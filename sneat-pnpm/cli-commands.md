@@ -29,3 +29,8 @@ pnpx nx generate @nxtend/ionic-angular:application <APP_NAME>
 ```
 pnpx nx g @nrwl/angular:lib <LIB_NAME> [--publishable]
 ```
+
+## To create an Angular component
+```
+pnpx nx g component <COMP_NAME> --project=<PROJ> --export
+```
