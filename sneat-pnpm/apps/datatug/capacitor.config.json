@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "datatug",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "../../dist/apps/datatug",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

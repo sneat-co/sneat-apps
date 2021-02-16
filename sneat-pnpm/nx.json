@@ -27,6 +27,9 @@
     "emptyionicapp-e2e": {
       "tags": [],
       "implicitDependencies": ["emptyionicapp"]
-    }
+    },
+    "core": { "tags": [] },
+    "datatug": { "tags": [] },
+    "datatug-e2e": { "tags": [], "implicitDependencies": ["datatug"] }
   }
 }
