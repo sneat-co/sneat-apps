@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sneat-pnpm/core": ["libs/core/src/index.ts"]
+      "@sneat/core": ["libs/core/src/index.ts"],
+      "@sneat/core/*": ["libs/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

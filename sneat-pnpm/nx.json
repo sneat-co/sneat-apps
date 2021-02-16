@@ -1,5 +1,5 @@
 {
-  "npmScope": "sneat-pnpm",
+  "npmScope": "sneat",
   "affected": { "defaultBase": "master" },
   "implicitDependencies": {
     "angular.json": "*",

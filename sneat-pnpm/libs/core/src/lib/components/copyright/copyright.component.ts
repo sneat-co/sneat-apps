@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'sneat-pnpm-copyright',
+  selector: 'sneat-copyright',
   templateUrl: './copyright.component.html',
   styleUrls: ['./copyright.component.scss']
 })

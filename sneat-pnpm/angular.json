@@ -38,7 +38,7 @@
       "projectType": "application",
       "root": "apps/emptyapp",
       "sourceRoot": "apps/emptyapp/src",
-      "prefix": "sneat-pnpm",
+      "prefix": "sneat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -152,7 +152,7 @@
       "projectType": "application",
       "root": "apps/emptyionicapp",
       "sourceRoot": "apps/emptyionicapp/src",
-      "prefix": "sneat-pnpm",
+      "prefix": "sneat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -363,7 +363,7 @@
       "projectType": "library",
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
-      "prefix": "sneat-pnpm",
+      "prefix": "sneat",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -388,7 +388,7 @@
       "projectType": "application",
       "root": "apps/datatug",
       "sourceRoot": "apps/datatug/src",
-      "prefix": "sneat-pnpm",
+      "prefix": "sneat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

@@ -29,6 +29,17 @@ pnpx nx generate @nxtend/ionic-angular:application <APP_NAME>
 ```
 pnpx nx g @nrwl/angular:lib <LIB_NAME> [--publishable]
 ```
+To support auto-imports in JetBrains IDE make sure to manually add `@sneat/<LIB_NAME>/*` path duplicate entry for libraries into `tsconfig.base.json`:
+```
+{
+  "compilerOptions": {
+    "paths": {
+      "@sneat/core": ["libs/core/src/index.ts"],
+      "@sneat/core/*": ["libs/core/src/index.ts"]
+    }
+  },
+}
+```
 
 ## To create an Angular component
 ```
