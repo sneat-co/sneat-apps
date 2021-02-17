@@ -405,7 +405,13 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              }
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              },
+              "apps/datatug/src/manifest.webmanifest"
             ],
             "styles": [
               "apps/datatug/src/styles.scss",

@@ -49,6 +49,7 @@
     "@sentry/browser": "^6.1.0",
     "codemirror": "^5.59.2",
     "firebase": "^8.2.7",
+    "ionicons": "^5.5.0",
     "rxjs": "~6.6.3",
     "tabulator-tables": "^4.9.3",
     "tslib": "^2.0.0",
