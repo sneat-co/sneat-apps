@@ -1,0 +1,12 @@
+{
+  "name": "@sneat/logging",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^11.0.9",
+    "@angular/core": "^11.0.9",
+    "@sentry/browser": "^6.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

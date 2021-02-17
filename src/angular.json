@@ -594,6 +594,43 @@
           }
         }
       }
+    },
+    "logging": {
+      "projectType": "library",
+      "root": "libs/logging",
+      "sourceRoot": "libs/logging/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/logging/tsconfig.lib.json",
+            "project": "libs/logging/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/logging/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/logging/src/**/*.ts",
+              "libs/logging/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/logging"],
+          "options": {
+            "jestConfig": "libs/logging/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

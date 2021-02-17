@@ -16,7 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@sneat/core": ["libs/core/src/index.ts"],
-      "@sneat/core/*": ["libs/core/src/index.ts"]
+      "@sneat/core/*": ["libs/core/src/index.ts"],
+      "@sneat/logging": ["libs/logging/src/index.ts"],
+      "@sneat/logging/*": ["libs/logging/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

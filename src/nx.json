@@ -30,6 +30,7 @@
     },
     "core": { "tags": [] },
     "datatug": { "tags": [] },
-    "datatug-e2e": { "tags": [], "implicitDependencies": ["datatug"] }
+    "datatug-e2e": { "tags": [], "implicitDependencies": ["datatug"] },
+    "logging": { "tags": ["scope:public", "type:util", "target:all"] }
   }
 }

@@ -43,6 +43,7 @@
     "@ionic-native/status-bar": "^5.30.0",
     "@ionic/angular": "^5.5.2",
     "@nrwl/angular": "11.2.12",
+    "@sentry/browser": "^6.1.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.2"
@@ -87,6 +88,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^11.0.0",
     "prettier": "2.2.1",
     "ts-jest": "26.4.0",
     "ts-node": "~9.1.1",
