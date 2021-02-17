@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 @Component({
   selector: 'sneat-home',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor() {}
+  constructor(
+    @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+  ) {
+  }
 }

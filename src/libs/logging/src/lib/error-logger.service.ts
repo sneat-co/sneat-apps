@@ -19,10 +19,14 @@ export class ErrorLoggerService implements IErrorLogger {
 	public logError(e: any, message?: string, options?: ILogErrorOptions): { error: any; message?: string; } | any {
 		console.error(`${message || 'Error'}:`, e, options);
 		if (!options || options.report === undefined || options.report) {
-			const eventId = Sentry.captureException(e);
-			if (!options || options.feedback === undefined || options.feedback) {
-				Sentry.showReportDialog({eventId});
-			}
+		  try {
+        const eventId = Sentry.captureException(e);
+        if (!options || options.feedback === undefined || options.feedback) {
+          Sentry.showReportDialog({eventId});
+        }
+      } catch (ex) {
+		    console.error('Sentry failed to capture or show  error report dialog', ex);
+      }
 		}
 		if (options?.show === undefined || options.show) {
 			if (e.message) {
