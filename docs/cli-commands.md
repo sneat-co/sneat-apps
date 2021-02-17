@@ -27,10 +27,11 @@ pnpx nx generate @nxtend/ionic-angular:application <APP_NAME>
 
 ## To create an Angular library 
 ```
-pnpx nx g @nrwl/angular:lib <LIB_NAME> [--publishable]
+pnpx nx g @nrwl/angular:lib <LIB_NAME> [--publishable] [--directory] <FOLDER_NAME>
 ```
-Example:
+Examples:
 ```
+pnpx nx g @nrwl/angular:lib Home --directory datatug/pages
 pnpx nx g @nrwl/angular:lib logging --publishable --importPath="@sneat/logging" --tags="scope:public,type:util,target:all"
 ```
 To support auto-imports in JetBrains IDE make sure to manually add `@sneat/<LIB_NAME>/*` path duplicate entry for libraries into `tsconfig.base.json`:

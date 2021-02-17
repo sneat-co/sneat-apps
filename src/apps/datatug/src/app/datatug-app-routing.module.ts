@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./home/home.module').then((m) => m.HomePageModule),
+      import('@sneat/datatug/pages/home').then((m) => m.DatatugPagesHomeModule),
   },
   {
     path: '',

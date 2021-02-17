@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
-import {HomePage} from './home.page';
+import {DatatugHomePage} from './datatug-home-page.component';
 
 import {HomePageRoutingModule} from './home-routing.module';
 import {CoreModule} from '@sneat/core';
@@ -15,7 +15,6 @@ import {CoreModule} from '@sneat/core';
     HomePageRoutingModule,
     CoreModule,
   ],
-  declarations: [HomePage],
+  declarations: [DatatugHomePage],
 })
-export class HomePageModule {
-}
+export class DatatugPagesHomeModule {}

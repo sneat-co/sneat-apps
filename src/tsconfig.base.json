@@ -33,7 +33,9 @@
       "@sneat/data": ["libs/data/src/index.ts"],
       "@sneat/data/*": ["libs/data/src/index.ts"],
       "@sneat/api": ["libs/api/src/index.ts"],
-      "@sneat/api/*": ["libs/api/src/index.ts"]
+      "@sneat/api/*": ["libs/api/src/index.ts"],
+      "@sneat/datatug/pages/home": ["libs/datatug/pages/home/src/index.ts"],
+      "@sneat/datatug/pages/home/*": ["libs/datatug/pages/home/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

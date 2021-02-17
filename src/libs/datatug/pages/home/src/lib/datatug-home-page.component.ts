@@ -3,10 +3,10 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 @Component({
   selector: 'sneat-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: 'datatug-home-page.component.html',
+  styleUrls: ['datatug-home-page.component.scss'],
 })
-export class HomePage {
+export class DatatugHomePage {
   constructor(
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
   ) {

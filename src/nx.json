@@ -39,6 +39,7 @@
     "app": { "tags": [] },
     "auth-models": { "tags": [] },
     "data": { "tags": [] },
-    "api": { "tags": [] }
+    "api": { "tags": [] },
+    "datatug-pages-home": { "tags": [] }
   }
 }

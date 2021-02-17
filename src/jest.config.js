@@ -11,5 +11,6 @@ module.exports = {
     '<rootDir>/libs/auth-models',
     '<rootDir>/libs/data',
     '<rootDir>/libs/api',
+    '<rootDir>/libs/datatug/pages/home',
   ],
 };

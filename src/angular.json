@@ -867,6 +867,31 @@
           }
         }
       }
+    },
+    "datatug-pages-home": {
+      "projectType": "library",
+      "root": "libs/datatug/pages/home",
+      "sourceRoot": "libs/datatug/pages/home/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/pages/home/src/**/*.ts",
+              "libs/datatug/pages/home/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/pages/home"],
+          "options": {
+            "jestConfig": "libs/datatug/pages/home/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
