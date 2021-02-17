@@ -36,6 +36,9 @@
     "auth": { "tags": ["scope:public", "type:util", "target:all"] },
     "auth-ui": { "tags": ["scope:public", "type:util", "target:all"] },
     "random": { "tags": ["scope:public", "type:util", "target:all"] },
-    "app": { "tags": [] }
+    "app": { "tags": [] },
+    "auth-models": { "tags": [] },
+    "data": { "tags": [] },
+    "api": { "tags": [] }
   }
 }

@@ -8,5 +8,8 @@ module.exports = {
     '<rootDir>/libs/auth-ui',
     '<rootDir>/libs/random',
     '<rootDir>/libs/app',
+    '<rootDir>/libs/auth-models',
+    '<rootDir>/libs/data',
+    '<rootDir>/libs/api',
   ],
 };

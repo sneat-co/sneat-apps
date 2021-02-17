@@ -27,7 +27,13 @@
       "@sneat/random": ["libs/random/src/index.ts"],
       "@sneat/random/*": ["libs/random/src/index.ts"],
       "@sneat/app": ["libs/app/src/index.ts"],
-      "@sneat/app/*": ["libs/app/src/index.ts"]
+      "@sneat/app/*": ["libs/app/src/index.ts"],
+      "@sneat/auth-models": ["libs/auth-models/src/index.ts"],
+      "@sneat/auth-models/*": ["libs/auth-models/src/index.ts"],
+      "@sneat/data": ["libs/data/src/index.ts"],
+      "@sneat/data/*": ["libs/data/src/index.ts"],
+      "@sneat/api": ["libs/api/src/index.ts"],
+      "@sneat/api/*": ["libs/api/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
