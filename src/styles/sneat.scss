@@ -1,0 +1,120 @@
+
+.split-pane-visible >.split-pane-side {
+  min-width: 400px!important;
+  max-width: 400px!important;
+}
+
+
+// Screen size hidden
+.invisible {
+  visibility: hidden !important;
+}
+
+.hidden-xs-up {
+  display: none !important;
+}
+
+@media (max-width: 540px) {
+  .hidden-xs-down {
+    display: none !important;
+  }
+}
+
+@media (min-width: 541px) {
+  .hidden-sm-up {
+    display: none !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .hidden-sm-down {
+    display: none !important;
+  }
+}
+
+@media (min-width: 541px) {
+  .hidden-md-up {
+    display: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .hidden-md-down {
+    display: none !important;
+  }
+}
+
+@media (min-width: 721px) {
+  .hidden-lg-up {
+    display: none !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .hidden-lg-down {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1140px) {
+  .hidden-xl-up {
+    display: none !important;
+  }
+}
+
+.hidden-xl-down {
+  display: none !important;
+}
+
+
+//@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+//@import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+ion-content.cards {
+  --background: #ebebeb;
+
+  ion-card {
+    --background: white;
+  }
+}
+
+ion-label.deleting-list-item {
+  text-decoration: line-through;
+}
+
+
+.cell-popover {
+  .popover-content {
+    min-width: 500px;
+    //border: 1px solid red;
+  }
+}
+
+.ion-grid-layout {
+  padding: 0;
+  margin: 0;
+}
+
+.ion-grid-layout ion-col {
+  padding: 0;
+  margin: 0;
+}
+
+ion-list.last-child-no-border ion-item:last-child {
+  --inner-border-width: 0;
+}
+
+ion-badge.badge-count {
+  font-weight: normal;
+  color: gray;
+}
+
+.delete-button:hover ion-icon {
+  color: red;
+}
+
+ion-item.no-end-padding {
+  .item-inner {
+    padding-right: 0;
+  }
+}
