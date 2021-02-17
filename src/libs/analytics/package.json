@@ -1,0 +1,11 @@
+{
+  "name": "@sneat/analytics",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": "^11.0.9",
+    "@angular/fire": "^6.1.4"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

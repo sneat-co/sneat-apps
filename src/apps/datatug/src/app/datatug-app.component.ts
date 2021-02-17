@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {Component} from '@angular/core';
+import {AppComponentService} from '@sneat/app';
 
 @Component({
   selector: 'sneat-root',
@@ -11,17 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class DatatugAppComponent {
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    readonly appComponentService: AppComponentService,
   ) {
-    this.initializeApp();
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+    appComponentService.initializeApp();
   }
 }

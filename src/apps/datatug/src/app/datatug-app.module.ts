@@ -10,6 +10,8 @@ import {DatatugAppComponent} from './datatug-app.component';
 import {DatatugAppRoutingModule} from './datatug-app-routing.module';
 import {CoreModule} from '@sneat/core';
 import {SneatLoggingModule} from '@sneat/logging';
+import {SneatAnalyticsModule} from '@sneat/analytics';
+import {SneatAppModule} from '@sneat/app';
 
 @NgModule({
   declarations: [DatatugAppComponent],
@@ -19,7 +21,9 @@ import {SneatLoggingModule} from '@sneat/logging';
     IonicModule.forRoot(),
     DatatugAppRoutingModule,
     CoreModule,
+    SneatAppModule,
     SneatLoggingModule,
+    SneatAnalyticsModule,
   ],
   providers: [
     StatusBar,
@@ -29,4 +33,6 @@ import {SneatLoggingModule} from '@sneat/logging';
   bootstrap: [DatatugAppComponent],
 })
 export class DatatugAppModule {
+  constructor() {
+  }
 }

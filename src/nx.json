@@ -31,6 +31,11 @@
     "core": { "tags": [] },
     "datatug": { "tags": [] },
     "datatug-e2e": { "tags": [], "implicitDependencies": ["datatug"] },
-    "logging": { "tags": ["scope:public", "type:util", "target:all"] }
+    "logging": { "tags": ["scope:public", "type:util", "target:all"] },
+    "analytics": { "tags": ["scope:public", "type:util", "target:all"] },
+    "auth": { "tags": ["scope:public", "type:util", "target:all"] },
+    "auth-ui": { "tags": ["scope:public", "type:util", "target:all"] },
+    "random": { "tags": ["scope:public", "type:util", "target:all"] },
+    "app": { "tags": [] }
   }
 }

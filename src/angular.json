@@ -631,6 +631,167 @@
           }
         }
       }
+    },
+    "analytics": {
+      "projectType": "library",
+      "root": "libs/analytics",
+      "sourceRoot": "libs/analytics/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/analytics/tsconfig.lib.json",
+            "project": "libs/analytics/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/analytics/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/analytics/src/**/*.ts",
+              "libs/analytics/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/analytics"],
+          "options": {
+            "jestConfig": "libs/analytics/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth": {
+      "projectType": "library",
+      "root": "libs/auth",
+      "sourceRoot": "libs/auth/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/auth/tsconfig.lib.json",
+            "project": "libs/auth/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/auth/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth/src/**/*.ts",
+              "libs/auth/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/auth"],
+          "options": {
+            "jestConfig": "libs/auth/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth-ui": {
+      "projectType": "library",
+      "root": "libs/auth-ui",
+      "sourceRoot": "libs/auth-ui/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/auth-ui/tsconfig.lib.json",
+            "project": "libs/auth-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/auth-ui/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth-ui/src/**/*.ts",
+              "libs/auth-ui/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/auth-ui"],
+          "options": {
+            "jestConfig": "libs/auth-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "random": {
+      "projectType": "library",
+      "root": "libs/random",
+      "sourceRoot": "libs/random/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/random/src/**/*.ts",
+              "libs/random/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/random"],
+          "options": {
+            "jestConfig": "libs/random/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "app": {
+      "projectType": "library",
+      "root": "libs/app",
+      "sourceRoot": "libs/app/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/app/src/**/*.ts",
+              "libs/app/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/app"],
+          "options": {
+            "jestConfig": "libs/app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
