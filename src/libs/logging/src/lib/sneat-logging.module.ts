@@ -1,12 +1,9 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {ErrorLogger} from './error-logger.interface';
 import {ErrorLoggerService} from './error-logger.service';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
+  imports: [],
   providers: [
     {
       provide: ErrorLogger,
@@ -14,5 +11,5 @@ import {ErrorLoggerService} from './error-logger.service';
     },
   ]
 })
-export class LoggingModule {
+export class SneatLoggingModule {
 }

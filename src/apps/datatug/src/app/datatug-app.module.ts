@@ -6,27 +6,27 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing.module';
+import {DatatugAppComponent} from './datatug-app.component';
+import {DatatugAppRoutingModule} from './datatug-app-routing.module';
 import {CoreModule} from '@sneat/core';
-import {LoggingModule} from '@sneat/logging';
+import {SneatLoggingModule} from '@sneat/logging';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [DatatugAppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule,
+    DatatugAppRoutingModule,
     CoreModule,
-    LoggingModule,
+    SneatLoggingModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [DatatugAppComponent],
 })
-export class AppModule {
+export class DatatugAppModule {
 }

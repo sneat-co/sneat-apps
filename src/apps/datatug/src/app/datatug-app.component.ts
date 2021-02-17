@@ -6,10 +6,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'sneat-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+  templateUrl: 'datatug-app.component.html',
+  styleUrls: ['datatug-app.component.scss'],
 })
-export class AppComponent {
+export class DatatugAppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
