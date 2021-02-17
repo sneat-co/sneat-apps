@@ -12,6 +12,13 @@ import {CoreModule} from '@sneat/core';
 import {SneatLoggingModule} from '@sneat/logging';
 import {SneatAnalyticsModule} from '@sneat/analytics';
 import {SneatAppModule} from '@sneat/app';
+import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {environment} from '../environments/environment';
+import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule} from '@sneat/auth';
+import {SneatAuthRoutingModule} from '../../../../libs/auth/src/lib/sneat-auth-routing.module';
 
 @NgModule({
   declarations: [DatatugAppComponent],
@@ -19,16 +26,32 @@ import {SneatAppModule} from '@sneat/app';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    // AngularFireAnalyticsModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     DatatugAppRoutingModule,
     CoreModule,
     SneatAppModule,
     SneatLoggingModule,
     SneatAnalyticsModule,
+    SneatAuthModule,
+    SneatAuthRoutingModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    AngularFireAuth,
+    AngularFireAuthGuard,
+    SneatAuthGuard,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    {
+      provide: LoginEventsHandler, useValue: {
+        onLoggedIn: () => {
+          console.log('LoginEventsHandler: logged in')
+        }
+      }
+    },
   ],
   bootstrap: [DatatugAppComponent],
 })

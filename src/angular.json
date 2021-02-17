@@ -892,6 +892,231 @@
           }
         }
       }
+    },
+    "animations": {
+      "projectType": "library",
+      "root": "libs/animations",
+      "sourceRoot": "libs/animations/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/animations/src/**/*.ts",
+              "libs/animations/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/animations"],
+          "options": {
+            "jestConfig": "libs/animations/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "components-error-card": {
+      "projectType": "library",
+      "root": "libs/components/error-card",
+      "sourceRoot": "libs/components/error-card/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/components/error-card/src/**/*.ts",
+              "libs/components/error-card/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components/error-card"],
+          "options": {
+            "jestConfig": "libs/components/error-card/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "components-card-list": {
+      "projectType": "library",
+      "root": "libs/components/card-list",
+      "sourceRoot": "libs/components/card-list/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/components/card-list/src/**/*.ts",
+              "libs/components/card-list/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components/card-list"],
+          "options": {
+            "jestConfig": "libs/components/card-list/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-models": {
+      "projectType": "library",
+      "root": "libs/datatug/models",
+      "sourceRoot": "libs/datatug/models/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/models/src/**/*.ts",
+              "libs/datatug/models/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/models"],
+          "options": {
+            "jestConfig": "libs/datatug/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datetime": {
+      "projectType": "library",
+      "root": "libs/datetime",
+      "sourceRoot": "libs/datetime/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datetime/src/**/*.ts",
+              "libs/datetime/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datetime"],
+          "options": {
+            "jestConfig": "libs/datetime/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-pages-signed-out": {
+      "projectType": "library",
+      "root": "libs/datatug/pages/signed-out",
+      "sourceRoot": "libs/datatug/pages/signed-out/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/pages/signed-out/src/**/*.ts",
+              "libs/datatug/pages/signed-out/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/pages/signed-out"],
+          "options": {
+            "jestConfig": "libs/datatug/pages/signed-out/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-core": {
+      "projectType": "library",
+      "root": "libs/datatug/core",
+      "sourceRoot": "libs/datatug/core/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/core/src/**/*.ts",
+              "libs/datatug/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/core"],
+          "options": {
+            "jestConfig": "libs/datatug/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-pages-my": {
+      "projectType": "library",
+      "root": "libs/datatug/pages/my",
+      "sourceRoot": "libs/datatug/pages/my/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/pages/my/src/**/*.ts",
+              "libs/datatug/pages/my/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/pages/my"],
+          "options": {
+            "jestConfig": "libs/datatug/pages/my/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth-login-page": {
+      "projectType": "library",
+      "root": "libs/auth-login-page",
+      "sourceRoot": "libs/auth-login-page/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth-login-page/src/**/*.ts",
+              "libs/auth-login-page/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/auth-login-page"],
+          "options": {
+            "jestConfig": "libs/auth-login-page/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

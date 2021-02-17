@@ -1,0 +1,10 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>My stuff @ DataTug.app</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+	<datatug-my-projects [projects]="dataTugUser && (dataTugUser.dataTug?.projects || [])"></datatug-my-projects>
+	<datatug-my-stores [stores]="dataTugUser && (dataTugUser.dataTug?.stores || [])"></datatug-my-stores>
+</ion-content>

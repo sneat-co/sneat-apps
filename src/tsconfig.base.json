@@ -10,33 +10,135 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sneat/core": ["libs/core/src/index.ts"],
-      "@sneat/core/*": ["libs/core/src/index.ts"],
-      "@sneat/logging": ["libs/logging/src/index.ts"],
-      "@sneat/logging/*": ["libs/logging/src/index.ts"],
-      "@sneat/analytics": ["libs/analytics/src/index.ts"],
-      "@sneat/auth": ["libs/auth/src/index.ts"],
-      "@sneat/auth/*": ["libs/auth/src/index.ts"],
-      "@sneat/auth-ui": ["libs/auth-ui/src/index.ts"],
-      "@sneat/auth-ui/*": ["libs/auth-ui/src/index.ts"],
-      "@sneat/random": ["libs/random/src/index.ts"],
-      "@sneat/random/*": ["libs/random/src/index.ts"],
-      "@sneat/app": ["libs/app/src/index.ts"],
-      "@sneat/app/*": ["libs/app/src/index.ts"],
-      "@sneat/auth-models": ["libs/auth-models/src/index.ts"],
-      "@sneat/auth-models/*": ["libs/auth-models/src/index.ts"],
-      "@sneat/data": ["libs/data/src/index.ts"],
-      "@sneat/data/*": ["libs/data/src/index.ts"],
-      "@sneat/api": ["libs/api/src/index.ts"],
-      "@sneat/api/*": ["libs/api/src/index.ts"],
-      "@sneat/datatug/pages/home": ["libs/datatug/pages/home/src/index.ts"],
-      "@sneat/datatug/pages/home/*": ["libs/datatug/pages/home/src/index.ts"]
+      "@sneat/core": [
+        "libs/core/src/index.ts"
+      ],
+      "@sneat/core/*": [
+        "libs/core/src/index.ts"
+      ],
+      "@sneat/logging": [
+        "libs/logging/src/index.ts"
+      ],
+      "@sneat/logging/*": [
+        "libs/logging/src/index.ts"
+      ],
+      "@sneat/analytics": [
+        "libs/analytics/src/index.ts"
+      ],
+      "@sneat/auth": [
+        "libs/auth/src/index.ts"
+      ],
+      "@sneat/auth/*": [
+        "libs/auth/src/index.ts"
+      ],
+      "@sneat/auth-ui": [
+        "libs/auth-ui/src/index.ts"
+      ],
+      "@sneat/auth-ui/*": [
+        "libs/auth-ui/src/index.ts"
+      ],
+      "@sneat/random": [
+        "libs/random/src/index.ts"
+      ],
+      "@sneat/random/*": [
+        "libs/random/src/index.ts"
+      ],
+      "@sneat/app": [
+        "libs/app/src/index.ts"
+      ],
+      "@sneat/app/*": [
+        "libs/app/src/index.ts"
+      ],
+      "@sneat/auth-models": [
+        "libs/auth-models/src/index.ts"
+      ],
+      "@sneat/auth-models/*": [
+        "libs/auth-models/src/index.ts"
+      ],
+      "@sneat/data": [
+        "libs/data/src/index.ts"
+      ],
+      "@sneat/data/*": [
+        "libs/data/src/index.ts"
+      ],
+      "@sneat/api": [
+        "libs/api/src/index.ts"
+      ],
+      "@sneat/api/*": [
+        "libs/api/src/index.ts"
+      ],
+      "@sneat/datatug/pages/home": [
+        "libs/datatug/pages/home/src/index.ts"
+      ],
+      "@sneat/datatug/pages/home/*": [
+        "libs/datatug/pages/home/src/index.ts"
+      ],
+      "@sneat/animations": [
+        "libs/animations/src/index.ts"
+      ],
+      "@sneat/animations/*": [
+        "libs/animations/src/index.ts"
+      ],
+      "@sneat/components/error-card": [
+        "libs/components/error-card/src/index.ts"
+      ],
+      "@sneat/components/error-card/*": [
+        "libs/components/error-card/src/index.ts"
+      ],
+      "@sneat/components/card-list": [
+        "libs/components/card-list/src/index.ts"
+      ],
+      "@sneat/components/card-list/*": [
+        "libs/components/card-list/src/index.ts"
+      ],
+      "@sneat/datatug/models": [
+        "libs/datatug/models/src/index.ts"
+      ],
+      "@sneat/datatug/models/*": [
+        "libs/datatug/models/src/index.ts"
+      ],
+      "@sneat/datetime": [
+        "libs/datetime/src/index.ts"
+      ],
+      "@sneat/datetime/*": [
+        "libs/datetime/src/index.ts"
+      ],
+      "@sneat/datatug/pages/signed-out": [
+        "libs/datatug/pages/signed-out/src/index.ts"
+      ],
+      "@sneat/datatug/pages/signed-out/*": [
+        "libs/datatug/pages/signed-out/src/index.ts"
+      ],
+      "@sneat/datatug/core": [
+        "libs/datatug/core/src/index.ts"
+      ],
+      "@sneat/datatug/core/*": [
+        "libs/datatug/core/src/index.ts"
+      ],
+      "@sneat/datatug/pages/my": [
+        "libs/datatug/pages/my/src/index.ts"
+      ],
+      "@sneat/datatug/pages/my/*": [
+        "libs/datatug/pages/my/src/index.ts"
+      ],
+      "@sneat/auth-login-page": [
+        "libs/auth-login-page/src/index.ts"
+      ],
+      "@sneat/auth-login-page/*": [
+        "libs/auth-login-page/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

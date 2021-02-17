@@ -1,0 +1,136 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-title>DailyScrum.app</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+
+	<ion-card *ngIf="to" [ngSwitch]="to" color="tertiary">
+		<ion-card-content *ngSwitchCase="'join-team'">
+			<p *ngIf="action === 'join'">Please sign in to join team</p>
+			<p *ngIf="action === 'refuse'">Please sign in to send refusal to join team to the inviter.</p>
+		</ion-card-content>
+	</ion-card>
+
+	<p style="text-align: center; font-size: smaller;">
+		<ion-text color="medium">
+			This app is free to use & <a target="_blank" href="https://github.com/sneat-team/dailyscrum-pwa">open
+			source</a>.
+		</ion-text>
+	</p>
+
+	<ion-card>
+		<ion-grid>
+			<ion-row class="ion-no-padding ion-no-margin">
+				<ion-col class="ion-no-padding ion-no-margin">
+					<ion-list lines="none" class="ion-no-margin ion-no-padding">
+						<ion-item (click)="loginWith('Google')" tappable [disabled]="!!signingWith">
+							<ion-icon color="danger" name="logo-google" slot="start" *ngIf="signingWith !== 'Google'">
+							</ion-icon>
+							<ion-spinner slot="start" name="lines-small" *ngIf="signingWith === 'Google'">
+							</ion-spinner>
+							<ion-label color="danger">
+								Login with Google
+							</ion-label>
+						</ion-item>
+						<ion-item (click)="loginWith('Facebook')" tappable [disabled]="!!signingWith">
+							<ion-icon slot="start" color="primary" name="logo-facebook" *ngIf="signingWith !== 'Facebook'">
+							</ion-icon>
+							<ion-spinner slot="start" color="primary" name="lines-small" *ngIf="signingWith === 'Facebook'">
+							</ion-spinner>
+							<ion-label color="primary">Login with Facebook</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+				<ion-col class="ion-no-padding ion-no-margin">
+					<ion-list lines="none" class="ion-no-margin ion-no-padding">
+						<ion-item (click)="loginWith('Microsoft')" tappable [disabled]="!!signingWith">
+							<ion-icon slot="start" color="secondary" name="logo-windows" *ngIf="signingWith !== 'Microsoft'">
+							</ion-icon>
+							<ion-spinner slot="start" color="secondary" name="lines-small" *ngIf="signingWith === 'Microsoft'">
+							</ion-spinner>
+							<ion-label color="secondary">Login with Microsoft</ion-label>
+						</ion-item>
+						<ion-item (click)="loginWith('GitHub')" tappable [disabled]="!!signingWith">
+							<ion-icon slot="start" color="tertiary" name="logo-github" *ngIf="signingWith !== 'GitHub'">
+							</ion-icon>
+							<ion-spinner slot="start" color="tertiary" name="lines-small" *ngIf="signingWith === 'GitHub'">
+							</ion-spinner>
+							<ion-label color="tertiary">Login with GitHub</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-card>
+
+	<!--	<div style="text-align: center">-->
+	<!--		<ion-text color="medium" style="font-size: smaller">or</ion-text>-->
+	<!--	</div>-->
+
+	<p style="text-align: center; font-size: smaller">
+		<ion-text color="medium">
+			If any issues get <a href="mailto:help@dailyscrum.app?subject=Problem+with+login+at+DailyScrum.app">help@dailyscrum.app</a>
+		</ion-text>
+	</p>
+
+	<ion-card>
+		<ion-card-header>
+			<ion-segment [(ngModel)]="sign" (ionChange)="signChanged()">
+				<ion-segment-button value="up">Sign up</ion-segment-button>
+				<ion-segment-button value="in">Sign in</ion-segment-button>
+			</ion-segment>
+		</ion-card-header>
+		<ion-card-content class="ion-no-padding">
+			<ion-item>
+				<ion-label>
+					<ion-icon name="mail-outline"></ion-icon>
+				</ion-label>
+				<ion-input [disabled]="!!signingWith" [(ngModel)]="email" email type="email" name="email" id="email"
+							  required placeholder="my@work.email" (keyup.enter)="keyupEnter()">
+				</ion-input>
+			</ion-item>
+			<ion-item *ngIf="sign === 'up'">
+				<ion-label>
+					<ion-icon name="person-add-outline"></ion-icon>
+				</ion-label>
+				<ion-input placeholder="Full name" [(ngModel)]="fullName" type="text" required (keyup.enter)="keyupEnter()"
+							  [disabled]="!!signingWith"></ion-input>
+			</ion-item>
+			<ion-item *ngIf="sign === 'in'">
+				<ion-label>
+					<ion-icon name="key-outline"></ion-icon>
+				</ion-label>
+				<ion-input [(ngModel)]="password" placeholder="Password" type="password" required
+							  (keyup.enter)="keyupEnter()"
+							  [disabled]="!!signingWith">
+				</ion-input>
+				<ion-buttons slot="end">
+					<ion-button *ngIf="sign === 'in'" color="secondary" [disabled]="!validEmail" (click)="resetPassword()"
+									title="Send email with a link to reset password "
+					>Reset
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</ion-card-content>
+		<ion-card-content>
+			<ion-button *ngIf="sign === 'up'" [disabled]="!!signingWith || !validEmail || !fullName" (click)="signUp()">
+				<ion-icon name="enter-outline" slot="start"></ion-icon>
+				<ion-label>Sign up</ion-label>
+			</ion-button>
+			<ng-container *ngIf="sign === 'in'">
+				<ion-button [disabled]="!!signingWith || !validEmail || !password" (click)="signIn()">
+					<ion-icon name="enter-outline" slot="start"></ion-icon>
+					<ion-label>Sign in</ion-label>
+				</ion-button>
+				or
+				<ion-button size="small" [disabled]="!validEmail || signingWith" (click)="sendSignInLink()" fill="outline"
+								color="medium">
+					<ion-icon name="mail-outline" slot="start"></ion-icon>
+					<ion-label>Get sign-in link</ion-label>
+				</ion-button>
+			</ng-container>
+		</ion-card-content>
+	</ion-card>
+</ion-content>

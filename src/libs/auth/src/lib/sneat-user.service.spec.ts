@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SneatUserService } from './sneat-user.service';
 
-describe('UserService', () => {
+describe('SneatUserService', () => {
   let service: SneatUserService;
 
   beforeEach(() => {

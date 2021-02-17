@@ -9,6 +9,7 @@ dependencies:
   '@angular/platform-browser-dynamic': 11.2.0_4be395d0499823a496db43e0a2badb2a
   '@angular/router': 11.2.0_29430d8ec16341313bd9c97250556c01
   '@capacitor/core': 2.4.6
+  '@firebase/firestore': 1.18.0
   '@ionic-native/core': 5.31.1_rxjs@6.6.3
   '@ionic-native/splash-screen': 5.31.1_fba2ce20a1445ab520b44b573ed379a0
   '@ionic-native/status-bar': 5.31.1_fba2ce20a1445ab520b44b573ed379a0
@@ -2276,6 +2277,13 @@ packages:
       '@firebase/util': '*'
     resolution:
       integrity: sha512-0U+SJrh9K8vDv+lvWPYU9cAQBRPt8fpm3cK7yRZAwnN4jbcqfg+KBaddrDn28aIQYX+n4TrLiZ9TMJXPJfUYhQ==
+  /@firebase/component/0.1.19:
+    dependencies:
+      '@firebase/util': 0.3.2
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-L0S3g8eqaerg8y0zox3oOHSTwn/FE8RbcRHiurnbESvDViZtP5S5WnhuAPd7FnFxa8ElWK0z1Tr3ikzWDv1xdQ==
   /@firebase/component/0.1.21:
     dependencies:
       '@firebase/util': 0.3.4
@@ -2303,6 +2311,12 @@ packages:
       '@firebase/app-types': '*'
     resolution:
       integrity: sha512-/ZxABwwknVFypPivQGRauF0WE9ZNr+WCucwCqAhxzQPgfUOaAKL5PZs9Oa/Yz42gMMfmjF+z6hPvSjW2ePlEcA==
+  /@firebase/firestore-types/1.14.0:
+    dev: false
+    peerDependencies:
+      '@firebase/app-types': 0.x
+    resolution:
+      integrity: sha512-WF8IBwHzZDhwyOgQnmB0pheVrLNP78A8PGxk1nxb/Nrgh1amo4/zYvFMGgSsTeaQK37xMYS/g7eS948te/dJxw==
   /@firebase/firestore-types/2.1.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
@@ -2311,6 +2325,25 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-jietErBWihMvJkqqEquQy5GgoEwzHnMXXC/TsVoe9FPysXm1/AeJS12taS7ZYvenAtyvL/AEJyKrRKRh4adcJQ==
+  /@firebase/firestore/1.18.0:
+    dependencies:
+      '@firebase/component': 0.1.19
+      '@firebase/firestore-types': 1.14.0
+      '@firebase/logger': 0.2.6
+      '@firebase/util': 0.3.2
+      '@firebase/webchannel-wrapper': 0.4.0
+      '@grpc/grpc-js': 1.2.7
+      '@grpc/proto-loader': 0.5.6
+      node-fetch: 2.6.1
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: ^8.13.0 || >=10.10.0
+    peerDependencies:
+      '@firebase/app': 0.x
+      '@firebase/app-types': 0.x
+    resolution:
+      integrity: sha512-maMq4ltkrwjDRusR2nt0qS4wldHQMp+0IDSfXIjC+SNmjnWY/t/+Skn9U3Po+dB38xpz3i7nsKbs+8utpDnPSw==
   /@firebase/firestore/2.1.6_8444714d584c1e92b14b98b618c02542:
     dependencies:
       '@firebase/app': 0.6.14
@@ -2474,19 +2507,29 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-87CrvKrf8kijVekRBmUs8htsNz7N5X/pDhv3BvJBqw8K65GsUolpyjx0f4QJRkCRUYmh3MSkpa5P08lpVbC6nQ==
+  /@firebase/util/0.3.2:
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-Dqs00++c8rwKky6KCKLLY2T1qYO4Q+X5t+lF7DInXDNF4ae1Oau35bkD+OpJ9u7l1pEv7KHowP6CUKuySCOc8g==
   /@firebase/util/0.3.4:
     dependencies:
       tslib: 1.14.1
     dev: false
     resolution:
       integrity: sha512-VwjJUE2Vgr2UMfH63ZtIX9Hd7x+6gayi6RUXaTqEYxSbf/JmehLmAEYSuxS/NckfzAXWeGnKclvnXVibDgpjQQ==
+  /@firebase/webchannel-wrapper/0.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-8cUA/mg0S+BxIZ72TdZRsXKBP5n5uRcE3k29TZhZw6oIiHBt9JA7CTb/4pE1uKtE/q5NeTY2tBDcagoZ+1zjXQ==
   /@firebase/webchannel-wrapper/0.4.1:
     dev: false
     resolution:
       integrity: sha512-0yPjzuzGMkW1GkrC8yWsiN7vt1OzkMIi9HgxRmKREZl2wnNPOKo/yScTjXf/O57HM8dltqxPF6jlNLFVtc2qdw==
   /@grpc/grpc-js/1.2.7:
     dependencies:
-      '@types/node': 12.12.50
+      '@types/node': 13.13.42
       google-auth-library: 6.1.6
       semver: 6.3.0
     dev: false
@@ -14169,6 +14212,7 @@ specifiers:
   '@capacitor/android': ^2.4.5
   '@capacitor/core': ^2.4.5
   '@capacitor/ios': ^2.4.5
+  '@firebase/firestore': ^1.18.0
   '@ionic-native/core': ^5.30.0
   '@ionic-native/splash-screen': ^5.30.0
   '@ionic-native/status-bar': ^5.30.0

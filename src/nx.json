@@ -40,6 +40,15 @@
     "auth-models": { "tags": [] },
     "data": { "tags": [] },
     "api": { "tags": [] },
-    "datatug-pages-home": { "tags": [] }
+    "datatug-pages-home": { "tags": [] },
+    "animations": { "tags": [] },
+    "components-error-card": { "tags": [] },
+    "components-card-list": { "tags": [] },
+    "datatug-models": { "tags": [] },
+    "datetime": { "tags": [] },
+    "datatug-pages-signed-out": { "tags": [] },
+    "datatug-core": { "tags": [] },
+    "datatug-pages-my": { "tags": [] },
+    "auth-login-page": { "tags": [] }
   }
 }

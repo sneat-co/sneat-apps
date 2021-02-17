@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {SNEAT_AUTH_GUARDS} from '@sneat/auth';
 
 const routes: Routes = [
   {
@@ -11,6 +12,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'my',
+    ...SNEAT_AUTH_GUARDS,
+    loadChildren: () => import('@sneat/datatug/pages/my').then(m => m.DatatugMyPageModule),
   },
 ];
 
