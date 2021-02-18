@@ -9,7 +9,7 @@ import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
 @Injectable()
-export class NavService {
+export class NavService { // TODO: Should it be inside the /libs/datatug/services/nav/ folder?
 
 	constructor(
 		private readonly zone: NgZone,

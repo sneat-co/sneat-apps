@@ -19,6 +19,8 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
 import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule} from '@sneat/auth';
 import {SneatAuthRoutingModule} from '../../../../libs/auth/src/lib/sneat-auth-routing.module';
+import {DatatugMenuSignedModule} from './datatug-menu-signed/datatug-menu-signed.module';
+import {DatatugMenuUnsignedModule} from './datatug-menu-unsigned/datatug-menu-unsigned.module';
 
 @NgModule({
   declarations: [DatatugAppComponent],
@@ -37,6 +39,8 @@ import {SneatAuthRoutingModule} from '../../../../libs/auth/src/lib/sneat-auth-r
     SneatAnalyticsModule,
     SneatAuthModule,
     SneatAuthRoutingModule,
+    DatatugMenuSignedModule,
+    DatatugMenuUnsignedModule,
   ],
   providers: [
     StatusBar,

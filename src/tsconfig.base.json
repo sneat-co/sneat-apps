@@ -134,6 +134,36 @@
       ],
       "@sneat/auth-login-page/*": [
         "libs/auth-login-page/src/index.ts"
+      ],
+      "@sneat/datatug/services/nav": [
+        "libs/datatug/services/nav/src/index.ts"
+      ],
+      "@sneat/datatug/services/nav/*": [
+        "libs/datatug/services/nav/src/index.ts"
+      ],
+      "@sneat/datatug/services/project/*": [
+        "libs/datatug/services/project/src/index.ts"
+      ],
+      "@sneat/datatug/services/project": [
+        "libs/datatug/services/project/src/index.ts"
+      ],
+      "@sneat/datatug/services/repo": [
+        "libs/datatug/services/repo/src/index.ts"
+      ],
+      "@sneat/datatug/services/repo/*": [
+        "libs/datatug/services/repo/src/index.ts"
+      ],
+      "@sneat/datatug/dto": [
+        "libs/datatug/dto/src/index.ts"
+      ],
+      "@sneat/datatug/dto/*": [
+        "libs/datatug/dto/src/index.ts"
+      ],
+      "@sneat/grid": [
+        "libs/grid/src/index.ts"
+      ],
+      "@sneat/grid/*": [
+        "libs/grid/src/index.ts"
       ]
     }
   },

@@ -1,0 +1,11 @@
+ion-select {
+	max-width: 70% !important;
+}
+
+ion-label.current {
+	font-weight: bold;
+}
+
+ion-item.no-border {
+	--border-width: 0;
+}

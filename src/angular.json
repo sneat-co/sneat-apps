@@ -1123,6 +1123,131 @@
           }
         }
       }
+    },
+    "datatug-services-nav": {
+      "projectType": "library",
+      "root": "libs/datatug/services/nav",
+      "sourceRoot": "libs/datatug/services/nav/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/services/nav/src/**/*.ts",
+              "libs/datatug/services/nav/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/services/nav"],
+          "options": {
+            "jestConfig": "libs/datatug/services/nav/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-services-project": {
+      "projectType": "library",
+      "root": "libs/datatug/services/project",
+      "sourceRoot": "libs/datatug/services/project/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/services/project/src/**/*.ts",
+              "libs/datatug/services/project/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/services/project"],
+          "options": {
+            "jestConfig": "libs/datatug/services/project/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-services-repo": {
+      "projectType": "library",
+      "root": "libs/datatug/services/repo",
+      "sourceRoot": "libs/datatug/services/repo/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/services/repo/src/**/*.ts",
+              "libs/datatug/services/repo/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/services/repo"],
+          "options": {
+            "jestConfig": "libs/datatug/services/repo/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-dto": {
+      "projectType": "library",
+      "root": "libs/datatug/dto",
+      "sourceRoot": "libs/datatug/dto/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/dto/src/**/*.ts",
+              "libs/datatug/dto/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/dto"],
+          "options": {
+            "jestConfig": "libs/datatug/dto/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "grid": {
+      "projectType": "library",
+      "root": "libs/grid",
+      "sourceRoot": "libs/grid/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/grid/src/**/*.ts",
+              "libs/grid/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/grid"],
+          "options": {
+            "jestConfig": "libs/grid/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

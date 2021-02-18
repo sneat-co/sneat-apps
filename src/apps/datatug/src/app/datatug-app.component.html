@@ -1,3 +1,20 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay" [ngSwitch]="(appContext.currentApp|async).appCode">
+      <ion-header>
+        <ion-toolbar color="light">
+          <ion-title>
+						<span>DataTug.app</span>
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="cards">
+        <ng-container *ngIf="(afAuth.user|async)?.uid; else menuForAnonymous">
+          <datatug-menu-signed ></datatug-menu-signed>
+        </ng-container>
+        <ng-template #menuForAnonymous><datatug-menu-unsigned></datatug-menu-unsigned></ng-template>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
