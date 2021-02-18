@@ -1,7 +1,7 @@
 export const environment = {
 	production: true,
 	firebaseConfig: {
-		apiKey: '<SECURE_KEY_NOT_TO_BE_EXPOSED_PUBLICLY>',
+		apiKey: 'AIzaSyCuSieAoHqI4JSPkbV33Uj423VuFpqi91Q',
 		authDomain: 'sneat.team',
 		databaseURL: 'https://sneat-team.firebaseio.com',
 		projectId: 'sneat-team',
