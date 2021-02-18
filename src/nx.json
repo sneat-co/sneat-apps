@@ -56,6 +56,11 @@
     "datatug-dto": { "tags": [] },
     "grid": { "tags": [] },
     "scrumspace": { "tags": [] },
-    "scrumspace-e2e": { "tags": [], "implicitDependencies": ["scrumspace"] }
+    "scrumspace-e2e": { "tags": [], "implicitDependencies": ["scrumspace"] },
+    "issuenumberone": { "tags": [] },
+    "issuenumberone-e2e": {
+      "tags": [],
+      "implicitDependencies": ["issuenumberone"]
+    }
   }
 }

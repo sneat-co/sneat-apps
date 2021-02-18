@@ -1459,6 +1459,217 @@
           }
         }
       }
+    },
+    "issuenumberone": {
+      "projectType": "application",
+      "root": "apps/issuenumberone",
+      "sourceRoot": "apps/issuenumberone/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/issuenumberone",
+            "index": "apps/issuenumberone/src/index.html",
+            "main": "apps/issuenumberone/src/main.ts",
+            "polyfills": "apps/issuenumberone/src/polyfills.ts",
+            "tsConfig": "apps/issuenumberone/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/issuenumberone/src/assets",
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }
+            ],
+            "styles": [
+              "apps/issuenumberone/src/styles.scss",
+              {
+                "input": "apps\\issuenumberone/src/theme/variables.scss"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/issuenumberone/src/environments/environment.ts",
+                  "with": "apps/issuenumberone/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "issuenumberone:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "issuenumberone:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "issuenumberone:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/issuenumberone/tsconfig.app.json",
+              "apps/issuenumberone/tsconfig.spec.json",
+              "apps/issuenumberone/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/issuenumberone/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/issuenumberone/src/test.ts",
+            "tsConfig": "apps/issuenumberone/tsconfig.spec.json",
+            "karmaConfig": "apps/issuenumberone/karma.conf.js",
+            "polyfills": "apps/issuenumberone/src/polyfills.ts",
+            "styles": [],
+            "scripts": [],
+            "assets": []
+          }
+        },
+        "cap": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "--help"
+          }
+        },
+        "add": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "add",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "add ios"
+            },
+            "android": {
+              "cmd": "add android"
+            }
+          }
+        },
+        "copy": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "copy",
+            "packageInstall": false
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "copy ios"
+            },
+            "android": {
+              "cmd": "copy android"
+            }
+          }
+        },
+        "open": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "open",
+            "packageInstall": false
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "open ios"
+            },
+            "android": {
+              "cmd": "open android"
+            }
+          }
+        },
+        "sync": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "sync",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "sync ios"
+            },
+            "android": {
+              "cmd": "sync android"
+            }
+          }
+        },
+        "update": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "update",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "update ios"
+            },
+            "android": {
+              "cmd": "update android"
+            }
+          }
+        }
+      }
+    },
+    "issuenumberone-e2e": {
+      "root": "apps/issuenumberone-e2e",
+      "sourceRoot": "apps/issuenumberone-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/issuenumberone-e2e/cypress.json",
+            "tsConfig": "apps/issuenumberone-e2e/tsconfig.e2e.json",
+            "devServerTarget": "issuenumberone:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "issuenumberone:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/issuenumberone-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/issuenumberone-e2e/**/*"]
+          }
+        }
+      }
     }
   }
 }
