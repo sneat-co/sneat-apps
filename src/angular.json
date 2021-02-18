@@ -1248,6 +1248,217 @@
           }
         }
       }
+    },
+    "scrumspace": {
+      "projectType": "application",
+      "root": "apps/scrumspace",
+      "sourceRoot": "apps/scrumspace/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/scrumspace",
+            "index": "apps/scrumspace/src/index.html",
+            "main": "apps/scrumspace/src/main.ts",
+            "polyfills": "apps/scrumspace/src/polyfills.ts",
+            "tsConfig": "apps/scrumspace/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/scrumspace/src/assets",
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }
+            ],
+            "styles": [
+              "apps/scrumspace/src/styles.scss",
+              {
+                "input": "apps\\scrumspace/src/theme/variables.scss"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/scrumspace/src/environments/environment.ts",
+                  "with": "apps/scrumspace/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "scrumspace:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "scrumspace:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "scrumspace:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/scrumspace/tsconfig.app.json",
+              "apps/scrumspace/tsconfig.spec.json",
+              "apps/scrumspace/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/scrumspace/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/scrumspace/src/test.ts",
+            "tsConfig": "apps/scrumspace/tsconfig.spec.json",
+            "karmaConfig": "apps/scrumspace/karma.conf.js",
+            "polyfills": "apps/scrumspace/src/polyfills.ts",
+            "styles": [],
+            "scripts": [],
+            "assets": []
+          }
+        },
+        "cap": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "--help"
+          }
+        },
+        "add": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "add",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "add ios"
+            },
+            "android": {
+              "cmd": "add android"
+            }
+          }
+        },
+        "copy": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "copy",
+            "packageInstall": false
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "copy ios"
+            },
+            "android": {
+              "cmd": "copy android"
+            }
+          }
+        },
+        "open": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "open",
+            "packageInstall": false
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "open ios"
+            },
+            "android": {
+              "cmd": "open android"
+            }
+          }
+        },
+        "sync": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "sync",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "sync ios"
+            },
+            "android": {
+              "cmd": "sync android"
+            }
+          }
+        },
+        "update": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "update",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "update ios"
+            },
+            "android": {
+              "cmd": "update android"
+            }
+          }
+        }
+      }
+    },
+    "scrumspace-e2e": {
+      "root": "apps/scrumspace-e2e",
+      "sourceRoot": "apps/scrumspace-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/scrumspace-e2e/cypress.json",
+            "tsConfig": "apps/scrumspace-e2e/tsconfig.e2e.json",
+            "devServerTarget": "scrumspace:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "scrumspace:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/scrumspace-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/scrumspace-e2e/**/*"]
+          }
+        }
+      }
     }
   }
 }

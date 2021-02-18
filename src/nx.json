@@ -54,6 +54,8 @@
     "datatug-services-project": { "tags": [] },
     "datatug-services-repo": { "tags": [] },
     "datatug-dto": { "tags": [] },
-    "grid": { "tags": [] }
+    "grid": { "tags": [] },
+    "scrumspace": { "tags": [] },
+    "scrumspace-e2e": { "tags": [], "implicitDependencies": ["scrumspace"] }
   }
 }
