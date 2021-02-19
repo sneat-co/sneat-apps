@@ -22,6 +22,8 @@ import {SneatAuthRoutingModule} from '../../../../libs/auth/src/lib/sneat-auth-r
 import {DatatugMenuSignedModule} from './datatug-menu-signed/datatug-menu-signed.module';
 import {DatatugMenuUnsignedModule} from './datatug-menu-unsigned/datatug-menu-unsigned.module';
 import {DatatugCoreModule} from '@sneat/datatug/core';
+import {DatatugServicesNavModule} from '@sneat/datatug/services/nav';
+import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
 
 @NgModule({
   declarations: [DatatugAppComponent],
@@ -43,6 +45,8 @@ import {DatatugCoreModule} from '@sneat/datatug/core';
     SneatAuthRoutingModule,
     DatatugMenuSignedModule,
     DatatugMenuUnsignedModule,
+    DatatugServicesNavModule,
+    DatatugServicesUnsortedModule,
   ],
   providers: [
     StatusBar,
