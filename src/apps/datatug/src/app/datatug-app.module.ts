@@ -21,6 +21,7 @@ import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule} from '@sneat/auth';
 import {SneatAuthRoutingModule} from '../../../../libs/auth/src/lib/sneat-auth-routing.module';
 import {DatatugMenuSignedModule} from './datatug-menu-signed/datatug-menu-signed.module';
 import {DatatugMenuUnsignedModule} from './datatug-menu-unsigned/datatug-menu-unsigned.module';
+import {DatatugCoreModule} from '@sneat/datatug/core';
 
 @NgModule({
   declarations: [DatatugAppComponent],
@@ -32,6 +33,7 @@ import {DatatugMenuUnsignedModule} from './datatug-menu-unsigned/datatug-menu-un
     // AngularFireAnalyticsModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    DatatugCoreModule,
     DatatugAppRoutingModule,
     CoreModule,
     SneatAppModule,

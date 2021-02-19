@@ -1,0 +1,17 @@
+<ion-segment [(ngModel)]="tab" *ngIf="level">
+	<ion-segment-button value="SQL">SQL</ion-segment-button>
+	<ion-segment-button value="grid">Grid</ion-segment-button>
+	<ion-segment-button value="card">Card</ion-segment-button>
+</ion-segment>
+<div class="ion-margin-top" [ngSwitch]="tab">
+	<datatug-sql [sql]="sql" *ngSwitchCase="'SQL'"></datatug-sql>
+	<datatug-grid-widget [style.display]="tab === 'grid' ? 'block' : 'none'"
+								[recordset]="recordset"
+								[hideColumns]="data?.hideColumns"
+	></datatug-grid-widget>
+	<ng-container *ngSwitchCase="'card'">
+		<p class="ion-padding">
+			Card to be implemented
+		</p>
+	</ng-container>
+</div>

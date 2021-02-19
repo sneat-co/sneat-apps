@@ -1,0 +1,28 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+			<ion-back-button defaultHref="/" routerLink="/"></ion-back-button>
+		</ion-buttons>
+		<ion-title>Repository @ {{repoId | async}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+	<ng-template #showError><datatug-error-card [error]="error"></datatug-error-card></ng-template>
+	<ion-card *ngIf="!error; else showError">
+		<ion-item *ngIf="!projects">
+			<ion-label color="medium">Loading...</ion-label>
+		</ion-item>
+		<ion-list *ngIf="projects">
+			<ion-item-divider>
+				<ion-label>Projects</ion-label>
+			</ion-item-divider>
+			<ion-item *ngFor="let project of projects" tappable (click)="go(project)">
+				<ion-label>
+					<h3>{{project.title}}</h3>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+</ion-content>

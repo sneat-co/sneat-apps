@@ -1670,6 +1670,281 @@
           }
         }
       }
+    },
+    "datatug-pages-unsorted": {
+      "projectType": "library",
+      "root": "libs/datatug/pages/unsorted",
+      "sourceRoot": "libs/datatug/pages/unsorted/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/pages/unsorted/src/**/*.ts",
+              "libs/datatug/pages/unsorted/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/pages/unsorted"],
+          "options": {
+            "jestConfig": "libs/datatug/pages/unsorted/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-components-sqleditor": {
+      "projectType": "library",
+      "root": "libs/datatug/components/sqleditor",
+      "sourceRoot": "libs/datatug/components/sqleditor/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/components/sqleditor/src/**/*.ts",
+              "libs/datatug/components/sqleditor/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/components/sqleditor"],
+          "options": {
+            "jestConfig": "libs/datatug/components/sqleditor/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-components-datagrid": {
+      "projectType": "library",
+      "root": "libs/datatug/components/datagrid",
+      "sourceRoot": "libs/datatug/components/datagrid/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/components/datagrid/src/**/*.ts",
+              "libs/datatug/components/datagrid/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/components/datagrid"],
+          "options": {
+            "jestConfig": "libs/datatug/components/datagrid/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-board": {
+      "projectType": "library",
+      "root": "libs/datatug/board",
+      "sourceRoot": "libs/datatug/board/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/board/src/**/*.ts",
+              "libs/datatug/board/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/board"],
+          "options": {
+            "jestConfig": "libs/datatug/board/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-components-parameters": {
+      "projectType": "library",
+      "root": "libs/datatug/components/parameters",
+      "sourceRoot": "libs/datatug/components/parameters/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/components/parameters/src/**/*.ts",
+              "libs/datatug/components/parameters/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/components/parameters"],
+          "options": {
+            "jestConfig": "libs/datatug/components/parameters/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-nav": {
+      "projectType": "library",
+      "root": "libs/datatug/nav",
+      "sourceRoot": "libs/datatug/nav/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/nav/src/**/*.ts",
+              "libs/datatug/nav/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/nav"],
+          "options": {
+            "jestConfig": "libs/datatug/nav/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-routes": {
+      "projectType": "library",
+      "root": "libs/datatug/routes",
+      "sourceRoot": "libs/datatug/routes/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/routes/src/**/*.ts",
+              "libs/datatug/routes/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/routes"],
+          "options": {
+            "jestConfig": "libs/datatug/routes/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-services-unsorted": {
+      "projectType": "library",
+      "root": "libs/datatug/services/unsorted",
+      "sourceRoot": "libs/datatug/services/unsorted/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/services/unsorted/src/**/*.ts",
+              "libs/datatug/services/unsorted/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/services/unsorted"],
+          "options": {
+            "jestConfig": "libs/datatug/services/unsorted/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-executor": {
+      "projectType": "library",
+      "root": "libs/datatug/executor",
+      "sourceRoot": "libs/datatug/executor/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/executor/src/**/*.ts",
+              "libs/datatug/executor/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/executor"],
+          "options": {
+            "jestConfig": "libs/datatug/executor/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-components-dbmeta": {
+      "projectType": "library",
+      "root": "libs/datatug/components/dbmeta",
+      "sourceRoot": "libs/datatug/components/dbmeta/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/components/dbmeta/src/**/*.ts",
+              "libs/datatug/components/dbmeta/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/components/dbmeta"],
+          "options": {
+            "jestConfig": "libs/datatug/components/dbmeta/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datatug-db": {
+      "projectType": "library",
+      "root": "libs/datatug/db",
+      "sourceRoot": "libs/datatug/db/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/db/src/**/*.ts",
+              "libs/datatug/db/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/db"],
+          "options": {
+            "jestConfig": "libs/datatug/db/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

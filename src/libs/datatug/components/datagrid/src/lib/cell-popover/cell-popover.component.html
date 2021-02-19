@@ -1,0 +1,43 @@
+<ion-card-header>
+	<ion-card-title>Field: {{column?.name}}</ion-card-title>
+	<ion-card-subtitle>Value: {{value}}</ion-card-subtitle>
+</ion-card-header>
+<h3 class="ion-margin">
+	References:
+	<a routerLink="{{fk.refTable.schema}}.{{fk.refTable.name}}">{{fk.refTable.schema}}.{{fk.refTable.name}}</a>
+</h3>
+<ion-segment [(ngModel)]="tab">
+	<ion-segment-button value="rec">
+		<ion-label>Record</ion-label>
+	</ion-segment-button>
+	<ion-segment-button value="cols">
+		<ion-label>Columns</ion-label>
+	</ion-segment-button>
+	<ion-segment-button value="refs">
+		<ion-label>References</ion-label>
+	</ion-segment-button>
+</ion-segment>
+<ion-list *ngIf="tab === 'rec'">
+	<ion-item>
+		<ion-label>Id</ion-label>
+		<ion-input type="number" style="text-align: right" value="1" readonly></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label>Code</ion-label>
+		<ion-input type="text" style="text-align: right" value="Something" readonly></ion-input>
+	</ion-item>
+</ion-list>
+<ion-list *ngIf="tab === 'cols'">
+	<ion-item>
+		<ion-label>Id</ion-label>
+		<ion-badge slot="end" color="light">
+			<ion-text color="medium">INT</ion-text>
+		</ion-badge>
+	</ion-item>
+	<ion-item>
+		<ion-label>Code</ion-label>
+		<ion-badge slot="end" color="light">
+			<ion-text color="medium">NVARCHAR</ion-text>
+		</ion-badge>
+	</ion-item>
+</ion-list>

@@ -1,0 +1,29 @@
+<ion-card>
+	<ion-item *ngIf="boarCardDef?.title">
+		<ion-label *ngIf="boarCardDef?.title">{{boarCardDef?.title}}</ion-label>
+		<ion-buttons slot="end" *ngIf="boarCardDef?.widget?.name === 'SQL'">
+			<ion-segment [ngModel]="boardCardTab.currentTab" (ionChange)="setTab($event)">
+				<ion-segment-button value="grid" title="Grid">
+					<!--					<ion-icon name="grid-outline"></ion-icon>-->
+					Grid
+				</ion-segment-button>
+<!--				<ion-segment-button value="card" title="Card">-->
+<!--					&lt;!&ndash;					<ion-icon name="clipboard-outline"></ion-icon>&ndash;&gt;-->
+<!--					Card-->
+<!--				</ion-segment-button>-->
+				<ion-segment-button value="SQL">
+					SQL
+				</ion-segment-button>
+			</ion-segment>
+			<ion-button color="medium">
+				<ion-icon name="settings-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<datatug-board-widget
+		[level]="0"
+		[cardTab]="boardCardTab.currentTab"
+		[widgetDef]="boarCardDef.widget"
+		[boardContext]="boardContext"
+	></datatug-board-widget>
+</ion-card>

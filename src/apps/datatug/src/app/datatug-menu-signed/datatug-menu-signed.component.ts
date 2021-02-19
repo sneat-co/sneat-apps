@@ -9,12 +9,12 @@ import {IProjectBase, IProjectSummary} from '@sneat/datatug/models';
 import {
   DatatugNavContextService,
   DatatugNavService,
-  IEnvDbTableContext,
   ProjectTopLevelPage
 } from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
 import {RepoService} from '@sneat/datatug/services/repo';
+import {IEnvDbTableContext} from '@sneat/datatug/nav';
 
 interface IProjectTopLevelPage {
   path: ProjectTopLevelPage | '';

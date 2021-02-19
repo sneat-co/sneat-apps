@@ -1,0 +1,41 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title>
+<!--			<ion-icon name="easel-outline" class="ion-padding-end"></ion-icon>-->
+			Boards
+		</ion-title>
+		<!--		<ion-segment value="boards">-->
+		<!--			<ion-segment-button value="boards">Databoards</ion-segment-button>-->
+		<!--		</ion-segment>-->
+
+		<ion-buttons slot="end">
+			<ion-button (click)="newBoard()">
+				<ion-icon color="primary" slot="start" name="add"></ion-icon>
+				<ion-label color="primary">New</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+	<datatug-card-list [isLoading]="!boards"
+							 [noItemsText]="noItemsText"
+							 [items]="boards"
+							 itemIcon="easel-outline"
+							 [tab]="tab"
+							 [tabs]="[{id: 'shared', title: 'shared'}, {id: 'favorite', title: 'Favorite'}]"
+							 (tabChanged)="tabChanged($event)"
+							 [isFilterable]="boards?.length > 7"
+							 [getRouterLink]="getLinkToBoard"
+							 (itemClick)="goBoard"
+	></datatug-card-list>
+
+	<ion-button class="ion-margin" (click)="newBoard()">
+		<ion-icon slot="start" name="add"></ion-icon>
+		<ion-label>New board</ion-label>
+	</ion-button>
+</ion-content>

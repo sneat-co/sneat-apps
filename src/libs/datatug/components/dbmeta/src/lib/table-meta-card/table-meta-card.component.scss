@@ -1,0 +1,11 @@
+// https://stackoverflow.com/a/39894493/1975086
+
+// Hide short text by default (resolution > 1200px)
+.short-text { display: none; }
+.full-text {}
+
+// When resolution <= 1200px, hide full text and show short text
+@media (max-width: 1200px) {
+  .short-text { display: inline-block; }
+  .full-text { display: none; }
+}

@@ -61,6 +61,17 @@
     "issuenumberone-e2e": {
       "tags": [],
       "implicitDependencies": ["issuenumberone"]
-    }
+    },
+    "datatug-pages-unsorted": { "tags": [] },
+    "datatug-components-sqleditor": { "tags": [] },
+    "datatug-components-datagrid": { "tags": [] },
+    "datatug-board": { "tags": [] },
+    "datatug-components-parameters": { "tags": [] },
+    "datatug-nav": { "tags": [] },
+    "datatug-routes": { "tags": [] },
+    "datatug-services-unsorted": { "tags": [] },
+    "datatug-executor": { "tags": [] },
+    "datatug-components-dbmeta": { "tags": [] },
+    "datatug-db": { "tags": [] }
   }
 }

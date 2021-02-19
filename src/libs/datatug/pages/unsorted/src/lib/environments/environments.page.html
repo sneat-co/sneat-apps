@@ -1,0 +1,24 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title>
+			Environments
+			<ng-container *ngIf="project">{{project.title || project.id}}</ng-container>
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+	<ion-card>
+		<ion-item>
+			<ion-label>Project</ion-label>
+			<ion-input readonly color="medium" [value]="project?.title"></ion-input>
+		</ion-item>
+	</ion-card>
+
+	<datatug-card-list title="Environments" [isLoading]="!project" [items]="project?.environments"
+	></datatug-card-list>
+</ion-content>

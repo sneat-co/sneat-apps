@@ -55,7 +55,10 @@ export class SneatCardListComponent {
 		this.mode = 'add';
 		setTimeout(() => {
 			console.log(this.addInput);
-			this.addInput.setFocus().catch(err => this.errorLogger.logError(err, 'Failed to set focus'));
+			this.addInput
+        // @ts-ignore TS2339: Property 'setFocus' does not exist on type 'IonInput'.
+        .setFocus()
+        .catch(err => this.errorLogger.logError(err, 'Failed to set focus'));
 		}, 200);
 	}
 

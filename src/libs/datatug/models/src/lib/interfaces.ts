@@ -5,7 +5,7 @@ import {Timestamp} from '@firebase/firestore';
 
 export type RecordState = 'creating' | 'changed' | 'updating' | 'deleting';
 
-export interface IRecord<T> {
+export interface IRecord<T> { // TODO: duplicate name
   id: string;
   state?: RecordState;
   data?: T;

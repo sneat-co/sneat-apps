@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {SNEAT_AUTH_GUARDS} from '@sneat/auth';
+import {DatatugRoutingModule} from '@sneat/datatug/routes';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    DatatugRoutingModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule],

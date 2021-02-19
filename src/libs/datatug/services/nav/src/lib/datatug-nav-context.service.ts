@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} from 'rxjs/operators';
-import {IDatatugNavContext, IDatatugProjectContext, IEnvContext, IEnvDbContext, IEnvDbTableContext} from './nav-models';
+import {IDatatugNavContext, IDatatugProjectContext, IEnvContext, IEnvDbContext, IEnvDbTableContext} from '../../../../nav/src/lib/nav-models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
 import {DataTugProjStoreType} from '@sneat/datatug/models';
@@ -33,7 +33,7 @@ export class DatatugNavContextService {
   private readonly $currentEnv = new BehaviorSubject<IEnvContext>(undefined);
   public readonly currentEnv = this.$currentEnv.asObservable().pipe(
     distinctUntilChanged((x, y) => !x && !y || x?.id === y?.id),
-    tap(v => console.log('DataTugNavContextService => currentEnv changed:', v?.id)),
+    tap(v => console.log('DatatugNavContextService => currentEnv changed:', v?.id)),
   );
 
   private readonly $currentEnvDb = new BehaviorSubject<IEnvDbContext | undefined>(undefined);
@@ -51,7 +51,7 @@ export class DatatugNavContextService {
     private readonly projectService: ProjectService,
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
   ) {
-    console.log('DataTugNavContextService.constructor()');
+    console.log('DatatugNavContextService.constructor()');
     this.currentProject.subscribe(p => {
       const target = projectContextService.current;
       if (target?.projectId !== p?.brief?.id || target?.repoId !== p?.repoId) {
@@ -75,7 +75,7 @@ export class DatatugNavContextService {
         if (this.navEndSubscription) {
           return;
         }
-        console.log('DataTugNavContextService.constructor() => app:', app.appCode);
+        console.log('DatatugNavContextService.constructor() => app:', app.appCode);
         this.navEndSubscription = this.router.events
           .pipe(
             filter(val => val instanceof NavigationEnd),
@@ -84,7 +84,7 @@ export class DatatugNavContextService {
           )
           .subscribe({
               next: val => {
-                console.log('DataTugNavContextService.constructor() => NavigationEnd:', val);
+                console.log('DatatugNavContextService.constructor() => NavigationEnd:', val);
                 this.processUrl(val.urlAfterRedirects);
               },
               error: err => this.errorLogger.logError(err, 'Failed to process router event')
@@ -94,7 +94,7 @@ export class DatatugNavContextService {
   }
 
   public setCurrentProject(projectContext?: IDatatugProjectContext): void {
-    console.log('DataTugNavContextService.setCurrentProject()', projectContext);
+    console.log('DatatugNavContextService.setCurrentProject()', projectContext);
     if (projectContext?.summary && !projectContext.summary.id) {
       this.errorLogger.logError(new Error('attempt to set current project with no ID'));
       return;
@@ -134,7 +134,7 @@ export class DatatugNavContextService {
   }
 
   public setCurrentEnvironment(id: string): void {
-    console.log('DataTugNavContextService.setCurrentEnvironment()', id);
+    console.log('DatatugNavContextService.setCurrentEnvironment()', id);
     //if (this.$currentEnv.value?.id !== id) {
     const env = {id};
     this.$currentEnv.next(env);
@@ -142,7 +142,7 @@ export class DatatugNavContextService {
   }
 
   private processUrl(url: string): void {
-    console.log('DataTugNavContextService: NavigationEnd =>', url);
+    console.log('DatatugNavContextService: NavigationEnd =>', url);
     try {
       this.processRepo(url);
       this.processProject(url);

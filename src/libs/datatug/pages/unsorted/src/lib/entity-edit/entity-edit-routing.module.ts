@@ -1,0 +1,18 @@
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+
+import {EntityEditPage} from './entity-edit.page';
+
+const routes: Routes = [
+	{
+		path: '',
+		component: EntityEditPage
+	}
+];
+
+@NgModule({
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule],
+})
+export class EntityEditPageRoutingModule {
+}

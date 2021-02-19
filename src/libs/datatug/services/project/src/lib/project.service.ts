@@ -3,7 +3,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {EMPTY, Observable, throwError} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {getRepoUrl} from '@sneat/datatug/services/nav';
+import {getRepoUrl} from '@sneat/datatug/nav';
 import {GITHUB_REPO, IProjectContext} from '@sneat/datatug/core';
 import {IProjectFull, IProjectSummary} from '@sneat/datatug/models';
 

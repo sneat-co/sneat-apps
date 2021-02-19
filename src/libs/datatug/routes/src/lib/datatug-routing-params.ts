@@ -1,0 +1,10 @@
+export const routingParamRepoId = 'repoId';
+export const routingParamProjectId = 'projectId';
+export const routingParamTableId = 'tableId';
+export const routingParamDbId = 'dbId';
+export const routingParamDbModelId = 'dbModelId';
+export const routingParamDbServerId = 'dbServerId';
+export const routingParamDbDriver = 'dbDriver';
+export const routingParamEntityId = 'entityId';
+export const routingParamEnvironmentId = 'environmentId';
+export const routingParamBoard = 'board';

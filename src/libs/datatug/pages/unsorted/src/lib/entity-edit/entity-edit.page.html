@@ -1,0 +1,63 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+			<ion-back-button [defaultHref]="backUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="mode === 'new'">
+			New entity
+			<span *ngIf="currentProject?.brief">@ {{currentProject.brief.title || currentProject.brief.id}}</span>
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+	<ion-card>
+		<ion-item>
+			<ion-label position="floating">Name</ion-label>
+			<ion-input #nameInput autofocus="autofocus" [(ngModel)]="entity.title"></ion-input>
+		</ion-item>
+	</ion-card>
+
+	<ion-card>
+		<ion-list class="last-child-no-border">
+			<ion-item>
+				<ion-label color="medium">Properties</ion-label>
+				<ion-buttons slot="end">
+					<ion-button (click)="addProperty($event)">
+						<ion-icon name="add" slot="start"></ion-icon>
+						<ion-label>Add</ion-label>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			<ion-item *ngIf="entity && !entity.fields?.length">
+				<ion-label color="medium">No properties defined yet</ion-label>
+			</ion-item>
+			<ng-container *ngIf="entity">
+				<ion-item *ngFor="let field of entity.fields" tappable>
+					<ion-label>
+						{{field.id}}
+						<p *ngIf="field.namePattern">Name pattern: {{field.namePattern|json}}</p>
+					</ion-label>
+					<ion-badge color="light" style="font-weight: normal">
+						<ion-text color="medium">{{field.type}}</ion-text>
+					</ion-badge>
+					<ion-buttons slot="end">
+						<ion-button (click)="deleteField(field.id)">
+							<ion-icon name="close" color="medium"></ion-icon>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ng-container>
+		</ion-list>
+	</ion-card>
+
+	<ion-button *ngIf="mode === 'new'" class="ion-margin" (click)="createEntity()">
+		<ion-label>Create entity</ion-label>
+	</ion-button>
+	<ion-button *ngIf="mode === 'edit'" class="ion-margin" (click)="saveEntityChanges()">
+		<ion-label>Save changes</ion-label>
+	</ion-button>
+
+	<datatug-error-card *ngIf="error"></datatug-error-card>
+</ion-content>

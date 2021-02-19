@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {getRepoUrl} from '@sneat/datatug/services/nav';
+import {getRepoUrl} from '@sneat/datatug/nav';
 
 @Injectable()
 export class RepoProviderService {

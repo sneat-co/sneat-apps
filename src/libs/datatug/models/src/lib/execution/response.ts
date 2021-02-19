@@ -1,5 +1,6 @@
 import {Observable} from 'rxjs';
-import {IRecordset} from '../definition/recordset';
+import {IRecordsetDefinition} from '../definition/recordset';
+import {IRecordset} from '@sneat/datatug/dto';
 
 export interface ICommandResponse {
 	readonly commandId: string;
@@ -25,7 +26,7 @@ export interface ICommandHttpResponse extends ICommandResponseItem {
 
 export interface ICommandResponseWithRecordsets extends ICommandResponseItem {
 	type: 'recordsets';
-	value: IRecordset[];
+	value: IRecordsetDefinition[];
 }
 
 export interface ICommandResponseWithRecordset extends ICommandResponseItem {

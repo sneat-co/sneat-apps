@@ -164,6 +164,72 @@
       ],
       "@sneat/grid/*": [
         "libs/grid/src/index.ts"
+      ],
+      "@sneat/datatug/pages/unsorted": [
+        "libs/datatug/pages/unsorted/src/index.ts"
+      ],
+      "@sneat/datatug/pages/unsorted/*": [
+        "libs/datatug/pages/unsorted/src/index.ts"
+      ],
+      "@sneat/datatug/components/sqleditor": [
+        "libs/datatug/components/sqleditor/src/index.ts"
+      ],
+      "@sneat/datatug/components/sqleditor/*": [
+        "libs/datatug/components/sqleditor/src/index.ts"
+      ],
+      "@sneat/datatug/components/datagrid": [
+        "libs/datatug/components/datagrid/src/index.ts"
+      ],
+      "@sneat/datatug/components/datagrid/*": [
+        "libs/datatug/components/datagrid/src/index.ts"
+      ],
+      "@sneat/datatug/board": [
+        "libs/datatug/board/src/index.ts"
+      ],
+      "@sneat/datatug/board/*": [
+        "libs/datatug/board/src/index.ts"
+      ],
+      "@sneat/datatug/components/parameters": [
+        "libs/datatug/components/parameters/src/index.ts"
+      ],
+      "@sneat/datatug/components/parameters/*": [
+        "libs/datatug/components/parameters/src/index.ts"
+      ],
+      "@sneat/datatug/nav": [
+        "libs/datatug/nav/src/index.ts"
+      ],
+      "@sneat/datatug/nav/*": [
+        "libs/datatug/nav/src/index.ts"
+      ],
+      "@sneat/datatug/routes": [
+        "libs/datatug/routes/src/index.ts"
+      ],
+      "@sneat/datatug/routes/*": [
+        "libs/datatug/routes/src/index.ts"
+      ],
+      "@sneat/datatug/services/unsorted": [
+        "libs/datatug/services/unsorted/src/index.ts"
+      ],
+      "@sneat/datatug/services/unsorted/*": [
+        "libs/datatug/services/unsorted/src/index.ts"
+      ],
+      "@sneat/datatug/executor": [
+        "libs/datatug/executor/src/index.ts"
+      ],
+      "@sneat/datatug/executor/*": [
+        "libs/datatug/executor/src/index.ts"
+      ],
+      "@sneat/datatug/components/dbmeta": [
+        "libs/datatug/components/dbmeta/src/index.ts"
+      ],
+      "@sneat/datatug/components/dbmeta/*": [
+        "libs/datatug/components/dbmeta/src/index.ts"
+      ],
+      "@sneat/datatug/db": [
+        "libs/datatug/db/src/index.ts"
+      ],
+      "@sneat/datatug/db/*": [
+        "libs/datatug/db/src/index.ts"
       ]
     }
   },

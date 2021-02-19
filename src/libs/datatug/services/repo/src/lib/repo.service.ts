@@ -3,9 +3,9 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {shareReplay} from 'rxjs/operators';
 import {IExecuteRequest, IProjectBase} from '@sneat/datatug/models';
-import {getRepoUrl} from '@sneat/datatug/services/nav';
+import {getRepoUrl} from '@sneat/datatug/nav';
 import {IExecuteResponse, IRecordset, ISelectRequest} from '@sneat/datatug/dto';
-import {IGridColumn, IGridDef} from '../../../../../grid/src/lib/grid-models';
+import {IGridColumn, IGridDef} from '@sneat/grid';
 
 @Injectable()
 export class RepoService {
