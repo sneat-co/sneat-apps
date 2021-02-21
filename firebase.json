@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "src/dist/apps/datatug",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/pwa/**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
