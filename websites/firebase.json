@@ -14,6 +14,36 @@
           "destination": "/pwa/index.html"
         }
       ]
+    },
+    {
+      "target": "issuenumberone",
+      "public": "issuenumberone",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/pwa/**",
+          "destination": "/pwa/index.html"
+        }
+      ]
+    },
+    {
+      "target": "scrumspace",
+      "public": "scrumspace",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/pwa/**",
+          "destination": "/pwa/index.html"
+        }
+      ]
     }
   ]
 }

@@ -8,7 +8,7 @@ import {Coordinator} from '@sneat/datatug/executor';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IExecuteResponse, IRecordset} from '@sneat/datatug/dto';
-import {RandomId} from '../../../../../../random/src/lib/auto-id';
+import {RandomId} from '../../../../../random/src/lib/auto-id';
 
 interface IEnvState {
 	id: string;

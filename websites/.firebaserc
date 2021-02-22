@@ -7,6 +7,12 @@
       "hosting": {
         "datatug": [
           "datatug"
+        ],
+        "issuenumberone": [
+          "issuenumberone"
+        ],
+        "scrumspace": [
+          "scrumspace"
         ]
       }
     }

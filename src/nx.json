@@ -72,6 +72,7 @@
     "datatug-services-unsorted": { "tags": [] },
     "datatug-executor": { "tags": [] },
     "datatug-components-dbmeta": { "tags": [] },
-    "datatug-db": { "tags": [] }
+    "datatug-db": { "tags": [] },
+    "datatug-queries": { "tags": [] }
   }
 }

@@ -37,5 +37,6 @@ module.exports = {
     '<rootDir>/libs/datatug/executor',
     '<rootDir>/libs/datatug/components/dbmeta',
     '<rootDir>/libs/datatug/db',
+    '<rootDir>/libs/datatug/queries',
   ],
 };
