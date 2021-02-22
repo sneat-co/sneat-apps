@@ -1,8 +1,8 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "datatug",
+  "appId": "team.sneat.datatug",
+  "appName": "DataTug",
   "bundledWebRuntime": false,
-  "npmClient": "npm",
+  "npmClient": "pnpm",
   "webDir": "../../dist/apps/datatug",
   "plugins": {
     "SplashScreen": {

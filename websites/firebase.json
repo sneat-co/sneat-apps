@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "datatug",
+      "public": "datatug",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/pwa/**",
+          "destination": "/pwa/index.html"
+        }
+      ]
+    }
+  ]
+}

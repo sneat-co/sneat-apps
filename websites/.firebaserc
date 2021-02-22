@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "sneat-team"
+  },
+  "targets": {
+    "sneat-team": {
+      "hosting": {
+        "datatug": [
+          "datatug"
+        ]
+      }
+    }
+  }
+}
