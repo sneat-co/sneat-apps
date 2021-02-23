@@ -44,6 +44,21 @@
           "destination": "/pwa/index.html"
         }
       ]
+    },
+    {
+      "target": "sneatteam",
+      "public": "sneatteam",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/pwa/**",
+          "destination": "/pwa/index.html"
+        }
+      ]
     }
   ]
 }
