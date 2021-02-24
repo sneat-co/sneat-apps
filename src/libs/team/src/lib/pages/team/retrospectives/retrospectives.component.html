@@ -1,0 +1,26 @@
+<ion-card>
+	<ion-item-divider>
+		<ion-label color="dark"><b>Retrospectives</b></ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="primary" (click)="navService.navigateToRetroTree('today', team)">Tree</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-item tappable (click)="navigateToCurrentRetro()" [disabled]="!team?.data">
+		<ion-label
+			color="primary">{{team?.data?.active?.retrospective ? 'Active retrospective' : 'Upcoming retrospective'}}</ion-label>
+		<ion-buttons slot="end" *ngIf="team?.data?.upcomingRetro">
+			<ion-button color="success">{{retroCount('good')}}</ion-button>
+			<ion-button color="danger">{{retroCount('bad')}}</ion-button>
+			<ion-button color="primary">{{retroCount('idea')}}</ion-button>
+			<ion-button color="tertiary">{{retroCount('endorsement')}}</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item disabled>
+		<ion-label class="ion-text-wrap">
+			<b>Last completed</b> retrospective
+			<ion-text class="ion-margin-start" style="font-style: italic">
+				(no records yet - will be available after the 1st completed retrospective)
+			</ion-text>
+		</ion-label>
+	</ion-item>
+</ion-card>

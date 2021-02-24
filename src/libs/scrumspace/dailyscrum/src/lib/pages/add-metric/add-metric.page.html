@@ -1,0 +1,90 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-back-button slot="start" defaultHref="/teams"></ion-back-button>
+		<ion-title>
+			Add metric
+			<ng-container *ngIf="team">@ {{team.title}}</ng-container>
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-list>
+		<ion-radio-group name="mode" [(ngModel)]="mode">
+			<ion-item>
+				<ion-radio name="mode" value="personal" slot="start"></ion-radio>
+				<ion-label>
+					<b *ngIf="mode === 'personal'">Personal</b> <!-- TODO: should be a better way to set style -->
+					<ng-container *ngIf="mode !== 'personal'">Personal</ng-container>
+					<i style="margin-left: 1em">(everyone fill their own value)</i>
+				</ion-label>
+			</ion-item>
+			<ion-item>
+				<ion-radio name="mode" value="team" slot="start"></ion-radio>
+				<ion-label>
+					<b *ngIf="mode === 'team'">Team</b> <!-- TODO: should be a better way to set style -->
+					<ng-container *ngIf="mode !== 'team'">Team</ng-container>
+					<i style="margin-left: 1em">(anyone can enter shared value)</i>
+				</ion-label>
+			</ion-item>
+		</ion-radio-group>
+		<ion-item>
+			<ion-label color="medium">Title</ion-label>
+			<ion-input [(ngModel)]="title"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-segment [(ngModel)]="type">
+				<ion-segment-button value="bool">Boolean (yes/no)</ion-segment-button>
+				<ion-segment-button value="int">Number (int)</ion-segment-button>
+			</ion-segment>
+		</ion-item>
+		<ion-grid *ngIf="type === 'bool'">
+			<ion-row>
+				<ion-col size="6">
+					<ion-item>
+						<ion-label color="medium"><b>TRUE</b> label / color</ion-label>
+						<ion-input [(ngModel)]="trueLabel" [color]="trueColor"></ion-input>
+						<ion-select [(ngModel)]="trueColor" interface="popover">
+							<ion-select-option value="primary">Primary</ion-select-option>
+							<ion-select-option value="secondary">Secondary</ion-select-option>
+							<ion-select-option value="tertiary">Tertiary</ion-select-option>
+							<ion-select-option value="warning">Warning</ion-select-option>
+							<ion-select-option value="success">Success</ion-select-option>
+							<ion-select-option value="danger">Danger</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				<ion-col size="6">
+					<ion-item>
+						<ion-label color="medium"><b>FALSE</b> label / color</ion-label>
+						<ion-input [(ngModel)]="falseLabel" [color]="falseColor"></ion-input>
+						<ion-select [(ngModel)]="falseColor" interface="popover">
+							<ion-select-option value="primary">Primary</ion-select-option>
+							<ion-select-option value="secondary">Secondary</ion-select-option>
+							<ion-select-option value="tertiary">Tertiary</ion-select-option>
+							<ion-select-option value="warning">Warning</ion-select-option>
+							<ion-select-option value="success">Success</ion-select-option>
+							<ion-select-option value="danger">Danger</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+		<ng-container *ngIf="type === 'int'">
+			<ion-item>
+				<ion-label>Min</ion-label>
+				<ion-input type="number" [(ngModel)]="min"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Max</ion-label>
+				<ion-input type="number" [(ngModel)]="max"></ion-input>
+			</ion-item>
+		</ng-container>
+		<ion-item>
+			<ion-toggle slot="start"></ion-toggle>
+			<ion-label>Is required to fill</ion-label>
+			<ion-button size="medium" slot="end" (click)="submit()">Create metric</ion-button>
+		</ion-item>
+	</ion-list>
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-card *ngIf="treeNode" [class.dragging]="treeNode.isDragging" [color]="treeNode.childrenCount && 'light'">
+	<ion-item tappable [color]="treeNode.isDragging || isHovered ? 'medium' : item?.children?.length && 'light'"
+				 [class.expandable]="isExpandable" (click)="toggle()">
+		<ion-buttons slot="start" *ngIf="isExpandable" style="margin-right: 0">
+			<ion-button (click)="toggle($event)" color="medium">
+				<ion-icon
+					[name]="treeNode?.isExpanded ? 'chevron-down-circle-outline' : 'chevron-forward-circle-outline'"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-label>
+			<!--			<i>{{num}}</i>:-->
+			{{item?.title}}
+			<i *ngIf="!treeNode?.isExpanded && treeNode.childrenCount"><ion-text color="medium">({{treeNode.childrenCount}})</ion-text></i>
+			<span style="color: #86888f">
+				(lev: {{treeNode.level}}, i: {{treeNode.index}},
+				<ng-container *ngIf="treeNode.level === 1">expanded: {{treeNode.isExpanded}},</ng-container>
+			<ng-container *ngIf="treeNode.hasChildren !== undefined">hasChildren: {{treeNode.hasChildren}},</ng-container>
+			<ng-container *ngIf="treeNode.childrenCount">childrenCount: {{treeNode.childrenCount}}</ng-container>
+			<i style="margin-left: 2em" *ngIf="isExpandable && !treeNode.isExpanded && treeNode.children?.length">
+				<ion-text color="medium">{{treeNode.children.length}} sub items</ion-text>
+			</i>
+				)
+			</span>
+			<b *ngIf="treeNode.isDragging" style="margin-left: 1em">dragging</b>
+			<b *ngIf="isHovered" style="margin-left: 1em">hovered</b>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button *ngIf="treeNode.level === 1"
+							[color]="isLiked ? 'primary' : 'medium'"
+							(click)="like($event)"
+			>
+				<ion-label *ngIf="item?.likedUserIds?.length">{{item.likedUserIds.length}}</ion-label>
+				<ion-icon name="thumbs-up-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<angular-dnd-tree-list *ngIf="treeNode.children?.length && treeNode.isExpanded" [parentNode]="treeNode"></angular-dnd-tree-list>
+</ion-card>
+<!--<ion-item *ngIf="treeNode.level == 2" tappable [color]="treeNode.isDragging || isHovered ? 'medium' : item?.children?.length && 'light'"-->
+<!--			 [class.expandable]="isExpandable" (click)="toggle()">-->
+<!--	<ion-buttons slot="start" *ngIf="isExpandable" style="margin-right: 0">-->
+<!--		<ion-button (click)="toggle($event)" color="medium">-->
+<!--			<ion-icon-->
+<!--				[name]="treeNode.isExpanded ? 'chevron-down-circle-outline' : 'chevron-forward-circle-outline'"></ion-icon>-->
+<!--		</ion-button>-->
+<!--	</ion-buttons>-->
+<!--	<ion-label>-->
+<!--		&lt;!&ndash;			<i>{{num}}</i>:&ndash;&gt;-->
+<!--		{{item?.title}}-->
+<!--		&lt;!&ndash;			<span style="color: #86888f">&ndash;&gt;-->
+<!--		&lt;!&ndash;				(lev: {{treeNode.level}}, i: {{treeNode.index}},&ndash;&gt;-->
+<!--		&lt;!&ndash;				<ng-container *ngIf="treeNode.level === 1">expanded: {{treeNode.isExpanded}},</ng-container>&ndash;&gt;-->
+<!--		&lt;!&ndash;			<ng-container *ngIf="treeNode.hasChildren !== undefined">hasChildren: {{treeNode.hasChildren}},</ng-container>&ndash;&gt;-->
+<!--		&lt;!&ndash;			<ng-container *ngIf="treeNode.childrenCount">childrenCount: {{treeNode.childrenCount}}</ng-container>&ndash;&gt;-->
+<!--		&lt;!&ndash;			<i style="margin-left: 2em" *ngIf="isExpandable && !treeNode.isExpanded && treeNode.children?.length">&ndash;&gt;-->
+<!--		&lt;!&ndash;				<ion-text color="medium">{{treeNode.children.length}} sub items</ion-text>&ndash;&gt;-->
+<!--		&lt;!&ndash;			</i>&ndash;&gt;-->
+<!--		&lt;!&ndash;				)&ndash;&gt;-->
+<!--		&lt;!&ndash;			</span>&ndash;&gt;-->
+<!--		<b *ngIf="treeNode.isDragging" style="margin-left: 1em">dragging</b>-->
+<!--		<b *ngIf="isHovered" style="margin-left: 1em">hovered</b>-->
+<!--	</ion-label>-->
+<!--	<ion-buttons slot="end">-->
+<!--		<ion-button *ngIf="treeNode.level === 1"-->
+<!--						[color]="isLiked ? 'primary' : 'medium'"-->
+<!--						(click)="like($event)"-->
+<!--		>-->
+<!--			<ion-label *ngIf="item?.likedUserIds?.length">{{item.likedUserIds.length}}</ion-label>-->
+<!--			<ion-icon name="thumbs-up-outline"></ion-icon>-->
+<!--		</ion-button>-->
+<!--	</ion-buttons>-->
+<!--</ion-item>-->

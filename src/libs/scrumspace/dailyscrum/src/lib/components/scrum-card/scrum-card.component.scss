@@ -1,0 +1,20 @@
+h3 {font-weight: bold}
+
+ion-segment-button.narrow {
+	--padding-start: 0;
+	--margin-start: 0;
+	--padding-end: 0;
+	--margin-end: 0;
+	--border-color: red;
+}
+
+ion-buttons.counters {
+	ion-button {
+		--padding-start: 0;
+		--margin-start: 0;
+		text-transform: none;
+		ion-badge {
+			margin-right: 0.25em;
+		}
+	}
+}

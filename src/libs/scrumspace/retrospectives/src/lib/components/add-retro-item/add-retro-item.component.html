@@ -1,0 +1,15 @@
+<ion-item [disabled]="!meetingId || !teamId || !retroItemType">
+	<ion-input
+		[disabled]="isAdding"
+		[formControl]="titleControl"
+		expand="full"
+		fill="clear"
+		color="medium"
+		placeholder="New item"
+		(keyup.enter)="add()">
+	</ion-input>
+	<ion-buttons slot="end" style="margin-right: -0.8em">
+		<ion-button color="medium" (click)="add()" [disabled]="isAdding">Add</ion-button>
+		<!--						<ion-button color="medium"><ion-icon name="close"></ion-icon></ion-button>-->
+	</ion-buttons>
+</ion-item>

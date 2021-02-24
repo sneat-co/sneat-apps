@@ -1,0 +1,36 @@
+<ion-card>
+	<ion-item-divider (click)="goScrums()" tappable>
+		<ion-label color="dark">
+			<b>Scrums</b>
+			<ion-text color="medium" style="font-style: italic" class="ion-margin-start">(e.g. daily stand-ups)
+			</ion-text>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="goScrums($event)" title="Scrums history">
+				<ion-icon name="list-outline" slot="start"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-item tappable (click)="goScrum('today', 'my')">
+		<ion-label class="ion-text-wrap">
+			<ion-text color="tertiary" style="font-weight: bold">Today</ion-text>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="danger" *ngIf="todayScrum?.risksCount"
+							title="Risks or blockers">{{todayScrum.risksCount}}</ion-button>
+			<ion-button color="primary" *ngIf="todayScrum?.questionsCount"
+							title="Questions">{{todayScrum.questionsCount}}</ion-button>
+			<ion-button size="medium" fill="solid" color="primary" (click)="goScrum('today', 'my', $event)">
+				Add your update
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item [disabled]="!prevScrumId" detail tappable (click)="goScrum(prevScrumId, 'team')">
+		<ion-label class="ion-text-wrap">
+			<b>Previous</b>
+			<ion-text class="ion-margin-start" *ngIf="!prevScrumId" style="font-style: italic">
+				(no records yet - will be available on next day after the 1st recorded stand-up)
+			</ion-text>
+		</ion-label>
+	</ion-item>
+</ion-card>

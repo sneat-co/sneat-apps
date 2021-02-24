@@ -1,10 +1,14 @@
 import {Inject, Injectable, NgZone} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {IMemberInfo, IRecord, IRetrospective, IScrum, ITeam, IUserTeamInfoWithId} from '@sneat/datatug/models';
 import {Params} from '@angular/router';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
+import {IMemberInfo, ITeam} from '@sneat/team';
+import {IUserTeamInfoWithId} from '@sneat/auth-models';
+import {IRetrospective} from '@sneat/scrumspace/retrospectives';
+import {IRecord} from '@sneat/data';
+import {IScrum} from '@sneat/scrumspace/scrummodels';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 

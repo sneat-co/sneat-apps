@@ -3,7 +3,7 @@ import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {CreateNamedRequest} from '@sneat/datatug/dto';
-import {IRecord} from '@sneat/datatug/models';
+import {IRecord} from '@sneat/data';
 
 const userIsNotAuthenticatedNoFirebaseToken = 'User is not authenticated yet - no Firebase ID token';
 

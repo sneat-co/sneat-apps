@@ -1970,6 +1970,156 @@
           }
         }
       }
+    },
+    "scrumspace-dailyscrum": {
+      "projectType": "library",
+      "root": "libs/scrumspace/dailyscrum",
+      "sourceRoot": "libs/scrumspace/dailyscrum/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/scrumspace/dailyscrum/src/**/*.ts",
+              "libs/scrumspace/dailyscrum/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/scrumspace/dailyscrum"],
+          "options": {
+            "jestConfig": "libs/scrumspace/dailyscrum/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "scrumspace-retrospectives": {
+      "projectType": "library",
+      "root": "libs/scrumspace/retrospectives",
+      "sourceRoot": "libs/scrumspace/retrospectives/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/scrumspace/retrospectives/src/**/*.ts",
+              "libs/scrumspace/retrospectives/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/scrumspace/retrospectives"],
+          "options": {
+            "jestConfig": "libs/scrumspace/retrospectives/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "timer": {
+      "projectType": "library",
+      "root": "libs/timer",
+      "sourceRoot": "libs/timer/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/timer/src/**/*.ts",
+              "libs/timer/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/timer"],
+          "options": {
+            "jestConfig": "libs/timer/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "meeting": {
+      "projectType": "library",
+      "root": "libs/meeting",
+      "sourceRoot": "libs/meeting/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/meeting/src/**/*.ts",
+              "libs/meeting/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/meeting"],
+          "options": {
+            "jestConfig": "libs/meeting/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "team": {
+      "projectType": "library",
+      "root": "libs/team",
+      "sourceRoot": "libs/team/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/team/src/**/*.ts",
+              "libs/team/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/team"],
+          "options": {
+            "jestConfig": "libs/team/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "scrumspace-scrummodels": {
+      "projectType": "library",
+      "root": "libs/scrumspace/scrummodels",
+      "sourceRoot": "libs/scrumspace/scrummodels/src",
+      "prefix": "sneat",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/scrumspace/scrummodels/src/**/*.ts",
+              "libs/scrumspace/scrummodels/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/scrumspace/scrummodels"],
+          "options": {
+            "jestConfig": "libs/scrumspace/scrummodels/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

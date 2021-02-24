@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {IEntity, IRecord} from '@sneat/datatug/models';
 import {GITHUB_REPO, IProjectContext} from '@sneat/datatug/core';
 import {ProjectItemsByAgent} from './caching';
 import {RepoProviderService} from '@sneat/datatug/services/repo';
+import {IRecord} from '@sneat/data';
+import {IEntity} from '@sneat/datatug/models';
 
 @Injectable()
 export class EntityService {

@@ -1,0 +1,56 @@
+<h2 class="ion-padding">Others</h2>
+<ion-card>
+	<ion-segment [(ngModel)]="membersTab">
+		<ion-segment-button value="participants">
+			<ion-label>Participants
+				<ion-badge *ngIf="retrospective?.data" color="light">
+					<ion-text color="medium">{{participants?.length || 0}}</ion-text>
+				</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="spectators">
+			<ion-label>Spectators
+				<ion-badge *ngIf="retrospective?.data" color="light">
+					<ion-text color="medium">{{spectators?.length || 0}}</ion-text>
+				</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="absent">
+			<ion-label>Absent
+				<ion-badge *ngIf="retrospective?.data" color="light">
+					<ion-text color="medium">{{absents?.length || 0}}</ion-text>
+				</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+
+	<ion-list *ngIf="membersTab === 'participants' && retrospective?.data">
+		<ion-item *ngIf="!participants?.length; else membersList" disabled="true">
+			<ion-label>No participants yet</ion-label>
+		</ion-item>
+		<ng-template #membersList>
+			<ion-item *ngFor="let member of participants; trackBy: id">
+				<ion-label>{{member.title}}</ion-label>
+				<ion-badge color="danger" slot="end">2 risks</ion-badge>
+			</ion-item>
+		</ng-template>
+	</ion-list>
+
+	<ion-list *ngIf="membersTab === 'spectators' && retrospective?.data">
+		<ion-item *ngIf="!spectators?.length; else membersList" disabled="true">
+			<ion-label>No spectators yet</ion-label>
+		</ion-item>
+		<ng-template #membersList>
+			<ion-item *ngFor="let member of spectators; trackBy: id">
+				<ion-label>{{member.title}}</ion-label>
+			</ion-item>
+		</ng-template>
+	</ion-list>
+
+	<ion-card-content *ngIf="membersTab !== 'absent'">
+		<ion-button color="tertiary">
+			<ion-icon name="pricetags-outline" slot="start"></ion-icon>
+			<ion-label>Get invite link</ion-label>
+		</ion-button>
+	</ion-card-content>
+</ion-card>

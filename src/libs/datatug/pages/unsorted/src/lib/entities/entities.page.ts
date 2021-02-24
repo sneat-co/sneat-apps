@@ -3,12 +3,13 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
-import {IEntity, IProjEntity, IRecord} from '@sneat/datatug/models';
+import {IEntity, IProjEntity} from '@sneat/datatug/models';
 import {IDatatugProjectContext} from '@sneat/datatug/nav';
 import {IProjectContext} from '@sneat/datatug/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {EntityService} from '@sneat/datatug/services/unsorted';
+import {IRecord} from '@sneat/data';
 
 type Entities = IRecord<IEntity>[];
 

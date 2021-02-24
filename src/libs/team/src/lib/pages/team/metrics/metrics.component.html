@@ -1,0 +1,55 @@
+<ion-card>
+	<ion-list>
+		<ion-item-divider>
+			<ion-label color="dark"><b>Metrics</b></ion-label>
+			<ion-buttons slot="end">
+				<ion-button (click)="goAddMetric()" color="primary">
+					<ion-icon name="add" slot="start"></ion-icon>
+					<ion-label>Add metric</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item-divider>
+		<ion-item>
+			<ion-label class="ion-text-wrap" color="medium">
+				<p>
+					Metrics allow you to collect some quantitative measures or flags during your daily stand-up meetings.
+				</p>
+				<p *ngIf="isDemoMetricsOnly">
+					We've created few demo metrics but you can
+					<a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
+					and/or <a href="add-metric?team={{team.id}}" (click)="goAddMetric($event)">add your own</a>.
+				</p>
+			</ion-label>
+		</ion-item>
+
+		<ng-container *ngIf="team?.data?.metrics?.length">
+			<ion-item *ngFor="let metric of team.data.metrics">
+				<ion-spinner slot="start" name="lines-small" color="medium"
+								 *ngIf="isDeletingMetric(metric); else metricIcon"></ion-spinner>
+				<ng-template #metricIcon>
+					<ion-icon *ngIf="metric.mode === 'personal'" slot="start" name="person-outline"
+								 title="Personal"></ion-icon>
+					<ion-icon *ngIf="metric.mode === 'team'" slot="start" name="people-outline" title="Team"></ion-icon>
+				</ng-template>
+				<ion-label>
+					{{metric.title}}
+					<ng-container>
+						<i style="padding-left: 1em" *ngIf="metric.type === 'bool'">
+							<ion-text [color]="metric.bool.true.color">{{metric.bool.true.label}}</ion-text>
+							/
+							<ion-text [color]="metric.bool.false.color">{{metric.bool.false.label}}</ion-text>
+						</i>
+					</ng-container>
+				</ion-label>
+				<ion-buttons slot="end">
+					<ion-button color="medium" (click)="deleteMetric(metric)" [disabled]="isDeletingMetric(metric)">
+						<ion-icon name="close"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</ng-container>
+	</ion-list>
+	<ion-card-content *ngIf="team?.data && !team.data.metrics?.length">
+		<p>No metrics for your team yet.</p>
+	</ion-card-content>
+</ion-card>

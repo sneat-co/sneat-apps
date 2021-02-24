@@ -1,0 +1,21 @@
+.drop_target {
+	border: 1px dashed lightgray;
+	margin: 0 0.5em;
+	min-height: 1em;
+}
+
+.drop_target-top {
+	background-color: blanchedalmond;
+}
+
+.drop_target-bottom {
+	background-color: paleturquoise;
+}
+
+ion-card {
+	margin: 10px;
+}
+
+.expandable {
+	--padding-start: 0.25em;
+}

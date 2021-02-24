@@ -1,0 +1,41 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title style="font-weight: bold">{{task?.title}}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button color="medium" (click)="modalController.dismiss()" title="Close">
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="comments">
+			<ion-label>📝 Comments</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="thumbups">
+			<ion-label>👍 Thumb ups</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+	<ng-container [ngSwitch]="tab">
+		<ng-container *ngSwitchCase="'comments'">
+			<ion-item *ngFor="let comment of task?.comments">
+				<ion-label>{{comment.message}}</ion-label>
+			</ion-item>
+			<ion-item>
+				<ion-input #commentInput placeholder="You comment" (keyup.enter)="addComment()"></ion-input>
+				<ion-buttons slot="end">
+					<ion-button color="primary" (click)="addComment()">Add</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</ng-container>
+		<ng-container *ngSwitchCase="'thumbups'">
+			<ion-item>
+				<ion-label color="medium">No thumb ups yet</ion-label>
+				<ion-button color="success" slot="end" [fill]="task.thumbUps ? 'solid' : 'outline'">
+					<ion-icon name="thumbs-up-outline"></ion-icon>
+				</ion-button>
+			</ion-item>
+		</ng-container>
+	</ng-container>
+</ion-content>

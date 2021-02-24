@@ -1,0 +1,47 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title>Team member @ {{team?.data?.title || 'Team'}}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button *ngIf="memberInfo" [title]="memberInfo.uid === userId ? 'Leave team' : 'Remove team member'"
+							(click)="removeMember()">
+				<ion-icon name="trash"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-progress-bar *ngIf="!team" type="indeterminate"></ion-progress-bar>
+	<form>
+		<ion-item>
+			<ion-avatar slot="start" *ngIf="memberInfo?.avatar">
+				<ion-img title="avatar" *ngIf="memberInfo.avatar.gravatar"
+							src="//www.gravatar.com/avatar/{{ memberInfo.avatar.gravatar }}"></ion-img>
+				<ion-img title="avatar" *ngIf="memberInfo.avatar.external" [src]="memberInfo.avatar.external.url"></ion-img>
+			</ion-avatar>
+			<ion-avatar slot="start" *ngIf="memberInfo && !memberInfo.avatar">
+				<ion-img title="avatar" src="//www.gravatar.com/avatar/{{ memberInfo.id }}.gravatar"></ion-img>
+			</ion-avatar>
+			<ion-label position="stacked">Name</ion-label>
+			<ion-input readonly *ngIf="memberInfo" [value]="memberInfo.title"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label position="stacked">Email</ion-label>
+			<ion-input readonly type="email"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>
+				Role
+				<ion-spinner name="lines-small" *ngIf="changing === 'role'"></ion-spinner>
+			</ion-label>
+			<ion-select [value]="memberInfo?.roles && memberInfo?.roles[0]" name="role" interface="popover"
+							(ionChange)="changeRole($event)">
+				<ion-select-option value="contributor">Contributor</ion-select-option>
+				<ion-select-option value="spectator">Spectator</ion-select-option>
+			</ion-select>
+		</ion-item>
+	</form>
+</ion-content>

@@ -1,0 +1,276 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>Scrum
+			<ng-container *ngIf="team?.data">@ {{team.data.title}}</ng-container>
+		</ion-title>
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+
+	<ion-list lines="none">
+		<ion-item color="light">
+			<ion-buttons slot="start">
+				<ion-button class="timer" size="medium" fill="solid" color="primary"
+								[title]="timerState?.status === 'active' ? 'Stop timer' : 'Start time'"
+								(click)="toggleScrumTimer()"
+								[disabled]="!scrum || timerState?.isToggling">
+					<ion-icon slot="start" name="play-outline"
+								 *ngIf="scrum && (!timerState || timerState && !timerState.isToggling && (!timerState.status || timerState.status === 'stopped'))"
+					></ion-icon>
+					<ion-icon slot="start" name="pause-outline"
+								 *ngIf="!timerState?.isToggling && timerState?.status === 'active'"></ion-icon>
+					<ion-label *ngIf="timerState?.status === 'active' || timerState?.elapsedSeconds">
+						Elapsed: {{totalElapsed}}
+					</ion-label>
+					<ion-label
+						*ngIf="scrum && (!timerState || timerState?.status !== 'active' && !timerState?.elapsedSeconds)">
+						Start timer
+					</ion-label>
+					<ion-spinner slot="start" color="light" name="lines-small"
+									 *ngIf="!scrum || timerState?.isToggling"></ion-spinner>
+					<ion-label *ngIf="!scrum">Timer</ion-label>
+				</ion-button>
+				<!--				<ion-button *ngIf="timerState === 'active'" color="primary">-->
+				<!--					<ion-icon slot="start" name="stop"></ion-icon>-->
+				<!--					<ion-label>Stop</ion-label>-->
+				<!--				</ion-button>-->
+			</ion-buttons>
+			<ion-label></ion-label>
+			<ion-buttons slot="end">
+				<ion-button disabled>{{scrumDate?.toDateString()}}</ion-button>
+				<ion-button color="primary" [title]="prevScrumTitle" (click)="changeDate('prev')"
+								[disabled]="!(prevScrumId)">
+					<ion-icon name="chevron-back-outline"></ion-icon>
+				</ion-button>
+				<ion-button *ngIf="isToday" color="primary" (click)="goScrumsList()" title="History">
+					<ion-icon name="list-outline"></ion-icon>
+				</ion-button>
+				<ion-button *ngIf="!isToday" color="primary" (click)="changeDate('today')" title="Go to today's scrum"
+								[disabled]="isToday">
+					<ion-icon name="today"></ion-icon>
+				</ion-button>
+				<ion-button color="primary" [title]="nextScrumTitle" (click)="changeDate(nextScrumId ? 'next' : 'today')"
+								[disabled]="isToday">
+					<ion-icon name="chevron-forward-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+	</ion-list>
+
+	<ion-segment [(ngModel)]="tab" (ionChange)="showChanged()">
+		<ion-segment-button value="my">
+			<ion-label>Me</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="team">
+			<ion-label>Team</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="risks">
+			<ion-label color="danger">
+				Risks
+				<ion-badge color="danger" *ngIf="scrum?.risksCount">{{scrum?.risksCount}}</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="qna">
+			<ion-label>
+				Q&A
+				<ion-badge color="primary" *ngIf="scrum?.questionsCount">{{scrum?.questionsCount}}</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+
+	<ng-container [ngSwitch]="tab">
+		<ng-container *ngSwitchCase="'my'">
+			<app-scrum-tasks *ngFor="let taskType of taskTypes"
+								  [currentMemberId]="userMemberId"
+								  [team]="team"
+								  [scrumId]="scrumId"
+								  [member]="memberStatus?.member"
+								  [taskType]="taskType"
+								  [tasks]="memberStatus?.byType && memberStatus?.byType[taskType] || []"
+								  [hideTitle]="false"
+			></app-scrum-tasks>
+
+			<ion-card>
+				<ion-item-divider>
+					<ion-label>Personal metrics</ion-label>
+				</ion-item-divider>
+				<app-metrics [metrics]="personalMetrics"></app-metrics>
+			</ion-card>
+
+			<app-my-retro-items [teamId]="team?.id" tabAutoSelect="true"></app-my-retro-items>
+		</ng-container>
+
+		<ng-container *ngSwitchCase="'team'">
+
+			<ion-card *ngIf="!teamMetrics || teamMetrics?.length">
+				<ion-item-divider>
+					<ion-icon slot="start" name="thermometer-outline" *ngIf="teamMetrics"></ion-icon>
+					<ion-spinner slot="start" name="lines-small" color="medium" *ngIf="!teamMetrics"></ion-spinner>
+					<ion-label>
+						Shared metrics
+					</ion-label>
+				</ion-item-divider>
+				<app-metrics *ngIf="teamMetrics" [metrics]="teamMetrics"></app-metrics>
+			</ion-card>
+
+			<ng-container *ngIf="!displayStatuses">
+				<ion-card *ngFor="let i of [1, 2]">
+					<ion-item-divider>
+						<ion-spinner slot="start" name="lines-small" color="medium" *ngIf="!teamMetrics"></ion-spinner>
+						<ion-label>
+							Team members
+						</ion-label>
+					</ion-item-divider>
+				</ion-card>
+			</ng-container>
+
+			<ng-container *ngIf="team?.id && displayStatuses">
+				<ion-card *ngFor="let status of displayStatuses; trackBy: trackByMember">
+					<app-scrum-card viewMode="team"
+										 (expandChanged)="onScrumExpandChanged(status.member.id, $event)"
+										 [isExpanded]="status.member.id === expandedMemberId"
+										 [team]="team"
+										 [scrumId]="scrumId"
+										 [scrum]="scrum"
+										 [status]="status"
+										 [currentMemberId]="userMemberId"
+										 [timer]="timer"
+					></app-scrum-card>
+					<ng-container *ngIf="status.member.id === expandedMemberId">
+						<ion-item-divider>Personal metrics</ion-item-divider>
+						<ng-container *ngIf="personalMetrics">
+							<ng-container *ngFor="let metric of personalMetrics">
+								<ion-item [ngSwitch]="metric.type">
+									<ng-container *ngSwitchCase="'int'">
+										<ion-range #range [(ngModel)]="metric.value"
+													  [color]="range.value < 80 ? 'danger' : 'primary' " pin="true" snaps="true"
+													  ticks="true"
+													  *ngIf="metric.type === 'int' && metric.min !== undefined && metric.max !== undefined"
+													  [min]="metric.min" [max]="metric.max">
+											<ion-label>{{metric.title}}: {{range.value}}</ion-label>
+										</ion-range>
+									</ng-container>
+									<ng-container *ngSwitchCase="'bool'">
+										<ion-label>
+											{{metric.title}}:
+											<ion-text [color]="metric.bool.true.color"
+														 *ngIf="metric.value">{{metric.bool.true.label}}</ion-text>
+											<ion-text [color]="metric.bool.false.color"
+														 *ngIf="!metric.value">{{metric.bool.false.label}}</ion-text>
+										</ion-label>
+										<ion-toggle slot="start"
+														[color]="metric.value ? metric.bool.true.color : metric.bool.false.color"
+														[(ngModel)]="metric.value" *ngIf="metric.type === 'bool'">
+										</ion-toggle>
+									</ng-container>
+								</ion-item>
+							</ng-container>
+						</ng-container>
+					</ng-container>
+				</ion-card>
+			</ng-container>
+
+			<ion-card>
+				<ion-item-divider>
+					<ion-label style="font-weight: bold">Spectators</ion-label>
+				</ion-item-divider>
+				<ion-item>
+					<ion-label color="medium" [ngSwitch]="spectators?.length">
+						<ng-container *ngSwitchCase="undefined">
+							Loading...
+						</ng-container>
+						<ng-container *ngSwitchCase="0">
+							There is no followers for your scrums.
+						</ng-container>
+						<ng-container *ngSwitchCase="1">
+							There is 1 follower for your scrums.
+						</ng-container>
+						<ng-container *ngSwitchDefault>
+							There is {{spectators.length}} followers for your scrums.
+						</ng-container>
+					</ion-label>
+				</ion-item>
+			</ion-card>
+
+			<ion-card>
+				<ion-card-content>
+					<ion-button expand="full" color="primary"
+									fill="solid" (click)="navService.navigateToAddMember(navController, team)">
+						<ion-icon name="add" slot="start"></ion-icon>
+						<ion-label>Add member(s)</ion-label>
+					</ion-button>
+				</ion-card-content>
+			</ion-card>
+		</ng-container>
+
+		<ng-container *ngSwitchCase="'risks'">
+			<ion-text color="medium" *ngIf="scrum && !scrum.risksCount" class="ion-padding">
+				<p style="text-align: center;">
+					Sleep tight dear homeland, there is no risks. Yet.
+				</p>
+			</ion-text>
+
+			<ng-container *ngIf="team?.id && displayStatuses">
+				<ng-container *ngFor="let status of displayStatuses; trackBy: trackByMember">
+					<ng-container *ngIf="status.byType?.risk?.length">
+						<ion-item-divider>
+							<ion-label style="font-weight: bold" color="dark">{{status.member.title}}</ion-label>
+						</ion-item-divider>
+						<app-scrum-tasks [currentMemberId]="userMemberId"
+											  [team]="team"
+											  [scrumId]="scrumId"
+											  [member]="status.member"
+											  taskType="risk"
+											  [tasks]="status.byType?.risk"
+											  [hideTitle]="true"
+						></app-scrum-tasks>
+					</ng-container>
+				</ng-container>
+			</ng-container>
+		</ng-container>
+
+		<div *ngSwitchCase="'qna'" class="ion-padding">
+			<ion-text color="medium" *ngIf="scrum && !scrum.questionsCount" >
+				<p style="text-align: center;">
+					There is no questions asked yet.
+				</p>
+				<p>All question will be send to the whole team 1 hour before stand-up.</p>
+			</ion-text>
+			<ng-container *ngIf="team?.id && displayStatuses">
+				<ng-container *ngFor="let status of displayStatuses; trackBy: trackByMember">
+					<ng-container *ngIf="status.byType?.qna?.length">
+						<ion-item-divider>
+							<ion-label style="font-weight: bold" color="dark">{{status.member.title}}</ion-label>
+						</ion-item-divider>
+						<app-scrum-tasks [currentMemberId]="userMemberId"
+											  [team]="team"
+											  [scrumId]="scrumId"
+											  [member]="status.member"
+											  taskType="qna"
+											  [tasks]="status.byType?.qna"
+											  [hideTitle]="true"
+						></app-scrum-tasks>
+					</ng-container>
+				</ng-container>
+			</ng-container>
+		</div>
+	</ng-container>
+
+	<ion-list style="position: absolute; top: -999px"> <!-- TODO: How to do preloading right way? -->
+		<!-- This is a pre-loaded of components to make sure there is no flickering when we add 1st item -->
+		<ion-reorder-group disabled="false">
+			<ion-item>
+				<ion-reorder slot="start">
+					<ion-icon name="swap-vertical-outline"></ion-icon>
+				</ion-reorder>
+				<ion-label>
+				</ion-label>
+			</ion-item>
+		</ion-reorder-group>
+	</ion-list>
+
+</ion-content>

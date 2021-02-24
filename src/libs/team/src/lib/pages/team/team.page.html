@@ -1,0 +1,33 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title *ngIf="userTeam">{{userTeam?.title}}</ion-title>
+		<ion-title *ngIf="!userTeam">Team: loading...</ion-title>
+		<ion-buttons slot="end">
+			<ion-button color="dark">
+				<ion-icon name="settings" slot="start" color="medium"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+	<ion-row class="ion-no-padding ion-no-margin"> <!-- TODO(StackOverflow): Is here better way to use grid without padding? -->
+		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">
+			<app-team-scrums [team]="team"></app-team-scrums>
+		</ion-col>
+		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">
+			<app-team-retrospectives [team]="team"></app-team-retrospectives>
+		</ion-col>
+	</ion-row>
+	<ion-row class="ion-no-padding ion-no-margin">
+		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">
+			<app-team-members [team]="team"></app-team-members>
+		</ion-col>
+		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">
+			<app-team-metrics [team]="team"></app-team-metrics>
+		</ion-col>
+	</ion-row>
+</ion-content>

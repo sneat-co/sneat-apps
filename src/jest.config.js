@@ -38,5 +38,11 @@ module.exports = {
     '<rootDir>/libs/datatug/components/dbmeta',
     '<rootDir>/libs/datatug/db',
     '<rootDir>/libs/datatug/queries',
+    '<rootDir>/libs/scrumspace/dailyscrum',
+    '<rootDir>/libs/scrumspace/retrospectives',
+    '<rootDir>/libs/timer',
+    '<rootDir>/libs/meeting',
+    '<rootDir>/libs/team',
+    '<rootDir>/libs/scrumspace/scrummodels',
   ],
 };

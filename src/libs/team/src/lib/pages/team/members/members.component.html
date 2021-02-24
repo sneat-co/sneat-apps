@@ -1,0 +1,38 @@
+<ion-card>
+	<ion-item-divider>
+		<ion-label color="dark" (click)="membersRoleTab = '*'" tappable>
+			<b>Members</b><span *ngIf="spectatorsCount || contributorsCount">:
+				<span id="team_members_count">{{spectatorsCount + contributorsCount}}</span></span>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="goAddMember()" color="primary">
+				<ion-icon name="add" slot="start"></ion-icon>
+				<ion-label>Add member</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-segment [(ngModel)]="membersRoleTab" [disabled]="!team?.data">
+		<ion-segment-button value="*">
+			<ion-label>
+				All
+				<!--					<ion-badge color="medium" *ngIf="team?.data?.members?.length">{{team?.data?.members?.length}}</ion-badge>-->
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="contributor">
+			<ion-label>Contributors
+				<ion-badge *ngIf="contributorsCount">{{contributorsCount}}</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="spectator">
+			<ion-label>Spectators
+				<ion-badge *ngIf="spectatorsCount" color="medium">{{spectatorsCount}}</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+	<app-members-list
+		[team]="team"
+		[allMembers]="team?.data?.members"
+		[role]="membersRoleTab === '*' ? null : membersRoleTab"
+		(selfRemoved)="onSelfRemoved()"
+	></app-members-list>
+</ion-card>

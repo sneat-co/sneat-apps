@@ -1,0 +1,75 @@
+<ion-list lines="none">
+	<ng-container *ngIf="team && retrospective?.data?.stage === 'upcoming'; else notUpcoming">
+		<ion-row class="ion-no-padding ion-no-margin">
+			<ion-col size="11" size-md="3" class="ion-no-margin ion-no-padding">
+				<ion-item>
+					<ion-buttons slot="start">
+						<ion-button color="primary" (click)="startRetro()" fill="solid">
+							<ion-icon name="play-outline" slot="start"></ion-icon>
+							<ion-label>Start</ion-label>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-col>
+			<ion-col size="1" class="ion-no-margin ion-no-padding"></ion-col>
+			<ion-col size="12" size-md="4" class="ion-no-margin ion-no-padding">
+				<ion-item>
+					<ion-label color="medium">Feedback</ion-label>
+					<ion-select [(ngModel)]="feedbackDuration" interface="popover">
+						<ion-select-option [value]="5">5 mins</ion-select-option>
+						<ion-select-option [value]="10">10 mins</ion-select-option>
+						<ion-select-option [value]="15">15 mins</ion-select-option>
+						<ion-select-option [value]="20">20 mins</ion-select-option>
+						<ion-select-option [value]="25">25 mins</ion-select-option>
+						<ion-select-option [value]="30">30 mins</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col size="12" size-md="4" class="ion-no-margin ion-no-padding">
+				<ion-item>
+					<ion-label color="medium">Review</ion-label>
+					<ion-select [(ngModel)]="reviewDuration" interface="popover">
+						<ion-select-option [value]="10">10 mins</ion-select-option>
+						<ion-select-option [value]="20">20 mins</ion-select-option>
+						<ion-select-option [value]="30">30 mins</ion-select-option>
+						<ion-select-option [value]="40">40 mins</ion-select-option>
+						<ion-select-option [value]="50">50 mins</ion-select-option>
+						<ion-select-option [value]="60">60 mins</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ng-container>
+	<ng-template #notUpcoming>
+		<ion-item>
+			<ion-buttons slot="start">
+				<ion-button color="primary" (click)="pauseRetro()"  [disabled]="!timer"
+								*ngIf="retrospective?.data && retrospective.data.stage !== 'upcoming' && retrospective.data.timer?.status !== 'stopped'">
+					<ion-icon name="pause-circle-outline" slot="start"></ion-icon>
+					<ion-label>Pause</ion-label>
+				</ion-button>
+				<ion-button color="primary" (click)="startRetro()" [disabled]="!timer"
+								*ngIf="retrospective?.data && retrospective.data.stage !== 'upcoming' && retrospective.data.timer?.status === 'stopped'">
+					<ion-icon name="play-outline" slot="start"></ion-icon>
+					<ion-label>Resume</ion-label>
+				</ion-button>
+			</ion-buttons>
+			<ion-label>
+				<ng-container *ngIf="retrospective?.data?.stage === 'upcoming'; else notUpcoming">
+					Start retrospective to activate timer
+				</ng-container>
+				<ng-template #notUpcoming>
+					<ng-container>
+						<b>Stage</b>: Gather feedback &mdash; <i>ends in {{minutesLeft}} min {{secondsLeft}} sec</i>
+						{{totalElapsed}}
+					</ng-container>
+				</ng-template>
+			</ion-label>
+			<ion-buttons>
+				<ion-button color="tertiary">
+					<ion-label>Extend</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+	</ng-template>
+</ion-list>
