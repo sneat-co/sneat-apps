@@ -29,13 +29,16 @@ export class SqlParser {
   private readonly reOrderBy = /ORDER\s+BY\s+(.+)$/i;
 
   public parseQuery(text: string): IAstQuery {
-    const q: IAstQuery = {joins: [], orderBy: []};
+    let q: IAstQuery = {joins: [], orderBy: []};
     const from = text.match(this.reFrom);
     if (from) {
-      q.from = {
-        schema: from[1],
-        name: from[2],
-        alias: from[3]
+      q = {
+        ...q,
+        from: {
+          schema: from[1],
+          name: from[2],
+          alias: from[3]
+        }
       };
     }
     let m: RegExpMatchArray;
