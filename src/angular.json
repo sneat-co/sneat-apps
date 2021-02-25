@@ -174,7 +174,7 @@
             "styles": [
               "apps/emptyionicapp/src/styles.scss",
               {
-                "input": "apps\\emptyionicapp/src/theme/variables.scss"
+                "input": "apps/emptyionicapp/src/theme/variables.scss"
               }
             ],
             "scripts": []
@@ -418,7 +418,7 @@
               "node_modules/codemirror/lib/codemirror.css",
               "node_modules/codemirror/theme/material.css",
               {
-                "input": "apps\\datatug/src/theme/variables.scss"
+                "input": "apps/datatug/src/theme/variables.scss"
               }
             ],
             "scripts": []
@@ -1277,7 +1277,7 @@
             "styles": [
               "apps/scrumspace/src/styles.scss",
               {
-                "input": "apps\\scrumspace/src/theme/variables.scss"
+                "input": "apps/scrumspace/src/theme/variables.scss"
               }
             ],
             "scripts": []
@@ -1488,7 +1488,7 @@
             "styles": [
               "apps/issuenumberone/src/styles.scss",
               {
-                "input": "apps\\issuenumberone/src/theme/variables.scss"
+                "input": "apps/issuenumberone/src/theme/variables.scss"
               }
             ],
             "scripts": []
