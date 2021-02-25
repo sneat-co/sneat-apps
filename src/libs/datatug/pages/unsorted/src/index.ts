@@ -16,7 +16,7 @@ export * from './lib/repo/repo.module';
 export * from './lib/repo/repo-routing.module';
 export * from './lib/resources/resources.module';
 export * from './lib/servers/servers.module';
-export * from '../../../queries/src/lib/sql-query/sql-parser';
+export * from '../../../services/unsorted/src/lib/sql-parser';
 export * from './lib/tags/tags.module';
 export * from './lib/variables/variables.module';
 export * from './lib/widgets/widgets.module';

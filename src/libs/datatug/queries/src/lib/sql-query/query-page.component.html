@@ -1,269 +1,271 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-buttons slot="start">
-			<ion-menu-button></ion-menu-button>
-			<ion-back-button
-				defaultHref="/repo/{{projectContext?.repoId}}/project/{{projectContext?.projectId}}/queries"></ion-back-button>
-		</ion-buttons>
-		<ion-title>Query</ion-title>
-		<ion-buttons slot="end">
-			<ion-button class="ion-padding-horizontal" slot="end" [fill]="isChanged ? 'solid' : 'clear'"
-							[color]="isChanged ? 'danger' : 'medium'" title="Edit" (click)="saveChanges()">
-				<ion-icon name="save-outline" slot="start"></ion-icon>
-				<ion-label>Save</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button
+        defaultHref="/repo/{{projectContext?.repoId}}/project/{{projectContext?.projectId}}/queries"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Query</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="ion-padding-horizontal" slot="end" [fill]="isChanged ? 'solid' : 'clear'"
+                  [color]="isChanged ? 'danger' : 'medium'" title="Edit" (click)="saveChanges()">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        <ion-label>Save</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="cards">
 
-	<div class="ion-margin">
-		<ion-item>
-			<ion-input [(ngModel)]="queryTitle" readonly="false"></ion-input>
-			<!--			<ion-select interface="popover" slot="end">-->
-			<!--				<ion-select-option value="q1">Query #1</ion-select-option>-->
-			<!--				<ion-select-option value="q2">Query #2</ion-select-option>-->
-			<!--				<ion-select-option value="q3">Query #3</ion-select-option>-->
-			<!--				<ion-select-option value="q4">Query #4</ion-select-option>-->
-			<!--			</ion-select>-->
-		</ion-item>
-		<datatug-sql
-                [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
-		</datatug-sql>
-	</div>
+  <div class="ion-margin">
+    <ion-item>
+      <ion-input [placeholder]="queryNamePlaceholder" [(ngModel)]="queryTitle" readonly="false"></ion-input>
+      <!--			<ion-select interface="popover" slot="end">-->
+      <!--				<ion-select-option value="q1">Query #1</ion-select-option>-->
+      <!--				<ion-select-option value="q2">Query #2</ion-select-option>-->
+      <!--				<ion-select-option value="q3">Query #3</ion-select-option>-->
+      <!--				<ion-select-option value="q4">Query #4</ion-select-option>-->
+      <!--			</ion-select>-->
+    </ion-item>
+    <datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
+    </datatug-sql>
+  </div>
 
-	<div class="hidden-lg-up">
-		<div class="ion-padding-start ion-padding-end">
-			<ion-segment value="columns">
-				<ion-segment-button value="columns" style="font-size: smaller; text-transform: none">
-					<ion-label>Columns</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="group" style="font-size: smaller; text-transform: none">
-					<ion-label>Group by</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="order" style="font-size: smaller; text-transform: none">
-					<ion-label>Order by</ion-label>
-				</ion-segment-button>
-			</ion-segment>
-		</div>
-		<ion-card>
-			<ion-list>
-				<ion-item>
-					<ion-checkbox slot="start" checked="true"></ion-checkbox>
-					<ion-label><b>ft</b> -
-						<ion-text color="medium">FistTable</ion-text>
-					</ion-label>
-				</ion-item>
-				<ion-item>
-					<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
-					<ion-label color="medium">ID</ion-label>
-				</ion-item>
-				<ion-item>
-					<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
-					<ion-label color="medium">Name</ion-label>
-				</ion-item>
-			</ion-list>
-		</ion-card>
-	</div>
+  <div class="hidden-lg-up">
+    <div class="ion-padding-start ion-padding-end">
+      <ion-segment value="columns">
+        <ion-segment-button value="columns" style="font-size: smaller; text-transform: none">
+          <ion-label>Columns</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="group" style="font-size: smaller; text-transform: none">
+          <ion-label>Group by</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="order" style="font-size: smaller; text-transform: none">
+          <ion-label>Order by</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <ion-card>
+      <ion-list>
+        <ion-item>
+          <ion-checkbox slot="start" checked="true"></ion-checkbox>
+          <ion-label><b>ft</b> -
+            <ion-text color="medium">FistTable</ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
+          <ion-label color="medium">ID</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
+          <ion-label color="medium">Name</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
 
-	<ion-row>
-		<ion-col size-md="5" class="hidden-md-down">
-			<h3 class="ion-margin-start">From & Joins</h3>
-			<ion-card>
-				<ion-item *ngIf="queryAst?.from">
-					<ion-checkbox checked="true" disabled slot="start"></ion-checkbox>
-					<ion-label title="FROM">{{queryAst.from.alias}} &mdash; {{queryAst.from.name}}</ion-label>
-					<ion-buttons slot="end">
-						<ion-button>
-							<ion-icon name="link-outline"></ion-icon>
-						</ion-button>
-					</ion-buttons>
-				</ion-item>
-				<ng-container *ngIf="queryAst?.joins">
-					<ion-item *ngFor="let join of queryAst.joins; trackBy: trackByIndex">
-						<ion-checkbox slot="start" [checked]="!join.disabled"
-										  (ionChange)="joinCheckChanged($event, join)"></ion-checkbox>
-						<ion-label><b>{{join.alias}}</b> -
-							<ion-text color="medium">{{join.name}}</ion-text>
-						</ion-label>
-						<ion-buttons slot="end">
-							<ion-button>
-								<ion-icon name="link-outline"></ion-icon>
-							</ion-button>
-						</ion-buttons>
-					</ion-item>
-				</ng-container>
-			</ion-card>
-		</ion-col>
-		<ion-col size-md="4" class="hidden-md-down ion-no-padding">
-			<h3 class="ion-margin-start">Columns</h3>
-			<ion-card>
-				<ion-list>
-					<ion-item>
-						<ion-checkbox slot="start"></ion-checkbox>
-						<ion-label><b>ft</b> -
-							<ion-text color="medium">FirstTable</ion-text>
-						</ion-label>
-						<ion-buttons slot="end">
-							<ion-button color="medium">
-								<ion-icon name="chevron-up-circle-outline"></ion-icon>
-							</ion-button>
-						</ion-buttons>
-					</ion-item>
-					<ion-item>
-						<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
-						<ion-label color="medium">ID</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
-						<ion-label color="medium">Name</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-checkbox slot="start"></ion-checkbox>
-						<ion-label><b>st</b> -
-							<ion-text color="medium">SecondTable</ion-text>
-						</ion-label>
-						<ion-buttons slot="end">
-							<ion-button color="medium" disabled="">2</ion-button>
-							<ion-button color="medium">
-								<ion-icon name="chevron-down-circle-outline"></ion-icon>
-							</ion-button>
-						</ion-buttons>
-					</ion-item>
-					<!--					<ion-item>-->
-					<!--						<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>-->
-					<!--						<ion-label color="medium">ID</ion-label>-->
-					<!--					</ion-item>-->
-					<!--					<ion-item>-->
-					<!--						<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>-->
-					<!--						<ion-label color="medium">Name</ion-label>-->
-					<!--					</ion-item>-->
-					<ion-item-divider style="font-weight: bold">
-						<ion-label>Aggregated</ion-label>
-					</ion-item-divider>
-					<ion-item class="ion-padding-start">
-						<ion-label color="medium" style="font-size: smaller">Enable GROUP BY to add</ion-label>
-					</ion-item>
-				</ion-list>
-			</ion-card>
-		</ion-col>
-		<ion-col size-md="3" class="hidden-md-down">
-			<div class="ion-padding-start ion-padding-end">
-				<ion-segment [(ngModel)]="colsTab">
-					<ion-segment-button value="group" style="font-size: smaller">Group by</ion-segment-button>
-					<ion-segment-button value="order" style="font-size: smaller">Order by</ion-segment-button>
-				</ion-segment>
-			</div>
-			<ion-card>
-				<ion-list *ngIf="colsTab === 'group'">
-					<ion-item>
-						<ion-label><b>ft</b> -
-							<ion-text color="medium">FirstTable</ion-text>
-						</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-checkbox slot="start"></ion-checkbox>
-						<ion-label color="medium">ID</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-checkbox slot="start"></ion-checkbox>
-						<ion-label color="medium">Name</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-label><b>st</b> -
-							<ion-text color="medium">SecondTable</ion-text>
-						</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-checkbox slot="start"></ion-checkbox>
-						<ion-label color="medium">ID</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-checkbox slot="start"></ion-checkbox>
-						<ion-label color="medium">Name</ion-label>
-					</ion-item>
-				</ion-list>
-				<ion-list *ngIf="colsTab === 'order'">
-					<ng-container *ngIf="queryAst?.orderBy?.length">
-						<ion-item *ngFor="let orderCol of queryAst.orderBy">
-							<ion-checkbox slot="start" checked></ion-checkbox>
-							<ion-label>{{orderCol}}</ion-label>
-						</ion-item>
-					</ng-container>
-				</ion-list>
-			</ion-card>
-		</ion-col>
-	</ion-row>
+  <ion-row>
+    <ion-col size-md="5" class="hidden-md-down">
+      <h3 class="ion-margin-start">From & Joins</h3>
+      <ion-card>
+        <ion-item *ngIf="queryAst?.from">
+          <ion-checkbox checked="true" disabled slot="start"></ion-checkbox>
+          <ion-label title="FROM">
+            <span *ngIf="queryAst.from.schema">[{{queryAst.from.schema}}].</span>|{{queryAst.from.name}}|
+          </ion-label>
+          <ion-badge color="medium" *ngIf="queryAst.from.alias">{{queryAst.from.alias}}</ion-badge>
+          <ion-buttons slot="end">
+            <ion-button>
+              <ion-icon name="link-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ng-container *ngIf="queryAst?.joins">
+          <ion-item *ngFor="let join of queryAst.joins; trackBy: trackByIndex">
+            <ion-checkbox slot="start" [checked]="!join.disabled"
+                          (ionChange)="joinCheckChanged($event, join)"></ion-checkbox>
+            <ion-label><b>{{join.alias}}</b> -
+              <ion-text color="medium">{{join.name}}</ion-text>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button>
+                <ion-icon name="link-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ng-container>
+      </ion-card>
+    </ion-col>
+    <ion-col size-md="4" class="hidden-md-down ion-no-padding">
+      <h3 class="ion-margin-start">Columns</h3>
+      <ion-card>
+        <ion-list>
+          <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label><b>ft</b> -
+              <ion-text color="medium">FirstTable</ion-text>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button color="medium">
+                <ion-icon name="chevron-up-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
+            <ion-label color="medium">ID</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>
+            <ion-label color="medium">Name</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label><b>st</b> -
+              <ion-text color="medium">SecondTable</ion-text>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button color="medium" disabled="">2</ion-button>
+              <ion-button color="medium">
+                <ion-icon name="chevron-down-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <!--					<ion-item>-->
+          <!--						<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>-->
+          <!--						<ion-label color="medium">ID</ion-label>-->
+          <!--					</ion-item>-->
+          <!--					<ion-item>-->
+          <!--						<ion-checkbox slot="start" class="ion-margin-start"></ion-checkbox>-->
+          <!--						<ion-label color="medium">Name</ion-label>-->
+          <!--					</ion-item>-->
+          <ion-item-divider style="font-weight: bold">
+            <ion-label>Aggregated</ion-label>
+          </ion-item-divider>
+          <ion-item class="ion-padding-start">
+            <ion-label color="medium" style="font-size: smaller">Enable GROUP BY to add</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-col>
+    <ion-col size-md="3" class="hidden-md-down">
+      <div class="ion-padding-start ion-padding-end">
+        <ion-segment [(ngModel)]="colsTab">
+          <ion-segment-button value="group" style="font-size: smaller">Group by</ion-segment-button>
+          <ion-segment-button value="order" style="font-size: smaller">Order by</ion-segment-button>
+        </ion-segment>
+      </div>
+      <ion-card>
+        <ion-list *ngIf="colsTab === 'group'">
+          <ion-item>
+            <ion-label><b>ft</b> -
+              <ion-text color="medium">FirstTable</ion-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label color="medium">ID</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label color="medium">Name</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><b>st</b> -
+              <ion-text color="medium">SecondTable</ion-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label color="medium">ID</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label color="medium">Name</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-list *ngIf="colsTab === 'order'">
+          <ng-container *ngIf="queryAst?.orderBy?.length">
+            <ion-item *ngFor="let orderCol of queryAst.orderBy">
+              <ion-checkbox slot="start" checked></ion-checkbox>
+              <ion-label>{{orderCol}}</ion-label>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+      </ion-card>
+    </ion-col>
+  </ion-row>
 
-	<div class="ion-padding-start ion-padding-end">
-		<ion-segment [(ngModel)]="envId" (ionChange)="envChanged()">
-			<ion-segment-button [value]="env.id" *ngFor="let env of environments">
-				<ion-grid>
-					<ion-row>
-						<ion-col style="margin-top: 0.5rem">
-							{{env.title || env.id}}
-						</ion-col>
-						<ion-col>
-							<ion-buttons>
-								<ion-button *ngIf="env.isExecuting" disabled>
-									<ion-spinner name="lines-small" slot="end"></ion-spinner>
-								</ion-button>
-								<ion-button *ngIf="!env.isExecuting" (click)="executeFromTab($event, env)">
-									<ion-icon name="play-circle-outline"></ion-icon>
-								</ion-button>
-							</ion-buttons>
-						</ion-col>
-					</ion-row>
-				</ion-grid>
-			</ion-segment-button>
-		</ion-segment>
-	</div>
+  <div class="ion-padding-start ion-padding-end">
+    <ion-segment [(ngModel)]="envId" (ionChange)="envChanged()">
+      <ion-segment-button [value]="env.id" *ngFor="let env of environments">
+        <ion-grid>
+          <ion-row>
+            <ion-col style="margin-top: 0.5rem">
+              {{env.title || env.id}}
+            </ion-col>
+            <ion-col>
+              <ion-buttons>
+                <ion-button *ngIf="env.isExecuting" disabled>
+                  <ion-spinner name="lines-small" slot="end"></ion-spinner>
+                </ion-button>
+                <ion-button *ngIf="!env.isExecuting" (click)="executeFromTab($event, env)">
+                  <ion-icon name="play-circle-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
-	<ion-grid>
-		<ion-row *ngIf="envId !== '=='">
-			<ion-col size="5">
-				<ion-item>
+  <ion-grid>
+    <ion-row *ngIf="envId !== '=='">
+      <ion-col size="5">
+        <ion-item>
 
-					<ion-label>@ Server</ion-label>
-					<ion-select value="localhost">
-						<ion-select-option value="localhost">localhost</ion-select-option>
-					</ion-select>
-				</ion-item>
-			</ion-col>
-			<ion-col size="5">
-				<ion-item>
-					<ion-label color="medium">DB</ion-label>
-					<ion-select [(ngModel)]="targetCatalog" *ngIf="query">
-						<ion-select-option *ngFor="let target of query.targets">{{target.catalog}}</ion-select-option>
-					</ion-select>
-				</ion-item>
-			</ion-col>
-			<ion-col size="2">
-				<ion-button expand="full"
-								[disabled]="!activeEnv || activeEnv.isExecuting"
-								(click)="executeQuery()"
-								style="text-transform: none"
-				>
-					<ion-icon slot="start" name="play-circle-outline"></ion-icon>
-					<ion-label>Execute</ion-label>
-				</ion-button>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+          <ion-label>@ Server</ion-label>
+          <ion-select value="localhost">
+            <ion-select-option value="localhost">localhost</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="5">
+        <ion-item>
+          <ion-label color="medium">DB</ion-label>
+          <ion-select [(ngModel)]="targetCatalog" *ngIf="query">
+            <ion-select-option *ngFor="let target of query.targets">{{target.catalog}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button expand="full"
+                    [disabled]="!activeEnv || activeEnv.isExecuting"
+                    (click)="executeQuery()"
+                    style="text-transform: none"
+        >
+          <ion-icon slot="start" name="play-circle-outline"></ion-icon>
+          <ion-label>Execute</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-	<div class="ion-padding" *ngIf="envId === '=='">
-		<p>Comparison is not implemented yet</p>
-	</div>
+  <div class="ion-padding" *ngIf="envId === '=='">
+    <p>Comparison is not implemented yet</p>
+  </div>
 
-	<div class="ion-padding" *ngIf="envId !== '==' && !activeEnv?.recordsets && !activeEnv?.isExecuting">
-		<ion-text color="medium">Not executed yet</ion-text>
-	</div>
+  <div class="ion-padding" *ngIf="envId !== '==' && !activeEnv?.recordsets && !activeEnv?.isExecuting">
+    <ion-text color="medium">Not executed yet</ion-text>
+  </div>
 
-	<ion-progress-bar type="indeterminate" *ngIf="activeEnv?.isExecuting" color="tertiary"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" *ngIf="activeEnv?.isExecuting" color="tertiary"></ion-progress-bar>
 
-	<div class="ion-margin-top" style="margin-left: 0.6rem; margin-right: 0.6rem;" *ngIf="activeEnv?.recordsets">
-		<datatug-grid-widget *ngFor="let recordset of activeEnv.recordsets; trackBy: trackByIndex"
-									[recordset]="recordset"></datatug-grid-widget>
-	</div>
+  <div class="ion-margin-top" style="margin-left: 0.6rem; margin-right: 0.6rem;" *ngIf="activeEnv?.recordsets">
+    <datatug-grid-widget *ngFor="let recordset of activeEnv.recordsets; trackBy: trackByIndex"
+                         [recordset]="recordset"></datatug-grid-widget>
+  </div>
 </ion-content>

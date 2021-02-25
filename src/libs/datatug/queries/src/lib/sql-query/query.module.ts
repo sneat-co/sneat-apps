@@ -12,6 +12,7 @@ import {DatatugBoardModule} from '@sneat/datatug/board';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
 import {DatatugExecutorModule} from '@sneat/datatug/executor';
 import {DatatugComponentsSqlEditorModule} from '@sneat/datatug/components/sqleditor';
+import {QueriesServiceModule} from '@sneat/datatug/services/unsorted';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import {DatatugComponentsSqlEditorModule} from '@sneat/datatug/components/sqledi
     DatatugComponentsSqlEditorModule,
     SqlEditorPageRoutingModule,
     CodemirrorModule,
+    QueriesServiceModule,
     DatatugBoardModule,
     DatatugExecutorModule,
     DatatugComponentsDatagridModule,

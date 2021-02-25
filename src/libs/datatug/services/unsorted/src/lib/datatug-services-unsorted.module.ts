@@ -3,10 +3,12 @@ import {SchemaService} from './schema.service';
 import {EntityService} from './entity.service';
 import {DbServerService} from './db-server.service';
 import {EnvironmentService} from './environment.service';
-import {ProjectItemService, ProjectItemServiceFactory} from './project-item-service';
+import {ProjectItemServiceFactory} from './project-item-service';
 import {QueriesService} from './queries.service';
 import {RecordsetService} from './recordset.service';
 import {VariableService} from './variable.service';
+import {TableService} from './table.service';
+import {QueryContextSqlService} from './query-context-sql.service';
 
 @NgModule({
   imports: [],
@@ -19,6 +21,8 @@ import {VariableService} from './variable.service';
     RecordsetService,
     SchemaService,
     VariableService,
+    TableService,
+    QueryContextSqlService,
   ]
 })
 export class DatatugServicesUnsortedModule {

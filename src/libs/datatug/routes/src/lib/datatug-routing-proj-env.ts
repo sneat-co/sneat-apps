@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {routingParamDbId} from './datatug-routing-params';
+import {routingParamDbCatalogId} from './datatug-routing-params';
 
 export const datatugProjEnvRoutes: Routes = [
 	{
@@ -8,7 +8,7 @@ export const datatugProjEnvRoutes: Routes = [
 		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.EnvironmentPageModule),
 	},
 	{
-		path: 'db/:' + routingParamDbId,
+		path: 'db/:' + routingParamDbCatalogId,
 		loadChildren: () => import('@sneat/datatug/routes').then(m => m.DatatugProjEnvDbRoutingModule),
 	},
 	{

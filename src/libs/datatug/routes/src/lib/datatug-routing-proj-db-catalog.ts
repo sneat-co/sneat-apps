@@ -4,10 +4,6 @@ import {routingParamTableType} from './datatug-routing-params';
 
 export const datatugProjEnvDbRoutes: Routes = [
 	{
-		path: '',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.EnvDbPageModule),
-	},
-	{
 		path: 'table/:' + routingParamTableType,
 		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.EnvDbTablePageModule),
 	},
@@ -25,5 +21,5 @@ export const datatugProjEnvDbRoutes: Routes = [
 		RouterModule,
 	],
 })
-export class DatatugProjEnvDbRoutingModule {
+export class DatatugRoutingProjDbCatalog {
 }

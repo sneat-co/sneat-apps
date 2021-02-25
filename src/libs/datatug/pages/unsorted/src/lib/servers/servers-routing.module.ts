@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {ServersPage} from './servers.page';
-import {routingParamDbDriver, routingParamDbServerId} from '@sneat/datatug/routes';
+import {routingParamDriver, routingParamDbServerId} from '@sneat/datatug/routes';
 
 const routes: Routes = [
 	{
@@ -10,7 +10,7 @@ const routes: Routes = [
 		component: ServersPage
 	},
 	{
-		path: `db/:${routingParamDbDriver}/:${routingParamDbServerId}`,
+		path: `db/:${routingParamDriver}/:${routingParamDbServerId}`,
 		loadChildren: () => import('../dbserver/dbserver.module').then(m => m.DbserverPageModule)
 	},
 ];

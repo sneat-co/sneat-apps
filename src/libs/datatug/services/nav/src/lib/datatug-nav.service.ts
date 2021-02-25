@@ -12,6 +12,7 @@ export type ProjectTopLevelPage =
   'environments' |
   'servers' |
   'queries' |
+  'query' |
   'tags' |
   'widgets';
 

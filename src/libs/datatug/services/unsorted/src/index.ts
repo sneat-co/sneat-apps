@@ -10,3 +10,7 @@ export * from './lib/queries.service';
 export * from './lib/recordset.service';
 export * from './lib/schema.service';
 export * from './lib/variable.service';
+export * from './lib/private-token-store.service';
+export * from './lib/private-token-store.module';
+export * from './lib/table.service';
+export * from './lib/query-context-sql.service';

@@ -1,10 +1,10 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {
-	routingParamBoard,
-	routingParamDbModelId,
-	routingParamEntityId,
-	routingParamEnvironmentId
+  routingParamBoard, routingParamDbCatalogId,
+  routingParamDbModelId, routingParamDbServerId, routingParamDriver,
+  routingParamEntityId,
+  routingParamEnvironmentId, routingParamServerType
 } from './datatug-routing-params';
 
 export const datatugProjectRoutes: Routes = [
@@ -94,9 +94,14 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'servers',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.ServersPageModule)
+    loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.ServersPageModule),
 	},
-	{
+  {
+    // e.g. "db/sqlserver/localhost/AdventureWorks" for MS SQL Server
+    path: `server/${routingParamServerType}/:${routingParamDriver}/:${routingParamDbServerId}/:${routingParamDbCatalogId}`,
+    loadChildren: () => import('./datatug-routing-proj-db-catalog').then(m => m.DatatugRoutingProjDbCatalog),
+  },
+  {
 		path: 'diff',
 		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.DiffPageModule)
 	},

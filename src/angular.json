@@ -415,6 +415,8 @@
             ],
             "styles": [
               "apps/datatug/src/styles.scss",
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/theme/material.css",
               {
                 "input": "apps\\datatug/src/theme/variables.scss"
               }

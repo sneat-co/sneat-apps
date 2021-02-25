@@ -23,7 +23,7 @@ export interface IDataTugStoreBrief {
   url: string;
 }
 
-export type DataTugProjStoreType = 'agent' | 'local' | 'github';
+export type DataTugProjStoreType = 'agent' | 'local' | 'github.com';
 
 export interface IDataTugProjStoreBrief {
   type: DataTugProjStoreType;

@@ -21,6 +21,7 @@ interface IProjectTopLevelPage {
   title: string;
   icon: string;
   count?: (proj: IProjectSummary) => number;
+  buttons?: {path: string, icon: string; }[];
 }
 
 @Component({
@@ -77,6 +78,9 @@ export class DatatugMenuSignedComponent implements OnDestroy {
       path: 'queries',
       title: 'Queries',
       icon: 'terminal-outline',
+      buttons: [
+        {path: 'query', icon: 'add'}
+      ]
     },
     {
       path: 'tags',

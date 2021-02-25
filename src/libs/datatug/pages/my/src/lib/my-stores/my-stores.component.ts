@@ -20,7 +20,7 @@ export class MyStoresComponent {
 		event.stopPropagation();
 	}
 
-	public openHelp(event: Event, path: 'agent' | 'cloud' | 'github' | 'private-repos'): void {
+	public openHelp(event: Event, path: 'agent' | 'cloud' | 'github.com' | 'private-repos'): void {
 		event.preventDefault();
 		event.stopPropagation();
 		window.open('https://datatug.app/' + path, '_blank');
