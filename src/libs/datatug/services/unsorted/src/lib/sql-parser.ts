@@ -1,7 +1,7 @@
 export interface IAstRecordset {
   schema?: string;
   name: string;
-  alias: string;
+  alias?: string;
 }
 
 type JoinType = 'inner' | 'left' | 'right' | 'cross';
@@ -14,8 +14,8 @@ export interface IAstJoin extends IAstRecordset {
 }
 
 export interface IAstQuery {
-  from?: IAstRecordset;
-  joins?: IAstJoin[];
+  readonly from?: IAstRecordset;
+  readonly joins?: IAstJoin[];
   orderBy: string[];
 }
 
