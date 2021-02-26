@@ -57,7 +57,7 @@ export class QueryContextSqlService {
     const recordsets = this.allAstRecordset();
     recordsets.forEach(rs => {
       this.tableService
-        .getTableMeta({repository: this.repository, catalog: this.catalog, server: this.server, schema: rs.schema, name: rs.name})
+        .getTableMeta({...this.target, schema: rs.schema, name: rs.name})
         .subscribe({
           next: this.processTable,
           error: this.errorLogger.logErrorHandler(

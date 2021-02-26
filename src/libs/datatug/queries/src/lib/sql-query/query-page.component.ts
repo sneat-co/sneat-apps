@@ -33,6 +33,7 @@ export class QueryPage implements AfterViewInit {
   public sql = '';
   public colsTab: 'group' | 'order' = 'order';
   public targetCatalog: string;
+  public targetServer: string;
   public queryAst: IAstQuery;
   public projectContext: IProjectContext;
   public response: IExecuteResponse;
@@ -65,6 +66,20 @@ export class QueryPage implements AfterViewInit {
   ) {
     console.log('QueryPage.constructor()');
     this.query = history.state.query as IQueryDef;
+
+    this.route.queryParamMap.subscribe({
+      next: queryParams => {
+        this.targetServer = queryParams.get('server');
+        this.targetCatalog = queryParams.get('catalog');
+        this.queryContextSqlService.setTarget({
+          repository: this.projectContext.repoId,
+          project: this.projectContext.projectId,
+          driver: 'sqlserver',
+          server: this.targetServer,
+          catalog: this.targetCatalog,
+        })
+      }
+    });
     if (location.hash.startsWith('#text=')) {
       this.sql = decodeURIComponent(location.hash.substr(6).replace(/\+/g, '%20'));
       this.onSqlChanged();
@@ -91,8 +106,13 @@ export class QueryPage implements AfterViewInit {
             this.onSqlChanged();
           }
         }
-        queryContextSqlService.setRepository(projContext.repoId);
-        queryContextSqlService.setCatalog('DcStore'); // TODO: remove hardcoded
+        queryContextSqlService.setTarget({
+          repository: projContext.repoId,
+          project: projContext.projectId,
+          catalog: this.targetCatalog,
+          driver: 'sqlserver',
+          server: this.targetServer,
+        });
 
         this.queryNamePlaceholder = queryId ? 'Name is required field' : 'New query - type name here to save';
       },
