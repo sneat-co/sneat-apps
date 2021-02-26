@@ -22,9 +22,10 @@ export interface IAstQuery {
 export class SqlParser {
   // private readonly reFrom = .compile();
   // private readonly reJoin = .compile();
-
+  //a = //
   // This is a global regex - be careful
-  private readonly reJoin = /(?<=\s+)(--+\s*)?(?:(INNER|LEFT|RIGHT|CROSS)\s+?)JOIN\s+(\w+)(?:\s+AS)?\s+(\w+)(?:\s+ON\s+(.+?\n))?/ig;
+  private readonly reJoin = /(?<=\s+)(--+\s*)?(?:(INNER|LEFT|RIGHT|CROSS)\s+?)JOIN\s+(?:(?:(\w+)\.)(\w+))(?:(?:\s+AS)?\s+(\w+))(?:\s+ON\s+(.+?\n))?/ig;
+  // private readonly reJoin = /(?<=\s+)(--+\s*)?(?:(INNER|LEFT|RIGHT|CROSS)\s+?)JOIN\s+(?:(?:(\w+)\.)(\w+))(?:(?:\s+AS)?\s+(\w+))?(?:\s+ON\s+(.+?\n))?/ig;
   private readonly reFrom = /FROM\s+(?:(?:(\w+)\.)(\w+))(?:(?:\s+AS)?\s+(\w+))?/i;
   private readonly reOrderBy = /ORDER\s+BY\s+(.+)$/i;
 
@@ -35,7 +36,7 @@ export class SqlParser {
       q = {
         ...q,
         from: {
-          schema: from[1],
+          schema: from[1] || 'dbo',
           name: from[2],
           alias: from[3]
         }
@@ -50,8 +51,9 @@ export class SqlParser {
           comment: m[1],
           disabled: !!m[1],
           side: m[2] as JoinType,
-          name: m[3],
-          alias: m[4],
+          schema: m[3] || 'dbo',
+          name: m[4],
+          alias: m[5],
         })
       }
     }

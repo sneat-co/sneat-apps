@@ -97,7 +97,22 @@
           </ion-item>
         </ng-container>
       </ion-card>
+
+      <ion-card *ngIf="this.suggestedJoins?.length">
+        <ion-list>
+          <ion-item *ngFor="let sj of suggestedJoins">
+            <ion-label *ngIf="sj.to">{{sj.to.recordset.schema}}.{{sj.to.recordset.name}}</ion-label>
+            <ion-label *ngIf="!sj.to">[{{sj|json}}]</ion-label>
+            <ion-buttons slot="end">
+              <ion-button color="medium" (click)="addJoin(sj, 'left')" title="Add LEFT join"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+              <ion-button color="medium" (click)="addJoin(sj, 'inner')" title="Add INNER join"><ion-icon name="reorder-two-outline"></ion-icon></ion-button>
+              <ion-button color="medium" (click)="addJoin(sj, 'right')" title="Add RIGHT join"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+      </ion-card>
     </ion-col>
+
     <ion-col size-md="4" class="hidden-md-down ion-no-padding">
       <h3 class="ion-margin-start">Columns</h3>
       <ion-card>

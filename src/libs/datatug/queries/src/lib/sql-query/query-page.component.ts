@@ -6,7 +6,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ICommandResponseWithRecordset, IExecuteRequest, IQueryDef, ISqlCommandRequest} from '@sneat/datatug/models';
 import {Coordinator} from '@sneat/datatug/executor';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ICanJoin, QueriesService, QueryContextSqlService} from '@sneat/datatug/services/unsorted';
+import {ICanJoin, ISqlQueryTarget, QueriesService, QueryContextSqlService} from '@sneat/datatug/services/unsorted';
 import {IExecuteResponse, IRecordset} from '@sneat/datatug/dto';
 import {RandomId} from '../../../../../random/src/lib/auto-id';
 
@@ -32,8 +32,6 @@ export class QueryPage implements AfterViewInit {
   public envId = 'local';
   public sql = '';
   public colsTab: 'group' | 'order' = 'order';
-  public targetCatalog: string;
-  public targetServer: string;
   public queryAst: IAstQuery;
   public projectContext: IProjectContext;
   public response: IExecuteResponse;
@@ -52,9 +50,9 @@ export class QueryPage implements AfterViewInit {
     viewportMargin: Infinity,
     style: {height: 'auto'},
   };
-  private readonly sqlParser = new SqlParser();
-
   public suggestedJoins: ICanJoin[];
+  private readonly sqlParser = new SqlParser();
+  private target: ISqlQueryTarget;
 
   constructor(
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -64,26 +62,26 @@ export class QueryPage implements AfterViewInit {
     private readonly queriesService: QueriesService,
     private readonly coordinator: Coordinator,
   ) {
-    console.log('QueryPage.constructor()');
+    console.log('QueryPage.constructor()', location.hash);
     this.query = history.state.query as IQueryDef;
 
-    this.route.queryParamMap.subscribe({
-      next: queryParams => {
-        this.targetServer = queryParams.get('server');
-        this.targetCatalog = queryParams.get('catalog');
-        this.queryContextSqlService.setTarget({
-          repository: this.projectContext.repoId,
-          project: this.projectContext.projectId,
-          driver: 'sqlserver',
-          server: this.targetServer,
-          catalog: this.targetCatalog,
-        })
-      }
-    });
     if (location.hash.startsWith('#text=')) {
       this.sql = decodeURIComponent(location.hash.substr(6).replace(/\+/g, '%20'));
       this.onSqlChanged();
     }
+
+    this.route.queryParamMap.subscribe({
+      next: queryParams => {
+        this.target = {
+          ...(this.target || {}),
+          server: queryParams.get('server'),
+          catalog: queryParams.get('catalog'),
+          driver: queryParams.get('driver') || 'sqlserver',
+        } as ISqlQueryTarget;
+        console.log('target', this.target);
+        this.updateQueryContext();
+      }
+    });
     this.route.paramMap.subscribe({
       next: paramMap => {
         console.log('QueryPage.constructor() => paramMap:', paramMap);
@@ -92,12 +90,21 @@ export class QueryPage implements AfterViewInit {
           projectId: paramMap.get('projectId'),
           repoId: paramMap.get('repoId'),
         };
+        this.projectContext = projContext;
+        if (projContext.repoId && projContext.projectId) {
+          this.target = {
+            ...(this.target || {}),
+            repository: projContext.repoId,
+            project: projContext.projectId,
+          } as ISqlQueryTarget;
+          console.log('target', this.target);
+          this.updateQueryContext();
+        }
         if (queryId && (
           queryId !== this.queryId ||
           projContext.projectId !== this.projectContext?.projectId ||
           projContext.repoId !== this.projectContext?.repoId
         )) {
-          this.projectContext = projContext;
           this.queryId = queryId;
           this.loadQuery(queryId);
         } else if (!queryId) {
@@ -106,13 +113,6 @@ export class QueryPage implements AfterViewInit {
             this.onSqlChanged();
           }
         }
-        queryContextSqlService.setTarget({
-          repository: projContext.repoId,
-          project: projContext.projectId,
-          catalog: this.targetCatalog,
-          driver: 'sqlserver',
-          server: this.targetServer,
-        });
 
         this.queryNamePlaceholder = queryId ? 'Name is required field' : 'New query - type name here to save';
       },
@@ -125,6 +125,13 @@ export class QueryPage implements AfterViewInit {
       },
       error: this.errorLogger.logErrorHandler('failed to get suggested join'),
     });
+  }
+
+  private updateQueryContext(): void {
+    console.log('updateQueryContext()', this.target);
+    if (this.target.repository && this.target.project && this.target.driver && this.target.server && this.target.catalog) {
+      this.queryContextSqlService.setTarget(this.target);
+    }
   }
 
   public get isChanged(): boolean {
@@ -235,6 +242,25 @@ export class QueryPage implements AfterViewInit {
     alert('Not implemented yet');
   }
 
+  public addJoin(sj: ICanJoin, joinType: 'inner' | 'right' | 'left'): void {
+    alert('Sorry, not implemented yed');
+  }
+
+  protected onSqlChanged(): void {
+    const query = this.query;
+    this.queryAst = this.queryContextSqlService.setSql(this.sql);
+    if (query) {
+      if (!this.target.catalog || !query.targets.find(t => t.catalog === this.target.catalog)) {
+        this.target = {
+          ...(this.target || {}),
+          catalog: query.targets?.length && query.targets[0].catalog,
+        } as ISqlQueryTarget;
+        this.updateQueryContext();
+      }
+    }
+    console.log('this.queryAst:', this.queryAst);
+  }
+
   private loadQuery(queryId: string): void {
     console.log('QueryPage.loadQuery()', queryId);
     this.queriesService.getQuery(this.projectContext, this.queryId).subscribe({
@@ -247,16 +273,5 @@ export class QueryPage implements AfterViewInit {
       },
       error: this.errorLogger.logErrorHandler('Failed to get query by id'),
     })
-  }
-
-  protected onSqlChanged(): void {
-    const query = this.query;
-    this.queryAst = this.sqlParser.parseQuery(this.sql);
-    if (query) {
-      if (!this.targetCatalog || !query.targets.find(t => t.catalog === this.targetCatalog)) {
-        this.targetCatalog = query.targets?.length && query.targets[0].catalog
-      }
-    }
-    console.log('this.queryAst:', this.queryAst);
   }
 }
