@@ -6,7 +6,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ICommandResponseWithRecordset, IExecuteRequest, IQueryDef, ISqlCommandRequest} from '@sneat/datatug/models';
 import {Coordinator} from '@sneat/datatug/executor';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {QueriesService, QueryContextSqlService} from '@sneat/datatug/services/unsorted';
+import {ICanJoin, QueriesService, QueryContextSqlService} from '@sneat/datatug/services/unsorted';
 import {IExecuteResponse, IRecordset} from '@sneat/datatug/dto';
 import {RandomId} from '../../../../../random/src/lib/auto-id';
 
@@ -53,6 +53,8 @@ export class QueryPage implements AfterViewInit {
   };
   private readonly sqlParser = new SqlParser();
 
+  public suggestedJoins: ICanJoin[];
+
   constructor(
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
     private readonly route: ActivatedRoute,
@@ -89,9 +91,19 @@ export class QueryPage implements AfterViewInit {
             this.onSqlChanged();
           }
         }
+        queryContextSqlService.setRepository(projContext.repoId);
+        queryContextSqlService.setCatalog('DcStore'); // TODO: remove hardcoded
+
         this.queryNamePlaceholder = queryId ? 'Name is required field' : 'New query - type name here to save';
       },
       error: this.errorLogger.logErrorHandler('Failed to get query params from activated router'),
+    });
+
+    queryContextSqlService.suggestedJoins.subscribe({
+      next: suggestedJoins => {
+        this.suggestedJoins = suggestedJoins;
+      },
+      error: this.errorLogger.logErrorHandler('failed to get suggested join'),
     });
   }
 

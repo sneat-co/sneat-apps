@@ -1,9 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
-import {TableService} from './table.service';
+import {ISqlQueryTarget, TableService} from './table.service';
 import {IAstQuery, IAstRecordset, SqlParser} from './sql-parser';
 import {IForeignKey, ITableFull} from '@sneat/datatug/models';
 import {BehaviorSubject} from 'rxjs';
-import {ErrorLogger, IErrorLogger} from "../../../../../logging/src";
+import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 
 const equalRecordsets = (a: IAstRecordset, b: IAstRecordset) => a.name === b.name && a.schema === b.schema;
@@ -13,8 +13,10 @@ export class QueryContextSqlService {
 
   private readonly sqlParser = new SqlParser();
 
+  private target: ISqlQueryTarget;
   private catalog: string;
   private repository: string;
+  private server: string;
   private ast: IAstQuery;
   private tables: ITableFull[] = [];
 
@@ -32,12 +34,8 @@ export class QueryContextSqlService {
   ) {
   }
 
-  public setRepository(repository: string): void {
-    this.repository = repository;
-  }
-
-  public setCatalog(catalog: string): void {
-    this.catalog = catalog;
+  public setTarget(target: ISqlQueryTarget): void {
+    this.target = target;
   }
 
   public setSql(sql: string): IAstQuery {
@@ -59,7 +57,7 @@ export class QueryContextSqlService {
     const recordsets = this.allAstRecordset();
     recordsets.forEach(rs => {
       this.tableService
-        .getTableMeta({repository: this.repository, catalog: this.catalog, schema: rs.schema, name: rs.name})
+        .getTableMeta({repository: this.repository, catalog: this.catalog, server: this.server, schema: rs.schema, name: rs.name})
         .subscribe({
           next: this.processTable,
           error: this.errorLogger.logErrorHandler(
