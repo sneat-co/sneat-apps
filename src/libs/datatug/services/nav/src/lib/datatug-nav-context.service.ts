@@ -110,7 +110,7 @@ export class DatatugNavContextService {
     if (target?.repoId !== projectContext?.repoId || target?.projectId !== projectContext?.brief?.id) {
       this.projectContextService.setCurrent({projectId: projectContext?.brief?.id, repoId: projectContext?.repoId})
     }
-    if (projectContext.brief) {
+    if (projectContext?.brief?.id) {
       this.projectService
         .getSummary({repoId: projectContext.repoId, projectId: projectContext.brief.id})
         .subscribe({
@@ -124,7 +124,7 @@ export class DatatugNavContextService {
               summary = {...summary, id: projectContext.brief.id};
             }
             const currentProj = this.$currentProj.value;
-            if (currentProj?.brief?.id === summary.id || true) {
+            if (currentProj?.brief?.id === summary.id) {
               this.$currentProj.next({...currentProj, summary});
             }
           },

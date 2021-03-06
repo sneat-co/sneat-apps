@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IProjectSummary, ITableFull} from '@sneat/datatug/models';
-import {PrivateTokenStoreService} from './private-token-store.service';
 import {map, mergeMap} from 'rxjs/operators';
+import {PrivateTokenStoreService} from "@sneat/auth";
 
 @Injectable()
 export class TableService {

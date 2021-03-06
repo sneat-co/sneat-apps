@@ -3,19 +3,21 @@ import {DatatugMenuUnsignedComponent} from './datatug-menu-unsigned.component';
 import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
-	declarations: [
-		DatatugMenuUnsignedComponent,
-	],
-	exports: [
-		DatatugMenuUnsignedComponent,
-	],
-	imports: [
-		IonicModule,
-		FormsModule,
-		CommonModule,
-	],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    IonicModule,
+  ],
+  declarations: [
+    DatatugMenuUnsignedComponent,
+  ],
+  exports: [
+    DatatugMenuUnsignedComponent,
+  ],
 })
 export class DatatugMenuUnsignedModule {
 }

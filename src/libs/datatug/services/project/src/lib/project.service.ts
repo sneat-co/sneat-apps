@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {getRepoUrl} from '@sneat/datatug/nav';
 import {GITHUB_REPO, GITLAB_REPO_PREFIX, IProjectContext} from '@sneat/datatug/core';
 import {IProjectFull, IProjectSummary} from '@sneat/datatug/models';
-import {PrivateTokenStoreService} from '@sneat/datatug/services/unsorted';
+import {PrivateTokenStoreService} from '@sneat/auth';
 
 @Injectable()
 export class ProjectService {
@@ -95,6 +95,7 @@ export class ProjectService {
         url: string;
         headers?: { [name: string]: string };
       }
+
       let connectTo: Observable<urlAndHeaders>;
       if (repoId === GITHUB_REPO) {
         const [repo, org] = projectId.split('@')
@@ -108,7 +109,7 @@ export class ProjectService {
           })));
       }
       return connectTo.pipe(
-        mergeMap( request => this.http
+        mergeMap(request => this.http
           .get<IProjectSummary>(request.url, {headers: request.headers})
           .pipe(map(p => {
             if (p.id === projectId) {

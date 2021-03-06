@@ -67,7 +67,9 @@ export class RepoPage implements OnInit, OnDestroy {
 		this.destroyed.next();
 	}
 
-	go(project: IProjectBase): void {
+	public goProject(project: IProjectBase, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
 		this.repoId
 			.pipe(first())
 			.subscribe(repoId => this.nav.goProject(repoId, project.id));

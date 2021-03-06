@@ -18,9 +18,9 @@
 			<ion-item-divider>
 				<ion-label>Projects</ion-label>
 			</ion-item-divider>
-			<ion-item *ngFor="let project of projects" tappable (click)="go(project)">
+			<ion-item *ngFor="let project of projects" tappable (click)="goProject(project, $event)" [routerLink]="'project/' + project.id">
 				<ion-label>
-					<h3>{{project.title}}</h3>
+          <h3>{{project.title || project.id}}</h3>
 				</ion-label>
 			</ion-item>
 		</ion-list>

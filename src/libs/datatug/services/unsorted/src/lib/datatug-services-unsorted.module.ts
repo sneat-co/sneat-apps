@@ -9,9 +9,14 @@ import {RecordsetService} from './recordset.service';
 import {VariableService} from './variable.service';
 import {TableService} from './table.service';
 import {QueryContextSqlService} from './query-context-sql.service';
+import {SneatAuthModule} from "@sneat/auth";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  imports: [],
+  imports: [
+    HttpClientModule,
+    SneatAuthModule,
+  ],
   providers: [
     DbServerService,
     EntityService,

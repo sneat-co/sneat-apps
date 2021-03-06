@@ -7,9 +7,6 @@ const tokenKey = (domain: string, projectId: string): string => {
 
 @Injectable()
 export class PrivateTokenStoreService {
-  constructor() {
-  }
-
 
   public getPrivateToken(domain: string, projectId: string): Observable<string> {
     const key = tokenKey(domain, projectId);

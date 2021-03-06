@@ -1,16 +1,15 @@
 import {NgModule} from '@angular/core';
 import {ProjectService} from './project.service';
 import {ProjectContextService} from './project-context.service';
-import {PrivateTokenStoreModule, PrivateTokenStoreService} from '@sneat/datatug/services/unsorted';
+import {SneatAuthModule} from '@sneat/auth';
 
 @NgModule({
   imports: [
-    PrivateTokenStoreModule
+    SneatAuthModule,
   ],
   providers: [
     ProjectService,
     ProjectContextService,
-    PrivateTokenStoreService,
   ]
 })
 export class DatatugServicesProjectModule {

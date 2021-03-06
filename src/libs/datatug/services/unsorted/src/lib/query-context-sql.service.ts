@@ -14,9 +14,9 @@ export class QueryContextSqlService {
   private readonly sqlParser = new SqlParser();
 
   private target: ISqlQueryTarget;
-  private catalog: string;
-  private repository: string;
-  private server: string;
+  private catalogId: string;
+  private repositoryId: string;
+  private serverId: string;
   private ast: IAstQuery;
   private tables: ITableFull[] = [];
 
@@ -32,6 +32,14 @@ export class QueryContextSqlService {
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
     private readonly tableService: TableService,
   ) {
+  }
+
+  public setRepository(repoId: string): void {
+    this.repositoryId = repoId;
+  }
+
+  public setCatalog(catalogId: string): void {
+    this.catalogId = catalogId;
   }
 
   public setTarget(target: ISqlQueryTarget): void {
@@ -57,7 +65,15 @@ export class QueryContextSqlService {
     const recordsets = this.allAstRecordset();
     recordsets.forEach(rs => {
       this.tableService
-        .getTableMeta({repository: this.repository, catalog: this.catalog, server: this.server, schema: rs.schema, name: rs.name})
+        .getTableMeta({
+          project: this.target.project,
+          driver: this.target.driver,
+          repository: this.repositoryId,
+          catalog: this.catalogId,
+          server: this.serverId,
+          schema: rs.schema,
+          name: rs.name
+        })
         .subscribe({
           next: this.processTable,
           error: this.errorLogger.logErrorHandler(
