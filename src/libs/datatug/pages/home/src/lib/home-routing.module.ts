@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DatatugHomePage } from './datatug-home-page.component';
+import { DatatugHomePageComponent } from './datatug-home-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DatatugHomePage,
+    component: DatatugHomePageComponent,
   },
 ];
 

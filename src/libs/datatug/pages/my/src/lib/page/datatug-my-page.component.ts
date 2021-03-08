@@ -6,7 +6,7 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {SneatUserService} from '@sneat/auth';
 
 @Component({
-  selector: 'datatug-my',
+  selector: 'sneat-datatug-my',
   templateUrl: './datatug-my-page.component.html',
   styleUrls: ['./datatug-my-page.component.scss'],
 })

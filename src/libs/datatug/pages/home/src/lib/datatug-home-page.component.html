@@ -4,20 +4,52 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="cards">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">DataTug.app (condense)</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <h1>DataTug.app</h1>
-    <p>
-      Your data workbench - do not repeat yourself & feel the power of context!
-    </p>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        DataTug.app
+      </ion-card-title>
+      <ion-card-subtitle>
+        Your data workbench - do not repeat yourself & feel the power of context!
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        What to put here?
+      </p>
+    </ion-card-content>
+  </ion-card>
 
-    <hr>
-    <sneat-copyright></sneat-copyright>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>You personal workspace</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Keep list of all <a href="my">your DataTug projects</a> & quick access to the most recent ones.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Demo projects</ion-card-title>
+    </ion-card-header>
+    <ion-list>
+      <ion-item>
+        <ion-label>DataTug Basic Demo Project</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <sneat-copyright></sneat-copyright>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

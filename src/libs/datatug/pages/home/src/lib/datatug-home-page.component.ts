@@ -4,9 +4,8 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 @Component({
   selector: 'sneat-home',
   templateUrl: 'datatug-home-page.component.html',
-  styleUrls: ['datatug-home-page.component.scss'],
 })
-export class DatatugHomePage {
+export class DatatugHomePageComponent {
   constructor(
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
   ) {

@@ -24,9 +24,11 @@ import {DatatugMenuUnsignedModule} from './datatug-menu-unsigned/datatug-menu-un
 import {DatatugCoreModule} from '@sneat/datatug/core';
 import {DatatugServicesNavModule} from '@sneat/datatug/services/nav';
 import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
+import {CommonModule} from "@angular/common";
+import { DatatugMenuComponent } from './datatug-menu/datatug-menu.component';
 
 @NgModule({
-  declarations: [DatatugAppComponent],
+  declarations: [DatatugAppComponent, DatatugMenuComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -37,6 +39,7 @@ import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
     AngularFirestoreModule,
     DatatugCoreModule,
     DatatugAppRoutingModule,
+    CommonModule,
     CoreModule,
     SneatAppModule,
     SneatLoggingModule,

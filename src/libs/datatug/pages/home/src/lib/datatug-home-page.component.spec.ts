@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DatatugHomePage } from './datatug-home-page.component';
+import { DatatugHomePageComponent } from './datatug-home-page.component';
 
 describe('HomePage', () => {
-  let component: DatatugHomePage;
-  let fixture: ComponentFixture<DatatugHomePage>;
+  let component: DatatugHomePageComponent;
+  let fixture: ComponentFixture<DatatugHomePageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DatatugHomePage],
+      declarations: [DatatugHomePageComponent],
       imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DatatugHomePage);
+    fixture = TestBed.createComponent(DatatugHomePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
