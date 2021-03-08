@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {ISqlQueryTarget, TableService} from './table.service';
+import {IDbCatalogObjectWithRefs, ISqlQueryTarget, TableService} from './table.service';
 import {IAstQuery, IAstRecordset, SqlParser} from './sql-parser';
 import {IForeignKey, ITableFull} from '@sneat/datatug/models';
 import {BehaviorSubject} from 'rxjs';
@@ -14,19 +14,17 @@ export class QueryContextSqlService {
   private readonly sqlParser = new SqlParser();
 
   private target: ISqlQueryTarget;
-  private catalogId: string;
-  private repositoryId: string;
-  private serverId: string;
+  private catalog: string;
+  private repository: string;
+  private server: string;
+  private sql: string;
   private ast: IAstQuery;
   private tables: ITableFull[] = [];
+  private dbCatalogRefs: IDbCatalogObjectWithRefs[];
 
   private _suggestedJoins = new BehaviorSubject<ICanJoin[]>(undefined);
 
   public readonly suggestedJoins = this._suggestedJoins.asObservable();
-
-  private static getAutoAlias(name: string): string {
-    return undefined;
-  }
 
   constructor(
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -34,19 +32,23 @@ export class QueryContextSqlService {
   ) {
   }
 
-  public setRepository(repoId: string): void {
-    this.repositoryId = repoId;
-  }
-
-  public setCatalog(catalogId: string): void {
-    this.catalogId = catalogId;
+  private static getAutoAlias(name: string): string {
+    return undefined;
   }
 
   public setTarget(target: ISqlQueryTarget): void {
     this.target = target;
+    this.tableService.getDbCatalogRefs(target).subscribe({
+      next: dbCatalogRefs => {
+        this.dbCatalogRefs = dbCatalogRefs;
+        this.updateMeta();
+      },
+      error: this.errorLogger.logErrorHandler(`failed to get DB catalog ref`),
+    })
   }
 
   public setSql(sql: string): IAstQuery {
+    this.sql = sql;
     this.ast = this.sqlParser.parseQuery(sql);
     requestAnimationFrame(() => {
       this.updateMeta();
@@ -55,30 +57,25 @@ export class QueryContextSqlService {
   }
 
   private allAstRecordset(): IAstRecordset[] {
-    return [
+    console.log('allAstRecordset(): ast:', this.ast)
+    return this.ast && [
       this.ast.from,
       ...this.ast.joins,
-    ].filter(rs => this.tables.find(t => t.name === rs.name && t.schema === rs.schema));
+    ]; //.filter(rs => this.tables.find(t => t.name === rs.name && t.schema === rs.schema));
   }
 
   private updateMeta(): void {
     const recordsets = this.allAstRecordset();
-    recordsets.forEach(rs => {
-      this.tableService
-        .getTableMeta({
-          project: this.target.project,
-          driver: this.target.driver,
-          repository: this.repositoryId,
-          catalog: this.catalogId,
-          server: this.serverId,
-          schema: rs.schema,
-          name: rs.name
-        })
-        .subscribe({
-          next: this.processTable,
-          error: this.errorLogger.logErrorHandler(
-            `failed to load table metadata for [${rs.schema}].[${rs.name}]`),
-        });
+    console.log('updateMeta(): recordsets:', recordsets, 'SQL:', this.sql);
+    recordsets?.forEach(rs => {
+      this.updateSuggestedJoins(rs);
+      // this.tableService
+      //   .getTableMeta({...this.target, schema: rs.schema, name: rs.name})
+      //   .subscribe({
+      //     next: this.processTable,
+      //     error: this.errorLogger.logErrorHandler(
+      //       `failed to load table metadata for [${rs.schema}].[${rs.name}]`),
+      //   });
     })
   }
 
@@ -89,9 +86,14 @@ export class QueryContextSqlService {
     this.updateSuggestedJoins(table);
   }
 
-  private updateSuggestedJoins(table: ITableFull): void {
-    const recordset = this.allAstRecordset().find(rs => rs.name === table.name && rs.schema === table.schema);
+  private updateSuggestedJoins(recordset: IAstRecordset): void {
+    // const recordset = this.allAstRecordset().find(rs => rs.name === table.name && rs.schema === table.schema);
     if (!recordset) {
+      return;
+    }
+
+    const table = this.dbCatalogRefs?.find(o => o.name === recordset.name && o.schema === recordset.schema)
+    if (!table) {
       return;
     }
     if (table.foreignKeys?.length) {
@@ -107,19 +109,19 @@ export class QueryContextSqlService {
       ?.find(sj => sj.to.recordset.name === rs.name && sj.to.recordset.schema === rs.schema);
   }
 
-  private updateSuggestedJoinForRefsBy(rs: IAstRecordset, table: ITableFull): void {
+  private updateSuggestedJoinForRefsBy(rs: IAstRecordset, table: IDbCatalogObjectWithRefs): void {
     return this.updateSuggestedJoinFor(table, 'refBy', table.referencedBy.map(refBy => ({
       rs: {schema: refBy.schema, name: refBy.name},
     })));
   }
 
-  private updateSuggestedJoinForForeignKeys(rs: IAstRecordset, table: ITableFull): void {
+  private updateSuggestedJoinForForeignKeys(rs: IAstRecordset, table: IDbCatalogObjectWithRefs): void {
     return this.updateSuggestedJoinFor(table, 'fk', table.foreignKeys.map(fk => ({
       fk, rs: {schema: fk.refTable.schema, name: fk.refTable.name},
     })));
   }
 
-  private updateSuggestedJoinFor(table: ITableFull, reason: JoinReason, tos: IJoinToRef[]): void {
+  private updateSuggestedJoinFor(table: IDbCatalogObjectWithRefs, reason: JoinReason, tos: IJoinToRef[]): void {
     let joins = [...this._suggestedJoins.value || []];
     let updated = false;
     tos.forEach(to => {
@@ -133,9 +135,10 @@ export class QueryContextSqlService {
         sj = {...sj, from: [...(sj.from || []), {recordset: to.rs, fk: to.fk, table, reason}]};
         joins = joins.map(j => equalRecordsets(j.to.recordset, to.rs) ? sj : j)
       } else {
-        if (joins.indexOf(sj) < 0) {
-          joins.push(sj);
-        }
+        joins.push({
+          to: {recordset: to.rs},
+          from: [{recordset: to.rs, fk: to.fk, table, reason}]
+        })
       }
     });
     if (updated) {
@@ -154,13 +157,13 @@ export type JoinReason = 'fk' | 'refBy';
 export interface IJoinFrom {
   reason: JoinReason;
   recordset: IAstRecordset;
-  table: ITableFull;
+  table: IDbCatalogObjectWithRefs;
   fk?: IForeignKey;
 }
 
 export interface IJoinTo {
   recordset?: IAstRecordset;
-  table?: ITableFull;
+  table?: IDbCatalogObjectWithRefs;
 }
 
 export interface ICanJoin {
