@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IForeignKey, IPrimaryKey, IProjectSummary, IReferencedBy, ITableFull} from '@sneat/datatug/models';
-import {PrivateTokenStoreService} from './private-token-store.service';
 import {map, mergeMap} from 'rxjs/operators';
+import {PrivateTokenStoreService} from "@sneat/auth";
 
 @Injectable()
 export class TableService {
@@ -20,8 +20,7 @@ export class TableService {
       url: string;
       headers?: { [name: string]: string };
     }
-    let connectTo: Observable<urlAndHeaders>;
-    connectTo = this.privateTokenStoreService.getPrivateToken(r.repository, r.project).pipe(map(accessToken => (
+    const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService.getPrivateToken(r.repository, r.project).pipe(map(accessToken => (
       {
         url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
         headers: {"PRIVATE-TOKEN": "QPgjyFaJwq29x9h7pVxu"}
@@ -38,8 +37,7 @@ export class TableService {
       url: string;
       headers?: { [name: string]: string };
     }
-    let connectTo: Observable<urlAndHeaders>;
-    connectTo = this.privateTokenStoreService.getPrivateToken(r.repository, r.project).pipe(map(accessToken => (
+    const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService.getPrivateToken(r.repository, r.project).pipe(map(accessToken => (
       {
         url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
         headers: {"PRIVATE-TOKEN": "QPgjyFaJwq29x9h7pVxu"}
