@@ -50,6 +50,7 @@ To support auto-imports in JetBrains IDE make sure to manually add `@sneat/<LIB_
 ```
 pnpx nx g @trellisorg/make-buildable:migrate
 ```
+https://www.npmjs.com/package/@trellisorg/make-buildable
 
 ## To create an Angular component
 ```
