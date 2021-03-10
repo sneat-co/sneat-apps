@@ -9,7 +9,7 @@ export * from './lib/env-db/env-db.module';
 export * from './lib/env-db-table/env-db-table.module';
 export * from './lib/environment/environment.module';
 export * from './lib/environments/environments.module';
-export * from './lib/project/project.module';
+export * from './lib/project/project-page.module';
 export * from '../../../queries/src/lib/queries/queries.module';
 export * from '../../../queries/src/lib/sql-query/query.module';
 export * from './lib/repo/repo.module';

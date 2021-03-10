@@ -404,7 +404,7 @@
       "projectType": "application",
       "root": "apps/datatug",
       "sourceRoot": "apps/datatug/src",
-      "prefix": "sneat",
+      "prefix": "datatug",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

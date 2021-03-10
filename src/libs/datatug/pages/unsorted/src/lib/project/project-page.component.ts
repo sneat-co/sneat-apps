@@ -22,9 +22,9 @@ import {IRecord} from '@sneat/data';
 
 @Component({
 	selector: 'datatug-project',
-	templateUrl: './project.page.html',
+	templateUrl: './project-page.component.html',
 })
-export class ProjectPage implements OnInit, OnDestroy {
+export class ProjectPageComponent implements OnInit, OnDestroy {
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	readonly Environment = ProjectItem.Environment as const;

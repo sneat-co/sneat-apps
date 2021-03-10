@@ -9,7 +9,7 @@ import {DatatugNavService} from '@sneat/datatug/services/nav';
 import {routingParamRepoId} from '@sneat/datatug/routes';
 
 @Component({
-	selector: 'sneat-datatug-repo',
+	selector: 'datatug-repo',
 	templateUrl: './repo-page.component.html',
 })
 export class RepoPageComponent implements OnInit, OnDestroy {
@@ -17,6 +17,8 @@ export class RepoPageComponent implements OnInit, OnDestroy {
 	public repoId: Observable<string>;
 	public projects: IProjectBase[];
 	public error: any;
+
+	public agentIsOffline: boolean;
 
 	private readonly destroyed = new Subject<void>();
 	private readonly agentChanged = new Subject<void>();
@@ -60,7 +62,8 @@ export class RepoPageComponent implements OnInit, OnDestroy {
 				next: projects => this.processRepoProjects(projects),
 				error: err => {
 					if (err.name === 'HttpErrorResponse' && err.ok === false && err.status === 0) {
-						this.error = 'Agent is not available at URL: ' + err.url;
+						this.agentIsOffline = true;
+						// this.error = 'Agent is not available at URL: ' + err.url;
 					} else {
 						this.error = this.errorLogger.logError(err,
 							`Failed to get list of projects hosted by agent [${repoId}]`, {show: false});

@@ -1,0 +1,76 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+			<ion-back-button [defaultHref]="repoId && ('/repo/' + repoId) || undefined"></ion-back-button>
+		</ion-buttons>
+		<ion-title>{{projBrief?.title || 'Project'}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+	<ion-card>
+		<ion-item>
+			<ion-label color="medium" style="font-weight: bold;">ID</ion-label>
+			<ion-input readonly [value]="projBrief?.id" color="medium"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium" style="font-weight: bold;">Agent</ion-label>
+			<ion-input readonly [value]="repoId" color="medium"></ion-input>
+		</ion-item>
+	</ion-card>
+
+	<datatug-card-list [projItemType]="DbModel"
+					   title="DB models"
+					   itemIcon="server-outline"
+					   [isLoading]="!project"
+					   [items]="project?.dbModels"
+					   [getRouterLink]="getItemLink('dbmodel')"
+					   (itemClick)="goDbModel($event)"
+					   [create]="createSchema"
+					   (cardTitleClick)="goProjFolder(DbModel)"
+	></datatug-card-list>
+	<datatug-card-list [projItemType]="Environment"
+					   title="Environments"
+					   itemIcon="earth-outline"
+					   [isLoading]="!project"
+					   [items]="project?.environments"
+					   [create]="createEnvironment"
+					   [getRouterLink]="getItemLink('env')"
+					   (itemClick)="goEnvironment($event)"
+					   (cardTitleClick)="goProjFolder(Environment)"
+	></datatug-card-list>
+	<!--	<datatug-card-list [projItemType]="Entity"-->
+	<!--							 title="Entities"-->
+	<!--							 itemIcon="pricetag-outline"-->
+	<!--							 [isLoading]="!project"-->
+	<!--							 [items]="project?.entities"-->
+	<!--							 [create]="createEntity"-->
+	<!--							 (itemClick)="goEntity($event)"-->
+	<!--							 (cardTitleClick)="goProjFolder(Entity)"></datatug-card-list>-->
+	<datatug-card-list [projItemType]="Board"
+					   title="Boards"
+					   itemIcon="clipboard-outline"
+					   [isLoading]="!project"
+					   [items]="project?.boards"
+					   (cardTitleClick)="goProjFolder(Board)"
+					   (itemClick)="goBoard($event)"
+					   [getRouterLink]="getItemLink('board')"
+	></datatug-card-list>
+	<!--	<datatug-card-list [projItemType]="Agent"-->
+	<!--							 title="Agents"-->
+	<!--							 itemIcon="cube-outline"-->
+	<!--							 [isLoading]="!project"-->
+	<!--							 [items]="project?.agents"-->
+	<!--							 (itemClick)="goEntity($event)"-->
+	<!--							 (cardTitleClick)="goProjFolder(Agent)"-->
+	<!--	></datatug-card-list>-->
+	<!--	<datatug-card-list [projItemType]="Variable"-->
+	<!--						title="Variables"-->
+	<!--						itemIcon="cog-outline"-->
+	<!--						[isLoading]="!project"-->
+	<!--						[items]="undefined"-->
+	<!--						(itemClick)="goEntity($event)"-->
+	<!--						(cardTitleClick)="goFolder(Variable)"-->
+	<!--	></datatug-card-list>-->
+</ion-content>

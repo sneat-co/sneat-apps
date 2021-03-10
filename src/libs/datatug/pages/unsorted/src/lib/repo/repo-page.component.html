@@ -2,7 +2,7 @@
 	<ion-toolbar>
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
-			<ion-back-button defaultHref="/" routerLink="/"></ion-back-button>
+			<ion-back-button defaultHref="/my"></ion-back-button>
 		</ion-buttons>
 		<ion-title>Repository @ {{repoId | async}}</ion-title>
 	</ion-toolbar>
@@ -10,22 +10,33 @@
 
 <ion-content class="cards">
 	<ng-template #showError>
+		agentIsOffline: {{agentIsOffline}}
 		<datatug-error-card [error]="error"></datatug-error-card>
 	</ng-template>
-	<ion-card *ngIf="!error; else showError">
-		<ion-item *ngIf="!projects">
-			<ion-label color="medium">Loading...</ion-label>
-		</ion-item>
-		<ion-list *ngIf="projects">
-			<ion-item-divider>
-				<ion-label>Projects</ion-label>
-			</ion-item-divider>
-			<ion-item *ngFor="let project of projects" tappable (click)="goProject(project, $event)"
-					  [routerLink]="'project/' + project.id">
-				<ion-label>
-					<h3>{{project.title || project.id}}</h3>
-				</ion-label>
+	<ng-container *ngIf="!error; else showError">
+		<ion-card *ngIf="agentIsOffline">
+			<ion-card-header>
+				<ion-card-title color="warning">Agent is offline</ion-card-title>
+			</ion-card-header>
+			<ion-card-content>
+				<p>You need to start the DataTug agent to be able to see it's projects.</p>
+			</ion-card-content>
+		</ion-card>
+		<ion-card *ngIf="!agentIsOffline">
+			<ion-item *ngIf="!projects">
+				<ion-label color="medium">Loading...</ion-label>
 			</ion-item>
-		</ion-list>
-	</ion-card>
+			<ion-list *ngIf="projects">
+				<ion-item-divider>
+					<ion-label>Projects</ion-label>
+				</ion-item-divider>
+				<ion-item *ngFor="let project of projects" tappable (click)="goProject(project, $event)"
+						  [routerLink]="'project/' + project.id">
+					<ion-label>
+						<h3>{{project.title || project.id}}</h3>
+					</ion-label>
+				</ion-item>
+			</ion-list>
+		</ion-card>
+	</ng-container>
 </ion-content>

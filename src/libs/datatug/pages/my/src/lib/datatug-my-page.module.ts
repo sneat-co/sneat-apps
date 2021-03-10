@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {MyPageRoutingModule} from './my-routing.module';
 
-import {DatatugMyPage} from './page/datatug-my-page.component';
+import {DatatugMyPageComponent} from './page/datatug-my-page.component';
 import {MyProjectsComponent} from './my-projects/my-projects.component';
 import {MyStoresComponent} from './my-stores/my-stores.component';
 import {MyBaseCardComponent} from './my-base-card-component';
@@ -18,7 +18,7 @@ import {MyBaseCardComponent} from './my-base-card-component';
 		IonicModule,
 		MyPageRoutingModule
 	],
-	declarations: [DatatugMyPage, MyBaseCardComponent, MyProjectsComponent, MyStoresComponent]
+	declarations: [DatatugMyPageComponent, MyBaseCardComponent, MyProjectsComponent, MyStoresComponent]
 })
 export class DatatugMyPageModule {
 }

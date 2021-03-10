@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {DatatugMyPage} from './datatug-my-page.component';
+import {DatatugMyPageComponent} from './datatug-my-page.component';
 
 describe('MyPage', () => {
-	let component: DatatugMyPage;
-	let fixture: ComponentFixture<DatatugMyPage>;
+	let component: DatatugMyPageComponent;
+	let fixture: ComponentFixture<DatatugMyPageComponent>;
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [DatatugMyPage],
+			declarations: [DatatugMyPageComponent],
 			imports: [IonicModule.forRoot()]
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(DatatugMyPage);
+		fixture = TestBed.createComponent(DatatugMyPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	}));
