@@ -24,6 +24,7 @@
 		</ion-card>
 		<ion-card *ngIf="!agentIsOffline">
 			<ion-item *ngIf="!projects">
+				<ion-icon name="hourglass-outline" slot="start"></ion-icon>
 				<ion-label color="medium">Loading...</ion-label>
 			</ion-item>
 			<ion-list *ngIf="projects">

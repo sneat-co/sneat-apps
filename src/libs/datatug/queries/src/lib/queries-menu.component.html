@@ -1,0 +1,14 @@
+<ion-segment [(ngModel)]="tab" class="ion-padding-horizontal">
+	<ion-segment-button value="queries">Queries</ion-segment-button>
+	<ion-segment-button value="project">Project</ion-segment-button>
+</ion-segment>
+<ion-card *ngIf="tab === 'queries'">
+	<ion-item *ngFor="let query of queries" tappable (click)="setActiveQuery(query.id)">
+		<ion-label [color]="query.id === activeQueryId ? 'primary' : undefined">{{query.title || query.id}}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="medium">
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-card>

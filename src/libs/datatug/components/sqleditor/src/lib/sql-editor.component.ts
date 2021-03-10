@@ -19,7 +19,6 @@ import 'codemirror/mode/sql/sql';
 @Component({
   selector: 'datatug-sql',
   templateUrl: './sql-editor.component.html',
-  styleUrls: ['./sql-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SqlEditorComponent implements AfterViewInit, OnChanges {

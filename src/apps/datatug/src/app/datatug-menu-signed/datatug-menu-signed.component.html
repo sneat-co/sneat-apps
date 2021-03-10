@@ -1,95 +1,98 @@
 <ion-card>
-  <ion-list>
-    <ion-item tappable routerLink="/my" routerDirection="root" >
-      <!--    <ion-buttons slot="start" class="ion-no-margin">-->
-      <!--      <ion-button disabled color="medium" >-->
-      <!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
-      <!--      </ion-button>-->
-      <!--    </ion-buttons>-->
-      <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+	<ion-list>
+		<ion-item tappable routerLink="/my" routerDirection="root">
+			<!--    <ion-buttons slot="start" class="ion-no-margin">-->
+			<!--      <ion-button disabled color="medium" >-->
+			<!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
+			<!--      </ion-button>-->
+			<!--    </ion-buttons>-->
+			<ion-icon slot="start" name="person-circle-outline"></ion-icon>
 
-      <ion-label color="medium">{{(firebaseUser$|async)?.displayName}}</ion-label>
-      <ion-buttons slot="end">
-        <ion-button color="medium" title="Settings">
-          <ion-icon name="settings-outline"></ion-icon>
-        </ion-button>
-        <ion-button color="medium" title="Sign-out" (click)="logout()">
-          <ion-icon name="log-out-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
-  </ion-list>
+			<ion-label color="medium">{{(firebaseUser$|async)?.displayName}}</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium" title="Settings">
+					<ion-icon name="settings-outline"></ion-icon>
+				</ion-button>
+				<ion-button color="medium" title="Sign-out" (click)="logout()">
+					<ion-icon name="log-out-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+	</ion-list>
 </ion-card>
 
 <ion-card>
-  <ion-item class="ion-no-padding">
-    <ion-buttons slot="start" class="ion-no-margin">
-      <ion-button routerLink="/" slot="start">
-        <ion-icon name="storefront-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-label color="medium">Repository</ion-label>
-    <ion-select interface="popover" [value]="currentRepoId" (ionChange)="switchRepo($event)">
-      <ion-select-option value="localhost:8989">localhost:8989</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item class="ion-no-padding" *ngIf="currentRepoId">
-    <ion-buttons slot="start" class="ion-no-margin">
-      <ion-button>
-        <ion-icon name="albums-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-label>Project</ion-label>
-    <!--		<ion-select *ngIf="projects?.length"-->
-    <!--						[value]="currentProjectId"-->
-    <!--						(ionChange)="switchProject($event)"-->
-    <!--						interface="popover"-->
-    <!--		>-->
-    <!--			<ion-select-option *ngFor="let p of projects" [value]="p.id">{{p.title || p.id}}</ion-select-option>-->
-    <!--		</ion-select>-->
-    <ion-select interface="popover" [value]="currentProject?.id" *ngIf="projects" (ionChange)="switchProject($event)">
-      <ion-select-option *ngFor="let project of projects" [value]="project.id">
-        {{project.title}}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ng-container *ngIf="currentProject">
-    <ion-item class="ion-no-padding">
-      <ion-buttons slot="start" class="ion-no-margin">
-        <ion-button>
-          <ion-icon name="globe-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-label>
-        <ng-container *ngIf="currentEnvId">Environment</ng-container>
-        <ng-container *ngIf="!currentEnvId">Environments</ng-container>
-        <ion-badge color="light" *ngIf="!currentEnvId && currentProject?.environments" class="ion-margin-start">
-          <ion-text color="medium" style="font-weight: normal">{{currentProject.environments.length}}</ion-text>
-        </ion-badge>
-      </ion-label>
-      <ion-select *ngIf="currentProject?.environments?.length" [value]="currentEnvId" interface="popover"
-                  (ionChange)="switchEnv($event)">
-        <ion-select-option *ngFor="let env of currentProject.environments"
-                           [value]="env.id">{{env.title || env.id}}</ion-select-option>
-      </ion-select>
-      <ion-buttons slot="end" class="ion-no-margin ion-no-padding" style="margin-right: -1em" *ngIf="currentEnvId">
-        <ion-button color="medium" (click)="clearEnv()">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
-    <ion-item class="ion-no-padding" *ngIf="currentEnvId">
-      <ion-buttons slot="start" class="ion-no-margin">
-        <ion-button>
-          <ion-icon name="layers-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-label>DB instance</ion-label>
-      <ion-select value="SomeDb" interface="popover">
-        <ion-select-option>Some DB instance</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ng-container>
+	<ion-item class="ion-no-padding">
+		<ion-buttons slot="start" class="ion-no-margin">
+			<ion-button routerLink="/" slot="start">
+				<ion-icon name="storefront-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-label color="medium">Repository</ion-label>
+		<ion-select interface="popover" [value]="currentRepoId" (ionChange)="switchRepo($event)">
+			<ion-select-option value="localhost:8989">localhost:8989</ion-select-option>
+		</ion-select>
+	</ion-item>
+	<ion-item class="ion-no-padding" *ngIf="currentRepoId">
+		<ion-buttons slot="start" class="ion-no-margin">
+			<ion-button>
+				<ion-icon name="albums-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-label>Project</ion-label>
+		<!--		<ion-select *ngIf="projects?.length"-->
+		<!--						[value]="currentProjectId"-->
+		<!--						(ionChange)="switchProject($event)"-->
+		<!--						interface="popover"-->
+		<!--		>-->
+		<!--			<ion-select-option *ngFor="let p of projects" [value]="p.id">{{p.title || p.id}}</ion-select-option>-->
+		<!--		</ion-select>-->
+		<ion-select interface="popover" [value]="currentProject?.id" *ngIf="projects"
+					(ionChange)="switchProject($event)">
+			<ion-select-option *ngFor="let project of projects" [value]="project.id">
+				{{project.title}}
+			</ion-select-option>
+		</ion-select>
+	</ion-item>
+	<ng-container *ngIf="currentProject">
+		<ion-item class="ion-no-padding">
+			<ion-buttons slot="start" class="ion-no-margin">
+				<ion-button>
+					<ion-icon name="globe-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+			<ion-label>
+				<ng-container *ngIf="currentEnvId">Environment</ng-container>
+				<ng-container *ngIf="!currentEnvId">Environments</ng-container>
+				<ion-badge color="light" *ngIf="!currentEnvId && currentProject?.environments" class="ion-margin-start">
+					<ion-text color="medium"
+							  style="font-weight: normal">{{currentProject.environments.length}}</ion-text>
+				</ion-badge>
+			</ion-label>
+			<ion-select *ngIf="currentProject?.environments?.length" [value]="currentEnvId" interface="popover"
+						(ionChange)="switchEnv($event)">
+				<ion-select-option *ngFor="let env of currentProject.environments"
+								   [value]="env.id">{{env.title || env.id}}</ion-select-option>
+			</ion-select>
+			<ion-buttons slot="end" class="ion-no-margin ion-no-padding" style="margin-right: -1em"
+						 *ngIf="currentEnvId">
+				<ion-button color="medium" (click)="clearEnv()">
+					<ion-icon name="close"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item class="ion-no-padding" *ngIf="currentEnvId">
+			<ion-buttons slot="start" class="ion-no-margin">
+				<ion-button>
+					<ion-icon name="layers-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+			<ion-label>DB instance</ion-label>
+			<ion-select value="SomeDb" interface="popover">
+				<ion-select-option>Some DB instance</ion-select-option>
+			</ion-select>
+		</ion-item>
+	</ng-container>
 </ion-card>
 
 <datatug-context-card *ngIf="currentProjectId" [projectId]="currentProjectId"></datatug-context-card>
@@ -97,16 +100,27 @@
 <datatug-table-meta-card *ngIf="table" [meta]="table?.meta"></datatug-table-meta-card>
 
 <ion-card *ngIf="currentProjectId">
-  <ion-item *ngFor="let page of projTopLevelPages" (click)="goProjPage($event, page.path)" tappable>
-    <!--		[routerLink]="projectPageUrl(page.path)" routerDirection="root"-->
-    <ion-icon slot="start" [name]="page.icon"></ion-icon>
-    <ion-label [class.current]="(currentFolder|async)  === page.path">{{page.title}}</ion-label>
-    <!--		<ion-badge color="medium" *ngIf="page.count && currentProject">{{page.count(currentProject) || 0}}</ion-badge>-->
-    <ion-buttons *ngIf="page.buttons">
-      <ion-button (click)="goProjPage($event, button.path)" *ngFor="let button of page.buttons">
-        <ion-icon [name]="button.icon"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-item>
+	<ion-item *ngFor="let page of projTopLevelPages" (click)="goProjPage($event, page.path)" tappable>
+		<!--		[routerLink]="projectPageUrl(page.path)" routerDirection="root"-->
+		<ion-icon slot="start" [name]="page.icon"></ion-icon>
+		<ion-label [class.current]="(currentFolder|async)  === page.path">{{page.title}}</ion-label>
+		<!--		<ion-badge color="medium" *ngIf="page.count && currentProject">{{page.count(currentProject) || 0}}</ion-badge>-->
+		<ion-buttons *ngIf="page.buttons">
+			<ion-button (click)="goProjPage($event, button.path)" *ngFor="let button of page.buttons">
+				<ion-icon [name]="button.icon"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
 </ion-card>
+
+<ng-template #testContextMenu>
+	<ion-card>
+		<ion-card-content>
+			Test context menu
+		</ion-card-content>
+	</ion-card>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="mainContextMenu"></ng-container>
+
 

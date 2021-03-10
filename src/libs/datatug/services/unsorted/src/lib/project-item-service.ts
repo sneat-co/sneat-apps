@@ -1,7 +1,7 @@
 import {Observable, throwError} from 'rxjs';
 import {startWith, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {RepoProviderService} from '@sneat/datatug/services/repo';
+import {RepoApiService} from '@sneat/datatug/services/repo';
 import {IProjectContext} from '@sneat/datatug/core';
 import {IProjItemBrief} from '@sneat/datatug/models';
 
@@ -10,7 +10,7 @@ const notImplemented = 'not implemented';
 @Injectable()
 export class ProjectItemServiceFactory {
 	public readonly newProjectItemService = (
-		agentProvider: RepoProviderService,
+		agentProvider: RepoApiService,
 		itemsPath: string,
 		itemPath: string,
 	) => new ProjectItemService(agentProvider, itemsPath, itemPath);
@@ -22,7 +22,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	private cache: { [id: string]: ProjItem } = {};
 
 	constructor(
-		private readonly agentProvider: RepoProviderService,
+		private readonly agentProvider: RepoApiService,
 		private readonly itemsPath: string,
 		private readonly itemPath: string,
 	) {
@@ -38,7 +38,9 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		}).pipe(
 			tap(items => {
 				this.cache = {};
-				items.forEach(this.putProjItemToCache)
+				if (items) {
+					items.forEach(this.putProjItemToCache)
+				}
 			}),
 		);
 	}

@@ -13,22 +13,33 @@
 		<ion-icon name="terminal-outline" slot="start"></ion-icon>
 		<ion-label>DataTug app @ localhost:8989</ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="warning" (click)="checkAgent($event)" title="Click to refresh">Not started</ion-button>
-			<ion-button color="primary" href="https://datatug.app/agent" target="_blank" (click)="openHelp($event, 'agent')"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
+			<ion-button color="medium" *ngIf="!agentState">Checking...</ion-button>
+			<ion-button color="success" *ngIf="agentState?.info" [title]="agentState?.info.uptimeMinutes">Running</ion-button>
+			<ion-button color="warning" *ngIf="agentState?.lastCheckedAt && !agentState.info" (click)="checkAgent($event)" title="Click to refresh">offline</ion-button>
+			<ion-button color="primary" href="https://datatug.app/agent" target="_blank"
+						(click)="openHelp($event, 'agent')">
+				<ion-icon name="information-circle-outline"></ion-icon>
+			</ion-button>
 		</ion-buttons>
 	</ion-item>
 	<ion-item tappable (click)="goRepo('cloud')">
 		<ion-icon name="boat-outline" slot="start" color="primary"></ion-icon>
 		<ion-label color="primary">DataTug cloud</ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="primary" href="https://datatug.app/cloud" target="_blank" (click)="openHelp($event, 'cloud')"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
+			<ion-button color="primary" href="https://datatug.app/cloud" target="_blank"
+						(click)="openHelp($event, 'cloud')">
+				<ion-icon name="information-circle-outline"></ion-icon>
+			</ion-button>
 		</ion-buttons>
 	</ion-item>
 	<ion-item tappable (click)="goRepo('github.com')">
 		<ion-icon name="logo-github" slot="start"></ion-icon>
 		<ion-label>GitHub</ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="primary" href="https://datatug.app/github" target="_blank" (click)="openHelp($event, 'github.com')"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
+			<ion-button color="primary" href="https://datatug.app/github" target="_blank"
+						(click)="openHelp($event, 'github.com')">
+				<ion-icon name="information-circle-outline"></ion-icon>
+			</ion-button>
 		</ion-buttons>
 	</ion-item>
 
@@ -44,7 +55,10 @@
 			<ion-item>
 				<ion-label color="medium">No private repositories have been added yet</ion-label>
 				<ion-buttons slot="end">
-					<ion-button color="primary" href="https://datatug.app/agent" target="_blank" (click)="openHelp($event, 'private-repos')"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
+					<ion-button color="primary" href="https://datatug.app/agent" target="_blank"
+								(click)="openHelp($event, 'private-repos')">
+						<ion-icon name="information-circle-outline"></ion-icon>
+					</ion-button>
 				</ion-buttons>
 			</ion-item>
 		</ng-template>

@@ -4,7 +4,7 @@ import {map, mergeMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {GITHUB_REPO, IProjectContext} from '@sneat/datatug/core';
 import {ProjectItemsByAgent} from './caching';
-import {RepoProviderService} from '@sneat/datatug/services/repo';
+import {RepoApiService} from '@sneat/datatug/services/repo';
 import {IRecord} from '@sneat/data';
 import {IEntity} from '@sneat/datatug/models';
 
@@ -15,7 +15,7 @@ export class EntityService {
 
 	constructor(
 		// private readonly api: SneatTeamApiService,
-		private readonly agentProvider: RepoProviderService,
+		private readonly agentProvider: RepoApiService,
 		private readonly http: HttpClient,
 	) {
 		// console.log('EntityService.constructor()');

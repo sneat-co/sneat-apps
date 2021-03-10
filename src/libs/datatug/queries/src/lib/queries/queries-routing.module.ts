@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {QueriesPage} from './queries.page';
+import {QueriesPageComponent} from './queries-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: QueriesPage
+		component: QueriesPageComponent
 	},
 	{
 		path: ':queryId',

@@ -11,24 +11,24 @@ import {DatatugServicesRepoModule} from '@sneat/datatug/services/repo';
 // import {ContextCardEntityComponent} from '../../context/components/context-card-entity/context-card-entity.component';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    FormsModule,
-    CommonModule,
-    RouterModule,
-    DatatugServicesRepoModule,
-    DatatugServicesProjectModule
-    // DatatugServicesModule,
-    // TableMetaCardModule,
-  ],
-  declarations: [
-    DatatugMenuSignedComponent,
-    // ContextCardComponent,
-    // ContextCardEntityComponent,
-  ],
-  exports: [
-    DatatugMenuSignedComponent,
-  ],
+	imports: [
+		IonicModule,
+		FormsModule,
+		CommonModule,
+		RouterModule,
+		DatatugServicesRepoModule,
+		DatatugServicesProjectModule,
+		// DatatugServicesModule,
+		// TableMetaCardModule,
+	],
+	declarations: [
+		DatatugMenuSignedComponent,
+		// ContextCardComponent,
+		// ContextCardEntityComponent,
+	],
+	exports: [
+		DatatugMenuSignedComponent,
+	],
 })
 export class DatatugMenuSignedModule {
 }

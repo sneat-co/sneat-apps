@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {ProjectItemServiceFactory} from './project-item-service';
 import {QueriesService} from './queries.service';
 import {QUERY_PROJ_ITEM_SERVICE} from './queries.service.token';
-import {RepoProviderService} from '@sneat/datatug/services/repo';
+import {RepoApiService} from '@sneat/datatug/services/repo';
 import {ProjItemServiceModule} from './project-item-service.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import {ProjItemServiceModule} from './project-item-service.module';
       provide: QUERY_PROJ_ITEM_SERVICE,
       deps: [
         ProjectItemServiceFactory,
-        RepoProviderService,
+        RepoApiService,
       ],
-      useFactory: (projectItemServiceFactory: ProjectItemServiceFactory, repoProvider: RepoProviderService) =>
+      useFactory: (projectItemServiceFactory: ProjectItemServiceFactory, repoProvider: RepoApiService) =>
         projectItemServiceFactory.newProjectItemService(repoProvider, 'queries', 'query'),
     },
     QueriesService,

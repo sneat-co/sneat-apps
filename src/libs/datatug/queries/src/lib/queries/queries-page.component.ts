@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -6,7 +6,8 @@ import {IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IProjectContext} from '@sneat/datatug/core';
-import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
+import {DatatugMenuService, DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
+import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 
 interface FilteredItem {
 	folders: string[];
@@ -15,10 +16,10 @@ interface FilteredItem {
 
 @Component({
 	selector: 'datatug-sql-queries',
-	templateUrl: './queries.page.html',
-	styleUrls: ['./queries.page.scss'],
+	templateUrl: './queries-page.component.html',
+	styleUrls: ['./queries-page.component.scss'],
 })
-export class QueriesPage implements OnInit, AfterViewInit {
+export class QueriesPageComponent implements OnInit, ViewDidEnter, ViewDidLeave {
 
 	@ViewChild('codemirrorComponent', {static: true}) public codemirrorComponent: CodemirrorComponent;
 
@@ -56,6 +57,7 @@ export class QueriesPage implements OnInit, AfterViewInit {
 		private readonly queriesService: QueriesService,
 		private readonly dataTugNavContextService: DatatugNavContextService,
 		private readonly dataTugNavService: DatatugNavService,
+		private readonly datatugMenuService: DatatugMenuService,
 	) {
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
@@ -71,18 +73,20 @@ export class QueriesPage implements OnInit, AfterViewInit {
 		console.log('QueriesPage.ngOnInit()')
 	}
 
-	ngAfterViewInit(): void {
-		console.log('QueriesPage.ngAfterViewInit()')
-		// try {
-		// 	this.codemirrorComponent.codeMirror.getWrapperElement().style.height = 'auto';
-		// 	setTimeout(() => this.codemirrorComponent.codeMirror.refresh(), 9);
-		// } catch (e) {
-		// 	this.errorLogger.logError(e, 'Failed to setup CodeMirror component');
-		// }
+	@ViewChild('contextMenu')
+	contextMenu: TemplateRef<any>;
+
+
+	ionViewDidEnter(): void {
+		this.datatugMenuService.setContextMenu(this.contextMenu);
+	}
+
+	ionViewDidLeave(): void {
+		this.datatugMenuService.removeContextMenu(this.contextMenu);
 	}
 
 	goQuery(query: IQueryDef, action?: 'execute' | 'edit'): void {
-		const id = this.folderPath + '/' + query.id;
+		const id = this.folderPath ? this.folderPath + '/' + query.id : query.id;
 		this.dataTugNavService.goQuery(this.currentProject, query, id, action);
 	}
 
@@ -100,11 +104,11 @@ export class QueriesPage implements OnInit, AfterViewInit {
 
 	private populateFilteredItems(path: string[], folder: IQueryFolder): void {
 		const f = this.filter.toLowerCase();
-		folder.queries?.forEach(item => {
+		folder?.queries?.forEach(item => {
 			if (item.type === 'folder') {
 				this.populateFilteredItems([...path, item.id], item);
 			} else {
-				if (item.title.toLowerCase().indexOf(f) >= 0) {
+				if ((item.title || item.id).toLowerCase().indexOf(f) >= 0) {
 					this.filteredItems.push({query: item, folders: path})
 				}
 			}
@@ -143,7 +147,11 @@ export class QueriesPage implements OnInit, AfterViewInit {
 				this.queriesSub = this.queriesService.getQueries(currentProject, '').subscribe({
 					next: queries => {
 						this.allQueries = queries;
-						this.currentFolder = this.getFolderAndUpdateParents(this.folderPath, {id: '', type: 'folder', queries})
+						this.currentFolder = this.getFolderAndUpdateParents(this.folderPath, {
+							id: '',
+							type: 'folder',
+							queries
+						})
 						this.displayCurrentFolder();
 						console.log('QueriesPage.constructor() => queries:', queries);
 					},
@@ -169,7 +177,7 @@ export class QueriesPage implements OnInit, AfterViewInit {
 	}
 
 	private displayCurrentFolder(): void {
-		this.currentFolder?.queries.sort((a, b) => {
+		this.currentFolder?.queries?.sort((a, b) => {
 			const ac = a.title || a.id, bc = b.title || b.id;
 			if (a.type === 'folder' && b.type !== 'folder' || ac < bc) {
 				return -1;
@@ -181,4 +189,6 @@ export class QueriesPage implements OnInit, AfterViewInit {
 		});
 		this.applyFilter();
 	}
+
+	public queryId = (_, query: IQueryDef) => query.id;
 }

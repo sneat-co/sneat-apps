@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {IBoardDef, IProjBoard} from '@sneat/datatug/models';
-import {RepoProviderService} from '@sneat/datatug/services/repo';
+import {RepoApiService} from '@sneat/datatug/services/repo';
 
 @Injectable()
 export class BoardService {
 
 	constructor(
-		private readonly repoProviderService: RepoProviderService,
+		private readonly repoProviderService: RepoApiService,
 	) {
 	}
 
