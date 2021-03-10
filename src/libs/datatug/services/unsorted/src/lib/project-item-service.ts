@@ -1,9 +1,11 @@
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {startWith, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {RepoProviderService} from '@sneat/datatug/services/repo';
 import {IProjectContext} from '@sneat/datatug/core';
 import {IProjItemBrief} from '@sneat/datatug/models';
+
+const notImplemented = 'not implemented';
 
 @Injectable()
 export class ProjectItemServiceFactory {
@@ -14,9 +16,8 @@ export class ProjectItemServiceFactory {
 	) => new ProjectItemService(agentProvider, itemsPath, itemPath);
 }
 
-// @Injectable()
-// @ts-ignore // TODO: why it's complaining about TS1219?
-export class ProjectItemService<ProjItem> {
+// TODO: why it's complaining about TS1219?
+export class ProjectItemService<ProjItem extends IProjItemBrief> {
 
 	private cache: { [id: string]: ProjItem } = {};
 
@@ -37,14 +38,15 @@ export class ProjectItemService<ProjItem> {
 		}).pipe(
 			tap(items => {
 				this.cache = {};
-				items.forEach(item => {
-					const id = (item as unknown as IProjItemBrief).id;
-					if (id) {
-						this.cache[id] = item;
-					}
-				})
+				items.forEach(this.putProjItemToCache)
 			}),
 		);
+	}
+
+	private putProjItemToCache = (item: ProjItem): void => {
+		if (item.id) {
+			this.cache[item.id] = item;
+		}
 	}
 
 	public getProjItem(from: IProjectContext, id: string): Observable<ProjItem> {
@@ -56,20 +58,21 @@ export class ProjectItemService<ProjItem> {
 		});
 		const cached = this.cache[id];
 		if (cached) {
-			o = o.pipe(startWith(cached));
+			o = o.pipe(startWith(cached as ProjItem));
 		}
 		return o;
 	}
 
 	public createProjItem(projId: string, projItem: ProjItem): Observable<ProjItem> {
-		return null;
+		return throwError(notImplemented + ` createProjItem(${projId}, ${JSON.stringify(projItem)}`);
 	}
 
 	public updateProjItem(projId: string, projItem: ProjItem): Observable<ProjItem> {
-		return null;
+		return throwError(notImplemented + ` updateProjItem(${projId}, ${JSON.stringify(projItem)}`);
 	}
 
 	public deleteProjItem(projId: string, id: string): Observable<ProjItem> {
-		return null;
+		return throwError(notImplemented + ` deleteProjItem(${projId}, ${id}`);
 	}
 }
+

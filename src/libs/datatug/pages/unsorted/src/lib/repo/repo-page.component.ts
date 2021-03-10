@@ -9,10 +9,10 @@ import {DatatugNavService} from '@sneat/datatug/services/nav';
 import {routingParamRepoId} from '@sneat/datatug/routes';
 
 @Component({
-	selector: 'datatug-repo',
-	templateUrl: './repo.page.html',
+	selector: 'sneat-datatug-repo',
+	templateUrl: './repo-page.component.html',
 })
-export class RepoPage implements OnInit, OnDestroy {
+export class RepoPageComponent implements OnInit, OnDestroy {
 
 	public repoId: Observable<string>;
 	public projects: IProjectBase[];
@@ -33,6 +33,10 @@ export class RepoPage implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		console.log('RepoPage.ngOnInit()');
+		this.trackRepoId();
+	}
+
+	private trackRepoId(): void {
 		this.repoId = this.route.paramMap
 			.pipe(
 				takeUntil(this.destroyed),
@@ -41,35 +45,43 @@ export class RepoPage implements OnInit, OnDestroy {
 				tap(() => this.agentChanged.next()),
 				filter(repoId => !!repoId),
 				tap(repoId => {
-					this.repoService.getProjects(repoId)
-						.pipe(takeUntil(this.agentChanged))
-						.subscribe({
-							next: projects => {
-								console.table(projects);
-								this.projects = projects;
-							},
-							error: err => {
-								if (err.name === 'HttpErrorResponse' && err.ok === false && err.status === 0) {
-									this.error = 'Agent is not available at URL: ' + err.url;
-								} else {
-									this.error = this.errorLogger.logError(err,
-										`Failed to get list of projects hosted by agent [${repoId}]`, {show: false});
-								}
-							},
-						});
+					this.processRepoId(repoId)
 				}),
 			);
 	}
 
+	private processRepoId(repoId: string): void {
+		this.repoService.getProjects(repoId)
+			.pipe(
+				takeUntil(this.agentChanged),
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
+				next: projects => this.processRepoProjects(projects),
+				error: err => {
+					if (err.name === 'HttpErrorResponse' && err.ok === false && err.status === 0) {
+						this.error = 'Agent is not available at URL: ' + err.url;
+					} else {
+						this.error = this.errorLogger.logError(err,
+							`Failed to get list of projects hosted by agent [${repoId}]`, {show: false});
+					}
+				},
+			});
+	}
+
+	private processRepoProjects(projects: IProjectBase[]): void {
+		console.table(projects);
+		this.projects = projects;
+	}
+
 	ngOnDestroy(): void {
 		console.log('RepoPage.ngOnDestroy()');
-		this.agentChanged.next();
 		this.destroyed.next();
 	}
 
 	public goProject(project: IProjectBase, event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+		event.preventDefault();
+		event.stopPropagation();
 		this.repoId
 			.pipe(first())
 			.subscribe(repoId => this.nav.goProject(repoId, project.id));

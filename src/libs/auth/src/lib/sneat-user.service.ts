@@ -3,8 +3,8 @@ import {AngularFirestore, AngularFirestoreCollection, DocumentReference} from '@
 import {BehaviorSubject, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {SneatTeamApiService} from '@sneat/api';
 import firebase from 'firebase/app';
+import {SneatTeamApiService} from '@sneat/api';
 import {IUser} from '@sneat/auth-models';
 import {IRecord} from '@sneat/data';
 

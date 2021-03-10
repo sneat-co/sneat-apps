@@ -1,26 +1,24 @@
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
-import {createObject, SneatTeamApiService} from '@sneat/api';
+import {SneatTeamApiService} from '@sneat/api';
 import {CreateNamedRequest} from '@sneat/datatug/dto';
 import {ISchema} from '@sneat/datatug/models';
 import {IRecord} from '@sneat/data';
-
-// import {ProjectService} from './project.service';
+import {createProjItem} from "@sneat/datatug/services/base";
 
 @Injectable()
 export class SchemaService {
 
-  constructor(
-    private readonly api: SneatTeamApiService,
-  ) {
-  }
+	constructor(
+		private readonly api: SneatTeamApiService,
+	) {
+	}
 
-  public createSchema = (request: CreateNamedRequest): Observable<IRecord<ISchema>> => {
-    console.log('createSchema', request);
-    try {
-      return createObject<ISchema>(this.api, 'datatug/schema/create_schema', request);
-    } catch (err) {
-      return throwError(err);
-    }
-  }
+	public createSchema = (request: CreateNamedRequest): Observable<IRecord<ISchema>> => {
+		try {
+			return createProjItem<ISchema>(this.api, 'datatug/schema/create_schema', request);
+		} catch (err) {
+			return throwError(err);
+		}
+	}
 }

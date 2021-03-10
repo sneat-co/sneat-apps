@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
-import {createObject, SneatTeamApiService} from '@sneat/api';
+import {SneatTeamApiService} from '@sneat/api';
 import {RepoProviderService} from '@sneat/datatug/services/repo';
 import {CreateNamedRequest} from '@sneat/datatug/dto';
 import {IEnvironmentSummary} from '@sneat/datatug/models';
 import {IProjectContext} from '@sneat/datatug/core';
+import {createProjItem} from "@sneat/datatug/services/base";
 
 @Injectable({
 	providedIn: 'root'
@@ -22,7 +23,7 @@ export class EnvironmentService {
 	}
 
 	createEnvironment = (request: CreateNamedRequest): Observable<any> =>
-		createObject<IEnvironmentSummary>(this.api, 'datatug/environment/create_environment', request)
+		createProjItem<IEnvironmentSummary>(this.api, 'datatug/environment/create_environment', request)
 
 	putConnection(): Observable<IEnvironmentSummary> {
 		return throwError('')

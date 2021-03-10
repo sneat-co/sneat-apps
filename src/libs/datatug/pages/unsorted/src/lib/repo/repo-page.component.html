@@ -9,7 +9,9 @@
 </ion-header>
 
 <ion-content class="cards">
-	<ng-template #showError><datatug-error-card [error]="error"></datatug-error-card></ng-template>
+	<ng-template #showError>
+		<datatug-error-card [error]="error"></datatug-error-card>
+	</ng-template>
 	<ion-card *ngIf="!error; else showError">
 		<ion-item *ngIf="!projects">
 			<ion-label color="medium">Loading...</ion-label>
@@ -18,9 +20,10 @@
 			<ion-item-divider>
 				<ion-label>Projects</ion-label>
 			</ion-item-divider>
-			<ion-item *ngFor="let project of projects" tappable (click)="goProject(project, $event)" [routerLink]="'project/' + project.id">
+			<ion-item *ngFor="let project of projects" tappable (click)="goProject(project, $event)"
+					  [routerLink]="'project/' + project.id">
 				<ion-label>
-          <h3>{{project.title || project.id}}</h3>
+					<h3>{{project.title || project.id}}</h3>
 				</ion-label>
 			</ion-item>
 		</ion-list>

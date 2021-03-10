@@ -2,32 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {CreateNamedRequest} from '@sneat/datatug/dto';
-import {IRecord} from '@sneat/data';
 
 const userIsNotAuthenticatedNoFirebaseToken = 'User is not authenticated yet - no Firebase ID token';
-
-const validateCreateNamedRequest = (request: CreateNamedRequest): Observable<never> => {
-  if (!request.project) {
-    return throwError('project is a required parameter');
-  }
-  if (!request.name) {
-    return throwError('name is a required parameter');
-  }
-  return undefined;
-};
-
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function createObject<T>(api: SneatTeamApiService, endpoint: string, payload: CreateNamedRequest)
-  : Observable<IRecord<T>> {
-	console.log('createObject', endpoint, payload);
-	const err = validateCreateNamedRequest(payload)
-	if (err) {
-		console.error('Invalid payload');
-		return err;
-	}
-	return api.post(endpoint, payload);
-}
 
 @Injectable()
 export class SneatTeamApiService {

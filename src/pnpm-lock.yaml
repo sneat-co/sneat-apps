@@ -46,6 +46,7 @@ devDependencies:
   '@nrwl/workspace': 11.3.1_prettier@2.2.1
   '@nxtend/capacitor': 11.1.1_@nrwl+workspace@11.3.1
   '@nxtend/ionic-angular': 11.0.0_50070f266f1d329881586c3a85e048a0
+  '@trellisorg/make-buildable': 0.0.10_@nrwl+workspace@11.3.1
   '@types/jasmine': 3.5.14
   '@types/jest': 26.0.8
   '@types/node': 12.12.38
@@ -3424,6 +3425,16 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
+  /@trellisorg/make-buildable/0.0.10_@nrwl+workspace@11.3.1:
+    dependencies:
+      '@nrwl/workspace': 11.3.1_prettier@2.2.1
+      lodash.merge: 4.6.2
+    dev: true
+    peerDependencies:
+      '@angular-devkit/schematics': '>=9'
+      '@nrwl/workspace': '>=9'
+    resolution:
+      integrity: sha512-SBUi7vGu1tw8nVmsMz1vjZbvDa5+ch+IVEvOnutr3FdVtvsAo7Pv6BKtR0XedgQcFKAglUhnzkuJ9SahUOhBxA==
   /@types/babel__core/7.1.12:
     dependencies:
       '@babel/parser': 7.12.16
@@ -4423,7 +4434,7 @@ packages:
       integrity: sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
   /axios/0.21.1:
     dependencies:
-      follow-redirects: 1.13.2
+      follow-redirects: 1.13.3
     dev: true
     resolution:
       integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
@@ -7288,6 +7299,30 @@ packages:
         optional: true
     resolution:
       integrity: sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA==
+  /follow-redirects/1.13.2_debug@4.3.1:
+    dependencies:
+      debug: 4.3.1_supports-color@6.1.0
+    dev: true
+    engines:
+      node: '>=4.0'
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    resolution:
+      integrity: sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA==
+  /follow-redirects/1.13.3:
+    dev: true
+    engines:
+      node: '>=4.0'
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    resolution:
+      integrity: sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA==
   /for-in/1.0.2:
     engines:
       node: '>=0.10.0'
@@ -7919,7 +7954,7 @@ packages:
   /http-proxy/1.18.1_debug@4.3.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.13.2
+      follow-redirects: 1.13.2_debug@4.3.1
       requires-port: 1.0.0
     dev: true
     engines:
@@ -9618,6 +9653,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
+  /lodash.merge/4.6.2:
+    dev: true
+    resolution:
+      integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
   /lodash.once/4.1.1:
     dev: true
     resolution:
@@ -14494,6 +14533,7 @@ specifiers:
   '@nxtend/capacitor': ^11.1.1
   '@nxtend/ionic-angular': 11.0.0
   '@sentry/browser': ^6.2.0
+  '@trellisorg/make-buildable': ^0.0.10
   '@types/jasmine': ~3.5.0
   '@types/jest': 26.0.8
   '@types/node': 12.12.38

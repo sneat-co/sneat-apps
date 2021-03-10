@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {RepoPage} from './repo.page';
+import {RepoPageComponent} from './repo-page.component';
 import {IonicModule} from '@ionic/angular';
 
 const routes: Routes = [
   {
     path: '',
-    component: RepoPage,
+    component: RepoPageComponent,
   },
 ];
 

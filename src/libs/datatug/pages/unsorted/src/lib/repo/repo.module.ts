@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RepoPageRoutingModule} from './repo-routing.module';
-import {RepoPage} from './repo.page';
+import {RepoPageComponent} from './repo-page.component';
 import {SneatErrorCardModule} from '@sneat/components/error-card';
 import {DatatugServicesNavModule} from '@sneat/datatug/services/nav';
 import {IonicModule} from '@ionic/angular';
@@ -14,7 +14,7 @@ import {IonicModule} from '@ionic/angular';
 		SneatErrorCardModule,
     DatatugServicesNavModule,
 	],
-	declarations: [RepoPage]
+	declarations: [RepoPageComponent]
 })
 export class RepoPageModule {
 }

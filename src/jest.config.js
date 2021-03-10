@@ -44,5 +44,6 @@ module.exports = {
     '<rootDir>/libs/meeting',
     '<rootDir>/libs/team',
     '<rootDir>/libs/scrumspace/scrummodels',
+    '<rootDir>/libs/datatug/services/base',
   ],
 };

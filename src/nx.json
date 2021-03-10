@@ -79,6 +79,7 @@
     "timer": { "tags": [] },
     "meeting": { "tags": [] },
     "team": { "tags": [] },
-    "scrumspace-scrummodels": { "tags": [] }
+    "scrumspace-scrummodels": { "tags": [] },
+    "datatug-services-base": { "tags": [] }
   }
 }
