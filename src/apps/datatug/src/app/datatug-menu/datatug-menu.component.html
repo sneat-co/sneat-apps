@@ -1,43 +1,43 @@
-<ng-container *ngIf="afAuth.user | async; else unauthenticated; let user">
-  <datatug-menu-signed *ngIf="user?.uid; else menuForAnonymous"></datatug-menu-signed>
-  <ng-template #menuForAnonymous>
-    <datatug-menu-unsigned></datatug-menu-unsigned>
-  </ng-template>
+<ng-container [ngSwitch]="authState">
+	<datatug-menu-signed *ngSwitchCase="'authenticated'"></datatug-menu-signed>
+
+	<datatug-menu-unsigned *ngSwitchCase="'notAuthenticated'"></datatug-menu-unsigned>
+
+	<ng-container *ngSwitchCase="'authenticating'">
+		<ion-card>
+			<ion-list>
+				<ion-item>
+					<ion-icon slot="start" color="medium" name="person-circle-outline"></ion-icon>
+					<ion-label color="medium">Authenticating...</ion-label>
+					<ion-buttons slot="end">
+						<ion-button>
+							<ion-button color="medium">
+								<ion-icon name="settings-outline"></ion-icon>
+							</ion-button>
+							<ion-button color="medium">
+								<ion-icon name="enter-outline"></ion-icon>
+							</ion-button>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-list>
+		</ion-card>
+
+		<ion-card>
+			<ion-item>
+				<ion-icon name="hourglass-outline" slot="start"></ion-icon>
+				<ion-label>Awaiting authentication</ion-label>
+				<ion-select disabled="disable">
+					<ion-select-option></ion-select-option>
+				</ion-select>
+			</ion-item>
+		</ion-card>
+
+	</ng-container>
 </ng-container>
-<ng-template #unauthenticated>
-  <ion-card>
-    <ion-list>
-      <ion-item>
-        <ion-icon slot="start" color="medium" slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label color="medium">Authenticating...</ion-label>
-        <ion-buttons slot="end">
-          <ion-button>
-            <ion-button color="medium">
-              <ion-icon name="settings-outline"></ion-icon>
-            </ion-button>
-            <ion-button color="medium">
-              <ion-icon name="enter-outline"></ion-icon>
-            </ion-button>
-          </ion-button>
-        </ion-buttons>
-      </ion-item>
-    </ion-list>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-icon name="hourglass-outline" slot="start"></ion-icon>
-      <ion-label>Awaiting authentication</ion-label>
-      <ion-select disabled="disable">
-        <ion-select-option></ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-card>
-
-</ng-template>
 
 <ion-card>
-  <ion-card-content>
-    2020 - 2021 &copy; DataTug.app
-  </ion-card-content>
+	<ion-card-content>
+		2020 - 2021 &copy; DataTug.app
+	</ion-card-content>
 </ion-card>

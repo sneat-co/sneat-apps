@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/auth";
+import {Component, Inject} from '@angular/core';
+import {AuthStates, SneatAuthStateService} from "@sneat/auth";
+import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 
 @Component({
 	selector: 'datatug-menu',
@@ -7,9 +8,16 @@ import {AngularFireAuth} from "@angular/fire/auth";
 })
 export class DatatugMenuComponent {
 
+	public authState: AuthStates;
+
 	constructor(
-		public readonly afAuth: AngularFireAuth,
+		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
+		readonly sneatAuthStateService: SneatAuthStateService,
 	) {
+		sneatAuthStateService.authState.subscribe({
+			next: authState => this.authState = authState,
+			error: this.errorLogger.logErrorHandler('failed to get auth stage'),
+		})
 	}
 
 }

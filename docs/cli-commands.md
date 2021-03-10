@@ -27,7 +27,7 @@ pnpx nx generate @nxtend/ionic-angular:application <APP_NAME>
 
 ## To create an Angular library 
 ```
-pnpx nx g @nrwl/angular:lib <LIB_NAME> [--publishable] [--directory] <FOLDER_NAME>
+pnpx nx g @nrwl/angular:lib <LIB_NAME> [--publishable | --buildable] [--directory] <FOLDER_NAME>
 ```
 Examples:
 ```
@@ -44,6 +44,11 @@ To support auto-imports in JetBrains IDE make sure to manually add `@sneat/<LIB_
     }
   },
 }
+```
+
+## To make existing library to be buildable
+```
+pnpx nx g @trellisorg/make-buildable:migrate
 ```
 
 ## To create an Angular component
