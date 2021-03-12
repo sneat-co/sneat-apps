@@ -278,6 +278,12 @@
 	  ],
 	  "@sneat/datatug/services/base/*": [
 		"libs/datatug/services/base/src/index.ts"
+	  ],
+	  "@sneat/datatug/components/project": [
+		"libs/datatug/components/project/src/index.ts"
+	  ],
+	  "@sneat/datatug/components/project/*": [
+		"libs/datatug/components/project/src/index.ts"
 	  ]
 	}
   },

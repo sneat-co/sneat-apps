@@ -1,5 +1,6 @@
-import {Component} from "@angular/core";
-import {IQueryDef} from "@sneat/datatug/models";
+import {Component, Inject} from "@angular/core";
+import {IQueryState, QueryEditorStateService} from "@sneat/datatug/queries";
+import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 
 interface IQuery {
 	id: string
@@ -13,20 +14,29 @@ interface IQuery {
 export class QueriesMenuComponent {
 	tab: 'queries' | 'project' = 'queries';
 
-	activeQueryId: string = 'query_1';
+	currentQueryId: string;
 
-	queries: IQuery[] = [
-		{
-			id: 'query_1',
-			title: 'Query #1',
-		},
-		{
-			id: 'query_2',
-			title: 'Query #2',
-		},
-	]
+	queries: IQueryState[];
+
+	constructor(
+		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
+		queryEditorStateService: QueryEditorStateService,
+	) {
+		try {
+			queryEditorStateService.queryEditorState.subscribe({
+				next: state => {
+					console.log('QueriesMenuComponent.constructor() => QueryEditorStateService => QueryEditor state:', state);
+					this.currentQueryId = state?.currentQueryId;
+					this.queries = state?.activeQueries;
+				},
+				error: this.errorLogger.logErrorHandler('failed to get query editor stage'),
+			});
+		} catch (err) {
+			this.errorLogger.logError(err, 'failed to subscribe for query queryEditorStateService.queryEditorState')
+		}
+	}
 
 	setActiveQuery(id: string): void {
-		this.activeQueryId = id;
+		this.currentQueryId = id;
 	}
 }

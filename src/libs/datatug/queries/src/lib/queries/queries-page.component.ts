@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -6,7 +6,7 @@ import {IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IProjectContext} from '@sneat/datatug/core';
-import {DatatugMenuService, DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
+import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 
 interface FilteredItem {
@@ -14,19 +14,21 @@ interface FilteredItem {
 	query: IQueryDef;
 }
 
+type QueryType = 'SQL' | 'GraphQL' | 'HTTP' | '*'
+
 @Component({
 	selector: 'datatug-sql-queries',
 	templateUrl: './queries-page.component.html',
 	styleUrls: ['./queries-page.component.scss'],
 })
-export class QueriesPageComponent implements OnInit, ViewDidEnter, ViewDidLeave {
+export class QueriesPageComponent implements OnInit {
 
 	@ViewChild('codemirrorComponent', {static: true}) public codemirrorComponent: CodemirrorComponent;
 
 	public sql = 'select * from';
 
 	public tab: 'all' | 'new' | 'popular' | 'recent' | 'bookmarked' = 'all'
-	public type: 'SQL' | 'GraphQL' | 'HTTP' | '*' = '*';
+	public type: QueryType = '*';
 
 	public filter = '';
 
@@ -57,7 +59,6 @@ export class QueriesPageComponent implements OnInit, ViewDidEnter, ViewDidLeave 
 		private readonly queriesService: QueriesService,
 		private readonly dataTugNavContextService: DatatugNavContextService,
 		private readonly dataTugNavService: DatatugNavService,
-		private readonly datatugMenuService: DatatugMenuService,
 	) {
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
@@ -71,18 +72,6 @@ export class QueriesPageComponent implements OnInit, ViewDidEnter, ViewDidLeave 
 
 	ngOnInit(): void {
 		console.log('QueriesPage.ngOnInit()')
-	}
-
-	@ViewChild('contextMenu')
-	contextMenu: TemplateRef<any>;
-
-
-	ionViewDidEnter(): void {
-		this.datatugMenuService.setContextMenu(this.contextMenu);
-	}
-
-	ionViewDidLeave(): void {
-		this.datatugMenuService.removeContextMenu(this.contextMenu);
 	}
 
 	goQuery(query: IQueryDef, action?: 'execute' | 'edit'): void {
@@ -100,6 +89,11 @@ export class QueriesPageComponent implements OnInit, ViewDidEnter, ViewDidLeave 
 		}
 		this.filteredItems = [];
 		this.populateFilteredItems(this.folderPath ? this.folderPath.split('/') : [], this.currentFolder);
+	}
+
+	setQueryType(type: QueryType): void {
+		this.type = type === this.type ? '*' : type;
+		this.applyFilter();
 	}
 
 	private populateFilteredItems(path: string[], folder: IQueryFolder): void {

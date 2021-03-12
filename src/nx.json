@@ -80,6 +80,7 @@
     "meeting": { "tags": [] },
     "team": { "tags": [] },
     "scrumspace-scrummodels": { "tags": [] },
-    "datatug-services-base": { "tags": [] }
+    "datatug-services-base": { "tags": [] },
+    "datatug-components-project": { "tags": [] }
   }
 }

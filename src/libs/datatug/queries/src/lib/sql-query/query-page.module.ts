@@ -6,30 +6,38 @@ import {IonicModule} from '@ionic/angular';
 
 import {SqlEditorPageRoutingModule} from './query-routing.module';
 
-import {QueryPage} from './query-page.component';
+import {QueryPageComponent} from './query-page.component';
 import {CodemirrorModule} from '@ctrl/ngx-codemirror';
 import {DatatugBoardModule} from '@sneat/datatug/board';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
 import {DatatugExecutorModule} from '@sneat/datatug/executor';
 import {DatatugComponentsSqlEditorModule} from '@sneat/datatug/components/sqleditor';
 import {QueriesServiceModule} from '@sneat/datatug/services/unsorted';
+import {DatatugQueriesModule} from "@sneat/datatug/queries";
+import {ColumnsComponent} from "./columns.component";
+import {JoinsComponent} from "./joins.component";
+import {WormholeModule} from "@sneat/wormhole";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DatatugComponentsSqlEditorModule,
-    SqlEditorPageRoutingModule,
-    CodemirrorModule,
-    QueriesServiceModule,
-    DatatugBoardModule,
-    DatatugExecutorModule,
-    DatatugComponentsDatagridModule,
-  ],
-  declarations: [
-    QueryPage,
-  ]
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		DatatugComponentsSqlEditorModule,
+		SqlEditorPageRoutingModule,
+		CodemirrorModule,
+		QueriesServiceModule,
+		DatatugBoardModule,
+		DatatugExecutorModule,
+		DatatugComponentsDatagridModule,
+		DatatugQueriesModule,
+		WormholeModule,
+	],
+	declarations: [
+		QueryPageComponent,
+		ColumnsComponent,
+		JoinsComponent,
+	]
 })
 export class QueryPageModule {
 }

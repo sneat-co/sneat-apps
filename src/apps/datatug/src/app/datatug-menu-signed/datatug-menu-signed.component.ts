@@ -7,7 +7,6 @@ import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {IProjectBase, IProjectSummary} from '@sneat/datatug/models';
 import {
-	DatatugMenuService,
 	DatatugNavContextService,
 	DatatugNavService,
 	ProjectTopLevelPage
@@ -17,20 +16,13 @@ import {CLOUD_REPO} from '@sneat/datatug/core';
 import {RepoService} from '@sneat/datatug/services/repo';
 import {IEnvDbTableContext} from '@sneat/datatug/nav';
 
-interface IProjectTopLevelPage {
-	path: ProjectTopLevelPage | '';
-	title: string;
-	icon: string;
-	count?: (proj: IProjectSummary) => number;
-	buttons?: { path: string, icon: string; }[];
-}
 
 @Component({
 	selector: 'datatug-menu-signed',
 	templateUrl: './datatug-menu-signed.component.html',
 	styleUrls: ['./datatug-menu-signed.component.scss'],
 })
-export class DatatugMenuSignedComponent implements OnInit, OnDestroy {
+export class DatatugMenuSignedComponent implements OnDestroy {
 
 	public currentRepoId: string;
 	public currentProjectId: string;
@@ -40,103 +32,11 @@ export class DatatugMenuSignedComponent implements OnInit, OnDestroy {
 	public currentProject: IProjectSummary;
 	public projects: IProjectBase[] = [];
 
-	public readonly projTopLevelPages: IProjectTopLevelPage[] = [
-		{
-			path: '',
-			title: 'Overview',
-			icon: 'home-outline',
-		},
-		{
-			path: 'boards',
-			title: 'Boards',
-			icon: 'easel-outline',
-			count: proj => proj?.boards?.length,
-		},
-		{
-			path: 'dbmodels',
-			title: 'DB models',
-			icon: 'layers-outline',
-			count: proj => proj?.dbModels?.length,
-		},
-		{
-			path: 'entities',
-			title: 'Entities',
-			icon: 'book-outline',
-			count: proj => proj?.entities?.length,
-		},
-		{
-			path: 'environments',
-			title: 'Environments',
-			icon: 'earth-outline',
-			count: proj => proj?.environments?.length,
-		},
-		{
-			path: 'servers',
-			title: 'Servers',
-			icon: 'server-outline',
-		},
-		{
-			path: 'queries',
-			title: 'Queries',
-			icon: 'terminal-outline',
-			buttons: [
-				{path: 'query', icon: 'add'}
-			]
-		},
-		{
-			path: 'tags',
-			title: 'Tags',
-			icon: 'pricetags-outline',
-			count: proj => proj?.tags?.length,
-		},
-		{
-			path: 'widgets',
-			title: 'Widgets',
-			icon: 'easel-outline',
-		},
-	];
-
-	public readonly appPages = [
-		{
-			title: 'Databoards',
-			url: '/databoards',
-			icon: 'mail'
-		},
-		{
-			title: 'Queries',
-			url: '/folder/Queries',
-			icon: 'mail'
-		},
-		{
-			title: 'Databases',
-			url: '/folder/databases',
-			icon: 'mail'
-		},
-		{
-			title: 'Environments',
-			url: '/folder/environments',
-			icon: 'mail'
-		},
-		{
-			title: 'Agents',
-			url: '/folder/repos',
-			icon: 'mail'
-		},
-		{
-			title: 'Widgets',
-			url: '/folder/widgets',
-			icon: 'mail'
-		},
-	];
-	public readonly labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 	public table: IEnvDbTableContext;
 	public currentFolder: Observable<string>;
 	public readonly firebaseUser$: Observable<firebase.User | null>
 	private projSub: Subscription;
 	private readonly destroyed = new Subject<void>();
-
-	// @ViewChild('testContextMenu')
-	mainContextMenu: TemplateRef<any>;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -146,7 +46,6 @@ export class DatatugMenuSignedComponent implements OnInit, OnDestroy {
 		private readonly repoService: RepoService,
 		private readonly projectService: ProjectService,
 		private readonly afAuth: AngularFireAuth,
-		private readonly datatugMenuService: DatatugMenuService,
 		// private readonly userService: UserService,
 	) {
 		this.firebaseUser$ = afAuth.user;
@@ -159,21 +58,6 @@ export class DatatugMenuSignedComponent implements OnInit, OnDestroy {
 		this.trackCurrentProject();
 		this.trackCurrentEnvironemnt();
 		this.trackCurrentEnvDbTable();
-	}
-
-	ngOnInit() {
-		console.log('DatatugMenuSignedComponent.ngOnInit()');
-		try {
-			this.datatugMenuService.contextMenu.subscribe({
-				next: contextMenu => {
-					console.log('DatatugMenuSignedComponent.contextMenu:', contextMenu);
-					this.mainContextMenu = contextMenu;
-				},
-				error: this.errorLogger.logErrorHandler('DatatugMenuSignedComponent: failed to get context menu'),
-			});
-		} catch (err) {
-			this.errorLogger.logError(err, 'failed to subscribe for context menu');
-		}
 	}
 
 	public get currentProjUrlId(): string {
@@ -234,15 +118,6 @@ export class DatatugMenuSignedComponent implements OnInit, OnDestroy {
 
 	projectPageUrl(page: ProjectTopLevelPage | ''): string {
 		return `/repo/${this.currentRepoId}/project/${this.currentProjectId}/${page}`;
-	}
-
-	goProjPage(event: Event, page: ProjectTopLevelPage): boolean {
-		console.log('goProjPage', page);
-		event.preventDefault();
-		event.stopPropagation();
-
-		this.nav.goProjPage(this.currentRepoId, this.currentProjectId, page, {projSummary: this.currentProject});
-		return false;
 	}
 
 	public logout(): void {

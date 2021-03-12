@@ -19,6 +19,7 @@ dependencies:
   '@ionic/angular': 5.5.4_3772f4a8438db4fb06c13b570f60eb7d
   '@nrwl/angular': 11.3.1_2dd7feace5f00282347008d5146957e0
   '@sentry/browser': 6.2.0
+  '@sneat/wormhole': 0.0.1_46f051be48c1b148de8fdbd5df9ebdf1
   codemirror: 5.59.3
   firebase: 8.2.9
   ionicons: 5.5.0
@@ -41,7 +42,7 @@ devDependencies:
   '@nrwl/eslint-plugin-nx': 11.3.1_f1702ff99a0e5f13f24f2127f7180044
   '@nrwl/jest': 11.3.1
   '@nrwl/linter': 11.3.1
-  '@nrwl/nx-cloud': 11.1.4
+  '@nrwl/nx-cloud': 11.2.0
   '@nrwl/tao': 11.3.1
   '@nrwl/workspace': 11.3.1_prettier@2.2.1
   '@nxtend/capacitor': 11.1.1_@nrwl+workspace@11.3.1
@@ -3118,7 +3119,7 @@ packages:
       tslib: 2.1.0
     resolution:
       integrity: sha512-HB1+KS6YVnTlxOteZCSgvAMOo66muPnutOtHKDjTsFi3G4zktg2M98j5Nj4+/h3M20k4r9njycdHcR+eyNo1tw==
-  /@nrwl/nx-cloud/11.1.4:
+  /@nrwl/nx-cloud/11.2.0:
     dependencies:
       axios: 0.21.1
       chalk: 4.1.0
@@ -3128,7 +3129,7 @@ packages:
       uuid: 3.4.0
     dev: true
     resolution:
-      integrity: sha512-x9CcS3RnYmGrhCMRiDj1Db5WEmHXpZi+/quaZH+wfmwIoh7/ejp/1HqZ178jUS+LTcrHYOIgd+54pOgEg6IcxQ==
+      integrity: sha512-aKDAUbhOzPzgayuqQB4jas8FrgXG2jKyJYicBtgnLipRj3HerPpz6ZVIW7SZbqjX5b0700c6lCWCF+A5x4MkWg==
   /@nrwl/tao/11.3.1:
     dependencies:
       chalk: 4.1.0
@@ -3411,6 +3412,19 @@ packages:
     dev: true
     resolution:
       integrity: sha512-MZPUxrmFubI36XS1DI3qmI0YdN1gks62JtFZvxR67ljjSNCeK6U08Zx4msEWOXuofgqUt6zPHSi1H9fbjR/NRA==
+  /@sneat/wormhole/0.0.1_46f051be48c1b148de8fdbd5df9ebdf1:
+    dependencies:
+      '@angular/common': 11.2.2_@angular+core@11.2.2+rxjs@6.6.3
+      '@angular/core': 11.2.2_rxjs@6.6.3+zone.js@0.10.3
+      rxjs: 6.6.3
+      tslib: 2.1.0
+    dev: false
+    peerDependencies:
+      '@angular/common': ^11.2.5
+      '@angular/core': ^11.2.5
+      rxjs: ~6.6.3
+    resolution:
+      integrity: sha512-2JL2KtO65WbMdxY9/DJ1g8Eein4X9fTVdLyMBCpbTIIv4SATkp5W0+W5fNLzzFby9YoqTMRb4ALAMnbiTicPfA==
   /@stencil/core/2.4.0:
     dev: false
     engines:
@@ -14533,6 +14547,7 @@ specifiers:
   '@nxtend/capacitor': ^11.1.1
   '@nxtend/ionic-angular': 11.0.0
   '@sentry/browser': ^6.2.0
+  '@sneat/wormhole': ^0.0.1
   '@trellisorg/make-buildable': ^0.0.10
   '@types/jasmine': ~3.5.0
   '@types/jest': 26.0.8

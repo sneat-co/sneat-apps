@@ -12,3 +12,4 @@ export * from './lib/schema.service';
 export * from './lib/variable.service';
 export * from './lib/table.service';
 export * from './lib/query-context-sql.service';
+export * from './lib/sql-parser';

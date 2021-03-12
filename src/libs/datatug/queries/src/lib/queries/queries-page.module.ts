@@ -10,7 +10,8 @@ import {QueriesPageComponent} from './queries-page.component';
 import {DatatugBoardModule} from '@sneat/datatug/board';
 import {QueriesServiceModule} from '@sneat/datatug/services/unsorted';
 import {DatatugComponentsSqlEditorModule} from "@sneat/datatug/components/sqleditor";
-import {QueriesMenuComponent} from "../queries-menu.component";
+import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
+import {WormholeModule} from "@sneat/wormhole";
 
 @NgModule({
 	imports: [
@@ -21,10 +22,11 @@ import {QueriesMenuComponent} from "../queries-menu.component";
 		SqlQueriesPageRoutingModule,
 		QueriesServiceModule,
 		DatatugBoardModule,
+		DatatugComponentsProjectModule,
+		WormholeModule,
 	],
 	declarations: [
 		QueriesPageComponent,
-		QueriesMenuComponent,
 	]
 })
 export class QueriesPageModule {

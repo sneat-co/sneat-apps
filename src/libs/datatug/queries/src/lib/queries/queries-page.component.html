@@ -29,12 +29,11 @@
 			<ion-item>
 				<ion-input [disabled]="!currentFolder" placeholder="Filter" [(ngModel)]="filter"
 						   (ionChange)="applyFilter()"></ion-input>
+				<ion-buttons>
+					<ion-button (click)="setQueryType('SQL')" [color]="type === 'SQL' ? 'primary' : 'medium'">SQL</ion-button>
+					<ion-button (click)="setQueryType('HTTP')" [color]="type === 'HTTP' ? 'primary' : 'medium'">HTTP</ion-button>
+				</ion-buttons>
 			</ion-item>
-			<ion-segment [(ngModel)]="type" class="ion-padding-start ion-padding-end">
-				<ion-segment-button value="*">Any kind</ion-segment-button>
-				<ion-segment-button value="SQL">SQL</ion-segment-button>
-				<ion-segment-button value="HTTP">HTTP(s)</ion-segment-button>
-			</ion-segment>
 			<!--			<ion-item>-->
 			<!--				<ion-label>Tags:</ion-label>-->
 			<!--				<ion-badge slot="end" color="secondary">-->
@@ -126,5 +125,8 @@
 </ion-content>
 
 <ng-template #contextMenu>
-	<datatug-queries-menu></datatug-queries-menu>
+	TEST MENU
+<!--	<datatug-project-context-menu></datatug-project-context-menu>-->
 </ng-template>
+
+<wormhole-entrance tunnel="context-menu" [template]="contextMenu"></wormhole-entrance>

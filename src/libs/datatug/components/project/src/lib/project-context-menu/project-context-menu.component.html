@@ -1,0 +1,13 @@
+<ion-card>
+	<ion-item *ngFor="let page of projTopLevelPages" (click)="goProjPage($event, page.path)" tappable>
+		<!--		[routerLink]="projectPageUrl(page.path)" routerDirection="root"-->
+		<ion-icon slot="start" [name]="page.icon"></ion-icon>
+		<ion-label [class.current]="(currentFolder|async)  === page.path">{{page.title}}</ion-label>
+		<!--		<ion-badge color="medium" *ngIf="page.count && currentProject">{{page.count(currentProject) || 0}}</ion-badge>-->
+		<ion-buttons *ngIf="page.buttons">
+			<ion-button (click)="goProjPage($event, button.path)" *ngFor="let button of page.buttons">
+				<ion-icon [name]="button.icon"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-card>

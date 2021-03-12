@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import {DatatugMenuSignedComponent} from './datatug-menu-signed.component';
 import {DatatugServicesProjectModule} from '@sneat/datatug/services/project';
 import {DatatugServicesRepoModule} from '@sneat/datatug/services/repo';
+import {WormholeModule} from '@sneat/wormhole';
 // import {TableMetaCardModule} from '../table-meta-card/table-meta-card.module';
 // import {ContextCardComponent} from '../../context/components/context-card/context-card.component';
 // import {ContextCardEntityComponent} from '../../context/components/context-card-entity/context-card-entity.component';
@@ -18,6 +19,7 @@ import {DatatugServicesRepoModule} from '@sneat/datatug/services/repo';
 		RouterModule,
 		DatatugServicesRepoModule,
 		DatatugServicesProjectModule,
+		WormholeModule,
 		// DatatugServicesModule,
 		// TableMetaCardModule,
 	],
