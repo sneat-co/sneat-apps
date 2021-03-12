@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {Component, Inject, OnDestroy} from '@angular/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
@@ -6,11 +6,7 @@ import {NavController} from '@ionic/angular';
 import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {IProjectBase, IProjectSummary} from '@sneat/datatug/models';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-	ProjectTopLevelPage
-} from '@sneat/datatug/services/nav';
+import {DatatugNavContextService, DatatugNavService, ProjectTopLevelPage} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
 import {RepoService} from '@sneat/datatug/services/repo';
@@ -54,9 +50,9 @@ export class DatatugMenuSignedComponent implements OnDestroy {
 		// 	this.projects = user?.data?.dataTugProjects;
 		// });
 		this.currentFolder = datatugNavContextService.currentFolder;
-		this.trackCurrentAgent();
+		this.trackCurrentRepo();
 		this.trackCurrentProject();
-		this.trackCurrentEnvironemnt();
+		this.trackCurrentEnvironment();
 		this.trackCurrentEnvDbTable();
 	}
 
@@ -130,7 +126,7 @@ export class DatatugMenuSignedComponent implements OnDestroy {
 			.catch(this.errorLogger.logErrorHandler('Failed to sign out'));
 	}
 
-	private trackCurrentAgent(): void {
+	private trackCurrentRepo(): void {
 		this.datatugNavContextService.currentRepoId
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
@@ -198,7 +194,7 @@ export class DatatugMenuSignedComponent implements OnDestroy {
 			});
 	}
 
-	private trackCurrentEnvironemnt(): void {
+	private trackCurrentEnvironment(): void {
 		this.datatugNavContextService.currentEnv
 			.pipe(
 				takeUntil(this.destroyed),

@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {DatatugNavContextService, DatatugNavService, ProjectTopLevelPage} from "@sneat/datatug/services/nav";
 import {IProjectSummary} from "@sneat/datatug/models";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage | '';
@@ -15,7 +16,7 @@ interface IProjectTopLevelPage {
 	selector: 'datatug-project-context-menu',
 	templateUrl: './project-context-menu.component.html',
 })
-export class ProjectContextMenuComponent {
+export class ProjectContextMenuComponent implements OnDestroy {
 
 	public readonly projTopLevelPages: IProjectTopLevelPage[] = [
 		{
@@ -78,11 +79,24 @@ export class ProjectContextMenuComponent {
 	currentProject: IProjectSummary;
 	public currentFolder: Observable<string>;
 
+	private destroyed = new Subject<void>();
+
 	constructor(
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
 	) {
+		this.datatugNavContextService.currentRepoId.pipe(takeUntil(this.destroyed)).subscribe({
+			next: id => this.currentRepoId = id,
+		});
+		this.datatugNavContextService.currentProject.pipe(takeUntil(this.destroyed)).subscribe({
+			next: proj => this.currentProjectId = proj.brief.id,
+		});
 		this.currentFolder = datatugNavContextService.currentFolder;
+	}
+
+	ngOnDestroy() {
+		this.destroyed.next();
+		this.destroyed.complete();
 	}
 
 	goProjPage(event: Event, page: ProjectTopLevelPage): boolean {

@@ -124,9 +124,6 @@
 	</ion-card>
 </ion-content>
 
-<ng-template #contextMenu>
-	TEST MENU
-<!--	<datatug-project-context-menu></datatug-project-context-menu>-->
-</ng-template>
+<wormhole-entrance sender="queries-page" tunnel="context-menu" [component]="isActiveView && contextMenuComponent"></wormhole-entrance>
 
-<wormhole-entrance tunnel="context-menu" [template]="contextMenu"></wormhole-entrance>
+

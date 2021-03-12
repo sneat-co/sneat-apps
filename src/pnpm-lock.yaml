@@ -19,7 +19,7 @@ dependencies:
   '@ionic/angular': 5.5.4_3772f4a8438db4fb06c13b570f60eb7d
   '@nrwl/angular': 11.3.1_2dd7feace5f00282347008d5146957e0
   '@sentry/browser': 6.2.0
-  '@sneat/wormhole': 0.0.1_46f051be48c1b148de8fdbd5df9ebdf1
+  '@sneat/wormhole': 0.0.5_46f051be48c1b148de8fdbd5df9ebdf1
   codemirror: 5.59.3
   firebase: 8.2.9
   ionicons: 5.5.0
@@ -3412,7 +3412,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-MZPUxrmFubI36XS1DI3qmI0YdN1gks62JtFZvxR67ljjSNCeK6U08Zx4msEWOXuofgqUt6zPHSi1H9fbjR/NRA==
-  /@sneat/wormhole/0.0.1_46f051be48c1b148de8fdbd5df9ebdf1:
+  /@sneat/wormhole/0.0.5_46f051be48c1b148de8fdbd5df9ebdf1:
     dependencies:
       '@angular/common': 11.2.2_@angular+core@11.2.2+rxjs@6.6.3
       '@angular/core': 11.2.2_rxjs@6.6.3+zone.js@0.10.3
@@ -3424,7 +3424,7 @@ packages:
       '@angular/core': ^11.2.5
       rxjs: ~6.6.3
     resolution:
-      integrity: sha512-2JL2KtO65WbMdxY9/DJ1g8Eein4X9fTVdLyMBCpbTIIv4SATkp5W0+W5fNLzzFby9YoqTMRb4ALAMnbiTicPfA==
+      integrity: sha512-tT20De8eGIwtjmcL5CKzChStgn9gAi6Zc51waGUPQ5kGPO6kDDBCsx8GxL9hzmlAl0zhWKHdyKEdf2fx2QRL+g==
   /@stencil/core/2.4.0:
     dev: false
     engines:
@@ -14547,7 +14547,7 @@ specifiers:
   '@nxtend/capacitor': ^11.1.1
   '@nxtend/ionic-angular': 11.0.0
   '@sentry/browser': ^6.2.0
-  '@sneat/wormhole': ^0.0.1
+  '@sneat/wormhole': ^0.0.5
   '@trellisorg/make-buildable': ^0.0.10
   '@types/jasmine': ~3.5.0
   '@types/jest': 26.0.8

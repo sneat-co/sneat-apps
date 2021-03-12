@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -7,7 +7,8 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IProjectContext} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
-import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
+import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
+import {ProjectContextMenuComponent} from "@sneat/datatug/components/project";
 
 interface FilteredItem {
 	folders: string[];
@@ -21,7 +22,9 @@ type QueryType = 'SQL' | 'GraphQL' | 'HTTP' | '*'
 	templateUrl: './queries-page.component.html',
 	styleUrls: ['./queries-page.component.scss'],
 })
-export class QueriesPageComponent implements OnInit {
+export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave {
+
+	public contextMenuComponent = ProjectContextMenuComponent;
 
 	@ViewChild('codemirrorComponent', {static: true}) public codemirrorComponent: CodemirrorComponent;
 
@@ -68,6 +71,22 @@ export class QueriesPageComponent implements OnInit {
 			error: this.errorLogger.logErrorHandler('Failed to get query params map from activate route'),
 		})
 		this.loadQueries();
+	}
+
+	public isActiveView: boolean;
+
+	ionViewWillEnter(): void {
+		console.log('ionViewWillEnter()')
+		this.isActiveView = true;
+	}
+
+	ionViewDidEnter(): void {
+		console.log('ionViewDidEnter()')
+	}
+
+	ionViewDidLeave(): void {
+		console.log('ionViewDidLeave()')
+		this.isActiveView = false;
 	}
 
 	ngOnInit(): void {

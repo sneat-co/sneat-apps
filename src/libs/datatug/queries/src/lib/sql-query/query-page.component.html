@@ -1,8 +1,4 @@
-<ng-template #contextMenu>
-	<datatug-queries-menu></datatug-queries-menu>
-</ng-template>
-
-<wormhole-entrance tunnel="context-menu" [template]="contextMenu"></wormhole-entrance>
+<wormhole-entrance sender="query-page" tunnel="context-menu" [component]="contextMenuComponent"></wormhole-entrance>
 
 <ion-header>
 	<ion-toolbar>

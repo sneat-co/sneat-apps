@@ -5,6 +5,8 @@ import {IonicModule} from '@ionic/angular';
 import {ProjectPageRoutingModule} from './project-routing.module';
 import {ProjectPageComponent} from './project-page.component';
 import {SneatCardListModule} from '@sneat/components/card-list';
+import {WormholeModule} from '@sneat/wormhole';
+import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
 
 @NgModule({
 	imports: [
@@ -13,6 +15,8 @@ import {SneatCardListModule} from '@sneat/components/card-list';
 		IonicModule,
 		ProjectPageRoutingModule,
 		SneatCardListModule,
+		DatatugComponentsProjectModule,
+		WormholeModule,
 	],
 	declarations: [ProjectPageComponent],
 })

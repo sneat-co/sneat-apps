@@ -1,4 +1,4 @@
-import {Component, Inject, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {IProjectContext} from '@sneat/datatug/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
@@ -14,10 +14,10 @@ import {
 	SqlParser
 } from '@sneat/datatug/services/unsorted';
 import {IExecuteResponse, IRecordset} from '@sneat/datatug/dto';
-import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 import {RandomId} from "@sneat/random";
 import {ISqlChanged} from "./intefaces";
 import {QueryEditorStateService} from "@sneat/datatug/queries";
+import {QueriesMenuComponent} from "../queries-menu.component";
 
 interface IEnvState {
 	id: string;
@@ -34,8 +34,7 @@ interface IEnvState {
 })
 export class QueryPageComponent {
 
-	@ViewChild('contextMenu')
-	contextMenu: TemplateRef<any>;
+	public readonly contextMenuComponent = QueriesMenuComponent;
 
 	queryTitle = '';
 	public queryNamePlaceholder: string;
