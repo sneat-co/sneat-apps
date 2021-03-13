@@ -36,6 +36,9 @@ export class SqlQueryPageComponent {
 
 	public readonly contextMenuComponent = QueriesMenuComponent;
 
+	public targetDbModelId: string;
+	public queryMode: 'text' | 'builder'  = 'text';
+
 	queryTitle = '';
 	public queryNamePlaceholder: string;
 	public targetCatalog: string;
@@ -202,11 +205,15 @@ export class SqlQueryPageComponent {
 	}
 
 	executeQuery(): void {
+		if (!this.targetCatalog) {
+			alert('select target catalog 1st');
+			return;
+		}
 		const sqlCommandRequest: ISqlCommandRequest = {
 			type: 'SQL',
 			text: this.sql,
 			env: this.envId,
-			db: this.query.targets[0].catalog,
+			db: this.targetCatalog,
 		}
 		const request: IExecuteRequest = {
 			id: RandomId.newRandomId(),

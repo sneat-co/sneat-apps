@@ -1,18 +1,25 @@
 <ion-card>
-	<ion-item *ngIf="queryAst?.from">
-		<ion-checkbox checked="true" disabled slot="start"></ion-checkbox>
-		<ion-label title="FROM">
-			<span *ngIf="queryAst.from.schema">[{{queryAst.from.schema}}].</span>|{{queryAst.from.name}}|
-		</ion-label>
-		<ion-badge color="medium" *ngIf="queryAst.from.alias">{{queryAst.from.alias}}</ion-badge>
-		<ion-buttons slot="end">
-			<ion-button>
-				<ion-icon name="link-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ng-container *ngIf="queryAst?.joins">
-		<ion-item *ngFor="let join of queryAst.joins; trackBy: trackByIndex">
+	<ion-list>
+		<ion-item *ngIf="!queryAst.from">
+			<ion-label color="medium" style="font-weight: bold">FROM</ion-label>
+			<ion-select>
+				<ion-select-option>Artist</ion-select-option>
+				<ion-select-option>Album</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item *ngIf="queryAst?.from">
+			<ion-checkbox checked="true" disabled slot="start"></ion-checkbox>
+			<ion-label title="FROM">
+				<span *ngIf="queryAst.from.schema">[{{queryAst.from.schema}}].</span>|{{queryAst.from.name}}|
+			</ion-label>
+			<ion-badge color="medium" *ngIf="queryAst.from.alias">{{queryAst.from.alias}}</ion-badge>
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="link-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item *ngFor="let join of (queryAst.joins || []); trackBy: trackByIndex">
 			<ion-checkbox slot="start" [checked]="!join.disabled"
 						  (ionChange)="joinCheckChanged($event, join)"></ion-checkbox>
 			<ion-label><b>{{join.alias}}</b> -
@@ -24,7 +31,7 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-	</ng-container>
+	</ion-list>
 </ion-card>
 
 <ion-card *ngIf="this.suggestedJoins?.length">
