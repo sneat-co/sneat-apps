@@ -1,11 +1,7 @@
 import {Component, Inject} from "@angular/core";
-import {IQueryState, QueryEditorStateService} from "@sneat/datatug/queries";
+// noinspection ES6PreferShortImport
+import {IQueryState, QueryEditorStateService} from "./query-editor-state-service";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-
-interface IQuery {
-	id: string
-	title?: string
-}
 
 @Component({
 	selector: 'datatug-queries-menu',
