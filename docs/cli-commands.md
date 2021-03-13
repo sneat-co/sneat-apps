@@ -28,6 +28,7 @@ pnpx nx generate @nxtend/ionic-angular:application <APP_NAME>
 ## To create an Angular library 
 ```
 pnpx nx g @nrwl/angular:lib <LIB_NAME> [--publishable | --buildable] [--directory] <FOLDER_NAME>
+pnpx nx g @nrwl/angular:lib <LIB_NAME> --buildable --directory <FOLDER_NAME>
 ```
 Examples:
 ```

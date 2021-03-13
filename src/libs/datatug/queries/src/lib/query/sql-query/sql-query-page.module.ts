@@ -4,9 +4,9 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {SqlEditorPageRoutingModule} from './query-routing.module';
+import {SqlQueryPageRoutingModule} from './sql-query-routing.module';
 
-import {QueryPageComponent} from './query-page.component';
+import {SqlQueryPageComponent} from './sql-query-page.component';
 import {CodemirrorModule} from '@ctrl/ngx-codemirror';
 import {DatatugBoardModule} from '@sneat/datatug/board';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
@@ -24,7 +24,7 @@ import {WormholeModule} from "@sneat/wormhole";
 		FormsModule,
 		IonicModule,
 		DatatugComponentsSqlEditorModule,
-		SqlEditorPageRoutingModule,
+		SqlQueryPageRoutingModule,
 		CodemirrorModule,
 		QueriesServiceModule,
 		DatatugBoardModule,
@@ -34,10 +34,10 @@ import {WormholeModule} from "@sneat/wormhole";
 		WormholeModule,
 	],
 	declarations: [
-		QueryPageComponent,
+		SqlQueryPageComponent,
 		ColumnsComponent,
 		JoinsComponent,
 	]
 })
-export class QueryPageModule {
+export class SqlQueryPageModule {
 }

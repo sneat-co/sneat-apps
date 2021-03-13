@@ -10,7 +10,7 @@ const routes: Routes = [
 	},
 	{
 		path: ':queryId',
-		loadChildren: () => import('../sql-query/query-page.module').then(m => m.QueryPageModule),
+		loadChildren: () => import('../query/sql-query/sql-query-page.module').then(m => m.SqlQueryPageModule),
 	}
 ];
 

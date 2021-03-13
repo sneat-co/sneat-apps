@@ -86,7 +86,7 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'query',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.QueryPageModule)
+		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.SqlQueryPageModule)
 	},
 	{
 		path: 'queries',

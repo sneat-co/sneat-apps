@@ -17,7 +17,7 @@ import {IExecuteResponse, IRecordset} from '@sneat/datatug/dto';
 import {RandomId} from "@sneat/random";
 import {ISqlChanged} from "./intefaces";
 import {QueryEditorStateService} from "@sneat/datatug/queries";
-import {QueriesMenuComponent} from "../queries-menu.component";
+import {QueriesMenuComponent} from "../../queries-menu.component";
 
 interface IEnvState {
 	id: string;
@@ -29,15 +29,16 @@ interface IEnvState {
 
 @Component({
 	selector: 'datatug-sql-editor',
-	templateUrl: './query-page.component.html',
-	styleUrls: ['./query-page.component.scss'],
+	templateUrl: './sql-query-page.component.html',
+	styleUrls: ['./sql-query-page.component.scss'],
 })
-export class QueryPageComponent {
+export class SqlQueryPageComponent {
 
 	public readonly contextMenuComponent = QueriesMenuComponent;
 
 	queryTitle = '';
 	public queryNamePlaceholder: string;
+	public targetCatalog: string;
 	public query: IQueryDef;
 	public queryId: string;
 	public envId = 'local';
@@ -74,7 +75,10 @@ export class QueryPageComponent {
 		private readonly queryEditorStateService: QueryEditorStateService,
 	) {
 		console.log('QueryPage.constructor()', location.hash);
-		this.query = history.state.query as IQueryDef;
+		const query = history.state.query as IQueryDef;
+		if (query) {
+			this.setQuery(query);
+		}
 
 		if (location.hash.startsWith('#text=')) {
 			this.sql = decodeURIComponent(location.hash.substr(6).replace(/\+/g, '%20'));
@@ -130,6 +134,16 @@ export class QueryPageComponent {
 			},
 			error: this.errorLogger.logErrorHandler('Failed to get query params from activated router'),
 		});
+	}
+
+	private setQuery(query: IQueryDef): void {
+		this.query = query;
+		this.queryTitle = query.title;
+		this.sql = query.text;
+		if (query.targets?.length && !this.targetCatalog) {
+			this.targetCatalog = query.targets[0].catalog;
+		}
+		this.onSqlChanged();
 	}
 
 	private updateQueryContext(): void {
@@ -244,7 +258,7 @@ export class QueryPageComponent {
 		const query = this.query;
 		this.queryAst = this.queryContextSqlService.setSql(this.sql);
 		if (query) {
-			if (!this.target.catalog || !query.targets.find(t => t.catalog === this.target.catalog)) {
+			if (!this.target?.catalog || !query.targets?.find(t => t.catalog === this.target.catalog)) {
 				this.target = {
 					...(this.target || {}),
 					catalog: query.targets?.length && query.targets[0].catalog,
@@ -260,10 +274,7 @@ export class QueryPageComponent {
 		this.queriesService.getQuery(this.projectContext, this.queryId).subscribe({
 			next: query => {
 				console.log('QueryPage.loadQuery() => query:', query);
-				this.query = query;
-				this.queryTitle = query.title;
-				this.sql = query.text;
-				this.onSqlChanged();
+				this.setQuery(query)
 			},
 			error: this.errorLogger.logErrorHandler('Failed to get query by id'),
 		})

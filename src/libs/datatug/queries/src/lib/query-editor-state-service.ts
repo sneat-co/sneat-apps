@@ -12,12 +12,14 @@ export interface IQueryEditorState {
 	readonly activeQueries: IQueryState[];
 }
 
+const $state = new BehaviorSubject<IQueryEditorState | undefined>(undefined);
+
 @Injectable({
 	providedIn: 'root',
 })
 export class QueryEditorStateService {
-	private readonly $state = new BehaviorSubject<IQueryEditorState | undefined>(undefined);
-	public readonly queryEditorState = this.$state.asObservable();
+	// private readonly $state = new BehaviorSubject<IQueryEditorState | undefined>(undefined);
+	public readonly queryEditorState = $state.asObservable();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -29,7 +31,7 @@ export class QueryEditorStateService {
 		console.log(`QueryEditorStateService.openQuery(${id})`)
 		try {
 			let changed = false;
-			let state = this.$state.value || {currentQueryId: id, activeQueries: []};
+			let state = $state.value || {currentQueryId: id, activeQueries: []};
 			const queryState = state.activeQueries.find(q => q.id === id)
 			if (!queryState) {
 				state = {
@@ -43,7 +45,7 @@ export class QueryEditorStateService {
 				changed = true;
 			}
 			if (changed) {
-				this.$state.next(state);
+				$state.next(state);
 			}
 		} catch (err) {
 			this.errorLogger.logError(err, 'failed to openQuery');

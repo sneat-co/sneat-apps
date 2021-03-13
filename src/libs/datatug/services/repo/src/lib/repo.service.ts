@@ -76,7 +76,7 @@ export class RepoService {
 		request = {...request, projectId: undefined};
 		// eslint-disable-next-line object-shorthand
 		const agentUrl = getRepoUrl(repoId);
-		return this.http.post<IExecuteResponse>(`${agentUrl}/exec/execute_commands`, request, {params});
+		return this.http.post<IExecuteResponse>(agentUrl + `/exec/execute_commands`, request, {params});
 	}
 }
 

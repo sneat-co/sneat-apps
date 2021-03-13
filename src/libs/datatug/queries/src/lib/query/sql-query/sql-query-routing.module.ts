@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {QueryPageComponent} from './query-page.component';
+import {SqlQueryPageComponent} from './sql-query-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: QueryPageComponent
+		component: SqlQueryPageComponent
 	}
 ];
 
@@ -14,5 +14,5 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class SqlEditorPageRoutingModule {
+export class SqlQueryPageRoutingModule {
 }

@@ -1,7 +1,7 @@
 <div class="ion-padding-horizontal">
 	<ion-segment [(ngModel)]="tab">
-		<ion-segment-button value="queries">Queries</ion-segment-button>
 		<ion-segment-button value="project">Project</ion-segment-button>
+		<ion-segment-button value="queries">Queries</ion-segment-button>
 	</ion-segment>
 </div>
 <ng-container *ngIf="tab === 'queries'">
