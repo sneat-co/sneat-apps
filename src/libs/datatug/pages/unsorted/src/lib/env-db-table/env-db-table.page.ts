@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {PopoverController} from '@ionic/angular';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {RepoService} from '@sneat/datatug/services/repo';
 import {ICommandResponseWithRecordset, IForeignKey} from '@sneat/datatug/models';
@@ -21,7 +21,7 @@ import {IEnvDbTableContext} from '@sneat/datatug/nav';
 })
 export class EnvDbTablePage implements AfterViewInit {
 
-	target: IProjectContext;
+	target: IDatatugProjRef;
 	repoId: string;
 	projectId: string;
 	envId: string;

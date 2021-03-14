@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {IProjBoard, IDatatugProjectSummary, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
 
 export type ProjectTopLevelPage =
@@ -39,27 +39,27 @@ export class DatatugNavService {
     this.navRoot(url, 'Failed to navigate to project page ' + page);
   }
 
-  goEnvironment(projContext: IProjectContext, projEnv: IProjEnv, envId?: string): void {
+  goEnvironment(projContext: IDatatugProjRef, projEnv: IProjEnv, envId?: string): void {
     const url = this.projectPageUrl(projContext, 'env', projEnv?.id || envId);
     this.navForward(url, {state: {projEnv}}, 'Failed to navigate to environment page');
   }
 
-  goEntity(projContext: IProjectContext, projEntity: IProjEntity, entityId?: string): void {
+  goEntity(projContext: IDatatugProjRef, projEntity: IProjEntity, entityId?: string): void {
     const url = this.projectPageUrl(projContext, 'entity', projEntity?.id || entityId);
     this.navForward(url, {state: {projEntity}}, 'Failed to navigate to entity page');
   }
 
-  goQuery(projContext: IProjectContext, query: IQueryDef, queryFullId: string, action?: 'execute' | 'edit'): void {
+  goQuery(projContext: IDatatugProjRef, query: IQueryDef, queryFullId: string, action?: 'execute' | 'edit'): void {
     const url = this.projectPageUrl(projContext, 'queries', queryFullId);
     this.navForward(url, {state: {query, action}}, 'Failed to navigate to query page');
   }
 
-  goBoard(projContext: IProjectContext, projBoard: IProjBoard, boardId?: string): void {
+  goBoard(projContext: IDatatugProjRef, projBoard: IProjBoard, boardId?: string): void {
     const url = this.projectPageUrl(projContext, 'board', projBoard?.id || boardId);
     this.navForward(url, {state: {projBoard}}, 'Failed to navigate to board page');
   }
 
-  public projectPageUrl(c: IProjectContext, name: string, id: string): string {
+  public projectPageUrl(c: IDatatugProjRef, name: string, id: string): string {
     return `/repo/${c.repoId}/project/${c.projectId}/${name}/${encodeURIComponent(id)}`;
   }
 
@@ -92,7 +92,7 @@ export class DatatugNavService {
 }
 
 export interface IDbObjectNavParams {
-  target: IProjectContext;
+  target: IDatatugProjRef;
   env: string;
   db: string;
   schema: string;

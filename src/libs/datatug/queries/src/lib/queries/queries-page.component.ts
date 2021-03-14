@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueriesService} from '@sneat/datatug/services/unsorted';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
 import {ProjectContextMenuComponent} from "@sneat/datatug/components/project";
@@ -35,7 +35,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	public filter = '';
 
-	public currentProject: IProjectContext;
+	public currentProject: IDatatugProjRef;
 
 	public readonly codemirrorOptions = {
 		lineNumbers: false,

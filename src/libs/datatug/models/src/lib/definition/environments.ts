@@ -19,7 +19,7 @@ export interface IEnvironmentSummary extends IEnvironmentBase {
 export interface IEnvDbServer extends IDbServer {
 	id: string;
 	title?: string;
-	databases?: string[];
+	catalogs?: string[];
 }
 
 export interface IProjectEnv {

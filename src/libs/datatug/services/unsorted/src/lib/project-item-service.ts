@@ -2,7 +2,7 @@ import {Observable, throwError} from 'rxjs';
 import {startWith, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {RepoApiService} from '@sneat/datatug/services/repo';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {IProjItemBrief} from '@sneat/datatug/models';
 
 const notImplemented = 'not implemented';
@@ -28,7 +28,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	) {
 	}
 
-	public getProjItems(from: IProjectContext, folder: string): Observable<ProjItem[]> {
+	public getProjItems(from: IDatatugProjRef, folder: string): Observable<ProjItem[]> {
 		console.log('getProjItems', from, folder);
 		return this.agentProvider.get<ProjItem[]>(from.repoId, `/${this.itemsPath}/all_${this.itemsPath}`, {
 			params: {
@@ -51,7 +51,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		}
 	}
 
-	public getProjItem(from: IProjectContext, id: string): Observable<ProjItem> {
+	public getProjItem(from: IDatatugProjRef, id: string): Observable<ProjItem> {
 		let o = this.agentProvider.get<ProjItem>(from.repoId, `/${this.itemsPath}/get_${this.itemPath}`, {
 			params: {
 				project: from.projectId,

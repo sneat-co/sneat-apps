@@ -1,10 +1,11 @@
-import {Component, Inject, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {
 	ICommandResponseWithRecordset,
 	IEnvDbServer,
+	IEnvironmentSummary,
 	IExecuteRequest,
 	IProjEnv,
 	IQueryDef,
@@ -28,13 +29,19 @@ import {QueryEditorStateService} from "@sneat/datatug/queries";
 import {QueriesMenuComponent} from "../../queries-menu.component";
 import {DatatugNavContextService} from "@sneat/datatug/services/nav";
 import {IDatatugProjectContext} from "@sneat/datatug/nav";
+import {takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
 
 interface IEnvState {
-	id: string;
-	title?: string;
-	isExecuting?: boolean;
-	recordsets?: IRecordset[];
-	rowsCount?: number;
+	readonly id: string;
+	readonly title?: string;
+	readonly summary?: IEnvironmentSummary;
+	readonly isExecuting?: boolean;
+	readonly recordsets?: IRecordset[];
+	readonly rowsCount?: number;
+	readonly dbServerId?: string;
+	readonly catalogId?: string;
+	readonly error?: any
 }
 
 function getEnvBriefFromEnvState(envState: IEnvState): IProjEnv {
@@ -46,7 +53,7 @@ function getEnvBriefFromEnvState(envState: IEnvState): IProjEnv {
 	templateUrl: './sql-query-page.component.html',
 	styleUrls: ['./sql-query-page.component.scss'],
 })
-export class SqlQueryPageComponent {
+export class SqlQueryPageComponent implements OnDestroy {
 
 	public readonly contextMenuComponent = QueriesMenuComponent;
 
@@ -58,11 +65,12 @@ export class SqlQueryPageComponent {
 	public targetCatalog: string;
 	public query: IQueryDef;
 	public queryId: string;
-	public envId = 'local';
+	public envId;
+	public envDbServerId: string;
 	public sql = '';
 	public colsTab: 'group' | 'order' = 'order';
 	public queryAst: IAstQuery;
-	public projectContext: IProjectContext;
+	public projectContext: IDatatugProjRef;
 	public response: IExecuteResponse;
 	public environments: IEnvState[];
 	public envDbServers: IEnvDbServer[];
@@ -79,6 +87,8 @@ export class SqlQueryPageComponent {
 	private target: ISqlQueryTarget;
 
 	public currentProject: IDatatugProjectContext;
+
+	private destroyed = new Subject<void>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -108,36 +118,53 @@ export class SqlQueryPageComponent {
 		this.trackParamMap();
 	}
 
+	ngOnDestroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
+
 	private trackCurrentEnv(): void {
-		this.datatugNavContextService.currentEnv.subscribe(currentEnv => {
-			const {id} = currentEnv;
-			if (!id) {
-				return
-			}
-			this.envId = id
-			this.activeEnv.id =id;
-			this.activeEnv = this.environments.find(env => env.id === id)
-		});
+		this.datatugNavContextService.currentEnv
+			.pipe(takeUntil(this.destroyed))
+			.subscribe(currentEnv => {
+				const {id} = currentEnv;
+				if (!id) {
+					return
+				}
+				this.envId = id
+				this.activeEnv = this.environments.find(env => env.id === id)
+			});
 	}
 
 	private trackCurrentProject(): void {
-		this.datatugNavContextService.currentProject.subscribe(currentProject => {
-			console.log('SqlQueryPage => currentProject:', currentProject)
-			this.currentProject = currentProject;
-			const summary = currentProject?.summary;
-			if (summary) {
-				this.environments = summary.environments;
-				if (summary.environments?.length) {
-					this.envId = summary.environments[0].id;
-					this.envService.getEnvSummary(this.projectContext, this.envId).subscribe(env => {
-						this.envDbServers = env.dbServers;
-					});
+		this.datatugNavContextService.currentProject
+			.pipe(takeUntil(this.destroyed))
+			.subscribe(currentProject => {
+				console.log('SqlQueryPage => currentProject:', currentProject)
+				this.currentProject = currentProject;
+				const summary = currentProject?.summary;
+				if (summary) {
+					this.environments = summary.environments;
+					if (summary.environments?.length) {
+						const envId = summary.environments[0].id;
+						this.envId = envId;
+						this.envService.getEnvSummary(this.projectContext, envId)
+							.pipe(takeUntil(this.destroyed))
+							.subscribe(envSummary => {
+								if (this.envId == envId) {
+									this.envDbServers = envSummary.dbServers;
+									this.activeEnv = {
+										...this.activeEnv,
+										summary: envSummary,
+									}
+								}
+							});
+					}
+					if (summary.dbModels?.length === 1) {
+						this.targetDbModelId = summary.dbModels[0].id;
+					}
 				}
-				if (summary.dbModels?.length === 1) {
-					this.targetDbModelId = summary.dbModels[0].id;
-				}
-			}
-		});
+			});
 	}
 
 	private trackQueryParams(): void {
@@ -161,7 +188,7 @@ export class SqlQueryPageComponent {
 				console.log('QueryPage.constructor() => paramMap:', paramMap);
 				const queryId = paramMap.get('queryId');
 				this.queryEditorStateService.openQuery(queryId);
-				const projContext: IProjectContext = {
+				const projContext: IDatatugProjRef = {
 					projectId: paramMap.get('projectId'),
 					repoId: paramMap.get('repoId'),
 				};
@@ -238,6 +265,13 @@ export class SqlQueryPageComponent {
 
 	trackByIndex = (i: number) => i;
 
+	serverChanged(): void {
+		this.activeEnv = {
+			...this.activeEnv,
+			dbServerId: this.envDbServerId,
+		};
+	}
+
 	envChanged(): void {
 		this.activeEnv = this.environments.find(v => v.id === this.envId);
 
@@ -281,9 +315,11 @@ export class SqlQueryPageComponent {
 				sqlCommandRequest,
 			],
 		};
-		const envState = this.activeEnv;
-		envState.isExecuting = true;
-		delete envState.recordsets;
+		let envState = this.updateEnvState({
+			...this.activeEnv,
+			isExecuting: true,
+			recordsets: undefined,
+		});
 		this.coordinator.execute(this.projectContext.repoId, request).subscribe({
 			next: response => {
 				console.log('response:', response);
@@ -299,17 +335,39 @@ export class SqlQueryPageComponent {
 					});
 				});
 
-				envState.recordsets = recordsets;
-				envState.isExecuting = false;
+				envState = this.updateEnvState({
+					...envState,
+					recordsets: recordsets,
+					isExecuting: false,
+				});
+				if (this.activeEnv.id === envState.id) {
+					this.activeEnv = envState;
+				}
 				if (sqlCommandRequest.env === this.envId) {
 					this.activeEnv = envState;
 				}
 			},
 			error: err => {
-				envState.isExecuting = false;
+				envState = this.updateEnvState({
+					...envState,
+					isExecuting: false,
+					error: err,
+				})
 				this.errorLogger.logError(err, 'Failed to execute query')
 			},
 		})
+	}
+
+	private updateEnvState(envState: IEnvState): IEnvState {
+		if (this.activeEnv.id === envState.id) {
+			this.activeEnv = envState;
+		}
+		if (this.environments.find(env => env.id === envState.id)) {
+			this.environments = this.environments.map(env => env.id === envState.id ? envState : env);
+		} else {
+			this.environments.push(envState);
+		}
+		return envState;
 	}
 
 	public saveChanges(): void {

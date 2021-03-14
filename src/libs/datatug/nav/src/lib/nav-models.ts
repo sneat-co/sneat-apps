@@ -5,9 +5,9 @@ import {
 	IProjEnv,
 	ITableFull
 } from '@sneat/datatug/models';
-import {IProjectContext} from "@sneat/datatug/core";
+import {IDatatugProjRef} from "@sneat/datatug/core";
 
-export interface IDatatugProjectContext extends IProjectContext {
+export interface IDatatugProjectContext extends IDatatugProjRef {
 	readonly brief: IDatatugProjectBrief;
 	readonly summary?: IDatatugProjectSummary;
 }

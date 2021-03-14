@@ -7,7 +7,7 @@ import {IEntity, IEntityField} from '@sneat/datatug/models';
 import {IDatatugProjectContext} from '@sneat/datatug/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {EntityService} from '@sneat/datatug/services/unsorted';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 
 @Component({
@@ -74,7 +74,7 @@ export class EntityEditPage implements OnDestroy {
 	createEntity(): void {
 		console.log('createEntity()');
 		try {
-			const projectContext: IProjectContext = {...this.currentProject};
+			const projectContext: IDatatugProjRef = {...this.currentProject};
 			this.entityService.createEntity(projectContext, this.entity).subscribe({
 				next: value => {
 					console.log('Entity created:', value);

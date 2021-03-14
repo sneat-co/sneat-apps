@@ -187,7 +187,7 @@
 			<ion-col size="5">
 				<ion-item>
 					<ion-label>@ Server</ion-label>
-					<ion-select value="localhost" *ngIf="envDbServers">
+					<ion-select [(ngModel)]="envDbServerId" *ngIf="envDbServers" (ionChange)="serverChanged()">
 						<ion-select-option *ngFor="let envDbServer of envDbServers"
 								[value]="envDbServer.id"
 						>{{envDbServer.title || envDbServer.id}}</ion-select-option>

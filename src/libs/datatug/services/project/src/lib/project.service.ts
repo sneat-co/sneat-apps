@@ -4,7 +4,7 @@ import {EMPTY, Observable, of, throwError} from 'rxjs';
 import {map, mergeMap, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getRepoUrl} from '@sneat/datatug/nav';
-import {GITHUB_REPO, GITLAB_REPO_PREFIX, IProjectContext} from '@sneat/datatug/core';
+import {GITHUB_REPO, GITLAB_REPO_PREFIX, IDatatugProjRef} from '@sneat/datatug/core';
 import {IDatatugProjectFull, IDatatugProjectSummary} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
 
@@ -50,7 +50,7 @@ export class ProjectService {
       );
   }
 
-  public getFull(target: IProjectContext): Observable<IDatatugProjectFull> {
+  public getFull(target: IDatatugProjRef): Observable<IDatatugProjectFull> {
     console.warn('The getFull() method should not be called from UI');
     if (!target) {
       throw new Error('target is a required parameter for getFull()');
@@ -69,7 +69,7 @@ export class ProjectService {
     return $project;
   }
 
-  public getSummary(target: IProjectContext, options?: { cachedOnly?: boolean }): Observable<IDatatugProjectSummary> {
+  public getSummary(target: IDatatugProjRef, options?: { cachedOnly?: boolean }): Observable<IDatatugProjectSummary> {
     const id = `${target.repoId}|${target.projectId}`;
     let $project = this.projSummary[id];
     if ($project) {
@@ -88,7 +88,7 @@ export class ProjectService {
     return $project;
   }
 
-  private getProjectSummaryRequest(target: IProjectContext): Observable<IDatatugProjectSummary> {
+  private getProjectSummaryRequest(target: IDatatugProjRef): Observable<IDatatugProjectSummary> {
     const {repoId, projectId} = target;
     if (repoId === GITHUB_REPO || repoId.startsWith(GITLAB_REPO_PREFIX)) {
       interface urlAndHeaders {

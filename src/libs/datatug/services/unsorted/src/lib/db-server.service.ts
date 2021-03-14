@@ -6,7 +6,7 @@ import {ProjectContextService, ProjectService} from '@sneat/datatug/services/pro
 import {IDbCatalogSummary, IDbServer, IDbServerSummary, IProjDbServerSummary} from '@sneat/datatug/models';
 import {getRepoUrl} from '@sneat/datatug/nav';
 import {GetServerDatabasesRequest} from '@sneat/datatug/dto';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 
 @Injectable()
 export class DbServerService {
@@ -56,7 +56,7 @@ export class DbServerService {
     return this.http.delete<void>(`${getRepoUrl(target.repoId)}/dbserver-delete`, {params});
   }
 
-  public getDbServers(target: IProjectContext): Observable<IProjDbServerSummary[]> {
+  public getDbServers(target: IDatatugProjRef): Observable<IProjDbServerSummary[]> {
     console.log('getDbServers()', target);
     return this.projectService
       .getFull(target)

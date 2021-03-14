@@ -3,7 +3,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {QUERY_PROJ_ITEM_SERVICE} from './queries.service.token';
 import {IQueryDef, QueryItem} from '@sneat/datatug/models';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 
 @Injectable()
 // @ts-ignore // TODO: why it's complaining about TS1219?
@@ -14,13 +14,13 @@ export class QueriesService {
 	) {
 	}
 
-	public getQueries(from: IProjectContext, folder: string): Observable<QueryItem[]> {
+	public getQueries(from: IDatatugProjRef, folder: string): Observable<QueryItem[]> {
 		// const v: IQueryDef[] = [{id: 'id1', type: 'SQL', title: 'Query 1', text: 'select  * from table1'}];
 		// return of(v);
 		return this.projItemService.getProjItems(from, folder);
 	}
 
-	public getQuery(from: IProjectContext, id: string): Observable<IQueryDef> {
+	public getQuery(from: IDatatugProjRef, id: string): Observable<IQueryDef> {
 		return this.projItemService.getProjItem(from, id);
 	}
 

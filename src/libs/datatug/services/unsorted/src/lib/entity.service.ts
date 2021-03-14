@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {GITHUB_REPO, IProjectContext} from '@sneat/datatug/core';
+import {GITHUB_REPO, IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectItemsByAgent} from './caching';
 import {RepoApiService} from '@sneat/datatug/services/repo';
 import {IRecord} from '@sneat/data';
@@ -51,7 +51,7 @@ export class EntityService {
 		}
 	}
 
-	public getAllEntities = (from: IProjectContext, forceReload?: boolean): Observable<IRecord<IEntity>[]> => {
+	public getAllEntities = (from: IDatatugProjRef, forceReload?: boolean): Observable<IRecord<IEntity>[]> => {
 		console.log('EntityService.getAllEntities()');
 		let o = this.cache.getItems$(from);
 		if (!o || forceReload) {
@@ -75,7 +75,7 @@ export class EntityService {
 		return o;
 	};
 
-	public createEntity = (projContext: IProjectContext, entity: IEntity): Observable<IRecord<IEntity>> => {
+	public createEntity = (projContext: IDatatugProjRef, entity: IEntity): Observable<IRecord<IEntity>> => {
 		const {repoId, projectId} = projContext;
 		const entities$ = this.cache.byRepo$[repoId][projectId];
 		return this.agentProvider
@@ -90,7 +90,7 @@ export class EntityService {
 	public saveEntity = (repo: string, project: string, request: IEntity): Observable<IRecord<IEntity>> =>
 		this.agentProvider.put(repo, '/entities/save_entity', request, {params: {project}});
 
-	public deleteEntity = (from: IProjectContext, entityId: string): Observable<void> => {
+	public deleteEntity = (from: IDatatugProjRef, entityId: string): Observable<void> => {
 		const entities$ = this.cache.byRepo$[from.repoId][from.projectId];
 		entities$.next(entities$.getValue().map(entity => entity.id === entityId ? {
 			...entity,

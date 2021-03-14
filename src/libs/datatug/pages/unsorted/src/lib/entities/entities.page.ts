@@ -5,7 +5,7 @@ import {NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {IEntity, IProjEntity} from '@sneat/datatug/models';
 import {IDatatugProjectContext} from '@sneat/datatug/nav';
-import {IProjectContext} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {EntityService} from '@sneat/datatug/services/unsorted';
@@ -21,7 +21,7 @@ export class EntitiesPage implements OnDestroy {
 
 	entities: Entities;
 	currentProject: IDatatugProjectContext;
-	projectContext: IProjectContext;
+	projectContext: IDatatugProjRef;
 	private readonly destroyed = new Subject<void>();
 
 	constructor(
