@@ -50,7 +50,7 @@
 		<ion-select interface="popover" [value]="currentProject?.id" *ngIf="projects"
 					(ionChange)="switchProject($event)">
 			<ion-select-option *ngFor="let project of projects" [value]="project.id">
-				{{project.title}}
+				{{project.title || project.id}}
 			</ion-select-option>
 		</ion-select>
 	</ion-item>
@@ -81,17 +81,17 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ion-item class="ion-no-padding" *ngIf="currentEnvId">
-			<ion-buttons slot="start" class="ion-no-margin">
-				<ion-button>
-					<ion-icon name="layers-outline"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-			<ion-label>DB instance</ion-label>
-			<ion-select value="SomeDb" interface="popover">
-				<ion-select-option>Some DB instance</ion-select-option>
-			</ion-select>
-		</ion-item>
+<!--		<ion-item class="ion-no-padding" *ngIf="currentEnvId">-->
+<!--			<ion-buttons slot="start" class="ion-no-margin">-->
+<!--				<ion-button>-->
+<!--					<ion-icon name="layers-outline"></ion-icon>-->
+<!--				</ion-button>-->
+<!--			</ion-buttons>-->
+<!--			<ion-label>DB instance</ion-label>-->
+<!--			<ion-select value="SomeDb" interface="popover">-->
+<!--				<ion-select-option>Some DB instance</ion-select-option>-->
+<!--			</ion-select>-->
+<!--		</ion-item>-->
 	</ng-container>
 </ion-card>
 

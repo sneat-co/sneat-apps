@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService} from '@sneat/datatug/services/nav';
-import {IProjectSummary} from '@sneat/datatug/models';
+import {IDatatugProjectSummary} from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-environments',
@@ -9,7 +9,7 @@ import {IProjectSummary} from '@sneat/datatug/models';
 })
 export class EnvironmentsPage {
 
-	public project: IProjectSummary;
+	public project: IDatatugProjectSummary;
 
 	public environments: { id: string; title?: string }[];
 
@@ -17,7 +17,7 @@ export class EnvironmentsPage {
 		readonly datatugNavContextService: DatatugNavContextService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
-		this.setProjSummary(history.state.projSummary as IProjectSummary);
+		this.setProjSummary(history.state.projSummary as IDatatugProjectSummary);
 		if (!this.project) {
 			// this.projectService.getSummary()
 		}
@@ -32,7 +32,7 @@ export class EnvironmentsPage {
 		console.log('EnvironmentsPage.constructor()', this.project)
 	}
 
-	private setProjSummary(p: IProjectSummary): void {
+	private setProjSummary(p: IDatatugProjectSummary): void {
 		if (!this.environments) {
 			this.environments = this.project?.environments;
 		}

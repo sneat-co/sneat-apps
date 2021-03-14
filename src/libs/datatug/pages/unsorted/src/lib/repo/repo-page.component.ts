@@ -2,7 +2,7 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {distinctUntilChanged, filter, first, map, takeUntil, tap} from 'rxjs/operators';
-import {IProjectBase} from '@sneat/datatug/models';
+import {IDatatugProjectBase} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {RepoService} from '@sneat/datatug/services/repo';
 import {DatatugNavService} from '@sneat/datatug/services/nav';
@@ -15,7 +15,7 @@ import {routingParamRepoId} from '@sneat/datatug/routes';
 export class RepoPageComponent implements OnInit, OnDestroy {
 
 	public repoId: Observable<string>;
-	public projects: IProjectBase[];
+	public projects: IDatatugProjectBase[];
 	public error: any;
 
 	public agentIsOffline: boolean;
@@ -72,7 +72,7 @@ export class RepoPageComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	private processRepoProjects(projects: IProjectBase[]): void {
+	private processRepoProjects(projects: IDatatugProjectBase[]): void {
 		console.table(projects);
 		this.projects = projects;
 	}
@@ -82,7 +82,7 @@ export class RepoPageComponent implements OnInit, OnDestroy {
 		this.destroyed.next();
 	}
 
-	public goProject(project: IProjectBase, event: Event): void {
+	public goProject(project: IDatatugProjectBase, event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
 		this.repoId

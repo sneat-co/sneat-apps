@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {EnvironmentPage} from './environment.page';
+import {EnvironmentPageComponent} from './environment-page.component';
 
 describe('EnvironmentPage', () => {
-	let component: EnvironmentPage;
-	let fixture: ComponentFixture<EnvironmentPage>;
+	let component: EnvironmentPageComponent;
+	let fixture: ComponentFixture<EnvironmentPageComponent>;
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [EnvironmentPage],
+			declarations: [EnvironmentPageComponent],
 			imports: [IonicModule.forRoot()]
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(EnvironmentPage);
+		fixture = TestBed.createComponent(EnvironmentPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	}));

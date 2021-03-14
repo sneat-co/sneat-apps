@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
-import {IDataTugProjectBrief, IEnvDbServer, IEnvironmentSummary, IProjEnv} from '@sneat/datatug/models';
+import {IDatatugProjectBrief, IEnvDbServer, IEnvironmentSummary, IProjEnv} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {IProjectContext} from '@sneat/datatug/core';
 import {EnvironmentService} from '@sneat/datatug/services/unsorted';
@@ -9,12 +9,12 @@ import {DatatugNavContextService} from '@sneat/datatug/services/nav';
 
 @Component({
 	selector: 'datatug-environment',
-	templateUrl: './environment.page.html',
+	templateUrl: './environment-page.component.html',
 })
-export class EnvironmentPage {
+export class EnvironmentPageComponent {
 
 	projEnv: IProjEnv;
-	projBrief: IDataTugProjectBrief;
+	projBrief: IDatatugProjectBrief;
 
 	currentProject: IProjectContext;
 	env: IEnvironmentSummary;

@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService} from '@sneat/datatug/services/nav';
+import {IProjEnv} from "@sneat/datatug/models";
 
 interface IEnv {
 	readonly id: string
@@ -15,15 +16,17 @@ export class EnvSelectorComponent {
 
 	public currentEnvId: string;
 
-	public environments: IEnv[] = [
-		{id: 'local'},
-		{id: 'SIT-G2'},
-	];
+	public environments: IProjEnv[];
 
 	constructor(
 		private readonly dataTugNavContext: DatatugNavContextService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
+		dataTugNavContext.currentProject.subscribe(currentProject => {
+			if (currentProject?.summary.environments) {
+				this.environments = currentProject.summary.environments;
+			}
+		});
 		dataTugNavContext.currentEnv.subscribe({
 			next: currentEnv => {
 				console.log('EnvSelectorComponent: currentEnv =>', currentEnv);

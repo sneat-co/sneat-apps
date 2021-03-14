@@ -9,12 +9,12 @@ import {IUser} from '@sneat/auth-models';
 
 export interface IDataTugUser extends IUser {
   dataTug?: IDataTugBriefForUser;
-  dataTugProjects?: IDataTugProjectBrief[];
+  dataTugProjects?: IDatatugProjectBrief[];
 }
 
 export interface IDataTugBriefForUser {
   stores: IDataTugStoreBrief[];
-  projects: IDataTugProjectBrief[];
+  projects: IDatatugProjectBrief[];
 }
 
 export interface IDataTugStoreBrief {
@@ -25,14 +25,14 @@ export interface IDataTugStoreBrief {
 
 export type DataTugProjStoreType = 'agent' | 'local' | 'github.com';
 
-export interface IDataTugProjStoreBrief {
+export interface IDatatugProjStoreBrief {
   type: DataTugProjStoreType;
   url?: string;
 }
 
-export interface IDataTugProjectBrief {
+export interface IDatatugProjectBrief {
   readonly id: string;
-  readonly store: IDataTugProjStoreBrief;
+  readonly store: IDatatugProjStoreBrief;
   readonly title?: string;
   readonly titleOverride?: string;
 }

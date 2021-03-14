@@ -1,15 +1,22 @@
-import {IDataTugProjectBrief, IProjectSummary, ITableFull} from '@sneat/datatug/models';
+import {
+	IDatatugProjectBrief,
+	IDatatugProjectSummary,
+	IEnvironmentSummary,
+	IProjEnv,
+	ITableFull
+} from '@sneat/datatug/models';
+import {IProjectContext} from "@sneat/datatug/core";
 
-export interface IDatatugProjectContext {
-	readonly repoId: string;
-	readonly projectId: string;
-	readonly brief: IDataTugProjectBrief;
-	readonly summary?: IProjectSummary;
+export interface IDatatugProjectContext extends IProjectContext {
+	readonly brief: IDatatugProjectBrief;
+	readonly summary?: IDatatugProjectSummary;
 }
 
 
 export interface IEnvContext {
 	readonly id: string;
+	readonly brief?: IProjEnv;
+	readonly summary?: IEnvironmentSummary;
 }
 
 export interface IEnvDbContext {

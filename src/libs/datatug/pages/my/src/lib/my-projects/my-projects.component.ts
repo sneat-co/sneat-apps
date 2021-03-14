@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, ViewChild} from '@angular/core';
 import {MyBaseCardComponent} from '../my-base-card-component';
-import {IDataTugProjectBrief} from '@sneat/datatug/models';
+import {IDatatugProjectBrief} from '@sneat/datatug/models';
 import {GITHUB_REPO} from '@sneat/datatug/core';
 
 @Component({
@@ -10,8 +10,8 @@ import {GITHUB_REPO} from '@sneat/datatug/core';
 })
 export class MyProjectsComponent {
 
-	@Input() public projects: IDataTugProjectBrief[];
-	public demoProjects: IDataTugProjectBrief[] = [
+	@Input() public projects: IDatatugProjectBrief[];
+	public demoProjects: IDatatugProjectBrief[] = [
 		{
 			id: 'datatug-demo-project@datatug',
 			store: {type: GITHUB_REPO},
@@ -22,7 +22,7 @@ export class MyProjectsComponent {
 
 	public showDemoProjects = true;
 
-	goProject(proj: IDataTugProjectBrief): void {
+	goProject(proj: IDatatugProjectBrief): void {
 		this.base.navController
 			.navigateForward(`/repo/${proj.store.url || proj.store.type}/project/${proj.id}`, {state: {proj}})
 			.catch(e => this.base.errorLogger.logError(e, 'Failed to navigate to project page'));

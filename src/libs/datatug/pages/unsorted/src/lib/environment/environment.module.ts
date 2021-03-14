@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {EnvironmentPageRoutingModule} from './environment-routing.module';
 
-import {EnvironmentPage} from './environment.page';
+import {EnvironmentPageComponent} from './environment-page.component';
 
 @NgModule({
 	imports: [
@@ -15,7 +15,7 @@ import {EnvironmentPage} from './environment.page';
 		IonicModule,
 		EnvironmentPageRoutingModule,
 	],
-	declarations: [EnvironmentPage]
+	declarations: [EnvironmentPageComponent]
 })
 export class EnvironmentPageModule {
 }

@@ -18,7 +18,7 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content class="cards">
+<ion-content>
 
 	<ion-grid>
 		<ion-row>
@@ -37,8 +37,13 @@
 			<ion-col size="4">
 				<ion-item>
 					<ion-label color="medium">Target</ion-label>
-					<ion-select interface="popover" [(ngModel)]="targetDbModelId" placeholder="DB model">
-						<ion-select-option value="chinook">Chinook</ion-select-option>
+					<ion-select *ngIf="currentProject?.summary?.dbModels"
+								interface="popover" [(ngModel)]="targetDbModelId" placeholder="DB model">
+						<ion-select-option
+								*ngFor="let dbModel of currentProject.summary.dbModels"
+								[value]="dbModel.id">
+							{{dbModel.title || dbModel.id}}
+						</ion-select-option>
 					</ion-select>
 				</ion-item>
 			</ion-col>
@@ -150,39 +155,42 @@
 			</ion-row>
 		</ion-grid>
 
-		<div class="ion-padding-start ion-padding-end">
-			<ion-segment [(ngModel)]="envId" (ionChange)="envChanged()">
-				<ion-segment-button [value]="env.id" *ngFor="let env of environments">
-					<ion-grid>
-						<ion-row>
-							<ion-col style="margin-top: 0.5rem">
-								{{env.title || env.id}}
-							</ion-col>
-							<ion-col>
-								<ion-buttons>
-									<ion-button *ngIf="env.isExecuting" disabled>
-										<ion-spinner name="lines-small" slot="end"></ion-spinner>
-									</ion-button>
-									<ion-button *ngIf="!env.isExecuting" (click)="executeFromTab($event, env)">
-										<ion-icon name="play-circle-outline"></ion-icon>
-									</ion-button>
-								</ion-buttons>
-							</ion-col>
-						</ion-row>
-					</ion-grid>
-				</ion-segment-button>
-			</ion-segment>
-		</div>
+
 	</ng-container>
+
+	<div class="ion-padding-start ion-padding-end">
+		<ion-segment [(ngModel)]="envId" (ionChange)="envChanged()">
+			<ion-segment-button [value]="env.id" *ngFor="let env of environments">
+				<ion-grid>
+					<ion-row>
+						<ion-col style="margin-top: 0.5rem">
+							{{env.title || env.id}}
+						</ion-col>
+						<ion-col>
+							<ion-buttons>
+								<ion-button *ngIf="env.isExecuting" disabled>
+									<ion-spinner name="lines-small" slot="end"></ion-spinner>
+								</ion-button>
+								<ion-button *ngIf="!env.isExecuting" (click)="executeFromTab($event, env)">
+									<ion-icon name="play-circle-outline"></ion-icon>
+								</ion-button>
+							</ion-buttons>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
 
 	<ion-grid>
 		<ion-row *ngIf="envId !== '=='">
 			<ion-col size="5">
 				<ion-item>
-
 					<ion-label>@ Server</ion-label>
-					<ion-select value="localhost">
-						<ion-select-option value="localhost">localhost</ion-select-option>
+					<ion-select value="localhost" *ngIf="envDbServers">
+						<ion-select-option *ngFor="let envDbServer of envDbServers"
+								[value]="envDbServer.id"
+						>{{envDbServer.title || envDbServer.id}}</ion-select-option>
 					</ion-select>
 				</ion-item>
 			</ion-col>

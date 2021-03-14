@@ -5,14 +5,14 @@ import {map, mergeMap, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getRepoUrl} from '@sneat/datatug/nav';
 import {GITHUB_REPO, GITLAB_REPO_PREFIX, IProjectContext} from '@sneat/datatug/core';
-import {IProjectFull, IProjectSummary} from '@sneat/datatug/models';
+import {IDatatugProjectFull, IDatatugProjectSummary} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
 
 @Injectable()
 export class ProjectService {
 
-  private projects: { [id: string]: Observable<IProjectFull> } = {};
-  private projSummary: { [id: string]: Observable<IProjectSummary> } = {};
+  private projects: { [id: string]: Observable<IDatatugProjectFull> } = {};
+  private projSummary: { [id: string]: Observable<IDatatugProjectSummary> } = {};
 
   constructor(
     private readonly db: AngularFirestore,
@@ -21,7 +21,7 @@ export class ProjectService {
   ) {
   }
 
-  public watchProject(id: string): Observable<IProjectSummary> {
+  public watchProject(id: string): Observable<IDatatugProjectSummary> {
     if (!id) {
       return throwError('Can not watch project by empty ID parameter');
     }
@@ -46,11 +46,11 @@ export class ProjectService {
       .doc(id)
       .snapshotChanges()
       .pipe(
-        map(value => value.type === 'removed' ? undefined : value.payload.data() as IProjectSummary),
+        map(value => value.type === 'removed' ? undefined : value.payload.data() as IDatatugProjectSummary),
       );
   }
 
-  public getFull(target: IProjectContext): Observable<IProjectFull> {
+  public getFull(target: IProjectContext): Observable<IDatatugProjectFull> {
     console.warn('The getFull() method should not be called from UI');
     if (!target) {
       throw new Error('target is a required parameter for getFull()');
@@ -60,7 +60,7 @@ export class ProjectService {
       return $project;
     }
     $project = this.http
-      .get<IProjectFull>(`${getRepoUrl(target.repoId)}/project-full`, {params: {id: target.projectId}})
+      .get<IDatatugProjectFull>(`${getRepoUrl(target.repoId)}/project-full`, {params: {id: target.projectId}})
       .pipe(
         shareReplay(1),
       )
@@ -69,7 +69,7 @@ export class ProjectService {
     return $project;
   }
 
-  public getSummary(target: IProjectContext, options?: { cachedOnly?: boolean }): Observable<IProjectSummary> {
+  public getSummary(target: IProjectContext, options?: { cachedOnly?: boolean }): Observable<IDatatugProjectSummary> {
     const id = `${target.repoId}|${target.projectId}`;
     let $project = this.projSummary[id];
     if ($project) {
@@ -88,7 +88,7 @@ export class ProjectService {
     return $project;
   }
 
-  private getProjectSummaryRequest(target: IProjectContext): Observable<IProjectSummary> {
+  private getProjectSummaryRequest(target: IProjectContext): Observable<IDatatugProjectSummary> {
     const {repoId, projectId} = target;
     if (repoId === GITHUB_REPO || repoId.startsWith(GITLAB_REPO_PREFIX)) {
       interface urlAndHeaders {
@@ -110,7 +110,7 @@ export class ProjectService {
       }
       return connectTo.pipe(
         mergeMap(request => this.http
-          .get<IProjectSummary>(request.url, {headers: request.headers})
+          .get<IDatatugProjectSummary>(request.url, {headers: request.headers})
           .pipe(map(p => {
             if (p.id === projectId) {
               return p;
@@ -123,7 +123,7 @@ export class ProjectService {
       );
     }
     const agentUrl = getRepoUrl(repoId);
-    return this.http.get<IProjectSummary>(`${agentUrl}/project-summary`, {params: {id: projectId}});
+    return this.http.get<IDatatugProjectSummary>(`${agentUrl}/project-summary`, {params: {id: projectId}});
   }
 }
 

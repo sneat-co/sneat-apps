@@ -11,7 +11,6 @@ export interface IEnvironmentFull extends IEnvironmentBase {
 }
 
 export interface IEnvironmentSummary extends IEnvironmentBase {
-	// projects?: { [id: string]: IProjectEnv };
 	vars?: { [id: string]: string };
 	connections?: { [id: string]: IConnection };
 	dbServers?: IEnvDbServer[];

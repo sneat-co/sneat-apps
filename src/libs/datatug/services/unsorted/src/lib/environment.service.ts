@@ -29,7 +29,7 @@ export class EnvironmentService {
 		return throwError('')
 	}
 
-	getEnvSummary(projContext: IProjectContext, env: string): Observable<IEnvironmentSummary> {
+	public getEnvSummary(projContext: IProjectContext, env: string): Observable<IEnvironmentSummary> {
 		return this.agentProvider.get(projContext.repoId, '/environment-summary', {
 			params: {
 				proj: projContext.projectId,

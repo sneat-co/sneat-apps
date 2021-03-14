@@ -5,7 +5,7 @@ import {first, takeUntil} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
 import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {IProjectBase, IProjectSummary} from '@sneat/datatug/models';
+import {IDatatugProjectBase, IDatatugProjectSummary} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService, ProjectTopLevelPage} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
@@ -25,8 +25,8 @@ export class DatatugMenuSignedComponent implements OnDestroy {
 	public currentDbModelId: string;
 	public currentEnvId: string;
 	public currentDbInstanceId: string;
-	public currentProject: IProjectSummary;
-	public projects: IProjectBase[] = [];
+	public currentProject: IDatatugProjectSummary;
+	public projects: IDatatugProjectBase[] = [];
 
 	public table: IEnvDbTableContext;
 	public currentFolder: Observable<string>;

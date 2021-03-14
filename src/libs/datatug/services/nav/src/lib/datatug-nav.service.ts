@@ -3,7 +3,7 @@ import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 import {IProjectContext} from '@sneat/datatug/core';
-import {IProjBoard, IProjectSummary, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
+import {IProjBoard, IDatatugProjectSummary, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
 
 export type ProjectTopLevelPage =
   'boards' |
@@ -63,7 +63,7 @@ export class DatatugNavService {
     return `/repo/${c.repoId}/project/${c.projectId}/${name}/${encodeURIComponent(id)}`;
   }
 
-  goProjPage(repoId: string, projectId: string, projPage: string, state?: { projSummary: IProjectSummary }): void {
+  goProjPage(repoId: string, projectId: string, projPage: string, state?: { projSummary: IDatatugProjectSummary }): void {
     this.navForward(['repo', repoId, 'project', projectId, projPage],
       {state}, 'Failed to navigate to project page: ' + projPage);
   }
