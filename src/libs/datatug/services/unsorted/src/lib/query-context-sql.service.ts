@@ -48,6 +48,9 @@ export class QueryContextSqlService {
   }
 
   public setSql(sql: string): IAstQuery {
+  	if (!sql) {
+  		throw new Error('sql is a required parameter');
+	}
     this.sql = sql;
     this.ast = this.sqlParser.parseQuery(sql);
     requestAnimationFrame(() => {

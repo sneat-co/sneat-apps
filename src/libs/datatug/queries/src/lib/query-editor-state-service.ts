@@ -3,8 +3,8 @@ import {BehaviorSubject} from "rxjs";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 
 export interface IQueryState {
-	id: string;
-	title?: string;
+	readonly id: string;
+	readonly title?: string;
 }
 
 export interface IQueryEditorState {
@@ -13,6 +13,8 @@ export interface IQueryEditorState {
 }
 
 const $state = new BehaviorSubject<IQueryEditorState | undefined>(undefined);
+
+let counter = 0;
 
 @Injectable({
 	providedIn: 'root',
@@ -32,7 +34,7 @@ export class QueryEditorStateService {
 		try {
 			let changed = false;
 			let state = $state.value || {currentQueryId: id, activeQueries: []};
-			const queryState = state.activeQueries.find(q => q.id === id)
+			const queryState = state?.activeQueries?.find(q => q.id === id)
 			if (!queryState) {
 				state = {
 					...state,
@@ -50,5 +52,28 @@ export class QueryEditorStateService {
 		} catch (err) {
 			this.errorLogger.logError(err, 'failed to openQuery');
 		}
+	}
+
+	public newQuery(queryState: IQueryState): void {
+		if (!queryState.title) {
+			for (; ;) {
+				counter += 1;
+				const title = `Query #${counter}`;
+				if (!$state.value?.activeQueries?.find(q => q.title === title)) {
+					queryState = {...queryState, title};
+					break;
+				}
+			}
+
+
+		}
+		$state.next({currentQueryId: queryState.id, activeQueries: $state.value?.activeQueries || [queryState]});
+	}
+
+	updateQueryState(queryState: IQueryState): void {
+		$state.next({
+			...$state.value,
+			activeQueries: $state.value?.activeQueries.map(q => q.id === queryState.id ? queryState : q)
+		});
 	}
 }

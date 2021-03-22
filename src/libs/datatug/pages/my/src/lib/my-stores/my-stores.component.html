@@ -14,8 +14,12 @@
 		<ion-label>DataTug app @ localhost:8989</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="medium" *ngIf="!agentState">Checking...</ion-button>
-			<ion-button color="success" *ngIf="agentState?.info" [title]="agentState?.info.uptimeMinutes">Running</ion-button>
-			<ion-button color="warning" *ngIf="agentState?.lastCheckedAt && !agentState.info" (click)="checkAgent($event)" title="Click to refresh">offline</ion-button>
+			<ion-button color="success" *ngIf="agentState?.info" title="{{agentState?.info.uptimeMinutes}} minutes">
+				Running
+			</ion-button>
+			<ion-button color="warning" *ngIf="agentState?.lastCheckedAt && !agentState.info"
+						(click)="checkAgent($event)" title="Click to refresh">offline
+			</ion-button>
 			<ion-button color="primary" href="https://datatug.app/agent" target="_blank"
 						(click)="openHelp($event, 'agent')">
 				<ion-icon name="information-circle-outline"></ion-icon>
@@ -45,10 +49,11 @@
 
 	<ng-container *ngIf="stores; else loadingUser">
 		<ng-container *ngIf="stores?.length; else noEntries">
-			<ion-item *ngFor="let store of stores" tappable>
+			<ion-item *ngFor="let store of stores" tappable (click)="goRepo(store.url)">
+				<ion-icon name="terminal-outline" slot="start"></ion-icon>
 				{{store.title}}
-				<ion-badge>{{store.type}}</ion-badge>
-				<ion-badge>{{store.url}}</ion-badge>
+				<ion-badge color="light" slot="end">{{store.type}}</ion-badge>
+				<ion-badge color="primary" slot="end">{{store.url}}</ion-badge>
 			</ion-item>
 		</ng-container>
 		<ng-template #noEntries>

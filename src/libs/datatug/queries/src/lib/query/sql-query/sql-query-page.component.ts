@@ -251,8 +251,12 @@ export class SqlQueryPageComponent implements OnDestroy {
 		this.route.paramMap.subscribe({
 			next: paramMap => {
 				console.log('QueryPage.constructor() => paramMap:', paramMap);
-				const queryId = paramMap.get('queryId');
-				this.queryEditorStateService.openQuery(queryId);
+
+				let queryId = paramMap.get('queryId');
+				if (queryId) {
+					this.queryEditorStateService.openQuery(queryId);
+				}
+
 				const projContext: IDatatugProjRef = {
 					projectId: paramMap.get('projectId'),
 					repoId: paramMap.get('repoId'),
@@ -275,6 +279,9 @@ export class SqlQueryPageComponent implements OnDestroy {
 					this.queryId = queryId;
 					this.loadQuery(queryId);
 				} else if (!queryId) {
+					queryId = RandomId.newRandomId();
+					this.queryEditorStateService.newQuery({id: queryId});
+					this.queryId = queryId;
 					if (!this.sql) {
 						this.sql = 'select' + ' * ' + 'from ';
 						this.onSqlChanged();
@@ -325,7 +332,9 @@ export class SqlQueryPageComponent implements OnDestroy {
 			return;
 		}
 		this.sql = sql;
-		this.queryAst = this.queryContextSqlService.setSql(sql)
+		if (sql) {
+			this.queryAst = this.queryContextSqlService.setSql(sql)
+		}
 	}
 
 	trackByIndex = (i: number) => i;
@@ -493,6 +502,7 @@ export class SqlQueryPageComponent implements OnDestroy {
 				this.updateQueryContext();
 			}
 		}
+		this.queryEditorStateService.updateQueryState({id: this.queryId, title: query.text})
 		console.log('this.queryAst:', this.queryAst);
 	}
 
@@ -501,6 +511,10 @@ export class SqlQueryPageComponent implements OnDestroy {
 		this.queriesService.getQuery(this.projectContext, this.queryId).subscribe({
 			next: query => {
 				console.log('QueryPage.loadQuery() => query:', query);
+				if (!query.type) {
+					this.errorLogger.logError('received a query with unknown type');
+					return;
+				}
 				this.setQuery(query)
 			},
 			error: this.errorLogger.logErrorHandler('Failed to get query by id'),

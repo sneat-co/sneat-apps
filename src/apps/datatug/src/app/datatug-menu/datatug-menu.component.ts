@@ -10,7 +10,7 @@ import {DatatugNavContextService, DatatugNavService, ProjectTopLevelPage} from '
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
 import {RepoService} from '@sneat/datatug/services/repo';
-import {IEnvDbTableContext} from '@sneat/datatug/nav';
+import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
 import {DatatugUserService} from "@sneat/datatug/services/base";
 import {AuthStates, SneatAuthStateService} from "@sneat/auth";
 
@@ -48,18 +48,22 @@ export class DatatugMenuComponent implements OnDestroy {
 		private readonly afAuth: AngularFireAuth,
 		private readonly datatugUserService: DatatugUserService,
 	) {
-		this.firebaseUser$ = afAuth.user;
 		console.log('DatatugMenuComponent.constructor()');
+		this.firebaseUser$ = afAuth.user;
 		// userService.userRecord.subscribe(user => {
 		// 	this.projects = user?.data?.dataTugProjects;
 		// });
 		this.currentFolder = datatugNavContextService.currentFolder;
-		this.trackAuthState();
-		this.trackCurrentUser();
-		this.trackCurrentRepo();
-		this.trackCurrentProject();
-		this.trackCurrentEnvironment();
-		this.trackCurrentEnvDbTable();
+		try {
+			this.trackAuthState();
+			this.trackCurrentUser();
+			this.trackCurrentRepo();
+			this.trackCurrentProject();
+			this.trackCurrentEnvironment();
+			this.trackCurrentEnvDbTable();
+		} catch (e) {
+			errorLogger.logError(e, 'Failed to setup context tracking');
+		}
 	}
 
 	public get currentProjUrlId(): string {
@@ -67,38 +71,55 @@ export class DatatugMenuComponent implements OnDestroy {
 	}
 
 	private trackAuthState(): void {
-		this.sneatAuthStateService.authState.subscribe({
-			next: authState => this.authState = authState,
-			error: this.errorLogger.logErrorHandler('failed to get auth stage'),
-		})
+		this.sneatAuthStateService.authState
+			.pipe(
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
+				next: authState => this.authState = authState,
+				error: this.errorLogger.logErrorHandler('failed to get auth stage'),
+			})
 	}
 
 	ngOnDestroy(): void {
-		this.destroyed.next();
+		if (this.destroyed) {
+			this.destroyed.next();
+			this.destroyed.complete();
+		}
 	}
 
 	switchRepo(event: CustomEvent): void {
-		const {value} = event.detail;
-		if (!this.currentRepoId) {
-			console.log('switchRepo', event);
-			this.nav.goRepo(value);
+		try {
+			const {value} = event.detail;
+			if (value && !this.currentRepoId) {
+				console.log('DatatugMenuComponent.switchRepo()', value);
+				this.nav.goRepo(value);
+			}
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to handle repo switch');
 		}
 	}
 
 	switchProject(event: CustomEvent): void {
-		const {value} = event.detail;
-		if (value !== this.currentProjectId) {
-			console.log('switchProject', event);
-			const project = this.projects.find(p => p.id === value);
-			this.datatugNavContextService.setCurrentProject({
-				repoId: this.currentRepoId,
-				brief: {
-					...project,
-					store: {type: 'agent'},
-				},
-				projectId: project?.id
-			});
-			this.nav.goProject(this.currentRepoId, value);
+		try {
+			const {value} = event.detail;
+			if (value !== this.currentProjectId) {
+				console.log('DatatugMenuComponent.switchProject', value);
+				const project = this.projects.find(p => p.id === value);
+				this.datatugNavContextService.setCurrentProject({
+					repoId: this.currentRepoId,
+					brief: {
+						...project,
+						store: {type: 'agent'},
+					},
+					projectId: project?.id
+				});
+				if (value) {
+					this.nav.goProject(this.currentRepoId, value);
+				}
+			}
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to handle project switch');
 		}
 	}
 
@@ -116,109 +137,133 @@ export class DatatugMenuComponent implements OnDestroy {
 				}, undefined, envId);
 			}
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to switch environment from app menu');
+			this.errorLogger.logError(e, 'Failed to handle environment switch');
 		}
 	}
 
-	clearEnv(): void {
-		this.datatugNavContextService.setCurrentEnvironment(undefined);
-		this.nav.goProject(this.currentRepoId, this.currentProjectId);
-	}
-
-	projectPageUrl(page: ProjectTopLevelPage | ''): string {
-		return `/repo/${this.currentRepoId}/project/${this.currentProjectId}/${page}`;
+	public clearEnv(): void { // Called from template
+		try {
+			this.datatugNavContextService.setCurrentEnvironment(undefined);
+			this.nav.goProject(this.currentRepoId, this.currentProjectId);
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to clear environment');
+		}
 	}
 
 	public logout(): void {
-		this.afAuth
-			.signOut()
-			.then(() => {
-				this.navCtrl.navigateBack('/signed-out')
-					.catch(this.errorLogger.logErrorHandler('Failed to navigate to signed out page'));
-			})
-			.catch(this.errorLogger.logErrorHandler('Failed to sign out'));
+		try {
+			this.afAuth
+				.signOut()
+				.then(() => {
+					this.navCtrl.navigateBack('/signed-out')
+						.catch(this.errorLogger.logErrorHandler('Failed to navigate to signed out page'));
+				})
+				.catch(this.errorLogger.logErrorHandler('Failed to sign out'));
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to logout');
+		}
 	}
 
 	public datatugUser: IDatatugUser;
 
 	private trackCurrentUser(): void {
-		this.datatugUserService.datatugUser.pipe(
-			takeUntil(this.destroyed),
-		).subscribe({
-			next: datatugUser => {
-				this.datatugUser = datatugUser;
-				console.log('trackCurrentUser() => datatugUser:', datatugUser);
-			},
-			error: this.errorLogger.logErrorHandler('Failed to get user record for menu'),
-		});
+		try {
+			this.datatugUserService.datatugUser.pipe(
+				takeUntil(this.destroyed),
+			).subscribe({
+				next: datatugUser => {
+					this.datatugUser = datatugUser;
+					console.log('trackCurrentUser() => datatugUser:', datatugUser);
+				},
+				error: this.errorLogger.logErrorHandler('Failed to get user record for menu'),
+			});
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to setup tracking of current user');
+		}
 	}
 
 	private trackCurrentRepo(): void {
-		this.datatugNavContextService.currentRepoId
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-				next: repoId => {
-					if (repoId === this.currentRepoId) {
-						return;
-					}
-					console.log('DatatugMenuComponent => repoId changed:', repoId, this.currentRepoId);
-					this.currentRepoId = repoId;
-					if (repoId) {
-						this.repoService.getProjects(repoId)
-							.pipe(
-								takeUntil(this.destroyed),
-								first(),
-							)
-							.subscribe({
-								next: projects => {
-									this.projects = projects;
-								},
-								error: err => this.errorLogger.logError(err,
-									'Failed to get list of projects for an repo from menu component', {show: false}),
-							});
-					}
-				},
-				error: err => this.errorLogger.logError(err, 'Failed to get repoId'),
-			});
+		try {
+			this.datatugNavContextService.currentRepoId
+				.pipe(
+					takeUntil(this.destroyed),
+				)
+				.subscribe({
+					next: this.onCurrentRepoChanged,
+					error: err => this.errorLogger.logError(err, 'Failed to get repoId'),
+				});
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to setup tracking of current repository');
+		}
+	}
+
+	private readonly onCurrentRepoChanged = (repoId: string): void => {
+		if (repoId === this.currentRepoId) {
+			return;
+		}
+		console.log('DatatugMenuComponent => repoId changed:', repoId, this.currentRepoId);
+		this.currentRepoId = repoId;
+		if (repoId) {
+			this.repoService.getProjects(repoId)
+				.pipe(
+					takeUntil(this.destroyed),
+					first(),
+				)
+				.subscribe({
+					next: projects => {
+						this.projects = projects;
+					},
+					error: err => this.errorLogger.logError(err,
+						'Failed to get list of projects for an repo from menu component', {show: false}),
+				});
+		}
 	}
 
 	private trackCurrentProject(): void {
-		this.datatugNavContextService.currentProject
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-				next: currentProject => {
-					const {brief, summary, repoId} = currentProject || {};
-					const {id} = brief || {};
-					if (id !== this.currentProjectId) {
-						console.log('DatatugMenuComponent => currentProjectId changed:', id, this.currentProjectId);
-					}
-					this.currentProjectId = id;
-					this.currentProject = summary;
-					try {
-						if (repoId) {
-							this.currentRepoId = repoId;
-						}
-						this.currentProjectId = id;
-						if (!id) {
-							this.currentProject = undefined;
-							this.projSub?.unsubscribe();
-							return;
-						}
-						if (id !== '.' && repoId === CLOUD_REPO) {
-							this.projSub = this.projectService.watchProject(id).subscribe({
-								next: project => {
-									this.currentProject = project;
-								},
-								error: this.errorLogger.logErrorHandler('Failed to watch project at Firestore: ' + id),
-							});
-						}
-						console.log('DatatugMenuComponent: project =>', currentProject);
-					} catch (ex) {
-						this.errorLogger.logError(ex, 'Failed to process project brief');
-					}
-				},
-				error: err => this.errorLogger.logError(err, 'Failed to get current project'),
-			});
+		try {
+			this.datatugNavContextService.currentProject
+				.pipe(
+					takeUntil(this.destroyed),
+				)
+				.subscribe({
+					next: this.onCurrentProjectChanged,
+					error: err => this.errorLogger.logError(err, 'Failed to get current project'),
+				});
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to setup tracking of current project');
+		}
+	}
+
+	private readonly onCurrentProjectChanged = (currentProject: IDatatugProjectContext): void => {
+		const {brief, summary, repoId} = currentProject || {};
+		const {id} = brief || {};
+		if (id !== this.currentProjectId) {
+			console.log('DatatugMenuComponent => currentProjectId changed:', id, this.currentProjectId);
+		}
+		this.currentProjectId = id;
+		this.currentProject = summary;
+		try {
+			if (repoId) {
+				this.currentRepoId = repoId;
+			}
+			this.currentProjectId = id;
+			if (!id) {
+				this.currentProject = undefined;
+				this.projSub?.unsubscribe();
+				return;
+			}
+			if (id !== '.' && repoId === CLOUD_REPO) {
+				this.projSub = this.projectService.watchProject(id).subscribe({
+					next: project => {
+						this.currentProject = project;
+					},
+					error: this.errorLogger.logErrorHandler('Failed to watch project at Firestore: ' + id),
+				});
+			}
+			console.log('DatatugMenuComponent: project =>', currentProject);
+		} catch (ex) {
+			this.errorLogger.logError(ex, 'Failed to process project brief');
+		}
 	}
 
 	private trackCurrentEnvironment(): void {
@@ -227,16 +272,16 @@ export class DatatugMenuComponent implements OnDestroy {
 				takeUntil(this.destroyed),
 			)
 			.subscribe({
-				next: env => {
-					this.currentEnvId = env?.id;
-				},
+				next: env => this.currentEnvId = env?.id,
 				error: err => this.errorLogger.logError(err, 'Failed to process changed environment'),
 			})
 	}
 
 	private trackCurrentEnvDbTable(): void {
 		this.datatugNavContextService.currentEnvDbTable
-			.pipe(takeUntil(this.destroyed))
+			.pipe(
+				takeUntil(this.destroyed),
+			)
 			.subscribe({
 				next: table => {
 					if (table?.name !== this.table?.name && table?.schema !== this.table?.schema) {

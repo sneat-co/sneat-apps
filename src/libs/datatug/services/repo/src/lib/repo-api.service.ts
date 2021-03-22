@@ -18,7 +18,7 @@ export class RepoApiService {
 
 	public get<T>(repoId: string, path: string, options?: IHttpRequestOptions): Observable<T> {
 		const url = RepoApiService.getUrl(repoId, path);
-		console.log('url', url);
+		// console.log('url', url);
 		return this.httpClient.get<T>(url, options);
 	}
 

@@ -29,6 +29,9 @@ export class DatatugNavService {
 	}
 
 	goRepo(repo: string): void {
+		if (!repo) {
+			throw new Error("repo is a required parameter");
+		}
 		const repoId = getRepoId(repo);
 		this.navRoot(['repo', repoId], 'Failed to navigate to repo page');
 	}

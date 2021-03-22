@@ -89,7 +89,7 @@ export class ProjectContextMenuComponent implements OnDestroy {
 			next: id => this.currentRepoId = id,
 		});
 		this.datatugNavContextService.currentProject.pipe(takeUntil(this.destroyed)).subscribe({
-			next: proj => this.currentProjectId = proj.brief.id,
+			next: proj => this.currentProjectId = proj?.brief?.id,
 		});
 		this.currentFolder = datatugNavContextService.currentFolder;
 	}
