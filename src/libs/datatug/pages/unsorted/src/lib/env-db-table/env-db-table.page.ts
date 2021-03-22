@@ -5,7 +5,7 @@ import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {PopoverController} from '@ionic/angular';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {RepoService} from '@sneat/datatug/services/repo';
+import {AgentService, RepoService} from '@sneat/datatug/services/repo';
 import {ICommandResponseWithRecordset, IForeignKey} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
@@ -59,7 +59,7 @@ export class EnvDbTablePage implements AfterViewInit {
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly route: ActivatedRoute,
 		private readonly projService: ProjectService,
-		private readonly repoService: RepoService,
+		private readonly agentService: AgentService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
 		private readonly datatugNavService: DatatugNavService,
@@ -136,8 +136,8 @@ from ${from}`;
 		}
 	}
 
-	public tabChanged(_: Event): void {
-		console.log('tab changed:', this.tab);
+	public tabChanged(event: Event): void {
+		console.log('tab changed:', this.tab, event);
 	}
 
 	// public selectRow(event: RowDoubleClickedEvent): void {
@@ -224,7 +224,7 @@ from ${from}`;
 		console.log('EnvDbTablePage.loadData()', this.table);
 		try {
 			this.step = 'loadData';
-			this.repoService
+			this.agentService
 				.select(this.target.repoId, {
 					proj: this.projectId,
 					env: this.envId,

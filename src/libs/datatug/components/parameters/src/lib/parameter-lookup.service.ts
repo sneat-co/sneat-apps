@@ -5,7 +5,7 @@ import {ParameterLookupComponent} from './parameter-lookup.component';
 import {share} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {IParameterDef, IParameterValueWithoutName} from '@sneat/datatug/models';
-import {RepoService} from '@sneat/datatug/services/repo';
+import {AgentService, RepoService} from '@sneat/datatug/services/repo';
 
 @Injectable()
 export class ParameterLookupService {
@@ -13,7 +13,7 @@ export class ParameterLookupService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modal: ModalController,
-		private readonly repoService: RepoService,
+		private readonly agentService: AgentService,
 	) {
 	}
 
@@ -23,7 +23,7 @@ export class ParameterLookupService {
 		projectId: string,
 		envId: string,
 	): Observable<IParameterValueWithoutName> {
-		const lookupResponse = this.repoService
+		const lookupResponse = this.agentService
 			.select(repo, {
 				proj: projectId,
 				env: envId,

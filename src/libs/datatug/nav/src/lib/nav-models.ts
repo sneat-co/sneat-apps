@@ -41,9 +41,24 @@ export interface IAgentContext {
 	port: number;
 }
 
+export const getRepoId = (repo: string): string => {
+	if (repo.startsWith('http://')) {
+		return repo.replace('http://', 'http-')
+	} else if (repo.startsWith('https://')) {
+		return  repo.replace('https://', 'https-')
+	}
+	return repo;
+}
+
 export const getRepoUrl = (repo: string): string => {
-	if (!repo) {
+	if (!repo || repo.startsWith('http://') || repo.startsWith('https://')) {
 		return repo;
+	}
+	if (repo.startsWith('http-')) {
+		return repo.replace('http-', 'http://');
+	}
+	if (repo.startsWith('https-')) {
+		return repo.replace('https-', 'https://');
 	}
 	const a = repo.split(':');
 	repo = `//${a[0]}:${a[1]}`;

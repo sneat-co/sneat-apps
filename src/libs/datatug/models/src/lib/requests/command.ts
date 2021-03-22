@@ -18,4 +18,5 @@ export interface ISqlCommandRequest extends IRequestCommand {
 	text: string;
 	env: string
 	db: string;
+	driver?: string;
 }

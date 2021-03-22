@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {RepoApiService} from "./repo-api.service";
 import {interval, Observable, of, throwError} from "rxjs";
-import {catchError, map, mergeMap, startWith} from "rxjs/operators";
+import {catchError, map, startWith, switchMap} from "rxjs/operators";
 
 export interface IAgentInfo {
 	version: string;
@@ -15,6 +15,8 @@ export interface IAgentState {
 	error?: any;
 }
 
+const periodMs = 10000;
+
 @Injectable()
 export class AgentStateService {
 	private watchers: { [repoId: string]: Observable<IAgentState> } = {};
@@ -25,25 +27,24 @@ export class AgentStateService {
 	}
 
 	public watchAgentInfo(repoId: string): Observable<IAgentState> {
-		const watcher = this.watchers[repoId] || interval(5000).pipe(
-			startWith(0),
-			mergeMap(() => this.repoApiService.get<IAgentInfo>(repoId, '/agent-info')),
-			map(info => ({info, lastCheckedAt: new Date()})),
-			// retryWhen(errors => errors.pipe(
-			// 	delayWhen(val => timer(5000)))
-			// ),
-			catchError(err => {
-				console.log('Failed to get agent info:', err);
-				if (err.name === 'HttpErrorResponse' && err.ok === false && err.status === 0) {
-					const offlineState: IAgentState = {lastCheckedAt: new Date(), isNotAvailable: true};
-					// return this.watchAgentInfo(repoId).pipe(
-					// 	startWith(offlineState),
-					// );
-					return of(offlineState);
-				}
-				return throwError(err);
-			}),
-		);
+		let watcher = this.watchers[repoId];
+		if (watcher) {
+			return watcher;
+		}
+		watcher = interval(periodMs)
+			.pipe(
+				startWith(0),
+				switchMap(() => this.repoApiService.get<IAgentInfo>(repoId, '/agent-info')
+					.pipe(catchError(err => {
+						console.log('Failed to get agent info:', err);
+						if (err.name === 'HttpErrorResponse' && err.ok === false && err.status === 0) {
+							return of(undefined);
+						}
+						return throwError(err);
+					}))),
+				map(info => ({info, lastCheckedAt: new Date(), isNotAvailable: info === undefined})),
+			)
+		;
 		this.watchers[repoId] = watcher;
 		return watcher
 	}

@@ -28,7 +28,8 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	@ViewChild('codemirrorComponent', {static: true}) public codemirrorComponent: CodemirrorComponent;
 
-	public sql = 'select * from';
+	// noinspection SqlDialectInspection
+	public sql = 'select * from ';
 
 	public tab: 'all' | 'new' | 'popular' | 'recent' | 'bookmarked' = 'all'
 	public type: QueryType = '*';

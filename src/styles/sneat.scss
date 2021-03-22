@@ -70,13 +70,13 @@
 //@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 //@import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
 
-ion-content.cards {
-  --background: #ebebeb;
-
-  ion-card {
-    --background: white;
-  }
-}
+// ion-content {
+//   --background: #ebebeb;
+//
+//   ion-card {
+//     --background: white;
+//   }
+// }
 
 ion-label.deleting-list-item {
   text-decoration: line-through;

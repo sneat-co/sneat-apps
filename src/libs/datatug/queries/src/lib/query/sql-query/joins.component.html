@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-list>
-		<ion-item *ngIf="!queryAst.from">
+		<ion-item *ngIf="!queryAst?.from">
 			<ion-label color="medium" style="font-weight: bold">FROM</ion-label>
 			<ion-select>
 				<ion-select-option>Artist</ion-select-option>
@@ -19,7 +19,7 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ion-item *ngFor="let join of (queryAst.joins || []); trackBy: trackByIndex">
+		<ion-item *ngFor="let join of (queryAst?.joins || []); trackBy: trackByIndex">
 			<ion-checkbox slot="start" [checked]="!join.disabled"
 						  (ionChange)="joinCheckChanged($event, join)"></ion-checkbox>
 			<ion-label><b>{{join.alias}}</b> -

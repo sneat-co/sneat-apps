@@ -4,7 +4,7 @@ import {DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {IGridDef} from '@sneat/grid';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {RepoService} from '@sneat/datatug/services/repo';
+import {AgentService, RepoService} from '@sneat/datatug/services/repo';
 
 @Component({
 	selector: 'datatug-fk-card',
@@ -26,7 +26,7 @@ export class ForeignKeyCardComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly projectService: ProjectService,
 		private readonly datatugNavService: DatatugNavService,
-		private readonly repoService: RepoService,
+		private readonly agentService: AgentService,
 	) {
 	}
 
@@ -74,7 +74,7 @@ export class ForeignKeyCardComponent implements OnChanges {
 
 	private loadData(): void {
 		const {schema, name} = this.table.meta;
-		this.repoService.select(this.tableNavParams.target.repoId, {
+		this.agentService.select(this.tableNavParams.target.repoId, {
 			proj: this.tableNavParams.target.projectId,
 			db: this.tableNavParams.db,
 			env: this.tableNavParams.env,

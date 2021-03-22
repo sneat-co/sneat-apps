@@ -38,9 +38,15 @@ export class EnvironmentService {
 
 	public getEnvSummary(projRef: IDatatugProjRef, env: string, forceReload: boolean = false)
 		: Observable<IEnvironmentSummary> {
+		if (!projRef) {
+			return throwError('"projRef" is a required parameter');
+		}
+		if (!env) {
+			return throwError('"env" is a required parameter');
+		}
 		const cacheKey = getEnvCacheKey(projRef, env);
 		const cached = this.envSummaryCache[cacheKey];
-		if (!forceReload) {
+		if (cached && !forceReload) {
 			return of(cached)
 		}
 		const result =

@@ -2,8 +2,8 @@ import {ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy, Simpl
 import {BoardCardTabService} from '../../board-card/board-card.component';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {IBoardContext, ICommandResponseWithRecordset, ISqlWidgetSettings} from '@sneat/datatug/models';
-import {RepoService} from '@sneat/datatug/services/repo';
+import {IBoardContext, ISqlWidgetSettings} from '@sneat/datatug/models';
+import {AgentService} from '@sneat/datatug/services/repo';
 import {IRecordset} from '@sneat/datatug/dto';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
@@ -38,7 +38,7 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 	constructor(
 		private readonly boardCardTab: BoardCardTabService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly repoService: RepoService,
+		private readonly agentService: AgentService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		setTimeout(() => boardCardTab.setTab('grid'), 2000);
@@ -73,14 +73,14 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 			}
 			this.sql = sql;
 			if (this.data.env && this.data.db) {
-				this.repoService.select('localhost:8989', {
+				this.agentService.select('localhost:8989', {
 					sql,
 					env: this.data.env || 'LOCAL',
 					db: this.data.db,
 					proj: '.',
 				}).subscribe({
 					next: _ => {
-					  alert('not implemented processing response')
+						alert('not implemented processing response')
 						// const itemWithRecordset = response.commands[0].items[0] as ICommandResponseWithRecordset
 						// this.recordset = itemWithRecordset.value;
 						this.changeDetectorRef.markForCheck();

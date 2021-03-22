@@ -12,10 +12,8 @@ export class RepoApiService {
 	}
 
 	private static getUrl(repo: string, path: string): string {
-		if (!repo.startsWith('http://') && !repo.startsWith('https://')) {
-			repo = getRepoUrl(repo)
-		}
-		return `${repo}${path}`;
+		const repoUrl = getRepoUrl(repo);
+		return `${repoUrl}${path}`;
 	}
 
 	public get<T>(repoId: string, path: string, options?: IHttpRequestOptions): Observable<T> {

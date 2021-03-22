@@ -7,14 +7,14 @@ import {IUser} from '@sneat/auth-models';
 //   data?: T;
 // }
 
-export interface IDataTugUser extends IUser {
+export interface IDatatugUser extends IUser {
   dataTug?: IDataTugBriefForUser;
   dataTugProjects?: IDatatugProjectBrief[];
 }
 
 export interface IDataTugBriefForUser {
-  stores: IDataTugStoreBrief[];
-  projects: IDatatugProjectBrief[];
+  stores?: IDataTugStoreBrief[];
+  projects?: IDatatugProjectBrief[];
 }
 
 export interface IDataTugStoreBrief {

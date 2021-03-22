@@ -3,6 +3,7 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} from 'rxjs/operators';
 import {
+	getRepoUrl,
 	IDatatugNavContext,
 	IDatatugProjectContext,
 	IEnvContext,
@@ -84,6 +85,7 @@ export class DatatugNavContextService {
 					return;
 				}
 				console.log('DatatugNavContextService.constructor() => app:', app.appCode);
+				this.processUrl(location.href);
 				this.navEndSubscription = this.router.events
 					.pipe(
 						filter(val => val instanceof NavigationEnd),
@@ -149,23 +151,30 @@ export class DatatugNavContextService {
 		if (this.$currentEnv.value?.id === id) {
 			return;
 		}
-		const envContext: IEnvContext = {
+		const envContext: IEnvContext = id && {
 			id,
 			brief: this.$currentProj.value?.summary?.environments.find(env => env.id === id)
 		};
 
-		this.envService.getEnvSummary(this.$currentProj.value, id).subscribe({
-			next: envSummary => {
-				if (this.$currentEnv.value?.id === envSummary.id) {
-					this.$currentEnv.next({
-						...envContext,
-						summary: envSummary
-					})
-				}
-			},
-			error: this.errorLogger.logErrorHandler('failed to get env summary')
-		})
-		this.$currentEnv.next(envContext);
+		if (id && this.$currentProj.value) {
+			this.envService.getEnvSummary(this.$currentProj.value, id)
+				.subscribe({
+					next: envSummary => {
+						if (!envSummary) {
+							this.errorLogger.logError('API returned nothing for environmentId=' + id);
+							return;
+						}
+						if (this.$currentEnv.value?.id === envSummary.id) {
+							this.$currentEnv.next({
+								...envContext,
+								summary: envSummary
+							})
+						}
+					},
+					error: this.errorLogger.logErrorHandler('failed to get env summary')
+				})
+		}
+		this.$currentEnv.next(envContext || undefined);
 		//}
 	}
 
@@ -184,9 +193,11 @@ export class DatatugNavContextService {
 
 	private processRepo(url: string): void {
 		const m = url.match(reRepo);
+		console.log('processRepo', url, m);
 		// console.log('processAgent', m);
 		const repoId = m && m[1];
-		this.$currentRepoId.next(repoId);
+		const repoUrl = getRepoUrl(repoId);
+		this.$currentRepoId.next(repoUrl);
 	}
 
 	private processProject(url: string): void {

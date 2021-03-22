@@ -50,16 +50,21 @@
 		</ion-row>
 	</ion-grid>
 
-	<ion-segment [(ngModel)]="queryMode">
-		<ion-segment-button value="text">Query text</ion-segment-button>
+
+	<ion-segment [(ngModel)]="queryMode" color="medium">
+		<ion-segment-button value="text">Text only</ion-segment-button>
 		<ion-segment-button value="builder">Query builder</ion-segment-button>
 	</ion-segment>
 
-	<ion-grid [style.display]="queryMode === 'text' ? 'block' : 'none'">
+	<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
+	</datatug-sql>
+
+	<!--	<ion-grid [style.display]="queryMode === 'text' ? 'block' : 'none'">-->
+	<ion-grid>
 		<ion-row>
-			<ion-col>
-				<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
-				</datatug-sql>
+			<ion-col size="12">
+<!--				<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">-->
+<!--				</datatug-sql>-->
 			</ion-col>
 		</ion-row>
 	</ion-grid>
@@ -165,6 +170,11 @@
 					<ion-row>
 						<ion-col style="margin-top: 0.5rem">
 							{{env.title || env.id}}
+							<ion-badge color="light"
+									   *ngIf="env.recordsets?.length === 1 && env.recordsets[0].rows?.length"
+							>
+								{{env.recordsets[0].rows.length}}
+							</ion-badge>
 						</ion-col>
 						<ion-col>
 							<ion-buttons>
@@ -182,23 +192,32 @@
 		</ion-segment>
 	</div>
 
+
 	<ion-grid>
 		<ion-row *ngIf="envId !== '=='">
 			<ion-col size="5">
 				<ion-item>
-					<ion-label>@ Server</ion-label>
-					<ion-select [(ngModel)]="envDbServerId" *ngIf="envDbServers" (ionChange)="serverChanged()">
-						<ion-select-option *ngFor="let envDbServer of envDbServers"
-								[value]="envDbServer.id"
-						>{{envDbServer.title || envDbServer.id}}</ion-select-option>
+					<ion-label color="medium">@ Server</ion-label>
+					<ion-select *ngIf="activeEnv.summary?.dbServers?.length"
+								interface="popover"
+								[value]="activeEnv.dbServerId"
+								(ionChange)="serverChanged($event)"
+					>
+						<ion-select-option *ngFor="let dbServer of activeEnv.summary.dbServers"
+										   [value]="getDbServerId(dbServer)">
+							{{dbServer.driver}} : {{dbServer.host}}
+						</ion-select-option>
 					</ion-select>
 				</ion-item>
 			</ion-col>
 			<ion-col size="5">
 				<ion-item>
 					<ion-label color="medium">DB</ion-label>
-					<ion-select [(ngModel)]="targetCatalog" *ngIf="query">
-						<ion-select-option *ngFor="let target of query.targets">{{target.catalog}}</ion-select-option>
+					<ion-select [value]="activeEnv?.catalogId" *ngIf="activeEnv?.dbServer" interface="popover"
+								(ionChange)="catalogChanged($event)">
+						<ion-select-option *ngFor="let catalog of activeEnv.dbServer.catalogs" [value]="catalog">
+							{{catalog}}
+						</ion-select-option>
 					</ion-select>
 				</ion-item>
 			</ion-col>

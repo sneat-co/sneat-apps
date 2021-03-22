@@ -57,7 +57,7 @@ export class QueryContextSqlService {
   }
 
   private allAstRecordset(): IAstRecordset[] {
-    console.log('allAstRecordset(): ast:', this.ast)
+    // console.log('allAstRecordset(): ast:', this.ast)
     return this.ast && [
       this.ast.from,
       ...this.ast.joins,
@@ -66,7 +66,7 @@ export class QueryContextSqlService {
 
   private updateMeta(): void {
     const recordsets = this.allAstRecordset();
-    console.log('updateMeta(): recordsets:', recordsets, 'SQL:', this.sql);
+    // console.log('updateMeta(): recordsets:', recordsets, 'SQL:', this.sql);
     recordsets?.forEach(rs => {
       this.updateSuggestedJoins(rs);
       // this.tableService

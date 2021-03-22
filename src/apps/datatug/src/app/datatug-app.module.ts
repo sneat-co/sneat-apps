@@ -19,56 +19,58 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
 import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule} from '@sneat/auth';
 import {SneatAuthRoutingModule} from '../../../../libs/auth/src/lib/sneat-auth-routing.module';
-import {DatatugMenuSignedModule} from './datatug-menu-signed/datatug-menu-signed.module';
-import {DatatugMenuUnsignedModule} from './datatug-menu-unsigned/datatug-menu-unsigned.module';
+import {DatatugMenuModule} from './datatug-menu/datatug-menu.module';
 import {DatatugCoreModule} from '@sneat/datatug/core';
 import {DatatugServicesNavModule} from '@sneat/datatug/services/nav';
 import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
 import {CommonModule} from "@angular/common";
-import { DatatugMenuComponent } from './datatug-menu/datatug-menu.component';
+import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 
 @NgModule({
-  declarations: [DatatugAppComponent, DatatugMenuComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    // AngularFireAnalyticsModule,
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    DatatugCoreModule,
-    DatatugAppRoutingModule,
-    CommonModule,
-    CoreModule,
-    SneatAppModule,
-    SneatLoggingModule,
-    SneatAnalyticsModule,
-    SneatAuthModule,
-    SneatAuthRoutingModule,
-    DatatugMenuSignedModule,
-    DatatugMenuUnsignedModule,
-    DatatugServicesNavModule,
-    DatatugServicesUnsortedModule,
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    AngularFireAuth,
-    AngularFireAuthGuard,
-    SneatAuthGuard,
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    {
-      provide: LoginEventsHandler, useValue: {
-        onLoggedIn: () => {
-          console.log('LoginEventsHandler: logged in')
-        }
-      }
-    },
-  ],
-  bootstrap: [DatatugAppComponent],
+	declarations: [DatatugAppComponent],
+	entryComponents: [],
+	imports: [
+		BrowserModule,
+		IonicModule.forRoot(),
+		AngularFireModule.initializeApp(environment.firebaseConfig),
+		// AngularFireAnalyticsModule,
+		AngularFireAuthModule,
+		AngularFirestoreModule,
+		DatatugCoreModule,
+		DatatugAppRoutingModule,
+		CommonModule,
+		CoreModule,
+		SneatAppModule,
+		SneatLoggingModule,
+		SneatAnalyticsModule,
+		SneatAuthModule,
+		SneatAuthRoutingModule,
+		DatatugServicesBaseModule,
+		DatatugMenuModule,
+		DatatugServicesNavModule,
+		DatatugServicesUnsortedModule,
+	],
+	providers: [
+		StatusBar,
+		SplashScreen,
+		AngularFireAuth,
+		AngularFireAuthGuard,
+		SneatAuthGuard,
+		{
+			provide: RouteReuseStrategy,
+			useClass: IonicRouteStrategy,
+		},
+		{
+			provide: LoginEventsHandler, useValue: {
+				onLoggedIn: () => {
+					console.log('LoginEventsHandler: logged in')
+				}
+			}
+		},
+	],
+	bootstrap: [DatatugAppComponent],
 })
 export class DatatugAppModule {
-  constructor() {
-  }
+	constructor() {
+	}
 }

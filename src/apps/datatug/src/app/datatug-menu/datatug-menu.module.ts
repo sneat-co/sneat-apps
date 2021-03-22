@@ -3,7 +3,7 @@ import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {DatatugMenuSignedComponent} from './datatug-menu-signed.component';
+import {DatatugMenuComponent} from './datatug-menu.component';
 import {DatatugServicesProjectModule} from '@sneat/datatug/services/project';
 import {DatatugServicesRepoModule} from '@sneat/datatug/services/repo';
 import {WormholeModule} from '@sneat/wormhole';
@@ -24,13 +24,13 @@ import {WormholeModule} from '@sneat/wormhole';
 		// TableMetaCardModule,
 	],
 	declarations: [
-		DatatugMenuSignedComponent,
+		DatatugMenuComponent,
 		// ContextCardComponent,
 		// ContextCardEntityComponent,
 	],
 	exports: [
-		DatatugMenuSignedComponent,
+		DatatugMenuComponent,
 	],
 })
-export class DatatugMenuSignedModule {
+export class DatatugMenuModule {
 }

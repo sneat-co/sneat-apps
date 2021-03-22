@@ -1,9 +1,9 @@
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {IDataTugUser} from '@sneat/datatug/models';
+import {IDatatugUser} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {SneatUserService} from '@sneat/auth';
+import {DatatugUserService} from "@sneat/datatug/services/base";
 
 @Component({
 	selector: 'datatug-my',
@@ -12,17 +12,18 @@ import {SneatUserService} from '@sneat/auth';
 })
 export class DatatugMyPageComponent implements OnDestroy {
 
-	public dataTugUser: IDataTugUser;
+	public datatugUser: IDatatugUser;
 	private destroyed = new Subject<void>();
 
 	constructor(
-		readonly userService: SneatUserService,
+		readonly datatugUserService: DatatugUserService,
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
 	) {
-		userService.userRecord.pipe(takeUntil(this.destroyed)).subscribe({
-			next: sneatUser => {
-				console.log('sneatUser:', sneatUser);
-				this.dataTugUser = sneatUser?.data as IDataTugUser;
+		datatugUserService.datatugUser.pipe(
+			takeUntil(this.destroyed),
+		).subscribe({
+			next: datatugUser => {
+				this.datatugUser = datatugUser;
 			},
 			error: errorLogger.logErrorHandler('Failed to get user record for MyPage'),
 		});

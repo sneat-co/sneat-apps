@@ -5,7 +5,7 @@ import {IRecordset} from '@sneat/datatug/dto';
 export interface ICommandResponse {
 	readonly commandId: string;
 	readonly elapsed?: number;
-	readonly items: Observable<ICommandResponseItem>;
+	readonly items: Observable<ICommandResponseItem> | ICommandResponseItem[];
 }
 
 // export interface IRxCommandResponse {
