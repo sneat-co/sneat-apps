@@ -1,10 +1,13 @@
 import {IPipeDefinition} from '../definition/pipe-definition';
+import {IParameterValueWithoutID} from "../definition";
 
+
+export type NamedParams = { [name: string]: IParameterValueWithoutID };
 
 export interface IRequestCommand {
 	id?: string;
 	readonly type: 'SQL' | 'HTTP';
-	namedParams?: { [name: string]: string };
+	namedParams?: NamedParams;
 	pipes?: IPipeDefinition[];
 }
 

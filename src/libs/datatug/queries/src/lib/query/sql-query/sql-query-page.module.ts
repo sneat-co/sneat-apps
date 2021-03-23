@@ -17,6 +17,7 @@ import {DatatugQueriesModule} from "@sneat/datatug/queries";
 import {ColumnsComponent} from "./columns.component";
 import {JoinsComponent} from "./joins.component";
 import {WormholeModule} from "@sneat/wormhole";
+import {DatatugComponentsParametersModule} from "@sneat/datatug/components/parameters";
 
 @NgModule({
 	imports: [
@@ -32,6 +33,7 @@ import {WormholeModule} from "@sneat/wormhole";
 		DatatugComponentsDatagridModule,
 		DatatugQueriesModule,
 		WormholeModule,
+		DatatugComponentsParametersModule,
 	],
 	declarations: [
 		SqlQueryPageComponent,

@@ -7,7 +7,7 @@ import {
 	ICommandResponseWithRecordset,
 	IEnvDbServer,
 	IEnvironmentSummary,
-	IExecuteRequest,
+	IExecuteRequest, IParameter,
 	IProjEnv,
 	IQueryDef,
 	ISqlCommandRequest
@@ -60,7 +60,7 @@ export class SqlQueryPageComponent implements OnDestroy {
 	public readonly contextMenuComponent = QueriesMenuComponent;
 
 	public targetDbModelId: string;
-	public queryMode: 'text' | 'builder' = 'text';
+	public queryMode: 'text' | 'builder' | 'parameters' = 'text';
 
 	queryTitle = '';
 	public queryNamePlaceholder: string;
@@ -78,6 +78,14 @@ export class SqlQueryPageComponent implements OnDestroy {
 	public dbDriver: 'sqlite3' | 'sqlserver' = 'sqlite3';
 	public envDbServers: IEnvDbServer[];
 	public activeEnv?: IEnvState;
+
+	public parameters: IParameter[];
+
+	public onParametersChanged(parameters: IParameter[]): void {
+		console.log('onParametersChanged:', parameters);
+		this.parameters = parameters;
+	}
+
 	@ViewChild('codemirrorComponent') public codemirrorComponent: CodemirrorComponent;
 	public readonly codemirrorOptions = {
 		lineNumbers: true,
@@ -402,7 +410,15 @@ export class SqlQueryPageComponent implements OnDestroy {
 			db: this.activeEnv.catalogId,
 			env: this.envId,
 			text: this.sql,
+			namedParams: this.parameters?.length ? {} : undefined,
 		}
+
+		if (this.parameters?.length) {
+			this.parameters.forEach(p => {
+				sqlCommandRequest.namedParams[p.id] = {type: p.type, value: p.value};
+			});
+		}
+
 		const request: IExecuteRequest = {
 			id: RandomId.newRandomId(),
 			projectId: this.projectContext.projectId,

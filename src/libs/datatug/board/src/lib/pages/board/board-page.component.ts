@@ -5,21 +5,16 @@ import {distinctUntilChanged, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueryParamsService} from '@sneat/datatug/core';
-import {IBoardContext, IBoardDef, IParameterDef, IParameterValueWithoutName, IProjBoard} from '@sneat/datatug/models';
+import {IBoardContext, IBoardDef, IParamWithDefAndValue, IProjBoard} from '@sneat/datatug/models';
 import {routingParamBoard} from '@sneat/datatug/routes';
 import {DatatugNavContextService} from '@sneat/datatug/services/nav';
 import {ParameterLookupService} from '@sneat/datatug/components/parameters';
 
-interface IParamWithDefAndValue {
-	def: IParameterDef;
-	val?: IParameterValueWithoutName;
-}
-
 @Component({
 	selector: 'datatug-board-page',
-	templateUrl: './board.page.html',
+	templateUrl: './board-page.component.html',
 })
-export class BoardPage implements OnInit, OnDestroy {
+export class BoardPageComponent implements OnInit, OnDestroy {
 
 	boardId: string;
 
@@ -92,7 +87,7 @@ export class BoardPage implements OnInit, OnDestroy {
 											this.boardDef = board;
 											this.parameters = board.parameters?.map(def => ({
 												def,
-												val: {type: def.type, value: ''}
+												val: '',
 											}));
 										} catch (e) {
 											this.errorLogger.logError(e, 'Failed to process board response');
@@ -139,10 +134,10 @@ export class BoardPage implements OnInit, OnDestroy {
 			.subscribe({
 				next: v => {
 					console.log('Looked up:', v);
-					p.val = v;
+					p.val = v.value;
 					this.boardContext = {
 						...this.boardContext,
-						parameters: {...this.boardContext.parameters, [p.def.name]: v},
+						parameters: {...this.boardContext.parameters, [p.def.id]: v},
 					};
 				},
 				error: err => this.errorLogger.logError(err, 'Failed to lookup parameter value'),

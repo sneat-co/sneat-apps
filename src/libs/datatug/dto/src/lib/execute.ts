@@ -1,4 +1,4 @@
-import {ICommandResponse} from '@sneat/datatug/models'; // TODO: Why in different library?
+import {ICommandResponse, NamedParams} from '@sneat/datatug/models'; // TODO: Why in different library?
 
 export interface ISelectRequest {
 	proj: string;
@@ -9,6 +9,7 @@ export interface ISelectRequest {
 	cols?: string;
 	limit?: number;
 	where?: string;
+	namedParams?: NamedParams;
 }
 
 export interface IExecuteResponse {

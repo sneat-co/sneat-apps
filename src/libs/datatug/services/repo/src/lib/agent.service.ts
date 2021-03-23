@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {IExecuteResponse, ISelectRequest} from "@sneat/datatug/dto";
 import {Observable, throwError} from "rxjs";
 import {getRepoUrl} from "@sneat/datatug/nav";
-import {IExecuteRequest} from "@sneat/datatug/models";
+import {IExecuteRequest, ISqlCommandRequest} from "@sneat/datatug/models";
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
@@ -37,6 +37,13 @@ export class AgentService {
 		if (request.limit) {
 			params = params.append('limit', '' + request.limit);
 		}
+		if (request.namedParams) {
+			Object.entries(request.namedParams).forEach(
+				([id, p]) => {
+					params = params.append(`p:${id}:${p.type}`, '' + p.value);
+				}
+			);
+		}
 		// eslint-disable-next-line object-shorthand
 		const agentUrl = getRepoUrl(repoId);
 		return this.http.get<IExecuteResponse>(agentUrl + '/exec/select', {params});
@@ -44,13 +51,14 @@ export class AgentService {
 
 	public execute(repoId: string, request: IExecuteRequest): Observable<IExecuteResponse> {
 		console.log(`AgentService.execute(${repoId})`, request);
-		if (request.commands?.length === 1) {
-			const cmd = request.commands[0] as unknown as any;
+		if (request.commands?.length === 1 && !!request.commands[0].namedParams) {
+			const cmd = request.commands[0] as ISqlCommandRequest;
 			return this.select(repoId, {
 				db: cmd.db,
 				env: cmd.env,
 				sql: cmd.text,
 				proj: request.projectId,
+				namedParams: cmd.namedParams,
 			});
 		}
 		if (!request.projectId) {

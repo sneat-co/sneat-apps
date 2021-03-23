@@ -32,8 +32,8 @@
 	</ion-grid>
 
 	<ion-card *ngIf="parameters">
-		<ion-item *ngFor="let p of parameters" [title]="'@' + p.def.name">
-			<ion-label color="medium">{{p.def.title || p.def.name}}</ion-label>
+		<ion-item *ngFor="let p of parameters" [title]="'@' + p.def.id">
+			<ion-label color="medium">{{p.def.title || p.def.id}}</ion-label>
 			<ion-input [placeholder]="p.def.type" [(ngModel)]="p.val.value"></ion-input>
 			<ion-buttons slot="end">
 				<ion-button *ngIf="p.def.lookup" color="medium" [title]="p.def.lookup.sql" (click)="lookup(p)">

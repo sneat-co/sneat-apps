@@ -2,7 +2,7 @@ import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {ModalController} from '@ionic/angular';
-import {ICommandResponseWithRecordset, IParameterDef, IParameterValueWithoutName} from '@sneat/datatug/models';
+import {ICommandResponseWithRecordset, IParameterDef, IParameterValueWithoutID} from '@sneat/datatug/models';
 import {IExecuteResponse} from '@sneat/datatug/dto';
 import {IGridDef} from '@sneat/grid';
 import {recordsetToGridDef, RepoService} from '@sneat/datatug/services/repo';
@@ -16,7 +16,7 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 export class ParameterLookupComponent implements OnInit {
 
 	@Input() parameter: IParameterDef;
-	@Input() subj: Subject<IParameterValueWithoutName>;
+	@Input() subj: Subject<IParameterValueWithoutID>;
 	@Input() canceled: () => void;
 	@Input() repoId: string;
 	@Input() projectId: string;

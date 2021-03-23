@@ -1,0 +1,9 @@
+<ng-container *ngIf="parameters?.length">
+	<ion-item *ngFor="let param of parameters">
+		<ion-label>
+			{{param.def.id}}
+			<ion-badge color="light" style="font-weight: normal"><ion-text color="medium">{{param.def.type}}</ion-text></ion-badge>
+		</ion-label>
+		<ion-input *ngIf="param.def.type === 'integer' || param.def.type === 'number'" type="number" [(ngModel)]="param.val" (ionChange)="omParamChanged($event)"></ion-input>
+	</ion-item>
+</ng-container>

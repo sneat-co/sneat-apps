@@ -52,19 +52,22 @@
 
 
 	<ion-segment [(ngModel)]="queryMode" color="medium">
-		<ion-segment-button value="text">Text only</ion-segment-button>
+		<ion-segment-button value="text">Query text</ion-segment-button>
 		<ion-segment-button value="builder">Query builder</ion-segment-button>
+		<ion-segment-button value="parameters">Parameters</ion-segment-button>
 	</ion-segment>
 
-	<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
-	</datatug-sql>
+	<ion-card *ngIf="queryMode === 'text'">
+		<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
+		</datatug-sql>
+	</ion-card>
 
 	<!--	<ion-grid [style.display]="queryMode === 'text' ? 'block' : 'none'">-->
 	<ion-grid>
 		<ion-row>
 			<ion-col size="12">
-<!--				<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">-->
-<!--				</datatug-sql>-->
+				<!--				<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">-->
+				<!--				</datatug-sql>-->
 			</ion-col>
 		</ion-row>
 	</ion-grid>
@@ -163,6 +166,14 @@
 
 	</ng-container>
 
+
+	<ion-card *ngIf="queryMode === 'parameters'">
+		<ion-item>
+			<ion-label color="medium">Parameters</ion-label>
+		</ion-item>
+		<datatug-input-parameters [paramDefs]="query?.parameters" (paramValues)="onParametersChanged($event)"></datatug-input-parameters>
+	</ion-card>
+
 	<div class="ion-padding-start ion-padding-end">
 		<ion-segment [(ngModel)]="envId" (ionChange)="envChanged()">
 			<ion-segment-button [value]="env.id" *ngFor="let env of environments">
@@ -198,7 +209,7 @@
 			<ion-col size="5">
 				<ion-item>
 					<ion-label color="medium">@ Server</ion-label>
-					<ion-select *ngIf="activeEnv.summary?.dbServers?.length"
+					<ion-select *ngIf="activeEnv?.summary?.dbServers?.length"
 								interface="popover"
 								[value]="activeEnv.dbServerId"
 								(ionChange)="serverChanged($event)"

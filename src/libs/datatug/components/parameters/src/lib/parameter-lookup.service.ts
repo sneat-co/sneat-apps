@@ -4,7 +4,7 @@ import {ModalController} from '@ionic/angular';
 import {ParameterLookupComponent} from './parameter-lookup.component';
 import {share} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {IParameterDef, IParameterValueWithoutName} from '@sneat/datatug/models';
+import {IParameterDef, IParameterValueWithoutID} from '@sneat/datatug/models';
 import {AgentService, RepoService} from '@sneat/datatug/services/repo';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class ParameterLookupService {
 		repo: string,
 		projectId: string,
 		envId: string,
-	): Observable<IParameterValueWithoutName> {
+	): Observable<IParameterValueWithoutID> {
 		const lookupResponse = this.agentService
 			.select(repo, {
 				proj: projectId,
@@ -32,7 +32,7 @@ export class ParameterLookupService {
 			}).pipe(
 				share(), // Supposed to issue HTTP request immediately before modal component created
 			);
-		const subj = new Subject<IParameterValueWithoutName>();
+		const subj = new Subject<IParameterValueWithoutID>();
 		const canceled = () => {
 			this.modal.dismiss().catch(err => this.errorLogger.logError(err, 'Failed to dismiss modal'));
 		}

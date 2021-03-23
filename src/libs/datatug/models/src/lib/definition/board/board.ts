@@ -1,4 +1,4 @@
-import {IParameterDef, IParameterValueWithoutName} from '../parameter';
+import {IParameterDef, IParameterValueWithoutID} from '../parameter';
 import {WidgetDef} from './widgets';
 
 
@@ -38,5 +38,5 @@ export interface IBoardWidgetInstance {
 
 export interface IBoardContext {
 	mode: 'edit' | 'view';
-	parameters: { [name: string]: IParameterValueWithoutName };
+	parameters: { [name: string]: IParameterValueWithoutID };
 }

@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {BoardPageRoutingModule} from './board-routing.module';
 
-import {BoardPage} from './board.page';
+import {BoardPageComponent} from './board-page.component';
 import {QueryParamsService} from '@sneat/datatug/core';
 import {DatatugBoardModule} from '../../datatug-board.module';
 
@@ -19,7 +19,7 @@ import {DatatugBoardModule} from '../../datatug-board.module';
 		DatatugBoardModule,
 	],
 	declarations: [
-		BoardPage,
+		BoardPageComponent,
 	],
 	providers: [
 		QueryParamsService,

@@ -15,7 +15,6 @@ import {IExecuteResponse} from '@sneat/datatug/dto';
 @Injectable({
 	providedIn: 'root'
 })
-// @ts-ignore
 export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 	constructor(
 		private httpClient: HttpClient,

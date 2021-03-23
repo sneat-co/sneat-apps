@@ -5,6 +5,7 @@ import {ParameterLookupComponent} from './parameter-lookup.component';
 import {ParameterLookupService} from './parameter-lookup.service';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
 import {DatatugComponentsSqlEditorModule} from '@sneat/datatug/components/sqleditor';
+import { InputParametersComponent } from './input-parameters/input-parameters.component';
 
 @NgModule({
   imports: [
@@ -15,9 +16,11 @@ import {DatatugComponentsSqlEditorModule} from '@sneat/datatug/components/sqledi
   ],
   declarations: [
     ParameterLookupComponent,
+    InputParametersComponent,
   ],
   providers: [
     ParameterLookupService,
-  ]
+  ],
+  exports: [InputParametersComponent]
 })
 export class DatatugComponentsParametersModule {}
