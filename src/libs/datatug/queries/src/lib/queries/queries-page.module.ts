@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {SqlQueriesPageRoutingModule} from './queries-routing.module';
+import {QueriesPageRoutingModule} from './queries-routing.module';
 
 import {QueriesPageComponent} from './queries-page.component';
 import {DatatugBoardModule} from '@sneat/datatug/board';
@@ -19,7 +19,7 @@ import {WormholeModule} from "@sneat/wormhole";
 		FormsModule,
 		IonicModule,
 		DatatugComponentsSqlEditorModule,
-		SqlQueriesPageRoutingModule,
+		QueriesPageRoutingModule,
 		QueriesServiceModule,
 		DatatugBoardModule,
 		DatatugComponentsProjectModule,

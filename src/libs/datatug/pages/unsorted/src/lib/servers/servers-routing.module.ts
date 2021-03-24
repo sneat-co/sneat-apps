@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {ServersPage} from './servers.page';
+import {ServersPageComponent} from './servers-page.component';
 import {routingParamDriver, routingParamDbServerId} from '@sneat/datatug/routes';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ServersPage
+		component: ServersPageComponent
 	},
 	{
 		path: `db/:${routingParamDriver}/:${routingParamDbServerId}`,

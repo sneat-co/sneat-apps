@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {ServersPageRoutingModule} from './servers-routing.module';
 
-import {ServersPage} from './servers.page';
+import {ServersPageComponent} from './servers-page.component';
 import {DatatugDbModalsAddDbServerModule} from '@sneat/datatug/db';
 
 @NgModule({
@@ -17,7 +17,7 @@ import {DatatugDbModalsAddDbServerModule} from '@sneat/datatug/db';
 		ServersPageRoutingModule,
     DatatugDbModalsAddDbServerModule,
 	],
-	declarations: [ServersPage]
+	declarations: [ServersPageComponent]
 })
 export class ServersPageModule {
 }

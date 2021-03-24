@@ -33,6 +33,7 @@ import {DatatugNavContextService} from "@sneat/datatug/services/nav";
 import {IDatatugProjectContext} from "@sneat/datatug/nav";
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {ViewDidEnter} from "@ionic/angular";
 
 interface IEnvState {
 	readonly id: string;
@@ -57,18 +58,19 @@ function getEnvBriefFromEnvState(envState: IEnvState): IProjEnv {
 	templateUrl: './sql-query-page.component.html',
 	styleUrls: ['./sql-query-page.component.scss'],
 })
-export class SqlQueryPageComponent implements OnDestroy {
+export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	public readonly contextMenuComponent = QueriesMenuComponent;
 
 	public targetDbModelId: string;
-	public queryMode: 'text' | 'builder' | 'parameters' = 'text';
+	public editorTab: 'text' | 'builder' = 'text';
 
 	queryTitle = '';
 	public queryNamePlaceholder: string;
 	public targetCatalog: string;
 	public query: IQueryDef;
 	public queryId: string;
+	public queryFolderPath = '';
 	public envId;
 	public envDbServerId: string;
 	public sql = 'select * from Album';
@@ -133,6 +135,10 @@ export class SqlQueryPageComponent implements OnDestroy {
 		this.trackQueryParams();
 		this.trackParamMap();
 	}
+
+	ionViewDidEnter(): void {
+		this.updateUrl(); // If called in constructor breaks back button
+    }
 
 	ngOnDestroy(): void {
 		this.destroyed.next();
@@ -241,6 +247,25 @@ export class SqlQueryPageComponent implements OnDestroy {
 	private trackQueryParams(): void {
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
+				console.log('queryParams:', queryParams);
+				let queryId = queryParams.get('id');
+				if (queryId) {
+					if (queryId !== this.queryId) {
+						this.setQueryId(queryId);
+						this.queryEditorStateService.openQuery(queryId);
+						this.queryNamePlaceholder = queryId ? 'Title is a required field' : 'New query - title is a required field';
+						this.loadQuery(queryId);
+					}
+				} else {
+					queryId = RandomId.newRandomId();
+					this.setQueryId(queryId)
+					this.queryEditorStateService.newQuery({id: queryId});
+					if (!this.sql) {
+						this.sql = 'select' + ' * ' + 'from ';
+						this.onSqlChanged();
+					}
+				}
+
 				const envId = queryParams.get('env');
 				if (envId) {
 					this.envId = envId;
@@ -265,16 +290,10 @@ export class SqlQueryPageComponent implements OnDestroy {
 			next: paramMap => {
 				console.log('QueryPage.constructor() => paramMap:', paramMap);
 
-				let queryId = paramMap.get('queryId');
-				if (queryId) {
-					this.queryEditorStateService.openQuery(queryId);
-				}
-
 				const projContext: IDatatugProjRef = {
 					projectId: paramMap.get('projectId'),
 					repoId: paramMap.get('repoId'),
 				};
-				this.projectContext = projContext;
 				if (projContext.repoId && projContext.projectId) {
 					this.target = {
 						...(this.target || {}),
@@ -284,30 +303,28 @@ export class SqlQueryPageComponent implements OnDestroy {
 					console.log('target', this.target);
 					this.updateQueryContext();
 				}
-				if (queryId && (
-					queryId !== this.queryId ||
-					projContext.projectId !== this.projectContext?.projectId ||
-					projContext.repoId !== this.projectContext?.repoId
+				const prevProjectContext = this.projectContext;
+				this.projectContext = projContext;
+				if (this.queryId && (
+					projContext.projectId !== prevProjectContext?.projectId ||
+					projContext.repoId !== prevProjectContext?.repoId
 				)) {
-					this.queryId = queryId;
-					this.loadQuery(queryId);
-				} else if (!queryId) {
-					queryId = RandomId.newRandomId();
-					this.queryEditorStateService.newQuery({id: queryId});
-					this.queryId = queryId;
-					if (!this.sql) {
-						this.sql = 'select' + ' * ' + 'from ';
-						this.onSqlChanged();
-					}
+					this.loadQuery(this.queryId);
 				}
-
-				this.queryNamePlaceholder = queryId ? 'Name is required field' : 'New query - type name here to save';
 			},
 			error: this.errorLogger.logErrorHandler('Failed to get query params from activated router'),
 		});
 
 	}
 
+	private setQueryId(id: string): void {
+		this.queryId = id;
+		const i = id.lastIndexOf('/');
+		if (i >= 0) {
+			this.queryFolderPath = id.substring(0, i);
+		}
+
+	}
 	private setQuery(query: IQueryDef): void {
 		this.query = query;
 		this.queryTitle = query.title;
@@ -380,13 +397,23 @@ export class SqlQueryPageComponent implements OnDestroy {
 		}
 
 		this.datatugNavContextService.setCurrentEnvironment(this.envId);
+		this.updateUrl();
+	}
+
+	editorTabChanged(event: CustomEvent): void {
+		this.updateUrl();
+	}
+
+	updateUrl(): void {
 		const queryParams: Params = {
+			editor: this.editorTab,
 			env: this.envId,
 		};
-
 		this.router.navigate(
 			[],
 			{
+				// preserveFragment: true,
+				replaceUrl: true,
 				relativeTo: this.route,
 				queryParams,
 				queryParamsHandling: 'merge', // remove to replace all query params by provided
@@ -556,6 +583,9 @@ export class SqlQueryPageComponent implements OnDestroy {
 	}
 
 	private loadQuery(queryId: string): void {
+		if (!this.projectContext) {
+			return;
+		}
 		console.log('QueryPage.loadQuery()', queryId);
 		this.queriesService.getQuery(this.projectContext, this.queryId).subscribe({
 			next: query => {

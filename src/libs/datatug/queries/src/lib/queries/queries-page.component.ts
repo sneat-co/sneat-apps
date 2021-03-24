@@ -64,6 +64,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		private readonly dataTugNavContextService: DatatugNavContextService,
 		private readonly dataTugNavService: DatatugNavService,
 	) {
+		console.log('QueriesPageComponent.constructor()');
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
 				this.folderPath = queryParams.get('folder');
@@ -141,7 +142,11 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 			this.folderPath = this.folderPath ? this.folderPath + '/' + path : path;
 			this.currentFolder = this.getFolderAndUpdateParents(path, this.currentFolder);
 		}
-		this.router.navigate([], {queryParams: this.folderPath && {folder: this.folderPath}})
+		this.router.navigate([],
+			{
+				queryParams: this.folderPath && {folder: this.folderPath},
+				replaceUrl: true,
+			})
 			.catch(this.errorLogger.logErrorHandler('Failed to navigate to another folder'));
 		this.displayCurrentFolder();
 	}

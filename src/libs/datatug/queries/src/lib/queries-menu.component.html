@@ -1,21 +1,22 @@
-<div class="ion-padding-horizontal">
-	<ion-segment [(ngModel)]="tab">
-		<ion-segment-button value="project">Project</ion-segment-button>
-		<ion-segment-button value="queries">Queries</ion-segment-button>
-	</ion-segment>
-</div>
-<ng-container *ngIf="tab === 'queries'">
-	<ion-card *ngIf="queries">
-		<ion-item *ngFor="let query of queries" tappable (click)="setActiveQuery(query.id)">
-			<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined">
-				{{query.title || query.id}}
-			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button color="medium">
-					<ion-icon name="close"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	</ion-card>
-</ng-container>
-<datatug-project-context-menu *ngIf="tab === 'project'"></datatug-project-context-menu>
+<datatug-project-context-menu></datatug-project-context-menu>
+
+<ion-card *ngIf="queries">
+	<ion-item-divider color="light">
+		<ion-label>Active queries</ion-label>
+		<ion-buttons slot="end">
+			<ion-button title="Close all active queries">
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-item *ngFor="let query of queries" tappable (click)="setActiveQuery(query.id)" [detail]="query.id === currentQueryId">
+		<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined">
+			{{query.title || query.id}}
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="medium">
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-card>

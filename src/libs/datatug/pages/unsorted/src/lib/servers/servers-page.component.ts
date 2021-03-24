@@ -11,9 +11,9 @@ import {AddDbServerComponent} from '@sneat/datatug/db';
 
 @Component({
 	selector: 'datatug-servers',
-	templateUrl: './servers.page.html',
+	templateUrl: './servers-page.component.html',
 })
-export class ServersPage implements OnDestroy {
+export class ServersPageComponent implements OnDestroy {
 	tab: 'db' | 'web' | 'api' = 'db';
 
 	dbServers: IProjDbServerSummary[];

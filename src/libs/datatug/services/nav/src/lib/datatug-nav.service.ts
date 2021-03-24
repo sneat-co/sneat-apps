@@ -56,8 +56,16 @@ export class DatatugNavService {
 	}
 
 	goQuery(projContext: IDatatugProjRef, query: IQueryDef, queryFullId: string, action?: 'execute' | 'edit'): void {
-		const url = this.projectPageUrl(projContext, 'queries', queryFullId);
-		this.navForward(url, {state: {query, action}}, 'Failed to navigate to query page');
+		const url = this.projectPageUrl(projContext, 'query');
+		this.navForward(url, {
+			state: {
+				query,
+				action,
+			},
+			queryParams: {
+				id: queryFullId,
+			}
+		}, 'Failed to navigate to query page');
 	}
 
 	goBoard(projContext: IDatatugProjRef, projBoard: IProjBoard, boardId?: string): void {
@@ -65,8 +73,9 @@ export class DatatugNavService {
 		this.navForward(url, {state: {projBoard}}, 'Failed to navigate to board page');
 	}
 
-	public projectPageUrl(c: IDatatugProjRef, name: string, id: string): string {
-		return `/repo/${getRepoId(c.repoId)}/project/${c.projectId}/${name}/${encodeURIComponent(id)}`;
+	public projectPageUrl(c: IDatatugProjRef, name: string, id?: string): string {
+		const url = `/repo/${getRepoId(c.repoId)}/project/${c.projectId}/${name}`;
+		return id ? url + '/' + encodeURIComponent(id) : url;
 	}
 
 	goProjPage(repo: string, projectId: string, projPage: string, state?: { projSummary: IDatatugProjectSummary }): void {
@@ -94,7 +103,7 @@ export class DatatugNavService {
 	private navForward(url: string[] | string, options: NavigationOptions, errMessage: string): void {
 		console.log('navForward()', url, options);
 		this.nav.navigateForward(url, options)
-			.catch(err => this.errorLogger.logError(err, errMessage));
+			.catch(this.errorLogger.logErrorHandler(errMessage));
 	}
 }
 

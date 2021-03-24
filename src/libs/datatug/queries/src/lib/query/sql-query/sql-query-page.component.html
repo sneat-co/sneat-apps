@@ -5,7 +5,8 @@
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
 			<ion-back-button
-					defaultHref="/repo/{{projectContext?.repoId}}/project/{{projectContext?.projectId}}/queries"></ion-back-button>
+					defaultHref="/repo/{{projectContext?.repoId}}/project/{{projectContext?.projectId}}/queries?folder={{queryFolderPath}}"
+			></ion-back-button>
 		</ion-buttons>
 		<ion-title>Query</ion-title>
 		<ion-buttons slot="end">
@@ -57,18 +58,20 @@
 	</ion-grid>
 
 
-	<ion-segment [(ngModel)]="queryMode" color="dark">
+	<ion-segment [(ngModel)]="editorTab" color="dark" (ionChange)="editorTabChanged($event)">
 		<ion-segment-button value="text">Query text</ion-segment-button>
 		<ion-segment-button value="builder">
 			<ion-label>
 				Query builder
-				<ion-badge color="medium" style="font-weight: normal; font-size: x-small" title="Is not implemented yet">PROTOTYPE</ion-badge>
+				<ion-badge color="medium" style="font-weight: normal; font-size: x-small"
+						   title="Is not implemented yet">PROTOTYPE
+				</ion-badge>
 			</ion-label>
 
 		</ion-segment-button>
 	</ion-segment>
 
-	<ion-card *ngIf="queryMode === 'text'">
+	<ion-card *ngIf="editorTab === 'text'">
 		<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
 		</datatug-sql>
 	</ion-card>
@@ -83,7 +86,7 @@
 		</ion-row>
 	</ion-grid>
 
-	<ng-container *ngIf="queryMode === 'builder'">
+	<ng-container *ngIf="editorTab === 'builder'">
 		<div class="hidden-lg-up">
 			<div class="ion-padding-start ion-padding-end">
 				<ion-segment value="columns">

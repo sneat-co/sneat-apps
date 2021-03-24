@@ -7,6 +7,10 @@ const routes: Routes = [
 	{
 		path: '',
 		component: SqlQueryPageComponent
+	},
+	{
+		path: ':queryId',
+		component: SqlQueryPageComponent,
 	}
 ];
 
@@ -14,5 +18,5 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class SqlQueryPageRoutingModule {
+export class QueryPageRoutingModule {
 }

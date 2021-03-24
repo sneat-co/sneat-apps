@@ -8,8 +8,6 @@ import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 	templateUrl: './queries-menu.component.html',
 })
 export class QueriesMenuComponent {
-	tab: 'queries' | 'project' = 'queries';
-
 	currentQueryId: string;
 
 	queries: IQueryState[];
