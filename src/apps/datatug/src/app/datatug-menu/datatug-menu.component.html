@@ -1,9 +1,3 @@
-<ion-card *ngIf="authState === 'notAuthenticated'">
-	<ion-card-content>
-		Please <a [routerLink]="'/login'">sign in</a>
-	</ion-card-content>
-</ion-card>
-
 <ion-card>
 	<ion-item tappable routerLink="/my" routerDirection="root">
 		<!--    <ion-buttons slot="start" class="ion-no-margin">-->
@@ -15,8 +9,11 @@
 
 		<ion-label color="medium" *ngIf="firebaseUser$|async">{{(firebaseUser$|async)?.displayName}}</ion-label>
 		<ion-label color="medium" *ngIf="authState === 'authenticating'">Authenticating...</ion-label>
+		<ion-label color="medium" *ngIf="authState === 'notAuthenticated'">
+			Please <a [routerLink]="'/login'">sign in</a>
+		</ion-label>
 
-		<ion-buttons slot="end">
+		<ion-buttons slot="end" *ngIf="authState === 'authenticated'">
 			<ion-button color="medium" title="Settings">
 				<ion-icon name="settings-outline"></ion-icon>
 			</ion-button>
@@ -109,7 +106,7 @@
 	</ng-container>
 </ion-card>
 
-<datatug-context-card *ngIf="currentProjectId" [projectId]="currentProjectId"></datatug-context-card>
+<!--<datatug-context-card *ngIf="currentProjectId" [projectId]="currentProjectId"></datatug-context-card>-->
 
 <!--<datatug-table-meta-card *ngIf="table" [meta]="table?.meta"></datatug-table-meta-card>-->
 <wormhole-exit tunnel="context-menu"></wormhole-exit>
