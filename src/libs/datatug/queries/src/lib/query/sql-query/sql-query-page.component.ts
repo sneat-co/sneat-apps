@@ -9,7 +9,6 @@ import {
 	IEnvironmentSummary,
 	IExecuteRequest,
 	IParameter,
-	IProjEnv,
 	IQueryDef,
 	ISqlCommandRequest
 } from '@sneat/datatug/models';
@@ -18,7 +17,6 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {
 	EnvironmentService,
 	IAstQuery,
-	ICanJoin,
 	ISqlQueryTarget,
 	QueriesService,
 	QueryContextSqlService,
@@ -46,11 +44,7 @@ interface IEnvState {
 	readonly dbServerId?: string;
 	readonly dbServer?: IEnvDbServer;
 	readonly catalogId?: string;
-	readonly error?: any
-}
-
-function getEnvBriefFromEnvState(envState: IEnvState): IProjEnv {
-	return {id: envState.id, title: envState.title};
+	readonly error?: unknown;
 }
 
 @Component({
@@ -70,9 +64,11 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 	public targetCatalog: string;
 	public query: IQueryDef;
 	public queryId: string;
+	public isNew: boolean;
 	public queryFolderPath = '';
 	public envId;
 	public envDbServerId: string;
+	// noinspection SqlDialectInspection,SqlNoDataSourceInspection
 	public sql = 'select * from Album';
 	public colsTab: 'group' | 'order' = 'order';
 	public queryAst: IAstQuery;
@@ -86,11 +82,6 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 	public parameters: IParameter[];
 	public isSaving: boolean;
 
-
-	public onParametersChanged(parameters: IParameter[]): void {
-		console.log('onParametersChanged:', parameters);
-		this.parameters = parameters;
-	}
 
 	@ViewChild('codemirrorComponent') public codemirrorComponent: CodemirrorComponent;
 	public readonly codemirrorOptions = {
@@ -138,11 +129,16 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	ionViewDidEnter(): void {
 		this.updateUrl(); // If called in constructor breaks back button
-    }
+	}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
+	}
+
+	public onParametersChanged(parameters: IParameter[]): void {
+		console.log('onParametersChanged:', parameters);
+		this.parameters = parameters;
 	}
 
 	private trackCurrentEnv(): void {
@@ -258,7 +254,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 					}
 				} else {
 					queryId = RandomId.newRandomId();
-					this.setQueryId(queryId)
+					this.setQueryId(queryId, true)
 					this.queryEditorStateService.newQuery({id: queryId});
 					if (!this.sql) {
 						this.sql = 'select' + ' * ' + 'from ';
@@ -317,14 +313,16 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	}
 
-	private setQueryId(id: string): void {
+	private setQueryId(id: string, isNew: boolean = false): void {
 		this.queryId = id;
+		this.isNew = isNew;
 		const i = id.lastIndexOf('/');
 		if (i >= 0) {
 			this.queryFolderPath = id.substring(0, i);
 		}
 
 	}
+
 	private setQuery(query: IQueryDef): void {
 		this.query = query;
 		this.queryTitle = query.title;
@@ -400,7 +398,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 		this.updateUrl();
 	}
 
-	editorTabChanged(event: CustomEvent): void {
+	editorTabChanged(): void {
 		this.updateUrl();
 	}
 
@@ -479,7 +477,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 					const mapRecordset = (result: IRecordsetResult) => ({
 						result,
 						parameters,
-						def: this.query.recordsets?.length && this.query.recordsets[0]
+						def: this.query?.recordsets?.length && this.query?.recordsets[0]
 					});
 
 					const processCommandResponseItem = (item: ICommandResponseItem) => {
@@ -562,10 +560,6 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 			});
 	}
 
-	public addJoin(sj: ICanJoin, joinType: 'inner' | 'right' | 'left'): void {
-		alert('Sorry, not implemented yed');
-	}
-
 	protected onSqlChanged(): void {
 		const query = this.query;
 		this.queryAst = this.queryContextSqlService.setSql(this.sql);
@@ -583,7 +577,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 	}
 
 	private loadQuery(queryId: string): void {
-		if (!this.projectContext) {
+		if (!this.projectContext || !this.queryId || this.isNew) {
 			return;
 		}
 		console.log('QueryPage.loadQuery()', queryId);
