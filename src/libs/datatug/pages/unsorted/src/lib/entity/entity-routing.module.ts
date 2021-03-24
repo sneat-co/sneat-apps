@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {EntityPage} from './entity.page';
+import {EntityPageComponent} from './entity-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: EntityPage
+		component: EntityPageComponent
 	}
 ];
 

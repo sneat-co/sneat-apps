@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {IParameter, IParameterDef, IParamWithDefAndValue} from "@sneat/datatug/models";
+import {IParameter, IParameterDef, IParamWithDefAndValue, ParameterValue} from "@sneat/datatug/models";
 
 @Component({
 	selector: 'datatug-input-parameters',
@@ -25,13 +25,34 @@ export class InputParametersComponent implements OnChanges {
 		}
 	}
 
-	public omParamChanged(event: CustomEvent): void {
+	public get hasParamValues(): boolean {
+		return !!this.parameters?.find(p => p.val !== undefined);
+	}
+
+	public clearAllParams(event: Event): void {
+		this.parameters.forEach(p => p.val = undefined);
+	}
+
+	public onParamChanged(event: CustomEvent, parameter: IParamWithDefAndValue): void {
+		const {value} = event.detail;
+		console.log('omParamChanged:', value, parameter)
 		this.paramValues.emit(this.parameters.map(p => {
-			const {value} = event.detail;
+			const v = p.def.id === parameter.def.id ? value : p.val;
+			let pVal: ParameterValue;
+			if (p.def.type === 'integer' || p.def.type === 'number') {
+				if (v === undefined || v === null || v === '') {
+					pVal = undefined;
+				} else {
+					pVal =  +v;
+					if (isNaN(pVal)) {
+						throw new Error(`Got a not a number for ${p.def.type} parameter`)
+					}
+				}
+			}
 			const param: IParameter = {
 				id: p.def.id,
 				type: p.def.type,
-				value: p.def.type === 'integer' || p.def.type === 'number' ? +value : value
+				value: pVal,
 			};
 			return param;
 		}));

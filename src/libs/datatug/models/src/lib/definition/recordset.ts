@@ -1,17 +1,19 @@
+import {IEntityFieldRef} from "./metapedia";
+
 export interface IRecordsetDefinition {
 	name: string;
-	fields?: IRecordsetField[];
+	columns?: IRecordsetColumn[];
 }
 
-export interface IRecordsetField {
+export interface IRecordsetColumn {
 	name: string;
 	type: string;
 	meta?: IEntityFieldRef;
+	hideIf?: IHideRecordsetColIf;
 }
 
-export interface IEntityFieldRef {
-	entity: string;
-	field: string;
+export interface IHideRecordsetColIf {
+	parameters?: string[];
 }
 
 // This is used to mark source of a field in Views, SP & queries

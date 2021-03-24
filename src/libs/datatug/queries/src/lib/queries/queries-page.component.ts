@@ -94,8 +94,9 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		console.log('QueriesPage.ngOnInit()')
 	}
 
-	goQuery(query: IQueryDef, action?: 'execute' | 'edit'): void {
-		const id = this.folderPath ? this.folderPath + '/' + query.id : query.id;
+	goQuery(query: IQueryDef, action?: 'execute' | 'edit', folders?: string[]): void {
+		const folderPath = folders ? folders.join('/') + '/' : this.folderPath ? this.folderPath + '/' : '';
+		const id = folderPath + query.id;
 		this.dataTugNavService.goQuery(this.currentProject, query, id, action);
 	}
 

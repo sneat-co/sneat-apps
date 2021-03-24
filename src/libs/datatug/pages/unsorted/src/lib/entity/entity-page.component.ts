@@ -12,9 +12,9 @@ import {IGridColumn} from '@sneat/grid';
 
 @Component({
 	selector: 'datatug-entity',
-	templateUrl: './entity.page.html',
+	templateUrl: './entity-page.component.html',
 })
-export class EntityPage implements OnDestroy {
+export class EntityPageComponent implements OnDestroy {
 
 	repoId: string;
 	projectId: string;

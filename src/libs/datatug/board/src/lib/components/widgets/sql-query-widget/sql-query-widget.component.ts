@@ -4,7 +4,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {IBoardContext, ISqlWidgetSettings} from '@sneat/datatug/models';
 import {AgentService} from '@sneat/datatug/services/repo';
-import {IRecordset} from '@sneat/datatug/dto';
+import {IRecordsetResult} from '@sneat/datatug/dto';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 const reSqlParams = /@(\w+)/;
@@ -23,7 +23,7 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 	public state: 'loading' | 'loaded' | 'error';
 
 	public sql: string;
-	public recordset: IRecordset = {
+	public recordset: IRecordsetResult = {
 		duration: 0,
 		columns: [
 			{name: 'Grid', dbType: 'NVARCHAR'},

@@ -14,27 +14,27 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
-<!--	<ion-segment value="all">-->
-<!--		<ion-segment-button value="all">All</ion-segment-button>-->
-<!--		<ion-segment-button value="favorites">-->
-<!--			<ion-icon name="star-outline" class="ion-margin-end"></ion-icon>-->
-<!--			<ion-label>-->
-<!--				Favorites-->
-<!--			</ion-label>-->
-<!--		</ion-segment-button>-->
-<!--	</ion-segment>-->
+<ion-content color="light">
+	<!--	<ion-segment value="all">-->
+	<!--		<ion-segment-button value="all">All</ion-segment-button>-->
+	<!--		<ion-segment-button value="favorites">-->
+	<!--			<ion-icon name="star-outline" class="ion-margin-end"></ion-icon>-->
+	<!--			<ion-label>-->
+	<!--				Favorites-->
+	<!--			</ion-label>-->
+	<!--		</ion-segment-button>-->
+	<!--	</ion-segment>-->
 	<ion-card>
 		<ion-item>
 			<ion-input placeholder="Filter"></ion-input>
-<!--			<ion-buttons slot="end">-->
-<!--				<ion-button title="Many-to-many" color="medium">-->
-<!--					<ion-icon name="code-working-outline"></ion-icon>-->
-<!--				</ion-button>-->
-<!--				<ion-button title="Many-to-many" color="medium">-->
-<!--					<ion-icon name="bookmark-outline"></ion-icon>-->
-<!--				</ion-button>-->
-<!--			</ion-buttons>-->
+			<!--			<ion-buttons slot="end">-->
+			<!--				<ion-button title="Many-to-many" color="medium">-->
+			<!--					<ion-icon name="code-working-outline"></ion-icon>-->
+			<!--				</ion-button>-->
+			<!--				<ion-button title="Many-to-many" color="medium">-->
+			<!--					<ion-icon name="bookmark-outline"></ion-icon>-->
+			<!--				</ion-button>-->
+			<!--			</ion-buttons>-->
 		</ion-item>
 		<!--		<ion-segment value="all">-->
 		<!--			<ion-segment-button value="all">-->
@@ -50,15 +50,18 @@
 		<ion-list class="last-child-no-border">
 			<ng-container *ngIf="entities; else loadingEntities">
 				<ng-container *ngIf="entities.length; else noEntitiesYet">
-					<ion-item *ngFor="let entity of entities; trackBy: trackById" [routerLink]="entityUrl(entity)" (click)="goEntity(entity)" class="last-child-no-border">
-						<ion-label [class.deleting-list-item]="entity.state === 'deleting'">{{entity.data.title || entity.id}}</ion-label>
+					<ion-item *ngFor="let entity of entities; trackBy: trackById" [routerLink]="entityUrl(entity)"
+							  (click)="goEntity(entity)" class="last-child-no-border">
+						<ion-label [class.deleting-list-item]="entity.state === 'deleting'">
+							{{entity.data.title || entity.data.id}}
+						</ion-label>
 						<ion-badge *ngIf="entity.data?.fields?.length" color="light" class="badge-count">
 							{{entity.data.fields.length}} {{entity.data.fields.length === 1 ? 'field' : 'fields'}}
 						</ion-badge>
 						<ion-buttons>
 							<ion-button title="Delete entity" class="delete-button"
-											[disabled]="entity.state && entity.state !== 'changed'" color="medium"
-											(click)="deleteEntity($event, entity)">
+										[disabled]="entity.state && entity.state !== 'changed'" color="medium"
+										(click)="deleteEntity($event, entity)">
 								<ion-icon name="trash"></ion-icon>
 							</ion-button>
 						</ion-buttons>
@@ -83,3 +86,5 @@
 		<ion-label>New entity</ion-label>
 	</ion-button>
 </ion-content>
+
+<wormhole-entrance sender="queries-page" tunnel="context-menu" [component]="isActiveView && contextMenuComponent"></wormhole-entrance>

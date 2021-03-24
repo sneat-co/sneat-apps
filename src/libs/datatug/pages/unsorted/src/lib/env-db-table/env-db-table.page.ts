@@ -10,7 +10,7 @@ import {ICommandResponseWithRecordset, IForeignKey} from '@sneat/datatug/models'
 import {DatatugNavContextService, DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {CellPopoverComponent} from '../../../../../components/datagrid/src/lib/cell-popover/cell-popover.component';
-import {IExecuteResponse, IRecordset} from '@sneat/datatug/dto';
+import {IExecuteResponse, IRecordsetResult} from '@sneat/datatug/dto';
 import {IGridDef} from '@sneat/grid';
 import {IEnvDbTableContext} from '@sneat/datatug/nav';
 
@@ -53,7 +53,7 @@ export class EnvDbTablePage implements AfterViewInit {
 	};
 
 	public step = 'initial';
-	public recordset: IRecordset;
+	public recordset: IRecordsetResult;
 
 	constructor(
 		private readonly datatugNavContextService: DatatugNavContextService,

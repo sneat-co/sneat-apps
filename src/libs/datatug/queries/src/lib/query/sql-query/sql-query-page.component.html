@@ -9,16 +9,22 @@
 		</ion-buttons>
 		<ion-title>Query</ion-title>
 		<ion-buttons slot="end">
-			<ion-button class="ion-padding-horizontal" slot="end" [fill]="isChanged ? 'solid' : 'clear'"
-						[color]="isChanged ? 'danger' : 'medium'" title="Edit" (click)="saveChanges()">
+			<ion-button class="ion-padding-horizontal" slot="end"
+						[disabled]="isSaving"
+						[fill]="isChanged ? 'solid' : 'clear'"
+						[color]="isChanged ? 'danger' : 'medium'"
+						title="Save changes"
+						(click)="saveChanges()"
+			>
 				<ion-icon name="save-outline" slot="start"></ion-icon>
-				<ion-label>Save</ion-label>
+				<ion-label *ngIf="!isSaving">Save</ion-label>
+				<ion-label *ngIf="isSaving">Saving...</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="light">
 
 	<ion-grid>
 		<ion-row>
@@ -51,10 +57,15 @@
 	</ion-grid>
 
 
-	<ion-segment [(ngModel)]="queryMode" color="medium">
+	<ion-segment [(ngModel)]="queryMode" color="dark">
 		<ion-segment-button value="text">Query text</ion-segment-button>
-		<ion-segment-button value="builder">Query builder</ion-segment-button>
-		<ion-segment-button value="parameters">Parameters</ion-segment-button>
+		<ion-segment-button value="builder">
+			<ion-label>
+				Query builder
+				<ion-badge color="medium" style="font-weight: normal; font-size: x-small" title="Is not implemented yet">PROTOTYPE</ion-badge>
+			</ion-label>
+
+		</ion-segment-button>
 	</ion-segment>
 
 	<ion-card *ngIf="queryMode === 'text'">
@@ -73,12 +84,6 @@
 	</ion-grid>
 
 	<ng-container *ngIf="queryMode === 'builder'">
-		<p style="text-align: center">
-			<ion-text class="ion-margin-start" color="medium">
-				<b>PROTOTYPE!</b> Query builder is not implemented yet.
-			</ion-text>
-		</p>
-
 		<div class="hidden-lg-up">
 			<div class="ion-padding-start ion-padding-end">
 				<ion-segment value="columns">
@@ -167,11 +172,9 @@
 	</ng-container>
 
 
-	<ion-card *ngIf="queryMode === 'parameters'">
-		<ion-item>
-			<ion-label color="medium">Parameters</ion-label>
-		</ion-item>
-		<datatug-input-parameters [paramDefs]="query?.parameters" (paramValues)="onParametersChanged($event)"></datatug-input-parameters>
+	<ion-card>
+		<datatug-input-parameters [paramDefs]="query?.parameters"
+								  (paramValues)="onParametersChanged($event)"></datatug-input-parameters>
 	</ion-card>
 
 	<div class="ion-padding-start ion-padding-end">

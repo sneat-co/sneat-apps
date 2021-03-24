@@ -41,7 +41,7 @@ export class ParameterLookupComponent implements OnInit {
 					try {
 						const itemWithRecordset = response.commands[0].items[0] as ICommandResponseWithRecordset
 						const recordset = itemWithRecordset.value;
-						this.grid = recordsetToGridDef(recordset);
+						this.grid = recordsetToGridDef({result: recordset});
 						console.log('this.grid:', this.grid);
 					} catch (e) {
 						this.errorLogger.logError(e, 'Failed to process lookup response');

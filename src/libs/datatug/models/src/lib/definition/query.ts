@@ -1,5 +1,6 @@
 import {IProjItemBrief} from './project';
 import {IParameterDef} from './parameter';
+import {IRecordsetDefinition} from "./recordset";
 
 export type FolderType = 'folder';
 export type QueryType = 'SQL' | 'GraphQL';
@@ -8,7 +9,7 @@ export interface IQueryBase extends IProjItemBrief {
 	type: FolderType | QueryType;
 }
 
-export interface IQueryFolder extends  IQueryBase {
+export interface IQueryFolder extends IQueryBase {
 	type: FolderType;
 	queries: QueryItem[];
 }
@@ -19,6 +20,7 @@ export interface IQueryDef extends IQueryBase {
 	draft?: boolean;
 	parameters?: IParameterDef[]
 	targets?: IQueryTarget[];
+	recordsets?: IRecordsetDefinition[];
 }
 
 export type QueryItem = IQueryDef | IQueryFolder;

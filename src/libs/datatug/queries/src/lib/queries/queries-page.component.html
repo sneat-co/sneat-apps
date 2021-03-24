@@ -12,8 +12,7 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content color="light">
 	<ion-segment [(ngModel)]="tab" class="ion-padding-start ion-padding-end">
 		<ion-segment-button value="all">All</ion-segment-button>
 		<ion-segment-button value="bookmarked">Bookmarked</ion-segment-button>
@@ -30,6 +29,9 @@
 				<ion-input [disabled]="!currentFolder" placeholder="Filter" [(ngModel)]="filter"
 						   (ionChange)="applyFilter()"></ion-input>
 				<ion-buttons>
+					<ion-button *ngIf="filter" (click)="filter = ''" color="medium">
+						<ion-icon name="close"></ion-icon>
+					</ion-button>
 					<ion-button (click)="setQueryType('SQL')" [color]="type === 'SQL' ? 'primary' : 'medium'">SQL</ion-button>
 					<ion-button (click)="setQueryType('HTTP')" [color]="type === 'HTTP' ? 'primary' : 'medium'">HTTP</ion-button>
 				</ion-buttons>
@@ -46,7 +48,8 @@
 				<ion-label>..</ion-label>
 			</ion-item>
 			<ng-container *ngIf="filter">
-				<ion-item *ngFor="let item of filteredItems">
+				<ion-item tappable *ngFor="let item of filteredItems" (click)="goQuery(item.query, 'edit', item.folders)">
+					<ion-icon name="document-text-outline" slot="start"></ion-icon>
 					<ion-label>
 						{{item.query.title || item.query.id}}
 						<p *ngIf="item.folders?.length">
@@ -57,6 +60,17 @@
 				</ion-item>
 			</ng-container>
 			<ng-container *ngIf="!filter && currentFolder?.queries">
+				<ion-item-divider>
+					<ion-label>Root</ion-label>
+					<ion-buttons slot="end">
+						<ion-button title="New query">
+							<ion-icon name="add-outline" slot="start"></ion-icon>
+						</ion-button>
+						<ion-button title="New folder">
+							<ion-icon name="add-circle-outline" slot="start"></ion-icon>
+						</ion-button>
+					</ion-buttons>
+				</ion-item-divider>
 				<ng-container *ngFor="let query of currentFolder.queries; trackBy: queryId">
 					<ng-container *ngIf="type === '*' || query.type === 'folder' || query.type === type">
 						<ion-item tappable *ngIf="query.type === 'folder'; else notFolder" (click)="cd(query.id)">

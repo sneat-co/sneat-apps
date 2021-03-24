@@ -6,16 +6,18 @@ import {IonicModule} from '@ionic/angular';
 
 import {EntitiesPageRoutingModule} from './entities-routing.module';
 
-import {EntitiesPage} from './entities.page';
+import {EntitiesPageComponent} from './entities-page.component';
+import {WormholeModule} from "@sneat/wormhole";
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		EntitiesPageRoutingModule
+		EntitiesPageRoutingModule,
+		WormholeModule
 	],
-	declarations: [EntitiesPage]
+	declarations: [EntitiesPageComponent]
 })
 export class EntitiesPageModule {
 }

@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {EntityPageRoutingModule} from './entity-routing.module';
 
-import {EntityPage} from './entity.page';
+import {EntityPageComponent} from './entity-page.component';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
 import {DatatugBoardModule} from '@sneat/datatug/board';
 
@@ -19,7 +19,7 @@ import {DatatugBoardModule} from '@sneat/datatug/board';
 		DatatugBoardModule,
 		DatatugComponentsDatagridModule,
 	],
-	declarations: [EntityPage]
+	declarations: [EntityPageComponent]
 })
 export class EntityPageModule {
 }

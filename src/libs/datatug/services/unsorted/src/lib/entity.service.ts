@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {GITHUB_REPO, IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectItemsByAgent} from './caching';
 import {RepoApiService} from '@sneat/datatug/services/repo';
-import {IRecord} from '@sneat/data';
+import {IRecord, mapToRecord} from '@sneat/data';
 import {IEntity} from '@sneat/datatug/models';
 
 @Injectable()
@@ -21,34 +21,42 @@ export class EntityService {
 		// console.log('EntityService.constructor()');
 	}
 
+
 	public getEntity = (repo: string, project: string, entityId: string): Observable<IRecord<IEntity>> => {
-		// do not auto-format
 		switch (repo) {
 			case GITHUB_REPO:
-				const [ghRepo, org] = project.split('@');
-				const url = `https://raw.githubusercontent.com/${org}/${ghRepo}/main/entities/${entityId}.json`;
-				return this.http.get<IEntity>(url)
-					.pipe(
-						mergeMap(data => {
-							if (!data.extends?.def) {
-								return of(data);
-							}
-							return this.http
-								.get<IEntity>(data.extends.def)
-								.pipe(
-									map(def => ({
-										...data,
-										fields: def.fields,
-										options: def.options,
-									})),
-								)
-						}),
-						map(data => ({id: entityId, data})),
-						tap(record => console.log('Entity record:', record)),
-					);
+				return this.getEntityFromGithub(project, entityId);
 			default:
-				return this.agentProvider.get(repo, '/entities/entity', {params: {project, id: entityId}});
+				return this.agentProvider
+					.get(repo, '/entities/entity', {params: {project, id: entityId}})
+					.pipe(
+						mapToRecord<IEntity>(),
+					);
 		}
+	}
+
+	private getEntityFromGithub(project: string, entityId: string): Observable<IRecord<IEntity>> {
+		const [ghRepo, org] = project.split('@');
+		const url = `https://raw.githubusercontent.com/${org}/${ghRepo}/main/entities/${entityId}.json`;
+		return this.http.get<IEntity>(url)
+			.pipe(
+				mergeMap(data => {
+					if (!data.extends?.def) {
+						return of(data);
+					}
+					return this.http
+						.get<IEntity>(data.extends.def)
+						.pipe(
+							map(def => ({
+								...data,
+								fields: def.fields,
+								options: def.options,
+							})),
+						)
+				}),
+				mapToRecord<IEntity>(),
+				tap(record => console.log('Entity record:', record)),
+			);
 	}
 
 	public getAllEntities = (from: IDatatugProjRef, forceReload?: boolean): Observable<IRecord<IEntity>[]> => {

@@ -7,7 +7,8 @@ import {
 	ICommandResponseWithRecordset,
 	IEnvDbServer,
 	IEnvironmentSummary,
-	IExecuteRequest, IParameter,
+	IExecuteRequest,
+	IParameter,
 	IProjEnv,
 	IQueryDef,
 	ISqlCommandRequest
@@ -23,7 +24,7 @@ import {
 	QueryContextSqlService,
 	SqlParser
 } from '@sneat/datatug/services/unsorted';
-import {IExecuteResponse, IRecordset} from '@sneat/datatug/dto';
+import {IExecuteResponse, IRecordset, IRecordsetResult} from '@sneat/datatug/dto';
 import {RandomId} from "@sneat/random";
 import {ISqlChanged} from "./intefaces";
 import {QueryEditorStateService} from "@sneat/datatug/queries";
@@ -38,6 +39,7 @@ interface IEnvState {
 	readonly title?: string;
 	readonly summary?: IEnvironmentSummary;
 	readonly isExecuting?: boolean;
+	readonly parameters?: IParameter[];
 	readonly recordsets?: IRecordset[];
 	readonly rowsCount?: number;
 	readonly dbServerId?: string;
@@ -80,6 +82,8 @@ export class SqlQueryPageComponent implements OnDestroy {
 	public activeEnv?: IEnvState;
 
 	public parameters: IParameter[];
+	public isSaving: boolean;
+
 
 	public onParametersChanged(parameters: IParameter[]): void {
 		console.log('onParametersChanged:', parameters);
@@ -184,7 +188,7 @@ export class SqlQueryPageComponent implements OnDestroy {
 				});
 				if (summary.environments?.length) {
 					const envId = summary.environments[0].id;
-					this.activeEnv = {id: envId};
+					this.activeEnv = {id: envId, parameters: this.parameters && [...this.parameters]};
 					this.getEnvData(currentProject, envId);
 					if (summary.dbModels?.length === 1) {
 						this.targetDbModelId = summary.dbModels[0].id;
@@ -215,6 +219,7 @@ export class SqlQueryPageComponent implements OnDestroy {
 							const envDbServer = envSummary.dbServers[0];
 							envState = {
 								...envState,
+								parameters: this.parameters && [...this.parameters],
 								dbServer: envDbServer,
 								dbServerId: this.getDbServerId(envDbServer),
 								catalogId: envDbServer.catalogs?.length && envDbServer.catalogs[0],
@@ -413,8 +418,10 @@ export class SqlQueryPageComponent implements OnDestroy {
 			namedParams: this.parameters?.length ? {} : undefined,
 		}
 
-		if (this.parameters?.length) {
-			this.parameters.forEach(p => {
+		const parameters = this.parameters && [...this.parameters];
+
+		if (parameters?.length) {
+			parameters.forEach(p => {
 				sqlCommandRequest.namedParams[p.id] = {type: p.type, value: p.value};
 			});
 		}
@@ -440,7 +447,13 @@ export class SqlQueryPageComponent implements OnDestroy {
 				next: response => {
 					console.log('response:', response);
 					this.response = response;
-					let recordsets: IRecordset[] = [];
+					let recordsets: IRecordsetResult[] = [];
+
+					const mapRecordset = (result: IRecordsetResult) => ({
+						result,
+						parameters,
+						def: this.query.recordsets?.length && this.query.recordsets[0]
+					});
 
 					const processCommandResponseItem = (item: ICommandResponseItem) => {
 						const recordset = (item as ICommandResponseWithRecordset).value;
@@ -448,7 +461,7 @@ export class SqlQueryPageComponent implements OnDestroy {
 							recordsets = [...recordsets, recordset];
 							this.updateEnvState({
 								...this.environments.find(e => e.id === envState.id),
-								recordsets,
+								recordsets: recordsets.map(mapRecordset),
 								isExecuting: false,
 							})
 						}
@@ -459,7 +472,7 @@ export class SqlQueryPageComponent implements OnDestroy {
 
 					envState = this.updateEnvState({
 						...envState,
-						recordsets: recordsets,
+						recordsets: recordsets.map(mapRecordset),
 						isExecuting: false,
 					});
 					if (this.activeEnv.id === envState.id) {
@@ -499,7 +512,27 @@ export class SqlQueryPageComponent implements OnDestroy {
 	}
 
 	public saveChanges(): void {
-		alert('Not implemented yet');
+		if (!this.isChanged) {
+			alert('Query does not require saving as is not changed yet');
+			return;
+		}
+		const query: IQueryDef = {
+			...this.query,
+			text: this.sql,
+		};
+		this.isSaving = true;
+		this.queriesService.updateQuery(this.currentProject, query)
+			.subscribe({
+				next: value => {
+					console.log('query updated', value);
+					this.query = query;
+					this.isSaving = false;
+				},
+				error: err => {
+					this.isSaving = false;
+					this.errorLogger.logError(err, 'Failed to save query');
+				},
+			});
 	}
 
 	public addJoin(sj: ICanJoin, joinType: 'inner' | 'right' | 'left'): void {

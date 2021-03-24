@@ -6,11 +6,9 @@ import {IQueryDef, QueryItem} from '@sneat/datatug/models';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 
 @Injectable()
-// @ts-ignore // TODO: why it's complaining about TS1219?
 export class QueriesService {
 	constructor(
-		// @ts-ignore // TODO: why it's complaining about TS1219?
-		@Inject(QUERY_PROJ_ITEM_SERVICE) private readonly projItemService: ProjectItemService,
+		@Inject(QUERY_PROJ_ITEM_SERVICE) private readonly projItemService: ProjectItemService<IQueryDef>,
 	) {
 	}
 
@@ -28,11 +26,11 @@ export class QueriesService {
 		return this.projItemService.createProjItem(projId, query);
 	}
 
-	public updateQuery(projId: string, query: IQueryDef): Observable<IQueryDef> {
-		return this.projItemService.updateProjItem(projId, query);
+	public updateQuery(target: IDatatugProjRef, query: IQueryDef): Observable<IQueryDef> {
+		return this.projItemService.updateProjItem(target, query);
 	}
 
 	public deleteQuery(projId: string, query: IQueryDef): Observable<IQueryDef> {
-		return this.projItemService.deleteProjItem(projId, query);
+		return this.projItemService.deleteProjItem(projId, query.id);
 	}
 }

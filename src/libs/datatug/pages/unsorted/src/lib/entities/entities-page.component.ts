@@ -1,7 +1,7 @@
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {NavController, ToastController} from '@ionic/angular';
+import {NavController, ToastController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {IEntity, IProjEntity} from '@sneat/datatug/models';
 import {IDatatugProjectContext} from '@sneat/datatug/nav';
@@ -10,14 +10,15 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {EntityService} from '@sneat/datatug/services/unsorted';
 import {IRecord} from '@sneat/data';
+import {ProjectContextMenuComponent} from "@sneat/datatug/components/project";
 
 type Entities = IRecord<IEntity>[];
 
 @Component({
 	selector: 'datatug-entities',
-	templateUrl: './entities.page.html',
+	templateUrl: './entities-page.component.html',
 })
-export class EntitiesPage implements OnDestroy {
+export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLeave {
 
 	entities: Entities;
 	currentProject: IDatatugProjectContext;
@@ -42,21 +43,40 @@ export class EntitiesPage implements OnDestroy {
 						repoId: currentProject.repoId,
 						projectId: currentProject.brief?.id
 					};
-					if (currentProject?.brief && !this.entities) {
-						if (currentProject?.summary?.entities) {
-							this.setEntities([
-								...currentProject.summary.entities.map(entity => ({
-									id: entity.id,
-									data: entity as IEntity,
-								}))
-							]);
-						}
-						// this.loadEntities();
-					}
+					this.loadEntities();
+					// if (currentProject?.brief && !this.entities) {
+					// 	if (currentProject?.summary?.entities) {
+					// 		this.setEntities([
+					// 			...currentProject.summary.entities.map(entity => ({
+					// 				id: entity.id,
+					// 				data: entity as IEntity,
+					// 			}))
+					// 		]);
+					// 	}
+					// 	// this.loadEntities();
+					// }
 				},
 				error: err => this.errorLogger.logError(err, 'Failed to get current project context'),
 			});
 	}
+
+	public isActiveView: boolean;
+	public contextMenuComponent = ProjectContextMenuComponent;
+
+	ionViewWillEnter(): void {
+		console.log('ionViewWillEnter()')
+		this.isActiveView = true;
+	}
+
+	ionViewDidEnter(): void {
+		console.log('ionViewDidEnter()')
+	}
+
+	ionViewDidLeave(): void {
+		console.log('ionViewDidLeave()')
+		this.isActiveView = false;
+	}
+
 
 	public get projectUrlId() {
 		return `${this.currentProject.brief.id}@${this.currentProject.repoId}`;

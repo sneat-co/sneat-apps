@@ -41,9 +41,9 @@ export interface IParameterLookup {
 	readonly keyFields: string[];
 }
 
-type ParameterValueType = ParameterType;
+export type ParameterValueType = ParameterType;
 
-type ParameterValue = boolean | boolean[] | string | string[] | number | number[];
+export type ParameterValue = boolean | boolean[] | string | string[] | number | number[];
 
 export interface IParameter {
 	id: string;

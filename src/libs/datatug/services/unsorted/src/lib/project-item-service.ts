@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {RepoApiService} from '@sneat/datatug/services/repo';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {IProjItemBrief} from '@sneat/datatug/models';
+import {getRepoUrl} from "@sneat/datatug/nav";
 
 const notImplemented = 'not implemented';
 
@@ -69,8 +70,13 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		return throwError(notImplemented + ` createProjItem(${projId}, ${JSON.stringify(projItem)}`);
 	}
 
-	public updateProjItem(projId: string, projItem: ProjItem): Observable<ProjItem> {
-		return throwError(notImplemented + ` updateProjItem(${projId}, ${JSON.stringify(projItem)}`);
+	public updateProjItem(target: IDatatugProjRef, projItem: ProjItem): Observable<ProjItem> {
+		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/update_${this.itemPath}`,  projItem,{
+			params: {
+				project: target.projectId,
+				query: projItem.id,
+			},
+		});
 	}
 
 	public deleteProjItem(projId: string, id: string): Observable<ProjItem> {

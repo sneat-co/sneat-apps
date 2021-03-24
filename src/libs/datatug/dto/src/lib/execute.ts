@@ -1,4 +1,4 @@
-import {ICommandResponse, NamedParams} from '@sneat/datatug/models'; // TODO: Why in different library?
+import {ICommandResponse, IParameter, IRecordsetDefinition, NamedParams} from '@sneat/datatug/models';
 
 export interface ISelectRequest {
 	proj: string;
@@ -19,10 +19,16 @@ export interface IExecuteResponse {
 
 export type RecordsetValue = string | number | boolean;
 
-export interface IRecordset {
+export interface IRecordsetResult {
 	duration: number;
 	columns: IRecordsetColumn[];
 	rows: RecordsetValue[][];
+}
+
+export interface IRecordset {
+	def?: IRecordsetDefinition;
+	result?: IRecordsetResult;
+	parameters?: IParameter[];
 }
 
 export type DbType = 'UNIQUEIDENTIFIER' | 'NVARCHAR' | string;
