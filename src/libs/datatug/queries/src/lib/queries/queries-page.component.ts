@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
+import {IProjItemBrief, IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IDatatugProjRef} from '@sneat/datatug/core';
@@ -16,7 +16,7 @@ interface FilteredItem {
 	query: IQueryDef;
 }
 
-interface IParentFolder extends  IQueryFolder {
+interface IParentFolder extends IQueryFolder {
 	path: string;
 }
 
@@ -36,10 +36,12 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	// noinspection SqlDialectInspection
 	public sql = 'select * from ';
 
-	public tab: 'all' | 'new' | 'popular' | 'recent' | 'bookmarked' = 'all'
+	public tab: 'shared' | 'new' | 'popular' | 'recent' | 'bookmarked' = 'shared'
 	public type: QueryType = '*';
 
 	public filter = '';
+
+	public readonly trackById = (_, v: IProjItemBrief) => v.id;
 
 	public get defaultBackHref(): string {
 		return this.currentProject ? `/repo/${getRepoId(this.currentProject.repoId)}/project/${this.currentProject.projectId}` : '/';
@@ -129,20 +131,19 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	private populateFilteredItems(path: string[], folder: IQueryFolder): void {
 		const f = this.filter.toLowerCase();
-		folder?.queries?.forEach(item => {
-			if (item.type === 'folder') {
-				this.populateFilteredItems([...path, item.id], item);
-			} else {
-				if ((item.title || item.id).toLowerCase().indexOf(f) >= 0) {
-					this.filteredItems.push({query: item, folders: path})
-				}
+		folder?.items?.forEach(item => {
+			if ((item.title || item.id).toLowerCase().indexOf(f) >= 0) {
+				this.filteredItems.push({query: item, folders: path})
 			}
 		})
+		folder?.folders?.forEach(subFolder => {
+			this.populateFilteredItems([...path, subFolder.id], subFolder);
+		});
 	}
 
 	cd(path: string): void {
 		console.log('cd()', path);
-		if(!path) {
+		if (!path) {
 			this.currentFolder = this.parentFolders[0];
 			this.parentFolders = [];
 			this.folderPath = '';
@@ -177,16 +178,11 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 					this.queriesSub.unsubscribe();
 				}
 				console.log('QueriesPage.constructor() => currentProject:', currentProject);
-				this.queriesSub = this.queriesService.getQueries(currentProject, '').subscribe({
-					next: queries => {
-						this.allQueries = queries;
-						this.currentFolder = this.getFolderAndUpdateParents(this.folderPath, {
-							id: '',
-							type: 'folder',
-							queries
-						})
+				this.queriesSub = this.queriesService.getQueriesFolder(currentProject, '').subscribe({
+					next: folder => {
+						this.allQueries = folder.items	;
+						this.currentFolder = this.getFolderAndUpdateParents(this.folderPath, folder)
 						this.displayCurrentFolder();
-						console.log('QueriesPage.constructor() => queries:', queries);
 					},
 					error: this.errorLogger.logErrorHandler('Failed to load queries'),
 				});
@@ -204,18 +200,18 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		while (folder && p.length) {
 			const id = p.pop();
 			this.parentFolders.push({...folder, path: p.join('/')});
-			folder = folder.queries.find(item => item.id === id && item.type === 'folder') as IQueryFolder;
+			folder = folder.folders.find(item => item.id === id) as IQueryFolder;
 		}
 		return folder;
 	}
 
 	private displayCurrentFolder(): void {
-		this.currentFolder?.queries?.sort((a, b) => {
+		this.currentFolder?.items?.sort((a, b) => {
 			const ac = a.title || a.id, bc = b.title || b.id;
-			if (a.type === 'folder' && b.type !== 'folder' || ac < bc) {
+			if (ac < bc) {
 				return -1;
 			}
-			if (a.type !== 'folder' && b.type === 'folder' || ac > bc) {
+			if (ac > bc) {
 				return 1;
 			}
 			return 0;
@@ -228,5 +224,6 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		if (!name) {
 			return;
 		}
+		this.queriesService.createFolder(this.currentProject, name)
 	}
 }

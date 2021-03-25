@@ -3,8 +3,7 @@ import {startWith, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {RepoApiService} from '@sneat/datatug/services/repo';
 import {IDatatugProjRef} from '@sneat/datatug/core';
-import {IProjItemBrief} from '@sneat/datatug/models';
-import {getRepoUrl} from "@sneat/datatug/nav";
+import {IProjItemBrief, IProjItemsFolder} from '@sneat/datatug/models';
 
 const notImplemented = 'not implemented';
 
@@ -29,26 +28,55 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	) {
 	}
 
-	public getProjItems(from: IDatatugProjRef, folder: string): Observable<ProjItem[]> {
-		console.log('getProjItems', from, folder);
+	public getProjItems(from: IDatatugProjRef, folderPath: string): Observable<ProjItem[]> {
+		console.log('getProjItems', from, folderPath);
 		return this.agentProvider.get<ProjItem[]>(from.repoId, `/${this.itemsPath}/all_${this.itemsPath}`, {
 			params: {
 				project: from.projectId,
-				folder
+				folder: folderPath,
 			}
 		}).pipe(
 			tap(items => {
-				this.cache = {};
-				if (items) {
-					items.forEach(this.putProjItemToCache)
-				}
+				const folder: IProjItemsFolder = {
+					id: folderPath && folderPath.split('/').pop() || folderPath,
+					items,
+				};
+				this.putProjItemsToCache(folder, folderPath);
 			}),
 		);
 	}
 
-	private putProjItemToCache = (item: ProjItem): void => {
-		if (item.id) {
-			this.cache[item.id] = item;
+	public getFolder<T extends IProjItemsFolder>(from: IDatatugProjRef, folderPath: string): Observable<T> {
+		console.log('getFolder', from, folderPath);
+		return this.agentProvider.get<T>(from.repoId, `/${this.itemsPath}/all_${this.itemsPath}`, {
+			params: {
+				project: from.projectId,
+				folder: folderPath,
+			}
+		}).pipe(
+			tap(folder => {
+				if (!this.cache) {
+					this.cache = {};
+				}
+				this.putProjItemsToCache(folder, folderPath);
+			}),
+		);
+	}
+
+	private putProjItemsToCache(folder: IProjItemsFolder, path: string): void {
+		if (!this.cache) {
+			this.cache = {};
+		}
+		if (folder?.items) {
+			const keyPrefix = path ? path + '/' : '';
+			folder.items.forEach(item => this.putProjItemToCache(item as ProjItem, keyPrefix + item.id))
+		}
+
+	}
+
+	private putProjItemToCache = (item: ProjItem, key: string): void => {
+		if (item.id || key) {
+			this.cache[item.id || key] = item;
 		}
 	}
 
@@ -66,15 +94,20 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		return o;
 	}
 
-	public createProjItem(projId: string, projItem: ProjItem): Observable<ProjItem> {
-		return throwError(notImplemented + ` createProjItem(${projId}, ${JSON.stringify(projItem)}`);
+	public createProjItem(target: IDatatugProjRef, projItem: ProjItem): Observable<ProjItem> {
+		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/create_${this.itemPath}`, projItem, {
+			params: {
+				project: target.projectId,
+				id: projItem.id,
+			},
+		});
 	}
 
 	public updateProjItem(target: IDatatugProjRef, projItem: ProjItem): Observable<ProjItem> {
-		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/update_${this.itemPath}`,  projItem,{
+		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/update_${this.itemPath}`, projItem, {
 			params: {
 				project: target.projectId,
-				query: projItem.id,
+				id: projItem.id,
 			},
 		});
 	}

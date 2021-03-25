@@ -2,7 +2,7 @@ import {ProjectItemService} from './project-item-service';
 import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {QUERY_PROJ_ITEM_SERVICE} from './queries.service.token';
-import {IQueryDef, QueryItem} from '@sneat/datatug/models';
+import {IQueryDef, IQueryFolder} from '@sneat/datatug/models';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 
 @Injectable()
@@ -12,18 +12,25 @@ export class QueriesService {
 	) {
 	}
 
-	public getQueries(from: IDatatugProjRef, folder: string): Observable<QueryItem[]> {
+	public getQueriesFolder(from: IDatatugProjRef, folderPath: string): Observable<IQueryFolder> {
 		// const v: IQueryDef[] = [{id: 'id1', type: 'SQL', title: 'Query 1', text: 'select  * from table1'}];
 		// return of(v);
-		return this.projItemService.getProjItems(from, folder);
+		return this.projItemService.getFolder<IQueryFolder>(from, folderPath);
 	}
 
 	public getQuery(from: IDatatugProjRef, id: string): Observable<IQueryDef> {
 		return this.projItemService.getProjItem(from, id);
 	}
 
-	public createQuery(projId: string, query: IQueryDef): Observable<IQueryDef> {
-		return this.projItemService.createProjItem(projId, query);
+	public createFolder(target: IDatatugProjRef, name: string): Observable<IQueryDef> {
+		const folder: IQueryFolder = {
+			id: name,
+		}
+		return this.projItemService.createProjItem(target, folder as unknown as IQueryDef);
+	}
+
+	public createQuery(target: IDatatugProjRef, query: IQueryDef): Observable<IQueryDef> {
+		return this.projItemService.createProjItem(target, query);
 	}
 
 	public updateQuery(target: IDatatugProjRef, query: IQueryDef): Observable<IQueryDef> {

@@ -60,6 +60,12 @@ export interface IProjItemBrief extends IOptionallyTitled {
 	id: string;
 }
 
+export interface IProjItemsFolder {
+	id: string;
+	folders?: IProjItemsFolder[];
+	items?: IProjItemBrief[];
+}
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IProjBoard extends IProjItemBrief {
 	//
