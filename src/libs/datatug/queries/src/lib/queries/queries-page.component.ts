@@ -9,10 +9,15 @@ import {IDatatugProjRef} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
 import {ProjectContextMenuComponent} from "@sneat/datatug/components/project";
+import {getRepoId} from "@sneat/datatug/nav";
 
 interface FilteredItem {
 	folders: string[];
 	query: IQueryDef;
+}
+
+interface IParentFolder extends  IQueryFolder {
+	path: string;
 }
 
 type QueryType = 'SQL' | 'GraphQL' | 'HTTP' | '*'
@@ -36,6 +41,10 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	public filter = '';
 
+	public get defaultBackHref(): string {
+		return this.currentProject ? `/repo/${getRepoId(this.currentProject.repoId)}/project/${this.currentProject.projectId}` : '/';
+	}
+
 	public currentProject: IDatatugProjRef;
 
 	public readonly codemirrorOptions = {
@@ -50,7 +59,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	public allQueries: QueryItem[];
 	public currentFolder: IQueryFolder;
-	public parentFolders: IQueryFolder[] = [];
+	public parentFolders: IParentFolder[] = [];
 
 	public filteredItems: FilteredItem[];
 
@@ -133,7 +142,11 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	cd(path: string): void {
 		console.log('cd()', path);
-		if (path === '..') {
+		if(!path) {
+			this.currentFolder = this.parentFolders[0];
+			this.parentFolders = [];
+			this.folderPath = '';
+		} else if (path === '..') {
 			const p = this.folderPath.split('/');
 			p.pop()
 			this.folderPath = p.join('/');
@@ -190,7 +203,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		const p = path.split('/').reverse();
 		while (folder && p.length) {
 			const id = p.pop();
-			this.parentFolders.push(folder);
+			this.parentFolders.push({...folder, path: p.join('/')});
 			folder = folder.queries.find(item => item.id === id && item.type === 'folder') as IQueryFolder;
 		}
 		return folder;
@@ -210,5 +223,10 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		this.applyFilter();
 	}
 
-	public queryId = (_, query: IQueryDef) => query.id;
+	newFolder(): void {
+		const name = prompt('Name of a new folder?');
+		if (!name) {
+			return;
+		}
+	}
 }

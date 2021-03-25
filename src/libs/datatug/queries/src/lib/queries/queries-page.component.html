@@ -1,7 +1,9 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/"></ion-back-button>
+			<ion-back-button
+					[defaultHref]="defaultBackHref"
+			></ion-back-button>
 		</ion-buttons>
 		<ion-title>Queries</ion-title>
 		<ion-buttons slot="end">
@@ -36,6 +38,25 @@
 					<ion-button (click)="setQueryType('HTTP')" [color]="type === 'HTTP' ? 'primary' : 'medium'">HTTP</ion-button>
 				</ion-buttons>
 			</ion-item>
+			<ion-item-divider *ngIf="!filter && currentFolder?.queries">
+				<ion-label *ngIf="!parentFolders?.length">Root</ion-label>
+				<ion-badge *ngFor="let parentFolder of parentFolders" color="light" tappable (click)="cd(parentFolder.path)" style="font-weight: normal">
+					<ion-icon name="folder-open-outline"></ion-icon>
+					{{parentFolder.id|| 'root'}}
+				</ion-badge>
+				<ng-container *ngIf="currentFolder.id">
+					&nbsp;/&nbsp;
+					<ion-badge color="light" >{{currentFolder.id}}</ion-badge>
+				</ng-container>
+				<ion-buttons slot="end">
+					<ion-button title="New query">
+						<ion-icon name="add-outline" slot="start"></ion-icon>
+					</ion-button>
+					<ion-button title="New folder" (click)="newFolder()">
+						<ion-icon name="add-circle-outline" slot="start"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item-divider>
 			<!--			<ion-item>-->
 			<!--				<ion-label>Tags:</ion-label>-->
 			<!--				<ion-badge slot="end" color="secondary">-->
@@ -43,7 +64,7 @@
 			<!--					<ion-icon name="close" tappable></ion-icon>-->
 			<!--				</ion-badge>-->
 			<!--			</ion-item>-->
-			<ion-item tappable *ngIf="folderPath" (click)="cd('..')">
+			<ion-item tappable *ngIf="parentFolders?.length" (click)="cd('..')">
 				<ion-icon name="folder-open-outline" slot="start"></ion-icon>
 				<ion-label>..</ion-label>
 			</ion-item>
@@ -60,17 +81,6 @@
 				</ion-item>
 			</ng-container>
 			<ng-container *ngIf="!filter && currentFolder?.queries">
-				<ion-item-divider>
-					<ion-label>Root</ion-label>
-					<ion-buttons slot="end">
-						<ion-button title="New query">
-							<ion-icon name="add-outline" slot="start"></ion-icon>
-						</ion-button>
-						<ion-button title="New folder">
-							<ion-icon name="add-circle-outline" slot="start"></ion-icon>
-						</ion-button>
-					</ion-buttons>
-				</ion-item-divider>
 				<ng-container *ngFor="let query of currentFolder.queries; trackBy: queryId">
 					<ng-container *ngIf="type === '*' || query.type === 'folder' || query.type === type">
 						<ion-item tappable *ngIf="query.type === 'folder'; else notFolder" (click)="cd(query.id)">
