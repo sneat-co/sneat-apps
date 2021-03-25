@@ -22,11 +22,11 @@ export class QueriesService {
 		return this.projItemService.getProjItem(from, id);
 	}
 
-	public createFolder(target: IDatatugProjRef, name: string): Observable<IQueryDef> {
-		const folder: IQueryFolder = {
-			id: name,
-		}
-		return this.projItemService.createProjItem(target, folder as unknown as IQueryDef);
+	public createQueryFolder(target: IDatatugProjRef, path: string, id: string): Observable<IQueryFolder> {
+		return this.projItemService.createProjItem(target, {
+			path,
+			id
+		} as unknown as IQueryDef, 'folder') as unknown as Observable<IQueryFolder>;
 	}
 
 	public createQuery(target: IDatatugProjRef, query: IQueryDef): Observable<IQueryDef> {
@@ -37,7 +37,11 @@ export class QueriesService {
 		return this.projItemService.updateProjItem(target, query);
 	}
 
-	public deleteQuery(projId: string, query: IQueryDef): Observable<IQueryDef> {
-		return this.projItemService.deleteProjItem(projId, query.id);
+	public deleteQuery(target: IDatatugProjRef, folder: string, query: IQueryDef): Observable<void> {
+		return this.projItemService.deleteProjItem(target, folder ? folder + '/' + query.id : query.id);
+	}
+
+	public deleteQueryFolder(target: IDatatugProjRef, path: string): Observable<void> {
+		return this.projItemService.deleteProjItem(target, path, 'folder');
 	}
 }

@@ -48,6 +48,8 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	}
 
 	public currentProject: IDatatugProjRef;
+	public isDeletingFolders: string[] = [];
+
 
 	public readonly codemirrorOptions = {
 		lineNumbers: false,
@@ -180,7 +182,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 				console.log('QueriesPage.constructor() => currentProject:', currentProject);
 				this.queriesSub = this.queriesService.getQueriesFolder(currentProject, '').subscribe({
 					next: folder => {
-						this.allQueries = folder.items	;
+						this.allQueries = folder.items;
 						this.currentFolder = this.getFolderAndUpdateParents(this.folderPath, folder)
 						this.displayCurrentFolder();
 					},
@@ -206,6 +208,15 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	}
 
 	private displayCurrentFolder(): void {
+		this.currentFolder?.folders?.sort((a, b) => {
+			if (a.id < b.id) {
+				return -1;
+			}
+			if (a.id > b.id) {
+				return 1;
+			}
+			return 0;
+		});
 		this.currentFolder?.items?.sort((a, b) => {
 			const ac = a.title || a.id, bc = b.title || b.id;
 			if (ac < bc) {
@@ -224,6 +235,46 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		if (!name) {
 			return;
 		}
-		this.queriesService.createFolder(this.currentProject, name)
+		const parentFolder = this.currentFolder;
+		this.queriesService.createQueryFolder(this.currentProject, this.folderPath, name).subscribe({
+			next: folder => {
+				const existing = parentFolder.folders.find(f => f.id === name);
+				if (existing) {
+					existing.folders = folder.folders;
+					existing.items = folder.items;
+				} else {
+					parentFolder.folders.push(folder);
+				}
+				this.cd(this.folderPath ? this.folderPath + '/' + name : name);
+			},
+			error: this.errorLogger.logErrorHandler('Failed to create new folder'),
+		});
+	}
+
+	public deleteFolder(): void {
+		if (!this.folderPath) {
+			alert('The root folder is non deletable');
+			return
+		}
+		if (!confirm(`Are you sure you want to delete this folder?\n\n  /${this.folderPath}`)) {
+			return;
+		}
+		const folder = this.currentFolder;
+		const folderPath = this.folderPath;
+		const parent = this.parentFolders[this.parentFolders.length - 1];
+		this.isDeletingFolders.push(folderPath)
+		this.queriesService.deleteQueryFolder(this.currentProject, this.folderPath).subscribe({
+			next: () => {
+				this.isDeletingFolders = this.isDeletingFolders.filter(f => f !== folderPath);
+				parent.folders = parent.folders.filter(f => f.id !== folder.id);
+				if (this.folderPath === folderPath && this.currentFolder.id === folder.id) {
+					this.cd('..');
+				}
+			},
+			error: err => {
+				this.isDeletingFolders = this.isDeletingFolders.filter(f => f !== folderPath);
+				this.errorLogger.logError(err, 'Failed to delete queries folder')
+			},
+		})
 	}
 }

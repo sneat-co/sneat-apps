@@ -188,9 +188,9 @@
 						<ion-col style="margin-top: 0.5rem">
 							{{env.title || env.id}}
 							<ion-badge color="light"
-									   *ngIf="env.recordsets?.length === 1 && env.recordsets[0].rows?.length"
+									   *ngIf="env.recordsets?.length === 1 && env.recordsets[0].result.rows?.length"
 							>
-								{{env.recordsets[0].rows.length}}
+								{{env.recordsets[0].result.rows.length}}
 							</ion-badge>
 						</ion-col>
 						<ion-col>

@@ -94,8 +94,8 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		return o;
 	}
 
-	public createProjItem(target: IDatatugProjRef, projItem: ProjItem): Observable<ProjItem> {
-		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/create_${this.itemPath}`, projItem, {
+	public createProjItem(target: IDatatugProjRef, projItem: ProjItem, itemPath = this.itemPath): Observable<ProjItem> {
+		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/create_${itemPath}`, projItem, {
 			params: {
 				project: target.projectId,
 				id: projItem.id,
@@ -112,8 +112,13 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		});
 	}
 
-	public deleteProjItem(projId: string, id: string): Observable<ProjItem> {
-		return throwError(notImplemented + ` deleteProjItem(${projId}, ${id}`);
+	public deleteProjItem(target: IDatatugProjRef, id: string, itemPath = this.itemPath): Observable<void> {
+		return this.agentProvider.delete(target.repoId, `/${this.itemsPath}/delete_${itemPath}`, {
+			params: {
+				project: target.projectId,
+				id,
+			},
+		});
 	}
 }
 

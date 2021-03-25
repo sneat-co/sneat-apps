@@ -40,7 +40,7 @@
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
-			<ion-item-divider *ngIf="!filter && currentFolder?.items">
+			<ion-item-divider *ngIf="!filter && currentFolder">
 				<ion-label *ngIf="!parentFolders?.length">Root</ion-label>
 				<ion-badge *ngFor="let parentFolder of parentFolders" color="light" tappable
 						   (click)="cd(parentFolder.path)" style="font-weight: normal">
@@ -52,6 +52,9 @@
 					<ion-badge color="light">{{currentFolder.id}}</ion-badge>
 				</ng-container>
 				<ion-buttons slot="end">
+					<ion-button title="Delete folder" *ngIf="folderPath" [disabled]="isDeletingFolders.includes(this.folderPath)" (click)="deleteFolder()">
+						<ion-icon name="trash"></ion-icon>
+					</ion-button>
 					<ion-button title="New query">
 						<ion-icon name="add-outline" slot="start"></ion-icon>
 					</ion-button>
