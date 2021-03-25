@@ -3,14 +3,18 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ActivatedRoute} from '@angular/router';
-import {IonInput, NavController, ViewDidLeave, ViewWillEnter} from '@ionic/angular';
+import {IonInput, NavController, ViewWillEnter} from '@ionic/angular';
 import {
-  IDatatugProjectBrief, IOptionallyTitled, IProjBoard,
-  IProjDbModelBrief,
-  IDatatugProjectSummary, IProjEntity,
-  IProjEnv, IProjItemBrief,
-  ProjectItem,
-  ProjectItemType
+	IDatatugProjectBrief,
+	IDatatugProjectSummary,
+	IOptionallyTitled,
+	IProjBoard,
+	IProjDbModelBrief,
+	IProjEntity,
+	IProjEnv,
+	IProjItemBrief,
+	ProjectItem,
+	ProjectItemType
 } from '@sneat/datatug/models';
 import {IDatatugProjectContext} from '@sneat/datatug/nav';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
@@ -19,15 +23,12 @@ import {EntityService, EnvironmentService, SchemaService} from '@sneat/datatug/s
 import {routingParamProjectId} from '@sneat/datatug/routes';
 import {CreateNamedRequest} from '@sneat/datatug/dto';
 import {IRecord} from '@sneat/data';
-import {ProjectContextMenuComponent} from "@sneat/datatug/components/project";
 
 @Component({
 	selector: 'datatug-project',
 	templateUrl: './project-page.component.html',
 })
 export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
-
-	public contextMenuComponent = ProjectContextMenuComponent;
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	readonly Environment = ProjectItem.Environment as const;
@@ -87,8 +88,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	isActiveView = false;
 
 	ionViewWillEnter(): void {
-        this.isActiveView = true;
-    }
+		this.isActiveView = true;
+	}
 
 	ionViewDidLeave(): void {
 		this.isActiveView = false;

@@ -13,10 +13,10 @@ interface IProjectTopLevelPage {
 }
 
 @Component({
-	selector: 'datatug-project-context-menu',
-	templateUrl: './project-context-menu.component.html',
+	selector: 'datatug-project-menu-top',
+	templateUrl: './project-menu-top.component.html',
 })
-export class ProjectContextMenuComponent implements OnDestroy {
+export class ProjectMenuTopComponent implements OnDestroy {
 
 	public readonly projTopLevelPages: IProjectTopLevelPage[] = [
 		{

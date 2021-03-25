@@ -1,11 +1,42 @@
 import {Inject, Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
+import {IEnvDbServer, IEnvironmentSummary, IParameter} from "@sneat/datatug/models";
+import {IRecordset} from "@sneat/datatug/dto";
+
+export interface ISqlQueryTarget {
+	repository: string; // Should be removed?
+	project: string;	// Should be removed?
+	model?: string;
+	driver?: string;
+	server?: string;
+	catalog?: string;
+}
+
 
 export interface IQueryState {
 	readonly id: string;
+	readonly isNew?: boolean;
 	readonly title?: string;
+	readonly text: string;
+	readonly activeEnv?: IQueryEnvState;
+	readonly environments?: IQueryEnvState[]
 }
+
+export interface IQueryEnvState {
+	readonly id: string;
+	readonly title?: string;
+	readonly summary?: IEnvironmentSummary;
+	readonly isExecuting?: boolean;
+	readonly parameters?: IParameter[];
+	readonly recordsets?: IRecordset[];
+	readonly rowsCount?: number;
+	readonly dbServerId?: string;
+	readonly dbServer?: IEnvDbServer;
+	readonly catalogId?: string;
+	readonly error?: unknown;
+}
+
 
 export interface IQueryEditorState {
 	readonly currentQueryId?: string;
@@ -34,16 +65,20 @@ export class QueryEditorStateService {
 		try {
 			let changed = false;
 			let state = $state.value || {currentQueryId: id, activeQueries: []};
-			const queryState = state?.activeQueries?.find(q => q.id === id)
+			let queryState = state?.activeQueries?.find(q => q.id === id)
 			if (!queryState) {
+				queryState = {id, text: undefined}
 				state = {
 					...state,
-					activeQueries: state.activeQueries ? [{id}, ...state.activeQueries] : [{id}],
+					activeQueries: [queryState, ...(state.activeQueries || [])],
 				}
 				changed = true;
 			}
 			if (state.currentQueryId !== id) {
-				state = {...state, currentQueryId: id};
+				state = {
+					...state,
+					currentQueryId: id,
+				};
 				changed = true;
 			}
 			if (changed) {
@@ -71,6 +106,7 @@ export class QueryEditorStateService {
 	}
 
 	updateQueryState(queryState: IQueryState): void {
+		console.log('updateQueryState', queryState);
 		$state.next({
 			...$state.value,
 			activeQueries: $state.value?.activeQueries.map(q => q.id === queryState.id ? queryState : q)

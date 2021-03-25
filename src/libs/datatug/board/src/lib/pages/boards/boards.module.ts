@@ -6,18 +6,22 @@ import {IonicModule} from '@ionic/angular';
 
 import {DataboardsPageRoutingModule} from './boards-routing.module';
 
-import {BoardsPage} from './boards-page.component';
+import {BoardsPageComponent} from './boards-page.component';
 import {SneatCardListModule} from '@sneat/components/card-list';
+import {BoardServiceModule} from "../../board.service.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DataboardsPageRoutingModule,
-    SneatCardListModule,
-  ],
-  declarations: [BoardsPage]
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		BoardServiceModule,
+		DataboardsPageRoutingModule,
+		SneatCardListModule,
+	],
+	declarations: [
+		BoardsPageComponent,
+	],
 })
 export class BoardsPageModule {
 }

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {IForeignKey, IPrimaryKey, IDatatugProjectSummary, IReferencedBy, ITableFull} from '@sneat/datatug/models';
 import {map, mergeMap} from 'rxjs/operators';
 import {PrivateTokenStoreService} from "@sneat/auth";
+import {ISqlQueryTarget} from "@sneat/datatug/queries";
 
 @Injectable()
 export class TableService {
@@ -47,14 +48,6 @@ export class TableService {
       mergeMap( request => this.httpClient.get<ITableFull>(request.url, {headers: request.headers})),
     );
   }
-}
-
-export interface ISqlQueryTarget {
-  repository: string;
-  project: string;
-  driver: string;
-  server: string;
-  catalog: string;
 }
 
 export interface ITableRequest extends ISqlQueryTarget {

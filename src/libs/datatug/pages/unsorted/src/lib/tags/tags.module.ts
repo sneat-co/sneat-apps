@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {TagsPageRoutingModule} from './tags-routing.module';
 
-import {TagsPage} from './tags.page';
+import {TagsPageComponent} from './tags-page.component';
 
 @NgModule({
 	imports: [
@@ -15,7 +15,7 @@ import {TagsPage} from './tags.page';
 		IonicModule,
 		TagsPageRoutingModule
 	],
-	declarations: [TagsPage]
+	declarations: [TagsPageComponent]
 })
 export class TagsPageModule {
 }

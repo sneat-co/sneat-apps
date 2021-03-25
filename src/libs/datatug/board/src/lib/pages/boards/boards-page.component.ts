@@ -7,10 +7,10 @@ import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/servic
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 @Component({
-	selector: 'datatug-databoards',
+	selector: 'datatug-boards',
 	templateUrl: './boards-page.component.html',
 })
-export class BoardsPage implements OnInit {
+export class BoardsPageComponent implements OnInit {
 
 	tab = 'shared';
 	noItemsText: string;

@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {EnvironmentsPage} from './environments.page';
+import {EnvironmentsPageComponent} from './environments-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: EnvironmentsPage
+		component: EnvironmentsPageComponent
 	}
 ];
 

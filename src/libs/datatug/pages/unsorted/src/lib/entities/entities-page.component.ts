@@ -10,7 +10,6 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {EntityService} from '@sneat/datatug/services/unsorted';
 import {IRecord} from '@sneat/data';
-import {ProjectContextMenuComponent} from "@sneat/datatug/components/project";
 
 type Entities = IRecord<IEntity>[];
 
@@ -61,7 +60,6 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 	}
 
 	public isActiveView: boolean;
-	public contextMenuComponent = ProjectContextMenuComponent;
 
 	ionViewWillEnter(): void {
 		console.log('ionViewWillEnter()')

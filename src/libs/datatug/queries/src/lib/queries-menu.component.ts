@@ -1,5 +1,4 @@
 import {Component, Inject} from "@angular/core";
-// noinspection ES6PreferShortImport
 import {IQueryState, QueryEditorStateService} from "./query-editor-state-service";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 

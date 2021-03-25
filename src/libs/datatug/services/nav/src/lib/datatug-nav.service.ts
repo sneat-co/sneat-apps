@@ -55,7 +55,8 @@ export class DatatugNavService {
 		this.navForward(url, {state: {projEntity}}, 'Failed to navigate to entity page');
 	}
 
-	goQuery(projContext: IDatatugProjRef, query: IQueryDef, queryFullId: string, action?: 'execute' | 'edit'): void {
+	goQuery(projContext: IDatatugProjRef, query: IQueryDef, action?: 'execute' | 'edit'): void {
+		console.log('goQuery', query.id);
 		const url = this.projectPageUrl(projContext, 'query');
 		this.navForward(url, {
 			state: {
@@ -63,7 +64,7 @@ export class DatatugNavService {
 				action,
 			},
 			queryParams: {
-				id: queryFullId,
+				id: query.id,
 			}
 		}, 'Failed to navigate to query page');
 	}

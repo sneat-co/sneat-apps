@@ -8,7 +8,6 @@ import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
-import {ProjectContextMenuComponent} from "@sneat/datatug/components/project";
 import {getRepoId} from "@sneat/datatug/nav";
 
 interface FilteredItem {
@@ -28,8 +27,6 @@ type QueryType = 'SQL' | 'GraphQL' | 'HTTP' | '*'
 	styleUrls: ['./queries-page.component.scss'],
 })
 export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave {
-
-	public contextMenuComponent = ProjectContextMenuComponent;
 
 	@ViewChild('codemirrorComponent', {static: true}) public codemirrorComponent: CodemirrorComponent;
 
@@ -108,10 +105,14 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		console.log('QueriesPage.ngOnInit()')
 	}
 
-	goQuery(query: IQueryDef, action?: 'execute' | 'edit', folders?: string[]): void {
-		const folderPath = folders ? folders.join('/') + '/' : this.folderPath ? this.folderPath + '/' : '';
-		const id = folderPath + query.id;
-		this.dataTugNavService.goQuery(this.currentProject, query, id, action);
+	goQuery(q: IQueryDef, action?: 'execute' | 'edit', folders?: string[]): void {
+		console.log('goQuery', q, folders, this.folderPath);
+		const folderPath = folders?.length ? folders.join('/') : this.folderPath ?? '';
+
+		if (folderPath) {
+			q = {...q, id: folderPath + '/' +q.id};
+		}
+		this.dataTugNavService.goQuery(this.currentProject, q, action);
 	}
 
 	reloadQueries(): void {

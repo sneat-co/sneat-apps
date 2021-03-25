@@ -6,7 +6,7 @@ import {NavController} from '@ionic/angular';
 import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {IDatatugProjectBase, IDatatugProjectSummary, IDatatugUser} from '@sneat/datatug/models';
-import {DatatugNavContextService, DatatugNavService, ProjectTopLevelPage} from '@sneat/datatug/services/nav';
+import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
 import {RepoService} from '@sneat/datatug/services/repo';

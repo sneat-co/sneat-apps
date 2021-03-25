@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {WidgetsPageRoutingModule} from './widgets-routing.module';
 
-import {WidgetsPage} from './widgets.page';
+import {WidgetsPageComponent} from './widgets-page.component';
 
 @NgModule({
 	imports: [
@@ -15,7 +15,7 @@ import {WidgetsPage} from './widgets.page';
 		IonicModule,
 		WidgetsPageRoutingModule
 	],
-	declarations: [WidgetsPage]
+	declarations: [WidgetsPageComponent]
 })
 export class WidgetsPageModule {
 }

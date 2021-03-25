@@ -5,9 +5,9 @@ import {IDatatugProjectSummary} from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-environments',
-	templateUrl: './environments.page.html',
+	templateUrl: './environments-page.component.html',
 })
-export class EnvironmentsPage {
+export class EnvironmentsPageComponent {
 
 	public project: IDatatugProjectSummary;
 

@@ -9,12 +9,14 @@ import {BoardPageRoutingModule} from './board-routing.module';
 import {BoardPageComponent} from './board-page.component';
 import {QueryParamsService} from '@sneat/datatug/core';
 import {DatatugBoardModule} from '../../datatug-board.module';
+import {BoardServiceModule} from "../../board.service.module";
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
+		BoardServiceModule,
 		BoardPageRoutingModule,
 		DatatugBoardModule,
 	],

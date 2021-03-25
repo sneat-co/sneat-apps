@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {EnvironmentsPageRoutingModule} from './environments-routing.module';
 
-import {EnvironmentsPage} from './environments.page';
+import {EnvironmentsPageComponent} from './environments-page.component';
 import {SneatCardListModule} from '@sneat/components/card-list';
 
 @NgModule({
@@ -17,7 +17,7 @@ import {SneatCardListModule} from '@sneat/components/card-list';
 		EnvironmentsPageRoutingModule,
 		SneatCardListModule,
 	],
-	declarations: [EnvironmentsPage]
+	declarations: [EnvironmentsPageComponent]
 })
 export class EnvironmentsPageModule {
 }

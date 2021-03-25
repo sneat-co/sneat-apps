@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {TagsPage} from './tags.page';
+import {TagsPageComponent} from './tags-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: TagsPage
+		component: TagsPageComponent
 	}
 ];
 

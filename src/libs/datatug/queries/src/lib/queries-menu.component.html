@@ -1,22 +1,25 @@
-<datatug-project-context-menu></datatug-project-context-menu>
-
-<ion-card *ngIf="queries">
-	<ion-item-divider color="light">
-		<ion-label>Active queries</ion-label>
-		<ion-buttons slot="end">
-			<ion-button title="Close all active queries">
-				<ion-icon name="close"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
-	<ion-item *ngFor="let query of queries" tappable (click)="setActiveQuery(query.id)" [detail]="query.id === currentQueryId">
-		<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined">
-			{{query.title || query.id}}
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium">
-				<ion-icon name="close"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-</ion-card>
+<ion-item-divider color="light" *ngIf="queries?.length">
+	<ion-label color="medium">Active Queries</ion-label>
+	<ion-buttons slot="end">
+		<ion-button color="medium" title="Close all active queries">
+			<ion-icon name="close"></ion-icon>
+		</ion-button>
+	</ion-buttons>
+</ion-item-divider>
+<ion-item *ngFor="let query of queries"
+		  tappable
+		  (click)="setActiveQuery(query.id)"
+>
+	<ion-icon name="terminal-outline" slot="start"></ion-icon>
+	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query|json">
+		{{query.title || query.id}}
+	</ion-label>
+	<ion-buttons slot="end">
+		<ion-button color="medium">
+			<ion-icon name="close"></ion-icon>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
+<ion-item *ngIf="!queries?.length">
+	<ion-label color="medium">No active queries</ion-label>
+</ion-item>
