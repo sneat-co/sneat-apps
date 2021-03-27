@@ -6,7 +6,7 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-<ng-container *ngIf="parameters?.length">
+<ng-container *ngIf="parameters?.length; else noParameters">
 	<ion-item *ngFor="let param of parameters">
 		<ion-label>
 			{{param.def.id}}
@@ -20,3 +20,8 @@
 		</ion-buttons>
 	</ion-item>
 </ng-container>
+<ng-template #noParameters>
+	<ion-item>
+		<ion-label color="medium">No input parameters</ion-label>
+	</ion-item>
+</ng-template>

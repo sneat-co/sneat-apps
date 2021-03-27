@@ -9,15 +9,15 @@
 		<ion-title>Query</ion-title>
 		<ion-buttons slot="end">
 			<ion-button class="ion-padding-horizontal" slot="end"
-						[disabled]="isSaving"
+						[disabled]="queryState?.isSaving"
 						[fill]="isChanged ? 'solid' : 'clear'"
 						[color]="isChanged ? 'danger' : 'medium'"
 						title="Save changes"
 						(click)="saveChanges()"
 			>
 				<ion-icon name="save-outline" slot="start"></ion-icon>
-				<ion-label *ngIf="!isSaving">Save</ion-label>
-				<ion-label *ngIf="isSaving">Saving...</ion-label>
+				<ion-label *ngIf="!queryState?.isSaving">Save</ion-label>
+				<ion-label *ngIf="queryState?.isSaving">Saving...</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -29,7 +29,8 @@
 		<ion-row>
 			<ion-col size="8">
 				<ion-item>
-					<ion-input [placeholder]="queryNamePlaceholder" [value]="queryState?.title" (ionChange)="queryTitleChanged($event)"
+					<ion-input [placeholder]="queryNamePlaceholder" [value]="queryState?.title"
+							   (ionChange)="queryTitleChanged($event)"
 							   readonly="false"></ion-input>
 					<!--			<ion-select interface="popover" slot="end">-->
 					<!--				<ion-select-option value="q1">Query #1</ion-select-option>-->
@@ -42,11 +43,14 @@
 			<ion-col size="4">
 				<ion-item>
 					<ion-label color="medium">Target</ion-label>
-					<ion-select *ngIf="currentProject?.summary?.dbModels"
-								interface="popover" [(ngModel)]="targetDbModelId" placeholder="DB model">
+					<ion-select interface="popover" placeholder="DB model"
+								[disabled]="!currentProject?.summary?.dbModels?.length"
+								[value]="queryState?.targetDbModel?.id"
+					>
 						<ion-select-option
-								*ngFor="let dbModel of currentProject.summary.dbModels"
-								[value]="dbModel.id">
+								*ngFor="let dbModel of currentProject?.summary?.dbModels"
+								[value]="dbModel.id"
+						>
 							{{dbModel.title || dbModel.id}}
 						</ion-select-option>
 					</ion-select>
@@ -70,7 +74,7 @@
 	</ion-segment>
 
 	<ion-card *ngIf="editorTab === 'text'">
-		<datatug-sql [sql]="sql" (sqlChanged)="sqlChanged($event)" [lineNumbers]="true" [readonly]="false">
+		<datatug-sql [sql]="sql" (sqlChanged)="onSqlChanged($event)" [lineNumbers]="true" [readonly]="false">
 		</datatug-sql>
 	</ion-card>
 
@@ -172,15 +176,14 @@
 
 	</ng-container>
 
-
 	<ion-card>
-		<datatug-input-parameters [paramDefs]="query?.parameters"
+		<datatug-input-parameters [paramDefs]="queryState?.def?.parameters"
 								  (paramValues)="onParametersChanged($event)"></datatug-input-parameters>
 	</ion-card>
 
 	<div class="ion-padding-start ion-padding-end">
-		<ion-segment [value]="queryState.activeEnv?.id" (ionChange)="envChanged($event)">
-			<ion-segment-button [value]="env.id" *ngFor="let env of queryState.environments">
+		<ion-segment [value]="activeEnv?.id" (ionChange)="envChanged($event)">
+			<ion-segment-button [value]="env.id" *ngFor="let env of queryState?.environments">
 				<ion-grid>
 					<ion-row>
 						<ion-col style="margin-top: 0.5rem">
@@ -209,16 +212,16 @@
 
 
 	<ion-grid>
-		<ion-row *ngIf="queryState.activeEnv?.id !== '=='">
+		<ion-row *ngIf="activeEnv?.id !== '=='">
 			<ion-col size="5">
 				<ion-item>
 					<ion-label color="medium">@ Server</ion-label>
-					<ion-select *ngIf="queryState.activeEnv?.summary?.dbServers?.length"
+					<ion-select *ngIf="activeEnv?.summary?.dbServers?.length"
 								interface="popover"
-								[value]="queryState.activeEnv.dbServerId"
+								[value]="activeEnv.dbServerId"
 								(ionChange)="serverChanged($event)"
 					>
-						<ion-select-option *ngFor="let dbServer of queryState.activeEnv.summary.dbServers"
+						<ion-select-option *ngFor="let dbServer of activeEnv.summary.dbServers"
 										   [value]="getDbServerId(dbServer)">
 							{{dbServer.driver}} : {{dbServer.host}}
 						</ion-select-option>
@@ -228,9 +231,9 @@
 			<ion-col size="5">
 				<ion-item>
 					<ion-label color="medium">DB</ion-label>
-					<ion-select [value]="queryState.activeEnv?.catalogId" *ngIf="activeEnv?.dbServer" interface="popover"
+					<ion-select [value]="activeEnv?.catalogId" *ngIf="activeEnv?.dbServer" interface="popover"
 								(ionChange)="catalogChanged($event)">
-						<ion-select-option *ngFor="let catalog of queryState.activeEnv.dbServer.catalogs" [value]="catalog">
+						<ion-select-option *ngFor="let catalog of activeEnv.dbServer.catalogs" [value]="catalog">
 							{{catalog}}
 						</ion-select-option>
 					</ion-select>
@@ -238,7 +241,7 @@
 			</ion-col>
 			<ion-col size="2">
 				<ion-button expand="full"
-							[disabled]="!queryState.activeEnv || queryState.activeEnv.isExecuting"
+							[disabled]="!activeEnv || activeEnv.isExecuting"
 							(click)="executeQuery()"
 							style="text-transform: none"
 				>

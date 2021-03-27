@@ -13,7 +13,8 @@ export interface IQueryDef extends IProjItemBrief {
 	type: QueryType
 	text: string;
 	draft?: boolean;
-	parameters?: IParameterDef[]
+	parameters?: IParameterDef[];
+	dbModel?: string;
 	targets?: IQueryTarget[];
 	recordsets?: IRecordsetDefinition[];
 }

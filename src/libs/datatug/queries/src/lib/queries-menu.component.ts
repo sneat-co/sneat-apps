@@ -9,7 +9,7 @@ import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 export class QueriesMenuComponent {
 	currentQueryId: string;
 
-	queries: IQueryState[];
+	queries: ReadonlyArray<IQueryState>;
 
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,

@@ -4,12 +4,14 @@ import {QueriesMenuComponent} from "./queries-menu.component";
 import {IonicModule} from "@ionic/angular";
 import {FormsModule} from "@angular/forms";
 import {QueryEditorStateService} from "./query-editor-state-service";
+import {QueriesServiceModule} from "./queries.service.module";
 
 @NgModule({
 	imports: [
 		CommonModule,
 		IonicModule,
 		FormsModule,
+		QueriesServiceModule,
 	],
 	declarations: [
 		QueriesMenuComponent,
