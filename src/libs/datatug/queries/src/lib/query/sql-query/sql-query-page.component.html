@@ -42,7 +42,10 @@
 			</ion-col>
 			<ion-col size="4">
 				<ion-item>
-					<ion-label color="medium">Target</ion-label>
+					<ion-label
+							[color]="!queryState?.targetDbModel?.id && currentProject?.summary?.dbModels?.length ? 'danger': 'medium'">
+						Target
+					</ion-label>
 					<ion-select interface="popover" placeholder="DB model"
 								[disabled]="!currentProject?.summary?.dbModels?.length"
 								[value]="queryState?.targetDbModel?.id"
@@ -215,22 +218,34 @@
 		<ion-row *ngIf="activeEnv?.id !== '=='">
 			<ion-col size="5">
 				<ion-item>
-					<ion-label color="medium">@ Server</ion-label>
-					<ion-select *ngIf="activeEnv?.summary?.dbServers?.length"
-								interface="popover"
-								[value]="activeEnv.dbServerId"
-								(ionChange)="serverChanged($event)"
-					>
-						<ion-select-option *ngFor="let dbServer of activeEnv.summary.dbServers"
-										   [value]="getDbServerId(dbServer)">
-							{{dbServer.driver}} : {{dbServer.host}}
-						</ion-select-option>
-					</ion-select>
+					<ion-label [color]="activeEnv && !activeEnv.dbServerId ? 'danger' : 'medium'">@ Server</ion-label>
+					<ion-input *ngIf="activeEnv && !activeEnv.summary"
+							   readonly style="text-align: right" placeholder="loading..."
+					></ion-input>
+					<ng-container *ngIf="activeEnv?.summary">
+						<ng-container
+								*ngIf="!activeEnv.summary.dbServers?.length; else hasDbServers">
+							<ion-input readonly *ngIf="activeEnv && !activeEnv.catalogId"
+									   placeholder="No known catalogs"></ion-input>
+						</ng-container>
+						<ng-template #hasDbServers>
+							<ion-select interface="popover" [value]="activeEnv?.dbServerId"
+										(ionChange)="serverChanged($event)">
+								<ion-select-option *ngFor="let dbServer of activeEnv.summary?.dbServers"
+												   [value]="getDbServerId(dbServer)">
+									{{dbServer.driver}} : {{dbServer.host}}
+								</ion-select-option>
+							</ion-select>
+						</ng-template>
+					</ng-container>
 				</ion-item>
 			</ion-col>
 			<ion-col size="5">
 				<ion-item>
-					<ion-label color="medium">DB</ion-label>
+					<ion-label [color]="activeEnv && !activeEnv.catalogId ? 'danger' : 'medium'">DB</ion-label>
+					<ion-input *ngIf="activeEnv && !activeEnv.summary"
+							   readonly style="text-align: right" placeholder="loading..."
+					></ion-input>
 					<ion-select [value]="activeEnv?.catalogId" *ngIf="activeEnv?.dbServer" interface="popover"
 								(ionChange)="catalogChanged($event)">
 						<ion-select-option *ngFor="let catalog of activeEnv.dbServer.catalogs" [value]="catalog">

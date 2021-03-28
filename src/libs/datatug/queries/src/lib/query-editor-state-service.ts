@@ -206,7 +206,13 @@ export class QueryEditorStateService {
 
 	private readonly updateQueryStateWithEnvs = (queryState: IQueryState): IQueryState => ({
 		...queryState,
-		environments: this.currentProject?.summary?.environments?.map(env => queryState.environments?.find(qEnv => qEnv.id === env.id) || env)
+		environments: this.currentProject?.summary?.environments?.map(env => {
+				const qEnv = queryState.environments?.find(qEnv => qEnv.id === env.id);
+				if (!qEnv) {
+					return env;
+				}
+				return qEnv;
+			})
 			?? queryState.environments,
 	});
 

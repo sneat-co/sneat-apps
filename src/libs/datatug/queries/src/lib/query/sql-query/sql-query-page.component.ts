@@ -168,6 +168,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 			.pipe(takeUntil(this.destroyed))
 			.subscribe(currentEnv => {
 				try {
+					console.log('trackCurrentEnv() => ', currentEnv);
 					if (!currentEnv) {
 						return;
 					}
@@ -177,14 +178,21 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 					}
 					this.envId = id
 
-					const activeEnv = this.queryState.environments?.find(env => env.id === id) || {
+					let activeEnv = this.queryState.environments?.find(env => env.id === id) || {
 						id,
 						summary: currentEnv.summary
 					};
+					if (!activeEnv.summary && currentEnv.summary) {
+						activeEnv = {...activeEnv, summary: currentEnv.summary};
+					}
+					let environments: ReadonlyArray<IQueryEnvState> = this.queryState.environments || [activeEnv];
+					if (!environments.find(item => item.id == id)) {
+						environments = [...environments, activeEnv];
+					}
 					this.updateQueryState({
 						...this.queryState,
 						activeEnv,
-						environments: this.queryState.environments || [activeEnv],
+						environments,
 					})
 				} catch (e) {
 					this.errorLogger.logError(e, 'Failed to process change of current environment');
@@ -290,7 +298,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 							catalogId: envDbServer.catalogs?.length && envDbServer.catalogs[0],
 						}
 					}
-					this.updateEnvState(envState);
+					this.updateEnvState(envState, this.getQueryState(queryId));
 				},
 				error: this.errorLogger.logErrorHandler('Failed to get env summary'),
 			});
@@ -417,7 +425,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 		this.updateEnvState({
 			...this.activeEnv,
 			dbServerId: this.envDbServerId,
-		});
+		}, this.queryState);
 	}
 
 	catalogChanged(event: CustomEvent): void {
@@ -428,7 +436,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 		this.updateEnvState({
 			...this.activeEnv,
 			catalogId: event.detail.value,
-		});
+		}, this.queryState);
 	}
 
 	envChanged(event: CustomEvent): void {
@@ -521,7 +529,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 			...this.queryState.activeEnv,
 			isExecuting: true,
 			recordsets: undefined,
-		});
+		}, this.queryState);
 		this.coordinator.execute(this.projectContext.repoId, request)
 			.pipe(
 				takeUntil(this.destroyed),
@@ -545,7 +553,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 								...this.queryState.environments.find(e => e.id === envState.id),
 								recordsets: recordsets.map(mapRecordset),
 								isExecuting: false,
-							});
+							}, this.getQueryState(queryId));
 						}
 					}
 					response.commands.forEach(command => {
@@ -556,14 +564,14 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 						...envState,
 						recordsets: recordsets.map(mapRecordset),
 						isExecuting: false,
-					});
+					}, this.getQueryState(queryId));
 				},
 				error: err => {
 					envState = this.updateEnvState({
 						...envState,
 						isExecuting: false,
 						error: err,
-					});
+					}, this.getQueryState(queryId));
 					this.errorLogger.logError(err, 'Failed to execute query');
 				},
 			})
@@ -573,17 +581,16 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 		return this.queryEditorStateService.getQueryState(id);
 	}
 
-	private updateEnvState(envState: IQueryEnvState): IQueryEnvState {
+	private updateEnvState(envState: IQueryEnvState, queryState: IQueryState): IQueryEnvState {
 		console.log('updateEnvState', envState);
 		if (!envState.id) {
 			throw new Error('!envState.id');
 		}
-		// if (this.environments.find(env => env.id === envState.id)) {
-		//
-		// } else {
-		// 	this.environments.push(envState);
-		// }
-		this.changeDetector.markForCheck();
+		if (queryState.activeEnv.id == envState.id) {
+			queryState = {...queryState, activeEnv: envState};
+		}
+		queryState = {...queryState, environments: queryState.environments.map(env => env.id === envState.id ? envState : env)};
+		this.updateQueryState(queryState);
 		return envState;
 	}
 
