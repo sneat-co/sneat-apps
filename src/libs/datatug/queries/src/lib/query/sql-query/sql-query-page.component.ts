@@ -44,6 +44,7 @@ import {ViewDidEnter} from "@ionic/angular";
 })
 export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 
+	public showQueryBuilder: boolean;
 	public editorTab: 'text' | 'builder' = 'text';
 
 	public queryState: IQueryState = {id: undefined, text: ''};
@@ -145,6 +146,10 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 						targetDbModel: dbModels[0],
 					});
 				}
+			}
+			if (queryState.activeEnv?.id && queryState.activeEnv.id !== this.envId) {
+				this.envId = queryState?.activeEnv.id;
+				this.datatugNavContextService.setCurrentEnvironment(this.envId);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process query editor state change');
@@ -448,8 +453,6 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 		if (this.activeEnv && !this.activeEnv.summary) {
 			this.getEnvData(this.currentProject, this.activeEnv.id);
 		}
-
-		this.datatugNavContextService.setCurrentEnvironment(this.envId);
 		this.updateUrl();
 	}
 
@@ -503,7 +506,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 			type: 'SQL',
 			driver: this.activeEnv.dbServer.driver,
 			db: this.activeEnv.catalogId,
-			env: this.envId,
+			env: this.activeEnv?.id,
 			text: this.sql,
 			namedParams: this.parameters?.length ? {} : undefined,
 		}

@@ -11,7 +11,7 @@
 		  (click)="setActiveQuery(query.id)"
 >
 	<ion-icon name="terminal-outline" slot="start"></ion-icon>
-	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query|json">
+	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query.text">
 		{{query.title || query.id}}
 	</ion-label>
 	<ion-buttons slot="end">

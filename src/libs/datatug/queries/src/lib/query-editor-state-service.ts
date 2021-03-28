@@ -140,6 +140,9 @@ export class QueryEditorStateService {
 			if (state.text === undefined) {
 				state = {...state, text: def.text};
 			}
+			if (state.title === undefined) {
+				state = {...state, title: def.title};
+			}
 			state = this.updateQueryStateWithEnvs(state);
 			if (!state.targetDbModel) {
 				state =  {
