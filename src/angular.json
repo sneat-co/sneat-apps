@@ -409,6 +409,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+			"allowedCommonJsDependencies": ["@ctrl/ngx-codemirror"],
             "outputPath": "dist/apps/datatug",
             "index": "apps/datatug/src/index.html",
             "main": "apps/datatug/src/main.ts",
