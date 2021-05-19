@@ -28,7 +28,7 @@ jobs:
             version: 6.2.5
             run_install: true
 
-      - build: pnpm run nx build datatug
+      build: pnpm run nx build datatug
 
 #      - uses: FirebaseExtended/action-hosting-deploy@v0
 #        with:
