@@ -23,10 +23,10 @@ jobs:
             restore-keys: |
               ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
 
-          - uses: pnpm/action-setup@v2.0.1
-            with:
-              version: 6.2.5
-              run_install: true
+        - uses: pnpm/action-setup@v2.0.1
+          with:
+            version: 6.2.5
+            run_install: true
 
       - build: pnpm run nx build datatug
 
