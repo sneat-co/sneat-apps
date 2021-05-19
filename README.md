@@ -19,3 +19,24 @@ A suit of open source apps that help in work & personal life.
 - [Capacitor](https://capacitorjs.com/) - a cross-platform native runtime for web apps.
 - [nx](https://nx.dev/) by [Nrwl](https://nrwl.io/) - extensible dev tools for monorepos
 
+## How to run
+
+Preferable way is not to use global `nx` but to use:
+```shell
+pnpm run nx serve <APP_NAME>
+```
+
+Shorter way:
+```shell
+pnpx nx serve <APP_NAME>
+```
+
+To make it even shorter first create a shortcut:
+```shell
+alias pnx="pnpm run nx --"
+```
+
+Then run as:
+```shell
+pnx serve <APP_NAME>
+```
