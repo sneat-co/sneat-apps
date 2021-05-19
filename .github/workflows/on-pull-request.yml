@@ -30,7 +30,11 @@ jobs:
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.2.5
-          run_install: true
+          run_install: false
+
+      - name: PNPM install
+        run: pnpm install
+        working-directory: ./src
 
       - name: NX build
         run: pnpm run nx build datatug
