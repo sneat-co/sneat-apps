@@ -28,6 +28,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
 
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node_modules
+        with:
+          path: ~/src/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+
       - name: Install PNPM
         uses: pnpm/action-setup@v2.0.1
         with:
