@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {IBoardDef, IProjBoard} from '@sneat/datatug/models';
-import {RepoApiService} from '@sneat/datatug/services/repo';
+import {StoreApiService} from '@sneat/datatug/services/repo';
 
 @Injectable()
 export class BoardService {
 
 	constructor(
-		private readonly repoProviderService: RepoApiService,
+		private readonly repoProviderService: StoreApiService,
 	) {
 	}
 
 	getBoard(repoId: string, project: string, boardId: string): Observable<IBoardDef> {
 		if (!repoId) {
-			return throwError('required parameter "repo" has not been provided');
+			return throwError('required parameter "store" has not been provided');
 		}
 		if (!project) {
 			return throwError('required parameter "project" has not been provided');

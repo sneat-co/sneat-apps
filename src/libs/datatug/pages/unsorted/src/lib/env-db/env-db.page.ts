@@ -161,7 +161,7 @@ export class EnvDbPage implements AfterViewInit {
 				this.datatugNavService.goTable({
 					target: {projectId: this.projectId, repoId: 'localhost:8989'},
 					env: this.env.id,
-					// repo: this.a
+					// store: this.a
 					db: this.envDb.id,
 					schema: data.t.schema,
 					name: data.t.name,

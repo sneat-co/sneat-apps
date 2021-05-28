@@ -3,7 +3,7 @@ import {filter} from 'rxjs/operators';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 
 export class ProjectItemsByAgent<T> {
-	// private readonly byAgent: {[repo: string]: {[id: string]: T[]}} = {};
+	// private readonly byAgent: {[store: string]: {[id: string]: T[]}} = {};
 	public readonly byRepo$: { [repo: string]: { [id: string]: BehaviorSubject<T[]> } } = {};
 
 	public getItems$(from: IDatatugProjRef): Observable<T[]> {

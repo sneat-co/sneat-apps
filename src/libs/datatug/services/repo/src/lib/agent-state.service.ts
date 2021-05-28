@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {RepoApiService} from "./repo-api.service";
+import {StoreApiService} from "./store-api.service";
 import {interval, Observable, of, throwError} from "rxjs";
 import {catchError, map, startWith, switchMap} from "rxjs/operators";
 
@@ -22,7 +22,7 @@ export class AgentStateService {
 	private watchers: { [repoId: string]: Observable<IAgentState> } = {};
 
 	constructor(
-		private repoApiService: RepoApiService,
+		private repoApiService: StoreApiService,
 	) {
 	}
 

@@ -33,7 +33,7 @@ export class DatatugNavService {
 			throw new Error("storeId is a required parameter");
 		}
 		const repoId = getStoreId(storeId);
-		this.navRoot(['store', storeId], 'Failed to navigate to repo page');
+		this.navRoot(['store', storeId], 'Failed to navigate to store page');
 	}
 
 	goProject(storeId: string, projectId: string, page?: ProjectTopLevelPage): void {

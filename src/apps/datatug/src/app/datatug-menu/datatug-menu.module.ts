@@ -5,7 +5,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {DatatugMenuComponent} from './datatug-menu.component';
 import {DatatugServicesProjectModule} from '@sneat/datatug/services/project';
-import {DatatugServicesRepoModule} from '@sneat/datatug/services/repo';
+import {DatatugServicesStoreModule} from '@sneat/datatug/services/repo';
 import {WormholeModule} from '@sneat/wormhole';
 import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
 // import {TableMetaCardModule} from '../table-meta-card/table-meta-card.module';
@@ -18,7 +18,7 @@ import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project"
 		FormsModule,
 		CommonModule,
 		RouterModule,
-		DatatugServicesRepoModule,
+		DatatugServicesStoreModule,
 		DatatugServicesProjectModule,
 		WormholeModule,
 		DatatugComponentsProjectModule,

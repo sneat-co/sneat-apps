@@ -74,7 +74,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 				)
 				.subscribe(p => {
 					[this.repoId, this.projectId] = p.split('/');
-					console.log('this.repo, this.projectId', p, this.repoId, this.projectId);
+					console.log('this.store, this.projectId', p, this.repoId, this.projectId);
 					this.route.paramMap
 						.subscribe(params => {
 							this.boardId = params.get(routingParamBoard);

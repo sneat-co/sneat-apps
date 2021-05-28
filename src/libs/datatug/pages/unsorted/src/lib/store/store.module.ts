@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {StorePageRoutingModule} from './repo-routing.module';
-import {RepoPageComponent} from './repo-page.component';
+import {StorePageRoutingModule} from './store-routing.module';
+import {StorePageComponent} from './store-page.component';
 import {SneatErrorCardModule} from '@sneat/components/error-card';
 import {IonicModule} from '@ionic/angular';
 
@@ -12,7 +12,7 @@ import {IonicModule} from '@ionic/angular';
 		StorePageRoutingModule,
 		SneatErrorCardModule,
 	],
-	declarations: [RepoPageComponent]
+	declarations: [StorePageComponent]
 })
-export class RepoPageModule {
+export class StorePageModule {
 }

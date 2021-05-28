@@ -21,7 +21,7 @@ export class EnvironmentPageComponent {
 	dbCols = [
 		{field: 'id', sortable: true, filter: true},
 	];
-	public defaultBackUrl = '/repo/localhost:8989';
+	public defaultBackUrl = '/store/localhost:8989';
 	private envId: string;
 
 	constructor(

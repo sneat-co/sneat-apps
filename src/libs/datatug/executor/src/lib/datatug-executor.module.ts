@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {DatatugServicesRepoModule} from '@sneat/datatug/services/repo';
+import {DatatugServicesStoreModule} from '@sneat/datatug/services/repo';
 import {Coordinator} from './coordinator';
 
 @NgModule({
   imports: [
-    DatatugServicesRepoModule,
+    DatatugServicesStoreModule,
   ],
   providers: [
     Coordinator,

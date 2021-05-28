@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {getStoreUrl} from '@sneat/datatug/nav';
 
 @Injectable()
-export class RepoApiService {
+export class StoreApiService {
 
 	constructor(
 		private readonly httpClient: HttpClient,
@@ -17,26 +17,26 @@ export class RepoApiService {
 	}
 
 	public get<T>(repoId: string, path: string, options?: IHttpRequestOptions): Observable<T> {
-		const url = RepoApiService.getUrl(repoId, path);
+		const url = StoreApiService.getUrl(repoId, path);
 		// console.log('url', url);
 		return this.httpClient.get<T>(url, options);
 	}
 
 	// noinspection JSUnusedGlobalSymbols
 	public post<T>(repoId: string, path: string, body: any, options?: IHttpRequestOptions): Observable<T> {
-		const url = RepoApiService.getUrl(repoId, path);
+		const url = StoreApiService.getUrl(repoId, path);
 		return this.httpClient.post<T>(url, body, options);
 	}
 
 	// noinspection JSUnusedGlobalSymbols
 	public put<T>(repoId: string, path: string, body: any, options?: IHttpRequestOptions): Observable<T> {
-		const url = RepoApiService.getUrl(repoId, path);
+		const url = StoreApiService.getUrl(repoId, path);
 		return this.httpClient.put<T>(url, body, options);
 	}
 
 	// noinspection JSUnusedGlobalSymbols
 	public delete<T>(repoId: string, path: string, options?: IHttpRequestOptions) {
-		const url = RepoApiService.getUrl(repoId, path);
+		const url = StoreApiService.getUrl(repoId, path);
 		return this.httpClient.delete<T>(url, options);
 	}
 }

@@ -96,7 +96,7 @@ export class DatatugMenuComponent implements OnDestroy {
 				this.nav.goStore(value);
 			}
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to handle repo switch');
+			this.errorLogger.logError(e, 'Failed to handle store switch');
 		}
 	}
 
@@ -214,7 +214,7 @@ export class DatatugMenuComponent implements OnDestroy {
 						this.projects = projects;
 					},
 					error: err => this.errorLogger.logError(err,
-						'Failed to get list of projects for an repo from menu component', {show: false}),
+						'Failed to get list of projects for an store from menu component', {show: false}),
 				});
 		}
 	}

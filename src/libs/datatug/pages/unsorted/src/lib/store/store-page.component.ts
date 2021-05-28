@@ -11,9 +11,9 @@ import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 
 @Component({
 	selector: 'datatug-repo',
-	templateUrl: './repo-page.component.html',
+	templateUrl: './store-page.component.html',
 })
-export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter {
+export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter {
 
 	public storeId: string;
 	public projects: IDatatugProjectBase[];
@@ -67,7 +67,7 @@ export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewD
 				this.storeId = repoId;
 				this.processStoreId(repoId)
 			},
-			error: this.errorLogger.logErrorHandler('Failed to track repo id'),
+			error: this.errorLogger.logErrorHandler('Failed to track store id'),
 		});
 	}
 

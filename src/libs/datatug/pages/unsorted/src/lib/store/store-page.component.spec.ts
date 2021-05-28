@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {RepoPageComponent} from './repo-page.component';
+import {StorePageComponent} from './store-page.component';
 
 describe('StorePageComponent', () => {
-	let component: RepoPageComponent;
-	let fixture: ComponentFixture<RepoPageComponent>;
+	let component: StorePageComponent;
+	let fixture: ComponentFixture<StorePageComponent>;
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [RepoPageComponent],
+			declarations: [StorePageComponent],
 			imports: [IonicModule.forRoot()]
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(RepoPageComponent);
+		fixture = TestBed.createComponent(StorePageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	}));

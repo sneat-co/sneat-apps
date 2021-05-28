@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'datatug-services-repo',
+  displayName: 'datatug-services-store',
   preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../../../coverage/libs/datatug/services/repo',
+  coverageDirectory: '../../../../coverage/libs/datatug/services/store',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

@@ -8,8 +8,8 @@ export const datatugRoutes: Routes = [
 		loadChildren: () => import('@sneat/datatug/pages/home').then(m => m.DatatugPagesHomeModule),
 	},
 	{
-		path: 'repo/:' + routingParamRepoId,
-		loadChildren: () => import('./datatug-routing-agent').then(m => m.DatatugStoreRoutingModule),
+		path: 'store/:' + routingParamRepoId,
+		loadChildren: () => import('./datatug-routing-store').then(m => m.DatatugStoreRoutingModule),
 		// ...canLoad(),
 	},
 	{

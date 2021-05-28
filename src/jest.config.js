@@ -23,7 +23,7 @@ module.exports = {
     '<rootDir>/libs/auth-login-page',
     '<rootDir>/libs/datatug/services/nav',
     '<rootDir>/libs/datatug/services/project',
-    '<rootDir>/libs/datatug/services/repo',
+    '<rootDir>/libs/datatug/services/store',
     '<rootDir>/libs/datatug/dto',
     '<rootDir>/libs/grid',
     '<rootDir>/libs/datatug/pages/unsorted',
