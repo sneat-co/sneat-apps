@@ -3,7 +3,6 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} from 'rxjs/operators';
 import {
-	getRepoUrl,
 	IDatatugNavContext,
 	IDatatugProjectContext,
 	IEnvContext,
@@ -17,7 +16,7 @@ import {AppContextService, GITHUB_REPO} from '@sneat/datatug/core';
 import {EnvironmentService} from "@sneat/datatug/services/unsorted";
 
 const
-	reRepo = /\/repo\/(.+?)($|\/)/,
+	reStore = /\/store\/(.+?)($|\/)/,
 	reProj = /\/project\/(.+?)($|\/)/,
 	reEnv = /\/env\/(.+?)(?:\/|$)/,
 	reEnvDb = /\/env\/\w+\/db\/(.+?)(?:\/|$)/,
@@ -29,8 +28,8 @@ export class DatatugNavContextService {
 	private readonly $currentContext = new BehaviorSubject<IDatatugNavContext>({});
 	public readonly currentContext = this.$currentContext.asObservable();
 
-	private readonly $currentRepoId = new BehaviorSubject<string | undefined>(undefined);
-	public readonly currentRepoId = this.$currentRepoId.asObservable().pipe(distinctUntilChanged());
+	private readonly $currentStoreId = new BehaviorSubject<string | undefined>(undefined);
+	public readonly currentStoreId = this.$currentStoreId.asObservable().pipe(distinctUntilChanged());
 
 	private readonly $currentProj = new BehaviorSubject<IDatatugProjectContext | undefined>(undefined);
 	public readonly currentProject = this.$currentProj.asObservable();
@@ -110,7 +109,7 @@ export class DatatugNavContextService {
 			return;
 		}
 		if (projectContext) {
-			this.$currentRepoId.next(projectContext?.repoId);
+			this.$currentStoreId.next(projectContext?.repoId);
 		}
 		this.$currentProj.next(projectContext);
 		if (!projectContext) {
@@ -181,7 +180,7 @@ export class DatatugNavContextService {
 	private processUrl(url: string): void {
 		console.log('DatatugNavContextService: NavigationEnd =>', url);
 		try {
-			this.processRepo(url);
+			this.processStore(url);
 			this.processProject(url);
 			this.processEnvironment(url);
 			this.processEnvDb(url);
@@ -191,13 +190,11 @@ export class DatatugNavContextService {
 		}
 	}
 
-	private processRepo(url: string): void {
-		const m = url.match(reRepo);
-		console.log('processRepo', url, m);
-		// console.log('processAgent', m);
-		const repoId = m && m[1];
-		const repoUrl = getRepoUrl(repoId);
-		this.$currentRepoId.next(repoUrl);
+	private processStore(url: string): void {
+		const m = url.match(reStore);
+		console.log('processStore', url, m);
+		const storeId = m && m[1];
+		this.$currentStoreId.next(storeId);
 	}
 
 	private processProject(url: string): void {
@@ -208,15 +205,20 @@ export class DatatugNavContextService {
 			return;
 		}
 		const currentProject = this.$currentProj.value;
-		const currentRepoId = this.$currentRepoId.value;
+		const currentRepoId = this.$currentStoreId.value;
 		if (!currentProject || currentProject.brief?.id !== id || currentProject.repoId !== currentRepoId) {
 			let storeType: DataTugProjStoreType;
 			if (currentRepoId === GITHUB_REPO) {
-				storeType = currentRepoId;
+				storeType = GITHUB_REPO;
 			} else {
 				storeType = 'agent';
 			}
-			this.setCurrentProject({brief: {id, store: {type: storeType}}, repoId: currentRepoId, projectId: id});
+			const projectContext: IDatatugProjectContext = {
+				brief: {id, store: {type: storeType}},
+				repoId: currentRepoId,
+				projectId: id,
+			};
+			this.setCurrentProject(projectContext);
 		}
 	}
 

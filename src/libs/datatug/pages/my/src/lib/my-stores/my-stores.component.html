@@ -9,7 +9,7 @@
 		</ion-buttons>
 	</ion-item>
 
-	<ion-item tappable routerLink="/repo/http-localhost:8989" routerDirection="forward">
+	<ion-item tappable routerLink="/store/http-localhost:8989" routerDirection="forward">
 		<ion-icon name="terminal-outline" slot="start"></ion-icon>
 		<ion-label>DataTug app @ localhost:8989</ion-label>
 		<ion-buttons slot="end">
@@ -26,7 +26,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item tappable (click)="goRepo('cloud')">
+	<ion-item tappable (click)="goStore('cloud')">
 		<ion-icon name="boat-outline" slot="start" color="primary"></ion-icon>
 		<ion-label color="primary">DataTug cloud</ion-label>
 		<ion-buttons slot="end">
@@ -36,7 +36,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item tappable (click)="goRepo('github.com')">
+	<ion-item tappable (click)="goStore('github.com')">
 		<ion-icon name="logo-github" slot="start"></ion-icon>
 		<ion-label>GitHub</ion-label>
 		<ion-buttons slot="end">
@@ -49,7 +49,7 @@
 
 	<ng-container *ngIf="stores; else loadingUser">
 		<ng-container *ngIf="stores?.length; else noEntries">
-			<ion-item *ngFor="let store of stores" tappable (click)="goRepo(store.url)">
+			<ion-item *ngFor="let store of stores" tappable (click)="goStore(store.url)">
 				<ion-icon name="terminal-outline" slot="start"></ion-icon>
 				{{store.title}}
 				<ion-badge color="light" slot="end">{{store.type}}</ion-badge>

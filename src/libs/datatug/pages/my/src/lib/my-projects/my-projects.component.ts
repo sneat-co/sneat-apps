@@ -24,7 +24,7 @@ export class MyProjectsComponent {
 
 	goProject(proj: IDatatugProjectBrief): void {
 		this.base.navController
-			.navigateForward(`/repo/${proj.store.url || proj.store.type}/project/${proj.id}`, {state: {proj}})
+			.navigateForward(`/store/${proj.store.url || proj.store.type}/project/${proj.id}`, {state: {proj}})
 			.catch(e => this.base.errorLogger.logError(e, 'Failed to navigate to project page'));
 	}
 }

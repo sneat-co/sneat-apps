@@ -25,14 +25,14 @@ export interface IDataTugStoreBrief {
 
 export type DataTugProjStoreType = 'agent' | 'local' | 'github.com';
 
-export interface IDatatugProjStoreBrief {
+export interface IProjStoreRef {
   type: DataTugProjStoreType;
   url?: string;
 }
 
 export interface IDatatugProjectBrief {
   readonly id: string;
-  readonly store: IDatatugProjStoreBrief;
+  readonly store: IProjStoreRef;
   readonly title?: string;
   readonly titleOverride?: string;
 }

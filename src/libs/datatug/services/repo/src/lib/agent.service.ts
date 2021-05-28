@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {IExecuteResponse, ISelectRequest} from "@sneat/datatug/dto";
 import {Observable, throwError} from "rxjs";
-import {getRepoUrl} from "@sneat/datatug/nav";
+import {getStoreUrl} from "@sneat/datatug/nav";
 import {IExecuteRequest, ISqlCommandRequest} from "@sneat/datatug/models";
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
@@ -45,7 +45,7 @@ export class AgentService {
 			);
 		}
 		// eslint-disable-next-line object-shorthand
-		const agentUrl = getRepoUrl(repoId);
+		const agentUrl = getStoreUrl(repoId);
 		return this.http.get<IExecuteResponse>(agentUrl + '/exec/select', {params});
 	}
 
@@ -71,7 +71,7 @@ export class AgentService {
 		;
 		const body: Writeable<IExecuteRequest> = {...request};
 		delete body.projectId;
-		const agentUrl = getRepoUrl(repoId);
+		const agentUrl = getStoreUrl(repoId);
 		return this.http.post<IExecuteResponse>(agentUrl + `/exec/execute_commands`, body, {params});
 	}
 }

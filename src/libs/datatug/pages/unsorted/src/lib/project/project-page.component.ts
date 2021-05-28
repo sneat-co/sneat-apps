@@ -40,7 +40,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	projContext: IDatatugProjectContext;
 	projBrief: IDatatugProjectBrief;
 	project: IDatatugProjectSummary;
-	repoId: string;
+	storeId: string;
 	destroyed = new Subject<boolean>();
 	@ViewChild(IonInput, {static: false}) addInput: IonInput;
 	private projectSubscription: Subscription;
@@ -157,7 +157,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	private onProjectChanged = (currentProject: IDatatugProjectContext): void => {
 		console.log('currentProject:', currentProject);
-		this.repoId = currentProject?.repoId;
+		this.storeId = currentProject?.repoId;
 		this.project = currentProject?.summary;
 		this.projContext = currentProject;
 		if (currentProject?.summary && !currentProject.summary.id) {
@@ -224,7 +224,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 				break;
 		}
 		const itemId = projItem.id;
-		const projectKey = this.repoId ? `${this.project.id}@${this.repoId}` : this.project.id;
+		const projectKey = this.storeId ? `${this.project.id}@${this.storeId}` : this.project.id;
 		const url = `project/${projectKey}/${page}/${itemId}`;
 		console.log('url:', url);
 		this.navController

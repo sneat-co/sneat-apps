@@ -41,7 +41,7 @@ export interface IAgentContext {
 	port: number;
 }
 
-export const getRepoId = (repo: string): string => {
+export const getStoreId = (repo: string): string => {
 	if (repo.startsWith('http://')) {
 		return repo.replace('http://', 'http-')
 	} else if (repo.startsWith('https://')) {
@@ -50,20 +50,20 @@ export const getRepoId = (repo: string): string => {
 	return repo;
 }
 
-export const getRepoUrl = (repo: string): string => {
-	if (!repo || repo.startsWith('http://') || repo.startsWith('https://')) {
-		return repo;
+export const getStoreUrl = (storeId: string): string => {
+	if (!storeId || storeId.startsWith('http://') || storeId.startsWith('https://')) {
+		return storeId;
 	}
-	if (repo.startsWith('http-')) {
-		return repo.replace('http-', 'http://');
+	if (storeId.startsWith('http-')) {
+		return storeId.replace('http-', 'http://');
 	}
-	if (repo.startsWith('https-')) {
-		return repo.replace('https-', 'https://');
+	if (storeId.startsWith('https-')) {
+		return storeId.replace('https-', 'https://');
 	}
-	const a = repo.split(':');
-	repo = `//${a[0]}:${a[1]}`;
+	const a = storeId.split(':');
+	storeId = `//${a[0]}:${a[1]}`;
 	if (a[2]) {
-		repo += ':' + a[2];
+		storeId += ':' + a[2];
 	}
-	return repo;
+	return storeId;
 };

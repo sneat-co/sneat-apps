@@ -53,9 +53,7 @@
               "apps/emptyapp/src/favicon.ico",
               "apps/emptyapp/src/assets"
             ],
-            "styles": [
-              "apps/emptyapp/src/styles.scss"
-            ],
+            "styles": ["apps/emptyapp/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -116,9 +114,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/emptyapp"
-          ],
+          "outputs": ["coverage/apps/emptyapp"],
           "options": {
             "jestConfig": "apps/emptyapp/jest.config.js",
             "passWithNoTests": true
@@ -147,9 +143,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/emptyapp-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/emptyapp-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -240,10 +234,7 @@
               "apps/emptyionicapp/tsconfig.spec.json",
               "apps/emptyionicapp/tsconfig.editor.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/emptyionicapp/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/emptyionicapp/**/*"]
           }
         },
         "test": {
@@ -362,13 +353,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/emptyionicapp-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/emptyionicapp-e2e/**/*"
-            ]
+            "tsConfig": ["apps/emptyionicapp-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/emptyionicapp-e2e/**/*"]
           }
         }
       }
@@ -390,9 +376,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/core"
-          ],
+          "outputs": ["coverage/libs/core"],
           "options": {
             "jestConfig": "libs/core/jest.config.js",
             "passWithNoTests": true
@@ -409,7 +393,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-			"allowedCommonJsDependencies": ["@ctrl/ngx-codemirror"],
+            "allowedCommonJsDependencies": ["@ctrl/ngx-codemirror"],
             "outputPath": "dist/apps/datatug",
             "index": "apps/datatug/src/index.html",
             "main": "apps/datatug/src/main.ts",
@@ -495,10 +479,7 @@
               "apps/datatug/tsconfig.spec.json",
               "apps/datatug/tsconfig.editor.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/datatug/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/datatug/**/*"]
           }
         },
         "test": {
@@ -617,13 +598,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/datatug-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/datatug-e2e/**/*"
-            ]
+            "tsConfig": ["apps/datatug-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/datatug-e2e/**/*"]
           }
         }
       }
@@ -657,9 +633,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/logging"
-          ],
+          "outputs": ["coverage/libs/logging"],
           "options": {
             "jestConfig": "libs/logging/jest.config.js",
             "passWithNoTests": true
@@ -696,9 +670,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/analytics"
-          ],
+          "outputs": ["coverage/libs/analytics"],
           "options": {
             "jestConfig": "libs/analytics/jest.config.js",
             "passWithNoTests": true
@@ -735,9 +707,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/auth"
-          ],
+          "outputs": ["coverage/libs/auth"],
           "options": {
             "jestConfig": "libs/auth/jest.config.js",
             "passWithNoTests": true
@@ -774,9 +744,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/auth-ui"
-          ],
+          "outputs": ["coverage/libs/auth-ui"],
           "options": {
             "jestConfig": "libs/auth-ui/jest.config.js",
             "passWithNoTests": true
@@ -801,9 +769,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/random"
-          ],
+          "outputs": ["coverage/libs/random"],
           "options": {
             "jestConfig": "libs/random/jest.config.js",
             "passWithNoTests": true
@@ -828,9 +794,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/app"
-          ],
+          "outputs": ["coverage/libs/app"],
           "options": {
             "jestConfig": "libs/app/jest.config.js",
             "passWithNoTests": true
@@ -855,9 +819,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/auth-models"
-          ],
+          "outputs": ["coverage/libs/auth-models"],
           "options": {
             "jestConfig": "libs/auth-models/jest.config.js",
             "passWithNoTests": true
@@ -894,9 +856,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/data"
-          ],
+          "outputs": ["coverage/libs/data"],
           "options": {
             "jestConfig": "libs/data/jest.config.js",
             "passWithNoTests": true
@@ -933,9 +893,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/api"
-          ],
+          "outputs": ["coverage/libs/api"],
           "options": {
             "jestConfig": "libs/api/jest.config.js",
             "passWithNoTests": true
@@ -972,9 +930,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/pages/home"
-          ],
+          "outputs": ["coverage/libs/datatug/pages/home"],
           "options": {
             "jestConfig": "libs/datatug/pages/home/jest.config.js",
             "passWithNoTests": true
@@ -999,9 +955,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/animations"
-          ],
+          "outputs": ["coverage/libs/animations"],
           "options": {
             "jestConfig": "libs/animations/jest.config.js",
             "passWithNoTests": true
@@ -1026,9 +980,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/components/error-card"
-          ],
+          "outputs": ["coverage/libs/components/error-card"],
           "options": {
             "jestConfig": "libs/components/error-card/jest.config.js",
             "passWithNoTests": true
@@ -1053,9 +1005,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/components/card-list"
-          ],
+          "outputs": ["coverage/libs/components/card-list"],
           "options": {
             "jestConfig": "libs/components/card-list/jest.config.js",
             "passWithNoTests": true
@@ -1080,9 +1030,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/models"
-          ],
+          "outputs": ["coverage/libs/datatug/models"],
           "options": {
             "jestConfig": "libs/datatug/models/jest.config.js",
             "passWithNoTests": true
@@ -1119,9 +1067,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datetime"
-          ],
+          "outputs": ["coverage/libs/datetime"],
           "options": {
             "jestConfig": "libs/datetime/jest.config.js",
             "passWithNoTests": true
@@ -1146,9 +1092,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/pages/signed-out"
-          ],
+          "outputs": ["coverage/libs/datatug/pages/signed-out"],
           "options": {
             "jestConfig": "libs/datatug/pages/signed-out/jest.config.js",
             "passWithNoTests": true
@@ -1173,9 +1117,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/core"
-          ],
+          "outputs": ["coverage/libs/datatug/core"],
           "options": {
             "jestConfig": "libs/datatug/core/jest.config.js",
             "passWithNoTests": true
@@ -1200,9 +1142,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/pages/my"
-          ],
+          "outputs": ["coverage/libs/datatug/pages/my"],
           "options": {
             "jestConfig": "libs/datatug/pages/my/jest.config.js",
             "passWithNoTests": true
@@ -1227,9 +1167,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/auth-login-page"
-          ],
+          "outputs": ["coverage/libs/auth-login-page"],
           "options": {
             "jestConfig": "libs/auth-login-page/jest.config.js",
             "passWithNoTests": true
@@ -1254,9 +1192,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/services/nav"
-          ],
+          "outputs": ["coverage/libs/datatug/services/nav"],
           "options": {
             "jestConfig": "libs/datatug/services/nav/jest.config.js",
             "passWithNoTests": true
@@ -1293,9 +1229,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/services/project"
-          ],
+          "outputs": ["coverage/libs/datatug/services/project"],
           "options": {
             "jestConfig": "libs/datatug/services/project/jest.config.js",
             "passWithNoTests": true
@@ -1320,9 +1254,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/services/repo"
-          ],
+          "outputs": ["coverage/libs/datatug/services/repo"],
           "options": {
             "jestConfig": "libs/datatug/services/repo/jest.config.js",
             "passWithNoTests": true
@@ -1347,9 +1279,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/dto"
-          ],
+          "outputs": ["coverage/libs/datatug/dto"],
           "options": {
             "jestConfig": "libs/datatug/dto/jest.config.js",
             "passWithNoTests": true
@@ -1374,9 +1304,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/grid"
-          ],
+          "outputs": ["coverage/libs/grid"],
           "options": {
             "jestConfig": "libs/grid/jest.config.js",
             "passWithNoTests": true
@@ -1470,10 +1398,7 @@
               "apps/scrumspace/tsconfig.spec.json",
               "apps/scrumspace/tsconfig.editor.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/scrumspace/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/scrumspace/**/*"]
           }
         },
         "test": {
@@ -1592,13 +1517,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/scrumspace-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/scrumspace-e2e/**/*"
-            ]
+            "tsConfig": ["apps/scrumspace-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/scrumspace-e2e/**/*"]
           }
         }
       }
@@ -1689,10 +1609,7 @@
               "apps/issuenumberone/tsconfig.spec.json",
               "apps/issuenumberone/tsconfig.editor.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/issuenumberone/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/issuenumberone/**/*"]
           }
         },
         "test": {
@@ -1811,13 +1728,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/issuenumberone-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/issuenumberone-e2e/**/*"
-            ]
+            "tsConfig": ["apps/issuenumberone-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/issuenumberone-e2e/**/*"]
           }
         }
       }
@@ -1839,9 +1751,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/pages/unsorted"
-          ],
+          "outputs": ["coverage/libs/datatug/pages/unsorted"],
           "options": {
             "jestConfig": "libs/datatug/pages/unsorted/jest.config.js",
             "passWithNoTests": true
@@ -1866,9 +1776,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/components/sqleditor"
-          ],
+          "outputs": ["coverage/libs/datatug/components/sqleditor"],
           "options": {
             "jestConfig": "libs/datatug/components/sqleditor/jest.config.js",
             "passWithNoTests": true
@@ -1893,9 +1801,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/components/datagrid"
-          ],
+          "outputs": ["coverage/libs/datatug/components/datagrid"],
           "options": {
             "jestConfig": "libs/datatug/components/datagrid/jest.config.js",
             "passWithNoTests": true
@@ -1920,9 +1826,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/board"
-          ],
+          "outputs": ["coverage/libs/datatug/board"],
           "options": {
             "jestConfig": "libs/datatug/board/jest.config.js",
             "passWithNoTests": true
@@ -1947,9 +1851,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/components/parameters"
-          ],
+          "outputs": ["coverage/libs/datatug/components/parameters"],
           "options": {
             "jestConfig": "libs/datatug/components/parameters/jest.config.js",
             "passWithNoTests": true
@@ -1974,9 +1876,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/nav"
-          ],
+          "outputs": ["coverage/libs/datatug/nav"],
           "options": {
             "jestConfig": "libs/datatug/nav/jest.config.js",
             "passWithNoTests": true
@@ -2001,9 +1901,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/routes"
-          ],
+          "outputs": ["coverage/libs/datatug/routes"],
           "options": {
             "jestConfig": "libs/datatug/routes/jest.config.js",
             "passWithNoTests": true
@@ -2028,9 +1926,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/services/unsorted"
-          ],
+          "outputs": ["coverage/libs/datatug/services/unsorted"],
           "options": {
             "jestConfig": "libs/datatug/services/unsorted/jest.config.js",
             "passWithNoTests": true
@@ -2055,9 +1951,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/executor"
-          ],
+          "outputs": ["coverage/libs/datatug/executor"],
           "options": {
             "jestConfig": "libs/datatug/executor/jest.config.js",
             "passWithNoTests": true
@@ -2082,9 +1976,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/components/dbmeta"
-          ],
+          "outputs": ["coverage/libs/datatug/components/dbmeta"],
           "options": {
             "jestConfig": "libs/datatug/components/dbmeta/jest.config.js",
             "passWithNoTests": true
@@ -2109,9 +2001,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/db"
-          ],
+          "outputs": ["coverage/libs/datatug/db"],
           "options": {
             "jestConfig": "libs/datatug/db/jest.config.js",
             "passWithNoTests": true
@@ -2136,9 +2026,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/queries"
-          ],
+          "outputs": ["coverage/libs/datatug/queries"],
           "options": {
             "jestConfig": "libs/datatug/queries/jest.config.js",
             "passWithNoTests": true
@@ -2163,9 +2051,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/scrumspace/dailyscrum"
-          ],
+          "outputs": ["coverage/libs/scrumspace/dailyscrum"],
           "options": {
             "jestConfig": "libs/scrumspace/dailyscrum/jest.config.js",
             "passWithNoTests": true
@@ -2190,9 +2076,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/scrumspace/retrospectives"
-          ],
+          "outputs": ["coverage/libs/scrumspace/retrospectives"],
           "options": {
             "jestConfig": "libs/scrumspace/retrospectives/jest.config.js",
             "passWithNoTests": true
@@ -2217,9 +2101,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/timer"
-          ],
+          "outputs": ["coverage/libs/timer"],
           "options": {
             "jestConfig": "libs/timer/jest.config.js",
             "passWithNoTests": true
@@ -2244,9 +2126,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/meeting"
-          ],
+          "outputs": ["coverage/libs/meeting"],
           "options": {
             "jestConfig": "libs/meeting/jest.config.js",
             "passWithNoTests": true
@@ -2271,9 +2151,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/team"
-          ],
+          "outputs": ["coverage/libs/team"],
           "options": {
             "jestConfig": "libs/team/jest.config.js",
             "passWithNoTests": true
@@ -2298,9 +2176,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/scrumspace/scrummodels"
-          ],
+          "outputs": ["coverage/libs/scrumspace/scrummodels"],
           "options": {
             "jestConfig": "libs/scrumspace/scrummodels/jest.config.js",
             "passWithNoTests": true
@@ -2337,9 +2213,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/services/base"
-          ],
+          "outputs": ["coverage/libs/datatug/services/base"],
           "options": {
             "jestConfig": "libs/datatug/services/base/jest.config.js",
             "passWithNoTests": true
@@ -2376,12 +2250,218 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/datatug/components/project"
-          ],
+          "outputs": ["coverage/libs/datatug/components/project"],
           "options": {
             "jestConfig": "libs/datatug/components/project/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "listus": {
+      "projectType": "application",
+      "root": "apps/listus",
+      "sourceRoot": "apps/listus/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/listus",
+            "index": "apps/listus/src/index.html",
+            "main": "apps/listus/src/main.ts",
+            "polyfills": "apps/listus/src/polyfills.ts",
+            "tsConfig": "apps/listus/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/listus/src/assets",
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }
+            ],
+            "styles": [
+              "apps/listus/src/styles.scss",
+              {
+                "input": "apps/listus/src/theme/variables.scss"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/listus/src/environments/environment.ts",
+                  "with": "apps/listus/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "listus:build:production"
+            },
+            "development": {
+              "browserTarget": "listus:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "listus:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/listus/src/**/*.ts",
+              "apps/listus/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/listus"],
+          "options": {
+            "jestConfig": "apps/listus/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "cap": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "--help"
+          }
+        },
+        "add": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "add",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "add ios"
+            },
+            "android": {
+              "cmd": "add android"
+            }
+          }
+        },
+        "copy": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "copy",
+            "packageInstall": false
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "copy ios"
+            },
+            "android": {
+              "cmd": "copy android"
+            }
+          }
+        },
+        "open": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "open",
+            "packageInstall": false
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "open ios"
+            },
+            "android": {
+              "cmd": "open android"
+            }
+          }
+        },
+        "sync": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "sync",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "sync ios"
+            },
+            "android": {
+              "cmd": "sync android"
+            }
+          }
+        },
+        "update": {
+          "builder": "@nxtend/capacitor:cap",
+          "options": {
+            "cmd": "update",
+            "packageInstall": true
+          },
+          "configurations": {
+            "ios": {
+              "cmd": "update ios"
+            },
+            "android": {
+              "cmd": "update android"
+            }
+          }
+        }
+      }
+    },
+    "listus-e2e": {
+      "root": "apps/listus-e2e",
+      "sourceRoot": "apps/listus-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/listus-e2e/cypress.json",
+            "tsConfig": "apps/listus-e2e/tsconfig.e2e.json",
+            "devServerTarget": "listus:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "listus:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/listus-e2e/**/*.{js,ts}"]
           }
         }
       }

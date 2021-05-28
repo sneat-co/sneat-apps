@@ -9,7 +9,7 @@ export const datatugRoutes: Routes = [
 	},
 	{
 		path: 'repo/:' + routingParamRepoId,
-		loadChildren: () => import('./datatug-routing-agent').then(m => m.DatatugAgentRoutingModule),
+		loadChildren: () => import('./datatug-routing-agent').then(m => m.DatatugStoreRoutingModule),
 		// ...canLoad(),
 	},
 	{

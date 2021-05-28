@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
 import {IDbCatalogSummary, IDbServer, IDbServerSummary, IProjDbServerSummary} from '@sneat/datatug/models';
-import {getRepoUrl} from '@sneat/datatug/nav';
+import {getStoreUrl} from '@sneat/datatug/nav';
 import {GetServerDatabasesRequest} from '@sneat/datatug/dto';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 
@@ -27,7 +27,7 @@ export class DbServerService {
       proj: target.projectId,
       ...dbServer,
     }
-    return this.http.get<IDbServerSummary>(`${getRepoUrl(target.repoId)}/dbserver-summary`, {params});
+    return this.http.get<IDbServerSummary>(`${getStoreUrl(target.repoId)}/dbserver-summary`, {params});
   }
 
   public getServerDatabases(request: GetServerDatabasesRequest): Observable<IDbCatalogSummary[]> {
@@ -40,20 +40,20 @@ export class DbServerService {
       ...request.dbServer,
       proj: request.project || target.projectId,
     };
-    return this.http.get<IDbCatalogSummary[]>(`${getRepoUrl(target.repoId)}/dbserver-databases`, {params});
+    return this.http.get<IDbCatalogSummary[]>(`${getStoreUrl(target.repoId)}/dbserver-databases`, {params});
   }
 
   public addDbServer(dbServer: IDbServer): Observable<IDbServerSummary> {
     const target = this.projectContextService.current;
     const params: any = {proj: target.projectId, ...dbServer};
-    return this.http.post<IDbServerSummary>(`${getRepoUrl(target.repoId)}/dbserver-add`, undefined, {params});
+    return this.http.post<IDbServerSummary>(`${getStoreUrl(target.repoId)}/dbserver-add`, undefined, {params});
   }
 
   public deleteDbServer(dbServer: IDbServer): Observable<void> {
     console.log('deleteDbServer', dbServer);
     const target = this.projectContextService.current;
     const params: any = {proj: target.projectId, ...dbServer};
-    return this.http.delete<void>(`${getRepoUrl(target.repoId)}/dbserver-delete`, {params});
+    return this.http.delete<void>(`${getStoreUrl(target.repoId)}/dbserver-delete`, {params});
   }
 
   public getDbServers(target: IDatatugProjRef): Observable<IProjDbServerSummary[]> {

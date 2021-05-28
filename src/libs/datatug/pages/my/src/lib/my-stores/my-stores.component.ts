@@ -45,8 +45,8 @@ export class MyStoresComponent implements OnDestroy {
 		this.destroyed.complete();
 	}
 
-	goRepo(repo: string): void {
-		this.datatugNavService.goRepo(repo);
+	goStore(repo: string): void {
+		this.datatugNavService.goStore(repo);
 	}
 
 	public checkAgent(event: Event): void {

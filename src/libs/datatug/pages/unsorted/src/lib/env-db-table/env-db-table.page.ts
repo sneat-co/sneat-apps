@@ -5,7 +5,7 @@ import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {PopoverController} from '@ionic/angular';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {AgentService, RepoService} from '@sneat/datatug/services/repo';
+import {AgentService, StoreService} from '@sneat/datatug/services/repo';
 import {ICommandResponseWithRecordset, IForeignKey} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';

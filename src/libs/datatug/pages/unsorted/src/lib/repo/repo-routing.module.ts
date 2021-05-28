@@ -16,5 +16,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RepoPageRoutingModule {
+export class StorePageRoutingModule {
 }

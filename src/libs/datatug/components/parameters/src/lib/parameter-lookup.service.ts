@@ -5,7 +5,7 @@ import {ParameterLookupComponent} from './parameter-lookup.component';
 import {share} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {IParameterDef, IParameterValueWithoutID} from '@sneat/datatug/models';
-import {AgentService, RepoService} from '@sneat/datatug/services/repo';
+import {AgentService, StoreService} from '@sneat/datatug/services/repo';
 
 @Injectable()
 export class ParameterLookupService {

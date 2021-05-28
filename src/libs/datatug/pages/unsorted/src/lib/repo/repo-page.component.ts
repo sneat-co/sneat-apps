@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {distinctUntilChanged, filter, map, takeUntil, tap} from 'rxjs/operators';
 import {IDatatugProjectBase} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {AgentStateService, IAgentState, RepoService} from '@sneat/datatug/services/repo';
+import {AgentStateService, IAgentState, StoreService} from '@sneat/datatug/services/repo';
 import {DatatugNavService} from '@sneat/datatug/services/nav';
 import {routingParamRepoId} from '@sneat/datatug/routes';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
@@ -15,7 +15,7 @@ import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 })
 export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter {
 
-	public repoId: string;
+	public storeId: string;
 	public projects: IDatatugProjectBase[];
 	public error: any;
 
@@ -29,11 +29,11 @@ export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewD
 	constructor(
 		private readonly route: ActivatedRoute,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly repoService: RepoService,
+		private readonly storeService: StoreService,
 		private readonly nav: DatatugNavService,
 		private readonly agentStateService: AgentStateService,
 	) {
-		console.log('RepoPage.constructor()', route, errorLogger, repoService);
+		console.log('RepoPage.constructor()', route, errorLogger, storeService);
 		console.log('RepoPage.constructor()');
 	}
 
@@ -43,9 +43,9 @@ export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewD
 	}
 
 	ionViewDidEnter(): void {
-		console.log('RepoPageComponent.ionViewDidEnter()', this.repoId);
-		if (this.repoId) {
-			this.processRepoId(this.repoId)
+		console.log('RepoPageComponent.ionViewDidEnter()', this.storeId);
+		if (this.storeId) {
+			this.processStoreId(this.storeId)
 		}
 	}
 
@@ -64,16 +64,16 @@ export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewD
 				filter(repoId => !!repoId),
 			).subscribe({
 			next: repoId => {
-				this.repoId = repoId;
-				this.processRepoId(repoId)
+				this.storeId = repoId;
+				this.processStoreId(repoId)
 			},
 			error: this.errorLogger.logErrorHandler('Failed to track repo id'),
 		});
 	}
 
-	private processRepoId(repoId: string): void {
+	private processStoreId(storeId: string): void {
 		this.agentStateService
-			.watchAgentInfo(repoId)
+			.watchAgentInfo(storeId)
 			.pipe(
 				takeUntil(this.viewDidLeave),
 				takeUntil(this.destroyed),
@@ -84,16 +84,16 @@ export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewD
 					console.log('processRepoId => agentState:', agentState);
 					this.agentState = agentState;
 					if (!agentState?.isNotAvailable && !this.projects) {
-						this.loadProjects(repoId);
+						this.loadProjects(storeId);
 					}
 				},
 				error: this.errorLogger.logErrorHandler('Failed to get agent state info'),
 			});
 	}
 
-	private loadProjects(repoId: string): void {
+	private loadProjects(storeId: string): void {
 		this.isLoading = true;
-		this.repoService.getProjects(repoId)
+		this.storeService.getProjects(storeId)
 			.pipe(
 				takeUntil(this.agentChanged),
 				takeUntil(this.destroyed),
@@ -113,7 +113,7 @@ export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewD
 						// this.error = 'Agent is not available at URL: ' + err.url;
 					} else {
 						this.error = this.errorLogger.logError(err,
-							`Failed to get list of projects hosted by agent [${repoId}]`, {show: false});
+							`Failed to get list of projects hosted by agent [${storeId}]`, {show: false});
 					}
 				},
 			});
@@ -133,7 +133,7 @@ export class RepoPageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewD
 	public goProject(project: IDatatugProjectBase, event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
-		this.nav.goProject(this.repoId, project.id);
+		this.nav.goProject(this.storeId, project.id);
 	}
 
 }

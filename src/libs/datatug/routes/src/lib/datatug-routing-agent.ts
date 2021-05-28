@@ -2,10 +2,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {routingParamProjectId} from './datatug-routing-params';
 
-export const datatugAgentRoutes: Routes = [
+export const datatugStoreRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.RepoPageRoutingModule)
+		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.StorePageRoutingModule)
 	},
 	{
 		path: 'diff',
@@ -27,11 +27,11 @@ export const datatugAgentRoutes: Routes = [
 
 @NgModule({
 	imports: [
-		RouterModule.forChild(datatugAgentRoutes)
+		RouterModule.forChild(datatugStoreRoutes)
 	],
 	exports: [
 		RouterModule,
 	],
 })
-export class DatatugAgentRoutingModule {
+export class DatatugStoreRoutingModule {
 }

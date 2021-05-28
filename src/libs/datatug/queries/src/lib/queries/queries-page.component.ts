@@ -8,7 +8,7 @@ import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
-import {getRepoId} from "@sneat/datatug/nav";
+import {getStoreId} from "@sneat/datatug/nav";
 
 interface FilteredItem {
 	folders: string[];
@@ -41,7 +41,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	public readonly trackById = (_, v: IProjItemBrief) => v.id;
 
 	public get defaultBackHref(): string {
-		return this.currentProject ? `/repo/${getRepoId(this.currentProject.repoId)}/project/${this.currentProject.projectId}` : '/';
+		return this.currentProject ? `/repo/${getStoreId(this.currentProject.repoId)}/project/${this.currentProject.projectId}` : '/';
 	}
 
 	public currentProject: IDatatugProjRef;

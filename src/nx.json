@@ -1,9 +1,14 @@
 {
   "npmScope": "sneat",
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
     "angular.json": "*",
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -21,66 +26,182 @@
     }
   },
   "projects": {
-    "emptyapp": { "tags": [] },
-    "emptyapp-e2e": { "tags": [], "implicitDependencies": ["emptyapp"] },
-    "emptyionicapp": { "tags": [] },
+    "emptyapp": {
+      "tags": []
+    },
+    "emptyapp-e2e": {
+      "tags": [],
+      "implicitDependencies": ["emptyapp"]
+    },
+    "emptyionicapp": {
+      "tags": []
+    },
     "emptyionicapp-e2e": {
       "tags": [],
       "implicitDependencies": ["emptyionicapp"]
     },
-    "core": { "tags": [] },
-    "datatug": { "tags": [] },
-    "datatug-e2e": { "tags": [], "implicitDependencies": ["datatug"] },
-    "logging": { "tags": ["scope:public", "type:util", "target:all"] },
-    "analytics": { "tags": ["scope:public", "type:util", "target:all"] },
-    "auth": { "tags": ["scope:public", "type:util", "target:all"] },
-    "auth-ui": { "tags": ["scope:public", "type:util", "target:all"] },
-    "random": { "tags": ["scope:public", "type:util", "target:all"] },
-    "app": { "tags": [] },
-    "auth-models": { "tags": [] },
-    "data": { "tags": [] },
-    "api": { "tags": [] },
-    "datatug-pages-home": { "tags": [] },
-    "animations": { "tags": [] },
-    "components-error-card": { "tags": [] },
-    "components-card-list": { "tags": [] },
-    "datatug-models": { "tags": [] },
-    "datetime": { "tags": [] },
-    "datatug-pages-signed-out": { "tags": [] },
-    "datatug-core": { "tags": [] },
-    "datatug-pages-my": { "tags": [] },
-    "auth-login-page": { "tags": [] },
-    "datatug-services-nav": { "tags": [] },
-    "datatug-services-project": { "tags": [] },
-    "datatug-services-repo": { "tags": [] },
-    "datatug-dto": { "tags": [] },
-    "grid": { "tags": [] },
-    "scrumspace": { "tags": [] },
-    "scrumspace-e2e": { "tags": [], "implicitDependencies": ["scrumspace"] },
-    "issuenumberone": { "tags": [] },
+    "core": {
+      "tags": []
+    },
+    "datatug": {
+      "tags": []
+    },
+    "datatug-e2e": {
+      "tags": [],
+      "implicitDependencies": ["datatug"]
+    },
+    "logging": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "analytics": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "auth": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "auth-ui": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "random": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "app": {
+      "tags": []
+    },
+    "auth-models": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    },
+    "datatug-pages-home": {
+      "tags": []
+    },
+    "animations": {
+      "tags": []
+    },
+    "components-error-card": {
+      "tags": []
+    },
+    "components-card-list": {
+      "tags": []
+    },
+    "datatug-models": {
+      "tags": []
+    },
+    "datetime": {
+      "tags": []
+    },
+    "datatug-pages-signed-out": {
+      "tags": []
+    },
+    "datatug-core": {
+      "tags": []
+    },
+    "datatug-pages-my": {
+      "tags": []
+    },
+    "auth-login-page": {
+      "tags": []
+    },
+    "datatug-services-nav": {
+      "tags": []
+    },
+    "datatug-services-project": {
+      "tags": []
+    },
+    "datatug-services-repo": {
+      "tags": []
+    },
+    "datatug-dto": {
+      "tags": []
+    },
+    "grid": {
+      "tags": []
+    },
+    "scrumspace": {
+      "tags": []
+    },
+    "scrumspace-e2e": {
+      "tags": [],
+      "implicitDependencies": ["scrumspace"]
+    },
+    "issuenumberone": {
+      "tags": []
+    },
     "issuenumberone-e2e": {
       "tags": [],
       "implicitDependencies": ["issuenumberone"]
     },
-    "datatug-pages-unsorted": { "tags": [] },
-    "datatug-components-sqleditor": { "tags": [] },
-    "datatug-components-datagrid": { "tags": [] },
-    "datatug-board": { "tags": [] },
-    "datatug-components-parameters": { "tags": [] },
-    "datatug-nav": { "tags": [] },
-    "datatug-routes": { "tags": [] },
-    "datatug-services-unsorted": { "tags": [] },
-    "datatug-executor": { "tags": [] },
-    "datatug-components-dbmeta": { "tags": [] },
-    "datatug-db": { "tags": [] },
-    "datatug-queries": { "tags": [] },
-    "scrumspace-dailyscrum": { "tags": [] },
-    "scrumspace-retrospectives": { "tags": [] },
-    "timer": { "tags": [] },
-    "meeting": { "tags": [] },
-    "team": { "tags": [] },
-    "scrumspace-scrummodels": { "tags": [] },
-    "datatug-services-base": { "tags": [] },
-    "datatug-components-project": { "tags": [] }
+    "datatug-pages-unsorted": {
+      "tags": []
+    },
+    "datatug-components-sqleditor": {
+      "tags": []
+    },
+    "datatug-components-datagrid": {
+      "tags": []
+    },
+    "datatug-board": {
+      "tags": []
+    },
+    "datatug-components-parameters": {
+      "tags": []
+    },
+    "datatug-nav": {
+      "tags": []
+    },
+    "datatug-routes": {
+      "tags": []
+    },
+    "datatug-services-unsorted": {
+      "tags": []
+    },
+    "datatug-executor": {
+      "tags": []
+    },
+    "datatug-components-dbmeta": {
+      "tags": []
+    },
+    "datatug-db": {
+      "tags": []
+    },
+    "datatug-queries": {
+      "tags": []
+    },
+    "scrumspace-dailyscrum": {
+      "tags": []
+    },
+    "scrumspace-retrospectives": {
+      "tags": []
+    },
+    "timer": {
+      "tags": []
+    },
+    "meeting": {
+      "tags": []
+    },
+    "team": {
+      "tags": []
+    },
+    "scrumspace-scrummodels": {
+      "tags": []
+    },
+    "datatug-services-base": {
+      "tags": []
+    },
+    "datatug-components-project": {
+      "tags": []
+    },
+    "listus": {
+      "tags": []
+    },
+    "listus-e2e": {
+      "tags": [],
+      "implicitDependencies": ["listus"]
+    }
   }
 }

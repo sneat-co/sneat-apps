@@ -85,7 +85,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
 	) {
-		this.datatugNavContextService.currentRepoId.pipe(takeUntil(this.destroyed)).subscribe({
+		this.datatugNavContextService.currentStoreId.pipe(takeUntil(this.destroyed)).subscribe({
 			next: id => this.currentRepoId = id,
 		});
 		this.datatugNavContextService.currentProject.pipe(takeUntil(this.destroyed)).subscribe({

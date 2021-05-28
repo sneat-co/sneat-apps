@@ -3,7 +3,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {RepoPageComponent} from './repo-page.component';
 
-describe('AgentPage', () => {
+describe('StorePageComponent', () => {
 	let component: RepoPageComponent;
 	let fixture: ComponentFixture<RepoPageComponent>;
 

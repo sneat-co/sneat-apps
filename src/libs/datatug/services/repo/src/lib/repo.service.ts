@@ -3,35 +3,35 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {shareReplay} from 'rxjs/operators';
 import {IDatatugProjectBase} from '@sneat/datatug/models';
-import {getRepoUrl} from '@sneat/datatug/nav';
+import {getStoreUrl} from '@sneat/datatug/nav';
 import {IRecordset} from '@sneat/datatug/dto';
 import {IGridColumn, IGridDef} from '@sneat/grid';
 
 @Injectable()
-export class RepoService {
+export class StoreService {
 
-	private readonly projectsByAgent: { [repoId: string]: Observable<IDatatugProjectBase[]> } = {};
+	private readonly projectsByStore: { [storeId: string]: Observable<IDatatugProjectBase[]> } = {};
 
 	constructor(
 		private readonly http: HttpClient,
 	) {
-		console.log('RepoService.constructor()');
+		console.log('StoreService.constructor()');
 	}
 
-	public getProjects(repoId: string): Observable<IDatatugProjectBase[]> {
+	public getProjects(storeId: string): Observable<IDatatugProjectBase[]> {
 		// eslint-disable-next-line no-console
-		console.log('getProjects', repoId);
-		if (!repoId) {
-			return throwError('Parameter "repoId" is required');
+		console.log('getProjects', storeId);
+		if (!storeId) {
+			return throwError('Parameter "storeId" is required');
 		}
-		let projects = this.projectsByAgent[repoId]
+		let projects = this.projectsByStore[storeId]
 		if (projects) {
 			return projects;
 		}
-		const agentUrl = getRepoUrl(repoId);
-		projects = this.http.get<IDatatugProjectBase[]>(`${agentUrl}/projects`)
+		const storeUrl = getStoreUrl(storeId);
+		projects = this.http.get<IDatatugProjectBase[]>(`${storeUrl}/projects`)
 			.pipe(shareReplay(1));
-		this.projectsByAgent[repoId] = projects;
+		this.projectsByStore[storeId] = projects;
 		return projects;
 	}
 }

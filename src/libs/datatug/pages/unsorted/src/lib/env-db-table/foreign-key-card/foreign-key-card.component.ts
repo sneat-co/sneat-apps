@@ -4,7 +4,7 @@ import {DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {IGridDef} from '@sneat/grid';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {AgentService, RepoService} from '@sneat/datatug/services/repo';
+import {AgentService, StoreService} from '@sneat/datatug/services/repo';
 
 @Component({
 	selector: 'datatug-fk-card',

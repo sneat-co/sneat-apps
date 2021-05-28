@@ -9,7 +9,7 @@ import {IDatatugProjectBase, IDatatugProjectSummary, IDatatugUser} from '@sneat/
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
-import {RepoService} from '@sneat/datatug/services/repo';
+import {StoreService} from '@sneat/datatug/services/repo';
 import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
 import {DatatugUserService} from "@sneat/datatug/services/base";
 import {AuthStates, SneatAuthStateService} from "@sneat/auth";
@@ -43,7 +43,7 @@ export class DatatugMenuComponent implements OnDestroy {
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly navCtrl: NavController,
 		private readonly nav: DatatugNavService,
-		private readonly repoService: RepoService,
+		private readonly repoService: StoreService,
 		private readonly projectService: ProjectService,
 		private readonly afAuth: AngularFireAuth,
 		private readonly datatugUserService: DatatugUserService,
@@ -93,7 +93,7 @@ export class DatatugMenuComponent implements OnDestroy {
 			const {value} = event.detail;
 			if (value && !this.currentRepoId) {
 				console.log('DatatugMenuComponent.switchRepo()', value);
-				this.nav.goRepo(value);
+				this.nav.goStore(value);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle repo switch');
@@ -184,7 +184,7 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	private trackCurrentRepo(): void {
 		try {
-			this.datatugNavContextService.currentRepoId
+			this.datatugNavContextService.currentStoreId
 				.pipe(
 					takeUntil(this.destroyed),
 				)

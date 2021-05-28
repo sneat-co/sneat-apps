@@ -3,7 +3,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {EMPTY, Observable, of, throwError} from 'rxjs';
 import {map, mergeMap, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {getRepoUrl} from '@sneat/datatug/nav';
+import {getStoreUrl} from '@sneat/datatug/nav';
 import {GITHUB_REPO, GITLAB_REPO_PREFIX, IDatatugProjRef} from '@sneat/datatug/core';
 import {IDatatugProjectFull, IDatatugProjectSummary} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
@@ -60,7 +60,7 @@ export class ProjectService {
       return $project;
     }
     $project = this.http
-      .get<IDatatugProjectFull>(`${getRepoUrl(target.repoId)}/project-full`, {params: {id: target.projectId}})
+      .get<IDatatugProjectFull>(`${getStoreUrl(target.repoId)}/project-full`, {params: {id: target.projectId}})
       .pipe(
         shareReplay(1),
       )
@@ -89,7 +89,13 @@ export class ProjectService {
   }
 
   private getProjectSummaryRequest(target: IDatatugProjRef): Observable<IDatatugProjectSummary> {
+  	if (!target) {
+  		throw new Error('target is required parameter');
+	}
     const {repoId, projectId} = target;
+  	if (!repoId) {
+		throw new Error('target.repoId is required parameter');
+	}
     if (repoId === GITHUB_REPO || repoId.startsWith(GITLAB_REPO_PREFIX)) {
       interface urlAndHeaders {
         url: string;
@@ -122,7 +128,7 @@ export class ProjectService {
           })))
       );
     }
-    const agentUrl = getRepoUrl(repoId);
+    const agentUrl = getStoreUrl(repoId);
     return this.http.get<IDatatugProjectSummary>(`${agentUrl}/project-summary`, {params: {id: projectId}});
   }
 }

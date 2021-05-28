@@ -4,7 +4,7 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {IDatatugProjectSummary, IProjBoard, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
-import {getRepoId} from "@sneat/datatug/nav";
+import {getStoreId} from "@sneat/datatug/nav";
 
 export type ProjectTopLevelPage =
 	'boards' |
@@ -28,17 +28,16 @@ export class DatatugNavService {
 	) {
 	}
 
-	goRepo(repo: string): void {
-		if (!repo) {
-			throw new Error("repo is a required parameter");
+	goStore(storeId: string): void {
+		if (!storeId) {
+			throw new Error("storeId is a required parameter");
 		}
-		const repoId = getRepoId(repo);
-		this.navRoot(['repo', repoId], 'Failed to navigate to repo page');
+		const repoId = getStoreId(storeId);
+		this.navRoot(['store', storeId], 'Failed to navigate to repo page');
 	}
 
-	goProject(repo: string, projectId: string, page?: ProjectTopLevelPage): void {
-		const repoId = getRepoId(repo);
-		const url = ['repo', repoId, 'project', projectId];
+	goProject(storeId: string, projectId: string, page?: ProjectTopLevelPage): void {
+		const url = ['store', storeId, 'project', projectId];
 		if (page) {
 			url.push(page);
 		}
@@ -75,19 +74,18 @@ export class DatatugNavService {
 	}
 
 	public projectPageUrl(c: IDatatugProjRef, name: string, id?: string): string {
-		const url = `/repo/${getRepoId(c.repoId)}/project/${c.projectId}/${name}`;
+		const url = `/store/${getStoreId(c.repoId)}/project/${c.projectId}/${name}`;
 		return id ? url + '/' + encodeURIComponent(id) : url;
 	}
 
-	goProjPage(repo: string, projectId: string, projPage: string, state?: { projSummary: IDatatugProjectSummary }): void {
-		const repoId = getRepoId(repo)
-		this.navForward(['repo', repoId, 'project', projectId, projPage],
+	goProjPage(storeId: string, projectId: string, projPage: string, state?: { projSummary: IDatatugProjectSummary }): void {
+		this.navForward(['store', storeId, 'project', projectId, projPage],
 			{state}, 'Failed to navigate to project page: ' + projPage);
 	}
 
 	goTable(to: IDbObjectNavParams): void {
 		const url = [
-			'project', `${to.target.projectId}@${getRepoId(to.target.repoId)}`,
+			'project', `${to.target.projectId}@${getStoreId(to.target.repoId)}`,
 			'env', to.env,
 			'db', to.db,
 			'table', `${to.schema}.${to.name}`,

@@ -40,3 +40,14 @@ Then run as:
 ```shell
 pnx serve <APP_NAME>
 ```
+
+## Code generation
+To generate new apps & libraries use `nx` command.
+
+### To generate new Ionic app
+Run next command:
+```shell
+nx generate @nxtend/ionic-angular:app my-app
+```
+
+More on how to use NX with Ionic here: https://ionicframework.com/blog/ionic-angular-monorepos-with-nx/

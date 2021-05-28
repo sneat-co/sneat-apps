@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {getRepoUrl} from '@sneat/datatug/nav';
+import {getStoreUrl} from '@sneat/datatug/nav';
 
 @Injectable()
 export class RepoApiService {
@@ -12,7 +12,7 @@ export class RepoApiService {
 	}
 
 	private static getUrl(repo: string, path: string): string {
-		const repoUrl = getRepoUrl(repo);
+		const repoUrl = getStoreUrl(repo);
 		return `${repoUrl}${path}`;
 	}
 
