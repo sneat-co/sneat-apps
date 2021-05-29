@@ -1,7 +1,14 @@
 import {Inject, Injectable} from "@angular/core";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {IEnvDbServer, IEnvironmentSummary, IParameter, IProjDbModelBrief, IQueryDef} from "@sneat/datatug/models";
+import {
+	IEnvDbServer,
+	IEnvironmentSummary,
+	IParameter,
+	IProjDbModelBrief,
+	IQueryDef,
+	QueryType
+} from "@sneat/datatug/models";
 import {IExecuteResponse, IRecordset} from "@sneat/datatug/dto";
 import {QueriesService} from "./queries.service";
 import {IDatatugProjRef} from "@sneat/datatug/core";
@@ -21,16 +28,30 @@ export interface ISqlQueryTarget {
 
 export interface IQueryState {
 	readonly id: string;
+	readonly type: QueryType;
 	readonly isNew?: boolean;
 	readonly def?: IQueryDef;
 	readonly title?: string;
-	readonly text: string;
+	readonly request: ITextQueryRequest | IHttpQueryRequest;
+	readonly text?: string;
 	readonly targetDbModel?: IProjDbModelBrief;
 	readonly activeEnv?: IQueryEnvState;
 	readonly environments?: ReadonlyArray<IQueryEnvState>;
 	readonly response?: IExecuteResponse;
 	readonly isSaving?: boolean;
 	readonly isLoading?: boolean;
+}
+
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD';
+
+export interface ITextQueryRequest {
+	text: string;
+}
+
+export interface IHttpQueryRequest {
+	url: string;
+	method: HttpMethod;
+	body?: string;
 }
 
 export const isQueryChanged = (queryState: IQueryState): boolean => {
@@ -92,6 +113,21 @@ export class QueryEditorStateService {
 		return $state.value.activeQueries.find(qs => qs.id === id);
 	}
 
+	public setCurrentQuery(id: string): void {
+		const newState: IQueryEditorState = {
+			...$state.value,
+			currentQueryId: id,
+		};
+		$state.next(newState);
+	}
+
+	public closeQuery(query: IQueryState): void {
+		const newState: IQueryEditorState = {
+			...$state.value,
+			activeQueries: $state.value.activeQueries.filter(q => q !== query),
+		};
+		$state.next(newState);
+	}
 
 	openQuery(id: string): void {
 		console.log(`QueryEditorStateService.openQuery(${id})`, this.currentProject);
@@ -102,9 +138,10 @@ export class QueryEditorStateService {
 			if (!queryState) {
 				queryState = {
 					id,
-					text: undefined,
+					type: 'SQL',
+					request: {text: undefined},
 					isLoading: true,
-				}
+				};
 				state = {
 					...state,
 					activeQueries: [queryState, ...(state.activeQueries || [])],
@@ -145,7 +182,7 @@ export class QueryEditorStateService {
 			}
 			state = this.updateQueryStateWithEnvs(state);
 			if (!state.targetDbModel) {
-				state =  {
+				state = {
 					...state,
 					targetDbModel: def.dbModel
 						? this.currentProject?.summary?.dbModels.find(m => m.id === def.dbModel)

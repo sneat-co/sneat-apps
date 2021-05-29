@@ -2,7 +2,7 @@ import {IProjItemBrief} from './project';
 import {IParameterDef} from './parameter';
 import {IRecordsetDefinition} from "./recordset";
 
-export type QueryType = 'SQL' | 'GraphQL';
+export type QueryType = 'SQL' | 'GraphQL' | 'HTTP';
 
 export interface IQueryFolder extends IProjItemBrief {
 	folders?: IQueryFolder[];

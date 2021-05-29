@@ -1,21 +1,22 @@
-<ion-item-divider color="light" *ngIf="queries?.length">
-	<ion-label color="medium">Active Queries</ion-label>
+<ion-item color="light" *ngIf="queries?.length">
+	<ion-icon name="search-outline" slot="start"></ion-icon>
+	<ion-input placeholder="Active Queries"></ion-input>
 	<ion-buttons slot="end">
 		<ion-button color="medium" title="Close all active queries">
 			<ion-icon name="close"></ion-icon>
 		</ion-button>
 	</ion-buttons>
-</ion-item-divider>
+</ion-item>
 <ion-item *ngFor="let query of queries"
 		  tappable
-		  (click)="setActiveQuery(query.id)"
+		  (click)="selectQuery(query.id)"
 >
 	<ion-icon name="terminal-outline" slot="start"></ion-icon>
-	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query.text">
+	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query?.request.text">
 		{{query.title || query.id}}
 	</ion-label>
 	<ion-buttons slot="end">
-		<ion-button color="medium">
+		<ion-button color="medium" title="Close query" (click)="closeQuery(query)">
 			<ion-icon name="close"></ion-icon>
 		</ion-button>
 	</ion-buttons>

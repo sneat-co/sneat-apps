@@ -47,7 +47,8 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 	public showQueryBuilder: boolean;
 	public editorTab: 'text' | 'builder' = 'text';
 
-	public queryState: IQueryState = {id: undefined, text: ''};
+	public editorState: IQueryEditorState = undefined;
+	public queryState: IQueryState = {id: undefined, type: 'SQL', request: {text: ''}};
 
 	public get activeEnv(): IQueryEnvState {
 		return this.queryState?.activeEnv;
@@ -125,6 +126,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	private readonly onQueryEditorStateChanged = (editorState: IQueryEditorState): void => {
 		try {
+			this.editorState = editorState;
 			if (!editorState.currentQueryId) {
 				return;
 			}
@@ -316,11 +318,12 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 	private trackQueryParams(): void {
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
-				console.log('queryParams:', queryParams);
+				console.log('SqlQueryPageComponent.trackQueryParams(): queryParams:', queryParams);
 				let queryId = queryParams.get('id');
 				const isNew = !queryId;
 				if (isNew) {
 					queryId = RandomId.newRandomId();
+					queryId = '' + (this.editorState.activeQueries?.length || 1);
 				}
 				this.setQueryId(queryId, isNew);
 
@@ -387,24 +390,31 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 			}
 		}
 		if (isNew) {
-			this.queryEditorStateService.newQuery({id, text: this.sql, isNew});
+			const queryState: IQueryState = {id, type: 'SQL', request: {text: this.sql}, isNew};
+			this.queryEditorStateService.newQuery(queryState);
 		} else {
 			this.queryEditorStateService.openQuery(id);
 		}
 	}
 
 	private setQuery(query: IQueryDef): void {
-		const queryState = this.getQueryState(query.id) || {
+		const queryState: IQueryState = this.getQueryState(query.id) || {
 			id: query.id,
+			type: query.type,
 			title: query.title,
-			text: query.text,
+			request: {
+				text: query.text,
+			},
 			def: query,
 		};
 		this.updateQueryState(queryState.def === query ? queryState : {
 			...queryState,
 			isNew: false,
+			type: query.type,
 			def: query,
-			text: query.text,
+			request: {
+				text: query.text,
+			},
 		});
 		this.sql = query.text;
 		if (query.targets?.length && !this.targetCatalog) {
@@ -470,6 +480,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	updateUrl(): void {
 		const queryParams: Params = {
+			id: this.queryId,
 			editor: this.editorTab,
 			env: this.queryState.activeEnv?.id,
 		};
@@ -592,7 +603,10 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 		if (queryState.activeEnv.id == envState.id) {
 			queryState = {...queryState, activeEnv: envState};
 		}
-		queryState = {...queryState, environments: queryState.environments.map(env => env.id === envState.id ? envState : env)};
+		queryState = {
+			...queryState,
+			environments: queryState.environments.map(env => env.id === envState.id ? envState : env)
+		};
 		this.updateQueryState(queryState);
 		return envState;
 	}
@@ -625,7 +639,10 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 				}
 				this.updateQueryState({
 					id: this.queryId,
-					text: this.sql,
+					type: 'SQL',
+					request: {
+						text: this.sql,
+					}
 				})
 			} else {
 				this.updateUrl();

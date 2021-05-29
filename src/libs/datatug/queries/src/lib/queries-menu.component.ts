@@ -13,10 +13,14 @@ export class QueriesMenuComponent {
 
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		queryEditorStateService: QueryEditorStateService,
+		private queryEditorStateService: QueryEditorStateService,
 	) {
+		this.setupQueryEditorStateTracking();
+	}
+
+	private setupQueryEditorStateTracking(): void {
 		try {
-			queryEditorStateService.queryEditorState.subscribe({
+			this.queryEditorStateService.queryEditorState.subscribe({
 				next: state => {
 					console.log('QueriesMenuComponent.constructor() => QueryEditorStateService => QueryEditor state:', state);
 					this.currentQueryId = state?.currentQueryId;
@@ -29,7 +33,11 @@ export class QueriesMenuComponent {
 		}
 	}
 
-	setActiveQuery(id: string): void {
-		this.currentQueryId = id;
+	selectQuery(id: string): void {
+		this.queryEditorStateService.setCurrentQuery(id);
+	}
+
+	closeQuery(query: IQueryState): void {
+		this.queryEditorStateService.closeQuery(query);
 	}
 }
