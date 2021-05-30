@@ -1,10 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IForeignKey, IPrimaryKey, IDatatugProjectSummary, IReferencedBy, ITableFull} from '@sneat/datatug/models';
+import {
+	IForeignKey,
+	IPrimaryKey,
+	IDatatugProjectSummary,
+	IReferencedBy,
+	ITableFull,
+	ISqlQueryTarget
+} from '@sneat/datatug/models';
 import {map, mergeMap} from 'rxjs/operators';
 import {PrivateTokenStoreService} from "@sneat/auth";
-import {ISqlQueryTarget} from "@sneat/datatug/queries";
 
 @Injectable()
 export class TableService {

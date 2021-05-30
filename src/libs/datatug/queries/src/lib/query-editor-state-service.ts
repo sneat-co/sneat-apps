@@ -1,86 +1,35 @@
 import {Inject, Injectable} from "@angular/core";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {
-	IEnvDbServer,
-	IEnvironmentSummary,
-	IParameter,
-	IProjDbModelBrief,
-	IQueryDef,
-	QueryType
-} from "@sneat/datatug/models";
-import {IExecuteResponse, IRecordset} from "@sneat/datatug/dto";
+import {IHttpQueryRequest, IQueryDef, ISqlQueryRequest, QueryType} from "@sneat/datatug/models";
 import {QueriesService} from "./queries.service";
 import {IDatatugProjRef} from "@sneat/datatug/core";
 import {DatatugNavContextService} from "@sneat/datatug/services/nav";
 import {filter} from "rxjs/operators";
 import {IDatatugProjectContext} from "@sneat/datatug/nav";
-
-export interface ISqlQueryTarget {
-	repository: string; // Should be removed?
-	project: string;	// Should be removed?
-	model?: string;
-	driver?: string;
-	server?: string;
-	catalog?: string;
-}
-
-
-export interface IQueryState {
-	readonly id: string;
-	readonly type: QueryType;
-	readonly isNew?: boolean;
-	readonly def?: IQueryDef;
-	readonly title?: string;
-	readonly request: ITextQueryRequest | IHttpQueryRequest;
-	readonly text?: string;
-	readonly targetDbModel?: IProjDbModelBrief;
-	readonly activeEnv?: IQueryEnvState;
-	readonly environments?: ReadonlyArray<IQueryEnvState>;
-	readonly response?: IExecuteResponse;
-	readonly isSaving?: boolean;
-	readonly isLoading?: boolean;
-}
-
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD';
-
-export interface ITextQueryRequest {
-	text: string;
-}
-
-export interface IHttpQueryRequest {
-	url: string;
-	method: HttpMethod;
-	body?: string;
-}
+import {IQueryEditorState, IQueryState} from "@sneat/datatug/editor";
 
 export const isQueryChanged = (queryState: IQueryState): boolean => {
 	const {def} = queryState;
-	return !def
-		|| def.text != queryState.text
+	if (
+		!def
 		|| def.title != queryState.title
-		|| def.dbModel != queryState.targetDbModel?.id;
+	) {
+		return true;
+	}
+	if (def.request.queryType !== queryState.request.queryType) {
+		throw new Error(`def.request.type !== queryState.request.type: ${def.request.queryType} !== ${queryState.request.queryType}`);
+	}
+	switch (queryState.request.queryType) {
+		case QueryType.SQL:
+			return (queryState.request as ISqlQueryRequest).text != (def.request as ISqlQueryRequest).text;
+		case QueryType.HTTP:
+			return (queryState.request as IHttpQueryRequest).url != (def.request as IHttpQueryRequest).url;
+		default:
+			throw new Error('Unknown query request type: ' + queryState.request.queryType);
+	}
 }
 
-export interface IQueryEnvState {
-	readonly id: string;
-	readonly title?: string;
-	readonly summary?: IEnvironmentSummary;
-	readonly isExecuting?: boolean;
-	readonly parameters?: ReadonlyArray<IParameter>;
-	readonly recordsets?: ReadonlyArray<IRecordset>;
-	readonly rowsCount?: number;
-	readonly dbServerId?: string;
-	readonly dbServer?: IEnvDbServer;
-	readonly catalogId?: string;
-	readonly error?: unknown;
-}
-
-
-export interface IQueryEditorState {
-	readonly currentQueryId?: string;
-	readonly activeQueries: ReadonlyArray<IQueryState>;
-}
 
 const $state = new BehaviorSubject<IQueryEditorState>(undefined);
 
@@ -133,13 +82,16 @@ export class QueryEditorStateService {
 		console.log(`QueryEditorStateService.openQuery(${id})`, this.currentProject);
 		try {
 			let changed = false;
-			let state = $state.value || {currentQueryId: id, activeQueries: []};
+			let state: IQueryEditorState = $state.value || {currentQueryId: id, activeQueries: []};
 			let queryState = state?.activeQueries?.find(q => q.id === id)
 			if (!queryState) {
 				queryState = {
 					id,
-					type: 'SQL',
-					request: {text: undefined},
+					queryType: QueryType.SQL,
+					request: {
+						queryType: QueryType.SQL,
+						text: '',
+					} as ISqlQueryRequest,
 					isLoading: true,
 				};
 				state = {
@@ -174,8 +126,8 @@ export class QueryEditorStateService {
 			if (def) {
 				state = {...state, def};
 			}
-			if (state.text === undefined) {
-				state = {...state, text: def.text};
+			if (state.request.queryType === QueryType.SQL && (state.request as ISqlQueryRequest).text === undefined) {
+				state = {...state, request: def.request};
 			}
 			if (state.title === undefined) {
 				state = {...state, title: def.title};
@@ -285,7 +237,7 @@ export class QueryEditorStateService {
 			});
 			const query: IQueryDef = {
 				...queryState.def,
-				text: queryState.text,
+				request: queryState.request,
 			};
 			this.queriesService.updateQuery(target, query)
 				.subscribe({

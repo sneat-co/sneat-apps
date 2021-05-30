@@ -1,6 +1,7 @@
 import {Component, Inject} from "@angular/core";
-import {IQueryState, QueryEditorStateService} from "./query-editor-state-service";
+import {QueryEditorStateService} from "./query-editor-state-service";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
+import {IQueryState} from "@sneat/datatug/editor";
 
 @Component({
 	selector: 'datatug-queries-menu',

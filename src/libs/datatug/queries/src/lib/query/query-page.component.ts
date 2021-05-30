@@ -8,7 +8,10 @@ import {
 	IExecuteRequest,
 	IParameter,
 	IQueryDef,
-	ISqlCommandRequest
+	ISqlCommandRequest,
+	ISqlQueryRequest,
+	ISqlQueryTarget,
+	QueryType
 } from '@sneat/datatug/models';
 import {Coordinator} from '@sneat/datatug/executor';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
@@ -22,19 +25,13 @@ import {
 import {IRecordsetResult} from '@sneat/datatug/dto';
 import {RandomId} from "@sneat/random";
 import {ISqlChanged} from "./sql-query/intefaces";
-import {
-	IQueryEditorState,
-	IQueryEnvState,
-	IQueryState,
-	ISqlQueryTarget,
-	isQueryChanged,
-	QueryEditorStateService
-} from "@sneat/datatug/queries";
 import {DatatugNavContextService} from "@sneat/datatug/services/nav";
 import {IDatatugProjectContext} from "@sneat/datatug/nav";
 import {distinctUntilChanged, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {ViewDidEnter} from "@ionic/angular";
+import {IQueryEditorState, IQueryEnvState, IQueryState} from "@sneat/datatug/editor";
+import {isQueryChanged, QueryEditorStateService} from "@sneat/datatug/queries";
 
 
 @Component({
@@ -47,7 +44,14 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	public editorTab: 'text' | 'builder' = 'text';
 
 	public editorState: IQueryEditorState = undefined;
-	public queryState: IQueryState = {id: undefined, type: 'SQL', request: {text: ''}};
+	public queryState: IQueryState = {
+		id: undefined,
+		queryType: QueryType.SQL,
+		request: {
+			queryType: QueryType.SQL,
+			text: '',
+		} as ISqlQueryRequest,
+	};
 
 	public get activeEnv(): IQueryEnvState {
 		return this.queryState?.activeEnv;
@@ -135,8 +139,8 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 			}
 			console.log('onQueryEditorStateChanged', queryState);
 			this.queryState = queryState;
-			if (this.sql != queryState.text) {
-				this.sql = queryState.text;
+			if (this.sql != (queryState.request as ISqlQueryRequest).text) {
+				this.sql = (queryState.request as ISqlQueryRequest).text;
 			}
 			if (this.queryState.environments && !this.queryState.activeEnv) {
 				this.setActiveEnv(this.queryState.environments[0].id)
@@ -389,7 +393,15 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 			}
 		}
 		if (isNew) {
-			const queryState: IQueryState = {id, type: 'SQL', request: {text: this.sql}, isNew};
+			const queryState: IQueryState = {
+				isNew,
+				id,
+				queryType: QueryType.SQL,
+				request: {
+					queryType: QueryType.SQL,
+					text: this.sql,
+				} as ISqlQueryRequest,
+			};
 			this.queryEditorStateService.newQuery(queryState);
 		} else {
 			this.queryEditorStateService.openQuery(id);
@@ -399,23 +411,22 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	private setQuery(query: IQueryDef): void {
 		const queryState: IQueryState = this.getQueryState(query.id) || {
 			id: query.id,
-			type: query.type,
+			queryType: query.request.queryType,
 			title: query.title,
-			request: {
-				text: query.text,
-			},
+			request: query.request,
 			def: query,
 		};
 		this.updateQueryState(queryState.def === query ? queryState : {
 			...queryState,
 			isNew: false,
-			type: query.type,
+			queryType: query.request.queryType,
 			def: query,
 			request: {
-				text: query.text,
-			},
+				queryType: query.request.queryType,
+				text: (query.request as ISqlQueryRequest).text,
+			} as ISqlQueryRequest,
 		});
-		this.sql = query.text;
+		this.sql = (query.request as ISqlQueryRequest).text;
 		if (query.targets?.length && !this.targetCatalog) {
 			this.targetCatalog = query.targets[0].catalog;
 		}
@@ -638,10 +649,11 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 				}
 				this.updateQueryState({
 					id: this.queryId,
-					type: 'SQL',
+					queryType: QueryType.SQL,
 					request: {
+						queryType: QueryType.SQL,
 						text: this.sql,
-					}
+					} as ISqlQueryRequest,
 				})
 			} else {
 				this.updateUrl();

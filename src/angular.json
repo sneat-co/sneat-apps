@@ -2465,6 +2465,31 @@
           }
         }
       }
+    },
+    "datatug-editor": {
+      "projectType": "library",
+      "root": "libs/datatug/editor",
+      "sourceRoot": "libs/datatug/editor/src",
+      "prefix": "sneat",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/editor"],
+          "options": {
+            "jestConfig": "libs/datatug/editor/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/editor/src/**/*.ts",
+              "libs/datatug/editor/src/**/*.html"
+            ]
+          }
+        }
+      }
     }
   }
 }

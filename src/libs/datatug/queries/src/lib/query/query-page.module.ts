@@ -14,7 +14,7 @@ import {SqlQueryComponentModule} from "./sql-query/sql-query.component.module";
 	],
 	declarations: [
 		QueryPageComponent,
-	]
+	],
 })
 export class QueryPageModule {
 }

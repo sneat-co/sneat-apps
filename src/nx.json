@@ -202,6 +202,9 @@
     "listus-e2e": {
       "tags": [],
       "implicitDependencies": ["listus"]
+    },
+    "datatug-editor": {
+      "tags": []
     }
   }
 }

@@ -47,5 +47,6 @@ module.exports = {
     '<rootDir>/libs/datatug/services/base',
     '<rootDir>/libs/datatug/components/project',
     '<rootDir>/apps/listus',
+    '<rootDir>/libs/datatug/editor',
   ],
 };

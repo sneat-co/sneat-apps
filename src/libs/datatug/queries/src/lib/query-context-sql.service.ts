@@ -1,10 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
 import {IDbCatalogObjectWithRefs, TableService} from '../../../services/unsorted/src/lib/table.service';
 import {IAstQuery, IAstRecordset, SqlParser} from '../../../services/unsorted/src/lib/sql-parser';
-import {IForeignKey, ITableFull} from '@sneat/datatug/models';
+import {IForeignKey, ISqlQueryTarget, ITableFull} from '@sneat/datatug/models';
 import {BehaviorSubject} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ISqlQueryTarget} from "@sneat/datatug/queries";
 
 
 const equalRecordsets = (a: IAstRecordset, b: IAstRecordset) => a.name === b.name && a.schema === b.schema;
