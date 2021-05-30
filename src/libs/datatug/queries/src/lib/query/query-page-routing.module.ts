@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {SqlQueryPageComponent} from './sql-query-page.component';
+import {QueryPageComponent} from './query-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: SqlQueryPageComponent
+		redirectTo: 'queries',
 	},
 	{
 		path: ':queryId',
-		component: SqlQueryPageComponent,
+		component: QueryPageComponent,
 	}
 ];
 

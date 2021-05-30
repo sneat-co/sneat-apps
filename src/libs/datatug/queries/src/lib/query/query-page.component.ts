@@ -21,7 +21,7 @@ import {
 } from '@sneat/datatug/services/unsorted';
 import {IRecordsetResult} from '@sneat/datatug/dto';
 import {RandomId} from "@sneat/random";
-import {ISqlChanged} from "./intefaces";
+import {ISqlChanged} from "./sql-query/intefaces";
 import {
 	IQueryEditorState,
 	IQueryEnvState,
@@ -39,10 +39,9 @@ import {ViewDidEnter} from "@ionic/angular";
 
 @Component({
 	selector: 'datatug-sql-editor',
-	templateUrl: './sql-query-page.component.html',
-	styleUrls: ['./sql-query-page.component.scss'],
+	templateUrl: './query-page.component.html',
 })
-export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
+export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	public showQueryBuilder: boolean;
 	public editorTab: 'text' | 'builder' = 'text';

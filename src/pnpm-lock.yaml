@@ -29,6 +29,7 @@ specifiers:
   '@ionic-native/splash-screen': ^5.33.0
   '@ionic-native/status-bar': ^5.33.0
   '@ionic/angular': ^5.6.7
+  '@ionic/angular-toolkit': ^4.0.0
   '@nrwl/angular': 12.3.4
   '@nrwl/cli': 12.3.4
   '@nrwl/cypress': 12.3.4
@@ -115,12 +116,13 @@ devDependencies:
   '@capacitor/android': 2.4.7_@capacitor+core@2.4.7
   '@capacitor/cli': 3.0.0
   '@capacitor/ios': 2.4.7_@capacitor+core@2.4.7
+  '@ionic/angular-toolkit': 4.0.0
   '@nrwl/cli': 12.3.4
   '@nrwl/cypress': 12.3.4_65d8e7b224216042aae993a893450bc7
   '@nrwl/eslint-plugin-nx': 12.3.4_722a1f2999ae6ad5857a75c57dc30742
   '@nrwl/jest': 12.3.4
   '@nrwl/linter': 12.3.4
-  '@nrwl/nx-cloud': 12.1.1
+  '@nrwl/nx-cloud': 12.1.3
   '@nrwl/tao': 12.3.4
   '@nrwl/workspace': 12.3.4_prettier@2.2.1
   '@nxtend/capacitor': 11.1.1_@nrwl+workspace@12.3.4
@@ -3011,6 +3013,25 @@ packages:
       rxjs: 6.6.7
     dev: false
 
+  /@ionic/angular-toolkit/4.0.0:
+    resolution: {integrity: sha512-HGRAGUtc1YSwNZ/Q7X7c2QRyYM2AfsSm++OasPrMo3LnPRVr8OIsUih2ithEU7f3CXrViUR7j/Anu90zGsRgzg==}
+    peerDependencies:
+      '@angular-devkit/architect': ^0.1200.0
+      '@angular-devkit/schematics': ^12.0.0
+    dependencies:
+      '@schematics/angular': 12.0.0
+      cheerio: 1.0.0-rc.3
+      colorette: 1.1.0
+      copy-webpack-plugin: 6.4.1
+      tapable: 2.2.0
+      tslib: 2.2.0
+      ws: 7.4.5
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - webpack
+    dev: true
+
   /@ionic/angular/5.6.7_a5a8e9a0ae84207066ef1ab303582943:
     resolution: {integrity: sha512-urc1N64u3GN/iS6B/7TFctawGyYzz2JICdU0bGpe1DsMwLqBCwRpXUBeqMIA/ptaufepUtLeE+lr77FTRbqzOQ==}
     peerDependencies:
@@ -3545,8 +3566,8 @@ packages:
       tmp: 0.2.1
       tslib: 2.2.0
 
-  /@nrwl/nx-cloud/12.1.1:
-    resolution: {integrity: sha512-748HPQQgs2uHHBz8ZkH66uodVQDZguE+KHhVOIBJEygOE8Ge3V8halwgTfff9wy4ORizGQ6QFm6oVeuF6oGeJA==}
+  /@nrwl/nx-cloud/12.1.3:
+    resolution: {integrity: sha512-IC+CNSXGuInEnIwDS6wVl25vQJm5z9Duh1PzP5k0e30JcoUTqjL08KKwvzo8cmKpUvgLNo3rABc5J5F+fXaJGQ==}
     hasBin: true
     dependencies:
       axios: 0.21.1
@@ -5351,6 +5372,18 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
+  /cheerio/1.0.0-rc.3:
+    resolution: {integrity: sha512-0td5ijfUPuubwLUu0OBoe98gZj8C/AA+RW3v67GPlGOrvxWjZmBXiBCRU+I8VEiNyJzjth40POfHiz2RB3gImA==}
+    engines: {node: '>= 0.6'}
+    dependencies:
+      css-select: 1.2.0
+      dom-serializer: 0.1.1
+      entities: 1.1.2
+      htmlparser2: 3.10.1
+      lodash: 4.17.21
+      parse5: 3.0.3
+    dev: true
+
   /chokidar/2.1.8:
     resolution: {integrity: sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==}
     deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
@@ -5577,6 +5610,10 @@ packages:
     resolution: {integrity: sha512-/9I83NehU/HvAKGTSEZrFFEubYHknzGMpSDOee2JBTqk42qbYd+EOKfN22gmh7kysTwdpNfbJGgfUiqGkLul0A==}
     dev: true
 
+  /colorette/1.1.0:
+    resolution: {integrity: sha512-6S062WDQUXi6hOfkO/sBPVwE5ASXY4G2+b4atvhJfSsuUUhIaUKlkjLe9692Ipyt5/a+IPF5aVTu3V5gvXq5cg==}
+    dev: true
+
   /colorette/1.2.2:
     resolution: {integrity: sha512-MKGMzyfeuutC/ZJ1cba9NqcNpfeqMUcYmyF1ZFY6/Cn7CNSAKx6a+s48sqLqyAiZuaP2TcqMhoo+dlwFnVxT9w==}
 
@@ -5730,6 +5767,25 @@ packages:
   /copy-descriptor/0.1.1:
     resolution: {integrity: sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=}
     engines: {node: '>=0.10.0'}
+
+  /copy-webpack-plugin/6.4.1:
+    resolution: {integrity: sha512-MXyPCjdPVx5iiWyl40Va3JGh27bKzOTNY3NjUTrosD2q7dR/cLD0013uqJ3BpFbUjyONINjb6qI7nDIJujrMbA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.37.0 || ^5.0.0
+    dependencies:
+      cacache: 15.1.0
+      fast-glob: 3.2.5
+      find-cache-dir: 3.3.1
+      glob-parent: 5.1.2
+      globby: 11.0.3
+      loader-utils: 2.0.0
+      normalize-path: 3.0.0
+      p-limit: 3.1.0
+      schema-utils: 3.0.0
+      serialize-javascript: 5.0.1
+      webpack-sources: 1.4.3
+    dev: true
 
   /copy-webpack-plugin/8.1.1_webpack@5.36.2:
     resolution: {integrity: sha512-rYM2uzRxrLRpcyPqGceRBDpxxUV8vcDqIKxAUKfcnFpcrPxT5+XvhTxv7XLjo5AvEJFPdAE3zCogG2JVahqgSQ==}
@@ -5903,6 +5959,15 @@ packages:
       postcss: 7.0.35
     dev: true
 
+  /css-select/1.2.0:
+    resolution: {integrity: sha1-KzoRBTnFNV8c2NMUYj6HCxIeyFg=}
+    dependencies:
+      boolbase: 1.0.0
+      css-what: 2.1.3
+      domutils: 1.5.1
+      nth-check: 1.0.2
+    dev: true
+
   /css-select/3.1.2:
     resolution: {integrity: sha512-qmss1EihSuBNWNNhHjxzxSfJoFBM/lERB/Q4EnsJQQC62R2evJDW481091oAdOr9uh46/0n4nrg0It5cAnj1RA==}
     dependencies:
@@ -5926,6 +5991,10 @@ packages:
     dependencies:
       mdn-data: 2.0.14
       source-map: 0.6.1
+    dev: true
+
+  /css-what/2.1.3:
+    resolution: {integrity: sha512-a+EPoD+uZiNfh+5fxw2nO9QwFa6nJe2Or35fGY6Ipw1R3R4AGz1d1TEZrCegvw2YTmZ0jXirGYlzxxpYSHwpEg==}
     dev: true
 
   /css-what/4.0.0:
@@ -6447,6 +6516,13 @@ packages:
       void-elements: 2.0.1
     dev: true
 
+  /dom-serializer/0.1.1:
+    resolution: {integrity: sha512-l0IU0pPzLWSHBcieZbpOKgkIn3ts3vAh7ZuFyXNwJxJXk/c4Gwj9xaTJwIDVQCXawWD0qb3IzMGH5rglQaO0XA==}
+    dependencies:
+      domelementtype: 1.3.1
+      entities: 1.1.2
+    dev: true
+
   /dom-serializer/1.3.2:
     resolution: {integrity: sha512-5c54Bk5Dw4qAxNOI1pFEizPSjVsx5+bpJKmL2kPn8JhBUq2q09tTCa3mjijun2NfK78NMouDYNMBkOrPZiS+ig==}
     dependencies:
@@ -6459,6 +6535,10 @@ packages:
     resolution: {integrity: sha512-g6RpyWXzl0RR6OTElHKBl7nwnK87GUyZMYC7JWsB/IA73vpqK2K6LT39x4VepLxlSsWBFrPVLnsSR5Jyty0+2Q==}
     dev: false
 
+  /domelementtype/1.3.1:
+    resolution: {integrity: sha512-BSKB+TSpMpFI/HOxCNr1O8aMOTZ8hT3pM3GQ0w/mWRmkhEDSFJkkyzz4XQsBV44BChwGkrDfMyjVD0eA2aFV3w==}
+    dev: true
+
   /domelementtype/2.2.0:
     resolution: {integrity: sha512-DtBMo82pv1dFtUmHyr48beiuq792Sxohr+8Hm9zoxklYPfa6n0Z3Byjj2IV7bmr2IyqClnqEQhfgHJJ5QF0R5A==}
     dev: true
@@ -6470,11 +6550,31 @@ packages:
       webidl-conversions: 5.0.0
     dev: true
 
+  /domhandler/2.4.2:
+    resolution: {integrity: sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==}
+    dependencies:
+      domelementtype: 1.3.1
+    dev: true
+
   /domhandler/4.2.0:
     resolution: {integrity: sha512-zk7sgt970kzPks2Bf+dwT/PLzghLnsivb9CcxkvR8Mzr66Olr0Ofd8neSbglHJHaHa2MadfoSdNlKYAaafmWfA==}
     engines: {node: '>= 4'}
     dependencies:
       domelementtype: 2.2.0
+    dev: true
+
+  /domutils/1.5.1:
+    resolution: {integrity: sha1-3NhIiib1Y9YQeeSMn3t+Mjc2gs8=}
+    dependencies:
+      dom-serializer: 0.1.1
+      domelementtype: 1.3.1
+    dev: true
+
+  /domutils/1.7.0:
+    resolution: {integrity: sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==}
+    dependencies:
+      dom-serializer: 0.1.1
+      domelementtype: 1.3.1
     dev: true
 
   /domutils/2.6.0:
@@ -6632,6 +6732,10 @@ packages:
 
   /ent/2.2.0:
     resolution: {integrity: sha1-6WQhkyWiHQX0RGai9obtbOX13R0=}
+    dev: true
+
+  /entities/1.1.2:
+    resolution: {integrity: sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==}
     dev: true
 
   /entities/2.2.0:
@@ -7647,6 +7751,17 @@ packages:
 
   /html-escaper/2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
+    dev: true
+
+  /htmlparser2/3.10.1:
+    resolution: {integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==}
+    dependencies:
+      domelementtype: 1.3.1
+      domhandler: 2.4.2
+      domutils: 1.7.0
+      entities: 1.1.2
+      inherits: 2.0.4
+      readable-stream: 3.6.0
     dev: true
 
   /http-cache-semantics/4.1.0:
@@ -9987,6 +10102,12 @@ packages:
       set-blocking: 2.0.0
     dev: true
 
+  /nth-check/1.0.2:
+    resolution: {integrity: sha512-WeBOdju8SnzPN5vTUJYxYUxLeXpCaVP5i5e0LF8fg7WORF2Wd7wFX/pk0tYZk7s8T+J7VLy0Da6J1+wCT0AtHg==}
+    dependencies:
+      boolbase: 1.0.0
+    dev: true
+
   /nth-check/2.0.0:
     resolution: {integrity: sha512-i4sc/Kj8htBrAiH1viZ0TgU8Y5XqCaV/FziYK6TBczxmeKm3AEFWqqF3195yKudrarqy7Zu80Ra5dobFjn9X/Q==}
     dependencies:
@@ -10325,6 +10446,12 @@ packages:
     resolution: {integrity: sha512-kXX+5S81lgESA0LsDuGjAlBybImAChYRMT+/uKCEXFBFOeEhS52qUCydGhU3qLRD8D9DVjaUo821WK7DM4iCeg==}
     dependencies:
       parse5: 6.0.1
+    dev: true
+
+  /parse5/3.0.3:
+    resolution: {integrity: sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==}
+    dependencies:
+      '@types/node': 14.14.33
     dev: true
 
   /parse5/6.0.1:
@@ -13410,6 +13537,7 @@ packages:
 
   /uuid/3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
+    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
     dev: true
 

@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {routingParamTableType} from './datatug-routing-params';
+import {routingParamTableType} from '@sneat/datatug/core';
 
 export const datatugProjEnvDbRoutes: Routes = [
 	{

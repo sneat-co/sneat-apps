@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {routingParamRepoId} from './datatug-routing-params';
+import {routingParamRepoId} from '@sneat/datatug/core';
 
 export const datatugRoutes: Routes = [
 	{

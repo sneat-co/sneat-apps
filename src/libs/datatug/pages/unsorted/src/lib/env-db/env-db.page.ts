@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import Tabulator from 'tabulator-tables';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {getTabulatorCols, IGridColumn} from '@sneat/grid';
-import {routingParamEnvironmentId, routingParamProjectId} from '@sneat/datatug/routes';
+import {routingParamEnvironmentId, routingParamProjectId} from '@sneat/datatug/core';
 import {IDatabaseFull, IEnvironmentFull, IDatatugProjectFull, ITableFull} from '@sneat/datatug/models';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {DatatugNavService} from '@sneat/datatug/services/nav';

@@ -6,7 +6,7 @@ import {IDatatugProjectBase} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AgentStateService, IAgentState, StoreService} from '@sneat/datatug/services/repo';
 import {DatatugNavService} from '@sneat/datatug/services/nav';
-import {routingParamRepoId} from '@sneat/datatug/routes';
+import {routingParamRepoId} from '@sneat/datatug/core';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 
 @Component({

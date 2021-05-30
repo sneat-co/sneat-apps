@@ -5,7 +5,7 @@ import {
   routingParamDbModelId, routingParamDbServerId, routingParamDriver,
   routingParamEntityId,
   routingParamEnvironmentId, routingParamServerType
-} from './datatug-routing-params';
+} from '@sneat/datatug/core';
 
 export const datatugProjectRoutes: Routes = [
 	{
@@ -86,11 +86,11 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'query',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.SqlQueryPageModule)
+		loadChildren: () => import('@sneat/datatug/queries').then(m => m.QueryPageModule)
 	},
 	{
 		path: 'queries',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.QueriesPageModule)
+		loadChildren: () => import('@sneat/datatug/queries').then(m => m.QueriesPageModule)
 	},
 	{
 		path: 'servers',

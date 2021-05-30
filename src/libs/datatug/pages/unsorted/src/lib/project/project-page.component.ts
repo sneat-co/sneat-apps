@@ -20,7 +20,7 @@ import {IDatatugProjectContext} from '@sneat/datatug/nav';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {EntityService, EnvironmentService, SchemaService} from '@sneat/datatug/services/unsorted';
-import {routingParamProjectId} from '@sneat/datatug/routes';
+import {routingParamProjectId} from '@sneat/datatug/core';
 import {CreateNamedRequest} from '@sneat/datatug/dto';
 import {IRecord} from '@sneat/data';
 

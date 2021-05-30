@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {RecordsetValue} from '@sneat/datatug/dto';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {EntityService} from '@sneat/datatug/services/unsorted';
-import {routingParamEntityId, routingParamProjectId, routingParamRepoId} from '@sneat/datatug/routes';
+import {routingParamEntityId, routingParamProjectId, routingParamRepoId} from '@sneat/datatug/core';
 import {IEntity, IProjEntity} from '@sneat/datatug/models';
 import {IGridColumn} from '@sneat/grid';
 

@@ -6,7 +6,7 @@ import {Subject} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {QueryParamsService} from '@sneat/datatug/core';
 import {IBoardContext, IBoardDef, IParamWithDefAndValue, IProjBoard} from '@sneat/datatug/models';
-import {routingParamBoard} from '@sneat/datatug/routes';
+import {routingParamBoard} from '@sneat/datatug/core';
 import {DatatugNavContextService} from '@sneat/datatug/services/nav';
 import {ParameterLookupService} from '@sneat/datatug/components/parameters';
 
