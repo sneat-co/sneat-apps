@@ -1,8 +1,4 @@
 {
-  "npmScope": "sneat",
-  "affected": {
-    "defaultBase": "master"
-  },
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": {
@@ -14,6 +10,10 @@
     ".eslintrc.json": "*",
     "nx.json": "*"
   },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "npmScope": "sneat",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",

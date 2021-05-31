@@ -17,8 +17,7 @@ import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
-import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule} from '@sneat/auth';
-import {SneatAuthRoutingModule} from '../../../../libs/auth/src/lib/sneat-auth-routing.module';
+import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule, SneatAuthRoutingModule} from '@sneat/auth';
 import {DatatugMenuModule} from './datatug-menu/datatug-menu.module';
 import {DatatugCoreModule} from '@sneat/datatug/core';
 import {DatatugServicesNavModule} from '@sneat/datatug/services/nav';
@@ -71,7 +70,4 @@ import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 	bootstrap: [DatatugAppComponent],
 })
 export class DatatugAppModule {
-	constructor() {
-	}
 }
-console.log('DatatugAppModule is loaded');

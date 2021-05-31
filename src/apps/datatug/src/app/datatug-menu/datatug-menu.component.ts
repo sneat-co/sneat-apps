@@ -37,6 +37,8 @@ export class DatatugMenuComponent implements OnDestroy {
 	private projSub: Subscription;
 	private readonly destroyed = new Subject<void>();
 
+	public datatugUser: IDatatugUser;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly sneatAuthStateService: SneatAuthStateService,
@@ -163,8 +165,6 @@ export class DatatugMenuComponent implements OnDestroy {
 			this.errorLogger.logError(e, 'Failed to logout');
 		}
 	}
-
-	public datatugUser: IDatatugUser;
 
 	private trackCurrentUser(): void {
 		try {

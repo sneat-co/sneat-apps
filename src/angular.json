@@ -5,34 +5,21 @@
     "packageManager": "pnpm",
     "analytics": "648b39e6-de60-4652-879b-3b251331fa16"
   },
+  "defaultProject": "emptyapp",
   "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
     "@nrwl/angular:application": {
       "style": "scss",
-      "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:library": {
       "style": "scss",
-      "linter": "eslint",
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
       "style": "scss"
     }
   },
-  "defaultProject": "emptyapp",
   "projects": {
     "emptyapp": {
       "projectType": "application",
@@ -227,7 +214,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-devkit/build-angular:eslint",
           "options": {
             "tsConfig": [
               "apps/emptyionicapp/tsconfig.app.json",
@@ -351,7 +338,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-devkit/build-angular:eslint",
           "options": {
             "tsConfig": ["apps/emptyionicapp-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/emptyionicapp-e2e/**/*"]
@@ -472,14 +459,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "apps/datatug/tsconfig.app.json",
-              "apps/datatug/tsconfig.spec.json",
-              "apps/datatug/tsconfig.editor.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/datatug/**/*"]
+            "lintFilePatterns": [
+              "apps/datatug/src/**/*.ts",
+              "apps/datatug/src/**/*.html"
+            ]
           }
         },
         "test": {
@@ -596,10 +581,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": ["apps/datatug-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/datatug-e2e/**/*"]
+            "lintFilePatterns": ["apps/datatug-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -1391,7 +1375,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-devkit/build-angular:eslint",
           "options": {
             "tsConfig": [
               "apps/scrumspace/tsconfig.app.json",
@@ -1515,7 +1499,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-devkit/build-angular:eslint",
           "options": {
             "tsConfig": ["apps/scrumspace-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/scrumspace-e2e/**/*"]
@@ -1602,7 +1586,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-devkit/build-angular:eslint",
           "options": {
             "tsConfig": [
               "apps/issuenumberone/tsconfig.app.json",
@@ -1726,7 +1710,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-devkit/build-angular:eslint",
           "options": {
             "tsConfig": ["apps/issuenumberone-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/issuenumberone-e2e/**/*"]
