@@ -7,10 +7,8 @@ import {IonicModule} from '@ionic/angular';
 import {QueriesPageRoutingModule} from './queries-routing.module';
 
 import {QueriesPageComponent} from './queries-page.component';
-import {DatatugBoardModule} from '@sneat/datatug/board';
 import {QueriesServiceModule} from '@sneat/datatug/services/unsorted';
 import {DatatugComponentsSqlEditorModule} from "@sneat/datatug/components/sqleditor";
-import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
 import {WormholeModule} from "@sneat/wormhole";
 
 @NgModule({
@@ -21,8 +19,6 @@ import {WormholeModule} from "@sneat/wormhole";
 		DatatugComponentsSqlEditorModule,
 		QueriesPageRoutingModule,
 		QueriesServiceModule,
-		DatatugBoardModule,
-		DatatugComponentsProjectModule,
 		WormholeModule,
 	],
 	declarations: [
