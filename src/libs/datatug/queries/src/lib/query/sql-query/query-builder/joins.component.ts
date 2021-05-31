@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Inject, Input, Output} from "@angular/core";
-import {IAstJoin, IAstQuery, ICanJoin, QueryContextSqlService, SqlParser} from "@sneat/datatug/services/unsorted";
+import {IAstJoin, IAstQuery, SqlParser} from "@sneat/datatug/services/unsorted";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {ISqlChanged} from "../intefaces";
+import {QueryContextSqlService, ICanJoin} from '../../../query-context-sql.service';
 
 @Component({
 	selector: 'datatug-qe-joins',

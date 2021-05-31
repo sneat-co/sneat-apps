@@ -10,7 +10,7 @@ import {DatatugBoardModule} from '@sneat/datatug/board';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
 import {DatatugExecutorModule} from '@sneat/datatug/executor';
 import {DatatugComponentsSqlEditorModule} from '@sneat/datatug/components/sqleditor';
-import {QueriesServiceModule} from '@sneat/datatug/services/unsorted';
+import {QueriesServiceModule} from '../../queries.service.module';
 import {DatatugQueriesModule} from "@sneat/datatug/queries";
 import {ColumnsComponent} from "./query-builder/columns.component";
 import {JoinsComponent} from "./query-builder/joins.component";

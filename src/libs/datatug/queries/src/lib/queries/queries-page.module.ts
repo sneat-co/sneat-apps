@@ -7,7 +7,7 @@ import {IonicModule} from '@ionic/angular';
 import {QueriesPageRoutingModule} from './queries-routing.module';
 
 import {QueriesPageComponent} from './queries-page.component';
-import {QueriesServiceModule} from '@sneat/datatug/services/unsorted';
+import {QueriesServiceModule} from '../queries.service.module';
 import {DatatugComponentsSqlEditorModule} from "@sneat/datatug/components/sqleditor";
 import {WormholeModule} from "@sneat/wormhole";
 

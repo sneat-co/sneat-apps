@@ -4,11 +4,11 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IProjItemBrief, IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {QueriesService} from '@sneat/datatug/services/unsorted';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
 import {getStoreId} from "@sneat/datatug/nav";
+import {QueriesService} from "../queries.service";
 
 interface FilteredItem {
 	folders: string[];

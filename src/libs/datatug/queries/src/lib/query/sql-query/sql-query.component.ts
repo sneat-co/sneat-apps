@@ -14,8 +14,6 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {
 	EnvironmentService,
 	IAstQuery,
-	QueriesService,
-	QueryContextSqlService,
 	SqlParser
 } from '@sneat/datatug/services/unsorted';
 import {
@@ -33,6 +31,8 @@ import {distinctUntilChanged, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {ViewDidEnter} from "@ionic/angular";
 import {IQueryEditorState, IQueryEnvState, IQueryState} from "@sneat/datatug/editor";
+import {QueriesService} from '../../queries.service';
+import {QueryContextSqlService} from "../../query-context-sql.service";
 
 
 @Component({
