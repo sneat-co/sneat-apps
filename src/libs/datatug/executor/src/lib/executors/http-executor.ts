@@ -9,7 +9,7 @@ import {
   IExecuteRequest,
   IHttpCommand,
   IRequestCommand
-} from '@sneat/datatug/models';
+} from '@sneat/datatug/dto';
 import {IExecuteResponse} from '@sneat/datatug/dto';
 
 @Injectable({

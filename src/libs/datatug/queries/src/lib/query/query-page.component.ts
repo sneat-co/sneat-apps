@@ -2,13 +2,9 @@ import {ChangeDetectorRef, Component, Inject, OnDestroy} from '@angular/core';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {
-	ICommandResponseItem,
-	ICommandResponseWithRecordset,
 	IEnvDbServer,
-	IExecuteRequest,
 	IParameter,
 	IQueryDef,
-	ISqlCommandRequest,
 	ISqlQueryRequest,
 	ISqlQueryTarget,
 	QueryType
@@ -22,7 +18,12 @@ import {
 	QueryContextSqlService,
 	SqlParser
 } from '@sneat/datatug/services/unsorted';
-import {IRecordsetResult} from '@sneat/datatug/dto';
+import {
+	ICommandResponseItem,
+	ICommandResponseWithRecordset,
+	IExecuteRequest,
+	IRecordsetResult, ISqlCommandRequest
+} from '@sneat/datatug/dto';
 import {RandomId} from "@sneat/random";
 import {ISqlChanged} from "./sql-query/intefaces";
 import {DatatugNavContextService} from "@sneat/datatug/services/nav";

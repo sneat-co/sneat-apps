@@ -1,10 +1,11 @@
 import {Component, Inject, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ICommandResponseWithRecordset, IForeignKey, ITableFull} from '@sneat/datatug/models';
+import {IForeignKey, ITableFull} from '@sneat/datatug/models';
 import {DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {IGridDef} from '@sneat/grid';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {AgentService, StoreService} from '@sneat/datatug/services/repo';
+import {ICommandResponseWithRecordset} from "@sneat/datatug/dto";
 
 @Component({
 	selector: 'datatug-fk-card',

@@ -5,12 +5,12 @@ import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {PopoverController} from '@ionic/angular';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {AgentService, StoreService} from '@sneat/datatug/services/repo';
-import {ICommandResponseWithRecordset, IForeignKey} from '@sneat/datatug/models';
+import {AgentService} from '@sneat/datatug/services/repo';
+import {IForeignKey} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {CellPopoverComponent} from '../../../../../components/datagrid/src/lib/cell-popover/cell-popover.component';
-import {IExecuteResponse, IRecordsetResult} from '@sneat/datatug/dto';
+import {ICommandResponseWithRecordset, IExecuteResponse, IRecordsetResult} from '@sneat/datatug/dto';
 import {IGridDef} from '@sneat/grid';
 import {IEnvDbTableContext} from '@sneat/datatug/nav';
 

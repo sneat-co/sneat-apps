@@ -3,7 +3,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {IExecuteResponse, ISelectRequest} from "@sneat/datatug/dto";
 import {Observable, throwError} from "rxjs";
 import {getStoreUrl} from "@sneat/datatug/nav";
-import {IExecuteRequest, ISqlCommandRequest} from "@sneat/datatug/models";
+import {IExecuteRequest} from "@sneat/datatug/dto";
+import {ISqlCommandRequest} from "@sneat/datatug/dto"
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 

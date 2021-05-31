@@ -1,4 +1,5 @@
-import {ICommandResponse, IParameter, IRecordsetDefinition, NamedParams} from '@sneat/datatug/models';
+import {IParameter, IRecordsetDefinition, NamedParams} from '@sneat/datatug/models';
+import {ICommandResponse} from "./response";
 
 export interface ISelectRequest {
 	proj: string;

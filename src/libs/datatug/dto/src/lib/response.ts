@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
-import {IRecordsetDefinition} from '../definition/recordset';
-import {IRecordsetResult} from '@sneat/datatug/dto';
+import {IRecordsetDefinition} from '@sneat/datatug/models';
+import {IRecordsetResult} from "./execute";
 
 export interface ICommandResponse {
 	readonly commandId: string;

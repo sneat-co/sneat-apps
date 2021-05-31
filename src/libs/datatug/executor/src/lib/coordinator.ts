@@ -2,9 +2,8 @@ import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpExecutor} from './executors/http-executor';
 import {IRequestExecutor} from './command-executor';
-import {AgentService, StoreService} from '@sneat/datatug/services/repo';
-import {IExecuteRequest} from '@sneat/datatug/models';
-import {IExecuteResponse} from '@sneat/datatug/dto';
+import {AgentService} from '@sneat/datatug/services/repo';
+import {IExecuteRequest, IExecuteResponse} from '@sneat/datatug/dto';
 
 @Injectable({
 	providedIn: 'root'

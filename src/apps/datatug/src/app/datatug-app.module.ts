@@ -74,3 +74,4 @@ export class DatatugAppModule {
 	constructor() {
 	}
 }
+console.log('DatatugAppModule is loaded');
