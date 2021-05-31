@@ -30,8 +30,7 @@ export class AddDbServerComponent implements OnDestroy {
 	}
 
 	close(): void {
-		this.modalCtrl.dismiss().then(() => {
-		});
+		this.modalCtrl.dismiss().catch(this.errorLogger.logErrorHandler);
 	}
 
 	submit(): void {
