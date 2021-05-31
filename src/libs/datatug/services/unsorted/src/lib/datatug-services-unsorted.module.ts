@@ -3,7 +3,6 @@ import {SchemaService} from './schema.service';
 import {EntityService} from './entity.service';
 import {DbServerService} from './db-server.service';
 import {EnvironmentService} from './environment.service';
-import {QueriesService} from '../../../../queries/src/lib/queries.service';
 import {RecordsetService} from './recordset.service';
 import {VariableService} from './variable.service';
 import {TableService} from './table.service';
@@ -19,7 +18,6 @@ import {HttpClientModule} from "@angular/common/http";
     DbServerService,
     EntityService,
     EnvironmentService,
-    QueriesService,
     RecordsetService,
     SchemaService,
     VariableService,
