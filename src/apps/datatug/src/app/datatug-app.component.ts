@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AppComponentService} from '@sneat/app';
 
 @Component({
-  selector: 'datatug-root',
+  selector: 'sneat-root',
   templateUrl: 'datatug-app.component.html',
 })
 export class DatatugAppComponent {
