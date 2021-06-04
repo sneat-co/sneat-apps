@@ -20,7 +20,7 @@ import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project"
 		RouterModule,
 		DatatugServicesStoreModule,
 		DatatugServicesProjectModule,
-		WormholeModule,
+		WormholeModule, // WormholeModule have to be imported at root module
 		DatatugComponentsProjectModule,
 		// DatatugServicesModule,
 		// TableMetaCardModule,
@@ -35,4 +35,7 @@ import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project"
 	],
 })
 export class DatatugMenuModule {
+	constructor() {
+		console.log('DatatugMenuModule.constructor()');
+	}
 }

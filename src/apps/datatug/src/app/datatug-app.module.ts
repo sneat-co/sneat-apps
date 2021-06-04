@@ -67,7 +67,12 @@ import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 			}
 		},
 	],
-	bootstrap: [DatatugAppComponent],
+	bootstrap: [
+		DatatugAppComponent,
+	],
 })
 export class DatatugAppModule {
+	constructor() {
+		console.log('DatatugAppModule.constructor()');
+	}
 }
