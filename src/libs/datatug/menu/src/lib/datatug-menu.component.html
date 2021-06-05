@@ -7,8 +7,9 @@
 		<!--    </ion-buttons>-->
 		<ion-icon slot="start" name="person-circle-outline"></ion-icon>
 
-		<ion-label color="medium" *ngIf="firebaseUser$|async">{{(firebaseUser$|async)?.displayName}}</ion-label>
+		<ion-label color="medium" *ngIf="!authState">Loading...</ion-label>
 		<ion-label color="medium" *ngIf="authState === 'authenticating'">Authenticating...</ion-label>
+		<ion-label color="medium" *ngIf="firebaseUser$|async">{{(firebaseUser$|async)?.displayName}}</ion-label>
 		<ion-label color="medium" *ngIf="authState === 'notAuthenticated'">
 			Please <a [routerLink]="'/login'">sign in</a>
 		</ion-label>

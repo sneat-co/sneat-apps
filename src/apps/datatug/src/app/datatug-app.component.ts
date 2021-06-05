@@ -1,6 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, Type} from '@angular/core';
 import {AppComponentService} from '@sneat/app';
-import {DatatugMenuComponent} from "@sneat/datatug/menu";
 
 @Component({
 	selector: 'datatug-root',
@@ -8,7 +7,7 @@ import {DatatugMenuComponent} from "@sneat/datatug/menu";
 })
 export class DatatugAppComponent {
 
-	menu: Promise<typeof DatatugMenuComponent>;
+	menu: Promise<Type<any>>;
 
 	constructor(
 		readonly appComponentService: AppComponentService,

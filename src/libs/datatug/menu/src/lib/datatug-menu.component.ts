@@ -51,19 +51,22 @@ export class DatatugMenuComponent implements OnDestroy {
 		@Optional() private readonly datatugUserService: DatatugUserService,
 	) {
 		console.log('DatatugMenuComponent.constructor()');
-		return;
 		this.firebaseUser$ = afAuth.user;
 		// userService.userRecord.subscribe(user => {
 		// 	this.projects = user?.data?.dataTugProjects;
 		// });
-		this.currentFolder = datatugNavContextService.currentFolder;
 		try {
 			this.trackAuthState();
 			this.trackCurrentUser();
-			this.trackCurrentRepo();
-			this.trackCurrentProject();
-			this.trackCurrentEnvironment();
-			this.trackCurrentEnvDbTable();
+			if (datatugNavContextService) {
+				this.currentFolder = datatugNavContextService.currentFolder;
+				this.trackCurrentRepo();
+				this.trackCurrentProject();
+				this.trackCurrentEnvironment();
+				this.trackCurrentEnvDbTable();
+			} else {
+				console.error('datatugNavContextService is not injected');
+			}
 		} catch (e) {
 			errorLogger.logError(e, 'Failed to setup context tracking');
 		}
@@ -74,6 +77,10 @@ export class DatatugMenuComponent implements OnDestroy {
 	}
 
 	private trackAuthState(): void {
+		if (!this.sneatAuthStateService) {
+			console.error('this.sneatAuthStateService is not injected');
+			return;
+		}
 		this.sneatAuthStateService.authState
 			.pipe(
 				takeUntil(this.destroyed),
@@ -169,6 +176,10 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	private trackCurrentUser(): void {
 		try {
+			if (!this.datatugUserService) {
+				console.error('this.datatugUserService is not injected');
+				return;
+			}
 			this.datatugUserService.datatugUser.pipe(
 				takeUntil(this.destroyed),
 			).subscribe({
