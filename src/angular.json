@@ -9,11 +9,13 @@
   "schematics": {
     "@nrwl/angular:application": {
       "style": "scss",
+      "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:library": {
       "style": "scss",
+      "linter": "eslint",
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
@@ -444,7 +446,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "datatug:build"
+            "browserTarget": "datatug:build",
+			"sourceMap": true
           },
           "configurations": {
             "production": {
@@ -2470,6 +2473,31 @@
             "lintFilePatterns": [
               "libs/datatug/editor/src/**/*.ts",
               "libs/datatug/editor/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "datatug-menu": {
+      "projectType": "library",
+      "root": "libs/datatug/menu",
+      "sourceRoot": "libs/datatug/menu/src",
+      "prefix": "datatug",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/menu"],
+          "options": {
+            "jestConfig": "libs/datatug/menu/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/menu/src/**/*.ts",
+              "libs/datatug/menu/src/**/*.html"
             ]
           }
         }

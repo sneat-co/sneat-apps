@@ -8,6 +8,14 @@ import {DatatugServicesProjectModule} from '@sneat/datatug/services/project';
 import {DatatugServicesStoreModule} from '@sneat/datatug/services/repo';
 import {WormholeModule} from '@sneat/wormhole';
 import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
+import {DatatugCoreModule} from "@sneat/datatug/core";
+import {SneatAppModule} from "@sneat/app";
+import {SneatLoggingModule} from "@sneat/logging";
+import {SneatAnalyticsModule} from "@sneat/analytics";
+import {SneatAuthModule, SneatAuthRoutingModule} from "@sneat/auth";
+import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
+import {DatatugServicesNavModule} from "@sneat/datatug/services/nav";
+import {DatatugServicesUnsortedModule} from "@sneat/datatug/services/unsorted";
 // import {TableMetaCardModule} from '../table-meta-card/table-meta-card.module';
 // import {ContextCardComponent} from '../../context/components/context-card/context-card.component';
 // import {ContextCardEntityComponent} from '../../context/components/context-card-entity/context-card-entity.component';
@@ -20,10 +28,17 @@ import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project"
 		RouterModule,
 		DatatugServicesStoreModule,
 		DatatugServicesProjectModule,
-		WormholeModule, // WormholeModule have to be imported at root module
 		DatatugComponentsProjectModule,
-		// DatatugServicesModule,
-		// TableMetaCardModule,
+		DatatugCoreModule,
+		SneatAppModule,
+		SneatLoggingModule,
+		SneatAnalyticsModule,
+		SneatAuthModule,
+		SneatAuthRoutingModule,
+		DatatugServicesBaseModule,
+		DatatugServicesNavModule,
+		DatatugServicesUnsortedModule,
+		WormholeModule,
 	],
 	declarations: [
 		DatatugMenuComponent,

@@ -22,22 +22,22 @@ import {AuthStates, SneatAuthStateService} from "@sneat/auth";
 })
 export class DatatugMenuComponent implements OnDestroy {
 
-	public authState: AuthStates;
-	public currentRepoId: string;
-	public currentProjectId: string;
-	public currentDbModelId: string;
-	public currentEnvId: string;
-	public currentDbInstanceId: string;
-	public currentProject: IDatatugProjectSummary;
+	public authState?: AuthStates;
+	public currentRepoId?: string;
+	public currentProjectId?: string;
+	public currentDbModelId?: string;
+	public currentEnvId?: string;
+	public currentDbInstanceId?: string;
+	public currentProject?: IDatatugProjectSummary;
 	public projects: IDatatugProjectBase[] = [];
 
-	public table: IEnvDbTableContext;
+	public table?: IEnvDbTableContext;
 	public currentFolder: Observable<string>;
 	public readonly firebaseUser$: Observable<firebase.User | null>
-	private projSub: Subscription;
+	private projSub?: Subscription;
 	private readonly destroyed = new Subject<void>();
 
-	public datatugUser: IDatatugUser;
+	public datatugUser?: IDatatugUser;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

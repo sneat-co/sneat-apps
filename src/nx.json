@@ -205,6 +205,9 @@
     },
     "datatug-editor": {
       "tags": []
+    },
+    "datatug-menu": {
+      "tags": []
     }
   }
 }
