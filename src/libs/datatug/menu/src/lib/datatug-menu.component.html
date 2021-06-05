@@ -7,12 +7,17 @@
 		<!--    </ion-buttons>-->
 		<ion-icon slot="start" name="person-circle-outline"></ion-icon>
 
-		<ion-label color="medium" *ngIf="!authState">Loading...</ion-label>
-		<ion-label color="medium" *ngIf="authState === 'authenticating'">Authenticating...</ion-label>
-		<ion-label color="medium" *ngIf="firebaseUser$|async">{{(firebaseUser$|async)?.displayName}}</ion-label>
-		<ion-label color="medium" *ngIf="authState === 'notAuthenticated'">
-			Please <a [routerLink]="'/login'">sign in</a>
-		</ion-label>
+		<ion-label color="medium"
+				   *ngIf="firebaseUser$|async; else notAuthenticated">{{(firebaseUser$|async)?.displayName}}</ion-label>
+		<ng-template #notAuthenticated>
+			<ion-label color="medium">
+				<ng-container *ngIf="!authState">Loading...</ng-container>
+				<ng-container *ngIf="authState === 'authenticating'">Authenticating...</ng-container>
+				<ng-container *ngIf="authState === 'notAuthenticated'">
+					Please <a [routerLink]="'/login'">sign in</a>
+				</ng-container>
+			</ion-label>
+		</ng-template>
 
 		<ion-buttons slot="end" *ngIf="authState === 'authenticated'">
 			<ion-button color="medium" title="Settings">
