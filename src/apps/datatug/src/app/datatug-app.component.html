@@ -12,9 +12,10 @@
 				<ion-item>
 					<ion-label>Menu to be here</ion-label>
 				</ion-item>
-<!--				<ng-container *ngIf="menu">-->
-<!--					<ng-template [ngComponentOutlet]="menu | async"></ng-template>-->
-<!--				</ng-container>-->
+<!--				<datatug-menu></datatug-menu>-->
+				<ng-container *ngIf="menu">
+					<ng-template [ngComponentOutlet]="menu | async"></ng-template>
+				</ng-container>
 			</ion-content>
 		</ion-menu>
 		<ion-router-outlet id="main-content"></ion-router-outlet>

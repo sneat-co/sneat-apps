@@ -2,18 +2,18 @@ import {Inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} from 'rxjs/operators';
+import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
+import {DataTugProjStoreType} from '@sneat/datatug/models';
+import {AppContextService, GITHUB_REPO} from '@sneat/datatug/core';
+import {EnvironmentService} from "@sneat/datatug/services/unsorted";
 import {
 	IDatatugNavContext,
 	IDatatugProjectContext,
 	IEnvContext,
 	IEnvDbContext,
 	IEnvDbTableContext
-} from '../../../../nav/src/lib/nav-models';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
-import {DataTugProjStoreType} from '@sneat/datatug/models';
-import {AppContextService, GITHUB_REPO} from '@sneat/datatug/core';
-import {EnvironmentService} from "@sneat/datatug/services/unsorted";
+} from "@sneat/datatug/nav";
 
 const
 	reStore = /\/store\/(.+?)($|\/)/,
@@ -145,7 +145,7 @@ export class DatatugNavContextService {
 		}
 	}
 
-	public setCurrentEnvironment(id: string): void {
+	public setCurrentEnvironment(id?: string): void {
 		console.log('DatatugNavContextService.setCurrentEnvironment()', id);
 		if (this.$currentEnv.value?.id === id) {
 			return;

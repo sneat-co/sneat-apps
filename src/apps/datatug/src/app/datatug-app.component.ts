@@ -14,13 +14,13 @@ export class DatatugAppComponent {
 		readonly appComponentService: AppComponentService,
 	) {
 		appComponentService.initializeApp();
-		// this.loadMenu();
+		this.loadMenu();
 	}
 
-	// loadMenu(): void {
-	// 	if (!this.menu) {
-	// 		this.menu = import(`@sneat/datatug/menu`)
-	// 			.then(({ DatatugMenuComponent }) => DatatugMenuComponent);
-	// 	}
-	// }
+	loadMenu(): void {
+		if (!this.menu) {
+			this.menu = import(`@sneat/datatug/menu`)
+				.then(({DatatugMenuComponent}) => DatatugMenuComponent);
+		}
+	}
 }

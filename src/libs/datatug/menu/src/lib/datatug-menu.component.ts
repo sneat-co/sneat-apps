@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional} from '@angular/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
@@ -40,17 +40,18 @@ export class DatatugMenuComponent implements OnDestroy {
 	public datatugUser?: IDatatugUser;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly sneatAuthStateService: SneatAuthStateService,
-		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly navCtrl: NavController,
-		private readonly nav: DatatugNavService,
-		private readonly repoService: StoreService,
-		private readonly projectService: ProjectService,
 		private readonly afAuth: AngularFireAuth,
-		private readonly datatugUserService: DatatugUserService,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Optional() private readonly sneatAuthStateService: SneatAuthStateService,
+		@Optional() private readonly datatugNavContextService: DatatugNavContextService,
+		@Optional() private readonly nav: DatatugNavService,
+		@Optional() private readonly repoService: StoreService,
+		@Optional() private readonly projectService: ProjectService,
+		@Optional() private readonly datatugUserService: DatatugUserService,
 	) {
 		console.log('DatatugMenuComponent.constructor()');
+		return;
 		this.firebaseUser$ = afAuth.user;
 		// userService.userRecord.subscribe(user => {
 		// 	this.projects = user?.data?.dataTugProjects;

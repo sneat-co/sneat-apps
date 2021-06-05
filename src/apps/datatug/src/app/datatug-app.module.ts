@@ -15,6 +15,7 @@ import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule, SneatAuthRoutingMod
 import {CommonModule} from "@angular/common";
 import {WormholeModule} from "@sneat/wormhole";
 import {HelloWorldPageComponent} from "./hello-world-page.component";
+// import {DatatugMenuModule} from "@sneat/datatug/menu";
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,6 @@ import {HelloWorldPageComponent} from "./hello-world-page.component";
 	imports: [
 		BrowserModule,
 		IonicModule.forRoot(),
-		DatatugAppRoutingModule,
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		// AngularFireAnalyticsModule,
 		// AngularFireAuthModule,
@@ -34,6 +34,8 @@ import {HelloWorldPageComponent} from "./hello-world-page.component";
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatLoggingModule,
 		SneatAppModule,
+		// DatatugMenuModule,
+		DatatugAppRoutingModule,
 	],
 	providers: [
 		// StatusBar,

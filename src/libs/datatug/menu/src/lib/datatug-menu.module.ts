@@ -2,15 +2,12 @@ import {NgModule} from '@angular/core';
 import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {DatatugMenuComponent} from './datatug-menu.component';
 import {DatatugServicesProjectModule} from '@sneat/datatug/services/project';
 import {DatatugServicesStoreModule} from '@sneat/datatug/services/repo';
 import {WormholeModule} from '@sneat/wormhole';
 import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
 import {DatatugCoreModule} from "@sneat/datatug/core";
-import {SneatAppModule} from "@sneat/app";
-import {SneatLoggingModule} from "@sneat/logging";
 import {SneatAnalyticsModule} from "@sneat/analytics";
 import {SneatAuthModule, SneatAuthRoutingModule} from "@sneat/auth";
 import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
@@ -25,20 +22,19 @@ import {DatatugServicesUnsortedModule} from "@sneat/datatug/services/unsorted";
 		IonicModule,
 		FormsModule,
 		CommonModule,
-		RouterModule,
+		//
+		WormholeModule,
+		SneatAnalyticsModule,
+		SneatAuthModule,
+		//
+		DatatugCoreModule,
 		DatatugServicesStoreModule,
 		DatatugServicesProjectModule,
 		DatatugComponentsProjectModule,
-		DatatugCoreModule,
-		SneatAppModule,
-		SneatLoggingModule,
-		SneatAnalyticsModule,
-		SneatAuthModule,
-		SneatAuthRoutingModule,
 		DatatugServicesBaseModule,
 		DatatugServicesNavModule,
+		DatatugServicesStoreModule,
 		DatatugServicesUnsortedModule,
-		WormholeModule,
 	],
 	declarations: [
 		DatatugMenuComponent,
