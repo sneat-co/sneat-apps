@@ -11,6 +11,10 @@ export class DatatugUserService {
 	constructor(
 		readonly sneatUserService: SneatUserService,
 	) {
+		if (!sneatUserService) {
+			console.error('sneatUserService is not injected');
+			return;
+		}
 		this.datatugUser = sneatUserService.userRecord.pipe(
 			map(sneatUserRecord => {
 				let datatugUser = sneatUserRecord?.data as IDatatugUser;

@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {IDatatugUser} from '@sneat/datatug/models';
@@ -13,12 +13,16 @@ import {DatatugUserService} from "@sneat/datatug/services/base";
 export class DatatugMyPageComponent implements OnDestroy {
 
 	public datatugUser: IDatatugUser;
-	private destroyed = new Subject<void>();
+	private readonly destroyed = new Subject<void>();
 
 	constructor(
-		readonly datatugUserService: DatatugUserService,
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
+		@Optional() readonly datatugUserService: DatatugUserService,
 	) {
+		if (!datatugUserService) {
+			console.error('datatugUserService is not injected');
+			return;
+		}
 		datatugUserService.datatugUser.pipe(
 			takeUntil(this.destroyed),
 		).subscribe({
