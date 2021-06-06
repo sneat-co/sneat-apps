@@ -4,8 +4,8 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {LoginPage} from './login.page';
-import {LoginPageRoutingModule} from './login-routing.module';
+import {LoginPageComponent} from './login-page.component';
+import {LoginPageRoutingModule} from './login-page.routing.module';
 
 @NgModule({
 	imports: [
@@ -14,8 +14,8 @@ import {LoginPageRoutingModule} from './login-routing.module';
 		IonicModule,
 		LoginPageRoutingModule, // TODO: Why we need a 2nd separate module for routing?
 	],
-	declarations: [LoginPage],
-	exports: [LoginPage],
+	declarations: [LoginPageComponent],
+	exports: [LoginPageComponent],
 })
-export class LoginPageModule {
+export class LoginPageComponentModule {
 }

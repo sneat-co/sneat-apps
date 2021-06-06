@@ -1,4 +1,4 @@
-import {IUser} from '@sneat/auth-models';
+import {IUserRecord} from '@sneat/auth-models';
 
 
 // export interface IRecord<T> { // TODO: duplicate name
@@ -7,7 +7,7 @@ import {IUser} from '@sneat/auth-models';
 //   data?: T;
 // }
 
-export interface IDatatugUser extends IUser {
+export interface IDatatugUser extends IUserRecord {
   dataTug?: IDataTugBriefForUser;
   dataTugProjects?: IDatatugProjectBrief[];
 }

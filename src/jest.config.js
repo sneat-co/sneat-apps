@@ -20,7 +20,6 @@ module.exports = {
     '<rootDir>/libs/datatug/pages/signed-out',
     '<rootDir>/libs/datatug/core',
     '<rootDir>/libs/datatug/pages/my',
-    '<rootDir>/libs/auth-login-page',
     '<rootDir>/libs/datatug/services/nav',
     '<rootDir>/libs/datatug/services/project',
     '<rootDir>/libs/datatug/services/store',

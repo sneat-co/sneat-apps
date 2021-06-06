@@ -1,4 +1,4 @@
-// import {NavController, ToastController} from '@ionic/angular';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -15,8 +15,8 @@ import {NavController} from '@ionic/angular';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ILoginEventsHandler, LoginEventsHandler, SneatUserService} from '@sneat/auth';
-import {RandomId} from '../../../random/src/lib/auto-id';
 import {SneatTeamApiService} from '@sneat/api';
+import {RandomId} from "@sneat/random";
 
 
 type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
@@ -24,10 +24,10 @@ type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
 type Action = 'join' | 'refuse'; // TODO: inject provider for action descriptions/messages.
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.page.html',
+	selector: 'sneat-login',
+	templateUrl: './login-page.component.html',
 })
-export class LoginPage {
+export class LoginPageComponent {
 
 	public signingWith?: AuthProviderName | 'email' | 'emailLink' | 'resetPassword';
 	public email = '';

@@ -4,15 +4,15 @@ import {RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
 	{
 		path: 'login',
-		loadChildren: () => import('@sneat/auth-login-page').then(m => m.LoginPageModule),
+		loadChildren: () => import('./login-page').then(m => m.LoginPageComponentModule),
 	},
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-  ],
-  exports: [RouterModule],
+	imports: [
+		RouterModule.forChild(routes),
+	],
+	exports: [RouterModule],
 })
 export class SneatAuthRoutingModule {
-};
+}

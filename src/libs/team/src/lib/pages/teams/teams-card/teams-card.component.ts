@@ -6,13 +6,13 @@ import {TeamService} from '../../../services/team.service';
 import {mergeMap} from 'rxjs/operators';
 import {IErrorLogger, ErrorLogger} from '@sneat/logging';
 import {ICreateTeamRequest} from '../../../dto-models';
-import {IUser, IUserTeamInfoWithId} from '@sneat/auth-models';
+import {IUserRecord, IUserTeamInfoWithId} from '@sneat/auth-models';
 import {IRecord} from '@sneat/data';
 import {SneatUserService} from '@sneat/auth';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 
 @Component({
-	selector: 'app-teams-card',
+	selector: 'sneat-teams-card',
 	templateUrl: './teams-card.component.html',
 })
 export class TeamsCardComponent implements OnInit, OnDestroy {
@@ -150,11 +150,11 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		this.subscriptions = [];
 	}
 
-	private setUser = (user: IRecord<IUser>): void => {
+	private setUser = (user: IRecord<IUserRecord>): void => {
 		console.log('HomePage => user:', user);
 		if (user) {
 			this.teams = Object.entries(user.data?.teams ? user.data.teams : {})
-				.map(([id, team]) => ({id, ...team}));
+				.map(([id, team]) => ({id, ...(team as any)}));
 			this.teams.sort((a, b) => a.title > b.title ? 1 : -1);
 			this.showAdd = !this.teams?.length;
 			if (this.showAdd) {

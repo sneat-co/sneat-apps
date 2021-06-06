@@ -5,13 +5,13 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AngularFireAuth} from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import {SneatTeamApiService} from '@sneat/api';
-import {IUser} from '@sneat/auth-models';
+import {IUserRecord} from '@sneat/auth-models';
 import {IRecord} from '@sneat/data';
 
 @Injectable()
 export class SneatUserService {
 	public userDocSubscription?: Subscription;
-	private readonly userCollection: AngularFirestoreCollection<IUser>;
+	private readonly userCollection: AngularFirestoreCollection<IUserRecord>;
 
 	private uid?: string;
 	private $userTitle?: string;
@@ -19,7 +19,7 @@ export class SneatUserService {
 	private readonly userChanged$ = new ReplaySubject<string | undefined>();
 	public readonly userChanged = this.userChanged$.asObservable();
 
-	private readonly userRecord$ = new BehaviorSubject<IRecord<IUser> | undefined>(undefined);
+	private readonly userRecord$ = new BehaviorSubject<IRecord<IUserRecord> | undefined>(undefined);
 	public readonly userRecord = this.userRecord$.asObservable();
 
 	constructor(
@@ -28,7 +28,7 @@ export class SneatUserService {
 		private readonly afAuth: AngularFireAuth,
 		private readonly sneatTeamApiService: SneatTeamApiService,
 	) {
-		this.userCollection = db.collection<IUser>('users');
+		this.userCollection = db.collection<IUserRecord>('users');
 		afAuth.authState.subscribe(afUser => {
 			if (afUser) {
 				this.onUserSignedIn(afUser);
@@ -82,9 +82,9 @@ export class SneatUserService {
 					const userDocSnapshot = changes.payload;
 					if (userDocSnapshot.exists) {
 						if (userDocSnapshot.ref.id === this.uid) { // Should always be equal as we unsubscribe if uid changes
-							const userRecord: IRecord<IUser> = {
+							const userRecord: IRecord<IUserRecord> = {
 								id: uid,
-								data: userDocSnapshot.data() as IUser,
+								data: userDocSnapshot.data() as IUserRecord,
 							};
 							this.userRecord$.next(userRecord);
 						}
@@ -113,7 +113,7 @@ export class SneatUserService {
 			const u = await tx.get(userDocRef);
 			if (!u.exists) {
 				const title = afUser.displayName || afUser.email || afUser.uid;
-				const user: IUser = afUser.email
+				const user: IUserRecord = afUser.email
 					? {title, email: afUser.email, emailVerified: afUser.emailVerified}
 					: {title};
 				await tx.set(userDocRef, user);

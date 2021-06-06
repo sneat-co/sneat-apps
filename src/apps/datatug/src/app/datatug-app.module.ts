@@ -11,10 +11,12 @@ import {SneatAppModule} from '@sneat/app';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
-import {LoginEventsHandler, SneatAuthGuard, SneatAuthModule, SneatAuthRoutingModule} from '@sneat/auth';
+import {LoginEventsHandler, SneatAuthGuard} from '@sneat/auth';
 import {CommonModule} from "@angular/common";
 import {WormholeModule} from "@sneat/wormhole";
 import {HelloWorldPageComponent} from "./hello-world-page.component";
+import {SneatAuthRoutingModule} from "@sneat/auth-ui";
+
 // import {DatatugMenuModule} from "@sneat/datatug/menu";
 
 @NgModule({
@@ -43,6 +45,7 @@ import {HelloWorldPageComponent} from "./hello-world-page.component";
 		// AngularFireAuth,
 		// AngularFireAuthGuard,
 		SneatAuthGuard,
+		SneatAuthRoutingModule,
 		{
 			provide: RouteReuseStrategy,
 			useClass: IonicRouteStrategy,

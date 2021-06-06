@@ -1,1 +1,2 @@
-export * from './lib/auth-ui.module';
+export * from './lib/sneat-auth-routing.module';
+export * from './lib/login-page';

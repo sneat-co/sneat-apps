@@ -1137,31 +1137,6 @@
         }
       }
     },
-    "auth-login-page": {
-      "projectType": "library",
-      "root": "libs/auth-login-page",
-      "sourceRoot": "libs/auth-login-page/src",
-      "prefix": "sneat",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/auth-login-page/src/**/*.ts",
-              "libs/auth-login-page/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/auth-login-page"],
-          "options": {
-            "jestConfig": "libs/auth-login-page/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "datatug-services-nav": {
       "projectType": "library",
       "root": "libs/datatug/services/nav",

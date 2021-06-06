@@ -27,7 +27,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	defaultHref: string;
 	envId = 'LOCAL';
 	projectId?: string;
-	repoId: string;
+	storeId: string;
 
 	boardContext: IBoardContext = {parameters: {}, mode: 'view'};
 	private destoyed$ = new Subject<void>();
@@ -68,13 +68,13 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 			dataTugNavContext.currentProject
 				.pipe(
 					filter(p => !!p?.storeId && !!p.projectId),
-					map(p => `${p?.repoId}/${p?.projectId}`),
+					map(p => `${p?.storeId}/${p?.projectId}`),
 					distinctUntilChanged(),
 					filter(p => !!p),
 				)
 				.subscribe(p => {
-					[this.repoId, this.projectId] = p.split('/');
-					console.log('this.store, this.projectId', p, this.repoId, this.projectId);
+					[this.storeId, this.projectId] = p.split('/');
+					console.log('this.store, this.projectId', p, this.storeId, this.projectId);
 					this.route.paramMap
 						.subscribe(params => {
 							this.boardId = params.get(routingParamBoard);
@@ -130,7 +130,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	}
 
 	lookup(p: IParamWithDefAndValue): void {
-		this.lookupService.lookupParameterValue(p.def, this.repoId, this.projectId, this.envId)
+		this.lookupService.lookupParameterValue(p.def, this.storeId, this.projectId, this.envId)
 			.subscribe({
 				next: v => {
 					console.log('Looked up:', v);

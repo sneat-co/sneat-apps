@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 
-import {TeamsPage} from './teams-page.component';
+import {TeamsPageComponent} from './teams-page.component';
 import {IntroComponent} from './intro/intro.component';
 import {TeamsCardComponent} from './teams-card/teams-card.component';
 
@@ -16,11 +16,11 @@ import {TeamsCardComponent} from './teams-card/teams-card.component';
 		RouterModule.forChild([
 			{
 				path: '',
-				component: TeamsPage
+				component: TeamsPageComponent
 			}
 		])
 	],
-	declarations: [TeamsPage, IntroComponent, TeamsCardComponent]
+	declarations: [TeamsPageComponent, IntroComponent, TeamsCardComponent]
 })
 export class TeamsPageModule {
 }

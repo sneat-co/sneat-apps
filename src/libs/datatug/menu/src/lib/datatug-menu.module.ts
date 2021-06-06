@@ -9,7 +9,7 @@ import {WormholeModule} from '@sneat/wormhole';
 import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
 import {DatatugCoreModule} from "@sneat/datatug/core";
 import {SneatAnalyticsModule} from "@sneat/analytics";
-import {SneatAuthModule, SneatAuthRoutingModule} from "@sneat/auth";
+import {SneatAuthModule} from "@sneat/auth";
 import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 import {DatatugServicesNavModule} from "@sneat/datatug/services/nav";
 import {DatatugServicesUnsortedModule} from "@sneat/datatug/services/unsorted";

@@ -10,16 +10,10 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import User = firebase.User;
 import {SneatTeamApiService} from '@sneat/api';
 import {SneatUserService} from '@sneat/auth';
-import {
-  ITeam,
-  ITeamMemberRequest,
-  ITeamMetric,
-  ITeamRequest,
-  MemberRole
-} from '@sneat/team';
 import {ICreateTeamRequest, ICreateTeamResponse} from '../dto-models';
 import {IRecord} from '@sneat/data';
-import {IUser, IUserTeamInfo, IUserTeamInfoWithId} from '@sneat/auth-models';
+import {IUserRecord, IUserTeamInfo, IUserTeamInfoWithId} from '@sneat/auth-models';
+import {ITeam, ITeamMemberRequest, ITeamMetric, ITeamRequest, MemberRole} from "../models";
 
 @Injectable()
 export class TeamService {
@@ -42,7 +36,7 @@ export class TeamService {
 		};
 		afAuth.authState.subscribe(onFirebaseAuthStateChanged);
 
-		const processUserRecordInTeamService = (user: IRecord<IUser>): void => {
+		const processUserRecordInTeamService = (user: IRecord<IUserRecord>): void => {
 			console.log('processUserRecordInTeamService()');
 			if (!user) {
 				// this.userId = undefined;
@@ -80,7 +74,7 @@ export class TeamService {
 					this.subscriptions.push(o.subscribe(subj));
 				};
 				Object.entries(user.data.teams).forEach(
-					([id, team]) => subscribeForFirestoreTeamChanges({id, ...team}),
+					([id, team]) => subscribeForFirestoreTeamChanges({id, ...(team as IUserTeamInfoWithId)}),
 				);
 			}
 		};
