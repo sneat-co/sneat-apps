@@ -63,7 +63,7 @@ export class EnvDbPage implements AfterViewInit {
 				this.projectId = params.get(routingParamProjectId);
 				const [projectId, repoId] = this.projectId.split('@');
 
-				this.projService.getFull({repoId, projectId}).subscribe(p => {
+				this.projService.getFull({storeId: repoId, projectId}).subscribe(p => {
 					this.project = p;
 					this.env = p.environments.find(e => e.id === envId);
 					// const dbId = params.get('routingParamDbId');
@@ -159,7 +159,7 @@ export class EnvDbPage implements AfterViewInit {
 			rowClick: (e, row) => {
 				const data: IRecordsetInfo = row.getData();
 				this.datatugNavService.goTable({
-					target: {projectId: this.projectId, repoId: 'localhost:8989'},
+					target: {projectId: this.projectId, storeId: 'localhost:8989'},
 					env: this.env.id,
 					// store: this.a
 					db: this.envDb.id,

@@ -74,7 +74,7 @@ export class BoardsPageComponent implements OnInit {
 					handler: value => {
 						console.log('alert value:', value);
 						this.boardService
-							.createNewBoard(this.currentProject.repoId, this.currentProject.brief.id, value.title as string)
+							.createNewBoard(this.currentProject.storeId, this.currentProject.brief.id, value.title as string)
 							.subscribe({
 								next: board => {
 									console.log('Board created:', board);

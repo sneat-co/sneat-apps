@@ -23,7 +23,7 @@ import {AuthStates, SneatAuthStateService} from "@sneat/auth";
 export class DatatugMenuComponent implements OnDestroy {
 
 	public authState?: AuthStates;
-	public currentRepoId?: string;
+	public currentStoreId?: string;
 	public currentProjectId?: string;
 	public currentDbModelId?: string;
 	public currentEnvId?: string;
@@ -32,7 +32,7 @@ export class DatatugMenuComponent implements OnDestroy {
 	public projects: IDatatugProjectBase[] = [];
 
 	public table?: IEnvDbTableContext;
-	public currentFolder: Observable<string>;
+	public currentFolder?: Observable<string>;
 	public readonly firebaseUser$: Observable<firebase.User | null>
 	private projSub?: Subscription;
 	private readonly destroyed = new Subject<void>();
@@ -46,7 +46,7 @@ export class DatatugMenuComponent implements OnDestroy {
 		@Optional() private readonly sneatAuthStateService: SneatAuthStateService,
 		@Optional() private readonly datatugNavContextService: DatatugNavContextService,
 		@Optional() private readonly nav: DatatugNavService,
-		@Optional() private readonly repoService: StoreService,
+		@Optional() private readonly storeService: StoreService,
 		@Optional() private readonly projectService: ProjectService,
 		@Optional() private readonly datatugUserService: DatatugUserService,
 	) {
@@ -58,8 +58,8 @@ export class DatatugMenuComponent implements OnDestroy {
 		try {
 			this.trackAuthState();
 			this.trackCurrentUser();
+			this.currentFolder = datatugNavContextService?.currentFolder;
 			if (datatugNavContextService) {
-				this.currentFolder = datatugNavContextService.currentFolder;
 				this.trackCurrentRepo();
 				this.trackCurrentProject();
 				this.trackCurrentEnvironment();
@@ -73,7 +73,7 @@ export class DatatugMenuComponent implements OnDestroy {
 	}
 
 	public get currentProjUrlId(): string {
-		return `${this.currentProjectId}@${this.currentRepoId}`;
+		return `${this.currentProjectId}@${this.currentStoreId}`;
 	}
 
 	private trackAuthState(): void {
@@ -101,7 +101,7 @@ export class DatatugMenuComponent implements OnDestroy {
 	switchRepo(event: CustomEvent): void {
 		try {
 			const {value} = event.detail;
-			if (value && !this.currentRepoId) {
+			if (value && !this.currentStoreId) {
 				console.log('DatatugMenuComponent.switchRepo()', value);
 				this.nav.goStore(value);
 			}
@@ -112,21 +112,27 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	switchProject(event: CustomEvent): void {
 		try {
-			const {value} = event.detail;
-			if (value !== this.currentProjectId) {
-				console.log('DatatugMenuComponent.switchProject', value);
-				const project = this.projects.find(p => p.id === value);
-				this.datatugNavContextService.setCurrentProject({
-					repoId: this.currentRepoId,
-					brief: {
-						...project,
-						store: {type: 'agent'},
-					},
-					projectId: project?.id
-				});
-				if (value) {
-					this.nav.goProject(this.currentRepoId, value);
-				}
+			const projectId: string = event.detail.value;
+			if (!projectId) {
+				return;
+			}
+			console.log('DatatugMenuComponent.switchProject', projectId);
+			if (!this.currentStoreId) {
+				console.log('project changed but there is no store');
+				return;
+			}
+			const project = this.projects.find(p => p.id === projectId);
+			this.datatugNavContextService.setCurrentProject({
+				storeId: this.currentStoreId,
+				brief: {
+					...project,
+					id: projectId,
+					store: {type: 'agent'},
+				},
+				projectId,
+			});
+			if (projectId) {
+				this.nav.goProject(this.currentStoreId, projectId);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle project switch');
@@ -141,10 +147,12 @@ export class DatatugMenuComponent implements OnDestroy {
 				console.log('switchEnv', event);
 				// const env = this.currentProject.environments.find(e => e.id === value);
 				this.datatugNavContextService.setCurrentEnvironment(envId);
-				this.nav.goEnvironment({
-					repoId: this.currentRepoId,
-					projectId: this.currentProjectId
-				}, undefined, envId);
+				if (this.currentStoreId && this.currentProjectId) {
+					this.nav.goEnvironment({
+						storeId: this.currentStoreId,
+						projectId: this.currentProjectId
+					}, undefined, envId);
+				}
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle environment switch');
@@ -154,7 +162,9 @@ export class DatatugMenuComponent implements OnDestroy {
 	public clearEnv(): void { // Called from template
 		try {
 			this.datatugNavContextService.setCurrentEnvironment(undefined);
-			this.nav.goProject(this.currentRepoId, this.currentProjectId);
+			if (this.currentStoreId && this.currentProjectId) {
+				this.nav.goProject(this.currentStoreId, this.currentProjectId);
+			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to clear environment');
 		}
@@ -201,7 +211,7 @@ export class DatatugMenuComponent implements OnDestroy {
 					takeUntil(this.destroyed),
 				)
 				.subscribe({
-					next: this.onCurrentRepoChanged,
+					next: this.onCurrentStoreChanged,
 					error: err => this.errorLogger.logError(err, 'Failed to get repoId'),
 				});
 		} catch (e) {
@@ -209,14 +219,14 @@ export class DatatugMenuComponent implements OnDestroy {
 		}
 	}
 
-	private readonly onCurrentRepoChanged = (repoId: string): void => {
-		if (repoId === this.currentRepoId) {
+	private readonly onCurrentStoreChanged = (storeId?: string): void => {
+		if (storeId === this.currentStoreId) {
 			return;
 		}
-		console.log('DatatugMenuComponent => repoId changed:', repoId, this.currentRepoId);
-		this.currentRepoId = repoId;
-		if (repoId) {
-			this.repoService.getProjects(repoId)
+		console.log('DatatugMenuComponent => repoId changed:', storeId, this.currentStoreId);
+		this.currentStoreId = storeId;
+		if (storeId) {
+			this.storeService.getProjects(storeId)
 				.pipe(
 					takeUntil(this.destroyed),
 					first(),
@@ -246,8 +256,8 @@ export class DatatugMenuComponent implements OnDestroy {
 		}
 	}
 
-	private readonly onCurrentProjectChanged = (currentProject: IDatatugProjectContext): void => {
-		const {brief, summary, repoId} = currentProject || {};
+	private readonly onCurrentProjectChanged = (currentProject?: IDatatugProjectContext): void => {
+		const {brief, summary, storeId} = currentProject || {};
 		const {id} = brief || {};
 		if (id !== this.currentProjectId) {
 			console.log('DatatugMenuComponent => currentProjectId changed:', id, this.currentProjectId);
@@ -255,8 +265,8 @@ export class DatatugMenuComponent implements OnDestroy {
 		this.currentProjectId = id;
 		this.currentProject = summary;
 		try {
-			if (repoId) {
-				this.currentRepoId = repoId;
+			if (storeId) {
+				this.currentStoreId = storeId;
 			}
 			this.currentProjectId = id;
 			if (!id) {
@@ -264,7 +274,7 @@ export class DatatugMenuComponent implements OnDestroy {
 				this.projSub?.unsubscribe();
 				return;
 			}
-			if (id !== '.' && repoId === CLOUD_REPO) {
+			if (id !== '.' && storeId === CLOUD_REPO) {
 				this.projSub = this.projectService.watchProject(id).subscribe({
 					next: project => {
 						this.currentProject = project;
@@ -296,8 +306,10 @@ export class DatatugMenuComponent implements OnDestroy {
 			)
 			.subscribe({
 				next: table => {
-					if (table?.name !== this.table?.name && table?.schema !== this.table?.schema) {
-						console.log(`DatatugMenuComponent => currentTable changed to: ${table.schema}.${table.name}, meta:`, table.meta);
+					if (table) {
+						if (table.name !== this.table?.name && table.schema !== this.table?.schema) {
+							console.log(`DatatugMenuComponent => currentTable changed to: ${table.schema}.${table.name}, meta:`, table.meta);
+						}
 					}
 					this.table = table;
 				},

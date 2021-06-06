@@ -32,7 +32,7 @@ export class ServersPageComponent implements OnDestroy {
 		this.projectContextService.current$
 			.pipe(takeUntil(this.destroyed))
 			.subscribe(target => {
-				if (target && (this.target?.repoId !== target?.repoId || this.target?.projectId !== target?.projectId)) {
+				if (target && (this.target?.storeId !== target?.storeId || this.target?.projectId !== target?.projectId)) {
 					this.loadDbServers(target);
 				}
 				this.target = target;
@@ -46,7 +46,7 @@ export class ServersPageComponent implements OnDestroy {
 	goDbServer(dbServer: IProjDbServerSummary): void {
 		console.log('goServer', dbServer);
 		this.navCtrl
-			.navigateForward(['project', '.@' + this.target.repoId, 'servers', 'db', dbServer.dbServer.driver, dbServer.dbServer.host])
+			.navigateForward(['project', '.@' + this.target.storeId, 'servers', 'db', dbServer.dbServer.driver, dbServer.dbServer.host])
 			.catch(err => this.errorLogger.logError(err, 'Failed to navigate to DB server page'));
 	}
 

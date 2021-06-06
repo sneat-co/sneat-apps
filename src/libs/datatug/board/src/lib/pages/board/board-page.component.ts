@@ -67,7 +67,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 				});
 			dataTugNavContext.currentProject
 				.pipe(
-					filter(p => !!p?.repoId && !!p.projectId),
+					filter(p => !!p?.storeId && !!p.projectId),
 					map(p => `${p?.repoId}/${p?.projectId}`),
 					distinctUntilChanged(),
 					filter(p => !!p),

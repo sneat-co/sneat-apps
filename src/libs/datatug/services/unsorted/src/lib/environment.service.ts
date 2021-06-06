@@ -10,7 +10,7 @@ import {createProjItem} from "@sneat/datatug/services/base";
 import {startWith, tap} from "rxjs/operators";
 
 const getEnvCacheKey = (projRef: IDatatugProjRef, env: string): string => {
-	return `${projRef.projectId}@${projRef.repoId}/${env}`;
+	return `${projRef.projectId}@${projRef.storeId}/${env}`;
 };
 
 @Injectable({
@@ -50,7 +50,7 @@ export class EnvironmentService {
 			return of(cached)
 		}
 		const result =
-			this.repoApiService.get<IEnvironmentSummary>(projRef.repoId, '/environment-summary', {
+			this.repoApiService.get<IEnvironmentSummary>(projRef.storeId, '/environment-summary', {
 				params: {
 					proj: projRef.projectId,
 					env

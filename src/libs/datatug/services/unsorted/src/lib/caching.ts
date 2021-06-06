@@ -7,17 +7,17 @@ export class ProjectItemsByAgent<T> {
 	public readonly byRepo$: { [repo: string]: { [id: string]: BehaviorSubject<T[]> } } = {};
 
 	public getItems$(from: IDatatugProjRef): Observable<T[]> {
-		const {repoId, projectId} = from;
-		console.log('getItems$', repoId, projectId, this.byRepo$);
-		const a = this.byRepo$[repoId];
+		const {storeId, projectId} = from;
+		console.log('getItems$', storeId, projectId, this.byRepo$);
+		const a = this.byRepo$[storeId];
 		return a && this.asObservable(a[projectId]);
 	}
 
 	public setItems$(to: IDatatugProjRef, items: Observable<T[]>): Observable<T[]> {
-		const {repoId, projectId} = to;
-		let a = this.byRepo$[repoId];
+		const {storeId, projectId} = to;
+		let a = this.byRepo$[storeId];
 		if (!a) {
-			this.byRepo$[repoId] = a = {};
+			this.byRepo$[storeId] = a = {};
 		}
 		const subject = new BehaviorSubject<T[]>(undefined);
 		a[projectId] = subject;

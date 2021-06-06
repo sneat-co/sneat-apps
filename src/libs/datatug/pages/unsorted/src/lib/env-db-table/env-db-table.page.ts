@@ -72,7 +72,7 @@ export class EnvDbTablePage implements AfterViewInit {
 			this.envId = paramMap.get('environmentId');
 			this.dbId = paramMap.get('dbId');
 			const [projectId, agentAddress] = paramMap.get('projectId').split('@');
-			this.target = {projectId, repoId: agentAddress};
+			this.target = {projectId, storeId: agentAddress};
 			this.tableNavParams = {
 				target: this.target,
 				env: this.envId,
@@ -84,7 +84,7 @@ export class EnvDbTablePage implements AfterViewInit {
 				next: currentProject => {
 					console.log('EnvDbTablePage.constructor() => currentProject', currentProject);
 					try {
-						this.target = {projectId: currentProject?.brief?.id, repoId: currentProject?.repoId};
+						this.target = {projectId: currentProject?.brief?.id, storeId: currentProject?.storeId};
 					} catch (e) {
 						this.errorLogger.logError(e, 'Failed to process current project');
 					}
@@ -225,7 +225,7 @@ from ${from}`;
 		try {
 			this.step = 'loadData';
 			this.agentService
-				.select(this.target.repoId, {
+				.select(this.target.storeId, {
 					proj: this.projectId,
 					env: this.envId,
 					db: this.dbId,

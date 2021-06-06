@@ -41,7 +41,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	public readonly trackById = (_, v: IProjItemBrief) => v.id;
 
 	public get defaultBackHref(): string {
-		return this.currentProject ? `/repo/${getStoreId(this.currentProject.repoId)}/project/${this.currentProject.projectId}` : '/';
+		return this.currentProject ? `/repo/${getStoreId(this.currentProject.storeId)}/project/${this.currentProject.projectId}` : '/';
 	}
 
 	public currentProject: IDatatugProjRef;

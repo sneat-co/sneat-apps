@@ -157,7 +157,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	private onProjectChanged = (currentProject: IDatatugProjectContext): void => {
 		console.log('currentProject:', currentProject);
-		this.storeId = currentProject?.repoId;
+		this.storeId = currentProject?.storeId;
 		this.project = currentProject?.summary;
 		this.projContext = currentProject;
 		if (currentProject?.summary && !currentProject.summary.id) {

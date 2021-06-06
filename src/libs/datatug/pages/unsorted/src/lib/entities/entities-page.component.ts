@@ -39,7 +39,7 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 				next: currentProject => {
 					this.currentProject = currentProject;
 					this.projectContext = currentProject?.brief && {
-						repoId: currentProject.repoId,
+						storeId: currentProject.storeId,
 						projectId: currentProject.brief?.id
 					};
 					this.loadEntities();
@@ -77,7 +77,7 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 
 
 	public get projectUrlId() {
-		return `${this.currentProject.brief.id}@${this.currentProject.repoId}`;
+		return `${this.currentProject.brief.id}@${this.currentProject.storeId}`;
 	}
 
 	ngOnDestroy(): void {
@@ -92,7 +92,7 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 	goNewEntity(event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
-		this.datatugNavService.goProjPage(this.currentProject.repoId, this.currentProject.brief.id, 'new-entity');
+		this.datatugNavService.goProjPage(this.currentProject.storeId, this.currentProject.brief.id, 'new-entity');
 	}
 
 	goEntity(entity: IProjEntity): void {

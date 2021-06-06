@@ -62,8 +62,8 @@ export class DatatugNavContextService {
 		console.log('DatatugNavContextService.constructor()');
 		this.currentProject.subscribe(p => {
 			const target = projectContextService.current;
-			if (target?.projectId !== p?.brief?.id || target?.repoId !== p?.repoId) {
-				projectContextService.setCurrent(p && {projectId: p.brief?.id, repoId: p.repoId})
+			if (target?.projectId !== p?.brief?.id || target?.storeId !== p?.storeId) {
+				projectContextService.setCurrent(p && {projectId: p.brief?.id, storeId: p.storeId})
 			}
 		});
 		// try {
@@ -109,27 +109,27 @@ export class DatatugNavContextService {
 			return;
 		}
 		if (projectContext) {
-			this.$currentStoreId.next(projectContext?.repoId);
+			this.$currentStoreId.next(projectContext?.storeId);
 		}
 		this.$currentProj.next(projectContext);
 		if (!projectContext) {
 			return;
 		}
 		const target = this.projectContextService.current;
-		if (target?.repoId !== projectContext?.repoId || target?.projectId !== projectContext?.brief?.id) {
+		if (target?.storeId !== projectContext?.storeId || target?.projectId !== projectContext?.brief?.id) {
 			this.projectContextService.setCurrent({
 				projectId: projectContext?.brief?.id,
-				repoId: projectContext?.repoId
+				storeId: projectContext?.storeId
 			})
 		}
 		if (projectContext?.brief?.id) {
 			this.projectService
-				.getSummary({repoId: projectContext.repoId, projectId: projectContext.brief.id})
+				.getSummary({storeId: projectContext.storeId, projectId: projectContext.brief.id})
 				.subscribe({
 					next: summary => {
 						if (!summary) {
 							this.errorLogger.logError(new Error('Returned empty project summary'),
-								`project: ${projectContext.brief.id} @ ${projectContext.repoId}`);
+								`project: ${projectContext.brief.id} @ ${projectContext.storeId}`);
 							return;
 						}
 						if (!summary.id) {
@@ -206,7 +206,7 @@ export class DatatugNavContextService {
 		}
 		const currentProject = this.$currentProj.value;
 		const currentRepoId = this.$currentStoreId.value;
-		if (!currentProject || currentProject.brief?.id !== id || currentProject.repoId !== currentRepoId) {
+		if (!currentProject || currentProject.brief?.id !== id || currentProject.storeId !== currentRepoId) {
 			let storeType: DataTugProjStoreType;
 			if (currentRepoId === GITHUB_REPO) {
 				storeType = GITHUB_REPO;
@@ -215,7 +215,7 @@ export class DatatugNavContextService {
 			}
 			const projectContext: IDatatugProjectContext = {
 				brief: {id, store: {type: storeType}},
-				repoId: currentRepoId,
+				storeId: currentRepoId,
 				projectId: id,
 			};
 			this.setCurrentProject(projectContext);
@@ -262,7 +262,7 @@ export class DatatugNavContextService {
 			this.$currentEnvDbTable.next({name, schema});
 			console.log('currentTable:', this.$currentEnvDbTable.value);
 			this.projectService
-				.getFull({repoId: project.repoId, projectId: project.brief.id})
+				.getFull({storeId: project.storeId, projectId: project.brief.id})
 				.pipe(first())
 				.subscribe({
 					next: p => {

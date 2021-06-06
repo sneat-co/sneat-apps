@@ -223,7 +223,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 				if (
 					!currentProject ||
 					this.currentProject?.projectId === currentProject.projectId
-					&& this.currentProject?.repoId === currentProject.repoId
+					&& this.currentProject?.storeId === currentProject.storeId
 					&& this.currentProject?.summary?.environments?.length === currentProject.summary?.environments?.length
 				) {
 					return; // TODO: cleanup query state?
@@ -352,12 +352,12 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 
 				const projContext: IDatatugProjRef = {
 					projectId: paramMap.get('projectId'),
-					repoId: paramMap.get('repoId'),
+					storeId: paramMap.get('repoId'),
 				};
-				if (projContext.repoId && projContext.projectId) {
+				if (projContext.storeId && projContext.projectId) {
 					this.target = {
 						...(this.target || {}),
-						repository: projContext.repoId,
+						repository: projContext.storeId,
 						project: projContext.projectId,
 					} as ISqlQueryTarget;
 					console.log('target', this.target);
@@ -367,7 +367,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 				this.projectContext = projContext;
 				if (this.queryId && (
 					projContext.projectId !== prevProjectContext?.projectId ||
-					projContext.repoId !== prevProjectContext?.repoId
+					projContext.storeId !== prevProjectContext?.storeId
 				)) {
 					// this.loadQuery();
 				}
@@ -553,7 +553,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 			isExecuting: true,
 			recordsets: undefined,
 		}, this.queryState);
-		this.coordinator.execute(this.projectContext.repoId, request)
+		this.coordinator.execute(this.projectContext.storeId, request)
 			.pipe(
 				takeUntil(this.destroyed),
 			)

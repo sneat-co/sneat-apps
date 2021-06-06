@@ -27,7 +27,7 @@ export class DbServerService {
       proj: target.projectId,
       ...dbServer,
     }
-    return this.http.get<IDbServerSummary>(`${getStoreUrl(target.repoId)}/dbserver-summary`, {params});
+    return this.http.get<IDbServerSummary>(`${getStoreUrl(target.storeId)}/dbserver-summary`, {params});
   }
 
   public getServerDatabases(request: GetServerDatabasesRequest): Observable<IDbCatalogSummary[]> {
@@ -40,20 +40,20 @@ export class DbServerService {
       ...request.dbServer,
       proj: request.project || target.projectId,
     };
-    return this.http.get<IDbCatalogSummary[]>(`${getStoreUrl(target.repoId)}/dbserver-databases`, {params});
+    return this.http.get<IDbCatalogSummary[]>(`${getStoreUrl(target.storeId)}/dbserver-databases`, {params});
   }
 
   public addDbServer(dbServer: IDbServer): Observable<IDbServerSummary> {
     const target = this.projectContextService.current;
     const params: any = {proj: target.projectId, ...dbServer};
-    return this.http.post<IDbServerSummary>(`${getStoreUrl(target.repoId)}/dbserver-add`, undefined, {params});
+    return this.http.post<IDbServerSummary>(`${getStoreUrl(target.storeId)}/dbserver-add`, undefined, {params});
   }
 
   public deleteDbServer(dbServer: IDbServer): Observable<void> {
     console.log('deleteDbServer', dbServer);
     const target = this.projectContextService.current;
     const params: any = {proj: target.projectId, ...dbServer};
-    return this.http.delete<void>(`${getStoreUrl(target.repoId)}/dbserver-delete`, {params});
+    return this.http.delete<void>(`${getStoreUrl(target.storeId)}/dbserver-delete`, {params});
   }
 
   public getDbServers(target: IDatatugProjRef): Observable<IProjDbServerSummary[]> {

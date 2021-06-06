@@ -1,4 +1,4 @@
 export interface IDatatugProjRef {
-	readonly repoId: string;
+	readonly storeId: string;
 	readonly projectId: string;
 }

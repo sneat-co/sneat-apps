@@ -75,7 +75,7 @@ export class ForeignKeyCardComponent implements OnChanges {
 
 	private loadData(): void {
 		const {schema, name} = this.table.meta;
-		this.agentService.select(this.tableNavParams.target.repoId, {
+		this.agentService.select(this.tableNavParams.target.storeId, {
 			proj: this.tableNavParams.target.projectId,
 			db: this.tableNavParams.db,
 			env: this.tableNavParams.env,

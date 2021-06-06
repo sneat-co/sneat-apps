@@ -30,7 +30,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 
 	public getProjItems(from: IDatatugProjRef, folderPath: string): Observable<ProjItem[]> {
 		console.log('getProjItems', from, folderPath);
-		return this.agentProvider.get<ProjItem[]>(from.repoId, `/${this.itemsPath}/all_${this.itemsPath}`, {
+		return this.agentProvider.get<ProjItem[]>(from.storeId, `/${this.itemsPath}/all_${this.itemsPath}`, {
 			params: {
 				project: from.projectId,
 				folder: folderPath,
@@ -48,7 +48,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 
 	public getFolder<T extends IProjItemsFolder>(from: IDatatugProjRef, folderPath: string): Observable<T> {
 		console.log('getFolder', from, folderPath);
-		return this.agentProvider.get<T>(from.repoId, `/${this.itemsPath}/all_${this.itemsPath}`, {
+		return this.agentProvider.get<T>(from.storeId, `/${this.itemsPath}/all_${this.itemsPath}`, {
 			params: {
 				project: from.projectId,
 				folder: folderPath,
@@ -81,7 +81,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	}
 
 	public getProjItem(from: IDatatugProjRef, id: string): Observable<ProjItem> {
-		let o = this.agentProvider.get<ProjItem>(from.repoId, `/${this.itemsPath}/get_${this.itemPath}`, {
+		let o = this.agentProvider.get<ProjItem>(from.storeId, `/${this.itemsPath}/get_${this.itemPath}`, {
 			params: {
 				project: from.projectId,
 				[this.itemPath]: id,
@@ -95,7 +95,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	}
 
 	public createProjItem(target: IDatatugProjRef, projItem: ProjItem, itemPath = this.itemPath): Observable<ProjItem> {
-		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/create_${itemPath}`, projItem, {
+		return this.agentProvider.put(target.storeId, `/${this.itemsPath}/create_${itemPath}`, projItem, {
 			params: {
 				project: target.projectId,
 				id: projItem.id,
@@ -104,7 +104,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	}
 
 	public updateProjItem(target: IDatatugProjRef, projItem: ProjItem): Observable<ProjItem> {
-		return this.agentProvider.put(target.repoId, `/${this.itemsPath}/update_${this.itemPath}`, projItem, {
+		return this.agentProvider.put(target.storeId, `/${this.itemsPath}/update_${this.itemPath}`, projItem, {
 			params: {
 				project: target.projectId,
 				id: projItem.id,
@@ -113,7 +113,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	}
 
 	public deleteProjItem(target: IDatatugProjRef, id: string, itemPath = this.itemPath): Observable<void> {
-		return this.agentProvider.delete(target.repoId, `/${this.itemsPath}/delete_${itemPath}`, {
+		return this.agentProvider.delete(target.storeId, `/${this.itemsPath}/delete_${itemPath}`, {
 			params: {
 				project: target.projectId,
 				id,

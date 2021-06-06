@@ -44,7 +44,7 @@ export class DatatugNavService {
 		this.navRoot(url, 'Failed to navigate to project page ' + page);
 	}
 
-	goEnvironment(projContext: IDatatugProjRef, projEnv: IProjEnv, envId?: string): void {
+	goEnvironment(projContext: IDatatugProjRef, projEnv?: IProjEnv, envId?: string): void {
 		const url = this.projectPageUrl(projContext, 'env', projEnv?.id || envId);
 		this.navForward(url, {state: {projEnv}}, 'Failed to navigate to environment page');
 	}
@@ -74,7 +74,7 @@ export class DatatugNavService {
 	}
 
 	public projectPageUrl(c: IDatatugProjRef, name: string, id?: string): string {
-		const url = `/store/${getStoreId(c.repoId)}/project/${c.projectId}/${name}`;
+		const url = `/store/${getStoreId(c.storeId)}/project/${c.projectId}/${name}`;
 		return id ? url + '/' + encodeURIComponent(id) : url;
 	}
 
@@ -85,7 +85,7 @@ export class DatatugNavService {
 
 	goTable(to: IDbObjectNavParams): void {
 		const url = [
-			'project', `${to.target.projectId}@${getStoreId(to.target.repoId)}`,
+			'project', `${to.target.projectId}@${getStoreId(to.target.storeId)}`,
 			'env', to.env,
 			'db', to.db,
 			'table', `${to.schema}.${to.name}`,

@@ -27,7 +27,7 @@ export class ProjectService {
     }
     const m = id.match(/(\.|\w+)@(\w+:\d+)/);
     if (m) {
-      return this.getSummary({repoId: m[2], projectId: m[1]})
+      return this.getSummary({storeId: m[2], projectId: m[1]})
         // .pipe(
         // 	map(projectFull => {
         // 		const project: IProjectSummary = {
@@ -60,7 +60,7 @@ export class ProjectService {
       return $project;
     }
     $project = this.http
-      .get<IDatatugProjectFull>(`${getStoreUrl(target.repoId)}/project-full`, {params: {id: target.projectId}})
+      .get<IDatatugProjectFull>(`${getStoreUrl(target.storeId)}/project-full`, {params: {id: target.projectId}})
       .pipe(
         shareReplay(1),
       )
@@ -70,7 +70,7 @@ export class ProjectService {
   }
 
   public getSummary(target: IDatatugProjRef, options?: { cachedOnly?: boolean }): Observable<IDatatugProjectSummary> {
-    const id = `${target.repoId}|${target.projectId}`;
+    const id = `${target.storeId}|${target.projectId}`;
     let $project = this.projSummary[id];
     if ($project) {
       return $project;
@@ -92,23 +92,23 @@ export class ProjectService {
   	if (!target) {
   		throw new Error('target is required parameter');
 	}
-    const {repoId, projectId} = target;
-  	if (!repoId) {
+    const {storeId, projectId} = target;
+  	if (!storeId) {
 		throw new Error('target.repoId is required parameter');
 	}
-    if (repoId === GITHUB_REPO || repoId.startsWith(GITLAB_REPO_PREFIX)) {
+    if (storeId === GITHUB_REPO || storeId.startsWith(GITLAB_REPO_PREFIX)) {
       interface urlAndHeaders {
         url: string;
         headers?: { [name: string]: string };
       }
 
       let connectTo: Observable<urlAndHeaders>;
-      if (repoId === GITHUB_REPO) {
+      if (storeId === GITHUB_REPO) {
         const [repo, org] = projectId.split('@')
         connectTo = of({url: `https://raw.githubusercontent.com/${org}/${repo}/main/datatug/datatug-project.json`});
-      } else if (repoId.startsWith(GITLAB_REPO_PREFIX)) {
+      } else if (storeId.startsWith(GITLAB_REPO_PREFIX)) {
         //url = 'https://gitlab.dell.com/A_Trakhimenok/dsa-datatug/-/raw/master/datatug/datatug-project.json';
-        connectTo = this.privateTokenStoreService.getPrivateToken(repoId, projectId).pipe(map(accessToken => (
+        connectTo = this.privateTokenStoreService.getPrivateToken(storeId, projectId).pipe(map(accessToken => (
           {
             url: `https://gitlab.dell.com/api/v4/projects/${projectId}/repository/files/datatug%2Fdatatug-project.json/raw?ref=master`,
             headers: {"PRIVATE-TOKEN": "QPgjyFaJwq29x9h7pVxu"}
@@ -128,7 +128,7 @@ export class ProjectService {
           })))
       );
     }
-    const agentUrl = getStoreUrl(repoId);
+    const agentUrl = getStoreUrl(storeId);
     return this.http.get<IDatatugProjectSummary>(`${agentUrl}/project-summary`, {params: {id: projectId}});
   }
 }

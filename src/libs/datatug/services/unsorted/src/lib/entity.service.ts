@@ -63,10 +63,10 @@ export class EntityService {
 		console.log('EntityService.getAllEntities()');
 		let o = this.cache.getItems$(from);
 		if (!o || forceReload) {
-			const entities$ = this.cache.byRepo$[from.repoId]?.[from.projectId];
+			const entities$ = this.cache.byRepo$[from.storeId]?.[from.projectId];
 			const records = entities$?.getValue();
 			o = this.agentProvider
-				.get<IEntity[]>(from.repoId, '/entities/all_entities', {params: {project: from.projectId}})
+				.get<IEntity[]>(from.storeId, '/entities/all_entities', {params: {project: from.projectId}})
 				.pipe(
 					map(
 						entities => entities.map(
@@ -84,10 +84,10 @@ export class EntityService {
 	};
 
 	public createEntity = (projContext: IDatatugProjRef, entity: IEntity): Observable<IRecord<IEntity>> => {
-		const {repoId, projectId} = projContext;
-		const entities$ = this.cache.byRepo$[repoId][projectId];
+		const {storeId, projectId} = projContext;
+		const entities$ = this.cache.byRepo$[storeId][projectId];
 		return this.agentProvider
-			.post<IRecord<IEntity>>(repoId, '/entities/create_entity', entity, {params: {project: projectId}})
+			.post<IRecord<IEntity>>(storeId, '/entities/create_entity', entity, {params: {project: projectId}})
 			.pipe(
 				tap(() => {
 					entities$.next([...entities$.getValue(), {id: entity.id, data: entity}]);
@@ -99,13 +99,13 @@ export class EntityService {
 		this.agentProvider.put(repo, '/entities/save_entity', request, {params: {project}});
 
 	public deleteEntity = (from: IDatatugProjRef, entityId: string): Observable<void> => {
-		const entities$ = this.cache.byRepo$[from.repoId][from.projectId];
+		const entities$ = this.cache.byRepo$[from.storeId][from.projectId];
 		entities$.next(entities$.getValue().map(entity => entity.id === entityId ? {
 			...entity,
 			state: 'deleting'
 		} : entity));
 		return this.agentProvider
-			.delete<void>(from.repoId, '/entities/delete_entity',
+			.delete<void>(from.storeId, '/entities/delete_entity',
 				{params: {project: from.projectId, entity: entityId}})
 			.pipe(
 				// delay(1000),

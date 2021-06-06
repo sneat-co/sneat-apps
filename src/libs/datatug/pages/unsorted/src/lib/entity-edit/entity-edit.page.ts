@@ -44,7 +44,7 @@ export class EntityEditPage implements OnDestroy {
 					try {
 						console.log('EntityEditPage: currentProject:', currentProject);
 						this.currentProject = currentProject;
-						this.backUrl = currentProject ? `/project/${currentProject.brief.id}@${currentProject.repoId}/entities` : '/';
+						this.backUrl = currentProject ? `/project/${currentProject.brief.id}@${currentProject.storeId}/entities` : '/';
 					} catch (e) {
 						this.errorLogger.logError(e, 'Failed to process current project');
 					}
