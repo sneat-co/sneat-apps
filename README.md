@@ -70,4 +70,12 @@ More on how to use NX with Ionic here: https://ionicframework.com/blog/ionic-ang
 To see chunks content:
 
 1. Build with source maps
-2. Run `source-map-explorer dist/apps/datatug/main.js`  
+2. Run `source-map-explorer dist/apps/datatug/main.js`
+
+## Known issues
+
+### Dependencies
+
+#### Firebase stuck @ v. 8.6.1
+There is a [known issue](https://github.com/firebase/firebase-js-sdk/issues/4990) with Firebase >= 8.6.2 regards authentication
+and Firestore rules

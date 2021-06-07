@@ -54,7 +54,7 @@
     "@sentry/browser": "^6.5.1",
     "@sneat/wormhole": "^0.0.5",
     "codemirror": "^5.61.1",
-    "firebase": "^8.6.5",
+    "firebase": "8.6.1",
     "ionicons": "^5.5.1",
     "rxjs": "~6.6.7",
     "tabulator-tables": "^4.9.3",
