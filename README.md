@@ -41,6 +41,17 @@ Then run as:
 pnx serve <APP_NAME>
 ```
 
+### Run with source maps
+
+For some reason the serve is running with enabled optimization and no source maps.
+It results in troubles with debugging.
+
+Here is how to run dev server properly for datatug app:
+
+```shell
+pnx serve datatug --optimization=false --sourceMap=true
+```
+
 ## Code generation
 To generate new apps & libraries use `nx` command.
 
