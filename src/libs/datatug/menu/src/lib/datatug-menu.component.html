@@ -11,15 +11,15 @@
 				   *ngIf="firebaseUser$|async; else notAuthenticated">{{(firebaseUser$|async)?.displayName}}</ion-label>
 		<ng-template #notAuthenticated>
 			<ion-label color="medium">
-				<ng-container *ngIf="!authState">Loading...</ng-container>
-				<ng-container *ngIf="authState === 'authenticating'">Authenticating...</ng-container>
-				<ng-container *ngIf="authState === 'notAuthenticated'">
+				<ng-container *ngIf="!authStatus">Loading...</ng-container>
+				<ng-container *ngIf="authStatus === 'authenticating'">Authenticating...</ng-container>
+				<ng-container *ngIf="authStatus === 'notAuthenticated'">
 					Please <a [routerLink]="'/login'">sign in</a>
 				</ng-container>
 			</ion-label>
 		</ng-template>
 
-		<ion-buttons slot="end" *ngIf="authState === 'authenticated'">
+		<ion-buttons slot="end" *ngIf="authStatus === 'authenticated'">
 			<ion-button color="medium" title="Settings">
 				<ion-icon name="settings-outline"></ion-icon>
 			</ion-button>

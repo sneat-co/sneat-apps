@@ -10,11 +10,16 @@
 			</ion-header>
 			<ion-content color="light">
 				<ion-item>
-					<ion-label>Menu to be here</ion-label>
+					<ion-label>Menu starts</ion-label>
 				</ion-item>
 				<ng-container *ngIf="menu">
-					<ng-template [ngComponentOutlet]="menu | async"></ng-template>
+					<ng-template [ngComponentOutlet]="menu | async"
+								 [ngComponentOutletInjector]="menuInjector"
+					></ng-template>
 				</ng-container>
+				<ion-item>
+					<ion-label>Menu ends</ion-label>
+				</ion-item>
 			</ion-content>
 		</ion-menu>
 		<ion-router-outlet id="main-content"></ion-router-outlet>

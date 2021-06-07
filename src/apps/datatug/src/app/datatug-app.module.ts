@@ -9,13 +9,14 @@ import {SneatLoggingModule} from '@sneat/logging';
 import {SneatAppModule} from '@sneat/app';
 // import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
+// import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
 import {LoginEventsHandler, SneatAuthGuard} from '@sneat/auth';
 import {CommonModule} from "@angular/common";
 import {WormholeModule} from "@sneat/wormhole";
 import {HelloWorldPageComponent} from "./hello-world-page.component";
 import {SneatAuthRoutingModule} from "@sneat/auth-ui";
+import {DatatugMenuModule} from "@sneat/datatug/menu";
 
 // import {DatatugMenuModule} from "@sneat/datatug/menu";
 
@@ -36,8 +37,8 @@ import {SneatAuthRoutingModule} from "@sneat/auth-ui";
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatLoggingModule,
 		SneatAppModule,
-		// DatatugMenuModule,
 		DatatugAppRoutingModule,
+		// DatatugMenuModule,
 	],
 	providers: [
 		// StatusBar,

@@ -23,6 +23,7 @@ import {RouterModule} from "@angular/router";
 		IonicModule,
 		FormsModule,
 		CommonModule,
+		RouterModule.forChild([{path: '', component: DatatugMenuComponent, outlet: 'menu'}]),
 		//
 		WormholeModule,
 		SneatAnalyticsModule,

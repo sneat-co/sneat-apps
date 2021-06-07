@@ -7,7 +7,6 @@ import {DatatugHomePageComponent} from './datatug-home-page.component';
 import {HomePageRoutingModule} from './home-routing.module';
 import {CoreModule} from '@sneat/core';
 import {WormholeModule} from "@sneat/wormhole";
-import {DatatugMenuModule} from "../../../../menu/src/lib/datatug-menu.module";
 
 @NgModule({
 	imports: [
@@ -17,7 +16,6 @@ import {DatatugMenuModule} from "../../../../menu/src/lib/datatug-menu.module";
 		HomePageRoutingModule,
 		CoreModule,
 		WormholeModule,
-		DatatugMenuModule,
 	],
 	declarations: [
 		DatatugHomePageComponent,

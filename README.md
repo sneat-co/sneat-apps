@@ -51,4 +51,12 @@ nx generate @nxtend/ionic-angular:app my-app
 ```
 
 More on how to use NX with Ionic here: https://ionicframework.com/blog/ionic-angular-monorepos-with-nx/
-  
+
+## Troubleshooting
+
+### Performance: Bundles size
+
+To see chunks content:
+
+1. Build with source maps
+2. Run `source-map-explorer dist/apps/datatug/main.js`  

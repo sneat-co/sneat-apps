@@ -3,17 +3,21 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {Inject, Injectable} from "@angular/core";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 
-export enum AuthStates {
+export enum AuthStatuses {
 	authenticating = 'authenticating',
 	authenticated = 'authenticated',
 	notAuthenticated = 'notAuthenticated',
 }
 
-export type AuthState = AuthStates.authenticated | AuthStates.authenticating | AuthStates.notAuthenticated;
+export type AuthStatus = AuthStatuses.authenticated | AuthStatuses.authenticating | AuthStatuses.notAuthenticated;
+
+export interface IAuthState {
+	status: AuthStatus;
+}
 
 @Injectable()
 export class SneatAuthStateService {
-	private readonly authState$ = new BehaviorSubject<AuthState>(AuthStates.authenticating);
+	private readonly authState$ = new BehaviorSubject<AuthStatus>(AuthStatuses.authenticating);
 	public readonly authState = this.authState$.asObservable();
 
 	constructor(
@@ -22,7 +26,7 @@ export class SneatAuthStateService {
 	) {
 		afAuth.idToken.subscribe({
 			next: token => {
-				this.authState$.next(token ? AuthStates.authenticated : AuthStates.notAuthenticated)
+				this.authState$.next(token ? AuthStatuses.authenticated : AuthStatuses.notAuthenticated)
 			},
 			error: errorLogger.logErrorHandler('failed to get Firebase auth token')
 		});

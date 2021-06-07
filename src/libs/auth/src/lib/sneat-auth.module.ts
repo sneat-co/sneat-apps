@@ -15,4 +15,7 @@ import {SneatAuthStateService} from "./sneat-auth-state-service";
 	]
 })
 export class SneatAuthModule {
+	constructor() {
+		console.log('SneatAuthModule');
+	}
 }

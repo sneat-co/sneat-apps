@@ -12,7 +12,7 @@ import {CLOUD_REPO} from '@sneat/datatug/core';
 import {StoreService} from '@sneat/datatug/services/repo';
 import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
 import {DatatugUserService} from "@sneat/datatug/services/base";
-import {AuthStates, SneatAuthStateService} from "@sneat/auth";
+import {AuthStatus, AuthStatuses, SneatAuthStateService} from "@sneat/auth";
 
 
 @Component({
@@ -22,7 +22,7 @@ import {AuthStates, SneatAuthStateService} from "@sneat/auth";
 })
 export class DatatugMenuComponent implements OnDestroy {
 
-	public authState?: AuthStates;
+	public authStatus?: AuthStatus;
 	public currentStoreId?: string;
 	public currentProjectId?: string;
 	public currentDbModelId?: string;
@@ -86,7 +86,7 @@ export class DatatugMenuComponent implements OnDestroy {
 				takeUntil(this.destroyed),
 			)
 			.subscribe({
-				next: authState => this.authState = authState,
+				next: authState => this.authStatus = authState,
 				error: this.errorLogger.logErrorHandler('failed to get auth stage'),
 			})
 	}
