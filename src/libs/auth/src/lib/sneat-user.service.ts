@@ -92,7 +92,7 @@ export class SneatUserService {
 						setTimeout(() => this.createUserRecord(userDoc.ref, afUser), 1);
 					}
 				}
-			}, err => this.errorLogger.logError(err, 'failed to process user changed'));
+			}, err => this.errorLogger.logErrorHandler('failed to process user changed'));
 	}
 
 	private onUserSignedOut(): void {
