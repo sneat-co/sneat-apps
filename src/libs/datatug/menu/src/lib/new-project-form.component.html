@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-title>New DataTug Project</ion-title>
+		<ion-buttons slot="end">
+			<ion-button color="medium" title="Cancel" (click)="cancel()">
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-item>
+	<ion-label>Store</ion-label>
+	<ion-select [(ngModel)]="store">
+		<ion-select-option value="cloud">DataTug Cloud</ion-select-option>
+	</ion-select>
+</ion-item>
+<ion-item-divider>
+	<i>DataTug cloud is free for personal use.</i>
+</ion-item-divider>
+<ion-item>
+	<ion-label>Title</ion-label>
+	<ion-input [(ngModel)]="title" required="required" minlength="2" maxlength="30"></ion-input>
+</ion-item>
+<ion-footer>
+	<div class="ion-padding">
+		<ion-button>Create new project</ion-button>
+		<ion-button (click)="cancel()" color="light">Cancel</ion-button>
+	</div>
+</ion-footer>
+

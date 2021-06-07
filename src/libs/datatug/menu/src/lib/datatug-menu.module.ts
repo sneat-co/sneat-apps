@@ -14,6 +14,8 @@ import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 import {DatatugServicesNavModule} from "@sneat/datatug/services/nav";
 import {DatatugServicesUnsortedModule} from "@sneat/datatug/services/unsorted";
 import {RouterModule} from "@angular/router";
+import {MenuProjectSelectorComponent} from "./menu-project-selector.component";
+import {NewProjectFormComponent} from "./new-project-form.component";
 // import {TableMetaCardModule} from '../table-meta-card/table-meta-card.module';
 // import {ContextCardComponent} from '../../context/components/context-card/context-card.component';
 // import {ContextCardEntityComponent} from '../../context/components/context-card-entity/context-card-entity.component';
@@ -41,6 +43,8 @@ import {RouterModule} from "@angular/router";
 	],
 	declarations: [
 		DatatugMenuComponent,
+		MenuProjectSelectorComponent,
+		NewProjectFormComponent,
 		// ContextCardComponent,
 		// ContextCardEntityComponent,
 	],

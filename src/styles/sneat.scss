@@ -1,7 +1,7 @@
 
-.split-pane-visible >.split-pane-side {
-  min-width: 400px!important;
-  max-width: 400px!important;
+.split-pane-visible > .split-pane-side {
+  min-width: 400px !important;
+  max-width: 400px !important;
 }
 
 
@@ -16,49 +16,49 @@
 
 @media (max-width: 540px) {
   .hidden-xs-down {
-    display: none !important;
+	display: none !important;
   }
 }
 
 @media (min-width: 541px) {
   .hidden-sm-up {
-    display: none !important;
+	display: none !important;
   }
 }
 
 @media (max-width: 540px) {
   .hidden-sm-down {
-    display: none !important;
+	display: none !important;
   }
 }
 
 @media (min-width: 541px) {
   .hidden-md-up {
-    display: none !important;
+	display: none !important;
   }
 }
 
 @media (max-width: 720px) {
   .hidden-md-down {
-    display: none !important;
+	display: none !important;
   }
 }
 
 @media (min-width: 721px) {
   .hidden-lg-up {
-    display: none !important;
+	display: none !important;
   }
 }
 
 @media (max-width: 960px) {
   .hidden-lg-down {
-    display: none !important;
+	display: none !important;
   }
 }
 
 @media (min-width: 1140px) {
   .hidden-xl-up {
-    display: none !important;
+	display: none !important;
   }
 }
 
@@ -85,8 +85,20 @@ ion-label.deleting-list-item {
 
 .cell-popover {
   .popover-content {
-    min-width: 500px;
-    //border: 1px solid red;
+	min-width: 500px;
+	//border: 1px solid red;
+  }
+}
+
+.small-popover {
+  .popover-content {
+	min-width: 520px;
+  }
+}
+
+.medium-popover {
+  .popover-content {
+	min-width: 640px;
   }
 }
 
@@ -115,6 +127,6 @@ ion-badge.badge-count {
 
 ion-item.no-end-padding {
   .item-inner {
-    padding-right: 0;
+	padding-right: 0;
   }
 }

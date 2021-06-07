@@ -50,27 +50,11 @@
 							   *ngFor="let store of datatugUser.datatug.stores">{{store.title}}</ion-select-option>
 		</ion-select>
 	</ion-item>
-	<ion-item class="ion-no-padding" *ngIf="currentStoreId">
-		<ion-buttons slot="start" class="ion-no-margin">
-			<ion-button>
-				<ion-icon name="albums-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-		<ion-label>Project</ion-label>
-		<!--		<ion-select *ngIf="projects?.length"-->
-		<!--						[value]="currentProjectId"-->
-		<!--						(ionChange)="switchProject($event)"-->
-		<!--						interface="popover"-->
-		<!--		>-->
-		<!--			<ion-select-option *ngFor="let p of projects" [value]="p.id">{{p.title || p.id}}</ion-select-option>-->
-		<!--		</ion-select>-->
-		<ion-select interface="popover" [value]="currentProject?.id" *ngIf="projects"
-					(ionChange)="switchProject($event)">
-			<ion-select-option *ngFor="let project of projects" [value]="project.id">
-				{{project.title || project.id}}
-			</ion-select-option>
-		</ion-select>
-	</ion-item>
+	<datatug-menu-project-selector
+			[currentStoreId]="currentStoreId"
+			[currentProjectId]="currentProjectId"
+			[projects]="projects"
+	></datatug-menu-project-selector>
 	<ng-container *ngIf="currentProjectId">
 		<ion-item class="ion-no-padding">
 			<ion-buttons slot="start" class="ion-no-margin">
