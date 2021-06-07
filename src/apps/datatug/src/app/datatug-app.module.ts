@@ -10,6 +10,7 @@ import {environment} from '../environments/environment';
 import {CommonModule} from "@angular/common";
 import {WormholeModule} from "@sneat/wormhole";
 import {HelloWorldPageComponent} from "./hello-world-page.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
 	declarations: [
@@ -25,6 +26,7 @@ import {HelloWorldPageComponent} from "./hello-world-page.component";
 		// AngularFirestoreModule,
 		CommonModule,
 		CoreModule,
+		HttpClientModule,
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatAppModule,
 		DatatugAppRoutingModule,

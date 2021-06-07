@@ -8,10 +8,10 @@ import {SneatTeamApiService} from '@sneat/api';
 import {IUserRecord} from '@sneat/auth-models';
 import {IRecord} from '@sneat/data';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SneatUserService {
 	public userDocSubscription?: Subscription;
-	private readonly userCollection: AngularFirestoreCollection<IUserRecord>;
+	private userCollection: AngularFirestoreCollection<IUserRecord>;
 
 	private uid?: string;
 	private $userTitle?: string;
@@ -28,15 +28,20 @@ export class SneatUserService {
 		private readonly afAuth: AngularFireAuth,
 		private readonly sneatTeamApiService: SneatTeamApiService,
 	) {
-		this.userCollection = db.collection<IUserRecord>('users');
-		afAuth.authState.subscribe(afUser => {
+		console.log('SneatUserService.constructor()');
+		afAuth.user.subscribe(afUser => {
+			console.log('SneatUserService received Firebase auth user with UID=', afUser?.uid, afUser?.email, afUser?.emailVerified);
+			this.userChanged$.next(this.uid);
 			if (afUser) {
+				// afUser.getIdToken().then(idToken => {
+				// 	console.log('idToken:', idToken);
+				// });
+				this.userCollection = db.collection<IUserRecord>('users');
 				this.onUserSignedIn(afUser);
 			} else {
 				this.onUserSignedOut();
 			}
-			this.userChanged$.next(this.uid);
-		});
+		}, this.errorLogger.logErrorHandler('SneatUserService failed to get Firebase auth state'));
 		// this.userRecord.subscribe(userRecord => console.log('userRecord:', userRecord));
 	}
 
@@ -53,11 +58,10 @@ export class SneatUserService {
 	}
 
 	public onUserSignedIn(afUser: firebase.User): void {
-		console.log('onUserSignedIn()');
+		console.log('onUserSignedIn()', afUser);
 		if (afUser.uid === this.uid) {
 			return;
 		}
-		console.log('afUser:', afUser);
 		// afUser.getIdToken().then(idToken => {
 		// 	console.log('Firebase idToken:', idToken);
 		// }).catch(err => this.errorLoggerService.logError(err, 'Failed to get Firebase ID token'));
@@ -73,8 +77,14 @@ export class SneatUserService {
 		}
 		const {uid} = afUser;
 		this.uid = uid;
-		const userDoc = this.userCollection.doc(uid);
-		this.userDocSubscription = userDoc
+		const userDocRef = this.userCollection.doc(uid);
+		userDocRef.get().subscribe({
+			next: userDoc => {
+				console.log('userDoc:', userDoc.data());
+			},
+			error: this.errorLogger.logErrorHandler('failed to get user record from Firestore'),
+		});
+		this.userDocSubscription = userDocRef
 			.snapshotChanges()
 			.subscribe(changes => {
 				console.log('Firestore: User record changed', changes);
@@ -89,10 +99,10 @@ export class SneatUserService {
 							this.userRecord$.next(userRecord);
 						}
 					} else {
-						setTimeout(() => this.createUserRecord(userDoc.ref, afUser), 1);
+						setTimeout(() => this.createUserRecord(userDocRef.ref, afUser), 1);
 					}
 				}
-			}, err => this.errorLogger.logErrorHandler('failed to process user changed'));
+			}, this.errorLogger.logErrorHandler('failed to process user changed'));
 	}
 
 	private onUserSignedOut(): void {

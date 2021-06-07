@@ -8,66 +8,62 @@ import {IUserRecord} from '@sneat/auth-models';
 // }
 
 export interface IDatatugUser extends IUserRecord {
-  dataTug?: IDataTugBriefForUser;
-  dataTugProjects?: IDatatugProjectBrief[];
+	datatug?: IDataTugBriefForUser;
 }
 
 export interface IDataTugBriefForUser {
-  stores?: IDataTugStoreBrief[];
-  projects?: IDatatugProjectBrief[];
+	stores?: IDataTugStoreBrief[];
+	projects?: IDatatugProjectBrief[];
 }
 
 export interface IDataTugStoreBrief {
-  title: string;
-  type: DataTugProjStoreType;
-  url: string;
+	title: string;
+	type: DataTugProjStoreType;
+	url: string;
 }
 
 export type DataTugProjStoreType = 'agent' | 'local' | 'github.com';
 
 export interface IProjStoreRef {
-  type: DataTugProjStoreType;
-  url?: string;
+	type: DataTugProjStoreType;
+	url?: string;
 }
 
 export interface IDatatugProjectBrief {
-  readonly id: string;
-  readonly store: IProjStoreRef;
-  readonly title?: string;
-  readonly titleOverride?: string;
+	readonly id: string;
+	readonly store: IProjStoreRef;
+	readonly title?: string;
+	readonly titleOverride?: string;
 }
 
 export type MetricColor = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger' | 'warning';
 
 export interface IBoolMetricVal {
-  label: string;
-  color: MetricColor;
+	label: string;
+	color: MetricColor;
 }
 
 export interface IBoolMetric {
-  true: IBoolMetricVal;
-  false: IBoolMetricVal;
+	true: IBoolMetricVal;
+	false: IBoolMetricVal;
 }
-
-
-
 
 
 interface IInvite {
-  message?: string;
+	message?: string;
 }
 
 interface IPerson {
-  title: string;
-  email: string;
+	title: string;
+	email: string;
 }
 
 export interface IPersonalInvite extends IInvite {
-  channel: string;
-  address: string;
-  team: { id: string; title: string };
-  memberId: string;
-  from: IPerson;
-  to: IPerson;
+	channel: string;
+	address: string;
+	team: { id: string; title: string };
+	memberId: string;
+	from: IPerson;
+	to: IPerson;
 }
 

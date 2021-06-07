@@ -5,6 +5,8 @@
 </ion-header>
 
 <ion-content>
-	<datatug-my-projects [projects]="datatugUser && (datatugUser.dataTug?.projects || [])"></datatug-my-projects>
-	<datatug-my-stores [stores]="datatugUser && (datatugUser.dataTug?.stores || [])"></datatug-my-stores>
+	<datatug-my-projects title="My projects"
+						 [projects]="datatugUser && (datatugUser.datatug?.projects || [])"
+	></datatug-my-projects>
+	<datatug-my-stores [stores]="datatugUser && (datatugUser.datatug?.stores || [])"></datatug-my-stores>
 </ion-content>

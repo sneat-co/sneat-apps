@@ -5,7 +5,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 
 const userIsNotAuthenticatedNoFirebaseToken = 'User is not authenticated yet - no Firebase ID token';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SneatTeamApiService {
 
 	private baseUrl = 'https://api.sneat.team/v0/';

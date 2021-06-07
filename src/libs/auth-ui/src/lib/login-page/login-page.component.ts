@@ -2,7 +2,7 @@
 // @ts-ignore
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {ActivatedRoute} from '@angular/router';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
@@ -42,7 +42,10 @@ export class LoginPageComponent {
 		@Inject(AnalyticsService) private readonly  analyticsService: IAnalyticsService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		// @Inject(Toaster) private readonly toaster: IToaster,
-		@Inject(LoginEventsHandler) private readonly loginEventsHandler: ILoginEventsHandler,
+
+		@Inject(LoginEventsHandler) @Optional()
+		private readonly loginEventsHandler: ILoginEventsHandler,
+
 		private readonly route: ActivatedRoute,
 		private readonly afAuth: AngularFireAuth,
 		private readonly navController: NavController,

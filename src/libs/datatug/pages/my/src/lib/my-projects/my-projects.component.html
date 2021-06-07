@@ -1,7 +1,7 @@
 <datatug-my-base-card></datatug-my-base-card>
 <ion-card>
 	<ion-item>
-		<ion-label>My projects</ion-label>
+		<ion-label>{{title || '@title is NOT defined '}}</ion-label>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="projects">
 				<ion-icon name="add" slot="start"></ion-icon>

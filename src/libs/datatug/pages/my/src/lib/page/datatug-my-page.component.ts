@@ -17,7 +17,7 @@ export class DatatugMyPageComponent implements OnDestroy {
 
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		@Optional() readonly datatugUserService: DatatugUserService,
+		readonly datatugUserService: DatatugUserService,
 	) {
 		if (!datatugUserService) {
 			console.error('datatugUserService is not injected');
@@ -28,6 +28,7 @@ export class DatatugMyPageComponent implements OnDestroy {
 		).subscribe({
 			next: datatugUser => {
 				this.datatugUser = datatugUser;
+				console.log('DatatugMyPageComponent.constructor() => user:', datatugUser);
 			},
 			error: errorLogger.logErrorHandler('Failed to get user record for MyPage'),
 		});

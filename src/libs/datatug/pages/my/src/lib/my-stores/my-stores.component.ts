@@ -4,7 +4,7 @@ import {IDataTugStoreBrief} from '@sneat/datatug/models';
 import {AgentStateService, IAgentState} from "@sneat/datatug/services/repo";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {first, takeUntil} from "rxjs/operators";
 import {DatatugNavService} from "@sneat/datatug/services/nav";
 
 @Component({
@@ -25,7 +25,7 @@ export class MyStoresComponent implements OnDestroy {
 		readonly agentStateService: AgentStateService,
 		private readonly datatugNavService: DatatugNavService,
 	) {
-		agentStateService.watchAgentInfo('localhost:8989')
+		agentStateService.getAgentInfo('localhost:8989')
 			.pipe(
 				takeUntil(this.destroyed),
 			)

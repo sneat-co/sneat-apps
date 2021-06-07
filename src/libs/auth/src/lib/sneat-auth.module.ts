@@ -10,11 +10,11 @@ import {SneatAuthGuard} from "./sneat-auth-guard";
 		SneatApiModule,
 	],
 	providers: [
-		SneatUserService,
+		// {provide: SneatUserService, useClass: SneatUserService, multi: false},
 		PrivateTokenStoreService,
-		SneatAuthStateService,
+		// SneatAuthStateService,
 		SneatAuthGuard,
-	]
+	],
 })
 export class SneatAuthModule {
 	constructor() {

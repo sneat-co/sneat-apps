@@ -10,6 +10,8 @@ import {GITHUB_REPO} from '@sneat/datatug/core';
 })
 export class MyProjectsComponent {
 
+	@Input() title: string;
+
 	@Input() public projects: IDatatugProjectBrief[];
 	public demoProjects: IDatatugProjectBrief[] = [
 		{

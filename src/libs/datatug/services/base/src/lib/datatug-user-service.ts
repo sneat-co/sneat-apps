@@ -21,14 +21,14 @@ export class DatatugUserService {
 				if (!datatugUser) {
 					return datatugUser;
 				}
-				if (!datatugUser.dataTug) {
-					datatugUser = {...datatugUser, dataTug: {stores: []}}
+				if (!datatugUser.datatug) {
+					datatugUser = {...datatugUser, datatug: {stores: []}}
 				}
-				if (!datatugUser.dataTug.stores) {
-					datatugUser = {...datatugUser, dataTug: {stores: []}}
+				if (!datatugUser.datatug.stores) {
+					datatugUser = {...datatugUser, datatug: {stores: []}}
 				}
-				if (!datatugUser.dataTug.stores.length) {
-					datatugUser.dataTug.stores.push(
+				if (!datatugUser.datatug.stores.length) {
+					datatugUser.datatug.stores.push(
 						{type: 'local', url: 'http://localhost:8989', title: 'localhost:8989'},
 					);
 				}

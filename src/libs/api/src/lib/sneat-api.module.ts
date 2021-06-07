@@ -3,12 +3,12 @@ import {SneatTeamApiService} from './sneat-team-api.service';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-  ],
-  providers: [
-    SneatTeamApiService,
-  ]
+	imports: [
+		HttpClientModule,
+	],
+	providers: [
+		// SneatTeamApiService,
+	]
 })
 export class SneatApiModule {
 }

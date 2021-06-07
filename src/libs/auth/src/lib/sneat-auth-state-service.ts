@@ -15,7 +15,7 @@ export interface IAuthState {
 	status: AuthStatus;
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SneatAuthStateService {
 	private readonly authState$ = new BehaviorSubject<AuthStatus>(AuthStatuses.authenticating);
 	public readonly authState = this.authState$.asObservable();
