@@ -31,69 +31,20 @@
 </ion-card>
 
 <ion-card>
-	<ion-item class="ion-no-padding">
-		<ion-buttons slot="start" class="ion-no-margin">
-			<ion-button routerLink="/" slot="start">
-				<ion-icon name="storefront-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-		<ion-label color="medium">
-			Store
-			<ion-badge color="warning">🚫</ion-badge>
-		</ion-label>
-		<ion-select disabled *ngIf="currentStoreId && !datatugUser?.datatug?.stores?.length" [value]="currentStoreId">
-			<ion-select-option [value]="currentStoreId">{{currentStoreId}}</ion-select-option>
-		</ion-select>
-		<ion-select interface="popover" [(ngModel)]="currentStoreId" (ionChange)="switchRepo($event)"
-					*ngIf="datatugUser?.datatug?.stores">
-			<ion-select-option [value]="store.url"
-							   *ngFor="let store of datatugUser.datatug.stores">{{store.title}}</ion-select-option>
-		</ion-select>
-	</ion-item>
+	<datatug-menu-store-selector
+			[datatugUser]="datatugUser"
+			[currentStoreId]="currentStoreId"
+	></datatug-menu-store-selector>
 	<datatug-menu-project-selector
 			[currentStoreId]="currentStoreId"
 			[currentProjectId]="currentProjectId"
 			[projects]="projects"
 	></datatug-menu-project-selector>
-	<ng-container *ngIf="currentProjectId">
-		<ion-item class="ion-no-padding">
-			<ion-buttons slot="start" class="ion-no-margin">
-				<ion-button>
-					<ion-icon name="globe-outline"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-			<ion-label>
-				<ng-container *ngIf="currentEnvId">Environment</ng-container>
-				<ng-container *ngIf="!currentEnvId">Environments</ng-container>
-				<ion-badge color="light" *ngIf="!currentEnvId && currentProject?.environments" class="ion-margin-start">
-					<ion-text color="medium"
-							  style="font-weight: normal">{{currentProject.environments.length}}</ion-text>
-				</ion-badge>
-			</ion-label>
-			<ion-select *ngIf="currentProject?.environments?.length" [value]="currentEnvId" interface="popover"
-						(ionChange)="switchEnv($event)">
-				<ion-select-option *ngFor="let env of currentProject.environments"
-								   [value]="env.id">{{env.title || env.id}}</ion-select-option>
-			</ion-select>
-			<ion-buttons slot="end" class="ion-no-margin ion-no-padding" style="margin-right: -1em"
-						 *ngIf="currentEnvId">
-				<ion-button color="medium" (click)="clearEnv()">
-					<ion-icon name="close"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		<!--		<ion-item class="ion-no-padding" *ngIf="currentEnvId">-->
-		<!--			<ion-buttons slot="start" class="ion-no-margin">-->
-		<!--				<ion-button>-->
-		<!--					<ion-icon name="layers-outline"></ion-icon>-->
-		<!--				</ion-button>-->
-		<!--			</ion-buttons>-->
-		<!--			<ion-label>DB instance</ion-label>-->
-		<!--			<ion-select value="SomeDb" interface="popover">-->
-		<!--				<ion-select-option>Some DB instance</ion-select-option>-->
-		<!--			</ion-select>-->
-		<!--		</ion-item>-->
-	</ng-container>
+	<datatug-menu-env-selector
+			*ngIf="currentProjectId"
+			[currentStoreId]="currentStoreId"
+			[currentProject]="currentProject"
+	></datatug-menu-env-selector>
 </ion-card>
 
 <!--<datatug-context-card *ngIf="currentProjectId" [projectId]="currentProjectId"></datatug-context-card>-->

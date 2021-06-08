@@ -99,50 +99,6 @@ export class DatatugMenuComponent implements OnDestroy {
 		}
 	}
 
-	switchRepo(event: CustomEvent): void {
-		try {
-			const {value} = event.detail;
-			if (value && !this.currentStoreId) {
-				console.log('DatatugMenuComponent.switchRepo()', value);
-				this.nav.goStore(value);
-			}
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to handle store switch');
-		}
-	}
-
-
-	switchEnv(event: CustomEvent): void {
-		console.log('switchEnv', event);
-		try {
-			const envId = event.detail.value as string;
-			if (envId !== this.currentEnvId) {
-				console.log('switchEnv', event);
-				// const env = this.currentProject.environments.find(e => e.id === value);
-				this.datatugNavContextService.setCurrentEnvironment(envId);
-				if (this.currentStoreId && this.currentProjectId) {
-					this.nav.goEnvironment({
-						storeId: this.currentStoreId,
-						projectId: this.currentProjectId
-					}, undefined, envId);
-				}
-			}
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to handle environment switch');
-		}
-	}
-
-	public clearEnv(): void { // Called from template
-		try {
-			this.datatugNavContextService.setCurrentEnvironment(undefined);
-			if (this.currentStoreId && this.currentProjectId) {
-				this.nav.goProject(this.currentStoreId, this.currentProjectId);
-			}
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to clear environment');
-		}
-	}
-
 	public logout(): void {
 		try {
 			this.afAuth
