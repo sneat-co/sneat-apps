@@ -11,6 +11,7 @@ import {CommonModule} from "@angular/common";
 import {WormholeModule} from "@sneat/wormhole";
 import {HelloWorldPageComponent} from "./hello-world-page.component";
 import {HttpClientModule} from "@angular/common/http";
+import {USE_EMULATOR as USE_FIRESTORE_EMULATOR} from '@angular/fire/firestore';
 
 @NgModule({
 	declarations: [
@@ -38,6 +39,10 @@ import {HttpClientModule} from "@angular/common/http";
 		// AngularFireAuth,
 		// AngularFireAuthGuard,
 		// SneatAuthGuard,
+		{
+			provide: USE_FIRESTORE_EMULATOR,
+			useValue: environment.useEmulators ? ['localhost', 8071] : undefined,
+		}
 	],
 	bootstrap: [
 		DatatugAppComponent,
@@ -45,6 +50,6 @@ import {HttpClientModule} from "@angular/common/http";
 })
 export class DatatugAppModule {
 	constructor() {
-		console.log('DatatugAppModule.constructor()');
+		console.log('DatatugAppModule.constructor(), environment.firebaseConfig:', environment.firebaseConfig);
 	}
 }

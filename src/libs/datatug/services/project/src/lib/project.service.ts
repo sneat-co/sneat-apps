@@ -1,24 +1,28 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {EMPTY, Observable, of, throwError} from 'rxjs';
+import {Inject, Injectable} from '@angular/core';
+import {AngularFirestore, AngularFirestoreCollection, DocumentData} from '@angular/fire/firestore';
+import {EMPTY, from, Observable, of, Subject, throwError} from 'rxjs';
 import {map, mergeMap, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {GITHUB_REPO, GITLAB_REPO_PREFIX, IDatatugProjRef} from '@sneat/datatug/core';
 import {IDatatugProjectFull, IDatatugProjectSummary} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
+import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 
 @Injectable()
 export class ProjectService {
 
 	private projects: { [id: string]: Observable<IDatatugProjectFull> } = {};
 	private projSummary: { [id: string]: Observable<IDatatugProjectSummary> } = {};
+	private readonly projectsCollection: AngularFirestoreCollection;
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly db: AngularFirestore,
 		private readonly http: HttpClient,
 		private readonly privateTokenStoreService: PrivateTokenStoreService,
 	) {
+		this.projectsCollection = db.collection('datatug-projects');
 	}
 
 	public watchProject(id: string): Observable<IDatatugProjectSummary> {
@@ -42,7 +46,7 @@ export class ProjectService {
 				// )
 				;
 		}
-		return this.db.collection('DataTugProjects')
+		return this.projectsCollection
 			.doc(id)
 			.snapshotChanges()
 			.pipe(
@@ -130,6 +134,18 @@ export class ProjectService {
 		}
 		const agentUrl = getStoreUrl(storeId);
 		return this.http.get<IDatatugProjectSummary>(`${agentUrl}/project-summary`, {params: {id: projectId}});
+	}
+
+	public createNewProject(projData: {
+		title: string;
+		userIds: string[];
+		teamId?: string;
+	}): Observable<string> {
+		return from(this.db.firestore.runTransaction<string>(transaction => {
+			const projDoc = this.projectsCollection.doc();
+			transaction.set(projDoc.ref, projData)
+			return Promise.resolve(projDoc.ref.id);
+		}));
 	}
 }
 

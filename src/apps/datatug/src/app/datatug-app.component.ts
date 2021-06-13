@@ -1,6 +1,7 @@
 import {Component, ComponentFactoryResolver, Injector, Type} from '@angular/core';
 import { ɵcreateInjector as createInjector } from '@angular/core';
 import {AppComponentService} from '@sneat/app';
+import {FirebaseApp} from "@angular/fire";
 
 @Component({
 	selector: 'datatug-root',
@@ -15,6 +16,7 @@ export class DatatugAppComponent {
 		private readonly injector: Injector,
 		readonly appComponentService: AppComponentService,
 		private componentFactoryResolver: ComponentFactoryResolver,
+		app: FirebaseApp,
 	) {
 		appComponentService.initializeApp();
 		this.loadMenu();

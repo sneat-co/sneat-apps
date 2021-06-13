@@ -4,17 +4,29 @@
 
 export const environment = {
 	production: false,
+	// firebaseConfigProd: {
+	// 	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
+	// 	authDomain: 'sneat.team',
+	// 	databaseURL: 'https://sneat-team.firebaseio.com',
+	// 	projectId: 'sneat-team',
+	// 	storageBucket: 'sneat-team.appspot.com',
+	// 	messagingSenderId: '724666284649',
+	// 	appId: '1:724666284649:web:080ffaab56bb71e49740f8',
+	// 	measurementId: 'G-RRM3BNCN0S',
+	// },
 	firebaseConfig: {
 		apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 		authDomain: 'sneat.team',
-		databaseURL: 'https://sneat-team.firebaseio.com',
+		databaseURL: 'http://localhost:8080',
 		projectId: 'sneat-team',
-		storageBucket: 'sneat-team.appspot.com',
-		messagingSenderId: '724666284649',
+	// 	storageBucket: 'sneat-team.appspot.com',
+	// 	messagingSenderId: '724666284649',
 		appId: '1:724666284649:web:080ffaab56bb71e49740f8',
 		measurementId: 'G-RRM3BNCN0S',
 	},
+	useEmulators: true,
 };
+console.log('environment:', environment);
 
 /*
  * For easier debugging in development mode, you can import the following file
