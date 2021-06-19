@@ -1,12 +1,13 @@
 <ion-header>
 	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="/"></ion-back-button>
+		</ion-buttons>
 		<ion-title>My stuff @ DataTug.app</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<datatug-my-projects title="My projects"
-						 [projects]="datatugUser && (datatugUser.datatug?.projects || [])"
-	></datatug-my-projects>
-	<datatug-my-stores [stores]="datatugUser && (datatugUser.datatug?.stores || [])"></datatug-my-stores>
+	<datatug-my-projects title="My projects" [projects]="projects"></datatug-my-projects>
+	<datatug-my-stores [stores]="stores"></datatug-my-stores>
 </ion-content>

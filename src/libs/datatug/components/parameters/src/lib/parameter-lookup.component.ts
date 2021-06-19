@@ -5,7 +5,7 @@ import {ModalController} from '@ionic/angular';
 import {IParameterDef, IParameterValueWithoutID} from '@sneat/datatug/models';
 import {ICommandResponseWithRecordset, IExecuteResponse} from '@sneat/datatug/dto';
 import {IGridDef} from '@sneat/grid';
-import {recordsetToGridDef, StoreService} from '@sneat/datatug/services/repo';
+import {recordsetToGridDef, DatatugStoreService} from '@sneat/datatug/services/repo';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 @Component({
@@ -26,7 +26,7 @@ export class ParameterLookupComponent implements OnInit {
 	grid: IGridDef;
 
 	constructor(
-		private readonly repoService: StoreService,
+		private readonly repoService: DatatugStoreService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modal: ModalController,
 	) {

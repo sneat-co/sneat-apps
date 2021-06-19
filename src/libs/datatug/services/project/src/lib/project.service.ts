@@ -5,9 +5,10 @@ import {map, mergeMap, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {GITHUB_REPO, GITLAB_REPO_PREFIX, IDatatugProjRef} from '@sneat/datatug/core';
-import {IDatatugProjectFull, IDatatugProjectSummary} from '@sneat/datatug/models';
+import {IDatatugProjectFull, IDatatugProjectSummary, IProjStoreRef} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
+import {SneatApiServiceFactory} from "@sneat/api";
 
 @Injectable()
 export class ProjectService {
@@ -21,6 +22,7 @@ export class ProjectService {
 		private readonly db: AngularFirestore,
 		private readonly http: HttpClient,
 		private readonly privateTokenStoreService: PrivateTokenStoreService,
+		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
 	) {
 		this.projectsCollection = db.collection('datatug-projects');
 	}
@@ -129,23 +131,28 @@ export class ProjectService {
 							console.warn(`Request project info with projectId=${projectId} but response JSON have id=${p.id}`);
 						}
 						return {...p, id: projectId};
-					})))
+					}))),
 			);
 		}
 		const agentUrl = getStoreUrl(storeId);
 		return this.http.get<IDatatugProjectSummary>(`${agentUrl}/project-summary`, {params: {id: projectId}});
 	}
 
-	public createNewProject(projData: {
-		title: string;
-		userIds: string[];
-		teamId?: string;
-	}): Observable<string> {
-		return from(this.db.firestore.runTransaction<string>(transaction => {
-			const projDoc = this.projectsCollection.doc();
-			transaction.set(projDoc.ref, projData)
-			return Promise.resolve(projDoc.ref.id);
-		}));
+	public createNewProject(
+		projStoreRef: IProjStoreRef,
+		projData: ICreateProjectData,
+	): Observable<string> {
+		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(projStoreRef);
+		return sneatApiService.post<ICreateProjectData, { id: string }>('/datatug/project/create_project', projData)
+			.pipe(
+				map(response => response.id)
+			);
 	}
+}
+
+export interface ICreateProjectData {
+	title: string;
+	userIds: string[];
+	teamId?: string;
 }
 

@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {distinctUntilChanged, filter, map, takeUntil, tap} from 'rxjs/operators';
 import {IDatatugProjectBase} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {AgentStateService, IAgentState, StoreService} from '@sneat/datatug/services/repo';
+import {AgentStateService, IAgentState, DatatugStoreService} from '@sneat/datatug/services/repo';
 import {DatatugNavService} from '@sneat/datatug/services/nav';
 import {routingParamRepoId} from '@sneat/datatug/core';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
@@ -29,7 +29,7 @@ export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, View
 	constructor(
 		private readonly route: ActivatedRoute,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly storeService: StoreService,
+		private readonly storeService: DatatugStoreService,
 		private readonly nav: DatatugNavService,
 		private readonly agentStateService: AgentStateService,
 	) {
@@ -71,7 +71,14 @@ export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, View
 		});
 	}
 
+	private getProjectsFromUser(storeId: string) {
+	}
+
 	private processStoreId(storeId: string): void {
+		if (storeId === 'firestore' || storeId === 'github.com') {
+			this.getProjectsFromUser(storeId);
+			return;
+		}
 		this.agentStateService
 			.watchAgentInfo(storeId)
 			.pipe(
@@ -133,7 +140,7 @@ export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, View
 	public goProject(project: IDatatugProjectBase, event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
-		this.nav.goProject(this.storeId, project.id);
+		this.nav.goProject({storeId: this.storeId, projectId: project.id});
 	}
 
 }

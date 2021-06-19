@@ -9,7 +9,7 @@ import {IDatatugProjectBase, IDatatugProjectSummary, IDatatugUser} from '@sneat/
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
-import {StoreService} from '@sneat/datatug/services/repo';
+import {DatatugStoreService} from '@sneat/datatug/services/repo';
 import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
 import {DatatugUserService} from "@sneat/datatug/services/base";
 import {AuthStatus, AuthStatuses, SneatAuthStateService} from "@sneat/auth";
@@ -47,7 +47,7 @@ export class DatatugMenuComponent implements OnDestroy {
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
-		private readonly storeService: StoreService,
+		private readonly storeService: DatatugStoreService,
 		private readonly projectService: ProjectService,
 		private readonly datatugUserService: DatatugUserService,
 	) {

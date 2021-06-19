@@ -12,6 +12,7 @@ import {WormholeModule} from "@sneat/wormhole";
 import {HelloWorldPageComponent} from "./hello-world-page.component";
 import {HttpClientModule} from "@angular/common/http";
 import {USE_EMULATOR as USE_FIRESTORE_EMULATOR} from '@angular/fire/firestore';
+// import {USE_EMULATOR as USE_FIREBASE_AUTH_EMULATOR} from '@angular/fire/auth';
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,11 @@ import {USE_EMULATOR as USE_FIRESTORE_EMULATOR} from '@angular/fire/firestore';
 		{
 			provide: USE_FIRESTORE_EMULATOR,
 			useValue: environment.useEmulators ? ['localhost', 8071] : undefined,
-		}
+		},
+		// {
+		// 	provide: USE_FIREBASE_AUTH_EMULATOR,
+		// 	useValue: environment.useEmulators ? ['localhost', 9099] : undefined,
+		// },
 	],
 	bootstrap: [
 		DatatugAppComponent,

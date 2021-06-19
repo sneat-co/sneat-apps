@@ -6,14 +6,13 @@
 	</ion-buttons>
 	<ion-label color="medium">
 		Store
-		<ion-badge color="warning">🚫</ion-badge>
 	</ion-label>
-	<ion-select disabled *ngIf="currentStoreId && !datatugUser?.datatug?.stores?.length" [value]="currentStoreId">
+	<ion-select disabled *ngIf="currentStoreId && !stores?.length" [value]="currentStoreId">
 		<ion-select-option [value]="currentStoreId">{{currentStoreId}}</ion-select-option>
 	</ion-select>
-	<ion-select interface="popover" [(ngModel)]="currentStoreId" (ionChange)="switchStore($event)"
-				*ngIf="datatugUser?.datatug?.stores">
-		<ion-select-option [value]="store.url"
-						   *ngFor="let store of datatugUser.datatug.stores">{{store.title}}</ion-select-option>
+	<ion-select *ngIf="stores" interface="popover" [(ngModel)]="currentStoreId" (ionChange)="switchStore($event)">
+		<ion-select-option [value]="store.id" *ngFor="let store of stores; trackBy: trackById">
+			{{store.title || store.id}}
+		</ion-select-option>
 	</ion-select>
 </ion-item>

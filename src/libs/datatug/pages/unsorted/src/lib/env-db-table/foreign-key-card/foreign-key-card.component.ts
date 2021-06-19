@@ -4,7 +4,7 @@ import {DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {IGridDef} from '@sneat/grid';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {AgentService, StoreService} from '@sneat/datatug/services/repo';
+import {AgentService, DatatugStoreService} from '@sneat/datatug/services/repo';
 import {ICommandResponseWithRecordset} from "@sneat/datatug/dto";
 
 @Component({

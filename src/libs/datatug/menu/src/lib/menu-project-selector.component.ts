@@ -1,5 +1,11 @@
-import {Component, Inject, Input} from "@angular/core";
-import {IDatatugProjectBase} from "@sneat/datatug/models";
+import {Component, Inject, Input, OnChanges, SimpleChanges} from "@angular/core";
+import {
+	allUserProjectsAsFlatList,
+	IDatatugProjectBase, IDatatugProjectBrief,
+	IDatatugUser,
+	IProjectAndStore,
+	projectsBriefFromDictToFlatList
+} from "@sneat/datatug/models";
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
@@ -9,10 +15,11 @@ import {NewProjectFormComponent} from "./new-project-form.component";
 	selector: 'datatug-menu-project-selector',
 	templateUrl: 'menu-project-selector.component.html'
 })
-export class MenuProjectSelectorComponent {
+export class MenuProjectSelectorComponent implements OnChanges {
+	@Input() datatugUser?: IDatatugUser;
 	@Input() currentStoreId?: string;
 	@Input() currentProjectId?: string;
-	@Input() projects?: IDatatugProjectBase[];
+	projects?: IDatatugProjectBrief[];
 
 	constructor(
 		@Inject(ErrorLogger)
@@ -22,6 +29,17 @@ export class MenuProjectSelectorComponent {
 		private readonly datatugNavContextService: DatatugNavContextService,
 	) {
 	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+        if (changes.datatugUser) {
+        	if (this.datatugUser?.datatug?.stores && this.currentStoreId) {
+        		const projectsById = this.datatugUser?.datatug?.stores[this.currentStoreId]?.projects;
+				this.projects = projectsBriefFromDictToFlatList(projectsById);
+			} else {
+        		this.projects = undefined;
+			}
+		}
+    }
 
 	public newProject(event: Event): void {
 		console.log('newProject()', event);
@@ -63,7 +81,7 @@ export class MenuProjectSelectorComponent {
 				projectId,
 			});
 			if (projectId) {
-				this.nav.goProject(this.currentStoreId, projectId);
+				this.nav.goProject({storeId: this.currentStoreId, projectId});
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle project switch');

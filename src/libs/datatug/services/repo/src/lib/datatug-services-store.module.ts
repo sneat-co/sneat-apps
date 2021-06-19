@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {StoreService} from './repo.service';
+import {DatatugStoreService} from './datatug-store.service';
 import {StoreApiService} from './store-api.service';
 import {AgentStateService} from "./agent-state.service";
 import {AgentService} from "./agent.service";
@@ -10,7 +10,7 @@ import {AgentService} from "./agent.service";
 		HttpClientModule,
 	],
 	providers: [
-		StoreService,
+		DatatugStoreService,
 		StoreApiService,
 		AgentService,
 		AgentStateService,

@@ -3,7 +3,14 @@ import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 import {IDatatugProjRef} from '@sneat/datatug/core';
-import {IDatatugProjectSummary, IProjBoard, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
+import {
+	IDatatugProjectSummary,
+	IDatatugStoreBrief,
+	IProjBoard,
+	IProjEntity,
+	IProjEnv,
+	IQueryDef,
+} from '@sneat/datatug/models';
 import {getStoreId} from "@sneat/datatug/nav";
 
 export type ProjectTopLevelPage =
@@ -17,6 +24,11 @@ export type ProjectTopLevelPage =
 	'tags' |
 	'widgets';
 
+export interface IStoreNavContext {
+	id: string;
+	brief?: IDatatugStoreBrief;
+}
+
 @Injectable({
 	providedIn: 'root' // TODO: embed explicitly
 })
@@ -28,16 +40,17 @@ export class DatatugNavService {
 	) {
 	}
 
-	goStore(storeId: string): void {
-		if (!storeId) {
-			throw new Error("storeId is a required parameter");
+	goStore(store: IStoreNavContext): void {
+		if (!store?.id) {
+			throw new Error("store.id is a required parameter");
 		}
-		const repoId = getStoreId(storeId);
-		this.navRoot(['store', storeId], 'Failed to navigate to store page');
+		const storeId = getStoreId(store.id);
+		const options: NavigationOptions = store.brief ? {state: {store}} : undefined ;
+		this.navRoot(['store', storeId], 'Failed to navigate to store page', options);
 	}
 
-	goProject(storeId: string, projectId: string, page?: ProjectTopLevelPage): void {
-		const url = ['store', storeId, 'project', projectId];
+	goProject(to: IDatatugProjRef, page?: ProjectTopLevelPage): void {
+		const url = ['store', to.storeId, 'project', to.projectId];
 		if (page) {
 			url.push(page);
 		}
@@ -93,9 +106,9 @@ export class DatatugNavService {
 		this.navRoot(url, 'Failed to navigate to environment table page');
 	}
 
-	private navRoot(url: string[] | string, errMessage: string): void {
+	private navRoot(url: string[] | string, errMessage: string, options?: NavigationOptions): void {
 		console.log('navRoot', url);
-		this.nav.navigateRoot(url)
+		this.nav.navigateRoot(url, options)
 			.catch(err => this.errorLogger.logError(err, errMessage));
 	}
 

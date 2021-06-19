@@ -35,10 +35,10 @@
 			[datatugUser]="datatugUser"
 			[currentStoreId]="currentStoreId"
 	></datatug-menu-store-selector>
-	<datatug-menu-project-selector
+	<datatug-menu-project-selector *ngIf="currentStoreId"
+			[datatugUser]="datatugUser"
 			[currentStoreId]="currentStoreId"
 			[currentProjectId]="currentProjectId"
-			[projects]="projects"
 	></datatug-menu-project-selector>
 	<datatug-menu-env-selector
 			*ngIf="currentProjectId"

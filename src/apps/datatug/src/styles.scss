@@ -34,3 +34,7 @@
 ion-item ion-buttons[slot=end] {
   margin-right: -1em; // TODO: Replace this dirty workaround with proper fix
 }
+
+ion-select {
+  max-width: 100% !important; // https://forum.ionicframework.com/t/ion-option-in-ion-select-doesnt-use-full-width/148256
+}

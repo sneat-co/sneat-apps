@@ -22,15 +22,18 @@ export class DatatugUserService {
 					return datatugUser;
 				}
 				if (!datatugUser.datatug) {
-					datatugUser = {...datatugUser, datatug: {stores: []}}
+					datatugUser = {...datatugUser, datatug: {stores: {}}}
 				}
 				if (!datatugUser.datatug.stores) {
-					datatugUser = {...datatugUser, datatug: {stores: []}}
+					datatugUser = {...datatugUser, datatug: {stores: {}}}
 				}
-				if (!datatugUser.datatug.stores.length) {
-					datatugUser.datatug.stores.push(
-						{type: 'local', url: 'http://localhost:8989', title: 'localhost:8989'},
-					);
+				const hasLocalhost = Object.keys(datatugUser.datatug.stores).some(v => v.startsWith('http://localhost:'));
+				if (!hasLocalhost) {
+					datatugUser.datatug.stores['http://localhost:8989'] = {
+						type: 'agent',
+						url: 'http://localhost:8989',
+						title: 'localhost:8989'
+					};
 				}
 				return datatugUser;
 			}),

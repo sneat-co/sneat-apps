@@ -18,7 +18,7 @@
 			{{project.title || project.id}}
 		</ion-select-option>
 	</ion-select>
-	<ion-buttons slot="end" class="ion-margin-end">
+	<ion-buttons slot="end" class="ion-margin-end" *ngIf="currentStoreId === 'firestore'">
 		<ion-button color="primary" (click)="newProject($event)">
 			<ion-icon slot="start" name="add"></ion-icon>
 			<ion-label>New project</ion-label>

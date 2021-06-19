@@ -2,6 +2,8 @@ import {Component, Inject, Input} from "@angular/core";
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {ProjectService} from "@sneat/datatug/services/project";
+import {IProjStoreRef} from "@sneat/datatug/models";
+import {DatatugNavService} from "@sneat/datatug/services/nav";
 
 @Component({
 	selector: 'datatug-new-project-form',
@@ -17,6 +19,8 @@ export class NewProjectFormComponent {
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
 		private readonly projectService: ProjectService,
+		private readonly popoverController: PopoverController,
+		private readonly nav: DatatugNavService,
 	) {
 	}
 
@@ -27,12 +31,16 @@ export class NewProjectFormComponent {
 	}
 
 	create(): void {
-		console.log('NewProjectFormComponent.create()')
-		this.projectService.createNewProject({title: this.title, userIds: []}).subscribe({
-			next: projId => {
-				const m = 'New project ID: ' + projId;
+		console.log('NewProjectFormComponent.create()');
+		const projStoreRef: IProjStoreRef = {
+			type: 'firestore',
+		};
+		this.projectService.createNewProject(projStoreRef, {title: this.title, userIds: []}).subscribe({
+			next: projectId => {
+				const m = 'New project ID: ' + projectId;
 				console.log(m);
-				alert(m);
+				this.popoverController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close popover with new project form'));
+				this.nav.goProject({storeId: projStoreRef.type, projectId});
 			},
 			error: this.errorLogger.logErrorHandler('Failed to create a new project'),
 		});

@@ -27,7 +27,7 @@ export class MenuEnvSelectorComponent {
 		try {
 			this.datatugNavContextService.setCurrentEnvironment(undefined);
 			if (this.currentStoreId && this.currentProject?.id) {
-				this.nav.goProject(this.currentStoreId, this.currentProject.id);
+				this.nav.goProject({storeId: this.currentStoreId, projectId: this.currentProject.id});
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to clear environment');

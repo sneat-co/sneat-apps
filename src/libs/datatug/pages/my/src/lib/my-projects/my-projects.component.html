@@ -14,9 +14,9 @@
 		<ion-item *ngIf="showDemoProjects">
 			<ion-label color="medium">No personal or favorite projects yet</ion-label>
 		</ion-item>
-		<ion-item *ngFor="let proj of projects" tappable (click)="goProject(proj)" detail>
+		<ion-item *ngFor="let item of projects" tappable (click)="goProject(item)" detail>
 			<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
-			{{proj.title}}
+			{{item.project.title}}
 		</ion-item>
 	</ng-container>
 	<ng-template #loadingUserProjects>
@@ -30,8 +30,8 @@
 	<ion-item-divider *ngIf="showDemoProjects">
 		<ion-label>Demo projects</ion-label>
 	</ion-item-divider>
-	<ion-item *ngFor="let proj of demoProjects" tappable (click)="goProject(proj)" detail>
+	<ion-item *ngFor="let project of demoProjects" tappable (click)="goProject({store: undefined, project: project})" detail>
 		<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
-		{{proj.title}}
+		{{project.title}}
 	</ion-item>
 </ion-card>

@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnDestroy, ViewChild} from '@angular/core';
 import {MyBaseCardComponent} from '../my-base-card-component';
-import {IDataTugStoreBrief} from '@sneat/datatug/models';
+import {IDatatugStoreBrief} from '@sneat/datatug/models';
 import {AgentStateService, IAgentState} from "@sneat/datatug/services/repo";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {Subject} from "rxjs";
@@ -13,7 +13,7 @@ import {DatatugNavService} from "@sneat/datatug/services/nav";
 	styleUrls: ['./my-stores.component.scss'],
 })
 export class MyStoresComponent implements OnDestroy {
-	@Input() public stores: IDataTugStoreBrief[];
+	@Input() public stores: IDatatugStoreBrief[];
 	@ViewChild(MyBaseCardComponent) base: MyBaseCardComponent;
 
 	public agentState: IAgentState;
@@ -45,8 +45,8 @@ export class MyStoresComponent implements OnDestroy {
 		this.destroyed.complete();
 	}
 
-	goStore(repo: string): void {
-		this.datatugNavService.goStore(repo);
+	goStore(id: string): void {
+		this.datatugNavService.goStore({id});
 	}
 
 	public checkAgent(event: Event): void {

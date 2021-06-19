@@ -8,7 +8,7 @@ import {IRecordset} from '@sneat/datatug/dto';
 import {IGridColumn, IGridDef} from '@sneat/grid';
 
 @Injectable()
-export class StoreService {
+export class DatatugStoreService {
 
 	private readonly projectsByStore: { [storeId: string]: Observable<IDatatugProjectBase[]> } = {};
 

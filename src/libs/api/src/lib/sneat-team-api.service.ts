@@ -1,35 +1,29 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Optional} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {ISneatApiService} from "./sneat-api-service.interface";
 
 const userIsNotAuthenticatedNoFirebaseToken = 'User is not authenticated yet - no Firebase ID token';
 
-@Injectable({providedIn: 'root'})
-export class SneatTeamApiService {
 
-	private baseUrl = 'https://api.sneat.team/v0/';
-
-	private firebaseIdToken?: string;
+export class SneatApiService implements ISneatApiService {
 
 	constructor(
 		private readonly httpClient: HttpClient,
-		readonly afAuth: AngularFireAuth,
+		private firebaseIdToken?: string,
+		private readonly baseUrl?: string,
 	) {
-		afAuth.idToken.subscribe(idToken => {
-			// console.log('SneatTeamApiService => new Firebase token:', idToken);
-			if (idToken) {
-				this.setFirebaseToken(idToken);
-			} else {
-				this.firebaseIdToken = undefined;
-			}
-		});
+		// if (!baseUrl) {
+		// 	baseUrl = 'https://api.sneat.team/v0/';
+		// }
+		// if (firebaseIdToken) {
+		// 	this.setFirebaseToken(firebaseIdToken);
+		// }
 	}
 
 	// TODO: It's made public because we use it in Login page, might be a bad idea consider making private and rely on afAuth.idToken event
-	public setFirebaseToken(token: string): void {
-		this.firebaseIdToken = token;
-	}
+	setFirebaseToken = (token: string) => this.firebaseIdToken = token;
 
 	public post<T>(endpoint: string, body: any): Observable<T> {
 		const url = this.baseUrl + endpoint;
@@ -92,5 +86,16 @@ export class SneatTeamApiService {
 			headers = headers.append('X-Firebase-Id-Token', this.firebaseIdToken);
 		}
 		return headers;
+	}
+}
+
+@Injectable({providedIn: 'root'})
+export class SneatTeamApiService extends SneatApiService {
+	constructor(
+		httpClient: HttpClient,
+		afAuth?: AngularFireAuth,
+	) {
+		super(httpClient, undefined, 'https://api.sneat.team/v0/')
+		afAuth?.idToken.subscribe(this.setFirebaseToken);
 	}
 }

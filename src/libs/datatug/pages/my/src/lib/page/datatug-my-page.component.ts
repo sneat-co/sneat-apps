@@ -1,7 +1,13 @@
 import {Component, Inject, OnDestroy, Optional} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {IDatatugUser} from '@sneat/datatug/models';
+import {
+	allUserProjectsAsFlatList,
+	allUserStoresAsFlatList,
+	IDatatugStoreBrief,
+	IDatatugUser,
+	IProjectAndStore
+} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugUserService} from "@sneat/datatug/services/base";
 
@@ -14,6 +20,9 @@ export class DatatugMyPageComponent implements OnDestroy {
 
 	public datatugUser: IDatatugUser;
 	private readonly destroyed = new Subject<void>();
+
+	projects: IProjectAndStore[];
+	stores: IDatatugStoreBrief[];
 
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
@@ -28,6 +37,8 @@ export class DatatugMyPageComponent implements OnDestroy {
 		).subscribe({
 			next: datatugUser => {
 				this.datatugUser = datatugUser;
+				this.projects = allUserProjectsAsFlatList(datatugUser?.datatug?.stores);
+				this.stores = allUserStoresAsFlatList(datatugUser?.datatug?.stores);
 				console.log('DatatugMyPageComponent.constructor() => user:', datatugUser);
 			},
 			error: errorLogger.logErrorHandler('Failed to get user record for MyPage'),
