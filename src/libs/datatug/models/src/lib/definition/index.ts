@@ -9,6 +9,6 @@ export * from './pipe-definition';
 export * from './project';
 export * from './recordset';
 export * from './query';
-export * from './repo';
+export * from './store';
 export * from './schema';
 

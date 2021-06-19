@@ -6,7 +6,7 @@ import {NavController} from '@ionic/angular';
 import {IDatatugProjectBase, IDatatugProjectSummary, IDatatugUser} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {CLOUD_REPO} from '@sneat/datatug/core';
+import {STORE_ID_FIRESTORE} from '@sneat/datatug/core';
 import {DatatugStoreService} from '@sneat/datatug/services/repo';
 import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
 import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
@@ -207,7 +207,7 @@ export class DatatugMenuComponent implements OnDestroy {
 				this.projSub?.unsubscribe();
 				return;
 			}
-			if (id !== '.' && storeId === CLOUD_REPO) {
+			if (id !== '.' && storeId === STORE_ID_FIRESTORE) {
 				this.projSub = this.projectService.watchProject(id).subscribe({
 					next: project => {
 						this.currentProject = project;

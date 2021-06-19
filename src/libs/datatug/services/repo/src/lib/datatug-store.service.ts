@@ -6,6 +6,7 @@ import {cloudStoreId, IDatatugProjectBase} from '@sneat/datatug/models';
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {IRecordset} from '@sneat/datatug/dto';
 import {IGridColumn, IGridDef} from '@sneat/grid';
+import {STORE_ID_GITHUB_COM, storeCanProvideListOfProjects} from '@sneat/datatug/core';
 
 @Injectable()
 export class DatatugStoreService {
@@ -24,7 +25,7 @@ export class DatatugStoreService {
 		if (!storeId) {
 			return throwError('Parameter "storeId" is required');
 		}
-		if (storeId === cloudStoreId) {
+		if (!storeCanProvideListOfProjects(storeId)) {
 			return of([{id: 'demo-project', title: 'Demo project', access: 'public'}]);
 		}
 		let projects = this.projectsByStore[storeId]

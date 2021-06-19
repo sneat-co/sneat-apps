@@ -1,4 +1,4 @@
-import {IRepo} from './repo';
+import {IStore} from './store';
 import {IOptionallyTitled} from '../core';
 import {IEnvironmentFull} from './environments';
 import {IDbModelFull} from './dbmodels';
@@ -32,10 +32,12 @@ export const ProjectItems = [
 
 export type ProjectItemType = typeof ProjectItems[number];
 
+export type ProjectAccess = 'private' | 'protected' | 'public';
+
 export interface IDatatugProjectBase {
 	id: string;
 	title: string;
-	access: 'private' | 'protected' | 'public';
+	access: ProjectAccess;
 }
 
 export interface IDatatugProjectFull extends IDatatugProjectBase {
@@ -49,7 +51,7 @@ export interface IDatatugProjectSummary extends IDatatugProjectBase {
 	readonly dbModels?: IProjDbModelBrief[];
 	readonly entities?: IProjEntity[];
 	readonly environments?: IProjEnv[];
-	readonly agents?: IRepo[];
+	readonly agents?: IStore[];
 	readonly tags?: { [tag: string]: number };
 	readonly default?: {
 		readonly agent?: string;
