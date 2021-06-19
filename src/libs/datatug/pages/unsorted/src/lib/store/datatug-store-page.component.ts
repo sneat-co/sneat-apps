@@ -39,19 +39,19 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 	}
 
 	ionViewDidLeave(): void {
-		console.log('RepoPageComponent.ionViewDidLeave()');
+		console.log('DatatugStorePageComponent.ionViewDidLeave()');
 		this.viewDidLeave.next();
 	}
 
 	ionViewDidEnter(): void {
-		console.log('RepoPageComponent.ionViewDidEnter()', this.storeId);
+		console.log('DatatugStorePageComponent.ionViewDidEnter()', this.storeId);
 		if (this.storeId) {
 			this.processStoreId(this.storeId)
 		}
 	}
 
 	ngOnInit() {
-		console.log('RepoPage.ngOnInit()');
+		console.log('DatatugStorePageComponent.ngOnInit()');
 		this.trackStoreId();
 	}
 
@@ -131,8 +131,9 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 	}
 
 	ngOnDestroy(): void {
-		console.log('RepoPage.ngOnDestroy()');
+		console.log('DatatugStorePageComponent.ngOnDestroy()');
 		this.destroyed.next();
+		this.destroyed.complete();
 	}
 
 	public goProject(project: IDatatugProjectBase, event: Event): void {
