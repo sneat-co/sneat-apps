@@ -1,12 +1,17 @@
 import {Injectable} from "@angular/core";
-import {SneatUserService} from "@sneat/auth";
+import {ISneatAuthState, ISneatUserState, SneatUserService} from "@sneat/auth";
 import {Observable} from "rxjs";
 import {IDatatugUser} from "@sneat/datatug/models";
 import {map} from "rxjs/operators";
+import {IUserRecord} from '@sneat/auth-models';
+
+export interface IDatatugUserState extends ISneatUserState {
+	record?: IDatatugUser;
+}
 
 @Injectable()
 export class DatatugUserService {
-	public datatugUser: Observable<IDatatugUser>;
+	public datatugUserState: Observable<IDatatugUserState>;
 
 	constructor(
 		readonly sneatUserService: SneatUserService,
@@ -15,11 +20,13 @@ export class DatatugUserService {
 			console.error('sneatUserService is not injected');
 			return;
 		}
-		this.datatugUser = sneatUserService.userRecord.pipe(
-			map(sneatUserRecord => {
-				let datatugUser = sneatUserRecord?.data as IDatatugUser;
+		this.datatugUserState = sneatUserService.userState.pipe(
+			map(sneatUserState => {
+				console.log('DatatugUserService => sneatUserState:', sneatUserState);
+				let datatugUser = sneatUserState?.record as IDatatugUser
+					|| sneatUserState?.record === null && {title: ''};
 				if (!datatugUser) {
-					return datatugUser;
+					return sneatUserState as IDatatugUserState;
 				}
 				if (!datatugUser.datatug) {
 					datatugUser = {...datatugUser, datatug: {stores: {}}}
@@ -35,7 +42,11 @@ export class DatatugUserService {
 						title: 'localhost:8989'
 					};
 				}
-				return datatugUser;
+				const datatugUserState: IDatatugUserState = {
+					...sneatUserState,
+					record: datatugUser,
+				}
+				return datatugUserState;
 			}),
 		);
 	}

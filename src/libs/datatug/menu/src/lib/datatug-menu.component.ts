@@ -1,18 +1,16 @@
-import {Component, Inject, OnDestroy, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy} from '@angular/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
-import firebase from 'firebase';
-import {AngularFireAuth} from '@angular/fire/auth';
 import {IDatatugProjectBase, IDatatugProjectSummary, IDatatugUser} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {CLOUD_REPO} from '@sneat/datatug/core';
 import {DatatugStoreService} from '@sneat/datatug/services/repo';
 import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
-import {DatatugUserService} from "@sneat/datatug/services/base";
-import {AuthStatus, AuthStatuses, SneatAuthStateService} from "@sneat/auth";
+import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
+import {AuthStatus, AuthStatuses, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
 
 
 @Component({
@@ -33,17 +31,16 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	public table?: IEnvDbTableContext;
 	public currentFolder?: Observable<string>;
-	public readonly firebaseUser$: Observable<firebase.User | null>
+	public authState: ISneatAuthState = {status: AuthStatuses.authenticating};
 	private projSub?: Subscription;
 	private readonly destroyed = new Subject<void>();
 
-	public datatugUser?: IDatatugUser;
+	public datatugUserState?: IDatatugUserState;
 
 	constructor(
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
 		private readonly navCtrl: NavController,
-		private readonly afAuth: AngularFireAuth,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
@@ -52,7 +49,15 @@ export class DatatugMenuComponent implements OnDestroy {
 		private readonly datatugUserService: DatatugUserService,
 	) {
 		console.log('DatatugMenuComponent.constructor()');
-		this.firebaseUser$ = afAuth.user;
+		this.sneatAuthStateService.authState
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: authState => {
+					this.authState = authState;
+				},
+				error: errorLogger.logErrorHandler('failed to process sneat auth state'),
+			});
+
 		// userService.userRecord.subscribe(user => {
 		// 	this.projects = user?.data?.dataTugProjects;
 		// });
@@ -82,7 +87,7 @@ export class DatatugMenuComponent implements OnDestroy {
 			console.error('this.sneatAuthStateService is not injected');
 			return;
 		}
-		this.sneatAuthStateService.authState
+		this.sneatAuthStateService.authStatus
 			.pipe(
 				takeUntil(this.destroyed),
 			)
@@ -101,8 +106,7 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	public logout(): void {
 		try {
-			this.afAuth
-				.signOut()
+			this.sneatAuthStateService.signOut()
 				.then(() => {
 					this.navCtrl.navigateBack('/signed-out')
 						.catch(this.errorLogger.logErrorHandler('Failed to navigate to signed out page'));
@@ -119,11 +123,11 @@ export class DatatugMenuComponent implements OnDestroy {
 				console.error('this.datatugUserService is not injected');
 				return;
 			}
-			this.datatugUserService.datatugUser.pipe(
+			this.datatugUserService.datatugUserState.pipe(
 				takeUntil(this.destroyed),
 			).subscribe({
 				next: datatugUser => {
-					this.datatugUser = datatugUser;
+					this.datatugUserState = datatugUser;
 					console.log('trackCurrentUser() => datatugUser:', datatugUser);
 				},
 				error: this.errorLogger.logErrorHandler('Failed to get user record for menu'),

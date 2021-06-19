@@ -1,4 +1,3 @@
-<datatug-my-base-card></datatug-my-base-card>
 <ion-card>
 	<ion-item>
 		<ion-label>{{title || '@title is NOT defined '}}</ion-label>
@@ -10,7 +9,7 @@
 		</ion-buttons>
 	</ion-item>
 
-	<ng-container *ngIf="projects; else loadingUserProjects">
+	<ng-container *ngIf="datatugUserRecord || datatugUserRecord === null; else loading">
 		<ion-item *ngIf="showDemoProjects">
 			<ion-label color="medium">No personal or favorite projects yet</ion-label>
 		</ion-item>
@@ -19,13 +18,21 @@
 			{{item.project.title}}
 		</ion-item>
 	</ng-container>
-	<ng-template #loadingUserProjects>
-		<ion-item>
+	<ng-template #loading>
+		<ion-item *ngIf="authStatus === 'authenticating'; else loadingUserProjects">
 			<ion-icon name="hourglass-outline" slot="start"></ion-icon>
 			<ion-label color="medium">
-				<ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+				Authenticating...
 			</ion-label>
 		</ion-item>
+		<ng-template #loadingUserProjects>
+			<ion-item>
+				<ion-icon name="hourglass-outline" slot="start"></ion-icon>
+				<ion-label color="medium">
+					Loading user projects...
+				</ion-label>
+			</ion-item>
+		</ng-template>
 	</ng-template>
 	<ion-item-divider *ngIf="showDemoProjects">
 		<ion-label>Demo projects</ion-label>

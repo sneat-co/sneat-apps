@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {IRecord, IScrum, ITeam} from '../../models/interfaces';
-import {IErrorLogger, ErrorLogger} from '@sneat-team/ui-core';
+import {ErrorLogger, IErrorLogger} from '@sneat-team/ui-core';
 import {ActivatedRoute} from '@angular/router';
 import {TeamService} from '../../services/team.service';
 import {ScrumService} from '../../services/scrum.service';
@@ -8,7 +8,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {NavService} from '../../services/nav.service';
 
 @Component({
-	selector: 'app-scrums-history',
+	selector: 'sneat-scrums-history',
 	templateUrl: './scrums-history.page.html',
 	styleUrls: ['./scrums-history.page.scss'],
 })

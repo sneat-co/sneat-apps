@@ -5,18 +5,18 @@ import 'firebase/auth';
 import {Component, Inject, Optional} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {ActivatedRoute} from '@angular/router';
+import {NavController} from '@ionic/angular';
+import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
+import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import {AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler, SneatUserService} from '@sneat/auth';
+import {SneatTeamApiService} from '@sneat/api';
+import {RandomId} from "@sneat/random";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import OAuthProvider = firebase.auth.OAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import GithubAuthProvider = firebase.auth.GithubAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 import UserCredential = firebase.auth.UserCredential;
-import {NavController} from '@ionic/angular';
-import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ILoginEventsHandler, LoginEventsHandler, SneatUserService} from '@sneat/auth';
-import {SneatTeamApiService} from '@sneat/api';
-import {RandomId} from "@sneat/random";
 
 
 type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
@@ -39,13 +39,12 @@ export class LoginPageComponent {
 	public sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means
 
 	constructor(
-		@Inject(AnalyticsService) private readonly  analyticsService: IAnalyticsService,
+		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		// @Inject(Toaster) private readonly toaster: IToaster,
 
 		@Inject(LoginEventsHandler) @Optional()
 		private readonly loginEventsHandler: ILoginEventsHandler,
-
 		private readonly route: ActivatedRoute,
 		private readonly afAuth: AngularFireAuth,
 		private readonly navController: NavController,
@@ -97,15 +96,13 @@ export class LoginPageComponent {
 				authProvider = new OAuthProvider('microsoft.com');
 				break;
 			case 'Facebook':
-				const fbAuthProvider = new FacebookAuthProvider();
-				fbAuthProvider.addScope('email');
-				authProvider = fbAuthProvider;
+				authProvider = new FacebookAuthProvider();
+				(authProvider as FacebookAuthProvider).addScope('email');
 				break;
 			case 'GitHub':
-				const githubAuthProvider = new GithubAuthProvider();
-				githubAuthProvider.addScope('read:user');
-				githubAuthProvider.addScope('user:email');
-				authProvider = githubAuthProvider;
+				authProvider = new GithubAuthProvider();
+				(authProvider as GithubAuthProvider).addScope('read:user');
+				(authProvider as GithubAuthProvider).addScope('user:email');
 				break;
 			default:
 				this.errorLogger.logError('Coding error', 'Unknown or unsupported auth provider: ' + provider);
@@ -201,7 +198,11 @@ export class LoginPageComponent {
 	private onLoggedIn(userCredential: UserCredential): void {
 		console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
 		if (userCredential.user) {
-			this.userService.onUserSignedIn(userCredential.user);
+			const authState: ISneatAuthState = {
+				status: AuthStatuses.authenticated,
+				user: userCredential.user,
+			}
+			this.userService.onUserSignedIn(authState);
 		}
 		const {to} = this.route.snapshot.queryParams;
 		const queryParams = to ? {...this.route.snapshot.queryParams} : undefined;

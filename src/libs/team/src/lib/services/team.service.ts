@@ -9,7 +9,7 @@ import firebase from 'firebase';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import User = firebase.User;
 import {SneatTeamApiService} from '@sneat/api';
-import {SneatUserService} from '@sneat/auth';
+import {ISneatUserState, SneatUserService} from '@sneat/auth';
 import {ICreateTeamRequest, ICreateTeamResponse} from '../dto-models';
 import {IRecord} from '@sneat/data';
 import {IUserRecord, IUserTeamInfo, IUserTeamInfoWithId} from '@sneat/auth-models';
@@ -36,8 +36,9 @@ export class TeamService {
 		};
 		afAuth.authState.subscribe(onFirebaseAuthStateChanged);
 
-		const processUserRecordInTeamService = (user: IRecord<IUserRecord>): void => {
+		const processUserRecordInTeamService = (userState: ISneatUserState): void => {
 			console.log('processUserRecordInTeamService()');
+			const user = userState?.record;
 			if (!user) {
 				// this.userId = undefined;
 				if (this.subscriptions?.length) {
@@ -45,13 +46,13 @@ export class TeamService {
 				}
 				return;
 			}
-			if (user.id !== this.userId) {
+			if (userState.user.uid !== this.userId) {
 				if (this.userId) {
 					this.unsubscribe('user id changed');
 				}
-				this.userId = user.id;
+				this.userId = userState.user.uid;
 			}
-			if (user.data?.teams) {
+			if (user?.teams) {
 				const subscribeForFirestoreTeamChanges = (teamInfo: IUserTeamInfoWithId): void => {
 					const {id} = teamInfo;
 					let subj = this.teams$[id];
@@ -73,13 +74,13 @@ export class TeamService {
 						);
 					this.subscriptions.push(o.subscribe(subj));
 				};
-				Object.entries(user.data.teams).forEach(
+				Object.entries(user.teams).forEach(
 					([id, team]) => subscribeForFirestoreTeamChanges({id, ...(team as IUserTeamInfoWithId)}),
 				);
 			}
 		};
 		// We are intentionally not un-subscribing from user record updates. TODO: why?
-		this.userService.userRecord.subscribe({
+		this.userService.userState.subscribe({
 			next: processUserRecordInTeamService,
 			error: err => this.errorLogger.logError(err, 'failed to load user record'),
 		});

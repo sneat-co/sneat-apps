@@ -12,9 +12,10 @@ export interface IDatatugUser extends IUserRecord {
 	datatug?: IDatatugBriefForUser;
 }
 
-export interface IDatatugBriefForUser {
-	stores?: { [id: string]: IDatatugStoreBrief };
+export type IDatatugStoreBriefsById = { [id: string]: IDatatugStoreBrief };
 
+export interface IDatatugBriefForUser {
+	stores?: IDatatugStoreBriefsById;
 }
 
 export interface IDatatugStoreBrief {
@@ -32,7 +33,7 @@ export interface IProjectAndStore {
 
 const cloudStoreTitle = '☁️ DataTug cloud';
 
-export function allUserStoresAsFlatList(stores?: { [id: string]: IDatatugStoreBrief }): IDatatugStoreBrief[] {
+export function allUserStoresAsFlatList(stores?: IDatatugStoreBriefsById): IDatatugStoreBrief[] {
 	const result: IDatatugStoreBrief[] = [];
 	if (stores) {
 		for (const storeId in stores) {
@@ -52,7 +53,7 @@ export function allUserStoresAsFlatList(stores?: { [id: string]: IDatatugStoreBr
 	return result;
 }
 
-export function allUserProjectsAsFlatList(stores: { [id: string]: IDatatugStoreBrief }): IProjectAndStore[] {
+export function allUserProjectsAsFlatList(stores: IDatatugStoreBriefsById): IProjectAndStore[] {
 	const projects: IProjectAndStore[] = [];
 	for (const storeId in stores) {
 		const store = {id: storeId, ...stores[storeId]};

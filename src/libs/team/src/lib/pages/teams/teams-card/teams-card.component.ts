@@ -8,7 +8,7 @@ import {IErrorLogger, ErrorLogger} from '@sneat/logging';
 import {ICreateTeamRequest} from '../../../dto-models';
 import {IUserRecord, IUserTeamInfoWithId} from '@sneat/auth-models';
 import {IRecord} from '@sneat/data';
-import {SneatUserService} from '@sneat/auth';
+import {ISneatUserState, SneatUserService} from '@sneat/auth';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 
 @Component({
@@ -51,7 +51,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 					this.unsubscribe('user signed out');
 					return;
 				}
-				this.subscriptions.push(this.userService.userRecord.subscribe({
+				this.subscriptions.push(this.userService.userState.subscribe({
 					next: this.setUser,
 					error: err => this.errorLogger.logError(err, 'Failed to get user record'),
 				}));
@@ -150,10 +150,11 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		this.subscriptions = [];
 	}
 
-	private setUser = (user: IRecord<IUserRecord>): void => {
-		console.log('HomePage => user:', user);
+	private setUser = (userState: ISneatUserState): void => {
+		console.log('HomePage => user:', userState);
+		const user = userState.record;
 		if (user) {
-			this.teams = Object.entries(user.data?.teams ? user.data.teams : {})
+			this.teams = Object.entries(user?.teams ? user.teams : {})
 				.map(([id, team]) => ({id, ...(team as any)}));
 			this.teams.sort((a, b) => a.title > b.title ? 1 : -1);
 			this.showAdd = !this.teams?.length;

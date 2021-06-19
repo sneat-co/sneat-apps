@@ -7,6 +7,10 @@ import {DatatugHomePageComponent} from './datatug-home-page.component';
 import {HomePageRoutingModule} from './home-routing.module';
 import {CoreModule} from '@sneat/core';
 import {WormholeModule} from "@sneat/wormhole";
+import {MyStoresComponent} from './my-stores/my-stores.component';
+import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
+import {DatatugServicesStoreModule} from "@sneat/datatug/services/repo";
+import {MyDatatugProjectsComponent} from "./my-projects/my-datatug-projects.component";
 
 @NgModule({
 	imports: [
@@ -16,9 +20,13 @@ import {WormholeModule} from "@sneat/wormhole";
 		HomePageRoutingModule,
 		CoreModule,
 		WormholeModule,
+		DatatugServicesBaseModule,
+		DatatugServicesStoreModule,
 	],
 	declarations: [
 		DatatugHomePageComponent,
+		MyDatatugProjectsComponent,
+		MyStoresComponent,
 	],
 })
 export class DatatugPagesHomeModule {

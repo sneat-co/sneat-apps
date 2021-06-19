@@ -1,20 +1,27 @@
-import {Component, Inject, Input, OnDestroy, ViewChild} from '@angular/core';
-import {MyBaseCardComponent} from '../my-base-card-component';
-import {IDatatugStoreBrief} from '@sneat/datatug/models';
+import {Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import {
+	allUserStoresAsFlatList,
+	IDatatugStoreBrief,
+	IDatatugStoreBriefsById,
+	IDatatugUser
+} from '@sneat/datatug/models';
 import {AgentStateService, IAgentState} from "@sneat/datatug/services/repo";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {Subject} from "rxjs";
-import {first, takeUntil} from "rxjs/operators";
+import {takeUntil} from "rxjs/operators";
 import {DatatugNavService} from "@sneat/datatug/services/nav";
+import {NavController} from "@ionic/angular";
 
 @Component({
 	selector: 'datatug-my-stores',
 	templateUrl: './my-stores.component.html',
 	styleUrls: ['./my-stores.component.scss'],
 })
-export class MyStoresComponent implements OnDestroy {
-	@Input() public stores: IDatatugStoreBrief[];
-	@ViewChild(MyBaseCardComponent) base: MyBaseCardComponent;
+export class MyStoresComponent implements OnChanges, OnDestroy {
+
+	@Input() public datatugUser: IDatatugUser;
+
+	public stores: IDatatugStoreBrief[];
 
 	public agentState: IAgentState;
 
@@ -22,6 +29,7 @@ export class MyStoresComponent implements OnDestroy {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly navController: NavController,
 		readonly agentStateService: AgentStateService,
 		private readonly datatugNavService: DatatugNavService,
 	) {
@@ -39,6 +47,12 @@ export class MyStoresComponent implements OnDestroy {
 				}
 			});
 	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes.datatugUser) {
+			this.stores = allUserStoresAsFlatList(this.datatugUser?.datatug?.stores);
+		}
+    }
 
 	ngOnDestroy() {
 		this.destroyed.next();

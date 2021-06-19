@@ -18,10 +18,10 @@ export class UserProfilePage {
 	constructor(
 		private readonly userService: SneatUserService,
 	) {
-		userService.userRecord.subscribe(user => {
-			console.log('UserProfilePage => user:', user);
-			this.user = user?.data;
-			this.userTitle.setValue(user?.data.title || '');
+		userService.userState.subscribe(userState => {
+			console.log('UserProfilePage => userState:', userState);
+			this.user = userState.record;
+			this.userTitle.setValue(userState?.record.title || '');
 		})
 	}
 

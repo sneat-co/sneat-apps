@@ -7,8 +7,9 @@
 		<!--    </ion-buttons>-->
 		<ion-icon slot="start" name="person-circle-outline"></ion-icon>
 
-		<ion-label color="medium"
-				   *ngIf="firebaseUser$|async; else notAuthenticated">{{(firebaseUser$|async)?.displayName}}</ion-label>
+		<ion-label *ngIf="authState.user; else notAuthenticated" color="medium">
+			{{authState.user.displayName}}
+		</ion-label>
 		<ng-template #notAuthenticated>
 			<ion-label color="medium">
 				<ng-container *ngIf="!authStatus">Loading...</ng-container>
@@ -32,13 +33,13 @@
 
 <ion-card>
 	<datatug-menu-store-selector
-			[datatugUser]="datatugUser"
+			[datatugUser]="datatugUserState?.record"
 			[currentStoreId]="currentStoreId"
 	></datatug-menu-store-selector>
 	<datatug-menu-project-selector *ngIf="currentStoreId"
-			[datatugUser]="datatugUser"
-			[currentStoreId]="currentStoreId"
-			[currentProjectId]="currentProjectId"
+								   [datatugUser]="datatugUserState?.record"
+								   [currentStoreId]="currentStoreId"
+								   [currentProjectId]="currentProjectId"
 	></datatug-menu-project-selector>
 	<datatug-menu-env-selector
 			*ngIf="currentProjectId"

@@ -5,14 +5,22 @@ interface MightHaveId {
 	id?: string;
 }
 
-export function mapToRecord<T extends MightHaveId>(): OperatorFunction<T, IRecord<T>> {
-	return map((data: T): IRecord<T> => ({id: data.id, data}));
+export function mapToRecord<T extends MightHaveId>(state: RecordState = 'unchanged'):
+	OperatorFunction<T, IRecord<T>> {
+	return map((data: T): IRecord<T> => ({id: data.id, data, state}));
 }
 
-export interface IRecord<T> { // TODO: duplicate name
-  id: string;
-  data?: T;
-  state?: RecordState;
+export interface IRecord<T> {
+	id: string;
+	data?: T;
+	state?: RecordState; // undefined == 'unchanged';
 }
 
-export type RecordState = 'creating' | 'changed' | 'updating' | 'deleting';
+export type RecordState =
+	'changed' |
+	'creating' |
+	'deleting' |
+	'loading' |
+	'unchanged' |
+	'updating'
+	;
