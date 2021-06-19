@@ -74,7 +74,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		},
 	];
 
-	currentRepoId: string;
+	currentStoreId: string;
 	currentProjectId: string;
 	currentProject: IDatatugProjectSummary;
 	public currentFolder: Observable<string>;
@@ -86,7 +86,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		private readonly nav: DatatugNavService,
 	) {
 		this.datatugNavContextService.currentStoreId.pipe(takeUntil(this.destroyed)).subscribe({
-			next: id => this.currentRepoId = id,
+			next: id => this.currentStoreId = id,
 		});
 		this.datatugNavContextService.currentProject.pipe(takeUntil(this.destroyed)).subscribe({
 			next: proj => this.currentProjectId = proj?.brief?.id,
@@ -104,7 +104,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		event.preventDefault();
 		event.stopPropagation();
 
-		this.nav.goProjPage(this.currentRepoId, this.currentProjectId, page, {projSummary: this.currentProject});
+		this.nav.goProjPage(this.currentStoreId, this.currentProjectId, page, {projSummary: this.currentProject});
 		return false;
 	}
 

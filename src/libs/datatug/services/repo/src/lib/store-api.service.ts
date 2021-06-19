@@ -16,27 +16,27 @@ export class StoreApiService {
 		return `${repoUrl}${path}`;
 	}
 
-	public get<T>(repoId: string, path: string, options?: IHttpRequestOptions): Observable<T> {
-		const url = StoreApiService.getUrl(repoId, path);
+	public get<T>(storeId: string, path: string, options?: IHttpRequestOptions): Observable<T> {
+		const url = StoreApiService.getUrl(storeId, path);
 		// console.log('url', url);
 		return this.httpClient.get<T>(url, options);
 	}
 
 	// noinspection JSUnusedGlobalSymbols
-	public post<T>(repoId: string, path: string, body: any, options?: IHttpRequestOptions): Observable<T> {
-		const url = StoreApiService.getUrl(repoId, path);
+	public post<T>(storeId: string, path: string, body: any, options?: IHttpRequestOptions): Observable<T> {
+		const url = StoreApiService.getUrl(storeId, path);
 		return this.httpClient.post<T>(url, body, options);
 	}
 
 	// noinspection JSUnusedGlobalSymbols
-	public put<T>(repoId: string, path: string, body: any, options?: IHttpRequestOptions): Observable<T> {
-		const url = StoreApiService.getUrl(repoId, path);
+	public put<T>(storeId: string, path: string, body: any, options?: IHttpRequestOptions): Observable<T> {
+		const url = StoreApiService.getUrl(storeId, path);
 		return this.httpClient.put<T>(url, body, options);
 	}
 
 	// noinspection JSUnusedGlobalSymbols
-	public delete<T>(repoId: string, path: string, options?: IHttpRequestOptions) {
-		const url = StoreApiService.getUrl(repoId, path);
+	public delete<T>(storeId: string, path: string, options?: IHttpRequestOptions) {
+		const url = StoreApiService.getUrl(storeId, path);
 		return this.httpClient.delete<T>(url, options);
 	}
 }

@@ -18,7 +18,7 @@ export class ParameterLookupComponent implements OnInit {
 	@Input() parameter: IParameterDef;
 	@Input() subj: Subject<IParameterValueWithoutID>;
 	@Input() canceled: () => void;
-	@Input() repoId: string;
+	@Input() storeId: string;
 	@Input() projectId: string;
 	@Input() envId: string;
 	@Input() lookupResponse: Observable<IExecuteResponse>;

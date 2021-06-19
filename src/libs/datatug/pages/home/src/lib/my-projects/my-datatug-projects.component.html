@@ -9,7 +9,7 @@
 		</ion-buttons>
 	</ion-item>
 
-	<ng-container *ngIf="datatugUserRecord || datatugUserRecord === null; else loading">
+	<ng-container *ngIf="userRecordLoaded; else loading">
 		<ion-item *ngIf="showDemoProjects">
 			<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
 			<ion-label color="medium">No personal or favorite projects yet</ion-label>
@@ -20,20 +20,7 @@
 		</ion-item>
 	</ng-container>
 	<ng-template #loading>
-		<ion-item *ngIf="authStatus === 'authenticating'; else loadingUserProjects">
-			<ion-icon name="hourglass-outline" slot="start"></ion-icon>
-			<ion-label color="medium">
-				Authenticating...
-			</ion-label>
-		</ion-item>
-		<ng-template #loadingUserProjects>
-			<ion-item>
-				<ion-icon name="hourglass-outline" slot="start"></ion-icon>
-				<ion-label color="medium">
-					Loading user projects...
-				</ion-label>
-			</ion-item>
-		</ng-template>
+		<datatug-loading-items [authStatus]="authStatus" title="Loading user projects..."></datatug-loading-items>
 	</ng-template>
 	<ion-item-divider *ngIf="showDemoProjects">
 		<ion-label><h3 style="font-weight: bold">Demo projects</h3></ion-label>

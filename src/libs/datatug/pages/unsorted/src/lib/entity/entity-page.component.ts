@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {RecordsetValue} from '@sneat/datatug/dto';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {EntityService} from '@sneat/datatug/services/unsorted';
-import {routingParamEntityId, routingParamProjectId, routingParamRepoId} from '@sneat/datatug/core';
+import {routingParamEntityId, routingParamProjectId, routingParamStoreId} from '@sneat/datatug/core';
 import {IEntity, IProjEntity} from '@sneat/datatug/models';
 import {IGridColumn} from '@sneat/grid';
 
@@ -16,7 +16,7 @@ import {IGridColumn} from '@sneat/grid';
 })
 export class EntityPageComponent implements OnDestroy {
 
-	repoId: string;
+	storeId: string;
 	projectId: string;
 	entityId: string;
 	projEntity: IProjEntity;
@@ -36,11 +36,11 @@ export class EntityPageComponent implements OnDestroy {
 		route.paramMap
 			.pipe(takeUntil(this.destroyed))
 			.subscribe(params => {
-				this.repoId = params.get(routingParamRepoId);
+				this.storeId = params.get(routingParamStoreId);
 				this.projectId = params.get(routingParamProjectId);
 				const entityId = params.get(routingParamEntityId);
 				this.entityId = entityId;
-				this.entityService.getEntity(this.repoId, this.projectId, this.entityId)
+				this.entityService.getEntity(this.storeId, this.projectId, this.entityId)
 					.pipe(
 						takeUntil(this.destroyed),
 						takeWhile(() => this.entityId === entityId),

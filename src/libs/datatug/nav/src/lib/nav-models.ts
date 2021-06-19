@@ -1,5 +1,5 @@
 import {
-	IDatatugProjectBrief,
+	IDatatugProjectBrief, IDatatugProjectBriefWithStoreRef,
 	IDatatugProjectSummary,
 	IEnvironmentSummary,
 	IProjEnv,
@@ -8,7 +8,7 @@ import {
 import {IDatatugProjRef} from "@sneat/datatug/core";
 
 export interface IDatatugProjectContext extends IDatatugProjRef {
-	readonly brief: IDatatugProjectBrief;
+	readonly brief: IDatatugProjectBriefWithStoreRef;
 	readonly summary?: IDatatugProjectSummary;
 }
 
@@ -45,7 +45,7 @@ export const getStoreId = (repo: string): string => {
 	if (repo.startsWith('http://')) {
 		return repo.replace('http://', 'http-')
 	} else if (repo.startsWith('https://')) {
-		return  repo.replace('https://', 'https-')
+		return repo.replace('https://', 'https-')
 	}
 	return repo;
 }

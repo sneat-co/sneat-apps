@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {StorePageComponent} from './store-page.component';
+import {DatatugStorePageComponent} from './datatug-store-page.component';
 
 describe('StorePageComponent', () => {
-	let component: StorePageComponent;
-	let fixture: ComponentFixture<StorePageComponent>;
+	let component: DatatugStorePageComponent;
+	let fixture: ComponentFixture<DatatugStorePageComponent>;
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [StorePageComponent],
+			declarations: [DatatugStorePageComponent],
 			imports: [IonicModule.forRoot()]
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(StorePageComponent);
+		fixture = TestBed.createComponent(DatatugStorePageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	}));

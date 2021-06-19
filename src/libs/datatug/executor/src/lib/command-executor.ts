@@ -7,5 +7,5 @@ export interface ICommandExecutor {
 }
 
 export interface IRequestExecutor {
-	execute(repoId: string, request: IExecuteRequest): Observable<IExecuteResponse>;
+	execute(agentId: string, request: IExecuteRequest): Observable<IExecuteResponse>;
 }

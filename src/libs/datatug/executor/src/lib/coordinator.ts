@@ -15,13 +15,13 @@ export class Coordinator {
 	) {
 	}
 
-	public execute(repoId: string, request: IExecuteRequest): Observable<IExecuteResponse> {
+	public execute(agentId: string, request: IExecuteRequest): Observable<IExecuteResponse> {
 		let executor: IRequestExecutor;
 		if (request.commands.length === 1 && request.commands[0].type === 'HTTP') {
 			executor = this.httpExecutor;
 		} else {
 			executor = this.agentService;
 		}
-		return executor.execute(repoId, request);
+		return executor.execute(agentId, request);
 	}
 }

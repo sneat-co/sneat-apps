@@ -4,8 +4,8 @@ import {NavigationEnd, Router} from '@angular/router';
 import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
-import {DataTugProjStoreType} from '@sneat/datatug/models';
-import {AppContextService, GITHUB_REPO} from '@sneat/datatug/core';
+import {DatatugProjStoreType} from '@sneat/datatug/models';
+import {AppContextService, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/datatug/core';
 import {EnvironmentService} from "@sneat/datatug/services/unsorted";
 import {
 	IDatatugNavContext,
@@ -22,6 +22,7 @@ const
 	reEnvDb = /\/env\/\w+\/db\/(.+?)(?:\/|$)/,
 	reTable = /\/table\/(.+?)(?:\/|$)/
 ;
+
 
 @Injectable()
 export class DatatugNavContextService {
@@ -205,17 +206,17 @@ export class DatatugNavContextService {
 			return;
 		}
 		const currentProject = this.$currentProj.value;
-		const currentRepoId = this.$currentStoreId.value;
-		if (!currentProject || currentProject.brief?.id !== id || currentProject.storeId !== currentRepoId) {
-			let storeType: DataTugProjStoreType;
-			if (currentRepoId === GITHUB_REPO) {
-				storeType = GITHUB_REPO;
+		const currentStoreId = this.$currentStoreId.value;
+		if (!currentProject || currentProject.brief?.id !== id || currentProject.storeId !== currentStoreId) {
+			let storeType: DatatugProjStoreType;
+			if (currentStoreId === STORE_ID_GITHUB_COM) {
+				storeType = STORE_TYPE_GITHUB;
 			} else {
 				storeType = 'agent';
 			}
 			const projectContext: IDatatugProjectContext = {
 				brief: {id, store: {type: storeType}},
-				storeId: currentRepoId,
+				storeId: currentStoreId,
 				projectId: id,
 			};
 			this.setCurrentProject(projectContext);

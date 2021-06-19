@@ -355,7 +355,7 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 
 				const projContext: IDatatugProjRef = {
 					projectId: paramMap.get('projectId'),
-					storeId: paramMap.get('repoId'),
+					storeId: paramMap.get('storeId'),
 				};
 				if (projContext.storeId && projContext.projectId) {
 					this.target = {

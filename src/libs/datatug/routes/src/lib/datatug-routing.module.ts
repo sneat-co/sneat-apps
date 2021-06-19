@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {routingParamRepoId} from '@sneat/datatug/core';
+import {routingParamStoreId} from '@sneat/datatug/core';
 import {SNEAT_AUTH_GUARDS, SneatAuthModule} from "@sneat/auth";
 import {IonicModule} from "@ionic/angular";
 
@@ -15,7 +15,7 @@ export const datatugRoutes: Routes = [
 		loadChildren: () => import('@sneat/datatug/pages/my').then(m => m.DatatugMyPageModule),
 	},
 	{
-		path: 'store/:' + routingParamRepoId,
+		path: 'store/:' + routingParamStoreId,
 		loadChildren: () => import('./datatug-routing-store').then(m => m.DatatugStoreRoutingModule),
 		// ...canLoad(),
 	},

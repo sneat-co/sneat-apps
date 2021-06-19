@@ -1,4 +1,4 @@
-export const routingParamRepoId = 'repoId';
+export const routingParamStoreId = 'storeId';
 export const routingParamProjectId = 'projectId';
 export const routingParamTableType = 'tableType';
 export const routingParamDbCatalogId = 'dbCatalogId';

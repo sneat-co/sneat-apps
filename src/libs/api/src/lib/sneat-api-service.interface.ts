@@ -16,7 +16,7 @@ export interface ISneatApiService {
 	getAsAnonymous<T>(endpoint: string, params?: HttpParams): Observable<T>;
 }
 
-export type StoreType = 'firestore' | 'agent' | 'browser' | 'github.com';
+export type StoreType = 'firestore' | 'agent' | 'browser' | 'github';
 
 export interface IStoreRef {
 	type: StoreType;

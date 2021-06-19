@@ -22,51 +22,17 @@
 		</ion-label>
 	</ion-item>
 
-	<ion-item tappable routerLink="/store/http-localhost:8989" routerDirection="forward">
-		<ion-icon name="terminal-outline" slot="start"></ion-icon>
-		<ion-label>DataTug app @ localhost:8989</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium" *ngIf="!agentState">Checking...</ion-button>
-			<ion-button color="success" *ngIf="agentState?.info" title="{{agentState?.info.uptimeMinutes}} minutes">
-				Running
-			</ion-button>
-			<ion-button color="warning" *ngIf="agentState?.lastCheckedAt && !agentState.info"
-						(click)="checkAgent($event)" title="Click to refresh">offline
-			</ion-button>
-			<ion-button color="primary" href="https://datatug.app/agent" target="_blank"
-						(click)="openHelp($event, 'agent')">
-				<ion-icon name="information-circle-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ion-item tappable (click)="goStore('firestore')">
-		<ion-icon name="boat-outline" slot="start" color="primary"></ion-icon>
-		<ion-label color="primary">DataTug cloud</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="primary" href="https://datatug.app/cloud" target="_blank"
-						(click)="openHelp($event, 'cloud')">
-				<ion-icon name="information-circle-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ion-item tappable (click)="goStore('github.com')">
-		<ion-icon name="logo-github" slot="start"></ion-icon>
-		<ion-label>GitHub</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="primary" href="https://datatug.app/github" target="_blank"
-						(click)="openHelp($event, 'github.com')">
-				<ion-icon name="information-circle-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-
-	<ng-container *ngIf="stores; else loadingUser">
+	<ng-container *ngIf="stores; else loading">
 		<ng-container *ngIf="stores?.length; else noEntries">
-			<ion-item *ngFor="let store of stores" tappable (click)="goStore(store.url)">
-				<ion-icon name="terminal-outline" slot="start"></ion-icon>
+			<ion-item *ngFor="let store of stores" tappable (click)="goStore(store)">
+				<ion-icon [name]="storeIcon(store.type)" slot="start"></ion-icon>
 				{{store.title}}
-				<ion-badge color="light" slot="end">{{store.type}}</ion-badge>
-				<ion-badge color="primary" slot="end">{{store.url}}</ion-badge>
+				<ion-badge color="light" slot="end" style="font-weight: normal">
+					<ion-text color="primary">{{store.url}}</ion-text>
+				</ion-badge>
+				<ion-badge color="light" slot="end" style="font-weight: normal;">
+					<ion-text color="medium">{{store.type}}</ion-text>
+				</ion-badge>
 			</ion-item>
 		</ng-container>
 		<ng-template #noEntries>
@@ -81,9 +47,7 @@
 			</ion-item>
 		</ng-template>
 	</ng-container>
-	<ng-template #loadingUser>
-		<ion-item>
-			<ion-label color="medium">Loading...</ion-label>
-		</ion-item>
+	<ng-template #loading>
+		<datatug-loading-items [authStatus]="authStatus" title="Loading user stores..."></datatug-loading-items>
 	</ng-template>
 </ion-card>

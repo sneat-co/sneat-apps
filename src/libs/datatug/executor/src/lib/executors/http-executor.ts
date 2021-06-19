@@ -21,7 +21,7 @@ export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 	) {
 	}
 
-	execute(repoId: string, request: IExecuteRequest): Observable<IExecuteResponse> {
+	execute(agentId: string, request: IExecuteRequest): Observable<IExecuteResponse> {
 		return undefined
 	}
 

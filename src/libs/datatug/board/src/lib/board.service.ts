@@ -11,8 +11,8 @@ export class BoardService {
 	) {
 	}
 
-	getBoard(repoId: string, project: string, boardId: string): Observable<IBoardDef> {
-		if (!repoId) {
+	getBoard(storeId: string, project: string, boardId: string): Observable<IBoardDef> {
+		if (!storeId) {
 			return throwError('required parameter "store" has not been provided');
 		}
 		if (!project) {
@@ -21,14 +21,14 @@ export class BoardService {
 		if (project === 'undefined') {
 			return throwError('required parameter "project" has "undefined" string value');
 		}
-		if (!repoId) {
+		if (!storeId) {
 			return throwError('required parameter "boardId" has not been provided');
 		}
-		return this.repoProviderService.get(repoId, '/boards/board', {params: {id: boardId, project}});
+		return this.repoProviderService.get(storeId, '/boards/board', {params: {id: boardId, project}});
 	}
 
-	createNewBoard(repoId: string, project: string, title: string): Observable<IProjBoard> {
-		console.log('BoardService.createNewBoard()', repoId, project);
-		return this.repoProviderService.post<IProjBoard>(repoId, '/boards/create_board', {title}, {params: {project}});
+	createNewBoard(storeId: string, project: string, title: string): Observable<IProjBoard> {
+		console.log('BoardService.createNewBoard()', storeId, project);
+		return this.repoProviderService.post<IProjBoard>(storeId, '/boards/create_board', {title}, {params: {project}});
 	}
 }

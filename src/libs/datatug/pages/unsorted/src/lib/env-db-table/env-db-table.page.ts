@@ -19,10 +19,10 @@ import {IEnvDbTableContext} from '@sneat/datatug/nav';
 	templateUrl: './env-db-table.page.html',
 	styleUrls: ['./env-db-table.page.scss'],
 })
-export class EnvDbTablePage implements AfterViewInit {
+export class EnvDbTablePageComponent implements AfterViewInit {
 
 	target: IDatatugProjRef;
-	repoId: string;
+	storeId: string;
 	projectId: string;
 	envId: string;
 	dbId: string;

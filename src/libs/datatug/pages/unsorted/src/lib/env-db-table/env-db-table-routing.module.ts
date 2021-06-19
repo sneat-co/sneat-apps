@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {EnvDbTablePage} from './env-db-table.page';
+import {EnvDbTablePageComponent} from './env-db-table.page';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: EnvDbTablePage
+		component: EnvDbTablePageComponent
 	}
 ];
 

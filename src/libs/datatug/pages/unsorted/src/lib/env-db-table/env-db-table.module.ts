@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {EnvDbTablePageRoutingModule} from './env-db-table-routing.module';
 
-import {EnvDbTablePage} from './env-db-table.page';
+import {EnvDbTablePageComponent} from './env-db-table.page';
 import {CodemirrorModule} from '@ctrl/ngx-codemirror';
 import {ForeignKeyCardComponent} from './foreign-key-card/foreign-key-card.component';
 import {RecordTabComponent} from './record-tab/record-tab.component';
@@ -26,7 +26,7 @@ import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagri
 		CodemirrorModule,
 	],
 	declarations: [
-		EnvDbTablePage,
+		EnvDbTablePageComponent,
 		ForeignKeyCardComponent,
 		RecordTabComponent,
 		RecordValuesCardComponent,

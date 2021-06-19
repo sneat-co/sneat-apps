@@ -1,6 +1,7 @@
-import {Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {
-	allUserStoresAsFlatList,
+	allUserProjectsAsFlatList,
+	allUserStoresAsFlatList, DatatugProjStoreType,
 	IDatatugStoreBrief,
 	IDatatugStoreBriefsById,
 	IDatatugUser
@@ -8,18 +9,21 @@ import {
 import {AgentStateService, IAgentState} from "@sneat/datatug/services/repo";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {take, takeUntil} from "rxjs/operators";
 import {DatatugNavService} from "@sneat/datatug/services/nav";
 import {NavController} from "@ionic/angular";
+import {DatatugUserService} from '@sneat/datatug/services/base';
+import {AuthStatus} from '@sneat/auth';
 
 @Component({
 	selector: 'datatug-my-stores',
 	templateUrl: './my-stores.component.html',
 	styleUrls: ['./my-stores.component.scss'],
 })
-export class MyStoresComponent implements OnChanges, OnDestroy {
+export class MyStoresComponent implements OnInit, OnDestroy {
 
-	@Input() public datatugUser: IDatatugUser;
+	public authStatus: AuthStatus;
+	public userRecordLoaded = false;
 
 	public stores: IDatatugStoreBrief[];
 
@@ -32,35 +36,55 @@ export class MyStoresComponent implements OnChanges, OnDestroy {
 		private readonly navController: NavController,
 		readonly agentStateService: AgentStateService,
 		private readonly datatugNavService: DatatugNavService,
+		private readonly datatugUserService: DatatugUserService,
 	) {
-		agentStateService.getAgentInfo('localhost:8989')
-			.pipe(
-				takeUntil(this.destroyed),
-			)
+	}
+
+	ngOnInit(): void {
+		this.agentStateService.getAgentInfo('localhost:8989')
+			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: agentState => {
-					console.log('agent state:', agentState);
+					console.log('MyStoresComponent => agent state:', agentState);
 					this.agentState = agentState;
 				},
 				error: error => {
 					this.errorLogger.logError(error, 'failed to get agent state');
 				}
 			});
+		this.datatugUserService.datatugUserState
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: datatugUserState => {
+					console.log('MyStoresComponent => datatugUserState:', datatugUserState);
+					this.authStatus = datatugUserState?.status;
+					this.userRecordLoaded = !!datatugUserState?.record || datatugUserState.record === null;
+					const {record} = datatugUserState;
+					if (record || record == null) {
+						this.stores = allUserStoresAsFlatList(record?.datatug?.stores);
+					}
+				},
+				error: this.errorLogger.logErrorHandler('Failed to get datatug user state'),
+			});
 	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.datatugUser) {
-			this.stores = allUserStoresAsFlatList(this.datatugUser?.datatug?.stores);
-		}
-    }
 
 	ngOnDestroy() {
 		this.destroyed.next();
 		this.destroyed.complete();
 	}
 
-	goStore(id: string): void {
-		this.datatugNavService.goStore({id});
+	storeIcon(storeType: DatatugProjStoreType): string {
+		switch (storeType) {
+			case 'firestore': return 'boat-outline';
+			case 'github': return 'logo-github';
+			default: return 'terminal-outline';
+		}
+	}
+
+	goStore(store: IDatatugStoreBrief): void {
+		store.projects ??= {};
+		store.projects['test'] = {id: 'test1', title: 'Test #1'}
+		this.datatugNavService.goStore({id: store.id, brief: store});
 	}
 
 	public checkAgent(event: Event): void {

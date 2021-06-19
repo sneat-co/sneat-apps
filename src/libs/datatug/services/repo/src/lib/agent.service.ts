@@ -15,8 +15,8 @@ export class AgentService {
 	) {
 	}
 
-	public select(repoId: string, request: ISelectRequest): Observable<IExecuteResponse> {
-		console.log(`AgentService.select(${repoId})`, request);
+	public select(agentId: string, request: ISelectRequest): Observable<IExecuteResponse> {
+		console.log(`AgentService.select(${agentId})`, request);
 		if (!request.proj) {
 			return throwError('Client side check failed: !request.proj');
 		} else if (request.proj.indexOf('@') >= 0) {
@@ -46,15 +46,15 @@ export class AgentService {
 			);
 		}
 		// eslint-disable-next-line object-shorthand
-		const agentUrl = getStoreUrl(repoId);
+		const agentUrl = getStoreUrl(agentId);
 		return this.http.get<IExecuteResponse>(agentUrl + '/exec/select', {params});
 	}
 
-	public execute(repoId: string, request: IExecuteRequest): Observable<IExecuteResponse> {
-		console.log(`AgentService.execute(${repoId})`, request);
+	public execute(agentId: string, request: IExecuteRequest): Observable<IExecuteResponse> {
+		console.log(`AgentService.execute(${agentId})`, request);
 		if (request.commands?.length === 1 && !!request.commands[0].namedParams) {
 			const cmd = request.commands[0] as ISqlCommandRequest;
-			return this.select(repoId, {
+			return this.select(agentId, {
 				db: cmd.db,
 				env: cmd.env,
 				sql: cmd.text,
@@ -72,7 +72,7 @@ export class AgentService {
 		;
 		const body: Writeable<IExecuteRequest> = {...request};
 		delete body.projectId;
-		const agentUrl = getStoreUrl(repoId);
+		const agentUrl = getStoreUrl(agentId);
 		return this.http.post<IExecuteResponse>(agentUrl + `/exec/execute_commands`, body, {params});
 	}
 }

@@ -145,7 +145,7 @@ export class DatatugMenuComponent implements OnDestroy {
 				)
 				.subscribe({
 					next: this.onCurrentStoreChanged,
-					error: err => this.errorLogger.logError(err, 'Failed to get repoId'),
+					error: err => this.errorLogger.logError(err, 'Failed to get storeId'),
 				});
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to setup tracking of current repository');
@@ -156,7 +156,7 @@ export class DatatugMenuComponent implements OnDestroy {
 		if (storeId === this.currentStoreId) {
 			return;
 		}
-		console.log('DatatugMenuComponent => repoId changed:', storeId, this.currentStoreId);
+		console.log('DatatugMenuComponent => storeId changed:', storeId, this.currentStoreId);
 		this.currentStoreId = storeId;
 		if (storeId) {
 			this.storeService.getProjects(storeId)

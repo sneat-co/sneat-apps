@@ -11,6 +11,7 @@ import {MyStoresComponent} from './my-stores/my-stores.component';
 import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 import {DatatugServicesStoreModule} from "@sneat/datatug/services/repo";
 import {MyDatatugProjectsComponent} from "./my-projects/my-datatug-projects.component";
+import {LoadingItemsComponent} from './loading-items-component';
 
 @NgModule({
 	imports: [
@@ -25,6 +26,7 @@ import {MyDatatugProjectsComponent} from "./my-projects/my-datatug-projects.comp
 	],
 	declarations: [
 		DatatugHomePageComponent,
+		LoadingItemsComponent,
 		MyDatatugProjectsComponent,
 		MyStoresComponent,
 	],

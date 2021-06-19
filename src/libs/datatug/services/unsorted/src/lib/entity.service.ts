@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {GITHUB_REPO, IDatatugProjRef} from '@sneat/datatug/core';
+import {IDatatugProjRef, STORE_ID_GITHUB_COM} from '@sneat/datatug/core';
 import {ProjectItemsByAgent} from './caching';
 import {StoreApiService} from '@sneat/datatug/services/repo';
 import {IRecord, mapToRecord} from '@sneat/data';
@@ -22,13 +22,13 @@ export class EntityService {
 	}
 
 
-	public getEntity = (repo: string, project: string, entityId: string): Observable<IRecord<IEntity>> => {
-		switch (repo) {
-			case GITHUB_REPO:
+	public getEntity = (store: string, project: string, entityId: string): Observable<IRecord<IEntity>> => {
+		switch (store) {
+			case STORE_ID_GITHUB_COM:
 				return this.getEntityFromGithub(project, entityId);
 			default:
 				return this.agentProvider
-					.get(repo, '/entities/entity', {params: {project, id: entityId}})
+					.get(store, '/entities/entity', {params: {project, id: entityId}})
 					.pipe(
 						mapToRecord<IEntity>(),
 					);

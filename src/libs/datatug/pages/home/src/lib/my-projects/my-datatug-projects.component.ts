@@ -1,11 +1,11 @@
 import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {
 	allUserProjectsAsFlatList,
-	IDatatugProjectBrief,
+	IDatatugProjectBrief, IDatatugProjectBriefWithStoreRef,
 	IDatatugStoreBriefsById, IDatatugUser,
 	IProjectAndStore
 } from '@sneat/datatug/models';
-import {GITHUB_REPO} from '@sneat/datatug/core';
+import {STORE_TYPE_GITHUB} from '@sneat/datatug/core';
 import {NavController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
@@ -22,22 +22,17 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 
 	@Input() title: string;
 
-	private datatugUserState: IDatatugUserState;
+	public datatugUserState: IDatatugUserState;
+	public userRecordLoaded = false;
 
-	public get authStatus(): AuthStatus {
-		return this.datatugUserState?.status;
-	}
-
-	public get datatugUserRecord() {
-		return this.datatugUserState?.record;
-	}
+	public authStatus: AuthStatus;
 
 	private readonly destroyed = new Subject<void>();
 	public projects: IProjectAndStore[];
-	public demoProjects: IDatatugProjectBrief[] = [
+	public demoProjects: IDatatugProjectBriefWithStoreRef[] = [
 		{
 			id: 'datatug-demo-project@datatug',
-			store: {type: GITHUB_REPO},
+			store: {type: STORE_TYPE_GITHUB},
 			title: 'DataTug Demo Project @ GitHub'
 		},
 	];
@@ -63,7 +58,8 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		).subscribe({
 			next: datatugUserState => {
 				console.log('MyDatatugProjectsComponent.ngOnInit() => datatugUserState:', datatugUserState);
-				this.datatugUserState = datatugUserState;
+				this.authStatus = datatugUserState?.status;
+				this.userRecordLoaded = !!datatugUserState?.record || datatugUserState.record === null;
 				const {record} = datatugUserState;
 				if (record || record == null) {
 					this.projects = allUserProjectsAsFlatList(record?.datatug?.stores);
@@ -74,7 +70,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	}
 
 	goProject(item: IProjectAndStore): void {
-		const store = item.store || item.project.store;
+		const {store} = item;
 		this.navController
 			.navigateForward(`/store/${store.url || store.type}/project/${item.project.id}`, {state: item})
 			.catch(e => this.errorLogger.logError(e, 'Failed to navigate to project page'));

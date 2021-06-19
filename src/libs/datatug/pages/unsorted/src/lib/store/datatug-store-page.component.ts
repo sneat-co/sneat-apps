@@ -6,14 +6,14 @@ import {IDatatugProjectBase} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AgentStateService, IAgentState, DatatugStoreService} from '@sneat/datatug/services/repo';
 import {DatatugNavService} from '@sneat/datatug/services/nav';
-import {routingParamRepoId} from '@sneat/datatug/core';
+import {routingParamStoreId} from '@sneat/datatug/core';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 
 @Component({
-	selector: 'datatug-repo',
-	templateUrl: './store-page.component.html',
+	selector: 'datatug-store-page',
+	templateUrl: './datatug-store-page.component.html',
 })
-export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter {
+export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter {
 
 	public storeId: string;
 	public projects: IDatatugProjectBase[];
@@ -51,21 +51,21 @@ export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, View
 
 	ngOnInit() {
 		console.log('RepoPage.ngOnInit()');
-		this.trackRepoId();
+		this.trackStoreId();
 	}
 
-	private trackRepoId(): void {
+	private trackStoreId(): void {
 		this.route.paramMap
 			.pipe(
 				takeUntil(this.destroyed),
-				map(params => params.get(routingParamRepoId)),
+				map(params => params.get(routingParamStoreId)),
 				distinctUntilChanged(),
 				tap(() => this.agentChanged.next()),
-				filter(repoId => !!repoId),
+				filter(id => !!id),
 			).subscribe({
-			next: repoId => {
-				this.storeId = repoId;
-				this.processStoreId(repoId)
+			next: storeId => {
+				this.storeId = storeId;
+				this.processStoreId(storeId)
 			},
 			error: this.errorLogger.logErrorHandler('Failed to track store id'),
 		});
@@ -88,7 +88,7 @@ export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, View
 			)
 			.subscribe({
 				next: agentState => {
-					console.log('processRepoId => agentState:', agentState);
+					console.log('processStoreId => agentState:', agentState);
 					this.agentState = agentState;
 					if (!agentState?.isNotAvailable && !this.projects) {
 						this.loadProjects(storeId);
@@ -106,7 +106,7 @@ export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, View
 				takeUntil(this.destroyed),
 			)
 			.subscribe({
-				next: projects => this.processRepoProjects(projects),
+				next: projects => this.processStoreProjects(projects),
 				error: err => {
 					this.isLoading = false;
 					if (err.name === 'HttpErrorResponse' && err.ok === false && err.status === 0) {
@@ -126,7 +126,7 @@ export class StorePageComponent implements OnInit, OnDestroy, ViewDidLeave, View
 			});
 	}
 
-	private processRepoProjects(projects: IDatatugProjectBase[]): void {
+	private processStoreProjects(projects: IDatatugProjectBase[]): void {
 		console.table(projects);
 		this.isLoading = false;
 		this.projects = projects;

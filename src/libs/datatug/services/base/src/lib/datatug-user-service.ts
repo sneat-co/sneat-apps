@@ -34,14 +34,6 @@ export class DatatugUserService {
 				if (!datatugUser.datatug.stores) {
 					datatugUser = {...datatugUser, datatug: {stores: {}}}
 				}
-				const hasLocalhost = Object.keys(datatugUser.datatug.stores).some(v => v.startsWith('http://localhost:'));
-				if (!hasLocalhost) {
-					datatugUser.datatug.stores['http://localhost:8989'] = {
-						type: 'agent',
-						url: 'http://localhost:8989',
-						title: 'localhost:8989'
-					};
-				}
 				const datatugUserState: IDatatugUserState = {
 					...sneatUserState,
 					record: datatugUser,

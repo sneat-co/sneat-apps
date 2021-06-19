@@ -61,9 +61,9 @@ export class EnvDbPage implements AfterViewInit {
 			next: params => {
 				const envId = params.get(routingParamEnvironmentId);
 				this.projectId = params.get(routingParamProjectId);
-				const [projectId, repoId] = this.projectId.split('@');
+				const [projectId, storeId] = this.projectId.split('@');
 
-				this.projService.getFull({storeId: repoId, projectId}).subscribe(p => {
+				this.projService.getFull({storeId, projectId}).subscribe(p => {
 					this.project = p;
 					this.env = p.environments.find(e => e.id === envId);
 					// const dbId = params.get('routingParamDbId');

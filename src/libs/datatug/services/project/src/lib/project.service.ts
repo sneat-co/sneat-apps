@@ -4,7 +4,7 @@ import {EMPTY, from, Observable, of, Subject, throwError} from 'rxjs';
 import {map, mergeMap, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getStoreUrl} from '@sneat/datatug/nav';
-import {GITHUB_REPO, GITLAB_REPO_PREFIX, IDatatugProjRef} from '@sneat/datatug/core';
+import {STORE_TYPE_GITHUB, GITLAB_REPO_PREFIX, IDatatugProjRef, STORE_ID_GITHUB_COM} from '@sneat/datatug/core';
 import {IDatatugProjectFull, IDatatugProjectSummary, IProjStoreRef} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
@@ -100,16 +100,16 @@ export class ProjectService {
 		}
 		const {storeId, projectId} = target;
 		if (!storeId) {
-			throw new Error('target.repoId is required parameter');
+			throw new Error('target.storeId is required parameter');
 		}
-		if (storeId === GITHUB_REPO || storeId.startsWith(GITLAB_REPO_PREFIX)) {
+		if (storeId === STORE_ID_GITHUB_COM || storeId.startsWith(GITLAB_REPO_PREFIX)) {
 			interface urlAndHeaders {
 				url: string;
 				headers?: { [name: string]: string };
 			}
 
 			let connectTo: Observable<urlAndHeaders>;
-			if (storeId === GITHUB_REPO) {
+			if (storeId === STORE_ID_GITHUB_COM) {
 				const [repo, org] = projectId.split('@')
 				connectTo = of({url: `https://raw.githubusercontent.com/${org}/${repo}/main/datatug/datatug-project.json`});
 			} else if (storeId.startsWith(GITLAB_REPO_PREFIX)) {
