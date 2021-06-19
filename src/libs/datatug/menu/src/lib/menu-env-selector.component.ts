@@ -2,7 +2,7 @@ import {Component, Inject, Input} from "@angular/core";
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
-import {NewProjectFormComponent} from "./new-project-form.component";
+import {NewProjectFormComponent} from "../../../project/src/lib/new-project-form.component";
 import {IDatatugProjectSummary} from "@sneat/datatug/models";
 
 @Component({

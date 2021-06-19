@@ -15,9 +15,9 @@ import {DatatugServicesNavModule} from "@sneat/datatug/services/nav";
 import {DatatugServicesUnsortedModule} from "@sneat/datatug/services/unsorted";
 import {RouterModule} from "@angular/router";
 import {MenuProjectSelectorComponent} from "./menu-project-selector.component";
-import {NewProjectFormComponent} from "./new-project-form.component";
 import {MenuEnvSelectorComponent} from "./menu-env-selector.component";
 import {MenuStoreSelectorComponent} from "./menu-store-selector.component";
+import {NewProjectFormModule} from '@sneat/datatug/project';
 // import {TableMetaCardModule} from '../table-meta-card/table-meta-card.module';
 // import {ContextCardComponent} from '../../context/components/context-card/context-card.component';
 // import {ContextCardEntityComponent} from '../../context/components/context-card-entity/context-card-entity.component';
@@ -42,12 +42,12 @@ import {MenuStoreSelectorComponent} from "./menu-store-selector.component";
 		DatatugServicesStoreModule,
 		DatatugServicesUnsortedModule,
 		RouterModule,
+		NewProjectFormModule,
 	],
 	declarations: [
 		DatatugMenuComponent,
 		MenuProjectSelectorComponent,
 		MenuEnvSelectorComponent,
-		NewProjectFormComponent,
 		MenuStoreSelectorComponent,
 		// ContextCardComponent,
 		// ContextCardEntityComponent,

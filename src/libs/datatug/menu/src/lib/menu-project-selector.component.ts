@@ -9,7 +9,8 @@ import {
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
-import {NewProjectFormComponent} from "./new-project-form.component";
+import {NewProjectFormComponent} from "../../../project/src/lib/new-project-form.component";
+import {NewProjectService} from '../../../project/src/lib/new-project.service';
 
 @Component({
 	selector: 'datatug-menu-project-selector',
@@ -24,7 +25,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController,
+		private readonly newProjectService: NewProjectService,
 		private readonly nav: DatatugNavService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 	) {
@@ -43,17 +44,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
 
 	public newProject(event: Event): void {
 		console.log('newProject()', event);
-		this.popoverController.create({
-			component: NewProjectFormComponent,
-			cssClass: 'small-popover',
-			componentProps: {
-				onCancel: () => this.popoverController.dismiss().catch(this.errorLogger.logErrorHandler('failed to dismiss popover on cancel')),
-			}
-		})
-			.then(popover => {
-				popover.present().catch(this.errorLogger.logErrorHandler('Failed to present modal'));
-			})
-			.catch(this.errorLogger.logErrorHandler('Failed to create modal:'))
+		this.newProjectService.openNewProjectDialog();
 	}
 
 	switchProject(event: CustomEvent): void {
