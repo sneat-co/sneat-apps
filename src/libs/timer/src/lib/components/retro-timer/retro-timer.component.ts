@@ -7,7 +7,7 @@ import {
   RetrospectiveService,
   RetrospectiveStage
 } from '@sneat/scrumspace/retrospectives';
-import {ITimerState} from '../../models';
+import {ITimerState} from '../../../../../meeting/src/lib/timer/models';
 import {Timer, TimerFactory} from '../../timer.service';
 import {IRecord} from '@sneat/data';
 import {ITeam} from '@sneat/team';

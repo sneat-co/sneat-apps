@@ -10,7 +10,7 @@ import {
   ITimerState,
   TimerOperation, TimerOperationEnum,
   TimerStatusEnum
-} from './models';
+} from '../../../meeting/src/lib/timer/models';
 import firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
 

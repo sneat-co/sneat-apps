@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ITimerState, TimerStatusEnum} from '../../../models';
+import {ITimerState, TimerStatusEnum} from '../../../../../../meeting/src/lib/timer/models';
 import {secondsToStr} from '@sneat/datetime';
 import {Timer} from '../../../timer.service';
 import {IScrum} from '@sneat/scrumspace/scrummodels';

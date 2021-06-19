@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {ScrumsHistoryPageRoutingModule} from './scrums-history-routing.module';
 
-import {ScrumsHistoryPage} from './scrums-history.page';
+import {ScrumsHistoryPageComponent} from './scrums-history.page';
 
 @NgModule({
 	imports: [
@@ -15,7 +15,7 @@ import {ScrumsHistoryPage} from './scrums-history.page';
 		IonicModule,
 		ScrumsHistoryPageRoutingModule
 	],
-	declarations: [ScrumsHistoryPage]
+	declarations: [ScrumsHistoryPageComponent]
 })
 export class ScrumsHistoryPageModule {
 }

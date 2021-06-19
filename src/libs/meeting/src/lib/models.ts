@@ -1,16 +1,15 @@
 import {IMemberInfo, ITeamRequest} from '@sneat/team';
-import {ITimerState} from '@sneat/timer';
-import {IStatus} from '@sneat/scrumspace/dailyscrum';
+import {ITimerState} from './timer/models';
 
 export interface IMeetingRequest extends ITeamRequest {
-  meeting: string;
+	meeting: string;
 }
 
 export type IMeetingMember = IMemberInfo;
 
 export interface IMeeting {
-  timer?: ITimerState;
-  readonly userIds: string[];
-  readonly members?: IMeetingMember[];
+	timer?: ITimerState;
+	readonly userIds: string[];
+	readonly members?: IMeetingMember[];
 }
 

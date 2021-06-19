@@ -1,18 +1,19 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {IRecord, IScrum, ITeam} from '../../models/interfaces';
-import {ErrorLogger, IErrorLogger} from '@sneat-team/ui-core';
+import {Component, Inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TeamService} from '../../services/team.service';
-import {ScrumService} from '../../services/scrum.service';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {NavService} from '../../services/nav.service';
+import {IRecord} from '@sneat/data';
+import {ITeam, TeamService} from '@sneat/team';
+import {IScrum} from '@sneat/scrumspace/scrummodels';
+import {ScrumService} from '@sneat/scrumspace/dailyscrum';
+import {NavService} from '@sneat/datatug/core';
+import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-scrums-history',
 	templateUrl: './scrums-history.page.html',
 	styleUrls: ['./scrums-history.page.scss'],
 })
-export class ScrumsHistoryPage implements OnInit {
+export class ScrumsHistoryPageComponent {
 
 	public team: IRecord<ITeam>;
 	public scrums: IRecord<IScrum>[];
@@ -56,9 +57,6 @@ export class ScrumsHistoryPage implements OnInit {
 				}
 			});
 		}
-	}
-
-	ngOnInit() {
 	}
 
 	goScrum(scrum: IRecord<IScrum>): void {
