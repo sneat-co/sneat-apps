@@ -17,6 +17,12 @@
 			<ion-list>
 				<ion-item-divider>
 					<ion-label>Projects</ion-label>
+					<ion-buttons slot="end">
+						<ion-button title="New project" (click)="create($event)">
+							<ion-icon name="add" slot="start"></ion-icon>
+							<ion-label>Create</ion-label>
+						</ion-button>
+					</ion-buttons>
 				</ion-item-divider>
 				<ng-container *ngIf="projects; else loadingProjects">
 					<ion-item *ngFor="let project of projects" tappable (click)="goProject(project, $event)"

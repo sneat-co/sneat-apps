@@ -8,6 +8,7 @@ import {AgentStateService, IAgentState, DatatugStoreService} from '@sneat/datatu
 import {DatatugNavService} from '@sneat/datatug/services/nav';
 import {routingParamStoreId} from '@sneat/datatug/core';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
+import {NewProjectService} from '../../../../../project/src/lib/new-project/new-project.service';
 
 @Component({
 	selector: 'datatug-store-page',
@@ -32,6 +33,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		private readonly storeService: DatatugStoreService,
 		private readonly nav: DatatugNavService,
 		private readonly agentStateService: AgentStateService,
+		private readonly newProjectService: NewProjectService,
 	) {
 		console.log('RepoPage.constructor()', route, errorLogger, storeService);
 		console.log('RepoPage.constructor()');
@@ -141,6 +143,10 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		event.preventDefault();
 		event.stopPropagation();
 		this.nav.goProject({storeId: this.storeId, projectId: project.id});
+	}
+
+	create(event: Event): void {
+		this.newProjectService.openNewProjectDialog(event);
 	}
 
 }

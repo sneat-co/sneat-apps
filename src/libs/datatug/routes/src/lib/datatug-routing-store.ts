@@ -5,7 +5,7 @@ import {routingParamProjectId} from '@sneat/datatug/core';
 export const datatugStoreRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.StorePageModule)
+		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.DatatugStorePageModule)
 	},
 	{
 		path: 'diff',

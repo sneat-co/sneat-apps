@@ -16,8 +16,7 @@ export class NewProjectFormComponent {
 	@Input() onCancel?: () => void;
 
 	constructor(
-		@Inject(ErrorLogger)
-		private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly projectService: ProjectService,
 		private readonly popoverController: PopoverController,
 		private readonly nav: DatatugNavService,

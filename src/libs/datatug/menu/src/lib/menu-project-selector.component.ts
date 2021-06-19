@@ -9,8 +9,8 @@ import {
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
-import {NewProjectFormComponent} from "../../../project/src/lib/new-project-form.component";
-import {NewProjectService} from '../../../project/src/lib/new-project.service';
+import {NewProjectFormComponent} from "../../../project/src/lib/new-project/new-project-form.component";
+import {NewProjectService} from '../../../project/src/lib/new-project/new-project.service';
 
 @Component({
 	selector: 'datatug-menu-project-selector',
@@ -32,19 +32,18 @@ export class MenuProjectSelectorComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-        if (changes.datatugUser) {
-        	if (this.datatugUser?.datatug?.stores && this.currentStoreId) {
-        		const projectsById = this.datatugUser?.datatug?.stores[this.currentStoreId]?.projects;
+		if (changes.datatugUser) {
+			if (this.datatugUser?.datatug?.stores && this.currentStoreId) {
+				const projectsById = this.datatugUser?.datatug?.stores[this.currentStoreId]?.projects;
 				this.projects = projectsBriefFromDictToFlatList(projectsById);
 			} else {
-        		this.projects = undefined;
+				this.projects = undefined;
 			}
 		}
-    }
+	}
 
 	public newProject(event: Event): void {
-		console.log('newProject()', event);
-		this.newProjectService.openNewProjectDialog();
+		this.newProjectService.openNewProjectDialog(event);
 	}
 
 	switchProject(event: CustomEvent): void {

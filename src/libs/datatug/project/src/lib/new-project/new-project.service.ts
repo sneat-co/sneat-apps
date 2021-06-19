@@ -12,7 +12,8 @@ export class NewProjectService {
 	) {
 	}
 
-	public openNewProjectDialog(): void {
+	public openNewProjectDialog(event: Event): void {
+		console.log('openNewProjectDialog', event);
 		this.popoverController.create({
 			component: NewProjectFormComponent,
 			cssClass: 'small-popover',

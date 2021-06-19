@@ -18,5 +18,5 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 })
-export class StorePageRoutingModule {
+export class DatatugStorePageRoutingModule {
 }
