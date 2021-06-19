@@ -112,19 +112,6 @@ export interface IDatatugProjectBriefWithStoreRef extends IDatatugProjectBrief {
 	readonly store: IProjStoreRef;
 }
 
-export type MetricColor = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger' | 'warning';
-
-export interface IBoolMetricVal {
-	label: string;
-	color: MetricColor;
-}
-
-export interface IBoolMetric {
-	true: IBoolMetricVal;
-	false: IBoolMetricVal;
-}
-
-
 interface IInvite {
 	message?: string;
 }

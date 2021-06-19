@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ITimerState, TimerStatusEnum} from '../../../../../../meeting/src/lib/timer/models';
 import {secondsToStr} from '@sneat/datetime';
-import {Timer} from '../../../timer.service';
+import {Timer} from '../../../../../../meeting/src/lib/timer/timer.service';
 import {IScrum} from '@sneat/scrumspace/scrummodels';
 
 @Component({

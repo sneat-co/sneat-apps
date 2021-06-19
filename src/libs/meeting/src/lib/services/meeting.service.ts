@@ -1,6 +1,7 @@
 import {Observable, throwError} from 'rxjs';
-import {IMeetingTimerRequest, IMeetingTimerService, IMemberTimerRequest, ITimerResponse} from '@sneat/timer';
+import {IMeetingTimerRequest, IMemberTimerRequest, ITimerResponse} from '../timer';
 import {SneatTeamApiService} from '@sneat/api';
+import {IMeetingTimerService} from '../timer';
 
 export const validateMeetingRequest: (request: IMeetingTimerRequest) => Observable<never> = request => {
 	if (!request) {

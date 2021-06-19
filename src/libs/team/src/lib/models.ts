@@ -1,5 +1,16 @@
-import {IBoolMetric, MetricColor} from '@sneat/datatug/models';
 import {IAvatar} from '@sneat/auth-models';
+
+export type MetricColor = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger' | 'warning';
+
+export interface IBoolMetricVal {
+	label: string;
+	color: MetricColor;
+}
+
+export interface IBoolMetric {
+	true: IBoolMetricVal;
+	false: IBoolMetricVal;
+}
 
 export interface ITeamMetric {
   id?: string;

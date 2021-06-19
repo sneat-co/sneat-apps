@@ -4,13 +4,13 @@ import {takeUntil} from 'rxjs/operators';
 import {interval, Observable, ReplaySubject, Subject, Subscription, throwError} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {
-  IMeetingTimerRequest,
-  IMemberTimerRequest,
-  ITimerResponse,
-  ITimerState,
-  TimerOperation, TimerOperationEnum,
-  TimerStatusEnum
-} from '../../../meeting/src/lib/timer/models';
+	IMeetingTimerRequest,
+	IMemberTimerRequest,
+	ITimerResponse,
+	ITimerState,
+	TimerOperation, TimerOperationEnum,
+	TimerStatusEnum
+} from '@sneat/meeting';
 import firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
 
