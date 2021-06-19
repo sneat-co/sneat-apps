@@ -11,6 +11,7 @@
 
 	<ng-container *ngIf="datatugUserRecord || datatugUserRecord === null; else loading">
 		<ion-item *ngIf="showDemoProjects">
+			<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
 			<ion-label color="medium">No personal or favorite projects yet</ion-label>
 		</ion-item>
 		<ion-item *ngFor="let item of projects" tappable (click)="goProject(item)" detail>
