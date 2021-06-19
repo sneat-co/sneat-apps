@@ -1,8 +1,8 @@
-import {Observable, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {shareReplay} from 'rxjs/operators';
-import {IDatatugProjectBase} from '@sneat/datatug/models';
+import {cloudStoreId, IDatatugProjectBase} from '@sneat/datatug/models';
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {IRecordset} from '@sneat/datatug/dto';
 import {IGridColumn, IGridDef} from '@sneat/grid';
@@ -23,6 +23,9 @@ export class DatatugStoreService {
 		console.log('getProjects', storeId);
 		if (!storeId) {
 			return throwError('Parameter "storeId" is required');
+		}
+		if (storeId === cloudStoreId) {
+			return of([{id: 'demo-project', title: 'Demo project', access: 'public'}]);
 		}
 		let projects = this.projectsByStore[storeId]
 		if (projects) {

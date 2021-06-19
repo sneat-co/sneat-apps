@@ -25,7 +25,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 
 	private readonly destroyed = new Subject<void>();
 	private readonly viewDidLeave = new Subject<void>();
-	private readonly agentChanged = new Subject<void>();
+	private readonly storeChanged = new Subject<void>();
 
 	constructor(
 		private readonly route: ActivatedRoute,
@@ -35,8 +35,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		private readonly agentStateService: AgentStateService,
 		private readonly newProjectService: NewProjectService,
 	) {
-		console.log('RepoPage.constructor()', route, errorLogger, storeService);
-		console.log('RepoPage.constructor()');
+		console.log('DatatugStorePageComponent.constructor()');
 	}
 
 	ionViewDidLeave(): void {
@@ -62,7 +61,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 				takeUntil(this.destroyed),
 				map(params => params.get(routingParamStoreId)),
 				distinctUntilChanged(),
-				tap(() => this.agentChanged.next()),
+				tap(() => this.storeChanged.next()),
 				filter(id => !!id),
 			).subscribe({
 			next: storeId => {
@@ -73,12 +72,9 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		});
 	}
 
-	private getProjectsFromUser(storeId: string) {
-	}
-
 	private processStoreId(storeId: string): void {
 		if (storeId === 'firestore' || storeId === 'github.com') {
-			this.getProjectsFromUser(storeId);
+			this.loadProjects(storeId);
 			return;
 		}
 		this.agentStateService
@@ -86,7 +82,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 			.pipe(
 				takeUntil(this.viewDidLeave),
 				takeUntil(this.destroyed),
-				takeUntil(this.agentChanged),
+				takeUntil(this.storeChanged),
 			)
 			.subscribe({
 				next: agentState => {
@@ -104,7 +100,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		this.isLoading = true;
 		this.storeService.getProjects(storeId)
 			.pipe(
-				takeUntil(this.agentChanged),
+				takeUntil(this.storeChanged),
 				takeUntil(this.destroyed),
 			)
 			.subscribe({

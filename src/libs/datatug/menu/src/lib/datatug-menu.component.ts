@@ -169,7 +169,7 @@ export class DatatugMenuComponent implements OnDestroy {
 						this.projects = projects;
 					},
 					error: err => this.errorLogger.logError(err,
-						'Failed to get list of projects for an store from menu component', {show: false}),
+						'Failed to get list of projects for a store from menu component', {show: false}),
 				});
 		}
 	}
