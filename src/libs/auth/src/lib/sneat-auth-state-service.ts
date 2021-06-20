@@ -20,6 +20,7 @@ export interface ISneatAuthUser extends firebase.UserInfo {
 
 export interface ISneatAuthState {
 	status: AuthStatus;
+	token?: string;
 	user?: ISneatAuthUser;
 }
 
@@ -47,7 +48,8 @@ export class SneatAuthStateService {
 				// console.log('SneatAuthStateService => token', token);
 				const status: AuthStatus = token ? AuthStatuses.authenticated : AuthStatuses.notAuthenticated;
 				this.authStatus$.next(status);
-				this.authState$.next({status, user: this.authUser$.value});
+				const current = this.authState$.value || {};
+				this.authState$.next({...current, status, token, user: this.authUser$.value});
 			},
 			error: errorLogger.logErrorHandler('failed to get Firebase auth token')
 		});

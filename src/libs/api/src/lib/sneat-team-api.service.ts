@@ -3,6 +3,7 @@ import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {ISneatApiService} from "./sneat-api-service.interface";
+import {SneatAuthStateService} from '@sneat/auth';
 
 const userIsNotAuthenticatedNoFirebaseToken = 'User is not authenticated yet - no Firebase ID token';
 
@@ -23,7 +24,9 @@ export class SneatApiService implements ISneatApiService {
 	}
 
 	// TODO: It's made public because we use it in Login page, might be a bad idea consider making private and rely on afAuth.idToken event
-	setFirebaseToken = (token: string) => this.firebaseIdToken = token;
+	setFirebaseToken = (token?: string | null) => {
+		this.firebaseIdToken = token ?? undefined;
+	}
 
 	public post<T>(endpoint: string, body: any): Observable<T> {
 		const url = this.baseUrl + endpoint;
@@ -93,9 +96,12 @@ export class SneatApiService implements ISneatApiService {
 export class SneatTeamApiService extends SneatApiService {
 	constructor(
 		httpClient: HttpClient,
+		authStateService: SneatAuthStateService,
 		afAuth?: AngularFireAuth,
 	) {
-		super(httpClient, undefined, 'https://api.sneat.team/v0/')
+		super(httpClient, undefined, 'https://api.sneat.team/v0/');
+		authStateService.authState.subscribe(authState => {
+		})
 		afAuth?.idToken.subscribe(this.setFirebaseToken);
 	}
 }
