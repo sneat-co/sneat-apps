@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar color="light">
-		<ion-title>DailyScrum.app</ion-title>
+		<ion-title>Sneat.team</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -35,9 +35,11 @@
 							</ion-label>
 						</ion-item>
 						<ion-item (click)="loginWith('Facebook')" tappable [disabled]="!!signingWith">
-							<ion-icon slot="start" color="primary" name="logo-facebook" *ngIf="signingWith !== 'Facebook'">
+							<ion-icon slot="start" color="primary" name="logo-facebook"
+									  *ngIf="signingWith !== 'Facebook'">
 							</ion-icon>
-							<ion-spinner slot="start" color="primary" name="lines-small" *ngIf="signingWith === 'Facebook'">
+							<ion-spinner slot="start" color="primary" name="lines-small"
+										 *ngIf="signingWith === 'Facebook'">
 							</ion-spinner>
 							<ion-label color="primary">Login with Facebook</ion-label>
 						</ion-item>
@@ -46,16 +48,19 @@
 				<ion-col class="ion-no-padding ion-no-margin">
 					<ion-list lines="none" class="ion-no-margin ion-no-padding">
 						<ion-item (click)="loginWith('Microsoft')" tappable [disabled]="!!signingWith">
-							<ion-icon slot="start" color="secondary" name="logo-windows" *ngIf="signingWith !== 'Microsoft'">
+							<ion-icon slot="start" color="secondary" name="logo-windows"
+									  *ngIf="signingWith !== 'Microsoft'">
 							</ion-icon>
-							<ion-spinner slot="start" color="secondary" name="lines-small" *ngIf="signingWith === 'Microsoft'">
+							<ion-spinner slot="start" color="secondary" name="lines-small"
+										 *ngIf="signingWith === 'Microsoft'">
 							</ion-spinner>
 							<ion-label color="secondary">Login with Microsoft</ion-label>
 						</ion-item>
 						<ion-item (click)="loginWith('GitHub')" tappable [disabled]="!!signingWith">
 							<ion-icon slot="start" color="tertiary" name="logo-github" *ngIf="signingWith !== 'GitHub'">
 							</ion-icon>
-							<ion-spinner slot="start" color="tertiary" name="lines-small" *ngIf="signingWith === 'GitHub'">
+							<ion-spinner slot="start" color="tertiary" name="lines-small"
+										 *ngIf="signingWith === 'GitHub'">
 							</ion-spinner>
 							<ion-label color="tertiary">Login with GitHub</ion-label>
 						</ion-item>
@@ -88,27 +93,29 @@
 					<ion-icon name="mail-outline"></ion-icon>
 				</ion-label>
 				<ion-input [disabled]="!!signingWith" [(ngModel)]="email" email type="email" name="email" id="email"
-							  required placeholder="my@work.email" (keyup.enter)="keyupEnter()">
+						   required placeholder="my@work.email" (keyup.enter)="keyupEnter()">
 				</ion-input>
 			</ion-item>
 			<ion-item *ngIf="sign === 'up'">
 				<ion-label>
 					<ion-icon name="person-add-outline"></ion-icon>
 				</ion-label>
-				<ion-input placeholder="Full name" [(ngModel)]="fullName" type="text" required (keyup.enter)="keyupEnter()"
-							  [disabled]="!!signingWith"></ion-input>
+				<ion-input placeholder="Full name" [(ngModel)]="fullName" type="text" required
+						   (keyup.enter)="keyupEnter()"
+						   [disabled]="!!signingWith"></ion-input>
 			</ion-item>
 			<ion-item *ngIf="sign === 'in'">
 				<ion-label>
 					<ion-icon name="key-outline"></ion-icon>
 				</ion-label>
 				<ion-input [(ngModel)]="password" placeholder="Password" type="password" required
-							  (keyup.enter)="keyupEnter()"
-							  [disabled]="!!signingWith">
+						   (keyup.enter)="keyupEnter()"
+						   [disabled]="!!signingWith">
 				</ion-input>
 				<ion-buttons slot="end">
-					<ion-button *ngIf="sign === 'in'" color="secondary" [disabled]="!validEmail" (click)="resetPassword()"
-									title="Send email with a link to reset password "
+					<ion-button *ngIf="sign === 'in'" color="secondary" [disabled]="!validEmail"
+								(click)="resetPassword()"
+								title="Send email with a link to reset password "
 					>Reset
 					</ion-button>
 				</ion-buttons>
@@ -125,8 +132,9 @@
 					<ion-label>Sign in</ion-label>
 				</ion-button>
 				or
-				<ion-button size="small" [disabled]="!validEmail || signingWith" (click)="sendSignInLink()" fill="outline"
-								color="medium">
+				<ion-button size="small" [disabled]="!validEmail || signingWith" (click)="sendSignInLink()"
+							fill="outline"
+							color="medium">
 					<ion-icon name="mail-outline" slot="start"></ion-icon>
 					<ion-label>Get sign-in link</ion-label>
 				</ion-button>

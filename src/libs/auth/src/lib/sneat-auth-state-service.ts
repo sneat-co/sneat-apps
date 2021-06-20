@@ -54,7 +54,7 @@ export class SneatAuthStateService {
 		afAuth.user.subscribe({
 			next: (fbUser: firebase.User) => {
 				console.log(`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`, fbUser);
-				const user: ISneatAuthUser = {
+				const user: ISneatAuthUser = fbUser && {
 					isAnonymous: fbUser.isAnonymous,
 					emailVerified: fbUser.emailVerified,
 					email: fbUser.email,

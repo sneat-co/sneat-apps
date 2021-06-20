@@ -38,7 +38,7 @@ export class SneatApiServiceFactory {
 			case 'firestore':
 				this.services[id]
 					= service
-					= new SneatApiService(this.httpClient, this.firebaseIdToken,'http://localhost:8080/v0');
+					= new SneatApiService(this.httpClient, this.firebaseIdToken, 'http://localhost:4300/v0');
 				return service;
 			default:
 				throw new Error('unknown store type: ' + storeRef.type);
