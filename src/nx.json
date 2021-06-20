@@ -206,9 +206,6 @@
     "datatug-project": {
       "tags": []
     },
-    "team-models": {
-      "tags": []
-    },
     "team-services": {
       "tags": []
     },
@@ -216,6 +213,9 @@
       "tags": []
     },
     "team-pages": {
+      "tags": []
+    },
+    "team-models": {
       "tags": []
     }
   }
