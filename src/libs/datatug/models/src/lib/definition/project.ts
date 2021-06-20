@@ -4,6 +4,8 @@ import {IEnvironmentFull} from './environments';
 import {IDbModelFull} from './dbmodels';
 import {IProjDbServerFull} from './apis/database';
 
+export type ProjectAccess = 'private' | 'protected' | 'public';
+
 // eslint-disable-next-line no-shadow
 export enum ProjectItem {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -31,8 +33,6 @@ export const ProjectItems = [
 ] as const;
 
 export type ProjectItemType = typeof ProjectItems[number];
-
-export type ProjectAccess = 'private' | 'protected' | 'public';
 
 export interface IDatatugProjectBase {
 	id: string;

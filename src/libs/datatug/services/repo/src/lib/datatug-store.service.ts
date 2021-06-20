@@ -1,22 +1,31 @@
 import {Observable, of, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {shareReplay} from 'rxjs/operators';
-import {cloudStoreId, IDatatugProjectBase} from '@sneat/datatug/models';
+import {map, shareReplay} from 'rxjs/operators';
+import {cloudStoreId, IDatatugProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {IRecordset} from '@sneat/datatug/dto';
 import {IGridColumn, IGridDef} from '@sneat/grid';
 import {STORE_ID_GITHUB_COM, storeCanProvideListOfProjects} from '@sneat/datatug/core';
+import {DatatugUserService, IDatatugUserState} from '@sneat/datatug/services/base';
 
 @Injectable()
 export class DatatugStoreService {
 
 	private readonly projectsByStore: { [storeId: string]: Observable<IDatatugProjectBase[]> } = {};
 
+	private datatugUserState: IDatatugUserState;
+
 	constructor(
 		private readonly http: HttpClient,
+		private readonly datatugUserService: DatatugUserService,
 	) {
 		console.log('StoreService.constructor()');
+		datatugUserService.datatugUserState.subscribe({
+			next: datatugUserState => {
+				this.datatugUserState = datatugUserState;
+			}
+		})
 	}
 
 	public getProjects(storeId: string): Observable<IDatatugProjectBase[]> {
@@ -26,7 +35,20 @@ export class DatatugStoreService {
 			return throwError('Parameter "storeId" is required');
 		}
 		if (!storeCanProvideListOfProjects(storeId)) {
-			return of([{id: 'demo-project', title: 'Demo project', access: 'public'}]);
+			return this.datatugUserService.datatugUserState.pipe(
+				map(datatugUserState => {
+					const result: IDatatugProjectBase[] = [];
+					//
+					const {record} = datatugUserState;
+					const store = record?.datatug?.stores[storeId];
+					projectsBriefFromDictToFlatList(store?.projects).forEach(p => {
+						result.push(p as IDatatugProjectBase); // TODO: casting is dirty hack
+					});
+					//
+					result.push({id: 'demo-project', title: 'Demo project', access: 'public'});
+					return result;
+				}),
+			);
 		}
 		let projects = this.projectsByStore[storeId]
 		if (projects) {

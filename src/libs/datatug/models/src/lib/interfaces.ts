@@ -1,6 +1,6 @@
 import {IUserRecord} from '@sneat/auth-models';
-import {IStoreRef, StoreType} from "@sneat/api";
-import {STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/datatug/core';
+import {IStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB, StoreType} from '@sneat/datatug/core';
+import {ProjectAccess} from './definition';
 
 
 // export interface IRecord<T> { // TODO: duplicate name
@@ -104,6 +104,7 @@ export interface IProjStoreRef extends IStoreRef {
 
 export interface IDatatugProjectBrief {
 	readonly id: string;
+	readonly access?: ProjectAccess;
 	readonly title?: string;
 	readonly titleOverride?: string;
 }

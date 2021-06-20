@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {ISneatApiService, IStoreRef} from './sneat-api-service.interface';
+import {ISneatApiService} from './sneat-api-service.interface';
 import {SneatApiService} from "./sneat-team-api.service";
 import {HttpClient} from "@angular/common/http";
 import {AngularFireAuth} from "@angular/fire/auth";
+import {IStoreRef} from '@sneat/datatug/core';
 
 
 @Injectable({providedIn: 'root'})

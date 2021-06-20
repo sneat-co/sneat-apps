@@ -64,15 +64,17 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 				tap(() => this.storeChanged.next()),
 				filter(id => !!id),
 			).subscribe({
-			next: storeId => {
-				this.storeId = storeId;
-				this.processStoreId(storeId)
-			},
+			next: this.processStoreId,
 			error: this.errorLogger.logErrorHandler('Failed to track store id'),
 		});
 	}
 
-	private processStoreId(storeId: string): void {
+	processStoreId = (storeId: string): void => {
+		console.log('DatatugStorePageComponent.processStoreId()', storeId);
+		if (storeId === this.storeId) {
+			return;
+		}
+		this.storeId = storeId;
 		if (storeId === 'firestore' || storeId === 'github.com') {
 			this.loadProjects(storeId);
 			return;

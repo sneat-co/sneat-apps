@@ -10,3 +10,10 @@ export const GITLAB_REPO_PREFIX = 'gitlab.';
 export function storeCanProvideListOfProjects(storeId: string): boolean {
 	return !(storeId === STORE_ID_FIRESTORE || storeId === STORE_ID_GITHUB_COM);
 }
+
+export type StoreType = 'firestore' | 'agent' | 'browser' | 'github' | 'gitlab';
+
+export interface IStoreRef {
+	type: StoreType;
+	url?: string;
+}

@@ -13,18 +13,16 @@ const getEnvCacheKey = (projRef: IDatatugProjRef, env: string): string => {
 	return `${projRef.projectId}@${projRef.storeId}/${env}`;
 };
 
-@Injectable({
-	providedIn: 'root'
-})
-export class EnvironmentService {
+const envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
 
-	private readonly envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
+@Injectable()
+export class EnvironmentService {
 
 	constructor(
 		private readonly projectContextService: ProjectContextService,
 		private readonly api: SneatTeamApiService,
-		private readonly projService: ProjectService,
-		private readonly repoApiService: StoreApiService,
+		private readonly projectService: ProjectService,
+		private readonly storeApiService: StoreApiService,
 		// private readonly http: HttpClient,
 	) {
 	}
@@ -45,18 +43,18 @@ export class EnvironmentService {
 			return throwError('"env" is a required parameter');
 		}
 		const cacheKey = getEnvCacheKey(projRef, env);
-		const cached = this.envSummaryCache[cacheKey];
+		const cached = envSummaryCache[cacheKey];
 		if (cached && !forceReload) {
 			return of(cached)
 		}
 		const result =
-			this.repoApiService.get<IEnvironmentSummary>(projRef.storeId, '/environment-summary', {
+			this.storeApiService.get<IEnvironmentSummary>(projRef.storeId, '/environment-summary', {
 				params: {
 					proj: projRef.projectId,
 					env
 				}
 			}).pipe(tap(envSummary => {
-				this.envSummaryCache[cacheKey] = envSummary;
+				envSummaryCache[cacheKey] = envSummary;
 			}));
 		return cached ? result.pipe(startWith(cached)) : result;
 	}

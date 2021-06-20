@@ -7,15 +7,26 @@ import {ProjectPageComponent} from './project-page.component';
 import {SneatCardListModule} from '@sneat/components/card-list';
 import {WormholeModule} from '@sneat/wormhole';
 import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
+import {DatatugServicesNavModule} from '@sneat/datatug/services/nav';
+import {DatatugCoreModule} from '@sneat/datatug/core';
+import {DatatugServicesProjectModule} from '@sneat/datatug/services/project';
+import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
+import {DatatugServicesStoreModule} from '@sneat/datatug/services/repo';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
+		//
+		DatatugComponentsProjectModule,
+		DatatugCoreModule,
+		DatatugServicesNavModule,
+		DatatugServicesProjectModule,
+		DatatugServicesStoreModule,
+		DatatugServicesUnsortedModule,
 		ProjectPageRoutingModule,
 		SneatCardListModule,
-		DatatugComponentsProjectModule,
 		WormholeModule,
 	],
 	declarations: [ProjectPageComponent],

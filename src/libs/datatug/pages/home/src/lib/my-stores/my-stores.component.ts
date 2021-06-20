@@ -83,7 +83,6 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 
 	goStore(store: IDatatugStoreBrief): void {
 		store.projects ??= {};
-		store.projects['test'] = {id: 'test1', title: 'Test #1'}
 		this.datatugNavService.goStore({id: store.id, brief: store});
 	}
 

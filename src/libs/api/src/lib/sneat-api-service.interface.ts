@@ -4,7 +4,7 @@ import {InjectionToken} from "@angular/core";
 
 const SneatApiService = new InjectionToken('ISneatApiService');
 
-export interface ISneatApiResponse<T> {
+export interface ISneatApiResponse<T> { // TODO: Either use or delete
 	data: T;
 }
 
@@ -16,9 +16,3 @@ export interface ISneatApiService {
 	getAsAnonymous<T>(endpoint: string, params?: HttpParams): Observable<T>;
 }
 
-export type StoreType = 'firestore' | 'agent' | 'browser' | 'github';
-
-export interface IStoreRef {
-	type: StoreType;
-	url?: string;
-}
