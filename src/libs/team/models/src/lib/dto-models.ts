@@ -1,4 +1,4 @@
-import {ITeam} from '@sneat/team-models';
+import {ITeam} from './models';
 import {IRecord} from '@sneat/data';
 
 export interface ICreateTeamRequest {
