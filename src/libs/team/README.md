@@ -1,7 +1,6 @@
-# team
+# @sneat/team-* packages
 
-This library was generated with [Nx](https://nx.dev).
-
-## Running unit tests
-
-Run `nx test team` to execute the unit tests.
+- [@sneat/team-models](models)
+- [@sneat/team-services](services)
+- [@sneat/team-components](components)
+- [@sneat/team-pages](pages)

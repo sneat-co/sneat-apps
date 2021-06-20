@@ -255,9 +255,6 @@
 	  "@sneat/meeting/*": [
 		"libs/meeting/src/index.ts"
 	  ],
-	  "@sneat/team": [
-		"libs/team/src/index.ts"
-	  ],
 	  "@sneat/team/*": [
 		"libs/team/src/index.ts"
 	  ],
