@@ -863,43 +863,6 @@
         }
       }
     },
-    "api": {
-      "projectType": "library",
-      "root": "libs/api",
-      "sourceRoot": "libs/api/src",
-      "prefix": "sneat",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/api/src/**/*.ts",
-              "libs/api/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api"],
-          "options": {
-            "jestConfig": "libs/api/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/angular:ng-packagr-lite",
-          "options": {
-            "tsConfig": "libs/api/tsconfig.lib.json",
-            "project": "libs/api/ng-package.json"
-          },
-          "configurations": {
-            "": {
-              "tsConfig": "libs/api/tsconfig.lib.prod.json"
-            }
-          }
-        }
-      }
-    },
     "datatug-pages-home": {
       "projectType": "library",
       "root": "libs/datatug/pages/home",
@@ -2633,6 +2596,46 @@
             "lintFilePatterns": [
               "libs/team/models/src/**/*.ts",
               "libs/team/models/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "api": {
+      "projectType": "library",
+      "root": "libs/api",
+      "sourceRoot": "libs/api/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api"],
+          "options": {
+            "jestConfig": "libs/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/api/src/**/*.ts",
+              "libs/api/src/**/*.html"
             ]
           }
         }

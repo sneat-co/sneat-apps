@@ -32,8 +32,6 @@
       "@sneat/auth-models/*": ["libs/auth-models/src/index.ts"],
       "@sneat/data": ["libs/data/src/index.ts"],
       "@sneat/data/*": ["libs/data/src/index.ts"],
-      "@sneat/api": ["libs/api/src/index.ts"],
-      "@sneat/api/*": ["libs/api/src/index.ts"],
       "@sneat/datatug/pages/home": ["libs/datatug/pages/home/src/index.ts"],
       "@sneat/datatug/pages/home/*": ["libs/datatug/pages/home/src/index.ts"],
       "@sneat/animations": ["libs/animations/src/index.ts"],
@@ -171,7 +169,8 @@
       "@sneat/team-services": ["libs/team/services/src/index.ts"],
       "@sneat/team-components": ["libs/team/components/src/index.ts"],
       "@sneat/team-pages": ["libs/team/pages/src/index.ts"],
-      "@sneat/team-models": ["libs/team/models/src/index.ts"]
+      "@sneat/team-models": ["libs/team/models/src/index.ts"],
+      "@sneat/api": ["libs/api/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
