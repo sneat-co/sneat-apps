@@ -49,5 +49,10 @@ module.exports = {
     '<rootDir>/libs/datatug/editor',
     '<rootDir>/libs/datatug/menu',
     '<rootDir>/libs/datatug/project',
+    '<rootDir>/libs/team/models',
+    '<rootDir>/libs/teams/teams-models',
+    '<rootDir>/libs/team/services',
+    '<rootDir>/libs/team/components',
+    '<rootDir>/libs/team/pages',
   ],
 };

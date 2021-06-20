@@ -1,5 +1,5 @@
 import {
-	IDatatugProjectBrief, IDatatugProjectBriefWithStoreRef,
+	IDatatugProjectBrief, IDatatugProjectBriefWithIdAndStoreRef,
 	IDatatugProjectSummary,
 	IEnvironmentSummary,
 	IProjEnv,
@@ -8,7 +8,7 @@ import {
 import {IDatatugProjRef} from "@sneat/datatug/core";
 
 export interface IDatatugProjectContext extends IDatatugProjRef {
-	readonly brief: IDatatugProjectBriefWithStoreRef;
+	readonly brief: IDatatugProjectBriefWithIdAndStoreRef;
 	readonly summary?: IDatatugProjectSummary;
 }
 

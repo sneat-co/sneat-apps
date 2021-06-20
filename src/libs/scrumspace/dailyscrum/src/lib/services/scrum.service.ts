@@ -11,16 +11,14 @@ import {HttpParams} from '@angular/common/http';
 import firebase from 'firebase';
 import FieldPath = firebase.firestore.FieldPath;
 import {BaseMeetingService} from '@sneat/meeting';
-import {IMemberInfo, ITeam} from '@sneat/team';
-import {IScrum, IStatus, ITask, TaskType} from '../../../../scrummodels/src/lib/models-dailyscrum';
-import {IReorderTaskRequest} from '@sneat/datatug/models';
+import {IMemberInfo, ITeam} from '@sneat/team-models';
 import {IRecord} from '@sneat/data';
 import {SneatTeamApiService} from '@sneat/api';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {RandomId} from '../../../../../random/src/lib/auto-id';
 import {SneatUserService} from '@sneat/auth';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
-import {IAddCommentRequest, IAddTaskRequest, IThumbUpRequest} from '@sneat/scrumspace/scrummodels';
+import {IAddCommentRequest, IAddTaskRequest, IScrum, IStatus, IThumbUpRequest} from '@sneat/scrumspace/scrummodels';
+import {RandomId} from '@sneat/random';
 
 const getOrCreateMemberStatus = (scrum: IScrum, member: IMemberInfo): IStatus => {
 	const mid = member.id;

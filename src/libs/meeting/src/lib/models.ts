@@ -1,4 +1,4 @@
-import {IMemberInfo, ITeamRequest} from '@sneat/team';
+import {IMemberInfo, ITeamRequest} from '@sneat/team-models';
 import {ITimerState} from './timer/models';
 
 export interface IMeetingRequest extends ITeamRequest {

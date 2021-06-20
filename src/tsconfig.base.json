@@ -168,7 +168,11 @@
       ],
       "@sneat/datatug/editor": ["libs/datatug/editor/src/index.ts"],
       "@sneat/datatug/menu": ["libs/datatug/menu/src/index.ts"],
-      "@sneat/datatug/project": ["libs/datatug/project/src/index.ts"]
+      "@sneat/datatug/project": ["libs/datatug/project/src/index.ts"],
+      "@sneat/team-models": ["libs/team/team-models/src/index.ts"],
+      "@sneat/team-services": ["libs/team/team-services/src/index.ts"],
+      "@sneat/team-components": ["libs/team/team-components/src/index.ts"],
+      "@sneat/team-pages": ["libs/team/team-pages/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

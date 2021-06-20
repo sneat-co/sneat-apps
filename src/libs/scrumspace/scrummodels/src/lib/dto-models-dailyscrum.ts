@@ -1,6 +1,6 @@
 import {IByUser, ITimerState} from '@sneat/timer';
 import {IRecord} from '@sneat/data';
-import {ITeam} from '@sneat/team';
+import {ITeam} from '@sneat/team-models';
 
 export interface ITeamRequest {
 	team: string;
@@ -8,18 +8,6 @@ export interface ITeamRequest {
 
 export interface ITeamMemberRequest extends ITeamRequest {
 	member: string;
-}
-
-export interface IAcceptPersonalInviteRequest extends ITeamRequest {
-	invite: string;
-	pin: string;
-	fullName: string;
-	email: string;
-}
-
-export interface IRejectPersonalInviteRequest extends ITeamRequest {
-	invite: string;
-	pin: string;
 }
 
 // TODO(help-wanted): Why ESLint gives "no-shadow" error: 'MemberRoleEnum' is already declared in the upper scope
@@ -37,24 +25,6 @@ export interface IAddTeamMemberRequest extends ITeamRequest {
 	title: string;
 	email?: string;
 	message?: string;
-}
-
-export interface IApiError {
-	code?: string;
-	message: string;
-}
-
-export interface IErrorResponse {
-	error: IApiError;
-}
-
-export interface IFieldError extends IApiError {
-	field: string;
-}
-
-export interface IAddTeamMemberResponse {
-	id: string;
-	uid?: string;
 }
 
 export interface IMeetingRequest extends ITeamRequest {

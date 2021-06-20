@@ -5,7 +5,7 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ActivatedRoute} from '@angular/router';
 import {IonInput, NavController, ViewWillEnter} from '@ionic/angular';
 import {
-	IDatatugProjectBrief, IDatatugProjectBriefWithStoreRef,
+	IDatatugProjectBrief, IDatatugProjectBriefWithIdAndStoreRef,
 	IDatatugProjectSummary,
 	IOptionallyTitled,
 	IProjBoard,
@@ -38,7 +38,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	readonly DbModel = ProjectItem.DbModel as const;
 
 	projContext: IDatatugProjectContext;
-	projBrief: IDatatugProjectBriefWithStoreRef;
+	projBrief: IDatatugProjectBriefWithIdAndStoreRef;
 	project: IDatatugProjectSummary;
 	storeId: string;
 	destroyed = new Subject<boolean>();
@@ -97,7 +97,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	ngOnInit() {
 		console.log('ProjectPage.ngOnInit()');
-		const projBrief = history.state.proj as IDatatugProjectBriefWithStoreRef;
+		const projBrief = history.state.proj as IDatatugProjectBriefWithIdAndStoreRef;
 		if (projBrief && (!this.projBrief || !this.projBrief.title && projBrief.id === this.projBrief.id)) {
 			this.projBrief = projBrief;
 			if (this.projBrief?.id) {

@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {
 	IDatatugProjectBrief,
-	IDatatugProjectBriefWithStoreRef,
+	IDatatugProjectBriefWithIdAndStoreRef,
 	IEnvDbServer,
 	IEnvironmentSummary,
 	IProjEnv
@@ -20,7 +20,7 @@ import {DatatugNavContextService} from '@sneat/datatug/services/nav';
 export class EnvironmentPageComponent {
 
 	projEnv: IProjEnv;
-	projBrief: IDatatugProjectBriefWithStoreRef;
+	projBrief: IDatatugProjectBriefWithIdAndStoreRef;
 
 	currentProject: IDatatugProjRef;
 	env: IEnvironmentSummary;

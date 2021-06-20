@@ -58,7 +58,7 @@ To generate new apps & libraries use `nx` command.
 ### To generate new Angular library
 Run next command:
 ```shell
-nx generate lib my-lib
+pnx g lib my-lib --buildable --publishable
 ```
 
 

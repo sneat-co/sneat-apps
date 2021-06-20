@@ -85,8 +85,8 @@ export function allUserProjectsAsFlatList(stores: IDatatugStoreBriefsById): IPro
 }
 
 export function projectsBriefFromDictToFlatList(projects?: { [id: string]: IDatatugProjectBrief })
-	: IDatatugProjectBrief[] {
-	const result: IDatatugProjectBrief[] = [];
+	: IDatatugProjectBriefWithId[] {
+	const result: IDatatugProjectBriefWithId[] = [];
 	if (projects) {
 		for (const id in projects) {
 			result.push({...projects[id], id});
@@ -103,31 +103,16 @@ export interface IProjStoreRef extends IStoreRef {
 }
 
 export interface IDatatugProjectBrief {
-	readonly id: string;
-	readonly access?: ProjectAccess;
+	readonly access: ProjectAccess;
 	readonly title?: string;
 	readonly titleOverride?: string;
 }
 
-export interface IDatatugProjectBriefWithStoreRef extends IDatatugProjectBrief {
+export interface IDatatugProjectBriefWithId extends IDatatugProjectBrief {
+	readonly id: string;
+}
+
+export interface IDatatugProjectBriefWithIdAndStoreRef extends IDatatugProjectBriefWithId {
 	readonly store: IProjStoreRef;
-}
-
-interface IInvite {
-	message?: string;
-}
-
-interface IPerson {
-	title: string;
-	email: string;
-}
-
-export interface IPersonalInvite extends IInvite {
-	channel: string;
-	address: string;
-	team: { id: string; title: string };
-	memberId: string;
-	from: IPerson;
-	to: IPerson;
 }
 

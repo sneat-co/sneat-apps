@@ -2096,31 +2096,6 @@
         }
       }
     },
-    "team": {
-      "projectType": "library",
-      "root": "libs/team",
-      "sourceRoot": "libs/team/src",
-      "prefix": "sneat",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/team/src/**/*.ts",
-              "libs/team/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/team"],
-          "options": {
-            "jestConfig": "libs/team/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "scrumspace-scrummodels": {
       "projectType": "library",
       "root": "libs/scrumspace/scrummodels",
@@ -2498,6 +2473,166 @@
             "lintFilePatterns": [
               "libs/datatug/project/src/**/*.ts",
               "libs/datatug/project/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "team-models": {
+      "projectType": "library",
+      "root": "libs/team/models",
+      "sourceRoot": "libs/team/models/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/team/models/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/team/models/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/team/models/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/team/models"],
+          "options": {
+            "jestConfig": "libs/team/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/team/models/src/**/*.ts",
+              "libs/team/models/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "team-services": {
+      "projectType": "library",
+      "root": "libs/team/services",
+      "sourceRoot": "libs/team/services/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/team/services/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/team/services/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/team/services/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/team/services"],
+          "options": {
+            "jestConfig": "libs/team/services/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/team/services/src/**/*.ts",
+              "libs/team/services/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "team-components": {
+      "projectType": "library",
+      "root": "libs/team/components",
+      "sourceRoot": "libs/team/components/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/team/components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/team/components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/team/components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/team/components"],
+          "options": {
+            "jestConfig": "libs/team/components/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/team/components/src/**/*.ts",
+              "libs/team/components/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "team-pages": {
+      "projectType": "library",
+      "root": "libs/team/pages",
+      "sourceRoot": "libs/team/pages/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:ng-packagr-lite",
+          "options": {
+            "project": "libs/team/pages/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/team/pages/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/team/pages/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/team/pages"],
+          "options": {
+            "jestConfig": "libs/team/pages/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/team/pages/src/**/*.ts",
+              "libs/team/pages/src/**/*.html"
             ]
           }
         }

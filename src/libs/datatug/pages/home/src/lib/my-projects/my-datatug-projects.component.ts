@@ -1,7 +1,7 @@
 import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {
 	allUserProjectsAsFlatList,
-	IDatatugProjectBrief, IDatatugProjectBriefWithStoreRef,
+	IDatatugProjectBrief, IDatatugProjectBriefWithIdAndStoreRef,
 	IDatatugStoreBriefsById, IDatatugUser,
 	IProjectAndStore
 } from '@sneat/datatug/models';
@@ -29,7 +29,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 	public projects: IProjectAndStore[];
-	public demoProjects: IDatatugProjectBriefWithStoreRef[] = [
+	public demoProjects: IDatatugProjectBriefWithIdAndStoreRef[] = [
 		{
 			id: 'datatug-demo-project@datatug',
 			store: {type: STORE_TYPE_GITHUB},

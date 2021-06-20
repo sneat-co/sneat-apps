@@ -181,9 +181,6 @@
     "meeting": {
       "tags": []
     },
-    "team": {
-      "tags": []
-    },
     "scrumspace-scrummodels": {
       "tags": []
     },
@@ -207,6 +204,21 @@
       "tags": []
     },
     "datatug-project": {
+      "tags": []
+    },
+    "team-models": {
+      "tags": []
+    },
+    "teams-models": {
+      "tags": []
+    },
+    "team-services": {
+      "tags": []
+    },
+    "team-components": {
+      "tags": []
+    },
+    "team-pages": {
       "tags": []
     }
   }
