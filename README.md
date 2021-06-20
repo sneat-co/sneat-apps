@@ -55,6 +55,13 @@ pnx serve datatug --optimization=false --sourceMap=true
 ## Code generation
 To generate new apps & libraries use `nx` command.
 
+### To generate new Angular library
+Run next command:
+```shell
+nx generate lib my-lib
+```
+
+
 ### To generate new Ionic app
 Run next command:
 ```shell
