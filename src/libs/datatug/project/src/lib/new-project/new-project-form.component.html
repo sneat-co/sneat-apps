@@ -10,7 +10,7 @@
 </ion-header>
 <ion-item>
 	<ion-label>Store</ion-label>
-	<ion-select [(ngModel)]="store">
+	<ion-select [(ngModel)]="store" interface="popover">
 		<ion-select-option value="cloud">DataTug Cloud</ion-select-option>
 	</ion-select>
 </ion-item>
@@ -19,12 +19,18 @@
 </ion-item-divider>
 <ion-item>
 	<ion-label>Title</ion-label>
-	<ion-input [(ngModel)]="title" required="required" minlength="2" maxlength="30"></ion-input>
+	<ion-input placeholder="is required" [(ngModel)]="title" required="required" minlength="2" maxlength="30"></ion-input>
 </ion-item>
 <ion-footer>
 	<div class="ion-padding">
-		<ion-button (click)="create()">Create new project</ion-button>
-		<ion-button (click)="cancel()" color="light">Cancel</ion-button>
+		<ion-button (click)="create()" [disabled]="isCreating">
+			<ion-icon name="save-outline" slot="start"></ion-icon>
+			<ion-label>Create new project</ion-label>
+		</ion-button>
+		<ion-button  [disabled]="isCreating" style="position: absolute; right: 1em" (click)="cancel()" color="light">
+			<ion-icon name="close-outline" color="medium" slot="start"></ion-icon>
+			<ion-label color="medium">Cancel</ion-label>
+		</ion-button>
 	</div>
 </ion-footer>
 
