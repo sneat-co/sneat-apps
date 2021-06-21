@@ -4,11 +4,12 @@ import {EMPTY, from, Observable, of, Subject, throwError} from 'rxjs';
 import {map, mergeMap, shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getStoreUrl} from '@sneat/datatug/nav';
-import {STORE_TYPE_GITHUB, GITLAB_REPO_PREFIX, IDatatugProjRef, STORE_ID_GITHUB_COM} from '@sneat/datatug/core';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 import {IDatatugProjectFull, IDatatugProjectSummary, IProjStoreRef} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {SneatApiServiceFactory} from "@sneat/api";
+import {GITLAB_REPO_PREFIX, STORE_ID_GITHUB_COM} from '@sneat/core';
 
 @Injectable()
 export class ProjectService {

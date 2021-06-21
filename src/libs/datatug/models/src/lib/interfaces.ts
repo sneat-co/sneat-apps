@@ -1,6 +1,6 @@
 import {IUserRecord} from '@sneat/auth-models';
-import {IStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB, StoreType} from '@sneat/datatug/core';
 import {ProjectAccess} from './definition';
+import {IStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB, StoreType} from '@sneat/core';
 
 
 // export interface IRecord<T> { // TODO: duplicate name
@@ -29,7 +29,7 @@ export interface IDatatugStoreBrief {
 
 export interface IProjectAndStore {
 	store: IDatatugStoreBrief;
-	project: IDatatugProjectBrief;
+	project: IDatatugProjectBriefWithId;
 }
 
 export const cloudStoreId = 'firestore';

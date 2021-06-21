@@ -15,10 +15,10 @@ import {IMemberInfo, ITeam} from '@sneat/team-models';
 import {IRecord} from '@sneat/data';
 import {SneatTeamApiService} from '@sneat/api';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {SneatUserService} from '@sneat/auth';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 import {IAddCommentRequest, IAddTaskRequest, IScrum, IStatus, IThumbUpRequest} from '@sneat/scrumspace/scrummodels';
 import {RandomId} from '@sneat/random';
+import {SneatUserService} from '@sneat/user';
 
 const getOrCreateMemberStatus = (scrum: IScrum, member: IMemberInfo): IStatus => {
 	const mid = member.id;

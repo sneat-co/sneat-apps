@@ -5,9 +5,9 @@ import {ActivatedRoute} from '@angular/router';
 import {BaseTeamPageDirective} from '../base-team-page-directive';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {TeamNavService} from '@sneat/team-models';
-import {SneatUserService} from '@sneat/auth';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 import {TeamContextService} from '../../../../services/src/lib/team-context.service';
+import {SneatUserService} from '@sneat/user';
 
 @Component({
 	selector: 'app-team',

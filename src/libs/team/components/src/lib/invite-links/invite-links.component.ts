@@ -1,10 +1,10 @@
 import {Component, Inject, Input, OnChanges, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {TeamNavService} from '../../../../services/src/lib/team-nav.service';
 import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {SneatUserService} from '@sneat/auth';
-import {ITeam} from '../../../../models/src/lib/models';
+import {SneatUserService} from '@sneat/user';
+import {ITeam} from '@sneat/team-models';
+import {TeamNavService} from '@sneat/team-services';
 
 export const stringHash = (s: string): number => {
 	let hash = 0;
@@ -22,21 +22,21 @@ export const stringHash = (s: string): number => {
 }
 
 @Component({
-	selector: 'app-invite-links',
+	selector: 'sneat-invite-links',
 	templateUrl: './invite-links.component.html',
 	styleUrls: ['./invite-links.component.scss'],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
 
-	@Input() teamId: string;
+	@Input() teamId?: string;
 	@Input() public team?: ITeam;
 
-	public inviteUrlsFor: {
+	public inviteUrlsFor?: {
 		contributors: string;
 		spectators: string;
 	};
 
-	private currentUserId: string;
+	private currentUserId?: string;
 	private readonly subscription: Subscription;
 
 	constructor(
@@ -66,6 +66,10 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 		if (event) {
 			event.preventDefault();
 			event.stopPropagation();
+		}
+		if (!this.teamId) {
+			this.errorLogger.logError('Not able to navigate to team member is teamId is now known');
+			return;
 		}
 		this.navService.navigateToAddMember(this.navController, {id: this.teamId, data: this.team});
 	}

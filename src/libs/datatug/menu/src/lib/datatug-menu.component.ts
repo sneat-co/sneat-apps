@@ -3,14 +3,14 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
-import {IDatatugProjectBase, IDatatugProjectSummary, IDatatugUser} from '@sneat/datatug/models';
+import {IDatatugProjectBase, IDatatugProjectSummary} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {STORE_ID_FIRESTORE} from '@sneat/datatug/core';
 import {DatatugStoreService} from '@sneat/datatug/services/repo';
 import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
 import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
 import {AuthStatus, AuthStatuses, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
+import {STORE_ID_FIRESTORE} from '@sneat/core';
 
 
 @Component({

@@ -4,9 +4,9 @@ import {Subscription} from 'rxjs';
 import {TeamService} from '../../../../services/src/lib/team.service';
 import {NavController} from '@ionic/angular';
 import {IErrorLogger, ErrorLogger} from '@sneat/logging';
-import {SneatUserService} from '@sneat/auth';
 import {IMemberInfo, ITeam} from '@sneat/team-models';
 import {IRecord} from '@sneat/data';
+import {SneatUserService} from '@sneat/user';
 
 @Component({
 	selector: 'sneat-member',
@@ -15,14 +15,14 @@ import {IRecord} from '@sneat/data';
 })
 export class MemberPageComponent implements OnDestroy {
 
-	public team: IRecord<ITeam>;
+	public team?: IRecord<ITeam>;
 
-	public userId: string;
-	public memberInfo: IMemberInfo;
+	public userId?: string;
+	public memberInfo?: IMemberInfo;
 	public changing?: 'role';
 
-	private memberId: string;
-	private teamSubscription: Subscription;
+	private memberId?: string;
+	private teamSubscription?: Subscription;
 
 
 	public get defaultBackUrl(): string {
@@ -33,7 +33,7 @@ export class MemberPageComponent implements OnDestroy {
 		readonly route: ActivatedRoute,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
-		private readonly userService:  SneatUserService,
+		private readonly userService: SneatUserService,
 		private readonly teamService: TeamService,
 	) {
 		console.log('MemberPage.constructor()');
@@ -67,7 +67,15 @@ export class MemberPageComponent implements OnDestroy {
 	}
 
 	public removeMember() {
-		if (!confirm(`Are you sure you want to remove ${this.memberInfo.title} from ${this.team?.data?.title}?`)) {
+		if (!confirm(`Are you sure you want to remove ${this.memberInfo?.title || this.memberInfo?.id} from ${this.team?.data?.title}?`)) {
+			return;
+		}
+		if (!this.team) {
+			this.errorLogger.logError('Can not remove team member without team context');
+			return;
+		}
+		if (!this.memberId) {
+			this.errorLogger.logError('Can not remove team member without knowing member ID');
 			return;
 		}
 		this.teamService
@@ -89,6 +97,14 @@ export class MemberPageComponent implements OnDestroy {
 
 	public changeRole(event: CustomEvent): void {
 		console.log('changeRole():', event);
+		if (!this.team) {
+			this.errorLogger.logError('Can not change role without team context');
+			return;
+		}
+		if (!this.memberId) {
+			this.errorLogger.logError('Can not change role without knowing member ID');
+			return;
+		}
 		this.changing = 'role';
 		this.teamService.changeMemberRole(this.team, this.memberId, event.detail.value).subscribe({
 			next: () => {
@@ -128,21 +144,23 @@ export class MemberPageComponent implements OnDestroy {
 		}
 		this.memberId = undefined;
 		const teamId = this.team?.id;
-		this.teamSubscription = this.teamService.watchTeam(teamId)
-			.subscribe({
-				next: team => {
-					console.log('MemberPage: teamService.watchTeam =>', team);
+		if (teamId) {
+			this.teamSubscription = this.teamService.watchTeam(teamId)
+				.subscribe({
+					next: team => {
+						console.log('MemberPage: teamService.watchTeam =>', team);
 
-					if (this.team?.id !== teamId) {
-						return;
-					}
-					this.team = {id: this.team.id, data: team};
-					if (this.memberId) {
-						this.onMemberIdChanged();
-					}
-				},
-				error: err => this.errorLogger.logError(err, 'MemberPage.onTeamIdChanged() => Failed to get team'),
-			});
+						if (this.team?.id !== teamId) {
+							return;
+						}
+						this.team = {id: this.team.id, data: team};
+						if (this.memberId) {
+							this.onMemberIdChanged();
+						}
+					},
+					error: err => this.errorLogger.logError(err, 'MemberPage.onTeamIdChanged() => Failed to get team'),
+				});
+		}
 	}
 
 	private onMemberIdChanged(): void {

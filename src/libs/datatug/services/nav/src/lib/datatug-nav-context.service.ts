@@ -5,7 +5,7 @@ import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} 
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
 import {DatatugProjStoreType} from '@sneat/datatug/models';
-import {AppContextService, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/datatug/core';
+import {AppContextService} from '@sneat/datatug/core';
 import {EnvironmentService} from "@sneat/datatug/services/unsorted";
 import {
 	IDatatugNavContext,
@@ -14,6 +14,7 @@ import {
 	IEnvDbContext,
 	IEnvDbTableContext
 } from "@sneat/datatug/nav";
+import {STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/core';
 
 const
 	reStore = /\/store\/(.+?)($|\/)/,

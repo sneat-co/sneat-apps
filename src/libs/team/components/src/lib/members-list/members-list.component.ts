@@ -6,7 +6,7 @@ import {IMemberInfo, ITeam, MemberRole, MemberRoleEnum} from '../../../../models
 import {TeamNavService} from '../../../../services/src/lib';
 import {listAddRemoveAnimation} from '@sneat/animations';
 import {IRecord} from '@sneat/data';
-import {SneatUserService} from '@sneat/auth';
+import {SneatUserService} from '@sneat/user';
 
 @Component({
   selector: 'app-members-list',
@@ -15,12 +15,12 @@ import {SneatUserService} from '@sneat/auth';
   animations: listAddRemoveAnimation,
 })
 export class MembersListComponent implements OnChanges {
-  @Input() team: IRecord<ITeam>;
-  @Input() allMembers: IMemberInfo[];
-  @Input() role: MemberRole;
+  @Input() team?: IRecord<ITeam>;
+  @Input() allMembers?: IMemberInfo[];
+  @Input() role?: MemberRole;
   @Output() selfRemoved = new EventEmitter<void>();
-  public members: IMemberInfo[];
-  private selfRemove: boolean;
+  public members?: IMemberInfo[];
+  private selfRemove?: boolean;
 
   constructor(
     private navService: TeamNavService,
@@ -35,6 +35,10 @@ export class MembersListComponent implements OnChanges {
 
   public goMember(member?: IMemberInfo): void {
     console.log('TeamPage.goMember()', member);
+    if (!this.team) {
+    	this.errorLogger.logError('Can not navigate to team member without team context');
+    	return;
+	}
     this.navService.navigateToMember(this.navController, this.team,
       member || {id: 'myself', title: 'Myself', roles: [MemberRoleEnum.contributor]});
   }
@@ -55,14 +59,16 @@ export class MembersListComponent implements OnChanges {
     if (!this.team) {
       return;
     }
-    const {members} = this.team.data;
-    const memberIndex = members.findIndex(m => m.id === memberInfo.id);
-    this.team.data.members = members.filter(m => m.id !== memberInfo.id);
+    const members = this.team?.data?.members;
+    const memberIndex = members?.findIndex(m => m.id === memberInfo.id);
+    if (members && this.team?.data?.members) {
+		this.team.data.members = members.filter(m => m.id !== memberInfo.id);
+	}
     this.selfRemove = memberInfo.uid === this.userService.currentUserId;
     const teamId = this.team.id;
     this.teamService.removeTeamMember(this.team, memberInfo.id).subscribe({
       next: team => {
-        if (teamId !== this.team.id) {
+        if (teamId !== this.team?.id) {
           return;
         }
         this.team = {id: teamId, data: team};
@@ -70,14 +76,14 @@ export class MembersListComponent implements OnChanges {
         if (this.selfRemove) {
           this.selfRemoved.emit();
         }
-        if (!team || team.userIds.indexOf(this.userService.currentUserId) < 0) {
+        if (!team || this.userService.currentUserId && team.userIds.indexOf(this.userService.currentUserId) < 0) {
           this.navService.navigateToTeams('back');
         }
       },
       error: err => {
         this.selfRemove = undefined;
         this.errorLogger.logError(err, 'Failed to remove member from team');
-        if (members && !members.find(m => m.id === memberInfo.id)) {
+        if (members && (!members.find(m => m.id === memberInfo.id) && memberIndex || memberIndex === 0)) {
           members.splice(memberIndex, 0, memberInfo);
         }
       }

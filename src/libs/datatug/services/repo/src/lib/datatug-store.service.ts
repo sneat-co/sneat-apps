@@ -6,8 +6,8 @@ import {cloudStoreId, IDatatugProjectBase, projectsBriefFromDictToFlatList} from
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {IRecordset} from '@sneat/datatug/dto';
 import {IGridColumn, IGridDef} from '@sneat/grid';
-import {STORE_ID_GITHUB_COM, storeCanProvideListOfProjects} from '@sneat/datatug/core';
 import {DatatugUserService, IDatatugUserState} from '@sneat/datatug/services/base';
+import {storeCanProvideListOfProjects} from '@sneat/core';
 
 @Injectable()
 export class DatatugStoreService {

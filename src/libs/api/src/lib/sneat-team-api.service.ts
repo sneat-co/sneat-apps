@@ -3,7 +3,6 @@ import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {ISneatApiService} from "./sneat-api-service.interface";
-import {SneatAuthStateService} from '@sneat/auth';
 
 const userIsNotAuthenticatedNoFirebaseToken = 'User is not authenticated yet - no Firebase ID token';
 
@@ -96,12 +95,10 @@ export class SneatApiService implements ISneatApiService {
 export class SneatTeamApiService extends SneatApiService {
 	constructor(
 		httpClient: HttpClient,
-		authStateService: SneatAuthStateService,
+		// TODO: Get rid of hard dependency on AngularFireAuth and instead have some token provider
 		afAuth?: AngularFireAuth,
 	) {
 		super(httpClient, undefined, 'https://api.sneat.team/v0/');
-		authStateService.authState.subscribe(authState => {
-		})
 		afAuth?.idToken.subscribe(this.setFirebaseToken);
 	}
 }

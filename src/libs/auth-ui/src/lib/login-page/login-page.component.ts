@@ -8,7 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler, SneatUserService} from '@sneat/auth';
+import {AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler} from '@sneat/auth';
 import {SneatTeamApiService} from '@sneat/api';
 import {RandomId} from "@sneat/random";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
@@ -17,6 +17,7 @@ import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import GithubAuthProvider = firebase.auth.GithubAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 import UserCredential = firebase.auth.UserCredential;
+import {SneatUserService} from '@sneat/user';
 
 
 type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';

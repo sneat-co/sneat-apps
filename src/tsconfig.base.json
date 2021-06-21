@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sneat/core": ["libs/core/src/index.ts"],
       "@sneat/core/*": ["libs/core/src/index.ts"],
       "@sneat/logging": ["libs/logging/src/index.ts"],
       "@sneat/logging/*": ["libs/logging/src/index.ts"],
@@ -170,7 +169,9 @@
       "@sneat/team-components": ["libs/team/components/src/index.ts"],
       "@sneat/team-pages": ["libs/team/pages/src/index.ts"],
       "@sneat/team-models": ["libs/team/models/src/index.ts"],
-      "@sneat/api": ["libs/api/src/index.ts"]
+      "@sneat/api": ["libs/api/src/index.ts"],
+      "@sneat/user": ["libs/user/src/index.ts"],
+      "@sneat/core": ["libs/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

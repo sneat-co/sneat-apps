@@ -1,15 +1,7 @@
 import {Component, Inject, Input, OnChanges, SimpleChanges} from "@angular/core";
-import {
-	allUserProjectsAsFlatList,
-	IDatatugProjectBase, IDatatugProjectBrief,
-	IDatatugUser,
-	IProjectAndStore,
-	projectsBriefFromDictToFlatList
-} from "@sneat/datatug/models";
-import {PopoverController} from "@ionic/angular";
+import {IDatatugProjectBriefWithId, IDatatugUser, projectsBriefFromDictToFlatList} from "@sneat/datatug/models";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
-import {NewProjectFormComponent} from "../../../project/src/lib/new-project/new-project-form.component";
 import {NewProjectService} from '../../../project/src/lib/new-project/new-project.service';
 
 @Component({
@@ -20,7 +12,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
 	@Input() datatugUser?: IDatatugUser;
 	@Input() currentStoreId?: string;
 	@Input() currentProjectId?: string;
-	projects?: IDatatugProjectBrief[];
+	projects?: IDatatugProjectBriefWithId[];
 
 	constructor(
 		@Inject(ErrorLogger)

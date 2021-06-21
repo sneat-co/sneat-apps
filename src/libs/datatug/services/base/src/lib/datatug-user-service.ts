@@ -1,9 +1,8 @@
 import {Injectable} from "@angular/core";
-import {ISneatAuthState, ISneatUserState, SneatUserService} from "@sneat/auth";
 import {Observable} from "rxjs";
 import {IDatatugUser} from "@sneat/datatug/models";
 import {map} from "rxjs/operators";
-import {IUserRecord} from '@sneat/auth-models';
+import {ISneatUserState, SneatUserService} from '@sneat/user';
 
 export interface IDatatugUserState extends ISneatUserState {
 	record?: IDatatugUser;

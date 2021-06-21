@@ -9,32 +9,40 @@ import firebase from 'firebase';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import User = firebase.User;
 import {SneatTeamApiService} from '@sneat/api';
-import {ISneatUserState, SneatUserService} from '@sneat/auth';
-import {ICreateTeamRequest, ICreateTeamResponse} from '../../../models/src/lib/dto-models';
+import {ISneatUserState, SneatUserService} from '@sneat/user';
 import {IRecord} from '@sneat/data';
-import {IUserRecord, IUserTeamInfo, IUserTeamInfoWithId} from '@sneat/auth-models';
-import {ITeam, ITeamMemberRequest, ITeamMetric, ITeamRequest, MemberRole} from "../../../models/src/lib/models";
+import {IUserTeamInfo, IUserTeamInfoWithId} from '@sneat/auth-models';
+import {
+	ICreateTeamRequest,
+	ICreateTeamResponse,
+	ITeam, ITeamMemberRequest,
+	ITeamMetric,
+	ITeamRequest,
+	MemberRole
+} from '@sneat/team-models';
+import {AuthStatus, ISneatAuthState, SneatAuthStateService} from '@sneat/auth';
 
 @Injectable()
 export class TeamService {
-	private userId: string;
+	private userId?: string;
 
 	private teams$: { [id: string]: ReplaySubject<ITeam> } = {};
 	private subscriptions: Subscription[] = [];
 
 	constructor(
-		readonly afAuth: AngularFireAuth,
+		readonly sneatAuthStateService: SneatAuthStateService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly db: AngularFirestore,
 		private readonly userService: SneatUserService,
 		private readonly sneatTeamApiService: SneatTeamApiService,
+
 	) {
-		const onFirebaseAuthStateChanged = (user: User): void => {
-			if (!user) {
-				this.unsubscribe('sign out');
+		const onAuthStatusChanged = (status: AuthStatus): void => {
+			if (status === 'notAuthenticated') {
+				this.unsubscribe('signed out');
 			}
 		};
-		afAuth.authState.subscribe(onFirebaseAuthStateChanged);
+		sneatAuthStateService.authStatus.subscribe(onAuthStatusChanged)
 
 		const processUserRecordInTeamService = (userState: ISneatUserState): void => {
 			console.log('processUserRecordInTeamService()');
@@ -46,11 +54,11 @@ export class TeamService {
 				}
 				return;
 			}
-			if (userState.user.uid !== this.userId) {
+			if (userState.user?.uid !== this.userId) {
 				if (this.userId) {
 					this.unsubscribe('user id changed');
 				}
-				this.userId = userState.user.uid;
+				this.userId = userState.user?.uid;
 			}
 			if (user?.teams) {
 				const subscribeForFirestoreTeamChanges = (teamInfo: IUserTeamInfoWithId): void => {
@@ -75,7 +83,7 @@ export class TeamService {
 					this.subscriptions.push(o.subscribe(subj));
 				};
 				Object.entries(user.teams).forEach(
-					([id, team]) => subscribeForFirestoreTeamChanges({id, ...(team as IUserTeamInfoWithId)}),
+					([id, team]) => subscribeForFirestoreTeamChanges({...(team as IUserTeamInfoWithId), id}),
 				);
 			}
 		};
@@ -109,7 +117,10 @@ export class TeamService {
 	}
 
 	public changeMemberRole(teamRecord: IRecord<ITeam>, memberId: string, role: MemberRole): Observable<IRecord<ITeam>> {
-		const member = teamRecord.data.members.find(m => m.id === memberId);
+		const member = teamRecord?.data?.members.find(m => m.id === memberId);
+		if (!member) {
+			return throwError('member not found by ID in team record');
+		}
 		return this.sneatTeamApiService.post(`team/change_member_role`, {
 			team: teamRecord.id,
 			member: memberId,
@@ -142,11 +153,9 @@ export class TeamService {
 		};
 		const processRemoveTeamMemberResponse = () => this.getTeam(teamRecord.id).pipe(
 			tap(updateTeam),
-			map(team =>
-				team.members.find(m => m.uid === this.userService.currentUserId) ? team : null
-			),
+			// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
 		);
-		if (teamRecord.data.members) {
+		if (teamRecord?.data?.members) {
 			const member = teamRecord.data.members.find(m => m.id === memberId);
 			if (member?.uid === this.userService.currentUserId) {
 				const teamRequest: ITeamRequest = {

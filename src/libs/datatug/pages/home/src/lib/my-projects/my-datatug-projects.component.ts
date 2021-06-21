@@ -1,17 +1,16 @@
-import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {
 	allUserProjectsAsFlatList,
-	IDatatugProjectBrief, IDatatugProjectBriefWithIdAndStoreRef,
-	IDatatugStoreBriefsById, IDatatugUser,
+	IDatatugProjectBriefWithIdAndStoreRef,
 	IProjectAndStore
 } from '@sneat/datatug/models';
-import {STORE_TYPE_GITHUB} from '@sneat/datatug/core';
 import {NavController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {AuthStatus, SneatAuthStateService} from "@sneat/auth";
+import {STORE_TYPE_GITHUB} from '@sneat/core';
 
 @Component({
 	selector: 'datatug-my-projects',
@@ -71,6 +70,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 
 	goProject(item: IProjectAndStore): void {
 		const {store} = item;
+		if (!item?.project.access)
 		this.navController
 			.navigateForward(`/store/${store.url || store.type}/project/${item.project.id}`, {state: item})
 			.catch(e => this.errorLogger.logError(e, 'Failed to navigate to project page'));

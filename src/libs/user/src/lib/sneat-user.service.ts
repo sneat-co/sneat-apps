@@ -10,13 +10,13 @@ import {
 	ISneatAuthState,
 	ISneatAuthUser,
 	SneatAuthStateService
-} from "./sneat-auth-state-service";
+} from '@sneat/auth';
 
 export interface ISneatUserState extends ISneatAuthState {
 	record?: IUserRecord | null; // undefined => not loaded yet, null = does not exists
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({providedIn: 'root'}) // TODO: lazy loading
 export class SneatUserService {
 	public userDocSubscription?: Subscription;
 	private userCollection: AngularFirestoreCollection<IUserRecord>;
@@ -71,21 +71,21 @@ export class SneatUserService {
 	public onUserSignedIn(authState: ISneatAuthState): void {
 		console.log('onUserSignedIn()', authState);
 		const authUser = authState.user;
-		if (authUser.uid === this.uid) {
-			return;
-		}
 		// afUser.getIdToken().then(idToken => {
 		// 	console.log('Firebase idToken:', idToken);
 		// }).catch(err => this.errorLoggerService.logError(err, 'Failed to get Firebase ID token'));
-		if (authUser.email && authUser.emailVerified) {
+		if (authUser?.email && authUser.emailVerified) {
 			this.$userTitle = authUser.email;
 		}
-		if (this.uid === authUser.uid) {
+		if (this.uid === authUser?.uid) {
 			return;
 		}
 		if (this.userDocSubscription) {
 			this.userDocSubscription.unsubscribe();
 			this.userDocSubscription = undefined;
+		}
+		if (!authUser) {
+			return;
 		}
 		const {uid} = authUser;
 		this.uid = uid;

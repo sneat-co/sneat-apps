@@ -40,9 +40,6 @@
       "tags": [],
       "implicitDependencies": ["emptyionicapp"]
     },
-    "core": {
-      "tags": []
-    },
     "datatug": {
       "tags": []
     },
@@ -216,6 +213,12 @@
       "tags": []
     },
     "team-models": {
+      "tags": []
+    },
+    "user": {
+      "tags": []
+    },
+    "core": {
       "tags": []
     }
   }

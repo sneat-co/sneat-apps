@@ -8,7 +8,7 @@ import {IErrorLogger, ErrorLogger} from '@sneat/logging';
 import {ICreateTeamRequest} from '../../../../../models/src/lib/dto-models';
 import {IUserRecord, IUserTeamInfoWithId} from '@sneat/auth-models';
 import {IRecord} from '@sneat/data';
-import {ISneatUserState, SneatUserService} from '@sneat/auth';
+import {ISneatUserState, SneatUserService} from '@sneat/user';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 
 @Component({

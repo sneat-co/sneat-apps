@@ -3,12 +3,11 @@ import {ISneatApiService} from './sneat-api-service.interface';
 import {SneatApiService} from "./sneat-team-api.service";
 import {HttpClient} from "@angular/common/http";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {IStoreRef} from '@sneat/datatug/core';
-
+import {IStoreRef} from '@sneat/core';
 
 @Injectable({providedIn: 'root'})
 export class SneatApiServiceFactory {
-	private firebaseIdToken: string;
+	private firebaseIdToken?: string | null;
 
 	private services: { [id: string]: ISneatApiService } = {};
 
@@ -39,7 +38,7 @@ export class SneatApiServiceFactory {
 			case 'firestore':
 				this.services[id]
 					= service
-					= new SneatApiService(this.httpClient, this.firebaseIdToken, 'http://localhost:4300/v0');
+					= new SneatApiService(this.httpClient, this.firebaseIdToken || undefined, 'http://localhost:4300/v0');
 				return service;
 			default:
 				throw new Error('unknown store type: ' + storeRef.type);

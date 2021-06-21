@@ -55,5 +55,6 @@ module.exports = {
     '<rootDir>/libs/team/components',
     '<rootDir>/libs/team/pages',
     '<rootDir>/libs/team/team-models',
+    '<rootDir>/libs/user',
   ],
 };
