@@ -49,6 +49,7 @@ export class SneatUserService {
 					if (authState.user) {
 						this.onUserSignedIn(authState);
 					} else {
+						this.userState$.next(authState);
 						this.onUserSignedOut();
 					}
 				},
@@ -85,6 +86,9 @@ export class SneatUserService {
 			this.userDocSubscription = undefined;
 		}
 		if (!authUser) {
+			if (this.userState$.value?.record !== null) {
+				this.userState$.next({...this.userState$.value});
+			}
 			return;
 		}
 		const {uid} = authUser;
@@ -101,25 +105,28 @@ export class SneatUserService {
 		});
 		this.userDocSubscription = userDocRef
 			.snapshotChanges()
-			.subscribe(changes => {
-				console.log('SneatUserService => User record changed', changes);
-				if (changes.type === 'value' || changes.type === 'added' || changes.type === 'removed') {
-					const userDocSnapshot = changes.payload;
-					console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
-					if (userDocSnapshot.exists) {
-						if (userDocSnapshot.ref.id === this.uid) { // Should always be equal as we unsubscribe if uid changes
-							const userState: ISneatUserState = {
-								...authState,
-								record: userDocSnapshot.data() as IUserRecord
-							};
-							this.userState$.next(userState);
+			.subscribe({
+				next: changes => {
+					console.log('SneatUserService => User record changed', changes);
+					if (changes.type === 'value' || changes.type === 'added' || changes.type === 'removed') {
+						const userDocSnapshot = changes.payload;
+						console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
+						if (userDocSnapshot.exists) {
+							if (userDocSnapshot.ref.id === this.uid) { // Should always be equal as we unsubscribe if uid changes
+								const userState: ISneatUserState = {
+									...authState,
+									record: userDocSnapshot.data() as IUserRecord
+								};
+								this.userState$.next(userState);
+							}
+						} else {
+							this.userState$.next({...authState, record: null})
+							setTimeout(() => this.createUserRecord(userDocRef.ref, authUser), 1);
 						}
-					} else {
-						this.userState$.next({...authState, record: null})
-						setTimeout(() => this.createUserRecord(userDocRef.ref, authUser), 1);
 					}
-				}
-			}, this.errorLogger.logErrorHandler('failed to process user changed'));
+				},
+				error: this.errorLogger.logErrorHandler('SneatUserService failed to get user record'),
+			});
 	}
 
 	private onUserSignedOut(): void {

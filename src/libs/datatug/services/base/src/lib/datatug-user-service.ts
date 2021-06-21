@@ -28,10 +28,16 @@ export class DatatugUserService {
 					return sneatUserState as IDatatugUserState;
 				}
 				if (!datatugUser.datatug) {
-					datatugUser = {...datatugUser, datatug: {stores: {}}}
+					datatugUser = {
+						...datatugUser,
+						datatug: {stores: {}},
+					};
 				}
 				if (!datatugUser.datatug.stores) {
-					datatugUser = {...datatugUser, datatug: {stores: {}}}
+					datatugUser = {
+						...datatugUser,
+						datatug: {stores: {}},
+					};
 				}
 				const datatugUserState: IDatatugUserState = {
 					...sneatUserState,

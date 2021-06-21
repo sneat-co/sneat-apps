@@ -9,7 +9,7 @@ import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
-import {AuthStatus, SneatAuthStateService} from "@sneat/auth";
+import {AuthStatus, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
 import {STORE_TYPE_GITHUB} from '@sneat/core';
 
 @Component({
@@ -24,7 +24,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	public datatugUserState: IDatatugUserState;
 	public userRecordLoaded = false;
 
-	public authStatus: AuthStatus;
+	public authState: ISneatAuthState;
 
 	private readonly destroyed = new Subject<void>();
 	public projects: IProjectAndStore[];
@@ -57,7 +57,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		).subscribe({
 			next: datatugUserState => {
 				console.log('MyDatatugProjectsComponent.ngOnInit() => datatugUserState:', datatugUserState);
-				this.authStatus = datatugUserState?.status;
+				this.authState = datatugUserState;
 				this.userRecordLoaded = !!datatugUserState?.record || datatugUserState.record === null;
 				const {record} = datatugUserState;
 				if (record || record == null) {
