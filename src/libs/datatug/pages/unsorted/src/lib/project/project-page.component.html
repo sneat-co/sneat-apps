@@ -14,8 +14,8 @@
 			<ion-label color="medium" style="font-weight: bold;">ID</ion-label>
 			<ion-input readonly [value]="projBrief?.id" color="medium"></ion-input>
 		</ion-item>
-		<ion-item>
-			<ion-label color="medium" style="font-weight: bold;">Agent</ion-label>
+		<ion-item *ngIf="storeId !== 'firestore'">
+			<ion-label color="medium" style="font-weight: bold;">Store</ion-label>
 			<ion-input readonly [value]="storeId" color="medium"></ion-input>
 		</ion-item>
 	</ion-card>

@@ -207,12 +207,12 @@ export class DatatugMenuComponent implements OnDestroy {
 				this.projSub?.unsubscribe();
 				return;
 			}
-			if (id !== '.' && storeId === STORE_ID_FIRESTORE) {
+			if (storeId === STORE_ID_FIRESTORE) {
 				this.projSub = this.projectService.watchProject(id).subscribe({
 					next: project => {
 						this.currentProject = project;
 					},
-					error: this.errorLogger.logErrorHandler('Failed to watch project at Firestore: ' + id),
+					error: this.errorLogger.logErrorHandler(`Failed to watch project at Firestore (id=${id})`),
 				});
 			}
 			console.log('DatatugMenuComponent: project =>', currentProject);

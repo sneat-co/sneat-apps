@@ -142,7 +142,7 @@ export class DatatugNavContextService {
 							this.$currentProj.next({...currentProj, summary});
 						}
 					},
-					error: err => this.errorLogger.logError(err, 'Failed to get project summary'),
+					error: err => this.errorLogger.logError(err, 'Failed to get project summary', {show: false}),
 				});
 		}
 	}

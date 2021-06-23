@@ -8,10 +8,10 @@ export const environment = {
 	production: false,
 	useEmulators,
 	firebaseConfig: {
-		apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
+		apiKey: useEmulators ? 'emulator-does-not-need-api-key' : 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 		authDomain: 'sneat.team',
 		databaseURL: 'http://localhost:8080',
-		projectId: useEmulators ? 'sneat-team' : 'sneat-team',
+		projectId: useEmulators ? 'demo-sneat' : 'sneat-team',
 		// 	storageBucket: 'sneat-team.appspot.com',
 		// 	messagingSenderId: '724666284649',
 		appId: '1:724666284649:web:080ffaab56bb71e49740f8',

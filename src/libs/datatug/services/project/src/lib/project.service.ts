@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, DocumentData} from '@angular/fire/firestore';
 import {EMPTY, from, Observable, of, Subject, throwError} from 'rxjs';
-import {map, mergeMap, shareReplay} from 'rxjs/operators';
+import {map, mergeMap, shareReplay, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {IDatatugProjRef} from '@sneat/datatug/core';
@@ -25,10 +25,11 @@ export class ProjectService {
 		private readonly privateTokenStoreService: PrivateTokenStoreService,
 		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
 	) {
-		this.projectsCollection = db.collection('datatug-projects');
+		this.projectsCollection = db.collection<IDatatugProjectSummary>('datatug_projects');
 	}
 
 	public watchProject(id: string): Observable<IDatatugProjectSummary> {
+		console.log('watchProject', id);
 		if (!id) {
 			return throwError('Can not watch project by empty ID parameter');
 		}
@@ -49,10 +50,12 @@ export class ProjectService {
 				// )
 				;
 		}
+		console.log('watchProject: subscribing to firestore changes');
 		return this.projectsCollection
 			.doc(id)
 			.snapshotChanges()
 			.pipe(
+				tap(v => console.log(`project[${id}] snapshotChange:`, v)),
 				map(value => value.type === 'removed' ? undefined : value.payload.data() as IDatatugProjectSummary),
 			);
 	}

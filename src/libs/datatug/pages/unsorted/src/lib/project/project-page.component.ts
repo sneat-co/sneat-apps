@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {takeUntil, tap} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ActivatedRoute} from '@angular/router';
 import {IonInput, NavController, ViewWillEnter} from '@ionic/angular';
@@ -196,19 +196,19 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		if (this.projectSubscription) {
 			this.projectSubscription.unsubscribe();
 		}
-		// const id = this.projBrief?.id;
-		// if (id) {
-		// 	this.projectSubscription = this.projectService.watchProject(id)
-		// 		.pipe(takeUntil(this.destroyed))
-		// 		.subscribe({
-		// 			next: project => {
-		// 				console.log('project:', project);
-		// 				this.project = project;
-		// 				this.projBrief = {id, title: project.title};
-		// 			},
-		// 			error: err => this.errorLogger.logError(err, 'Failed to get project record'),
-		// 		});
-		// }
+		const id = this.projBrief?.id;
+		if (id) {
+			this.projectSubscription = this.projectService.watchProject(id)
+				.pipe(takeUntil(this.destroyed))
+				.subscribe({
+					next: project => {
+						console.log('project:', project);
+						this.project = project;
+						this.projBrief = {id, access: project.access, title: project.title, store: {type: 'firestore'}};
+					},
+					error: err => this.errorLogger.logError(err, 'Failed to get project record'),
+				});
+		}
 	}
 
 	private createProjItem<T extends IOptionallyTitled>(
