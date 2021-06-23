@@ -18,23 +18,30 @@
 		</ion-buttons>
 	</ion-item>
 
-	<ion-item *ngIf="authState.status === 'notAuthenticated'">
-		<ion-label color="medium">Please sign in to access your projects</ion-label>
-	</ion-item>
-	<ng-container *ngIf="userRecordLoaded; else loading">
-		<ion-item *ngIf="!authState?.user?.isAnonymous">
-			<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
-			<ion-label color="medium">No personal or favorite projects yet</ion-label>
+	<ng-container [ngSwitch]="authState.status">
+		<ion-item *ngSwitchCase="'authenticating'">
+			<ion-label color="medium">Authenticating...</ion-label>
 		</ion-item>
-		<ion-item *ngFor="let item of projects" tappable (click)="goProject(item)" detail>
-			<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
-			{{item.project.title}}
+		<ion-item *ngSwitchCase="'notAuthenticated'">
+			<ion-label color="medium">Please sign in to access your projects</ion-label>
 		</ion-item>
+		<ng-container *ngSwitchCase="'authenticated'">
+			<ng-container *ngIf="userRecordLoaded; else loading">
+				<ion-item *ngIf="!authState?.user?.isAnonymous">
+					<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
+					<ion-label color="medium">No personal or favorite projects yet</ion-label>
+				</ion-item>
+				<ion-item *ngFor="let item of projects" tappable (click)="goProject(item)" detail>
+					<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
+					{{item.project.title}}
+				</ion-item>
+			</ng-container>
+			<ng-template #loading>
+				<datatug-loading-items [authStatus]="authState.status"
+									   title="Loading user projects..."></datatug-loading-items>
+			</ng-template>
+		</ng-container>
 	</ng-container>
-	<ng-template #loading>
-		<datatug-loading-items [authStatus]="authState.status"
-							   title="Loading user projects..."></datatug-loading-items>
-	</ng-template>
 	<ion-item-divider *ngIf="showDemoProjects">
 		<ion-label><h3 style="font-weight: bold">Demo projects</h3></ion-label>
 	</ion-item-divider>

@@ -10,7 +10,7 @@ export * from './lib/env-db-table/env-db-table.module';
 export * from './lib/environment/environment.module';
 export * from './lib/environments/environments.module';
 export * from './lib/project/project-page.module';
-export * from './lib/store/datatug-store.module';
+export * from './lib/store/datatug-store-page.module';
 export * from './lib/store/datatug-store-routing.module';
 export * from './lib/resources/resources.module';
 export * from './lib/servers/servers.module';

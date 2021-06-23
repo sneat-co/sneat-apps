@@ -1,7 +1,7 @@
 import {Component, Inject, Input} from "@angular/core";
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
+import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
 import {NewProjectFormComponent} from "../../../project/src/lib/new-project/new-project-form.component";
 import {IDatatugProjectSummary} from "@sneat/datatug/models";
 
@@ -27,7 +27,12 @@ export class MenuEnvSelectorComponent {
 		try {
 			this.datatugNavContextService.setCurrentEnvironment(undefined);
 			if (this.currentStoreId && this.currentProject?.id) {
-				this.nav.goProject({storeId: this.currentStoreId, projectId: this.currentProject.id});
+				const projNavContext: IProjectNavContext = {
+					id: this.currentProject.id,
+					store: {id: this.currentStoreId},
+					brief: this.currentProject,
+				}
+				this.nav.goProject(projNavContext);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to clear environment');

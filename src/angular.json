@@ -1025,31 +1025,6 @@
         }
       }
     },
-    "datatug-core": {
-      "projectType": "library",
-      "root": "libs/datatug/core",
-      "sourceRoot": "libs/datatug/core/src",
-      "prefix": "sneat",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/datatug/core/src/**/*.ts",
-              "libs/datatug/core/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/datatug/core"],
-          "options": {
-            "jestConfig": "libs/datatug/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "datatug-pages-my": {
       "projectType": "library",
       "root": "libs/datatug/pages/my",
@@ -2691,6 +2666,46 @@
             "lintFilePatterns": [
               "libs/core/src/**/*.ts",
               "libs/core/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "datatug-core": {
+      "projectType": "library",
+      "root": "libs/datatug/core",
+      "sourceRoot": "libs/datatug/core/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/datatug/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/datatug/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/datatug/core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/core"],
+          "options": {
+            "jestConfig": "libs/datatug/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/core/src/**/*.ts",
+              "libs/datatug/core/src/**/*.html"
             ]
           }
         }

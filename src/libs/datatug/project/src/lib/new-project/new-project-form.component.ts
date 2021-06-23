@@ -50,7 +50,7 @@ export class NewProjectFormComponent implements ViewDidEnter {
 				const m = 'New project ID: ' + projectId;
 				console.log(m);
 				this.popoverController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close popover with new project form'));
-				this.nav.goProject({storeId: projStoreRef.type, projectId});
+				this.nav.goProject({id: projectId, store: {id: projStoreRef.type}});
 			},
 			error: err => {
 				this.errorLogger.logError(err,'Failed to create a new project');

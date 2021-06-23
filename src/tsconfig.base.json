@@ -55,8 +55,6 @@
       "@sneat/datatug/pages/signed-out/*": [
         "libs/datatug/pages/signed-out/src/index.ts"
       ],
-      "@sneat/datatug/core": ["libs/datatug/core/src/index.ts"],
-      "@sneat/datatug/core/*": ["libs/datatug/core/src/index.ts"],
       "@sneat/datatug/pages/my": ["libs/datatug/pages/my/src/index.ts"],
       "@sneat/datatug/pages/my/*": ["libs/datatug/pages/my/src/index.ts"],
       "@sneat/datatug/services/nav": ["libs/datatug/services/nav/src/index.ts"],
@@ -171,7 +169,8 @@
       "@sneat/team-models": ["libs/team/models/src/index.ts"],
       "@sneat/api": ["libs/api/src/index.ts"],
       "@sneat/user": ["libs/user/src/index.ts"],
-      "@sneat/core": ["libs/core/src/index.ts"]
+      "@sneat/core": ["libs/core/src/index.ts"],
+      "@sneat/datatug/core": ["libs/datatug/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

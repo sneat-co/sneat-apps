@@ -4,7 +4,6 @@ import {DatatugStorePageRoutingModule} from './datatug-store-routing.module';
 import {DatatugStorePageComponent} from './datatug-store-page.component';
 import {SneatErrorCardModule} from '@sneat/components/error-card';
 import {IonicModule} from '@ionic/angular';
-import {DatatugServicesStoreModule} from "@sneat/datatug/services/repo";
 import {NewProjectFormModule} from '@sneat/datatug/project';
 
 @NgModule({

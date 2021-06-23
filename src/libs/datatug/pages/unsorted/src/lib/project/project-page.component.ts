@@ -17,12 +17,13 @@ import {
 	ProjectItemType
 } from '@sneat/datatug/models';
 import {IDatatugProjectContext} from '@sneat/datatug/nav';
-import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
+import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {EntityService, EnvironmentService, SchemaService} from '@sneat/datatug/services/unsorted';
 import {routingParamProjectId} from '@sneat/datatug/core';
 import {CreateNamedRequest} from '@sneat/datatug/dto';
 import {IRecord} from '@sneat/data';
+import {ITeam} from '@sneat/team-models';
 
 @Component({
 	selector: 'datatug-project',
@@ -45,9 +46,11 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	@ViewChild(IonInput, {static: false}) addInput: IonInput;
 	private projectSubscription: Subscription;
 
+	isActiveView = false;
+
 	constructor(
-		readonly route: ActivatedRoute,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly route: ActivatedRoute,
 		private readonly datatugNavService: DatatugNavService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly projectService: ProjectService,
@@ -56,13 +59,18 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		private readonly entityService: EntityService,
 		private readonly navController: NavController,
 	) {
-		// console.log('ProjectPage.constructor()', route?.snapshot?.paramMap);
+		console.log('ProjectPage.constructor()', route?.snapshot?.paramMap);
+		this.getProjectContextFromHistoryState();
+		this.trackCurrentProject();
+	}
+
+	private trackCurrentProject(): void {
 		try {
 			this.datatugNavContextService.currentProject.subscribe({
 				next: this.onProjectChanged,
 				error: this.errorLogger.logErrorHandler('Failed to get current project'),
 			});
-			route.paramMap
+			this.route.paramMap
 				.subscribe({
 					next: params => {
 						try {
@@ -85,7 +93,25 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		}
 	}
 
-	isActiveView = false;
+	private getProjectContextFromHistoryState(): void {
+		const projectNavContext = window.history.state.project as IProjectNavContext;
+		if (projectNavContext) {
+
+			this.projContext = {
+				projectId: projectNavContext.id,
+				storeId: projectNavContext.store.id,
+				brief: {
+					...projectNavContext.brief,
+					id: projectNavContext.id,
+					store: {
+						...projectNavContext.store,
+						type: 'firestore',
+					},
+				},
+			};
+			this.projBrief = this.projContext.brief;
+		}
+	}
 
 	ionViewWillEnter(): void {
 		this.isActiveView = true;

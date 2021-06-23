@@ -95,9 +95,6 @@
     "datatug-pages-signed-out": {
       "tags": []
     },
-    "datatug-core": {
-      "tags": []
-    },
     "datatug-pages-my": {
       "tags": []
     },
@@ -219,6 +216,9 @@
       "tags": []
     },
     "core": {
+      "tags": []
+    },
+    "datatug-core": {
       "tags": []
     }
   }

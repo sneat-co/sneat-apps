@@ -4,6 +4,7 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 import {IDatatugProjRef} from '@sneat/datatug/core';
 import {
+	IDatatugProjectBrief,
 	IDatatugProjectSummary,
 	IDatatugStoreBrief,
 	IProjBoard,
@@ -29,6 +30,12 @@ export interface IStoreNavContext {
 	brief?: IDatatugStoreBrief;
 }
 
+export interface IProjectNavContext {
+	id: string;
+	store: IStoreNavContext;
+	brief?: IDatatugProjectBrief;
+}
+
 @Injectable({
 	providedIn: 'root' // TODO: embed explicitly
 })
@@ -45,16 +52,17 @@ export class DatatugNavService {
 			throw new Error("store.id is a required parameter");
 		}
 		const storeId = getStoreId(store.id);
-		const options: NavigationOptions = store.brief ? {state: {store}} : undefined ;
+		const options: NavigationOptions = store.brief ? {state: {store}} : undefined;
 		this.navRoot(['store', storeId], 'Failed to navigate to store page', options);
 	}
 
-	goProject(to: IDatatugProjRef, page?: ProjectTopLevelPage): void {
-		const url = ['store', to.storeId, 'project', to.projectId];
+	goProject(project: IProjectNavContext, page?: ProjectTopLevelPage): void {
+		const url = ['store', project.store.id, 'project', project.id];
 		if (page) {
 			url.push(page);
 		}
-		this.navRoot(url, 'Failed to navigate to project page ' + page);
+		const options: NavigationOptions = project.brief ? {state: {project}} : undefined;
+		this.navRoot(url, 'Failed to navigate to project page ' + page, options);
 	}
 
 	goEnvironment(projContext: IDatatugProjRef, projEnv?: IProjEnv, envId?: string): void {

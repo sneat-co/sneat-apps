@@ -1,7 +1,7 @@
 import {Component, Inject, Input, OnChanges, SimpleChanges} from "@angular/core";
 import {IDatatugProjectBriefWithId, IDatatugUser, projectsBriefFromDictToFlatList} from "@sneat/datatug/models";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
+import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
 import {NewProjectService} from '../../../project/src/lib/new-project/new-project.service';
 
 @Component({
@@ -63,7 +63,11 @@ export class MenuProjectSelectorComponent implements OnChanges {
 				projectId,
 			});
 			if (projectId) {
-				this.nav.goProject({storeId: this.currentStoreId, projectId});
+				const projNavContext: IProjectNavContext = {
+					id: projectId,
+					store: {id: this.currentStoreId},
+				};
+				this.nav.goProject(projNavContext);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle project switch');
