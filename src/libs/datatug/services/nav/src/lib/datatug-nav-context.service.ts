@@ -216,7 +216,7 @@ export class DatatugNavContextService {
 				storeType = 'agent';
 			}
 			const projectContext: IDatatugProjectContext = {
-				brief: {id, store: {type: storeType}},
+				brief: {id, access: undefined, title: undefined, store: {type: storeType}},
 				storeId: currentStoreId,
 				projectId: id,
 			};

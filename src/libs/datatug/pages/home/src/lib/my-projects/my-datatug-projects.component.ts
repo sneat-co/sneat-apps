@@ -31,6 +31,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	public demoProjects: IDatatugProjectBriefWithIdAndStoreRef[] = [
 		{
 			id: 'datatug-demo-project@datatug',
+			access: 'public',
 			store: {type: STORE_TYPE_GITHUB},
 			title: 'DataTug Demo Project @ GitHub'
 		},

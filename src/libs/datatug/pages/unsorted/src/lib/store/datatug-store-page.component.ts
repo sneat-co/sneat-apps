@@ -2,13 +2,15 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {distinctUntilChanged, filter, map, takeUntil, tap} from 'rxjs/operators';
-import {IDatatugProjectBase} from '@sneat/datatug/models';
+import {IDatatugProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AgentStateService, IAgentState, DatatugStoreService} from '@sneat/datatug/services/repo';
-import {DatatugNavService, IProjectNavContext, StoreTracker} from '@sneat/datatug/services/nav';
+import {DatatugNavService, IProjectNavContext, IStoreNavContext, StoreTracker} from '@sneat/datatug/services/nav';
 import {routingParamStoreId} from '@sneat/datatug/core';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 import {NewProjectService} from '@sneat/datatug/project';
+import {DatatugUserService} from '@sneat/datatug/services/base';
+import {AuthStatus, ISneatAuthState} from '@sneat/auth';
 
 @Component({
 	selector: 'datatug-store-page',
@@ -29,6 +31,8 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 
 	private readonly storeTracker: StoreTracker;
 
+	private authStatus: AuthStatus;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly route: ActivatedRoute,
@@ -36,9 +40,19 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		private readonly nav: DatatugNavService,
 		private readonly agentStateService: AgentStateService,
 		private readonly newProjectService: NewProjectService,
+		private readonly datatugUserService: DatatugUserService,
 	) {
-		console.log('DatatugStorePageComponent.constructor()');
+		console.log('DatatugStorePageComponent.constructor(), window.history.state:', window.history.state);
+		const store = window.history.state.store as IStoreNavContext;
+		if (store) {
+			this.storeId = store.id;
+			const projects = projectsBriefFromDictToFlatList(store.brief.projects);
+			this.projects = projects;
+		}
 		this.storeTracker = new StoreTracker(this.destroyed, route);
+		datatugUserService.datatugUserState.subscribe(state => {
+			this.authStatus = state.status;
+		});
 	}
 
 	ionViewDidLeave(): void {
@@ -48,14 +62,14 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 
 	ionViewDidEnter(): void {
 		console.log('DatatugStorePageComponent.ionViewDidEnter()', this.storeId);
-		if (this.storeId) {
-			this.processStoreId(this.storeId)
-		}
+		// if (this.storeId) {
+		// 	this.processStoreId(this.storeId)
+		// }
 	}
 
 	ngOnInit() {
 		console.log('DatatugStorePageComponent.ngOnInit()');
-		this.trackStoreId();
+		// this.trackStoreId();
 	}
 
 	private trackStoreId(): void {

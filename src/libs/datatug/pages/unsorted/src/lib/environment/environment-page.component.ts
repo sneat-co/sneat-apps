@@ -44,7 +44,12 @@ export class EnvironmentPageComponent {
 				this.currentProject = currentProject;
 				if (this.currentProject) {
 					if (!this.projBrief) {
-						this.projBrief = {id: this.currentProject.projectId, store: {type: 'agent'}};
+						this.projBrief = {
+							id: this.currentProject.projectId,
+							access: undefined,
+							title: undefined,
+							store: {type: 'agent'}
+						};
 					}
 					this.loadEnvSummary();
 				}

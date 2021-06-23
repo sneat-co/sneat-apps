@@ -103,8 +103,8 @@ export interface IProjStoreRef extends IStoreRef {
 }
 
 export interface IDatatugProjectBrief {
-	readonly access?: ProjectAccess;
-	readonly title?: string;
+	readonly access: ProjectAccess;
+	readonly title: string;
 	readonly titleOverride?: string;
 }
 

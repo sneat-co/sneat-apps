@@ -78,7 +78,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 							console.log('project ID:', id);
 							if (this.projBrief?.id !== id) {
 								if (id) {
-									this.projBrief = {id, title: id, store: {type: 'agent'}};
+									this.projBrief = {id, access: undefined, title: id, store: {type: 'agent'}};
 									this.onProjectIdChanged();
 								}
 							}
