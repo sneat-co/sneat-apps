@@ -1,16 +1,15 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {distinctUntilChanged, filter, map, takeUntil, tap} from 'rxjs/operators';
+import {filter, takeUntil, tap} from 'rxjs/operators';
 import {IDatatugProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {AgentStateService, IAgentState, DatatugStoreService} from '@sneat/datatug/services/repo';
+import {AgentStateService, DatatugStoreService, IAgentState} from '@sneat/datatug/services/repo';
 import {DatatugNavService, IProjectNavContext, IStoreNavContext, StoreTracker} from '@sneat/datatug/services/nav';
-import {routingParamStoreId} from '@sneat/datatug/core';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 import {NewProjectService} from '@sneat/datatug/project';
 import {DatatugUserService} from '@sneat/datatug/services/base';
-import {AuthStatus, ISneatAuthState} from '@sneat/auth';
+import {AuthStatus} from '@sneat/auth';
 
 @Component({
 	selector: 'datatug-store-page',
@@ -45,7 +44,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		console.log('DatatugStorePageComponent.constructor(), window.history.state:', window.history.state);
 		const store = window.history.state.store as IStoreNavContext;
 		if (store) {
-			this.storeId = store.id;
+			// this.storeId = store.id;
 			const projects = projectsBriefFromDictToFlatList(store.brief.projects);
 			this.projects = projects;
 		}
@@ -62,14 +61,14 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 
 	ionViewDidEnter(): void {
 		console.log('DatatugStorePageComponent.ionViewDidEnter()', this.storeId);
-		// if (this.storeId) {
-		// 	this.processStoreId(this.storeId)
-		// }
+		if (this.storeId) {
+			this.processStoreId(this.storeId)
+		}
 	}
 
 	ngOnInit() {
 		console.log('DatatugStorePageComponent.ngOnInit()');
-		// this.trackStoreId();
+		this.trackStoreId();
 	}
 
 	private trackStoreId(): void {
