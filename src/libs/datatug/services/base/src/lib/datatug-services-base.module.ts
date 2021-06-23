@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DatatugUserService} from "./datatug-user-service";
 import {SneatAuthModule} from "@sneat/auth";
 
 @NgModule({
@@ -9,7 +8,7 @@ import {SneatAuthModule} from "@sneat/auth";
 		SneatAuthModule,
 	],
 	providers: [
-		DatatugUserService,
+		// DatatugUserService,
 	]
 })
 export class DatatugServicesBaseModule {

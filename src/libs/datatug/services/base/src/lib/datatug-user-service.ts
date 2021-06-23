@@ -1,16 +1,19 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {IDatatugUser} from "@sneat/datatug/models";
-import {map} from "rxjs/operators";
+import {map, shareReplay} from "rxjs/operators";
 import {ISneatUserState, SneatUserService} from '@sneat/user';
+import {RandomId} from '@sneat/random';
 
 export interface IDatatugUserState extends ISneatUserState {
 	record?: IDatatugUser;
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DatatugUserService {
 	public datatugUserState: Observable<IDatatugUserState>;
+
+	private readonly id = RandomId.newRandomId(5);
 
 	constructor(
 		readonly sneatUserService: SneatUserService,
@@ -21,7 +24,7 @@ export class DatatugUserService {
 		}
 		this.datatugUserState = sneatUserService.userState.pipe(
 			map(sneatUserState => {
-				console.log('DatatugUserService => sneatUserState:', sneatUserState);
+				console.log(`DatatugUserService(id=${this.id}) => sneatUserState:`, sneatUserState);
 				let datatugUser = sneatUserState?.record as IDatatugUser
 					|| sneatUserState?.record === null && {title: ''};
 				if (!datatugUser) {
@@ -45,6 +48,7 @@ export class DatatugUserService {
 				}
 				return datatugUserState;
 			}),
+			shareReplay(1),
 		);
 	}
 }
