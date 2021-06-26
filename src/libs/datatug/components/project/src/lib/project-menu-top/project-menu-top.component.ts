@@ -11,6 +11,9 @@ import {IProjectContext} from '@sneat/datatug/nav';
 import {ActivatedRoute} from '@angular/router';
 import {parseStoreRef} from '@sneat/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import {distinctUntilKeyChanged, filter, map, takeUntil} from 'rxjs/operators';
+import {equalProjectRef, IProjectRef} from '@sneat/datatug/core';
+import {DatatugUserService} from '@sneat/datatug/services/base';
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage | '';
@@ -91,14 +94,22 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
-		private route: ActivatedRoute,
+		private readonly userService: DatatugUserService,
 	) {
-		const projectTracker = new ProjectTracker(this.destroyed, route);
-		projectTracker.projectRef.subscribe({
-			next: ref => this.project = ref && {ref, store: {ref: parseStoreRef(ref.storeId)}},
-			error: this.errorLogger.logErrorHandler('failed to retrieve projectRef from ProjectTracker'),
-		});
+		this.datatugNavContextService.currentProject
+			.pipe(
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
+				next: this.setProject,
+				error: this.errorLogger.logErrorHandler('ProjectMenuTopComponent failed to retrieve project context from ProjectTracker'),
+			});
 		this.currentFolder = datatugNavContextService.currentFolder;
+	}
+
+	private setProject = (project: IProjectContext) => {
+		console.log('ProjectMenuTopComponent.setProject()', project);
+		this.project = project;
 	}
 
 	ngOnDestroy() {

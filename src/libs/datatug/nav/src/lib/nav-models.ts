@@ -20,6 +20,22 @@ export interface IProjectContext {
 	readonly summary?: IProjectSummary;
 }
 
+export function newProjectBriefFromSummary(summary: IProjectSummary, brief?: IProjectBrief): IProjectBrief {
+	return {
+		...(brief||{}),
+		access: summary.access,
+		title: summary.title,
+		// titleOverride: summary.t
+	};
+}
+
+export function populateProjectBriefFromSummaryIfMissing(p: IProjectContext): IProjectContext {
+	if (p?.summary && !p.brief) {
+		p = {...p, brief: newProjectBriefFromSummary(p.summary)};
+	}
+	return p
+}
+
 export function newProjectContextFromRef(ref: IProjectRef): IProjectContext {
 	return {ref, store: {ref: parseStoreRef(ref.storeId)}};
 }

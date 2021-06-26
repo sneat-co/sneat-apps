@@ -3,6 +3,7 @@ import {IOptionallyTitled} from '../core';
 import {IEnvironmentFull} from './environments';
 import {IDbModelFull} from './dbmodels';
 import {IProjDbServerFull} from './apis/database';
+import {IProjectBrief} from '../interfaces';
 
 export type ProjectAccess = 'private' | 'protected' | 'public';
 

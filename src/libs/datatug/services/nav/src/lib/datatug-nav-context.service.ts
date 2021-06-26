@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
-import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} from 'rxjs/operators';
+import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, shareReplay, tap} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
 import {DatatugProjStoreType, IProjectSummary} from '@sneat/datatug/models';
@@ -12,7 +12,7 @@ import {
 	IProjectContext,
 	IEnvContext,
 	IEnvDbContext,
-	IEnvDbTableContext
+	IEnvDbTableContext, populateProjectBriefFromSummaryIfMissing
 } from "@sneat/datatug/nav";
 import {parseStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/core';
 import {RandomId} from '@sneat/random';
@@ -37,7 +37,8 @@ export class DatatugNavContextService {
 
 	private readonly $currentProj = new BehaviorSubject<IProjectContext | undefined>(undefined);
 	public readonly currentProject = this.$currentProj.asObservable().pipe(
-		distinctUntilChanged(),
+		map(populateProjectBriefFromSummaryIfMissing),
+		shareReplay(1),
 	);
 
 	private readonly $currentFolder = new BehaviorSubject<string>(undefined);
