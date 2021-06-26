@@ -12,9 +12,10 @@ import {parseStoreRef} from '@sneat/core';
 })
 export class MenuProjectSelectorComponent implements OnChanges {
 	@Input() datatugUser?: IDatatugUser;
-	@Input() currentStoreId?: string;
-	@Input() currentProject?: IProjectContext;
-	@Input() project?: IProjectContext; // TODO(not_sure): should it be not input and take value from context?
+	currentStoreId?: string;
+	currentProjectId?: string;
+	currentProject?: IProjectContext;
+	project?: IProjectContext; // TODO(not_sure): should it be not input and take value from context?
 
 	@Output() projectChanged = new EventEmitter<IProjectContext>()
 
@@ -27,6 +28,20 @@ export class MenuProjectSelectorComponent implements OnChanges {
 		private readonly nav: DatatugNavService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 	) {
+		datatugNavContextService.currentStoreId.subscribe({
+			next: storeId => this.currentStoreId = storeId,
+			error: this.errorLogger.logErrorHandler('Failed to retrieve store id'),
+		});
+		datatugNavContextService.currentProject.subscribe({
+			next: this.setProject,
+			error: this.errorLogger.logErrorHandler('Failed to retrieve project context'),
+		});
+	}
+
+	private setProject = (project: IProjectContext): void => {
+		console.log('MenuProjectSelectorComponent.setProject()', project);
+		this.project = project;
+		this.currentProjectId = project.ref.projectId;
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

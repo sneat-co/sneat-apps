@@ -38,13 +38,10 @@
 	></datatug-menu-store-selector>
 	<datatug-menu-project-selector *ngIf="currentStoreId"
 								   [datatugUser]="datatugUserState?.record"
-								   [currentStoreId]="currentStoreId"
-								   [currentProject]="currentProject"
 								   (projectChanged)="onProjectChanged($event)"
 	></datatug-menu-project-selector>
 	<datatug-menu-env-selector
 			*ngIf="currentProject"
-			[projectSummary]="currentProject"
 	></datatug-menu-env-selector>
 </ion-card>
 
