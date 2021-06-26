@@ -16,6 +16,9 @@ export class ProjectTracker {
 		readonly stopNotifier: Observable<any>,
 		readonly route: ActivatedRoute,
 	) {
+		if (!stopNotifier) {
+			throw new Error('stopNotifier is a required parameter for ProjectTracker')
+		}
 		this.stopNotifier = stopNotifier;
 		this.storeTracker = new StoreTracker(stopNotifier, route);
 		this.projectId = route.paramMap.pipe(

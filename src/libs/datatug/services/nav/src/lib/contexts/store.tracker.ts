@@ -21,6 +21,9 @@ export class StoreTracker {
 		readonly stopNotifier: Observable<any>,
 		readonly route: ActivatedRoute,
 	) {
+		if (!stopNotifier) {
+			throw new Error('stopNotifier is a required parameter for StoreTracker')
+		}
 		this.stopped = stopNotifier;
 		this.trackStoreIdParam(route);
 	}

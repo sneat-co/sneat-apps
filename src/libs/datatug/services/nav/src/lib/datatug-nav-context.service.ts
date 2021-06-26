@@ -66,11 +66,14 @@ export class DatatugNavContextService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		console.log('DatatugNavContextService.constructor(), id=', this.id);
-		this.currentProject.subscribe(p => {
-			const projRef = projectContextService.current;
-			if (projRef?.projectId !== p?.ref?.projectId || projRef?.storeId !== p?.ref?.storeId) {
-				projectContextService.setCurrent(p.ref)
-			}
+		this.currentProject.subscribe({
+			next: p => {
+				const projRef = projectContextService.current;
+				if (projRef?.projectId !== p?.ref?.projectId || projRef?.storeId !== p?.ref?.storeId) {
+					projectContextService.setCurrent(p?.ref)
+				}
+			},
+			error: this.errorLogger.logErrorHandler('DatatugNavContextService failed to retrieve current project'),
 		});
 		// try {
 		// 	throw new Error('stack');
@@ -223,7 +226,7 @@ export class DatatugNavContextService {
 			const projectContext: IProjectContext = {
 				// brief: {access: undefined, title: undefined},
 				store: {ref: parseStoreRef(currentStoreId)},
-				ref: {projectId: currentProject.ref.projectId, storeId: currentStoreId},
+				ref: {projectId: id, storeId: currentStoreId},
 			};
 			this.setCurrentProject(projectContext);
 		}
