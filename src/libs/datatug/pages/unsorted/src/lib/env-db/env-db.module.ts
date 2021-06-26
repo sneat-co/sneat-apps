@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {EnvDbPageRoutingModule} from './env-db-routing.module';
 
-import {EnvDbPage} from './env-db.page';
+import {EnvDbPageComponent} from './env-db-page.component';
 
 @NgModule({
 	imports: [
@@ -15,7 +15,7 @@ import {EnvDbPage} from './env-db.page';
 		IonicModule,
 		EnvDbPageRoutingModule,
 	],
-	declarations: [EnvDbPage]
+	declarations: [EnvDbPageComponent]
 })
 export class EnvDbPageModule {
 }

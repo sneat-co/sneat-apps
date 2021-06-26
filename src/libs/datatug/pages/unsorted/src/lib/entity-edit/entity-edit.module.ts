@@ -6,7 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {EntityEditPageRoutingModule} from './entity-edit-routing.module';
 
-import {EntityEditPage} from './entity-edit.page';
+import {EntityEditPageComponent} from './entity-edit-page.component';
 import {EntityFieldDialogComponent} from './entity-field-dialog/entity-field-dialog.component';
 import {SneatErrorCardModule} from '@sneat/components/error-card';
 
@@ -19,7 +19,7 @@ import {SneatErrorCardModule} from '@sneat/components/error-card';
 		SneatErrorCardModule,
 	],
 	declarations: [
-		EntityEditPage,
+		EntityEditPageComponent,
 		EntityFieldDialogComponent,
 	]
 })

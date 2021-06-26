@@ -5,12 +5,12 @@ import {SneatTeamApiService} from '@sneat/api';
 import {StoreApiService} from '@sneat/datatug/services/repo';
 import {CreateNamedRequest} from '@sneat/datatug/dto';
 import {IEnvironmentSummary} from '@sneat/datatug/models';
-import {IDatatugProjRef} from '@sneat/datatug/core';
 import {createProjItem} from "@sneat/datatug/services/base";
 import {startWith, tap} from "rxjs/operators";
+import {IProjectRef} from '@sneat/datatug/core';
 
-const getEnvCacheKey = (projRef: IDatatugProjRef, env: string): string => {
-	return `${projRef.projectId}@${projRef.storeId}/${env}`;
+const getEnvCacheKey = (projectRef: IProjectRef, env: string): string => {
+	return `${projectRef.projectId}@${projectRef.storeId}/${env}`;
 };
 
 const envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
@@ -34,23 +34,23 @@ export class EnvironmentService {
 		return throwError('')
 	}
 
-	public getEnvSummary(projRef: IDatatugProjRef, env: string, forceReload: boolean = false)
+	public getEnvSummary(projectRef: IProjectRef, env: string, forceReload: boolean = false)
 		: Observable<IEnvironmentSummary> {
-		if (!projRef) {
+		if (!projectRef) {
 			return throwError('"projRef" is a required parameter');
 		}
 		if (!env) {
 			return throwError('"env" is a required parameter');
 		}
-		const cacheKey = getEnvCacheKey(projRef, env);
+		const cacheKey = getEnvCacheKey(projectRef, env);
 		const cached = envSummaryCache[cacheKey];
 		if (cached && !forceReload) {
 			return of(cached)
 		}
 		const result =
-			this.storeApiService.get<IEnvironmentSummary>(projRef.storeId, '/environment-summary', {
+			this.storeApiService.get<IEnvironmentSummary>(projectRef.storeId, '/environment-summary', {
 				params: {
-					proj: projRef.projectId,
+					proj: projectRef.projectId,
 					env
 				}
 			}).pipe(tap(envSummary => {

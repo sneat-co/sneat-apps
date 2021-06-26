@@ -1,12 +1,14 @@
-import {AfterViewInit, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import Tabulator from 'tabulator-tables';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {getTabulatorCols, IGridColumn} from '@sneat/grid';
-import {routingParamEnvironmentId, routingParamProjectId} from '@sneat/datatug/core';
-import {IDatabaseFull, IEnvironmentFull, IDatatugProjectFull, ITableFull} from '@sneat/datatug/models';
+import {routingParamEnvironmentId} from '@sneat/datatug/core';
+import {IDatabaseFull, IEnvironmentFull, IProjectFull, ITableFull} from '@sneat/datatug/models';
 import {ProjectService} from '@sneat/datatug/services/project';
-import {DatatugNavService} from '@sneat/datatug/services/nav';
+import {DatatugNavService, ProjectTracker} from '@sneat/datatug/services/nav';
+import {IProjectContext} from '@sneat/datatug/nav';
+import {Subject} from 'rxjs';
 
 interface IRecordsetInfo {
 	schema: string;
@@ -20,18 +22,18 @@ interface IRecordsetInfo {
 
 @Component({
 	selector: 'datatug-env-db',
-	templateUrl: './env-db.page.html',
-	styleUrls: ['./env-db.page.scss'],
+	templateUrl: './env-db-page.component.html',
+	styleUrls: ['./env-db-page.component.scss'],
 })
-export class EnvDbPage implements AfterViewInit {
+export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 
 	@ViewChild('grid', {static: false}) gridElRef: ElementRef;
 
 	filter = '';
 	tab: 'tables' | 'views' = 'tables';
 
-	projectId: string;
-	project: IDatatugProjectFull;
+	project: IProjectContext;
+	projectFull: IProjectFull;
 	env: IEnvironmentFull;
 	envDb: IDatabaseFull;
 
@@ -43,6 +45,8 @@ export class EnvDbPage implements AfterViewInit {
 	filteredRows: { [tab: string]: IRecordsetInfo[] } = {};
 
 	private tabulator: Tabulator;
+
+	private readonly destroyed = new Subject<void>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -56,23 +60,26 @@ export class EnvDbPage implements AfterViewInit {
 		this.envDb = history.state.db as IDatabaseFull;
 	}
 
-	ngAfterViewInit(): void {
-		this.route.paramMap.subscribe({
-			next: params => {
-				const envId = params.get(routingParamEnvironmentId);
-				this.projectId = params.get(routingParamProjectId);
-				const [projectId, storeId] = this.projectId.split('@');
+	ngOnDestroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
 
-				this.projService.getFull({storeId, projectId}).subscribe(p => {
-					this.project = p;
+	ngAfterViewInit(): void {
+		const projectTracker = new ProjectTracker(this.destroyed, this.route);
+		projectTracker.projectRef.subscribe({
+			next: projectRef => {
+				this.projService.getFull(projectRef).subscribe(p => {
+					this.projectFull = p;
+					const envId = this.route.snapshot.params.get(routingParamEnvironmentId);
 					this.env = p.environments.find(e => e.id === envId);
 					// const dbId = params.get('routingParamDbId');
 					// this.envDb = this.env.dbServer.find(db => db.id === dbId);
 					this.onDataChanged();
 				});
-			},
-			error: err => this.errorLogger.logError(err, 'Failed to get router params'),
-		});
+
+			}
+		})
 	}
 
 	public tabChanged(): void {
@@ -138,7 +145,14 @@ export class EnvDbPage implements AfterViewInit {
 				// 	}
 				// },
 			},
-			{title: 'Cols', dbType: 'integer', field: 'cols', widthGrow: 1, hozAlign: 'right', tooltip: this.colsTooltip},
+			{
+				title: 'Cols',
+				dbType: 'integer',
+				field: 'cols',
+				widthGrow: 1,
+				hozAlign: 'right',
+				tooltip: this.colsTooltip
+			},
 			{title: 'FKs', dbType: 'integer', field: 'fks', widthGrow: 1, hozAlign: 'right', tooltip: this.fksTooltip},
 			{
 				title: 'Refs By',
@@ -159,7 +173,7 @@ export class EnvDbPage implements AfterViewInit {
 			rowClick: (e, row) => {
 				const data: IRecordsetInfo = row.getData();
 				this.datatugNavService.goTable({
-					target: {projectId: this.projectId, storeId: 'localhost:8989'},
+					project: this.project,
 					env: this.env.id,
 					// store: this.a
 					db: this.envDb.id,

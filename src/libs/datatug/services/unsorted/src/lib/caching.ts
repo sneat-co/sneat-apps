@@ -1,19 +1,19 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {filter} from 'rxjs/operators';
-import {IDatatugProjRef} from '@sneat/datatug/core';
+import {IProjectRef} from '@sneat/datatug/core';
 
 export class ProjectItemsByAgent<T> {
 	// private readonly byAgent: {[store: string]: {[id: string]: T[]}} = {};
 	public readonly byRepo$: { [repo: string]: { [id: string]: BehaviorSubject<T[]> } } = {};
 
-	public getItems$(from: IDatatugProjRef): Observable<T[]> {
+	public getItems$(from: IProjectRef): Observable<T[]> {
 		const {storeId, projectId} = from;
 		console.log('getItems$', storeId, projectId, this.byRepo$);
 		const a = this.byRepo$[storeId];
 		return a && this.asObservable(a[projectId]);
 	}
 
-	public setItems$(to: IDatatugProjRef, items: Observable<T[]>): Observable<T[]> {
+	public setItems$(to: IProjectRef, items: Observable<T[]>): Observable<T[]> {
 		const {storeId, projectId} = to;
 		let a = this.byRepo$[storeId];
 		if (!a) {

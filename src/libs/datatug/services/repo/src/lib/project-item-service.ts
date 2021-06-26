@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 import {startWith, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {IDatatugProjRef} from '@sneat/datatug/core';
+import {IProjectRef} from '@sneat/datatug/core';
 import {IProjItemBrief, IProjItemsFolder} from '@sneat/datatug/models';
 import {StoreApiService} from './store-api.service';
 
@@ -28,7 +28,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	) {
 	}
 
-	public getProjItems(from: IDatatugProjRef, folderPath: string): Observable<ProjItem[]> {
+	public getProjItems(from: IProjectRef, folderPath: string): Observable<ProjItem[]> {
 		console.log('getProjItems', from, folderPath);
 		return this.storeApiService.get<ProjItem[]>(from.storeId, `/${this.itemsPath}/all_${this.itemsPath}`, {
 			params: {
@@ -46,7 +46,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		);
 	}
 
-	public getFolder<T extends IProjItemsFolder>(from: IDatatugProjRef, folderPath: string): Observable<T> {
+	public getFolder<T extends IProjItemsFolder>(from: IProjectRef, folderPath: string): Observable<T> {
 		console.log('getFolder', from, folderPath);
 		return this.storeApiService.get<T>(from.storeId, `/${this.itemsPath}/all_${this.itemsPath}`, {
 			params: {
@@ -80,10 +80,10 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		}
 	}
 
-	public getProjItem(from: IDatatugProjRef, id: string): Observable<ProjItem> {
-		let o = this.storeApiService.get<ProjItem>(from.storeId, `/${this.itemsPath}/get_${this.itemPath}`, {
+	public getProjItem(projectRef: IProjectRef, id: string): Observable<ProjItem> {
+		let o = this.storeApiService.get<ProjItem>(projectRef.storeId, `/${this.itemsPath}/get_${this.itemPath}`, {
 			params: {
-				project: from.projectId,
+				project: projectRef.projectId,
 				[this.itemPath]: id,
 			}
 		});
@@ -94,28 +94,28 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		return o;
 	}
 
-	public createProjItem(target: IDatatugProjRef, projItem: ProjItem, itemPath = this.itemPath): Observable<ProjItem> {
-		return this.storeApiService.put(target.storeId, `/${this.itemsPath}/create_${itemPath}`, projItem, {
+	public createProjItem(projectRef: IProjectRef, projItem: ProjItem, itemPath = this.itemPath): Observable<ProjItem> {
+		return this.storeApiService.put(projectRef.storeId, `/${this.itemsPath}/create_${itemPath}`, projItem, {
 			params: {
-				project: target.projectId,
+				project: projectRef.projectId,
 				id: projItem.id,
 			},
 		});
 	}
 
-	public updateProjItem(target: IDatatugProjRef, projItem: ProjItem): Observable<ProjItem> {
-		return this.storeApiService.put(target.storeId, `/${this.itemsPath}/update_${this.itemPath}`, projItem, {
+	public updateProjItem(projectRef: IProjectRef, projItem: ProjItem): Observable<ProjItem> {
+		return this.storeApiService.put(projectRef.storeId, `/${this.itemsPath}/update_${this.itemPath}`, projItem, {
 			params: {
-				project: target.projectId,
+				project: projectRef.projectId,
 				id: projItem.id,
 			},
 		});
 	}
 
-	public deleteProjItem(target: IDatatugProjRef, id: string, itemPath = this.itemPath): Observable<void> {
-		return this.storeApiService.delete(target.storeId, `/${this.itemsPath}/delete_${itemPath}`, {
+	public deleteProjItem(projectRef: IProjectRef, id: string, itemPath = this.itemPath): Observable<void> {
+		return this.storeApiService.delete(projectRef.storeId, `/${this.itemsPath}/delete_${itemPath}`, {
 			params: {
-				project: target.projectId,
+				project: projectRef.projectId,
 				id,
 			},
 		});

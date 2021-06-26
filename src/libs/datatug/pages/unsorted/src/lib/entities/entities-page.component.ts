@@ -4,8 +4,7 @@ import {takeUntil} from 'rxjs/operators';
 import {NavController, ToastController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {IEntity, IProjEntity} from '@sneat/datatug/models';
-import {IDatatugProjectContext} from '@sneat/datatug/nav';
-import {IDatatugProjRef} from '@sneat/datatug/core';
+import {IProjectContext} from '@sneat/datatug/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {EntityService} from '@sneat/datatug/services/unsorted';
@@ -20,8 +19,7 @@ type Entities = IRecord<IEntity>[];
 export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLeave {
 
 	entities: Entities;
-	currentProject: IDatatugProjectContext;
-	projectContext: IDatatugProjRef;
+	project: IProjectContext;
 	private readonly destroyed = new Subject<void>();
 
 	constructor(
@@ -37,11 +35,7 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: currentProject => {
-					this.currentProject = currentProject;
-					this.projectContext = currentProject?.brief && {
-						storeId: currentProject.storeId,
-						projectId: currentProject.brief?.id
-					};
+					this.project = currentProject;
 					this.loadEntities();
 					// if (currentProject?.brief && !this.entities) {
 					// 	if (currentProject?.summary?.entities) {
@@ -76,33 +70,29 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 	}
 
 
-	public get projectUrlId() {
-		return `${this.currentProject.brief.id}@${this.currentProject.storeId}`;
-	}
-
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
 	}
 
 	entityUrl(entity: IProjEntity): string {
-		return this.datatugNavService.projectPageUrl(this.currentProject, 'entity', entity.id);
+		return this.datatugNavService.projectPageUrl(this.project, 'entity', entity.id);
 	}
 
 	goNewEntity(event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
-		this.datatugNavService.goProjPage(this.currentProject.storeId, this.currentProject.brief.id, 'new-entity');
+		this.datatugNavService.goProjPage(this.project, 'new-entity');
 	}
 
 	goEntity(entity: IProjEntity): void {
-		this.datatugNavService.goEntity(this.currentProject, entity);
+		this.datatugNavService.goEntity(this.project, entity);
 	}
 
 	deleteEntity(event: Event, entity: IProjEntity): void {
 		event?.stopPropagation();
 		event?.preventDefault();
-		this.entityService.deleteEntity(this.projectContext, entity.id)
+		this.entityService.deleteEntity(this.project.ref, entity.id)
 			.subscribe({
 				next: async () => {
 					this.entities = (this.entities as IProjEntity[]).filter(v => v.id !== entity.id);
@@ -123,7 +113,7 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 
 	private loadEntities(): void {
 		this.entityService
-			.getAllEntities(this.projectContext)
+			.getAllEntities(this.project.ref)
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: entities => this.setEntities(entities),

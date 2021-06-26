@@ -2,16 +2,15 @@ import {Component, Inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {
-	IDatatugProjectBrief,
 	IDatatugProjectBriefWithIdAndStoreRef,
 	IEnvDbServer,
 	IEnvironmentSummary,
 	IProjEnv
 } from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {IDatatugProjRef} from '@sneat/datatug/core';
 import {EnvironmentService} from '@sneat/datatug/services/unsorted';
 import {DatatugNavContextService} from '@sneat/datatug/services/nav';
+import {IProjectContext} from '@sneat/datatug/nav';
 
 @Component({
 	selector: 'datatug-environment',
@@ -22,7 +21,7 @@ export class EnvironmentPageComponent {
 	projEnv: IProjEnv;
 	projBrief: IDatatugProjectBriefWithIdAndStoreRef;
 
-	currentProject: IDatatugProjRef;
+	project: IProjectContext;
 	env: IEnvironmentSummary;
 	dbCols = [
 		{field: 'id', sortable: true, filter: true},
@@ -41,11 +40,11 @@ export class EnvironmentPageComponent {
 
 		this.dataTugNavContextService.currentProject.subscribe({
 			next: currentProject => {
-				this.currentProject = currentProject;
-				if (this.currentProject) {
+				this.project = currentProject;
+				if (this.project) {
 					if (!this.projBrief) {
 						this.projBrief = {
-							id: this.currentProject.projectId,
+							id: this.project.ref.projectId,
 							access: undefined,
 							title: undefined,
 							store: {type: 'agent'}
@@ -90,11 +89,11 @@ export class EnvironmentPageComponent {
 	// }
 
 	private loadEnvSummary(): void {
-		console.log('loadEnvSummary', this.currentProject, this.envId);
-		if (!this.currentProject || !this.envId) {
+		console.log('loadEnvSummary', this.project, this.envId);
+		if (!this.project || !this.envId) {
 			return;
 		}
-		this.envService.getEnvSummary(this.currentProject, this.envId).subscribe({
+		this.envService.getEnvSummary(this.project.ref, this.envId).subscribe({
 			next: value => this.env = value,
 			error: err => this.errorLogger.logError(err, 'Failed to load environment summary'),
 		});

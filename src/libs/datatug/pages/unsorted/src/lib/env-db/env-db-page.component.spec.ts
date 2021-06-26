@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {SqlQueryComponent} from './sql-query.component';
+import {EnvDbPageComponent} from './env-db-page.component';
 
-describe('SqlEditorPage', () => {
-	let component: SqlQueryComponent;
-	let fixture: ComponentFixture<SqlQueryComponent>;
+describe('EnvDbPage', () => {
+	let component: EnvDbPageComponent;
+	let fixture: ComponentFixture<EnvDbPageComponent>;
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [SqlQueryComponent],
+			declarations: [EnvDbPageComponent],
 			imports: [IonicModule.forRoot()]
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(SqlQueryComponent);
+		fixture = TestBed.createComponent(EnvDbPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	}));

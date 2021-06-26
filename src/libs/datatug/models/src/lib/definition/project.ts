@@ -34,19 +34,19 @@ export const ProjectItems = [
 
 export type ProjectItemType = typeof ProjectItems[number];
 
-export interface IDatatugProjectBase {
+export interface IProjectBase {
 	id: string;
 	title: string;
 	access: ProjectAccess;
 }
 
-export interface IDatatugProjectFull extends IDatatugProjectBase {
+export interface IProjectFull extends IProjectBase {
 	environments?: IEnvironmentFull[];
 	dbModels?: IDbModelFull[];
 	dbServers: IProjDbServerFull[];
 }
 
-export interface IDatatugProjectSummary extends IDatatugProjectBase {
+export interface IProjectSummary extends IProjectBase {
 	readonly boards?: IProjBoard[];
 	readonly dbModels?: IProjDbModelBrief[];
 	readonly entities?: IProjEntity[];

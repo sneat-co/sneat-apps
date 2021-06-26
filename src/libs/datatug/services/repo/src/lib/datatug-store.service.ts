@@ -2,7 +2,7 @@ import {Observable, of, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map, shareReplay} from 'rxjs/operators';
-import {cloudStoreId, IDatatugProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
+import {cloudStoreId, IProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
 import {getStoreUrl} from '@sneat/datatug/nav';
 import {IRecordset} from '@sneat/datatug/dto';
 import {IGridColumn, IGridDef} from '@sneat/grid';
@@ -12,7 +12,7 @@ import {storeCanProvideListOfProjects} from '@sneat/core';
 @Injectable()
 export class DatatugStoreService {
 
-	private readonly projectsByStore: { [storeId: string]: Observable<IDatatugProjectBase[]> } = {};
+	private readonly projectsByStore: { [storeId: string]: Observable<IProjectBase[]> } = {};
 
 	private datatugUserState: IDatatugUserState;
 
@@ -28,7 +28,7 @@ export class DatatugStoreService {
 		})
 	}
 
-	public getProjects(storeId: string): Observable<IDatatugProjectBase[]> {
+	public getProjects(storeId: string): Observable<IProjectBase[]> {
 		// eslint-disable-next-line no-console
 		console.log('getProjects', storeId);
 		if (!storeId) {
@@ -37,12 +37,12 @@ export class DatatugStoreService {
 		if (!storeCanProvideListOfProjects(storeId)) {
 			return this.datatugUserService.datatugUserState.pipe(
 				map(datatugUserState => {
-					const result: IDatatugProjectBase[] = [];
+					const result: IProjectBase[] = [];
 					//
 					const {record} = datatugUserState;
 					const store = record?.datatug?.stores[storeId];
 					projectsBriefFromDictToFlatList(store?.projects).forEach(p => {
-						result.push(p as IDatatugProjectBase); // TODO: casting is dirty hack
+						result.push(p as IProjectBase); // TODO: casting is dirty hack
 					});
 					//
 					result.push({id: 'demo-project', title: 'Demo project', access: 'public'});
@@ -55,7 +55,7 @@ export class DatatugStoreService {
 			return projects;
 		}
 		const storeUrl = getStoreUrl(storeId);
-		projects = this.http.get<IDatatugProjectBase[]>(`${storeUrl}/projects`)
+		projects = this.http.get<IProjectBase[]>(`${storeUrl}/projects`)
 			.pipe(shareReplay(1));
 		this.projectsByStore[storeId] = projects;
 		return projects;

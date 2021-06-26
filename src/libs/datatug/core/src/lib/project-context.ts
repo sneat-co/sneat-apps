@@ -1,12 +1,12 @@
-export interface IDatatugProjRef {
+export interface IProjectRef {
 	readonly storeId: string;
 	readonly projectId: string;
 }
 
-export function isValidProjectTargetRef(v: IDatatugProjRef): boolean {
+export function isValidProjectTargetRef(v: IProjectRef): boolean {
 	return !!(v?.storeId && v?.projectId);
 }
 
-export function projectRefToString(v?: IDatatugProjRef): string | undefined {
+export function projectRefToString(v?: IProjectRef): string | undefined {
 	return v && `${v.projectId}@${v.storeId}`;
 }

@@ -17,3 +17,32 @@ export interface IStoreRef {
 	type: StoreType;
 	url?: string;
 }
+
+export function storeRefToId(ref: IStoreRef): string {
+	switch (ref.type) {
+		case 'firestore':
+		case 'github':
+			return ref.url || ref.type;
+		case 'gitlab':
+		case 'agent':
+			if (ref.url) {
+				return ref.url;
+			}
+			throw new Error('store with type "agent" must have URL')
+		default:
+			return ``
+	}
+}
+
+export function parseStoreRef(storeId: string): IStoreRef {
+	switch (storeId) {
+		case 'firestore':
+		case 'github':
+			return {type: storeId};
+		default:
+			if (storeId.startsWith('http-') || storeId.startsWith('https-')) {
+				return {type: 'agent', url: storeId.replace('-', '://')}
+			}
+			throw new Error('unsupported format of store id:' + storeId);
+	}
+}

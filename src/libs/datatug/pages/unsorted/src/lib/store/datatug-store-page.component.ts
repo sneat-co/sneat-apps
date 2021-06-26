@@ -2,7 +2,7 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {filter, takeUntil, tap} from 'rxjs/operators';
-import {IDatatugProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
+import {IProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AgentStateService, DatatugStoreService, IAgentState} from '@sneat/datatug/services/repo';
 import {DatatugNavService, IProjectNavContext, IStoreNavContext, StoreTracker} from '@sneat/datatug/services/nav';
@@ -10,6 +10,8 @@ import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 import {NewProjectService} from '@sneat/datatug/project';
 import {DatatugUserService} from '@sneat/datatug/services/base';
 import {AuthStatus} from '@sneat/auth';
+import {IProjectContext} from '@sneat/datatug/nav';
+import {parseStoreRef} from '@sneat/core';
 
 @Component({
 	selector: 'datatug-store-page',
@@ -18,7 +20,7 @@ import {AuthStatus} from '@sneat/auth';
 export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter {
 
 	public storeId: string;
-	public projects: IDatatugProjectBase[];
+	public projects: IProjectBase[];
 	public error: any;
 
 	public agentState: IAgentState;
@@ -139,7 +141,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 			});
 	}
 
-	private processStoreProjects(projects: IDatatugProjectBase[]): void {
+	private processStoreProjects(projects: IProjectBase[]): void {
 		console.table(projects);
 		this.isLoading = false;
 		this.projects = projects;
@@ -151,18 +153,18 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		this.destroyed.complete();
 	}
 
-	public goProject(project: IDatatugProjectBase, event: Event): void {
+	public goProject(project: IProjectBase, event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
-		const projNavContext: IProjectNavContext = {
-			id: project.id,
-			store: {id: this.storeId},
+		const projectContext: IProjectContext = {
+			ref: {projectId: project.id, storeId: this.storeId},
+			store: {ref: parseStoreRef(this.storeId)},
 			brief: {
 				access: project.access,
 				title: project.title,
 			},
 		}
-		this.nav.goProject(projNavContext);
+		this.nav.goProject(projectContext);
 	}
 
 	create(event: Event): void {

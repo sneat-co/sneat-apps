@@ -46,7 +46,7 @@ export class ForeignKeyCardComponent implements OnChanges {
 			if (this.fk && this.tableNavParams && this.row) {
 				console.log('tableNavParams', this.tableNavParams);
 				if (!this.table?.meta) {
-					this.projectService.getFull(this.tableNavParams.target)
+					this.projectService.getFull(this.tableNavParams.project.ref)
 						.subscribe({
 							next: project => {
 								console.log('ForeignKeyCardComponent => project:', project);
@@ -75,8 +75,8 @@ export class ForeignKeyCardComponent implements OnChanges {
 
 	private loadData(): void {
 		const {schema, name} = this.table.meta;
-		this.agentService.select(this.tableNavParams.target.storeId, {
-			proj: this.tableNavParams.target.projectId,
+		this.agentService.select(this.tableNavParams.project.ref.storeId, {
+			proj: this.tableNavParams.project.ref.projectId,
 			db: this.tableNavParams.db,
 			env: this.tableNavParams.env,
 			from: `${schema}.${name}`,

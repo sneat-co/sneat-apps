@@ -4,6 +4,8 @@ import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {ProjectService} from "@sneat/datatug/services/project";
 import {IProjStoreRef} from "@sneat/datatug/models";
 import {DatatugNavService} from "@sneat/datatug/services/nav";
+import {IProjectContext} from '@sneat/datatug/nav';
+import {storeRefToId} from '@sneat/core';
 
 @Component({
 	selector: 'datatug-new-project-form',
@@ -42,15 +44,19 @@ export class NewProjectFormComponent implements ViewDidEnter {
 	create(): void {
 		console.log('NewProjectFormComponent.create()');
 		this.isCreating = true;
-		const projStoreRef: IProjStoreRef = {
+		const store: IProjStoreRef = {
 			type: 'firestore',
 		};
-		this.projectService.createNewProject(projStoreRef, {title: this.title, userIds: []}).subscribe({
+		this.projectService.createNewProject(store, {title: this.title, userIds: []}).subscribe({
 			next: projectId => {
 				const m = 'New project ID: ' + projectId;
 				console.log(m);
 				this.popoverController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close popover with new project form'));
-				this.nav.goProject({id: projectId, store: {id: projStoreRef.type}});
+				const projectContext: IProjectContext = {
+					ref: {projectId, storeId: storeRefToId(store)},
+					store: {ref: store},
+				}
+				this.nav.goProject(projectContext);
 			},
 			error: err => {
 				this.errorLogger.logError(err,'Failed to create a new project');

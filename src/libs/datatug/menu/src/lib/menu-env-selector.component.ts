@@ -2,16 +2,16 @@ import {Component, Inject, Input} from "@angular/core";
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
-import {IDatatugProjectSummary} from "@sneat/datatug/models";
-import {IDatatugProjRef} from '@sneat/datatug/core';
+import {IProjectSummary} from "@sneat/datatug/models";
+import {IProjectBrief} from '@sneat/datatug/core';
+import {IProjectContext} from '@sneat/datatug/nav';
 
 @Component({
 	selector: 'datatug-menu-env-selector',
 	templateUrl: 'menu-env-selector.component.html'
 })
 export class MenuEnvSelectorComponent {
-	@Input() projectRef?: IDatatugProjRef;
-	@Input() projectSummary?: IDatatugProjectSummary;
+	@Input() project?: IProjectContext;
 	@Input() currentEnvId?: string;
 
 	constructor(
@@ -26,13 +26,8 @@ export class MenuEnvSelectorComponent {
 	public clearEnv(): void { // Called from template
 		try {
 			this.datatugNavContextService.setCurrentEnvironment(undefined);
-			if (this.projectRef && this.projectSummary?.id) {
-				const projNavContext: IProjectNavContext = {
-					id: this.projectSummary.id,
-					store: {id: this.projectRef.storeId},
-					brief: this.projectSummary,
-				}
-				this.nav.goProject(projNavContext);
+			if (this.project?.ref && this.project?.summary?.id) {
+				this.nav.goProject(this.project);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to clear environment');
@@ -47,8 +42,8 @@ export class MenuEnvSelectorComponent {
 				console.log('switchEnv', event);
 				// const env = this.currentProject.environments.find(e => e.id === value);
 				this.datatugNavContextService.setCurrentEnvironment(envId);
-				if (this.projectRef) {
-					this.nav.goEnvironment(this.projectRef, undefined, envId);
+				if (this.project?.ref) {
+					this.nav.goEnvironment(this.project, undefined, envId);
 				}
 			}
 		} catch (e) {

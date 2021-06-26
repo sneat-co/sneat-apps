@@ -3,19 +3,19 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
-import {IDatatugProjectBase, IDatatugProjectSummary} from '@sneat/datatug/models';
+import {IProjectBase, IProjectSummary} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {DatatugStoreService} from '@sneat/datatug/services/repo';
-import {IDatatugProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
+import {IProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
 import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
 import {AuthStatus, AuthStatuses, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
 import {STORE_ID_FIRESTORE} from '@sneat/core';
-import {IDatatugProjRef, projectRefToString} from '@sneat/datatug/core';
+import {IProjectContext, projectRefToString} from '@sneat/datatug/core';
 
 export interface ICurrentProject {
-	readonly ref: IDatatugProjRef;
-	readonly summary?: IDatatugProjectSummary;
+	readonly ref: IProjectContext;
+	readonly summary?: IProjectSummary;
 }
 
 @Component({
@@ -172,16 +172,16 @@ export class DatatugMenuComponent implements OnDestroy {
 		}
 	}
 
-	onProjectRefChanged(ref: IDatatugProjRef): void {
+	onProjectRefChanged(ref: IProjectContext): void {
 		this.currentProject = {ref};
 	}
-	private readonly onCurrentProjectChanged = (currentProject?: IDatatugProjectContext): void => {
+	private readonly onCurrentProjectChanged = (currentProject?: IProjectContext): void => {
 		const {brief, summary, storeId} = currentProject || {};
 		const {id} = brief || {};
 		if (id !== this.currentProject?.ref?.projectId) {
 			console.log('DatatugMenuComponent.onCurrentProjectChanged() => currentProjectId changed:', id, currentProject);
 		}
-		const ref: IDatatugProjRef | undefined = id && storeId ? {projectId: id, storeId} : undefined;
+		const ref: IProjectContext | undefined = id && storeId ? {projectId: id, storeId} : undefined;
 		this.currentProject = ref ? {ref, summary} : undefined;
 		try {
 			if (storeId) {

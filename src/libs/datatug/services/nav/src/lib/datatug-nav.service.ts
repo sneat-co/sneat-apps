@@ -2,17 +2,16 @@ import {Inject, Injectable} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
-import {IDatatugProjRef} from '@sneat/datatug/core';
 import {
 	IDatatugProjectBrief,
-	IDatatugProjectSummary,
 	IDatatugStoreBrief,
 	IProjBoard,
 	IProjEntity,
 	IProjEnv,
 	IQueryDef,
 } from '@sneat/datatug/models';
-import {getStoreId} from "@sneat/datatug/nav";
+import {getStoreId, IProjectContext} from "@sneat/datatug/nav";
+import {IProjectRef} from '@sneat/datatug/core';
 
 export type ProjectTopLevelPage =
 	'boards' |
@@ -56,8 +55,8 @@ export class DatatugNavService {
 		this.navRoot(['store', storeId], 'Failed to navigate to store page', options);
 	}
 
-	goProject(project: IProjectNavContext, page?: ProjectTopLevelPage): void {
-		const url = ['store', project.store.id, 'project', project.id];
+	goProject(project: IProjectContext, page?: ProjectTopLevelPage): void {
+		const url = ['store', project.ref.storeId, 'project', project.ref.projectId];
 		if (page) {
 			url.push(page);
 		}
@@ -65,21 +64,22 @@ export class DatatugNavService {
 		this.navRoot(url, 'Failed to navigate to project page ' + page, options);
 	}
 
-	goEnvironment(projContext: IDatatugProjRef, projEnv?: IProjEnv, envId?: string): void {
-		const url = this.projectPageUrl(projContext, 'env', projEnv?.id || envId);
-		this.navForward(url, {state: {projEnv}}, 'Failed to navigate to environment page');
+	goEnvironment(project: IProjectContext, projEnv?: IProjEnv, envId?: string): void {
+		const url = this.projectPageUrl(project.ref, 'env', projEnv?.id || envId);
+		this.navForward(url, {state: {project, projEnv}}, 'Failed to navigate to environment page');
 	}
 
-	goEntity(projContext: IDatatugProjRef, projEntity: IProjEntity, entityId?: string): void {
-		const url = this.projectPageUrl(projContext, 'entity', projEntity?.id || entityId);
-		this.navForward(url, {state: {projEntity}}, 'Failed to navigate to entity page');
+	goEntity(project: IProjectContext, projEntity: IProjEntity, entityId?: string): void {
+		const url = this.projectPageUrl(project.ref, 'entity', projEntity?.id || entityId);
+		this.navForward(url, {state: {project, projEntity}}, 'Failed to navigate to entity page');
 	}
 
-	goQuery(projContext: IDatatugProjRef, query: IQueryDef, action?: 'execute' | 'edit'): void {
+	goQuery(project: IProjectContext, query: IQueryDef, action?: 'execute' | 'edit'): void {
 		console.log('goQuery', query.id);
-		const url = this.projectPageUrl(projContext, 'query');
+		const url = this.projectPageUrl(project.ref, 'query');
 		this.navForward(url, {
 			state: {
+				project,
 				query,
 				action,
 			},
@@ -89,24 +89,25 @@ export class DatatugNavService {
 		}, 'Failed to navigate to query page');
 	}
 
-	goBoard(projContext: IDatatugProjRef, projBoard: IProjBoard, boardId?: string): void {
-		const url = this.projectPageUrl(projContext, 'board', projBoard?.id || boardId);
-		this.navForward(url, {state: {projBoard}}, 'Failed to navigate to board page');
+	goBoard(project: IProjectContext, projBoard: IProjBoard, boardId?: string): void {
+		const url = this.projectPageUrl(project.ref, 'board', projBoard?.id || boardId);
+		this.navForward(url, {state: {project, projBoard}}, 'Failed to navigate to board page');
 	}
 
-	public projectPageUrl(c: IDatatugProjRef, name: string, id?: string): string {
+	public projectPageUrl(c: IProjectRef, name: string, id?: string): string {
 		const url = `/store/${getStoreId(c.storeId)}/project/${c.projectId}/${name}`;
 		return id ? url + '/' + encodeURIComponent(id) : url;
 	}
 
-	goProjPage(storeId: string, projectId: string, projPage: string, state?: { projSummary: IDatatugProjectSummary }): void {
-		this.navForward(['store', storeId, 'project', projectId, projPage],
+	goProjPage(project: IProjectContext, projPage: string, state?: any): void {
+		state = {...(state || {}), project};
+		this.navForward(['store', project.ref.storeId, 'project', project.ref.projectId, projPage],
 			{state}, 'Failed to navigate to project page: ' + projPage);
 	}
 
 	goTable(to: IDbObjectNavParams): void {
 		const url = [
-			'project', `${to.target.projectId}@${getStoreId(to.target.storeId)}`,
+			'project', `${to.project.ref.projectId}@${getStoreId(to.project.ref.storeId)}`,
 			'env', to.env,
 			'db', to.db,
 			'table', `${to.schema}.${to.name}`,
@@ -128,7 +129,7 @@ export class DatatugNavService {
 }
 
 export interface IDbObjectNavParams {
-	target: IDatatugProjRef;
+	project: IProjectContext;
 	env: string;
 	db: string;
 	schema: string;

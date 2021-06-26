@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectItemsByAgent} from './caching';
 import {StoreApiService} from '@sneat/datatug/services/repo';
 import {IRecord, mapToRecord} from '@sneat/data';
 import {IEntity} from '@sneat/datatug/models';
 import {STORE_ID_GITHUB_COM} from '@sneat/core';
+import {IProjectRef} from '@sneat/datatug/core';
 
 @Injectable()
 export class EntityService {
@@ -60,7 +60,7 @@ export class EntityService {
 			);
 	}
 
-	public getAllEntities = (from: IDatatugProjRef, forceReload?: boolean): Observable<IRecord<IEntity>[]> => {
+	public getAllEntities = (from: IProjectRef, forceReload?: boolean): Observable<IRecord<IEntity>[]> => {
 		console.log('EntityService.getAllEntities()');
 		let o = this.cache.getItems$(from);
 		if (!o || forceReload) {
@@ -84,8 +84,8 @@ export class EntityService {
 		return o;
 	};
 
-	public createEntity = (projContext: IDatatugProjRef, entity: IEntity): Observable<IRecord<IEntity>> => {
-		const {storeId, projectId} = projContext;
+	public createEntity = (projectRef: IProjectRef, entity: IEntity): Observable<IRecord<IEntity>> => {
+		const {storeId, projectId} = projectRef;
 		const entities$ = this.cache.byRepo$[storeId][projectId];
 		return this.agentProvider
 			.post<IRecord<IEntity>>(storeId, '/entities/create_entity', entity, {params: {project: projectId}})
@@ -99,7 +99,7 @@ export class EntityService {
 	public saveEntity = (repo: string, project: string, request: IEntity): Observable<IRecord<IEntity>> =>
 		this.agentProvider.put(repo, '/entities/save_entity', request, {params: {project}});
 
-	public deleteEntity = (from: IDatatugProjRef, entityId: string): Observable<void> => {
+	public deleteEntity = (from: IProjectRef, entityId: string): Observable<void> => {
 		const entities$ = this.cache.byRepo$[from.storeId][from.projectId];
 		entities$.next(entities$.getValue().map(entity => entity.id === entityId ? {
 			...entity,

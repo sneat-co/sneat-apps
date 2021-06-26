@@ -6,5 +6,5 @@ export *  from './lib/queries.service.module';
 export * from './lib/queries.service';
 export * from './lib/query/query-page.component';
 export * from './lib/query-context-sql.service';
-export * from './lib/query/sql-query/sql-query.component';
+export * from './lib/query/sql-query/sql-query-page.component';
 export * from './lib/query/sql-query/sql-query.component.module';

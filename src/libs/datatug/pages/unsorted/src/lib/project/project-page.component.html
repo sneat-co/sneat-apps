@@ -12,11 +12,11 @@
 	<ion-card>
 		<ion-item>
 			<ion-label color="medium" style="font-weight: bold;">Title</ion-label>
-			<ion-input readonly [value]="projBrief?.title || 'Loading...'"></ion-input>
+			<ion-input readonly [value]="project?.brief?.title || 'Loading...'"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label color="medium" style="font-weight: bold;">ID</ion-label>
-			<ion-input readonly [value]="projBrief?.id" color="medium"></ion-input>
+			<ion-input readonly [value]="project?.ref?.projectId" color="medium"></ion-input>
 		</ion-item>
 		<ion-item *ngIf="storeId !== 'firestore'">
 			<ion-label color="medium" style="font-weight: bold;">Store</ion-label>
@@ -28,7 +28,7 @@
 					   title="DB models"
 					   itemIcon="server-outline"
 					   [isLoading]="!project"
-					   [items]="project?.dbModels"
+					   [items]="project?.summary?.dbModels"
 					   [getRouterLink]="getItemLink('dbmodel')"
 					   (itemClick)="goDbModel($event)"
 					   [create]="createSchema"
@@ -38,7 +38,7 @@
 					   title="Environments"
 					   itemIcon="earth-outline"
 					   [isLoading]="!project"
-					   [items]="project?.environments"
+					   [items]="project?.summary?.environments"
 					   [create]="createEnvironment"
 					   [getRouterLink]="getItemLink('env')"
 					   (itemClick)="goEnvironment($event)"
@@ -56,7 +56,7 @@
 					   title="Boards"
 					   itemIcon="clipboard-outline"
 					   [isLoading]="!project"
-					   [items]="project?.boards"
+					   [items]="project?.summary?.boards"
 					   (cardTitleClick)="goProjFolder(Board)"
 					   (itemClick)="goBoard($event)"
 					   [getRouterLink]="getItemLink('board')"

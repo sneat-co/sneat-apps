@@ -5,7 +5,7 @@ import {takeUntil} from 'rxjs/operators';
 import {IDbServer, IProjDbServerSummary} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DbServerService} from '@sneat/datatug/services/unsorted';
-import {IDatatugProjRef} from '@sneat/datatug/core';
+import {IProjectRef} from '@sneat/datatug/core';
 import {ProjectContextService} from '@sneat/datatug/services/project';
 import {AddDbServerComponent} from '@sneat/datatug/db';
 
@@ -19,7 +19,7 @@ export class ServersPageComponent implements OnDestroy {
 	dbServers: IProjDbServerSummary[];
 
 	private readonly destroyed = new Subject();
-	private target: IDatatugProjRef;
+	private target: IProjectRef;
 	private readonly isDeletingServer: { [id: string]: boolean } = {};
 
 	constructor(
@@ -89,7 +89,7 @@ export class ServersPageComponent implements OnDestroy {
 	}
 
 
-	private loadDbServers(target: IDatatugProjRef): void {
+	private loadDbServers(target: IProjectRef): void {
 		this.dbServerService
 			.getDbServers(target)
 			.subscribe({

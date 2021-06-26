@@ -6,7 +6,7 @@
 		</ion-buttons>
 		<ion-title *ngIf="mode === 'new'">
 			New entity
-			<span *ngIf="currentProject?.brief">@ {{currentProject.brief.title || currentProject.brief.id}}</span>
+			<span *ngIf="project?.brief">@ {{project.brief.title || project.brief.id}}</span>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>

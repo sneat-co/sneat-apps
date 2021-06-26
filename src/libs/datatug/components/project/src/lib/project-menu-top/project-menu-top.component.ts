@@ -1,14 +1,15 @@
 import {Component, OnDestroy} from '@angular/core';
 import {DatatugNavContextService, DatatugNavService, ProjectTopLevelPage} from "@sneat/datatug/services/nav";
-import {IDatatugProjectSummary} from "@sneat/datatug/models";
+import {IProjectSummary} from "@sneat/datatug/models";
 import {Observable, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {IProjectRef} from '@sneat/datatug/core';
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage | '';
 	title: string;
 	icon: string;
-	count?: (proj: IDatatugProjectSummary) => number;
+	count?: (proj: IProjectSummary) => number;
 	buttons?: { path: ProjectTopLevelPage, icon: string; }[];
 }
 
@@ -76,7 +77,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 
 	currentStoreId: string;
 	currentProjectId: string;
-	currentProject: IDatatugProjectSummary;
+	currentProject: IProjectSummary;
 	public currentFolder: Observable<string>;
 
 	private destroyed = new Subject<void>();
@@ -104,7 +105,8 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		event.preventDefault();
 		event.stopPropagation();
 
-		this.nav.goProjPage(this.currentStoreId, this.currentProjectId, page, {projSummary: this.currentProject});
+		const projRef: IProjectRef = {storeId: this.currentStoreId, projectId: this.currentProjectId};
+		this.nav.goProjPage(projRef, page, {projSummary: this.currentProject});
 		return false;
 	}
 

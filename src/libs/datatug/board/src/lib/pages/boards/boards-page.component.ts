@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {BoardService} from '../../board.service';
 import {AlertController} from '@ionic/angular';
 import {IProjBoard, IProjItemBrief} from '@sneat/datatug/models';
-import {IDatatugProjectContext} from '@sneat/datatug/nav';
+import {IProjectContext} from '@sneat/datatug/nav';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
@@ -17,7 +17,7 @@ export class BoardsPageComponent implements OnInit {
 
 	boards: IProjBoard[];
 	defaultHref: string;
-	currentProject: IDatatugProjectContext;
+	project: IProjectContext;
 
 	constructor(
 		private readonly datatugNavContextService: DatatugNavContextService,
@@ -30,7 +30,7 @@ export class BoardsPageComponent implements OnInit {
 		this.datatugNavContextService.currentProject.subscribe({
 			next: currentProject => {
 				try {
-					this.currentProject = currentProject;
+					this.project = currentProject;
 					this.boards = currentProject?.summary?.boards || [];
 				} catch (e) {
 					this.errorLogger.logError(e, 'Failed to process current project in Boards page');
@@ -40,14 +40,14 @@ export class BoardsPageComponent implements OnInit {
 		});
 	}
 
-	public getLinkToBoard = (item: IProjItemBrief) => this.datatugNavService.projectPageUrl(this.currentProject, 'board', item.id);
+	public getLinkToBoard = (item: IProjItemBrief) => this.datatugNavService.projectPageUrl(this.project.ref, 'board', item.id);
 
 	ngOnInit() {
 		this.defaultHref = location.pathname.split('/').slice(0, -1).join('/') + 's';
 	}
 
 	public goBoard(item: IProjBoard): void {
-		this.datatugNavService.goBoard(this.currentProject, item);
+		this.datatugNavService.goBoard(this.project, item);
 	}
 
 	async newBoard(): Promise<void> {
@@ -74,7 +74,7 @@ export class BoardsPageComponent implements OnInit {
 					handler: value => {
 						console.log('alert value:', value);
 						this.boardService
-							.createNewBoard(this.currentProject.storeId, this.currentProject.brief.id, value.title as string)
+							.createNewBoard(this.project.ref, value.title as string)
 							.subscribe({
 								next: board => {
 									console.log('Board created:', board);

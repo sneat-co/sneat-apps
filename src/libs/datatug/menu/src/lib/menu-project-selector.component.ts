@@ -3,7 +3,8 @@ import {IDatatugProjectBriefWithId, IDatatugUser, projectsBriefFromDictToFlatLis
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
 import {NewProjectService} from '@sneat/datatug/project';
-import {IDatatugProjRef} from '@sneat/datatug/core';
+import {IProjectBrief} from '@sneat/datatug/core';
+import {IProjectContext} from '@sneat/datatug/nav';
 
 @Component({
 	selector: 'datatug-menu-project-selector',
@@ -12,9 +13,9 @@ import {IDatatugProjRef} from '@sneat/datatug/core';
 export class MenuProjectSelectorComponent implements OnChanges {
 	@Input() datatugUser?: IDatatugUser;
 	@Input() currentStoreId?: string;
-	@Input() currentProjectId?: string; // TODO(not_sure): should it be not input and take value from context?
+	@Input() project: IProjectContext; // TODO(not_sure): should it be not input and take value from context?
 
-	@Output() projectChanged = new EventEmitter<IDatatugProjRef>()
+	@Output() projectChanged = new EventEmitter<IProjectContext>()
 
 	projects?: IDatatugProjectBriefWithId[];
 

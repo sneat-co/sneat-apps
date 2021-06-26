@@ -1,29 +1,32 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {PopoverController} from '@ionic/angular';
-import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {AgentService} from '@sneat/datatug/services/repo';
 import {IForeignKey} from '@sneat/datatug/models';
-import {DatatugNavContextService, DatatugNavService, IDbObjectNavParams} from '@sneat/datatug/services/nav';
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+	IDbObjectNavParams,
+	ProjectTracker
+} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {CellPopoverComponent} from '../../../../../components/datagrid/src/lib/cell-popover/cell-popover.component';
 import {ICommandResponseWithRecordset, IExecuteResponse, IRecordsetResult} from '@sneat/datatug/dto';
 import {IGridDef} from '@sneat/grid';
-import {IEnvDbTableContext} from '@sneat/datatug/nav';
+import {IEnvDbTableContext, IProjectContext} from '@sneat/datatug/nav';
+import {Subject} from 'rxjs';
+import {CellPopoverComponent} from '@sneat/datatug/components/datagrid';
 
 @Component({
 	selector: 'datatug-env-db-table',
 	templateUrl: './env-db-table.page.html',
 	styleUrls: ['./env-db-table.page.scss'],
 })
-export class EnvDbTablePageComponent implements AfterViewInit {
+export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 
-	target: IDatatugProjRef;
-	storeId: string;
-	projectId: string;
+	project: IProjectContext;
 	envId: string;
 	dbId: string;
 
@@ -55,6 +58,8 @@ export class EnvDbTablePageComponent implements AfterViewInit {
 	public step = 'initial';
 	public recordset: IRecordsetResult;
 
+	private readonly destroyed = new Subject<void>();
+
 	constructor(
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly route: ActivatedRoute,
@@ -65,16 +70,16 @@ export class EnvDbTablePageComponent implements AfterViewInit {
 		private readonly datatugNavService: DatatugNavService,
 	) {
 		console.log('EnvDbTablePage.constructor()', errorLogger);
+		const projectTracker = new ProjectTracker(this.destroyed, route);
 		try {
 			const {paramMap} = route.snapshot;
 			const [schema, name] = paramMap.get('tableId').split('.');
 			this.table = {schema, name};
 			this.envId = paramMap.get('environmentId');
 			this.dbId = paramMap.get('dbId');
-			const [projectId, agentAddress] = paramMap.get('projectId').split('@');
-			this.target = {projectId, storeId: agentAddress};
+
 			this.tableNavParams = {
-				target: this.target,
+				project: this.project,
 				env: this.envId,
 				db: this.dbId,
 				schema,
@@ -84,7 +89,7 @@ export class EnvDbTablePageComponent implements AfterViewInit {
 				next: currentProject => {
 					console.log('EnvDbTablePage.constructor() => currentProject', currentProject);
 					try {
-						this.target = {projectId: currentProject?.brief?.id, storeId: currentProject?.storeId};
+						this.project = currentProject
 					} catch (e) {
 						this.errorLogger.logError(e, 'Failed to process current project');
 					}
@@ -125,6 +130,11 @@ from ${from}`;
 			this.errorLogger.logError(e, 'Failed to create EnvDbTablePage')
 		}
 	}
+
+	ngOnDestroy(): void {
+        this.destroyed.next();
+        this.destroyed.complete();
+    }
 
 	ngAfterViewInit(): void {
 		try {
@@ -168,7 +178,7 @@ from ${from}`;
 		event.stopPropagation();
 		this.datatugNavService
 			.goTable({
-				target: this.target,
+				project: this.project,
 				env: this.envId,
 				db: this.dbId,
 				schema,
@@ -225,8 +235,8 @@ from ${from}`;
 		try {
 			this.step = 'loadData';
 			this.agentService
-				.select(this.target.storeId, {
-					proj: this.projectId,
+				.select(this.project?.ref.storeId, {
+					proj: this.project.ref?.projectId,
 					env: this.envId,
 					db: this.dbId,
 					from: this.table.meta.name,

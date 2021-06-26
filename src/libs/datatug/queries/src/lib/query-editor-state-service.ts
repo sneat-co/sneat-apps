@@ -3,10 +3,10 @@ import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {IHttpQueryRequest, IQueryDef, ISqlQueryRequest, QueryType} from "@sneat/datatug/models";
 import {QueriesService} from "./queries.service";
-import {IDatatugProjRef} from "@sneat/datatug/core";
+import {IProjectRef} from "@sneat/datatug/core";
 import {DatatugNavContextService} from "@sneat/datatug/services/nav";
 import {filter} from "rxjs/operators";
-import {IDatatugProjectContext} from "@sneat/datatug/nav";
+import {IProjectContext} from "@sneat/datatug/nav";
 import {IQueryEditorState, IQueryState} from "@sneat/datatug/editor";
 
 export const isQueryChanged = (queryState: IQueryState): boolean => {
@@ -41,7 +41,7 @@ let counter = 0;
 export class QueryEditorStateService {
 	public readonly queryEditorState = $state.asObservable().pipe(filter(state => !!state));
 
-	private currentProject: IDatatugProjectContext;
+	private currentProject: IProjectContext;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -143,7 +143,7 @@ export class QueryEditorStateService {
 			}
 			this.updateQueryState(state);
 		};
-		this.queriesService.getQuery(this.currentProject, id).subscribe({
+		this.queriesService.getQuery(this.currentProject.ref, id).subscribe({
 			next: def => onCompleted(def),
 			error: err => onCompleted(undefined, err),
 		});
@@ -216,8 +216,8 @@ export class QueryEditorStateService {
 		});
 	}
 
-	saveQuery(queryState: IQueryState, target: IDatatugProjRef): Observable<void> {
-		if (target.projectId !== this.currentProject.projectId) {
+	saveQuery(queryState: IQueryState, projectRef: IProjectRef): Observable<void> {
+		if (projectRef.projectId !== this.currentProject.ref.projectId) {
 			return throwError('An attempt to save a query after current project have been changed');
 		}
 		const {id} = queryState;
@@ -239,7 +239,7 @@ export class QueryEditorStateService {
 				...queryState.def,
 				request: queryState.request,
 			};
-			this.queriesService.updateQuery(target, query)
+			this.queriesService.updateQuery(projectRef, query)
 				.subscribe({
 					next: value => {
 						console.log('query updated', value);

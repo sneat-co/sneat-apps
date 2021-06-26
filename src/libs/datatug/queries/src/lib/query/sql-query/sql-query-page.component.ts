@@ -1,46 +1,36 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy} from '@angular/core';
-import {IDatatugProjRef} from '@sneat/datatug/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {
-	IEnvDbServer,
-	IParameter,
-	IQueryDef,
-	ISqlQueryRequest,
-	ISqlQueryTarget,
-	QueryType
-} from '@sneat/datatug/models';
+import {IEnvDbServer, IParameter, IQueryDef, ISqlQueryRequest, ISqlQueryTarget, QueryType} from '@sneat/datatug/models';
 import {Coordinator} from '@sneat/datatug/executor';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {
-	EnvironmentService,
-	IAstQuery,
-	SqlParser
-} from '@sneat/datatug/services/unsorted';
+import {EnvironmentService, IAstQuery, SqlParser} from '@sneat/datatug/services/unsorted';
 import {
 	ICommandResponseItem,
 	ICommandResponseWithRecordset,
 	IExecuteRequest,
-	IRecordsetResult, ISqlCommandRequest
+	IRecordsetResult,
+	ISqlCommandRequest
 } from '@sneat/datatug/dto';
 import {RandomId} from "@sneat/random";
 import {ISqlChanged} from "./intefaces";
 import {isQueryChanged, QueryEditorStateService} from "../../query-editor-state-service";
-import {DatatugNavContextService} from "@sneat/datatug/services/nav";
-import {IDatatugProjectContext} from "@sneat/datatug/nav";
+import {DatatugNavContextService, ProjectTracker} from "@sneat/datatug/services/nav";
+import {IProjectContext} from "@sneat/datatug/nav";
 import {distinctUntilChanged, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {ViewDidEnter} from "@ionic/angular";
 import {IQueryEditorState, IQueryEnvState, IQueryState} from "@sneat/datatug/editor";
 import {QueriesService} from '../../queries.service';
 import {QueryContextSqlService} from "../../query-context-sql.service";
+import {parseStoreRef} from '@sneat/core';
 
 
 @Component({
 	selector: 'datatug-sql-query',
-	templateUrl: './sql-query.component.html',
-	styleUrls: ['./sql-query.component.scss'],
+	templateUrl: './sql-query-page.component.html',
+	styleUrls: ['./sql-query-page.component.scss'],
 })
-export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
+export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	public showQueryBuilder: boolean;
 	public editorTab: 'text' | 'builder' = 'text';
@@ -71,14 +61,14 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 	// noinspection SqlDialectInspection,SqlNoDataSourceInspection
 	public sql = '';
 	public queryAst: IAstQuery;
-	public projectContext: IDatatugProjRef;
+	public project: IProjectContext;
 	public environments: ReadonlyArray<IQueryEnvState>;
 	public dbDriver: 'sqlite3' | 'sqlserver' = 'sqlite3';
 
 	public parameters: IParameter[];
 	private target: ISqlQueryTarget;
 
-	public currentProject: IDatatugProjectContext;
+	public currentProject: IProjectContext;
 
 	private readonly destroyed = new Subject<void>();
 	public readonly sqlParser = new SqlParser();
@@ -225,8 +215,8 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 				console.log('SqlQueryPage => currentProject:', currentProject)
 				if (
 					!currentProject ||
-					this.currentProject?.projectId === currentProject.projectId
-					&& this.currentProject?.storeId === currentProject.storeId
+					this.currentProject?.ref.projectId === currentProject.ref.projectId
+					&& this.currentProject?.ref.storeId === currentProject.ref.storeId
 					&& this.currentProject?.summary?.environments?.length === currentProject.summary?.environments?.length
 				) {
 					return; // TODO: cleanup query state?
@@ -239,6 +229,7 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 			});
 	}
 
+	// TODO: Duplicate code
 	private setActiveEnv(envId: string): void {
 		try {
 			if (!envId) {
@@ -270,10 +261,10 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 		}
 	}
 
-	private getEnvData(datatugProjectContext: IDatatugProjectContext, envId: string): void {
+	private getEnvData(datatugProjectContext: IProjectContext, envId: string): void {
 		const queryId = this.queryId;
 
-		this.envService.getEnvSummary(datatugProjectContext, envId)
+		this.envService.getEnvSummary(datatugProjectContext.ref, envId)
 			.pipe(
 				takeUntil(this.destroyed),
 			)
@@ -349,33 +340,21 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 	}
 
 	private trackParamMap(): void {
-		this.route.paramMap.subscribe({
-			next: paramMap => {
-				console.log('QueryPage.constructor() => paramMap:', paramMap);
-
-				const projContext: IDatatugProjRef = {
-					projectId: paramMap.get('projectId'),
-					storeId: paramMap.get('storeId'),
-				};
-				if (projContext.storeId && projContext.projectId) {
+		const projectTracker = new ProjectTracker(this.destroyed, this.route);
+		projectTracker.projectRef.subscribe({
+			next: projectRef => {
+				this.project = {ref: projectRef, store: {ref: parseStoreRef(projectRef.storeId)}};
+				if (projectRef) {
 					this.target = {
 						...(this.target || {}),
-						repository: projContext.storeId,
-						project: projContext.projectId,
+						repository: projectRef.storeId,
+						project: projectRef.projectId,
 					} as ISqlQueryTarget;
 					console.log('target', this.target);
 					this.updateQueryContext();
 				}
-				const prevProjectContext = this.projectContext;
-				this.projectContext = projContext;
-				if (this.queryId && (
-					projContext.projectId !== prevProjectContext?.projectId ||
-					projContext.storeId !== prevProjectContext?.storeId
-				)) {
-					// this.loadQuery();
-				}
 			},
-			error: this.errorLogger.logErrorHandler('Failed to get query params from activated router'),
+			error: this.errorLogger.logErrorHandler('Failed to track projectRef from activated router'),
 		});
 
 	}
@@ -544,7 +523,7 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 
 		const request: IExecuteRequest = {
 			id: RandomId.newRandomId(),
-			projectId: this.projectContext.projectId,
+			projectId: this.project.ref.projectId,
 			commands: [
 				sqlCommandRequest,
 			],
@@ -556,7 +535,7 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 			isExecuting: true,
 			recordsets: undefined,
 		}, this.queryState);
-		this.coordinator.execute(this.projectContext.storeId, request)
+		this.coordinator.execute(this.project.ref.storeId, request)
 			.pipe(
 				takeUntil(this.destroyed),
 			)
@@ -629,7 +608,7 @@ export class SqlQueryComponent implements OnDestroy, ViewDidEnter {
 			return;
 		}
 		this.queryEditorStateService
-			.saveQuery(this.queryState, this.currentProject)
+			.saveQuery(this.queryState, this.currentProject.ref)
 			.subscribe({error: this.errorLogger.logErrorHandler('Failed to save query')});
 	}
 

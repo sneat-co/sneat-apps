@@ -12,6 +12,7 @@ import {Subject} from "rxjs";
 import {AuthStatus, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
 import {STORE_TYPE_GITHUB} from '@sneat/core';
 import {NewProjectService} from '@sneat/datatug/project';
+import {DatatugNavService, IProjectNavContext} from '@sneat/datatug/services/nav';
 
 @Component({
 	selector: 'datatug-my-projects',
@@ -42,7 +43,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navController: NavController,
+		private readonly navService: DatatugNavService,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly datatugUserService: DatatugUserService,
 		private readonly newProjectService: NewProjectService,
@@ -72,11 +73,13 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	}
 
 	goProject(item: IProjectAndStore): void {
-		const {store} = item;
-		if (!item?.project.access)
-		this.navController
-			.navigateForward(`/store/${store.url || store.type}/project/${item.project.id}`, {state: item})
-			.catch(e => this.errorLogger.logError(e, 'Failed to navigate to project page'));
+		console.log('goProject()', item);
+		const project: IProjectNavContext = {
+			store: {id: item.store.id, brief: item.store},
+			id: item.project.id,
+			brief: item.project,
+		}
+		this.navService.goProject(project);
 	}
 
 	addProject(event: Event): void {

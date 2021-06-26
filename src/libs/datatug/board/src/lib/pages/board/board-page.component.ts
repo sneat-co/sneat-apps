@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {distinctUntilChanged, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {QueryParamsService} from '@sneat/datatug/core';
+import {projectRefToString, QueryParamsService} from '@sneat/datatug/core';
 import {IBoardContext, IBoardDef, IParamWithDefAndValue, IProjBoard} from '@sneat/datatug/models';
 import {routingParamBoard} from '@sneat/datatug/core';
 import {DatatugNavContextService} from '@sneat/datatug/services/nav';
@@ -67,8 +67,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 				});
 			dataTugNavContext.currentProject
 				.pipe(
-					filter(p => !!p?.storeId && !!p.projectId),
-					map(p => `${p?.storeId}/${p?.projectId}`),
+					filter(p => !!p?.ref),
+					map(p => projectRefToString(p.ref)),
 					distinctUntilChanged(),
 					filter(p => !!p),
 				)

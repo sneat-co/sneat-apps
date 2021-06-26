@@ -4,10 +4,9 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IProjItemBrief, IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {IDatatugProjRef} from '@sneat/datatug/core';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
-import {getStoreId} from "@sneat/datatug/nav";
+import {getStoreId, IProjectContext} from "@sneat/datatug/nav";
 import {QueriesService} from "../queries.service";
 
 interface FilteredItem {
@@ -41,10 +40,10 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	public readonly trackById = (_, v: IProjItemBrief) => v.id;
 
 	public get defaultBackHref(): string {
-		return this.currentProject ? `/repo/${getStoreId(this.currentProject.storeId)}/project/${this.currentProject.projectId}` : '/';
+		return this.project ? `/store/${getStoreId(this.project.ref.storeId)}/project/${this.project.ref.projectId}` : '/';
 	}
 
-	public currentProject: IDatatugProjRef;
+	public project: IProjectContext;
 	public isDeletingFolders: string[] = [];
 
 
@@ -112,7 +111,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		if (folderPath) {
 			q = {...q, id: folderPath + '/' +q.id};
 		}
-		this.dataTugNavService.goQuery(this.currentProject, q, action);
+		this.dataTugNavService.goQuery(this.project, q, action);
 	}
 
 	reloadQueries(): void {
@@ -173,7 +172,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		this.dataTugNavContextService.currentProject.subscribe({
 			next: currentProject => {
 				console.log('QueryPage.constructor() => currentProject:', currentProject);
-				this.currentProject = currentProject;
+				this.project = currentProject;
 				if (!currentProject) {
 					return;
 				}
@@ -181,7 +180,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 					this.queriesSub.unsubscribe();
 				}
 				console.log('QueriesPage.constructor() => currentProject:', currentProject);
-				this.queriesSub = this.queriesService.getQueriesFolder(currentProject, '').subscribe({
+				this.queriesSub = this.queriesService.getQueriesFolder(currentProject.ref, '').subscribe({
 					next: folder => {
 						this.allQueries = folder.items;
 						this.currentFolder = this.getFolderAndUpdateParents(this.folderPath, folder)
@@ -237,7 +236,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 			return;
 		}
 		const parentFolder = this.currentFolder;
-		this.queriesService.createQueryFolder(this.currentProject, this.folderPath, name).subscribe({
+		this.queriesService.createQueryFolder(this.project.ref, this.folderPath, name).subscribe({
 			next: folder => {
 				const existing = parentFolder.folders.find(f => f.id === name);
 				if (existing) {
@@ -264,7 +263,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		const folderPath = this.folderPath;
 		const parent = this.parentFolders[this.parentFolders.length - 1];
 		this.isDeletingFolders.push(folderPath)
-		this.queriesService.deleteQueryFolder(this.currentProject, this.folderPath).subscribe({
+		this.queriesService.deleteQueryFolder(this.project.ref, this.folderPath).subscribe({
 			next: () => {
 				this.isDeletingFolders = this.isDeletingFolders.filter(f => f !== folderPath);
 				parent.folders = parent.folders.filter(f => f.id !== folder.id);
