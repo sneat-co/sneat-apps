@@ -2,7 +2,8 @@
 	<ion-toolbar>
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
-			<ion-back-button [defaultHref]="storeId && ('/store/' + storeId) || undefined"></ion-back-button>
+			<ion-back-button
+					[defaultHref]="project?.ref && ('/store/' + project.ref.storeId) || undefined"></ion-back-button>
 		</ion-buttons>
 		<ion-title>Project</ion-title>
 	</ion-toolbar>
@@ -18,9 +19,9 @@
 			<ion-label color="medium" style="font-weight: bold;">ID</ion-label>
 			<ion-input readonly [value]="project?.ref?.projectId" color="medium"></ion-input>
 		</ion-item>
-		<ion-item *ngIf="storeId !== 'firestore'">
+		<ion-item *ngIf="project.ref && project.ref.storeId !== 'firestore'">
 			<ion-label color="medium" style="font-weight: bold;">Store</ion-label>
-			<ion-input readonly [value]="storeId" color="medium"></ion-input>
+			<ion-input readonly [value]="project.ref.storeId" color="medium"></ion-input>
 		</ion-item>
 	</ion-card>
 

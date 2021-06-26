@@ -41,7 +41,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	project: IProjectContext;
 
-	storeId: string;
 	destroyed = new Subject<boolean>();
 	@ViewChild(IonInput, {static: false}) addInput: IonInput;
 	private projectSubscription: Subscription;
