@@ -5,12 +5,12 @@ import {filter, takeUntil, tap} from 'rxjs/operators';
 import {IProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AgentStateService, DatatugStoreService, IAgentState} from '@sneat/datatug/services/repo';
-import {DatatugNavService, IProjectNavContext, IStoreNavContext, StoreTracker} from '@sneat/datatug/services/nav';
+import {DatatugNavService, StoreTracker} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave} from "@ionic/angular";
 import {NewProjectService} from '@sneat/datatug/project';
 import {DatatugUserService} from '@sneat/datatug/services/base';
 import {AuthStatus} from '@sneat/auth';
-import {IProjectContext} from '@sneat/datatug/nav';
+import {IDatatugStoreContext, IProjectContext} from '@sneat/datatug/nav';
 import {parseStoreRef} from '@sneat/core';
 
 @Component({
@@ -44,7 +44,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		private readonly datatugUserService: DatatugUserService,
 	) {
 		console.log('DatatugStorePageComponent.constructor(), window.history.state:', window.history.state);
-		const store = window.history.state.store as IStoreNavContext;
+		const store = window.history.state.store as IDatatugStoreContext;
 		if (store) {
 			// this.storeId = store.id;
 			const projects = projectsBriefFromDictToFlatList(store.brief.projects);

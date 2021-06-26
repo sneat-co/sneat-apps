@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
-import {IDatatugStoreBrief, IProjBoard, IProjectBrief, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
+import {IProjBoard, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
 import {getStoreId, IDatatugStoreContext, IProjectContext} from "@sneat/datatug/nav";
 import {IProjectRef} from '@sneat/datatug/core';
 import {storeRefToId} from '@sneat/core';
@@ -17,17 +17,6 @@ export type ProjectTopLevelPage =
 	'query' |
 	'tags' |
 	'widgets';
-
-export interface IStoreNavContext {
-	id: string;
-	brief?: IDatatugStoreBrief;
-}
-
-export interface IProjectNavContext {
-	id: string;
-	store: IStoreNavContext;
-	brief?: IProjectBrief;
-}
 
 @Injectable({
 	providedIn: 'root' // TODO: embed explicitly
