@@ -13,26 +13,23 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 // 	deps: [ActivatedRoute],
 // })
 export class StoreTracker {
-	private readonly stopped: Observable<void>;
-
-	public storeId: Observable<string>;
+	public readonly storeId: Observable<string>;
 
 	constructor(
-		readonly stopNotifier: Observable<any>,
+		private readonly stopNotifier: Observable<any>,
 		readonly route: ActivatedRoute,
 	) {
 		if (!stopNotifier) {
 			throw new Error('stopNotifier is a required parameter for StoreTracker')
 		}
-		this.stopped = stopNotifier;
-		this.trackStoreIdParam(route);
-	}
-
-	private trackStoreIdParam(route: ActivatedRoute): void {
+		if (!route) {
+			throw new Error('route is a required parameter for StoreTracker')
+		}
 		this.storeId = route.paramMap
 			.pipe(
-				takeUntil(this.stopped),
+				takeUntil(stopNotifier),
 				map(paramMap => paramMap.get(routingParamStoreId)),
 			);
 	}
+
 }

@@ -1,12 +1,10 @@
 import {ActivatedRoute} from '@angular/router';
 import {combineLatest, Observable} from 'rxjs';
 import {StoreTracker} from './store.tracker';
-import {map, takeUntil} from 'rxjs/operators';
+import {filter, map, takeUntil} from 'rxjs/operators';
 import {IProjectRef, routingParamProjectId} from '@sneat/datatug/core';
 
 export class ProjectTracker {
-	private readonly stopped: Observable<void>;
-
 	public readonly storeTracker: StoreTracker;
 
 	public readonly projectId: Observable<string>;
@@ -19,13 +17,18 @@ export class ProjectTracker {
 		if (!stopNotifier) {
 			throw new Error('stopNotifier is a required parameter for ProjectTracker')
 		}
-		this.stopNotifier = stopNotifier;
+		if (!route) {
+			throw new Error('route is a required parameter for StoreTracker')
+		}
 		this.storeTracker = new StoreTracker(stopNotifier, route);
 		this.projectId = route.paramMap.pipe(
-			takeUntil(this.stopped),
+			takeUntil(stopNotifier),
 			map(paramMap => paramMap.get(routingParamProjectId))
 		);
 		this.projectRef = combineLatest([this.storeTracker.storeId, this.projectId])
-			.pipe(map(([storeId, projectId]) => ({storeId, projectId})));
+			.pipe(
+				filter(([storeId, projectId]) => !!storeId && !!projectId),
+				map(([storeId, projectId]) => ({storeId, projectId})),
+			);
 	}
 }

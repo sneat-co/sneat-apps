@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy} from '@angular/core';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
@@ -10,6 +10,7 @@ import {Observable, Subject} from "rxjs";
 import {IProjectContext} from '@sneat/datatug/nav';
 import {ActivatedRoute} from '@angular/router';
 import {parseStoreRef} from '@sneat/core';
+import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage | '';
@@ -87,13 +88,15 @@ export class ProjectMenuTopComponent implements OnDestroy {
 	private destroyed = new Subject<void>();
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
 		private route: ActivatedRoute,
 	) {
 		const projectTracker = new ProjectTracker(this.destroyed, route);
 		projectTracker.projectRef.subscribe({
-			next: ref => this.project = {ref, store: {ref: parseStoreRef(ref.storeId)}},
+			next: ref => this.project = ref && {ref, store: {ref: parseStoreRef(ref.storeId)}},
+			error: this.errorLogger.logErrorHandler('failed to retrieve projectRef from ProjectTracker'),
 		});
 		this.currentFolder = datatugNavContextService.currentFolder;
 	}

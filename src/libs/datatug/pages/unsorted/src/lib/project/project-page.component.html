@@ -19,7 +19,7 @@
 			<ion-label color="medium" style="font-weight: bold;">ID</ion-label>
 			<ion-input readonly [value]="project?.ref?.projectId" color="medium"></ion-input>
 		</ion-item>
-		<ion-item *ngIf="project.ref && project.ref.storeId !== 'firestore'">
+		<ion-item *ngIf="project?.ref && project.ref.storeId !== 'firestore'">
 			<ion-label color="medium" style="font-weight: bold;">Store</ion-label>
 			<ion-input readonly [value]="project.ref.storeId" color="medium"></ion-input>
 		</ion-item>

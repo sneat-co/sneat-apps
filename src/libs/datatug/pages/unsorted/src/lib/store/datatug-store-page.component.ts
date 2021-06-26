@@ -1,5 +1,5 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Subject} from 'rxjs';
+import {merge, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {filter, takeUntil, tap} from 'rxjs/operators';
 import {IProjectBase, projectsBriefFromDictToFlatList} from '@sneat/datatug/models';
@@ -97,9 +97,7 @@ export class DatatugStorePageComponent implements OnInit, OnDestroy, ViewDidLeav
 		this.agentStateService
 			.watchAgentInfo(storeId)
 			.pipe(
-				takeUntil(this.viewDidLeave),
-				takeUntil(this.destroyed),
-				takeUntil(this.storeChanged),
+				takeUntil(merge([this.viewDidLeave, this.destroyed, this.storeChanged])),
 			)
 			.subscribe({
 				next: agentState => {
