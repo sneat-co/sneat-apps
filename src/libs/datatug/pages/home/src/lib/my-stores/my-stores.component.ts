@@ -56,7 +56,7 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: datatugUserState => {
-					console.log('MyStoresComponent => datatugUserState:', datatugUserState);
+					// console.log('MyStoresComponent => datatugUserState:', datatugUserState);
 					this.authStatus = datatugUserState?.status;
 					this.userRecordLoaded = !!datatugUserState?.record || datatugUserState.record === null;
 					const {record} = datatugUserState;

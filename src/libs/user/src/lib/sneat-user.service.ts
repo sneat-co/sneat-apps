@@ -1,5 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection, DocumentReference} from '@angular/fire/firestore';
+import {
+	AngularFirestore,
+	AngularFirestoreCollection,
+	DocumentReference,
+	Action,
+	DocumentSnapshot
+} from '@angular/fire/firestore';
 import {BehaviorSubject, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {SneatTeamApiService} from '@sneat/api';
@@ -44,7 +50,7 @@ export class SneatUserService {
 			// )
 			.subscribe({
 				next: authState => {
-					console.log('SneatUserService => authState:', authState);
+					// console.log('SneatUserService => authState:', authState);
 					this.userChanged$.next(this.uid);
 					if (authState.user) {
 						this.onUserSignedIn(authState);
@@ -70,7 +76,7 @@ export class SneatUserService {
 	}
 
 	public onUserSignedIn(authState: ISneatAuthState): void {
-		console.log('onUserSignedIn()', authState);
+		// console.log('onUserSignedIn()', authState);
 		const authUser = authState.user;
 		// afUser.getIdToken().then(idToken => {
 		// 	console.log('Firebase idToken:', idToken);
@@ -97,36 +103,30 @@ export class SneatUserService {
 			...authState,
 		});
 		const userDocRef = this.userCollection.doc(uid);
-		userDocRef.get().subscribe({
-			next: userDoc => {
-				console.log('userDoc:', userDoc.data());
-			},
-			error: this.errorLogger.logErrorHandler('failed to get user record from Firestore'),
-		});
 		this.userDocSubscription = userDocRef
 			.snapshotChanges()
 			.subscribe({
-				next: changes => {
-					console.log('SneatUserService => User record changed', changes);
-					if (changes.type === 'value' || changes.type === 'added' || changes.type === 'removed') {
-						const userDocSnapshot = changes.payload;
-						console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
-						if (userDocSnapshot.exists) {
-							if (userDocSnapshot.ref.id === this.uid) { // Should always be equal as we unsubscribe if uid changes
-								const userState: ISneatUserState = {
-									...authState,
-									record: userDocSnapshot.data() as IUserRecord
-								};
-								this.userState$.next(userState);
-							}
-						} else {
-							this.userState$.next({...authState, record: null})
-							setTimeout(() => this.createUserRecord(userDocRef.ref, authUser), 1);
-						}
-					}
-				},
+				next: changes => this.userDocChanged(changes, authState),
 				error: this.errorLogger.logErrorHandler('SneatUserService failed to get user record'),
 			});
+	}
+
+	private userDocChanged(
+		changes: Action<DocumentSnapshot<IUserRecord>>,
+		authState: ISneatAuthState,
+	): void {
+		// console.log('SneatUserService => User record changed', changes);
+		if (changes.type === 'value' || changes.type === 'added' || changes.type === 'removed') {
+			const userDocSnapshot = changes.payload;
+			if (userDocSnapshot.ref.id !== this.uid) {
+				return;  // Should always be equal as we unsubscribe if uid changes
+			}
+			// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
+			this.userState$.next({
+				...authState,
+				record: userDocSnapshot.exists ? userDocSnapshot.data() as IUserRecord : null,
+			});
+		}
 	}
 
 	private onUserSignedOut(): void {
@@ -136,36 +136,36 @@ export class SneatUserService {
 		}
 	}
 
-	private createUserRecord(userDocRef: DocumentReference, authUser: ISneatAuthUser): void {
-		if (this.userState$.value) {
-			return;
-		}
-		this.db.firestore.runTransaction(async tx => {
-			if (this.userState$.value) {
-				return undefined;
-			}
-			const u = await tx.get(userDocRef);
-			if (!u.exists) {
-				const title = authUser.displayName || authUser.email || authUser.uid;
-				const user: IUserRecord = authUser.email
-					? {title, email: authUser.email, emailVerified: authUser.emailVerified}
-					: {title};
-				await tx.set(userDocRef, user);
-				return user;
-			}
-			return undefined;
-		}).then(user => {
-			if (user) {
-				console.log('user record created:', user);
-			}
-			if (!this.userState$.value) {
-				const userState: ISneatUserState = {
-					status: AuthStatuses.authenticated,
-					record: user,
-					user: authUser,
-				};
-				this.userState$.next(userState);
-			}
-		}).catch(this.errorLogger.logErrorHandler('failed to create user record'));
-	}
+	// private createUserRecord(userDocRef: DocumentReference, authUser: ISneatAuthUser): void {
+	// 	if (this.userState$.value) {
+	// 		return;
+	// 	}
+	// 	this.db.firestore.runTransaction(async tx => {
+	// 		if (this.userState$.value) {
+	// 			return undefined;
+	// 		}
+	// 		const u = await tx.get(userDocRef);
+	// 		if (!u.exists) {
+	// 			const title = authUser.displayName || authUser.email || authUser.uid;
+	// 			const user: IUserRecord = authUser.email
+	// 				? {title, email: authUser.email, emailVerified: authUser.emailVerified}
+	// 				: {title};
+	// 			await tx.set(userDocRef, user);
+	// 			return user;
+	// 		}
+	// 		return undefined;
+	// 	}).then(user => {
+	// 		if (user) {
+	// 			console.log('user record created:', user);
+	// 		}
+	// 		if (!this.userState$.value) {
+	// 			const userState: ISneatUserState = {
+	// 				status: AuthStatuses.authenticated,
+	// 				record: user,
+	// 				user: authUser,
+	// 			};
+	// 			this.userState$.next(userState);
+	// 		}
+	// 	}).catch(this.errorLogger.logErrorHandler('failed to create user record'));
+	// }
 }

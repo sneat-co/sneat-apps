@@ -24,7 +24,7 @@ export class DatatugUserService {
 		}
 		this.datatugUserState = sneatUserService.userState.pipe(
 			map(sneatUserState => {
-				console.log(`DatatugUserService(id=${this.id}) => sneatUserState:`, sneatUserState);
+				// console.log(`DatatugUserService(id=${this.id}) => sneatUserState:`, sneatUserState);
 				let datatugUser = sneatUserState?.record as IDatatugUser
 					|| sneatUserState?.record === null && {title: ''};
 				if (!datatugUser) {

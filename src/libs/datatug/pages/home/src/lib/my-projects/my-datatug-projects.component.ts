@@ -57,7 +57,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 			takeUntil(this.destroyed),
 		).subscribe({
 			next: datatugUserState => {
-				console.log('MyDatatugProjectsComponent.ngOnInit() => datatugUserState:', datatugUserState);
+				// console.log('MyDatatugProjectsComponent.ngOnInit() => datatugUserState:', datatugUserState);
 				this.authState = datatugUserState;
 				this.userRecordLoaded = !!datatugUserState?.record || datatugUserState.record === null;
 				const {record} = datatugUserState;

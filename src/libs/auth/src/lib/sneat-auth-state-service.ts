@@ -30,7 +30,7 @@ export const initialSneatAuthState = {status: initialAuthStatus};
 
 @Injectable({providedIn: 'root'})
 export class SneatAuthStateService {
-	private readonly instanceId = RandomId.newRandomId(5);
+	private readonly id = RandomId.newRandomId(5);
 
 	private readonly authStatus$ = new BehaviorSubject<AuthStatus>(initialAuthStatus);
 	public readonly authStatus = this.authStatus$.asObservable().pipe(distinctUntilChanged());
@@ -41,7 +41,7 @@ export class SneatAuthStateService {
 	private readonly authState$ = new BehaviorSubject<ISneatAuthState>(initialSneatAuthState);
 	public readonly authState = this.authState$.asObservable()
 		.pipe(
-			tap(v => console.log('SneatAuthStateService => SneatAuthState:', v)),
+			// tap(v => console.log('SneatAuthStateService => SneatAuthState:', v)),
 			shareReplay(1),
 		);
 
@@ -49,10 +49,10 @@ export class SneatAuthStateService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly afAuth: AngularFireAuth,
 	) {
-		console.log(`SneatAuthStateService.constructor(): instanceId=${this.instanceId}`);
+		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
 		afAuth.idToken.subscribe({
 			next: token => {
-				console.log('SneatAuthStateService => token', token);
+				// console.log('SneatAuthStateService => token', token);
 				const status: AuthStatus = token ? AuthStatuses.authenticated : AuthStatuses.notAuthenticated;
 				this.authStatus$.next(status);
 				const current = this.authState$.value || {};
@@ -67,7 +67,7 @@ export class SneatAuthStateService {
 		});
 		afAuth.user.subscribe({
 			next: (fbUser: firebase.User) => {
-				console.log(`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`, fbUser);
+				// console.log(`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`, fbUser);
 				const user: ISneatAuthUser = fbUser && {
 					isAnonymous: fbUser.isAnonymous,
 					emailVerified: fbUser.emailVerified,

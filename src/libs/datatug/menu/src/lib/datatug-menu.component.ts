@@ -48,7 +48,7 @@ export class DatatugMenuComponent implements OnDestroy {
 		private readonly projectService: ProjectService,
 		private readonly datatugUserService: DatatugUserService,
 	) {
-		console.log('DatatugMenuComponent.constructor()');
+		// console.log('DatatugMenuComponent.constructor()');
 		this.sneatAuthStateService.authState
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
@@ -128,7 +128,7 @@ export class DatatugMenuComponent implements OnDestroy {
 			).subscribe({
 				next: datatugUser => {
 					this.datatugUserState = datatugUser;
-					console.log('trackCurrentUser() => datatugUser:', datatugUser);
+					// console.log('trackCurrentUser() => datatugUser:', datatugUser);
 				},
 				error: this.errorLogger.logErrorHandler('Failed to get user record for menu'),
 			});
