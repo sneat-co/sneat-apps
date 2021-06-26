@@ -2,16 +2,10 @@ import {Inject, Injectable} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
-import {
-	IDatatugProjectBrief,
-	IDatatugStoreBrief,
-	IProjBoard,
-	IProjEntity,
-	IProjEnv,
-	IQueryDef,
-} from '@sneat/datatug/models';
-import {getStoreId, IProjectContext} from "@sneat/datatug/nav";
+import {IDatatugStoreBrief, IProjBoard, IProjectBrief, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
+import {getStoreId, IDatatugStoreContext, IProjectContext} from "@sneat/datatug/nav";
 import {IProjectRef} from '@sneat/datatug/core';
+import {storeRefToId} from '@sneat/core';
 
 export type ProjectTopLevelPage =
 	'boards' |
@@ -32,7 +26,7 @@ export interface IStoreNavContext {
 export interface IProjectNavContext {
 	id: string;
 	store: IStoreNavContext;
-	brief?: IDatatugProjectBrief;
+	brief?: IProjectBrief;
 }
 
 @Injectable({
@@ -46,11 +40,11 @@ export class DatatugNavService {
 	) {
 	}
 
-	goStore(store: IStoreNavContext): void {
-		if (!store?.id) {
-			throw new Error("store.id is a required parameter");
+	goStore(store: IDatatugStoreContext): void {
+		if (!store?.ref) {
+			throw new Error("store.ref is a required parameter");
 		}
-		const storeId = getStoreId(store.id);
+		const storeId = storeRefToId(store.ref);
 		const options: NavigationOptions = store.brief ? {state: {store}} : undefined;
 		this.navRoot(['store', storeId], 'Failed to navigate to store page', options);
 	}

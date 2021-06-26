@@ -1,19 +1,22 @@
 import {
-	IDatatugProjectBrief, IDatatugProjectBriefWithIdAndStoreRef,
+	IProjectBrief, IDatatugProjectBriefWithIdAndStoreRef,
 	IProjectSummary,
 	IEnvironmentSummary,
 	IProjEnv,
-	ITableFull
+	ITableFull, IDatatugStoreBrief
 } from '@sneat/datatug/models';
 import {IProjectRef} from "@sneat/datatug/core";
 import {IStoreRef, parseStoreRef} from '@sneat/core';
 
+export interface IDatatugStoreContext {
+	readonly ref: IStoreRef;
+	readonly brief?: IDatatugStoreBrief;
+}
+
 export interface IProjectContext {
 	readonly ref: IProjectRef;
-	readonly store: {
-		readonly ref: IStoreRef;
-	}
-	readonly brief?: IDatatugProjectBrief;
+	readonly store: IDatatugStoreContext;
+	readonly brief?: IProjectBrief;
 	readonly summary?: IProjectSummary;
 }
 

@@ -39,8 +39,8 @@
 	<datatug-menu-project-selector *ngIf="currentStoreId"
 								   [datatugUser]="datatugUserState?.record"
 								   [currentStoreId]="currentStoreId"
-								   [currentProjectId]="currentProject?.ref.projectId"
-								   (projectChanged)="onProjectRefChanged($event)"
+								   [currentProject]="currentProject"
+								   (projectChanged)="onProjectChanged($event)"
 	></datatug-menu-project-selector>
 	<datatug-menu-env-selector
 			*ngIf="currentProject"

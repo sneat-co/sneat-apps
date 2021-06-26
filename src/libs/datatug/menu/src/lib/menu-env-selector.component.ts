@@ -1,9 +1,7 @@
 import {Component, Inject, Input} from "@angular/core";
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
-import {IProjectSummary} from "@sneat/datatug/models";
-import {IProjectBrief} from '@sneat/datatug/core';
+import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
 import {IProjectContext} from '@sneat/datatug/nav';
 
 @Component({

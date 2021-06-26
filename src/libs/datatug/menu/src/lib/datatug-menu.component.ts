@@ -1,22 +1,14 @@
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {Observable, Subject, Subscription} from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
-import {IProjectBase, IProjectSummary} from '@sneat/datatug/models';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
-import {ProjectService} from '@sneat/datatug/services/project';
 import {DatatugStoreService} from '@sneat/datatug/services/repo';
-import {IProjectContext, IEnvDbTableContext} from '@sneat/datatug/nav';
+import {IEnvDbTableContext, IProjectContext} from '@sneat/datatug/nav';
 import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
 import {AuthStatus, AuthStatuses, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
-import {STORE_ID_FIRESTORE} from '@sneat/core';
-import {IProjectContext, projectRefToString} from '@sneat/datatug/core';
-
-export interface ICurrentProject {
-	readonly ref: IProjectContext;
-	readonly summary?: IProjectSummary;
-}
+import {parseStoreRef} from '@sneat/core';
 
 @Component({
 	selector: 'datatug-menu',
@@ -27,7 +19,7 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	public authStatus?: AuthStatus;
 	public currentStoreId?: string;
-	public currentProject?: ICurrentProject;
+	public currentProject?: IProjectContext;
 
 	public table?: IEnvDbTableContext;
 	public currentFolder?: Observable<string>;
@@ -164,7 +156,7 @@ export class DatatugMenuComponent implements OnDestroy {
 					takeUntil(this.destroyed),
 				)
 				.subscribe({
-					next: this.onCurrentProjectChanged,
+					next: this.onProjectChanged,
 					error: err => this.errorLogger.logError(err, 'Failed to get current project'),
 				});
 		} catch (e) {
@@ -172,29 +164,8 @@ export class DatatugMenuComponent implements OnDestroy {
 		}
 	}
 
-	onProjectRefChanged(ref: IProjectContext): void {
-		this.currentProject = {ref};
-	}
-	private readonly onCurrentProjectChanged = (currentProject?: IProjectContext): void => {
-		const {brief, summary, storeId} = currentProject || {};
-		const {id} = brief || {};
-		if (id !== this.currentProject?.ref?.projectId) {
-			console.log('DatatugMenuComponent.onCurrentProjectChanged() => currentProjectId changed:', id, currentProject);
-		}
-		const ref: IProjectContext | undefined = id && storeId ? {projectId: id, storeId} : undefined;
-		this.currentProject = ref ? {ref, summary} : undefined;
-		try {
-			if (storeId) {
-				this.currentStoreId = storeId;
-			}
-			if (!ref) {
-				this.currentProject = undefined;
-				return;
-			}
-			console.log('DatatugMenuComponent: project =>', currentProject);
-		} catch (ex) {
-			this.errorLogger.logError(ex, 'Failed to process project brief');
-		}
+	onProjectChanged = (project?: IProjectContext) => {
+		this.currentProject = project;
 	}
 
 	private trackCurrentEnvDbTable(): void {

@@ -13,6 +13,7 @@ import {AuthStatus, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
 import {STORE_TYPE_GITHUB} from '@sneat/core';
 import {NewProjectService} from '@sneat/datatug/project';
 import {DatatugNavService, IProjectNavContext} from '@sneat/datatug/services/nav';
+import {IProjectContext} from '@sneat/datatug/nav';
 
 @Component({
 	selector: 'datatug-my-projects',
@@ -74,10 +75,11 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 
 	goProject(item: IProjectAndStore): void {
 		console.log('goProject()', item);
-		const project: IProjectNavContext = {
-			store: {id: item.store.id, brief: item.store},
-			id: item.project.id,
+
+		const project: IProjectContext = {
+			ref: item.ref,
 			brief: item.project,
+			store: {ref: item.store, brief: item.store},
 		}
 		this.navService.goProject(project);
 	}

@@ -3,7 +3,7 @@ import {
 	allUserProjectsAsFlatList,
 	allUserStoresAsFlatList, DatatugProjStoreType,
 	IDatatugStoreBrief,
-	IDatatugStoreBriefsById,
+	IDatatugStoreBriefsById, IDatatugStoreBriefWithId,
 	IDatatugUser
 } from '@sneat/datatug/models';
 import {AgentStateService, IAgentState} from "@sneat/datatug/services/repo";
@@ -14,6 +14,8 @@ import {DatatugNavService} from "@sneat/datatug/services/nav";
 import {NavController} from "@ionic/angular";
 import {DatatugUserService} from '@sneat/datatug/services/base';
 import {AuthStatus} from '@sneat/auth';
+import {IDatatugStoreContext} from '@sneat/datatug/nav';
+import {parseStoreRef} from '@sneat/core';
 
 @Component({
 	selector: 'datatug-my-stores',
@@ -75,15 +77,24 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 
 	storeIcon(storeType: DatatugProjStoreType): string {
 		switch (storeType) {
-			case 'firestore': return 'boat-outline';
-			case 'github': return 'logo-github';
-			default: return 'terminal-outline';
+			case 'firestore':
+				return 'boat-outline';
+			case 'github':
+				return 'logo-github';
+			default:
+				return 'terminal-outline';
 		}
 	}
 
-	goStore(store: IDatatugStoreBrief): void {
-		store.projects ??= {};
-		this.datatugNavService.goStore({id: store.id, brief: store});
+	goStore(brief: IDatatugStoreBriefWithId): void {
+		if (!brief.projects) {
+			brief = {...brief, projects: {}} // TODO: document why we do this or remove
+		}
+		const store: IDatatugStoreContext = {
+			ref: parseStoreRef(brief.id),
+			brief,
+		};
+		this.datatugNavService.goStore(store);
 	}
 
 	public checkAgent(event: Event): void {

@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges} from "@angular/core";
 import {IDatatugProjectBriefWithId, IDatatugUser, projectsBriefFromDictToFlatList} from "@sneat/datatug/models";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
+import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
 import {NewProjectService} from '@sneat/datatug/project';
-import {IProjectBrief} from '@sneat/datatug/core';
 import {IProjectContext} from '@sneat/datatug/nav';
+import {parseStoreRef} from '@sneat/core';
 
 @Component({
 	selector: 'datatug-menu-project-selector',
@@ -13,7 +13,8 @@ import {IProjectContext} from '@sneat/datatug/nav';
 export class MenuProjectSelectorComponent implements OnChanges {
 	@Input() datatugUser?: IDatatugUser;
 	@Input() currentStoreId?: string;
-	@Input() project: IProjectContext; // TODO(not_sure): should it be not input and take value from context?
+	@Input() currentProject?: IProjectContext;
+	@Input() project?: IProjectContext; // TODO(not_sure): should it be not input and take value from context?
 
 	@Output() projectChanged = new EventEmitter<IProjectContext>()
 
@@ -54,30 +55,23 @@ export class MenuProjectSelectorComponent implements OnChanges {
 				console.log('project changed but there is no store');
 				return;
 			}
-			const project = this.projects?.find(p => p.id === projectId);
-			if (!project) {
+			const brief = this.projects?.find(p => p.id === projectId);
+			if (!brief) {
 				return;
 			}
-			this.datatugNavContextService.setCurrentProject({
-				storeId: this.currentStoreId,
-				brief: {
-					...project,
-					id: projectId,
-					store: {type: 'agent'},
-				},
-				projectId,
-			});
+			const storeId = this.currentStoreId;
+			this.currentProject = {
+				ref: {projectId, storeId},
+				brief,
+				store: {ref: parseStoreRef(storeId)},
+			};
+			this.datatugNavContextService.setCurrentProject(this.currentProject);
 			if (projectId) {
-				const projNavContext: IProjectNavContext = {
-					id: projectId,
-					store: {id: this.currentStoreId},
-				};
-				this.nav.goProject(projNavContext);
+				this.nav.goProject(this.currentProject);
 			}
-			this.projectChanged.emit({projectId, storeId: this.currentStoreId})
+			this.projectChanged.emit(this.currentProject)
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle project switch');
 		}
 	}
-
 }

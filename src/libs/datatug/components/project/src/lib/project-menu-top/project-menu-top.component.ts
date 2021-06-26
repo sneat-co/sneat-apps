@@ -1,9 +1,15 @@
 import {Component, OnDestroy} from '@angular/core';
-import {DatatugNavContextService, DatatugNavService, ProjectTopLevelPage} from "@sneat/datatug/services/nav";
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+	ProjectTopLevelPage,
+	ProjectTracker
+} from "@sneat/datatug/services/nav";
 import {IProjectSummary} from "@sneat/datatug/models";
 import {Observable, Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {IProjectRef} from '@sneat/datatug/core';
+import {IProjectContext} from '@sneat/datatug/nav';
+import {ActivatedRoute} from '@angular/router';
+import {parseStoreRef} from '@sneat/core';
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage | '';
@@ -75,9 +81,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		},
 	];
 
-	currentStoreId: string;
-	currentProjectId: string;
-	currentProject: IProjectSummary;
+	project?: IProjectContext;
 	public currentFolder: Observable<string>;
 
 	private destroyed = new Subject<void>();
@@ -85,12 +89,11 @@ export class ProjectMenuTopComponent implements OnDestroy {
 	constructor(
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
+		private route: ActivatedRoute,
 	) {
-		this.datatugNavContextService.currentStoreId.pipe(takeUntil(this.destroyed)).subscribe({
-			next: id => this.currentStoreId = id,
-		});
-		this.datatugNavContextService.currentProject.pipe(takeUntil(this.destroyed)).subscribe({
-			next: proj => this.currentProjectId = proj?.brief?.id,
+		const projectTracker = new ProjectTracker(this.destroyed, route);
+		projectTracker.projectRef.subscribe({
+			next: ref => this.project = {ref, store: {ref: parseStoreRef(ref.storeId)}},
 		});
 		this.currentFolder = datatugNavContextService.currentFolder;
 	}
@@ -104,9 +107,8 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		console.log('goProjPage', page);
 		event.preventDefault();
 		event.stopPropagation();
-
-		const projRef: IProjectRef = {storeId: this.currentStoreId, projectId: this.currentProjectId};
-		this.nav.goProjPage(projRef, page, {projSummary: this.currentProject});
+		const project = this.project;
+		this.nav.goProjPage(project, page, {project});
 		return false;
 	}
 

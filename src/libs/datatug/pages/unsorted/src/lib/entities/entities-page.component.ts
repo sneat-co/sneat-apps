@@ -76,7 +76,7 @@ export class EntitiesPageComponent implements OnDestroy, ViewDidEnter, ViewDidLe
 	}
 
 	entityUrl(entity: IProjEntity): string {
-		return this.datatugNavService.projectPageUrl(this.project, 'entity', entity.id);
+		return this.datatugNavService.projectPageUrl(this.project.ref, 'entity', entity.id);
 	}
 
 	goNewEntity(event: Event): void {

@@ -1,6 +1,7 @@
 import {IUserRecord} from '@sneat/auth-models';
 import {ProjectAccess} from './definition';
 import {IStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB, StoreType} from '@sneat/core';
+import {IProjectRef} from '@sneat/datatug/core';
 
 
 // export interface IRecord<T> { // TODO: duplicate name
@@ -20,16 +21,20 @@ export interface IDatatugBriefForUser {
 }
 
 export interface IDatatugStoreBrief {
-	id?: string
-	title: string;
-	type: DatatugProjStoreType;
-	url?: string;
-	projects?: { [id: string]: IDatatugProjectBrief };
+	readonly title: string;
+	readonly type: DatatugProjStoreType;
+	readonly url?: string;
+	readonly projects?: { [id: string]: IProjectBrief };
+}
+
+export interface IDatatugStoreBriefWithId extends IDatatugStoreBrief {
+	id: string
 }
 
 export interface IProjectAndStore {
+	ref: IProjectRef;
 	store: IDatatugStoreBrief;
-	project: IDatatugProjectBriefWithId;
+	project: IProjectBrief;
 }
 
 export const cloudStoreId = 'firestore';
@@ -37,8 +42,8 @@ export const cloudStoreTitle = 'DataTug cloud';
 export const cloudStoreEmoji = '☁️';
 export const cloudStoreTitleWithIcon = `${cloudStoreEmoji} ${cloudStoreTitle}`;
 
-export function allUserStoresAsFlatList(stores?: IDatatugStoreBriefsById): IDatatugStoreBrief[] {
-	const result: IDatatugStoreBrief[] = [];
+export function allUserStoresAsFlatList(stores?: IDatatugStoreBriefsById): IDatatugStoreBriefWithId[] {
+	const result: IDatatugStoreBriefWithId[] = [];
 	stores = stores || {};
 	if (!stores[cloudStoreId]) {
 		stores[cloudStoreId] = {type: cloudStoreId, title: cloudStoreTitleWithIcon};
@@ -59,15 +64,15 @@ export function allUserStoresAsFlatList(stores?: IDatatugStoreBriefsById): IData
 		};
 	}
 
-	for (const storeId in stores) {
-		let store = stores[storeId];
-		store = {id: storeId, ...store, title: store.title || store.id};
-		if (store.id === cloudStoreId || store.type === 'firestore') {
-			store.title = cloudStoreTitleWithIcon;
-		} else {
-			store.title = '💻 ' + store.title;
-		}
-		result.push(store);
+	for (const id in stores) {
+		const store: IDatatugStoreBriefWithId = {...stores[id], id};
+		result.push({
+			...store,
+			title:
+				(store.id === cloudStoreId || store.type === 'firestore') && cloudStoreTitle
+				|| store.title
+				|| id
+		});
 	}
 	return result;
 }
@@ -78,13 +83,13 @@ export function allUserProjectsAsFlatList(stores: IDatatugStoreBriefsById): IPro
 		const store = {id: storeId, ...stores[storeId]};
 		for (const projectId in store.projects) {
 			const project = {id: projectId, ...store.projects[projectId]};
-			projects.push({store, project});
+			projects.push({ref: {projectId, storeId}, store, project});
 		}
 	}
 	return projects;
 }
 
-export function projectsBriefFromDictToFlatList(projects?: { [id: string]: IDatatugProjectBrief })
+export function projectsBriefFromDictToFlatList(projects?: { [id: string]: IProjectBrief })
 	: IDatatugProjectBriefWithId[] {
 	const result: IDatatugProjectBriefWithId[] = [];
 	if (projects) {
@@ -102,13 +107,13 @@ export interface IProjStoreRef extends IStoreRef {
 	url?: string;
 }
 
-export interface IDatatugProjectBrief {
+export interface IProjectBrief {
 	readonly access: ProjectAccess;
 	readonly title: string;
 	readonly titleOverride?: string;
 }
 
-export interface IDatatugProjectBriefWithId extends IDatatugProjectBrief {
+export interface IDatatugProjectBriefWithId extends IProjectBrief {
 	readonly id: string;
 }
 
