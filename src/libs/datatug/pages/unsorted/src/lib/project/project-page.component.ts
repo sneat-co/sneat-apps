@@ -182,7 +182,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	public getItemLink = (path: string) => (item: IProjItemBrief) => `${path}/${item.id}`;
 
 	private onProjectChanged = (currentProject: IDatatugProjectContext): void => {
-		console.log('currentProject:', currentProject);
+		console.log('ProjectPageComponent.onProjectChanged() => currentProject:', currentProject);
 		this.storeId = currentProject?.storeId;
 		this.project = currentProject?.summary;
 		this.projContext = currentProject;
@@ -192,23 +192,31 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	}
 
 	private onProjectIdChanged(): void {
-		console.log('onProjectIdChanged()', this.projBrief);
+		console.log('ProjectPageComponent.onProjectIdChanged()', this.projBrief);
 		if (this.projectSubscription) {
 			this.projectSubscription.unsubscribe();
 		}
 		const id = this.projBrief?.id;
 		if (id) {
-			this.projectSubscription = this.projectService.watchProject(id)
-				.pipe(takeUntil(this.destroyed))
-				.subscribe({
-					next: project => {
-						console.log('project:', project);
-						this.project = project;
-						this.projBrief = {id, access: project.access, title: project.title, store: {type: 'firestore'}};
-					},
-					error: err => this.errorLogger.logError(err, 'Failed to get project record'),
-				});
+			this.projectSubscription = this.projectService.watchProjectSummary({
+				projectId: id,
+				storeId: 'firestore', // TODO: Fix
+			}).pipe(
+				takeUntil(this.destroyed),
+			).subscribe({
+				next: projectSummary => this.onProjectSummaryChanged(id, projectSummary),
+				error: err => this.errorLogger.logError(err, 'Failed to get project record'),
+			});
 		}
+	}
+
+	private onProjectSummaryChanged(id: string, projectSummary: IDatatugProjectSummary): void {
+		console.log('projectSummary:', projectSummary);
+		if (!projectSummary) {
+			return;
+		}
+		this.project = projectSummary;
+		this.projBrief = {id, access: projectSummary.access, title: projectSummary.title, store: {type: 'firestore'}};
 	}
 
 	private createProjItem<T extends IOptionallyTitled>(

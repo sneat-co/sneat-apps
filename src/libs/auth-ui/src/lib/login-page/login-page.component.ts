@@ -217,7 +217,7 @@ export class LoginPageComponent {
 		// 	this.loginEventsHandler.onLoggedIn();
 		// }
 		console.log('this.redirectTo:', this.redirectTo);
-		const redirectTo = this.redirectTo || '/my'; // TODO: default one should be app specific.
+		const redirectTo = this.redirectTo || '/'; // TODO: default one should be app specific.
 		this.navController.navigateRoot(redirectTo)
 			.catch(this.errorLogger.logErrorHandler('Failed to navigate back to ' + redirectTo));
 	}

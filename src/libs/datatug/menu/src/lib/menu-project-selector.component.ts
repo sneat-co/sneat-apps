@@ -1,8 +1,9 @@
-import {Component, Inject, Input, OnChanges, SimpleChanges} from "@angular/core";
+import {Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges} from "@angular/core";
 import {IDatatugProjectBriefWithId, IDatatugUser, projectsBriefFromDictToFlatList} from "@sneat/datatug/models";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
-import {NewProjectService} from '../../../project/src/lib/new-project/new-project.service';
+import {NewProjectService} from '@sneat/datatug/project';
+import {IDatatugProjRef} from '@sneat/datatug/core';
 
 @Component({
 	selector: 'datatug-menu-project-selector',
@@ -11,7 +12,10 @@ import {NewProjectService} from '../../../project/src/lib/new-project/new-projec
 export class MenuProjectSelectorComponent implements OnChanges {
 	@Input() datatugUser?: IDatatugUser;
 	@Input() currentStoreId?: string;
-	@Input() currentProjectId?: string;
+	@Input() currentProjectId?: string; // TODO(not_sure): should it be not input and take value from context?
+
+	@Output() projectChanged = new EventEmitter<IDatatugProjRef>()
+
 	projects?: IDatatugProjectBriefWithId[];
 
 	constructor(
@@ -69,6 +73,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
 				};
 				this.nav.goProject(projNavContext);
 			}
+			this.projectChanged.emit({projectId, storeId: this.currentStoreId})
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle project switch');
 		}

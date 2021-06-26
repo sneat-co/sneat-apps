@@ -4,12 +4,16 @@
 			<ion-menu-button></ion-menu-button>
 			<ion-back-button [defaultHref]="storeId && ('/store/' + storeId) || undefined"></ion-back-button>
 		</ion-buttons>
-		<ion-title>{{projBrief?.title || 'Project'}}</ion-title>
+		<ion-title>Project</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content color="light">
 	<ion-card>
+		<ion-item>
+			<ion-label color="medium" style="font-weight: bold;">Title</ion-label>
+			<ion-input readonly [value]="projBrief?.title || 'Loading...'"></ion-input>
+		</ion-item>
 		<ion-item>
 			<ion-label color="medium" style="font-weight: bold;">ID</ion-label>
 			<ion-input readonly [value]="projBrief?.id" color="medium"></ion-input>

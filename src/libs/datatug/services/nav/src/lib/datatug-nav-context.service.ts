@@ -4,8 +4,8 @@ import {NavigationEnd, Router} from '@angular/router';
 import {distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, tap} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ProjectContextService, ProjectService} from '@sneat/datatug/services/project';
-import {DatatugProjStoreType} from '@sneat/datatug/models';
-import {AppContextService} from '@sneat/datatug/core';
+import {DatatugProjStoreType, IDatatugProjectSummary} from '@sneat/datatug/models';
+import {AppContextService, IDatatugProjRef} from '@sneat/datatug/core';
 import {EnvironmentService} from "@sneat/datatug/services/unsorted";
 import {
 	IDatatugNavContext,
@@ -15,6 +15,7 @@ import {
 	IEnvDbTableContext
 } from "@sneat/datatug/nav";
 import {STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/core';
+import {RandomId} from '@sneat/random';
 
 const
 	reStore = /\/store\/(.+?)($|\/)/,
@@ -25,8 +26,9 @@ const
 ;
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DatatugNavContextService {
+	readonly id = RandomId.newRandomId(5);
 	private readonly $currentContext = new BehaviorSubject<IDatatugNavContext>({});
 	public readonly currentContext = this.$currentContext.asObservable();
 
@@ -61,7 +63,7 @@ export class DatatugNavContextService {
 		private readonly envService: EnvironmentService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
-		console.log('DatatugNavContextService.constructor()');
+		console.log('DatatugNavContextService.constructor(), id=', this.id);
 		this.currentProject.subscribe(p => {
 			const target = projectContextService.current;
 			if (target?.projectId !== p?.brief?.id || target?.storeId !== p?.storeId) {
@@ -125,25 +127,29 @@ export class DatatugNavContextService {
 			})
 		}
 		if (projectContext?.brief?.id) {
+			const projectRef = {storeId: projectContext.storeId, projectId: projectContext.brief.id};
 			this.projectService
-				.getSummary({storeId: projectContext.storeId, projectId: projectContext.brief.id})
+				.watchProjectSummary(projectRef)
 				.subscribe({
-					next: summary => {
-						if (!summary) {
-							this.errorLogger.logError(new Error('Returned empty project summary'),
-								`project: ${projectContext.brief.id} @ ${projectContext.storeId}`);
-							return;
-						}
-						if (!summary.id) {
-							summary = {...summary, id: projectContext.brief.id};
-						}
-						const currentProj = this.$currentProj.value;
-						if (currentProj?.brief?.id === summary.id) {
-							this.$currentProj.next({...currentProj, summary});
-						}
-					},
-					error: err => this.errorLogger.logError(err, 'Failed to get project summary', {show: false}),
+					next: summary => this.onProjectSummaryChanged(projectRef, summary),
+					error: err => this.errorLogger.logError(err, 'Navigation context failed to get project summary', {show: false}),
 				});
+		}
+	}
+
+	private onProjectSummaryChanged(projRef: IDatatugProjRef, summary: IDatatugProjectSummary): void {
+		if (!summary) {
+			// this.errorLogger.logError(new Error('Returned empty project summary'),
+			// 	`project: ${projectContext.brief.id} @ ${projectContext.storeId}`);
+			return;
+		}
+		console.log('DataTugNavContext => projectSummary:', summary);
+		if (!summary.id) {
+			summary = {...summary, id: projRef.projectId};
+		}
+		const currentProj = this.$currentProj.value;
+		if (currentProj?.brief?.id === summary.id) {
+			this.$currentProj.next({...currentProj, summary});
 		}
 	}
 

@@ -12,6 +12,7 @@ import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 import {DatatugServicesStoreModule} from "@sneat/datatug/services/repo";
 import {MyDatatugProjectsComponent} from "./my-projects/my-datatug-projects.component";
 import {LoadingItemsComponent} from './loading-items-component';
+import {NewProjectFormModule} from '@sneat/datatug/project';
 
 @NgModule({
 	imports: [
@@ -23,6 +24,7 @@ import {LoadingItemsComponent} from './loading-items-component';
 		WormholeModule,
 		DatatugServicesBaseModule,
 		DatatugServicesStoreModule,
+		NewProjectFormModule,
 	],
 	declarations: [
 		DatatugHomePageComponent,

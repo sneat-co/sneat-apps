@@ -39,12 +39,12 @@
 	<datatug-menu-project-selector *ngIf="currentStoreId"
 								   [datatugUser]="datatugUserState?.record"
 								   [currentStoreId]="currentStoreId"
-								   [currentProjectId]="currentProjectId"
+								   [currentProjectId]="currentProject?.ref.projectId"
+								   (projectChanged)="onProjectRefChanged($event)"
 	></datatug-menu-project-selector>
 	<datatug-menu-env-selector
-			*ngIf="currentProjectId"
-			[currentStoreId]="currentStoreId"
-			[currentProject]="currentProject"
+			*ngIf="currentProject"
+			[projectSummary]="currentProject"
 	></datatug-menu-env-selector>
 </ion-card>
 
@@ -52,7 +52,7 @@
 
 <!--<datatug-table-meta-card *ngIf="table" [meta]="table?.meta"></datatug-table-meta-card>-->
 <wormhole-exit tunnel="context-menu"></wormhole-exit>
-<datatug-project-menu *ngIf="currentProjectId"></datatug-project-menu>
+<datatug-project-menu *ngIf="currentProject"></datatug-project-menu>
 
 <ion-card>
 	<ion-card-content>

@@ -11,6 +11,7 @@ import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {AuthStatus, ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
 import {STORE_TYPE_GITHUB} from '@sneat/core';
+import {NewProjectService} from '@sneat/datatug/project';
 
 @Component({
 	selector: 'datatug-my-projects',
@@ -44,6 +45,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		private readonly navController: NavController,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly datatugUserService: DatatugUserService,
+		private readonly newProjectService: NewProjectService,
 	) {
 	}
 
@@ -75,5 +77,9 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		this.navController
 			.navigateForward(`/store/${store.url || store.type}/project/${item.project.id}`, {state: item})
 			.catch(e => this.errorLogger.logError(e, 'Failed to navigate to project page'));
+	}
+
+	addProject(event: Event): void {
+		this.newProjectService.openNewProjectDialog(event)
 	}
 }

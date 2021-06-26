@@ -2,16 +2,16 @@ import {Component, Inject, Input} from "@angular/core";
 import {PopoverController} from "@ionic/angular";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {DatatugNavContextService, DatatugNavService, IProjectNavContext} from "@sneat/datatug/services/nav";
-import {NewProjectFormComponent} from "../../../project/src/lib/new-project/new-project-form.component";
 import {IDatatugProjectSummary} from "@sneat/datatug/models";
+import {IDatatugProjRef} from '@sneat/datatug/core';
 
 @Component({
 	selector: 'datatug-menu-env-selector',
 	templateUrl: 'menu-env-selector.component.html'
 })
 export class MenuEnvSelectorComponent {
-	@Input() currentStoreId?: string;
-	@Input() currentProject?: IDatatugProjectSummary;
+	@Input() projectRef?: IDatatugProjRef;
+	@Input() projectSummary?: IDatatugProjectSummary;
 	@Input() currentEnvId?: string;
 
 	constructor(
@@ -26,11 +26,11 @@ export class MenuEnvSelectorComponent {
 	public clearEnv(): void { // Called from template
 		try {
 			this.datatugNavContextService.setCurrentEnvironment(undefined);
-			if (this.currentStoreId && this.currentProject?.id) {
+			if (this.projectRef && this.projectSummary?.id) {
 				const projNavContext: IProjectNavContext = {
-					id: this.currentProject.id,
-					store: {id: this.currentStoreId},
-					brief: this.currentProject,
+					id: this.projectSummary.id,
+					store: {id: this.projectRef.storeId},
+					brief: this.projectSummary,
 				}
 				this.nav.goProject(projNavContext);
 			}
@@ -47,11 +47,8 @@ export class MenuEnvSelectorComponent {
 				console.log('switchEnv', event);
 				// const env = this.currentProject.environments.find(e => e.id === value);
 				this.datatugNavContextService.setCurrentEnvironment(envId);
-				if (this.currentStoreId && this.currentProject?.id) {
-					this.nav.goEnvironment({
-						storeId: this.currentStoreId,
-						projectId: this.currentProject.id
-					}, undefined, envId);
+				if (this.projectRef) {
+					this.nav.goEnvironment(this.projectRef, undefined, envId);
 				}
 			}
 		} catch (e) {

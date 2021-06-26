@@ -7,14 +7,14 @@
 	<ion-label>
 		<ng-container *ngIf="currentEnvId">Environment</ng-container>
 		<ng-container *ngIf="!currentEnvId">Environments</ng-container>
-		<ion-badge color="light" *ngIf="!currentEnvId && currentProject?.environments" class="ion-margin-start">
+		<ion-badge color="light" *ngIf="!currentEnvId && projectSummary?.environments" class="ion-margin-start">
 			<ion-text color="medium"
-					  style="font-weight: normal">{{currentProject.environments.length}}</ion-text>
+					  style="font-weight: normal">{{projectSummary.environments.length}}</ion-text>
 		</ion-badge>
 	</ion-label>
-	<ion-select *ngIf="currentProject?.environments?.length" [value]="currentEnvId" interface="popover"
-				(ionChange)="switchEnv($event)">
-		<ion-select-option *ngFor="let env of currentProject.environments"
+	<ion-select *ngIf="projectSummary?.environments?.length" [value]="currentEnvId" interface="popover"
+                (ionChange)="switchEnv($event)">
+		<ion-select-option *ngFor="let env of projectSummary.environments"
 						   [value]="env.id">{{env.title || env.id}}</ion-select-option>
 	</ion-select>
 	<ion-buttons slot="end" class="ion-no-margin ion-no-padding" style="margin-right: -1em"
