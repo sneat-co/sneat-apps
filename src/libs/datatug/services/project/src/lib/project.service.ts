@@ -11,7 +11,7 @@ import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {SneatApiServiceFactory} from "@sneat/api";
 import {GITLAB_REPO_PREFIX, STORE_ID_GITHUB_COM} from '@sneat/core';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProjectService {
 
 	private projects: { [id: string]: Observable<IDatatugProjectFull> } = {};

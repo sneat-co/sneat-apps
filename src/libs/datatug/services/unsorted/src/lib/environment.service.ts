@@ -15,7 +15,7 @@ const getEnvCacheKey = (projRef: IDatatugProjRef, env: string): string => {
 
 const envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class EnvironmentService {
 
 	constructor(

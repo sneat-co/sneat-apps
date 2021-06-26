@@ -5,12 +5,12 @@ import {NavService} from './services/nav.service';
 import {QueryParamsService} from './services/QueryParamsService';
 
 @NgModule({
-  imports: [CommonModule],
-  providers: [
-    AppContextService,
-    NavService,
-    QueryParamsService,
-  ]
+	imports: [CommonModule],
+	providers: [
+		// AppContextService,
+		NavService,
+		QueryParamsService,
+	]
 })
 export class DatatugCoreModule {
 	constructor() {

@@ -16,7 +16,7 @@ export interface AppContext {
 	readonly appCode: AppCode;
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AppContextService { // TODO: move to common
 
 	private current = new BehaviorSubject<AppContext | undefined>(undefined);

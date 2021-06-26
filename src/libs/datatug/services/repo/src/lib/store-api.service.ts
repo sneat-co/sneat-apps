@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getStoreUrl} from '@sneat/datatug/nav';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class StoreApiService {
 
 	constructor(

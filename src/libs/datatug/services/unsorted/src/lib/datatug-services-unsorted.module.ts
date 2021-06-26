@@ -10,19 +10,19 @@ import {SneatAuthModule} from "@sneat/auth";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-    SneatAuthModule,
-  ],
-  providers: [
-    DbServerService,
-    EntityService,
-    EnvironmentService,
-    RecordsetService,
-    SchemaService,
-    VariableService,
-    TableService,
-  ]
+	imports: [
+		HttpClientModule,
+		SneatAuthModule,
+	],
+	providers: [
+		DbServerService,
+		EntityService,
+		// EnvironmentService,
+		RecordsetService,
+		SchemaService,
+		VariableService,
+		TableService,
+	]
 })
 export class DatatugServicesUnsortedModule {
 }
