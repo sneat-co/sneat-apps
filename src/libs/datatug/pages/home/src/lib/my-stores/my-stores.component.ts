@@ -50,9 +50,7 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 					console.log('MyStoresComponent => agent state:', agentState);
 					this.agentState = agentState;
 				},
-				error: error => {
-					this.errorLogger.logError(error, 'failed to get agent state');
-				}
+				error: this.errorLogger.logErrorHandler('failed to get agent state'),
 			});
 		this.datatugUserService.datatugUserState
 			.pipe(takeUntil(this.destroyed))
