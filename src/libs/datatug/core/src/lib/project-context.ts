@@ -3,7 +3,9 @@ export interface IProjectRef {
 	readonly projectId: string;
 }
 
-export function isValidProjectTargetRef(v: IProjectRef): boolean {
+export const equalProjectRef = (a: IProjectRef, b: IProjectRef) => a?.projectId === b?.projectId && a?.storeId === b?.storeId;
+
+export function isValidProjectRef(v: IProjectRef): boolean {
 	return !!(v?.storeId && v?.projectId);
 }
 

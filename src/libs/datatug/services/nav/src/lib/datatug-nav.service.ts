@@ -4,7 +4,7 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 import {IProjBoard, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
 import {getStoreId, IDatatugStoreContext, IProjectContext} from "@sneat/datatug/nav";
-import {IProjectRef} from '@sneat/datatug/core';
+import {IProjectRef, isValidProjectRef} from '@sneat/datatug/core';
 import {storeRefToId} from '@sneat/core';
 
 export type ProjectTopLevelPage =
@@ -83,6 +83,12 @@ export class DatatugNavService {
 	}
 
 	goProjPage(project: IProjectContext, projPage: string, state?: any): void {
+		if (!project) {
+			throw new Error('project is a required parameter');
+		}
+		if (!isValidProjectRef(project.ref)) {
+			throw new Error('project.ref is a required parameter');
+		}
 		state = {...(state || {}), project};
 		this.navForward(['store', project.ref.storeId, 'project', project.ref.projectId, projPage],
 			{state}, 'Failed to navigate to project page: ' + projPage);

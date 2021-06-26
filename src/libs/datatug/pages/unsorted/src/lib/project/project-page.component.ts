@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {merge, Observable, Subject, Subscription} from 'rxjs';
-import {takeUntil, tap} from 'rxjs/operators';
+import {merge, Observable, race, Subject, Subscription} from 'rxjs';
+import {skip, takeUntil, tap} from 'rxjs/operators';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {ActivatedRoute} from '@angular/router';
 import {IonInput, NavController, ViewWillEnter} from '@ionic/angular';
@@ -60,22 +60,32 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		private readonly entityService: EntityService,
 		private readonly navController: NavController,
 	) {
-		console.log('ProjectPage.constructor()', route?.snapshot?.paramMap);
+		console.log('ProjectPageComponent.constructor()', route?.snapshot?.paramMap);
 		this.projectTracker = new ProjectTracker(this.destroyed, route);
-		this.projectTracker.projectRef.subscribe(this.setProjRef);
-		this.project = window.history.state.project as IProjectContext;
-
+		this.projectTracker.projectRef.subscribe({
+			next: this.setProjRef,
+			error: this.errorLogger.logErrorHandler('Failed to get project ref for ProjectPageComponent'),
+		});
 	}
 
 	private setProjRef = (ref: IProjectRef) => {
-		if (ref.projectId === this.project?.ref?.projectId) {
-			this.project = {ref, store: {ref: parseStoreRef(ref.storeId)}};
+		console.log('ProjectPageComponent.setProjRef()', ref);
+		try {
+			if (ref.projectId === this.project?.ref?.projectId) {
+				this.project = {ref, store: {ref: parseStoreRef(ref.storeId)}};
+			}
+			this.projectService.watchProjectSummary(ref).pipe(
+				takeUntil(race([
+					this.projectTracker.projectRef.pipe(skip(1)),
+					this.destroyed,
+				])),
+			).subscribe({
+				next: summary => this.onProjectSummaryChanged(ref, summary),
+				error: this.errorLogger.logErrorHandler('Failed to load project summary for project page'),
+			});
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to set projectRef at ProjectPageComponent');
 		}
-		this.projectService.watchProjectSummary(ref).pipe(
-			takeUntil(merge([this.projectTracker.projectRef, this.destroyed])),
-		).subscribe({
-			next: summary => this.onProjectSummaryChanged(ref, summary),
-		});
 	}
 
 	ionViewWillEnter(): void {
@@ -87,18 +97,11 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	}
 
 	ngOnInit() {
-		console.log('ProjectPage.ngOnInit()');
-		const projBrief = history.state.proj as IDatatugProjectBriefWithIdAndStoreRef;
-		// if (projBrief && (!this.projBrief || !this.projBrief.title && projBrief.id === this.projBrief.id)) {
-		// 	this.projBrief = projBrief;
-		// 	if (this.projBrief?.id) {
-		// 		this.onProjectIdChanged();
-		// 	}
-		// }
+		console.log('ProjectPageComponent.ngOnInit()');
 	}
 
 	ngOnDestroy(): void {
-		console.log('ProjectPage.ngOnDestroy()');
+		console.log('ProjectPageComponent.ngOnDestroy()');
 		this.destroyed.next(true);
 		this.destroyed.complete();
 	}
@@ -161,7 +164,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	// }
 
 	private onProjectSummaryChanged(ref: IProjectRef, summary: IProjectSummary): void {
-		console.log('onProjectSummaryChanged:', ref, summary);
+		console.log('ProjectPageComponent.onProjectSummaryChanged():', ref, summary);
 		if (!summary) {
 			return;
 		}

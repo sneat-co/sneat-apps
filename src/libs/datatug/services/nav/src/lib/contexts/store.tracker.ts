@@ -1,5 +1,5 @@
 import {ActivatedRoute} from '@angular/router';
-import {map, takeUntil} from 'rxjs/operators';
+import {distinctUntilChanged, map, takeUntil} from 'rxjs/operators';
 import {routingParamStoreId} from '@sneat/datatug/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
@@ -29,6 +29,7 @@ export class StoreTracker {
 			.pipe(
 				takeUntil(stopNotifier),
 				map(paramMap => paramMap.get(routingParamStoreId)),
+				distinctUntilChanged(),
 			);
 	}
 

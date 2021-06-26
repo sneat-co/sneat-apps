@@ -4,7 +4,7 @@ import {EMPTY, from, Observable, of, ReplaySubject, Subject, throwError} from 'r
 import {map, mergeMap, shareReplay, take, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {getStoreUrl} from '@sneat/datatug/nav';
-import {IProjectRef, isValidProjectTargetRef, projectRefToString} from '@sneat/datatug/core';
+import {IProjectRef, isValidProjectRef, projectRefToString} from '@sneat/datatug/core';
 import {IProjectFull, IProjectSummary, IProjStoreRef} from '@sneat/datatug/models';
 import {PrivateTokenStoreService} from '@sneat/auth';
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
@@ -30,7 +30,7 @@ export class ProjectService {
 
 	public watchProjectSummary(projectRef: IProjectRef): Observable<IProjectSummary> {
 		console.log('ProjectService.watchProject', projectRef);
-		if (!isValidProjectTargetRef(projectRef)) {
+		if (!isValidProjectRef(projectRef)) {
 			return throwError('Can not watch project by empty target parameter');
 		}
 		if (projectRef.storeId === 'agent') {
@@ -38,13 +38,14 @@ export class ProjectService {
 		}
 		const id = projectRefToString(projectRef);
 		let subj = this.projSummary[id];
-		if (!subj) {
-			this.projSummary[id] = subj = new ReplaySubject()
+		if (subj) {
+			console.log('ProjectService.watchProject() => reusing existing subject');
+		} else {
+			console.log('ProjectService.watchProject() => creating new subject');
+			this.projSummary[id] = subj = new ReplaySubject();
 			if (projectRef.storeId === 'firestore') {
 				this.firestoreChanges(projectRef.projectId)
-					// .pipe(
-					// 	tap(summary => console.log(`ProjectService.watchProject(${id}) =>`, summary))
-					// )
+					.pipe(tap(summary => console.log(`ProjectService.watchProject(${id}) => summary:`, summary)))
 					.subscribe(subj);
 			}
 			const m = id.match(/(\.|\w+)@(\w+:\d+)/);
