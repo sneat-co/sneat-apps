@@ -2,8 +2,7 @@
 	<ion-toolbar>
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
-			<ion-back-button
-					[defaultHref]="project?.ref && ('/store/' + project.ref.storeId) || undefined"></ion-back-button>
+			<ion-back-button [defaultHref]="project?.ref && ('/store/' + project?.ref?.storeId)"></ion-back-button>
 		</ion-buttons>
 		<ion-title>Project</ion-title>
 	</ion-toolbar>

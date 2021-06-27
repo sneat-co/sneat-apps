@@ -170,6 +170,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		}
 		this.project = {
 			...this.project,
+			ref,
 			brief: {access: summary.access, title: summary.title},
 			summary,
 		};

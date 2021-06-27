@@ -76,11 +76,6 @@ export class DatatugNavContextService {
 			},
 			error: this.errorLogger.logErrorHandler('DatatugNavContextService failed to retrieve current project'),
 		});
-		// try {
-		// 	throw new Error('stack');
-		// } catch (e) {
-		// 	this.errorLoggerService.logError(e, 'test');
-		// }
 		this.navEndSubscription = appContext.currentApp
 			.pipe(distinctUntilKeyChanged('appCode'))
 			.subscribe(app => {
