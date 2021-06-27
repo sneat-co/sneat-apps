@@ -9,6 +9,7 @@ import {
 } from '@sneat/datatug/services/repo';
 import {QueryContextSqlService} from "./query-context-sql.service";
 import {HttpClientModule} from '@angular/common/http';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @NgModule({
 	imports: [
@@ -19,11 +20,15 @@ import {HttpClientModule} from '@angular/common/http';
 		{
 			provide: QUERY_PROJ_ITEM_SERVICE,
 			deps: [
+				AngularFirestore,
 				ProjectItemServiceFactory,
 				StoreApiService,
 			],
-			useFactory: (projectItemServiceFactory: ProjectItemServiceFactory, repoProvider: StoreApiService) =>
-				projectItemServiceFactory.newProjectItemService(repoProvider, 'queries', 'query'),
+			useFactory: (
+				db: AngularFirestore,
+				projectItemServiceFactory: ProjectItemServiceFactory,
+				repoProvider: StoreApiService,
+			) => projectItemServiceFactory.newProjectItemService(db, repoProvider, 'queries', 'query'),
 		},
 		QueriesService,
 		QueryContextSqlService,

@@ -1,19 +1,22 @@
 import {Observable} from 'rxjs';
-import {startWith, tap} from 'rxjs/operators';
+import {map, startWith, take, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {IProjectRef} from '@sneat/datatug/core';
-import {IProjItemBrief, IProjItemsFolder} from '@sneat/datatug/models';
+import {IProjItemBrief, IProjItemsFolder, IQueryFolder} from '@sneat/datatug/models';
 import {StoreApiService} from './store-api.service';
+import {AngularFireDatabase} from '@angular/fire/database';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 const notImplemented = 'not implemented';
 
 @Injectable()
 export class ProjectItemServiceFactory {
 	public readonly newProjectItemService = (
+		db: AngularFirestore,
 		storeApiService: StoreApiService,
 		itemsPath: string,
 		itemPath: string,
-	) => new ProjectItemService(storeApiService, itemsPath, itemPath);
+	) => new ProjectItemService(db, storeApiService, itemsPath, itemPath);
 }
 
 // TODO: why it's complaining about TS1219?
@@ -22,6 +25,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	private cache: { [id: string]: ProjItem } = {};
 
 	constructor(
+		private readonly db: AngularFirestore,
 		private readonly storeApiService: StoreApiService,
 		private readonly itemsPath: string,
 		private readonly itemPath: string,
@@ -48,6 +52,9 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 
 	public getFolder<T extends IProjItemsFolder>(from: IProjectRef, folderPath: string): Observable<T> {
 		console.log('getFolder', from, folderPath);
+		if (from.storeId === 'firestore') {
+			return this.watchFirestoreFolder<T>(from.projectId, folderPath).pipe(take(1));
+		}
 		return this.storeApiService.get<T>(from.storeId, `/${this.itemsPath}/all_${this.itemsPath}`, {
 			params: {
 				project: from.projectId,
@@ -61,6 +68,24 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 				this.putProjItemsToCache(folder, folderPath);
 			}),
 		);
+	}
+
+	private watchFirestoreFolder<T>(projectId: string, folderPath: string): Observable<T> {
+		return this.db
+			.collection('datatug_projects').doc(projectId)
+			.collection('queries').doc('~')
+			.snapshotChanges()
+			.pipe(
+				map(changes => {
+					console.log('folder changes:', changes.type);
+					if (changes.type === 'deleted') {
+						return null;
+					}
+					if (changes.type)
+						return changes.payload.data() as T;
+					},
+				),
+			);
 	}
 
 	private putProjItemsToCache(folder: IProjItemsFolder, path: string): void {

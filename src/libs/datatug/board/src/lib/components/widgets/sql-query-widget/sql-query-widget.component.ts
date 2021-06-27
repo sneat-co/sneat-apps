@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy, Simpl
 import {BoardCardTabService} from '../../board-card/board-card.component';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {IBoardContext, ISqlWidgetSettings} from '@sneat/datatug/models';
+import {IBoardContext, ISqlWidgetSettings, QueryType} from '@sneat/datatug/models';
 import {AgentService} from '@sneat/datatug/services/repo';
 import {IRecordsetResult} from '@sneat/datatug/dto';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
@@ -16,7 +16,7 @@ const reSqlParams = /@(\w+)/;
 export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 
 	@Input() level: number;
-	@Input() tab: 'SQL' | 'grid' | 'card' = 'SQL';
+	@Input() tab: QueryType | 'grid' | 'card' = QueryType.SQL;
 	@Input() data: ISqlWidgetSettings;
 	@Input() boardContext: IBoardContext;
 

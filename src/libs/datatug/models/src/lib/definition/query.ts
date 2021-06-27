@@ -17,6 +17,11 @@ export interface IQueryFolder extends IQueryItem {
 	items?: IQueryDef[];
 }
 
+export interface IQueryFolderContext extends IQueryFolder {
+	path: string;
+
+}
+
 export interface IQueryDef extends IQueryItem {
 	request: IQueryRequest;
 	draft?: boolean;

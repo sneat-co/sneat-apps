@@ -2,7 +2,14 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IProjItemBrief, IQueryDef, IQueryFolder, QueryItem} from '@sneat/datatug/models';
+import {
+	IProjItemBrief,
+	IQueryDef,
+	IQueryFolder,
+	IQueryFolderContext,
+	ISqlQueryRequest,
+	QueryItem
+} from '@sneat/datatug/models';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
@@ -29,19 +36,16 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	@ViewChild('codemirrorComponent', {static: true}) public codemirrorComponent: CodemirrorComponent;
 
+	public isActiveView: boolean;
+
 	// noinspection SqlDialectInspection
 	public sql = 'select * from ';
+	public currentFolder: IQueryFolderContext = {path: '~', id: ''};
 
 	public tab: 'shared' | 'new' | 'popular' | 'recent' | 'bookmarked' = 'shared'
 	public type: QueryType = '*';
 
 	public filter = '';
-
-	public readonly trackById = (_, v: IProjItemBrief) => v.id;
-
-	public get defaultBackHref(): string {
-		return this.project ? `/store/${getStoreId(this.project.ref.storeId)}/project/${this.project.ref.projectId}` : '/';
-	}
 
 	public project: IProjectContext;
 	public isDeletingFolders: string[] = [];
@@ -55,10 +59,8 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		style: {height: 'auto'},
 	};
 
-	public folderPath: string;
-
 	public allQueries: QueryItem[];
-	public currentFolder: IQueryFolder;
+
 	public parentFolders: IParentFolder[] = [];
 
 	public filteredItems: FilteredItem[];
@@ -76,7 +78,11 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		console.log('QueriesPageComponent.constructor()');
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
-				this.folderPath = queryParams.get('folder');
+				const id = queryParams.get('folder') || '';
+				this.currentFolder = {
+					path: id && `~/${id}` || '~',
+					id,
+				};
 				this.displayCurrentFolder();
 			},
 			error: this.errorLogger.logErrorHandler('Failed to get query params map from activate route'),
@@ -84,7 +90,16 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		this.loadQueries();
 	}
 
-	public isActiveView: boolean;
+	public get isRoot(): boolean {
+		return !!this.currentFolder.id;
+	}
+
+	public readonly trackById = (_, v: IProjItemBrief) => v.id;
+
+	public get defaultBackHref(): string {
+		return this.project ? `/store/${getStoreId(this.project.ref.storeId)}/project/${this.project.ref.projectId}` : '/';
+	}
+
 
 	ionViewWillEnter(): void {
 		console.log('ionViewWillEnter()')
@@ -100,17 +115,18 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		this.isActiveView = false;
 	}
 
+	getText(query: IQueryDef): string {
+		return (query.request as ISqlQueryRequest).text;
+	}
+
 	ngOnInit(): void {
 		console.log('QueriesPage.ngOnInit()')
 	}
 
 	goQuery(q: IQueryDef, action?: 'execute' | 'edit', folders?: string[]): void {
-		console.log('goQuery', q, folders, this.folderPath);
-		const folderPath = folders?.length ? folders.join('/') : this.folderPath ?? '';
-
-		if (folderPath) {
-			q = {...q, id: folderPath + '/' +q.id};
-		}
+		console.log('goQuery', q, folders, this.currentFolder.path);
+		const id = folders.join('/').replace('~/', '');
+		q = {...q, id: `${id}/${q.id}`};
 		this.dataTugNavService.goQuery(this.project, q, action);
 	}
 
@@ -123,7 +139,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 			this.filteredItems = undefined;
 		}
 		this.filteredItems = [];
-		this.populateFilteredItems(this.folderPath ? this.folderPath.split('/') : [], this.currentFolder);
+		this.populateFilteredItems(this.currentFolder.path.split('/'), this.currentFolder);
 	}
 
 	setQueryType(type: QueryType): void {
@@ -145,22 +161,30 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 
 	cd(path: string): void {
 		console.log('cd()', path);
-		if (!path) {
-			this.currentFolder = this.parentFolders[0];
+		if (path === '~') {
+			this.currentFolder = {
+				...this.parentFolders[0],
+				path: '~',
+			};
 			this.parentFolders = [];
-			this.folderPath = '';
 		} else if (path === '..') {
-			const p = this.folderPath.split('/');
+			const p = this.currentFolder.path.split('/');
 			p.pop()
-			this.folderPath = p.join('/');
-			this.currentFolder = this.parentFolders.pop()
-		} else {
-			this.folderPath = this.folderPath ? this.folderPath + '/' + path : path;
-			this.currentFolder = this.getFolderAndUpdateParents(path, this.currentFolder);
+			this.currentFolder = {
+				...this.parentFolders.pop(),
+				path: p.join('/'),
+			}
+		} else if (path) {
+			this.currentFolder = {
+				...this.getFolderAndUpdateParents(path, this.currentFolder),
+				path: this.currentFolder.path + '/' + path,
+			}
+		} else if (!path) {
+			throw new Error('can not change directory to a folder with empty name');
 		}
 		this.router.navigate([],
 			{
-				queryParams: this.folderPath && {folder: this.folderPath},
+				queryParams: this.currentFolder.path != '~' && {folder: this.currentFolder.path.replace('~/', '')},
 				replaceUrl: true,
 			})
 			.catch(this.errorLogger.logErrorHandler('Failed to navigate to another folder'));
@@ -180,12 +204,9 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 					this.queriesSub.unsubscribe();
 				}
 				console.log('QueriesPage.constructor() => currentProject:', currentProject);
-				this.queriesSub = this.queriesService.getQueriesFolder(currentProject.ref, '').subscribe({
-					next: folder => {
-						this.allQueries = folder.items;
-						this.currentFolder = this.getFolderAndUpdateParents(this.folderPath, folder)
-						this.displayCurrentFolder();
-					},
+				const {path} = this.currentFolder;
+				this.queriesSub = this.queriesService.getQueriesFolder(currentProject.ref, path).subscribe({
+					next: (folder: IQueryFolder) => this.onFolderRetrieved(path, folder),
 					error: this.errorLogger.logErrorHandler('Failed to load queries'),
 				});
 			},
@@ -193,14 +214,39 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		});
 	}
 
+	private onFolderRetrieved(path: string, folder: IQueryFolder): void {
+		console.log('onFolderRetrieved()', path, folder);
+		if (!path) {
+			throw new Error('path is a required parameter');
+		}
+		if (!!folder && folder !== null) {
+			throw new Error('folder argument expected to have value or be null');
+		}
+		if (path !== this.currentFolder.path) {
+			return;
+		}
+		if (!folder && path === '~') {
+			folder = {id: '~', folders: [], items: []};
+		}
+		this.allQueries = folder?.items || [];
+		this.currentFolder = {
+			...this.getFolderAndUpdateParents(path, folder),
+			path,
+		}
+		this.displayCurrentFolder();
+	}
+
 	private getFolderAndUpdateParents(path: string, folder: IQueryFolder): IQueryFolder {
 		console.log('getFolder()', path, folder);
-		if (!path) {
+		if (path === '~') {
 			return folder;
 		}
 		const p = path.split('/').reverse();
 		while (folder && p.length) {
 			const id = p.pop();
+			// if (id === '~' && !p.length) {
+			// 	continue;
+			// }
 			this.parentFolders.push({...folder, path: p.join('/')});
 			folder = folder.folders.find(item => item.id === id) as IQueryFolder;
 		}
@@ -236,7 +282,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 			return;
 		}
 		const parentFolder = this.currentFolder;
-		this.queriesService.createQueryFolder(this.project.ref, this.folderPath, name).subscribe({
+		this.queriesService.createQueryFolder(this.project.ref, parentFolder.path, name).subscribe({
 			next: folder => {
 				const existing = parentFolder.folders.find(f => f.id === name);
 				if (existing) {
@@ -245,29 +291,28 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 				} else {
 					parentFolder.folders.push(folder);
 				}
-				this.cd(this.folderPath ? this.folderPath + '/' + name : name);
+				this.cd(`${parentFolder.path}/${name}`);
 			},
 			error: this.errorLogger.logErrorHandler('Failed to create new folder'),
 		});
 	}
 
 	public deleteFolder(): void {
-		if (!this.folderPath) {
-			alert('The root folder is non deletable');
-			return
-		}
-		if (!confirm(`Are you sure you want to delete this folder?\n\n  /${this.folderPath}`)) {
+		const m = this.currentFolder.path === '~'
+			? 'Are you sure you want to delete all queries and sub-folder?'
+			: `Are you sure you want to delete this folder?\n\n  /${this.currentFolder.path}`;
+		if (!confirm(m)) {
 			return;
 		}
 		const folder = this.currentFolder;
-		const folderPath = this.folderPath;
+		const folderPath = folder.path;
 		const parent = this.parentFolders[this.parentFolders.length - 1];
 		this.isDeletingFolders.push(folderPath)
-		this.queriesService.deleteQueryFolder(this.project.ref, this.folderPath).subscribe({
+		this.queriesService.deleteQueryFolder(this.project.ref, folderPath).subscribe({
 			next: () => {
 				this.isDeletingFolders = this.isDeletingFolders.filter(f => f !== folderPath);
 				parent.folders = parent.folders.filter(f => f.id !== folder.id);
-				if (this.folderPath === folderPath && this.currentFolder.id === folder.id) {
+				if (this.currentFolder.path === folderPath && this.currentFolder.id === folder.id) {
 					this.cd('..');
 				}
 			},
