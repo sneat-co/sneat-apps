@@ -1,8 +1,7 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {routingParamStoreId} from '@sneat/datatug/core';
-import {SNEAT_AUTH_GUARDS, SneatAuthModule} from "@sneat/auth";
-import {IonicModule} from "@ionic/angular";
+import {SNEAT_AUTH_GUARDS} from "@sneat/auth";
 
 export const datatugRoutes: Routes = [
 	{
@@ -27,7 +26,6 @@ export const datatugRoutes: Routes = [
 
 @NgModule({
 	imports: [
-		SneatAuthModule,
 		RouterModule.forChild(datatugRoutes)
 	],
 	exports: [

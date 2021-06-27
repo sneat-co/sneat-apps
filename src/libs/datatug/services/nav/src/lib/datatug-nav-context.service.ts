@@ -98,7 +98,7 @@ export class DatatugNavContextService {
 					)
 					.subscribe({
 							next: val => {
-								console.log('DatatugNavContextService.constructor() => NavigationEnd:', val);
+								// console.log('DatatugNavContextService.constructor() => NavigationEnd:', val);
 								this.processUrl(val.urlAfterRedirects);
 							},
 							error: err => this.errorLogger.logError(err, 'Failed to process router event')
@@ -108,7 +108,7 @@ export class DatatugNavContextService {
 	}
 
 	public setCurrentProject(projectContext?: IProjectContext): void {
-		console.log('DatatugNavContextService.setCurrentProject()', projectContext);
+		// console.log('DatatugNavContextService.setCurrentProject()', projectContext);
 		if (projectContext?.summary && !projectContext.summary.id) {
 			this.errorLogger.logError(new Error('attempt to set current project with no ID'));
 			return;
@@ -152,7 +152,7 @@ export class DatatugNavContextService {
 	}
 
 	public setCurrentEnvironment(id?: string): void {
-		console.log('DatatugNavContextService.setCurrentEnvironment()', id);
+		// console.log('DatatugNavContextService.setCurrentEnvironment()', id);
 		if (this.$currentEnv.value?.id === id) {
 			return;
 		}
@@ -184,7 +184,7 @@ export class DatatugNavContextService {
 	}
 
 	private processUrl(url: string): void {
-		console.log('DatatugNavContextService: NavigationEnd =>', url);
+		// console.log('DatatugNavContextService.processUrl():', url);
 		try {
 			this.processStore(url);
 			this.processProject(url);
@@ -198,7 +198,7 @@ export class DatatugNavContextService {
 
 	private processStore(url: string): void {
 		const m = url.match(reStore);
-		console.log('processStore', url, m);
+		// console.log('processStore', url, m);
 		const storeId = m && m[1];
 		this.$currentStoreId.next(storeId);
 	}

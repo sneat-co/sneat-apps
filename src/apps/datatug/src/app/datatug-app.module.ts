@@ -21,6 +21,7 @@ import {HttpClientModule} from "@angular/common/http";
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import {SneatAuthModule} from '@sneat/auth';
 
 const firebaseApp = firebase.initializeApp(environment.firebaseConfig);
 if (environment.useEmulators) {
@@ -46,6 +47,7 @@ if (environment.useEmulators) {
 		HttpClientModule,
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatAppModule,
+		SneatAuthModule,
 		DatatugAppRoutingModule,
 		// DatatugMenuModule,
 	],

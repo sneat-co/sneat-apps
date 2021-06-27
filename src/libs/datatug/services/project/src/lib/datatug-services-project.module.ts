@@ -1,10 +1,7 @@
 import {NgModule} from '@angular/core';
-import {SneatAuthModule} from '@sneat/auth';
 
 @NgModule({
-	imports: [
-		SneatAuthModule,
-	],
+	imports: [],
 	providers: [
 		// ProjectService,
 		// ProjectContextService,

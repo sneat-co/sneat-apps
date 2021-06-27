@@ -9,7 +9,6 @@ import {WormholeModule} from '@sneat/wormhole';
 import {DatatugComponentsProjectModule} from "@sneat/datatug/components/project";
 import {DatatugCoreModule} from "@sneat/datatug/core";
 import {SneatAnalyticsModule} from "@sneat/analytics";
-import {SneatAuthModule} from "@sneat/auth";
 import {DatatugServicesBaseModule} from "@sneat/datatug/services/base";
 import {DatatugServicesNavModule} from "@sneat/datatug/services/nav";
 import {DatatugServicesUnsortedModule} from "@sneat/datatug/services/unsorted";
@@ -18,9 +17,6 @@ import {MenuProjectSelectorComponent} from "./menu-project-selector.component";
 import {MenuEnvSelectorComponent} from "./menu-env-selector.component";
 import {MenuStoreSelectorComponent} from "./menu-store-selector.component";
 import {NewProjectFormModule} from '@sneat/datatug/project';
-// import {TableMetaCardModule} from '../table-meta-card/table-meta-card.module';
-// import {ContextCardComponent} from '../../context/components/context-card/context-card.component';
-// import {ContextCardEntityComponent} from '../../context/components/context-card-entity/context-card-entity.component';
 
 @NgModule({
 	imports: [
@@ -31,7 +27,6 @@ import {NewProjectFormModule} from '@sneat/datatug/project';
 		//
 		WormholeModule,
 		SneatAnalyticsModule,
-		SneatAuthModule,
 		//
 		DatatugCoreModule,
 		DatatugServicesStoreModule,
