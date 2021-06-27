@@ -41,7 +41,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
 	private setProject = (project: IProjectContext): void => {
 		console.log('MenuProjectSelectorComponent.setProject()', project);
 		this.project = project;
-		this.currentProjectId = project.ref.projectId;
+		this.currentProjectId = project?.ref?.projectId;
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

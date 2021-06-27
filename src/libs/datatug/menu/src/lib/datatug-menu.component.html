@@ -34,7 +34,6 @@
 <ion-card>
 	<datatug-menu-store-selector
 			[datatugUser]="datatugUserState?.record"
-			[currentStoreId]="currentStoreId"
 	></datatug-menu-store-selector>
 	<datatug-menu-project-selector *ngIf="currentStoreId"
 								   [datatugUser]="datatugUserState?.record"

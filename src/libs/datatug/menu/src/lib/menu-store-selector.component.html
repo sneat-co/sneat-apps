@@ -10,7 +10,9 @@
 	<ion-select disabled *ngIf="currentStoreId && !stores?.length" [value]="currentStoreId">
 		<ion-select-option [value]="currentStoreId">{{currentStoreId}}</ion-select-option>
 	</ion-select>
-	<ion-select *ngIf="stores" interface="popover" [(ngModel)]="currentStoreId" (ionChange)="switchStore($event)">
+	<ion-select *ngIf="stores" interface="popover"
+				[value]="currentStoreId"
+				(ionChange)="switchStore($event)">
 		<ion-select-option [value]="store.id" *ngFor="let store of stores; trackBy: trackById">
 			{{store.title || store.id}}
 		</ion-select-option>
