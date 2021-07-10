@@ -7,6 +7,9 @@ const useEmulators = true;
 export const environment = {
 	production: false,
 	useEmulators,
+	agents: {
+		firestoreStoreAgent: useEmulators ? 'http://localhost:4300/v0' : 'https://api.sneat.team/v0',
+	},
 	firebaseConfig: {
 		apiKey: useEmulators ? 'emulator-does-not-need-api-key' : 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 		authDomain: 'sneat.team',

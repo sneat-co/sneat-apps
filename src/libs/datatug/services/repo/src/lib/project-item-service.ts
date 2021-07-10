@@ -6,6 +6,8 @@ import {IProjItemBrief, IProjItemsFolder, IQueryFolder} from '@sneat/datatug/mod
 import {StoreApiService} from './store-api.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {SneatApiServiceFactory} from '@sneat/api';
+import {parseStoreRef} from '@sneat/core';
 
 const notImplemented = 'not implemented';
 
@@ -77,12 +79,12 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 			.snapshotChanges()
 			.pipe(
 				map(changes => {
-					console.log('folder changes:', changes.type);
-					if (changes.type === 'deleted') {
-						return null;
-					}
-					if (changes.type)
-						return changes.payload.data() as T;
+						console.log('folder changes:', changes.type);
+						if (changes.type === 'deleted') {
+							return null;
+						}
+						if (changes.type)
+							return changes.payload.data() as T;
 					},
 				),
 			);
@@ -120,12 +122,20 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 	}
 
 	public createProjItem(projectRef: IProjectRef, projItem: ProjItem, itemPath = this.itemPath): Observable<ProjItem> {
-		return this.storeApiService.put(projectRef.storeId, `/${this.itemsPath}/create_${itemPath}`, projItem, {
-			params: {
-				project: projectRef.projectId,
-				id: projItem.id,
-			},
-		});
+		const params: {
+			[param: string]: string | string[];
+		} = {
+			project: projectRef.projectId,
+			id: projItem.id,
+		};
+		if (projectRef.storeId === 'firestore') {
+			params.store = projectRef.storeId;
+		}
+		return this.storeApiService.put(
+			projectRef.storeId,
+			`/${this.itemsPath}/create_${itemPath}`,
+			projItem,
+			{params});
 	}
 
 	public updateProjItem(projectRef: IProjectRef, projItem: ProjItem): Observable<ProjItem> {

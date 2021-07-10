@@ -158,6 +158,7 @@ export class ProjectService {
 		projStoreRef: IProjStoreRef,
 		projData: ICreateProjectData,
 	): Observable<string> {
+		console.log('createNewProject', projStoreRef, projData);
 		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(projStoreRef);
 		return sneatApiService.post<ICreateProjectData, { id: string }>('/datatug/project/create_project', projData)
 			.pipe(

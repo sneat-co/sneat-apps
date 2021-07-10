@@ -28,6 +28,7 @@ export class SneatApiService implements ISneatApiService {
 	}
 
 	public post<T>(endpoint: string, body: any): Observable<T> {
+		console.log('post()', endpoint);
 		const url = this.baseUrl + endpoint;
 		return this.errorIfNotAuthenticated() || this.httpClient
 			.post<T>(

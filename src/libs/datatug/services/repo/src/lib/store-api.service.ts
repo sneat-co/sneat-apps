@@ -2,11 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getStoreUrl} from '@sneat/datatug/nav';
+import {SneatApiServiceFactory} from '@sneat/api';
+import {parseStoreRef} from '@sneat/core';
 
 @Injectable({providedIn: 'root'})
 export class StoreApiService {
 
 	constructor(
+		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
 		private readonly httpClient: HttpClient,
 	) {
 	}
@@ -29,9 +32,10 @@ export class StoreApiService {
 	}
 
 	// noinspection JSUnusedGlobalSymbols
-	public put<T>(storeId: string, path: string, body: any, options?: IHttpRequestOptions): Observable<T> {
+	public put<I, O>(storeId: string, path: string, body: I, options?: IHttpRequestOptions): Observable<O> {
+		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(parseStoreRef(storeId))
 		const url = StoreApiService.getUrl(storeId, path);
-		return this.httpClient.put<T>(url, body, options);
+		return sneatApiService.put<I, O>(url, body, options);
 	}
 
 	// noinspection JSUnusedGlobalSymbols
