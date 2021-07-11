@@ -16,6 +16,8 @@ export class QueriesMenuComponent {
 
 	queries: ReadonlyArray<IQueryState>;
 
+	public trackByID = (i: number, item: IQueryState) => item.id;
+
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
 		private readonly queriesUiService: QueriesUiService,
@@ -52,4 +54,5 @@ export class QueriesMenuComponent {
 			.openNewQuery()
 			.catch(this.errorLogger.logErrorHandler('failed to open new query'))
 	}
+
 }

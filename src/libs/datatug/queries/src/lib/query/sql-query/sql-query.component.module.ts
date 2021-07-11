@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {SqlQueryPageComponent} from './sql-query-page.component';
+import {SqlQueryEditorComponent} from './sql-query-editor.component';
 import {CodemirrorModule} from '@ctrl/ngx-codemirror';
 import {DatatugBoardModule} from '@sneat/datatug/board';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
@@ -31,10 +31,10 @@ import {DatatugComponentsParametersModule} from "@sneat/datatug/components/param
 		DatatugComponentsParametersModule,
 	],
 	exports: [
-		SqlQueryPageComponent
+		SqlQueryEditorComponent
 	],
 	declarations: [
-		SqlQueryPageComponent,
+		SqlQueryEditorComponent,
 		ColumnsComponent,
 		JoinsComponent,
 	]

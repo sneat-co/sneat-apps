@@ -6,7 +6,7 @@ import {QueryPageComponent} from './query-page.component';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'queries',
+		component: QueryPageComponent,
 	},
 	{
 		path: ':queryId',
@@ -19,4 +19,7 @@ const routes: Routes = [
 	exports: [RouterModule],
 })
 export class QueryPageRoutingModule {
+	constructor() {
+		console.log('QueryPageRoutingModule.constructor');
+	}
 }

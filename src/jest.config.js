@@ -57,5 +57,6 @@ module.exports = {
     '<rootDir>/libs/team/team-models',
     '<rootDir>/libs/user',
     '<rootDir>/libs/datatug/folders',
+    '<rootDir>/libs/datatug/components/jsontug',
   ],
 };

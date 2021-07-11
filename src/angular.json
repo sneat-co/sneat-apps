@@ -2750,6 +2750,46 @@
           }
         }
       }
+    },
+    "datatug-components-jsontug": {
+      "projectType": "library",
+      "root": "libs/datatug/components/jsontug",
+      "sourceRoot": "libs/datatug/components/jsontug/src",
+      "prefix": "sneat",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/datatug/components/jsontug/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/datatug/components/jsontug/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/datatug/components/jsontug/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/components/jsontug"],
+          "options": {
+            "jestConfig": "libs/datatug/components/jsontug/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/components/jsontug/src/**/*.ts",
+              "libs/datatug/components/jsontug/src/**/*.html"
+            ]
+          }
+        }
+      }
     }
   }
 }

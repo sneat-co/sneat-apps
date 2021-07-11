@@ -27,10 +27,10 @@ import {parseStoreRef} from '@sneat/core';
 
 @Component({
 	selector: 'datatug-sql-query',
-	templateUrl: './sql-query-page.component.html',
-	styleUrls: ['./sql-query-page.component.scss'],
+	templateUrl: './sql-query-editor.component.html',
+	styleUrls: ['./sql-query-editor.component.scss'],
 })
-export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
+export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 
 	public showQueryBuilder: boolean;
 	public editorTab: 'text' | 'builder' = 'text';
@@ -86,7 +86,7 @@ export class SqlQueryPageComponent implements OnDestroy, ViewDidEnter {
 		private readonly envService: EnvironmentService,
 		private readonly changeDetector: ChangeDetectorRef,
 	) {
-		console.log('QueryPage.constructor()', location.hash);
+		console.log('SqlQueryEditorComponent.constructor()', location.hash);
 		this.queryEditorStateService.queryEditorState
 			.pipe(
 				distinctUntilChanged(),

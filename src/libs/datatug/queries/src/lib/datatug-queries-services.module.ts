@@ -12,12 +12,14 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {IonicModule} from '@ionic/angular';
 import {QueryEditorStateService} from './query-editor-state-service';
 import {QueriesUiService} from './queries-ui.service';
+import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
 
 @NgModule({
 	imports: [
 		DatatugServicesStoreModule,
 		ProjItemServiceModule,
 		IonicModule,
+		DatatugServicesUnsortedModule,
 	],
 	providers: [
 		{

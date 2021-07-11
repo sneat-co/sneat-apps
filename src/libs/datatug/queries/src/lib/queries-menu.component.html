@@ -11,7 +11,7 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
-<ion-item *ngFor="let query of queries"
+<ion-item *ngFor="let query of queries; trackBy: trackByID"
 		  tappable
 		  (click)="selectQuery(query.id)"
 >
