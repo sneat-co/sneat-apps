@@ -30,7 +30,7 @@ export class HttpQueryEditorComponent {
 	}
 
 	response: any;
-	responseTab = 'raw';
+	responseTab: 'raw' | 'formatted' | 'structured' = 'raw';
 
 	run(): void {
 

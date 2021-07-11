@@ -1,0 +1,22 @@
+<table *ngIf="rows" border="1" class="json-table">
+	<tr *ngFor="let row of rows">
+		<td style="vertical-align: top; text-align: right;">
+			{{row[0]}}
+		</td>
+		<td>
+			<datatug-json-grid *ngIf="isArray(row[1]); else notArray" [jsonGrid]="grid(row[1])"></datatug-json-grid>
+			<ng-template #notArray>
+				<ng-container *ngIf="isObject(row[1]); else notObject">
+					<span *ngIf="isEmptyObject(row[1]); else table">{{row[1]|json}}</span>
+					<ng-template #table>
+						<datatug-json-table [level]="level+1" [json]="row[1]"></datatug-json-table>
+					</ng-template>
+				</ng-container>
+				<ng-template #notObject>
+					<span style="color: grey; padding: 0.25em 0.5em;" *ngIf="row[1] === null">null</span>
+					<span style="padding: 0.25em 0.5em;" *ngIf="isSimpleType(row[1])">{{row[1]}}</span>
+				</ng-template>
+			</ng-template>
+		</td>
+	</tr>
+</table>

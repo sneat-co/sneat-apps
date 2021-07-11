@@ -32,7 +32,7 @@
 <ion-card *ngIf="response">
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
-			<ion-col size="4" >
+			<ion-col size="4">
 				<h2 class="ion-margin-start">Response</h2>
 			</ion-col>
 			<ion-col size="8">
@@ -45,14 +45,17 @@
 		</ion-row>
 	</ion-grid>
 	<ion-card-content>
-		<ion-textarea style="border: 1px solid lightgray; background-color: whitesmoke" rows="20" [value]="response|json" readonly="readonly"></ion-textarea>
+		<ion-textarea *ngIf="responseTab === 'raw'" style="border: 1px solid lightgray; background-color: whitesmoke"
+					  rows="20" [value]="response|json" readonly="readonly"></ion-textarea>
+		<datatug-json-table *ngIf="responseTab === 'structured'" [json]="response"></datatug-json-table>
 	</ion-card-content>
 </ion-card>
 
 <ion-card>
 	<ion-card-content>
 		<ul>
-			<li><a target="_blank" href="https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/">List of 50 Free and Open Public APIs (No Auth Needed)</a></li>
+			<li><a target="_blank" href="https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/">List
+				of 50 Free and Open Public APIs (No Auth Needed)</a></li>
 		</ul>
 	</ion-card-content>
 </ion-card>
