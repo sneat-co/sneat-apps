@@ -12,6 +12,7 @@ import {DatatugCoreModule} from '@sneat/datatug/core';
 import {DatatugServicesProjectModule} from '@sneat/datatug/services/project';
 import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
 import {DatatugServicesStoreModule} from '@sneat/datatug/services/repo';
+import {DatatugFoldersModule} from '@sneat/datatug/folders';
 
 @NgModule({
 	imports: [
@@ -28,6 +29,7 @@ import {DatatugServicesStoreModule} from '@sneat/datatug/services/repo';
 		ProjectPageRoutingModule,
 		SneatCardListModule,
 		WormholeModule,
+		DatatugFoldersModule,
 	],
 	declarations: [ProjectPageComponent],
 })

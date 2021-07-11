@@ -5,8 +5,8 @@ import {IHttpQueryRequest, IQueryDef, ISqlQueryRequest, QueryType} from "@sneat/
 import {QueriesService} from "./queries.service";
 import {IProjectRef} from "@sneat/datatug/core";
 import {DatatugNavContextService} from "@sneat/datatug/services/nav";
-import {filter} from "rxjs/operators";
 import {IProjectContext} from "@sneat/datatug/nav";
+import {filter} from "rxjs/operators";
 import {IQueryEditorState, IQueryState} from "@sneat/datatug/editor";
 
 export const isQueryChanged = (queryState: IQueryState): boolean => {

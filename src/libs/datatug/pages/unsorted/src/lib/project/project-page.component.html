@@ -24,26 +24,16 @@
 		</ion-item>
 	</ion-card>
 
-	<datatug-card-list [projItemType]="DbModel"
-					   title="DB models"
-					   itemIcon="server-outline"
-					   [isLoading]="!project"
-					   [items]="project?.summary?.dbModels"
-					   [getRouterLink]="getItemLink('dbmodel')"
-					   (itemClick)="goDbModel($event)"
-					   [create]="createSchema"
-					   (cardTitleClick)="goProjFolder(DbModel)"
-	></datatug-card-list>
-	<datatug-card-list [projItemType]="Environment"
-					   title="Environments"
-					   itemIcon="earth-outline"
-					   [isLoading]="!project"
-					   [items]="project?.summary?.environments"
-					   [create]="createEnvironment"
-					   [getRouterLink]="getItemLink('env')"
-					   (itemClick)="goEnvironment($event)"
-					   (cardTitleClick)="goProjFolder(Environment)"
-	></datatug-card-list>
+<!--	<datatug-card-list [projItemType]="DbModel"-->
+<!--					   title="DB models"-->
+<!--					   itemIcon="server-outline"-->
+<!--					   [isLoading]="!project"-->
+<!--					   [items]="project?.summary?.dbModels"-->
+<!--					   [getRouterLink]="getItemLink('dbmodel')"-->
+<!--					   (itemClick)="goDbModel($event)"-->
+<!--					   [create]="createSchema"-->
+<!--					   (cardTitleClick)="goProjFolder(DbModel)"-->
+<!--	></datatug-card-list>-->
 	<!--	<datatug-card-list [projItemType]="Entity"-->
 	<!--							 title="Entities"-->
 	<!--							 itemIcon="pricetag-outline"-->
@@ -52,15 +42,8 @@
 	<!--							 [create]="createEntity"-->
 	<!--							 (itemClick)="goEntity($event)"-->
 	<!--							 (cardTitleClick)="goProjFolder(Entity)"></datatug-card-list>-->
-	<datatug-card-list [projItemType]="Board"
-					   title="Boards"
-					   itemIcon="clipboard-outline"
-					   [isLoading]="!project"
-					   [items]="project?.summary?.boards"
-					   (cardTitleClick)="goProjFolder(Board)"
-					   (itemClick)="goBoard($event)"
-					   [getRouterLink]="getItemLink('board')"
-	></datatug-card-list>
+
+	<datatug-folder [path]="'~'" [projectRef]="project?.ref"></datatug-folder>
 	<!--	<datatug-card-list [projItemType]="Agent"-->
 	<!--							 title="Agents"-->
 	<!--							 itemIcon="cube-outline"-->

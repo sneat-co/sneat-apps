@@ -8,13 +8,16 @@ import {
 	StoreApiService
 } from '@sneat/datatug/services/repo';
 import {QueryContextSqlService} from "./query-context-sql.service";
-import {HttpClientModule} from '@angular/common/http';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {IonicModule} from '@ionic/angular';
+import {QueryEditorStateService} from './query-editor-state-service';
+import {QueriesUiService} from './queries-ui.service';
 
 @NgModule({
 	imports: [
 		DatatugServicesStoreModule,
 		ProjItemServiceModule,
+		IonicModule,
 	],
 	providers: [
 		{
@@ -32,7 +35,9 @@ import {AngularFirestore} from '@angular/fire/firestore';
 		},
 		QueriesService,
 		QueryContextSqlService,
+		QueryEditorStateService,
+		QueriesUiService,
 	]
 })
-export class QueriesServiceModule {
+export class DatatugQueriesServicesModule {
 }

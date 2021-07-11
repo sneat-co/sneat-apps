@@ -2,19 +2,24 @@ import {Component, Inject} from "@angular/core";
 import {QueryEditorStateService} from "./query-editor-state-service";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {IQueryState} from "@sneat/datatug/editor";
+import {QueriesUiService} from './queries-ui.service';
 
 @Component({
 	selector: 'datatug-queries-menu',
 	templateUrl: './queries-menu.component.html',
 })
 export class QueriesMenuComponent {
+
+	tab: 'active' | 'all' = 'active';
+
 	currentQueryId: string;
 
 	queries: ReadonlyArray<IQueryState>;
 
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		private queryEditorStateService: QueryEditorStateService,
+		private readonly queriesUiService: QueriesUiService,
+		private readonly queryEditorStateService: QueryEditorStateService,
 	) {
 		this.setupQueryEditorStateTracking();
 	}
@@ -40,5 +45,11 @@ export class QueriesMenuComponent {
 
 	closeQuery(query: IQueryState): void {
 		this.queryEditorStateService.closeQuery(query);
+	}
+
+	newQuery(): void {
+		this.queriesUiService
+			.openNewQuery()
+			.catch(this.errorLogger.logErrorHandler('failed to open new query'))
 	}
 }

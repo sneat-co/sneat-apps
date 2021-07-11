@@ -90,6 +90,10 @@ ion-label.deleting-list-item {
   }
 }
 
+.no-text-transform {
+  text-transform: none;
+}
+
 .small-popover {
   .popover-content {
 	min-width: 520px;

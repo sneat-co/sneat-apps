@@ -22,17 +22,17 @@
 </ion-header>
 
 <ion-content color="light">
-	<datatug-card-list [isLoading]="!boards"
-							 [noItemsText]="noItemsText"
-							 [items]="boards"
-							 itemIcon="easel-outline"
-							 [tab]="tab"
-							 [tabs]="[{id: 'shared', title: 'shared'}, {id: 'favorite', title: 'Favorite'}]"
-							 (tabChanged)="tabChanged($event)"
-							 [isFilterable]="boards?.length > 7"
-							 [getRouterLink]="getLinkToBoard"
-							 (itemClick)="goBoard"
-	></datatug-card-list>
+	<sneat-card-list [isLoading]="!boards"
+                     [noItemsText]="noItemsText"
+                     [items]="boards"
+                     itemIcon="easel-outline"
+                     [tab]="tab"
+                     [tabs]="[{id: 'shared', title: 'shared'}, {id: 'favorite', title: 'Favorite'}]"
+                     (tabChanged)="tabChanged($event)"
+                     [isFilterable]="boards?.length > 7"
+                     [getRouterLink]="getLinkToBoard"
+                     (itemClick)="goBoard"
+	></sneat-card-list>
 
 	<ion-button class="ion-margin" (click)="newBoard()">
 		<ion-icon slot="start" name="add"></ion-icon>

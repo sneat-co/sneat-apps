@@ -7,7 +7,6 @@ import {
 } from '@sneat/datatug/models';
 import {IProjectRef} from "@sneat/datatug/core";
 import {IStoreRef, parseStoreRef} from '@sneat/core';
-import {environment} from '../../../../../apps/datatug/src/environments/environment';
 
 export interface IDatatugStoreContext {
 	readonly ref: IStoreRef;
@@ -81,7 +80,7 @@ export const getStoreId = (repo: string): string => {
 
 export const getStoreUrl = (storeId: string): string => {
 	if (storeId === 'firestore') {
-		const v = environment.agents.firestoreStoreAgent;
+		const v = 'http://localhost:4300/v0'; //environment.agents.firestoreStoreAgent;
 		console.log('firestoreStoreAgent', v);
 		return v.endsWith('/') ? v.substring(0, v.length - 1) : v;
 	}

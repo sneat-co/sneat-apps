@@ -4,14 +4,14 @@ import {ProjectMenuTopComponent} from './project-menu-top/project-menu-top.compo
 import {IonicModule} from "@ionic/angular";
 import {ProjectMenuComponent} from "./project-menu/project-menu.component";
 import {FormsModule} from "@angular/forms";
-import {DatatugQueriesModule} from "@sneat/datatug/queries";
+import {DatatugQueriesMenuModule} from '@sneat/datatug/queries';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		DatatugQueriesModule,
+		DatatugQueriesMenuModule,
 	],
 	declarations: [
 		ProjectMenuComponent,

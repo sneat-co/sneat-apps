@@ -11,7 +11,7 @@ export interface ICardTab {
 }
 
 @Component({
-	selector: 'datatug-card-list',
+	selector: 'sneat-card-list',
 	templateUrl: './sneat-card-list.component.html',
 })
 export class SneatCardListComponent {

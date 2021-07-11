@@ -10,8 +10,7 @@ import {DatatugBoardModule} from '@sneat/datatug/board';
 import {DatatugComponentsDatagridModule} from '@sneat/datatug/components/datagrid';
 import {DatatugExecutorModule} from '@sneat/datatug/executor';
 import {DatatugComponentsSqlEditorModule} from '@sneat/datatug/components/sqleditor';
-import {QueriesServiceModule} from '../../queries.service.module';
-import {DatatugQueriesModule} from "@sneat/datatug/queries";
+import {DatatugQueriesServicesModule} from '../../datatug-queries-services.module';
 import {ColumnsComponent} from "./query-builder/columns.component";
 import {JoinsComponent} from "./query-builder/joins.component";
 import {WormholeModule} from "@sneat/wormhole";
@@ -24,11 +23,10 @@ import {DatatugComponentsParametersModule} from "@sneat/datatug/components/param
 		IonicModule,
 		DatatugComponentsSqlEditorModule,
 		CodemirrorModule,
-		QueriesServiceModule,
+		DatatugQueriesServicesModule,
 		DatatugBoardModule,
 		DatatugExecutorModule,
 		DatatugComponentsDatagridModule,
-		DatatugQueriesModule,
 		WormholeModule,
 		DatatugComponentsParametersModule,
 	],

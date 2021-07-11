@@ -33,10 +33,6 @@ import {parseStoreRef} from '@sneat/core';
 export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	readonly Environment = ProjectItem.Environment as const;
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	readonly Board = ProjectItem.Board as const;
-	// eslint-disable-next-line @typescript-eslint/naming-convention
 	readonly DbModel = ProjectItem.DbModel as const;
 
 	project: IProjectContext;

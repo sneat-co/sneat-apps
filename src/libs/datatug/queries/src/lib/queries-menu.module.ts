@@ -3,15 +3,16 @@ import {CommonModule} from '@angular/common';
 import {QueriesMenuComponent} from "./queries-menu.component";
 import {IonicModule} from "@ionic/angular";
 import {FormsModule} from "@angular/forms";
-import {QueryEditorStateService} from "./query-editor-state-service";
-import {QueriesServiceModule} from "./queries.service.module";
+import {DatatugQueriesServicesModule} from "./datatug-queries-services.module";
+import {DatatugQueriesUiModule} from './datatug-queries-ui.module';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		QueriesServiceModule,
+		DatatugQueriesServicesModule,
+		DatatugQueriesUiModule,
 	],
 	declarations: [
 		QueriesMenuComponent,
@@ -19,9 +20,6 @@ import {QueriesServiceModule} from "./queries.service.module";
 	exports: [
 		QueriesMenuComponent,
 	],
-	providers: [
-		QueryEditorStateService,
-	]
 })
-export class DatatugQueriesModule {
+export class DatatugQueriesMenuModule {
 }

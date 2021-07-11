@@ -1,7 +1,14 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {BoardService} from '../../board.service';
 import {AlertController} from '@ionic/angular';
-import {IFolder, IFolderItem, IProjBoard, IProjItemBrief, IProjStoreRef} from '@sneat/datatug/models';
+import {
+	folderItemsAsList,
+	IFolder,
+	IFolderItem,
+	IProjBoard,
+	IProjItemBrief,
+	IProjStoreRef
+} from '@sneat/datatug/models';
 import {IProjectContext} from '@sneat/datatug/nav';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
@@ -74,10 +81,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		}
 		this.boards = [];
 		if (folder?.boards) {
-			Object.keys(folder.boards).forEach(id => {
-				this.boards.push({id, title: folder.boards[id].name})
-			})
-			this.boards = this.boards.sort((a, b) => a.title > b.title ? 1 : -1)
+			this.boards = folderItemsAsList(folder.boards);
 		}
 	}
 

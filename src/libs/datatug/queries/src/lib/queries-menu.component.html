@@ -1,3 +1,7 @@
+<ion-segment [(ngModel)]="tab">
+	<ion-segment-button value="active" class="no-text-transform">Active</ion-segment-button>
+	<ion-segment-button value="all" class="no-text-transform">All</ion-segment-button>
+</ion-segment>
 <ion-item color="light" *ngIf="queries?.length">
 	<ion-icon name="search-outline" slot="start"></ion-icon>
 	<ion-input placeholder="Active Queries"></ion-input>
@@ -12,7 +16,7 @@
 		  (click)="selectQuery(query.id)"
 >
 	<ion-icon name="terminal-outline" slot="start"></ion-icon>
-	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query?.request.text">
+	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query?.title">
 		{{query.title || query.id}}
 	</ion-label>
 	<ion-buttons slot="end">
@@ -21,6 +25,15 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
-<ion-item *ngIf="!queries?.length">
+<ion-item *ngIf="tab === 'active' && !queries?.length">
 	<ion-label color="medium">No active queries</ion-label>
+	<ion-buttons slot="end">
+		<ion-button color="medium" (click)="newQuery()">
+			<ion-icon slot="start" name="add"></ion-icon>
+			<ion-label>New</ion-label>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
+<ion-item *ngIf="tab !== 'active'">
+	<ion-label color="medium">Not implemented yet</ion-label>
 </ion-item>
