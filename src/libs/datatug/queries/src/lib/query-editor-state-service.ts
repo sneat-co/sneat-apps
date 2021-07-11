@@ -149,7 +149,7 @@ export class QueryEditorStateService {
 		});
 	}
 
-	public newQuery(queryState: IQueryState): void {
+	public newQuery(queryState: IQueryState): IQueryState {
 		if (!queryState.title) {
 			for (; ;) {
 				counter += 1;
@@ -166,6 +166,7 @@ export class QueryEditorStateService {
 			activeQueries: [...$state.value?.activeQueries, queryState] || [queryState],
 		};
 		$state.next(state);
+		return queryState;
 	}
 
 	private updateQuerySatesWithProj(state: IQueryEditorState): IQueryEditorState {

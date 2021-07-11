@@ -3,23 +3,36 @@ import {Injectable} from '@angular/core';
 import {QueryType} from '@sneat/datatug/models';
 import {QueryEditorStateService} from './query-editor-state-service';
 import {RandomId} from '@sneat/random';
+import {DatatugNavService} from '@sneat/datatug/services/nav';
+import {IProjectRef} from '@sneat/datatug/core';
 
 @Injectable()
 export class QueriesUiService {
 	constructor(
 		private readonly actionSheet: ActionSheetController,
-		private queryEditorStateService: QueryEditorStateService,
+		private readonly queryEditorStateService: QueryEditorStateService,
+		private readonly nav: DatatugNavService,
 	) {
 	}
 
-	async openNewQuery(): Promise<void> {
+	async openNewQuery(projectRef: IProjectRef): Promise<void> {
+		console.log('openNewQuery', projectRef)
 		const createNewQuery = (type: QueryType) => () => {
 			console.log(type);
-			this.queryEditorStateService.newQuery({
-				id: RandomId.newRandomId(7),
+			const id = RandomId.newRandomId(7);
+			const queryState = this.queryEditorStateService.newQuery({
+				id: id,
 				isNew: true,
 				queryType: type,
+				def: {
+					id,
+					draft: true,
+					request: {
+						queryType: QueryType.HTTP,
+					}
+				},
 			});
+			this.nav.goQuery({ref: projectRef}, queryState.def);
 		}
 		const actionSheet = await this.actionSheet.create({
 			header: 'New query',

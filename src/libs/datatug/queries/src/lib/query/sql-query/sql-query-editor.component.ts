@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {IEnvDbServer, IParameter, IQueryDef, ISqlQueryRequest, ISqlQueryTarget, QueryType} from '@sneat/datatug/models';
 import {Coordinator} from '@sneat/datatug/executor';
@@ -15,7 +15,7 @@ import {RandomId} from "@sneat/random";
 import {ISqlChanged} from "./intefaces";
 import {isQueryChanged, QueryEditorStateService} from "../../query-editor-state-service";
 import {DatatugNavContextService, ProjectTracker} from "@sneat/datatug/services/nav";
-import {IProjectContext} from "@sneat/datatug/nav";
+import {IEnvContext, IProjectContext} from "@sneat/datatug/nav";
 import {distinctUntilChanged, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {ViewDidEnter} from "@ionic/angular";
@@ -57,6 +57,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	public targetCatalog: string;
 	public queryFolderPath = '';
 	public envId;
+	public envContext: IEnvContext;
 	public envDbServerId: string;
 	// noinspection SqlDialectInspection,SqlNoDataSourceInspection
 	public sql = '';
@@ -105,7 +106,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 			this.onSqlChanged(this.sql);
 		}
 
-		this.trackCurrentEnv();
 		this.trackCurrentProject()
 		this.trackQueryParams();
 		this.trackParamMap();
@@ -165,42 +165,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		this.parameters = parameters;
 	}
 
-	private trackCurrentEnv(): void {
-		this.datatugNavContextService.currentEnv
-			.pipe(takeUntil(this.destroyed))
-			.subscribe(currentEnv => {
-				try {
-					console.log('trackCurrentEnv() => ', currentEnv);
-					if (!currentEnv) {
-						return;
-					}
-					const {id} = currentEnv;
-					if (!id) {
-						return;
-					}
-					this.envId = id
-
-					let activeEnv = this.queryState.environments?.find(env => env.id === id) || {
-						id,
-						summary: currentEnv.summary
-					};
-					if (!activeEnv.summary && currentEnv.summary) {
-						activeEnv = {...activeEnv, summary: currentEnv.summary};
-					}
-					let environments: ReadonlyArray<IQueryEnvState> = this.queryState.environments || [activeEnv];
-					if (!environments.find(item => item.id == id)) {
-						environments = [...environments, activeEnv];
-					}
-					this.updateQueryState({
-						...this.queryState,
-						activeEnv,
-						environments,
-					})
-				} catch (e) {
-					this.errorLogger.logError(e, 'Failed to process change of current environment');
-				}
-			});
-	}
 
 	private updateQueryState(queryState: IQueryState): void {
 		this.queryEditorStateService.updateQueryState(queryState);
@@ -315,18 +279,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
 				console.log('SqlQueryPageComponent.trackQueryParams(): queryParams:', queryParams);
-				let queryId = queryParams.get('id');
-				const isNew = !queryId;
-				if (isNew) {
-					queryId = RandomId.newRandomId();
-					queryId = '' + (this.editorState.activeQueries?.length || 1);
-				}
-				this.setQueryId(queryId, isNew);
-
-				const envId = queryParams.get('env');
-				if (envId) {
-					this.setActiveEnv(envId);
-				}
 				this.target = {
 					...(this.target || {}),
 					server: queryParams.get('server'),

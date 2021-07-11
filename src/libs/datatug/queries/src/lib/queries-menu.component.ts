@@ -1,8 +1,10 @@
-import {Component, Inject} from "@angular/core";
+import {Component, Inject, Input} from "@angular/core";
 import {QueryEditorStateService} from "./query-editor-state-service";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {IQueryState} from "@sneat/datatug/editor";
 import {QueriesUiService} from './queries-ui.service';
+import {IProjectRef} from '@sneat/datatug/core';
+import {ProjectContextService} from '@sneat/datatug/services/project';
 
 @Component({
 	selector: 'datatug-queries-menu',
@@ -20,6 +22,7 @@ export class QueriesMenuComponent {
 
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
+		private readonly projectContextService: ProjectContextService,
 		private readonly queriesUiService: QueriesUiService,
 		private readonly queryEditorStateService: QueryEditorStateService,
 	) {
@@ -50,8 +53,12 @@ export class QueriesMenuComponent {
 	}
 
 	newQuery(): void {
+		if (!this.projectContextService.current) {
+			alert('Current project context is not in ProjectContextService');
+			return;
+		}
 		this.queriesUiService
-			.openNewQuery()
+			.openNewQuery(this.projectContextService.current)
 			.catch(this.errorLogger.logErrorHandler('failed to open new query'))
 	}
 

@@ -15,7 +15,7 @@ export interface IDatatugStoreContext {
 
 export interface IProjectContext {
 	readonly ref: IProjectRef;
-	readonly store: IDatatugStoreContext;
+	readonly store?: IDatatugStoreContext;
 	readonly brief?: IProjectBrief;
 	readonly summary?: IProjectSummary;
 }
