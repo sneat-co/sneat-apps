@@ -1,5 +1,5 @@
 import {
-	IProjectBrief, IDatatugProjectBriefWithIdAndStoreRef,
+	IProjectBrief,
 	IProjectSummary,
 	IEnvironmentSummary,
 	IProjEnv,
@@ -23,7 +23,7 @@ export interface IProjectContext {
 
 export function newProjectBriefFromSummary(summary: IProjectSummary, brief?: IProjectBrief): IProjectBrief {
 	return {
-		...(brief||{}),
+		...(brief || {}),
 		access: summary.access,
 		title: summary.title,
 		// titleOverride: summary.t
@@ -83,7 +83,7 @@ export const getStoreUrl = (storeId: string): string => {
 	if (storeId === 'firestore') {
 		const v = environment.agents.firestoreStoreAgent;
 		console.log('firestoreStoreAgent', v);
-		return v.endsWith('/') ? v.substring(0, v.length-1) : v;
+		return v.endsWith('/') ? v.substring(0, v.length - 1) : v;
 	}
 	if (!storeId || storeId.startsWith('http://') || storeId.startsWith('https://')) {
 		return storeId;

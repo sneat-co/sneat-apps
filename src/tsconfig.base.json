@@ -170,7 +170,8 @@
       "@sneat/api": ["libs/api/src/index.ts"],
       "@sneat/user": ["libs/user/src/index.ts"],
       "@sneat/core": ["libs/core/src/index.ts"],
-      "@sneat/datatug/core": ["libs/datatug/core/src/index.ts"]
+      "@sneat/datatug/core": ["libs/datatug/core/src/index.ts"],
+      "@sneat/datatug/folders": ["libs/datatug/folders/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

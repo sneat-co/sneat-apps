@@ -22,6 +22,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import {SneatAuthModule} from '@sneat/auth';
+import {EnvConfigToken} from '@sneat/datatug/core';
 
 const firebaseApp = firebase.initializeApp(environment.firebaseConfig);
 if (environment.useEmulators) {
@@ -65,6 +66,10 @@ if (environment.useEmulators) {
 		// 	provide: USE_FIREBASE_AUTH_EMULATOR,
 		// 	useValue: environment.useEmulators ? ['localhost', 9099] : undefined,
 		// },
+		{
+			provide: EnvConfigToken,
+			useValue: environment,
+		}
 	],
 	bootstrap: [
 		DatatugAppComponent,

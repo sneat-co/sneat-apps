@@ -56,5 +56,6 @@ module.exports = {
     '<rootDir>/libs/team/pages',
     '<rootDir>/libs/team/team-models',
     '<rootDir>/libs/user',
+    '<rootDir>/libs/datatug/folders',
   ],
 };

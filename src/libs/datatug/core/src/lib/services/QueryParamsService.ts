@@ -22,6 +22,8 @@ export class QueryParamsService {
 		// 		this.errorLogger.logError(err, `failed: ${err}`) ;
 		// 	});
 		// this.router.navigateByUrl(url);
-		history.replaceState(undefined, undefined, url);
+
+
+		history.replaceState(undefined,  document.title, url);
 	}
 }

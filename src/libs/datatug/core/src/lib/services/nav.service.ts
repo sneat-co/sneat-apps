@@ -6,9 +6,9 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 import {IMemberInfo, ITeam} from '@sneat/team-models';
 import {IUserTeamInfoWithId} from '@sneat/auth-models';
-import {IRetrospective} from '@sneat/scrumspace/retrospectives';
+// import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import {IRecord} from '@sneat/data';
-import {IScrum} from '@sneat/scrumspace/scrummodels';
+// import {IScrum} from '@sneat/scrumspace/scrummodels';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
@@ -32,8 +32,8 @@ export class NavService { // TODO: Should it be inside the /libs/datatug/service
 
 	public navigateToLogin(options?: { returnTo?: string; queryParams?: Params, fragment?: string }): void {
 		console.log('navigateToLogin()', options);
-		this.analyticsService.logEvent('navigateToLogin', {returnTo: options.returnTo});
-		if (options.returnTo) {
+		this.analyticsService.logEvent('navigateToLogin', {returnTo: options?.returnTo});
+		if (options?.returnTo) {
 			// Make `to`first parameter for sake of URL readability
 			options.queryParams = options && {to: options.returnTo, ...options.queryParams};
 		}
@@ -41,18 +41,18 @@ export class NavService { // TODO: Should it be inside the /libs/datatug/service
 			.catch(err => this.errorLogger.logError(err, 'Failed to navigate to login page'));
 	}
 
-	public navigateToScrum(date: 'today' | 'yesterday' | string, team: IRecord<ITeam>, scrum?: IRecord<IScrum>, tab?: ScrumPageTab): void {
-		console.log(`navigateToScrum(date=${date}, team=${team?.id}, tab=${tab}), scrum:`, scrum?.data);
-		this.analyticsService.logEvent('navigateToScrum', {date, team: team.id});
-		this.navController
-			.navigateForward('scrum', {
-					queryParams: {date, team: team.id},
-					state: {team, scrum},
-					fragment: tab && `tab=` + tab,
-				},
-			)
-			.catch(err => this.errorLogger.logError(err, 'Failed to navigate to scrum page'));
-	}
+	// public navigateToScrum(date: 'today' | 'yesterday' | string, team: IRecord<ITeam>, scrum?: IRecord<IScrum>, tab?: ScrumPageTab): void {
+	// 	console.log(`navigateToScrum(date=${date}, team=${team?.id}, tab=${tab}), scrum:`, scrum?.data);
+	// 	this.analyticsService.logEvent('navigateToScrum', {date, team: team.id});
+	// 	this.navController
+	// 		.navigateForward('scrum', {
+	// 				queryParams: {date, team: team.id},
+	// 				state: {team, scrum},
+	// 				fragment: tab && `tab=` + tab,
+	// 			},
+	// 		)
+	// 		.catch(err => this.errorLogger.logError(err, 'Failed to navigate to scrum page'));
+	// }
 
 
 	public navigateToUserProfile(): void {
@@ -86,29 +86,29 @@ export class NavService { // TODO: Should it be inside the /libs/datatug/service
 		).catch(err => this.errorLogger.logError(err, 'Failed to navigate to team page'));
 	}
 
-	public navigateToScrums = (navController: NavController, team: IRecord<ITeam>): void =>
-		this.navToTeamPage(navController, team, 'scrums', 'navigateToScrums');
-
-	public navigateToAddMetric = (navController: NavController, team: IRecord<ITeam>): void =>
-		this.navToTeamPage(navController, team, 'add-metric', 'navigateToAddMetric');
-
-	public navigateToAddMember = (navController: NavController, team: IRecord<ITeam>): void =>
-		this.navToTeamPage(navController, team, 'add-member', 'navigateToAddMember');
-
-	public navigateToRetrospective = (navController: NavController, team: IRecord<ITeam>, id: string | 'upcoming'): void =>
-		this.navToTeamPage(navController, team, 'retrospective', 'navigateToRetrospective', {id});
-
-	public navigateToRetroTree(date: 'today' | 'yesterday' | string, team: IRecord<ITeam>, retrospective?: IRecord<IRetrospective>): void {
-		console.log(`navigateToRetroReview(date=${date}, team=${team?.id}), scrum:`, retrospective?.data);
-		this.analyticsService.logEvent('navigateToRetroReview', {date, team: team.id});
-		this.navController
-			.navigateForward('retro-tree', {
-					queryParams: {date, team: team.id},
-					state: {team, retrospective},
-				},
-			)
-			.catch(err => this.errorLogger.logError(err, 'Failed to navigate to retro review page'));
-	}
+	// public navigateToScrums = (navController: NavController, team: IRecord<ITeam>): void =>
+	// 	this.navToTeamPage(navController, team, 'scrums', 'navigateToScrums');
+	//
+	// public navigateToAddMetric = (navController: NavController, team: IRecord<ITeam>): void =>
+	// 	this.navToTeamPage(navController, team, 'add-metric', 'navigateToAddMetric');
+	//
+	// public navigateToAddMember = (navController: NavController, team: IRecord<ITeam>): void =>
+	// 	this.navToTeamPage(navController, team, 'add-member', 'navigateToAddMember');
+	//
+	// public navigateToRetrospective = (navController: NavController, team: IRecord<ITeam>, id: string | 'upcoming'): void =>
+	// 	this.navToTeamPage(navController, team, 'retrospective', 'navigateToRetrospective', {id});
+	//
+	// public navigateToRetroTree(date: 'today' | 'yesterday' | string, team: IRecord<ITeam>, retrospective?: IRecord<IRetrospective>): void {
+	// 	console.log(`navigateToRetroReview(date=${date}, team=${team?.id}), scrum:`, retrospective?.data);
+	// 	this.analyticsService.logEvent('navigateToRetroReview', {date, team: team.id});
+	// 	this.navController
+	// 		.navigateForward('retro-tree', {
+	// 				queryParams: {date, team: team.id},
+	// 				state: {team, retrospective},
+	// 			},
+	// 		)
+	// 		.catch(err => this.errorLogger.logError(err, 'Failed to navigate to retro review page'));
+	// }
 
 	private navForward(
 		navController: NavController,

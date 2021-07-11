@@ -1,16 +1,19 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {BoardService} from '../../board.service';
 import {AlertController} from '@ionic/angular';
-import {IProjBoard, IProjItemBrief, IProjStoreRef} from '@sneat/datatug/models';
+import {IFolder, IFolderItem, IProjBoard, IProjItemBrief, IProjStoreRef} from '@sneat/datatug/models';
 import {IProjectContext} from '@sneat/datatug/nav';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import {DatatugFoldersService} from '@sneat/datatug/folders';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
 	selector: 'datatug-boards',
 	templateUrl: './boards-page.component.html',
 })
-export class BoardsPageComponent implements OnInit {
+export class BoardsPageComponent implements OnInit, OnDestroy {
 
 	tab = 'shared';
 	noItemsText: string;
@@ -19,25 +22,63 @@ export class BoardsPageComponent implements OnInit {
 	defaultHref: string;
 	project: IProjectContext;
 
+	folderPath = '~';
+
+	private readonly destroyed = new Subject<void>();
+
 	constructor(
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly datatugNavService: DatatugNavService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly boardService: BoardService,
 		private readonly alertCtrl: AlertController,
+		private readonly foldersService: DatatugFoldersService,
 	) {
 		this.tabChanged(this.tab);
-		this.datatugNavContextService.currentProject.subscribe({
-			next: currentProject => {
-				try {
-					this.project = currentProject;
-					this.boards = currentProject?.summary?.boards || [];
-				} catch (e) {
-					this.errorLogger.logError(e, 'Failed to process current project in Boards page');
-				}
-			},
-			error: err => this.errorLogger.logError(err, 'Failed to get current project at Boards page'),
-		});
+		this.datatugNavContextService.currentProject
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: currentProject => {
+					try {
+						this.setProject(currentProject);
+						// this.project = currentProject;
+						// this.boards = currentProject?.summary?.boards || [];
+					} catch (e) {
+						this.errorLogger.logError(e, 'Failed to process current project in Boards page');
+					}
+				},
+				error: err => this.errorLogger.logError(err, 'Failed to get current project at Boards page'),
+			});
+	}
+
+	ngOnDestroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
+
+	private setProject(project: IProjectContext): void {
+		const path = this.folderPath;
+		if (project?.ref?.projectId && project.ref.projectId !== this.project?.ref?.projectId) {
+			this.foldersService
+				.watchFolder({...project.ref, id: path})
+				.pipe(takeUntil(this.destroyed))
+				.subscribe(folder => this.onFolderReceived(path, folder))
+		}
+		this.project = project;
+	}
+
+	private onFolderReceived = (path: string, folder: IFolder): void => {
+		console.log('onFolderReceived', path, folder);
+		if (this.folderPath !== path) {
+			return;
+		}
+		this.boards = [];
+		if (folder?.boards) {
+			Object.keys(folder.boards).forEach(id => {
+				this.boards.push({id, title: folder.boards[id].name})
+			})
+			this.boards = this.boards.sort((a, b) => a.title > b.title ? 1 : -1)
+		}
 	}
 
 	public getLinkToBoard = (item: IProjItemBrief) => this.datatugNavService.projectPageUrl(this.project.ref, 'board', item.id);
