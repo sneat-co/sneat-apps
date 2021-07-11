@@ -37,17 +37,24 @@
 			</ion-col>
 			<ion-col size="8">
 				<ion-segment [(ngModel)]="responseTab">
-					<ion-segment-button value="raw">Raw</ion-segment-button>
-					<ion-segment-button value="formatted">Formatted</ion-segment-button>
+					<ion-segment-button value="headers">Headers</ion-segment-button>
+					<ion-segment-button value="raw">Body</ion-segment-button>
+<!--					<ion-segment-button value="formatted">Formatted</ion-segment-button>-->
 					<ion-segment-button value="structured">Structured</ion-segment-button>
 				</ion-segment>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-	<ion-card-content>
+	<ion-card-content *ngIf="responseTab === 'headers'">
+		<ion-item *ngFor="let headerKey of response.headers.keys()">
+			<ion-label color="medium">{{headerKey}}</ion-label>
+			<ion-input readonly="readonly" [value]="response.headers.get(headerKey)"></ion-input>
+		</ion-item>
+	</ion-card-content>
+	<ion-card-content *ngIf="responseTab !== 'headers'">
 		<ion-textarea *ngIf="responseTab === 'raw'" style="border: 1px solid lightgray; background-color: whitesmoke"
-					  rows="20" [value]="response|json" readonly="readonly"></ion-textarea>
-		<datatug-json-table *ngIf="responseTab === 'structured'" [json]="response"></datatug-json-table>
+					  rows="20" [value]="response.body|json" readonly="readonly"></ion-textarea>
+		<datatug-json-table *ngIf="responseTab === 'structured'" [json]="response.body"></datatug-json-table>
 	</ion-card-content>
 </ion-card>
 

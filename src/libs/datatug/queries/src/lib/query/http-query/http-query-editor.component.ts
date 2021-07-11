@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpRequest, HttpResponse} from '@angular/common/http';
 
-export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH';
 
 export interface IHttpQueryDef {
 	method: HttpMethod;
 	url: string;
+	body?: string;
 }
 
 @Component({
@@ -29,20 +30,26 @@ export class HttpQueryEditorComponent {
 	) {
 	}
 
-	response: any;
-	responseTab: 'raw' | 'formatted' | 'structured' = 'raw';
+	response: HttpResponse<any>;
+	responseTab: 'raw' | 'formatted' | 'structured' | 'headers' = 'raw';
 
 	run(): void {
-
 		let req: HttpRequest<any>;
-		if (this.queryDef.method === 'GET') {
-			req =  new HttpRequest<any>(this.queryDef.method, this.queryDef.url);
-		} else  {
-			req =  new HttpRequest<any>(this.queryDef.method, this.queryDef.url, 'test');
+		switch (this.queryDef.method) {
+			case 'GET':
+			case 'DELETE':
+				req = new HttpRequest(this.queryDef.method, this.queryDef.url);
+				break;
+			case 'POST':
+			case 'PUT':
+			case 'PATCH':
+				req = new HttpRequest(this.queryDef.method, this.queryDef.url, this.queryDef.body);
 		}
-		this.httpClient.request(req).subscribe(response => {
-			console.log('RESPONSE:', response);
-			this.response = response;
+		this.httpClient.request(req).subscribe(event => {
+			console.log('RESPONSE:', event);
+			if (event instanceof HttpResponse) {
+				this.response = event;
+			}
 		});
 	}
 }
