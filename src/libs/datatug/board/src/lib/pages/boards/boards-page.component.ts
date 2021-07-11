@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {BoardService} from '../../board.service';
 import {AlertController} from '@ionic/angular';
-import {IProjBoard, IProjItemBrief} from '@sneat/datatug/models';
+import {IProjBoard, IProjItemBrief, IProjStoreRef} from '@sneat/datatug/models';
 import {IProjectContext} from '@sneat/datatug/nav';
 import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
@@ -73,8 +73,11 @@ export class BoardsPageComponent implements OnInit {
 					text: 'Create',
 					handler: value => {
 						console.log('alert value:', value);
+						const store: IProjStoreRef = {
+							type: 'firestore',
+						};
 						this.boardService
-							.createNewBoard(this.project.ref, value.title as string)
+							.createNewBoard(store, this.project.ref, value.title as string)
 							.subscribe({
 								next: board => {
 									console.log('Board created:', board);

@@ -160,10 +160,12 @@ export class ProjectService {
 	): Observable<string> {
 		console.log('createNewProject', projStoreRef, projData);
 		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(projStoreRef);
-		return sneatApiService.post<ICreateProjectData, { id: string }>('/datatug/project/create_project', projData)
-			.pipe(
-				map(response => response.id)
-			);
+		return sneatApiService.post<ICreateProjectData, { id: string }>(
+			'/datatug/projects/create_project?store=firestore',
+			projData,
+		).pipe(
+			map(response => response.id)
+		);
 	}
 }
 
@@ -171,5 +173,10 @@ export interface ICreateProjectData {
 	title: string;
 	userIds: string[];
 	teamId?: string;
+}
+
+export interface ICreateProjectItemRequest {
+	title: string
+	folder: '~' | string;
 }
 
