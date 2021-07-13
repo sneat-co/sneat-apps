@@ -36,7 +36,9 @@
 <sneat-card-list *ngIf="tab === 'environments'"
 				 [projItemType]="Environment"
 				 title="Environments"
-				 itemIcon="earth-outline">
+				 itemIcon="earth-outline"
+				 [create]="createEnvironment"
+>
 	<!--					   [isLoading]="folder === undefined"-->
 	<!--					   [items]="project?.summary?.environments"-->
 	<!--					   [create]="createEnvironment"-->
@@ -50,6 +52,7 @@
 				 itemIcon="clipboard-outline"
 				 [isLoading]="folder === undefined"
 				 [items]="items"
+				 [create]="createBoard"
 >
 	<!--					   -->
 	<!--					   (cardTitleClick)="goProjFolder(Board)"-->

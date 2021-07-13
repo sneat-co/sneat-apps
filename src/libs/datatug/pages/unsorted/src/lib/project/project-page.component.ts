@@ -17,7 +17,12 @@ import {
 	ProjectItemType
 } from '@sneat/datatug/models';
 import {IProjectContext} from '@sneat/datatug/nav';
-import {DatatugNavContextService, DatatugNavService, ProjectTracker} from '@sneat/datatug/services/nav';
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+	ProjectTopLevelPage,
+	ProjectTracker
+} from '@sneat/datatug/services/nav';
 import {ProjectService} from '@sneat/datatug/services/project';
 import {EntityService, EnvironmentService, SchemaService} from '@sneat/datatug/services/unsorted';
 import {IProjectRef} from '@sneat/datatug/core';
@@ -102,10 +107,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		this.destroyed.complete();
 	}
 
-	public createSchema = (title: string) => this.createProjItem(ProjectItem.DbModel, title, this.schemaService.createSchema)
-
-	public createEnvironment = (title: string) =>
-		this.createProjItem(ProjectItem.Environment, title, this.environmentService.createEnvironment)
 
 	public goDbModel(dbModelBrief: IProjDbModelBrief): void {
 		this.goProjItemPage(ProjectItem.DbModel, dbModelBrief);
@@ -172,36 +173,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		};
 	}
 
-	private createProjItem<T extends IOptionallyTitled>(
-		projItemType: ProjectItem,
-		name: string,
-		create: (request: CreateNamedRequest) => Observable<IRecord<T>>,
-	): Observable<IRecord<T>> {
-		console.log('createProjItem()', projItemType, name);
-		return create({project: this.project.ref.projectId, name: name.trim()})
-			.pipe(
-				tap(value => {
-					console.log('project item created:', value);
-					try {
-						if (!this.project.summary.environments) {
-							this.project = {
-								...this.project,
-								summary: {...this.project.summary, environments: []},
-							}
-						}
-						const projItemBrief = {id: value.id, title: value.data?.title};
-						// this.project.environments.push(projItemBrief)
-						this.goProjItemPage(projItemType, projItemBrief);
-					} catch (err) {
-						this.errorLogger.logError(err, 'Failed to process API response');
-					}
-				}),
-				// catchError(err => {
-				// 	this.errorLogger.logError(err, 'Failed to create ' + projItemType);
-				// 	return throwError(err);
-				// }),
-			);
-	}
 
 	private goProjItemPage(page: ProjectItemType, projItem: IProjItemBrief): void {
 		console.log('goProjItemPage()', page, projItem, this.project);
@@ -211,5 +182,10 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 				break;
 		}
 		this.datatugNavService.goProjPage(this.project, page, {projectContext: this.project});
+	}
+
+	goTo(event: CustomEvent): void{
+		const page = event.detail.value as ProjectTopLevelPage;
+		this.datatugNavService.goProject(this.project, page);
 	}
 }

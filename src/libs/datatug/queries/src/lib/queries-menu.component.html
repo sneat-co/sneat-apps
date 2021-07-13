@@ -1,13 +1,7 @@
 <ion-segment [(ngModel)]="tab">
-	<ion-segment-button value="active" class="no-text-transform">
-		Active
-	</ion-segment-button>
-	<ion-segment-button value="all" class="no-text-transform">
-		All
-	</ion-segment-button>
-	<ion-segment-button value="favorites" class="no-text-transform">
-		Bookmarked
-	</ion-segment-button>
+	<ion-segment-button value="all" class="no-text-transform">Queries</ion-segment-button>
+	<ion-segment-button value="active" class="no-text-transform">Active</ion-segment-button>
+	<ion-segment-button value="favorites" class="no-text-transform">Bookmarked</ion-segment-button>
 </ion-segment>
 <ion-item color="light" *ngIf="queries?.length">
 	<ion-icon name="search-outline" slot="start"></ion-icon>

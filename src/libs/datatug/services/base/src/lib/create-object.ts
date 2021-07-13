@@ -8,8 +8,8 @@ interface PostService {
 }
 
 const validateCreateNamedRequest = (request: CreateNamedRequest): Observable<never> | undefined => {
-	if (!request.project) {
-		return throwError('project is a required parameter');
+	if (!request.projectRef) {
+		return throwError('projectRef is a required parameter');
 	}
 	if (!request.name) {
 		return throwError('name is a required parameter');

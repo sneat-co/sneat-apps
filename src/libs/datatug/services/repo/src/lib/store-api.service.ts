@@ -33,7 +33,7 @@ export class StoreApiService {
 
 	// noinspection JSUnusedGlobalSymbols
 	public put<I, O>(storeId: string, path: string, body: I, options?: IHttpRequestOptions): Observable<O> {
-		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(parseStoreRef(storeId))
+		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(storeId)
 		const url = StoreApiService.getUrl(storeId, path);
 		return sneatApiService.put<I, O>(url, body, options);
 	}

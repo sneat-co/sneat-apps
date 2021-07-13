@@ -122,7 +122,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 							type: 'firestore',
 						};
 						this.boardService
-							.createNewBoard(store, this.project.ref, value.title as string)
+							.createNewBoard({projectRef: this.project.ref, name: value.title as string})
 							.subscribe({
 								next: board => {
 									console.log('Board created:', board);

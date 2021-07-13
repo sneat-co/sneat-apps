@@ -4,6 +4,7 @@ import {DatatugFolderComponent} from './datatug-folder.component';
 import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
 import {SneatCardListModule} from '@sneat/components/card-list';
+import {BoardServiceModule} from '@sneat/datatug/board';
 
 @NgModule({
 	imports: [
@@ -11,6 +12,7 @@ import {SneatCardListModule} from '@sneat/components/card-list';
 		IonicModule,
 		FormsModule,
 		SneatCardListModule,
+		BoardServiceModule,
 	],
 	declarations: [
 		DatatugFolderComponent,

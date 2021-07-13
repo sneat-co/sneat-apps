@@ -5,6 +5,7 @@ import {IBoardDef, IProjBoard, IProjStoreRef} from '@sneat/datatug/models';
 import {IProjectRef} from '@sneat/datatug/core';
 import {SneatApiServiceFactory} from '@sneat/api';
 import {ICreateProjectItemRequest} from '@sneat/datatug/services/project';
+import {CreateNamedRequest} from '@sneat/datatug/dto';
 
 @Injectable()
 export class BoardService {
@@ -32,12 +33,13 @@ export class BoardService {
 		// return this.repoProviderService.get(storeId, '/boards/board', {params: {id: boardId, project}});
 	}
 
-	createNewBoard(storeRef: IProjStoreRef, projectRef: IProjectRef, title: string): Observable<IProjBoard> {
-		console.log('BoardService.createNewBoard()', projectRef);
-		const service = this.sneatApiServiceFactory.getSneatApiService(storeRef);
+	createNewBoard(request: CreateNamedRequest): Observable<IProjBoard> {
+		console.log('BoardService.createNewBoard()', request);
+		const {projectRef} = request;
+		const service = this.sneatApiServiceFactory.getSneatApiService(projectRef.storeId);
 		return service.post<ICreateProjectItemRequest, { id: string }>(
 			`/datatug/boards/create_board?project=${projectRef.projectId}&store=${projectRef.storeId}`,
-			{title, folder: '~'}, {
+			{title: request.name, folder: '~'}, {
 				params: {project: projectRef.projectId}
 			});
 		// return this.repoProviderService.post<IProjBoard>(projectRef.storeId, '/datatug/boards/create_board', {title}, {params: {project: projectRef.projectId}});

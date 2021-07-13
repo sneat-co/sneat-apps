@@ -155,11 +155,11 @@ export class ProjectService {
 	}
 
 	public createNewProject(
-		projStoreRef: IProjStoreRef,
+		storeId: string,
 		projData: ICreateProjectData,
 	): Observable<string> {
-		console.log('createNewProject', projStoreRef, projData);
-		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(projStoreRef);
+		console.log('createNewProject', storeId, projData);
+		const sneatApiService = this.sneatApiServiceFactory.getSneatApiService(storeId);
 		return sneatApiService.post<ICreateProjectData, { id: string }>(
 			'/datatug/projects/create_project?store=firestore',
 			projData,

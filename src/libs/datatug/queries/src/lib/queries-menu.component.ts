@@ -12,7 +12,7 @@ import {ProjectContextService} from '@sneat/datatug/services/project';
 })
 export class QueriesMenuComponent {
 
-	tab: 'active' | 'all' = 'active';
+	tab: 'active' | 'all' | 'bookmarked' = 'all';
 
 	currentQueryId: string;
 

@@ -3,7 +3,7 @@ import {ISneatApiService} from './sneat-api-service.interface';
 import {SneatApiService} from "./sneat-team-api.service";
 import {HttpClient} from "@angular/common/http";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {IStoreRef, storeRefToId} from '@sneat/core';
+import {IStoreRef, parseStoreRef, storeRefToId} from '@sneat/core';
 import {getStoreUrl} from '@sneat/datatug/nav';
 
 @Injectable({providedIn: 'root'})
@@ -23,10 +23,11 @@ export class SneatApiServiceFactory {
 		});
 	}
 
-	getSneatApiService(storeRef: IStoreRef): ISneatApiService {
-		if (!storeRef) {
-			throw new Error('storeRef is a required parameter, got empty: ' + typeof storeRef);
+	getSneatApiService(storeId: string): ISneatApiService {
+		if (!storeId) {
+			throw new Error('storeRef is a required parameter, got empty: ' + typeof storeId);
 		}
+		const storeRef = parseStoreRef(storeId);
 		if (!storeRef.type) {
 			throw new Error('storeRef.type is a required parameter, got empty: ' + typeof storeRef.type);
 		}

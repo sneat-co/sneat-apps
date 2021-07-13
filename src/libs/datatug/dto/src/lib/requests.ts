@@ -1,7 +1,8 @@
 import {IDbServer, IPipeDefinition, NamedParams} from '@sneat/datatug/models';
+import {IProjectRef} from '@sneat/datatug/core';
 
 export interface CreateNamedRequest {
-	project: string;
+	projectRef: IProjectRef;
 	name: string;
 }
 

@@ -28,10 +28,11 @@
 		</ion-item>
 		<ng-container *ngSwitchCase="'authenticated'">
 			<ng-container *ngIf="userRecordLoaded; else loading">
-				<ion-item *ngIf="!authState?.user?.isAnonymous">
-					<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
-					<ion-label color="medium">No personal or favorite projects yet</ion-label>
-				</ion-item>
+<!--				<ion-item *ngIf="!authState?.user?.isAnonymous">-->
+<!--					<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>-->
+<!--					<ion-label color="medium">No personal or favorite projects yet</ion-label>-->
+<!--				</ion-item>-->
+				<ng-container *ngIf="projects"></ng-container>
 				<ion-item *ngFor="let item of projects" tappable (click)="goProject(item)" detail>
 					<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
 					{{item.project.title}}

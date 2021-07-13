@@ -1,9 +1,22 @@
-import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
-import {Subject} from 'rxjs';
+import {Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import {Observable, Subject, throwError} from 'rxjs';
 import {DatatugFoldersService} from '@sneat/datatug/folders';
 import {IProjectRef} from '@sneat/datatug/core';
-import {takeUntil} from 'rxjs/operators';
-import {folderItemsAsList, IFolder, IProjItemBrief, ProjectItem} from '@sneat/datatug/models';
+import {takeUntil, tap} from 'rxjs/operators';
+import {
+	folderItemsAsList,
+	IFolder,
+	IOptionallyTitled,
+	IProjItemBrief,
+	ProjectItem,
+	ProjectItemType
+} from '@sneat/datatug/models';
+import {CreateNamedRequest} from '@sneat/datatug/dto';
+import {IRecord} from '@sneat/data';
+import {DatatugNavService} from '@sneat/datatug/services/nav';
+import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import {EntityService, EnvironmentService, SchemaService} from '@sneat/datatug/services/unsorted';
+import {BoardService} from '../../../board/src/lib/board.service';
 
 @Component({
 	selector: 'datatug-folder',
@@ -30,7 +43,13 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 	public getItemLink = (path: string) => (item: IProjItemBrief) => `${path}/${item.id}`;
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly foldersService: DatatugFoldersService,
+		private readonly datatugNavService: DatatugNavService,
+		private readonly schemaService: SchemaService,
+		private readonly environmentService: EnvironmentService,
+		private readonly boardService: BoardService,
+		private readonly entityService: EntityService,
 	) {
 		// foldersService.watchFolder()
 	}
@@ -44,6 +63,65 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 		if (this.projectRef) {
 			this.subscribeForFolder();
 		}
+	}
+
+	public createBoard = (title: string) =>
+		this.createProjItem(ProjectItem.Board, title, this.boardService.createNewBoard)
+
+	public createEnvironment = (title: string) =>
+		this.createProjItem(ProjectItem.Environment, title, this.environmentService.createEnvironment)
+
+	public createSchema = (title: string) => this.createProjItem(ProjectItem.DbModel, title,
+		this.schemaService.createSchema)
+
+	private createProjItem<T extends IOptionallyTitled>(
+		projItemType: ProjectItem,
+		name: string,
+		create: (request: CreateNamedRequest) => Observable<IRecord<T>>,
+	): Observable<IRecord<T>> {
+		console.log('createProjItem()', projItemType, name);
+		if (!this.projectRef) {
+			return throwError('projectRef is not set');
+		}
+		return create({projectRef: this.projectRef, name: name.trim()})
+			.pipe(
+				tap(value => {
+					console.log('project item created:', value);
+					try {
+						// if (!this.project.summary.environments) {
+						// 	this.project = {
+						// 		...this.project,
+						// 		summary: {...this.project.summary, environments: []},
+						// 	}
+						// }
+						const projItemBrief = {id: value.id, title: value.data?.title};
+						// this.project.environments.push(projItemBrief)
+						this.goProjItemPage(projItemType, projItemBrief);
+					} catch (err) {
+						this.errorLogger.logError(err, 'Failed to process API response');
+					}
+				}),
+				// catchError(err => {
+				// 	this.errorLogger.logError(err, 'Failed to create ' + projItemType);
+				// 	return throwError(err);
+				// }),
+			);
+	}
+
+	private goProjItemPage(page: ProjectItemType, projItem: IProjItemBrief): void {
+		console.log('goProjItemPage()', page, projItem, this.projectRef);
+		if (!this.projectRef) {
+			throw new Error('projectRef is not set');
+		}
+		switch (page) {
+			case ProjectItem.Environment:
+				page = 'env' as ProjectItemType;
+				break;
+		}
+		this.datatugNavService.goProjPage(
+			{ref: this.projectRef}, page,
+			{projectContext: {ref: this.projectRef}},
+		);
 	}
 
 	private subscribeForFolder(): void {
