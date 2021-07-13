@@ -16,9 +16,22 @@
 
 <ion-content color="light">
 	<ion-segment [(ngModel)]="tab" class="ion-padding-start ion-padding-end">
-		<ion-segment-button value="shared">Shared</ion-segment-button>
-		<ion-segment-button value="bookmarked">Bookmarked</ion-segment-button>
-		<ion-segment-button value="recent">Recent</ion-segment-button>
+		<ion-segment-button value="shared">
+			<ion-icon name="file-tray-stacked-outline"></ion-icon>
+			<ion-label>Shared</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="personal">
+			<ion-icon name="person-circle-outline"></ion-icon>
+			<ion-label>Personal</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="bookmarked">
+			<ion-icon name="bookmarks-outline"></ion-icon>
+			<ion-label>Bookmarked</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="recent">
+			<ion-icon name="receipt-outline"></ion-icon>
+			<ion-label>Recent</ion-label>
+		</ion-segment-button>
 	</ion-segment>
 	<ion-card *ngIf="tab !== 'shared'">
 		<ion-card-content>
@@ -31,16 +44,25 @@
 				<ion-input [disabled]="!currentFolder" placeholder="Filter" [(ngModel)]="filter"
 						   (ionChange)="applyFilter()"></ion-input>
 				<ion-buttons slot="end">
-<!--					<ion-segment>-->
-<!--						<ion-segment-button>SQL</ion-segment-button>-->
-<!--						<ion-segment-button>HTTP</ion-segment-button>-->
-<!--					</ion-segment>-->
-					<ion-button *ngIf="filter" (click)="filter = ''" color="medium">
+					<!--					<ion-segment>-->
+					<!--						<ion-segment-button>SQL</ion-segment-button>-->
+					<!--						<ion-segment-button>HTTP</ion-segment-button>-->
+					<!--					</ion-segment>-->
+					<ion-button *ngIf="filter || type !== '*'" (click)="clearFilter()"
+								color="medium"
+								title="Clear filter"
+					>
 						<ion-icon name="close"></ion-icon>
 					</ion-button>
-					<ion-button (click)="setQueryType('SQL')" [color]="type === 'SQL' ? 'primary' : 'medium'">SQL
+					<ion-button (click)="setQueryType('SQL')" [color]="type === 'SQL' ? 'success' : 'medium'">
+						<ion-icon *ngIf="type === 'SQL'" slot="start" name="checkbox-outline"></ion-icon>
+						<ion-icon *ngIf="type !== 'SQL'" slot="start" name="terminal-outline"></ion-icon>
+						<ion-label>SQL</ion-label>
 					</ion-button>
-					<ion-button (click)="setQueryType('HTTP')" [color]="type === 'HTTP' ? 'primary' : 'medium'">HTTP
+					<ion-button (click)="setQueryType('HTTP')" [color]="type === 'HTTP' ? 'success' : 'medium'">
+						<ion-icon *ngIf="type === 'HTTP'" slot="start" name="checkbox-outline"></ion-icon>
+						<ion-icon *ngIf="type !== 'HTTP'" slot="start" name="earth-outline"></ion-icon>
+						<ion-label>HTTP</ion-label>
 					</ion-button>
 				</ion-buttons>
 			</ion-item>

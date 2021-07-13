@@ -48,8 +48,6 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		return this.queryState?.id;
 	}
 
-	public queryNamePlaceholder: string;
-	public targetCatalog: string;
 	public queryFolderPath = '';
 	public envId;
 	public envDbServerId: string;
@@ -323,7 +321,6 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		if (this.queryId === id) {
 			return;
 		}
-		this.queryNamePlaceholder = isNew ? 'New query - title is a required field' : 'Title is a required field';
 		const i = id.lastIndexOf('/');
 		if (i >= 0) {
 			this.queryFolderPath = id.substring(0, i);

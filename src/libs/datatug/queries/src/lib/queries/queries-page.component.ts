@@ -25,7 +25,7 @@ interface IParentFolder extends IQueryFolder {
 	path: string;
 }
 
-type QueryType = 'SQL' | 'GraphQL' | 'HTTP' | '*'
+type QueryType = 'SQL' | 'GraphQL' | 'HTTP';
 
 @Component({
 	selector: 'datatug-sql-queries',
@@ -43,7 +43,7 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	public currentFolder: IQueryFolderContext = {path: '~', id: ''};
 
 	public tab: 'shared' | 'new' | 'popular' | 'recent' | 'bookmarked' = 'shared'
-	public type: QueryType = '*';
+	public type: QueryType | '*' = '*';
 
 	public filter = '';
 
@@ -90,6 +90,10 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 		this.loadQueries();
 	}
 
+	public clearFilter(): void {
+		this.filter = '';
+		this.type = '*';
+	}
 	public get isRoot(): boolean {
 		return !!this.currentFolder.id;
 	}

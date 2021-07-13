@@ -25,24 +25,25 @@
 
 <ion-content color="light">
 
-	<ion-grid>
-		<ion-row>
-			<ion-col size="12">
-				<ion-item>
-					<ion-input [placeholder]="queryNamePlaceholder" [value]="queryState?.title"
-							   (ionChange)="queryTitleChanged($event)"
-							   readonly="false"></ion-input>
-					<!--			<ion-select interface="popover" slot="end">-->
-					<!--				<ion-select-option value="q1">Query #1</ion-select-option>-->
-					<!--				<ion-select-option value="q2">Query #2</ion-select-option>-->
-					<!--				<ion-select-option value="q3">Query #3</ion-select-option>-->
-					<!--				<ion-select-option value="q4">Query #4</ion-select-option>-->
-					<!--			</ion-select>-->
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	<ion-card>
+		<ion-item>
+			<ion-input placeholder="Title - is required" [value]="queryState?.title"
+					   (ionChange)="queryTitleChanged($event)"
+					   readonly="false"></ion-input>
+			<ion-select interface="popover" slot="end">
+				<ion-select-option value="q1">Query #1</ion-select-option>
+				<ion-select-option value="q2">Query #2</ion-select-option>
+				<ion-select-option value="q3">Query #3</ion-select-option>
+				<ion-select-option value="q4">Query #4</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-icon name="folder-outline" slot="start"></ion-icon>
+			<ion-label color="medium">Folder:</ion-label>
+			<ion-input readonly="true" value="/"></ion-input>
+		</ion-item>
+	</ion-card>
 
-<!--	<datatug-sql-query *ngIf="queryState?.queryType === 'SQL'"></datatug-sql-query>-->
-	<datatug-http-query-editor ></datatug-http-query-editor>
+	<!--	<datatug-sql-query *ngIf="queryState?.queryType === 'SQL'"></datatug-sql-query>-->
+	<datatug-http-query-editor></datatug-http-query-editor>
 </ion-content>
