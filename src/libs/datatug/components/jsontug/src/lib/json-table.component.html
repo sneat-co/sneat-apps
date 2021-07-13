@@ -9,7 +9,7 @@
 				<ng-container *ngIf="isObject(row[1]); else notObject">
 					<span *ngIf="isEmptyObject(row[1]); else table">{{row[1]|json}}</span>
 					<ng-template #table>
-						<datatug-json-table [level]="level+1" [json]="row[1]"></datatug-json-table>
+						<datatug-json-table [path]="path + '.' + row[0]" [level]="level+1" [json]="row[1]"></datatug-json-table>
 					</ng-template>
 				</ng-container>
 				<ng-template #notObject>

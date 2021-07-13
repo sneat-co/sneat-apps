@@ -5,7 +5,7 @@
 	</tr>
 	</thead>
 	<tbody>
-	<tr *ngFor="let row of jsonGrid.rows">
+	<tr *ngFor="let row of jsonGrid.rows; let i = index">
 		<td *ngFor="let v of row">{{v|json}}</td>
 	</tr>
 	</tbody>

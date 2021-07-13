@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {arrayToGrid, IJsonGridData} from './array-to-grid';
+import {arrayToGrid, IJsonGridData, IObjectPipe} from './array-to-grid';
 
 @Component({
 	selector: 'datatug-json-table',
@@ -7,14 +7,17 @@ import {arrayToGrid, IJsonGridData} from './array-to-grid';
 	styleUrls: ['json-component.scss'],
 })
 export class JsonTableComponent implements OnChanges {
+	@Input() path = '';
 	@Input() json: any;
 	@Input() level = 0;
+	// @Input() path = 'data.#';
+	@Input() pipes?: IObjectPipe[];
 
 	public rows?: any[];
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (this.level < 2 && changes.json) {
-			this.rows = this.json && [];
+			this.rows = this.json && []; /// && [] is a hack to set rows to empty array if json otherwise false
 			if (this.rows) {
 				const o = this.json;
 				if (!Array.isArray(o)) {
@@ -50,7 +53,7 @@ export class JsonTableComponent implements OnChanges {
 	}
 
 	public grid(o: any): IJsonGridData {
-		return arrayToGrid(o);
+		return arrayToGrid(o, this.pipes);
 	}
 
 	public isArray(o: any): boolean {

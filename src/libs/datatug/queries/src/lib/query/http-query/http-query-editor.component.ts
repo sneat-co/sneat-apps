@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient, HttpRequest, HttpResponse} from '@angular/common/http';
+import {CurrencyFlagPipe, IObjectPipe} from '../../../../../components/jsontug/src/lib/array-to-grid';
 
 export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH';
 
@@ -7,6 +8,11 @@ export interface IHttpQueryDef {
 	method: HttpMethod;
 	url: string;
 	body?: string;
+}
+
+export interface IHttpApiEndpoint {
+	url: string;
+	title: string;
 }
 
 @Component({
@@ -25,10 +31,27 @@ export class HttpQueryEditorComponent {
 		return this.queryDef.method === 'POST';
 	}
 
+	readonly apiEndpoints: IHttpApiEndpoint[] = [
+		{
+			url: "https://api.coinbase.com/v2/currencies",
+			title: "Currency codes and names",
+		},
+		{
+			url: "https://api.coingecko.com/api/v3/exchange_rates",
+			title: "Exchange rates",
+		},
+	];
+
 	constructor(
 		private readonly httpClient: HttpClient,
 	) {
 	}
+
+	private readonly currencyPipe = new CurrencyFlagPipe('data.#', 'id', 'currency_flag');
+
+	isCurrencyPipeEnabled = false;
+
+	// pipes: IObjectPipe[] = [];
 
 	response: HttpResponse<any>;
 	responseTab: 'raw' | 'formatted' | 'structured' | 'headers' = 'raw';
@@ -51,5 +74,12 @@ export class HttpQueryEditorComponent {
 				this.response = event;
 			}
 		});
+	}
+
+	public try(event: Event, endpoint: IHttpApiEndpoint): void {
+		event.preventDefault();
+		event.stopPropagation();
+		this.queryDef = {...this.queryDef, url: endpoint.url};
+		this.run();
 	}
 }

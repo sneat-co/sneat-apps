@@ -8,5 +8,4 @@ import {IJsonGridData} from './array-to-grid';
 })
 export class JsonGridComponent {
 	@Input() jsonGrid?: IJsonGridData;
-
 }
