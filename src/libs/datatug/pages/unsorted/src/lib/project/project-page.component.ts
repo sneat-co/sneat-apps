@@ -38,7 +38,7 @@ import {parseStoreRef} from '@sneat/core';
 export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	readonly DbModel = ProjectItem.DbModel as const;
+	readonly DbModel = ProjectItem.dbModel as const;
 
 	project: IProjectContext;
 
@@ -109,7 +109,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 
 	public goDbModel(dbModelBrief: IProjDbModelBrief): void {
-		this.goProjItemPage(ProjectItem.DbModel, dbModelBrief);
+		this.goProjItemPage(ProjectItem.dbModel, dbModelBrief);
 	}
 
 	// public createEntity = (title: string) => {
@@ -177,7 +177,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	private goProjItemPage(page: ProjectItemType, projItem: IProjItemBrief): void {
 		console.log('goProjItemPage()', page, projItem, this.project);
 		switch (page) {
-			case ProjectItem.Environment:
+			case ProjectItem.environment:
 				page = 'env' as ProjectItemType;
 				break;
 		}

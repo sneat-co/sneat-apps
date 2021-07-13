@@ -3,37 +3,20 @@ import {IOptionallyTitled} from '../core';
 import {IEnvironmentFull} from './environments';
 import {IDbModelFull} from './dbmodels';
 import {IProjDbServerFull} from './apis/database';
-import {IProjectBrief} from '../interfaces';
 
 export type ProjectAccess = 'private' | 'protected' | 'public';
 
-// eslint-disable-next-line no-shadow
 export enum ProjectItem {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	Agent = 'agent',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	DbModel = 'dbmodel',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	Environment = 'environment',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	Entity = 'entity',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	agent = 'agent',
+	dbModel = 'dbModel',
+	environment = 'environment',
+	entity = 'entity',
 	Board = 'board',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	Variable = 'variable',
+	query = 'board',
+	variable = 'variable',
 }
 
-// eslint-disable-next-line no-shadow,@typescript-eslint/naming-convention
-export const ProjectItems = [
-	ProjectItem.Entity,
-	ProjectItem.Board,
-	ProjectItem.DbModel,
-	ProjectItem.Agent,
-	ProjectItem.Environment,
-	ProjectItem.Variable,
-] as const;
-
-export type ProjectItemType = typeof ProjectItems[number];
+export type ProjectItemType = `${ProjectItem}`;
 
 export interface IProjectBase {
 	id: string;

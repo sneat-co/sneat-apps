@@ -1,32 +1,16 @@
 <ion-segment [(ngModel)]="tab" class="ion-padding-horizontal">
-	<ion-segment-button value="environments">
-		<ion-label class="no-text-transform">
-			<!--			<ion-icon name="earth-outline" class="ion-padding-end"></ion-icon>-->
-			Environments
-		</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="boards">
+	<ion-segment-button [value]="t" *ngFor="let t of tabs">
 		<ion-label class="no-text-transform">
 			<!--			<ion-icon slot="start" name="clipboard-outline" class="ion-margin-end"></ion-icon>-->
-			Boards
-			<ion-badge color="light" *ngIf="folder?.numberOf?.boards">
-				<ion-text color="medium">{{folder.numberOf.boards}}</ion-text>
+			{{t|titlecase}}
+			<ion-badge color="light" *ngIf="folder?.numberOf[t]">
+				<ion-text color="medium">{{folder.numberOf[t]}}</ion-text>
 			</ion-badge>
-		</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="queries">
-		<ion-label class="no-text-transform">
-			Queries
-		</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="entities">
-		<ion-label class="no-text-transform">
-			Entities
 		</ion-label>
 	</ion-segment-button>
 </ion-segment>
 
-<ion-card *ngIf="tab === 'queries' || tab === 'entities'">
+<ion-card *ngIf="tab === 'entities'">
 	<ion-card-content>
 		<p>Not implemented yet (tab: {{tab}})</p>
 		<p>Path: {{path}}</p>
@@ -34,6 +18,7 @@
 </ion-card>
 
 <sneat-card-list *ngIf="tab === 'environments'"
+				 isFilterable="true"
 				 [projItemType]="Environment"
 				 title="Environments"
 				 itemIcon="earth-outline"
@@ -48,10 +33,26 @@
 </sneat-card-list>
 <sneat-card-list *ngIf="tab === 'boards'"
 				 [projItemType]="Board"
+				 isFilterable="true"
 				 title="Boards"
 				 itemIcon="clipboard-outline"
 				 [isLoading]="folder === undefined"
-				 [items]="items"
+				 [items]="boards"
+				 [create]="createBoard"
+>
+	<!--					   -->
+	<!--					   (cardTitleClick)="goProjFolder(Board)"-->
+	<!--					   (itemClick)="goBoard($event)"-->
+	<!--					   [getRouterLink]="getItemLink('board')"-->
+	>
+</sneat-card-list>
+<sneat-card-list *ngIf="tab === 'queries'"
+				 [projItemType]="Query"
+				 isFilterable="true"
+				 title="Queries"
+				 itemIcon="clipboard-outline"
+				 [isLoading]="folder === undefined"
+				 [items]="queries"
 				 [create]="createBoard"
 >
 	<!--					   -->

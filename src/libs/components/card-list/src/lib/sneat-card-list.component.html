@@ -1,11 +1,12 @@
 <ion-card>
-	<ion-item *ngIf="isFilterable">
-		<ion-input placeholder="Filter"></ion-input>
-	</ion-item>
 	<ion-item *ngIf="title" (click)="cardTitleClick.emit()" tappable>
 		<ion-icon *ngIf="itemIcon && !isLoading && !items?.length" [name]="itemIcon" slot="start"></ion-icon>
 		<ion-label style="font-weight: bold">{{title}}</ion-label>
+		<ion-input *ngIf="isFilterable" [(ngModel)]="filter" placeholder="(type to filter)"></ion-input>
 		<ion-buttons slot="end">
+			<ion-button *ngIf="filter" (click)="filter = ''" title="Clear filter">
+				<ion-icon name="close" color="medium"></ion-icon>
+			</ion-button>
 			<ion-button *ngIf="mode !== 'add' && create" (click)="showAddForm($event)">
 				<ion-icon color="primary" slot="start" name="add"></ion-icon>
 				<ion-label color="medium">Add</ion-label>

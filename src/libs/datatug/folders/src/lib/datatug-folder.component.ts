@@ -25,13 +25,22 @@ import {BoardService} from '../../../board/src/lib/board.service';
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	readonly Environment = ProjectItem.Environment as const;
+	readonly Environment = ProjectItem.environment as const;
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	readonly Board = ProjectItem.Board as const;
+	readonly Query = ProjectItem.query as const;
+
+	tabs = [
+		'boards',
+		'queries',
+		'environments',
+		'entities',
+	]
 
 	private destroyed = new Subject<void>();
 
-	items?: IProjItemBrief[];
+	boards?: IProjItemBrief[];
+	queries?: IProjItemBrief[];
 
 	@Input() path = '~';
 	@Input() projectRef?: IProjectRef;
@@ -68,10 +77,13 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 	public createBoard = (title: string) =>
 		this.createProjItem(ProjectItem.Board, title, this.boardService.createNewBoard)
 
-	public createEnvironment = (title: string) =>
-		this.createProjItem(ProjectItem.Environment, title, this.environmentService.createEnvironment)
+	public createQuery = (title: string) =>
+		alert('Not implemented yet.')
 
-	public createSchema = (title: string) => this.createProjItem(ProjectItem.DbModel, title,
+	public createEnvironment = (title: string) =>
+		this.createProjItem(ProjectItem.environment, title, this.environmentService.createEnvironment)
+
+	public createSchema = (title: string) => this.createProjItem(ProjectItem.dbModel, title,
 		this.schemaService.createSchema)
 
 	private createProjItem<T extends IOptionallyTitled>(
@@ -114,7 +126,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 			throw new Error('projectRef is not set');
 		}
 		switch (page) {
-			case ProjectItem.Environment:
+			case ProjectItem.environment:
 				page = 'env' as ProjectItemType;
 				break;
 		}
@@ -131,7 +143,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 				.subscribe({
 					next: folder => {
 						this.folder = folder;
-						this.items = folder?.boards ? folderItemsAsList(folder.boards).map(v => ({
+						this.boards = folder?.boards ? folderItemsAsList(folder.boards).map(v => ({
 							id: v.id,
 							title: v.name
 						})) : [];

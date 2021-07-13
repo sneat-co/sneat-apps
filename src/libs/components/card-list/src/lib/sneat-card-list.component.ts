@@ -34,6 +34,8 @@ export class SneatCardListComponent {
 
 	@ViewChild(IonInput, {static: false}) addInput: IonInput;
 
+	filter = '';
+
 	public mode: 'list' | 'add' = 'list';
 	public name = '';
 	public isAdding: boolean;
