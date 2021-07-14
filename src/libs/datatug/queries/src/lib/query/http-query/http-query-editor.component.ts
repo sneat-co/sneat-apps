@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient, HttpRequest, HttpResponse} from '@angular/common/http';
-import {CurrencyFlagPipe, IObjectPipe} from '../../../../../components/jsontug/src/lib/array-to-grid';
+import {currencyFlag, LookupPipe} from '@datatug/plugins';
 
 export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH';
 
@@ -47,7 +47,7 @@ export class HttpQueryEditorComponent {
 	) {
 	}
 
-	private readonly currencyPipe = new CurrencyFlagPipe('data.#', 'id', 'currency_flag');
+	private readonly currencyPipe = new LookupPipe(currencyFlag, 'data.#', 'id', 'currency_flag');
 
 	isCurrencyPipeEnabled = false;
 

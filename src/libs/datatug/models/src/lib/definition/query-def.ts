@@ -2,6 +2,7 @@ import {IProjItemBrief} from './project';
 import {IParameterDef} from './parameter';
 import {IRecordsetDefinition} from "./recordset";
 import {HttpMethod} from "./command-definition";
+import {IWidgetRef} from '@datatug/plugins';
 
 export enum QueryType {
 	HTTP = 'HTTP',
@@ -29,6 +30,7 @@ export interface IQueryDef extends IQueryItem {
 	dbModel?: string;
 	targets?: IQueryTarget[];
 	recordsets?: IRecordsetDefinition[];
+	widgets?: IWidgetRef[];
 }
 
 // Defines request to some data without parameters

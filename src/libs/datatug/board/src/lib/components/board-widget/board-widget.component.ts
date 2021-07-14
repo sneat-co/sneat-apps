@@ -10,7 +10,7 @@ import {IBoardContext, WidgetDef} from '@sneat/datatug/models';
 export class BoardWidgetComponent {
 
 	@Input() level: number;
-  @Input() cardTab: string;
+	@Input() cardTab: string;
 	@Input() widgetDef: WidgetDef;
 	@Input() boardContext: IBoardContext;
 }
