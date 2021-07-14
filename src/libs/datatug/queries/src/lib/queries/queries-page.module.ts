@@ -10,6 +10,7 @@ import {QueriesPageComponent} from './queries-page.component';
 import {DatatugQueriesServicesModule} from '../datatug-queries-services.module';
 import {DatatugComponentsSqlEditorModule} from "@sneat/datatug/components/sqleditor";
 import {WormholeModule} from "@sneat/wormhole";
+import {QueriesTabComponent} from './queries-tab.component';
 
 @NgModule({
 	imports: [
@@ -22,6 +23,7 @@ import {WormholeModule} from "@sneat/wormhole";
 		WormholeModule,
 	],
 	declarations: [
+		QueriesTabComponent,
 		QueriesPageComponent,
 	]
 })
