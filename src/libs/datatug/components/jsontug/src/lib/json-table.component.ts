@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {arrayToGrid, IJsonGridData, IObjectPipe} from './array-to-grid';
+import {arrayToGrid, IJsonGridData, IPipe} from '@datatug/plugins';
 
 @Component({
 	selector: 'datatug-json-table',
@@ -11,7 +11,7 @@ export class JsonTableComponent implements OnChanges {
 	@Input() json: any;
 	@Input() level = 0;
 	// @Input() path = 'data.#';
-	@Input() pipes?: IObjectPipe[];
+	@Input() pipes?: IPipe[];
 
 	public rows?: any[];
 
