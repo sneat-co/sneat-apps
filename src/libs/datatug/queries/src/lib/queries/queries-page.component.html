@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content color="light">
-	<ion-segment [(ngModel)]="tab" class="ion-padding-start ion-padding-end">
+	<ion-segment [(ngModel)]="tab" class="ion-padding-start ion-padding-end" (ionChange)="updateUrlWithCurrentTab()">
 		<ion-segment-button value="active">
 			<ion-icon name="play-circle-outline"></ion-icon>
 			<ion-label>Active</ion-label>
@@ -37,27 +37,12 @@
 			<ion-label>Shared</ion-label>
 		</ion-segment-button>
 	</ion-segment>
-	<ng-container [ngSwitch]="tab">
-		<ion-card *ngSwitchCase="'active'">
-			<ion-card-content>
-				<p>{{tab}} &mdash; not implemented yet</p>
-			</ion-card-content>
-		</ion-card>
-		<ion-card *ngSwitchCase="'bookmarked'">
-			<ion-card-content>
-				<p>{{tab}} &mdash; not implemented yet</p>
-			</ion-card-content>
-		</ion-card>
-		<ion-card *ngSwitchCase="'personal'">
-			<ion-card-content>
-				<p>{{tab}} &mdash; not implemented yet</p>
-			</ion-card-content>
-		</ion-card>
-		<ion-card *ngSwitchCase="'shared'">
-			<datatug-queries-tab rootFolder="shared" [project]="project"></datatug-queries-tab>
-		</ion-card>
-
-	</ng-container>
+	<ion-card >
+		<ion-card-content *ngIf="tab === 'active' || tab === 'bookmarked'">
+			<p>{{tab}} &mdash; not implemented yet</p>
+		</ion-card-content>
+		<datatug-queries-tab *ngIf="tab === 'shared' || tab === 'personal'" [rootFolder]="tab" [project]="project"></datatug-queries-tab>
+	</ion-card>
 
 	<ion-card>
 		<ion-item>
@@ -65,7 +50,7 @@
 				Tags
 			</ion-label>
 			<ion-label slot="end" color="medium" style="text-align: right">Order by:</ion-label>
-			<ion-select interface="popover" value="count" slot="end">
+			<ion-select [(ngModel)]="orderTagsBy" interface="popover" value="count" slot="end" (ionChange)="updateUrlWithOrderTagsBy()">
 				<ion-select-option value="title">title</ion-select-option>
 				<ion-select-option value="count">count</ion-select-option>
 			</ion-select>

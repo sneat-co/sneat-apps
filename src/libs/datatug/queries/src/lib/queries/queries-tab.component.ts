@@ -68,15 +68,23 @@ export class QueriesTabComponent {
 		this.route.queryParamMap.subscribe({
 			next: queryParams => {
 				const id = queryParams.get('folder') || '';
-				this.currentFolder = {
-					path: id && `~/${id}` || '~',
-					id,
-				};
-				this.displayCurrentFolder();
+				if (!id) {
+					this.updateUrlWithCurrentFolder();
+				} else {
+					this.currentFolder = {
+						path: id && `~/${id}` || '~',
+						id,
+					};
+					this.displayCurrentFolder();
+				}
 			},
 			error: this.errorLogger.logErrorHandler('Failed to get query params map from activate route'),
 		})
 		this.loadQueries();
+	}
+
+	public isFiltering(): boolean {
+		return !!this.filter && this.type !== '*';
 	}
 
 	getText(query: IQueryDef): string {
@@ -89,10 +97,10 @@ export class QueriesTabComponent {
 		this.filter = '';
 		this.type = '*';
 	}
+
 	public get isRoot(): boolean {
 		return !!this.currentFolder.id;
 	}
-
 
 
 	goQuery(q: IQueryDef, action?: 'execute' | 'edit', folders?: string[]): void {
@@ -151,13 +159,21 @@ export class QueriesTabComponent {
 		} else if (!path) {
 			throw new Error('can not change directory to a folder with empty name');
 		}
+		this.updateUrlWithCurrentFolder();
+		this.displayCurrentFolder();
+	}
+
+	private updateUrlWithCurrentFolder(): void {
+		this.setUrlParam('folder', this.currentFolder.path.replace('~/', ''));
+	}
+
+	private setUrlParam(name: string, value: string): void {
 		this.router.navigate([],
 			{
-				queryParams: this.currentFolder.path != '~' && {folder: this.currentFolder.path.replace('~/', '')},
+				queryParams: {[name]: value},
 				replaceUrl: true,
 			})
-			.catch(this.errorLogger.logErrorHandler('Failed to navigate to another folder'));
-		this.displayCurrentFolder();
+			.catch(this.errorLogger.logErrorHandler(`Failed to set url parameter "${name}"`));
 	}
 
 	private loadQueries(): void {

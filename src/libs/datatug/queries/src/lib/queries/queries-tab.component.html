@@ -25,8 +25,8 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item-divider *ngIf="!filter && currentFolder.folders">
-		<ion-label *ngIf="!parentFolders?.length">Root</ion-label>
+	<ion-item-divider *ngIf="!isFiltering() && currentFolder.folders">
+		<ion-label *ngIf="!parentFolders?.length">{{rootFolder|titlecase}} queries</ion-label>
 		<ion-badge *ngFor="let parentFolder of parentFolders" color="light" tappable
 				   (click)="cd(parentFolder.path)" style="font-weight: normal">
 			<ion-icon name="folder-open-outline"></ion-icon>
