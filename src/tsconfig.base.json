@@ -173,7 +173,8 @@
       "@sneat/datatug/core": ["libs/datatug/core/src/index.ts"],
       "@sneat/datatug/folders": ["libs/datatug/folders/src/index.ts"],
       "@datatug/jsonrows": ["libs/datatug/components/jsontug/src/index.ts"],
-      "@datatug/plugins": ["libs/datatug/plugins/src/index.ts"]
+      "@datatug/plugins": ["libs/datatug/plugins/src/index.ts"],
+      "@sneat/datatug/checks": ["libs/datatug/checks/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

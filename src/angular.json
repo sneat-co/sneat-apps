@@ -2830,6 +2830,31 @@
           }
         }
       }
+    },
+    "datatug-checks": {
+      "projectType": "library",
+      "root": "libs/datatug/checks",
+      "sourceRoot": "libs/datatug/checks/src",
+      "prefix": "sneat",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatug/checks"],
+          "options": {
+            "jestConfig": "libs/datatug/checks/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatug/checks/src/**/*.ts",
+              "libs/datatug/checks/src/**/*.html"
+            ]
+          }
+        }
+      }
     }
   }
 }

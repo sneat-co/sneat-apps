@@ -59,5 +59,6 @@ module.exports = {
     '<rootDir>/libs/datatug/folders',
     '<rootDir>/libs/datatug/components/jsontug',
     '<rootDir>/libs/datatug/plugins',
+    '<rootDir>/libs/datatug/checks',
   ],
 };
