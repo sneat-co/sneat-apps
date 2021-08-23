@@ -12,4 +12,4 @@ export * from './recordset';
 export * from './query-def';
 export * from './store';
 export * from './schema';
-
+export * from './checks';

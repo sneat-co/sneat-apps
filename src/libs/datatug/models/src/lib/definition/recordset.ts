@@ -1,4 +1,5 @@
 import {IEntityFieldRef} from "./metapedia";
+import {IFieldCheck} from './checks';
 
 export interface IRecordsetDefinition {
 	name: string;
@@ -10,6 +11,7 @@ export interface IRecordsetColumn {
 	type: string;
 	meta?: IEntityFieldRef;
 	hideIf?: IHideRecordsetColIf;
+	checks: IFieldCheck;
 }
 
 export interface IHideRecordsetColIf {

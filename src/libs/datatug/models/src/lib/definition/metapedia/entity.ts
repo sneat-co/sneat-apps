@@ -1,5 +1,7 @@
 import {IOptionallyTitled} from '../../core';
 import {ParameterType} from '../parameter';
+import {IValueCheck} from '../../../../../checks/src/lib/interfaces';
+import {IFieldCheck} from '../checks';
 
 export interface IEntity extends IOptionallyTitled {
 	extends?: { def: string };
@@ -23,6 +25,7 @@ export interface IEntityField {
 	readonly id: string;
 	readonly type: ParameterType;
 	readonly namePattern?: { regexp: string } | { wildcard: string };
+	readonly checks: IFieldCheck[];
 }
 
 export interface IEntityFieldRef {
