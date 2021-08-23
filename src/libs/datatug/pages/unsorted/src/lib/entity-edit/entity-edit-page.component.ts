@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Subject} from 'rxjs';
 import {IonInput, PopoverController} from '@ionic/angular';
 import {EntityFieldDialogComponent} from './entity-field-dialog/entity-field-dialog.component';
-import {IEntity, IEntityField} from '@sneat/datatug/models';
+import {IEntity, IEntityFieldDef} from '@sneat/datatug/models';
 import {IProjectContext} from '@sneat/datatug/nav';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {EntityService} from '@sneat/datatug/services/unsorted';
@@ -94,7 +94,7 @@ export class EntityEditPageComponent implements OnDestroy {
 		});
 		popover.onDidDismiss().then((response) => {
 			console.log('response:', response);
-			this.entity = {...this.entity, fields: [...this.entity.fields, response.data as IEntityField]};
+			this.entity = {...this.entity, fields: [...this.entity.fields, response.data as IEntityFieldDef]};
 			console.log('entity', this.entity);
 		});
 		return await popover.present();

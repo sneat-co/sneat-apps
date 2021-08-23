@@ -1,11 +1,10 @@
 import {IOptionallyTitled} from '../../core';
-import {ParameterType} from '../parameter';
-import {IValueCheck} from '../../../../../checks/src/lib/interfaces';
-import {IFieldCheck} from '../checks';
+import {IFieldCheckDef} from '../checks';
+import {DataType} from '../types';
 
 export interface IEntity extends IOptionallyTitled {
 	extends?: { def: string };
-	fields: IEntityField[];
+	fields: IEntityFieldDef[];
 	sourceOfRecord?: {
 		db: string;
 		objType: 'table';
@@ -21,11 +20,11 @@ export interface IEntity extends IOptionallyTitled {
 	};
 }
 
-export interface IEntityField {
+export interface IEntityFieldDef {
 	readonly id: string;
-	readonly type: ParameterType;
+	readonly type: DataType;
 	readonly namePattern?: { regexp: string } | { wildcard: string };
-	readonly checks: IFieldCheck[];
+	readonly checks?: IFieldCheckDef[];
 }
 
 export interface IEntityFieldRef {

@@ -170,7 +170,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 			layout: 'fitColumns',
 			groupBy: 'schema',
 			columns: getTabulatorCols(columns),
-			rowClick: (e, row) => {
+			rowClick: (e: any, row: { getData: () => IRecordsetInfo; }) => {
 				const data: IRecordsetInfo = row.getData();
 				this.datatugNavService.goTable({
 					project: this.project,

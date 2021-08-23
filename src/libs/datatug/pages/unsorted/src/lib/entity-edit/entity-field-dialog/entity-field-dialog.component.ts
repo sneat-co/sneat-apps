@@ -1,17 +1,17 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {PopoverController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {IEntityField, ParameterType} from '@sneat/datatug/models';
+import {DataType, IEntityFieldDef} from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-entity-field-dialog',
 	templateUrl: './entity-field-dialog.component.html',
 	styleUrls: ['./entity-field-dialog.component.scss'],
 })
-export class EntityFieldDialogComponent implements OnInit {
+export class EntityFieldDialogComponent  {
 
 	public fieldId = '';
-	public fieldType: ParameterType;
+	public fieldType: DataType;
 	public regexPattern: string;
 
 	constructor(
@@ -20,11 +20,8 @@ export class EntityFieldDialogComponent implements OnInit {
 	) {
 	}
 
-	ngOnInit() {
-	}
-
 	complete(): void {
-		let data: IEntityField = {id: this.fieldId, type: this.fieldType};
+		let data: IEntityFieldDef = {id: this.fieldId, type: this.fieldType};
 		if (this.regexPattern) {
 			data = {...data, namePattern: {regexp: this.regexPattern}};
 		}

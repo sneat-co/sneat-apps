@@ -1,6 +1,6 @@
 import {IProjItemBrief} from './project';
 import {IParameterDef} from './parameter';
-import {IRecordsetDefinition} from "./recordset";
+import {IRecordsetDef} from "./recordset";
 import {HttpMethod} from "./command-definition";
 import {IWidgetRef} from '@datatug/plugins';
 
@@ -18,18 +18,18 @@ export interface IQueryFolder extends IQueryItem {
 	items?: IQueryDef[];
 }
 
-export interface IQueryFolderContext extends IQueryFolder {
+export interface IQueryFolderContext extends IQueryFolder { // TODO: document what & why
 	path: string;
-
 }
 
+// Defines user's query
 export interface IQueryDef extends IQueryItem {
 	request: IQueryRequest;
 	draft?: boolean;
 	parameters?: IParameterDef[];
 	dbModel?: string;
 	targets?: IQueryTarget[];
-	recordsets?: IRecordsetDefinition[];
+	recordsets?: IRecordsetDef[];
 	widgets?: IWidgetRef[];
 }
 
@@ -39,6 +39,7 @@ export interface IQueryRequest {
 	queryType: QueryType // for example: SQL, HTTP, etc.
 }
 
+// A base interface for queries that uses some text based language like SQL, GraphQL, etc.
 export interface ITextQueryRequest extends IQueryRequest {
 	text: string;
 }

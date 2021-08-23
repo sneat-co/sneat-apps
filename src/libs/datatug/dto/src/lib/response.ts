@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {IRecordsetDefinition} from '@sneat/datatug/models';
+import {IRecordsetDef} from '@sneat/datatug/models';
 import {IRecordsetResult} from "./execute";
 
 export interface ICommandResponse {
@@ -26,7 +26,7 @@ export interface ICommandHttpResponse extends ICommandResponseItem {
 
 export interface ICommandResponseWithRecordsets extends ICommandResponseItem {
 	type: 'recordsets';
-	value: IRecordsetDefinition[];
+	value: IRecordsetDef[];
 }
 
 export interface ICommandResponseWithRecordset extends ICommandResponseItem {

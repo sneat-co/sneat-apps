@@ -1,6 +1,6 @@
-import {IValueCheck, IValueCheckResult} from '../interfaces';
+import {IValueCheck, IValueCheckResult} from './interfaces';
 
-export class EnumCheck implements IValueCheck {
+export class EnumValidCheck implements IValueCheck {
 	constructor(
 		private readonly values: unknown[],
 	) {

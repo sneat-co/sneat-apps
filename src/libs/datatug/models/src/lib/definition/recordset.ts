@@ -1,20 +1,22 @@
 import {IEntityFieldRef} from "./metapedia";
-import {IFieldCheck} from './checks';
+import {IFieldCheckDef, IRecordsetCheckDef} from './checks';
+import {DataType} from './types';
 
-export interface IRecordsetDefinition {
+export interface IRecordsetDef {
 	name: string;
-	columns?: IRecordsetColumn[];
+	columns: IFieldDef[]; // Mandatory as records does not make sense without columns
+	checks?: IRecordsetCheckDef[];
 }
 
-export interface IRecordsetColumn {
+export interface IFieldDef {
 	name: string;
-	type: string;
+	type: DataType;
 	meta?: IEntityFieldRef;
-	hideIf?: IHideRecordsetColIf;
-	checks: IFieldCheck;
+	hideIf?: IHideFieldIf;
+	checks?: IFieldCheckDef[];
 }
 
-export interface IHideRecordsetColIf {
+export interface IHideFieldIf {
 	parameters?: string[];
 }
 

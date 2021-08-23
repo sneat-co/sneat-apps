@@ -1,6 +1,6 @@
-import {IValueCheck, IValueCheckResult} from '../interfaces';
+import {IValueCheck, IValueCheckResult} from './interfaces';
 
-export class RegexpCheck implements IValueCheck {
+export class RegExpCheck implements IValueCheck {
 	private readonly regExp: RegExp;
 
 	constructor(regExp: RegExp) {

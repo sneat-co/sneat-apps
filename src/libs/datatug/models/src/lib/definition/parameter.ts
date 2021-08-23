@@ -1,26 +1,10 @@
 import {IEntityFieldRef} from './metapedia/entity';
+import {DataType} from './types';
 
-
-export type ParameterType = 'bool'
-	| 'string'
-	| 'text'
-	| 'number'
-	| 'integer'
-	| 'decimal'
-	| 'float'
-	| 'money'
-	| 'boolean'
-	| 'bit'
-	| 'binary'
-	| 'UUID'
-	| 'GUID'
-	| 'datetime'
-	| 'date'
-	;
 
 export interface IParameterDef {
 	readonly id: string;
-	readonly type: ParameterType;
+	readonly type: DataType;
 	readonly title?: string;
 	readonly maxLength?: number;
 	readonly minLength?: number;
@@ -41,7 +25,7 @@ export interface IParameterLookup {
 	readonly keyFields: string[];
 }
 
-export type ParameterValueType = ParameterType;
+export type ParameterValueType = DataType;
 
 export type ParameterValue = boolean | boolean[] | string | string[] | number | number[];
 
@@ -71,7 +55,7 @@ export interface INumberParamValue extends IParameterValueWithoutID {
 }
 
 export interface IBoolParamValue extends IParameterValueWithoutID {
-	readonly type: 'bool';
+	readonly type: 'boolean';
 	readonly value: boolean;
 }
 

@@ -23,7 +23,7 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 	public state: 'loading' | 'loaded' | 'error';
 
 	public sql: string;
-	public recordset: IRecordsetResult = {
+	public recordset: IRecordsetResult = { // TODO: Wrong type, should be IRecordset
 		duration: 0,
 		columns: [
 			{name: 'Grid', dbType: 'NVARCHAR'},
