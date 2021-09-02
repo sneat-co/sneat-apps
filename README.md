@@ -84,5 +84,6 @@ To see chunks content:
 ### Dependencies
 
 #### Firebase stuck @ v. 8.6.1
-There is a [known issue](https://github.com/firebase/firebase-js-sdk/issues/4990) with Firebase >= 8.6.2 regards authentication
+There is a [known issue](https://github.com/firebase/firebase-js-sdk/issues/4932)
+with Firebase >= 8.6.2 regards authentication
 and Firestore rules
