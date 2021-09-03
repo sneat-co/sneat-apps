@@ -24,11 +24,10 @@ specifiers:
   '@capacitor/core': ^2.4.9
   '@capacitor/ios': ^2.4.9
   '@ctrl/ngx-codemirror': ^4.1.1
-  '@firebase/firestore': ^2.4.0
   '@ionic-native/core': ^5.36.0
   '@ionic-native/splash-screen': ^5.36.0
   '@ionic-native/status-bar': ^5.36.0
-  '@ionic/angular': ^5.7.0
+  '@ionic/angular': ^6.0.0-beta.5
   '@ionic/angular-toolkit': ^4.0.0
   '@nrwl/angular': 12.7.2
   '@nrwl/cli': 12.7.2
@@ -86,11 +85,10 @@ dependencies:
   '@angular/router': 12.2.2_57741d94da0a90cc6b5628913010fad4
   '@capacitor/core': 2.4.9
   '@ctrl/ngx-codemirror': 4.1.1_abf86e6f35be68def746908a3efcd4ee
-  '@firebase/firestore': 2.4.0
   '@ionic-native/core': 5.36.0_rxjs@6.6.7
   '@ionic-native/splash-screen': 5.36.0_39c95bb9232b71b0c330d0d5506ab1ac
   '@ionic-native/status-bar': 5.36.0_39c95bb9232b71b0c330d0d5506ab1ac
-  '@ionic/angular': 5.7.0_f30b44524b5c4a933062c6307f7a95fe
+  '@ionic/angular': 6.0.0-beta.5_f30b44524b5c4a933062c6307f7a95fe
   '@nrwl/angular': 12.7.2_7e670a8c1ba1567a7ce929297370af61
   '@sentry/browser': 6.12.0
   '@sneat/wormhole': 0.0.5_19cae5108dc367c1a3f3ec644a17f9cb
@@ -2924,33 +2922,6 @@ packages:
       '@firebase/util': 1.3.0
     dev: false
 
-  /@firebase/firestore-types/2.4.0_@firebase+util@1.3.0:
-    resolution: {integrity: sha512-0dgwfuNP7EN6/OlK2HSNSQiQNGLGaRBH0gvgr1ngtKKJuJFuq0Z48RBMeJX9CGjV4TP9h2KaB+KrUKJ5kh1hMg==}
-    peerDependencies:
-      '@firebase/app-types': 0.x
-      '@firebase/util': 1.x
-    dependencies:
-      '@firebase/util': 1.3.0
-    dev: false
-
-  /@firebase/firestore/2.4.0:
-    resolution: {integrity: sha512-PQ6+lWNrvh74GvFTHT4gCutFipDmtu8D1tNNawKe+/SyL6XFgeuMYgZIpKQgkTSezVDogC7EGQTJBFnewF9pOg==}
-    engines: {node: ^8.13.0 || >=10.10.0}
-    peerDependencies:
-      '@firebase/app': 0.x
-      '@firebase/app-types': 0.x
-    dependencies:
-      '@firebase/component': 0.5.6
-      '@firebase/firestore-types': 2.4.0_@firebase+util@1.3.0
-      '@firebase/logger': 0.2.6
-      '@firebase/util': 1.3.0
-      '@firebase/webchannel-wrapper': 0.5.1
-      '@grpc/grpc-js': 1.3.7
-      '@grpc/proto-loader': 0.6.4
-      node-fetch: 2.6.1
-      tslib: 2.3.1
-    dev: false
-
   /@firebase/firestore/2.4.0_cecf7a7a742bee2db1328663fe21e1e0:
     resolution: {integrity: sha512-PQ6+lWNrvh74GvFTHT4gCutFipDmtu8D1tNNawKe+/SyL6XFgeuMYgZIpKQgkTSezVDogC7EGQTJBFnewF9pOg==}
     engines: {node: ^8.13.0 || >=10.10.0}
@@ -3197,8 +3168,8 @@ packages:
       - webpack
     dev: true
 
-  /@ionic/angular/5.7.0_f30b44524b5c4a933062c6307f7a95fe:
-    resolution: {integrity: sha512-oJLpHYRevSmih7IuBVm/VoCHkl8H5V24ZFaPT2XdqixyxcnwmoeQ10ew/Ha0UjgUv8q6T8t5I5c/LUqgwGypjQ==}
+  /@ionic/angular/6.0.0-beta.5_f30b44524b5c4a933062c6307f7a95fe:
+    resolution: {integrity: sha512-UoAsdlj6lvs0kjJFY82Ssxhia+BwGPVsnlpFkVZHH66Omw59UwpyT/JcUkggIQOw4B4kenqq35sJem1qecEEOQ==}
     peerDependencies:
       '@angular/core': '>=8.2.7'
       '@angular/forms': '>=8.2.7'
@@ -3209,7 +3180,7 @@ packages:
       '@angular/core': 12.2.2_rxjs@6.6.7+zone.js@0.11.4
       '@angular/forms': 12.2.2_57741d94da0a90cc6b5628913010fad4
       '@angular/router': 12.2.2_57741d94da0a90cc6b5628913010fad4
-      '@ionic/core': 5.7.0
+      '@ionic/core': 6.0.0-beta.5
       rxjs: 6.6.7
       tslib: 1.14.1
       zone.js: 0.11.4
@@ -3226,8 +3197,8 @@ packages:
       - supports-color
     dev: true
 
-  /@ionic/core/5.7.0:
-    resolution: {integrity: sha512-5GunAeZWDhjbo4/gFCYjA4vXP3V+8PEoGa9C+ZEojurpk7IBuAtI36KalCukrHLPoIbfUCywTXoZubfC1S6lHQ==}
+  /@ionic/core/6.0.0-beta.5:
+    resolution: {integrity: sha512-RLK/ir4RMiAvn0gmHDCcnN4i1YvsSH1X1Ymgxayj9ePg7F0VhKepXNHHcglCBxeqPY5L8HYf6f5EdzFCzFXZfQ==}
     dependencies:
       '@stencil/core': 2.8.0
       ionicons: 5.5.3

@@ -38,7 +38,7 @@ if (environment.useEmulators) {
 	],
 	imports: [
 		BrowserModule,
-		IonicModule.forRoot(),
+		IonicModule.forRoot(undefined),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		// AngularFireAnalyticsModule,
 		// AngularFireAuthModule,
