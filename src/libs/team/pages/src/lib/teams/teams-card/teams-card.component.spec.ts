@@ -3,7 +3,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {TeamsCardComponent} from './teams-card.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../../../../environments/environment';
 import {UserService} from '../../../services/user-service';
 import {TeamService} from '../../../../../services/src/lib/team.service';

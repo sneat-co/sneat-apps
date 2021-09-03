@@ -1,7 +1,7 @@
 import {Injectable, Optional} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {ISneatApiService} from "./sneat-api-service.interface";
 
 const userIsNotAuthenticatedNoFirebaseToken = 'User is not authenticated yet - no Firebase ID token';

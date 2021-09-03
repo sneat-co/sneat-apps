@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {ScrumService} from './scrum.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../../environments/environment';
 import {TeamService} from './team.service';
 import {UserService} from './user-service';

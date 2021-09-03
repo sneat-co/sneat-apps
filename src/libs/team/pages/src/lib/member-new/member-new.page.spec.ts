@@ -4,7 +4,7 @@ import {IonicModule} from '@ionic/angular';
 import {MemberNewPage} from './member-new.page';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TeamService} from '../../../../services/src/lib/team.service';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../../../environments/environment';
 import {UserService} from '../../services/user-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

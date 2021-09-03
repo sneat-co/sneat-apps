@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {ErrorLogger, IErrorLogger, ILogErrorOptions} from '@sneat/logging';
 import {IAnalyticsCallOptions, IAnalyticsService} from './analytics.interface';
-import {AngularFireAnalytics} from '@angular/fire/analytics';
+import {AngularFireAnalytics} from '@angular/fire/compat/analytics';
 
 const logErrOptions: ILogErrorOptions = {show: false, feedback: false};
 

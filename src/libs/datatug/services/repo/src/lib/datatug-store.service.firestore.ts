@@ -1,6 +1,6 @@
 import {IDatatugStoreService} from './datatug-store.service.interface';
 import {Observable, throwError} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 

@@ -1,8 +1,8 @@
 import {Observable, ReplaySubject, Subscription, throwError} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {filter, first, map, mergeMap, tap} from 'rxjs/operators';
 
-import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {Inject, Injectable} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
 import firebase from 'firebase';

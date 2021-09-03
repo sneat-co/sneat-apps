@@ -3,7 +3,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {RetrospectivesComponent} from './retrospectives.component';
 import {TeamService} from '../../../../../services/src/lib/team.service';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../../../../environments/environment';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {UserService} from '../../../services/user-service';

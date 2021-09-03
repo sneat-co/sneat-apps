@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
 import {InvitePersonalPage} from './invite-personal.page';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../../../environments/environment';
 import {UserService} from '../../services/user-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

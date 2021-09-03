@@ -2,10 +2,9 @@ import {Inject, Injectable} from '@angular/core';
 import {
 	AngularFirestore,
 	AngularFirestoreCollection,
-	DocumentReference,
 	Action,
 	DocumentSnapshot
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 import {BehaviorSubject, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {SneatTeamApiService} from '@sneat/api';

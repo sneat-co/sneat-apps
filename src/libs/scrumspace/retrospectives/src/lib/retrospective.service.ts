@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {filter, map, tap} from 'rxjs/operators';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {IRetroItem, IRetrospective, RetroItemType} from '../../../scrummodels/src/lib/models-retrospectives';
 import {BaseMeetingService, IMeetingRequest} from '@sneat/meeting';
 import {SneatTeamApiService} from '@sneat/api';

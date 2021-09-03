@@ -1,9 +1,10 @@
 import {BehaviorSubject} from "rxjs";
-import {AngularFireAuth} from "@angular/fire/auth";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Inject, Injectable} from "@angular/core";
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import {distinctUntilChanged, shareReplay, tap} from 'rxjs/operators';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {RandomId} from '@sneat/random';
 
 export enum AuthStatuses {

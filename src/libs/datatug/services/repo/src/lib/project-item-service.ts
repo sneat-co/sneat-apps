@@ -2,12 +2,9 @@ import {Observable} from 'rxjs';
 import {map, startWith, take, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {IProjectRef} from '@sneat/datatug/core';
-import {IProjItemBrief, IProjItemsFolder, IQueryFolder} from '@sneat/datatug/models';
+import {IProjItemBrief, IProjItemsFolder} from '@sneat/datatug/models';
 import {StoreApiService} from './store-api.service';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {SneatApiServiceFactory} from '@sneat/api';
-import {parseStoreRef} from '@sneat/core';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 
 const notImplemented = 'not implemented';
 

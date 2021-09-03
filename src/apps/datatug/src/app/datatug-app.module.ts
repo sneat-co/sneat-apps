@@ -5,22 +5,22 @@ import {DatatugAppComponent} from './datatug-app.component';
 import {DatatugAppRoutingModule} from './datatug-app-routing.module';
 import {CoreModule} from '@sneat/core';
 import {SneatAppModule} from '@sneat/app';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../environments/environment';
 import {CommonModule} from "@angular/common";
 import {WormholeModule} from "@sneat/wormhole";
 import {HelloWorldPageComponent} from "./hello-world-page.component";
 import {HttpClientModule} from "@angular/common/http";
-// import {USE_EMULATOR as USE_FIRESTORE_EMULATOR} from '@angular/fire/firestore';
-// import {USE_EMULATOR as USE_FIREBASE_AUTH_EMULATOR} from '@angular/fire/auth';
+// import {USE_EMULATOR as USE_FIRESTORE_EMULATOR} from '@angular/fire/compat/firestore';
+// import {USE_EMULATOR as USE_FIREBASE_AUTH_EMULATOR} from '@angular/fire/compat/auth';
 
 
 // Issue: https://github.com/angular/angularfire/issues/2656
 // Bug: https://github.com/firebase/firebase-js-sdk/issues/4110
 // Workaround: https://stackoverflow.com/questions/65025005/angularfireauth-emulator-login-is-lost-on-page-reload
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 import {SneatAuthModule} from '@sneat/auth';
 import {EnvConfigToken} from '@sneat/datatug/core';
 

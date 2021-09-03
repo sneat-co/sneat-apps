@@ -1,7 +1,7 @@
 import {Component, ComponentFactoryResolver, Injector, Type} from '@angular/core';
 import { ɵcreateInjector as createInjector } from '@angular/core';
 import {AppComponentService} from '@sneat/app';
-import {FirebaseApp} from "@angular/fire";
+import {FirebaseApp} from "@angular/fire/compat";
 
 @Component({
 	selector: 'datatug-root',

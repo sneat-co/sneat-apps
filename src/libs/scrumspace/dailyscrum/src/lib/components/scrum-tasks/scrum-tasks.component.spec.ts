@@ -3,7 +3,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {ScrumTasksComponent} from './scrum-tasks.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../../../../environments/environment';
 import {TeamService} from '../../../services/team.service';
 import {UserService} from '../../../services/user-service';

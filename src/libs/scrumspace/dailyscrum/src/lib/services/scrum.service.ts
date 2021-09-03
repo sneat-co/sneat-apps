@@ -5,7 +5,7 @@ import {
 	AngularFirestoreCollection,
 	AngularFirestoreDocument,
 	DocumentReference
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 import {filter, map, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import firebase from 'firebase';

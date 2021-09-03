@@ -3,7 +3,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {ScrumCardComponent} from './scrum-card.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {AngularFireModule} from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../../../../environments/environment';
 
 describe('ScrumCardComponent', () => {

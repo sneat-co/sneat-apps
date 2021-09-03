@@ -11,9 +11,9 @@ import {
 } from '@angular/router';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {map, take} from 'rxjs/operators';
-import {AuthPipe} from '@angular/fire/auth-guard';
+import {AuthPipe} from '@angular/fire/compat/auth-guard';
 
 type AuthCanLoadPipeGenerator = (route: Route, segments: UrlSegment[]) => AuthPipe;
 

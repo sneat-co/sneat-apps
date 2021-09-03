@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection, DocumentData} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection, DocumentData} from '@angular/fire/compat/firestore';
 import {EMPTY, from, Observable, of, ReplaySubject, Subject, throwError} from 'rxjs';
 import {map, mergeMap, shareReplay, take, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';

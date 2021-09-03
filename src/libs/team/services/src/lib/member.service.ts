@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {map, mapTo, mergeMap, tap} from 'rxjs/operators';
 import {SneatTeamApiService} from '@sneat/api';
 import {

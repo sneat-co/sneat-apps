@@ -4,7 +4,7 @@ import {HttpParams} from '@angular/common/http';
 import {MemberService} from '../../../../services/src/lib/member.service';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavController} from '@ionic/angular';
-import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {SneatUserService} from '@sneat/user';
 import {IAcceptPersonalInviteRequest, IMemberInfo, IPersonalInvite, IRejectPersonalInviteRequest} from '@sneat/team-models';
 import {SneatTeamApiService} from '@sneat/api';
