@@ -6,7 +6,7 @@
     {
       "extends": "monorepo:nrwl",
       "groupName": "nrwl monorepo",
-      "automerge": false,
+      "automerge": true,
       "matchUpdateTypes": [
         "minor",
         "patch",
