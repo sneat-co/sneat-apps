@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "extends": "monorepo:nrwl",
+      "groupName": "nrwl monorepo",
+      "automerge": false,
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ]
+    }
+  ]
+}
