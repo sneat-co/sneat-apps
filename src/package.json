@@ -38,7 +38,7 @@
     "@angular/common": "12.2.2",
     "@angular/compiler": "12.2.2",
     "@angular/core": "12.2.2",
-    "@angular/fire": "^7.0.3",
+    "@angular/fire": "7.0.4",
     "@angular/forms": "12.2.2",
     "@angular/platform-browser": "12.2.2",
     "@angular/platform-browser-dynamic": "12.2.2",
