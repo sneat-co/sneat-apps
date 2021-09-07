@@ -52,7 +52,7 @@ specifiers:
   cypress: 7.7.0
   dotenv: 10.0.0
   eslint: 7.22.0
-  eslint-config-prettier: 8.1.0
+  eslint-config-prettier: 8.3.0
   eslint-plugin-cypress: 2.11.3
   firebase: 9.0.1
   hogan.js: 3.0.2
@@ -118,7 +118,7 @@ devDependencies:
   '@ionic/angular-toolkit': 4.0.0
   '@nrwl/cli': 12.7.2
   '@nrwl/cypress': 12.7.2_79c6497c4b26e6352419c1c62d92d386
-  '@nrwl/eslint-plugin-nx': 12.7.2_fbc8a26641f03e1686929415fa2f1a12
+  '@nrwl/eslint-plugin-nx': 12.7.2_de5967e899e85dc53365dcc0c7f23138
   '@nrwl/jest': 12.7.2_ts-node@9.1.1
   '@nrwl/linter': 12.7.2
   '@nrwl/nx-cloud': 12.3.10
@@ -135,7 +135,7 @@ devDependencies:
   cypress: 7.7.0
   dotenv: 10.0.0
   eslint: 7.22.0
-  eslint-config-prettier: 8.1.0_eslint@7.22.0
+  eslint-config-prettier: 8.3.0_eslint@7.22.0
   eslint-plugin-cypress: 2.11.3_eslint@7.22.0
   jest: 27.0.3_ts-node@9.1.1
   jest-preset-angular: 9.0.3_f913b0e12c20fcd739c3958dbf219159
@@ -3843,7 +3843,7 @@ packages:
       semver: 7.3.4
       tslib: 2.3.1
 
-  /@nrwl/eslint-plugin-nx/12.7.2_fbc8a26641f03e1686929415fa2f1a12:
+  /@nrwl/eslint-plugin-nx/12.7.2_de5967e899e85dc53365dcc0c7f23138:
     resolution: {integrity: sha512-rqbdKIaabsZh0sgpQ7XTRhSO+a5JoGRYR8rOmmLO9T5pFn7gNjrJSPBNMFJbLExMmSXJBbUi0iMVK/Za8riQAg==}
     peerDependencies:
       '@typescript-eslint/parser': ~4.28.3
@@ -3854,7 +3854,7 @@ packages:
       '@typescript-eslint/experimental-utils': 4.28.5_eslint@7.22.0+typescript@4.3.5
       '@typescript-eslint/parser': 4.28.5_eslint@7.22.0+typescript@4.3.5
       confusing-browser-globals: 1.0.10
-      eslint-config-prettier: 8.1.0_eslint@7.22.0
+      eslint-config-prettier: 8.3.0_eslint@7.22.0
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -7444,8 +7444,8 @@ packages:
     optionalDependencies:
       source-map: 0.6.1
 
-  /eslint-config-prettier/8.1.0_eslint@7.22.0:
-    resolution: {integrity: sha512-oKMhGv3ihGbCIimCAjqkdzx2Q+jthoqnXSP+d86M9tptwugycmTFdVR4IpLgq2c4SHifbwO90z2fQ8/Aio73yw==}
+  /eslint-config-prettier/8.3.0_eslint@7.22.0:
+    resolution: {integrity: sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
