@@ -1,0 +1,7 @@
+{
+  "name": "sneat-team",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

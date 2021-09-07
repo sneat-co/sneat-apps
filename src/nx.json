@@ -26,6 +26,139 @@
     }
   },
   "projects": {
+    "analytics": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "animations": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    },
+    "app": {
+      "tags": []
+    },
+    "auth": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "auth-models": {
+      "tags": []
+    },
+    "auth-ui": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "components-card-list": {
+      "tags": []
+    },
+    "components-error-card": {
+      "tags": []
+    },
+    "core": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    },
+    "datatug": {
+      "tags": []
+    },
+    "datatug-board": {
+      "tags": []
+    },
+    "datatug-checks": {
+      "tags": []
+    },
+    "datatug-components-datagrid": {
+      "tags": []
+    },
+    "datatug-components-dbmeta": {
+      "tags": []
+    },
+    "datatug-components-jsontug": {
+      "tags": []
+    },
+    "datatug-components-parameters": {
+      "tags": []
+    },
+    "datatug-components-project": {
+      "tags": []
+    },
+    "datatug-components-sqleditor": {
+      "tags": []
+    },
+    "datatug-core": {
+      "tags": []
+    },
+    "datatug-db": {
+      "tags": []
+    },
+    "datatug-dto": {
+      "tags": []
+    },
+    "datatug-e2e": {
+      "tags": [],
+      "implicitDependencies": ["datatug"]
+    },
+    "datatug-editor": {
+      "tags": []
+    },
+    "datatug-executor": {
+      "tags": []
+    },
+    "datatug-folders": {
+      "tags": []
+    },
+    "datatug-menu": {
+      "tags": []
+    },
+    "datatug-models": {
+      "tags": []
+    },
+    "datatug-nav": {
+      "tags": []
+    },
+    "datatug-pages-home": {
+      "tags": []
+    },
+    "datatug-pages-my": {
+      "tags": []
+    },
+    "datatug-pages-signed-out": {
+      "tags": []
+    },
+    "datatug-pages-unsorted": {
+      "tags": []
+    },
+    "datatug-plugins": {
+      "tags": []
+    },
+    "datatug-project": {
+      "tags": []
+    },
+    "datatug-queries": {
+      "tags": []
+    },
+    "datatug-routes": {
+      "tags": []
+    },
+    "datatug-services-base": {
+      "tags": []
+    },
+    "datatug-services-nav": {
+      "tags": []
+    },
+    "datatug-services-project": {
+      "tags": []
+    },
+    "datatug-services-repo": {
+      "tags": []
+    },
+    "datatug-services-unsorted": {
+      "tags": []
+    },
+    "datetime": {
+      "tags": []
+    },
     "emptyapp": {
       "tags": []
     },
@@ -40,85 +173,8 @@
       "tags": [],
       "implicitDependencies": ["emptyionicapp"]
     },
-    "datatug": {
-      "tags": []
-    },
-    "datatug-e2e": {
-      "tags": [],
-      "implicitDependencies": ["datatug"]
-    },
-    "logging": {
-      "tags": ["scope:public", "type:util", "target:all"]
-    },
-    "analytics": {
-      "tags": ["scope:public", "type:util", "target:all"]
-    },
-    "auth": {
-      "tags": ["scope:public", "type:util", "target:all"]
-    },
-    "auth-ui": {
-      "tags": ["scope:public", "type:util", "target:all"]
-    },
-    "random": {
-      "tags": ["scope:public", "type:util", "target:all"]
-    },
-    "app": {
-      "tags": []
-    },
-    "auth-models": {
-      "tags": []
-    },
-    "data": {
-      "tags": []
-    },
-    "api": {
-      "tags": []
-    },
-    "datatug-pages-home": {
-      "tags": []
-    },
-    "animations": {
-      "tags": []
-    },
-    "components-error-card": {
-      "tags": []
-    },
-    "components-card-list": {
-      "tags": []
-    },
-    "datatug-models": {
-      "tags": []
-    },
-    "datetime": {
-      "tags": []
-    },
-    "datatug-pages-signed-out": {
-      "tags": []
-    },
-    "datatug-pages-my": {
-      "tags": []
-    },
-    "datatug-services-nav": {
-      "tags": []
-    },
-    "datatug-services-project": {
-      "tags": []
-    },
-    "datatug-services-repo": {
-      "tags": []
-    },
-    "datatug-dto": {
-      "tags": []
-    },
     "grid": {
       "tags": []
-    },
-    "scrumspace": {
-      "tags": []
-    },
-    "scrumspace-e2e": {
-      "tags": [],
-      "implicitDependencies": ["scrumspace"]
     },
     "issuenumberone": {
       "tags": []
@@ -127,63 +183,6 @@
       "tags": [],
       "implicitDependencies": ["issuenumberone"]
     },
-    "datatug-pages-unsorted": {
-      "tags": []
-    },
-    "datatug-components-sqleditor": {
-      "tags": []
-    },
-    "datatug-components-datagrid": {
-      "tags": []
-    },
-    "datatug-board": {
-      "tags": []
-    },
-    "datatug-components-parameters": {
-      "tags": []
-    },
-    "datatug-nav": {
-      "tags": []
-    },
-    "datatug-routes": {
-      "tags": []
-    },
-    "datatug-services-unsorted": {
-      "tags": []
-    },
-    "datatug-executor": {
-      "tags": []
-    },
-    "datatug-components-dbmeta": {
-      "tags": []
-    },
-    "datatug-db": {
-      "tags": []
-    },
-    "datatug-queries": {
-      "tags": []
-    },
-    "scrumspace-dailyscrum": {
-      "tags": []
-    },
-    "scrumspace-retrospectives": {
-      "tags": []
-    },
-    "timer": {
-      "tags": []
-    },
-    "meeting": {
-      "tags": []
-    },
-    "scrumspace-scrummodels": {
-      "tags": []
-    },
-    "datatug-services-base": {
-      "tags": []
-    },
-    "datatug-components-project": {
-      "tags": []
-    },
     "listus": {
       "tags": []
     },
@@ -191,46 +190,54 @@
       "tags": [],
       "implicitDependencies": ["listus"]
     },
-    "datatug-editor": {
+    "logging": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "meeting": {
       "tags": []
     },
-    "datatug-menu": {
+    "random": {
+      "tags": ["scope:public", "type:util", "target:all"]
+    },
+    "scrumspace": {
       "tags": []
     },
-    "datatug-project": {
+    "scrumspace-dailyscrum": {
       "tags": []
     },
-    "team-services": {
+    "scrumspace-e2e": {
+      "tags": [],
+      "implicitDependencies": ["scrumspace"]
+    },
+    "scrumspace-retrospectives": {
       "tags": []
+    },
+    "scrumspace-scrummodels": {
+      "tags": []
+    },
+    "sneat-team": {
+      "tags": []
+    },
+    "sneat-team-e2e": {
+      "tags": [],
+      "implicitDependencies": ["sneat-team"]
     },
     "team-components": {
-      "tags": []
-    },
-    "team-pages": {
       "tags": []
     },
     "team-models": {
       "tags": []
     },
+    "team-pages": {
+      "tags": []
+    },
+    "team-services": {
+      "tags": []
+    },
+    "timer": {
+      "tags": []
+    },
     "user": {
-      "tags": []
-    },
-    "core": {
-      "tags": []
-    },
-    "datatug-core": {
-      "tags": []
-    },
-    "datatug-folders": {
-      "tags": []
-    },
-    "datatug-components-jsontug": {
-      "tags": []
-    },
-    "datatug-plugins": {
-      "tags": []
-    },
-    "datatug-checks": {
       "tags": []
     }
   }
