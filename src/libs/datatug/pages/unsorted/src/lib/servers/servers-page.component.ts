@@ -18,7 +18,7 @@ export class ServersPageComponent implements OnDestroy {
 
 	dbServers: IProjDbServerSummary[];
 
-	private readonly destroyed = new Subject();
+	private readonly destroyed = new Subject<void>();
 	private target: IProjectRef;
 	private readonly isDeletingServer: { [id: string]: boolean } = {};
 

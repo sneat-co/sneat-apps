@@ -16,7 +16,7 @@ export class AddDbServerComponent implements OnDestroy {
 		host: '',
 	}
 	submitting = false;
-	private readonly destroyed = new Subject();
+	private readonly destroyed = new Subject<void>();
 
 	constructor(
 		private readonly modalCtrl: ModalController,
