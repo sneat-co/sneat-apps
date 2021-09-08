@@ -21,7 +21,7 @@ export class DbserverPage implements OnInit, OnDestroy {
 	public loadingCatalogs = true;
 	public envs: string[];
 
-	private readonly destroyed = new Subject();
+	private readonly destroyed = new Subject<void>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
