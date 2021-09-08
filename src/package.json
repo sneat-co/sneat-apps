@@ -94,7 +94,7 @@
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-cypress": "2.11.3",
-    "jest": "27.0.3",
+    "jest": "27.1.0",
     "jest-preset-angular": "9.0.3",
     "karma": "5.2.3",
     "karma-chrome-launcher": "3.1.0",
