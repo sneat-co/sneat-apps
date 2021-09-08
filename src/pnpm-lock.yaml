@@ -43,7 +43,7 @@ specifiers:
   '@sentry/browser': 6.12.0
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.10
-  '@types/jasmine': 3.5.14
+  '@types/jasmine': 3.9.0
   '@types/jest': 27.0.1
   '@types/node': 14.17.15
   '@typescript-eslint/eslint-plugin': 4.31.0
@@ -127,7 +127,7 @@ devDependencies:
   '@nxtend/capacitor': 11.1.1_@nrwl+workspace@12.9.0
   '@nxtend/ionic-angular': 11.1.1_3de8685df30e2723002c6516a9f0b3ca
   '@trellisorg/make-buildable': 0.0.10_@nrwl+workspace@12.9.0
-  '@types/jasmine': 3.5.14
+  '@types/jasmine': 3.9.0
   '@types/jest': 27.0.1
   '@types/node': 14.17.15
   '@typescript-eslint/eslint-plugin': 4.31.0_d1dd20e6bac64435251dbfdf7965a8a7
@@ -4325,8 +4325,8 @@ packages:
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
 
-  /@types/jasmine/3.5.14:
-    resolution: {integrity: sha512-Fkgk536sHPqcOtd+Ow+WiUNuk0TSo/BntKkF8wSvcd6M2FvPjeXcUE6Oz/bwDZiUZEaXLslAgw00Q94Pnx6T4w==}
+  /@types/jasmine/3.9.0:
+    resolution: {integrity: sha512-x7aAO0c4EpBEJkUd/v012GLO7tDXXtv+t7Cz5xK+WdSmitH27eHgsQr+36CblfJFuqBQ0++O0xgBTuaKJnB4fg==}
     dev: true
 
   /@types/jest/27.0.1:
