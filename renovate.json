@@ -7,6 +7,38 @@
       "extends": "monorepo:nrwl",
       "groupName": "nrwl monorepo",
       "automerge": true,
+      "automergeType": "branch",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
+    },
+    {
+      "matchSourceUrlPrefixes": [
+        "https://github.com/angular/angular",
+        "https://github.com/angular/angular-cli",
+        "https://github.com/angular/angularfire"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchPackagePrefixes": [
+        "@ionic"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "automerge": true,
       "matchUpdateTypes": [
         "minor",
         "patch"
