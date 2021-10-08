@@ -64,7 +64,7 @@ specifiers:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
   karma-jasmine-html-reporter: 1.7.0
-  ng-packagr: 12.2.1
+  ng-packagr: 12.2.3
   prettier: 2.4.0
   rxjs: 7.3.0
   tabulator-tables: 4.9.3
@@ -105,7 +105,7 @@ dependencies:
   zone.js: 0.11.4
 
 devDependencies:
-  '@angular-devkit/build-angular': 12.2.5_ad16c18f0cfbe4d032cb8ee17df21d62
+  '@angular-devkit/build-angular': 12.2.5_0ad21a2762b53a70aa1c89700bc48f8e
   '@angular-eslint/eslint-plugin': 12.4.1_32dbdb9f1b7d17b8ede962ddc16c52b7
   '@angular-eslint/eslint-plugin-template': 12.4.1_32dbdb9f1b7d17b8ede962ddc16c52b7
   '@angular-eslint/template-parser': 12.4.1_32dbdb9f1b7d17b8ede962ddc16c52b7
@@ -144,7 +144,7 @@ devDependencies:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1_karma@6.3.4
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.4
-  ng-packagr: 12.2.1_208ab388936983b2aa7f6cff3ac53e16
+  ng-packagr: 12.2.3_208ab388936983b2aa7f6cff3ac53e16
   prettier: 2.4.0
   ts-jest: 27.0.5_3219f89f487ce9e294f8a5bbf5c2db99
   ts-node: 10.2.1_b04324131e2fb5ba13b634647cdac0ef
@@ -176,7 +176,7 @@ packages:
       rxjs: 6.6.7
     dev: true
 
-  /@angular-devkit/build-angular/12.2.5_ad16c18f0cfbe4d032cb8ee17df21d62:
+  /@angular-devkit/build-angular/12.2.5_0ad21a2762b53a70aa1c89700bc48f8e:
     resolution: {integrity: sha512-v44FAFMGSXJLKx25REXdoTdW/WzNXV3BDJam9ZKHFOrdtwJek4D/tEdtNHiQP4HberOHzmVjvKffa5VYXzZ40g==}
     engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -247,7 +247,7 @@ packages:
       loader-utils: 2.0.0
       mini-css-extract-plugin: 2.2.1_webpack@5.50.0
       minimatch: 3.0.4
-      ng-packagr: 12.2.1_208ab388936983b2aa7f6cff3ac53e16
+      ng-packagr: 12.2.3_208ab388936983b2aa7f6cff3ac53e16
       open: 8.2.1
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -4612,7 +4612,7 @@ packages:
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 14.14.33
+      '@types/node': 14.17.15
     dev: true
 
   /@types/sinonjs__fake-timers/6.0.3:
@@ -7189,6 +7189,12 @@ packages:
       is-date-object: 1.0.5
       is-symbol: 1.0.4
 
+  /esbuild-wasm/0.12.29:
+    resolution: {integrity: sha512-amSuB/qOGnTFYLOxGHDGosQbOKZnrinniPHFf6ZxzeNH7WAjLkjXluKyKAtX2YuhTkUXm9XV9igl13iqYZ44fQ==}
+    engines: {node: '>=8'}
+    hasBin: true
+    dev: true
+
   /esbuild/0.12.24:
     resolution: {integrity: sha512-C0ibY+HsXzYB6L/pLWEiWjMpghKsIc58Q5yumARwBQsHl9DXPakW+5NI/Y9w4YXiz0PEP6XTGTT/OV4Nnsmb4A==}
     hasBin: true
@@ -7200,6 +7206,7 @@ packages:
     hasBin: true
     requiresBuild: true
     dev: true
+    optional: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -10738,8 +10745,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /ng-packagr/12.2.1_208ab388936983b2aa7f6cff3ac53e16:
-    resolution: {integrity: sha512-awX/sRmURikw6YjcDzrz2+/SJ4yOr1MTgv4OitSeMXfwBlG5zJLN36mLQn49fYBFecBV+lcAosh0OYJuAueU5g==}
+  /ng-packagr/12.2.3_208ab388936983b2aa7f6cff3ac53e16:
+    resolution: {integrity: sha512-2KHoglc7UgJMnzkytzZ1wU+IEkb6UrxoU4QZxnF5BSFh9vjUra2nCXH+EKkvxD3WTj0ikXmNIMeNWbwoZpGkgA==}
     engines: {node: ^12.14.1 || >=14.0.0}
     hasBin: true
     peerDependencies:
@@ -10758,7 +10765,7 @@ packages:
       chokidar: 3.5.2
       commander: 8.1.0
       dependency-graph: 0.11.0
-      esbuild: 0.12.25
+      esbuild-wasm: 0.12.29
       find-cache-dir: 3.3.2
       glob: 7.1.7
       injection-js: 2.4.0
@@ -10776,6 +10783,8 @@ packages:
       stylus: 0.54.8
       tslib: 2.3.1
       typescript: 4.3.5
+    optionalDependencies:
+      esbuild: 0.12.25
     transitivePeerDependencies:
       - '@types/node'
     dev: true
