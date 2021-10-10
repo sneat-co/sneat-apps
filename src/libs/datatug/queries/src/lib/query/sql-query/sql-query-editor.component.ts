@@ -11,7 +11,7 @@ import {
 	IRecordsetResult,
 	ISqlCommandRequest
 } from '@sneat/datatug/dto';
-import {RandomId} from "@sneat/random";
+import {RandomIdService} from "@sneat/random";
 import {ISqlChanged} from "./intefaces";
 import {isQueryChanged, QueryEditorStateService} from "../../query-editor-state-service";
 import {DatatugNavContextService, ProjectTracker} from "@sneat/datatug/services/nav";
@@ -77,6 +77,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly randomIdService: RandomIdService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
@@ -474,7 +475,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		}
 
 		const request: IExecuteRequest = {
-			id: RandomId.newRandomId(),
+			id: this.randomIdService.newRandomId(),
 			projectId: this.project.ref.projectId,
 			commands: [
 				sqlCommandRequest,

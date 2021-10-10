@@ -17,7 +17,7 @@ import {SneatTeamApiService} from '@sneat/api';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 import {IAddCommentRequest, IAddTaskRequest, IScrum, IStatus, IThumbUpRequest} from '@sneat/scrumspace/scrummodels';
-import {RandomId} from '@sneat/random';
+import {RandomIdService} from '@sneat/random';
 import {SneatUserService} from '@sneat/user';
 
 const getOrCreateMemberStatus = (scrum: IScrum, member: IMemberInfo): IStatus => {
@@ -52,6 +52,7 @@ export class ScrumService extends BaseMeetingService {
 	constructor(
 		readonly sneatTeamApiService: SneatTeamApiService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly randomIdService: RandomIdService,
 		private readonly userService: SneatUserService,
 		private readonly db: AngularFirestore,
 		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
@@ -178,7 +179,7 @@ export class ScrumService extends BaseMeetingService {
 	public addTask(team: IRecord<ITeam>, scrumId: string, member: IMemberInfo, type: TaskType, title: string):
 		Observable<ITaskWithUiStatus> {
 		const task: ITaskWithUiStatus = {
-			id: RandomId.newRandomId(9),
+			id: this.randomIdService.newRandomId(9),
 			title,
 			uiStatus: 'adding',
 		};

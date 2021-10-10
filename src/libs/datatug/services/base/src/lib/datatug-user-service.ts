@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {IDatatugUser} from "@sneat/datatug/models";
 import {map, shareReplay} from "rxjs/operators";
 import {ISneatUserState, SneatUserService} from '@sneat/user';
-import {RandomId} from '@sneat/random';
+import {newRandomId} from '@sneat/random';
 
 export interface IDatatugUserState extends ISneatUserState {
 	record?: IDatatugUser;
@@ -13,7 +13,7 @@ export interface IDatatugUserState extends ISneatUserState {
 export class DatatugUserService {
 	public datatugUserState: Observable<IDatatugUserState>;
 
-	private readonly id = RandomId.newRandomId(5);
+	private readonly id = newRandomId({len: 5});
 
 	constructor(
 		readonly sneatUserService: SneatUserService,

@@ -5,7 +5,7 @@ import {IEnvDbServer, IParameter, IQueryDef, ISqlQueryRequest, QueryType} from '
 import {Coordinator} from '@sneat/datatug/executor';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {EnvironmentService} from '@sneat/datatug/services/unsorted';
-import {RandomId} from "@sneat/random";
+import {RandomIdService} from "@sneat/random";
 import {DatatugNavContextService, ProjectTracker} from "@sneat/datatug/services/nav";
 import {IProjectContext, newProjectContextFromRef} from "@sneat/datatug/nav";
 import {distinctUntilChanged, takeUntil} from "rxjs/operators";
@@ -58,6 +58,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly randomIdService: RandomIdService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
@@ -289,7 +290,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 				let queryId = queryParams.get('id');
 				const isNew = !queryId;
 				if (isNew) {
-					queryId = RandomId.newRandomId();
+					queryId = this.randomIdService.newRandomId();
 					queryId = '' + (this.editorState.activeQueries?.length || 1);
 				}
 				this.setQueryId(queryId, isNew);

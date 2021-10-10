@@ -196,9 +196,6 @@
 		"meeting": {
 			"tags": []
 		},
-		"random": {
-			"tags": ["scope:public", "type:util", "target:all"]
-		},
 		"scrumspace": {
 			"tags": []
 		},

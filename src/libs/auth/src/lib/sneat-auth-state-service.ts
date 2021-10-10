@@ -5,7 +5,7 @@ import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import firebase from "firebase/compat/app";
 import {distinctUntilChanged, shareReplay, tap} from 'rxjs/operators';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {RandomId} from '@sneat/random';
+import {newRandomId} from '@sneat/random';
 
 export enum AuthStatuses {
 	authenticating = 'authenticating',
@@ -31,7 +31,7 @@ export const initialSneatAuthState = {status: initialAuthStatus};
 
 @Injectable({providedIn: 'root'})
 export class SneatAuthStateService {
-	private readonly id = RandomId.newRandomId(5);
+	private readonly id = newRandomId({len: 5});
 
 	private readonly authStatus$ = new BehaviorSubject<AuthStatus>(initialAuthStatus);
 	public readonly authStatus = this.authStatus$.asObservable().pipe(distinctUntilChanged());

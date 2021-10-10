@@ -8,7 +8,7 @@ import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {SneatUserService} from '@sneat/user';
 import {IAcceptPersonalInviteRequest, IMemberInfo, IPersonalInvite, IRejectPersonalInviteRequest} from '@sneat/team-models';
 import {SneatTeamApiService} from '@sneat/api';
-import {RandomId} from '@sneat/random';
+import {RandomIdService} from '@sneat/random';
 
 @Component({
   selector: 'app-invite-personal',
@@ -41,6 +41,7 @@ export class InvitePersonalPage implements OnInit {
     private readonly memberService: MemberService,
     @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
     private readonly navController: NavController,
+	private readonly randomIdService: RandomIdService,
   ) {
     this.getPinFromUrl();
   }
@@ -102,7 +103,8 @@ export class InvitePersonalPage implements OnInit {
     if (this.userService.currentUserId) {
       acceptInvite(undefined);
     } else { // Move into service?
-      this.afAuth.createUserWithEmailAndPassword(this.email, RandomId.newRandomId()).then(userCredential => {
+    	const password = this.randomIdService.newRandomId();
+      this.afAuth.createUserWithEmailAndPassword(this.email, password).then(userCredential => {
         userCredential.user.getIdToken().then(token => {
           acceptInvite(token);
         }).catch(err => {

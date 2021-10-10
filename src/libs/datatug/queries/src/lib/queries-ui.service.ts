@@ -2,13 +2,14 @@ import {ActionSheetController} from '@ionic/angular';
 import {Injectable} from '@angular/core';
 import {QueryType} from '@sneat/datatug/models';
 import {QueryEditorStateService} from './query-editor-state-service';
-import {RandomId} from '@sneat/random';
+import {RandomIdService} from '@sneat/random';
 import {DatatugNavService} from '@sneat/datatug/services/nav';
 import {IProjectRef} from '@sneat/datatug/core';
 
 @Injectable()
 export class QueriesUiService {
 	constructor(
+		private readonly randomIdService: RandomIdService,
 		private readonly actionSheet: ActionSheetController,
 		private readonly queryEditorStateService: QueryEditorStateService,
 		private readonly nav: DatatugNavService,
@@ -19,7 +20,7 @@ export class QueriesUiService {
 		console.log('openNewQuery', projectRef)
 		const createNewQuery = (type: QueryType) => () => {
 			console.log(type);
-			const id = RandomId.newRandomId(7);
+			const id = this.randomIdService.newRandomId({len: 7});
 			const queryState = this.queryEditorStateService.newQuery({
 				id: id,
 				isNew: true,

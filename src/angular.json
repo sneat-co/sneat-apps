@@ -2320,31 +2320,6 @@
 				}
 			}
 		},
-		"random": {
-			"projectType": "library",
-			"root": "libs/random",
-			"sourceRoot": "libs/random/src",
-			"prefix": "sneat",
-			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/random/src/**/*.ts",
-							"libs/random/src/**/*.html"
-						]
-					}
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/random"],
-					"options": {
-						"jestConfig": "libs/random/jest.config.js",
-						"passWithNoTests": true
-					}
-				}
-			}
-		},
 		"scrumspace": {
 			"projectType": "application",
 			"root": "apps/scrumspace",

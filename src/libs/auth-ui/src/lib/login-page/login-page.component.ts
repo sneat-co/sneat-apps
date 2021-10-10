@@ -10,7 +10,7 @@ import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler} from '@sneat/auth';
 import {SneatTeamApiService} from '@sneat/api';
-import {RandomId} from "@sneat/random";
+import {RandomIdService} from "@sneat/random";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import OAuthProvider = firebase.auth.OAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
@@ -44,6 +44,7 @@ export class LoginPageComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		// @Inject(Toaster) private readonly toaster: IToaster,
 
+		private readonly randomIdService: RandomIdService,
 		@Inject(LoginEventsHandler) @Optional()
 		private readonly loginEventsHandler: ILoginEventsHandler,
 		private readonly route: ActivatedRoute,
@@ -126,7 +127,8 @@ export class LoginPageComponent {
 		this.signingWith = 'email';
 		this.email = this.email.trim();
 		const errorLoggerService = this.errorLogger; // In case if page gets disposed by time we send verification email.
-		this.afAuth.createUserWithEmailAndPassword(this.email, RandomId.newRandomId())
+		const password = this.randomIdService.newRandomId({len: 9});
+		this.afAuth.createUserWithEmailAndPassword(this.email, password)
 			.then(userCredential => {
 				localStorage.setItem('emailForSignIn', this.email);
 				setTimeout(() => {

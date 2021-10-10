@@ -147,8 +147,6 @@
 			"@sneat/logging/*": ["libs/logging/src/index.ts"],
 			"@sneat/meeting": ["libs/meeting/src/index.ts"],
 			"@sneat/meeting/*": ["libs/meeting/src/index.ts"],
-			"@sneat/random": ["libs/random/src/index.ts"],
-			"@sneat/random/*": ["libs/random/src/index.ts"],
 			"@sneat/scrumspace/dailyscrum": [
 				"libs/scrumspace/dailyscrum/src/index.ts"
 			],

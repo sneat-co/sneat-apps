@@ -15,7 +15,7 @@ import {
 	IEnvDbTableContext, populateProjectBriefFromSummaryIfMissing
 } from "@sneat/datatug/nav";
 import {parseStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/core';
-import {RandomId} from '@sneat/random';
+import {newRandomId} from '@sneat/random';
 
 const
 	reStore = /\/store\/(.+?)($|\/)/,
@@ -28,7 +28,7 @@ const
 
 @Injectable({providedIn: 'root'})
 export class DatatugNavContextService {
-	readonly id = RandomId.newRandomId(5);
+	readonly id = newRandomId({len: 5});
 	private readonly $currentContext = new BehaviorSubject<IDatatugNavContext>({});
 	public readonly currentContext = this.$currentContext.asObservable();
 
