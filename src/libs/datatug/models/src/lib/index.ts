@@ -4,5 +4,5 @@ export * from './requests';
 export * from './core';
 export * from './interfaces';
 export * from './pipe';
-export * from './tags';
 export * from './sql-models';
+export * from './tags';
