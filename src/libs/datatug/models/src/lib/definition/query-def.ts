@@ -2,7 +2,7 @@ import {IProjItemBrief} from './project';
 import {IParameterDef} from './parameter';
 import {IRecordsetDef} from "./recordset";
 import {HttpMethod} from "./command-definition";
-import {IWidgetRef} from '@datatug/plugins';
+import {IWidgetRef} from './widget';
 
 export enum QueryType {
 	HTTP = 'HTTP',
