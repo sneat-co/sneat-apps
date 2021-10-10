@@ -1,4 +1,4 @@
-# [github.com/sneat-team/sneat-apps](https://github.com/sneat-team/sneat-apps)
+# [github.com/sneat-co/sneat-apps](https://github.com/sneat-co/sneat-apps)
 
 A suit of open source apps that help in work & personal life.
 
