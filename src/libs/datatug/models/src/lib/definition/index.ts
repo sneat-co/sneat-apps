@@ -1,6 +1,7 @@
 export * from './apis';
 export * from './board';
 export * from './metapedia';
+export * from './cell-widget';
 export * from './command-definition';
 export * from './dbmodels';
 export * from './environments';

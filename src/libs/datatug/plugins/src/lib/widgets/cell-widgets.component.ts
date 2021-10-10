@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {ICellWidgetDef} from '../../../../models/src/lib/definition/cell-widget';
+import {ICellWidgetDef} from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-cell-widgets',
-	templateUrl: 'datatug-cell.component.html',
+	templateUrl: 'cell-widgets.component.html',
 })
 export class CellWidgetsComponent {
 	@Input() v: unknown;

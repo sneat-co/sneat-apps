@@ -8,12 +8,16 @@ export interface ICellButtonWidgetSettings {
 }
 
 @Component({
-	selector: 'datatug-cell-href-widget',
-	template: '<button [type]="settings.type" [title]="text" (click)="click()">{{text}}</button>'
+	selector: 'datatug-cell-button-widget',
+	template: '<button [type]="btnType" [title]="text" (click)="click()">{{text}}</button>'
 })
 export class CellButtonWidgetComponent {
 	@Input() v: unknown;
 	@Input() settings?: ICellButtonWidgetSettings;
+
+	get btnType(): string {
+		return this.settings?.type || 'button';
+	}
 
 	public get text(): string {
 		const t = this.settings?.textFormat as string;
