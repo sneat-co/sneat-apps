@@ -50,7 +50,7 @@
     "@ionic-native/status-bar": "5.36.0",
     "@ionic/angular": "6.0.0-beta.5",
     "@nrwl/angular": "12.9.0",
-    "@sentry/browser": "6.12.0",
+    "@sentry/browser": "6.13.3",
     "@sneat/wormhole": "0.0.5",
 	"@sneat/random": "0.0.3",
     "codemirror": "5.62.3",
