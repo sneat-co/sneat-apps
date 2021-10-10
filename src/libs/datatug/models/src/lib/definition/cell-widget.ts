@@ -1,5 +1,6 @@
-import {IProjItemBrief} from '@sneat/datatug/models';
+import {IProjItemBrief} from './project';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ICellWidgetDef extends IProjItemBrief {
 }
 

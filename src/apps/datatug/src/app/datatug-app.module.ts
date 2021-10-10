@@ -23,12 +23,14 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import {SneatAuthModule} from '@sneat/auth';
 import {EnvConfigToken} from '@sneat/datatug/core';
+import {RANDOM_ID_OPTIONS, RandomIdService, RandomModule} from '@sneat/random';
 
 const firebaseApp = firebase.initializeApp(environment.firebaseConfig);
 if (environment.useEmulators) {
 	firebaseApp.auth().useEmulator('http://localhost:9099');
 	firebaseApp.firestore().useEmulator('localhost', 8080);
 }
+
 // ***********************************************************************************************
 
 @NgModule({
@@ -46,6 +48,7 @@ if (environment.useEmulators) {
 		CommonModule,
 		CoreModule,
 		HttpClientModule,
+		RandomModule,
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatAppModule,
 		SneatAuthModule,
@@ -69,6 +72,10 @@ if (environment.useEmulators) {
 		{
 			provide: EnvConfigToken,
 			useValue: environment,
+		},
+		{
+			provide: RANDOM_ID_OPTIONS,
+			useValue: {len: 9},
 		}
 	],
 	bootstrap: [
