@@ -39,7 +39,9 @@ export class DatatugNavService {
 	}
 
 	goProject(project: IProjectContext, page?: ProjectTopLevelPage): void {
-		const url = ['store', project.ref.storeId, 'project', project.ref.projectId];
+		console.log('DatatugNavService.goProject()', project, page);
+		const storeId = project.ref?.storeId || project.store.ref?.type;
+		const url = ['store', storeId, 'project', project.ref.projectId];
 		if (page) {
 			url.push(page);
 		}

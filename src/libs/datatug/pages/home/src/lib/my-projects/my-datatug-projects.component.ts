@@ -13,6 +13,7 @@ import {STORE_TYPE_GITHUB} from '@sneat/core';
 import {NewProjectService} from '@sneat/datatug/project';
 import {DatatugNavService} from '@sneat/datatug/services/nav';
 import {IProjectContext} from '@sneat/datatug/nav';
+import {IProjectRef} from '@sneat/datatug/core';
 
 @Component({
 	selector: 'datatug-my-projects',
@@ -34,7 +35,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		{
 			id: 'datatug-demo-project@datatug',
 			access: 'public',
-			store: {type: STORE_TYPE_GITHUB},
+			store: {ref: {type: STORE_TYPE_GITHUB}},
 			title: 'DataTug Demo Project @ GitHub'
 		},
 	];
@@ -72,15 +73,24 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	goProject(item: IProjectAndStore): void {
-		console.log('goProject()', item);
-
-		const project: IProjectContext = {
-			ref: item.ref,
-			brief: item.project,
-			store: {ref: item.store, brief: item.store},
+	goDemoProject(project: IDatatugProjectBriefWithIdAndStoreRef): void {
+		const projectContext: IProjectContext = {
+			ref: {projectId: project.id, storeId: project.store.ref.type},
+			brief: project,
+			store: project.store,
 		}
-		this.navService.goProject(project);
+		this.navService.goProject(projectContext);
+	}
+
+	goProject(project: IProjectAndStore): void {
+		console.log('goProject()', project);
+
+		const projectContext: IProjectContext = {
+			ref: project.ref,
+			brief: project.project,
+			store: {ref: project.store, brief: project.store},
+		}
+		this.navService.goProject(projectContext);
 	}
 
 	addProject(event: Event): void {

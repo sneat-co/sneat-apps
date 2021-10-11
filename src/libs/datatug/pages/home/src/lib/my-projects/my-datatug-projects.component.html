@@ -47,7 +47,7 @@
 	<ion-item-divider *ngIf="showDemoProjects">
 		<ion-label><h3 style="font-weight: bold">Demo projects</h3></ion-label>
 	</ion-item-divider>
-	<ion-item *ngFor="let project of demoProjects" tappable (click)="goProject({store: undefined, project: project})"
+	<ion-item *ngFor="let project of demoProjects" tappable (click)="goDemoProject(project)"
 			  detail>
 		<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
 		{{project.title}}

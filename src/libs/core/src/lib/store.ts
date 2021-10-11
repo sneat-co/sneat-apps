@@ -15,6 +15,7 @@ export type StoreType = 'firestore' | 'agent' | 'browser' | 'github' | 'gitlab';
 
 export interface IStoreRef {
 	type: StoreType;
+	id?: string;
 	url?: string;
 }
 
@@ -42,6 +43,8 @@ export function parseStoreRef(storeId: string): IStoreRef {
 		case 'firestore':
 		case 'github':
 			return {type: storeId};
+		case 'github.com':
+			return {type: 'github'};
 		default:
 			if (storeId.startsWith('http-') || storeId.startsWith('https-')) {
 				return {type: 'agent', url: storeId.replace('-', '://')}

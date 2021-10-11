@@ -47,7 +47,7 @@ export class EnvironmentPageComponent {
 							id: this.project.ref.projectId,
 							access: undefined,
 							title: undefined,
-							store: {type: 'agent'}
+							store: {ref: {type: 'agent'}}
 						};
 					}
 					this.loadEnvSummary();

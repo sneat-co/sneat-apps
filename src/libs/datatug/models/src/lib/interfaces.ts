@@ -118,6 +118,6 @@ export interface IDatatugProjectBriefWithId extends IProjectBrief {
 }
 
 export interface IDatatugProjectBriefWithIdAndStoreRef extends IDatatugProjectBriefWithId {
-	readonly store: IProjStoreRef;
+	readonly store: {ref: IProjStoreRef};
 }
 
