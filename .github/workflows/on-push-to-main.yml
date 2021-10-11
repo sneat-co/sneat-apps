@@ -3,6 +3,7 @@ name: On merge to main
   push:
     branches:
       - main
+      - renovate/*
 jobs:
   build:
     runs-on: ubuntu-latest
