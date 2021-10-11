@@ -64,7 +64,7 @@ specifiers:
   karma-jasmine-html-reporter: 1.7.0
   ng-packagr: 12.2.3
   prettier: 2.4.1
-  rxfire: ^6.0.2
+  rxfire: 6.0.2
   rxjs: 7.4.0
   tabulator-tables: 4.9.3
   ts-jest: 27.0.5

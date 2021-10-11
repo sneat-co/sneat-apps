@@ -57,7 +57,7 @@
     "firebase": "9.1.2",
     "hogan.js": "3.0.2",
     "ionicons": "5.5.3",
-    "rxfire": "^6.0.2",
+    "rxfire": "6.0.2",
     "rxjs": "7.4.0",
     "tabulator-tables": "4.9.3",
     "tslib": "2.3.1",
