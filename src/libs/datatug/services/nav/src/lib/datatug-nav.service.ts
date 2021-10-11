@@ -2,10 +2,10 @@ import {Inject, Injectable} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
-import {IProjBoard, IProjEntity, IProjEnv, IQueryDef,} from '@sneat/datatug/models';
+import {IProjBoard, IProjEntity, IProjEnv, IProjStoreRef, IQueryDef,} from '@sneat/datatug/models';
 import {getStoreId, IDatatugStoreContext, IProjectContext} from "@sneat/datatug/nav";
 import {IProjectRef, isValidProjectRef} from '@sneat/datatug/core';
-import {storeRefToId} from '@sneat/core';
+import {IStoreRef, storeRefToId} from '@sneat/core';
 
 export type ProjectTopLevelPage =
 	'boards' |
@@ -40,7 +40,8 @@ export class DatatugNavService {
 
 	goProject(project: IProjectContext, page?: ProjectTopLevelPage): void {
 		console.log('DatatugNavService.goProject()', project, page);
-		const storeId = project.ref?.storeId || project.store.ref?.type;
+		const storeRef: IStoreRef = project.store.ref;
+		const storeId = storeRef?.id || project.ref?.storeId || storeRef?.type;
 		const url = ['store', storeId, 'project', project.ref.projectId];
 		if (page) {
 			url.push(page);

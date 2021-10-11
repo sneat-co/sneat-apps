@@ -5,16 +5,16 @@ import {IMeetingTimerService} from '../timer';
 
 export const validateMeetingRequest: (request: IMeetingTimerRequest) => Observable<never> = request => {
 	if (!request) {
-		return throwError('request parameter is required');
+		return throwError(() => 'request parameter is required');
 	}
 	if (!request.operation) {
-		return throwError('operation parameter is required');
+		return throwError(() => 'operation parameter is required');
 	}
 	if (!request.team) {
-		return throwError('team parameter is required');
+		return throwError(() => 'team parameter is required');
 	}
 	if (!request.meeting) {
-		return throwError('meeting parameter is required');
+		return throwError(() => 'meeting parameter is required');
 	}
 }
 
@@ -26,8 +26,8 @@ export abstract class BaseMeetingService implements IMeetingTimerService {
 	}
 
 	public readonly toggleMemberTimer = (request: IMemberTimerRequest): Observable<ITimerResponse> =>
-		!request && throwError('request parameter is required')
-		|| !request?.member && throwError('date parameter is required')
+		!request && throwError(() => 'request parameter is required')
+		|| !request?.member && throwError(() => 'date parameter is required')
 		|| this.toggleTimer(request, 'toggle_member_timer');
 
 	public readonly toggleMeetingTimer = (request: IMeetingTimerRequest): Observable<ITimerResponse> =>

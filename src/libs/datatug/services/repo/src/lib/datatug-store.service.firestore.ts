@@ -14,7 +14,7 @@ export class DatatugStoreFirestoreService implements IDatatugStoreService {
 
 	watchProjectItem<T>(projectId: string, path?: string): Observable<T | null> {
 		if (path && !path.startsWith('/')) {
-			return throwError('path should start with a "/", got: ' + path);
+			return throwError(() => 'path should start with a "/", got: ' + path);
 		}
 		path = `datatug_projects/${projectId}${path || ''}`;
 		return this.db.doc(path).snapshotChanges().pipe(map(changes => {

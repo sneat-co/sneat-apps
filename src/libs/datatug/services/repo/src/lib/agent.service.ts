@@ -18,9 +18,9 @@ export class AgentService {
 	public select(agentId: string, request: ISelectRequest): Observable<IExecuteResponse> {
 		console.log(`AgentService.select(${agentId})`, request);
 		if (!request.proj) {
-			return throwError('Client side check failed: !request.proj');
+			return throwError(() => 'Client side check failed: !request.proj');
 		} else if (request.proj.indexOf('@') >= 0) {
-			return throwError('Client side check failed: "@" character in project ID, store is supposed to be passed independently');
+			return throwError(() => 'Client side check failed: "@" character in project ID, store is supposed to be passed independently');
 		}
 		let params = new HttpParams()
 			.append('db', request.db)
@@ -63,9 +63,9 @@ export class AgentService {
 			});
 		}
 		if (!request.projectId) {
-			return throwError('Client side check failed: !request.proj');
+			return throwError(() => 'Client side check failed: !request.proj');
 		} else if (request.projectId.indexOf('@') >= 0) {
-			return throwError('Client side check failed: "@" character in project ID, store is supposed to be passed independently');
+			return throwError(() => 'Client side check failed: "@" character in project ID, store is supposed to be passed independently');
 		}
 		const params = new HttpParams()
 			.append('project', request.projectId)

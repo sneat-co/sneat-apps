@@ -29,9 +29,9 @@ export class ProjectService {
 	}
 
 	public watchProjectSummary(projectRef: IProjectRef): Observable<IProjectSummary> {
-		console.log('ProjectService.watchProject', projectRef);
+		console.log('ProjectService.watchProjectSummary', projectRef);
 		if (!isValidProjectRef(projectRef)) {
-			return throwError('Can not watch project by empty target parameter');
+			return throwError(() => 'Can not watch project by empty target parameter');
 		}
 		if (projectRef.storeId === 'agent') {
 			throw new Error('TEMP DEBUG: storeId === agent, expected firestore');

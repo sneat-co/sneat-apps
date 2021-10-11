@@ -160,7 +160,7 @@ export class Timer {
 					this.stopTicking();
 					break;
 				default:
-					return throwError('Unknown operation: ' + operation);
+					return throwError(() => 'Unknown operation: ' + operation);
 			}
 			const request: IMemberTimerRequest = {
 				team: this.teamId,

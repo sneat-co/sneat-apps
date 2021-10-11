@@ -31,16 +31,16 @@ export class EnvironmentService {
 		createProjItem<IEnvironmentSummary>(this.api, 'datatug/environment/create_environment', request)
 
 	putConnection(): Observable<IEnvironmentSummary> {
-		return throwError('')
+		return throwError(() => '')
 	}
 
 	public getEnvSummary(projectRef: IProjectRef, env: string, forceReload: boolean = false)
 		: Observable<IEnvironmentSummary> {
 		if (!projectRef) {
-			return throwError('"projRef" is a required parameter');
+			return throwError(() => '"projRef" is a required parameter');
 		}
 		if (!env) {
-			return throwError('"env" is a required parameter');
+			return throwError(() => '"env" is a required parameter');
 		}
 		const cacheKey = getEnvCacheKey(projectRef, env);
 		const cached = envSummaryCache[cacheKey];

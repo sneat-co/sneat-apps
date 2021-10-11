@@ -32,7 +32,7 @@ export class DatatugStoreService {
 		// eslint-disable-next-line no-console
 		console.log('getProjects', storeId);
 		if (!storeId) {
-			return throwError('Parameter "storeId" is required');
+			return throwError(() => 'Parameter "storeId" is required');
 		}
 		if (!storeCanProvideListOfProjects(storeId)) {
 			return this.datatugUserService.datatugUserState.pipe(

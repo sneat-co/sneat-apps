@@ -119,7 +119,7 @@ export class TeamService {
 	public changeMemberRole(teamRecord: IRecord<ITeam>, memberId: string, role: MemberRole): Observable<IRecord<ITeam>> {
 		const member = teamRecord?.data?.members.find(m => m.id === memberId);
 		if (!member) {
-			return throwError('member not found by ID in team record');
+			return throwError(() => 'member not found by ID in team record');
 		}
 		return this.sneatTeamApiService.post(`team/change_member_role`, {
 			team: teamRecord.id,
@@ -139,13 +139,13 @@ export class TeamService {
 	): Observable<ITeam> {
 		console.log(`removeTeamMember(teamId: ${teamRecord?.id}, memberId=${memberId})`);
 		if (!teamRecord) {
-			return throwError('teamRecord parameters is required');
+			return throwError(() => 'teamRecord parameters is required');
 		}
 		if (!teamRecord.id) {
-			return throwError('teamRecord.id parameters is required');
+			return throwError(() => 'teamRecord.id parameters is required');
 		}
 		if (!memberId) {
-			return throwError('memberId is required parameter');
+			return throwError(() => 'memberId is required parameter');
 		}
 		const updateTeam = (team: ITeam) => {
 			team.members = team.members.filter(m => m.id !== memberId);

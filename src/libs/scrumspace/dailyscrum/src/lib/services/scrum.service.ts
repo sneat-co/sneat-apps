@@ -121,19 +121,19 @@ export class ScrumService extends BaseMeetingService {
 	public addComment(request: IAddCommentRequest): Observable<string> {
 		console.log('addComment', request);
 		if (!request.message) {
-			return throwError('message required');
+			return throwError(() => 'message required');
 		}
 		if (!request.team) {
-			return throwError('team required');
+			return throwError(() => 'team required');
 		}
 		if (!request.member) {
-			return throwError('member required');
+			return throwError(() => 'member required');
 		}
 		if (!request.meeting) {
-			return throwError('meeting required');
+			return throwError(() => 'meeting required');
 		}
 		if (!request.type) {
-			return throwError('task type required');
+			return throwError(() => 'task type required');
 		}
 		return this.sneatTeamApiService.post<string>('scrum/add_comment', request);
 	}

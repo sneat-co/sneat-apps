@@ -93,7 +93,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 	): Observable<IRecord<T>> {
 		console.log('createProjItem()', projItemType, name);
 		if (!this.projectRef) {
-			return throwError('projectRef is not set');
+			return throwError(() => 'projectRef is not set');
 		}
 		return create({projectRef: this.projectRef, name: name.trim()})
 			.pipe(

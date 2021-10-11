@@ -52,21 +52,21 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 	}
 
 	switchStore(event: CustomEvent): void {
-		console.log('MenuStoreSelectorComponent.switchStore()', this.externalChange, event);
+		console.log('MenuStoreSelectorComponent.switchStore(event: CustomEvent)', this.externalChange, event);
 		if (this.externalChange) {
 			this.externalChange = false;
 			return;
 		}
 		try {
 			const value: string = event.detail.value;
-			console.log('value', value);
+			console.log('event.detail.value', value);
 			if (value) {
 				console.log('MenuStoreSelectorComponent.switchStore()', value);
 				const store: IDatatugStoreContext = {
 					ref: parseStoreRef(value),
 					brief: this.stores?.find(store => store.id === value)
 				};
-				this.nav.goStore(store);
+				// this.nav.goStore(store);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle store switch');

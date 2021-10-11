@@ -18,18 +18,18 @@ export class BoardService {
 
 	getBoard(storeId: string, project: string, boardId: string): Observable<IBoardDef> {
 		if (!storeId) {
-			return throwError('required parameter "store" has not been provided');
+			return throwError(() => 'required parameter "store" has not been provided');
 		}
 		if (!project) {
-			return throwError('required parameter "project" has not been provided');
+			return throwError(() => 'required parameter "project" has not been provided');
 		}
 		if (project === 'undefined') {
-			return throwError('required parameter "project" has "undefined" string value');
+			return throwError(() => 'required parameter "project" has "undefined" string value');
 		}
 		if (!storeId) {
-			return throwError('required parameter "boardId" has not been provided');
+			return throwError(() => 'required parameter "boardId" has not been provided');
 		}
-		return throwError('not implemented');
+		return throwError(() => 'not implemented');
 		// return this.repoProviderService.get(storeId, '/boards/board', {params: {id: boardId, project}});
 	}
 

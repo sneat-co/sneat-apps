@@ -219,7 +219,7 @@ export class QueryEditorStateService {
 
 	saveQuery(queryState: IQueryState, projectRef: IProjectRef): Observable<void> {
 		if (projectRef.projectId !== this.currentProject.ref.projectId) {
-			return throwError('An attempt to save a query after current project have been changed');
+			return throwError(() => 'An attempt to save a query after current project have been changed');
 		}
 		const {id} = queryState;
 		const setIsSavingToFalse = () => {
