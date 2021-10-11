@@ -38,7 +38,7 @@
     "@angular/common": "12.2.9",
     "@angular/compiler": "12.2.9",
     "@angular/core": "12.2.9",
-    "@angular/fire": "7.0.4",
+    "@angular/fire": "7.1.0",
     "@angular/forms": "12.2.9",
     "@angular/platform-browser": "12.2.9",
     "@angular/platform-browser-dynamic": "12.2.9",
@@ -51,12 +51,13 @@
     "@ionic/angular": "6.0.0-rc.0",
     "@nrwl/angular": "12.10.0",
     "@sentry/browser": "6.13.3",
-    "@sneat/wormhole": "0.0.5",
     "@sneat/random": "0.0.3",
+    "@sneat/wormhole": "0.0.5",
     "codemirror": "5.63.1",
     "firebase": "9.1.2",
     "hogan.js": "3.0.2",
     "ionicons": "5.5.3",
+    "rxfire": "^6.0.2",
     "rxjs": "7.4.0",
     "tabulator-tables": "4.9.3",
     "tslib": "2.3.1",
@@ -106,4 +107,3 @@
     "typescript": "4.3.5"
   }
 }
-
