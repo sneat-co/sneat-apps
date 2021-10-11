@@ -1,6 +1,13 @@
-name: On pull request
-'on': pull_request
+name: On PR to main or push to main & renovate
 
+'on':
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+      - renovate/*
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,3 +37,12 @@ jobs:
       - name: NX build
         run: pnpm run nx build datatug
         working-directory: ./src
+
+#      - uses: FirebaseExtended/action-hosting-deploy@v0
+#        with:
+#          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+#          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SNEAT_TEAM }}'
+#          channelId: live
+#          projectId: sneat-team
+#        env:
+#          FIREBASE_CLI_PREVIEWS: hostingchannels
