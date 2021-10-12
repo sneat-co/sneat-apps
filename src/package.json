@@ -53,7 +53,7 @@
     "@sentry/browser": "6.13.3",
     "@sneat/random": "0.0.3",
     "@sneat/wormhole": "0.0.5",
-    "codemirror": "5.63.1",
+    "codemirror": "5.63.3",
     "firebase": "9.1.2",
     "hogan.js": "3.0.2",
     "ionicons": "5.5.3",

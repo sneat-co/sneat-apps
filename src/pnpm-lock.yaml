@@ -48,7 +48,7 @@ specifiers:
   '@types/node': 14.17.21
   '@typescript-eslint/eslint-plugin': 4.33.0
   '@typescript-eslint/parser': 4.33.0
-  codemirror: 5.63.1
+  codemirror: 5.63.3
   dotenv: 10.0.0
   eslint: 8.0.0
   eslint-config-prettier: 8.3.0
@@ -86,7 +86,7 @@ dependencies:
   '@angular/platform-browser-dynamic': 12.2.9_6f57b33b067841eb80d4bce283e8816b
   '@angular/router': 12.2.9_568f89294d63a40e7d085ec83a345a38
   '@capacitor/core': 3.2.4
-  '@ctrl/ngx-codemirror': 5.0.1_9805fb44df2dedd2a6b6a121ec9c7fb5
+  '@ctrl/ngx-codemirror': 5.0.1_aa28bc0bf6a7e19cd835adf00bd85ad8
   '@ionic-native/core': 5.36.0_rxjs@7.4.0
   '@ionic-native/splash-screen': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic-native/status-bar': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
@@ -95,7 +95,7 @@ dependencies:
   '@sentry/browser': 6.13.3
   '@sneat/random': 0.0.3_e9db11e862952f1540068af6c838de0a
   '@sneat/wormhole': 0.0.5_fee24d2d196dac359046537a4578617d
-  codemirror: 5.63.1
+  codemirror: 5.63.3
   firebase: 9.1.2
   hogan.js: 3.0.2
   ionicons: 5.5.3
@@ -2811,7 +2811,7 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
-  /@ctrl/ngx-codemirror/5.0.1_9805fb44df2dedd2a6b6a121ec9c7fb5:
+  /@ctrl/ngx-codemirror/5.0.1_aa28bc0bf6a7e19cd835adf00bd85ad8:
     resolution: {integrity: sha512-NCO3isAsdABeGxin+smJlYd+m42bXpbmjQQKjgn7K0z7HPgGTPdFLInMLa5XZbQktFmMj0ASexA1PgTWHHXJTA==}
     peerDependencies:
       '@angular/core': '>=12.0.0-0'
@@ -2821,7 +2821,7 @@ packages:
       '@angular/core': 12.2.9_rxjs@7.4.0+zone.js@0.11.4
       '@angular/forms': 12.2.9_568f89294d63a40e7d085ec83a345a38
       '@types/codemirror': 5.60.4
-      codemirror: 5.63.1
+      codemirror: 5.63.3
       tslib: 2.3.1
     dev: false
 
@@ -5977,8 +5977,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /codemirror/5.63.1:
-    resolution: {integrity: sha512-baivaNZreZOGh1/tYyTvCupC9NeWk7qlZeGUDi4nFKj/J0JU8FYKZND4QqLw70P7HOttlCt4JJAOj9GoIhHEkA==}
+  /codemirror/5.63.3:
+    resolution: {integrity: sha512-1C+LELr+5grgJYqwZKqxrcbPsHFHapVaVAloBsFBASbpLnQqLw1U8yXJ3gT5D+rhxIiSpo+kTqN+hQ+9ialIXw==}
     dev: false
 
   /collect-v8-coverage/1.0.1:
