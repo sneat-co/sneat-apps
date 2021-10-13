@@ -45,7 +45,7 @@ specifiers:
   '@trellisorg/make-buildable': 0.0.10
   '@types/jasmine': 3.9.1
   '@types/jest': 27.0.2
-  '@types/node': 14.17.22
+  '@types/node': 14.17.25
   '@typescript-eslint/eslint-plugin': 5.0.0
   '@typescript-eslint/parser': 5.0.0
   codemirror: 5.63.3
@@ -129,7 +129,7 @@ devDependencies:
   '@trellisorg/make-buildable': 0.0.10_@nrwl+workspace@12.10.0
   '@types/jasmine': 3.9.1
   '@types/jest': 27.0.2
-  '@types/node': 14.17.22
+  '@types/node': 14.17.25
   '@typescript-eslint/eslint-plugin': 5.0.0_7d5ba1c5ec80b5108f198fd50147b710
   '@typescript-eslint/parser': 5.0.0_eslint@8.0.0+typescript@4.3.5
   dotenv: 10.0.0
@@ -142,10 +142,10 @@ devDependencies:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1_karma@6.3.4
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.4
-  ng-packagr: 12.2.3_c939bc5980d86a5cf2b26cb87832a757
+  ng-packagr: 12.2.3_e72fb1347c17e4a8aa218b64af5e787b
   prettier: 2.4.1
   ts-jest: 27.0.5_264229bfc48990975d6164ef8299aad6
-  ts-node: 10.3.0_0ee58d82276fbddd97d81b37bdc22738
+  ts-node: 10.3.0_a44f7898cfce41d03c3bbb8cabeb2f18
   typescript: 4.3.5
 
 packages:
@@ -245,7 +245,7 @@ packages:
       loader-utils: 2.0.0
       mini-css-extract-plugin: 2.2.1_webpack@5.50.0
       minimatch: 3.0.4
-      ng-packagr: 12.2.3_c939bc5980d86a5cf2b26cb87832a757
+      ng-packagr: 12.2.3_e72fb1347c17e4a8aa218b64af5e787b
       open: 8.2.1
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -4579,8 +4579,8 @@ packages:
   /@types/node/14.17.21:
     resolution: {integrity: sha512-zv8ukKci1mrILYiQOwGSV4FpkZhyxQtuFWGya2GujWg+zVAeRQ4qbaMmWp9vb9889CFA8JECH7lkwCL6Ygg8kA==}
 
-  /@types/node/14.17.22:
-    resolution: {integrity: sha512-6Mgu9YWd8j0dk9M8V9+5w6ktqIFCcn/fFXAVIDFk/niAOFiOiz4GeFAMWYAQjKrcsASbFqMkqR8/Y2wuVCAkNg==}
+  /@types/node/14.17.25:
+    resolution: {integrity: sha512-85DGKK4X9h+JEbs69xggu9j6y/aAExbfZzTrUMSqSwATwYXywbxRLaNQyJ7WibJjsC4OcxJWJwtuANUzDqMc7A==}
     dev: true
 
   /@types/parse-json/4.0.0:
@@ -8998,7 +8998,7 @@ packages:
       jest-validate: 27.2.5
       micromatch: 4.0.4
       pretty-format: 27.2.5
-      ts-node: 10.3.0_0ee58d82276fbddd97d81b37bdc22738
+      ts-node: 10.3.0_a44f7898cfce41d03c3bbb8cabeb2f18
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -9073,7 +9073,7 @@ packages:
       jest-validate: 27.2.5
       micromatch: 4.0.4
       pretty-format: 27.2.5
-      ts-node: 10.3.0_0ee58d82276fbddd97d81b37bdc22738
+      ts-node: 10.3.0_a44f7898cfce41d03c3bbb8cabeb2f18
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -10372,7 +10372,7 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /ng-packagr/12.2.3_c939bc5980d86a5cf2b26cb87832a757:
+  /ng-packagr/12.2.3_e72fb1347c17e4a8aa218b64af5e787b:
     resolution: {integrity: sha512-2KHoglc7UgJMnzkytzZ1wU+IEkb6UrxoU4QZxnF5BSFh9vjUra2nCXH+EKkvxD3WTj0ikXmNIMeNWbwoZpGkgA==}
     engines: {node: ^12.14.1 || >=14.0.0}
     hasBin: true
@@ -10404,7 +10404,7 @@ packages:
       postcss-preset-env: 6.7.0
       postcss-url: 10.1.3_postcss@8.3.9
       rollup: 2.58.0
-      rollup-plugin-sourcemaps: 0.6.3_ad8619995d9d2fdfd11c4fdadf1656e6
+      rollup-plugin-sourcemaps: 0.6.3_2eefba4da363726c3fee873831df3d5f
       rxjs: 6.6.7
       sass: 1.42.1
       stylus: 0.54.8
@@ -12246,7 +12246,7 @@ packages:
     dependencies:
       glob: 7.2.0
 
-  /rollup-plugin-sourcemaps/0.6.3_ad8619995d9d2fdfd11c4fdadf1656e6:
+  /rollup-plugin-sourcemaps/0.6.3_2eefba4da363726c3fee873831df3d5f:
     resolution: {integrity: sha512-paFu+nT1xvuO1tPFYXGe+XnQvg4Hjqv/eIhG8i5EspfYYPBKL57X7iVbfv55aNVASg3dzWvES9dmWsL2KhfByw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -12257,7 +12257,7 @@ packages:
         optional: true
     dependencies:
       '@rollup/pluginutils': 3.1.0_rollup@2.58.0
-      '@types/node': 14.17.22
+      '@types/node': 14.17.25
       rollup: 2.58.0
       source-map-resolve: 0.6.0
     dev: true
@@ -13373,7 +13373,7 @@ packages:
       typescript: 4.3.5
     dev: false
 
-  /ts-node/10.3.0_0ee58d82276fbddd97d81b37bdc22738:
+  /ts-node/10.3.0_a44f7898cfce41d03c3bbb8cabeb2f18:
     resolution: {integrity: sha512-RYIy3i8IgpFH45AX4fQHExrT8BxDeKTdC83QFJkNzkvt8uFB6QJ8XMyhynYiKMLxt9a7yuXaDBZNOYS3XjDcYw==}
     hasBin: true
     peerDependencies:
@@ -13392,7 +13392,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 14.17.22
+      '@types/node': 14.17.25
       acorn: 8.5.0
       acorn-walk: 8.2.0
       arg: 4.1.3
