@@ -24,6 +24,7 @@ import 'firebase/compat/auth';
 import {SneatAuthModule} from '@sneat/auth';
 import {EnvConfigToken} from '@sneat/datatug/core';
 import {RANDOM_ID_OPTIONS, RandomIdService, RandomModule} from '@sneat/random';
+import { GuiGridModule } from '@generic-ui/ngx-grid';
 
 const firebaseApp = firebase.initializeApp(environment.firebaseConfig);
 if (environment.useEmulators) {
@@ -48,6 +49,7 @@ if (environment.useEmulators) {
 		CommonModule,
 		CoreModule,
 		HttpClientModule,
+		GuiGridModule,
 		RandomModule,
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatAppModule,

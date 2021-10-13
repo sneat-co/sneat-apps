@@ -13,19 +13,21 @@ import {DatatugServicesStoreModule} from "@sneat/datatug/services/repo";
 import {MyDatatugProjectsComponent} from "./my-projects/my-datatug-projects.component";
 import {LoadingItemsComponent} from './loading-items-component';
 import {NewProjectFormModule} from '@sneat/datatug/project';
+import {GuiGridModule} from '@generic-ui/ngx-grid';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		HomePageRoutingModule,
-		CoreModule,
-		WormholeModule,
-		DatatugServicesBaseModule,
-		DatatugServicesStoreModule,
-		NewProjectFormModule,
-	],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HomePageRoutingModule,
+        CoreModule,
+        WormholeModule,
+        DatatugServicesBaseModule,
+        DatatugServicesStoreModule,
+        NewProjectFormModule,
+        GuiGridModule,
+    ],
 	declarations: [
 		DatatugHomePageComponent,
 		LoadingItemsComponent,

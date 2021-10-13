@@ -22,6 +22,25 @@
 		</ion-card-content>
 	</ion-card>
 
+	<ion-card>
+		<ion-item>
+			<ion-label style="font-weight: bold" color="medium">GitHub repositories</ion-label>
+			<ion-input placeholder="Search" value="datatug"></ion-input>
+			<ion-buttons>
+				<ion-button><ion-icon name="settings" color="medium"></ion-icon></ion-button>
+				<ion-button><ion-icon name="close" color="medium"></ion-icon></ion-button>
+			</ion-buttons>
+		</ion-item>
+		<gui-grid [source]="source"
+				  [columns]="columns"
+				  [searching]="searching"
+				  [infoPanel]="infoPanel"
+				  [sorting]="sorting"
+				  [columnMenu]="columnMenu"
+		>
+		</gui-grid>
+	</ion-card>
+
 	<datatug-my-projects title="My projects"></datatug-my-projects>
 	<datatug-my-stores></datatug-my-stores>
 
