@@ -6,5 +6,6 @@ export * from './lib/agent-state.service';
 export * from './lib/project-item-service';
 export * from './lib/project-item-service.module';
 export * from './lib/project-item-service.module';
+export * from './lib/datatug-store-service-factory.service';
 export * from './lib/datatug-store.service.interface';
 export * from './lib/datatug-store.service.firestore';

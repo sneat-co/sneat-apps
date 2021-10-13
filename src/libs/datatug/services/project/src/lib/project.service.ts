@@ -9,7 +9,8 @@ import {IProjectFull, IProjectSummary, IProjStoreRef} from '@sneat/datatug/model
 import {PrivateTokenStoreService} from '@sneat/auth';
 import {ErrorLogger, IErrorLogger} from "@sneat/logging";
 import {SneatApiServiceFactory} from "@sneat/api";
-import {GITLAB_REPO_PREFIX, STORE_ID_GITHUB_COM} from '@sneat/core';
+import {GITLAB_REPO_PREFIX, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB} from '@sneat/core';
+import {DatatugStoreServiceFactory} from '../../../repo/src/lib/datatug-store-service-factory.service';
 
 @Injectable({providedIn: 'root'})
 export class ProjectService {
@@ -24,6 +25,7 @@ export class ProjectService {
 		private readonly http: HttpClient,
 		private readonly privateTokenStoreService: PrivateTokenStoreService,
 		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
+		private readonly datatugStoreServiceFactory: DatatugStoreServiceFactory,
 	) {
 		this.projectsCollection = db.collection<IProjectSummary>('datatug_projects');
 	}
@@ -39,19 +41,19 @@ export class ProjectService {
 		const id = projectRefToString(projectRef);
 		let subj = this.projSummary[id];
 		if (subj) {
-			console.log('ProjectService.watchProject() => reusing existing subject');
+			console.log('ProjectService.watchProjectSummary() => reusing existing subject');
 		} else {
-			console.log('ProjectService.watchProject() => creating new subject');
+			console.log('ProjectService.watchProjectSummary() => creating new subject for', id);
 			this.projSummary[id] = subj = new ReplaySubject();
 			if (projectRef.storeId === 'firestore') {
 				this.firestoreChanges(projectRef.projectId)
 					.pipe(tap(summary => console.log(`ProjectService.watchProject(${id}) => summary:`, summary)))
 					.subscribe(subj);
 			}
-			const m = id.match(/(\.|\w+)@(\w+:\d+)/);
-			if (m) {
-				this.getSummary(projectRef).pipe(shareReplay(1)).subscribe(subj)
-			}
+			this.getSummary(projectRef).pipe(shareReplay(1)).subscribe(subj)
+			// const m = id.match(/(\.|\w+)@(\w+:\d+)()/);
+			// if (m) {
+			// }
 		}
 		return subj.asObservable();
 	}
@@ -112,43 +114,16 @@ export class ProjectService {
 
 	private getProjectSummaryRequest(projectRef: IProjectRef): Observable<IProjectSummary> {
 		if (!projectRef) {
-			throw new Error('target is required parameter');
+			return throwError(() => 'target is a required parameter');
 		}
 		const {storeId, projectId} = projectRef;
 		if (!storeId) {
-			throw new Error('target.storeId is required parameter');
+			return throwError(() => 'target.storeId is a required parameter');
 		}
-		if (storeId === STORE_ID_GITHUB_COM || storeId.startsWith(GITLAB_REPO_PREFIX)) {
-			interface urlAndHeaders {
-				url: string;
-				headers?: { [name: string]: string };
-			}
-
-			let connectTo: Observable<urlAndHeaders>;
-			if (storeId === STORE_ID_GITHUB_COM) {
-				const [repo, org] = projectId.split('@')
-				connectTo = of({url: `https://raw.githubusercontent.com/${org}/${repo}/main/datatug/datatug-project.json`});
-			} else if (storeId.startsWith(GITLAB_REPO_PREFIX)) {
-				//url = 'https://gitlab.dell.com/A_Trakhimenok/dsa-datatug/-/raw/master/datatug/datatug-project.json';
-				connectTo = this.privateTokenStoreService.getPrivateToken(storeId, projectId).pipe(map(accessToken => (
-					{
-						url: `https://gitlab.dell.com/api/v4/projects/${projectId}/repository/files/datatug%2Fdatatug-project.json/raw?ref=master`,
-						headers: {"PRIVATE-TOKEN": accessToken}
-					})));
-			}
-			return connectTo.pipe(
-				mergeMap(request => this.http
-					.get<IProjectSummary>(request.url, {headers: request.headers})
-					.pipe(map(p => {
-						if (p.id === projectId) {
-							return p;
-						}
-						if (p.id) {
-							console.warn(`Request project info with projectId=${projectId} but response JSON have id=${p.id}`);
-						}
-						return {...p, id: projectId};
-					}))),
-			);
+		console.log('getProjectSummaryRequest', storeId, projectId);
+		if (storeId === STORE_ID_GITHUB_COM || storeId === STORE_TYPE_GITHUB || storeId.startsWith(GITLAB_REPO_PREFIX)) {
+			const storeService = this.datatugStoreServiceFactory.getDatatugStoreService(storeId);
+			return storeService.getProjectSummary(projectId);
 		}
 		const agentUrl = getStoreUrl(storeId);
 		return this.http.get<IProjectSummary>(`${agentUrl}/project-summary`, {params: {id: projectId}});

@@ -3,6 +3,7 @@ import {Observable, throwError} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
+import {IProjectSummary} from '@sneat/datatug/models';
 
 @Injectable({providedIn: 'root'})
 export class DatatugStoreFirestoreService implements IDatatugStoreService {
@@ -11,6 +12,11 @@ export class DatatugStoreFirestoreService implements IDatatugStoreService {
 		private readonly db: AngularFirestore,
 	) {
 	}
+
+	getProjectSummary(projectId: string): Observable<IProjectSummary> {
+		return throwError(() => 'not implemented');
+	}
+
 
 	watchProjectItem<T>(projectId: string, path?: string): Observable<T | null> {
 		if (path && !path.startsWith('/')) {
