@@ -6,8 +6,15 @@
     {
       "extends": "monorepo:nrwl",
       "groupName": "nrwl monorepo",
+      "matchUpdateTypes": [
+        "major"
+      ]
+    },
+    {
+      "extends": "monorepo:nrwl",
+      "groupName": "nrwl monorepo",
       "automerge": true,
-      "automergeType": "branch",
+      "automergeType": "pr",
       "matchUpdateTypes": [
         "minor",
         "patch"
@@ -24,7 +31,7 @@
         "patch"
       ],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     },
     {
       "matchPackagePrefixes": [
@@ -35,10 +42,11 @@
         "patch"
       ],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     },
     {
       "automerge": true,
+      "automergeType": "pr",
       "matchUpdateTypes": [
         "minor",
         "patch"

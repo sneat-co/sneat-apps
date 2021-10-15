@@ -1,4 +1,4 @@
-name: On PR to main or push to main & renovate
+name: On PR or push to main
 
 'on':
   pull_request:
@@ -7,7 +7,6 @@ name: On PR to main or push to main & renovate
   push:
     branches:
       - main
-      - renovate/*
 jobs:
   build:
     runs-on: ubuntu-latest
