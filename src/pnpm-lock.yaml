@@ -13,7 +13,7 @@ specifiers:
   '@angular/compiler': 12.2.10
   '@angular/compiler-cli': 12.2.10
   '@angular/core': 12.2.10
-  '@angular/fire': 7.1.0
+  '@angular/fire': 7.1.1
   '@angular/forms': 12.2.10
   '@angular/language-service': 12.2.10
   '@angular/platform-browser': 12.2.10
@@ -83,7 +83,7 @@ dependencies:
   '@angular/common': 12.2.10_@angular+core@12.2.10+rxjs@7.4.0
   '@angular/compiler': 12.2.10
   '@angular/core': 12.2.10_rxjs@7.4.0+zone.js@0.11.4
-  '@angular/fire': 7.1.0_fb4d72d74be64ebb30fd999ca6ab548e
+  '@angular/fire': 7.1.1_fb4d72d74be64ebb30fd999ca6ab548e
   '@angular/forms': 12.2.10_16b9992bc4c4b055d83dc6292630fa1f
   '@angular/platform-browser': 12.2.10_6af6c47ec9245df1b752195c3fb25d8a
   '@angular/platform-browser-dynamic': 12.2.10_b5d9ec009ace38beb22de4942df57df3
@@ -579,8 +579,8 @@ packages:
       zone.js: 0.11.4
     dev: false
 
-  /@angular/fire/7.1.0_fb4d72d74be64ebb30fd999ca6ab548e:
-    resolution: {integrity: sha512-Ey6pbbV7hCi96F4OCY+lVEiQoY5brx+FHMYbrgm2Hq+7Sz3OYzeKfCqe7Ig5SDzDkPyOL327h6GZ/GV9dDVlzg==}
+  /@angular/fire/7.1.1_fb4d72d74be64ebb30fd999ca6ab548e:
+    resolution: {integrity: sha512-Ba+KGTnEu6L7S8Pb2l3BlRo/cZb8IDY7OrkzBeTrYe9Ic6i4Xm1TShRDin1K8zXmL1FAopNH/Qk5bOd/VGzOpg==}
     peerDependencies:
       '@angular-devkit/architect': '> 0.1200.0 < 0.1300.0'
       '@angular-devkit/schematics': ^12.0.0
