@@ -67,7 +67,7 @@ specifiers:
   karma-jasmine-html-reporter: 1.7.0
   ng-packagr: 12.2.4
   prettier: 2.4.1
-  rxfire: 6.0.2
+  rxfire: 6.0.3
   rxjs: 7.4.0
   tabulator-tables: 5.0.2
   ts-jest: 27.0.7
@@ -83,7 +83,7 @@ dependencies:
   '@angular/common': 12.2.11_@angular+core@12.2.11+rxjs@7.4.0
   '@angular/compiler': 12.2.11
   '@angular/core': 12.2.11_rxjs@7.4.0+zone.js@0.11.4
-  '@angular/fire': 7.1.1_a7a14b9151cfe06c1061688c3321130b
+  '@angular/fire': 7.1.1_7cdfbfdaf3b4ff057bd597a381ae0550
   '@angular/forms': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
   '@angular/platform-browser': 12.2.11_04209d25c037ce8f1827ccccc5d573e5
   '@angular/platform-browser-dynamic': 12.2.11_e279577ce9fddd9adf13bbe454ab43a2
@@ -105,7 +105,7 @@ dependencies:
   firebase: 9.1.3
   hogan.js: 3.0.2
   ionicons: 5.5.3
-  rxfire: 6.0.2_firebase@9.1.3+rxjs@7.4.0
+  rxfire: 6.0.3_firebase@9.1.3+rxjs@7.4.0
   rxjs: 7.4.0
   tabulator-tables: 5.0.2
   tslib: 2.3.1
@@ -579,7 +579,7 @@ packages:
       zone.js: 0.11.4
     dev: false
 
-  /@angular/fire/7.1.1_a7a14b9151cfe06c1061688c3321130b:
+  /@angular/fire/7.1.1_7cdfbfdaf3b4ff057bd597a381ae0550:
     resolution: {integrity: sha512-Ba+KGTnEu6L7S8Pb2l3BlRo/cZb8IDY7OrkzBeTrYe9Ic6i4Xm1TShRDin1K8zXmL1FAopNH/Qk5bOd/VGzOpg==}
     peerDependencies:
       '@angular-devkit/architect': '> 0.1200.0 < 0.1300.0'
@@ -611,7 +611,7 @@ packages:
       node-fetch: 2.6.5
       open: 8.2.1
       ora: 5.4.1
-      rxfire: 6.0.2_firebase@9.1.3+rxjs@7.4.0
+      rxfire: 6.0.3_firebase@9.1.3+rxjs@7.4.0
       rxjs: 7.4.0
       semver: 7.3.5
       triple-beam: 1.3.0
@@ -12612,8 +12612,8 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /rxfire/6.0.2_firebase@9.1.3+rxjs@7.4.0:
-    resolution: {integrity: sha512-4Ob30tYy88sEDk92QzKznVvNjB13T0Z30aCC5hWkekaW2SzR3OHr4LO74IFGw7c/PoDUmQTzwwnncjq56pfOrQ==}
+  /rxfire/6.0.3_firebase@9.1.3+rxjs@7.4.0:
+    resolution: {integrity: sha512-77nkyffHh7jgfi1YA/N9RI+kWxYpgKk6GRML1lyersvaqbJt4hkvWwk1rWib9Rb5Lr5mT+Ha45lu7nM79sJCZA==}
     peerDependencies:
       firebase: ^9.0.0
       rxjs: ^6.0.0 || ^7.0.0
