@@ -65,7 +65,7 @@ specifiers:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
   karma-jasmine-html-reporter: 1.7.0
-  ng-packagr: 12.2.3
+  ng-packagr: 12.2.4
   prettier: 2.4.1
   rxfire: 6.0.2
   rxjs: 7.4.0
@@ -112,7 +112,7 @@ dependencies:
   zone.js: 0.11.4
 
 devDependencies:
-  '@angular-devkit/build-angular': 12.2.10_ed23cbeac49885701b6d8f8779382eb0
+  '@angular-devkit/build-angular': 12.2.10_966334dbad2f3d5580b8f280f8c0e63f
   '@angular-eslint/eslint-plugin': 12.5.0_c080fc73db1068a3e32a2f723fa8bf00
   '@angular-eslint/eslint-plugin-template': 12.5.0_c080fc73db1068a3e32a2f723fa8bf00
   '@angular-eslint/template-parser': 12.5.0_c080fc73db1068a3e32a2f723fa8bf00
@@ -148,7 +148,7 @@ devDependencies:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1_karma@6.3.4
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.4
-  ng-packagr: 12.2.3_aa6d346f866cd825ed78efe839371d9e
+  ng-packagr: 12.2.4_aa6d346f866cd825ed78efe839371d9e
   prettier: 2.4.1
   ts-jest: 27.0.7_aa63873380b4bb2f237e2e46aef8ee69
   ts-node: 10.3.0_b4249ebc6f3fc3abec5689759acf39bc
@@ -180,7 +180,7 @@ packages:
       rxjs: 6.6.7
     dev: true
 
-  /@angular-devkit/build-angular/12.2.10_ed23cbeac49885701b6d8f8779382eb0:
+  /@angular-devkit/build-angular/12.2.10_966334dbad2f3d5580b8f280f8c0e63f:
     resolution: {integrity: sha512-MuViuSmXmB67Wge3NpyfY2aAU4O4K+BbcHj1W1k1A9WTx/Hyh6jR6Zgwy/EsNh64zjdUg/Jlg/oHxIVabsWfvQ==}
     engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -251,7 +251,7 @@ packages:
       loader-utils: 2.0.0
       mini-css-extract-plugin: 2.2.1_webpack@5.50.0
       minimatch: 3.0.4
-      ng-packagr: 12.2.3_aa6d346f866cd825ed78efe839371d9e
+      ng-packagr: 12.2.4_aa6d346f866cd825ed78efe839371d9e
       open: 8.2.1
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -10684,8 +10684,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /ng-packagr/12.2.3_aa6d346f866cd825ed78efe839371d9e:
-    resolution: {integrity: sha512-2KHoglc7UgJMnzkytzZ1wU+IEkb6UrxoU4QZxnF5BSFh9vjUra2nCXH+EKkvxD3WTj0ikXmNIMeNWbwoZpGkgA==}
+  /ng-packagr/12.2.4_aa6d346f866cd825ed78efe839371d9e:
+    resolution: {integrity: sha512-0IWq+ooKxqeLpwOeefzDSP9NLN02U3aWo7REvXLJVWjFfs35hE95HJjCjEvFtj9KwVKGTVgh8ZsgQ/K8OEptlg==}
     engines: {node: ^12.14.1 || >=14.0.0}
     hasBin: true
     peerDependencies:
@@ -11276,7 +11276,7 @@ packages:
   /parse5/3.0.3:
     resolution: {integrity: sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==}
     dependencies:
-      '@types/node': 14.17.15
+      '@types/node': 14.17.27
     dev: true
 
   /parse5/6.0.1:
