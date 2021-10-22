@@ -24,7 +24,7 @@ specifiers:
   '@capacitor/core': 3.2.5
   '@capacitor/ios': 3.2.5
   '@ctrl/ngx-codemirror': 5.0.1
-  '@generic-ui/fabric': 0.15.0
+  '@generic-ui/fabric': 0.15.1
   '@generic-ui/hermes': 0.15.0
   '@generic-ui/ngx-grid': 0.15.0
   '@ionic-native/core': 5.36.0
@@ -90,9 +90,9 @@ dependencies:
   '@angular/router': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
   '@capacitor/core': 3.2.5
   '@ctrl/ngx-codemirror': 5.0.1_ce4df7c0b08856389eba3265d1065fe0
-  '@generic-ui/fabric': 0.15.0_2d043371b052a027ca4be8db0191e6a2
+  '@generic-ui/fabric': 0.15.1_2d043371b052a027ca4be8db0191e6a2
   '@generic-ui/hermes': 0.15.0_2d043371b052a027ca4be8db0191e6a2
-  '@generic-ui/ngx-grid': 0.15.0_5607f0c0e543cd9ea9ba49bc3e239642
+  '@generic-ui/ngx-grid': 0.15.0_b3a241d214c5a416a0af35f71ce02e38
   '@ionic-native/core': 5.36.0_rxjs@7.4.0
   '@ionic-native/splash-screen': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic-native/status-bar': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
@@ -3339,8 +3339,8 @@ packages:
     resolution: {integrity: sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==}
     dev: true
 
-  /@generic-ui/fabric/0.15.0_2d043371b052a027ca4be8db0191e6a2:
-    resolution: {integrity: sha512-KhWCwr5JRDob4pmTY6JaMZVnf46kcd9kp929AuVxhNp2/W3s01XedkrXJuofcBs7RmjEx9Qj3858ZmAwU/VX7Q==}
+  /@generic-ui/fabric/0.15.1_2d043371b052a027ca4be8db0191e6a2:
+    resolution: {integrity: sha512-INdChwzkxUNBpxTlV4358FJKVBzDLU1lOQ4gecCwvZMHTt0Fii8MCLCeGm9POtH1MExt9kI8tn4jC86OaiS1wg==}
     peerDependencies:
       '@angular/common': ^8.2.0
       '@angular/core': ^8.2.0
@@ -3365,7 +3365,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@generic-ui/ngx-grid/0.15.0_5607f0c0e543cd9ea9ba49bc3e239642:
+  /@generic-ui/ngx-grid/0.15.0_b3a241d214c5a416a0af35f71ce02e38:
     resolution: {integrity: sha512-7ujHlm0KIuUToahkZiudB1/acxFmkZn+kUUdywiJTHEpRwuUCodi5QDo4vOuegPjPnNj2ezxXgraLjIIo6A3JA==}
     peerDependencies:
       '@angular/common': ^8.0.0
@@ -3380,7 +3380,7 @@ packages:
       '@angular/core': 12.2.11_rxjs@7.4.0+zone.js@0.11.4
       '@angular/forms': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
       '@angular/platform-browser': 12.2.11_04209d25c037ce8f1827ccccc5d573e5
-      '@generic-ui/fabric': 0.15.0_2d043371b052a027ca4be8db0191e6a2
+      '@generic-ui/fabric': 0.15.1_2d043371b052a027ca4be8db0191e6a2
       '@generic-ui/hermes': 0.15.0_2d043371b052a027ca4be8db0191e6a2
       rxjs: 7.4.0
       tslib: 1.14.1
