@@ -33,15 +33,11 @@ jobs:
           version: 6.19.0
           run_install: true
 
-      - name: NX build
-        run: pnpm run nx build datatug
-        working-directory: ./src
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
 
-#      - uses: FirebaseExtended/action-hosting-deploy@v0
-#        with:
-#          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-#          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SNEAT_TEAM }}'
-#          channelId: live
-#          projectId: sneat-team
-#        env:
-#          FIREBASE_CLI_PREVIEWS: hostingchannels
+      - run: pnpm run nx affected --target=build --base=${{ env.NX_HEAD }}
+
+#      - name: NX build
+#        run: pnpm run nx build datatug
+#        working-directory: ./src
