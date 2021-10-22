@@ -38,6 +38,7 @@ jobs:
 #
 #      - run: pnpm run nx affected --target=build --base=${{ env.NX_HEAD }}
       - run: pnpm run nx affected -- --target=build --base=HEAD~1 --head=HEAD
+        working-directory: ./src
 
 
 #      - name: NX build
