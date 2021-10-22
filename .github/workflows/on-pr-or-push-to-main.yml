@@ -30,7 +30,7 @@ jobs:
       - name: Install PNPM
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.17.0
+          version: 6.19.0
           run_install: true
 
       - name: NX build
