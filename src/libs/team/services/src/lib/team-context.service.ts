@@ -13,8 +13,7 @@ export class TeamContextService {
 	// eslint-disable-next-line @typescript-eslint/member-ordering
 	public currentTeamId = this.$currentTeamId.asObservable();
 
-	constructor() // private teamService: TeamService,
-	{}
+	constructor() {} // private teamService: TeamService,
 
 	public trackUrl(
 		route: ActivatedRoute,

@@ -24,9 +24,8 @@ export class EnvironmentService {
 		private readonly projectContextService: ProjectContextService,
 		private readonly api: SneatTeamApiService,
 		private readonly projectService: ProjectService,
-		private readonly storeApiService: StoreApiService
-	) // private readonly http: HttpClient,
-	{}
+		private readonly storeApiService: StoreApiService // private readonly http: HttpClient,
+	) {}
 
 	createEnvironment = (request: CreateNamedRequest): Observable<any> =>
 		createProjItem<IEnvironmentSummary>(

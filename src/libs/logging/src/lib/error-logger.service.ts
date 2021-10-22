@@ -60,13 +60,11 @@ export class ErrorLoggerService implements IErrorLogger {
 						icon: 'close',
 						side: 'end',
 						handler: () =>
-							this.toastController
-								.dismiss()
-								.catch((e) =>
-									this.logError(e, 'Failed to dismiss error dialog', {
-										show: false,
-									})
-								),
+							this.toastController.dismiss().catch((e) =>
+								this.logError(e, 'Failed to dismiss error dialog', {
+									show: false,
+								})
+							),
 					},
 				],
 				color: 'danger',

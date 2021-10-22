@@ -75,18 +75,16 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 
 	public canActivate(
 		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot
-	) //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
-	{
+		state: RouterStateSnapshot //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+	) {
 		console.log('SneatAuthGuard.canActivate', route, state);
 		return true;
 	}
 
 	canActivateChild(
 		childRoute: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot
-	) // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
-	{
+		state: RouterStateSnapshot // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+	) {
 		console.log('SneatAuthGuard.canActivateChild', childRoute, state);
 		return true;
 	}

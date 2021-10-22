@@ -10,9 +10,8 @@ export class AppComponentService {
 		private platform: Platform,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		@Optional() private splashScreen: SplashScreen,
-		@Optional() private statusBar: StatusBar
-	) // @Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
-	{}
+		@Optional() private statusBar: StatusBar // @Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
+	) {}
 
 	public initializeApp() {
 		this.platform
