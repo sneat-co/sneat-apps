@@ -33,10 +33,12 @@ jobs:
           version: 6.19.0
           run_install: true
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
+#      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+#        uses: nrwl/nx-set-shas@v2
+#
+#      - run: pnpm run nx affected --target=build --base=${{ env.NX_HEAD }}
+      - run: pnpm run nx affected --target=build --base=HEAD~1 --head=HEAD
 
-      - run: pnpm run nx affected --target=build --base=${{ env.NX_HEAD }}
 
 #      - name: NX build
 #        run: pnpm run nx build datatug
