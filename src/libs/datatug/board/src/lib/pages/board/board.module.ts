@@ -1,15 +1,15 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {BoardPageRoutingModule} from './board-routing.module';
+import { BoardPageRoutingModule } from './board-routing.module';
 
-import {BoardPageComponent} from './board-page.component';
-import {QueryParamsService} from '@sneat/datatug/core';
-import {DatatugBoardModule} from '../../datatug-board.module';
-import {BoardServiceModule} from "../../board.service.module";
+import { BoardPageComponent } from './board-page.component';
+import { QueryParamsService } from '@sneat/datatug/core';
+import { DatatugBoardModule } from '../../datatug-board.module';
+import { BoardServiceModule } from '../../board.service.module';
 
 @NgModule({
 	imports: [
@@ -20,12 +20,7 @@ import {BoardServiceModule} from "../../board.service.module";
 		BoardPageRoutingModule,
 		DatatugBoardModule,
 	],
-	declarations: [
-		BoardPageComponent,
-	],
-	providers: [
-		QueryParamsService,
-	]
+	declarations: [BoardPageComponent],
+	providers: [QueryParamsService],
 })
-export class BoardPageModule {
-}
+export class BoardPageModule {}

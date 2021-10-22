@@ -3,17 +3,21 @@
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
 			<ion-back-button
-					defaultHref="/store/{{project?.ref?.storeId}}/project/{{project?.ref?.projectId}}/queries?folder={{queryFolderPath}}"
+				defaultHref="/store/{{ project?.ref?.storeId }}/project/{{
+					project?.ref?.projectId
+				}}/queries?folder={{ queryFolderPath }}"
 			></ion-back-button>
 		</ion-buttons>
 		<ion-title>Query</ion-title>
 		<ion-buttons slot="end">
-			<ion-button class="ion-padding-horizontal" slot="end"
-						[disabled]="queryState?.isSaving"
-						[fill]="isChanged ? 'solid' : 'clear'"
-						[color]="isChanged ? 'danger' : 'medium'"
-						title="Save changes"
-						(click)="saveChanges()"
+			<ion-button
+				class="ion-padding-horizontal"
+				slot="end"
+				[disabled]="queryState?.isSaving"
+				[fill]="isChanged ? 'solid' : 'clear'"
+				[color]="isChanged ? 'danger' : 'medium'"
+				title="Save changes"
+				(click)="saveChanges()"
 			>
 				<ion-icon name="save-outline" slot="start"></ion-icon>
 				<ion-label *ngIf="!queryState?.isSaving">Save</ion-label>
@@ -24,12 +28,14 @@
 </ion-header>
 
 <ion-content color="light">
-
 	<ion-card>
 		<ion-item>
-			<ion-input placeholder="Title - is required" [value]="queryState?.title"
-					   (ionChange)="queryTitleChanged($event)"
-					   readonly="false"></ion-input>
+			<ion-input
+				placeholder="Title - is required"
+				[value]="queryState?.title"
+				(ionChange)="queryTitleChanged($event)"
+				readonly="false"
+			></ion-input>
 			<ion-select interface="popover" slot="end">
 				<ion-select-option value="q1">Query #1</ion-select-option>
 				<ion-select-option value="q2">Query #2</ion-select-option>

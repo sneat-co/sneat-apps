@@ -1,10 +1,10 @@
-import {Component, Inject, Input} from '@angular/core';
-import {TeamService} from '../../../../../services/src/lib/team.service';
-import {NavController} from '@ionic/angular';
-import {TeamNavService} from '../../../../../services/src/lib/team-nav.service';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ITeam, ITeamMetric} from '@sneat/team-models';
-import {IRecord} from '@sneat/data';
+import { Component, Inject, Input } from '@angular/core';
+import { TeamService } from '../../../../../services/src/lib/team.service';
+import { NavController } from '@ionic/angular';
+import { TeamNavService } from '../../../../../services/src/lib/team-nav.service';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeam, ITeamMetric } from '@sneat/team-models';
+import { IRecord } from '@sneat/data';
 
 @Component({
 	selector: 'app-team-metrics',
@@ -12,7 +12,6 @@ import {IRecord} from '@sneat/data';
 	styleUrls: ['./metrics.component.scss'],
 })
 export class MetricsComponent {
-
 	@Input() public team: IRecord<ITeam>;
 
 	public deletingMetrics: string[] = [];
@@ -23,10 +22,8 @@ export class MetricsComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly teamService: TeamService,
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService,
-	) {
-	}
-
+		public readonly navService: TeamNavService
+	) {}
 
 	public get isDemoMetricsOnly(): boolean {
 		const metrics = this.team?.data?.metrics;
@@ -40,10 +37,13 @@ export class MetricsComponent {
 		event.preventDefault();
 		event.stopPropagation();
 		this.deletingMetrics.push(...this.demoMetrics);
-		const complete = () => this.deletingMetrics = this.deletingMetrics.filter(v => this.demoMetrics.indexOf(v) < 0);
+		const complete = () =>
+			(this.deletingMetrics = this.deletingMetrics.filter(
+				(v) => this.demoMetrics.indexOf(v) < 0
+			));
 		this.teamService.deleteMetrics(this.team.id, this.demoMetrics).subscribe({
 			complete,
-			error: err => {
+			error: (err) => {
 				complete();
 				this.errorLogger.logError(err, 'Failed to delete demo metrics');
 			},
@@ -56,14 +56,17 @@ export class MetricsComponent {
 
 	public deleteMetric(metric: ITeamMetric): void {
 		this.deletingMetrics.push(metric.id);
-		const complete = () => this.deletingMetrics = this.deletingMetrics.filter(v => v !== metric.id);
+		const complete = () =>
+			(this.deletingMetrics = this.deletingMetrics.filter(
+				(v) => v !== metric.id
+			));
 		this.teamService.deleteMetrics(this.team.id, [metric.id]).subscribe({
-			error: err => {
+			error: (err) => {
 				complete();
 				this.errorLogger.logError(err, 'Failed to delete metric');
 			},
 			complete,
-		})
+		});
 	}
 
 	goAddMetric(event?: Event): void {

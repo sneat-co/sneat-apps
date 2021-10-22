@@ -1,15 +1,16 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export interface ICellButtonWidgetSettings {
 	type: 'button';
 	javaScript: string;
-	textFormat?: string
-	titleFormat?: string
+	textFormat?: string;
+	titleFormat?: string;
 }
 
 @Component({
 	selector: 'datatug-cell-button-widget',
-	template: '<button [type]="btnType" [title]="text" (click)="click()">{{text}}</button>'
+	template:
+		'<button [type]="btnType" [title]="text" (click)="click()">{{text}}</button>',
 })
 export class CellButtonWidgetComponent {
 	@Input() v: unknown;
@@ -39,5 +40,3 @@ export class CellButtonWidgetComponent {
 		eval(this.settings?.javaScript);
 	}
 }
-
-

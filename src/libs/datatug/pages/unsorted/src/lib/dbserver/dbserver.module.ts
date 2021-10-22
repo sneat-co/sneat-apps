@@ -1,21 +1,15 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {DbserverPageRoutingModule} from './dbserver-routing.module';
+import { DbserverPageRoutingModule } from './dbserver-routing.module';
 
-import {DbserverPage} from './dbserver.page';
+import { DbserverPage } from './dbserver.page';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		DbserverPageRoutingModule
-	],
-	declarations: [DbserverPage]
+	imports: [CommonModule, FormsModule, IonicModule, DbserverPageRoutingModule],
+	declarations: [DbserverPage],
 })
-export class DbserverPageModule {
-}
+export class DbserverPageModule {}

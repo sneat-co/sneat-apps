@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {DataService, Message} from '../services/data.service';
+import { Component } from '@angular/core';
+import { DataService, Message } from '../services/data.service';
 
 @Component({
 	selector: 'sneat-home',
@@ -7,8 +7,7 @@ import {DataService, Message} from '../services/data.service';
 	styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-	constructor(private data: DataService) {
-	}
+	constructor(private data: DataService) {}
 
 	refresh(ev: Event) {
 		if (ev instanceof CustomEvent) {

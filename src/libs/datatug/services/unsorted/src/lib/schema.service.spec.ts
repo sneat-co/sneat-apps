@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {SchemaService} from './schema.service';
+import { SchemaService } from './schema.service';
 
 describe('SchemaService', () => {
 	let service: SchemaService;

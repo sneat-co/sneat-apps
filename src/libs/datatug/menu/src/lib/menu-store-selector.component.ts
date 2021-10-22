@@ -1,15 +1,29 @@
-import {Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges} from "@angular/core";
-import {allUserStoresAsFlatList, IDatatugStoreBriefWithId, IDatatugUser} from "@sneat/datatug/models";
-import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
-import {IDatatugStoreContext} from '@sneat/datatug/nav';
-import {parseStoreRef} from '@sneat/core';
-import {Subject} from 'rxjs';
-import {filter, takeUntil} from 'rxjs/operators';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	SimpleChanges,
+} from '@angular/core';
+import {
+	allUserStoresAsFlatList,
+	IDatatugStoreBriefWithId,
+	IDatatugUser,
+} from '@sneat/datatug/models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+} from '@sneat/datatug/services/nav';
+import { IDatatugStoreContext } from '@sneat/datatug/nav';
+import { parseStoreRef } from '@sneat/core';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'datatug-menu-store-selector',
-	templateUrl: 'menu-store-selector.component.html'
+	templateUrl: 'menu-store-selector.component.html',
 })
 export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 	@Input() datatugUser?: IDatatugUser;
@@ -26,15 +40,21 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
 		private readonly nav: DatatugNavService,
-		readonly datatugNavContextService: DatatugNavContextService,
+		readonly datatugNavContextService: DatatugNavContextService
 	) {
 		datatugNavContextService.currentStoreId
 			.pipe(
 				takeUntil(this.destroyed),
-				filter(id => id !== this.currentStoreId && !(id === null && !this.currentStoreId)),
+				filter(
+					(id) =>
+						id !== this.currentStoreId && !(id === null && !this.currentStoreId)
+				)
 			)
-			.subscribe(storeId => {
-				console.log('MenuStoreSelectorComponent => external store change:', storeId)
+			.subscribe((storeId) => {
+				console.log(
+					'MenuStoreSelectorComponent => external store change:',
+					storeId
+				);
 				this.externalChange = true;
 				this.currentStoreId = storeId;
 			});
@@ -52,7 +72,11 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 	}
 
 	switchStore(event: CustomEvent): void {
-		console.log('MenuStoreSelectorComponent.switchStore(event: CustomEvent)', this.externalChange, event);
+		console.log(
+			'MenuStoreSelectorComponent.switchStore(event: CustomEvent)',
+			this.externalChange,
+			event
+		);
 		if (this.externalChange) {
 			this.externalChange = false;
 			return;
@@ -64,7 +88,7 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 				console.log('MenuStoreSelectorComponent.switchStore()', value);
 				const store: IDatatugStoreContext = {
 					ref: parseStoreRef(value),
-					brief: this.stores?.find(store => store.id === value)
+					brief: this.stores?.find((store) => store.id === value),
 				};
 				// this.nav.goStore(store);
 			}

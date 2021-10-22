@@ -1,6 +1,6 @@
-import {IEntityFieldRef} from "./metapedia";
-import {IFieldCheckDef, IRecordsetCheckDef} from './checks';
-import {DataType} from './types';
+import { IEntityFieldRef } from './metapedia';
+import { IFieldCheckDef, IRecordsetCheckDef } from './checks';
+import { DataType } from './types';
 
 export interface IRecordsetDef {
 	name: string;

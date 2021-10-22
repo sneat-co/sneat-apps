@@ -1,18 +1,22 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {map, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {getDbServerFromId, IDbCatalogSummary, IDbServer, IDbServerSummary} from '@sneat/datatug/models';
-import {ProjectContextService} from '@sneat/datatug/services/project';
-import {DbServerService} from '@sneat/datatug/services/unsorted';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	getDbServerFromId,
+	IDbCatalogSummary,
+	IDbServer,
+	IDbServerSummary,
+} from '@sneat/datatug/models';
+import { ProjectContextService } from '@sneat/datatug/services/project';
+import { DbServerService } from '@sneat/datatug/services/unsorted';
 
 @Component({
 	selector: 'datatug-dbserver',
 	templateUrl: './dbserver.page.html',
 })
 export class DbserverPage implements OnInit, OnDestroy {
-
 	tab: 'known' | 'unknown' = 'known';
 	public dbServer: IDbServer;
 	public dbServerSummary: IDbServerSummary;
@@ -27,27 +31,29 @@ export class DbserverPage implements OnInit, OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly route: ActivatedRoute,
 		private readonly dbServerService: DbServerService,
-		private readonly projectContextService: ProjectContextService,
+		private readonly projectContextService: ProjectContextService
 	) {
-		this.route.paramMap.pipe(
-			takeUntil(this.destroyed),
-			map(q => {
-				const id = q.get('dbServerId');
-				const driver = q.get('dbDriver');
-				return getDbServerFromId(driver, id);
-			}),
-		).subscribe(dbServer => {
-			this.dbServer = dbServer;
-		});
+		this.route.paramMap
+			.pipe(
+				takeUntil(this.destroyed),
+				map((q) => {
+					const id = q.get('dbServerId');
+					const driver = q.get('dbDriver');
+					return getDbServerFromId(driver, id);
+				})
+			)
+			.subscribe((dbServer) => {
+				this.dbServer = dbServer;
+			});
 		this.projectContextService.current$
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
-				next: target => {
+				next: (target) => {
 					if (target) {
 						this.loadData();
 					}
 				},
-			})
+			});
 	}
 
 	ngOnDestroy() {
@@ -55,8 +61,7 @@ export class DbserverPage implements OnInit, OnDestroy {
 		this.destroyed.next();
 	}
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	private loadData(): void {
 		this.loadSummary();
@@ -68,24 +73,24 @@ export class DbserverPage implements OnInit, OnDestroy {
 		this.dbServerService
 			.getDbServerSummary(this.dbServer)
 			.pipe(
-				takeUntil(this.destroyed),
+				takeUntil(this.destroyed)
 				// delay(1000),
 			)
 			.subscribe({
-				next: dbServerSummary => {
+				next: (dbServerSummary) => {
 					this.loadingSummary = false;
 					this.dbServerSummary = dbServerSummary;
 					this.envs = [];
-					dbServerSummary.databases?.forEach(db => {
-						db.environments?.forEach(env => {
+					dbServerSummary.databases?.forEach((db) => {
+						db.environments?.forEach((env) => {
 							if (!this.envs.includes(env)) {
 								this.envs.push(env);
 							}
-						})
+						});
 					});
 					this.removeAddedCatalogs();
 				},
-				error: err => {
+				error: (err) => {
 					this.loadingSummary = false;
 					this.errorLogger.logError(err, 'Failed to load DB server summary');
 				},
@@ -95,18 +100,18 @@ export class DbserverPage implements OnInit, OnDestroy {
 	private loadCatalogs(): void {
 		this.loadingCatalogs = true;
 		this.dbServerService
-			.getServerDatabases({dbServer: this.dbServer})
+			.getServerDatabases({ dbServer: this.dbServer })
 			.pipe(
-				takeUntil(this.destroyed),
+				takeUntil(this.destroyed)
 				// delay(1000),
 			)
 			.subscribe({
-				next: catalogs => {
+				next: (catalogs) => {
 					this.loadingCatalogs = false;
 					this.dbServerCatalogs = catalogs;
 					this.removeAddedCatalogs();
 				},
-				error: err => {
+				error: (err) => {
 					this.loadingCatalogs = false;
 					this.errorLogger.logError(err, 'Failed to load DB catalogs');
 				},
@@ -115,8 +120,10 @@ export class DbserverPage implements OnInit, OnDestroy {
 
 	private removeAddedCatalogs(): void {
 		if (this.dbServerSummary && this.dbServerCatalogs) {
-			const {databases} = this.dbServerSummary;
-			this.dbServerCatalogs = this.dbServerCatalogs.filter(c => !databases || !databases.some(db => db.id === c.name));
+			const { databases } = this.dbServerSummary;
+			this.dbServerCatalogs = this.dbServerCatalogs.filter(
+				(c) => !databases || !databases.some((db) => db.id === c.name)
+			);
 		}
 	}
 }

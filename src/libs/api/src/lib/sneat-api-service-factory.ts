@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {ISneatApiService} from './sneat-api-service.interface';
-import {SneatApiService} from "./sneat-team-api.service";
-import {HttpClient} from "@angular/common/http";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {parseStoreRef, storeRefToId} from '@sneat/core';
-import {getStoreUrl} from '@sneat/datatug/nav';
+import { Injectable } from '@angular/core';
+import { ISneatApiService } from './sneat-api-service.interface';
+import { SneatApiService } from './sneat-team-api.service';
+import { HttpClient } from '@angular/common/http';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { parseStoreRef, storeRefToId } from '@sneat/core';
+import { getStoreUrl } from '@sneat/datatug/nav';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class SneatApiServiceFactory {
 	private firebaseIdToken?: string | null;
 
@@ -14,10 +14,10 @@ export class SneatApiServiceFactory {
 
 	constructor(
 		private readonly httpClient: HttpClient,
-		readonly afAuth: AngularFireAuth,
+		readonly afAuth: AngularFireAuth
 	) {
 		console.log('SneatApiServiceFactory.constructor()');
-		afAuth.idToken.subscribe(idToken => {
+		afAuth.idToken.subscribe((idToken) => {
 			this.firebaseIdToken = idToken;
 			this.services = {};
 		});
@@ -25,11 +25,16 @@ export class SneatApiServiceFactory {
 
 	getSneatApiService(storeId: string): ISneatApiService {
 		if (!storeId) {
-			throw new Error('storeRef is a required parameter, got empty: ' + typeof storeId);
+			throw new Error(
+				'storeRef is a required parameter, got empty: ' + typeof storeId
+			);
 		}
 		const storeRef = parseStoreRef(storeId);
 		if (!storeRef.type) {
-			throw new Error('storeRef.type is a required parameter, got empty: ' + typeof storeRef.type);
+			throw new Error(
+				'storeRef.type is a required parameter, got empty: ' +
+					typeof storeRef.type
+			);
 		}
 		const id = `${storeRef.type}:${storeRef.url}`;
 		let service = this.services[id];
@@ -39,9 +44,11 @@ export class SneatApiServiceFactory {
 		const baseUrl = getStoreUrl(storeRefToId(storeRef));
 		switch (storeRef.type) {
 			case 'firestore':
-				this.services[id]
-					= service
-					= new SneatApiService(this.httpClient, this.firebaseIdToken || undefined, baseUrl);
+				this.services[id] = service = new SneatApiService(
+					this.httpClient,
+					this.firebaseIdToken || undefined,
+					baseUrl
+				);
 				return service;
 			default:
 				throw new Error('unknown store type: ' + storeRef.type);

@@ -1,22 +1,24 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import {EnvironmentsPageComponent} from './environments-page.component';
+import { EnvironmentsPageComponent } from './environments-page.component';
 
 describe('EnvironmentsPage', () => {
 	let component: EnvironmentsPageComponent;
 	let fixture: ComponentFixture<EnvironmentsPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
-			declarations: [EnvironmentsPageComponent],
-			imports: [IonicModule.forRoot()]
-		}).compileComponents();
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [EnvironmentsPageComponent],
+				imports: [IonicModule.forRoot()],
+			}).compileComponents();
 
-		fixture = TestBed.createComponent(EnvironmentsPageComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+			fixture = TestBed.createComponent(EnvironmentsPageComponent);
+			component = fixture.componentInstance;
+			fixture.detectChanges();
+		})
+	);
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

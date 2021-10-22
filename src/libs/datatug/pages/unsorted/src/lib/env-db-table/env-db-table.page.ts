@@ -1,23 +1,33 @@
-import {AfterViewInit, Component, Inject, OnDestroy, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {first} from 'rxjs/operators';
-import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
-import {PopoverController} from '@ionic/angular';
-import {ProjectService} from '@sneat/datatug/services/project';
-import {AgentService} from '@sneat/datatug/services/repo';
-import {IForeignKey} from '@sneat/datatug/models';
+import {
+	AfterViewInit,
+	Component,
+	Inject,
+	OnDestroy,
+	ViewChild,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
+import { PopoverController } from '@ionic/angular';
+import { ProjectService } from '@sneat/datatug/services/project';
+import { AgentService } from '@sneat/datatug/services/repo';
+import { IForeignKey } from '@sneat/datatug/models';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
 	IDbObjectNavParams,
-	ProjectTracker
+	ProjectTracker,
 } from '@sneat/datatug/services/nav';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ICommandResponseWithRecordset, IExecuteResponse, IRecordsetResult} from '@sneat/datatug/dto';
-import {IGridDef} from '@sneat/grid';
-import {IEnvDbTableContext, IProjectContext} from '@sneat/datatug/nav';
-import {Subject} from 'rxjs';
-import {CellPopoverComponent} from '@sneat/datatug/components/datagrid';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	ICommandResponseWithRecordset,
+	IExecuteResponse,
+	IRecordsetResult,
+} from '@sneat/datatug/dto';
+import { IGridDef } from '@sneat/grid';
+import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug/nav';
+import { Subject } from 'rxjs';
+import { CellPopoverComponent } from '@sneat/datatug/components/datagrid';
 
 @Component({
 	selector: 'datatug-env-db-table',
@@ -25,7 +35,6 @@ import {CellPopoverComponent} from '@sneat/datatug/components/datagrid';
 	styleUrls: ['./env-db-table.page.scss'],
 })
 export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
-
 	project: IProjectContext;
 	envId: string;
 	dbId: string;
@@ -42,17 +51,18 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 	public currentRow: {
 		index: number;
 		data?: any;
-	} = {index: 0};
+	} = { index: 0 };
 	public sql = 'select * from';
 
-	@ViewChild('codemirrorComponent') public codemirrorComponent: CodemirrorComponent;
+	@ViewChild('codemirrorComponent')
+	public codemirrorComponent: CodemirrorComponent;
 
 	public readonly codemirrorOptions = {
 		lineNumbers: true,
 		readOnly: true,
 		mode: 'text/x-sql',
 		viewportMargin: Infinity,
-		style: {height: 'auto'},
+		style: { height: 'auto' },
 	};
 
 	public step = 'initial';
@@ -67,14 +77,14 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 		private readonly agentService: AgentService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
-		private readonly datatugNavService: DatatugNavService,
+		private readonly datatugNavService: DatatugNavService
 	) {
 		console.log('EnvDbTablePage.constructor()', errorLogger);
 		const projectTracker = new ProjectTracker(this.destroyed, route);
 		try {
-			const {paramMap} = route.snapshot;
+			const { paramMap } = route.snapshot;
 			const [schema, name] = paramMap.get('tableId').split('.');
-			this.table = {schema, name};
+			this.table = { schema, name };
 			this.envId = paramMap.get('environmentId');
 			this.dbId = paramMap.get('dbId');
 
@@ -86,33 +96,45 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 				name,
 			};
 			this.datatugNavContextService.currentProject.subscribe({
-				next: currentProject => {
-					console.log('EnvDbTablePage.constructor() => currentProject', currentProject);
+				next: (currentProject) => {
+					console.log(
+						'EnvDbTablePage.constructor() => currentProject',
+						currentProject
+					);
 					try {
-						this.project = currentProject
+						this.project = currentProject;
 					} catch (e) {
 						this.errorLogger.logError(e, 'Failed to process current project');
 					}
 				},
-				error: err => this.errorLogger.logError(err, 'EnvDbTablePage: failed to get current project'),
-			})
+				error: (err) =>
+					this.errorLogger.logError(
+						err,
+						'EnvDbTablePage: failed to get current project'
+					),
+			});
 			this.datatugNavContextService.currentEnvDbTable.subscribe({
-				next: currentTable => {
+				next: (currentTable) => {
 					console.log('EnvDbTablePage => currentTable:', currentTable);
 					try {
 						this.table = currentTable;
 						if (!currentTable) {
 							return;
 						}
-						this.groupByFks = currentTable.meta?.foreignKeys?.filter(fk => fk.columns.length === 1);
-						const from = currentTable.schema === 'dbo' ? currentTable.name : `${currentTable.schema}.${currentTable.name}`
+						this.groupByFks = currentTable.meta?.foreignKeys?.filter(
+							(fk) => fk.columns.length === 1
+						);
+						const from =
+							currentTable.schema === 'dbo'
+								? currentTable.name
+								: `${currentTable.schema}.${currentTable.name}`;
 						this.sql = `select *
 from ${from}`;
 						console.log('sql:', this.sql, currentTable);
 						// this.codemirrorComponent?.codeMirror?.refresh();
 						if (currentTable.meta) {
 							this.grid = {
-								columns: this.table.meta.columns.map(col => ({
+								columns: this.table.meta.columns.map((col) => ({
 									field: col.name,
 									title: col.name,
 									dbType: col.dbType,
@@ -124,21 +146,22 @@ from ${from}`;
 						this.errorLogger.logError(e, 'Failed to process current table');
 					}
 				},
-				error: err => this.errorLogger.logError(err, 'Failed to get current table context'),
+				error: (err) =>
+					this.errorLogger.logError(err, 'Failed to get current table context'),
 			});
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to create EnvDbTablePage')
+			this.errorLogger.logError(e, 'Failed to create EnvDbTablePage');
 		}
 	}
 
 	ngOnDestroy(): void {
-        this.destroyed.next();
-        this.destroyed.complete();
-    }
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
 
 	ngAfterViewInit(): void {
 		try {
-			const {codeMirror} = this.codemirrorComponent;
+			const { codeMirror } = this.codemirrorComponent;
 			codeMirror.getWrapperElement().style.height = 'auto';
 			setTimeout(() => codeMirror.refresh(), 9);
 		} catch (e) {
@@ -162,7 +185,7 @@ from ${from}`;
 			if (!data) {
 				data = this.grid.rows[index];
 			}
-			this.currentRow = {index, data};
+			this.currentRow = { index, data };
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to set current row');
 		}
@@ -176,14 +199,13 @@ from ${from}`;
 	goTable(schema: string, name: string, event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
-		this.datatugNavService
-			.goTable({
-				project: this.project,
-				env: this.envId,
-				db: this.dbId,
-				schema,
-				name,
-			});
+		this.datatugNavService.goTable({
+			project: this.project,
+			env: this.envId,
+			db: this.dbId,
+			schema,
+			name,
+		});
 	}
 
 	private cellFormatter = (cell, formatterParams, onRendered) => {
@@ -193,26 +215,36 @@ from ${from}`;
 				try {
 					const el: HTMLElement = cell.getElement();
 					const colDef = cell.getColumn().getDefinition();
-					const {field} = colDef;
+					const { field } = colDef;
 					const fk = this.getColFk(field);
-					const col = this.table.meta.columns.find(c => c.name === field);
+					const col = this.table.meta.columns.find((c) => c.name === field);
 					// console.log('cellFormatter', field, value, colDef, col);
 					if (col?.dbType === 'uniqueidentifier') {
 						el.style.fontSize = 'smaller';
 					}
 					if (fk) {
 						el.style.color = 'blue';
-						el.onclick = event => {
+						el.onclick = (event) => {
 							console.log('Mouse clicked: ' + value, colDef, colDef.field);
-							this.popoverController.create({
-								component: CellPopoverComponent,
-								event,
-								componentProps: {column: {name: colDef.field}, value, fk},
-								cssClass: 'cell-popover',
-								// showBackdrop: false,
-							}).then(p => {
-								p.present().catch(e => this.errorLogger.logError(e, 'Failed to present cell popover'));
-							}).catch(e => this.errorLogger.logError(e, 'Failed to present cell popover'));
+							this.popoverController
+								.create({
+									component: CellPopoverComponent,
+									event,
+									componentProps: { column: { name: colDef.field }, value, fk },
+									cssClass: 'cell-popover',
+									// showBackdrop: false,
+								})
+								.then((p) => {
+									p.present().catch((e) =>
+										this.errorLogger.logError(
+											e,
+											'Failed to present cell popover'
+										)
+									);
+								})
+								.catch((e) =>
+									this.errorLogger.logError(e, 'Failed to present cell popover')
+								);
 						};
 					}
 				} catch (e) {
@@ -227,7 +259,9 @@ from ${from}`;
 	};
 
 	private getColFk(field: string) {
-		return this.table.meta?.foreignKeys?.find(v => v.columns.indexOf(field) >= 0);
+		return this.table.meta?.foreignKeys?.find(
+			(v) => v.columns.indexOf(field) >= 0
+		);
 	}
 
 	private loadData(): void {
@@ -244,11 +278,12 @@ from ${from}`;
 				})
 				.pipe(first())
 				.subscribe({
-					next: response => {
+					next: (response) => {
 						this.step = 'got response';
 						this.processResponse(response);
 					},
-					error: err => this.errorLogger.logError(err, 'Failed to select from table'),
+					error: (err) =>
+						this.errorLogger.logError(err, 'Failed to select from table'),
 				});
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to load data');
@@ -259,51 +294,59 @@ from ${from}`;
 		console.log('processResponse()', response);
 		try {
 			this.step = 'processResponse';
-			const itemWithRecordset = response.commands[0].items[0] as ICommandResponseWithRecordset
+			const itemWithRecordset = response.commands[0]
+				.items[0] as ICommandResponseWithRecordset;
 			this.recordset = itemWithRecordset?.value;
 			this.setupGrid();
 			console.log('Grid was set up', 'grid:', this.grid);
 		} catch (ex) {
 			this.errorLogger.logError(ex, 'Failed to process response');
 		}
-	}
+	};
 
 	private setupGrid(): void {
 		console.log('setupGrid()', this, this.recordset);
 		this.step = 'setupGrid';
 		try {
 			const cols = this.recordset.columns;
-			const groupBy = this.groupByFk && this.table?.meta?.foreignKeys?.find(fk => fk.name === this.groupByFk).columns[0];
+			const groupBy =
+				this.groupByFk &&
+				this.table?.meta?.foreignKeys?.find((fk) => fk.name === this.groupByFk)
+					.columns[0];
 			this.grid = {
 				groupBy,
 				columns: cols
-					.filter(c => c.name !== groupBy)
-					.map(c => {
+					.filter((c) => c.name !== groupBy)
+					.map((c) => {
 						const col: any = {
 							field: c.name,
 							dbType: c.dbType,
 							title: c.title || c.name,
 							sortable: true,
-							tooltip: cell =>
+							tooltip: (cell) =>
 								// function should return a string for the tooltip of false to hide the tooltip
-								`${cell.getColumn().getField()}: ${cell.getValue()}` // return cells "field - value";
-							,
-							formatter: (c.dbType === 'UNIQUEIDENTIFIER' || this.getColFk(c.name)) && this.cellFormatter,
+								`${cell.getColumn().getField()}: ${cell.getValue()}`, // return cells "field - value";
+							formatter:
+								(c.dbType === 'UNIQUEIDENTIFIER' || this.getColFk(c.name)) &&
+								this.cellFormatter,
 						};
 						if (c.dbType === 'integer') {
 							col.hozAlign = 'right';
 						}
 						return col;
 					}),
-				rows: this.recordset.rows.map(row => {
+				rows: this.recordset.rows.map((row) => {
 					const r = {};
-					cols.forEach((col, i) => r[col.name] = row[i]);
-					return r
+					cols.forEach((col, i) => (r[col.name] = row[i]));
+					return r;
 				}),
 			};
 			console.log('grid:', this.grid);
 			if (this.grid?.rows?.length) {
-				const index = Math.min(this.currentRow.index, this.recordset.rows.length - 1);
+				const index = Math.min(
+					this.currentRow.index,
+					this.recordset.rows.length - 1
+				);
 				this.setCurrentRow(index, this.grid.rows[index]);
 			}
 		} catch (e) {

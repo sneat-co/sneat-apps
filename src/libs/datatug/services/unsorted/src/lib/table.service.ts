@@ -1,26 +1,26 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import {
 	IForeignKey,
 	IPrimaryKey,
 	IReferencedBy,
 	ITableFull,
-	ISqlQueryTarget
+	ISqlQueryTarget,
 } from '@sneat/datatug/models';
-import {map, mergeMap} from 'rxjs/operators';
-import {PrivateTokenStoreService} from "@sneat/auth";
+import { map, mergeMap } from 'rxjs/operators';
+import { PrivateTokenStoreService } from '@sneat/auth';
 
 @Injectable()
 export class TableService {
 	constructor(
 		private readonly httpClient: HttpClient,
-		private readonly privateTokenStoreService: PrivateTokenStoreService,
-	) {
+		private readonly privateTokenStoreService: PrivateTokenStoreService
+	) {}
 
-	}
-
-	public getDbCatalogRefs(r: ISqlQueryTarget): Observable<IDbCatalogObjectWithRefs[]> {
+	public getDbCatalogRefs(
+		r: ISqlQueryTarget
+	): Observable<IDbCatalogObjectWithRefs[]> {
 		const path = `datatug%2Fservers%2Fdb%2F${r.driver}%2F${r.server}%2Fdbcatalogs%2F${r.catalog}%2F${r.catalog}.refs.json`;
 
 		interface urlAndHeaders {
@@ -28,14 +28,21 @@ export class TableService {
 			headers?: { [name: string]: string };
 		}
 
-		const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService.getPrivateToken(r.repository, r.project).pipe(map(accessToken => (
-			{
-				url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
-				headers: {"PRIVATE-TOKEN": "QPgjyFaJwq29x9h7pVxu"}
-			})));
+		const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService
+			.getPrivateToken(r.repository, r.project)
+			.pipe(
+				map((accessToken) => ({
+					url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
+					headers: { 'PRIVATE-TOKEN': 'QPgjyFaJwq29x9h7pVxu' },
+				}))
+			);
 
 		return connectTo.pipe(
-			mergeMap(request => this.httpClient.get<IDbCatalogObjectWithRefs[]>(request.url, {headers: request.headers})),
+			mergeMap((request) =>
+				this.httpClient.get<IDbCatalogObjectWithRefs[]>(request.url, {
+					headers: request.headers,
+				})
+			)
 		);
 	}
 
@@ -47,14 +54,21 @@ export class TableService {
 			headers?: { [name: string]: string };
 		}
 
-		const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService.getPrivateToken(r.repository, r.project).pipe(map(accessToken => (
-			{
-				url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
-				headers: {"PRIVATE-TOKEN": "QPgjyFaJwq29x9h7pVxu"}
-			})));
+		const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService
+			.getPrivateToken(r.repository, r.project)
+			.pipe(
+				map((accessToken) => ({
+					url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
+					headers: { 'PRIVATE-TOKEN': 'QPgjyFaJwq29x9h7pVxu' },
+				}))
+			);
 
 		return connectTo.pipe(
-			mergeMap(request => this.httpClient.get<ITableFull>(request.url, {headers: request.headers})),
+			mergeMap((request) =>
+				this.httpClient.get<ITableFull>(request.url, {
+					headers: request.headers,
+				})
+			)
 		);
 	}
 }

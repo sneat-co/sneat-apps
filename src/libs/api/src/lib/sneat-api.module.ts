@@ -1,13 +1,10 @@
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-	imports: [
-		HttpClientModule,
-	],
+	imports: [HttpClientModule],
 	providers: [
 		// SneatTeamApiService,
-	]
+	],
 })
-export class SneatApiModule {
-}
+export class SneatApiModule {}

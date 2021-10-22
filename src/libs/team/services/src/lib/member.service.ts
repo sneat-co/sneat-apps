@@ -1,46 +1,58 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
-import {map, mapTo, mergeMap, tap} from 'rxjs/operators';
-import {SneatTeamApiService} from '@sneat/api';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
+import { SneatTeamApiService } from '@sneat/api';
 import {
 	IAcceptPersonalInviteRequest,
-	IAddTeamMemberRequest, IAddTeamMemberResponse,
+	IAddTeamMemberRequest,
+	IAddTeamMemberResponse,
 	IMember,
 	IMemberInfo,
 	IRejectPersonalInviteRequest,
-	ITeam
+	ITeam,
 } from '@sneat/team-models';
-import {TeamService} from './team.service';
-import {IErrorResponse} from '@sneat/core';
+import { TeamService } from './team.service';
+import { IErrorResponse } from '@sneat/core';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class MemberService {
-
 	constructor(
 		private readonly db: AngularFirestore,
 		private readonly teamService: TeamService,
-		private readonly sneatTeamApiService: SneatTeamApiService,
-	) {
-	}
+		private readonly sneatTeamApiService: SneatTeamApiService
+	) {}
 
-	public acceptPersonalInvite(request: IAcceptPersonalInviteRequest, firebaseToken: string): Observable<IMemberInfo> {
+	public acceptPersonalInvite(
+		request: IAcceptPersonalInviteRequest,
+		firebaseToken: string
+	): Observable<IMemberInfo> {
 		console.log('MemberService.acceptPersonalInvite()');
 		if (firebaseToken) {
 			this.sneatTeamApiService.setFirebaseToken(firebaseToken);
 		}
-		return this.sneatTeamApiService.post('invites/accept_personal_invite', request);
+		return this.sneatTeamApiService.post(
+			'invites/accept_personal_invite',
+			request
+		);
 	}
 
-	public rejectPersonalInvite(request: IRejectPersonalInviteRequest): Observable<void> {
-		return this.sneatTeamApiService.post('invites/reject_personal_invite', request);
+	public rejectPersonalInvite(
+		request: IRejectPersonalInviteRequest
+	): Observable<void> {
+		return this.sneatTeamApiService.post(
+			'invites/reject_personal_invite',
+			request
+		);
 	}
 
 	public addMember(request: IAddTeamMemberRequest): Observable<IMemberInfo> {
 		console.log(`MemberService.addMember()`, request);
-		const processAddMemberResponse = (response: IAddTeamMemberResponse | IErrorResponse) => {
+		const processAddMemberResponse = (
+			response: IAddTeamMemberResponse | IErrorResponse
+		) => {
 			if (response.hasOwnProperty('error')) {
 				throw (response as IErrorResponse).error;
 			}
@@ -54,11 +66,11 @@ export class MemberService {
 				member.uid = okResponse.uid;
 			}
 			return this.teamService.getTeam(request.team).pipe(
-				tap(team => {
+				tap((team) => {
 					team.members.push(member);
-					this.teamService.onTeamUpdated({id: request.team, data: team});
+					this.teamService.onTeamUpdated({ id: request.team, data: team });
 				}),
-				mapTo(member),
+				mapTo(member)
 			);
 		};
 		return this.sneatTeamApiService
@@ -66,10 +78,14 @@ export class MemberService {
 			.pipe(mergeMap(processAddMemberResponse));
 	}
 
-	public watchMember(teamId: string, memberId: string): Observable<{ team: ITeam, member: IMember }> {
-		const findMember = (team: ITeam) => ({team, member: team.members.find(m => m.id === memberId)});
-		return this.teamService
-			.watchTeam(teamId)
-			.pipe(map(findMember));
+	public watchMember(
+		teamId: string,
+		memberId: string
+	): Observable<{ team: ITeam; member: IMember }> {
+		const findMember = (team: ITeam) => ({
+			team,
+			member: team.members.find((m) => m.id === memberId),
+		});
+		return this.teamService.watchTeam(teamId).pipe(map(findMember));
 	}
 }

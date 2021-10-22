@@ -1,7 +1,7 @@
 {
-  "name": "sneat-team",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+	"name": "sneat-team",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "angular"
 }

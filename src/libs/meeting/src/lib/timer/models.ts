@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
-import {IMeetingRequest} from '@sneat/meeting';
+import { IMeetingRequest } from '@sneat/meeting';
 
 // eslint-disable-next-line no-shadow
 export enum TimerOperationEnum {
@@ -12,7 +12,10 @@ export enum TimerOperationEnum {
 	pause = 'pause',
 }
 
-export type TimerOperation = TimerOperationEnum.start | TimerOperationEnum.stop | TimerOperationEnum.pause;
+export type TimerOperation =
+	| TimerOperationEnum.start
+	| TimerOperationEnum.stop
+	| TimerOperationEnum.pause;
 
 // eslint-disable-next-line no-shadow
 export enum TimerStatusEnum {
@@ -25,10 +28,13 @@ export enum TimerStatusEnum {
 }
 
 // TODO(StackOverflow): does it make sense to have both `type` && `enum`?
-export type TimerStatus = TimerStatusEnum.active | TimerStatusEnum.stopped | TimerStatusEnum.paused;
+export type TimerStatus =
+	| TimerStatusEnum.active
+	| TimerStatusEnum.stopped
+	| TimerStatusEnum.paused;
 
 export interface IByUser {
-	uid: string
+	uid: string;
 	title?: string;
 }
 
@@ -42,7 +48,7 @@ export interface ITimerState {
 	isToggling?: boolean;
 }
 
-export interface IMeetingTimerRequest extends IMeetingRequest{
+export interface IMeetingTimerRequest extends IMeetingRequest {
 	operation: TimerOperation;
 }
 

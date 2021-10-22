@@ -1,6 +1,5 @@
-import {IParameterDef, IParameterValueWithoutID} from '../parameter';
-import {WidgetDef} from './widgets';
-
+import { IParameterDef, IParameterValueWithoutID } from '../parameter';
+import { WidgetDef } from './widgets';
 
 export interface IBoardDef {
 	id: string;

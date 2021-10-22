@@ -1,26 +1,31 @@
-import {Component, Inject, OnDestroy} from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
 	ProjectTopLevelPage,
-	ProjectTracker
-} from "@sneat/datatug/services/nav";
-import {IProjectSummary} from "@sneat/datatug/models";
-import {Observable, Subject} from "rxjs";
-import {IProjectContext} from '@sneat/datatug/nav';
-import {ActivatedRoute} from '@angular/router';
-import {parseStoreRef} from '@sneat/core';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {distinctUntilKeyChanged, filter, map, takeUntil} from 'rxjs/operators';
-import {equalProjectRef, IProjectRef} from '@sneat/datatug/core';
-import {DatatugUserService} from '@sneat/datatug/services/base';
+	ProjectTracker,
+} from '@sneat/datatug/services/nav';
+import { IProjectSummary } from '@sneat/datatug/models';
+import { Observable, Subject } from 'rxjs';
+import { IProjectContext } from '@sneat/datatug/nav';
+import { ActivatedRoute } from '@angular/router';
+import { parseStoreRef } from '@sneat/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	distinctUntilKeyChanged,
+	filter,
+	map,
+	takeUntil,
+} from 'rxjs/operators';
+import { equalProjectRef, IProjectRef } from '@sneat/datatug/core';
+import { DatatugUserService } from '@sneat/datatug/services/base';
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage | '';
 	title: string;
 	icon: string;
 	count?: (proj: IProjectSummary) => number;
-	buttons?: { path: ProjectTopLevelPage, icon: string; }[];
+	buttons?: { path: ProjectTopLevelPage; icon: string }[];
 }
 
 @Component({
@@ -28,7 +33,6 @@ interface IProjectTopLevelPage {
 	templateUrl: './project-menu-top.component.html',
 })
 export class ProjectMenuTopComponent implements OnDestroy {
-
 	public readonly projTopLevelPages: IProjectTopLevelPage[] = [
 		{
 			path: '',
@@ -39,25 +43,25 @@ export class ProjectMenuTopComponent implements OnDestroy {
 			path: 'boards',
 			title: 'Boards',
 			icon: 'easel-outline',
-			count: proj => proj?.boards?.length,
+			count: (proj) => proj?.boards?.length,
 		},
 		{
 			path: 'dbmodels',
 			title: 'DB models',
 			icon: 'layers-outline',
-			count: proj => proj?.dbModels?.length,
+			count: (proj) => proj?.dbModels?.length,
 		},
 		{
 			path: 'entities',
 			title: 'Entities',
 			icon: 'book-outline',
-			count: proj => proj?.entities?.length,
+			count: (proj) => proj?.entities?.length,
 		},
 		{
 			path: 'environments',
 			title: 'Environments',
 			icon: 'earth-outline',
-			count: proj => proj?.environments?.length,
+			count: (proj) => proj?.environments?.length,
 		},
 		{
 			path: 'servers',
@@ -68,15 +72,13 @@ export class ProjectMenuTopComponent implements OnDestroy {
 			path: 'queries',
 			title: 'Queries',
 			icon: 'terminal-outline',
-			buttons: [
-				{path: 'query', icon: 'add'}
-			]
+			buttons: [{ path: 'query', icon: 'add' }],
 		},
 		{
 			path: 'tags',
 			title: 'Tags',
 			icon: 'pricetags-outline',
-			count: proj => proj?.tags?.length,
+			count: (proj) => proj?.tags?.length,
 		},
 		{
 			path: 'widgets',
@@ -94,15 +96,15 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
-		private readonly userService: DatatugUserService,
+		private readonly userService: DatatugUserService
 	) {
 		this.datatugNavContextService.currentProject
-			.pipe(
-				takeUntil(this.destroyed),
-			)
+			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: this.setProject,
-				error: this.errorLogger.logErrorHandler('ProjectMenuTopComponent failed to retrieve project context from ProjectTracker'),
+				error: this.errorLogger.logErrorHandler(
+					'ProjectMenuTopComponent failed to retrieve project context from ProjectTracker'
+				),
 			});
 		this.currentFolder = datatugNavContextService.currentFolder;
 	}
@@ -110,7 +112,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 	private setProject = (project: IProjectContext) => {
 		console.log('ProjectMenuTopComponent.setProject()', project);
 		this.project = project;
-	}
+	};
 
 	ngOnDestroy() {
 		this.destroyed.next();
@@ -122,9 +124,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		event.preventDefault();
 		event.stopPropagation();
 		const project = this.project;
-		this.nav.goProjPage(project, page, {project});
+		this.nav.goProjPage(project, page, { project });
 		return false;
 	}
-
-
 }

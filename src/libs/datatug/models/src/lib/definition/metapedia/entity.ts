@@ -1,6 +1,6 @@
-import {IOptionallyTitled} from '../../core';
-import {IFieldCheckDef} from '../checks';
-import {DataType} from '../types';
+import { IOptionallyTitled } from '../../core';
+import { IFieldCheckDef } from '../checks';
+import { DataType } from '../types';
 
 export interface IEntity extends IOptionallyTitled {
 	extends?: { def: string };
@@ -31,4 +31,3 @@ export interface IEntityFieldRef {
 	entity: string;
 	field: string;
 }
-

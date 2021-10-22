@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {RecordsetService} from './recordset.service';
+import { RecordsetService } from './recordset.service';
 
 describe('RecordsetService', () => {
 	let service: RecordsetService;

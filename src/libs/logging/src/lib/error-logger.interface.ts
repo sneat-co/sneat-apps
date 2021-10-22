@@ -1,4 +1,4 @@
-import {InjectionToken} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 export interface ILogErrorOptions {
 	readonly report?: boolean;
@@ -8,10 +8,12 @@ export interface ILogErrorOptions {
 }
 
 export interface IErrorLogger {
+	logError(e: any, message?: string, options?: ILogErrorOptions): void; // TODO: document why we need to return this: { error: any; message?: string; } | any;
 
-	logError(e: any, message?: string, options?: ILogErrorOptions): void // TODO: document why we need to return this: { error: any; message?: string; } | any;
-
-	logErrorHandler(message?: string, options?: ILogErrorOptions): (error: any) => void;
+	logErrorHandler(
+		message?: string,
+		options?: ILogErrorOptions
+	): (error: any) => void;
 }
 
 export const ErrorLogger = new InjectionToken<IErrorLogger>('IErrorLogger');

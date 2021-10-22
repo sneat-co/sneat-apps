@@ -1,9 +1,9 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {merge, Observable, race, Subject, Subscription} from 'rxjs';
-import {skip, takeUntil, tap} from 'rxjs/operators';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {ActivatedRoute} from '@angular/router';
-import {IonInput, NavController, ViewWillEnter} from '@ionic/angular';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { merge, Observable, race, Subject, Subscription } from 'rxjs';
+import { skip, takeUntil, tap } from 'rxjs/operators';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ActivatedRoute } from '@angular/router';
+import { IonInput, NavController, ViewWillEnter } from '@ionic/angular';
 import {
 	IDatatugProjectBriefWithIdAndStoreRef,
 	IOptionallyTitled,
@@ -14,36 +14,38 @@ import {
 	IProjEnv,
 	IProjItemBrief,
 	ProjectItem,
-	ProjectItemType
+	ProjectItemType,
 } from '@sneat/datatug/models';
-import {IProjectContext} from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug/nav';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
 	ProjectTopLevelPage,
-	ProjectTracker
+	ProjectTracker,
 } from '@sneat/datatug/services/nav';
-import {ProjectService} from '@sneat/datatug/services/project';
-import {EntityService, EnvironmentService, SchemaService} from '@sneat/datatug/services/unsorted';
-import {IProjectRef} from '@sneat/datatug/core';
-import {CreateNamedRequest} from '@sneat/datatug/dto';
-import {IRecord} from '@sneat/data';
-import {parseStoreRef} from '@sneat/core';
-
+import { ProjectService } from '@sneat/datatug/services/project';
+import {
+	EntityService,
+	EnvironmentService,
+	SchemaService,
+} from '@sneat/datatug/services/unsorted';
+import { IProjectRef } from '@sneat/datatug/core';
+import { CreateNamedRequest } from '@sneat/datatug/dto';
+import { IRecord } from '@sneat/data';
+import { parseStoreRef } from '@sneat/core';
 
 @Component({
 	selector: 'datatug-project',
 	templateUrl: './project-page.component.html',
 })
 export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
-
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	readonly DbModel = ProjectItem.dbModel as const;
 
 	project: IProjectContext;
 
 	destroyed = new Subject<boolean>();
-	@ViewChild(IonInput, {static: false}) addInput: IonInput;
+	@ViewChild(IonInput, { static: false }) addInput: IonInput;
 	private projectSubscription: Subscription;
 
 	isActiveView = false;
@@ -59,13 +61,18 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		private readonly schemaService: SchemaService,
 		private readonly environmentService: EnvironmentService,
 		private readonly entityService: EntityService,
-		private readonly navController: NavController,
+		private readonly navController: NavController
 	) {
-		console.log('ProjectPageComponent.constructor()', route?.snapshot?.paramMap);
+		console.log(
+			'ProjectPageComponent.constructor()',
+			route?.snapshot?.paramMap
+		);
 		this.projectTracker = new ProjectTracker(this.destroyed, route);
 		this.projectTracker.projectRef.subscribe({
 			next: this.setProjRef,
-			error: this.errorLogger.logErrorHandler('Failed to get project ref for ProjectPageComponent'),
+			error: this.errorLogger.logErrorHandler(
+				'Failed to get project ref for ProjectPageComponent'
+			),
 		});
 	}
 
@@ -73,21 +80,28 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		console.log('ProjectPageComponent.setProjRef()', ref);
 		try {
 			if (ref.projectId === this.project?.ref?.projectId) {
-				this.project = {ref, store: {ref: parseStoreRef(ref.storeId)}};
+				this.project = { ref, store: { ref: parseStoreRef(ref.storeId) } };
 			}
-			this.projectService.watchProjectSummary(ref).pipe(
-				takeUntil(race([
-					this.projectTracker.projectRef.pipe(skip(1)),
-					this.destroyed,
-				])),
-			).subscribe({
-				next: summary => this.onProjectSummaryChanged(ref, summary),
-				error: this.errorLogger.logErrorHandler('Failed to load project summary for project page'),
-			});
+			this.projectService
+				.watchProjectSummary(ref)
+				.pipe(
+					takeUntil(
+						race([this.projectTracker.projectRef.pipe(skip(1)), this.destroyed])
+					)
+				)
+				.subscribe({
+					next: (summary) => this.onProjectSummaryChanged(ref, summary),
+					error: this.errorLogger.logErrorHandler(
+						'Failed to load project summary for project page'
+					),
+				});
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to set projectRef at ProjectPageComponent');
+			this.errorLogger.logError(
+				e,
+				'Failed to set projectRef at ProjectPageComponent'
+			);
 		}
-	}
+	};
 
 	ionViewWillEnter(): void {
 		this.isActiveView = true;
@@ -107,7 +121,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		this.destroyed.complete();
 	}
 
-
 	public goDbModel(dbModelBrief: IProjDbModelBrief): void {
 		this.goProjItemPage(ProjectItem.dbModel, dbModelBrief);
 	}
@@ -123,16 +136,25 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	public goProjFolder(projItemType: ProjectItemType): void {
 		console.log('goProjFolder()', projItemType, this.project.ref);
 		if (!this.project?.ref?.projectId) {
-			this.errorLogger.logError(new Error('Can not navigate to project folder'), '!this.projBrief.id');
+			this.errorLogger.logError(
+				new Error('Can not navigate to project folder'),
+				'!this.projBrief.id'
+			);
 			return;
 		}
 		const url = `project/${this.project.ref.projectId}/${projItemType}s`;
-		this.navController.navigateForward(url, {
+		this.navController
+			.navigateForward(url, {
 				state: {
 					project: this.project,
 				},
-			},
-		).catch(err => this.errorLogger.logError(err, 'Failed to navigate to project item page: ' + url));
+			})
+			.catch((err) =>
+				this.errorLogger.logError(
+					err,
+					'Failed to navigate to project item page: ' + url
+				)
+			);
 	}
 
 	public goEntity(entity: IProjEntity): void {
@@ -143,7 +165,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		this.datatugNavService.goBoard(this.project, board);
 	}
 
-	public getItemLink = (path: string) => (item: IProjItemBrief) => `${path}/${item.id}`;
+	public getItemLink = (path: string) => (item: IProjItemBrief) =>
+		`${path}/${item.id}`;
 
 	// private onProjectIdChanged(): void {
 	// 	console.log('ProjectPageComponent.onProjectIdChanged()', this.project.ref);
@@ -160,31 +183,42 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 	// 	}
 	// }
 
-	private onProjectSummaryChanged(ref: IProjectRef, summary: IProjectSummary): void {
-		console.log('ProjectPageComponent.onProjectSummaryChanged():', ref, summary);
+	private onProjectSummaryChanged(
+		ref: IProjectRef,
+		summary: IProjectSummary
+	): void {
+		console.log(
+			'ProjectPageComponent.onProjectSummaryChanged():',
+			ref,
+			summary
+		);
 		if (!summary) {
 			return;
 		}
 		this.project = {
 			...this.project,
 			ref,
-			brief: {access: summary.access, title: summary.title},
+			brief: { access: summary.access, title: summary.title },
 			summary,
 		};
 	}
 
-
-	private goProjItemPage(page: ProjectItemType, projItem: IProjItemBrief): void {
+	private goProjItemPage(
+		page: ProjectItemType,
+		projItem: IProjItemBrief
+	): void {
 		console.log('goProjItemPage()', page, projItem, this.project);
 		switch (page) {
 			case ProjectItem.environment:
 				page = 'env' as ProjectItemType;
 				break;
 		}
-		this.datatugNavService.goProjPage(this.project, page, {projectContext: this.project});
+		this.datatugNavService.goProjPage(this.project, page, {
+			projectContext: this.project,
+		});
 	}
 
-	goTo(event: CustomEvent): void{
+	goTo(event: CustomEvent): void {
 		const page = event.detail.value as ProjectTopLevelPage;
 		this.datatugNavService.goProject(this.project, page);
 	}

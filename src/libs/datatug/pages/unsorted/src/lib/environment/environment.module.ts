@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {EnvironmentPageRoutingModule} from './environment-routing.module';
+import { EnvironmentPageRoutingModule } from './environment-routing.module';
 
-import {EnvironmentPageComponent} from './environment-page.component';
+import { EnvironmentPageComponent } from './environment-page.component';
 
 @NgModule({
 	imports: [
@@ -15,7 +15,6 @@ import {EnvironmentPageComponent} from './environment-page.component';
 		IonicModule,
 		EnvironmentPageRoutingModule,
 	],
-	declarations: [EnvironmentPageComponent]
+	declarations: [EnvironmentPageComponent],
 })
-export class EnvironmentPageModule {
-}
+export class EnvironmentPageModule {}

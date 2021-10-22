@@ -1,21 +1,31 @@
-import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	SimpleChanges,
+} from '@angular/core';
 import {
 	allUserProjectsAsFlatList,
-	allUserStoresAsFlatList, DatatugProjStoreType,
+	allUserStoresAsFlatList,
+	DatatugProjStoreType,
 	IDatatugStoreBrief,
-	IDatatugStoreBriefsById, IDatatugStoreBriefWithId,
-	IDatatugUser
+	IDatatugStoreBriefsById,
+	IDatatugStoreBriefWithId,
+	IDatatugUser,
 } from '@sneat/datatug/models';
-import {AgentStateService, IAgentState} from "@sneat/datatug/services/repo";
-import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {Subject} from "rxjs";
-import {take, takeUntil} from "rxjs/operators";
-import {DatatugNavService} from "@sneat/datatug/services/nav";
-import {NavController} from "@ionic/angular";
-import {DatatugUserService} from '@sneat/datatug/services/base';
-import {AuthStatus} from '@sneat/auth';
-import {IDatatugStoreContext} from '@sneat/datatug/nav';
-import {parseStoreRef} from '@sneat/core';
+import { AgentStateService, IAgentState } from '@sneat/datatug/services/repo';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+import { DatatugNavService } from '@sneat/datatug/services/nav';
+import { NavController } from '@ionic/angular';
+import { DatatugUserService } from '@sneat/datatug/services/base';
+import { AuthStatus } from '@sneat/auth';
+import { IDatatugStoreContext } from '@sneat/datatug/nav';
+import { parseStoreRef } from '@sneat/core';
 
 @Component({
 	selector: 'datatug-my-stores',
@@ -23,7 +33,6 @@ import {parseStoreRef} from '@sneat/core';
 	styleUrls: ['./my-stores.component.scss'],
 })
 export class MyStoresComponent implements OnInit, OnDestroy {
-
 	public authStatus: AuthStatus;
 	public userRecordLoaded = false;
 
@@ -38,15 +47,15 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 		private readonly navController: NavController,
 		readonly agentStateService: AgentStateService,
 		private readonly datatugNavService: DatatugNavService,
-		private readonly datatugUserService: DatatugUserService,
-	) {
-	}
+		private readonly datatugUserService: DatatugUserService
+	) {}
 
 	ngOnInit(): void {
-		this.agentStateService.getAgentInfo('localhost:8989')
+		this.agentStateService
+			.getAgentInfo('localhost:8989')
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
-				next: agentState => {
+				next: (agentState) => {
 					console.log('MyStoresComponent => agent state:', agentState);
 					this.agentState = agentState;
 				},
@@ -55,16 +64,19 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 		this.datatugUserService.datatugUserState
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
-				next: datatugUserState => {
+				next: (datatugUserState) => {
 					// console.log('MyStoresComponent => datatugUserState:', datatugUserState);
 					this.authStatus = datatugUserState?.status;
-					this.userRecordLoaded = !!datatugUserState?.record || datatugUserState.record === null;
-					const {record} = datatugUserState;
+					this.userRecordLoaded =
+						!!datatugUserState?.record || datatugUserState.record === null;
+					const { record } = datatugUserState;
 					if (record || record == null) {
 						this.stores = allUserStoresAsFlatList(record?.datatug?.stores);
 					}
 				},
-				error: this.errorLogger.logErrorHandler('Failed to get datatug user state'),
+				error: this.errorLogger.logErrorHandler(
+					'Failed to get datatug user state'
+				),
 			});
 	}
 
@@ -86,7 +98,7 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 
 	goStore(brief: IDatatugStoreBriefWithId): void {
 		if (!brief.projects) {
-			brief = {...brief, projects: {}} // TODO: document why we do this or remove
+			brief = { ...brief, projects: {} }; // TODO: document why we do this or remove
 		}
 		const store: IDatatugStoreContext = {
 			ref: parseStoreRef(brief.id),
@@ -100,7 +112,10 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 		event.stopPropagation();
 	}
 
-	public openHelp(event: Event, path: 'agent' | 'cloud' | 'github.com' | 'private-repos'): void {
+	public openHelp(
+		event: Event,
+		path: 'agent' | 'cloud' | 'github.com' | 'private-repos'
+	): void {
 		event.preventDefault();
 		event.stopPropagation();
 		window.open('https://datatug.app/' + path, '_blank');

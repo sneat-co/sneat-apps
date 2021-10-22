@@ -4,21 +4,21 @@ import { IonicModule } from '@ionic/angular';
 import { EnvSelectorComponent } from './env-selector.component';
 
 describe('EnvSelectorComponent', () => {
-  let component: EnvSelectorComponent;
-  let fixture: ComponentFixture<EnvSelectorComponent>;
+	let component: EnvSelectorComponent;
+	let fixture: ComponentFixture<EnvSelectorComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ EnvSelectorComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [EnvSelectorComponent],
+			imports: [IonicModule.forRoot()],
+		}).compileComponents();
 
-    fixture = TestBed.createComponent(EnvSelectorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+		fixture = TestBed.createComponent(EnvSelectorComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

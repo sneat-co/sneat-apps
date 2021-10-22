@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {getMeetingIdFromDate} from '../../../services/meeting.service';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { getMeetingIdFromDate } from '../../../services/meeting.service';
 
 export interface IRetroQuestion {
 	id: string;
@@ -17,13 +17,13 @@ export class RetroMyFeedbackPage {
 	retroId: string;
 
 	questions: IRetroQuestion[] = [
-		{id: 'good', title: 'What went well?'},
-		{id: 'bad', title: 'What went bad?'},
-		{id: 'ideas', title: 'What to improve?'},
+		{ id: 'good', title: 'What went well?' },
+		{ id: 'bad', title: 'What went bad?' },
+		{ id: 'ideas', title: 'What to improve?' },
 	];
 
 	constructor(
-		route: ActivatedRoute,
+		route: ActivatedRoute
 		// private navService: NavService,
 	) {
 		this.teamId = route.snapshot.queryParamMap.get('team');

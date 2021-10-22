@@ -1,12 +1,12 @@
-import {Component, Inject} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {IRecord} from '@sneat/data';
-import {ITeam, TeamService} from '@sneat/team-models';
-import {IScrum} from '@sneat/scrumspace/scrummodels';
-import {ScrumService} from '@sneat/scrumspace/dailyscrum';
-import {NavService} from '@sneat/datatug/core';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { IRecord } from '@sneat/data';
+import { ITeam, TeamService } from '@sneat/team-models';
+import { IScrum } from '@sneat/scrumspace/scrummodels';
+import { ScrumService } from '@sneat/scrumspace/dailyscrum';
+import { NavService } from '@sneat/datatug/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-scrums-history',
@@ -14,7 +14,6 @@ import {ErrorLogger, IErrorLogger} from '@sneat/logging';
 	styleUrls: ['./scrums-history.page.scss'],
 })
 export class ScrumsHistoryPageComponent {
-
 	public team: IRecord<ITeam>;
 	public scrums: IRecord<IScrum>[];
 
@@ -24,7 +23,7 @@ export class ScrumsHistoryPageComponent {
 		private readonly teamService: TeamService,
 		private readonly scrumService: ScrumService,
 		private readonly afAuth: AngularFireAuth,
-		private readonly navService: NavService,
+		private readonly navService: NavService
 	) {
 		const team = history.state?.team as IRecord<ITeam>;
 		console.log('team', team);
@@ -33,26 +32,25 @@ export class ScrumsHistoryPageComponent {
 		} else {
 			const id = route.snapshot.queryParamMap.get('team');
 			if (id) {
-				this.team = {id};
-				this.teamService.watchTeam(id).subscribe(teamData => {
+				this.team = { id };
+				this.teamService.watchTeam(id).subscribe((teamData) => {
 					this.team.data = teamData;
 				});
 			}
 		}
 		if (this.team?.id) {
-			this.afAuth.idToken.subscribe(token => {
+			this.afAuth.idToken.subscribe((token) => {
 				if (token) {
 					console.log('token', token);
 					setTimeout(() => {
-						this.scrumService
-							.getScrums(this.team.id)
-							.subscribe({
-								next: scrums => {
-									console.log('scrums', scrums);
-									this.scrums = scrums;
-								},
-								error: err => this.errorLogger.logError(err, 'Failed to load scrums'),
-							});
+						this.scrumService.getScrums(this.team.id).subscribe({
+							next: (scrums) => {
+								console.log('scrums', scrums);
+								this.scrums = scrums;
+							},
+							error: (err) =>
+								this.errorLogger.logError(err, 'Failed to load scrums'),
+						});
 					}, 1000);
 				}
 			});

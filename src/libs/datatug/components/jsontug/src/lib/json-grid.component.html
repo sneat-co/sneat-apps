@@ -1,12 +1,12 @@
 <table *ngIf="jsonGrid" border="1" class="json-table">
 	<thead>
-	<tr>
-		<td *ngFor="let col of jsonGrid.cols">{{col}}</td>
-	</tr>
+		<tr>
+			<td *ngFor="let col of jsonGrid.cols">{{ col }}</td>
+		</tr>
 	</thead>
 	<tbody>
-	<tr *ngFor="let row of jsonGrid.rows; let i = index">
-		<td *ngFor="let v of row">{{v|json}}</td>
-	</tr>
+		<tr *ngFor="let row of jsonGrid.rows; let i = index">
+			<td *ngFor="let v of row">{{ v | json }}</td>
+		</tr>
 	</tbody>
 </table>

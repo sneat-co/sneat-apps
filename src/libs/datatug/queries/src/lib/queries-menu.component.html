@@ -1,7 +1,13 @@
 <ion-segment [(ngModel)]="tab">
-	<ion-segment-button value="all" class="no-text-transform">Queries</ion-segment-button>
-	<ion-segment-button value="active" class="no-text-transform">Active</ion-segment-button>
-	<ion-segment-button value="favorites" class="no-text-transform">Bookmarked</ion-segment-button>
+	<ion-segment-button value="all" class="no-text-transform"
+		>Queries</ion-segment-button
+	>
+	<ion-segment-button value="active" class="no-text-transform"
+		>Active</ion-segment-button
+	>
+	<ion-segment-button value="favorites" class="no-text-transform"
+		>Bookmarked</ion-segment-button
+	>
 </ion-segment>
 <ion-item color="light" *ngIf="queries?.length">
 	<ion-icon name="search-outline" slot="start"></ion-icon>
@@ -12,13 +18,17 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
-<ion-item *ngFor="let query of queries; trackBy: trackByID"
-		  tappable
-		  (click)="selectQuery(query.id)"
+<ion-item
+	*ngFor="let query of queries; trackBy: trackByID"
+	tappable
+	(click)="selectQuery(query.id)"
 >
 	<ion-icon name="terminal-outline" slot="start"></ion-icon>
-	<ion-label [color]="query.id === currentQueryId ? 'primary' : undefined" [title]="query?.title">
-		{{query.title || query.id}}
+	<ion-label
+		[color]="query.id === currentQueryId ? 'primary' : undefined"
+		[title]="query?.title"
+	>
+		{{ query.title || query.id }}
 	</ion-label>
 	<ion-buttons slot="end">
 		<ion-button color="medium" title="Close query" (click)="closeQuery(query)">
@@ -35,7 +45,11 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
-<ion-item tappable *ngIf="tab === 'active' && queries.length" (click)="newQuery()">
+<ion-item
+	tappable
+	*ngIf="tab === 'active' && queries.length"
+	(click)="newQuery()"
+>
 	<ion-icon slot="start" name="add"></ion-icon>
 	<ion-label color="medium">New query</ion-label>
 </ion-item>

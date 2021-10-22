@@ -6,7 +6,9 @@
 		</ion-buttons>
 		<ion-title>
 			Environments
-			<ng-container *ngIf="project">{{project.title || project.id}}</ng-container>
+			<ng-container *ngIf="project">{{
+				project.title || project.id
+			}}</ng-container>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -19,6 +21,9 @@
 		</ion-item>
 	</ion-card>
 
-	<sneat-card-list title="Environments" [isLoading]="!project" [items]="project?.environments"
+	<sneat-card-list
+		title="Environments"
+		[isLoading]="!project"
+		[items]="project?.environments"
 	></sneat-card-list>
 </ion-content>

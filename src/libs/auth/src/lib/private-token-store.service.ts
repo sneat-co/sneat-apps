@@ -1,19 +1,22 @@
-import {Injectable} from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
 
-const tokenKey = (domain: string, projectId: string) => `private/tokens/${domain}/${projectId}`;
+const tokenKey = (domain: string, projectId: string) =>
+	`private/tokens/${domain}/${projectId}`;
 
 export const canceledByUser = 'canceled by user';
 
 @Injectable()
 export class PrivateTokenStoreService {
-
-	public getPrivateToken(domain: string, projectId: string): Observable<string> {
+	public getPrivateToken(
+		domain: string,
+		projectId: string
+	): Observable<string> {
 		// Consider storing all tokens in a single item
 		const key = tokenKey(domain, projectId);
 		let token = localStorage.getItem(key);
 		if (token) {
-			return of(token)
+			return of(token);
 		}
 
 		const subj = new Subject<string>();

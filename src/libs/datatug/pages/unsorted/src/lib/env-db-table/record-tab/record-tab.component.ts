@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'datatug-record-tab',
@@ -6,11 +6,7 @@ import {Component, OnInit} from '@angular/core';
 	styleUrls: ['./record-tab.component.scss'],
 })
 export class RecordTabComponent implements OnInit {
+	constructor() {}
 
-	constructor() {
-	}
-
-	ngOnInit() {
-	}
-
+	ngOnInit() {}
 }

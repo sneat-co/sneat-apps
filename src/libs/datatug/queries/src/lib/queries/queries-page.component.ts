@@ -1,21 +1,23 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
-import {Subscription} from 'rxjs';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
 	IProjItemBrief,
 	IQueryDef,
 	IQueryFolder,
 	IQueryFolderContext,
 	ISqlQueryRequest,
-	QueryItem
+	QueryItem,
 } from '@sneat/datatug/models';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
-import {ViewDidEnter, ViewDidLeave, ViewWillEnter} from "@ionic/angular";
-import {getStoreId, IProjectContext} from "@sneat/datatug/nav";
-import {QueriesService} from "../queries.service";
-
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+} from '@sneat/datatug/services/nav';
+import { ViewDidEnter, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
+import { getStoreId, IProjectContext } from '@sneat/datatug/nav';
+import { QueriesService } from '../queries.service';
 
 const paramTab = 'tab';
 const tabs = ['active', 'bookmarked', 'personal', 'shared'] as const;
@@ -30,16 +32,18 @@ type OrderBy = typeof orderBys[number];
 	templateUrl: './queries-page.component.html',
 	styleUrls: ['./queries-page.component.scss'],
 })
-export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave {
-
-	@ViewChild('codemirrorComponent', {static: true}) public codemirrorComponent: CodemirrorComponent;
+export class QueriesPageComponent
+	implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave
+{
+	@ViewChild('codemirrorComponent', { static: true })
+	public codemirrorComponent: CodemirrorComponent;
 
 	public isActiveView: boolean;
 
 	// noinspection SqlDialectInspection
 	public sql = 'select * from ';
 
-	public tab: Tab = 'shared'
+	public tab: Tab = 'shared';
 	public orderTagsBy: OrderBy = 'count';
 
 	public filter = '';
@@ -47,15 +51,19 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 	public project: IProjectContext;
 
 	public get defaultBackHref(): string {
-		return this.project ? `/store/${getStoreId(this.project.ref.storeId)}/project/${this.project.ref.projectId}` : '/';
+		return this.project
+			? `/store/${getStoreId(this.project.ref.storeId)}/project/${
+					this.project.ref.projectId
+			  }`
+			: '/';
 	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly route: ActivatedRoute,
-		private readonly router: Router,
+		private readonly router: Router
 	) {
-		this.route.queryParamMap.subscribe(q => {
+		this.route.queryParamMap.subscribe((q) => {
 			const tab = q.get('tab') as Tab;
 			if (!tab) {
 				this.updateUrlWithCurrentTab();
@@ -66,47 +74,54 @@ export class QueriesPageComponent implements OnInit, ViewWillEnter, ViewDidEnter
 			const orderBy = q.get(paramOrderTagsBy) as OrderBy;
 			if (!orderBy) {
 				this.updateUrlWithOrderTagsBy();
-			} else if (orderBy != this.orderTagsBy && orderBys.indexOf(orderBy) >= 0) {
+			} else if (
+				orderBy != this.orderTagsBy &&
+				orderBys.indexOf(orderBy) >= 0
+			) {
 				this.orderTagsBy = orderBy;
 			}
 		});
 	}
 
 	public updateUrlWithOrderTagsBy(): void {
-		this.setUrlParam(paramOrderTagsBy, this.orderTagsBy)
+		this.setUrlParam(paramOrderTagsBy, this.orderTagsBy);
 	}
 
 	public updateUrlWithCurrentTab(): void {
-		this.setUrlParam('tab', this.tab)
+		this.setUrlParam('tab', this.tab);
 	}
 
 	public setUrlParam(name: string, value: string): void {
-		const queryParams: Params = {[name]: value};
-		this.router.navigate(
-			[],
-			{
+		const queryParams: Params = { [name]: value };
+		this.router
+			.navigate([], {
 				relativeTo: this.route,
 				queryParams: queryParams,
 				queryParamsHandling: 'merge', // remove to replace all query params by provided
-			}).catch(this.errorLogger.logErrorHandler(`failed to update url with query parameter "${name}"`));
+			})
+			.catch(
+				this.errorLogger.logErrorHandler(
+					`failed to update url with query parameter "${name}"`
+				)
+			);
 	}
 
 	ionViewWillEnter(): void {
-		console.log('ionViewWillEnter()')
+		console.log('ionViewWillEnter()');
 		this.isActiveView = true;
 	}
 
 	ionViewDidEnter(): void {
-		console.log('ionViewDidEnter()')
+		console.log('ionViewDidEnter()');
 	}
 
 	ionViewDidLeave(): void {
-		console.log('ionViewDidLeave()')
+		console.log('ionViewDidLeave()');
 		this.isActiveView = false;
 	}
 
 	ngOnInit(): void {
-		console.log('QueriesPage.ngOnInit()')
+		console.log('QueriesPage.ngOnInit()');
 	}
 
 	reloadQueries(): void {

@@ -1,6 +1,7 @@
 export type DtoType = 'boolean' | 'number' | 'string';
 
-export type DataType = DtoType
+export type DataType =
+	| DtoType
 	| 'text'
 	| 'integer'
 	| 'decimal'
@@ -12,8 +13,7 @@ export type DataType = DtoType
 	| 'UUID'
 	| 'GUID'
 	| 'datetime'
-	| 'date'
-	;
+	| 'date';
 
 export const dataType2dtoType = (type: DataType): DtoType => {
 	switch (type) {
@@ -34,5 +34,4 @@ export const dataType2dtoType = (type: DataType): DtoType => {
 		default:
 			throw new Error('unknown data type: ' + type);
 	}
-}
-
+};

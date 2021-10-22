@@ -1,11 +1,11 @@
-import {ICommandDefinition} from '../command-definition';
+import { ICommandDefinition } from '../command-definition';
 
 export const sqlWidgetName = 'SQL';
 export type SqlWidgetName = typeof sqlWidgetName;
 
 export interface ISqlWidgetDef extends ICommandDefinition {
 	name: SqlWidgetName;
-	data: {sql: ISqlWidgetSettings};
+	data: { sql: ISqlWidgetSettings };
 }
 
 export interface ISqlWidgetSettings extends ICommandDefinition {

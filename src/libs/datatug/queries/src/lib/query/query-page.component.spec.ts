@@ -1,22 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {QueryPageComponent} from './query-page.component';
+import { QueryPageComponent } from './query-page.component';
 
 describe('SqlEditorPage', () => {
 	let component: QueryPageComponent;
 	let fixture: ComponentFixture<QueryPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
-			declarations: [QueryPageComponent],
-			imports: [IonicModule.forRoot()]
-		}).compileComponents();
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [QueryPageComponent],
+				imports: [IonicModule.forRoot()],
+			}).compileComponents();
 
-		fixture = TestBed.createComponent(QueryPageComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+			fixture = TestBed.createComponent(QueryPageComponent);
+			component = fixture.componentInstance;
+			fixture.detectChanges();
+		})
+	);
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

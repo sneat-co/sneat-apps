@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {ErrorLoggerService} from './error-logger.service';
+import { ErrorLoggerService } from './error-logger.service';
 
 describe('ErrorLoggerService', () => {
 	beforeEach(() => TestBed.configureTestingModule({}));

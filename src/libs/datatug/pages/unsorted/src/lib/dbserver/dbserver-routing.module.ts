@@ -1,18 +1,17 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {DbserverPage} from './dbserver.page';
+import { DbserverPage } from './dbserver.page';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: DbserverPage
-	}
+		component: DbserverPage,
+	},
 ];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class DbserverPageRoutingModule {
-}
+export class DbserverPageRoutingModule {}

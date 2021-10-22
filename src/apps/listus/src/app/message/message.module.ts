@@ -8,8 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { MessageComponent } from './message.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, RouterModule],
-  declarations: [MessageComponent],
-  exports: [MessageComponent],
+	imports: [CommonModule, FormsModule, IonicModule, RouterModule],
+	declarations: [MessageComponent],
+	exports: [MessageComponent],
 })
 export class MessageComponentModule {}

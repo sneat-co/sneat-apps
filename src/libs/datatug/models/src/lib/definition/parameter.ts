@@ -1,6 +1,5 @@
-import {IEntityFieldRef} from './metapedia/entity';
-import {DataType} from './types';
-
+import { IEntityFieldRef } from './metapedia/entity';
+import { DataType } from './types';
 
 export interface IParameterDef {
 	readonly id: string;
@@ -27,7 +26,13 @@ export interface IParameterLookup {
 
 export type ParameterValueType = DataType;
 
-export type ParameterValue = boolean | boolean[] | string | string[] | number | number[];
+export type ParameterValue =
+	| boolean
+	| boolean[]
+	| string
+	| string[]
+	| number
+	| number[];
 
 export interface IParameter {
 	id: string;
@@ -58,4 +63,3 @@ export interface IBoolParamValue extends IParameterValueWithoutID {
 	readonly type: 'boolean';
 	readonly value: boolean;
 }
-

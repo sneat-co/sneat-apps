@@ -1,17 +1,25 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {ChangeDetectorRef, Component, Inject} from '@angular/core';
-import {IRetroItem, IRetrospective, RetrospectiveStage} from '../../../models/interfaces';
-import {ChildrenSizeMode, IDndTreeSpec, IDraggedTreeItem} from '@angular-dnd/tree';
-import {BaseTeamPageDirective} from '../../../pages/base-team-page-directive';
-import {ActivatedRoute} from '@angular/router';
-import {IErrorLogger, ErrorLogger} from '@sneat-team/ui-core';
-import {NavController} from '@ionic/angular';
-import {TeamService} from '../../../services/team.service';
-import {RetrospectiveService} from '../../retrospective.service';
-import {takeUntil} from 'rxjs/operators';
-import {TeamContextService} from '../../../services/team-context.service';
-import {UserService} from '../../../services/user-service';
-import {getMeetingIdFromDate} from '../../../services/meeting.service';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
+import {
+	IRetroItem,
+	IRetrospective,
+	RetrospectiveStage,
+} from '../../../models/interfaces';
+import {
+	ChildrenSizeMode,
+	IDndTreeSpec,
+	IDraggedTreeItem,
+} from '@angular-dnd/tree';
+import { BaseTeamPageDirective } from '../../../pages/base-team-page-directive';
+import { ActivatedRoute } from '@angular/router';
+import { IErrorLogger, ErrorLogger } from '@sneat-team/ui-core';
+import { NavController } from '@ionic/angular';
+import { TeamService } from '../../../services/team.service';
+import { RetrospectiveService } from '../../retrospective.service';
+import { takeUntil } from 'rxjs/operators';
+import { TeamContextService } from '../../../services/team-context.service';
+import { UserService } from '../../../services/user-service';
+import { getMeetingIdFromDate } from '../../../services/meeting.service';
 
 @Component({
 	selector: 'app-retro-tree',
@@ -19,21 +27,21 @@ import {getMeetingIdFromDate} from '../../../services/meeting.service';
 	styleUrls: ['./retro-tree.page.scss'],
 })
 export class RetroTreePage extends BaseTeamPageDirective {
-
 	public meetingId: string;
 	public retrospective: IRetrospective;
 
 	public treeSpec: IDndTreeSpec<IRetroItem> = {
-		itemId: item => item.ID,
-		getChildItems: item => item.children,
-		autoExpand: () => true, /*node => {
+		itemId: (item) => item.ID,
+		getChildItems: (item) => item.children,
+		autoExpand: () => true /*node => {
 			const result = node.data.id !== 'doing';
 			// console.log('autoExpand', node.data.id, result);
 			return result;
-		},*/
+		},*/,
 		maxDepth: 2,
-		childrenCount: item => item?.children.length || 0,
-		childrenSize: node => node.level >= 1 ? ChildrenSizeMode.fixed : ChildrenSizeMode.flexible,
+		childrenCount: (item) => item?.children.length || 0,
+		childrenSize: (node) =>
+			node.level >= 1 ? ChildrenSizeMode.fixed : ChildrenSizeMode.flexible,
 	};
 
 	public readonly positive: IRetroItem = {
@@ -44,10 +52,10 @@ export class RetroTreePage extends BaseTeamPageDirective {
 				ID: 'todo',
 				title: 'ToDo',
 				children: [
-					{ID: 'spanish', title: 'Learn Spanish'},
-					{ID: 'guitar', title: 'Play guitar'},
-					{ID: 'kite-surfing', title: 'Kite-surf'},
-					{ID: 'sleep-mode', title: 'Sleep more'},
+					{ ID: 'spanish', title: 'Learn Spanish' },
+					{ ID: 'guitar', title: 'Play guitar' },
+					{ ID: 'kite-surfing', title: 'Kite-surf' },
+					{ ID: 'sleep-mode', title: 'Sleep more' },
 				],
 			},
 			{
@@ -69,8 +77,8 @@ export class RetroTreePage extends BaseTeamPageDirective {
 				ID: 'devOps',
 				title: 'DevOps',
 				children: [
-					{ID: 'CI', title: 'CI'},
-					{ID: 'CD', title: 'CD'},
+					{ ID: 'CI', title: 'CI' },
+					{ ID: 'CD', title: 'CD' },
 				],
 			},
 		],
@@ -84,8 +92,8 @@ export class RetroTreePage extends BaseTeamPageDirective {
 				ID: 'devOps',
 				title: 'DevOps',
 				children: [
-					{ID: 'CI', title: 'CI'},
-					{ID: 'CD', title: 'CD'},
+					{ ID: 'CI', title: 'CI' },
+					{ ID: 'CD', title: 'CD' },
 				],
 			},
 		],
@@ -117,12 +125,19 @@ export class RetroTreePage extends BaseTeamPageDirective {
 		readonly teamService: TeamService,
 		readonly teamContextService: TeamContextService,
 		readonly userService: UserService,
-		private retrospectiveService: RetrospectiveService,
-
+		private retrospectiveService: RetrospectiveService
 	) {
-		super(changeDetectorRef, route, errorLogger, navController, teamService, teamContextService, userService);
+		super(
+			changeDetectorRef,
+			route,
+			errorLogger,
+			navController,
+			teamService,
+			teamContextService,
+			userService
+		);
 		this.trackTeamIdFromUrl();
-		route.queryParamMap.subscribe(queryParams => {
+		route.queryParamMap.subscribe((queryParams) => {
 			this.meetingId = queryParams.get('date');
 			if (this.meetingId === 'today') {
 				this.meetingId = getMeetingIdFromDate(new Date());
@@ -131,14 +146,15 @@ export class RetroTreePage extends BaseTeamPageDirective {
 				return;
 			}
 			// TODO: Make this call after team decided
-			this.retrospectiveService.watchRetro(this.team.id, this.meetingId)
+			this.retrospectiveService
+				.watchRetro(this.team.id, this.meetingId)
 				.pipe(takeUntil(this.destroyed.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
 				.subscribe({
-					next: retrospective => {
+					next: (retrospective) => {
 						this.retrospective = retrospective;
-					}
-				})
-		})
+					},
+				});
+		});
 	}
 
 	public itemMoved(item: IDraggedTreeItem<IRetroItem>): void {
@@ -149,7 +165,10 @@ export class RetroTreePage extends BaseTeamPageDirective {
 		if (!this.retrospective) {
 			return false;
 		}
-		const {stage} = this.retrospective;
-		return stage === RetrospectiveStage.review || stage === RetrospectiveStage.feedback;
+		const { stage } = this.retrospective;
+		return (
+			stage === RetrospectiveStage.review ||
+			stage === RetrospectiveStage.feedback
+		);
 	}
 }

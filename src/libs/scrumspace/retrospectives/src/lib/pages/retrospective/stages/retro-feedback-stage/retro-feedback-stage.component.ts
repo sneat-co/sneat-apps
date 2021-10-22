@@ -1,5 +1,9 @@
-import {Component, Input} from '@angular/core';
-import {IRecord, IRetrospective, ITeam} from '../../../../../models/interfaces';
+import { Component, Input } from '@angular/core';
+import {
+	IRecord,
+	IRetrospective,
+	ITeam,
+} from '../../../../../models/interfaces';
 
 @Component({
 	selector: 'app-retro-feedback-stage',
@@ -7,7 +11,6 @@ import {IRecord, IRetrospective, ITeam} from '../../../../../models/interfaces';
 	styleUrls: ['./retro-feedback-stage.component.scss'],
 })
 export class RetroFeedbackStageComponent {
-
 	@Input() team: IRecord<ITeam>;
 	@Input() retrospective: IRecord<IRetrospective>;
 

@@ -1,5 +1,5 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {arrayToGrid, IJsonGridData, IPipe} from '@datatug/plugins';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { arrayToGrid, IJsonGridData, IPipe } from '@datatug/plugins';
 
 @Component({
 	selector: 'datatug-json-table',
@@ -21,13 +21,13 @@ export class JsonTableComponent implements OnChanges {
 			if (this.rows) {
 				const o = this.json;
 				if (!Array.isArray(o)) {
-					Object.keys(o).forEach(k => {
+					Object.keys(o).forEach((k) => {
 						let key = k;
 						let v = o[k];
 						if (v && !Array.isArray(v)) {
 							const keys = Object.keys(v);
 							if (keys.length === 1) {
-								const vK = keys[0]
+								const vK = keys[0];
 								key += '.' + vK;
 								v = v[vK];
 							}
@@ -40,12 +40,15 @@ export class JsonTableComponent implements OnChanges {
 	}
 
 	public isSimpleType(o: any): boolean {
-		return (typeof o === 'string' || o instanceof String)
-			|| (typeof o === 'number' && isFinite(o));
+		return (
+			typeof o === 'string' ||
+			o instanceof String ||
+			(typeof o === 'number' && isFinite(o))
+		);
 	}
 
 	public isObject(o: any): boolean {
-		return typeof o === 'object' && o !== null
+		return typeof o === 'object' && o !== null;
 	}
 
 	public isEmptyObject(o: any): boolean {

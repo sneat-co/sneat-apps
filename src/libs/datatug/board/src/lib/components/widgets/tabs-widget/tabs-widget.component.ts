@@ -1,5 +1,11 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {IBoardContext, ITabsWidgetSettings} from '@sneat/datatug/models';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
+import { IBoardContext, ITabsWidgetSettings } from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-tabs-widget',
@@ -7,7 +13,6 @@ import {IBoardContext, ITabsWidgetSettings} from '@sneat/datatug/models';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsWidgetComponent implements OnChanges {
-
 	public selectedTab: string;
 
 	@Input() level: number;
@@ -16,7 +21,9 @@ export class TabsWidgetComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.tabsWidgetDef && !this.selectedTab) {
-			this.selectedTab = this.tabsWidgetSettings?.tabs?.length && this.tabsWidgetSettings.tabs[0].title;
+			this.selectedTab =
+				this.tabsWidgetSettings?.tabs?.length &&
+				this.tabsWidgetSettings.tabs[0].title;
 		}
 	}
 }

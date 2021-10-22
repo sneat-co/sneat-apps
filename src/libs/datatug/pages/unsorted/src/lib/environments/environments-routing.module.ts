@@ -1,18 +1,17 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {EnvironmentsPageComponent} from './environments-page.component';
+import { EnvironmentsPageComponent } from './environments-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: EnvironmentsPageComponent
-	}
+		component: EnvironmentsPageComponent,
+	},
 ];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class EnvironmentsPageRoutingModule {
-}
+export class EnvironmentsPageRoutingModule {}

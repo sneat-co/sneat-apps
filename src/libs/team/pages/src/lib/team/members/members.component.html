@@ -1,8 +1,13 @@
 <ion-card>
 	<ion-item-divider>
 		<ion-label color="dark" (click)="membersRoleTab = '*'" tappable>
-			<b>Members</b><span *ngIf="spectatorsCount || contributorsCount">:
-				<span id="team_members_count">{{spectatorsCount + contributorsCount}}</span></span>
+			<b>Members</b
+			><span *ngIf="spectatorsCount || contributorsCount"
+				>:
+				<span id="team_members_count">{{
+					spectatorsCount + contributorsCount
+				}}</span></span
+			>
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="goAddMember()" color="primary">
@@ -19,13 +24,17 @@
 			</ion-label>
 		</ion-segment-button>
 		<ion-segment-button value="contributor">
-			<ion-label>Contributors
-				<ion-badge *ngIf="contributorsCount">{{contributorsCount}}</ion-badge>
+			<ion-label
+				>Contributors
+				<ion-badge *ngIf="contributorsCount">{{ contributorsCount }}</ion-badge>
 			</ion-label>
 		</ion-segment-button>
 		<ion-segment-button value="spectator">
-			<ion-label>Spectators
-				<ion-badge *ngIf="spectatorsCount" color="medium">{{spectatorsCount}}</ion-badge>
+			<ion-label
+				>Spectators
+				<ion-badge *ngIf="spectatorsCount" color="medium">{{
+					spectatorsCount
+				}}</ion-badge>
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>

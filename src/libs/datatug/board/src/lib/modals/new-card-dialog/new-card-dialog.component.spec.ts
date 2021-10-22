@@ -4,21 +4,21 @@ import { IonicModule } from '@ionic/angular';
 import { NewCardDialogComponent } from './new-card-dialog.component';
 
 describe('NewCardDialogComponent', () => {
-  let component: NewCardDialogComponent;
-  let fixture: ComponentFixture<NewCardDialogComponent>;
+	let component: NewCardDialogComponent;
+	let fixture: ComponentFixture<NewCardDialogComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ NewCardDialogComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [NewCardDialogComponent],
+			imports: [IonicModule.forRoot()],
+		}).compileComponents();
 
-    fixture = TestBed.createComponent(NewCardDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+		fixture = TestBed.createComponent(NewCardDialogComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

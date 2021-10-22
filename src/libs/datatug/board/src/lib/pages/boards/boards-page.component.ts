@@ -1,27 +1,29 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {BoardService} from '../../board.service';
-import {AlertController} from '@ionic/angular';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { BoardService } from '../../board.service';
+import { AlertController } from '@ionic/angular';
 import {
 	folderItemsAsList,
 	IFolder,
 	IFolderItem,
 	IProjBoard,
 	IProjItemBrief,
-	IProjStoreRef
+	IProjStoreRef,
 } from '@sneat/datatug/models';
-import {IProjectContext} from '@sneat/datatug/nav';
-import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {DatatugFoldersService} from '@sneat/datatug/folders';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { IProjectContext } from '@sneat/datatug/nav';
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+} from '@sneat/datatug/services/nav';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { DatatugFoldersService } from '@sneat/datatug/folders';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'datatug-boards',
 	templateUrl: './boards-page.component.html',
 })
 export class BoardsPageComponent implements OnInit, OnDestroy {
-
 	tab = 'shared';
 	noItemsText: string;
 
@@ -39,22 +41,29 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly boardService: BoardService,
 		private readonly alertCtrl: AlertController,
-		private readonly foldersService: DatatugFoldersService,
+		private readonly foldersService: DatatugFoldersService
 	) {
 		this.tabChanged(this.tab);
 		this.datatugNavContextService.currentProject
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
-				next: currentProject => {
+				next: (currentProject) => {
 					try {
 						this.setProject(currentProject);
 						// this.project = currentProject;
 						// this.boards = currentProject?.summary?.boards || [];
 					} catch (e) {
-						this.errorLogger.logError(e, 'Failed to process current project in Boards page');
+						this.errorLogger.logError(
+							e,
+							'Failed to process current project in Boards page'
+						);
 					}
 				},
-				error: err => this.errorLogger.logError(err, 'Failed to get current project at Boards page'),
+				error: (err) =>
+					this.errorLogger.logError(
+						err,
+						'Failed to get current project at Boards page'
+					),
 			});
 	}
 
@@ -65,11 +74,14 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 
 	private setProject(project: IProjectContext): void {
 		const path = this.folderPath;
-		if (project?.ref?.projectId && project.ref.projectId !== this.project?.ref?.projectId) {
+		if (
+			project?.ref?.projectId &&
+			project.ref.projectId !== this.project?.ref?.projectId
+		) {
 			this.foldersService
-				.watchFolder({...project.ref, id: path})
+				.watchFolder({ ...project.ref, id: path })
 				.pipe(takeUntil(this.destroyed))
-				.subscribe(folder => this.onFolderReceived(path, folder))
+				.subscribe((folder) => this.onFolderReceived(path, folder));
 		}
 		this.project = project;
 	}
@@ -83,12 +95,14 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		if (folder?.boards) {
 			this.boards = folderItemsAsList(folder.boards);
 		}
-	}
+	};
 
-	public getLinkToBoard = (item: IProjItemBrief) => this.datatugNavService.projectPageUrl(this.project.ref, 'board', item.id);
+	public getLinkToBoard = (item: IProjItemBrief) =>
+		this.datatugNavService.projectPageUrl(this.project.ref, 'board', item.id);
 
 	ngOnInit() {
-		this.defaultHref = location.pathname.split('/').slice(0, -1).join('/') + 's';
+		this.defaultHref =
+			location.pathname.split('/').slice(0, -1).join('/') + 's';
 	}
 
 	public goBoard(item: IProjBoard): void {
@@ -106,7 +120,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 					// 	console.log('input handler:', v);
 					// },
 					placeholder: 'Name, should be unique',
-				}
+				},
 			],
 			buttons: [
 				{
@@ -116,23 +130,29 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 				},
 				{
 					text: 'Create',
-					handler: value => {
+					handler: (value) => {
 						console.log('alert value:', value);
 						const store: IProjStoreRef = {
 							type: 'firestore',
 						};
 						this.boardService
-							.createNewBoard({projectRef: this.project.ref, name: value.title as string})
+							.createNewBoard({
+								projectRef: this.project.ref,
+								name: value.title as string,
+							})
 							.subscribe({
-								next: board => {
+								next: (board) => {
 									console.log('Board created:', board);
 									this.boards.push(board);
 								},
-								error: this.logError(() => `Failed to create a new board with title [${value.title}]`),
+								error: this.logError(
+									() =>
+										`Failed to create a new board with title [${value.title}]`
+								),
 							});
-					}
+					},
 				},
-			]
+			],
 		});
 		await modal.present();
 	}
@@ -154,5 +174,6 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	private logError = (message: () => string) => err => this.errorLogger.logError(err, message());
+	private logError = (message: () => string) => (err) =>
+		this.errorLogger.logError(err, message());
 }

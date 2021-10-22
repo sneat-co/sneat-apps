@@ -1,35 +1,46 @@
-import {Inject, Injectable} from "@angular/core";
-import {BehaviorSubject, Observable, throwError} from "rxjs";
-import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {IHttpQueryRequest, IQueryDef, ISqlQueryRequest, QueryType} from "@sneat/datatug/models";
-import {QueriesService} from "./queries.service";
-import {IProjectRef} from "@sneat/datatug/core";
-import {DatatugNavContextService} from "@sneat/datatug/services/nav";
-import {IProjectContext} from "@sneat/datatug/nav";
-import {filter} from "rxjs/operators";
-import {IQueryEditorState, IQueryState} from "@sneat/datatug/editor";
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	IHttpQueryRequest,
+	IQueryDef,
+	ISqlQueryRequest,
+	QueryType,
+} from '@sneat/datatug/models';
+import { QueriesService } from './queries.service';
+import { IProjectRef } from '@sneat/datatug/core';
+import { DatatugNavContextService } from '@sneat/datatug/services/nav';
+import { IProjectContext } from '@sneat/datatug/nav';
+import { filter } from 'rxjs/operators';
+import { IQueryEditorState, IQueryState } from '@sneat/datatug/editor';
 
 export const isQueryChanged = (queryState: IQueryState): boolean => {
-	const {def} = queryState;
-	if (
-		!def
-		|| def.title != queryState.title
-	) {
+	const { def } = queryState;
+	if (!def || def.title != queryState.title) {
 		return true;
 	}
 	if (def.request.queryType !== queryState.request.queryType) {
-		throw new Error(`def.request.type !== queryState.request.type: ${def.request.queryType} !== ${queryState.request.queryType}`);
+		throw new Error(
+			`def.request.type !== queryState.request.type: ${def.request.queryType} !== ${queryState.request.queryType}`
+		);
 	}
 	switch (queryState.request.queryType) {
 		case QueryType.SQL:
-			return (queryState.request as ISqlQueryRequest).text != (def.request as ISqlQueryRequest).text;
+			return (
+				(queryState.request as ISqlQueryRequest).text !=
+				(def.request as ISqlQueryRequest).text
+			);
 		case QueryType.HTTP:
-			return (queryState.request as IHttpQueryRequest).url != (def.request as IHttpQueryRequest).url;
+			return (
+				(queryState.request as IHttpQueryRequest).url !=
+				(def.request as IHttpQueryRequest).url
+			);
 		default:
-			throw new Error('Unknown query request type: ' + queryState.request.queryType);
+			throw new Error(
+				'Unknown query request type: ' + queryState.request.queryType
+			);
 	}
-}
-
+};
 
 const $state = new BehaviorSubject<IQueryEditorState>(undefined);
 
@@ -39,27 +50,30 @@ let counter = 0;
 	providedIn: 'root',
 })
 export class QueryEditorStateService {
-	public readonly queryEditorState = $state.asObservable().pipe(filter(state => !!state));
+	public readonly queryEditorState = $state
+		.asObservable()
+		.pipe(filter((state) => !!state));
 
 	private currentProject: IProjectContext;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly queriesService: QueriesService,
-		readonly datatugNavContextService: DatatugNavContextService,
+		readonly datatugNavContextService: DatatugNavContextService
 	) {
 		console.log('QueryEditorStateService.constructor()');
-		datatugNavContextService.currentProject
-			.subscribe(currentProject => {
-				this.currentProject = currentProject;
-				if (this.currentProject?.summary) {
-					$state.next(this.updateQuerySatesWithProj($state.value || {activeQueries: []}));
-				}
-			});
+		datatugNavContextService.currentProject.subscribe((currentProject) => {
+			this.currentProject = currentProject;
+			if (this.currentProject?.summary) {
+				$state.next(
+					this.updateQuerySatesWithProj($state.value || { activeQueries: [] })
+				);
+			}
+		});
 	}
 
 	public getQueryState(id: string): IQueryState {
-		return $state.value.activeQueries.find(qs => qs.id === id);
+		return $state.value.activeQueries.find((qs) => qs.id === id);
 	}
 
 	public setCurrentQuery(id: string): void {
@@ -73,17 +87,23 @@ export class QueryEditorStateService {
 	public closeQuery(query: IQueryState): void {
 		const newState: IQueryEditorState = {
 			...$state.value,
-			activeQueries: $state.value.activeQueries.filter(q => q !== query),
+			activeQueries: $state.value.activeQueries.filter((q) => q !== query),
 		};
 		$state.next(newState);
 	}
 
 	openQuery(id: string): void {
-		console.log(`QueryEditorStateService.openQuery(${id})`, this.currentProject);
+		console.log(
+			`QueryEditorStateService.openQuery(${id})`,
+			this.currentProject
+		);
 		try {
 			let changed = false;
-			let state: IQueryEditorState = $state.value || {currentQueryId: id, activeQueries: []};
-			let queryState = state?.activeQueries?.find(q => q.id === id)
+			let state: IQueryEditorState = $state.value || {
+				currentQueryId: id,
+				activeQueries: [],
+			};
+			let queryState = state?.activeQueries?.find((q) => q.id === id);
 			if (!queryState) {
 				queryState = {
 					id,
@@ -97,7 +117,7 @@ export class QueryEditorStateService {
 				state = {
 					...state,
 					activeQueries: [queryState, ...(state.activeQueries || [])],
-				}
+				};
 				changed = true;
 				this.loadQuery(id);
 			}
@@ -120,42 +140,49 @@ export class QueryEditorStateService {
 		console.log('loadQuery', id);
 		const onCompleted = (def: IQueryDef, error?: any) => {
 			let state: IQueryState = {
-				...$state.value.activeQueries.find(q => q.id === id),
+				...$state.value.activeQueries.find((q) => q.id === id),
 				isLoading: false,
 			};
 			if (def) {
-				state = {...state, def};
+				state = { ...state, def };
 			}
-			if (state.request.queryType === QueryType.SQL && (state.request as ISqlQueryRequest).text === undefined) {
-				state = {...state, request: def.request};
+			if (
+				state.request.queryType === QueryType.SQL &&
+				(state.request as ISqlQueryRequest).text === undefined
+			) {
+				state = { ...state, request: def.request };
 			}
 			if (state.title === undefined) {
-				state = {...state, title: def.title};
+				state = { ...state, title: def.title };
 			}
 			state = this.updateQueryStateWithEnvs(state);
 			if (!state.targetDbModel) {
 				state = {
 					...state,
 					targetDbModel: def.dbModel
-						? this.currentProject?.summary?.dbModels.find(m => m.id === def.dbModel)
-						: this.currentProject?.summary?.dbModels?.length === 1 ? this.currentProject?.summary?.dbModels[0] : undefined,
+						? this.currentProject?.summary?.dbModels.find(
+								(m) => m.id === def.dbModel
+						  )
+						: this.currentProject?.summary?.dbModels?.length === 1
+						? this.currentProject?.summary?.dbModels[0]
+						: undefined,
 				};
 			}
 			this.updateQueryState(state);
 		};
 		this.queriesService.getQuery(this.currentProject.ref, id).subscribe({
-			next: def => onCompleted(def),
-			error: err => onCompleted(undefined, err),
+			next: (def) => onCompleted(def),
+			error: (err) => onCompleted(undefined, err),
 		});
 	}
 
 	public newQuery(queryState: IQueryState): IQueryState {
 		if (!queryState.title) {
-			for (; ;) {
+			for (;;) {
 				counter += 1;
 				const title = `Query #${counter}`;
-				if (!$state.value?.activeQueries?.find(q => q.title === title)) {
-					queryState = {...queryState, title};
+				if (!$state.value?.activeQueries?.find((q) => q.title === title)) {
+					queryState = { ...queryState, title };
 					break;
 				}
 			}
@@ -163,30 +190,40 @@ export class QueryEditorStateService {
 		queryState = this.updateQueryStateWithEnvs(queryState);
 		const state: IQueryEditorState = {
 			currentQueryId: queryState.id,
-			activeQueries: [...$state.value?.activeQueries, queryState] || [queryState],
+			activeQueries: [...$state.value?.activeQueries, queryState] || [
+				queryState,
+			],
 		};
 		$state.next(state);
 		return queryState;
 	}
 
-	private updateQuerySatesWithProj(state: IQueryEditorState): IQueryEditorState {
+	private updateQuerySatesWithProj(
+		state: IQueryEditorState
+	): IQueryEditorState {
 		console.log('updateQuerySatesWithProj', state);
 		state = this.updateQueryStatesWithEnvs(state);
 		const projDbModels = this.currentProject.summary?.dbModels;
 		if (projDbModels?.length === 1) {
 			state = {
 				...state,
-				activeQueries: state.activeQueries.map(
-					q => q.def && !q.def.dbModel ? {...q, targetDbModel: projDbModels[0]} : q,
+				activeQueries: state.activeQueries.map((q) =>
+					q.def && !q.def.dbModel ? { ...q, targetDbModel: projDbModels[0] } : q
 				),
 			};
 		}
 		return state;
 	}
 
-	private updateQueryStatesWithEnvs(state: IQueryEditorState): IQueryEditorState {
-		console.log('updateQueryStatesWithEnvs', state.activeQueries, this.currentProject?.summary?.environments);
-		const {activeQueries} = state;
+	private updateQueryStatesWithEnvs(
+		state: IQueryEditorState
+	): IQueryEditorState {
+		console.log(
+			'updateQueryStatesWithEnvs',
+			state.activeQueries,
+			this.currentProject?.summary?.environments
+		);
+		const { activeQueries } = state;
 		if (!activeQueries?.length) {
 			return state;
 		}
@@ -197,31 +234,43 @@ export class QueryEditorStateService {
 		return state;
 	}
 
-	private readonly updateQueryStateWithEnvs = (queryState: IQueryState): IQueryState => ({
+	private readonly updateQueryStateWithEnvs = (
+		queryState: IQueryState
+	): IQueryState => ({
 		...queryState,
-		environments: this.currentProject?.summary?.environments?.map(env => {
-				const qEnv = queryState.environments?.find(qEnv => qEnv.id === env.id);
+		environments:
+			this.currentProject?.summary?.environments?.map((env) => {
+				const qEnv = queryState.environments?.find(
+					(qEnv) => qEnv.id === env.id
+				);
 				if (!qEnv) {
 					return env;
 				}
 				return qEnv;
-			})
-			?? queryState.environments,
+			}) ?? queryState.environments,
 	});
 
 	updateQueryState(queryState: IQueryState): void {
 		console.log('updateQueryState', queryState);
 		$state.next({
 			...$state.value,
-			activeQueries: $state.value?.activeQueries.map(q => q.id === queryState.id ? queryState : q)
+			activeQueries: $state.value?.activeQueries.map((q) =>
+				q.id === queryState.id ? queryState : q
+			),
 		});
 	}
 
-	saveQuery(queryState: IQueryState, projectRef: IProjectRef): Observable<void> {
+	saveQuery(
+		queryState: IQueryState,
+		projectRef: IProjectRef
+	): Observable<void> {
 		if (projectRef.projectId !== this.currentProject.ref.projectId) {
-			return throwError(() => 'An attempt to save a query after current project have been changed');
+			return throwError(
+				() =>
+					'An attempt to save a query after current project have been changed'
+			);
 		}
-		const {id} = queryState;
+		const { id } = queryState;
 		const setIsSavingToFalse = () => {
 			const state = this.getQueryState(id);
 			if (state.isSaving) {
@@ -230,7 +279,7 @@ export class QueryEditorStateService {
 					isSaving: false,
 				});
 			}
-		}
+		};
 		try {
 			this.updateQueryState({
 				...queryState,
@@ -240,21 +289,20 @@ export class QueryEditorStateService {
 				...queryState.def,
 				request: queryState.request,
 			};
-			this.queriesService.updateQuery(projectRef, query)
-				.subscribe({
-					next: value => {
-						console.log('query updated', value);
-						this.updateQueryState({
-							...this.getQueryState(query.id),
-							def: value,
-						})
-						setIsSavingToFalse();
-					},
-					error: err => {
-						setIsSavingToFalse();
-						this.errorLogger.logError(err, 'Failed to save query');
-					},
-				});
+			this.queriesService.updateQuery(projectRef, query).subscribe({
+				next: (value) => {
+					console.log('query updated', value);
+					this.updateQueryState({
+						...this.getQueryState(query.id),
+						def: value,
+					});
+					setIsSavingToFalse();
+				},
+				error: (err) => {
+					setIsSavingToFalse();
+					this.errorLogger.logError(err, 'Failed to save query');
+				},
+			});
 		} catch (e) {
 			setIsSavingToFalse();
 			return throwError(e);

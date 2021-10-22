@@ -1,7 +1,11 @@
 <ion-item-divider color="light">
 	<ion-label>Parameters</ion-label>
 	<ion-buttons slot="end" *ngIf="hasParamValues">
-		<ion-button color="medium" (click)="clearAllParams($event)" title="Clear all parameters">
+		<ion-button
+			color="medium"
+			(click)="clearAllParams($event)"
+			title="Clear all parameters"
+		>
 			<ion-icon name="trash-bin-outline"></ion-icon>
 		</ion-button>
 	</ion-buttons>
@@ -9,10 +13,17 @@
 <ng-container *ngIf="parameters?.length; else noParameters">
 	<ion-item *ngFor="let param of parameters">
 		<ion-label>
-			{{param.def.id}}
-			<ion-badge color="light" style="font-weight: normal"><ion-text color="medium">{{param.def.type}}</ion-text></ion-badge>
+			{{ param.def.id }}
+			<ion-badge color="light" style="font-weight: normal"
+				><ion-text color="medium">{{ param.def.type }}</ion-text></ion-badge
+			>
 		</ion-label>
-		<ion-input *ngIf="param.def.type === 'integer' || param.def.type === 'number'" type="number" [(ngModel)]="param.val" (ionChange)="onParamChanged($event, param)"></ion-input>
+		<ion-input
+			*ngIf="param.def.type === 'integer' || param.def.type === 'number'"
+			type="number"
+			[(ngModel)]="param.val"
+			(ionChange)="onParamChanged($event, param)"
+		></ion-input>
 		<ion-buttons *ngIf="param.val !== undefined" slot="end">
 			<ion-button color="medium" (click)="param.val = undefined">
 				<ion-icon name="close"></ion-icon>

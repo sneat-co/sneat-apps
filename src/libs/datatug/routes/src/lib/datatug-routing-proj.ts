@@ -1,20 +1,26 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 import {
-  routingParamBoard, routingParamDbCatalogId,
-  routingParamDbModelId, routingParamDbServerId, routingParamDriver,
-  routingParamEntityId,
-  routingParamEnvironmentId, routingParamServerType
+	routingParamBoard,
+	routingParamDbCatalogId,
+	routingParamDbModelId,
+	routingParamDbServerId,
+	routingParamDriver,
+	routingParamEntityId,
+	routingParamEnvironmentId,
+	routingParamServerType,
 } from '@sneat/datatug/core';
 
 export const datatugProjectRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.ProjectPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.ProjectPageModule),
 	},
 	{
 		path: 'board/:' + routingParamBoard,
-		loadChildren: () => import('@sneat/datatug/board').then(m => m.BoardPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/board').then((m) => m.BoardPageModule),
 	},
 	{
 		path: 'board',
@@ -22,19 +28,27 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'boards',
-		loadChildren: () => import('@sneat/datatug/board').then(m => m.BoardsPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/board').then((m) => m.BoardsPageModule),
 	},
 	{
 		path: 'entities',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.EntitiesPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.EntitiesPageModule),
 	},
 	{
 		path: 'new-entity',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.EntityEditPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then(
+				(m) => m.EntityEditPageModule
+			),
 	},
 	{
 		path: 'environments',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.EnvironmentsPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then(
+				(m) => m.EnvironmentsPageModule
+			),
 	},
 	{
 		path: 'env',
@@ -42,19 +56,23 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'widgets',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.WidgetsPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.WidgetsPageModule),
 	},
 	{
 		path: 'tags',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.TagsPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.TagsPageModule),
 	},
 	{
 		path: 'project',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.ProjectPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.ProjectPageModule),
 	},
 	{
 		path: 'dbmodel/:' + routingParamDbModelId,
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.DbModelPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.DbModelPageModule),
 	},
 	{
 		path: 'dbmodel',
@@ -62,19 +80,27 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'dbmodels',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.DbModelsPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.DbModelsPageModule),
 	},
 	{
 		path: 'resources',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.ResourcesPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then(
+				(m) => m.ResourcesPageModule
+			),
 	},
 	{
 		path: 'variables',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.VariablesPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then(
+				(m) => m.VariablesPageModule
+			),
 	},
 	{
 		path: 'entity/:' + routingParamEntityId,
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.EntityPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.EntityPageModule),
 	},
 	{
 		path: 'entity',
@@ -82,38 +108,43 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'env/:' + routingParamEnvironmentId,
-		loadChildren: () => import('./datatug-routing-proj-env').then(m => m.DatatugProjEnvRoutingModule)
+		loadChildren: () =>
+			import('./datatug-routing-proj-env').then(
+				(m) => m.DatatugProjEnvRoutingModule
+			),
 	},
 	{
 		path: 'query',
-		loadChildren: () => import('@sneat/datatug/queries').then(m => m.QueryPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/queries').then((m) => m.QueryPageModule),
 	},
 	{
 		path: 'queries',
-		loadChildren: () => import('@sneat/datatug/queries').then(m => m.QueriesPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/queries').then((m) => m.QueriesPageModule),
 	},
 	{
 		path: 'servers',
-    loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.ServersPageModule),
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.ServersPageModule),
 	},
-  {
-    // e.g. "db/sqlserver/localhost/AdventureWorks" for MS SQL Server
-    path: `server/${routingParamServerType}/:${routingParamDriver}/:${routingParamDbServerId}/:${routingParamDbCatalogId}`,
-    loadChildren: () => import('./datatug-routing-proj-db-catalog').then(m => m.DatatugRoutingProjDbCatalog),
-  },
-  {
+	{
+		// e.g. "db/sqlserver/localhost/AdventureWorks" for MS SQL Server
+		path: `server/${routingParamServerType}/:${routingParamDriver}/:${routingParamDbServerId}/:${routingParamDbCatalogId}`,
+		loadChildren: () =>
+			import('./datatug-routing-proj-db-catalog').then(
+				(m) => m.DatatugRoutingProjDbCatalog
+			),
+	},
+	{
 		path: 'diff',
-		loadChildren: () => import('@sneat/datatug/pages/unsorted').then(m => m.DiffPageModule)
+		loadChildren: () =>
+			import('@sneat/datatug/pages/unsorted').then((m) => m.DiffPageModule),
 	},
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forChild(datatugProjectRoutes)
-	],
-	exports: [
-		RouterModule,
-	],
+	imports: [RouterModule.forChild(datatugProjectRoutes)],
+	exports: [RouterModule],
 })
-export class DatatugProjectRoutingModule {
-}
+export class DatatugProjectRoutingModule {}

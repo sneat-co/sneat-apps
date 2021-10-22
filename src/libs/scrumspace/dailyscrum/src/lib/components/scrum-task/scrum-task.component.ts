@@ -1,11 +1,17 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {IRecord, ITask, ITaskComment, IUser, TaskType} from '../../../models/interfaces';
-import {ModalController} from '@ionic/angular';
-import {ErrorLogger, IErrorLogger} from '@sneat-team/ui-core';
-import {UserService} from '../../../services/user-service';
-import {ScrumService} from '../../../services/scrum.service';
-import {IAddCommentRequest} from '../../../models/dto-models';
-import {getMeetingIdFromDate} from '../../../services/meeting.service';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+	IRecord,
+	ITask,
+	ITaskComment,
+	IUser,
+	TaskType,
+} from '../../../models/interfaces';
+import { ModalController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
+import { UserService } from '../../../services/user-service';
+import { ScrumService } from '../../../services/scrum.service';
+import { IAddCommentRequest } from '../../../models/dto-models';
+import { getMeetingIdFromDate } from '../../../services/meeting.service';
 
 @Component({
 	selector: 'app-scrum-task',
@@ -13,14 +19,13 @@ import {getMeetingIdFromDate} from '../../../services/meeting.service';
 	styleUrls: ['./scrum-task.component.scss'],
 })
 export class ScrumTaskComponent implements OnInit {
-
 	@Input() teamId: string;
 	@Input() date: Date;
 	@Input() memberId: string;
 	@Input() type: TaskType;
 	@Input() task: ITask;
 
-	@ViewChild('commentInput', {static: false}) commentInput; // TODO: strong typing : IonInput;
+	@ViewChild('commentInput', { static: false }) commentInput; // TODO: strong typing : IonInput;
 
 	public tab: 'comments' | 'thumbups' = 'comments';
 
@@ -30,9 +35,9 @@ export class ScrumTaskComponent implements OnInit {
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
 		public modalController: ModalController,
 		private userService: UserService,
-		private scrumService: ScrumService,
+		private scrumService: ScrumService
 	) {
-		this.userService.userRecord.subscribe(user => {
+		this.userService.userRecord.subscribe((user) => {
 			this.user = user;
 		});
 	}
@@ -40,9 +45,15 @@ export class ScrumTaskComponent implements OnInit {
 	ngOnInit() {
 		if (this.tab === 'comments') {
 			setTimeout(() => {
-				this.commentInput?.setFocus().catch(
-					err => this.errorLogger.logError(
-						err, 'Failed to set focus to comment input', {feedback: false}));
+				this.commentInput
+					?.setFocus()
+					.catch((err) =>
+						this.errorLogger.logError(
+							err,
+							'Failed to set focus to comment input',
+							{ feedback: false }
+						)
+					);
 			}, 200);
 		}
 	}
@@ -50,7 +61,11 @@ export class ScrumTaskComponent implements OnInit {
 	addComment(): void {
 		const message = this.commentInput.value as string;
 		this.commentInput.value = '';
-		this.commentInput.setFocus().catch(err => this.errorLogger.logError(err, 'Failed to set focus back to input'));
+		this.commentInput
+			.setFocus()
+			.catch((err) =>
+				this.errorLogger.logError(err, 'Failed to set focus back to input')
+			);
 		if (message) {
 			if (!this.task.comments) {
 				this.task.comments = [];
@@ -58,7 +73,7 @@ export class ScrumTaskComponent implements OnInit {
 			const comment: ITaskComment = {
 				id: undefined as string,
 				message,
-				by: {userId: this.user.id, title: this.user.data.title},
+				by: { userId: this.user.id, title: this.user.data.title },
 			};
 			this.task.comments.push(comment);
 			const request: IAddCommentRequest = {
@@ -70,10 +85,12 @@ export class ScrumTaskComponent implements OnInit {
 				message,
 			};
 			this.scrumService.addComment(request).subscribe({
-				next: id => comment.id = id,
-				error: err => {
+				next: (id) => (comment.id = id),
+				error: (err) => {
 					this.errorLogger.logError(err, 'Failed to add comment');
-					this.task.comments = this.task.comments.filter(c => !c.id && c.message === message);
+					this.task.comments = this.task.comments.filter(
+						(c) => !c.id && c.message === message
+					);
 				},
 			});
 		}

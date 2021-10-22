@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 // noinspection ES6PreferShortImport
-import {TimerFactory} from './timer.service';
+import { TimerFactory } from './timer.service';
 
 describe('TimerService', () => {
 	beforeEach(() => TestBed.configureTestingModule({}));

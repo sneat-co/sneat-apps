@@ -1,8 +1,12 @@
-import {IUserRecord} from '@sneat/auth-models';
-import {ProjectAccess} from './definition';
-import {IStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB, StoreType} from '@sneat/core';
-import {IProjectRef} from '@sneat/datatug/core';
-
+import { IUserRecord } from '@sneat/auth-models';
+import { ProjectAccess } from './definition';
+import {
+	IStoreRef,
+	STORE_ID_GITHUB_COM,
+	STORE_TYPE_GITHUB,
+	StoreType,
+} from '@sneat/core';
+import { IProjectRef } from '@sneat/datatug/core';
 
 // export interface IRecord<T> { // TODO: duplicate name
 //   id: string;
@@ -28,7 +32,7 @@ export interface IDatatugStoreBrief {
 }
 
 export interface IDatatugStoreBriefWithId extends IDatatugStoreBrief {
-	id: string
+	id: string;
 }
 
 export interface IProjectAndStore {
@@ -42,59 +46,73 @@ export const cloudStoreTitle = 'DataTug cloud';
 export const cloudStoreEmoji = '☁️';
 export const cloudStoreTitleWithIcon = `${cloudStoreEmoji} ${cloudStoreTitle}`;
 
-export function allUserStoresAsFlatList(stores?: IDatatugStoreBriefsById): IDatatugStoreBriefWithId[] {
+export function allUserStoresAsFlatList(
+	stores?: IDatatugStoreBriefsById
+): IDatatugStoreBriefWithId[] {
 	const result: IDatatugStoreBriefWithId[] = [];
 	stores = stores || {};
 	if (!stores[cloudStoreId]) {
-		stores[cloudStoreId] = {type: cloudStoreId, title: cloudStoreTitleWithIcon};
+		stores[cloudStoreId] = {
+			type: cloudStoreId,
+			title: cloudStoreTitleWithIcon,
+		};
 	}
 	if (!stores[STORE_ID_GITHUB_COM]) {
-		stores[STORE_ID_GITHUB_COM] = {type: STORE_TYPE_GITHUB, title: 'GitHub.com'};
+		stores[STORE_ID_GITHUB_COM] = {
+			type: STORE_TYPE_GITHUB,
+			title: 'GitHub.com',
+		};
 	}
 
-	const hasLocalhost = Object.keys(stores).some(v => v.startsWith('http://localhost:'));
+	const hasLocalhost = Object.keys(stores).some((v) =>
+		v.startsWith('http://localhost:')
+	);
 	if (!hasLocalhost) {
 		stores = {
 			...stores,
 			'http://localhost:8989': {
 				type: 'agent',
 				url: 'http://localhost:8989',
-				title: 'localhost:8989'
-			}
+				title: 'localhost:8989',
+			},
 		};
 	}
 
 	for (const id in stores) {
-		const store: IDatatugStoreBriefWithId = {...stores[id], id};
+		const store: IDatatugStoreBriefWithId = { ...stores[id], id };
 		result.push({
 			...store,
 			title:
-				(store.id === cloudStoreId || store.type === 'firestore') && cloudStoreTitle
-				|| store.title
-				|| id
+				((store.id === cloudStoreId || store.type === 'firestore') &&
+					cloudStoreTitle) ||
+				store.title ||
+				id,
 		});
 	}
 	return result;
 }
 
-export function allUserProjectsAsFlatList(stores: IDatatugStoreBriefsById): IProjectAndStore[] {
+export function allUserProjectsAsFlatList(
+	stores: IDatatugStoreBriefsById
+): IProjectAndStore[] {
 	const projects: IProjectAndStore[] = [];
 	for (const storeId in stores) {
-		const store = {id: storeId, ...stores[storeId]};
+		const store = { id: storeId, ...stores[storeId] };
 		for (const projectId in store.projects) {
-			const project = {id: projectId, ...store.projects[projectId]};
-			projects.push({ref: {projectId, storeId}, store, project});
+			const project = { id: projectId, ...store.projects[projectId] };
+			projects.push({ ref: { projectId, storeId }, store, project });
 		}
 	}
 	return projects;
 }
 
-export function projectsBriefFromDictToFlatList(projects?: { [id: string]: IProjectBrief })
-	: IDatatugProjectBriefWithId[] {
+export function projectsBriefFromDictToFlatList(projects?: {
+	[id: string]: IProjectBrief;
+}): IDatatugProjectBriefWithId[] {
 	const result: IDatatugProjectBriefWithId[] = [];
 	if (projects) {
 		for (const id in projects) {
-			result.push({...projects[id], id});
+			result.push({ ...projects[id], id });
 		}
 	}
 	return result;
@@ -117,7 +135,7 @@ export interface IDatatugProjectBriefWithId extends IProjectBrief {
 	readonly id: string;
 }
 
-export interface IDatatugProjectBriefWithIdAndStoreRef extends IDatatugProjectBriefWithId {
-	readonly store: {ref: IProjStoreRef};
+export interface IDatatugProjectBriefWithIdAndStoreRef
+	extends IDatatugProjectBriefWithId {
+	readonly store: { ref: IProjStoreRef };
 }
-

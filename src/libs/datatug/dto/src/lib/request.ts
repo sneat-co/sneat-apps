@@ -1,4 +1,4 @@
-import {IRequestCommand} from "./requests";
+import { IRequestCommand } from './requests';
 
 export interface IExecuteRequest {
 	id: string;

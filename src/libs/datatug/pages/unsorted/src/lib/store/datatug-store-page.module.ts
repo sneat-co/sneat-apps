@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {DatatugStorePageRoutingModule} from './datatug-store-routing.module';
-import {DatatugStorePageComponent} from './datatug-store-page.component';
-import {SneatErrorCardModule} from '@sneat/components/error-card';
-import {IonicModule} from '@ionic/angular';
-import {NewProjectFormModule} from '@sneat/datatug/project';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DatatugStorePageRoutingModule } from './datatug-store-routing.module';
+import { DatatugStorePageComponent } from './datatug-store-page.component';
+import { SneatErrorCardModule } from '@sneat/components/error-card';
+import { IonicModule } from '@ionic/angular';
+import { NewProjectFormModule } from '@sneat/datatug/project';
 
 @NgModule({
 	imports: [
@@ -14,7 +14,6 @@ import {NewProjectFormModule} from '@sneat/datatug/project';
 		SneatErrorCardModule,
 		NewProjectFormModule,
 	],
-	declarations: [DatatugStorePageComponent]
+	declarations: [DatatugStorePageComponent],
 })
-export class DatatugStorePageModule {
-}
+export class DatatugStorePageModule {}

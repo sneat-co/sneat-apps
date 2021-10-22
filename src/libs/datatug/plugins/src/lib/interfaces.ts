@@ -3,8 +3,6 @@ export interface IJsonGridData {
 	rows: unknown[][];
 }
 
-
 export interface IPipe {
 	tunnel: (o: unknown) => any;
 }
-

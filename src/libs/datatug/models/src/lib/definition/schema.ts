@@ -1,7 +1,7 @@
-import {IRecordsetDef} from './recordset';
-import {IOptionallyTitled} from '../core';
+import { IRecordsetDef } from './recordset';
+import { IOptionallyTitled } from '../core';
 
 export interface ISchema extends IOptionallyTitled {
-	id: string
+	id: string;
 	recordsets?: IRecordsetDef[];
 }

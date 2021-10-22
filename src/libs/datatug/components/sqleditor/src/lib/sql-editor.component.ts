@@ -8,10 +8,10 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
-	ViewChild
+	ViewChild,
 } from '@angular/core';
-import {CodemirrorComponent} from '@ctrl/ngx-codemirror';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/sql/sql';
@@ -22,33 +22,32 @@ import 'codemirror/mode/sql/sql';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SqlEditorComponent implements AfterViewInit, OnChanges {
-
-	@Input() sql: string
+	@Input() sql: string;
 	@Input() lineNumbers = false;
 	@Input() readonly = true;
 
 	@Output() sqlChanged = new EventEmitter<string>();
 
-	@ViewChild('codemirrorComponent') public codemirrorComponent: CodemirrorComponent;
+	@ViewChild('codemirrorComponent')
+	public codemirrorComponent: CodemirrorComponent;
 	public codemirrorOptions = {
 		lineNumbers: this.lineNumbers,
 		readOnly: this.readonly,
 		mode: 'text/x-mssql',
 		viewportMargin: Infinity,
-		style: {height: 'auto'},
+		style: { height: 'auto' },
 	};
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+	) {}
 
 	public onSqlChanged(_: Event): void {
 		this.sqlChanged.emit(this.sql);
 	}
 
 	ngAfterViewInit(): void {
-		const {codeMirror} = this.codemirrorComponent;
+		const { codeMirror } = this.codemirrorComponent;
 		codeMirror.getWrapperElement().style.height = 'auto';
 		setTimeout(() => {
 			this.refreshCodeMirror();
@@ -58,7 +57,7 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 	refreshCodeMirror(): void {
 		console.log('refreshCodeMirror()');
 		try {
-			const {codeMirror} = this.codemirrorComponent;
+			const { codeMirror } = this.codemirrorComponent;
 			setTimeout(() => {
 				try {
 					codeMirror.refresh();
@@ -77,7 +76,7 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 			this.codemirrorOptions = {
 				...this.codemirrorOptions,
 				lineNumbers: this.lineNumbers,
-				readOnly: this.readonly
+				readOnly: this.readonly,
 			};
 			// console.log('codemirrorOptions:', this.codemirrorOptions);
 			if (this.codemirrorComponent) {

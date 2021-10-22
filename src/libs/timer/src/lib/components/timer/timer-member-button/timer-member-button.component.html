@@ -1,11 +1,42 @@
-<ion-button color="tertiary" (click)="toggleTimer($event)" [disabled]="isDisabled">
-	<ion-spinner name="lines-small" *ngIf="timerState?.isToggling && timerState.activeMemberId === memberId || !timerState"></ion-spinner>
-	<ng-container *ngIf="timerState && (!timerState.status || timerState.status === 'stopped' || timerState.activeMemberId !== memberId)">
-		<ion-icon slot="start" name="play-outline" *ngIf="!timerState?.isToggling"></ion-icon>
+<ion-button
+	color="tertiary"
+	(click)="toggleTimer($event)"
+	[disabled]="isDisabled"
+>
+	<ion-spinner
+		name="lines-small"
+		*ngIf="
+			(timerState?.isToggling && timerState.activeMemberId === memberId) ||
+			!timerState
+		"
+	></ion-spinner>
+	<ng-container
+		*ngIf="
+			timerState &&
+			(!timerState.status ||
+				timerState.status === 'stopped' ||
+				timerState.activeMemberId !== memberId)
+		"
+	>
+		<ion-icon
+			slot="start"
+			name="play-outline"
+			*ngIf="!timerState?.isToggling"
+		></ion-icon>
 		<ion-label *ngIf="!totalElapsed">Start</ion-label>
 	</ng-container>
-	<ion-icon name="pause-outline" *ngIf="!timerState?.isToggling && timerState?.status === 'active' && timerState?.activeMemberId === memberId"></ion-icon>
-	<ion-label style="text-transform: none" *ngIf="timerState?.status === 'active' || totalElapsed">
-		{{totalElapsed}}
+	<ion-icon
+		name="pause-outline"
+		*ngIf="
+			!timerState?.isToggling &&
+			timerState?.status === 'active' &&
+			timerState?.activeMemberId === memberId
+		"
+	></ion-icon>
+	<ion-label
+		style="text-transform: none"
+		*ngIf="timerState?.status === 'active' || totalElapsed"
+	>
+		{{ totalElapsed }}
 	</ion-label>
 </ion-button>

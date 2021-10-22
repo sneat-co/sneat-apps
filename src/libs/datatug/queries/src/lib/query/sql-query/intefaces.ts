@@ -1,4 +1,4 @@
-import {IAstQuery} from "@sneat/datatug/services/unsorted";
+import { IAstQuery } from '@sneat/datatug/services/unsorted';
 
 export interface ISqlChanged {
 	sql: string;

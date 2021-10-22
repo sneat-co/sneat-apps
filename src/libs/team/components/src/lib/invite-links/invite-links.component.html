@@ -1,25 +1,41 @@
-<ion-skeleton-text style="width: 100%" animated *ngIf="!inviteUrlsFor"></ion-skeleton-text>
+<ion-skeleton-text
+	style="width: 100%"
+	animated
+	*ngIf="!inviteUrlsFor"
+></ion-skeleton-text>
 <ng-container *ngIf="inviteUrlsFor">
-	<p>
-		Share this links for mass invite:
-	</p>
+	<p>Share this links for mass invite:</p>
 	<ul style="list-style: none; padding: 1em">
 		<li class="ion-margin-bottom">
-			<ion-button size="small" fill="outline" class="copy-link" (click)="copy(inviteUrlsFor.contributors)">
+			<ion-button
+				size="small"
+				fill="outline"
+				class="copy-link"
+				(click)="copy(inviteUrlsFor.contributors)"
+			>
 				<ion-icon slot="start" name="copy-outline"></ion-icon>
 				<ion-label>Copy link</ion-label>
 			</ion-button>
-			<b>For contributors:</b><br>
-			<a target="_blank" href="{{inviteUrlsFor.contributors}}">{{inviteUrlsFor.contributors}}</a>
+			<b>For contributors:</b><br />
+			<a target="_blank" href="{{ inviteUrlsFor.contributors }}">{{
+				inviteUrlsFor.contributors
+			}}</a>
 		</li>
 		<li>
-			<ion-button size="small" fill="outline" class="copy-link" (click)="copy(inviteUrlsFor.spectators)">
+			<ion-button
+				size="small"
+				fill="outline"
+				class="copy-link"
+				(click)="copy(inviteUrlsFor.spectators)"
+			>
 				<ion-icon slot="start" name="copy-outline"></ion-icon>
 				<ion-label>Copy link</ion-label>
 			</ion-button>
-			<b>For spectators:</b><br>
-			<a target="_blank" href="{{inviteUrlsFor.spectators}}">{{inviteUrlsFor.spectators}}</a>
-			<br>
+			<b>For spectators:</b><br />
+			<a target="_blank" href="{{ inviteUrlsFor.spectators }}">{{
+				inviteUrlsFor.spectators
+			}}</a>
+			<br />
 		</li>
 	</ul>
 </ng-container>

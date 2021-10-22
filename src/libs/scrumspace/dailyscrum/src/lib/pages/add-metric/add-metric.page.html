@@ -9,13 +9,13 @@
 </ion-header>
 
 <ion-content>
-
 	<ion-list>
 		<ion-radio-group name="mode" [(ngModel)]="mode">
 			<ion-item>
 				<ion-radio name="mode" value="personal" slot="start"></ion-radio>
 				<ion-label>
-					<b *ngIf="mode === 'personal'">Personal</b> <!-- TODO: should be a better way to set style -->
+					<b *ngIf="mode === 'personal'">Personal</b>
+					<!-- TODO: should be a better way to set style -->
 					<ng-container *ngIf="mode !== 'personal'">Personal</ng-container>
 					<i style="margin-left: 1em">(everyone fill their own value)</i>
 				</ion-label>
@@ -23,7 +23,8 @@
 			<ion-item>
 				<ion-radio name="mode" value="team" slot="start"></ion-radio>
 				<ion-label>
-					<b *ngIf="mode === 'team'">Team</b> <!-- TODO: should be a better way to set style -->
+					<b *ngIf="mode === 'team'">Team</b>
+					<!-- TODO: should be a better way to set style -->
 					<ng-container *ngIf="mode !== 'team'">Team</ng-container>
 					<i style="margin-left: 1em">(anyone can enter shared value)</i>
 				</ion-label>
@@ -58,7 +59,10 @@
 				<ion-col size="6">
 					<ion-item>
 						<ion-label color="medium"><b>FALSE</b> label / color</ion-label>
-						<ion-input [(ngModel)]="falseLabel" [color]="falseColor"></ion-input>
+						<ion-input
+							[(ngModel)]="falseLabel"
+							[color]="falseColor"
+						></ion-input>
 						<ion-select [(ngModel)]="falseColor" interface="popover">
 							<ion-select-option value="primary">Primary</ion-select-option>
 							<ion-select-option value="secondary">Secondary</ion-select-option>
@@ -84,7 +88,9 @@
 		<ion-item>
 			<ion-toggle slot="start"></ion-toggle>
 			<ion-label>Is required to fill</ion-label>
-			<ion-button size="medium" slot="end" (click)="submit()">Create metric</ion-button>
+			<ion-button size="medium" slot="end" (click)="submit()"
+				>Create metric</ion-button
+			>
 		</ion-item>
 	</ion-list>
 </ion-content>

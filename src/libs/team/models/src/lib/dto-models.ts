@@ -1,10 +1,10 @@
-import {ITeam} from './models';
-import {IRecord} from '@sneat/data';
+import { ITeam } from './models';
+import { IRecord } from '@sneat/data';
 
 export interface ICreateTeamRequest {
-  title: string;
+	title: string;
 }
 
 export interface ICreateTeamResponse {
-  team: IRecord<ITeam>;
+	team: IRecord<ITeam>;
 }

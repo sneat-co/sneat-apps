@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {AppContextService} from './app-context.service';
+import { AppContextService } from './app-context.service';
 
 describe('AppContextService', () => {
 	let service: AppContextService;

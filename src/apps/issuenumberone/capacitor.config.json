@@ -1,13 +1,13 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "issuenumberone",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "../../dist/apps/issuenumberone",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {}
+	"appId": "io.ionic.starter",
+	"appName": "issuenumberone",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "../../dist/apps/issuenumberone",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {}
 }

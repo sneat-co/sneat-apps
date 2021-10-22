@@ -1,10 +1,10 @@
-import {Component, Inject, Input, OnChanges, OnDestroy} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {NavController} from '@ionic/angular';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {SneatUserService} from '@sneat/user';
-import {ITeam} from '@sneat/team-models';
-import {TeamNavService} from '@sneat/team-services';
+import { Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { NavController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { SneatUserService } from '@sneat/user';
+import { ITeam } from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 
 export const stringHash = (s: string): number => {
 	let hash = 0;
@@ -14,12 +14,12 @@ export const stringHash = (s: string): number => {
 	for (let i = 0; i < s.length; i++) {
 		const char = s.charCodeAt(i);
 		// eslint-disable-next-line no-bitwise
-		hash = ((hash << 5) - hash) + char;
+		hash = (hash << 5) - hash + char;
 		// eslint-disable-next-line no-bitwise
 		hash = hash & hash; // Convert to 32bit integer
 	}
 	return hash;
-}
+};
 
 @Component({
 	selector: 'sneat-invite-links',
@@ -27,7 +27,6 @@ export const stringHash = (s: string): number => {
 	styleUrls: ['./invite-links.component.scss'],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
-
 	@Input() teamId?: string;
 	@Input() public team?: ITeam;
 
@@ -43,9 +42,9 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 		readonly userService: SneatUserService,
 		private readonly navService: TeamNavService,
 		private readonly navController: NavController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
 	) {
-		this.subscription = userService.userChanged.subscribe(uid => {
+		this.subscription = userService.userChanged.subscribe((uid) => {
 			this.currentUserId = uid;
 			this.setPins();
 		});
@@ -68,15 +67,27 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			event.stopPropagation();
 		}
 		if (!this.teamId) {
-			this.errorLogger.logError('Not able to navigate to team member is teamId is now known');
+			this.errorLogger.logError(
+				'Not able to navigate to team member is teamId is now known'
+			);
 			return;
 		}
-		this.navService.navigateToAddMember(this.navController, {id: this.teamId, data: this.team});
+		this.navService.navigateToAddMember(this.navController, {
+			id: this.teamId,
+			data: this.team,
+		});
 	}
 
 	copy(s: string): void {
 		if (navigator.clipboard) {
-			navigator.clipboard.writeText(s).catch(err => this.errorLogger.logError(err, 'Failed to copy invite URL to clipboard'));
+			navigator.clipboard
+				.writeText(s)
+				.catch((err) =>
+					this.errorLogger.logError(
+						err,
+						'Failed to copy invite URL to clipboard'
+					)
+				);
 		}
 	}
 
@@ -87,12 +98,12 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			return;
 		}
 		const teamId = this.teamId;
-		const getPin = (role: 'contributor' | 'spectator'): number => Math.abs(stringHash(`${teamId}-${role}-${uid}`));
+		const getPin = (role: 'contributor' | 'spectator'): number =>
+			Math.abs(stringHash(`${teamId}-${role}-${uid}`));
 		const url = `${document.baseURI}join-team?id=${teamId}#pin=`;
 		this.inviteUrlsFor = {
 			contributors: url + getPin('contributor'),
 			spectators: url + getPin('spectator'),
 		};
 	}
-
 }

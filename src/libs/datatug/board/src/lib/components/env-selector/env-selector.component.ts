@@ -1,11 +1,11 @@
-import {Component, Inject} from '@angular/core';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {DatatugNavContextService} from '@sneat/datatug/services/nav';
-import {IProjEnv} from "@sneat/datatug/models";
+import { Component, Inject } from '@angular/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { DatatugNavContextService } from '@sneat/datatug/services/nav';
+import { IProjEnv } from '@sneat/datatug/models';
 
 interface IEnv {
-	readonly id: string
-	readonly title?: string
+	readonly id: string;
+	readonly title?: string;
 }
 
 @Component({
@@ -13,27 +13,30 @@ interface IEnv {
 	templateUrl: './env-selector.component.html',
 })
 export class EnvSelectorComponent {
-
 	public currentEnvId: string;
 
 	public environments: IProjEnv[];
 
 	constructor(
 		private readonly dataTugNavContext: DatatugNavContextService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
 	) {
-		dataTugNavContext.currentProject.subscribe(currentProject => {
+		dataTugNavContext.currentProject.subscribe((currentProject) => {
 			if (currentProject?.summary.environments) {
 				this.environments = currentProject.summary.environments;
 			}
 		});
 		dataTugNavContext.currentEnv.subscribe({
-			next: currentEnv => {
+			next: (currentEnv) => {
 				console.log('EnvSelectorComponent: currentEnv =>', currentEnv);
 				this.currentEnvId = currentEnv?.id;
 			},
-			error: err => this.errorLogger.logError(err, 'Failed to get current environment by EnvSelectorComponent'),
-		})
+			error: (err) =>
+				this.errorLogger.logError(
+					err,
+					'Failed to get current environment by EnvSelectorComponent'
+				),
+		});
 	}
 
 	public envChanged(event: Event): void {

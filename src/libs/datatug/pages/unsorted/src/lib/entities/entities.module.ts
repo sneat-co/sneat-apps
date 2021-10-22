@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {EntitiesPageRoutingModule} from './entities-routing.module';
+import { EntitiesPageRoutingModule } from './entities-routing.module';
 
-import {EntitiesPageComponent} from './entities-page.component';
-import {WormholeModule} from "@sneat/wormhole";
+import { EntitiesPageComponent } from './entities-page.component';
+import { WormholeModule } from '@sneat/wormhole';
 
 @NgModule({
 	imports: [
@@ -15,9 +15,8 @@ import {WormholeModule} from "@sneat/wormhole";
 		FormsModule,
 		IonicModule,
 		EntitiesPageRoutingModule,
-		WormholeModule
+		WormholeModule,
 	],
-	declarations: [EntitiesPageComponent]
+	declarations: [EntitiesPageComponent],
 })
-export class EntitiesPageModule {
-}
+export class EntitiesPageModule {}

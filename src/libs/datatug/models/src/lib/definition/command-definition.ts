@@ -43,19 +43,18 @@ export interface IHttpCommandSettings {
 }
 
 export type HttpMethod =
-	'GET' |
-	'POST' |
-	'PUT' |
-	'PATCH' |
-	'DELETE' |
-	'COPY' |
-	'HEAD' |
-	'OPTIONS' |
-	'LINK' |
-	'UNLINK' |
-	'PURGE' |
-	'LOCK' |
-	'UNLOCK' |
-	'PROPFIND' |
-	'VIEW'
-	;
+	| 'GET'
+	| 'POST'
+	| 'PUT'
+	| 'PATCH'
+	| 'DELETE'
+	| 'COPY'
+	| 'HEAD'
+	| 'OPTIONS'
+	| 'LINK'
+	| 'UNLINK'
+	| 'PURGE'
+	| 'LOCK'
+	| 'UNLOCK'
+	| 'PROPFIND'
+	| 'VIEW';

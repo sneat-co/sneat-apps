@@ -1,12 +1,15 @@
-import {Component, Inject, Input} from "@angular/core";
-import {PopoverController} from "@ionic/angular";
-import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {DatatugNavContextService, DatatugNavService} from "@sneat/datatug/services/nav";
-import {IProjectContext} from '@sneat/datatug/nav';
+import { Component, Inject, Input } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+} from '@sneat/datatug/services/nav';
+import { IProjectContext } from '@sneat/datatug/nav';
 
 @Component({
 	selector: 'datatug-menu-env-selector',
-	templateUrl: 'menu-env-selector.component.html'
+	templateUrl: 'menu-env-selector.component.html',
 })
 export class MenuEnvSelectorComponent {
 	@Input() project?: IProjectContext;
@@ -17,11 +20,11 @@ export class MenuEnvSelectorComponent {
 		private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
 		private readonly nav: DatatugNavService,
-		private readonly datatugNavContextService: DatatugNavContextService,
-	) {
-	}
+		private readonly datatugNavContextService: DatatugNavContextService
+	) {}
 
-	public clearEnv(): void { // Called from template
+	public clearEnv(): void {
+		// Called from template
 		try {
 			this.datatugNavContextService.setCurrentEnvironment(undefined);
 			if (this.project?.ref && this.project?.summary?.id) {

@@ -4,15 +4,18 @@
 			<ion-menu-button></ion-menu-button>
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-title>DB model: {{dbModelBrief?.title || dbModelBrief?.id}}</ion-title>
+		<ion-title
+			>DB model: {{ dbModelBrief?.title || dbModelBrief?.id }}</ion-title
+		>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-card-list title="Environments"
-                     itemIcon="clipboard-outline"
-                     [isLoading]="false"
-                     [items]="[]"
+	<sneat-card-list
+		title="Environments"
+		itemIcon="clipboard-outline"
+		[isLoading]="false"
+		[items]="[]"
 	></sneat-card-list>
 
 	<ion-card>
@@ -22,7 +25,7 @@
 
 		<ion-segment [(ngModel)]="envTab">
 			<ion-segment-button *ngFor="let env of envs" [value]="env">
-				<ion-label>{{env}}</ion-label>
+				<ion-label>{{ env }}</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 		<ion-list>
@@ -32,7 +35,9 @@
 			</ion-item>
 			<ion-item>
 				<ion-label color="medium">Schema</ion-label>
-				<ion-input value="{{dbModelBrief?.title || dbModelBrief?.id}}"></ion-input>
+				<ion-input
+					value="{{ dbModelBrief?.title || dbModelBrief?.id }}"
+				></ion-input>
 			</ion-item>
 		</ion-list>
 	</ion-card>
@@ -62,7 +67,8 @@
 		</ion-item-divider>
 		<ion-item tappable>
 			<ion-icon name="book-outline" slot="start"></ion-icon>
-			<ion-label>BusinessUnits
+			<ion-label
+				>BusinessUnits
 				<ion-text color="medium">(default alias: <b>bu</b>)</ion-text>
 			</ion-label>
 			<ion-badge color="warning">Dictionary</ion-badge>
@@ -102,8 +108,10 @@
 			</ion-buttons>
 		</ion-item>
 		<ion-item>
-			<ion-label color="medium" style="font-style: italic">There is no unexpected {{tab}}
-				in {{envTab.toUpperCase()}}</ion-label>
+			<ion-label color="medium" style="font-style: italic"
+				>There is no unexpected {{ tab }} in
+				{{ envTab.toUpperCase() }}</ion-label
+			>
 		</ion-item>
 	</ion-card>
 </ion-content>

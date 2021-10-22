@@ -1,7 +1,7 @@
-import {InjectionToken} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 export interface ILoginEventsHandler {
-	onLoggedIn(): void
+	onLoggedIn(): void;
 }
 
 export const LoginEventsHandler = new InjectionToken('ILoginEventsHandler');

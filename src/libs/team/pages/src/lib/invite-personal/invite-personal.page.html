@@ -8,12 +8,10 @@
 	<div class="ion-padding">
 		<p *ngIf="invite">
 			You've been invited by <b>{{invite.from.title}}</b>
-			<br>
+			<br />
 			to join team: <b>{{invite.team.title}}</b>
 		</p>
-		<p>
-			Please verify your details before joining.
-		</p>
+		<p>Please verify your details before joining.</p>
 	</div>
 
 	<ion-list>
@@ -26,26 +24,53 @@
 		</ion-item>
 		<ion-item>
 			<ion-label position="fixed">Email</ion-label>
-			<ion-input readonly [disabled]="true" id="email" type="email" [(ngModel)]="email"></ion-input>
+			<ion-input
+				readonly
+				[disabled]="true"
+				id="email"
+				type="email"
+				[(ngModel)]="email"
+			></ion-input>
 		</ion-item>
 		<ion-item-divider *ngIf="!hidePin">
 			<ion-label>Secret</ion-label>
 		</ion-item-divider>
 		<ion-item *ngIf="!hidePin">
 			<ion-label>PIN</ion-label>
-			<ion-input [disabled]="working" type="number" [(ngModel)]="pin"></ion-input>
+			<ion-input
+				[disabled]="working"
+				type="number"
+				[(ngModel)]="pin"
+			></ion-input>
 		</ion-item>
 	</ion-list>
 	<div class="ion-padding">
 		<ion-button [disabled]="working" (click)="join()">
-			<ion-icon name="log-in-outline" slot="start" *ngIf="!accepting"></ion-icon>
-			<ion-spinner name="lines-small" slot="start" *ngIf="accepting"></ion-spinner>
+			<ion-icon
+				name="log-in-outline"
+				slot="start"
+				*ngIf="!accepting"
+			></ion-icon>
+			<ion-spinner
+				name="lines-small"
+				slot="start"
+				*ngIf="accepting"
+			></ion-spinner>
 			<ion-label *ngIf="!accepting">Join team</ion-label>
 			<ion-label *ngIf="accepting">Joining team...</ion-label>
 		</ion-button>
-		<ion-button [disabled]="working" color="medium" fill="outline" (click)="reject()">
+		<ion-button
+			[disabled]="working"
+			color="medium"
+			fill="outline"
+			(click)="reject()"
+		>
 			<ion-icon name="close-outline" slot="start" *ngIf="!rejecting"></ion-icon>
-			<ion-spinner name="lines-small" slot="start" *ngIf="rejecting"></ion-spinner>
+			<ion-spinner
+				name="lines-small"
+				slot="start"
+				*ngIf="rejecting"
+			></ion-spinner>
 			<ion-label *ngIf="!rejecting">Refuse to join</ion-label>
 			<ion-label *ngIf="rejecting">Rejecting invite...</ion-label>
 		</ion-button>

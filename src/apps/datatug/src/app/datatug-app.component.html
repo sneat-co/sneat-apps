@@ -10,8 +10,9 @@
 			</ion-header>
 			<ion-content color="light">
 				<ng-container *ngIf="menu">
-					<ng-template [ngComponentOutlet]="menu | async"
-								 [ngComponentOutletInjector]="menuInjector"
+					<ng-template
+						[ngComponentOutlet]="menu | async"
+						[ngComponentOutletInjector]="menuInjector"
 					></ng-template>
 				</ng-container>
 			</ion-content>

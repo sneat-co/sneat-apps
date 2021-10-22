@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {EnvironmentsPageRoutingModule} from './environments-routing.module';
+import { EnvironmentsPageRoutingModule } from './environments-routing.module';
 
-import {EnvironmentsPageComponent} from './environments-page.component';
-import {SneatCardListModule} from '@sneat/components/card-list';
+import { EnvironmentsPageComponent } from './environments-page.component';
+import { SneatCardListModule } from '@sneat/components/card-list';
 
 @NgModule({
 	imports: [
@@ -17,7 +17,6 @@ import {SneatCardListModule} from '@sneat/components/card-list';
 		EnvironmentsPageRoutingModule,
 		SneatCardListModule,
 	],
-	declarations: [EnvironmentsPageComponent]
+	declarations: [EnvironmentsPageComponent],
 })
-export class EnvironmentsPageModule {
-}
+export class EnvironmentsPageModule {}

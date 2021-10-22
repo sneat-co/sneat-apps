@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {DatatugNavContextService} from './datatug-nav-context.service';
+import { DatatugNavContextService } from './datatug-nav-context.service';
 
 describe('DatatugNavContextService', () => {
 	let service: DatatugNavContextService;

@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {IonicModule} from '@ionic/angular';
-import {HttpQueryEditorComponent} from './http-query-editor.component';
-import {DatatugComponentsJsontugModule} from '@datatug/jsonrows';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { HttpQueryEditorComponent } from './http-query-editor.component';
+import { DatatugComponentsJsontugModule } from '@datatug/jsonrows';
 
 @NgModule({
 	imports: [
@@ -12,12 +12,7 @@ import {DatatugComponentsJsontugModule} from '@datatug/jsonrows';
 		IonicModule,
 		DatatugComponentsJsontugModule,
 	],
-	declarations: [
-		HttpQueryEditorComponent,
-	],
-	exports: [
-		HttpQueryEditorComponent
-	]
+	declarations: [HttpQueryEditorComponent],
+	exports: [HttpQueryEditorComponent],
 })
-export class HttpQueryEditorModule {
-}
+export class HttpQueryEditorModule {}

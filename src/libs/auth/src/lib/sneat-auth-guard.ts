@@ -7,21 +7,24 @@ import {
 	Router,
 	RouterStateSnapshot,
 	UrlSegment,
-	UrlTree
+	UrlTree,
 } from '@angular/router';
-import {Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {map, take} from 'rxjs/operators';
-import {AuthPipe} from '@angular/fire/compat/auth-guard';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { map, take } from 'rxjs/operators';
+import { AuthPipe } from '@angular/fire/compat/auth-guard';
 
-type AuthCanLoadPipeGenerator = (route: Route, segments: UrlSegment[]) => AuthPipe;
+type AuthCanLoadPipeGenerator = (
+	route: Route,
+	segments: UrlSegment[]
+) => AuthPipe;
 
-export const redirectToLoginIfNotSignedIn: AuthPipe = map(user => {
+export const redirectToLoginIfNotSignedIn: AuthPipe = map((user) => {
 	if (user) {
 		return true;
 	}
-	let url =  '/login';
+	let url = '/login';
 	if (location.pathname != '/') {
 		url += '#' + location.pathname;
 	}
@@ -30,25 +33,32 @@ export const redirectToLoginIfNotSignedIn: AuthPipe = map(user => {
 
 @Injectable()
 export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
-
 	constructor(
 		private readonly router: Router,
-		private readonly auth: AngularFireAuth,
-	) {
-	}
+		private readonly auth: AngularFireAuth
+	) {}
 
-	public canLoad(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+	public canLoad(
+		route: Route,
+		segments: UrlSegment[]
+	):
+		| Observable<boolean | UrlTree>
+		| Promise<boolean | UrlTree>
+		| boolean
+		| UrlTree {
 		{
 			console.log('SneatAuthGuard.canLoad', route, segments);
-			const authPipeFactory = route.data?.authCanLoadGuardPipe as AuthCanLoadPipeGenerator || (() => redirectToLoginIfNotSignedIn);
+			const authPipeFactory =
+				(route.data?.authCanLoadGuardPipe as AuthCanLoadPipeGenerator) ||
+				(() => redirectToLoginIfNotSignedIn);
 			return this.auth.user.pipe(
-				map(user => {
+				map((user) => {
 					console.log('user', user);
 					return user;
 				}),
 				take(1),
 				authPipeFactory(route, segments),
-				map(can => {
+				map((can) => {
 					console.log('can', can);
 					if (typeof can === 'boolean') {
 						return can;
@@ -57,21 +67,25 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 					} else {
 						return this.router.parseUrl(can);
 					}
-				}),
+				})
 			);
 			// return true;
 		}
 	}
 
-	public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-	//: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+	public canActivate(
+		route: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot
+	) //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	{
 		console.log('SneatAuthGuard.canActivate', route, state);
 		return true;
 	}
 
-	canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-	// : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+	canActivateChild(
+		childRoute: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot
+	) // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	{
 		console.log('SneatAuthGuard.canActivateChild', childRoute, state);
 		return true;
@@ -79,7 +93,8 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 }
 
 export const canLoad = (pipe?: AuthCanLoadPipeGenerator) => ({
-	canLoad: [SneatAuthGuard], data: {authCanLoadGuardPipe: pipe}
+	canLoad: [SneatAuthGuard],
+	data: { authCanLoadGuardPipe: pipe },
 });
 
 export const SNEAT_AUTH_GUARDS = {

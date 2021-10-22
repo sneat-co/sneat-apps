@@ -1,21 +1,25 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {BoardService} from '../../board.service';
-import {ActivatedRoute} from '@angular/router';
-import {distinctUntilChanged, filter, map, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {projectRefToString, QueryParamsService} from '@sneat/datatug/core';
-import {IBoardContext, IBoardDef, IParamWithDefAndValue, IProjBoard} from '@sneat/datatug/models';
-import {routingParamBoard} from '@sneat/datatug/core';
-import {DatatugNavContextService} from '@sneat/datatug/services/nav';
-import {ParameterLookupService} from '@sneat/datatug/components/parameters';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { BoardService } from '../../board.service';
+import { ActivatedRoute } from '@angular/router';
+import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { projectRefToString, QueryParamsService } from '@sneat/datatug/core';
+import {
+	IBoardContext,
+	IBoardDef,
+	IParamWithDefAndValue,
+	IProjBoard,
+} from '@sneat/datatug/models';
+import { routingParamBoard } from '@sneat/datatug/core';
+import { DatatugNavContextService } from '@sneat/datatug/services/nav';
+import { ParameterLookupService } from '@sneat/datatug/components/parameters';
 
 @Component({
 	selector: 'datatug-board-page',
 	templateUrl: './board-page.component.html',
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
-
 	boardId: string;
 
 	projBoard: IProjBoard;
@@ -29,7 +33,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	projectId?: string;
 	storeId: string;
 
-	boardContext: IBoardContext = {parameters: {}, mode: 'view'};
+	boardContext: IBoardContext = { parameters: {}, mode: 'view' };
 	private destoyed$ = new Subject<void>();
 
 	constructor(
@@ -38,75 +42,93 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		private readonly route: ActivatedRoute,
 		private readonly lookupService: ParameterLookupService,
 		private readonly dataTugNavContext: DatatugNavContextService,
-		private readonly queryParamsService: QueryParamsService,
+		private readonly queryParamsService: QueryParamsService
 	) {
 		console.log('BoardPage.constructor()');
 		this.projBoard = history.state?.projBoard;
 		try {
 			this.route.queryParamMap.subscribe({
-				next: queryParamMap => {
+				next: (queryParamMap) => {
 					console.log('BoardPage: queryParamMap =>', queryParamMap);
 					this.envId = queryParamMap.get('env');
 					if (this.envId) {
 						this.dataTugNavContext.setCurrentEnvironment(this.envId);
 					}
 				},
-				error: err => this.errorLogger.logError(err, 'Failed to get query parameters'),
+				error: (err) =>
+					this.errorLogger.logError(err, 'Failed to get query parameters'),
 			});
 			dataTugNavContext.currentEnv
 				.pipe(takeUntil(this.destoyed$.asObservable()))
 				.subscribe({
-					next: env => {
+					next: (env) => {
 						console.log('BoardPage got current environment:', env);
 						this.envId = env?.id;
 						if (this.envId) {
 							this.queryParamsService.setQueryParameter('env', this.envId);
 						}
 					},
-					error: e => this.errorLogger.logError(e, 'Failed on getting current environment'),
+					error: (e) =>
+						this.errorLogger.logError(
+							e,
+							'Failed on getting current environment'
+						),
 				});
 			dataTugNavContext.currentProject
 				.pipe(
-					filter(p => !!p?.ref),
-					map(p => projectRefToString(p.ref)),
+					filter((p) => !!p?.ref),
+					map((p) => projectRefToString(p.ref)),
 					distinctUntilChanged(),
-					filter(p => !!p),
+					filter((p) => !!p)
 				)
-				.subscribe(p => {
+				.subscribe((p) => {
 					[this.storeId, this.projectId] = p.split('/');
-					console.log('this.store, this.projectId', p, this.storeId, this.projectId);
-					this.route.paramMap
-						.subscribe(params => {
-							this.boardId = params.get(routingParamBoard);
-							try {
-								this.boardService.getBoard('http://localhost:8989', this.projectId, this.boardId).subscribe({
-									next: board => {
+					console.log(
+						'this.store, this.projectId',
+						p,
+						this.storeId,
+						this.projectId
+					);
+					this.route.paramMap.subscribe((params) => {
+						this.boardId = params.get(routingParamBoard);
+						try {
+							this.boardService
+								.getBoard('http://localhost:8989', this.projectId, this.boardId)
+								.subscribe({
+									next: (board) => {
 										try {
 											console.log('Loaded board:', board);
 											this.projBoard = board;
 											this.boardDef = board;
-											this.parameters = board.parameters?.map(def => ({
+											this.parameters = board.parameters?.map((def) => ({
 												def,
 												val: '',
 											}));
 										} catch (e) {
-											this.errorLogger.logError(e, 'Failed to process board response');
+											this.errorLogger.logError(
+												e,
+												'Failed to process board response'
+											);
 										}
 									},
-									error: err => this.errorLogger.logError(err, 'Failed to get board'),
+									error: (err) =>
+										this.errorLogger.logError(err, 'Failed to get board'),
 								});
-							} catch (e) {
-								this.errorLogger.logError(e, 'Failed to request board definition');
-							}
-						});
-
+						} catch (e) {
+							this.errorLogger.logError(
+								e,
+								'Failed to request board definition'
+							);
+						}
+					});
 				});
 			dataTugNavContext.currentEnv.subscribe({
-				next: env => {
+				next: (env) => {
 					console.log('currentEnv: ', env);
 					this.envId = env?.id;
 				},
-				error: err => this.errorLogger.logError(err, 'Failed process current environment'),
+				error: (err) =>
+					this.errorLogger.logError(err, 'Failed process current environment'),
 			});
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed in BoardPage.constructor()');
@@ -114,11 +136,11 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	}
 
 	public startEditing(): void {
-		this.boardContext = {...this.boardContext, mode: 'edit'};
+		this.boardContext = { ...this.boardContext, mode: 'edit' };
 	}
 
 	public saveChanges(): void {
-		this.boardContext = {...this.boardContext, mode: 'view'};
+		this.boardContext = { ...this.boardContext, mode: 'view' };
 	}
 
 	ngOnInit() {
@@ -130,17 +152,19 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	}
 
 	lookup(p: IParamWithDefAndValue): void {
-		this.lookupService.lookupParameterValue(p.def, this.storeId, this.projectId, this.envId)
+		this.lookupService
+			.lookupParameterValue(p.def, this.storeId, this.projectId, this.envId)
 			.subscribe({
-				next: v => {
+				next: (v) => {
 					console.log('Looked up:', v);
 					p.val = v.value;
 					this.boardContext = {
 						...this.boardContext,
-						parameters: {...this.boardContext.parameters, [p.def.id]: v},
+						parameters: { ...this.boardContext.parameters, [p.def.id]: v },
 					};
 				},
-				error: err => this.errorLogger.logError(err, 'Failed to lookup parameter value'),
+				error: (err) =>
+					this.errorLogger.logError(err, 'Failed to lookup parameter value'),
 			});
 	}
 
@@ -155,5 +179,4 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 			this.errorLogger.logError(err, 'Failed to destroy BoarPageComponent');
 		}
 	}
-
 }

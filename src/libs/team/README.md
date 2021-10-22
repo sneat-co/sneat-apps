@@ -1,4 +1,4 @@
-# @sneat/team-* packages
+# @sneat/team-\* packages
 
 - [@sneat/team-models](models)
 - [@sneat/team-services](services)

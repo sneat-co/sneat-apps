@@ -1,7 +1,7 @@
 <ion-card>
 	<ion-list lines="none">
 		<ion-item-divider>
-			<ion-label>{{title}}</ion-label>
+			<ion-label>{{ title }}</ion-label>
 			<ion-buttons slot="end" *ngIf="!noExpandCollapse && typeControl.value">
 				<ion-button (click)="typeControl.setValue(undefined)">
 					<ion-icon name="chevron-up-circle-outline"></ion-icon>
@@ -11,17 +11,33 @@
 	</ion-list>
 	<form [formGroup]="addRetroItemForm">
 		<ion-segment [formControl]="typeControl" (ionChange)="typeChanged()">
-			<ion-segment-button [value]="retroList.id" *ngFor="let retroList of retroLists; trackBy: trackById">
+			<ion-segment-button
+				[value]="retroList.id"
+				*ngFor="let retroList of retroLists; trackBy: trackById"
+			>
 				<ion-label>
-					{{retroList.title}}
-					<ion-badge [color]="listColor(retroList.id)" *ngIf="items(retroList.id).length">{{items(retroList.id).length}}</ion-badge>
+					{{ retroList.title }}
+					<ion-badge
+						[color]="listColor(retroList.id)"
+						*ngIf="items(retroList.id).length"
+						>{{ items(retroList.id).length }}</ion-badge
+					>
 				</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 		<ion-list>
-			<ion-item *ngFor="let item of items(typeControl.value); trackBy: trackByID">
-				<ion-label [color]="item.ID && !item.isDeleting ? 'dark' : 'medium'" [class.deleting-list-item]="item.isDeleting">{{item.title}}</ion-label>
-				<ion-spinner name="lines-small" *ngIf="!item.ID || item.isDeleting"></ion-spinner>
+			<ion-item
+				*ngFor="let item of items(typeControl.value); trackBy: trackByID"
+			>
+				<ion-label
+					[color]="item.ID && !item.isDeleting ? 'dark' : 'medium'"
+					[class.deleting-list-item]="item.isDeleting"
+					>{{ item.title }}</ion-label
+				>
+				<ion-spinner
+					name="lines-small"
+					*ngIf="!item.ID || item.isDeleting"
+				></ion-spinner>
 				<ion-buttons slot="end" *ngIf="item.ID && !item.isDeleting">
 					<ion-button title="Delete" (click)="delete(item)">
 						<ion-icon name="close" color="medium"></ion-icon>

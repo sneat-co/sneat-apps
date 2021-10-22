@@ -12,37 +12,62 @@
 		<ion-item>
 			<ion-label class="ion-text-wrap" color="medium">
 				<p>
-					Metrics allow you to collect some quantitative measures or flags during your daily stand-up meetings.
+					Metrics allow you to collect some quantitative measures or flags
+					during your daily stand-up meetings.
 				</p>
 				<p *ngIf="isDemoMetricsOnly">
 					We've created few demo metrics but you can
 					<a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
-					and/or <a href="add-metric?team={{team.id}}" (click)="goAddMetric($event)">add your own</a>.
+					and/or
+					<a href="add-metric?team={{ team.id }}" (click)="goAddMetric($event)"
+						>add your own</a
+					>.
 				</p>
 			</ion-label>
 		</ion-item>
 
 		<ng-container *ngIf="team?.data?.metrics?.length">
 			<ion-item *ngFor="let metric of team.data.metrics">
-				<ion-spinner slot="start" name="lines-small" color="medium"
-								 *ngIf="isDeletingMetric(metric); else metricIcon"></ion-spinner>
+				<ion-spinner
+					slot="start"
+					name="lines-small"
+					color="medium"
+					*ngIf="isDeletingMetric(metric); else metricIcon"
+				></ion-spinner>
 				<ng-template #metricIcon>
-					<ion-icon *ngIf="metric.mode === 'personal'" slot="start" name="person-outline"
-								 title="Personal"></ion-icon>
-					<ion-icon *ngIf="metric.mode === 'team'" slot="start" name="people-outline" title="Team"></ion-icon>
+					<ion-icon
+						*ngIf="metric.mode === 'personal'"
+						slot="start"
+						name="person-outline"
+						title="Personal"
+					></ion-icon>
+					<ion-icon
+						*ngIf="metric.mode === 'team'"
+						slot="start"
+						name="people-outline"
+						title="Team"
+					></ion-icon>
 				</ng-template>
 				<ion-label>
-					{{metric.title}}
+					{{ metric.title }}
 					<ng-container>
 						<i style="padding-left: 1em" *ngIf="metric.type === 'bool'">
-							<ion-text [color]="metric.bool.true.color">{{metric.bool.true.label}}</ion-text>
+							<ion-text [color]="metric.bool.true.color">{{
+								metric.bool.true.label
+							}}</ion-text>
 							/
-							<ion-text [color]="metric.bool.false.color">{{metric.bool.false.label}}</ion-text>
+							<ion-text [color]="metric.bool.false.color">{{
+								metric.bool.false.label
+							}}</ion-text>
 						</i>
 					</ng-container>
 				</ion-label>
 				<ion-buttons slot="end">
-					<ion-button color="medium" (click)="deleteMetric(metric)" [disabled]="isDeletingMetric(metric)">
+					<ion-button
+						color="medium"
+						(click)="deleteMetric(metric)"
+						[disabled]="isDeletingMetric(metric)"
+					>
 						<ion-icon name="close"></ion-icon>
 					</ion-button>
 				</ion-buttons>

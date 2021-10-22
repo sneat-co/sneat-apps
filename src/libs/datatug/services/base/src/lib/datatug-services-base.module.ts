@@ -1,13 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-	imports: [
-		CommonModule,
-	],
+	imports: [CommonModule],
 	providers: [
 		// DatatugUserService,
-	]
+	],
 })
-export class DatatugServicesBaseModule {
-}
+export class DatatugServicesBaseModule {}

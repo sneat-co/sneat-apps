@@ -1,18 +1,18 @@
-import {NgModule} from '@angular/core';
-import {QueriesService} from './queries.service';
-import {QUERY_PROJ_ITEM_SERVICE} from './queries.service.token';
+import { NgModule } from '@angular/core';
+import { QueriesService } from './queries.service';
+import { QUERY_PROJ_ITEM_SERVICE } from './queries.service.token';
 import {
 	DatatugServicesStoreModule,
 	ProjectItemServiceFactory,
 	ProjItemServiceModule,
-	StoreApiService
+	StoreApiService,
 } from '@sneat/datatug/services/repo';
-import {QueryContextSqlService} from "./query-context-sql.service";
-import {AngularFirestore} from '@angular/fire/compat/firestore';
-import {IonicModule} from '@ionic/angular';
-import {QueryEditorStateService} from './query-editor-state-service';
-import {QueriesUiService} from './queries-ui.service';
-import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
+import { QueryContextSqlService } from './query-context-sql.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { IonicModule } from '@ionic/angular';
+import { QueryEditorStateService } from './query-editor-state-service';
+import { QueriesUiService } from './queries-ui.service';
+import { DatatugServicesUnsortedModule } from '@sneat/datatug/services/unsorted';
 
 @NgModule({
 	imports: [
@@ -24,22 +24,23 @@ import {DatatugServicesUnsortedModule} from '@sneat/datatug/services/unsorted';
 	providers: [
 		{
 			provide: QUERY_PROJ_ITEM_SERVICE,
-			deps: [
-				AngularFirestore,
-				ProjectItemServiceFactory,
-				StoreApiService,
-			],
+			deps: [AngularFirestore, ProjectItemServiceFactory, StoreApiService],
 			useFactory: (
 				db: AngularFirestore,
 				projectItemServiceFactory: ProjectItemServiceFactory,
-				repoProvider: StoreApiService,
-			) => projectItemServiceFactory.newProjectItemService(db, repoProvider, 'queries', 'query'),
+				repoProvider: StoreApiService
+			) =>
+				projectItemServiceFactory.newProjectItemService(
+					db,
+					repoProvider,
+					'queries',
+					'query'
+				),
 		},
 		QueriesService,
 		QueryContextSqlService,
 		QueryEditorStateService,
 		QueriesUiService,
-	]
+	],
 })
-export class DatatugQueriesServicesModule {
-}
+export class DatatugQueriesServicesModule {}

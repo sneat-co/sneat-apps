@@ -1,18 +1,17 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {ScrumsHistoryPageComponent} from './scrums-history.page';
+import { ScrumsHistoryPageComponent } from './scrums-history.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ScrumsHistoryPageComponent
-  }
+	{
+		path: '',
+		component: ScrumsHistoryPageComponent,
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule],
 })
-export class ScrumsHistoryPageRoutingModule {
-}
+export class ScrumsHistoryPageRoutingModule {}

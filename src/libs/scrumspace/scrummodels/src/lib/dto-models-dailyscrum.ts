@@ -1,8 +1,6 @@
-
-
 // eslint-disable-next-line no-shadow
-import {ITaskRequest} from '@sneat/team-models';
-import {IByUser, IMeetingRequest, ITimerState} from '@sneat/meeting';
+import { ITaskRequest } from '@sneat/team-models';
+import { IByUser, IMeetingRequest, ITimerState } from '@sneat/meeting';
 
 export enum TimerOperationEnum {
 	start = 'start',
@@ -10,7 +8,10 @@ export enum TimerOperationEnum {
 	pause = 'pause',
 }
 
-export type TimerOperation = TimerOperationEnum.start | TimerOperationEnum.stop | TimerOperationEnum.pause;
+export type TimerOperation =
+	| TimerOperationEnum.start
+	| TimerOperationEnum.stop
+	| TimerOperationEnum.pause;
 
 // eslint-disable-next-line no-shadow
 export enum TimerStatusEnum {
@@ -20,8 +21,10 @@ export enum TimerStatusEnum {
 }
 
 // TODO(StackOverflow): does it make sense to have both `type` && `enum`?
-export type TimerStatus = TimerStatusEnum.active | TimerStatusEnum.stopped | TimerStatusEnum.paused;
-
+export type TimerStatus =
+	| TimerStatusEnum.active
+	| TimerStatusEnum.stopped
+	| TimerStatusEnum.paused;
 
 export interface IMeetingTimerRequest extends IMeetingRequest {
 	operation: TimerOperation;
@@ -38,7 +41,6 @@ export interface ITimestamp {
 export interface ITimerResponse extends ITimestamp {
 	by: IByUser;
 }
-
 
 export interface IReorderTaskRequest extends ITaskRequest {
 	len: number;

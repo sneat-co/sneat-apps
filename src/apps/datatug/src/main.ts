@@ -7,9 +7,9 @@ import { DatatugAppModule } from './app/datatug-app.module';
 import { environment } from './environments/environment';
 
 if (environment.production) {
-  enableProdMode();
+	enableProdMode();
 }
 
 platformBrowserDynamic()
-  .bootstrapModule(DatatugAppModule)
-  .catch((err) => console.error(err));
+	.bootstrapModule(DatatugAppModule)
+	.catch((err) => console.error(err));
