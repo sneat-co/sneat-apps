@@ -1,5 +1,5 @@
-import {Observable} from 'rxjs';
-import {ICommandResponse, IRequestCommand} from '@sneat/datatug/dto';
+import { Observable } from 'rxjs';
+import { ICommandResponse, IRequestCommand } from '@sneat/datatug/dto';
 
 // This
 export class IndexedDbExecutor {

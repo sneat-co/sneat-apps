@@ -1,19 +1,22 @@
-import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import {
 	allUserProjectsAsFlatList,
 	IDatatugProjectBriefWithIdAndStoreRef,
-	IProjectAndStore
+	IProjectAndStore,
 } from '@sneat/datatug/models';
-import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {DatatugUserService, IDatatugUserState} from "@sneat/datatug/services/base";
-import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
-import {ISneatAuthState, SneatAuthStateService} from "@sneat/auth";
-import {STORE_TYPE_GITHUB} from '@sneat/core';
-import {NewProjectService} from '@sneat/datatug/project';
-import {DatatugNavService} from '@sneat/datatug/services/nav';
-import {IProjectContext} from '@sneat/datatug/nav';
-import {IProjectRef} from '@sneat/datatug/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	DatatugUserService,
+	IDatatugUserState,
+} from '@sneat/datatug/services/base';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { STORE_TYPE_GITHUB } from '@sneat/core';
+import { NewProjectService } from '@sneat/datatug/project';
+import { DatatugNavService } from '@sneat/datatug/services/nav';
+import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectRef } from '@sneat/datatug/core';
 
 @Component({
 	selector: 'datatug-my-projects',
@@ -21,7 +24,6 @@ import {IProjectRef} from '@sneat/datatug/core';
 	styleUrls: ['./my-datatug-projects.component.scss'],
 })
 export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
-
 	@Input() title: string;
 
 	public datatugUserState: IDatatugUserState;
@@ -35,8 +37,8 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		{
 			id: 'datatug-demo-project@datatug',
 			access: 'public',
-			store: {ref: {type: STORE_TYPE_GITHUB, id: 'github.com'}},
-			title: 'DataTug Demo Project @ GitHub'
+			store: { ref: { type: STORE_TYPE_GITHUB, id: 'github.com' } },
+			title: 'DataTug Demo Project @ GitHub',
 		},
 	];
 
@@ -47,9 +49,8 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		private readonly navService: DatatugNavService,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly datatugUserService: DatatugUserService,
-		private readonly newProjectService: NewProjectService,
-	) {
-	}
+		private readonly newProjectService: NewProjectService
+	) {}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();
@@ -57,28 +58,31 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.datatugUserService.datatugUserState.pipe(
-			takeUntil(this.destroyed),
-		).subscribe({
-			next: datatugUserState => {
-				// console.log('MyDatatugProjectsComponent.ngOnInit() => datatugUserState:', datatugUserState);
-				this.authState = datatugUserState;
-				this.userRecordLoaded = !!datatugUserState?.record || datatugUserState.record === null;
-				const {record} = datatugUserState;
-				if (record || record == null) {
-					this.projects = allUserProjectsAsFlatList(record?.datatug?.stores);
-				}
-			},
-			error: this.errorLogger.logErrorHandler('Failed to get datatug user state'),
-		});
+		this.datatugUserService.datatugUserState
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (datatugUserState) => {
+					// console.log('MyDatatugProjectsComponent.ngOnInit() => datatugUserState:', datatugUserState);
+					this.authState = datatugUserState;
+					this.userRecordLoaded =
+						!!datatugUserState?.record || datatugUserState.record === null;
+					const { record } = datatugUserState;
+					if (record || record == null) {
+						this.projects = allUserProjectsAsFlatList(record?.datatug?.stores);
+					}
+				},
+				error: this.errorLogger.logErrorHandler(
+					'Failed to get datatug user state'
+				),
+			});
 	}
 
 	goDemoProject(project: IDatatugProjectBriefWithIdAndStoreRef): void {
 		const projectContext: IProjectContext = {
-			ref: {projectId: project.id, storeId: project.store.ref.type},
+			ref: { projectId: project.id, storeId: project.store.ref.type },
 			brief: project,
 			store: project.store,
-		}
+		};
 		this.navService.goProject(projectContext);
 	}
 
@@ -88,12 +92,12 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		const projectContext: IProjectContext = {
 			ref: project.ref,
 			brief: project.project,
-			store: {ref: project.store, brief: project.store},
-		}
+			store: { ref: project.store, brief: project.store },
+		};
 		this.navService.goProject(projectContext);
 	}
 
 	addProject(event: Event): void {
-		this.newProjectService.openNewProjectDialog(event)
+		this.newProjectService.openNewProjectDialog(event);
 	}
 }

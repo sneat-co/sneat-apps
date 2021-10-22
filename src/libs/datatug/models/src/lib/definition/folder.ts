@@ -1,8 +1,8 @@
-import {IProjItemBrief} from './project';
+import { IProjItemBrief } from './project';
 
 // IFolderItem holds brief information about a folder item like query, board, etc.
 export interface IFolderItem {
-	name: string
+	name: string;
 }
 
 // IFolderItem holds brief information about a folder item with an ID, like: query, board, etc.
@@ -17,9 +17,10 @@ export interface IFolder extends IProjItemBrief {
 	readonly numberOf?: { [id: string]: number };
 }
 
-export function folderItemsAsList(items: { [id: string]: IFolderItem }): IFolderItemWithId[] {
-	return Object
-		.keys(items)
-		.map(id => ({id, name: items[id].name}))
-		.sort((a, b) => a.name > b.name ? 1 : -1)
+export function folderItemsAsList(items: {
+	[id: string]: IFolderItem;
+}): IFolderItemWithId[] {
+	return Object.keys(items)
+		.map((id) => ({ id, name: items[id].name }))
+		.sort((a, b) => (a.name > b.name ? 1 : -1));
 }

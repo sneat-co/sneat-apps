@@ -1,8 +1,13 @@
-import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
-import {ModalController} from '@ionic/angular';
-import {NewCardDialogComponent} from '../../modals/new-card-dialog/new-card-dialog.component';
-import {IBoardContext, IBoardDef} from '@sneat/datatug/models';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	Input,
+} from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { NewCardDialogComponent } from '../../modals/new-card-dialog/new-card-dialog.component';
+import { IBoardContext, IBoardDef } from '@sneat/datatug/models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'datatug-board',
@@ -16,13 +21,14 @@ export class BoardComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalCtrl: ModalController,
-	) {
-	}
+		private readonly modalCtrl: ModalController
+	) {}
 
 	async newCard() {
 		console.log('newCard()');
-		const modal = await this.modalCtrl.create({component: NewCardDialogComponent})
+		const modal = await this.modalCtrl.create({
+			component: NewCardDialogComponent,
+		});
 		await modal.present();
 		// try {
 		// 	const id = Math.random().toString().split('.')[1];

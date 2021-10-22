@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {DatatugNavService} from './datatug-nav.service';
+import { DatatugNavService } from './datatug-nav.service';
 
 describe('DatatugNavService', () => {
 	let service: DatatugNavService;

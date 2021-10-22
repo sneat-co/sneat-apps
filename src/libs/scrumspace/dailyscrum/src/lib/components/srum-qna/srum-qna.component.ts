@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-srum-qna',
@@ -6,11 +6,7 @@ import {Component, OnInit} from '@angular/core';
 	styleUrls: ['./srum-qna.component.scss'],
 })
 export class SrumQnaComponent implements OnInit {
+	constructor() {}
 
-	constructor() {
-	}
-
-	ngOnInit() {
-	}
-
+	ngOnInit() {}
 }

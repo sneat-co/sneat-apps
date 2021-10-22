@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {DbModelPageRoutingModule} from './db-model-routing.module';
+import { DbModelPageRoutingModule } from './db-model-routing.module';
 
-import {DbModelPage} from './db-model-page.component';
-import {SneatCardListModule} from '@sneat/components/card-list';
+import { DbModelPage } from './db-model-page.component';
+import { SneatCardListModule } from '@sneat/components/card-list';
 
 @NgModule({
 	imports: [
@@ -17,7 +17,6 @@ import {SneatCardListModule} from '@sneat/components/card-list';
 		DbModelPageRoutingModule,
 		SneatCardListModule,
 	],
-	declarations: [DbModelPage]
+	declarations: [DbModelPage],
 })
-export class DbModelPageModule {
-}
+export class DbModelPageModule {}

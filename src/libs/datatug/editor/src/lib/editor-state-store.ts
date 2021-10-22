@@ -1,5 +1,5 @@
-import {EMPTY, Observable, of} from "rxjs";
-import {IQueryStateDto} from "./models";
+import { EMPTY, Observable, of } from 'rxjs';
+import { IQueryStateDto } from './models';
 
 export interface IEditorStateStore {
 	getQueryStateDto(id: string): Observable<IQueryStateDto>;

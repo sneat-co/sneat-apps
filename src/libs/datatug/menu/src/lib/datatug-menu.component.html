@@ -8,12 +8,14 @@
 		<ion-icon slot="start" name="person-circle-outline"></ion-icon>
 
 		<ion-label *ngIf="authState.user; else notAuthenticated" color="medium">
-			{{authState.user.displayName}}
+			{{ authState.user.displayName }}
 		</ion-label>
 		<ng-template #notAuthenticated>
 			<ion-label color="medium">
 				<ng-container *ngIf="!authStatus">Loading...</ng-container>
-				<ng-container *ngIf="authStatus === 'authenticating'">Authenticating...</ng-container>
+				<ng-container *ngIf="authStatus === 'authenticating'"
+					>Authenticating...</ng-container
+				>
 				<ng-container *ngIf="authStatus === 'notAuthenticated'">
 					Please <a [routerLink]="'/login'">sign in</a>
 				</ng-container>
@@ -33,15 +35,14 @@
 
 <ion-card>
 	<datatug-menu-store-selector
-			[datatugUser]="datatugUserState?.record"
+		[datatugUser]="datatugUserState?.record"
 	></datatug-menu-store-selector>
-	<datatug-menu-project-selector *ngIf="currentStoreId"
-								   [datatugUser]="datatugUserState?.record"
-								   (projectChanged)="onProjectChanged($event)"
+	<datatug-menu-project-selector
+		*ngIf="currentStoreId"
+		[datatugUser]="datatugUserState?.record"
+		(projectChanged)="onProjectChanged($event)"
 	></datatug-menu-project-selector>
-	<datatug-menu-env-selector
-			*ngIf="currentProject"
-	></datatug-menu-env-selector>
+	<datatug-menu-env-selector *ngIf="currentProject"></datatug-menu-env-selector>
 </ion-card>
 
 <!--<datatug-context-card *ngIf="currentProjectId" [projectId]="currentProjectId"></datatug-context-card>-->
@@ -51,7 +52,5 @@
 <datatug-project-menu *ngIf="currentProject"></datatug-project-menu>
 
 <ion-card>
-	<ion-card-content>
-		2020 - 2021 &copy; DataTug.app
-	</ion-card-content>
+	<ion-card-content> 2020 - 2021 &copy; DataTug.app </ion-card-content>
 </ion-card>

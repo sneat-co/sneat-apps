@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {ServersPageRoutingModule} from './servers-routing.module';
+import { ServersPageRoutingModule } from './servers-routing.module';
 
-import {ServersPageComponent} from './servers-page.component';
-import {DatatugDbModalsAddDbServerModule} from '@sneat/datatug/db';
+import { ServersPageComponent } from './servers-page.component';
+import { DatatugDbModalsAddDbServerModule } from '@sneat/datatug/db';
 
 @NgModule({
 	imports: [
@@ -15,9 +15,8 @@ import {DatatugDbModalsAddDbServerModule} from '@sneat/datatug/db';
 		FormsModule,
 		IonicModule,
 		ServersPageRoutingModule,
-    DatatugDbModalsAddDbServerModule,
+		DatatugDbModalsAddDbServerModule,
 	],
-	declarations: [ServersPageComponent]
+	declarations: [ServersPageComponent],
 })
-export class ServersPageModule {
-}
+export class ServersPageModule {}

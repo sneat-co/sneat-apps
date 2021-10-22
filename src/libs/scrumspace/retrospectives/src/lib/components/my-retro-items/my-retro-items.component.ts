@@ -1,25 +1,40 @@
-import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IonInput} from '@ionic/angular';
-import {Subscription} from 'rxjs';
-import {IRecord, IRetroItem, IRetroList, IRetroListItem, IUser, RetrospectiveStage} from '../../../models/interfaces';
-import {ErrorLogger, IErrorLogger} from '@sneat-team/ui-core';
-import {UserService} from '../../../services/user-service';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IonInput } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import {
+	IRecord,
+	IRetroItem,
+	IRetroList,
+	IRetroListItem,
+	IUser,
+	RetrospectiveStage,
+} from '../../../models/interfaces';
+import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
+import { UserService } from '../../../services/user-service';
 import {
 	IAddRetroItemRequest,
 	RetroItemType,
 	RetroItemTypeEnum,
-	RetrospectiveService
+	RetrospectiveService,
 } from '../../retrospective.service';
-import {filter} from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-my-retro-items',
 	templateUrl: './my-retro-items.component.html',
 })
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
-
-	@ViewChild(IonInput, {static: false}) titleInput; // TODO: IonInput;
+	@ViewChild(IonInput, { static: false }) titleInput; // TODO: IonInput;
 
 	@Input() isEditable = true;
 	@Input() noExpandCollapse: boolean;
@@ -27,9 +42,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() teamId: string;
 	@Input() title = 'My feedback for next retrospective';
 
-	public typeControl = new FormControl('', [
-		Validators.required,
-	]);
+	public typeControl = new FormControl('', [Validators.required]);
 
 	public titleControl = new FormControl('', [
 		// Validators.required,
@@ -42,10 +55,10 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	public adding = false;
 
 	public retroLists?: IRetroList[] = [
-		{id: RetroItemTypeEnum.good, title: '👍 Good'},
-		{id: RetroItemTypeEnum.bad, title: '👎 Bad'},
-		{id: RetroItemTypeEnum.endorsement, title: '🥇 Kudos'},
-		{id: RetroItemTypeEnum.idea, title: '💡 Ideas'},
+		{ id: RetroItemTypeEnum.good, title: '👍 Good' },
+		{ id: RetroItemTypeEnum.bad, title: '👎 Bad' },
+		{ id: RetroItemTypeEnum.endorsement, title: '🥇 Kudos' },
+		{ id: RetroItemTypeEnum.idea, title: '💡 Ideas' },
 	];
 
 	private userSubscription: Subscription;
@@ -53,9 +66,8 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	constructor(
 		private readonly retrospectiveService: RetrospectiveService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly userService: UserService,
-	) {
-	}
+		private readonly userService: UserService
+	) {}
 
 	public get currentType(): string {
 		return this.typeControl.value as string;
@@ -71,9 +83,8 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
 	public ngOnInit(): void {
 		this.userSubscription = this.userService.userRecord
-			.pipe(
-				filter(user => !!user),
-			).subscribe(user => this.processUserRecord(user));
+			.pipe(filter((user) => !!user))
+			.subscribe((user) => this.processUserRecord(user));
 	}
 
 	public ngOnDestroy(): void {
@@ -92,8 +103,14 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
 	public typeChanged(): void {
 		setTimeout(() => {
-			this.titleInput.setFocus()
-				.catch(err => this.errorLogger.logError(err, 'Failed to set focus to title input (ScrumRetroCardComponent.typeChanged)'));
+			this.titleInput
+				.setFocus()
+				.catch((err) =>
+					this.errorLogger.logError(
+						err,
+						'Failed to set focus to title input (ScrumRetroCardComponent.typeChanged)'
+					)
+				);
 		}, 50);
 		// if (!this.retroSub) {
 		// 	this.retroSub = this.retrospectiveService.watchRetro(this.teamId)
@@ -108,7 +125,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	public items(type: string): IRetroListItem[] {
-		return this.retroLists.find(rl => rl.id === type)?.items || [];
+		return this.retroLists.find((rl) => rl.id === type)?.items || [];
 	}
 
 	public listColor(id: RetroItemType): string {
@@ -136,10 +153,10 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 			})
 			.subscribe({
 				next: () => {
-					const list = this.retroLists.find(l => l.id === type)
-					list.items = list.items.filter(v => v.ID !== item.ID);
+					const list = this.retroLists.find((l) => l.id === type);
+					list.items = list.items.filter((v) => v.ID !== item.ID);
 				},
-				error: err => {
+				error: (err) => {
 					item.isDeleting = false;
 					this.errorLogger.logError(err, 'Failed to delete scrum item');
 				},
@@ -169,11 +186,15 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				title,
 			};
 			if (!this.retroLists) {
-				this.retroLists = []
+				this.retroLists = [];
 			}
-			const retroList = this.retroLists.find(l => l.id === type);
+			const retroList = this.retroLists.find((l) => l.id === type);
 			if (!retroList) {
-				this.errorLogger.logError(`list not found by id "${type}", have: ${this.retroLists.map(l => l.id).join(', ')}`);
+				this.errorLogger.logError(
+					`list not found by id "${type}", have: ${this.retroLists
+						.map((l) => l.id)
+						.join(', ')}`
+				);
 				return;
 			}
 			const items = retroList.items || [];
@@ -181,10 +202,10 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				retroList.items = items;
 			}
 			// eslint-disable-next-line @typescript-eslint/naming-convention
-			items.push({ID: '', title});
+			items.push({ ID: '', title });
 			this.titleControl.setValue('');
 			this.retrospectiveService.addRetroItem(request).subscribe(
-				response => {
+				(response) => {
 					console.log(response);
 
 					// const item: IRetroItem = {id: response.id, title: request.title};
@@ -195,10 +216,15 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 					// 	this.itemsByType[type] = [item]
 					// }
 				},
-				err => {
-					this.retroLists[type] = this.retroLists[type].filter(item => item.Id || item.title !== title);
-					this.errorLogger.logError(err, 'Failed to add a private retrospective item');
-				},
+				(err) => {
+					this.retroLists[type] = this.retroLists[type].filter(
+						(item) => item.Id || item.title !== title
+					);
+					this.errorLogger.logError(
+						err,
+						'Failed to add a private retrospective item'
+					);
+				}
 			);
 			this.titleControl.markAsPristine();
 			this.titleControl.markAsUntouched();
@@ -210,13 +236,16 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	private processUserRecord(user: IRecord<IUser>): void {
 		try {
 			const teamInfo = user?.data?.teams?.[this.teamId];
-			console.log(`user.data.teams[${this.teamId}].retroItems:`, teamInfo?.retroItems);
+			console.log(
+				`user.data.teams[${this.teamId}].retroItems:`,
+				teamInfo?.retroItems
+			);
 			if (!teamInfo) {
 				return; // TODO: Log error & redirect to /teams
 			}
 			if (teamInfo.retroItems) {
 				Object.entries(teamInfo.retroItems).forEach(([itemType, items]) => {
-					const retroList = this.retroLists.find(rl => rl.id === itemType);
+					const retroList = this.retroLists.find((rl) => rl.id === itemType);
 					if (retroList) {
 						if (items && items.length) {
 							retroList.items = items;
@@ -224,11 +253,11 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 							delete retroList.items;
 						}
 					} else {
-						this.retroLists.push({id: itemType, title: itemType, items});
+						this.retroLists.push({ id: itemType, title: itemType, items });
 					}
 				});
 			} else {
-				this.retroLists.forEach(retroList => delete retroList.items);
+				this.retroLists.forEach((retroList) => delete retroList.items);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process user record');

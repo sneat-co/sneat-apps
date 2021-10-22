@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {IRecordsetColumn} from '@sneat/datatug/dto';
-import {IForeignKey} from '@sneat/datatug/models';
+import { Component, Input } from '@angular/core';
+import { IRecordsetColumn } from '@sneat/datatug/dto';
+import { IForeignKey } from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-cell-popover',

@@ -1,21 +1,20 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {InvitePersonalPageRoutingModule} from './invite-personal-routing.module';
+import { InvitePersonalPageRoutingModule } from './invite-personal-routing.module';
 
-import {InvitePersonalPage} from './invite-personal.page';
+import { InvitePersonalPage } from './invite-personal.page';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		InvitePersonalPageRoutingModule
+		InvitePersonalPageRoutingModule,
 	],
-	declarations: [InvitePersonalPage]
+	declarations: [InvitePersonalPage],
 })
-export class InvitePersonalPageModule {
-}
+export class InvitePersonalPageModule {}

@@ -11,7 +11,11 @@
 				<ion-label>Run</ion-label>
 			</ion-button>
 		</ion-buttons>
-		<ion-input type="text" placeholder="URL" [(ngModel)]="queryDef.url"></ion-input>
+		<ion-input
+			type="text"
+			placeholder="URL"
+			[(ngModel)]="queryDef.url"
+		></ion-input>
 	</ion-item>
 	<ion-segment [(ngModel)]="tab">
 		<ion-segment-button value="headers">Headers</ion-segment-button>
@@ -19,7 +23,12 @@
 		<ion-segment-button value="body" *ngIf="takesBody">Body</ion-segment-button>
 	</ion-segment>
 	<ion-item>
-		<ion-input type="text" name="name" slot="start" placeholder="Name"></ion-input>
+		<ion-input
+			type="text"
+			name="name"
+			slot="start"
+			placeholder="Name"
+		></ion-input>
 		<ion-input type="text" name="value" placeholder="Value"></ion-input>
 		<ion-buttons slot="end">
 			<ion-button color="medium">
@@ -48,19 +57,30 @@
 	<ng-container [ngSwitch]="responseTab">
 		<ion-card-content *ngSwitchCase="'headers'">
 			<ion-item *ngFor="let headerKey of response.headers.keys()">
-				<ion-label color="medium">{{headerKey}}</ion-label>
-				<ion-input readonly="readonly" [value]="response.headers.get(headerKey)"></ion-input>
+				<ion-label color="medium">{{ headerKey }}</ion-label>
+				<ion-input
+					readonly="readonly"
+					[value]="response.headers.get(headerKey)"
+				></ion-input>
 			</ion-item>
 		</ion-card-content>
 		<ion-card-content *ngSwitchCase="'raw'">
-			<ion-textarea style="border: 1px solid lightgray; background-color: whitesmoke"
-						  rows="20" [value]="response.body|json" readonly="readonly"></ion-textarea>
+			<ion-textarea
+				style="border: 1px solid lightgray; background-color: whitesmoke"
+				rows="20"
+				[value]="response.body | json"
+				readonly="readonly"
+			></ion-textarea>
 		</ion-card-content>
 		<ion-card-content *ngSwitchCase="'structured'">
 			<ion-list>
 				<ion-list-header>Widgets</ion-list-header>
 				<ion-item>
-					<ion-checkbox [(ngModel)]="isCurrencyPipeEnabled" value="currency_flag" slot="start"></ion-checkbox>
+					<ion-checkbox
+						[(ngModel)]="isCurrencyPipeEnabled"
+						value="currency_flag"
+						slot="start"
+					></ion-checkbox>
 					<ion-label>Currency flag on:</ion-label>
 					<ion-input value="data.#.id"></ion-input>
 					<ion-select interface="popover" value="append">
@@ -71,10 +91,16 @@
 				<ion-item>
 					<ion-checkbox value="currency_country" slot="start"></ion-checkbox>
 					<ion-label>Currency country as:</ion-label>
-					<ion-input placeholder="property name" value="country_code"></ion-input>
+					<ion-input
+						placeholder="property name"
+						value="country_code"
+					></ion-input>
 				</ion-item>
 			</ion-list>
-			<datatug-json-table [pipes]="isCurrencyPipeEnabled ? [currencyPipe] : undefined" [json]="response.body"></datatug-json-table>
+			<datatug-json-table
+				[pipes]="isCurrencyPipeEnabled ? [currencyPipe] : undefined"
+				[json]="response.body"
+			></datatug-json-table>
 		</ion-card-content>
 	</ng-container>
 </ion-card>
@@ -85,7 +111,7 @@
 	</ion-card-header>
 	<!--	https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/ -->
 	<ion-item *ngFor="let apiEndpoint of apiEndpoints" [title]="apiEndpoint.url">
-		<ion-label>{{apiEndpoint.title}}</ion-label>
+		<ion-label>{{ apiEndpoint.title }}</ion-label>
 		<ion-buttons>
 			<ion-button (click)="try($event, apiEndpoint)">Try</ion-button>
 		</ion-buttons>

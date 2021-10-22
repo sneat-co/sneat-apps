@@ -7,4 +7,3 @@ This library was generated with [Nx](https://nx.dev).
 Run `nx test auth` to execute the unit tests.
 
 ## Interfaces
-

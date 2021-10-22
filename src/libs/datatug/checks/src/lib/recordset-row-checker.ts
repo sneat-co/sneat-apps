@@ -1,20 +1,30 @@
-import {IRecordsetCheckResults, IRecordsetResult} from '@sneat/datatug/dto';
-import {IRecordsetCheckDef, IRecordsetDef, IRecordsetMinCountCheckDef} from '@sneat/datatug/models';
-import {IRecordsetCheck} from './recordset/interfaces';
-import {RecordsetMaxCountCheck, RecordsetMinCountCheck} from './recordset/count-checks';
-import {newFieldCheckFromDef} from './values/mapper';
+import { IRecordsetCheckResults, IRecordsetResult } from '@sneat/datatug/dto';
+import {
+	IRecordsetCheckDef,
+	IRecordsetDef,
+	IRecordsetMinCountCheckDef,
+} from '@sneat/datatug/models';
+import { IRecordsetCheck } from './recordset/interfaces';
+import {
+	RecordsetMaxCountCheck,
+	RecordsetMinCountCheck,
+} from './recordset/count-checks';
+import { newFieldCheckFromDef } from './values/mapper';
 
-export function checkRecordsetResult(def: IRecordsetDef, result: IRecordsetResult): IRecordsetCheckResults {
+export function checkRecordsetResult(
+	def: IRecordsetDef,
+	result: IRecordsetResult
+): IRecordsetCheckResults {
 	const checks = def.checks?.map(newRecordsetCheckFromDef);
 	const results: IRecordsetCheckResults = {
-		recordset: checks?.map(check => check.checkRecordsetResult(result)) || [],
+		recordset: checks?.map((check) => check.checkRecordsetResult(result)) || [],
 		byColumn: {},
-	}
+	};
 	def.columns.forEach((colDef, colIndex) => {
 		if (!colDef.checks?.length) {
 			return;
 		}
-		colDef.checks.forEach(colCheckDef => {
+		colDef.checks.forEach((colCheckDef) => {
 			const check = newFieldCheckFromDef(colCheckDef);
 			result.rows.forEach((row, rowIndex) => {
 				const cellCheckResult = check.checkValue(row[colIndex]);
@@ -31,13 +41,15 @@ export function checkRecordsetResult(def: IRecordsetDef, result: IRecordsetResul
 					}
 					colCheckResults[rowIndex].push(cellCheckResult);
 				}
-			})
+			});
 		});
-	})
+	});
 	return results;
 }
 
-export const newRecordsetCheckFromDef = (def: IRecordsetCheckDef): IRecordsetCheck => {
+export const newRecordsetCheckFromDef = (
+	def: IRecordsetCheckDef
+): IRecordsetCheck => {
 	switch (def.type) {
 		case 'min':
 			return new RecordsetMinCountCheck(def as IRecordsetMinCountCheckDef);
@@ -46,4 +58,4 @@ export const newRecordsetCheckFromDef = (def: IRecordsetCheckDef): IRecordsetChe
 		default:
 			throw new Error(`unknown recordset check type: ${def.type}`);
 	}
-}
+};

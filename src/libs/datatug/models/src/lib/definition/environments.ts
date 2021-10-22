@@ -1,5 +1,5 @@
-import {ITagged} from '../tags';
-import {IDbServer} from './apis/database';
+import { ITagged } from '../tags';
+import { IDbServer } from './apis/database';
 
 export interface IEnvironmentBase {
 	id: string;

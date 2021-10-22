@@ -1,8 +1,14 @@
-import {IParameter, IRecordsetCheckDef, IRecordsetDef, NamedParams} from '@sneat/datatug/models';
-import {ICommandResponse} from "./response";
-import {IValueCheckResult} from '@sneat/datatug/checks';
+import {
+	IParameter,
+	IRecordsetCheckDef,
+	IRecordsetDef,
+	NamedParams,
+} from '@sneat/datatug/models';
+import { ICommandResponse } from './response';
+import { IValueCheckResult } from '@sneat/datatug/checks';
 
-export interface ISelectRequest { // TODO: document where & how it is used
+export interface ISelectRequest {
+	// TODO: document where & how it is used
 	proj: string;
 	env: string;
 	db: string;

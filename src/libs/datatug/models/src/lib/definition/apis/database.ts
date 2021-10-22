@@ -43,7 +43,7 @@ export interface IDatabaseFull extends IEnvDatabaseBase {
 	version?: {
 		min?: string;
 		max?: string;
-	}
+	};
 }
 
 export interface IDatabaseSummary {
@@ -83,7 +83,7 @@ export interface IDbCatalogSummary {
 export const getDbServerFromId = (driver, id: string): IDbServer => {
 	const v = id.split(':');
 	if (v.length === 1) {
-		return {driver, host: v[0]}
+		return { driver, host: v[0] };
 	}
-	return {driver, host: v[0], port: +v[0]};
-}
+	return { driver, host: v[0], port: +v[0] };
+};

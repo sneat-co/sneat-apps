@@ -1,6 +1,6 @@
 <ion-list>
 	<ion-item *ngFor="let item of items || []; trackBy: trackById">
-		<ion-label>{{item.title}}</ion-label>
+		<ion-label>{{ item.title }}</ion-label>
 		<ion-spinner name="lines-small" *ngIf="!item.id"></ion-spinner>
 		<ion-buttons slot="end" *ngIf="item.id">
 			<ion-button title="Delete" (click)="delete(item)">
@@ -17,8 +17,10 @@
 			>
 			</ion-input>
 			<ion-buttons slot="end">
-				<ion-button (click)="add()"
-								[color]="titleControl.value.trim().length ? 'primary' : 'medium'">
+				<ion-button
+					(click)="add()"
+					[color]="titleControl.value.trim().length ? 'primary' : 'medium'"
+				>
 					Add
 				</ion-button>
 			</ion-buttons>

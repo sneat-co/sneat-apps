@@ -1,18 +1,17 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {RetroTreePage} from './retro-tree.page';
+import { RetroTreePage } from './retro-tree.page';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: RetroTreePage
-	}
+		component: RetroTreePage,
+	},
 ];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class RetroTreePageRoutingModule {
-}
+export class RetroTreePageRoutingModule {}

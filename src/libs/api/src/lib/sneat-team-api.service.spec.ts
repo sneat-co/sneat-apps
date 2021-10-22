@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {SneatTeamApiService} from './sneat-team-api.service';
+import { SneatTeamApiService } from './sneat-team-api.service';
 
 describe('SneatTeamApiService', () => {
 	beforeEach(() => TestBed.configureTestingModule({}));

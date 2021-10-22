@@ -1,7 +1,7 @@
 {
-  "name": "datatug",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+	"name": "datatug",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "angular"
 }

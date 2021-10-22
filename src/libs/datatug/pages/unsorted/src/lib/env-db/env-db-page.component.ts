@@ -1,14 +1,26 @@
-import {AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	Inject,
+	OnDestroy,
+	ViewChild,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import Tabulator from 'tabulator-tables';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {getTabulatorCols, IGridColumn} from '@sneat/grid';
-import {routingParamEnvironmentId} from '@sneat/datatug/core';
-import {IDatabaseFull, IEnvironmentFull, IProjectFull, ITableFull} from '@sneat/datatug/models';
-import {ProjectService} from '@sneat/datatug/services/project';
-import {DatatugNavService, ProjectTracker} from '@sneat/datatug/services/nav';
-import {IProjectContext} from '@sneat/datatug/nav';
-import {Subject} from 'rxjs';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { getTabulatorCols, IGridColumn } from '@sneat/grid';
+import { routingParamEnvironmentId } from '@sneat/datatug/core';
+import {
+	IDatabaseFull,
+	IEnvironmentFull,
+	IProjectFull,
+	ITableFull,
+} from '@sneat/datatug/models';
+import { ProjectService } from '@sneat/datatug/services/project';
+import { DatatugNavService, ProjectTracker } from '@sneat/datatug/services/nav';
+import { IProjectContext } from '@sneat/datatug/nav';
+import { Subject } from 'rxjs';
 
 interface IRecordsetInfo {
 	schema: string;
@@ -17,7 +29,7 @@ interface IRecordsetInfo {
 	rows?: number;
 	fks?: number;
 	refsBy?: number;
-	t: ITableFull,
+	t: ITableFull;
 }
 
 @Component({
@@ -26,8 +38,7 @@ interface IRecordsetInfo {
 	styleUrls: ['./env-db-page.component.scss'],
 })
 export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
-
-	@ViewChild('grid', {static: false}) gridElRef: ElementRef;
+	@ViewChild('grid', { static: false }) gridElRef: ElementRef;
 
 	filter = '';
 	tab: 'tables' | 'views' = 'tables';
@@ -38,7 +49,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 	envDb: IDatabaseFull;
 
 	defaultColDef = {
-		resizable: true
+		resizable: true,
 	};
 
 	allRows: { [tab: string]: IRecordsetInfo[] } = {};
@@ -52,7 +63,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly projService: ProjectService,
 		private datatugNavService: DatatugNavService,
-		private readonly route: ActivatedRoute,
+		private readonly route: ActivatedRoute
 	) {
 		// this.tabulator = new Tabulator({
 		// 	// columns: this.tablesCols,
@@ -68,18 +79,19 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 	ngAfterViewInit(): void {
 		const projectTracker = new ProjectTracker(this.destroyed, this.route);
 		projectTracker.projectRef.subscribe({
-			next: projectRef => {
-				this.projService.getFull(projectRef).subscribe(p => {
+			next: (projectRef) => {
+				this.projService.getFull(projectRef).subscribe((p) => {
 					this.projectFull = p;
-					const envId = this.route.snapshot.params.get(routingParamEnvironmentId);
-					this.env = p.environments.find(e => e.id === envId);
+					const envId = this.route.snapshot.params.get(
+						routingParamEnvironmentId
+					);
+					this.env = p.environments.find((e) => e.id === envId);
 					// const dbId = params.get('routingParamDbId');
 					// this.envDb = this.env.dbServer.find(db => db.id === dbId);
 					this.onDataChanged();
 				});
-
-			}
-		})
+			},
+		});
 	}
 
 	public tabChanged(): void {
@@ -113,11 +125,11 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		let rows = this.allRows[this.tab];
 		if (this.filter) {
 			const v = this.filter.toLowerCase();
-			rows = rows.filter(r => r.name.toLowerCase().indexOf(v) >= 0);
+			rows = rows.filter((r) => r.name.toLowerCase().indexOf(v) >= 0);
 		}
 		this.filteredRows[this.tab] = rows;
 		if (this.tabulator) {
-			this.tabulator.setData(rows)
+			this.tabulator.setData(rows);
 		} else {
 			this.createTabulator();
 		}
@@ -127,7 +139,10 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		const columns: IGridColumn[] = [
 			// {field: 'schema', dbType: 'str', title: 'Schema', widthGrow: 2},
 			{
-				field: 'name', dbType: 'str', title: 'Name', widthGrow: 4, // resizable: true,
+				field: 'name',
+				dbType: 'str',
+				title: 'Name',
+				widthGrow: 4, // resizable: true,
 				// cellRendererFramework: RouterLinkRendererComponent,
 				// cellRendererParams: {
 				// 	routerLinkRendererComponentOptions: (param): IRouterLinkRendererComponentOptions => {
@@ -151,18 +166,31 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 				field: 'cols',
 				widthGrow: 1,
 				hozAlign: 'right',
-				tooltip: this.colsTooltip
+				tooltip: this.colsTooltip,
 			},
-			{title: 'FKs', dbType: 'integer', field: 'fks', widthGrow: 1, hozAlign: 'right', tooltip: this.fksTooltip},
+			{
+				title: 'FKs',
+				dbType: 'integer',
+				field: 'fks',
+				widthGrow: 1,
+				hozAlign: 'right',
+				tooltip: this.fksTooltip,
+			},
 			{
 				title: 'Refs By',
 				dbType: 'integer',
 				field: 'refsBy',
 				widthGrow: 1,
 				hozAlign: 'right',
-				tooltip: this.refsByTooltip
+				tooltip: this.refsByTooltip,
 			},
-			{title: 'Rows', dbType: 'integer', field: 'rows', widthGrow: 1, hozAlign: 'right'},
+			{
+				title: 'Rows',
+				dbType: 'integer',
+				field: 'rows',
+				widthGrow: 1,
+				hozAlign: 'right',
+			},
 		];
 
 		const options = {
@@ -170,7 +198,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 			layout: 'fitColumns',
 			groupBy: 'schema',
 			columns: getTabulatorCols(columns),
-			rowClick: (e: any, row: { getData: () => IRecordsetInfo; }) => {
+			rowClick: (e: any, row: { getData: () => IRecordsetInfo }) => {
 				const data: IRecordsetInfo = row.getData();
 				this.datatugNavService.goTable({
 					project: this.project,
@@ -191,21 +219,36 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		this.tabChanged();
 	}
 
-	private colsTooltip = cell => {
+	private colsTooltip = (cell) => {
 		const data: IRecordsetInfo = cell.getData();
-		return 'COLUMNS:\n' + data.t.columns.map(c => `${c.name}: ${c.dbType}`).join('\n');
-	}
+		return (
+			'COLUMNS:\n' +
+			data.t.columns.map((c) => `${c.name}: ${c.dbType}`).join('\n')
+		);
+	};
 
-	private fksTooltip = cell => {
+	private fksTooltip = (cell) => {
 		const data: IRecordsetInfo = cell.getData();
-		return 'FOREIGN KEYS:\n' + data.t.foreignKeys?.map(fk => `${fk.name} (${fk.columns.join(', ')})`).join('\n');
-	}
+		return (
+			'FOREIGN KEYS:\n' +
+			data.t.foreignKeys
+				?.map((fk) => `${fk.name} (${fk.columns.join(', ')})`)
+				.join('\n')
+		);
+	};
 
-	private refsByTooltip = cell => {
+	private refsByTooltip = (cell) => {
 		const data: IRecordsetInfo = cell.getData();
-		return 'REFERENCED BY:\n'
-			+ data.t.referencedBy
-				?.map(ref => `${ref.schema}.${ref.name} (${ref.foreignKeys.map(fk => fk.name).join(', ')})`)
-				.join('\n');
-	}
+		return (
+			'REFERENCED BY:\n' +
+			data.t.referencedBy
+				?.map(
+					(ref) =>
+						`${ref.schema}.${ref.name} (${ref.foreignKeys
+							.map((fk) => fk.name)
+							.join(', ')})`
+				)
+				.join('\n')
+		);
+	};
 }

@@ -5,7 +5,7 @@
 			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
 		<ion-title>
-<!--			<ion-icon name="easel-outline" class="ion-padding-end"></ion-icon>-->
+			<!--			<ion-icon name="easel-outline" class="ion-padding-end"></ion-icon>-->
 			Boards
 		</ion-title>
 		<!--		<ion-segment value="boards">-->
@@ -22,16 +22,20 @@
 </ion-header>
 
 <ion-content color="light">
-	<sneat-card-list [isLoading]="!boards"
-                     [noItemsText]="noItemsText"
-                     [items]="boards"
-                     itemIcon="easel-outline"
-                     [tab]="tab"
-                     [tabs]="[{id: 'shared', title: 'shared'}, {id: 'favorite', title: 'Favorite'}]"
-                     (tabChanged)="tabChanged($event)"
-                     [isFilterable]="boards?.length > 7"
-                     [getRouterLink]="getLinkToBoard"
-                     (itemClick)="goBoard"
+	<sneat-card-list
+		[isLoading]="!boards"
+		[noItemsText]="noItemsText"
+		[items]="boards"
+		itemIcon="easel-outline"
+		[tab]="tab"
+		[tabs]="[
+			{ id: 'shared', title: 'shared' },
+			{ id: 'favorite', title: 'Favorite' }
+		]"
+		(tabChanged)="tabChanged($event)"
+		[isFilterable]="boards?.length > 7"
+		[getRouterLink]="getLinkToBoard"
+		(itemClick)="(goBoard)"
 	></sneat-card-list>
 
 	<ion-button class="ion-margin" (click)="newBoard()">

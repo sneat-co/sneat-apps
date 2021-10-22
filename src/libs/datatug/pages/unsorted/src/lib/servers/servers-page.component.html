@@ -9,7 +9,6 @@
 </ion-header>
 
 <ion-content color="light">
-
 	<ion-card>
 		<ion-item-divider>Environments</ion-item-divider>
 		<ion-item>
@@ -28,7 +27,8 @@
 		<ion-card-header>
 			<ion-segment [(ngModel)]="tab">
 				<ion-segment-button value="db">
-					<ion-label>DB servers
+					<ion-label
+						>DB servers
 						<ion-badge color="light">2</ion-badge>
 					</ion-label>
 				</ion-segment-button>
@@ -38,20 +38,33 @@
 		</ion-card-header>
 		<ion-list *ngIf="tab === 'db'">
 			<ng-container *ngIf="dbServers">
-				<ion-item tappable *ngFor="let dbServer of dbServers" (click)="goDbServer(dbServer)">
-					<ion-label>{{dbServer.dbServer.host}}</ion-label>
-					<ion-badge color="medium">{{dbServer.dbServer.driver}}</ion-badge>
-					<ion-badge color="light" class="ion-margin-start">{{dbServer.databasesCount}}</ion-badge>
+				<ion-item
+					tappable
+					*ngFor="let dbServer of dbServers"
+					(click)="goDbServer(dbServer)"
+				>
+					<ion-label>{{ dbServer.dbServer.host }}</ion-label>
+					<ion-badge color="medium">{{ dbServer.dbServer.driver }}</ion-badge>
+					<ion-badge color="light" class="ion-margin-start">{{
+						dbServer.databasesCount
+					}}</ion-badge>
 					<ion-buttons slot="end">
-						<ion-button (click)="deleteDbServer($event, dbServer)" [disabled]="isDeleting(dbServer.dbServer)">
+						<ion-button
+							(click)="deleteDbServer($event, dbServer)"
+							[disabled]="isDeleting(dbServer.dbServer)"
+						>
 							<ion-icon name="trash-outline"></ion-icon>
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
 				<ion-item>
-					<ion-label color="medium">Total: {{dbServers.length}} database servers</ion-label>
+					<ion-label color="medium"
+						>Total: {{ dbServers.length }} database servers</ion-label
+					>
 					<ion-buttons slot="end">
-						<ion-button fill="outline" (click)="addDbServer()">Add DB server</ion-button>
+						<ion-button fill="outline" (click)="addDbServer()"
+							>Add DB server</ion-button
+						>
 					</ion-buttons>
 				</ion-item>
 			</ng-container>
@@ -63,6 +76,4 @@
 			<p>Not implemented yet.</p>
 		</ion-card-content>
 	</ion-card>
-
-
 </ion-content>

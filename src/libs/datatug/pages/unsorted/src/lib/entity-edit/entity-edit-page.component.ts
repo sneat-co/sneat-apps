@@ -1,22 +1,24 @@
-import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Subject} from 'rxjs';
-import {IonInput, PopoverController} from '@ionic/angular';
-import {EntityFieldDialogComponent} from './entity-field-dialog/entity-field-dialog.component';
-import {IEntity, IEntityFieldDef} from '@sneat/datatug/models';
-import {IProjectContext} from '@sneat/datatug/nav';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {EntityService} from '@sneat/datatug/services/unsorted';
-import {DatatugNavContextService, DatatugNavService} from '@sneat/datatug/services/nav';
+import { Component, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { IonInput, PopoverController } from '@ionic/angular';
+import { EntityFieldDialogComponent } from './entity-field-dialog/entity-field-dialog.component';
+import { IEntity, IEntityFieldDef } from '@sneat/datatug/models';
+import { IProjectContext } from '@sneat/datatug/nav';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { EntityService } from '@sneat/datatug/services/unsorted';
+import {
+	DatatugNavContextService,
+	DatatugNavService,
+} from '@sneat/datatug/services/nav';
 
 @Component({
 	selector: 'datatug-entity-edit',
 	templateUrl: './entity-edit-page.component.html',
 })
 export class EntityEditPageComponent implements OnDestroy {
-
 	mode: 'new' | 'edit';
-	public entity: IEntity = {fields: []};
+	public entity: IEntity = { fields: [] };
 	backUrl = '/';
 	project: IProjectContext;
 	@ViewChild('nameInput') nameInput: IonInput;
@@ -30,7 +32,7 @@ export class EntityEditPageComponent implements OnDestroy {
 		private readonly navContextService: DatatugNavContextService,
 		private readonly entityService: EntityService,
 		private readonly datatugNavService: DatatugNavService,
-		private readonly popoverCtrl: PopoverController,
+		private readonly popoverCtrl: PopoverController
 	) {
 		try {
 			this.mode = !route.snapshot.paramMap.get('entityId') ? 'new' : 'edit';
@@ -39,18 +41,23 @@ export class EntityEditPageComponent implements OnDestroy {
 			};
 			this.showNewPropForm = true;
 			navContextService.currentProject.subscribe({
-				next: currentProject => {
+				next: (currentProject) => {
 					try {
 						console.log('EntityEditPage: currentProject:', currentProject);
 						this.project = currentProject;
-						this.backUrl = currentProject ? `/store/${currentProject.ref.storeId}/project/${currentProject.ref.projectId}/entities` : '/';
+						this.backUrl = currentProject
+							? `/store/${currentProject.ref.storeId}/project/${currentProject.ref.projectId}/entities`
+							: '/';
 					} catch (e) {
 						this.errorLogger.logError(e, 'Failed to process current project');
 					}
 				},
 			});
 		} catch (e) {
-			this.error = this.errorLogger.logError(e, 'Failed in EntityEditPage.constructor()');
+			this.error = this.errorLogger.logError(
+				e,
+				'Failed in EntityEditPage.constructor()'
+			);
 		}
 	}
 
@@ -58,7 +65,9 @@ export class EntityEditPageComponent implements OnDestroy {
 		try {
 			this.nameInput
 				.setFocus()
-				.catch(e => this.errorLogger.logError(e, 'Failed to set focus to "name" input'));
+				.catch((e) =>
+					this.errorLogger.logError(e, 'Failed to set focus to "name" input')
+				);
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process ionViewDidEnter');
 		}
@@ -73,11 +82,14 @@ export class EntityEditPageComponent implements OnDestroy {
 		console.log('createEntity()');
 		try {
 			this.entityService.createEntity(this.project.ref, this.entity).subscribe({
-				next: value => {
+				next: (value) => {
 					console.log('Entity created:', value);
-					this.datatugNavService.goEntity(this.project, {id: value.id, title: value.data.title});
+					this.datatugNavService.goEntity(this.project, {
+						id: value.id,
+						title: value.data.title,
+					});
 				},
-			})
+			});
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to create entity');
 		}
@@ -94,7 +106,10 @@ export class EntityEditPageComponent implements OnDestroy {
 		});
 		popover.onDidDismiss().then((response) => {
 			console.log('response:', response);
-			this.entity = {...this.entity, fields: [...this.entity.fields, response.data as IEntityFieldDef]};
+			this.entity = {
+				...this.entity,
+				fields: [...this.entity.fields, response.data as IEntityFieldDef],
+			};
 			console.log('entity', this.entity);
 		});
 		return await popover.present();
@@ -102,6 +117,9 @@ export class EntityEditPageComponent implements OnDestroy {
 
 	deleteField(id: string): void {
 		console.log('deleteField', id);
-		this.entity = {...this.entity, fields: this.entity.fields.filter(f => f.id !== id)};
+		this.entity = {
+			...this.entity,
+			fields: this.entity.fields.filter((f) => f.id !== id),
+		};
 	}
 }

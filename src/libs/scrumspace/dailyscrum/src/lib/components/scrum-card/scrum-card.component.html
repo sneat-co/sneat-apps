@@ -1,33 +1,47 @@
-<ion-card-header class="ion-no-padding ion-padding-start" *ngIf="viewMode === 'team' || showMember" tappable
-					  (click)="expandCollapseMember($event)">
+<ion-card-header
+	class="ion-no-padding ion-padding-start"
+	*ngIf="viewMode === 'team' || showMember"
+	tappable
+	(click)="expandCollapseMember($event)"
+>
 	<ion-list lines="none" class="ion-no-padding ion-no-margin">
 		<ion-item class="ion-no-padding ion-no-margin">
 			<ion-avatar slot="start" *ngIf="status.member.avatar">
-				<ion-img title="avatar" *ngIf="status.member.avatar.gravatar"
-							src="//www.gravatar.com/avatar/{{ status.member.avatar.gravatar }}"></ion-img>
-				<ion-img title="avatar" *ngIf="status.member.avatar.external"
-							[src]="status.member.avatar.external.url"></ion-img>
+				<ion-img
+					title="avatar"
+					*ngIf="status.member.avatar.gravatar"
+					src="//www.gravatar.com/avatar/{{ status.member.avatar.gravatar }}"
+				></ion-img>
+				<ion-img
+					title="avatar"
+					*ngIf="status.member.avatar.external"
+					[src]="status.member.avatar.external.url"
+				></ion-img>
 			</ion-avatar>
-			<ion-icon slot="start" name="person-outline" *ngIf="!status.member.avatar"></ion-icon>
+			<ion-icon
+				slot="start"
+				name="person-outline"
+				*ngIf="!status.member.avatar"
+			></ion-icon>
 			<ion-label color="dark">
-				<h3>{{status.member.title}}</h3>
+				<h3>{{ status.member.title }}</h3>
 				<ion-buttons class="counters">
 					<ion-button color="danger" disabled *ngIf="count('risk')">
-						<ion-badge color="danger">{{count('risk')}}</ion-badge>
+						<ion-badge color="danger">{{ count('risk') }}</ion-badge>
 						<!-- TODO(i18n): pluralise -->
 						<ng-container *ngIf="count('risk') === 1">risk</ng-container>
 						<ng-container *ngIf="count('risk') !== 1">risks</ng-container>
 					</ion-button>
 					<ion-button color="success" disabled *ngIf="count('done')">
-						<ion-badge color="success">{{count('done')}}</ion-badge>
+						<ion-badge color="success">{{ count('done') }}</ion-badge>
 						done
 					</ion-button>
 					<ion-button color="dark" disabled *ngIf="count('todo')">
-						<ion-badge color="dark">{{count('todo')}}</ion-badge>
+						<ion-badge color="dark">{{ count('todo') }}</ion-badge>
 						plans
 					</ion-button>
 					<ion-button color="primary" disabled *ngIf="count('qna')">
-						<ion-badge>{{count('qna')}}</ion-badge>
+						<ion-badge>{{ count('qna') }}</ion-badge>
 						<ng-container *ngIf="count('qna') === 1">question</ng-container>
 						<ng-container *ngIf="count('qna') !== 1">questions</ng-container>
 					</ion-button>
@@ -40,24 +54,32 @@
 					[scrumId]="scrumId"
 					[scrum]="scrum"
 					[memberId]="status.member?.id"
-					(toggled)="onTimerToggled($event)">
+					(toggled)="onTimerToggled($event)"
+				>
 				</app-timer-member-button>
 				<ion-button color="medium">
-					<ion-icon [name]="isExpanded ? 'arrow-up-circle-outline' : 'arrow-down-circle-outline'"></ion-icon>
+					<ion-icon
+						[name]="
+							isExpanded
+								? 'arrow-up-circle-outline'
+								: 'arrow-down-circle-outline'
+						"
+					></ion-icon>
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
 	</ion-list>
 </ion-card-header>
 <ion-list *ngIf="isExpanded">
-	<app-scrum-tasks *ngIf="viewMode === 'single' && isExpanded"
-						  [currentMemberId]="currentMemberId"
-						  [team]="team"
-						  [scrumId]="scrumId"
-						  [member]="status?.member"
-						  [taskType]="taskType"
-						  [tasks]="status?.byType && status?.byType[taskType] || []"
-						  [hideTitle]="showMember"
+	<app-scrum-tasks
+		*ngIf="viewMode === 'single' && isExpanded"
+		[currentMemberId]="currentMemberId"
+		[team]="team"
+		[scrumId]="scrumId"
+		[member]="status?.member"
+		[taskType]="taskType"
+		[tasks]="(status?.byType && status?.byType[taskType]) || []"
+		[hideTitle]="showMember"
 	></app-scrum-tasks>
 
 	<ng-container *ngIf="viewMode !== 'single'">
@@ -67,9 +89,11 @@
 				*ngIf="taskType !== 'kudos' || count('kudos')"
 				[team]="team"
 				[currentMemberId]="currentMemberId"
-				[scrumId]="scrumId" [member]="status.member"
-				[tasks]="status?.byType && status?.byType[taskType] || []"
-				[taskType]="taskType"></app-scrum-tasks>
+				[scrumId]="scrumId"
+				[member]="status.member"
+				[tasks]="(status?.byType && status?.byType[taskType]) || []"
+				[taskType]="taskType"
+			></app-scrum-tasks>
 		</ng-container>
 	</ng-container>
 </ion-list>

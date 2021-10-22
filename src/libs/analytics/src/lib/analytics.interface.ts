@@ -1,4 +1,4 @@
-import {InjectionToken} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 export interface IAnalyticsCallOptions {
 	// If true, this config or event call applies globally to all analytics properties on the page.
@@ -9,9 +9,15 @@ export interface IAnalyticsCallOptions {
  * An interface for analytics service
  */
 export interface IAnalyticsService {
-	logEvent(eventName: string, eventParams?: { [key: string]: any; }, options?: IAnalyticsCallOptions): void
+	logEvent(
+		eventName: string,
+		eventParams?: { [key: string]: any },
+		options?: IAnalyticsCallOptions
+	): void;
 
-	setCurrentScreen(screenName: string, options?: IAnalyticsCallOptions): void
+	setCurrentScreen(screenName: string, options?: IAnalyticsCallOptions): void;
 }
 
-export const AnalyticsService = new InjectionToken<IAnalyticsService>('IAnalyticsService');
+export const AnalyticsService = new InjectionToken<IAnalyticsService>(
+	'IAnalyticsService'
+);

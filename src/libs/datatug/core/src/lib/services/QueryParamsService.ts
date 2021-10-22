@@ -1,14 +1,15 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class QueryParamsService {
 	constructor(
-		private readonly location: Location,
-		// @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+		private readonly location: Location // @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {}
 
-	public setQueryParameter(name: string, value: string | number | boolean): void {
+	public setQueryParameter(
+		name: string,
+		value: string | number | boolean
+	): void {
 		let url = this.location.href;
 		console.log('setQueryParameter', name, value);
 		if (url.includes(name + '=')) {
@@ -23,7 +24,6 @@ export class QueryParamsService {
 		// 	});
 		// this.router.navigateByUrl(url);
 
-
-		history.replaceState(undefined,  document.title, url);
+		history.replaceState(undefined, document.title, url);
 	}
 }

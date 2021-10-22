@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {CellHrefWidgetComponent} from './widgets/cell-href-widget';
-import {CellButtonWidgetComponent} from './widgets/cell-button-widget.component';
-import {CellWidgetsComponent} from './widgets';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CellHrefWidgetComponent } from './widgets/cell-href-widget';
+import { CellButtonWidgetComponent } from './widgets/cell-button-widget.component';
+import { CellWidgetsComponent } from './widgets';
 
 @NgModule({
 	imports: [CommonModule],
@@ -15,7 +15,6 @@ import {CellWidgetsComponent} from './widgets';
 		CellHrefWidgetComponent,
 		CellButtonWidgetComponent,
 		CellWidgetsComponent,
-	]
+	],
 })
-export class DatatugPluginsModule {
-}
+export class DatatugPluginsModule {}

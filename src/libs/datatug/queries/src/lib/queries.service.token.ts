@@ -1,4 +1,5 @@
-import {InjectionToken} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
-export const QUERY_PROJ_ITEM_SERVICE = new InjectionToken('QueryProjectItemService');
-
+export const QUERY_PROJ_ITEM_SERVICE = new InjectionToken(
+	'QueryProjectItemService'
+);

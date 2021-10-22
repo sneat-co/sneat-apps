@@ -1,4 +1,4 @@
-import {IAvatar} from './avatar';
+import { IAvatar } from './avatar';
 
 // Does not contains ID as it's a key.
 // Use IRecord<IUserRecord> to keep record paired with ID

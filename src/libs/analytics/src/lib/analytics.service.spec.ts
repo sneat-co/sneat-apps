@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {FireAnalyticsService} from './fire-analytics.service';
+import { FireAnalyticsService } from './fire-analytics.service';
 
 describe('AnalyticsService', () => {
 	beforeEach(() => TestBed.configureTestingModule({}));

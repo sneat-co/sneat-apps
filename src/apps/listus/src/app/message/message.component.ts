@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {Message} from '../services/data.service';
+import { Component, Input } from '@angular/core';
+import { Message } from '../services/data.service';
 
 @Component({
 	selector: 'sneat-message',

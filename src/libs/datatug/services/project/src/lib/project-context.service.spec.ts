@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {ProjectContextService} from './project-context.service';
+import { ProjectContextService } from './project-context.service';
 
 describe('ProjectContextService', () => {
 	let service: ProjectContextService;

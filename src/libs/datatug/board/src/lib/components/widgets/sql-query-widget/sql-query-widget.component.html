@@ -5,13 +5,12 @@
 </ion-segment>
 <div class="ion-margin-top" [ngSwitch]="tab">
 	<datatug-sql [sql]="sql" *ngSwitchCase="'SQL'"></datatug-sql>
-	<datatug-grid-widget [style.display]="tab === 'grid' ? 'block' : 'none'"
-								[recordset]="recordset"
-								[hideColumns]="data?.hideColumns"
+	<datatug-grid-widget
+		[style.display]="tab === 'grid' ? 'block' : 'none'"
+		[recordset]="recordset"
+		[hideColumns]="data?.hideColumns"
 	></datatug-grid-widget>
 	<ng-container *ngSwitchCase="'card'">
-		<p class="ion-padding">
-			Card to be implemented
-		</p>
+		<p class="ion-padding">Card to be implemented</p>
 	</ng-container>
 </div>

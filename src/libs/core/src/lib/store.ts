@@ -3,7 +3,7 @@ export const STORE_ID_FIRESTORE = 'firestore';
 export const STORE_TYPE_FIRESTORE = 'firestore';
 
 export const STORE_TYPE_GITHUB = 'github';
-export const STORE_ID_GITHUB_COM = 'github.com'
+export const STORE_ID_GITHUB_COM = 'github.com';
 
 export const GITLAB_REPO_PREFIX = 'gitlab.';
 
@@ -29,9 +29,9 @@ export function storeRefToId(ref: IStoreRef): string {
 			if (ref.url) {
 				return ref.url;
 			}
-			throw new Error('store with type "agent" must have URL')
+			throw new Error('store with type "agent" must have URL');
 		default:
-			return ``
+			return ``;
 	}
 }
 
@@ -42,12 +42,12 @@ export function parseStoreRef(storeId: string): IStoreRef {
 	switch (storeId) {
 		case 'firestore':
 		case 'github':
-			return {type: storeId};
+			return { type: storeId };
 		case 'github.com':
-			return {type: 'github'};
+			return { type: 'github' };
 		default:
 			if (storeId.startsWith('http-') || storeId.startsWith('https-')) {
-				return {type: 'agent', url: storeId.replace('-', '://')}
+				return { type: 'agent', url: storeId.replace('-', '://') };
 			}
 			throw new Error('unsupported format of store id:' + storeId);
 	}

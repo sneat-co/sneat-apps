@@ -1,13 +1,13 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "emptyionicapp",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "../../dist/apps/emptyionicapp",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {}
+	"appId": "io.ionic.starter",
+	"appName": "emptyionicapp",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "../../dist/apps/emptyionicapp",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {}
 }

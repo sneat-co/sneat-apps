@@ -1,15 +1,21 @@
-import {Component, EventEmitter, Inject, Input, Output} from "@angular/core";
-import {IAstJoin, IAstQuery, SqlParser} from "@sneat/datatug/services/unsorted";
-import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {ISqlChanged} from "../intefaces";
-import {QueryContextSqlService, ICanJoin} from '../../../query-context-sql.service';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {
+	IAstJoin,
+	IAstQuery,
+	SqlParser,
+} from '@sneat/datatug/services/unsorted';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ISqlChanged } from '../intefaces';
+import {
+	QueryContextSqlService,
+	ICanJoin,
+} from '../../../query-context-sql.service';
 
 @Component({
 	selector: 'datatug-qe-joins',
 	templateUrl: 'joins.component.html',
 })
 export class JoinsComponent {
-
 	@Input() public sql: string;
 	@Input() public queryAst: IAstQuery;
 	@Input() public sqlParser: SqlParser;
@@ -21,10 +27,10 @@ export class JoinsComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		readonly queryContextSqlService: QueryContextSqlService,
+		readonly queryContextSqlService: QueryContextSqlService
 	) {
 		queryContextSqlService.suggestedJoins.subscribe({
-			next: suggestedJoins => {
+			next: (suggestedJoins) => {
 				this.suggestedJoins = suggestedJoins;
 			},
 			error: this.errorLogger.logErrorHandler('failed to get suggested join'),
@@ -40,6 +46,6 @@ export class JoinsComponent {
 			this.sql = this.sqlParser.commentOutJoin(this.sql, join);
 		}
 		this.queryAst = this.sqlParser.parseQuery(this.sql);
-		this.astChanged.emit({sql: this.sql, ast: this.queryAst});
+		this.astChanged.emit({ sql: this.sql, ast: this.queryAst });
 	}
 }

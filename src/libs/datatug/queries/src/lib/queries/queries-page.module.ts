@@ -1,16 +1,16 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {QueriesPageRoutingModule} from './queries-routing.module';
+import { QueriesPageRoutingModule } from './queries-routing.module';
 
-import {QueriesPageComponent} from './queries-page.component';
-import {DatatugQueriesServicesModule} from '../datatug-queries-services.module';
-import {DatatugComponentsSqlEditorModule} from "@sneat/datatug/components/sqleditor";
-import {WormholeModule} from "@sneat/wormhole";
-import {QueriesTabComponent} from './queries-tab.component';
+import { QueriesPageComponent } from './queries-page.component';
+import { DatatugQueriesServicesModule } from '../datatug-queries-services.module';
+import { DatatugComponentsSqlEditorModule } from '@sneat/datatug/components/sqleditor';
+import { WormholeModule } from '@sneat/wormhole';
+import { QueriesTabComponent } from './queries-tab.component';
 
 @NgModule({
 	imports: [
@@ -22,10 +22,6 @@ import {QueriesTabComponent} from './queries-tab.component';
 		DatatugQueriesServicesModule,
 		WormholeModule,
 	],
-	declarations: [
-		QueriesTabComponent,
-		QueriesPageComponent,
-	]
+	declarations: [QueriesTabComponent, QueriesPageComponent],
 })
-export class QueriesPageModule {
-}
+export class QueriesPageModule {}

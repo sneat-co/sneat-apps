@@ -1,7 +1,7 @@
 {
-  "name": "listus",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+	"name": "listus",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "angular"
 }

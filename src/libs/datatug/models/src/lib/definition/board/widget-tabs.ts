@@ -1,4 +1,4 @@
-import {WidgetDef} from './widgets';
+import { WidgetDef } from './widgets';
 
 export type TabsWidgetName = 'tabs';
 

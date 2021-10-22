@@ -1,4 +1,4 @@
-import {RegExpCheck} from './regexp_check';
+import { RegExpCheck } from './regexp_check';
 
 describe('RegExpCheck', () => {
 	const check = new RegExpCheck(/\w+/);
@@ -15,4 +15,4 @@ describe('RegExpCheck', () => {
 	if (result.ok) {
 		throw new Error('expected to fail');
 	}
-})
+});

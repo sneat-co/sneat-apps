@@ -1,6 +1,6 @@
 {
-  "name": "issuenumberone",
-  "devDependencies": {
-    "@capacitor/cli": "3.2.5"
-  }
+	"name": "issuenumberone",
+	"devDependencies": {
+		"@capacitor/cli": "3.2.5"
+	}
 }

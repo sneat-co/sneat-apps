@@ -1,39 +1,65 @@
 <ion-item-sliding *ngIf="!team?.data">
 	<ion-item>
 		<ion-avatar slot="start" style="opacity: 0.3">
-			<ion-img title="avatar" src="//www.gravatar.com/avatar/gravatar"></ion-img>
+			<ion-img
+				title="avatar"
+				src="//www.gravatar.com/avatar/gravatar"
+			></ion-img>
 		</ion-avatar>
-		<ion-skeleton-text style="width: 50%;" animated></ion-skeleton-text>
+		<ion-skeleton-text style="width: 50%" animated></ion-skeleton-text>
 	</ion-item>
 </ion-item-sliding>
 <ion-item *ngIf="members && !members.length; else list">
-	<ion-label color="medium">No members of this type: {{role}}</ion-label>
+	<ion-label color="medium">No members of this type: {{ role }}</ion-label>
 </ion-item>
 <ng-template #list>
-	<ion-item-sliding [@addRemove]="'added'" *ngFor="let member of members; trackBy: id">
+	<ion-item-sliding
+		[@addRemove]="'added'"
+		*ngFor="let member of members; trackBy: id"
+	>
 		<ion-item tappable detail (click)="goMember(member)">
 			<ion-avatar slot="start">
-				<ion-img title="avatar" *ngIf="member.avatar?.gravatar"
-							src="//www.gravatar.com/avatar/{{ member.avatar.gravatar }}"></ion-img>
-				<ion-img title="avatar" *ngIf="member.avatar?.external?.url"
-							[src]="member.avatar.external.url"></ion-img>
-				<ion-img title="avatar" *ngIf="!member.avatar" src="//www.gravatar.com/avatar/gravatar"></ion-img>
+				<ion-img
+					title="avatar"
+					*ngIf="member.avatar?.gravatar"
+					src="//www.gravatar.com/avatar/{{ member.avatar.gravatar }}"
+				></ion-img>
+				<ion-img
+					title="avatar"
+					*ngIf="member.avatar?.external?.url"
+					[src]="member.avatar.external.url"
+				></ion-img>
+				<ion-img
+					title="avatar"
+					*ngIf="!member.avatar"
+					src="//www.gravatar.com/avatar/gravatar"
+				></ion-img>
 			</ion-avatar>
 			<ion-label>
 				<h3>
-					{{member.title}}
+					{{ member.title }}
 					<ng-container *ngIf="role === null">
 						<ion-badge
 							*ngFor="let role of member.roles"
 							class="ion-margin-start sneat-team-member-role"
 							[color]="role === 'contributor' ? 'primary' : 'medium'"
-						>{{role}}</ion-badge>
+							>{{ role }}</ion-badge
+						>
 					</ng-container>
 				</h3>
 				<p style="margin-top: 0.5em" *ngIf="member.email || !member.uid">
-					<a href="mailto:{{member.email}}" style="opacity: 0.7"
-						(click)="$event.stopPropagation()">{{member.email}}</a>
-					<ion-badge class="ion-margin-start" color="tertiary" *ngIf="!member.uid">not signed up yet</ion-badge>
+					<a
+						href="mailto:{{ member.email }}"
+						style="opacity: 0.7"
+						(click)="$event.stopPropagation()"
+						>{{ member.email }}</a
+					>
+					<ion-badge
+						class="ion-margin-start"
+						color="tertiary"
+						*ngIf="!member.uid"
+						>not signed up yet</ion-badge
+					>
 				</p>
 			</ion-label>
 			<ion-buttons slot="end">
@@ -43,10 +69,14 @@
 			</ion-buttons>
 		</ion-item>
 		<ion-item-options side="start">
-			<ion-item-option color="danger" (click)="removeMember($event, member)">Remove</ion-item-option>
+			<ion-item-option color="danger" (click)="removeMember($event, member)"
+				>Remove</ion-item-option
+			>
 		</ion-item-options>
 		<ion-item-options side="end">
-			<ion-item-option color="danger" (click)="removeMember($event, member)">Remove</ion-item-option>
+			<ion-item-option color="danger" (click)="removeMember($event, member)"
+				>Remove</ion-item-option
+			>
 		</ion-item-options>
 	</ion-item-sliding>
 </ng-template>

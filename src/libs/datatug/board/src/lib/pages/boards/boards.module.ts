@@ -1,14 +1,14 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {DataboardsPageRoutingModule} from './boards-routing.module';
+import { DataboardsPageRoutingModule } from './boards-routing.module';
 
-import {BoardsPageComponent} from './boards-page.component';
-import {SneatCardListModule} from '@sneat/components/card-list';
-import {BoardServiceModule} from "../../board.service.module";
+import { BoardsPageComponent } from './boards-page.component';
+import { SneatCardListModule } from '@sneat/components/card-list';
+import { BoardServiceModule } from '../../board.service.module';
 
 @NgModule({
 	imports: [
@@ -19,9 +19,6 @@ import {BoardServiceModule} from "../../board.service.module";
 		DataboardsPageRoutingModule,
 		SneatCardListModule,
 	],
-	declarations: [
-		BoardsPageComponent,
-	],
+	declarations: [BoardsPageComponent],
 })
-export class BoardsPageModule {
-}
+export class BoardsPageModule {}

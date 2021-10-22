@@ -21,7 +21,13 @@
 			<ion-spinner name="lines-small"></ion-spinner>
 		</ng-container>
 	</ion-button>
-	<ion-button *ngIf="team" [disabled]="joining || refusing" fill="clear" color="medium" (click)="refuse()">
+	<ion-button
+		*ngIf="team"
+		[disabled]="joining || refusing"
+		fill="clear"
+		color="medium"
+		(click)="refuse()"
+	>
 		Refuse
 		<ion-spinner name="lines-small" *ngIf="refusing"></ion-spinner>
 	</ion-button>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'datatug-ref-by-card',
@@ -6,11 +6,7 @@ import {Component, OnInit} from '@angular/core';
 	styleUrls: ['./ref-by-card.component.scss'],
 })
 export class RefByCardComponent implements OnInit {
+	constructor() {}
 
-	constructor() {
-	}
-
-	ngOnInit() {
-	}
-
+	ngOnInit() {}
 }

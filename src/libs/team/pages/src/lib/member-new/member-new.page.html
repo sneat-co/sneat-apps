@@ -3,9 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title>
-			New member @ {{ team?.title || 'Team' }}
-		</ion-title>
+		<ion-title> New member @ {{ team?.title || 'Team' }} </ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -15,7 +13,11 @@
 		<ion-segment-button value="mass">Mass invite</ion-segment-button>
 		<ion-segment-button value="personal">Personal invite</ion-segment-button>
 	</ion-segment>
-	<form *ngIf="tab === 'personal'" [formGroup]="addMemberForm" (ngSubmit)="addMember()">
+	<form
+		*ngIf="tab === 'personal'"
+		[formGroup]="addMemberForm"
+		(ngSubmit)="addMember()"
+	>
 		<ion-radio-group [formControl]="role" name="role">
 			<ion-item>
 				<ion-radio name="role" slot="start" value="contributor"></ion-radio>
@@ -28,21 +30,37 @@
 		</ion-radio-group>
 		<ion-item>
 			<ion-label>Title</ion-label>
-			<ion-input #titleInput required maxlength="50" [formControl]="title" (keyup.enter)="addMember()"></ion-input>
+			<ion-input
+				#titleInput
+				required
+				maxlength="50"
+				[formControl]="title"
+				(keyup.enter)="addMember()"
+			></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Email</ion-label>
-			<ion-input [formControl]="email" placeholder="member@team.email" (keyup.enter)="addMember()"></ion-input>
+			<ion-input
+				[formControl]="email"
+				placeholder="member@team.email"
+				(keyup.enter)="addMember()"
+			></ion-input>
 		</ion-item>
-<!--		<ion-item *ngIf="email.value">-->
-<!--			<ion-label position="stacked">Message</ion-label>-->
-<!--			<ion-textarea maxlength="300" [formControl]="message"-->
-<!--							  placeholder="Write few words on why to join (optional)"></ion-textarea>-->
-<!--		</ion-item>-->
+		<!--		<ion-item *ngIf="email.value">-->
+		<!--			<ion-label position="stacked">Message</ion-label>-->
+		<!--			<ion-textarea maxlength="300" [formControl]="message"-->
+		<!--							  placeholder="Write few words on why to join (optional)"></ion-textarea>-->
+		<!--		</ion-item>-->
 
 		<div class="ion-padding">
-			<ion-button (click)="addMember()" [disabled]="!team || addMemberForm.disabled || !addMemberForm.valid">
-				<ion-spinner name="lines-small" *ngIf="addMemberForm.disabled"></ion-spinner>
+			<ion-button
+				(click)="addMember()"
+				[disabled]="!team || addMemberForm.disabled || !addMemberForm.valid"
+			>
+				<ion-spinner
+					name="lines-small"
+					*ngIf="addMemberForm.disabled"
+				></ion-spinner>
 				<ion-label>Add member</ion-label>
 			</ion-button>
 		</div>
@@ -54,10 +72,11 @@
 
 			<p>
 				<b>Or</b> you can send
-				<a href="" (click)="tab = 'personal'; $event.preventDefault();">personal invite</a>
+				<a href="" (click)="tab = 'personal'; $event.preventDefault();"
+					>personal invite</a
+				>
 				by email.
 			</p>
-
 		</ion-card-content>
 	</ion-card>
 </ion-content>

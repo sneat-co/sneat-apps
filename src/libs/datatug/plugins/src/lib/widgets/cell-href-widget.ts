@@ -1,14 +1,14 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export interface ICellHrefWidgetSettings {
-	textFormat?: string
-	titleFormat?: string
+	textFormat?: string;
+	titleFormat?: string;
 	hrefFormat?: string;
 }
 
 @Component({
 	selector: 'datatug-cell-href-widget',
-	template: '<a [href]="href" [title]="text">{{text}}</a>'
+	template: '<a [href]="href" [title]="text">{{text}}</a>',
 })
 export class CellHrefWidgetComponent {
 	@Input() v: unknown;
@@ -32,5 +32,3 @@ export class CellHrefWidgetComponent {
 		return t ? t.replace('{value}', v) : v;
 	}
 }
-
-

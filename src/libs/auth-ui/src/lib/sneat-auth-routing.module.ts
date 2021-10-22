@@ -1,18 +1,16 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 	{
 		path: 'login',
-		loadChildren: () => import('./login-page').then(m => m.LoginPageComponentModule),
+		loadChildren: () =>
+			import('./login-page').then((m) => m.LoginPageComponentModule),
 	},
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forChild(routes),
-	],
+	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class SneatAuthRoutingModule {
-}
+export class SneatAuthRoutingModule {}

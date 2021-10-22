@@ -2,23 +2,27 @@
 // @ts-ignore
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import {Component, Inject, Optional} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {ActivatedRoute} from '@angular/router';
-import {NavController} from '@ionic/angular';
-import {AnalyticsService, IAnalyticsService} from '@sneat/analytics';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler} from '@sneat/auth';
-import {SneatTeamApiService} from '@sneat/api';
-import {RandomIdService} from "@sneat/random";
+import { Component, Inject, Optional } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	AuthStatuses,
+	ILoginEventsHandler,
+	ISneatAuthState,
+	LoginEventsHandler,
+} from '@sneat/auth';
+import { SneatTeamApiService } from '@sneat/api';
+import { RandomIdService } from '@sneat/random';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import OAuthProvider = firebase.auth.OAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import GithubAuthProvider = firebase.auth.GithubAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 import UserCredential = firebase.auth.UserCredential;
-import {SneatUserService} from '@sneat/user';
-
+import { SneatUserService } from '@sneat/user';
 
 type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
 
@@ -29,8 +33,11 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 	templateUrl: './login-page.component.html',
 })
 export class LoginPageComponent {
-
-	public signingWith?: AuthProviderName | 'email' | 'emailLink' | 'resetPassword';
+	public signingWith?:
+		| AuthProviderName
+		| 'email'
+		| 'emailLink'
+		| 'resetPassword';
 	public email = '';
 	public password = '';
 	public fullName = '';
@@ -40,26 +47,28 @@ export class LoginPageComponent {
 	public sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means
 
 	constructor(
-		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
+		@Inject(AnalyticsService)
+		private readonly analyticsService: IAnalyticsService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		// @Inject(Toaster) private readonly toaster: IToaster,
 
 		private readonly randomIdService: RandomIdService,
-		@Inject(LoginEventsHandler) @Optional()
+		@Inject(LoginEventsHandler)
+		@Optional()
 		private readonly loginEventsHandler: ILoginEventsHandler,
 		private readonly route: ActivatedRoute,
 		private readonly afAuth: AngularFireAuth,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		// private readonly toastController: ToastController,
-		private readonly sneatTeamApiService: SneatTeamApiService,
+		private readonly sneatTeamApiService: SneatTeamApiService
 	) {
 		this.email = localStorage.getItem('emailForSignIn') || '';
 		if (this.email) {
 			this.sign = 'in';
 		}
 		if (location.hash.startsWith('#/')) {
-			this.redirectTo = location.hash
+			this.redirectTo = location.hash;
 		}
 		this.to = this.route.snapshot.queryParams.to; // should we subscribe? I believe no.
 		const action = location.hash.match(/[#&]action=(\w+)/);
@@ -69,7 +78,8 @@ export class LoginPageComponent {
 	// @ViewChild('emailInput', {static: true}) emailInput: IonInput;
 
 	public get validEmail(): boolean {
-		const email = this.email, i = email?.indexOf('@');
+		const email = this.email,
+			i = email?.indexOf('@');
 		return i > 0 && i < email.length - 1;
 	}
 
@@ -88,7 +98,7 @@ export class LoginPageComponent {
 
 	loginWith(provider: AuthProviderName) {
 		this.signingWith = provider;
-		const eventParams = {authProvider: provider};
+		const eventParams = { authProvider: provider };
 		let authProvider: AuthProvider;
 		switch (provider) {
 			case 'Google':
@@ -107,16 +117,26 @@ export class LoginPageComponent {
 				(authProvider as GithubAuthProvider).addScope('user:email');
 				break;
 			default:
-				this.errorLogger.logError('Coding error', 'Unknown or unsupported auth provider: ' + provider);
+				this.errorLogger.logError(
+					'Coding error',
+					'Unknown or unsupported auth provider: ' + provider
+				);
 				return;
 		}
 		this.analyticsService.logEvent('loginWith', eventParams);
-		this.afAuth.signInWithPopup(authProvider)
-			.then(userCredential => {
+		this.afAuth
+			.signInWithPopup(authProvider)
+			.then((userCredential) => {
 				this.analyticsService.logEvent('signInWithPopup', eventParams);
 				this.onLoggedIn(userCredential);
 			})
-			.catch(this.handleError('Failed to sign in with: ' + provider, 'FailedToSignInWith', {authProvider: provider}));
+			.catch(
+				this.handleError(
+					'Failed to sign in with: ' + provider,
+					'FailedToSignInWith',
+					{ authProvider: provider }
+				)
+			);
 	}
 
 	public signUp(): void {
@@ -127,28 +147,47 @@ export class LoginPageComponent {
 		this.signingWith = 'email';
 		this.email = this.email.trim();
 		const errorLoggerService = this.errorLogger; // In case if page gets disposed by time we send verification email.
-		const password = this.randomIdService.newRandomId({len: 9});
-		this.afAuth.createUserWithEmailAndPassword(this.email, password)
-			.then(userCredential => {
+		const password = this.randomIdService.newRandomId({ len: 9 });
+		this.afAuth
+			.createUserWithEmailAndPassword(this.email, password)
+			.then((userCredential) => {
 				localStorage.setItem('emailForSignIn', this.email);
 				setTimeout(() => {
-					userCredential.user?.sendEmailVerification().catch(err => {
-						errorLoggerService.logError(err, 'Failed to send verification email');
+					userCredential.user?.sendEmailVerification().catch((err) => {
+						errorLoggerService.logError(
+							err,
+							'Failed to send verification email'
+						);
 					});
 				});
-				userCredential.user?.getIdToken().then(token => {
-					this.sneatTeamApiService.setFirebaseToken(token);
-					this.userService.setUserTitle(this.fullName.trim()).subscribe({
-						next: () => this.onLoggedIn(userCredential),
-						error: err => {
-							this.analyticsService.logEvent('FailedToSetUserTitle');
-							this.errorLogger.logError(err, 'Failed to set user title', {feedback: false});
-							this.onLoggedIn(userCredential);
-						},
-					});
-				}).catch(this.handleError('Failed to get Firebase ID token', 'FirebaseGetIdTokenFailed'));
+				userCredential.user
+					?.getIdToken()
+					.then((token) => {
+						this.sneatTeamApiService.setFirebaseToken(token);
+						this.userService.setUserTitle(this.fullName.trim()).subscribe({
+							next: () => this.onLoggedIn(userCredential),
+							error: (err) => {
+								this.analyticsService.logEvent('FailedToSetUserTitle');
+								this.errorLogger.logError(err, 'Failed to set user title', {
+									feedback: false,
+								});
+								this.onLoggedIn(userCredential);
+							},
+						});
+					})
+					.catch(
+						this.handleError(
+							'Failed to get Firebase ID token',
+							'FirebaseGetIdTokenFailed'
+						)
+					);
 			})
-			.catch(this.handleError('Failed to sign up with email', 'FailedToSignUpWithEmail'));
+			.catch(
+				this.handleError(
+					'Failed to sign up with email',
+					'FailedToSignUpWithEmail'
+				)
+			);
 	}
 
 	public keyupEnter(): void {
@@ -165,28 +204,39 @@ export class LoginPageComponent {
 	public signIn(): void {
 		this.signingWith = 'email';
 		this.email = this.email.trim();
-		this.afAuth.signInWithEmailAndPassword(this.email, this.password)
-			.then(userCredential => {
+		this.afAuth
+			.signInWithEmailAndPassword(this.email, this.password)
+			.then((userCredential) => {
 				// TODO: add analytics event
 				this.onLoggedIn(userCredential);
 			})
-			.catch(this.handleError('Failed to sign in with email & password', 'email'));
+			.catch(
+				this.handleError('Failed to sign in with email & password', 'email')
+			);
 	}
 
 	public sendSignInLink(): void {
 		this.signingWith = 'emailLink';
 		this.email = this.email.trim();
 		localStorage.setItem('emailForSignIn', this.email);
-		this.afAuth.sendSignInLinkToEmail(this.email, {
-			// url: 'https://dailyscrum.app/pwa/sign-in',
-			url: document.baseURI + 'sign-in',
-			handleCodeInApp: true,
-		}).catch(this.handleError('Failed to send sign in link to email', 'FailedToSendSignInLinkToEmail'));
+		this.afAuth
+			.sendSignInLinkToEmail(this.email, {
+				// url: 'https://dailyscrum.app/pwa/sign-in',
+				url: document.baseURI + 'sign-in',
+				handleCodeInApp: true,
+			})
+			.catch(
+				this.handleError(
+					'Failed to send sign in link to email',
+					'FailedToSendSignInLinkToEmail'
+				)
+			);
 	}
 
 	public resetPassword(): void {
 		this.signingWith = 'resetPassword';
-		this.afAuth.sendPasswordResetEmail(this.email)
+		this.afAuth
+			.sendPasswordResetEmail(this.email)
 			.then(() => {
 				this.signingWith = undefined;
 				// this.toastController.create({
@@ -195,7 +245,12 @@ export class LoginPageComponent {
 				// 	toast.present().catch(this.errorLogger.logErrorHandler('Failed to present toast about password reset email sent success'));
 				// });
 			})
-			.catch(this.handleError('Failed to send password reset email', 'FailedToSendPasswordResetEmail'));
+			.catch(
+				this.handleError(
+					'Failed to send password reset email',
+					'FailedToSendPasswordResetEmail'
+				)
+			);
 	}
 
 	private onLoggedIn(userCredential: UserCredential): void {
@@ -204,11 +259,11 @@ export class LoginPageComponent {
 			const authState: ISneatAuthState = {
 				status: AuthStatuses.authenticated,
 				user: userCredential.user,
-			}
+			};
 			this.userService.onUserSignedIn(authState);
 		}
-		const {to} = this.route.snapshot.queryParams;
-		const queryParams = to ? {...this.route.snapshot.queryParams} : undefined;
+		const { to } = this.route.snapshot.queryParams;
+		const queryParams = to ? { ...this.route.snapshot.queryParams } : undefined;
 		if (queryParams) {
 			delete queryParams.to;
 		}
@@ -220,16 +275,25 @@ export class LoginPageComponent {
 		// }
 		console.log('this.redirectTo:', this.redirectTo);
 		const redirectTo = this.redirectTo || '/'; // TODO: default one should be app specific.
-		this.navController.navigateRoot(redirectTo)
-			.catch(this.errorLogger.logErrorHandler('Failed to navigate back to ' + redirectTo));
+		this.navController
+			.navigateRoot(redirectTo)
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to navigate back to ' + redirectTo
+				)
+			);
 	}
 
-	private handleError(m: string, eventName?: string, eventParams?: { [key: string]: string }): (err: any) => void {
-		return err => {
+	private handleError(
+		m: string,
+		eventName?: string,
+		eventParams?: { [key: string]: string }
+	): (err: any) => void {
+		return (err) => {
 			if (eventName) {
 				this.analyticsService.logEvent(eventName, eventParams);
 			}
-			this.errorLogger.logError(err, m, {report: !err.code});
+			this.errorLogger.logError(err, m, { report: !err.code });
 			this.signingWith = undefined;
 		};
 	}

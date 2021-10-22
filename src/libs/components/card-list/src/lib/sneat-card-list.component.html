@@ -1,13 +1,24 @@
 <ion-card>
 	<ion-item *ngIf="title" (click)="cardTitleClick.emit()" tappable>
-		<ion-icon *ngIf="itemIcon && !isLoading && !items?.length" [name]="itemIcon" slot="start"></ion-icon>
-		<ion-label style="font-weight: bold">{{title}}</ion-label>
-		<ion-input *ngIf="isFilterable" [(ngModel)]="filter" placeholder="(type to filter)"></ion-input>
+		<ion-icon
+			*ngIf="itemIcon && !isLoading && !items?.length"
+			[name]="itemIcon"
+			slot="start"
+		></ion-icon>
+		<ion-label style="font-weight: bold">{{ title }}</ion-label>
+		<ion-input
+			*ngIf="isFilterable"
+			[(ngModel)]="filter"
+			placeholder="(type to filter)"
+		></ion-input>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="filter" (click)="filter = ''" title="Clear filter">
 				<ion-icon name="close" color="medium"></ion-icon>
 			</ion-button>
-			<ion-button *ngIf="mode !== 'add' && create" (click)="showAddForm($event)">
+			<ion-button
+				*ngIf="mode !== 'add' && create"
+				(click)="showAddForm($event)"
+			>
 				<ion-icon color="primary" slot="start" name="add"></ion-icon>
 				<ion-label color="medium">Add</ion-label>
 			</ion-button>
@@ -16,11 +27,14 @@
 	<ng-container *ngIf="tabs">
 		<ion-segment [(ngModel)]="tab" (ionChange)="tabChanged.emit(tab)">
 			<ion-segment-button *ngFor="let tab of tabs" [value]="tab.id">
-				<ion-label>{{tab.title}}</ion-label>
+				<ion-label>{{ tab.title }}</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 		<ion-buttons>
-			<ion-button *ngIf="mode !== 'add' && create" (click)="showAddForm($event)">
+			<ion-button
+				*ngIf="mode !== 'add' && create"
+				(click)="showAddForm($event)"
+			>
 				<ion-icon color="primary" slot="start" name="add"></ion-icon>
 				<ion-label color="medium">Add</ion-label>
 			</ion-button>
@@ -31,18 +45,37 @@
 	</ion-card-content>
 	<ng-container *ngIf="!isLoading">
 		<ion-list>
-			<ion-item tappable *ngFor="let item of items" (click)="itemClick && click($event, item)" [routerLink]="getRouterLink  && getRouterLink(item)">
+			<ion-item
+				tappable
+				*ngFor="let item of items"
+				(click)="itemClick && click($event, item)"
+				[routerLink]="getRouterLink && getRouterLink(item)"
+			>
 				<ion-icon *ngIf="itemIcon" [name]="itemIcon" slot="start"></ion-icon>
-				<ion-label>{{item.title || item.id}}</ion-label>
+				<ion-label>{{ item.title || item.id }}</ion-label>
 			</ion-item>
 			<ion-item *ngIf="mode === 'add'">
 				<ion-icon name="earth-outline" slot="start" color="medium"></ion-icon>
-				<ion-input [(ngModel)]="name" placeholder="Name" [disabled]="isAdding"></ion-input>
+				<ion-input
+					[(ngModel)]="name"
+					placeholder="Name"
+					[disabled]="isAdding"
+				></ion-input>
 				<ion-buttons slot="end">
-					<ion-button fill="solid" color="primary" [disabled]="isAdding || !name.trim()" (click)="tryCreate()">
+					<ion-button
+						fill="solid"
+						color="primary"
+						[disabled]="isAdding || !name.trim()"
+						(click)="tryCreate()"
+					>
 						Create
 					</ion-button>
-					<ion-button (click)="mode = 'list'" color="medium" title="Cancel" [disabled]="isAdding">
+					<ion-button
+						(click)="mode = 'list'"
+						color="medium"
+						title="Cancel"
+						[disabled]="isAdding"
+					>
 						<ion-icon name="close"></ion-icon>
 					</ion-button>
 				</ion-buttons>
@@ -50,12 +83,14 @@
 		</ion-list>
 		<ion-card-content *ngIf="!items?.length && mode !== 'add'">
 			<p *ngIf="!noItemsText">
-				Not defined for this project yet.
-				Click the <span style="background-color: whitesmoke; padding: 4px 8px">+ Add</span>
+				Not defined for this project yet. Click the
+				<span style="background-color: whitesmoke; padding: 4px 8px"
+					>+ Add</span
+				>
 				button above in the header of this card to create a first one.
 			</p>
 			<p *ngIf="noItemsText">
-				{{noItemsText}}
+				{{ noItemsText }}
 			</p>
 		</ion-card-content>
 	</ng-container>

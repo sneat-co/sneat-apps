@@ -1,5 +1,5 @@
-import {IMemberInfo, ITeamRequest} from '@sneat/team-models';
-import {ITimerState} from './timer/models';
+import { IMemberInfo, ITeamRequest } from '@sneat/team-models';
+import { ITimerState } from './timer/models';
 
 export interface IMeetingRequest extends ITeamRequest {
 	meeting: string;
@@ -12,4 +12,3 @@ export interface IMeeting {
 	readonly userIds: string[];
 	readonly members?: IMeetingMember[];
 }
-

@@ -1,24 +1,30 @@
-import {ChangeDetectorRef, Component, Inject, OnDestroy} from '@angular/core';
-import {IRecord, IRetrospective, RetrospectiveStage} from '../../../models/interfaces';
-import {ActivatedRoute} from '@angular/router';
-import {UserService} from '../../../services/user-service';
-import {TeamContextService} from '../../../services/team-context.service';
-import {TeamService} from '../../../services/team.service';
-import {BaseTeamPageDirective} from '../../../pages/base-team-page-directive';
-import {ErrorLogger, IErrorLogger} from '@sneat-team/ui-core';
-import {NavController} from '@ionic/angular';
-import {filter, first, mergeMap, takeUntil} from 'rxjs/operators';
-import {RetrospectiveService} from '../../retrospective.service';
-import {Subscription} from 'rxjs';
-import {getMeetingIdFromDate} from '../../../services/meeting.service';
+import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
+import {
+	IRecord,
+	IRetrospective,
+	RetrospectiveStage,
+} from '../../../models/interfaces';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../../services/user-service';
+import { TeamContextService } from '../../../services/team-context.service';
+import { TeamService } from '../../../services/team.service';
+import { BaseTeamPageDirective } from '../../../pages/base-team-page-directive';
+import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
+import { NavController } from '@ionic/angular';
+import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
+import { RetrospectiveService } from '../../retrospective.service';
+import { Subscription } from 'rxjs';
+import { getMeetingIdFromDate } from '../../../services/meeting.service';
 
 @Component({
 	selector: 'app-retrospective',
 	templateUrl: './retrospective.page.html',
 	styleUrls: ['./retrospective.page.scss'],
 })
-export class RetrospectivePage extends BaseTeamPageDirective implements OnDestroy {
-
+export class RetrospectivePage
+	extends BaseTeamPageDirective
+	implements OnDestroy
+{
 	public title = 'Retrospective';
 	public retrospective: IRecord<IRetrospective>;
 	private retroSub: Subscription;
@@ -31,16 +37,27 @@ export class RetrospectivePage extends BaseTeamPageDirective implements OnDestro
 		readonly route: ActivatedRoute,
 		readonly userService: UserService,
 		readonly navController: NavController,
-		private readonly retrospectiveService: RetrospectiveService,
+		private readonly retrospectiveService: RetrospectiveService
 	) {
-		super(changeDetectorRef, route, errorLogger, navController, teamService, teamContextService, userService);
+		super(
+			changeDetectorRef,
+			route,
+			errorLogger,
+			navController,
+			teamService,
+			teamContextService,
+			userService
+		);
 		this.trackTeamIdFromUrl();
 		this.trackMeetingIdFromUrl();
 	}
 
 	public showPersonalFeedback(): boolean {
 		const stage = this.retrospective?.data?.stage;
-		return stage === RetrospectiveStage.upcoming || stage === RetrospectiveStage.feedback;
+		return (
+			stage === RetrospectiveStage.upcoming ||
+			stage === RetrospectiveStage.feedback
+		);
 	}
 
 	ngOnDestroy() {
@@ -51,7 +68,11 @@ export class RetrospectivePage extends BaseTeamPageDirective implements OnDestro
 	}
 
 	protected onRetrospectiveIdChanged(): void {
-		if (this.team?.id && this.retrospective.id && this.retrospective.id !== RetrospectiveStage.upcoming) {
+		if (
+			this.team?.id &&
+			this.retrospective.id &&
+			this.retrospective.id !== RetrospectiveStage.upcoming
+		) {
 			this.watchRetro();
 		}
 	}
@@ -70,35 +91,38 @@ export class RetrospectivePage extends BaseTeamPageDirective implements OnDestro
 
 	private trackMeetingIdFromUrl(): void {
 		try {
-			this.userService.userChanged.pipe(
-				filter(uid => !!uid),
-				first(),
-				mergeMap(() => this.route.queryParamMap),
-				takeUntil(this.destroyed)
-			).subscribe({
-				next: queryParams => {
-					let id = queryParams.get('id')
-					switch (id) {
-						case 'today':
-							id = getMeetingIdFromDate(new Date()); // TODO: replace URL?
-							break;
-						case RetrospectiveStage.upcoming:
-							this.retrospective = {
-								id,
-								data: {
-									stage: RetrospectiveStage.upcoming,
-									userIds: undefined,
-								},
-							};
-							break;
-					}
-					if (!this.retrospective) {
-						this.retrospective = {id};
-						this.onRetrospectiveIdChanged()
-					}
-				},
-				error: err => this.errorLogger.logError(err, 'Failed to load retrospective'),
-			});
+			this.userService.userChanged
+				.pipe(
+					filter((uid) => !!uid),
+					first(),
+					mergeMap(() => this.route.queryParamMap),
+					takeUntil(this.destroyed)
+				)
+				.subscribe({
+					next: (queryParams) => {
+						let id = queryParams.get('id');
+						switch (id) {
+							case 'today':
+								id = getMeetingIdFromDate(new Date()); // TODO: replace URL?
+								break;
+							case RetrospectiveStage.upcoming:
+								this.retrospective = {
+									id,
+									data: {
+										stage: RetrospectiveStage.upcoming,
+										userIds: undefined,
+									},
+								};
+								break;
+						}
+						if (!this.retrospective) {
+							this.retrospective = { id };
+							this.onRetrospectiveIdChanged();
+						}
+					},
+					error: (err) =>
+						this.errorLogger.logError(err, 'Failed to load retrospective'),
+				});
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed in track meeting id from URL');
 		}
@@ -108,7 +132,7 @@ export class RetrospectivePage extends BaseTeamPageDirective implements OnDestro
 		console.log('RetrospectivePage.watchRetro()');
 		this.userService.userChanged
 			// .pipe(filter(uid => !!uid))
-			.subscribe(userId => {
+			.subscribe((userId) => {
 				console.log('RetrospectivePage.watchRetro() => userId:', userId);
 				try {
 					if (this.retroSub) {
@@ -117,16 +141,18 @@ export class RetrospectivePage extends BaseTeamPageDirective implements OnDestro
 					if (!userId) {
 						return;
 					}
-					const {id} = this.retrospective;
+					const { id } = this.retrospective;
 					if (id === RetrospectiveStage.upcoming) {
 						return;
 					}
 					const teamId = this.team.id;
-					this.retroSub = this.retrospectiveService.watchRetro(teamId, id)
+					this.retroSub = this.retrospectiveService
+						.watchRetro(teamId, id)
 						.pipe(takeUntil(this.destroyed.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
 						.subscribe({
-							next: retrospective => this.setRetro(teamId, {id, data: retrospective}),
-							error: e => this.logError(e, 'Failed to watch retrospective'),
+							next: (retrospective) =>
+								this.setRetro(teamId, { id, data: retrospective }),
+							error: (e) => this.logError(e, 'Failed to watch retrospective'),
 						});
 				} catch (e) {
 					this.logError(e, 'Failed to watchTeam');
@@ -134,10 +160,16 @@ export class RetrospectivePage extends BaseTeamPageDirective implements OnDestro
 			});
 	}
 
-	private setRetro(teamId: string, retrospective: IRecord<IRetrospective>): void {
+	private setRetro(
+		teamId: string,
+		retrospective: IRecord<IRetrospective>
+	): void {
 		console.log('RetrospectivePage.setRetro()');
 		try {
-			if (this.retrospective?.id === retrospective.id && this.team?.id === teamId) {
+			if (
+				this.retrospective?.id === retrospective.id &&
+				this.team?.id === teamId
+			) {
 				this.retrospective = retrospective;
 			}
 		} catch (e) {

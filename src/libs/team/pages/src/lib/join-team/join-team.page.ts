@@ -1,12 +1,12 @@
-import {Component, Inject, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {TeamService} from '../../../../services/src/lib/team.service';
-import {TeamNavService} from '../../../../services/src/lib/team-nav.service';
-import {Subscription} from 'rxjs';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {IUserTeamInfo} from '@sneat/auth-models';
-import {ITeam} from '@sneat/team-models';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TeamService } from '../../../../services/src/lib/team.service';
+import { TeamNavService } from '../../../../services/src/lib/team-nav.service';
+import { Subscription } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IUserTeamInfo } from '@sneat/auth-models';
+import { ITeam } from '@sneat/team-models';
 
 export const getPinFromUrl: () => number | undefined = () => {
 	const m = location.hash.match(/[#&]pin=(\d+)($|&)/);
@@ -14,7 +14,7 @@ export const getPinFromUrl: () => number | undefined = () => {
 		return +m[1];
 	}
 	return undefined;
-}
+};
 
 @Component({
 	selector: 'app-join-team',
@@ -22,7 +22,6 @@ export const getPinFromUrl: () => number | undefined = () => {
 	styleUrls: ['./join-team.page.scss'],
 })
 export class JoinTeamPage implements OnDestroy {
-
 	public teamId: string;
 	public pin?: number;
 	public team?: ITeam;
@@ -38,7 +37,7 @@ export class JoinTeamPage implements OnDestroy {
 		private readonly navService: TeamNavService,
 		private readonly teamService: TeamService,
 		private readonly afAuth: AngularFireAuth,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
 	) {
 		console.log('JoinTeamPage.constructor()');
 		try {
@@ -50,7 +49,7 @@ export class JoinTeamPage implements OnDestroy {
 		if (this.teamId && this.pin) {
 			const errMsg = 'Failed to get team information';
 			this.teamService.getTeamJoinInfo(this.teamId, this.pin).subscribe({
-				next: response => {
+				next: (response) => {
 					console.log('join_team:', response);
 					if (response) {
 						this.team = response.team;
@@ -59,28 +58,30 @@ export class JoinTeamPage implements OnDestroy {
 						this.errorLogger.logError('EmptyResponse', errMsg);
 					}
 				},
-				error: err => this.errorLogger.logError(err, errMsg),
+				error: (err) => this.errorLogger.logError(err, errMsg),
 			});
 		}
-		this.subscriptions.push(this.afAuth.idToken.subscribe(token => {
-			this.isUserAuthenticated = !!token;
-			if (this.isUserAuthenticated) {
-				const m = location.hash.match(/[#&]action=(\w+)/);
-				console.log('m:', m);
-				if (m && this.teamId && this.pin) {
-					switch (m[1]) {
-						case 'join':
-							this.joinTeam(this.teamId, this.pin);
-							break;
-						case 'refuse':
-							this.refuseToJoinTeam(this.teamId, this.pin);
-							break;
-						default:
-							console.warn('Unknown action:', m[1]);
+		this.subscriptions.push(
+			this.afAuth.idToken.subscribe((token) => {
+				this.isUserAuthenticated = !!token;
+				if (this.isUserAuthenticated) {
+					const m = location.hash.match(/[#&]action=(\w+)/);
+					console.log('m:', m);
+					if (m && this.teamId && this.pin) {
+						switch (m[1]) {
+							case 'join':
+								this.joinTeam(this.teamId, this.pin);
+								break;
+							case 'refuse':
+								this.refuseToJoinTeam(this.teamId, this.pin);
+								break;
+							default:
+								console.warn('Unknown action:', m[1]);
+						}
 					}
 				}
-			}
-		}));
+			})
+		);
 	}
 
 	public ngOnDestroy(): void {
@@ -93,11 +94,10 @@ export class JoinTeamPage implements OnDestroy {
 			this.joinTeam(id, this.pin);
 		} else {
 			this.navService.navigateToLogin({
-					returnTo: 'join-team',
-					queryParams: {id},
-					fragment: `pin=${this.pin}&action=join`,
-				},
-			);
+				returnTo: 'join-team',
+				queryParams: { id },
+				fragment: `pin=${this.pin}&action=join`,
+			});
 		}
 	}
 
@@ -107,26 +107,25 @@ export class JoinTeamPage implements OnDestroy {
 			this.refuseToJoinTeam(id, this.pin);
 		} else {
 			this.navService.navigateToLogin({
-					returnTo: 'join-team',
-					queryParams: {id},
-					fragment: `pin=${this.pin}&action=refuse`,
-				},
-			);
+				returnTo: 'join-team',
+				queryParams: { id },
+				fragment: `pin=${this.pin}&action=refuse`,
+			});
 		}
 	}
 
 	private unsubscribe(): void {
-		this.subscriptions.forEach(s => s.unsubscribe());
+		this.subscriptions.forEach((s) => s.unsubscribe());
 		this.subscriptions = [];
 	}
 
 	private joinTeam(id: string, pin: number): void {
 		this.joining = true;
 		this.teamService.joinTeam(id, pin).subscribe({
-			next: team => {
+			next: (team) => {
 				this.navService.navigateToTeam(id, undefined, team);
 			},
-			error: err => {
+			error: (err) => {
 				this.joining = false;
 				this.errorLogger.logError(err, 'Failed to join team');
 			},
@@ -137,11 +136,10 @@ export class JoinTeamPage implements OnDestroy {
 		this.refusing = true;
 		this.teamService.refuseToJoinTeam(id, pin).subscribe({
 			next: () => this.navService.navigateToTeams('forward'),
-			error: err => {
+			error: (err) => {
 				this.refusing = false;
 				this.errorLogger.logError(err, 'Failed to join team');
 			},
 		});
 	}
-
 }

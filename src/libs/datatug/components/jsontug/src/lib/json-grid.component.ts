@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {IJsonGridData} from '@datatug/plugins';
+import { Component, Input } from '@angular/core';
+import { IJsonGridData } from '@datatug/plugins';
 
 @Component({
 	selector: 'datatug-json-grid',

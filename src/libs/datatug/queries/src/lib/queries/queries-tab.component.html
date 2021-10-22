@@ -1,46 +1,83 @@
 <ng-container *ngIf="currentFolder; else loader">
 	<ion-item>
-		<ion-input [disabled]="!currentFolder" placeholder="Filter" [(ngModel)]="filter"
-				   (ionChange)="applyFilter()"></ion-input>
+		<ion-input
+			[disabled]="!currentFolder"
+			placeholder="Filter"
+			[(ngModel)]="filter"
+			(ionChange)="applyFilter()"
+		></ion-input>
 		<ion-buttons slot="end">
 			<!--					<ion-segment>-->
 			<!--						<ion-segment-button>SQL</ion-segment-button>-->
 			<!--						<ion-segment-button>HTTP</ion-segment-button>-->
 			<!--					</ion-segment>-->
-			<ion-button *ngIf="filter || type !== '*'" (click)="clearFilter()"
-						color="medium"
-						title="Clear filter"
+			<ion-button
+				*ngIf="filter || type !== '*'"
+				(click)="clearFilter()"
+				color="medium"
+				title="Clear filter"
 			>
 				<ion-icon name="close"></ion-icon>
 			</ion-button>
-			<ion-button (click)="setQueryType('SQL')" [color]="type === 'SQL' ? 'success' : 'medium'">
-				<ion-icon *ngIf="type === 'SQL'" slot="start" name="checkbox-outline"></ion-icon>
-				<ion-icon *ngIf="type !== 'SQL'" slot="start" name="terminal-outline"></ion-icon>
+			<ion-button
+				(click)="setQueryType('SQL')"
+				[color]="type === 'SQL' ? 'success' : 'medium'"
+			>
+				<ion-icon
+					*ngIf="type === 'SQL'"
+					slot="start"
+					name="checkbox-outline"
+				></ion-icon>
+				<ion-icon
+					*ngIf="type !== 'SQL'"
+					slot="start"
+					name="terminal-outline"
+				></ion-icon>
 				<ion-label>SQL</ion-label>
 			</ion-button>
-			<ion-button (click)="setQueryType('HTTP')" [color]="type === 'HTTP' ? 'success' : 'medium'">
-				<ion-icon *ngIf="type === 'HTTP'" slot="start" name="checkbox-outline"></ion-icon>
-				<ion-icon *ngIf="type !== 'HTTP'" slot="start" name="earth-outline"></ion-icon>
+			<ion-button
+				(click)="setQueryType('HTTP')"
+				[color]="type === 'HTTP' ? 'success' : 'medium'"
+			>
+				<ion-icon
+					*ngIf="type === 'HTTP'"
+					slot="start"
+					name="checkbox-outline"
+				></ion-icon>
+				<ion-icon
+					*ngIf="type !== 'HTTP'"
+					slot="start"
+					name="earth-outline"
+				></ion-icon>
 				<ion-label>HTTP</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 	<ion-item-divider *ngIf="!isFiltering() && currentFolder.folders">
-		<ion-label *ngIf="!parentFolders?.length">{{rootFolder|titlecase}} queries</ion-label>
-		<ion-badge *ngFor="let parentFolder of parentFolders" color="light" tappable
-				   (click)="cd(parentFolder.path)" style="font-weight: normal">
+		<ion-label *ngIf="!parentFolders?.length"
+			>{{ rootFolder | titlecase }} queries</ion-label
+		>
+		<ion-badge
+			*ngFor="let parentFolder of parentFolders"
+			color="light"
+			tappable
+			(click)="cd(parentFolder.path)"
+			style="font-weight: normal"
+		>
 			<ion-icon name="folder-open-outline"></ion-icon>
-			{{parentFolder.id || 'root'}}
+			{{ parentFolder.id || 'root' }}
 		</ion-badge>
 		<ng-container *ngIf="currentFolder.id && currentFolder.path !== '~'">
 			&nbsp;/&nbsp;
-			<ion-badge color="light">{{currentFolder.id}}</ion-badge>
+			<ion-badge color="light">{{ currentFolder.id }}</ion-badge>
 		</ng-container>
 		<ion-buttons slot="end">
-			<ion-button title="Delete folder"
-						*ngIf="currentFolder.path !== '~' || currentFolder.folders.length"
-						[disabled]="isDeletingFolders.includes(this.currentFolder.path)"
-						(click)="deleteFolder()">
+			<ion-button
+				title="Delete folder"
+				*ngIf="currentFolder.path !== '~' || currentFolder.folders.length"
+				[disabled]="isDeletingFolders.includes(this.currentFolder.path)"
+				(click)="deleteFolder()"
+			>
 				<ion-icon name="trash"></ion-icon>
 			</ion-button>
 			<ion-button title="New query">
@@ -48,7 +85,11 @@
 				<ion-label>New query</ion-label>
 			</ion-button>
 			<ion-button title="New folder" (click)="newFolder()">
-				<ion-icon slot="start" name="add-circle-outline" color="primary"></ion-icon>
+				<ion-icon
+					slot="start"
+					name="add-circle-outline"
+					color="primary"
+				></ion-icon>
 				<ion-label>New folder</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -65,44 +106,64 @@
 		<ion-label>..</ion-label>
 	</ion-item>
 	<ng-container *ngIf="filter">
-		<ion-item tappable *ngFor="let item of filteredItems"
-				  (click)="goQuery(item.query, 'edit', item.folders)">
+		<ion-item
+			tappable
+			*ngFor="let item of filteredItems"
+			(click)="goQuery(item.query, 'edit', item.folders)"
+		>
 			<ion-icon name="document-text-outline" slot="start"></ion-icon>
 			<ion-label>
-				{{item.query.title || item.query.id}}
+				{{ item.query.title || item.query.id }}
 				<p *ngIf="item.folders?.length">
 					<ion-text color="medium">Folder:&nbsp;</ion-text>
-					<code><span *ngFor="let p of item.folders">{{p}}/</span></code>
+					<code
+						><span *ngFor="let p of item.folders">{{ p }}/</span></code
+					>
 				</p>
 			</ion-label>
 		</ion-item>
 	</ng-container>
 	<ng-container *ngIf="!filter && currentFolder">
-		<ion-item *ngFor="let folder of currentFolder.folders" tappable (click)="cd(folder.id)">
+		<ion-item
+			*ngFor="let folder of currentFolder.folders"
+			tappable
+			(click)="cd(folder.id)"
+		>
 			<ion-icon name="folder-outline" slot="start" color="primary"></ion-icon>
-			<ion-label>{{folder.id}}</ion-label>
+			<ion-label>{{ folder.id }}</ion-label>
 		</ion-item>
 		<ng-container *ngFor="let query of currentFolder.items; trackBy: trackById">
 			<ion-item tappable (click)="goQuery(query)">
 				<ion-icon name="document-text-outline" slot="start"></ion-icon>
 
 				<ion-label>
-					<h3 style="display: inline;font-size: large">
-						{{query.title || query.id}}
+					<h3 style="display: inline; font-size: large">
+						{{ query.title || query.id }}
 					</h3>
 					<span class="ion-margin-start" *ngIf="query.targets?.length">
-									<ion-badge *ngFor="let target of query.targets">{{target?.catalog}}</ion-badge>
-								</span>
+						<ion-badge *ngFor="let target of query.targets">{{
+							target?.catalog
+						}}</ion-badge>
+					</span>
 				</ion-label>
 
-
-				<ion-badge slot="end" color="secondary">{{query.request.queryType}}</ion-badge>
+				<ion-badge slot="end" color="secondary">{{
+					query.request.queryType
+				}}</ion-badge>
 
 				<ion-buttons slot="end" class="ion-no-margin">
-					<ion-button color="medium" title="Edit" (click)="goQuery(query, 'edit')">
+					<ion-button
+						color="medium"
+						title="Edit"
+						(click)="goQuery(query, 'edit')"
+					>
 						<ion-icon slot="start" name="create-outline"></ion-icon>
 					</ion-button>
-					<ion-button color="medium" title="Execute" (click)="goQuery(query, 'execute')">
+					<ion-button
+						color="medium"
+						title="Execute"
+						(click)="goQuery(query, 'execute')"
+					>
 						<ion-icon slot="start" name="play-outline"></ion-icon>
 					</ion-button>
 				</ion-buttons>
@@ -137,4 +198,3 @@
 <!--				</ion-button>-->
 <!--			</ion-buttons>-->
 <!--		</ion-item>-->
-

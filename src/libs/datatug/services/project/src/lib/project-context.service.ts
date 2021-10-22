@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {IProjectRef} from '@sneat/datatug/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { IProjectRef } from '@sneat/datatug/core';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ProjectContextService {
-
-	private readonly $current = new BehaviorSubject<IProjectRef | undefined>(undefined);
+	private readonly $current = new BehaviorSubject<IProjectRef | undefined>(
+		undefined
+	);
 	public readonly current$ = this.$current.asObservable();
 
 	public get current() {

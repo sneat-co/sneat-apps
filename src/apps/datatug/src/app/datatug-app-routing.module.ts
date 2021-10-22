@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
-import {DatatugRoutingModule} from '@sneat/datatug/routes';
-import {HelloWorldPageComponent} from "./hello-world-page.component";
-import {IonicModule, IonicRouteStrategy} from "@ionic/angular";
-import {SneatAuthRoutingModule} from "@sneat/auth-ui";
+import { NgModule } from '@angular/core';
+import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
+import { DatatugRoutingModule } from '@sneat/datatug/routes';
+import { HelloWorldPageComponent } from './hello-world-page.component';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 
 const routes: Routes = [
 	{
@@ -26,7 +26,8 @@ const routes: Routes = [
 	imports: [
 		IonicModule,
 		DatatugRoutingModule,
-		RouterModule.forRoot(routes,
+		RouterModule.forRoot(
+			routes
 			// {preloadingStrategy: PreloadAllModules},
 		),
 		SneatAuthRoutingModule,

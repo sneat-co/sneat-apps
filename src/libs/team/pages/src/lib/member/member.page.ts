@@ -1,12 +1,12 @@
-import {Component, Inject, OnDestroy} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {TeamService} from '../../../../services/src/lib/team.service';
-import {NavController} from '@ionic/angular';
-import {IErrorLogger, ErrorLogger} from '@sneat/logging';
-import {IMemberInfo, ITeam} from '@sneat/team-models';
-import {IRecord} from '@sneat/data';
-import {SneatUserService} from '@sneat/user';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { TeamService } from '../../../../services/src/lib/team.service';
+import { NavController } from '@ionic/angular';
+import { IErrorLogger, ErrorLogger } from '@sneat/logging';
+import { IMemberInfo, ITeam } from '@sneat/team-models';
+import { IRecord } from '@sneat/data';
+import { SneatUserService } from '@sneat/user';
 
 @Component({
 	selector: 'sneat-member',
@@ -14,7 +14,6 @@ import {SneatUserService} from '@sneat/user';
 	styleUrls: ['./member.page.scss'],
 })
 export class MemberPageComponent implements OnDestroy {
-
 	public team?: IRecord<ITeam>;
 
 	public userId?: string;
@@ -23,7 +22,6 @@ export class MemberPageComponent implements OnDestroy {
 
 	private memberId?: string;
 	private teamSubscription?: Subscription;
-
 
 	public get defaultBackUrl(): string {
 		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
@@ -34,7 +32,7 @@ export class MemberPageComponent implements OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
-		private readonly teamService: TeamService,
+		private readonly teamService: TeamService
 	) {
 		console.log('MemberPage.constructor()');
 		try {
@@ -43,23 +41,35 @@ export class MemberPageComponent implements OnDestroy {
 				this.memberId = this?.memberInfo?.id;
 			}
 			if (this.memberId) {
-				if (this.memberInfo && this.memberId && this.memberInfo.id !== this.memberId) {
+				if (
+					this.memberInfo &&
+					this.memberId &&
+					this.memberInfo.id !== this.memberId
+				) {
 					this.errorLogger.logError('this.memberInfo.id !== this.memberId');
 					return;
 				}
 				this.onMemberIdChanged();
 			}
 			route.queryParamMap.subscribe(
-				params => {
+				(params) => {
 					this.processUrlParams(params);
 				},
-				err => this.errorLogger.logError(err, 'MemberPage.constructor() => failed to retrieve query parameters'),
+				(err) =>
+					this.errorLogger.logError(
+						err,
+						'MemberPage.constructor() => failed to retrieve query parameters'
+					)
 			);
 			this.userService.userChanged.subscribe({
-				next: userId => {
+				next: (userId) => {
 					this.userId = userId;
 				},
-				error: err => this.errorLogger.logError(err, 'MemberPage.constructor() => userChanged'),
+				error: (err) =>
+					this.errorLogger.logError(
+						err,
+						'MemberPage.constructor() => userChanged'
+					),
 			});
 		} catch (e) {
 			this.errorLogger.logError(e, 'MemberPage.constructor(): unhandled error');
@@ -67,26 +77,37 @@ export class MemberPageComponent implements OnDestroy {
 	}
 
 	public removeMember() {
-		if (!confirm(`Are you sure you want to remove ${this.memberInfo?.title || this.memberInfo?.id} from ${this.team?.data?.title}?`)) {
+		if (
+			!confirm(
+				`Are you sure you want to remove ${
+					this.memberInfo?.title || this.memberInfo?.id
+				} from ${this.team?.data?.title}?`
+			)
+		) {
 			return;
 		}
 		if (!this.team) {
-			this.errorLogger.logError('Can not remove team member without team context');
+			this.errorLogger.logError(
+				'Can not remove team member without team context'
+			);
 			return;
 		}
 		if (!this.memberId) {
-			this.errorLogger.logError('Can not remove team member without knowing member ID');
+			this.errorLogger.logError(
+				'Can not remove team member without knowing member ID'
+			);
 			return;
 		}
-		this.teamService
-			.removeTeamMember(this.team, this.memberId)
-			.subscribe({
-				next: () => {
-					this.navController.pop()
-						.catch(err => this.errorLogger.logError(err, 'Failed to pop navigator state'));
-				},
-				error: err => this.errorLogger.logError(err, 'Failed to remove member'),
-			});
+		this.teamService.removeTeamMember(this.team, this.memberId).subscribe({
+			next: () => {
+				this.navController
+					.pop()
+					.catch((err) =>
+						this.errorLogger.logError(err, 'Failed to pop navigator state')
+					);
+			},
+			error: (err) => this.errorLogger.logError(err, 'Failed to remove member'),
+		});
 	}
 
 	public ngOnDestroy(): void {
@@ -102,19 +123,23 @@ export class MemberPageComponent implements OnDestroy {
 			return;
 		}
 		if (!this.memberId) {
-			this.errorLogger.logError('Can not change role without knowing member ID');
+			this.errorLogger.logError(
+				'Can not change role without knowing member ID'
+			);
 			return;
 		}
 		this.changing = 'role';
-		this.teamService.changeMemberRole(this.team, this.memberId, event.detail.value).subscribe({
-			next: () => {
-				this.changing = undefined;
-			},
-			error: err => {
-				this.changing = undefined;
-				this.errorLogger.logError(err, 'Failed to change team member role');
-			},
-		});
+		this.teamService
+			.changeMemberRole(this.team, this.memberId, event.detail.value)
+			.subscribe({
+				next: () => {
+					this.changing = undefined;
+				},
+				error: (err) => {
+					this.changing = undefined;
+					this.errorLogger.logError(err, 'Failed to change team member role');
+				},
+			});
 	}
 
 	private processUrlParams(params: ParamMap): void {
@@ -127,7 +152,7 @@ export class MemberPageComponent implements OnDestroy {
 		if (ids.length === 2) {
 			const [teamId, memberId] = ids;
 			if (teamId && teamId !== this.team?.id) {
-				this.team = {id: teamId};
+				this.team = { id: teamId };
 				this.onTeamIdChanged();
 			}
 			if (memberId !== this.memberId) {
@@ -145,29 +170,33 @@ export class MemberPageComponent implements OnDestroy {
 		this.memberId = undefined;
 		const teamId = this.team?.id;
 		if (teamId) {
-			this.teamSubscription = this.teamService.watchTeam(teamId)
-				.subscribe({
-					next: team => {
-						console.log('MemberPage: teamService.watchTeam =>', team);
+			this.teamSubscription = this.teamService.watchTeam(teamId).subscribe({
+				next: (team) => {
+					console.log('MemberPage: teamService.watchTeam =>', team);
 
-						if (this.team?.id !== teamId) {
-							return;
-						}
-						this.team = {id: this.team.id, data: team};
-						if (this.memberId) {
-							this.onMemberIdChanged();
-						}
-					},
-					error: err => this.errorLogger.logError(err, 'MemberPage.onTeamIdChanged() => Failed to get team'),
-				});
+					if (this.team?.id !== teamId) {
+						return;
+					}
+					this.team = { id: this.team.id, data: team };
+					if (this.memberId) {
+						this.onMemberIdChanged();
+					}
+				},
+				error: (err) =>
+					this.errorLogger.logError(
+						err,
+						'MemberPage.onTeamIdChanged() => Failed to get team'
+					),
+			});
 		}
 	}
 
 	private onMemberIdChanged(): void {
 		if (this.team) {
 			const memberId = this.memberId;
-			this.memberInfo = this.team?.data?.members?.find(m => m.id === memberId);
+			this.memberInfo = this.team?.data?.members?.find(
+				(m) => m.id === memberId
+			);
 		}
 	}
-
 }

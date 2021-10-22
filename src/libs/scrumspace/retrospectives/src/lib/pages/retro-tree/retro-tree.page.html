@@ -1,29 +1,40 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-back-button slot="start" [defaultHref]="defaultBackUrl"></ion-back-button>
+		<ion-back-button
+			slot="start"
+			[defaultHref]="defaultBackUrl"
+		></ion-back-button>
 		<ion-title>
 			Retrospective
-			<ng-container *ngIf="team">@ {{team?.data?.title || team?.id}}</ng-container>
+			<ng-container *ngIf="team"
+				>@ {{team?.data?.title || team?.id}}</ng-container
+			>
 			: {{meetingId}}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-
 	<ion-row>
 		<ion-col size="12" size-lg="3" *ngFor="let category of categories">
 			<h2 class="ion-padding">{{category.title}}</h2>
-			<angular-dnd-tree [treeId]="positive.ID" [rootItem]="category" [spec]="treeSpec" (moved)="itemMoved($event)">
+			<angular-dnd-tree
+				[treeId]="positive.ID"
+				[rootItem]="category"
+				[spec]="treeSpec"
+				(moved)="itemMoved($event)"
+			>
 				<ng-template angularDndTreeItem let-node>
 					<app-retro-item-card [treeNode]="node"></app-retro-item-card>
 				</ng-template>
 			</angular-dnd-tree>
 			<ion-card *ngIf="isAllowedToAddItems()">
-				<app-add-retro-item [teamId]="team?.id" [meetingId]="meetingId"
-										  [retroItemType]="category.ID"></app-add-retro-item>
+				<app-add-retro-item
+					[teamId]="team?.id"
+					[meetingId]="meetingId"
+					[retroItemType]="category.ID"
+				></app-add-retro-item>
 			</ion-card>
 		</ion-col>
 	</ion-row>
-
 </ion-content>

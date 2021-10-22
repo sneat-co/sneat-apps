@@ -1,22 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {RecordValuesCardComponent} from './record-values-card.component';
+import { RecordValuesCardComponent } from './record-values-card.component';
 
 describe('RecordValuesCardComponent', () => {
 	let component: RecordValuesCardComponent;
 	let fixture: ComponentFixture<RecordValuesCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
-			declarations: [RecordValuesCardComponent],
-			imports: [IonicModule.forRoot()]
-		}).compileComponents();
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [RecordValuesCardComponent],
+				imports: [IonicModule.forRoot()],
+			}).compileComponents();
 
-		fixture = TestBed.createComponent(RecordValuesCardComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+			fixture = TestBed.createComponent(RecordValuesCardComponent);
+			component = fixture.componentInstance;
+			fixture.detectChanges();
+		})
+	);
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

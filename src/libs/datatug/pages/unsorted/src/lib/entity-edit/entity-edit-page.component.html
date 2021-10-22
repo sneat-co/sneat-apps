@@ -6,7 +6,9 @@
 		</ion-buttons>
 		<ion-title *ngIf="mode === 'new'">
 			New entity
-			<span *ngIf="project?.brief">@ {{project.brief.title || project.brief.id}}</span>
+			<span *ngIf="project?.brief"
+				>@ {{ project.brief.title || project.brief.id }}</span
+			>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -15,7 +17,11 @@
 	<ion-card>
 		<ion-item>
 			<ion-label position="floating">Name</ion-label>
-			<ion-input #nameInput autofocus="autofocus" [(ngModel)]="entity.title"></ion-input>
+			<ion-input
+				#nameInput
+				autofocus="autofocus"
+				[(ngModel)]="entity.title"
+			></ion-input>
 		</ion-item>
 	</ion-card>
 
@@ -36,11 +42,13 @@
 			<ng-container *ngIf="entity">
 				<ion-item *ngFor="let field of entity.fields" tappable>
 					<ion-label>
-						{{field.id}}
-						<p *ngIf="field.namePattern">Name pattern: {{field.namePattern|json}}</p>
+						{{ field.id }}
+						<p *ngIf="field.namePattern">
+							Name pattern: {{ field.namePattern | json }}
+						</p>
 					</ion-label>
 					<ion-badge color="light" style="font-weight: normal">
-						<ion-text color="medium">{{field.type}}</ion-text>
+						<ion-text color="medium">{{ field.type }}</ion-text>
 					</ion-badge>
 					<ion-buttons slot="end">
 						<ion-button (click)="deleteField(field.id)">
@@ -52,10 +60,18 @@
 		</ion-list>
 	</ion-card>
 
-	<ion-button *ngIf="mode === 'new'" class="ion-margin" (click)="createEntity()">
+	<ion-button
+		*ngIf="mode === 'new'"
+		class="ion-margin"
+		(click)="createEntity()"
+	>
 		<ion-label>Create entity</ion-label>
 	</ion-button>
-	<ion-button *ngIf="mode === 'edit'" class="ion-margin" (click)="saveEntityChanges()">
+	<ion-button
+		*ngIf="mode === 'edit'"
+		class="ion-margin"
+		(click)="saveEntityChanges()"
+	>
 		<ion-label>Save changes</ion-label>
 	</ion-button>
 

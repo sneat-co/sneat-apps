@@ -1,9 +1,14 @@
-import {Component, Inject} from '@angular/core';
-import {IRecord, ITeam, ITeamMetric, MetricColor} from '../../models/interfaces';
-import {TeamService} from '../../services/team.service';
-import {NavController, ToastController} from '@ionic/angular';
-import {IErrorLogger, ErrorLogger} from '@sneat-team/ui-core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import {
+	IRecord,
+	ITeam,
+	ITeamMetric,
+	MetricColor,
+} from '../../models/interfaces';
+import { TeamService } from '../../services/team.service';
+import { NavController, ToastController } from '@ionic/angular';
+import { IErrorLogger, ErrorLogger } from '@sneat-team/ui-core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-add-metric',
@@ -11,7 +16,6 @@ import {ActivatedRoute} from '@angular/router';
 	styleUrls: ['./add-metric.page.scss'],
 })
 export class AddMetricPage {
-
 	public team: ITeam;
 	public teamId: string;
 
@@ -30,7 +34,7 @@ export class AddMetricPage {
 		private readonly navController: NavController,
 		private readonly teamService: TeamService,
 		private readonly toastController: ToastController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
 	) {
 		this.min = 0;
 		const team = window?.history?.state?.team as IRecord<ITeam>;
@@ -40,10 +44,10 @@ export class AddMetricPage {
 		} else {
 			this.teamId = route.snapshot.queryParamMap.get('team');
 			this.teamService.getTeam(this.teamId).subscribe({
-				next: teamData => {
+				next: (teamData) => {
 					this.team = teamData;
 				},
-			})
+			});
 		}
 	}
 
@@ -83,17 +87,19 @@ export class AddMetricPage {
 			next: () => {
 				this.navController.back();
 			},
-			error: err => this.errorLogger.logError(err, 'Failed to add metric'),
-		})
+			error: (err) => this.errorLogger.logError(err, 'Failed to add metric'),
+		});
 	}
 
 	private alert(message: string): void {
-		this.toastController.create({
-			position: 'middle',
-			color: 'tertiary',
-			message,
-			keyboardClose: true,
-			buttons: [{role: 'cancel', text: 'OK'}],
-		}).then(toast => toast.present());
+		this.toastController
+			.create({
+				position: 'middle',
+				color: 'tertiary',
+				message,
+				keyboardClose: true,
+				buttons: [{ role: 'cancel', text: 'OK' }],
+			})
+			.then((toast) => toast.present());
 	}
 }

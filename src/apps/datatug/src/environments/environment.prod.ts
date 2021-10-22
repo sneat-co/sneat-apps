@@ -1,4 +1,4 @@
-import {IEnvironmentConfig} from '@sneat/datatug/core';
+import { IEnvironmentConfig } from '@sneat/datatug/core';
 
 export const environment: IEnvironmentConfig = {
 	production: true,

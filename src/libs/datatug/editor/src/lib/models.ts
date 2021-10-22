@@ -5,10 +5,9 @@ import {
 	IProjDbModelBrief,
 	IQueryDef,
 	IQueryRequest,
-	QueryType
-} from "@sneat/datatug/models";
-import {IExecuteResponse, IRecordset} from "@sneat/datatug/dto";
-
+	QueryType,
+} from '@sneat/datatug/models';
+import { IExecuteResponse, IRecordset } from '@sneat/datatug/dto';
 
 export interface IQueryEditorState {
 	readonly currentQueryId?: string;
@@ -47,4 +46,3 @@ export interface IQueryState extends IQueryStateDto {
 	readonly isSaving?: boolean;
 	readonly isLoading?: boolean;
 }
-

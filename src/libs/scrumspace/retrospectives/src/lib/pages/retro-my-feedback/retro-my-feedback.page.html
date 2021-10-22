@@ -1,6 +1,9 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-back-button slot="start" defaultHref="team?id={{teamId}}"></ion-back-button>
+		<ion-back-button
+			slot="start"
+			defaultHref="team?id={{teamId}}"
+		></ion-back-button>
 		<ion-title>Retrospective</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -12,7 +15,11 @@
 		<ion-card-header>
 			<ion-card-title>{{question.title}}</ion-card-title>
 		</ion-card-header>
-		<app-retro-my-items [question]="question.id" [teamId]="teamId" [retroId]="retroId"></app-retro-my-items>
+		<app-retro-my-items
+			[question]="question.id"
+			[teamId]="teamId"
+			[retroId]="retroId"
+		></app-retro-my-items>
 	</ion-card>
 
 	<div class="ion-padding">
@@ -46,7 +53,11 @@
 				</ion-buttons>
 			</ion-item>
 			<ion-item>
-				<ion-icon slot="start" color="success" name="checkmark-done-outline"></ion-icon>
+				<ion-icon
+					slot="start"
+					color="success"
+					name="checkmark-done-outline"
+				></ion-icon>
 				<ion-label>Jack</ion-label>
 				<ion-buttons slot="end">
 					<ion-button>

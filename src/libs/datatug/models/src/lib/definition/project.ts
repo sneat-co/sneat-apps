@@ -1,8 +1,8 @@
-import {IStore} from './store';
-import {IOptionallyTitled} from '../core';
-import {IEnvironmentFull} from './environments';
-import {IDbModelFull} from './dbmodels';
-import {IProjDbServerFull} from './apis/database';
+import { IStore } from './store';
+import { IOptionallyTitled } from '../core';
+import { IEnvironmentFull } from './environments';
+import { IDbModelFull } from './dbmodels';
+import { IProjDbServerFull } from './apis/database';
 
 export type ProjectAccess = 'private' | 'protected' | 'public';
 
@@ -69,12 +69,10 @@ export interface IProjDbModelNumbers {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEntity extends IProjItemBrief {
-}
+export interface IProjEntity extends IProjItemBrief {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEnv extends IProjItemBrief {
-}
+export interface IProjEnv extends IProjItemBrief {}
 
 export interface IProjectApp {
 	id: string;
@@ -87,7 +85,7 @@ export interface IApiDefinition {
 	title?: string;
 	tags?: string[];
 	endpointPattern?: string;
-	server?: { host: string; port: number; };
+	server?: { host: string; port: number };
 }
 
 export type FieldType = string | number;

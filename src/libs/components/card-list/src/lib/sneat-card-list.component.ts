@@ -1,9 +1,20 @@
-import {Component, EventEmitter, Inject, Input, Output, ViewChild} from '@angular/core';
-import {IonInput} from '@ionic/angular';
-import {ErrorLogger, IErrorLogger} from '@sneat/logging';
-import {Observable} from 'rxjs';
-import {IRecord} from '@sneat/data';
-import {IOptionallyTitled, IProjItemBrief, ProjectItemType} from '@sneat/datatug/models';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	Output,
+	ViewChild,
+} from '@angular/core';
+import { IonInput } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { Observable } from 'rxjs';
+import { IRecord } from '@sneat/data';
+import {
+	IOptionallyTitled,
+	IProjItemBrief,
+	ProjectItemType,
+} from '@sneat/datatug/models';
 
 export interface ICardTab {
 	id: string;
@@ -15,7 +26,6 @@ export interface ICardTab {
 	templateUrl: './sneat-card-list.component.html',
 })
 export class SneatCardListComponent {
-
 	@Input() isFilterable: boolean;
 	@Input() projItemType: ProjectItemType;
 	@Input() title: string;
@@ -32,7 +42,7 @@ export class SneatCardListComponent {
 	@Output() itemClick = new EventEmitter<IProjItemBrief>();
 	@Output() tabChanged = new EventEmitter<string>();
 
-	@ViewChild(IonInput, {static: false}) addInput: IonInput;
+	@ViewChild(IonInput, { static: false }) addInput: IonInput;
 
 	filter = '';
 
@@ -41,9 +51,8 @@ export class SneatCardListComponent {
 	public isAdding: boolean;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+	) {}
 
 	click(event: Event, item: IProjItemBrief): void {
 		event.preventDefault();
@@ -58,22 +67,22 @@ export class SneatCardListComponent {
 		setTimeout(() => {
 			console.log(this.addInput);
 			this.addInput
-        // @ts-ignore TS2339: Property 'setFocus' does not exist on type 'IonInput'.
-        .setFocus()
-        .catch(err => this.errorLogger.logError(err, 'Failed to set focus'));
+				// @ts-ignore TS2339: Property 'setFocus' does not exist on type 'IonInput'.
+				.setFocus()
+				.catch((err) => this.errorLogger.logError(err, 'Failed to set focus'));
 		}, 200);
 	}
 
 	tryCreate(): void {
 		this.isAdding = true;
 		this.create(this.name.trim()).subscribe({
-			next: item => {
+			next: (item) => {
 				this.items.push(item);
 				this.isAdding = false;
 				this.mode = 'list';
 				this.name = '';
 			},
-			error: err => {
+			error: (err) => {
 				this.errorLogger.logError(err, 'Failed to create ' + this.projItemType);
 				this.isAdding = false;
 			},

@@ -5,14 +5,23 @@
 		</ion-item>
 		<ion-item>
 			<ion-checkbox slot="start"></ion-checkbox>
-			<ion-label><b>ft</b> -
+			<ion-label
+				><b>ft</b> -
 				<ion-text color="medium">FirstTable</ion-text>
 			</ion-label>
 			<ion-buttons slot="end">
-				<ion-button color="medium" *ngIf="expanded === 'ft'" (click)="expanded = undefined">
+				<ion-button
+					color="medium"
+					*ngIf="expanded === 'ft'"
+					(click)="expanded = undefined"
+				>
 					<ion-icon name="chevron-up-circle-outline"></ion-icon>
 				</ion-button>
-				<ion-button color="medium" *ngIf="expanded !== 'ft'" (click)="expanded = 'ft'">
+				<ion-button
+					color="medium"
+					*ngIf="expanded !== 'ft'"
+					(click)="expanded = 'ft'"
+				>
 					<ion-icon name="chevron-down-circle-outline"></ion-icon>
 				</ion-button>
 			</ion-buttons>
@@ -51,14 +60,23 @@
 		</ng-container>
 		<ion-item>
 			<ion-checkbox slot="start"></ion-checkbox>
-			<ion-label><b>st</b> -
+			<ion-label
+				><b>st</b> -
 				<ion-text color="medium">SecondTable</ion-text>
 			</ion-label>
 			<ion-buttons slot="end">
-				<ion-button color="medium" *ngIf="expanded === 'st'" (click)="expanded = undefined">
+				<ion-button
+					color="medium"
+					*ngIf="expanded === 'st'"
+					(click)="expanded = undefined"
+				>
 					<ion-icon name="chevron-up-circle-outline"></ion-icon>
 				</ion-button>
-				<ion-button color="medium" *ngIf="expanded !== 'st'" (click)="expanded = 'st'">
+				<ion-button
+					color="medium"
+					*ngIf="expanded !== 'st'"
+					(click)="expanded = 'st'"
+				>
 					<ion-icon name="chevron-down-circle-outline"></ion-icon>
 				</ion-button>
 			</ion-buttons>
@@ -99,7 +117,9 @@
 			<ion-label>Aggregates</ion-label>
 		</ion-item-divider>
 		<ion-item class="ion-padding-start">
-			<ion-label color="medium" style="font-size: smaller">GROUP BY required to enable</ion-label>
+			<ion-label color="medium" style="font-size: smaller"
+				>GROUP BY required to enable</ion-label
+			>
 		</ion-item>
 	</ion-list>
 </ion-card>

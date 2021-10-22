@@ -5,17 +5,25 @@
 			<ion-segment-button value="queries" title="Active Queries">
 				<ion-icon name="terminal-outline" color="medium"></ion-icon>
 			</ion-segment-button>
-			<ion-segment-button value="boards" style="text-transform: none" title="Active Boards">
+			<ion-segment-button
+				value="boards"
+				style="text-transform: none"
+				title="Active Boards"
+			>
 				<ion-icon name="easel-outline" color="medium"></ion-icon>
 			</ion-segment-button>
 		</ion-segment>
 	</ion-item-divider>
-	<datatug-project-menu-top *ngIf="tab === 'project'"></datatug-project-menu-top>
+	<datatug-project-menu-top
+		*ngIf="tab === 'project'"
+	></datatug-project-menu-top>
 	<datatug-queries-menu *ngIf="tab === 'queries'"></datatug-queries-menu>
 	<ng-container *ngIf="tab === 'boards'">
 		<ion-item-divider color="light">
 			<ion-label color="medium">Active boards</ion-label>
 		</ion-item-divider>
-		<ion-item><ion-label color="medium">Not implemented yet</ion-label></ion-item>
+		<ion-item
+			><ion-label color="medium">Not implemented yet</ion-label></ion-item
+		>
 	</ng-container>
 </ion-card>

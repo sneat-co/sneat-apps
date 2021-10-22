@@ -17,18 +17,27 @@
 			<ion-select [(ngModel)]="dbServer.driver">
 				<ion-select-option value="sqlserver">MS SQL Server</ion-select-option>
 				<ion-select-option value="mysql" disabled>MySQL</ion-select-option>
-				<ion-select-option value="postgresql" disabled>PostgreSQL</ion-select-option>
+				<ion-select-option value="postgresql" disabled
+					>PostgreSQL</ion-select-option
+				>
 				<ion-select-option value="oracle" disabled>Oracle</ion-select-option>
 			</ion-select>
 		</ion-item>
 		<ion-item>
 			<ion-label>Host name</ion-label>
-			<ion-input [disabled]="submitting" [(ngModel)]="dbServer.host"></ion-input>
+			<ion-input
+				[disabled]="submitting"
+				[(ngModel)]="dbServer.host"
+			></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Port</ion-label>
-			<ion-input type="number" [disabled]="submitting" [(ngModel)]="dbServer.port"
-						  placeholder="leave empty to use default"></ion-input>
+			<ion-input
+				type="number"
+				[disabled]="submitting"
+				[(ngModel)]="dbServer.port"
+				placeholder="leave empty to use default"
+			></ion-input>
 		</ion-item>
 		<!--		<ion-item-divider>-->
 		<!--			<ion-label>Environments</ion-label>-->

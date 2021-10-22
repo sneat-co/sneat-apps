@@ -1,21 +1,26 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {routingParamStoreId} from '@sneat/datatug/core';
-import {SNEAT_AUTH_GUARDS} from "@sneat/auth";
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { routingParamStoreId } from '@sneat/datatug/core';
+import { SNEAT_AUTH_GUARDS } from '@sneat/auth';
 
 export const datatugRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('@sneat/datatug/pages/home').then(m => m.DatatugPagesHomeModule),
+		loadChildren: () =>
+			import('@sneat/datatug/pages/home').then((m) => m.DatatugPagesHomeModule),
 	},
 	{
 		path: 'my',
 		...SNEAT_AUTH_GUARDS,
-		loadChildren: () => import('@sneat/datatug/pages/my').then(m => m.DatatugMyPageModule),
+		loadChildren: () =>
+			import('@sneat/datatug/pages/my').then((m) => m.DatatugMyPageModule),
 	},
 	{
 		path: 'store/:' + routingParamStoreId,
-		loadChildren: () => import('./datatug-routing-store').then(m => m.DatatugStoreRoutingModule),
+		loadChildren: () =>
+			import('./datatug-routing-store').then(
+				(m) => m.DatatugStoreRoutingModule
+			),
 		// ...canLoad(),
 	},
 	{
@@ -25,12 +30,7 @@ export const datatugRoutes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forChild(datatugRoutes)
-	],
-	exports: [
-		RouterModule,
-	],
+	imports: [RouterModule.forChild(datatugRoutes)],
+	exports: [RouterModule],
 })
-export class DatatugRoutingModule {
-}
+export class DatatugRoutingModule {}

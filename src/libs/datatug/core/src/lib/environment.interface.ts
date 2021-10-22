@@ -1,4 +1,4 @@
-import {InjectionToken} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 export interface IFirebaseConfig {
 	projectId: string;
@@ -12,7 +12,7 @@ export interface IFirebaseConfig {
 export interface IEnvironmentConfig {
 	production: boolean;
 	useEmulators: boolean;
-	agents: {[id: string]: string};
+	agents: { [id: string]: string };
 	firebaseConfig: IFirebaseConfig;
 }
 

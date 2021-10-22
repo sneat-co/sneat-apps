@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {AuthStatus} from '@sneat/auth';
+import { Component, Input } from '@angular/core';
+import { AuthStatus } from '@sneat/auth';
 
 @Component({
 	selector: 'datatug-loading-items',

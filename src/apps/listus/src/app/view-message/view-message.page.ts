@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {DataService, Message} from '../services/data.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DataService, Message } from '../services/data.service';
 
 @Component({
 	selector: 'sneat-view-message',
@@ -13,8 +13,7 @@ export class ViewMessagePage implements OnInit {
 	constructor(
 		private data: DataService,
 		private activatedRoute: ActivatedRoute
-	) {
-	}
+	) {}
 
 	ngOnInit() {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');

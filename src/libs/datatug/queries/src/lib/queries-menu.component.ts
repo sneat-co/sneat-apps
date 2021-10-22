@@ -1,17 +1,16 @@
-import {Component, Inject, Input} from "@angular/core";
-import {QueryEditorStateService} from "./query-editor-state-service";
-import {ErrorLogger, IErrorLogger} from "@sneat/logging";
-import {IQueryState} from "@sneat/datatug/editor";
-import {QueriesUiService} from './queries-ui.service';
-import {IProjectRef} from '@sneat/datatug/core';
-import {ProjectContextService} from '@sneat/datatug/services/project';
+import { Component, Inject, Input } from '@angular/core';
+import { QueryEditorStateService } from './query-editor-state-service';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IQueryState } from '@sneat/datatug/editor';
+import { QueriesUiService } from './queries-ui.service';
+import { IProjectRef } from '@sneat/datatug/core';
+import { ProjectContextService } from '@sneat/datatug/services/project';
 
 @Component({
 	selector: 'datatug-queries-menu',
 	templateUrl: './queries-menu.component.html',
 })
 export class QueriesMenuComponent {
-
 	tab: 'active' | 'all' | 'bookmarked' = 'all';
 
 	currentQueryId: string;
@@ -24,7 +23,7 @@ export class QueriesMenuComponent {
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
 		private readonly projectContextService: ProjectContextService,
 		private readonly queriesUiService: QueriesUiService,
-		private readonly queryEditorStateService: QueryEditorStateService,
+		private readonly queryEditorStateService: QueryEditorStateService
 	) {
 		this.setupQueryEditorStateTracking();
 	}
@@ -32,15 +31,23 @@ export class QueriesMenuComponent {
 	private setupQueryEditorStateTracking(): void {
 		try {
 			this.queryEditorStateService.queryEditorState.subscribe({
-				next: state => {
-					console.log('QueriesMenuComponent.constructor() => QueryEditorStateService => QueryEditor state:', state);
+				next: (state) => {
+					console.log(
+						'QueriesMenuComponent.constructor() => QueryEditorStateService => QueryEditor state:',
+						state
+					);
 					this.currentQueryId = state?.currentQueryId;
 					this.queries = state?.activeQueries;
 				},
-				error: this.errorLogger.logErrorHandler('failed to get query editor stage'),
+				error: this.errorLogger.logErrorHandler(
+					'failed to get query editor stage'
+				),
 			});
 		} catch (err) {
-			this.errorLogger.logError(err, 'failed to subscribe for query queryEditorStateService.queryEditorState')
+			this.errorLogger.logError(
+				err,
+				'failed to subscribe for query queryEditorStateService.queryEditorState'
+			);
 		}
 	}
 
@@ -59,7 +66,6 @@ export class QueriesMenuComponent {
 		}
 		this.queriesUiService
 			.openNewQuery(this.projectContextService.current)
-			.catch(this.errorLogger.logErrorHandler('failed to open new query'))
+			.catch(this.errorLogger.logErrorHandler('failed to open new query'));
 	}
-
 }

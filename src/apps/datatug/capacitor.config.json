@@ -1,13 +1,13 @@
 {
-  "appId": "team.sneat.datatug",
-  "appName": "DataTug",
-  "bundledWebRuntime": false,
-  "npmClient": "pnpm",
-  "webDir": "../../dist/apps/datatug",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {}
+	"appId": "team.sneat.datatug",
+	"appName": "DataTug",
+	"bundledWebRuntime": false,
+	"npmClient": "pnpm",
+	"webDir": "../../dist/apps/datatug",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {}
 }

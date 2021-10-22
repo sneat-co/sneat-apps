@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {IRetroItem} from '../../../models/interfaces';
-import {ITreeNode} from '@angular-dnd/tree';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IRetroItem } from '../../../models/interfaces';
+import { ITreeNode } from '@angular-dnd/tree';
 
 @Component({
 	selector: 'app-retro-item-card',
@@ -8,7 +8,6 @@ import {ITreeNode} from '@angular-dnd/tree';
 	styleUrls: ['./retro-item-card.component.scss'],
 })
 export class RetroItemCardComponent implements OnChanges {
-
 	@Input() treeNode: ITreeNode<IRetroItem>;
 	@Input() isPreview: boolean;
 
@@ -18,12 +17,14 @@ export class RetroItemCardComponent implements OnChanges {
 	public isLiked: boolean;
 
 	public get isExpandable(): boolean {
-		return this.treeNode.hasChildren
-			|| !!this.treeNode.childrenCount
-			|| (!!this.treeNode.children && this.treeNode.isExpanded === undefined);
+		return (
+			this.treeNode.hasChildren ||
+			!!this.treeNode.childrenCount ||
+			(!!this.treeNode.children && this.treeNode.isExpanded === undefined)
+		);
 	}
 
-	ngOnChanges({treeNode}: SimpleChanges): void {
+	ngOnChanges({ treeNode }: SimpleChanges): void {
 		if (treeNode) {
 			this.item = this.treeNode?.data;
 			this.num = this.getItemNumber();
@@ -64,12 +65,12 @@ export class RetroItemCardComponent implements OnChanges {
 
 	private getItemNumber(): string {
 		const s = [`${this.treeNode.index + 1}`];
-		let {parent} = this.treeNode;
+		let { parent } = this.treeNode;
 		while (parent) {
-			const n = this.treeNode.tree.state.node(parent)
+			const n = this.treeNode.tree.state.node(parent);
 			s.unshift(`${n.index + 1}`);
 			parent = n.parent;
 		}
-		return s.join('.')
+		return s.join('.');
 	}
 }

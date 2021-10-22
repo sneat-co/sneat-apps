@@ -1,6 +1,12 @@
-import {IAvatar} from '@sneat/auth-models';
+import { IAvatar } from '@sneat/auth-models';
 
-export type MetricColor = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger' | 'warning';
+export type MetricColor =
+	| 'primary'
+	| 'secondary'
+	| 'tertiary'
+	| 'success'
+	| 'danger'
+	| 'warning';
 
 export interface IBoolMetricVal {
 	label: string;
@@ -69,7 +75,9 @@ export interface ITeam {
 	metrics: ITeamMetric[];
 	active?: ITeamMeetings;
 	last?: ITeamMeetings;
-	upcomingRetro?: { itemsByUserAndType?: { [user: string]: { [itemType: string]: number } } };
+	upcomingRetro?: {
+		itemsByUserAndType?: { [user: string]: { [itemType: string]: number } };
+	};
 }
 
 export interface IMemberInfo {
@@ -89,7 +97,6 @@ export interface IMember {
 	userId?: string;
 	avatar?: IAvatar;
 }
-
 
 export interface IBy {
 	memberId?: string;
@@ -127,7 +134,6 @@ export interface IPersonalInvite extends IInvite {
 	to: IPerson;
 }
 
-
 export interface IAddTeamMemberResponse {
 	id: string;
 	uid?: string;
@@ -137,7 +143,6 @@ export interface ITaskRequest extends ITeamMemberRequest {
 	type: string;
 	task: string;
 }
-
 
 export interface IReorderTaskRequest extends ITaskRequest {
 	len: number;

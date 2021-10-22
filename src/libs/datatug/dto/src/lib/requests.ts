@@ -1,5 +1,5 @@
-import {IDbServer, IPipeDefinition, NamedParams} from '@sneat/datatug/models';
-import {IProjectRef} from '@sneat/datatug/core';
+import { IDbServer, IPipeDefinition, NamedParams } from '@sneat/datatug/models';
+import { IProjectRef } from '@sneat/datatug/core';
 
 export interface CreateNamedRequest {
 	projectRef: IProjectRef;
@@ -26,7 +26,7 @@ export interface IHttpCommand {
 export interface ISqlCommandRequest extends IRequestCommand {
 	readonly type: 'SQL';
 	text: string;
-	env: string
+	env: string;
 	db: string;
 	driver?: string;
 }

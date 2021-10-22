@@ -3,12 +3,13 @@
 	(ionChange)="envChanged($event)"
 	class="ion-margin-start ion-margin-end"
 >
-	<ion-segment-button *ngFor="let env of environments || [{id: 'local', title:  'Local'}]" [value]="env.id">
+	<ion-segment-button
+		*ngFor="let env of environments || [{ id: 'local', title: 'Local' }]"
+		[value]="env.id"
+	>
 		<ion-label>
-			{{env.title || env.id}}
+			{{ env.title || env.id }}
 		</ion-label>
 	</ion-segment-button>
 </ion-segment>
-<div>
-	currentEnvId: {{currentEnvId}}
-</div>
+<div>currentEnvId: {{ currentEnvId }}</div>

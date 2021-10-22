@@ -5,18 +5,20 @@
 			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
 		<ion-title>
-			DB server:
-			{{dbServer?.host}}
+			DB server: {{dbServer?.host}}
 			<span *ngIf="dbServer?.port">{{dbServer.port}}</span>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-
 	<ion-card>
 		<ion-item-divider [ngSwitch]="dbServer?.driver">
-			<ion-icon name="logo-windows" slot="start" *ngSwitchCase="'sqlserver'"></ion-icon>
+			<ion-icon
+				name="logo-windows"
+				slot="start"
+				*ngSwitchCase="'sqlserver'"
+			></ion-icon>
 			<ion-label *ngSwitchCase="'sqlserver'">Microsoft SQL Server</ion-label>
 			<ion-label *ngSwitchDefault>{{dbServer?.driver}}</ion-label>
 		</ion-item-divider>
@@ -41,7 +43,9 @@
 			<ion-badge color="light">1</ion-badge>
 		</ion-item>
 		<ion-item *ngIf="!loadingSummary && !envs?.length">
-			<ion-label color="medium">Not assigned to any specific environment yet</ion-label>
+			<ion-label color="medium"
+				>Not assigned to any specific environment yet</ion-label
+			>
 		</ion-item>
 	</ion-card>
 	<ion-card>
@@ -52,7 +56,9 @@
 				<ion-segment-button value="unknown">
 					<ion-label>
 						Unknown
-						<ion-badge color="light" *ngIf="dbServerCatalogs?.length">{{dbServerCatalogs?.length}}</ion-badge>
+						<ion-badge color="light" *ngIf="dbServerCatalogs?.length"
+							>{{dbServerCatalogs?.length}}</ion-badge
+						>
 					</ion-label>
 				</ion-segment-button>
 			</ion-segment>
@@ -62,16 +68,23 @@
 				<ion-item *ngIf="loadingSummary">
 					<ion-label color="medium">Loading...</ion-label>
 				</ion-item>
-				<ng-container *ngIf="!loadingSummary && dbServerSummary?.databases?.length; else noKnownDbs">
+				<ng-container
+					*ngIf="!loadingSummary && dbServerSummary?.databases?.length; else noKnownDbs"
+				>
 					<ion-item *ngFor="let database of dbServerSummary.databases" tappable>
 						<ion-label>{{database.id}}</ion-label>
-						<ion-badge color="light" *ngFor="let env of database.environments">{{env}}</ion-badge>
+						<ion-badge color="light" *ngFor="let env of database.environments"
+							>{{env}}</ion-badge
+						>
 					</ion-item>
 				</ng-container>
 				<ng-template #noKnownDbs>
 					<ion-item>
 						<ion-text color="medium">
-							<ion-label>Nothing from this server have been added to the project yet.</ion-label>
+							<ion-label
+								>Nothing from this server have been added to the project
+								yet.</ion-label
+							>
 						</ion-text>
 					</ion-item>
 				</ng-template>

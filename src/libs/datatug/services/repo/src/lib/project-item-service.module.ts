@@ -1,15 +1,10 @@
-import {NgModule} from '@angular/core';
-import {ProjectItemServiceFactory} from './project-item-service';
-import {HttpClientModule} from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { ProjectItemServiceFactory } from './project-item-service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-	imports: [
-		HttpClientModule,
-	],
-	providers: [
-		ProjectItemServiceFactory,
-	],
+	imports: [HttpClientModule],
+	providers: [ProjectItemServiceFactory],
 })
 // @ts-ignore
-export class ProjItemServiceModule {
-}
+export class ProjItemServiceModule {}
