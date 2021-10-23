@@ -33,6 +33,8 @@ jobs:
           version: 6.19.0
           run_install: true
 
+      - run: git rev-parse HEAD
+
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
 
