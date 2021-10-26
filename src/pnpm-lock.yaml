@@ -59,7 +59,7 @@ specifiers:
   hogan.js: 3.0.2
   ionicons: 5.5.3
   jest: 27.3.1
-  jest-preset-angular: 10.0.1
+  jest-preset-angular: 10.1.0
   karma: 6.3.6
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
@@ -142,7 +142,7 @@ devDependencies:
   eslint: 8.1.0
   eslint-config-prettier: 8.3.0_eslint@8.1.0
   jest: 27.3.1_ts-node@10.4.0
-  jest-preset-angular: 10.0.1_7e1b5acb3730b6258f698d033bf1b543
+  jest-preset-angular: 10.1.0_7e1b5acb3730b6258f698d033bf1b543
   karma: 6.3.6
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
@@ -2930,7 +2930,7 @@ packages:
       istanbul-reports: 3.0.5
       jest-haste-map: 27.3.1
       jest-resolve: 27.2.2
-      jest-util: 27.2.0
+      jest-util: 27.3.1
       jest-worker: 27.3.1
       slash: 3.0.0
       source-map: 0.6.1
@@ -8365,7 +8365,7 @@ packages:
       jest-regex-util: 27.0.6
       jest-resolve: 27.2.2
       jest-runner: 27.3.1
-      jest-util: 27.2.0
+      jest-util: 27.3.1
       jest-validate: 27.3.1
       micromatch: 4.0.4
       pretty-format: 27.3.1
@@ -8402,7 +8402,7 @@ packages:
       jest-regex-util: 27.0.6
       jest-resolve: 27.2.2
       jest-runner: 27.3.1
-      jest-util: 27.2.0
+      jest-util: 27.3.1
       jest-validate: 27.3.1
       micromatch: 4.0.4
       pretty-format: 27.3.1
@@ -8612,8 +8612,8 @@ packages:
     dependencies:
       jest-resolve: 27.3.1
 
-  /jest-preset-angular/10.0.1_7e1b5acb3730b6258f698d033bf1b543:
-    resolution: {integrity: sha512-+Rxi47jRJTX5BDhB4DqIELCWnJ319vHGI4MGcIVl+AXVXUKXe7zZiy7yC2Pdbs6SNUrwHObWq3yFkSt6jFtEPQ==}
+  /jest-preset-angular/10.1.0_7e1b5acb3730b6258f698d033bf1b543:
+    resolution: {integrity: sha512-D4k+BnGoig3w1x4MZiQOdN8UfaLN5aNjmx91U28VYRA+LslbN+D8dGyb5a5lR32mog5y86iVnAZ4mRvFlYr7SQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=15.0.0}
     peerDependencies:
       '@angular/compiler-cli': '>=10.0.0'
@@ -8663,7 +8663,7 @@ packages:
       graceful-fs: 4.2.8
       jest-haste-map: 27.3.1
       jest-pnp-resolver: 1.2.2_jest-resolve@27.2.2
-      jest-util: 27.2.0
+      jest-util: 27.3.1
       jest-validate: 27.3.1
       resolve: 1.20.0
       slash: 3.0.0
