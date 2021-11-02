@@ -82,7 +82,7 @@
 	"@nrwl/eslint-plugin-nx": "13.1.2",
 	"@nrwl/jest": "13.1.2",
 	"@nrwl/linter": "13.1.2",
-	"@nrwl/nx-cloud": "12.5.1",
+	"@nrwl/nx-cloud": "12.5.2",
 	"@nrwl/tao": "13.1.2",
 	"@nrwl/workspace": "13.1.2",
 	"@nxtend/capacitor": "11.1.1",
