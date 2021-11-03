@@ -88,7 +88,7 @@
 	"@nxtend/capacitor": "11.1.1",
 	"@nxtend/ionic-angular": "11.1.1",
 	"@trellisorg/make-buildable": "0.0.10",
-	"@types/jasmine": "3.10.1",
+	"@types/jasmine": "3.10.2",
 	"@types/jest": "27.0.2",
 	"@types/node": "16.11.6",
 	"@typescript-eslint/eslint-plugin": "5.3.0",
