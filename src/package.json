@@ -77,7 +77,7 @@
     "@capacitor/android": "3.3.1",
     "@capacitor/cli": "3.3.1",
     "@capacitor/ios": "3.3.1",
-    "@ionic/angular-toolkit": "4.0.0",
+    "@ionic/angular-toolkit": "5.0.3",
     "@nrwl/cli": "13.1.4",
     "@nrwl/eslint-plugin-nx": "13.1.4",
     "@nrwl/jest": "13.1.4",
