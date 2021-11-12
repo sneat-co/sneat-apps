@@ -46,7 +46,7 @@
     "@capacitor/core": "3.3.1",
     "@ctrl/ngx-codemirror": "5.0.1",
     "@generic-ui/fabric": "0.16.2",
-    "@generic-ui/hermes": "0.16.1",
+    "@generic-ui/hermes": "0.16.2",
     "@generic-ui/ngx-grid": "0.16.1",
     "@ionic-native/core": "5.36.0",
     "@ionic-native/splash-screen": "5.36.0",
