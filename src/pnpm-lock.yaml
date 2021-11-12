@@ -13,7 +13,7 @@ specifiers:
   '@angular/compiler': 12.2.11
   '@angular/compiler-cli': 12.2.11
   '@angular/core': 12.2.11
-  '@angular/fire': 7.1.1
+  '@angular/fire': 7.2.0
   '@angular/forms': 12.2.11
   '@angular/language-service': 12.2.11
   '@angular/platform-browser': 12.2.11
@@ -83,7 +83,7 @@ dependencies:
   '@angular/common': 12.2.11_@angular+core@12.2.11+rxjs@7.4.0
   '@angular/compiler': 12.2.11
   '@angular/core': 12.2.11_rxjs@7.4.0+zone.js@0.11.4
-  '@angular/fire': 7.1.1_48bee2cf995625addad28cf593795ae8
+  '@angular/fire': 7.2.0_48bee2cf995625addad28cf593795ae8
   '@angular/forms': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
   '@angular/platform-browser': 12.2.11_04209d25c037ce8f1827ccccc5d573e5
   '@angular/platform-browser-dynamic': 12.2.11_e279577ce9fddd9adf13bbe454ab43a2
@@ -580,17 +580,14 @@ packages:
       zone.js: 0.11.4
     dev: false
 
-  /@angular/fire/7.1.1_48bee2cf995625addad28cf593795ae8:
-    resolution: {integrity: sha512-Ba+KGTnEu6L7S8Pb2l3BlRo/cZb8IDY7OrkzBeTrYe9Ic6i4Xm1TShRDin1K8zXmL1FAopNH/Qk5bOd/VGzOpg==}
+  /@angular/fire/7.2.0_48bee2cf995625addad28cf593795ae8:
+    resolution: {integrity: sha512-qWLaNb3K32RZc/O5bXgYs5ETvuWRplCSl/TmxPXyna0g7JeeNq0t7znffnv1PvsxmAeYftNXSHvHQJcls3IfLQ==}
     peerDependencies:
-      '@angular-devkit/architect': '> 0.1200.0 < 0.1300.0'
-      '@angular-devkit/schematics': ^12.0.0
-      '@angular/common': ^12.0.0
-      '@angular/core': ^12.0.0
-      '@angular/platform-browser': ^12.0.0
-      '@angular/platform-browser-dynamic': ^12.0.0
-      '@schematics/angular': ^12.0.0
-      firebase: ^9.1.0
+      '@angular/common': ^12.0.0 || ^13.0.0
+      '@angular/core': ^12.0.0 || ^13.0.0
+      '@angular/platform-browser': ^12.0.0 || ^13.0.0
+      '@angular/platform-browser-dynamic': ^12.0.0 || ^13.0.0
+      firebase: ^9.4.0
       firebase-tools: ^9.9.0
       rxfire: ^6.0.0
       rxjs: ~6.6.0 || ^7.0.0
@@ -598,10 +595,12 @@ packages:
       firebase-tools:
         optional: true
     dependencies:
+      '@angular-devkit/schematics': 12.2.13
       '@angular/common': 12.2.11_@angular+core@12.2.11+rxjs@7.4.0
       '@angular/core': 12.2.11_rxjs@7.4.0+zone.js@0.11.4
       '@angular/platform-browser': 12.2.11_04209d25c037ce8f1827ccccc5d573e5
       '@angular/platform-browser-dynamic': 12.2.11_e279577ce9fddd9adf13bbe454ab43a2
+      '@schematics/angular': 12.2.13
       file-loader: 6.2.0
       firebase: 9.4.1
       fs-extra: 8.1.0
