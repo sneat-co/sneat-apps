@@ -23,7 +23,7 @@ specifiers:
   '@capacitor/cli': 3.3.1
   '@capacitor/core': 3.3.1
   '@capacitor/ios': 3.3.1
-  '@ctrl/ngx-codemirror': 5.0.1
+  '@ctrl/ngx-codemirror': 5.1.0
   '@generic-ui/fabric': 0.16.2
   '@generic-ui/hermes': 0.16.2
   '@generic-ui/ngx-grid': 0.16.2
@@ -89,7 +89,7 @@ dependencies:
   '@angular/platform-browser-dynamic': 12.2.11_e279577ce9fddd9adf13bbe454ab43a2
   '@angular/router': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
   '@capacitor/core': 3.3.1
-  '@ctrl/ngx-codemirror': 5.0.1_ce4df7c0b08856389eba3265d1065fe0
+  '@ctrl/ngx-codemirror': 5.1.0_ce4df7c0b08856389eba3265d1065fe0
   '@generic-ui/fabric': 0.16.2_2d043371b052a027ca4be8db0191e6a2
   '@generic-ui/hermes': 0.16.2_2d043371b052a027ca4be8db0191e6a2
   '@generic-ui/ngx-grid': 0.16.2_2be97feb12479044b8e82ed14a49ee53
@@ -2044,12 +2044,12 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
-  /@ctrl/ngx-codemirror/5.0.1_ce4df7c0b08856389eba3265d1065fe0:
-    resolution: {integrity: sha512-NCO3isAsdABeGxin+smJlYd+m42bXpbmjQQKjgn7K0z7HPgGTPdFLInMLa5XZbQktFmMj0ASexA1PgTWHHXJTA==}
+  /@ctrl/ngx-codemirror/5.1.0_ce4df7c0b08856389eba3265d1065fe0:
+    resolution: {integrity: sha512-Y1198CSe2nZp7bf7tS1b5qfp5TFfoC/IPpzU0VA22p26ZDgASpbgPL6GuxtnPrGG9HRGGLJO6A/LXBXM1FOxZw==}
     peerDependencies:
       '@angular/core': '>=12.0.0-0'
       '@angular/forms': '>=12.0.0-0'
-      codemirror: '>=5.61.0'
+      codemirror: '>=5.63.3'
     dependencies:
       '@angular/core': 12.2.11_rxjs@7.4.0+zone.js@0.11.4
       '@angular/forms': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
@@ -2588,7 +2588,7 @@ packages:
     dev: false
 
   /@generic-ui/ngx-grid/0.16.2_2be97feb12479044b8e82ed14a49ee53:
-    resolution: {integrity: sha512-OAPvjwIHQBj8ab8nVxF5yUBWTJpc3WZZk+mBmq/qJ2Wxv2prOWdtCRuiNu37OdR+lMqfUCDgZlPRMne/yubfwQ==}
+    resolution: {integrity: sha512-OAPvjwIHQBj8ab8nVxF5yUBWTJpc3WZZk+mBmq/qJ2Wxv2prOWdtCRuiNu37OdR+lMqfUCDgZlPRMne/yubfwQ==, tarball: '@generic-ui/ngx-grid/-/ngx-grid-0.16.2.tgz'}
     peerDependencies:
       '@angular/common': 12.2.11
       '@angular/core': 12.2.11
