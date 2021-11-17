@@ -19,10 +19,10 @@ specifiers:
   '@angular/platform-browser': 12.2.11
   '@angular/platform-browser-dynamic': 12.2.11
   '@angular/router': 12.2.11
-  '@capacitor/android': 3.3.1
-  '@capacitor/cli': 3.3.1
-  '@capacitor/core': 3.3.1
-  '@capacitor/ios': 3.3.1
+  '@capacitor/android': 3.3.2
+  '@capacitor/cli': 3.3.2
+  '@capacitor/core': 3.3.2
+  '@capacitor/ios': 3.3.2
   '@ctrl/ngx-codemirror': 5.1.0
   '@generic-ui/fabric': 0.16.2
   '@generic-ui/hermes': 0.16.2
@@ -88,7 +88,7 @@ dependencies:
   '@angular/platform-browser': 12.2.11_04209d25c037ce8f1827ccccc5d573e5
   '@angular/platform-browser-dynamic': 12.2.11_e279577ce9fddd9adf13bbe454ab43a2
   '@angular/router': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
-  '@capacitor/core': 3.3.1
+  '@capacitor/core': 3.3.2
   '@ctrl/ngx-codemirror': 5.1.0_ce4df7c0b08856389eba3265d1065fe0
   '@generic-ui/fabric': 0.16.2_2d043371b052a027ca4be8db0191e6a2
   '@generic-ui/hermes': 0.16.2_2d043371b052a027ca4be8db0191e6a2
@@ -119,10 +119,10 @@ devDependencies:
   '@angular/cli': 12.2.13
   '@angular/compiler-cli': 12.2.11_f2fe15c7fab43af9c0d25bd7f4b49ab1
   '@angular/language-service': 12.2.11
-  '@capacitor/android': 3.3.1_@capacitor+core@3.3.1
-  '@capacitor/cli': 3.3.1
-  '@capacitor/ios': 3.3.1_@capacitor+core@3.3.1
-  '@ionic/angular-toolkit': 5.0.3_1d8a214862ec1ff14467e8b6d71b8f10
+  '@capacitor/android': 3.3.2_@capacitor+core@3.3.2
+  '@capacitor/cli': 3.3.2
+  '@capacitor/ios': 3.3.2_@capacitor+core@3.3.2
+  '@ionic/angular-toolkit': 5.0.3_2cb00a5a0bb1b0fc6c1ea241fe869858
   '@nrwl/cli': 13.1.4
   '@nrwl/eslint-plugin-nx': 13.1.4_3f8bc0498ee627483ff3ff4cb35a1aa8
   '@nrwl/jest': 13.1.4_ts-node@10.4.0
@@ -1959,16 +1959,16 @@ packages:
   /@bcoe/v8-coverage/0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  /@capacitor/android/3.3.1_@capacitor+core@3.3.1:
-    resolution: {integrity: sha512-TB9UJh6/e6CV6KDpu/lNHKhgVvnDL2d3crNYtfKzp64CzeZhttQGIQShXSdMb3DG4kk7Zi/qBlfSaWBBD95NhQ==}
+  /@capacitor/android/3.3.2_@capacitor+core@3.3.2:
+    resolution: {integrity: sha512-TG+tGz0KxkT/BgvSLQfbQwQ9c4Budub5TRijIGdmMbB1ZYB76TFhwvVuwWZ52HFSlKS3sx/UYLlbULL7UQ2aug==}
     peerDependencies:
       '@capacitor/core': ^3.3.0
     dependencies:
-      '@capacitor/core': 3.3.1
+      '@capacitor/core': 3.3.2
     dev: true
 
-  /@capacitor/cli/3.3.1:
-    resolution: {integrity: sha512-PWGWhK/++NPziLigzO0RVORif+V7DAhm99Sd+2UuhfK40elQYK80/DeqCGwh5dVYwuiPN6Q8U2q9mz+mx8LM0g==}
+  /@capacitor/cli/3.3.2:
+    resolution: {integrity: sha512-LmH3DzuwNL3k995CgAs20KXjQhDWrQCQgur3M8nqIKecZk0xCoSGghht+rEK8/Gqn0XqdBGdgUgop+nep17edg==}
     engines: {node: '>=12.4.0'}
     hasBin: true
     dependencies:
@@ -1992,18 +1992,18 @@ packages:
       - supports-color
     dev: true
 
-  /@capacitor/core/3.3.1:
-    resolution: {integrity: sha512-wKQwk2nw2yDk5gwbsExs6u2rtGQDkXZ/LaZrdzqBy9T48+juPI/y4IE1zAoGNraBCR+LRcKQbKfZNmmDUYpvdA==}
+  /@capacitor/core/3.3.2:
+    resolution: {integrity: sha512-pyI3dQdQjA1L5iEw0jkeKCogx9t5d5kIFTB5M3CJRg9Uj5MIpU2J5CRj+74A7BflvZJo8IBd6IfMJaOArRumaw==}
     dependencies:
       tslib: 2.3.1
     dev: false
 
-  /@capacitor/ios/3.3.1_@capacitor+core@3.3.1:
-    resolution: {integrity: sha512-0/XOwEYfSXawI58Ynb+d8HVUaHy+BGrOqEEdtTgm1ZHNGdTO4troKngWY9hPx5f47t0qEWfhS50zArOMYx7AFw==}
+  /@capacitor/ios/3.3.2_@capacitor+core@3.3.2:
+    resolution: {integrity: sha512-qXbWo9zTtinIYDxKsLdkXXuZD8H+wlJII3+ZF9QzH+38IYyd+sohOG3NLC8EaX7GRtwCymd+mGotoN420SfQ4Q==}
     peerDependencies:
       '@capacitor/core': ^3.3.0
     dependencies:
-      '@capacitor/core': 3.3.1
+      '@capacitor/core': 3.3.2
     dev: true
 
   /@cspotcode/source-map-consumer/0.8.0:
@@ -2662,11 +2662,11 @@ packages:
       rxjs: 7.4.0
     dev: false
 
-  /@ionic/angular-toolkit/5.0.3_1d8a214862ec1ff14467e8b6d71b8f10:
+  /@ionic/angular-toolkit/5.0.3_2cb00a5a0bb1b0fc6c1ea241fe869858:
     resolution: {integrity: sha512-xHVvB0FPkvzQ52B74EN8g0IhMj+rPl7oAMAd89P0ajlV3bvRfFyDimgx7HJDhl99qf9a7EhxjB65Yf6M/b1tnw==}
     dependencies:
       '@angular-devkit/architect': 0.1202.13
-      '@angular-devkit/build-angular': 12.2.13_1d8a214862ec1ff14467e8b6d71b8f10
+      '@angular-devkit/build-angular': 12.2.13_2cb00a5a0bb1b0fc6c1ea241fe869858
       '@angular-devkit/core': 12.2.13
       '@angular-devkit/schematics': 12.2.13
       '@schematics/angular': 12.2.13
