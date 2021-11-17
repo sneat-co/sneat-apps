@@ -57,7 +57,7 @@ specifiers:
   eslint-config-prettier: 8.3.0
   firebase: 9.4.1
   hogan.js: 3.0.2
-  ionicons: 5.5.4
+  ionicons: 6.0.0
   jest: 27.3.1
   jest-preset-angular: 10.1.0
   karma: 6.3.9
@@ -104,7 +104,7 @@ dependencies:
   codemirror: 5.63.3
   firebase: 9.4.1
   hogan.js: 3.0.2
-  ionicons: 5.5.4
+  ionicons: 6.0.0
   rxfire: 6.0.3_firebase@9.4.1+rxjs@7.4.0
   rxjs: 7.4.0
   tabulator-tables: 5.0.7
@@ -7812,6 +7812,12 @@ packages:
 
   /ionicons/5.5.4:
     resolution: {integrity: sha512-3ph8X9my3inhabWEZ7N0XRA0MnnNQ1v9a602mLNgWsIXnxE9G5BybIZ/pws/OZZ/hoNlvSjk801N03yL9/FNgQ==}
+    dependencies:
+      '@stencil/core': 2.10.0
+    dev: false
+
+  /ionicons/6.0.0:
+    resolution: {integrity: sha512-p83W1T8jZUlllHAjuIWaDQbI36OYqdrwcf8MhYbKW7+9rjGlCMP9+5OaR0W7tl0QfM004uAiy/zkc7HTpDNKgA==}
     dependencies:
       '@stencil/core': 2.10.0
     dev: false
