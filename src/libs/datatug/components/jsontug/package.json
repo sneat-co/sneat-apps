@@ -2,8 +2,8 @@
 	"name": "@datatug/jsonrows",
 	"version": "0.0.1",
 	"peerDependencies": {
-		"@angular/common": "^12.0.5",
-		"@angular/core": "^12.0.5"
+		"@angular/common": "^12.0.5 || ^13.0.0",
+		"@angular/core": "^12.0.5 || ^13.0.0"
 	},
 	"dependencies": {
 		"tslib": "2.3.1"
