@@ -23,7 +23,7 @@ specifiers:
   '@capacitor/cli': 3.3.2
   '@capacitor/core': 3.3.2
   '@capacitor/ios': 3.3.2
-  '@ctrl/ngx-codemirror': 5.1.0
+  '@ctrl/ngx-codemirror': 5.1.1
   '@generic-ui/fabric': 0.16.3
   '@generic-ui/hermes': 0.16.3
   '@generic-ui/ngx-grid': 0.16.3
@@ -89,7 +89,7 @@ dependencies:
   '@angular/platform-browser-dynamic': 12.2.11_e279577ce9fddd9adf13bbe454ab43a2
   '@angular/router': 12.2.11_fb29ee8425ff23c01e0cae1ae4e8b620
   '@capacitor/core': 3.3.2
-  '@ctrl/ngx-codemirror': 5.1.0_824526076a39bcda44d2f28c6fa2f8e5
+  '@ctrl/ngx-codemirror': 5.1.1_824526076a39bcda44d2f28c6fa2f8e5
   '@generic-ui/fabric': 0.16.3_2d043371b052a027ca4be8db0191e6a2
   '@generic-ui/hermes': 0.16.3_2d043371b052a027ca4be8db0191e6a2
   '@generic-ui/ngx-grid': 0.16.3_a1467887f997435852c58e506bc78e46
@@ -2023,8 +2023,8 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
-  /@ctrl/ngx-codemirror/5.1.0_824526076a39bcda44d2f28c6fa2f8e5:
-    resolution: {integrity: sha512-Y1198CSe2nZp7bf7tS1b5qfp5TFfoC/IPpzU0VA22p26ZDgASpbgPL6GuxtnPrGG9HRGGLJO6A/LXBXM1FOxZw==}
+  /@ctrl/ngx-codemirror/5.1.1_824526076a39bcda44d2f28c6fa2f8e5:
+    resolution: {integrity: sha512-MAByA/cJBZY3yv/cpO87mF9Q24/ptCWf2Pr4n4V1w3G0ya5cKAIyHwIfvJ5nJz/4Gj2i2O/pteDWkyxrbyICoA==}
     peerDependencies:
       '@angular/core': '>=12.0.0-0'
       '@angular/forms': '>=12.0.0-0'
