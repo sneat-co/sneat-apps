@@ -59,7 +59,7 @@ specifiers:
   hogan.js: 3.0.2
   ionicons: 6.0.0
   jest: 27.3.1
-  jest-preset-angular: 11.0.0
+  jest-preset-angular: 11.0.1
   karma: 6.3.9
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
@@ -142,7 +142,7 @@ devDependencies:
   eslint: 8.3.0
   eslint-config-prettier: 8.3.0_eslint@8.3.0
   jest: 27.3.1_ts-node@10.4.0
-  jest-preset-angular: 11.0.0_0a1b6153200ccbf5005468da80e11e0b
+  jest-preset-angular: 11.0.1_0a1b6153200ccbf5005468da80e11e0b
   karma: 6.3.9
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
@@ -9979,8 +9979,8 @@ packages:
     dependencies:
       jest-resolve: 27.3.1
 
-  /jest-preset-angular/11.0.0_0a1b6153200ccbf5005468da80e11e0b:
-    resolution: {integrity: sha512-+Vt6O2q/cvhbbrE4xplZjn3TqLcQpOtkk+zqoCFLW/Lo0fALEJIXECt1Ia288iJtxJU4qm7tLsQy1KmAaN+CzA==}
+  /jest-preset-angular/11.0.1_0a1b6153200ccbf5005468da80e11e0b:
+    resolution: {integrity: sha512-7img58VmxvPtwOrkEEczDbV3cjdO/1qzB8Edbde8/e3GJIIk+6LcPnHOLw+dagJxZhcWagYGbqNbR7dxqntOBQ==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0}
     peerDependencies:
       '@angular/compiler-cli': '>=10.0.0'
@@ -9990,6 +9990,7 @@ packages:
       '@angular/compiler-cli': 13.0.2_55c174922213663cb2bae7b1f5b9606c
       '@angular/core': 13.0.2_rxjs@7.4.0+zone.js@0.11.4
       '@angular/platform-browser-dynamic': 13.0.2_f4754e85b40bc1aed7dddc58bbc14fd9
+      bs-logger: 0.2.6
       esbuild: 0.13.13
       jest-environment-jsdom: 27.3.1
       pretty-format: 27.3.1
