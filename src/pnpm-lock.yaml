@@ -24,9 +24,6 @@ specifiers:
   '@capacitor/core': 3.3.2
   '@capacitor/ios': 3.3.2
   '@ctrl/ngx-codemirror': 5.1.1
-  '@generic-ui/fabric': 0.16.4
-  '@generic-ui/hermes': 0.16.4
-  '@generic-ui/ngx-grid': 0.16.4
   '@ionic-native/core': 5.36.0
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
@@ -90,9 +87,6 @@ dependencies:
   '@angular/router': 13.0.2_e71324d85a902ac733fd3e0d91e978e1
   '@capacitor/core': 3.3.2
   '@ctrl/ngx-codemirror': 5.1.1_83e6fedab5fa55c110e37802334a9ac8
-  '@generic-ui/fabric': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
-  '@generic-ui/hermes': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
-  '@generic-ui/ngx-grid': 0.16.4_deace578c415261e864b6d411375eb58
   '@ionic-native/core': 5.36.0_rxjs@7.4.0
   '@ionic-native/splash-screen': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic-native/status-bar': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
@@ -3470,53 +3464,6 @@ packages:
   /@gar/promisify/1.1.2:
     resolution: {integrity: sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==}
     dev: true
-
-  /@generic-ui/fabric/0.16.4_2f613825cba5b20be657b6b3ae2dbf97:
-    resolution: {integrity: sha512-yFHyIQxBaXdFb03SCLhWGUfhAt9qk+bnKrB7w13f5qMEHCaJ20QU5HdOKCSWuYpSYVDgv5VWT+hzWBXF9rO/fg==}
-    peerDependencies:
-      '@angular/common': 12.2.11
-      '@angular/core': 12.2.11
-      rxjs: 6.6.7
-    dependencies:
-      '@angular/common': 13.0.2_@angular+core@13.0.2+rxjs@7.4.0
-      '@angular/core': 13.0.2_rxjs@7.4.0+zone.js@0.11.4
-      rxjs: 7.4.0
-      tslib: 2.3.1
-    dev: false
-
-  /@generic-ui/hermes/0.16.4_2f613825cba5b20be657b6b3ae2dbf97:
-    resolution: {integrity: sha512-kvY8+0uHmMpkPjSIGULPtPLb6Vj9xi3mBT/tyPOVOWy3FaJ+0a9uiWWsF4WlbkYyDTanjqm5Y3H0ShKzaBmrXg==}
-    peerDependencies:
-      '@angular/common': 12.2.11
-      '@angular/core': 12.2.11
-      rxjs: 6.6.7
-    dependencies:
-      '@angular/common': 13.0.2_@angular+core@13.0.2+rxjs@7.4.0
-      '@angular/core': 13.0.2_rxjs@7.4.0+zone.js@0.11.4
-      rxjs: 7.4.0
-      tslib: 2.3.1
-    dev: false
-
-  /@generic-ui/ngx-grid/0.16.4_deace578c415261e864b6d411375eb58:
-    resolution: {integrity: sha512-Uc8UvBFk19WR2D/KWBctoEm1E//Excd+od8bQuEwhzap76KlzBk/WqcG9bRAD8Wk32zgLxOXKOo/1MqA5703aA==}
-    peerDependencies:
-      '@angular/common': 12.2.11
-      '@angular/core': 12.2.11
-      '@angular/forms': 12.2.11
-      '@angular/platform-browser': 12.2.11
-      '@generic-ui/fabric': 0.16.4
-      '@generic-ui/hermes': 0.16.4
-      rxjs: 6.6.7
-    dependencies:
-      '@angular/common': 13.0.2_@angular+core@13.0.2+rxjs@7.4.0
-      '@angular/core': 13.0.2_rxjs@7.4.0+zone.js@0.11.4
-      '@angular/forms': 13.0.2_e71324d85a902ac733fd3e0d91e978e1
-      '@angular/platform-browser': 13.0.2_07f6bcaeb5577e3bcae450ce44087d22
-      '@generic-ui/fabric': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
-      '@generic-ui/hermes': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
-      rxjs: 7.4.0
-      tslib: 2.3.1
-    dev: false
 
   /@grpc/grpc-js/1.4.1:
     resolution: {integrity: sha512-/chkA48TdAvATHA7RXJPeHQLdfFhpu51974s8htjO/XTDHA41j5+SkR5Io+lr9XsLmkZD6HxLyRAFGmA9wjO2w==}

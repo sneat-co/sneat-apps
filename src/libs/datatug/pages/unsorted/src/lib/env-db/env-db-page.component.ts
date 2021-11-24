@@ -7,7 +7,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import Tabulator from 'tabulator-tables';
+import {Tabulator} from 'tabulator-tables';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getTabulatorCols, IGridColumn } from '@sneat/grid';
 import { routingParamEnvironmentId } from '@sneat/datatug/core';

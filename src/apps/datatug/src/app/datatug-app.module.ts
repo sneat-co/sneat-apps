@@ -27,7 +27,7 @@ import {
 	RandomIdService,
 	RandomModule,
 } from '@sneat/random';
-import { GuiGridModule } from '@generic-ui/ngx-grid';
+// import { GuiGridModule } from '@generic-ui/ngx-grid';
 
 const firebaseApp = firebase.initializeApp(environment.firebaseConfig);
 if (environment.useEmulators) {
@@ -49,7 +49,7 @@ if (environment.useEmulators) {
 		CommonModule,
 		CoreModule,
 		HttpClientModule,
-		GuiGridModule,
+		// GuiGridModule,
 		RandomModule,
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatAppModule,

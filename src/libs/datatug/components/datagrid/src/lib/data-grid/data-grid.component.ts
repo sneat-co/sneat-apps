@@ -10,7 +10,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import Tabulator from 'tabulator-tables';
+import {Tabulator} from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
 
 // export interface IGridDef {
