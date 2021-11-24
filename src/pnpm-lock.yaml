@@ -26,7 +26,7 @@ specifiers:
   '@ctrl/ngx-codemirror': 5.1.1
   '@generic-ui/fabric': 0.16.4
   '@generic-ui/hermes': 0.16.4
-  '@generic-ui/ngx-grid': 0.16.3
+  '@generic-ui/ngx-grid': 0.16.4
   '@ionic-native/core': 5.36.0
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
@@ -92,7 +92,7 @@ dependencies:
   '@ctrl/ngx-codemirror': 5.1.1_83e6fedab5fa55c110e37802334a9ac8
   '@generic-ui/fabric': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
   '@generic-ui/hermes': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
-  '@generic-ui/ngx-grid': 0.16.3_d99f4d790c57f81bb609c2266ab15d39
+  '@generic-ui/ngx-grid': 0.16.4_23bd473d6ec86a1f01e769e11325ee46
   '@ionic-native/core': 5.36.0_rxjs@7.4.0
   '@ionic-native/splash-screen': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic-native/status-bar': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
@@ -3485,7 +3485,7 @@ packages:
     dev: false
 
   /@generic-ui/hermes/0.16.4_2f613825cba5b20be657b6b3ae2dbf97:
-    resolution: {integrity: sha512-kvY8+0uHmMpkPjSIGULPtPLb6Vj9xi3mBT/tyPOVOWy3FaJ+0a9uiWWsF4WlbkYyDTanjqm5Y3H0ShKzaBmrXg==}
+    resolution: {integrity: sha512-kvY8+0uHmMpkPjSIGULPtPLb6Vj9xi3mBT/tyPOVOWy3FaJ+0a9uiWWsF4WlbkYyDTanjqm5Y3H0ShKzaBmrXg==, tarball: '@generic-ui/hermes/-/hermes-0.16.4.tgz'}
     peerDependencies:
       '@angular/common': 12.2.11
       '@angular/core': 12.2.11
@@ -3497,15 +3497,15 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@generic-ui/ngx-grid/0.16.3_d99f4d790c57f81bb609c2266ab15d39:
-    resolution: {integrity: sha512-4nNVtcFyh2JWP/axMHiwDSrMSPjzLUJIS1gjjU9Ge7BO7tcJQYEmtFEPRhr4S2GcZ5tu0za3wMUzmu0381OIWg==, tarball: '@generic-ui/ngx-grid/-/ngx-grid-0.16.3.tgz'}
+  /@generic-ui/ngx-grid/0.16.4_23bd473d6ec86a1f01e769e11325ee46:
+    resolution: {integrity: sha512-Uc8UvBFk19WR2D/KWBctoEm1E//Excd+od8bQuEwhzap76KlzBk/WqcG9bRAD8Wk32zgLxOXKOo/1MqA5703aA==}
     peerDependencies:
       '@angular/common': 12.2.11
       '@angular/core': 12.2.11
       '@angular/forms': 12.2.11
       '@angular/platform-browser': 12.2.11
-      '@generic-ui/fabric': 0.16.3
-      '@generic-ui/hermes': 0.16.3
+      '@generic-ui/fabric': 0.16.4
+      '@generic-ui/hermes': 0.16.4
       rxjs: 6.6.7
     dependencies:
       '@angular/common': 13.0.2_@angular+core@13.0.2+rxjs@7.4.0
