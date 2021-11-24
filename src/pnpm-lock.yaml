@@ -65,7 +65,7 @@ specifiers:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
   karma-jasmine-html-reporter: 1.7.0
-  ng-packagr: 13.0.7
+  ng-packagr: 13.0.8
   prettier: 2.4.1
   rxfire: 6.0.3
   rxjs: 7.4.0
@@ -92,7 +92,7 @@ dependencies:
   '@ctrl/ngx-codemirror': 5.1.1_83e6fedab5fa55c110e37802334a9ac8
   '@generic-ui/fabric': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
   '@generic-ui/hermes': 0.16.4_2f613825cba5b20be657b6b3ae2dbf97
-  '@generic-ui/ngx-grid': 0.16.4_23bd473d6ec86a1f01e769e11325ee46
+  '@generic-ui/ngx-grid': 0.16.4_deace578c415261e864b6d411375eb58
   '@ionic-native/core': 5.36.0_rxjs@7.4.0
   '@ionic-native/splash-screen': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic-native/status-bar': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
@@ -112,7 +112,7 @@ dependencies:
   zone.js: 0.11.4
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.0.3_7f4e34bc955bb76bfa8a79e2b7b9a56f
+  '@angular-devkit/build-angular': 13.0.3_f668c95643e401813df49899686c5d7f
   '@angular-eslint/eslint-plugin': 13.0.1_eslint@8.3.0+typescript@4.4.4
   '@angular-eslint/eslint-plugin-template': 13.0.1_eslint@8.3.0+typescript@4.4.4
   '@angular-eslint/template-parser': 13.0.1_eslint@8.3.0+typescript@4.4.4
@@ -122,7 +122,7 @@ devDependencies:
   '@capacitor/android': 3.3.2_@capacitor+core@3.3.2
   '@capacitor/cli': 3.3.2
   '@capacitor/ios': 3.3.2_@capacitor+core@3.3.2
-  '@ionic/angular-toolkit': 5.0.3_7f4e34bc955bb76bfa8a79e2b7b9a56f
+  '@ionic/angular-toolkit': 5.0.3_f668c95643e401813df49899686c5d7f
   '@nrwl/cli': 13.2.2
   '@nrwl/eslint-plugin-nx': 13.2.2_1fe0464117e4d7f4d768a6995883f150
   '@nrwl/jest': 13.2.2_ts-node@10.4.0
@@ -148,7 +148,7 @@ devDependencies:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1_karma@6.3.9
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.9
-  ng-packagr: 13.0.7_949ffe5c5dc26429e22a2e7f2b078dec
+  ng-packagr: 13.0.8_949ffe5c5dc26429e22a2e7f2b078dec
   prettier: 2.4.1
   ts-jest: 27.0.7_b626c82449d36ccae0aa7169b15092e6
   ts-node: 10.4.0_7540702c48b7fe50dc1d100cfa6ffcf4
@@ -190,7 +190,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/12.2.13_7f4e34bc955bb76bfa8a79e2b7b9a56f:
+  /@angular-devkit/build-angular/12.2.13_f668c95643e401813df49899686c5d7f:
     resolution: {integrity: sha512-iJ1P/RZ1hk2n/HtEqB5ohXvHa+Hf0BXShYskSGrn6/klcTb0eJTCREsFxHk7mNEmRIGPWkjbLAslqpPgwiagXg==}
     engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -261,7 +261,7 @@ packages:
       loader-utils: 2.0.0
       mini-css-extract-plugin: 2.4.2_webpack@5.50.0
       minimatch: 3.0.4
-      ng-packagr: 13.0.7_949ffe5c5dc26429e22a2e7f2b078dec
+      ng-packagr: 13.0.8_949ffe5c5dc26429e22a2e7f2b078dec
       open: 8.2.1
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -306,7 +306,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@angular-devkit/build-angular/13.0.3_7f4e34bc955bb76bfa8a79e2b7b9a56f:
+  /@angular-devkit/build-angular/13.0.3_f668c95643e401813df49899686c5d7f:
     resolution: {integrity: sha512-5KFsknpnq3mc0KwcIDjvmqB3trz5cMt48dB0nrc23zkFI9v4hkpalc/OEg/H3G93K0c9g6dcyxmHkNfsU1+CHw==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -371,7 +371,7 @@ packages:
       loader-utils: 3.0.0
       mini-css-extract-plugin: 2.4.3_webpack@5.64.1
       minimatch: 3.0.4
-      ng-packagr: 13.0.7_949ffe5c5dc26429e22a2e7f2b078dec
+      ng-packagr: 13.0.8_949ffe5c5dc26429e22a2e7f2b078dec
       open: 8.4.0
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -3472,7 +3472,7 @@ packages:
     dev: true
 
   /@generic-ui/fabric/0.16.4_2f613825cba5b20be657b6b3ae2dbf97:
-    resolution: {integrity: sha512-yFHyIQxBaXdFb03SCLhWGUfhAt9qk+bnKrB7w13f5qMEHCaJ20QU5HdOKCSWuYpSYVDgv5VWT+hzWBXF9rO/fg==, tarball: '@generic-ui/fabric/-/fabric-0.16.4.tgz'}
+    resolution: {integrity: sha512-yFHyIQxBaXdFb03SCLhWGUfhAt9qk+bnKrB7w13f5qMEHCaJ20QU5HdOKCSWuYpSYVDgv5VWT+hzWBXF9rO/fg==}
     peerDependencies:
       '@angular/common': 12.2.11
       '@angular/core': 12.2.11
@@ -3485,7 +3485,7 @@ packages:
     dev: false
 
   /@generic-ui/hermes/0.16.4_2f613825cba5b20be657b6b3ae2dbf97:
-    resolution: {integrity: sha512-kvY8+0uHmMpkPjSIGULPtPLb6Vj9xi3mBT/tyPOVOWy3FaJ+0a9uiWWsF4WlbkYyDTanjqm5Y3H0ShKzaBmrXg==, tarball: '@generic-ui/hermes/-/hermes-0.16.4.tgz'}
+    resolution: {integrity: sha512-kvY8+0uHmMpkPjSIGULPtPLb6Vj9xi3mBT/tyPOVOWy3FaJ+0a9uiWWsF4WlbkYyDTanjqm5Y3H0ShKzaBmrXg==}
     peerDependencies:
       '@angular/common': 12.2.11
       '@angular/core': 12.2.11
@@ -3497,7 +3497,7 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@generic-ui/ngx-grid/0.16.4_23bd473d6ec86a1f01e769e11325ee46:
+  /@generic-ui/ngx-grid/0.16.4_deace578c415261e864b6d411375eb58:
     resolution: {integrity: sha512-Uc8UvBFk19WR2D/KWBctoEm1E//Excd+od8bQuEwhzap76KlzBk/WqcG9bRAD8Wk32zgLxOXKOo/1MqA5703aA==}
     peerDependencies:
       '@angular/common': 12.2.11
@@ -3593,11 +3593,11 @@ packages:
       rxjs: 7.4.0
     dev: false
 
-  /@ionic/angular-toolkit/5.0.3_7f4e34bc955bb76bfa8a79e2b7b9a56f:
+  /@ionic/angular-toolkit/5.0.3_f668c95643e401813df49899686c5d7f:
     resolution: {integrity: sha512-xHVvB0FPkvzQ52B74EN8g0IhMj+rPl7oAMAd89P0ajlV3bvRfFyDimgx7HJDhl99qf9a7EhxjB65Yf6M/b1tnw==}
     dependencies:
       '@angular-devkit/architect': 0.1202.13
-      '@angular-devkit/build-angular': 12.2.13_7f4e34bc955bb76bfa8a79e2b7b9a56f
+      '@angular-devkit/build-angular': 12.2.13_f668c95643e401813df49899686c5d7f
       '@angular-devkit/core': 12.2.13
       '@angular-devkit/schematics': 12.2.13
       '@schematics/angular': 12.2.13
@@ -11165,8 +11165,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /ng-packagr/13.0.7_949ffe5c5dc26429e22a2e7f2b078dec:
-    resolution: {integrity: sha512-AzKNRZO0RIkpCFY9uYFYwlmlyEonhy99VW93Z9Dt0dDJNja7Wmy1aqd6voblK5Oa6lzvWIZcAmxBM3je/8lIeg==}
+  /ng-packagr/13.0.8_949ffe5c5dc26429e22a2e7f2b078dec:
+    resolution: {integrity: sha512-m2YhziyqntCsBxZFjqlaoA7Q4eY8yvZzGiTypkIFkG4ORqGb6dXt8WTUu2p+b7vx02bIqTa+1O+1T9KnyDqdiw==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0}
     hasBin: true
     peerDependencies:
