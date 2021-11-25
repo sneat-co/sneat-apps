@@ -63,7 +63,7 @@ specifiers:
   karma-jasmine: 4.0.1
   karma-jasmine-html-reporter: 1.7.0
   ng-packagr: 13.0.8
-  prettier: 2.4.1
+  prettier: 2.5.0
   rxfire: 6.0.3
   rxjs: 7.4.0
   tabulator-tables: 5.0.7
@@ -91,7 +91,7 @@ dependencies:
   '@ionic-native/splash-screen': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic-native/status-bar': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic/angular': 6.0.0-rc.3_6ff7fd53bbe38290545bbe6a52c559bd
-  '@nrwl/angular': 13.2.2_15cd372e5f2d9cdc180269ea908dc1a9
+  '@nrwl/angular': 13.2.2_130c6e8ff47c2cfe1dddb2185219b1f2
   '@sentry/browser': 6.15.0
   '@sneat/random': 0.0.3_336e3dfe30e69082d890ea73d12b6f01
   '@sneat/wormhole': 0.0.5_2f613825cba5b20be657b6b3ae2dbf97
@@ -118,12 +118,12 @@ devDependencies:
   '@capacitor/ios': 3.3.2_@capacitor+core@3.3.2
   '@ionic/angular-toolkit': 5.0.3_f668c95643e401813df49899686c5d7f
   '@nrwl/cli': 13.2.2
-  '@nrwl/eslint-plugin-nx': 13.2.2_1fe0464117e4d7f4d768a6995883f150
+  '@nrwl/eslint-plugin-nx': 13.2.2_f3688cdba258479e8658ca620cf7a2a8
   '@nrwl/jest': 13.2.2_ts-node@10.4.0
   '@nrwl/linter': 13.2.2_ts-node@10.4.0
   '@nrwl/nx-cloud': 12.5.4
   '@nrwl/tao': 13.2.2
-  '@nrwl/workspace': 13.2.2_prettier@2.4.1+ts-node@10.4.0
+  '@nrwl/workspace': 13.2.2_prettier@2.5.0+ts-node@10.4.0
   '@nxtend/capacitor': 12.0.0_@nrwl+workspace@13.2.2
   '@nxtend/ionic-angular': 11.1.1_b20b922d5628c8ccdb92833daa59b74a
   '@trellisorg/make-buildable': 0.0.10_@nrwl+workspace@13.2.2
@@ -143,7 +143,7 @@ devDependencies:
   karma-jasmine: 4.0.1_karma@6.3.9
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.9
   ng-packagr: 13.0.8_949ffe5c5dc26429e22a2e7f2b078dec
-  prettier: 2.4.1
+  prettier: 2.5.0
   ts-jest: 27.0.7_b626c82449d36ccae0aa7169b15092e6
   ts-node: 10.4.0_7540702c48b7fe50dc1d100cfa6ffcf4
   typescript: 4.4.4
@@ -4066,16 +4066,16 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/13.2.2_15cd372e5f2d9cdc180269ea908dc1a9:
+  /@nrwl/angular/13.2.2_130c6e8ff47c2cfe1dddb2185219b1f2:
     resolution: {integrity: sha512-KTtDVmhu793X8rKLiH+DKZDA++1YrDV9vkGHTwN/EVEKYnq1w0m5/TaHyhtfAXUBLl5itPrPBRs10Uviar8Cxw==}
     requiresBuild: true
     dependencies:
       '@angular-devkit/schematics': 13.0.3
-      '@nrwl/cypress': 13.2.2_3646e84897a767900b56fa57a91ca5a2
+      '@nrwl/cypress': 13.2.2_26d18b2305e7c5aa00e6445118d5d243
       '@nrwl/devkit': 13.2.2
       '@nrwl/jest': 13.2.2_ts-node@10.4.0
       '@nrwl/linter': 13.2.2_ts-node@10.4.0
-      '@nrwl/storybook': 13.2.2_3646e84897a767900b56fa57a91ca5a2
+      '@nrwl/storybook': 13.2.2_26d18b2305e7c5aa00e6445118d5d243
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.4.4
       '@schematics/angular': 13.0.3
       find-parent-dir: 0.3.1
@@ -4113,7 +4113,7 @@ packages:
       yargs: 15.4.1
       yargs-parser: 20.0.0
 
-  /@nrwl/cypress/13.2.2_3646e84897a767900b56fa57a91ca5a2:
+  /@nrwl/cypress/13.2.2_26d18b2305e7c5aa00e6445118d5d243:
     resolution: {integrity: sha512-duiUeE15i8DezrQ88s8GLoaT6xZdDAZ21iu/KjMwTm48za/pa2pcCUf8TtbpL8TWzVoFo/7ks61fycmUY+jJow==}
     peerDependencies:
       cypress: '>= 3 < 9'
@@ -4124,7 +4124,7 @@ packages:
       '@cypress/webpack-preprocessor': 5.9.1
       '@nrwl/devkit': 13.2.2
       '@nrwl/linter': 13.2.2_ts-node@10.4.0
-      '@nrwl/workspace': 13.2.2_prettier@2.4.1+ts-node@10.4.0
+      '@nrwl/workspace': 13.2.2_prettier@2.5.0+ts-node@10.4.0
       chalk: 4.1.0
       enhanced-resolve: 5.8.3
       fork-ts-checker-webpack-plugin: 6.2.10
@@ -4171,14 +4171,14 @@ packages:
       semver: 7.3.4
       tslib: 2.3.1
 
-  /@nrwl/eslint-plugin-nx/13.2.2_1fe0464117e4d7f4d768a6995883f150:
+  /@nrwl/eslint-plugin-nx/13.2.2_f3688cdba258479e8658ca620cf7a2a8:
     resolution: {integrity: sha512-HAR7p2QnScXk0LwHvvUSnMZB0oTnYHhFiLOyTYCUQFdp6Mjx7scJdVsm2/NfQh7VCqzDe5qMvKqb5k47TRX2WQ==}
     peerDependencies:
       '@typescript-eslint/parser': ~4.33.0
       eslint-config-prettier: ^8.1.0
     dependencies:
       '@nrwl/devkit': 13.2.2
-      '@nrwl/workspace': 13.2.2_prettier@2.4.1+ts-node@9.1.1
+      '@nrwl/workspace': 13.2.2_prettier@2.5.0+ts-node@9.1.1
       '@typescript-eslint/experimental-utils': 4.33.0_eslint@8.3.0+typescript@4.4.4
       '@typescript-eslint/parser': 5.4.0_eslint@8.3.0+typescript@4.4.4
       confusing-browser-globals: 1.0.10
@@ -4292,13 +4292,13 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/storybook/13.2.2_3646e84897a767900b56fa57a91ca5a2:
+  /@nrwl/storybook/13.2.2_26d18b2305e7c5aa00e6445118d5d243:
     resolution: {integrity: sha512-jYKUObbKOGne/8veF1czzKox/+6OE8glyIOjpBvFsk6z3PKM5m8motIZbQ9skcb0zOQhNLdVVFphHnUyA63Ljw==}
     dependencies:
-      '@nrwl/cypress': 13.2.2_3646e84897a767900b56fa57a91ca5a2
+      '@nrwl/cypress': 13.2.2_26d18b2305e7c5aa00e6445118d5d243
       '@nrwl/devkit': 13.2.2
       '@nrwl/linter': 13.2.2_ts-node@10.4.0
-      '@nrwl/workspace': 13.2.2_prettier@2.4.1+ts-node@10.4.0
+      '@nrwl/workspace': 13.2.2_prettier@2.5.0+ts-node@10.4.0
       core-js: 3.19.0
       semver: 7.3.4
       ts-loader: 9.2.6_typescript@4.4.4
@@ -4352,7 +4352,7 @@ packages:
       tslib: 2.3.1
       yargs-parser: 20.0.0
 
-  /@nrwl/workspace/13.2.2_prettier@2.4.1+ts-node@10.4.0:
+  /@nrwl/workspace/13.2.2_prettier@2.5.0+ts-node@10.4.0:
     resolution: {integrity: sha512-DP+dTUee/hJ8mbF8x9gd5hL0dUmnT6j1c2zujneYMhvrFGdC8M5wbyK5V7tuW9tSUzjVnQeATGrCvJuFz6tOxQ==}
     peerDependencies:
       prettier: ^2.3.0
@@ -4378,7 +4378,7 @@ packages:
       npm-run-all: 4.1.5
       npm-run-path: 4.0.1
       open: 7.4.2
-      prettier: 2.4.1
+      prettier: 2.5.0
       rxjs: 6.6.7
       semver: 7.3.4
       strip-ansi: 6.0.0
@@ -4394,7 +4394,7 @@ packages:
       - ts-node
       - utf-8-validate
 
-  /@nrwl/workspace/13.2.2_prettier@2.4.1+ts-node@9.1.1:
+  /@nrwl/workspace/13.2.2_prettier@2.5.0+ts-node@9.1.1:
     resolution: {integrity: sha512-DP+dTUee/hJ8mbF8x9gd5hL0dUmnT6j1c2zujneYMhvrFGdC8M5wbyK5V7tuW9tSUzjVnQeATGrCvJuFz6tOxQ==}
     peerDependencies:
       prettier: ^2.3.0
@@ -4420,7 +4420,7 @@ packages:
       npm-run-all: 4.1.5
       npm-run-path: 4.0.1
       open: 7.4.2
-      prettier: 2.4.1
+      prettier: 2.5.0
       rxjs: 6.6.7
       semver: 7.3.4
       strip-ansi: 6.0.0
@@ -4443,7 +4443,7 @@ packages:
       '@nrwl/workspace': ^12.0.0
     dependencies:
       '@nrwl/devkit': 12.10.0
-      '@nrwl/workspace': 13.2.2_prettier@2.4.1+ts-node@10.4.0
+      '@nrwl/workspace': 13.2.2_prettier@2.5.0+ts-node@10.4.0
     dev: true
 
   /@nxtend/ionic-angular/11.1.1_b20b922d5628c8ccdb92833daa59b74a:
@@ -4455,7 +4455,7 @@ packages:
       '@angular-devkit/architect': 0.1100.7
       '@angular-devkit/core': 11.0.7
       '@angular-devkit/schematics': 11.0.7
-      '@nrwl/angular': 13.2.2_15cd372e5f2d9cdc180269ea908dc1a9
+      '@nrwl/angular': 13.2.2_130c6e8ff47c2cfe1dddb2185219b1f2
       '@nxtend/capacitor': 12.0.0_@nrwl+workspace@13.2.2
     dev: true
 
@@ -4681,7 +4681,7 @@ packages:
       '@angular-devkit/schematics': '>=9'
       '@nrwl/workspace': '>=9'
     dependencies:
-      '@nrwl/workspace': 13.2.2_prettier@2.4.1+ts-node@10.4.0
+      '@nrwl/workspace': 13.2.2_prettier@2.5.0+ts-node@10.4.0
       lodash.merge: 4.6.2
     dev: true
 
@@ -12610,8 +12610,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  /prettier/2.4.1:
-    resolution: {integrity: sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==}
+  /prettier/2.5.0:
+    resolution: {integrity: sha512-FM/zAKgWTxj40rH03VxzIPdXmj39SwSjwG0heUcNFwI+EMZJnY93yAiKXM3dObIKAM5TA88werc8T/EwhB45eg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
