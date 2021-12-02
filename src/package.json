@@ -82,7 +82,7 @@
     "@nrwl/nx-cloud": "12.5.4",
     "@nrwl/tao": "13.2.3",
     "@nrwl/workspace": "13.2.3",
-    "@nxtend/capacitor": "12.0.0",
+    "@nxtend/capacitor": "12.1.0",
     "@nxtend/ionic-angular": "11.1.1",
     "@trellisorg/make-buildable": "0.0.10",
     "@types/jasmine": "3.10.2",
