@@ -37,7 +37,7 @@ specifiers:
   '@nrwl/nx-cloud': 12.5.4
   '@nrwl/tao': 13.2.3
   '@nrwl/workspace': 13.2.3
-  '@nxtend/capacitor': 12.0.0
+  '@nxtend/capacitor': 12.1.0
   '@nxtend/ionic-angular': 11.1.1
   '@sentry/browser': 6.15.0
   '@sneat/random': 0.0.3
@@ -124,8 +124,8 @@ devDependencies:
   '@nrwl/nx-cloud': 12.5.4
   '@nrwl/tao': 13.2.3
   '@nrwl/workspace': 13.2.3_prettier@2.5.0+ts-node@10.4.0
-  '@nxtend/capacitor': 12.0.0_@nrwl+workspace@13.2.3
-  '@nxtend/ionic-angular': 11.1.1_5756fe3f1d92d9bc34a5c59af429adba
+  '@nxtend/capacitor': 12.1.0_@nrwl+workspace@13.2.3
+  '@nxtend/ionic-angular': 11.1.1_fe145e33711e8dbb09f753ec4259f960
   '@trellisorg/make-buildable': 0.0.10_@nrwl+workspace@13.2.3
   '@types/jasmine': 3.10.2
   '@types/jest': 27.0.3
@@ -4502,8 +4502,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@nxtend/capacitor/12.0.0_@nrwl+workspace@13.2.3:
-    resolution: {integrity: sha512-z4N2v8eG+u00AdxR1DW+lAi+GMJ9qRlV/2yRr9e2VlcS0ipYkd7xd6XPOe+3TmhqIYdL79DDagWZIS5uHIzlAA==}
+  /@nxtend/capacitor/12.1.0_@nrwl+workspace@13.2.3:
+    resolution: {integrity: sha512-7MgZkanXeO5lJ3X6XY5b0NE+XD1058057i+EB71lxXA1TSQH/+GC5ahg2Z10uxgkrrpbXKVsPCV0EYxjWd+d4Q==}
     peerDependencies:
       '@nrwl/workspace': ^12.0.0
     dependencies:
@@ -4511,7 +4511,7 @@ packages:
       '@nrwl/workspace': 13.2.3_prettier@2.5.0+ts-node@10.4.0
     dev: true
 
-  /@nxtend/ionic-angular/11.1.1_5756fe3f1d92d9bc34a5c59af429adba:
+  /@nxtend/ionic-angular/11.1.1_fe145e33711e8dbb09f753ec4259f960:
     resolution: {integrity: sha512-aZdJycT/ziPPTYgomA7DUw6+DPWci096bBrlqIjOsX1z4Jft58F4pOle4Oqp5xO0vzj2a37dU22OmgPE3hkmWQ==}
     peerDependencies:
       '@nrwl/angular': ^11.0.19
@@ -4521,7 +4521,7 @@ packages:
       '@angular-devkit/core': 11.0.7
       '@angular-devkit/schematics': 11.0.7
       '@nrwl/angular': 13.2.3_130c6e8ff47c2cfe1dddb2185219b1f2
-      '@nxtend/capacitor': 12.0.0_@nrwl+workspace@13.2.3
+      '@nxtend/capacitor': 12.1.0_@nrwl+workspace@13.2.3
     dev: true
 
   /@parcel/watcher/2.0.0-alpha.11:
