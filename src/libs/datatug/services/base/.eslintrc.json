@@ -13,7 +13,7 @@
 					"error",
 					{
 						"type": "attribute",
-						"prefix": "datatug",
+						"prefix": "sneat",
 						"style": "camelCase"
 					}
 				],
@@ -21,7 +21,7 @@
 					"error",
 					{
 						"type": "element",
-						"prefix": "datatug",
+						"prefix": "sneat",
 						"style": "kebab-case"
 					}
 				]

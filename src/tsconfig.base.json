@@ -43,6 +43,7 @@
 			"@sneat/core/*": ["libs/core/src/index.ts"],
 			"@sneat/data": ["libs/data/src/index.ts"],
 			"@sneat/data/*": ["libs/data/src/index.ts"],
+			"@sneat/datatug-service-base": ["libs/datatug-service-base/src/index.ts"],
 			"@sneat/datatug/board": ["libs/datatug/board/src/index.ts"],
 			"@sneat/datatug/board/*": ["libs/datatug/board/src/index.ts"],
 			"@sneat/datatug/checks": ["libs/datatug/checks/src/index.ts"],
@@ -80,14 +81,12 @@
 			"@sneat/datatug/db": ["libs/datatug/db/src/index.ts"],
 			"@sneat/datatug/db/*": ["libs/datatug/db/src/index.ts"],
 			"@sneat/datatug/dto": ["libs/datatug/dto/src/index.ts"],
-			"@sneat/datatug/dto/*": ["libs/datatug/dto/src/index.ts"],
 			"@sneat/datatug/editor": ["libs/datatug/editor/src/index.ts"],
 			"@sneat/datatug/executor": ["libs/datatug/executor/src/index.ts"],
 			"@sneat/datatug/executor/*": ["libs/datatug/executor/src/index.ts"],
 			"@sneat/datatug/folders": ["libs/datatug/folders/src/index.ts"],
 			"@sneat/datatug/menu": ["libs/datatug/menu/src/index.ts"],
 			"@sneat/datatug/models": ["libs/datatug/models/src/index.ts"],
-			"@sneat/datatug/models/*": ["libs/datatug/models/src/index.ts"],
 			"@sneat/datatug/nav": ["libs/datatug/nav/src/index.ts"],
 			"@sneat/datatug/nav/*": ["libs/datatug/nav/src/index.ts"],
 			"@sneat/datatug/pages/home": ["libs/datatug/pages/home/src/index.ts"],
@@ -112,9 +111,6 @@
 			"@sneat/datatug/routes": ["libs/datatug/routes/src/index.ts"],
 			"@sneat/datatug/routes/*": ["libs/datatug/routes/src/index.ts"],
 			"@sneat/datatug/services/base": [
-				"libs/datatug/services/base/src/index.ts"
-			],
-			"@sneat/datatug/services/base/*": [
 				"libs/datatug/services/base/src/index.ts"
 			],
 			"@sneat/datatug/services/nav": ["libs/datatug/services/nav/src/index.ts"],

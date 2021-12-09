@@ -7,7 +7,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { SneatTeamApiService } from '@sneat/api';
+// import { SneatTeamApiService } from '@sneat/api';
 import { IUserRecord } from '@sneat/auth-models';
 import {
 	AuthStatuses,
@@ -41,7 +41,7 @@ export class SneatUserService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly db: AngularFirestore,
 		private readonly sneatAuthStateService: SneatAuthStateService,
-		private readonly sneatTeamApiService: SneatTeamApiService
+		// private readonly sneatTeamApiService: SneatTeamApiService
 	) {
 		console.log('SneatUserService.constructor()');
 		this.userCollection = db.collection<IUserRecord>('users');
@@ -75,9 +75,10 @@ export class SneatUserService {
 	}
 
 	public setUserTitle(title: string): Observable<void> {
-		return this.sneatTeamApiService.post<void>('users/set_user_title', {
-			title,
-		});
+		throw new Error('not implemented yet'); // due to circle deps
+		// return this.sneatTeamApiService.post<void>('users/set_user_title', {
+		// 	title,
+		// });
 	}
 
 	public onUserSignedIn(authState: ISneatAuthState): void {

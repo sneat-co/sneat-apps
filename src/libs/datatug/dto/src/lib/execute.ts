@@ -5,7 +5,7 @@ import {
 	NamedParams,
 } from '@sneat/datatug/models';
 import { ICommandResponse } from './response';
-import { IValueCheckResult } from '@sneat/datatug/checks';
+// import { IValueCheckResult } from '@sneat/datatug/checks';
 
 export interface ISelectRequest {
 	// TODO: document where & how it is used
@@ -37,7 +37,7 @@ export interface IRecordsetCheckResult {
 
 export interface IRecordsetCheckResults {
 	recordset: IRecordsetCheckResult[];
-	byColumn: { [i: number]: { [row: number]: IValueCheckResult[] } };
+	// byColumn: { [i: number]: { [row: number]: IValueCheckResult[] } };
 }
 
 export interface IRecordsetResult {

@@ -80,7 +80,7 @@ export interface IDbCatalogSummary {
 	name: string;
 }
 
-export const getDbServerFromId = (driver, id: string): IDbServer => {
+export const getDbServerFromId = (driver: string, id: string): IDbServer => {
 	const v = id.split(':');
 	if (v.length === 1) {
 		return { driver, host: v[0] };
