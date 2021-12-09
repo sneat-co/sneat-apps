@@ -54,7 +54,7 @@
     "@sneat/random": "0.0.3",
     "@sneat/wormhole": "0.0.5",
     "codemirror": "5.64.0",
-    "firebase": "9.6.0",
+    "firebase": "9.6.1",
     "hogan.js": "3.0.2",
     "ionicons": "6.0.0",
     "rxfire": "6.0.3",
