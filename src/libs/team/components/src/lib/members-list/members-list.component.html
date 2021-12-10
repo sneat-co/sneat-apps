@@ -22,12 +22,12 @@
 				<ion-img
 					title="avatar"
 					*ngIf="member.avatar?.gravatar"
-					src="//www.gravatar.com/avatar/{{ member.avatar.gravatar }}"
+					src="//www.gravatar.com/avatar/{{ member.avatar?.gravatar }}"
 				></ion-img>
 				<ion-img
 					title="avatar"
 					*ngIf="member.avatar?.external?.url"
-					[src]="member.avatar.external.url"
+					[src]="member.avatar?.external?.url"
 				></ion-img>
 				<ion-img
 					title="avatar"

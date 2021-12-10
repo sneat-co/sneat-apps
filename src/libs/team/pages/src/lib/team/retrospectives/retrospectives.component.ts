@@ -5,7 +5,7 @@ import { IRecord } from '@sneat/data';
 import { ITeam } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/user';
 import { RetroItemType } from '@sneat/scrumspace/retrospectives';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, TeamService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-team-retrospectives',

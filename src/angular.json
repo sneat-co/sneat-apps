@@ -3126,6 +3126,7 @@
 			"architect": {
 				"build": {
 					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/team/pages"],
 					"options": {
 						"project": "libs/team/pages/ng-package.json"
 					},
@@ -3166,7 +3167,8 @@
 			"prefix": "sneat",
 			"architect": {
 				"build": {
-					"builder": "@nrwl/angular:package",
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/team/services"],
 					"options": {
 						"project": "libs/team/services/ng-package.json"
 					},

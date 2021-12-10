@@ -1,10 +1,10 @@
 <ion-img
 	title="avatar"
 	*ngIf="avatar?.gravatar"
-	src="//www.gravatar.com/avatar/{{ avatar.gravatar }}"
+	src="//www.gravatar.com/avatar/{{ avatar?.gravatar }}"
 ></ion-img>
 <ion-img
 	title="avatar"
 	*ngIf="avatar?.external"
-	[src]="avatar.external.url"
+	[src]="avatar?.external?.url"
 ></ion-img>

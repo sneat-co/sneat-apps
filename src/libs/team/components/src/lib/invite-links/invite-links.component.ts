@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatUserService } from '@sneat/user';
 import { ITeam } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team-services';
+import { TeamNavService } from '@sneat/team/services';
 
 export const stringHash = (s: string): number => {
 	let hash = 0;

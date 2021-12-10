@@ -13,7 +13,7 @@ import { listAddRemoveAnimation } from '@sneat/animations';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/user';
 import { IMemberInfo, ITeam, MemberRole, MemberRoleEnum } from "@sneat/team/models";
-import { TeamNavService, TeamService } from "@sneat/team-services";
+import { TeamNavService, TeamService } from "@sneat/team/services";
 
 @Component({
 	selector: 'sneat-members-list',
