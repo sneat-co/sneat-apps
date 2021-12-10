@@ -38,10 +38,10 @@
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>
-	<app-members-list
+	<sneat-members-list
 		[team]="team"
 		[allMembers]="team?.data?.members"
 		[role]="membersRoleTab === '*' ? undefined : membersRoleTab"
 		(selfRemoved)="onSelfRemoved()"
-	></app-members-list>
+	></sneat-members-list>
 </ion-card>

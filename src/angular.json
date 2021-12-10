@@ -45,14 +45,21 @@
 			"sourceRoot": "libs/animations/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/animations"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/animations/src/**/*.ts",
-							"libs/animations/src/**/*.html"
-						]
-					}
+						"project": "libs/animations/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/animations/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/animations/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -60,6 +67,15 @@
 					"options": {
 						"jestConfig": "libs/animations/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/animations/src/**/*.ts",
+							"libs/animations/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -215,15 +231,27 @@
 			"prefix": "sneat",
 			"architect": {
 				"build": {
-					"builder": "@nrwl/angular:package",
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/auth-ui"],
 					"options": {
-						"tsConfig": "libs/auth-ui/tsconfig.lib.json",
 						"project": "libs/auth-ui/ng-package.json"
 					},
 					"configurations": {
 						"production": {
 							"tsConfig": "libs/auth-ui/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/auth-ui/tsconfig.lib.json"
 						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/auth-ui"],
+					"options": {
+						"jestConfig": "libs/auth-ui/jest.config.js",
+						"passWithNoTests": true
 					}
 				},
 				"lint": {
@@ -234,17 +262,9 @@
 							"libs/auth-ui/src/**/*.html"
 						]
 					}
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/auth-ui"],
-					"options": {
-						"jestConfig": "libs/auth-ui/jest.config.js",
-						"passWithNoTests": true
-					}
 				}
 			},
-			"tags": ["scope:public", "type:util", "target:all"]
+			"tags": []
 		},
 		"components-card-list": {
 			"projectType": "library",
@@ -1017,6 +1037,7 @@
 			"architect": {
 				"build": {
 					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/folders"],
 					"options": {
 						"project": "libs/datatug/folders/ng-package.json"
 					},
@@ -3020,7 +3041,8 @@
 			"prefix": "sneat",
 			"architect": {
 				"build": {
-					"builder": "@nrwl/angular:package",
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/team/components"],
 					"options": {
 						"project": "libs/team/components/ng-package.json"
 					},

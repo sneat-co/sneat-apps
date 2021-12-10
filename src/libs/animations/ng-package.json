@@ -1,6 +1,6 @@
 {
 	"$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-	"dest": "../../dist/libs/auth-ui",
+	"dest": "../../dist/libs/animations",
 	"lib": {
 		"entryFile": "src/index.ts"
 	}

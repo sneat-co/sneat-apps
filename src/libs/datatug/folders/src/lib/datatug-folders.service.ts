@@ -12,7 +12,7 @@ export class DatatugFoldersService {
 		private readonly storeServiceFactory: DatatugStoreServiceFactory
 	) {}
 
-	watchFolder(ref: IProjectItemRef): Observable<IFolder | null> {
+	watchFolder(ref: IProjectItemRef): Observable<IFolder | null | undefined> {
 		const storeService = this.storeServiceFactory.getDatatugStoreService(
 			ref.storeId
 		);

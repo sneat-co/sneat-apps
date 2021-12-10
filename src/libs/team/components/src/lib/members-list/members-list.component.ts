@@ -8,21 +8,15 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { TeamService } from '../../../../services/src/lib/team.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	IMemberInfo,
-	ITeam,
-	MemberRole,
-	MemberRoleEnum,
-} from '../../../../models/src/lib/models';
-import { TeamNavService } from '../../../../services/src/lib';
 import { listAddRemoveAnimation } from '@sneat/animations';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/user';
+import { IMemberInfo, ITeam, MemberRole, MemberRoleEnum } from "@sneat/team/models";
+import { TeamNavService, TeamService } from "@sneat/team-services";
 
 @Component({
-	selector: 'app-members-list',
+	selector: 'sneat-members-list',
 	templateUrl: './members-list.component.html',
 	styleUrls: ['./members-list.component.scss'],
 	animations: listAddRemoveAnimation,
