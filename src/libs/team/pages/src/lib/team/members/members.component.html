@@ -41,7 +41,7 @@
 	<app-members-list
 		[team]="team"
 		[allMembers]="team?.data?.members"
-		[role]="membersRoleTab === '*' ? null : membersRoleTab"
+		[role]="membersRoleTab === '*' ? undefined : membersRoleTab"
 		(selfRemoved)="onSelfRemoved()"
 	></app-members-list>
 </ion-card>

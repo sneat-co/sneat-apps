@@ -20,7 +20,7 @@ import {
 	TimerFactory,
 } from '../../../../../meeting/src/lib/timer/timer.service';
 import { IRecord } from '@sneat/data';
-import { ITeam } from '@sneat/team-models';
+import { ITeam } from '@sneat/team/models';
 import { secondsToStr } from '@sneat/datetime';
 
 @Component({

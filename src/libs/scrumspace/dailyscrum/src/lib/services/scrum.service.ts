@@ -11,7 +11,7 @@ import { HttpParams } from '@angular/common/http';
 import firebase from 'firebase';
 import FieldPath = firebase.firestore.FieldPath;
 import { BaseMeetingService } from '@sneat/meeting';
-import { IMemberInfo, ITeam } from '@sneat/team-models';
+import { IMemberInfo, ITeam } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { SneatTeamApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

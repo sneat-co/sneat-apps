@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { IRecord } from '@sneat/data';
-import { ITeam, TeamService } from '@sneat/team-models';
+import { ITeam, TeamService } from '@sneat/team/models';
 import { IScrum } from '@sneat/scrumspace/scrummodels';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { NavService } from '@sneat/datatug/core';

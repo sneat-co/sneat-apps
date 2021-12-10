@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-shadow
-import { ITaskRequest } from '@sneat/team-models';
+import { ITaskRequest } from '@sneat/team/models';
 import { IByUser, IMeetingRequest, ITimerState } from '@sneat/meeting';
 
 export enum TimerOperationEnum {

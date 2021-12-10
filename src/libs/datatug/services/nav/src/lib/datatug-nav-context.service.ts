@@ -264,12 +264,12 @@ export class DatatugNavContextService {
 			currentProject.ref.projectId !== id ||
 			currentProject.ref.storeId !== currentStoreId
 		) {
-			let storeType: DatatugProjStoreType;
-			if (currentStoreId === STORE_ID_GITHUB_COM) {
-				storeType = STORE_TYPE_GITHUB;
-			} else {
-				storeType = 'agent';
-			}
+			// let storeType: DatatugProjStoreType;
+			// if (currentStoreId === STORE_ID_GITHUB_COM) {
+			// 	storeType = STORE_TYPE_GITHUB;
+			// } else {
+			// 	storeType = 'agent';
+			// }
 			const projectContext: IProjectContext = {
 				// brief: {access: undefined, title: undefined},
 				store: { ref: parseStoreRef(currentStoreId) },

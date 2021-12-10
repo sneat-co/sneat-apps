@@ -15,7 +15,7 @@ import {
 } from 'rxjs';
 import { map, mergeMap, shareReplay, take, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { getStoreUrl } from '@sneat/datatug/nav';
+import { getStoreUrl } from '@sneat/api';
 import {
 	IProjectRef,
 	isValidProjectRef,
@@ -67,6 +67,9 @@ export class ProjectService {
 			throw new Error('TEMP DEBUG: storeId === agent, expected firestore');
 		}
 		const id = projectRefToString(projectRef);
+		if (!id) {
+			throw new Error('project id is undefined');
+		}
 		let subj = this.projSummary[id];
 		if (subj) {
 			console.log(
@@ -77,7 +80,7 @@ export class ProjectService {
 				'ProjectService.watchProjectSummary() => creating new subject for',
 				id
 			);
-			this.projSummary[id] = subj = new ReplaySubject();
+			this.projSummary[id] = subj = new ReplaySubject(1);
 			if (projectRef.storeId === 'firestore') {
 				this.firestoreChanges(projectRef.projectId)
 					.pipe(
@@ -98,7 +101,7 @@ export class ProjectService {
 		return subj.asObservable();
 	}
 
-	private firestoreChanges(id: string): Observable<IProjectSummary> {
+	private firestoreChanges(id: string): Observable<IProjectSummary | undefined> {
 		console.log(`ProjectService.firestoreChanges(${id})`);
 		return this.projectsCollection
 			.doc(id)

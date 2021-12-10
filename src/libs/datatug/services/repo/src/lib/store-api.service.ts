@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { getStoreUrl } from '@sneat/datatug/nav';
-import { SneatApiServiceFactory } from '@sneat/api';
+import { getStoreUrl } from '@sneat/api';
+import { IHttpRequestOptions, SneatApiServiceFactory } from "@sneat/api";
 import { parseStoreRef } from '@sneat/core';
 
 @Injectable({ providedIn: 'root' })
@@ -60,21 +60,4 @@ export class StoreApiService {
 		const url = StoreApiService.getUrl(storeId, path);
 		return this.httpClient.delete<T>(url, options);
 	}
-}
-
-export interface IHttpRequestOptions {
-	headers?:
-		| HttpHeaders
-		| {
-				[header: string]: string | string[];
-		  };
-	observe?: 'body';
-	params?:
-		| HttpParams
-		| {
-				[param: string]: string | string[];
-		  };
-	reportProgress?: boolean;
-	responseType?: 'json';
-	withCredentials?: boolean;
 }

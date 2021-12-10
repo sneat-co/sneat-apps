@@ -1,6 +1,6 @@
-import firebase from 'firebase';
+import { IMeetingRequest } from '../models';
+import firebase from "firebase/compat";
 import Timestamp = firebase.firestore.Timestamp;
-import { IMeetingRequest } from '@sneat/meeting';
 
 // eslint-disable-next-line no-shadow
 export enum TimerOperationEnum {
@@ -49,6 +49,7 @@ export interface ITimerState {
 }
 
 export interface IMeetingTimerRequest extends IMeetingRequest {
+	team: string; // TODO: remove temporary workaround, should come from: IMeetingRequest < ITeamRequest
 	operation: TimerOperation;
 }
 

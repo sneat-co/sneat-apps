@@ -1,4 +1,4 @@
-import { IBy, MemberRole } from '@sneat/team-models';
+import { IBy, MemberRole } from '@sneat/team/models';
 import { Modified } from '@sneat/data';
 import { IAvatar } from '@sneat/auth-models';
 import { IMeeting } from '@sneat/meeting';

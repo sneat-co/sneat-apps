@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
-import { ITeam } from '@sneat/team-models';
+import { ITeam } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/user';
 import { RetroItemType } from '@sneat/scrumspace/retrospectives';
 import { TeamNavService, TeamService } from '@sneat/team-services';

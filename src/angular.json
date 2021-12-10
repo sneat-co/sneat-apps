@@ -1521,14 +1521,21 @@
 			"sourceRoot": "libs/datatug/services/repo/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/services/repo"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/datatug/services/repo/src/**/*.ts",
-							"libs/datatug/services/repo/src/**/*.html"
-						]
-					}
+						"project": "libs/datatug/services/repo/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/services/repo/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/services/repo/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -1536,6 +1543,15 @@
 					"options": {
 						"jestConfig": "libs/datatug/services/repo/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/services/repo/src/**/*.ts",
+							"libs/datatug/services/repo/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -1547,14 +1563,21 @@
 			"sourceRoot": "libs/datatug/services/unsorted/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/services/unsorted"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/datatug/services/unsorted/src/**/*.ts",
-							"libs/datatug/services/unsorted/src/**/*.html"
-						]
-					}
+						"project": "libs/datatug/services/unsorted/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/services/unsorted/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/services/unsorted/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -1562,6 +1585,15 @@
 					"options": {
 						"jestConfig": "libs/datatug/services/unsorted/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/services/unsorted/src/**/*.ts",
+							"libs/datatug/services/unsorted/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -1930,14 +1962,21 @@
 			"sourceRoot": "libs/grid/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:package",
+					"outputs": ["dist/libs/grid"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/grid/src/**/*.ts",
-							"libs/grid/src/**/*.html"
-						]
-					}
+						"project": "libs/grid/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/grid/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/grid/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -1945,6 +1984,15 @@
 					"options": {
 						"jestConfig": "libs/grid/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/grid/src/**/*.ts",
+							"libs/grid/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -2419,14 +2467,21 @@
 			"sourceRoot": "libs/meeting/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:package",
+					"outputs": ["dist/libs/meeting"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/meeting/src/**/*.ts",
-							"libs/meeting/src/**/*.html"
-						]
-					}
+						"project": "libs/meeting/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/meeting/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/meeting/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -2434,6 +2489,15 @@
 					"options": {
 						"jestConfig": "libs/meeting/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/meeting/src/**/*.ts",
+							"libs/meeting/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -2992,6 +3056,7 @@
 			"architect": {
 				"build": {
 					"builder": "@nrwl/angular:package",
+					"outputs": ["dist/libs/team/models"],
 					"options": {
 						"project": "libs/team/models/ng-package.json"
 					},

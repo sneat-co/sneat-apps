@@ -5,7 +5,7 @@ import { TeamService } from '../../../../services/src/lib/team.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MemberService } from '../../../../services/src/lib/member.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAddTeamMemberRequest, ITeam } from '@sneat/team-models';
+import { IAddTeamMemberRequest, ITeam } from '@sneat/team/models';
 import { IUserTeamInfoWithId } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 

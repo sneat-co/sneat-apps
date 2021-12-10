@@ -126,23 +126,15 @@
 			"@sneat/datatug/services/repo": [
 				"libs/datatug/services/repo/src/index.ts"
 			],
-			"@sneat/datatug/services/repo/*": [
-				"libs/datatug/services/repo/src/index.ts"
-			],
 			"@sneat/datatug/services/unsorted": [
-				"libs/datatug/services/unsorted/src/index.ts"
-			],
-			"@sneat/datatug/services/unsorted/*": [
 				"libs/datatug/services/unsorted/src/index.ts"
 			],
 			"@sneat/datetime": ["libs/datetime/src/index.ts"],
 			"@sneat/datetime/*": ["libs/datetime/src/index.ts"],
 			"@sneat/grid": ["libs/grid/src/index.ts"],
-			"@sneat/grid/*": ["libs/grid/src/index.ts"],
 			"@sneat/logging": ["libs/logging/src/index.ts"],
 			"@sneat/logging/*": ["libs/logging/src/index.ts"],
 			"@sneat/meeting": ["libs/meeting/src/index.ts"],
-			"@sneat/meeting/*": ["libs/meeting/src/index.ts"],
 			"@sneat/scrumspace/dailyscrum": [
 				"libs/scrumspace/dailyscrum/src/index.ts"
 			],
@@ -162,10 +154,10 @@
 				"libs/scrumspace/scrummodels/src/index.ts"
 			],
 			"@sneat/team-components": ["libs/team/components/src/index.ts"],
-			"@sneat/team-models": ["libs/team/models/src/index.ts"],
 			"@sneat/team-pages": ["libs/team/pages/src/index.ts"],
 			"@sneat/team-services": ["libs/team/services/src/index.ts"],
 			"@sneat/team/*": ["libs/team/src/index.ts"],
+			"@sneat/team/models": ["libs/team/models/src/index.ts"],
 			"@sneat/timer": ["libs/timer/src/index.ts"],
 			"@sneat/timer/*": ["libs/timer/src/index.ts"],
 			"@sneat/user": ["libs/user/src/index.ts"]

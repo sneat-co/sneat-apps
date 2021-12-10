@@ -4,7 +4,33 @@ import { SneatApiService } from './sneat-team-api.service';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { parseStoreRef, storeRefToId } from '@sneat/core';
-import { getStoreUrl } from '@sneat/datatug/nav';
+
+export const getStoreUrl = (storeId: string): string => {
+	if (storeId === 'firestore') {
+		const v = 'http://localhost:4300/v0'; //environment.agents.firestoreStoreAgent;
+		console.log('firestoreStoreAgent', v);
+		return v.endsWith('/') ? v.substring(0, v.length - 1) : v;
+	}
+	if (
+		!storeId ||
+		storeId.startsWith('http://') ||
+		storeId.startsWith('https://')
+	) {
+		return storeId;
+	}
+	if (storeId.startsWith('http-')) {
+		return storeId.replace('http-', 'http://');
+	}
+	if (storeId.startsWith('https-')) {
+		return storeId.replace('https-', 'https://');
+	}
+	const a = storeId.split(':');
+	storeId = `//${a[0]}:${a[1]}`;
+	if (a[2]) {
+		storeId += ':' + a[2];
+	}
+	return storeId;
+};
 
 @Injectable({ providedIn: 'root' })
 export class SneatApiServiceFactory {

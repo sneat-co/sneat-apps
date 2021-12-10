@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { TeamService } from '../../../../services/src/lib/team.service';
 import { NavController } from '@ionic/angular';
 import { IErrorLogger, ErrorLogger } from '@sneat/logging';
-import { IMemberInfo, ITeam } from '@sneat/team-models';
+import { IMemberInfo, ITeam } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/user';
 

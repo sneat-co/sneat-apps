@@ -1,26 +1,26 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from "@angular/core";
 
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil } from "rxjs/operators";
 import {
 	interval,
 	Observable,
 	ReplaySubject,
 	Subject,
 	Subscription,
-	throwError,
-} from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+	throwError
+} from "rxjs";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+
+import firebase from "firebase/compat";
+import Timestamp = firebase.firestore.Timestamp;
 import {
 	IMeetingTimerRequest,
 	IMemberTimerRequest,
 	ITimerResponse,
 	ITimerState,
-	TimerOperation,
-	TimerOperationEnum,
-	TimerStatusEnum,
-} from '@sneat/meeting';
-import firebase from 'firebase';
-import Timestamp = firebase.firestore.Timestamp;
+	TimerOperation, TimerOperationEnum,
+	TimerStatusEnum
+} from "./models";
 
 export interface IMeetingTimerService {
 	readonly meetingType: string;
@@ -35,10 +35,10 @@ export class Timer {
 	// eslint-disable-next-line @typescript-eslint/member-ordering
 	public readonly onTick = this.tick.asObservable();
 
-	private state: ITimerState;
-	private prevState: ITimerState;
+	private state?: ITimerState;
+	private prevState?: ITimerState;
 
-	private intervalSubscription: Subscription;
+	private intervalSubscription?: Subscription;
 	private destroyed = new Subject<boolean>();
 
 	private lastTick?: ITimerState;
@@ -49,7 +49,8 @@ export class Timer {
 		private readonly released: () => void,
 		public readonly teamId: string,
 		public readonly meetingId: string
-	) {}
+	) {
+	}
 
 	public releaseTimer(): void {
 		if (this.intervalSubscription) {
@@ -62,27 +63,28 @@ export class Timer {
 
 	public updateTimerState(timerState?: ITimerState): ITimerState {
 		console.log(
-			'Timer.updateTimerState()',
+			"Timer.updateTimerState()",
 			{ ...timerState },
 			{ ...this.state }
 		);
 		if (!timerState) {
 			this.state = {};
-			this.tick.next();
-			return;
+			this.tick.next(this.state);
+			return this.state;
 		}
+		timerState = timerState || {};
 		try {
 			const prevState = this.state;
 			const prevAt =
-				prevState && typeof prevState.at === 'string'
+				prevState && typeof prevState.at === "string"
 					? Timestamp.fromDate(new Date(prevState.at))
 					: (prevState?.at as Timestamp);
 			const { elapsedSeconds } = timerState;
 			const at =
-				typeof timerState.at === 'string'
+				typeof timerState.at === "string"
 					? Timestamp.fromDate(new Date(timerState.at))
 					: timerState.at;
-			if (prevAt?.nanoseconds !== at.nanoseconds) {
+			if (at?.nanoseconds && prevAt?.nanoseconds !== at.nanoseconds) {
 				this.state = {
 					...timerState,
 					isToggling: this.state?.isToggling,
@@ -92,12 +94,12 @@ export class Timer {
 					elapsedSeconds:
 						timerState.status === TimerStatusEnum.active
 							? (elapsedSeconds || 0) +
-							  (new Date().getTime() / 1000 - at.seconds)
-							: timerState?.elapsedSeconds,
+							(new Date().getTime() / 1000 - at.seconds)
+							: timerState?.elapsedSeconds
 				};
 			}
-			if (isNaN(this.state.elapsedSeconds)) {
-				console.log('this.state.elapsedSeconds is NaN');
+			if (isNaN(this.state?.elapsedSeconds as number)) {
+				console.log("this.state.elapsedSeconds is NaN");
 			}
 			switch (this.state?.status) {
 				case undefined:
@@ -119,12 +121,12 @@ export class Timer {
 					this.emitTick();
 			}
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to update timer state', {
+			this.errorLogger.logError(e, "Failed to update timer state", {
 				feedback: false,
-				show: false,
+				show: false
 			});
 		}
-		return this.state;
+		return this.state || {};
 	}
 
 	public startTimer(member?: string): Observable<never> {
@@ -153,7 +155,7 @@ export class Timer {
 						: TimerOperationEnum.start;
 				break;
 			default:
-				return throwError(`Unexpected timer status: ${this.state.status}`);
+				return throwError(() => `Unexpected timer status: ${this.state?.status}`);
 		}
 		return this.setTimerState(operation, member);
 	}
@@ -174,9 +176,9 @@ export class Timer {
 					operation === TimerOperationEnum.start
 						? TimerStatusEnum.active
 						: operation === TimerOperationEnum.stop
-						? TimerStatusEnum.stopped
-						: undefined,
-				activeMemberId: member,
+							? TimerStatusEnum.stopped
+							: undefined,
+				activeMemberId: member
 			};
 			this.emitTick();
 
@@ -189,18 +191,25 @@ export class Timer {
 					this.stopTicking();
 					break;
 				default:
-					return throwError(() => 'Unknown operation: ' + operation);
+					return throwError(() => "Unknown operation: " + operation);
 			}
-			const request: IMemberTimerRequest = {
-				team: this.teamId,
-				meeting: this.meetingId,
-				operation,
-				member,
-			};
-			const toggleTimerApi = member
-				? this.timerService.toggleMemberTimer
-				: this.timerService.toggleMeetingTimer;
-			toggleTimerApi(request)
+			let toggleTimerMethod: () => Observable<ITimerResponse>;
+			if (member) {
+				toggleTimerMethod = () => this.timerService.toggleMemberTimer({
+					team: this.teamId,
+					meeting: this.meetingId,
+					operation,
+					member
+				});
+			} else {
+				toggleTimerMethod = () => this.timerService.toggleMeetingTimer({
+					team: this.teamId,
+					meeting: this.meetingId,
+					operation
+				});
+			}
+
+			toggleTimerMethod()
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: (response) => {
@@ -211,8 +220,8 @@ export class Timer {
 							}
 						} catch (e) {
 							this.errorLogger.logError(
-								'toggleTimer() => failed to process API response',
-								e
+								e,
+								"toggleTimer() => failed to process API response"
 							);
 						}
 					},
@@ -224,14 +233,14 @@ export class Timer {
 							}
 						} catch (e) {
 							this.errorLogger.logError(
-								'toggleTimer() => failed to process observable error',
-								e
+								e,
+								"toggleTimer() => failed to process observable error"
 							);
 						}
-					},
+					}
 				});
 		} catch (e) {
-			this.errorLogger.logError('toggleTimer() => failed to execute', e);
+			this.errorLogger.logError(e, "toggleTimer() => failed to execute");
 			try {
 				this.onTimerToggleFailed(operation);
 				if (!result.closed) {
@@ -239,8 +248,8 @@ export class Timer {
 				}
 			} catch (ee) {
 				this.errorLogger.logError(
-					'toggleTimer() => failed to process error',
-					ee
+					ee,
+					"toggleTimer() => failed to process error"
 				);
 			}
 		}
@@ -250,7 +259,7 @@ export class Timer {
 	private onTimerToggleFailed = (operation: TimerOperation): void => {
 		this.state = {
 			...this.prevState,
-			isToggling: false,
+			isToggling: false
 		};
 		if (operation === TimerOperationEnum.start) {
 			this.unsubscribeInterval();
@@ -259,11 +268,11 @@ export class Timer {
 	};
 
 	private onTimerResponse = (response: ITimerResponse): ITimerState => {
-		console.log('onTimerResponse()', response);
+		console.log("onTimerResponse()", response);
 		this.prevState = undefined;
 		this.state = {
 			...this.state,
-			isToggling: false,
+			isToggling: false
 		};
 		return this.updateTimerState(response.timer);
 	};
@@ -278,23 +287,23 @@ export class Timer {
 		if (this.state?.status !== TimerStatusEnum.active) {
 			this.state = {
 				...this.state,
-				status: TimerStatusEnum.active,
+				status: TimerStatusEnum.active
 			};
 		}
 		this.unsubscribeInterval();
 		this.emitTick();
 		this.intervalSubscription = interval(1000).subscribe({
-			next: this.nextSecond,
+			next: this.nextSecond
 		});
 	}
 
 	private stopTicking(): void {
 		this.unsubscribeInterval();
-		console.log('Timer.stopTicking()', this.state?.status);
+		console.log("Timer.stopTicking()", this.state?.status);
 		if (this.state?.status !== TimerStatusEnum.stopped) {
 			this.state = {
 				...this.state,
-				status: TimerStatusEnum.stopped,
+				status: TimerStatusEnum.stopped
 			};
 		}
 		this.emitTick();
@@ -303,23 +312,23 @@ export class Timer {
 	private nextSecond = (): void => {
 		this.state = {
 			...this.state,
-			elapsedSeconds: (this.state.elapsedSeconds || 0) + 1,
+			elapsedSeconds: (this.state?.elapsedSeconds || 0) + 1
 		};
-		if (this.state.activeMemberId) {
+		if (this.state?.activeMemberId) {
 			if (!this.state.secondsByMember) {
 				this.state.secondsByMember = {};
 			}
 			this.state.secondsByMember = {
 				...this.state.secondsByMember,
 				[this.state.activeMemberId]:
-					(this.state.secondsByMember[this.state.activeMemberId] ?? 0) + 1,
+				(this.state.secondsByMember[this.state.activeMemberId] ?? 0) + 1
 			};
 		}
 		this.emitTick();
 	};
 
 	private emitTick(): void {
-		const state = this.state,
+		const state = this.state || {},
 			lastTick = this.lastTick;
 		if (
 			!lastTick ||
@@ -329,10 +338,10 @@ export class Timer {
 			state.isToggling !== lastTick.isToggling
 		) {
 			this.lastTick = state;
-			console.log('Timer.emitTick()', JSON.stringify(state));
+			console.log("Timer.emitTick()", JSON.stringify(state));
 			this.tick.next(state);
 		} else {
-			console.log('Timer.emitTick(): state not changed');
+			console.log("Timer.emitTick(): state not changed");
 		}
 	}
 }
@@ -343,7 +352,8 @@ export class TimerFactory {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+	) {
+	}
 
 	public getTimer(
 		timerService: IMeetingTimerService,
@@ -351,14 +361,14 @@ export class TimerFactory {
 		meetingId: string
 	): Timer {
 		if (!teamId) {
-			throw new Error('teamId is required');
+			throw new Error("teamId is required");
 		}
 		if (!meetingId) {
-			throw new Error('meetingId is required');
+			throw new Error("meetingId is required");
 		}
 		const { meetingType } = timerService;
 		if (!meetingType) {
-			throw new Error('timerService.meetingType is required');
+			throw new Error("timerService.meetingType is required");
 		}
 		const k = `${teamId}/${meetingType}/${meetingId}`;
 		return (

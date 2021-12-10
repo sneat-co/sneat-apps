@@ -12,7 +12,7 @@ import {
 	IDbServerSummary,
 	IProjDbServerSummary,
 } from '@sneat/datatug/models';
-import { getStoreUrl } from '@sneat/datatug/nav';
+import { getStoreUrl } from '@sneat/api';
 import { GetServerDatabasesRequest } from '@sneat/datatug/dto';
 import { IProjectRef } from '@sneat/datatug/core';
 
@@ -45,7 +45,7 @@ export class DbServerService {
 		console.log('DbServerService.getDatabaseCatalogs()', request);
 		const target = this.projectContextService.current;
 		if (!target) {
-			return throwError(new Error('projectContextService.current is not set'));
+			throw new Error('projectContextService.current is not defined');
 		}
 		const params: any = {
 			...request.dbServer,
@@ -59,6 +59,9 @@ export class DbServerService {
 
 	public addDbServer(dbServer: IDbServer): Observable<IDbServerSummary> {
 		const target = this.projectContextService.current;
+		if (!target) {
+			throw new Error('this.projectContextService.current is not defined');
+		}
 		const params: any = { proj: target.projectId, ...dbServer };
 		return this.http.post<IDbServerSummary>(
 			`${getStoreUrl(target.storeId)}/dbserver-add`,
@@ -70,6 +73,9 @@ export class DbServerService {
 	public deleteDbServer(dbServer: IDbServer): Observable<void> {
 		console.log('deleteDbServer', dbServer);
 		const target = this.projectContextService.current;
+		if (!target) {
+			throw new Error('this.projectContextService.current is not defined');
+		}
 		const params: any = { proj: target.projectId, ...dbServer };
 		return this.http.delete<void>(
 			`${getStoreUrl(target.storeId)}/dbserver-delete`,

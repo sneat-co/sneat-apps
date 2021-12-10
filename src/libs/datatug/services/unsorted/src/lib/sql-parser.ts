@@ -47,11 +47,11 @@ export class SqlParser {
 				},
 			};
 		}
-		let m: RegExpMatchArray;
+		let m: RegExpMatchArray | null;
 		while ((m = this.reJoin.exec(text)) !== null) {
 			console.log(m);
 			if (m) {
-				q.joins.push({
+				q.joins?.push({
 					match: m,
 					comment: m[1],
 					disabled: !!m[1],
@@ -73,6 +73,9 @@ export class SqlParser {
 
 	public commentOutJoin(text: string, join: IAstJoin): string {
 		console.log('commentOutJoin', join);
+		if (!join.match.index || join.match.index !== 0) {
+			return text;
+		}
 		const joinSql = text.substr(join.match.index, join.match.length);
 
 		return (
@@ -84,6 +87,9 @@ export class SqlParser {
 	}
 
 	public uncommentJoin(text: string, join: IAstJoin): string {
+		if (!join.match.index && join.match.index !== 0) {
+			return text
+		}
 		const joinSql = text.substr(join.match.index, join.match.length);
 		console.log('uncommentJoin', text, joinSql, join);
 		return (

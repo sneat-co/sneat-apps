@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-	DatatugStoreFirestoreService,
-	IDatatugStoreService,
-} from '@sneat/datatug/services/repo';
 import { DatatugStoreGithubService } from './datatug-store.service.github';
+import { DatatugStoreFirestoreService } from "./datatug-store.service.firestore";
+import { IDatatugStoreService } from "./datatug-store.service.interface";
 
 @Injectable({ providedIn: 'root' })
 export class DatatugStoreServiceFactory {

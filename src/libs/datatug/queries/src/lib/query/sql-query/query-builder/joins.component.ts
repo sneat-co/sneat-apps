@@ -48,4 +48,8 @@ export class JoinsComponent {
 		this.queryAst = this.sqlParser.parseQuery(this.sql);
 		this.astChanged.emit({ sql: this.sql, ast: this.queryAst });
 	}
+
+	public addJoin(join: IAstJoin, type: 'left' | 'right' | 'inner'): void {
+		alert('Not implemented yet');
+	}
 }

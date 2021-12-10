@@ -21,7 +21,7 @@ export class GridWidgetComponent implements OnChanges {
 	@Input() recordset: IRecordset;
 	@Input() hideColumns?: string[];
 
-	public grid: IGridDef;
+	public grid?: IGridDef;
 
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,

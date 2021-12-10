@@ -5,7 +5,7 @@ import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { IRecord } from '@sneat/data';
-import { IMemberInfo, ITeam } from '../../../models/src/lib/models';
+import { IMemberInfo, ITeam } from '@sneat/team/models';
 import { IUserTeamInfoWithId } from '@sneat/auth-models';
 import { IRetrospective, IScrum } from '@sneat/scrumspace/scrummodels';
 
@@ -40,9 +40,9 @@ export class TeamNavService {
 	}): void {
 		console.log('navigateToLogin()', options);
 		this.analyticsService.logEvent('navigateToLogin', {
-			returnTo: options.returnTo,
+			returnTo: options?.returnTo,
 		});
-		if (options.returnTo) {
+		if (options?.returnTo) {
 			options.queryParams = options && {
 				to: options.returnTo, // Make `to`first parameter for sake of URL readability
 				...options.queryParams, // TODO: make sure query parameter `to` does not overrides returnTo passed above.

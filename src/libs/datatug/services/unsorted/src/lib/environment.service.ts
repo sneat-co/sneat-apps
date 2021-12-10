@@ -1,16 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import {
-	ProjectContextService,
-	ProjectService,
-} from '@sneat/datatug/services/project';
-import { SneatTeamApiService } from '@sneat/api';
-import { StoreApiService } from '@sneat/datatug/services/repo';
-import { CreateNamedRequest } from '@sneat/datatug/dto';
-import { IEnvironmentSummary } from '@sneat/datatug/models';
-import { createProjItem } from '@sneat/datatug/services/base';
-import { startWith, tap } from 'rxjs/operators';
-import { IProjectRef } from '@sneat/datatug/core';
+import { Injectable } from "@angular/core";
+import { Observable, of, throwError } from "rxjs";
+
+import { SneatTeamApiService } from "@sneat/api";
+import { StoreApiService } from "@sneat/datatug/services/repo";
+import { CreateNamedRequest } from "@sneat/datatug/dto";
+import { IEnvironmentSummary } from "@sneat/datatug/models";
+import { createProjItem } from "@sneat/datatug/services/base";
+import { startWith, tap } from "rxjs/operators";
+import { IProjectRef } from "@sneat/datatug/core";
+import { ProjectContextService, ProjectService } from "@sneat/datatug/services/project";
 
 const getEnvCacheKey = (projectRef: IProjectRef, env: string): string => {
 	return `${projectRef.projectId}@${projectRef.storeId}/${env}`;
@@ -18,24 +16,25 @@ const getEnvCacheKey = (projectRef: IProjectRef, env: string): string => {
 
 const envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class EnvironmentService {
 	constructor(
 		private readonly projectContextService: ProjectContextService,
 		private readonly api: SneatTeamApiService,
 		private readonly projectService: ProjectService,
 		private readonly storeApiService: StoreApiService // private readonly http: HttpClient,
-	) {}
+	) {
+	}
 
 	createEnvironment = (request: CreateNamedRequest): Observable<any> =>
 		createProjItem<IEnvironmentSummary>(
 			this.api,
-			'datatug/environment/create_environment',
+			"datatug/environment/create_environment",
 			request
 		);
 
 	putConnection(): Observable<IEnvironmentSummary> {
-		return throwError(() => '');
+		return throwError(() => "");
 	}
 
 	public getEnvSummary(
@@ -44,10 +43,10 @@ export class EnvironmentService {
 		forceReload: boolean = false
 	): Observable<IEnvironmentSummary> {
 		if (!projectRef) {
-			return throwError(() => '"projRef" is a required parameter');
+			return throwError(() => "\"projRef\" is a required parameter");
 		}
 		if (!env) {
-			return throwError(() => '"env" is a required parameter');
+			return throwError(() => "\"env\" is a required parameter");
 		}
 		const cacheKey = getEnvCacheKey(projectRef, env);
 		const cached = envSummaryCache[cacheKey];
@@ -55,11 +54,11 @@ export class EnvironmentService {
 			return of(cached);
 		}
 		const result = this.storeApiService
-			.get<IEnvironmentSummary>(projectRef.storeId, '/environment-summary', {
+			.get<IEnvironmentSummary>(projectRef.storeId, "/environment-summary", {
 				params: {
 					proj: projectRef.projectId,
-					env,
-				},
+					env
+				}
 			})
 			.pipe(
 				tap((envSummary) => {

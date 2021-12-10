@@ -1,20 +1,20 @@
-import { Observable, of, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map, shareReplay } from 'rxjs/operators';
+import { Observable, of, throwError } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { map, shareReplay } from "rxjs/operators";
 import {
 	cloudStoreId,
 	IProjectBase,
-	projectsBriefFromDictToFlatList,
-} from '@sneat/datatug/models';
-import { getStoreUrl } from '@sneat/datatug/nav';
-import { IRecordset } from '@sneat/datatug/dto';
-import { IGridColumn, IGridDef } from '@sneat/grid';
+	projectsBriefFromDictToFlatList
+} from "@sneat/datatug/models";
+import { getStoreUrl } from "@sneat/api";
+import { IRecordset } from "@sneat/datatug/dto";
+import { IGridColumn, IGridDef } from "@sneat/grid";
 import {
 	DatatugUserService,
-	IDatatugUserState,
-} from '@sneat/datatug/services/base';
-import { storeCanProvideListOfProjects } from '@sneat/core';
+	IDatatugUserState
+} from "@sneat/datatug/services/base";
+import { storeCanProvideListOfProjects } from "@sneat/core";
 
 @Injectable()
 export class DatatugStoreService {
@@ -22,41 +22,41 @@ export class DatatugStoreService {
 		[storeId: string]: Observable<IProjectBase[]>;
 	} = {};
 
-	private datatugUserState: IDatatugUserState;
+	private datatugUserState?: IDatatugUserState;
 
 	constructor(
 		private readonly http: HttpClient,
 		private readonly datatugUserService: DatatugUserService
 	) {
-		console.log('StoreService.constructor()');
+		console.log("StoreService.constructor()");
 		datatugUserService.datatugUserState.subscribe({
 			next: (datatugUserState) => {
 				this.datatugUserState = datatugUserState;
-			},
+			}
 		});
 	}
 
 	public getProjects(storeId: string): Observable<IProjectBase[]> {
 		// eslint-disable-next-line no-console
-		console.log('getProjects', storeId);
+		console.log("getProjects", storeId);
 		if (!storeId) {
-			return throwError(() => 'Parameter "storeId" is required');
+			return throwError(() => "Parameter \"storeId\" is required");
 		}
 		if (!storeCanProvideListOfProjects(storeId)) {
 			return this.datatugUserService.datatugUserState.pipe(
 				map((datatugUserState) => {
 					const result: IProjectBase[] = [];
 					//
-					const { record } = datatugUserState;
-					const store = record?.datatug?.stores[storeId];
+					const stores = datatugUserState.record?.datatug?.stores;
+					const store = stores && stores[storeId];
 					projectsBriefFromDictToFlatList(store?.projects).forEach((p) => {
 						result.push(p as IProjectBase); // TODO: casting is dirty hack
 					});
 					//
 					result.push({
-						id: 'demo-project',
-						title: 'Demo project',
-						access: 'public',
+						id: "demo-project",
+						title: "Demo project",
+						access: "public"
 					});
 					return result;
 				})
@@ -78,13 +78,16 @@ export class DatatugStoreService {
 export const recordsetToGridDef = (
 	recordset: IRecordset,
 	hideColumns?: string[]
-): IGridDef => {
-	console.log('recordsetToGridDef', recordset, hideColumns);
+): IGridDef | undefined => {
+	console.log("recordsetToGridDef", recordset, hideColumns);
+	if (!recordset.result) {
+		return undefined;
+	}
 	const columns = recordset.result.columns
 		.map((c, i) => ({ c, i }))
 		.filter((col) => {
 			const { c } = col;
-			if (hideColumns?.indexOf(c.name) >= 0) {
+			if (!c?.name || hideColumns && c?.name && hideColumns.indexOf(c.name) >= 0) {
 				return false;
 			}
 			const colDef = recordset.def?.columns?.find(
@@ -104,21 +107,21 @@ export const recordsetToGridDef = (
 		.map((col) => {
 			const { c } = col;
 			const gridCol: IGridColumn = {
-				field: '' + col.i,
+				field: "" + col.i,
 				colName: c.name,
 				dbType: c.dbType,
-				title: c.name,
+				title: c.name
 			};
 			return gridCol;
 		});
-	const reducer = (r, v, i) => {
-		r['' + i] = v;
+	const reducer = (r: any, v: any, i: number) => {
+		r["" + i] = v;
 		return r;
 	};
 	const gridDef: IGridDef = {
 		columns,
-		rows: recordset.result.rows?.map((row) => row.reduce(reducer, {})),
+		rows: recordset.result.rows?.map((row) => row.reduce(reducer, {}))
 	};
-	console.log('gridDef', gridDef);
+	console.log("gridDef", gridDef);
 	return gridDef;
 };

@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { ITeam } from '@sneat/team-models';
+import { ITeam } from '@sneat/team/models';
 import { IScrum, ScrumService } from '@sneat/scrumspace/dailyscrum';
 
 @Component({

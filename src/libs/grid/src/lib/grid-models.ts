@@ -19,7 +19,7 @@ export interface IGridColumn {
 
 export const getTabulatorCols = (cols: IGridColumn[]): any[] =>
 	cols.map((c) => {
-		const v = { ...c };
+		const v = { ...c } as any;
 		delete v.dbType;
 		return v;
 	});

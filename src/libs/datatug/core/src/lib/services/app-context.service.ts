@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 export enum AppCode {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	DataTug = 'datatug',
-	sneatTeam = 'sneatTeam',
+	// sneatTeam = 'sneatTeam',
 }
 
 // export const AppCodes = [AppCode.SneatTeam, AppCode.DataTug] as const;

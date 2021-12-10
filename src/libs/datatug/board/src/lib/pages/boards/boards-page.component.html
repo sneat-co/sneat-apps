@@ -35,7 +35,7 @@
 		(tabChanged)="tabChanged($event)"
 		[isFilterable]="boards?.length > 7"
 		[getRouterLink]="getLinkToBoard"
-		(itemClick)="(goBoard)"
+		(itemClick)="goBoard($event)"
 	></sneat-card-list>
 
 	<ion-button class="ion-margin" (click)="newBoard()">

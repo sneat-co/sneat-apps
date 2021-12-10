@@ -11,7 +11,7 @@ import {
 	IMemberInfo,
 	IPersonalInvite,
 	IRejectPersonalInviteRequest,
-} from '@sneat/team-models';
+} from '@sneat/team/models';
 import { SneatTeamApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
 

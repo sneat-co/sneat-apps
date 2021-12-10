@@ -1,7 +1,23 @@
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from "@angular/common/http";
 import { InjectionToken } from '@angular/core';
-import { IHttpRequestOptions } from '@sneat/datatug/services/repo';
+
+export interface IHttpRequestOptions {
+	headers?:
+		| HttpHeaders
+		| {
+		[header: string]: string | string[];
+	};
+	observe?: 'body';
+	params?:
+		| HttpParams
+		| {
+		[param: string]: string | string[];
+	};
+	reportProgress?: boolean;
+	responseType?: 'json';
+	withCredentials?: boolean;
+}
 
 const SneatApiService = new InjectionToken('ISneatApiService');
 

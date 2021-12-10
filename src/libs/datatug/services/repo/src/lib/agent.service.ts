@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IExecuteResponse, ISelectRequest } from '@sneat/datatug/dto';
 import { Observable, throwError } from 'rxjs';
-import { getStoreUrl } from '@sneat/datatug/nav';
+import { getStoreUrl } from '@sneat/api';
 import { IExecuteRequest } from '@sneat/datatug/dto';
 import { ISqlCommandRequest } from '@sneat/datatug/dto';
 
@@ -57,6 +57,9 @@ export class AgentService {
 		request: IExecuteRequest
 	): Observable<IExecuteResponse> {
 		console.log(`AgentService.execute(${agentId})`, request);
+		if (!request.projectId) {
+			return throwError(() => 'request.projectId is required parameter');
+		}
 		if (request.commands?.length === 1 && !!request.commands[0].namedParams) {
 			const cmd = request.commands[0] as ISqlCommandRequest;
 			return this.select(agentId, {

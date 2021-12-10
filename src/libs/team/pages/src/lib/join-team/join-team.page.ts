@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IUserTeamInfo } from '@sneat/auth-models';
-import { ITeam } from '@sneat/team-models';
+import { ITeam } from '@sneat/team/models';
 
 export const getPinFromUrl: () => number | undefined = () => {
 	const m = location.hash.match(/[#&]pin=(\d+)($|&)/);
