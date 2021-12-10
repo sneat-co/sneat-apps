@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from "@angular/core";
 import {
 	AngularFirestore,
 	AngularFirestoreCollection,
-	DocumentData,
-} from '@angular/fire/compat/firestore';
+	DocumentData
+} from "@angular/fire/compat/firestore";
 import {
 	EMPTY,
 	from,
@@ -11,35 +11,35 @@ import {
 	of,
 	ReplaySubject,
 	Subject,
-	throwError,
-} from 'rxjs';
-import { map, mergeMap, shareReplay, take, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { getStoreUrl } from '@sneat/api';
+	throwError
+} from "rxjs";
+import { map, mergeMap, shareReplay, take, tap } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+import { getStoreUrl } from "@sneat/api";
 import {
 	IProjectRef,
 	isValidProjectRef,
-	projectRefToString,
-} from '@sneat/datatug/core';
+	projectRefToString
+} from "@sneat/datatug/core";
 import {
 	IProjectFull,
 	IProjectSummary,
-	IProjStoreRef,
-} from '@sneat/datatug/models';
-import { PrivateTokenStoreService } from '@sneat/auth';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { SneatApiServiceFactory } from '@sneat/api';
+	IProjStoreRef
+} from "@sneat/datatug/models";
+import { PrivateTokenStoreService } from "@sneat/auth";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { SneatApiServiceFactory } from "@sneat/api";
 import {
 	GITLAB_REPO_PREFIX,
 	STORE_ID_GITHUB_COM,
-	STORE_TYPE_GITHUB,
-} from '@sneat/core';
-import { DatatugStoreServiceFactory } from '../../../repo/src/lib/datatug-store-service-factory.service';
+	STORE_TYPE_GITHUB
+} from "@sneat/core";
+import { DatatugStoreServiceFactory } from "@sneat/datatug/services/repo";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class ProjectService {
 	private projects: { [id: string]: Observable<IProjectFull> } = {};
-	private projSummary: { [id: string]: ReplaySubject<IProjectSummary> } = {};
+	private projSummary: { [id: string]: ReplaySubject<IProjectSummary | undefined> } = {};
 	private readonly projectsCollection: AngularFirestoreCollection;
 
 	constructor(
@@ -51,37 +51,37 @@ export class ProjectService {
 		private readonly datatugStoreServiceFactory: DatatugStoreServiceFactory
 	) {
 		this.projectsCollection =
-			db.collection<IProjectSummary>('datatug_projects');
+			db.collection<IProjectSummary>("datatug_projects");
 	}
 
 	public watchProjectSummary(
 		projectRef: IProjectRef
-	): Observable<IProjectSummary> {
-		console.log('ProjectService.watchProjectSummary', projectRef);
+	): Observable<IProjectSummary | undefined> {
+		console.log("ProjectService.watchProjectSummary", projectRef);
 		if (!isValidProjectRef(projectRef)) {
 			return throwError(
-				() => 'Can not watch project by empty target parameter'
+				() => "Can not watch project by empty target parameter"
 			);
 		}
-		if (projectRef.storeId === 'agent') {
-			throw new Error('TEMP DEBUG: storeId === agent, expected firestore');
+		if (projectRef.storeId === "agent") {
+			throw new Error("TEMP DEBUG: storeId === agent, expected firestore");
 		}
 		const id = projectRefToString(projectRef);
 		if (!id) {
-			throw new Error('project id is undefined');
+			throw new Error("project id is undefined");
 		}
 		let subj = this.projSummary[id];
 		if (subj) {
 			console.log(
-				'ProjectService.watchProjectSummary() => reusing existing subject'
+				"ProjectService.watchProjectSummary() => reusing existing subject"
 			);
 		} else {
 			console.log(
-				'ProjectService.watchProjectSummary() => creating new subject for',
+				"ProjectService.watchProjectSummary() => creating new subject for",
 				id
 			);
 			this.projSummary[id] = subj = new ReplaySubject(1);
-			if (projectRef.storeId === 'firestore') {
+			if (projectRef.storeId === "firestore") {
 				this.firestoreChanges(projectRef.projectId)
 					.pipe(
 						tap((summary) =>
@@ -109,7 +109,7 @@ export class ProjectService {
 			.pipe(
 				tap((v) => console.log(`project[${id}] snapshotChange:`, v)),
 				map((value) =>
-					value.type === 'removed'
+					value.type === "removed"
 						? undefined
 						: (value.payload.data() as IProjectSummary)
 				),
@@ -118,9 +118,9 @@ export class ProjectService {
 	}
 
 	public getFull(projectRef: IProjectRef): Observable<IProjectFull> {
-		console.warn('The getFull() method should not be called from UI');
+		console.warn("The getFull() method should not be called from UI");
 		if (!projectRef) {
-			throw new Error('target is a required parameter for getFull()');
+			throw new Error("target is a required parameter for getFull()");
 		}
 		let $project = this.projects[projectRef.projectId];
 		if ($project) {
@@ -128,17 +128,20 @@ export class ProjectService {
 		}
 		$project = this.http
 			.get<IProjectFull>(`${getStoreUrl(projectRef.storeId)}/project-full`, {
-				params: { id: projectRef.projectId },
+				params: { id: projectRef.projectId }
 			})
 			.pipe(shareReplay(1));
 		this.projects[projectRef.projectId] = $project;
 		return $project;
 	}
 
-	public getSummary(projectRef: IProjectRef): Observable<IProjectSummary> {
-		console.log('ProjectService.getSummary()', projectRef);
-		if (projectRef.storeId === 'firestore') {
-			return this.watchProjectSummary(projectRef).pipe(take(1));
+	public getSummary(projectRef: IProjectRef): Observable<IProjectSummary|undefined> {
+		console.log("ProjectService.getSummary()", projectRef);
+		if (projectRef.storeId === "firestore") {
+			return this.watchProjectSummary(projectRef)
+				.pipe(
+					take(1)
+				);
 		}
 		const id = `${projectRef.storeId}|${projectRef.projectId}`;
 		let subj = this.projSummary[id];
@@ -161,13 +164,13 @@ export class ProjectService {
 		projectRef: IProjectRef
 	): Observable<IProjectSummary> {
 		if (!projectRef) {
-			return throwError(() => 'target is a required parameter');
+			return throwError(() => "target is a required parameter");
 		}
 		const { storeId, projectId } = projectRef;
 		if (!storeId) {
-			return throwError(() => 'target.storeId is a required parameter');
+			return throwError(() => "target.storeId is a required parameter");
 		}
-		console.log('getProjectSummaryRequest', storeId, projectId);
+		console.log("getProjectSummaryRequest", storeId, projectId);
 		if (
 			storeId === STORE_ID_GITHUB_COM ||
 			storeId === STORE_TYPE_GITHUB ||
@@ -179,7 +182,7 @@ export class ProjectService {
 		}
 		const agentUrl = getStoreUrl(storeId);
 		return this.http.get<IProjectSummary>(`${agentUrl}/project-summary`, {
-			params: { id: projectId },
+			params: { id: projectId }
 		});
 	}
 
@@ -187,12 +190,12 @@ export class ProjectService {
 		storeId: string,
 		projData: ICreateProjectData
 	): Observable<string> {
-		console.log('createNewProject', storeId, projData);
+		console.log("createNewProject", storeId, projData);
 		const sneatApiService =
 			this.sneatApiServiceFactory.getSneatApiService(storeId);
 		return sneatApiService
 			.post<ICreateProjectData, { id: string }>(
-				'/datatug/projects/create_project?store=firestore',
+				"/datatug/projects/create_project?store=firestore",
 				projData
 			)
 			.pipe(map((response) => response.id));
@@ -207,5 +210,5 @@ export interface ICreateProjectData {
 
 export interface ICreateProjectItemRequest {
 	title: string;
-	folder: '~' | string;
+	folder: "~" | string;
 }
