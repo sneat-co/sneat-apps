@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RetroTreePage } from './retro-tree.page';
+import { RetroTreePageComponent } from './retro-tree-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: RetroTreePage,
+		component: RetroTreePageComponent,
 	},
 ];
 

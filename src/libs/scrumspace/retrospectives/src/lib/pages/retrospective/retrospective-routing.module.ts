@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RetrospectivePage } from './retrospective.page';
+import { RetrospectivePageComponent } from './retrospective-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: RetrospectivePage,
+		component: RetrospectivePageComponent,
 	},
 ];
 

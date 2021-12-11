@@ -1,18 +1,17 @@
 import { Component, Inject, Input } from '@angular/core';
-import { TeamService } from '../../../../../services/src/lib/team.service';
 import { NavController } from '@ionic/angular';
-import { TeamNavService } from '../../../../../services/src/lib/team-nav.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeam, ITeamMetric } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
+import { TeamNavService, TeamService } from "@sneat/team/services";
 
 @Component({
-	selector: 'app-team-metrics',
+	selector: 'sneat-team-metrics',
 	templateUrl: './metrics.component.html',
 	styleUrls: ['./metrics.component.scss'],
 })
 export class MetricsComponent {
-	@Input() public team: IRecord<ITeam>;
+	@Input() public team?: IRecord<ITeam>;
 
 	public deletingMetrics: string[] = [];
 
@@ -36,6 +35,9 @@ export class MetricsComponent {
 	public deleteDemoMetrics(event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
+		if (!this.team) {
+			throw 'no team';
+		}
 		this.deletingMetrics.push(...this.demoMetrics);
 		const complete = () =>
 			(this.deletingMetrics = this.deletingMetrics.filter(
@@ -51,10 +53,16 @@ export class MetricsComponent {
 	}
 
 	public isDeletingMetric(metric: ITeamMetric): boolean {
-		return this.deletingMetrics.indexOf(metric.id) >= 0;
+		return !!metric.id && this.deletingMetrics.indexOf(metric.id) >= 0;
 	}
 
 	public deleteMetric(metric: ITeamMetric): void {
+		if (!metric.id) {
+			throw 'metric has no id';
+		}
+		if (!this.team) {
+			throw 'no team'
+		}
 		this.deletingMetrics.push(metric.id);
 		const complete = () =>
 			(this.deletingMetrics = this.deletingMetrics.filter(
@@ -73,6 +81,9 @@ export class MetricsComponent {
 		if (event) {
 			event.preventDefault();
 			event.stopPropagation();
+		}
+		if (!this.team) {
+			throw 'no team';
 		}
 		this.navService.navigateToAddMetric(this.navController, this.team);
 	}

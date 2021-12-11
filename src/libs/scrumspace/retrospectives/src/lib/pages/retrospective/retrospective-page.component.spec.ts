@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RetrospectivePage } from './retrospective.page';
+import { RetrospectivePageComponent } from './retrospective-page.component';
 import { TeamService } from '../../../services/team.service';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../../environments/environment';
@@ -10,13 +10,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RetrospectivePage', () => {
-	let component: RetrospectivePage;
-	let fixture: ComponentFixture<RetrospectivePage>;
+	let component: RetrospectivePageComponent;
+	let fixture: ComponentFixture<RetrospectivePageComponent>;
 
 	beforeEach(
 		waitForAsync(() => {
 			TestBed.configureTestingModule({
-				declarations: [RetrospectivePage],
+				declarations: [RetrospectivePageComponent],
 				imports: [
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
@@ -26,7 +26,7 @@ describe('RetrospectivePage', () => {
 				providers: [TeamService, UserService],
 			}).compileComponents();
 
-			fixture = TestBed.createComponent(RetrospectivePage);
+			fixture = TestBed.createComponent(RetrospectivePageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
 		})

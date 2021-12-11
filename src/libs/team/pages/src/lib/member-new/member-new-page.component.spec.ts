@@ -1,32 +1,32 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RetroTreePage } from './retro-tree.page';
+import { MemberNewPageComponent } from './member-new-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TeamService } from '../../../services/team.service';
+import { TeamService } from '../../../../services/src/lib/team.service';
 import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../../environments/environment';
-import { UserService } from '../../../services/user-service';
+import { environment } from '../../../environments/environment';
+import { UserService } from '../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('RetroTreePage', () => {
-	let component: RetroTreePage;
-	let fixture: ComponentFixture<RetroTreePage>;
+describe('MemberNewPage', () => {
+	let component: MemberNewPageComponent;
+	let fixture: ComponentFixture<MemberNewPageComponent>;
 
 	beforeEach(
 		waitForAsync(() => {
 			TestBed.configureTestingModule({
-				declarations: [RetroTreePage],
+				declarations: [MemberNewPageComponent],
 				imports: [
+					IonicModule.forRoot(),
 					RouterTestingModule,
 					HttpClientTestingModule,
-					IonicModule.forRoot(),
 					AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
 				providers: [TeamService, UserService],
 			}).compileComponents();
 
-			fixture = TestBed.createComponent(RetroTreePage);
+			fixture = TestBed.createComponent(MemberNewPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
 		})

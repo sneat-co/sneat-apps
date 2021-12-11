@@ -1,36 +1,27 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
-import {
-	IRetroItem,
-	IRetrospective,
-	RetrospectiveStage,
-} from '../../../models/interfaces';
-import {
-	ChildrenSizeMode,
-	IDndTreeSpec,
-	IDraggedTreeItem,
-} from '@angular-dnd/tree';
-import { BaseTeamPageDirective } from '../../../pages/base-team-page-directive';
+
 import { ActivatedRoute } from '@angular/router';
-import { IErrorLogger, ErrorLogger } from '@sneat-team/ui-core';
 import { NavController } from '@ionic/angular';
-import { TeamService } from '../../../services/team.service';
 import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
-import { TeamContextService } from '../../../services/team-context.service';
-import { UserService } from '../../../services/user-service';
-import { getMeetingIdFromDate } from '../../../services/meeting.service';
+import { BaseTeamPageDirective } from "@sneat/team/pages";
+import { IRetroItem, IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
+import { TeamContextService, TeamService } from "@sneat/team/services";
+import { SneatUserService } from "@sneat/user";
+import { getMeetingIdFromDate } from "@sneat/meeting";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 
 @Component({
-	selector: 'app-retro-tree',
-	templateUrl: './retro-tree.page.html',
-	styleUrls: ['./retro-tree.page.scss'],
+	selector: 'sneat-retro-tree',
+	templateUrl: './retro-tree-page.component.html',
+	styleUrls: ['./retro-tree-page.component.scss'],
 })
-export class RetroTreePage extends BaseTeamPageDirective {
+export class RetroTreePageComponent extends BaseTeamPageDirective {
 	public meetingId: string;
 	public retrospective: IRetrospective;
 
-	public treeSpec: IDndTreeSpec<IRetroItem> = {
+	public treeSpec: any /*IDndTreeSpec<IRetroItem>*/ = {
 		itemId: (item) => item.ID,
 		getChildItems: (item) => item.children,
 		autoExpand: () => true /*node => {
@@ -40,8 +31,7 @@ export class RetroTreePage extends BaseTeamPageDirective {
 		},*/,
 		maxDepth: 2,
 		childrenCount: (item) => item?.children.length || 0,
-		childrenSize: (node) =>
-			node.level >= 1 ? ChildrenSizeMode.fixed : ChildrenSizeMode.flexible,
+		childrenSize: undefined, //(node) => node.level >= 1 ? ChildrenSizeMode.fixed : ChildrenSizeMode.flexible,
 	};
 
 	public readonly positive: IRetroItem = {
@@ -124,7 +114,7 @@ export class RetroTreePage extends BaseTeamPageDirective {
 		readonly navController: NavController,
 		readonly teamService: TeamService,
 		readonly teamContextService: TeamContextService,
-		readonly userService: UserService,
+		readonly userService: SneatUserService,
 		private retrospectiveService: RetrospectiveService
 	) {
 		super(
@@ -157,7 +147,7 @@ export class RetroTreePage extends BaseTeamPageDirective {
 		});
 	}
 
-	public itemMoved(item: IDraggedTreeItem<IRetroItem>): void {
+	public itemMoved(item: any /*IDraggedTreeItem<IRetroItem>*/): void {
 		console.log(`itemMoved: ${item.node.id}`, item.dropTo);
 	}
 

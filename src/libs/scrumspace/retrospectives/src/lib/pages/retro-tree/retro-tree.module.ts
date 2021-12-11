@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { RetroTreePageRoutingModule } from './retro-tree-routing.module';
 
-import { RetroTreePage } from './retro-tree.page';
+import { RetroTreePageComponent } from './retro-tree-page.component';
 import { AngularDndCoreModule } from '@angular-dnd/core';
 import { AngularDndTreeModule } from '@angular-dnd/tree';
 import { RetroItemCardComponent } from '../retro-item-card/retro-item-card.component';
@@ -22,6 +22,6 @@ import { AddRetroItemComponent } from '../../components/add-retro-item/add-retro
 		AngularDndTreeModule,
 		RetroTreePageRoutingModule,
 	],
-	declarations: [AddRetroItemComponent, RetroItemCardComponent, RetroTreePage],
+	declarations: [AddRetroItemComponent, RetroItemCardComponent, RetroTreePageComponent],
 })
 export class RetroTreePageModule {}

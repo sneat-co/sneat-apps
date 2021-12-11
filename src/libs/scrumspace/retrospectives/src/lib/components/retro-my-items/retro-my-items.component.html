@@ -1,8 +1,8 @@
 <ion-list>
 	<ion-item *ngFor="let item of items || []; trackBy: trackById">
 		<ion-label>{{ item.title }}</ion-label>
-		<ion-spinner name="lines-small" *ngIf="!item.id"></ion-spinner>
-		<ion-buttons slot="end" *ngIf="item.id">
+		<ion-spinner name="lines-small" *ngIf="!item.ID"></ion-spinner>
+		<ion-buttons slot="end" *ngIf="item.ID">
 			<ion-button title="Delete" (click)="delete(item)">
 				<ion-icon name="close" color="medium"></ion-icon>
 			</ion-button>
@@ -10,6 +10,7 @@
 	</ion-item>
 	<form [formGroup]="addRetroItemForm">
 		<ion-item>
+			<!--suppress AngularUndefinedBinding -->
 			<ion-input
 				[formControl]="titleControl"
 				placeholder="Type your feedback here"

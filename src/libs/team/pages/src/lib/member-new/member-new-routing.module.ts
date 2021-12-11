@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MemberNewPage } from './member-new.page';
+import { MemberNewPageComponent } from './member-new-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MemberNewPage,
+		component: MemberNewPageComponent,
 	},
 ];
 

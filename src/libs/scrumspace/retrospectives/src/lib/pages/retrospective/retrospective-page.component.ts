@@ -1,31 +1,26 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
-import {
-	IRecord,
-	IRetrospective,
-	RetrospectiveStage,
-} from '../../../models/interfaces';
-import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../services/user-service';
-import { TeamContextService } from '../../../services/team-context.service';
-import { TeamService } from '../../../services/team.service';
-import { BaseTeamPageDirective } from '../../../pages/base-team-page-directive';
-import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
-import { NavController } from '@ionic/angular';
-import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
-import { RetrospectiveService } from '../../retrospective.service';
-import { Subscription } from 'rxjs';
-import { getMeetingIdFromDate } from '../../../services/meeting.service';
+import { ChangeDetectorRef, Component, Inject, OnDestroy } from "@angular/core";
+
+import { ActivatedRoute } from "@angular/router";
+import { NavController } from "@ionic/angular";
+import { filter, first, mergeMap, takeUntil } from "rxjs/operators";
+import { RetrospectiveService } from "../../retrospective.service";
+import { Subscription } from "rxjs";
+import { BaseTeamPageDirective } from "@sneat/team/pages";
+import { IRecord } from "@sneat/data";
+import { IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
+import { TeamContextService, TeamService } from "@sneat/team/services";
+import { SneatUserService } from "@sneat/user";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { getMeetingIdFromDate } from "@sneat/meeting";
 
 @Component({
-	selector: 'app-retrospective',
-	templateUrl: './retrospective.page.html',
-	styleUrls: ['./retrospective.page.scss'],
+	selector: "sneat-retrospective",
+	templateUrl: "./retrospective-page.component.html",
 })
-export class RetrospectivePage
+export class RetrospectivePageComponent
 	extends BaseTeamPageDirective
-	implements OnDestroy
-{
-	public title = 'Retrospective';
+	implements OnDestroy {
+	public title = "Retrospective";
 	public retrospective: IRecord<IRetrospective>;
 	private retroSub: Subscription;
 
@@ -35,9 +30,9 @@ export class RetrospectivePage
 		readonly teamContextService: TeamContextService,
 		readonly teamService: TeamService,
 		readonly route: ActivatedRoute,
-		readonly userService: UserService,
+		readonly userService: SneatUserService,
 		readonly navController: NavController,
-		private readonly retrospectiveService: RetrospectiveService
+		private readonly retrospectiveService: RetrospectiveService,
 	) {
 		super(
 			changeDetectorRef,
@@ -46,7 +41,7 @@ export class RetrospectivePage
 			navController,
 			teamService,
 			teamContextService,
-			userService
+			userService,
 		);
 		this.trackTeamIdFromUrl();
 		this.trackMeetingIdFromUrl();
@@ -80,12 +75,12 @@ export class RetrospectivePage
 	protected onTeamIdChanged() {
 		super.onTeamIdChanged();
 		try {
-			console.log('RetrospectivePage.onTeamIdChanged()');
+			console.log("RetrospectivePage.onTeamIdChanged()");
 			if (this.retrospective?.id) {
 				this.watchRetro();
 			}
 		} catch (e) {
-			this.logError(e, 'Failed to process changed team ID');
+			this.logError(e, "Failed to process changed team ID");
 		}
 	}
 
@@ -96,13 +91,13 @@ export class RetrospectivePage
 					filter((uid) => !!uid),
 					first(),
 					mergeMap(() => this.route.queryParamMap),
-					takeUntil(this.destroyed)
+					takeUntil(this.destroyed),
 				)
 				.subscribe({
 					next: (queryParams) => {
-						let id = queryParams.get('id');
+						let id = queryParams.get("id");
 						switch (id) {
-							case 'today':
+							case "today":
 								id = getMeetingIdFromDate(new Date()); // TODO: replace URL?
 								break;
 							case RetrospectiveStage.upcoming:
@@ -121,19 +116,19 @@ export class RetrospectivePage
 						}
 					},
 					error: (err) =>
-						this.errorLogger.logError(err, 'Failed to load retrospective'),
+						this.errorLogger.logError(err, "Failed to load retrospective"),
 				});
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed in track meeting id from URL');
+			this.errorLogger.logError(e, "Failed in track meeting id from URL");
 		}
 	}
 
 	private watchRetro(): void {
-		console.log('RetrospectivePage.watchRetro()');
+		console.log("RetrospectivePage.watchRetro()");
 		this.userService.userChanged
 			// .pipe(filter(uid => !!uid))
 			.subscribe((userId) => {
-				console.log('RetrospectivePage.watchRetro() => userId:', userId);
+				console.log("RetrospectivePage.watchRetro() => userId:", userId);
 				try {
 					if (this.retroSub) {
 						this.retroSub.unsubscribe();
@@ -152,19 +147,19 @@ export class RetrospectivePage
 						.subscribe({
 							next: (retrospective) =>
 								this.setRetro(teamId, { id, data: retrospective }),
-							error: (e) => this.logError(e, 'Failed to watch retrospective'),
+							error: (e) => this.logError(e, "Failed to watch retrospective"),
 						});
 				} catch (e) {
-					this.logError(e, 'Failed to watchTeam');
+					this.logError(e, "Failed to watchTeam");
 				}
 			});
 	}
 
 	private setRetro(
 		teamId: string,
-		retrospective: IRecord<IRetrospective>
+		retrospective: IRecord<IRetrospective>,
 	): void {
-		console.log('RetrospectivePage.setRetro()');
+		console.log("RetrospectivePage.setRetro()");
 		try {
 			if (
 				this.retrospective?.id === retrospective.id &&
@@ -173,7 +168,7 @@ export class RetrospectivePage
 				this.retrospective = retrospective;
 			}
 		} catch (e) {
-			this.logError(e, 'Failed process new retrospective record');
+			this.logError(e, "Failed process new retrospective record");
 		}
 	}
 }

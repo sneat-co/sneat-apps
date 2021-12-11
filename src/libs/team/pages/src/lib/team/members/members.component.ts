@@ -18,11 +18,11 @@ import { IRecord } from '@sneat/data';
 	styleUrls: ['./members.component.scss'],
 })
 export class MembersComponent implements OnChanges {
-	@Input() public team: IRecord<ITeam>;
+	@Input() public team?: IRecord<ITeam>;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleEnum.contributor;
-	public contributorsCount: number;
-	public spectatorsCount: number;
+	public contributorsCount?: number;
+	public spectatorsCount?: number;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -35,6 +35,9 @@ export class MembersComponent implements OnChanges {
 		if (event) {
 			event.preventDefault();
 			event.stopPropagation();
+		}
+		if (!this.team) {
+			throw 'no team';
 		}
 		this.navService.navigateToAddMember(this.navController, this.team);
 	}
