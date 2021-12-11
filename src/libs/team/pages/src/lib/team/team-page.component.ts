@@ -1,20 +1,17 @@
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { TeamService } from '../../../../services/src/lib/team.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseTeamPageDirective } from '../base-team-page-directive';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamNavService } from '@sneat/team/models';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { TeamContextService } from '../../../../services/src/lib/team-context.service';
 import { SneatUserService } from '@sneat/user';
+import { TeamContextService, TeamNavService, TeamService } from "@sneat/team/services";
 
 @Component({
-	selector: 'app-team',
-	templateUrl: './team.page.html',
-	styleUrls: ['./team.page.scss'],
+	selector: 'sneat-team',
+	templateUrl: './team-page.component.html',
 })
-export class TeamPage extends BaseTeamPageDirective {
+export class TeamPageComponent extends BaseTeamPageDirective {
 	public teamId?: string;
 
 	constructor(
@@ -23,8 +20,8 @@ export class TeamPage extends BaseTeamPageDirective {
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
 		readonly navController: NavController,
 		readonly teamService: TeamService,
-		readonly teamContextService: TeamContextService,
 		readonly userService: SneatUserService,
+		readonly teamContextService: TeamContextService,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
 		public readonly navService: TeamNavService

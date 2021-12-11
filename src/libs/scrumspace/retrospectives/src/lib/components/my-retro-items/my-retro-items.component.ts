@@ -11,26 +11,26 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import {
-	IRecord,
-	IRetroItem,
-	IRetroList,
-	IRetroListItem,
-	IUser,
-	RetrospectiveStage,
-} from '../../../models/interfaces';
-import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
-import { UserService } from '../../../services/user-service';
+
 import {
 	IAddRetroItemRequest,
-	RetroItemType,
-	RetroItemTypeEnum,
 	RetrospectiveService,
 } from '../../retrospective.service';
 import { filter } from 'rxjs/operators';
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import {
+	IRetroItem,
+	IRetroList,
+	IRetroListItem,
+	RetroItemType,
+	RetroItemTypeEnum, RetrospectiveStage
+} from "@sneat/scrumspace/scrummodels";
+import { ISneatUserState, SneatUserService } from "@sneat/user";
+import { IRecord } from "@sneat/data";
+import { IUserRecord } from "@sneat/auth-models";
 
 @Component({
-	selector: 'app-my-retro-items',
+	selector: 'sneat-my-retro-items',
 	templateUrl: './my-retro-items.component.html',
 })
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
@@ -66,7 +66,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	constructor(
 		private readonly retrospectiveService: RetrospectiveService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly userService: UserService
+		private readonly userService: SneatUserService
 	) {}
 
 	public get currentType(): string {
@@ -77,14 +77,15 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		return this.retroLists && this.items(this.currentType);
 	}
 
-	public trackById = (_, item: { id: string }) => item.id;
+	public trackById = (_: number, item: { id: string }) => item.id;
 
 	public trackByID = (i: number, item: IRetroItem) => item.ID;
 
 	public ngOnInit(): void {
-		this.userSubscription = this.userService.userRecord
-			.pipe(filter((user) => !!user))
-			.subscribe((user) => this.processUserRecord(user));
+		console.error('commented out')
+		// this.userSubscription = this.userService.userRecord
+		// 	.pipe(filter((user) => !!user))
+		// 	.subscribe((user) => this.processUserRecord(user));
 	}
 
 	public ngOnDestroy(): void {
@@ -233,26 +234,38 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		}
 	}
 
-	private processUserRecord(user: IRecord<IUser>): void {
+	private processUserRecord(user: IRecord<IUserRecord>): void {
 		try {
 			const teamInfo = user?.data?.teams?.[this.teamId];
 			console.log(
 				`user.data.teams[${this.teamId}].retroItems:`,
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
 				teamInfo?.retroItems
 			);
 			if (!teamInfo) {
 				return; // TODO: Log error & redirect to /teams
 			}
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			if (teamInfo.retroItems) {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
 				Object.entries(teamInfo.retroItems).forEach(([itemType, items]) => {
 					const retroList = this.retroLists.find((rl) => rl.id === itemType);
 					if (retroList) {
+						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+						// @ts-ignore
 						if (items && items.length) {
+							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+							// @ts-ignore
 							retroList.items = items;
 						} else {
 							delete retroList.items;
 						}
 					} else {
+						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+						// @ts-ignore
 						this.retroLists.push({ id: itemType, title: itemType, items });
 					}
 				});

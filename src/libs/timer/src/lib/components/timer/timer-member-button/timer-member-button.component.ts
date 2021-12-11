@@ -19,7 +19,7 @@ import { Timer } from '../../../../../../meeting/src/lib/timer/timer.service';
 import { IScrum } from '@sneat/scrumspace/scrummodels';
 
 @Component({
-	selector: 'app-timer-member-button',
+	selector: 'sneat-timer-member-button',
 	templateUrl: './timer-member-button.component.html',
 	styleUrls: ['./timer-member-button.component.scss'],
 })

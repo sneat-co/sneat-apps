@@ -13,7 +13,7 @@ import { ITeam, MemberRole, MemberRoleEnum } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 
 @Component({
-	selector: 'app-team-members',
+	selector: 'sneat-team-members',
 	templateUrl: './members.component.html',
 	styleUrls: ['./members.component.scss'],
 })

@@ -6,10 +6,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { JoinTeamPageRoutingModule } from './join-team-routing.module';
 
-import { JoinTeamPage } from './join-team.page';
+import { JoinTeamPageComponent } from './join-team-page.component';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, IonicModule, JoinTeamPageRoutingModule],
-	declarations: [JoinTeamPage],
+	declarations: [JoinTeamPageComponent],
 })
 export class JoinTeamPageModule {}

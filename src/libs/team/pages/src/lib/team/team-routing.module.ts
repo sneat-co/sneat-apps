@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { TeamPage } from './team.page';
+import { TeamPageComponent } from './team-page.component';
 import { IonicModule } from "@ionic/angular";
 
 const routes: Routes = [
 	{
 		path: '',
-		component: TeamPage,
+		component: TeamPageComponent,
 	},
 ];
 

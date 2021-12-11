@@ -1,21 +1,15 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import { IErrorLogger, ErrorLogger } from '@sneat/logging';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-	IAddRetroItemRequest,
-	IRetroItem,
-	IRetroItemRequest,
-	RetroItemType,
-	RetrospectiveService,
-} from '@sneat/scrumspace/retrospectives';
+import { IRetroItem, RetroItemType } from "@sneat/scrumspace/scrummodels";
+import { IAddRetroItemRequest, IRetroItemRequest, RetrospectiveService } from "../../retrospective.service";
 
 @Component({
-	selector: 'app-retro-my-items',
+	selector: 'sneat-retro-my-items',
 	templateUrl: './retro-my-items.component.html',
-	styleUrls: ['./retro-my-items.component.scss'],
 })
-export class RetroMyItemsComponent implements OnInit {
+export class RetroMyItemsComponent {
 	@ViewChild(IonInput, { static: true }) titleInput; // TODO: strong typing : IonInput;
 
 	@Input() public question: RetroItemType;
@@ -34,8 +28,6 @@ export class RetroMyItemsComponent implements OnInit {
 		private readonly retrospectiveService: RetrospectiveService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
 	) {}
-
-	ngOnInit() {}
 
 	public trackById = (i: number, item: IRetroItem) => item.ID;
 

@@ -7,5 +7,8 @@ import { RetroMyItemsComponent } from './components/retro-my-items/retro-my-item
 @NgModule({
 	imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule],
 	declarations: [RetroMyItemsComponent],
+	exports: [
+		RetroMyItemsComponent
+	]
 })
 export class ScrumspaceRetrospectivesModule {}

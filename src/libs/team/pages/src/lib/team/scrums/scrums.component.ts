@@ -7,25 +7,25 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { TeamNavService } from '../../../../../services/src/lib/team-nav.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { ITeam } from '@sneat/team/models';
-import { IScrum, ScrumService } from '@sneat/scrumspace/dailyscrum';
+import { ScrumService } from '@sneat/scrumspace/dailyscrum';
+import { IScrum } from "@sneat/scrumspace/scrummodels";
+import { TeamNavService } from "@sneat/team/services";
 
 @Component({
-	selector: 'app-team-scrums',
+	selector: 'sneat-team-scrums',
 	templateUrl: './scrums.component.html',
-	styleUrls: ['./scrums.component.scss'],
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {
-	@Input() public team: IRecord<ITeam>;
+	@Input() public team?: IRecord<ITeam>;
 
 	public prevScrumId?: string;
-	public todayScrum: IScrum;
+	public todayScrum?: IScrum;
 
 	protected readonly destroyed = new Subject<boolean>();
 
@@ -41,15 +41,15 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.team) {
 			try {
-				if (this.teamId !== this.team.id) {
+				if (this.team && this.teamId !== this.team.id) {
 					this.todayScrum = undefined;
 					this.prevScrumId = undefined;
 				}
-				const team = this.team.data;
+				const team = this.team?.data;
 				if (team?.last?.scrum?.id) {
 					const today = getToday();
 					const todayId = getMeetingIdFromDate(today);
-					if (team.last?.scrum?.id === todayId) {
+					if (team.last?.scrum?.id === todayId && this.team?.id) {
 						this.scrumService
 							.watchScrum(this.team.id, todayId)
 							.pipe(takeUntil(this.destroyed))
@@ -92,7 +92,9 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 					id: getMeetingIdFromDate(getToday()),
 					data: this.todayScrum,
 				};
-			this.navService.navigateToScrum(date, this.team, scrum, tab);
+			if (this.team && scrum) {
+				this.navService.navigateToScrum(date, this.team, scrum, tab);
+			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to navigate to scrum');
 		}
@@ -103,7 +105,9 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		this.navService.navigateToScrums(this.navController, this.team);
+		if (this.team) {
+			this.navService.navigateToScrums(this.navController, this.team);
+		}
 	}
 
 	ngOnDestroy(): void {

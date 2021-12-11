@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { getMeetingIdFromDate } from '../../../services/meeting.service';
+import { getMeetingIdFromDate } from "@sneat/meeting";
 
 export interface IRetroQuestion {
 	id: string;
@@ -8,11 +8,11 @@ export interface IRetroQuestion {
 }
 
 @Component({
-	selector: 'app-retro-my-feedback',
+	selector: 'sneat-retro-my-feedback',
 	templateUrl: './retro-my-feedback.page.html',
 	styleUrls: ['./retro-my-feedback.page.scss'],
 })
-export class RetroMyFeedbackPage {
+export class RetroMyFeedbackPageComponent {
 	teamId: string;
 	retroId: string;
 

@@ -1,26 +1,25 @@
-import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { TeamService } from '../../../services/src/lib/team.service';
+import { ActivatedRoute } from "@angular/router";
+import { NavController } from "@ionic/angular";
 import {
 	ChangeDetectorRef,
 	Directive,
 	Inject,
 	Injectable,
-	OnDestroy,
-} from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { TeamContextService } from '../../../services/src/lib/team-context.service';
-import { first, mergeMap, takeUntil } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IUserTeamInfoWithId } from '@sneat/auth-models';
-import { IRecord } from '@sneat/data';
-import { ITeam } from '../../../models/src/lib/models';
-import { SneatUserService } from '@sneat/auth';
+	OnDestroy
+} from "@angular/core";
+import { Subject, Subscription } from "rxjs";
+import { first, mergeMap, takeUntil } from "rxjs/operators";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { IUserTeamInfoWithId } from "@sneat/auth-models";
+import { IRecord } from "@sneat/data";
+import { TeamContextService, TeamService } from "@sneat/team/services";
+import { SneatUserService } from "@sneat/user";
+import { ITeam } from "@sneat/team/models";
 
 @Injectable()
 @Directive()
 export abstract class BaseTeamPageDirective implements OnDestroy {
-	public userTeam: IUserTeamInfoWithId;
+	public userTeam?: IUserTeamInfoWithId;
 
 	protected readonly subs = new Subscription();
 	protected readonly destroyed = new Subject<boolean>();
@@ -35,10 +34,10 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 	}
 
 	public get defaultBackUrl(): string {
-		return this.teamRecord?.id ? `team?id=${this.team.id}` : 'teams';
+		return this.teamRecord?.id ? `team?id=${this.teamRecord.id}` : "teams";
 	}
 
-	private teamRecord: IRecord<ITeam>;
+	private teamRecord?: IRecord<ITeam>;
 
 	protected constructor(
 		protected readonly changeDetectorRef: ChangeDetectorRef,
@@ -55,12 +54,12 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 			this.getTeamRecordFromState();
 			this.cleanupOnUserLogout();
 		} catch (e) {
-			this.logError(e, 'Failed in BaseTeamPageDirective.constructor()');
+			this.logError(e, "Failed in BaseTeamPageDirective.constructor()");
 		}
 	}
 
 	public ngOnDestroy() {
-		this.unsubscribe('ngOnDestroy');
+		this.unsubscribe("ngOnDestroy");
 		this.destroyed.next(true);
 		this.destroyed.complete();
 	}
@@ -70,7 +69,7 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 		this.subs.unsubscribe();
 	}
 
-	protected trackTeamIdFromUrl(teamParamName: string = 'team'): void {
+	protected trackTeamIdFromUrl(teamParamName: string = "team"): void {
 		try {
 			this.teamContextService
 				.trackUrl(this.route, teamParamName)
@@ -84,10 +83,10 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 						this.setTeamId(id);
 					},
 					error: (err) =>
-						this.logError(err, 'Failed to track team ID from url'),
+						this.logError(err, "Failed to track team ID from url")
 				});
 		} catch (e) {
-			this.logError(e, 'Failed to call teamContextService.trackUrl()');
+			this.logError(e, "Failed to call teamContextService.trackUrl()");
 		}
 	}
 
@@ -102,14 +101,16 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 	}
 
 	protected onTeamIdChanged(): void {
-		console.log('BaseTeamPageDirective.onTeamIdChanged()');
+		console.log("BaseTeamPageDirective.onTeamIdChanged()");
 	}
 
 	protected onTeamChanged(): void {
-		console.log('BaseTeamPageDirective.onTeamChanged()');
-		this.userTeam = this.teamRecord
-			? { id: this.team?.id, title: this.team.data.title }
-			: undefined;
+		console.log("BaseTeamPageDirective.onTeamChanged()");
+		if (this.team?.data) {
+			this.userTeam = this.teamRecord
+				? { id: this.team?.id, title: this.team.data.title }
+				: undefined;
+		}
 	}
 
 	private getUserTeamInfoFromState(): void {
@@ -128,7 +129,7 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 				this.onTeamChanged();
 			}
 		} catch (e) {
-			this.logError(e, 'Failed in BaseTeamPage.constructor()');
+			this.logError(e, "Failed in BaseTeamPage.constructor()");
 		}
 	}
 
@@ -137,22 +138,22 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 			this.userService.userChanged.pipe(takeUntil(this.destroyed)).subscribe({
 				next: (uid) => {
 					if (!uid) {
-						this.unsubscribe('user signed out');
+						this.unsubscribe("user signed out");
 						this.teamRecord = undefined;
 					}
 					this.onUserIdChanged();
 				},
-				error: (e) => this.logError(e, 'Failed to get user record'),
+				error: (e) => this.logError(e, "Failed to get user record")
 			});
 		} catch (e) {
 			this.logError(
 				e,
-				'Failed to subscribe a hook on page cleanup on user logout'
+				"Failed to subscribe a hook on page cleanup on user logout"
 			);
 		}
 	}
 
-	private setTeamId(id: string): void {
+	private setTeamId(id: string | undefined): void {
 		try {
 			if (id) {
 				if (this.teamRecord?.id !== id) {
@@ -166,9 +167,9 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 								mergeMap(() => this.teamService.watchTeam(id))
 							)
 							.subscribe({
-								next: (data) => this.setTeam({ id, data }),
+								next: (data) => this.setTeam({ id, data: data || undefined }),
 								error: (err) =>
-									this.logError(err, `failed to load team by id=${id}`),
+									this.logError(err, `failed to load team by id=${id}`)
 							})
 					);
 				}
@@ -184,12 +185,12 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 				}
 			}
 		} catch (e) {
-			this.logError(e, 'Failed to set team id');
+			this.logError(e, "Failed to set team id");
 		}
 	}
 
 	private setTeam(team: IRecord<ITeam>): void {
-		console.log('BaseTeamPageDirective.setTeam()', team);
+		console.log("BaseTeamPageDirective.setTeam()", team);
 		this.teamRecord = team;
 		this.onTeamChanged();
 	}

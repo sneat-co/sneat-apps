@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { BehaviorSubject, Observable } from "rxjs";
+import { filter, map, tap } from "rxjs/operators";
 
 @Injectable({
-	providedIn: 'root',
+	providedIn: "root"
 })
 export class TeamContextService {
 	private readonly $currentTeamId = new BehaviorSubject<string | undefined>(
@@ -13,19 +13,18 @@ export class TeamContextService {
 	// eslint-disable-next-line @typescript-eslint/member-ordering
 	public currentTeamId = this.$currentTeamId.asObservable();
 
-	constructor() {} // private teamService: TeamService,
-
 	public trackUrl(
 		route: ActivatedRoute,
 		paramName: string
-	): Observable<string> {
+	): Observable<string | undefined> {
 		return route.queryParamMap.pipe(
-			map((params) => this.setActiveTeamId(params.get(paramName))),
-			tap((id) => console.log('team ID:', id))
+			map(params => params.get(paramName) || undefined),
+			map(paramValue => this.setActiveTeamId(paramValue)),
+			tap(id => console.log("team ID:", id))
 		);
 	}
 
-	public setActiveTeamId(id: string): string {
+	public setActiveTeamId(id: string | undefined): string | undefined {
 		this.$currentTeamId.next(id);
 		return id;
 	}

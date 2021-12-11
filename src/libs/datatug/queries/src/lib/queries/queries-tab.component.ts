@@ -96,7 +96,7 @@ export class QueriesTabComponent {
 		return (query.request as ISqlQueryRequest).text;
 	}
 
-	public readonly trackById = (_, v: IProjItemBrief) => v.id;
+	public readonly trackById = (_: number, v: IProjItemBrief) => v.id;
 
 	public clearFilter(): void {
 		this.filter = '';

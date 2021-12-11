@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { JoinTeamPage } from './join-team.page';
+import { JoinTeamPageComponent } from './join-team-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: JoinTeamPage,
+		component: JoinTeamPageComponent,
 	},
 ];
 

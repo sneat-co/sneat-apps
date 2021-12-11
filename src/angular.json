@@ -2705,14 +2705,21 @@
 			"sourceRoot": "libs/scrumspace/dailyscrum/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/scrumspace/dailyscrum"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/scrumspace/dailyscrum/src/**/*.ts",
-							"libs/scrumspace/dailyscrum/src/**/*.html"
-						]
-					}
+						"project": "libs/scrumspace/dailyscrum/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/scrumspace/dailyscrum/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/scrumspace/dailyscrum/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -2720,6 +2727,15 @@
 					"options": {
 						"jestConfig": "libs/scrumspace/dailyscrum/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/scrumspace/dailyscrum/src/**/*.ts",
+							"libs/scrumspace/dailyscrum/src/**/*.html"
+						]
 					}
 				}
 			},

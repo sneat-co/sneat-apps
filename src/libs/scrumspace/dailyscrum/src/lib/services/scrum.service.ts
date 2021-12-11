@@ -8,8 +8,6 @@ import {
 } from '@angular/fire/compat/firestore';
 import { filter, map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import firebase from 'firebase';
-import FieldPath = firebase.firestore.FieldPath;
 import { BaseMeetingService } from '@sneat/meeting';
 import { IMemberInfo, ITeam } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
@@ -18,13 +16,16 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import {
 	IAddCommentRequest,
-	IAddTaskRequest,
+	IAddTaskRequest, IReorderTaskRequest,
 	IScrum,
-	IStatus,
+	IStatus, ITask,
 	IThumbUpRequest,
-} from '@sneat/scrumspace/scrummodels';
+	TaskType
+} from "@sneat/scrumspace/scrummodels";
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/user';
+import firebase from "firebase/compat";
+import FieldPath = firebase.firestore.FieldPath;
 
 const getOrCreateMemberStatus = (
 	scrum: IScrum,
@@ -79,6 +80,7 @@ export class ScrumService extends BaseMeetingService {
 			map((result) => {
 				console.log('result', result);
 				// TODO: Remove `@ts-ignore`
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				return result.docs.map((d) => {
 					console.log('d', d);
@@ -142,6 +144,8 @@ export class ScrumService extends BaseMeetingService {
 		if (!request.member) {
 			return throwError(() => 'member required');
 		}
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		if (!request.meeting) {
 			return throwError(() => 'meeting required');
 		}
@@ -162,10 +166,18 @@ export class ScrumService extends BaseMeetingService {
 		return this.updateStatus(teamId, scrumId, member, (scrum, status) => {
 			const move = (src: 'done' | 'todo', dst: 'done' | 'todo'): void => {
 				memberStatus = status;
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
 				const index = status[src].findIndex((t) => t.id === taskId);
 				if (index >= 0) {
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					// @ts-ignore
 					status[dst] = status[dst].filter((t) => t.id !== taskId);
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					// @ts-ignore
 					status[dst].push(status[src][index]);
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					// @ts-ignore
 					status[src].splice(index, 1);
 				}
 			};
@@ -197,13 +209,15 @@ export class ScrumService extends BaseMeetingService {
 		title: string
 	): Observable<ITaskWithUiStatus> {
 		const task: ITaskWithUiStatus = {
-			id: this.randomIdService.newRandomId(9),
+			id: this.randomIdService.newRandomId({ len: 9 }),
 			title,
 			uiStatus: 'adding',
 		};
 		const request: IAddTaskRequest = {
 			type,
 			team: team.id,
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			meeting: scrumId,
 			member: member.id,
 			task: task.id,

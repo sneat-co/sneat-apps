@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IScrum } from '@sneat/scrumspace/scrummodels';
 
 @Component({
-	selector: 'app-timer-meeting-button',
+	selector: 'sneat-timer-meeting-button',
 	templateUrl: './timer-meeting-button.component.html',
 	styleUrls: ['./timer-meeting-button.component.scss'],
 })

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TeamPage } from './team.page';
+import { TeamPageComponent } from './team-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TeamService } from '../../../../services/src/lib/team.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -10,13 +10,13 @@ import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/user-service';
 
 describe('TeamPage', () => {
-	let component: TeamPage;
-	let fixture: ComponentFixture<TeamPage>;
+	let component: TeamPageComponent;
+	let fixture: ComponentFixture<TeamPageComponent>;
 
 	beforeEach(
 		waitForAsync(() => {
 			TestBed.configureTestingModule({
-				declarations: [TeamPage],
+				declarations: [TeamPageComponent],
 				imports: [
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
@@ -26,7 +26,7 @@ describe('TeamPage', () => {
 				providers: [TeamService, UserService],
 			}).compileComponents();
 
-			fixture = TestBed.createComponent(TeamPage);
+			fixture = TestBed.createComponent(TeamPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
 		})

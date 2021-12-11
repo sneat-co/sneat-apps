@@ -10,7 +10,7 @@ import { IUserTeamInfoWithId } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 
 @Component({
-	selector: 'app-member-new',
+	selector: 'sneat-member-new',
 	templateUrl: './member-new.page.html',
 	styleUrls: ['./member-new.page.scss'],
 })
