@@ -38,7 +38,7 @@ specifiers:
   '@nrwl/tao': 13.3.2
   '@nrwl/workspace': 13.3.2
   '@nxtend/capacitor': 12.1.0
-  '@nxtend/firebase': ^12.1.0
+  '@nxtend/firebase': 12.1.0
   '@nxtend/ionic-angular': 12.1.0
   '@sentry/browser': 6.16.1
   '@sneat/random': 0.0.3
