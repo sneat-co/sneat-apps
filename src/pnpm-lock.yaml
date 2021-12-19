@@ -43,7 +43,7 @@ specifiers:
   '@sentry/browser': 6.16.1
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
-  '@trellisorg/make-buildable': 0.0.10
+  '@trellisorg/make-buildable': 0.0.11
   '@types/jasmine': 3.10.2
   '@types/jest': 27.0.3
   '@types/node': 16.11.14
@@ -132,7 +132,7 @@ devDependencies:
   '@nxtend/capacitor': 12.1.0_@nrwl+workspace@13.3.9
   '@nxtend/firebase': 12.1.0_@nrwl+workspace@13.3.9
   '@nxtend/ionic-angular': 12.1.0_6c1d3171cf0e5d772762ed1355549e12
-  '@trellisorg/make-buildable': 0.0.10_@nrwl+workspace@13.3.9
+  '@trellisorg/make-buildable': 0.0.11_@nrwl+workspace@13.3.9
   '@types/jasmine': 3.10.2
   '@types/jest': 27.0.3
   '@types/node': 16.11.14
@@ -4736,8 +4736,8 @@ packages:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
     engines: {node: '>= 6'}
 
-  /@trellisorg/make-buildable/0.0.10_@nrwl+workspace@13.3.9:
-    resolution: {integrity: sha512-SBUi7vGu1tw8nVmsMz1vjZbvDa5+ch+IVEvOnutr3FdVtvsAo7Pv6BKtR0XedgQcFKAglUhnzkuJ9SahUOhBxA==}
+  /@trellisorg/make-buildable/0.0.11_@nrwl+workspace@13.3.9:
+    resolution: {integrity: sha512-0/LmWJh9btfTx31P2EUqLgoiE73Zeo5SdYjSA7PUYrvkPiPCliUp69uTZ+gOo57Qdsd2A3WHBqoSgEtS9Sa3kg==}
     peerDependencies:
       '@angular-devkit/schematics': '>=9'
       '@nrwl/workspace': '>=9'
