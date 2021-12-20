@@ -49,7 +49,7 @@ specifiers:
   '@types/node': 16.11.14
   '@typescript-eslint/eslint-plugin': 5.7.0
   '@typescript-eslint/parser': 5.7.0
-  codemirror: 5.64.0
+  codemirror: 5.65.0
   dotenv: 10.0.0
   eslint: 8.5.0
   eslint-config-prettier: 8.3.0
@@ -91,7 +91,7 @@ dependencies:
   '@angular/platform-browser-dynamic': 13.1.1_53ae741ee19166964f64e7b56404e938
   '@angular/router': 13.1.1_b57cfce72efcce1bdc2391be51a25b4d
   '@capacitor/core': 3.3.3
-  '@ctrl/ngx-codemirror': 5.1.1_96ad8382be2bc18616e858191aa02eca
+  '@ctrl/ngx-codemirror': 5.1.1_960c9e663d746fe115143512dd29770f
   '@ionic-native/core': 5.36.0_rxjs@7.4.0
   '@ionic-native/splash-screen': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
   '@ionic-native/status-bar': 5.36.0_8ab47c48efad7ef04fb75c816a44ee08
@@ -100,7 +100,7 @@ dependencies:
   '@sentry/browser': 6.16.1
   '@sneat/random': 0.0.3_97c374658fb8cefbe875884a7f473e47
   '@sneat/wormhole': 0.0.5_c29e44c52f612f85d8772daafc0be51e
-  codemirror: 5.64.0
+  codemirror: 5.65.0
   firebase: 9.6.1
   hogan.js: 3.0.2
   ionicons: 6.0.0
@@ -2992,7 +2992,7 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
-  /@ctrl/ngx-codemirror/5.1.1_96ad8382be2bc18616e858191aa02eca:
+  /@ctrl/ngx-codemirror/5.1.1_960c9e663d746fe115143512dd29770f:
     resolution: {integrity: sha512-MAByA/cJBZY3yv/cpO87mF9Q24/ptCWf2Pr4n4V1w3G0ya5cKAIyHwIfvJ5nJz/4Gj2i2O/pteDWkyxrbyICoA==}
     peerDependencies:
       '@angular/core': '>=12.0.0-0'
@@ -3002,7 +3002,7 @@ packages:
       '@angular/core': 13.1.1_rxjs@7.4.0+zone.js@0.11.4
       '@angular/forms': 13.1.1_b57cfce72efcce1bdc2391be51a25b4d
       '@types/codemirror': 5.60.5
-      codemirror: 5.64.0
+      codemirror: 5.65.0
       tslib: 2.3.1
     dev: false
 
@@ -6364,8 +6364,8 @@ packages:
     resolution: {integrity: sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
-  /codemirror/5.64.0:
-    resolution: {integrity: sha512-fqr6CtDQdJ6iNMbD8NX2gH2G876nNDk+TO1rrYkgWnqQdO3O1Xa9tK6q+psqhJJgE5SpbaDcgdfLmukoUVE8pg==}
+  /codemirror/5.65.0:
+    resolution: {integrity: sha512-gWEnHKEcz1Hyz7fsQWpK7P0sPI2/kSkRX2tc7DFA6TmZuDN75x/1ejnH/Pn8adYKrLEA1V2ww6L00GudHZbSKw==}
     dev: false
 
   /collect-v8-coverage/1.0.1:
