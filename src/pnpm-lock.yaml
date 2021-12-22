@@ -66,7 +66,7 @@ specifiers:
   ng-packagr: 13.1.2
   postcss: 8.4.5
   postcss-import: 14.0.2
-  postcss-preset-env: 7.0.2
+  postcss-preset-env: 7.1.0
   postcss-url: 10.1.3
   prettier: 2.5.1
   rxfire: 6.0.3
@@ -151,7 +151,7 @@ devDependencies:
   ng-packagr: 13.1.2_29f81843686caf9bb962b94ce72db9e1
   postcss: 8.4.5
   postcss-import: 14.0.2_postcss@8.4.5
-  postcss-preset-env: 7.0.2_postcss@8.4.5
+  postcss-preset-env: 7.1.0_postcss@8.4.5
   postcss-url: 10.1.3_postcss@8.4.5
   prettier: 2.5.1
   ts-jest: 27.1.2_b65cae1b46840061996b6cc0ea16ca56
@@ -243,9 +243,9 @@ packages:
       '@ngtools/webpack': 12.2.14_4eff90363ac5723fcc1b5605e853a9bb
       ansi-colors: 4.1.1
       babel-loader: 8.2.2_15fcbb65a44a1f30443ae494d6c1d89a
-      browserslist: 4.18.1
+      browserslist: 4.19.1
       cacache: 15.2.0
-      caniuse-lite: 1.0.30001286
+      caniuse-lite: 1.0.30001292
       circular-dependency-plugin: 5.2.2_webpack@5.50.0
       copy-webpack-plugin: 9.0.1_webpack@5.50.0
       core-js: 3.16.0
@@ -5660,7 +5660,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001292
       fraction.js: 4.1.2
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -5673,7 +5673,7 @@ packages:
     hasBin: true
     dependencies:
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001292
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       picocolors: 0.2.1
@@ -6012,7 +6012,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001292
       electron-to-chromium: 1.4.20
       escalade: 3.1.1
       node-releases: 2.0.1
@@ -6024,7 +6024,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001292
       electron-to-chromium: 1.4.20
       escalade: 3.1.1
       node-releases: 2.0.1
@@ -6162,17 +6162,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001292
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite/1.0.30001286:
-    resolution: {integrity: sha512-zaEMRH6xg8ESMi2eQ3R4eZ5qw/hJiVsO/HlLwniIwErij0JDr9P+8V4dtx1l+kLq6j3yy8l8W4fst1lBnat5wQ==}
-    dev: true
-
-  /caniuse-lite/1.0.30001287:
-    resolution: {integrity: sha512-4udbs9bc0hfNrcje++AxBuc6PfLNHwh3PO9kbwnfCQWyqtlzg3py0YgFu8jyRTTo85VAz4U+VLxSlID09vNtWA==}
+  /caniuse-lite/1.0.30001292:
+    resolution: {integrity: sha512-jnT4Tq0Q4ma+6nncYQVe7d73kmDmE9C3OGTx3MvW7lBM/eY1S1DZTMBON7dqV481RhNiS5OxD7k9JQvmDOTirw==}
 
   /canonical-path/1.0.0:
     resolution: {integrity: sha512-feylzsbDxi1gPZ1IjystzIQZagYYLvfKrSuygUCgf7z6x790VEzze5QEkdSV1U58RA7Hi0+v6fv4K54atOzATg==}
@@ -12778,7 +12774,7 @@ packages:
     dependencies:
       autoprefixer: 9.8.8
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001292
       css-blank-pseudo: 0.1.4
       css-has-pseudo: 0.10.0
       css-prefers-color-scheme: 3.1.1
@@ -12815,8 +12811,8 @@ packages:
       postcss-selector-not: 4.0.1
     dev: true
 
-  /postcss-preset-env/7.0.2_postcss@8.4.5:
-    resolution: {integrity: sha512-xgmkS+H2xhjPQWewnH4ViKBCHIZ15FfpldGZuBFaBIi/iipxHTLnBHKtkCp1L531SdNEPwo9md2psjOU1G77lw==}
+  /postcss-preset-env/7.1.0_postcss@8.4.5:
+    resolution: {integrity: sha512-YZI44uxVJQQu18TeHEoDtdLsjKLQpCpzt/4FAzadIcnNYwvKSQqvxaHE6uWobEWQrcfU42zIddMPUKgYQxZs8g==}
     engines: {node: ^12 || ^14 || >=16}
     hasBin: true
     peerDependencies:
@@ -12824,7 +12820,7 @@ packages:
     dependencies:
       autoprefixer: 10.4.0_postcss@8.4.5
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001292
       css-blank-pseudo: 3.0.0_postcss@8.4.5
       css-has-pseudo: 3.0.0_postcss@8.4.5
       css-prefers-color-scheme: 6.0.0_postcss@8.4.5
