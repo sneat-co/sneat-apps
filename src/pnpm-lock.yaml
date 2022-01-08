@@ -58,7 +58,7 @@ specifiers:
   ionicons: 6.0.0
   jest: 27.4.7
   jest-preset-angular: 11.0.1
-  karma: 6.3.9
+  karma: 6.3.10
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
@@ -111,7 +111,7 @@ dependencies:
   zone.js: 0.11.4
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.1.2_1a4294c217f0c6a6ad57a4f9255f355a
+  '@angular-devkit/build-angular': 13.1.2_7e5fc10c33fd37c161568f1d3a24887c
   '@angular-eslint/eslint-plugin': 13.0.1_eslint@8.6.0+typescript@4.5.4
   '@angular-eslint/eslint-plugin-template': 13.0.1_eslint@8.6.0+typescript@4.5.4
   '@angular-eslint/template-parser': 13.0.1_eslint@8.6.0+typescript@4.5.4
@@ -121,7 +121,7 @@ devDependencies:
   '@capacitor/android': 3.3.4_@capacitor+core@3.3.4
   '@capacitor/cli': 3.3.4
   '@capacitor/ios': 3.3.4_@capacitor+core@3.3.4
-  '@ionic/angular-toolkit': 5.0.3_1a4294c217f0c6a6ad57a4f9255f355a
+  '@ionic/angular-toolkit': 5.0.3_7e5fc10c33fd37c161568f1d3a24887c
   '@nrwl/cli': 13.4.3
   '@nrwl/eslint-plugin-nx': 13.4.3_07dc9765e1d31da3945cb464a48772a7
   '@nrwl/jest': 13.4.3_ts-node@10.4.0
@@ -143,11 +143,11 @@ devDependencies:
   eslint-config-prettier: 8.3.0_eslint@8.6.0
   jest: 27.4.7_ts-node@10.4.0
   jest-preset-angular: 11.0.1_7fd0536b2442fed823bbff00de7ef15e
-  karma: 6.3.9
+  karma: 6.3.10
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
-  karma-jasmine: 4.0.1_karma@6.3.9
-  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.9
+  karma-jasmine: 4.0.1_karma@6.3.10
+  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.10
   ng-packagr: 13.1.2_69c45ba37ea38f1b071a1c50af7e1b4e
   postcss: 8.4.5
   postcss-import: 14.0.2_postcss@8.4.5
@@ -194,7 +194,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/12.2.14_1a4294c217f0c6a6ad57a4f9255f355a:
+  /@angular-devkit/build-angular/12.2.14_7e5fc10c33fd37c161568f1d3a24887c:
     resolution: {integrity: sha512-oN/Rw+hL3T9EuzRauILJLiLgyyxgG4hjSO+W0EO9uYL3Q08+XmcmOKQgm0c3LAJFyk+REeOy6y4Gb3P7ZcfJ0Q==}
     engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -257,7 +257,7 @@ packages:
       glob: 7.1.7
       https-proxy-agent: 5.0.0
       inquirer: 8.1.2
-      karma: 6.3.9
+      karma: 6.3.10
       karma-source-map-support: 1.4.0
       less: 4.1.1
       less-loader: 10.0.1_less@4.1.1+webpack@5.50.0
@@ -313,7 +313,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@angular-devkit/build-angular/13.1.2_1a4294c217f0c6a6ad57a4f9255f355a:
+  /@angular-devkit/build-angular/13.1.2_7e5fc10c33fd37c161568f1d3a24887c:
     resolution: {integrity: sha512-0FeDqfjWJjgIU42T3136RNYb7Yv2as6Z8rAnfUlX6RjRGZf98+6ZQZ80yREgrLkm7L8G1qWJc1sn3NyVMDwf9A==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -370,7 +370,7 @@ packages:
       https-proxy-agent: 5.0.0
       inquirer: 8.2.0
       jsonc-parser: 3.0.0
-      karma: 6.3.9
+      karma: 6.3.10
       karma-source-map-support: 1.4.0
       less: 4.1.2
       less-loader: 10.2.0_less@4.1.2+webpack@5.65.0
@@ -3572,11 +3572,11 @@ packages:
       rxjs: 7.5.1
     dev: false
 
-  /@ionic/angular-toolkit/5.0.3_1a4294c217f0c6a6ad57a4f9255f355a:
+  /@ionic/angular-toolkit/5.0.3_7e5fc10c33fd37c161568f1d3a24887c:
     resolution: {integrity: sha512-xHVvB0FPkvzQ52B74EN8g0IhMj+rPl7oAMAd89P0ajlV3bvRfFyDimgx7HJDhl99qf9a7EhxjB65Yf6M/b1tnw==}
     dependencies:
       '@angular-devkit/architect': 0.1202.14
-      '@angular-devkit/build-angular': 12.2.14_1a4294c217f0c6a6ad57a4f9255f355a
+      '@angular-devkit/build-angular': 12.2.14_7e5fc10c33fd37c161568f1d3a24887c
       '@angular-devkit/core': 12.2.14
       '@angular-devkit/schematics': 12.2.14
       '@schematics/angular': 12.2.14
@@ -10794,25 +10794,25 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@4.0.1+karma@6.3.9:
+  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@4.0.1+karma@6.3.10:
     resolution: {integrity: sha512-pzum1TL7j90DTE86eFt48/s12hqwQuiD+e5aXx2Dc9wDEn2LfGq6RoAxEZZjFiN0RDSCOnosEKRZWxbQ+iMpQQ==}
     peerDependencies:
       jasmine-core: '>=3.8'
       karma: '>=0.9'
       karma-jasmine: '>=1.1'
     dependencies:
-      karma: 6.3.9
-      karma-jasmine: 4.0.1_karma@6.3.9
+      karma: 6.3.10
+      karma-jasmine: 4.0.1_karma@6.3.10
     dev: true
 
-  /karma-jasmine/4.0.1_karma@6.3.9:
+  /karma-jasmine/4.0.1_karma@6.3.10:
     resolution: {integrity: sha512-h8XDAhTiZjJKzfkoO1laMH+zfNlra+dEQHUAjpn5JV1zCPtOIVWGQjLBrqhnzQa/hrU2XrZwSyBa6XjEBzfXzw==}
     engines: {node: '>= 10'}
     peerDependencies:
       karma: '*'
     dependencies:
       jasmine-core: 3.10.1
-      karma: 6.3.9
+      karma: 6.3.10
     dev: true
 
   /karma-source-map-support/1.4.0:
@@ -10821,8 +10821,8 @@ packages:
       source-map-support: 0.5.21
     dev: true
 
-  /karma/6.3.9:
-    resolution: {integrity: sha512-E/MqdLM9uVIhfuyVnrhlGBu4miafBdXEAEqCmwdEMh3n17C7UWC/8Kvm3AYKr91gc7scutekZ0xv6rxRaUCtnw==}
+  /karma/6.3.10:
+    resolution: {integrity: sha512-Ofv+sgrkT8Czo6bzzQCvrwVyRSG8/3e7RbawEuxjfsINony+IR/S2csNRUFgPNfmWvju+dqi/MzQGOJ2LnlmfQ==}
     engines: {node: '>= 10'}
     hasBin: true
     dependencies:
