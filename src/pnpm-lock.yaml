@@ -72,7 +72,7 @@ specifiers:
   rxfire: 6.0.3
   rxjs: 7.5.2
   tabulator-tables: 5.0.10
-  ts-jest: 27.1.2
+  ts-jest: 27.1.3
   ts-node: 10.4.0
   tslib: 2.3.1
   typescript: 4.5.4
@@ -154,7 +154,7 @@ devDependencies:
   postcss-preset-env: 7.2.3_postcss@8.4.5
   postcss-url: 10.1.3_postcss@8.4.5
   prettier: 2.5.1
-  ts-jest: 27.1.2_9364f2ad0b7b67f00a4d081c662c6871
+  ts-jest: 27.1.3_9364f2ad0b7b67f00a4d081c662c6871
   ts-node: 10.4.0_c0a8ca172db2ce87bc71f1a1cb132fc8
   typescript: 4.5.4
 
@@ -10060,7 +10060,7 @@ packages:
       esbuild: 0.13.13
       jest-environment-jsdom: 27.4.3
       pretty-format: 27.4.2
-      ts-jest: 27.1.2_4d49fa1626ccfe841fb357ce0c97d5e0
+      ts-jest: 27.1.3_4d49fa1626ccfe841fb357ce0c97d5e0
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/jest'
@@ -14536,8 +14536,8 @@ packages:
     resolution: {integrity: sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==}
     dev: false
 
-  /ts-jest/27.1.2_4d49fa1626ccfe841fb357ce0c97d5e0:
-    resolution: {integrity: sha512-eSOiJOWq6Hhs6Khzk5wKC5sgWIXgXqOCiIl1+3lfnearu58Hj4QpE5tUhQcA3xtZrELbcvAGCsd6HB8OsaVaTA==}
+  /ts-jest/27.1.3_4d49fa1626ccfe841fb357ce0c97d5e0:
+    resolution: {integrity: sha512-6Nlura7s6uM9BVUAoqLH7JHyMXjz8gluryjpPXxr3IxZdAXnU6FhjvVLHFtfd1vsE1p8zD1OJfskkc0jhTSnkA==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     hasBin: true
     peerDependencies:
@@ -14571,8 +14571,8 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /ts-jest/27.1.2_9364f2ad0b7b67f00a4d081c662c6871:
-    resolution: {integrity: sha512-eSOiJOWq6Hhs6Khzk5wKC5sgWIXgXqOCiIl1+3lfnearu58Hj4QpE5tUhQcA3xtZrELbcvAGCsd6HB8OsaVaTA==}
+  /ts-jest/27.1.3_9364f2ad0b7b67f00a4d081c662c6871:
+    resolution: {integrity: sha512-6Nlura7s6uM9BVUAoqLH7JHyMXjz8gluryjpPXxr3IxZdAXnU6FhjvVLHFtfd1vsE1p8zD1OJfskkc0jhTSnkA==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     hasBin: true
     peerDependencies:
