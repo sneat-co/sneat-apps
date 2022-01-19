@@ -55,7 +55,7 @@ specifiers:
   eslint-config-prettier: 8.3.0
   firebase: 9.6.3
   hogan.js: 3.0.2
-  ionicons: 6.0.0
+  ionicons: 6.0.1
   jest: 27.4.7
   jest-preset-angular: 11.0.1
   karma: 6.3.11
@@ -103,7 +103,7 @@ dependencies:
   codemirror: 5.65.0
   firebase: 9.6.3
   hogan.js: 3.0.2
-  ionicons: 6.0.0
+  ionicons: 6.0.1
   rxfire: 6.0.3_firebase@9.6.3+rxjs@7.5.2
   rxjs: 7.5.2
   tabulator-tables: 5.0.10
@@ -3639,7 +3639,7 @@ packages:
     resolution: {integrity: sha512-eH2pk34owVuUUb5liNR+hQEaUIYYy2EKBZXtb7+eDOvXzEO4nnQHZpIVvyESeA9YNYKJm8YUFWKt5vgaL4u8cA==}
     dependencies:
       '@stencil/core': 2.12.1
-      ionicons: 6.0.0
+      ionicons: 6.0.1
       tslib: 2.3.1
     dev: false
 
@@ -4710,12 +4710,6 @@ packages:
       '@angular/core': 13.1.3_rxjs@7.5.2+zone.js@0.11.4
       rxjs: 7.5.2
       tslib: 2.3.1
-    dev: false
-
-  /@stencil/core/2.10.0:
-    resolution: {integrity: sha512-15rWMTPQ/sp0lSV82HVCXkIya3QLN+uBl7pqK4JnTrp4HiLrzLmNbWjbvgCs55gw0lULbCIGbRIEsFz+Pe/Q+A==}
-    engines: {node: '>=12.10.0', npm: '>=6.0.0'}
-    hasBin: true
     dev: false
 
   /@stencil/core/2.12.1:
@@ -9198,10 +9192,10 @@ packages:
       ipaddr.js: 1.9.1
     dev: true
 
-  /ionicons/6.0.0:
-    resolution: {integrity: sha512-p83W1T8jZUlllHAjuIWaDQbI36OYqdrwcf8MhYbKW7+9rjGlCMP9+5OaR0W7tl0QfM004uAiy/zkc7HTpDNKgA==}
+  /ionicons/6.0.1:
+    resolution: {integrity: sha512-xQekOJsxH82O7oB+3F60zeRggCdND9pJ/k0E6IJDVUGGlCj5mlyFqNgxUimytKgstPGv3S+3EmCxjefvtGgWUg==}
     dependencies:
-      '@stencil/core': 2.10.0
+      '@stencil/core': 2.12.1
     dev: false
 
   /ip-regex/2.1.0:
