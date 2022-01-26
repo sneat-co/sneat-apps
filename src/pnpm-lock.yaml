@@ -63,7 +63,7 @@ specifiers:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
   karma-jasmine-html-reporter: 1.7.0
-  ng-packagr: 13.1.3
+  ng-packagr: 13.2.0
   postcss: 8.4.5
   postcss-import: 14.0.2
   postcss-preset-env: 7.2.3
@@ -111,7 +111,7 @@ dependencies:
   zone.js: 0.11.4
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.1.4_5bf8637c4d0216c72ccbefde5f68443d
+  '@angular-devkit/build-angular': 13.1.4_024378e7239101da02d1552d325b302e
   '@angular-eslint/eslint-plugin': 13.0.1_eslint@8.7.0+typescript@4.5.5
   '@angular-eslint/eslint-plugin-template': 13.0.1_eslint@8.7.0+typescript@4.5.5
   '@angular-eslint/template-parser': 13.0.1_eslint@8.7.0+typescript@4.5.5
@@ -121,7 +121,7 @@ devDependencies:
   '@capacitor/android': 3.4.0_@capacitor+core@3.4.0
   '@capacitor/cli': 3.4.0
   '@capacitor/ios': 3.4.0_@capacitor+core@3.4.0
-  '@ionic/angular-toolkit': 5.0.3_5bf8637c4d0216c72ccbefde5f68443d
+  '@ionic/angular-toolkit': 5.0.3_024378e7239101da02d1552d325b302e
   '@nrwl/cli': 13.5.3
   '@nrwl/eslint-plugin-nx': 13.5.3_f2cb1aded99a35dbb91c7d30bec8681a
   '@nrwl/jest': 13.5.3_ts-node@10.4.0
@@ -148,7 +148,7 @@ devDependencies:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1_karma@6.3.12
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.12
-  ng-packagr: 13.1.3_3929fd565cd6f01c222dfb5b4ceb47e4
+  ng-packagr: 13.2.0_3929fd565cd6f01c222dfb5b4ceb47e4
   postcss: 8.4.5
   postcss-import: 14.0.2_postcss@8.4.5
   postcss-preset-env: 7.2.3_postcss@8.4.5
@@ -194,7 +194,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/12.2.14_5bf8637c4d0216c72ccbefde5f68443d:
+  /@angular-devkit/build-angular/12.2.14_024378e7239101da02d1552d325b302e:
     resolution: {integrity: sha512-oN/Rw+hL3T9EuzRauILJLiLgyyxgG4hjSO+W0EO9uYL3Q08+XmcmOKQgm0c3LAJFyk+REeOy6y4Gb3P7ZcfJ0Q==}
     engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -265,7 +265,7 @@ packages:
       loader-utils: 2.0.0
       mini-css-extract-plugin: 2.4.2_webpack@5.50.0
       minimatch: 3.0.4
-      ng-packagr: 13.1.3_3929fd565cd6f01c222dfb5b4ceb47e4
+      ng-packagr: 13.2.0_3929fd565cd6f01c222dfb5b4ceb47e4
       open: 8.2.1
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -313,7 +313,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@angular-devkit/build-angular/13.1.4_5bf8637c4d0216c72ccbefde5f68443d:
+  /@angular-devkit/build-angular/13.1.4_024378e7239101da02d1552d325b302e:
     resolution: {integrity: sha512-MTvlUCb02J4ODXDsnit4N0PR9PkpKeSYpTPueaSBuWTBeP3dvMPZQabvb3C5QT/5yUzBiXQZq11QYx3Gui4StA==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -378,7 +378,7 @@ packages:
       loader-utils: 3.2.0
       mini-css-extract-plugin: 2.4.5_webpack@5.65.0
       minimatch: 3.0.4
-      ng-packagr: 13.1.3_3929fd565cd6f01c222dfb5b4ceb47e4
+      ng-packagr: 13.2.0_3929fd565cd6f01c222dfb5b4ceb47e4
       open: 8.4.0
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -3564,11 +3564,11 @@ packages:
       rxjs: 7.5.2
     dev: false
 
-  /@ionic/angular-toolkit/5.0.3_5bf8637c4d0216c72ccbefde5f68443d:
+  /@ionic/angular-toolkit/5.0.3_024378e7239101da02d1552d325b302e:
     resolution: {integrity: sha512-xHVvB0FPkvzQ52B74EN8g0IhMj+rPl7oAMAd89P0ajlV3bvRfFyDimgx7HJDhl99qf9a7EhxjB65Yf6M/b1tnw==}
     dependencies:
       '@angular-devkit/architect': 0.1202.14
-      '@angular-devkit/build-angular': 12.2.14_5bf8637c4d0216c72ccbefde5f68443d
+      '@angular-devkit/build-angular': 12.2.14_024378e7239101da02d1552d325b302e
       '@angular-devkit/core': 12.2.14
       '@angular-devkit/schematics': 12.2.14
       '@schematics/angular': 12.2.14
@@ -10017,7 +10017,7 @@ packages:
       '@angular/core': '>=10.0.0'
       '@angular/platform-browser-dynamic': '>=10.0.0'
     dependencies:
-      '@angular-devkit/build-angular': 13.1.4_5bf8637c4d0216c72ccbefde5f68443d
+      '@angular-devkit/build-angular': 13.1.4_024378e7239101da02d1552d325b302e
       '@angular/compiler-cli': 13.1.3_045cf1ca7264bfdbd626fd58cf7f5b66
       '@angular/core': 13.1.3_rxjs@7.5.2+zone.js@0.11.4
       '@angular/platform-browser-dynamic': 13.1.3_9d2c7eee1846907b90db43b8b519ad6e
@@ -11158,8 +11158,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /ng-packagr/13.1.3_3929fd565cd6f01c222dfb5b4ceb47e4:
-    resolution: {integrity: sha512-u6Idmh4qAFYKNYP7tsm+Oys8enZ0FrZLN0muJFx7VY5CChq+PYqHeuWPd2a/JD0dL1Ffzr7qHL4Yak8/Ld0/0Q==}
+  /ng-packagr/13.2.0_3929fd565cd6f01c222dfb5b4ceb47e4:
+    resolution: {integrity: sha512-qfAipG1jQLjQ0+NXUTYyCmi5xSdMYY3LUWc7iXrbPfl8R2b8fLO+abW1zNMxS6TtcBUZMyfYtz2NGcFrh7QteA==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0}
     hasBin: true
     peerDependencies:
@@ -11189,7 +11189,7 @@ packages:
       postcss-url: 10.1.3_postcss@8.4.5
       rollup: 2.61.0
       rollup-plugin-sourcemaps: 0.6.3_0471037e3089ff14b2c3c0460395566e
-      rxjs: 6.6.7
+      rxjs: 7.5.2
       sass: 1.44.0
       stylus: 0.56.0
       tslib: 2.3.1
