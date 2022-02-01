@@ -58,7 +58,7 @@ specifiers:
   ionicons: 6.0.1
   jest: 27.4.7
   jest-preset-angular: 11.1.0
-  karma: 6.3.12
+  karma: 6.3.13
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
@@ -111,7 +111,7 @@ dependencies:
   zone.js: 0.11.4
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.2.1_b8382557db990f4d4e830fadae55c603
+  '@angular-devkit/build-angular': 13.2.1_111793d93255aa77f9091ebdc75913a2
   '@angular-eslint/eslint-plugin': 13.0.1_eslint@8.8.0+typescript@4.5.5
   '@angular-eslint/eslint-plugin-template': 13.0.1_eslint@8.8.0+typescript@4.5.5
   '@angular-eslint/template-parser': 13.0.1_eslint@8.8.0+typescript@4.5.5
@@ -121,7 +121,7 @@ devDependencies:
   '@capacitor/android': 3.4.0_@capacitor+core@3.4.0
   '@capacitor/cli': 3.4.0
   '@capacitor/ios': 3.4.0_@capacitor+core@3.4.0
-  '@ionic/angular-toolkit': 5.0.3_b8382557db990f4d4e830fadae55c603
+  '@ionic/angular-toolkit': 5.0.3_111793d93255aa77f9091ebdc75913a2
   '@nrwl/cli': 13.7.1
   '@nrwl/eslint-plugin-nx': 13.7.1_b4e1c6727dc7ebafbf377414c88e7f96
   '@nrwl/jest': 13.7.1_ts-node@10.4.0
@@ -143,11 +143,11 @@ devDependencies:
   eslint-config-prettier: 8.3.0_eslint@8.8.0
   jest: 27.4.7_ts-node@10.4.0
   jest-preset-angular: 11.1.0_b80033ff9dccbae12d99f6d2bcbd881e
-  karma: 6.3.12
+  karma: 6.3.13
   karma-chrome-launcher: 3.1.0
   karma-coverage-istanbul-reporter: 3.0.3
-  karma-jasmine: 4.0.1_karma@6.3.12
-  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.12
+  karma-jasmine: 4.0.1_karma@6.3.13
+  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.13
   ng-packagr: 13.2.1_b4c14d6c27e290380197b36460a821e1
   postcss: 8.4.5
   postcss-import: 14.0.2_postcss@8.4.5
@@ -194,7 +194,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/12.2.14_b8382557db990f4d4e830fadae55c603:
+  /@angular-devkit/build-angular/12.2.14_111793d93255aa77f9091ebdc75913a2:
     resolution: {integrity: sha512-oN/Rw+hL3T9EuzRauILJLiLgyyxgG4hjSO+W0EO9uYL3Q08+XmcmOKQgm0c3LAJFyk+REeOy6y4Gb3P7ZcfJ0Q==}
     engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -257,7 +257,7 @@ packages:
       glob: 7.1.7
       https-proxy-agent: 5.0.0
       inquirer: 8.1.2
-      karma: 6.3.12
+      karma: 6.3.13
       karma-source-map-support: 1.4.0
       less: 4.1.1
       less-loader: 10.0.1_less@4.1.1+webpack@5.50.0
@@ -313,7 +313,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@angular-devkit/build-angular/13.2.1_b8382557db990f4d4e830fadae55c603:
+  /@angular-devkit/build-angular/13.2.1_111793d93255aa77f9091ebdc75913a2:
     resolution: {integrity: sha512-bK1fXqtE/By9cybmVp7oFbCKoI6y9AlZO3k/k7AsyMgLtKL1YYLPN93Tq6L99W+zFI9+8V7x5bjuXWiexA63DA==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -370,7 +370,7 @@ packages:
       https-proxy-agent: 5.0.0
       inquirer: 8.2.0
       jsonc-parser: 3.0.0
-      karma: 6.3.12
+      karma: 6.3.13
       karma-source-map-support: 1.4.0
       less: 4.1.2
       less-loader: 10.2.0_less@4.1.2+webpack@5.67.0
@@ -3697,11 +3697,11 @@ packages:
       rxjs: 7.5.2
     dev: false
 
-  /@ionic/angular-toolkit/5.0.3_b8382557db990f4d4e830fadae55c603:
+  /@ionic/angular-toolkit/5.0.3_111793d93255aa77f9091ebdc75913a2:
     resolution: {integrity: sha512-xHVvB0FPkvzQ52B74EN8g0IhMj+rPl7oAMAd89P0ajlV3bvRfFyDimgx7HJDhl99qf9a7EhxjB65Yf6M/b1tnw==}
     dependencies:
       '@angular-devkit/architect': 0.1202.14
-      '@angular-devkit/build-angular': 12.2.14_b8382557db990f4d4e830fadae55c603
+      '@angular-devkit/build-angular': 12.2.14_111793d93255aa77f9091ebdc75913a2
       '@angular-devkit/core': 12.2.14
       '@angular-devkit/schematics': 12.2.14
       '@schematics/angular': 12.2.14
@@ -3907,7 +3907,7 @@ packages:
       chalk: 4.1.2
       emittery: 0.8.1
       exit: 0.1.2
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
       jest-changed-files: 27.4.2
       jest-config: 27.4.7_ts-node@10.4.0
       jest-haste-map: 27.4.6
@@ -7426,13 +7426,8 @@ packages:
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
 
-  /date-format/2.1.0:
-    resolution: {integrity: sha512-bYQuGLeFxhkxNOF3rcMtiZxvCBAquGzZm6oWA1oZ0g2THUzivaRhv8uOhdr19LmoobSOLoIAxeUK2RdbM8IFTA==}
-    engines: {node: '>=4.0'}
-    dev: true
-
-  /date-format/3.0.0:
-    resolution: {integrity: sha512-eyTcpKOcamdhWJXj56DpQMo1ylSQpcGtGKXcU0Tb97+K56/CF5amAqqqNj0+KvA0iw2ynxtHWFsPDSClCxe48w==}
+  /date-format/4.0.3:
+    resolution: {integrity: sha512-7P3FyqDcfeznLZp2b+OMitV9Sz2lUnsT87WaTat9nVwqsBkTzPG3lPLNwW3en6F4pHUiWzr6vb8CLhjdK9bcxQ==}
     engines: {node: '>=4.0'}
     dev: true
 
@@ -8876,10 +8871,6 @@ packages:
     resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
     hasBin: true
 
-  /flatted/2.0.2:
-    resolution: {integrity: sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==}
-    dev: true
-
   /flatted/3.2.4:
     resolution: {integrity: sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==}
     dev: true
@@ -8968,6 +8959,15 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
+  /fs-extra/10.0.0:
+    resolution: {integrity: sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      graceful-fs: 4.2.9
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: true
+
   /fs-extra/8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
     engines: {node: '>=6 <7 || >=8'}
@@ -8975,6 +8975,7 @@ packages:
       graceful-fs: 4.2.9
       jsonfile: 4.0.0
       universalify: 0.1.2
+    dev: false
 
   /fs-extra/9.1.0:
     resolution: {integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==}
@@ -9179,10 +9180,6 @@ packages:
       object-assign: 4.1.1
       pify: 2.3.0
       pinkie-promise: 2.0.1
-    dev: true
-
-  /graceful-fs/4.2.8:
-    resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}
     dev: true
 
   /graceful-fs/4.2.9:
@@ -10106,7 +10103,7 @@ packages:
       '@jest/types': 27.4.2
       chalk: 4.1.2
       exit: 0.1.2
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
       import-local: 3.0.3
       jest-config: 27.4.7_ts-node@10.4.0
       jest-util: 27.4.2
@@ -10414,7 +10411,7 @@ packages:
       '@angular/core': '>=10.0.0'
       '@angular/platform-browser-dynamic': '>=10.0.0'
     dependencies:
-      '@angular-devkit/build-angular': 13.2.1_b8382557db990f4d4e830fadae55c603
+      '@angular-devkit/build-angular': 13.2.1_111793d93255aa77f9091ebdc75913a2
       '@angular/compiler-cli': 13.2.0_8cc5395d9441276921188a8c7e402644
       '@angular/core': 13.2.0_rxjs@7.5.2+zone.js@0.11.4
       '@angular/platform-browser-dynamic': 13.2.0_891bed6000718f6dbfd0b9e5b1c11477
@@ -10763,6 +10760,7 @@ packages:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
     optionalDependencies:
       graceful-fs: 4.2.9
+    dev: false
 
   /jsonfile/6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
@@ -10803,25 +10801,25 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@4.0.1+karma@6.3.12:
+  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@4.0.1+karma@6.3.13:
     resolution: {integrity: sha512-pzum1TL7j90DTE86eFt48/s12hqwQuiD+e5aXx2Dc9wDEn2LfGq6RoAxEZZjFiN0RDSCOnosEKRZWxbQ+iMpQQ==}
     peerDependencies:
       jasmine-core: '>=3.8'
       karma: '>=0.9'
       karma-jasmine: '>=1.1'
     dependencies:
-      karma: 6.3.12
-      karma-jasmine: 4.0.1_karma@6.3.12
+      karma: 6.3.13
+      karma-jasmine: 4.0.1_karma@6.3.13
     dev: true
 
-  /karma-jasmine/4.0.1_karma@6.3.12:
+  /karma-jasmine/4.0.1_karma@6.3.13:
     resolution: {integrity: sha512-h8XDAhTiZjJKzfkoO1laMH+zfNlra+dEQHUAjpn5JV1zCPtOIVWGQjLBrqhnzQa/hrU2XrZwSyBa6XjEBzfXzw==}
     engines: {node: '>= 10'}
     peerDependencies:
       karma: '*'
     dependencies:
       jasmine-core: 3.10.1
-      karma: 6.3.12
+      karma: 6.3.13
     dev: true
 
   /karma-source-map-support/1.4.0:
@@ -10830,8 +10828,8 @@ packages:
       source-map-support: 0.5.21
     dev: true
 
-  /karma/6.3.12:
-    resolution: {integrity: sha512-qwIG+oB2YmHx4hjvYSRMNzL3YWAJ9baHaLAxiP7biFNkfpwYTUTtPck0joFpucalNLzMr+7z/FX1uY/kl8DV9A==}
+  /karma/6.3.13:
+    resolution: {integrity: sha512-64lbtHBnM/sG7XKvitSQVlImKYNugyjw4K2e8cZYrlZm0GwoWrfsrkzgS/KWY/r3+fVM/2xvT/JN6MyfdttxLw==}
     engines: {node: '>= 10'}
     hasBin: true
     dependencies:
@@ -10843,11 +10841,11 @@ packages:
       di: 0.0.1
       dom-serialize: 2.2.1
       glob: 7.2.0
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
       http-proxy: 1.18.1
       isbinaryfile: 4.0.8
       lodash: 4.17.21
-      log4js: 6.3.0
+      log4js: 6.4.1
       mime: 2.6.0
       minimatch: 3.0.4
       qjobs: 1.2.0
@@ -11111,15 +11109,15 @@ packages:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
-  /log4js/6.3.0:
-    resolution: {integrity: sha512-Mc8jNuSFImQUIateBFwdOQcmC6Q5maU0VVvdC2R6XMb66/VnT+7WS4D/0EeNMZu1YODmJe5NIn2XftCzEocUgw==}
+  /log4js/6.4.1:
+    resolution: {integrity: sha512-iUiYnXqAmNKiIZ1XSAitQ4TmNs8CdZYTAWINARF3LjnsLN8tY5m0vRwd6uuWj/yNY0YHxeZodnbmxKFUOM2rMg==}
     engines: {node: '>=8.0'}
     dependencies:
-      date-format: 3.0.0
+      date-format: 4.0.3
       debug: 4.3.3
-      flatted: 2.0.2
+      flatted: 3.2.4
       rfdc: 1.3.0
-      streamroller: 2.2.4
+      streamroller: 3.0.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -14516,13 +14514,13 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /streamroller/2.2.4:
-    resolution: {integrity: sha512-OG79qm3AujAM9ImoqgWEY1xG4HX+Lw+yY6qZj9R1K2mhF5bEmQ849wvrb+4vt4jLMLzwXttJlQbOdPOQVRv7DQ==}
+  /streamroller/3.0.2:
+    resolution: {integrity: sha512-ur6y5S5dopOaRXBuRIZ1u6GC5bcEXHRZKgfBjfCglMhmIf+roVCECjvkEYzNQOXIN2/JPnkMPW/8B3CZoKaEPA==}
     engines: {node: '>=8.0'}
     dependencies:
-      date-format: 2.1.0
+      date-format: 4.0.3
       debug: 4.3.3
-      fs-extra: 8.1.0
+      fs-extra: 10.0.0
     transitivePeerDependencies:
       - supports-color
     dev: true
