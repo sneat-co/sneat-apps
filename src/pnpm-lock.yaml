@@ -40,7 +40,7 @@ specifiers:
   '@nxtend/capacitor': 12.1.0
   '@nxtend/firebase': 12.1.0
   '@nxtend/ionic-angular': 12.1.0
-  '@sentry/browser': 6.17.3
+  '@sentry/browser': 6.17.4
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.11
@@ -97,7 +97,7 @@ dependencies:
   '@ionic-native/status-bar': 5.36.0_5e89ef58ff9f55d5d282f0e03142cb92
   '@ionic/angular': 6.0.5_e4457f906d4147c821eccda47d743822
   '@nrwl/angular': 13.7.1_41e26a1fa18bd5af75a6aa02c89e75b6
-  '@sentry/browser': 6.17.3
+  '@sentry/browser': 6.17.4
   '@sneat/random': 0.0.3_1de5b7fafa0e9d1a57eb052d21f0f431
   '@sneat/wormhole': 0.0.5_b1f8934b350289870b239f67b9a74dde
   codemirror: 5.65.1
@@ -4792,55 +4792,55 @@ packages:
       - chokidar
     dev: true
 
-  /@sentry/browser/6.17.3:
-    resolution: {integrity: sha512-UElPk6/Q/78eL8tHGHy080uHVQAuieWXlSMSzrJMVNa+vwXPwEeyL+WbPtKkND2jGwdODjg+pSj960RqhIv+ig==}
+  /@sentry/browser/6.17.4:
+    resolution: {integrity: sha512-ezLZ/FP2ZJPPemzGKMiu8RCHvuRYfDYXbkQb9KhUbpylJokL4GSRZHy8EYkcHugnvAiov7p8cdj7QgOZQPDAgw==}
     engines: {node: '>=6'}
     dependencies:
-      '@sentry/core': 6.17.3
-      '@sentry/types': 6.17.3
-      '@sentry/utils': 6.17.3
+      '@sentry/core': 6.17.4
+      '@sentry/types': 6.17.4
+      '@sentry/utils': 6.17.4
       tslib: 1.14.1
     dev: false
 
-  /@sentry/core/6.17.3:
-    resolution: {integrity: sha512-h7WgrNL0RVlr8Dceh97ZiXNdmEumDutpoqFijjiX4x72IiC6zSaVD4IsqrdGln+v8iJ3l3lX44HHqzubDub1OQ==}
+  /@sentry/core/6.17.4:
+    resolution: {integrity: sha512-7QFgw+I9YK/X1Gie0c7phwT5pHMow66UCXHzDzHR2aK/0X3Lhn8OWlcGjIt5zmiBK/LHwNfQBNMskbktbYHgdA==}
     engines: {node: '>=6'}
     dependencies:
-      '@sentry/hub': 6.17.3
-      '@sentry/minimal': 6.17.3
-      '@sentry/types': 6.17.3
-      '@sentry/utils': 6.17.3
+      '@sentry/hub': 6.17.4
+      '@sentry/minimal': 6.17.4
+      '@sentry/types': 6.17.4
+      '@sentry/utils': 6.17.4
       tslib: 1.14.1
     dev: false
 
-  /@sentry/hub/6.17.3:
-    resolution: {integrity: sha512-TDxv8nRvk45xvfQg6zs8GYzQzgo0EMhI3wjQZLiNfW2rzybKmIwVp2x3O4PAc3WPzwg4bYNgSAkYKVlHmYjRCg==}
+  /@sentry/hub/6.17.4:
+    resolution: {integrity: sha512-6+EvPcrPCwUmayeieIpm1ZrRNWriqMHWZFyw+MzunFLgG8IH8G45cJU1zNnTY9Jwwg4sFIS9xrHy3AOkctnIGw==}
     engines: {node: '>=6'}
     dependencies:
-      '@sentry/types': 6.17.3
-      '@sentry/utils': 6.17.3
+      '@sentry/types': 6.17.4
+      '@sentry/utils': 6.17.4
       tslib: 1.14.1
     dev: false
 
-  /@sentry/minimal/6.17.3:
-    resolution: {integrity: sha512-zvGGfHNNA92Lqx6P8ZwOUkmRmAiQl0AQFRXl9So1Ayq9bJRnFLJZv4YFVnp2wE4HXYIlfBYb51+GlGB5LIuPmw==}
+  /@sentry/minimal/6.17.4:
+    resolution: {integrity: sha512-p1A8UTtRt7bhV4ygu7yDNCannFr9E9dmqgeZWC7HrrTfygcnhNRFvTXTj92wEb0bFKuZr67wPSKnoXlkqkGxsw==}
     engines: {node: '>=6'}
     dependencies:
-      '@sentry/hub': 6.17.3
-      '@sentry/types': 6.17.3
+      '@sentry/hub': 6.17.4
+      '@sentry/types': 6.17.4
       tslib: 1.14.1
     dev: false
 
-  /@sentry/types/6.17.3:
-    resolution: {integrity: sha512-0AXCjYcfl8Vx26GfyLY4rBQ78Lyt1oND3UozTTMaVXlcKYIjzV+f7TOo5IZx+Kbr6EGUNDLdpA4xfbkWdW/1NA==}
+  /@sentry/types/6.17.4:
+    resolution: {integrity: sha512-RUyiXCKf61k2GIMP7FQX0naoSew4zLxe+UrtbjwVcWU4AFPZfH7tLNtTpVE85zAKbxsaiq3OD2FPtTZarHcwxQ==}
     engines: {node: '>=6'}
     dev: false
 
-  /@sentry/utils/6.17.3:
-    resolution: {integrity: sha512-6/2awDIeHSj0JgiC7DDdV1lxvLmf+/BisWhw09dKvmhVQB3ADvQZbohjUgM+Qam5zE0xmZAfQhvuDwC41W8Wnw==}
+  /@sentry/utils/6.17.4:
+    resolution: {integrity: sha512-+ENzZbrlVL1JJ+FoK2EOS27nbA/yToeaJPFlyVOnbthUxVyN3TTi9Uzn9F05fIE/2BTkOEk89wPtgcHafgrD6A==}
     engines: {node: '>=6'}
     dependencies:
-      '@sentry/types': 6.17.3
+      '@sentry/types': 6.17.4
       tslib: 1.14.1
     dev: false
 
