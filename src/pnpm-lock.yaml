@@ -66,7 +66,7 @@ specifiers:
   ng-packagr: 13.2.1
   postcss: 8.4.6
   postcss-import: 14.0.2
-  postcss-preset-env: 7.3.0
+  postcss-preset-env: 7.3.1
   postcss-url: 10.1.3
   prettier: 2.5.1
   rxfire: 6.0.3
@@ -151,7 +151,7 @@ devDependencies:
   ng-packagr: 13.2.1_ed2aca3102bf3296cf5e50345f044d13
   postcss: 8.4.6
   postcss-import: 14.0.2_postcss@8.4.6
-  postcss-preset-env: 7.3.0_postcss@8.4.6
+  postcss-preset-env: 7.3.1_postcss@8.4.6
   postcss-url: 10.1.3_postcss@8.4.6
   prettier: 2.5.1
   ts-jest: 27.1.3_a7e53b5e5b59e71a0fd4d8cf128393d5
@@ -11621,7 +11621,7 @@ packages:
       less: 4.1.2
       ora: 5.4.1
       postcss: 8.4.6
-      postcss-preset-env: 7.3.0_postcss@8.4.6
+      postcss-preset-env: 7.3.1_postcss@8.4.6
       postcss-url: 10.1.3_postcss@8.4.6
       rollup: 2.61.0
       rollup-plugin-sourcemaps: 0.6.3_1e7b68e208bf560bc6c4bda91c1e955c
@@ -13210,13 +13210,9 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /postcss-opacity-percentage/1.1.1_postcss@8.4.6:
-    resolution: {integrity: sha512-WZo/LXA2fDrkCwN7QQbf3uc6hSd1SON+Ilb0Smg9FojqpOPhrHx9kmv3hXxWi1rPepKl/NdoAU6FmhTnYKFigg==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      postcss: '>=8'
-    dependencies:
-      postcss: 8.4.6
+  /postcss-opacity-percentage/1.1.2:
+    resolution: {integrity: sha512-lyUfF7miG+yewZ8EAk9XUBIlrHyUE6fijnesuz+Mj5zrIHIEw6KcIZSOk/elVMqzLvREmXB83Zi/5QpNRYd47w==}
+    engines: {node: ^12 || ^14 || >=16}
     dev: true
 
   /postcss-ordered-values/5.0.2_postcss@8.4.6:
@@ -13390,8 +13386,8 @@ packages:
       postcss-selector-not: 5.0.0_postcss@8.4.5
     dev: true
 
-  /postcss-preset-env/7.3.0_postcss@8.4.6:
-    resolution: {integrity: sha512-mEK7vqBL/BvynALHNc9pC7T7jolNm3ouornf9p4WpXW+sGooV3kCLvS4kKXE+rL6i12LKUgleJOZRPaoOuNLEg==}
+  /postcss-preset-env/7.3.1_postcss@8.4.6:
+    resolution: {integrity: sha512-x7fNsJxfkY60P4FUNwhJUOfXBFfnObd2EcUYY97sXZ0XRLgmAE65es9EFIYHq1rAk7X3LMfbG+L9wYgkrNsq5Q==}
     engines: {node: ^12 || ^14 || >=16}
     peerDependencies:
       postcss: ^8.4
@@ -13428,7 +13424,7 @@ packages:
       postcss-logical: 5.0.3_postcss@8.4.6
       postcss-media-minmax: 5.0.0_postcss@8.4.6
       postcss-nesting: 10.1.2_postcss@8.4.6
-      postcss-opacity-percentage: 1.1.1_postcss@8.4.6
+      postcss-opacity-percentage: 1.1.2
       postcss-overflow-shorthand: 3.0.2_postcss@8.4.6
       postcss-page-break: 3.0.4_postcss@8.4.6
       postcss-place: 7.0.3_postcss@8.4.6
