@@ -13,7 +13,7 @@ specifiers:
   '@angular/compiler': 13.2.2
   '@angular/compiler-cli': 13.2.2
   '@angular/core': 13.2.2
-  '@angular/fire': 7.2.0
+  '@angular/fire': 7.2.1
   '@angular/forms': 13.2.2
   '@angular/language-service': 13.2.2
   '@angular/platform-browser': 13.2.2
@@ -85,7 +85,7 @@ dependencies:
   '@angular/common': 13.2.2_@angular+core@13.2.2+rxjs@7.5.4
   '@angular/compiler': 13.2.2
   '@angular/core': 13.2.2_rxjs@7.5.4+zone.js@0.11.4
-  '@angular/fire': 7.2.0_b6b8949f259783508b4b5311e5b2647c
+  '@angular/fire': 7.2.1_b6b8949f259783508b4b5311e5b2647c
   '@angular/forms': 13.2.2_35e62c822a25e6e13e3432fdf570f1e6
   '@angular/platform-browser': 13.2.2_c64a13fde22b93b73524c2f285257034
   '@angular/platform-browser-dynamic': 13.2.2_9ae48879d51b4631516600e997a0571b
@@ -480,23 +480,6 @@ packages:
       source-map: 0.7.3
     dev: true
 
-  /@angular-devkit/core/13.0.4:
-    resolution: {integrity: sha512-AzgLvERLC6qzY5aZWUpkz5nx+pZChrq3DSt6azMPALwzzoABrwiO6XqzRnj17mXtANXLH2oe9FuHr9jzgFbF1g==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    peerDependencies:
-      chokidar: ^3.5.2
-    peerDependenciesMeta:
-      chokidar:
-        optional: true
-    dependencies:
-      ajv: 8.6.3
-      ajv-formats: 2.1.1
-      fast-json-stable-stringify: 2.1.0
-      magic-string: 0.25.7
-      rxjs: 6.6.7
-      source-map: 0.7.3
-    dev: false
-
   /@angular-devkit/core/13.2.3:
     resolution: {integrity: sha512-/47RA8qmWzeS60xSdaprIn1MiSv0Iw83t0M9/ENH7irFS5vMAq62NCcwiWXH59pZmvvLbF+7xy/RgYUZLr4nHQ==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -521,19 +504,6 @@ packages:
       ora: 5.4.1
       rxjs: 6.6.7
     dev: true
-
-  /@angular-devkit/schematics/13.0.4:
-    resolution: {integrity: sha512-3LsmpfAEOxwPyachrktCHtGUYBzQCCzD0++CUjhK8W99v8/IAplkm4dgovFb1RiRkUm44l+HIS7387AbvEIf5A==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    dependencies:
-      '@angular-devkit/core': 13.0.4
-      jsonc-parser: 3.0.0
-      magic-string: 0.25.7
-      ora: 5.4.1
-      rxjs: 6.6.7
-    transitivePeerDependencies:
-      - chokidar
-    dev: false
 
   /@angular-devkit/schematics/13.2.3:
     resolution: {integrity: sha512-+dyC4iKV0huvpjiuz4uyjLNK3FsCIp/Ghv5lXvhG6yok/dCAubsJItJOxi6G16aVCzG/E9zbsDfm9fNMyVOkgQ==}
@@ -739,8 +709,8 @@ packages:
       zone.js: 0.11.4
     dev: false
 
-  /@angular/fire/7.2.0_b6b8949f259783508b4b5311e5b2647c:
-    resolution: {integrity: sha512-qWLaNb3K32RZc/O5bXgYs5ETvuWRplCSl/TmxPXyna0g7JeeNq0t7znffnv1PvsxmAeYftNXSHvHQJcls3IfLQ==}
+  /@angular/fire/7.2.1_b6b8949f259783508b4b5311e5b2647c:
+    resolution: {integrity: sha512-hi63xI17MW1mC0KKWQbUBAUkkvB61O6LoBHsP/Mgy/dCM9pAYJ1NxYamAHqAD2WI670FMAqJOqXoS86RSH4rYg==}
     peerDependencies:
       '@angular/common': ^12.0.0 || ^13.0.0
       '@angular/core': ^12.0.0 || ^13.0.0
@@ -754,12 +724,12 @@ packages:
       firebase-tools:
         optional: true
     dependencies:
-      '@angular-devkit/schematics': 13.0.4
+      '@angular-devkit/schematics': 13.2.3
       '@angular/common': 13.2.2_@angular+core@13.2.2+rxjs@7.5.4
       '@angular/core': 13.2.2_rxjs@7.5.4+zone.js@0.11.4
       '@angular/platform-browser': 13.2.2_c64a13fde22b93b73524c2f285257034
       '@angular/platform-browser-dynamic': 13.2.2_9ae48879d51b4631516600e997a0571b
-      '@schematics/angular': 13.0.4
+      '@schematics/angular': 13.2.3
       file-loader: 6.2.0
       firebase: 9.6.6
       fs-extra: 8.1.0
@@ -767,7 +737,7 @@ packages:
       inquirer: 8.2.0
       inquirer-autocomplete-prompt: 1.4.0_inquirer@8.2.0
       jsonc-parser: 3.0.0
-      node-fetch: 2.6.6
+      node-fetch: 2.6.7
       open: 8.4.0
       ora: 5.4.1
       rxfire: 6.0.3_firebase@9.6.6+rxjs@7.5.4
@@ -778,6 +748,7 @@ packages:
       winston: 3.3.3
     transitivePeerDependencies:
       - chokidar
+      - encoding
       - webpack
     dev: false
 
@@ -4728,17 +4699,6 @@ packages:
       jsonc-parser: 3.0.0
     dev: true
 
-  /@schematics/angular/13.0.4:
-    resolution: {integrity: sha512-P9F5c8ApLbEyfNO4TZNsTyAdrtOjwIhrM/P+eEC4/x6nklWlEFE6TGMYTNjiK/RRhkbX1tBs8gcdJLYxtEqPSg==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    dependencies:
-      '@angular-devkit/core': 13.0.4
-      '@angular-devkit/schematics': 13.0.4
-      jsonc-parser: 3.0.0
-    transitivePeerDependencies:
-      - chokidar
-    dev: false
-
   /@schematics/angular/13.2.3:
     resolution: {integrity: sha512-jloooGC7eco9AKxlIMMqFRptJYzZ0jNRBStWOp2dCISg6rmOKqpxbsHLtYFQIT1PnlomSxtKDAgYGQMDi9zhXw==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -5862,15 +5822,6 @@ packages:
       require-from-string: 2.0.2
       uri-js: 4.4.1
     dev: true
-
-  /ajv/8.6.3:
-    resolution: {integrity: sha512-SMJOdDP6LqTkD0Uq8qLi+gMwSt0imXLSV080qFVwJCpH9U6Mb+SUGHAXM0KNbcBPguytWyvFxcHgMLe2D2XSpw==}
-    dependencies:
-      fast-deep-equal: 3.1.3
-      json-schema-traverse: 1.0.0
-      require-from-string: 2.0.2
-      uri-js: 4.4.1
-    dev: false
 
   /ajv/8.9.0:
     resolution: {integrity: sha512-qOKJyNj/h+OWx7s5DePL6Zu1KeM9jPZhwBqs+7DzP6bGOvqzVCSf0xueYmVuaC/oQ/VtS2zLMLHdQFbkka+XDQ==}
@@ -11722,13 +11673,6 @@ packages:
 
   /node-addon-api/3.2.1:
     resolution: {integrity: sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==}
-
-  /node-fetch/2.6.6:
-    resolution: {integrity: sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==}
-    engines: {node: 4.x || >=6.0.0}
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: false
 
   /node-fetch/2.6.7:
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
