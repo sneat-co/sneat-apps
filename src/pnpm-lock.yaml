@@ -66,7 +66,7 @@ specifiers:
   ng-packagr: 13.2.1
   postcss: 8.4.6
   postcss-import: 14.0.2
-  postcss-preset-env: 7.3.2
+  postcss-preset-env: 7.3.3
   postcss-url: 10.1.3
   prettier: 2.5.1
   rxfire: 6.0.3
@@ -151,7 +151,7 @@ devDependencies:
   ng-packagr: 13.2.1_b35d3345fe9378ad6fd3ad54288e7721
   postcss: 8.4.6
   postcss-import: 14.0.2_postcss@8.4.6
-  postcss-preset-env: 7.3.2_postcss@8.4.6
+  postcss-preset-env: 7.3.3_postcss@8.4.6
   postcss-url: 10.1.3_postcss@8.4.6
   prettier: 2.5.1
   ts-jest: 27.1.3_1e2406a8ca2ae3dc934d01f9ee2aebbb
@@ -7301,8 +7301,8 @@ packages:
     resolution: {integrity: sha512-Q7982SynYCtcLUBCPgUPFy2TZmDiFyimpdln8K2v4w2c07W4rXL7q5F1ksVAqOAQfxKyyUGCKSsioezKT5bU1Q==}
     dev: true
 
-  /cssdb/6.2.1:
-    resolution: {integrity: sha512-TBIhtDCOeYjwr44Vpl1g/224/18lI0jW+PKdA5ZP30dhre3eEutVUb2mnqUnpRPiPWQB7BQf8CWiUGOa966Fnw==}
+  /cssdb/6.3.0:
+    resolution: {integrity: sha512-U/nJSGsM0NIEsVPwat6r6QrvtqZ8m+eYb8qLoSFXXWNghy5x3z6ftubzbb6AMFcvaYVVRXKAmgD1I1e2A31qug==}
     dev: true
 
   /cssesc/2.0.0:
@@ -11627,7 +11627,7 @@ packages:
       less: 4.1.2
       ora: 5.4.1
       postcss: 8.4.6
-      postcss-preset-env: 7.3.2_postcss@8.4.6
+      postcss-preset-env: 7.3.3_postcss@8.4.6
       postcss-url: 10.1.3_postcss@8.4.6
       rollup: 2.61.0
       rollup-plugin-sourcemaps: 0.6.3_0181a239c1fe5aa6c372ba95c89f4d5e
@@ -13387,8 +13387,8 @@ packages:
       postcss-selector-not: 5.0.0_postcss@8.4.5
     dev: true
 
-  /postcss-preset-env/7.3.2_postcss@8.4.6:
-    resolution: {integrity: sha512-bxKNZu7/JWTiePds3IJlDdnCaYkIQt38KkfMX9mKmDw0+D8tpf/a+1sog34BuiDsRsKWYYGaPvfKw61gJs7f6A==}
+  /postcss-preset-env/7.3.3_postcss@8.4.6:
+    resolution: {integrity: sha512-/4EIceyxf6LKihp88YnQ0uExt//EHozxOspsCQbLq9/RB4W0zutdk52XJZzDYtCkvergw0NTTQvB7TpdxBRbvQ==}
     engines: {node: ^12 || ^14 || >=16}
     peerDependencies:
       postcss: ^8.4
@@ -13403,7 +13403,7 @@ packages:
       css-blank-pseudo: 3.0.3_postcss@8.4.6
       css-has-pseudo: 3.0.4_postcss@8.4.6
       css-prefers-color-scheme: 6.0.3_postcss@8.4.6
-      cssdb: 6.2.1
+      cssdb: 6.3.0
       postcss: 8.4.6
       postcss-attribute-case-insensitive: 5.0.0_postcss@8.4.6
       postcss-clamp: 3.0.0_postcss@8.4.6
