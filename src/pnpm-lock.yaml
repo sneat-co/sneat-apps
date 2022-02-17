@@ -39,7 +39,7 @@ specifiers:
   '@nrwl/workspace': 13.8.2
   '@nxtend/capacitor': 12.1.0
   '@nxtend/firebase': 12.1.0
-  '@nxtend/ionic-angular': 12.1.0
+  '@nxtend/ionic-angular': 13.0.0
   '@sentry/browser': 6.17.9
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
@@ -131,7 +131,7 @@ devDependencies:
   '@nrwl/workspace': 13.8.2_dfe62ddff4040f54aa3519403220c4a3
   '@nxtend/capacitor': 12.1.0_@nrwl+workspace@13.8.2
   '@nxtend/firebase': 12.1.0_@nrwl+workspace@13.8.2
-  '@nxtend/ionic-angular': 12.1.0_65d2e3d0adcb5b0ee0e5f1487966355e
+  '@nxtend/ionic-angular': 13.0.0_65d2e3d0adcb5b0ee0e5f1487966355e
   '@trellisorg/make-buildable': 0.0.11_@nrwl+workspace@13.8.2
   '@types/jasmine': 3.10.3
   '@types/jest': 27.4.0
@@ -4615,14 +4615,14 @@ packages:
       '@nrwl/workspace': 13.8.2_dfe62ddff4040f54aa3519403220c4a3
     dev: true
 
-  /@nxtend/ionic-angular/12.1.0_65d2e3d0adcb5b0ee0e5f1487966355e:
-    resolution: {integrity: sha512-+Z7ajjB/NtxRGlGadZhY/reqsgmnG8VGpsz8AbiPHX5At0TXRKtSHiS3IXhJu6n3MFS8zTgitUEeN/haqVboHQ==}
+  /@nxtend/ionic-angular/13.0.0_65d2e3d0adcb5b0ee0e5f1487966355e:
+    resolution: {integrity: sha512-qrEbogP03pR/fKyiBSIs5Cmoj4HSMVeRZ64mFhe1xLC1YfJV6lM4kua+dSIBjNnL0xXjCCUHS5kMZZCbNhShmQ==}
     peerDependencies:
-      '@nrwl/angular': ^12.0.0
-      '@nxtend/capacitor': ^12.0.0
+      '@nrwl/angular': ^13.0.0
+      '@nxtend/capacitor': ^13.0.0
     dependencies:
       '@nrwl/angular': 13.8.2_b0e355019177e3530ed9f890d8bc7abf
-      '@nrwl/devkit': 12.10.1
+      '@nrwl/devkit': 13.8.2
       '@nxtend/capacitor': 12.1.0_@nrwl+workspace@13.8.2
     dev: true
 
