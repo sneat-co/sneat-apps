@@ -66,7 +66,7 @@ specifiers:
   ng-packagr: 13.2.1
   postcss: 8.4.6
   postcss-import: 14.0.2
-  postcss-preset-env: 7.4.0
+  postcss-preset-env: 7.4.1
   postcss-url: 10.1.3
   prettier: 2.5.1
   rxfire: 6.0.3
@@ -151,7 +151,7 @@ devDependencies:
   ng-packagr: 13.2.1_c2fe36f49c78444b3af8b77d8dcba700
   postcss: 8.4.6
   postcss-import: 14.0.2_postcss@8.4.6
-  postcss-preset-env: 7.4.0_postcss@8.4.6
+  postcss-preset-env: 7.4.1_postcss@8.4.6
   postcss-url: 10.1.3_postcss@8.4.6
   prettier: 2.5.1
   ts-jest: 27.1.3_1e2406a8ca2ae3dc934d01f9ee2aebbb
@@ -11668,7 +11668,7 @@ packages:
       less: 4.1.2
       ora: 5.4.1
       postcss: 8.4.6
-      postcss-preset-env: 7.4.0_postcss@8.4.6
+      postcss-preset-env: 7.4.1_postcss@8.4.6
       postcss-url: 10.1.3_postcss@8.4.6
       rollup: 2.61.0
       rollup-plugin-sourcemaps: 0.6.3_d7d4847d0543d202205a079551484d06
@@ -12387,11 +12387,11 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /postcss-clamp/3.0.0_postcss@8.4.6:
-    resolution: {integrity: sha512-QENQMIF/Grw0qX0RzSPJjw+mAiGPIwG2AnsQDIoR/WJ5Q19zLB0NrZX8cH7CzzdDWEerTPGCdep7ItFaAdtItg==}
+  /postcss-clamp/4.0.0_postcss@8.4.6:
+    resolution: {integrity: sha512-FsMmeBZtymFN7Jtlnw9is8I4nB+qEEb/qS0ZLTIqcKiwZyHBq44Yhv29Q+VQsTGHYFqIr/s/9tqvNM7j+j1d+g==}
     engines: {node: '>=7.6.0'}
     peerDependencies:
-      postcss: ^8.4.5
+      postcss: ^8.4.6
     dependencies:
       postcss: 8.4.6
       postcss-value-parser: 4.2.0
@@ -13430,8 +13430,8 @@ packages:
       postcss-selector-not: 5.0.0_postcss@8.4.5
     dev: true
 
-  /postcss-preset-env/7.4.0_postcss@8.4.6:
-    resolution: {integrity: sha512-nWC9bDW6nQ4a15RZ/UKgpxZT8xbv0gl+/2q6PROAwwzsxiEb4pjsChAbS0sltepvAjqXbQhff+38FXDxJCCobw==}
+  /postcss-preset-env/7.4.1_postcss@8.4.6:
+    resolution: {integrity: sha512-UvBVvPJ2vb4odAtckSbryndyBz+Me1q8wawqq0qznpDXy188I+8W5Sa929sCPqw2/NSYnqpHJbo41BKso3+I9A==}
     engines: {node: ^12 || ^14 || >=16}
     peerDependencies:
       postcss: ^8.4
@@ -13452,7 +13452,7 @@ packages:
       cssdb: 6.3.1
       postcss: 8.4.6
       postcss-attribute-case-insensitive: 5.0.0_postcss@8.4.6
-      postcss-clamp: 3.0.0_postcss@8.4.6
+      postcss-clamp: 4.0.0_postcss@8.4.6
       postcss-color-functional-notation: 4.2.2_postcss@8.4.6
       postcss-color-hex-alpha: 8.0.3_postcss@8.4.6
       postcss-color-rebeccapurple: 7.0.2_postcss@8.4.6
