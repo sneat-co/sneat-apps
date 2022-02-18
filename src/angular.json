@@ -2838,6 +2838,227 @@
 			},
 			"tags": []
 		},
+		"sneat-app": {
+			"projectType": "application",
+			"root": "apps/sneat-app",
+			"sourceRoot": "apps/sneat-app/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"outputs": ["{options.outputPath}"],
+					"options": {
+						"outputPath": "dist/apps/sneat-app",
+						"index": "apps/sneat-app/src/index.html",
+						"main": "apps/sneat-app/src/main.ts",
+						"polyfills": "apps/sneat-app/src/polyfills.ts",
+						"tsConfig": "apps/sneat-app/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							"apps/sneat-app/src/assets",
+							{
+								"glob": "**/*.svg",
+								"input": "node_modules/ionicons/dist/ionicons/svg",
+								"output": "./svg"
+							}
+						],
+						"styles": [
+							"apps/sneat-app/src/styles.scss",
+							{
+								"input": "apps/sneat-app/src/theme/variables.scss"
+							}
+						],
+						"scripts": []
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "apps/sneat-app/src/environments/environment.ts",
+									"with": "apps/sneat-app/src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all"
+						},
+						"development": {
+							"buildOptimizer": false,
+							"optimization": false,
+							"vendorChunk": true,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"production": {
+							"browserTarget": "sneat-app:build:production"
+						},
+						"development": {
+							"browserTarget": "sneat-app:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"browserTarget": "sneat-app:build"
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"apps/sneat-app/src/**/*.ts",
+							"apps/sneat-app/src/**/*.html"
+						]
+					}
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/apps/sneat-app"],
+					"options": {
+						"jestConfig": "apps/sneat-app/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"cap": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "--help"
+					}
+				},
+				"add": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "add"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "add ios"
+						},
+						"android": {
+							"cmd": "add android"
+						}
+					}
+				},
+				"copy": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "copy"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "copy ios"
+						},
+						"android": {
+							"cmd": "copy android"
+						}
+					}
+				},
+				"open": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "open"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "open ios"
+						},
+						"android": {
+							"cmd": "open android"
+						}
+					}
+				},
+				"run": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "run"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "run ios"
+						},
+						"android": {
+							"cmd": "run android"
+						}
+					}
+				},
+				"sync": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "sync"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "sync ios"
+						},
+						"android": {
+							"cmd": "sync android"
+						}
+					}
+				},
+				"update": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "update"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "update ios"
+						},
+						"android": {
+							"cmd": "update android"
+						}
+					}
+				}
+			},
+			"tags": []
+		},
+		"sneat-app-e2e": {
+			"root": "apps/sneat-app-e2e",
+			"sourceRoot": "apps/sneat-app-e2e/src",
+			"projectType": "application",
+			"architect": {
+				"e2e": {
+					"builder": "@nrwl/cypress:cypress",
+					"options": {
+						"cypressConfig": "apps/sneat-app-e2e/cypress.json",
+						"devServerTarget": "sneat-app:serve:development"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "sneat-app:serve:production"
+						}
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"outputs": ["{options.outputFile}"],
+					"options": {
+						"lintFilePatterns": ["apps/sneat-app-e2e/**/*.{js,ts}"]
+					}
+				}
+			},
+			"tags": [],
+			"implicitDependencies": ["sneat-app"]
+		},
 		"sneat-team": {
 			"projectType": "application",
 			"root": "apps/sneat-team",
