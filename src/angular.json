@@ -1636,6 +1636,227 @@
 			},
 			"tags": []
 		},
+		"debtus": {
+			"projectType": "application",
+			"root": "apps/debtus",
+			"sourceRoot": "apps/debtus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"outputs": ["{options.outputPath}"],
+					"options": {
+						"outputPath": "dist/apps/debtus",
+						"index": "apps/debtus/src/index.html",
+						"main": "apps/debtus/src/main.ts",
+						"polyfills": "apps/debtus/src/polyfills.ts",
+						"tsConfig": "apps/debtus/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							"apps/debtus/src/assets",
+							{
+								"glob": "**/*.svg",
+								"input": "node_modules/ionicons/dist/ionicons/svg",
+								"output": "./svg"
+							}
+						],
+						"styles": [
+							"apps/debtus/src/styles.scss",
+							{
+								"input": "apps/debtus/src/theme/variables.scss"
+							}
+						],
+						"scripts": []
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "apps/debtus/src/environments/environment.ts",
+									"with": "apps/debtus/src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all"
+						},
+						"development": {
+							"buildOptimizer": false,
+							"optimization": false,
+							"vendorChunk": true,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"production": {
+							"browserTarget": "debtus:build:production"
+						},
+						"development": {
+							"browserTarget": "debtus:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"browserTarget": "debtus:build"
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"apps/debtus/src/**/*.ts",
+							"apps/debtus/src/**/*.html"
+						]
+					}
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/apps/debtus"],
+					"options": {
+						"jestConfig": "apps/debtus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"cap": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "--help"
+					}
+				},
+				"add": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "add"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "add ios"
+						},
+						"android": {
+							"cmd": "add android"
+						}
+					}
+				},
+				"copy": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "copy"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "copy ios"
+						},
+						"android": {
+							"cmd": "copy android"
+						}
+					}
+				},
+				"open": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "open"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "open ios"
+						},
+						"android": {
+							"cmd": "open android"
+						}
+					}
+				},
+				"run": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "run"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "run ios"
+						},
+						"android": {
+							"cmd": "run android"
+						}
+					}
+				},
+				"sync": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "sync"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "sync ios"
+						},
+						"android": {
+							"cmd": "sync android"
+						}
+					}
+				},
+				"update": {
+					"builder": "@nxtend/capacitor:cap",
+					"options": {
+						"cmd": "update"
+					},
+					"configurations": {
+						"ios": {
+							"cmd": "update ios"
+						},
+						"android": {
+							"cmd": "update android"
+						}
+					}
+				}
+			},
+			"tags": []
+		},
+		"debtus-e2e": {
+			"root": "apps/debtus-e2e",
+			"sourceRoot": "apps/debtus-e2e/src",
+			"projectType": "application",
+			"architect": {
+				"e2e": {
+					"builder": "@nrwl/cypress:cypress",
+					"options": {
+						"cypressConfig": "apps/debtus-e2e/cypress.json",
+						"devServerTarget": "debtus:serve:development"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "debtus:serve:production"
+						}
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"outputs": ["{options.outputFile}"],
+					"options": {
+						"lintFilePatterns": ["apps/debtus-e2e/**/*.{js,ts}"]
+					}
+				}
+			},
+			"tags": [],
+			"implicitDependencies": ["debtus"]
+		},
 		"emptyapp": {
 			"projectType": "application",
 			"root": "apps/emptyapp",

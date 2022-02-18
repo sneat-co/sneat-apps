@@ -1,0 +1,7 @@
+{
+	"name": "debtus",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "angular"
+}
