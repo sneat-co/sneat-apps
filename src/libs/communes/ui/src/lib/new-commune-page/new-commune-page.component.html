@@ -33,55 +33,8 @@
 			<ion-label>Commune name</ion-label>
 			<ion-input #nameInput [(ngModel)]="name"></ion-input>
 		</ion-item>
-		<ng-container *ngIf="code === 'family'">
-			<ng-container *ngIf="!partnerStatus">
-				<ion-list-header>
-					Do you have a spouse or a partner?
-				</ion-list-header>
-				<ion-radio-group [(ngModel)]="partnerStatus">
-					<ion-item>
-						<ion-radio slot="start" value="married"></ion-radio>
-						<ion-label>I am married</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-radio slot="start" value="partner"></ion-radio>
-						<ion-label>I have a partner</ion-label>
-					</ion-item>
-					<ion-item>
-						<ion-label>I am single</ion-label>
-						<ion-radio slot="start" value="single"></ion-radio>
-					</ion-item>
-				</ion-radio-group>
-			</ng-container>
-			<ng-container *ngIf="partnerStatus">
-				<ion-item>
-					<ion-label>Partner/spouse</ion-label>
-					<ion-select [(ngModel)]="partnerStatus" interface="popover">
-						<ion-select-option value="married">I am married</ion-select-option>
-						<ion-select-option value="partner">I have a partner</ion-select-option>
-						<ion-select-option value="single">I am single</ion-select-option>
-					</ion-select>
-				</ion-item>
-			</ng-container>
-			<ng-container *ngIf="!numberOfKids && partnerStatus">
-				<ion-list-header>
-					<ion-label>How many kids?</ion-label>
-				</ion-list-header>
-				<ion-radio-group [(ngModel)]="numberOfKids">
-					<ion-item *ngFor="let n of range0to7">
-						<ion-radio slot="start" [value]="n"></ion-radio>
-						<ion-label>{{n}}</ion-label>
-					</ion-item>
-				</ion-radio-group>
-			</ng-container>
-			<ion-item *ngIf="!!numberOfKids">
-				<ion-label>Number of kids</ion-label>
-				<ion-select [(ngModel)]="numberOfKids" interface="popover">
-					<ion-select-option *ngFor="let n of range0to7" [value]="n">{{n}}</ion-select-option>
-				</ion-select>
-			</ion-item>
-		</ng-container>
 	</ion-list>
-	<ion-button [disabled]="!numberOfKids">Create commune</ion-button>
+	<sneat-new-family-wizard *ngIf="code === 'family'" (ready)="onFormReadyChanged($event)"></sneat-new-family-wizard>
+	<ion-button [disabled]="!formIsReady">Create commune</ion-button>
 
 </ion-content>

@@ -19,16 +19,18 @@ export class NewCommunePageComponent {
 	public code?: string;
 	public icon?: string;
 	public name = "";
+	formIsReady?: boolean;
 	@ViewChild("nameInput") nameInput?: IonInput;
 
-	range0to7 = '01234567'.split('');
-
-	partnerStatus?: string;
-	numberOfKids?: string;
 
 	public onTypeChanged(event: Event): void {
 		setTimeout(() => {
 			this.nameInput?.setFocus().then(() => console.log("set focus to name"));
 		}, 100);
+	}
+
+
+	public onFormReadyChanged(value: boolean): void {
+		this.formIsReady = value;
 	}
 }
