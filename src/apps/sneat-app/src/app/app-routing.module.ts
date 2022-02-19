@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
 	{
-		path: 'home',
+		path: "communes",
 		loadChildren: () =>
-			import('./home/home.module').then((m) => m.HomePageModule),
+			import("@sneat/communes/ui").then(m => m.CommunesRoutingModule),
 	},
 	{
-		path: '',
-		redirectTo: 'home',
-		pathMatch: 'full',
+		path: "",
+		redirectTo: "communes",
+		pathMatch: "full",
 	},
 ];
 
@@ -20,4 +20,5 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

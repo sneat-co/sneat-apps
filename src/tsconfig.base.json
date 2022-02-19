@@ -24,6 +24,7 @@
 			"@sneat/auth": ["libs/auth/src/index.ts"],
 			"@sneat/auth-models": ["libs/auth-models/src/index.ts"],
 			"@sneat/auth-ui": ["libs/auth-ui/src/index.ts"],
+			"@sneat/communes/ui": ["libs/communes/ui/src/index.ts"],
 			"@sneat/components/card-list": ["libs/components/card-list/src/index.ts"],
 			"@sneat/components/error-card": [
 				"libs/components/error-card/src/index.ts"

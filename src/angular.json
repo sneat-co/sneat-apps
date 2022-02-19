@@ -266,6 +266,32 @@
 			},
 			"tags": []
 		},
+		"communes-ui": {
+			"projectType": "library",
+			"root": "libs/communes/ui",
+			"sourceRoot": "libs/communes/ui/src",
+			"prefix": "sneat",
+			"architect": {
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/communes/ui"],
+					"options": {
+						"jestConfig": "libs/communes/ui/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/communes/ui/src/**/*.ts",
+							"libs/communes/ui/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
 		"components-card-list": {
 			"projectType": "library",
 			"root": "libs/components/card-list",

@@ -1,0 +1,38 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="communes"></ion-back-button>
+		</ion-buttons>
+		<ion-title>New commune</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+	<ion-list>
+		<ion-item *ngIf="!!code">
+			<ion-label>Commune type</ion-label>
+			<ion-icon slot="start" name="home"></ion-icon>
+			<ion-select [(ngModel)]="code" interface="popover">
+				<ion-select-option *ngFor="let type of types" [value]="type.code">{{type.title}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ng-container *ngIf="!code">
+			<ion-list-header>
+				<ion-label>Choose commune type</ion-label>
+			</ion-list-header>
+			<ion-radio-group [(ngModel)]="code" (ionChange)="onTypeChanged($event)">
+				<ion-item *ngFor="let type of types">
+					<ion-label>{{type.title}}</ion-label>
+					<ion-radio slot="start" [value]="type.code"></ion-radio>
+				</ion-item>
+			</ion-radio-group>
+		</ng-container>
+		<ion-item *ngIf="!!code">
+			<ion-label>Commune name</ion-label>
+			<ion-input #nameInput [(ngModel)]="name"></ion-input>
+		</ion-item>
+	</ion-list>
+	<ion-button *ngIf="!!code">Create commune</ion-button>
+
+</ion-content>
