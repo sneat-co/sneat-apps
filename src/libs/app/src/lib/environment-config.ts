@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken } from "@angular/core";
 
 export interface IFirebaseConfig {
 	projectId: string;
@@ -16,4 +16,4 @@ export interface IEnvironmentConfig {
 	firebaseConfig: IFirebaseConfig;
 }
 
-export const EnvConfigToken = new InjectionToken('envConfig');
+export const EnvConfigToken = new InjectionToken("envConfig");
