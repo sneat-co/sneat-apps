@@ -35,6 +35,6 @@
 		</ion-item>
 	</ion-list>
 	<sneat-new-family-wizard *ngIf="code === 'family'" (ready)="onFormReadyChanged($event)"></sneat-new-family-wizard>
-	<ion-button [disabled]="!formIsReady">Create commune</ion-button>
+	<ion-button *ngIf="formIsReady">Create commune</ion-button>
 
 </ion-content>
