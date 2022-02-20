@@ -100,7 +100,9 @@
 			"@sneat/team/pages": ["libs/team/pages/src/index.ts"],
 			"@sneat/team/services": ["libs/team/services/src/index.ts"],
 			"@sneat/timer": ["libs/timer/src/index.ts"],
-			"@sneat/user": ["libs/user/src/index.ts"]
+			"@sneat/ui": ["libs/ui/src/index.ts"],
+			"@sneat/user": ["libs/user/src/index.ts"],
+			"@sneat/wizard": ["libs/wizard/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
