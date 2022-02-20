@@ -3,6 +3,10 @@ import { IEnvironmentConfig, IFirebaseConfig } from "../lib/environment-config";
 const useEmulators = true;
 
 const firebaseConfig: IFirebaseConfig = {
+	emulator: {
+		authPort: 9099,
+		firestorePort: 8080,
+	},
 	apiKey: useEmulators
 		? "emulator-does-not-need-api-key"
 		: "AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw",
