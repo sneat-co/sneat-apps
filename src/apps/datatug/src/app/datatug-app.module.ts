@@ -4,7 +4,7 @@ import { IonicModule } from "@ionic/angular";
 import { DatatugAppComponent } from "./datatug-app.component";
 import { DatatugAppRoutingModule } from "./datatug-app-routing.module";
 import { CoreModule } from "@sneat/core";
-import { EnvConfigToken, SneatAppModule } from "@sneat/app";
+import { EnvConfigToken, initFirebase, SneatAppModule } from "@sneat/app";
 import { AngularFireModule } from "@angular/fire/compat";
 import { environment } from "../environments/environment";
 import { CommonModule } from "@angular/common";
@@ -17,9 +17,6 @@ import { HttpClientModule } from "@angular/common/http";
 // Issue: https://github.com/angular/angularfire/issues/2656
 // Bug: https://github.com/firebase/firebase-js-sdk/issues/4110
 // Workaround: https://stackoverflow.com/questions/65025005/angularfireauth-emulator-login-is-lost-on-page-reload
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-import "firebase/compat/auth";
 import { SneatAuthModule } from "@sneat/auth";
 import {
 	RANDOM_ID_OPTIONS,
@@ -28,13 +25,7 @@ import {
 } from "@sneat/random";
 // import { GuiGridModule } from '@generic-ui/ngx-grid';
 
-const firebaseApp = firebase.initializeApp(environment.firebaseConfig);
-if (environment.useEmulators) {
-	console.log("using firebase emulators...");
-	const emulator = environment.firebaseConfig.emulator;
-	firebaseApp.auth().useEmulator("http://localhost:" + emulator.authPort);
-	firebaseApp.firestore().useEmulator("localhost", emulator.firestorePort);
-}
+initFirebase(environment.firebaseConfig);
 
 // ***********************************************************************************************
 
