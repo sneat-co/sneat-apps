@@ -4,3 +4,4 @@
 import { localEnvironmentConfig } from "@sneat/app";
 
 export const environment = localEnvironmentConfig;
+console.log("environment", environment);
