@@ -58,6 +58,7 @@ specifiers:
   eslint-plugin-cypress: ^2.10.3
   firebase: 9.6.7
   hogan.js: 3.0.2
+  idb: ^7.0.0
   ionicons: 6.0.1
   jest: 27.5.1
   jest-preset-angular: 11.1.1
@@ -106,6 +107,7 @@ dependencies:
   codemirror: 5.65.2
   firebase: 9.6.7
   hogan.js: 3.0.2
+  idb: 7.0.0
   ionicons: 6.0.1
   rxfire: 6.0.3_firebase@9.6.7+rxjs@7.5.4
   rxjs: 7.5.4
@@ -9973,6 +9975,10 @@ packages:
 
   /idb/3.0.2:
     resolution: {integrity: sha512-+FLa/0sTXqyux0o6C+i2lOR0VoS60LU/jzUo5xjfY6+7sEEgy4Gz1O7yFBXvjd7N0NyIGWIRg8DcQSLEG+VSPw==}
+    dev: false
+
+  /idb/7.0.0:
+    resolution: {integrity: sha512-jSx0WOY9Nj+QzP6wX5e7g64jqh8ExtDs/IAuOrOEZCD/h6+0HqyrKsDMfdJc0hqhSvh0LsrwqrkDn+EtjjzSRA==}
     dev: false
 
   /identity-obj-proxy/3.0.0:

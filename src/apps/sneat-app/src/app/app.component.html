@@ -1,3 +1,16 @@
-<ion-app>
-	<ion-router-outlet></ion-router-outlet>
-</ion-app>
+<ion-split-pane contentId="main">
+	<!--  the side menu  -->
+	<ion-menu contentId="main">
+		<ion-header>
+			<ion-toolbar color="primary">
+				<ion-title>sneat.app</ion-title>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content>
+			<sneat-commune-menu></sneat-commune-menu>
+		</ion-content>
+	</ion-menu>
+
+	<!-- the main content -->
+	<ion-router-outlet id="main"></ion-router-outlet>
+</ion-split-pane>

@@ -4,7 +4,7 @@ import { IonicModule } from "@ionic/angular";
 import { DatatugAppComponent } from "./datatug-app.component";
 import { DatatugAppRoutingModule } from "./datatug-app-routing.module";
 import { CoreModule } from "@sneat/core";
-import { EnvConfigToken, initFirebase, SneatAppModule } from "@sneat/app";
+import { EnvConfigToken, initFirebase, SneatApplicationModule } from "@sneat/app";
 import { AngularFireModule } from "@angular/fire/compat";
 import { environment } from "../environments/environment";
 import { CommonModule } from "@angular/common";
@@ -44,7 +44,7 @@ initFirebase(environment.firebaseConfig);
 		// GuiGridModule,
 		RandomModule,
 		WormholeModule, // WormholeModule have to be imported at root module
-		SneatAppModule,
+		SneatApplicationModule,
 		SneatAuthModule,
 		DatatugAppRoutingModule,
 		// DatatugMenuModule,

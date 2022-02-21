@@ -12,5 +12,5 @@ import { SneatAnalyticsModule } from "@sneat/analytics";
 	],
 	providers: [AppComponentService],
 })
-export class SneatAppModule {
+export class SneatApplicationModule {
 }

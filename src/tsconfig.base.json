@@ -86,6 +86,7 @@
 			"@sneat/grid": ["libs/grid/src/index.ts"],
 			"@sneat/logging": ["libs/logging/src/index.ts"],
 			"@sneat/meeting": ["libs/meeting/src/index.ts"],
+			"@sneat/rxstore": ["libs/rxstore/src/index.ts"],
 			"@sneat/scrumspace/dailyscrum": [
 				"libs/scrumspace/dailyscrum/src/index.ts"
 			],

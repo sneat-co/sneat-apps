@@ -6,7 +6,7 @@ import "firebase/compat/auth";
 export function initFirebase(firebaseConfig: IFirebaseConfig): void {
 	const firebaseApp = firebase.initializeApp(firebaseConfig);
 	if (firebaseConfig.emulator) {
-		console.log("using firebase emulators...");
+		console.log("using firebase emulators", firebaseConfig);
 		const emulator = firebaseConfig.emulator;
 		if (emulator.authPort) {
 			firebaseApp.auth().useEmulator("http://localhost:" + emulator.authPort);
