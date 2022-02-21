@@ -7,6 +7,8 @@ import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SneatAppComponent } from "./sneat-app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CommunesUiModule, RoutesToCommuneModule } from "@sneat/communes/ui";
+import { SneatLoggingModule } from "@sneat/logging";
+import { SneatApplicationModule } from "@sneat/app";
 
 @NgModule({
 	declarations: [SneatAppComponent],
@@ -15,6 +17,7 @@ import { CommunesUiModule, RoutesToCommuneModule } from "@sneat/communes/ui";
 		BrowserModule,
 		IonicModule.forRoot(),
 		AppRoutingModule,
+		SneatApplicationModule,
 		CommunesUiModule,
 	],
 	providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

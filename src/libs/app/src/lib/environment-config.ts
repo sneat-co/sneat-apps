@@ -11,7 +11,7 @@ export interface IFirebaseConfig {
 	measurementId: string;
 	apiKey: string;
 	authDomain: string;
-	databaseURL: string;
+	databaseURL?: string;
 }
 
 export interface IEnvironmentConfig {

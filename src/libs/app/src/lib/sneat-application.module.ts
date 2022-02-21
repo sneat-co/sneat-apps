@@ -10,7 +10,9 @@ import { SneatAnalyticsModule } from "@sneat/analytics";
 		SneatLoggingModule,
 		SneatAnalyticsModule,
 	],
-	providers: [AppComponentService],
+	providers: [
+		AppComponentService,
+	],
 })
 export class SneatApplicationModule {
 }

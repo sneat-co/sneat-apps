@@ -25,8 +25,8 @@ export interface ISneatAuthUser extends firebase.UserInfo {
 
 export interface ISneatAuthState {
 	status: AuthStatus;
-	token?: string;
-	user?: ISneatAuthUser;
+	token?: string | null;
+	user?: ISneatAuthUser | null;
 }
 
 const initialAuthStatus = AuthStatuses.authenticating;
@@ -43,7 +43,7 @@ export class SneatAuthStateService {
 		.asObservable()
 		.pipe(distinctUntilChanged());
 
-	private readonly authUser$ = new BehaviorSubject<ISneatAuthUser>(undefined);
+	private readonly authUser$ = new BehaviorSubject<ISneatAuthUser|null|undefined>(undefined);
 	public readonly authUser = this.authUser$.asObservable();
 
 	private readonly authState$ = new BehaviorSubject<ISneatAuthState>(
@@ -77,9 +77,9 @@ export class SneatAuthStateService {
 			error: errorLogger.logErrorHandler('failed to get Firebase auth token'),
 		});
 		afAuth.user.subscribe({
-			next: (fbUser: firebase.User) => {
+			next: (fbUser) => {
 				// console.log(`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`, fbUser);
-				const user: ISneatAuthUser = fbUser && {
+				const user: ISneatAuthUser | null = fbUser && {
 					isAnonymous: fbUser.isAnonymous,
 					emailVerified: fbUser.emailVerified,
 					email: fbUser.email,

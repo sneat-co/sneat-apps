@@ -49,7 +49,7 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 		{
 			console.log('SneatAuthGuard.canLoad', route, segments);
 			const authPipeFactory =
-				(route.data?.authCanLoadGuardPipe as AuthCanLoadPipeGenerator) ||
+				(route.data && route.data['authCanLoadGuardPipe'] as AuthCanLoadPipeGenerator) ||
 				(() => redirectToLoginIfNotSignedIn);
 			return this.auth.user.pipe(
 				map((user) => {
