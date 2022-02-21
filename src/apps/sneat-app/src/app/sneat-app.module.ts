@@ -4,22 +4,21 @@ import { RouteReuseStrategy } from "@angular/router";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 
-import { AppComponent } from "./app.component";
+import { SneatAppComponent } from "./sneat-app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CommunesUiModule, RoutesToCommuneModule } from "@sneat/communes/ui";
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [SneatAppComponent],
 	entryComponents: [],
 	imports: [
 		BrowserModule,
 		IonicModule.forRoot(),
 		AppRoutingModule,
-		RoutesToCommuneModule,
 		CommunesUiModule,
 	],
 	providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-	bootstrap: [AppComponent],
+	bootstrap: [SneatAppComponent],
 })
 export class SneatAppModule {
 }
