@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { SneatAuthStateService } from "@sneat/auth";
+import { SneatAuthStateService } from "./sneat-auth-state-service";
 
 @Injectable({
 	providedIn: "root",
