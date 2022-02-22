@@ -4,7 +4,7 @@ export class RegExpCheck implements IValueCheck {
 	private readonly regExp: RegExp;
 
 	constructor(regExp: RegExp) {
-		this.regExp = regExp.compile();
+		this.regExp = regExp;
 	}
 
 	checkValue(o: unknown): IValueCheckResult {
