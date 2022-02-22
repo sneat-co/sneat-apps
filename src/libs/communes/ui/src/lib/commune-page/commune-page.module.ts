@@ -5,6 +5,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { NewFamilyWizardModule } from "../new-family-wizard/new-family-wizard.module";
 import { CommunePageComponent } from "./commune-page.component";
+import { AuthModule } from "@angular/fire/auth";
+import { SneatAuthModule } from "@sneat/auth";
 
 const routes: Routes = [
 	{
@@ -20,6 +22,7 @@ const routes: Routes = [
 		IonicModule,
 		FormsModule,
 		RouterModule.forChild(routes),
+		SneatAuthModule,
 	],
 	declarations: [CommunePageComponent],
 })

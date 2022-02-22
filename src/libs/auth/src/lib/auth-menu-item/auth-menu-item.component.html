@@ -1,3 +1,9 @@
-<ion-item>
-	Sign in or Sign out
+<ion-item tappable>
+	<ion-label *ngIf="!authState" color="medium">Authenticating...</ion-label>
+	<ion-label *ngIf="authState?.status === 'notAuthenticated'">
+		Sign-in
+	</ion-label>
+	<ion-label *ngIf="authState?.status === 'authenticated'">
+		Sign-out
+	</ion-label>
 </ion-item>

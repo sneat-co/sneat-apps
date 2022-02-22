@@ -2,10 +2,10 @@ import { Component } from "@angular/core";
 import { ISneatAuthState, SneatAuthStateService } from "../sneat-auth-state-service";
 
 @Component({
-	selector: "sneat-auth-menu-item",
-	templateUrl: "./auth-menu-item.component.html",
+	selector: "sneat-login-required",
+	templateUrl: "./login-required.component.html",
 })
-export class AuthMenuItemComponent {
+export class LoginRequiredComponent {
 
 	public authState?: ISneatAuthState;
 
