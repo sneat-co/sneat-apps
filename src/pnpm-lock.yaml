@@ -58,7 +58,7 @@ specifiers:
   eslint-plugin-cypress: 2.12.1
   firebase: 9.6.7
   hogan.js: 3.0.2
-  idb: ^7.0.0
+  idb: 7.0.0
   ionicons: 6.0.1
   jest: 27.5.1
   jest-preset-angular: 11.1.1
