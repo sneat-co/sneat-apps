@@ -90,7 +90,7 @@
 		"@nxtend/ionic-angular": "13.0.0",
 		"@trellisorg/make-buildable": "0.0.11",
 		"@types/jasmine": "3.10.3",
-		"@types/jest": "27.4.0",
+		"@types/jest": "27.4.1",
 		"@types/node": "16.11.25",
 		"@typescript-eslint/eslint-plugin": "5.12.1",
 		"@typescript-eslint/parser": "5.12.1",
