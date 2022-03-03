@@ -1,6 +1,6 @@
 {
 	"name": "datatug",
 	"devDependencies": {
-		"@capacitor/cli": "3.4.1"
+		"@capacitor/cli": "3.4.2"
 	}
 }
