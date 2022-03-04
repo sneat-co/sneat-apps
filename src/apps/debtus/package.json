@@ -1,6 +1,6 @@
 {
 	"name": "debtus",
 	"devDependencies": {
-		"@capacitor/cli": "3.4.2"
+		"@capacitor/cli": "3.4.3"
 	}
 }
