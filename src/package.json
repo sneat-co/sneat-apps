@@ -89,7 +89,7 @@
 		"@nxtend/firebase": "12.1.0",
 		"@nxtend/ionic-angular": "13.0.0",
 		"@trellisorg/make-buildable": "0.0.11",
-		"@types/jasmine": "3.10.3",
+		"@types/jasmine": "3.10.4",
 		"@types/jest": "27.4.1",
 		"@types/node": "16.11.26",
 		"@typescript-eslint/eslint-plugin": "5.13.0",
