@@ -45,7 +45,7 @@ specifiers:
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.11
-  '@types/jasmine': 3.10.3
+  '@types/jasmine': 3.10.4
   '@types/jest': 27.4.1
   '@types/node': 16.11.26
   '@typescript-eslint/eslint-plugin': 5.13.0
@@ -139,7 +139,7 @@ devDependencies:
   '@nxtend/firebase': 12.1.0_@nrwl+workspace@13.8.8
   '@nxtend/ionic-angular': 13.0.0_f38287bc55eff1810bc5a8116baf63d5
   '@trellisorg/make-buildable': 0.0.11_@nrwl+workspace@13.8.8
-  '@types/jasmine': 3.10.3
+  '@types/jasmine': 3.10.4
   '@types/jest': 27.4.1
   '@types/node': 16.11.26
   '@typescript-eslint/eslint-plugin': 5.13.0_33fffc354ccfa91fbe7d1677b9395a0a
@@ -4323,8 +4323,8 @@ packages:
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
 
-  /@types/jasmine/3.10.3:
-    resolution: {integrity: sha512-SWyMrjgdAUHNQmutvDcKablrJhkDLy4wunTme8oYLjKp41GnHGxMRXr2MQMvy/qy8H3LdzwQk9gH4hZ6T++H8g==}
+  /@types/jasmine/3.10.4:
+    resolution: {integrity: sha512-7UAoOBYJpaZKmpJ8esMUIMl6pSdReliPQjviOOikWdQ7eVr4Hq8YbpeXyfXFKflZv8ymDFhYdTjVabbP2s4K4Q==}
     dev: true
 
   /@types/jest/27.4.1:
