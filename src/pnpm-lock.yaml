@@ -63,7 +63,7 @@ specifiers:
   jest: 27.5.1
   jest-preset-angular: 11.1.1
   karma: 6.3.17
-  karma-chrome-launcher: 3.1.0
+  karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
   karma-jasmine-html-reporter: 1.7.0
@@ -152,7 +152,7 @@ devDependencies:
   jest: 27.5.1_ts-node@10.7.0
   jest-preset-angular: 11.1.1_a350c6acd74d089e3acee142fc6f084b
   karma: 6.3.17
-  karma-chrome-launcher: 3.1.0
+  karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1_karma@6.3.17
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.17
@@ -9002,8 +9002,8 @@ packages:
       set-immediate-shim: 1.0.1
     dev: false
 
-  /karma-chrome-launcher/3.1.0:
-    resolution: {integrity: sha512-3dPs/n7vgz1rxxtynpzZTvb9y/GIaW8xjAwcIGttLbycqoFtI7yo1NGnQi6oFTherRE+GIhCAHZC4vEqWGhNvg==}
+  /karma-chrome-launcher/3.1.1:
+    resolution: {integrity: sha512-hsIglcq1vtboGPAN+DGCISCFOxW+ZVnIqhDQcCMqqCp+4dmJ0Qpq5QAjkbA0X2L9Mi6OBkHi2Srrbmm7pUKkzQ==}
     dependencies:
       which: 1.3.1
     dev: true
