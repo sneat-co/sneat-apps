@@ -28,7 +28,7 @@ specifiers:
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
   '@ionic/angular': 6.0.12
-  '@ionic/angular-toolkit': 6.0.0
+  '@ionic/angular-toolkit': 6.1.0
   '@nrwl/angular': 13.8.8
   '@nrwl/cli': 13.8.8
   '@nrwl/cypress': 13.8.8
@@ -126,7 +126,7 @@ devDependencies:
   '@capacitor/android': 3.4.3_@capacitor+core@3.4.3
   '@capacitor/cli': 3.4.3
   '@capacitor/ios': 3.4.3_@capacitor+core@3.4.3
-  '@ionic/angular-toolkit': 6.0.0
+  '@ionic/angular-toolkit': 6.1.0
   '@nrwl/cli': 13.8.8
   '@nrwl/cypress': 13.8.8_41d7b2a272f2b7e4bcb3ec8377da2d65
   '@nrwl/eslint-plugin-nx': 13.8.8_2937473add85d176590b9fff9b06c889
@@ -334,23 +334,6 @@ packages:
       source-map: 0.7.3
     dev: false
 
-  /@angular-devkit/core/13.2.4:
-    resolution: {integrity: sha512-hSw1JWA/6dDAF/xleQRXGtzHphfU49TMUhvAoAmsmmz3NAn03xLy1dtqdIXIf+TkFXVvZDaAB2mW8KfRV67GFg==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    peerDependencies:
-      chokidar: ^3.5.2
-    peerDependenciesMeta:
-      chokidar:
-        optional: true
-    dependencies:
-      ajv: 8.9.0
-      ajv-formats: 2.1.1
-      fast-json-stable-stringify: 2.1.0
-      magic-string: 0.25.7
-      rxjs: 6.6.7
-      source-map: 0.7.3
-    dev: true
-
   /@angular-devkit/core/13.2.5:
     resolution: {integrity: sha512-WuWp/1R0FtCHPBcJLF13lTLHETtDGFUX0ULfGPRaYB5OVCSQcovVp5UbZTTy/Ss3ub3EOEmJlU8kMJfBrWuq+A==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -397,19 +380,6 @@ packages:
     transitivePeerDependencies:
       - chokidar
     dev: false
-
-  /@angular-devkit/schematics/13.2.4:
-    resolution: {integrity: sha512-VMhYa4cDu5yE31OvHncAd15Rmlchih/Sr6sxFsIwkg4xzRNIIZCtwqxVXgf0TiTN9zrvlvzK7nhPqTGNqqYb2A==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    dependencies:
-      '@angular-devkit/core': 13.2.4
-      jsonc-parser: 3.0.0
-      magic-string: 0.25.7
-      ora: 5.4.1
-      rxjs: 6.6.7
-    transitivePeerDependencies:
-      - chokidar
-    dev: true
 
   /@angular-devkit/schematics/13.2.5:
     resolution: {integrity: sha512-kAye6VYiF9JQAoeO+BYhy8eT2QOmhB+WLziRjXoFCBxh5+yXTygTVfs9fD5jmIpHmeu4hd2ErSh69yT5xWcD9g==}
@@ -2807,12 +2777,12 @@ packages:
       rxjs: 7.5.5
     dev: false
 
-  /@ionic/angular-toolkit/6.0.0:
-    resolution: {integrity: sha512-obbFfMaHBkbfldD/6buopF7a7/Vygkr2FOryM6YOFeIcwUVx3iGptOHK38s+6MYVZ0dHzStvoh+xNu2IopVaCw==}
+  /@ionic/angular-toolkit/6.1.0:
+    resolution: {integrity: sha512-QZkoNdXej4MQqKGdm+suzTK39R0iRGpBFhOzP+f75v4ZGgEQ+ntA213UdaTa6EvsvS7n14p0zbHiBroLUOCNzQ==}
     dependencies:
-      '@angular-devkit/core': 13.2.4
-      '@angular-devkit/schematics': 13.2.4
-      '@schematics/angular': 13.2.4
+      '@angular-devkit/core': 13.3.0
+      '@angular-devkit/schematics': 13.3.0
+      '@schematics/angular': 13.3.0
     transitivePeerDependencies:
       - chokidar
     dev: true
@@ -3917,17 +3887,6 @@ packages:
     transitivePeerDependencies:
       - chokidar
     dev: false
-
-  /@schematics/angular/13.2.4:
-    resolution: {integrity: sha512-pAVuPmFklWVpNJkARs4aGYM5Mo4iez0eW0dDY+ugxZlt1KOLJQDmMK2Go60iEAQLlOw2pKO/jcmTttOP8PN0UQ==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    dependencies:
-      '@angular-devkit/core': 13.2.4
-      '@angular-devkit/schematics': 13.2.4
-      jsonc-parser: 3.0.0
-    transitivePeerDependencies:
-      - chokidar
-    dev: true
 
   /@schematics/angular/13.2.5:
     resolution: {integrity: sha512-pUaTwyMZRy7laV9RQozREomiUKi7Tn4wdyyuCUSqVvaiLI+DKvWE4vJXA2+/ketfzRjx6xIaCEexjsHJ+2FNtg==}
