@@ -67,7 +67,7 @@ specifiers:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1
   karma-jasmine-html-reporter: 1.7.0
-  ng-packagr: 13.2.1
+  ng-packagr: 13.3.0
   postcss: 8.4.12
   postcss-import: 14.0.2
   postcss-preset-env: 7.4.2
@@ -116,7 +116,7 @@ dependencies:
   zone.js: 0.11.5
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.3.0_7f8d4b2ae0472e5f94246a1e3b4c2632
+  '@angular-devkit/build-angular': 13.3.0_3194c273d7d28dc2c4f94fa3255506ff
   '@angular-eslint/eslint-plugin': 13.1.0_eslint@8.11.0+typescript@4.6.2
   '@angular-eslint/eslint-plugin-template': 13.1.0_eslint@8.11.0+typescript@4.6.2
   '@angular-eslint/template-parser': 13.1.0_eslint@8.11.0+typescript@4.6.2
@@ -156,7 +156,7 @@ devDependencies:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.1_karma@6.3.17
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.1+karma@6.3.17
-  ng-packagr: 13.2.1_989d5d90807bc75aed477eddbc1483c8
+  ng-packagr: 13.3.0_989d5d90807bc75aed477eddbc1483c8
   postcss: 8.4.12
   postcss-import: 14.0.2_postcss@8.4.12
   postcss-preset-env: 7.4.2_postcss@8.4.12
@@ -192,7 +192,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/13.3.0_7f8d4b2ae0472e5f94246a1e3b4c2632:
+  /@angular-devkit/build-angular/13.3.0_3194c273d7d28dc2c4f94fa3255506ff:
     resolution: {integrity: sha512-3Ji7EeqGHj7i1Jgmeo3aIEXsnfKyFeQPpl65gcYmHwj5dP4lZzLSU4rMaWWUKksccgqCUXgPI2vKePTPazmikg==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -257,7 +257,7 @@ packages:
       loader-utils: 3.2.0
       mini-css-extract-plugin: 2.5.3_webpack@5.70.0
       minimatch: 3.0.4
-      ng-packagr: 13.2.1_989d5d90807bc75aed477eddbc1483c8
+      ng-packagr: 13.3.0_989d5d90807bc75aed477eddbc1483c8
       open: 8.4.0
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -5376,18 +5376,6 @@ packages:
   /browser-process-hrtime/1.0.0:
     resolution: {integrity: sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==}
 
-  /browserslist/4.19.1:
-    resolution: {integrity: sha512-u2tbbG5PdKRTUoctO3NBD8FQ5HdPh1ZXPHzp1rwaa5jTc+RV9/+RlWiAIKmjRPQF+xbGM9Kklj5bZQFa2s/38A==}
-    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
-    hasBin: true
-    dependencies:
-      caniuse-lite: 1.0.30001312
-      electron-to-chromium: 1.4.75
-      escalade: 3.1.1
-      node-releases: 2.0.2
-      picocolors: 1.0.0
-    dev: true
-
   /browserslist/4.19.3:
     resolution: {integrity: sha512-XK3X4xtKJ+Txj8G5c30B4gsm71s69lqXlkYui4s6EkKxuv49qjYlY6oVd+IFJ73d4YymtM3+djvvt/R/iJwwDg==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
@@ -6775,12 +6763,6 @@ packages:
 
   /esbuild-wasm/0.14.11:
     resolution: {integrity: sha512-9e1R6hv0hiU+BkJI2edqUuWfXUbOP2Mox+Ijl/uY1vLLlSsunkrcADqD/4Rz+VCEDzw6ecscJM+uJqR2fRmEUg==}
-    engines: {node: '>=8'}
-    hasBin: true
-    dev: true
-
-  /esbuild-wasm/0.14.14:
-    resolution: {integrity: sha512-qTjK4MWnYtQHCMGg2qDUqeFYXfVvYq5qJkQTIsOV4VZCknoYePVaDTG9ygEB9Ct0kc0DWs7IrS6Ja+GjY62Kzw==}
     engines: {node: '>=8'}
     hasBin: true
     dev: true
@@ -8616,7 +8598,7 @@ packages:
       '@angular/core': '>=10.0.0'
       '@angular/platform-browser-dynamic': '>=10.0.0'
     dependencies:
-      '@angular-devkit/build-angular': 13.3.0_7f8d4b2ae0472e5f94246a1e3b4c2632
+      '@angular-devkit/build-angular': 13.3.0_3194c273d7d28dc2c4f94fa3255506ff
       '@angular/compiler-cli': 13.3.0_0f2e6ab59d35ea195b4f920b804bba7c
       '@angular/core': 13.3.0_rxjs@7.5.5+zone.js@0.11.5
       '@angular/platform-browser-dynamic': 13.3.0_522f35f06a6bd1631064e8f0c1b49642
@@ -9654,26 +9636,26 @@ packages:
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  /ng-packagr/13.2.1_989d5d90807bc75aed477eddbc1483c8:
-    resolution: {integrity: sha512-N0eiTTj5yxOBO7NX8kv+UV08bdLJOBG/ABZkaod9uAwflT6qZG1etX4DHnpfy1I591AZtAJNOnAwdRVoaBIDwQ==}
+  /ng-packagr/13.3.0_989d5d90807bc75aed477eddbc1483c8:
+    resolution: {integrity: sha512-y0bmIkGp1YQJVPYX3/dOjZBTqN+qD6rDbVhJB//1y0WEs8WDjrwaRPp6JGT79z2jbUXoIOsDmPnIKNegpNAgPw==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0}
     hasBin: true
     peerDependencies:
-      '@angular/compiler-cli': ^13.0.0 || ^13.2.0-next
+      '@angular/compiler-cli': ^13.0.0
       tslib: ^2.3.0
-      typescript: '>=4.4.0 <4.6'
+      typescript: '>=4.4.0 <4.7'
     dependencies:
       '@angular/compiler-cli': 13.3.0_0f2e6ab59d35ea195b4f920b804bba7c
       '@rollup/plugin-json': 4.1.0_rollup@2.61.0
       '@rollup/plugin-node-resolve': 13.0.6_rollup@2.61.0
       ajv: 8.9.0
       ansi-colors: 4.1.1
-      browserslist: 4.19.1
+      browserslist: 4.19.3
       cacache: 15.3.0
       chokidar: 3.5.2
       commander: 8.3.0
       dependency-graph: 0.11.0
-      esbuild-wasm: 0.14.14
+      esbuild-wasm: 0.14.22
       find-cache-dir: 3.3.2
       glob: 7.2.0
       injection-js: 2.4.0
