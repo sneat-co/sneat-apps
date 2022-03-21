@@ -33,7 +33,7 @@
 			{ id: 'favorite', title: 'Favorite' }
 		]"
 		(tabChanged)="tabChanged($event)"
-		[isFilterable]="boards?.length > 7"
+		[isFilterable]="boards && boards.length > 7"
 		[getRouterLink]="getLinkToBoard"
 		(itemClick)="goBoard($event)"
 	></sneat-card-list>

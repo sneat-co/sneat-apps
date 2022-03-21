@@ -43,7 +43,7 @@ export class HttpQueryEditorComponent {
 
 	constructor(private readonly httpClient: HttpClient) {}
 
-	private readonly currencyPipe = new LookupPipe(
+	public readonly currencyPipe = new LookupPipe(
 		currencyFlag,
 		'data.#',
 		'id',
@@ -54,7 +54,7 @@ export class HttpQueryEditorComponent {
 
 	// pipes: IObjectPipe[] = [];
 
-	response: HttpResponse<any>;
+	response?: HttpResponse<any>;
 	responseTab: 'raw' | 'formatted' | 'structured' | 'headers' = 'raw';
 
 	run(): void {

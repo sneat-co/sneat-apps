@@ -15,7 +15,7 @@ export class QueriesService {
 	public getQueriesFolder(
 		projRef: IProjectRef,
 		folderPath: string
-	): Observable<IQueryFolder> {
+	): Observable<IQueryFolder | null | undefined> {
 		// const v: IQueryDef[] = [{id: 'id1', type: 'SQL', title: 'Query 1', text: 'select  * from table1'}];
 		// return of(v);
 		return this.projItemService.getFolder<IQueryFolder>(projRef, folderPath);

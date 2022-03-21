@@ -1,6 +1,6 @@
-<ng-container *ngIf="boardDef.rows?.length; else noRows">
+<ng-container *ngIf="!!boardDef?.rows?.length; else noRows">
 	<datatug-board-row
-		*ngFor="let boardRowDef of boardDef.rows"
+		*ngFor="let boardRowDef of boardDef?.rows"
 		[boardRowDef]="boardRowDef"
 		[boardContext]="boardContext"
 	></datatug-board-row>
@@ -15,7 +15,7 @@
 				</ion-text>
 			</ion-col>
 		</ion-row>
-		<ion-row *ngIf="boardContext.mode === 'edit'">
+		<ion-row *ngIf="boardContext?.mode === 'edit'">
 			<ion-col>
 				<ion-button fill="outline" (click)="newCard()">
 					<ion-icon slot="start" name="add"></ion-icon>

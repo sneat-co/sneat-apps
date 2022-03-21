@@ -1,48 +1,47 @@
-import { Inject, Injectable } from '@angular/core';
-import {
-	IDbCatalogObjectWithRefs,
-	TableService,
-} from '../../../services/unsorted/src/lib/table.service';
-import {
-	IAstQuery,
-	IAstRecordset,
-	SqlParser,
-} from '../../../services/unsorted/src/lib/sql-parser';
+import { Inject, Injectable } from "@angular/core";
 import {
 	IForeignKey,
 	ISqlQueryTarget,
 	ITableFull,
-} from '@sneat/datatug/models';
-import { BehaviorSubject } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+} from "@sneat/datatug/models";
+import { BehaviorSubject } from "rxjs";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import {
+	IAstQuery,
+	IAstRecordset,
+	IDbCatalogObjectWithRefs,
+	SqlParser,
+	TableService,
+} from "@sneat/datatug/services/unsorted";
 
-const equalRecordsets = (a: IAstRecordset, b: IAstRecordset) =>
-	a.name === b.name && a.schema === b.schema;
+const equalRecordsets = (a?: IAstRecordset, b?: IAstRecordset): boolean =>
+	(!a && !b) || a?.name === b?.name && a?.schema === b?.schema;
 
 @Injectable()
 export class QueryContextSqlService {
 	private readonly sqlParser = new SqlParser();
 
-	private target: ISqlQueryTarget;
-	private catalog: string;
-	private repository: string;
-	private server: string;
-	private sql: string;
-	private ast: IAstQuery;
+	private target?: ISqlQueryTarget;
+	private catalog?: string;
+	private repository?: string;
+	private server?: string;
+	private sql?: string;
+	private ast?: IAstQuery;
 	private tables: ITableFull[] = [];
-	private dbCatalogRefs: IDbCatalogObjectWithRefs[];
+	private dbCatalogRefs?: IDbCatalogObjectWithRefs[];
 
-	private _suggestedJoins = new BehaviorSubject<ICanJoin[]>(undefined);
+	private _suggestedJoins = new BehaviorSubject<ICanJoin[] | undefined>(undefined);
 
 	public readonly suggestedJoins = this._suggestedJoins.asObservable();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly tableService: TableService
-	) {}
+		private readonly tableService: TableService,
+	) {
+	}
 
 	private static getAutoAlias(name: string): string {
-		return undefined;
+		throw new Error("Not implemented yet");
 	}
 
 	public setTarget(target: ISqlQueryTarget): void {
@@ -58,7 +57,7 @@ export class QueryContextSqlService {
 
 	public setSql(sql: string): IAstQuery {
 		if (!sql) {
-			throw new Error('sql is a required parameter');
+			throw new Error("sql is a required parameter");
 		}
 		this.sql = sql;
 		this.ast = this.sqlParser.parseQuery(sql);
@@ -70,7 +69,10 @@ export class QueryContextSqlService {
 
 	private allAstRecordset(): IAstRecordset[] {
 		// console.log('allAstRecordset(): ast:', this.ast)
-		return this.ast && [this.ast.from, ...this.ast.joins]; //.filter(rs => this.tables.find(t => t.name === rs.name && t.schema === rs.schema));
+		return this.ast ? [
+			...(this.ast.from && [this.ast.from] || []),
+			...(this.ast.joins || []),
+		] : []; //.filter(rs => this.tables.find(t => t.name === rs.name && t.schema === rs.schema));
 	}
 
 	private updateMeta(): void {
@@ -91,7 +93,7 @@ export class QueryContextSqlService {
 	private processTable = (table: ITableFull): void => {
 		if (
 			!this.tables.find(
-				(t) => t.name === table.name && t.schema == table.schema
+				(t) => t.name === table.name && t.schema == table.schema,
 			)
 		) {
 			this.tables.push(table);
@@ -106,7 +108,7 @@ export class QueryContextSqlService {
 		}
 
 		const table = this.dbCatalogRefs?.find(
-			(o) => o.name === recordset.name && o.schema === recordset.schema
+			(o) => o.name === recordset.name && o.schema === recordset.schema,
 		);
 		if (!table) {
 			return;
@@ -119,51 +121,52 @@ export class QueryContextSqlService {
 		}
 	}
 
-	private getSuggestedJoinByToRecordset(rs: IAstRecordset): ICanJoin {
-		return this._suggestedJoins.value?.find(
-			(sj) =>
-				sj.to.recordset.name === rs.name && sj.to.recordset.schema === rs.schema
+	private getSuggestedJoinByToRecordset(rs: IAstRecordset): ICanJoin | undefined {
+		const suggestedJoin = this._suggestedJoins.value?.find(
+			(sj: ICanJoin) =>
+				sj.to?.recordset?.name === rs.name && sj.to?.recordset?.schema === rs.schema,
 		);
+		return suggestedJoin;
 	}
 
 	private updateSuggestedJoinForRefsBy(
 		rs: IAstRecordset,
-		table: IDbCatalogObjectWithRefs
+		table: IDbCatalogObjectWithRefs,
 	): void {
 		return this.updateSuggestedJoinFor(
 			table,
-			'refBy',
-			table.referencedBy.map((refBy) => ({
+			"refBy",
+			table.referencedBy ? table.referencedBy.map((refBy) => ({
 				rs: { schema: refBy.schema, name: refBy.name },
-			}))
+			})) : [],
 		);
 	}
 
 	private updateSuggestedJoinForForeignKeys(
 		rs: IAstRecordset,
-		table: IDbCatalogObjectWithRefs
+		table: IDbCatalogObjectWithRefs,
 	): void {
 		return this.updateSuggestedJoinFor(
 			table,
-			'fk',
-			table.foreignKeys.map((fk) => ({
+			"fk",
+			table.foreignKeys && table.foreignKeys.map((fk) => ({
 				fk,
 				rs: { schema: fk.refTable.schema, name: fk.refTable.name },
-			}))
+			})) || [],
 		);
 	}
 
 	private updateSuggestedJoinFor(
 		table: IDbCatalogObjectWithRefs,
 		reason: JoinReason,
-		tos: IJoinToRef[]
+		tos: IJoinToRef[],
 	): void {
 		let joins = [...(this._suggestedJoins.value || [])];
 		let updated = false;
 		tos.forEach((to) => {
 			let sj = this.getSuggestedJoinByToRecordset(to.rs);
 			const from = sj?.from?.find(
-				(f) => f.reason === reason && equalRecordsets(f.recordset, to.rs)
+				(f) => f.reason === reason && equalRecordsets(f.recordset, to.rs),
 			);
 			if (from) {
 				return;
@@ -178,8 +181,8 @@ export class QueryContextSqlService {
 					],
 				};
 				joins = joins.map((j) =>
-					equalRecordsets(j.to.recordset, to.rs) ? sj : j
-				);
+					sj && equalRecordsets(j.to?.recordset, to?.rs) ? sj : j,
+				)
 			} else {
 				joins.push({
 					to: { recordset: to.rs },
@@ -198,7 +201,7 @@ interface IJoinToRef {
 	fk?: IForeignKey;
 }
 
-export type JoinReason = 'fk' | 'refBy';
+export type JoinReason = "fk" | "refBy";
 
 export interface IJoinFrom {
 	reason: JoinReason;

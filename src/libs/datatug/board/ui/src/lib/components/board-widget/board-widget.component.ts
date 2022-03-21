@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { IBoardContext, WidgetDef } from '@sneat/datatug/models';
+import {
+	IBoardContext,
+	ISqlWidgetDef,
+	ISqlWidgetSettings,
+	ITabsWidgetSettings,
+	QueryType,
+	WidgetDef,
+} from "@sneat/datatug/models";
 
 @Component({
 	selector: 'datatug-board-widget',
@@ -9,7 +16,16 @@ import { IBoardContext, WidgetDef } from '@sneat/datatug/models';
 })
 export class BoardWidgetComponent {
 	@Input() level?: number;
-	@Input() cardTab?: string;
+	@Input() cardTab?: QueryType | 'grid' | 'card';
 	@Input() widgetDef?: WidgetDef;
+
+	get tabsWidgetSettings() {
+		return this.widgetDef?.data as ITabsWidgetSettings;
+	}
+
+	get sqlWidgetSettings() {
+		return this.widgetDef?.data as ISqlWidgetSettings;
+	}
+
 	@Input() boardContext?: IBoardContext;
 }

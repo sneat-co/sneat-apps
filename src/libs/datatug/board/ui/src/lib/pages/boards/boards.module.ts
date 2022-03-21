@@ -7,15 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { DataboardsPageRoutingModule } from './boards-routing.module';
 
 import { BoardsPageComponent } from './boards-page.component';
-import { SneatCardListModule } from '@sneat/components/card-list';
-import { BoardServiceModule } from '../../board.service.module';
+import { SneatCardListModule } from '@sneat/components';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		BoardServiceModule,
 		DataboardsPageRoutingModule,
 		SneatCardListModule,
 	],

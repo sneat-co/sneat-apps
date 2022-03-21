@@ -1,19 +1,19 @@
-import { IStore } from './store';
-import { IOptionallyTitled } from '../core';
-import { IEnvironmentFull } from './environments';
-import { IDbModelFull } from './dbmodels';
-import { IProjDbServerFull } from './apis/database';
+import { IStore } from "./store";
+import { IOptionallyTitled } from "../core";
+import { IEnvironmentFull } from "./environments";
+import { IDbModelFull } from "./dbmodels";
+import { IProjDbServerFull } from "./apis/database";
 
-export type ProjectAccess = 'private' | 'protected' | 'public';
+export type ProjectAccess = "private" | "protected" | "public";
 
 export enum ProjectItem {
-	agent = 'agent',
-	dbModel = 'dbModel',
-	environment = 'environment',
-	entity = 'entity',
-	Board = 'board',
-	query = 'board',
-	variable = 'variable',
+	agent = "agent",
+	dbModel = "dbModel",
+	environment = "environment",
+	entity = "entity",
+	Board = "board",
+	query = "board",
+	variable = "variable",
 }
 
 export type ProjectItemType = `${ProjectItem}`;
@@ -42,8 +42,9 @@ export interface IProjectSummary extends IProjectBase {
 	};
 }
 
-export interface IProjItemBrief extends IOptionallyTitled {
+export interface IProjItemBrief {
 	id: string;
+	title?: string;
 }
 
 export interface IProjItemsFolder {
@@ -69,10 +70,12 @@ export interface IProjDbModelNumbers {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEntity extends IProjItemBrief {}
+export interface IProjEntity extends IProjItemBrief {
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEnv extends IProjItemBrief {}
+export interface IProjEnv extends IProjItemBrief {
+}
 
 export interface IProjectApp {
 	id: string;
@@ -80,7 +83,7 @@ export interface IProjectApp {
 }
 
 export interface IApiDefinition {
-	type: 'web' | 'db';
+	type: "web" | "db";
 	id: string;
 	title?: string;
 	tags?: string[];

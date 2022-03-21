@@ -1,72 +1,72 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
-import { IProjectRef } from '@sneat/datatug/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ChangeDetectorRef, Component, Inject, OnDestroy } from "@angular/core";
+import { IProjectRef } from "@sneat/datatug/core";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import {
-	IEnvDbServer,
+	IEnvDbServer, IEnvironmentSummary,
 	IParameter,
 	IQueryDef,
 	ISqlQueryRequest,
 	QueryType,
-} from '@sneat/datatug/models';
-import { Coordinator } from '@sneat/datatug/executor';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EnvironmentService } from '@sneat/datatug/services/unsorted';
-import { RandomIdService } from '@sneat/random';
+} from "@sneat/datatug/models";
+import { Coordinator } from "@sneat/datatug/executor";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { EnvironmentService } from "@sneat/datatug/services/unsorted";
+import { RandomIdService } from "@sneat/random";
 import {
 	DatatugNavContextService,
 	ProjectTracker,
-} from '@sneat/datatug/services/nav';
-import { IProjectContext, newProjectContextFromRef } from '@sneat/datatug/nav';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { ViewDidEnter } from '@ionic/angular';
+} from "@sneat/datatug/services/nav";
+import { IProjectContext, newProjectContextFromRef } from "@sneat/datatug/nav";
+import { distinctUntilChanged, takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { ViewDidEnter } from "@ionic/angular";
 import {
 	IQueryEditorState,
 	IQueryEnvState,
 	IQueryState,
-} from '@sneat/datatug/editor';
+} from "@sneat/datatug/editor";
 import {
 	isQueryChanged,
 	QueryEditorStateService,
-} from '../query-editor-state-service';
-import { QueriesService } from '../queries.service';
-import { QueryContextSqlService } from '../query-context-sql.service';
+} from "../query-editor-state-service";
+import { QueriesService } from "../queries.service";
+import { QueryContextSqlService } from "../query-context-sql.service";
 
 @Component({
-	selector: 'datatug-sql-editor',
-	templateUrl: './query-page.component.html',
+	selector: "datatug-sql-editor",
+	templateUrl: "./query-page.component.html",
 })
 export class QueryPageComponent implements OnDestroy, ViewDidEnter {
-	public project: IProjectContext;
+	public project?: IProjectContext;
 
-	public showQueryBuilder: boolean;
-	public editorTab: 'text' | 'builder' = 'text';
+	public showQueryBuilder?: boolean;
+	public editorTab: "text" | "builder" = "text";
 
-	public parameters: IParameter[];
+	public parameters?: IParameter[];
 
-	public editorState: IQueryEditorState = undefined;
+	public editorState?: IQueryEditorState = undefined;
 	public queryState: IQueryState = {
-		id: undefined,
+		id: "",
 		queryType: QueryType.SQL,
 		request: {
 			queryType: QueryType.SQL,
-			text: '',
+			text: "",
 		} as ISqlQueryRequest,
 	};
 
-	public get activeEnv(): IQueryEnvState {
+	public get activeEnv(): IQueryEnvState | undefined {
 		return this.queryState?.activeEnv;
 	}
 
-	public get queryId(): string {
+	public get queryId(): string | undefined {
 		return this.queryState?.id;
 	}
 
-	public queryFolderPath = '';
-	public envId;
-	public envDbServerId: string;
+	public queryFolderPath = "";
+	public envId?: string;
+	public envDbServerId?: string;
 	// noinspection SqlDialectInspection,SqlNoDataSourceInspection
-	public environments: ReadonlyArray<IQueryEnvState>;
+	public environments?: ReadonlyArray<IQueryEnvState>;
 
 	private readonly destroyed = new Subject<void>();
 
@@ -81,17 +81,10 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		private readonly coordinator: Coordinator,
 		private readonly queryEditorStateService: QueryEditorStateService,
 		private readonly envService: EnvironmentService,
-		private readonly changeDetector: ChangeDetectorRef
+		private readonly changeDetector: ChangeDetectorRef,
 	) {
-		console.log('QueryPage.constructor()', location.hash);
-		this.queryEditorStateService.queryEditorState
-			.pipe(distinctUntilChanged())
-			.subscribe({
-				next: this.onQueryEditorStateChanged,
-				error: this.errorLogger.logErrorHandler(
-					'Failed to get query editor stage'
-				),
-			});
+		console.log("QueryPage.constructor()", location.hash);
+		this.trackQueryState();
 		const query = history.state.query as IQueryDef;
 		if (query) {
 			this.setQuery(query);
@@ -107,25 +100,25 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		try {
 			this.updateUrl(); // If called in constructor breaks back button
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to process ionViewDidEnter event');
+			this.errorLogger.logError(e, "Failed to process ionViewDidEnter event");
 		}
 	}
 
 	private readonly onQueryEditorStateChanged = (
-		editorState: IQueryEditorState
+		editorState?: IQueryEditorState,
 	): void => {
 		try {
 			this.editorState = editorState;
-			if (!editorState.currentQueryId) {
+			if (!editorState?.currentQueryId) {
 				return;
 			}
 			const queryState = editorState.activeQueries.find(
-				(qs) => qs.id === editorState.currentQueryId
+				(qs) => qs.id === editorState.currentQueryId,
 			);
 			if (!queryState) {
 				return;
 			}
-			console.log('onQueryEditorStateChanged', queryState);
+			console.log("onQueryEditorStateChanged", queryState);
 			this.queryState = queryState;
 			if (this.queryState.environments && !this.queryState.activeEnv) {
 				this.setActiveEnv(this.queryState.environments[0].id);
@@ -137,7 +130,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				'Failed to process query editor state change'
+				"Failed to process query editor state change",
 			);
 		}
 	};
@@ -150,8 +143,19 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	}
 
 	public onParametersChanged(parameters: IParameter[]): void {
-		console.log('onParametersChanged:', parameters);
+		console.log("onParametersChanged:", parameters);
 		this.parameters = parameters;
+	}
+
+	private trackQueryState(): void {
+		this.queryEditorStateService.queryEditorState
+			.pipe(distinctUntilChanged())
+			.subscribe({
+				next: this.onQueryEditorStateChanged,
+				error: this.errorLogger.logErrorHandler(
+					"Failed to get query editor stage",
+				),
+			});
 	}
 
 	private trackCurrentEnv(): void {
@@ -159,7 +163,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 			.pipe(takeUntil(this.destroyed))
 			.subscribe((currentEnv) => {
 				try {
-					console.log('trackCurrentEnv() => ', currentEnv);
+					console.log("trackCurrentEnv() => ", currentEnv);
 					if (!currentEnv) {
 						return;
 					}
@@ -170,7 +174,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 					this.envId = id;
 
 					let activeEnv = this.queryState.environments?.find(
-						(env) => env.id === id
+						(env) => env.id === id,
 					) || {
 						id,
 						summary: currentEnv.summary,
@@ -191,7 +195,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 				} catch (e) {
 					this.errorLogger.logError(
 						e,
-						'Failed to process change of current environment'
+						"Failed to process change of current environment",
 					);
 				}
 			});
@@ -205,13 +209,13 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		this.datatugNavContextService.currentProject
 			.pipe(takeUntil(this.destroyed))
 			.subscribe((currentProject) => {
-				console.log('SqlQueryPage => currentProject:', currentProject);
+				console.log("SqlQueryPage => currentProject:", currentProject);
 				if (
 					!currentProject ||
 					(this.project?.ref.projectId === currentProject.ref.projectId &&
 						this.project?.ref.storeId === currentProject.ref.storeId &&
 						this.project?.summary?.environments?.length ===
-							currentProject.summary?.environments?.length)
+						currentProject.summary?.environments?.length)
 				) {
 					return; // TODO: cleanup query state?
 				}
@@ -227,19 +231,19 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		try {
 			if (!envId) {
 				this.errorLogger.logError(
-					'An attempt to set active environment to: ' + envId
+					"An attempt to set active environment to: " + envId,
 				);
 				return;
 			}
-			const queryState = this.getQueryState(this.queryId);
+			const queryState = this.queryId && this.getQueryState(this.queryId);
 			if (!queryState) {
 				this.errorLogger.logError(
-					'An attempt to set unknown env as an active one: ' + envId
+					"An attempt to set unknown env as an active one: " + envId,
 				);
 				return;
 			}
 			const activeEnv = queryState.environments?.find(
-				(env) => env.id === envId
+				(env) => env.id === envId,
 			) || {
 				id: envId,
 				parameters: this.parameters && [...this.parameters],
@@ -253,62 +257,74 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 			}
 			if (!activeEnv.summary) {
 				// Potentially can be duplicate calls if user changes env back and forth before response comes back
-				this.getEnvData(this.project.ref, envId);
+				if (this.project) {
+					this.getEnvData(this.project.ref, envId);
+				}
 			}
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to set active environment');
+			this.errorLogger.logError(e, "Failed to set active environment");
 		}
 	}
 
 	private getEnvData(projRef: IProjectRef, envId: string): void {
 		const queryId = this.queryId;
 
-		this.envService
-			.getEnvSummary(projRef, envId)
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-				next: (envSummary) => {
-					console.log('envSummary:', envSummary);
-					if (!envSummary) {
-						this.errorLogger.logError(
-							'getEnvSummary returned nothing for envId=' + envId
-						);
-						return;
-					}
-					const queryState = this.getQueryState(queryId);
-					if (!queryState) {
-						// The query has been closed since execution requested.
-						// A 100% proper way would be TODO: takeUntil(IQueryState.destroyed:Observable<void>)
-						return;
-					}
-					const queryEnv = queryState.environments?.find(
-						(env) => env.id == envId
-					);
-					if (!queryEnv) {
-						// Can't see how it is possible but just in case
-						this.errorLogger.logError(
-							'received env details for unknown environment: ' + envSummary.id
-						);
-						return;
-					}
-					let envState = {
-						...this.queryState.activeEnv,
-						summary: envSummary,
-					};
-					if (envSummary.dbServers?.length) {
-						const envDbServer = envSummary.dbServers[0];
-						envState = {
-							...envState,
-							dbServer: envDbServer,
-							dbServerId: this.getDbServerId(envDbServer),
-							catalogId:
-								envDbServer.catalogs?.length && envDbServer.catalogs[0],
-						};
-					}
-					this.updateEnvState(envState, this.getQueryState(queryId));
-				},
-				error: this.errorLogger.logErrorHandler('Failed to get env summary'),
-			});
+		if (queryId) {
+			this.envService
+				.getEnvSummary(projRef, envId)
+				.pipe(takeUntil(this.destroyed))
+				.subscribe({
+					next: envSummary => this.onEnvSummaryReceived(queryId, envId, envSummary),
+					error: this.errorLogger.logErrorHandler("Failed to get env summary"),
+				});
+		}
+	}
+
+	private onEnvSummaryReceived(queryId: string, envId: string, envSummary: IEnvironmentSummary): void {
+		console.log("envSummary:", envSummary);
+		if (!envSummary) {
+			this.errorLogger.logError(
+				"getEnvSummary returned nothing for envId=" + envId,
+			);
+			return;
+		}
+		const queryState = this.getQueryState(queryId);
+		if (!queryState) {
+			// The query has been closed since execution requested.
+			// A 100% proper way would be TODO: takeUntil(IQueryState.destroyed:Observable<void>)
+			return;
+		}
+		const queryEnv = queryState.environments?.find(
+			(env) => env.id == envId,
+		);
+		if (!queryEnv) {
+			// Can't see how it is possible but just in case
+			this.errorLogger.logError(
+				"received env details for unknown environment: " + envSummary.id,
+			);
+			return;
+		}
+		if (!this.queryState.activeEnv) {
+			return;
+		}
+		let envState: IQueryEnvState = {
+			...this.queryState.activeEnv,
+			summary: envSummary,
+		};
+		if (envSummary.dbServers?.length) {
+			const envDbServer = envSummary.dbServers[0];
+			envState = {
+				...envState,
+				dbServer: envDbServer,
+				dbServerId: this.getDbServerId(envDbServer),
+				catalogId:
+					envDbServer.catalogs?.length ? envDbServer.catalogs[0] : undefined,
+			};
+		}
+		if (queryId) {
+			const queryState = this.getQueryState(queryId);
+			this.updateEnvState(envState, queryState);
+		}
 	}
 
 	public getDbServerId(dbServer: IEnvDbServer): string {
@@ -319,20 +335,20 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		this.route.queryParamMap.subscribe({
 			next: (queryParams) => {
 				console.log(
-					'QueryPageComponent.trackQueryParams(): queryParams:',
-					queryParams
+					"QueryPageComponent.trackQueryParams(): queryParams:",
+					queryParams,
 				);
 
-				const envId = queryParams.get('env');
+				const envId = queryParams.get("env");
 				if (envId) {
 					this.setActiveEnv(envId);
 				}
 
-				let queryId = queryParams.get('id');
+				let queryId = queryParams.get("id");
 				const isNew = !queryId;
 				if (isNew) {
 					queryId = this.randomIdService.newRandomId();
-					queryId = '' + (this.editorState.activeQueries?.length || 1);
+					queryId = "" + (this.editorState?.activeQueries?.length || 1);
 				}
 				this.setQueryId(queryId, isNew);
 			},
@@ -356,16 +372,20 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		projectTracker.projectRef.subscribe({
 			next: this.onProjRefChanged,
 			error: this.errorLogger.logErrorHandler(
-				'Failed to track project ref from activated router'
+				"Failed to track project ref from activated router",
 			),
 		});
 	}
 
-	private setQueryId(id: string, isNew: boolean = false): void {
+	private setQueryId(id?: string | null, isNew: boolean = false): void {
 		if (this.queryId === id) {
 			return;
 		}
-		const i = id.lastIndexOf('/');
+		if (!id) {
+			this.queryFolderPath = "";
+			return;
+		}
+		const i = id.lastIndexOf("/");
 		if (i >= 0) {
 			this.queryFolderPath = id.substring(0, i);
 		}
@@ -386,15 +406,15 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 			queryState.def === query
 				? queryState
 				: {
-						...queryState,
-						isNew: false,
+					...queryState,
+					isNew: false,
+					queryType: query.request.queryType,
+					def: query,
+					request: {
 						queryType: query.request.queryType,
-						def: query,
-						request: {
-							queryType: query.request.queryType,
-							text: (query.request as ISqlQueryRequest).text,
-						} as ISqlQueryRequest,
-				  }
+						text: (query.request as ISqlQueryRequest).text,
+					} as ISqlQueryRequest,
+				},
 		);
 	}
 
@@ -406,40 +426,44 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		if (event.detail.value === this.activeEnv?.dbServerId) {
 			return;
 		}
-		this.updateEnvState(
-			{
-				...this.activeEnv,
-				dbServerId: this.envDbServerId,
-			},
-			this.queryState
-		);
+		if (!this.activeEnv) {
+			return;
+		}
+		const envState: IQueryEnvState = {
+			...this.activeEnv,
+			dbServerId: this.envDbServerId,
+		};
+		this.updateEnvState(envState, this.queryState);
 	}
 
 	catalogChanged(event: CustomEvent): void {
 		console.log(
-			'catalogChanged',
+			"catalogChanged",
 			event.detail.value,
-			this.activeEnv?.catalogId
+			this.activeEnv?.catalogId,
 		);
 		if (event.detail.value === this.activeEnv?.catalogId) {
 			return;
 		}
-		this.updateEnvState(
-			{
-				...this.activeEnv,
-				catalogId: event.detail.value,
-			},
-			this.queryState
-		);
+		if (this.activeEnv) {
+			this.updateEnvState(
+				{
+					...this.activeEnv,
+					catalogId: event.detail.value,
+				},
+				this.queryState,
+			);
+		}
 	}
 
 	envChanged(event: CustomEvent): void {
 		const { value } = event.detail;
+		const activeEnv = this.queryState?.environments?.find((v) => v.id === value);
 		this.updateQueryState({
 			...this.queryState,
-			activeEnv: this.queryState.environments.find((v) => v.id === value),
+			activeEnv,
 		});
-		if (this.activeEnv && !this.activeEnv.summary) {
+		if (this.project && this.activeEnv && !this.activeEnv.summary) {
 			this.getEnvData(this.project.ref, this.activeEnv.id);
 		}
 		this.updateUrl();
@@ -452,7 +476,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	public queryTitleChanged(event: CustomEvent): void {
 		this.queryState = {
 			...this.queryState,
-			title: event.detail.value || '',
+			title: event.detail.value || "",
 		};
 		this.queryEditorStateService.updateQueryState(this.queryState);
 	}
@@ -470,32 +494,35 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 				replaceUrl: true,
 				relativeTo: this.route,
 				queryParams,
-				queryParamsHandling: 'merge', // remove to replace all query params by provided
+				queryParamsHandling: "merge", // remove to replace all query params by provided
 			})
 			.catch(
-				this.errorLogger.logErrorHandler('Failed to change query parameter')
+				this.errorLogger.logErrorHandler("Failed to change query parameter"),
 			);
 	}
 
-	private getQueryState(id: string): IQueryState {
+	private getQueryState(id: string): IQueryState | undefined {
 		return this.queryEditorStateService.getQueryState(id);
 	}
 
 	private updateEnvState(
 		envState: IQueryEnvState,
-		queryState: IQueryState
-	): IQueryEnvState {
-		console.log('updateEnvState', envState);
+		queryState?: IQueryState,
+	): IQueryEnvState | undefined {
+		console.log("updateEnvState", envState);
 		if (!envState.id) {
-			throw new Error('!envState.id');
+			throw new Error("!envState.id");
 		}
-		if (queryState.activeEnv.id == envState.id) {
+		if (!queryState) {
+			return queryState;
+		}
+		if (queryState.activeEnv?.id == envState.id) {
 			queryState = { ...queryState, activeEnv: envState };
 		}
 		queryState = {
 			...queryState,
-			environments: queryState.environments.map((env) =>
-				env.id === envState.id ? envState : env
+			environments: queryState.environments?.map((env) =>
+				env.id === envState.id ? envState : env,
 			),
 		};
 		this.updateQueryState(queryState);
@@ -504,13 +531,15 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	public saveChanges(): void {
 		if (!this.isChanged) {
-			alert('Query does not require saving as is not changed yet');
+			alert("Query does not require saving as is not changed yet");
 			return;
 		}
-		this.queryEditorStateService
-			.saveQuery(this.queryState, this.project.ref)
-			.subscribe({
-				error: this.errorLogger.logErrorHandler('Failed to save query'),
-			});
+		if (this.project) {
+			this.queryEditorStateService
+				.saveQuery(this.queryState, this.project.ref)
+				.subscribe({
+					error: this.errorLogger.logErrorHandler("Failed to save query"),
+				});
+		}
 	}
 }

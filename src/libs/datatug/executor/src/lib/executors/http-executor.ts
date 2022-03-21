@@ -22,13 +22,13 @@ export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 		agentId: string,
 		request: IExecuteRequest
 	): Observable<IExecuteResponse> {
-		return undefined;
+		throw new Error('Not implemented yet'); // TODO: Needs implementation
 	}
 
 	executeCommand(command: IRequestCommand): Observable<ICommandResponse> {
 		if (command.type !== 'HTTP') {
 			return throwError(
-				`HttpExecutor does not support command type: ${command.type}`
+				() => `HttpExecutor does not support command type: ${command.type}`
 			);
 		}
 		const httpCommand = command as unknown as IHttpCommand;
@@ -38,10 +38,14 @@ export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 					type: 'object',
 					value: httpResponse,
 				};
-				return {
+				if (!command.id) {
+					throw new Error('command have no ID');
+				}
+				const result: ICommandResponse = {
 					commandId: command.id,
 					items: of(httpResponseItem),
 				};
+				return result;
 			})
 		);
 	}

@@ -292,53 +292,43 @@
 			},
 			"tags": []
 		},
-		"components-card-list": {
+		"components": {
 			"projectType": "library",
-			"root": "libs/components/card-list",
-			"sourceRoot": "libs/components/card-list/src",
+			"root": "libs/components",
+			"sourceRoot": "libs/components/src",
 			"prefix": "sneat",
 			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:package",
+					"outputs": ["dist/libs/components"],
+					"options": {
+						"project": "libs/components/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/components/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/components/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/components"],
+					"options": {
+						"jestConfig": "libs/components/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
 						"lintFilePatterns": [
-							"libs/components/card-list/src/**/*.ts",
-							"libs/components/card-list/src/**/*.html"
+							"libs/components/src/**/*.ts",
+							"libs/components/src/**/*.html"
 						]
-					}
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/components/card-list"],
-					"options": {
-						"jestConfig": "libs/components/card-list/jest.config.js",
-						"passWithNoTests": true
-					}
-				}
-			},
-			"tags": []
-		},
-		"components-error-card": {
-			"projectType": "library",
-			"root": "libs/components/error-card",
-			"sourceRoot": "libs/components/error-card/src",
-			"prefix": "sneat",
-			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/components/error-card/src/**/*.ts",
-							"libs/components/error-card/src/**/*.html"
-						]
-					}
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/components/error-card"],
-					"options": {
-						"jestConfig": "libs/components/error-card/jest.config.js",
-						"passWithNoTests": true
 					}
 				}
 			},
@@ -1115,6 +1105,22 @@
 			"sourceRoot": "libs/datatug/editor/src",
 			"prefix": "sneat",
 			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/editor"],
+					"options": {
+						"project": "libs/datatug/editor/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/editor/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/editor/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
 					"outputs": ["coverage/libs/datatug/editor"],
@@ -1141,14 +1147,21 @@
 			"sourceRoot": "libs/datatug/executor/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/executor"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/datatug/executor/src/**/*.ts",
-							"libs/datatug/executor/src/**/*.html"
-						]
-					}
+						"project": "libs/datatug/executor/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/executor/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/executor/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -1156,6 +1169,15 @@
 					"options": {
 						"jestConfig": "libs/datatug/executor/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/executor/src/**/*.ts",
+							"libs/datatug/executor/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -1532,14 +1554,21 @@
 			"sourceRoot": "libs/datatug/queries/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/queries"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/datatug/queries/src/**/*.ts",
-							"libs/datatug/queries/src/**/*.html"
-						]
-					}
+						"project": "libs/datatug/queries/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/queries/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/queries/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -1547,6 +1576,15 @@
 					"options": {
 						"jestConfig": "libs/datatug/queries/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/queries/src/**/*.ts",
+							"libs/datatug/queries/src/**/*.html"
+						]
 					}
 				}
 			},

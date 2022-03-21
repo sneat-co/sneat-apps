@@ -13,9 +13,9 @@ import { ProjectContextService } from '@sneat/datatug/services/project';
 export class QueriesMenuComponent {
 	tab: 'active' | 'all' | 'bookmarked' = 'all';
 
-	currentQueryId: string;
+	currentQueryId?: string;
 
-	queries: ReadonlyArray<IQueryState>;
+	queries?: ReadonlyArray<IQueryState>;
 
 	public trackByID = (i: number, item: IQueryState) => item.id;
 

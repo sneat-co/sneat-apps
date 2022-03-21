@@ -10,24 +10,24 @@ import {
 import { Subject } from 'rxjs';
 import {
 	IBoardCardDef,
-	IBoardContext,
+	IBoardContext, QueryType,
 	sqlWidgetName,
 	WidgetName,
-} from '@sneat/datatug/models';
+} from "@sneat/datatug/models";
 
 @Injectable()
 export class BoardCardTabService {
 	public $changed = new Subject<string>();
 	public changed = this.$changed.asObservable();
 
-	private tab?: string;
+	private tab?: QueryType | 'grid' | 'card';
 
 	public get currentTab() {
 		return this.tab;
 	}
 
 	public setTab(tab: WidgetName): void {
-		this.tab = tab;
+		this.tab = tab as (QueryType | 'grid' | 'card');
 	}
 }
 
@@ -54,9 +54,10 @@ export class BoardCardComponent implements OnChanges {
 		}
 	}
 
-	setTab(event: CustomEvent) {
+	setTab(event: Event) {
 		console.log('setTab', event);
-		this.boardCardTab.setTab(event.detail.value as WidgetName);
+		const ce = event as CustomEvent;
+		this.boardCardTab.setTab(ce.detail.value as WidgetName);
 		this.changeDetectorRef.markForCheck();
 	}
 }

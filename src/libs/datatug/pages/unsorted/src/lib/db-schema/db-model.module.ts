@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DbModelPageRoutingModule } from './db-model-routing.module';
 
 import { DbModelPage } from './db-model-page.component';
-import { SneatCardListModule } from '@sneat/components/card-list';
+import { SneatCardListModule } from '@sneat/components';
 
 @NgModule({
 	imports: [

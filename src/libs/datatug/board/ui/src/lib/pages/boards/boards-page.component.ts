@@ -1,5 +1,4 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { BoardService } from '../../board.service';
 import { AlertController } from '@ionic/angular';
 import {
 	folderItemsAsList,
@@ -15,9 +14,10 @@ import {
 	DatatugNavService,
 } from '@sneat/datatug/services/nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { DatatugFoldersService } from '@sneat/datatug/folders';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DatatugBoardService } from "@sneat/datatug/board/core";
+import { DatatugFoldersService } from "@sneat/datatug/folders/core";
 
 @Component({
 	selector: 'datatug-boards',
@@ -25,11 +25,11 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class BoardsPageComponent implements OnInit, OnDestroy {
 	tab = 'shared';
-	noItemsText: string;
+	noItemsText?: string;
 
-	boards: IProjBoard[];
-	defaultHref: string;
-	project: IProjectContext;
+	boards?: IProjBoard[];
+	defaultHref?: string;
+	project?: IProjectContext;
 
 	folderPath = '~';
 
@@ -39,7 +39,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly datatugNavService: DatatugNavService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly boardService: BoardService,
+		private readonly boardService: DatatugBoardService,
 		private readonly alertCtrl: AlertController,
 		private readonly foldersService: DatatugFoldersService
 	) {
@@ -86,7 +86,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		this.project = project;
 	}
 
-	private onFolderReceived = (path: string, folder: IFolder): void => {
+	private onFolderReceived = (path: string, folder?: IFolder | null): void => {
 		console.log('onFolderReceived', path, folder);
 		if (this.folderPath !== path) {
 			return;
@@ -98,7 +98,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 	};
 
 	public getLinkToBoard = (item: IProjItemBrief) =>
-		this.datatugNavService.projectPageUrl(this.project.ref, 'board', item.id);
+		this.project && this.datatugNavService.projectPageUrl(this.project.ref, 'board', item.id);
 
 	ngOnInit() {
 		this.defaultHref =
@@ -106,7 +106,9 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 	}
 
 	public goBoard(item: IProjBoard): void {
-		this.datatugNavService.goBoard(this.project, item);
+		if (this.project) {
+			this.datatugNavService.goBoard(this.project, item);
+		}
 	}
 
 	async newBoard(): Promise<void> {
@@ -135,6 +137,9 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 						const store: IProjStoreRef = {
 							type: 'firestore',
 						};
+						if (!this.project) {
+							return;
+						}
 						this.boardService
 							.createNewBoard({
 								projectRef: this.project.ref,
@@ -143,7 +148,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 							.subscribe({
 								next: (board) => {
 									console.log('Board created:', board);
-									this.boards.push(board);
+									this.boards?.push(board);
 								},
 								error: this.logError(
 									() =>
@@ -174,6 +179,6 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	private logError = (message: () => string) => (err) =>
+	private logError = (message: () => string) => (err: any) =>
 		this.errorLogger.logError(err, message());
 }

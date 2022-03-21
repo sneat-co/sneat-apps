@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ProjectPageRoutingModule } from './project-routing.module';
 import { ProjectPageComponent } from './project-page.component';
-import { SneatCardListModule } from '@sneat/components/card-list';
+import { SneatCardListModule } from '@sneat/components';
 import { WormholeModule } from '@sneat/wormhole';
 import { DatatugComponentsProjectModule } from '@sneat/datatug/components/project';
 import { DatatugServicesNavModule } from '@sneat/datatug/services/nav';

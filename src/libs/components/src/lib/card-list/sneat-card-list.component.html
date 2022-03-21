@@ -59,7 +59,7 @@
 				<ion-input
 					[(ngModel)]="name"
 					placeholder="Name"
-					[disabled]="isAdding"
+					[disabled]="!!isAdding"
 				></ion-input>
 				<ion-buttons slot="end">
 					<ion-button

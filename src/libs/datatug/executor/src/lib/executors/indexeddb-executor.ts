@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
-import { ICommandResponse, IRequestCommand } from '@sneat/datatug/dto';
+import { Observable } from "rxjs";
+import { ICommandResponse, IRequestCommand } from "@sneat/datatug/dto";
 
 // This
 export class IndexedDbExecutor {
 	execute(command: IRequestCommand): Observable<ICommandResponse> {
-		return undefined;
+		throw new Error("Not implemented yet"); // TODO: Needs implementation
 	}
 }

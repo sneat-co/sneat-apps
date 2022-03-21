@@ -44,8 +44,8 @@
 <ion-card *ngIf="this.suggestedJoins?.length">
 	<ion-list>
 		<ion-item *ngFor="let sj of suggestedJoins">
-			<ion-label *ngIf="sj.to"
-				>{{ sj.to.recordset.schema }}.{{ sj.to.recordset.name }}</ion-label
+			<ion-label *ngIf="sj.to; let to"
+				>{{ to.recordset.schema }}.{{ to.recordset.name }}</ion-label
 			>
 			<ion-label *ngIf="!sj.to">[{{ sj | json }}]</ion-label>
 			<ion-buttons slot="end">

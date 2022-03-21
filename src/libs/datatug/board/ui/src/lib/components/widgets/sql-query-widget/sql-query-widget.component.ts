@@ -6,40 +6,36 @@ import {
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
-} from '@angular/core';
-import { BoardCardTabService } from '../../board-card/board-card.component';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+} from "@angular/core";
+import { BoardCardTabService } from "../../board-card/board-card.component";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import {
 	IBoardContext,
 	ISqlWidgetSettings,
 	QueryType,
-} from '@sneat/datatug/models';
-import { AgentService } from '@sneat/datatug/services/repo';
-import { IRecordsetResult } from '@sneat/datatug/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+} from "@sneat/datatug/models";
+import { AgentService } from "@sneat/datatug/services/repo";
+import { IRecordset, IRecordsetResult } from "@sneat/datatug/dto";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 
 const reSqlParams = /@(\w+)/;
 
 @Component({
-	selector: 'datatug-sql-query-widget',
-	templateUrl: './sql-query-widget.component.html',
+	selector: "datatug-sql-query-widget",
+	templateUrl: "./sql-query-widget.component.html",
 })
 export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 	@Input() level?: number;
-	@Input() tab: QueryType | 'grid' | 'card' = QueryType.SQL;
+	@Input() tab?: QueryType | "grid" | "card" = QueryType.SQL;
 	@Input() data?: ISqlWidgetSettings;
 	@Input() boardContext?: IBoardContext;
 
-	public state?: 'loading' | 'loaded' | 'error';
+	public state?: "loading" | "loaded" | "error";
 
 	public sql?: string;
-	public recordset: IRecordsetResult = {
-		// TODO: Wrong type, should be IRecordset
-		duration: 0,
-		columns: [{ name: 'Grid', dbType: 'NVARCHAR' }],
-		rows: [['Loading...']],
-	};
+	public recordsetResult?: IRecordsetResult = undefined;
+	public recordset?: IRecordset = undefined;
 
 	destroyed = new Subject<boolean>();
 
@@ -47,9 +43,9 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 		private readonly boardCardTab: BoardCardTabService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly agentService: AgentService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
-		setTimeout(() => boardCardTab.setTab('grid'), 2000);
+		setTimeout(() => boardCardTab.setTab("grid"), 2000);
 		this.boardCardTab.changed
 			.pipe(takeUntil(this.destroyed))
 			.subscribe(() => this.changeDetectorRef.markForCheck());
@@ -62,21 +58,21 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if ((changes["data"] || changes["boardContext"]) && this.data) {
-			console.log('SqlQueryWidgetComponent.ngOnChanges()', this.data);
+			console.log("SqlQueryWidgetComponent.ngOnChanges()", this.data);
 			let sql = this.data.query;
 			const match = sql.match(reSqlParams);
 			if (match) {
 				const paramName = match[1];
 				const parameter = this.boardContext?.parameters[paramName];
-				console.log('Parameter: ', paramName, parameter);
+				console.log("Parameter: ", paramName, parameter);
 				if (parameter) {
 					switch (parameter.type) {
-						case 'string':
-						case 'GUID':
-						case 'UUID':
+						case "string":
+						case "GUID":
+						case "UUID":
 							sql = sql.replace(match[0], `'${parameter.value}'`);
 							break;
-						case 'integer':
+						case "integer":
 							sql = sql.replace(match[0], `${parameter.value}`);
 					}
 				}
@@ -84,26 +80,26 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 			this.sql = sql;
 			if (this.data.env && this.data.db) {
 				this.agentService
-					.select('localhost:8989', {
+					.select("localhost:8989", {
 						sql,
-						env: this.data.env || 'LOCAL',
+						env: this.data.env || "LOCAL",
 						db: this.data.db,
-						proj: '.',
+						proj: ".",
 					})
 					.subscribe({
 						next: (_) => {
-							alert('not implemented processing response');
+							alert("not implemented processing response");
 							// const itemWithRecordset = response.commands[0].items[0] as ICommandResponseWithRecordset
 							// this.recordset = itemWithRecordset.value;
 							this.changeDetectorRef.markForCheck();
 						},
 						error: (err) =>
-							this.errorLogger.logError(err, 'Failed to load data'),
+							this.errorLogger.logError(err, "Failed to load data"),
 					});
 			} else {
 				// TODO: temporary debug thing
 				console.log(
-					`Not issuing SELECT query as env=${this.data.env}, db=${this.data.db}`
+					`Not issuing SELECT query as env=${this.data.env}, db=${this.data.db}`,
 				);
 			}
 			if (this.data.db) {

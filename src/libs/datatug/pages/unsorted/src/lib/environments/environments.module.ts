@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EnvironmentsPageRoutingModule } from './environments-routing.module';
 
 import { EnvironmentsPageComponent } from './environments-page.component';
-import { SneatCardListModule } from '@sneat/components/card-list';
+import { SneatCardListModule } from '@sneat/components';
 
 @NgModule({
 	imports: [

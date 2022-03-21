@@ -1,10 +1,14 @@
-import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { QueriesUiService } from './queries-ui.service';
-import { DatatugQueriesServicesModule } from '@sneat/datatug/queries';
+import { NgModule } from "@angular/core";
+import { IonicModule } from "@ionic/angular";
+import { QueriesUiService } from "./queries-ui.service";
+import { DatatugQueriesServicesModule } from "./datatug-queries-services.module";
 
 @NgModule({
-	imports: [IonicModule, DatatugQueriesServicesModule],
+	imports: [
+		IonicModule,
+		DatatugQueriesServicesModule,
+	],
 	providers: [QueriesUiService],
 })
-export class DatatugQueriesUiModule {}
+export class DatatugQueriesUiModule {
+}

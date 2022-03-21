@@ -50,6 +50,6 @@
 		</ion-item>
 	</ion-card>
 
-	<!--	<datatug-sql-query *ngIf="queryState?.queryType === 'SQL'"></datatug-sql-query>-->
-	<datatug-http-query-editor></datatug-http-query-editor>
+	<datatug-sql-query *ngIf="queryState?.queryType === 'SQL'"></datatug-sql-query>
+	<datatug-http-query-editor *ngIf="queryState?.queryType === 'HTTP'"></datatug-http-query-editor>
 </ion-content>

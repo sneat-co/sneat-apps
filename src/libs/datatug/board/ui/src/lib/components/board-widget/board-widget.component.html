@@ -2,14 +2,14 @@
 	<datatug-tabs-widget
 		*ngSwitchCase="'tabs'"
 		[level]="level"
-		[tabsWidgetSettings]="widgetDef.data"
+		[tabsWidgetSettings]="tabsWidgetSettings"
 		[boardContext]="boardContext"
 	></datatug-tabs-widget>
 	<datatug-sql-query-widget
 		*ngSwitchCase="'SQL'"
 		[level]="level"
 		[tab]="cardTab //noinspection InvalidExpressionResultType"
-		[data]="widgetDef.data"
+		[data]="sqlWidgetSettings"
 		[boardContext]="boardContext"
 	></datatug-sql-query-widget>
 	<div class="ion-margin-top" *ngSwitchDefault>
@@ -18,7 +18,7 @@
 			>No widget name</ng-container
 		>
 		<ng-container *ngIf="widgetDef?.name">
-			To be implemented: {{ widgetDef.name }}
+			To be implemented: {{ widgetDef?.name }}
 		</ng-container>
 	</div>
 </ng-container>

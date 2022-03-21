@@ -5,8 +5,8 @@ import {
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
-} from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+} from "@angular/core";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import {
 	IEnvDbServer,
 	IParameter,
@@ -14,88 +14,88 @@ import {
 	ISqlQueryRequest,
 	ISqlQueryTarget,
 	QueryType,
-} from '@sneat/datatug/models';
-import { Coordinator } from '@sneat/datatug/executor';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+} from "@sneat/datatug/models";
+import { Coordinator } from "@sneat/datatug/executor";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 import {
 	EnvironmentService,
 	IAstQuery,
 	SqlParser,
-} from '@sneat/datatug/services/unsorted';
+} from "@sneat/datatug/services/unsorted";
 import {
 	ICommandResponseItem,
 	ICommandResponseWithRecordset,
 	IExecuteRequest,
 	IRecordsetResult,
 	ISqlCommandRequest,
-} from '@sneat/datatug/dto';
-import { RandomIdService } from '@sneat/random';
-import { ISqlChanged } from './intefaces';
+} from "@sneat/datatug/dto";
+import { RandomIdService } from "@sneat/random";
+import { ISqlChanged } from "./intefaces";
 import {
 	isQueryChanged,
 	QueryEditorStateService,
-} from '../../query-editor-state-service';
+} from "../../query-editor-state-service";
 import {
 	DatatugNavContextService,
 	ProjectTracker,
-} from '@sneat/datatug/services/nav';
-import { IEnvContext, IProjectContext } from '@sneat/datatug/nav';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { ViewDidEnter } from '@ionic/angular';
+} from "@sneat/datatug/services/nav";
+import { IEnvContext, IProjectContext } from "@sneat/datatug/nav";
+import { distinctUntilChanged, takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { ViewDidEnter } from "@ionic/angular";
 import {
 	IQueryEditorState,
 	IQueryEnvState,
 	IQueryState,
-} from '@sneat/datatug/editor';
-import { QueriesService } from '../../queries.service';
-import { QueryContextSqlService } from '../../query-context-sql.service';
-import { parseStoreRef } from '@sneat/core';
+} from "@sneat/datatug/editor";
+import { QueriesService } from "../../queries.service";
+import { QueryContextSqlService } from "../../query-context-sql.service";
+import { parseStoreRef } from "@sneat/core";
 
 @Component({
-	selector: 'datatug-sql-query',
-	templateUrl: './sql-query-editor.component.html',
-	styleUrls: ['./sql-query-editor.component.scss'],
+	selector: "datatug-sql-query",
+	templateUrl: "./sql-query-editor.component.html",
+	styleUrls: ["./sql-query-editor.component.scss"],
 })
 export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
-	public showQueryBuilder: boolean;
-	public editorTab: 'text' | 'builder' = 'text';
+	public showQueryBuilder = false;
+	public editorTab: "text" | "builder" = "text";
 
-	public editorState: IQueryEditorState = undefined;
+	public editorState?: IQueryEditorState = undefined;
 	public queryState: IQueryState = {
-		id: undefined,
+		id: "",
 		queryType: QueryType.SQL,
 		request: {
 			queryType: QueryType.SQL,
-			text: '',
+			text: "",
 		} as ISqlQueryRequest,
 	};
 
-	public get activeEnv(): IQueryEnvState {
+	public get activeEnv(): IQueryEnvState | undefined {
 		return this.queryState?.activeEnv;
 	}
 
-	public get queryId(): string {
+	public get queryId(): string | undefined {
 		return this.queryState?.id;
 	}
 
-	public queryNamePlaceholder: string;
-	public targetCatalog: string;
-	public queryFolderPath = '';
-	public envId;
-	public envContext: IEnvContext;
-	public envDbServerId: string;
+	public queryNamePlaceholder?: string;
+	public targetCatalog?: string;
+	public queryFolderPath = "";
+	public envId?: string;
+	public envContext?: IEnvContext;
+	public envDbServerId?: string;
 	// noinspection SqlDialectInspection,SqlNoDataSourceInspection
-	public sql = '';
-	public queryAst: IAstQuery;
-	public project: IProjectContext;
-	public environments: ReadonlyArray<IQueryEnvState>;
-	public dbDriver: 'sqlite3' | 'sqlserver' = 'sqlite3';
+	public sql = "";
+	public queryAst?: IAstQuery;
+	public project?: IProjectContext;
+	public environments?: ReadonlyArray<IQueryEnvState>;
+	public dbDriver: "sqlite3" | "sqlserver" = "sqlite3";
 
-	public parameters: IParameter[];
-	private target: ISqlQueryTarget;
+	public parameters?: IParameter[];
+	private target?: ISqlQueryTarget;
 
-	public currentProject: IProjectContext;
+	public currentProject?: IProjectContext;
 
 	private readonly destroyed = new Subject<void>();
 	public readonly sqlParser = new SqlParser();
@@ -112,15 +112,15 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		private readonly coordinator: Coordinator,
 		private readonly queryEditorStateService: QueryEditorStateService,
 		private readonly envService: EnvironmentService,
-		private readonly changeDetector: ChangeDetectorRef
+		private readonly changeDetector: ChangeDetectorRef,
 	) {
-		console.log('SqlQueryEditorComponent.constructor()', location.hash);
+		console.log("SqlQueryEditorComponent.constructor()", location.hash);
 		this.queryEditorStateService.queryEditorState
 			.pipe(distinctUntilChanged())
 			.subscribe({
 				next: this.onQueryEditorStateChanged,
 				error: this.errorLogger.logErrorHandler(
-					'Failed to get query editor stage'
+					"Failed to get query editor stage",
 				),
 			});
 		const query = history.state.query as IQueryDef;
@@ -128,9 +128,9 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 			this.setQuery(query);
 		}
 
-		if (location.hash.startsWith('#text=')) {
+		if (location.hash.startsWith("#text=")) {
 			this.sql = decodeURIComponent(
-				location.hash.substr(6).replace(/\+/g, '%20')
+				location.hash.substr(6).replace(/\+/g, "%20"),
 			);
 			this.onSqlChanged(this.sql);
 		}
@@ -144,12 +144,12 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		try {
 			this.updateUrl(); // If called in constructor breaks back button
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to process ionViewDidEnter event');
+			this.errorLogger.logError(e, "Failed to process ionViewDidEnter event");
 		}
 	}
 
 	private readonly onQueryEditorStateChanged = (
-		editorState: IQueryEditorState
+		editorState: IQueryEditorState,
 	): void => {
 		try {
 			this.editorState = editorState;
@@ -157,12 +157,12 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 				return;
 			}
 			const queryState = editorState.activeQueries.find(
-				(qs) => qs.id === editorState.currentQueryId
+				(qs) => qs.id === editorState.currentQueryId,
 			);
 			if (!queryState) {
 				return;
 			}
-			console.log('onQueryEditorStateChanged', queryState);
+			console.log("onQueryEditorStateChanged", queryState);
 			this.queryState = queryState;
 			if (this.sql != (queryState.request as ISqlQueryRequest).text) {
 				this.sql = (queryState.request as ISqlQueryRequest).text;
@@ -184,7 +184,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				'Failed to process query editor state change'
+				"Failed to process query editor state change",
 			);
 		}
 	};
@@ -197,7 +197,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	}
 
 	public onParametersChanged(parameters: IParameter[]): void {
-		console.log('onParametersChanged:', parameters);
+		console.log("onParametersChanged:", parameters);
 		this.parameters = parameters;
 	}
 
@@ -209,14 +209,14 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		this.datatugNavContextService.currentProject
 			.pipe(takeUntil(this.destroyed))
 			.subscribe((currentProject) => {
-				console.log('SqlQueryPage => currentProject:', currentProject);
+				console.log("SqlQueryPage => currentProject:", currentProject);
 				if (
 					!currentProject ||
 					(this.currentProject?.ref.projectId ===
 						currentProject.ref.projectId &&
 						this.currentProject?.ref.storeId === currentProject.ref.storeId &&
 						this.currentProject?.summary?.environments?.length ===
-							currentProject.summary?.environments?.length)
+						currentProject.summary?.environments?.length)
 				) {
 					return; // TODO: cleanup query state?
 				}
@@ -233,19 +233,19 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		try {
 			if (!envId) {
 				this.errorLogger.logError(
-					'An attempt to set active environment to: ' + envId
+					"An attempt to set active environment to: " + envId,
 				);
 				return;
 			}
 			const queryState = this.getQueryState(this.queryId);
 			if (!queryState) {
 				this.errorLogger.logError(
-					'An attempt to set unknown env as an active one: ' + envId
+					"An attempt to set unknown env as an active one: " + envId,
 				);
 				return;
 			}
 			const activeEnv = queryState.environments?.find(
-				(env) => env.id === envId
+				(env) => env.id === envId,
 			) || {
 				id: envId,
 				parameters: this.parameters && [...this.parameters],
@@ -262,13 +262,13 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 				this.getEnvData(this.currentProject, envId);
 			}
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to set active environment');
+			this.errorLogger.logError(e, "Failed to set active environment");
 		}
 	}
 
 	private getEnvData(
 		datatugProjectContext: IProjectContext,
-		envId: string
+		envId: string,
 	): void {
 		const queryId = this.queryId;
 
@@ -277,10 +277,10 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: (envSummary) => {
-					console.log('envSummary:', envSummary);
+					console.log("envSummary:", envSummary);
 					if (!envSummary) {
 						this.errorLogger.logError(
-							'getEnvSummary returned nothing for envId=' + envId
+							"getEnvSummary returned nothing for envId=" + envId,
 						);
 						return;
 					}
@@ -291,12 +291,12 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 						return;
 					}
 					const queryEnv = queryState.environments?.find(
-						(env) => env.id == envId
+						(env) => env.id == envId,
 					);
 					if (!queryEnv) {
 						// Can't see how it is possible but just in case
 						this.errorLogger.logError(
-							'received env details for unknown environment: ' + envSummary.id
+							"received env details for unknown environment: " + envSummary.id,
 						);
 						return;
 					}
@@ -317,7 +317,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 					}
 					this.updateEnvState(envState, this.getQueryState(queryId));
 				},
-				error: this.errorLogger.logErrorHandler('Failed to get env summary'),
+				error: this.errorLogger.logErrorHandler("Failed to get env summary"),
 			});
 	}
 
@@ -329,16 +329,16 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		this.route.queryParamMap.subscribe({
 			next: (queryParams) => {
 				console.log(
-					'SqlQueryPageComponent.trackQueryParams(): queryParams:',
-					queryParams
+					"SqlQueryPageComponent.trackQueryParams(): queryParams:",
+					queryParams,
 				);
 				this.target = {
 					...(this.target || {}),
-					server: queryParams.get('server'),
-					catalog: queryParams.get('catalog'),
-					driver: queryParams.get('driver'),
+					server: queryParams.get("server"),
+					catalog: queryParams.get("catalog"),
+					driver: queryParams.get("driver"),
 				} as ISqlQueryTarget;
-				console.log('target', this.target);
+				console.log("target", this.target);
 				this.updateQueryContext();
 			},
 		});
@@ -358,12 +358,12 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 						repository: projectRef.storeId,
 						project: projectRef.projectId,
 					} as ISqlQueryTarget;
-					console.log('target', this.target);
+					console.log("target", this.target);
 					this.updateQueryContext();
 				}
 			},
 			error: this.errorLogger.logErrorHandler(
-				'Failed to track projectRef from activated router'
+				"Failed to track projectRef from activated router",
 			),
 		});
 	}
@@ -373,15 +373,15 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 			return;
 		}
 		this.queryNamePlaceholder = isNew
-			? 'New query - title is a required field'
-			: 'Title is a required field';
-		const i = id.lastIndexOf('/');
+			? "New query - title is a required field"
+			: "Title is a required field";
+		const i = id.lastIndexOf("/");
 		if (i >= 0) {
 			this.queryFolderPath = id.substring(0, i);
 		}
 		if (isNew) {
 			if (!this.sql) {
-				this.sql = 'select' + ' * ' + 'from ';
+				this.sql = "select" + " * " + "from ";
 			}
 		}
 		if (isNew) {
@@ -412,15 +412,15 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 			queryState.def === query
 				? queryState
 				: {
-						...queryState,
-						isNew: false,
+					...queryState,
+					isNew: false,
+					queryType: query.request.queryType,
+					def: query,
+					request: {
 						queryType: query.request.queryType,
-						def: query,
-						request: {
-							queryType: query.request.queryType,
-							text: (query.request as ISqlQueryRequest).text,
-						} as ISqlQueryRequest,
-				  }
+						text: (query.request as ISqlQueryRequest).text,
+					} as ISqlQueryRequest,
+				},
 		);
 		this.sql = (query.request as ISqlQueryRequest)?.text;
 		if (query.targets?.length && !this.targetCatalog) {
@@ -429,7 +429,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	}
 
 	private updateQueryContext(): void {
-		console.log('updateQueryContext()', this.target);
+		console.log("updateQueryContext()", this.target);
 		if (
 			this.target.repository &&
 			this.target.project &&
@@ -454,15 +454,15 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 				...this.activeEnv,
 				dbServerId: this.envDbServerId,
 			},
-			this.queryState
+			this.queryState,
 		);
 	}
 
 	catalogChanged(event: CustomEvent): void {
 		console.log(
-			'catalogChanged',
+			"catalogChanged",
 			event.detail.value,
-			this.activeEnv?.catalogId
+			this.activeEnv?.catalogId,
 		);
 		if (event.detail.value === this.activeEnv?.catalogId) {
 			return;
@@ -472,7 +472,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 				...this.activeEnv,
 				catalogId: event.detail.value,
 			},
-			this.queryState
+			this.queryState,
 		);
 	}
 
@@ -495,7 +495,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	public queryTitleChanged(event: CustomEvent): void {
 		this.queryState = {
 			...this.queryState,
-			title: event.detail.value || '',
+			title: event.detail.value || "",
 		};
 		this.queryEditorStateService.updateQueryState(this.queryState);
 	}
@@ -515,10 +515,10 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 				replaceUrl: true,
 				relativeTo: this.route,
 				queryParams,
-				queryParamsHandling: 'merge', // remove to replace all query params by provided
+				queryParamsHandling: "merge", // remove to replace all query params by provided
 			})
 			.catch(
-				this.errorLogger.logErrorHandler('Failed to change query parameter')
+				this.errorLogger.logErrorHandler("Failed to change query parameter"),
 			);
 	}
 
@@ -534,11 +534,11 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 
 	executeQuery(): void {
 		if (!this.activeEnv.catalogId) {
-			alert('select target catalog 1st');
+			alert("select target catalog 1st");
 			return;
 		}
 		const sqlCommandRequest: ISqlCommandRequest = {
-			type: 'SQL',
+			type: "SQL",
 			driver: this.activeEnv.dbServer.driver,
 			db: this.activeEnv.catalogId,
 			env: this.activeEnv?.id,
@@ -567,14 +567,14 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 				isExecuting: true,
 				recordsets: undefined,
 			},
-			this.queryState
+			this.queryState,
 		);
 		this.coordinator
 			.execute(this.project.ref.storeId, request)
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: (response) => {
-					console.log('response:', response);
+					console.log("response:", response);
 					let recordsets: IRecordsetResult[] = [];
 
 					const mapRecordset = (result: IRecordsetResult) => ({
@@ -592,12 +592,12 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 							this.updateEnvState(
 								{
 									...this.queryState.environments.find(
-										(e) => e.id === envState.id
+										(e) => e.id === envState.id,
 									),
 									recordsets: recordsets.map(mapRecordset),
 									isExecuting: false,
 								},
-								this.getQueryState(queryId)
+								this.getQueryState(queryId),
 							);
 						}
 					};
@@ -611,7 +611,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 							recordsets: recordsets.map(mapRecordset),
 							isExecuting: false,
 						},
-						this.getQueryState(queryId)
+						this.getQueryState(queryId),
 					);
 				},
 				error: (err) => {
@@ -621,24 +621,24 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 							isExecuting: false,
 							error: err,
 						},
-						this.getQueryState(queryId)
+						this.getQueryState(queryId),
 					);
-					this.errorLogger.logError(err, 'Failed to execute query');
+					this.errorLogger.logError(err, "Failed to execute query");
 				},
 			});
 	}
 
-	private getQueryState(id: string): IQueryState {
+	private getQueryState(id: string): IQueryState | undefined {
 		return this.queryEditorStateService.getQueryState(id);
 	}
 
 	private updateEnvState(
 		envState: IQueryEnvState,
-		queryState: IQueryState
+		queryState: IQueryState,
 	): IQueryEnvState {
-		console.log('updateEnvState', envState);
+		console.log("updateEnvState", envState);
 		if (!envState.id) {
-			throw new Error('!envState.id');
+			throw new Error("!envState.id");
 		}
 		if (queryState.activeEnv.id == envState.id) {
 			queryState = { ...queryState, activeEnv: envState };
@@ -646,7 +646,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		queryState = {
 			...queryState,
 			environments: queryState.environments.map((env) =>
-				env.id === envState.id ? envState : env
+				env.id === envState.id ? envState : env,
 			),
 		};
 		this.updateQueryState(queryState);
@@ -655,13 +655,13 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 
 	public saveChanges(): void {
 		if (!this.isChanged) {
-			alert('Query does not require saving as is not changed yet');
+			alert("Query does not require saving as is not changed yet");
 			return;
 		}
 		this.queryEditorStateService
 			.saveQuery(this.queryState, this.currentProject.ref)
 			.subscribe({
-				error: this.errorLogger.logErrorHandler('Failed to save query'),
+				error: this.errorLogger.logErrorHandler("Failed to save query"),
 			});
 	}
 
@@ -695,9 +695,9 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 			} else {
 				this.updateUrl();
 			}
-			console.log('this.queryAst:', this.queryAst);
+			console.log("this.queryAst:", this.queryAst);
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to process onSqlChanged event');
+			this.errorLogger.logError(e, "Failed to process onSqlChanged event");
 		}
 	}
 

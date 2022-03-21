@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
 	IProjItemBrief,
@@ -36,9 +35,9 @@ export class QueriesPageComponent
 	implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave
 {
 	@ViewChild('codemirrorComponent', { static: true })
-	public codemirrorComponent: CodemirrorComponent;
+	public codemirrorComponent?: CodemirrorComponent;
 
-	public isActiveView: boolean;
+	public isActiveView = false;
 
 	// noinspection SqlDialectInspection
 	public sql = 'select * from ';
@@ -48,7 +47,7 @@ export class QueriesPageComponent
 
 	public filter = '';
 
-	public project: IProjectContext;
+	public project?: IProjectContext;
 
 	public get defaultBackHref(): string {
 		return this.project
