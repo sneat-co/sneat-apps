@@ -22,14 +22,14 @@ import 'codemirror/mode/sql/sql';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SqlEditorComponent implements AfterViewInit, OnChanges {
-	@Input() sql: string;
+	@Input() sql?: string;
 	@Input() lineNumbers = false;
 	@Input() readonly = true;
 
 	@Output() sqlChanged = new EventEmitter<string>();
 
 	@ViewChild('codemirrorComponent')
-	public codemirrorComponent: CodemirrorComponent;
+	public codemirrorComponent?: CodemirrorComponent;
 	public codemirrorOptions = {
 		lineNumbers: this.lineNumbers,
 		readOnly: this.readonly,
@@ -47,7 +47,13 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 	}
 
 	ngAfterViewInit(): void {
+		if (!this.codemirrorComponent) {
+			return;
+		}
 		const { codeMirror } = this.codemirrorComponent;
+		if (!codeMirror) {
+			return;
+		}
 		codeMirror.getWrapperElement().style.height = 'auto';
 		setTimeout(() => {
 			this.refreshCodeMirror();
@@ -57,7 +63,13 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 	refreshCodeMirror(): void {
 		console.log('refreshCodeMirror()');
 		try {
+			if (!this.codemirrorComponent) {
+				return;
+			}
 			const { codeMirror } = this.codemirrorComponent;
+			if (!codeMirror) {
+				return;
+			}
 			setTimeout(() => {
 				try {
 					codeMirror.refresh();
@@ -72,7 +84,7 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('SqlComponent.ngOnChanges()', changes);
-		if (changes.sql || changes.lineNumbers || changes.readonly) {
+		if (changes["sql"] || changes["lineNumbers"] || changes["readonly"]) {
 			this.codemirrorOptions = {
 				...this.codemirrorOptions,
 				lineNumbers: this.lineNumbers,

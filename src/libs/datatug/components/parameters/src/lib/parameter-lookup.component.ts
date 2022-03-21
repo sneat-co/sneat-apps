@@ -4,9 +4,10 @@ import { first } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { IParameterDef, IParameterValueWithoutID } from '@sneat/datatug/models';
 import {
+	ICommandResponseItem,
 	ICommandResponseWithRecordset,
 	IExecuteResponse,
-} from '@sneat/datatug/dto';
+} from "@sneat/datatug/dto";
 import { IGridDef } from '@sneat/grid';
 import {
 	recordsetToGridDef,
@@ -20,15 +21,15 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	styleUrls: ['./parameter-lookup.component.scss'],
 })
 export class ParameterLookupComponent implements OnInit {
-	@Input() parameter: IParameterDef;
-	@Input() subj: Subject<IParameterValueWithoutID>;
-	@Input() canceled: () => void;
-	@Input() storeId: string;
-	@Input() projectId: string;
-	@Input() envId: string;
-	@Input() lookupResponse: Observable<IExecuteResponse>;
+	@Input() parameter?: IParameterDef;
+	@Input() subj?: Subject<IParameterValueWithoutID>;
+	@Input() canceled?: () => void;
+	@Input() storeId?: string;
+	@Input() projectId?: string;
+	@Input() envId?: string;
+	@Input() lookupResponse?: Observable<IExecuteResponse>;
 
-	grid: IGridDef;
+	grid?: IGridDef;
 
 	constructor(
 		private readonly repoService: DatatugStoreService,
@@ -37,12 +38,13 @@ export class ParameterLookupComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.lookupResponse.pipe(first()).subscribe({
-			next: (response) => {
+		this.lookupResponse?.pipe(first()).subscribe({
+			next: (response: IExecuteResponse) => {
 				console.log('Lookup got response:', response);
 				try {
-					const itemWithRecordset = response.commands[0]
-						.items[0] as ICommandResponseWithRecordset;
+					const firstCommand = response.commands[0];
+					const firstItem = (firstCommand.items as ICommandResponseItem[])[0];
+					const itemWithRecordset = firstItem as ICommandResponseWithRecordset;
 					const recordset = itemWithRecordset.value;
 					this.grid = recordsetToGridDef({ result: recordset });
 					console.log('this.grid:', this.grid);
@@ -60,9 +62,11 @@ export class ParameterLookupComponent implements OnInit {
 
 	rowClicked = (event: Event, row: { getData: () => any }): void => {
 		const data = row.getData();
-		const value = this.parameter.lookup.keyFields.map((f) => data[f])[0];
+		const value = this.parameter?.lookup?.keyFields.map((f) => data[f])[0];
 		console.log('ParameterLookupComponent.rowClicked', row, data, value);
-		this.subj.next({ type: this.parameter.type, value });
+		if (this.parameter?.type) {
+			this.subj?.next({ type: this.parameter.type, value });
+		}
 		this.modal
 			.dismiss()
 			.catch((err) =>

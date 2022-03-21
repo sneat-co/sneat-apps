@@ -615,27 +615,85 @@
 			},
 			"tags": []
 		},
-		"datatug-board": {
+		"datatug-board-core": {
 			"projectType": "library",
-			"root": "libs/datatug/board",
-			"sourceRoot": "libs/datatug/board/src",
+			"root": "libs/datatug/board/core",
+			"sourceRoot": "libs/datatug/board/core/src",
 			"prefix": "sneat",
 			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/board/core"],
+					"options": {
+						"project": "libs/datatug/board/core/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/board/core/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/board/core/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/datatug/board/core"],
+					"options": {
+						"jestConfig": "libs/datatug/board/core/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
 						"lintFilePatterns": [
-							"libs/datatug/board/src/**/*.ts",
-							"libs/datatug/board/src/**/*.html"
+							"libs/datatug/board/core/src/**/*.ts",
+							"libs/datatug/board/core/src/**/*.html"
 						]
 					}
+				}
+			},
+			"tags": []
+		},
+		"datatug-board-ui": {
+			"projectType": "library",
+			"root": "libs/datatug/board/ui",
+			"sourceRoot": "libs/datatug/board/ui/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/board/ui"],
+					"options": {
+						"project": "libs/datatug/board/ui/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/board/ui/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/board/ui/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/datatug/board"],
+					"outputs": ["coverage/libs/datatug/board/ui"],
 					"options": {
-						"jestConfig": "libs/datatug/board/jest.config.js",
+						"jestConfig": "libs/datatug/board/ui/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/board/ui/src/**/*.ts",
+							"libs/datatug/board/ui/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -689,14 +747,21 @@
 			"sourceRoot": "libs/datatug/components/datagrid/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/components/datagrid"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/datatug/components/datagrid/src/**/*.ts",
-							"libs/datatug/components/datagrid/src/**/*.html"
-						]
-					}
+						"project": "libs/datatug/components/datagrid/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/components/datagrid/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/components/datagrid/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -704,6 +769,15 @@
 					"options": {
 						"jestConfig": "libs/datatug/components/datagrid/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/components/datagrid/src/**/*.ts",
+							"libs/datatug/components/datagrid/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -782,14 +856,21 @@
 			"sourceRoot": "libs/datatug/components/parameters/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/components/parameters"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/datatug/components/parameters/src/**/*.ts",
-							"libs/datatug/components/parameters/src/**/*.html"
-						]
-					}
+						"project": "libs/datatug/components/parameters/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/components/parameters/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/components/parameters/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -797,6 +878,15 @@
 					"options": {
 						"jestConfig": "libs/datatug/components/parameters/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/components/parameters/src/**/*.ts",
+							"libs/datatug/components/parameters/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -846,14 +936,21 @@
 			"sourceRoot": "libs/datatug/components/sqleditor/src",
 			"prefix": "sneat",
 			"architect": {
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/components/sqleditor"],
 					"options": {
-						"lintFilePatterns": [
-							"libs/datatug/components/sqleditor/src/**/*.ts",
-							"libs/datatug/components/sqleditor/src/**/*.html"
-						]
-					}
+						"project": "libs/datatug/components/sqleditor/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/components/sqleditor/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/components/sqleditor/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
@@ -861,6 +958,15 @@
 					"options": {
 						"jestConfig": "libs/datatug/components/sqleditor/jest.config.js",
 						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/components/sqleditor/src/**/*.ts",
+							"libs/datatug/components/sqleditor/src/**/*.html"
+						]
 					}
 				}
 			},
@@ -1055,33 +1161,33 @@
 			},
 			"tags": []
 		},
-		"datatug-folders": {
+		"datatug-folders-core": {
 			"projectType": "library",
-			"root": "libs/datatug/folders",
-			"sourceRoot": "libs/datatug/folders/src",
+			"root": "libs/datatug/folders/core",
+			"sourceRoot": "libs/datatug/folders/core/src",
 			"prefix": "sneat",
 			"architect": {
 				"build": {
 					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/datatug/folders"],
+					"outputs": ["dist/libs/datatug/folders/core"],
 					"options": {
-						"project": "libs/datatug/folders/ng-package.json"
+						"project": "libs/datatug/folders/core/ng-package.json"
 					},
 					"configurations": {
 						"production": {
-							"tsConfig": "libs/datatug/folders/tsconfig.lib.prod.json"
+							"tsConfig": "libs/datatug/folders/core/tsconfig.lib.prod.json"
 						},
 						"development": {
-							"tsConfig": "libs/datatug/folders/tsconfig.lib.json"
+							"tsConfig": "libs/datatug/folders/core/tsconfig.lib.json"
 						}
 					},
 					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/datatug/folders"],
+					"outputs": ["coverage/libs/datatug/folders/core"],
 					"options": {
-						"jestConfig": "libs/datatug/folders/jest.config.js",
+						"jestConfig": "libs/datatug/folders/core/jest.config.js",
 						"passWithNoTests": true
 					}
 				},
@@ -1089,8 +1195,50 @@
 					"builder": "@nrwl/linter:eslint",
 					"options": {
 						"lintFilePatterns": [
-							"libs/datatug/folders/src/**/*.ts",
-							"libs/datatug/folders/src/**/*.html"
+							"libs/datatug/folders/core/src/**/*.ts",
+							"libs/datatug/folders/core/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"datatug-folders-ui": {
+			"projectType": "library",
+			"root": "libs/datatug/folders/ui",
+			"sourceRoot": "libs/datatug/folders/ui/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/datatug/folders/ui"],
+					"options": {
+						"project": "libs/datatug/folders/ui/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/datatug/folders/ui/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/datatug/folders/ui/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/datatug/folders/ui"],
+					"options": {
+						"jestConfig": "libs/datatug/folders/ui/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/datatug/folders/ui/src/**/*.ts",
+							"libs/datatug/folders/ui/src/**/*.html"
 						]
 					}
 				}

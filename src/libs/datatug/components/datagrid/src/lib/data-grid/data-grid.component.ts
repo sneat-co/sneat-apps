@@ -10,6 +10,8 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Tabulator} from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
 
@@ -48,16 +50,16 @@ import { IGridColumn } from '@sneat/grid';
 	template: ` <div id="tabulator" #container></div>
 		<p class="ion-margin-start">Rows: {{ data?.length }}</p>`,
 })
-export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class DataGridComponent implements AfterViewInit, OnChanges {
 	@Input() layout?: 'fitData' | 'fitColumns';
-	@Input() data: any[] = [];
-	@Input() columns: IGridColumn[] = [];
-	@Input() groupBy: string;
+	@Input() data?: any[] = [];
+	@Input() columns?: IGridColumn[] = [];
+	@Input() groupBy?: string;
 	@Input() height?: string | number = '700px';
-	@Input() maxHeight: string | number;
-	@ViewChild('container', { static: true }) tabulatorDiv: ElementRef;
+	@Input() maxHeight?: string | number;
+	@ViewChild('container', { static: true }) tabulatorDiv?: ElementRef;
 
-	@Input() rowClick: (event: Event, row: any) => void;
+	@Input() rowClick?: (event: Event, row: any) => void;
 
 	// private tab = document.createElement('div');
 	private tabulator: Tabulator;
@@ -72,8 +74,8 @@ export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
 		console.log('DataGridComponent.ngOnChanges():', changes);
 		try {
 			if (
-				(changes.data && this.data && this.columns) ||
-				(changes.columns && this.columns)
+				(changes["data"] && this.data && this.columns) ||
+				(changes["columns"] && this.columns)
 			) {
 				this.drawTable();
 			}
@@ -85,7 +87,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	ngOnDestroy(): void {
+	// ngOnDestroy(): void {
 		// console.log('DataGridComponent.ngOnDestroy()', this.tabulator);
 		// try { // TODO: destroy Tabulator
 		// 	if (this.tabulator?.element) {
@@ -95,7 +97,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
 		// } catch (ex) {
 		// 	this.errorLogger.logError(ex, 'Failed to destroy tabulator');
 		// }
-	}
+	// }
 
 	ngAfterViewInit(): void {
 		if (this.tabulator) {
@@ -142,7 +144,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
 			tooltipGenerationMode: 'hover',
 			data: this.data,
 			reactiveData: true, // enable data reactivity
-			columns: this.columns.map((c) => {
+			columns: this.columns?.map((c) => {
 				const col: any = {
 					// TODO(help-wanted): Use strongly typed Tabulator col def
 					field: c.field,
@@ -150,12 +152,12 @@ export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
 					headerTooltip: () =>
 						`${c.colName || c.title || c.field}: ${c.dbType}`,
 				};
-				if (c.colName !== 'Id' && c.colName.endsWith('Id')) {
+				if (c.colName !== 'Id' && c.colName?.endsWith('Id')) {
 					col.formatter = 'link';
 					col.formatterParams = {
 						url: 'test-url',
 					};
-					col.cellClick = (e: Event, cell) => {
+					col.cellClick = (e: Event, cell: any) => {
 						e.preventDefault();
 						e.stopPropagation();
 						console.log('cellClick', cell);
@@ -188,7 +190,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
 		};
 		if (this.groupBy) {
 			this.tabulatorOptions.groupBy = this.groupBy;
-			this.tabulatorOptions.groupHeader = (value, count) => {
+			this.tabulatorOptions.groupHeader = (value: any, count: number) => {
 				// value - the value all members of this group share
 				// count - the number of rows in this group
 				// data - an array of all the row data objects in this group
@@ -206,7 +208,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 		if (!this.tabulator) {
 			this.tabulator = new Tabulator(
-				this.tabulatorDiv.nativeElement,
+				this.tabulatorDiv?.nativeElement,
 				this.tabulatorOptions
 			);
 		}

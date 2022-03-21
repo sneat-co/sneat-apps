@@ -1,7 +1,7 @@
 <div>
-	<h2 class="ion-margin">{{ parameter.id }}</h2>
+	<h2 class="ion-margin">{{ parameter?.id }}</h2>
 
-	<datatug-sql [sql]="parameter.lookup.sql"></datatug-sql>
+	<datatug-sql [sql]="parameter?.lookup?.sql"></datatug-sql>
 </div>
 
 <datatug-grid

@@ -20,15 +20,15 @@ import {
 })
 export class InputParametersComponent implements OnChanges {
 	@Input()
-	public paramDefs: IParameterDef[];
+	public paramDefs?: IParameterDef[];
 
-	public parameters: IParamWithDefAndValue[];
+	public parameters?: IParamWithDefAndValue[];
 
 	@Output()
 	public readonly paramValues = new EventEmitter<IParameter[]>();
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.paramDefs) {
+		if (changes["paramDefs"]) {
 			this.parameters = this.paramDefs?.map((def) => ({
 				def,
 				val: this.parameters?.find((p) => p.def.id === def.id)?.val,
@@ -41,19 +41,19 @@ export class InputParametersComponent implements OnChanges {
 	}
 
 	public clearAllParams(event: Event): void {
-		this.parameters.forEach((p) => (p.val = undefined));
+		this.parameters?.forEach((p) => (p.val = undefined));
 	}
 
 	public onParamChanged(
-		event: CustomEvent,
+		event: Event,
 		parameter: IParamWithDefAndValue
 	): void {
-		const { value } = event.detail;
+		const { value } = (event as CustomEvent).detail;
 		console.log('omParamChanged:', value, parameter);
 		this.paramValues.emit(
-			this.parameters.map((p) => {
+			this.parameters?.map((p) => {
 				const v = p.def.id === parameter.def.id ? value : p.val;
-				let pVal: ParameterValue;
+				let pVal: ParameterValue | undefined;
 				if (p.def.type === 'integer' || p.def.type === 'number') {
 					if (v === undefined || v === null || v === '') {
 						pVal = undefined;
