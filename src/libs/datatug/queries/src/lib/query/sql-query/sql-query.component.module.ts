@@ -7,7 +7,7 @@ import { DatatugComponentsDatagridModule } from "@sneat/datatug/components/datag
 import { DatatugExecutorModule } from "@sneat/datatug/executor";
 import { DatatugComponentsSqlEditorModule } from "@sneat/datatug/components/sqleditor";
 import { DatatugQueriesServicesModule } from "../../datatug-queries-services.module";
-// import { WormholeModule } from "@sneat/wormhole";
+// import { WormholeModule } from "@sneat/wormhole"; // was causing error NG6002
 import { DatatugComponentsParametersModule } from "@sneat/datatug/components/parameters";
 import { DatatugBoardUiModule } from "@sneat/datatug/board/ui";
 
@@ -27,7 +27,7 @@ import { JoinsComponent } from "./query-builder/joins.component";
 		DatatugExecutorModule,
 		DatatugComponentsDatagridModule,
 		DatatugComponentsParametersModule,
-		DatatugBoardUiModule
+		DatatugBoardUiModule,
 	],
 	exports: [
 		SqlQueryEditorComponent,
