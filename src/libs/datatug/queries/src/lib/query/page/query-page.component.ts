@@ -28,9 +28,9 @@ import {
 import {
 	isQueryChanged,
 	QueryEditorStateService,
-} from "../query-editor-state-service";
-import { QueriesService } from "../queries.service";
-import { QueryContextSqlService } from "../query-context-sql.service";
+} from "../../query-editor-state-service";
+import { QueriesService } from "../../queries.service";
+import { QueryContextSqlService } from "../../query-context-sql.service";
 
 @Component({
 	selector: "datatug-sql-editor",
