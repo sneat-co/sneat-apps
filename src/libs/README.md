@@ -3,7 +3,10 @@
 To generate a new library use `nx` command:
 
 ```shell
-nx generate @nrwl/angular:library <mylibrary>
+nx generate @nrwl/angular:library <mylibrary> --buildable
+
+# or with PNPM alias
+pnx generate @nrwl/angular:library <mylibrary> --buildable
 ```
 
 ## List of sneat libraries with brief description
