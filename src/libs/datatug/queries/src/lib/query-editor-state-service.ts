@@ -294,6 +294,9 @@ export class QueryEditorStateService {
 			);
 		}
 		const { id } = queryState;
+		if (!id) {
+			return throwError(() => "queryState.id is not set");
+		}
 		const setIsSavingToFalse = () => {
 			const state = this.getQueryState(id);
 			if (!state) {

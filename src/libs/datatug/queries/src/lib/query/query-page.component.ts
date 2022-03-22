@@ -473,10 +473,11 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		this.updateUrl();
 	}
 
-	public queryTitleChanged(event: CustomEvent): void {
+	public queryTitleChanged(event: Event): void {
+		const ce = event as CustomEvent;
 		this.queryState = {
 			...this.queryState,
-			title: event.detail.value || "",
+			title: ce.detail.value || "",
 		};
 		this.queryEditorStateService.updateQueryState(this.queryState);
 	}

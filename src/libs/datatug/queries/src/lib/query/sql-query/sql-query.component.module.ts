@@ -14,6 +14,7 @@ import { ColumnsComponent } from "./query-builder/columns.component";
 import { JoinsComponent } from "./query-builder/joins.component";
 import { WormholeModule } from "@sneat/wormhole";
 import { DatatugComponentsParametersModule } from "@sneat/datatug/components/parameters";
+import { DatatugBoardUiModule } from "@sneat/datatug/board/ui";
 
 const exports = [
 	SqlQueryEditorComponent,
@@ -31,6 +32,7 @@ const exports = [
 		DatatugComponentsDatagridModule,
 		WormholeModule,
 		DatatugComponentsParametersModule,
+		DatatugBoardUiModule,
 	],
 	exports,
 	declarations: [

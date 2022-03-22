@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
 	templateUrl: 'columns.component.html',
 })
 export class ColumnsComponent {
-	expanded: string;
+	expanded?: string;
 }

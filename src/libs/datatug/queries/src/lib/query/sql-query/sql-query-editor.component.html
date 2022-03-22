@@ -90,7 +90,7 @@
 					color="medium"
 					style="font-weight: normal; font-size: x-small"
 					title="Is not implemented yet"
-					>PROTOTYPE
+				>PROTOTYPE
 				</ion-badge>
 			</ion-label>
 		</ion-segment-button>
@@ -125,7 +125,8 @@
 						color="danger"
 						slot="end"
 						(click)="showQueryBuilder = true"
-						>Show prototype</ion-button
+					>Show prototype
+					</ion-button
 					>
 				</p>
 			</ion-card-content>
@@ -159,7 +160,7 @@
 						<ion-item>
 							<ion-checkbox slot="start" checked="true"></ion-checkbox>
 							<ion-label
-								><b>ft</b> -
+							><b>ft</b> -
 								<ion-text color="medium">FistTable</ion-text>
 							</ion-label>
 						</ion-item>
@@ -267,15 +268,16 @@
 					<ion-row>
 						<ion-col style="margin-top: 0.5rem">
 							{{ env.title || env.id }}
-							<ion-badge
-								color="light"
-								*ngIf="
-									env.recordsets?.length === 1 &&
-									env.recordsets[0].result.rows?.length
+							<ng-container *ngIf="env.recordsets; let envRecordsets">
+								<ion-badge
+									color="light"
+									*ngIf="envRecordsets.length === 1 &&
+									!!envRecordsets[0].result?.rows?.length
 								"
-							>
-								{{ env.recordsets[0].result.rows.length }}
-							</ion-badge>
+								>
+									{{ envRecordsets[0].result?.rows?.length }}
+								</ion-badge>
+							</ng-container>
 						</ion-col>
 						<ion-col>
 							<ion-buttons>
@@ -302,7 +304,8 @@
 				<ion-item>
 					<ion-label
 						[color]="activeEnv && !activeEnv.dbServerId ? 'danger' : 'medium'"
-						>@ Server</ion-label
+					>@ Server
+					</ion-label
 					>
 					<ion-input
 						*ngIf="activeEnv && !activeEnv.summary"
@@ -312,7 +315,7 @@
 					></ion-input>
 					<ng-container *ngIf="activeEnv?.summary">
 						<ng-container
-							*ngIf="!activeEnv.summary.dbServers?.length; else hasDbServers"
+							*ngIf="!activeEnv?.summary?.dbServers?.length; else hasDbServers"
 						>
 							<ion-input
 								readonly
@@ -327,7 +330,7 @@
 								(ionChange)="serverChanged($event)"
 							>
 								<ion-select-option
-									*ngFor="let dbServer of activeEnv.summary?.dbServers"
+									*ngFor="let dbServer of activeEnv?.summary?.dbServers"
 									[value]="getDbServerId(dbServer)"
 								>
 									{{ dbServer.driver }} : {{ dbServer.host }}
@@ -341,7 +344,8 @@
 				<ion-item>
 					<ion-label
 						[color]="activeEnv && !activeEnv.catalogId ? 'danger' : 'medium'"
-						>DB</ion-label
+					>DB
+					</ion-label
 					>
 					<ion-input
 						*ngIf="activeEnv && !activeEnv.summary"
@@ -356,7 +360,7 @@
 						(ionChange)="catalogChanged($event)"
 					>
 						<ion-select-option
-							*ngFor="let catalog of activeEnv.dbServer.catalogs"
+							*ngFor="let catalog of activeEnv?.dbServer?.catalogs"
 							[value]="catalog"
 						>
 							{{ catalog }}
@@ -401,7 +405,7 @@
 		*ngIf="activeEnv?.recordsets"
 	>
 		<datatug-grid-widget
-			*ngFor="let recordset of activeEnv.recordsets; trackBy: trackByIndex"
+			*ngFor="let recordset of activeEnv?.recordsets; trackBy: trackByIndex"
 			[recordset]="recordset"
 		></datatug-grid-widget>
 	</div>

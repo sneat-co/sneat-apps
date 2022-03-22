@@ -35,7 +35,7 @@ export interface IQueryEnvState {
 }
 
 export interface IQueryState extends IQueryStateDto {
-	readonly id: string;
+	readonly id?: string;
 	readonly isNew?: boolean;
 	readonly title?: string;
 	readonly request?: IQueryRequest;

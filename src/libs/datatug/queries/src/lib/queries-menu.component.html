@@ -47,7 +47,7 @@
 </ion-item>
 <ion-item
 	tappable
-	*ngIf="tab === 'active' && queries.length"
+	*ngIf="tab === 'active' && queries?.length"
 	(click)="newQuery()"
 >
 	<ion-icon slot="start" name="add"></ion-icon>

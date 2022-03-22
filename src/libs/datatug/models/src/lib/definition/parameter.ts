@@ -42,7 +42,7 @@ export interface IParameter {
 
 export interface IParameterValueWithoutID {
 	readonly type: ParameterValueType;
-	value: ParameterValue;
+	value?: ParameterValue;
 }
 
 export interface IParameterValueWithName extends IParameterValueWithoutID {

@@ -11,3 +11,4 @@ export * from './lib/query/sql-query/sql-query.component.module';
 export * from './lib/query/http-query/http-query-editor.component';
 export * from './lib/query/http-query/http-query-editor.module';
 export * from './lib/queries-menu.module';
+export * from './lib/queries-menu.component';

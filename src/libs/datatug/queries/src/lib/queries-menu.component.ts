@@ -51,8 +51,10 @@ export class QueriesMenuComponent {
 		}
 	}
 
-	selectQuery(id: string): void {
-		this.queryEditorStateService.setCurrentQuery(id);
+	selectQuery(id?: string): void {
+		if (id) {
+			this.queryEditorStateService.setCurrentQuery(id);
+		}
 	}
 
 	closeQuery(query: IQueryState): void {
