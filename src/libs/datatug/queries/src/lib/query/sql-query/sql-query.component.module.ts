@@ -17,7 +17,7 @@ import { DatatugComponentsParametersModule } from "@sneat/datatug/components/par
 import { DatatugBoardUiModule } from "@sneat/datatug/board/ui";
 
 const exports = [
-	SqlQueryEditorComponent,
+	SqlQueryEditorComponent
 ];
 
 @NgModule({
@@ -32,14 +32,16 @@ const exports = [
 		DatatugComponentsDatagridModule,
 		WormholeModule,
 		DatatugComponentsParametersModule,
-		DatatugBoardUiModule,
+		DatatugBoardUiModule
 	],
-	exports,
+	exports: [
+		...exports
+	],
 	declarations: [
 		...exports,
 		ColumnsComponent,
-		JoinsComponent,
-	],
+		JoinsComponent
+	]
 })
 export class SqlQueryComponentModule {
 }
