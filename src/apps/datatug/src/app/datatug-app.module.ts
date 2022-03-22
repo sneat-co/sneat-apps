@@ -21,7 +21,7 @@ import { SneatAuthModule } from "@sneat/auth";
 import {
 	RANDOM_ID_OPTIONS,
 	RandomIdService,
-	RandomModule,
+	RandomModule
 } from "@sneat/random";
 // import { GuiGridModule } from '@generic-ui/ngx-grid';
 
@@ -46,7 +46,7 @@ initFirebase(environment.firebaseConfig);
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatApplicationModule,
 		SneatAuthModule,
-		DatatugAppRoutingModule,
+		DatatugAppRoutingModule
 		// DatatugMenuModule,
 	],
 	providers: [
@@ -65,20 +65,17 @@ initFirebase(environment.firebaseConfig);
 		// },
 		{
 			provide: EnvConfigToken,
-			useValue: environment,
+			useValue: environment
 		},
 		{
 			provide: RANDOM_ID_OPTIONS,
-			useValue: { len: 9 },
-		},
+			useValue: { len: 9 }
+		}
 	],
-	bootstrap: [DatatugAppComponent],
+	bootstrap: [DatatugAppComponent]
 })
 export class DatatugAppModule {
 	constructor() {
-		console.log(
-			"DatatugAppModule.constructor(), environment.firebaseConfig:",
-			environment.firebaseConfig,
-		);
+		console.log("DatatugAppModule.constructor()");
 	}
 }

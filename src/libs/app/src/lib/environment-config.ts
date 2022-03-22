@@ -1,6 +1,7 @@
 import { InjectionToken } from "@angular/core";
 
 export interface IFirebaseConfig {
+	useEmulators?: boolean;
 	emulator?: {
 		authPort: number;
 		firestorePort: number
@@ -9,6 +10,7 @@ export interface IFirebaseConfig {
 	projectId: string;
 	appId: string;
 	measurementId: string;
+	messagingSenderId?: string;
 	apiKey: string;
 	authDomain: string;
 	databaseURL?: string;
