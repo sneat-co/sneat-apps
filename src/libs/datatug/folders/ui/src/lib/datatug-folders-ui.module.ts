@@ -1,10 +1,27 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { DatatugFolderComponent } from "./datatug-folder.component";
+import { DatatugFoldersCoreModule } from "@sneat/datatug/folders/core";
+import { IonicModule } from "@ionic/angular";
+import { FormsModule } from "@angular/forms";
+import { SneatCardListComponent, SneatCardListModule } from "@sneat/components";
+
+const exports = [
+	DatatugFolderComponent,
+];
 
 @NgModule({
-	imports: [CommonModule],
-	declarations: [DatatugFolderComponent],
-	exports: [DatatugFolderComponent],
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		SneatCardListModule,
+		DatatugFoldersCoreModule,
+	],
+	declarations: [
+		...exports,
+	],
+	exports,
 })
-export class DatatugFoldersUiModule {}
+export class DatatugFoldersUiModule {
+}

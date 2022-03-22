@@ -515,7 +515,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 			throw new Error("!envState.id");
 		}
 		if (!queryState) {
-			return queryState;
+			return undefined;
 		}
 		if (queryState.activeEnv?.id == envState.id) {
 			queryState = { ...queryState, activeEnv: envState };

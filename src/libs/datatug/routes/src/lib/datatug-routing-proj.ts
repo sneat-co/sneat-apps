@@ -20,7 +20,7 @@ export const datatugProjectRoutes: Routes = [
 	{
 		path: 'board/:' + routingParamBoard,
 		loadChildren: () =>
-			import('@sneat/datatug/board').then((m) => m.BoardPageModule),
+			import('@sneat/datatug/board/ui').then((m) => m.BoardPageModule),
 	},
 	{
 		path: 'board',
@@ -29,7 +29,7 @@ export const datatugProjectRoutes: Routes = [
 	{
 		path: 'boards',
 		loadChildren: () =>
-			import('@sneat/datatug/board').then((m) => m.BoardsPageModule),
+			import('@sneat/datatug/board/ui').then((m) => m.BoardsPageModule),
 	},
 	{
 		path: 'entities',

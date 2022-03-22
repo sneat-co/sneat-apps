@@ -26,8 +26,9 @@ import {
 	EnvironmentService,
 	SchemaService,
 } from "@sneat/datatug/services/unsorted";
-import { BoardService } from "@sneat/datatug/board";
 import { DatatugFoldersService } from "@sneat/datatug/folders/core";
+import { DatatugBoardService } from "@sneat/datatug/board/core";
+import { folder } from "ionicons/icons";
 
 @Component({
 	selector: "datatug-folder",
@@ -35,10 +36,10 @@ import { DatatugFoldersService } from "@sneat/datatug/folders/core";
 })
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	readonly Environment = ProjectItem.environment as const;
+	readonly Environment: ProjectItemType = ProjectItem.environment as const;
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	readonly Board = ProjectItem.Board as const;
-	readonly Query = ProjectItem.query as const;
+	readonly Board: ProjectItemType = ProjectItem.Board;
+	readonly Query: ProjectItemType = ProjectItem.query;
 
 	tabs = ["boards", "queries", "environments", "entities"];
 
@@ -54,6 +55,10 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 
 	public folder?: IFolder | null;
 
+	public numberOf(tab: string): number {
+		return this.folder?.numberOf && this.numberOf(tab) || 0;
+	}
+
 	public getItemLink = (path: string) => (item: IProjItemBrief) =>
 		`${path}/${item.id}`;
 
@@ -63,7 +68,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 		private readonly datatugNavService: DatatugNavService,
 		private readonly schemaService: SchemaService,
 		private readonly environmentService: EnvironmentService,
-		private readonly boardService: BoardService,
+		private readonly boardService: DatatugBoardService,
 		private readonly entityService: EntityService,
 	) {
 		// foldersService.watchFolder()
@@ -82,11 +87,11 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 
 	public createFolderItem: (name: string) => Observable<IRecord<IOptionallyTitled>> =
 		(title: string) =>
-		this.createProjItem(
-			ProjectItem.Board,
-			title,
-			this.boardService.createNewBoard,
-		);
+			this.createProjItem(
+				ProjectItem.Board,
+				title,
+				this.boardService.createNewBoard,
+			);
 
 	public createQuery = (title: string) => alert("Not implemented yet.");
 

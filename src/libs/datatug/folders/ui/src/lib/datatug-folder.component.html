@@ -3,8 +3,8 @@
 		<ion-label class="no-text-transform">
 			<!--			<ion-icon slot="start" name="clipboard-outline" class="ion-margin-end"></ion-icon>-->
 			{{ t | titlecase }}
-			<ion-badge color="light" *ngIf="folder?.numberOf[t]">
-				<ion-text color="medium">{{ folder.numberOf[t] }}</ion-text>
+			<ion-badge color="light" *ngIf="numberOf(t); let numOf">
+				<ion-text color="medium">{{ numOf }}</ion-text>
 			</ion-badge>
 		</ion-label>
 	</ion-segment-button>
@@ -19,7 +19,7 @@
 
 <sneat-card-list
 	*ngIf="tab === 'environments'"
-	isFilterable="true"
+	[isFilterable]="true"
 	[projItemType]="Environment"
 	title="Environments"
 	itemIcon="earth-outline"
@@ -35,7 +35,7 @@
 <sneat-card-list
 	*ngIf="tab === 'boards'"
 	[projItemType]="Board"
-	isFilterable="true"
+	[isFilterable]="true"
 	title="Boards"
 	itemIcon="clipboard-outline"
 	[isLoading]="folder === undefined"
@@ -51,7 +51,7 @@
 <sneat-card-list
 	*ngIf="tab === 'queries'"
 	[projItemType]="Query"
-	isFilterable="true"
+	[isFilterable]="true"
 	title="Queries"
 	itemIcon="clipboard-outline"
 	[isLoading]="folder === undefined"
