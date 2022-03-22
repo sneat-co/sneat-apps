@@ -88,8 +88,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"api": {
 	  "projectType": "library",
@@ -131,8 +130,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"app": {
 	  "projectType": "library",
@@ -159,8 +157,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"auth": {
 	  "projectType": "library",
@@ -243,8 +240,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"auth-ui": {
 	  "projectType": "library",
@@ -289,8 +285,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"communes-ui": {
 	  "projectType": "library",
@@ -317,8 +312,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"components": {
 	  "projectType": "library",
@@ -363,8 +357,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"core": {
 	  "projectType": "library",
@@ -406,8 +399,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"data": {
 	  "projectType": "library",
@@ -446,8 +438,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug": {
 	  "projectType": "application",
@@ -640,8 +631,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-board-core": {
 	  "projectType": "library",
@@ -686,8 +676,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-board-ui": {
 	  "projectType": "library",
@@ -732,8 +721,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-checks": {
 	  "projectType": "library",
@@ -778,8 +766,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-components-datagrid": {
 	  "projectType": "library",
@@ -824,8 +811,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-components-dbmeta": {
 	  "projectType": "library",
@@ -852,8 +838,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-components-jsontug": {
 	  "projectType": "library",
@@ -895,8 +880,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-components-parameters": {
 	  "projectType": "library",
@@ -941,8 +925,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-components-project": {
 	  "projectType": "library",
@@ -981,8 +964,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-components-sqleditor": {
 	  "projectType": "library",
@@ -1027,8 +1009,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-core": {
 	  "projectType": "library",
@@ -1070,8 +1051,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-db": {
 	  "projectType": "library",
@@ -1098,8 +1078,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-dto": {
 	  "projectType": "library",
@@ -1144,8 +1123,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-e2e": {
 	  "root": "apps/datatug-e2e",
@@ -1174,7 +1152,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"datatug"
 	  ]
@@ -1222,8 +1199,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-executor": {
 	  "projectType": "library",
@@ -1268,8 +1244,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-folders-core": {
 	  "projectType": "library",
@@ -1314,8 +1289,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-folders-ui": {
 	  "projectType": "library",
@@ -1360,8 +1334,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-menu": {
 	  "projectType": "library",
@@ -1388,8 +1361,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-models": {
 	  "projectType": "library",
@@ -1434,8 +1406,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-nav": {
 	  "projectType": "library",
@@ -1480,8 +1451,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-pages-home": {
 	  "projectType": "library",
@@ -1508,8 +1478,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-pages-my": {
 	  "projectType": "library",
@@ -1536,8 +1505,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-pages-signed-out": {
 	  "projectType": "library",
@@ -1564,8 +1532,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-pages-unsorted": {
 	  "projectType": "library",
@@ -1592,8 +1559,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-plugins": {
 	  "projectType": "library",
@@ -1635,8 +1601,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-project": {
 	  "projectType": "library",
@@ -1663,8 +1628,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-queries": {
 	  "projectType": "library",
@@ -1709,8 +1673,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-routes": {
 	  "projectType": "library",
@@ -1737,8 +1700,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-services-base": {
 	  "projectType": "library",
@@ -1783,8 +1745,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-services-nav": {
 	  "projectType": "library",
@@ -1823,8 +1784,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-services-project": {
 	  "projectType": "library",
@@ -1869,8 +1829,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-services-repo": {
 	  "projectType": "library",
@@ -1915,8 +1874,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datatug-services-unsorted": {
 	  "projectType": "library",
@@ -1961,8 +1919,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"datetime": {
 	  "projectType": "library",
@@ -1989,8 +1946,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"debtus": {
 	  "projectType": "application",
@@ -2186,8 +2142,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"debtus-e2e": {
 	  "root": "apps/debtus-e2e",
@@ -2218,7 +2173,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"debtus"
 	  ]
@@ -2313,8 +2267,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"emptyapp-e2e": {
 	  "root": "apps/emptyapp-e2e",
@@ -2343,7 +2296,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"emptyapp"
 	  ]
@@ -2533,8 +2485,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"emptyionicapp-e2e": {
 	  "root": "apps/emptyionicapp-e2e",
@@ -2567,7 +2518,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"emptyionicapp"
 	  ]
@@ -2766,8 +2716,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"family-e2e": {
 	  "root": "apps/family-e2e",
@@ -2798,7 +2747,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"family"
 	  ]
@@ -2846,8 +2794,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"issuenumberone": {
 	  "projectType": "application",
@@ -3034,8 +2981,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"issuenumberone-e2e": {
 	  "root": "apps/issuenumberone-e2e",
@@ -3068,7 +3014,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"issuenumberone"
 	  ]
@@ -3255,8 +3200,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"listus-e2e": {
 	  "root": "apps/listus-e2e",
@@ -3285,7 +3229,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"listus"
 	  ]
@@ -3377,8 +3320,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"rxstore": {
 	  "projectType": "library",
@@ -3423,8 +3365,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"scrumspace": {
 	  "projectType": "application",
@@ -3611,8 +3552,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"scrumspace-dailyscrum": {
 	  "projectType": "library",
@@ -3657,8 +3597,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"scrumspace-e2e": {
 	  "root": "apps/scrumspace-e2e",
@@ -3691,7 +3630,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"scrumspace"
 	  ]
@@ -3721,8 +3659,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"scrumspace-scrummodels": {
 	  "projectType": "library",
@@ -3767,8 +3704,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"sneat-app": {
 	  "projectType": "application",
@@ -3964,8 +3900,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"sneat-app-e2e": {
 	  "root": "apps/sneat-app-e2e",
@@ -3996,7 +3931,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"sneat-app"
 	  ]
@@ -4186,8 +4120,7 @@
 			}
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"sneat-team-e2e": {
 	  "root": "apps/sneat-team-e2e",
@@ -4216,7 +4149,6 @@
 		  }
 		}
 	  },
-	  "tags": [],
 	  "implicitDependencies": [
 		"sneat-team"
 	  ]
@@ -4264,8 +4196,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"team-models": {
 	  "projectType": "library",
@@ -4310,8 +4241,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"team-pages": {
 	  "projectType": "library",
@@ -4356,8 +4286,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"team-services": {
 	  "projectType": "library",
@@ -4402,8 +4331,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"timer": {
 	  "projectType": "library",
@@ -4430,8 +4358,7 @@
 			"passWithNoTests": true
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"ui": {
 	  "projectType": "library",
@@ -4476,8 +4403,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"user": {
 	  "projectType": "library",
@@ -4519,8 +4445,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	},
 	"wizard": {
 	  "projectType": "library",
@@ -4565,8 +4490,7 @@
 			]
 		  }
 		}
-	  },
-	  "tags": []
+	  }
 	}
   }
 }
