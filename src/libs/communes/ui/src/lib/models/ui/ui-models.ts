@@ -304,15 +304,16 @@ export class Commune implements ICommune {
 	}
 
 	public get membersCountByRole(): { role: string; count: number }[] {
-		if (!this._membersCountByRole) {
-			const byRole = this.numberOf.membersByRole;
-			if (!byRole) {
-				return [];
-			}
-			this._membersCountByRole = Object.entries(byRole)
-				.map(item => ({ role: item[0], count: item[1] as number }));
-		}
-		return this._membersCountByRole;
+		throw new Error('Not implemented yet - disabled');
+		// if (!this._membersCountByRole) {
+		// 	const byRole = this.numberOf.membersByRole;
+		// 	if (!byRole) {
+		// 		return [];
+		// 	}
+		// 	this._membersCountByRole = Object.entries(byRole)
+		// 		.map(item => ({ role: item[0], count: item[1] as number }));
+		// }
+		// return this._membersCountByRole;
 	}
 
 	public readonly totals: Totals;
