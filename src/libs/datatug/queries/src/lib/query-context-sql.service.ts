@@ -1,18 +1,14 @@
-import { Inject, Injectable } from "@angular/core";
-import {
-	IForeignKey,
-	ISqlQueryTarget,
-	ITableFull,
-} from "@sneat/datatug/models";
-import { BehaviorSubject } from "rxjs";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { Inject, Injectable } from '@angular/core';
+import { IForeignKey, ISqlQueryTarget, ITableFull } from '@sneat/datatug/models';
+import { BehaviorSubject } from 'rxjs';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAstQuery,
 	IAstRecordset,
 	IDbCatalogObjectWithRefs,
 	SqlParser,
 	TableService,
-} from "@sneat/datatug/services/unsorted";
+} from '@sneat/datatug/services/unsorted';
 
 const equalRecordsets = (a?: IAstRecordset, b?: IAstRecordset): boolean =>
 	(!a && !b) || a?.name === b?.name && a?.schema === b?.schema;
@@ -41,7 +37,7 @@ export class QueryContextSqlService {
 	}
 
 	private static getAutoAlias(name: string): string {
-		throw new Error("Not implemented yet");
+		throw new Error('Not implemented yet');
 	}
 
 	public setTarget(target: ISqlQueryTarget): void {
@@ -57,7 +53,7 @@ export class QueryContextSqlService {
 
 	public setSql(sql: string): IAstQuery {
 		if (!sql) {
-			throw new Error("sql is a required parameter");
+			throw new Error('sql is a required parameter');
 		}
 		this.sql = sql;
 		this.ast = this.sqlParser.parseQuery(sql);
@@ -135,7 +131,7 @@ export class QueryContextSqlService {
 	): void {
 		return this.updateSuggestedJoinFor(
 			table,
-			"refBy",
+			'refBy',
 			table.referencedBy ? table.referencedBy.map((refBy) => ({
 				rs: { schema: refBy.schema, name: refBy.name },
 			})) : [],
@@ -148,7 +144,7 @@ export class QueryContextSqlService {
 	): void {
 		return this.updateSuggestedJoinFor(
 			table,
-			"fk",
+			'fk',
 			table.foreignKeys && table.foreignKeys.map((fk) => ({
 				fk,
 				rs: { schema: fk.refTable.schema, name: fk.refTable.name },
@@ -182,7 +178,7 @@ export class QueryContextSqlService {
 				};
 				joins = joins.map((j) =>
 					sj && equalRecordsets(j.to?.recordset, to?.rs) ? sj : j,
-				)
+				);
 			} else {
 				joins.push({
 					to: { recordset: to.rs },
@@ -201,7 +197,7 @@ interface IJoinToRef {
 	fk?: IForeignKey;
 }
 
-export type JoinReason = "fk" | "refBy";
+export type JoinReason = 'fk' | 'refBy';
 
 export interface IJoinFrom {
 	reason: JoinReason;

@@ -9,4 +9,5 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 	declarations: [SqlEditorComponent],
 	exports: [SqlEditorComponent],
 })
-export class DatatugComponentsSqlEditorModule {}
+export class DatatugComponentsSqlEditorModule {
+}

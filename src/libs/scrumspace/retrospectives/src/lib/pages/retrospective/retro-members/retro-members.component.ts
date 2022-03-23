@@ -1,15 +1,9 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	SimpleChanges,
-} from "@angular/core";
-import { IMeetingMember } from "@sneat/meeting";
-import { IRecord } from "@sneat/data";
-import { ITeam, MemberRoleEnum } from "@sneat/team/models";
-import { IRetrospective } from "@sneat/scrumspace/scrummodels";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IMeetingMember } from '@sneat/meeting';
+import { IRecord } from '@sneat/data';
+import { ITeam, MemberRoleEnum } from '@sneat/team/models';
+import { IRetrospective } from '@sneat/scrumspace/scrummodels';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 interface IRetroCount {
 	title: string;
@@ -21,15 +15,15 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 }
 
 @Component({
-	selector: "sneat-retro-members",
-	templateUrl: "./retro-members.component.html",
-	styleUrls: ["./retro-members.component.scss"],
+	selector: 'sneat-retro-members',
+	templateUrl: './retro-members.component.html',
+	styleUrls: ['./retro-members.component.scss'],
 })
 export class RetroMembersComponent implements OnChanges {
 	@Input() team: IRecord<ITeam>;
 	@Input() retrospective: IRecord<IRetrospective>;
 
-	public membersTab: "participants" | "spectators" | "absent" = "participants";
+	public membersTab: 'participants' | 'spectators' | 'absent' = 'participants';
 
 	public participants: IMeetingMemberWithCounts[];
 	public spectators: IMeetingMemberWithCounts[];
@@ -43,7 +37,7 @@ export class RetroMembersComponent implements OnChanges {
 	public id = (_: number, member: IMeetingMember) => member.id;
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		console.log("ngOnChanges", this.team, this.retrospective);
+		console.log('ngOnChanges', this.team, this.retrospective);
 		try {
 			if (changes.retrospective) {
 				const retrospective = this.retrospective?.data;
@@ -72,7 +66,7 @@ export class RetroMembersComponent implements OnChanges {
 				}
 			}
 		} catch (e) {
-			this.errorLogger.logError(e, "Failed to process ngOnChanges event");
+			this.errorLogger.logError(e, 'Failed to process ngOnChanges event');
 		}
 	}
 }

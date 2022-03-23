@@ -1,11 +1,4 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,8 +7,8 @@ import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { ITeam } from '@sneat/team/models';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
-import { IScrum } from "@sneat/scrumspace/scrummodels";
-import { TeamNavService } from "@sneat/team/services";
+import { IScrum } from '@sneat/scrumspace/scrummodels';
+import { TeamNavService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-team-scrums',
@@ -35,8 +28,9 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly scrumService: ScrumService,
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService
-	) {}
+		public readonly navService: TeamNavService,
+	) {
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.team) {
@@ -63,7 +57,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 									this.errorLogger.logError(
 										err,
 										`failed to load scrum by id=${todayId}`,
-										{ feedback: false, show: false, report: true }
+										{ feedback: false, show: false, report: true },
 									),
 							});
 					} else {
@@ -79,7 +73,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	public goScrum(
 		date: 'today' | string,
 		tab?: 'team' | 'my',
-		event?: Event
+		event?: Event,
 	): void {
 		try {
 			console.log(`TeamPage.goScrum(${date}, tab=${tab})`);

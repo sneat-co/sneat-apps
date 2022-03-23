@@ -1,7 +1,8 @@
 import { IValueCheck, IValueCheckResult } from './interfaces';
 
 export class EnumValidCheck implements IValueCheck {
-	constructor(private readonly values: unknown[]) {}
+	constructor(private readonly values: unknown[]) {
+	}
 
 	checkValue(o: unknown): IValueCheckResult {
 		if (this.values.some((v) => v === o)) {

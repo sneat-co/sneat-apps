@@ -19,4 +19,5 @@ import { SneatCardListModule } from '@sneat/components';
 	],
 	declarations: [EnvironmentsPageComponent],
 })
-export class EnvironmentsPageModule {}
+export class EnvironmentsPageModule {
+}

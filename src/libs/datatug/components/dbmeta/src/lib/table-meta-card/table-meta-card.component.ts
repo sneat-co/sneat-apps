@@ -13,7 +13,7 @@ export class TableMetaCardComponent {
 
 	public colFk(c: IColumn): IForeignKey | undefined {
 		const fks = this.meta?.foreignKeys?.filter(
-			(fk) => fk.columns.indexOf(c.name) >= 0
+			(fk) => fk.columns.indexOf(c.name) >= 0,
 		);
 		return fks?.length === 1 ? fks[0] : undefined;
 	}

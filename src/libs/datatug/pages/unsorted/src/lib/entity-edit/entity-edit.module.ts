@@ -20,4 +20,5 @@ import { SneatErrorCardModule } from '@sneat/components';
 	],
 	declarations: [EntityEditPageComponent, EntityFieldDialogComponent],
 })
-export class EntityEditPageModule {}
+export class EntityEditPageModule {
+}

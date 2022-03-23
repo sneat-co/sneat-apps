@@ -4,4 +4,5 @@ import { CommonModule } from '@angular/common';
 @NgModule({
 	imports: [CommonModule],
 })
-export class ScrumspaceScrummodelsModule {}
+export class ScrumspaceScrummodelsModule {
+}

@@ -17,7 +17,7 @@ describe('CardListComponent', () => {
 			fixture = TestBed.createComponent(SneatCardListComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

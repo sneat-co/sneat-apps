@@ -1,19 +1,18 @@
-import { IStore } from "./store";
-import { IOptionallyTitled } from "../core";
-import { IEnvironmentFull } from "./environments";
-import { IDbModelFull } from "./dbmodels";
-import { IProjDbServerFull } from "./apis/database";
+import { IStore } from './store';
+import { IEnvironmentFull } from './environments';
+import { IDbModelFull } from './dbmodels';
+import { IProjDbServerFull } from './apis/database';
 
-export type ProjectAccess = "private" | "protected" | "public";
+export type ProjectAccess = 'private' | 'protected' | 'public';
 
 export enum ProjectItem {
-	agent = "agent",
-	dbModel = "dbModel",
-	environment = "environment",
-	entity = "entity",
-	Board = "board",
-	query = "board",
-	variable = "variable",
+	agent = 'agent',
+	dbModel = 'dbModel',
+	environment = 'environment',
+	entity = 'entity',
+	Board = 'board',
+	query = 'board',
+	variable = 'variable',
 }
 
 export type ProjectItemType = `${ProjectItem}`;
@@ -83,7 +82,7 @@ export interface IProjectApp {
 }
 
 export interface IApiDefinition {
-	type: "web" | "db";
+	type: 'web' | 'db';
 	id: string;
 	title?: string;
 	tags?: string[];

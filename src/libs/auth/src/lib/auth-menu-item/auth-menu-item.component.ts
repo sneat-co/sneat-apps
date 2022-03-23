@@ -1,11 +1,11 @@
-import { Component, Inject } from "@angular/core";
-import { ISneatAuthState, SneatAuthStateService } from "../sneat-auth-state-service";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { NavController } from "@ionic/angular";
+import { Component, Inject } from '@angular/core';
+import { ISneatAuthState, SneatAuthStateService } from '../sneat-auth-state-service';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { NavController } from '@ionic/angular';
 
 @Component({
-	selector: "sneat-auth-menu-item",
-	templateUrl: "./auth-menu-item.component.html",
+	selector: 'sneat-auth-menu-item',
+	templateUrl: './auth-menu-item.component.html',
 })
 export class AuthMenuItemComponent {
 
@@ -19,7 +19,7 @@ export class AuthMenuItemComponent {
 	) {
 		authStateService.authState.subscribe({
 			next: authState => this.authState = authState,
-			error: errorLogger.logErrorHandler("failed to get auth state"),
+			error: errorLogger.logErrorHandler('failed to get auth state'),
 		});
 	}
 
@@ -29,16 +29,16 @@ export class AuthMenuItemComponent {
 				.signOut()
 				.then(() => {
 					this.navCtrl
-						.navigateBack("/signed-out")
+						.navigateBack('/signed-out')
 						.catch(
 							this.errorLogger.logErrorHandler(
-								"Failed to navigate to signed out page",
+								'Failed to navigate to signed out page',
 							),
 						);
 				})
-				.catch(this.errorLogger.logErrorHandler("Failed to sign out"));
+				.catch(this.errorLogger.logErrorHandler('Failed to sign out'));
 		} catch (e) {
-			this.errorLogger.logError(e, "Failed to logout");
+			this.errorLogger.logError(e, 'Failed to logout');
 		}
 	}
 

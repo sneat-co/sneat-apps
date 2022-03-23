@@ -7,4 +7,5 @@ import { CommonModule } from '@angular/common';
 		// DatatugUserService,
 	],
 })
-export class DatatugServicesBaseModule {}
+export class DatatugServicesBaseModule {
+}

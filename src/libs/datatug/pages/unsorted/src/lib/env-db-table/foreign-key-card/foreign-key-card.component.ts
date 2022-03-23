@@ -1,22 +1,10 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IForeignKey, ITableFull } from '@sneat/datatug/models';
-import {
-	DatatugNavService,
-	IDbObjectNavParams,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavService, IDbObjectNavParams } from '@sneat/datatug/services/nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IGridDef } from '@sneat/grid';
 import { ProjectService } from '@sneat/datatug/services/project';
-import {
-	AgentService,
-	DatatugStoreService,
-} from '@sneat/datatug/services/repo';
+import { AgentService } from '@sneat/datatug/services/repo';
 import { ICommandResponseWithRecordset } from '@sneat/datatug/dto';
 
 @Component({
@@ -38,8 +26,9 @@ export class ForeignKeyCardComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly projectService: ProjectService,
 		private readonly datatugNavService: DatatugNavService,
-		private readonly agentService: AgentService
-	) {}
+		private readonly agentService: AgentService,
+	) {
+	}
 
 	public goTable(schema: string, name: string, event: Event): void {
 		event.preventDefault();

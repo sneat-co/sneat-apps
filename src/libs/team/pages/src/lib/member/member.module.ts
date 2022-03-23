@@ -12,4 +12,5 @@ import { MemberPageComponent } from './member.page';
 	imports: [CommonModule, FormsModule, IonicModule, MemberPageRoutingModule],
 	declarations: [MemberPageComponent],
 })
-export class MemberPageModule {}
+export class MemberPageModule {
+}

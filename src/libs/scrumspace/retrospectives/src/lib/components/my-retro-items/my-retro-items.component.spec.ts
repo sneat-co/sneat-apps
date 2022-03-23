@@ -26,7 +26,7 @@ describe('MyRetroItemsComponent', () => {
 			fixture = TestBed.createComponent(MyRetroItemsComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

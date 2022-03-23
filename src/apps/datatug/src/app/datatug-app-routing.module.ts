@@ -27,7 +27,7 @@ const routes: Routes = [
 		IonicModule,
 		DatatugRoutingModule,
 		RouterModule.forRoot(
-			routes
+			routes,
 			// {preloadingStrategy: PreloadAllModules},
 		),
 		SneatAuthRoutingModule,

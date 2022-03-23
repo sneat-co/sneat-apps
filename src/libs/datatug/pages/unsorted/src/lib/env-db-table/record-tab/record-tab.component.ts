@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./record-tab.component.scss'],
 })
 export class RecordTabComponent implements OnInit {
-	constructor() {}
+	constructor() {
+	}
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 }

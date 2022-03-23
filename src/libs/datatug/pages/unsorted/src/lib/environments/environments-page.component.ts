@@ -14,7 +14,7 @@ export class EnvironmentsPageComponent {
 
 	constructor(
 		readonly datatugNavContextService: DatatugNavContextService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		this.setProjSummary(history.state.projSummary as IProjectSummary);
 		if (!this.project) {

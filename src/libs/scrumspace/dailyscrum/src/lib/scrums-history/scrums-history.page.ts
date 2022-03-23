@@ -23,7 +23,7 @@ export class ScrumsHistoryPageComponent {
 		private readonly teamService: TeamService,
 		private readonly scrumService: ScrumService,
 		private readonly afAuth: AngularFireAuth,
-		private readonly navService: NavService
+		private readonly navService: NavService,
 	) {
 		const team = history.state?.team as IRecord<ITeam>;
 		console.log('team', team);

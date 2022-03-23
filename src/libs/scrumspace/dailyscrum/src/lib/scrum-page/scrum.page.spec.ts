@@ -29,7 +29,7 @@ describe('ScrumPage', () => {
 			fixture = TestBed.createComponent(ScrumPage);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

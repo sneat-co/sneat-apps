@@ -17,4 +17,5 @@ import { InvitePersonalPage } from './invite-personal.page';
 	],
 	declarations: [InvitePersonalPage],
 })
-export class InvitePersonalPageModule {}
+export class InvitePersonalPageModule {
+}

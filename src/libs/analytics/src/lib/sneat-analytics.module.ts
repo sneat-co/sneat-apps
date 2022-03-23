@@ -13,4 +13,5 @@ import { SneatLoggingModule } from '@sneat/logging';
 		},
 	],
 })
-export class SneatAnalyticsModule {}
+export class SneatAnalyticsModule {
+}

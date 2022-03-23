@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./ref-by-card.component.scss'],
 })
 export class RefByCardComponent implements OnInit {
-	constructor() {}
+	constructor() {
+	}
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 }

@@ -1,1 +1,2 @@
-export interface IScrumUser {}
+export interface IScrumUser {
+}

@@ -2,16 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {
-	ProjectContextService,
-	ProjectService,
-} from '@sneat/datatug/services/project';
-import {
-	IDbCatalogSummary,
-	IDbServer,
-	IDbServerSummary,
-	IProjDbServerSummary,
-} from '@sneat/datatug/models';
+import { ProjectContextService, ProjectService } from '@sneat/datatug/services/project';
+import { IDbCatalogSummary, IDbServer, IDbServerSummary, IProjDbServerSummary } from '@sneat/datatug/models';
 import { getStoreUrl } from '@sneat/api';
 import { GetServerDatabasesRequest } from '@sneat/datatug/dto';
 import { IProjectRef } from '@sneat/datatug/core';
@@ -21,8 +13,9 @@ export class DbServerService {
 	constructor(
 		private readonly http: HttpClient,
 		private readonly projectContextService: ProjectContextService,
-		private readonly projectService: ProjectService
-	) {}
+		private readonly projectService: ProjectService,
+	) {
+	}
 
 	public getDbServerSummary(dbServer: IDbServer): Observable<IDbServerSummary> {
 		const target = this.projectContextService?.current;
@@ -35,12 +28,12 @@ export class DbServerService {
 		};
 		return this.http.get<IDbServerSummary>(
 			`${getStoreUrl(target.storeId)}/dbserver-summary`,
-			{ params }
+			{ params },
 		);
 	}
 
 	public getServerDatabases(
-		request: GetServerDatabasesRequest
+		request: GetServerDatabasesRequest,
 	): Observable<IDbCatalogSummary[]> {
 		console.log('DbServerService.getDatabaseCatalogs()', request);
 		const target = this.projectContextService.current;
@@ -53,7 +46,7 @@ export class DbServerService {
 		};
 		return this.http.get<IDbCatalogSummary[]>(
 			`${getStoreUrl(target.storeId)}/dbserver-databases`,
-			{ params }
+			{ params },
 		);
 	}
 
@@ -66,7 +59,7 @@ export class DbServerService {
 		return this.http.post<IDbServerSummary>(
 			`${getStoreUrl(target.storeId)}/dbserver-add`,
 			undefined,
-			{ params }
+			{ params },
 		);
 	}
 
@@ -79,12 +72,12 @@ export class DbServerService {
 		const params: any = { proj: target.projectId, ...dbServer };
 		return this.http.delete<void>(
 			`${getStoreUrl(target.storeId)}/dbserver-delete`,
-			{ params }
+			{ params },
 		);
 	}
 
 	public getDbServers(
-		projectRef: IProjectRef
+		projectRef: IProjectRef,
 	): Observable<IProjDbServerSummary[]> {
 		console.log('getDbServers()', projectRef);
 		return this.projectService.getFull(projectRef).pipe(
@@ -92,8 +85,8 @@ export class DbServerService {
 				p.dbServers?.map((dbServerFull) => ({
 					dbServer: dbServerFull.dbServer,
 					databasesCount: dbServerFull.databases?.length || 0,
-				}))
-			)
+				})),
+			),
 		);
 	}
 }

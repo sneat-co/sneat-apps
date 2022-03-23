@@ -17,7 +17,7 @@ describe('VariablesPage', () => {
 			fixture = TestBed.createComponent(VariablesPage);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

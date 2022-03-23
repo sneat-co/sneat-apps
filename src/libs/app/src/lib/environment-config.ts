@@ -1,4 +1,4 @@
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from '@angular/core';
 
 export interface IFirebaseConfig {
 	useEmulators?: boolean;
@@ -23,4 +23,4 @@ export interface IEnvironmentConfig {
 	firebaseConfig: IFirebaseConfig;
 }
 
-export const EnvConfigToken = new InjectionToken("envConfig");
+export const EnvConfigToken = new InjectionToken('envConfig');

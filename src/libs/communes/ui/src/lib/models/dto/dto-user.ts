@@ -1,7 +1,8 @@
-import {CommuneType, CountryId} from '../types';
-import {MemberRelationship} from './dto-member';
-import {ITitledRecord} from './dto-models';
-import {ICommuneDto} from './dto-commune';
+import { CommuneType, CountryId } from '../types';
+import { MemberRelationship } from './dto-member';
+import { ITitledRecord } from './dto-models';
+import { ICommuneDto } from './dto-commune';
+
 // import {RxRecordKey} from '@sneat/rxstore';
 
 export interface IUserCommuneInfo {
@@ -18,7 +19,7 @@ export interface IUserCommuneInfo {
 }
 
 export function createUserCommuneInfoFromCommuneDto(communeDto: ICommuneDto, shortId?: string): IUserCommuneInfo {
-	return {id: communeDto.id, shortId, title: communeDto.title, type: communeDto.type};
+	return { id: communeDto.id, shortId, title: communeDto.title, type: communeDto.type };
 }
 
 export interface IUserDto extends ITitledRecord {
@@ -57,7 +58,7 @@ export class UserModel {
 	public static getCommuneInfoById(id: string, communes: readonly IUserCommuneInfo[]): IUserCommuneInfo | undefined {
 		const ci = communes && communes.find(c => c.shortId === id || c.id === id);
 		if (!ci && id === 'family') {
-			return {type: 'family', shortId: 'family', title: 'Family'};
+			return { type: 'family', shortId: 'family', title: 'Family' };
 		}
 		return ci;
 	}

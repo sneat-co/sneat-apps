@@ -17,7 +17,7 @@ describe('TabsWidgetComponent', () => {
 			fixture = TestBed.createComponent(TabsWidgetComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

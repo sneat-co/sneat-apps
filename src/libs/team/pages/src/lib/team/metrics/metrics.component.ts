@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeam, ITeamMetric } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
-import { TeamNavService, TeamService } from "@sneat/team/services";
+import { TeamNavService, TeamService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-team-metrics',
@@ -21,8 +21,9 @@ export class MetricsComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly teamService: TeamService,
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService
-	) {}
+		public readonly navService: TeamNavService,
+	) {
+	}
 
 	public get isDemoMetricsOnly(): boolean {
 		const metrics = this.team?.data?.metrics;
@@ -41,7 +42,7 @@ export class MetricsComponent {
 		this.deletingMetrics.push(...this.demoMetrics);
 		const complete = () =>
 			(this.deletingMetrics = this.deletingMetrics.filter(
-				(v) => this.demoMetrics.indexOf(v) < 0
+				(v) => this.demoMetrics.indexOf(v) < 0,
 			));
 		this.teamService.deleteMetrics(this.team.id, this.demoMetrics).subscribe({
 			complete,
@@ -61,12 +62,12 @@ export class MetricsComponent {
 			throw 'metric has no id';
 		}
 		if (!this.team) {
-			throw 'no team'
+			throw 'no team';
 		}
 		this.deletingMetrics.push(metric.id);
 		const complete = () =>
 			(this.deletingMetrics = this.deletingMetrics.filter(
-				(v) => v !== metric.id
+				(v) => v !== metric.id,
 			));
 		this.teamService.deleteMetrics(this.team.id, [metric.id]).subscribe({
 			error: (err) => {

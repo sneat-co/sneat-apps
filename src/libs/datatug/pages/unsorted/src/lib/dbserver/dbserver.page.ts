@@ -3,12 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	getDbServerFromId,
-	IDbCatalogSummary,
-	IDbServer,
-	IDbServerSummary,
-} from '@sneat/datatug/models';
+import { getDbServerFromId, IDbCatalogSummary, IDbServer, IDbServerSummary } from '@sneat/datatug/models';
 import { ProjectContextService } from '@sneat/datatug/services/project';
 import { DbServerService } from '@sneat/datatug/services/unsorted';
 
@@ -31,7 +26,7 @@ export class DbserverPage implements OnInit, OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly route: ActivatedRoute,
 		private readonly dbServerService: DbServerService,
-		private readonly projectContextService: ProjectContextService
+		private readonly projectContextService: ProjectContextService,
 	) {
 		this.route.paramMap
 			.pipe(
@@ -40,7 +35,7 @@ export class DbserverPage implements OnInit, OnDestroy {
 					const id = q.get('dbServerId');
 					const driver = q.get('dbDriver');
 					return getDbServerFromId(driver, id);
-				})
+				}),
 			)
 			.subscribe((dbServer) => {
 				this.dbServer = dbServer;
@@ -61,7 +56,8 @@ export class DbserverPage implements OnInit, OnDestroy {
 		this.destroyed.next();
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 
 	private loadData(): void {
 		this.loadSummary();
@@ -73,7 +69,7 @@ export class DbserverPage implements OnInit, OnDestroy {
 		this.dbServerService
 			.getDbServerSummary(this.dbServer)
 			.pipe(
-				takeUntil(this.destroyed)
+				takeUntil(this.destroyed),
 				// delay(1000),
 			)
 			.subscribe({
@@ -102,7 +98,7 @@ export class DbserverPage implements OnInit, OnDestroy {
 		this.dbServerService
 			.getServerDatabases({ dbServer: this.dbServer })
 			.pipe(
-				takeUntil(this.destroyed)
+				takeUntil(this.destroyed),
 				// delay(1000),
 			)
 			.subscribe({
@@ -122,7 +118,7 @@ export class DbserverPage implements OnInit, OnDestroy {
 		if (this.dbServerSummary && this.dbServerCatalogs) {
 			const { databases } = this.dbServerSummary;
 			this.dbServerCatalogs = this.dbServerCatalogs.filter(
-				(c) => !databases || !databases.some((db) => db.id === c.name)
+				(c) => !databases || !databases.some((db) => db.id === c.name),
 			);
 		}
 	}

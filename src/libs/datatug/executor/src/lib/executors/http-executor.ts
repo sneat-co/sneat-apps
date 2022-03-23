@@ -7,20 +7,21 @@ import {
 	ICommandHttpResponse,
 	ICommandResponse,
 	IExecuteRequest,
+	IExecuteResponse,
 	IHttpCommand,
 	IRequestCommand,
 } from '@sneat/datatug/dto';
-import { IExecuteResponse } from '@sneat/datatug/dto';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
-	constructor(private httpClient: HttpClient) {}
+	constructor(private httpClient: HttpClient) {
+	}
 
 	execute(
 		agentId: string,
-		request: IExecuteRequest
+		request: IExecuteRequest,
 	): Observable<IExecuteResponse> {
 		throw new Error('Not implemented yet'); // TODO: Needs implementation
 	}
@@ -28,7 +29,7 @@ export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 	executeCommand(command: IRequestCommand): Observable<ICommandResponse> {
 		if (command.type !== 'HTTP') {
 			return throwError(
-				() => `HttpExecutor does not support command type: ${command.type}`
+				() => `HttpExecutor does not support command type: ${command.type}`,
 			);
 		}
 		const httpCommand = command as unknown as IHttpCommand;
@@ -46,7 +47,7 @@ export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 					items: of(httpResponseItem),
 				};
 				return result;
-			})
+			}),
 		);
 	}
 }

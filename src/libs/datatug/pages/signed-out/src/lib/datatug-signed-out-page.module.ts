@@ -11,4 +11,5 @@ import { DatatugSignedOutPage } from './datatug-signed-out-page.component';
 	imports: [CommonModule, IonicModule, DatatugSignedOutPageRoutingModule],
 	declarations: [DatatugSignedOutPage],
 })
-export class DatatugSignedOutPageModule {}
+export class DatatugSignedOutPageModule {
+}

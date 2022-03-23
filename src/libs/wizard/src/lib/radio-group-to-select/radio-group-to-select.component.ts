@@ -1,10 +1,10 @@
-import { Component, forwardRef, Input } from "@angular/core";
-import { SelectOption } from "./select-options";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, forwardRef, Input } from '@angular/core';
+import { SelectOption } from './select-options';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-	selector: "sneat-radio-group-to-select",
-	templateUrl: "./radio-group-to-select.component.html",
+	selector: 'sneat-radio-group-to-select',
+	templateUrl: './radio-group-to-select.component.html',
 	providers: [{
 		provide: NG_VALUE_ACCESSOR,
 		useExisting: forwardRef(() => RadioGroupToSelectComponent),
@@ -19,7 +19,7 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
 	@Input() selectLabel?: string;
 	@Input() radioGroupLabel?: string;
 
-	@Input() slot: "start" | "end" = "start";
+	@Input() slot: 'start' | 'end' = 'start';
 
 	@Input() selectOptions?: SelectOption[];
 
@@ -32,9 +32,9 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
 	}
 
 	registerOnChange(fn: (v: any) => void): void {
-		console.log("registerOnChange", fn);
+		console.log('registerOnChange', fn);
 		this.onChange = (v: any) => {
-			console.log("changed", v, this.value);
+			console.log('changed', v, this.value);
 			fn(v);
 		};
 	}

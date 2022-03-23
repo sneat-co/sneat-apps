@@ -11,4 +11,5 @@ import { TableMetaCardComponent } from './table-meta-card.component';
 	exports: [TableMetaCardComponent],
 	imports: [IonicModule, FormsModule, CommonModule, RouterModule],
 })
-export class TableMetaCardModule {}
+export class TableMetaCardModule {
+}

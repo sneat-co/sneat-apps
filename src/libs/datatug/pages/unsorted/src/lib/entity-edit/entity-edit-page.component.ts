@@ -7,10 +7,7 @@ import { IEntity, IEntityFieldDef } from '@sneat/datatug/models';
 import { IProjectContext } from '@sneat/datatug/nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { EntityService } from '@sneat/datatug/services/unsorted';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavContextService, DatatugNavService } from '@sneat/datatug/services/nav';
 
 @Component({
 	selector: 'datatug-entity-edit',
@@ -32,7 +29,7 @@ export class EntityEditPageComponent implements OnDestroy {
 		private readonly navContextService: DatatugNavContextService,
 		private readonly entityService: EntityService,
 		private readonly datatugNavService: DatatugNavService,
-		private readonly popoverCtrl: PopoverController
+		private readonly popoverCtrl: PopoverController,
 	) {
 		try {
 			this.mode = !route.snapshot.paramMap.get('entityId') ? 'new' : 'edit';
@@ -56,7 +53,7 @@ export class EntityEditPageComponent implements OnDestroy {
 		} catch (e) {
 			this.error = this.errorLogger.logError(
 				e,
-				'Failed in EntityEditPage.constructor()'
+				'Failed in EntityEditPage.constructor()',
 			);
 		}
 	}
@@ -66,7 +63,7 @@ export class EntityEditPageComponent implements OnDestroy {
 			this.nameInput
 				.setFocus()
 				.catch((e) =>
-					this.errorLogger.logError(e, 'Failed to set focus to "name" input')
+					this.errorLogger.logError(e, 'Failed to set focus to "name" input'),
 				);
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process ionViewDidEnter');

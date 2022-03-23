@@ -1,25 +1,12 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	Inject,
-	OnDestroy,
-	OnInit,
-} from '@angular/core';
-import {
-	IMemberInfo,
-	IRecord,
-	IScrum,
-	IStatus,
-	ITimerState,
-	TaskType,
-} from '../../models/interfaces';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { IMemberInfo, IRecord, IScrum, IStatus, ITimerState, TaskType } from '../../models/interfaces';
 import { TeamService } from '../../services/team.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { UserService } from '../../services/user-service';
 import { Subscription } from 'rxjs';
 import { ScrumService } from '../../services/scrum.service';
 import { NavController } from '@ionic/angular';
-import { IErrorLogger, ErrorLogger } from '@sneat-team/ui-core';
+import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { NavService, ScrumPageTab } from '../../services/nav.service';
 import { AnalyticsService } from '../../services/analytics.service';
 import { Location } from '@angular/common';
@@ -39,8 +26,7 @@ import { getMeetingIdFromDate, getToday } from '../../services/meeting.service';
 })
 export class ScrumPage
 	extends BaseTeamPageDirective
-	implements OnInit, OnDestroy
-{
+	implements OnInit, OnDestroy {
 	public tab: ScrumPageTab = 'my';
 
 	public totalElapsed: string;
@@ -109,7 +95,7 @@ export class ScrumPage
 		private readonly analyticsService: AnalyticsService,
 		public readonly navService: NavService,
 		private readonly location: Location,
-		private readonly timerFactory: TimerFactory
+		private readonly timerFactory: TimerFactory,
 	) {
 		super(
 			changeDetectorRef,
@@ -118,7 +104,7 @@ export class ScrumPage
 			navController,
 			teamService,
 			teamContextService,
-			userService
+			userService,
 		);
 		this.trackTeamIdFromUrl();
 	}
@@ -164,7 +150,7 @@ export class ScrumPage
 			'showChanged(), tab:',
 			this.tab,
 			'location.hash:',
-			location.hash
+			location.hash,
 		);
 		// if (this.tab) {
 		// 	location.hash = '#tab=' + this.tab;
@@ -196,7 +182,7 @@ export class ScrumPage
 					(this.isToday && this.team?.data?.last?.scrum?.id);
 				if (!prevScrumId) {
 					this.errorLogger.logError(
-						`Attempted to go PREV non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumId})`
+						`Attempted to go PREV non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumId})`,
 					);
 					return;
 				}
@@ -206,7 +192,7 @@ export class ScrumPage
 			case 'next': {
 				if (!this.scrum?.scrumIds?.next) {
 					this.errorLogger.logError(
-						`Attempted to go NEXT non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumId})`
+						`Attempted to go NEXT non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumId})`,
 					);
 					return;
 				}
@@ -224,14 +210,14 @@ export class ScrumPage
 		console.log(
 			'location.replaceState',
 			window.location.search,
-			`date=${this.isToday ? 'today' : this.scrumId}&`
+			`date=${this.isToday ? 'today' : this.scrumId}&`,
 		);
 		this.location.replaceState(
 			path, // TODO(StackOverflow): do proper navigation
 			window.location.search.replace(
 				/date=.+?(&|$)/,
-				`date=${this.isToday ? 'today' : this.scrumId}&`
-			)
+				`date=${this.isToday ? 'today' : this.scrumId}&`,
+			),
 		);
 		console.log('changeDate =>', to, this.scrumDate);
 	}
@@ -265,7 +251,7 @@ export class ScrumPage
 			this.subscribeScrum(
 				this.team.id,
 				this.scrumId,
-				`subscribeTeam(this.scrumId=${this.scrumId})`
+				`subscribeTeam(this.scrumId=${this.scrumId})`,
 			);
 		}
 	}
@@ -285,7 +271,7 @@ export class ScrumPage
 		}
 		if (team.members) {
 			this.spectators = team.members.filter((m) =>
-				m.roles?.indexOf(MemberRoleEnum.spectator)
+				m.roles?.indexOf(MemberRoleEnum.spectator),
 			);
 			const uid = this.currentUserId;
 			const member = Object.values(team.members).find((m) => m.uid === uid);
@@ -342,7 +328,7 @@ export class ScrumPage
 	private scrumLoaded(id: string, scrum: IScrum, from: string): void {
 		console.log(
 			`${from}: scrumLoaded(${id}: currentScrumId=${this.scrumId}`,
-			scrum
+			scrum,
 		);
 		this.scrumsById[id] = scrum;
 		switch (id) {
@@ -385,7 +371,7 @@ export class ScrumPage
 				console.log(
 					// eslint-disable-next-line max-len
 					`loaded scrum(${id}) not related to current(${this.scrumId}) or previous(${this.prevScrumId}) or next(${this.nextScrumId}):`,
-					scrum
+					scrum,
 				);
 		}
 	}
@@ -399,7 +385,7 @@ export class ScrumPage
 			this.userService.userChanged
 				.pipe(
 					first(),
-					mergeMap(() => this.scrumService.watchScrum(teamId, scrumId))
+					mergeMap(() => this.scrumService.watchScrum(teamId, scrumId)),
 				)
 				.subscribe({
 					next: (scrum) =>
@@ -407,23 +393,23 @@ export class ScrumPage
 					error: (err) => {
 						this.errorLogger.logError(
 							err,
-							`failed to load scrum by id=${scrumId}`
+							`failed to load scrum by id=${scrumId}`,
 						);
 						this.navService.navigateToTeam(
 							this.team.id,
 							undefined,
 							this.team.data,
-							'back'
+							'back',
 						);
 					},
-				})
+				}),
 		);
 	}
 
 	private merge(
 		scrum: IScrum,
 		prevScrum: IScrum,
-		members: IMemberInfo[]
+		members: IMemberInfo[],
 	): void {
 		console.log(
 			'ScrumPage.merge(),\n\tscrum:',
@@ -431,7 +417,7 @@ export class ScrumPage
 			'\n\tprevScrum:',
 			prevScrum,
 			'\n\tmembers:',
-			members
+			members,
 		);
 		this.allStatuses = members
 			.filter((m) => m.roles?.indexOf(MemberRoleEnum.contributor) >= 0)
@@ -454,7 +440,7 @@ export class ScrumPage
 					},
 				};
 				const index = this.allStatuses.findIndex(
-					(v) => id && id === v.member.id
+					(v) => id && id === v.member.id,
 				);
 				console.log('item:', item);
 				if (index < 0) {
@@ -475,7 +461,7 @@ export class ScrumPage
 			Object.values(prevScrum.statuses).forEach((item) => {
 				const { id } = item.member;
 				const index = this.allStatuses.findIndex(
-					(v) => id && id === v.member.id
+					(v) => id && id === v.member.id,
 				);
 				if (index < 0) {
 					this.allStatuses.push({
@@ -507,7 +493,7 @@ export class ScrumPage
 			this.setHasRisks();
 			if (this.userMemberId) {
 				this.memberStatus = this.allStatuses.find(
-					(s) => s.member.id === this.userMemberId
+					(s) => s.member.id === this.userMemberId,
 				);
 			}
 		}
@@ -535,14 +521,14 @@ export class ScrumPage
 			console.log(
 				'ScrumPage.onTimerTicked() => elapsedSeconds:',
 				timerState?.elapsedSeconds,
-				timerState
+				timerState,
 			);
 			this.timerState = timerState;
 			this.totalElapsed = timerState && secondsToStr(timerState.elapsedSeconds);
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				'ScrumPage failed to process timer ticked event'
+				'ScrumPage failed to process timer ticked event',
 			);
 		}
 	};

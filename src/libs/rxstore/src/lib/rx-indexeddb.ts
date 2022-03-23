@@ -13,14 +13,14 @@ import {
 	RxReadonlyTransactionWorker,
 	RxReadwriteTransactionWorker,
 	RxTransaction,
-	SelectResult
+	SelectResult,
 } from './interfaces';
-import {from, Observable, of, ReplaySubject, Subject, throwError} from 'rxjs';
-import {IDBPDatabase, IDBPTransaction, openDB, OpenDBCallbacks} from 'idb';
-import {catchError, map, mergeMap, share, tap} from 'rxjs/operators';
-import {SyncBacklogKind} from './rx-sync-logger';
-import {EntityKind, IRecord, RxRecordKey, SpecificOrUnknownSchema} from './schema';
-import {ILogger, ILoggerFactory} from './logging';
+import { from, Observable, of, ReplaySubject, Subject, throwError } from 'rxjs';
+import { IDBPDatabase, IDBPTransaction, openDB, OpenDBCallbacks } from 'idb';
+import { catchError, map, mergeMap, share, tap } from 'rxjs/operators';
+import { SyncBacklogKind } from './rx-sync-logger';
+import { EntityKind, IRecord, RxRecordKey, SpecificOrUnknownSchema } from './schema';
+import { ILogger, ILoggerFactory } from './logging';
 
 let txId = 0;
 
@@ -52,7 +52,7 @@ abstract class IndexedDbRxTransaction<CustomSchema extends SpecificOrUnknownSche
 	protected objectStore<T extends IRecord>(name: EntityKind<CustomSchema>) {
 		if (this.kinds.indexOf(name) < 0) {
 			throw new Error(
-				`Requested to open object store ${name as string} but transaction was started just for this stores: ${this.kinds.join(', ')}`
+				`Requested to open object store ${name as string} but transaction was started just for this stores: ${this.kinds.join(', ')}`,
 			);
 		}
 		try {
@@ -112,7 +112,7 @@ class IndexedDbRxReadonlyTransaction<CustomSchema extends SpecificOrUnknownSchem
 		const index = this.objectStore<T>(kind)
 			.index(indexName);
 		const queryBySingleKey: (v: string) => Observable<SelectResult<T>> = v => (from(index.getAll(v)) as Observable<T[]>).pipe(
-			map(result => ({key: v, values: result})),
+			map(result => ({ key: v, values: result })),
 		);
 		if (Array.isArray(value) && !Array.isArray(field)) {
 			return from(value)
@@ -174,7 +174,7 @@ class IndexedDbRxReadwriteTransaction<CustomSchema extends SpecificOrUnknownSche
 				// tap(v => console.log(`IndexedDbRxTransaction.getById(${kind}, ${id}) =>`, v)),
 				tap(v => {
 					if (v) {
-						byKind[id] = {record: v};
+						byKind[id] = { record: v };
 					}
 				}),
 			);
@@ -187,9 +187,9 @@ class IndexedDbRxReadwriteTransaction<CustomSchema extends SpecificOrUnknownSche
 				const [kind, items] = entry;
 				Object.values(items)
 					.forEach(change => {
-						const {n, action, record} = change;
+						const { n, action, record } = change;
 						if (action && n) {
-							changes.push({n, kind, action, record});
+							changes.push({ n, kind, action, record });
 						}
 					});
 			});
@@ -214,7 +214,7 @@ class IndexedDbRxReadwriteTransaction<CustomSchema extends SpecificOrUnknownSche
 				entry.action = action;
 			}
 		} else {
-			byKind[record.id as string] = {n, record, action};
+			byKind[record.id as string] = { n, record, action };
 		}
 		this.logger.debug(`IndexedDbRxReadwriteTransaction.updateUncommitted(${kind as string}, ${record.id}, ${action})`, this.uncommitted);
 		return record;
@@ -230,7 +230,7 @@ class IndexedDbRxReadwriteTransaction<CustomSchema extends SpecificOrUnknownSche
 		}
 		this.validate(kind, record);
 		if (!record.v) {
-			record.v = {l: 1};
+			record.v = { l: 1 };
 		}
 		record.ts = new Date().toISOString();
 		return from(this.objectStore<T>(kind)
@@ -246,7 +246,7 @@ class IndexedDbRxReadwriteTransaction<CustomSchema extends SpecificOrUnknownSche
 	put<T extends IRecord>(kind: EntityKind<CustomSchema>, record: T): Observable<T> {
 		this.validate(kind, record);
 		if (!record.v) {
-			record.v = {l: 1};
+			record.v = { l: 1 };
 		} else if (!record.v.l) {
 			record.v.l = 1;
 		} else {
@@ -284,7 +284,7 @@ class IndexedDbRxReadwriteTransaction<CustomSchema extends SpecificOrUnknownSche
 					if (recordChange) {
 						recordChange.action = RxMutation.delete;
 					} else {
-						byKind[id] = {action: RxMutation.delete, record: {id}};
+						byKind[id] = { action: RxMutation.delete, record: { id } };
 					}
 					return id;
 				}),

@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { TeamPageContextComponent } from "./team-page-context.component";
-import { RouterModule } from "@angular/router";
-import { IonicModule } from "@ionic/angular";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TeamPageContextComponent } from './team-page-context.component';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 
 const exports: any[] = [TeamPageContextComponent];
 
@@ -10,10 +10,10 @@ const exports: any[] = [TeamPageContextComponent];
 	imports: [
 		CommonModule,
 		RouterModule,
-		IonicModule
+		IonicModule,
 	],
 	declarations: [...exports],
-	exports
+	exports,
 })
 export class TeamPageContextModule {
 }

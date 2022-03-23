@@ -1,21 +1,7 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	SimpleChanges,
-} from '@angular/core';
-import {
-	allUserStoresAsFlatList,
-	IDatatugStoreBriefWithId,
-	IDatatugUser,
-} from '@sneat/datatug/models';
+import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { allUserStoresAsFlatList, IDatatugStoreBriefWithId, IDatatugUser } from '@sneat/datatug/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavContextService, DatatugNavService } from '@sneat/datatug/services/nav';
 import { IDatatugStoreContext } from '@sneat/datatug/nav';
 import { parseStoreRef } from '@sneat/core';
 import { Subject } from 'rxjs';
@@ -40,20 +26,20 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
 		private readonly nav: DatatugNavService,
-		readonly datatugNavContextService: DatatugNavContextService
+		readonly datatugNavContextService: DatatugNavContextService,
 	) {
 		datatugNavContextService.currentStoreId
 			.pipe(
 				takeUntil(this.destroyed),
 				filter(
 					(id) =>
-						id !== this.currentStoreId && !(id === null && !this.currentStoreId)
-				)
+						id !== this.currentStoreId && !(id === null && !this.currentStoreId),
+				),
 			)
 			.subscribe((storeId) => {
 				console.log(
 					'MenuStoreSelectorComponent => external store change:',
-					storeId
+					storeId,
 				);
 				this.externalChange = true;
 				this.currentStoreId = storeId;
@@ -75,7 +61,7 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 		console.log(
 			'MenuStoreSelectorComponent.switchStore(event: CustomEvent)',
 			this.externalChange,
-			event
+			event,
 		);
 		if (this.externalChange) {
 			this.externalChange = false;

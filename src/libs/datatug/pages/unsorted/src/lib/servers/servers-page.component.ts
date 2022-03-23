@@ -27,7 +27,7 @@ export class ServersPageComponent implements OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalCtrl: ModalController,
 		private readonly navCtrl: NavController,
-		private readonly dbServerService: DbServerService
+		private readonly dbServerService: DbServerService,
 	) {
 		this.projectContextService.current$
 			.pipe(takeUntil(this.destroyed))
@@ -59,7 +59,7 @@ export class ServersPageComponent implements OnDestroy {
 				dbServer.dbServer.host,
 			])
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to DB server page')
+				this.errorLogger.logError(err, 'Failed to navigate to DB server page'),
 			);
 	}
 
@@ -78,7 +78,7 @@ export class ServersPageComponent implements OnDestroy {
 				delete this.isDeletingServer[id];
 				this.errorLogger.logError(
 					err,
-					'Failed to remove DB server from project'
+					'Failed to remove DB server from project',
 				);
 			},
 		});
@@ -102,15 +102,15 @@ export class ServersPageComponent implements OnDestroy {
 					.catch((err) =>
 						this.errorLogger.logError(
 							err,
-							'Failed to present AddDbServerComponent as modal'
-						)
+							'Failed to present AddDbServerComponent as modal',
+						),
 					);
 			})
 			.catch((err) =>
 				this.errorLogger.logError(
 					err,
-					'Failed to create a modal for AddDbServerComponent'
-				)
+					'Failed to create a modal for AddDbServerComponent',
+				),
 			);
 	}
 

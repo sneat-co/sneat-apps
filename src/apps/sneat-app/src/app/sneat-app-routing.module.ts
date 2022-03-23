@@ -1,14 +1,14 @@
-import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-import { RoutesToCommuneModule } from "@sneat/communes/ui";
-import { SneatAuthRoutingModule } from "@sneat/auth-ui";
-import { TeamRoutingModule } from "@sneat/team/pages";
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RoutesToCommuneModule } from '@sneat/communes/ui';
+import { SneatAuthRoutingModule } from '@sneat/auth-ui';
+import { TeamRoutingModule } from '@sneat/team/pages';
 
 const routes: Routes = [
 	{
-		path: "communes",
+		path: 'communes',
 		loadChildren: () =>
-			import("@sneat/communes/ui").then(m => m.CommunesRoutingModule),
+			import('@sneat/communes/ui').then(m => m.CommunesRoutingModule),
 	},
 	{
 		path: 'signed-out',
@@ -16,9 +16,9 @@ const routes: Routes = [
 		pathMatch: 'full',
 	},
 	{
-		path: "",
-		redirectTo: "communes",
-		pathMatch: "full",
+		path: '',
+		redirectTo: 'communes',
+		pathMatch: 'full',
 	},
 ];
 

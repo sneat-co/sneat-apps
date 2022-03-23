@@ -7,4 +7,5 @@ import { NgModule } from '@angular/core';
 		// ProjectContextService,
 	],
 })
-export class DatatugServicesProjectModule {}
+export class DatatugServicesProjectModule {
+}

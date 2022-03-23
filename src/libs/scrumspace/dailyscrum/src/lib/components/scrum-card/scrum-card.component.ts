@@ -1,19 +1,5 @@
-import {
-	Attribute,
-	Component,
-	EventEmitter,
-	Input,
-	Output,
-} from '@angular/core';
-import {
-	IMemberInfo,
-	IRecord,
-	IScrum,
-	IStatus,
-	ITask,
-	ITeam,
-	TaskType,
-} from '../../../models/interfaces';
+import { Attribute, Component, EventEmitter, Input, Output } from '@angular/core';
+import { IMemberInfo, IRecord, IScrum, IStatus, ITask, ITeam, TaskType } from '../../../models/interfaces';
 import { NavController } from '@ionic/angular';
 import { Md5 } from 'ts-md5/dist/md5';
 import { NavService } from '../../../services/nav.service';
@@ -53,8 +39,9 @@ export class ScrumCardComponent {
 		@Attribute('showMember') public showMember: boolean,
 		@Attribute('viewMode') public viewMode: 'single' | 'team',
 		private readonly navController: NavController,
-		private readonly navService: NavService
-	) {}
+		private readonly navService: NavService,
+	) {
+	}
 
 	expandCollapseMember(event: Event): void {
 		if (event) {

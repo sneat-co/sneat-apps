@@ -6,4 +6,5 @@ import { Coordinator } from './coordinator';
 	imports: [DatatugServicesStoreModule],
 	providers: [Coordinator],
 })
-export class DatatugExecutorModule {}
+export class DatatugExecutorModule {
+}

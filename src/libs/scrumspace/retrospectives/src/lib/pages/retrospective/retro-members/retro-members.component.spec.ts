@@ -17,7 +17,7 @@ describe('RetroMembersComponent', () => {
 			fixture = TestBed.createComponent(RetroMembersComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

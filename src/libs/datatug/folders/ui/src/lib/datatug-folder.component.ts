@@ -1,14 +1,7 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	SimpleChanges,
-} from "@angular/core";
-import { Observable, Subject, throwError } from "rxjs";
-import { IProjectRef } from "@sneat/datatug/core";
-import { takeUntil, tap } from "rxjs/operators";
+import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Observable, Subject, throwError } from 'rxjs';
+import { IProjectRef } from '@sneat/datatug/core';
+import { takeUntil, tap } from 'rxjs/operators';
 import {
 	folderItemsAsList,
 	IFolder,
@@ -16,23 +9,18 @@ import {
 	IProjItemBrief,
 	ProjectItem,
 	ProjectItemType,
-} from "@sneat/datatug/models";
-import { CreateNamedRequest } from "@sneat/datatug/dto";
-import { IRecord } from "@sneat/data";
-import { DatatugNavService } from "@sneat/datatug/services/nav";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import {
-	EntityService,
-	EnvironmentService,
-	SchemaService,
-} from "@sneat/datatug/services/unsorted";
-import { DatatugFoldersService } from "@sneat/datatug/folders/core";
-import { DatatugBoardService } from "@sneat/datatug/board/core";
-import { folder } from "ionicons/icons";
+} from '@sneat/datatug/models';
+import { CreateNamedRequest } from '@sneat/datatug/dto';
+import { IRecord } from '@sneat/data';
+import { DatatugNavService } from '@sneat/datatug/services/nav';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { EntityService, EnvironmentService, SchemaService } from '@sneat/datatug/services/unsorted';
+import { DatatugFoldersService } from '@sneat/datatug/folders/core';
+import { DatatugBoardService } from '@sneat/datatug/board/core';
 
 @Component({
-	selector: "datatug-folder",
-	templateUrl: "datatug-folder.component.html",
+	selector: 'datatug-folder',
+	templateUrl: 'datatug-folder.component.html',
 })
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -41,17 +29,17 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 	readonly Board: ProjectItemType = ProjectItem.Board;
 	readonly Query: ProjectItemType = ProjectItem.query;
 
-	tabs = ["boards", "queries", "environments", "entities"];
+	tabs = ['boards', 'queries', 'environments', 'entities'];
 
 	private destroyed = new Subject<void>();
 
 	boards?: IProjItemBrief[];
 	queries?: IProjItemBrief[];
 
-	@Input() path = "~";
+	@Input() path = '~';
 	@Input() projectRef?: IProjectRef;
 
-	tab: "boards" | "queries" | "environments" | "entities" = "boards";
+	tab: 'boards' | 'queries' | 'environments' | 'entities' = 'boards';
 
 	public folder?: IFolder | null;
 
@@ -93,7 +81,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 				this.boardService.createNewBoard,
 			);
 
-	public createQuery = (title: string) => alert("Not implemented yet.");
+	public createQuery = (title: string) => alert('Not implemented yet.');
 
 	public createEnvironment = (title: string) =>
 		this.createProjItem(
@@ -114,13 +102,13 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 		name: string,
 		create: (request: CreateNamedRequest) => Observable<IRecord<T>>,
 	): Observable<IRecord<T>> {
-		console.log("createProjItem()", projItemType, name);
+		console.log('createProjItem()', projItemType, name);
 		if (!this.projectRef) {
-			return throwError(() => "projectRef is not set");
+			return throwError(() => 'projectRef is not set');
 		}
 		return create({ projectRef: this.projectRef, name: name.trim() }).pipe(
 			tap((value) => {
-				console.log("project item created:", value);
+				console.log('project item created:', value);
 				try {
 					// if (!this.project.summary.environments) {
 					// 	this.project = {
@@ -132,7 +120,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 					// this.project.environments.push(projItemBrief)
 					this.goProjItemPage(projItemType, projItemBrief);
 				} catch (err) {
-					this.errorLogger.logError(err, "Failed to process API response");
+					this.errorLogger.logError(err, 'Failed to process API response');
 				}
 			}),
 			// catchError(err => {
@@ -146,13 +134,13 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 		page: ProjectItemType,
 		projItem: IProjItemBrief,
 	): void {
-		console.log("goProjItemPage()", page, projItem, this.projectRef);
+		console.log('goProjItemPage()', page, projItem, this.projectRef);
 		if (!this.projectRef) {
-			throw new Error("projectRef is not set");
+			throw new Error('projectRef is not set');
 		}
 		switch (page) {
 			case ProjectItem.environment:
-				page = "env" as ProjectItemType;
+				page = 'env' as ProjectItemType;
 				break;
 		}
 		this.datatugNavService.goProjPage({ ref: this.projectRef }, page, {
@@ -174,7 +162,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 								title: v.name,
 							}))
 							: [];
-						console.log("DatatugFolderComponent => folder:", folder);
+						console.log('DatatugFolderComponent => folder:', folder);
 					},
 				});
 		}

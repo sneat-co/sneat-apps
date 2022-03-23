@@ -9,12 +9,13 @@ import { ProjectItemService } from '@sneat/datatug/services/repo';
 export class QueriesService {
 	constructor(
 		@Inject(QUERY_PROJ_ITEM_SERVICE)
-		private readonly projItemService: ProjectItemService<IQueryDef>
-	) {}
+		private readonly projItemService: ProjectItemService<IQueryDef>,
+	) {
+	}
 
 	public getQueriesFolder(
 		projRef: IProjectRef,
-		folderPath: string
+		folderPath: string,
 	): Observable<IQueryFolder | null | undefined> {
 		// const v: IQueryDef[] = [{id: 'id1', type: 'SQL', title: 'Query 1', text: 'select  * from table1'}];
 		// return of(v);
@@ -28,7 +29,7 @@ export class QueriesService {
 	public createQueryFolder(
 		projRef: IProjectRef,
 		path: string,
-		id: string
+		id: string,
 	): Observable<IQueryFolder> {
 		return this.projItemService.createProjItem(
 			projRef,
@@ -36,20 +37,20 @@ export class QueriesService {
 				path,
 				id,
 			} as unknown as IQueryDef,
-			'folder'
+			'folder',
 		) as unknown as Observable<IQueryFolder>;
 	}
 
 	public createQuery(
 		projRef: IProjectRef,
-		query: IQueryDef
+		query: IQueryDef,
 	): Observable<IQueryDef> {
 		return this.projItemService.createProjItem(projRef, query);
 	}
 
 	public updateQuery(
 		projRef: IProjectRef,
-		query: IQueryDef
+		query: IQueryDef,
 	): Observable<IQueryDef> {
 		return this.projItemService.updateProjItem(projRef, query);
 	}
@@ -57,17 +58,17 @@ export class QueriesService {
 	public deleteQuery(
 		projRef: IProjectRef,
 		folder: string,
-		query: IQueryDef
+		query: IQueryDef,
 	): Observable<void> {
 		return this.projItemService.deleteProjItem(
 			projRef,
-			folder ? folder + '/' + query.id : query.id
+			folder ? folder + '/' + query.id : query.id,
 		);
 	}
 
 	public deleteQueryFolder(
 		projRef: IProjectRef,
-		path: string
+		path: string,
 	): Observable<void> {
 		return this.projItemService.deleteProjItem(projRef, path, 'folder');
 	}

@@ -7,14 +7,14 @@ export const datatugProjEnvDbRoutes: Routes = [
 		path: 'table/:' + routingParamTableType,
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvDbTablePageModule
+				(m) => m.EnvDbTablePageModule,
 			),
 	},
 	{
 		path: 'view/:' + routingParamTableType,
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvDbTablePageModule
+				(m) => m.EnvDbTablePageModule,
 			),
 	},
 ];
@@ -23,4 +23,5 @@ export const datatugProjEnvDbRoutes: Routes = [
 	imports: [RouterModule.forChild(datatugProjEnvDbRoutes)],
 	exports: [RouterModule],
 })
-export class DatatugRoutingProjDbCatalog {}
+export class DatatugRoutingProjDbCatalog {
+}

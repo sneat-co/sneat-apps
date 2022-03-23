@@ -4,4 +4,5 @@ import { Component } from '@angular/core';
 	selector: 'datatug-signed-out',
 	templateUrl: './datatug-signed-out-page.component.html',
 })
-export class DatatugSignedOutPage {}
+export class DatatugSignedOutPage {
+}

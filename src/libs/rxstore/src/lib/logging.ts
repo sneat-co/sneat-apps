@@ -1,10 +1,13 @@
 export interface ILogger {
 	// tslint:disable-next-line:no-any
 	debug(...v: any[]): void;
+
 	// tslint:disable-next-line:no-any
 	info(...v: any[]): void;
+
 	// tslint:disable-next-line:no-any
 	warn(...v: any[]): void;
+
 	// tslint:disable-next-line:no-any
 	error(...v: any[]): void;
 }
@@ -25,5 +28,5 @@ export const loggerFactory: ILoggerFactory = {
 			// tslint:disable-next-line:no-unbound-method
 			warn: console.warn,
 		};
-	}
+	},
 };

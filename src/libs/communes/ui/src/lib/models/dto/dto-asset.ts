@@ -1,7 +1,7 @@
-import {AssetCategoryId, CountryId, FuelType, LiabilityServiceType, VehicleType} from '../types';
-import {ICommuneRecord, IDemoRecord, ITitledRecord, ITotalsHolder} from './dto-models';
-import {IContact2Asset} from './dto-contact';
-import {RxRecordKey} from 'rxstore';
+import { AssetCategoryId, CountryId, FuelType, LiabilityServiceType, VehicleType } from '../types';
+import { ICommuneRecord, IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
+import { IContact2Asset } from './dto-contact';
+import { RxRecordKey } from 'rxstore';
 
 export interface AssetLiabilityInfo {
 	id: string;

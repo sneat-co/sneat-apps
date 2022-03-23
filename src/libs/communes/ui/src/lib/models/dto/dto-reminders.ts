@@ -1,4 +1,4 @@
-import {ITitledRecord} from './dto-models';
+import { ITitledRecord } from './dto-models';
 
 export interface DtoReminder extends ITitledRecord {
 	dueOn: string;

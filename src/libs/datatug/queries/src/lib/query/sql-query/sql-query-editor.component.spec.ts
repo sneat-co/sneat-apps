@@ -17,7 +17,7 @@ describe('SqlEditorPage', () => {
 			fixture = TestBed.createComponent(SqlQueryEditorComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

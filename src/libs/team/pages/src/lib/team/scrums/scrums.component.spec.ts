@@ -28,7 +28,7 @@ describe('ScrumsComponent', () => {
 			fixture = TestBed.createComponent(ScrumsComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

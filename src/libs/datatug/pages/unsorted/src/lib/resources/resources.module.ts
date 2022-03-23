@@ -12,4 +12,5 @@ import { ResourcesPage } from './resources.page';
 	imports: [CommonModule, FormsModule, IonicModule, ResourcesPageRoutingModule],
 	declarations: [ResourcesPage],
 })
-export class ResourcesPageModule {}
+export class ResourcesPageModule {
+}

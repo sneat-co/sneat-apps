@@ -5,7 +5,7 @@ import { IProjectRef } from '@sneat/datatug/core';
 @Injectable({ providedIn: 'root' })
 export class ProjectContextService {
 	private readonly $current = new BehaviorSubject<IProjectRef | undefined>(
-		undefined
+		undefined,
 	);
 	public readonly current$ = this.$current.asObservable();
 

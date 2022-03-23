@@ -1,12 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { merge, Observable, race, Subject, Subscription } from 'rxjs';
-import { skip, takeUntil, tap } from 'rxjs/operators';
+import { race, Subject, Subscription } from 'rxjs';
+import { skip, takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput, NavController, ViewWillEnter } from '@ionic/angular';
 import {
-	IDatatugProjectBriefWithIdAndStoreRef,
-	IOptionallyTitled,
 	IProjBoard,
 	IProjDbModelBrief,
 	IProjectSummary,
@@ -24,14 +22,8 @@ import {
 	ProjectTracker,
 } from '@sneat/datatug/services/nav';
 import { ProjectService } from '@sneat/datatug/services/project';
-import {
-	EntityService,
-	EnvironmentService,
-	SchemaService,
-} from '@sneat/datatug/services/unsorted';
+import { EntityService, EnvironmentService, SchemaService } from '@sneat/datatug/services/unsorted';
 import { IProjectRef } from '@sneat/datatug/core';
-import { CreateNamedRequest } from '@sneat/datatug/dto';
-import { IRecord } from '@sneat/data';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({
@@ -61,17 +53,17 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		private readonly schemaService: SchemaService,
 		private readonly environmentService: EnvironmentService,
 		private readonly entityService: EntityService,
-		private readonly navController: NavController
+		private readonly navController: NavController,
 	) {
 		console.log(
 			'ProjectPageComponent.constructor()',
-			route?.snapshot?.paramMap
+			route?.snapshot?.paramMap,
 		);
 		this.projectTracker = new ProjectTracker(this.destroyed, route);
 		this.projectTracker.projectRef.subscribe({
 			next: this.setProjRef,
 			error: this.errorLogger.logErrorHandler(
-				'Failed to get project ref for ProjectPageComponent'
+				'Failed to get project ref for ProjectPageComponent',
 			),
 		});
 	}
@@ -86,19 +78,19 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 				.watchProjectSummary(ref)
 				.pipe(
 					takeUntil(
-						race([this.projectTracker.projectRef.pipe(skip(1)), this.destroyed])
-					)
+						race([this.projectTracker.projectRef.pipe(skip(1)), this.destroyed]),
+					),
 				)
 				.subscribe({
 					next: (summary) => this.onProjectSummaryChanged(ref, summary),
 					error: this.errorLogger.logErrorHandler(
-						'Failed to load project summary for project page'
+						'Failed to load project summary for project page',
 					),
 				});
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				'Failed to set projectRef at ProjectPageComponent'
+				'Failed to set projectRef at ProjectPageComponent',
 			);
 		}
 	};
@@ -138,7 +130,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 		if (!this.project?.ref?.projectId) {
 			this.errorLogger.logError(
 				new Error('Can not navigate to project folder'),
-				'!this.projBrief.id'
+				'!this.projBrief.id',
 			);
 			return;
 		}
@@ -152,8 +144,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 			.catch((err) =>
 				this.errorLogger.logError(
 					err,
-					'Failed to navigate to project item page: ' + url
-				)
+					'Failed to navigate to project item page: ' + url,
+				),
 			);
 	}
 
@@ -185,12 +177,12 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	private onProjectSummaryChanged(
 		ref: IProjectRef,
-		summary: IProjectSummary
+		summary: IProjectSummary,
 	): void {
 		console.log(
 			'ProjectPageComponent.onProjectSummaryChanged():',
 			ref,
-			summary
+			summary,
 		);
 		if (!summary) {
 			return;
@@ -205,7 +197,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy, ViewWillEnter {
 
 	private goProjItemPage(
 		page: ProjectItemType,
-		projItem: IProjItemBrief
+		projItem: IProjItemBrief,
 	): void {
 		console.log('goProjItemPage()', page, projItem, this.project);
 		switch (page) {

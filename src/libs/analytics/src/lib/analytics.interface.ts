@@ -12,12 +12,12 @@ export interface IAnalyticsService {
 	logEvent(
 		eventName: string,
 		eventParams?: { [key: string]: any },
-		options?: IAnalyticsCallOptions
+		options?: IAnalyticsCallOptions,
 	): void;
 
 	setCurrentScreen(screenName: string, options?: IAnalyticsCallOptions): void;
 }
 
 export const AnalyticsService = new InjectionToken<IAnalyticsService>(
-	'IAnalyticsService'
+	'IAnalyticsService',
 );

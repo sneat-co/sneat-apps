@@ -17,4 +17,5 @@ import { DatatugServicesProjectModule } from '@sneat/datatug/services/project';
 	exports: [NewProjectFormComponent],
 	providers: [NewProjectService],
 })
-export class NewProjectFormModule {}
+export class NewProjectFormModule {
+}

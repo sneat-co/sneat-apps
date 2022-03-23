@@ -1,7 +1,7 @@
-import {IRxStoreProvider, RxMutation} from './interfaces';
-import {Injectable} from '@angular/core';
-import {filter} from 'rxjs/operators';
-import {SyncBacklogKind} from './rx-sync-logger';
+import { IRxStoreProvider, RxMutation } from './interfaces';
+import { Injectable } from '@angular/core';
+import { filter } from 'rxjs/operators';
+import { SyncBacklogKind } from './rx-sync-logger';
 
 @Injectable()
 export class RxSyncFirestorePusher {

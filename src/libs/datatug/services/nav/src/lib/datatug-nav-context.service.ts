@@ -1,36 +1,21 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
-import {
-	distinctUntilChanged,
-	distinctUntilKeyChanged,
-	filter,
-	first,
-	map,
-	shareReplay,
-	tap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, distinctUntilKeyChanged, filter, first, map, shareReplay, tap } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	ProjectContextService,
-	ProjectService,
-} from '@sneat/datatug/services/project';
-import { DatatugProjStoreType, IProjectSummary } from '@sneat/datatug/models';
+import { ProjectContextService, ProjectService } from '@sneat/datatug/services/project';
+import { IProjectSummary } from '@sneat/datatug/models';
 import { AppContextService, IProjectRef } from '@sneat/datatug/core';
 import { EnvironmentService } from '@sneat/datatug/services/unsorted';
 import {
 	IDatatugNavContext,
-	IProjectContext,
 	IEnvContext,
 	IEnvDbContext,
 	IEnvDbTableContext,
+	IProjectContext,
 	populateProjectBriefFromSummaryIfMissing,
 } from '@sneat/datatug/nav';
-import {
-	parseStoreRef,
-	STORE_ID_GITHUB_COM,
-	STORE_TYPE_GITHUB,
-} from '@sneat/core';
+import { parseStoreRef } from '@sneat/core';
 import { newRandomId } from '@sneat/random';
 
 const reStore = /\/store\/(.+?)($|\/)/,
@@ -38,24 +23,23 @@ const reStore = /\/store\/(.+?)($|\/)/,
 	reEnv = /\/env\/(.+?)(?:\/|$)/,
 	reEnvDb = /\/env\/\w+\/db\/(.+?)(?:\/|$)/,
 	reTable = /\/table\/(.+?)(?:\/|$)/;
+
 @Injectable({ providedIn: 'root' })
 export class DatatugNavContextService {
 	readonly id = newRandomId({ len: 5 });
 	private readonly $currentContext = new BehaviorSubject<IDatatugNavContext>(
-		{}
+		{},
 	);
 	public readonly currentContext = this.$currentContext.asObservable();
 
 	private readonly $currentStoreId = new BehaviorSubject<string | undefined>(
-		undefined
+		undefined,
 	);
 	public readonly currentStoreId = this.$currentStoreId
 		.asObservable()
 		.pipe(distinctUntilChanged());
 
-	private readonly $currentProj = new BehaviorSubject<
-		IProjectContext | undefined
-	>(undefined);
+	private readonly $currentProj = new BehaviorSubject<IProjectContext | undefined>(undefined);
 	public readonly currentProject = this.$currentProj
 		.asObservable()
 		.pipe(map(populateProjectBriefFromSummaryIfMissing), shareReplay(1));
@@ -67,18 +51,14 @@ export class DatatugNavContextService {
 	public readonly currentEnv = this.$currentEnv.asObservable().pipe(
 		distinctUntilChanged((x, y) => (!x && !y) || x?.id === y?.id),
 		tap((v) =>
-			console.log('DatatugNavContextService => currentEnv changed:', v?.id)
-		)
+			console.log('DatatugNavContextService => currentEnv changed:', v?.id),
+		),
 	);
 
-	private readonly $currentEnvDb = new BehaviorSubject<
-		IEnvDbContext | undefined
-	>(undefined);
+	private readonly $currentEnvDb = new BehaviorSubject<IEnvDbContext | undefined>(undefined);
 	public readonly currentEnvDb = this.$currentEnvDb.asObservable();
 
-	private readonly $currentEnvDbTable = new BehaviorSubject<
-		IEnvDbTableContext | undefined
-	>(undefined);
+	private readonly $currentEnvDbTable = new BehaviorSubject<IEnvDbTableContext | undefined>(undefined);
 	public readonly currentEnvDbTable = this.$currentEnvDbTable.asObservable();
 
 	private navEndSubscription: Subscription;
@@ -89,7 +69,7 @@ export class DatatugNavContextService {
 		private readonly router: Router,
 		private readonly projectService: ProjectService,
 		private readonly envService: EnvironmentService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		console.log('DatatugNavContextService.constructor(), id=', this.id);
 		this.currentProject.subscribe({
@@ -103,7 +83,7 @@ export class DatatugNavContextService {
 				}
 			},
 			error: this.errorLogger.logErrorHandler(
-				'DatatugNavContextService failed to retrieve current project'
+				'DatatugNavContextService failed to retrieve current project',
 			),
 		});
 		this.navEndSubscription = appContext.currentApp
@@ -120,14 +100,14 @@ export class DatatugNavContextService {
 				}
 				console.log(
 					'DatatugNavContextService.constructor() => app:',
-					app.appCode
+					app.appCode,
 				);
 				this.processUrl(location.href);
 				this.navEndSubscription = this.router.events
 					.pipe(
 						filter((val) => val instanceof NavigationEnd),
 						map((val) => val as NavigationEnd),
-						distinctUntilKeyChanged('urlAfterRedirects')
+						distinctUntilKeyChanged('urlAfterRedirects'),
 					)
 					.subscribe({
 						next: (val) => {
@@ -144,7 +124,7 @@ export class DatatugNavContextService {
 		// console.log('DatatugNavContextService.setCurrentProject()', projectContext);
 		if (projectContext?.summary && !projectContext.summary.id) {
 			this.errorLogger.logError(
-				new Error('attempt to set current project with no ID')
+				new Error('attempt to set current project with no ID'),
 			);
 			return;
 		}
@@ -170,7 +150,7 @@ export class DatatugNavContextService {
 					this.errorLogger.logError(
 						err,
 						'Navigation context failed to get project summary',
-						{ show: false }
+						{ show: false },
 					),
 			});
 		}
@@ -178,7 +158,7 @@ export class DatatugNavContextService {
 
 	private onProjectSummaryChanged(
 		projRef: IProjectRef,
-		summary: IProjectSummary
+		summary: IProjectSummary,
 	): void {
 		if (!summary) {
 			// this.errorLogger.logError(new Error('Returned empty project summary'),
@@ -203,7 +183,7 @@ export class DatatugNavContextService {
 		const envContext: IEnvContext = id && {
 			id,
 			brief: this.$currentProj.value?.summary?.environments.find(
-				(env) => env.id === id
+				(env) => env.id === id,
 			),
 		};
 
@@ -212,7 +192,7 @@ export class DatatugNavContextService {
 				next: (envSummary) => {
 					if (!envSummary) {
 						this.errorLogger.logError(
-							'API returned nothing for environmentId=' + id
+							'API returned nothing for environmentId=' + id,
 						);
 						return;
 					}
@@ -347,7 +327,7 @@ export class DatatugNavContextService {
 						} catch (e) {
 							this.errorLogger.logError(
 								e,
-								'Failed to process project to get table meta'
+								'Failed to process project to get table meta',
 							);
 						}
 					},

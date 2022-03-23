@@ -1,10 +1,10 @@
 import {
+	IDatatugStoreBrief,
+	IEnvironmentSummary,
 	IProjectBrief,
 	IProjectSummary,
-	IEnvironmentSummary,
 	IProjEnv,
 	ITableFull,
-	IDatatugStoreBrief,
 } from '@sneat/datatug/models';
 import { IProjectRef } from '@sneat/datatug/core';
 import { IStoreRef, parseStoreRef } from '@sneat/core';
@@ -23,7 +23,7 @@ export interface IProjectContext {
 
 export function newProjectBriefFromSummary(
 	summary: IProjectSummary,
-	brief?: IProjectBrief
+	brief?: IProjectBrief,
 ): IProjectBrief {
 	return {
 		...(brief || {}),
@@ -34,7 +34,7 @@ export function newProjectBriefFromSummary(
 }
 
 export function populateProjectBriefFromSummaryIfMissing(
-	p: IProjectContext
+	p: IProjectContext,
 ): IProjectContext {
 	if (p?.summary && !p.brief) {
 		p = { ...p, brief: newProjectBriefFromSummary(p.summary) };

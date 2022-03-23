@@ -1,8 +1,5 @@
 import { Component, Inject, Input, OnDestroy } from '@angular/core';
-import {
-	IAddRetroItemRequest,
-	RetrospectiveService,
-} from '../../retrospective.service';
+import { IAddRetroItemRequest, RetrospectiveService } from '../../retrospective.service';
 import { FormControl, Validators } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { takeUntil } from 'rxjs/operators';
@@ -24,8 +21,9 @@ export class AddRetroItemComponent implements OnDestroy {
 
 	constructor(
 		private retrospectiveService: RetrospectiveService,
-		@Inject(ErrorLogger) private errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
+	) {
+	}
 
 	ngOnDestroy() {
 		this.destroyed.next(true);
@@ -57,7 +55,7 @@ export class AddRetroItemComponent implements OnDestroy {
 				next: (response) => {
 					console.log(
 						'retrospectiveService.addRetroItem() => response:',
-						response
+						response,
 					);
 					this.isAdding = false;
 				},

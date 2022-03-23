@@ -22,4 +22,5 @@ import { CommonModule } from '@angular/common';
 		TimerMemberButtonComponent,
 	],
 })
-export class TimerModule {}
+export class TimerModule {
+}

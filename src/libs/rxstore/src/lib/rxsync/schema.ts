@@ -1,5 +1,5 @@
-import {Schema} from '../schema';
-import { IRxMutation } from "./interfaces";
+import { Schema } from '../schema';
+import { IRxMutation } from './interfaces';
 
 const RxMutationKind = '$mutation';
 

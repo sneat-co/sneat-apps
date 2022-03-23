@@ -17,7 +17,7 @@ describe('MetricsComponent', () => {
 			fixture = TestBed.createComponent(MetricsComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

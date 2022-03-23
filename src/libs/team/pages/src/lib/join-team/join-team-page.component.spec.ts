@@ -29,7 +29,7 @@ describe('JoinTeamPage', () => {
 			fixture = TestBed.createComponent(JoinTeamPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

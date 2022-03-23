@@ -17,7 +17,7 @@ describe('TimerMeetingButtonComponent', () => {
 			fixture = TestBed.createComponent(TimerMeetingButtonComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

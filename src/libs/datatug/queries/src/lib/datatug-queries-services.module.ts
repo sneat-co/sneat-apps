@@ -28,13 +28,13 @@ import { DatatugServicesUnsortedModule } from '@sneat/datatug/services/unsorted'
 			useFactory: (
 				db: AngularFirestore,
 				projectItemServiceFactory: ProjectItemServiceFactory,
-				repoProvider: StoreApiService
+				repoProvider: StoreApiService,
 			) =>
 				projectItemServiceFactory.newProjectItemService(
 					db,
 					repoProvider,
 					'queries',
-					'query'
+					'query',
 				),
 		},
 		QueriesService,
@@ -43,4 +43,5 @@ import { DatatugServicesUnsortedModule } from '@sneat/datatug/services/unsorted'
 		QueriesUiService,
 	],
 })
-export class DatatugQueriesServicesModule {}
+export class DatatugQueriesServicesModule {
+}

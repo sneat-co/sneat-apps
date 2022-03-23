@@ -1,6 +1,6 @@
 type Portion = [
-	'year' | 'day' | 'hour' | 'minute' | 'second',
-	'min' | 'sec' | undefined,
+		'year' | 'day' | 'hour' | 'minute' | 'second',
+		'min' | 'sec' | undefined,
 	(seconds: number) => number
 ];
 
@@ -27,7 +27,7 @@ export const secondsToStr = (s: number): string | undefined => {
 				v[2] +
 				' ' +
 				(a.length === 1 || !v[1] ? v[0] : v[1]) +
-				(v[2] === 1 ? '' : 's')
+				(v[2] === 1 ? '' : 's'),
 		)
 		.join(' ');
 };

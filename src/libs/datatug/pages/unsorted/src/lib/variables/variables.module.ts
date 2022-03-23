@@ -12,4 +12,5 @@ import { VariablesPage } from './variables.page';
 	imports: [CommonModule, FormsModule, IonicModule, VariablesPageRoutingModule],
 	declarations: [VariablesPage],
 })
-export class VariablesPageModule {}
+export class VariablesPageModule {
+}

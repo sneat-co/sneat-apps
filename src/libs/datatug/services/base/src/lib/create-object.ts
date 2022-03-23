@@ -8,7 +8,7 @@ interface PostService {
 }
 
 const validateCreateNamedRequest = (
-	request: CreateNamedRequest
+	request: CreateNamedRequest,
 ): Observable<never> | undefined => {
 	if (!request.projectRef) {
 		return throwError(() => 'projectRef is a required parameter');
@@ -19,10 +19,8 @@ const validateCreateNamedRequest = (
 	return undefined;
 };
 
-export function createProjItem<
-	T extends IProjItemBrief,
-	R extends CreateNamedRequest = CreateNamedRequest
->(api: PostService, endpoint: string, payload: R): Observable<IRecord<T>> {
+export function createProjItem<T extends IProjItemBrief,
+	R extends CreateNamedRequest = CreateNamedRequest>(api: PostService, endpoint: string, payload: R): Observable<IRecord<T>> {
 	console.log('createObject', endpoint, payload);
 	return validateCreateNamedRequest(payload) || api.post(endpoint, payload);
 }

@@ -1,4 +1,4 @@
-import {IRecord} from '../schema';
+import { IRecord } from '../schema';
 
 // tslint:disable-next-line:no-any
 export interface IRxMutation<T = any> extends IRecord {

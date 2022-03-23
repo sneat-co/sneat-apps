@@ -1,17 +1,5 @@
-import {
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
-import {
-	IParameter,
-	IParameterDef,
-	IParamWithDefAndValue,
-	ParameterValue,
-} from '@sneat/datatug/models';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { IParameter, IParameterDef, IParamWithDefAndValue, ParameterValue } from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-input-parameters',
@@ -28,7 +16,7 @@ export class InputParametersComponent implements OnChanges {
 	public readonly paramValues = new EventEmitter<IParameter[]>();
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes["paramDefs"]) {
+		if (changes['paramDefs']) {
 			this.parameters = this.paramDefs?.map((def) => ({
 				def,
 				val: this.parameters?.find((p) => p.def.id === def.id)?.val,
@@ -46,7 +34,7 @@ export class InputParametersComponent implements OnChanges {
 
 	public onParamChanged(
 		event: Event,
-		parameter: IParamWithDefAndValue
+		parameter: IParamWithDefAndValue,
 	): void {
 		const { value } = (event as CustomEvent).detail;
 		console.log('omParamChanged:', value, parameter);
@@ -70,7 +58,7 @@ export class InputParametersComponent implements OnChanges {
 					value: pVal,
 				};
 				return param;
-			})
+			}),
 		);
 	}
 }

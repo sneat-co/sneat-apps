@@ -1,15 +1,9 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import { ITeam, MemberRole, MemberRoleEnum } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
-import { TeamNavService, TeamService } from "@sneat/team/services";
+import { TeamNavService, TeamService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-team-members',
@@ -27,8 +21,9 @@ export class MembersComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly teamService: TeamService,
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService
-	) {}
+		public readonly navService: TeamNavService,
+	) {
+	}
 
 	public goAddMember(event?: Event): void {
 		if (event) {

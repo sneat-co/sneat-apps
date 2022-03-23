@@ -42,7 +42,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 		readonly userService: SneatUserService,
 		private readonly navService: TeamNavService,
 		private readonly navController: NavController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		this.subscription = userService.userChanged.subscribe((uid) => {
 			this.currentUserId = uid;
@@ -68,7 +68,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 		}
 		if (!this.teamId) {
 			this.errorLogger.logError(
-				'Not able to navigate to team member is teamId is now known'
+				'Not able to navigate to team member is teamId is now known',
 			);
 			return;
 		}
@@ -85,8 +85,8 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 				.catch((err) =>
 					this.errorLogger.logError(
 						err,
-						'Failed to copy invite URL to clipboard'
-					)
+						'Failed to copy invite URL to clipboard',
+					),
 				);
 		}
 	}

@@ -8,21 +8,16 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	AuthStatuses,
-	ILoginEventsHandler,
-	ISneatAuthState,
-	LoginEventsHandler,
-} from '@sneat/auth';
+import { AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler } from '@sneat/auth';
 import { SneatTeamApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
+import { SneatUserService } from '@sneat/user';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import OAuthProvider = firebase.auth.OAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import GithubAuthProvider = firebase.auth.GithubAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 import UserCredential = firebase.auth.UserCredential;
-import { SneatUserService } from '@sneat/user';
 
 type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
 
@@ -61,7 +56,7 @@ export class LoginPageComponent {
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		// private readonly toastController: ToastController,
-		private readonly sneatTeamApiService: SneatTeamApiService
+		private readonly sneatTeamApiService: SneatTeamApiService,
 	) {
 		this.email = localStorage.getItem('emailForSignIn') || '';
 		if (this.email) {
@@ -119,7 +114,7 @@ export class LoginPageComponent {
 			default:
 				this.errorLogger.logError(
 					'Coding error',
-					'Unknown or unsupported auth provider: ' + provider
+					'Unknown or unsupported auth provider: ' + provider,
 				);
 				return;
 		}
@@ -134,8 +129,8 @@ export class LoginPageComponent {
 				this.handleError(
 					'Failed to sign in with: ' + provider,
 					'FailedToSignInWith',
-					{ authProvider: provider }
-				)
+					{ authProvider: provider },
+				),
 			);
 	}
 
@@ -156,7 +151,7 @@ export class LoginPageComponent {
 					userCredential.user?.sendEmailVerification().catch((err) => {
 						errorLoggerService.logError(
 							err,
-							'Failed to send verification email'
+							'Failed to send verification email',
 						);
 					});
 				});
@@ -178,15 +173,15 @@ export class LoginPageComponent {
 					.catch(
 						this.handleError(
 							'Failed to get Firebase ID token',
-							'FirebaseGetIdTokenFailed'
-						)
+							'FirebaseGetIdTokenFailed',
+						),
 					);
 			})
 			.catch(
 				this.handleError(
 					'Failed to sign up with email',
-					'FailedToSignUpWithEmail'
-				)
+					'FailedToSignUpWithEmail',
+				),
 			);
 	}
 
@@ -211,7 +206,7 @@ export class LoginPageComponent {
 				this.onLoggedIn(userCredential);
 			})
 			.catch(
-				this.handleError('Failed to sign in with email & password', 'email')
+				this.handleError('Failed to sign in with email & password', 'email'),
 			);
 	}
 
@@ -228,8 +223,8 @@ export class LoginPageComponent {
 			.catch(
 				this.handleError(
 					'Failed to send sign in link to email',
-					'FailedToSendSignInLinkToEmail'
-				)
+					'FailedToSendSignInLinkToEmail',
+				),
 			);
 	}
 
@@ -248,8 +243,8 @@ export class LoginPageComponent {
 			.catch(
 				this.handleError(
 					'Failed to send password reset email',
-					'FailedToSendPasswordResetEmail'
-				)
+					'FailedToSendPasswordResetEmail',
+				),
 			);
 	}
 
@@ -279,15 +274,15 @@ export class LoginPageComponent {
 			.navigateRoot(redirectTo)
 			.catch(
 				this.errorLogger.logErrorHandler(
-					'Failed to navigate back to ' + redirectTo
-				)
+					'Failed to navigate back to ' + redirectTo,
+				),
 			);
 	}
 
 	private handleError(
 		m: string,
 		eventName?: string,
-		eventParams?: { [key: string]: string }
+		eventParams?: { [key: string]: string },
 	): (err: any) => void {
 		return (err) => {
 			if (eventName) {

@@ -1,6 +1,6 @@
-import {Observable, of, throwError} from 'rxjs';
-import {filter, first, mapTo, mergeMap, share, shareReplay} from 'rxjs/operators';
-import {EntityKind, IRecord, Schema, RxRecordKey} from './schema';
+import { Observable, of, throwError } from 'rxjs';
+import { filter, first, mapTo, mergeMap, share, shareReplay } from 'rxjs/operators';
+import { EntityKind, IRecord, RxRecordKey, Schema } from './schema';
 import {
 	IRecordChange,
 	IRxReadonlyTransaction,
@@ -9,7 +9,7 @@ import {
 	IRxStoreProvider,
 	RxReadonlyTransactionWorker,
 	RxReadwriteTransactionWorker,
-	SelectResult
+	SelectResult,
 } from './interfaces';
 
 export abstract class RxStoreService<CustomSchema extends Schema> {

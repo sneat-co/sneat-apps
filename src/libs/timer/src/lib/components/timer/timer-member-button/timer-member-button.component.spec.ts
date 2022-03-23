@@ -17,7 +17,7 @@ describe('TimerMemberButtonComponent', () => {
 			fixture = TestBed.createComponent(TimerMemberButtonComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

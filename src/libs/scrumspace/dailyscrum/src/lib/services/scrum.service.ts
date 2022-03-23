@@ -16,20 +16,22 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import {
 	IAddCommentRequest,
-	IAddTaskRequest, IReorderTaskRequest,
+	IAddTaskRequest,
+	IReorderTaskRequest,
 	IScrum,
-	IStatus, ITask,
+	IStatus,
+	ITask,
 	IThumbUpRequest,
-	TaskType
-} from "@sneat/scrumspace/scrummodels";
+	TaskType,
+} from '@sneat/scrumspace/scrummodels';
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/user';
-import firebase from "firebase/compat";
+import firebase from 'firebase/compat';
 import FieldPath = firebase.firestore.FieldPath;
 
 const getOrCreateMemberStatus = (
 	scrum: IScrum,
-	member: IMemberInfo
+	member: IMemberInfo,
 ): IStatus => {
 	const mid = member.id;
 	const statusOfMember = (item: IStatus) => mid && item.member.id === mid;
@@ -64,7 +66,7 @@ export class ScrumService extends BaseMeetingService {
 		private readonly userService: SneatUserService,
 		private readonly db: AngularFirestore,
 		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService
+		private readonly analyticsService: IAnalyticsService,
 	) {
 		super('scrum', sneatTeamApiService);
 	}
@@ -89,7 +91,7 @@ export class ScrumService extends BaseMeetingService {
 						data: d.data() as IScrum,
 					};
 				});
-			})
+			}),
 		);
 	}
 
@@ -101,7 +103,7 @@ export class ScrumService extends BaseMeetingService {
 				console.log('scrum changes:', changes);
 			}),
 			filter((changes) => changes.type === 'value'),
-			map((changes) => changes.payload.data() as IScrum)
+			map((changes) => changes.payload.data() as IScrum),
 		);
 	}
 
@@ -110,7 +112,7 @@ export class ScrumService extends BaseMeetingService {
 		scrumId: string,
 		member: IMemberInfo,
 		type: TaskType,
-		id: string
+		id: string,
 	): Observable<void> {
 		console.log('deleteTask', team, scrumId, member, type, id);
 		const params = new HttpParams()
@@ -160,7 +162,7 @@ export class ScrumService extends BaseMeetingService {
 		scrumId: string,
 		member: IMemberInfo,
 		taskId: string,
-		isCompleted: boolean
+		isCompleted: boolean,
 	): Observable<IStatus> {
 		let memberStatus: IStatus;
 		return this.updateStatus(teamId, scrumId, member, (scrum, status) => {
@@ -197,7 +199,7 @@ export class ScrumService extends BaseMeetingService {
 				}
 				this.analyticsService.logEvent('taskCompletionChanged', eventParams);
 			}),
-			map(() => memberStatus)
+			map(() => memberStatus),
 		);
 	}
 
@@ -206,7 +208,7 @@ export class ScrumService extends BaseMeetingService {
 		scrumId: string,
 		member: IMemberInfo,
 		type: TaskType,
-		title: string
+		title: string,
 	): Observable<ITaskWithUiStatus> {
 		const task: ITaskWithUiStatus = {
 			id: this.randomIdService.newRandomId({ len: 9 }),
@@ -245,7 +247,7 @@ export class ScrumService extends BaseMeetingService {
 
 	private getScrumDoc(
 		teamId: string,
-		scrumId: string
+		scrumId: string,
 	): AngularFirestoreDocument<IScrum> {
 		return this.scrumsCollection(teamId).doc(scrumId);
 	}
@@ -257,7 +259,7 @@ export class ScrumService extends BaseMeetingService {
 		// TODO: Invalid eslint-disable-next-line no-shadow - lambda definition should not cause shadowing.
 		// https://github.com/sneat-team/sneat-team-pwa/issues/381
 		// eslint-disable-next-line no-shadow
-		worker: (scrum: IScrum, status: IStatus) => IScrum
+		worker: (scrum: IScrum, status: IStatus) => IScrum,
 	): Observable<IScrum> {
 		let scrum: IScrum;
 		return from(
@@ -269,7 +271,7 @@ export class ScrumService extends BaseMeetingService {
 					scrum = worker(scrum, status);
 					return transaction.update(scrumRef, { statuses: scrum.statuses });
 				});
-			})
+			}),
 		).pipe(map(() => scrum));
 	}
 }

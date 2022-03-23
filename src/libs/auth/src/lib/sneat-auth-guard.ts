@@ -17,7 +17,7 @@ import { AuthPipe } from '@angular/fire/compat/auth-guard';
 
 type AuthCanLoadPipeGenerator = (
 	route: Route,
-	segments: UrlSegment[]
+	segments: UrlSegment[],
 ) => AuthPipe;
 
 export const redirectToLoginIfNotSignedIn: AuthPipe = map((user) => {
@@ -35,12 +35,13 @@ export const redirectToLoginIfNotSignedIn: AuthPipe = map((user) => {
 export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 	constructor(
 		private readonly router: Router,
-		private readonly auth: AngularFireAuth
-	) {}
+		private readonly auth: AngularFireAuth,
+	) {
+	}
 
 	public canLoad(
 		route: Route,
-		segments: UrlSegment[]
+		segments: UrlSegment[],
 	):
 		| Observable<boolean | UrlTree>
 		| Promise<boolean | UrlTree>
@@ -67,7 +68,7 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 					} else {
 						return this.router.parseUrl(can);
 					}
-				})
+				}),
 			);
 			// return true;
 		}
@@ -75,7 +76,7 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 
 	public canActivate(
 		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+		state: RouterStateSnapshot, //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	) {
 		console.log('SneatAuthGuard.canActivate', route, state);
 		return true;
@@ -83,7 +84,7 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 
 	canActivateChild(
 		childRoute: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+		state: RouterStateSnapshot, // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	) {
 		console.log('SneatAuthGuard.canActivateChild', childRoute, state);
 		return true;

@@ -7,4 +7,5 @@ import { HttpClientModule } from '@angular/common/http';
 	providers: [ProjectItemServiceFactory],
 })
 // @ts-ignore
-export class ProjItemServiceModule {}
+export class ProjItemServiceModule {
+}

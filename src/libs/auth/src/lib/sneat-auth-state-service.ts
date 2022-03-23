@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Inject, Injectable } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import firebase from 'firebase/compat/app';
-import { distinctUntilChanged, shareReplay, tap } from 'rxjs/operators';
+import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { newRandomId } from '@sneat/random';
 
@@ -37,26 +37,26 @@ export class SneatAuthStateService {
 	private readonly id = newRandomId({ len: 5 });
 
 	private readonly authStatus$ = new BehaviorSubject<AuthStatus>(
-		initialAuthStatus
+		initialAuthStatus,
 	);
 	public readonly authStatus = this.authStatus$
 		.asObservable()
 		.pipe(distinctUntilChanged());
 
-	private readonly authUser$ = new BehaviorSubject<ISneatAuthUser|null|undefined>(undefined);
+	private readonly authUser$ = new BehaviorSubject<ISneatAuthUser | null | undefined>(undefined);
 	public readonly authUser = this.authUser$.asObservable();
 
 	private readonly authState$ = new BehaviorSubject<ISneatAuthState>(
-		initialSneatAuthState
+		initialSneatAuthState,
 	);
 	public readonly authState = this.authState$.asObservable().pipe(
 		// tap(v => console.log('SneatAuthStateService => SneatAuthState:', v)),
-		shareReplay(1)
+		shareReplay(1),
 	);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly afAuth: AngularFireAuth
+		private readonly afAuth: AngularFireAuth,
 	) {
 		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
 		afAuth.idToken.subscribe({
@@ -97,7 +97,7 @@ export class SneatAuthStateService {
 				this.authState$.next({ ...this.authState$.value, user, status });
 			},
 			error: this.errorLogger.logErrorHandler(
-				'failed to retrieve Firebase auth user information'
+				'failed to retrieve Firebase auth user information',
 			),
 		});
 	}

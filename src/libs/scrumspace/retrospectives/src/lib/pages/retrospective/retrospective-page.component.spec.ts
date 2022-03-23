@@ -29,7 +29,7 @@ describe('RetrospectivePage', () => {
 			fixture = TestBed.createComponent(RetrospectivePageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

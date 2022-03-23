@@ -19,4 +19,5 @@ import { HttpClientModule } from '@angular/common/http';
 		TableService,
 	],
 })
-export class DatatugServicesUnsortedModule {}
+export class DatatugServicesUnsortedModule {
+}

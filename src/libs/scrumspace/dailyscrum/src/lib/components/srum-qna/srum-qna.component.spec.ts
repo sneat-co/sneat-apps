@@ -17,7 +17,7 @@ describe('SrumQnaComponent', () => {
 			fixture = TestBed.createComponent(SrumQnaComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

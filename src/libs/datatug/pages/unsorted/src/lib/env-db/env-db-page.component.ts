@@ -1,22 +1,10 @@
-import {
-	AfterViewInit,
-	Component,
-	ElementRef,
-	Inject,
-	OnDestroy,
-	ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Tabulator} from 'tabulator-tables';
+import { Tabulator } from 'tabulator-tables';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getTabulatorCols, IGridColumn } from '@sneat/grid';
 import { routingParamEnvironmentId } from '@sneat/datatug/core';
-import {
-	IDatabaseFull,
-	IEnvironmentFull,
-	IProjectFull,
-	ITableFull,
-} from '@sneat/datatug/models';
+import { IDatabaseFull, IEnvironmentFull, IProjectFull, ITableFull } from '@sneat/datatug/models';
 import { ProjectService } from '@sneat/datatug/services/project';
 import { DatatugNavService, ProjectTracker } from '@sneat/datatug/services/nav';
 import { IProjectContext } from '@sneat/datatug/nav';
@@ -63,7 +51,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly projService: ProjectService,
 		private datatugNavService: DatatugNavService,
-		private readonly route: ActivatedRoute
+		private readonly route: ActivatedRoute,
 	) {
 		// this.tabulator = new Tabulator({
 		// 	// columns: this.tablesCols,
@@ -83,7 +71,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 				this.projService.getFull(projectRef).subscribe((p) => {
 					this.projectFull = p;
 					const envId = this.route.snapshot.params.get(
-						routingParamEnvironmentId
+						routingParamEnvironmentId,
 					);
 					this.env = p.environments.find((e) => e.id === envId);
 					// const dbId = params.get('routingParamDbId');
@@ -246,7 +234,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 					(ref) =>
 						`${ref.schema}.${ref.name} (${ref.foreignKeys
 							.map((fk) => fk.name)
-							.join(', ')})`
+							.join(', ')})`,
 				)
 				.join('\n')
 		);

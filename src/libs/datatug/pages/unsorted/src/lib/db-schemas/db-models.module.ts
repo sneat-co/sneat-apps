@@ -12,4 +12,5 @@ import { DbModelsPage } from './db-models-page.component';
 	imports: [CommonModule, FormsModule, IonicModule, DbModelsPageRoutingModule],
 	declarations: [DbModelsPage],
 })
-export class DbModelsPageModule {}
+export class DbModelsPageModule {
+}

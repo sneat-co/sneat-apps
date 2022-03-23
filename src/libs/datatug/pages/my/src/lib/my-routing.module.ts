@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { DatatugMyPageComponent } from './page/datatug-my-page.component';
 
@@ -14,4 +14,5 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class MyPageRoutingModule {}
+export class MyPageRoutingModule {
+}

@@ -17,7 +17,7 @@ describe('AddDbServerComponent', () => {
 			fixture = TestBed.createComponent(AddDbServerComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -19,4 +19,5 @@ import { DatatugDbModalsAddDbServerModule } from '@sneat/datatug/db';
 	],
 	declarations: [ServersPageComponent],
 })
-export class ServersPageModule {}
+export class ServersPageModule {
+}

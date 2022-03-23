@@ -1,19 +1,12 @@
-import { Component, EventEmitter, Inject, Input, Output } from "@angular/core";
-import {
-	IAstJoin,
-	IAstQuery,
-	SqlParser,
-} from "@sneat/datatug/services/unsorted";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { ISqlChanged } from "../intefaces";
-import {
-	QueryContextSqlService,
-	ICanJoin,
-} from "../../../query-context-sql.service";
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { IAstJoin, IAstQuery, SqlParser } from '@sneat/datatug/services/unsorted';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ISqlChanged } from '../intefaces';
+import { ICanJoin, QueryContextSqlService } from '../../../query-context-sql.service';
 
 @Component({
-	selector: "datatug-qe-joins",
-	templateUrl: "joins.component.html",
+	selector: 'datatug-qe-joins',
+	templateUrl: 'joins.component.html',
 })
 export class JoinsComponent {
 	@Input() public sql?: string;
@@ -33,12 +26,12 @@ export class JoinsComponent {
 			next: (suggestedJoins) => {
 				this.suggestedJoins = suggestedJoins;
 			},
-			error: this.errorLogger.logErrorHandler("failed to get suggested join"),
+			error: this.errorLogger.logErrorHandler('failed to get suggested join'),
 		});
 	}
 
 	public joinCheckChanged(event: Event, join: IAstJoin): void {
-		console.log("joinCheckChanged", event, join);
+		console.log('joinCheckChanged', event, join);
 		const ce = event as CustomEvent;
 		const checked = !!ce.detail.checked;
 		if (this.sql) {
@@ -49,10 +42,10 @@ export class JoinsComponent {
 			}
 		}
 		this.queryAst = this.sql ? this.sqlParser?.parseQuery(this.sql) : undefined;
-		this.astChanged.emit({ sql: this.sql || "", ast: this.queryAst || {} });
+		this.astChanged.emit({ sql: this.sql || '', ast: this.queryAst || {} });
 	}
 
-	public addJoin(join: ICanJoin, type: "left" | "right" | "inner"): void {
-		alert("Not implemented yet");
+	public addJoin(join: ICanJoin, type: 'left' | 'right' | 'inner'): void {
+		alert('Not implemented yet');
 	}
 }

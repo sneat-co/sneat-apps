@@ -1,22 +1,7 @@
-import {
-	Component,
-	EventEmitter,
-	Inject,
-	Input,
-	OnChanges,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
-import {
-	IDatatugProjectBriefWithId,
-	IDatatugUser,
-	projectsBriefFromDictToFlatList,
-} from '@sneat/datatug/models';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { IDatatugProjectBriefWithId, IDatatugUser, projectsBriefFromDictToFlatList } from '@sneat/datatug/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavContextService, DatatugNavService } from '@sneat/datatug/services/nav';
 import { NewProjectService } from '@sneat/datatug/project';
 import { IProjectContext } from '@sneat/datatug/nav';
 import { parseStoreRef } from '@sneat/core';
@@ -41,7 +26,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
 		private readonly errorLogger: IErrorLogger,
 		private readonly newProjectService: NewProjectService,
 		private readonly nav: DatatugNavService,
-		private readonly datatugNavContextService: DatatugNavContextService
+		private readonly datatugNavContextService: DatatugNavContextService,
 	) {
 		datatugNavContextService.currentStoreId.subscribe({
 			next: (storeId) => (this.currentStoreId = storeId),
@@ -50,7 +35,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
 		datatugNavContextService.currentProject.subscribe({
 			next: this.setProject,
 			error: this.errorLogger.logErrorHandler(
-				'Failed to retrieve project context'
+				'Failed to retrieve project context',
 			),
 		});
 	}

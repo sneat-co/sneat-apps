@@ -5,12 +5,15 @@ import {
 	IRxReadonlyTransaction,
 	IRxReadwriteTransaction,
 	IRxStore,
-	IRxStoreProvider, RxReadonlyTransactionWorker, RxReadwriteTransactionWorker, SelectResult
+	IRxStoreProvider,
+	RxReadonlyTransactionWorker,
+	RxReadwriteTransactionWorker,
+	SelectResult,
 } from './interfaces';
-import {from, Observable, ReplaySubject} from 'rxjs';
+import { from, Observable, ReplaySubject } from 'rxjs';
 import * as firebase from 'firebase/app';
-import {map} from 'rxjs/operators';
-import {EntityKind, IRecord, RxRecordKey, SpecificOrUnknownSchema} from './schema';
+import { map } from 'rxjs/operators';
+import { EntityKind, IRecord, RxRecordKey, SpecificOrUnknownSchema } from './schema';
 
 // interface IFirestorePath {
 //     property: string;

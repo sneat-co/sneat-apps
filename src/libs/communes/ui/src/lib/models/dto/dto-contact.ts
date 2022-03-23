@@ -1,6 +1,6 @@
-import {ContactToMemberRelation, ContactType} from '../types';
-import {IPersonRecord} from './dto-models';
-import {RxRecordKey} from 'rxstore';
+import { ContactToMemberRelation, ContactType } from '../types';
+import { IPersonRecord } from './dto-models';
+import { RxRecordKey } from 'rxstore';
 
 export interface IContact2Member {
 	id: RxRecordKey; // TODO: Change to string

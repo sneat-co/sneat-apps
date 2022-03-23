@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DataType, IEntityFieldDef } from '@sneat/datatug/models';
@@ -15,8 +15,9 @@ export class EntityFieldDialogComponent {
 
 	constructor(
 		private readonly popoverCtrl: PopoverController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
 
 	complete(): void {
 		let data: IEntityFieldDef = { id: this.fieldId, type: this.fieldType };
@@ -26,7 +27,7 @@ export class EntityFieldDialogComponent {
 		this.popoverCtrl
 			.dismiss(data, 'save')
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to dismiss popover')
+				this.errorLogger.logError(err, 'Failed to dismiss popover'),
 			);
 	}
 
@@ -34,7 +35,7 @@ export class EntityFieldDialogComponent {
 		this.popoverCtrl
 			.dismiss(undefined, 'cancel')
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to dismiss popover')
+				this.errorLogger.logError(err, 'Failed to dismiss popover'),
 			);
 	}
 }

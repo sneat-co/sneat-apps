@@ -5,10 +5,7 @@ import {
 	IProjectAndStore,
 } from '@sneat/datatug/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	DatatugUserService,
-	IDatatugUserState,
-} from '@sneat/datatug/services/base';
+import { DatatugUserService, IDatatugUserState } from '@sneat/datatug/services/base';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
@@ -16,7 +13,6 @@ import { STORE_TYPE_GITHUB } from '@sneat/core';
 import { NewProjectService } from '@sneat/datatug/project';
 import { DatatugNavService } from '@sneat/datatug/services/nav';
 import { IProjectContext } from '@sneat/datatug/nav';
-import { IProjectRef } from '@sneat/datatug/core';
 
 @Component({
 	selector: 'datatug-my-projects',
@@ -49,8 +45,9 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 		private readonly navService: DatatugNavService,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly datatugUserService: DatatugUserService,
-		private readonly newProjectService: NewProjectService
-	) {}
+		private readonly newProjectService: NewProjectService,
+	) {
+	}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();
@@ -72,7 +69,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 					}
 				},
 				error: this.errorLogger.logErrorHandler(
-					'Failed to get datatug user state'
+					'Failed to get datatug user state',
 				),
 			});
 	}

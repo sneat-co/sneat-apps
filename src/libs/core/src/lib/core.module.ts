@@ -7,4 +7,5 @@ import { CopyrightComponent } from './components/copyright/copyright.component';
 	declarations: [CopyrightComponent],
 	exports: [CopyrightComponent],
 })
-export class CoreModule {}
+export class CoreModule {
+}

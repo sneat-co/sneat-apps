@@ -12,7 +12,7 @@ describe('TeamNavService', () => {
 				RouterTestingModule,
 				AngularFireModule.initializeApp(environment.firebaseConfig),
 			],
-		})
+		}),
 	);
 
 	it('should be created', () => {

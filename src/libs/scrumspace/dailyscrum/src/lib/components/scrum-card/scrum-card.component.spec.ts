@@ -24,7 +24,7 @@ describe('ScrumCardComponent', () => {
 			fixture = TestBed.createComponent(ScrumCardComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { getMeetingIdFromDate } from "@sneat/meeting";
+import { getMeetingIdFromDate } from '@sneat/meeting';
 
 export interface IRetroQuestion {
 	id: string;
@@ -23,7 +23,7 @@ export class RetroMyFeedbackPageComponent {
 	];
 
 	constructor(
-		route: ActivatedRoute
+		route: ActivatedRoute,
 		// private navService: NavService,
 	) {
 		this.teamId = route.snapshot.queryParamMap.get('team');

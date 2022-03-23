@@ -12,4 +12,5 @@ import { JoinTeamPageComponent } from './join-team-page.component';
 	imports: [CommonModule, FormsModule, IonicModule, JoinTeamPageRoutingModule],
 	declarations: [JoinTeamPageComponent],
 })
-export class JoinTeamPageModule {}
+export class JoinTeamPageModule {
+}

@@ -9,16 +9,17 @@ import { IProjectItemRef } from '@sneat/datatug/core';
 })
 export class DatatugFoldersService {
 	constructor(
-		private readonly storeServiceFactory: DatatugStoreServiceFactory
-	) {}
+		private readonly storeServiceFactory: DatatugStoreServiceFactory,
+	) {
+	}
 
 	watchFolder(ref: IProjectItemRef): Observable<IFolder | null | undefined> {
 		const storeService = this.storeServiceFactory.getDatatugStoreService(
-			ref.storeId
+			ref.storeId,
 		);
 		return storeService.watchProjectItem<IFolder>(
 			ref.projectId,
-			`/folders/${ref.id}`
+			`/folders/${ref.id}`,
 		);
 	}
 }

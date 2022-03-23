@@ -31,7 +31,7 @@ export class EnvironmentPageComponent {
 		private readonly envService: EnvironmentService,
 		private readonly navController: NavController,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly dataTugNavContextService: DatatugNavContextService
+		private readonly dataTugNavContextService: DatatugNavContextService,
 	) {
 		this.projEnv = history.state.projEnv as IProjEnv;
 
@@ -53,7 +53,7 @@ export class EnvironmentPageComponent {
 			error: (err) =>
 				this.errorLogger.logError(
 					err,
-					'Failed to get current project for EnvironmentPage'
+					'Failed to get current project for EnvironmentPage',
 				),
 		});
 		this.dataTugNavContextService.currentEnv.subscribe((env) => {
@@ -104,16 +104,16 @@ export class EnvironmentPageComponent {
 	private goEnvSubPage(
 		envObject: { id: string },
 		folder: string,
-		state?: any
+		state?: any,
 	): void {
 		const { id } = envObject;
 		this.navController
 			.navigateForward(
 				`/project/${this.projBrief.id}/env/${this.projEnv.id}/${folder}/${id}`, // TODO: relative path?
-				{ state }
+				{ state },
 			)
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to db page')
+				this.errorLogger.logError(err, 'Failed to navigate to db page'),
 			);
 	}
 }

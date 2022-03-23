@@ -1,4 +1,4 @@
-import {EntityKind, SpecificOrUnknownSchema} from 'rxstore/schema';
+import { EntityKind, SpecificOrUnknownSchema } from 'rxstore/schema';
 
 export type RecordId = string | number;
 
@@ -12,7 +12,7 @@ export function rxRecordKeyPath<CustomSchema extends SpecificOrUnknownSchema>(ke
 	const s: string[] = [];
 	let k: IRxRecordKey<CustomSchema> | undefined = key;
 	while (k) {
-		const {id, kind} = k;
+		const { id, kind } = k;
 		if (s.some(v => v.startsWith(`${kind}:`))) {
 			throw new Error(`RxRecordKey has a duplicate reference to kind [${kind}]`);
 		}

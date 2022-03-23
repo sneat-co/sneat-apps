@@ -1,5 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
-import { IonInput } from "@ionic/angular";
+import { Component, ViewChild } from '@angular/core';
+import { IonInput } from '@ionic/angular';
 
 interface ICommuneType {
 	code: string;
@@ -8,24 +8,24 @@ interface ICommuneType {
 }
 
 @Component({
-	selector: "sneat-new-commune-page",
-	templateUrl: "./new-commune-page.component.html",
+	selector: 'sneat-new-commune-page',
+	templateUrl: './new-commune-page.component.html',
 })
 export class NewCommunePageComponent {
 	public types: ICommuneType[] = [
-		{ code: "family", title: "Family", emoji: "👨‍👩‍👧‍👦" },
-		{ code: "friends", title: "Friends", emoji: "🤝" },
+		{ code: 'family', title: 'Family', emoji: '👨‍👩‍👧‍👦' },
+		{ code: 'friends', title: 'Friends', emoji: '🤝' },
 	];
 	public code?: string;
 	public icon?: string;
-	public name = "";
+	public name = '';
 	formIsReady?: boolean;
-	@ViewChild("nameInput") nameInput?: IonInput;
+	@ViewChild('nameInput') nameInput?: IonInput;
 
 
 	public onTypeChanged(event: Event): void {
 		setTimeout(() => {
-			this.nameInput?.setFocus().then(() => console.log("set focus to name"));
+			this.nameInput?.setFocus().then(() => console.log('set focus to name'));
 		}, 100);
 	}
 

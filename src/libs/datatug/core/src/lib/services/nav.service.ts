@@ -21,8 +21,9 @@ export class NavService {
 		private readonly navController: NavController,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService
-	) {}
+		private readonly analyticsService: IAnalyticsService,
+	) {
+	}
 
 	public navigateToTeams(animationDirection?: 'forward' | 'back'): void {
 		console.log('navigateToTeams()');
@@ -30,7 +31,7 @@ export class NavService {
 		this.navController
 			.navigateRoot('teams', { animationDirection })
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to teams page')
+				this.errorLogger.logError(err, 'Failed to navigate to teams page'),
 			);
 	}
 
@@ -53,7 +54,7 @@ export class NavService {
 		this.navController
 			.navigateRoot('login', { ...options, animationDirection: 'back' })
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to login page')
+				this.errorLogger.logError(err, 'Failed to navigate to login page'),
 			);
 	}
 
@@ -75,17 +76,17 @@ export class NavService {
 		this.navController
 			.navigateRoot('user-profile')
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to naviage to user profile')
+				this.errorLogger.logError(err, 'Failed to naviage to user profile'),
 			);
 	}
 
 	public navigateToMember(
 		navController: NavController,
 		team: IRecord<ITeam>,
-		memberInfo: IMemberInfo
+		memberInfo: IMemberInfo,
 	): void {
 		console.log(
-			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`
+			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`,
 		);
 		const id = `${team.id}:${memberInfo.id}`;
 		this.navForward(
@@ -98,7 +99,7 @@ export class NavService {
 					memberInfo,
 				},
 			},
-			{ name: '', params: { id, team: team.id, member: memberInfo.id } }
+			{ name: '', params: { id, team: team.id, member: memberInfo.id } },
 		);
 	}
 
@@ -106,7 +107,7 @@ export class NavService {
 		id: string,
 		teamInfo?: IUserTeamInfoWithId,
 		team?: ITeam,
-		animationDirection?: 'forward' | 'back'
+		animationDirection?: 'forward' | 'back',
 	): void {
 		this.analyticsService.logEvent('navigateToTeam', { team: id });
 		this.navController
@@ -119,7 +120,7 @@ export class NavService {
 				animationDirection,
 			})
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to team page')
+				this.errorLogger.logError(err, 'Failed to navigate to team page'),
 			);
 	}
 
@@ -151,7 +152,7 @@ export class NavService {
 		navController: NavController,
 		url: string,
 		navOptions: NavigationOptions,
-		event: { name: string; params?: any }
+		event: { name: string; params?: any },
 	): void {
 		console.log('navForward()', event.name, event.params);
 		navController = navController || this.navController;
@@ -159,7 +160,7 @@ export class NavService {
 		navController
 			.navigateForward(url, navOptions)
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to: ' + url)
+				this.errorLogger.logError(err, 'Failed to navigate to: ' + url),
 			);
 	}
 
@@ -168,14 +169,14 @@ export class NavService {
 		team: IRecord<ITeam>,
 		url: string,
 		eventName: string,
-		params?: any
+		params?: any,
 	): void => {
 		params = { ...(params || {}), team: team.id };
 		this.navForward(
 			navController,
 			url,
 			{ queryParams: params, state: { team } },
-			{ name: eventName, params }
+			{ name: eventName, params },
 		);
 	};
 }

@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/user-service';
-import { TeamService } from "@sneat/team/services";
+import { TeamService } from '@sneat/team/services';
 
 describe('TeamPage', () => {
 	let component: TeamPageComponent;
@@ -29,7 +29,7 @@ describe('TeamPage', () => {
 			fixture = TestBed.createComponent(TeamPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

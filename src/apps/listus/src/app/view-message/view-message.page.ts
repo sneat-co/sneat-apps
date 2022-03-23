@@ -12,8 +12,9 @@ export class ViewMessagePage implements OnInit {
 
 	constructor(
 		private data: DataService,
-		private activatedRoute: ActivatedRoute
-	) {}
+		private activatedRoute: ActivatedRoute,
+	) {
+	}
 
 	ngOnInit() {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');

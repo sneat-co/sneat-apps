@@ -19,4 +19,5 @@ import { WormholeModule } from '@sneat/wormhole';
 	],
 	declarations: [EntitiesPageComponent],
 })
-export class EntitiesPageModule {}
+export class EntitiesPageModule {
+}

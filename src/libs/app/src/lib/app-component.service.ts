@@ -10,8 +10,9 @@ export class AppComponentService {
 		private platform: Platform,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		@Optional() private splashScreen: SplashScreen,
-		@Optional() private statusBar: StatusBar // @Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
-	) {}
+		@Optional() private statusBar: StatusBar, // @Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
+	) {
+	}
 
 	public initializeApp() {
 		this.platform
@@ -32,14 +33,14 @@ export class AppComponentService {
 				} catch (e) {
 					this.errorLogger.logError(
 						e,
-						'failed to handle "platform_ready" event'
+						'failed to handle "platform_ready" event',
 					);
 				}
 			})
 			.catch(
 				this.errorLogger.logErrorHandler(
-					'Failed to initialize Platform@ionic/angular'
-				)
+					'Failed to initialize Platform@ionic/angular',
+				),
 			);
 	}
 }

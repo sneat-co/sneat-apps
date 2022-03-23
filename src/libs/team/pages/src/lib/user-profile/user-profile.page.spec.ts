@@ -28,7 +28,7 @@ describe('UserProfilePage', () => {
 			fixture = TestBed.createComponent(UserProfilePage);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -1,10 +1,4 @@
-import {
-	AfterViewInit,
-	Component,
-	Inject,
-	OnDestroy,
-	ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
@@ -19,11 +13,7 @@ import {
 	ProjectTracker,
 } from '@sneat/datatug/services/nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	ICommandResponseWithRecordset,
-	IExecuteResponse,
-	IRecordsetResult,
-} from '@sneat/datatug/dto';
+import { ICommandResponseWithRecordset, IExecuteResponse, IRecordsetResult } from '@sneat/datatug/dto';
 import { IGridDef } from '@sneat/grid';
 import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug/nav';
 import { Subject } from 'rxjs';
@@ -77,7 +67,7 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 		private readonly agentService: AgentService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
-		private readonly datatugNavService: DatatugNavService
+		private readonly datatugNavService: DatatugNavService,
 	) {
 		console.log('EnvDbTablePage.constructor()', errorLogger);
 		const projectTracker = new ProjectTracker(this.destroyed, route);
@@ -99,7 +89,7 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 				next: (currentProject) => {
 					console.log(
 						'EnvDbTablePage.constructor() => currentProject',
-						currentProject
+						currentProject,
 					);
 					try {
 						this.project = currentProject;
@@ -110,7 +100,7 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 				error: (err) =>
 					this.errorLogger.logError(
 						err,
-						'EnvDbTablePage: failed to get current project'
+						'EnvDbTablePage: failed to get current project',
 					),
 			});
 			this.datatugNavContextService.currentEnvDbTable.subscribe({
@@ -122,7 +112,7 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 							return;
 						}
 						this.groupByFks = currentTable.meta?.foreignKeys?.filter(
-							(fk) => fk.columns.length === 1
+							(fk) => fk.columns.length === 1,
 						);
 						const from =
 							currentTable.schema === 'dbo'
@@ -238,12 +228,12 @@ from ${from}`;
 									p.present().catch((e) =>
 										this.errorLogger.logError(
 											e,
-											'Failed to present cell popover'
-										)
+											'Failed to present cell popover',
+										),
 									);
 								})
 								.catch((e) =>
-									this.errorLogger.logError(e, 'Failed to present cell popover')
+									this.errorLogger.logError(e, 'Failed to present cell popover'),
 								);
 						};
 					}
@@ -260,7 +250,7 @@ from ${from}`;
 
 	private getColFk(field: string) {
 		return this.table.meta?.foreignKeys?.find(
-			(v) => v.columns.indexOf(field) >= 0
+			(v) => v.columns.indexOf(field) >= 0,
 		);
 	}
 
@@ -345,7 +335,7 @@ from ${from}`;
 			if (this.grid?.rows?.length) {
 				const index = Math.min(
 					this.currentRow.index,
-					this.recordset.rows.length - 1
+					this.recordset.rows.length - 1,
 				);
 				this.setCurrentRow(index, this.grid.rows[index]);
 			}

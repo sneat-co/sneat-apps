@@ -1,4 +1,4 @@
-import {Injectable, Type} from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 
 export type PreloadPages =
 	| 'assets'
@@ -9,7 +9,7 @@ export type PreloadPages =
 	;
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class NgModulePreloaderService {
 
@@ -61,7 +61,7 @@ export class NgModulePreloaderService {
 	// tslint:disable-next-line:no-any
 	public addPreloadConfigs(...configs: { id: string; path: string; type: Type<any>; module?: string }[]): void {
 		configs.forEach(config => {
-			this.configs[config.id] = {path: config.path, type: config.type};
+			this.configs[config.id] = { path: config.path, type: config.type };
 		});
 	}
 

@@ -17,7 +17,7 @@ describe('TableMetaCardComponent', () => {
 			fixture = TestBed.createComponent(TableMetaCardComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -19,7 +19,7 @@ export const datatugRoutes: Routes = [
 		path: 'store/:' + routingParamStoreId,
 		loadChildren: () =>
 			import('./datatug-routing-store').then(
-				(m) => m.DatatugStoreRoutingModule
+				(m) => m.DatatugStoreRoutingModule,
 			),
 		// ...canLoad(),
 	},
@@ -33,4 +33,5 @@ export const datatugRoutes: Routes = [
 	imports: [RouterModule.forChild(datatugRoutes)],
 	exports: [RouterModule],
 })
-export class DatatugRoutingModule {}
+export class DatatugRoutingModule {
+}

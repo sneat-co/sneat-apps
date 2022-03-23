@@ -1,6 +1,6 @@
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {EntityKind, IRecord, Schema, SpecificOrUnknownSchema, RxRecordKey} from './schema';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { EntityKind, IRecord, RxRecordKey, Schema, SpecificOrUnknownSchema } from './schema';
 
 export interface IRecordKey {
 	kind: string;

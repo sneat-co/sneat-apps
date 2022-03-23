@@ -1,10 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavContextService, DatatugNavService } from '@sneat/datatug/services/nav';
 import { IProjectContext } from '@sneat/datatug/nav';
 
 @Component({
@@ -20,8 +17,9 @@ export class MenuEnvSelectorComponent {
 		private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
 		private readonly nav: DatatugNavService,
-		private readonly datatugNavContextService: DatatugNavContextService
-	) {}
+		private readonly datatugNavContextService: DatatugNavContextService,
+	) {
+	}
 
 	public clearEnv(): void {
 		// Called from template

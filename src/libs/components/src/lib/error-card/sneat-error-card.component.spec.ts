@@ -17,7 +17,7 @@ describe('ErrorCardComponent', () => {
 			fixture = TestBed.createComponent(SneatErrorCardComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

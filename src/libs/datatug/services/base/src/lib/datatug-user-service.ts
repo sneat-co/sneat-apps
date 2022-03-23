@@ -17,7 +17,7 @@ export class DatatugUserService {
 
 	constructor(readonly sneatUserService: SneatUserService) {
 		if (!sneatUserService) {
-			throw new Error('sneatUserService is not injected')
+			throw new Error('sneatUserService is not injected');
 			return;
 		}
 		this.datatugUserState = sneatUserService.userState.pipe(
@@ -47,7 +47,7 @@ export class DatatugUserService {
 				};
 				return datatugUserState;
 			}),
-			shareReplay(1)
+			shareReplay(1),
 		);
 	}
 }

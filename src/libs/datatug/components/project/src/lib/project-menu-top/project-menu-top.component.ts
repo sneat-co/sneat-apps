@@ -1,23 +1,10 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-	ProjectTopLevelPage,
-	ProjectTracker,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavContextService, DatatugNavService, ProjectTopLevelPage } from '@sneat/datatug/services/nav';
 import { IProjectSummary } from '@sneat/datatug/models';
 import { Observable, Subject } from 'rxjs';
 import { IProjectContext } from '@sneat/datatug/nav';
-import { ActivatedRoute } from '@angular/router';
-import { parseStoreRef } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	distinctUntilKeyChanged,
-	filter,
-	map,
-	takeUntil,
-} from 'rxjs/operators';
-import { equalProjectRef, IProjectRef } from '@sneat/datatug/core';
+import { takeUntil } from 'rxjs/operators';
 import { DatatugUserService } from '@sneat/datatug/services/base';
 
 interface IProjectTopLevelPage {
@@ -96,14 +83,14 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
-		private readonly userService: DatatugUserService
+		private readonly userService: DatatugUserService,
 	) {
 		this.datatugNavContextService.currentProject
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: this.setProject,
 				error: this.errorLogger.logErrorHandler(
-					'ProjectMenuTopComponent failed to retrieve project context from ProjectTracker'
+					'ProjectMenuTopComponent failed to retrieve project context from ProjectTracker',
 				),
 			});
 		this.currentFolder = datatugNavContextService.currentFolder;

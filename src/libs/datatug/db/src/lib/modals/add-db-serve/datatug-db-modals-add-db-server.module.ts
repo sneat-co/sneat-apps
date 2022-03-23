@@ -9,4 +9,5 @@ import { FormsModule } from '@angular/forms';
 	declarations: [AddDbServerComponent],
 	exports: [AddDbServerComponent],
 })
-export class DatatugDbModalsAddDbServerModule {}
+export class DatatugDbModalsAddDbServerModule {
+}

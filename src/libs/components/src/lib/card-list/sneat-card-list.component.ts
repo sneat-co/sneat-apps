@@ -1,20 +1,9 @@
-import {
-	Component,
-	EventEmitter,
-	Inject,
-	Input,
-	Output,
-	ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Observable } from 'rxjs';
 import { IRecord } from '@sneat/data';
-import {
-	IOptionallyTitled,
-	IProjItemBrief,
-	ProjectItemType,
-} from '@sneat/datatug/models';
+import { IOptionallyTitled, IProjItemBrief, ProjectItemType } from '@sneat/datatug/models';
 
 export interface ICardTab {
 	id: string;
@@ -51,8 +40,9 @@ export class SneatCardListComponent {
 	public isAdding?: boolean;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
 
 	click(event: Event, item: IProjItemBrief): void {
 		event.preventDefault();

@@ -1,19 +1,7 @@
-import {
-	Component,
-	EventEmitter,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	ITimerState,
-	TimerStatusEnum,
-} from '../../../../../../meeting/src/lib/timer/models';
+import { ITimerState, TimerStatusEnum } from '../../../../../../meeting/src/lib/timer/models';
 import { secondsToStr } from '@sneat/datetime';
 import { Timer } from '../../../../../../meeting/src/lib/timer/timer.service';
 import { IScrum } from '@sneat/scrumspace/scrummodels';
@@ -37,8 +25,9 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	private timerSubscription: Subscription;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
 
 	public get isDisabled(): boolean {
 		return (
@@ -57,7 +46,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 			if (changes.timer && this.timer) {
 				this.unsubscribeFromTimer();
 				this.timerSubscription = this.timer.onTick.subscribe(
-					this.onTimerTicked
+					this.onTimerTicked,
 				);
 			}
 		} catch (e) {
@@ -67,7 +56,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 				{
 					feedback: false,
 					show: false,
-				}
+				},
 			);
 		}
 	}
@@ -79,7 +68,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 		const { status, activeMemberId } = this.timerState;
 		this.toggled.emit(
 			status !== TimerStatusEnum.active ||
-				(status === TimerStatusEnum.active && activeMemberId !== this.memberId)
+			(status === TimerStatusEnum.active && activeMemberId !== this.memberId),
 		);
 		this.timer.toggleTimer(this.memberId).subscribe({
 			error: (err) =>

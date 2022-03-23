@@ -7,16 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { RetroMyFeedbackPageRoutingModule } from './retro-my-feedback-routing.module';
 
 import { RetroMyFeedbackPageComponent } from './retro-my-feedback.page';
-import { ScrumspaceRetrospectivesModule } from "../../scrumspace-retrospectives.module";
+import { ScrumspaceRetrospectivesModule } from '../../scrumspace-retrospectives.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RetroMyFeedbackPageRoutingModule,
-    ScrumspaceRetrospectivesModule
-  ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		RetroMyFeedbackPageRoutingModule,
+		ScrumspaceRetrospectivesModule,
+	],
 	declarations: [RetroMyFeedbackPageComponent],
 })
-export class RetroMyFeedbackPageModule {}
+export class RetroMyFeedbackPageModule {
+}

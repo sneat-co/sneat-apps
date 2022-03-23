@@ -17,4 +17,5 @@ import { CellWidgetsComponent } from './widgets';
 		CellWidgetsComponent,
 	],
 })
-export class DatatugPluginsModule {}
+export class DatatugPluginsModule {
+}

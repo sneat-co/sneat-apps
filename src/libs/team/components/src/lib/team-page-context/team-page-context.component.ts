@@ -1,20 +1,16 @@
-import { ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { NavController } from "@ionic/angular";
-import {
-	TeamNavService,
-	TeamService,
-	trackTeamIdFromRouteParameter
-} from "@sneat/team/services";
-import { SneatUserService } from "@sneat/user";
-import { AnalyticsService, IAnalyticsService } from "@sneat/analytics";
-import { BehaviorSubject, Subject, takeUntil } from "rxjs";
-import { ITeamContext } from "@sneat/team/models";
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { NavController } from '@ionic/angular';
+import { TeamNavService, TeamService, trackTeamIdFromRouteParameter } from '@sneat/team/services';
+import { SneatUserService } from '@sneat/user';
+import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { ITeamContext } from '@sneat/team/models';
 
 @Component({
-	selector: "sneat-team-page-context",
-	template: "",
+	selector: 'sneat-team-page-context',
+	template: '',
 })
 export class TeamPageContextComponent implements OnInit, OnDestroy {
 
@@ -36,14 +32,14 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 		public readonly navController: NavController,
 		public readonly teamService: TeamService,
 		public readonly userService: SneatUserService,
-		public readonly navService: TeamNavService
+		public readonly navService: TeamNavService,
 	) {
-		console.log("TeamPageContextComponent.constructor()", route.url);
+		console.log('TeamPageContextComponent.constructor()', route.url);
 		trackTeamIdFromRouteParameter(route).pipe(
-			takeUntil(this.destroyed)
+			takeUntil(this.destroyed),
 		).subscribe({
 			next: this.onTeamIdChanged,
-			error: this.errorLogger.logErrorHandler
+			error: this.errorLogger.logErrorHandler,
 		});
 	}
 
@@ -54,7 +50,7 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 	};
 
 	ngOnInit(): void {
-		console.log("TeamPageContextComponent.ngOnInit()", this.page);
+		console.log('TeamPageContextComponent.ngOnInit()', this.page);
 	}
 
 	ngOnDestroy(): void {

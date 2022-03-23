@@ -12,4 +12,5 @@ const exports = [MyRetroItemsComponent];
 	declarations: exports,
 	exports,
 })
-export class MyRetroItemsComponentModule {}
+export class MyRetroItemsComponentModule {
+}

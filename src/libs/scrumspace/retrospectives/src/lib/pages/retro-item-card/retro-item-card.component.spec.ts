@@ -17,7 +17,7 @@ describe('RetroItemCardComponent', () => {
 			fixture = TestBed.createComponent(RetroItemCardComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

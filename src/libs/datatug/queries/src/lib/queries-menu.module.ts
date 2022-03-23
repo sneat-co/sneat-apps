@@ -17,4 +17,5 @@ import { DatatugQueriesUiModule } from './datatug-queries-ui.module';
 	declarations: [QueriesMenuComponent],
 	exports: [QueriesMenuComponent],
 })
-export class DatatugQueriesMenuModule {}
+export class DatatugQueriesMenuModule {
+}

@@ -6,11 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { RecordsetValue } from '@sneat/datatug/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { EntityService } from '@sneat/datatug/services/unsorted';
-import {
-	routingParamEntityId,
-	routingParamProjectId,
-	routingParamStoreId,
-} from '@sneat/datatug/core';
+import { routingParamEntityId, routingParamProjectId, routingParamStoreId } from '@sneat/datatug/core';
 import { IEntity, IProjEntity } from '@sneat/datatug/models';
 import { IGridColumn } from '@sneat/grid';
 
@@ -33,7 +29,7 @@ export class EntityPageComponent implements OnDestroy {
 		readonly route: ActivatedRoute,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		readonly entityService: EntityService,
-		readonly http: HttpClient
+		readonly http: HttpClient,
 	) {
 		this.projEntity = history.state.entity;
 		route.paramMap.pipe(takeUntil(this.destroyed)).subscribe((params) => {
@@ -45,7 +41,7 @@ export class EntityPageComponent implements OnDestroy {
 				.getEntity(this.storeId, this.projectId, this.entityId)
 				.pipe(
 					takeUntil(this.destroyed),
-					takeWhile(() => this.entityId === entityId)
+					takeWhile(() => this.entityId === entityId),
 				)
 				.subscribe({
 					next: (entity) => {
@@ -84,7 +80,7 @@ export class EntityPageComponent implements OnDestroy {
 										];
 									},
 									error: this.errorLogger.logErrorHandler(
-										'Failed to get source data'
+										'Failed to get source data',
 									),
 								});
 						}

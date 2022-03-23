@@ -19,7 +19,7 @@ export class EnvSelectorComponent {
 
 	constructor(
 		private readonly dataTugNavContext: DatatugNavContextService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		dataTugNavContext.currentProject.subscribe((currentProject) => {
 			if (currentProject?.summary?.environments) {
@@ -34,7 +34,7 @@ export class EnvSelectorComponent {
 			error: (err) =>
 				this.errorLogger.logError(
 					err,
-					'Failed to get current environment by EnvSelectorComponent'
+					'Failed to get current environment by EnvSelectorComponent',
 				),
 		});
 	}

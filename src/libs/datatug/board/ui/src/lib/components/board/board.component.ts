@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Inject,
-	Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NewCardDialogComponent } from '../../modals/new-card-dialog/new-card-dialog.component';
 import { IBoardContext, IBoardDef } from '@sneat/datatug/models';
@@ -21,8 +16,9 @@ export class BoardComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalCtrl: ModalController
-	) {}
+		private readonly modalCtrl: ModalController,
+	) {
+	}
 
 	async newCard() {
 		console.log('newCard()');

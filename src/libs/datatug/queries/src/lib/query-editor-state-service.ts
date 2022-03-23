@@ -1,20 +1,13 @@
-import { Inject, Injectable } from "@angular/core";
-import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from "rxjs";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import {
-	IHttpQueryRequest,
-	IQueryDef,
-	ISqlQueryRequest,
-	QueryType,
-} from "@sneat/datatug/models";
-import { QueriesService } from "./queries.service";
-import { IProjectRef } from "@sneat/datatug/core";
-import { DatatugNavContextService } from "@sneat/datatug/services/nav";
-import { IProjectContext } from "@sneat/datatug/nav";
-import { filter } from "rxjs/operators";
-import { IQueryEditorState, IQueryState } from "@sneat/datatug/editor";
-import { stat } from "ng-packagr/lib/utils/fs";
-import { error } from "ng-packagr/lib/utils/log";
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IHttpQueryRequest, IQueryDef, ISqlQueryRequest, QueryType } from '@sneat/datatug/models';
+import { QueriesService } from './queries.service';
+import { IProjectRef } from '@sneat/datatug/core';
+import { DatatugNavContextService } from '@sneat/datatug/services/nav';
+import { IProjectContext } from '@sneat/datatug/nav';
+import { filter } from 'rxjs/operators';
+import { IQueryEditorState, IQueryState } from '@sneat/datatug/editor';
 
 export const isQueryChanged = (queryState: IQueryState): boolean => {
 	if (!queryState) {
@@ -42,7 +35,7 @@ export const isQueryChanged = (queryState: IQueryState): boolean => {
 			);
 		default:
 			throw new Error(
-				"Unknown query request type: " + queryState.request.queryType,
+				'Unknown query request type: ' + queryState.request.queryType,
 			);
 	}
 };
@@ -52,7 +45,7 @@ const $state = new BehaviorSubject<IQueryEditorState | undefined>(undefined);
 let counter = 0;
 
 @Injectable({
-	providedIn: "root",
+	providedIn: 'root',
 })
 export class QueryEditorStateService {
 	public readonly queryEditorState = $state
@@ -66,7 +59,7 @@ export class QueryEditorStateService {
 		private readonly queriesService: QueriesService,
 		readonly datatugNavContextService: DatatugNavContextService,
 	) {
-		console.log("QueryEditorStateService.constructor()");
+		console.log('QueryEditorStateService.constructor()');
 		datatugNavContextService.currentProject.subscribe((currentProject) => {
 			this.currentProject = currentProject;
 			if (this.currentProject?.summary) {
@@ -115,7 +108,7 @@ export class QueryEditorStateService {
 					queryType: QueryType.SQL,
 					request: {
 						queryType: QueryType.SQL,
-						text: "",
+						text: '',
 					} as ISqlQueryRequest,
 					isLoading: true,
 				};
@@ -137,12 +130,12 @@ export class QueryEditorStateService {
 				$state.next(this.updateQueryStatesWithEnvs(state));
 			}
 		} catch (err) {
-			this.errorLogger.logError(err, "failed to openQuery");
+			this.errorLogger.logError(err, 'failed to openQuery');
 		}
 	}
 
 	private loadQuery(id: string): void {
-		console.log("loadQuery", id);
+		console.log('loadQuery', id);
 		const onCompleted = (def?: IQueryDef, error?: any) => {
 			const activeQuery = $state.value?.activeQueries.find((q) => q.id === id);
 			if (!activeQuery) {
@@ -215,7 +208,7 @@ export class QueryEditorStateService {
 	private updateQuerySatesWithProj(
 		state: IQueryEditorState,
 	): IQueryEditorState {
-		console.log("updateQuerySatesWithProj", state);
+		console.log('updateQuerySatesWithProj', state);
 		state = this.updateQueryStatesWithEnvs(state);
 		if (!this.currentProject) {
 			return state;
@@ -236,7 +229,7 @@ export class QueryEditorStateService {
 		state: IQueryEditorState,
 	): IQueryEditorState {
 		console.log(
-			"updateQueryStatesWithEnvs",
+			'updateQueryStatesWithEnvs',
 			state.activeQueries,
 			this.currentProject?.summary?.environments,
 		);
@@ -268,7 +261,7 @@ export class QueryEditorStateService {
 	});
 
 	updateQueryState(queryState: IQueryState): void {
-		console.log("updateQueryState", queryState);
+		console.log('updateQueryState', queryState);
 		if (!$state.value) {
 			return;
 		}
@@ -285,17 +278,17 @@ export class QueryEditorStateService {
 		projectRef: IProjectRef,
 	): Observable<void> {
 		if (!this.currentProject) {
-			return throwError(() => "no current project");
+			return throwError(() => 'no current project');
 		}
 		if (projectRef.projectId !== this.currentProject.ref.projectId) {
 			return throwError(
 				() =>
-					"An attempt to save a query after current project have been changed",
+					'An attempt to save a query after current project have been changed',
 			);
 		}
 		const { id } = queryState;
 		if (!id) {
-			return throwError(() => "queryState.id is not set");
+			return throwError(() => 'queryState.id is not set');
 		}
 		const setIsSavingToFalse = () => {
 			const state = this.getQueryState(id);
@@ -315,7 +308,7 @@ export class QueryEditorStateService {
 				isSaving: true,
 			});
 			if (!queryState.request) {
-				return throwError(() => "query state has no request");
+				return throwError(() => 'query state has no request');
 			}
 			if (!queryState.def?.id) {
 				return throwError(() => `queryState.def.id is not defined`);
@@ -327,7 +320,7 @@ export class QueryEditorStateService {
 			const result = this.queriesService.updateQuery(projectRef, query)
 				.pipe(
 					tap((value: IQueryDef) => {
-						console.log("query updated", value);
+						console.log('query updated', value);
 						const queryState = this.getQueryState(query.id);
 						if (!queryState) {
 							return throwError(() => `no state for query with id=${query.id}`);
@@ -341,7 +334,7 @@ export class QueryEditorStateService {
 					}),
 					catchError(err => {
 						setIsSavingToFalse();
-						this.errorLogger.logError(err, "Failed to save query");
+						this.errorLogger.logError(err, 'Failed to save query');
 						throw err;
 					}),
 					map(v => void 0),

@@ -3,16 +3,9 @@ import { Observable, Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { IParameterDef, IParameterValueWithoutID } from '@sneat/datatug/models';
-import {
-	ICommandResponseItem,
-	ICommandResponseWithRecordset,
-	IExecuteResponse,
-} from "@sneat/datatug/dto";
+import { ICommandResponseItem, ICommandResponseWithRecordset, IExecuteResponse } from '@sneat/datatug/dto';
 import { IGridDef } from '@sneat/grid';
-import {
-	recordsetToGridDef,
-	DatatugStoreService,
-} from '@sneat/datatug/services/repo';
+import { DatatugStoreService, recordsetToGridDef } from '@sneat/datatug/services/repo';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
@@ -34,8 +27,9 @@ export class ParameterLookupComponent implements OnInit {
 	constructor(
 		private readonly repoService: DatatugStoreService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modal: ModalController
-	) {}
+		private readonly modal: ModalController,
+	) {
+	}
 
 	ngOnInit() {
 		this.lookupResponse?.pipe(first()).subscribe({
@@ -55,7 +49,7 @@ export class ParameterLookupComponent implements OnInit {
 			error: (err) =>
 				this.errorLogger.logError(
 					err,
-					'Failed to execute parameter lookup SQL'
+					'Failed to execute parameter lookup SQL',
 				),
 		});
 	}
@@ -72,8 +66,8 @@ export class ParameterLookupComponent implements OnInit {
 			.catch((err) =>
 				this.errorLogger.logError(
 					err,
-					'Failed to dismiss modal from ParameterLookupComponent'
-				)
+					'Failed to dismiss modal from ParameterLookupComponent',
+				),
 			);
 	};
 }

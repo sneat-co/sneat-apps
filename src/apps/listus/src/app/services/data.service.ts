@@ -71,7 +71,8 @@ export class DataService {
 		},
 	];
 
-	constructor() {}
+	constructor() {
+	}
 
 	public getMessages(): Message[] {
 		return this.messages;

@@ -13,7 +13,7 @@ describe('AppComponent', () => {
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 				imports: [RouterTestingModule.withRoutes([])],
 			}).compileComponents();
-		})
+		}),
 	);
 
 	it(
@@ -22,7 +22,7 @@ describe('AppComponent', () => {
 			const fixture = TestBed.createComponent(AppComponent);
 			const app = fixture.debugElement.componentInstance;
 			expect(app).toBeTruthy();
-		})
+		}),
 	);
 
 	it(
@@ -35,7 +35,7 @@ describe('AppComponent', () => {
 			expect(menuItems.length).toEqual(12);
 			expect(menuItems[0].textContent).toContain('Inbox');
 			expect(menuItems[1].textContent).toContain('Outbox');
-		})
+		}),
 	);
 
 	it(
@@ -47,11 +47,11 @@ describe('AppComponent', () => {
 			const menuItems = app.querySelectorAll('ion-item');
 			expect(menuItems.length).toEqual(12);
 			expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual(
-				'/folder/Inbox'
+				'/folder/Inbox',
 			);
 			expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual(
-				'/folder/Outbox'
+				'/folder/Outbox',
 			);
-		})
+		}),
 	);
 });

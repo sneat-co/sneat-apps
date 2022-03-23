@@ -1,9 +1,8 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { QueryEditorStateService } from './query-editor-state-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IQueryState } from '@sneat/datatug/editor';
 import { QueriesUiService } from './queries-ui.service';
-import { IProjectRef } from '@sneat/datatug/core';
 import { ProjectContextService } from '@sneat/datatug/services/project';
 
 @Component({
@@ -23,7 +22,7 @@ export class QueriesMenuComponent {
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
 		private readonly projectContextService: ProjectContextService,
 		private readonly queriesUiService: QueriesUiService,
-		private readonly queryEditorStateService: QueryEditorStateService
+		private readonly queryEditorStateService: QueryEditorStateService,
 	) {
 		this.setupQueryEditorStateTracking();
 	}
@@ -34,19 +33,19 @@ export class QueriesMenuComponent {
 				next: (state) => {
 					console.log(
 						'QueriesMenuComponent.constructor() => QueryEditorStateService => QueryEditor state:',
-						state
+						state,
 					);
 					this.currentQueryId = state?.currentQueryId;
 					this.queries = state?.activeQueries;
 				},
 				error: this.errorLogger.logErrorHandler(
-					'failed to get query editor stage'
+					'failed to get query editor stage',
 				),
 			});
 		} catch (err) {
 			this.errorLogger.logError(
 				err,
-				'failed to subscribe for query queryEditorStateService.queryEditorState'
+				'failed to subscribe for query queryEditorStateService.queryEditorState',
 			);
 		}
 	}

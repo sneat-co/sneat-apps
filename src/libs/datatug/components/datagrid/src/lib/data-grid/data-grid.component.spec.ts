@@ -17,7 +17,7 @@ describe('DataGridComponent', () => {
 			fixture = TestBed.createComponent(DataGridComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

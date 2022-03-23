@@ -1,26 +1,21 @@
-import { EMPTY, Observable, throwError } from "rxjs";
-import {
-	IMeetingTimerRequest,
-	IMemberTimerRequest,
-	ITimerResponse
-} from "../timer";
-import { SneatTeamApiService } from "@sneat/api";
-import { IMeetingTimerService } from "../timer";
+import { EMPTY, Observable, throwError } from 'rxjs';
+import { IMeetingTimerRequest, IMeetingTimerService, IMemberTimerRequest, ITimerResponse } from '../timer';
+import { SneatTeamApiService } from '@sneat/api';
 
 export const validateMeetingRequest: (
-	request: IMeetingTimerRequest
+	request: IMeetingTimerRequest,
 ) => Observable<never> = (request) => {
 	if (!request) {
-		return throwError(() => "request parameter is required");
+		return throwError(() => 'request parameter is required');
 	}
 	if (!request.operation) {
-		return throwError(() => "operation parameter is required");
+		return throwError(() => 'operation parameter is required');
 	}
 	if (!request.team) {
-		return throwError(() => "team parameter is required");
+		return throwError(() => 'team parameter is required');
 	}
 	if (!request.meeting) {
-		return throwError(() => "meeting parameter is required");
+		return throwError(() => 'meeting parameter is required');
 	}
 	return EMPTY;
 };
@@ -28,31 +23,31 @@ export const validateMeetingRequest: (
 export abstract class BaseMeetingService implements IMeetingTimerService {
 	protected constructor(
 		public readonly meetingType: string,
-		protected readonly sneatTeamApiService: SneatTeamApiService
+		protected readonly sneatTeamApiService: SneatTeamApiService,
 	) {
 	}
 
 	public readonly toggleMemberTimer = (
-		request: IMemberTimerRequest
+		request: IMemberTimerRequest,
 	): Observable<ITimerResponse> =>
-		(!request && throwError(() => "request parameter is required")) ||
-		(!request?.member && throwError(() => "date parameter is required")) ||
-		this.toggleTimer(request, "toggle_member_timer");
+		(!request && throwError(() => 'request parameter is required')) ||
+		(!request?.member && throwError(() => 'date parameter is required')) ||
+		this.toggleTimer(request, 'toggle_member_timer');
 
 	public readonly toggleMeetingTimer = (
-		request: IMeetingTimerRequest
+		request: IMeetingTimerRequest,
 	): Observable<ITimerResponse> =>
-		this.toggleTimer(request, "toggle_meeting_timer");
+		this.toggleTimer(request, 'toggle_meeting_timer');
 
 	private toggleTimer(
 		request: IMeetingTimerRequest,
-		endpoint: "toggle_meeting_timer" | "toggle_member_timer"
+		endpoint: 'toggle_meeting_timer' | 'toggle_member_timer',
 	): Observable<ITimerResponse> {
 		return (
 			validateMeetingRequest(request) ||
 			this.sneatTeamApiService.post<ITimerResponse>(
 				`${this.meetingType}/${endpoint}`,
-				request
+				request,
 			)
 		);
 	}
@@ -61,8 +56,8 @@ export abstract class BaseMeetingService implements IMeetingTimerService {
 export const getMeetingIdFromDate = (date: Date) => {
 	const m = `` + (date.getMonth() + 1);
 	const d = `` + date.getDate();
-	return `${date.getFullYear()}-${m.length === 2 ? m : "0" + m}-${
-		d.length === 2 ? d : "0" + d
+	return `${date.getFullYear()}-${m.length === 2 ? m : '0' + m}-${
+		d.length === 2 ? d : '0' + d
 	}`;
 };
 

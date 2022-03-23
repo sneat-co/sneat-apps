@@ -17,7 +17,7 @@ describe('ParameterLookupComponent', () => {
 			fixture = TestBed.createComponent(ParameterLookupComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

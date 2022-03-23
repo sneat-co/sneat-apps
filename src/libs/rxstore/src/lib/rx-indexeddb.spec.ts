@@ -1,8 +1,8 @@
-import {IdbUpgradeCallback, IndexedDbRxStore, IndexedDbRxStoreProvider} from './rx-indexeddb';
-import {deleteDB, IDBPDatabase, IDBPTransaction, openDB} from 'idb';
-import {loggerFactory} from './logging';
-import {IValidator} from './interfaces';
-import {IRecord} from 'rxstore/schema';
+import { IdbUpgradeCallback, IndexedDbRxStore, IndexedDbRxStoreProvider } from './rx-indexeddb';
+import { deleteDB, IDBPDatabase, IDBPTransaction, openDB } from 'idb';
+import { loggerFactory } from './logging';
+import { IValidator } from './interfaces';
+import { IRecord } from 'rxstore/schema';
 
 describe('RxIndexedDb', () => {
 	const testDbName = 'test-db';
@@ -14,8 +14,8 @@ describe('RxIndexedDb', () => {
 		tx: IDBPTransaction,
 	) => {
 		console.log('idbUpgradeCallback', 'oldVersion', oldVersion, 'newVersion', newVersion);
-		db.createObjectStore('ObjStore1', {keyPath: 'id'});
-		db.createObjectStore('ObjStore2', {keyPath: 'id'});
+		db.createObjectStore('ObjStore1', { keyPath: 'id' });
+		db.createObjectStore('ObjStore2', { keyPath: 'id' });
 	};
 
 	const validators: { [id: string]: IValidator } = {
@@ -24,14 +24,14 @@ describe('RxIndexedDb', () => {
 				if (!record) {
 					throw new Error('!record');
 				}
-			}
+			},
 		},
 		ObjStore2: {
 			validate: (record: IRecord): void => {
 				if (!record) {
 					throw new Error('!record');
 				}
-			}
+			},
 		},
 	};
 
@@ -67,7 +67,7 @@ describe('RxIndexedDb', () => {
 				rxStore
 					.readwriteTransaction(
 						['ObjStore1'],
-						tx => tx.add('ObjStore1', {id: 'rec1'}),
+						tx => tx.add('ObjStore1', { id: 'rec1' }),
 					)
 					.subscribe(record => {
 						expect(record)

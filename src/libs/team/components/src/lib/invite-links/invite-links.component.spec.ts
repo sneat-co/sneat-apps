@@ -28,7 +28,7 @@ describe('InviteLinksComponent', () => {
 			fixture = TestBed.createComponent(InviteLinksComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

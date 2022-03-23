@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { SneatAuthStateService } from "./sneat-auth-state-service";
+import { Injectable } from '@angular/core';
+import { SneatAuthStateService } from './sneat-auth-state-service';
 
 @Injectable({
-	providedIn: "root",
+	providedIn: 'root',
 })
 export class LoginRequiredServiceService {
 
@@ -11,7 +11,7 @@ export class LoginRequiredServiceService {
 	) {
 		console.log('LoginRequiredServiceService.constructor()');
 		authState.authState.subscribe(state => {
-			console.log("LoginRequiredServiceService => authState:", state);
+			console.log('LoginRequiredServiceService => authState:', state);
 		});
 	}
 }

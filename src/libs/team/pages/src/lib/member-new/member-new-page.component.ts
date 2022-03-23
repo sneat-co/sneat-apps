@@ -1,33 +1,33 @@
-import { Component, Inject, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { IonInput, NavController } from "@ionic/angular";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { IAddTeamMemberRequest, ITeam } from "@sneat/team/models";
-import { IUserTeamInfoWithId } from "@sneat/auth-models";
-import { IRecord } from "@sneat/data";
-import { MemberService, TeamService } from "@sneat/team/services";
+import { Component, Inject, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IonInput, NavController } from '@ionic/angular';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IAddTeamMemberRequest, ITeam } from '@sneat/team/models';
+import { IUserTeamInfoWithId } from '@sneat/auth-models';
+import { IRecord } from '@sneat/data';
+import { MemberService, TeamService } from '@sneat/team/services';
 
 @Component({
-	selector: "sneat-member-new",
-	templateUrl: "./member-new-page.component.html",
+	selector: 'sneat-member-new',
+	templateUrl: './member-new-page.component.html',
 })
 export class MemberNewPageComponent {
-	@ViewChild("titleInput", { static: false }) titleInput?: IonInput; // TODO: strong typing : IonInput;
+	@ViewChild('titleInput', { static: false }) titleInput?: IonInput; // TODO: strong typing : IonInput;
 
-	public tab: "personal" | "mass" = "mass";
+	public tab: 'personal' | 'mass' = 'mass';
 	public teamId?: string;
 	public team?: ITeam;
 	public teamInfo?: IUserTeamInfoWithId;
-	public title = new FormControl("", [
+	public title = new FormControl('', [
 		Validators.required,
 		Validators.maxLength(50),
 	]);
-	public role = new FormControl("contributor", [Validators.required]);
+	public role = new FormControl('contributor', [Validators.required]);
 
 	// public role: 'contributor' | 'spectator' = 'contributor';
-	public email = new FormControl("", [Validators.required, Validators.email]);
-	public message = new FormControl("", [Validators.maxLength(300)]);
+	public email = new FormControl('', [Validators.required, Validators.email]);
+	public message = new FormControl('', [Validators.maxLength(300)]);
 	public addMemberForm = new FormGroup({
 		title: this.title,
 		email: this.email,
@@ -41,7 +41,7 @@ export class MemberNewPageComponent {
 		private readonly navController: NavController,
 		private readonly memberService: MemberService,
 	) {
-		console.log("MemberNewPage.constructor()");
+		console.log('MemberNewPage.constructor()');
 		try {
 			const teamRecord = window.history.state.team as IRecord<ITeam>;
 			if (teamRecord) {
@@ -49,7 +49,7 @@ export class MemberNewPageComponent {
 				this.setTeam(teamRecord.data);
 			} else {
 				route.queryParamMap.subscribe((queryParams) => {
-					const teamId = (this.teamId = queryParams.get("team") || undefined);
+					const teamId = (this.teamId = queryParams.get('team') || undefined);
 					if (teamId) {
 						teamService.getTeam(teamId).subscribe(
 							(team) => {
@@ -57,7 +57,7 @@ export class MemberNewPageComponent {
 									this.setTeam(team || undefined);
 								}
 							},
-							err => this.errorLogger.logError(err, "Failed to get team"),
+							err => this.errorLogger.logError(err, 'Failed to get team'),
 						);
 					}
 				});
@@ -65,35 +65,35 @@ export class MemberNewPageComponent {
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				"MemberNewPage.constructor(): unhandled error",
+				'MemberNewPage.constructor(): unhandled error',
 			);
 		}
 	}
 
 	public get defaultBackUrl(): string {
-		return this.teamId ? `/team?id=${this.teamId}` : "/home";
+		return this.teamId ? `/team?id=${this.teamId}` : '/home';
 	}
 
 	public ionViewDidEnter(): void {
-		if (this.tab === "personal") {
+		if (this.tab === 'personal') {
 			this.setFocusToTitleInput();
 		}
 	}
 
 	public tabChanged(): void {
-		if (this.tab === "personal") {
+		if (this.tab === 'personal') {
 			this.setFocusToTitleInput(100);
 		}
 	}
 
 	public addMember(): void {
-		console.log("NewMemberFormComponent.addMember()");
+		console.log('NewMemberFormComponent.addMember()');
 		if (!this.teamId) {
-			throw "teamId is not set";
+			throw 'teamId is not set';
 		}
 		if (!this.addMemberForm.valid) {
 			setTimeout(() => {
-				alert("Form is not valid:" + JSON.stringify(this.addMemberForm.errors));
+				alert('Form is not valid:' + JSON.stringify(this.addMemberForm.errors));
 			});
 			return;
 		}
@@ -117,11 +117,11 @@ export class MemberNewPageComponent {
 				this.navController
 					.pop()
 					.catch((err) =>
-						this.errorLogger.logError(err, "Failed to pop navigator state"),
+						this.errorLogger.logError(err, 'Failed to pop navigator state'),
 					);
 			},
 			(err) => {
-				this.errorLogger.logError(err, "Failed to add member");
+				this.errorLogger.logError(err, 'Failed to add member');
 				this.addMemberForm.enable();
 			},
 		);
@@ -130,21 +130,21 @@ export class MemberNewPageComponent {
 	private setTeam(team: ITeam | undefined): void {
 		this.team = team;
 		if (this.teamId) {
-			this.teamInfo = { id: this.teamId, title: team?.title || "loading..." };
+			this.teamInfo = { id: this.teamId, title: team?.title || 'loading...' };
 		}
 	}
 
 	private setFocusToTitleInput(delay = 1): void {
-		console.log("setFocusToTitleInput");
+		console.log('setFocusToTitleInput');
 		setTimeout(() => {
-			const errMsg = "Failed to set focus to title input",
+			const errMsg = 'Failed to set focus to title input',
 				errOpts = { feedback: false };
 			if (this.titleInput) {
 				this.titleInput
 					.setFocus()
 					.catch((err) => this.errorLogger.logError(err, errMsg, errOpts));
 			} else {
-				this.errorLogger.logError("this.titleInput not found", errMsg, errOpts);
+				this.errorLogger.logError('this.titleInput not found', errMsg, errOpts);
 			}
 		}, delay);
 	}

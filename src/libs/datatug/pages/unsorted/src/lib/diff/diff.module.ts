@@ -8,4 +8,5 @@ import { DiffPage } from './diff.page';
 	imports: [CommonModule, IonicModule, DiffPageRoutingModule],
 	declarations: [DiffPage],
 })
-export class DiffPageModule {}
+export class DiffPageModule {
+}

@@ -28,7 +28,7 @@ describe('ScrumsHistoryPage', () => {
 			fixture = TestBed.createComponent(ScrumsHistoryPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

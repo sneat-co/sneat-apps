@@ -18,4 +18,5 @@ import { UserProfilePage } from './user-profile.page';
 	],
 	declarations: [UserProfilePage],
 })
-export class UserProfilePageModule {}
+export class UserProfilePageModule {
+}

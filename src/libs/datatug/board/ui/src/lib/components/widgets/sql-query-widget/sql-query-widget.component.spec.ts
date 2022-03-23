@@ -17,7 +17,7 @@ describe('SqlQueryWidgetComponent', () => {
 			fixture = TestBed.createComponent(SqlQueryWidgetComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

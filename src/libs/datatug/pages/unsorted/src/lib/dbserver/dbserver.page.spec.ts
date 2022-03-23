@@ -17,7 +17,7 @@ describe('DbserverPage', () => {
 			fixture = TestBed.createComponent(DbserverPage);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

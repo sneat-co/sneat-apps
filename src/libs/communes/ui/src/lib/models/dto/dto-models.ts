@@ -1,6 +1,6 @@
 /* tslint:disable:no-bitwise */
-import { Age, Gender, Restriction } from "../types";
-import { IRecord, RxRecordKey } from "@sneat/rxstore";
+import { Age, Gender, Restriction } from '../types';
+import { IRecord, RxRecordKey } from '@sneat/rxstore';
 
 // import {IPersonSize} from '../ui/dto-sizechart';
 

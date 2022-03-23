@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatatugStoreGithubService } from './datatug-store.service.github';
-import { DatatugStoreFirestoreService } from "./datatug-store.service.firestore";
-import { IDatatugStoreService } from "./datatug-store.service.interface";
+import { DatatugStoreFirestoreService } from './datatug-store.service.firestore';
+import { IDatatugStoreService } from './datatug-store.service.interface';
 
 @Injectable({ providedIn: 'root' })
 export class DatatugStoreServiceFactory {
@@ -9,8 +9,9 @@ export class DatatugStoreServiceFactory {
 
 	constructor(
 		private readonly firestoreService: DatatugStoreFirestoreService,
-		private readonly githubService: DatatugStoreGithubService
-	) {}
+		private readonly githubService: DatatugStoreGithubService,
+	) {
+	}
 
 	getDatatugStoreService(store: string): IDatatugStoreService {
 		switch (store) {

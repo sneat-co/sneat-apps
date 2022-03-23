@@ -2,10 +2,9 @@ import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput, PopoverController, ViewDidEnter } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ProjectService } from '@sneat/datatug/services/project';
-import { IProjStoreRef } from '@sneat/datatug/models';
 import { DatatugNavService } from '@sneat/datatug/services/nav';
 import { IProjectContext } from '@sneat/datatug/nav';
-import { parseStoreRef, storeRefToId } from '@sneat/core';
+import { parseStoreRef } from '@sneat/core';
 
 @Component({
 	selector: 'datatug-new-project-form',
@@ -25,8 +24,9 @@ export class NewProjectFormComponent implements ViewDidEnter {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly projectService: ProjectService,
 		private readonly popoverController: PopoverController,
-		private readonly nav: DatatugNavService
-	) {}
+		private readonly nav: DatatugNavService,
+	) {
+	}
 
 	ionViewDidEnter(): void {
 		setTimeout(() => {
@@ -54,8 +54,8 @@ export class NewProjectFormComponent implements ViewDidEnter {
 						.dismiss()
 						.catch(
 							this.errorLogger.logErrorHandler(
-								'failed to close popover with new project form'
-							)
+								'failed to close popover with new project form',
+							),
 						);
 					const projectContext: IProjectContext = {
 						ref: { projectId, storeId },

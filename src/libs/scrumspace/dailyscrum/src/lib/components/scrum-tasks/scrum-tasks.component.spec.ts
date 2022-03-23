@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../../environments/environment';
 import { UserService } from '../../../services/user-service';
-import { TeamService } from "@sneat/team/services";
+import { TeamService } from '@sneat/team/services';
 
 describe('ScrumTasksComponent', () => {
 	let component: ScrumTasksComponent;
@@ -27,7 +27,7 @@ describe('ScrumTasksComponent', () => {
 			fixture = TestBed.createComponent(ScrumTasksComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

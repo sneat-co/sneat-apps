@@ -5,12 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
-import { BaseTeamPageDirective } from "@sneat/team/components";
-import { IRetroItem, IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
-import { TeamService } from "@sneat/team/services";
-import { SneatUserService } from "@sneat/user";
-import { getMeetingIdFromDate } from "@sneat/meeting";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { BaseTeamPageDirective } from '@sneat/team/components';
+import { IRetroItem, IRetrospective, RetrospectiveStage } from '@sneat/scrumspace/scrummodels';
+import { TeamService } from '@sneat/team/services';
+import { SneatUserService } from '@sneat/user';
+import { getMeetingIdFromDate } from '@sneat/meeting';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-retro-tree',
@@ -114,7 +114,7 @@ export class RetroTreePageComponent extends BaseTeamPageDirective {
 		readonly navController: NavController,
 		readonly teamService: TeamService,
 		readonly userService: SneatUserService,
-		private retrospectiveService: RetrospectiveService
+		private retrospectiveService: RetrospectiveService,
 	) {
 		super(
 			changeDetectorRef,
@@ -122,7 +122,7 @@ export class RetroTreePageComponent extends BaseTeamPageDirective {
 			errorLogger,
 			navController,
 			teamService,
-			userService
+			userService,
 		);
 		this.trackTeamIdFromUrl();
 		route.queryParamMap.subscribe((queryParams) => {

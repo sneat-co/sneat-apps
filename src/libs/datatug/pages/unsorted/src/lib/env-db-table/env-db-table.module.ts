@@ -33,4 +33,5 @@ import { DatatugComponentsDatagridModule } from '@sneat/datatug/components/datag
 		RefByCardComponent,
 	],
 })
-export class EnvDbTablePageModule {}
+export class EnvDbTablePageModule {
+}

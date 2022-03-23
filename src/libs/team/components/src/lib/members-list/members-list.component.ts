@@ -1,19 +1,11 @@
-import {
-	Component,
-	EventEmitter,
-	Inject,
-	Input,
-	OnChanges,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { listAddRemoveAnimation } from '@sneat/animations';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/user';
-import { IMemberInfo, ITeam, MemberRole, MemberRoleEnum } from "@sneat/team/models";
-import { TeamNavService, TeamService } from "@sneat/team/services";
+import { IMemberInfo, ITeam, MemberRole, MemberRoleEnum } from '@sneat/team/models';
+import { TeamNavService, TeamService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-members-list',
@@ -34,8 +26,9 @@ export class MembersListComponent implements OnChanges {
 		private navController: NavController,
 		private userService: SneatUserService,
 		private teamService: TeamService,
-		@Inject(ErrorLogger) private errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
+	) {
+	}
 
 	public id = (_: number, m: IMemberInfo) => m.id;
 
@@ -43,7 +36,7 @@ export class MembersListComponent implements OnChanges {
 		console.log('TeamPage.goMember()', member);
 		if (!this.team) {
 			this.errorLogger.logError(
-				'Can not navigate to team member without team context'
+				'Can not navigate to team member without team context',
 			);
 			return;
 		}
@@ -54,7 +47,7 @@ export class MembersListComponent implements OnChanges {
 				id: 'myself',
 				title: 'Myself',
 				roles: [MemberRoleEnum.contributor],
-			}
+			},
 		);
 	}
 
@@ -64,8 +57,8 @@ export class MembersListComponent implements OnChanges {
 				this.role === null
 					? this.allMembers
 					: this.allMembers?.filter((m) =>
-							m.roles?.some((r) => r === this.role)
-					  );
+						m.roles?.some((r) => r === this.role),
+					);
 		}
 	}
 

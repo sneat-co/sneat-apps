@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { DatatugSignedOutPage } from './datatug-signed-out-page.component';
 
@@ -14,4 +14,5 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class DatatugSignedOutPageRoutingModule {}
+export class DatatugSignedOutPageRoutingModule {
+}

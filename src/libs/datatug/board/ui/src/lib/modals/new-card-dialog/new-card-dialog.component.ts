@@ -14,15 +14,16 @@ export class NewCardDialogComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalCtrl: ModalController
-	) {}
+		private readonly modalCtrl: ModalController,
+	) {
+	}
 
 	ionViewDidEnter() {
 		setTimeout(() => {
 			this.inputTitle
 				?.setFocus()
 				.catch((err) =>
-					this.errorLogger.logError(err, 'Failed to set focus to title input')
+					this.errorLogger.logError(err, 'Failed to set focus to title input'),
 				);
 		}, 100);
 	}
@@ -37,7 +38,7 @@ export class NewCardDialogComponent {
 		this.modalCtrl
 			.dismiss()
 			.catch(
-				this.errorLogger.logErrorHandler('Failed to dismiss modal on cancel')
+				this.errorLogger.logErrorHandler('Failed to dismiss modal on cancel'),
 			);
 	}
 }

@@ -24,4 +24,5 @@ import { AddRetroItemComponent } from '../../components/add-retro-item/add-retro
 	],
 	declarations: [AddRetroItemComponent, RetroItemCardComponent, RetroTreePageComponent],
 })
-export class RetroTreePageModule {}
+export class RetroTreePageModule {
+}

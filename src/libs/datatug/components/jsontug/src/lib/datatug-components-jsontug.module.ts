@@ -8,4 +8,5 @@ import { JsonGridComponent } from './json-grid.component';
 	declarations: [JsonTableComponent, JsonGridComponent],
 	exports: [JsonTableComponent],
 })
-export class DatatugComponentsJsontugModule {}
+export class DatatugComponentsJsontugModule {
+}

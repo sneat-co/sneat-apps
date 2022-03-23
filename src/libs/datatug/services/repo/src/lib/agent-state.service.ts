@@ -21,7 +21,8 @@ const periodMs = 10000;
 export class AgentStateService {
 	private watchers: { [storeId: string]: Observable<IAgentState> } = {};
 
-	constructor(private repoApiService: StoreApiService) {}
+	constructor(private repoApiService: StoreApiService) {
+	}
 
 	public getAgentInfo(storeId: string): Observable<IAgentState> {
 		return this.watchAgentInfo(storeId).pipe(first());
@@ -46,14 +47,14 @@ export class AgentStateService {
 							return of(undefined);
 						}
 						return throwError(err);
-					})
-				)
+					}),
+				),
 			),
 			map((info) => ({
 				info,
 				lastCheckedAt: new Date(),
 				isNotAvailable: info === undefined,
-			}))
+			})),
 		);
 		this.watchers[storeId] = watcher;
 		return watcher;

@@ -1,8 +1,9 @@
-import {beforeComplete} from './beforeComplete';
+import { beforeComplete } from './beforeComplete';
 
 describe('beforeComplete', () => {
 	it('should be created', () => {
-		const operator = beforeComplete(() => {});
+		const operator = beforeComplete(() => {
+		});
 		expect(operator)
 			.toBeTruthy();
 	});

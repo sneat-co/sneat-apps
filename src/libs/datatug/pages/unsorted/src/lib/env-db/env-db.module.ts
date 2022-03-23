@@ -12,4 +12,5 @@ import { EnvDbPageComponent } from './env-db-page.component';
 	imports: [CommonModule, FormsModule, IonicModule, EnvDbPageRoutingModule],
 	declarations: [EnvDbPageComponent],
 })
-export class EnvDbPageModule {}
+export class EnvDbPageModule {
+}

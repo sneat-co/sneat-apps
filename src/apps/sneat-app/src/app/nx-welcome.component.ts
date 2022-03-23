@@ -843,7 +843,9 @@ nx affected:e2e</pre>
 	encapsulation: ViewEncapsulation.None,
 })
 export class NxWelcomeComponent implements OnInit {
-	constructor() {}
+	constructor() {
+	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+	}
 }

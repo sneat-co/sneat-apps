@@ -1,11 +1,11 @@
-import { DtoTotal, DtoTotals } from "../dto/dto-models";
-import { CommuneType, Period } from "../types";
-import { IAssetDtoGroup, IAssetDtoGroupCounts } from "../dto/dto-asset";
-import { ICommuneCounts, ICommuneDto, newCommuneCounts } from "../dto/dto-commune";
-import { IMemberDto, IMemberGroupDto, IMemberGroupDtoCounts } from "../dto/dto-member";
-import { DtoGroupTerms } from "../dto/dto-term";
-import { ICommuneIds } from "../commune-ids";
-import { RxRecordKey } from "@sneat/rxstore";
+import { DtoTotal, DtoTotals } from '../dto/dto-models';
+import { CommuneType, Period } from '../types';
+import { IAssetDtoGroup, IAssetDtoGroupCounts } from '../dto/dto-asset';
+import { ICommuneCounts, ICommuneDto, newCommuneCounts } from '../dto/dto-commune';
+import { IMemberDto, IMemberGroupDto, IMemberGroupDtoCounts } from '../dto/dto-member';
+import { DtoGroupTerms } from '../dto/dto-term';
+import { ICommuneIds } from '../commune-ids';
+import { RxRecordKey } from '@sneat/rxstore';
 
 export class Total {
 	constructor(
@@ -22,15 +22,15 @@ export class Total {
 
 	public per(period: Period): number {
 		switch (period) {
-			case "month":
+			case 'month':
 				return this.perMonth();
-			case "year":
+			case 'year':
 				return this.perYear();
-			case "quarter":
+			case 'quarter':
 				return this.perQuarter();
-			case "week":
+			case 'week':
 				return this.perWeek();
-			case "day":
+			case 'day':
 				return this.perDay();
 			default:
 				throw new Error(`unknown period: ${period}`);
@@ -209,12 +209,12 @@ export class Totals {
 		return 0;
 	}
 
-	balance(per: "month" | "day"): number {
+	balance(per: 'month' | 'day'): number {
 		switch (per) {
-			case "month":
+			case 'month':
 				// tslint:disable-next-line:no-magic-numbers
 				return Math.round((this.incomes.perMonth() - this.expenses.perMonth()) * 100) / 100;
-			case "day":
+			case 'day':
 				// tslint:disable-next-line:no-magic-numbers
 				return Math.round((this.incomes.perDay() - this.expenses.perDay()) * 100) / 100;
 			default:
@@ -242,7 +242,7 @@ export class Member {
 	}
 
 	public get emoji(): string {
-		return this.dto.age === "child" ? "🧒" : "🧑";
+		return this.dto.age === 'child' ? '🧒' : '🧑';
 	}
 }
 
@@ -293,7 +293,7 @@ export class Commune implements ICommune {
 
 	public get isSupportingMemberGroups(): boolean {
 		const t = this.dto.type;
-		return t === "educator" || t === "sportclub" || t === "cohabit";
+		return t === 'educator' || t === 'sportclub' || t === 'cohabit';
 	}
 
 	public get numberOf(): ICommuneCounts {
@@ -320,15 +320,15 @@ export class Commune implements ICommune {
 
 	private _membersCountByRole?: { role: string; count: number }[];
 
-	public supports(v: "staff" | "pupils"): boolean {
+	public supports(v: 'staff' | 'pupils'): boolean {
 		if (!v) {
 			return false;
 		}
 		switch (v) {
-			case "staff":
-				return this.type === "educator" || this.type === "realtor";
-			case "pupils":
-				return this.type === "educator";
+			case 'staff':
+				return this.type === 'educator' || this.type === 'realtor';
+			case 'pupils':
+				return this.type === 'educator';
 			default:
 				break;
 		}

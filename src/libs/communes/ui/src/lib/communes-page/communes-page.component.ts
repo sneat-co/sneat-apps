@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: "sneat-communes-page",
-	templateUrl: "./communes-page.component.html",
+	selector: 'sneat-communes-page',
+	templateUrl: './communes-page.component.html',
 })
 export class CommunesPageComponent implements OnInit {
 

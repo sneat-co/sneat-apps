@@ -1,25 +1,14 @@
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	OnInit,
-	SimpleChanges,
-} from '@angular/core';
-import {
-	allUserProjectsAsFlatList,
 	allUserStoresAsFlatList,
 	DatatugProjStoreType,
 	IDatatugStoreBrief,
-	IDatatugStoreBriefsById,
 	IDatatugStoreBriefWithId,
-	IDatatugUser,
 } from '@sneat/datatug/models';
 import { AgentStateService, IAgentState } from '@sneat/datatug/services/repo';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { DatatugNavService } from '@sneat/datatug/services/nav';
 import { NavController } from '@ionic/angular';
 import { DatatugUserService } from '@sneat/datatug/services/base';
@@ -47,8 +36,9 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 		private readonly navController: NavController,
 		readonly agentStateService: AgentStateService,
 		private readonly datatugNavService: DatatugNavService,
-		private readonly datatugUserService: DatatugUserService
-	) {}
+		private readonly datatugUserService: DatatugUserService,
+	) {
+	}
 
 	ngOnInit(): void {
 		this.agentStateService
@@ -75,7 +65,7 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 					}
 				},
 				error: this.errorLogger.logErrorHandler(
-					'Failed to get datatug user state'
+					'Failed to get datatug user state',
 				),
 			});
 	}
@@ -114,7 +104,7 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 
 	public openHelp(
 		event: Event,
-		path: 'agent' | 'cloud' | 'github.com' | 'private-repos'
+		path: 'agent' | 'cloud' | 'github.com' | 'private-repos',
 	): void {
 		event.preventDefault();
 		event.stopPropagation();

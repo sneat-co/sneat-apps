@@ -15,4 +15,5 @@ import { DatatugComponentsJsontugModule } from '@datatug/jsonrows';
 	declarations: [HttpQueryEditorComponent],
 	exports: [HttpQueryEditorComponent],
 })
-export class HttpQueryEditorModule {}
+export class HttpQueryEditorModule {
+}

@@ -1,23 +1,13 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import {
-	folderItemsAsList,
-	IFolder,
-	IFolderItem,
-	IProjBoard,
-	IProjItemBrief,
-	IProjStoreRef,
-} from '@sneat/datatug/models';
+import { folderItemsAsList, IFolder, IProjBoard, IProjItemBrief, IProjStoreRef } from '@sneat/datatug/models';
 import { IProjectContext } from '@sneat/datatug/nav';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavContextService, DatatugNavService } from '@sneat/datatug/services/nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DatatugBoardService } from "@sneat/datatug/board/core";
-import { DatatugFoldersService } from "@sneat/datatug/folders/core";
+import { DatatugBoardService } from '@sneat/datatug/board/core';
+import { DatatugFoldersService } from '@sneat/datatug/folders/core';
 
 @Component({
 	selector: 'datatug-boards',
@@ -41,7 +31,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly boardService: DatatugBoardService,
 		private readonly alertCtrl: AlertController,
-		private readonly foldersService: DatatugFoldersService
+		private readonly foldersService: DatatugFoldersService,
 	) {
 		this.tabChanged(this.tab);
 		this.datatugNavContextService.currentProject
@@ -55,14 +45,14 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 					} catch (e) {
 						this.errorLogger.logError(
 							e,
-							'Failed to process current project in Boards page'
+							'Failed to process current project in Boards page',
 						);
 					}
 				},
 				error: (err) =>
 					this.errorLogger.logError(
 						err,
-						'Failed to get current project at Boards page'
+						'Failed to get current project at Boards page',
 					),
 			});
 	}
@@ -152,7 +142,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 								},
 								error: this.logError(
 									() =>
-										`Failed to create a new board with title [${value.title}]`
+										`Failed to create a new board with title [${value.title}]`,
 								),
 							});
 					},

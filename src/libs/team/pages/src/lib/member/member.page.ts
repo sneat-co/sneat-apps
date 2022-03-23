@@ -2,11 +2,11 @@ import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
-import { IErrorLogger, ErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberInfo, ITeam } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/user';
-import { TeamService } from "@sneat/team/services";
+import { TeamService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-member',
@@ -32,7 +32,7 @@ export class MemberPageComponent implements OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
-		private readonly teamService: TeamService
+		private readonly teamService: TeamService,
 	) {
 		console.log('MemberPage.constructor()');
 		try {
@@ -58,8 +58,8 @@ export class MemberPageComponent implements OnDestroy {
 				(err) =>
 					this.errorLogger.logError(
 						err,
-						'MemberPage.constructor() => failed to retrieve query parameters'
-					)
+						'MemberPage.constructor() => failed to retrieve query parameters',
+					),
 			);
 			this.userService.userChanged.subscribe({
 				next: (userId) => {
@@ -68,7 +68,7 @@ export class MemberPageComponent implements OnDestroy {
 				error: (err) =>
 					this.errorLogger.logError(
 						err,
-						'MemberPage.constructor() => userChanged'
+						'MemberPage.constructor() => userChanged',
 					),
 			});
 		} catch (e) {
@@ -81,20 +81,20 @@ export class MemberPageComponent implements OnDestroy {
 			!confirm(
 				`Are you sure you want to remove ${
 					this.memberInfo?.title || this.memberInfo?.id
-				} from ${this.team?.data?.title}?`
+				} from ${this.team?.data?.title}?`,
 			)
 		) {
 			return;
 		}
 		if (!this.team) {
 			this.errorLogger.logError(
-				'Can not remove team member without team context'
+				'Can not remove team member without team context',
 			);
 			return;
 		}
 		if (!this.memberId) {
 			this.errorLogger.logError(
-				'Can not remove team member without knowing member ID'
+				'Can not remove team member without knowing member ID',
 			);
 			return;
 		}
@@ -103,7 +103,7 @@ export class MemberPageComponent implements OnDestroy {
 				this.navController
 					.pop()
 					.catch((err) =>
-						this.errorLogger.logError(err, 'Failed to pop navigator state')
+						this.errorLogger.logError(err, 'Failed to pop navigator state'),
 					);
 			},
 			error: (err) => this.errorLogger.logError(err, 'Failed to remove member'),
@@ -124,7 +124,7 @@ export class MemberPageComponent implements OnDestroy {
 		}
 		if (!this.memberId) {
 			this.errorLogger.logError(
-				'Can not change role without knowing member ID'
+				'Can not change role without knowing member ID',
 			);
 			return;
 		}
@@ -186,7 +186,7 @@ export class MemberPageComponent implements OnDestroy {
 				error: (err) =>
 					this.errorLogger.logError(
 						err,
-						'MemberPage.onTeamIdChanged() => Failed to get team'
+						'MemberPage.onTeamIdChanged() => Failed to get team',
 					),
 			});
 		}
@@ -196,7 +196,7 @@ export class MemberPageComponent implements OnDestroy {
 		if (this.team) {
 			const memberId = this.memberId;
 			this.memberInfo = this.team?.data?.members?.find(
-				(m) => m.id === memberId
+				(m) => m.id === memberId,
 			);
 		}
 	}

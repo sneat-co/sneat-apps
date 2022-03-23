@@ -1,5 +1,5 @@
-import {ICommuneRecord, ITitledRecord} from './dto-models';
-import {IPrice} from './dto-pricing';
+import { ICommuneRecord, ITitledRecord } from './dto-models';
+import { IPrice } from './dto-pricing';
 
 export interface DtoTerm extends ICommuneRecord, ITitledRecord {
 	status: 'active' | 'archived';

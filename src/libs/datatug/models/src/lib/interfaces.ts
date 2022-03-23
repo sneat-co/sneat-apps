@@ -1,11 +1,6 @@
 import { IUserRecord } from '@sneat/auth-models';
 import { ProjectAccess } from './definition';
-import {
-	IStoreRef,
-	STORE_ID_GITHUB_COM,
-	STORE_TYPE_GITHUB,
-	StoreType,
-} from '@sneat/core';
+import { IStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB, StoreType } from '@sneat/core';
 import { IProjectRef } from '@sneat/datatug/core';
 
 // export interface IRecord<T> { // TODO: duplicate name
@@ -47,7 +42,7 @@ export const cloudStoreEmoji = '☁️';
 export const cloudStoreTitleWithIcon = `${cloudStoreEmoji} ${cloudStoreTitle}`;
 
 export function allUserStoresAsFlatList(
-	stores?: IDatatugStoreBriefsById
+	stores?: IDatatugStoreBriefsById,
 ): IDatatugStoreBriefWithId[] {
 	const result: IDatatugStoreBriefWithId[] = [];
 	stores = stores || {};
@@ -65,7 +60,7 @@ export function allUserStoresAsFlatList(
 	}
 
 	const hasLocalhost = Object.keys(stores).some((v) =>
-		v.startsWith('http://localhost:')
+		v.startsWith('http://localhost:'),
 	);
 	if (!hasLocalhost) {
 		stores = {
@@ -93,7 +88,7 @@ export function allUserStoresAsFlatList(
 }
 
 export function allUserProjectsAsFlatList(
-	stores: IDatatugStoreBriefsById
+	stores: IDatatugStoreBriefsById,
 ): IProjectAndStore[] {
 	const projects: IProjectAndStore[] = [];
 	for (const storeId in stores) {

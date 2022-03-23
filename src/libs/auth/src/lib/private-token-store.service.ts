@@ -10,7 +10,7 @@ export const canceledByUser = 'canceled by user';
 export class PrivateTokenStoreService {
 	public getPrivateToken(
 		domain: string,
-		projectId: string
+		projectId: string,
 	): Observable<string> {
 		// Consider storing all tokens in a single item
 		const key = tokenKey(domain, projectId);

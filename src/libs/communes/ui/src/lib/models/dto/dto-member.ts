@@ -1,35 +1,35 @@
-import { MembersVisibility, MemberType } from "../types";
-import { IContact2Member } from "./dto-contact";
-import { ICommuneRecord, IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from "./dto-models";
-import { DtoGroupTerms } from "./dto-term";
+import { MembersVisibility, MemberType } from '../types';
+import { IContact2Member } from './dto-contact';
+import { ICommuneRecord, IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
+import { DtoGroupTerms } from './dto-term';
 // import {RxRecordKey} from 'rxstore';
-import { ICommuneMemberInfo } from "./dto-commune";
-import { EnumAsUnionOfKeys, excludeUndefined } from "@sneat/core";
-import { RxRecordKey } from "@sneat/rxstore";
+import { ICommuneMemberInfo } from './dto-commune';
+import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
+import { RxRecordKey } from '@sneat/rxstore';
 
-export type MemberRoleParish = "pastor";
-export type MemberRoleEducation = "administrator" | "principal" | "pupil" | "teacher";
-export type MemberRoleRealtor = "administrator" | "agent";
+export type MemberRoleParish = 'pastor';
+export type MemberRoleEducation = 'administrator' | 'principal' | 'pupil' | 'teacher';
+export type MemberRoleRealtor = 'administrator' | 'agent';
 export type MemberRole = MemberRoleEducation | MemberRoleRealtor | MemberRoleParish;
 
 export const enum FamilyMemberRelation {
-	child = "child",
-	parent = "parent",
-	grandparent = "grandparent",
-	sibling = "sibling",
-	spouse = "spouse",
-	partner = "partner",
+	child = 'child',
+	parent = 'parent',
+	grandparent = 'grandparent',
+	sibling = 'sibling',
+	spouse = 'spouse',
+	partner = 'partner',
 }
 
 export function familyRelationTitle(id: FamilyMemberRelation): string {
 	const s = (id as string);
-	return s ? s[0].toUpperCase() + s.substr(1) : "";
+	return s ? s[0].toUpperCase() + s.substr(1) : '';
 }
 
 export type FamilyMemberRelations = EnumAsUnionOfKeys<typeof FamilyMemberRelation>;
 
-export const MemberRelationshipOther = "other";
-export const MemberRelationshipUndisclosed = "undisclosed";
+export const MemberRelationshipOther = 'other';
+export const MemberRelationshipUndisclosed = 'undisclosed';
 
 export type MemberRelationship =
 	FamilyMemberRelations
@@ -69,7 +69,7 @@ export function memberDtoFromMemberInfo(memberInfo: ICommuneMemberInfo, communeI
 		...memberInfo,
 		communeId,
 		title,
-		type: "member",
+		type: 'member',
 	});
 }
 

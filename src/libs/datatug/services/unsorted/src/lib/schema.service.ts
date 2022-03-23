@@ -8,16 +8,17 @@ import { createProjItem } from '@sneat/datatug/services/base';
 
 @Injectable()
 export class SchemaService {
-	constructor(private readonly api: SneatTeamApiService) {}
+	constructor(private readonly api: SneatTeamApiService) {
+	}
 
 	public createSchema = (
-		request: CreateNamedRequest
+		request: CreateNamedRequest,
 	): Observable<IRecord<ISchema>> => {
 		try {
 			return createProjItem<ISchema>(
 				this.api,
 				'datatug/schema/create_schema',
-				request
+				request,
 			);
 		} catch (err) {
 			return throwError(err);

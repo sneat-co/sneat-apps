@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
-import { ISneatAuthState, SneatAuthStateService } from "../sneat-auth-state-service";
+import { Component } from '@angular/core';
+import { ISneatAuthState, SneatAuthStateService } from '../sneat-auth-state-service';
 
 @Component({
-	selector: "sneat-login-required",
-	templateUrl: "./login-required.component.html",
+	selector: 'sneat-login-required',
+	templateUrl: './login-required.component.html',
 })
 export class LoginRequiredComponent {
 

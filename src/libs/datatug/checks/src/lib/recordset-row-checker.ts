@@ -1,19 +1,12 @@
 import { IRecordsetCheckResults, IRecordsetResult } from '@sneat/datatug/dto';
-import {
-	IRecordsetCheckDef,
-	IRecordsetDef,
-	IRecordsetMinCountCheckDef,
-} from '@sneat/datatug/models';
+import { IRecordsetCheckDef, IRecordsetDef, IRecordsetMinCountCheckDef } from '@sneat/datatug/models';
 import { IRecordsetCheck } from './recordset/interfaces';
-import {
-	RecordsetMaxCountCheck,
-	RecordsetMinCountCheck,
-} from './recordset/count-checks';
+import { RecordsetMaxCountCheck, RecordsetMinCountCheck } from './recordset/count-checks';
 import { newFieldCheckFromDef } from './values/mapper';
 
 export function checkRecordsetResult(
 	def: IRecordsetDef,
-	result: IRecordsetResult
+	result: IRecordsetResult,
 ): IRecordsetCheckResults {
 	const checks = def.checks?.map(newRecordsetCheckFromDef);
 	const results: IRecordsetCheckResults = {
@@ -48,7 +41,7 @@ export function checkRecordsetResult(
 }
 
 export const newRecordsetCheckFromDef = (
-	def: IRecordsetCheckDef
+	def: IRecordsetCheckDef,
 ): IRecordsetCheck => {
 	switch (def.type) {
 		case 'min':

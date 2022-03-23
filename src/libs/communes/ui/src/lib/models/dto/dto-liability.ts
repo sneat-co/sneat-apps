@@ -1,6 +1,6 @@
-import {LiabilityDirection, LiabilityServiceType, LiabilityType, Period} from '../types';
-import {ICommuneRecord, ITitledRecord} from './dto-models';
-import {RxRecordKey} from 'rxstore';
+import { LiabilityDirection, LiabilityServiceType, LiabilityType, Period } from '../types';
+import { ICommuneRecord, ITitledRecord } from './dto-models';
+import { RxRecordKey } from 'rxstore';
 
 export interface DtoLiability extends ICommuneRecord, ITitledRecord {
 	memberId?: RxRecordKey;

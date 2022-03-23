@@ -5,8 +5,9 @@ export class LookupPipe implements IPipe {
 		private readonly data: { [id: string]: string },
 		public readonly path: string,
 		private readonly sourceProp: string,
-		private readonly targetProp: string
-	) {}
+		private readonly targetProp: string,
+	) {
+	}
 
 	public tunnel(o: unknown): any {
 		let a = o as any;

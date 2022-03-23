@@ -17,7 +17,7 @@ describe('DiffPage', () => {
 			fixture = TestBed.createComponent(DiffPage);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -12,4 +12,5 @@ import { DbserverPage } from './dbserver.page';
 	imports: [CommonModule, FormsModule, IonicModule, DbserverPageRoutingModule],
 	declarations: [DbserverPage],
 })
-export class DbserverPageModule {}
+export class DbserverPageModule {
+}

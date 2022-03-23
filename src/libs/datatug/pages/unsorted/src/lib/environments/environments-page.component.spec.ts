@@ -17,7 +17,7 @@ describe('EnvironmentsPage', () => {
 			fixture = TestBed.createComponent(EnvironmentsPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

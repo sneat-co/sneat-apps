@@ -17,7 +17,7 @@ describe('BoardWidgetComponent', () => {
 			fixture = TestBed.createComponent(BoardWidgetComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

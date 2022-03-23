@@ -1,21 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import {
+	Action,
 	AngularFirestore,
 	AngularFirestoreCollection,
-	Action,
 	DocumentSnapshot,
 } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import { SneatTeamApiService } from '@sneat/api';
 import { IUserRecord } from '@sneat/auth-models';
-import {
-	AuthStatuses,
-	initialSneatAuthState,
-	ISneatAuthState,
-	ISneatAuthUser,
-	SneatAuthStateService,
-} from '@sneat/auth';
+import { initialSneatAuthState, ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
 
 export interface ISneatUserState extends ISneatAuthState {
 	record?: IUserRecord | null; // undefined => not loaded yet, null = does not exists
@@ -33,7 +27,7 @@ export class SneatUserService {
 	public readonly userChanged = this.userChanged$.asObservable();
 
 	private readonly userState$ = new BehaviorSubject<ISneatUserState>(
-		initialSneatAuthState
+		initialSneatAuthState,
 	);
 	public readonly userState = this.userState$.asObservable();
 
@@ -61,7 +55,7 @@ export class SneatUserService {
 					}
 				},
 				error: this.errorLogger.logErrorHandler(
-					'failed to get sneat auth state'
+					'failed to get sneat auth state',
 				),
 			});
 	}
@@ -112,14 +106,14 @@ export class SneatUserService {
 		this.userDocSubscription = userDocRef.snapshotChanges().subscribe({
 			next: (changes) => this.userDocChanged(changes, authState),
 			error: this.errorLogger.logErrorHandler(
-				'SneatUserService failed to get user record'
+				'SneatUserService failed to get user record',
 			),
 		});
 	}
 
 	private userDocChanged(
 		changes: Action<DocumentSnapshot<IUserRecord>>,
-		authState: ISneatAuthState
+		authState: ISneatAuthState,
 	): void {
 		// console.log('SneatUserService => User record changed', changes);
 		if (

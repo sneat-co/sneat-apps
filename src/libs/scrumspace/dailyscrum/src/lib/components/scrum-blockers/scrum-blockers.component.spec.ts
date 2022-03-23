@@ -17,7 +17,7 @@ describe('ScrumBlockersComponent', () => {
 			fixture = TestBed.createComponent(ScrumBlockersComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

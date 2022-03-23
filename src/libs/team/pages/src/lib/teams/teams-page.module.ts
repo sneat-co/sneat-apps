@@ -22,4 +22,5 @@ import { TeamsCardComponent } from './teams-card/teams-card.component';
 	],
 	declarations: [TeamsPageComponent, IntroComponent, TeamsCardComponent],
 })
-export class TeamsPageModule {}
+export class TeamsPageModule {
+}

@@ -7,8 +7,9 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 export class NewProjectService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController
-	) {}
+		private readonly popoverController: PopoverController,
+	) {
+	}
 
 	public openNewProjectDialog(event: Event): void {
 		console.log('openNewProjectDialog', event);
@@ -22,8 +23,8 @@ export class NewProjectService {
 							.dismiss()
 							.catch(
 								this.errorLogger.logErrorHandler(
-									'failed to dismiss popover on cancel'
-								)
+									'failed to dismiss popover on cancel',
+								),
 							),
 				},
 			})

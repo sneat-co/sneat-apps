@@ -16,4 +16,5 @@ import { NewProjectFormModule } from '@sneat/datatug/project';
 	],
 	declarations: [DatatugStorePageComponent],
 })
-export class DatatugStorePageModule {}
+export class DatatugStorePageModule {
+}

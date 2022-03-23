@@ -19,4 +19,5 @@ import { SneatCardListModule } from '@sneat/components';
 	],
 	declarations: [DbModelPage],
 })
-export class DbModelPageModule {}
+export class DbModelPageModule {
+}

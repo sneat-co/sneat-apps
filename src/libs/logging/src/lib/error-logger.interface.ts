@@ -12,7 +12,7 @@ export interface IErrorLogger {
 
 	logErrorHandler(
 		message?: string,
-		options?: ILogErrorOptions
+		options?: ILogErrorOptions,
 	): (error: any) => void;
 }
 

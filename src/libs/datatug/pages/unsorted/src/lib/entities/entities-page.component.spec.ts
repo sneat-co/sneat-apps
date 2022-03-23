@@ -17,7 +17,7 @@ describe('EntitiesPage', () => {
 			fixture = TestBed.createComponent(EntitiesPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

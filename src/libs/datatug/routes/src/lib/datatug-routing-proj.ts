@@ -40,14 +40,14 @@ export const datatugProjectRoutes: Routes = [
 		path: 'new-entity',
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EntityEditPageModule
+				(m) => m.EntityEditPageModule,
 			),
 	},
 	{
 		path: 'environments',
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvironmentsPageModule
+				(m) => m.EnvironmentsPageModule,
 			),
 	},
 	{
@@ -87,14 +87,14 @@ export const datatugProjectRoutes: Routes = [
 		path: 'resources',
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.ResourcesPageModule
+				(m) => m.ResourcesPageModule,
 			),
 	},
 	{
 		path: 'variables',
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.VariablesPageModule
+				(m) => m.VariablesPageModule,
 			),
 	},
 	{
@@ -110,7 +110,7 @@ export const datatugProjectRoutes: Routes = [
 		path: 'env/:' + routingParamEnvironmentId,
 		loadChildren: () =>
 			import('./datatug-routing-proj-env').then(
-				(m) => m.DatatugProjEnvRoutingModule
+				(m) => m.DatatugProjEnvRoutingModule,
 			),
 	},
 	{
@@ -133,7 +133,7 @@ export const datatugProjectRoutes: Routes = [
 		path: `server/${routingParamServerType}/:${routingParamDriver}/:${routingParamDbServerId}/:${routingParamDbCatalogId}`,
 		loadChildren: () =>
 			import('./datatug-routing-proj-db-catalog').then(
-				(m) => m.DatatugRoutingProjDbCatalog
+				(m) => m.DatatugRoutingProjDbCatalog,
 			),
 	},
 	{
@@ -147,4 +147,5 @@ export const datatugProjectRoutes: Routes = [
 	imports: [RouterModule.forChild(datatugProjectRoutes)],
 	exports: [RouterModule],
 })
-export class DatatugProjectRoutingModule {}
+export class DatatugProjectRoutingModule {
+}

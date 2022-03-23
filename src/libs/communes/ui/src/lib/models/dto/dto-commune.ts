@@ -1,10 +1,10 @@
 /* tslint:disable:no-bitwise */
-import {Age, CommuneType, CountryId, Gender} from '../types';
-import {IDemoRecord, ITitledRecord, ITotalsHolder} from './dto-models';
-import {ICommuneDtoMemberGroupInfo, MemberRole} from './dto-member';
-import {IListGroupsHolder} from './dto-list';
-import { EnumAsUnionOfKeys } from "@sneat/core";
-import { RxRecordKey } from "@sneat/rxstore";
+import { Age, CommuneType, CountryId, Gender } from '../types';
+import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
+import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
+import { IListGroupsHolder } from './dto-list';
+import { EnumAsUnionOfKeys } from '@sneat/core';
+import { RxRecordKey } from '@sneat/rxstore';
 
 export const enum CommuneCounter {
 	activities = 'activities',
@@ -94,7 +94,7 @@ export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder, 
 	readonly userId: RxRecordKey;
 	readonly order?: number;
 	readonly numberOf?: ICommuneCounts;
-	readonly membersCountByRole?: {[id: string]: number};
+	readonly membersCountByRole?: { [id: string]: number };
 	readonly noContactRoles?: string[];
 	readonly groups?: ICommuneDtoMemberGroupInfo[];
 	readonly members?: readonly ICommuneMemberInfo[];
@@ -142,5 +142,5 @@ export const CommuneModel = {
 		return dto.listGroups && dto.listGroups
 			.map(lg => lg.lists && lg.lists.find(l => l.shortId === shortListId))
 			.find(l => !!l);
-	}
+	},
 };

@@ -25,13 +25,14 @@ export class GridWidgetComponent implements OnChanges {
 
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('GridWidgetComponent.ngOnChanges()', changes);
 		try {
-			if (changes["recordset"] && this.recordset) {
+			if (changes['recordset'] && this.recordset) {
 				this.grid = recordsetToGridDef(this.recordset, this.hideColumns);
 				this.changeDetectorRef.markForCheck();
 				console.log('GridWidgetComponent.ngOnChanges(): grid:', this.grid);
@@ -39,7 +40,7 @@ export class GridWidgetComponent implements OnChanges {
 		} catch (ex) {
 			this.errorLogger.logError(
 				ex,
-				'Failed to process ngOnChanges by GridWidgetComponent'
+				'Failed to process ngOnChanges by GridWidgetComponent',
 			);
 		}
 	}

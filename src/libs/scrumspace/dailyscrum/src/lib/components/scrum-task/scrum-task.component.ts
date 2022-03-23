@@ -1,11 +1,5 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import {
-	IRecord,
-	ITask,
-	ITaskComment,
-	IUser,
-	TaskType,
-} from '../../../models/interfaces';
+import { IRecord, ITask, ITaskComment, IUser, TaskType } from '../../../models/interfaces';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { UserService } from '../../../services/user-service';
@@ -35,7 +29,7 @@ export class ScrumTaskComponent implements OnInit {
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
 		public modalController: ModalController,
 		private userService: UserService,
-		private scrumService: ScrumService
+		private scrumService: ScrumService,
 	) {
 		this.userService.userRecord.subscribe((user) => {
 			this.user = user;
@@ -51,8 +45,8 @@ export class ScrumTaskComponent implements OnInit {
 						this.errorLogger.logError(
 							err,
 							'Failed to set focus to comment input',
-							{ feedback: false }
-						)
+							{ feedback: false },
+						),
 					);
 			}, 200);
 		}
@@ -64,7 +58,7 @@ export class ScrumTaskComponent implements OnInit {
 		this.commentInput
 			.setFocus()
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to set focus back to input')
+				this.errorLogger.logError(err, 'Failed to set focus back to input'),
 			);
 		if (message) {
 			if (!this.task.comments) {
@@ -89,7 +83,7 @@ export class ScrumTaskComponent implements OnInit {
 				error: (err) => {
 					this.errorLogger.logError(err, 'Failed to add comment');
 					this.task.comments = this.task.comments.filter(
-						(c) => !c.id && c.message === message
+						(c) => !c.id && c.message === message,
 					);
 				},
 			});

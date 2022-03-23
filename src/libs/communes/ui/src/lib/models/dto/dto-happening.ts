@@ -1,6 +1,6 @@
-import {ICommuneRecord, ITitledRecord} from './dto-models';
-import {ActivityType, EventType, Repeats, Weekday} from '../types';
-import {IPrice} from './dto-pricing';
+import { ICommuneRecord, ITitledRecord } from './dto-models';
+import { ActivityType, EventType, Repeats, Weekday } from '../types';
+import { IPrice } from './dto-pricing';
 
 export interface SlotParticipant {
 	id: string;

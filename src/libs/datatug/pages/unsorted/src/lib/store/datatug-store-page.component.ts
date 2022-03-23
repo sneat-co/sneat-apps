@@ -2,16 +2,9 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { filter, takeUntil, tap } from 'rxjs/operators';
-import {
-	IProjectBase,
-	projectsBriefFromDictToFlatList,
-} from '@sneat/datatug/models';
+import { IProjectBase, projectsBriefFromDictToFlatList } from '@sneat/datatug/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	AgentStateService,
-	DatatugStoreService,
-	IAgentState,
-} from '@sneat/datatug/services/repo';
+import { AgentStateService, DatatugStoreService, IAgentState } from '@sneat/datatug/services/repo';
 import { DatatugNavService, StoreTracker } from '@sneat/datatug/services/nav';
 import { ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { NewProjectService } from '@sneat/datatug/project';
@@ -25,8 +18,7 @@ import { parseStoreRef } from '@sneat/core';
 	templateUrl: './datatug-store-page.component.html',
 })
 export class DatatugStorePageComponent
-	implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter
-{
+	implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter {
 	public storeId: string;
 	public projects: IProjectBase[];
 	public error: any;
@@ -49,11 +41,11 @@ export class DatatugStorePageComponent
 		private readonly nav: DatatugNavService,
 		private readonly agentStateService: AgentStateService,
 		private readonly newProjectService: NewProjectService,
-		private readonly datatugUserService: DatatugUserService
+		private readonly datatugUserService: DatatugUserService,
 	) {
 		console.log(
 			'DatatugStorePageComponent.constructor(), window.history.state:',
-			window.history.state
+			window.history.state,
 		);
 		const store = window.history.state.store as IDatatugStoreContext;
 		if (store) {
@@ -88,7 +80,7 @@ export class DatatugStorePageComponent
 		this.storeTracker.storeId
 			.pipe(
 				tap(() => this.storeChanged.next()),
-				filter((id) => !!id)
+				filter((id) => !!id),
 			)
 			.subscribe({
 				next: this.processStoreId,
@@ -109,7 +101,7 @@ export class DatatugStorePageComponent
 		this.agentStateService
 			.watchAgentInfo(storeId)
 			.pipe(
-				takeUntil(merge([this.viewDidLeave, this.destroyed, this.storeChanged]))
+				takeUntil(merge([this.viewDidLeave, this.destroyed, this.storeChanged])),
 			)
 			.subscribe({
 				next: (agentState) => {
@@ -120,7 +112,7 @@ export class DatatugStorePageComponent
 					}
 				},
 				error: this.errorLogger.logErrorHandler(
-					'Failed to get agent state info'
+					'Failed to get agent state info',
 				),
 			});
 	};
@@ -151,7 +143,7 @@ export class DatatugStorePageComponent
 						this.error = this.errorLogger.logError(
 							err,
 							`Failed to get list of projects hosted by agent [${storeId}]`,
-							{ show: false }
+							{ show: false },
 						);
 					}
 				},

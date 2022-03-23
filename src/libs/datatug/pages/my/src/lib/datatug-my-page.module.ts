@@ -21,4 +21,5 @@ import { DatatugServicesStoreModule } from '@sneat/datatug/services/repo';
 	],
 	declarations: [DatatugMyPageComponent],
 })
-export class DatatugMyPageModule {}
+export class DatatugMyPageModule {
+}

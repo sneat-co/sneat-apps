@@ -5,4 +5,5 @@ import { Component } from '@angular/core';
 	templateUrl: './datatug-my-page.component.html',
 	styleUrls: ['./datatug-my-page.component.scss'],
 })
-export class DatatugMyPageComponent {}
+export class DatatugMyPageComponent {
+}

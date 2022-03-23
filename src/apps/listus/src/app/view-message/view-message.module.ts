@@ -16,4 +16,5 @@ import { ViewMessagePageRoutingModule } from './view-message-routing.module';
 	],
 	declarations: [ViewMessagePage],
 })
-export class ViewMessagePageModule {}
+export class ViewMessagePageModule {
+}

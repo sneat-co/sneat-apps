@@ -17,4 +17,5 @@ import { EnvironmentPageComponent } from './environment-page.component';
 	],
 	declarations: [EnvironmentPageComponent],
 })
-export class EnvironmentPageModule {}
+export class EnvironmentPageModule {
+}

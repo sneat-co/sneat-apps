@@ -1,12 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import {
-	IBoardContext,
-	ISqlWidgetDef,
-	ISqlWidgetSettings,
-	ITabsWidgetSettings,
-	QueryType,
-	WidgetDef,
-} from "@sneat/datatug/models";
+import { IBoardContext, ISqlWidgetSettings, ITabsWidgetSettings, QueryType, WidgetDef } from '@sneat/datatug/models';
 
 @Component({
 	selector: 'datatug-board-widget',

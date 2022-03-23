@@ -29,7 +29,7 @@ describe('RetroTreePage', () => {
 			fixture = TestBed.createComponent(RetroTreePageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

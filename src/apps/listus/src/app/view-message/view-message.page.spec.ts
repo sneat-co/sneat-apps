@@ -23,7 +23,7 @@ describe('ViewMessagePage', () => {
 			fixture = TestBed.createComponent(ViewMessagePage);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

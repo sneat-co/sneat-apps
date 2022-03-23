@@ -41,13 +41,14 @@ export class HttpQueryEditorComponent {
 		},
 	];
 
-	constructor(private readonly httpClient: HttpClient) {}
+	constructor(private readonly httpClient: HttpClient) {
+	}
 
 	public readonly currencyPipe = new LookupPipe(
 		currencyFlag,
 		'data.#',
 		'id',
-		'currency_flag'
+		'currency_flag',
 	);
 
 	isCurrencyPipeEnabled = false;
@@ -70,7 +71,7 @@ export class HttpQueryEditorComponent {
 				req = new HttpRequest(
 					this.queryDef.method,
 					this.queryDef.url,
-					this.queryDef.body
+					this.queryDef.body,
 				);
 		}
 		this.httpClient.request(req).subscribe((event) => {

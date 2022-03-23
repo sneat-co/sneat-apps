@@ -24,7 +24,7 @@ describe('RetroTimerComponent', () => {
 			fixture = TestBed.createComponent(RetroTimerComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

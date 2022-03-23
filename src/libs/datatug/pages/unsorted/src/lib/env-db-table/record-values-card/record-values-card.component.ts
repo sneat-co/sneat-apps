@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./record-values-card.component.scss'],
 })
 export class RecordValuesCardComponent implements OnInit {
-	constructor() {}
+	constructor() {
+	}
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 }

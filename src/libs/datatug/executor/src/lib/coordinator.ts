@@ -11,12 +11,13 @@ import { IExecuteRequest, IExecuteResponse } from '@sneat/datatug/dto';
 export class Coordinator {
 	constructor(
 		private readonly httpExecutor: HttpExecutor, // Load dynamically?
-		private readonly agentService: AgentService
-	) {}
+		private readonly agentService: AgentService,
+	) {
+	}
 
 	public execute(
 		agentId: string,
-		request: IExecuteRequest
+		request: IExecuteRequest,
 	): Observable<IExecuteResponse> {
 		let executor: IRequestExecutor;
 		if (request.commands.length === 1 && request.commands[0].type === 'HTTP') {

@@ -8,4 +8,5 @@ import { SneatErrorCardComponent } from './sneat-error-card.component';
 	declarations: [SneatErrorCardComponent],
 	exports: [SneatErrorCardComponent],
 })
-export class SneatErrorCardModule {}
+export class SneatErrorCardModule {
+}

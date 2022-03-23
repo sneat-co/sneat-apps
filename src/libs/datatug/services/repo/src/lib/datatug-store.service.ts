@@ -1,20 +1,13 @@
-import { Observable, of, throwError } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { map, shareReplay } from "rxjs/operators";
-import {
-	cloudStoreId,
-	IProjectBase,
-	projectsBriefFromDictToFlatList
-} from "@sneat/datatug/models";
-import { getStoreUrl } from "@sneat/api";
-import { IRecordset } from "@sneat/datatug/dto";
-import { IGridColumn, IGridDef } from "@sneat/grid";
-import {
-	DatatugUserService,
-	IDatatugUserState
-} from "@sneat/datatug/services/base";
-import { storeCanProvideListOfProjects } from "@sneat/core";
+import { Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, shareReplay } from 'rxjs/operators';
+import { IProjectBase, projectsBriefFromDictToFlatList } from '@sneat/datatug/models';
+import { getStoreUrl } from '@sneat/api';
+import { IRecordset } from '@sneat/datatug/dto';
+import { IGridColumn, IGridDef } from '@sneat/grid';
+import { DatatugUserService, IDatatugUserState } from '@sneat/datatug/services/base';
+import { storeCanProvideListOfProjects } from '@sneat/core';
 
 @Injectable()
 export class DatatugStoreService {
@@ -26,21 +19,21 @@ export class DatatugStoreService {
 
 	constructor(
 		private readonly http: HttpClient,
-		private readonly datatugUserService: DatatugUserService
+		private readonly datatugUserService: DatatugUserService,
 	) {
-		console.log("StoreService.constructor()");
+		console.log('StoreService.constructor()');
 		datatugUserService.datatugUserState.subscribe({
 			next: (datatugUserState) => {
 				this.datatugUserState = datatugUserState;
-			}
+			},
 		});
 	}
 
 	public getProjects(storeId: string): Observable<IProjectBase[]> {
 		// eslint-disable-next-line no-console
-		console.log("getProjects", storeId);
+		console.log('getProjects', storeId);
 		if (!storeId) {
-			return throwError(() => "Parameter \"storeId\" is required");
+			return throwError(() => 'Parameter "storeId" is required');
 		}
 		if (!storeCanProvideListOfProjects(storeId)) {
 			return this.datatugUserService.datatugUserState.pipe(
@@ -54,12 +47,12 @@ export class DatatugStoreService {
 					});
 					//
 					result.push({
-						id: "demo-project",
-						title: "Demo project",
-						access: "public"
+						id: 'demo-project',
+						title: 'Demo project',
+						access: 'public',
 					});
 					return result;
-				})
+				}),
 			);
 		}
 		let projects = this.projectsByStore[storeId];
@@ -77,9 +70,9 @@ export class DatatugStoreService {
 
 export const recordsetToGridDef = (
 	recordset: IRecordset,
-	hideColumns?: string[]
+	hideColumns?: string[],
 ): IGridDef | undefined => {
-	console.log("recordsetToGridDef", recordset, hideColumns);
+	console.log('recordsetToGridDef', recordset, hideColumns);
 	if (!recordset.result) {
 		return undefined;
 	}
@@ -91,13 +84,13 @@ export const recordsetToGridDef = (
 				return false;
 			}
 			const colDef = recordset.def?.columns?.find(
-				(cDef) => cDef.name === c.name
+				(cDef) => cDef.name === c.name,
 			);
 			if (
 				colDef?.hideIf?.parameters?.find((pId) =>
 					recordset.parameters?.find(
-						(p) => p.id === pId && p.value !== undefined
-					)
+						(p) => p.id === pId && p.value !== undefined,
+					),
 				)
 			) {
 				return false;
@@ -107,21 +100,21 @@ export const recordsetToGridDef = (
 		.map((col) => {
 			const { c } = col;
 			const gridCol: IGridColumn = {
-				field: "" + col.i,
+				field: '' + col.i,
 				colName: c.name,
 				dbType: c.dbType,
-				title: c.name
+				title: c.name,
 			};
 			return gridCol;
 		});
 	const reducer = (r: any, v: any, i: number) => {
-		r["" + i] = v;
+		r['' + i] = v;
 		return r;
 	};
 	const gridDef: IGridDef = {
 		columns,
-		rows: recordset.result.rows?.map((row) => row.reduce(reducer, {}))
+		rows: recordset.result.rows?.map((row) => row.reduce(reducer, {})),
 	};
-	console.log("gridDef", gridDef);
+	console.log('gridDef', gridDef);
 	return gridDef;
 };

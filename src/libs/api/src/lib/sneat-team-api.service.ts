@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -11,7 +11,7 @@ export class SneatApiService implements ISneatApiService {
 	constructor(
 		private readonly httpClient: HttpClient,
 		private firebaseIdToken?: string,
-		private readonly baseUrl?: string
+		private readonly baseUrl?: string,
 	) {
 		// if (!baseUrl) {
 		// 	baseUrl = 'https://api.sneat.team/v0/';
@@ -58,7 +58,7 @@ export class SneatApiService implements ISneatApiService {
 
 	public getAsAnonymous<T>(
 		endpoint: string,
-		params?: HttpParams
+		params?: HttpParams,
 	): Observable<T> {
 		return this.httpClient.get<T>(this.baseUrl + endpoint, {
 			params,
@@ -97,7 +97,7 @@ export class SneatTeamApiService extends SneatApiService {
 	constructor(
 		httpClient: HttpClient,
 		// TODO: Get rid of hard dependency on AngularFireAuth and instead have some token provider
-		afAuth?: AngularFireAuth
+		afAuth?: AngularFireAuth,
 	) {
 		super(httpClient, undefined, 'https://api.sneat.team/v0/');
 		afAuth?.idToken.subscribe(this.setFirebaseToken);

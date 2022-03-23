@@ -1,5 +1,5 @@
-import { CommunePages } from "../constants";
-import { CommuneType, PreloadPages } from "@sneat/core";
+import { CommunePages } from '../constants';
+import { CommuneType, PreloadPages } from '@sneat/core';
 
 export interface CommuneMenuItem {
 	code: string;
@@ -21,6 +21,6 @@ export interface CommuneMenuItem {
 	communeTypes?: CommuneType[];
 	excludeCommuneType?: CommuneType[];
 	isNotImplementedYet?: boolean;
-	communeSupports?: "staff" | "pupils";
+	communeSupports?: 'staff' | 'pupils';
 	preload?: PreloadPages;
 }

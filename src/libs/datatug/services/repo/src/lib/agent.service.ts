@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { IExecuteResponse, ISelectRequest } from '@sneat/datatug/dto';
+import { IExecuteRequest, IExecuteResponse, ISelectRequest, ISqlCommandRequest } from '@sneat/datatug/dto';
 import { Observable, throwError } from 'rxjs';
 import { getStoreUrl } from '@sneat/api';
-import { IExecuteRequest } from '@sneat/datatug/dto';
-import { ISqlCommandRequest } from '@sneat/datatug/dto';
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
 @Injectable()
 export class AgentService {
-	constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {
+	}
 
 	public select(
 		agentId: string,
-		request: ISelectRequest
+		request: ISelectRequest,
 	): Observable<IExecuteResponse> {
 		console.log(`AgentService.select(${agentId})`, request);
 		if (!request.proj) {
@@ -22,7 +21,7 @@ export class AgentService {
 		} else if (request.proj.indexOf('@') >= 0) {
 			return throwError(
 				() =>
-					'Client side check failed: "@" character in project ID, store is supposed to be passed independently'
+					'Client side check failed: "@" character in project ID, store is supposed to be passed independently',
 			);
 		}
 		let params = new HttpParams()
@@ -54,7 +53,7 @@ export class AgentService {
 
 	public execute(
 		agentId: string,
-		request: IExecuteRequest
+		request: IExecuteRequest,
 	): Observable<IExecuteResponse> {
 		console.log(`AgentService.execute(${agentId})`, request);
 		if (!request.projectId) {
@@ -75,7 +74,7 @@ export class AgentService {
 		} else if (request.projectId.indexOf('@') >= 0) {
 			return throwError(
 				() =>
-					'Client side check failed: "@" character in project ID, store is supposed to be passed independently'
+					'Client side check failed: "@" character in project ID, store is supposed to be passed independently',
 			);
 		}
 		const params = new HttpParams().append('project', request.projectId);
@@ -85,7 +84,7 @@ export class AgentService {
 		return this.http.post<IExecuteResponse>(
 			agentUrl + `/exec/execute_commands`,
 			body,
-			{ params }
+			{ params },
 		);
 	}
 }

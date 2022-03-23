@@ -20,8 +20,9 @@ export class AddDbServerComponent implements OnDestroy {
 	constructor(
 		private readonly modalCtrl: ModalController,
 		private readonly dbServerService: DbServerService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
 
 	ngOnDestroy() {
 		this.destroyed.next();
@@ -39,7 +40,7 @@ export class AddDbServerComponent implements OnDestroy {
 				this.modalCtrl
 					.dismiss(dbServerSummary)
 					.catch((err) =>
-						this.errorLogger.logError(err, 'Failed to dismiss modal')
+						this.errorLogger.logError(err, 'Failed to dismiss modal'),
 					);
 			},
 			error: (err) => {

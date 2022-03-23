@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { IonicModule } from "@ionic/angular";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import { MembersComponent } from "./members.component";
-import { RouterTestingModule } from "@angular/router/testing";
+import { MembersComponent } from './members.component';
+import { RouterTestingModule } from '@angular/router/testing';
 // import { AngularFireModule } from '@angular/fire/compat';
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 // import { TeamService } from "@sneat/team/services";
 
-describe("MembersComponent", () => {
+describe('MembersComponent', () => {
 	let component: MembersComponent;
 	let fixture: ComponentFixture<MembersComponent>;
 
@@ -30,7 +30,7 @@ describe("MembersComponent", () => {
 		}),
 	);
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

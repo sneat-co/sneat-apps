@@ -7,7 +7,7 @@ export const datatugStoreRoutes: Routes = [
 		path: '',
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.DatatugStorePageModule
+				(m) => m.DatatugStorePageModule,
 			),
 	},
 	{
@@ -19,7 +19,7 @@ export const datatugStoreRoutes: Routes = [
 		path: 'project/:' + routingParamProjectId,
 		loadChildren: () =>
 			import('./datatug-routing-proj').then(
-				(m) => m.DatatugProjectRoutingModule
+				(m) => m.DatatugProjectRoutingModule,
 			),
 	},
 	{
@@ -30,7 +30,7 @@ export const datatugStoreRoutes: Routes = [
 		path: 'environment',
 		loadChildren: () =>
 			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvironmentPageModule
+				(m) => m.EnvironmentPageModule,
 			),
 	},
 ];
@@ -39,4 +39,5 @@ export const datatugStoreRoutes: Routes = [
 	imports: [RouterModule.forChild(datatugStoreRoutes)],
 	exports: [RouterModule],
 })
-export class DatatugStoreRoutingModule {}
+export class DatatugStoreRoutingModule {
+}

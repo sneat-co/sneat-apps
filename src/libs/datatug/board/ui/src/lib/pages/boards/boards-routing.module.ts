@@ -14,4 +14,5 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class DataboardsPageRoutingModule {}
+export class DataboardsPageRoutingModule {
+}

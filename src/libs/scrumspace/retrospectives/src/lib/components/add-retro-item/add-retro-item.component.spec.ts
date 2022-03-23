@@ -24,7 +24,7 @@ describe('AddRetroItemComponent', () => {
 			fixture = TestBed.createComponent(AddRetroItemComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 @Component({
 	selector: 'sneat-root',
 	templateUrl: 'app.component.html',
@@ -14,5 +15,7 @@ export class AppComponent {
 		{ title: 'Spam', url: '/folder/Spam', icon: 'warning' },
 	];
 	public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-	constructor() {}
+
+	constructor() {
+	}
 }

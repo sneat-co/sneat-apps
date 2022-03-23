@@ -5,7 +5,7 @@ import { IRecord } from '@sneat/data';
 import { ITeam } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/user';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { RetroItemType } from "@sneat/scrumspace/scrummodels";
+import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 
 @Component({
 	selector: 'sneat-team-retrospectives',
@@ -20,14 +20,15 @@ export class RetrospectivesComponent {
 		private readonly teamService: TeamService,
 		private readonly userService: SneatUserService, // TODO: replace with user context service
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService
-	) {}
+		public readonly navService: TeamNavService,
+	) {
+	}
 
 	navigateToCurrentRetro(): void {
 		console.log('navigateToCurrentRetro()');
 		if (!this.team) {
 			this.errorLogger.logError(
-				'Can not navigate to retro without having team context'
+				'Can not navigate to retro without having team context',
 			);
 			return;
 		}
@@ -36,7 +37,7 @@ export class RetrospectivesComponent {
 			this.navService.navigateToRetrospective(
 				this.navController,
 				this.team,
-				activeRetroId || 'upcoming'
+				activeRetroId || 'upcoming',
 			);
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to navigate to retrospective page');
@@ -48,8 +49,8 @@ export class RetrospectivesComponent {
 		return (
 			(userId
 				? this.team?.data?.upcomingRetro?.itemsByUserAndType?.[userId]?.[
-						itemType
-				  ]
+					itemType
+					]
 				: 0) || 0
 		);
 	}

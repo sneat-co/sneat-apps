@@ -12,4 +12,5 @@ import { WidgetsPageComponent } from './widgets-page.component';
 	imports: [CommonModule, FormsModule, IonicModule, WidgetsPageRoutingModule],
 	declarations: [WidgetsPageComponent],
 })
-export class WidgetsPageModule {}
+export class WidgetsPageModule {
+}

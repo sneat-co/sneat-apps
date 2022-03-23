@@ -12,4 +12,5 @@ import { TagsPageComponent } from './tags-page.component';
 	imports: [CommonModule, FormsModule, IonicModule, TagsPageRoutingModule],
 	declarations: [TagsPageComponent],
 })
-export class TagsPageModule {}
+export class TagsPageModule {
+}

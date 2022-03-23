@@ -1,9 +1,9 @@
 import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput } from '@ionic/angular';
-import { IErrorLogger, ErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IRetroItem, RetroItemType } from "@sneat/scrumspace/scrummodels";
-import { IAddRetroItemRequest, IRetroItemRequest, RetrospectiveService } from "../../retrospective.service";
+import { IRetroItem, RetroItemType } from '@sneat/scrumspace/scrummodels';
+import { IAddRetroItemRequest, IRetroItemRequest, RetrospectiveService } from '../../retrospective.service';
 
 @Component({
 	selector: 'sneat-retro-my-items',
@@ -26,8 +26,9 @@ export class RetroMyItemsComponent {
 
 	constructor(
 		private readonly retrospectiveService: RetrospectiveService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
 
 	public trackById = (i: number, item: IRetroItem) => item.ID;
 
@@ -50,7 +51,7 @@ export class RetroMyItemsComponent {
 			this.errorLogger.logError(
 				'addFailed',
 				'RetroMyItemsComponent is not properly initialized',
-				{ feedback: false }
+				{ feedback: false },
 			);
 			return;
 		}
@@ -86,14 +87,14 @@ export class RetroMyItemsComponent {
 				},
 				(err) => {
 					this.items = this.items.filter(
-						(item) => item.ID || item.title !== title
+						(item) => item.ID || item.title !== title,
 					);
 					if (!this.titleInput.value) {
 						this.titleInput.value = title;
 					}
 					this.errorLogger.logError(err, 'Failed to add a retrospective item');
 					this.titleInput.ionFocus.emit();
-				}
+				},
 			);
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to add a retrospective item');

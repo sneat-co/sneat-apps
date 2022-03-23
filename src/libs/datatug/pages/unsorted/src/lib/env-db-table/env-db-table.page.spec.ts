@@ -17,7 +17,7 @@ describe('EnvDbTablePage', () => {
 			fixture = TestBed.createComponent(EnvDbTablePageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

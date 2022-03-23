@@ -17,7 +17,7 @@ describe('ForeignKeyCardComponent', () => {
 			fixture = TestBed.createComponent(ForeignKeyCardComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

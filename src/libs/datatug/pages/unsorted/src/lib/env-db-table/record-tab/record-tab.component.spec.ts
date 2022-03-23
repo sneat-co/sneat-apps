@@ -17,7 +17,7 @@ describe('RecordTabComponent', () => {
 			fixture = TestBed.createComponent(RecordTabComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -1,15 +1,13 @@
-import { Inject, Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
-import { IonInput, ModalController } from "@ionic/angular";
+import { Inject, Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { IonInput, ModalController } from '@ionic/angular';
 // import { ParameterLookupComponent } from "./parameter-lookup.component";
-import { share } from "rxjs/operators";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { IParameterDef, IParameterValueWithoutID } from "@sneat/datatug/models";
-import {
-	AgentService,
-} from "@sneat/datatug/services/repo";
+import { share } from 'rxjs/operators';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IParameterDef, IParameterValueWithoutID } from '@sneat/datatug/models';
+import { AgentService } from '@sneat/datatug/services/repo';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ParameterLookupService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -25,7 +23,7 @@ export class ParameterLookupService {
 		envId: string,
 	): Observable<IParameterValueWithoutID> {
 		if (!parameter?.lookup?.db) {
-			throw new Error("parameter.lookup.db is not set");
+			throw new Error('parameter.lookup.db is not set');
 		}
 		const lookupResponse = this.agentService
 			.select(repo, {
@@ -42,7 +40,7 @@ export class ParameterLookupService {
 			this.modal
 				.dismiss()
 				.catch((err) =>
-					this.errorLogger.logError(err, "Failed to dismiss modal"),
+					this.errorLogger.logError(err, 'Failed to dismiss modal'),
 				);
 		};
 		this.modal

@@ -1,20 +1,12 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import {
-	NavController,
-	ToastController,
-	ViewDidEnter,
-	ViewDidLeave,
-} from '@ionic/angular';
+import { NavController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { IEntity, IProjEntity } from '@sneat/datatug/models';
 import { IProjectContext } from '@sneat/datatug/nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	DatatugNavContextService,
-	DatatugNavService,
-} from '@sneat/datatug/services/nav';
+import { DatatugNavContextService, DatatugNavService } from '@sneat/datatug/services/nav';
 import { EntityService } from '@sneat/datatug/services/unsorted';
 import { IRecord } from '@sneat/data';
 
@@ -25,8 +17,7 @@ type Entities = IRecord<IEntity>[];
 	templateUrl: './entities-page.component.html',
 })
 export class EntitiesPageComponent
-	implements OnDestroy, ViewDidEnter, ViewDidLeave
-{
+	implements OnDestroy, ViewDidEnter, ViewDidLeave {
 	entities: Entities;
 	project: IProjectContext;
 	private readonly destroyed = new Subject<void>();
@@ -38,7 +29,7 @@ export class EntitiesPageComponent
 		private readonly datatugNavService: DatatugNavService,
 		private readonly navContextService: DatatugNavContextService,
 		private readonly entityService: EntityService,
-		private readonly toastCtrl: ToastController
+		private readonly toastCtrl: ToastController,
 	) {
 		navContextService.currentProject.pipe(takeUntil(this.destroyed)).subscribe({
 			next: (currentProject) => {
@@ -86,7 +77,7 @@ export class EntitiesPageComponent
 		return this.datatugNavService.projectPageUrl(
 			this.project.ref,
 			'entity',
-			entity.id
+			entity.id,
 		);
 	}
 
@@ -106,7 +97,7 @@ export class EntitiesPageComponent
 		this.entityService.deleteEntity(this.project.ref, entity.id).subscribe({
 			next: async () => {
 				this.entities = (this.entities as IProjEntity[]).filter(
-					(v) => v.id !== entity.id
+					(v) => v.id !== entity.id,
 				);
 				const toast = await this.toastCtrl.create({
 					position: 'top',

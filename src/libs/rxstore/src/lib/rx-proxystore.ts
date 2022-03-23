@@ -1,6 +1,6 @@
-import {IRecordChange, IRxStore, RxReadonlyTransactionWorker, RxReadwriteTransactionWorker} from './interfaces';
-import {Observable} from 'rxjs';
-import {EntityKind, IRecord, Schema} from './schema';
+import { IRecordChange, IRxStore, RxReadonlyTransactionWorker, RxReadwriteTransactionWorker } from './interfaces';
+import { Observable } from 'rxjs';
+import { EntityKind, IRecord, Schema } from './schema';
 
 export abstract class RxProxyStore<CustomSchema extends Schema | unknown> implements IRxStore<CustomSchema> {
 

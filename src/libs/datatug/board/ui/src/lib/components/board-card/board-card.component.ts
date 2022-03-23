@@ -8,12 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import {
-	IBoardCardDef,
-	IBoardContext, QueryType,
-	sqlWidgetName,
-	WidgetName,
-} from "@sneat/datatug/models";
+import { IBoardCardDef, IBoardContext, QueryType, sqlWidgetName, WidgetName } from '@sneat/datatug/models';
 
 @Injectable()
 export class BoardCardTabService {
@@ -43,11 +38,12 @@ export class BoardCardComponent implements OnChanges {
 
 	constructor(
 		public readonly boardCardTab: BoardCardTabService,
-		private readonly changeDetectorRef: ChangeDetectorRef
-	) {}
+		private readonly changeDetectorRef: ChangeDetectorRef,
+	) {
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes["boarCardDef"] && this.boarCardDef) {
+		if (changes['boarCardDef'] && this.boarCardDef) {
 			if (this.boarCardDef?.widget?.name === sqlWidgetName) {
 				this.boardCardTab.setTab(sqlWidgetName);
 			}

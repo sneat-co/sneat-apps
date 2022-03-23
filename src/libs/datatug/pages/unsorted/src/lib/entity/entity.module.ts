@@ -8,7 +8,7 @@ import { EntityPageRoutingModule } from './entity-routing.module';
 
 import { EntityPageComponent } from './entity-page.component';
 import { DatatugComponentsDatagridModule } from '@sneat/datatug/components/datagrid';
-import { DatatugBoardUiModule } from "@sneat/datatug/board/ui";
+import { DatatugBoardUiModule } from '@sneat/datatug/board/ui';
 
 @NgModule({
 	imports: [
@@ -21,4 +21,5 @@ import { DatatugBoardUiModule } from "@sneat/datatug/board/ui";
 	],
 	declarations: [EntityPageComponent],
 })
-export class EntityPageModule {}
+export class EntityPageModule {
+}

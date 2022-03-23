@@ -7,4 +7,5 @@ import { HttpClientModule } from '@angular/common/http';
 		// SneatTeamApiService,
 	],
 })
-export class SneatApiModule {}
+export class SneatApiModule {
+}

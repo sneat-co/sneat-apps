@@ -1,7 +1,7 @@
-import {Observable} from 'rxjs';
-import {IRxReadwriteTransaction} from '../interfaces';
-import {IRxMutation} from './interfaces';
-import { IRxMutationSchema } from "./schema";
+import { Observable } from 'rxjs';
+import { IRxReadwriteTransaction } from '../interfaces';
+import { IRxMutation } from './interfaces';
+import { IRxMutationSchema } from './schema';
 
 export interface IRxMutationLogger {
 	recordMutation<CustomSchema extends IRxMutationSchema>(tx: IRxReadwriteTransaction<CustomSchema>, mutation: IRxMutation)

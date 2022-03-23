@@ -1,32 +1,11 @@
-import {
-	Component,
-	Inject,
-	Input,
-	NgZone,
-	OnChanges,
-	OnDestroy,
-	SimpleChanges,
-	ViewChild,
-} from '@angular/core';
-import {
-	IMemberInfo,
-	IRecord,
-	ITask,
-	ITeam,
-	TaskType,
-} from '../../../models/interfaces';
-import {
-	ITaskWithUiStatus,
-	ScrumService,
-} from '../../../services/scrum.service';
+import { Component, Inject, Input, NgZone, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import { IMemberInfo, IRecord, ITask, ITeam, TaskType } from '../../../models/interfaces';
+import { ITaskWithUiStatus, ScrumService } from '../../../services/scrum.service';
 import { IonInput, ModalController } from '@ionic/angular';
-import {
-	IReorderTaskRequest,
-	IThumbUpRequest,
-} from '../../../models/dto-models';
+import { IReorderTaskRequest, IThumbUpRequest } from '../../../models/dto-models';
 import { Subscription } from 'rxjs';
 import { listAddRemoveAnimation } from '../../../animations/list-animations';
-import { IErrorLogger, ErrorLogger } from '@sneat-team/ui-core';
+import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 
 @Component({
@@ -69,8 +48,9 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		private readonly zone: NgZone,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly scrumService: ScrumService,
-		private modalController: ModalController
-	) {}
+		private modalController: ModalController,
+	) {
+	}
 
 	ngOnDestroy(): void {
 		if (this.userSubscription) {
@@ -120,7 +100,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 				this.titleInput
 					.setFocus()
 					.catch((err) =>
-						this.errorLogger.logError(err, 'Failed to set focus to title input')
+						this.errorLogger.logError(err, 'Failed to set focus to title input'),
 					);
 			}, 99);
 			return;
@@ -136,7 +116,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 				this.scrumId,
 				this.member,
 				this.taskType as TaskType,
-				title
+				title,
 			)
 			.subscribe({
 				next: (task) => {
@@ -172,7 +152,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			this.errorLogger.logError(
 				'You can not upvote your own tasks',
 				'You can not upvote your own tasks',
-				{ show: true }
+				{ show: true },
 			);
 			return;
 		}
@@ -214,7 +194,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 				this.scrumId,
 				this.member,
 				this.taskType as TaskType,
-				id
+				id,
 			)
 			.subscribe({
 				next: () => {
@@ -222,7 +202,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 					if (this.deletingTaskIds.find((v) => v === id)) {
 						this.zone.runOutsideAngular(() => {
 							this.deletingTaskIds = this.deletingTaskIds.filter(
-								(v) => v !== id
+								(v) => v !== id,
 							);
 						});
 					}
@@ -244,7 +224,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			tasks?.length === 1
 		) {
 			(event.detail as { complete: (v: ITaskWithUiStatus[]) => void }).complete(
-				this.visibleTasks
+				this.visibleTasks,
 			); // Should be before setting before & after values
 			return;
 		}
@@ -259,7 +239,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			to: event.detail.to,
 		};
 		(event.detail as { complete: (v: ITaskWithUiStatus[]) => void }).complete(
-			this.visibleTasks
+			this.visibleTasks,
 		); // Should be before setting before & after values
 		if (request.to < this.tasks?.length - 1) {
 			request.before = this.visibleTasks[request.to + 1].id;
@@ -276,11 +256,11 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (changes.tasks) {
 			if (this.taskType === 'risk') {
 				console.log(
-					`ScrumTasksComponent.ngOnChanges: deletingTaskIds: ${this.deletingTaskIds}, tasks: ${this.tasks}`
+					`ScrumTasksComponent.ngOnChanges: deletingTaskIds: ${this.deletingTaskIds}, tasks: ${this.tasks}`,
 				);
 			}
 			this.visibleTasks = this.tasks.filter(
-				(t) => this.deletingTaskIds.findIndex((v) => v === t.id) < 0
+				(t) => this.deletingTaskIds.findIndex((v) => v === t.id) < 0,
 			);
 		}
 	}

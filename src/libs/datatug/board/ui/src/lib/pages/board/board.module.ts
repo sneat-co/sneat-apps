@@ -8,7 +8,7 @@ import { BoardPageRoutingModule } from './board-routing.module';
 
 import { BoardPageComponent } from './board-page.component';
 import { QueryParamsService } from '@sneat/datatug/core';
-import { DatatugBoardUiModule } from "../../datatug-board-ui.module";
+import { DatatugBoardUiModule } from '../../datatug-board-ui.module';
 // import { DatatugBoardModule } from '../../datatug-board.module';
 // import { BoardServiceModule } from '../../board.service.module';
 
@@ -24,4 +24,5 @@ import { DatatugBoardUiModule } from "../../datatug-board-ui.module";
 	declarations: [BoardPageComponent],
 	providers: [QueryParamsService],
 })
-export class BoardPageModule {}
+export class BoardPageModule {
+}

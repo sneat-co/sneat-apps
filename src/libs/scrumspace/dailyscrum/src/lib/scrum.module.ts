@@ -34,4 +34,5 @@ import { TimerModule } from '@sneat/timer';
 		MetricsComponent,
 	],
 })
-export class ScrumPageModule {}
+export class ScrumPageModule {
+}

@@ -3,16 +3,17 @@ import {
 	IRxReadwriteTransaction,
 	IRxStore,
 	IRxStoreProvider,
-	RecordAction, RxMutation,
+	RecordAction,
+	RxMutation,
 	RxReadwriteTransactionWorker,
 	RxTransaction,
 	SelectResult,
 } from './interfaces';
-import {RxProxyStore} from './rx-proxystore';
-import {concat, Observable, throwError} from 'rxjs';
-import {first, map, mapTo, mergeMap, shareReplay, tap} from 'rxjs/operators';
+import { RxProxyStore } from './rx-proxystore';
+import { concat, Observable, throwError } from 'rxjs';
+import { first, map, mapTo, mergeMap, shareReplay, tap } from 'rxjs/operators';
 // import {beforeComplete} from './beforeComplete';
-import {EntityKind, IRecord, Schema} from './schema';
+import { EntityKind, IRecord, Schema } from './schema';
 
 export const SyncBacklogKind = '$yncBacklog';
 
@@ -77,13 +78,13 @@ class RxSyncLoggerReadwriteTx<CustomSchema extends SyncSchema | unknown>
 						return result;
 					}
 					return result.pipe(tap(id2 => {
-						const key: IRecordKey = {kind: kind as string, id: id2};
+						const key: IRecordKey = { kind: kind as string, id: id2 };
 						const k = keyToString(key);
 						let entry = this.recordsLog[k];
 						if (!entry) {
-							this.recordsLog[k] = entry = {key};
+							this.recordsLog[k] = entry = { key };
 						}
-						entry.new = {ts: Date.now()};
+						entry.new = { ts: Date.now() };
 						entry.op = RxMutation.delete;
 					}));
 				}),
@@ -96,12 +97,12 @@ class RxSyncLoggerReadwriteTx<CustomSchema extends SyncSchema | unknown>
 			return result;
 		}
 		return result.pipe(tap(record => {
-			const key: IRecordKey = {kind: kind as string, id};
+			const key: IRecordKey = { kind: kind as string, id };
 			const k = keyToString(key);
 			if (!this.recordsLog[k]) {
-				record = {...(record as T)};
+				record = { ...(record as T) };
 				delete record.id;
-				this.recordsLog[k] = {key, old: {ts: Date.now(), record}};
+				this.recordsLog[k] = { key, old: { ts: Date.now(), record } };
 			}
 		}));
 	}
@@ -110,15 +111,15 @@ class RxSyncLoggerReadwriteTx<CustomSchema extends SyncSchema | unknown>
 		if (!record.id) {
 			throw new Error('!record.id');
 		}
-		const key: IRecordKey = {kind: kind as string, id: record.id};
+		const key: IRecordKey = { kind: kind as string, id: record.id };
 		const k = keyToString(key);
 		let entry = this.recordsLog[k];
 		if (!entry) {
-			this.recordsLog[k] = entry = {key};
+			this.recordsLog[k] = entry = { key };
 		}
-		record = {...record};
+		record = { ...record };
 		delete record.id;
-		entry.new = {ts: Date.now(), record};
+		entry.new = { ts: Date.now(), record };
 		return entry;
 	}
 
@@ -282,7 +283,7 @@ export class RxSyncLoggerStoreProvider<CustomSchema extends SyncSchema | unknown
 		// console.log(`RxRecordChangeLoggerStore.constructor() => provider:`, provider);
 		this.logPolicy = (kind: EntityKind<CustomSchema>, record?: IRecord) => {
 			if (kind as unknown as string === SyncBacklogKind) {
-				return {record, loggingEnabled: false};
+				return { record, loggingEnabled: false };
 			}
 			return logPolicy(kind, record);
 		};

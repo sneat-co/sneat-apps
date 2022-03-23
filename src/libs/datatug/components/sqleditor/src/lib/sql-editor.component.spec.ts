@@ -17,7 +17,7 @@ describe('SqlComponent', () => {
 			fixture = TestBed.createComponent(SqlEditorComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

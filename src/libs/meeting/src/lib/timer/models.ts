@@ -1,5 +1,5 @@
 import { IMeetingRequest } from '../models';
-import firebase from "firebase/compat";
+import firebase from 'firebase/compat';
 import Timestamp = firebase.firestore.Timestamp;
 
 // eslint-disable-next-line no-shadow

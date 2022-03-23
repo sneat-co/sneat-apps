@@ -7,4 +7,5 @@ import { DatatugServicesProjectModule } from '@sneat/datatug/services/project';
 	imports: [DatatugServicesProjectModule],
 	providers: [DatatugNavService, DatatugNavContextService],
 })
-export class DatatugServicesNavModule {}
+export class DatatugServicesNavModule {
+}

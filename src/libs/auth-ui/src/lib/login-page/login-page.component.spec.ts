@@ -17,7 +17,7 @@ describe('LoginPage', () => {
 			fixture = TestBed.createComponent(LoginPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

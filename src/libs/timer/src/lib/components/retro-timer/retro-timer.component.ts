@@ -1,11 +1,4 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -15,10 +8,7 @@ import {
 	RetrospectiveStage,
 } from '@sneat/scrumspace/retrospectives';
 import { ITimerState } from '../../../../../meeting/src/lib/timer/models';
-import {
-	Timer,
-	TimerFactory,
-} from '../../../../../meeting/src/lib/timer/timer.service';
+import { Timer, TimerFactory } from '../../../../../meeting/src/lib/timer/timer.service';
 import { IRecord } from '@sneat/data';
 import { ITeam } from '@sneat/team/models';
 import { secondsToStr } from '@sneat/datetime';
@@ -48,8 +38,9 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly retrospectiveService: RetrospectiveService,
-		private readonly timerFactory: TimerFactory
-	) {}
+		private readonly timerFactory: TimerFactory,
+	) {
+	}
 
 	get minutesLeft(): number {
 		return Math.round((this.leftInSeconds - 30) / 60);
@@ -119,7 +110,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				'Failed to update state from new retrospective record'
+				'Failed to update state from new retrospective record',
 			);
 		}
 	};
@@ -132,7 +123,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 				error: (err) =>
 					this.errorLogger.logError(
 						err,
-						'Failed to start review phase of retrospective'
+						'Failed to start review phase of retrospective',
 					),
 			});
 	}
@@ -148,7 +139,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		console.log('pauseRetro()');
 		if (!this.timer) {
 			this.errorLogger.logError(
-				'pauseRetro() called before timer has been initialized.'
+				'pauseRetro() called before timer has been initialized.',
 			);
 			return;
 		}
@@ -162,7 +153,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		this.timer = this.timerFactory.getTimer(
 			this.retrospectiveService,
 			this.team.id,
-			this.retrospective.id
+			this.retrospective.id,
 		);
 		this.timerSubscription = this.timer.onTick.subscribe(this.onTimerTicked);
 	}

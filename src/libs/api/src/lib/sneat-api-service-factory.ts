@@ -40,7 +40,7 @@ export class SneatApiServiceFactory {
 
 	constructor(
 		private readonly httpClient: HttpClient,
-		readonly afAuth: AngularFireAuth
+		readonly afAuth: AngularFireAuth,
 	) {
 		console.log('SneatApiServiceFactory.constructor()');
 		afAuth.idToken.subscribe((idToken) => {
@@ -52,14 +52,14 @@ export class SneatApiServiceFactory {
 	getSneatApiService(storeId: string): ISneatApiService {
 		if (!storeId) {
 			throw new Error(
-				'storeRef is a required parameter, got empty: ' + typeof storeId
+				'storeRef is a required parameter, got empty: ' + typeof storeId,
 			);
 		}
 		const storeRef = parseStoreRef(storeId);
 		if (!storeRef.type) {
 			throw new Error(
 				'storeRef.type is a required parameter, got empty: ' +
-					typeof storeRef.type
+				typeof storeRef.type,
 			);
 		}
 		const id = `${storeRef.type}:${storeRef.url}`;
@@ -73,7 +73,7 @@ export class SneatApiServiceFactory {
 				this.services[id] = service = new SneatApiService(
 					this.httpClient,
 					this.firebaseIdToken || undefined,
-					baseUrl
+					baseUrl,
 				);
 				return service;
 			default:

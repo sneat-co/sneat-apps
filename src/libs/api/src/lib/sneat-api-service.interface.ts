@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { InjectionToken } from '@angular/core';
 
 export interface IHttpRequestOptions {
@@ -30,24 +30,24 @@ export interface ISneatApiService {
 	post<I, O>(
 		endpoint: string,
 		body: I,
-		options?: IHttpRequestOptions
+		options?: IHttpRequestOptions,
 	): Observable<O>;
 
 	put<I, O>(
 		endpoint: string,
 		body: I,
-		options?: IHttpRequestOptions
+		options?: IHttpRequestOptions,
 	): Observable<O>;
 
 	get<T>(
 		endpoint: string,
 		params?: HttpParams,
-		options?: IHttpRequestOptions
+		options?: IHttpRequestOptions,
 	): Observable<T>;
 
 	getAsAnonymous<T>(
 		endpoint: string,
 		params?: HttpParams,
-		options?: IHttpRequestOptions
+		options?: IHttpRequestOptions,
 	): Observable<T>;
 }

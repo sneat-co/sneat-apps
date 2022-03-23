@@ -1,16 +1,18 @@
-import {Observable, of, ReplaySubject} from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import {
 	IRecordChange,
 	IRxReadwriteTransaction,
 	IRxStore,
 	IRxStoreProvider,
-	IRxTransaction, RxMutation,
+	IRxTransaction,
+	RxMutation,
 	RxReadonlyTransactionWorker,
-	RxReadwriteTransactionWorker, RxTransaction,
+	RxReadwriteTransactionWorker,
+	RxTransaction,
 	SelectResult,
 } from './interfaces';
-import {first, map, shareReplay, tap} from 'rxjs/operators';
-import {EntityKind, IRecord, Schema, RxRecordKey} from './schema';
+import { first, map, shareReplay, tap } from 'rxjs/operators';
+import { EntityKind, IRecord, RxRecordKey, Schema } from './schema';
 
 interface RxCache<CustomSchema> {
 	[kind: string]: {

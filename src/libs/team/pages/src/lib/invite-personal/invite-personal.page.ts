@@ -1,29 +1,29 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { HttpParams } from "@angular/common/http";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { NavController } from "@ionic/angular";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { SneatUserService } from "@sneat/user";
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { NavController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { SneatUserService } from '@sneat/user';
 import {
 	IAcceptPersonalInviteRequest,
 	IMemberInfo,
 	IPersonalInvite,
 	IRejectPersonalInviteRequest,
-} from "@sneat/team/models";
-import { SneatTeamApiService } from "@sneat/api";
-import { RandomIdService } from "@sneat/random";
-import { MemberService } from "@sneat/team/services";
+} from '@sneat/team/models';
+import { SneatTeamApiService } from '@sneat/api';
+import { RandomIdService } from '@sneat/random';
+import { MemberService } from '@sneat/team/services';
 
 @Component({
-	selector: "sneat-invite-personal",
-	templateUrl: "./invite-personal.page.html",
-	styleUrls: ["./invite-personal.page.scss"],
+	selector: 'sneat-invite-personal',
+	templateUrl: './invite-personal.page.html',
+	styleUrls: ['./invite-personal.page.scss'],
 })
 export class InvitePersonalPage implements OnInit {
-	public fullName = "";
-	public email = "";
-	public pin = "";
+	public fullName = '';
+	public email = '';
+	public pin = '';
 
 	public hidePin?: boolean;
 
@@ -34,8 +34,8 @@ export class InvitePersonalPage implements OnInit {
 	public invite?: IPersonalInvite;
 	public members?: IMemberInfo[];
 
-	private inviteId = "";
-	private teamId = "";
+	private inviteId = '';
+	private teamId = '';
 
 	constructor(
 		private readonly afAuth: AngularFireAuth,
@@ -52,39 +52,39 @@ export class InvitePersonalPage implements OnInit {
 
 	public ngOnInit() {
 		this.route.queryParamMap.subscribe((qp) => {
-			const inviteId = qp.get("id") || "";
-			const teamId = qp.get("team") || "";
+			const inviteId = qp.get('id') || '';
+			const teamId = qp.get('team') || '';
 			this.inviteId = inviteId;
 			this.teamId = teamId;
 			if (!inviteId) {
-				this.errorLogger.logError("inviteId is not set");
+				this.errorLogger.logError('inviteId is not set');
 			}
 			if (!teamId) {
-				this.errorLogger.logError("teamId is not set");
+				this.errorLogger.logError('teamId is not set');
 			}
 			this.sneatTeamApiService
 				.getAsAnonymous<{ invite?: IPersonalInvite; members?: IMemberInfo[] }>(
-					"invites/personal",
+					'invites/personal',
 					new HttpParams({
 						fromObject: { invite: inviteId, team: teamId },
 					}),
 				)
 				.subscribe({
 					next: (response) => {
-						console.log("invite record:", response);
+						console.log('invite record:', response);
 						this.invite = response.invite;
 						this.members = response.members?.filter(
 							(m) => m.id !== response.invite?.memberId,
 						);
 						if (response.invite) {
 							this.fullName = response.invite.to.title;
-							if (response.invite.channel === "email") {
+							if (response.invite.channel === 'email') {
 								this.email = response.invite.address;
 							}
 						}
 					},
 					error: (err) =>
-						this.errorLogger.logError(err, "Failed to load invite:"),
+						this.errorLogger.logError(err, 'Failed to load invite:'),
 				});
 		});
 	}
@@ -102,24 +102,24 @@ export class InvitePersonalPage implements OnInit {
 				fullName: this.fullName,
 			};
 			if (!token) {
-				throw new Error("token is undefined or empty");
+				throw new Error('token is undefined or empty');
 			}
 			this.memberService
 				.acceptPersonalInvite(request, token)
 				.subscribe({
 						next: (/*memberInfo*/) => {
-							console.log("Joined team");
+							console.log('Joined team');
 							this.navController
-								.navigateRoot("team", { queryParams: { id: this.teamId } })
+								.navigateRoot('team', { queryParams: { id: this.teamId } })
 								.catch((err) => {
 									this.errorLogger.logError(
 										err,
-										"Failed to navigate to team page after successfully joining a team",
+										'Failed to navigate to team page after successfully joining a team',
 									);
 								});
 						},
 						error: (error) => {
-							this.errorLogger.logError(error, "Failed to join team");
+							this.errorLogger.logError(error, 'Failed to join team');
 							this.accepting = false;
 							this.working = false;
 						},
@@ -145,13 +145,13 @@ export class InvitePersonalPage implements OnInit {
 							acceptInvite(token);
 						})
 						.catch((err) => {
-							this.errorLogger.logError(err, "Failed to get Firebase token");
+							this.errorLogger.logError(err, 'Failed to get Firebase token');
 						});
 				})
 				.catch((err) => {
 					this.accepting = false;
 					this.working = false;
-					this.errorLogger.logError(err, "Failed to create Firebase user");
+					this.errorLogger.logError(err, 'Failed to create Firebase user');
 				});
 		}
 	}
@@ -166,16 +166,16 @@ export class InvitePersonalPage implements OnInit {
 		};
 		this.memberService.rejectPersonalInvite(request).subscribe(
 			() => {
-				console.log("Refused to join team");
-				this.navController.navigateRoot("teams").catch((err) => {
+				console.log('Refused to join team');
+				this.navController.navigateRoot('teams').catch((err) => {
 					this.errorLogger.logError(
 						err,
-						"Failed to navigate to teams page after successfully refused joining a team",
+						'Failed to navigate to teams page after successfully refused joining a team',
 					);
 				});
 			},
 			(error) => {
-				this.errorLogger.logError(error, "Failed to join team");
+				this.errorLogger.logError(error, 'Failed to join team');
 				this.working = false;
 				this.rejecting = false;
 			},

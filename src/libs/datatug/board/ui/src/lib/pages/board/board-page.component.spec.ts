@@ -17,7 +17,7 @@ describe('BoardPage', () => {
 			fixture = TestBed.createComponent(BoardPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

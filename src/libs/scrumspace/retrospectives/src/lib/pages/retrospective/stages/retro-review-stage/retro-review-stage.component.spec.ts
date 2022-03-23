@@ -17,7 +17,7 @@ describe('RetroReviewStageComponent', () => {
 			fixture = TestBed.createComponent(RetroReviewStageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

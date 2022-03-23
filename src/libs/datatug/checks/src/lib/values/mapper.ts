@@ -1,8 +1,4 @@
-import {
-	IEnumFieldCheck,
-	IFieldCheckDef,
-	IRegexFieldCheck,
-} from '@sneat/datatug/models';
+import { IEnumFieldCheck, IFieldCheckDef, IRegexFieldCheck } from '@sneat/datatug/models';
 import { RegExpCheck } from './regexp_check';
 import { IValueCheck } from './interfaces';
 import { EnumValidCheck } from '@sneat/datatug/checks';

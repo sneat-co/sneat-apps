@@ -15,4 +15,5 @@ import { DatatugServicesBaseModule } from '@sneat/datatug/services/base';
 		AgentStateService,
 	],
 })
-export class DatatugServicesStoreModule {}
+export class DatatugServicesStoreModule {
+}

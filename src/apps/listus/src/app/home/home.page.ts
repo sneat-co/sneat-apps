@@ -7,7 +7,8 @@ import { DataService, Message } from '../services/data.service';
 	styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-	constructor(private data: DataService) {}
+	constructor(private data: DataService) {
+	}
 
 	refresh(ev: Event) {
 		if (ev instanceof CustomEvent) {

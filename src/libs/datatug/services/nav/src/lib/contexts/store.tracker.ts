@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { routingParamStoreId } from '@sneat/datatug/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 // function factory(route: ActivatedRoute): StoreContextService {
 // 	return new StoreContextService(route);
@@ -17,7 +17,7 @@ export class StoreTracker {
 
 	constructor(
 		private readonly stopNotifier: Observable<any>,
-		readonly route: ActivatedRoute
+		readonly route: ActivatedRoute,
 	) {
 		if (!stopNotifier) {
 			throw new Error('stopNotifier is a required parameter for StoreTracker');
@@ -28,7 +28,7 @@ export class StoreTracker {
 		this.storeId = route.paramMap.pipe(
 			takeUntil(stopNotifier),
 			map((paramMap) => paramMap.get(routingParamStoreId)),
-			distinctUntilChanged()
+			distinctUntilChanged(),
 		);
 	}
 }

@@ -26,7 +26,7 @@ describe('ScrumTaskComponent', () => {
 			fixture = TestBed.createComponent(ScrumTaskComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

@@ -39,8 +39,9 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 	};
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
-	) {}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
 
 	public onSqlChanged(_: Event): void {
 		this.sqlChanged.emit(this.sql);
@@ -84,7 +85,7 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('SqlComponent.ngOnChanges()', changes);
-		if (changes["sql"] || changes["lineNumbers"] || changes["readonly"]) {
+		if (changes['sql'] || changes['lineNumbers'] || changes['readonly']) {
 			this.codemirrorOptions = {
 				...this.codemirrorOptions,
 				lineNumbers: this.lineNumbers,

@@ -1,13 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import {
-	IRecord,
-	ITeam,
-	ITeamMetric,
-	MetricColor,
-} from '../../models/interfaces';
+import { IRecord, ITeam, ITeamMetric, MetricColor } from '../../models/interfaces';
 import { TeamService } from '../../services/team.service';
 import { NavController, ToastController } from '@ionic/angular';
-import { IErrorLogger, ErrorLogger } from '@sneat-team/ui-core';
+import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -34,7 +29,7 @@ export class AddMetricPage {
 		private readonly navController: NavController,
 		private readonly teamService: TeamService,
 		private readonly toastController: ToastController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		this.min = 0;
 		const team = window?.history?.state?.team as IRecord<ITeam>;

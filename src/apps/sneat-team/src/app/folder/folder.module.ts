@@ -12,4 +12,5 @@ import { FolderPage } from './folder.page';
 	imports: [CommonModule, FormsModule, IonicModule, FolderPageRoutingModule],
 	declarations: [FolderPage],
 })
-export class FolderPageModule {}
+export class FolderPageModule {
+}

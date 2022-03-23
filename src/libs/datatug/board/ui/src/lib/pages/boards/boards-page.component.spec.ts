@@ -17,7 +17,7 @@ describe('DataboardsPage', () => {
 			fixture = TestBed.createComponent(BoardsPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

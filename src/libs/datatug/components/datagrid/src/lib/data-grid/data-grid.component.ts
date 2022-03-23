@@ -5,14 +5,13 @@ import {
 	Inject,
 	Input,
 	OnChanges,
-	OnDestroy,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import {Tabulator} from 'tabulator-tables';
+import { Tabulator } from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
 
 // export interface IGridDef {
@@ -74,29 +73,29 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 		console.log('DataGridComponent.ngOnChanges():', changes);
 		try {
 			if (
-				(changes["data"] && this.data && this.columns) ||
-				(changes["columns"] && this.columns)
+				(changes['data'] && this.data && this.columns) ||
+				(changes['columns'] && this.columns)
 			) {
 				this.drawTable();
 			}
 		} catch (ex) {
 			this.errorLogger.logError(
 				ex,
-				'Failed to process ngOnChanges in DataGridComponent'
+				'Failed to process ngOnChanges in DataGridComponent',
 			);
 		}
 	}
 
 	// ngOnDestroy(): void {
-		// console.log('DataGridComponent.ngOnDestroy()', this.tabulator);
-		// try { // TODO: destroy Tabulator
-		// 	if (this.tabulator?.element) {
-		// 		// noinspection TypeScriptValidateJSTypes
-		// 		this.tabulator.element.tabulator('destroy');
-		// 	}
-		// } catch (ex) {
-		// 	this.errorLogger.logError(ex, 'Failed to destroy tabulator');
-		// }
+	// console.log('DataGridComponent.ngOnDestroy()', this.tabulator);
+	// try { // TODO: destroy Tabulator
+	// 	if (this.tabulator?.element) {
+	// 		// noinspection TypeScriptValidateJSTypes
+	// 		this.tabulator.element.tabulator('destroy');
+	// 	}
+	// } catch (ex) {
+	// 	this.errorLogger.logError(ex, 'Failed to destroy tabulator');
+	// }
 	// }
 
 	ngAfterViewInit(): void {
@@ -117,7 +116,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			'groupBy:',
 			this.groupBy,
 			'data:',
-			this.data
+			this.data,
 		);
 		try {
 			if (!this.tabulatorDiv) {
@@ -209,7 +208,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 		if (!this.tabulator) {
 			this.tabulator = new Tabulator(
 				this.tabulatorDiv?.nativeElement,
-				this.tabulatorOptions
+				this.tabulatorOptions,
 			);
 		}
 	}

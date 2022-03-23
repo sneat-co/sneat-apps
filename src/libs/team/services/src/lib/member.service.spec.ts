@@ -15,7 +15,7 @@ describe('MemberService', () => {
 				AngularFireModule.initializeApp(environment.firebaseConfig),
 			],
 			providers: [TeamService, UserService],
-		})
+		}),
 	);
 
 	it('should be created', () => {

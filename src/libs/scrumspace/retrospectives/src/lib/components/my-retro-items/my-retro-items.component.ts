@@ -1,33 +1,21 @@
-import {
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	OnInit,
-	SimpleChanges,
-	ViewChild,
-} from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
-import {
-	IAddRetroItemRequest,
-	RetrospectiveService,
-} from '../../retrospective.service';
-import { filter } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { IAddRetroItemRequest, RetrospectiveService } from '../../retrospective.service';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IRetroItem,
 	IRetroList,
 	IRetroListItem,
 	RetroItemType,
-	RetroItemTypeEnum, RetrospectiveStage
-} from "@sneat/scrumspace/scrummodels";
-import { ISneatUserState, SneatUserService } from "@sneat/user";
-import { IRecord } from "@sneat/data";
-import { IUserRecord } from "@sneat/auth-models";
+	RetroItemTypeEnum,
+	RetrospectiveStage,
+} from '@sneat/scrumspace/scrummodels';
+import { SneatUserService } from '@sneat/user';
+import { IRecord } from '@sneat/data';
+import { IUserRecord } from '@sneat/auth-models';
 
 @Component({
 	selector: 'sneat-my-retro-items',
@@ -66,8 +54,9 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	constructor(
 		private readonly retrospectiveService: RetrospectiveService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly userService: SneatUserService
-	) {}
+		private readonly userService: SneatUserService,
+	) {
+	}
 
 	public get currentType(): string {
 		return this.typeControl.value as string;
@@ -82,7 +71,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	public trackByID = (i: number, item: IRetroItem) => item.ID;
 
 	public ngOnInit(): void {
-		console.error('commented out')
+		console.error('commented out');
 		// this.userSubscription = this.userService.userRecord
 		// 	.pipe(filter((user) => !!user))
 		// 	.subscribe((user) => this.processUserRecord(user));
@@ -109,8 +98,8 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				.catch((err) =>
 					this.errorLogger.logError(
 						err,
-						'Failed to set focus to title input (ScrumRetroCardComponent.typeChanged)'
-					)
+						'Failed to set focus to title input (ScrumRetroCardComponent.typeChanged)',
+					),
 				);
 		}, 50);
 		// if (!this.retroSub) {
@@ -194,7 +183,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				this.errorLogger.logError(
 					`list not found by id "${type}", have: ${this.retroLists
 						.map((l) => l.id)
-						.join(', ')}`
+						.join(', ')}`,
 				);
 				return;
 			}
@@ -219,13 +208,13 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				},
 				(err) => {
 					this.retroLists[type] = this.retroLists[type].filter(
-						(item) => item.Id || item.title !== title
+						(item) => item.Id || item.title !== title,
 					);
 					this.errorLogger.logError(
 						err,
-						'Failed to add a private retrospective item'
+						'Failed to add a private retrospective item',
 					);
-				}
+				},
 			);
 			this.titleControl.markAsPristine();
 			this.titleControl.markAsUntouched();
@@ -241,7 +230,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				`user.data.teams[${this.teamId}].retroItems:`,
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
-				teamInfo?.retroItems
+				teamInfo?.retroItems,
 			);
 			if (!teamInfo) {
 				return; // TODO: Log error & redirect to /teams

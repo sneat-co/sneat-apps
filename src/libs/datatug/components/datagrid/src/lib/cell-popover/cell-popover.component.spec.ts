@@ -17,7 +17,7 @@ describe('CellPopoverComponent', () => {
 			fixture = TestBed.createComponent(CellPopoverComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

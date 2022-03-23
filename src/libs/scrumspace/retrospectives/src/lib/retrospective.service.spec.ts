@@ -12,7 +12,7 @@ describe('RetrospectiveService', () => {
 				HttpClientTestingModule,
 				AngularFireModule.initializeApp(environment.firebaseConfig),
 			],
-		})
+		}),
 	);
 
 	it('should be created', () => {

@@ -1,14 +1,13 @@
-import { NgModule } from "@angular/core";
-import { CommuneMenuComponent } from "./commune-menu/commune-menu.component";
-import { RouterModule, Routes } from "@angular/router";
-import { CommunePageComponent } from "./commune-page/commune-page.component";
-import { CommonModule } from "@angular/common";
-import { IonicModule } from "@ionic/angular";
+import { NgModule } from '@angular/core';
+import { CommuneMenuComponent } from './commune-menu/commune-menu.component';
+import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
 	{
-		path: "family",
-		loadChildren: () => import("./commune-page/commune-page.module").then(m => m.CommunePageModule),
+		path: 'family',
+		loadChildren: () => import('./commune-page/commune-page.module').then(m => m.CommunePageModule),
 	},
 ];
 

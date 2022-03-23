@@ -3,7 +3,8 @@ import { IRecordsetMinCountCheckDef } from '@sneat/datatug/models';
 import { IRecordsetCheck } from './interfaces';
 
 export class RecordsetMinCountCheck implements IRecordsetCheck {
-	constructor(public readonly def: IRecordsetMinCountCheckDef) {}
+	constructor(public readonly def: IRecordsetMinCountCheckDef) {
+	}
 
 	public checkRecordsetResult(result: IRecordsetResult): IRecordsetCheckResult {
 		if (result.rows.length > this.def.value) {
@@ -18,7 +19,8 @@ export class RecordsetMinCountCheck implements IRecordsetCheck {
 }
 
 export class RecordsetMaxCountCheck implements IRecordsetCheck {
-	constructor(public readonly def: IRecordsetMinCountCheckDef) {}
+	constructor(public readonly def: IRecordsetMinCountCheckDef) {
+	}
 
 	public checkRecordsetResult(result: IRecordsetResult): IRecordsetCheckResult {
 		if (result.rows.length > this.def.value) {

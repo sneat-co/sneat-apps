@@ -24,4 +24,5 @@ import { QueriesTabComponent } from './queries-tab.component';
 	],
 	declarations: [QueriesTabComponent, QueriesPageComponent],
 })
-export class QueriesPageModule {}
+export class QueriesPageModule {
+}

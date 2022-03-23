@@ -1,26 +1,26 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy } from "@angular/core";
+import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 
-import { ActivatedRoute } from "@angular/router";
-import { NavController } from "@ionic/angular";
-import { filter, first, mergeMap, takeUntil } from "rxjs/operators";
-import { RetrospectiveService } from "../../retrospective.service";
-import { Subscription } from "rxjs";
-import { BaseTeamPageDirective } from "@sneat/team/components";
-import { IRecord } from "@sneat/data";
-import { IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
-import { TeamService } from "@sneat/team/services";
-import { SneatUserService } from "@sneat/user";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { getMeetingIdFromDate } from "@sneat/meeting";
+import { ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
+import { RetrospectiveService } from '../../retrospective.service';
+import { Subscription } from 'rxjs';
+import { BaseTeamPageDirective } from '@sneat/team/components';
+import { IRecord } from '@sneat/data';
+import { IRetrospective, RetrospectiveStage } from '@sneat/scrumspace/scrummodels';
+import { TeamService } from '@sneat/team/services';
+import { SneatUserService } from '@sneat/user';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { getMeetingIdFromDate } from '@sneat/meeting';
 
 @Component({
-	selector: "sneat-retrospective",
-	templateUrl: "./retrospective-page.component.html",
+	selector: 'sneat-retrospective',
+	templateUrl: './retrospective-page.component.html',
 })
 export class RetrospectivePageComponent
 	extends BaseTeamPageDirective
 	implements OnDestroy {
-	public title = "Retrospective";
+	public title = 'Retrospective';
 	public retrospective: IRecord<IRetrospective>;
 	private retroSub: Subscription;
 
@@ -73,12 +73,12 @@ export class RetrospectivePageComponent
 	protected onTeamIdChanged() {
 		super.onTeamIdChanged();
 		try {
-			console.log("RetrospectivePage.onTeamIdChanged()");
+			console.log('RetrospectivePage.onTeamIdChanged()');
 			if (this.retrospective?.id) {
 				this.watchRetro();
 			}
 		} catch (e) {
-			this.logError(e, "Failed to process changed team ID");
+			this.logError(e, 'Failed to process changed team ID');
 		}
 	}
 
@@ -93,9 +93,9 @@ export class RetrospectivePageComponent
 				)
 				.subscribe({
 					next: (queryParams) => {
-						let id = queryParams.get("id");
+						let id = queryParams.get('id');
 						switch (id) {
-							case "today":
+							case 'today':
 								id = getMeetingIdFromDate(new Date()); // TODO: replace URL?
 								break;
 							case RetrospectiveStage.upcoming:
@@ -114,19 +114,19 @@ export class RetrospectivePageComponent
 						}
 					},
 					error: (err) =>
-						this.errorLogger.logError(err, "Failed to load retrospective"),
+						this.errorLogger.logError(err, 'Failed to load retrospective'),
 				});
 		} catch (e) {
-			this.errorLogger.logError(e, "Failed in track meeting id from URL");
+			this.errorLogger.logError(e, 'Failed in track meeting id from URL');
 		}
 	}
 
 	private watchRetro(): void {
-		console.log("RetrospectivePage.watchRetro()");
+		console.log('RetrospectivePage.watchRetro()');
 		this.userService.userChanged
 			// .pipe(filter(uid => !!uid))
 			.subscribe((userId) => {
-				console.log("RetrospectivePage.watchRetro() => userId:", userId);
+				console.log('RetrospectivePage.watchRetro() => userId:', userId);
 				try {
 					if (this.retroSub) {
 						this.retroSub.unsubscribe();
@@ -145,10 +145,10 @@ export class RetrospectivePageComponent
 						.subscribe({
 							next: (retrospective) =>
 								this.setRetro(teamId, { id, data: retrospective }),
-							error: (e) => this.logError(e, "Failed to watch retrospective"),
+							error: (e) => this.logError(e, 'Failed to watch retrospective'),
 						});
 				} catch (e) {
-					this.logError(e, "Failed to watchTeam");
+					this.logError(e, 'Failed to watchTeam');
 				}
 			});
 	}
@@ -157,7 +157,7 @@ export class RetrospectivePageComponent
 		teamId: string,
 		retrospective: IRecord<IRetrospective>,
 	): void {
-		console.log("RetrospectivePage.setRetro()");
+		console.log('RetrospectivePage.setRetro()');
 		try {
 			if (
 				this.retrospective?.id === retrospective.id &&
@@ -166,7 +166,7 @@ export class RetrospectivePageComponent
 				this.retrospective = retrospective;
 			}
 		} catch (e) {
-			this.logError(e, "Failed process new retrospective record");
+			this.logError(e, 'Failed process new retrospective record');
 		}
 	}
 }

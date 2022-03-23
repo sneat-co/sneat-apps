@@ -1,12 +1,7 @@
-import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
-import {delay, filter} from 'rxjs/operators';
-import {EntityKind, IRecord, SpecificOrUnknownSchema} from './schema';
-import {
-	IRecordChange,
-	IRxStore,
-	RxReadonlyTransactionWorker,
-	RxReadwriteTransactionWorker,
-} from './interfaces';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { delay, filter } from 'rxjs/operators';
+import { EntityKind, IRecord, SpecificOrUnknownSchema } from './schema';
+import { IRecordChange, IRxStore, RxReadonlyTransactionWorker, RxReadwriteTransactionWorker } from './interfaces';
 
 const delay1 = 300;
 const delay3 = 300;

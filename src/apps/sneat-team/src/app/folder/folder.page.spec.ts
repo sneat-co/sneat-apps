@@ -17,7 +17,7 @@ describe('FolderPage', () => {
 			fixture = TestBed.createComponent(FolderPage);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {

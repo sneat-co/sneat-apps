@@ -11,7 +11,9 @@ export class TimerMeetingButtonComponent implements OnInit {
 	@Input() public scrum?: IScrum;
 	@Input() public teamId: string;
 
-	constructor() {}
+	constructor() {
+	}
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 }

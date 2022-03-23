@@ -5,4 +5,5 @@ import { Component } from '@angular/core';
 	templateUrl: './db-models-page.component.html',
 	styleUrls: ['./db-models-page.component.scss'],
 })
-export class DbModelsPage {}
+export class DbModelsPage {
+}

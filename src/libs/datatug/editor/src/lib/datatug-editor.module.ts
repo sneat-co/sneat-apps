@@ -6,4 +6,5 @@ import { EditorStateStore } from './editor-state-store';
 	imports: [CommonModule],
 	providers: [EditorStateStore],
 })
-export class DatatugEditorModule {}
+export class DatatugEditorModule {
+}

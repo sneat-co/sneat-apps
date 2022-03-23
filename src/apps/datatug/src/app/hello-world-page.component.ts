@@ -4,4 +4,5 @@ import { Component } from '@angular/core';
 	selector: 'datatug-hello-world',
 	template: 'Hello world',
 })
-export class HelloWorldPageComponent {}
+export class HelloWorldPageComponent {
+}

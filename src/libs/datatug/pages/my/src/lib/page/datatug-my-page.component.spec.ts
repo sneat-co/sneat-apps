@@ -17,7 +17,7 @@ describe('MyPage', () => {
 			fixture = TestBed.createComponent(DatatugMyPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
-		})
+		}),
 	);
 
 	it('should create', () => {
