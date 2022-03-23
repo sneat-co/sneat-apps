@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
 import { BaseTeamPageDirective } from "@sneat/team/pages";
 import { IRecord } from "@sneat/data";
 import { IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
-import { TeamContextService, TeamService } from "@sneat/team/services";
+import { TeamService } from "@sneat/team/services";
 import { SneatUserService } from "@sneat/user";
 import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 import { getMeetingIdFromDate } from "@sneat/meeting";
@@ -27,7 +27,6 @@ export class RetrospectivePageComponent
 	constructor(
 		readonly changeDetectorRef: ChangeDetectorRef,
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		readonly teamContextService: TeamContextService,
 		readonly teamService: TeamService,
 		readonly route: ActivatedRoute,
 		readonly userService: SneatUserService,
@@ -40,7 +39,6 @@ export class RetrospectivePageComponent
 			errorLogger,
 			navController,
 			teamService,
-			teamContextService,
 			userService,
 		);
 		this.trackTeamIdFromUrl();

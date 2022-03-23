@@ -2,9 +2,8 @@ import {ICommuneRecord, ITitledRecord, IWithRestrictions} from './dto-models';
 import {CommuneType, ListStatus} from '../types';
 import {ICommuneDto} from './dto-commune';
 import {IUserCommuneInfo} from './dto-user';
-import {IList} from '../../extensions/listus/services/interfaces';
-import {IRecord, RxRecordKey} from 'rxstore';
-import {CommuneShortId} from '../../services/interfaces';
+import {IRecord, RxRecordKey} from '@sneat/rxstore';
+import { CommuneShortId } from "../commune-ids";
 
 export interface IQuantity {
 	value: number;
@@ -118,7 +117,7 @@ export interface IListInfo extends IWithRestrictions {
 	itemsCount?: number;
 }
 
-export function isListInfoMatchesListDto(i: IListInfo, l: IList): boolean {
+export function isListInfoMatchesListDto(i: IListInfo, l: any): boolean {
 	return !!i.id && i.id === l.dto.id
 		|| (
 			i.type === l.dto.type

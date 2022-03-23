@@ -5,11 +5,13 @@ import { LoginRequiredComponent } from "./login-required-component/login-require
 import { IonicModule } from "@ionic/angular";
 import { AuthMenuItemComponent } from "./auth-menu-item/auth-menu-item.component";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
 	imports: [
 		IonicModule,
 		CommonModule,
+		RouterModule,
 	],
 	providers: [
 		PrivateTokenStoreService,

@@ -1,30 +1,27 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { NavController } from '@ionic/angular';
+import { Component, Inject, OnDestroy } from "@angular/core";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug/services/nav';
-import { DatatugStoreService } from '@sneat/datatug/services/repo';
-import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug/nav';
+} from "@sneat/datatug/services/nav";
+import { IEnvDbTableContext, IProjectContext } from "@sneat/datatug/nav";
 import {
 	DatatugUserService,
 	IDatatugUserState,
-} from '@sneat/datatug/services/base';
+} from "@sneat/datatug/services/base";
 import {
 	AuthStatus,
 	AuthStatuses,
 	ISneatAuthState,
 	SneatAuthStateService,
-} from '@sneat/auth';
-import { parseStoreRef } from '@sneat/core';
+} from "@sneat/auth";
 
 @Component({
-	selector: 'datatug-menu',
-	templateUrl: './datatug-menu.component.html',
-	styleUrls: ['./datatug-menu.component.scss'],
+	selector: "datatug-menu",
+	templateUrl: "./datatug-menu.component.html",
+	styleUrls: ["./datatug-menu.component.scss"],
 })
 export class DatatugMenuComponent implements OnDestroy {
 	public authStatus?: AuthStatus;
@@ -41,12 +38,11 @@ export class DatatugMenuComponent implements OnDestroy {
 	constructor(
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
-		private readonly navCtrl: NavController,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly datatugNavContextService: DatatugNavContextService,
 		private readonly nav: DatatugNavService,
-		private readonly storeService: DatatugStoreService,
-		private readonly datatugUserService: DatatugUserService
+		// private readonly storeService: DatatugStoreService,
+		private readonly datatugUserService: DatatugUserService,
 	) {
 		// console.log('DatatugMenuComponent.constructor()');
 		this.sneatAuthStateService.authState
@@ -55,9 +51,7 @@ export class DatatugMenuComponent implements OnDestroy {
 				next: (authState) => {
 					this.authState = authState;
 				},
-				error: errorLogger.logErrorHandler(
-					'failed to process sneat auth state'
-				),
+				error: errorLogger.logErrorHandler("failed to process sneat auth state"),
 			});
 
 		// userService.userRecord.subscribe(user => {
@@ -72,10 +66,10 @@ export class DatatugMenuComponent implements OnDestroy {
 				this.trackCurrentProject();
 				this.trackCurrentEnvDbTable();
 			} else {
-				console.error('datatugNavContextService is not injected');
+				console.error("datatugNavContextService is not injected");
 			}
 		} catch (e) {
-			errorLogger.logError(e, 'Failed to setup context tracking');
+			errorLogger.logError(e, "Failed to setup context tracking");
 		}
 	}
 
@@ -85,14 +79,14 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	private trackAuthState(): void {
 		if (!this.sneatAuthStateService) {
-			console.error('this.sneatAuthStateService is not injected');
+			console.error("this.sneatAuthStateService is not injected");
 			return;
 		}
 		this.sneatAuthStateService.authStatus
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: (authState) => (this.authStatus = authState),
-				error: this.errorLogger.logErrorHandler('failed to get auth stage'),
+				error: this.errorLogger.logErrorHandler("failed to get auth stage"),
 			});
 	}
 
@@ -103,29 +97,11 @@ export class DatatugMenuComponent implements OnDestroy {
 		}
 	}
 
-	public logout(): void {
-		try {
-			this.sneatAuthStateService
-				.signOut()
-				.then(() => {
-					this.navCtrl
-						.navigateBack('/signed-out')
-						.catch(
-							this.errorLogger.logErrorHandler(
-								'Failed to navigate to signed out page'
-							)
-						);
-				})
-				.catch(this.errorLogger.logErrorHandler('Failed to sign out'));
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to logout');
-		}
-	}
 
 	private trackCurrentUser(): void {
 		try {
 			if (!this.datatugUserService) {
-				console.error('this.datatugUserService is not injected');
+				console.error("this.datatugUserService is not injected");
 				return;
 			}
 			this.datatugUserService.datatugUserState
@@ -136,11 +112,11 @@ export class DatatugMenuComponent implements OnDestroy {
 						// console.log('trackCurrentUser() => datatugUser:', datatugUser);
 					},
 					error: this.errorLogger.logErrorHandler(
-						'Failed to get user record for menu'
+						"Failed to get user record for menu",
 					),
 				});
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to setup tracking of current user');
+			this.errorLogger.logError(e, "Failed to setup tracking of current user");
 		}
 	}
 
@@ -151,12 +127,12 @@ export class DatatugMenuComponent implements OnDestroy {
 				.subscribe({
 					next: this.onCurrentStoreChanged,
 					error: (err) =>
-						this.errorLogger.logError(err, 'Failed to get storeId'),
+						this.errorLogger.logError(err, "Failed to get storeId"),
 				});
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				'Failed to setup tracking of current repository'
+				"Failed to setup tracking of current repository",
 			);
 		}
 	}
@@ -166,9 +142,9 @@ export class DatatugMenuComponent implements OnDestroy {
 			return;
 		}
 		console.log(
-			'DatatugMenuComponent => storeId changed:',
+			"DatatugMenuComponent => storeId changed:",
 			storeId,
-			this.currentStoreId
+			this.currentStoreId,
 		);
 		this.currentStoreId = storeId;
 	};
@@ -180,12 +156,12 @@ export class DatatugMenuComponent implements OnDestroy {
 				.subscribe({
 					next: this.onProjectChanged,
 					error: (err) =>
-						this.errorLogger.logError(err, 'Failed to get current project'),
+						this.errorLogger.logError(err, "Failed to get current project"),
 				});
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				'Failed to setup tracking of current project'
+				"Failed to setup tracking of current project",
 			);
 		}
 	}
@@ -206,14 +182,14 @@ export class DatatugMenuComponent implements OnDestroy {
 						) {
 							console.log(
 								`DatatugMenuComponent => currentTable changed to: ${table.schema}.${table.name}, meta:`,
-								table.meta
+								table.meta,
 							);
 						}
 					}
 					this.table = table;
 				},
 				error: (err) =>
-					this.errorLogger.logError(err, 'Failed to get current table context'),
+					this.errorLogger.logError(err, "Failed to get current table context"),
 			});
 	}
 }

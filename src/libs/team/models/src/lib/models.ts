@@ -67,6 +67,11 @@ export interface IAddTeamMemberRequest extends ITeamRequest {
 	message?: string;
 }
 
+export interface ITeamBrief {
+	id: string;
+	title: string;
+}
+
 export interface ITeam {
 	title: string;
 	userIds: string[];

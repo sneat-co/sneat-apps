@@ -24,7 +24,7 @@ import {
 	SneatAuthStateService
 } from "@sneat/auth";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TeamService {
 	private userId?: string;
 

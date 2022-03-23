@@ -59,7 +59,7 @@ export class MembersListComponent implements OnChanges {
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes.allMembers || changes.role) {
+		if (changes['allMembers'] || changes['role']) {
 			this.members =
 				this.role === null
 					? this.allMembers

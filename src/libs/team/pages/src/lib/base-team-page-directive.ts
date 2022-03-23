@@ -1,24 +1,21 @@
 import { ActivatedRoute } from "@angular/router";
 import { NavController } from "@ionic/angular";
-import {
-	ChangeDetectorRef,
-	Directive,
-	Inject,
-	Injectable,
-	OnDestroy
-} from "@angular/core";
+import { ChangeDetectorRef, Directive, Inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 import { first, mergeMap, takeUntil } from "rxjs/operators";
 import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 import { IUserTeamInfoWithId } from "@sneat/auth-models";
 import { IRecord } from "@sneat/data";
-import { TeamContextService, TeamService } from "@sneat/team/services";
+import { TeamService, trackTeamIdFromRouteParameter } from "@sneat/team/services";
 import { SneatUserService } from "@sneat/user";
 import { ITeam } from "@sneat/team/models";
+import { TeamPageContextComponent } from "@sneat/team/components";
 
-@Injectable()
-@Directive()
-export abstract class BaseTeamPageDirective implements OnDestroy {
+@Directive() // There was some reason to add a @Directive() - TODO: document why
+export abstract class BaseTeamPageDirective implements OnInit, OnDestroy {
+
+	@ViewChild(TeamPageContextComponent) context?: TeamPageContextComponent;
+
 	public userTeam?: IUserTeamInfoWithId;
 
 	protected readonly subs = new Subscription();
@@ -45,7 +42,6 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
 		protected readonly navController: NavController,
 		protected readonly teamService: TeamService,
-		protected readonly teamContextService: TeamContextService,
 		protected readonly userService: SneatUserService
 	) {
 		console.log(`BaseTeamPage.constructor()`);
@@ -69,18 +65,16 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 		this.subs.unsubscribe();
 	}
 
-	protected trackTeamIdFromUrl(teamParamName: string = "team"): void {
+	protected trackTeamIdFromUrl(): void {
 		try {
-			this.teamContextService
-				.trackUrl(this.route, teamParamName)
+			trackTeamIdFromRouteParameter(this.route)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
-					next: (id) => {
+					next: (teamContext) => {
 						console.log(
-							`BaseTeamPageDirective.trackTeamIdFromUrl() => ${teamParamName}:`,
-							id
+							`BaseTeamPageDirective.trackTeamIdFromUrl() =>`, teamContext
 						);
-						this.setTeamId(id);
+						this.setTeamId(teamContext?.id);
 					},
 					error: (err) =>
 						this.logError(err, "Failed to track team ID from url")
@@ -193,5 +187,13 @@ export abstract class BaseTeamPageDirective implements OnDestroy {
 		console.log("BaseTeamPageDirective.setTeam()", team);
 		this.teamRecord = team;
 		this.onTeamChanged();
+	}
+
+	ngOnInit(): void {
+		this.context?.team.subscribe({
+			next: team => {
+				team?.id;
+			}
+		});
 	}
 }

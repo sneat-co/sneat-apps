@@ -8,7 +8,7 @@ interface MightHaveId {
 export function mapToRecord<T extends MightHaveId>(
 	state: RecordState = 'unchanged'
 ): OperatorFunction<T, IRecord<T>> {
-	return map((data: T): IRecord<T> => ({ id: data.id, data, state }));
+	return map((data: T): IRecord<T> => ({ id: data.id as string, data, state }));
 }
 
 export interface IRecord<T> {

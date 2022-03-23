@@ -1,9 +1,32 @@
-<ion-item tappable>
-	<ion-label *ngIf="!authState" color="medium">Authenticating...</ion-label>
-	<ion-label *ngIf="authState?.status === 'notAuthenticated'">
-		Sign-in
+<ion-item tappable routerLink="/my" routerDirection="root">
+	<!--    <ion-buttons slot="start" class="ion-no-margin">-->
+	<!--      <ion-button disabled color="medium" >-->
+	<!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
+	<!--      </ion-button>-->
+	<!--    </ion-buttons>-->
+	<ion-icon slot="start" name="person-circle-outline"></ion-icon>
+
+	<ion-label *ngIf="authState?.user; else notAuthenticated" color="medium">
+		{{ authState?.user?.displayName }}
 	</ion-label>
-	<ion-label *ngIf="authState?.status === 'authenticated'">
-		Sign-out
-	</ion-label>
+	<ng-template #notAuthenticated>
+		<ion-label color="medium">
+			<ng-container *ngIf="!authState">Loading...</ng-container>
+			<ng-container *ngIf="authState?.status === 'authenticating'"
+			>Authenticating...</ng-container
+			>
+			<ng-container *ngIf="authState?.status === 'notAuthenticated'">
+				Please <a [routerLink]="'/login'">sign in</a>
+			</ng-container>
+		</ion-label>
+	</ng-template>
+
+	<ion-buttons slot="end" *ngIf="authState?.status === 'authenticated'">
+		<ion-button color="medium" title="Settings">
+			<ion-icon name="settings-outline"></ion-icon>
+		</ion-button>
+		<ion-button color="medium" title="Sign-out" (click)="logout()">
+			<ion-icon name="log-out-outline"></ion-icon>
+		</ion-button>
+	</ion-buttons>
 </ion-item>

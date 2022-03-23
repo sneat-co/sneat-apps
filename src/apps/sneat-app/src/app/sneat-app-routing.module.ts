@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { RoutesToCommuneModule } from "@sneat/communes/ui";
+import { SneatAuthRoutingModule } from "@sneat/auth-ui";
 
 const routes: Routes = [
 	{
@@ -18,9 +19,10 @@ const routes: Routes = [
 @NgModule({
 	imports: [
 		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+		SneatAuthRoutingModule,
 		RoutesToCommuneModule,
 	],
 	exports: [RouterModule],
 })
-export class AppRoutingModule {
+export class SneatAppRoutingModule {
 }

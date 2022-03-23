@@ -20,7 +20,6 @@ import { HttpClientModule } from "@angular/common/http";
 import { SneatAuthModule } from "@sneat/auth";
 import {
 	RANDOM_ID_OPTIONS,
-	RandomIdService,
 	RandomModule
 } from "@sneat/random";
 // import { GuiGridModule } from '@generic-ui/ngx-grid';

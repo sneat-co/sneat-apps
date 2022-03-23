@@ -1,36 +1,5 @@
 <ion-card>
-	<ion-item tappable routerLink="/my" routerDirection="root">
-		<!--    <ion-buttons slot="start" class="ion-no-margin">-->
-		<!--      <ion-button disabled color="medium" >-->
-		<!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
-		<!--      </ion-button>-->
-		<!--    </ion-buttons>-->
-		<ion-icon slot="start" name="person-circle-outline"></ion-icon>
-
-		<ion-label *ngIf="authState.user; else notAuthenticated" color="medium">
-			{{ authState.user.displayName }}
-		</ion-label>
-		<ng-template #notAuthenticated>
-			<ion-label color="medium">
-				<ng-container *ngIf="!authStatus">Loading...</ng-container>
-				<ng-container *ngIf="authStatus === 'authenticating'"
-					>Authenticating...</ng-container
-				>
-				<ng-container *ngIf="authStatus === 'notAuthenticated'">
-					Please <a [routerLink]="'/login'">sign in</a>
-				</ng-container>
-			</ion-label>
-		</ng-template>
-
-		<ion-buttons slot="end" *ngIf="authStatus === 'authenticated'">
-			<ion-button color="medium" title="Settings">
-				<ion-icon name="settings-outline"></ion-icon>
-			</ion-button>
-			<ion-button color="medium" title="Sign-out" (click)="logout()">
-				<ion-icon name="log-out-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+	<sneat-auth-menu-item></sneat-auth-menu-item>
 </ion-card>
 
 <ion-card>

@@ -19,6 +19,12 @@ A suit of open source apps that help in work & personal life.
 - [Capacitor](https://capacitorjs.com/) - a cross-platform native runtime for web apps.
 - [nx](https://nx.dev/) by [Nrwl](https://nrwl.io/) - extensible dev tools for monorepos
 
+
+## Concepts
+- `Team`
+  - `Squad`
+  - `Commune`
+
 ## How to run
 
 Preferable way is not to use global `nx` but to use:
@@ -66,6 +72,11 @@ pnx g lib my-lib --buildable --publishable
 Run next command:
 ```shell
 nx generate @nxtend/ionic-angular:app my-app
+```
+
+### TO generate new component:
+```shell
+pnx generate @nrwl/angular:component
 ```
 
 More on how to use NX with Ionic here: https://ionicframework.com/blog/ionic-angular-monorepos-with-nx/

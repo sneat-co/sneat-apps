@@ -7,7 +7,7 @@ import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
 import { BaseTeamPageDirective } from "@sneat/team/pages";
 import { IRetroItem, IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
-import { TeamContextService, TeamService } from "@sneat/team/services";
+import { TeamService } from "@sneat/team/services";
 import { SneatUserService } from "@sneat/user";
 import { getMeetingIdFromDate } from "@sneat/meeting";
 import { ErrorLogger, IErrorLogger } from "@sneat/logging";
@@ -113,7 +113,6 @@ export class RetroTreePageComponent extends BaseTeamPageDirective {
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
 		readonly navController: NavController,
 		readonly teamService: TeamService,
-		readonly teamContextService: TeamContextService,
 		readonly userService: SneatUserService,
 		private retrospectiveService: RetrospectiveService
 	) {
@@ -123,7 +122,6 @@ export class RetroTreePageComponent extends BaseTeamPageDirective {
 			errorLogger,
 			navController,
 			teamService,
-			teamContextService,
 			userService
 		);
 		this.trackTeamIdFromUrl();

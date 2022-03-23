@@ -70,7 +70,7 @@ export class LoginPageComponent {
 		if (location.hash.startsWith('#/')) {
 			this.redirectTo = location.hash;
 		}
-		this.to = this.route.snapshot.queryParams.to; // should we subscribe? I believe no.
+		this.to = this.route.snapshot.queryParams['to']; // should we subscribe? I believe no.
 		const action = location.hash.match(/[#&]action=(\w+)/);
 		this.action = action?.[1] as Action;
 	}
@@ -265,7 +265,7 @@ export class LoginPageComponent {
 		const { to } = this.route.snapshot.queryParams;
 		const queryParams = to ? { ...this.route.snapshot.queryParams } : undefined;
 		if (queryParams) {
-			delete queryParams.to;
+			delete queryParams['to'];
 		}
 		// if (to) {
 		// 	// this.navController.navigateRoot(to, {queryParams, fragment: location.hash.substring(1)})

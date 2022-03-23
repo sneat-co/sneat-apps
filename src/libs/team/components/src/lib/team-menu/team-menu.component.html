@@ -1,0 +1,31 @@
+<!--<sneat-team-page-context page="team-menu"></sneat-team-page-context>-->
+<ng-container *ngIf="!team; else teamMenu">
+	<ion-item routerLink="communes">
+		<ion-label style="font-weight: bold">Teams</ion-label>
+	</ion-item>
+	<ion-item routerLink="/team/family">
+		<ion-icon name="person" slot="start"></ion-icon>
+		<ion-label>Family</ion-label>
+	</ion-item>
+	<ion-item routerLink="/team/work">
+		<ion-icon name="person" slot="start"></ion-icon>
+		<ion-label>Work</ion-label>
+	</ion-item>
+</ng-container>
+<ng-template #teamMenu>
+	<ion-item>
+		<ion-label>Team</ion-label>
+		<ion-select [value]="team?.id">
+			<ion-select-option value="family">Family</ion-select-option>
+			<ion-select-option value="work">Work</ion-select-option>
+		</ion-select>
+		<ion-item>
+			<ion-icon name="person" slot="start"></ion-icon>
+			<ion-label>Lists</ion-label>
+		</ion-item>
+		<ion-item>
+			<ion-icon name="person" slot="start"></ion-icon>
+			<ion-label>Documents</ion-label>
+		</ion-item>
+	</ion-item>
+</ng-template>

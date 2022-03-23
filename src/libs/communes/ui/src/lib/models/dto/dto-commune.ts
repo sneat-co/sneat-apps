@@ -3,8 +3,8 @@ import {Age, CommuneType, CountryId, Gender} from '../types';
 import {IDemoRecord, ITitledRecord, ITotalsHolder} from './dto-models';
 import {ICommuneDtoMemberGroupInfo, MemberRole} from './dto-member';
 import {IListGroupsHolder} from './dto-list';
-import {RxRecordKey} from 'rxstore';
-import {EnumAsUnionOfKeys} from '../../sneat-enum-keys';
+import { EnumAsUnionOfKeys } from "@sneat/core";
+import { RxRecordKey } from "@sneat/rxstore";
 
 export const enum CommuneCounter {
 	activities = 'activities',
@@ -14,7 +14,7 @@ export const enum CommuneCounter {
 	documents = 'documents',
 	liabilities = 'liabilities',
 	members = 'members',
-	membersByRole = 'membersByRole',
+	// membersByRole = 'membersByRole',
 	memberGroups = 'memberGroups',
 	overdues = 'overdues',
 	pupils = 'pupils',
@@ -40,7 +40,7 @@ export interface ICommuneCounts {
 	[CommuneCounter.pupils]?: number;
 	[CommuneCounter.staff]?: number;
 	[CommuneCounter.members]?: number;
-	[CommuneCounter.membersByRole]?: { [role: string]: number };
+	// [CommuneCounter.membersByRole]?: { [role: string]: number };
 	[CommuneCounter.memberGroups]?: number;
 	[CommuneCounter.overdues]?: number;
 	[CommuneCounter.todos]?: number;
@@ -94,6 +94,7 @@ export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder, 
 	readonly userId: RxRecordKey;
 	readonly order?: number;
 	readonly numberOf?: ICommuneCounts;
+	readonly membersCountByRole?: {[id: string]: number};
 	readonly noContactRoles?: string[];
 	readonly groups?: ICommuneDtoMemberGroupInfo[];
 	readonly members?: readonly ICommuneMemberInfo[];

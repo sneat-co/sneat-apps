@@ -310,8 +310,7 @@ export class Commune implements ICommune {
 				return [];
 			}
 			this._membersCountByRole = Object.entries(byRole)
-				.map(item => ({ role: item[0], count: item[1] }));
-
+				.map(item => ({ role: item[0], count: item[1] as number }));
 		}
 		return this._membersCountByRole;
 	}

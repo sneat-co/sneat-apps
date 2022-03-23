@@ -2,10 +2,10 @@ import {CommuneType, CountryId} from '../types';
 import {MemberRelationship} from './dto-member';
 import {ITitledRecord} from './dto-models';
 import {ICommuneDto} from './dto-commune';
-import {RxRecordKey} from 'rxstore';
+// import {RxRecordKey} from '@sneat/rxstore';
 
 export interface IUserCommuneInfo {
-	id?: RxRecordKey;
+	id?: string;
 	shortId?: string;
 	title?: string;
 	type: CommuneType;
