@@ -15,16 +15,18 @@ export class TeamPageComponent extends BaseTeamPageDirective {
 	public teamId?: string;
 
 	constructor(
-		readonly changeDetectorRef: ChangeDetectorRef,
-		readonly route: ActivatedRoute,
-		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		readonly navController: NavController,
-		readonly teamService: TeamService,
-		readonly userService: SneatUserService,
+		override readonly changeDetectorRef: ChangeDetectorRef,
+		override readonly route: ActivatedRoute,
+		@Inject(ErrorLogger)
+		override readonly errorLogger: IErrorLogger,
+		override readonly navController: NavController,
+		override readonly teamService:TeamService,
+		override readonly userService: SneatUserService,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
 		public readonly navService: TeamNavService
 	) {
+
 		super(
 			changeDetectorRef,
 			route,

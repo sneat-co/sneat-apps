@@ -16,19 +16,19 @@ import {
 	ITeamMemberRequest,
 	ITeamMetric,
 	ITeamRequest,
-	MemberRole
+	MemberRole,
 } from "@sneat/team/models";
 import {
 	AuthStatus,
 	ISneatAuthState,
-	SneatAuthStateService
+	SneatAuthStateService,
 } from "@sneat/auth";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: "root" })
 export class TeamService {
 	private userId?: string;
 
-	private teams$: { [id: string]: ReplaySubject<ITeam | null> } = {};
+	private teams$: { [id: string]: ReplaySubject<ITeam | undefined> } = {};
 	private subscriptions: Subscription[] = [];
 
 	constructor(
@@ -36,7 +36,7 @@ export class TeamService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly db: AngularFirestore,
 		private readonly userService: SneatUserService,
-		private readonly sneatTeamApiService: SneatTeamApiService
+		private readonly sneatTeamApiService: SneatTeamApiService,
 	) {
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === "notAuthenticated") {
@@ -46,7 +46,7 @@ export class TeamService {
 		sneatAuthStateService.authStatus.subscribe(onAuthStatusChanged);
 
 		const processUserRecordInTeamService = (
-			userState: ISneatUserState
+			userState: ISneatUserState,
 		): void => {
 			console.log("processUserRecordInTeamService()");
 			const user = userState?.record;
@@ -65,14 +65,15 @@ export class TeamService {
 			}
 			if (user?.teams) {
 				const subscribeForFirestoreTeamChanges = (
-					teamInfo: IUserTeamInfoWithId
+					teamInfo: IUserTeamInfoWithId,
 				): void => {
 					const { id } = teamInfo;
 					let subj = this.teams$[id];
 					console.log("subscribeForFirestoreTeamChanges, subj:", subj);
 					if (!subj) {
-						this.teams$[id] = subj = new ReplaySubject<ITeam | null>(1);
+						this.teams$[id] = subj = new ReplaySubject<ITeam | undefined>(1);
 					}
+
 					const o = this.db
 						.collection("teams")
 						.doc<ITeam>(id)
@@ -81,19 +82,20 @@ export class TeamService {
 							filter((documentSnapshot) => documentSnapshot.type === "value"),
 							map((documentSnapshot) => documentSnapshot.payload),
 							map((teamDoc) =>
-								teamDoc.exists ? (teamDoc.data() as ITeam) : null
+								teamDoc.exists ? (teamDoc.data() as ITeam) : null,
 							),
 							tap((team) => {
 								console.log("New team record from Firestore:", team);
-							})
+							}),
+							map(team => team || undefined)
 						);
 					this.subscriptions.push(o.subscribe(subj));
 				};
 				Object.entries(user.teams).forEach(([id, team]) =>
 					subscribeForFirestoreTeamChanges({
 						...(team as IUserTeamInfoWithId),
-						id
-					})
+						id,
+					}),
 				);
 			}
 		};
@@ -101,7 +103,7 @@ export class TeamService {
 		this.userService.userState.subscribe({
 			next: processUserRecordInTeamService,
 			error: (err) =>
-				this.errorLogger.logError(err, "failed to load user record")
+				this.errorLogger.logError(err, "failed to load user record"),
 		});
 	}
 
@@ -111,30 +113,31 @@ export class TeamService {
 			.pipe(map((response) => response.team));
 	}
 
-	public getTeam(id: string): Observable<ITeam | null> {
+	public getTeam(id: string): Observable<ITeam | undefined> {
 		return this.watchTeam(id)
 			.pipe(
-				first()
+				first(),
+				map(team => team || undefined)
 			);
 	}
 
-	public watchTeam(id: string): Observable<ITeam | null> {
+	public watchTeam(id: string): Observable<ITeam | undefined> {
 		console.log(`TeamService.watchTeam(${id})`);
 		let subj = this.teams$[id];
 		if (!subj) {
-			this.teams$[id] = subj = new ReplaySubject<ITeam | null>(1);
+			this.teams$[id] = subj = new ReplaySubject<ITeam | undefined>(1);
 		}
 		return subj
 			.asObservable()
 			.pipe(
-				tap(team => console.log("watchTeam =>", team))
+				tap(team => console.log("watchTeam =>", team)),
 			);
 	}
 
 	public changeMemberRole(
 		teamRecord: IRecord<ITeam>,
 		memberId: string,
-		role: MemberRole
+		role: MemberRole,
 	): Observable<IRecord<ITeam>> {
 		const member = teamRecord?.data?.members.find((m: IMemberInfo) => m.id === memberId);
 		if (!member) {
@@ -144,22 +147,22 @@ export class TeamService {
 			.post(`team/change_member_role`, {
 				team: teamRecord.id,
 				member: memberId,
-				role
+				role,
 			})
 			.pipe(
 				map(() => {
 					member.roles = [role];
 					return teamRecord;
-				})
+				}),
 			);
 	}
 
 	public removeTeamMember(
 		teamRecord: IRecord<ITeam>,
-		memberId: string
+		memberId: string,
 	): Observable<ITeam> {
 		console.log(
-			`removeTeamMember(teamId: ${teamRecord?.id}, memberId=${memberId})`
+			`removeTeamMember(teamId: ${teamRecord?.id}, memberId=${memberId})`,
 		);
 		if (!teamRecord) {
 			return throwError(() => "teamRecord parameters is required");
@@ -170,21 +173,21 @@ export class TeamService {
 		if (!memberId) {
 			return throwError(() => "memberId is required parameter");
 		}
-		const updateTeam = (team: ITeam | null) => {
+		const updateTeam = (team?: ITeam) => {
 			if (team) {
 				team.members = team.members.filter((m: IMemberInfo) => m.id !== memberId);
 			}
-			const record: IRecord<ITeam> = { id: teamRecord.id, data: team || undefined };
+			const record: IRecord<ITeam> = { id: teamRecord.id, data: team };
 			this.onTeamUpdated(record);
 		};
 		const processRemoveTeamMemberResponse = () =>
 			this.getTeam(teamRecord.id).pipe(
-				tap(updateTeam)
+				tap(updateTeam),
 				// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
 			);
-		const ensureTeamRecordExists = map((team: ITeam | null) => {
+		const ensureTeamRecordExists = map((team?: ITeam) => {
 			if (!team) {
-				throw new Error('team record is expected to exist')
+				throw new Error("team record is expected to exist");
 			}
 			return team;
 		});
@@ -192,10 +195,10 @@ export class TeamService {
 			const member = teamRecord.data.members.find((m: IMemberInfo) => m.id === memberId);
 			if (member?.uid === this.userService.currentUserId) {
 				const teamRequest: ITeamRequest = {
-					team: teamRecord.id
+					team: teamRecord.id,
 				};
 				this.sneatTeamApiService
-					.post("team/leave_team", teamRequest)
+					.post<ITeam>("team/leave_team", teamRequest)
 					.pipe(
 						switchMap(processRemoveTeamMemberResponse),
 						ensureTeamRecordExists,
@@ -204,7 +207,7 @@ export class TeamService {
 		}
 		const request: ITeamMemberRequest = {
 			team: teamRecord.id,
-			member: memberId
+			member: memberId,
 		};
 		return this.sneatTeamApiService
 			.post("team/remove_member", request)
@@ -217,27 +220,27 @@ export class TeamService {
 	public onTeamUpdated(team: IRecord<ITeam>): void {
 		console.log(
 			"TeamService.onTeamUpdated",
-			team ? { id: team.id, data: { ...team.data } } : team
+			team ? { id: team.id, data: { ...team.data } } : team,
 		);
 		let team$ = this.teams$[team.id];
 		if (!team$) {
-			this.teams$[team.id] = team$ = new ReplaySubject<ITeam | null>(1);
+			this.teams$[team.id] = team$ = new ReplaySubject<ITeam | undefined>(1);
 		}
-		team$.next(team.data || null);
+		team$.next(team.data);
 	}
 
 	public getTeamJoinInfo(
 		teamId: string,
-		pin: number
+		pin: number,
 	): Observable<IJoinTeamInfoResponse> {
 		return this.sneatTeamApiService.getAsAnonymous(
 			"team/join_info",
 			new HttpParams({
 				fromObject: {
 					id: teamId,
-					pin: pin.toString()
-				}
-			})
+					pin: pin.toString(),
+				},
+			}),
 		);
 	}
 
@@ -245,12 +248,12 @@ export class TeamService {
 		const params = new HttpParams({
 			fromObject: {
 				id: teamId,
-				pin: pin.toString()
-			}
+				pin: pin.toString(),
+			},
 		});
 		return this.sneatTeamApiService.post(
 			"team/join_team?" + params.toString(),
-			null
+			null,
 		);
 	}
 
@@ -258,19 +261,19 @@ export class TeamService {
 		const params = new HttpParams({
 			fromObject: {
 				id: teamId,
-				pin: pin.toString()
-			}
+				pin: pin.toString(),
+			},
 		});
 		return this.sneatTeamApiService.post(
 			"team/refuse_to_join_team?" + params.toString(),
-			null
+			null,
 		);
 	}
 
 	public deleteMetrics(team: string, metrics: string[]): Observable<void> {
 		return this.sneatTeamApiService.post("team/remove_metrics", {
 			team,
-			metrics
+			metrics,
 		});
 	}
 
@@ -281,7 +284,7 @@ export class TeamService {
 		const params = new HttpParams({ fromObject: { id: team } });
 		return this.sneatTeamApiService.post(
 			"team/add_metric?" + params.toString(),
-			{ metric }
+			{ metric },
 		);
 	}
 

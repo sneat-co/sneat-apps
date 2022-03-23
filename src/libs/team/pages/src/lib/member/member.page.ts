@@ -116,7 +116,7 @@ export class MemberPageComponent implements OnDestroy {
 		}
 	}
 
-	public changeRole(event: CustomEvent): void {
+	public changeRole(event: Event): void {
 		console.log('changeRole():', event);
 		if (!this.team) {
 			this.errorLogger.logError('Can not change role without team context');
@@ -129,8 +129,9 @@ export class MemberPageComponent implements OnDestroy {
 			return;
 		}
 		this.changing = 'role';
+		const { detail } = event as CustomEvent;
 		this.teamService
-			.changeMemberRole(this.team, this.memberId, event.detail.value)
+			.changeMemberRole(this.team, this.memberId, detail.value)
 			.subscribe({
 				next: () => {
 					this.changing = undefined;

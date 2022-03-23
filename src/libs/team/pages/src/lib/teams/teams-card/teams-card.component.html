@@ -30,12 +30,14 @@
 			</ion-item>
 			<ion-item-options side="start">
 				<ion-item-option color="danger" (click)="leaveTeam(team)"
-					>Leave team</ion-item-option
+				>Leave team
+				</ion-item-option
 				>
 			</ion-item-options>
 			<ion-item-options side="end">
 				<ion-item-option color="danger" (click)="leaveTeam(team)"
-					>Leave team</ion-item-option
+				>Leave team
+				</ion-item-option
 				>
 			</ion-item-options>
 		</ion-item-sliding>
@@ -55,7 +57,7 @@
 			<ion-button
 				(click)="showAdd = false"
 				color="medium"
-				*ngIf="teams.length > 0"
+				*ngIf="!!teams?.length"
 				title="Cancel"
 			>
 				<ion-spinner *ngIf="adding"></ion-spinner>

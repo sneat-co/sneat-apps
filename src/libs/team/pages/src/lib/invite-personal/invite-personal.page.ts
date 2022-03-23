@@ -1,41 +1,41 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
-import { MemberService } from '../../../../services/src/lib/member.service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { NavController } from '@ionic/angular';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { SneatUserService } from '@sneat/user';
+import { Component, Inject, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { HttpParams } from "@angular/common/http";
+import { MemberService } from "../../../../services/src/lib/member.service";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { NavController } from "@ionic/angular";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { SneatUserService } from "@sneat/user";
 import {
 	IAcceptPersonalInviteRequest,
 	IMemberInfo,
 	IPersonalInvite,
 	IRejectPersonalInviteRequest,
-} from '@sneat/team/models';
-import { SneatTeamApiService } from '@sneat/api';
-import { RandomIdService } from '@sneat/random';
+} from "@sneat/team/models";
+import { SneatTeamApiService } from "@sneat/api";
+import { RandomIdService } from "@sneat/random";
 
 @Component({
-	selector: 'app-invite-personal',
-	templateUrl: './invite-personal.page.html',
-	styleUrls: ['./invite-personal.page.scss'],
+	selector: "app-invite-personal",
+	templateUrl: "./invite-personal.page.html",
+	styleUrls: ["./invite-personal.page.scss"],
 })
 export class InvitePersonalPage implements OnInit {
-	public fullName: string;
-	public email: string;
-	public pin: string;
+	public fullName = "";
+	public email = "";
+	public pin = "";
 
-	public hidePin: boolean;
+	public hidePin?: boolean;
 
-	public working: boolean;
-	public accepting: boolean;
-	public rejecting: boolean;
+	public working = false;
+	public accepting = false;
+	public rejecting = false;
 
 	public invite?: IPersonalInvite;
 	public members?: IMemberInfo[];
 
-	private inviteId: string;
-	private teamId?: string;
+	private inviteId = "";
+	private teamId = "";
 
 	constructor(
 		private readonly afAuth: AngularFireAuth,
@@ -45,38 +45,46 @@ export class InvitePersonalPage implements OnInit {
 		private readonly memberService: MemberService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
-		private readonly randomIdService: RandomIdService
+		private readonly randomIdService: RandomIdService,
 	) {
 		this.getPinFromUrl();
 	}
 
 	public ngOnInit() {
 		this.route.queryParamMap.subscribe((qp) => {
-			this.inviteId = qp.get('id');
-			this.teamId = qp.get('team');
+			const inviteId = qp.get("id") || "";
+			const teamId = qp.get("team") || "";
+			this.inviteId = inviteId;
+			this.teamId = teamId;
+			if (!inviteId) {
+				this.errorLogger.logError("inviteId is not set");
+			}
+			if (!teamId) {
+				this.errorLogger.logError("teamId is not set");
+			}
 			this.sneatTeamApiService
 				.getAsAnonymous<{ invite?: IPersonalInvite; members?: IMemberInfo[] }>(
-					'invites/personal',
+					"invites/personal",
 					new HttpParams({
-						fromObject: { invite: this.inviteId, team: this.teamId },
-					})
+						fromObject: { invite: inviteId, team: teamId },
+					}),
 				)
 				.subscribe({
 					next: (response) => {
-						console.log('invite record:', response);
+						console.log("invite record:", response);
 						this.invite = response.invite;
-						this.members = response.members.filter(
-							(m) => m.id !== response.invite.memberId
+						this.members = response.members?.filter(
+							(m) => m.id !== response.invite?.memberId,
 						);
 						if (response.invite) {
 							this.fullName = response.invite.to.title;
-							if (response.invite.channel === 'email') {
+							if (response.invite.channel === "email") {
 								this.email = response.invite.address;
 							}
 						}
 					},
 					error: (err) =>
-						this.errorLogger.logError(err, 'Failed to load invite:'),
+						this.errorLogger.logError(err, "Failed to load invite:"),
 				});
 		});
 	}
@@ -93,24 +101,30 @@ export class InvitePersonalPage implements OnInit {
 				email: this.email,
 				fullName: this.fullName,
 			};
-			this.memberService.acceptPersonalInvite(request, token).subscribe(
-				(/*memberInfo*/) => {
-					console.log('Joined team');
-					this.navController
-						.navigateRoot('team', { queryParams: { id: this.teamId } })
-						.catch((err) => {
-							this.errorLogger.logError(
-								err,
-								'Failed to navigate to team page after successfully joining a team'
-							);
-						});
-				},
-				(error) => {
-					this.errorLogger.logError(error, 'Failed to join team');
-					this.accepting = false;
-					this.working = false;
-				}
-			);
+			if (!token) {
+				throw new Error("token is undefined or empty");
+			}
+			this.memberService
+				.acceptPersonalInvite(request, token)
+				.subscribe({
+						next: (/*memberInfo*/) => {
+							console.log("Joined team");
+							this.navController
+								.navigateRoot("team", { queryParams: { id: this.teamId } })
+								.catch((err) => {
+									this.errorLogger.logError(
+										err,
+										"Failed to navigate to team page after successfully joining a team",
+									);
+								});
+						},
+						error: (error) => {
+							this.errorLogger.logError(error, "Failed to join team");
+							this.accepting = false;
+							this.working = false;
+						},
+					},
+				);
 		};
 
 		if (this.userService.currentUserId) {
@@ -121,19 +135,23 @@ export class InvitePersonalPage implements OnInit {
 			this.afAuth
 				.createUserWithEmailAndPassword(this.email, password)
 				.then((userCredential) => {
+					if (!userCredential?.user) {
+						return;
+					}
+
 					userCredential.user
 						.getIdToken()
 						.then((token) => {
 							acceptInvite(token);
 						})
 						.catch((err) => {
-							this.errorLogger.logError(err, 'Failed to get Firebase token');
+							this.errorLogger.logError(err, "Failed to get Firebase token");
 						});
 				})
 				.catch((err) => {
 					this.accepting = false;
 					this.working = false;
-					this.errorLogger.logError(err, 'Failed to create Firebase user');
+					this.errorLogger.logError(err, "Failed to create Firebase user");
 				});
 		}
 	}
@@ -148,19 +166,19 @@ export class InvitePersonalPage implements OnInit {
 		};
 		this.memberService.rejectPersonalInvite(request).subscribe(
 			() => {
-				console.log('Refused to join team');
-				this.navController.navigateRoot('teams').catch((err) => {
+				console.log("Refused to join team");
+				this.navController.navigateRoot("teams").catch((err) => {
 					this.errorLogger.logError(
 						err,
-						'Failed to navigate to teams page after successfully refused joining a team'
+						"Failed to navigate to teams page after successfully refused joining a team",
 					);
 				});
 			},
 			(error) => {
-				this.errorLogger.logError(error, 'Failed to join team');
+				this.errorLogger.logError(error, "Failed to join team");
 				this.working = false;
 				this.rejecting = false;
-			}
+			},
 		);
 	}
 

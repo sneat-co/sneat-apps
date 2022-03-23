@@ -34,6 +34,6 @@
 
 	<ion-list *ngIf="team?.members?.length">
 		<ion-item-divider>Members</ion-item-divider>
-		<ion-item *ngFor="let member of team.members">{{member.title}}</ion-item>
+		<ion-item *ngFor="let member of team?.members">{{member.title}}</ion-item>
 	</ion-list>
 </ion-content>

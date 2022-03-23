@@ -23,13 +23,13 @@
 			<ion-avatar slot="start" *ngIf="memberInfo?.avatar">
 				<ion-img
 					title="avatar"
-					*ngIf="memberInfo.avatar.gravatar"
-					src="//www.gravatar.com/avatar/{{ memberInfo.avatar.gravatar }}"
+					*ngIf="memberInfo?.avatar?.gravatar"
+					src="//www.gravatar.com/avatar/{{ memberInfo?.avatar?.gravatar }}"
 				></ion-img>
 				<ion-img
 					title="avatar"
-					*ngIf="memberInfo.avatar.external"
-					[src]="memberInfo.avatar.external.url"
+					*ngIf="memberInfo?.avatar?.external"
+					[src]="memberInfo?.avatar?.external?.url"
 				></ion-img>
 			</ion-avatar>
 			<ion-avatar slot="start" *ngIf="memberInfo && !memberInfo.avatar">
@@ -42,7 +42,7 @@
 			<ion-input
 				readonly
 				*ngIf="memberInfo"
-				[value]="memberInfo.title"
+				[value]="memberInfo?.title"
 			></ion-input>
 		</ion-item>
 		<ion-item>
@@ -58,11 +58,11 @@
 				></ion-spinner>
 			</ion-label>
 			<ion-select
-				[value]="memberInfo?.roles && memberInfo?.roles[0]"
 				name="role"
 				interface="popover"
 				(ionChange)="changeRole($event)"
 			>
+<!--				[value]="memberInfo?.roles && memberInfo?.roles[0]"-->
 				<ion-select-option value="contributor">Contributor</ion-select-option>
 				<ion-select-option value="spectator">Spectator</ion-select-option>
 			</ion-select>

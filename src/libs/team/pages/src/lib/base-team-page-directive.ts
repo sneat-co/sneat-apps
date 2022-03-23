@@ -70,11 +70,11 @@ export abstract class BaseTeamPageDirective implements OnInit, OnDestroy {
 			trackTeamIdFromRouteParameter(this.route)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
-					next: (teamContext) => {
+					next: (teamId) => {
 						console.log(
-							`BaseTeamPageDirective.trackTeamIdFromUrl() =>`, teamContext
+							`BaseTeamPageDirective.trackTeamIdFromUrl() =>`, teamId
 						);
-						this.setTeamId(teamContext?.id);
+						this.setTeamId(teamId || undefined);
 					},
 					error: (err) =>
 						this.logError(err, "Failed to track team ID from url")

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { MemberNewPageRoutingModule } from './member-new-routing.module';
 import { MemberNewPageComponent } from './member-new-page.component';
+import { TeamComponentsModule } from "@sneat/team/components";
 
 @NgModule({
 	imports: [
@@ -12,6 +13,7 @@ import { MemberNewPageComponent } from './member-new-page.component';
 		FormsModule,
 		ReactiveFormsModule,
 		MemberNewPageRoutingModule,
+		TeamComponentsModule,
 	],
 	declarations: [MemberNewPageComponent],
 })
