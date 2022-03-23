@@ -27,7 +27,7 @@ import { IMetric } from '../interfaces';
 import { secondsToStr } from '../../pipes/date-time-pipes';
 import { Timer, TimerFactory } from '../../services/timer.service';
 import { TeamContextService } from '../../services/team-context.service';
-import { BaseTeamPageDirective } from '../../pages/base-team-page-directive';
+import { BaseTeamPageDirective } from '@sneat/team/components';
 import { MemberRoleEnum } from '../../models/dto-models';
 import { first, mergeMap } from 'rxjs/operators';
 import { getMeetingIdFromDate, getToday } from '../../services/meeting.service';

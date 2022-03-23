@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { NavController } from "@ionic/angular";
 import { ActivatedRoute } from "@angular/router";
-import { BaseTeamPageDirective } from "../base-team-page-directive";
+import { BaseTeamPageDirective } from "@sneat/team/components";
 import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 import { AnalyticsService, IAnalyticsService } from "@sneat/analytics";
 import { SneatUserService } from "@sneat/user";

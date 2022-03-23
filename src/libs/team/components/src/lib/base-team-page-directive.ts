@@ -9,7 +9,7 @@ import { IRecord } from "@sneat/data";
 import { TeamService, trackTeamIdFromRouteParameter } from "@sneat/team/services";
 import { SneatUserService } from "@sneat/user";
 import { ITeam } from "@sneat/team/models";
-import { TeamPageContextComponent } from "@sneat/team/components";
+import { TeamPageContextComponent } from "./team-page-context";
 
 @Directive() // There was some reason to add a @Directive() - TODO: document why
 export abstract class BaseTeamPageDirective implements OnInit, OnDestroy {

@@ -5,7 +5,7 @@ import { NavController } from "@ionic/angular";
 import { filter, first, mergeMap, takeUntil } from "rxjs/operators";
 import { RetrospectiveService } from "../../retrospective.service";
 import { Subscription } from "rxjs";
-import { BaseTeamPageDirective } from "@sneat/team/pages";
+import { BaseTeamPageDirective } from "@sneat/team/components";
 import { IRecord } from "@sneat/data";
 import { IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
 import { TeamService } from "@sneat/team/services";

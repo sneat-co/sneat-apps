@@ -4,3 +4,4 @@ export * from "./members-list/members-list.component";
 export * from "./team-components.module";
 export * from "./team-page-context";
 export * from "./team-menu";
+export * from "./base-team-page-directive";

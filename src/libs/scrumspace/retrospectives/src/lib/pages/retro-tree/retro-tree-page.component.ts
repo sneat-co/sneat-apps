@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
-import { BaseTeamPageDirective } from "@sneat/team/pages";
+import { BaseTeamPageDirective } from "@sneat/team/components";
 import { IRetroItem, IRetrospective, RetrospectiveStage } from "@sneat/scrumspace/scrummodels";
 import { TeamService } from "@sneat/team/services";
 import { SneatUserService } from "@sneat/user";
