@@ -3,11 +3,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { MemberNewPageComponent } from './member-new-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TeamService } from '../../../../services/src/lib/team.service';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TeamService } from "@sneat/team/services";
 
 describe('MemberNewPage', () => {
 	let component: MemberNewPageComponent;

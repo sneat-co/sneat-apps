@@ -1,16 +1,13 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { IonInput, ToastController } from "@ionic/angular";
 import { Subscription } from "rxjs";
-import { TeamNavService } from "../../../../../services/src/lib/team-nav.service";
-import { TeamService } from "../../../../../services/src/lib/team.service";
 import { mergeMap } from "rxjs/operators";
-import { IErrorLogger, ErrorLogger } from "@sneat/logging";
-import { ICreateTeamRequest } from "../../../../../models/src/lib/dto-models";
-import { IUserRecord, IUserTeamInfoWithId } from "@sneat/auth-models";
-import { IRecord } from "@sneat/data";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { IUserTeamInfoWithId } from "@sneat/auth-models";
 import { ISneatUserState, SneatUserService } from "@sneat/user";
 import { AnalyticsService, IAnalyticsService } from "@sneat/analytics";
-import { ITeam } from "@sneat/team/models";
+import { ICreateTeamRequest } from "@sneat/team/models";
+import { TeamNavService, TeamService } from "@sneat/team/services";
 
 @Component({
 	selector: "sneat-teams-card",
@@ -123,7 +120,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			next: (team) => {
 				this.analyticsService.logEvent("teamCreated", { team: team.id });
 				console.log("teamId:", team.id);
-				const userTeam: IUserTeamInfoWithId = { id: team.id, title: team?.data?.title || team.id};
+				const userTeam: IUserTeamInfoWithId = { id: team.id, title: team?.data?.title || team.id };
 				if (userTeam && !this.teams?.find((t) => t.id === team.id)) {
 					this.teams?.push(userTeam);
 				}

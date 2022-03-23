@@ -1,12 +1,11 @@
 import { Component, Inject, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { TeamService } from "../../../../services/src/lib/team.service";
-import { TeamNavService } from "../../../../services/src/lib/team-nav.service";
 import { Subscription } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 import { IUserTeamInfo } from "@sneat/auth-models";
 import { ITeam } from "@sneat/team/models";
+import { TeamNavService, TeamService } from "@sneat/team/services";
 
 export const getPinFromUrl: () => number | undefined = () => {
 	const m = location.hash.match(/[#&]pin=(\d+)($|&)/);

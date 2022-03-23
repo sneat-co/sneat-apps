@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { HttpParams } from "@angular/common/http";
-import { MemberService } from "../../../../services/src/lib/member.service";
 import { ErrorLogger, IErrorLogger } from "@sneat/logging";
 import { NavController } from "@ionic/angular";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
@@ -14,9 +13,10 @@ import {
 } from "@sneat/team/models";
 import { SneatTeamApiService } from "@sneat/api";
 import { RandomIdService } from "@sneat/random";
+import { MemberService } from "@sneat/team/services";
 
 @Component({
-	selector: "app-invite-personal",
+	selector: "sneat-invite-personal",
 	templateUrl: "./invite-personal.page.html",
 	styleUrls: ["./invite-personal.page.scss"],
 })

@@ -3,11 +3,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { TeamPageComponent } from './team-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TeamService } from '../../../../services/src/lib/team.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/user-service';
+import { TeamService } from "@sneat/team/services";
 
 describe('TeamPage', () => {
 	let component: TeamPageComponent;

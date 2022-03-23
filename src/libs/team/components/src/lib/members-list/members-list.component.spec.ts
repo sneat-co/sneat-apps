@@ -7,7 +7,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TeamService } from '../../../../services/src/lib/team.service';
+import { TeamService } from "@sneat/team/services";
 
 describe('MembersListComponent', () => {
 	let component: MembersListComponent;

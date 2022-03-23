@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { UserService } from '../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TeamService } from '../../../../services/src/lib/team.service';
+import { TeamService } from "@sneat/team/services";
 
 describe('InvitePersonalPage', () => {
 	let component: InvitePersonalPage;

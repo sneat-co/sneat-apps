@@ -6,11 +6,10 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamService } from '../../../../../services/src/lib/team.service';
 import { NavController } from '@ionic/angular';
-import { TeamNavService } from '../../../../../services/src/lib/team-nav.service';
 import { ITeam, MemberRole, MemberRoleEnum } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
+import { TeamNavService, TeamService } from "@sneat/team/services";
 
 @Component({
 	selector: 'sneat-team-members',
