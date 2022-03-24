@@ -1,6 +1,6 @@
-<!--<sneat-team-page-context page="team-summary"></sneat-team-page-context>-->
+<sneat-team-page-context page="team-summary"></sneat-team-page-context>
 <ion-header>
-	<ion-toolbar>
+	<ion-toolbar color="primary">
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
@@ -14,22 +14,22 @@
 	</ion-toolbar>
 </ion-header>
 
-<!--<ion-content>-->
-<!--	<ion-row class="ion-no-padding ion-no-margin">-->
-<!--		&lt;!&ndash; TODO(StackOverflow): Is here better way to use grid without padding? &ndash;&gt;-->
-<!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
-<!--			<sneat-team-scrums [team]="team"></sneat-team-scrums>-->
-<!--		</ion-col>-->
-<!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
-<!--			<sneat-team-retrospectives [team]="team"></sneat-team-retrospectives>-->
-<!--		</ion-col>-->
-<!--	</ion-row>-->
-<!--	<ion-row class="ion-no-padding ion-no-margin">-->
-<!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
+<ion-content>
+	<ion-row class="ion-no-padding ion-no-margin">
+		<!-- TODO(StackOverflow): Is here better way to use grid without padding? -->
+		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">
+			<sneat-team-scrums [team]="team"></sneat-team-scrums>
+		</ion-col>
+		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">
+			<sneat-team-retrospectives [team]="team"></sneat-team-retrospectives>
+		</ion-col>
+	</ion-row>
+	<ion-row class="ion-no-padding ion-no-margin">
+		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">
 <!--			<app-team-members [team]="team"></app-team-members>-->
-<!--		</ion-col>-->
-<!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
+		</ion-col>
+		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">
 <!--			<app-team-metrics [team]="team"></app-team-metrics>-->
-<!--		</ion-col>-->
-<!--	</ion-row>-->
-<!--</ion-content>-->
+		</ion-col>
+	</ion-row>
+</ion-content>
