@@ -1,27 +1,49 @@
 import { ISneatApiService } from './sneat-api-service.interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { map, Observable, Subject, takeUntil, throwError } from 'rxjs';
+import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 const userIsNotAuthenticatedNoFirebaseToken =
 	'User is not authenticated yet - no Firebase ID token';
 
-export class SneatApiService implements ISneatApiService {
+export const SneatApiAuthTokenProvider = new InjectionToken('SneatApiAuthTokenProvider');
+export const SneatApiBaseUrl = new InjectionToken('SneatApiBaseUrl');
+export const DefaultSneatApiBaseUrl = 'https://api.sneat.team/v0/';
+
+@Injectable({ providedIn: 'root' }) // Should it be in root? Maybe not
+export class SneatApiService implements ISneatApiService, OnDestroy {
+	private readonly destroyed = new Subject<void>();
+	private authToken?: string;
+
 	constructor(
 		private readonly httpClient: HttpClient,
-		private firebaseIdToken?: string,
-		private readonly baseUrl?: string,
+		afAuth: AngularFireAuth, // TODO: Get rid of hard dependency on AngularFireAuth and instead have some token provider
+		@Inject(SneatApiBaseUrl) private readonly baseUrl?: string,
+		// @Inject(SneatApiAuthTokenProvider) private authTokenProvider: Observable<string | undefined>,
 	) {
-		// if (!baseUrl) {
-		// 	baseUrl = 'https://api.sneat.team/v0/';
-		// }
-		// if (firebaseIdToken) {
-		// 	this.setFirebaseToken(firebaseIdToken);
-		// }
+		console.log('SneatApiService.constructor()', baseUrl);
+		if (!baseUrl) {
+			this.baseUrl = DefaultSneatApiBaseUrl;
+		}
+		afAuth.idToken
+			.pipe(
+				takeUntil(this.destroyed),
+				map(token => token || undefined),
+			)
+			.subscribe({
+				next: this.setApiAuthToken,
+			});
+	}
+
+	ngOnDestroy() {
+		this.destroyed.next();
+		this.destroyed.complete();
 	}
 
 	// TODO: It's made public because we use it in Login page, might be a bad idea consider making private and rely on afAuth.idToken event
-	setFirebaseToken = (token?: string | null) => {
-		this.firebaseIdToken = token ?? undefined;
+	setApiAuthToken = (token?: string) => {
+		this.authToken = token;
 	};
 
 	public post<T>(endpoint: string, body: any): Observable<T> {
@@ -75,7 +97,7 @@ export class SneatApiService implements ISneatApiService {
 
 	private errorIfNotAuthenticated(): Observable<never> | undefined {
 		return (
-			(!this.firebaseIdToken &&
+			(!this.authToken &&
 				throwError(() => userIsNotAuthenticatedNoFirebaseToken)) ||
 			undefined
 		);
@@ -83,8 +105,8 @@ export class SneatApiService implements ISneatApiService {
 
 	private headers(): HttpHeaders {
 		let headers = new HttpHeaders();
-		if (this.firebaseIdToken) {
-			headers = headers.append('X-Firebase-Id-Token', this.firebaseIdToken);
+		if (this.authToken) {
+			headers = headers.append('Authorization', 'Bearer ' + this.authToken);
 		}
 		return headers;
 	}

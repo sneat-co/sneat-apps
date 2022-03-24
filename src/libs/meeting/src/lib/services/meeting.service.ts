@@ -1,6 +1,6 @@
 import { EMPTY, Observable, throwError } from 'rxjs';
 import { IMeetingTimerRequest, IMeetingTimerService, IMemberTimerRequest, ITimerResponse } from '../timer';
-import { SneatTeamApiService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 
 export const validateMeetingRequest: (
 	request: IMeetingTimerRequest,
@@ -23,7 +23,7 @@ export const validateMeetingRequest: (
 export abstract class BaseMeetingService implements IMeetingTimerService {
 	protected constructor(
 		public readonly meetingType: string,
-		protected readonly sneatTeamApiService: SneatTeamApiService,
+		protected readonly sneatApiService: SneatApiService,
 	) {
 	}
 
@@ -45,7 +45,7 @@ export abstract class BaseMeetingService implements IMeetingTimerService {
 	): Observable<ITimerResponse> {
 		return (
 			validateMeetingRequest(request) ||
-			this.sneatTeamApiService.post<ITimerResponse>(
+			this.sneatApiService.post<ITimerResponse>(
 				`${this.meetingType}/${endpoint}`,
 				request,
 			)

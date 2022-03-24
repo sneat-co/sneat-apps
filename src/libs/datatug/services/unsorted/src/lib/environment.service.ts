@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 
-import { SneatTeamApiService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { StoreApiService } from '@sneat/datatug/services/repo';
 import { CreateNamedRequest } from '@sneat/datatug/dto';
 import { IEnvironmentSummary } from '@sneat/datatug/models';
@@ -20,7 +20,7 @@ const envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
 export class EnvironmentService {
 	constructor(
 		private readonly projectContextService: ProjectContextService,
-		private readonly api: SneatTeamApiService,
+		private readonly api: SneatApiService,
 		private readonly projectService: ProjectService,
 		private readonly storeApiService: StoreApiService, // private readonly http: HttpClient,
 	) {

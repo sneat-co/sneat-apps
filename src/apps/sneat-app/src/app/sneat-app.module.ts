@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { TeamMenuComponentModule } from '@sneat/team/components';
 import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
 import { HttpClientModule } from '@angular/common/http';
+import { DefaultSneatApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 
 initFirebase(environment.firebaseConfig);
 
@@ -38,6 +39,10 @@ initFirebase(environment.firebaseConfig);
 		{
 			provide: RouteReuseStrategy,
 			useClass: IonicRouteStrategy,
+		},
+		{
+			provide: SneatApiBaseUrl,
+			useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatApiBaseUrl,
 		},
 		{
 			provide: RANDOM_ID_OPTIONS,

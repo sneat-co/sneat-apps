@@ -8,10 +8,10 @@ function firebaseProjectId(useEmulators: boolean, projectId: string): string {
 	return useEmulators ? 'demo-' + projectId : projectId;
 }
 
-function firebaseDatabaseURL(useEmulators: boolean, projectId: string): string {
+function firebaseDatabaseURL(useEmulators: boolean, projectId: string): string | undefined{
 	// noinspection SpellCheckingInspection
 	return useEmulators
-		? 'http://localhost:8080' :
+		? undefined :
 		`https://${projectId}.firebaseio.com`;
 }
 

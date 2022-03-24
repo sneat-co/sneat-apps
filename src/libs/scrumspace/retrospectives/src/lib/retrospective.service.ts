@@ -4,7 +4,7 @@ import { filter, map, tap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { IRetroItem, IRetrospective, RetroItemType } from '../../../scrummodels/src/lib/models-retrospectives';
 import { BaseMeetingService, IMeetingRequest } from '@sneat/meeting';
-import { SneatTeamApiService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { IRecord } from '@sneat/data';
 
 export type IRetrospectiveRequest = IMeetingRequest;
@@ -39,16 +39,16 @@ export interface IAddRetroItemResponse {
 })
 export class RetrospectiveService extends BaseMeetingService {
 	constructor(
-		readonly sneatTeamApiService: SneatTeamApiService,
+		readonly sneatApiService: SneatApiService,
 		private readonly db: AngularFirestore,
 	) {
-		super('retrospective', sneatTeamApiService);
+		super('retrospective', sneatApiService);
 	}
 
 	public startRetrospective(
 		request: IStartRetrospectiveRequest,
 	): Observable<IRecord<IRetrospective>> {
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'retrospective/start_retrospective',
 			request,
 		);
@@ -57,7 +57,7 @@ export class RetrospectiveService extends BaseMeetingService {
 	public startRetroReview(
 		request: IRetrospectiveRequest,
 	): Observable<IRecord<IRetrospective>> {
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'retrospective/start_retro_review',
 			request,
 		);
@@ -66,14 +66,14 @@ export class RetrospectiveService extends BaseMeetingService {
 	addRetroItem(
 		request: IAddRetroItemRequest,
 	): Observable<IAddRetroItemResponse> {
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'retrospective/add_retro_item',
 			request,
 		);
 	}
 
 	public deleteRetroItem(request: IRetroItemRequest): Observable<IRetroItem[]> {
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'retrospective/delete_retro_item',
 			request,
 		);
@@ -99,6 +99,6 @@ export class RetrospectiveService extends BaseMeetingService {
 	}
 
 	public voteItem(request: IVoteRetroItemRequest): Observable<void> {
-		return this.sneatTeamApiService.post('retrospective/vote_item', request);
+		return this.sneatApiService.post('retrospective/vote_item', request);
 	}
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
-import { SneatTeamApiService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import {
 	IAcceptPersonalInviteRequest,
 	IAddTeamMemberRequest,
@@ -22,7 +22,7 @@ export class MemberService {
 	constructor(
 		private readonly db: AngularFirestore,
 		private readonly teamService: TeamService,
-		private readonly sneatTeamApiService: SneatTeamApiService,
+		private readonly sneatApiService: SneatApiService,
 	) {
 	}
 
@@ -32,9 +32,9 @@ export class MemberService {
 	): Observable<IMemberInfo> {
 		console.log('MemberService.acceptPersonalInvite()');
 		if (firebaseToken) {
-			this.sneatTeamApiService.setFirebaseToken(firebaseToken);
+			this.sneatApiService.setApiAuthToken(firebaseToken);
 		}
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'invites/accept_personal_invite',
 			request,
 		);
@@ -43,7 +43,7 @@ export class MemberService {
 	public rejectPersonalInvite(
 		request: IRejectPersonalInviteRequest,
 	): Observable<void> {
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'invites/reject_personal_invite',
 			request,
 		);
@@ -76,7 +76,7 @@ export class MemberService {
 				mapTo(member),
 			);
 		};
-		return this.sneatTeamApiService
+		return this.sneatApiService
 			.post<IAddTeamMemberResponse>('team/add_member', request)
 			.pipe(mergeMap(processAddMemberResponse));
 	}

@@ -10,10 +10,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import { SneatTeamApiService } from '@sneat/api';
 import { IUserRecord } from '@sneat/auth-models';
 import { initialSneatAuthState, ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { SneatApiService } from '@sneat/api';
+import { HttpClient } from '@angular/common/http';
 
 export interface ISneatUserState extends ISneatAuthState {
 	record?: IUserRecord | null; // undefined => not loaded yet, null = does not exists
 }
+
+const UsersCollection = 'users';
 
 @Injectable({ providedIn: 'root' }) // TODO: lazy loading
 export class SneatUserService {
@@ -33,12 +37,15 @@ export class SneatUserService {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly httpClient: HttpClient,
 		private readonly db: AngularFirestore,
 		private readonly sneatAuthStateService: SneatAuthStateService,
+		private readonly sneatApiService: SneatApiService,
 		// private readonly sneatTeamApiService: SneatTeamApiService
 	) {
+
 		console.log('SneatUserService.constructor()');
-		this.userCollection = db.collection<IUserRecord>('users');
+		this.userCollection = db.collection<IUserRecord>(UsersCollection);
 		sneatAuthStateService.authState
 			.subscribe({
 				next: this.onAuthStateChanged,
@@ -91,6 +98,7 @@ export class SneatUserService {
 			...authState,
 		});
 		const userDocRef = this.userCollection.doc(uid);
+		console.log('SneatUserService: Loading user record...');
 		this.userDocSubscription = userDocRef.snapshotChanges().subscribe({
 			next: (userDocSnapshot) => this.userDocChanged(userDocSnapshot, authState),
 			error: this.errorLogger.logErrorHandler('SneatUserService failed to get user record'),
@@ -123,11 +131,22 @@ export class SneatUserService {
 			}
 			// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
 			const fbUser = authState.user;
+			if (!userDocSnapshot.exists) {
+				this.sneatApiService
+					.post('users/create_user', {
+						creator: location.host,
+						title: fbUser?.displayName,
+						email: fbUser?.email,
+					})
+					.subscribe({
+						error: this.errorLogger.logErrorHandler('failed to create user record'),
+					});
+			}
 			this.userState$.next({
 				...authState,
 				record: userDocSnapshot.exists
 					? (userDocSnapshot.data() as IUserRecord)
-					: fbUser ? {title: fbUser.displayName || fbUser.email || fbUser.uid} : null,
+					: fbUser ? { title: fbUser.displayName || fbUser.email || fbUser.uid } : null,
 			});
 		}
 	}

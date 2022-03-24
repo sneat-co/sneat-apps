@@ -11,7 +11,7 @@ import { HttpParams } from '@angular/common/http';
 import { BaseMeetingService } from '@sneat/meeting';
 import { IMemberInfo, ITeam } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
-import { SneatTeamApiService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import {
@@ -60,7 +60,7 @@ export interface ITaskWithUiStatus extends ITask {
 })
 export class ScrumService extends BaseMeetingService {
 	constructor(
-		override readonly sneatTeamApiService: SneatTeamApiService,
+		override readonly sneatApiService: SneatApiService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly randomIdService: RandomIdService,
 		private readonly userService: SneatUserService,
@@ -68,7 +68,7 @@ export class ScrumService extends BaseMeetingService {
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
 	) {
-		super('scrum', sneatTeamApiService);
+		super('scrum', sneatApiService);
 	}
 
 	public getScrums(teamId: string, limit = 10): Observable<IRecord<IScrum>[]> {
@@ -122,17 +122,17 @@ export class ScrumService extends BaseMeetingService {
 			.append('type', type)
 			.append('id', id);
 
-		return this.sneatTeamApiService.delete<void>('scrum/delete_task', params);
+		return this.sneatApiService.delete<void>('scrum/delete_task', params);
 	}
 
 	public reorderTask(request: IReorderTaskRequest): Observable<void> {
 		console.log('reorderTask', request);
-		return this.sneatTeamApiService.post<void>('scrum/reorder_task', request);
+		return this.sneatApiService.post<void>('scrum/reorder_task', request);
 	}
 
 	public thumbUp(request: IThumbUpRequest): Observable<void> {
 		console.log('thumbUp', request);
-		return this.sneatTeamApiService.post<void>('scrum/thumb_up_task', request);
+		return this.sneatApiService.post<void>('scrum/thumb_up_task', request);
 	}
 
 	public addComment(request: IAddCommentRequest): Observable<string> {
@@ -154,7 +154,7 @@ export class ScrumService extends BaseMeetingService {
 		if (!request.type) {
 			return throwError(() => 'task type required');
 		}
-		return this.sneatTeamApiService.post<string>('scrum/add_comment', request);
+		return this.sneatApiService.post<string>('scrum/add_comment', request);
 	}
 
 	public setTaskCompletion(
@@ -226,7 +226,7 @@ export class ScrumService extends BaseMeetingService {
 			title: task.title,
 		};
 		const subj = new BehaviorSubject(task);
-		this.sneatTeamApiService.post('scrum/add_task', request).subscribe({
+		this.sneatApiService.post('scrum/add_task', request).subscribe({
 			next: () => {
 				subj.next({ ...task, uiStatus: undefined });
 				subj.complete();

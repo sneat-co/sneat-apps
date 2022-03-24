@@ -9,7 +9,7 @@ import { NavController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler } from '@sneat/auth';
-import { SneatTeamApiService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/user';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
@@ -56,7 +56,7 @@ export class LoginPageComponent {
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		// private readonly toastController: ToastController,
-		private readonly sneatTeamApiService: SneatTeamApiService,
+		private readonly sneatApiService: SneatApiService,
 	) {
 		this.email = localStorage.getItem('emailForSignIn') || '';
 		if (this.email) {
@@ -158,7 +158,7 @@ export class LoginPageComponent {
 				userCredential.user
 					?.getIdToken()
 					.then((token) => {
-						this.sneatTeamApiService.setFirebaseToken(token);
+						this.sneatApiService.setApiAuthToken(token);
 						this.userService.setUserTitle(this.fullName.trim()).subscribe({
 							next: () => this.onLoggedIn(userCredential),
 							error: (err) => {

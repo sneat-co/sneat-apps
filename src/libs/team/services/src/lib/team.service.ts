@@ -5,7 +5,7 @@ import { filter, first, map, tap } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { SneatTeamApiService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { IRecord } from '@sneat/data';
 import { IUserTeamInfo, IUserTeamInfoWithId } from '@sneat/auth-models';
@@ -33,7 +33,7 @@ export class TeamService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly db: AngularFirestore,
 		private readonly userService: SneatUserService,
-		private readonly sneatTeamApiService: SneatTeamApiService,
+		private readonly sneatApiService: SneatApiService,
 	) {
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === 'notAuthenticated') {
@@ -105,7 +105,7 @@ export class TeamService {
 	}
 
 	public createTeam(request: ICreateTeamRequest): Observable<IRecord<ITeam>> {
-		return this.sneatTeamApiService
+		return this.sneatApiService
 			.post<ICreateTeamResponse>('teams/create_team', request)
 			.pipe(map((response) => response.team));
 	}
@@ -140,7 +140,7 @@ export class TeamService {
 		if (!member) {
 			return throwError(() => 'member not found by ID in team record');
 		}
-		return this.sneatTeamApiService
+		return this.sneatApiService
 			.post(`team/change_member_role`, {
 				team: teamRecord.id,
 				member: memberId,
@@ -194,7 +194,7 @@ export class TeamService {
 				const teamRequest: ITeamRequest = {
 					team: teamRecord.id,
 				};
-				this.sneatTeamApiService
+				this.sneatApiService
 					.post<ITeam>('team/leave_team', teamRequest)
 					.pipe(
 						switchMap(processRemoveTeamMemberResponse),
@@ -206,7 +206,7 @@ export class TeamService {
 			team: teamRecord.id,
 			member: memberId,
 		};
-		return this.sneatTeamApiService
+		return this.sneatApiService
 			.post('team/remove_member', request)
 			.pipe(
 				switchMap(processRemoveTeamMemberResponse),
@@ -230,7 +230,7 @@ export class TeamService {
 		teamId: string,
 		pin: number,
 	): Observable<IJoinTeamInfoResponse> {
-		return this.sneatTeamApiService.getAsAnonymous(
+		return this.sneatApiService.getAsAnonymous(
 			'team/join_info',
 			new HttpParams({
 				fromObject: {
@@ -248,7 +248,7 @@ export class TeamService {
 				pin: pin.toString(),
 			},
 		});
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'team/join_team?' + params.toString(),
 			null,
 		);
@@ -261,14 +261,14 @@ export class TeamService {
 				pin: pin.toString(),
 			},
 		});
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'team/refuse_to_join_team?' + params.toString(),
 			null,
 		);
 	}
 
 	public deleteMetrics(team: string, metrics: string[]): Observable<void> {
-		return this.sneatTeamApiService.post('team/remove_metrics', {
+		return this.sneatApiService.post('team/remove_metrics', {
 			team,
 			metrics,
 		});
@@ -279,7 +279,7 @@ export class TeamService {
 			return throwError({ message: 'team parameter is required' });
 		}
 		const params = new HttpParams({ fromObject: { id: team } });
-		return this.sneatTeamApiService.post(
+		return this.sneatApiService.post(
 			'team/add_metric?' + params.toString(),
 			{ metric },
 		);

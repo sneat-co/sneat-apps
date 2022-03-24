@@ -34,7 +34,7 @@ export const getStoreUrl = (storeId: string): string => {
 
 @Injectable({ providedIn: 'root' })
 export class SneatApiServiceFactory {
-	private firebaseIdToken?: string | null;
+	private firebaseIdToken?: string;
 
 	private services: { [id: string]: ISneatApiService } = {};
 
@@ -44,7 +44,7 @@ export class SneatApiServiceFactory {
 	) {
 		console.log('SneatApiServiceFactory.constructor()');
 		afAuth.idToken.subscribe((idToken) => {
-			this.firebaseIdToken = idToken;
+			this.firebaseIdToken = idToken || undefined;
 			this.services = {};
 		});
 	}
@@ -72,7 +72,7 @@ export class SneatApiServiceFactory {
 			case 'firestore':
 				this.services[id] = service = new SneatApiService(
 					this.httpClient,
-					this.firebaseIdToken || undefined,
+					this.afAuth,
 					baseUrl,
 				);
 				return service;

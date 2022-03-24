@@ -6,6 +6,12 @@ import { TeamRoutingModule } from '@sneat/team/pages';
 
 const routes: Routes = [
 	{
+		path: 'my',
+		pathMatch: 'full',
+		loadChildren: () =>
+			import('./sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
+	},
+	{
 		path: '',
 		pathMatch: 'full',
 		loadChildren: () =>
