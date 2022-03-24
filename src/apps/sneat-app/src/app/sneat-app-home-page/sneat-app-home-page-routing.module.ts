@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePage } from './home.page';
+import { SneatAppHomePageComponent } from './sneat-app-home-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: HomePage,
+		component: SneatAppHomePageComponent,
 	},
 ];
 
@@ -13,5 +13,5 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class HomePageRoutingModule {
+export class SneatAppHomePageRoutingModule {
 }
