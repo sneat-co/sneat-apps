@@ -1,15 +1,18 @@
 import { IEnvironmentConfig } from './environment-config';
 
-export function firebaseApiKey(useEmulators: boolean, apiKey: string): string {
+function firebaseApiKey(useEmulators: boolean, apiKey: string): string {
 	return useEmulators ? 'emulator-does-not-need-api-key' : apiKey;
 }
 
-export function firebaseProjectId(useEmulators: boolean, projectId: string): string {
-	return useEmulators ? 'demo-sneat' : projectId;
+function firebaseProjectId(useEmulators: boolean, projectId: string): string {
+	return useEmulators ? 'demo-' + projectId : projectId;
 }
 
-export function firebaseDatabaseURL(useEmulators: boolean, v: string): string {
-	return useEmulators ? 'http://localhost:8080' : v;
+function firebaseDatabaseURL(useEmulators: boolean, projectId: string): string {
+	// noinspection SpellCheckingInspection
+	return useEmulators
+		? 'http://localhost:8080' :
+		`https://${projectId}.firebaseio.com`;
 }
 
 interface IFirebaseAppSpecificConfig {
@@ -25,7 +28,7 @@ export interface IAppSpecificConfig {
 }
 
 export function appSpecificConfig(useEmulators: boolean, envConfig: IEnvironmentConfig, appConfig: IAppSpecificConfig): IEnvironmentConfig {
-	return {
+	let config: IEnvironmentConfig = {
 		...envConfig,
 		useEmulators,
 		firebaseConfig: {
@@ -33,4 +36,15 @@ export function appSpecificConfig(useEmulators: boolean, envConfig: IEnvironment
 			...appConfig.firebase,
 		},
 	};
+	const projectId = firebaseProjectId(useEmulators, config.firebaseConfig.projectId);
+	config = {
+		...config,
+		firebaseConfig: {
+			...config.firebaseConfig,
+			apiKey: firebaseApiKey(useEmulators, config.firebaseConfig.apiKey),
+			projectId: projectId,
+			databaseURL: firebaseDatabaseURL(useEmulators, projectId),
+		},
+	};
+	return config;
 }

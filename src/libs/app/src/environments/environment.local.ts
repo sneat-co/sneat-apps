@@ -7,7 +7,6 @@ import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
  * on performance if an error is thrown.
  */
 import 'zone.js/dist/zone-error';
-import { firebaseApiKey, firebaseDatabaseURL, firebaseProjectId } from '../lib/init-helpers'; // Included with Angular CLI.
 
 const useEmulators = true;
 
@@ -18,10 +17,9 @@ const firebaseConfig: IFirebaseConfig = {
 		authPort: 9099,
 		firestorePort: 8080,
 	},
-	apiKey: firebaseApiKey(useEmulators, 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw'), // TODO: should be set from app level
+	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 	authDomain: 'sneat.team',
-	databaseURL: firebaseDatabaseURL(useEmulators, 'https://sneat-team.firebaseio.com'),
-	projectId: firebaseProjectId(useEmulators, 'sneat-team'),
+	projectId: 'sneat-team',
 	// 	storageBucket: 'sneat-team.appspot.com',
 	// 	messagingSenderId: '724666284649',
 	appId: '1:724666284649:web:080ffaab56bb71e49740f8',

@@ -1,13 +1,11 @@
 import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
-import { firebaseApiKey, firebaseDatabaseURL, firebaseProjectId } from '../lib/init-helpers';
 
 const useEmulators = false;
 
 const firebaseConfig: IFirebaseConfig = {
-	apiKey: firebaseApiKey(useEmulators, 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw'),
+	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 	authDomain: 'sneat.team',
-	databaseURL: firebaseDatabaseURL(useEmulators, 'https://sneat-team.firebaseio.com'),
-	projectId: firebaseProjectId(useEmulators, 'sneat-team'),
+	projectId: 'sneat-team',
 	// 	storageBucket: 'sneat-team.appspot.com',
 	// 	messagingSenderId: '724666284649',
 	appId: '1:724666284649:web:080ffaab56bb71e49740f8',
