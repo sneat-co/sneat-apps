@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { interval, Observable, ReplaySubject, Subject, Subscription, throwError } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
-import firebase from 'firebase/compat';
+import firebase from 'firebase/compat/app';
 import {
 	IMeetingTimerRequest,
 	IMemberTimerRequest,
