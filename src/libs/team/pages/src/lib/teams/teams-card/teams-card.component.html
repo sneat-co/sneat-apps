@@ -12,9 +12,10 @@
 	</ion-item>
 	<ion-list *ngIf="!teams">
 		<ion-item>
-			<ion-skeleton-text animated></ion-skeleton-text>
-		</ion-item>
-		<ion-item>
+			<ion-spinner name="" slot="start" color="medium"></ion-spinner>
+			<ion-buttons slot="start">
+				<ion-button disabled="disabled" style="text-transform: none">{{loadingState}}...</ion-button>
+			</ion-buttons>
 			<ion-skeleton-text animated></ion-skeleton-text>
 		</ion-item>
 	</ion-list>

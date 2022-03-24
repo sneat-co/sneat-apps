@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
-const childRoutes: Routes = [
+const teamRoutes: Routes = [
 	{
 		path: '',
 		loadChildren: () => import('./team/team-page.module').then(m => m.TeamPageModule),
@@ -12,8 +12,17 @@ const childRoutes: Routes = [
 
 const routes: Routes = [
 	{
+		path: 'teams',
+		loadChildren: () => import('./teams/teams-page.module').then(m => m.TeamsPageModule),
+	},
+	{
+		path: 'team',
+		redirectTo: 'teams',
+		pathMatch: 'full',
+	},
+	{
 		path: 'team/:id',
-		children: childRoutes,
+		children: teamRoutes,
 	},
 ];
 

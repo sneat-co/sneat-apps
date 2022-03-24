@@ -40,20 +40,8 @@ export class SneatUserService {
 		console.log('SneatUserService.constructor()');
 		this.userCollection = db.collection<IUserRecord>('users');
 		sneatAuthStateService.authState
-			// .pipe(
-			// 	filter(authState => !!authState.user),
-			// )
 			.subscribe({
-				next: (authState) => {
-					// console.log('SneatUserService => authState:', authState);
-					this.userChanged$.next(this.uid);
-					if (authState.user) {
-						this.onUserSignedIn(authState);
-					} else {
-						this.userState$.next(authState);
-						this.onUserSignedOut();
-					}
-				},
+				next: this.onAuthStateChanged,
 				error: this.errorLogger.logErrorHandler(
 					'failed to get sneat auth state',
 				),
@@ -104,18 +92,26 @@ export class SneatUserService {
 		});
 		const userDocRef = this.userCollection.doc(uid);
 		this.userDocSubscription = userDocRef.snapshotChanges().subscribe({
-			next: (changes) => this.userDocChanged(changes, authState),
-			error: this.errorLogger.logErrorHandler(
-				'SneatUserService failed to get user record',
-			),
+			next: (userDocSnapshot) => this.userDocChanged(userDocSnapshot, authState),
+			error: this.errorLogger.logErrorHandler('SneatUserService failed to get user record'),
 		});
 	}
+
+	private onAuthStateChanged = (authState: ISneatAuthState): void => {
+		console.log('SneatUserService => authState changed:', authState);
+		if (authState.user) {
+			this.onUserSignedIn(authState);
+		} else {
+			this.userState$.next(authState);
+			this.onUserSignedOut();
+		}
+	};
 
 	private userDocChanged(
 		changes: Action<DocumentSnapshot<IUserRecord>>,
 		authState: ISneatAuthState,
 	): void {
-		// console.log('SneatUserService => User record changed', changes);
+		console.log('SneatUserService => userDocChanged:', changes, authState);
 		if (
 			changes.type === 'value' ||
 			changes.type === 'added' ||
@@ -126,11 +122,12 @@ export class SneatUserService {
 				return; // Should always be equal as we unsubscribe if uid changes
 			}
 			// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
+			const fbUser = authState.user;
 			this.userState$.next({
 				...authState,
 				record: userDocSnapshot.exists
 					? (userDocSnapshot.data() as IUserRecord)
-					: null,
+					: fbUser ? {title: fbUser.displayName || fbUser.email || fbUser.uid} : null,
 			});
 		}
 	}

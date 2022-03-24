@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ToastController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { mergeMap, takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IUserTeamInfoWithId } from '@sneat/auth-models';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
@@ -17,6 +17,10 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addTeamInput?: IonInput; // TODO: IonInput;
 
 	public teams?: IUserTeamInfoWithId[];
+
+	private readonly destroyed = new Subject<void>()
+
+	public loadingState: 'Authenticating' | 'Loading' = 'Authenticating';
 
 	public teamName = '';
 	public adding = false;
@@ -36,31 +40,43 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnDestroy(): void {
-		console.log('HomePage.ngOnDestroy()');
+		console.log('TeamsCardComponent.ngOnDestroy()');
+		this.destroyed.next();
+		this.destroyed.complete();
 		this.unsubscribe('ngOnDestroy');
 	}
 
 	public ngOnInit(): void {
-		this.subscriptions.push(
-			this.userService.userChanged.subscribe({
-				next: (uid) => {
-					console.log('HomePage.ngOnInit() => userChanged:', uid);
-					this.teams = undefined;
-					if (!uid) {
-						this.unsubscribe('user signed out');
-						return;
+		this.watchUserRecord();
+	}
+
+	private watchUserRecord(): void {
+		this.userService.userState
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+			next: (userState) => {
+				console.log('TeamsCardComponent => user state changed:', userState);
+				if (userState.status === 'authenticating') {
+					if (this.loadingState === 'Authenticating') {
+						this.loadingState = 'Loading';
 					}
-					this.subscriptions.push(
-						this.userService.userState.subscribe({
-							next: this.setUser,
-							error: (err) =>
-								this.errorLogger.logError(err, 'Failed to get user record'),
-						}),
-					);
-				},
-				error: (err) => this.errorLogger.logError(err, 'Failed to get user ID'),
-			}),
-		);
+				}
+				const uid = userState.user?.uid;
+				this.teams = undefined;
+				if (!uid) {
+					this.unsubscribe('user signed out');
+					return;
+				}
+				this.subscriptions.push(
+					this.userService.userState.subscribe({
+						next: this.setUser,
+						error: (err) =>
+							this.errorLogger.logError(err, 'Failed to get user record'),
+					}),
+				);
+			},
+			error: (err) => this.errorLogger.logError(err, 'Failed to get user ID'),
+		});
 	}
 
 	public goTeam(team: IUserTeamInfoWithId) {
@@ -187,13 +203,13 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 	}
 
 	private unsubscribe(reason?: string): void {
-		console.log(`HomePage.unsubscribe(reason: ${reason})`);
+		console.log(`TeamsCardComponent.unsubscribe(reason: ${reason})`);
 		this.subscriptions.forEach((s) => s.unsubscribe());
 		this.subscriptions = [];
 	}
 
 	private setUser = (userState: ISneatUserState): void => {
-		console.log('HomePage => user:', userState);
+		console.log('TeamsCardComponent => user:', userState);
 		const user = userState.record;
 		if (user) {
 			this.teams = Object.entries(user?.teams ? user.teams : {}).map(
