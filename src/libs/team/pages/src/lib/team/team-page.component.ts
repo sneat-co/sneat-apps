@@ -1,17 +1,19 @@
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { BaseTeamPageDirective } from '@sneat/team/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { SneatUserService } from '@sneat/user';
 import { TeamNavService, TeamService } from '@sneat/team/services';
+import { IUserTeamInfoWithId } from '@sneat/auth-models';
+import { BaseTeamPageDirective } from '@sneat/team/components';
 
 @Component({
 	selector: 'sneat-team',
 	templateUrl: './team-page.component.html',
 })
 export class TeamPageComponent extends BaseTeamPageDirective {
+
 	public teamId?: string;
 
 	constructor(
@@ -23,8 +25,8 @@ export class TeamPageComponent extends BaseTeamPageDirective {
 		override readonly teamService: TeamService,
 		override readonly userService: SneatUserService,
 		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-		public readonly navService: TeamNavService,
+		readonly analyticsService: IAnalyticsService,
+		readonly navService: TeamNavService,
 	) {
 
 		super(
@@ -36,11 +38,11 @@ export class TeamPageComponent extends BaseTeamPageDirective {
 			userService,
 		);
 		console.log('TeamPage.constructor()');
-		this.trackTeamIdFromUrl();
+		// this.trackTeamIdFromUrl();
 	}
 
 	// noinspection JSUnusedGlobalSymbols
 	ionViewDidEnter() {
-		this.analyticsService.setCurrentScreen('Team');
+		// this.analyticsService.setCurrentScreen('Team');
 	}
 }

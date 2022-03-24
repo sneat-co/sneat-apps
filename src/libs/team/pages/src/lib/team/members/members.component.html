@@ -5,7 +5,7 @@
 			><span *ngIf="spectatorsCount || contributorsCount"
 				>:
 				<span id="team_members_count">{{
-					spectatorsCount + contributorsCount
+					(spectatorsCount || 0) + (contributorsCount || 0)
 				}}</span></span
 			>
 		</ion-label>
@@ -38,10 +38,12 @@
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>
-	<sneat-members-list
-		[team]="team"
-		[allMembers]="team?.data?.members"
-		[role]="membersRoleTab === '*' ? undefined : membersRoleTab"
-		(selfRemoved)="onSelfRemoved()"
-	></sneat-members-list>
+
+	sneat-members-list commented out
+<!--	<sneat-members-list-->
+<!--		[team]="team"-->
+<!--		[allMembers]="team?.data?.members"-->
+<!--		[role]="membersRoleTab === '*' ? undefined : membersRoleTab"-->
+<!--		(selfRemoved)="onSelfRemoved()"-->
+<!--	></sneat-members-list>-->
 </ion-card>

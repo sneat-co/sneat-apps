@@ -60,7 +60,7 @@ export interface ITaskWithUiStatus extends ITask {
 })
 export class ScrumService extends BaseMeetingService {
 	constructor(
-		readonly sneatTeamApiService: SneatTeamApiService,
+		override readonly sneatTeamApiService: SneatTeamApiService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly randomIdService: RandomIdService,
 		private readonly userService: SneatUserService,

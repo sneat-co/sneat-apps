@@ -11,10 +11,11 @@ import { SneatUserService } from '@sneat/user';
 import { ITeam } from '@sneat/team/models';
 import { TeamPageContextComponent } from './team-page-context';
 
-@Directive() // There was some reason to add a @Directive() - TODO: document why
-export abstract class BaseTeamPageDirective implements OnInit, OnDestroy {
+@Directive({selector: '[sneatBaseTeamPage]'}) // There was some reason to add a @Directive() - TODO: document why
+export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 
-	@ViewChild(TeamPageContextComponent) context?: TeamPageContextComponent;
+	@ViewChild(TeamPageContextComponent)
+	context?: TeamPageContextComponent;
 
 	public userTeam?: IUserTeamInfoWithId;
 
@@ -54,7 +55,7 @@ export abstract class BaseTeamPageDirective implements OnInit, OnDestroy {
 		}
 	}
 
-	public ngOnDestroy() {
+	protected onDestroy() {
 		this.unsubscribe('ngOnDestroy');
 		this.destroyed.next(true);
 		this.destroyed.complete();
@@ -189,7 +190,7 @@ export abstract class BaseTeamPageDirective implements OnInit, OnDestroy {
 		this.onTeamChanged();
 	}
 
-	ngOnInit(): void {
+	protected onInit(): void {
 		this.context?.team.subscribe({
 			next: team => {
 				team?.id;

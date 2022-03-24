@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 const childRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('./team/team-page-routing.module').then(m => m.TeamPageRoutingModule),
+		loadChildren: () => import('./team/team-page.module').then(m => m.TeamPageModule),
 	},
 ];
 

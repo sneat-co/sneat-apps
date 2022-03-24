@@ -4,14 +4,22 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { AvatarComponent, InviteLinksComponent, MembersListComponent } from './index';
 
+const exports = [
+	AvatarComponent,
+	InviteLinksComponent,
+	MembersListComponent,
+];
+
 @NgModule({
 	imports: [
 		CommonModule,
 		IonicModule,
 		FormsModule,
 	],
-	declarations: [AvatarComponent, InviteLinksComponent, MembersListComponent],
-	exports: [AvatarComponent, InviteLinksComponent, MembersListComponent],
+	declarations: [
+		...exports,
+	],
+	exports: exports,
 })
 export class TeamComponentsModule {
 }

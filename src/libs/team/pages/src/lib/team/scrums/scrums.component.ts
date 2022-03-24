@@ -33,7 +33,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.team) {
+		if (changes['team']) {
 			try {
 				if (this.team && this.teamId !== this.team.id) {
 					this.todayScrum = undefined;
@@ -71,12 +71,16 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	}
 
 	public goScrum(
-		date: 'today' | string,
+		date?: 'today' | string,
 		tab?: 'team' | 'my',
 		event?: Event,
 	): void {
 		try {
 			console.log(`TeamPage.goScrum(${date}, tab=${tab})`);
+			if (!date) {
+				this.errorLogger.logError('date is empty or undefined', date);
+				return;
+			}
 			if (event) {
 				event.preventDefault();
 				event.stopPropagation();

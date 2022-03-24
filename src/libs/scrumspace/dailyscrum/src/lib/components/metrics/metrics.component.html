@@ -8,20 +8,20 @@
 					<ion-label position="stacked">
 						{{ metric.title }}:
 						<ion-text
-							*ngIf="hasValue(metric)"
+							*ngIf="metric && hasValue(metric)"
 							[color]="
-								!metric.value
+								!metric?.value
 									? 'medium'
-									: metric.value < 70
+									: metric?.value < 70
 									? 'danger'
-									: metric.value < 80
+									: metric?.value < 80
 									? 'warning'
-									: metric.value > 90
+									: metric?.value > 90
 									? 'success'
 									: 'primary'
 							"
 						>
-							{{ metric.value }}%
+							{{ metric?.value }}%
 						</ion-text>
 						<ng-container *ngIf="!hasValue(metric)">none</ng-container>
 					</ion-label>
@@ -41,7 +41,7 @@
 						pin="false"
 						snaps="true"
 						ticks="true"
-						*ngIf="metric.min !== undefined && metric.max !== undefined"
+						*ngIf="metric && metric.min !== undefined && metric.max !== undefined"
 						[min]="metric.min"
 						[max]="metric.max"
 					>

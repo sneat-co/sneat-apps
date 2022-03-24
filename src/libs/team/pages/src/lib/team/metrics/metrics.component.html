@@ -19,15 +19,15 @@
 					We've created few demo metrics but you can
 					<a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
 					and/or
-					<a href="add-metric?team={{ team.id }}" (click)="goAddMetric($event)"
-						>add your own</a
+					<a href="add-metric?team={{ team?.id }}" (click)="goAddMetric($event)"
+					>add your own</a
 					>.
 				</p>
 			</ion-label>
 		</ion-item>
 
 		<ng-container *ngIf="team?.data?.metrics?.length">
-			<ion-item *ngFor="let metric of team.data.metrics">
+			<ion-item *ngFor="let metric of team?.data?.metrics">
 				<ion-spinner
 					slot="start"
 					name="lines-small"
@@ -51,14 +51,14 @@
 				<ion-label>
 					{{ metric.title }}
 					<ng-container>
-						<i style="padding-left: 1em" *ngIf="metric.type === 'bool'">
-							<ion-text [color]="metric.bool.true.color">{{
-								metric.bool.true.label
-							}}</ion-text>
+						<i style="padding-left: 1em" *ngIf="metric?.type === 'bool'">
+							<ion-text [color]="metricColor(metric.bool?.true)">{{
+								metricLabel(metric.bool?.true)
+								}}</ion-text>
 							/
-							<ion-text [color]="metric.bool.false.color">{{
-								metric.bool.false.label
-							}}</ion-text>
+							<ion-text [color]="metricColor(metric.bool?.false)">{{
+								metricLabel(metric.bool?.false)
+								}}</ion-text>
 						</i>
 					</ng-container>
 				</ion-label>
@@ -74,7 +74,7 @@
 			</ion-item>
 		</ng-container>
 	</ion-list>
-	<ion-card-content *ngIf="team?.data && !team.data.metrics?.length">
+	<ion-card-content *ngIf="team?.data && !team?.data?.metrics?.length">
 		<p>No metrics for your team yet.</p>
 	</ion-card-content>
 </ion-card>

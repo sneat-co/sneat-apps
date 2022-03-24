@@ -174,13 +174,16 @@ export class TeamNavService {
 
 	public navigateToRetroTree(
 		date: 'today' | 'yesterday' | string,
-		team: IRecord<ITeam>,
+		team?: IRecord<ITeam>,
 		retrospective?: IRecord<IRetrospective>,
 	): void {
 		console.log(
 			`navigateToRetroReview(date=${date}, team=${team?.id}), scrum:`,
 			retrospective?.data,
 		);
+		if (!team) {
+			return;
+		}
 		this.analyticsService.logEvent('navigateToRetroReview', {
 			date,
 			team: team.id,

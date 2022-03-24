@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeam, ITeamMetric } from '@sneat/team/models';
+import { IBoolMetricVal, ITeam, ITeamMetric } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
@@ -87,5 +87,13 @@ export class MetricsComponent {
 			throw 'no team';
 		}
 		this.navService.navigateToAddMetric(this.navController, this.team);
+	}
+
+	metricColor(v?: IBoolMetricVal): string { // Stupid workaround
+		return v?.color || '';
+	}
+
+	metricLabel(v?: IBoolMetricVal): string { // Stupid workaround
+		return v?.label || '';
 	}
 }

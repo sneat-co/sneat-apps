@@ -37,7 +37,7 @@ export class MembersComponent implements OnChanges {
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes.team) {
+		if (changes['team']) {
 			try {
 				this.setMembersCount(this.team?.data);
 			} catch (e) {
