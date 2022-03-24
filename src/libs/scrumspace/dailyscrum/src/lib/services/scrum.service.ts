@@ -26,7 +26,7 @@ import {
 } from '@sneat/scrumspace/scrummodels';
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/user';
-import firebase from 'firebase/compat';
+import firebase from 'firebase/compat/app';
 import FieldPath = firebase.firestore.FieldPath;
 
 const getOrCreateMemberStatus = (
