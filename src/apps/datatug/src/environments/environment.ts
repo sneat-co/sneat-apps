@@ -6,7 +6,7 @@ import { appSpecificConfig, firebaseApiKey, IEnvironmentConfig, localEnvironment
 const useEmulators = true;
 
 // noinspection SpellCheckingInspection
-export const environment: IEnvironmentConfig = appSpecificConfig(localEnvironmentConfig, {
+export const environment: IEnvironmentConfig = appSpecificConfig(useEmulators, localEnvironmentConfig, {
 	firebase: {
 		nickname: 'DataTug',
 		apiKey: firebaseApiKey(useEmulators, 'AIzaSyAbEG6aIiKqT8C5mmZav3oSoZSnFOPUnos'),

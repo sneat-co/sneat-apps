@@ -24,9 +24,10 @@ export interface IAppSpecificConfig {
 	firebase: IFirebaseAppSpecificConfig;
 }
 
-export function appSpecificConfig(envConfig: IEnvironmentConfig, appConfig: IAppSpecificConfig): IEnvironmentConfig {
+export function appSpecificConfig(useEmulators: boolean, envConfig: IEnvironmentConfig, appConfig: IAppSpecificConfig): IEnvironmentConfig {
 	return {
 		...envConfig,
+		useEmulators,
 		firebaseConfig: {
 			...envConfig.firebaseConfig,
 			...appConfig.firebase,
