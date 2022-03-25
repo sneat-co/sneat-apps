@@ -41,7 +41,6 @@ export class RetrospectivePageComponent
 			teamService,
 			userService,
 		);
-		this.trackTeamIdFromUrl();
 		this.trackMeetingIdFromUrl();
 	}
 
@@ -54,7 +53,7 @@ export class RetrospectivePageComponent
 	}
 
 	ngOnDestroy() {
-		super.ngOnDestroy();
+		// super.ngOnDestroy();
 		if (this.retroSub) {
 			this.retroSub.unsubscribe();
 		}

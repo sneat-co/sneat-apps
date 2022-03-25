@@ -106,7 +106,6 @@ export class ScrumPage
 			teamContextService,
 			userService,
 		);
-		this.trackTeamIdFromUrl();
 	}
 
 	private static getDateFromId(scrumId: string): Date {

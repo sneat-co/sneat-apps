@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
-import { TeamNavService, TeamService, trackTeamIdFromRouteParameter } from '@sneat/team/services';
+import { TeamNavService, TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
@@ -35,19 +35,13 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 		public readonly navService: TeamNavService,
 	) {
 		console.log('TeamPageContextComponent.constructor()', route.url);
-		trackTeamIdFromRouteParameter(route).pipe(
+		trackTeamIdAndTypeFromRouteParameter(route).pipe(
 			takeUntil(this.destroyed),
 		).subscribe({
-			next: this.onTeamIdChanged,
+			next: this.onTeamContextChanged,
 			error: this.errorLogger.logErrorHandler,
 		});
 	}
-
-	private onTeamIdChanged = (id: string | null): void => {
-		if (this.teamContext.value?.id != id) {
-			this.teamContext.next(id ? { id: id } : null);
-		}
-	};
 
 	ngOnInit(): void {
 		console.log('TeamPageContextComponent.ngOnInit()', this.page);
@@ -57,5 +51,11 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 		this.destroyed.next(true);
 		this.destroyed.complete();
 	}
+
+	private onTeamContextChanged = (teamContext?: ITeamContext): void => {
+		if (this.teamContext.value?.id != teamContext?.id) {
+			this.teamContext.next(teamContext);
+		}
+	};
 
 }

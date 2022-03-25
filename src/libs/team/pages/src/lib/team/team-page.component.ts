@@ -14,8 +14,6 @@ import { BaseTeamPageDirective } from '@sneat/team/components';
 })
 export class TeamPageComponent extends BaseTeamPageDirective {
 
-	public teamId?: string;
-
 	constructor(
 		override readonly changeDetectorRef: ChangeDetectorRef,
 		override readonly route: ActivatedRoute,

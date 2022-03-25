@@ -124,7 +124,6 @@ export class RetroTreePageComponent extends BaseTeamPageDirective {
 			teamService,
 			userService,
 		);
-		this.trackTeamIdFromUrl();
 		route.queryParamMap.subscribe((queryParams) => {
 			this.meetingId = queryParams.get('date');
 			if (this.meetingId === 'today') {

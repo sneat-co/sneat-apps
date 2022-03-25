@@ -72,7 +72,10 @@ export interface ITeamBrief {
 	title: string;
 }
 
+export type TeamType = 'family' | 'company' | 'team';
+
 export interface ITeam {
+	type: TeamType;
 	title: string;
 	userIds: string[];
 	memberIds?: string[];

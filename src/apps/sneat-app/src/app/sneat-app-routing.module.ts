@@ -18,6 +18,11 @@ const routes: Routes = [
 			import('./sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
 	},
 	{
+		path: 'space/:teamType/:teamId',
+		loadChildren: () =>
+			import('@sneat/team/pages').then(m => m.TeamRoutingModule),
+	},
+	{
 		path: 'communes',
 		loadChildren: () =>
 			import('@sneat/communes/ui').then(m => m.CommunesRoutingModule),
@@ -31,6 +36,10 @@ const routes: Routes = [
 		path: '',
 		redirectTo: 'communes',
 		pathMatch: 'full',
+	},
+	{
+		path: 'new-family',
+		loadChildren: () => import('@sneat/communes/ui').then(m => m.NewCommunePageModule),
 	},
 ];
 
