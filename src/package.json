@@ -86,7 +86,7 @@
     "@nrwl/workspace": "13.9.4",
     "@nxtend/capacitor": "13.0.0",
     "@nxtend/firebase": "12.1.0",
-    "@nxtend/ionic-angular": "13.0.0",
+    "@nxtend/ionic-angular": "13.1.0",
     "@trellisorg/make-buildable": "0.0.11",
     "@types/jasmine": "4.0.0",
     "@types/jest": "27.4.1",
