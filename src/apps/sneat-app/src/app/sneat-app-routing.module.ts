@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { RoutesToCommuneModule } from '@sneat/communes/ui';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
-import { TeamRoutingModule } from '@sneat/team/pages';
 
 const routes: Routes = [
 	{
@@ -20,7 +19,7 @@ const routes: Routes = [
 	{
 		path: 'space/:teamType/:teamId',
 		loadChildren: () =>
-			import('@sneat/team/pages').then(m => m.TeamRoutingModule),
+			import('@sneat/team/pages').then(m => m.TeamSpaceRoutingModule),
 	},
 	{
 		path: 'communes',
@@ -48,7 +47,6 @@ const routes: Routes = [
 		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
 		SneatAuthRoutingModule,
 		RoutesToCommuneModule,
-		TeamRoutingModule,
 	],
 	exports: [RouterModule],
 })

@@ -4,6 +4,7 @@ import { TeamMenuComponent } from './team-menu.component';
 import { IonicModule } from '@ionic/angular';
 import { TeamPageContextModule } from '../team-page-context';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 const exports = [TeamMenuComponent];
 
@@ -11,6 +12,7 @@ const exports = [TeamMenuComponent];
 	imports: [
 		CommonModule,
 		IonicModule,
+		FormsModule,
 		TeamPageContextModule,
 		RouterModule,
 	],

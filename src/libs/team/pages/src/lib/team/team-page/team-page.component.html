@@ -1,0 +1,77 @@
+<sneat-team-page-context page="team-summary"></sneat-team-page-context>
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+			<ion-back-button defaultHref="/"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="team?.dto || team?.type">
+			{{ team?.dto?.title || team?.type === 'family' ? 'Family' : team?.id }}
+		</ion-title>
+		<ion-title *ngIf="!team">
+			Space: loading...
+		</ion-title>
+		<ion-buttons slot="end">
+			<ion-button>
+				<ion-icon name="settings" slot="start"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!--	<ion-row class="ion-no-padding ion-no-margin">-->
+<!--		&lt;!&ndash; TODO(StackOverflow): Is here better way to use grid without padding? &ndash;&gt;-->
+<!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
+<!--			<sneat-team-scrums [team]="team"></sneat-team-scrums>-->
+<!--		</ion-col>-->
+<!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
+<!--			<sneat-team-retrospectives [team]="team"></sneat-team-retrospectives>-->
+<!--		</ion-col>-->
+<!--	</ion-row>-->
+<!--	<ion-row class="ion-no-padding ion-no-margin">-->
+<!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
+<!--			<app-team-members [team]="team"></app-team-members>-->
+<!--		</ion-col>-->
+<!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
+<!--			<app-team-metrics [team]="team"></app-team-metrics>-->
+<!--		</ion-col>-->
+<!--	</ion-row>-->
+
+	<ion-card>
+		<ion-list>
+			<ion-item>
+				<ion-label style="font-weight: bold">Apps</ion-label>
+				<ion-buttons slot="end">
+					<ion-button>
+						<ion-icon name="settings" color="medium"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			<ion-item routerLink="./schedule">
+				<ion-icon name="calendar-outline" slot="start"></ion-icon>
+				<ion-label>Schedule</ion-label>
+				<ion-buttons slot="end">
+					<ion-button>
+						<ion-label style="text-transform: none" color="primary">Today</ion-label>
+					</ion-button>
+					<ion-button>
+						<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			<ion-item routerLink="./lists">
+				<ion-icon name="cart-outline" slot="start"></ion-icon>
+				<ion-label>Lists</ion-label>
+				<ion-buttons slot="end">
+					<ion-button>
+						<ion-label style="text-transform: none" color="primary">Groceries</ion-label>
+					</ion-button>
+					<ion-button>
+						<ion-label style="text-transform: none" color="primary">To watch</ion-label>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+</ion-content>
