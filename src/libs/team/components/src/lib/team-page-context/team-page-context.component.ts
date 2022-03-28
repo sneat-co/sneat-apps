@@ -1,7 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { NavController } from '@ionic/angular';
 import { TeamNavService, TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
@@ -29,7 +28,6 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
 		public readonly route: ActivatedRoute,
-		public readonly navController: NavController,
 		public readonly teamService: TeamService,
 		public readonly userService: SneatUserService,
 		public readonly navService: TeamNavService,

@@ -107,9 +107,14 @@ ion-label.deleting-list-item {
 	margin: 0;
 }
 
+.ion-grid-layout ion-row {
+  padding: 0;
+  margin: 0;
+}
+
 .ion-grid-layout ion-col {
-	padding: 0;
-	margin: 0;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 ion-list.last-child-no-border ion-item:last-child {
