@@ -1,10 +1,10 @@
 import { MembersVisibility, MemberType } from './types';
-import { IContact2Member } from './dto-contact';
 import { ICommuneRecord, IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
 import { DtoGroupTerms } from './dto-term';
 import { ICommuneMemberInfo } from './dto-commune';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { RxRecordKey } from '@sneat/rxstore';
+import { IContact2Member } from './dto-contact2';
 
 export type MemberRoleParish = 'pastor';
 export type MemberRoleEducation = 'administrator' | 'principal' | 'pupil' | 'teacher';

@@ -1,18 +1,5 @@
-import { ContactToMemberRelation, ContactType } from './types';
 import { IPersonRecord } from './dto-models';
-
-export interface IContactBrief {
-	id: string;
-	title: string;
-}
-
-export interface IContact2Member extends IContactBrief {
-	relation: ContactToMemberRelation;
-}
-
-export interface IContact2Asset extends IContactBrief {
-	relation: ContactType;
-}
+import { IContact2Asset, IContact2Member } from './dto-contact2';
 
 export interface IContactDto extends IPersonRecord {
 	title: string; // Mandatory title

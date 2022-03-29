@@ -1,6 +1,6 @@
 import { AssetCategoryId, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
 import { ICommuneRecord, IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
-import { IContact2Asset } from './dto-contact';
+import { IContact2Asset } from './dto-contact2';
 
 export interface AssetLiabilityInfo {
 	id: string;
