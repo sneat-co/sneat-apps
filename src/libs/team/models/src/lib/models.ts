@@ -68,17 +68,12 @@ export interface IAddTeamMemberRequest extends ITeamRequest {
 	message?: string;
 }
 
-export interface ITeamBrief {
-	id: string;
-	title: string;
-}
-
-export interface ITeam {
-	type: TeamType;
-	title: string;
-	userIds: string[];
-	memberIds?: string[];
-	members: IMemberInfo[];
+export interface ITeamDto {
+	readonly type: TeamType;
+	readonly title: string;
+	readonly userIds: string[];
+	readonly memberIds?: string[];
+	readonly members: IMemberInfo[];
 	metrics: ITeamMetric[];
 	active?: ITeamMeetings;
 	last?: ITeamMeetings;
@@ -97,7 +92,9 @@ export interface IMemberInfo {
 	avatar?: IAvatar;
 }
 
+// Obsolete - replaced with IMemberDto
 export interface IMember {
+	gender?: 'male' | 'female';
 	title: string;
 	roles: MemberRole[];
 	email?: string;

@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { listAddRemoveAnimation } from '@sneat/animations';
-import { IRecord } from '@sneat/data';
-import { SneatUserService } from '@sneat/user';
-import { IMemberInfo, ITeam, MemberRole, MemberRoleEnum } from '@sneat/team/models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IMemberContext, IMemberInfo, ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
+import { SneatUserService } from '@sneat/user';
 
 @Component({
 	selector: 'sneat-members-list',
@@ -14,10 +13,11 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 	animations: listAddRemoveAnimation,
 })
 export class MembersListComponent implements OnChanges {
-	@Input() team?: IRecord<ITeam>;
+	@Input() team?: ITeamContext;
 	@Input() allMembers?: IMemberInfo[];
-	@Input() role?: MemberRole;
+	@Input() role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
+
 	public members?: IMemberInfo[];
 	private selfRemove?: boolean;
 
@@ -28,6 +28,7 @@ export class MembersListComponent implements OnChanges {
 		private teamService: TeamService,
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
 	) {
+		//
 	}
 
 	public id = (_: number, m: IMemberInfo) => m.id;
@@ -40,15 +41,15 @@ export class MembersListComponent implements OnChanges {
 			);
 			return;
 		}
-		this.navService.navigateToMember(
-			this.navController,
-			this.team,
-			member || {
-				id: 'myself',
-				title: 'Myself',
-				roles: [MemberRoleEnum.contributor],
-			},
-		);
+		if (!member?.id) {
+			throw new Error('!member?.id');
+		}
+		const memberContext: IMemberContext = {
+			id: member.id,
+			brief: member,
+			team: this.team,
+		};
+		this.navService.navigateToMember(this.navController, memberContext);
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
@@ -72,10 +73,16 @@ export class MembersListComponent implements OnChanges {
 		if (!this.team) {
 			return;
 		}
-		const members = this.team?.data?.members;
+		const members = this.team?.dto?.members;
 		const memberIndex = members?.findIndex((m) => m.id === memberInfo.id);
-		if (members && this.team?.data?.members) {
-			this.team.data.members = members.filter((m) => m.id !== memberInfo.id);
+		if (members && this.team?.dto?.members) {
+			this.team = {
+				...this.team,
+				dto: {
+					...this.team.dto,
+					members: members.filter((m) => m.id !== memberInfo.id),
+				},
+			};
 		}
 		this.selfRemove = memberInfo.uid === this.userService.currentUserId;
 		const teamId = this.team.id;
@@ -84,7 +91,7 @@ export class MembersListComponent implements OnChanges {
 				if (teamId !== this.team?.id) {
 					return;
 				}
-				this.team = { id: teamId, data: team };
+				this.team = { id: teamId, dto: team };
 				console.log('updated team:', team);
 				if (this.selfRemove) {
 					this.selfRemoved.emit();

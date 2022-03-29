@@ -1,0 +1,43 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title>Remove member</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="ion-padding">
+		<p>Are you sure you want to completely remove all records about <b>{{memberInfo && memberInfo.title}}</b>?</p>
+
+		<h2>Below records will be removed</h2>
+	</div>
+	<ion-list>
+		<ion-item>
+			<ion-label>Schedule</ion-label>
+			<ion-badge color="light">3 records</ion-badge>
+		</ion-item>
+	</ion-list>
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-button size="large" color="danger" expand="full" (click)="removeMember()">
+					Yes, remove now
+				</ion-button>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col style="text-align: center">
+				<ion-text color="danger">This operation can't be undone.</ion-text>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-button size="large" color="light" expand="full" (click)="cancelMemberRemoval()">
+					Cancel
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

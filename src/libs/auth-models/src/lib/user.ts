@@ -6,7 +6,7 @@ import { TeamType } from '@sneat/dto';
 export interface IUserRecord {
 	readonly title: string;
 	readonly email?: string;
-	readonly emailVerified?: boolean;
+	readonly emailIsVerified?: boolean;
 	readonly avatar?: IAvatar;
 	readonly teams?: IUserTeamInfo[];
 }
@@ -15,6 +15,5 @@ export interface IUserTeamInfo {
 	readonly id: string;
 	readonly type: TeamType;
 	readonly title: string;
-	readonly roles?: string[];
 	// retroItems?: { [type: string]: IRetroItem[] };
 }

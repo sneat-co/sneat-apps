@@ -1,9 +1,7 @@
-// import { ITeam } from "./models";
-
 import { INavContext } from '@sneat/core';
-import { ITeam, ITeamBrief } from './models';
-import { TeamType } from '@sneat/dto';
+import { IUserTeamBrief, TeamType } from '@sneat/dto';
+import { ITeamDto } from './models';
 
-export interface ITeamContext extends INavContext<ITeamBrief, ITeam> {
-	type?: TeamType;
+export interface ITeamContext extends INavContext<IUserTeamBrief, ITeamDto> {
+	readonly type?: TeamType;
 };

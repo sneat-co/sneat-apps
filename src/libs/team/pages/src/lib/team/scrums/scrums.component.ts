@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { ITeam } from '@sneat/team/models';
+import { ITeamDto } from '@sneat/team/models';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { IScrum } from '@sneat/scrumspace/scrummodels';
 import { TeamNavService } from '@sneat/team/services';
@@ -15,7 +15,7 @@ import { TeamNavService } from '@sneat/team/services';
 	templateUrl: './scrums.component.html',
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {
-	@Input() public team?: IRecord<ITeam>;
+	@Input() public team?: IRecord<ITeamDto>;
 
 	public prevScrumId?: string;
 	public todayScrum?: IScrum;
@@ -39,7 +39,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 					this.todayScrum = undefined;
 					this.prevScrumId = undefined;
 				}
-				const team = this.team?.data;
+				const team = this.team?.dto;
 				if (team?.last?.scrum?.id) {
 					const today = getToday();
 					const todayId = getMeetingIdFromDate(today);

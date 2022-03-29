@@ -1,0 +1,39 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button with-end-buttons">
+		<ion-buttons slot="start">
+			<ion-back-button [text]="null"
+								  [defaultHref]="memberId ? '/member?id='+memberId : '/communes'"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="memberInfo else titleNoCommune">
+			Documents of {{memberInfo.title}}
+		</ion-title>
+		<ng-template #titleNoCommune>Documents of a member</ng-template>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-item-group>
+		<ion-item-divider color="light">
+			<ion-label>Passports</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item-divider>
+		<ion-item>No passports recorded yet.</ion-item>
+	</ion-item-group>
+
+	<ion-item-group>
+		<ion-item-divider color="light">
+			<ion-label>Driving licenses</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item-divider>
+		<ion-item>No driving licenses recorded yet.</ion-item>
+	</ion-item-group>
+</ion-content>

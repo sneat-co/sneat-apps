@@ -5,7 +5,7 @@
 		</ion-buttons>
 		<ion-title
 			>Scrums
-			<ng-container *ngIf="team?.data">@ {{team.data.title}}</ng-container>
+			<ng-container *ngIf="team?.dto">@ {{team.dto.title}}</ng-container>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -23,11 +23,11 @@
 		<ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
 		<ion-label> {{scrum.id}} </ion-label>
 		<ion-button
-			*ngIf="scrum.data.risksCount"
+			*ngIf="scrum.dto.risksCount"
 			slot="end"
 			color="danger"
 			title="Risks"
-			>{{scrum.data.risksCount}}</ion-button
+			>{{scrum.dto.risksCount}}</ion-button
 		>
 	</ion-item>
 </ion-content>

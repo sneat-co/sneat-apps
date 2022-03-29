@@ -105,8 +105,8 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 				console.log('teamId:', team.id);
 				const userTeam: IUserTeamInfo = {
 					id: team.id,
-					title: team?.data?.title || team.id,
-					type: team?.data?.type || 'unknown',
+					title: team?.dto?.title || team.id,
+					type: team?.dto?.type || 'unknown',
 				};
 				if (userTeam && !this.teams?.find((t) => t.id === team.id)) {
 					this.teams?.push(userTeam);
@@ -158,7 +158,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 						return [team];
 					}
 					return this.teamService.removeTeamMember(
-						{ id: teamInfo.id, data: team },
+						{ id: teamInfo.id, dto: team },
 						userMember.id,
 					);
 				}),

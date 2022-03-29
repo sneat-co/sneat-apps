@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IUserTeamInfo } from '@sneat/auth-models';
-import { ITeam } from '@sneat/team/models';
+import { ITeamDto } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
 export const getPinFromUrl: () => number | undefined = () => {
@@ -22,7 +22,7 @@ export const getPinFromUrl: () => number | undefined = () => {
 export class JoinTeamPageComponent implements OnDestroy {
 	public teamId?: string;
 	public pin?: number;
-	public team?: ITeam;
+	public team?: ITeamDto;
 	public invitedBy?: IUserTeamInfo;
 	public joining?: boolean;
 	public refusing?: boolean;

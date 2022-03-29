@@ -1,0 +1,179 @@
+<sneat-team-page-context page="member-summary"></sneat-team-page-context>
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="'space/' + team?.type + '/' + team?.id"></ion-back-button>
+		</ion-buttons>
+		<ng-container [ngSwitch]="team?.type">
+			<ion-title *ngSwitchCase="'family'">Family member</ion-title>
+			<ion-title *ngSwitchCase="'cohabit'">Housemate</ion-title>
+			<ion-title *ngSwitchCase="'work'">Worker</ion-title>
+			<ion-title *ngSwitchDefault>Member : {{defaultBackUrl}}</ion-title>
+		</ng-container>
+		<!--<ion-title *ngIf="member else titleNoMember">{{member.title}}</ion-title>-->
+		<!--<ng-template #titleNoMember>-->
+		<!--<ion-title>Member</ion-title>-->
+		<!--</ng-template>-->
+		<ion-buttons slot="end">
+			<ion-menu-button menu="mainMenu"></ion-menu-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list mode="md">
+		<ion-item button class="with-buttons" (click)="go('edit-member')">
+			<ion-label>
+				<ng-container *ngIf="member?.dto?.gender">
+					<ng-container [ngSwitch]="member?.dto?.gender">
+						<span *ngSwitchCase="'male'">🧑</span>
+						<span *ngSwitchCase="'female'">👩</span>
+						<ion-icon name="person" *ngSwitchDefault></ion-icon>
+					</ng-container>
+
+					{{member?.brief?.title || (member?.dto?.userId === currentUserId ? 'Me' : '(no title)')}}
+				</ng-container>
+			</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium" title="Edit member" (click)="go('edit-member')">
+					<ion-icon name="create"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item-divider mode="md" *ngIf="member?.dto?.gender && relatedAs">
+			<ion-label *ngIf="member?.dto?.gender === 'male' && relatedAs === 'child'">My son</ion-label>
+			<ion-label *ngIf="member?.dto?.gender === 'female' && relatedAs === 'child'">My daughter</ion-label>
+			<ion-label *ngIf="member?.dto?.gender === 'male' && relatedAs === 'spouse'">My husband</ion-label>
+			<ion-label *ngIf="member?.dto?.gender === 'female' && relatedAs === 'spouse'">My wife</ion-label>
+		</ion-item-divider>
+		<ion-item mode="md" class="with-buttons" button (click)="go('member-assets')">
+			<ion-label>🏡 Assets</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium" (click)="goNew($event, 'new-asset')">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+<!--		<app-menu-item-budget [goNew]="goNew" [memberInfo]="memberInfo"-->
+<!--													[communeDto]="commune && commune.dto"></app-menu-item-budget>-->
+		<ion-item mode="md" button class="with-buttons" (click)="go('member-contacts')">
+			<ion-label>📇 Contacts</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium" title="Add contact">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item mode="md" button class="with-buttons" (click)="go('member-documents')">
+			<ion-label>🗎 Documents</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium" title="Add document">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item mode="md" button class="with-buttons" (click)="go('member-schedule')">
+			<ion-label>📅 Schedule</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="medium" title="Add activity">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item-group>
+			<ion-item mode="md" button class="with-buttons">
+				<ion-label>📏 Sizes</ion-label>
+				<!--				<ion-select>-->
+				<!--					<ion-select-option></ion-select-option>-->
+				<!--				</ion-select>-->
+				<ion-buttons slot="end">
+					<ion-button color="medium" title="Add activity">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+<!--			<sneat-app-person-sizes-->
+<!--				[person]="member?.dto"-->
+<!--				[selectedSizeSystem]="''"-->
+<!--			>-->
+<!--			</sneat-app-person-sizes>-->
+		</ion-item-group>
+
+		<ng-container *ngIf="member?.dto && (!member?.dto?.gender || !relatedAs)">
+			<ion-item
+				*ngIf="team?.type === 'family' && relatedAs && member?.dto?.userId !== currentUserId">
+				<ion-label>
+					Relationship to me
+				</ion-label>
+				<ion-select [value]="relatedAs" interface="popover" (ionChange)="changeRelationship($event)">
+					<ion-select-option value="spouse">spouse</ion-select-option>
+					<ion-select-option value="child">child</ion-select-option>
+					<ion-select-option value="parent">parent</ion-select-option>
+					<ion-select-option value="other">other</ion-select-option>
+				</ion-select>
+			</ion-item>
+
+			<ion-item-group
+				*ngIf="team?.type === 'family' && !relatedAs && member?.dto?.userId !== currentUserId">
+				<ion-item-divider>
+					<ion-label>Relationship to me</ion-label>
+				</ion-item-divider>
+				<ion-radio-group [(ngModel)]="relatedAs" (ionChange)="changeRelationship($event)">
+					<ion-item>
+						<ion-label>Spouse</ion-label>
+						<ion-radio slot="start" value="spouse"></ion-radio>
+					</ion-item>
+					<ion-item>
+						<ion-label>Child</ion-label>
+						<ion-radio slot="start" value="child"></ion-radio>
+					</ion-item>
+					<ion-item>
+						<ion-label>Parent</ion-label>
+						<ion-radio slot="start" value="child"></ion-radio>
+					</ion-item>
+					<ion-item>
+						<ion-label>Other</ion-label>
+						<ion-radio slot="start" value="other"></ion-radio>
+					</ion-item>
+				</ion-radio-group>
+			</ion-item-group>
+
+			<ion-item-group *ngIf="!member?.dto?.gender">
+				<ion-item-divider>
+					<ion-label>Gender</ion-label>
+				</ion-item-divider>
+				<ion-radio-group [value]="member?.dto?.gender" (ionChange)="changeGender($event)">
+					<ion-item>
+						<ion-label>Male</ion-label>
+						<ion-radio slot="start" value="male" [disabled]="!member?.dto"></ion-radio>
+					</ion-item>
+					<ion-item>
+						<ion-label>Female</ion-label>
+						<ion-radio slot="start" value="female" [disabled]="!member?.dto"></ion-radio>
+					</ion-item>
+				</ion-radio-group>
+			</ion-item-group>
+		</ng-container>
+
+		<ion-item-group>
+			<ion-item-divider>Advanced</ion-item-divider>
+			<ion-item>
+				<ion-label>Date of birth</ion-label>
+				<ion-input
+					value="{{ dob | date: 'dd.MM.yyyy' }}"
+					id="date"
+					class="ion-text-end"
+				></ion-input>
+				<ion-popover trigger="date" size="cover">
+					<ng-template>
+						<ion-datetime
+							presentation="date"
+							[(ngModel)]="dob"
+							locale="sl-SI"
+						></ion-datetime>
+					</ng-template>
+				</ion-popover>
+			</ion-item>
+		</ion-item-group>
+	</ion-list>
+</ion-content>

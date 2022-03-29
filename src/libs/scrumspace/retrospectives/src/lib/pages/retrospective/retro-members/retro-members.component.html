@@ -4,7 +4,7 @@
 		<ion-segment-button value="participants">
 			<ion-label
 				>Participants
-				<ion-badge *ngIf="retrospective?.data" color="light">
+				<ion-badge *ngIf="retrospective?.dto" color="light">
 					<ion-text color="medium">{{ participants?.length || 0 }}</ion-text>
 				</ion-badge>
 			</ion-label>
@@ -12,7 +12,7 @@
 		<ion-segment-button value="spectators">
 			<ion-label
 				>Spectators
-				<ion-badge *ngIf="retrospective?.data" color="light">
+				<ion-badge *ngIf="retrospective?.dto" color="light">
 					<ion-text color="medium">{{ spectators?.length || 0 }}</ion-text>
 				</ion-badge>
 			</ion-label>
@@ -20,14 +20,14 @@
 		<ion-segment-button value="absent">
 			<ion-label
 				>Absent
-				<ion-badge *ngIf="retrospective?.data" color="light">
+				<ion-badge *ngIf="retrospective?.dto" color="light">
 					<ion-text color="medium">{{ absents?.length || 0 }}</ion-text>
 				</ion-badge>
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>
 
-	<ion-list *ngIf="membersTab === 'participants' && retrospective?.data">
+	<ion-list *ngIf="membersTab === 'participants' && retrospective?.dto">
 		<ion-item *ngIf="!participants?.length; else membersList" disabled="true">
 			<ion-label>No participants yet</ion-label>
 		</ion-item>
@@ -39,7 +39,7 @@
 		</ng-template>
 	</ion-list>
 
-	<ion-list *ngIf="membersTab === 'spectators' && retrospective?.data">
+	<ion-list *ngIf="membersTab === 'spectators' && retrospective?.dto">
 		<ion-item *ngIf="!spectators?.length; else membersList" disabled="true">
 			<ion-label>No spectators yet</ion-label>
 		</ion-item>

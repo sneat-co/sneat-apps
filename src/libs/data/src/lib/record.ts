@@ -1,20 +1,20 @@
-import { map } from 'rxjs/operators';
 import { OperatorFunction } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-interface MightHaveId {
+export interface MightHaveId {
 	id?: string;
 }
 
 export function mapToRecord<T extends MightHaveId>(
 	state: RecordState = 'unchanged',
 ): OperatorFunction<T, IRecord<T>> {
-	return map((data: T): IRecord<T> => ({ id: data.id as string, data, state }));
+	return map((dto: T): IRecord<T> => ({ id: dto.id as string, dto, state }));
 }
 
 export interface IRecord<T> {
-	id: string;
-	data?: T;
-	state?: RecordState; // undefined == 'unchanged';
+	readonly id: string;
+	readonly dto?: T;
+	readonly state?: RecordState; // undefined == 'unchanged';
 }
 
 export type RecordState =

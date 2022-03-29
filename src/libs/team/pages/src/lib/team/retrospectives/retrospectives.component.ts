@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
-import { ITeam } from '@sneat/team/models';
+import { ITeamDto } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/user';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { RetroItemType } from '@sneat/scrumspace/scrummodels';
@@ -13,7 +13,7 @@ import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 	styleUrls: ['./retrospectives.component.scss'],
 })
 export class RetrospectivesComponent {
-	@Input() public team?: IRecord<ITeam>;
+	@Input() public team?: IRecord<ITeamDto>;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -32,7 +32,7 @@ export class RetrospectivesComponent {
 			);
 			return;
 		}
-		const activeRetroId = this.team?.data?.active?.retrospective?.id;
+		const activeRetroId = this.team?.dto?.active?.retrospective?.id;
 		try {
 			this.navService.navigateToRetrospective(
 				this.navController,
@@ -48,7 +48,7 @@ export class RetrospectivesComponent {
 		const userId = this.userService.currentUserId;
 		return (
 			(userId
-				? this.team?.data?.upcomingRetro?.itemsByUserAndType?.[userId]?.[
+				? this.team?.dto?.upcomingRetro?.itemsByUserAndType?.[userId]?.[
 					itemType
 					]
 				: 0) || 0

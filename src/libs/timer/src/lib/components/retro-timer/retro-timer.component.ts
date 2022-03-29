@@ -10,7 +10,7 @@ import {
 import { ITimerState } from '../../../../../meeting/src/lib/timer/models';
 import { Timer, TimerFactory } from '../../../../../meeting/src/lib/timer/timer.service';
 import { IRecord } from '@sneat/data';
-import { ITeam } from '@sneat/team/models';
+import { ITeamDto } from '@sneat/team/models';
 import { secondsToStr } from '@sneat/datetime';
 
 @Component({
@@ -19,7 +19,7 @@ import { secondsToStr } from '@sneat/datetime';
 	styleUrls: ['./retro-timer.component.scss'],
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
-	@Input() public team: IRecord<ITeam>;
+	@Input() public team: IRecord<ITeamDto>;
 	@Input() retrospective: IRecord<IRetrospective>;
 
 	public timer: Timer;
@@ -66,8 +66,8 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 					}
 				}
 			}
-			if (changes.retrospective && this.retrospective?.data?.timer) {
-				this.timer.updateTimerState(this.retrospective.data.timer);
+			if (changes.retrospective && this.retrospective?.dto?.timer) {
+				this.timer.updateTimerState(this.retrospective.dto.timer);
 			}
 		}
 	}
@@ -93,7 +93,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 					error: (err) =>
 						this.errorLogger.logError(err, 'Failed to start retrospective'),
 				});
-			this.retrospective.data.stage = RetrospectiveStage.feedback;
+			this.retrospective.dto.stage = RetrospectiveStage.feedback;
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to start retrospective');
 		}
@@ -106,7 +106,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 			if (!this.timer) {
 				this.createTimer();
 			}
-			this.timer.updateTimerState(retrospective.data?.timer);
+			this.timer.updateTimerState(retrospective.dto?.timer);
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
@@ -163,8 +163,8 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		try {
 			this.retrospective = {
 				...this.retrospective,
-				data: {
-					...this.retrospective.data,
+				dto: {
+					...this.retrospective.dto,
 					timer,
 				},
 			};

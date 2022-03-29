@@ -1,5 +1,5 @@
 import { MembersVisibility, MemberType } from './types';
-import { ICommuneRecord, IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
+import { ITeamRecord, IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
 import { DtoGroupTerms } from './dto-term';
 import { ICommuneMemberInfo } from './dto-commune';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
@@ -41,7 +41,6 @@ export interface DtoMemberGroupInfo {
 }
 
 export interface IMemberDto extends IPersonRecord, IVerification, ITotalsHolder {
-	id?: RxRecordKey;
 	title: string;
 	type?: MemberType;
 	position?: string;
@@ -80,7 +79,7 @@ export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 	members: number;
 }
 
-export interface IMemberGroupDto extends ICommuneRecord {
+export interface IMemberGroupDto extends ITeamRecord {
 	teamId?: string; // RxRecordKey; // family team ID
 	title: string;
 	desc?: string;

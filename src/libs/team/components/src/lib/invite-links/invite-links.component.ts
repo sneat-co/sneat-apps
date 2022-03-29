@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatUserService } from '@sneat/user';
-import { ITeam } from '@sneat/team/models';
+import { ITeamDto } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 
 export const stringHash = (s: string): number => {
@@ -28,7 +28,7 @@ export const stringHash = (s: string): number => {
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
 	@Input() teamId?: string;
-	@Input() public team?: ITeam;
+	@Input() public team?: ITeamDto;
 
 	public inviteUrlsFor?: {
 		contributors: string;
@@ -74,7 +74,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 		}
 		this.navService.navigateToAddMember(this.navController, {
 			id: this.teamId,
-			data: this.team,
+			dto: this.team,
 		});
 	}
 

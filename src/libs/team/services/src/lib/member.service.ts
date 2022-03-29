@@ -10,7 +10,7 @@ import {
 	IMember,
 	IMemberInfo,
 	IRejectPersonalInviteRequest,
-	ITeam,
+	ITeamDto,
 } from '@sneat/team/models';
 import { TeamService } from './team.service';
 import { IErrorResponse } from '@sneat/core';
@@ -71,7 +71,7 @@ export class MemberService {
 					if (team) {
 						team.members.push(member);
 					}
-					this.teamService.onTeamUpdated({ id: request.team, data: team || undefined });
+					this.teamService.onTeamUpdated({ id: request.team, dto: team || undefined });
 				}),
 				mapTo(member),
 			);
@@ -84,8 +84,8 @@ export class MemberService {
 	public watchMember(
 		teamId: string,
 		memberId: string,
-	): Observable<{ team: ITeam; member?: IMember } | undefined | null> {
-		const findMember = (team: ITeam | undefined | null) => team ? {
+	): Observable<{ team: ITeamDto; member?: IMember } | undefined | null> {
+		const findMember = (team: ITeamDto | undefined | null) => team ? {
 			team,
 			member: team?.members.find((m) => m.id === memberId),
 		} : team === null ? null : undefined;

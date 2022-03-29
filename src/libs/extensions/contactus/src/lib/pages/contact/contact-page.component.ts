@@ -4,14 +4,14 @@ import {eq, IContactService} from '../../../../services/interfaces';
 import {CommuneBasePageParams} from '../../../../services/params';
 // import {CommuneBasePage} from '../../../../pages/commune-base-page';
 import { IContactDto } from '@sneat/dto';
-import { BaseTeamPageDirective } from '@sneat/team/components';
+import { TeamBasePageDirective } from '@sneat/team/components';
 
 @Component({
 	selector: 'sneat-contact-page',
 	templateUrl: './contact-page.component.html',
 	providers: [CommuneBasePageParams],
 })
-export class ContactPageComponent extends BaseTeamPageDirective implements OnInit {
+export class ContactPageComponent extends TeamBasePageDirective implements OnInit {
 
 	public segment: 'contact' | 'members' | 'assets' = 'contact';
 	public contact?: IContactDto;

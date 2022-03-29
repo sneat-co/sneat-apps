@@ -1,11 +1,13 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { NgModulePreloaderService } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { BehaviorSubject, distinctUntilChanged, Subject, Subscription, takeUntil } from 'rxjs';
-import { ITeamContext } from '@sneat/team/models';
+import { TeamComponentBaseParams } from '../team-base-page.directive';
 
 @Component({
 	selector: 'sneat-team-page-context',
@@ -16,7 +18,7 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 	@Input() page?: string;
 
 	public readonly destroyed = new Subject<boolean>();
-	public readonly logError = this.errorLogger.logError;
+	// public readonly logError = this.params.errorLogger.logError;
 
 	private teamContext = new BehaviorSubject<ITeamContext | undefined | null>(undefined);
 
@@ -24,14 +26,8 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 	private teamRecordSubscription?: Subscription;
 
 	constructor(
-		@Inject(ErrorLogger)
-		public readonly errorLogger: IErrorLogger,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
+		public readonly params: TeamComponentBaseParams,
 		public readonly route: ActivatedRoute,
-		public readonly teamService: TeamService,
-		public readonly userService: SneatUserService,
-		public readonly navService: TeamNavService,
 	) {
 		console.log('TeamPageContextComponent.constructor()', route.snapshot.url, route.snapshot.params);
 		trackTeamIdAndTypeFromRouteParameter(route).pipe(
@@ -39,7 +35,7 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 			distinctUntilChanged((previous, current) => previous?.id === current?.id),
 		).subscribe({
 			next: this.onTeamUrlChanged,
-			error: this.errorLogger.logErrorHandler,
+			error: this.params.errorLogger.logErrorHandler,
 		});
 	}
 
@@ -60,12 +56,12 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 		}
 		this.teamContext.next(teamContext);
 		if (teamContext?.id)
-			this.teamRecordSubscription = this.teamService.watchTeam(teamContext?.id)
+			this.teamRecordSubscription = this.params.teamService.watchTeam(teamContext?.id)
 				.subscribe({
 					next: dto => {
 						console.log('TeamPageContextComponent => team record:', this.teamContext.value?.id, teamContext.id, dto);
 						if (this.teamContext.value?.id === teamContext.id) {
-							this.teamContext.next({...this.teamContext.value, dto: dto});
+							this.teamContext.next({ ...this.teamContext.value, dto: dto });
 						}
 					},
 				});

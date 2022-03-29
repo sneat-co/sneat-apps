@@ -1,5 +1,5 @@
 import { AssetCategoryId, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
-import { ICommuneRecord, IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
+import { ITeamRecord, IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
 import { IContact2Asset } from './dto-contact2';
 
 export interface AssetLiabilityInfo {
@@ -80,7 +80,7 @@ export interface IAssetDtoGroupCounts {
 	assets?: number;
 }
 
-export interface IAssetDtoGroup extends ICommuneRecord, ITitledRecord, ITotalsHolder {
+export interface IAssetDtoGroup extends ITeamRecord, ITitledRecord, ITotalsHolder {
 	order: number;
 	desc?: string;
 	categoryId?: AssetCategoryId;

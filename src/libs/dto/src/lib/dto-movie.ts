@@ -1,4 +1,4 @@
-import { ICommuneRecord } from './dto-models';
+import { ITeamRecord } from './dto-models';
 import { IListItemInfo } from './dto-list';
 
 export interface IMovie extends IListItemInfo {
@@ -36,7 +36,7 @@ export interface Actor {
 	profile_path?: string;
 }
 
-export interface IMovieDto extends ICommuneRecord, IMovie {
+export interface IMovieDto extends ITeamRecord, IMovie {
 	listIds: string[];
 }
 

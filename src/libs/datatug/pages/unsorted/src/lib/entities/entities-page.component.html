@@ -57,15 +57,15 @@
 						class="last-child-no-border"
 					>
 						<ion-label [class.deleting-list-item]="entity.state === 'deleting'">
-							{{ entity.data.title || entity.data.id }}
+							{{ entity.dto.title || entity.dto.id }}
 						</ion-label>
 						<ion-badge
-							*ngIf="entity.data?.fields?.length"
+							*ngIf="entity.dto?.fields?.length"
 							color="light"
 							class="badge-count"
 						>
-							{{ entity.data.fields.length }}
-							{{ entity.data.fields.length === 1 ? 'field' : 'fields' }}
+							{{ entity.dto.fields.length }}
+							{{ entity.dto.fields.length === 1 ? 'field' : 'fields' }}
 						</ion-badge>
 						<ion-buttons>
 							<ion-button

@@ -1,13 +1,13 @@
 import { Inject, Injectable, NgZone } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { Params } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { IRecord } from '@sneat/data';
-import { IMemberInfo, ITeam } from '@sneat/team/models';
 import { IUserTeamInfo } from '@sneat/auth-models';
+import { IRecord } from '@sneat/data';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrum } from '@sneat/scrumspace/scrummodels';
+import { IMemberContext, ITeamDto } from '@sneat/team/models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
@@ -58,13 +58,13 @@ export class TeamNavService {
 
 	public navigateToScrum(
 		date: 'today' | 'yesterday' | string,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 		scrum?: IRecord<IScrum>,
 		tab?: ScrumPageTab,
 	): void {
 		console.log(
 			`navigateToScrum(date=${date}, team=${team?.id}, tab=${tab}), scrum:`,
-			scrum?.data,
+			scrum?.dto,
 		);
 		this.analyticsService.logEvent('navigateToScrum', { date, team: team.id });
 		this.navController
@@ -89,31 +89,29 @@ export class TeamNavService {
 
 	public navigateToMember(
 		navController: NavController,
-		team: IRecord<ITeam>,
-		memberInfo: IMemberInfo,
+		memberContext: IMemberContext,
 	): void {
 		console.log(
-			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`,
+			`navigateToMember(team.id=${memberContext?.team?.id}, memberInfo.id=${memberContext?.id})`,
 		);
-		const id = `${team.id}:${memberInfo.id}`;
+		const id = `${memberContext?.team?.id}:${memberContext?.id}`;
+		const { team } = memberContext;
 		this.navForward(
 			navController,
-			'member',
+			`space/${team.type}/${memberContext.team?.id}/member/${memberContext.id}`,
 			{
-				queryParams: { id },
 				state: {
-					team,
-					memberInfo,
+					member: memberContext,
 				},
 			},
-			{ name: '', params: { id, team: team.id, member: memberInfo.id } },
+			{ name: '', params: { id, team: team.id, member: memberContext.id } },
 		);
 	}
 
 	public navigateToTeam(
 		id: string,
 		teamInfo?: IUserTeamInfo,
-		team?: ITeam,
+		team?: ITeamDto,
 		animationDirection?: 'forward' | 'back',
 	): void {
 		this.analyticsService.logEvent('navigateToTeam', { team: id });
@@ -133,13 +131,13 @@ export class TeamNavService {
 
 	public navigateToScrums = (
 		navController: NavController,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 	): void =>
 		this.navToTeamPage(navController, team, 'scrums', 'navigateToScrums');
 
 	public navigateToAddMetric = (
 		navController: NavController,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 	): void =>
 		this.navToTeamPage(
 			navController,
@@ -150,7 +148,7 @@ export class TeamNavService {
 
 	public navigateToAddMember = (
 		navController: NavController,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 	): void =>
 		this.navToTeamPage(
 			navController,
@@ -161,7 +159,7 @@ export class TeamNavService {
 
 	public navigateToRetrospective = (
 		navController: NavController,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 		id: string | 'upcoming',
 	): void =>
 		this.navToTeamPage(
@@ -174,12 +172,12 @@ export class TeamNavService {
 
 	public navigateToRetroTree(
 		date: 'today' | 'yesterday' | string,
-		team?: IRecord<ITeam>,
+		team?: IRecord<ITeamDto>,
 		retrospective?: IRecord<IRetrospective>,
 	): void {
 		console.log(
 			`navigateToRetroReview(date=${date}, team=${team?.id}), scrum:`,
-			retrospective?.data,
+			retrospective?.dto,
 		);
 		if (!team) {
 			return;
@@ -205,11 +203,11 @@ export class TeamNavService {
 		navController: NavController,
 		url: string,
 		navOptions: NavigationOptions,
-		event: { name: string; params?: any },
+		analyticsEvent: { name: string; params?: any },
 	): void {
-		console.log('navForward()', event.name, event.params);
+		console.log('navForward()', analyticsEvent.name, analyticsEvent.params);
 		navController = navController || this.navController;
-		this.analyticsService.logEvent(event.name, event.params);
+		this.analyticsService.logEvent(analyticsEvent.name, analyticsEvent.params);
 		navController
 			.navigateForward(url, navOptions)
 			.catch((err) =>
@@ -219,7 +217,7 @@ export class TeamNavService {
 
 	private navToTeamPage = (
 		navController: NavController,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 		url: string,
 		eventName: string,
 		params?: any,

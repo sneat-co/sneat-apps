@@ -116,7 +116,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 					// 		summary: {...this.project.summary, environments: []},
 					// 	}
 					// }
-					const projItemBrief = { id: value.id, title: value.data?.title };
+					const projItemBrief = { id: value.id, title: value.dto?.title };
 					// this.project.environments.push(projItemBrief)
 					this.goProjItemPage(projItemType, projItemBrief);
 				} catch (err) {

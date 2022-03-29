@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title>Team member @ {{team?.data?.title || 'Team'}}</ion-title>
+		<ion-title>Team member @ {{team?.dto?.title || 'Team'}}</ion-title>
 		<ion-buttons slot="end">
 			<ion-button
 				*ngIf="memberInfo"

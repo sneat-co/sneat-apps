@@ -1,19 +1,21 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire/compat';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SneatAppComponent } from './sneat-app.component';
-import { SneatAppRoutingModule } from './sneat-app-routing.module';
-import { CommunesUiModule } from '@sneat/communes/ui';
-import { initFirebase, SneatApplicationModule } from '@sneat/app';
-import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
-import { SneatAuthModule } from '@sneat/auth';
-import { environment } from '../environments/environment';
-import { AngularFireModule } from '@angular/fire/compat';
-import { TeamsMenuComponentModule } from '@sneat/team/components';
-import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
-import { HttpClientModule } from '@angular/common/http';
 import { DefaultSneatApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
+import { initFirebase, SneatApplicationModule } from '@sneat/app';
+import { SneatAuthModule } from '@sneat/auth';
+import { CommunesUiModule } from '@sneat/communes/ui';
+import { coreProviders } from '@sneat/core';
+import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
+import { TeamsMenuComponentModule } from '@sneat/team/components';
+import { environment } from '../environments/environment';
+import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
+import { SneatAppRoutingModule } from './sneat-app-routing.module';
+import { SneatAppComponent } from './sneat-app.component';
 
 initFirebase(environment.firebaseConfig);
 
@@ -25,6 +27,7 @@ initFirebase(environment.firebaseConfig);
 	entryComponents: [],
 	imports: [
 		BrowserModule,
+		BrowserAnimationsModule,
 		IonicModule.forRoot(),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		RandomModule,
@@ -36,6 +39,7 @@ initFirebase(environment.firebaseConfig);
 		HttpClientModule,
 	],
 	providers: [
+		...coreProviders,
 		{
 			provide: RouteReuseStrategy,
 			useClass: IonicRouteStrategy,

@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
-import { ITeam, MemberRole, MemberRoleEnum } from '@sneat/team/models';
+import { ITeamDto, MemberRole, MemberRoleEnum } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
@@ -11,7 +11,7 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 	styleUrls: ['./members.component.scss'],
 })
 export class MembersComponent implements OnChanges {
-	@Input() public team?: IRecord<ITeam>;
+	@Input() public team?: IRecord<ITeamDto>;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleEnum.contributor;
 	public contributorsCount?: number;
@@ -39,7 +39,7 @@ export class MembersComponent implements OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
 			try {
-				this.setMembersCount(this.team?.data);
+				this.setMembersCount(this.team?.dto);
 			} catch (e) {
 				this.errorLogger.logError(e, 'Failed to process team changes');
 			}
@@ -50,7 +50,7 @@ export class MembersComponent implements OnChanges {
 		// this.unsubscribe('onSelfRemoved');
 	}
 
-	private setMembersCount(team?: ITeam): void {
+	private setMembersCount(team?: ITeamDto): void {
 		if (team) {
 			const count = (role: MemberRole): number =>
 				team.members?.filter((m) => m.roles?.indexOf(role) >= 0)?.length || 0;

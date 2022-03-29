@@ -1,5 +1,5 @@
 /* tslint:disable:no-bitwise */
-import { Age, CommuneType, CountryId, Gender } from './types';
+import { AgeGroup, CommuneType, CountryId, Gender } from './types';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
 import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
 import { IListGroupsHolder } from './dto-list';
@@ -82,7 +82,7 @@ export interface ICommuneMemberInfo {
 	readonly userId?: string;
 	readonly title?: string;
 	readonly gender?: Gender;
-	readonly age?: Age;
+	readonly age?: AgeGroup;
 	readonly groupIds?: readonly RxRecordKey[];
 	readonly roles?: readonly MemberRole[];
 }

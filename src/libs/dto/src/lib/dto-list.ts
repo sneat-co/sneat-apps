@@ -1,4 +1,4 @@
-import { ICommuneRecord, ITitledRecord, IWithRestrictions } from './dto-models';
+import { ITeamRecord, ITitledRecord, IWithRestrictions } from './dto-models';
 import { CommuneType, ListStatus } from './types';
 import { ICommuneDto } from './dto-commune';
 import { IUserCommuneInfo } from './dto-user';
@@ -32,7 +32,7 @@ export interface ListCounts {  // TODO: Use some enumerator as IDB library does.
 
 export type ListType = 'buy' | 'cook' | 'do' | 'other' | 'recipe' | 'rsvp' | 'watch';
 
-export interface IListCommon extends ICommuneRecord, ITitledRecord {
+export interface IListCommon extends ITeamRecord, ITitledRecord {
 	img?: string;
 	emoji?: string;
 	status?: ListStatus;

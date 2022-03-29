@@ -2392,6 +2392,48 @@
 			},
 			"implicitDependencies": ["emptyionicapp"]
 		},
+		"ext-shared": {
+			"projectType": "library",
+			"root": "libs/ext-shared",
+			"sourceRoot": "libs/ext-shared/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/ext-shared"],
+					"options": {
+						"project": "libs/ext-shared/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/ext-shared/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/ext-shared/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/ext-shared"],
+					"options": {
+						"jestConfig": "libs/ext-shared/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/ext-shared/src/**/*.ts",
+							"libs/ext-shared/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
 		"extensions-assetus": {
 			"projectType": "library",
 			"root": "libs/extensions/assetus",

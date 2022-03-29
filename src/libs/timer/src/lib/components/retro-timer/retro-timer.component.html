@@ -1,6 +1,6 @@
 <ion-list lines="none">
 	<ng-container
-		*ngIf="team && retrospective?.data?.stage === 'upcoming'; else notUpcoming"
+		*ngIf="team && retrospective?.dto?.stage === 'upcoming'; else notUpcoming"
 	>
 		<ion-row class="ion-no-padding ion-no-margin">
 			<ion-col size="11" size-md="3" class="ion-no-margin ion-no-padding">
@@ -50,9 +50,9 @@
 					(click)="pauseRetro()"
 					[disabled]="!timer"
 					*ngIf="
-						retrospective?.data &&
-						retrospective.data.stage !== 'upcoming' &&
-						retrospective.data.timer?.status !== 'stopped'
+						retrospective?.dto &&
+						retrospective.dto.stage !== 'upcoming' &&
+						retrospective.dto.timer?.status !== 'stopped'
 					"
 				>
 					<ion-icon name="pause-circle-outline" slot="start"></ion-icon>
@@ -63,9 +63,9 @@
 					(click)="startRetro()"
 					[disabled]="!timer"
 					*ngIf="
-						retrospective?.data &&
-						retrospective.data.stage !== 'upcoming' &&
-						retrospective.data.timer?.status === 'stopped'
+						retrospective?.dto &&
+						retrospective.dto.stage !== 'upcoming' &&
+						retrospective.dto.timer?.status === 'stopped'
 					"
 				>
 					<ion-icon name="play-outline" slot="start"></ion-icon>
@@ -74,7 +74,7 @@
 			</ion-buttons>
 			<ion-label>
 				<ng-container
-					*ngIf="retrospective?.data?.stage === 'upcoming'; else notUpcoming"
+					*ngIf="retrospective?.dto?.stage === 'upcoming'; else notUpcoming"
 				>
 					Start retrospective to activate timer
 				</ng-container>

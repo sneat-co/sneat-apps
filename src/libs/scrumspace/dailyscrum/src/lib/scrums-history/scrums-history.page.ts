@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { IRecord } from '@sneat/data';
-import { ITeam, TeamService } from '@sneat/team/models';
+import { ITeamDto, TeamService } from '@sneat/team/models';
 import { IScrum } from '@sneat/scrumspace/scrummodels';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { NavService } from '@sneat/datatug/core';
@@ -14,7 +14,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	styleUrls: ['./scrums-history.page.scss'],
 })
 export class ScrumsHistoryPageComponent {
-	public team: IRecord<ITeam>;
+	public team: IRecord<ITeamDto>;
 	public scrums: IRecord<IScrum>[];
 
 	constructor(
@@ -25,7 +25,7 @@ export class ScrumsHistoryPageComponent {
 		private readonly afAuth: AngularFireAuth,
 		private readonly navService: NavService,
 	) {
-		const team = history.state?.team as IRecord<ITeam>;
+		const team = history.state?.team as IRecord<ITeamDto>;
 		console.log('team', team);
 		if (team?.id) {
 			this.team = team;
@@ -34,7 +34,7 @@ export class ScrumsHistoryPageComponent {
 			if (id) {
 				this.team = { id };
 				this.teamService.watchTeam(id).subscribe((teamData) => {
-					this.team.data = teamData;
+					this.team.dto = teamData;
 				});
 			}
 		}

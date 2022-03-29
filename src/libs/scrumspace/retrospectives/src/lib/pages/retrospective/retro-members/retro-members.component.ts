@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IMeetingMember } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { ITeam, MemberRoleEnum } from '@sneat/team/models';
+import { ITeamDto, MemberRoleEnum } from '@sneat/team/models';
 import { IRetrospective } from '@sneat/scrumspace/scrummodels';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
@@ -20,7 +20,7 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 	styleUrls: ['./retro-members.component.scss'],
 })
 export class RetroMembersComponent implements OnChanges {
-	@Input() team: IRecord<ITeam>;
+	@Input() team: IRecord<ITeamDto>;
 	@Input() retrospective: IRecord<IRetrospective>;
 
 	public membersTab: 'participants' | 'spectators' | 'absent' = 'participants';
@@ -40,9 +40,9 @@ export class RetroMembersComponent implements OnChanges {
 		console.log('ngOnChanges', this.team, this.retrospective);
 		try {
 			if (changes.retrospective) {
-				const retrospective = this.retrospective?.data;
+				const retrospective = this.retrospective?.dto;
 				if (retrospective) {
-					const members = this.retrospective?.data?.members;
+					const members = this.retrospective?.dto?.members;
 					if (members) {
 						this.participants = members.filter((m) =>
 							m.roles?.includes(MemberRoleEnum.contributor),
@@ -55,12 +55,12 @@ export class RetroMembersComponent implements OnChanges {
 			}
 			if (changes.team) {
 				// Check for this.retrospective?.data?.userIds is not great
-				if (this.team?.data && !this.retrospective?.data?.userIds) {
-					const { data } = this.team;
-					this.participants = data.members?.filter((m) =>
+				if (this.team?.dto && !this.retrospective?.dto?.userIds) {
+					const { dto } = this.team;
+					this.participants = dto.members?.filter((m) =>
 						m.roles?.includes(MemberRoleEnum.contributor),
 					);
-					this.spectators = data.members?.filter((m) =>
+					this.spectators = dto.members?.filter((m) =>
 						m.roles?.includes(MemberRoleEnum.spectator),
 					);
 				}

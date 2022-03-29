@@ -4,7 +4,7 @@ import { Params } from '@angular/router';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { IMemberInfo, ITeam } from '@sneat/team/models';
+import { IMemberInfo, ITeamDto } from '@sneat/team/models';
 import { IUserTeamInfo } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
@@ -82,7 +82,7 @@ export class NavService {
 
 	public navigateToMember(
 		navController: NavController,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 		memberInfo: IMemberInfo,
 	): void {
 		console.log(
@@ -106,7 +106,7 @@ export class NavService {
 	public navigateToTeam(
 		id: string,
 		teamInfo?: IUserTeamInfo,
-		team?: ITeam,
+		team?: ITeamDto,
 		animationDirection?: 'forward' | 'back',
 	): void {
 		this.analyticsService.logEvent('navigateToTeam', { team: id });
@@ -166,7 +166,7 @@ export class NavService {
 
 	private navToTeamPage = (
 		navController: NavController,
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 		url: string,
 		eventName: string,
 		params?: any,

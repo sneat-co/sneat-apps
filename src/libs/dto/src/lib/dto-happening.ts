@@ -1,4 +1,4 @@
-import { ICommuneRecord, ITitledRecord } from './dto-models';
+import { ITeamRecord, ITitledRecord } from './dto-models';
 import { ActivityType, EventType, Repeats, Weekday } from './types';
 import { IPrice } from './dto-pricing';
 
@@ -8,7 +8,7 @@ export interface SlotParticipant {
 	title: string;
 }
 
-export interface IHappening extends ICommuneRecord, ITitledRecord {
+export interface IHappening extends ITeamRecord, ITitledRecord {
 	// type: '';
 	communeIds?: string[];
 	assetId?: string;

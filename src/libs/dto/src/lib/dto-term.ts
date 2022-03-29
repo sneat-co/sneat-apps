@@ -1,7 +1,7 @@
-import { ICommuneRecord, ITitledRecord } from './dto-models';
+import { ITeamRecord, ITitledRecord } from './dto-models';
 import { IPrice } from './dto-pricing';
 
-export interface DtoTerm extends ICommuneRecord, ITitledRecord {
+export interface DtoTerm extends ITeamRecord, ITitledRecord {
 	status: 'active' | 'archived';
 	startsOn: string;
 	endsOn: string;

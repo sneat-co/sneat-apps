@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IBoolMetricVal, ITeam, ITeamMetric } from '@sneat/team/models';
+import { IBoolMetricVal, ITeamDto, ITeamMetric } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
@@ -11,7 +11,7 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 	styleUrls: ['./metrics.component.scss'],
 })
 export class MetricsComponent {
-	@Input() public team?: IRecord<ITeam>;
+	@Input() public team?: IRecord<ITeamDto>;
 
 	public deletingMetrics: string[] = [];
 
@@ -26,7 +26,7 @@ export class MetricsComponent {
 	}
 
 	public get isDemoMetricsOnly(): boolean {
-		const metrics = this.team?.data?.metrics;
+		const metrics = this.team?.dto?.metrics;
 		if (!metrics || metrics.length !== this.demoMetrics.length) {
 			return false;
 		}

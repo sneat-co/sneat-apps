@@ -1,32 +1,73 @@
+import { Directive, Inject, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { ChangeDetectorRef, Directive, Inject, OnInit } from '@angular/core';
-import { Subject, Subscription, tap } from 'rxjs';
-import { first, mergeMap, takeUntil } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IUserTeamInfo } from '@sneat/auth-models';
+import { LOGGER_FACTORY, NgModulePreloaderService } from '@sneat/core';
+import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
+import { ILogger, ILoggerFactory } from '@sneat/rxstore';
+import { ITeamContext } from '@sneat/team/models';
 import { TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
-import { ITeamContext } from '@sneat/team/models';
+import { Subject, Subscription, tap } from 'rxjs';
+import { first, mergeMap, takeUntil } from 'rxjs/operators';
 import { TeamPageContextComponent } from './team-page-context';
 
+
+@Injectable()
+// Should be declared in module for each page?
+export class TeamComponentBaseParams {
+	constructor(
+		public readonly navController: NavController,
+		//public readonly route: ActivatedRoute, // does not work here as injected route does not have parameters
+		// public readonly communeService: ICommuneService,
+		// public readonly activeCommuneService: IActiveCommuneService,
+		public readonly userService: SneatUserService,
+		public readonly teamService: TeamService,
+		public readonly preloader: NgModulePreloaderService,
+		@Inject(ErrorLogger)
+		public readonly errorLogger: IErrorLogger,
+		// @Inject(AUTH_STATE_PROVIDER) public readonly authStateService: IAuthStateService,
+		@Inject(LOGGER_FACTORY) public readonly loggerFactory: ILoggerFactory,
+	) {
+	}
+}
+
 @Directive({ selector: '[sneatBaseTeamPage]' }) // There was some reason to add a @Directive() - TODO: document why
-export abstract class BaseTeamPageDirective implements OnInit /*implements OnInit, OnDestroy*/ {
+export abstract class TeamBasePageDirective implements OnInit /*implements OnInit, OnDestroy*/ {
+
+	protected route?: ActivatedRoute;
+
+	protected readonly navController: NavController;
+	// protected readonly communeService: ICommuneService;
+	// protected readonly activeCommuneService: IActiveCommuneService;
+	protected readonly userService: SneatUserService;
+	protected readonly teamService: TeamService;
+	// protected readonly authStateService: IAuthStateService;
+	protected readonly logger: ILogger;
 
 	protected readonly subs = new Subscription();
 	protected readonly destroyed = new Subject<boolean>();
-	protected readonly logError = this.errorLogger.logError;
-	protected readonly logErrorHandler = this.errorLogger.logErrorHandler;
+	protected readonly logError: (e: any, message?: string, options?: ILogErrorOptions) => void;
+	protected readonly logErrorHandler: (
+		message?: string,
+		options?: ILogErrorOptions,
+	) => (error: any) => void;
 	private teamContext?: ITeamContext;
 
 	protected constructor(
-		protected readonly changeDetectorRef: ChangeDetectorRef,
-		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
-		protected readonly navController: NavController,
-		protected readonly teamService: TeamService,
-		protected readonly userService: SneatUserService,
+		@Inject('className')
+		public readonly className: string,
+		readonly teamParams: TeamComponentBaseParams,
 	) {
-		console.log(`BaseTeamPage.constructor()`);
+		console.log(`${className} extends TeamBasePageDirective.constructor()`);
+
+		this.navController = teamParams.navController;
+		this.teamService = teamParams.teamService;
+		this.userService = teamParams.userService;
+		this.logger = teamParams.loggerFactory.getLogger(this.className);
+		this.logError = teamParams.errorLogger.logError;
+		this.logErrorHandler = teamParams.errorLogger.logErrorHandler;
+
 		try {
 			this.getUserTeamInfoFromState();
 			this.getTeamRecordFromState();
@@ -54,9 +95,10 @@ export abstract class BaseTeamPageDirective implements OnInit /*implements OnIni
 
 	protected setTeamPageContext(context: TeamPageContextComponent): void {
 		console.log('setTeamPageContext()', context);
+		this.route = context.route;
 		context.team.subscribe({
 			next: this.setTeamContext,
-			error: context.errorLogger?.logErrorHandler('failed to get team context'),
+			error: context.params.errorLogger?.logErrorHandler('failed to get team context'),
 		});
 	}
 
@@ -75,7 +117,7 @@ export abstract class BaseTeamPageDirective implements OnInit /*implements OnIni
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
 			if (this.team) {
-				this.teamContext = { id: this.team.id }; // Hide team data
+				this.teamContext = { ...this.team, dto: undefined }; // Hide team data
 				this.onTeamChanged();
 			}
 		}
@@ -160,6 +202,10 @@ export abstract class BaseTeamPageDirective implements OnInit /*implements OnIni
 		}
 	}
 
+	private updateExistingTeamContext(teamContext: ITeamContext): void {
+		this.teamContext = teamContext;
+	}
+
 	private setNewTeamContext(teamContext: ITeamContext): void {
 		console.log(`setNewTeamContext(${teamContext.id}), previous id=${this.teamContext?.id}`);
 		this.teamContext = teamContext;
@@ -192,6 +238,8 @@ export abstract class BaseTeamPageDirective implements OnInit /*implements OnIni
 			if (teamContext?.id) {
 				if (this.teamContext?.id !== teamContext.id) {
 					this.setNewTeamContext(teamContext);
+				} else {
+					this.updateExistingTeamContext(teamContext);
 				}
 			} else if (this.teamContext) {
 				const hadData = !!this.teamContext.dto;

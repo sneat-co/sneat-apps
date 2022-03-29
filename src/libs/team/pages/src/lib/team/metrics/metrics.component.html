@@ -26,8 +26,8 @@
 			</ion-label>
 		</ion-item>
 
-		<ng-container *ngIf="team?.data?.metrics?.length">
-			<ion-item *ngFor="let metric of team?.data?.metrics">
+		<ng-container *ngIf="team?.dto?.metrics?.length">
+			<ion-item *ngFor="let metric of team?.dto?.metrics">
 				<ion-spinner
 					slot="start"
 					name="lines-small"
@@ -74,7 +74,7 @@
 			</ion-item>
 		</ng-container>
 	</ion-list>
-	<ion-card-content *ngIf="team?.data && !team?.data?.metrics?.length">
+	<ion-card-content *ngIf="team?.dto && !team?.dto?.metrics?.length">
 		<p>No metrics for your team yet.</p>
 	</ion-card-content>
 </ion-card>

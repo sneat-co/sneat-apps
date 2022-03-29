@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInput, NavController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAddTeamMemberRequest, ITeam } from '@sneat/team/models';
+import { IAddTeamMemberRequest, ITeamDto } from '@sneat/team/models';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { MemberService, TeamService } from '@sneat/team/services';
@@ -17,7 +17,7 @@ export class MemberNewPageComponent {
 
 	public tab: 'personal' | 'mass' = 'mass';
 	public teamId?: string;
-	public team?: ITeam;
+	public team?: ITeamDto;
 	public teamInfo?: IUserTeamInfo;
 	public title = new FormControl('', [
 		Validators.required,
@@ -43,10 +43,10 @@ export class MemberNewPageComponent {
 	) {
 		console.log('MemberNewPage.constructor()');
 		try {
-			const teamRecord = window.history.state.team as IRecord<ITeam>;
+			const teamRecord = window.history.state.team as IRecord<ITeamDto>;
 			if (teamRecord) {
 				this.teamId = teamRecord.id;
-				this.setTeam(teamRecord.data);
+				this.setTeam(teamRecord.dto);
 			} else {
 				route.queryParamMap.subscribe((queryParams) => {
 					const teamId = (this.teamId = queryParams.get('team') || undefined);
@@ -127,7 +127,7 @@ export class MemberNewPageComponent {
 		);
 	}
 
-	private setTeam(team: ITeam | undefined): void {
+	private setTeam(team: ITeamDto | undefined): void {
 		this.team = team;
 		if (this.teamId) {
 			this.teamInfo = { id: this.teamId, title: team?.title || 'loading...', type: team?.type || 'unknown' };

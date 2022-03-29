@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
 import { RetrospectiveService } from '../../retrospective.service';
 import { Subscription } from 'rxjs';
-import { BaseTeamPageDirective } from '@sneat/team/components';
+import { TeamBasePageDirective } from '@sneat/team/components';
 import { IRecord } from '@sneat/data';
 import { IRetrospective, RetrospectiveStage } from '@sneat/scrumspace/scrummodels';
 import { TeamService } from '@sneat/team/services';
@@ -18,7 +18,7 @@ import { getMeetingIdFromDate } from '@sneat/meeting';
 	templateUrl: './retrospective-page.component.html',
 })
 export class RetrospectivePageComponent
-	extends BaseTeamPageDirective
+	extends TeamBasePageDirective
 	implements OnDestroy {
 	public title = 'Retrospective';
 	public retrospective: IRecord<IRetrospective>;
@@ -45,7 +45,7 @@ export class RetrospectivePageComponent
 	}
 
 	public showPersonalFeedback(): boolean {
-		const stage = this.retrospective?.data?.stage;
+		const stage = this.retrospective?.dto?.stage;
 		return (
 			stage === RetrospectiveStage.upcoming ||
 			stage === RetrospectiveStage.feedback
@@ -100,7 +100,7 @@ export class RetrospectivePageComponent
 							case RetrospectiveStage.upcoming:
 								this.retrospective = {
 									id,
-									data: {
+									dto: {
 										stage: RetrospectiveStage.upcoming,
 										userIds: undefined,
 									},
@@ -143,7 +143,7 @@ export class RetrospectivePageComponent
 						.pipe(takeUntil(this.destroyed.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
 						.subscribe({
 							next: (retrospective) =>
-								this.setRetro(teamId, { id, data: retrospective }),
+								this.setRetro(teamId, { id, dto: retrospective }),
 							error: (e) => this.logError(e, 'Failed to watch retrospective'),
 						});
 				} catch (e) {

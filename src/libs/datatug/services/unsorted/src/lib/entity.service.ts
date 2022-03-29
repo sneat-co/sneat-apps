@@ -86,7 +86,7 @@ export class EntityService {
 							}
 							return {
 								id,
-								data: entity,
+								dto: entity,
 								state: records?.find((v) => v.id === entity.id)?.state,
 							};
 						}),
@@ -115,7 +115,7 @@ export class EntityService {
 					}
 					entities$.next([
 						...entities$.getValue(),
-						{ id, data: entity },
+						{ id, dto: entity },
 					]);
 				}),
 			);

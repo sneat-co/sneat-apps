@@ -1,0 +1,142 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="commune else titleNoCommune">
+			{{title}} @ {{commune.title}}
+		</ion-title>
+		<ng-template #titleNoCommune>{{title}}</ng-template>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ng-container *ngIf="relationships">
+		<ion-item-group *ngIf="!relationship">
+			<ion-item-divider>Related to me as</ion-item-divider>
+			<ion-radio-group [(ngModel)]="relationship" (ionChange)="setFocusToNameInput()">
+				<ion-item *ngFor="let rel of relationships">
+					<ion-label>{{rel.title}}</ion-label>
+					<ion-radio slot="start" [value]="rel.id"></ion-radio>
+				</ion-item>
+			</ion-radio-group>
+		</ion-item-group>
+		<ion-item *ngIf="relationship">
+			<ion-label color="medium">Related to me as</ion-label>
+			<ion-select [(ngModel)]="relationship" interface="popover">
+				<ion-select-option *ngFor="let rel of relationships" [value]="rel.id">{{rel.title}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+	</ng-container>
+
+	<ng-container *ngIf="relationship">
+		<ion-item>
+			<ion-label position="floating">Full name</ion-label>
+			<ion-input [(ngModel)]="name" #nameInput [disabled]="creating" style="font-weight: bold"></ion-input>
+		</ion-item>
+
+		<ion-item-group>
+			<ion-item-divider>
+				<ion-label>Contacts</ion-label>
+			</ion-item-divider>
+
+			<ion-item>
+				<ion-label>Email</ion-label>
+				<ion-input type="email" [(ngModel)]="email" [disabled]="creating"></ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Phone</ion-label>
+				<ion-input type="phone" [(ngModel)]="phone" [disabled]="creating"></ion-input>
+			</ion-item>
+		</ion-item-group>
+
+		<ion-item-group *ngIf="!gender">
+			<ion-item-divider>
+				<ion-label>Gender</ion-label>
+			</ion-item-divider>
+			<ion-radio-group [(ngModel)]="gender">
+				<ion-item>
+					<ion-label>Male</ion-label>
+					<ion-radio value="male" slot="start"></ion-radio>
+				</ion-item>
+				<ion-item>
+					<ion-label>Female</ion-label>
+					<ion-radio value="female" slot="start"></ion-radio>
+				</ion-item>
+			</ion-radio-group>
+		</ion-item-group>
+		<ion-item *ngIf="gender">
+			<ion-label>Gender</ion-label>
+			<ion-select [(ngModel)]="gender" interface="popover">
+				<ion-select-option value="male">Male</ion-select-option>
+				<ion-select-option value="female">Female</ion-select-option>
+			</ion-select>
+		</ion-item>
+
+		<ng-container *ngIf="commune && commune.type !== 'educator'">
+			<ion-item-group *ngIf="!age">
+				<ion-item-divider>
+					<ion-label>Age</ion-label>
+				</ion-item-divider>
+				<ion-radio-group [(ngModel)]="age" (ionChange)="ageChanged()">
+					<ion-item>
+						<ion-label>Adult</ion-label>
+						<ion-radio slot="start" value="adult"></ion-radio>
+					</ion-item>
+					<ion-item>
+						<ion-label>Child</ion-label>
+						<ion-radio slot="start" value="child"></ion-radio>
+					</ion-item>
+				</ion-radio-group>
+			</ion-item-group>
+			<ion-item *ngIf="age">
+				<ion-label>Age</ion-label>
+				<ion-select [(ngModel)]="age" interface="popover" (ionChange)="ageChanged()">
+					<ion-select-option value="adult">Adult</ion-select-option>
+					<ion-select-option value="child">Child</ion-select-option>
+				</ion-select>
+			</ion-item>
+		</ng-container>
+
+		<ion-item-group *ngIf="age === 'child' && this.commune && this.commune.dto.type !== 'family'">
+			<ion-item>
+				<ion-label>Adult contact</ion-label>
+				<ion-select value="mother" interface="action-sheet">
+					<ion-select-option value="mother">Mother</ion-select-option>
+					<ion-select-option value="father">Father</ion-select-option>
+					<ion-select-option value="sibling">Sibling</ion-select-option>
+				</ion-select>
+			</ion-item>
+			<ion-item>
+				<ion-label>Adult's name</ion-label>
+				<ion-input type="text"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Adult's phone</ion-label>
+				<ion-input type="phone"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Adult's email</ion-label>
+				<ion-input type="email"></ion-input>
+			</ion-item>
+		</ion-item-group>
+
+		<ion-item-group *ngIf="roles">
+			<ion-item-divider>
+				<ion-label>Roles</ion-label>
+			</ion-item-divider>
+			<ion-item *ngFor="let role of roles">
+				<ion-label>{{role.title}}</ion-label>
+				<ion-checkbox [(ngModel)]="role.checked">{{role.title}}</ion-checkbox>
+			</ion-item>
+		</ion-item-group>
+
+
+		<div class="ion-padding">
+			<ion-button expand="full" [disabled]="creating" (click)="submit()">
+				Add member
+			</ion-button>
+		</div>
+	</ng-container>
+</ion-content>

@@ -9,7 +9,7 @@ import {
 import { filter, map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { BaseMeetingService } from '@sneat/meeting';
-import { IMemberInfo, ITeam } from '@sneat/team/models';
+import { IMemberInfo, ITeamDto } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -88,7 +88,7 @@ export class ScrumService extends BaseMeetingService {
 					console.log('d', d);
 					return {
 						id: d.id,
-						data: d.data() as IScrum,
+						dto: d.data() as IScrum,
 					};
 				});
 			}),
@@ -204,7 +204,7 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	public addTask(
-		team: IRecord<ITeam>,
+		team: IRecord<ITeamDto>,
 		scrumId: string,
 		member: IMemberInfo,
 		type: TaskType,
@@ -241,7 +241,7 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	private scrumsCollection(teamId: string): AngularFirestoreCollection<IScrum> {
-		const teamDoc = this.db.collection('teams').doc<ITeam>(teamId);
+		const teamDoc = this.db.collection('teams').doc<ITeamDto>(teamId);
 		return teamDoc.collection<IScrum>('scrums');
 	}
 

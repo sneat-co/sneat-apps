@@ -225,7 +225,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
 	private processUserRecord(user: IRecord<IUserRecord>): void {
 		try {
-			const teamInfo = user?.data?.teams?.[this.teamId];
+			const teamInfo = user?.dto?.teams?.[this.teamId];
 			console.log(
 				`user.data.teams[${this.teamId}].retroItems:`,
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment

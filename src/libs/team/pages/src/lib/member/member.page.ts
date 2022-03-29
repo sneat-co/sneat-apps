@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IMemberInfo, ITeam } from '@sneat/team/models';
+import { IMemberInfo, ITeamDto } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/user';
 import { TeamService } from '@sneat/team/services';
@@ -14,7 +14,7 @@ import { TeamService } from '@sneat/team/services';
 	styleUrls: ['./member.page.scss'],
 })
 export class MemberPageComponent implements OnDestroy {
-	public team?: IRecord<ITeam>;
+	public team?: IRecord<ITeamDto>;
 
 	public userId?: string;
 	public memberInfo?: IMemberInfo;
@@ -81,7 +81,7 @@ export class MemberPageComponent implements OnDestroy {
 			!confirm(
 				`Are you sure you want to remove ${
 					this.memberInfo?.title || this.memberInfo?.id
-				} from ${this.team?.data?.title}?`,
+				} from ${this.team?.dto?.title}?`,
 			)
 		) {
 			return;
@@ -178,7 +178,7 @@ export class MemberPageComponent implements OnDestroy {
 					if (this.team?.id !== teamId) {
 						return;
 					}
-					this.team = { id: this.team.id, data: team };
+					this.team = { id: this.team.id, dto: team };
 					if (this.memberId) {
 						this.onMemberIdChanged();
 					}
@@ -195,7 +195,7 @@ export class MemberPageComponent implements OnDestroy {
 	private onMemberIdChanged(): void {
 		if (this.team) {
 			const memberId = this.memberId;
-			this.memberInfo = this.team?.data?.members?.find(
+			this.memberInfo = this.team?.dto?.members?.find(
 				(m) => m.id === memberId,
 			);
 		}

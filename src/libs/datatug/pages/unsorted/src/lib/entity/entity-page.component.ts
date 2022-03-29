@@ -47,7 +47,7 @@ export class EntityPageComponent implements OnDestroy {
 					next: (entity) => {
 						console.log('entity', entity);
 						this.projEntity = entity;
-						this.entity = entity.data; // TODO: workaround cast
+						this.entity = entity.dto; // TODO: workaround cast
 						const sourcesLen = this.entity?.options?.sources.length;
 						if (!sourcesLen) {
 							this.sourceIndex = undefined;

@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
 import { SneatAuthModule } from '@sneat/auth';
+import { memberRoutes } from '@sneat/extensions/memberus';
+import { TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 
 const routes: Routes = [
 	{
@@ -16,6 +17,7 @@ const routes: Routes = [
 		pathMatch: 'full',
 		loadChildren: () => import('./team-page/team-page.module').then(m => m.TeamPageModule),
 	},
+	...memberRoutes,
 	// {
 	// 	path: '',
 	// 	component: SpacePageComponent, // intentionally not lazy loading

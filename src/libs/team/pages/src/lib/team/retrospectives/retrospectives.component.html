@@ -12,14 +12,14 @@
 	<ion-item
 		tappable
 		(click)="navigateToCurrentRetro()"
-		[disabled]="!team?.data"
+		[disabled]="!team?.dto"
 	>
 		<ion-label color="primary">{{
-			team?.data?.active?.retrospective
+			team?.dto?.active?.retrospective
 				? 'Active retrospective'
 				: 'Upcoming retrospective'
 		}}</ion-label>
-		<ion-buttons slot="end" *ngIf="team?.data?.upcomingRetro">
+		<ion-buttons slot="end" *ngIf="team?.dto?.upcomingRetro">
 			<ion-button color="success">{{ retroCount('good') }}</ion-button>
 			<ion-button color="danger">{{ retroCount('bad') }}</ion-button>
 			<ion-button color="primary">{{ retroCount('idea') }}</ion-button>

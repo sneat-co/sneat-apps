@@ -1,0 +1,26 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="memberId ? '/member?id='+memberId : '/communes'"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="memberInfo else titleNoCommune">
+			Contacts of {{memberInfo.title}}
+		</ion-title>
+		<ng-template #titleNoCommune>Contacts of a member</ng-template>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<div class="segment">
+		<ion-segment [(ngModel)]="segment">
+			<ion-segment-button value="friends">
+				<ion-label>Friends</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="other">
+				<ion-label>Other</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+
+</ion-content>

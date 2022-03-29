@@ -1,6 +1,6 @@
 /* tslint:disable:no-bitwise */
-import { Age, Gender, Restriction } from './types';
 import { IRecord, RxRecordKey } from '@sneat/rxstore';
+import { AgeGroup, Gender, Restriction } from './types';
 
 // import {IPersonSize} from '../ui/dto-sizechart';
 
@@ -43,7 +43,7 @@ export interface DtoTotals {
 //     id: string;
 // }
 
-export interface ICommuneRecord extends IDemoRecord {
+export interface ITeamRecord extends IDemoRecord {
 	communeId?: RxRecordKey;
 }
 
@@ -77,7 +77,7 @@ export function zeroIfEmptyTotals(totals: DtoTotals): DtoTotals {
 	return totals;
 }
 
-export interface IPersonRecord extends ICommuneRecord/*, IPersonSize*/
+export interface IPersonRecord extends ITeamRecord/*, IPersonSize*/
 {
 	userId?: string;
 	readonly email?: string;
@@ -85,7 +85,7 @@ export interface IPersonRecord extends ICommuneRecord/*, IPersonSize*/
 	readonly website?: string;
 	readonly gender?: Gender;
 	readonly dob?: string;  // Date of birth
-	readonly age?: Age;
+	readonly age?: AgeGroup;
 }
 
 export interface IVerification {

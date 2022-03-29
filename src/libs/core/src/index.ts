@@ -6,3 +6,5 @@ export * from './lib/components/copyright/copyright.component';
 export * from './lib/sneat-enum-keys';
 export * from './lib/services/ng-module-preloader.service';
 export * from './lib/exclude-undefined';
+export * from './lib/logging';
+export * from './lib/core-providers';

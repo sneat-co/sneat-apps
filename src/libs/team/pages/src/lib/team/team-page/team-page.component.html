@@ -38,37 +38,78 @@
 	<!--		</ion-col>-->
 	<!--	</ion-row>-->
 
-	<ion-card>
-		<ion-list>
-			<ion-item>
-				<ion-label style="font-weight: bold">Apps</ion-label>
-				<ion-buttons slot="end">
-					<ion-button>
-						<ion-icon name="settings" color="medium"></ion-icon>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			<ion-item routerLink="./schedule">
-				<ion-icon name="calendar-outline" slot="start"></ion-icon>
-				<ion-label>Schedule</ion-label>
-				<ion-buttons slot="end">
-					<ion-button>
-						<ion-label style="text-transform: none" color="primary">Today</ion-label>
-					</ion-button>
-					<ion-button>
-						<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			<ion-item routerLink="./lists">
-				<ion-icon name="cart-outline" slot="start"></ion-icon>
-				<ion-label>Lists</ion-label>
-				<ion-buttons slot="end">
-					<ion-button>
-						<ion-label style="text-transform: none" color="primary">Groceries</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		</ion-list>
-	</ion-card>
+
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-card>
+					<ion-list>
+						<ion-item>
+							<ion-label style="font-weight: bold">Apps</ion-label>
+							<ion-buttons slot="end">
+								<ion-button>
+									<ion-icon name="settings" color="medium"></ion-icon>
+								</ion-button>
+							</ion-buttons>
+						</ion-item>
+						<ion-item routerLink="./schedule">
+							<ion-icon name="calendar-outline" slot="start"></ion-icon>
+							<ion-label>Schedule</ion-label>
+							<ion-buttons slot="end">
+								<ion-button>
+									<ion-label style="text-transform: none" color="primary">Today</ion-label>
+								</ion-button>
+								<ion-button>
+									<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>
+								</ion-button>
+							</ion-buttons>
+						</ion-item>
+						<ion-item routerLink="./lists">
+							<ion-icon name="cart-outline" slot="start"></ion-icon>
+							<ion-label>Lists</ion-label>
+							<ion-buttons slot="end">
+								<ion-button>
+									<ion-label style="text-transform: none" color="primary">Groceries</ion-label>
+								</ion-button>
+							</ion-buttons>
+						</ion-item>
+					</ion-list>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-card>
+					<ion-item>
+						<ion-label style="font-weight: bold">Members</ion-label>
+					</ion-item>
+					<ion-list>
+						<sneat-members-list [team]="team" [allMembers]="team?.dto?.members"
+																[role]="'contributor'"></sneat-members-list>
+					</ion-list>
+				</ion-card>
+			</ion-col>
+			<ion-col>
+				<ion-card>
+					<ion-list>
+						<ion-item>
+							<ion-label style="font-weight: bold">Schedule</ion-label>
+						</ion-item>
+						<ion-item-divider>
+							<ion-label>Today</ion-label>
+						</ion-item-divider>
+						<ion-item>
+							<ion-label color="medium">Not implemented yet</ion-label>
+						</ion-item>
+						<ion-item-divider>
+							<ion-label>Tomorrow</ion-label>
+						</ion-item-divider>
+						<ion-item>
+							<ion-label color="medium">Not implemented yet</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>
