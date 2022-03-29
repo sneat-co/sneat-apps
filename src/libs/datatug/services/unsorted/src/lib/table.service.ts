@@ -53,8 +53,8 @@ export class TableService {
 			.getPrivateToken(r.repository, r.project)
 			.pipe(
 				map((accessToken) => ({
-					url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
-					headers: { 'PRIVATE-TOKEN': 'QPgjyFaJwq29x9h7pVxu' },
+					url: `https://gitlab.<AT_COMPANY_HOST>/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
+					headers: { 'PRIVATE-TOKEN': '<TO_BE_SUPPLIEUD>>' },
 				})),
 			);
 
