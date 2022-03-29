@@ -18,9 +18,6 @@ export class TeamPageComponent extends TeamBasePageDirective implements AfterVie
 	}
 
 	ngAfterViewInit(): void {
-		if (this.teamPageContext)
-			this.setTeamPageContext(this.teamPageContext);
-		else
-			this.logError('teamPageContext is not set');
+		this.setTeamPageContext(this.teamPageContext);
 	}
 }

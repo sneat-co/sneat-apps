@@ -93,8 +93,12 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 		console.log('BaseTeamPageDirective.ngOnInit()');
 	}
 
-	protected setTeamPageContext(context: TeamPageContextComponent): void {
+	protected setTeamPageContext(context?: TeamPageContextComponent): void {
 		console.log('setTeamPageContext()', context);
+		if (!context) {
+			this.logError('TeamPageContextComponent is not provided');
+			return;
+		}
 		this.route = context.route;
 		context.team.subscribe({
 			next: this.setTeamContext,

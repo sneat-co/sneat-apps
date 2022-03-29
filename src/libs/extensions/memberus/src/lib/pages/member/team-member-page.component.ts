@@ -1,7 +1,7 @@
 //tslint:disable:no-unsafe-any
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Gender, MemberRelationship } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams, TeamPageContextComponent } from '@sneat/team/components';
 // import { MemberRelationship } from 'sneat-shared/models/dto/dto-member';
 // import { CommuneBasePageParams } from 'sneat-shared/services/params';
 import { MemberBasePage } from '../member-base-page';
@@ -17,6 +17,9 @@ import { MemberComponentBaseParams } from '../member-context.component';
 })
 export class TeamMemberPageComponent extends MemberBasePage implements OnInit, AfterViewInit {
 
+	@ViewChild('teamPageContext')
+	public teamPageContext?: TeamPageContextComponent;
+
 	public dob?: string;
 	public relatedAs?: MemberRelationship;
 
@@ -27,6 +30,7 @@ export class TeamMemberPageComponent extends MemberBasePage implements OnInit, A
 	}
 
 	ngAfterViewInit(): void {
+		this.setTeamPageContext(this.teamPageContext);
 		this.teamParams.preloader.preload([ // TODO: implement preloader
 			'members',
 			'document',
