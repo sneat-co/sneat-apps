@@ -1,0 +1,40 @@
+<ion-card>
+	<ion-card-header>
+		<ion-card-title>{{title}}</ion-card-title>
+	</ion-card-header>
+	<ion-item>
+		<ion-label>Group</ion-label>
+		<ion-select disabled="true" value="family" interface="popover">
+			<ion-select-option value="personal">Personal</ion-select-option>
+			<ion-select-option value="family">Family</ion-select-option>
+		</ion-select>
+	</ion-item>
+	<ion-item color="light">
+		<ion-checkbox slot="start"></ion-checkbox>
+		<ion-label><b>Adults</b></ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-toggle slot="end"></ion-toggle>
+		<ion-label>Janet</ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-toggle slot="end"></ion-toggle>
+		<ion-label>Jack</ion-label>
+	</ion-item>
+	<ion-item color="light">
+		<ion-checkbox slot="start"></ion-checkbox>
+		<ion-label>Kids</ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-toggle slot="end"></ion-toggle>
+		<ion-label>Janet</ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-toggle slot="end"></ion-toggle>
+		<ion-label>Jack</ion-label>
+	</ion-item>
+	<ion-item button>
+		<ion-icon name="add" slot="start" color="primary"></ion-icon>
+		<ion-label color="primary">Add member</ion-label>
+	</ion-item>
+</ion-card>

@@ -1,22 +1,23 @@
-import { ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { SneatUserService } from '@sneat/user';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { IUserTeamInfoWithId } from '@sneat/auth-models';
-import { BaseTeamPageDirective } from '@sneat/team/components';
+import { BaseTeamPageDirective, TeamPageContextComponent } from '@sneat/team/components';
 
 @Component({
 	selector: 'sneat-team',
 	templateUrl: './team-page.component.html',
 })
-export class TeamPageComponent extends BaseTeamPageDirective {
+export class TeamPageComponent extends BaseTeamPageDirective implements AfterViewInit {
+
+	@ViewChild('teamPageContext')
+	public teamPageContext?: TeamPageContextComponent;
 
 	constructor(
 		override readonly changeDetectorRef: ChangeDetectorRef,
-		override readonly route: ActivatedRoute,
 		@Inject(ErrorLogger)
 		override readonly errorLogger: IErrorLogger,
 		override readonly navController: NavController,
@@ -29,7 +30,6 @@ export class TeamPageComponent extends BaseTeamPageDirective {
 
 		super(
 			changeDetectorRef,
-			route,
 			errorLogger,
 			navController,
 			teamService,
@@ -42,5 +42,12 @@ export class TeamPageComponent extends BaseTeamPageDirective {
 	// noinspection JSUnusedGlobalSymbols
 	ionViewDidEnter() {
 		// this.analyticsService.setCurrentScreen('Team');
+	}
+
+	ngAfterViewInit(): void {
+		if (this.teamPageContext)
+			this.setTeamPageContext(this.teamPageContext);
+		else
+			this.errorLogger.logError('teamPageContext is not set')
 	}
 }

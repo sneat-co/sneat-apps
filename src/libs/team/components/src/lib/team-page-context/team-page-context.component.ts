@@ -4,7 +4,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamNavService, TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, Subject, Subscription, takeUntil } from 'rxjs';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({
@@ -21,6 +21,7 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 	private teamContext = new BehaviorSubject<ITeamContext | undefined | null>(undefined);
 
 	public readonly team = this.teamContext.asObservable();
+	private teamRecordSubscription?: Subscription;
 
 	constructor(
 		@Inject(ErrorLogger)
@@ -32,11 +33,12 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 		public readonly userService: SneatUserService,
 		public readonly navService: TeamNavService,
 	) {
-		console.log('TeamPageContextComponent.constructor()', route.url);
+		console.log('TeamPageContextComponent.constructor()', route.snapshot.url, route.snapshot.params);
 		trackTeamIdAndTypeFromRouteParameter(route).pipe(
 			takeUntil(this.destroyed),
+			distinctUntilChanged((previous, current) => previous?.id === current?.id),
 		).subscribe({
-			next: this.onTeamContextChanged,
+			next: this.onTeamUrlChanged,
 			error: this.errorLogger.logErrorHandler,
 		});
 	}
@@ -50,10 +52,23 @@ export class TeamPageContextComponent implements OnInit, OnDestroy {
 		this.destroyed.complete();
 	}
 
-	private onTeamContextChanged = (teamContext?: ITeamContext): void => {
-		if (this.teamContext.value?.id != teamContext?.id) {
-			this.teamContext.next(teamContext);
+
+	private onTeamUrlChanged = (teamContext?: ITeamContext): void => {
+		console.log('TeamPageContextComponent.onTeamContextChanged()', teamContext);
+		if (this.teamRecordSubscription) {
+			this.teamRecordSubscription.unsubscribe();
 		}
+		this.teamContext.next(teamContext);
+		if (teamContext?.id)
+			this.teamRecordSubscription = this.teamService.watchTeam(teamContext?.id)
+				.subscribe({
+					next: dto => {
+						console.log('TeamPageContextComponent => team record:', this.teamContext.value?.id, teamContext.id, dto);
+						if (this.teamContext.value?.id === teamContext.id) {
+							this.teamContext.next({...this.teamContext.value, dto: dto});
+						}
+					},
+				});
 	};
 
 }

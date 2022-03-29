@@ -1,16 +1,32 @@
 <ion-item>
 	<ion-label color="medium">Spaces</ion-label>
-	<ion-buttons slot="end">
-		<ion-button>
-			<ion-icon name="add-outline" color="medium"></ion-icon>
-		</ion-button>
-	</ion-buttons>
+<!--	<ion-buttons slot="end">-->
+<!--		<ion-button (click)="newTeam()">-->
+<!--			<ion-icon name="add-outline" color="medium"></ion-icon>-->
+<!--		</ion-button>-->
+<!--	</ion-buttons>-->
 </ion-item>
-<ion-item routerLink="/space/family/abc123">
+<ion-item *ngIf="!teams" [disabled]="true">
 	<ion-icon name="person" slot="start"></ion-icon>
 	<ion-label>Family</ion-label>
+	<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
 </ion-item>
-<ion-item routerLink="/space/work/def456">
-	<ion-icon name="person" slot="start"></ion-icon>
-	<ion-label>Work2</ion-label>
-</ion-item>
+<ng-container *ngIf="teams">
+	<ion-item *ngIf="familyTeam; else noFamilyItem" routerLink="/space/family/{{familyTeam.id}}">
+		<ion-icon name="person" slot="start"></ion-icon>
+		<ion-label>Family</ion-label>
+	</ion-item>
+	<ng-template #noFamilyItem>
+		<ion-item tappable [disabled]="!teams" (click)="newFamily()">
+			<ion-icon name="person" slot="start"></ion-icon>
+			<ion-label>Family (new)</ion-label>
+			<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
+		</ion-item>
+	</ng-template>
+	<ng-container *ngIf="teams?.length || 0 > 1">
+		<ion-item *ngFor="let team of teams" routerLink="/space/{{team.type}}/{{team.id}}">
+			<ion-icon name="person" slot="start"></ion-icon>
+			<ion-label>{{team.title || team.type}}</ion-label>
+		</ion-item>
+	</ng-container>
+</ng-container>

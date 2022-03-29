@@ -26,6 +26,7 @@
 			"@sneat/auth-ui": ["libs/auth-ui/src/index.ts"],
 			"@sneat/communes/ui": ["libs/communes/ui/src/index.ts"],
 			"@sneat/components": ["libs/components/src/index.ts"],
+			"@sneat/contactus/ui": ["libs/contactus/ui/src/index.ts"],
 			"@sneat/core": ["libs/core/src/index.ts"],
 			"@sneat/data": ["libs/data/src/index.ts"],
 			"@sneat/datatug-service-base": ["libs/datatug-service-base/src/index.ts"],
@@ -84,6 +85,7 @@
 				"libs/datatug/services/unsorted/src/index.ts"
 			],
 			"@sneat/datetime": ["libs/datetime/src/index.ts"],
+			"@sneat/dto": ["libs/dto/src/index.ts"],
 			"@sneat/grid": ["libs/grid/src/index.ts"],
 			"@sneat/logging": ["libs/logging/src/index.ts"],
 			"@sneat/meeting": ["libs/meeting/src/index.ts"],

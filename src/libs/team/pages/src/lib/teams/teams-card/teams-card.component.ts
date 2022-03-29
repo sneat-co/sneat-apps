@@ -3,7 +3,7 @@ import { IonInput, ToastController } from '@ionic/angular';
 import { Subject, Subscription } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IUserTeamInfoWithId } from '@sneat/auth-models';
+import { IUserTeamInfo } from '@sneat/auth-models';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { ICreateTeamRequest } from '@sneat/team/models';
@@ -16,16 +16,12 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 export class TeamsCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addTeamInput?: IonInput; // TODO: IonInput;
 
-	public teams?: IUserTeamInfoWithId[];
-
-	private readonly destroyed = new Subject<void>()
-
+	public teams?: IUserTeamInfo[];
 	public loadingState: 'Authenticating' | 'Loading' = 'Authenticating';
-
 	public teamName = '';
 	public adding = false;
 	public showAdd = false; //
-
+	private readonly destroyed = new Subject<void>();
 	private subscriptions: Subscription[] = [];
 
 	constructor(
@@ -50,36 +46,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		this.watchUserRecord();
 	}
 
-	private watchUserRecord(): void {
-		this.userService.userState
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-			next: (userState) => {
-				console.log('TeamsCardComponent => user state changed:', userState);
-				if (userState.status === 'authenticating') {
-					if (this.loadingState === 'Authenticating') {
-						this.loadingState = 'Loading';
-					}
-				}
-				const uid = userState.user?.uid;
-				this.teams = undefined;
-				if (!uid) {
-					this.unsubscribe('user signed out');
-					return;
-				}
-				this.subscriptions.push(
-					this.userService.userState.subscribe({
-						next: this.setUser,
-						error: (err) =>
-							this.errorLogger.logError(err, 'Failed to get user record'),
-					}),
-				);
-			},
-			error: (err) => this.errorLogger.logError(err, 'Failed to get user ID'),
-		});
-	}
-
-	public goTeam(team: IUserTeamInfoWithId) {
+	public goTeam(team: IUserTeamInfo) {
 		this.navService.navigateToTeam(team.id, team, undefined, 'forward');
 	}
 
@@ -130,13 +97,17 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 				);
 			return;
 		}
-		const request: ICreateTeamRequest = { title };
+		const request: ICreateTeamRequest = { type: 'team', title };
 		this.adding = true;
 		this.teamService.createTeam(request).subscribe({
 			next: (team) => {
 				this.analyticsService.logEvent('teamCreated', { team: team.id });
 				console.log('teamId:', team.id);
-				const userTeam: IUserTeamInfoWithId = { id: team.id, title: team?.data?.title || team.id };
+				const userTeam: IUserTeamInfo = {
+					id: team.id,
+					title: team?.data?.title || team.id,
+					type: team?.data?.type || 'unknown',
+				};
 				if (userTeam && !this.teams?.find((t) => t.id === team.id)) {
 					this.teams?.push(userTeam);
 				}
@@ -169,7 +140,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		}, 100);
 	}
 
-	public leaveTeam(teamInfo: IUserTeamInfoWithId, event?: Event): void {
+	public leaveTeam(teamInfo: IUserTeamInfo, event?: Event): void {
 		if (event) {
 			event.stopPropagation();
 			event.preventDefault();
@@ -199,6 +170,35 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 						err,
 						`Failed to leave a team: ${teamInfo.title}`,
 					),
+			});
+	}
+
+	private watchUserRecord(): void {
+		this.userService.userState
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (userState) => {
+					console.log('TeamsCardComponent => user state changed:', userState);
+					if (userState.status === 'authenticating') {
+						if (this.loadingState === 'Authenticating') {
+							this.loadingState = 'Loading';
+						}
+					}
+					const uid = userState.user?.uid;
+					this.teams = undefined;
+					if (!uid) {
+						this.unsubscribe('user signed out');
+						return;
+					}
+					this.subscriptions.push(
+						this.userService.userState.subscribe({
+							next: this.setUser,
+							error: (err) =>
+								this.errorLogger.logError(err, 'Failed to get user record'),
+						}),
+					);
+				},
+				error: (err) => this.errorLogger.logError(err, 'Failed to get user ID'),
 			});
 	}
 

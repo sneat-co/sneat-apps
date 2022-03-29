@@ -1,8 +1,7 @@
-import { MembersVisibility, MemberType } from '../types';
+import { MembersVisibility, MemberType } from './types';
 import { IContact2Member } from './dto-contact';
 import { ICommuneRecord, IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
 import { DtoGroupTerms } from './dto-term';
-// import {RxRecordKey} from 'rxstore';
 import { ICommuneMemberInfo } from './dto-commune';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { RxRecordKey } from '@sneat/rxstore';
@@ -82,7 +81,7 @@ export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 }
 
 export interface IMemberGroupDto extends ICommuneRecord {
-	communeId?: string; // RxRecordKey; // family commune ID
+	teamId?: string; // RxRecordKey; // family team ID
 	title: string;
 	desc?: string;
 	timetable?: string;

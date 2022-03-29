@@ -5,7 +5,7 @@ import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { IMemberInfo, ITeam } from '@sneat/team/models';
-import { IUserTeamInfoWithId } from '@sneat/auth-models';
+import { IUserTeamInfo } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
@@ -105,7 +105,7 @@ export class NavService {
 
 	public navigateToTeam(
 		id: string,
-		teamInfo?: IUserTeamInfoWithId,
+		teamInfo?: IUserTeamInfo,
 		team?: ITeam,
 		animationDirection?: 'forward' | 'back',
 	): void {

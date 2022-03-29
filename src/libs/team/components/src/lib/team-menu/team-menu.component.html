@@ -1,53 +1,37 @@
-<!--<sneat-team-page-context page="team-menu"></sneat-team-page-context>-->
-<!--<ng-container *ngIf="!team; else teamMenu">-->
-<!--<ion-list>-->
-<!--	<ion-item routerLink="/teams">-->
-<!--		<ion-label style="font-weight: bold">Teams (teamId: {{teamId}}</ion-label>-->
-<!--	</ion-item>-->
-<!--	<ion-item routerLink="/space/family/abc123">-->
-<!--		<ion-icon name="person" slot="start"></ion-icon>-->
-<!--		<ion-label>Family</ion-label>-->
-<!--	</ion-item>-->
-<!--	<ion-item routerLink="/space/work/def456">-->
-<!--		<ion-icon name="person" slot="start"></ion-icon>-->
-<!--		<ion-label>Work2</ion-label>-->
-<!--	</ion-item>-->
-<!--</ion-list>-->
-
 <ion-list>
 	<ion-item>
 		<ion-label color="medium">Space</ion-label>
-		<ion-select style="font-weight: bold" [(ngModel)]="teamId" interface="popover" (ionChange)="onTeamSelected($event)">
-			<ion-select-option value="family/abc123">Family</ion-select-option>
-			<ion-select-option value="work/def456">Work</ion-select-option>
+		<ion-select *ngIf="!teams"></ion-select>
+		<ion-select *ngIf="teams"
+								interface="popover"
+								[(ngModel)]="teamId"
+								(ionChange)="onTeamSelected($event)"
+								style="font-weight: bold"
+		>
+			<ion-select-option *ngFor="let team of teams" [value]="team.id">
+				{{team.title || team.id}}
+			</ion-select-option>
 		</ion-select>
 	</ion-item>
-	<ion-item>
+	<ion-item routerLink="members">
 		<ion-icon name="person" slot="start"></ion-icon>
-		<ion-label>Lists</ion-label>
+		<ion-label>Assets</ion-label>
 	</ion-item>
-	<ion-item>
+	<ion-item routerLink="contacts">
+		<ion-icon name="person" slot="start"></ion-icon>
+		<ion-label>Contacts</ion-label>
+	</ion-item>
+	<ion-item routerLink="documents">
 		<ion-icon name="person" slot="start"></ion-icon>
 		<ion-label>Documents</ion-label>
 	</ion-item>
+	<ion-item routerLink="lists">
+		<ion-icon name="person" slot="start"></ion-icon>
+		<ion-label>Lists</ion-label>
+	</ion-item>
+	<ion-item routerLink="members">
+		<ion-icon name="person" slot="start"></ion-icon>
+		<ion-label>Members</ion-label>
+	</ion-item>
+	<sneat-auth-menu-item></sneat-auth-menu-item>
 </ion-list>
-
-
-<!--</ng-container>-->
-<!--<ng-template #teamMenu>-->
-<!--	<ion-item>-->
-<!--		<ion-label>Team</ion-label>-->
-<!--		<ion-select [value]="team?.id">-->
-<!--			<ion-select-option value="family">Family</ion-select-option>-->
-<!--			<ion-select-option value="work">Work</ion-select-option>-->
-<!--		</ion-select>-->
-<!--		<ion-item>-->
-<!--			<ion-icon name="person" slot="start"></ion-icon>-->
-<!--			<ion-label>Lists</ion-label>-->
-<!--		</ion-item>-->
-<!--		<ion-item>-->
-<!--			<ion-icon name="person" slot="start"></ion-icon>-->
-<!--			<ion-label>Documents</ion-label>-->
-<!--		</ion-item>-->
-<!--	</ion-item>-->
-<!--</ng-template>-->

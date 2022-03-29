@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+        </ion-buttons>
+        <ion-title *ngIf="contact else titleNoContact">{{contact.title}}</ion-title>
+        <ng-template #titleNoContact>
+            <ion-title>Contact</ion-title>
+        </ng-template>
+        <ion-buttons slot="end">
+            <ion-menu-button menu="mainMenu"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div class="segment">
+        <ion-segment [(ngModel)]="segment">
+            <ion-segment-button value="contact">
+                <ion-label>Contact</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="assets">
+                <ion-label>Assets</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="members">
+                <ion-label>Members</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+
+    <ion-list *ngIf="segment === 'contact' && contact">
+        <ion-item *ngIf="contact.members && contact.members.length">
+            <ion-badge color="light" style="cursor: pointer" *ngFor="let m of contact.members" (click)="goMember(m.id)">
+                {{m.relation}} of {{m.title}}
+            </ion-badge>
+        </ion-item>
+        <ion-item>
+            <ion-label *ngIf="contact.email"><b>Email</b></ion-label>
+            <ion-label *ngIf="!contact.email">Email</ion-label>
+            <ion-input readonly type="email" placeholder="no email" [value]="contact.email"></ion-input>
+            <ion-button fill="clear">
+                <ion-icon [name]="contact.email ? 'create' : 'add'"></ion-icon>
+            </ion-button>
+        </ion-item>
+        <ion-item>
+            <ion-label *ngIf="contact.phone"><b>Phone</b></ion-label>
+            <ion-label *ngIf="!contact.phone">Phone</ion-label>
+            <ion-input readonly type="phone" placeholder="no phone" [value]="contact.phone"></ion-input>
+            <ion-button fill="clear">
+                <ion-icon [name]="contact.phone ? 'create' : 'add'"></ion-icon>
+            </ion-button>
+        </ion-item>
+        <ion-item>
+            <ion-label *ngIf="contact.website"><b>Website</b></ion-label>
+            <ion-label *ngIf="!contact.website">Website</ion-label>
+            <ion-input readonly type="url" placeholder="no website" [value]="contact.website"></ion-input>
+            <ion-button fill="clear">
+                <ion-icon [name]="contact.website ? 'create' : 'add'"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
+    <div class="ion-padding" *ngIf="segment === 'assets'">
+        <p>Assets related to this contact.</p>
+    </div>
+    <div class="ion-padding" *ngIf="segment === 'members'">
+        <p>Members related to this contact.</p>
+    </div>
+</ion-content>

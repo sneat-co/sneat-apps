@@ -1,30 +1,26 @@
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { ChangeDetectorRef, Directive, Inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Directive, Inject, OnInit } from '@angular/core';
 import { Subject, Subscription, tap } from 'rxjs';
 import { first, mergeMap, takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IUserTeamInfoWithId } from '@sneat/auth-models';
-import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
+import { IUserTeamInfo } from '@sneat/auth-models';
+import { TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamPageContextComponent } from './team-page-context';
 
 @Directive({ selector: '[sneatBaseTeamPage]' }) // There was some reason to add a @Directive() - TODO: document why
-export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
+export abstract class BaseTeamPageDirective implements OnInit /*implements OnInit, OnDestroy*/ {
 
-	@ViewChild(TeamPageContextComponent)
-	context?: TeamPageContextComponent;
-
-	private teamContext?: ITeamContext;
 	protected readonly subs = new Subscription();
 	protected readonly destroyed = new Subject<boolean>();
 	protected readonly logError = this.errorLogger.logError;
 	protected readonly logErrorHandler = this.errorLogger.logErrorHandler;
+	private teamContext?: ITeamContext;
 
 	protected constructor(
 		protected readonly changeDetectorRef: ChangeDetectorRef,
-		protected readonly route: ActivatedRoute,
 		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
 		protected readonly navController: NavController,
 		protected readonly teamService: TeamService,
@@ -35,7 +31,6 @@ export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 			this.getUserTeamInfoFromState();
 			this.getTeamRecordFromState();
 			this.cleanupOnUserLogout();
-			this.trackTeamIdAndTypeFromUrl();
 		} catch (e) {
 			this.logError(e, 'Failed in BaseTeamPageDirective.constructor()');
 		}
@@ -51,6 +46,18 @@ export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 
 	public get defaultBackUrl(): string {
 		return this.teamContext?.id ? `team?id=${this.teamContext.id}` : 'teams';
+	}
+
+	ngOnInit(): void {
+		console.log('BaseTeamPageDirective.ngOnInit()');
+	}
+
+	protected setTeamPageContext(context: TeamPageContextComponent): void {
+		console.log('setTeamPageContext()', context);
+		context.team.subscribe({
+			next: this.setTeamContext,
+			error: context.errorLogger?.logErrorHandler('failed to get team context'),
+		});
 	}
 
 	protected onDestroy() {
@@ -82,32 +89,24 @@ export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 		console.log('BaseTeamPageDirective.onTeamChanged()');
 	}
 
-	protected onInit(): void {
-		this.context?.team.subscribe({
-			next: team => {
-				team?.id;
-			},
-		});
-	}
-
-	private trackTeamIdAndTypeFromUrl(): void {
-		try {
-			trackTeamIdAndTypeFromRouteParameter(this.route)
-				.pipe(takeUntil(this.destroyed))
-				.subscribe({
-					next: (teamContext) => {
-						console.log(
-							`BaseTeamPageDirective.trackTeamIdAndTypeFromUrl() => teamContext:`, teamContext,
-						);
-						this.setTeamContext(teamContext);
-					},
-					error: (err) =>
-						this.logError(err, 'Failed to track team ID from url'),
-				});
-		} catch (e) {
-			this.logError(e, 'Failed to call teamContextService.trackUrl()');
-		}
-	}
+	// private trackTeamIdAndTypeFromUrl(): void {
+	// 	try {
+	// 		trackTeamIdAndTypeFromRouteParameter(this.route)
+	// 			.pipe(takeUntil(this.destroyed))
+	// 			.subscribe({
+	// 				next: (teamContext) => {
+	// 					console.log(
+	// 						`BaseTeamPageDirective.trackTeamIdAndTypeFromUrl() => teamContext:`, teamContext,
+	// 					);
+	// 					this.setTeamContext(teamContext);
+	// 				},
+	// 				error: (err) =>
+	// 					this.logError(err, 'Failed to track team ID from url'),
+	// 			});
+	// 	} catch (e) {
+	// 		this.logError(e, 'Failed to call teamContextService.trackUrl()');
+	// 	}
+	// }
 
 	private getUserTeamInfoFromState(): void {
 		const teamContext = history.state?.teamContext as ITeamContext;
@@ -131,7 +130,7 @@ export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 
 	private getTeamRecordFromState(): void {
 		try {
-			this.teamContext = history.state?.team as IUserTeamInfoWithId;
+			this.teamContext = history.state?.team as IUserTeamInfo;
 			if (this.teamContext) {
 				this.onTeamIdChanged();
 				this.onTeamChanged();
@@ -188,7 +187,7 @@ export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 		);
 	}
 
-	private setTeamContext(teamContext?: ITeamContext): void {
+	private setTeamContext = (teamContext?: ITeamContext | null): void => {
 		try {
 			if (teamContext?.id) {
 				if (this.teamContext?.id !== teamContext.id) {
@@ -209,7 +208,7 @@ export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 		} catch (e) {
 			this.logError(e, 'Failed to set team id');
 		}
-	}
+	};
 
 	private setTeam(team: ITeamContext): void {
 		console.log('BaseTeamPageDirective.setTeam()', team);
@@ -217,3 +216,4 @@ export abstract class BaseTeamPageDirective /*implements OnInit, OnDestroy*/ {
 		this.onTeamChanged();
 	}
 }
+

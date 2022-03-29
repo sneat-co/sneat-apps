@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SpacePageComponent } from './space/space-page.component';
-import { TeamComponentsModule, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
+import { TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { SneatAuthModule } from '@sneat/auth';
@@ -40,9 +39,7 @@ const routes: Routes = [
 		TeamMenuComponentModule,
 	],
 	exports: [RouterModule],
-	declarations: [
-		SpacePageComponent,
-	],
+	declarations: [],
 })
 export class TeamSpaceRoutingModule {
 }

@@ -327,6 +327,48 @@
 				}
 			}
 		},
+		"contactus-ui": {
+			"projectType": "library",
+			"root": "libs/contactus/ui",
+			"sourceRoot": "libs/contactus/ui/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/contactus/ui"],
+					"options": {
+						"project": "libs/contactus/ui/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/contactus/ui/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/contactus/ui/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/contactus/ui"],
+					"options": {
+						"jestConfig": "libs/contactus/ui/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/contactus/ui/src/**/*.ts",
+							"libs/contactus/ui/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
 		"core": {
 			"projectType": "library",
 			"root": "libs/core",
@@ -2022,6 +2064,48 @@
 				}
 			},
 			"implicitDependencies": ["debtus"]
+		},
+		"dto": {
+			"projectType": "library",
+			"root": "libs/dto",
+			"sourceRoot": "libs/dto/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:package",
+					"outputs": ["dist/libs/dto"],
+					"options": {
+						"project": "libs/dto/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/dto/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/dto/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/dto"],
+					"options": {
+						"jestConfig": "libs/dto/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/dto/src/**/*.ts",
+							"libs/dto/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
 		},
 		"emptyapp": {
 			"projectType": "application",

@@ -1,8 +1,9 @@
-import { ITeam } from './models';
+import { ITeam, TeamType } from './models';
 import { IRecord } from '@sneat/data';
 
 export interface ICreateTeamRequest {
-	title: string;
+	type: TeamType;
+	title?: string;
 }
 
 export interface ICreateTeamResponse {

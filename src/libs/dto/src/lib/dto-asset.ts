@@ -1,7 +1,6 @@
-import { AssetCategoryId, CountryId, FuelType, LiabilityServiceType, VehicleType } from '../types';
+import { AssetCategoryId, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
 import { ICommuneRecord, IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
 import { IContact2Asset } from './dto-contact';
-import { RxRecordKey } from 'rxstore';
 
 export interface AssetLiabilityInfo {
 	id: string;
@@ -20,18 +19,18 @@ export interface ISubAssetInfo extends ITitledRecord {
 }
 
 export interface IAssetDto extends ITitledRecord, IDemoRecord, ITotalsHolder {
-	id?: RxRecordKey;
-	parentAssetId?: RxRecordKey;
+	id?: string;
+	parentAssetId?: string;
 	parentCategoryId?: AssetCategoryId;
 	sameAssetId?: string; // A link to realtor's or tenant's asset ID
 	desc?: string;
 	categoryId?: AssetCategoryId;
 	countryId?: CountryId;
-	communeId?: RxRecordKey;
-	groupId?: RxRecordKey;
+	teamId?: string;
+	groupId?: string;
 	subAssets?: ISubAssetInfo[];
 	contacts?: IContact2Asset[];
-	memberIds?: RxRecordKey[];
+	memberIds?: string[];
 	membersInfo?: ITitledRecord[];
 	type?: string; // E.g. subcategory - for example for documents could be: passport, visa, etc.
 	number?: string;

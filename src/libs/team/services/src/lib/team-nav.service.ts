@@ -6,7 +6,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { IRecord } from '@sneat/data';
 import { IMemberInfo, ITeam } from '@sneat/team/models';
-import { IUserTeamInfoWithId } from '@sneat/auth-models';
+import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRetrospective, IScrum } from '@sneat/scrumspace/scrummodels';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
@@ -112,7 +112,7 @@ export class TeamNavService {
 
 	public navigateToTeam(
 		id: string,
-		teamInfo?: IUserTeamInfoWithId,
+		teamInfo?: IUserTeamInfo,
 		team?: ITeam,
 		animationDirection?: 'forward' | 'back',
 	): void {

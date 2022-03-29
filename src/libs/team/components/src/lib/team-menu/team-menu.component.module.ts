@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { TeamPageContextModule } from '../team-page-context';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SneatAuthModule } from '@sneat/auth';
 
 const exports = [TeamMenuComponent];
 
@@ -15,6 +16,7 @@ const exports = [TeamMenuComponent];
 		FormsModule,
 		TeamPageContextModule,
 		RouterModule,
+		SneatAuthModule,
 	],
 	declarations: [...exports],
 	exports,

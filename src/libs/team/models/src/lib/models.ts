@@ -72,7 +72,7 @@ export interface ITeamBrief {
 	title: string;
 }
 
-export type TeamType = 'family' | 'company' | 'team';
+export type TeamType = 'family' | 'company' | 'team' | 'unknown';
 
 export interface ITeam {
 	type: TeamType;

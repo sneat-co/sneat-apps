@@ -1,4 +1,5 @@
 import { IAvatar } from './avatar';
+import { TeamType } from '@sneat/team/models';
 
 // Does not contain an ID as it's a key.
 // Use IRecord<IUserRecord> to keep record paired with ID
@@ -7,14 +8,13 @@ export interface IUserRecord {
 	readonly email?: string;
 	readonly emailVerified?: boolean;
 	readonly avatar?: IAvatar;
-	teams?: { [id: string]: IUserTeamInfo };
+	readonly teams?: IUserTeamInfo[];
 }
 
 export interface IUserTeamInfo {
-	title: string;
+	readonly id: string;
+	readonly type: TeamType;
+	readonly title: string;
+	readonly roles?: string[];
 	// retroItems?: { [type: string]: IRetroItem[] };
-}
-
-export interface IUserTeamInfoWithId extends IUserTeamInfo {
-	id: string;
 }

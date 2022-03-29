@@ -4,7 +4,7 @@ import { IonInput, NavController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAddTeamMemberRequest, ITeam } from '@sneat/team/models';
-import { IUserTeamInfoWithId } from '@sneat/auth-models';
+import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { MemberService, TeamService } from '@sneat/team/services';
 
@@ -18,7 +18,7 @@ export class MemberNewPageComponent {
 	public tab: 'personal' | 'mass' = 'mass';
 	public teamId?: string;
 	public team?: ITeam;
-	public teamInfo?: IUserTeamInfoWithId;
+	public teamInfo?: IUserTeamInfo;
 	public title = new FormControl('', [
 		Validators.required,
 		Validators.maxLength(50),
@@ -130,7 +130,7 @@ export class MemberNewPageComponent {
 	private setTeam(team: ITeam | undefined): void {
 		this.team = team;
 		if (this.teamId) {
-			this.teamInfo = { id: this.teamId, title: team?.title || 'loading...' };
+			this.teamInfo = { id: this.teamId, title: team?.title || 'loading...', type: team?.type || 'unknown' };
 		}
 	}
 

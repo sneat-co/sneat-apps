@@ -8,7 +8,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatApiService } from '@sneat/api';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { IRecord } from '@sneat/data';
-import { IUserTeamInfo, IUserTeamInfoWithId } from '@sneat/auth-models';
+import { IUserTeamInfo } from '@sneat/auth-models';
 import {
 	ICreateTeamRequest,
 	ICreateTeamResponse,
@@ -45,7 +45,7 @@ export class TeamService {
 		const processUserRecordInTeamService = (
 			userState: ISneatUserState,
 		): void => {
-			console.log('processUserRecordInTeamService()');
+			console.log('processUserRecordInTeamService()', userState);
 			const user = userState?.record;
 			if (!user) {
 				// this.userId = undefined;
@@ -61,39 +61,7 @@ export class TeamService {
 				this.userId = userState.user?.uid;
 			}
 			if (user?.teams) {
-				const subscribeForFirestoreTeamChanges = (
-					teamInfo: IUserTeamInfoWithId,
-				): void => {
-					const { id } = teamInfo;
-					let subj = this.teams$[id];
-					console.log('subscribeForFirestoreTeamChanges, subj:', subj);
-					if (!subj) {
-						this.teams$[id] = subj = new ReplaySubject<ITeam | undefined>(1);
-					}
-
-					const o = this.db
-						.collection('teams')
-						.doc<ITeam>(id)
-						.snapshotChanges()
-						.pipe(
-							filter((documentSnapshot) => documentSnapshot.type === 'value'),
-							map((documentSnapshot) => documentSnapshot.payload),
-							map((teamDoc) =>
-								teamDoc.exists ? (teamDoc.data() as ITeam) : null,
-							),
-							tap((team) => {
-								console.log('New team record from Firestore:', team);
-							}),
-							map(team => team || undefined),
-						);
-					this.subscriptions.push(o.subscribe(subj));
-				};
-				Object.entries(user.teams).forEach(([id, team]) =>
-					subscribeForFirestoreTeamChanges({
-						...(team as IUserTeamInfoWithId),
-						id,
-					}),
-				);
+				user.teams?.forEach(this.subscribeForFirestoreTeamChanges);
 			}
 		};
 		// We are intentionally not un-subscribing from user record updates. TODO: why?
@@ -267,6 +235,7 @@ export class TeamService {
 		);
 	}
 
+	// TODO: move to separate module
 	public deleteMetrics(team: string, metrics: string[]): Observable<void> {
 		return this.sneatApiService.post('team/remove_metrics', {
 			team,
@@ -274,9 +243,10 @@ export class TeamService {
 		});
 	}
 
+	// TODO: move to separate module
 	public addMetric(team: string, metric: ITeamMetric): Observable<void> {
 		if (!team) {
-			return throwError({ message: 'team parameter is required' });
+			return throwError(() => 'team parameter is required');
 		}
 		const params = new HttpParams({ fromObject: { id: team } });
 		return this.sneatApiService.post(
@@ -284,6 +254,35 @@ export class TeamService {
 			{ metric },
 		);
 	}
+
+	private readonly subscribeForFirestoreTeamChanges = (teamInfo: IUserTeamInfo): void => {
+		console.log('subscribeForFirestoreTeamChanges', teamInfo);
+		const { id } = teamInfo;
+		let subj = this.teams$[id];
+		if (!subj) {
+			this.teams$[id] = subj = new ReplaySubject<ITeam | undefined>(1);
+		}
+
+		const o = this.db
+			.collection('teams')
+			.doc<ITeam>(id)
+			.snapshotChanges()
+			.pipe(
+				tap((team) => {
+					console.log('New team snapshot from Firestore:', team);
+				}),
+				filter((documentSnapshot) => documentSnapshot.type === 'value' || documentSnapshot.type === 'added'),
+				map((documentSnapshot) => documentSnapshot.payload),
+				map((teamDoc) =>
+					teamDoc.exists ? (teamDoc.data() as ITeam) : null,
+				),
+				tap((team) => {
+					console.log('New team record from Firestore:', team);
+				}),
+				map(team => team || undefined),
+			);
+		this.subscriptions.push(o.subscribe(subj));
+	};
 
 	private unsubscribe(on: string): void {
 		console.log('TeamService: unsubscribe on ' + on);
