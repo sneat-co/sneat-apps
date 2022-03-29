@@ -1,4 +1,4 @@
-import { AssetCategoryId, LiabilityServiceType, ServiceCategory, SettlementType } from '../types';
+import { AssetCategoryId, LiabilityServiceType, ServiceCategory, SettlementType } from './types';
 import { ITitledRecord } from './dto-models';
 
 export interface ServiceProviderContact {

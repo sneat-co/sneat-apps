@@ -1,3 +1,4 @@
+export type TeamType = 'family' | 'company' | 'team' | 'unknown';
 export type MemberType = 'member' | 'pupil' | 'staff';
 export type InsurerType = 'insurer';
 export type DwellingContacts =

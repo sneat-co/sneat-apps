@@ -1,5 +1,5 @@
 import { IAvatar } from './avatar';
-import { TeamType } from '@sneat/team/models';
+import { TeamType } from '@sneat/dto';
 
 // Does not contain an ID as it's a key.
 // Use IRecord<IUserRecord> to keep record paired with ID

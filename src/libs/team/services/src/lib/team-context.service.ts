@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ITeamContext, TeamType } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team/models';
+import { TeamType } from '@sneat/dto';
 
 @Injectable({
 	providedIn: 'root',

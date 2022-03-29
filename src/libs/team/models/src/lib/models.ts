@@ -1,4 +1,5 @@
 import { IAvatar } from '@sneat/auth-models';
+import { TeamType } from '@sneat/dto';
 
 export type MetricColor =
 	| 'primary'
@@ -71,8 +72,6 @@ export interface ITeamBrief {
 	id: string;
 	title: string;
 }
-
-export type TeamType = 'family' | 'company' | 'team' | 'unknown';
 
 export interface ITeam {
 	type: TeamType;

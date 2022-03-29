@@ -1,5 +1,5 @@
 module.exports = {
-	displayName: 'contactus-ui',
+	displayName: 'extensions-memberus',
 	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {
@@ -8,7 +8,7 @@ module.exports = {
 			stringifyContentPathRegex: '\\.(html|svg)$',
 		},
 	},
-	coverageDirectory: '../../../coverage/libs/contactus/ui',
+	coverageDirectory: '../../../coverage/libs/extensions/memberus',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
 	},

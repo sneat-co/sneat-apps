@@ -1,9 +1,9 @@
 import { ICommuneRecord, ITitledRecord, IWithRestrictions } from './dto-models';
-import { CommuneType, ListStatus } from '../types';
+import { CommuneType, ListStatus } from './types';
 import { ICommuneDto } from './dto-commune';
 import { IUserCommuneInfo } from './dto-user';
 import { IRecord, RxRecordKey } from '@sneat/rxstore';
-import { CommuneShortId } from '../commune-ids';
+// import { CommuneShortId } from '../commune-ids';
 
 export interface IQuantity {
 	value: number;
@@ -80,16 +80,16 @@ export interface IListItemDto extends IListCommon, IListItemCommon {
 export interface IShortCommuneInfo {
 	type: CommuneType;
 	id?: RxRecordKey;
-	shortId?: CommuneShortId;
+	// shortId?: CommuneShortId;
 	title?: string;
 }
 
-export function createShortCommuneInfoFromDto(dto: ICommuneDto, shortId?: string): IShortCommuneInfo {
-	return { id: dto.id, title: dto.title, type: dto.type, shortId };
+export function createShortCommuneInfoFromDto(dto: ICommuneDto): IShortCommuneInfo {
+	return { id: dto.id, title: dto.title, type: dto.type };
 }
 
 export function createShortCommuneInfoFromUserCommuneInfo(v: IUserCommuneInfo): IShortCommuneInfo {
-	return { id: v.id, title: v.title, shortId: v.shortId, type: v.type };
+	return { id: v.id, title: v.title, /*shortId: v.shortId,*/ type: v.type };
 }
 
 export function getListShortUrlId(communeId: string, shortId?: string, id?: string): string | undefined {

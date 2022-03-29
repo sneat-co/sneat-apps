@@ -327,48 +327,6 @@
 				}
 			}
 		},
-		"contactus-ui": {
-			"projectType": "library",
-			"root": "libs/contactus/ui",
-			"sourceRoot": "libs/contactus/ui/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/contactus/ui"],
-					"options": {
-						"project": "libs/contactus/ui/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/contactus/ui/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/contactus/ui/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/contactus/ui"],
-					"options": {
-						"jestConfig": "libs/contactus/ui/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/contactus/ui/src/**/*.ts",
-							"libs/contactus/ui/src/**/*.html"
-						]
-					}
-				}
-			},
-			"tags": []
-		},
 		"core": {
 			"projectType": "library",
 			"root": "libs/core",
@@ -2433,6 +2391,342 @@
 				}
 			},
 			"implicitDependencies": ["emptyionicapp"]
+		},
+		"extensions-assetus": {
+			"projectType": "library",
+			"root": "libs/extensions/assetus",
+			"sourceRoot": "libs/extensions/assetus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/assetus"],
+					"options": {
+						"project": "libs/extensions/assetus/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/assetus/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/assetus/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/assetus"],
+					"options": {
+						"jestConfig": "libs/extensions/assetus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/assetus/src/**/*.ts",
+							"libs/extensions/assetus/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-budgetus": {
+			"projectType": "library",
+			"root": "libs/extensions/budgetus",
+			"sourceRoot": "libs/extensions/budgetus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/budgetus"],
+					"options": {
+						"project": "libs/extensions/budgetus/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/budgetus/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/budgetus/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/budgetus"],
+					"options": {
+						"jestConfig": "libs/extensions/budgetus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/budgetus/src/**/*.ts",
+							"libs/extensions/budgetus/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-contactus": {
+			"projectType": "library",
+			"root": "libs/extensions/contactus",
+			"sourceRoot": "libs/extensions/contactus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/contactus"],
+					"options": {
+						"project": "libs/extensions/contactus/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/contactus/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/contactus/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/contactus"],
+					"options": {
+						"jestConfig": "libs/extensions/contactus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/contactus/src/**/*.ts",
+							"libs/extensions/contactus/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-debtus": {
+			"projectType": "library",
+			"root": "libs/extensions/debtus",
+			"sourceRoot": "libs/extensions/debtus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/debtus"],
+					"options": {
+						"project": "libs/extensions/debtus/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/debtus/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/debtus/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/debtus"],
+					"options": {
+						"jestConfig": "libs/extensions/debtus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/debtus/src/**/*.ts",
+							"libs/extensions/debtus/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-docus": {
+			"projectType": "library",
+			"root": "libs/extensions/docus",
+			"sourceRoot": "libs/extensions/docus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/docus"],
+					"options": {
+						"project": "libs/extensions/docus/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/docus/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/docus/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/docus"],
+					"options": {
+						"jestConfig": "libs/extensions/docus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/docus/src/**/*.ts",
+							"libs/extensions/docus/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-listus": {
+			"projectType": "library",
+			"root": "libs/extensions/listus",
+			"sourceRoot": "libs/extensions/listus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/listus"],
+					"options": {
+						"project": "libs/extensions/listus/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/listus/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/listus/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/listus"],
+					"options": {
+						"jestConfig": "libs/extensions/listus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/listus/src/**/*.ts",
+							"libs/extensions/listus/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-memberus": {
+			"projectType": "library",
+			"root": "libs/extensions/memberus",
+			"sourceRoot": "libs/extensions/memberus/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/memberus"],
+					"options": {
+						"project": "libs/extensions/memberus/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/memberus/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/memberus/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/memberus"],
+					"options": {
+						"jestConfig": "libs/extensions/memberus/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/memberus/src/**/*.ts",
+							"libs/extensions/memberus/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-schedule": {
+			"projectType": "library",
+			"root": "libs/extensions/schedule",
+			"sourceRoot": "libs/extensions/schedule/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/schedule"],
+					"options": {
+						"project": "libs/extensions/schedule/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/schedule/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/schedule/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/schedule"],
+					"options": {
+						"jestConfig": "libs/extensions/schedule/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/schedule/src/**/*.ts",
+							"libs/extensions/schedule/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
 		},
 		"family": {
 			"projectType": "application",

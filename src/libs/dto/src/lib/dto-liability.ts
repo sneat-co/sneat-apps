@@ -1,15 +1,14 @@
-import { LiabilityDirection, LiabilityServiceType, LiabilityType, Period } from '../types';
+import { LiabilityDirection, LiabilityServiceType, LiabilityType, Period } from './types';
 import { ICommuneRecord, ITitledRecord } from './dto-models';
-import { RxRecordKey } from 'rxstore';
 
 export interface DtoLiability extends ICommuneRecord, ITitledRecord {
-	memberId?: RxRecordKey;
-	contactId?: RxRecordKey;
-	assetId?: RxRecordKey;
+	memberId?: string;
+	contactId?: string;
+	assetId?: string;
 	type: LiabilityType;
 	direction: LiabilityDirection;
 	serviceTypes?: LiabilityServiceType[];
-	serviceProvider?: { id: RxRecordKey; title: string };
+	serviceProvider?: { id: string; title: string };
 	amount: number;
 	period: Period;
 }

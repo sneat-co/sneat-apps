@@ -1,5 +1,5 @@
 /* tslint:disable:no-bitwise */
-import { Age, CommuneType, CountryId, Gender } from '../types';
+import { Age, CommuneType, CountryId, Gender } from './types';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
 import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
 import { IListGroupsHolder } from './dto-list';
