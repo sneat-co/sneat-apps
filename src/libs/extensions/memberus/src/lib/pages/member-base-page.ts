@@ -1,7 +1,6 @@
 //tslint:disable:no-unsafe-any
-import { Directive, OnInit } from '@angular/core';
 import { TeamBasePageDirective } from '@sneat/team/components';
-import { IMemberContext } from '@sneat/team/models';
+import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { MemberPages } from '../constants';
 // import { MemberPages } from 'sneat-shared/extensions/memberus/constants';
 // import { IMemberDto } from 'sneat-shared/models/dto/dto-member';
@@ -9,10 +8,9 @@ import { MemberPages } from '../constants';
 // import { eq } from 'sneat-shared/services/interfaces';
 // import { ICommuneMemberInfo } from '../../../models/dto/dto-commune';
 // import { CommuneTopPage } from '../../../pages/constants';
-import { MemberComponentBaseParams } from './member-context.component';
+import { MemberComponentBaseParams, MemberContextComponent } from './member-context.component';
 
-@Directive()
-export abstract class MemberBasePage extends TeamBasePageDirective implements OnInit {
+export abstract class MemberBasePage extends TeamBasePageDirective {
 	public segment: 'friends' | 'other' | 'summary' = 'summary';
 	// override defaultBackUrl = CommuneTopPage.members;
 	public isDeleted?: boolean;
@@ -25,29 +23,17 @@ export abstract class MemberBasePage extends TeamBasePageDirective implements On
 		// protected assetService: IAssetService,
 	) {
 		super('members', params.teamPageParams);
+		this.tryToGetMemberFromHistoryState();
 	}
 
 	public get member(): IMemberContext | undefined {
 		return this.memberContext;
 	}
 
-	override ngOnInit(): void {
-		super.ngOnInit();
-		try {
-			this.tryToGetMemberFromHistoryState();
-			// this.userService.currentUserLoaded.subscribe(user => {
-			// 	this.setCurrentUser(user);
-			// });
-			this.route?.params.subscribe(params => {
-				const { memberId } = params;
-				console.log('CommuneMemberPage() => queryParamMap', params, 'memberId:', memberId);
-				// if (memberId && memberId !== this.memberId) {
-				// 	this.setMemberId(memberId);
-				// }
-			});
-		} catch (e) {
-			this.teamParams.errorLogger.logError(e, 'Failed to initialize MemberBasePage');
-		}
+	override onTeamDtoChanged(): void {
+		super.onTeamDtoChanged();
+		console.log('MemberBasePage.onTeamDtoChanged()', this.team?.dto, this.memberContext);
+		this.getBriefIfMissing();
 	}
 
 	goNew = (event: Event, type: 'new-contact' | 'new-document' | 'new-liability' | 'new-asset', relation?: string): void => {
@@ -66,6 +52,48 @@ export abstract class MemberBasePage extends TeamBasePageDirective implements On
 			state: { member: this.memberContext, team: this.memberContext.team },
 		})
 			.catch(this.teamParams.errorLogger.logError);
+	}
+
+	protected setMemberContextComponent(cmp?: MemberContextComponent): void {
+		if (!cmp) {
+			this.errorLogger.logError('MemberContextComponent is not supplied');
+			return;
+		}
+		this.setTeamPageContext(cmp);
+		this.tackMemberId();
+	}
+
+	private tackMemberId(): void {
+		this.route?.params.subscribe({
+			next: params => {
+				const id = params['memberId'];
+				const teamId = params['teamId'];
+				console.log('route', id, params);
+				if (id) {
+					let team: ITeamContext | undefined = this.team;
+					if (!team) {
+						team = { id: teamId };
+					}
+					this.memberContext = { id, team };
+				} else {
+					this.memberContext = undefined;
+				}
+				this.getBriefIfMissing();
+			},
+			error: this.errorLogger.logErrorHandler('failed to process route parameters'),
+		});
+	}
+
+	private getBriefIfMissing(): void {
+		if (this.team?.dto?.members && this.memberContext?.id && !this.memberContext?.brief) {
+			const memberBrief = this.team?.dto?.members?.find(m => m.id === this.memberContext?.id);
+			if (memberBrief) {
+				this.memberContext = {
+					...this.memberContext,
+					brief: memberBrief,
+				};
+			}
+		}
 	}
 
 	// protected setCurrentUser(dto?: IUserDto): void {

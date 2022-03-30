@@ -4,15 +4,6 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title>Team member @ {{team?.dto?.title || 'Team'}}</ion-title>
-		<ion-buttons slot="end">
-			<ion-button
-				*ngIf="memberBrief"
-				[title]="memberBrief.uid === userId ? 'Leave team' : 'Remove team member'"
-				(click)="removeMember()"
-			>
-				<ion-icon name="trash"></ion-icon>
-			</ion-button>
-		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 

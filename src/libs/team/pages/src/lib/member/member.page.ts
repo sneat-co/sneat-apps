@@ -76,39 +76,6 @@ export class MemberPageComponent implements OnDestroy {
 		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
 	}
 
-	public removeMember() {
-		if (
-			!confirm(
-				`Are you sure you want to remove ${
-					this.memberBrief?.title || this.memberBrief?.id
-				} from ${this.team?.dto?.title}?`,
-			)
-		) {
-			return;
-		}
-		if (!this.team) {
-			this.errorLogger.logError(
-				'Can not remove team member without team context',
-			);
-			return;
-		}
-		if (!this.memberId) {
-			this.errorLogger.logError(
-				'Can not remove team member without knowing member ID',
-			);
-			return;
-		}
-		this.teamService.removeTeamMember(this.team, this.memberId).subscribe({
-			next: () => {
-				this.navController
-					.pop()
-					.catch((err) =>
-						this.errorLogger.logError(err, 'Failed to pop navigator state'),
-					);
-			},
-			error: (err) => this.errorLogger.logError(err, 'Failed to remove member'),
-		});
-	}
 
 	public ngOnDestroy(): void {
 		if (this.teamSubscription) {

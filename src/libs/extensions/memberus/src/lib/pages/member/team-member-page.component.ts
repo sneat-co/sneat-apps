@@ -1,11 +1,11 @@
 //tslint:disable:no-unsafe-any
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Gender, MemberRelationship } from '@sneat/dto';
-import { TeamComponentBaseParams, TeamPageContextComponent } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 // import { MemberRelationship } from 'sneat-shared/models/dto/dto-member';
 // import { CommuneBasePageParams } from 'sneat-shared/services/params';
 import { MemberBasePage } from '../member-base-page';
-import { MemberComponentBaseParams } from '../member-context.component';
+import { MemberComponentBaseParams, MemberContextComponent } from '../member-context.component';
 
 @Component({
 	selector: 'sneat-team-member-page',
@@ -15,10 +15,10 @@ import { MemberComponentBaseParams } from '../member-context.component';
 		MemberComponentBaseParams,
 	],
 })
-export class TeamMemberPageComponent extends MemberBasePage implements OnInit, AfterViewInit {
+export class TeamMemberPageComponent extends MemberBasePage implements AfterViewInit {
 
-	@ViewChild('teamPageContext')
-	public teamPageContext?: TeamPageContextComponent;
+	@ViewChild('memberContextComponent')
+	public memberContextComponent?: MemberContextComponent;
 
 	public dob?: string;
 	public relatedAs?: MemberRelationship;
@@ -30,7 +30,7 @@ export class TeamMemberPageComponent extends MemberBasePage implements OnInit, A
 	}
 
 	ngAfterViewInit(): void {
-		this.setTeamPageContext(this.teamPageContext);
+		this.setMemberContextComponent(this.memberContextComponent);
 		this.teamParams.preloader.preload([ // TODO: implement preloader
 			'members',
 			'document',
@@ -108,6 +108,39 @@ export class TeamMemberPageComponent extends MemberBasePage implements OnInit, A
 	// 	}
 	// }
 
+	public removeMember() {
+		if (
+			!confirm(
+				`Are you sure you want to remove ${
+					this.member?.brief?.title || this.member?.brief?.id
+				} from ${this.team?.brief?.title}?`,
+			)
+		) {
+			return;
+		}
+		if (!this.team) {
+			this.errorLogger.logError(
+				'Can not remove team member without team context',
+			);
+			return;
+		}
+		if (!this.member?.id) {
+			this.errorLogger.logError(
+				'Can not remove team member without knowing member ID',
+			);
+			return;
+		}
+		this.teamService.removeTeamMember(this.team, this.member?.id).subscribe({
+			next: () => {
+				this.navController
+					.pop()
+					.catch((err) =>
+						this.errorLogger.logError(err, 'Failed to pop navigator state'),
+					);
+			},
+			error: (err) => this.errorLogger.logError(err, 'Failed to remove member'),
+		});
+	}
 
 	private setRelatedAs(): void {
 		// this.logger.debug('CommuneMemberPage.setRelatedAs()', this.currentUserDto);

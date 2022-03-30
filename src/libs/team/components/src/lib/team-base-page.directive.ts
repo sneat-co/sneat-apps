@@ -32,8 +32,8 @@ export class TeamComponentBaseParams {
 	}
 }
 
-@Directive({ selector: '[sneatBaseTeamPage]' }) // There was some reason to add a @Directive() - TODO: document why
-export abstract class TeamBasePageDirective implements OnInit /*implements OnInit, OnDestroy*/ {
+// @Directive({ selector: '[sneatBaseTeamPage]' }) // There was some reason to add a @Directive() - TODO: document why
+export abstract class TeamBasePageDirective  {
 
 	protected route?: ActivatedRoute;
 
@@ -55,7 +55,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 	private teamContext?: ITeamContext;
 
 	protected constructor(
-		@Inject('className')
+		// @Inject('className')
 		public readonly className: string,
 		readonly teamParams: TeamComponentBaseParams,
 	) {
@@ -92,10 +92,6 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 
 	protected get errorLogger() {
 		return this.teamParams.errorLogger;
-	}
-
-	ngOnInit(): void {
-		console.log('BaseTeamPageDirective.ngOnInit()');
 	}
 
 	protected setTeamPageContext(context?: TeamPageContextComponent): void {
@@ -137,7 +133,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 	}
 
 	protected onTeamDtoChanged(): void {
-		console.log('BaseTeamPageDirective.onTeamChanged()');
+		console.log('BaseTeamPageDirective.onTeamDtoChanged()', this.team?.dto);
 	}
 
 	// private trackTeamIdAndTypeFromUrl(): void {

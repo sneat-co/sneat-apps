@@ -1,12 +1,13 @@
-import { Component, Injectable, NgModule } from '@angular/core';
+import { Component, Injectable, Input, NgModule } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamComponentBaseParams, TeamPageContextComponent, TeamPageContextModule } from '@sneat/team/components';
+import { MemberService } from '@sneat/team/services';
 
 @Injectable()
 export class MemberComponentBaseParams {
 	constructor(
 		public readonly teamPageParams: TeamComponentBaseParams,
-		// public readonly membersService: IMemberService,
+		public readonly membersService: MemberService,
 	) {
 	}
 }
