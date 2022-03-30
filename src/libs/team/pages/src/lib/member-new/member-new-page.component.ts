@@ -102,6 +102,8 @@ export class MemberNewPageComponent {
 		const request: IAddTeamMemberRequest = {
 			team: this.teamId,
 			role: this.role.value,
+			gender: 'unknown',
+			ageGroup: 'unknown',
 			title,
 		};
 		const email = (this.email.value as string).trim();

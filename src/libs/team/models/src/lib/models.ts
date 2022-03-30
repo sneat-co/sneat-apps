@@ -1,5 +1,5 @@
 import { IAvatar } from '@sneat/auth-models';
-import { TeamType } from '@sneat/dto';
+import { AgeGroup, Gender, TeamType } from '@sneat/dto';
 
 export type MetricColor =
 	| 'primary'
@@ -64,7 +64,10 @@ export type MemberRole = MemberRoleEnum.contributor | MemberRoleEnum.spectator;
 export interface IAddTeamMemberRequest extends ITeamRequest {
 	role: MemberRole;
 	title: string;
+	gender: Gender;
+	ageGroup?: AgeGroup;
 	email?: string;
+	phone?: string;
 	message?: string;
 }
 

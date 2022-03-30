@@ -81,16 +81,17 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 		return this.teamContext;
 	}
 
-	protected get errorLogger() {
-		return this.teamParams.errorLogger;
-	}
-
 	public get currentUserId() {
 		return this.userService.currentUserId;
 	}
 
 	public get defaultBackUrl(): string {
-		return this.teamContext?.id ? `team?id=${this.teamContext.id}` : 'teams';
+		const t = this.teamContext;
+		return t ? `/space/${t.type}/${t.id}` : 'teams';
+	}
+
+	protected get errorLogger() {
+		return this.teamParams.errorLogger;
 	}
 
 	ngOnInit(): void {
@@ -126,7 +127,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 			this.subs.unsubscribe();
 			if (this.team) {
 				this.teamContext = { ...this.team, dto: undefined }; // Hide team data
-				this.onTeamChanged();
+				this.onTeamDtoChanged();
 			}
 		}
 	}
@@ -135,7 +136,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 		console.log('BaseTeamPageDirective.onTeamIdChanged()');
 	}
 
-	protected onTeamChanged(): void {
+	protected onTeamDtoChanged(): void {
 		console.log('BaseTeamPageDirective.onTeamChanged()');
 	}
 
@@ -174,7 +175,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 			)
 		) {
 			this.teamContext = { ...this.teamContext, ...teamContext };
-			this.onTeamChanged();
+			this.onTeamDtoChanged();
 		}
 	}
 
@@ -183,7 +184,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 			this.teamContext = history.state?.team as IUserTeamInfo;
 			if (this.teamContext) {
 				this.onTeamIdChanged();
-				this.onTeamChanged();
+				this.onTeamDtoChanged();
 			}
 		} catch (e) {
 			this.logError(e, 'Failed in BaseTeamPage.constructor()');
@@ -211,13 +212,24 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 	}
 
 	private updateExistingTeamContext(teamContext: ITeamContext): void {
+		const dtoChanged = this.teamContext?.dto != teamContext.dto;
 		this.teamContext = teamContext;
+		if (dtoChanged) {
+			this.onTeamDtoChanged();
+		}
 	}
 
 	private setNewTeamContext(teamContext: ITeamContext): void {
 		console.log(`setNewTeamContext(${teamContext.id}), previous id=${this.teamContext?.id}`);
+		const dtoChanged = this.teamContext?.dto != teamContext.dto;
+		const idChanged = this.teamContext?.id != teamContext.id;
 		this.teamContext = teamContext;
-		this.onTeamIdChanged();
+		if (idChanged) {
+			this.onTeamIdChanged();
+		}
+		if (dtoChanged) {
+			this.onTeamDtoChanged();
+		}
 		const { id } = teamContext;
 		if (!id) {
 			this.logError('setNewTeamContext() is called with team context without ID');
@@ -242,6 +254,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 	}
 
 	private setTeamContext = (teamContext?: ITeamContext | null): void => {
+		console.log('setTeamContext()', teamContext);
 		try {
 			if (teamContext?.id) {
 				if (this.teamContext?.id !== teamContext.id) {
@@ -257,7 +270,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 					this.onTeamIdChanged();
 				}
 				if (hadData) {
-					this.onTeamChanged();
+					this.onTeamDtoChanged();
 				}
 			}
 
@@ -269,7 +282,7 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 	private setTeam(team: ITeamContext): void {
 		console.log('BaseTeamPageDirective.setTeam()', team);
 		this.teamContext = team;
-		this.onTeamChanged();
+		this.onTeamDtoChanged();
 	}
 }
 

@@ -6,11 +6,17 @@ import {
 	AgeGroup,
 	FamilyMemberRelation,
 	familyRelationTitle,
-	Gender, IMemberDto, ITitledRecord,
+	Gender,
+	IMemberDto,
+	ITitledRecord,
 	MemberRelationship,
-	MemberRelationshipOther, MemberRelationshipUndisclosed, MemberRole,
+	MemberRelationshipOther,
+	MemberRelationshipUndisclosed,
+	MemberRole,
 } from '@sneat/dto';
 import { TeamBasePageDirective, TeamComponentBaseParams, TeamPageContextComponent } from '@sneat/team/components';
+import { IAddTeamMemberRequest, MemberRoleEnum } from '@sneat/team/models';
+import { MemberService } from '@sneat/team/services';
 
 interface Role {
 	checked?: boolean;
@@ -31,25 +37,24 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 
 	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 
-	public name = '';
 	public email = '';
 	public phone = '';
 	public role?: string;
-	public age?: AgeGroup;
+	public ageGroup?: AgeGroup;
 	public gender?: Gender;
 	public roles?: Role[];
 	public relationship?: MemberRelationship;
 	public relationships?: ITitledRecord[];
 	public creating = false;
-	public title = 'New member';
+	public title = '';
 
 	constructor(
 		params: TeamComponentBaseParams,
-		// private readonly membersService: IMemberService,
+		private readonly membersService: MemberService,
 	) {
 		super('members', params);
-		this.age = history.state.age as AgeGroup;
-		console.log('age', this.age);
+		this.ageGroup = history.state.age as AgeGroup;
+		console.log('age', this.ageGroup);
 	}
 
 	ionViewDidEnter(): void {
@@ -66,13 +71,14 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 	}
 
 	ageChanged(): void {
-		if (this.age === 'child') {
+		if (this.ageGroup === 'child') {
 			this.title = 'New child';
 		}
 	}
 
-	override onTeamChanged(): void {
+	override onTeamDtoChanged(): void {
 		// noinspection JSRedundantSwitchStatement
+		console.log('onTeamChanged', this.team);
 		if (!this.team?.dto) {
 			return;
 		}
@@ -93,7 +99,7 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 					title: familyRelationTitle(id),
 				}));
 				this.relationships = getRelOptions(
-					this.age === 'child'
+					this.ageGroup === 'child'
 						?
 						[
 							FamilyMemberRelation.child,
@@ -111,7 +117,7 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 							MemberRelationshipOther,
 						] as FamilyMemberRelation[],
 				);
-				console.log('rel options:', this.age, [...this.relationships]);
+				console.log('rel options:', this.ageGroup, [...this.relationships]);
 				break;
 			}
 			default:
@@ -121,15 +127,15 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 	}
 
 	submit(): void {
-		if (!this.name.trim()) {
+		if (!this.title.trim()) {
 			alert('Please enter full name of the new member');
 			this.setFocusToNameInput();
 			return;
 		}
 		this.creating = true;
 		let memberDto: IMemberDto = {
-			title: this.name,
-			age: this.age,
+			title: this.title,
+			age: this.ageGroup,
 			gender: this.gender,
 			email: this.email.trim() ? this.email.trim() : undefined,
 			phone: this.phone.trim() ? this.phone.trim() : undefined,
@@ -138,6 +144,33 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 			memberDto = { ...memberDto, roles: [this.role as MemberRole] };
 		}
 		memberDto = excludeUndefined(memberDto);
+		const team = this.team;
+		if (!team) {
+			this.errorLogger.logError('not able to add new member without team context');
+			return;
+		}
+		if (!this.ageGroup) {
+			throw new Error('Age group is a required field');
+		}
+		if (!this.gender) {
+			throw new Error('Gender is a required field');
+		}
+		const request: IAddTeamMemberRequest = {
+			team: team.id,
+			title: this.title,
+			gender: this.gender,
+			ageGroup: this.ageGroup,
+			role: MemberRoleEnum.contributor,
+		};
+		if (this.email) {
+			request.email = this.email;
+		}
+		if (this.phone) {
+			request.phone = this.phone;
+		}
+		this.membersService.addMember(request).subscribe(member => {
+			console.log('member created:', member);
+		});
 
 		// this.startCommuneReadwriteTx([MemberKind], (tx, communeDto, userDto) =>
 		// 	this.membersService.addCommuneItem(
@@ -171,6 +204,16 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 
 	id = (i: number, record: {id: string}) => record.id;
 
+	public onRelationshipChanged(): void {
+		if (!this.ageGroup) {
+			if (this.relationship === 'parent' || this.relationship === 'spouse' || this.relationship === 'partner' || this.relationship === 'grandparent') {
+				this.ageGroup = 'adult'
+			} else if (this.relationship === 'child') {
+				this.ageGroup = 'child';
+			}
+		}
+		this.setFocusToNameInput();
+	}
 	public setFocusToNameInput(): void {
 		setTimeout(
 			() => {

@@ -17,7 +17,11 @@ const routes: Routes = [
 		pathMatch: 'full',
 		loadChildren: () => import('./team-page/team-page.module').then(m => m.TeamPageModule),
 	},
-	...memberRoutes,
+	...memberRoutes, // E.g. "./new-member"
+	{
+		path: 'member/:memberId',
+		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
+	},
 	// {
 	// 	path: '',
 	// 	component: SpacePageComponent, // intentionally not lazy loading

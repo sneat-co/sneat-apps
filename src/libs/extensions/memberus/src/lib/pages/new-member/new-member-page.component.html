@@ -1,6 +1,6 @@
 <sneat-team-page-context #teamPageContext page="mew-member"></sneat-team-page-context>
 <ion-header>
-	<ion-toolbar color="primary" class="with-back-button">
+	<ion-toolbar color="light" class="with-back-button">
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
@@ -15,7 +15,7 @@
 	<ng-container *ngIf="relationships">
 		<ion-item-group *ngIf="!relationship">
 			<ion-item-divider>Related to me as</ion-item-divider>
-			<ion-radio-group [(ngModel)]="relationship" (ionChange)="setFocusToNameInput()">
+			<ion-radio-group [(ngModel)]="relationship" (ionChange)="onRelationshipChanged()">
 				<ion-item *ngFor="let rel of relationships">
 					<ion-label>{{rel.title}}</ion-label>
 					<ion-radio slot="start" [value]="rel.id"></ion-radio>
@@ -33,7 +33,7 @@
 	<ng-container *ngIf="relationship">
 		<ion-item>
 			<ion-label position="floating">Full name</ion-label>
-			<ion-input [(ngModel)]="name" #nameInput [disabled]="creating" style="font-weight: bold"></ion-input>
+			<ion-input [(ngModel)]="title" #nameInput [disabled]="creating" placeholder="Firstname Lastname"></ion-input>
 		</ion-item>
 
 		<ion-item-group>
@@ -65,6 +65,14 @@
 					<ion-label>Female</ion-label>
 					<ion-radio value="female" slot="start"></ion-radio>
 				</ion-item>
+				<ion-item>
+					<ion-label>Other</ion-label>
+					<ion-radio value="other" slot="start"></ion-radio>
+				</ion-item>
+				<ion-item>
+					<ion-label>Undisclosed</ion-label>
+					<ion-radio value="undisclosed" slot="start"></ion-radio>
+				</ion-item>
 			</ion-radio-group>
 		</ion-item-group>
 		<ion-item *ngIf="gender">
@@ -72,15 +80,17 @@
 			<ion-select [(ngModel)]="gender" interface="popover">
 				<ion-select-option value="male">Male</ion-select-option>
 				<ion-select-option value="female">Female</ion-select-option>
+				<ion-select-option value="other">other</ion-select-option>
+				<ion-select-option value="undisclosed">undisclosed</ion-select-option>
 			</ion-select>
 		</ion-item>
 
 		<ng-container *ngIf="team?.dto && team?.type !== 'educator'">
-			<ion-item-group *ngIf="!age">
+			<ion-item-group *ngIf="!ageGroup">
 				<ion-item-divider>
-					<ion-label>Age</ion-label>
+					<ion-label>Age group</ion-label>
 				</ion-item-divider>
-				<ion-radio-group [(ngModel)]="age" (ionChange)="ageChanged()">
+				<ion-radio-group [(ngModel)]="ageGroup" (ionChange)="ageChanged()">
 					<ion-item>
 						<ion-label>Adult</ion-label>
 						<ion-radio slot="start" value="adult"></ion-radio>
@@ -91,16 +101,16 @@
 					</ion-item>
 				</ion-radio-group>
 			</ion-item-group>
-			<ion-item *ngIf="age">
+			<ion-item *ngIf="ageGroup">
 				<ion-label>Age</ion-label>
-				<ion-select [(ngModel)]="age" interface="popover" (ionChange)="ageChanged()">
+				<ion-select [(ngModel)]="ageGroup" interface="popover" (ionChange)="ageChanged()">
 					<ion-select-option value="adult">Adult</ion-select-option>
 					<ion-select-option value="child">Child</ion-select-option>
 				</ion-select>
 			</ion-item>
 		</ng-container>
 
-		<ion-item-group *ngIf="age === 'child' && this.team?.dto && this.team?.dto?.type !== 'family'">
+		<ion-item-group *ngIf="ageGroup === 'child' && this.team?.dto && this.team?.dto?.type !== 'family'">
 			<ion-item>
 				<ion-label>Adult contact</ion-label>
 				<ion-select value="mother" interface="action-sheet">

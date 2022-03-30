@@ -255,7 +255,7 @@ export class ScrumPage
 		}
 	}
 
-	protected onTeamChanged(): void {
+	protected onTeamDtoChanged(): void {
 		const team = this.team?.data;
 		if (!team) {
 			return;
