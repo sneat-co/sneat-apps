@@ -4,7 +4,7 @@ import { Params } from '@angular/router';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { IMemberInfo, ITeamDto } from '@sneat/team/models';
+import { IMemberBrief, ITeamDto } from '@sneat/team/models';
 import { IUserTeamInfo } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
@@ -83,7 +83,7 @@ export class NavService {
 	public navigateToMember(
 		navController: NavController,
 		team: IRecord<ITeamDto>,
-		memberInfo: IMemberInfo,
+		memberInfo: IMemberBrief,
 	): void {
 		console.log(
 			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`,

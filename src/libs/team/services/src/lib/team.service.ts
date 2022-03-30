@@ -5,16 +5,13 @@ import { SneatApiService } from '@sneat/api';
 import { AuthStatus, SneatAuthStateService } from '@sneat/auth';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
+import { IMemberBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreateTeamRequest,
 	ICreateTeamResponse,
-	IMemberInfo,
-	ITeamDto,
 	ITeamMemberRequest,
-	ITeamMetric,
 	ITeamRequest,
-	MemberRole,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { Observable, ReplaySubject, Subscription, switchMap, throwError } from 'rxjs';
@@ -103,7 +100,7 @@ export class TeamService {
 		memberId: string,
 		role: MemberRole,
 	): Observable<IRecord<ITeamDto>> {
-		const member = teamRecord?.dto?.members.find((m: IMemberInfo) => m.id === memberId);
+		let member = teamRecord?.dto?.members.find((m: IMemberBrief) => m.id === memberId);
 		if (!member) {
 			return throwError(() => 'member not found by ID in team record');
 		}
@@ -115,7 +112,10 @@ export class TeamService {
 			})
 			.pipe(
 				map(() => {
-					member.roles = [role];
+					if (!member) {
+						throw new Error('member is no longer available');
+					}
+					member = {...member, roles: [role]}
 					return teamRecord;
 				}),
 			);
@@ -141,7 +141,7 @@ export class TeamService {
 			if (team) {
 				team = {
 					...team,
-					members: team.members.filter((m: IMemberInfo) => m.id !== memberId),
+					members: team.members.filter((m: IMemberBrief) => m.id !== memberId),
 				};
 			}
 			const record: IRecord<ITeamDto> = { id: teamRecord.id, dto: team };
@@ -159,7 +159,7 @@ export class TeamService {
 			return team;
 		});
 		if (teamRecord?.dto?.members) {
-			const member = teamRecord.dto.members.find((m: IMemberInfo) => m.id === memberId);
+			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberId);
 			if (member?.uid === this.userService.currentUserId) {
 				const teamRequest: ITeamRequest = {
 					team: teamRecord.id,

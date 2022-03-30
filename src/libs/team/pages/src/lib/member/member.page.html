@@ -6,8 +6,8 @@
 		<ion-title>Team member @ {{team?.dto?.title || 'Team'}}</ion-title>
 		<ion-buttons slot="end">
 			<ion-button
-				*ngIf="memberInfo"
-				[title]="memberInfo.uid === userId ? 'Leave team' : 'Remove team member'"
+				*ngIf="memberBrief"
+				[title]="memberBrief.uid === userId ? 'Leave team' : 'Remove team member'"
 				(click)="removeMember()"
 			>
 				<ion-icon name="trash"></ion-icon>
@@ -20,29 +20,29 @@
 	<ion-progress-bar *ngIf="!team" type="indeterminate"></ion-progress-bar>
 	<form>
 		<ion-item>
-			<ion-avatar slot="start" *ngIf="memberInfo?.avatar">
+			<ion-avatar slot="start" *ngIf="memberBrief?.avatar">
 				<ion-img
 					title="avatar"
-					*ngIf="memberInfo?.avatar?.gravatar"
-					src="//www.gravatar.com/avatar/{{ memberInfo?.avatar?.gravatar }}"
+					*ngIf="memberBrief?.avatar?.gravatar"
+					src="//www.gravatar.com/avatar/{{ memberBrief?.avatar?.gravatar }}"
 				></ion-img>
 				<ion-img
 					title="avatar"
-					*ngIf="memberInfo?.avatar?.external"
-					[src]="memberInfo?.avatar?.external?.url"
+					*ngIf="memberBrief?.avatar?.external"
+					[src]="memberBrief?.avatar?.external?.url"
 				></ion-img>
 			</ion-avatar>
-			<ion-avatar slot="start" *ngIf="memberInfo && !memberInfo.avatar">
+			<ion-avatar slot="start" *ngIf="memberBrief && !memberBrief.avatar">
 				<ion-img
 					title="avatar"
-					src="//www.gravatar.com/avatar/{{ memberInfo.id }}.gravatar"
+					src="//www.gravatar.com/avatar/{{ memberBrief.id }}.gravatar"
 				></ion-img>
 			</ion-avatar>
 			<ion-label position="stacked">Name</ion-label>
 			<ion-input
 				readonly
-				*ngIf="memberInfo"
-				[value]="memberInfo?.title"
+				*ngIf="memberBrief"
+				[value]="memberBrief?.title"
 			></ion-input>
 		</ion-item>
 		<ion-item>

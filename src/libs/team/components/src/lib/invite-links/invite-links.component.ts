@@ -1,9 +1,9 @@
 import { Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
+import { ITeamDto } from '@sneat/dto';
 import { Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatUserService } from '@sneat/user';
-import { ITeamDto } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 
 export const stringHash = (s: string): number => {

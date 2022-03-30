@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SneatUserService } from '@sneat/user';
 import {
 	IAcceptPersonalInviteRequest,
-	IMemberInfo,
 	IPersonalInvite,
 	IRejectPersonalInviteRequest,
 } from '@sneat/team/models';
@@ -32,7 +32,7 @@ export class InvitePersonalPage implements OnInit {
 	public rejecting = false;
 
 	public invite?: IPersonalInvite;
-	public members?: IMemberInfo[];
+	public members?: IMemberBrief[];
 
 	private inviteId = '';
 	private teamId = '';
@@ -63,7 +63,7 @@ export class InvitePersonalPage implements OnInit {
 				this.errorLogger.logError('teamId is not set');
 			}
 			this.sneatApiService
-				.getAsAnonymous<{ invite?: IPersonalInvite; members?: IMemberInfo[] }>(
+				.getAsAnonymous<{ invite?: IPersonalInvite; members?: IMemberBrief[] }>(
 					'invites/personal',
 					new HttpParams({
 						fromObject: { invite: inviteId, team: teamId },

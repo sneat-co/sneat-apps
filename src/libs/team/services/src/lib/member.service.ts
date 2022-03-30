@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IMemberBrief, IMemberDto, ITeamDto } from '@sneat/dto';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
@@ -7,10 +8,7 @@ import {
 	IAcceptPersonalInviteRequest,
 	IAddTeamMemberRequest,
 	IAddTeamMemberResponse,
-	IMember,
-	IMemberInfo,
 	IRejectPersonalInviteRequest,
-	ITeamDto,
 } from '@sneat/team/models';
 import { TeamService } from './team.service';
 import { IErrorResponse } from '@sneat/core';
@@ -29,7 +27,7 @@ export class MemberService {
 	public acceptPersonalInvite(
 		request: IAcceptPersonalInviteRequest,
 		firebaseToken: string,
-	): Observable<IMemberInfo> {
+	): Observable<IMemberBrief> {
 		console.log('MemberService.acceptPersonalInvite()');
 		if (firebaseToken) {
 			this.sneatApiService.setApiAuthToken(firebaseToken);
@@ -49,7 +47,7 @@ export class MemberService {
 		);
 	}
 
-	public addMember(request: IAddTeamMemberRequest): Observable<IMemberInfo> {
+	public addMember(request: IAddTeamMemberRequest): Observable<IMemberBrief> {
 		console.log(`MemberService.addMember()`, request);
 		const processAddMemberResponse = (
 			response: IAddTeamMemberResponse | IErrorResponse,
@@ -58,13 +56,13 @@ export class MemberService {
 				throw (response as IErrorResponse).error;
 			}
 			const okResponse = response as IAddTeamMemberResponse;
-			const member: IMemberInfo = {
+			let member: IMemberBrief = {
 				id: okResponse.id,
 				title: request.title,
 				roles: [request.role],
 			};
 			if (okResponse.uid) {
-				member.uid = okResponse.uid;
+				member = {...member, uid: okResponse.uid};
 			}
 			return this.teamService.getTeam(request.team).pipe(
 				tap((team) => {
@@ -84,10 +82,10 @@ export class MemberService {
 	public watchMember(
 		teamId: string,
 		memberId: string,
-	): Observable<{ team: ITeamDto; member?: IMember } | undefined | null> {
+	): Observable<{ team: ITeamDto; member?: IMemberDto } | undefined | null> {
 		const findMember = (team: ITeamDto | undefined | null) => team ? {
 			team,
-			member: team?.members.find((m) => m.id === memberId),
+			member: team?.members?.find(m => m.id === memberId),
 		} : team === null ? null : undefined;
 		return this.teamService.watchTeam(teamId)
 			.pipe(

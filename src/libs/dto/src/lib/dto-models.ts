@@ -44,7 +44,7 @@ export interface DtoTotals {
 // }
 
 export interface ITeamRecord extends IDemoRecord {
-	communeId?: RxRecordKey;
+	teamId?: string;
 }
 
 export interface IRealEstate {

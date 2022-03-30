@@ -1,12 +1,12 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IMemberInfo, ITeamDto } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
-import { SneatUserService } from '@sneat/user';
+import { IMemberBrief, ITeamDto } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamService } from '@sneat/team/services';
+import { SneatUserService } from '@sneat/user';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'sneat-member',
@@ -17,15 +17,11 @@ export class MemberPageComponent implements OnDestroy {
 	public team?: IRecord<ITeamDto>;
 
 	public userId?: string;
-	public memberInfo?: IMemberInfo;
+	public memberBrief?: IMemberBrief;
 	public changing?: 'role';
 
 	private memberId?: string;
 	private teamSubscription?: Subscription;
-
-	public get defaultBackUrl(): string {
-		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
-	}
 
 	constructor(
 		readonly route: ActivatedRoute,
@@ -36,15 +32,15 @@ export class MemberPageComponent implements OnDestroy {
 	) {
 		console.log('MemberPage.constructor()');
 		try {
-			this.memberInfo = window.history.state.memberInfo as IMemberInfo;
+			this.memberBrief = window.history.state.memberInfo as IMemberBrief;
 			if (!this.memberId) {
-				this.memberId = this?.memberInfo?.id;
+				this.memberId = this?.memberBrief?.id;
 			}
 			if (this.memberId) {
 				if (
-					this.memberInfo &&
+					this.memberBrief &&
 					this.memberId &&
-					this.memberInfo.id !== this.memberId
+					this.memberBrief.id !== this.memberId
 				) {
 					this.errorLogger.logError('this.memberInfo.id !== this.memberId');
 					return;
@@ -76,11 +72,15 @@ export class MemberPageComponent implements OnDestroy {
 		}
 	}
 
+	public get defaultBackUrl(): string {
+		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
+	}
+
 	public removeMember() {
 		if (
 			!confirm(
 				`Are you sure you want to remove ${
-					this.memberInfo?.title || this.memberInfo?.id
+					this.memberBrief?.title || this.memberBrief?.id
 				} from ${this.team?.dto?.title}?`,
 			)
 		) {
@@ -195,8 +195,8 @@ export class MemberPageComponent implements OnDestroy {
 	private onMemberIdChanged(): void {
 		if (this.team) {
 			const memberId = this.memberId;
-			this.memberInfo = this.team?.dto?.members?.find(
-				(m) => m.id === memberId,
+			this.memberBrief = this.team?.dto?.members?.find(
+				m => m.id === memberId,
 			);
 		}
 	}

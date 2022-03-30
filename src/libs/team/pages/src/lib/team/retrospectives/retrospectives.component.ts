@@ -1,8 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
-import { ITeamDto } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/user';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { RetroItemType } from '@sneat/scrumspace/scrummodels';

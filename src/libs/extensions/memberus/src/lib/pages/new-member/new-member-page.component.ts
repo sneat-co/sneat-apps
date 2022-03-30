@@ -12,10 +12,10 @@ import {
 	MemberRelationship,
 	MemberRelationshipOther,
 	MemberRelationshipUndisclosed,
-	MemberRole,
+	MemberRole, MemberRoleContributor,
 } from '@sneat/dto';
 import { TeamBasePageDirective, TeamComponentBaseParams, TeamPageContextComponent } from '@sneat/team/components';
-import { IAddTeamMemberRequest, MemberRoleEnum } from '@sneat/team/models';
+import { IAddTeamMemberRequest } from '@sneat/team/models';
 import { MemberService } from '@sneat/team/services';
 
 interface Role {
@@ -160,7 +160,7 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 			title: this.title,
 			gender: this.gender,
 			ageGroup: this.ageGroup,
-			role: MemberRoleEnum.contributor,
+			role: MemberRoleContributor,
 		};
 		if (this.email) {
 			request.email = this.email;
@@ -168,6 +168,7 @@ export class NewMemberPageComponent extends TeamBasePageDirective implements Aft
 		if (this.phone) {
 			request.phone = this.phone;
 		}
+
 		this.membersService.addMember(request).subscribe(member => {
 			console.log('member created:', member);
 		});

@@ -5,9 +5,10 @@ import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
+import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrum } from '@sneat/scrumspace/scrummodels';
-import { IMemberContext, ITeamDto } from '@sneat/team/models';
+import { IMemberContext } from '@sneat/team/models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 

@@ -1,11 +1,12 @@
 import { Component, Inject, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput, NavController } from '@ionic/angular';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAddTeamMemberRequest, ITeamDto } from '@sneat/team/models';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
+import { ITeamDto } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IAddTeamMemberRequest } from '@sneat/team/models';
 import { MemberService, TeamService } from '@sneat/team/services';
 
 @Component({

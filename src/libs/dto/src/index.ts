@@ -14,6 +14,8 @@ export * from './lib/dto-pricing';
 export * from './lib/dto-reminders';
 export * from './lib/dto-service-provider';
 export * from './lib/dto-team';
+export * from './lib/dto-team-meeting';
+export * from './lib/dto-team-metric';
 export * from './lib/dto-term';
 export * from './lib/dto-user';
 export * from './lib/types';

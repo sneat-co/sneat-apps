@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import {
 	AngularFirestore,
@@ -9,7 +10,6 @@ import {
 import { filter, map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { BaseMeetingService } from '@sneat/meeting';
-import { IMemberInfo, ITeamDto } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -18,7 +18,7 @@ import {
 	IAddCommentRequest,
 	IAddTaskRequest,
 	IReorderTaskRequest,
-	IScrum,
+	IScrum, IScrumStatusMember,
 	IStatus,
 	ITask,
 	IThumbUpRequest,
@@ -31,14 +31,14 @@ import FieldPath = firebase.firestore.FieldPath;
 
 const getOrCreateMemberStatus = (
 	scrum: IScrum,
-	member: IMemberInfo,
+	member: IMemberBrief,
 ): IStatus => {
 	const mid = member.id;
 	const statusOfMember = (item: IStatus) => mid && item.member.id === mid;
 	let status = scrum.statuses.find(statusOfMember);
 	if (!status) {
 		status = {
-			member,
+			member: member as IScrumStatusMember,
 			byType: {
 				done: [],
 				risk: [],
@@ -110,7 +110,7 @@ export class ScrumService extends BaseMeetingService {
 	public deleteTask(
 		team: string,
 		scrumId: string,
-		member: IMemberInfo,
+		member: IMemberBrief,
 		type: TaskType,
 		id: string,
 	): Observable<void> {
@@ -160,7 +160,7 @@ export class ScrumService extends BaseMeetingService {
 	public setTaskCompletion(
 		teamId: string,
 		scrumId: string,
-		member: IMemberInfo,
+		member: IMemberBrief,
 		taskId: string,
 		isCompleted: boolean,
 	): Observable<IStatus> {
@@ -206,7 +206,7 @@ export class ScrumService extends BaseMeetingService {
 	public addTask(
 		team: IRecord<ITeamDto>,
 		scrumId: string,
-		member: IMemberInfo,
+		member: IMemberBrief,
 		type: TaskType,
 		title: string,
 	): Observable<ITaskWithUiStatus> {
@@ -255,7 +255,7 @@ export class ScrumService extends BaseMeetingService {
 	private updateStatus(
 		teamId: string,
 		scrumId: string,
-		member: IMemberInfo,
+		member: IMemberBrief,
 		// TODO: Invalid eslint-disable-next-line no-shadow - lambda definition should not cause shadowing.
 		// https://github.com/sneat-team/sneat-team-pwa/issues/381
 		// eslint-disable-next-line no-shadow

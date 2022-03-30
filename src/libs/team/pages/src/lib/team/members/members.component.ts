@@ -1,8 +1,8 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
-import { ITeamDto, MemberRole, MemberRoleEnum } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
+import { ITeamDto, MemberRole, MemberRoleContributor, MemberRoleSpectator } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
 @Component({
@@ -13,7 +13,7 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 export class MembersComponent implements OnChanges {
 	@Input() public team?: IRecord<ITeamDto>;
 
-	public membersRoleTab: MemberRole | '*' = MemberRoleEnum.contributor;
+	public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
 	public contributorsCount?: number;
 	public spectatorsCount?: number;
 
@@ -53,9 +53,9 @@ export class MembersComponent implements OnChanges {
 	private setMembersCount(team?: ITeamDto): void {
 		if (team) {
 			const count = (role: MemberRole): number =>
-				team.members?.filter((m) => m.roles?.indexOf(role) >= 0)?.length || 0;
-			this.contributorsCount = count(MemberRoleEnum.contributor);
-			this.spectatorsCount = count(MemberRoleEnum.spectator);
+				team.members?.filter(m => m.roles?.indexOf(role) || -1 >= 0)?.length || 0;
+			this.contributorsCount = count(MemberRoleContributor);
+			this.spectatorsCount = count(MemberRoleSpectator);
 		} else {
 			this.contributorsCount = undefined;
 			this.spectatorsCount = undefined;

@@ -1,11 +1,11 @@
 import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ITeamDto } from '@sneat/dto';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { ITeamDto } from '@sneat/team/models';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { IScrum } from '@sneat/scrumspace/scrummodels';
 import { TeamNavService } from '@sneat/team/services';

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/animations';
+import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IMemberContext, IMemberInfo, ITeamContext } from '@sneat/team/models';
+import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 
@@ -14,11 +15,11 @@ import { SneatUserService } from '@sneat/user';
 })
 export class MembersListComponent implements OnChanges {
 	@Input() team?: ITeamContext;
-	@Input() allMembers?: IMemberInfo[];
+	@Input() allMembers?: IMemberBrief[];
 	@Input() role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
 
-	public members?: IMemberInfo[];
+	public members?: IMemberBrief[];
 	private selfRemove?: boolean;
 
 	constructor(
@@ -31,9 +32,9 @@ export class MembersListComponent implements OnChanges {
 		//
 	}
 
-	public id = (_: number, m: IMemberInfo) => m.id;
+	public id = (_: number, m: IMemberBrief) => m.id;
 
-	public goMember(member?: IMemberInfo): void {
+	public goMember(member?: IMemberBrief): void {
 		console.log('TeamPage.goMember()', member);
 		if (!this.team) {
 			this.errorLogger.logError(
@@ -67,7 +68,7 @@ export class MembersListComponent implements OnChanges {
 	// 	this.navService.navigateToAddMember(this.navController, this.team);
 	// }
 
-	public removeMember(event: Event, memberInfo: IMemberInfo) {
+	public removeMember(event: Event, memberInfo: IMemberBrief) {
 		// event.preventDefault();
 		event.stopPropagation();
 		if (!this.team) {

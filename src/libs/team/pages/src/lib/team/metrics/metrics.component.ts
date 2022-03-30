@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { IBoolMetricVal, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IBoolMetricVal, ITeamDto, ITeamMetric } from '@sneat/team/models';
 import { IRecord } from '@sneat/data';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
