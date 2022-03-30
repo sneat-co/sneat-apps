@@ -14,7 +14,7 @@ import { TeamPageContextComponent } from './team-page-context';
 
 
 @Injectable()
-// Should be declared in module for each page?
+// TODO: verify it should be declared in providers attribute for each page or can be just on app level?
 export class TeamComponentBaseParams {
 	constructor(
 		public readonly navController: NavController,
@@ -79,6 +79,10 @@ export abstract class TeamBasePageDirective implements OnInit /*implements OnIni
 
 	public get team() {
 		return this.teamContext;
+	}
+
+	protected get errorLogger() {
+		return this.teamParams.errorLogger;
 	}
 
 	public get currentUserId() {

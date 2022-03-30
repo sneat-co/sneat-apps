@@ -8,6 +8,7 @@ export * from './lib/dto-happening';
 export * from './lib/dto-liability';
 export * from './lib/dto-list';
 export * from './lib/dto-member';
+export * from './lib/dto-models';
 export * from './lib/dto-movie';
 export * from './lib/dto-pricing';
 export * from './lib/dto-reminders';

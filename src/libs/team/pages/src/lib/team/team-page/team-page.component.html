@@ -82,6 +82,11 @@
 				<ion-card>
 					<ion-item>
 						<ion-label style="font-weight: bold">Members</ion-label>
+						<ion-buttons slot="end">
+							<ion-button routerLink="new-member">
+								<ion-icon name="add-outline"></ion-icon>
+							</ion-button>
+						</ion-buttons>
 					</ion-item>
 					<ion-list>
 						<sneat-members-list [team]="team" [allMembers]="team?.dto?.members"
