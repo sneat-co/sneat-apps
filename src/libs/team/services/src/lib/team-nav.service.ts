@@ -205,9 +205,9 @@ export class TeamNavService {
 		navOptions: NavigationOptions,
 		analyticsEvent: { name: string; params?: any },
 	): void {
-		console.log('navForward()', analyticsEvent.name, analyticsEvent.params);
+		console.log('navForward()', url, analyticsEvent.name, analyticsEvent.params);
 		navController = navController || this.navController;
-		this.analyticsService.logEvent(analyticsEvent.name, analyticsEvent.params);
+		// this.analyticsService.logEvent(analyticsEvent.name, analyticsEvent.params);
 		navController
 			.navigateForward(url, navOptions)
 			.catch((err) =>
