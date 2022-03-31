@@ -31,9 +31,9 @@ export class ScrumPage
 
 	public totalElapsed: string;
 
-	public scrumId: string;
+	public scrumID: string;
 	public scrum: IScrum = {
-		userIds: [],
+		userIDs: [],
 		statuses: [],
 	};
 
@@ -44,10 +44,10 @@ export class ScrumPage
 	public isToday: boolean;
 	public scrumDate: Date;
 
-	public prevScrumId: string;
+	public prevScrumID: string;
 	public prevScrumDate: Date;
 
-	public nextScrumId: string;
+	public nextScrumID: string;
 	public nextScrumDate: Date;
 
 	public get prevScrumTitle(): string {
@@ -167,8 +167,8 @@ export class ScrumPage
 		if (to === 'today') {
 			this.isToday = true;
 			this.scrumDate = getToday();
-			this.scrumId = getMeetingIdFromDate(this.scrumDate);
-			this.subscribeScrum(this.team.id, this.scrumId, 'changeDate');
+			this.scrumID = getMeetingIdFromDate(this.scrumDate);
+			this.subscribeScrum(this.team.id, this.scrumID, 'changeDate');
 		}
 		switch (to) {
 			case 'today': {
@@ -181,7 +181,7 @@ export class ScrumPage
 					(this.isToday && this.team?.data?.last?.scrum?.id);
 				if (!prevScrumId) {
 					this.errorLogger.logError(
-						`Attempted to go PREV non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumId})`,
+						`Attempted to go PREV non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumID})`,
 					);
 					return;
 				}
@@ -191,7 +191,7 @@ export class ScrumPage
 			case 'next': {
 				if (!this.scrum?.scrumIds?.next) {
 					this.errorLogger.logError(
-						`Attempted to go NEXT non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumId})`,
+						`Attempted to go NEXT non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumID})`,
 					);
 					return;
 				}
@@ -209,13 +209,13 @@ export class ScrumPage
 		console.log(
 			'location.replaceState',
 			window.location.search,
-			`date=${this.isToday ? 'today' : this.scrumId}&`,
+			`date=${this.isToday ? 'today' : this.scrumID}&`,
 		);
 		this.location.replaceState(
 			path, // TODO(StackOverflow): do proper navigation
 			window.location.search.replace(
 				/date=.+?(&|$)/,
-				`date=${this.isToday ? 'today' : this.scrumId}&`,
+				`date=${this.isToday ? 'today' : this.scrumID}&`,
 			),
 		);
 		console.log('changeDate =>', to, this.scrumDate);
@@ -249,8 +249,8 @@ export class ScrumPage
 		if (this.scrumDate) {
 			this.subscribeScrum(
 				this.team.id,
-				this.scrumId,
-				`subscribeTeam(this.scrumId=${this.scrumId})`,
+				this.scrumID,
+				`subscribeTeam(this.scrumId=${this.scrumID})`,
 			);
 		}
 	}
@@ -260,13 +260,13 @@ export class ScrumPage
 		if (!team) {
 			return;
 		}
-		if (this.scrumId && !this.timer) {
-			this.setTimer(this.team.id, this.scrumId);
+		if (this.scrumID && !this.timer) {
+			this.setTimer(this.team.id, this.scrumID);
 		}
 		const lastScrumId = team.last?.scrum?.id;
-		if (this.isToday && lastScrumId && lastScrumId !== this.scrumId) {
-			this.prevScrumId = lastScrumId;
-			this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumId);
+		if (this.isToday && lastScrumId && lastScrumId !== this.scrumID) {
+			this.prevScrumID = lastScrumId;
+			this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumID);
 		}
 		if (team.members) {
 			this.spectators = team.members.filter((m) =>
@@ -326,12 +326,12 @@ export class ScrumPage
 
 	private scrumLoaded(id: string, scrum: IScrum, from: string): void {
 		console.log(
-			`${from}: scrumLoaded(${id}: currentScrumId=${this.scrumId}`,
+			`${from}: scrumLoaded(${id}: currentScrumId=${this.scrumID}`,
 			scrum,
 		);
 		this.scrumsById[id] = scrum;
 		switch (id) {
-			case this.scrumId:
+			case this.scrumID:
 				this.timer.updateTimerState(scrum?.timer);
 				this.scrum = scrum || {
 					...this.scrum,
@@ -349,17 +349,17 @@ export class ScrumPage
 				if (this.team?.data) {
 					this.merge(this.scrum, undefined, this.team.data.members);
 				}
-				this.prevScrumId = scrum?.scrumIds?.prev;
-				if (this.prevScrumId) {
-					this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumId);
+				this.prevScrumID = scrum?.scrumIds?.prev;
+				if (this.prevScrumID) {
+					this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumID);
 				}
-				this.nextScrumId = scrum?.scrumIds?.next;
-				if (this.nextScrumId) {
-					this.nextScrumDate = ScrumPage.getDateFromId(this.nextScrumId);
+				this.nextScrumID = scrum?.scrumIds?.next;
+				if (this.nextScrumID) {
+					this.nextScrumDate = ScrumPage.getDateFromId(this.nextScrumID);
 				}
 				console.log(`mapped to current scrum ${id}:`, this.scrum);
 				break;
-			case this.prevScrumId:
+			case this.prevScrumID:
 				// this.prevScrum = scrum || {...this.prevScrum, statuses: []};
 				if (this.team?.data) {
 					this.merge(this.scrum, undefined, this.team.data.members);
@@ -369,7 +369,7 @@ export class ScrumPage
 			default:
 				console.log(
 					// eslint-disable-next-line max-len
-					`loaded scrum(${id}) not related to current(${this.scrumId}) or previous(${this.prevScrumId}) or next(${this.nextScrumId}):`,
+					`loaded scrum(${id}) not related to current(${this.scrumID}) or previous(${this.prevScrumID}) or next(${this.nextScrumID}):`,
 					scrum,
 				);
 		}
@@ -534,19 +534,19 @@ export class ScrumPage
 
 	private setScrumId(id: string): void {
 		console.log(`setCurrentScrum(${id})`);
-		if (id === this.scrumId) {
+		if (id === this.scrumID) {
 			return;
 		}
 		try {
-			this.prevScrumId = undefined;
+			this.prevScrumID = undefined;
 			this.prevScrumDate = undefined;
-			this.nextScrumId = undefined;
+			this.nextScrumID = undefined;
 			this.nextScrumDate = undefined;
 			const todayId = getMeetingIdFromDate(getToday());
 			if (id === 'today') {
 				id = todayId;
 			}
-			this.scrumId = id;
+			this.scrumID = id;
 			if (this.team) {
 				this.setTimer(this.team.id, id);
 			}
@@ -559,19 +559,19 @@ export class ScrumPage
 			console.log(`isToday=${this.isToday}, id=${id}, todayId=${todayId}`);
 			{
 				/*if (scrum) - we need to set prevScrumId even if no scrum record */
-				this.prevScrumId =
+				this.prevScrumID =
 					scrum?.scrumIds?.prev ||
 					(this.isToday && this.team?.data?.last?.scrum?.id);
-				if (this.prevScrumId) {
-					this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumId);
+				if (this.prevScrumID) {
+					this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumID);
 				}
-				this.nextScrumId = scrum?.scrumIds?.next;
-				if (this.nextScrumId) {
-					this.nextScrumDate = ScrumPage.getDateFromId(this.nextScrumId);
+				this.nextScrumID = scrum?.scrumIds?.next;
+				if (this.nextScrumID) {
+					this.nextScrumDate = ScrumPage.getDateFromId(this.nextScrumID);
 				}
 			}
 			if (this.team) {
-				this.subscribeScrum(this.team.id, this.scrumId, 'setCurrentScrum');
+				this.subscribeScrum(this.team.id, this.scrumID, 'setCurrentScrum');
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, `Failed in setCurrentScrum(${id})`);

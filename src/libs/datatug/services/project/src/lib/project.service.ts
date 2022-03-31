@@ -179,7 +179,7 @@ export class ProjectService {
 
 export interface ICreateProjectData {
 	title: string;
-	userIds: string[];
+	userIDs: string[];
 	teamId?: string;
 }
 

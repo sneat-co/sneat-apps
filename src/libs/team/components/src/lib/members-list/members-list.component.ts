@@ -100,7 +100,7 @@ export class MembersListComponent implements OnChanges {
 				if (
 					!team ||
 					(this.userService.currentUserId &&
-						team.userIds.indexOf(this.userService.currentUserId) < 0)
+						team.userIDs.indexOf(this.userService.currentUserId) < 0)
 				) {
 					this.navService.navigateToTeams('back');
 				}

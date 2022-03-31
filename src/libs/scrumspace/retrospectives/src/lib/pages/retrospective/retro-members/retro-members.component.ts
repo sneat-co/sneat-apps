@@ -54,8 +54,8 @@ export class RetroMembersComponent implements OnChanges {
 				}
 			}
 			if (changes.team) {
-				// Check for this.retrospective?.data?.userIds is not great
-				if (this.team?.dto && !this.retrospective?.dto?.userIds) {
+				// Check for this.retrospective?.data?.userIDs is not great
+				if (this.team?.dto && !this.retrospective?.dto?.userIDs) {
 					const { dto } = this.team;
 					this.participants = dto.members?.filter((m) =>
 						m.roles?.includes(MemberRoleEnum.contributor),

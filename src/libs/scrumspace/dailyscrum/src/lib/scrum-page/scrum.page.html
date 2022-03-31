@@ -63,7 +63,7 @@
 					color="primary"
 					[title]="prevScrumTitle"
 					(click)="changeDate('prev')"
-					[disabled]="!(prevScrumId)"
+					[disabled]="!(prevScrumID)"
 				>
 					<ion-icon name="chevron-back-outline"></ion-icon>
 				</ion-button>
@@ -87,7 +87,7 @@
 				<ion-button
 					color="primary"
 					[title]="nextScrumTitle"
-					(click)="changeDate(nextScrumId ? 'next' : 'today')"
+					(click)="changeDate(nextScrumID ? 'next' : 'today')"
 					[disabled]="isToday"
 				>
 					<ion-icon name="chevron-forward-outline"></ion-icon>
@@ -127,7 +127,7 @@
 				*ngFor="let taskType of taskTypes"
 				[currentMemberId]="userMemberId"
 				[team]="team"
-				[scrumId]="scrumId"
+				[scrumId]="scrumID"
 				[member]="memberStatus?.member"
 				[taskType]="taskType"
 				[tasks]="memberStatus?.byType && memberStatus?.byType[taskType] || []"
@@ -189,7 +189,7 @@
 						(expandChanged)="onScrumExpandChanged(status.member.id, $event)"
 						[isExpanded]="status.member.id === expandedMemberId"
 						[team]="team"
-						[scrumId]="scrumId"
+						[scrumId]="scrumID"
 						[scrum]="scrum"
 						[status]="status"
 						[currentMemberId]="userMemberId"
@@ -303,7 +303,7 @@
 						<app-scrum-tasks
 							[currentMemberId]="userMemberId"
 							[team]="team"
-							[scrumId]="scrumId"
+							[scrumId]="scrumID"
 							[member]="status.member"
 							taskType="risk"
 							[tasks]="status.byType?.risk"
@@ -334,7 +334,7 @@
 						<app-scrum-tasks
 							[currentMemberId]="userMemberId"
 							[team]="team"
-							[scrumId]="scrumId"
+							[scrumId]="scrumID"
 							[member]="status.member"
 							taskType="qna"
 							[tasks]="status.byType?.qna"

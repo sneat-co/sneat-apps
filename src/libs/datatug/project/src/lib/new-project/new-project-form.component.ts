@@ -45,7 +45,7 @@ export class NewProjectFormComponent implements ViewDidEnter {
 		this.isCreating = true;
 		const storeId = 'firestore';
 		this.projectService
-			.createNewProject(storeId, { title: this.title, userIds: [] })
+			.createNewProject(storeId, { title: this.title, userIDs: [] })
 			.subscribe({
 				next: (projectId) => {
 					const m = 'New project ID: ' + projectId;

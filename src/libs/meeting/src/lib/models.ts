@@ -10,6 +10,6 @@ export type IMeetingMember = IMemberBrief;
 
 export interface IMeeting {
 	timer?: ITimerState;
-	readonly userIds: string[];
+	readonly userIDs: string[];
 	readonly members?: IMeetingMember[];
 }

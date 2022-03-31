@@ -18,7 +18,7 @@ export interface ITeamBrief extends IBrief {
 export interface ITeamDto {
 	readonly type: TeamType;
 	readonly title: string;
-	readonly userIds: string[];
+	readonly userIDs: string[];
 	readonly memberIds?: string[];
 	readonly members: IMemberBrief[];
 	metrics: ITeamMetric[];

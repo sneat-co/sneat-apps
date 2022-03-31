@@ -102,7 +102,7 @@ export class RetrospectivePageComponent
 									id,
 									dto: {
 										stage: RetrospectiveStage.upcoming,
-										userIds: undefined,
+										userIDs: undefined,
 									},
 								};
 								break;

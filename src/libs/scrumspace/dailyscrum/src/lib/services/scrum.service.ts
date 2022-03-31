@@ -75,7 +75,7 @@ export class ScrumService extends BaseMeetingService {
 		console.log('getScrums()', teamId, limit, this.userService.currentUserId);
 		const scrums = this.scrumsCollection(teamId);
 		const query = scrums.ref
-			.where('userIds', 'array-contains', this.userService.currentUserId)
+			.where('userIDs', 'array-contains', this.userService.currentUserId)
 			.orderBy(FieldPath.documentId(), 'desc')
 			.limit(limit);
 		return from(query.get()).pipe(
