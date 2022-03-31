@@ -38,10 +38,9 @@
 	<!--		</ion-col>-->
 	<!--	</ion-row>-->
 
-
 	<ion-grid>
 		<ion-row>
-			<ion-col>
+			<ion-col *ngIf="topMenuService.isTopMenuHidden | async">
 				<ion-card>
 					<ion-list>
 						<ion-item>

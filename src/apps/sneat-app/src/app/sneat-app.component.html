@@ -15,7 +15,7 @@
 <!--	<ion-router-outlet id="main"></ion-router-outlet>-->
 <!--</ion-split-pane>-->
 <ion-app>
-	<ion-split-pane contentId="main">
+	<ion-split-pane contentId="main" (ionSplitPaneVisible)="topMenuService.visibilityChanged($event)">
 		<!--  the side menu  -->
 		<ion-menu contentId="main" #menu>
 			<ion-header>
