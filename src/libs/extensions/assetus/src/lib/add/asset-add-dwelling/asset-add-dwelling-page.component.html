@@ -1,0 +1,58 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="commune else titleNoCommune">Add dwelling @ {{commune.title}}</ion-title>
+		<ng-template #titleNoCommune>
+			<ion-title>Add dwelling</ion-title>
+		</ng-template>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<form [formGroup]="titleForm">
+		<ion-item>
+			<ion-label><b>Title</b></ion-label>
+			<ion-input formControlName="title"></ion-input>
+		</ion-item>
+	</form>
+	<sneat-country-selector [country]="country"></sneat-country-selector>
+	<form [formGroup]="form">
+		<ion-item>
+			<ion-label>Eir code</ion-label>
+			<ion-input></ion-input>
+			<ion-buttons slot="end">
+				<ion-button color="primary">Check</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item>
+			<ion-label position="stacked">Address</ion-label>
+			<ion-textarea formControlName="address"></ion-textarea>
+		</ion-item>
+
+		<ion-item-divider>
+			<ion-label>Ownership</ion-label>
+		</ion-item-divider>
+		<ion-radio-group formControlName="ownership">
+			<ion-item>
+				<ion-radio slot="start"></ion-radio>
+				<ion-label>I am tenant of the property</ion-label>
+			</ion-item>
+			<ion-item>
+				<ion-radio slot="start"></ion-radio>
+				<ion-label>I am landlord of the property</ion-label>
+			</ion-item>
+			<ion-item>
+				<ion-radio slot="start"></ion-radio>
+				<ion-label>I own this property</ion-label>
+			</ion-item>
+		</ion-radio-group>
+		<div class="ion-padding">
+			<ion-button expand="full" [disabled]="isSubmitting" (click)="submitDwellingForm()">
+				<ng-container *ngIf="!isSubmitting">Add dwelling</ng-container>
+				<ng-container *ngIf="isSubmitting">Adding dwelling...</ng-container>
+			</ion-button>
+		</div>
+	</form>
+</ion-content>

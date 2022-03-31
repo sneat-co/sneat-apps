@@ -1,0 +1,63 @@
+<ion-card tappable [routerLink]="'/asset/' + asset.dto.id" routerDirection="forward">
+    <ion-card-header>
+        <ion-card-title>
+            {{asset.dto.title}}
+        </ion-card-title>
+    </ion-card-header>
+    <ion-list>
+        <ion-item *ngIf="asset.totals.per(period, true, false)">
+            Incomes ({{asset.totals.incomes.count}})
+            <div slot="end">
+                {{asset.totals.per(period, true, false)}}
+            </div>
+        </ion-item>
+        <ion-item *ngIf="asset.totals.per(period, false, true)">
+            Expenses ({{asset.totals.expenses.count}})
+            <div slot="end">
+                {{asset.totals.per(period, false, true)}}
+            </div>
+        </ion-item>
+        <ion-item *ngIf="asset.totals.per(period, true, false) && asset.totals.per(period, false, true)"
+                  style="font-weight: bold">
+            Total
+            <div slot="end">
+                {{asset.totals.per(period, true, true)}}
+            </div>
+        </ion-item>
+    </ion-list>
+    <!--<ion-card-content *ngIf="asset.incomes || asset.liabilities">-->
+    <!--<ion-segment [(value)]="segment" (ionChange)="segmentChanged($event)">-->
+    <!--<ion-segment-button value="expenses">-->
+    <!--Expenses-->
+    <!--<ng-container *ngIf="!asset.liabilities || !asset.liabilities.length">: none</ng-container>-->
+    <!--</ion-segment-button>-->
+    <!--<ion-segment-button value="income">-->
+    <!--Income-->
+    <!--<ng-container *ngIf="!asset.incomes || !asset.incomes.length">: none</ng-container>-->
+    <!--</ion-segment-button>-->
+    <!--</ion-segment>-->
+    <!--<ion-list *ngIf="segment === 'expenses'">-->
+    <!--<ng-container *ngIf="!asset.liabilities || !asset.liabilities.length">-->
+    <!--No expenses.-->
+    <!--</ng-container>-->
+    <!--<ion-item *ngFor="let liability of asset.liabilities">-->
+    <!--{{liability.title}}: €{{liability.amount}}/{{liability.period}}-->
+    <!--</ion-item>-->
+    <!--</ion-list>-->
+    <!--<ion-list *ngIf="segment === 'income'">-->
+    <!--<ng-container *ngIf="!asset.incomes || !asset.incomes.length">-->
+    <!--No income.-->
+    <!--</ng-container>-->
+    <!--<ion-item *ngFor="let income of asset.incomes">-->
+    <!--{{income.title}}: €{{income.amount}}/{{income.period}}-->
+    <!--</ion-item>-->
+    <!--</ion-list>-->
+    <!--</ion-card-content>-->
+    <ion-card-content *ngIf="asset.dto.subAssets">
+        <ion-item *ngFor="let subAsset of asset.dto.subAssets">
+            <ion-label>
+                <h3>{{subAsset.title}}</h3>
+            </ion-label>
+        </ion-item>
+    </ion-card-content>
+</ion-card>

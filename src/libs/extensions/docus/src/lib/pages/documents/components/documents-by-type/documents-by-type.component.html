@@ -1,0 +1,42 @@
+<ion-list>
+	<ng-container *ngFor="let docType of docTypes; trackBy: trackById">
+		<ion-item tappable class="with-buttons"
+					 (click)="selectDocType(docType)"
+		>
+			<ion-icon
+						 color="medium"
+						 [name]="docType.expanded ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+			<ion-label color="medium" [ngClass]="{expanded: docType.expanded}">
+				<span style="padding-right: 0.5em">{{docType.emoji}}</span>
+				{{docType.title}}
+			</ion-label>
+
+			<ion-badge color="light" slot="end"
+						  *ngIf="docType.documents && docType.documents.length">{{docType.documents.length}}</ion-badge>
+			<ion-buttons slot="end">
+				<ion-button color="medium" (click)="newDoc(docType, $event)">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+
+		</ion-item>
+		<ng-container *ngIf="docType.expanded">
+			<ion-item-sliding #slidingItem *ngFor="let doc of docType.documents; trackBy: trackById">
+				<ion-item button (click)="goDoc.emit(doc)">
+					<ion-badge color="light" *ngIf="doc.countryId" slot="start">{{doc.countryId}}</ion-badge>
+					<ion-badge *ngIf="!doc.countryId" slot="start" style="opacity: 0;">--</ion-badge>
+					<ion-label>{{doc.title}}</ion-label>
+				</ion-item>
+				<!--                <ion-item-options side="start">-->
+				<!--                    <ion-item-option color="primary" (click)="archiveDocument(doc)">Archive</ion-item-option>-->
+				<!--                </ion-item-options>-->
+				<ion-item-options side="end">
+					<ion-item-option color="danger" (click)="deleteDocument(doc, slidingItem)">
+						<ion-icon name="trash"></ion-icon>
+						Remove
+					</ion-item-option>
+				</ion-item-options>
+			</ion-item-sliding>
+		</ng-container>
+	</ng-container>
+</ion-list>

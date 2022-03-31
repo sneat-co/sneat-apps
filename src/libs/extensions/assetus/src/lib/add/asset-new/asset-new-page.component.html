@@ -1,0 +1,31 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="commune else titleNoCommune">New asset @ {{commune.title}}</ion-title>
+		<ng-template #titleNoCommune>
+			<ion-title>New asset</ion-title>
+		</ng-template>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!category">
+	<ion-list>
+		<ion-item button *ngFor="let category of categories; trackBy: trackById" (click)="selectCategory(category)">
+			<ion-label>
+				<h2>{{category.title}}</h2>
+				<p *ngIf="category.desc">{{category.desc}}</p>
+			</ion-label>
+		</ion-item>
+	</ion-list>
+</ion-content>
+
+<ion-content padding *ngIf="category">
+	<p>Creating {{category.title}} asset</p>
+	<ion-item>
+		<ion-label>Title</ion-label>
+		<ion-input [(ngModel)]="name"></ion-input>
+	</ion-item>
+	<ion-button>Add asset</ion-button>
+</ion-content>

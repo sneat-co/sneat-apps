@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+        </ion-buttons>
+        <ng-container *ngIf="assetGroup else titleNoAssetGroup">
+            <ion-title *ngIf="commune else titleWithAssetGroupButNoCommune">{{assetGroup.title}} @ {{commune.title}}</ion-title>
+            <ng-template #titleWithAssetGroupButNoCommune><ion-title>{{assetGroup.title}}</ion-title></ng-template>
+        </ng-container>
+        <ng-template #titleNoAssetGroup>
+            <ion-title *ngIf="commune">Loading... @ {{commune.title}}</ion-title>
+            <ion-title *ngIf="!commune">Loading...</ion-title>
+        </ng-template>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon name="add"></ion-icon>
+                <ion-label>Add</ion-label>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="cardy">
+    <div class="segment">
+        <app-period-segment [period]="period" (changed)="periodChanged($event)"></app-period-segment>
+    </div>
+    <ng-container *ngIf="assets">
+        <ng-container *ngFor="let asset of assets; trackBy: trackById">
+            <app-asset-card [asset]="asset" [period]="period"></app-asset-card>
+        </ng-container>
+    </ng-container>
+</ion-content>

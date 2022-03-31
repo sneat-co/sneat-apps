@@ -1,0 +1,22 @@
+<ion-item-group>
+	<ion-item-divider color="light">
+		<ion-label>{{title}}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="medium" [title]="addTitle"
+							(click)="goNewContact.emit(this.contactRelation)">
+				<ion-icon name="add"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-item *ngIf="contacts && !contacts.length" button (click)="goNewContact.emit(this.contactRelation)">
+		<ion-icon name="add" color="primary"></ion-icon>
+		<ion-label color="primary">{{addTitle}}</ion-label>
+	</ion-item>
+	<ng-container *ngIf="contacts">
+		<ion-item-sliding *ngFor="let contact of contacts">
+			<ion-item>
+				<ion-label>{{contact.title}}</ion-label>
+			</ion-item>
+		</ion-item-sliding>
+	</ng-container>
+</ion-item-group>

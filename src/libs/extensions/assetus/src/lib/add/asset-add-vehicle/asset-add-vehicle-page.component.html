@@ -1,0 +1,82 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="commune else titleNoCommune">Add vehicle @ {{commune.title}}</ion-title>
+		<ng-template #titleNoCommune>
+			<ion-title>Add vehicle</ion-title>
+		</ng-template>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<sneat-country-selector [country]="country"></sneat-country-selector>
+		<ion-item>
+			<ion-label>Type</ion-label>
+			<ion-select [(ngModel)]="vehicleType" interface="popover">
+				<ion-select-option value="car">Car</ion-select-option>
+				<ion-select-option value="motorcycle">Motorcycle</ion-select-option>
+				<ion-select-option value="boat">Boat</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label style="font-weight: bold">Reg #</ion-label>
+			<ion-input [(ngModel)]="regNumber" style="text-transform: uppercase;"></ion-input>
+			<!--            <ion-button fill="outline">Validate</ion-button>-->
+		</ion-item>
+		<!--        <ion-item>-->
+		<!--            <ion-label title="Vehicle Identification Number">-->
+		<!--                VIN-->
+		<!--                &lt;!&ndash;<sup style="color: #aaa;">optional</sup>&ndash;&gt;-->
+		<!--            </ion-label>-->
+		<!--            <ion-input [(ngModel)]="vin" style="text-transform: uppercase;"></ion-input>-->
+		<!--        </ion-item>-->
+		<ion-item>
+			<ion-label>Year produced</ion-label>
+			<ion-datetime pickerFormat="YYYY" displayFormat="YYYY" [(ngModel)]="yearBuild"></ion-datetime>
+		</ion-item>
+		<ion-item>
+			<ion-label>Make</ion-label>
+			<ion-select [(ngModel)]="make" (ionChange)="makeChanged()" interface="popover">
+				<ion-select-option *ngFor="let m of makes; trackBy: trackById">{{m}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>
+				<!--                <ng-container *ngIf="!model">-->
+				Model
+				<!--                </ng-container>-->
+			</ion-label>
+			<ion-select [(ngModel)]="model" [disabled]="!make" interface="popover" (ionChange)="modelChanged()">
+				<ion-select-option *ngFor="let m of models; trackBy: trackById">{{m}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>Engine</ion-label>
+			<ion-select [(ngModel)]="engine" [disabled]="!model" interface="popover">
+				<ion-select-option *ngFor="let v of engines; trackBy: trackById">{{v}}</ion-select-option>
+				<ion-select-option value="-">Other</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>Taxed till</ion-label>
+			<ion-datetime max="2021" [(ngModel)]="taxExpires"></ion-datetime>
+		</ion-item>
+		<ion-item>
+			<ion-label>NCT till</ion-label>
+			<ion-datetime max="2021" [(ngModel)]="nctExpires"></ion-datetime>
+		</ion-item>
+		<ion-item>
+			<ion-label>Service due</ion-label>
+			<ion-datetime max="2021" [(ngModel)]="nextServiceDue"></ion-datetime>
+		</ion-item>
+	</ion-list>
+	<div class="ion-padding">
+		<ion-button expand="full" [disabled]="isSubmitting" (click)="submitVehicleForm()">
+			<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
+			<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>
+		</ion-button>
+	</div>
+</ion-content>

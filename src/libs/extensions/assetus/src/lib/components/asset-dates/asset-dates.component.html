@@ -1,0 +1,12 @@
+<ion-item-group>
+	<ion-item-divider color="light">
+		<ion-label>Dates</ion-label>
+	</ion-item-divider>
+	<ion-item *ngFor="let item of items; trackBy: trackByName">
+		<ion-label [color]="item.value ? '' : 'danger'">{{item.title}}</ion-label>
+		<ion-datetime [(ngModel)]="item.value"
+						  displayFormat="YYYY-MM-DD" placeholder="set date"
+						  (ionChange)="onChange(item.name, $event)"
+		></ion-datetime>
+	</ion-item>
+</ion-item-group>

@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+        </ion-buttons>
+        <ion-title *ngIf="asset">{{asset.dto.title}}</ion-title>
+        <ion-title *ngIf="!asset">Property</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <app-real-estate-location *ngIf="asset && asset.dto.categoryId === 'real_estate'"
+                              [asset]="asset"></app-real-estate-location>
+
+    <ion-item-group>
+        <ion-item-divider color="light">
+            <ion-label>Finance</ion-label>
+        </ion-item-divider>
+        <ion-item>
+            <ion-label>Rent</ion-label>
+            <ion-badge color="light">€1,880.00</ion-badge>
+        </ion-item>
+    </ion-item-group>
+
+    <app-asset-contacts-group [contacts]="landlords" contactRelation="landlord"
+                              (goNewContact)="goNewContact($event)"></app-asset-contacts-group>
+    <app-asset-contacts-group [contacts]="tenants" contactRelation="tenant"
+                              (goNewContact)="goNewContact($event)"></app-asset-contacts-group>
+
+</ion-content>

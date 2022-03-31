@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar color="primary" class="with-back-button">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Add {{serviceType}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item-group>
+        <ion-item-divider>
+            <ion-label>Please select provider</ion-label>
+        </ion-item-divider>
+        <ion-item tappable *ngFor="let serviceProvider of serviceProviders; trackBy: trackById" (click)="selectProvider(serviceProvider)">
+            <ion-label>{{serviceProvider.title}}</ion-label>
+        </ion-item>
+        <ion-item tappable>
+            <ion-label color="medium">
+                <ion-icon name="add"></ion-icon>
+                Other provider
+            </ion-label>
+        </ion-item>
+    </ion-item-group>
+</ion-content>

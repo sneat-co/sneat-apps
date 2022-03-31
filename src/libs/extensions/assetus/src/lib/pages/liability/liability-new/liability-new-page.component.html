@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-toolbar color="primary" class="with-back-button">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+        </ion-buttons>
+        <ion-title *ngIf="commune else titleNoCommune">New liability @ {{commune.title}}</ion-title>
+        <ng-template #titleNoCommune>
+            <ion-title>New liability</ion-title>
+        </ng-template>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="segment">
+        <ion-segment [(ngModel)]="liabilityType">
+            <ion-segment-button value="expense">
+                <ion-label>Expense</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="income">
+                <ion-label>Income</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+
+    <ion-item>
+        <ion-label>Title</ion-label>
+        <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>
+            Period
+        </ion-label>
+        <ion-select [(ngModel)]="period" interface="action-sheet">
+            <ion-select-option value="weekly">Weekly</ion-select-option>
+            <ion-select-option value="monthly">Monthly</ion-select-option>
+            <ion-select-option value="yearly">Yearly</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Amount</ion-label>
+        <ion-input type="number"></ion-input>
+    </ion-item>
+
+    <div class="ion-padding">
+        <h3>Related to</h3>
+        <ion-segment [(ngModel)]="assignedTo">
+            <ion-segment-button value="assets">
+                <ion-label>Assets</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="members">
+                <ion-label>Members</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="contacts">
+                <ion-label>Contacts</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+        <p>Assign to selected {{assignedTo}}.</p>
+        <ion-list>
+            <ion-item>
+                <ion-label>Member #1</ion-label>
+                <ion-checkbox></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>Member #2</ion-label>
+                <ion-checkbox></ion-checkbox>
+            </ion-item>
+        </ion-list>
+        <p>If nothing assigned it will be treated as common expense. A good example of common expense for family would
+            be
+            spending for groceries.</p>
+
+        <ion-button>Add {{liabilityType}}</ion-button>
+    </div>
+</ion-content>

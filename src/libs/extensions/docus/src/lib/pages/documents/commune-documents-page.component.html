@@ -1,0 +1,66 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button with-end-buttons">
+		<ion-buttons slot="start">
+			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<sneat-commune-page-title
+			[commune]="commune"
+			generalTitle="Documents"
+			icon="📃"
+			[titlesByCommuneType]="{
+				personal: 'Personal documents',
+				family: 'Family documents'
+			}">
+		</sneat-commune-page-title>
+		<ion-buttons slot="end">
+			<ion-menu-button menu="mainMenu"></ion-menu-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="segment">
+		<ion-segment [(ngModel)]="segment">
+			<ion-segment-button value="type">
+				<ion-label>By type</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="list">
+				<ion-label>List</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+
+
+	<ng-container *ngIf="segment === 'list'">
+		<sneat-filter-item (changed)="applyFilter($event)"></sneat-filter-item>
+		<app-documents-list [allDocuments]="documents"
+								  [filter]="filter"
+								  (goDoc)="goDoc($event)">
+		</app-documents-list>
+	</ng-container>
+
+	<app-documents-by-type [allDocuments]="documents" *ngIf="segment === 'type'"
+								  (goDocType)="goType($event)"
+								  (goNewDoc)="goNewDoc($event)"
+								  (goDoc)="goDoc($event)"
+	></app-documents-by-type>
+</ion-content>
+
+<ion-footer *ngIf="segment === 'list'">
+	<ion-toolbar color="light">
+		<ion-label *ngIf="rootDocs">
+			{{ rootDocs.length }} {{ rootDocs.length === 1 ? 'document' : 'documents' }}
+		</ion-label>
+		<ion-label *ngIf="!documents">Loading...</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="primary"
+							size="small"
+							(click)="goNewDoc()"
+							[title]="'Add document'">
+				<ion-icon name="add"></ion-icon>
+				Add
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>
+

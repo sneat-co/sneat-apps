@@ -1,0 +1,94 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="commune else titleNoCommune">
+			New document @ {{commune.title}}
+		</ion-title>
+		<ng-template #titleNoCommune>
+			<ion-title>New document</ion-title>
+		</ng-template>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-item>
+		<ion-label>
+			Doc type
+		</ion-label>
+		<ion-select [(ngModel)]="docType" interface="popover">
+			<ion-select-option value="passport">Passport</ion-select-option>
+			<ion-select-option value="driving_license">Driving license</ion-select-option>
+			<ion-select-option value="birth_certificate">Birth certificate</ion-select-option>
+			<ion-select-option value="marriage_certificate">Marriage certificate</ion-select-option>
+			<ion-select-option value="rent_lease">Rent lease</ion-select-option>
+		</ion-select>
+	</ion-item>
+	<sneat-country-selector [country]="country"></sneat-country-selector>
+	<ion-item>
+		<ion-label *ngIf="member else noMember"><b>Belongs to</b>: {{member.title}}</ion-label>
+		<ng-template #noMember>
+			<ion-label><b>Belongs to</b>: unassigned</ion-label>
+		</ng-template>
+		<ion-button fill="clear" title="Assign owner of the document">
+			<ion-icon name="add"></ion-icon>
+		</ion-button>
+	</ion-item>
+	<p *ngIf="isMissingRequiredParams">This page is missing a required parameter.</p>
+	<ng-container *ngIf="!isMissingRequiredParams">
+		<ion-list>
+			<ion-item>
+				<ion-label>Title</ion-label>
+				<ion-input [(ngModel)]="docTitle"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Number</ion-label>
+				<ion-input [(ngModel)]="docNumber"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Issued on</ion-label>
+				<ion-datetime></ion-datetime>
+			</ion-item>
+			<ion-item>
+				<ion-label>Issued by</ion-label>
+				<ion-input></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Valid till</ion-label>
+				<ion-datetime></ion-datetime>
+			</ion-item>
+		</ion-list>
+
+		<ion-item-group *ngIf="docType === 'driving_license'">
+			<ion-item-divider>
+				<ion-label>Categories</ion-label>
+			</ion-item-divider>
+			<ion-item>
+				<ion-label>Category A</ion-label>
+				<ion-checkbox value="A"></ion-checkbox>
+			</ion-item>
+			<ion-item>
+				<ion-label>Category B</ion-label>
+				<ion-checkbox value="B"></ion-checkbox>
+			</ion-item>
+			<ion-item>
+				<ion-label>Category C</ion-label>
+				<ion-checkbox value="C"></ion-checkbox>
+			</ion-item>
+			<ion-item>
+				<ion-label>Category D</ion-label>
+				<ion-checkbox value="D"></ion-checkbox>
+			</ion-item>
+			<ion-item>
+				<ion-label>Category E</ion-label>
+				<ion-checkbox value="E"></ion-checkbox>
+			</ion-item>
+		</ion-item-group>
+
+		<ion-button [disabled]="!docTitle" (click)="submit()">
+			Create
+		</ion-button>
+		<ion-button color="light" routerDirection="back" routerLink="../documents">Cancel</ion-button>
+	</ng-container>
+</ion-content>
