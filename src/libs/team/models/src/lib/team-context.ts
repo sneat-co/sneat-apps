@@ -1,6 +1,6 @@
 import { INavContext } from '@sneat/core';
-import { ITeamDto, IUserTeamBrief, TeamType } from '@sneat/dto';
+import { ITeamDto, ITeamBrief, TeamType } from '@sneat/dto';
 
-export interface ITeamContext extends INavContext<IUserTeamBrief, ITeamDto> {
+export interface ITeamContext extends INavContext<ITeamBrief, ITeamDto> {
 	readonly type?: TeamType;
 };

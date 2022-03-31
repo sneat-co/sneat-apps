@@ -9,7 +9,7 @@ export interface ITeamMeetings {
 	retrospective?: IMeetingInfo;
 }
 
-export interface IUserTeamBrief extends IBrief {
+export interface ITeamBrief extends IBrief {
 	readonly type: TeamType;
 	readonly parentTeamID?: string;
 	readonly roles?: string[];

@@ -93,9 +93,9 @@
 			</ion-col>
 		</ion-row>
 		<ion-row>
-			<ion-col>
+			<ion-col *ngIf="team?.type === 'family' || team?.type === 'team'">
 				<ion-card>
-					<ion-item>
+					<ion-item routerLink="./members">
 						<ion-icon name="people-circle-outline" slot="start"></ion-icon>
 						<ion-label style="font-weight: bold">Members</ion-label>
 						<ion-buttons slot="end">
@@ -112,9 +112,14 @@
 			</ion-col>
 			<ion-col>
 				<ion-card>
-					<ion-list>
 						<ion-item>
+							<ion-icon name="calendar-outline" slot="start"></ion-icon>
 							<ion-label style="font-weight: bold">Schedule</ion-label>
+							<ion-buttons slot="end">
+								<ion-button routerLink="new-member">
+									<ion-icon name="add-outline"></ion-icon>
+								</ion-button>
+							</ion-buttons>
 						</ion-item>
 						<ion-item-divider>
 							<ion-label>Today</ion-label>
@@ -128,7 +133,6 @@
 						<ion-item>
 							<ion-label color="medium">Not implemented yet</ion-label>
 						</ion-item>
-					</ion-list>
 				</ion-card>
 			</ion-col>
 		</ion-row>

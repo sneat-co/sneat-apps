@@ -1,12 +1,12 @@
 /* tslint:disable:no-bitwise */
-import { AgeGroup, CommuneType, CountryId, Gender } from './types';
-import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
-import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
-import { IListGroupsHolder } from './dto-list';
 import { EnumAsUnionOfKeys } from '@sneat/core';
 import { RxRecordKey } from '@sneat/rxstore';
+import { IListGroupsHolder } from './dto-list';
+import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
+import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
+import { AgeGroup, CommuneType, CountryId, Gender } from './types';
 
-export const enum CommuneCounter {
+export const enum TeamCounter {
 	activities = 'activities',
 	assets = 'assets',
 	assetGroups = 'assetGroups',
@@ -24,27 +24,26 @@ export const enum CommuneCounter {
 	upcomings = 'upcomings',
 }
 
-type CommuneCounters = {
-	[P in EnumAsUnionOfKeys<typeof CommuneCounter>]: number;
+type TeamCounters = {
+	[P in EnumAsUnionOfKeys<typeof TeamCounter>]: number;
 };
 
-export interface ICommuneCounts {
-	// [counter: CommuneCounters]: number;
-	[CommuneCounter.activities]?: number;
-	[CommuneCounter.assets]?: number;
-	[CommuneCounter.assetGroups]?: number;
-	[CommuneCounter.contacts]?: number;
-	[CommuneCounter.documents]?: number;
-	[CommuneCounter.regularTasks]?: number;
-	[CommuneCounter.liabilities]?: number;
-	[CommuneCounter.pupils]?: number;
-	[CommuneCounter.staff]?: number;
-	[CommuneCounter.members]?: number;
-	// [CommuneCounter.membersByRole]?: { [role: string]: number };
-	[CommuneCounter.memberGroups]?: number;
-	[CommuneCounter.overdues]?: number;
-	[CommuneCounter.todos]?: number;
-	[CommuneCounter.upcomings]?: number;
+export interface TeamCounts {
+	[TeamCounter.activities]?: number;
+	[TeamCounter.assets]?: number;
+	[TeamCounter.assetGroups]?: number;
+	[TeamCounter.contacts]?: number;
+	[TeamCounter.documents]?: number;
+	[TeamCounter.regularTasks]?: number;
+	[TeamCounter.liabilities]?: number;
+	[TeamCounter.pupils]?: number;
+	[TeamCounter.staff]?: number;
+	[TeamCounter.members]?: number;
+	[TeamCounter.memberGroups]?: number;
+	[TeamCounter.overdues]?: number;
+	[TeamCounter.todos]?: number;
+	[TeamCounter.upcomings]?: number;
+	// [CommuneCounter.membersByRole]?: { [role: string]: number }; this does not make sense here
 }
 
 export function incrementNumberOf<NumberOf, Dto extends { numberOf?: NumberOf }>(
@@ -59,7 +58,7 @@ export function incrementNumberOf<NumberOf, Dto extends { numberOf?: NumberOf }>
 	};
 }
 
-export function newCommuneCounts(numberOf?: ICommuneCounts): ICommuneCounts {
+export function newCommuneCounts(numberOf?: TeamCounts): TeamCounts {
 	numberOf = numberOf || {};
 	return {
 		activities: numberOf.activities || 0,
@@ -93,7 +92,7 @@ export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder, 
 	readonly desc?: string;
 	readonly userId: RxRecordKey;
 	readonly order?: number;
-	readonly numberOf?: ICommuneCounts;
+	readonly numberOf?: TeamCounts;
 	readonly membersCountByRole?: { [id: string]: number };
 	readonly noContactRoles?: string[];
 	readonly groups?: ICommuneDtoMemberGroupInfo[];
