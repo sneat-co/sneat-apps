@@ -1,0 +1,18 @@
+.virtual-slider-outer {
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+}
+
+.virtual-slider-inner {
+	display: flex;
+	width: 200%;
+}
+
+.virtual-slide {
+	flex: 1 1 0;
+}
+
+.virtual-slide-overflow-fixer { // TODO: Why without it there is internal scrolling?
+	height: 20px;
+}

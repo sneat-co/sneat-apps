@@ -1,10 +1,9 @@
 <ion-list>
 	<ion-item>
 		<ion-label color="medium">Space</ion-label>
-		<ion-select *ngIf="!teams"></ion-select>
 		<ion-select *ngIf="teams"
+								[value]="team?.id"
 								interface="popover"
-								[(ngModel)]="teamId"
 								(ionChange)="onTeamSelected($event)"
 								style="font-weight: bold"
 		>
@@ -12,6 +11,10 @@
 				{{team.title || team.id}}
 			</ion-select-option>
 		</ion-select>
+	</ion-item>
+	<ion-item routerLink="">
+		<ion-icon name="home-outline" slot="start"></ion-icon>
+		<ion-label>Overview</ion-label>
 	</ion-item>
 	<ion-item routerLink="members">
 		<ion-icon name="person" slot="start"></ion-icon>
@@ -35,3 +38,4 @@
 	</ion-item>
 	<sneat-auth-menu-item></sneat-auth-menu-item>
 </ion-list>
+<sneat-team-context #teamContextComponent page="team-summary"></sneat-team-context>

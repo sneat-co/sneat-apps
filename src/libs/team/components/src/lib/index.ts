@@ -5,4 +5,4 @@ export * from './team-components.module';
 export * from './team-page-context';
 export * from './team-menu';
 export * from './teams-menu';
-export * from './team-base-page.directive';
+export * from './team-base.page';

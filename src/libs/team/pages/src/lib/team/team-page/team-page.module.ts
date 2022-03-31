@@ -6,7 +6,7 @@ import {
 	TeamComponentBaseParams,
 	TeamComponentsModule,
 	TeamMenuComponentModule,
-	TeamPageContextModule,
+	TeamComponentContextModule,
 } from '@sneat/team/components';
 import { MembersComponent } from '../members/members.component';
 import { MetricsComponent } from '../metrics/metrics.component';
@@ -21,7 +21,7 @@ import { TeamPageComponent } from './team-page.component';
 		FormsModule,
 		IonicModule,
 		TeamPageRoutingModule,
-		TeamPageContextModule,
+		TeamComponentContextModule,
 		TeamMenuComponentModule,
 		TeamComponentsModule,
 	],

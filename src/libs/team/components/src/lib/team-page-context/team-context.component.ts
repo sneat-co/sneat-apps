@@ -1,19 +1,18 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { NgModulePreloaderService } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { TeamNavService, TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/user';
+import { trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { BehaviorSubject, distinctUntilChanged, Subject, Subscription, takeUntil } from 'rxjs';
-import { TeamComponentBaseParams } from '../team-base-page.directive';
+import { TeamComponentBaseParams } from '../team-base.page';
 
 @Component({
-	selector: 'sneat-team-page-context',
+	selector: 'sneat-team-context',
 	template: '',
+	providers: [
+		TeamComponentBaseParams,
+	],
 })
-export class TeamPageContextComponent implements OnInit, OnDestroy {
+export class TeamContextComponent implements OnInit, OnDestroy {
 
 	@Input() page?: string;
 

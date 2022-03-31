@@ -1,5 +1,5 @@
 //tslint:disable:no-unsafe-any
-import { TeamBasePageDirective } from '@sneat/team/components';
+import { TeamBasePage } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { MemberPages } from '../constants';
 // import { MemberPages } from 'sneat-shared/extensions/memberus/constants';
@@ -10,7 +10,7 @@ import { MemberPages } from '../constants';
 // import { CommuneTopPage } from '../../../pages/constants';
 import { MemberComponentBaseParams, MemberContextComponent } from './member-context.component';
 
-export abstract class MemberBasePage extends TeamBasePageDirective {
+export abstract class MemberBasePage extends TeamBasePage {
 	public segment: 'friends' | 'other' | 'summary' = 'summary';
 	// override defaultBackUrl = CommuneTopPage.members;
 	public isDeleted?: boolean;

@@ -1,0 +1,18 @@
+<ion-item-group *ngFor="let weekday of weekdays; trackBy: trackByWd" style="margin-top: -1px">
+    <app-schedule-weekday [weekday]="weekday"
+                          [filter]="filter"
+                          [showRegulars]="showRegulars"
+                          [showEvents]="showEvents"
+                          (goNew)="goNew.emit($event)"
+                          (slotClicked)="slotClicked.emit($event)"
+                          (dateSelected)="dateSelected.emit($event)"
+    ></app-schedule-weekday>
+</ion-item-group>
+
+<ion-text padding color="medium">
+    <div style="text-align: center;">
+        &larr;
+        Swipe to change week
+        &rarr;
+    </div>
+</ion-text>

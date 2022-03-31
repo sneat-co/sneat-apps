@@ -1,0 +1,133 @@
+<ion-item-divider color="light" *ngIf="slots.length">
+    <ion-label>New slot</ion-label>
+    <ion-buttons slot="end">
+        <ion-button title="Cancel">Cancel
+            <ion-icon name="close"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+</ion-item-divider>
+<ion-item *ngIf="happeningKind === 'single'">
+    <ion-label *ngIf="isToDo && !date">Due</ion-label>
+    <ion-label *ngIf="isToDo && date">Due on</ion-label>
+    <ion-label *ngIf="!isToDo">Takes place on</ion-label>
+    <ion-datetime [min]="minDate" [max]="maxDate" [(ngModel)]="date" (ionChange)="onEventTimesChanged()"></ion-datetime>
+</ion-item>
+<form [formGroup]="timeForm" *ngIf="happeningKind === 'regular' || date">
+    <ion-item>
+        <ion-label *ngIf="!isToDo">Starts at</ion-label>
+        <ion-label *ngIf="isToDo">Due at</ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"
+                      formControlName="timeStarts"
+                      (ionChange)="onTimeStartsChanged($event)"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Duration</ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"
+                      formControlName="timeDuration"
+                      (ionChange)="onTimeDurationChanged()"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="!isToDo">
+        <ion-label>Ends at</ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"
+                      formControlName="timeEnds"
+                      (ionChange)="onTimeEndsChanged()"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="happeningKind === 'regular'">
+        <ion-label>Repeats</ion-label>
+        <ion-select formControlName="repeats" interface="popover" (ionChange)="repeatsChanged()">
+            <ion-select-option value="weekly">Weekly</ion-select-option>
+            <ion-select-option value="fortnightly">Fortnightly</ion-select-option>
+            <ion-select-option value="week-1st">Every 1st week</ion-select-option>
+            <ion-select-option value="week-2nd">Every 2nd week</ion-select-option>
+            <ion-select-option value="week-2nd">Every 3d week</ion-select-option>
+            <ion-select-option value="week-last">Every last week</ion-select-option>
+        </ion-select>
+    </ion-item>
+</form>
+<ng-container *ngIf="happeningKind === 'regular'">
+    <form [formGroup]="weekdaysForm" *ngIf="happens === 'weekly' && showWeekday">
+        <ion-grid class="grid-layout">
+            <ion-row>
+                <ion-col size="6">
+                    <ion-item>
+                        <ion-label>Monday</ion-label>
+                        <ion-checkbox slot="start" value="mo" formControlName="mo"></ion-checkbox>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Tuesday</ion-label>
+                        <ion-checkbox slot="start" value="tu" formControlName="tu"></ion-checkbox>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Wednesday</ion-label>
+                        <ion-checkbox slot="start" value="we" formControlName="we"></ion-checkbox>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Thursday</ion-label>
+                        <ion-checkbox slot="start" value="th" formControlName="th"></ion-checkbox>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-item>
+                        <ion-label>Friday</ion-label>
+                        <ion-checkbox slot="start" value="fr" formControlName="fr"></ion-checkbox>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Saturday</ion-label>
+                        <ion-checkbox slot="start" value="sa" formControlName="sa"></ion-checkbox>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Sunday</ion-label>
+                        <ion-checkbox slot="start" value="su" formControlName="su"></ion-checkbox>
+                    </ion-item>
+                    <ion-button style="margin: 1em 1em 0 3em;" size="small" color="light" (click)="addSlot()" expand="full">
+                        Add slot
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+
+    <form [formGroup]="weekdaysForm" *ngIf="happens !== 'weekly'">
+        <ion-radio-group>
+            <ion-grid style="width: 100%">
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-item>
+                            <ion-label>Monday</ion-label>
+                            <ion-radio slot="start" value="mo" formControlName="mo"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Tuesday</ion-label>
+                            <ion-radio slot="start" value="tu" formControlName="tu"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Wednesday</ion-label>
+                            <ion-radio slot="start" value="we" formControlName="we"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Thursday</ion-label>
+                            <ion-radio slot="start" value="th" formControlName="th"></ion-radio>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-item>
+                            <ion-label>Friday</ion-label>
+                            <ion-radio slot="start" value="fr" formControlName="fr"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Saturday</ion-label>
+                            <ion-radio slot="start" value="sa" formControlName="sa"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Sunday</ion-label>
+                            <ion-radio slot="start" value="su" formControlName="su"></ion-radio>
+                        </ion-item>
+                        <div style="padding-top: 0.5em; padding-left: 1.2em; text-align: right;">
+                            <ion-button (click)="addSlot()">Add slot</ion-button>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-radio-group>
+    </form>
+</ng-container>

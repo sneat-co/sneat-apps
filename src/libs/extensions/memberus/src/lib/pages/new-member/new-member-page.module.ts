@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { TeamPageContextModule } from '@sneat/team/components';
+import { TeamComponentContextModule } from '@sneat/team/components';
 
 import { NewMemberPageComponent } from './new-member-page.component';
 
@@ -21,7 +21,7 @@ const routes: Routes = [
 		FormsModule,
 		IonicModule,
 		RouterModule.forChild(routes),
-		TeamPageContextModule,
+		TeamComponentContextModule,
 	],
 	declarations: [NewMemberPageComponent],
 })

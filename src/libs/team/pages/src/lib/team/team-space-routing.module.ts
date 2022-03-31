@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatAuthModule } from '@sneat/auth';
 import { memberRoutes } from '@sneat/extensions/memberus';
-import { TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
+import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 
 const routes: Routes = [
 	{
@@ -46,6 +46,9 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 	declarations: [],
+	providers: [
+		TeamComponentBaseParams,
+	]
 })
 export class TeamSpaceRoutingModule {
 }

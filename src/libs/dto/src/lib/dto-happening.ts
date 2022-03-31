@@ -83,7 +83,7 @@ export interface IHappeningActivity extends IHappening {
 	levels?: Level[];
 }
 
-// tslint:disable-next-line:no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface DtoRegularTask extends IHappeningRegular {
 	// liabilityId?: string;
 }

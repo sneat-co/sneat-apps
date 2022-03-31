@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamPageContextComponent } from './team-page-context.component';
+import { TeamContextComponent } from './team-context.component';
 
 describe('TeamPageContextComponent', () => {
-	let component: TeamPageContextComponent;
-	let fixture: ComponentFixture<TeamPageContextComponent>;
+	let component: TeamContextComponent;
+	let fixture: ComponentFixture<TeamContextComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [TeamPageContextComponent],
+			declarations: [TeamContextComponent],
 		})
 			.compileComponents();
 	});
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(TeamPageContextComponent);
+		fixture = TestBed.createComponent(TeamContextComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

@@ -1,2 +1,2 @@
-export * from './team-page-context.module';
-export * from './team-page-context.component';
+export * from './team-component-context.module';
+export * from './team-context.component';

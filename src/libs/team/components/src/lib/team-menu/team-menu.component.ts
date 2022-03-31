@@ -1,60 +1,52 @@
-import { Component, Inject, NgZone, OnInit, ViewChild } from '@angular/core';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamPageContextComponent } from '../team-page-context';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { MenuController, NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 import { IUserTeamInfo } from '@sneat/auth-models';
-import { ISneatUserState, SneatUserService } from '@sneat/user';
+import { ISneatUserState } from '@sneat/user';
+import { TeamBasePage, TeamComponentBaseParams } from '../team-base.page';
+import { TeamContextComponent } from '../team-page-context';
 
 @Component({
 	selector: 'sneat-team-menu',
 	templateUrl: './team-menu.component.html',
 	styleUrls: ['./team-menu.component.scss'],
 })
-export class TeamMenuComponent implements OnInit {
+export class TeamMenuComponent extends TeamBasePage implements AfterViewInit {
 
-	@ViewChild(TeamPageContextComponent) context?: TeamPageContextComponent;
+	@ViewChild('teamContextComponent') teamContextComponent?: TeamContextComponent;
 
-	public team?: ITeamContext;
+	// public team?: ITeamContext;
 	public teamId?: string = undefined;
-	public teamType?: string = undefined;
+	// public teamType?: string = undefined;
 	public teams?: IUserTeamInfo[];
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		readonly route: ActivatedRoute,
-		readonly userService: SneatUserService,
-		private readonly navCtrl: NavController,
+		params: TeamComponentBaseParams,
 		private readonly menuCtrl: MenuController,
-		private readonly zone: NgZone,
 	) {
-		route.paramMap.subscribe({
-			next: params => {
-				this.teamId = params.get('teamId') || undefined;
-				this.teamType = params.get('teamType') || undefined;
-				console.log('TeamMenuComponent, params:', this.teamId, this.teamType);
-			},
-		});
-		userService.userState.subscribe({
+		super('TeamMenuComponent', params);
+		params.userService.userState.subscribe({
 			next: this.trackUserState,
 			error: this.errorLogger.logErrorHandler('failed to get user stage'),
 		});
 	}
 
-	ngOnInit(): void {
-		this.context?.team.subscribe({
-			next: team => {
-				this.team = team || undefined;
-			},
-			error: this.errorLogger.logErrorHandler,
-		});
+	ngAfterViewInit(): void {
+		this.setTeamPageContext(this.teamContextComponent);
 	}
 
 	onTeamSelected(event: Event): void {
-		console.log('onTeamSelected', this.teamId);
-		this.navCtrl.navigateRoot(`/space/${this.teamType}/${this.teamId}`).catch(console.error);
+		const teamID = (event as CustomEvent).detail.value as string;
+
+		console.log('onTeamSelected', teamID);
+		if (teamID === this.team?.id) {
+			return;
+		}
+		const team = this.teams?.find(t => t.id === teamID);
+		if (team) {
+			this.teamParams.navController.navigateRoot(`/space/${team.type}/${team.id}`).catch(console.error);
+		}
 		this.menuCtrl.close().catch(console.error);
+		return;
 	}
 
 	private trackUserState = (userState: ISneatUserState): void => {

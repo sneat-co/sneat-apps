@@ -14,7 +14,7 @@ import {
 	MemberRelationshipUndisclosed,
 	MemberRole, MemberRoleContributor,
 } from '@sneat/dto';
-import { TeamBasePageDirective, TeamComponentBaseParams, TeamPageContextComponent } from '@sneat/team/components';
+import { TeamBasePage, TeamComponentBaseParams, TeamContextComponent } from '@sneat/team/components';
 import { IAddTeamMemberRequest } from '@sneat/team/models';
 import { MemberService } from '@sneat/team/services';
 
@@ -30,10 +30,10 @@ interface Role {
 	templateUrl: './new-member-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewMemberPageComponent extends TeamBasePageDirective implements AfterViewInit {
+export class NewMemberPageComponent extends TeamBasePage implements AfterViewInit {
 
 	@ViewChild('teamPageContext')
-	public teamPageContext?: TeamPageContextComponent;
+	public teamPageContext?: TeamContextComponent;
 
 	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 

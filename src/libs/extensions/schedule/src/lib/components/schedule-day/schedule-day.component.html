@@ -1,0 +1,18 @@
+<ng-container *ngIf="dayWeekday">
+    <div class="ion-padding" *ngIf="!dayWeekday.slots || !dayWeekday.slots.length">
+        <p>No regular activities</p>
+    </div>
+    <ng-container *ngIf="dayWeekday && dayWeekday.slots && dayWeekday.slots.length">
+        <ng-container *ngFor="let slot of dayWeekday.slots; trackBy: trackByIndex">
+            <app-activity-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
+            </app-activity-item>
+        </ng-container>
+    </ng-container>
+</ng-container>
+<ion-text padding color="medium">
+    <div style="text-align: center">
+        &larr;
+        Swipe to change day
+        &rarr;
+    </div>
+</ion-text>

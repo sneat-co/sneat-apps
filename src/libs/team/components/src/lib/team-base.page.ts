@@ -10,7 +10,7 @@ import { TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import { Subject, Subscription, tap } from 'rxjs';
 import { first, mergeMap, takeUntil } from 'rxjs/operators';
-import { TeamPageContextComponent } from './team-page-context';
+import { TeamContextComponent } from './team-page-context';
 
 
 @Injectable()
@@ -33,7 +33,7 @@ export class TeamComponentBaseParams {
 }
 
 // @Directive({ selector: '[sneatBaseTeamPage]' }) // There was some reason to add a @Directive() - TODO: document why
-export abstract class TeamBasePageDirective  {
+export abstract class TeamBasePage {
 
 	protected route?: ActivatedRoute;
 
@@ -94,7 +94,7 @@ export abstract class TeamBasePageDirective  {
 		return this.teamParams.errorLogger;
 	}
 
-	protected setTeamPageContext(context?: TeamPageContextComponent): void {
+	protected setTeamPageContext(context?: TeamContextComponent): void {
 		console.log('setTeamPageContext()', context);
 		if (!context) {
 			this.logError('TeamPageContextComponent is not provided');

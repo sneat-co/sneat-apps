@@ -1,0 +1,271 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button with-end-buttons">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="memberInfo else communeHeaderTitle">
+			📅 {{memberInfo.title}}
+		</ion-title>
+		<ng-template #communeHeaderTitle>
+			<sneat-commune-page-title
+				[commune]="commune"
+				generalTitle="Schedule"
+				icon="📅"
+				[titlesByCommuneType]="{
+				family: 'Family schedule',
+				personal: 'Personal schedule'
+			}">
+			</sneat-commune-page-title>
+		</ng-template>
+		<ion-buttons slot="end">
+			<ion-button [disabled]="!communeRealId" (click)="goNew({type: 'regular'})"
+							title="Add">
+				<ion-icon name="add"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="segment">
+		<ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged()">
+			<ion-segment-button value="day">Day</ion-segment-button>
+			<ion-segment-button value="week">Week</ion-segment-button>
+			<ion-segment-button value="regular">Regular</ion-segment-button>
+			<ion-segment-button value="events">Events</ion-segment-button>
+		</ion-segment>
+	</div>
+
+	<ion-item class="with-buttons" *ngIf="segment === 'day' || segment === 'week'">
+		<ion-label>
+			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swipeRight)="swipeRight()">
+				<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState" *ngIf="segment === 'day'">
+					<h1 class="virtual-slide" [@virtualSlide]="oddDay.animationState">
+						<ng-container *ngIf="oddDay.weekday">
+							<b>{{oddDay.weekday.wd|wdToWeekday}}</b><span
+							style="font-weight: normal">, {{oddDay.date.getDate()}} {{oddDay.date.getMonth()|longMonthName}}</span>
+						</ng-container>
+					</h1>
+					<h1 class="virtual-slide" [@virtualSlide]="evenDay.animationState">
+						<ng-container *ngIf="evenDay.weekday">
+							<b>{{evenDay.weekday.wd|wdToWeekday}}</b><span
+							style="font-weight: normal">, {{evenDay.date.getDate()}} {{evenDay.date.getMonth()|longMonthName}}</span>
+						</ng-container>
+					</h1>
+				</div>
+				<div class="virtual-slider-inner" [@virtualSlider]="weekAnimationState" *ngIf="segment === 'week'">
+					<h1 class="virtual-slide" [@virtualSlide]="oddWeek.animationState" *ngIf="oddWeek.monday">
+						{{oddWeek.monday.getDate()}} {{oddWeek.monday.getMonth()|shortMonthName}}
+						&mdash;
+						{{oddWeek.sunday.getDate()}} {{oddWeek.sunday.getMonth()|shortMonthName}}
+					</h1>
+					<h1 class="virtual-slide" [@virtualSlide]="evenWeek.animationState">
+						<ng-container *ngIf="evenWeek.monday">
+							{{evenWeek.monday.getDate()}} {{evenWeek.monday.getMonth()|shortMonthName}}
+							&mdash;
+							{{evenWeek.sunday.getDate()}} {{evenWeek.sunday.getMonth()|shortMonthName}}
+						</ng-container>
+					</h1>
+				</div>
+			</div>
+		</ion-label>
+
+		<ion-buttons slot="end">
+			<ion-button [title]="segment === 'day' ? 'Today' : 'This week'"
+							[style.display]="segment === 'day' && isToday() || segment === 'week' && isCurrentWeek() ? 'none' : 'inherit'"
+							(click)="setToday()">
+				<ion-icon name="undo"></ion-icon>
+			</ion-button>
+			<ion-button [title]="segment === 'day' ? 'Previous day' : 'Previous week'"
+							(click)="changeDay(segment === 'day' ? -1 : -7)">
+				<ion-icon name="arrow-dropleft"></ion-icon>
+			</ion-button>
+			<ion-button [title]="segment === 'day' ? 'Next day' : 'Next week'"
+							(click)="changeDay(segment === 'day' ? +1 : +7)">
+				<ion-icon name="arrow-dropright"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+
+	<ion-list lines="none" class="no-v-padding" *ngIf="segment === 'day' || segment === 'week'">
+		<ion-grid class="grid-layout">
+			<ion-row>
+				<ion-col [size]="filter && filter.length > 4 ? 6 : 4">
+					<sneat-filter-item [filter]="filter" (changed)="applyFilter($event)"
+											 (onBlur)="filterFocused = false"></sneat-filter-item>
+				</ion-col>
+				<ion-col [size]="filter && filter.length > 4 ? 3 : 4">
+					<ion-item style="border-bottom: none; padding: 0">
+						<ion-checkbox [(ngModel)]="showRegulars"
+										  (ionChange)="onShowRegularChanged()"
+										  color="light"
+										  slot="start" checked="true">
+						</ion-checkbox>
+						<ion-label color="medium">
+							<small>Regular</small>
+						</ion-label>
+					</ion-item>
+				</ion-col>
+				<ion-col [size]="filter && filter.length > 4 ? 3 : 4">
+					<ion-item>
+						<ion-checkbox [(ngModel)]="showEvents"
+										  (ionChange)="onShowEventsChanged()"
+										  color="light"
+										  slot="start" checked="true">
+						</ion-checkbox>
+						<ion-label color="medium">
+							<small>Events</small>
+						</ion-label>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-list>
+
+	<sneat-filter-item *ngIf="segment === 'regular' || segment === 'events'" [filter]="filter"
+							 (changed)="applyFilter($event)"></sneat-filter-item>
+
+	<div *ngIf="segment === 'day' && activeDay.weekday" style="margin-top: 1em">
+		<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swipeRight)="swipeRight()">
+			<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState">
+				<div class="virtual-slide" [@virtualSlide]="oddDay.animationState">
+					<app-schedule-day
+						[filter]="filter"
+						[showEvents]="showEvents"
+						[showRegulars]="showRegulars"
+						[dayWeekday]="oddDay.weekday"
+						(slotClicked)="goActivity($event)"
+					></app-schedule-day>
+					<div class="virtual-slide-overflow-fixer"></div>
+				</div>
+				<div class="virtual-slide" [@virtualSlide]="evenDay.animationState">
+					<app-schedule-day
+						[dayWeekday]="evenDay.weekday"
+						(slotClicked)="goActivity($event)"
+					></app-schedule-day>
+					<div class="virtual-slide-overflow-fixer"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="segment === 'week' && activeWeek && activeWeek.weekdays">
+		<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swipeRight)="swipeRight()">
+			<div class="virtual-slider-inner" [@virtualSlider]="weekAnimationState">
+				<div class="virtual-slide" [@virtualSlide]="oddWeek.animationState">
+					<app-schedule-week
+						[filter]="filter"
+						[showEvents]="showEvents"
+						[showRegulars]="showRegulars"
+						[weekdays]="oddWeek.weekdays"
+						(goNew)="goNew($event)"
+						(dateSelected)="onDateSelected($event)"
+						(slotClicked)="goActivity($event)"></app-schedule-week>
+					<div class="virtual-slide-overflow-fixer"></div>
+				</div>
+				<div class="virtual-slide" [@virtualSlide]="evenWeek.animationState">
+					<app-schedule-week
+						[filter]="filter"
+						[showEvents]="showEvents"
+						[showRegulars]="showRegulars"
+						[weekdays]="evenWeek.weekdays"
+						(goNew)="goNew($event)"
+						(dateSelected)="onDateSelected($event)"
+						(slotClicked)="goActivity($event)"></app-schedule-week>
+					<div class="virtual-slide-overflow-fixer"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<ng-container *ngIf="segment === 'regular'">
+		<div class="ion-padding" *ngIf="!regulars">
+			<p>Loading...</p>
+		</div>
+		<ng-container *ngIf="regulars">
+			<p *ngIf="!regulars.length && !allRegulars.length" padding>No regular activities added yet.</p>
+			<p *ngIf="!regulars.length && allRegulars.length" padding>No regular activities matching filter.</p>
+			<ion-item-group *ngFor="let regular of regulars; trackBy: trackById">
+				<ion-item color="light" button (click)="goRegular(regular)">
+					<ion-label>
+						<h2><b>{{regular.type|titlecase}}</b>: <span
+							style="font-weight: normal">{{regular.title}}</span>
+						</h2>
+						<p *ngIf="regular.participants && regular.participants.length">
+							<ion-badge color="medium" style="margin-right: 0.5em"
+										  *ngFor="let participant of regular.participants; trackBy: trackById">
+								{{participant.title}}
+							</ion-badge>
+						</p>
+					</ion-label>
+				</ion-item>
+				<ion-item button *ngFor="let slot of regular.slots; trackBy: trackByIndex" (click)="goRegular(regular)">
+					<ion-badge color="light" slot="start">{{slot.time.starts}}</ion-badge>
+					<ion-label text-wrap>
+						<p>
+							<ion-badge color="light" style="margin-right: 4px;"
+										  *ngFor="let wd of slot.time.weekdays">{{wd|wdToWeekday}}</ion-badge>
+						</p>
+						<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
+							@ {{slot.location.title || slot.location.address}},
+							ends at {{slot.time.ends}}</p>
+						<ng-template #noLocation>
+							<p>Ends at {{slot.time.ends}}</p>
+						</ng-template>
+					</ion-label>
+				</ion-item>
+			</ion-item-group>
+		</ng-container>
+	</ng-container>
+
+	<ng-container *ngIf="segment === 'events'">
+		<p padding *ngIf="!todayAndFutureEvents">Loading...</p>
+		<p padding *ngIf="todayAndFutureEvents && todayAndFutureEvents.length === 0">No upcoming events.</p>
+		<ng-container *ngIf="todayAndFutureEvents && todayAndFutureEvents.length">
+			<ng-container *ngFor="let weekday of todayAndFutureEvents; trackBy: trackByDate">
+				<app-schedule-weekday [weekday]="weekday"
+											 [filter]="filter"
+											 [showEvents]="true"
+											 (slotClicked)="goActivity($event)"
+											 (dateSelected)="onDateSelected($event)"
+											 (goNew)="goNew($event)"
+				></app-schedule-weekday>
+			</ng-container>
+		</ng-container>
+	</ng-container>
+</ion-content>
+
+<ion-footer>
+	<ion-toolbar>
+		<ion-grid class="grid-layout" *ngIf="segment === 'day' || segment === 'week'">
+			<ion-row>
+				<ion-col size="6">
+					<ion-button size="small" expand="full" color="light" (click)="goNew({type: 'regular'})">
+						<ion-icon name="add" slot="start"></ion-icon>
+						Add regular
+						<ion-icon name="repeat" slot="end"></ion-icon>
+					</ion-button>
+				</ion-col>
+				<ion-col size="6">
+					<ion-button size="small" expand="full" color="light" (click)="goNew({type: 'single'})">
+						<ion-icon name="add" slot="start"></ion-icon>
+						Add event
+						<ion-icon name="calendar" slot="end"></ion-icon>
+					</ion-button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
+		<ion-button *ngIf="segment === 'regular'" expand="full" color="light" (click)="goNew({type: 'regular'})">
+			<ion-icon name="add" slot="start"></ion-icon>
+			Add regular activity
+			<ion-icon name="repeat" slot="end"></ion-icon>
+		</ion-button>
+
+		<ion-button *ngIf="segment === 'events'" expand="full" color="light" (click)="goNew({type: 'single'})">
+			<ion-icon name="add" slot="start"></ion-icon>
+			Add one time event
+			<ion-icon name="calendar" slot="end"></ion-icon>
+		</ion-button>
+	</ion-toolbar>
+</ion-footer>

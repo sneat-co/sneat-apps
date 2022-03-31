@@ -14,7 +14,7 @@ import { IMetric } from '../interfaces';
 import { secondsToStr } from '../../pipes/date-time-pipes';
 import { Timer, TimerFactory } from '../../services/timer.service';
 import { TeamContextService } from '../../services/team-context.service';
-import { TeamBasePageDirective } from '@sneat/team/components';
+import { TeamBasePage } from '@sneat/team/components';
 import { MemberRoleEnum } from '../../models/dto-models';
 import { first, mergeMap } from 'rxjs/operators';
 import { getMeetingIdFromDate, getToday } from '../../services/meeting.service';
@@ -25,7 +25,7 @@ import { getMeetingIdFromDate, getToday } from '../../services/meeting.service';
 	styleUrls: ['./scrum.page.scss'],
 })
 export class ScrumPage
-	extends TeamBasePageDirective
+	extends TeamBasePage
 	implements OnInit, OnDestroy {
 	public tab: ScrumPageTab = 'my';
 

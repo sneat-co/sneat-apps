@@ -1,0 +1,18 @@
+ion-list.no-v-padding {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+ion-checkbox {
+  margin-right: 1em;
+}
+
+ion-footer ion-toolbar {
+  --padding-start: 4px;
+
+  ion-button {
+    --margin-top: 0;
+    --margin-bottom: 0;
+    text-transform: none;
+  }
+}
