@@ -1,0 +1,16 @@
+<ion-title>
+	<ng-container *ngIf="team; else noTeam">
+		<ng-container *ngIf="!!typeTitle; else general">
+			<span style="margin-right: 0.5em">{{icon}}</span>
+			<span>{{typeTitle}}</span>
+		</ng-container>
+		<ng-template #general>
+			<span style="margin-right: 0.5em">{{icon}}</span>
+			<span>{{generalTitle}} @ {{team?.brief?.title || team?.id}}</span>
+		</ng-template>
+	</ng-container>
+	<ng-template #noTeam>
+		<span style="margin-right: 0.5em">{{icon}}</span>
+		<span>{{generalTitle}}</span>
+	</ng-template>
+</ion-title>

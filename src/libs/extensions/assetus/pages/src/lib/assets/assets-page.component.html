@@ -4,15 +4,15 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-<!--		<sneat-commune-page-title-->
-<!--			[commune]="commune"-->
-<!--			generalTitle="Assets"-->
-<!--			icon="🏡"-->
-<!--			[titlesByCommuneType]="{-->
-<!--				personal: 'Personal assets',-->
-<!--				family: 'Family assets'-->
-<!--			}">-->
-<!--		</sneat-commune-page-title>-->
+		<sneat-team-page-title
+			[team]="team"
+			generalTitle="Assets"
+			icon="🏡"
+			[titlesByTeamType]="{
+				personal: 'Personal assets',
+				family: 'Family assets'
+			}">
+		</sneat-team-page-title>
 		<ion-buttons slot="end">
 			<ion-button [disabled]="!team" (click)="goNew()"
 							title="Add asset">
