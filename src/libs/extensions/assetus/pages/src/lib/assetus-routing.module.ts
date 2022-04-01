@@ -4,6 +4,11 @@ import { Route, RouterModule } from '@angular/router';
 
 const assetusRoutes: Route[] = [
 	{
+		path: 'asset',
+		pathMatch: 'full',
+		redirectTo: 'assets',
+	},
+	{
 		path: 'assets',
 		loadChildren: () => import('./assets/assets-page.module')
 			.then(m => m.AssetsPageModule),
