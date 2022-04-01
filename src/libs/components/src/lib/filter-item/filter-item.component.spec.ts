@@ -1,22 +1,22 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AssetNewPageComponent} from './asset-new-page.component';
+import {FilterItemComponent} from './filter-item.component';
 
-describe('AssetNewPage', () => {
-	let component: AssetNewPageComponent;
-	let fixture: ComponentFixture<AssetNewPageComponent>;
+describe('FilterItemComponent', () => {
+	let component: FilterItemComponent;
+	let fixture: ComponentFixture<FilterItemComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [AssetNewPageComponent],
+			declarations: [FilterItemComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(AssetNewPageComponent);
+		fixture = TestBed.createComponent(FilterItemComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

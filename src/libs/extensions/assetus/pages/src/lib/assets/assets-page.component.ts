@@ -75,6 +75,9 @@ export class AssetsPageComponent extends AssetsBasePage implements AfterViewInit
 
 	public go(page: 'new-liability' | 'new-member' | 'new-contact'): void {
 		throw new Error('not implemented yey');
+		this.navController.navigateForward('./' + page, {
+			state: {team: this.team},
+		})
 		// this.navigateForward(page);
 	}
 }

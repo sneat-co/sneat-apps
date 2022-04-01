@@ -42,7 +42,7 @@ export class AssetListItemComponent {
 		}
 		let path: string;
 		switch (asset?.brief?.type) {
-			case 'vehicles':
+			case 'vehicle':
 				path = 'vehicle';
 				break;
 			case 'real_estate':

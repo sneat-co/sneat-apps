@@ -203,7 +203,7 @@ export class NewMemberPageComponent extends TeamBasePage implements AfterViewIni
 		// 	);
 	}
 
-	id = (i: number, record: {id: string}) => record.id;
+	readonly id = (i: number, record: {id: string}) => record.id;
 
 	public onRelationshipChanged(): void {
 		if (!this.ageGroup) {

@@ -1,32 +1,31 @@
-import {Component} from '@angular/core';
-import {CommuneBasePageParams} from 'sneat-shared/services/params';
-import {IAssetService, ICommuneIds, IServiceProviderService} from 'sneat-shared/services/interfaces';
-import {AssetBasePage} from '../../asset-base.page';
-import {LiabilityServiceType} from 'sneat-shared/models/types';
-import {IAssetDto} from 'sneat-shared/models/dto/dto-asset';
-import {IRecord} from 'rxstore';
-import {DtoServiceProvider} from 'sneat-shared/models/dto/dto-service-provider';
-import {CommuneTopPage} from '../../../../pages/constants';
+import { Component } from '@angular/core';
+import { AssetBasePage, AssetComponentBaseParams } from '../asset-base-page';
 
 @Component({
-	selector: 'app-add-asset-service',
+	selector: 'sneat-add-asset-service-page',
 	templateUrl: './add-asset-service-page.component.html',
-	providers: [CommuneBasePageParams],
+	providers: [AssetComponentBaseParams],
 })
 export class AddAssetServicePageComponent extends AssetBasePage {
 
-	serviceProviders: DtoServiceProvider[];
+	// serviceProviders: DtoServiceProvider[];
+	// serviceType: LiabilityServiceType;
+	serviceTypeTitle: string;
 
 	constructor(
 		assetService: IAssetService,
 		private serviceProviderService: IServiceProviderService,
-		params: CommuneBasePageParams,
+		params: AssetComponentBaseParams,
 	) {
-		super(CommuneTopPage.asset, params, assetService);
+		super('AddAssetServicePageComponent', params);
 	}
 
-	serviceType: LiabilityServiceType;
-	serviceTypeTitle: string;
+	// tslint:disable-next-line:prefer-function-over-method
+	selectProvider(serviceProvider: DtoServiceProvider): void {
+		console.log('selectProvider() => id:', serviceProvider.id);
+	}
+
+	readonly id = (o: number, v: { id: string }) => v.id;
 
 	protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
 		super.onCommuneIdsChanged(communeIds);
@@ -61,11 +60,4 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 				});
 		}
 	}
-
-	// tslint:disable-next-line:prefer-function-over-method
-	selectProvider(serviceProvider: DtoServiceProvider): void {
-		console.log('selectProvider() => id:', serviceProvider.id);
-	}
-
-	trackById = (o: number, record: IRecord) => record.id;
 }

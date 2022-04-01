@@ -49,12 +49,12 @@ const assetusRoutes: Route[] = [
 	// 		.then(m => m.RealEstatesPageModule),
 	// 	// ...guardRoute,
 	// },
-	// {
-	// 	path: 'new-asset',
-	// 	loadChildren: () => import('./add/asset-new/asset-new.module')
-	// 		.then(m => m.AssetNewPageModule),
-	// 	// ...guardRoute,
-	// },
+	{
+		path: 'new-asset',
+		loadChildren: () => import('./new-asset/new-asset-page.module')
+			.then(m => m.NewAssetPageModule),
+		// ...guardRoute,
+	},
 	// {
 	// 	path: 'add-vehicle',
 	// 	loadChildren: () => import('./add/asset-add-vehicle/asset-add-vehicle.module')

@@ -19,7 +19,7 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="cardy">
 	<!--	<ion-row class="ion-no-padding ion-no-margin">-->
 	<!--		&lt;!&ndash; TODO(StackOverflow): Is here better way to use grid without padding? &ndash;&gt;-->
 	<!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
@@ -112,29 +112,36 @@
 			</ion-col>
 			<ion-col>
 				<ion-card>
-						<ion-item>
-							<ion-icon name="calendar-outline" slot="start"></ion-icon>
-							<ion-label style="font-weight: bold">Schedule</ion-label>
-							<ion-buttons slot="end">
-								<ion-button routerLink="new-member">
-									<ion-icon name="add-outline"></ion-icon>
-								</ion-button>
-							</ion-buttons>
-						</ion-item>
-						<ion-item-divider>
-							<ion-label>Today</ion-label>
-						</ion-item-divider>
-						<ion-item>
-							<ion-label color="medium">Not implemented yet</ion-label>
-						</ion-item>
-						<ion-item-divider>
-							<ion-label>Tomorrow</ion-label>
-						</ion-item-divider>
-						<ion-item>
-							<ion-label color="medium">Not implemented yet</ion-label>
-						</ion-item>
+					<ion-item>
+						<ion-icon name="calendar-outline" slot="start"></ion-icon>
+						<ion-label style="font-weight: bold">Schedule</ion-label>
+						<ion-buttons slot="end">
+							<ion-button routerLink="new-member">
+								<ion-icon name="add-outline"></ion-icon>
+							</ion-button>
+						</ion-buttons>
+					</ion-item>
+					<ion-item-divider>
+						<ion-label>Today</ion-label>
+					</ion-item-divider>
+					<ion-item>
+						<ion-label color="medium">Not implemented yet</ion-label>
+					</ion-item>
+					<ion-item-divider>
+						<ion-label>Tomorrow</ion-label>
+					</ion-item-divider>
+					<ion-item>
+						<ion-label color="medium">Not implemented yet</ion-label>
+					</ion-item>
 				</ion-card>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+
+	<sneat-card-list
+		itemIcon="people-circle-outline"
+		[isFilterable]="true" title="Members"
+		[isLoading]="!team?.dto"
+		[items]="team?.dto?.members"
+	></sneat-card-list>
 </ion-content>

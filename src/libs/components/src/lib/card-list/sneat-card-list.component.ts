@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import { IonInput } from '@ionic/angular';
+import { IRecord } from '@sneat/data';
+import { IOptionallyTitled, IProjItemBrief } from '@sneat/datatug/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Observable } from 'rxjs';
-import { IRecord } from '@sneat/data';
-import { IOptionallyTitled, IProjItemBrief, ProjectItemType } from '@sneat/datatug/models';
 
 export interface ICardTab {
 	id: string;
@@ -15,9 +15,8 @@ export interface ICardTab {
 	templateUrl: './sneat-card-list.component.html',
 })
 export class SneatCardListComponent {
-	@Input() isFilterable?: boolean;
-	@Input() projItemType?: ProjectItemType;
 	@Input() title?: string;
+	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
 	@Input() items?: IProjItemBrief[];
 	@Input() create?: (name: string) => Observable<IRecord<IOptionallyTitled>>;
@@ -75,7 +74,7 @@ export class SneatCardListComponent {
 					this.name = '';
 				},
 				error: (err) => {
-					this.errorLogger.logError(err, 'Failed to create ' + this.projItemType);
+					this.errorLogger.logError(err, 'Failed to create new item');
 					this.isAdding = false;
 				},
 			});

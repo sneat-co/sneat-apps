@@ -68,9 +68,9 @@ export type ServiceCategory = 'service' | 'tax';
 export type AssetType =
 	'undefined'
 	| 'real_estate'
-	| 'vehicles'
-	| 'docs'
-	| 'debts'
+	| 'vehicle'
+	| 'document'
+	| 'debt'
 	| 'misc';
 export type Period = 'day' | 'week' | 'month' | 'quarter' | 'year';
 export type VehicleType = 'car' | 'motorcycle' | 'boat';

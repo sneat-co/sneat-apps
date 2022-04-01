@@ -1,4 +1,4 @@
-import { Directive, Inject, Injectable, OnInit } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { IUserTeamInfo } from '@sneat/auth-models';
@@ -55,7 +55,6 @@ export abstract class TeamBasePage {
 	private teamContext?: ITeamContext;
 
 	protected constructor(
-		// @Inject('className')
 		public readonly className: string,
 		readonly teamParams: TeamComponentBaseParams,
 	) {
@@ -73,7 +72,7 @@ export abstract class TeamBasePage {
 			this.getTeamRecordFromState();
 			this.cleanupOnUserLogout();
 		} catch (e) {
-			this.logError(e, 'Failed in BaseTeamPageDirective.constructor()');
+			this.logError(e, 'Failed in TeamBasePage.constructor()');
 		}
 	}
 
@@ -87,7 +86,7 @@ export abstract class TeamBasePage {
 
 	public get defaultBackUrl(): string {
 		const t = this.teamContext;
-		return t ? `/space/${t.type}/${t.id}` : 'teams';
+		return t ? `/space/${t.type}/${t.id}` : '';
 	}
 
 	protected get errorLogger() {
@@ -129,11 +128,11 @@ export abstract class TeamBasePage {
 	}
 
 	protected onTeamIdChanged(): void {
-		console.log('BaseTeamPageDirective.onTeamIdChanged()');
+		console.log('TeamBasePage.onTeamIdChanged()');
 	}
 
 	protected onTeamDtoChanged(): void {
-		console.log('BaseTeamPageDirective.onTeamDtoChanged()', this.team?.dto);
+		console.log('TeamBasePage.onTeamDtoChanged()', this.team?.dto);
 	}
 
 	// private trackTeamIdAndTypeFromUrl(): void {
@@ -143,7 +142,7 @@ export abstract class TeamBasePage {
 	// 			.subscribe({
 	// 				next: (teamContext) => {
 	// 					console.log(
-	// 						`BaseTeamPageDirective.trackTeamIdAndTypeFromUrl() => teamContext:`, teamContext,
+	// 						`TeamBasePage.trackTeamIdAndTypeFromUrl() => teamContext:`, teamContext,
 	// 					);
 	// 					this.setTeamContext(teamContext);
 	// 				},
@@ -154,6 +153,13 @@ export abstract class TeamBasePage {
 	// 		this.logError(e, 'Failed to call teamContextService.trackUrl()');
 	// 	}
 	// }
+
+	protected navigateForwardToTeamPage(page: string): void {
+		const url = `space/${this.team?.type}/${this?.team?.id}/`;
+		this.navController.navigateForward(url + page, {
+			state: { team: this.team },
+		}).catch(this.errorLogger.logErrorHandler(`failed to navigate to team page: ${url}`));
+	}
 
 	private getUserTeamInfoFromState(): void {
 		const teamContext = history.state?.teamContext as ITeamContext;
@@ -276,7 +282,7 @@ export abstract class TeamBasePage {
 	};
 
 	private setTeam(team: ITeamContext): void {
-		console.log('BaseTeamPageDirective.setTeam()', team);
+		console.log('TeamBasePage.setTeam()', team);
 		this.teamContext = team;
 		this.onTeamDtoChanged();
 	}

@@ -1,0 +1,15 @@
+<ion-item>
+	<ion-label color="medium">{{label}}</ion-label>
+	<ion-select [(ngModel)]="country" interface="popover" (ionChange)="onChanged($event)">
+		<ion-select-option value="au">Australia</ion-select-option>
+		<ion-select-option value="fr">France</ion-select-option>
+		<ion-select-option value="de">Germany</ion-select-option>
+		<ion-select-option value="ie">Ireland</ion-select-option>
+		<ion-select-option value="za">New Zealand</ion-select-option>
+		<ion-select-option value="ru">Russia</ion-select-option>
+		<ion-select-option value="es">Spain</ion-select-option>
+		<ion-select-option value="us">USA</ion-select-option>
+		<ion-select-option value="uk">UK</ion-select-option>
+		<ion-select-option value="su">USSR</ion-select-option>
+	</ion-select>
+</ion-item>

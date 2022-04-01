@@ -20,7 +20,6 @@
 <sneat-card-list
 	*ngIf="tab === 'environments'"
 	[isFilterable]="true"
-	[projItemType]="Environment"
 	title="Environments"
 	itemIcon="earth-outline"
 	[create]="createEnvironment"
@@ -34,7 +33,6 @@
 </sneat-card-list>
 <sneat-card-list
 	*ngIf="tab === 'boards'"
-	[projItemType]="Board"
 	[isFilterable]="true"
 	title="Boards"
 	itemIcon="clipboard-outline"
@@ -50,7 +48,6 @@
 </sneat-card-list>
 <sneat-card-list
 	*ngIf="tab === 'queries'"
-	[projItemType]="Query"
 	[isFilterable]="true"
 	title="Queries"
 	itemIcon="clipboard-outline"

@@ -51,6 +51,7 @@ specifiers:
   '@typescript-eslint/parser': 5.17.0
   codemirror: 5.65.2
   cypress: 9.5.3
+  date-fns: ^2.28.0
   dotenv: 16.0.0
   eslint: 8.12.0
   eslint-config-prettier: 8.5.0
@@ -105,6 +106,7 @@ dependencies:
   '@sneat/random': 0.0.3_7616c57abb71ad38c979dc7a2bd7029c
   '@sneat/wormhole': 0.0.5_2ddf8f52ebbbd163df84a320d70bda76
   codemirror: 5.65.2
+  date-fns: 2.28.0
   firebase: 9.6.10
   hogan.js: 3.0.2
   idb: 7.0.1
@@ -6072,6 +6074,11 @@ packages:
       abab: 2.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
+
+  /date-fns/2.28.0:
+    resolution: {integrity: sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /date-format/4.0.3:
     resolution: {integrity: sha512-7P3FyqDcfeznLZp2b+OMitV9Sz2lUnsT87WaTat9nVwqsBkTzPG3lPLNwW3en6F4pHUiWzr6vb8CLhjdK9bcxQ==}

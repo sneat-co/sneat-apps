@@ -1,3 +1,4 @@
+export * from './lib/data';
 export * from './lib/dto-app';
 export * from './lib/dto-asset';
 export * from './lib/dto-bill';

@@ -1,0 +1,38 @@
+<sneat-team-context #teamPageContext [page]="className"></sneat-team-context>
+<ion-header>
+	<ion-toolbar color="light" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<sneat-team-page-title
+			[team]="team"
+			generalTitle="New asset"
+			icon="🏡"
+			[titlesByTeamType]="{
+				personal: 'New personal asset',
+				family: 'New family asset'
+			}">
+		</sneat-team-page-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cardy">
+	<ion-card *ngIf="!category">
+		<ion-card-header>
+			<ion-card-title>Select asset type</ion-card-title>
+		</ion-card-header>
+		<ion-list *ngIf="!category">
+			<ion-item button *ngFor="let category of categories; trackBy: id" (click)="selectCategory(category)">
+				<ion-radio slot="start"></ion-radio>
+				<ion-label>
+					<h2>{{category.title}}</h2>
+					<p *ngIf="category.desc">{{category.desc}}</p>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+
+	<ng-container [ngSwitch]="category?.id">
+		<sneat-asset-add-vehicle [team]="team" *ngSwitchCase="'vehicle'"></sneat-asset-add-vehicle>
+	</ng-container>
+</ion-content>

@@ -2,12 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import {
-	TeamComponentBaseParams,
-	TeamComponentsModule,
-	TeamMenuComponentModule,
-	TeamComponentContextModule,
-} from '@sneat/team/components';
+import { SneatCardListModule } from '@sneat/components';
+import { TeamComponentContextModule, TeamComponentsModule, TeamMenuComponentModule } from '@sneat/team/components';
 import { MembersComponent } from '../members/members.component';
 import { MetricsComponent } from '../metrics/metrics.component';
 import { RetrospectivesComponent } from '../retrospectives/retrospectives.component';
@@ -24,6 +20,7 @@ import { TeamPageComponent } from './team-page.component';
 		TeamComponentContextModule,
 		TeamMenuComponentModule,
 		TeamComponentsModule,
+		SneatCardListModule,
 	],
 	declarations: [
 		MembersComponent,

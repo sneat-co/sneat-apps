@@ -35,7 +35,7 @@ export interface IAssetDto extends IAssetBase, IDemoRecord, ITotalsHolder {
 	sameAssetID?: string; // A link to realtor's or tenant's asset ID
 	desc?: string;
 	countryID?: CountryId;
-	teamId?: string;
+	teamID?: string;
 	groupId?: string;
 	yearOfBuild?: number;
 	dateOfBuild?: string; // ISO date string 'YYYY-MM-DD'
@@ -83,8 +83,8 @@ export interface IAssetDtoCategory extends ITitledRecord {
 	id: AssetType;
 	order: number;
 	desc?: string;
-	canHaveIncome: boolean;
-	canHaveExpense: boolean;
+	canHaveIncome?: boolean;
+	canHaveExpense?: boolean;
 }
 
 export interface IAssetDtoGroupCounts {

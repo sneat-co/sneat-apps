@@ -14,8 +14,7 @@ export abstract class AssetsBasePage extends TeamBasePage {
 	}
 
 	public goNew(path: 'new-asset' | 'add-vehicle' | 'add-dwelling' = 'new-asset'): void {
-		throw new Error('not implemented yet');
-		// this.navigateForward(path);
+		this.navigateForwardToTeamPage(path);
 	}
 
 	override onTeamDtoChanged(): void {
