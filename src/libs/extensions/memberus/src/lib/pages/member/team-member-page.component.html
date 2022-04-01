@@ -42,7 +42,7 @@
 										<ion-icon name="person" *ngSwitchDefault></ion-icon>
 									</ng-container>
 
-									{{member?.brief?.title || (member?.dto?.userId === currentUserId ? 'Me' : '(no title)')}}
+									{{member?.brief?.title || (member?.dto?.userID === currentUserId ? 'Me' : '(no title)')}}
 								</ng-container>
 							</ion-label>
 							<ion-buttons slot="end">
@@ -135,7 +135,7 @@
 
 						<ng-container *ngIf="member?.dto && (!member?.dto?.gender || !relatedAs)">
 							<ion-item
-								*ngIf="team?.type === 'family' && relatedAs && member?.dto?.userId !== currentUserId">
+								*ngIf="team?.type === 'family' && relatedAs && member?.dto?.userID !== currentUserId">
 								<ion-label>
 									Relationship to me
 								</ion-label>
@@ -148,7 +148,7 @@
 							</ion-item>
 
 							<ion-item-group
-								*ngIf="team?.type === 'family' && !relatedAs && member?.dto?.userId !== currentUserId">
+								*ngIf="team?.type === 'family' && !relatedAs && member?.dto?.userID !== currentUserId">
 								<ion-item-divider>
 									<ion-label>Relationship to me</ion-label>
 								</ion-item-divider>

@@ -19,7 +19,7 @@ import { filter, first, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
-	private userId?: string;
+	private userID?: string;
 
 	private teams$: { [id: string]: ReplaySubject<ITeamDto | undefined> } = {};
 	private subscriptions: Subscription[] = [];
@@ -44,17 +44,17 @@ export class TeamService {
 			console.log('processUserRecordInTeamService()', userState);
 			const user = userState?.record;
 			if (!user) {
-				// this.userId = undefined;
+				// this.userID = undefined;
 				if (this.subscriptions?.length) {
 					this.unsubscribe('user record is empty');
 				}
 				return;
 			}
-			if (userState.user?.uid !== this.userId) {
-				if (this.userId) {
+			if (userState.user?.uid !== this.userID) {
+				if (this.userID) {
 					this.unsubscribe('user id changed');
 				}
-				this.userId = userState.user?.uid;
+				this.userID = userState.user?.uid;
 			}
 			if (user?.teams) {
 				user.teams?.forEach(this.subscribeForFirestoreTeamChanges);

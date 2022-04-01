@@ -87,6 +87,12 @@
 			"@sneat/dto": ["libs/dto/src/index.ts"],
 			"@sneat/ext-shared": ["libs/ext-shared/src/index.ts"],
 			"@sneat/extensions/assetus": ["libs/extensions/assetus/src/index.ts"],
+			"@sneat/extensions/assetus/components": [
+				"libs/extensions/assetus/components/src/index.ts"
+			],
+			"@sneat/extensions/assetus/pages": [
+				"libs/extensions/assetus/pages/src/index.ts"
+			],
 			"@sneat/extensions/budgetus": ["libs/extensions/budgetus/src/index.ts"],
 			"@sneat/extensions/contactus": ["libs/extensions/contactus/src/index.ts"],
 			"@sneat/extensions/debtus": ["libs/extensions/debtus/src/index.ts"],

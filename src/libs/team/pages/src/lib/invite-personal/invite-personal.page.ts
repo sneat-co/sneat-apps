@@ -74,7 +74,7 @@ export class InvitePersonalPage implements OnInit {
 						console.log('invite record:', response);
 						this.invite = response.invite;
 						this.members = response.members?.filter(
-							(m) => m.id !== response.invite?.memberId,
+							(m) => m.id !== response.invite?.memberID,
 						);
 						if (response.invite) {
 							this.fullName = response.invite.to.title;

@@ -5,6 +5,9 @@ import { TeamBasePage, TeamComponentBaseParams, TeamContextComponent } from '@sn
 @Component({
 	selector: 'sneat-team',
 	templateUrl: './team-page.component.html',
+	providers: [
+		TeamComponentBaseParams,
+	]
 })
 export class TeamPageComponent extends TeamBasePage implements AfterViewInit {
 

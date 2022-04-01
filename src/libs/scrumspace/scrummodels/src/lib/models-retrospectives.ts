@@ -21,7 +21,7 @@ export interface IRetroItem {
 	type?: string; // provided only for root level items
 	title: string;
 	children?: IRetroItem[];
-	likedUserIds?: string[];
+	likedUserIDs?: string[];
 }
 
 export interface IRetroListItem extends IRetroItem {

@@ -124,13 +124,13 @@ export class RetrospectivePageComponent
 		console.log('RetrospectivePage.watchRetro()');
 		this.userService.userChanged
 			// .pipe(filter(uid => !!uid))
-			.subscribe((userId) => {
-				console.log('RetrospectivePage.watchRetro() => userId:', userId);
+			.subscribe((userID) => {
+				console.log('RetrospectivePage.watchRetro() => userID:', userID);
 				try {
 					if (this.retroSub) {
 						this.retroSub.unsubscribe();
 					}
-					if (!userId) {
+					if (!userID) {
 						return;
 					}
 					const { id } = this.retrospective;

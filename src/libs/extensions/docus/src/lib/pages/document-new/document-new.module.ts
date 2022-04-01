@@ -5,13 +5,13 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
 
-import {DocumentNewPageComponent} from './document-new-page.component';
+import {NewDocumentPageComponent} from './new-document-page.component';
 import {CountrySelectorModule} from 'sneat-shared/components/country-selector/country-selector.module';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: DocumentNewPageComponent
+		component: NewDocumentPageComponent
 	}
 ];
 
@@ -23,7 +23,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		CountrySelectorModule,
 	],
-	declarations: [DocumentNewPageComponent]
+	declarations: [NewDocumentPageComponent]
 })
 export class DocumentNewPageModule {
 }

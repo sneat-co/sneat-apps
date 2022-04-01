@@ -17,7 +17,7 @@ export interface IMovie extends IListItemInfo {
 	voteCount?: number;
 	idTmdb?: string;
 	actors?: Actor[];
-	watchedByUserIds?: string[];
+	watchedByUserIDs?: string[];
 }
 
 export interface Genre {

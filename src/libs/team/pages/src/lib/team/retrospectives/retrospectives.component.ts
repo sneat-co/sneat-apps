@@ -45,10 +45,10 @@ export class RetrospectivesComponent {
 	}
 
 	retroCount(itemType: RetroItemType): number {
-		const userId = this.userService.currentUserId;
+		const userID = this.userService.currentUserId;
 		return (
-			(userId
-				? this.team?.dto?.upcomingRetro?.itemsByUserAndType?.[userId]?.[
+			(userID
+				? this.team?.dto?.upcomingRetro?.itemsByUserAndType?.[userID]?.[
 					itemType
 					]
 				: 0) || 0

@@ -13,9 +13,9 @@ import { getMeetingIdFromDate } from '../../../services/meeting.service';
 	styleUrls: ['./scrum-task.component.scss'],
 })
 export class ScrumTaskComponent implements OnInit {
-	@Input() teamId: string;
+	@Input() teamID: string;
 	@Input() date: Date;
-	@Input() memberId: string;
+	@Input() memberID: string;
 	@Input() type: TaskType;
 	@Input() task: ITask;
 
@@ -67,15 +67,15 @@ export class ScrumTaskComponent implements OnInit {
 			const comment: ITaskComment = {
 				id: undefined as string,
 				message,
-				by: { userId: this.user.id, title: this.user.data.title },
+				by: { userID: this.user.id, title: this.user.data.title },
 			};
 			this.task.comments.push(comment);
 			const request: IAddCommentRequest = {
-				team: this.teamId,
+				team: this.teamID,
 				meeting: getMeetingIdFromDate(this.date),
 				type: this.type,
 				task: this.task.id,
-				member: this.memberId,
+				member: this.memberID,
 				message,
 			};
 			this.scrumService.addComment(request).subscribe({

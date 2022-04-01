@@ -62,8 +62,8 @@
 				[color]="isLiked ? 'primary' : 'medium'"
 				(click)="like($event)"
 			>
-				<ion-label *ngIf="item?.likedUserIds?.length">{{
-					item.likedUserIds.length
+				<ion-label *ngIf="item?.likedUserIDs?.length">{{
+					item.likedUserIDs.length
 				}}</ion-label>
 				<ion-icon name="thumbs-up-outline"></ion-icon>
 			</ion-button>
@@ -103,7 +103,7 @@
 <!--						[color]="isLiked ? 'primary' : 'medium'"-->
 <!--						(click)="like($event)"-->
 <!--		>-->
-<!--			<ion-label *ngIf="item?.likedUserIds?.length">{{item.likedUserIds.length}}</ion-label>-->
+<!--			<ion-label *ngIf="item?.likedUserIDs?.length">{{item.likedUserIds.length}}</ion-label>-->
 <!--			<ion-icon name="thumbs-up-outline"></ion-icon>-->
 <!--		</ion-button>-->
 <!--	</ion-buttons>-->

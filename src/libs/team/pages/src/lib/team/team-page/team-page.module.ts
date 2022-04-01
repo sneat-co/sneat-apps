@@ -32,9 +32,6 @@ import { TeamPageComponent } from './team-page.component';
 		ScrumsComponent,
 		TeamPageComponent,
 	],
-	providers: [
-		TeamComponentBaseParams,
-	]
 })
 export class TeamPageModule {
 }

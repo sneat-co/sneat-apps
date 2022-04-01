@@ -2476,6 +2476,90 @@
 			},
 			"tags": []
 		},
+		"extensions-assetus-components": {
+			"projectType": "library",
+			"root": "libs/extensions/assetus/components",
+			"sourceRoot": "libs/extensions/assetus/components/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/assetus/components"],
+					"options": {
+						"project": "libs/extensions/assetus/components/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/assetus/components"],
+					"options": {
+						"jestConfig": "libs/extensions/assetus/components/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/assetus/components/src/**/*.ts",
+							"libs/extensions/assetus/components/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-assetus-pages": {
+			"projectType": "library",
+			"root": "libs/extensions/assetus/pages",
+			"sourceRoot": "libs/extensions/assetus/pages/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/assetus/pages"],
+					"options": {
+						"project": "libs/extensions/assetus/pages/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/assetus/pages/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/assetus/pages/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/assetus/pages"],
+					"options": {
+						"jestConfig": "libs/extensions/assetus/pages/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/assetus/pages/src/**/*.ts",
+							"libs/extensions/assetus/pages/src/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
 		"extensions-budgetus": {
 			"projectType": "library",
 			"root": "libs/extensions/budgetus",

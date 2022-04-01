@@ -4,6 +4,10 @@ import { AgeGroup, Gender, Restriction } from './types';
 
 // import {IPersonSize} from '../ui/dto-sizechart';
 
+export interface  ITitled {
+	title: string
+}
+
 export interface ITitledRecord extends IRecord {
 	title?: string;
 }
@@ -79,7 +83,7 @@ export function zeroIfEmptyTotals(totals: DtoTotals): DtoTotals {
 
 export interface IPersonRecord extends ITeamRecord/*, IPersonSize*/
 {
-	userId?: string;
+	userID?: string;
 	readonly email?: string;
 	readonly phone?: string;
 	readonly website?: string;

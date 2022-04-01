@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class MemberPageComponent implements OnDestroy {
 	public team?: IRecord<ITeamDto>;
 
-	public userId?: string;
+	public userID?: string;
 	public memberBrief?: IMemberBrief;
 	public changing?: 'role';
 
@@ -58,8 +58,8 @@ export class MemberPageComponent implements OnDestroy {
 					),
 			);
 			this.userService.userChanged.subscribe({
-				next: (userId) => {
-					this.userId = userId;
+				next: (userID) => {
+					this.userID = userID;
 				},
 				error: (err) =>
 					this.errorLogger.logError(

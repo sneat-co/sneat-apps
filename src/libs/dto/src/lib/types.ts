@@ -1,4 +1,4 @@
-export type TeamType = 'family' | 'company' | 'team' | 'educator' | 'unknown';
+export type TeamType = 'family' | 'company' | 'team' | 'educator' | 'realtor' | 'unknown';
 export type MemberType = 'member' | 'pupil' | 'staff';
 export type InsurerType = 'insurer';
 export type DwellingContacts =
@@ -65,7 +65,7 @@ export type LiabilityServiceType =
 	| VehicleServiceType
 	;
 export type ServiceCategory = 'service' | 'tax';
-export type AssetCategoryId =
+export type AssetType =
 	'undefined'
 	| 'real_estate'
 	| 'vehicles'

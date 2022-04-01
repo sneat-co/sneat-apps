@@ -33,8 +33,8 @@ export interface IAddTeamMemberRequest extends ITeamRequest {
 }
 
 export interface IBy {
-	memberId?: string;
-	userId?: string;
+	memberID?: string;
+	userID?: string;
 	title: string;
 }
 
@@ -53,7 +53,7 @@ export interface IPersonalInvite extends IInvite {
 	channel: string;
 	address: string;
 	team: { id: string; title: string };
-	memberId: string;
+	memberID: string;
 	from: IPerson;
 	to: IPerson;
 }

@@ -1,4 +1,4 @@
-import { AssetCategoryId, LiabilityServiceType, ServiceCategory, SettlementType } from './types';
+import { AssetType, LiabilityServiceType, ServiceCategory, SettlementType } from './types';
 import { ITitledRecord } from './dto-models';
 
 export interface ServiceProviderContact {
@@ -26,7 +26,7 @@ export type ServiceProviderStatus = 'active' | 'rejected' | 'suggested' | 'archi
 export interface DtoServiceProvider extends ITitledRecord {
 	countryId: string;
 	status: ServiceProviderStatus;
-	assetCategoryId?: AssetCategoryId;
+	assetCategoryId?: AssetType;
 	serviceTypes: LiabilityServiceType[];
 	contact?: ServiceProviderContacts;
 }
@@ -51,7 +51,7 @@ export interface DtoServicePlan extends ITitledRecord {
 }
 
 export interface LinkedToAssetCategories {
-	assetCategoryIds: AssetCategoryId[];
+	assetCategoryIds: AssetType[];
 }
 
 export interface DtoServiceType extends ITitledRecord, LinkedToAssetCategories {

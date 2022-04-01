@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatAuthModule } from '@sneat/auth';
+import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { memberRoutes } from '@sneat/extensions/memberus';
 import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 
@@ -43,6 +44,7 @@ const routes: Routes = [
 		IonicModule,
 		SneatAuthModule,
 		TeamMenuComponentModule,
+		AssetusRoutingModule,
 	],
 	exports: [RouterModule],
 	declarations: [],

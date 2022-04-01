@@ -78,7 +78,7 @@ export function newCommuneCounts(numberOf?: TeamCounts): TeamCounts {
 
 export interface ICommuneMemberInfo {
 	readonly id?: string;
-	readonly userId?: string;
+	readonly userID?: string;
 	readonly title?: string;
 	readonly gender?: Gender;
 	readonly age?: AgeGroup;
@@ -90,7 +90,7 @@ export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder, 
 	readonly countryId?: CountryId;
 	readonly type: CommuneType;
 	readonly desc?: string;
-	readonly userId: RxRecordKey;
+	readonly userID: RxRecordKey;
 	readonly order?: number;
 	readonly numberOf?: TeamCounts;
 	readonly membersCountByRole?: { [id: string]: number };
@@ -105,26 +105,26 @@ export function isCommuneShouldHoldMembersInfo(type: CommuneType): boolean {
 
 export function findCommuneMemberInfo(
 	members: readonly ICommuneMemberInfo[],
-	member: { readonly id?: string; readonly userId?: string },
+	member: { readonly id?: string; readonly userID?: string },
 ): ICommuneMemberInfo | undefined {
-	return members && members.find(m => m && (!!m.id && m.id === member.id) || (!!m.userId && m.userId === member.userId));
+	return members && members.find(m => m && (!!m.id && m.id === member.id) || (!!m.userID && m.userID === member.userID));
 }
 
 export const personalCommuneIdPrefix = 'u_';
 
-export function getUserPersonalCommuneId(userId?: string): string {
-	if (!userId) {
-		throw new Error('userId is required parameter');
+export function getUserPersonalCommuneID(userID?: string): string {
+	if (!userID) {
+		throw new Error('userID is required parameter');
 	}
-	return personalCommuneIdPrefix + userId;
+	return personalCommuneIdPrefix + userID;
 }
 
 export function isPersonalCommuneId(id: string): boolean {
 	return !!id && id.startsWith(personalCommuneIdPrefix);
 }
 
-export function isUserPersonalCommune(communeId: string, userId?: string): boolean {
-	return !!userId && communeId === getUserPersonalCommuneId(userId);
+export function isUserPersonalCommune(communeID: string, userID?: string): boolean {
+	return !!userID && communeID === getUserPersonalCommuneID(userID);
 }
 
 export const CommuneModel = {

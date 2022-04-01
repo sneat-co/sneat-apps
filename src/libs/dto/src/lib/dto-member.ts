@@ -72,8 +72,8 @@ export interface IMemberDto extends IMemberBase {
 export function newCommuneMemberInfo(m: IMemberDto): ICommuneMemberInfo {
 	return excludeUndefined({
 		id: m.id as string,
-		userId: m.userId,
-		title: m.title && m.userId && m.title === m.userId ? undefined : m.title,
+		userID: m.userID,
+		title: m.title && m.userID && m.title === m.userID ? undefined : m.title,
 		age: m.age,
 		roles: m.roles,
 		gender: m.gender,

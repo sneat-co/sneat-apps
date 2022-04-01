@@ -1,6 +1,7 @@
-import { AssetCategoryId, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
-import { ITeamRecord, IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
+import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2';
+import { IDemoRecord, ITeamRecord, ITitled, ITitledRecord, ITotalsHolder } from './dto-models';
+import { AssetType, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
 
 export interface AssetLiabilityInfo {
 	id: string;
@@ -12,31 +13,43 @@ export interface AssetLiabilityInfo {
 }
 
 export interface ISubAssetInfo extends ITitledRecord {
-	categoryId: AssetCategoryId;
+	type: AssetType;
 	countryId?: CountryId;
-	type: string;
+	subType: string;
 	expires?: string; // ISO date string 'YYYY-MM-DD'
 }
 
-export interface IAssetDto extends ITitledRecord, IDemoRecord, ITotalsHolder {
-	id?: string;
-	parentAssetId?: string;
-	parentCategoryId?: AssetCategoryId;
-	sameAssetId?: string; // A link to realtor's or tenant's asset ID
+export interface IAssetBase extends ITitled {
+	type: AssetType;
+	regNumber?: string;
+}
+
+export interface IAssetBrief extends IAssetBase {
+	id: string;
+}
+
+export interface IAssetDto extends IAssetBase, IDemoRecord, ITotalsHolder {
+	type: AssetType;
+	parentAssetID?: string;
+	parentCategoryID?: AssetType;
+	sameAssetID?: string; // A link to realtor's or tenant's asset ID
 	desc?: string;
-	categoryId?: AssetCategoryId;
-	countryId?: CountryId;
+	countryID?: CountryId;
 	teamId?: string;
 	groupId?: string;
+	yearOfBuild?: number;
+	dateOfBuild?: string; // ISO date string 'YYYY-MM-DD'
 	subAssets?: ISubAssetInfo[];
 	contacts?: IContact2Asset[];
-	memberIds?: string[];
+	memberIDs?: string[];
 	membersInfo?: ITitledRecord[];
-	type?: string; // E.g. subcategory - for example for documents could be: passport, visa, etc.
+	subType?: string; // E.g. subcategory - for example for documents could be: passport, visa, etc.
 	number?: string;
 	liabilities?: AssetLiabilityInfo[];
 	notUsedServiceTypes?: LiabilityServiceType[];
 }
+
+export type IAssetContext = INavContext<IAssetBrief, IAssetDto>;
 
 export interface IDwelling extends IAssetDto {
 	address?: string;
@@ -50,8 +63,6 @@ export interface IVehicle extends IAssetDto {
 	engineCC?: number;
 	fuelType?: FuelType;
 	vin?: string;
-	yearBuild?: number;
-	dateBuild?: string; // ISO date string 'YYYY-MM-DD'
 	vehicleType?: VehicleType;
 	number?: string;
 	nctExpires?: string;     // ISO date string 'YYYY-MM-DD'
@@ -63,13 +74,13 @@ export interface IVehicle extends IAssetDto {
 }
 
 export interface IDocument extends IAssetDto {
-	issued?: string; // ISO date string 'YYYY-MM-DD'
+	issuedOn?: string; // ISO date string 'YYYY-MM-DD'
 	issuedBy?: string;
-	expires?: string; // ISO date string 'YYYY-MM-DD'
+	expiresOn?: string; // ISO date string 'YYYY-MM-DD'
 }
 
 export interface IAssetDtoCategory extends ITitledRecord {
-	id: AssetCategoryId;
+	id: AssetType;
 	order: number;
 	desc?: string;
 	canHaveIncome: boolean;
@@ -83,6 +94,6 @@ export interface IAssetDtoGroupCounts {
 export interface IAssetDtoGroup extends ITeamRecord, ITitledRecord, ITotalsHolder {
 	order: number;
 	desc?: string;
-	categoryId?: AssetCategoryId;
+	categoryId?: AssetType;
 	numberOf?: IAssetDtoGroupCounts;
 }
