@@ -4,23 +4,26 @@ import { carMakes, IMake, IModel, IVehicle, VehicleType } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
-import { AssetAddBasePage } from '../asset-add-base-page';
+import { AssetService } from '../../asset-service';
+import { ICreateAssetRequest } from '../../asset-service.dto';
+import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
 	selector: 'sneat-asset-add-vehicle',
 	templateUrl: './asset-add-vehicle.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class AssetAddVehicleComponent extends AssetAddBasePage {
+export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 
 	@Input() team?: ITeamContext;
 
 	vehicleType?: VehicleType;
 	vehicleTypes: ISelectItem[] = [
-		{id: 'boat', title: 'Boat', iconName: 'boat-outline'},
-		{id: 'car', title: 'Car', iconName: 'car-outline'},
-		{id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline'},
-	]
+		{ id: 'car', title: 'Car', iconName: 'car-outline' },
+		{ id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline' },
+		{ id: 'bicycle', title: 'Bicycle', iconName: 'bicycle-outline' },
+		{ id: 'boat', title: 'Boat', iconName: 'boat-outline' },
+	];
 
 	public countryIso2 = 'IE';
 	public regNumber = '';
@@ -36,28 +39,35 @@ export class AssetAddVehicleComponent extends AssetAddBasePage {
 	public nctExpires = '';       // ISO date string 'YYYY-MM-DD'
 	public taxExpires = '';      // ISO date string 'YYYY-MM-DD'
 	public nextServiceDue = '';  // ISO date string 'YYYY-MM-DD'
-	isSubmitting = false;
 
 	constructor(
-		// private readonly assetService: IAssetService,
+		// params: TeamComponentBaseParams,
+		teamParams: TeamComponentBaseParams,
+		assetService: AssetService,
 	) {
-		super();
-		console.log('AssetAddVehicleComponent.constructor()');
+		super(teamParams, assetService);
 		this.makes = Object.keys(carMakes).map(id => ({ id, title: id }));
 	}
 
 	onVehicleTypeChanged(): void {
 		this.make = '';
-		this.model = ''
+		this.model = '';
 	}
+
 	readonly id = (i: number, v: { id: string }) => v.id;
 
 	formatDate(value?: string | null): string {
 		return value ? format(parseISO(value), 'dd MMMM yyyy') : '';
 	}
 
-	makeChanged(): void {
+	makeChanged(event: Event): void {
+		console.log('makeChanged', event, this.make);
 		const make = carMakes[this.make];
+		if (!make) {
+			console.log('make not found by id: ' + this.make)
+			this.models = [];
+			return;
+		}
 		this.models = make.models.map(v => ({ id: v.model, title: v.model }));
 	}
 
@@ -74,66 +84,66 @@ export class AssetAddVehicleComponent extends AssetAddBasePage {
 		if (!this.team) {
 			throw 'no team context';
 		}
+		if (!this.vehicleType) {
+			throw 'no vehicleType';
+		}
+		if (!this.make) {
+			throw 'no make';
+		}
+		if (!this.model) {
+			throw 'no model';
+		}
 		this.isSubmitting = true;
 		const title = `${this.make} ${this.model} ${this.engine}`;
-		const assetDto: IVehicle = {
-			type: 'vehicle',
-			teamID: this.team?.id,
-			categoryId: 'vehicles',
-			vehicleType: this.vehicleType,
-			title,
-			number: this.regNumber,
+		const vehicle: IVehicle = {
+			make: this.make,
+			model: this.model,
 		};
-		if (this.make) {
-			assetDto.make = this.make;
-			if (this.model) {
-				assetDto.model = this.model;
-			}
-		}
+		const request: ICreateAssetRequest = {
+			type: 'vehicle',
+			team: this.team?.id,
+			subType: this.vehicleType,
+			countryID: this.countryIso2,
+			title,
+			regNumber: this.regNumber,
+			vehicle,
+		};
 		if (this.yearOfBuild) {
-			assetDto.yearOfBuild = new Date(this.yearOfBuild).getFullYear();
+			request.yearOfBuild = new Date(this.yearOfBuild).getFullYear();
 		}
 		if (this.vin) {
-			assetDto.vin = this.vin;
+			vehicle.vin = this.vin;
 		}
 		if (this.countryIso2) {
-			assetDto.countryID = this.countryIso2;
+			request.countryID = this.countryIso2;
 		}
 		if (this.taxExpires) {
-			assetDto.taxExpires = this.taxExpires;
+			vehicle.taxExpires = this.taxExpires;
 		}
 		if (this.nctExpires) {
-			assetDto.nctExpires = this.nctExpires;
+			vehicle.nctExpires = this.nctExpires;
 		}
 		if (this.nextServiceDue) {
-			assetDto.nextServiceDue = this.nextServiceDue;
+			vehicle.nextServiceDue = this.nextServiceDue;
 		}
 		// tslint:disable-next-line:no-this-assignment
-		const { engine } = this;
-		if (engine) {
-			const engineLower = engine.toLowerCase();
-			assetDto.engine = engine;
-			if (engineLower.indexOf('petrol') >= 0) {
-				assetDto.fuelType = 'petrol';
-			} else if (engineLower.indexOf('diesel') >= 0) {
-				assetDto.fuelType = 'diesel';
-			}
-			const size = engine.match(/(\d+(\.\d)?)+L/);
-			console.log('size:', size);
-			if (size) {
-				// tslint:disable-next-line:no-magic-numbers
-				assetDto.engineCC = +size[1] * 1000;
-			}
-		}
+		// const { engine } = this;
+		// if (engine) {
+		// 	const engineLower = engine.toLowerCase();
+		// 	request.engine = engine;
+		// 	if (engineLower.indexOf('petrol') >= 0) {
+		// 		request.fuelType = 'petrol';
+		// 	} else if (engineLower.indexOf('diesel') >= 0) {
+		// 		request.fuelType = 'diesel';
+		// 	}
+		// 	const size = engine.match(/(\d+(\.\d)?)+L/);
+		// 	console.log('size:', size);
+		// 	if (size) {
+		// 		// tslint:disable-next-line:no-magic-numbers
+		// 		request.engineCC = +size[1] * 1000;
+		// 	}
+		// }
 
-		// this.assetService.add(assetDto)
-		// 	.subscribe(
-		// 		dto => {
-		// 			this.navigateForward('asset', { id: dto.id }, { assetDto }, { excludeCommuneId: true, replaceUrl: true });
-		// 		},
-		// 		err => {
-		// 			this.isSubmitting = false;
-		// 			alert(err);
-		// 		});
+		this.createAssetAndGoToAssetPage(request, this.team);
 	}
 }

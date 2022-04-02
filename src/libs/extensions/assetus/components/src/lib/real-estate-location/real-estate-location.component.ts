@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {Asset} from 'sneat-shared/models/ui/ui-asset';
+import { IAssetContext } from '@sneat/team/models';
 
 @Component({
-	selector: 'app-real-estate-location',
+	selector: 'sneat-real-estate-location',
 	templateUrl: './real-estate-location.component.html',
 })
 export class RealEstateLocationComponent {
 
-	@Input() asset: Asset;
+	@Input() asset?: IAssetContext;
 }

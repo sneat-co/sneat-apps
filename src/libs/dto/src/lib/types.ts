@@ -56,7 +56,8 @@ export type DwellingServiceType =
 	| 'internet'
 	| 'phone'
 	| 'tv'
-	| 'tvlicense';
+	| 'tv_license';
+
 export type LiabilityServiceType =
 	| DwellingServiceType
 	| DwellingTaxServiceType

@@ -14,16 +14,16 @@ const assetusRoutes: Route[] = [
 			.then(m => m.AssetsPageModule),
 		// ...guardRoute,
 	},
+	{
+		path: 'asset/:assetID',
+		loadChildren: () => import('./asset/asset-page.module')
+			.then(m => m.AssetPageModule),
+		// ...guardRoute,
+	},
 	// {
 	// 	path: 'assets-group',
 	// 	loadChildren: () => import('./asset-group/asset-group.module')
 	// 		.then(m => m.AssetGroupPageModule),
-	// 	// ...guardRoute,
-	// },
-	// {
-	// 	path: 'asset/:assetID',
-	// 	loadChildren: () => import('./asset/asset.module')
-	// 		.then(m => m.AssetPageModule),
 	// 	// ...guardRoute,
 	// },
 	// {

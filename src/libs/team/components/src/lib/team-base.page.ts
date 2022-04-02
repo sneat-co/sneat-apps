@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { LOGGER_FACTORY, NgModulePreloaderService } from '@sneat/core';
 import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
 import { ILogger, ILoggerFactory } from '@sneat/rxstore';
 import { ITeamContext } from '@sneat/team/models';
-import { TeamService } from '@sneat/team/services';
+import { TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import { Subject, Subscription, tap } from 'rxjs';
 import { first, mergeMap, takeUntil } from 'rxjs/operators';
@@ -23,6 +24,7 @@ export class TeamComponentBaseParams {
 		// public readonly activeCommuneService: IActiveCommuneService,
 		public readonly userService: SneatUserService,
 		public readonly teamService: TeamService,
+		public readonly teamNavService: TeamNavService,
 		public readonly preloader: NgModulePreloaderService,
 		@Inject(ErrorLogger)
 		public readonly errorLogger: IErrorLogger,
@@ -153,13 +155,6 @@ export abstract class TeamBasePage {
 	// 		this.logError(e, 'Failed to call teamContextService.trackUrl()');
 	// 	}
 	// }
-
-	protected navigateForwardToTeamPage(page: string): void {
-		const url = `space/${this.team?.type}/${this?.team?.id}/`;
-		this.navController.navigateForward(url + page, {
-			state: { team: this.team },
-		}).catch(this.errorLogger.logErrorHandler(`failed to navigate to team page: ${url}`));
-	}
 
 	private getUserTeamInfoFromState(): void {
 		const teamContext = history.state?.teamContext as ITeamContext;

@@ -39,6 +39,11 @@ export class SelectFromListComponent implements ControlValueAccessor {
 	) {
 	}
 
+	onRadioChanged(event: Event): void {
+		this.value = (event as CustomEvent).detail['value'] as string;
+		this.onChange(this.value);
+	}
+
 	onChange = (_: any) => {
 		//
 	};

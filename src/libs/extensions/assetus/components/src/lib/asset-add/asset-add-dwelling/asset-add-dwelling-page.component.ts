@@ -1,18 +1,22 @@
 //tslint:disable:no-unbound-method
 //tslint:disable:no-unsafe-any
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AssetAddBasePage} from '../asset-add-base-page';
-import {CommuneBasePageParams} from 'sneat-shared/services/params';
-import {IAssetService} from 'sneat-shared/services/interfaces';
-import {IDwelling} from 'sneat-shared/models/dto/dto-asset';
+import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IDwelling } from '@sneat/dto';
+import { TeamComponentBaseParams } from '@sneat/team/components';
+import { ITeamContext } from '@sneat/team/models';
+import { AssetService } from '../../asset-service';
+import { ICreateAssetRequest } from '../../asset-service.dto';
+import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
 	selector: 'sneat-asset-add-dwelling',
 	templateUrl: './asset-add-dwelling-page.component.html',
-	providers: [CommuneBasePageParams],
+	providers: [TeamComponentBaseParams],
 })
-export class AssetAddDwellingPageComponent extends AssetAddBasePage {
+export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
+
+	@Input() team?: ITeamContext;
 
 	form = new FormGroup({
 		address: new FormControl(''),
@@ -22,10 +26,10 @@ export class AssetAddDwellingPageComponent extends AssetAddBasePage {
 	isSubmitting = false;
 
 	constructor(
-		private readonly assetService: IAssetService,
-		params: CommuneBasePageParams,
+		teamParams: TeamComponentBaseParams,
+		assetService: AssetService,
 	) {
-		super('assets', params);
+		super(teamParams, assetService);
 	}
 
 	submitDwellingForm(): void {
@@ -38,26 +42,26 @@ export class AssetAddDwellingPageComponent extends AssetAddBasePage {
 			return;
 		}
 
-		const assetDto: IDwelling = {
-			communeId: this.communeRealId,
-			categoryId: 'real_estate',
-			title: this.titleForm.controls.title.value,
-			address: this.form.controls.address.value,
+		const request: ICreateAssetRequest = {
+			teamID: this.team?.id,
+			type: 'real_estate',
+			title: this.titleForm.controls['title'].value,
+			// address: this.form.controls['address'].value,
 		};
-		switch (this.form.controls.ownership.value) {
-			case 'landlord':
-				assetDto.rent = 'landlord';
-				break;
-			case 'tenant':
-				assetDto.rent = 'tenant';
-				break;
-			default:
-				break;
-		}
-		this.assetService.add(assetDto)
+		// switch (this.form.controls['ownership'].value) {
+		// 	case 'landlord':
+		// 		request.rent = 'landlord';
+		// 		break;
+		// 	case 'tenant':
+		// 		request.rent = 'tenant';
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
+		this.assetService.createAsset(request)
 			.subscribe(
 				dto => {
-					this.navigateForward('asset', {id: dto.id}, {assetDto}, {excludeCommuneId: true, replaceUrl: true});
+					this.navigateForward('asset', { id: dto.id }, { assetDto: request }, { excludeCommuneId: true, replaceUrl: true });
 				},
 				err => {
 					this.isSubmitting = false;

@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IAssetContext } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
+import { IAssetContext, ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-assets-list',

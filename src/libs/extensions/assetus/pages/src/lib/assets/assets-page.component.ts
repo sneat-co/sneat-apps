@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { IAssetContext } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamContextComponent } from '@sneat/team/components';
+import { IAssetContext } from '@sneat/team/models';
 import { AssetsBasePage } from '../assets-base.page';
 
 @Component({

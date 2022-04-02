@@ -1,5 +1,5 @@
-import { IAssetContext } from '@sneat/dto';
 import { TeamBasePage, TeamComponentBaseParams } from '@sneat/team/components';
+import { IAssetContext } from '@sneat/team/models';
 
 export abstract class AssetsBasePage extends TeamBasePage {
 
@@ -14,11 +14,24 @@ export abstract class AssetsBasePage extends TeamBasePage {
 	}
 
 	public goNew(path: 'new-asset' | 'add-vehicle' | 'add-dwelling' = 'new-asset'): void {
-		this.navigateForwardToTeamPage(path);
+		const team = this.team;
+		if (!team) {
+			this.errorLogger.logError('no team context');
+			return;
+		}
+		this.teamParams.teamNavService.navigateForwardToTeamPage(team, path);
 	}
 
 	override onTeamDtoChanged(): void {
-		this.assets = this.team?.dto?.assets?.map(brief => ({ id: brief.id, brief }));
+		const team = this.team;
+		if (!team) {
+			this.assets = undefined;
+			return;
+		}
+		this.assets = this.team?.dto?.assets?.map(brief => {
+			const asset: IAssetContext = { id: brief.id, brief, team };
+			return asset;
+		});
 	}
 
 

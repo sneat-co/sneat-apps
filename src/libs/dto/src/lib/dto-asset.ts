@@ -21,6 +21,7 @@ export interface ISubAssetInfo extends ITitledRecord {
 
 export interface IAssetBase extends ITitled {
 	type: AssetType;
+	subType?: string; // E.g. subcategory - for example for documents could be: passport, visa, etc.
 	regNumber?: string;
 }
 
@@ -28,37 +29,36 @@ export interface IAssetBrief extends IAssetBase {
 	id: string;
 }
 
-export interface IAssetDto extends IAssetBase, IDemoRecord, ITotalsHolder {
-	type: AssetType;
+export interface IAssetMain extends IAssetBase {
 	parentAssetID?: string;
-	parentCategoryID?: AssetType;
-	sameAssetID?: string; // A link to realtor's or tenant's asset ID
 	desc?: string;
 	countryID?: CountryId;
-	teamID?: string;
-	groupId?: string;
-	yearOfBuild?: number;
+	yearOfBuild?: number; // TODO: consider using only `dateOfBuild`
 	dateOfBuild?: string; // ISO date string 'YYYY-MM-DD'
+	memberIDs?: string[];
+	regNumber?: string;
+}
+
+export interface IAssetDto extends IAssetMain, IDemoRecord, ITotalsHolder {
+	teamID?: string;
+	parentCategoryID?: AssetType;
+	sameAssetID?: string; // A link to realtor's or tenant's asset ID
+	groupId?: string; // TODO: document what it is
 	subAssets?: ISubAssetInfo[];
 	contacts?: IContact2Asset[];
-	memberIDs?: string[];
 	membersInfo?: ITitledRecord[];
-	subType?: string; // E.g. subcategory - for example for documents could be: passport, visa, etc.
-	number?: string;
 	liabilities?: AssetLiabilityInfo[];
 	notUsedServiceTypes?: LiabilityServiceType[];
 }
 
-export type IAssetContext = INavContext<IAssetBrief, IAssetDto>;
-
-export interface IDwelling extends IAssetDto {
+export interface IDwelling {
 	address?: string;
 	rent?: 'landlord' | 'tenant';
 }
 
-export interface IVehicle extends IAssetDto {
-	make?: string;
-	model?: string;
+export interface IVehicle {
+	make: string;
+	model: string;
 	engine?: string;
 	engineCC?: number;
 	fuelType?: FuelType;

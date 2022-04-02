@@ -2,8 +2,8 @@
 
 <ion-card>
 	<sneat-select-from-list [(ngModel)]="vehicleType" (ngModelChange)="onVehicleTypeChanged()" [isFilterable]="false" title="Type" [items]="vehicleTypes"></sneat-select-from-list>
-	<sneat-select-from-list *ngIf="vehicleType" [(ngModel)]="make" [isFilterable]="true" title="Make" [items]="makes"></sneat-select-from-list>
-	<sneat-select-from-list *ngIf="make" [(ngModel)]="model" [isFilterable]="true" title="Model" [items]="models"></sneat-select-from-list>
+	<sneat-select-from-list *ngIf="vehicleType" [(ngModel)]="make" (ngModelChange)="makeChanged($event)" [isFilterable]="true" title="Make" [items]="makes"></sneat-select-from-list>
+	<sneat-select-from-list *ngIf="make" [(ngModel)]="model" (ngModelChange)="modelChanged()" [isFilterable]="true" title="Model" [items]="models"></sneat-select-from-list>
 </ion-card>
 
 <ion-card *ngIf="model">
@@ -70,7 +70,7 @@
 
 </ion-card>
 
-<ion-button [color]="model ? 'primary' : 'light'" size="large" class="ion-margin" expand="full" [disabled]="isSubmitting" (click)="submitVehicleForm()">
+<ion-button [color]="model ? 'primary' : 'light'" size="large" class="ion-margin" expand="full" [disabled]="!team || isSubmitting" (click)="submitVehicleForm()">
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
 	<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>
 </ion-button>

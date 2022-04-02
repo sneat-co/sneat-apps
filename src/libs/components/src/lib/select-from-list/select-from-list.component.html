@@ -15,7 +15,7 @@
 	></ion-input>
 </ion-item>
 <ng-container *ngIf="!value">
-	<ion-radio-group [(ngModel)]="value" (ionChange)="onChange($event)">
+	<ion-radio-group [(ngModel)]="value" (ionChange)="onRadioChanged($event)">
 		<ion-item *ngFor="let item of items">
 			<ion-icon slot="start" *ngIf="item.iconName" [name]="item.iconName"></ion-icon>
 			<ion-radio [value]="item.id" slot="start"></ion-radio>

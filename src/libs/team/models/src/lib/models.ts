@@ -2,7 +2,7 @@ import { AgeGroup, Gender, MemberRole } from '@sneat/dto';
 
 
 export interface ITeamRequest {
-	team: string;
+	readonly team: string;
 }
 
 export interface ITeamMemberRequest extends ITeamRequest {

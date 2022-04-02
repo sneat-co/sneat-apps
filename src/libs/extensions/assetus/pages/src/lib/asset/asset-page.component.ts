@@ -1,51 +1,46 @@
 //tslint:disable:no-unsafe-any
-import {Component} from '@angular/core';
-import {AssetBasePage} from '../../asset-base.page';
-import {CommuneBasePageParams} from 'sneat-shared/services/params';
-import {AssetCategoryId, LiabilityServiceType} from 'sneat-shared/models/types';
-import {IAssetGroupService, IAssetService} from 'sneat-shared/services/interfaces';
-import {CommuneTopPage} from '../../../../pages/constants';
+import { Component } from '@angular/core';
+import { LiabilityServiceType } from '@sneat/dto';
+import { AssetBasePage, AssetComponentBaseParams } from '@sneat/extensions/assetus/components';
 
-interface AssetService {
-	type: string;
+interface LiabilityServiceBrief {
+	type: LiabilityServiceType;
 	title: string;
 }
 
 @Component({
-	selector: 'app-asset',
+	selector: 'sneat-asset-page',
 	templateUrl: './asset-page.component.html',
-	providers: [CommuneBasePageParams],
+	providers: [AssetComponentBaseParams],
 })
 export class AssetPageComponent extends AssetBasePage {
 
 	public segment: 'contacts' | 'taxes' | 'services' = 'services';
 	public period = 'this-month';
 	public scope: 'month' | 'year' = 'month';
-	public assetCategoryId: AssetCategoryId;
 
-	public assetServices: AssetService[] = [
-		{type: 'electricity', title: 'Electricity'},
-		{type: 'gas', title: 'Gas'},
-		{type: 'waste_removal', title: 'Waste removal'},
-		{type: 'internet', title: 'Internet'},
-		{type: 'tv', title: 'TV'},
-		{type: 'phone', title: 'Phone'},
+	public assetServices: LiabilityServiceBrief[] = [
+		{ type: 'electricity', title: 'Electricity' },
+		{ type: 'gas', title: 'Gas' },
+		{ type: 'waste_removal', title: 'Waste removal' },
+		{ type: 'internet', title: 'Internet' },
+		{ type: 'tv', title: 'TV' },
+		{ type: 'tv_license', title: 'TV' },
+		{ type: 'phone', title: 'Phone' },
 	];
 
 	mode: 'view' | 'edit' = 'view';
 
 	constructor(
-		params: CommuneBasePageParams,
-		assetGroupsService: IAssetGroupService,
-		assetService: IAssetService,
+		params: AssetComponentBaseParams,
 	) {
-		super(CommuneTopPage.assets, params, assetService);
-		const path = location.pathname;
-		if (path.indexOf('vehicle') >= 0) {
-			this.assetCategoryId = 'vehicles';
-		} else if (path.indexOf('property') >= 0) {
-			this.assetCategoryId = 'real_estate';
-		}
+		super('AssetPageComponent', params);
+		// const path = location.pathname;
+		// if (path.indexOf('vehicle') >= 0) {
+		// 	this.assetTypeId = 'vehicles';
+		// } else if (path.indexOf('property') >= 0) {
+		// 	this.assetTypeId = 'real_estate';
+		// }
 	}
 
 	public segmentChanged(ev: CustomEvent): void {
@@ -57,8 +52,8 @@ export class AssetPageComponent extends AssetBasePage {
 		this.period = ev.detail.value;
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	public addContact(): void {
+		//
 	}
 
 	addService(type: LiabilityServiceType): void {
@@ -66,13 +61,14 @@ export class AssetPageComponent extends AssetBasePage {
 		if (!this.asset) {
 			throw new Error('!this.asset');
 		}
-		this.navigateForward('select-provider', {
-			asset: this.asset.dto.id,
-			type,
-		},                   undefined, {excludeCommuneId: true});
+		this.errorLogger.logError('Not implemented yet');
+		// this.navigateForward('select-provider', {
+		// 	asset: this.asset?.dto.id,
+		// 	type,
+		// }, undefined, { excludeCommuneId: true });
 	}
 
-	public scopeChanged(ev: CustomEvent): void {
-		this.scope = ev.detail.value;
+	public scopeChanged(event: Event): void {
+		this.scope = (event as CustomEvent).detail.value;
 	}
 }

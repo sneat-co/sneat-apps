@@ -8,7 +8,7 @@ import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrum } from '@sneat/scrumspace/scrummodels';
-import { IMemberContext } from '@sneat/team/models';
+import { IMemberContext, ITeamContext } from '@sneat/team/models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
@@ -231,4 +231,14 @@ export class TeamNavService {
 			{ name: eventName, params },
 		);
 	};
+
+	public navigateForwardToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
+		const url = `space/${team?.type}/${team?.id}/${page}`;
+		const state = navOptions.state || {};
+		navOptions = { ...navOptions, state: { team, ...state } };
+		return this.navController
+			.navigateForward(url, navOptions)
+	}
+
+
 }
