@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ISelectItem } from '@sneat/components';
 import { carMakes, IMake, IModel, IVehicle, VehicleType } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
@@ -14,7 +15,12 @@ export class AssetAddVehicleComponent extends AssetAddBasePage {
 
 	@Input() team?: ITeamContext;
 
-	vehicleType: VehicleType = 'car';
+	vehicleType?: VehicleType;
+	vehicleTypes: ISelectItem[] = [
+		{id: 'boat', title: 'Boat', iconName: 'boat-outline'},
+		{id: 'car', title: 'Car', iconName: 'car-outline'},
+		{id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline'},
+	]
 
 	public countryIso2 = 'IE';
 	public regNumber = '';
@@ -40,6 +46,10 @@ export class AssetAddVehicleComponent extends AssetAddBasePage {
 		this.makes = Object.keys(carMakes).map(id => ({ id, title: id }));
 	}
 
+	onVehicleTypeChanged(): void {
+		this.make = '';
+		this.model = ''
+	}
 	readonly id = (i: number, v: { id: string }) => v.id;
 
 	formatDate(value?: string | null): string {

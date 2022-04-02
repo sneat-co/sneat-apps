@@ -19,7 +19,7 @@
 <ion-content class="cardy">
 	<ion-card *ngIf="!category">
 		<ion-card-header>
-			<ion-card-title>Select asset type</ion-card-title>
+			<ion-card-title>Select asset kind</ion-card-title>
 		</ion-card-header>
 		<ion-list *ngIf="!category">
 			<ion-item button *ngFor="let category of categories; trackBy: id" (click)="selectCategory(category)">

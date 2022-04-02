@@ -11,3 +11,6 @@ export * from './lib/country-selector/country-selector.module';
 //
 export * from './lib/filter-item/filter-item.component';
 export * from './lib/filter-item/filter-item.module';
+//
+export * from './lib/select-from-list/select-from-list.module';
+export * from './lib/select-from-list/select-from-list.component';

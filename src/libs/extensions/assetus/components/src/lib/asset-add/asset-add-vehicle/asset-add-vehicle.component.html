@@ -1,33 +1,12 @@
 <h1 class="ion-padding">New vehicle</h1>
 
 <ion-card>
-	<ion-item>
-		<ion-label>Type</ion-label>
-		<ion-select [(ngModel)]="vehicleType" interface="popover">
-			<ion-select-option value="car">Car</ion-select-option>
-			<ion-select-option value="motorcycle">Motorcycle</ion-select-option>
-			<ion-select-option value="boat">Boat</ion-select-option>
-		</ion-select>
-	</ion-item>
-	<ion-item>
-		<ion-label>Make</ion-label>
-		<ion-select [(ngModel)]="make" (ionChange)="makeChanged()" interface="popover">
-			<ion-select-option *ngFor="let m of makes; trackBy: id" [value]="m.id">{{m.title}}</ion-select-option>
-		</ion-select>
-	</ion-item>
-	<ion-item>
-		<ion-label>
-			<!--                <ng-container *ngIf="!model">-->
-			Model
-			<!--                </ng-container>-->
-		</ion-label>
-		<ion-select [(ngModel)]="model" [disabled]="!make" interface="popover" (ionChange)="modelChanged()">
-			<ion-select-option *ngFor="let m of models; trackBy: id" [value]="m.id">{{m.title}}</ion-select-option>
-		</ion-select>
-	</ion-item>
+	<sneat-select-from-list [(ngModel)]="vehicleType" (ngModelChange)="onVehicleTypeChanged()" [isFilterable]="false" title="Type" [items]="vehicleTypes"></sneat-select-from-list>
+	<sneat-select-from-list *ngIf="vehicleType" [(ngModel)]="make" [isFilterable]="true" title="Make" [items]="makes"></sneat-select-from-list>
+	<sneat-select-from-list *ngIf="make" [(ngModel)]="model" [isFilterable]="true" title="Model" [items]="models"></sneat-select-from-list>
 </ion-card>
 
-<ion-card>
+<ion-card *ngIf="model">
 	<ion-list>
 		<sneat-country-selector [country]="country" label="Country of registration"></sneat-country-selector>
 		<ion-item>
@@ -60,7 +39,7 @@
 	</ion-list>
 </ion-card>
 
-<ion-card>
+<ion-card *ngIf="model">
 	<ion-item>
 		<ion-label position="stacked">Taxed till</ion-label>
 		<!-- Datetime in popover with input -->
@@ -91,7 +70,7 @@
 
 </ion-card>
 
-<ion-button size="large" class="ion-margin" expand="full" [disabled]="isSubmitting" (click)="submitVehicleForm()">
+<ion-button [color]="model ? 'primary' : 'light'" size="large" class="ion-margin" expand="full" [disabled]="isSubmitting" (click)="submitVehicleForm()">
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
 	<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>
 </ion-button>
