@@ -15,7 +15,7 @@
 		</sneat-team-page-title>
 		<ion-buttons slot="end">
 			<ion-button [disabled]="!team" (click)="goNew()"
-							title="Add asset">
+									title="Add asset">
 				<ion-icon name="add"></ion-icon>
 			</ion-button>
 		</ion-buttons>
@@ -52,7 +52,7 @@
 				</ion-buttons>
 			</ion-item-divider>
 			<ng-container *ngIf="assets">
-				<sneat-assets-list category="real_estate" [assets]="assets" [team]="team"></sneat-assets-list>
+				<sneat-assets-list assetType="real_estate" [allAssets]="assets" [team]="team"></sneat-assets-list>
 			</ng-container>
 		</ion-item-group>
 		<ion-item-group *ngIf="team?.type === 'family'">
@@ -64,9 +64,7 @@
 					</ion-button>
 				</ion-buttons>
 			</ion-item-divider>
-			<ng-container *ngIf="assets">
-				<sneat-assets-list category="vehicles" [assets]="assets" [team]="team"></sneat-assets-list>
-			</ng-container>
+			<sneat-assets-list assetType="vehicle" [team]="team" [allAssets]="assets"></sneat-assets-list>
 		</ion-item-group>
 		<ion-item-group>
 			<ion-item-divider color="light">

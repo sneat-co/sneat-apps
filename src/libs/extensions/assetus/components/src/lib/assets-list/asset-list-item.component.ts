@@ -1,5 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AssetType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 
@@ -25,7 +26,7 @@ import { IAssetContext, ITeamContext } from '@sneat/team/models';
 export class AssetListItemComponent {
 
 	@Input() team?: ITeamContext;
-	@Input() category?: string;
+	@Input() assetType?: AssetType;
 	@Input() asset?: IAssetContext;
 
 	constructor(
@@ -52,9 +53,8 @@ export class AssetListItemComponent {
 				break;
 		}
 		this.navCtrl
-			.navigateForward([path], {
-				queryParams: { id: asset.id },
-				state: { assetDto: asset, team: this.team },
+			.navigateForward(['space', this.team?.type, this.team?.id, 'asset', asset.id], {
+				state: { asset, team: this.team },
 			})
 			.catch(this.errorLogger.logError);
 	}

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamComponentBaseParams, TeamContextComponent } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 import { AssetsBasePage } from '../assets-base.page';
@@ -27,7 +28,7 @@ export class AssetsPageComponent extends AssetsBasePage implements AfterViewInit
 
 	constructor(
 		params: TeamComponentBaseParams,
-		// assetService: IAssetService,
+		private readonly assetService: AssetService,
 		private readonly alertCtrl: AlertController,
 	) {
 		super('', params);
@@ -76,8 +77,21 @@ export class AssetsPageComponent extends AssetsBasePage implements AfterViewInit
 	public go(page: 'new-liability' | 'new-member' | 'new-contact'): void {
 		throw new Error('not implemented yey');
 		this.navController.navigateForward('./' + page, {
-			state: {team: this.team},
-		})
+			state: { team: this.team },
+		});
 		// this.navigateForward(page);
+	}
+
+	protected override onTeamIdChanged() {
+		console.log('AssetsPageComponent.onTeamIdChanged() => teamID:', this.team?.id);
+		if (this.team?.id) {
+			this.assetService.watchAssetsByTeamID(this.team?.id).subscribe({
+				next: (assets: IAssetContext[]) => {
+					console.log('AssetsPageComponent.onTeamIdChanged() => assets:', assets);
+					this.assets = assets;
+				},
+				error: this.errorLogger.logErrorHandler('failed to get team assets'),
+			});
+		}
 	}
 }

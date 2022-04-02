@@ -1,3 +1,4 @@
+export * from './lib/asset-service';
 export * from './lib/asset-base-page';
 export * from './lib/asset-add/asset-add-vehicle/asset-add-vehicle.component';
 export * from './lib/asset-add/add-asset-components.module';
