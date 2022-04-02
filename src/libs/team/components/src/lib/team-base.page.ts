@@ -244,7 +244,7 @@ export abstract class TeamBasePage {
 					}),
 				)
 				.subscribe({
-					next: dto => this.setTeam({ ...teamContext, dto }),
+					next: team => this.setTeam({ ...teamContext, ...team }),
 					error: this.logErrorHandler(`failed to load team by id=${id}`),
 				}),
 		);

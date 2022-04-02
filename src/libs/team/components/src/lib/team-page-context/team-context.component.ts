@@ -57,10 +57,10 @@ export class TeamContextComponent implements OnInit, OnDestroy {
 		if (teamContext?.id)
 			this.teamRecordSubscription = this.params.teamService.watchTeam(teamContext?.id)
 				.subscribe({
-					next: dto => {
-						console.log('TeamPageContextComponent => team record:', this.teamContext.value?.id, teamContext.id, dto);
+					next: team => {
+						console.log('TeamPageContextComponent => team record:', this.teamContext.value?.id, teamContext.id, team);
 						if (this.teamContext.value?.id === teamContext.id) {
-							this.teamContext.next({ ...this.teamContext.value, dto: dto });
+							this.teamContext.next({ ...this.teamContext.value, ...team });
 						}
 					},
 				});

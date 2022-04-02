@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title> New member @ {{ team?.title || 'Team' }} </ion-title>
+		<ion-title> New member @ {{ team?.dto?.title || 'Team' }} </ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -68,7 +68,7 @@
 
 	<ion-card *ngIf="tab === 'mass'">
 		<ion-card-content>
-			<sneat-invite-links [teamId]="teamId" [team]="team"></sneat-invite-links>
+			<sneat-invite-links [team]="team"></sneat-invite-links>
 
 			<p>
 				<b>Or</b> you can send

@@ -1,10 +1,10 @@
 import { Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
-import { ITeamDto } from '@sneat/dto';
-import { Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { SneatUserService } from '@sneat/user';
+import { ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
+import { SneatUserService } from '@sneat/user';
+import { Subscription } from 'rxjs';
 
 export const stringHash = (s: string): number => {
 	let hash = 0;
@@ -27,8 +27,7 @@ export const stringHash = (s: string): number => {
 	styleUrls: ['./invite-links.component.scss'],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
-	@Input() teamId?: string;
-	@Input() public team?: ITeamDto;
+	@Input() public team?: ITeamContext;
 
 	public inviteUrlsFor?: {
 		contributors: string;
@@ -66,17 +65,15 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		if (!this.teamId) {
+		if (!this.team?.id) {
 			this.errorLogger.logError(
 				'Not able to navigate to team member is teamId is now known',
 			);
 			return;
 		}
-		this.navService.navigateToAddMember(this.navController, {
-			id: this.teamId,
-			dto: this.team,
-		});
+		this.navService.navigateToAddMember(this.navController, this.team);
 	}
+
 
 	copy(s: string): void {
 		if (navigator.clipboard) {
@@ -97,7 +94,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			this.inviteUrlsFor = undefined;
 			return;
 		}
-		const teamId = this.teamId;
+		const teamId = this.team?.id;
 		const getPin = (role: 'contributor' | 'spectator'): number =>
 			Math.abs(stringHash(`${teamId}-${role}-${uid}`));
 		const url = `${document.baseURI}join-team?id=${teamId}#pin=`;

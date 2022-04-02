@@ -153,12 +153,12 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			.pipe(
 				mergeMap(team => {
 					const { currentUserId } = this.userService;
-					const userMember = team?.members.find((m) => m.uid === currentUserId);
+					const userMember = team?.dto?.members.find((m) => m.uid === currentUserId);
 					if (!userMember) {
 						return [team];
 					}
 					return this.teamService.removeTeamMember(
-						{ id: teamInfo.id, dto: team },
+						team,
 						userMember.id,
 					);
 				}),

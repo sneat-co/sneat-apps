@@ -6,7 +6,7 @@ import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAddTeamMemberRequest } from '@sneat/team/models';
+import { IAddTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberService, TeamService } from '@sneat/team/services';
 
 @Component({
@@ -17,8 +17,7 @@ export class MemberNewPageComponent {
 	@ViewChild('titleInput', { static: false }) titleInput?: IonInput; // TODO: strong typing : IonInput;
 
 	public tab: 'personal' | 'mass' = 'mass';
-	public teamId?: string;
-	public team?: ITeamDto;
+	public team?: ITeamContext;
 	public teamInfo?: IUserTeamInfo;
 	public title = new FormControl('', [
 		Validators.required,
@@ -44,24 +43,9 @@ export class MemberNewPageComponent {
 	) {
 		console.log('MemberNewPage.constructor()');
 		try {
-			const teamRecord = window.history.state.team as IRecord<ITeamDto>;
+			const teamRecord = window.history.state.team as ITeamContext;
 			if (teamRecord) {
-				this.teamId = teamRecord.id;
-				this.setTeam(teamRecord.dto);
-			} else {
-				route.queryParamMap.subscribe((queryParams) => {
-					const teamId = (this.teamId = queryParams.get('team') || undefined);
-					if (teamId) {
-						teamService.getTeam(teamId).subscribe(
-							(team) => {
-								if (teamId === this.teamId) {
-									this.setTeam(team || undefined);
-								}
-							},
-							err => this.errorLogger.logError(err, 'Failed to get team'),
-						);
-					}
-				});
+				this.setTeam(teamRecord);
 			}
 		} catch (e) {
 			this.errorLogger.logError(
@@ -72,7 +56,7 @@ export class MemberNewPageComponent {
 	}
 
 	public get defaultBackUrl(): string {
-		return this.teamId ? `/team?id=${this.teamId}` : '/home';
+		return this.team?.id ? `/team?id=${this.team.id}` : '/home';
 	}
 
 	public ionViewDidEnter(): void {
@@ -89,7 +73,7 @@ export class MemberNewPageComponent {
 
 	public addMember(): void {
 		console.log('NewMemberFormComponent.addMember()');
-		if (!this.teamId) {
+		if (!this.team?.id) {
 			throw 'teamId is not set';
 		}
 		if (!this.addMemberForm.valid) {
@@ -101,7 +85,7 @@ export class MemberNewPageComponent {
 		this.addMemberForm.disable();
 		const title = (this.title.value as string).trim();
 		const request: IAddTeamMemberRequest = {
-			team: this.teamId,
+			team: this.team.id,
 			role: this.role.value,
 			gender: 'unknown',
 			ageGroup: 'unknown',
@@ -130,11 +114,8 @@ export class MemberNewPageComponent {
 		);
 	}
 
-	private setTeam(team: ITeamDto | undefined): void {
+	private setTeam(team: ITeamContext | undefined): void {
 		this.team = team;
-		if (this.teamId) {
-			this.teamInfo = { id: this.teamId, title: team?.title || 'loading...', type: team?.type || 'unknown' };
-		}
 	}
 
 	private setFocusToTitleInput(delay = 1): void {

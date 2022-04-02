@@ -10,18 +10,21 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreateTeamRequest,
 	ICreateTeamResponse,
+	ITeamContext,
 	ITeamMemberRequest,
 	ITeamRequest,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
-import { Observable, ReplaySubject, Subscription, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subscription, switchMap, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
 	private userID?: string;
 
-	private teams$: { [id: string]: ReplaySubject<ITeamDto | undefined> } = {};
+	private currentUserTeams?: IUserTeamInfo[];
+
+	private teams$: { [id: string]: BehaviorSubject<ITeamContext> } = {};
 	private subscriptions: Subscription[] = [];
 
 	constructor(
@@ -56,6 +59,8 @@ export class TeamService {
 				}
 				this.userID = userState.user?.uid;
 			}
+			this.currentUserTeams = user?.teams;
+
 			if (user?.teams) {
 				user.teams?.forEach(this.subscribeForFirestoreTeamChanges);
 			}
@@ -74,25 +79,27 @@ export class TeamService {
 			.pipe(map((response) => response.team));
 	}
 
-	public getTeam(id: string): Observable<ITeamDto | undefined> {
+	public getTeam(id: string): Observable<ITeamContext> {
 		return this.watchTeam(id)
 			.pipe(
 				first(),
-				map(team => team || undefined),
 			);
 	}
 
-	public watchTeam(id: string): Observable<ITeamDto | undefined> {
+	public watchTeam(id: string): Observable<ITeamContext> {
 		console.log(`TeamService.watchTeam(${id})`);
 		let subj = this.teams$[id];
 		if (!subj) {
-			this.teams$[id] = subj = new ReplaySubject<ITeamDto | undefined>(1);
+			let teamContext: ITeamContext | undefined = undefined;
+			if (this.currentUserTeams) {
+				const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
+				if (userTeamInfo) {
+					teamContext = { id, brief: userTeamInfo };
+				}
+			}
+			this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(teamContext || { id });
 		}
-		return subj
-			.asObservable()
-			.pipe(
-				tap(team => console.log('watchTeam =>', team)),
-			);
+		return subj.asObservable();
 	}
 
 	public changeMemberRole(
@@ -115,45 +122,48 @@ export class TeamService {
 					if (!member) {
 						throw new Error('member is no longer available');
 					}
-					member = {...member, roles: [role]}
+					member = { ...member, roles: [role] };
 					return teamRecord;
 				}),
 			);
 	}
 
 	public removeTeamMember(
-		teamRecord: IRecord<ITeamDto>,
+		teamRecord: ITeamContext,
 		memberId: string,
-	): Observable<ITeamDto> {
+	): Observable<ITeamContext> {
 		console.log(
 			`removeTeamMember(teamId: ${teamRecord?.id}, memberId=${memberId})`,
 		);
 		if (!teamRecord) {
 			return throwError(() => 'teamRecord parameters is required');
 		}
-		if (!teamRecord.id) {
+		const id = teamRecord.id
+		if (!id) {
 			return throwError(() => 'teamRecord.id parameters is required');
 		}
 		if (!memberId) {
 			return throwError(() => 'memberId is required parameter');
 		}
-		const updateTeam = (team?: ITeamDto) => {
-			if (team) {
+		const updateTeam = (team: ITeamContext) => {
+			if (team?.dto) {
 				team = {
 					...team,
-					members: team.members.filter((m: IMemberBrief) => m.id !== memberId),
+					dto: {
+						...team.dto,
+						members: team.dto.members.filter((m: IMemberBrief) => m.id !== memberId),
+					},
 				};
 			}
-			const record: IRecord<ITeamDto> = { id: teamRecord.id, dto: team };
-			this.onTeamUpdated(record);
+			this.onTeamUpdated(team);
 		};
-		const processRemoveTeamMemberResponse = () =>
+		const processRemoveTeamMemberResponse = (): Observable<ITeamContext> =>
 			this.getTeam(teamRecord.id).pipe(
 				tap(updateTeam),
 				// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
 			);
-		const ensureTeamRecordExists = map((team?: ITeamDto) => {
-			if (!team) {
+		const ensureTeamRecordExists = map((team: ITeamContext) => {
+			if (!team?.dto) {
 				throw new Error('team record is expected to exist');
 			}
 			return team;
@@ -167,6 +177,10 @@ export class TeamService {
 				this.sneatApiService
 					.post<ITeamDto>('team/leave_team', teamRequest)
 					.pipe(
+						map(teamDto => {
+							const teamContext: ITeamContext = {id, brief: {id, ...teamDto}, dto: teamDto};
+							return teamContext;
+						}),
 						switchMap(processRemoveTeamMemberResponse),
 						ensureTeamRecordExists,
 					);
@@ -184,16 +198,16 @@ export class TeamService {
 			);
 	}
 
-	public onTeamUpdated(team: IRecord<ITeamDto>): void {
+	public onTeamUpdated(team: ITeamContext): void {
 		console.log(
 			'TeamService.onTeamUpdated',
 			team ? { id: team.id, data: { ...team.dto } } : team,
 		);
 		let team$ = this.teams$[team.id];
 		if (!team$) {
-			this.teams$[team.id] = team$ = new ReplaySubject<ITeamDto | undefined>(1);
+			this.teams$[team.id] = team$ = new BehaviorSubject<ITeamContext>(team);
 		}
-		team$.next(team.dto);
+		team$.next(team);
 	}
 
 	public getTeamJoinInfo(
@@ -262,10 +276,10 @@ export class TeamService {
 		const { id } = teamInfo;
 		let subj = this.teams$[id];
 		if (!subj) {
-			this.teams$[id] = subj = new ReplaySubject<ITeamDto | undefined>(1);
+			this.teams$[id] = subj = new BehaviorSubject<ITeamContext>({id: teamInfo.id, brief: teamInfo});
 		}
 
-		const o = this.db
+		const o: Observable<ITeamContext> = this.db
 			.collection('teams')
 			.doc<ITeamDto>(id)
 			.snapshotChanges()
@@ -278,10 +292,10 @@ export class TeamService {
 				map((teamDoc) =>
 					teamDoc.exists ? (teamDoc.data() as ITeamDto) : null,
 				),
+				map((dto: ITeamDto | null) => ({id, brief: teamInfo, dto: dto || undefined})),
 				tap((team) => {
 					console.log('New team record from Firestore:', team);
 				}),
-				map(team => team || undefined),
 			);
 		this.subscriptions.push(o.subscribe(subj));
 	};

@@ -92,7 +92,7 @@ export class MembersListComponent implements OnChanges {
 				if (teamId !== this.team?.id) {
 					return;
 				}
-				this.team = { id: teamId, dto: team };
+				this.team = team
 				console.log('updated team:', team);
 				if (this.selfRemove) {
 					this.selfRemoved.emit();
@@ -100,7 +100,7 @@ export class MembersListComponent implements OnChanges {
 				if (
 					!team ||
 					(this.userService.currentUserId &&
-						team.userIDs.indexOf(this.userService.currentUserId) < 0)
+						team?.dto?.userIDs?.indexOf(this.userService.currentUserId) || -1 < 0)
 				) {
 					this.navService.navigateToTeams('back');
 				}

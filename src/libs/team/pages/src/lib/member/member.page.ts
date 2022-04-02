@@ -139,13 +139,13 @@ export class MemberPageComponent implements OnDestroy {
 		const teamId = this.team?.id;
 		if (teamId) {
 			this.teamSubscription = this.teamService.watchTeam(teamId).subscribe({
-				next: (team) => {
+				next: team => {
 					console.log('MemberPage: teamService.watchTeam =>', team);
 
 					if (this.team?.id !== teamId) {
 						return;
 					}
-					this.team = { id: this.team.id, dto: team };
+					this.team = team;
 					if (this.memberId) {
 						this.onMemberIdChanged();
 					}
