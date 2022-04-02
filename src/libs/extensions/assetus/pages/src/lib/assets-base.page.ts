@@ -1,3 +1,4 @@
+import { AssetType } from '@sneat/dto';
 import { TeamBasePage, TeamComponentBaseParams } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 
@@ -13,13 +14,13 @@ export abstract class AssetsBasePage extends TeamBasePage {
 		super(className, params);
 	}
 
-	public goNew(path: 'new-asset' | 'add-vehicle' | 'add-dwelling' = 'new-asset'): void {
+	public goNew(assetType?: AssetType): void {
 		const team = this.team;
 		if (!team) {
 			this.errorLogger.logError('no team context');
 			return;
 		}
-		this.teamParams.teamNavService.navigateForwardToTeamPage(team, path);
+		this.teamParams.teamNavService.navigateForwardToTeamPage(team, 'new-asset', {state: {assetType}});
 	}
 
 	override onTeamDtoChanged(): void {

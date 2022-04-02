@@ -19,6 +19,7 @@
 	<ion-item [disabled]="!team" routerLink="/space/{{team?.type}}/{{team?.id}}/assets">
 		<ion-icon name="car-sport-outline" slot="start"></ion-icon>
 		<ion-label>Assets</ion-label>
+		<ion-badge style="font-weight: normal; color: gray" color="light" *ngIf="team?.dto?.numberOf?.assets">{{team?.dto?.numberOf?.assets}}</ion-badge>
 	</ion-item>
 	<ion-item [disabled]="!team" routerLink="/space/{{team?.type}}/{{team?.id}}/contacts">
 		<ion-icon name="people-outline" slot="start"></ion-icon>

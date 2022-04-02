@@ -16,7 +16,7 @@ export class NewAssetPageComponent extends TeamBasePage implements AfterViewInit
 
 	public category?: IAssetDtoCategory;
 
-	public categories?: IAssetDtoCategory[] = [
+	public categories: IAssetDtoCategory[] = [
 		{ id: 'vehicle', title: 'Vehicle', order: 1 },
 		{ id: 'real_estate', title: 'Real estate', order: 2 },
 	];
@@ -27,6 +27,10 @@ export class NewAssetPageComponent extends TeamBasePage implements AfterViewInit
 		params: TeamComponentBaseParams,
 	) {
 		super('AssetNewPageComponent', params);
+		const assetType = window.history.state['assetType'];
+		if (assetType) {
+			this.category = this.categories.find(c => c.id === assetType);
+		}
 		// this.categories = assetCategoryService.allAssetCategories();
 	}
 

@@ -14,9 +14,10 @@
 			}">
 		</sneat-team-page-title>
 		<ion-buttons slot="end">
-			<ion-button [disabled]="!team" (click)="goNew()"
+			<ion-button color="primary" [disabled]="!team" (click)="goNew()"
 									title="Add asset">
 				<ion-icon name="add"></ion-icon>
+				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -46,20 +47,18 @@
 			<ion-item-divider color="light">
 				<ion-label>Real estate</ion-label>
 				<ion-buttons slot="end">
-					<ion-button color="medium" title="Add property" (click)="goNew('add-dwelling')">
+					<ion-button color="medium" title="Add property" (click)="goNew('real_estate')">
 						<ion-icon name="add"></ion-icon>
 					</ion-button>
 				</ion-buttons>
 			</ion-item-divider>
-			<ng-container *ngIf="assets">
-				<sneat-assets-list assetType="real_estate" [allAssets]="assets" [team]="team"></sneat-assets-list>
-			</ng-container>
+			<sneat-assets-list assetType="real_estate" [team]="team" [allAssets]="assets"></sneat-assets-list>
 		</ion-item-group>
 		<ion-item-group *ngIf="team?.type === 'family'">
 			<ion-item-divider color="light">
 				<ion-label>Vehicles</ion-label>
 				<ion-buttons slot="end">
-					<ion-button color="medium" title="Add vehicle" (click)="goNew('add-vehicle')">
+					<ion-button color="medium" title="Add vehicle" (click)="goNew('vehicle')">
 						<ion-icon name="add"></ion-icon>
 					</ion-button>
 				</ion-buttons>
@@ -79,5 +78,10 @@
 				<ion-label color="medium">Not implemented yet.</ion-label>
 			</ion-item>
 		</ion-item-group>
+	</ion-card>
+	<ion-card>
+		<ion-card-content>
+			<ion-button expand="full" routerLink="../new-asset">Add new asset</ion-button>
+		</ion-card-content>
 	</ion-card>
 </ion-content>

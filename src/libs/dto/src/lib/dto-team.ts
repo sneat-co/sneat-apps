@@ -1,5 +1,6 @@
 import { IAssetBrief } from './dto-asset';
 import { IBrief } from './dto-brief';
+import { TeamCounts } from './dto-commune';
 import { IMemberBrief } from './dto-member';
 import { IMeetingInfo } from './dto-team-meeting';
 import { ITeamMetric } from './dto-team-metric';
@@ -23,6 +24,7 @@ export interface ITeamDto {
 	readonly memberIds?: string[];
 	readonly members: IMemberBrief[];
 	readonly assets?: IAssetBrief[];
+	readonly numberOf?: TeamCounts;
 	metrics: ITeamMetric[];
 	active?: ITeamMeetings;
 	last?: ITeamMeetings;
