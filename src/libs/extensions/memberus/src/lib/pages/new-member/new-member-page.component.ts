@@ -1,5 +1,6 @@
 //tslint:disable:no-unsafe-any
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
 import {
@@ -12,9 +13,10 @@ import {
 	MemberRelationship,
 	MemberRelationshipOther,
 	MemberRelationshipUndisclosed,
-	MemberRole, MemberRoleContributor,
+	MemberRole,
+	MemberRoleContributor,
 } from '@sneat/dto';
-import { TeamBasePage, TeamComponentBaseParams, TeamContextComponent } from '@sneat/team/components';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IAddTeamMemberRequest } from '@sneat/team/models';
 import { MemberService } from '@sneat/team/services';
 
@@ -30,10 +32,7 @@ interface Role {
 	templateUrl: './new-member-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewMemberPageComponent extends TeamBasePage implements AfterViewInit {
-
-	@ViewChild('teamPageContext')
-	public teamPageContext?: TeamContextComponent;
+export class NewMemberPageComponent extends TeamBaseComponent implements AfterViewInit {
 
 	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 
@@ -49,12 +48,16 @@ export class NewMemberPageComponent extends TeamBasePage implements AfterViewIni
 	public title = '';
 
 	constructor(
+		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		private readonly membersService: MemberService,
 	) {
-		super('members', params);
+		super('members', route, params);
 		this.ageGroup = history.state.age as AgeGroup;
 		console.log('age', this.ageGroup);
+		this.route?.queryParams.subscribe(params => {
+			this.role = params['role'];
+		});
 	}
 
 	ionViewDidEnter(): void {
@@ -63,11 +66,7 @@ export class NewMemberPageComponent extends TeamBasePage implements AfterViewIni
 
 	ngAfterViewInit(): void {
 		// super.ngAfterViewInit();
-		this.setTeamPageContext(this.teamPageContext);
 		this.ageChanged();
-		this.route?.queryParams.subscribe(params => {
-			this.role = params['role'];
-		});
 	}
 
 	ageChanged(): void {
@@ -203,18 +202,19 @@ export class NewMemberPageComponent extends TeamBasePage implements AfterViewIni
 		// 	);
 	}
 
-	readonly id = (i: number, record: {id: string}) => record.id;
+	readonly id = (i: number, record: { id: string }) => record.id;
 
 	public onRelationshipChanged(): void {
 		if (!this.ageGroup) {
 			if (this.relationship === 'parent' || this.relationship === 'spouse' || this.relationship === 'partner' || this.relationship === 'grandparent') {
-				this.ageGroup = 'adult'
+				this.ageGroup = 'adult';
 			} else if (this.relationship === 'child') {
 				this.ageGroup = 'child';
 			}
 		}
 		this.setFocusToNameInput();
 	}
+
 	public setFocusToNameInput(): void {
 		setTimeout(
 			() => {

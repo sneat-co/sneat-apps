@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { CountrySelectorModule, SelectFromListModule } from '@sneat/components';
-import { TeamComponentContextModule } from '@sneat/team/components';
 
 import { AssetAddVehicleComponent } from './asset-add-vehicle/asset-add-vehicle.component';
 
@@ -16,7 +15,6 @@ const exports = [AssetAddVehicleComponent];
 		FormsModule,
 		IonicModule,
 		CountrySelectorModule,
-		TeamComponentContextModule,
 		SelectFromListModule,
 	],
 	declarations: [...exports],

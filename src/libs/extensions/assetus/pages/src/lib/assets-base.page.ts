@@ -1,17 +1,20 @@
+import { ActivatedRoute } from '@angular/router';
 import { AssetType } from '@sneat/dto';
-import { TeamBasePage, TeamComponentBaseParams } from '@sneat/team/components';
+import { AssetService } from '@sneat/extensions/assetus/components';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 
-export abstract class AssetsBasePage extends TeamBasePage {
+export abstract class AssetsBasePage extends TeamBaseComponent {
 
 	public assets?: IAssetContext[];
 
 	protected constructor(
 		className: string,
+		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		// protected assetService: IAssetService,
+		protected readonly assetService: AssetService,
 	) {
-		super(className, params);
+		super(className, route, params);
 	}
 
 	public goNew(assetType?: AssetType): void {
@@ -20,7 +23,7 @@ export abstract class AssetsBasePage extends TeamBasePage {
 			this.errorLogger.logError('no team context');
 			return;
 		}
-		this.teamParams.teamNavService.navigateForwardToTeamPage(team, 'new-asset', {state: {assetType}});
+		this.teamParams.teamNavService.navigateForwardToTeamPage(team, 'new-asset', { state: { assetType } });
 	}
 
 	override onTeamDtoChanged(): void {

@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { InviteLinksComponent, MembersListComponent } from './index';
+import { AvatarComponent } from './index';
+import { TeamPageTitleComponent } from './team-page-title/team-page-title.component';
 
 const exports = [
-	InviteLinksComponent,
-	MembersListComponent,
+	AvatarComponent,
+	TeamPageTitleComponent,
 ];
 
 @NgModule({
@@ -20,5 +21,6 @@ const exports = [
 	],
 	exports: exports,
 })
-export class TeamComponentsModule {
+export class TeamCoreComponentsModule {
+
 }

@@ -1,22 +1,20 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { IAssetDtoCategory } from '@sneat/dto';
-import { TeamBasePage, TeamComponentBaseParams, TeamContextComponent } from '@sneat/team/components';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IAssetType } from '@sneat/dto';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 
 @Component({
 	selector: 'sneat-new-asset-page',
 	templateUrl: './new-asset-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewAssetPageComponent extends TeamBasePage implements AfterViewInit {
-
-	@ViewChild('teamPageContext')
-	public teamPageContext?: TeamContextComponent;
+export class NewAssetPageComponent extends TeamBaseComponent {
 
 	name?: string;
 
-	public category?: IAssetDtoCategory;
+	public category?: IAssetType;
 
-	public categories: IAssetDtoCategory[] = [
+	public categories: IAssetType[] = [
 		{ id: 'vehicle', title: 'Vehicle', order: 1 },
 		{ id: 'real_estate', title: 'Real estate', order: 2 },
 	];
@@ -24,9 +22,10 @@ export class NewAssetPageComponent extends TeamBasePage implements AfterViewInit
 	constructor(
 		// assetCategoryService: IAssetCategoryService,
 		// assetService: IAssetService,
+		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 	) {
-		super('AssetNewPageComponent', params);
+		super('AssetNewPageComponent', route, params);
 		const assetType = window.history.state['assetType'];
 		if (assetType) {
 			this.category = this.categories.find(c => c.id === assetType);
@@ -36,12 +35,7 @@ export class NewAssetPageComponent extends TeamBasePage implements AfterViewInit
 
 	readonly id = (i: number, item: { id: string }) => item.id;
 
-	ngAfterViewInit(): void {
-		console.log('ngAfterViewInit', this.teamPageContext);
-		this.setTeamPageContext(this.teamPageContext);
-	}
-
-	public selectCategory(category: IAssetDtoCategory): void {
+	public selectCategory(category: IAssetType): void {
 		this.category = category;
 	}
 }

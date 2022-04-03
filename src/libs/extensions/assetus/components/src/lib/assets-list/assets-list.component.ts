@@ -2,6 +2,7 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { AssetType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
+import { TeamNavService } from '@sneat/team/services';
 import { AssetService } from '../asset-service';
 
 @Component({
@@ -52,6 +53,7 @@ export class AssetsListComponent implements OnChanges {
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
 		private readonly assetService: AssetService,
+		private readonly teamNavService: TeamNavService,
 	) {
 	}
 
@@ -100,11 +102,13 @@ export class AssetsListComponent implements OnChanges {
 				path = 'asset';
 				break;
 		}
-		// this.navCtrl
-		// 	.navigateForward(['space', this.team?.type, this.team?.id, 'asset', asset.id], {
-		// 		state: { asset, team: this.team },
-		// 	})
-		// 	.catch(this.errorLogger.logError);
+		if (!this.team) {
+			this.errorLogger.logError('can not navigate to asset page without team context');
+			return;
+		}
+		this.teamNavService.navigateForwardToTeamPage(this.team, `asset/` + asset.id, {
+			state: { asset },
+		}).catch(this.errorLogger.logErrorHandler('failed to navigate to asset page'));
 	}
 
 	delete(asset: IAssetContext): void {

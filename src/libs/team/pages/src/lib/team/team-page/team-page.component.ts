@@ -1,28 +1,23 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TopMenuService } from '@sneat/core';
-import { TeamBasePage, TeamComponentBaseParams, TeamContextComponent } from '@sneat/team/components';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 
 @Component({
-	selector: 'sneat-team',
+	selector: 'sneat-team-page',
 	templateUrl: './team-page.component.html',
 	providers: [
 		TeamComponentBaseParams,
-	]
+	],
 })
-export class TeamPageComponent extends TeamBasePage implements AfterViewInit {
-
-	@ViewChild('teamPageContext')
-	public teamPageContext?: TeamContextComponent;
+export class TeamPageComponent extends TeamBaseComponent {
 
 	constructor(
+		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		public readonly topMenuService: TopMenuService,
 		// readonly navService: TeamNavService,
 	) {
-		super('TeamPageComponent', params);
-	}
-
-	ngAfterViewInit(): void {
-		this.setTeamPageContext(this.teamPageContext);
+		super('TeamPageComponent', route, params);
 	}
 }

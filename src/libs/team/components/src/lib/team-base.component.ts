@@ -1,41 +1,18 @@
-import { Inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { IUserTeamInfo } from '@sneat/auth-models';
-import { LOGGER_FACTORY, NgModulePreloaderService } from '@sneat/core';
-import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
-import { ILogger, ILoggerFactory } from '@sneat/rxstore';
+import { ILogErrorOptions } from '@sneat/logging';
+import { ILogger } from '@sneat/rxstore';
 import { ITeamContext } from '@sneat/team/models';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
-import { Subject, Subscription, tap } from 'rxjs';
+import { distinctUntilChanged, Subject, Subscription, tap } from 'rxjs';
 import { first, mergeMap, takeUntil } from 'rxjs/operators';
-import { TeamContextComponent } from './team-page-context';
+import { TeamComponentBaseParams } from './team-component-base-params';
 
-
-@Injectable()
-// TODO: verify it should be declared in providers attribute for each page or can be just on app level?
-export class TeamComponentBaseParams {
-	constructor(
-		public readonly navController: NavController,
-		//public readonly route: ActivatedRoute, // does not work here as injected route does not have parameters
-		// public readonly communeService: ICommuneService,
-		// public readonly activeCommuneService: IActiveCommuneService,
-		public readonly userService: SneatUserService,
-		public readonly teamService: TeamService,
-		public readonly teamNavService: TeamNavService,
-		public readonly preloader: NgModulePreloaderService,
-		@Inject(ErrorLogger)
-		public readonly errorLogger: IErrorLogger,
-		// @Inject(AUTH_STATE_PROVIDER) public readonly authStateService: IAuthStateService,
-		@Inject(LOGGER_FACTORY) public readonly loggerFactory: ILoggerFactory,
-	) {
-	}
-}
 
 // @Directive({ selector: '[sneatBaseTeamPage]' }) // There was some reason to add a @Directive() - TODO: document why
-export abstract class TeamBasePage {
+export abstract class TeamBaseComponent {
 
 	protected route?: ActivatedRoute;
 
@@ -55,12 +32,15 @@ export abstract class TeamBasePage {
 		options?: ILogErrorOptions,
 	) => (error: any) => void;
 	private teamContext?: ITeamContext;
+	private teamRecordSubscription?: Subscription;
 
 	protected constructor(
 		public readonly className: string,
+		route: ActivatedRoute,
 		readonly teamParams: TeamComponentBaseParams,
 	) {
 		console.log(`${className} extends TeamBasePageDirective.constructor()`);
+		this.route = route;
 
 		this.navController = teamParams.navController;
 		this.teamService = teamParams.teamService;
@@ -73,6 +53,7 @@ export abstract class TeamBasePage {
 			this.getUserTeamInfoFromState();
 			this.getTeamRecordFromState();
 			this.cleanupOnUserLogout();
+			this.trackTeamIdFromRouteParams(route);
 		} catch (e) {
 			this.logError(e, 'Failed in TeamBasePage.constructor()');
 		}
@@ -93,19 +74,6 @@ export abstract class TeamBasePage {
 
 	protected get errorLogger() {
 		return this.teamParams.errorLogger;
-	}
-
-	protected setTeamPageContext(context?: TeamContextComponent): void {
-		console.log('setTeamPageContext()', context);
-		if (!context) {
-			this.logError('TeamPageContextComponent is not provided');
-			return;
-		}
-		this.route = context.route;
-		context.team.subscribe({
-			next: this.setTeamContext,
-			error: context.params.errorLogger?.logErrorHandler('failed to get team context'),
-		});
 	}
 
 	protected onDestroy() {
@@ -136,6 +104,47 @@ export abstract class TeamBasePage {
 	protected onTeamDtoChanged(): void {
 		console.log('TeamBasePage.onTeamDtoChanged()', this.className, this.team?.dto);
 	}
+
+	private trackTeamIdFromRouteParams(route: ActivatedRoute): void {
+		trackTeamIdAndTypeFromRouteParameter(route).pipe(
+			takeUntil(this.destroyed),
+			distinctUntilChanged((previous, current) => previous?.id === current?.id),
+		).subscribe({
+			next: this.onTeamUrlChanged,
+			error: this.logErrorHandler,
+		});
+	}
+
+	private onTeamUrlChanged = (teamContext?: ITeamContext): void => {
+		console.log('TeamPageComponent.onTeamUrlChanged()', teamContext);
+		if (this.teamRecordSubscription) {
+			this.teamRecordSubscription.unsubscribe();
+		}
+		const prevTeam = this.teamContext;
+
+		this.teamContext = teamContext;
+		if (prevTeam?.id !== teamContext?.id) {
+			if (this.teamRecordSubscription) {
+				this.teamRecordSubscription.unsubscribe();
+			}
+			this.onTeamIdChanged();
+		} else {
+			return;
+		}
+		if (!teamContext?.id) {
+			return;
+		}
+		this.teamRecordSubscription = this.teamService
+			.watchTeam(teamContext?.id)
+			.subscribe({
+				next: team => {
+					console.log('TeamPageComponent => team record:', this.teamContext?.id, teamContext.id, team);
+					if (this.teamContext?.id === teamContext?.id) {
+						this.teamContext = { ...this.teamContext, ...team };
+					}
+				},
+			});
+	};
 
 	// private trackTeamIdAndTypeFromUrl(): void {
 	// 	try {

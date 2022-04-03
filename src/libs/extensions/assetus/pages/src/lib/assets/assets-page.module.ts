@@ -1,19 +1,19 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { AssetsListComponentModule } from '@sneat/extensions/assetus/components';
-import { TeamComponentContextModule } from '@sneat/team/components';
+import { TeamCoreComponentsModule } from '@sneat/team/components';
 
-import {AssetsPageComponent} from './assets-page.component';
+import { AssetsPageComponent } from './assets-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: AssetsPageComponent
-	}
+		component: AssetsPageComponent,
+	},
 ];
 
 @NgModule({
@@ -21,12 +21,12 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		TeamComponentContextModule,
 		AssetsListComponentModule,
 		// SharedComponentsModule,
-		RouterModule.forChild(routes)
+		RouterModule.forChild(routes),
+		TeamCoreComponentsModule,
 	],
-	declarations: [AssetsPageComponent]
+	declarations: [AssetsPageComponent],
 })
 export class AssetsPageModule {
 }

@@ -1,29 +1,26 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { ISneatUserState } from '@sneat/user';
-import { TeamBasePage, TeamComponentBaseParams } from '../team-base.page';
-import { TeamContextComponent } from '../team-page-context';
+import { TeamBaseComponent } from '../team-base.component';
+import { TeamComponentBaseParams } from '../team-component-base-params';
 
 @Component({
 	selector: 'sneat-team-menu',
 	templateUrl: './team-menu.component.html',
 	styleUrls: ['./team-menu.component.scss'],
 })
-export class TeamMenuComponent extends TeamBasePage implements AfterViewInit {
+export class TeamMenuComponent extends TeamBaseComponent {
 
-	@ViewChild('teamContextComponent') teamContextComponent?: TeamContextComponent;
-
-	// public team?: ITeamContext;
-	public teamId?: string = undefined;
-	// public teamType?: string = undefined;
 	public teams?: IUserTeamInfo[];
 
 	constructor(
+		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		private readonly menuCtrl: MenuController,
 	) {
-		super('TeamMenuComponent', params);
+		super('TeamMenuComponent', route, params);
 		params.userService.userState.subscribe({
 			next: this.trackUserState,
 			error: this.errorLogger.logErrorHandler('failed to get user stage'),
@@ -32,10 +29,6 @@ export class TeamMenuComponent extends TeamBasePage implements AfterViewInit {
 
 	public closeMenu(): void {
 		this.menuCtrl.close();
-	}
-
-	ngAfterViewInit(): void {
-		this.setTeamPageContext(this.teamContextComponent);
 	}
 
 	override onTeamDtoChanged(): void {

@@ -1,4 +1,3 @@
-<sneat-team-context #teamPageContext page="assets-page"></sneat-team-context>
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
@@ -43,32 +42,20 @@
 	<!--            </ion-buttons>-->
 	<!--        </ion-item>-->
 	<!--    </ion-list>-->
-	<ion-card *ngIf="segment === 'byCategory'">
+
+	<ion-card *ngFor="let assetType of assetTypes">
 		<ion-item-group>
 			<ion-item-divider color="light">
-				<ion-label>Real estate</ion-label>
+				<ion-icon [name]="assetType.iconName" slot="start" color="medium"></ion-icon>
+				<ion-label>{{assetType.title}}</ion-label>
 				<ion-buttons slot="end">
-					<ion-button color="medium" title="Add property" (click)="goNew('real_estate')">
+					<ion-button color="primary" title="Add vehicle" (click)="goNew(assetType.id)">
 						<ion-icon name="add"></ion-icon>
 						<ion-label>Add</ion-label>
 					</ion-button>
 				</ion-buttons>
 			</ion-item-divider>
-			<sneat-assets-list assetType="real_estate" [team]="team" [allAssets]="assets"></sneat-assets-list>
-		</ion-item-group>
-	</ion-card>
-	<ion-card>
-		<ion-item-group *ngIf="team?.type === 'family'">
-			<ion-item-divider color="light">
-				<ion-label>Vehicles</ion-label>
-				<ion-buttons slot="end">
-					<ion-button color="medium" title="Add vehicle" (click)="goNew('vehicle')">
-						<ion-icon name="add"></ion-icon>
-						<ion-label>Add</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item-divider>
-			<sneat-assets-list assetType="vehicle" [team]="team" [allAssets]="assets"></sneat-assets-list>
+			<sneat-assets-list [assetType]="assetType.id" [team]="team" [allAssets]="assets"></sneat-assets-list>
 		</ion-item-group>
 	</ion-card>
 	<ion-card>

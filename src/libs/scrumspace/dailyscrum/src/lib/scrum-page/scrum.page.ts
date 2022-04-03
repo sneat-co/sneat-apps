@@ -14,18 +14,18 @@ import { IMetric } from '../interfaces';
 import { secondsToStr } from '../../pipes/date-time-pipes';
 import { Timer, TimerFactory } from '../../services/timer.service';
 import { TeamContextService } from '../../services/team-context.service';
-import { TeamBasePage } from '@sneat/team/components';
+import { TeamBaseComponent } from '@sneat/team/components';
 import { MemberRoleEnum } from '../../models/dto-models';
 import { first, mergeMap } from 'rxjs/operators';
 import { getMeetingIdFromDate, getToday } from '../../services/meeting.service';
 
 @Component({
-	selector: 'app-scrum',
+	selector: 'sneat-scrum-page',
 	templateUrl: './scrum.page.html',
 	styleUrls: ['./scrum.page.scss'],
 })
-export class ScrumPage
-	extends TeamBasePage
+export class ScrumPage extends TeamBaseComponent
+	extends TeamBaseComponent
 	implements OnInit, OnDestroy {
 	public tab: ScrumPageTab = 'my';
 

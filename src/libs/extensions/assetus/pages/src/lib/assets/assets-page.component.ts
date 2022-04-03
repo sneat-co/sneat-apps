@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { IAssetType } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
-import { TeamComponentBaseParams, TeamContextComponent } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 import { AssetsBasePage } from '../assets-base.page';
 
@@ -10,12 +12,14 @@ import { AssetsBasePage } from '../assets-base.page';
 	templateUrl: './assets-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class AssetsPageComponent extends AssetsBasePage implements AfterViewInit {
-
-	@ViewChild('teamPageContext')
-	public teamPageContext?: TeamContextComponent;
+export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewInit*/ {
 
 	public vehicles?: IAssetContext[];
+
+	assetTypes: IAssetType[] = [
+		{ id: 'vehicle', title: 'Vehicles', iconName: 'car-outline' },
+		{ id: 'real_estate', title: 'Real estates', iconName: 'home-outline' },
+	];
 
 	// ngOnInit(): void {
 	//     super.ngOnInit();
@@ -27,16 +31,17 @@ export class AssetsPageComponent extends AssetsBasePage implements AfterViewInit
 	public segment: 'all' | 'byCategory' = 'byCategory';
 
 	constructor(
+		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private readonly assetService: AssetService,
+		assetService: AssetService,
 		private readonly alertCtrl: AlertController,
 	) {
-		super('', params);
+		super('AssetsPageComponent', route, params, assetService);
 	}
 
-	ngAfterViewInit(): void {
-		this.setTeamPageContext(this.teamPageContext);
-	}
+	// ngAfterViewInit(): void {
+	// 	this.setTeamPageContext(this.teamPageContext);
+	// }
 
 	public add2Asset(event: Event): void {
 		event.stopPropagation();

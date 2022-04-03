@@ -1,5 +1,4 @@
-export type TeamType = 'family' | 'company' | 'team' | 'educator' | 'realtor' | 'unknown';
-export type MemberType = 'member' | 'pupil' | 'staff';
+export {TeamType, MemberType} from '@sneat/auth-models';
 export type InsurerType = 'insurer';
 export type DwellingContacts =
 	InsurerType

@@ -1,26 +1,28 @@
 //tslint:disable:no-unsafe-any
 import {Component, OnInit} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {eq, IContactService} from '../../../../services/interfaces';
 import {CommuneBasePageParams} from '../../../../services/params';
 // import {CommuneBasePage} from '../../../../pages/commune-base-page';
 import { IContactDto } from '@sneat/dto';
-import { TeamBasePage } from '@sneat/team/components';
+import { TeamBaseComponent } from '@sneat/team/components';
 
 @Component({
 	selector: 'sneat-contact-page',
 	templateUrl: './contact-page.component.html',
 	providers: [CommuneBasePageParams],
 })
-export class ContactPageComponent extends TeamBasePage implements OnInit {
+export class ContactPageComponent extends TeamBaseComponent implements OnInit {
 
 	public segment: 'contact' | 'members' | 'assets' = 'contact';
 	public contact?: IContactDto;
 
 	constructor(
+		route: ActivatedRoute,
 		params: CommuneBasePageParams,
 		private readonly contactsService: IContactService,
 	) {
-		super('contacts', params);
+		super('contacts', route, params);
 	}
 
 	ngOnInit(): void {

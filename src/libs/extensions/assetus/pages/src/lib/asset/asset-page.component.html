@@ -22,117 +22,133 @@
 
 <ion-content>
 
-<!--	<app-real-estate-location [asset]="asset"-->
-<!--									  *ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
-
-<!--	<ng-container *ngIf="vehicle && assetTypeId === 'vehicles'">-->
-<!--		<ion-item-group>-->
-<!--			<app-make-model-engine [mode]="mode"-->
-<!--										  [regNumber]="vehicle.number"-->
-<!--										  [make]="vehicle.make"-->
-<!--										  [model]="vehicle.model"-->
-<!--										  [engine]="vehicle.engine"-->
-<!--										  [yearBuild]="vehicle.yearBuild"-->
-<!--			></app-make-model-engine>-->
-<!--		</ion-item-group>-->
-
-<!--		<app-asset-dates *ngIf="asset" [asset]="asset.dto"></app-asset-dates>-->
-
-<!--	</ng-container>-->
-
-	<ion-item-group *ngIf="asset">
-		<ion-item-divider color="light">
-			<ion-grid class="grid-layout">
-				<ion-row>
-					<ion-col size="3" style="padding-top: 1em;">
-						<ion-text color="medium">Costs</ion-text>
-					</ion-col>
-					<ion-col size="9" style="padding: 0; margin: 0">
-						<ion-segment [value]="scope" (ionChange)="scopeChanged($event)">
-							<ion-segment-button value="month">
-								<ion-label>Monthly</ion-label>
-							</ion-segment-button>
-							<ion-segment-button value="year">
-								<ion-label>Yearly</ion-label>
-							</ion-segment-button>
-						</ion-segment>
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-		</ion-item-divider>
-		<ion-item class="with-buttons">
-			<ion-label color="danger">Expenses</ion-label>
-<!--			<ion-badge color="light">${{asset?.dto?.totals.expenses.per(scope)}}</ion-badge>-->
-			<ion-buttons>
-				<ion-button color="medium">
-					<ion-icon name="add"></ion-icon>
-				</ion-button>
-			</ion-buttons>
+	<ion-card>
+		<ion-item>
+			<ion-label>{{asset?.brief?.title || asset?.dto?.title || asset?.id}}</ion-label>
 		</ion-item>
-		<ion-item class="with-buttons">
-			<ion-label color="success">Income</ion-label>
-<!--			<ion-badge color="light">${{asset?.dto?.totals.incomes.per(scope)}}</ion-badge>-->
-			<ion-buttons>
-				<ion-button color="medium">
-					<ion-icon name="add"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-<!--		<ion-item class="with-buttons" *ngIf="asset?.dto?.totals.count">-->
-<!--			<ion-label><b>Total</b></ion-label>-->
-<!--			<ion-badge-->
-<!--				[color]="asset?.dto?.totals?.isPositive(scope) ? 'success' : asset?.dto?.totals.isNegative(scope) ? 'danger' : 'light'">-->
-<!--				${{asset?.dto?.totals?.per(scope)}}</ion-badge>-->
-<!--			<ion-buttons>-->
-<!--				<ion-button color="medium">-->
-<!--					<ion-icon name="stats"></ion-icon>-->
-<!--				</ion-button>-->
-<!--			</ion-buttons>-->
-<!--		</ion-item>-->
-	</ion-item-group>
+	</ion-card>
+	<!--	<app-real-estate-location [asset]="asset"-->
+	<!--									  *ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
 
-	<ion-item-divider color="light">
-		<ion-segment [(ngModel)]="segment">
-			<ion-segment-button value="contacts">Contacts</ion-segment-button>
-			<ion-segment-button value="services">
-				<ion-label [color]="segment === 'services' ? '' : 'danger'">Services</ion-label>
-			</ion-segment-button>
-			<ion-segment-button value="taxes">Taxes</ion-segment-button>
-		</ion-segment>
-	</ion-item-divider>
+	<!--	<ng-container *ngIf="vehicle && assetTypeId === 'vehicles'">-->
+	<!--		<ion-item-group>-->
+	<!--			<app-make-model-engine [mode]="mode"-->
+	<!--										  [regNumber]="vehicle.number"-->
+	<!--										  [make]="vehicle.make"-->
+	<!--										  [model]="vehicle.model"-->
+	<!--										  [engine]="vehicle.engine"-->
+	<!--										  [yearBuild]="vehicle.yearBuild"-->
+	<!--			></app-make-model-engine>-->
+	<!--		</ion-item-group>-->
 
-	<ng-container [ngSwitch]="segment">
-		<ion-item-group *ngSwitchCase="'contacts'">
-<!--			<ng-container *ngIf="vehicle">-->
-<!--				<ion-item detail tappable>-->
-<!--					<ion-label>Mechanic</ion-label>-->
-<!--				</ion-item>-->
-<!--				<ion-item detail tappable>-->
-<!--					<ion-label>Insurer</ion-label>-->
-<!--				</ion-item>-->
-<!--			</ng-container>-->
-			<ng-container *ngIf="asset?.brief && asset?.brief?.type === 'real_estate'">
-				<ion-item detail tappable>
-					<ion-label>Gardener</ion-label>
-				</ion-item>
-				<ion-item detail tappable>
-					<ion-label>Plumber</ion-label>
-				</ion-item>
-			</ng-container>
-			<ion-item tappable (click)="addContact()">
-				<ion-label color="medium">
-					<ion-icon name="add"></ion-icon>
-					Add contact
-				</ion-label>
+	<!--		<app-asset-dates *ngIf="asset" [asset]="asset.dto"></app-asset-dates>-->
+
+	<!--	</ng-container>-->
+
+	<ion-card>
+		<ion-item-group>
+			<ion-item-divider color="light">
+				<ion-grid class="grid-layout">
+					<ion-row>
+						<ion-col size="3" style="padding-top: 1em;">
+							<ion-text color="medium" style="font-weight: bold">Costs:</ion-text>
+						</ion-col>
+						<ion-col size="9" style="padding: 0; margin: 0">
+							<ion-segment [value]="scope" (ionChange)="scopeChanged($event)">
+								<ion-segment-button value="month">
+									<ion-label>Monthly</ion-label>
+								</ion-segment-button>
+								<ion-segment-button value="year">
+									<ion-label>Yearly</ion-label>
+								</ion-segment-button>
+							</ion-segment>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item-divider>
+			<ion-item class="with-buttons">
+				<ion-label color="danger">Expenses</ion-label>
+				<!--			<ion-badge color="light">${{asset?.dto?.totals.expenses.per(scope)}}</ion-badge>-->
+				<ion-buttons>
+					<ion-button color="medium">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
 			</ion-item>
+			<ion-item class="with-buttons">
+				<ion-label color="success">Income</ion-label>
+				<!--			<ion-badge color="light">${{asset?.dto?.totals.incomes.per(scope)}}</ion-badge>-->
+				<ion-buttons>
+					<ion-button color="medium">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			<!--		<ion-item class="with-buttons" *ngIf="asset?.dto?.totals.count">-->
+			<!--			<ion-label><b>Total</b></ion-label>-->
+			<!--			<ion-badge-->
+			<!--				[color]="asset?.dto?.totals?.isPositive(scope) ? 'success' : asset?.dto?.totals.isNegative(scope) ? 'danger' : 'light'">-->
+			<!--				${{asset?.dto?.totals?.per(scope)}}</ion-badge>-->
+			<!--			<ion-buttons>-->
+			<!--				<ion-button color="medium">-->
+			<!--					<ion-icon name="stats"></ion-icon>-->
+			<!--				</ion-button>-->
+			<!--			</ion-buttons>-->
+			<!--		</ion-item>-->
 		</ion-item-group>
-<!--		<app-asset-liabilities *ngSwitchCase="'services'" liabilityType="service" [asset]="asset.dto"-->
-<!--									  (onAddService)="addService($event.type)"-->
-<!--									  addTitle="Add service"></app-asset-liabilities>-->
-<!--		<app-asset-liabilities *ngSwitchCase="'taxes'"-->
-<!--									  liabilityType="tax" [asset]="asset.dto" (onAddService)="addService($event.type)"-->
-<!--									  addTitle="Add tax"></app-asset-liabilities>-->
-	</ng-container>
+	</ion-card>
+
+	<ion-card>
+		<ion-item-divider color="light">
+			<ion-segment [(ngModel)]="segment">
+				<ion-segment-button value="contacts">Contacts</ion-segment-button>
+				<ion-segment-button value="services">
+					<ion-label [color]="segment === 'services' ? '' : 'danger'">Services</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="taxes">Taxes</ion-segment-button>
+			</ion-segment>
+		</ion-item-divider>
+
+		<ng-container [ngSwitch]="segment">
+			<ion-item-group *ngSwitchCase="'contacts'">
+				<p>Items to be implemented</p>
+				<!--			<ng-container *ngIf="vehicle">-->
+				<!--				<ion-item detail tappable>-->
+				<!--					<ion-label>Mechanic</ion-label>-->
+				<!--				</ion-item>-->
+				<!--				<ion-item detail tappable>-->
+				<!--					<ion-label>Insurer</ion-label>-->
+				<!--				</ion-item>-->
+				<!--			</ng-container>-->
+				<ng-container *ngIf="asset?.brief && asset?.brief?.type === 'real_estate'">
+					<ion-item detail tappable>
+						<ion-label>Gardener</ion-label>
+					</ion-item>
+					<ion-item detail tappable>
+						<ion-label>Plumber</ion-label>
+					</ion-item>
+				</ng-container>
+				<ion-item tappable (click)="addContact()">
+					<ion-label color="medium">
+						<ion-icon name="add"></ion-icon>
+						Add contact
+					</ion-label>
+				</ion-item>
+			</ion-item-group>
+			<ion-card-content *ngSwitchCase="'services'">
+				<p>Services to be implemented</p>
+			</ion-card-content>
+			<ion-card-content *ngSwitchCase="'taxes'">
+				<p>Taxes to be implemented</p>
+			</ion-card-content>
+			<!--		<app-asset-liabilities *ngSwitchCase="'services'" liabilityType="service" [asset]="asset.dto"-->
+			<!--									  (onAddService)="addService($event.type)"-->
+			<!--									  addTitle="Add service"></app-asset-liabilities>-->
+			<!--		<app-asset-liabilities *ngSwitchCase="'taxes'"-->
+			<!--									  liabilityType="tax" [asset]="asset.dto" (onAddService)="addService($event.type)"-->
+			<!--									  addTitle="Add tax"></app-asset-liabilities>-->
+		</ng-container>
+	</ion-card>
 
 
 </ion-content>

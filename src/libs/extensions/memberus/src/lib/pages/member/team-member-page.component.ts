@@ -1,11 +1,12 @@
 //tslint:disable:no-unsafe-any
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Gender, MemberRelationship } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
+import { MemberComponentBaseParams } from '../../member-component-base-params';
 // import { MemberRelationship } from 'sneat-shared/models/dto/dto-member';
 // import { CommuneBasePageParams } from 'sneat-shared/services/params';
 import { MemberBasePage } from '../member-base-page';
-import { MemberComponentBaseParams, MemberContextComponent } from '../member-context.component';
 
 @Component({
 	selector: 'sneat-team-member-page',
@@ -17,20 +18,18 @@ import { MemberComponentBaseParams, MemberContextComponent } from '../member-con
 })
 export class TeamMemberPageComponent extends MemberBasePage implements AfterViewInit {
 
-	@ViewChild('memberContextComponent')
-	public memberContextComponent?: MemberContextComponent;
 
 	public dob?: string;
 	public relatedAs?: MemberRelationship;
 
 	constructor(
+		route: ActivatedRoute,
 		params: MemberComponentBaseParams,
 	) {
-		super(params);
+		super('MemberPage', route, params);
 	}
 
 	ngAfterViewInit(): void {
-		this.setMemberContextComponent(this.memberContextComponent);
 		this.teamParams.preloader.preload([ // TODO: implement preloader
 			'members',
 			'document',

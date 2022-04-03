@@ -79,9 +79,10 @@ export interface IDocument extends IAssetDto {
 	expiresOn?: string; // ISO date string 'YYYY-MM-DD'
 }
 
-export interface IAssetDtoCategory extends ITitledRecord {
+export interface IAssetType extends ITitledRecord {
 	id: AssetType;
-	order: number;
+	iconName?: string;
+	order?: number;
 	desc?: string;
 	canHaveIncome?: boolean;
 	canHaveExpense?: boolean;

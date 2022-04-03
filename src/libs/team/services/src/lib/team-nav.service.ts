@@ -97,6 +97,10 @@ export class TeamNavService {
 		);
 		const id = `${memberContext?.team?.id}:${memberContext?.id}`;
 		const { team } = memberContext;
+		if (!team) {
+			this.errorLogger.logError('not able to navigate to member without team context');
+			return;
+		}
 		this.navForward(
 			navController,
 			`space/${team.type}/${memberContext.team?.id}/member/${memberContext.id}`,

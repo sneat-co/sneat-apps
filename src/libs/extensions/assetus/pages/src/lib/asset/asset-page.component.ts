@@ -1,5 +1,6 @@
 //tslint:disable:no-unsafe-any
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LiabilityServiceType } from '@sneat/dto';
 import { AssetBasePage, AssetComponentBaseParams } from '@sneat/extensions/assetus/components';
 
@@ -32,9 +33,10 @@ export class AssetPageComponent extends AssetBasePage {
 	mode: 'view' | 'edit' = 'view';
 
 	constructor(
+		route: ActivatedRoute,
 		params: AssetComponentBaseParams,
 	) {
-		super('AssetPageComponent', params);
+		super('AssetPageComponent', route, params);
 		// const path = location.pathname;
 		// if (path.indexOf('vehicle') >= 0) {
 		// 	this.assetTypeId = 'vehicles';

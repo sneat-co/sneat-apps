@@ -1,7 +1,8 @@
 //tslint:disable:no-unsafe-any
 import {Component} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IDocument } from '@sneat/dto';
-import { TeamBasePage } from '@sneat/team/components';
+import { TeamBaseComponent } from '@sneat/team/components';
 import { IMemberContext } from '@sneat/team/models';
 import {CommuneBasePageParams} from 'sneat-shared/services/params';
 import {CommuneBasePage} from 'sneat-shared/pages/commune-base-page';
@@ -14,25 +15,26 @@ import {IMemberDto} from 'sneat-shared/models/dto/dto-member';
 	templateUrl: './new-document-page.component.html',
 	providers: [CommuneBasePageParams],
 })
-export class NewDocumentPageComponent extends TeamBasePage {
+export class NewDocumentPageComponent extends TeamBaseComponent {
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
 	public member?: IMemberContext;
 
-	public isMissingRequiredParams: boolean;
+	public isMissingRequiredParams = false;
 
-	public country: string;
-	public docTitle: string;
-	public docType: string;
-	public docNumber: string;
+	public country = '';
+	public docTitle = '';
+	public docType = '';
+	public docNumber = '';
 
 	constructor(
+		route: ActivatedRoute,
 		params: CommuneBasePageParams,
 		membersService: IMemberService,
 		private readonly assetService: IAssetService,
 	) {
-		super('documents', params);
+		super('documents', route, params);
 		this.route.queryParams.subscribe(qp => {
 			console.log('queryParams', qp);
 			this.memberId = qp.member;

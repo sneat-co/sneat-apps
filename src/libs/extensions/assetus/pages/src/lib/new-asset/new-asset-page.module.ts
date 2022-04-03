@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { AddAssetComponentsModule } from '@sneat/extensions/assetus/components';
-import { TeamComponentContextModule } from '@sneat/team/components';
+import { TeamCoreComponentsModule } from '@sneat/team/components';
 
 import { NewAssetPageComponent } from './new-asset-page.component';
 
@@ -22,8 +22,8 @@ const routes: Routes = [
 		FormsModule,
 		IonicModule,
 		RouterModule.forChild(routes),
-		TeamComponentContextModule,
 		AddAssetComponentsModule,
+		TeamCoreComponentsModule,
 	],
 	declarations: [NewAssetPageComponent],
 })

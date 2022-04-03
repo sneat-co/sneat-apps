@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { MemberContextModule } from '../member-context.component';
 
 import { TeamMemberPageComponent } from './team-member-page.component';
 
@@ -21,7 +20,6 @@ const routes: Routes = [
 		FormsModule,
 		IonicModule,
 		RouterModule.forChild(routes),
-		MemberContextModule,
 	],
 	declarations: [TeamMemberPageComponent],
 })

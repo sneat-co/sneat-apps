@@ -1,5 +1,4 @@
 import { IAvatar } from './avatar';
-import { TeamType } from '@sneat/dto';
 
 // Does not contain an ID as it's a key.
 // Use IRecord<IUserRecord> to keep record paired with ID
@@ -10,6 +9,9 @@ export interface IUserRecord {
 	readonly avatar?: IAvatar;
 	readonly teams?: IUserTeamInfo[];
 }
+
+export type TeamType = 'family' | 'company' | 'team' | 'educator' | 'realtor' | 'unknown';
+export type MemberType = 'member' | 'pupil' | 'staff';
 
 export interface IUserTeamInfo {
 	readonly id: string;

@@ -1,6 +1,7 @@
 //tslint:disable:no-unsafe-any
 import { Component, OnInit } from '@angular/core';
-import { TeamBasePage, TeamComponentBaseParams } from '@sneat/team/components';
+import { ActivatedRoute } from '@angular/router';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { concat } from 'rxjs';
 import { RxRecordKey } from 'rxstore/schema';
 
@@ -76,7 +77,7 @@ function createWeekdays(week: Week): void {
 	animations: virtualSliderAnimations,
 })
 // tslint:disable-next-line:component-class-suffix
-export class SchedulePageComponent extends TeamBasePage implements OnInit {
+export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 
 	segment: 'day' | 'week' | 'regular' | 'events' = 'week';
 	public showRegulars = true;
@@ -118,11 +119,12 @@ export class SchedulePageComponent extends TeamBasePage implements OnInit {
 	// prevWeekdays: SlotsGroup[];
 
 	constructor(
+		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		private readonly singleHappeningService: ISingleHappeningService,
 		private readonly slotsProvider: ISlotsProvider,
 	) {
-		super(CommuneTopPage.home, params);
+		super(CommuneTopPage.home, route, params);
 
 		createWeekdays(this.oddWeek);
 		createWeekdays(this.evenWeek);

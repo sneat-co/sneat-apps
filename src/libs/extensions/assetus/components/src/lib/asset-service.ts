@@ -23,7 +23,7 @@ export class AssetService {
 		if (!asset?.team?.id) {
 			return throwError(() => 'team ID is not supplied');
 		}
-		const request = new HttpParams({fromObject: {id: asset.id, team: asset.team.id}});
+		const request = new HttpParams({ fromObject: { id: asset.id, team: asset.team.id } });
 		return this.sneatApiService
 			.delete<void>('assets/delete_asset', request);
 	}
@@ -47,6 +47,10 @@ export class AssetService {
 				// 	});
 				// }),
 			);
+	}
+
+	watchAssetByID(id: string): Observable<IAssetContext> {
+		return throwError(() => 'not implemented yet');
 	}
 
 	watchAssetsByTeamID(teamID: string): Observable<IAssetContext[]> {

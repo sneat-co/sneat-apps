@@ -41,13 +41,13 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 	public nextServiceDue = '';  // ISO date string 'YYYY-MM-DD'
 
 	constructor(
-		// params: TeamComponentBaseParams,
 		teamParams: TeamComponentBaseParams,
 		assetService: AssetService,
 	) {
 		super(teamParams, assetService);
 		this.makes = Object.keys(carMakes).map(id => ({ id, title: id }));
 	}
+
 
 	onVehicleTypeChanged(): void {
 		this.make = '';

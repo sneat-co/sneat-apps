@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { TeamComponentContextModule } from '../team-page-context';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TeamsMenuComponent } from './teams-menu.component';
 import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { TeamsMenuComponent } from './teams-menu.component';
 
 const exports = [TeamsMenuComponent];
 
@@ -13,7 +12,6 @@ const exports = [TeamsMenuComponent];
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		TeamComponentContextModule,
 		RouterModule,
 	],
 	declarations: [...exports],

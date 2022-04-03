@@ -1,4 +1,4 @@
-import { LOGGER_FACTORY } from '@sneat/core';
+import { LOGGER_FACTORY } from './logging';
 import { loggerFactory } from '@sneat/rxstore';
 
 export const coreProviders = [

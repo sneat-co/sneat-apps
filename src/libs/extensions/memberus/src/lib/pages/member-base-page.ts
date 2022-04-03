@@ -1,16 +1,17 @@
 //tslint:disable:no-unsafe-any
-import { TeamBasePage } from '@sneat/team/components';
+import { ActivatedRoute } from '@angular/router';
+import { TeamBaseComponent } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { MemberPages } from '../constants';
+import { MemberComponentBaseParams } from '../member-component-base-params';
 // import { MemberPages } from 'sneat-shared/extensions/memberus/constants';
 // import { IMemberDto } from 'sneat-shared/models/dto/dto-member';
 // import { IUserDto } from 'sneat-shared/models/dto/dto-user';
 // import { eq } from 'sneat-shared/services/interfaces';
 // import { ICommuneMemberInfo } from '../../../models/dto/dto-commune';
 // import { CommuneTopPage } from '../../../pages/constants';
-import { MemberComponentBaseParams, MemberContextComponent } from './member-context.component';
 
-export abstract class MemberBasePage extends TeamBasePage {
+export abstract class MemberBasePage extends TeamBaseComponent {
 	public segment: 'friends' | 'other' | 'summary' = 'summary';
 	// override defaultBackUrl = CommuneTopPage.members;
 	public isDeleted?: boolean;
@@ -18,12 +19,15 @@ export abstract class MemberBasePage extends TeamBasePage {
 	private memberContext?: IMemberContext;
 
 	protected constructor(
+		className: string,
+		route: ActivatedRoute,
 		params: MemberComponentBaseParams,
 		// protected preloader: NgModulePreloaderService,
 		// protected assetService: IAssetService,
 	) {
-		super('members', params.teamPageParams);
+		super(className, route, params.teamParams);
 		this.tryToGetMemberFromHistoryState();
+		this.tackMemberId();
 	}
 
 	public get member(): IMemberContext | undefined {
@@ -52,15 +56,6 @@ export abstract class MemberBasePage extends TeamBasePage {
 			state: { member: this.memberContext, team: this.memberContext.team },
 		})
 			.catch(this.teamParams.errorLogger.logError);
-	}
-
-	protected setMemberContextComponent(cmp?: MemberContextComponent): void {
-		if (!cmp) {
-			this.errorLogger.logError('MemberContextComponent is not supplied');
-			return;
-		}
-		this.setTeamPageContext(cmp);
-		this.tackMemberId();
 	}
 
 	private tackMemberId(): void {
