@@ -1,9 +1,9 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { IRecord } from '@sneat/data';
-import { IMemberBrief, ITeamDto } from '@sneat/dto';
+import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext } from '@sneat/team/models';
 import { TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./member.page.scss'],
 })
 export class MemberPageComponent implements OnDestroy {
-	public team?: IRecord<ITeamDto>;
+	public team?: ITeamContext;
 
 	public userID?: string;
 	public memberBrief?: IMemberBrief;

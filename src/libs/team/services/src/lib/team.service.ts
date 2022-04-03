@@ -103,17 +103,17 @@ export class TeamService {
 	}
 
 	public changeMemberRole(
-		teamRecord: IRecord<ITeamDto>,
+		team: ITeamContext,
 		memberId: string,
 		role: MemberRole,
-	): Observable<IRecord<ITeamDto>> {
-		let member = teamRecord?.dto?.members.find((m: IMemberBrief) => m.id === memberId);
+	): Observable<ITeamContext> {
+		let member = team?.dto?.members.find((m: IMemberBrief) => m.id === memberId);
 		if (!member) {
 			return throwError(() => 'member not found by ID in team record');
 		}
 		return this.sneatApiService
 			.post(`team/change_member_role`, {
-				team: teamRecord.id,
+				team: team.id,
 				member: memberId,
 				role,
 			})
@@ -123,7 +123,7 @@ export class TeamService {
 						throw new Error('member is no longer available');
 					}
 					member = { ...member, roles: [role] };
-					return teamRecord;
+					return team;
 				}),
 			);
 	}

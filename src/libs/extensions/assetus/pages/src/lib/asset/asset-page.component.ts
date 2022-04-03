@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LiabilityServiceType } from '@sneat/dto';
 import { AssetBasePage, AssetComponentBaseParams } from '@sneat/extensions/assetus/components';
+import { IAssetContext } from '@sneat/team/models';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;

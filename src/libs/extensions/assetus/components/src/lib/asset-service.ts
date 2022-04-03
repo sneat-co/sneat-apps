@@ -50,7 +50,19 @@ export class AssetService {
 	}
 
 	watchAssetByID(id: string): Observable<IAssetContext> {
-		return throwError(() => 'not implemented yet');
+		return this.db
+			.collection('team_assets')
+			.doc<IAssetDto>(id)
+			.snapshotChanges()
+			.pipe(
+				map(changes => {
+					if (!changes.payload.exists) {
+						return { id, dto: null };
+					}
+					const asset: IAssetContext = { id, dto: changes.payload.data() };
+					return asset;
+				}),
+			);
 	}
 
 	watchAssetsByTeamID(teamID: string): Observable<IAssetContext[]> {

@@ -39,7 +39,7 @@ export abstract class TeamBaseComponent {
 		route: ActivatedRoute,
 		readonly teamParams: TeamComponentBaseParams,
 	) {
-		console.log(`${className} extends TeamBasePageDirective.constructor()`);
+		console.log(`${className} extends TeamBasePageDirective.constructor(), history.state:`, history.state);
 		this.route = route;
 
 		this.navController = teamParams.navController;

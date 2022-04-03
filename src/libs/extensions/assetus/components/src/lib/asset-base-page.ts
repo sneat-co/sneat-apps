@@ -12,12 +12,16 @@ export abstract class AssetBasePage extends TeamBaseComponent {
 		public readonly params: AssetComponentBaseParams,
 	) {
 		super(className, route, params.teamParams);
+		this.assetContext = history.state.asset as IAssetContext | undefined;
 		this.route?.paramMap.subscribe({
 			next: params => {
 				console.log('AssetBasePage => route => params:', params);
-				const id = params.get('id');
+				const id = params.get('assetID');
 				if (!id) {
 					this.assetContext = undefined;
+					return;
+				}
+				if (this.assetContext?.id === id) {
 					return;
 				}
 				this.assetContext = { id: id };

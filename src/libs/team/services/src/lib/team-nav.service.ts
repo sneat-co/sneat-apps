@@ -153,7 +153,7 @@ export class TeamNavService {
 
 	public navigateToAddMember = (
 		navController: NavController,
-		team: IRecord<ITeamDto>,
+		team: ITeamContext,
 	): void =>
 		this.navToTeamPage(
 			navController,
@@ -222,7 +222,7 @@ export class TeamNavService {
 
 	private navToTeamPage = (
 		navController: NavController,
-		team: IRecord<ITeamDto>,
+		team: ITeamContext,
 		url: string,
 		eventName: string,
 		params?: any,
