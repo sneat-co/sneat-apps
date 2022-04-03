@@ -5,7 +5,7 @@ import { SneatApiService } from '@sneat/api';
 import { IAssetDto } from '@sneat/dto';
 import { IAssetContext } from '@sneat/team/models';
 import { TeamService } from '@sneat/team/services';
-import { map, Observable, throwError } from 'rxjs';
+import { map, Observable, tap, throwError } from 'rxjs';
 import { ICreateAssetRequest } from './asset-service.dto';
 
 @Injectable({
@@ -31,7 +31,23 @@ export class AssetService {
 	public createAsset(request: ICreateAssetRequest): Observable<IAssetContext> {
 		console.log(`AssetService.createAsset()`, request);
 		return this.sneatApiService
-			.post<IAssetContext>('assets/create_asset', request).pipe(
+			.post<IAssetContext>('assets/create_asset', request)
+			.pipe(
+				tap(asset => {
+					this.teamService.getTeam(request.team).subscribe({
+						next: team => {
+							if (team.dto) {
+								if (!team.dto?.numberOf) {
+									team = { ...team, dto: { ...team.dto || {}, numberOf: {} } };
+								}
+								if (team?.dto?.numberOf) {
+									team.dto.numberOf.assets = (team.dto?.numberOf?.assets || 0) + 1;
+								}
+								this.teamService.onTeamUpdated(team);
+							}
+						},
+					});
+				}),
 				// tap(() => {
 				// 	this.teamService.getTeam(request.team).subscribe({
 				// 		next: team => {
@@ -40,7 +56,7 @@ export class AssetService {
 				// 				// @ts-ignore
 				// 				team?.dto?.numberOf?.assets += 1;
 				// 			} else {
-				// 				team = { ...team, dto: team.dto ? { ...team?.dto, numberOf: {assets: 1} } : team.dto };
+				// 				team = { ...team, dto: team.dto ? { ...team?.dto, numberOf: { assets: 1 } } : team.dto };
 				// 				this.teamService.onTeamUpdated(team);
 				// 			}
 				// 		},
