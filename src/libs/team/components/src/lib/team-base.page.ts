@@ -130,11 +130,11 @@ export abstract class TeamBasePage {
 	}
 
 	protected onTeamIdChanged(): void {
-		console.log('TeamBasePage.onTeamIdChanged()');
+		console.log('TeamBasePage.onTeamIdChanged()', this.className);
 	}
 
 	protected onTeamDtoChanged(): void {
-		console.log('TeamBasePage.onTeamDtoChanged()', this.team?.dto);
+		console.log('TeamBasePage.onTeamDtoChanged()', this.className, this.team?.dto);
 	}
 
 	// private trackTeamIdAndTypeFromUrl(): void {

@@ -13,6 +13,7 @@
 	<ion-label color="medium">No members of this type: {{ role }}</ion-label>
 </ion-item>
 <ng-template #list>
+
 	<ion-item-sliding
 		[@addRemove]="'added'"
 		*ngFor="let member of members; trackBy: id"
@@ -43,7 +44,7 @@
 							*ngFor="let role of member.roles"
 							class="ion-margin-start sneat-team-member-role"
 							[color]="role === 'contributor' ? 'primary' : 'medium'"
-							>{{ role }}</ion-badge
+						>{{ role }}</ion-badge
 						>
 					</ng-container>
 				</h3>
@@ -52,13 +53,14 @@
 						href="mailto:{{ member.email }}"
 						style="opacity: 0.7"
 						(click)="$event.stopPropagation()"
-						>{{ member.email }}</a
+					>{{ member.email }}</a
 					>
 					<ion-badge
 						class="ion-margin-start"
 						color="tertiary"
 						*ngIf="!member.uid"
-						>not signed up yet</ion-badge
+					>not signed up yet
+					</ion-badge
 					>
 				</p>
 			</ion-label>
@@ -70,12 +72,14 @@
 		</ion-item>
 		<ion-item-options side="start">
 			<ion-item-option color="danger" (click)="removeMember($event, member)"
-				>Remove</ion-item-option
+			>Remove
+			</ion-item-option
 			>
 		</ion-item-options>
 		<ion-item-options side="end">
 			<ion-item-option color="danger" (click)="removeMember($event, member)"
-				>Remove</ion-item-option
+			>Remove
+			</ion-item-option
 			>
 		</ion-item-options>
 	</ion-item-sliding>

@@ -58,6 +58,7 @@ export class LoginPageComponent {
 		// private readonly toastController: ToastController,
 		private readonly sneatApiService: SneatApiService,
 	) {
+		console.log('LoginPageComponent.constructor()')
 		this.email = localStorage.getItem('emailForSignIn') || '';
 		if (this.email) {
 			this.sign = 'in';
@@ -122,6 +123,7 @@ export class LoginPageComponent {
 		this.afAuth
 			.signInWithPopup(authProvider)
 			.then((userCredential) => {
+				// console.log('LoginPage => userCredential:', userCredential);
 				this.analyticsService.logEvent('signInWithPopup', eventParams);
 				this.onLoggedIn(userCredential);
 			})

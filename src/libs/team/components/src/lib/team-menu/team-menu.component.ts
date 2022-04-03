@@ -30,8 +30,35 @@ export class TeamMenuComponent extends TeamBasePage implements AfterViewInit {
 		});
 	}
 
+	public closeMenu(): void {
+		this.menuCtrl.close();
+	}
+
 	ngAfterViewInit(): void {
 		this.setTeamPageContext(this.teamContextComponent);
+	}
+
+	override onTeamDtoChanged(): void {
+		super.onTeamDtoChanged();
+		console.log('TeamMenuComponent.onTeamDtoChanged()', this.team?.dto);
+	}
+
+	spaceLabelClicked(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+	}
+
+	isCurrentPage(page: string): boolean {
+		if (!this.team) {
+			return false;
+		}
+		const { id } = this.team;
+		const idp = '/' + id;
+		const { pathname } = location;
+		if (page === 'overview') {
+			return pathname.endsWith(idp);
+		}
+		return pathname.endsWith(idp + '/' + page) || pathname.indexOf(idp + '/' + page) > 0;
 	}
 
 	onTeamSelected(event: Event): void {

@@ -10,14 +10,25 @@ import { IAssetContext, ITeamContext } from '@sneat/team/models';
 			<ion-spinner slot="start" name="lines-small"></ion-spinner>
 			<ion-label>Loading...</ion-label>
 		</ion-item>
-		<ng-container *ngIf="assets?.length">
-			<sneat-asset-list-item
-				*ngFor="let asset of assets; trackBy: id"
-				[asset]="asset"
-				[team]="team"
-				[assetType]="assetType"
-			></sneat-asset-list-item>
-		</ng-container>
+		<div *ngIf="assets?.length" class="last-child-no-border">
+			<ion-item button (click)="goAsset(asset)" *ngFor="let asset of assets; trackBy: id">
+				<ion-label>
+					<h2>{{asset?.brief?.title}}</h2>
+				</ion-label>
+				<ion-badge *ngIf="asset?.dto?.yearOfBuild && ! asset?.brief?.regNumber" color="light"
+									 style="font-weight: normal">{{asset?.dto?.yearOfBuild}}</ion-badge>
+				<ion-badge *ngIf="asset?.brief?.regNumber" color="light"
+									 style="font-weight: normal">{{asset?.brief?.regNumber}}</ion-badge>
+				<ion-buttons slot="end">
+					<!--				<ion-button (click)="add2Asset($event)">-->
+					<!--					<ion-icon name="add"></ion-icon>-->
+					<!--				</ion-button>-->
+					<ion-button (click)="delete($event)">
+						<ion-icon name="close-outline"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</div>
 	`,
 })
 export class AssetsListComponent implements OnChanges {
@@ -57,4 +68,32 @@ export class AssetsListComponent implements OnChanges {
 		});
 		console.log('AssetsListComponent.ngOnChanges =>', this.assetType, this.team, 'allAssets:', this.allAssets, 'filtered assets:', this.assets);
 	}
+
+	public goAsset(asset: IAssetContext): void {
+		if (!asset) {
+			return;
+		}
+		let path: string;
+		switch (asset?.brief?.type) {
+			case 'vehicle':
+				path = 'vehicle';
+				break;
+			case 'real_estate':
+				path = this.team?.type === 'realtor' ? 'real-estate' : 'property';
+				break;
+			default:
+				path = 'asset';
+				break;
+		}
+		// this.navCtrl
+		// 	.navigateForward(['space', this.team?.type, this.team?.id, 'asset', asset.id], {
+		// 		state: { asset, team: this.team },
+		// 	})
+		// 	.catch(this.errorLogger.logError);
+	}
+
+	delete(event: Event): void {
+		// this.as
+	}
+
 }

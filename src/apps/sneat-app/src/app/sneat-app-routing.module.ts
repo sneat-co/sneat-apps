@@ -11,12 +11,12 @@ const routes: Routes = [
 		outlet: 'menu',
 		component: SneatAppMenuComponent,
 	},
-	{
-		path: 'my',
-		pathMatch: 'full',
-		loadChildren: () =>
-			import('./sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
-	},
+	// {
+	// 	path: 'my',
+	// 	pathMatch: 'full',
+	// 	loadChildren: () =>
+	// 		import('./sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
+	// },
 	{
 		path: '',
 		pathMatch: 'full',

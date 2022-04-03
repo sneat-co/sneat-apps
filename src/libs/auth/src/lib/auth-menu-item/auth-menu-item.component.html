@@ -1,7 +1,20 @@
 <ion-item-divider>
-	<ion-label>Signed in as</ion-label>
+	<ion-label *ngIf="authState?.status === 'authenticated'">Signed in as</ion-label>
+	<ion-label *ngIf="authState?.status !== 'authenticated'">Authentication</ion-label>
 </ion-item-divider>
-<ion-item tappable routerLink="/my" routerDirection="root">
+<ion-item *ngIf="!authState">
+	<ion-label>Loading....</ion-label>
+</ion-item>
+<ion-item *ngIf="authState?.status === 'authenticating'">
+	<ion-label>Authenticating....</ion-label>
+</ion-item>
+<ion-item routerLink="/login" *ngIf="authState?.status === 'notAuthenticated'">
+	<ion-icon slot="start" name="person-circle-outline"></ion-icon>
+	<ion-label color="primary">
+		Please sign in
+	</ion-label>
+</ion-item>
+<ion-item routerLink="/my" routerDirection="root" *ngIf="authState?.status === 'authenticated'">
 	<!--    <ion-buttons slot="start" class="ion-no-margin">-->
 	<!--      <ion-button disabled color="medium" >-->
 	<!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
@@ -9,20 +22,9 @@
 	<!--    </ion-buttons>-->
 	<ion-icon slot="start" name="person-circle-outline"></ion-icon>
 
-	<ion-label *ngIf="authState?.user; else notAuthenticated" color="medium">
+	<ion-label color="medium">
 		{{ authState?.user?.displayName }}
 	</ion-label>
-	<ng-template #notAuthenticated>
-		<ion-label color="medium">
-			<ng-container *ngIf="!authState">Loading...</ng-container>
-			<ng-container *ngIf="authState?.status === 'authenticating'"
-			>Authenticating...</ng-container
-			>
-			<ng-container *ngIf="authState?.status === 'notAuthenticated'">
-				Please <a [routerLink]="'/login'">sign in</a>
-			</ng-container>
-		</ion-label>
-	</ng-template>
 
 	<ion-buttons slot="end" *ngIf="authState?.status === 'authenticated'">
 <!--		<ion-button color="medium" title="Settings">-->

@@ -38,57 +38,52 @@
 	<!--		</ion-col>-->
 	<!--	</ion-row>-->
 
-	<ion-grid>
+	<ion-grid class="ion-grid-layout">
 		<ion-row>
 			<ion-col *ngIf="topMenuService.isTopMenuHidden | async">
-				<ion-card>
-					<ion-list>
-						<ion-item>
-							<ion-label style="font-weight: bold">Apps</ion-label>
-							<ion-buttons slot="end">
-								<ion-button>
-									<ion-icon name="settings" color="medium"></ion-icon>
-								</ion-button>
-							</ion-buttons>
-						</ion-item>
-						<ion-item routerLink="./assets">
-							<ion-icon name="car-sport-outline" slot="start"></ion-icon>
-							<ion-label>Assets</ion-label>
-						</ion-item>
-						<ion-item routerLink="./contacts">
-							<ion-icon name="people-outline" slot="start"></ion-icon>
-							<ion-label>Contacts</ion-label>
-						</ion-item>
-						<ion-item routerLink="./documents">
-							<ion-icon name="documents-outline" slot="start"></ion-icon>
-							<ion-label>Documents</ion-label>
-						</ion-item>
-						<ion-item routerLink="./lists">
-							<ion-icon name="list-outline" slot="start"></ion-icon>
-							<ion-label>Lists</ion-label>
-						</ion-item>
-						<ion-item routerLink="./schedule">
-							<ion-icon name="calendar-outline" slot="start"></ion-icon>
-							<ion-label>Schedule</ion-label>
-							<ion-buttons slot="end">
-								<ion-button>
-									<ion-label style="text-transform: none" color="primary">Today</ion-label>
-								</ion-button>
-								<ion-button>
-									<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>
-								</ion-button>
-							</ion-buttons>
-						</ion-item>
-						<ion-item routerLink="./lists">
-							<ion-icon name="cart-outline" slot="start"></ion-icon>
-							<ion-label>Lists</ion-label>
-							<ion-buttons slot="end">
-								<ion-button>
-									<ion-label style="text-transform: none" color="primary">Groceries</ion-label>
-								</ion-button>
-							</ion-buttons>
-						</ion-item>
-					</ion-list>
+				<ion-card class="last-child-no-border">
+					<ion-item>
+						<ion-label style="font-weight: bold">Apps</ion-label>
+						<ion-buttons slot="end">
+							<ion-button>
+								<ion-icon name="settings" color="medium"></ion-icon>
+							</ion-button>
+						</ion-buttons>
+					</ion-item>
+					<ion-item routerLink="./assets" detail>
+						<ion-icon name="car-sport-outline" slot="start"></ion-icon>
+						<ion-label>Assets</ion-label>
+						<ion-badge slot="end" color="light" class="badge-count" *ngIf="team?.dto?.numberOf?.assets">{{team?.dto?.numberOf?.assets}}</ion-badge>
+					</ion-item>
+					<ion-item routerLink="./contacts" detail>
+						<ion-icon name="people-outline" slot="start"></ion-icon>
+						<ion-label>Contacts</ion-label>
+					</ion-item>
+					<ion-item routerLink="./documents" detail>
+						<ion-icon name="documents-outline" slot="start"></ion-icon>
+						<ion-label>Documents</ion-label>
+					</ion-item>
+					<ion-item routerLink="./lists">
+						<ion-icon name="cart-outline" slot="start"></ion-icon>
+						<ion-label>Lists</ion-label>
+						<ion-buttons slot="end">
+							<ion-button>
+								<ion-label style="text-transform: none" color="primary">Groceries</ion-label>
+							</ion-button>
+						</ion-buttons>
+					</ion-item>
+					<ion-item routerLink="./schedule">
+						<ion-icon name="calendar-outline" slot="start"></ion-icon>
+						<ion-label>Schedule</ion-label>
+						<ion-buttons slot="end">
+							<ion-button>
+								<ion-label style="text-transform: none" color="primary">Today</ion-label>
+							</ion-button>
+							<ion-button>
+								<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>
+							</ion-button>
+						</ion-buttons>
+					</ion-item>
 				</ion-card>
 			</ion-col>
 		</ion-row>
@@ -104,10 +99,9 @@
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
-					<ion-list>
-						<sneat-members-list [team]="team" [allMembers]="team?.dto?.members"
-																[role]="'contributor'"></sneat-members-list>
-					</ion-list>
+
+					<sneat-members-list [team]="team" [allMembers]="team?.dto?.members"
+															[role]="'contributor'"></sneat-members-list>
 				</ion-card>
 			</ion-col>
 			<ion-col>
@@ -138,10 +132,10 @@
 		</ion-row>
 	</ion-grid>
 
-	<sneat-card-list
-		itemIcon="people-circle-outline"
-		[isFilterable]="true" title="Members"
-		[isLoading]="!team?.dto"
-		[items]="team?.dto?.members"
-	></sneat-card-list>
+<!--	<sneat-card-list-->
+<!--		itemIcon="people-circle-outline"-->
+<!--		[isFilterable]="true" title="Members"-->
+<!--		[isLoading]="!team?.dto"-->
+<!--		[items]="team?.dto?.members"-->
+<!--	></sneat-card-list>-->
 </ion-content>

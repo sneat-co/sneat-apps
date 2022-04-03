@@ -295,6 +295,7 @@ export class TeamService {
 				map((dto: ITeamDto | null) => ({id, brief: teamInfo, dto: dto || undefined})),
 				tap((team) => {
 					console.log('New team record from Firestore:', team);
+					subj.next(team);
 				}),
 			);
 		this.subscriptions.push(o.subscribe(subj));

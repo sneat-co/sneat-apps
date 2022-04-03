@@ -103,13 +103,13 @@ ion-label.deleting-list-item {
 }
 
 .ion-grid-layout {
-	padding: 0;
-	margin: 0;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 .ion-grid-layout ion-row {
-  padding: 0;
-  margin: 0;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .ion-grid-layout ion-col {

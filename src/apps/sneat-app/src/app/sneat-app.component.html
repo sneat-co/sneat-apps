@@ -20,7 +20,14 @@
 		<ion-menu contentId="main" #menu>
 			<ion-header>
 				<ion-toolbar color="light">
-					<ion-title routerLink="/" tappable (click)="menu.close()">Sneat.app</ion-title>
+
+					<ion-title routerLink="/" tappable (click)="menu.close()">
+						<span style="margin-right: 0.5em;">
+							<ion-icon color="primary" name="file-tray-stacked-outline" style="position: relative; top: 4px;"></ion-icon>
+						</span>
+
+						<ion-text color="primary" style="font-weight: bold">sneat.app</ion-text>
+					</ion-title>
 				</ion-toolbar>
 			</ion-header>
 			<ion-content>

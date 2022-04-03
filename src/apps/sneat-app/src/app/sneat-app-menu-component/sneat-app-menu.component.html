@@ -1,5 +1,5 @@
 <ion-list>
-	<sneat-teams-menu></sneat-teams-menu>
+	<sneat-teams-menu *ngIf="authState?.status === 'authenticated'"></sneat-teams-menu>
 	<!--	<sneat-commune-menu></sneat-commune-menu>-->
 	<sneat-auth-menu-item></sneat-auth-menu-item>
 </ion-list>
