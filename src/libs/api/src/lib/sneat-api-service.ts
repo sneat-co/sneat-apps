@@ -86,9 +86,11 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	}
 
 	public delete<T>(endpoint: string, params: HttpParams): Observable<T> {
+		console.log('delete()', endpoint, params);
+		const url = this.baseUrl + endpoint;
 		return (
 			this.errorIfNotAuthenticated() ||
-			this.httpClient.delete<T>(this.baseUrl + endpoint, {
+			this.httpClient.delete<T>(url, {
 				params,
 				headers: this.headers(),
 			})

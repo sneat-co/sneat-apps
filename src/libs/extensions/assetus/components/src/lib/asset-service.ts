@@ -1,10 +1,11 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IAssetDto } from '@sneat/dto';
 import { IAssetContext } from '@sneat/team/models';
 import { TeamService } from '@sneat/team/services';
-import { map, Observable } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import { ICreateAssetRequest } from './asset-service.dto';
 
 @Injectable({
@@ -16,6 +17,15 @@ export class AssetService {
 		private readonly sneatApiService: SneatApiService,
 		private readonly teamService: TeamService,
 	) {
+	}
+
+	public deleteAsset(asset: IAssetContext): Observable<void> {
+		if (!asset?.team?.id) {
+			return throwError(() => 'team ID is not supplied');
+		}
+		const request = new HttpParams({fromObject: {id: asset.id, team: asset.team.id}});
+		return this.sneatApiService
+			.delete<void>('assets/delete_asset', request);
 	}
 
 	public createAsset(request: ICreateAssetRequest): Observable<IAssetContext> {

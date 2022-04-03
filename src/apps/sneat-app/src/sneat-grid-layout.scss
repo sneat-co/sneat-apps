@@ -1,6 +1,6 @@
 .ion-grid-layout {
-	padding: 0 !important;
-	margin: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .ion-grid-layout ion-row {
@@ -9,25 +9,29 @@
 }
 
 .ion-grid-layout ion-col {
-	padding: 0 !important;
-	margin: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .last-child-no-border ion-item:last-child {
-	--inner-border-width: 0;
+  --inner-border-width: 0;
 }
 
 ion-badge.badge-count {
-	font-weight: normal;
-	color: gray;
+  font-weight: normal;
+  color: gray;
 }
 
 .delete-button:hover ion-icon {
-	color: red;
+  color: red;
 }
 
 ion-item.no-end-padding {
-	.item-inner {
-		padding-right: 0;
-	}
+  .item-inner {
+	padding-right: 0;
+  }
+}
+
+ion-item.deleting ion-label {
+  text-decoration: line-through;
 }

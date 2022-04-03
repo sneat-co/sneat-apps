@@ -1,6 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AssetType } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
+import { AssetService } from '../asset-service';
 
 @Component({
 	selector: 'sneat-assets-list',
@@ -11,7 +13,11 @@ import { IAssetContext, ITeamContext } from '@sneat/team/models';
 			<ion-label>Loading...</ion-label>
 		</ion-item>
 		<div *ngIf="assets?.length" class="last-child-no-border">
-			<ion-item button (click)="goAsset(asset)" *ngFor="let asset of assets; trackBy: id">
+			<ion-item *ngFor="let asset of assets; trackBy: id"
+								tappable
+								(click)="goAsset(asset)"
+								[class]="{deleting: deletingIDs.indexOf(asset.id) >= 0}"
+			>
 				<ion-label>
 					<h2>{{asset?.brief?.title}}</h2>
 				</ion-label>
@@ -23,7 +29,7 @@ import { IAssetContext, ITeamContext } from '@sneat/team/models';
 					<!--				<ion-button (click)="add2Asset($event)">-->
 					<!--					<ion-icon name="add"></ion-icon>-->
 					<!--				</ion-button>-->
-					<ion-button (click)="delete($event)">
+					<ion-button (click)="delete(asset)" [disabled]="deletingIDs.indexOf(asset.id) >= 0">
 						<ion-icon name="close-outline"></ion-icon>
 					</ion-button>
 				</ion-buttons>
@@ -39,6 +45,15 @@ export class AssetsListComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() assetType?: AssetType;
 	@Input() filter = '';
+
+	public deletingIDs: string[] = [];
+
+	constructor(
+		@Inject(ErrorLogger)
+		private readonly errorLogger: IErrorLogger,
+		private readonly assetService: AssetService,
+	) {
+	}
 
 	public id = (_: number, asset: IAssetContext) => asset.id;
 
@@ -92,8 +107,30 @@ export class AssetsListComponent implements OnChanges {
 		// 	.catch(this.errorLogger.logError);
 	}
 
-	delete(event: Event): void {
-		// this.as
-	}
+	delete(asset: IAssetContext): void {
+		const { id, brief } = asset;
+		this.deletingIDs.push(id);
+		const deleteCompleted = () => this.deletingIDs = this.deletingIDs.filter(v => v !== id);
+		setTimeout(() => {
+			if (!confirm(
+				`Are you sure you want to delete this asset?
 
+       ID: ${id}
+       Title: ${brief?.title}
+
+       This operation can not be undone.`)) {
+				deleteCompleted();
+				return;
+			}
+			this.assetService.deleteAsset(asset).subscribe({
+				next: () => {
+					this.assets = this.assets?.filter(a => a.id !== id);
+
+				},
+				error: this.errorLogger.logErrorHandler('failed to delete an asset with ID=' + id),
+				complete: deleteCompleted,
+			});
+		}, 1);
+
+	}
 }
