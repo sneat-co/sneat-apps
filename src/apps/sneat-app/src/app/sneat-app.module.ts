@@ -7,7 +7,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { DefaultSneatApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { initFirebase, SneatApplicationModule } from '@sneat/app';
-import { SneatAuthModule } from '@sneat/auth';
+import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunesUiModule } from '@sneat/communes/ui';
 import { coreProviders } from '@sneat/core';
 import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
@@ -33,7 +33,8 @@ initFirebase(environment.firebaseConfig);
 		RandomModule,
 		SneatAppRoutingModule,
 		SneatApplicationModule,
-		SneatAuthModule,
+		SneatAuthServicesModule,
+		AuthMenuItemModule,
 		CommunesUiModule,
 		TeamsMenuComponentModule,
 		HttpClientModule,

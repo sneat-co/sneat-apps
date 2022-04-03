@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TeamMenuComponent } from './team-menu.component';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SneatAuthModule } from '@sneat/auth';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
+import { TeamMenuComponent } from './team-menu.component';
 
 const exports = [TeamMenuComponent];
 
@@ -14,7 +14,7 @@ const exports = [TeamMenuComponent];
 		IonicModule,
 		FormsModule,
 		RouterModule,
-		SneatAuthModule,
+		AuthMenuItemModule,
 	],
 	declarations: [...exports],
 	exports,

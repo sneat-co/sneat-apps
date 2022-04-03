@@ -17,7 +17,7 @@ import { MenuProjectSelectorComponent } from './menu-project-selector.component'
 import { MenuEnvSelectorComponent } from './menu-env-selector.component';
 import { MenuStoreSelectorComponent } from './menu-store-selector.component';
 import { NewProjectFormModule } from '@sneat/datatug/project';
-import { SneatAuthModule } from '@sneat/auth';
+import { SneatAuthServicesModule } from '@sneat/auth';
 
 @NgModule({
 	imports: [
@@ -30,7 +30,7 @@ import { SneatAuthModule } from '@sneat/auth';
 		//
 		WormholeModule,
 		SneatAnalyticsModule,
-		SneatAuthModule,
+		SneatAuthServicesModule,
 		//
 		DatatugCoreModule,
 		DatatugServicesStoreModule,

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SneatAuthModule } from '@sneat/auth';
+import { SneatAuthServicesModule } from '@sneat/auth';
 import { TeamMenuComponentModule } from '@sneat/team/components';
 // import { guardRoute } from '../../../utils/guard-route';
 
@@ -74,7 +74,7 @@ const routes: Route[] = [
 		RouterModule.forChild(routes),
 		CommonModule,
 		IonicModule,
-		SneatAuthModule,
+		SneatAuthServicesModule,
 		TeamMenuComponentModule,
 	],
 	exports: [RouterModule],

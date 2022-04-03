@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { LoginRequiredComponentModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunePageComponent } from './commune-page.component';
-import { SneatAuthModule } from '@sneat/auth';
 
 const routes: Routes = [
 	{
@@ -20,7 +20,8 @@ const routes: Routes = [
 		IonicModule,
 		FormsModule,
 		RouterModule.forChild(routes),
-		SneatAuthModule,
+		SneatAuthServicesModule,
+		LoginRequiredComponentModule,
 	],
 	declarations: [CommunePageComponent],
 })

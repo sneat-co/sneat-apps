@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Issue: https://github.com/angular/angularfire/issues/2656
 // Bug: https://github.com/firebase/firebase-js-sdk/issues/4110
 // Workaround: https://stackoverflow.com/questions/65025005/angularfireauth-emulator-login-is-lost-on-page-reload
-import { SneatAuthModule } from '@sneat/auth';
+import { SneatAuthServicesModule } from '@sneat/auth';
 import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
 // import { GuiGridModule } from '@generic-ui/ngx-grid';
 
@@ -40,7 +40,7 @@ initFirebase(environment.firebaseConfig);
 		RandomModule,
 		WormholeModule, // WormholeModule have to be imported at root module
 		SneatApplicationModule,
-		SneatAuthModule,
+		SneatAuthServicesModule,
 		DatatugAppRoutingModule,
 		// DatatugMenuModule,
 	],
