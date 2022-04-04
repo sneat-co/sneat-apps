@@ -99,6 +99,7 @@ export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 }
 
 export interface IMemberGroupDto extends ITeamRecord {
+	id: string;
 	teamId?: string; // RxRecordKey; // family team ID
 	title: string;
 	desc?: string;

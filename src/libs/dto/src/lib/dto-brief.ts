@@ -1,4 +1,4 @@
-export interface IBrief {
+export interface IBriefWithIdAndTitle {
 	id: string;
-	title: string
+	title: string;
 }

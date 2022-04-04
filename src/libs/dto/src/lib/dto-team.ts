@@ -1,5 +1,5 @@
 import { IAssetBrief } from './dto-asset';
-import { IBrief } from './dto-brief';
+import { IBriefWithIdAndTitle } from './dto-brief';
 import { TeamCounts } from './dto-commune';
 import { IMemberBrief } from './dto-member';
 import { IMeetingInfo } from './dto-team-meeting';
@@ -11,7 +11,7 @@ export interface ITeamMeetings {
 	retrospective?: IMeetingInfo;
 }
 
-export interface ITeamBrief extends IBrief {
+export interface ITeamBrief extends IBriefWithIdAndTitle {
 	readonly type: TeamType;
 	readonly parentTeamID?: string;
 	readonly roles?: string[];
@@ -31,4 +31,6 @@ export interface ITeamDto {
 	upcomingRetro?: {
 		itemsByUserAndType?: { [user: string]: { [itemType: string]: number } };
 	};
+
+	noContactRoles?: string[]; // lists roles that have no contacts. For example families that have no plumber contacts.
 }

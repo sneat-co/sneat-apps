@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatAuthServicesModule } from '@sneat/auth';
 import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
+import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { memberRoutes } from '@sneat/extensions/memberus';
 import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 
@@ -19,6 +20,10 @@ const routes: Routes = [
 		loadChildren: () => import('./team-page/team-page.module').then(m => m.TeamPageModule),
 	},
 	...memberRoutes, // E.g. "./new-member"
+	{
+		path: 'member/:memberId',
+		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
+	},
 	{
 		path: 'member/:memberId',
 		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
@@ -45,12 +50,13 @@ const routes: Routes = [
 		SneatAuthServicesModule,
 		TeamMenuComponentModule,
 		AssetusRoutingModule,
+		ContactusRoutingModule,
 	],
 	exports: [RouterModule],
 	declarations: [],
 	providers: [
 		TeamComponentBaseParams,
-	]
+	],
 })
 export class TeamSpaceRoutingModule {
 }

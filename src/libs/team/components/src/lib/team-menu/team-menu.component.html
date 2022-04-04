@@ -36,6 +36,7 @@
 	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/contacts"
 						routerDirection="root"
 						[disabled]="!team"
+						[class.currentPage]="isCurrentPage('contacts')"
 						(click)="closeMenu()"
 	>
 		<ion-icon name="people-outline" slot="start"></ion-icon>

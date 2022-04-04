@@ -1,3 +1,4 @@
+export * from './lib/animations';
 export * from './lib/core.module';
 export * from './lib/core-models';
 export * from './lib/nav';
@@ -9,3 +10,4 @@ export * from './lib/exclude-undefined';
 export * from './lib/logging';
 export * from './lib/core-providers';
 export * from './lib/utils';
+export * from './lib/eq';

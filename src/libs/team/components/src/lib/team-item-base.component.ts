@@ -14,6 +14,6 @@ export abstract class TeamItemBaseComponent extends TeamBaseComponent {
 
 	override get defaultBackUrl(): string {
 		const url = super.defaultBackUrl;
-		return this.team?.id && url.endsWith(this.team?.id) ? url + '/' + this.parentPagePath : url;
+		return this.parentPagePath && this.team?.id && url.endsWith(this.team?.id) ? url + '/' + this.parentPagePath : url;
 	}
 }

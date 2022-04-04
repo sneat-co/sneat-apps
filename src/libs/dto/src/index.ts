@@ -20,6 +20,5 @@ export * from './lib/dto-team-metric';
 export * from './lib/dto-term';
 export * from './lib/dto-user';
 export * from './lib/types';
-export { IContactBrief } from './lib/dto-contact-brief';
 export { IContact2Asset } from './lib/dto-contact2';
 export { IContact2Member } from './lib/dto-contact2';

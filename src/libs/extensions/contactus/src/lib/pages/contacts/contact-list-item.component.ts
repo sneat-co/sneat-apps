@@ -1,42 +1,43 @@
-import {Component, Input} from '@angular/core';
-import {IRecord, RxRecordKey} from 'rxstore';
-import {IContactDto} from '../../../../models/dto/dto-contact';
-import {ContactType} from '../../../../models/types';
-import {IContactService} from '../../../../services/interfaces';
+import { Component, Inject, Input } from '@angular/core';
+import { ContactType } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IContactContext } from '@sneat/team/models';
+import { ContactService } from '../../contact.service';
 
 @Component({
-	selector: 'contactus-contact-item',
+	selector: 'sneat-contact-item',
 	templateUrl: './contact-list-item.component.html',
 	styleUrls: ['./contact-list-item.component.scss'],
 })
 export class ContactListItemComponent {
 
-	@Input() excludeRole: ContactType;
-	@Input() contact: IContactDto;
-	@Input() goContact: (c: IContactDto) => void;
-	@Input() goMember: (memberId: string, event: Event) => void;
+	@Input() excludeRole?: ContactType;
+	@Input() contact?: IContactContext;
 
 	constructor(
-		private readonly contactService: IContactService,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly contactService: ContactService,
 	) {
 	}
 
+	@Input() goContact: (c?: IContactContext) => void = () => void 0;
+
+	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
+
 	removeContact(): void {
 		console.log('ContactListItemComponent.removeContact()');
-		if (this.contact.id) {
-			this.contactService.deleteContact(this.contact.id)
-				.subscribe(
-					() => {
+		if (this.contact?.id) {
+			this.contactService.deleteContact(this.contact)
+				.subscribe({
+					next: () => {
 						console.log('ContactListItemComponent.removeContact() => done');
 					},
-					err => {
-						alert(alert);
-					});
+					error: this.errorLogger.logError,
+				});
 		}
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
-	trackById(i: number, record: IRecord): RxRecordKey | undefined {
+	id(i: number, record: { id: string }): string {
 		return record.id;
 	}
 }

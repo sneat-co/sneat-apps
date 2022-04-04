@@ -1,4 +1,4 @@
-<ion-item-group *ngFor="let contactGroup of contactGroups; trackBy: trackById" @listItem>
+<ion-item-group *ngFor="let contactGroup of contactGroups; trackBy: id" @listItem>
     <ion-item-divider color="light">
         <ion-label>{{contactGroup.title}}</ion-label>
         <ion-buttons slot="end">
@@ -7,10 +7,10 @@
             </ion-button>
         </ion-buttons>
     </ion-item-divider>
-    <ng-container *ngFor="let role of contactGroup.roles; trackBy: trackById">
+    <ng-container *ngFor="let role of contactGroup.roles; trackBy: id">
         <ng-container *ngIf="role.contacts && role.contacts">
-            <ion-item-sliding *ngFor="let contact of role.contacts; trackBy: trackById" @listItem>
-                <contactus-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></contactus-contact-item>
+            <ion-item-sliding *ngFor="let contact of role.contacts; trackBy: id" @listItem>
+                <sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contact-item>
             </ion-item-sliding>
         </ng-container>
         <ion-item button class="with-buttons" *ngIf="!role.contacts || !role.contacts.length">
@@ -30,7 +30,7 @@
     <ion-item-divider color="light">
         <ion-label>Other</ion-label>
     </ion-item-divider>
-    <ion-item-sliding *ngFor="let contact of contacts; trackBy: trackById" @listItem>
-        <contactus-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></contactus-contact-item>
+    <ion-item-sliding *ngFor="let contact of contacts; trackBy: id" @listItem>
+        <sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contact-item>
     </ion-item-sliding>
 </ion-item-group>

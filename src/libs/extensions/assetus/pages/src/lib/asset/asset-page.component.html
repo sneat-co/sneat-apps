@@ -36,66 +36,13 @@
 
 
 	<ion-card>
-		<ion-item-group>
-			<ion-item-divider color="light">
-				<ion-grid class="grid-layout">
-					<ion-row>
-						<ion-col size="3" style="padding-top: 1em;">
-							<ion-text color="medium" style="font-weight: bold">Costs:</ion-text>
-						</ion-col>
-						<ion-col size="9" style="padding: 0; margin: 0">
-							<ion-segment [value]="scope" (ionChange)="scopeChanged($event)">
-								<ion-segment-button value="month">
-									<ion-label>Monthly</ion-label>
-								</ion-segment-button>
-								<ion-segment-button value="year">
-									<ion-label>Yearly</ion-label>
-								</ion-segment-button>
-							</ion-segment>
-						</ion-col>
-					</ion-row>
-				</ion-grid>
-			</ion-item-divider>
-			<ion-item class="with-buttons">
-				<ion-label color="danger">Expenses</ion-label>
-				<!--			<ion-badge color="light">${{asset?.dto?.totals.expenses.per(scope)}}</ion-badge>-->
-				<ion-buttons>
-					<ion-button color="medium">
-						<ion-icon name="add"></ion-icon>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			<ion-item class="with-buttons">
-				<ion-label color="success">Income</ion-label>
-				<!--			<ion-badge color="light">${{asset?.dto?.totals.incomes.per(scope)}}</ion-badge>-->
-				<ion-buttons>
-					<ion-button color="medium">
-						<ion-icon name="add"></ion-icon>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			<!--		<ion-item class="with-buttons" *ngIf="asset?.dto?.totals.count">-->
-			<!--			<ion-label><b>Total</b></ion-label>-->
-			<!--			<ion-badge-->
-			<!--				[color]="asset?.dto?.totals?.isPositive(scope) ? 'success' : asset?.dto?.totals.isNegative(scope) ? 'danger' : 'light'">-->
-			<!--				${{asset?.dto?.totals?.per(scope)}}</ion-badge>-->
-			<!--			<ion-buttons>-->
-			<!--				<ion-button color="medium">-->
-			<!--					<ion-icon name="stats"></ion-icon>-->
-			<!--				</ion-button>-->
-			<!--			</ion-buttons>-->
-			<!--		</ion-item>-->
-		</ion-item-group>
-	</ion-card>
-
-	<ion-card>
 		<ion-item-divider color="light">
 			<ion-segment [(ngModel)]="segment">
 				<ion-segment-button value="contacts">Contacts</ion-segment-button>
 				<ion-segment-button value="services">
 					<ion-label [color]="segment === 'services' ? '' : 'danger'">Services</ion-label>
 				</ion-segment-button>
-				<ion-segment-button value="taxes">Taxes</ion-segment-button>
+				<ion-segment-button value="costs">Costs</ion-segment-button>
 			</ion-segment>
 		</ion-item-divider>
 
@@ -128,9 +75,6 @@
 			<ion-card-content *ngSwitchCase="'services'">
 				<p>Services to be implemented</p>
 			</ion-card-content>
-			<ion-card-content *ngSwitchCase="'taxes'">
-				<p>Taxes to be implemented</p>
-			</ion-card-content>
 			<!--		<app-asset-liabilities *ngSwitchCase="'services'" liabilityType="service" [asset]="asset.dto"-->
 			<!--									  (onAddService)="addService($event.type)"-->
 			<!--									  addTitle="Add service"></app-asset-liabilities>-->
@@ -138,7 +82,80 @@
 			<!--									  liabilityType="tax" [asset]="asset.dto" (onAddService)="addService($event.type)"-->
 			<!--									  addTitle="Add tax"></app-asset-liabilities>-->
 		</ng-container>
+
 	</ion-card>
 
+	<ion-card>
+		<ion-item color="light">
+			<ion-label>Costs</ion-label>
+			<ion-select [(ngModel)]="scope" interface="popover">
+				<ion-select-option value="year">Yearly</ion-select-option>
+				<ion-select-option value="month">Monthly</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item-group>
+<!--			<ion-segment [value]="scope" (ionChange)="scopeChanged($event)">-->
+<!--				<ion-segment-button value="year">-->
+<!--					<ion-label>Yearly</ion-label>-->
+<!--				</ion-segment-button>-->
+<!--				<ion-segment-button value="month">-->
+<!--					<ion-label>Monthly</ion-label>-->
+<!--				</ion-segment-button>-->
+<!--			</ion-segment>-->
+			<ion-item class="with-buttons">
+				<ion-label color="danger">Expenses</ion-label>
+				<!--			<ion-badge color="light">${{asset?.dto?.totals.expenses.per(scope)}}</ion-badge>-->
+				<ion-buttons>
+					<ion-button color="medium">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			<ion-item class="with-buttons">
+				<ion-label color="success">Income</ion-label>
+				<!--			<ion-badge color="light">${{asset?.dto?.totals.incomes.per(scope)}}</ion-badge>-->
+				<ion-buttons>
+					<ion-button color="medium">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			<!--		<ion-item class="with-buttons" *ngIf="asset?.dto?.totals.count">-->
+			<!--			<ion-label><b>Total</b></ion-label>-->
+			<!--			<ion-badge-->
+			<!--				[color]="asset?.dto?.totals?.isPositive(scope) ? 'success' : asset?.dto?.totals.isNegative(scope) ? 'danger' : 'light'">-->
+			<!--				${{asset?.dto?.totals?.per(scope)}}</ion-badge>-->
+			<!--			<ion-buttons>-->
+			<!--				<ion-button color="medium">-->
+			<!--					<ion-icon name="stats"></ion-icon>-->
+			<!--				</ion-button>-->
+			<!--			</ion-buttons>-->
+			<!--		</ion-item>-->
+		</ion-item-group>
 
+	</ion-card>
+
+	<ion-card *ngIf="asset?.brief?.type === 'vehicle'">
+		<ion-item color="light">
+			<ion-label>Special offers</ion-label>
+		</ion-item>
+		<ion-item>
+			<ion-label class="ion-text-wrap">
+				<p style="margin-bottom: 1em">
+					There is 4 companies ready to provide a quote
+					for insurance on your "{{asset?.brief?.title}}"
+					in Limerick, Ireland
+					<b style="white-space: nowrap">starting from just $342/year</b>.
+				</p>
+				<p>As you already have a lot of fields filled with data it would take only a minute to get the best quote.</p>
+			</ion-label>
+			<ion-button slot="end" color="danger">Get quote</ion-button>
+		</ion-item>
+		<ion-item>
+			<ion-label>
+				<p>You car is less then 7 years old and is eligible for extended warranty.</p>
+			</ion-label>
+			<ion-button slot="end" color="primary">Get quote</ion-button>
+		</ion-item>
+	</ion-card>
 </ion-content>

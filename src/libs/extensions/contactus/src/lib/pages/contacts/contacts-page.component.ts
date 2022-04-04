@@ -1,43 +1,40 @@
 //tslint:disable:no-unsafe-any
-import {Component} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {IRecord, RxRecordKey} from 'rxstore';
-import {CommuneBasePageParams} from '../../../../services/params';
-import {listItemAnimations} from '../../../../animations/list-animations';
-import {CommuneBasePage} from '../../../../pages/commune-base-page';
-import {IContactDto} from '../../../../models/dto/dto-contact';
-import {IMemberGroupDto} from '../../../../models/dto/dto-member';
-import {ContactType} from '../../../../models/types';
-import {IContactService} from '../../../../services/interfaces';
-import {CommuneTopPage} from '../../../../pages/constants';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { listItemAnimations } from '@sneat/core';
+import { ContactType, IMemberGroupDto } from '@sneat/dto';
+import { TeamComponentBaseParams, TeamItemBaseComponent } from '@sneat/team/components';
+import { IContactContext } from '@sneat/team/models';
+import { Subscription, takeUntil } from 'rxjs';
+import { ContactService } from '../../contact.service';
 
 @Component({
-	selector: 'contactus-contacts-page',
+	selector: 'sneat-contacts-page',
 	templateUrl: './contacts-page.component.html',
-	providers: [CommuneBasePageParams],
+	providers: [TeamComponentBaseParams],
 	animations: [listItemAnimations],
 })
-export class ContactsPageComponent extends CommuneBasePage {
+export class ContactsPageComponent extends TeamItemBaseComponent {
 
-	private contactsSubscription: Subscription;
-
-	public allContacts: IContactDto[];
-	public contacts: IContactDto[];
-	public groups: IMemberGroupDto[];
+	public allContacts: IContactContext[];
+	public contacts?: IContactContext[];
+	public groups: IMemberGroupDto[] = [];
 	public segment: 'list' | 'groups' = 'list';
-	public filter: string;
+	public filter = '';
 	public role?: ContactType;
+	private contactsSubscription?: Subscription;
 
 	constructor(
-		params: CommuneBasePageParams,
-		private readonly contactsService: IContactService,
+		route: ActivatedRoute,
+		params: TeamComponentBaseParams,
+		private readonly contactsService: ContactService,
 	) {
-		super(CommuneTopPage.home, params);
+		super('ContactsPageComponent', route, params, '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
 		if (role) {
 			this.role = role[1] as ContactType;
 		}
-		this.allContacts = window.history.state.contacts as IContactDto[];
+		this.allContacts = window.history.state.contacts as IContactContext[];
 
 		if (this.allContacts) {
 			this.applyFilter('', this.role);
@@ -66,7 +63,7 @@ export class ContactsPageComponent extends CommuneBasePage {
 
 	get canAdd(): boolean {
 		// tslint:disable-next-line:no-this-assignment
-		const {role} = this;
+		const { role } = this;
 		return role !== 'tenant' && role !== 'landlord';
 	}
 
@@ -76,71 +73,90 @@ export class ContactsPageComponent extends CommuneBasePage {
 		this.contacts = !filter && !role
 			? this.allContacts
 			: this.allContacts.filter(c =>
-				(!filter || c.title && c.title.toLowerCase()
+				(!filter || c.brief?.title && c.brief?.title.toLowerCase()
 					.indexOf(filter) >= 0)
-				&& (!role || c.roles && c.roles.includes(role))
+				&& (!role || c.dto?.roles && c?.dto.roles.includes(role)),
 			);
-	}
-
-	protected onCommuneChanged(source?: string): void {
-		super.onCommuneChanged(source);
-		if (this.commune
-			&& this.commune.dto && this.commune.dto.type === 'family'
-			&& (!this.commune.dto.numberOf || !this.commune.dto.numberOf.contacts)) {
-			this.segment = 'groups';
-		}
-		this.loadContacts('onCommuneChanged');
 	}
 
 	loadContacts(caller: string): void {
 		console.log(`CommuneContactsPage.loadContacts(${caller})`);
+		if (!this.team) {
+			return;
+		}
 		if (this.contactsSubscription) {
 			this.contactsSubscription.unsubscribe();
 		}
-		if (this.communeRealId) {
-			this.contactsSubscription = this.contactsService.watchByCommuneId(this.communeRealId)
-				.subscribe(contacts => {
-				this.allContacts = contacts;
-				this.applyFilter(this.filter, this.role);
+		this.contactsSubscription = this.contactsService.watchByTeam(this.team)
+			.pipe(
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
+				next: contacts => {
+					this.allContacts = contacts;
+					this.applyFilter(this.filter, this.role);
+				},
+				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
 			});
-		}
-		this.subscriptions.push(this.contactsSubscription);
 	}
 
-	goContact = (contact: IContactDto): void => {
-		this.navCtrl.navigateForward(['contact'], {
-			queryParams: {id: contact.id},
-			state: {
-				contact,
-				communeDto: this.commune && this.commune.dto,
-			}
-		})
-			.catch(this.errorLogger.logError);
-		// tslint:disable-next-line:semicolon
+	goContact = (contact?: IContactContext): void => {
+		if (!contact) {
+			this.errorLogger.logError('no contact');
+			return;
+		}
+		if (!this.team) {
+			this.errorLogger.logError('no team');
+			return;
+		}
+		this.teamParams.teamNavService.navigateForwardToTeamPage(this.team, `contact/${contact.id}`, {
+			state: { contact },
+		}).catch(this.errorLogger.logErrorHandler('failed to navigate to contact page'));
 	};
 
-	goNewContact = () => {
-		this.navCtrl.navigateForward(['new-contact'], {queryParams: {commune: this.communeUrlId}})
-			.catch(this.errorLogger.logError);
-		// tslint:disable-next-line:semicolon
+	goNewContact = (): void => {
+		if (!this.team) {
+			return;
+		}
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(this.team, 'new-contact')
+			.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
 	};
 
 	goMember(id: string, event: Event): boolean {
 		event.stopPropagation();
-		this.navCtrl.navigateForward(['member'], {
-			queryParams: {id},
-			state: {communeDto: this.commune && this.commune.dto}
-		})
-			.catch(this.errorLogger.logError);
+		if (!this.team) {
+			return false;
+		}
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(this.team, `member/${id}`, {
+				state: {
+					member: { id },
+				},
+			})
+			.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
 		return false;
 	}
 
 	goGroup(group: IMemberGroupDto): void {
-		this.navigateForward('group', {group: group.id}, {groupDto: group}, {excludeCommuneId: true});
+		if (!this.team) {
+			return;
+		}
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(this.team, `group/${group.id}`, {
+				state: {
+					group: group,
+				},
+			})
+			.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
-	trackById(i: number, record: IRecord): RxRecordKey | undefined {
+	id(i: number, record: { id: string }): string {
 		return record.id;
 	}
+
+	override onTeamIdChanged(): void {
+		this.loadContacts('onTeamIdChanged');
+	}
+
 }

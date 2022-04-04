@@ -1,39 +1,40 @@
 <ion-item (click)="goContact(contact)" tappable class="with-buttons">
-    <ion-label>
-        <h2>{{contact.title}}</h2>
-        <ng-container *ngIf="contact.members && contact.members.length">
-            <p *ngFor="let member of contact.members; trackBy: trackById">
-                {{member.relation}} of <a [href]="member.id"
-                                          (click)="goMember(member.id, $event)">{{member.title}}</a>
-            </p>
-        </ng-container>
-    </ion-label>
-    <ng-container *ngIf="contact.roles && contact.roles.length">
-        <ng-container *ngFor="let role of contact.roles">
-            <ion-badge *ngIf="!excludeRole || role !== excludeRole" color="light" class="light">{{role}}</ion-badge>
-        </ng-container>
-    </ng-container>
-    <ion-buttons slot="end">
-        <ion-button *ngIf="contact.email" href="mailto:{{contact.email}}"
-                    color="primary"
-                    [title]="contact.email"
-                    (click)="$event.stopPropagation()"
-        >
-            @
-        </ion-button>
-        <ion-button *ngIf="contact.phone" href="tel:{{contact.phone}}"
-                    color="primary"
-                    [title]="contact.phone"
-                    (click)="$event.stopPropagation()"
-        >
-            <ion-icon name="call"></ion-icon>
-        </ion-button>
-        <ion-button *ngIf="!contact.email" color="light">@</ion-button>
-        <ion-button *ngIf="!contact.phone" color="light">
-            <ion-icon name="call"></ion-icon>
-        </ion-button>
-    </ion-buttons>
+	<ion-label>
+		<h2>{{contact?.brief?.title}}</h2>
+		<ng-container *ngIf="contact?.dto?.members && contact?.dto?.members?.length">
+			<p *ngFor="let member of contact?.dto?.members; trackBy: id">
+				{{member.relation}} of <a [href]="member.id"
+																	(click)="goMember(member.id, $event)">{{member.title}}</a>
+			</p>
+		</ng-container>
+	</ion-label>
+
+	<ng-container *ngIf="contact?.dto?.roles?.length">
+		<ng-container *ngFor="let role of contact?.dto?.roles">
+			<ion-badge *ngIf="!excludeRole || role !== excludeRole" color="light" class="light">{{role}}</ion-badge>
+		</ng-container>
+	</ng-container>
+	<ion-buttons slot="end">
+		<ion-button *ngIf="contact?.dto?.email" href="mailto:{{contact?.dto?.email}}"
+								color="primary"
+								[title]="contact?.dto?.email"
+								(click)="$event.stopPropagation()"
+		>@
+		</ion-button>
+		<ion-button *ngIf="contact?.dto?.phone" href="tel:{{contact?.dto?.phone}}"
+								color="primary"
+								[title]="contact?.dto?.phone"
+								(click)="$event.stopPropagation()"
+		>
+			<ion-icon name="call"></ion-icon>
+		</ion-button>
+		<ion-button *ngIf="!contact?.dto?.email" color="light">@</ion-button>
+		<ion-button *ngIf="!contact?.dto?.phone" color="light">
+			<ion-icon name="call"></ion-icon>
+		</ion-button>
+	</ion-buttons>
+
 </ion-item>
 <ion-item-options slot="end">
-    <ion-item-option color="danger" (click)="removeContact()">Remove</ion-item-option>
+	<ion-item-option color="danger" (click)="removeContact()">Remove</ion-item-option>
 </ion-item-options>

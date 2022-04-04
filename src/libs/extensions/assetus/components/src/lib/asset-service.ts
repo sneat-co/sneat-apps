@@ -2,10 +2,10 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IAssetDto } from '@sneat/dto';
+import { IAssetBrief, IAssetDto, TeamCounter } from '@sneat/dto';
 import { IAssetContext } from '@sneat/team/models';
-import { TeamService } from '@sneat/team/services';
-import { map, Observable, tap, throwError } from 'rxjs';
+import { TeamItemBaseService } from '@sneat/team/services';
+import { map, Observable, throwError } from 'rxjs';
 import { ICreateAssetRequest } from './asset-service.dto';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class AssetService {
 	constructor(
 		private readonly db: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
-		private readonly teamService: TeamService,
+		private readonly teamItemService: TeamItemBaseService,
 	) {
 	}
 
@@ -30,39 +30,8 @@ export class AssetService {
 
 	public createAsset(request: ICreateAssetRequest): Observable<IAssetContext> {
 		console.log(`AssetService.createAsset()`, request);
-		return this.sneatApiService
-			.post<IAssetContext>('assets/create_asset', request)
-			.pipe(
-				tap(asset => {
-					this.teamService.getTeam(request.team).subscribe({
-						next: team => {
-							if (team.dto) {
-								if (!team.dto?.numberOf) {
-									team = { ...team, dto: { ...team.dto || {}, numberOf: {} } };
-								}
-								if (team?.dto?.numberOf) {
-									team.dto.numberOf.assets = (team.dto?.numberOf?.assets || 0) + 1;
-								}
-								this.teamService.onTeamUpdated(team);
-							}
-						},
-					});
-				}),
-				// tap(() => {
-				// 	this.teamService.getTeam(request.team).subscribe({
-				// 		next: team => {
-				// 			if (team?.dto?.numberOf?.assets) {
-				// 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-				// 				// @ts-ignore
-				// 				team?.dto?.numberOf?.assets += 1;
-				// 			} else {
-				// 				team = { ...team, dto: team.dto ? { ...team?.dto, numberOf: { assets: 1 } } : team.dto };
-				// 				this.teamService.onTeamUpdated(team);
-				// 			}
-				// 		},
-				// 	});
-				// }),
-			);
+		return this.teamItemService.createTeamItem<IAssetBrief, IAssetDto>(
+			'assets/create_asset', TeamCounter.assets, request);
 	}
 
 	watchAssetByID(id: string): Observable<IAssetContext> {
@@ -76,7 +45,7 @@ export class AssetService {
 						return { id, dto: null };
 					}
 					const dto: IAssetDto = changes.payload.data();
-					const asset: IAssetContext = { id, dto, brief: {id, ...dto} };
+					const asset: IAssetContext = { id, dto, brief: { id, ...dto } };
 					return asset;
 				}),
 			);

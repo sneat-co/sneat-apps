@@ -19,7 +19,7 @@ export class AssetPageComponent extends AssetBasePage {
 
 	public segment: 'contacts' | 'taxes' | 'services' = 'services';
 	public period = 'this-month';
-	public scope: 'month' | 'year' = 'month';
+	public scope: 'month' | 'year' = 'year';
 
 	public assetServices: LiabilityServiceBrief[] = [
 		{ type: 'electricity', title: 'Electricity' },

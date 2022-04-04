@@ -24,6 +24,7 @@ const routes: Routes = [
 		VehicleCardComponentModule,
 		// SharedComponentsModule,
 		RouterModule.forChild(routes),
+		IonicModule,
 	],
 	declarations: [
 		AssetPageComponent,

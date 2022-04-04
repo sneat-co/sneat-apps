@@ -1,17 +1,17 @@
 <ion-header>
-	<ion-toolbar color="primary" class="with-back-button with-end-buttons">
+	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<sneat-commune-page-title
-			[commune]="commune"
+		<sneat-team-page-title
+			[team]="team"
 			[generalTitle]="pageTitle"
 			[icon]="titleIcon"
 			[titlesByTeamType]="{
 				personal: 'Personal contacts',
 				family: 'Family contacts'
 			}">
-		</sneat-commune-page-title>
+		</sneat-team-page-title>
 		<ion-buttons slot="end">
 			<ion-menu-button menu="mainMenu"></ion-menu-button>
 		</ion-buttons>
@@ -33,9 +33,9 @@
 	</div>
 
 	<ion-list *ngIf="segment === 'list'">
-		<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: trackById">
-			<contactus-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
-											[excludeRole]="role"></contactus-contact-item>
+		<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: id">
+			<sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
+													[excludeRole]="role"></sneat-contact-item>
 		</ion-item-sliding>
 		<ion-item button (click)="goNewContact()" *ngIf="canAdd">
 			<ion-icon name="add" color="primary"></ion-icon>
@@ -44,13 +44,16 @@
 	</ion-list>
 
 	<ion-list *ngIf="segment === 'groups'">
-		<ng-container *ngIf="commune && commune.type === 'family'">
-			<contactus-contacts-family [contacts]="allContacts" [goContact]="goContact" [goMember]="goMember"
-												[commune]="commune" [filter]="filter"></contactus-contacts-family>
+		<ng-container *ngIf="team?.type === 'family'">
+			<sneat-contacts-family [contacts]="allContacts"
+														 [team]="team"
+														 [filter]="filter"
+														 [goContact]="goContact"
+														 [goMember]="goMember"
+			></sneat-contacts-family>
 		</ng-container>
-
 		<ng-container *ngIf="groups">
-			<ion-item *ngFor="let group of groups; trackBy: trackById" (click)="goGroup(group)" tappable>
+			<ion-item *ngFor="let group of groups; trackBy: id" (click)="goGroup(group)" tappable>
 				<ion-label>
 					{{group.title}}
 				</ion-label>
@@ -70,10 +73,10 @@
 		<ion-label *ngIf="!contacts">Loading...</ion-label>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="canAdd"
-							color="primary"
-							size="small"
-							(click)="goNewContact()"
-							[title]="'Add contact'">
+									color="primary"
+									size="small"
+									(click)="goNewContact()"
+									[title]="'Add contact'">
 				<ion-icon name="add"></ion-icon>
 				Add
 			</ion-button>
