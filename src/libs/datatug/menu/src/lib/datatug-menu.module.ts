@@ -1,23 +1,23 @@
-import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DatatugMenuComponent } from './datatug-menu.component';
-import { DatatugServicesProjectModule } from '@sneat/datatug/services/project';
-import { DatatugServicesStoreModule } from '@sneat/datatug/services/repo';
-import { WormholeModule } from '@sneat/wormhole';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { SneatAnalyticsModule } from '@sneat/analytics';
+import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { DatatugComponentsProjectModule } from '@sneat/datatug/components/project';
 import { DatatugCoreModule } from '@sneat/datatug/core';
-import { SneatAnalyticsModule } from '@sneat/analytics';
+import { NewProjectFormModule } from '@sneat/datatug/project';
 import { DatatugServicesBaseModule } from '@sneat/datatug/services/base';
 import { DatatugServicesNavModule } from '@sneat/datatug/services/nav';
+import { DatatugServicesProjectModule } from '@sneat/datatug/services/project';
+import { DatatugServicesStoreModule } from '@sneat/datatug/services/repo';
 import { DatatugServicesUnsortedModule } from '@sneat/datatug/services/unsorted';
-import { RouterModule } from '@angular/router';
-import { MenuProjectSelectorComponent } from './menu-project-selector.component';
+import { WormholeModule } from '@sneat/wormhole';
+import { DatatugMenuComponent } from './datatug-menu.component';
 import { MenuEnvSelectorComponent } from './menu-env-selector.component';
+import { MenuProjectSelectorComponent } from './menu-project-selector.component';
 import { MenuStoreSelectorComponent } from './menu-store-selector.component';
-import { NewProjectFormModule } from '@sneat/datatug/project';
-import { SneatAuthServicesModule } from '@sneat/auth';
 
 @NgModule({
 	imports: [
@@ -31,6 +31,7 @@ import { SneatAuthServicesModule } from '@sneat/auth';
 		WormholeModule,
 		SneatAnalyticsModule,
 		SneatAuthServicesModule,
+		AuthMenuItemModule,
 		//
 		DatatugCoreModule,
 		DatatugServicesStoreModule,

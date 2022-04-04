@@ -2434,48 +2434,6 @@
 			},
 			"tags": []
 		},
-		"extensions-assetus": {
-			"projectType": "library",
-			"root": "libs/extensions/assetus",
-			"sourceRoot": "libs/extensions/assetus/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/extensions/assetus"],
-					"options": {
-						"project": "libs/extensions/assetus/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/extensions/assetus/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/extensions/assetus/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/extensions/assetus"],
-					"options": {
-						"jestConfig": "libs/extensions/assetus/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/extensions/assetus/src/**/*.ts",
-							"libs/extensions/assetus/src/**/*.html"
-						]
-					}
-				}
-			},
-			"tags": []
-		},
 		"extensions-assetus-components": {
 			"projectType": "library",
 			"root": "libs/extensions/assetus/components",
