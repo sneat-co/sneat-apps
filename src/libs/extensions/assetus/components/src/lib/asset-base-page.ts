@@ -1,17 +1,18 @@
 import { ActivatedRoute } from '@angular/router';
-import { TeamBaseComponent } from '@sneat/team/components';
+import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 
-export abstract class AssetBasePage extends TeamBaseComponent {
+export abstract class AssetBasePage extends TeamItemBaseComponent {
 	private assetContext?: IAssetContext;
 
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,
 		public readonly params: AssetComponentBaseParams,
+		parentPagePath = 'assets',
 	) {
-		super(className, route, params.teamParams);
+		super(className, route, params.teamParams, parentPagePath);
 		this.assetContext = history.state.asset as IAssetContext | undefined;
 		this.route?.paramMap.subscribe({
 			next: params => {

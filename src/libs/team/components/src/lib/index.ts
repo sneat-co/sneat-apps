@@ -8,3 +8,4 @@ export * from './team-page-title/team-page-title.component';
 export * from './team-base.component';
 export * from './team-core-components.module';
 export * from './team-component-base-params';
+export * from './team-item-base.component';
