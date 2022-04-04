@@ -75,7 +75,8 @@ export class AssetService {
 					if (!changes.payload.exists) {
 						return { id, dto: null };
 					}
-					const asset: IAssetContext = { id, dto: changes.payload.data() };
+					const dto: IAssetDto = changes.payload.data();
+					const asset: IAssetContext = { id, dto, brief: {id, ...dto} };
 					return asset;
 				}),
 			);

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { ModuleAssetRealEstate } from '@sneat/extensions/assetus/components';
+import { ModuleAssetRealEstate, VehicleCardComponentModule } from '@sneat/extensions/assetus/components';
 
 import { AssetPageComponent } from './asset-page.component';
 
@@ -21,6 +21,7 @@ const routes: Routes = [
 		FormsModule,
 		IonicModule,
 		ModuleAssetRealEstate,
+		VehicleCardComponentModule,
 		// SharedComponentsModule,
 		RouterModule.forChild(routes),
 	],

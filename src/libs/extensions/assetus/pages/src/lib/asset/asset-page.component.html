@@ -28,22 +28,12 @@
 		</ion-item>
 	</ion-card>
 	<!--	<app-real-estate-location [asset]="asset"-->
-	<!--									  *ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
+	<!--														*ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
 
-	<!--	<ng-container *ngIf="vehicle && assetTypeId === 'vehicles'">-->
-	<!--		<ion-item-group>-->
-	<!--			<app-make-model-engine [mode]="mode"-->
-	<!--										  [regNumber]="vehicle.number"-->
-	<!--										  [make]="vehicle.make"-->
-	<!--										  [model]="vehicle.model"-->
-	<!--										  [engine]="vehicle.engine"-->
-	<!--										  [yearBuild]="vehicle.yearBuild"-->
-	<!--			></app-make-model-engine>-->
-	<!--		</ion-item-group>-->
+	<sneat-vehicle-card *ngIf="asset?.brief?.type === 'vehicle'" [asset]="asset">></sneat-vehicle-card>
 
 	<!--		<app-asset-dates *ngIf="asset" [asset]="asset.dto"></app-asset-dates>-->
 
-	<!--	</ng-container>-->
 
 	<ion-card>
 		<ion-item-group>
