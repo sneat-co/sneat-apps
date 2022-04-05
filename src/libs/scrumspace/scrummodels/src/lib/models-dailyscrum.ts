@@ -1,8 +1,8 @@
-import { MemberRole } from '@sneat/dto';
-import { IBy } from '@sneat/team/models';
-import { Modified } from '@sneat/data';
 import { IAvatar } from '@sneat/auth-models';
+import { Modified } from '@sneat/data';
+import { MemberRole } from '@sneat/dto';
 import { IMeeting } from '@sneat/meeting';
+import { IBy, ITeamItemContext } from '@sneat/team/models';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';
 
@@ -20,6 +20,8 @@ export interface IScrumDto extends IMeeting {
 	readonly questionsCount?: number;
 	statuses: IStatus[];
 }
+
+export type IScrumContext = ITeamItemContext<IScrumBrief, IScrumDto>;
 
 export interface IStatus {
 	member: IScrumStatusMember;
