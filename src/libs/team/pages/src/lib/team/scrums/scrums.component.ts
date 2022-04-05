@@ -7,7 +7,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
-import { IScrum } from '@sneat/scrumspace/scrummodels';
+import { IScrumDto } from '@sneat/scrumspace/scrummodels';
 import { TeamNavService } from '@sneat/team/services';
 
 @Component({
@@ -18,7 +18,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	@Input() public team?: IRecord<ITeamDto>;
 
 	public prevScrumId?: string;
-	public todayScrum?: IScrum;
+	public todayScrum?: IScrumDto;
 
 	protected readonly destroyed = new Subject<boolean>();
 

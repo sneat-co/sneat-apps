@@ -6,7 +6,11 @@ import { IMeeting } from '@sneat/meeting';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';
 
-export interface IScrum extends IMeeting {
+export interface IScrumBrief {
+	id: string;
+}
+
+export interface IScrumDto extends IMeeting {
 	// Key as: YYYY-MM-DD
 	scrumIds?: {
 		prev?: string; // 'YYYY-MM-DD'

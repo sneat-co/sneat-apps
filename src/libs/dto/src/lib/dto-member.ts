@@ -1,7 +1,7 @@
 import { IAvatar } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { RxRecordKey } from '@sneat/rxstore';
-import { ICommuneMemberInfo } from './dto-commune';
+import { ITeamMemberInfo } from './dto-commune';
 import { IContact2Member } from './dto-contact2';
 import { IPersonRecord, ITeamRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
 import { DtoGroupTerms } from './dto-term';
@@ -69,19 +69,19 @@ export interface IMemberDto extends IMemberBase {
 	contacts?: IContact2Member[];
 }
 
-export function newCommuneMemberInfo(m: IMemberDto): ICommuneMemberInfo {
+export function newCommuneMemberInfo(m: IMemberDto): ITeamMemberInfo {
 	return excludeUndefined({
 		id: m.id as string,
 		userID: m.userID,
 		title: m.title && m.userID && m.title === m.userID ? undefined : m.title,
-		age: m.age,
+		age: m.ageGroup,
 		roles: m.roles,
 		gender: m.gender,
 		groupIds: m.groupIds,
 	});
 }
 
-export function memberDtoFromMemberInfo(memberInfo: ICommuneMemberInfo, communeId: string, title: string): IMemberDto {
+export function memberDtoFromMemberInfo(memberInfo: ITeamMemberInfo, communeId: string, title: string): IMemberDto {
 	return excludeUndefined({
 		...memberInfo,
 		communeId,

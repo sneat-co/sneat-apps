@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { IRecord } from '@sneat/data';
 import { ITeamDto, TeamService } from '@sneat/team/models';
-import { IScrum } from '@sneat/scrumspace/scrummodels';
+import { IScrumDto } from '@sneat/scrumspace/scrummodels';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { NavService } from '@sneat/datatug/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -15,7 +15,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 })
 export class ScrumsHistoryPageComponent {
 	public team: IRecord<ITeamDto>;
-	public scrums: IRecord<IScrum>[];
+	public scrums: IRecord<IScrumDto>[];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -57,7 +57,7 @@ export class ScrumsHistoryPageComponent {
 		}
 	}
 
-	goScrum(scrum: IRecord<IScrum>): void {
+	goScrum(scrum: IRecord<IScrumDto>): void {
 		this.navService.navigateToScrum(scrum.id, this.team, scrum);
 	}
 }

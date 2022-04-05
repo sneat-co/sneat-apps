@@ -10,7 +10,7 @@ export interface SlotParticipant {
 
 export interface IHappening extends ITeamRecord, ITitledRecord {
 	// type: '';
-	communeIds?: string[];
+	teamIds?: string[];
 	assetId?: string;
 	memberIds?: string[];
 	contactIds?: string[];
@@ -73,8 +73,8 @@ export interface IHappeningRegular extends IHappening, IHappeningTask {
 
 export interface IHappeningSingle extends IHappening {
 	kind: 'activity' | 'task';
-	dtStarts: number; // UTC
-	dtEnds: number;   // UTC
+	dtStarts?: number; // UTC
+	dtEnds?: number;   // UTC
 	communeIdDates?: string[]; // ISO date strings prefixed with communeId e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	prices?: IPrice[];
 }

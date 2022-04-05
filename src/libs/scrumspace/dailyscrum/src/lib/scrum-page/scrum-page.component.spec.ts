@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ScrumPage } from './scrum.page';
+import { ScrumPageComponent } from './scrum-page.component';
 import { TeamService } from '../../services/team.service';
 import { UserService } from '../../services/user-service';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -10,13 +10,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ScrumPage', () => {
-	let component: ScrumPage;
-	let fixture: ComponentFixture<ScrumPage>;
+	let component: ScrumPageComponent;
+	let fixture: ComponentFixture<ScrumPageComponent>;
 
 	beforeEach(
 		waitForAsync(() => {
 			TestBed.configureTestingModule({
-				declarations: [ScrumPage],
+				declarations: [ScrumPageComponent],
 				imports: [
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
@@ -26,7 +26,7 @@ describe('ScrumPage', () => {
 				providers: [TeamService, UserService],
 			}).compileComponents();
 
-			fixture = TestBed.createComponent(ScrumPage);
+			fixture = TestBed.createComponent(ScrumPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
 		}),

@@ -134,7 +134,7 @@ export class NewMemberPageComponent extends TeamBaseComponent implements AfterVi
 		this.creating = true;
 		let memberDto: IMemberDto = {
 			title: this.title,
-			age: this.ageGroup,
+			ageGroup: this.ageGroup,
 			gender: this.gender,
 			email: this.email.trim() ? this.email.trim() : undefined,
 			phone: this.phone.trim() ? this.phone.trim() : undefined,

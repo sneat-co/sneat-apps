@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ScrumPage } from './scrum.page';
+import { ScrumPageComponent } from './scrum-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ScrumPage,
+		component: ScrumPageComponent,
 	},
 ];
 

@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ScrumPageRoutingModule } from './scrum-page/scrum-routing.module';
 
-import { ScrumPage } from './scrum-page/scrum.page';
+import { ScrumPageComponent } from './scrum-page/scrum-page.component';
 import { ScrumCardComponent } from './components/scrum-card/scrum-card.component';
 import { ScrumTasksComponent } from './components/scrum-tasks/scrum-tasks.component';
 import { SrumQnaComponent } from './components/srum-qna/srum-qna.component';
@@ -25,7 +25,7 @@ import { TimerModule } from '@sneat/timer';
 		TimerModule,
 	],
 	declarations: [
-		ScrumPage,
+		ScrumPageComponent,
 		ScrumCardComponent,
 		ScrumTasksComponent,
 		ScrumTaskComponent,

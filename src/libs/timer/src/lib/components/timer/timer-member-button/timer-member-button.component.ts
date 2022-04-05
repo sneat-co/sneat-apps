@@ -4,7 +4,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITimerState, TimerStatusEnum } from '../../../../../../meeting/src/lib/timer/models';
 import { secondsToStr } from '@sneat/datetime';
 import { Timer } from '../../../../../../meeting/src/lib/timer/timer.service';
-import { IScrum } from '@sneat/scrumspace/scrummodels';
+import { IScrumDto } from '@sneat/scrumspace/scrummodels';
 
 @Component({
 	selector: 'sneat-timer-member-button',
@@ -13,7 +13,7 @@ import { IScrum } from '@sneat/scrumspace/scrummodels';
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	@Input() public scrumId: string;
-	@Input() public scrum?: IScrum;
+	@Input() public scrum?: IScrumDto;
 	@Input() public memberId: string;
 	@Input() public teamId: string;
 	@Output() public toggled = new EventEmitter<boolean>();

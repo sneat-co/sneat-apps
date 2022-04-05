@@ -18,7 +18,7 @@ import {
 	IAddCommentRequest,
 	IAddTaskRequest,
 	IReorderTaskRequest,
-	IScrum, IScrumStatusMember,
+	IScrumDto, IScrumStatusMember,
 	IStatus,
 	ITask,
 	IThumbUpRequest,
@@ -30,7 +30,7 @@ import firebase from 'firebase/compat/app';
 import FieldPath = firebase.firestore.FieldPath;
 
 const getOrCreateMemberStatus = (
-	scrum: IScrum,
+	scrum: IScrumDto,
 	member: IMemberBrief,
 ): IStatus => {
 	const mid = member.id;
@@ -71,7 +71,7 @@ export class ScrumService extends BaseMeetingService {
 		super('scrum', sneatApiService);
 	}
 
-	public getScrums(teamId: string, limit = 10): Observable<IRecord<IScrum>[]> {
+	public getScrums(teamId: string, limit = 10): Observable<IRecord<IScrumDto>[]> {
 		console.log('getScrums()', teamId, limit, this.userService.currentUserId);
 		const scrums = this.scrumsCollection(teamId);
 		const query = scrums.ref
@@ -88,14 +88,14 @@ export class ScrumService extends BaseMeetingService {
 					console.log('d', d);
 					return {
 						id: d.id,
-						dto: d.data() as IScrum,
+						dto: d.data() as IScrumDto,
 					};
 				});
 			}),
 		);
 	}
 
-	public watchScrum(teamId: string, scrumId: string): Observable<IScrum> {
+	public watchScrum(teamId: string, scrumId: string): Observable<IScrumDto> {
 		console.log(`watchScrum(${teamId}, ${scrumId})`);
 		const scrumDoc = this.getScrumDoc(teamId, scrumId);
 		return scrumDoc.snapshotChanges().pipe(
@@ -103,7 +103,7 @@ export class ScrumService extends BaseMeetingService {
 				console.log('scrum changes:', changes);
 			}),
 			filter((changes) => changes.type === 'value'),
-			map((changes) => changes.payload.data() as IScrum),
+			map((changes) => changes.payload.data() as IScrumDto),
 		);
 	}
 
@@ -240,15 +240,15 @@ export class ScrumService extends BaseMeetingService {
 		return this.getScrumDoc(teamId, scrumId).ref;
 	}
 
-	private scrumsCollection(teamId: string): AngularFirestoreCollection<IScrum> {
+	private scrumsCollection(teamId: string): AngularFirestoreCollection<IScrumDto> {
 		const teamDoc = this.db.collection('teams').doc<ITeamDto>(teamId);
-		return teamDoc.collection<IScrum>('scrums');
+		return teamDoc.collection<IScrumDto>('scrums');
 	}
 
 	private getScrumDoc(
 		teamId: string,
 		scrumId: string,
-	): AngularFirestoreDocument<IScrum> {
+	): AngularFirestoreDocument<IScrumDto> {
 		return this.scrumsCollection(teamId).doc(scrumId);
 	}
 
@@ -259,14 +259,14 @@ export class ScrumService extends BaseMeetingService {
 		// TODO: Invalid eslint-disable-next-line no-shadow - lambda definition should not cause shadowing.
 		// https://github.com/sneat-team/sneat-team-pwa/issues/381
 		// eslint-disable-next-line no-shadow
-		worker: (scrum: IScrum, status: IStatus) => IScrum,
-	): Observable<IScrum> {
-		let scrum: IScrum;
+		worker: (scrum: IScrumDto, status: IStatus) => IScrumDto,
+	): Observable<IScrumDto> {
+		let scrum: IScrumDto;
 		return from(
 			this.db.firestore.runTransaction((transaction) => {
 				const scrumRef = this.getScrumRef(teamId, scrumId);
 				return transaction.get(scrumRef).then((scrumDoc) => {
-					scrum = scrumDoc.data() as IScrum;
+					scrum = scrumDoc.data() as IScrumDto;
 					const status = getOrCreateMemberStatus(scrum, member);
 					scrum = worker(scrum, status);
 					return transaction.update(scrumRef, { statuses: scrum.statuses });

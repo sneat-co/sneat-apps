@@ -89,7 +89,7 @@ export interface IPersonRecord extends ITeamRecord/*, IPersonSize*/
 	readonly website?: string;
 	readonly gender?: Gender;
 	readonly dob?: string;  // Date of birth
-	readonly age?: AgeGroup;
+	readonly ageGroup?: AgeGroup;
 }
 
 export interface IVerification {

@@ -58,7 +58,7 @@ export function incrementNumberOf<NumberOf, Dto extends { numberOf?: NumberOf }>
 	};
 }
 
-export function newCommuneCounts(numberOf?: TeamCounts): TeamCounts {
+export function newTeamCounts(numberOf?: TeamCounts): TeamCounts {
 	numberOf = numberOf || {};
 	return {
 		activities: numberOf.activities || 0,
@@ -76,7 +76,7 @@ export function newCommuneCounts(numberOf?: TeamCounts): TeamCounts {
 	};
 }
 
-export interface ICommuneMemberInfo {
+export interface ITeamMemberInfo {
 	readonly id?: string;
 	readonly userID?: string;
 	readonly title?: string;
@@ -96,7 +96,7 @@ export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder, 
 	readonly membersCountByRole?: { [id: string]: number };
 	readonly noContactRoles?: string[];
 	readonly groups?: ICommuneDtoMemberGroupInfo[];
-	readonly members?: readonly ICommuneMemberInfo[];
+	readonly members?: readonly ITeamMemberInfo[];
 }
 
 export function isCommuneShouldHoldMembersInfo(type: CommuneType): boolean {
@@ -104,9 +104,9 @@ export function isCommuneShouldHoldMembersInfo(type: CommuneType): boolean {
 }
 
 export function findCommuneMemberInfo(
-	members: readonly ICommuneMemberInfo[],
+	members: readonly ITeamMemberInfo[],
 	member: { readonly id?: string; readonly userID?: string },
-): ICommuneMemberInfo | undefined {
+): ITeamMemberInfo | undefined {
 	return members && members.find(m => m && (!!m.id && m.id === member.id) || (!!m.userID && m.userID === member.userID));
 }
 

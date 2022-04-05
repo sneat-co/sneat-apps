@@ -1,6 +1,7 @@
 import { IBriefWithIdAndTitle } from './dto-brief';
 import { TeamCounts } from './dto-commune';
 import { IMemberBrief } from './dto-member';
+import { ITotalsHolder } from './dto-models';
 import { IMeetingInfo } from './dto-team-meeting';
 import { ITeamMetric } from './dto-team-metric';
 import { TeamType } from './types';
@@ -24,7 +25,7 @@ export const equalTeamBriefs = (v1?: ITeamBrief | null, v2?: ITeamBrief | null):
 	return false;
 };
 
-export interface ITeamDto {
+export interface ITeamDto extends ITotalsHolder {
 	readonly type: TeamType;
 	readonly title: string;
 	readonly userIDs: string[];

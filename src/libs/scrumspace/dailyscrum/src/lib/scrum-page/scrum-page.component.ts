@@ -1,54 +1,75 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { IMemberInfo, IRecord, IScrum, IStatus, ITimerState, TaskType } from '../../models/interfaces';
-import { TeamService } from '../../services/team.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { UserService } from '../../services/user-service';
-import { Subscription } from 'rxjs';
-import { ScrumService } from '../../services/scrum.service';
-import { NavController } from '@ionic/angular';
-import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
-import { NavService, ScrumPageTab } from '../../services/nav.service';
-import { AnalyticsService } from '../../services/analytics.service';
 import { Location } from '@angular/common';
-import { IMetric } from '../interfaces';
-import { secondsToStr } from '../../pipes/date-time-pipes';
-import { Timer, TimerFactory } from '../../services/timer.service';
-import { TeamContextService } from '../../services/team-context.service';
-import { TeamBaseComponent } from '@sneat/team/components';
-import { MemberRoleEnum } from '../../models/dto-models';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { secondsToStr } from '@sneat/datetime';
+import { ITeamMemberInfo, MemberRoleSpectator } from '@sneat/dto';
+import { getMeetingIdFromDate, getToday, ITimerState, Timer } from '@sneat/meeting';
+import { IScrumDto, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { ScrumPageTab } from '@sneat/team/services';
+import { Subscription } from 'rxjs';
 import { first, mergeMap } from 'rxjs/operators';
-import { getMeetingIdFromDate, getToday } from '../../services/meeting.service';
+import { IMetric } from '../interfaces';
 
 @Component({
 	selector: 'sneat-scrum-page',
-	templateUrl: './scrum.page.html',
-	styleUrls: ['./scrum.page.scss'],
+	templateUrl: './scrum-page.component.html',
+	styleUrls: ['./scrum-page.component.scss'],
+	providers: [TeamComponentBaseParams],
 })
-export class ScrumPage extends TeamBaseComponent
-	extends TeamBaseComponent
+export class ScrumPageComponent extends TeamBaseComponent
 	implements OnInit, OnDestroy {
+
 	public tab: ScrumPageTab = 'my';
 
-	public totalElapsed: string;
+	public totalElapsed?: string;
 
-	public scrumID: string;
-	public scrum: IScrum = {
+	public scrumID?: string;
+
+	public scrum: IScrumDto = {
 		userIDs: [],
 		statuses: [],
 	};
 
 	public timerState?: ITimerState;
 
-	public spectators: IMemberInfo[];
+	public spectators?: ITeamMemberInfo[];
 
-	public isToday: boolean;
-	public scrumDate: Date;
+	public isToday?: boolean;
+	public scrumDate?: Date;
 
-	public prevScrumID: string;
-	public prevScrumDate: Date;
+	public prevScrumID?: string;
+	public prevScrumDate?: Date;
 
-	public nextScrumID: string;
-	public nextScrumDate: Date;
+	public nextScrumID?: string;
+	public nextScrumDate?: Date;
+	public allStatuses?: IStatus[];
+	public displayStatuses?: IStatus[];
+	public memberStatus?: IStatus;
+	public userMemberId?: string;
+	public readonly taskTypes: TaskType[] = ['done', 'todo', 'risk', 'qna'];
+	public teamMetrics?: IMetric[];
+	public personalMetrics?: IMetric[];
+	public timer?: Timer;
+	public expandedMemberId?: string | null;
+	private scrumsById: { [id: string]: IScrumDto } = {};
+	private subscriptions: Subscription[] = []; // TODO: replace with subs from BAsePage?
+
+	constructor(
+		readonly changeDetectorRef: ChangeDetectorRef,
+		route: ActivatedRoute,
+		params: TeamComponentBaseParams,
+		private readonly scrumService: ScrumService,
+		private readonly analyticsService: AnalyticsService,
+		private readonly location: Location,
+		private readonly timerFactory: TimerFactory,
+	) {
+		super(
+			'ScrumPageComponent',
+			route,
+			params,
+		);
+	}
 
 	public get prevScrumTitle(): string {
 		return this.prevScrumDate
@@ -62,50 +83,8 @@ export class ScrumPage extends TeamBaseComponent
 			: 'Next scrum';
 	}
 
-	public allStatuses: IStatus[];
-	public displayStatuses: IStatus[];
-	public memberStatus: IStatus;
-	public userMemberId?: string;
-
-	public readonly taskTypes: TaskType[] = ['done', 'todo', 'risk', 'qna'];
-
-	public teamMetrics: IMetric[];
-	public personalMetrics: IMetric[];
-
-	public timer: Timer;
-
 	public get defaultBackUrl(): string {
 		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
-	}
-
-	public expandedMemberId?: string | null;
-
-	private scrumsById: { [id: string]: IScrum } = {};
-	private subscriptions: Subscription[] = []; // TODO: replace with subs from BAsePage?
-
-	constructor(
-		readonly changeDetectorRef: ChangeDetectorRef,
-		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		readonly teamService: TeamService,
-		readonly navController: NavController,
-		readonly teamContextService: TeamContextService,
-		readonly route: ActivatedRoute,
-		readonly userService: UserService,
-		private readonly scrumService: ScrumService,
-		private readonly analyticsService: AnalyticsService,
-		public readonly navService: NavService,
-		private readonly location: Location,
-		private readonly timerFactory: TimerFactory,
-	) {
-		super(
-			changeDetectorRef,
-			route,
-			errorLogger,
-			navController,
-			teamService,
-			teamContextService,
-			userService,
-		);
 	}
 
 	private static getDateFromId(scrumId: string): Date {
@@ -118,22 +97,24 @@ export class ScrumPage extends TeamBaseComponent
 	public ngOnInit() {
 		try {
 			const tab = window?.location?.hash?.match(/[#&]tab=(\w+)/);
-			// @ts-ignore
-			this.tab = tab?.[1] || this.tab;
 
-			const scrum = history.state.scrum as IRecord<IScrum>;
+			this.tab = (tab?.[1] || this.tab) as ScrumPageTab;
+
+			const scrum = history.state.scrum as IRecord<IScrumDto>;
 			if (scrum) {
 				this.setScrumId(scrum.id);
 				this.scrumLoaded(scrum.id, scrum.data, 'history.state.scrum');
 			} else {
-				this.setCurrentScrumIdFromUrl(this.route.snapshot.queryParamMap);
+				if (this.route) {
+					this.setCurrentScrumIdFromUrl(this.route.snapshot.queryParamMap);
+				}
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'ScrumPage.constructor()');
 		}
 	}
 
-	public ngOnDestroy(): void {
+	public override ngOnDestroy(): void {
 		super.ngOnDestroy();
 		if (this.timer) {
 			this.timer.releaseTimer();
@@ -158,11 +139,15 @@ export class ScrumPage extends TeamBaseComponent
 	}
 
 	public goScrumsList(): void {
-		this.navService.navigateToScrums(this.navController, this.team);
+		this.navController.navigateToScrums(this.navController, this.team);
 	}
 
 	public changeDate(to: 'prev' | 'next' | 'today' | string): void {
 		console.log(`changeDate(to=${to}, currentScrumDate=${this.scrumDate})`);
+		if (!this.team) {
+			this.errorLogger.logError('can not change date without team context');
+			return;
+		}
 		this.analyticsService.logEvent('ScrumPage.changeDate', { to });
 		if (to === 'today') {
 			this.isToday = true;
@@ -256,7 +241,7 @@ export class ScrumPage extends TeamBaseComponent
 	}
 
 	protected onTeamDtoChanged(): void {
-		const team = this.team?.data;
+		const team = this.team?.dto;
 		if (!team) {
 			return;
 		}
@@ -266,11 +251,11 @@ export class ScrumPage extends TeamBaseComponent
 		const lastScrumId = team.last?.scrum?.id;
 		if (this.isToday && lastScrumId && lastScrumId !== this.scrumID) {
 			this.prevScrumID = lastScrumId;
-			this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumID);
+			this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
 		}
 		if (team.members) {
 			this.spectators = team.members.filter((m) =>
-				m.roles?.indexOf(MemberRoleEnum.spectator),
+				m.roles?.indexOf(MemberRoleSpectator),
 			);
 			const uid = this.currentUserId;
 			const member = Object.values(team.members).find((m) => m.uid === uid);
@@ -324,7 +309,7 @@ export class ScrumPage extends TeamBaseComponent
 	// 	}
 	// }
 
-	private scrumLoaded(id: string, scrum: IScrum, from: string): void {
+	private scrumLoaded(id: string, scrum: IScrumDto, from: string): void {
 		console.log(
 			`${from}: scrumLoaded(${id}: currentScrumId=${this.scrumID}`,
 			scrum,
@@ -351,18 +336,18 @@ export class ScrumPage extends TeamBaseComponent
 				}
 				this.prevScrumID = scrum?.scrumIds?.prev;
 				if (this.prevScrumID) {
-					this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumID);
+					this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
 				}
 				this.nextScrumID = scrum?.scrumIds?.next;
 				if (this.nextScrumID) {
-					this.nextScrumDate = ScrumPage.getDateFromId(this.nextScrumID);
+					this.nextScrumDate = ScrumPageComponent.getDateFromId(this.nextScrumID);
 				}
 				console.log(`mapped to current scrum ${id}:`, this.scrum);
 				break;
 			case this.prevScrumID:
 				// this.prevScrum = scrum || {...this.prevScrum, statuses: []};
-				if (this.team?.data) {
-					this.merge(this.scrum, undefined, this.team.data.members);
+				if (this.team?.dto) {
+					this.merge(this.scrum, undefined, this.team.dto.members);
 				}
 				console.log(`mapped to previous scrum ${id}:`, this.scrum);
 				break;
@@ -406,9 +391,9 @@ export class ScrumPage extends TeamBaseComponent
 	}
 
 	private merge(
-		scrum: IScrum,
-		prevScrum: IScrum,
-		members: IMemberInfo[],
+		scrum: IScrumDto,
+		prevScrum: IScrumDto,
+		members: ITeamMemberInfo[],
 	): void {
 		console.log(
 			'ScrumPage.merge(),\n\tscrum:',
@@ -438,18 +423,20 @@ export class ScrumPage extends TeamBaseComponent
 						qna: item.byType.qna || [],
 					},
 				};
-				const index = this.allStatuses.findIndex(
-					(v) => id && id === v.member.id,
-				);
-				console.log('item:', item);
-				if (index < 0) {
-					this.allStatuses.push(item);
-				} else {
-					this.allStatuses[index] = item;
+				if (this.allStatuses) {
+					const index = this.allStatuses.findIndex(
+						(v) => id && id === v.member.id,
+					);
+					console.log('item:', item);
+					if (index < 0) {
+						this.allStatuses.push(item);
+					} else {
+						this.allStatuses[index] = item;
+					}
 				}
 			});
 		} else {
-			this.allStatuses.forEach((status) => {
+			this.allStatuses?.forEach((status) => {
 				status.byType.todo = [];
 				status.byType.done = [];
 				status.byType.risk = [];
@@ -459,26 +446,28 @@ export class ScrumPage extends TeamBaseComponent
 		if (prevScrum?.statuses) {
 			Object.values(prevScrum.statuses).forEach((item) => {
 				const { id } = item.member;
-				const index = this.allStatuses.findIndex(
-					(v) => id && id === v.member.id,
-				);
-				if (index < 0) {
-					this.allStatuses.push({
-						member: item.member,
-						byType: {
-							plan: item.byType.todo,
-							risk: [],
-							todo: [],
-							done: [],
-							qna: [],
-						},
-					});
-				} else {
-					this.allStatuses[index].byType.plan = item.byType.todo;
+				if (this.allStatuses) {
+					const index = this.allStatuses.findIndex(
+						(v) => id && id === v.member.id,
+					);
+					if (index < 0) {
+						this.allStatuses.push({
+							member: item.member,
+							byType: {
+								plan: item.byType.todo,
+								risk: [],
+								todo: [],
+								done: [],
+								qna: [],
+							},
+						});
+					} else {
+						this.allStatuses[index].byType.plan = item.byType.todo;
+					}
 				}
 			});
 		} else {
-			this.allStatuses.forEach((status) => {
+			this.allStatuses?.forEach((status) => {
 				status.byType.plan = [];
 			});
 		}
@@ -523,7 +512,11 @@ export class ScrumPage extends TeamBaseComponent
 				timerState,
 			);
 			this.timerState = timerState;
-			this.totalElapsed = timerState && secondsToStr(timerState.elapsedSeconds);
+			if (timerState?.elapsedSeconds) {
+				this.totalElapsed = secondsToStr(timerState.elapsedSeconds);
+			} else {
+				this.totalElapsed = undefined;
+			}
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
@@ -550,7 +543,7 @@ export class ScrumPage extends TeamBaseComponent
 			if (this.team) {
 				this.setTimer(this.team.id, id);
 			}
-			this.scrumDate = ScrumPage.getDateFromId(id);
+			this.scrumDate = ScrumPageComponent.getDateFromId(id);
 			console.log(`setCurrentScrum() id=${id}, scrumDate:`, this.scrumDate);
 			const scrum = this.scrumsById[id];
 			console.log('setCurrentScrum() => scrum:', id, scrum, this.scrumsById);
@@ -561,13 +554,13 @@ export class ScrumPage extends TeamBaseComponent
 				/*if (scrum) - we need to set prevScrumId even if no scrum record */
 				this.prevScrumID =
 					scrum?.scrumIds?.prev ||
-					(this.isToday && this.team?.data?.last?.scrum?.id);
+					(this.isToday && this.team?.dto?.last?.scrum?.id);
 				if (this.prevScrumID) {
-					this.prevScrumDate = ScrumPage.getDateFromId(this.prevScrumID);
+					this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
 				}
 				this.nextScrumID = scrum?.scrumIds?.next;
 				if (this.nextScrumID) {
-					this.nextScrumDate = ScrumPage.getDateFromId(this.nextScrumID);
+					this.nextScrumDate = ScrumPageComponent.getDateFromId(this.nextScrumID);
 				}
 			}
 			if (this.team) {

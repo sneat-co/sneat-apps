@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IScrum } from '@sneat/scrumspace/scrummodels';
+import { IScrumDto } from '@sneat/scrumspace/scrummodels';
 
 @Component({
 	selector: 'sneat-timer-meeting-button',
@@ -8,7 +8,7 @@ import { IScrum } from '@sneat/scrumspace/scrummodels';
 })
 export class TimerMeetingButtonComponent implements OnInit {
 	@Input() public scrumId: string;
-	@Input() public scrum?: IScrum;
+	@Input() public scrum?: IScrumDto;
 	@Input() public teamId: string;
 
 	constructor() {

@@ -6,7 +6,7 @@ import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IRetrospective, IScrum } from '@sneat/scrumspace/scrummodels';
+import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
@@ -59,7 +59,7 @@ export class TeamNavService {
 	public navigateToScrum(
 		date: 'today' | 'yesterday' | string,
 		team: IRecord<ITeamDto>,
-		scrum?: IRecord<IScrum>,
+		scrum?: IRecord<IScrumDto>,
 		tab?: ScrumPageTab,
 	): void {
 		console.log(

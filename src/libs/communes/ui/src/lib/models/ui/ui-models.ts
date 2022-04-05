@@ -1,11 +1,20 @@
-import { DtoTotal, DtoTotals } from '../dto/dto-models';
-import { CommuneType, Period } from '../types';
-import { IAssetDtoGroup, IAssetDtoGroupCounts } from '../dto/dto-asset';
-import { ICommuneCounts, ICommuneDto, newCommuneCounts } from '../dto/dto-commune';
-import { IMemberDto, IMemberGroupDto, IMemberGroupDtoCounts } from '../dto/dto-member';
-import { DtoGroupTerms } from '../dto/dto-term';
-import { ICommuneIds } from '../commune-ids';
+import {
+	DtoGroupTerms,
+	DtoTotal,
+	DtoTotals,
+	IAssetDtoGroup,
+	IAssetDtoGroupCounts,
+	IMemberDto,
+	IMemberGroupDto,
+	IMemberGroupDtoCounts,
+	newTeamCounts,
+	Period,
+	TeamCounts,
+	TeamType,
+} from '@sneat/dto';
 import { RxRecordKey } from '@sneat/rxstore';
+import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import { ICommuneIds } from '../commune-ids';
 
 export class Total {
 	constructor(
@@ -227,22 +236,22 @@ export class Member {
 	public readonly totals: Totals;
 
 	constructor(
-		public dto: IMemberDto,
+		public member: IMemberContext,
 		public isChecked: boolean = false,
 	) {
-		this.totals = new Totals(dto.totals);
+		this.totals = new Totals(member.dto?.totals);
 	}
 
-	public get id(): RxRecordKey | undefined {
-		return this.dto.id;
+	public get id(): string {
+		return this.member.id;
 	}
 
-	public get title(): string | undefined {
-		return this.dto.title;
+	public get title(): string {
+		return this.member.brief?.title || this.member.id;
 	}
 
 	public get emoji(): string {
-		return this.dto.age === 'child' ? '🧒' : '🧑';
+		return this.member.dto?.ageGroup === 'child' ? '🧒' : '🧑';
 	}
 }
 
@@ -261,47 +270,46 @@ export class AssetGroup {
 	}
 }
 
-export interface ICommune {
-	readonly dto: ICommuneDto;
-	readonly shortId?: string;
-}
+export class Commune implements ITeamContext {
 
-export class Commune implements ICommune {
+	public readonly totals: Totals;
 
 	constructor(
-		public readonly dto: ICommuneDto,
+		public readonly team: ITeamContext,
 		public readonly shortId?: string,
 	) {
-		this.totals = new Totals(dto.totals);
+		this.totals = new Totals(team.dto?.totals);
 	}
 
 	public get ids(): ICommuneIds {
-		return { real: this.dto.id, short: this.shortId };
+		return { real: this.team.id, short: this.shortId };
 	}
 
-	public get id(): string | undefined {
-		return this.dto.id;
+	public get id(): string {
+		return this.team.id;
 	}
 
-	public get type(): CommuneType {
-		return this.dto.type;
+	public get type(): TeamType | undefined {
+		return this.team.dto?.type;
 	}
 
 	public get title(): string | undefined {
-		return this.dto.title;
+		return this.team.dto?.title;
 	}
 
 	public get isSupportingMemberGroups(): boolean {
-		const t = this.dto.type;
-		return t === 'educator' || t === 'sportclub' || t === 'cohabit';
+		const t = this.team.type;
+		return t === 'educator' || t === 'sport_club' || t === 'cohabit';
 	}
 
-	public get numberOf(): ICommuneCounts {
-		if (this.dto.numberOf) {
-			return this.dto.numberOf;
+	public get numberOf(): TeamCounts {
+		if (this.team.dto?.numberOf) {
+			return this.team.dto.numberOf;
 		}
-		return newCommuneCounts(this.dto.numberOf);
+		return newTeamCounts(this.team.dto?.numberOf);
 	}
+
+	private _membersCountByRole?: { role: string; count: number }[];
 
 	public get membersCountByRole(): { role: string; count: number }[] {
 		throw new Error('Not implemented yet - disabled');
@@ -315,10 +323,6 @@ export class Commune implements ICommune {
 		// }
 		// return this._membersCountByRole;
 	}
-
-	public readonly totals: Totals;
-
-	private _membersCountByRole?: { role: string; count: number }[];
 
 	public supports(v: 'staff' | 'pupils'): boolean {
 		if (!v) {
@@ -348,10 +352,6 @@ export class MemberGroup {
 			n.members = 0;
 		}
 		return n;
-	}
-
-	public get communeId(): string | undefined {
-		return this.dto.communeId;
 	}
 
 	public get id(): string | undefined {
