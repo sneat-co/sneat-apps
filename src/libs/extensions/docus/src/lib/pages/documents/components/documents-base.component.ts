@@ -1,7 +1,7 @@
 import { Inject, Injectable, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
-import { IDocumentContext } from '@sneat/dto';
+import { IDocumentContext } from '@sneat/team/models';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ignoreElements } from 'rxjs/operators';

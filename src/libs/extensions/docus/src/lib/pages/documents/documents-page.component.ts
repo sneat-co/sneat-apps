@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IDocumentContext, IDocumentDto } from '@sneat/dto';
+import { IDocumentDto } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IAssetContext, IMemberContext } from '@sneat/team/models';
+import { IAssetContext, IDocumentContext, IMemberContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-documents-page',

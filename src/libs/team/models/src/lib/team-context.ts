@@ -1,7 +1,8 @@
 import { INavContext } from '@sneat/core';
 import {
 	IAssetBrief,
-	IAssetDto, IContactBrief,
+	IAssetDto,
+	IContactBrief,
 	IContactDto,
 	IMemberBrief,
 	IMemberDto,
@@ -19,5 +20,6 @@ export interface ITeamContext extends INavContext<ITeamBrief, ITeamDto> {
 
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
+export type IDocumentContext = IAssetContext;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
 
