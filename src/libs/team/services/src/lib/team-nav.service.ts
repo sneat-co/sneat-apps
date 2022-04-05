@@ -3,7 +3,6 @@ import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -113,25 +112,21 @@ export class TeamNavService {
 		);
 	}
 
-	public navigateToTeam(
-		id: string,
-		teamInfo?: IUserTeamInfo,
-		team?: ITeamDto,
-		animationDirection?: 'forward' | 'back',
-	): void {
-		this.analyticsService.logEvent('navigateToTeam', { team: id });
-		this.navController
-			.navigateRoot('team', {
-				queryParams: { id },
-				state: {
-					teamInfo,
-					team,
-				},
-				animationDirection,
-			})
-			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to team page'),
-			);
+	public navigateToTeam(team: ITeamContext, animationDirection?: 'forward' | 'back'): Promise<boolean> {
+		this.analyticsService.logEvent('navigateToTeam', { team: team.id });
+		return new Promise<boolean>((resolve, reject) => {
+			this.navController
+				.navigateRoot(`space/${team?.type}/${team.id}`, {
+					state: { team },
+					animationDirection,
+				})
+				.then(resolve)
+				.catch(err => {
+						this.errorLogger.logError(err, 'Failed to navigate to team overview page');
+						reject(err);
+					},
+				);
+		});
 	}
 
 	public navigateToScrums = (
@@ -204,6 +199,14 @@ export class TeamNavService {
 			);
 	}
 
+	public navigateForwardToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
+		const url = `space/${team?.type}/${team?.id}/${page}`;
+		const state = navOptions.state || {};
+		navOptions = { ...navOptions, state: { team, ...state } };
+		return this.navController
+			.navigateForward(url, navOptions);
+	}
+
 	private navForward(
 		navController: NavController,
 		url: string,
@@ -235,14 +238,6 @@ export class TeamNavService {
 			{ name: eventName, params },
 		);
 	};
-
-	public navigateForwardToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
-		const url = `space/${team?.type}/${team?.id}/${page}`;
-		const state = navOptions.state || {};
-		navOptions = { ...navOptions, state: { team, ...state } };
-		return this.navController
-			.navigateForward(url, navOptions)
-	}
 
 
 }

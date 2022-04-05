@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TopMenuService } from '@sneat/core';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -10,7 +10,7 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 		TeamComponentBaseParams,
 	],
 })
-export class TeamPageComponent extends TeamBaseComponent {
+export class TeamPageComponent extends TeamBaseComponent implements OnDestroy {
 
 	constructor(
 		route: ActivatedRoute,

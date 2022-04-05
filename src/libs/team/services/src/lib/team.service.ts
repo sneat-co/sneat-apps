@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
-import { AuthStatus, SneatAuthStateService } from '@sneat/auth';
+import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { IMemberBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
@@ -15,7 +15,7 @@ import {
 	ITeamRequest,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
-import { BehaviorSubject, Observable, ReplaySubject, Subscription, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -34,6 +34,7 @@ export class TeamService {
 		private readonly userService: SneatUserService,
 		private readonly sneatApiService: SneatApiService,
 	) {
+		console.log('TeamService.constructor()');
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === 'notAuthenticated') {
 				this.unsubscribe('signed out');
@@ -44,12 +45,12 @@ export class TeamService {
 		const processUserRecordInTeamService = (
 			userState: ISneatUserState,
 		): void => {
-			console.log('processUserRecordInTeamService()', userState);
+			console.log('TeamService.processUserRecordInTeamService()', userState);
 			const user = userState?.record;
 			if (!user) {
 				// this.userID = undefined;
-				if (this.subscriptions?.length) {
-					this.unsubscribe('user record is empty');
+				if (userState.status === AuthStatuses.notAuthenticated && this.subscriptions?.length) {
+					this.unsubscribe('user is not authenticated and active team subscriptions');
 				}
 				return;
 			}
@@ -62,7 +63,7 @@ export class TeamService {
 			this.currentUserTeams = user?.teams;
 
 			if (user?.teams) {
-				user.teams?.forEach(this.subscribeForFirestoreTeamChanges);
+				user.teams?.forEach(this.subscribeForUserTeamChanges);
 			}
 		};
 		// We are intentionally not un-subscribing from user record updates. TODO: why?
@@ -88,16 +89,32 @@ export class TeamService {
 
 	public watchTeam(id: string): Observable<ITeamContext> {
 		console.log(`TeamService.watchTeam(${id})`);
+		if (!id) {
+			throw new Error('team ID is a required parameter');
+		}
 		let subj = this.teams$[id];
 		if (!subj) {
-			let teamContext: ITeamContext | undefined = undefined;
+			let teamContext: ITeamContext = { id };
 			if (this.currentUserTeams) {
 				const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
 				if (userTeamInfo) {
-					teamContext = { id, brief: userTeamInfo };
+					teamContext = { id, type: userTeamInfo.type, brief: userTeamInfo };
 				}
 			}
-			this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(teamContext || { id });
+			subj = new BehaviorSubject<ITeamContext>(teamContext);
+			this.teams$[id] = subj;
+			if (this.userService.currentUserId) {
+				this.subscribeForTeamChanges(subj);
+			} else {
+				this.userService.userState
+					.pipe(
+						filter(v => v.status === AuthStatuses.authenticated),
+						first(),
+					).subscribe({
+					next: () => this.subscribeForTeamChanges(subj),
+				});
+			}
+
 		}
 		return subj.asObservable();
 	}
@@ -138,7 +155,7 @@ export class TeamService {
 		if (!teamRecord) {
 			return throwError(() => 'teamRecord parameters is required');
 		}
-		const id = teamRecord.id
+		const id = teamRecord.id;
 		if (!id) {
 			return throwError(() => 'teamRecord.id parameters is required');
 		}
@@ -178,7 +195,7 @@ export class TeamService {
 					.post<ITeamDto>('team/leave_team', teamRequest)
 					.pipe(
 						map(teamDto => {
-							const teamContext: ITeamContext = {id, brief: {id, ...teamDto}, dto: teamDto};
+							const teamContext: ITeamContext = { id, type: teamDto.type, brief: { id, ...teamDto }, dto: teamDto };
 							return teamContext;
 						}),
 						switchMap(processRemoveTeamMemberResponse),
@@ -201,10 +218,13 @@ export class TeamService {
 	public onTeamUpdated(team: ITeamContext): void {
 		console.log(
 			'TeamService.onTeamUpdated',
-			team ? { id: team.id, data: { ...team.dto } } : team,
+			team ? { id: team.id, dto: { ...team.dto } } : team,
 		);
 		let team$ = this.teams$[team.id];
-		if (!team$) {
+		if (team$) {
+			const prevTeam = team$.value;
+			team = { ...prevTeam, ...team };
+		} else {
 			this.teams$[team.id] = team$ = new BehaviorSubject<ITeamContext>(team);
 		}
 		team$.next(team);
@@ -271,38 +291,68 @@ export class TeamService {
 		);
 	}
 
-	private readonly subscribeForFirestoreTeamChanges = (teamInfo: IUserTeamInfo): void => {
-		console.log('subscribeForFirestoreTeamChanges', teamInfo);
-		const { id } = teamInfo;
+	private readonly subscribeForUserTeamChanges = (userTeamInfo: IUserTeamInfo): void => {
+		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
+		const { id } = userTeamInfo;
 		let subj = this.teams$[id];
-		if (!subj) {
-			this.teams$[id] = subj = new BehaviorSubject<ITeamContext>({id: teamInfo.id, brief: teamInfo});
+		if (subj) {
+			let team = subj.value;
+			if (!team.type) {
+				team = { ...team, type: userTeamInfo.type, brief: userTeamInfo };
+				subj.next(team);
+			}
+			return;
 		}
+		const team: ITeamContext = {
+			id: userTeamInfo.id,
+			type: userTeamInfo.type,
+			brief: userTeamInfo,
+		};
+		this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(team);
 
+		this.subscribeForTeamChanges(subj);
+	};
+
+	private subscribeForTeamChanges(subj: BehaviorSubject<ITeamContext>): void {
+		const t = subj.value;
+		console.log(`TeamService.subscribeForTeamChanges(${t.id})`);
+		const { id } = t;
 		const o: Observable<ITeamContext> = this.db
 			.collection('teams')
 			.doc<ITeamDto>(id)
 			.snapshotChanges()
 			.pipe(
 				tap((team) => {
-					console.log('New team snapshot from Firestore:', team);
+					console.log('TeamService.subscribeForTeamChanges() => New team snapshot from Firestore:', team);
 				}),
 				filter((documentSnapshot) => documentSnapshot.type === 'value' || documentSnapshot.type === 'added'),
 				map((documentSnapshot) => documentSnapshot.payload),
 				map((teamDoc) =>
 					teamDoc.exists ? (teamDoc.data() as ITeamDto) : null,
 				),
-				map((dto: ITeamDto | null) => ({id, brief: teamInfo, dto: dto || undefined})),
+				map((dto: ITeamDto | null) => {
+					let team: ITeamContext = { id, brief: t.brief, dto: dto || undefined };
+					const prevTeam = this.teams$[id].value;
+					console.log('prevTeam', prevTeam);
+					if (prevTeam.assets) {
+						team = { ...team, assets: prevTeam.assets };
+						console.log('Reusing assets from prev context');
+					}
+					return team;
+				}),
 				tap((team) => {
-					console.log('New team record from Firestore:', team);
-					subj.next(team);
+					console.log('TeamService.subscribeForTeamChanges() => New team from Firestore:', team);
+					// subj.next(team);
 				}),
 			);
-		this.subscriptions.push(o.subscribe(subj));
-	};
+		this.subscriptions.push(o.subscribe({
+			next: value => subj.next(value),
+			error: this.errorLogger.logErrorHandler('failed to watch team with id=' + id),
+		}));
+	}
 
 	private unsubscribe(on: string): void {
-		console.log('TeamService: unsubscribe on ' + on);
+		console.log(`TeamService.unsubscribe(on=${on})`);
 		try {
 			this.subscriptions.forEach((s) => s.unsubscribe());
 			this.subscriptions = [];

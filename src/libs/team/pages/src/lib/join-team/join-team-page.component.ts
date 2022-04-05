@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ITeamDto } from '@sneat/dto';
-import { Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ActivatedRoute } from '@angular/router';
 import { IUserTeamInfo } from '@sneat/auth-models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
+import { Subscription } from 'rxjs';
 
 export const getPinFromUrl: () => number | undefined = () => {
 	const m = location.hash.match(/[#&]pin=(\d+)($|&)/);
@@ -22,7 +22,7 @@ export const getPinFromUrl: () => number | undefined = () => {
 export class JoinTeamPageComponent implements OnDestroy {
 	public teamId?: string;
 	public pin?: number;
-	public team?: ITeamDto;
+	public team?: ITeamContext;
 	public invitedBy?: IUserTeamInfo;
 	public joining?: boolean;
 	public refusing?: boolean;
@@ -38,19 +38,20 @@ export class JoinTeamPageComponent implements OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		console.log('JoinTeamPage.constructor()');
+		const teamId = this.route.snapshot.queryParamMap.get('id');
 		try {
-			this.teamId = this.route.snapshot.queryParamMap.get('id') || undefined;
+			this.teamId = teamId || undefined;
 			this.pin = getPinFromUrl();
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to handle URL query parameters');
 		}
-		if (this.teamId && this.pin) {
+		if (teamId && this.pin) {
 			const errMsg = 'Failed to get team information';
-			this.teamService.getTeamJoinInfo(this.teamId, this.pin).subscribe({
+			this.teamService.getTeamJoinInfo(teamId, this.pin).subscribe({
 				next: (response) => {
 					console.log('join_team:', response);
 					if (response) {
-						this.team = response.team;
+						this.team = { ...this.team || { id: teamId || '' }, dto: response.team };
 						this.invitedBy = response.invitedBy;
 					} else {
 						this.errorLogger.logError('EmptyResponse', errMsg);
@@ -59,6 +60,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 				error: (err) => this.errorLogger.logError(err, errMsg),
 			});
 		}
+
 		this.subscriptions.push(
 			this.afAuth.idToken.subscribe((token) => {
 				this.isUserAuthenticated = !!token;
@@ -68,7 +70,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 					if (m && this.teamId && this.pin) {
 						switch (m[1]) {
 							case 'join':
-								this.joinTeam(this.teamId, this.pin);
+								this.joinTeam();
 								break;
 							case 'refuse':
 								this.refuseToJoinTeam(this.teamId, this.pin);
@@ -95,7 +97,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 		}
 		if (this.isUserAuthenticated) {
 			if (this.pin) {
-				this.joinTeam(id, this.pin);
+				this.joinTeam();
 			} else {
 				alert('Please enter the PIN');
 			}
@@ -134,11 +136,24 @@ export class JoinTeamPageComponent implements OnDestroy {
 		this.subscriptions = [];
 	}
 
-	private joinTeam(id: string, pin: number): void {
+	private joinTeam(): void {
+		const team = this.team;
+		if (!team) {
+			this.errorLogger.logError('no team context');
+			return;
+		}
+		if (!this.pin) {
+			this.errorLogger.logError('no pin');
+			return;
+		}
 		this.joining = true;
-		this.teamService.joinTeam(id, pin).subscribe({
-			next: (team) => {
-				this.navService.navigateToTeam(id, undefined, team);
+		this.teamService.joinTeam(team.id, this.pin).subscribe({
+			next: (dto) => {
+				const newTeam = { ...team, dto };
+				this.team = newTeam;
+				this.navService
+					.navigateToTeam(newTeam, undefined)
+					.catch(this.errorLogger.logError);
 			},
 			error: (err) => {
 				this.joining = false;

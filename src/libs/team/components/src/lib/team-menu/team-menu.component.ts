@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { IUserTeamInfo } from '@sneat/auth-models';
 import { ISneatUserState } from '@sneat/user';
+import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
 import { TeamComponentBaseParams } from '../team-component-base-params';
 
@@ -21,14 +22,31 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		private readonly menuCtrl: MenuController,
 	) {
 		super('TeamMenuComponent', route, params);
-		params.userService.userState.subscribe({
-			next: this.trackUserState,
-			error: this.errorLogger.logErrorHandler('failed to get user stage'),
+		params.userService.userState
+			.pipe(
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
+				next: this.trackUserState,
+				error: this.errorLogger.logErrorHandler('failed to get user stage'),
+			});
+	}
+
+	public goOverview(): boolean {
+		if (!this.team) {
+			this.errorLogger.logError('no team context');
+			return false;
+		}
+		this.teamParams.teamNavService.navigateToTeam(this.team).then(v => {
+			if (v) {
+				this.closeMenu();
+			}
 		});
+		return false;
 	}
 
 	public closeMenu(): void {
-		this.menuCtrl.close();
+		this.menuCtrl.close().catch(this.errorLogger.logError);
 	}
 
 	override onTeamDtoChanged(): void {
@@ -57,7 +75,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	onTeamSelected(event: Event): void {
 		const teamID = (event as CustomEvent).detail.value as string;
 
-		console.log('onTeamSelected', teamID);
+		console.log('TeamMenuComponent.onTeamSelected', teamID);
 		if (teamID === this.team?.id) {
 			return;
 		}
@@ -70,14 +88,11 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	}
 
 	private trackUserState = (userState: ISneatUserState): void => {
-		console.log('trackUserState =>', userState);
-		// setTimeout(() => {
-		// }, 100);
+		// console.log('TeamMenuComponent.trackUserState =>', userState);
 		if (userState?.record) {
 			this.teams = userState.record.teams || [];
 		} else {
 			this.teams = undefined;
 		}
-		console.log('teams:', this.teams);
 	};
 }

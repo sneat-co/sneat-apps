@@ -31,7 +31,7 @@ export function trackTeamIdAndTypeFromRouteParameter(route: ActivatedRoute): Obs
 				id = params.get('teamId'),
 				type = params.get('teamType') as TeamType;
 			const teamContext: ITeamContext | undefined = id ? { id: id, type: type || undefined } : undefined;
-			console.log('trackTeamIdAndTypeFromRouteParameter() => teamContext:', teamContext)
+			// console.log('trackTeamIdAndTypeFromRouteParameter() => teamContext:', teamContext)
 			return teamContext;
 		}),
 		distinctUntilChanged(

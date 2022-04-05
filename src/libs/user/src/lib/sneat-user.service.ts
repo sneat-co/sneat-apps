@@ -27,7 +27,7 @@ export class SneatUserService {
 	private uid?: string;
 	private $userTitle?: string;
 
-	private readonly userChanged$ = new ReplaySubject<string | undefined>();
+	private readonly userChanged$ = new ReplaySubject<string | undefined>(1);
 	public readonly userChanged = this.userChanged$.asObservable();
 
 	private readonly userState$ = new BehaviorSubject<ISneatUserState>(

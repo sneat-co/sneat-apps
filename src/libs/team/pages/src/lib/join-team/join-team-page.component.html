@@ -10,7 +10,7 @@
 		<ng-container *ngIf="invitedBy">by <i>{{invitedBy.title}}</i></ng-container>
 	</p>
 	<p>
-		to join team <b *ngIf="team">{{team.title}}</b>
+		to join team <b *ngIf="team">{{team?.brief?.title}}</b>
 		<ion-spinner name="lines-small" *ngIf="!team" color="medium"></ion-spinner>
 	</p>
 
@@ -32,8 +32,8 @@
 		<ion-spinner name="lines-small" *ngIf="refusing"></ion-spinner>
 	</ion-button>
 
-	<ion-list *ngIf="team?.members?.length">
+	<ion-list *ngIf="team?.dto?.members?.length">
 		<ion-item-divider>Members</ion-item-divider>
-		<ion-item *ngFor="let member of team?.members">{{member.title}}</ion-item>
+		<ion-item *ngFor="let member of team?.dto?.members">{{member.title}}</ion-item>
 	</ion-list>
 </ion-content>

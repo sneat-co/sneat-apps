@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IAssetBrief, IAssetDto, TeamCounter } from '@sneat/dto';
 import { IAssetContext } from '@sneat/team/models';
-import { TeamItemBaseService } from '@sneat/team/services';
+import { TeamItemBaseService, TeamService } from '@sneat/team/services';
 import { map, Observable, throwError } from 'rxjs';
 import { ICreateAssetRequest } from './asset-service.dto';
 
@@ -16,6 +16,7 @@ export class AssetService {
 		private readonly db: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 		private readonly teamItemService: TeamItemBaseService,
+		private readonly teamService: TeamService,
 	) {
 	}
 
@@ -60,12 +61,21 @@ export class AssetService {
 			.pipe(
 				map(changes => {
 					console.log('team_assets changes:', changes.docs);
-					return changes.docs.map(d => {
+					const assets: IAssetContext[] = changes.docs.map(d => {
 						const dto = d.data();
 						const { id } = d;
 						const asset: IAssetContext = { id: d.id, team: { id: teamID }, brief: { id, ...dto }, dto };
 						return asset;
 					});
+					this.teamService.getTeam(teamID).subscribe({
+						next: team => {
+							this.teamService.onTeamUpdated({
+								...team,
+								assets,
+							});
+						},
+					});
+					return assets;
 				}),
 			);
 	}

@@ -1,13 +1,13 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ToastController } from '@ionic/angular';
-import { Subject, Subscription } from 'rxjs';
-import { mergeMap, takeUntil } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IUserTeamInfo } from '@sneat/auth-models';
-import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { IUserTeamInfo } from '@sneat/auth-models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
+import { ISneatUserState, SneatUserService } from '@sneat/user';
+import { Subject, Subscription } from 'rxjs';
+import { mergeMap, takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'sneat-teams-card',
@@ -47,7 +47,9 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 	}
 
 	public goTeam(team: IUserTeamInfo) {
-		this.navService.navigateToTeam(team.id, team, undefined, 'forward');
+		this.navService
+			.navigateToTeam(team, 'forward')
+			.catch(this.errorLogger.logError);
 	}
 
 	public addTeam() {

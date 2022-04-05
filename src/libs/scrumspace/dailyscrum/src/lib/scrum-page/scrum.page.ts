@@ -241,7 +241,7 @@ export class ScrumPage extends TeamBaseComponent
 		}
 	}
 
-	protected onTeamIdChanged() {
+	protected onTeamIdChanged(): void {
 		super.onTeamIdChanged();
 		if (!this.team?.id) {
 			return;

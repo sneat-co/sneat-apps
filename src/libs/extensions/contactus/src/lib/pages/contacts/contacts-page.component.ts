@@ -5,7 +5,7 @@ import { listItemAnimations } from '@sneat/core';
 import { ContactType, IMemberGroupDto } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemBaseComponent } from '@sneat/team/components';
 import { IContactContext } from '@sneat/team/models';
-import { Subscription, takeUntil } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ContactService } from '../../contact.service';
 
 @Component({
@@ -39,6 +39,9 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 		if (this.allContacts) {
 			this.applyFilter('', this.role);
 		}
+		this.teamIDChanged$.subscribe({
+			next: this.onTeamIDChanged,
+		});
 	}
 
 	get pageTitle(): string {
@@ -77,27 +80,6 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 					.indexOf(filter) >= 0)
 				&& (!role || c.dto?.roles && c?.dto.roles.includes(role)),
 			);
-	}
-
-	loadContacts(caller: string): void {
-		console.log(`CommuneContactsPage.loadContacts(${caller})`);
-		if (!this.team) {
-			return;
-		}
-		if (this.contactsSubscription) {
-			this.contactsSubscription.unsubscribe();
-		}
-		this.contactsSubscription = this.contactsService.watchByTeam(this.team)
-			.pipe(
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: contacts => {
-					this.allContacts = contacts;
-					this.applyFilter(this.filter, this.role);
-				},
-				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
-			});
 	}
 
 	goContact = (contact?: IContactContext): void => {
@@ -155,8 +137,25 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 		return record.id;
 	}
 
-	override onTeamIdChanged(): void {
-		this.loadContacts('onTeamIdChanged');
-	}
+	private readonly onTeamIDChanged = (): void => {
+		console.log(`CommuneContactsPage.onTeamIDChanged()`);
+		if (this.contactsSubscription) {
+			this.contactsSubscription.unsubscribe();
+		}
+		if (!this.team) {
+			return;
+		}
+		this.contactsSubscription = this.contactsService.watchByTeam(this.team)
+			.pipe(
+				this.takeUntilNeeded(),
+			)
+			.subscribe({
+				next: contacts => {
+					this.allContacts = contacts;
+					this.applyFilter(this.filter, this.role);
+				},
+				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
+			});
+	};
 
 }

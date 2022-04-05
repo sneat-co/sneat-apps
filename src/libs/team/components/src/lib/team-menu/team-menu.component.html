@@ -13,16 +13,15 @@
 			</ion-select-option>
 		</ion-select>
 	</ion-item>
-	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}"
-						routerDirection="root"
-						[disabled]="!team"
+	<ion-item tappable
+						[disabled]="!team?.type"
 						[class.currentPage]="isCurrentPage('overview')"
-						(click)="closeMenu()"
+						(click)="goOverview()"
 	>
 		<ion-icon name="home-outline" slot="start"></ion-icon>
 		<ion-label>Overview</ion-label>
 	</ion-item>
-	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/assets"
+	<ion-item routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}/assets"
 						routerDirection="root"
 						[disabled]="!team"
 						[class.currentPage]="isCurrentPage('assets')"

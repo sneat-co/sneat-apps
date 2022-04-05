@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { IAssetType } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
+import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 
 @Component({
@@ -37,6 +38,9 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		private readonly alertCtrl: AlertController,
 	) {
 		super('AssetsPageComponent', route, params, assetService);
+		this.teamIDChanged$.subscribe({
+			next: () => this.watchTeamAssets(),
+		})
 	}
 
 	// ngAfterViewInit(): void {
@@ -87,16 +91,20 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		// this.navigateForward(page);
 	}
 
-	protected override onTeamIdChanged() {
-		console.log('AssetsPageComponent.onTeamIdChanged() => teamID:', this.team?.id);
+	private watchTeamAssets(): void {
 		if (this.team?.id) {
-			this.assetService.watchAssetsByTeamID(this.team?.id).subscribe({
-				next: (assets: IAssetContext[]) => {
-					console.log('AssetsPageComponent.onTeamIdChanged() => assets:', assets);
-					this.assets = assets;
-				},
-				error: this.errorLogger.logErrorHandler('failed to get team assets'),
-			});
+			this.assetService
+				.watchAssetsByTeamID(this.team?.id)
+				.pipe(
+					takeUntil(this.destroyed),
+				)
+				.subscribe({
+					next: (assets: IAssetContext[]) => {
+						console.log('AssetsPageComponent.onTeamIdChanged() => assets:', assets);
+						this.assets = assets;
+					},
+					error: this.errorLogger.logErrorHandler('failed to get team assets'),
+				});
 		}
 	}
 }

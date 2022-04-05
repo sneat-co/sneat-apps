@@ -32,11 +32,8 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 			this.assets = undefined;
 			return;
 		}
-		if (!this.assets) {
-			this.assets = this.team?.dto?.assets?.map(brief => {
-				const asset: IAssetContext = { id: brief.id, brief, team };
-				return asset;
-			});
+		if (!this.assets && this.team?.assets) {
+			this.assets = this.team?.assets;
 		}
 	}
 
