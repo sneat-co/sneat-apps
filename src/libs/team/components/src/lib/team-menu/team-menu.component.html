@@ -25,7 +25,7 @@
 						routerDirection="root"
 						[disabled]="!team"
 						[class.currentPage]="isCurrentPage('assets')"
-						(click)="closeMenu()"
+						(click)="goTeamPage($event, 'assets')"
 	>
 		<ion-icon name="car-sport-outline" slot="start"></ion-icon>
 		<ion-label>Assets</ion-label>
@@ -34,9 +34,9 @@
 	</ion-item>
 	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/budget"
 						routerDirection="root"
-						(click)="goTeamPage($event, 'budget')"
 						[disabled]="!team"
 						[class.currentPage]="isCurrentPage('budget')"
+						(click)="goTeamPage($event, 'budget')"
 	>
 		<ion-icon name="cash-outline" slot="start"></ion-icon>
 		<ion-label>Budget</ion-label>
@@ -45,7 +45,7 @@
 						routerDirection="root"
 						[disabled]="!team"
 						[class.currentPage]="isCurrentPage('contacts')"
-						(click)="closeMenu()"
+						(click)="goTeamPage($event, 'contacts')"
 	>
 		<ion-icon name="people-outline" slot="start"></ion-icon>
 		<ion-label>Contacts</ion-label>
@@ -53,7 +53,8 @@
 	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/documents"
 						routerDirection="root"
 						[disabled]="!team"
-						(click)="closeMenu()"
+						[class.currentPage]="isCurrentPage('documents')"
+						(click)="goTeamPage($event, 'documents')"
 	>
 		<ion-icon name="documents-outline" slot="start"></ion-icon>
 		<ion-label>Documents</ion-label>
