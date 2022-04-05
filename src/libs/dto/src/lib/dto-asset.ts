@@ -1,4 +1,5 @@
 import { INavContext } from '@sneat/core';
+import { IAssetContext } from '@sneat/team/models';
 import { IContact2Asset } from './dto-contact2';
 import { IDemoRecord, ITeamRecord, ITitled, ITitledRecord, ITotalsHolder } from './dto-models';
 import { AssetType, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
@@ -73,11 +74,13 @@ export interface IVehicle {
 	nextServiceDueTaskId?: string;
 }
 
-export interface IDocument extends IAssetDto {
+export interface IDocumentDto extends IAssetDto {
 	issuedOn?: string; // ISO date string 'YYYY-MM-DD'
 	issuedBy?: string;
 	expiresOn?: string; // ISO date string 'YYYY-MM-DD'
 }
+
+export type IDocumentContext = IAssetContext;
 
 export interface IAssetType extends ITitledRecord {
 	id: AssetType;

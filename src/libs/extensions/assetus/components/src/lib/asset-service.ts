@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
+import { INavContext } from '@sneat/core';
 import { IAssetBrief, IAssetDto, TeamCounter } from '@sneat/dto';
 import { IAssetContext } from '@sneat/team/models';
 import { TeamItemBaseService, TeamService } from '@sneat/team/services';
@@ -52,19 +53,20 @@ export class AssetService {
 			);
 	}
 
-	watchAssetsByTeamID(teamID: string): Observable<IAssetContext[]> {
+	watchAssetsByTeamID<Dto extends IAssetDto, T extends IAssetContext<Dto>>(teamID: string): Observable<T[]> {
 		console.log('watchAssetsByTeamID()', teamID);
 		const query = this.db
-			.collection<IAssetDto>('team_assets',
+			.collection<Dto>('team_assets',
 				ref => ref.where('teamIDs', 'array-contains', teamID));
 		return query.get()
 			.pipe(
 				map(changes => {
 					console.log('team_assets changes:', changes.docs);
-					const assets: IAssetContext[] = changes.docs.map(d => {
-						const dto = d.data();
+					const assets: T[] = changes.docs.map(d => {
+						const dto: Dto = d.data();
 						const { id } = d;
-						const asset: IAssetContext = { id: d.id, team: { id: teamID }, brief: { id, ...dto }, dto };
+						const brief: IAssetBrief = { id, ...dto };
+						const asset: T = { id: d.id, team: { id: teamID }, brief, dto } as T;
 						return asset;
 					});
 					this.teamService.getTeam(teamID).subscribe({

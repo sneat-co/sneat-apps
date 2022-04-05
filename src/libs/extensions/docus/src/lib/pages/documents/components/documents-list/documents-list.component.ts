@@ -1,28 +1,30 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {DocumentsBaseComponent} from '../documents-base.component';
-import {ToastController} from '@ionic/angular';
-import {IAssetDto} from 'sneat-shared/models/dto/dto-asset';
-import {IRecord} from 'rxstore';
-import {IAssetService, IErrorLogger} from 'sneat-shared/services/interfaces';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import { IAssetDto } from '@sneat/dto';
+import { AssetService } from '@sneat/extensions/assetus/components';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IAssetContext } from '@sneat/team/models';
+import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({
-	selector: 'app-documents-list',
+	selector: 'sneat-documents-list',
 	templateUrl: './documents-list.component.html',
 })
 export class DocumentsListComponent extends DocumentsBaseComponent implements OnChanges {
 
-	filteredDocs: IAssetDto[];
-	@Input() filter: string;
-	@Output() goDoc = new EventEmitter<IAssetDto>();
-	trackById = (i: number, record: IRecord) => record.id;
+	filteredDocs?: IAssetContext[];
+	@Input() filter = '';
+	@Output() goDoc = new EventEmitter<IAssetContext>();
 
 	constructor(
-		errorLogger: IErrorLogger,
-		assetService: IAssetService,
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
+		assetService: AssetService,
 		toastCtrl: ToastController,
 	) {
 		super(errorLogger, assetService, toastCtrl);
 	}
+
+	readonly trackById = (i: number, record: { id: string }) => record.id;
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('DocumentsListComponent.ngOnChanges', changes, [...this.allDocuments], ''+this.filter);
@@ -31,8 +33,8 @@ export class DocumentsListComponent extends DocumentsBaseComponent implements On
 
 	protected onDocsChanged(): void {
 		this.filteredDocs = this.allDocuments
-			&& this.allDocuments.filter(d => !d.parentAssetId && (!this.filter
-				|| d.title && d.title
+			&& this.allDocuments.filter(d => !d.dto?.parentAssetID && (!this.filter
+				|| d.brief?.title && d.brief.title
 					.toLowerCase()
 					.indexOf(this.filter) >= 0));
 	}

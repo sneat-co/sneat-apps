@@ -1,7 +1,7 @@
 //tslint:disable:no-unsafe-any
 import {Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IDocument } from '@sneat/dto';
+import { IDocumentDto } from '@sneat/dto';
 import { TeamBaseComponent } from '@sneat/team/components';
 import { IMemberContext } from '@sneat/team/models';
 import {CommuneBasePageParams} from 'sneat-shared/services/params';
@@ -58,7 +58,7 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 	}
 
 	public submit(): void {
-		const dto: IDocument = {
+		const dto: IDocumentDto = {
 			title: this.docTitle,
 			type: this.docType,
 			number: this.docNumber,

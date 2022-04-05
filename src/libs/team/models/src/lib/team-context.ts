@@ -18,6 +18,6 @@ export interface ITeamContext extends INavContext<ITeamBrief, ITeamDto> {
 };
 
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
-export type IAssetContext = ITeamItemContext<IAssetBrief, IAssetDto>;
+export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
 

@@ -1,11 +1,12 @@
 <ion-list>
-	<ng-container *ngFor="let docType of docTypes; trackBy: trackById">
+	<ng-container *ngFor="let docType of docTypes; trackBy: id">
 		<ion-item tappable class="with-buttons"
 					 (click)="selectDocType(docType)"
 		>
 			<ion-icon
 						 color="medium"
 						 [name]="docType.expanded ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+
 			<ion-label color="medium" [ngClass]="{expanded: docType.expanded}">
 				<span style="padding-right: 0.5em">{{docType.emoji}}</span>
 				{{docType.title}}
@@ -21,11 +22,11 @@
 
 		</ion-item>
 		<ng-container *ngIf="docType.expanded">
-			<ion-item-sliding #slidingItem *ngFor="let doc of docType.documents; trackBy: trackById">
+			<ion-item-sliding #slidingItem *ngFor="let doc of docType.documents; trackBy: id">
 				<ion-item button (click)="goDoc.emit(doc)">
-					<ion-badge color="light" *ngIf="doc.countryId" slot="start">{{doc.countryId}}</ion-badge>
-					<ion-badge *ngIf="!doc.countryId" slot="start" style="opacity: 0;">--</ion-badge>
-					<ion-label>{{doc.title}}</ion-label>
+					<ion-badge color="light" *ngIf="doc.dto?.countryID" slot="start">{{doc.dto?.countryID}}</ion-badge>
+					<ion-badge *ngIf="!doc.dto?.countryID" slot="start" style="opacity: 0;">--</ion-badge>
+					<ion-label>{{doc.brief?.title}}</ion-label>
 				</ion-item>
 				<!--                <ion-item-options side="start">-->
 				<!--                    <ion-item-option color="primary" (click)="archiveDocument(doc)">Archive</ion-item-option>-->

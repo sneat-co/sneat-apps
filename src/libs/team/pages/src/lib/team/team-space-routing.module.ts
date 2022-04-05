@@ -6,6 +6,7 @@ import { SneatAuthServicesModule } from '@sneat/auth';
 import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
+import { docusRoutes } from '@sneat/extensions/docus';
 import { memberRoutes } from '@sneat/extensions/memberus';
 import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 
@@ -30,6 +31,7 @@ const routes: Routes = [
 		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
 	},
 	...budgetusRoutes,
+	...docusRoutes,
 	// {
 	// 	path: '',
 	// 	component: SpacePageComponent, // intentionally not lazy loading

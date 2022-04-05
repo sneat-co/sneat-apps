@@ -1,22 +1,22 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CommuneDocumentsPageComponent} from './commune-documents-page.component';
+import {DocumentsPageComponent} from './documents-page.component';
 
 describe('CommuneDocumentsPage', () => {
-	let component: CommuneDocumentsPageComponent;
-	let fixture: ComponentFixture<CommuneDocumentsPageComponent>;
+	let component: DocumentsPageComponent;
+	let fixture: ComponentFixture<DocumentsPageComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [CommuneDocumentsPageComponent],
+			declarations: [DocumentsPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(CommuneDocumentsPageComponent);
+		fixture = TestBed.createComponent(DocumentsPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
