@@ -3,8 +3,7 @@ import {
 	DtoTotal,
 	DtoTotals,
 	IAssetDtoGroup,
-	IAssetDtoGroupCounts,
-	IMemberDto,
+	IAssetDtoGroupCounts, IAssetGroupContext,
 	IMemberGroupDto,
 	IMemberGroupDtoCounts,
 	newTeamCounts,
@@ -12,9 +11,7 @@ import {
 	TeamCounts,
 	TeamType,
 } from '@sneat/dto';
-import { RxRecordKey } from '@sneat/rxstore';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
-import { ICommuneIds } from '../commune-ids';
+import { IMemberContext, ITeamContext } from '../team-context';
 
 export class Total {
 	constructor(
@@ -260,13 +257,17 @@ export class AssetGroup {
 	public readonly totals: Totals;
 
 	constructor(
-		public dto: IAssetDtoGroup,
+		public readonly context: IAssetGroupContext,
 	) {
-		this.totals = new Totals(dto.totals);
+		this.totals = new Totals(context.dto?.totals);
+	}
+
+	get id(): string {
+		return this.context.id;
 	}
 
 	public get numberOf(): IAssetDtoGroupCounts {
-		return this.dto.numberOf || {};
+		return this.context.dto?.numberOf || {};
 	}
 }
 
@@ -279,10 +280,6 @@ export class Commune implements ITeamContext {
 		public readonly shortId?: string,
 	) {
 		this.totals = new Totals(team.dto?.totals);
-	}
-
-	public get ids(): ICommuneIds {
-		return { real: this.team.id, short: this.shortId };
 	}
 
 	public get id(): string {

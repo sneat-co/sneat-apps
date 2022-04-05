@@ -55,9 +55,8 @@ interface IVersioned {
 }
 
 export interface IRecord extends IVersioned {
-	id?: RxRecordKey; // ID can be empty for new not saved yet records
+	id?: string; //RxRecordKey; // ID can be empty for new not saved yet records
 	ts?: string; // Timestamp ISO format - can be empty for new not saved yet records
 	// tslint:disable-next-line:no-any
 	[field: string]: any;
 }
-

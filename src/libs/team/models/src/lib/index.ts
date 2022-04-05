@@ -1,3 +1,4 @@
+export * from './uimodels';
 export * from './team-models.module';
 export * from './models';
 export * from './dto-models';

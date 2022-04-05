@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatAuthServicesModule } from '@sneat/auth';
 import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
+import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { memberRoutes } from '@sneat/extensions/memberus';
 import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
@@ -28,6 +29,7 @@ const routes: Routes = [
 		path: 'member/:memberId',
 		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
 	},
+	...budgetusRoutes,
 	// {
 	// 	path: '',
 	// 	component: SpacePageComponent, // intentionally not lazy loading

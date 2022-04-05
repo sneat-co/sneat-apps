@@ -32,6 +32,15 @@
 		<ion-badge style="font-weight: normal; color: gray" color="light"
 							 *ngIf="team?.dto?.numberOf?.assets">{{team?.dto?.numberOf?.assets}}</ion-badge>
 	</ion-item>
+	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/budget"
+						routerDirection="root"
+						(click)="goTeamPage($event, 'budget')"
+						[disabled]="!team"
+						[class.currentPage]="isCurrentPage('budget')"
+	>
+		<ion-icon name="cash-outline" slot="start"></ion-icon>
+		<ion-label>Budget</ion-label>
+	</ion-item>
 	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/contacts"
 						routerDirection="root"
 						[disabled]="!team"

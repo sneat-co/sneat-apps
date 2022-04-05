@@ -98,3 +98,6 @@ export interface IAssetDtoGroup extends ITeamRecord, ITitledRecord, ITotalsHolde
 	categoryId?: AssetType;
 	numberOf?: IAssetDtoGroupCounts;
 }
+
+export type IAssetGroupContext = INavContext<IAssetDtoGroup, IAssetDtoGroup>;
+

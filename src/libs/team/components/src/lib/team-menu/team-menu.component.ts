@@ -45,6 +45,13 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		return false;
 	}
 
+	public goTeamPage(event: Event, p: string): boolean {
+		event.stopPropagation();
+		event.preventDefault();
+		this.closeMenu();
+		return false;
+	}
+
 	public closeMenu(): void {
 		this.menuCtrl.close().catch(this.errorLogger.logError);
 	}
