@@ -167,15 +167,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 				this.takeUntilNeeded(),
 			)
 			.subscribe({
-				next: (newTeam: ITeamContext) => {
-					console.log(`${this.className} extends TeamBaseComponent => loaded team record:`, newTeam);
-					if (newTeam.id === this.teamContext?.id) {
-						this.setNewTeamContext({ ...this.teamContext, ...newTeam });
-						// this.teamContext = ;
-					} else { // Whe should never end up here as should unsubscribe on leaving page or ID change
-						this.errorLogger.logError(`got team record after team context changed: received id=${newTeam.id}, current id=${this.teamContext?.id}`);
-					}
-				},
+				next: this.onTeamLoaded,
 				error: this.errorLogger.logError,
 			});
 	}
@@ -297,12 +289,28 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// };
 
 	private readonly onTeamLoaded = (team: ITeamContext): void => {
-		console.log(`${this.className} extends TeamBasePage.setTeam() => team:`, team);
 		const dtoChanged = team.dto !== this.teamContext?.dto;
+		console.log(`${this.className} extends TeamBasePage.onTeamLoaded() => dtoChanged=${dtoChanged}, team:`, team);
+		if (!team.brief && team.dto) {
+			team = {...team, brief: {id: team.id, ...team.dto}};
+		}
+		if (!team.type) {
+			if (team.brief?.type) {
+				team = {...team, type: team.brief.type};
+			}
+		}
+		this.setNewTeamContext(team)
 		this.teamContext = team;
 		if (dtoChanged) {
 			this.onTeamDtoChanged();
 		}
+		// console.log(`${this.className} extends TeamBaseComponent => loaded team record:`, newTeam);
+		// if (newTeam.id === this.teamContext?.id) {
+		// 	this.setNewTeamContext({ ...this.teamContext, ...newTeam });
+		// 	// this.teamContext = ;
+		// } else { // Whe should never end up here as should unsubscribe on leaving page or ID change
+		// 	this.errorLogger.logError(`got team record after team context changed: received id=${newTeam.id}, current id=${this.teamContext?.id}`);
+		// }
 	};
 }
 

@@ -44,13 +44,13 @@ export class ListsPageComponent extends TeamBaseComponent {
 		});
 	}
 
-	clearAddingToGroup(): void {
-		this.addingToGroup = undefined
-	}
-
 	// defaultShortCommuneId: 'family';
 	public get appId(): string {
 		return this.appService.appId;
+	}
+
+	clearAddingToGroup(): void {
+		this.addingToGroup = undefined;
 	}
 
 	public isCollapsed(group: IListGroup): boolean {
@@ -64,7 +64,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 		this.listusAppStateService.setGroupCollapsed(group.title, !this.isCollapsed(group));
 	}
 
-	reorder(event: Event, listGroup: IListGroup, ): void {
+	reorder(event: Event, listGroup: IListGroup): void {
 		this.errorLogger.logError('reoder is not implemented yet');
 		// let dtoListGroup: IListGroup | undefined;
 		// let reordered = false;
@@ -258,28 +258,33 @@ export class ListsPageComponent extends TeamBaseComponent {
 	// }
 
 	protected override onTeamDtoChanged(): void {
-		super.onTeamDtoChanged();
-		if (this.team) {
-			if (this.reordered) {
-				this.reordered = false;
+		try {
+			super.onTeamDtoChanged();
+			if (this.team) {
+				if (this.reordered) {
+					this.reordered = false;
+				} else {
+					// if (!this.listGroups) {
+					// 	this.listGroups = this.commune.dto.listGroups.map(lg => {
+					// 		const listGroup: IListGroup = {
+					// 			...lg,
+					// 			lists: lg.lists && lg.lists.map(l => ({
+					// 				...l,
+					// 				commune: l.commune || this.shortCommuneInfo,
+					// 			})),
+					// 		};
+					// 		return listGroup;
+					// 	});
+					// }
+					this.updateListsFromTeam(this.team);
+				}
 			} else {
-				// if (!this.listGroups) {
-				// 	this.listGroups = this.commune.dto.listGroups.map(lg => {
-				// 		const listGroup: IListGroup = {
-				// 			...lg,
-				// 			lists: lg.lists && lg.lists.map(l => ({
-				// 				...l,
-				// 				commune: l.commune || this.shortCommuneInfo,
-				// 			})),
-				// 		};
-				// 		return listGroup;
-				// 	});
-				// }
-				this.updateListsFromCommune(this.team, undefined);
+				this.listGroups = [];
 			}
-		} else {
-			this.listGroups = [];
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to process onTeamDtoChanged');
 		}
+
 	}
 
 	private unsubscribeFromUserCommunesSubscriptions(): void {
@@ -322,22 +327,35 @@ export class ListsPageComponent extends TeamBaseComponent {
 	// }
 
 	// and personal lists (private to the current user).
-	private updateListsFromCommune(team: ITeamContext, communeShortId?: string): void {
+	private updateListsFromTeam(team: ITeamContext): void {
 		console.log(
-			`ListsPage.updateListsFromCommune(communeShortId=${communeShortId})`,
+			`ListsPageComponent.updateListsFromTeam()`,
 			team,
 			'\n: passed:', team.dto?.listGroups && team.dto?.listGroups.map(lg => ({ ...lg })),
 			'\n: current:', this.listGroups && this.listGroups.map(lg => ({ ...lg, lists: [...(lg.lists || [])] })),
 		);
-		if (!team?.dto?.listGroups) {
+		if (!team?.dto) {
 			return;
+		}
+		if (!team.dto?.listGroups) {
+			if (team?.type === 'family') {
+				team = {
+					...team, dto: {
+						...team.dto, listGroups: [
+							{ id: 'buy', type: 'buy', title: 'To buy', lists: [{ id: 'groceries', type: 'buy', title: 'Groceries' }] },
+						],
+					},
+				};
+			} else {
+				return;
+			}
 		}
 		if (!this.listGroups) {
 			this.listGroups = [];
 		}
-		team?.dto?.listGroups.forEach(passedListGroup => {
+		team.dto?.listGroups?.forEach(passedListGroup => {
 			if (!passedListGroup.type) {
-				throw new Error('!passedListGroup.type');
+				throw new Error('!passedListGroup.type: ' + JSON.stringify(passedListGroup));
 			}
 			let listGroup = this.listGroups?.find((v, i) => {
 				if (!v.type) {
@@ -418,6 +436,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 				}
 			});
 		});
+		console.log('this.listGroups:', this.listGroups);
 	}
 
 	private async newList(listType: ListType, event: Event): Promise<void> {

@@ -159,6 +159,7 @@ export function createListInfoFromDto(dto: IListDto, shortId?: string): IListInf
 }
 
 export interface IListGroup {
+	id: string;
 	title?: string;
 	type?: ListType;
 	emoji?: string;

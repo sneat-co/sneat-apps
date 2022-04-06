@@ -25,87 +25,89 @@
 
 <ion-content>
 
-	<ion-item-group *ngFor="let listGroup of listGroups; trackBy: trackByGroupIndex">
-		<ion-item-divider (click)="clickGroup(listGroup)" color="light" class="with-buttons" tappable>
-			<ion-label style="font-weight: bold">
-				<span *ngIf="listGroup.emoji" style="margin-right: 0.5em">{{listGroup.emoji}}</span>
+	<ion-card>
+		<ion-item-group *ngFor="let listGroup of listGroups; trackBy: trackByGroupIndex">
+			<ion-item-divider (click)="clickGroup(listGroup)" color="light" class="with-buttons" tappable>
+				<ion-label style="font-weight: bold">
+					<span *ngIf="listGroup.emoji" style="margin-right: 0.5em">{{listGroup.emoji}}</span>
 
-				<span *ngIf="listGroup.title === 'Recipes'">
-					<a href="https://yo.recipes/#utm_source=listus.app&utm_campaign=lists.page" target="_blank" (click)="$event.stopPropagation()"
+					<span *ngIf="listGroup.title === 'Recipes'">
+					<a href="https://yo.recipes/#utm_source=listus.app&utm_campaign=lists.page" target="_blank"
+						 (click)="$event.stopPropagation()"
 					>Yo.recipes</a>
 				</span>
-				<span *ngIf="listGroup.title !== 'Recipes'">{{listGroup.title}}</span>
+					<span *ngIf="listGroup.title !== 'Recipes'">{{listGroup.title}}</span>
 
-				<ion-icon style="margin-left: 0.5em" color="medium"
-							 [name]="isCollapsed(listGroup)? 'arrow-dropdown' : 'arrow-dropup'"></ion-icon>
-			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button color="medium" (click)="addTo($event, listGroup.type)">
-					<ion-icon name="add"></ion-icon>
-				</ion-button>
-				<!--<ion-button>-->
-				<!--<ion-icon name="git-compare"></ion-icon>-->
-				<!--</ion-button>-->
-			</ion-buttons>
-		</ion-item-divider>
-		<ion-reorder-group *ngIf="!isCollapsed(listGroup)" [disabled]="false"
-								 (ionItemReorder)="reorder($event, listGroup)"
-		>
-			<ion-item-sliding #ionItemSliding *ngFor="let list of listGroup.lists; trackBy: trackById">
-				<ion-item button detail="false"
-							 (click)="goList(list)">
-					<ion-label [color]="list.itemsCount ? '' : 'medium'" style="padding-left: 0.5em">
-						<ng-container *ngIf="list.emoji">{{list.emoji}} </ng-container>
+					<ion-icon style="margin-left: 0.5em" color="medium"
+										[name]="isCollapsed(listGroup)? 'arrow-dropdown' : 'arrow-dropup'"></ion-icon>
+				</ion-label>
+				<ion-buttons slot="end">
+					<ion-button color="medium" (click)="addTo($event, listGroup.type)">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+					<!--<ion-button>-->
+					<!--<ion-icon name="git-compare"></ion-icon>-->
+					<!--</ion-button>-->
+				</ion-buttons>
+			</ion-item-divider>
+			<ion-reorder-group *ngIf="!isCollapsed(listGroup)" [disabled]="false"
+												 (ionItemReorder)="reorder($event, listGroup)"
+			>
+				<ion-item-sliding #ionItemSliding *ngFor="let list of listGroup.lists; trackBy: trackById">
+					<ion-item button detail="false"
+										(click)="goList(list)">
+						<ion-label [color]="list.itemsCount ? '' : 'medium'" style="padding-left: 0.5em">
+							<ng-container *ngIf="list.emoji">{{list.emoji}} </ng-container>
 
-						{{list.title}}
+							{{list.title}}
 
-						<ion-text color="medium" *ngIf="list.team" style="font-size: x-small">&mdash;
-							<i>{{list.team.title}}</i></ion-text>
-					</ion-label>
-					<ion-badge slot="end" *ngIf="list.restrictions && list.restrictions.indexOf('adults_only') >= 0"
-								  color="light"
-								  style="font-weight: normal">adults only
-					</ion-badge>
-					<ion-badge slot="end" color="light" *ngIf="list.itemsCount">{{list.itemsCount}}</ion-badge>
-					<ion-reorder slot="end"></ion-reorder>
-				</ion-item>
-				<ion-item-options slot="end">
-					<ion-item-option color="danger" expandable="true" (click)="remove(listGroup, list, ionItemSliding)">
-						<ion-icon name="trash" class="with-label"></ion-icon>
-						Remove
-					</ion-item-option>
-				</ion-item-options>
-			</ion-item-sliding>
-			<form *ngIf="addingToGroup === listGroup.type" (ngSubmit)="createList(listGroup)">
-				<ion-item-sliding>
-					<ion-item>
-						<ion-buttons slot="start" style="margin: 0">
-							<ion-button (click)="cancelListCreation()" color="medium">
-								<ion-icon name="close"></ion-icon>
-							</ion-button>
-						</ion-buttons>
-						<ion-input #newListTitle name="title" placeholder="List name"
-									  [(ngModel)]="listTitle"></ion-input>
-						<ion-button fill="outline" size="small" [disabled]="!listTitle.trim()" type="submit">Add
-						</ion-button>
+							<ion-text color="medium" *ngIf="list.team" style="font-size: x-small">&mdash;
+								<i>{{list.team.title}}</i></ion-text>
+						</ion-label>
+						<ion-badge slot="end" *ngIf="list.restrictions && list.restrictions.indexOf('adults_only') >= 0"
+											 color="light"
+											 style="font-weight: normal">adults only
+						</ion-badge>
+						<ion-badge slot="end" color="light" *ngIf="list.itemsCount">{{list.itemsCount}}</ion-badge>
+						<ion-reorder slot="end"></ion-reorder>
 					</ion-item>
-					<!--suppress AngularUndefinedBinding -->
-					<ion-item-options slot="start" (ionSwipe)="clearAddingToGroup()">
-						<ion-item-option (click)="clearAddingToGroup()">Cancel</ion-item-option>
-					</ion-item-options>
-					<!--suppress AngularUndefinedBinding -->
-					<ion-item-options slot="end" (ionSwipe)="clearAddingToGroup()">
-						<ion-item-option (click)="clearAddingToGroup()">Cancel</ion-item-option>
+					<ion-item-options slot="end">
+						<ion-item-option color="danger" expandable="true" (click)="remove(listGroup, list, ionItemSliding)">
+							<ion-icon name="trash" class="with-label"></ion-icon>
+							Remove
+						</ion-item-option>
 					</ion-item-options>
 				</ion-item-sliding>
-			</form>
-		</ion-reorder-group>
-		<!--        <ion-item button *ngIf="listGroup.type === 'cook'">-->
-		<!--            <ion-label>-->
-		<!--                <h2>Most popular</h2>-->
-		<!--                <p>by <a href="https://recipe.express/"><ion-text color="medium">recipe.express</ion-text></a></p>-->
-		<!--            </ion-label>-->
-		<!--        </ion-item>-->
-	</ion-item-group>
-
+				<form *ngIf="addingToGroup === listGroup.type" (ngSubmit)="createList(listGroup)">
+					<ion-item-sliding>
+						<ion-item>
+							<ion-buttons slot="start" style="margin: 0">
+								<ion-button (click)="cancelListCreation()" color="medium">
+									<ion-icon name="close"></ion-icon>
+								</ion-button>
+							</ion-buttons>
+							<ion-input #newListTitle name="title" placeholder="List name"
+												 [(ngModel)]="listTitle"></ion-input>
+							<ion-button fill="outline" size="small" [disabled]="!listTitle.trim()" type="submit">Add
+							</ion-button>
+						</ion-item>
+						<!--suppress AngularUndefinedBinding -->
+						<ion-item-options slot="start" (ionSwipe)="clearAddingToGroup()">
+							<ion-item-option (click)="clearAddingToGroup()">Cancel</ion-item-option>
+						</ion-item-options>
+						<!--suppress AngularUndefinedBinding -->
+						<ion-item-options slot="end" (ionSwipe)="clearAddingToGroup()">
+							<ion-item-option (click)="clearAddingToGroup()">Cancel</ion-item-option>
+						</ion-item-options>
+					</ion-item-sliding>
+				</form>
+			</ion-reorder-group>
+			<!--        <ion-item button *ngIf="listGroup.type === 'cook'">-->
+			<!--            <ion-label>-->
+			<!--                <h2>Most popular</h2>-->
+			<!--                <p>by <a href="https://recipe.express/"><ion-text color="medium">recipe.express</ion-text></a></p>-->
+			<!--            </ion-label>-->
+			<!--        </ion-item>-->
+		</ion-item-group>
+	</ion-card>
 </ion-content>
