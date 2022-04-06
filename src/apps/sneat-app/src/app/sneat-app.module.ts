@@ -9,7 +9,7 @@ import { DefaultSneatApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { initFirebase, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunesUiModule } from '@sneat/communes/ui';
-import { coreProviders } from '@sneat/core';
+import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { environment } from '../environments/environment';
@@ -18,6 +18,11 @@ import { SneatAppRoutingModule } from './sneat-app-routing.module';
 import { SneatAppComponent } from './sneat-app.component';
 
 initFirebase(environment.firebaseConfig);
+
+const appInfo: IAppInfo = {
+	appId: 'sneat',
+	appTitle: 'sneat.app',
+};
 
 @NgModule({
 	declarations: [
@@ -52,6 +57,10 @@ initFirebase(environment.firebaseConfig);
 		{
 			provide: RANDOM_ID_OPTIONS,
 			useValue: { len: 9 },
+		},
+		{
+			provide: APP_INFO,
+			useValue: appInfo,
 		},
 	],
 	bootstrap: [SneatAppComponent],

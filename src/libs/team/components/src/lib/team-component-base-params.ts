@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { LOGGER_FACTORY, NgModulePreloaderService } from '@sneat/core';
+import { APP_INFO, IAppInfo, LOGGER_FACTORY, NgModulePreloaderService } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILoggerFactory } from '@sneat/rxstore';
 import { TeamNavService, TeamService } from '@sneat/team/services';
@@ -16,6 +16,7 @@ export class TeamComponentBaseParams { // TODO: verify it should be declared in 
 		public readonly preloader: NgModulePreloaderService,
 		@Inject(ErrorLogger) public readonly errorLogger: IErrorLogger,
 		@Inject(LOGGER_FACTORY) public readonly loggerFactory: ILoggerFactory,
+		@Inject(APP_INFO) private readonly appService: IAppInfo,
 	) {
 	}
 }

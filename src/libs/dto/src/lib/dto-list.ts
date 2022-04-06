@@ -1,8 +1,9 @@
-import { ITeamRecord, ITitledRecord, IWithRestrictions } from './dto-models';
-import { CommuneType, ListStatus } from './types';
-import { ICommuneDto } from './dto-commune';
-import { IUserCommuneInfo } from './dto-user';
 import { IRecord, RxRecordKey } from '@sneat/rxstore';
+import { IBriefWithIdAndTitle } from './dto-brief';
+import { ITeamRecord, ITitledRecord, IWithRestrictions } from './dto-models';
+import { IUserCommuneInfo } from './dto-user';
+import { ListStatus, TeamType } from './types';
+
 // import { CommuneShortId } from '../commune-ids';
 
 export interface IQuantity {
@@ -46,7 +47,7 @@ export interface IListDto extends IListCommon, IWithRestrictions {
 	type: ListType;
 	numberOf?: ListCounts;
 	items?: IListItemInfo[];
-	commune?: IShortCommuneInfo; // Used just for in-memory columns?
+	commune?: IShortTeamInfo; // Used just for in-memory columns?
 }
 
 // tslint:disable-next-line:no-unnecessary-class
@@ -77,18 +78,15 @@ export interface IListItemDto extends IListCommon, IListItemCommon {
 	subListItems?: IListItemInfo[];
 }
 
-export interface IShortCommuneInfo {
-	type: CommuneType;
-	id?: RxRecordKey;
+export interface IShortTeamInfo {
+	type: TeamType;
+	id?: string;
 	// shortId?: CommuneShortId;
 	title?: string;
 }
 
-export function createShortCommuneInfoFromDto(dto: ICommuneDto): IShortCommuneInfo {
-	return { id: dto.id, title: dto.title, type: dto.type };
-}
 
-export function createShortCommuneInfoFromUserCommuneInfo(v: IUserCommuneInfo): IShortCommuneInfo {
+export function createShortCommuneInfoFromUserCommuneInfo(v: IUserCommuneInfo): IShortTeamInfo {
 	return { id: v.id, title: v.title, /*shortId: v.shortId,*/ type: v.type };
 }
 
@@ -110,11 +108,15 @@ export interface IListInfo extends IWithRestrictions {
 	shortId?: string;
 	title?: string;
 	hidden?: boolean;
-	commune?: IShortCommuneInfo;
+	team?: IShortTeamInfo;
 	emoji?: string;
 	img?: string;
 	note?: string;
 	itemsCount?: number;
+}
+
+export interface IListBrief extends IBriefWithIdAndTitle {
+	emoji?: string;
 }
 
 export function isListInfoMatchesListDto(i: IListInfo, l: any): boolean {
@@ -151,7 +153,7 @@ export function createListInfoFromDto(dto: IListDto, shortId?: string): IListInf
 		listInfo.restrictions = dto.restrictions;
 	}
 	if (dto.commune) {
-		listInfo.commune = dto.commune;
+		listInfo.team = dto.commune;
 	}
 	return listInfo;
 }
@@ -171,7 +173,7 @@ export function createListItemInfoFromListInfo(listInfo: IListInfo): IListItemIn
 	return {
 		title: listInfo.title,
 		subListType: listInfo.type,
-		subListId: listInfo.id || `${listInfo.commune && listInfo.commune.id}-${listInfo.shortId}`,
+		subListId: listInfo.id || `${listInfo.team && listInfo.team.id}-${listInfo.shortId}`,
 		emoji: listInfo.emoji,
 		img: listInfo.img,
 	};

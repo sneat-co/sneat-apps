@@ -85,7 +85,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		});
 	}
 
-	public delete<T>(endpoint: string, params: HttpParams): Observable<T> {
+	public delete<T>(endpoint: string, params?: HttpParams): Observable<T> {
 		console.log('delete()', endpoint, params);
 		const url = this.baseUrl + endpoint;
 		return (

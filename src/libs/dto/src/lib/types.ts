@@ -1,3 +1,5 @@
+import { TeamType } from '@sneat/auth-models';
+
 export {TeamType, MemberType} from '@sneat/auth-models';
 export type InsurerType = 'insurer';
 export type DwellingContacts =
@@ -22,16 +24,9 @@ export type AgeGroup = 'adult' | 'child' | 'undisclosed' | 'unknown';
 export type Gender = 'male' | 'female' | 'undisclosed' | 'other' | 'unknown';
 export type Restriction = 'adults_only' | 'personal' | string;
 export type ListStatus = 'active' | 'archived' | 'deleted';
-export type CommuneType =
-	'personal'
-	| 'family'
-	| 'school'
-	| 'cohabit'
-	| 'work'
-	| 'educator'
-	| 'realtor'
-	| 'sportclub'
-	| 'parish';
+
+export type CommuneType = TeamType;
+
 export type CountryId = 'IE' | 'US' | 'UK' | 'RU' | 'FR' | 'ES' | 'AU' | 'ZA' | string;
 export type LiabilityType =
 	'salary'

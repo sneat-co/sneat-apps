@@ -1,0 +1,75 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button with-end-buttons">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title>
+			ToDo
+			<ng-container *ngIf="commune">@ {{commune.title}}</ng-container>
+		</ion-title>
+		<ion-buttons slot="end">
+			<ion-button title="Add ToDo" (click)="goNew()">
+				<ion-icon name="add"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-segment>
+		<ion-segment-button>
+			<ion-label>
+				Overdue
+				<ion-badge color="warning">5</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button>
+			<ion-label>
+				Today
+				<ion-badge color="success">3</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button>
+			<ion-label>
+				Future
+				<ion-badge color="light">17</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+
+	<ion-list>
+		<ion-item-group>
+			<ion-item-divider>Vehicles</ion-item-divider>
+			<ion-item>
+				<ion-label>
+					<h2>Peugeot 307sw</h2>
+					<p>
+						It's time to <a href="https://www.google.ie/search?q=change+oil" target="_blank">change oil</a>.
+					</p>
+				</ion-label>
+				<ion-button color="medium" fill="outline">€20-€40</ion-button>
+			</ion-item>
+			<ion-item>
+				<ion-label>
+					<h2>Peugeot 307sw</h2>
+					<p>
+						NCT is due this month.
+						<a href="https://www.ncts.ie/" target="_blank">Book appointment</a>
+					</p>
+				</ion-label>
+				<ion-button color="medium" fill="outline">€55</ion-button>
+			</ion-item>
+		</ion-item-group>
+		<ion-item-group>
+			<ion-item-divider>Real estate</ion-item-divider>
+			<ion-item>
+				<ion-label>
+					<h2>Cut the grass @ Dublin house</h2>
+					<p>It's better to cut your grass at least every month.</p>
+				</ion-label>
+				<ion-button color="medium" fill="outline">€30-€50</ion-button>
+			</ion-item>
+		</ion-item-group>
+	</ion-list>
+</ion-content>

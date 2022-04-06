@@ -1,0 +1,55 @@
+<ion-card [color]="isWatched ? 'light' : ''" *ngIf="showWatchedMovies || !isWatched" @listItem>
+	<img alt="loading error" tappable (click)="emitGoMovie(movie)"
+		  [src]="movie.backdrop_path ? 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path : 'data:image/png;base64,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' ">
+	<ion-card-header style="opacity: 0.7; position: absolute; top: 0; left: 0; right: 0; margin: 0; padding: 0;">
+		<ion-toolbar style="padding-left: 1em">
+			<ion-card-title tappable (click)="emitGoMovie(movie)">{{movie.original_title}}</ion-card-title>
+			<ion-buttons slot="end">
+				<ion-button *ngIf="!checkMovieId()" (click)="emitAddToWatchlist()">add</ion-button>
+				<ion-button *ngIf="checkMovieId()" (click)="removeFromWatchlist(movie)" color="medium">
+					<ion-icon name="close"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</ion-card-header>
+	<ion-toolbar style="margin-top: -5em; opacity: 0.5">
+		<ion-buttons>
+			<ion-button>
+				<ion-thumbnail *ngIf="movie.backdrop_path" >
+					<img alt="poster" tappable
+						  [src]="'https://image.tmdb.org/t/p/w500' + movie.backdrop_path"
+						  style="border: 2px solid red"
+					>
+				</ion-thumbnail>
+			</ion-button>
+			<ion-button>
+				<ion-thumbnail>
+					<img alt="Trailer" src="https://roadmaptoprofit.com/wp-content/uploads/2018/10/video-placeholder-768x432.jpg">
+				</ion-thumbnail>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+	<ion-item>
+		<ion-label color="medium">Released:</ion-label>
+		<ion-input color="medium" [value]="movie.release_date" readonly=""></ion-input>
+		<ion-buttons slot="end">
+			<ion-button fill="clear" (click)="markAsWatched($event);">
+				<ion-icon *ngIf="!isWatched" name="square-outline"></ion-icon>
+				<ion-icon *ngIf="isWatched" name="checkbox-outline"></ion-icon>
+				<ion-text color="medium" style="margin-left: 0.5em; text-transform: none">Is watched</ion-text>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item>
+		<ion-badge color="light" *ngFor="let genre of movie.genres" style="margin-right: 0.5em; font-weight: normal;">
+			{{genre.name}}
+		</ion-badge>
+	</ion-item>
+	<ion-card-content>
+		{{movie.overview}}
+	</ion-card-content>
+</ion-card>
+
+
+
+

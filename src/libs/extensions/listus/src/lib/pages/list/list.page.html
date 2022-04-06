@@ -1,0 +1,167 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="listInfo else noTitle">
+			<ng-container *ngIf="listInfo.emoji"><span style="margin-right: 0.3em">{{listInfo.emoji}}</span>
+			</ng-container>
+			<ng-container [ngSwitch]="listInfo.type">
+				<ng-container *ngSwitchCase="'buy'">{{listInfo.title}} to buy</ng-container>
+				<ng-container *ngSwitchCase="'cook'">{{listInfo.title}} to cook</ng-container>
+				<ng-container *ngSwitchCase="'recipe'">{{listInfo.title}}</ng-container>
+				<ng-container *ngSwitchCase="'watch'">To watch: {{listInfo.title}}</ng-container>
+				<ng-container *ngSwitchDefault>
+					<span *ngIf="listGroupTitle">{{listGroupTitle}}: </span> {{listInfo.title}}
+				</ng-container>
+			</ng-container>
+		</ion-title>
+		<ng-template #noTitle>
+			<ion-title>List</ion-title>
+		</ng-template>
+		<ion-buttons slot="end">
+			<ion-button (click)="newItem()">
+				<ion-icon name="add"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content [ngClass]="{cardy: segment === 'settings' || segment === 'cards'}">
+	<img alt="List image" *ngIf="listDto && listDto.img" [src]="listDto.img">
+	<div class="segment" *ngIf="listInfo" [ngSwitch]="listInfo.type">
+		<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipe'">
+			<ion-segment-button value="list">Ingredients</ion-segment-button>
+			<ion-segment-button value="recipe">Recipe</ion-segment-button>
+		</ion-segment>
+		<ion-segment *ngSwitchDefault [(ngModel)]="segment">
+			<ion-segment-button value="list" title="Brief list">
+				<ion-icon name="paper"></ion-icon>
+			</ion-segment-button>
+			<ion-segment-button value="cards" title="Cards">
+				<ion-icon name="clipboard"></ion-icon>
+			</ion-segment-button>
+			<ion-segment-button value="aisle" *ngIf="listInfo.id && listInfo.id.indexOf('groceries') >= 0">
+				By aisle
+			</ion-segment-button>
+			<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'watch' || listType === 'recipe'">
+				<ion-icon name="compass"></ion-icon>
+			</ion-segment-button>
+			<ion-segment-button value="settings" title="Shared with">
+				<ion-icon name="people"></ion-icon>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+
+	<p class="ion-padding" *ngIf="!listItems && !listInfo">Loading...</p>
+
+	<ng-container *ngIf="segment === 'recipe' && listDto">
+		<p class="ion-padding" *ngIf="listDto.note">
+			{{listDto.note}}
+		</p>
+	</ng-container>
+
+	<ion-list *ngIf="segment === 'list'">
+		<ion-reorder-group *ngIf="listItems" [disabled]="false" (ionItemReorder)="reorder($event)">
+			<sneat-list-item *ngFor="let item of listItems; trackBy: trackById"
+								  [listItem]="item"
+								  [listItems]="listItems"
+								  [commune]="commune"
+								  [listType]="listInfo.type"
+								  [shortListId]="shortListId"
+								  [listDto]="listDto"
+								  (itemClicked)="goListItem($event)"
+								  (listChanged)="setListDto($event)"
+			></sneat-list-item>
+		</ion-reorder-group>
+	</ion-list>
+
+	<ng-container *ngIf="segment !== 'settings' && listType !== 'watch' && listType !== 'recipe'">
+		<sneat-new-list-item [disabled]="isPersisting" #newListItem (added)="addMovieToWatchlist($event)">
+		</sneat-new-list-item>
+	</ng-container>
+
+	<ng-container [ngSwitch]="segment">
+		<div *ngSwitchCase="'discover'">
+			<div class="ion-padding" *ngIf="listType === 'watch'">
+				<h1>Discover good movies</h1>
+				<p>We give you recommendations based on what you added previously to this watchlist and your rating to the
+					watched movies.</p>
+				<p>The more movies you rate the better recommendations we can give.</p>
+				<p>Recommendations in your personal watchlist and in kids watchlist would be different so it's safe to use
+					with your family.</p>
+				<ion-button expand="full">Got it, show recommendations</ion-button>
+			</div>
+			<div class="ion-padding" *ngIf="listType === 'recipe'">
+				<h1>Discover great recipes</h1>
+				<p>We give you recommendations based on your rating to previous recipes in this list.</p>
+				<p>The more recipes you rate the better recommendations we can give.</p>
+				<ion-button expand="full">Got it, show recommendations</ion-button>
+			</div>
+		</div>
+	</ng-container>
+
+	<sneat-shared-with *ngIf="segment === 'settings'" title="This list is shared with"></sneat-shared-with>
+
+	<ng-container *ngIf="segment === 'list' && listItems">
+		<div class="ion-padding" style="text-align: center">
+			<ion-text class="ion-padding" color="medium">Swipe left to remove item, right to mark as completed.
+			</ion-text>
+		</div>
+		<div class="ion-padding" *ngIf="listInfo.type === 'recipe'">
+			<ion-button expand="block" (click)="openCopyListItemsDialog()">
+				🛒 Add to groceries
+			</ion-button>
+			<ion-button expand="block" fill="clear" (click)="goGroceries()">
+				📋 Groceries shopping list
+			</ion-button>
+		</div>
+	</ng-container>
+	<div *ngIf="segment === 'cards' && listDto && listItems" [ngSwitch]="listDto.type"
+		  style="padding-top: 0.5em; padding-bottom: 0.5em">
+		<ng-container *ngSwitchCase="'watch'">
+			<sneat-movie-card *ngFor="let listItem of listItems; trackBy: trackById"
+									[movie]="listItem"
+									[showWatchedMovies]="!isHideWatched"
+									[commune]="commune"
+									[shortListId]="shortListId"
+									[listDto]="listDto"
+									(addToWatchlist)="addMovieToWatchlist($event)"
+									(goMovie)="goMoviePage($event)"
+									(listChanged)="setListDto($event)"
+			></sneat-movie-card>
+		</ng-container>
+		<ng-container *ngSwitchDefault>
+			<ion-card *ngFor="let item of listItems; trackBy: trackById"
+						 button
+						 (click)="goListItem(item)"
+			>
+				<img alt="Item image" *ngIf="item.img" [src]="item.img">
+				<ion-card-content>
+					<h2>{{item.title}}</h2>
+					Short description here
+				</ion-card-content>
+			</ion-card>
+		</ng-container>
+	</div>
+</ion-content>
+<ion-footer *ngIf="(segment === 'list' || segment === 'cards') && listDto && listDto.type === 'watch'">
+	<ion-toolbar>
+		<ion-grid class="grid-layout">
+			<ion-row>
+				<ion-col size="6">
+					<ion-item (click)="clickShowWatchedMovies()">
+						<!--						<ion-checkbox slot="start" (click)="clickShowWatchedMovies()"></ion-checkbox>-->
+						<ion-icon slot="start" *ngIf="!isHideWatched" name="square-outline"></ion-icon>
+						<ion-icon slot="start" *ngIf="isHideWatched" name="checkbox-outline"></ion-icon>
+						<ion-text>Hide watched</ion-text>
+					</ion-item>
+				</ion-col>
+				<ion-col size="6">
+					<ion-button expand="full" fill="clear" (click)="removeIsWatchedFromWatchlist(listItems)">
+						Delete watched
+					</ion-button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-toolbar>
+</ion-footer>

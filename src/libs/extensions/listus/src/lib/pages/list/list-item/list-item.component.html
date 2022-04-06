@@ -1,0 +1,40 @@
+<ion-item *ngIf="listItem === null">
+    <ion-label color="medium">Loading...</ion-label>
+    <ion-spinner color="medium" name="lines-small"></ion-spinner>
+</ion-item>
+<ion-item-sliding #ionSliding @listItem *ngIf="listItem">
+    <ion-item button (click)="goListItem(listItem)">
+        <ion-label [class.done]="listItem.done">
+            <ng-container *ngIf="listItem.emoji">{{listItem.emoji}}</ng-container>
+            {{listItem.title}}
+            <ion-text *ngIf="listItem.quantity" color="medium" style="font-style: italic">
+                &mdash; {{listItem.quantity.value}}{{listItem.quantity.unit}}</ion-text>
+        </ion-label>
+        <ion-badge *ngIf="listItem.category" slot="end" color="light"
+                   style="font-weight: normal">{{listItem.category}}</ion-badge>
+        <ion-buttons slot="end" *ngIf="listType === 'cook'">
+            <ion-button (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>
+        </ion-buttons>
+        <ion-reorder slot="end"></ion-reorder>
+    </ion-item>
+    <!--suppress AngularUndefinedBinding -->
+    <ion-item-options side="start"
+                      (ionSwipe)="setIsCompleted(listItem, ionSliding, !listItem.done)">
+        <ion-item-option *ngIf="!listItem.done" expandable="true" color="success"
+                         (click)="setIsCompleted(listItem, ionSliding, true)">
+            <ion-icon class="with-label" name="checkmark"></ion-icon>
+            Done
+        </ion-item-option>
+        <ion-item-option *ngIf="!!listItem.done" expandable="true" color="primary"
+                         (click)="setIsCompleted(listItem, ionSliding, false)">
+            Not done
+        </ion-item-option>
+    </ion-item-options>
+    <!--suppress AngularUndefinedBinding -->
+    <ion-item-options side="end" (ionSwipe)="deleteFromList(listItem, ionSliding)">
+        <ion-item-option expandable="true" color="danger" (click)="deleteFromList(listItem, ionSliding)">
+            <ion-icon name="trash" class="with-label"></ion-icon>
+            Remove
+        </ion-item-option>
+    </ion-item-options>
+</ion-item-sliding>
