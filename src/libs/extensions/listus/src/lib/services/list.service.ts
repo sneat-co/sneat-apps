@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IListBrief, IListDto, ListType } from '@sneat/dto';
+import { IListDto, ListType } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -51,47 +51,61 @@ export class ListService {
 		return throwError(() => 'not implemented yet');
 	}
 
-	public watchListById(id: string): Observable<IListContext> {
+	getFullListID(team: string, type: ListType, shortID: string): string {
+		return `${team}:${type}:${shortID}`;
+	}
+
+	public watchList(teamID: string, listType: ListType, listID: string): Observable<IListContext> {
+		const id = this.getFullListID(teamID, listType, listID);
 		const doc = this.listDocRef(id);
 		return doc.snapshotChanges()
 			.pipe(
 				map(snapshot => {
-					const { exists, data } = snapshot.payload;
+					console.log(`watchListById(${id}) => snapshot:`, snapshot);
 					let dto: IListDto | null = null;
-					if (exists) {
-						dto = data();
+					if (snapshot.payload.exists) {
+						dto = snapshot.payload.data();
 					}
-					return this.onListSnapshot(id, exists, dto);
+					// console.log(`watchListById(id) =>`, snapshot.payload.exists, dto, snapshot);
+					return this.onListSnapshot(listID, listType, dto);
 				}),
 			);
 	}
 
 
-	public addListItem(params: IListItemsCommandParams): Observable<IListItemResult> {
-		return throwError(() => 'not implemented yet');
+	public createListItems(params: IListItemsCommandParams): Observable<IListItemResult> {
+		console.log('createListItems', params);
+		if (!params.list?.brief?.type) {
+			return throwError(() => 'list is of unknown type');
+		}
+		const request = {
+			teamID: params.team.id,
+			listID: params.list.id,
+			listType: params.list.brief?.type,
+			items: params.items,
+		};
+		return this.sneatApiService.post('listus/create_list_items', request);
 	}
 
 	public deleteListItem(request: IDeleteListItemsRequest): Observable<void> {
 		return throwError(() => 'not implemented yet');
 	}
 
-	public getListById(id: string): Observable<IListContext | null> {
+	public getListById(teamID: string, listType: ListType, listID: string): Observable<IListContext | null> {
+		const id = this.getFullListID(teamID, listType, listID);
 		return this.listDocRef(id).get().pipe(
 			map(snapshot => {
 				const { exists } = snapshot;
-				return this.onListSnapshot(id, snapshot.exists, exists ? snapshot.data() || null : null);
+				return this.onListSnapshot(listID, listType, exists ? snapshot.data() || null : null);
 			}),
 		);
 	}
 
-	private readonly onListSnapshot = (id: string, exists: boolean, dto: IListDto | null): IListContext => {
-		if (!exists) {
-			return { id };
-		}
-		const brief: IListBrief = { id, type: undefined as unknown as ListType, ...dto, title: dto?.title || id };
-		const list: IListContext = { id, dto, brief };
-		return list;
-	};
+
+	private readonly onListSnapshot = (id: string, type: ListType, dto: IListDto | null): IListContext => ({
+		id, dto,
+		brief: dto === null ? null : { ...dto, id, type },
+	});
 
 	private listDocRef(id: string): AngularFirestoreDocument<IListDto> {
 		return this.db.collection('team_lists').doc(id);

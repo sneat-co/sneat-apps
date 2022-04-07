@@ -316,10 +316,10 @@ export class ListsPageComponent extends TeamBaseComponent {
 					...team, dto: {
 						...team.dto, listGroups: [
 							{
-								id: 'buy',
-								type: 'buy',
+								id: 'to-buy',
+								type: 'to-buy',
 								title: 'To buy',
-								lists: [{ id: 'groceries', type: 'buy', title: 'Groceries' }],
+								lists: [{ id: 'groceries', type: 'to-buy', title: 'Groceries' }],
 							},
 						],
 					},

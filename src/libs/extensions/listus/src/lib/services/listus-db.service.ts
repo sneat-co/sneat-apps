@@ -423,15 +423,15 @@ export class ListusDbService extends IListusService {
 								}
 								result = this.listService.mustGetById(listId, tx)
 									.pipe(map(listDto => ({commune, toList: listDto})));
-							} else if (shortListId === 'buy') {
+							} else if (shortListId === 'to-buy') {
 								const listDto: IListDto = {
-									type: 'buy',
+									type: 'to-buy',
 									title: 'Groceries',
 									commune: {id: commune.id, type: commune.type, title: commune.title},
 								};
 								result = of({commune, toList: listDto});
 							} else {
-								result = throwError('Not implemented copy of items for shortListId other then "buy"');
+								result = throwError('Not implemented copy of items for shortListId other then "to-buy"');
 							}
 						} else {
 							result = throwError('Not implemented copy of items for communes without short ID');
@@ -457,8 +457,8 @@ export class ListusDbService extends IListusService {
 									if (!commune.listGroups) {
 										commune.listGroups = [];
 									}
-									const lgType = 'buy'; // TODO: get rid of hardcoded
-									let lg: IListGroup | undefined = commune.listGroups.find(lg2 => lg2.type === 'buy');
+									const lgType = 'to-buy'; // TODO: get rid of hardcoded
+									let lg: IListGroup | undefined = commune.listGroups.find(lg2 => lg2.type === 'to-buy');
 									if (!lg) {
 										lg = {type: lgType, lists: [], title: undefined};
 										commune.listGroups.push(lg);

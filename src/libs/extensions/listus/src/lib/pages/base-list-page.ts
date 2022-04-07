@@ -1,11 +1,10 @@
 //tslint:disable:no-unsafe-any
 import { ActivatedRoute } from '@angular/router';
-import { IMovie } from '@sneat/dto';
-import { TeamComponentBaseParams, TeamItemBaseComponent } from '@sneat/team/components';
+import { IMovie, ListType } from '@sneat/dto';
+import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IListContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
-import { ListService } from '../services/list.service';
 
 export abstract class BaseListPage extends TeamItemBaseComponent {
 
@@ -20,7 +19,7 @@ export abstract class BaseListPage extends TeamItemBaseComponent {
 		protected readonly params: ListusComponentBaseParams,
 	) {
 		super(className, route, params.teamParams, 'lists');
-		this.trackListIdFromUrl();
+		this.trackListParamsFromUrl();
 	}
 
 	public get listService() {
@@ -28,7 +27,11 @@ export abstract class BaseListPage extends TeamItemBaseComponent {
 	}
 
 	public setList(list: IListContext): void {
-		console.log('BaseListPage.setListDto()', list);
+		console.log('BaseListPage.setList()', list, 'this.list:', this.list);
+		if (!list.brief && list.id == this.list?.id && this.list.brief) {
+			list = { ...list, brief: this.list.brief };
+			console.log('BaseListPage.setList() => new this.list:', list);
+		}
 		this.list = list;
 	}
 
@@ -53,26 +56,28 @@ export abstract class BaseListPage extends TeamItemBaseComponent {
 		).catch(this.errorLogger.logError);
 	}
 
-	protected subscribeForListChanges(id: string): void {
-		console.log(`BaseListPage.subscribeForListChanges(${id})`);
+	protected subscribeForListChanges(teamID: string, listType: ListType, listID: string): void {
+		console.log(`BaseListPage.subscribeForListChanges(${teamID}, ${listType}, ${listID})`);
 		if (this.listSubscription) {
 			this.errorLogger.logError('got duplicate attempt to subscribe to list changes');
 			return;
 		}
-		this.listService.watchListById(id).pipe(
+		this.listService.watchList(teamID, listType, listID).pipe(
 			this.takeUntilNeeded(),
 		).subscribe({
 			next: list => this.setList(list),
-			error: this.errorLogger.logError,
+			error: this.errorLogger.logErrorHandler('failed to load list'),
 		});
 	}
 
-	private trackListIdFromUrl(): void {
+	private trackListParamsFromUrl(): void {
 		try {
 			this.route?.paramMap
 				.pipe(this.takeUntilNeeded())
 				.subscribe(params => {
-					const id = params.get('listID');
+					const id = params.get('listID'),
+						type = params.get('listType'),
+						teamID = params.get('teamID') || this.team?.id;
 					if (!id) {
 						this.listSubscription?.unsubscribe();
 						this.listSubscription = undefined;
@@ -81,12 +86,18 @@ export abstract class BaseListPage extends TeamItemBaseComponent {
 					if (this.list?.id != id) {
 						this.listSubscription?.unsubscribe();
 						this.listSubscription = undefined;
-						this.list = { id };
-						this.subscribeForListChanges(id);
+						this.setList({ id, brief: { id, type: type as ListType, title: type || id } });
+						if (!teamID) {
+							throw new Error('no team context');
+						}
+						if (!this.list?.brief?.type) {
+							throw new Error('unknown list type');
+						}
+						this.subscribeForListChanges(teamID, this.list.brief.type, id);
 					}
 				});
 		} catch (e) {
-			console.error('BaseListPage.ngOnInit():', e);
+			this.errorLogger.logError(e, 'trackListParamsFromUrl() failed');
 		}
 	}
 }

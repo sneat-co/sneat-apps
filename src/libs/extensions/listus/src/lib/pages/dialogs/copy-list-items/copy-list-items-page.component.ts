@@ -1,8 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { IListInfo, IListItemBrief } from '@sneat/dto';
+import { IListInfo, IListItemBrief, ListType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { first, ignoreElements, mergeMap } from 'rxjs/operators';
 import { ListService } from '../../../services/list.service';
 
 @Component({
@@ -96,7 +95,7 @@ export class CopyListItemsPageComponent implements OnInit {
 	private loadList(): void {
 		console.log(`CopyListItemsPage.loadList(${this.from?.id})`);
 		if (this.from?.id) {
-			this.listService.getListById(this.from.id)
+			this.listService.getListById('TO_BE_IMPLEMENTED', 'TO_BE_IMPLEMENTED' as ListType, this.from.id)
 				.subscribe({
 					next: list => {
 						console.log('loaded list:', list);

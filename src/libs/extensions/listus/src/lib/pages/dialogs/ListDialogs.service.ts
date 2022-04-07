@@ -13,7 +13,7 @@ export class ListDialogsService {
 	async copyListItems(listItems: IListItemBrief[], from: IListInfo, to?: IListInfo): Promise<void> {
 		if (!to) {
 			to = {  // TODO: get rid of hardcoded?
-				type: 'buy',
+				type: 'to-buy',
 				shortId: 'groceries',
 				title: 'Groceries',
 				team: { type: 'family', title: 'Family' },

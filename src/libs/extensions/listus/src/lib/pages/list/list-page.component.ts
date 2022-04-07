@@ -12,14 +12,14 @@ import { NewListItemComponent } from './new-list-item.component';
 
 @Component({
 	selector: 'sneat-list',
-	templateUrl: './list.page.html',
-	styleUrls: ['./list.page.scss'],
+	templateUrl: './list-page.component.html',
+	styleUrls: ['./list-page.component.scss'],
 	providers: [ListusComponentBaseParams],
 })
 export class ListPageComponent extends BaseListPage {
 
 	public isPersisting = false;
-	public segment: 'list' | 'cards' | 'recipe' | 'settings' | 'discover' = 'list';
+	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' = 'list';
 	public reordering = false;
 	public listItems?: IListItemBrief[];
 	public listType?: ListType;
@@ -113,7 +113,7 @@ export class ListPageComponent extends BaseListPage {
 			return;
 		}
 		if (item.subListId) {
-			const path = item.subListType === 'recipe' ? 'recipe' : 'list';
+			const path = item.subListType === 'recipes' ? 'recipe' : 'list';
 			this.teamNav.navigateForwardToTeamPage(this.team, path, {
 				state: { list: this.list, listItem: item },
 			}).catch(this.errorLogger.logError);
@@ -158,19 +158,19 @@ export class ListPageComponent extends BaseListPage {
 			throw new Error('!this.listItems');
 		}
 		switch (this.list?.brief?.type) {
-			case 'buy':
+			case 'to-buy':
 				break;
-			case 'cook':
+			case 'to-cook':
 				break;
-			case 'do':
+			case 'to-do':
 				break;
 			case 'other':
 				break;
-			case 'recipe':
+			case 'recipes':
 				break;
 			case 'rsvp':
 				break;
-			case 'watch':
+			case 'to-watch':
 				this.errorLogger.logError('Not implemented yet');
 				// this.teamNav.navigateForwardToTeamPage(
 				// 	'list/add-to-watch',
@@ -197,7 +197,7 @@ export class ListPageComponent extends BaseListPage {
 	}
 
 	addMovieToWatchlist(movie: IMovie): void {
-		console.log('ListPage.addMovieToWatchlist', movie);
+		console.log('ListPage.addMovieToWatchlist', movie, this.list, this.team);
 		if (!movie) {
 			throw new Error('movie is a required parameter');
 		}
@@ -209,7 +209,7 @@ export class ListPageComponent extends BaseListPage {
 		if (!this.list) {
 			throw new Error('no list context');
 		}
-		this.listService.addListItem({
+		this.listService.createListItems({
 			team: this.team,
 			list: this.list,
 			items: [item],

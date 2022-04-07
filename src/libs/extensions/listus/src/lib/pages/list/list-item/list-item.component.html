@@ -12,7 +12,7 @@
         </ion-label>
         <ion-badge *ngIf="listItem.category" slot="end" color="light"
                    style="font-weight: normal">{{listItem.category}}</ion-badge>
-        <ion-buttons slot="end" *ngIf="listType === 'cook'">
+        <ion-buttons slot="end" *ngIf="listType === 'to-cook'">
             <ion-button (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>
         </ion-buttons>
         <ion-reorder slot="end"></ion-reorder>

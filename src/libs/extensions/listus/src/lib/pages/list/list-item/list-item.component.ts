@@ -5,6 +5,7 @@ import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief, ListType } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';
+import { IListItemIDsRequest } from '../../../services/interfaces';
 import { ListDialogsService } from '../../dialogs/ListDialogs.service';
 
 @Component({
@@ -71,7 +72,13 @@ export class ListItemComponent {
 		if (!this.team?.id) {
 			return;
 		}
-		this.params.listService.deleteListItem({ teamID: this.team?.id, listID: this.list?.id, itemIDs: [item.id] })
+		const request: IListItemIDsRequest = {
+			teamID: this.team?.id,
+			listID: this.list?.id,
+			listType: this.list?.brief?.type,
+			itemIDs: [item.id],
+		};
+		this.params.listService.deleteListItem(request)
 			.subscribe({
 				next: () => {
 					console.log('ListItemComponent => item deleted');

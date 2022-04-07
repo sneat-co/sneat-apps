@@ -31,7 +31,7 @@ export interface ListCounts {  // TODO: Use some enumerator as IDB library does.
 	completed?: number;
 }
 
-export type ListType = 'buy' | 'cook' | 'do' | 'other' | 'recipe' | 'rsvp' | 'watch';
+export type ListType = 'to-buy' | 'to-watch' | 'to-cook' | 'to-do' | 'other' | 'recipes' | 'rsvp';
 
 // IListCommon is a common base class for a List & ListItem
 export interface IListCommon {

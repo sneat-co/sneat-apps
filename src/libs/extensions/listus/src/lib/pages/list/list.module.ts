@@ -11,7 +11,7 @@ import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-it
 import { ListDialogsService } from '../dialogs/ListDialogs.service';
 import { ListItemComponent } from './list-item/list-item.component';
 
-import { ListPageComponent } from './list.page';
+import { ListPageComponent } from './list-page.component';
 import { NewListItemComponent } from './new-list-item.component';
 
 const routes: Routes = [

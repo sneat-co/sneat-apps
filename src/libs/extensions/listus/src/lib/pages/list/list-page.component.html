@@ -7,10 +7,10 @@
 			<ng-container *ngIf="list?.brief?.emoji"><span style="margin-right: 0.3em">{{list?.brief?.emoji}}</span>
 			</ng-container>
 			<ng-container [ngSwitch]="list?.brief?.type">
-				<ng-container *ngSwitchCase="'buy'">{{list?.brief?.title}} to buy</ng-container>
-				<ng-container *ngSwitchCase="'cook'">{{list?.brief?.title}} to cook</ng-container>
-				<ng-container *ngSwitchCase="'recipe'">{{list?.brief?.title}}</ng-container>
-				<ng-container *ngSwitchCase="'watch'">To watch: {{list?.brief?.title}}</ng-container>
+				<ng-container *ngSwitchCase="'to-buy'">{{list?.brief?.title}} to buy</ng-container>
+				<ng-container *ngSwitchCase="'to-cook'">{{list?.brief?.title}} to cook</ng-container>
+				<ng-container *ngSwitchCase="'recipes'">{{list?.brief?.title}}</ng-container>
+				<ng-container *ngSwitchCase="'to-watch'">To watch: {{list?.brief?.title}}</ng-container>
 				<ng-container *ngSwitchDefault>
 					<span *ngIf="listGroupTitle">{{listGroupTitle}}: </span> {{list?.brief?.title}}
 				</ng-container>
@@ -28,60 +28,65 @@
 </ion-header>
 <ion-content [ngClass]="{cardy: segment === 'settings' || segment === 'cards'}">
 	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img">
-	<div class="segment" *ngIf="list?.brief" [ngSwitch]="list?.brief?.type">
-		<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipe'">
-			<ion-segment-button value="list">Ingredients</ion-segment-button>
-			<ion-segment-button value="recipe">Recipe</ion-segment-button>
-		</ion-segment>
-		<ion-segment *ngSwitchDefault [(ngModel)]="segment">
-			<ion-segment-button value="list" title="Brief list">
-				<ion-icon name="paper"></ion-icon>
-			</ion-segment-button>
-			<ion-segment-button value="cards" title="Cards">
-				<ion-icon name="clipboard"></ion-icon>
-			</ion-segment-button>
-			<ion-segment-button value="aisle" *ngIf="list && list.id.indexOf('groceries') >= 0">
-				By aisle
-			</ion-segment-button>
-			<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'watch' || listType === 'recipe'">
-				<ion-icon name="compass"></ion-icon>
-			</ion-segment-button>
-			<ion-segment-button value="settings" title="Shared with">
-				<ion-icon name="people"></ion-icon>
-			</ion-segment-button>
-		</ion-segment>
-	</div>
 
-	<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>
+	<ion-card>
+		<div class="segment" [ngSwitch]="list?.brief?.type">
+			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">
+				<ion-segment-button value="list">Ingredients</ion-segment-button>
+				<ion-segment-button value="recipe">Recipe</ion-segment-button>
+			</ion-segment>
+			<ion-segment *ngSwitchDefault [(ngModel)]="segment">
+				<ion-segment-button value="list" title="Brief list">
+					<ion-icon name="list-outline"></ion-icon>
+				</ion-segment-button>
+				<ion-segment-button value="cards" title="Cards">
+					<ion-icon name="albums-outline"></ion-icon>
+				</ion-segment-button>
+				<ion-segment-button value="aisle" *ngIf="list && list.id.indexOf('groceries') >= 0">
+					<ion-label>By aisle</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'to-watch' || listType === 'recipes'">
+					<ion-icon name="compass"></ion-icon>
+				</ion-segment-button>
+				<ion-segment-button value="settings" title="Shared with">
+					<ion-icon name="people"></ion-icon>
+				</ion-segment-button>
+			</ion-segment>
+		</div>
 
-	<ng-container *ngIf="segment === 'recipe' && list?.dto">
-		<p class="ion-padding" *ngIf="list?.dto?.note">
-			{{list?.dto?.note}}
-		</p>
-	</ng-container>
+		<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>
 
-	<ion-list *ngIf="segment === 'list'">
-		<ion-reorder-group *ngIf="listItems" [disabled]="false" (ionItemReorder)="reorder($event)">
-			<sneat-list-item *ngFor="let item of listItems; trackBy: trackById"
-								  [listItem]="item"
-								  [listItems]="listItems"
-								  [team]="team"
-								  [listType]="list?.brief?.type"
-								  [list]="list"
-								  (itemClicked)="goListItem($event)"
-								  (listChanged)="setList($event)"
-			></sneat-list-item>
-		</ion-reorder-group>
-	</ion-list>
+		<ng-container *ngIf="segment === 'recipes' && list?.dto">
+			<p class="ion-padding" *ngIf="list?.dto?.note">
+				{{list?.dto?.note}}
+			</p>
+		</ng-container>
 
-	<ng-container *ngIf="segment !== 'settings' && listType !== 'watch' && listType !== 'recipe'">
-		<sneat-new-list-item [disabled]="isPersisting" #newListItem (added)="addMovieToWatchlist($event)">
-		</sneat-new-list-item>
-	</ng-container>
+		<ion-list *ngIf="segment === 'list'">
+			<ion-reorder-group *ngIf="listItems" [disabled]="false" (ionItemReorder)="reorder($event)">
+				<sneat-list-item *ngFor="let item of listItems; trackBy: trackById"
+												 [listItem]="item"
+												 [listItems]="listItems"
+												 [team]="team"
+												 [listType]="list?.brief?.type"
+												 [list]="list"
+												 (itemClicked)="goListItem($event)"
+												 (listChanged)="setList($event)"
+				></sneat-list-item>
+			</ion-reorder-group>
+		</ion-list>
+
+		<ng-container *ngIf="segment !== 'settings' && listType !== 'to-watch' && listType !== 'recipes'">
+			<sneat-new-list-item [disabled]="isPersisting" #newListItem (added)="addMovieToWatchlist($event)">
+			</sneat-new-list-item>
+		</ng-container>
+	</ion-card>
+
+
 
 	<ng-container [ngSwitch]="segment">
 		<div *ngSwitchCase="'discover'">
-			<div class="ion-padding" *ngIf="listType === 'watch'">
+			<div class="ion-padding" *ngIf="listType === 'to-watch'">
 				<h1>Discover good movies</h1>
 				<p>We give you recommendations based on what you added previously to this watchlist and your rating to the
 					watched movies.</p>
@@ -90,7 +95,7 @@
 					with your family.</p>
 				<ion-button expand="full">Got it, show recommendations</ion-button>
 			</div>
-			<div class="ion-padding" *ngIf="listType === 'recipe'">
+			<div class="ion-padding" *ngIf="listType === 'recipes'">
 				<h1>Discover great recipes</h1>
 				<p>We give you recommendations based on your rating to previous recipes in this list.</p>
 				<p>The more recipes you rate the better recommendations we can give.</p>
@@ -106,7 +111,7 @@
 			<ion-text class="ion-padding" color="medium">Swipe left to remove item, right to mark as completed.
 			</ion-text>
 		</div>
-		<div class="ion-padding" *ngIf="list?.brief?.type === 'recipe'">
+		<div class="ion-padding" *ngIf="list?.brief?.type === 'recipes'">
 			<ion-button expand="block" (click)="openCopyListItemsDialog()">
 				🛒 Add to groceries
 			</ion-button>
@@ -143,7 +148,7 @@
 		</ng-container>
 	</div>
 </ion-content>
-<ion-footer *ngIf="(segment === 'list' || segment === 'cards') && list?.brief?.type === 'watch'">
+<ion-footer *ngIf="(segment === 'list' || segment === 'cards') && list?.brief?.type === 'to-watch'">
 	<ion-toolbar>
 		<ion-grid class="grid-layout">
 			<ion-row>
