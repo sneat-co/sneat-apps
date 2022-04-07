@@ -64,7 +64,7 @@ export class MemberService {
 			if (okResponse.uid) {
 				member = {...member, uid: okResponse.uid};
 			}
-			return this.teamService.getTeam(request.team).pipe(
+			return this.teamService.getTeam(request.teamID).pipe(
 				tap((team) => {
 					if (team) {
 						team?.dto?.members.push(member);

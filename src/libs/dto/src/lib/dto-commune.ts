@@ -4,6 +4,7 @@ import { RxRecordKey } from '@sneat/rxstore';
 import { IListGroupsHolder } from './dto-list';
 import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
+import { ITeamDto } from './dto-team';
 import { AgeGroup, CommuneType, CountryId, Gender } from './types';
 
 export const enum TeamCounter {
@@ -128,7 +129,7 @@ export function isUserPersonalCommune(communeID: string, userID?: string): boole
 }
 
 export const CommuneModel = {
-	getListInfoByRealId: (dto: ICommuneDto, listId: string) => {
+	getListInfoByRealId: (dto: ITeamDto, listId: string) => {
 		const result = dto.listGroups && dto.listGroups
 			.map(lg => lg.lists && lg.lists.find(l => l.id === listId))
 			.find(l => !!l);

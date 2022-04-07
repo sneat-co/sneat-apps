@@ -34,7 +34,7 @@ export class RetroMyItemsComponent {
 
 	public delete(item: IRetroItem): void {
 		const request: IRetroItemRequest = {
-			team: this.teamId,
+			teamID: this.teamId,
 			meeting: this.retroId,
 			item: item.ID,
 			type: item.type,
@@ -62,7 +62,7 @@ export class RetroMyItemsComponent {
 			}
 			const title = this.titleControl.value as string;
 			const request: IAddRetroItemRequest = {
-				team: this.teamId,
+				teamID: this.teamId,
 				meeting: this.retroId,
 				type: this.question,
 				title,

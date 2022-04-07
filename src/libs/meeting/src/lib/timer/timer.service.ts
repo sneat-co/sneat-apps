@@ -190,14 +190,14 @@ export class Timer {
 			let toggleTimerMethod: () => Observable<ITimerResponse>;
 			if (member) {
 				toggleTimerMethod = () => this.timerService.toggleMemberTimer({
-					team: this.teamId,
+					teamID: this.teamId,
 					meeting: this.meetingId,
 					operation,
 					member,
 				});
 			} else {
 				toggleTimerMethod = () => this.timerService.toggleMeetingTimer({
-					team: this.teamId,
+					teamID: this.teamId,
 					meeting: this.meetingId,
 					operation,
 				});

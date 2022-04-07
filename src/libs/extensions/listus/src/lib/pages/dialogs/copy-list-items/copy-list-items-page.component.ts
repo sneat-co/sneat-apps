@@ -1,29 +1,29 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IListInfo, IListItemInfo} from '../../../../../models/dto/dto-list';
-import {ModalController, ToastController} from '@ionic/angular';
-import {IErrorLogger, IUserService} from '../../../../../services/interfaces';
-import {IListService, IListusService} from '../../../services/interfaces';
-import {first, ignoreElements, mergeMap} from 'rxjs/operators';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { ModalController, ToastController } from '@ionic/angular';
+import { IListInfo, IListItemBrief } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { first, ignoreElements, mergeMap } from 'rxjs/operators';
+import { ListService } from '../../../services/list.service';
 
 @Component({
-	selector: 'app-copy-list-items',
+	selector: 'sneat-copy-list-items',
 	templateUrl: './copy-list-items-page.component.html',
 })
 export class CopyListItemsPageComponent implements OnInit {
 
-	@Input() modal: ModalController;
-	@Input() from: IListInfo;
-	@Input() to: IListInfo;
-	@Input() listItems: IListItemInfo[] | undefined;
+	@Input() modal?: ModalController;
+	@Input() from?: IListInfo;
+	@Input() to?: IListInfo;
+	@Input() listItems: IListItemBrief[] | undefined;
 
-	private selectedListItemIds: string[];
+	private selectedListItemIds: string[] = [];
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly toastCrl: ToastController,
-		private readonly errorLogger: IErrorLogger,
-		private readonly listService: IListService,
-		private readonly listusService: IListusService,
-		private readonly userService: IUserService,
+		private readonly listService: ListService,
+		// private readonly listusService: IListusService,
+		// private readonly userService: IUserService,
 	) {
 	}
 
@@ -38,70 +38,51 @@ export class CopyListItemsPageComponent implements OnInit {
 		}
 	}
 
-	private loadList(): void {
-		console.log(`CopyListItemsPage.loadList(${this.from.id})`);
-		if (this.from.id) {
-			this.listService.getById(this.from.id)
-				.subscribe(list => {
-					console.log('loaded list:', list);
-					this.listItems = list && list.items;
-					this.setSelected();
-				});
-		}
-	}
-
-	private setSelected(): void {
-		this.selectedListItemIds = this.listItems
-			? this.listItems.map(item => item.id as string)
-			: [];
-	}
-
 	cancel(): void {
-		this.modal.dismiss()
-			.catch(err => {
-				this.errorLogger.logError(err);
-			});
+		this.modal?.dismiss()
+			.catch(this.errorLogger.logError);
 	}
 
 	addSelected(): void {
 		console.log('addSelected');
-		this.userService.currentUserLoaded.pipe(
-			first(),
-			mergeMap(
-				userDto => {
-					if (!userDto) {
-						throw new Error('!userDto');
-					}
-					if (!this.to.commune) {
-						throw new Error('!this.to.commune');
-					}
-					if (!this.from.id) {
-						throw new Error('!this.from.id');
-					}
-					if (!this.listItems) {
-						throw new Error('!this.listItems');
-					}
-					const toListId = this.to.id || `${this.to.commune.id}-${this.to.shortId}`;
-					const listItemsToAdd = this.listItems.filter(
-						item => this.selectedListItemIds.some(id => id === item.id));
-					return this.listusService.copyListItems(this.from.id, toListId, listItemsToAdd, userDto);
-				},
-			),
-			ignoreElements(),
-		)
-			.subscribe(
-				{
-					complete: () => {
-						console.log('Selected items added to target list');
-						this.addSelectedCompleted()
-							.catch(this.errorLogger.logError);
-					},
-					error: this.errorLogger.logError,
-				},
-			);
+		// this.userService.currentUserLoaded.pipe(
+		// 	first(),
+		// 	mergeMap(
+		// 		userDto => {
+		// 			if (!userDto) {
+		// 				throw new Error('!userDto');
+		// 			}
+		// 			if (!this.to?.team) {
+		// 				throw new Error('!this.to.team');
+		// 			}
+		// 			if (!this.from?.team) {
+		// 				throw new Error('!this.from.team');
+		// 			}
+		// 			if (!this.listItems) {
+		// 				throw new Error('!this.listItems');
+		// 			}
+		// 			const toListId = this.to.id || `${this.to.team.id}-${this.to.shortId}`;
+		// 			const listItemsToAdd = this.listItems.filter(
+		// 				item => this.selectedListItemIds.some(id => id === item.id));
+		// 			return this.listusService.copyListItems(this.from.id, toListId, listItemsToAdd, userDto);
+		// 		},
+		// 	),
+		// 	ignoreElements(),
+		// )
+		// 	.subscribe(
+		// 		{
+		// 			complete: () => {
+		// 				console.log('Selected items added to target list');
+		// 				this.addSelectedCompleted()
+		// 					.catch(this.errorLogger.logError);
+		// 			},
+		// 			error: this.errorLogger.logError,
+		// 		},
+		// 	);
 	}
 
-	onItemToggled({checked, value}: { checked: boolean; value: string }): void {
+	onItemToggled(event: Event): void {
+		const { checked, value } = (event as CustomEvent).detail as { checked: boolean; value: string };
 		console.log(`CopyListItemsPage.onItemToggled(${value}, ${checked})`);
 		if (checked) {
 			if (this.selectedListItemIds.indexOf(value) < 0) {
@@ -112,6 +93,27 @@ export class CopyListItemsPageComponent implements OnInit {
 		}
 	}
 
+	private loadList(): void {
+		console.log(`CopyListItemsPage.loadList(${this.from?.id})`);
+		if (this.from?.id) {
+			this.listService.getListById(this.from.id)
+				.subscribe({
+					next: list => {
+						console.log('loaded list:', list);
+						this.listItems = list && list.dto?.items || [];
+						this.setSelected();
+					},
+					error: this.errorLogger.logError,
+				});
+		}
+	}
+
+	private setSelected(): void {
+		this.selectedListItemIds = this.listItems
+			? this.listItems.map(item => item.id as string)
+			: [];
+	}
+
 	private async addSelectedCompleted(): Promise<void> {
 		console.log('CopyListItemsPage.addSelectedCompleted()');
 		const toast = await this.toastCrl.create({
@@ -119,6 +121,6 @@ export class CopyListItemsPageComponent implements OnInit {
 		});
 		toast.present()
 			.catch(this.errorLogger.logError);
-		await this.modal.dismiss();
+		await this.modal?.dismiss();
 	}
 }

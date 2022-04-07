@@ -69,9 +69,10 @@ export interface IMemberDto extends IMemberBase {
 	contacts?: IContact2Member[];
 }
 
-export function newCommuneMemberInfo(m: IMemberDto): ITeamMemberInfo {
+
+export function newCommuneMemberInfo(id: string, m: IMemberDto): ITeamMemberInfo {
 	return excludeUndefined({
-		id: m.id as string,
+		id: id,
 		userID: m.userID,
 		title: m.title && m.userID && m.title === m.userID ? undefined : m.title,
 		age: m.ageGroup,

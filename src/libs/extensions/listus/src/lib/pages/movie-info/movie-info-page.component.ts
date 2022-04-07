@@ -6,7 +6,7 @@ import {NavController} from '@ionic/angular';
 import {CommuneBasePage} from '../../../../pages/commune-base-page';
 import {BaseListItemPage} from '../base-list-item-page';
 import {IListItemInfo} from '../../../../models/dto/dto-list';
-import {IListItemCommandParams, IListService, IListusService} from '../../services/interfaces';
+import {IListItemsCommandParams, IListService, IListusService} from '../../services/interfaces';
 import {AuthStateService} from '../../../../services/auth-state.service';
 import {ITmdbService} from '../../watchlist/interfaces';
 
@@ -62,11 +62,11 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 		}
 		const {id} = this.listInfo;
 		if (id && (!this.listDto || this.listDto.id !== id)) {
-			this.loadList(id);
+			this.subscribeForListChanges(id);
 		}
 	}
 
-	private createListItemCommandParams(): IListItemCommandParams {
+	private createListItemCommandParams(): IListItemsCommandParams {
 		if (!this.commune) {
 			throw new Error('!this.commune');
 		}
@@ -93,7 +93,7 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 			.subscribe(
 				listDto => {
 					console.log('MovieCardComponent => movie deleted');
-					this.setListDto(listDto);
+					this.setList(listDto);
 				},
 				this.errorLogger.logError,
 			);

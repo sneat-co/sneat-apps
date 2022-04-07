@@ -65,7 +65,7 @@ export class TeamItemBaseService {
 					return item;
 				}),
 				tap(() => {
-					this.teamService.getTeam(request.team).subscribe({
+					this.teamService.getTeam(request.teamID).subscribe({
 						next: team => {
 							if (team.dto) {
 								if (!team.dto?.numberOf) {

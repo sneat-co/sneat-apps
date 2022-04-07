@@ -1,6 +1,6 @@
-import { IRecord, RxRecordKey } from '@sneat/rxstore';
+import { RxRecordKey } from '@sneat/rxstore';
 import { IBriefWithIdAndTitle } from './dto-brief';
-import { ITeamRecord, ITitledRecord, IWithRestrictions } from './dto-models';
+import { ITeamRecord, IWithRestrictions } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
 import { ListStatus, TeamType } from './types';
 
@@ -11,15 +11,15 @@ export interface IQuantity {
 	unit: string;
 }
 
-export interface IListItemCommon extends IRecord {
+export interface IListItemCommon extends IListCommon {
 	subListId?: RxRecordKey;
 	subListType?: ListType;
-	title?: string; // Mandatory title
 	quantity?: IQuantity;
 	category?: string;
 }
 
-export interface IListItemInfo extends IListItemCommon {
+export interface IListItemBrief extends IListItemCommon {
+	id: string;
 	created?: string; // UTC datetime
 	emoji?: string;
 	done?: boolean;
@@ -33,32 +33,37 @@ export interface ListCounts {  // TODO: Use some enumerator as IDB library does.
 
 export type ListType = 'buy' | 'cook' | 'do' | 'other' | 'recipe' | 'rsvp' | 'watch';
 
-export interface IListCommon extends ITeamRecord, ITitledRecord {
+// IListCommon is a common base class for a List & ListItem
+export interface IListCommon {
+	title: string;
 	img?: string;
 	emoji?: string;
-	status?: ListStatus;
 	done?: boolean;
+}
+
+export interface IListBase extends IListCommon, ITeamRecord {
+	type: ListType;
+	status?: ListStatus;
+}
+
+export interface IListDto extends IListBase, IWithRestrictions {
 	dtCreated?: number;
 	dtClosed?: number;
 	note?: string; // Is used for example for recipe text
-}
-
-export interface IListDto extends IListCommon, IWithRestrictions {
-	type: ListType;
 	numberOf?: ListCounts;
-	items?: IListItemInfo[];
+	items?: IListItemBrief[];
 	commune?: IShortTeamInfo; // Used just for in-memory columns?
 }
 
 // tslint:disable-next-line:no-unnecessary-class
 export class ListItemInfoModel {
-	static trackBy: (index: number, item: IListItemInfo) => (string | number | undefined) = (index, item) =>
+	static trackBy: (index: number, item: IListItemBrief) => (string | number | undefined) = (index, item) =>
 		!item ? index : !!item.id && `id:${item.id}` || item.subListId && `subList:${item.subListId}` || item.title;
 }
 
 // tslint:disable-next-line:no-unnecessary-class
 export class ListItemModel {
-	static equalListItems(...items: IListItemInfo[]): boolean {
+	static equalListItems(...items: IListItemBrief[]): boolean {
 		const { id, title, subListId, category, subListType } = items[0];
 		return !items.some(item => {
 			if (id) {
@@ -72,10 +77,10 @@ export class ListItemModel {
 	}
 }
 
-export interface IListItemDto extends IListCommon, IListItemCommon {
+export interface IListItemDto extends IListBase, IListItemCommon {
 	listId?: string;
 	score?: number;
-	subListItems?: IListItemInfo[];
+	subListItems?: IListItemBrief[];
 }
 
 export interface IShortTeamInfo {
@@ -115,7 +120,7 @@ export interface IListInfo extends IWithRestrictions {
 	itemsCount?: number;
 }
 
-export interface IListBrief extends IBriefWithIdAndTitle {
+export interface IListBrief extends IListBase, IBriefWithIdAndTitle {
 	emoji?: string;
 }
 
@@ -139,9 +144,6 @@ export function createListInfoFromDto(dto: IListDto, shortId?: string): IListInf
 	};
 	if (shortId) {
 		listInfo.shortId = shortId;
-	}
-	if (dto.id) {
-		listInfo.id = dto.id;
 	}
 	if (dto.items && dto.items.length) {
 		listInfo.itemsCount = dto.items.length;
@@ -170,26 +172,27 @@ export interface IListGroupsHolder {
 	listGroups?: IListGroup[];
 }
 
-export function createListItemInfoFromListInfo(listInfo: IListInfo): IListItemInfo {
-	return {
-		title: listInfo.title,
-		subListType: listInfo.type,
-		subListId: listInfo.id || `${listInfo.team && listInfo.team.id}-${listInfo.shortId}`,
-		emoji: listInfo.emoji,
-		img: listInfo.img,
-	};
-}
+// export function createListItemInfoFromListInfo(listInfo: IListInfo): IListItemBrief {
+// 	return {
+// 		id: listInfo.id || '',
+// 		title: listInfo.title || '',
+// 		subListType: listInfo.type,
+// 		subListId: listInfo.id || `${listInfo.team && listInfo.team.id}-${listInfo.shortId}`,
+// 		emoji: listInfo.emoji,
+// 		img: listInfo.img,
+// 	};
+// }
 
-export function createListItemInfo(listItem: IListItemDto): IListItemInfo {
-	const v: IListItemInfo = {
-		id: listItem.id,
-		title: listItem.title,
-	};
-	if (listItem.emoji) {
-		v.emoji = listItem.emoji;
-	}
-	if (listItem.done) {
-		v.done = true;
-	}
-	return v;
-}
+// export function createListItemInfo(listItem: IListItemDto): IListItemBrief {
+// 	const v: IListItemBrief = {
+// 		id: listItem.id,
+// 		title: listItem.title,
+// 	};
+// 	if (listItem.emoji) {
+// 		v.emoji = listItem.emoji;
+// 	}
+// 	if (listItem.done) {
+// 		v.done = true;
+// 	}
+// 	return v;
+// }

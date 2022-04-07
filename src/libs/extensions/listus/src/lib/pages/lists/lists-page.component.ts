@@ -4,18 +4,18 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
 import { IListGroup, IListInfo, ListType } from '@sneat/dto';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamBaseComponent } from '@sneat/team/components';
 import { createShortCommuneInfoFromDto, ITeamContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
-import { ListService } from '../../services/list.service';
+import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
 import { getListUrlId } from '../helpers';
 import { NewListDialogComponent } from './new-list-dialog.component';
 
 @Component({
-	selector: 'sneat-lists',
+	selector: 'sneat-lists-page',
 	templateUrl: './lists-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [ListusComponentBaseParams],
 })
 export class ListsPageComponent extends TeamBaseComponent {
 
@@ -29,15 +29,14 @@ export class ListsPageComponent extends TeamBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		private readonly params: ListusComponentBaseParams,
 		@Inject(APP_INFO) private readonly appService: IAppInfo,
-		private readonly listService: ListService,
 		private readonly modalCtrl: PopoverController,
 		// private readonly shelfService: ShelfService,
 		// private preloaderService: NgModulePreloaderService,
 		private readonly listusAppStateService: IListusAppStateService,
 	) {
-		super('ListsPageComponent', route, params);
+		super('ListsPageComponent', route, params.teamParams);
 		// this.preloaderService.markAsPreloaded('lists');
 		this.listusAppStateService.changed.subscribe(appState => {
 			this.collapsedGroups = appState.collapsedGroups;
@@ -128,39 +127,13 @@ export class ListsPageComponent extends TeamBaseComponent {
 		// 		});
 	}
 
-	goList(list: IListInfo): void {
+	public goList(list: IListInfo): void {
 		console.log(`ListsPage.goList(id=${list.id}, shortId=${list.shortId}, title=${list.title}) => communeInfo:`, list.team);
 		const listGroup = this.listGroups?.find(lg => (lg.lists || []).some(l => eq(l.id, list.id)));
-		const listId = getListUrlId(list);
-		let path = 'list';
-		let keyParam = 'id';
-		switch (list.type) {
-			case 'cook':
-				path = 'recipes';
-				keyParam = 'folder';
-				break;
-			case 'buy':
-				path = 'to-buy';
-				keyParam = 'list';
-				break;
-			case 'do':
-				path = 'to-do';
-				keyParam = 'list';
-				break;
-			case 'rsvp':
-				path = 'rsvp';
-				keyParam = 'list';
-				break;
-			case 'watch':
-				path = 'to-watch';
-				keyParam = 'list';
-				break;
-			default:
-				break;
-		}
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
+		const path = `list/${list.type}/${list.id}`;
 		this.teamParams.teamNavService.navigateForwardToTeamPage(
 			this.team,
 			path,
@@ -204,7 +177,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
-		this.listService.deleteList(this.team, list.id)
+		this.params.listService.deleteList(this.team, list.id)
 			.subscribe({
 				next: () => {
 					listGroup.lists = (listGroup.lists || []).filter(l => !eq(l.id, list.id));
@@ -342,7 +315,12 @@ export class ListsPageComponent extends TeamBaseComponent {
 				team = {
 					...team, dto: {
 						...team.dto, listGroups: [
-							{ id: 'buy', type: 'buy', title: 'To buy', lists: [{ id: 'groceries', type: 'buy', title: 'Groceries' }] },
+							{
+								id: 'buy',
+								type: 'buy',
+								title: 'To buy',
+								lists: [{ id: 'groceries', type: 'buy', title: 'Groceries' }],
+							},
 						],
 					},
 				};

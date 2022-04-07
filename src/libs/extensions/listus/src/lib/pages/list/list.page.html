@@ -3,16 +3,16 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="listInfo else noTitle">
-			<ng-container *ngIf="listInfo.emoji"><span style="margin-right: 0.3em">{{listInfo.emoji}}</span>
+		<ion-title *ngIf="list?.brief else noTitle">
+			<ng-container *ngIf="list?.brief?.emoji"><span style="margin-right: 0.3em">{{list?.brief?.emoji}}</span>
 			</ng-container>
-			<ng-container [ngSwitch]="listInfo.type">
-				<ng-container *ngSwitchCase="'buy'">{{listInfo.title}} to buy</ng-container>
-				<ng-container *ngSwitchCase="'cook'">{{listInfo.title}} to cook</ng-container>
-				<ng-container *ngSwitchCase="'recipe'">{{listInfo.title}}</ng-container>
-				<ng-container *ngSwitchCase="'watch'">To watch: {{listInfo.title}}</ng-container>
+			<ng-container [ngSwitch]="list?.brief?.type">
+				<ng-container *ngSwitchCase="'buy'">{{list?.brief?.title}} to buy</ng-container>
+				<ng-container *ngSwitchCase="'cook'">{{list?.brief?.title}} to cook</ng-container>
+				<ng-container *ngSwitchCase="'recipe'">{{list?.brief?.title}}</ng-container>
+				<ng-container *ngSwitchCase="'watch'">To watch: {{list?.brief?.title}}</ng-container>
 				<ng-container *ngSwitchDefault>
-					<span *ngIf="listGroupTitle">{{listGroupTitle}}: </span> {{listInfo.title}}
+					<span *ngIf="listGroupTitle">{{listGroupTitle}}: </span> {{list?.brief?.title}}
 				</ng-container>
 			</ng-container>
 		</ion-title>
@@ -27,8 +27,8 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content [ngClass]="{cardy: segment === 'settings' || segment === 'cards'}">
-	<img alt="List image" *ngIf="listDto && listDto.img" [src]="listDto.img">
-	<div class="segment" *ngIf="listInfo" [ngSwitch]="listInfo.type">
+	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img">
+	<div class="segment" *ngIf="list?.brief" [ngSwitch]="list?.brief?.type">
 		<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipe'">
 			<ion-segment-button value="list">Ingredients</ion-segment-button>
 			<ion-segment-button value="recipe">Recipe</ion-segment-button>
@@ -40,7 +40,7 @@
 			<ion-segment-button value="cards" title="Cards">
 				<ion-icon name="clipboard"></ion-icon>
 			</ion-segment-button>
-			<ion-segment-button value="aisle" *ngIf="listInfo.id && listInfo.id.indexOf('groceries') >= 0">
+			<ion-segment-button value="aisle" *ngIf="list && list.id.indexOf('groceries') >= 0">
 				By aisle
 			</ion-segment-button>
 			<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'watch' || listType === 'recipe'">
@@ -52,11 +52,11 @@
 		</ion-segment>
 	</div>
 
-	<p class="ion-padding" *ngIf="!listItems && !listInfo">Loading...</p>
+	<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>
 
-	<ng-container *ngIf="segment === 'recipe' && listDto">
-		<p class="ion-padding" *ngIf="listDto.note">
-			{{listDto.note}}
+	<ng-container *ngIf="segment === 'recipe' && list?.dto">
+		<p class="ion-padding" *ngIf="list?.dto?.note">
+			{{list?.dto?.note}}
 		</p>
 	</ng-container>
 
@@ -65,12 +65,11 @@
 			<sneat-list-item *ngFor="let item of listItems; trackBy: trackById"
 								  [listItem]="item"
 								  [listItems]="listItems"
-								  [commune]="commune"
-								  [listType]="listInfo.type"
-								  [shortListId]="shortListId"
-								  [listDto]="listDto"
+								  [team]="team"
+								  [listType]="list?.brief?.type"
+								  [list]="list"
 								  (itemClicked)="goListItem($event)"
-								  (listChanged)="setListDto($event)"
+								  (listChanged)="setList($event)"
 			></sneat-list-item>
 		</ion-reorder-group>
 	</ion-list>
@@ -107,7 +106,7 @@
 			<ion-text class="ion-padding" color="medium">Swipe left to remove item, right to mark as completed.
 			</ion-text>
 		</div>
-		<div class="ion-padding" *ngIf="listInfo.type === 'recipe'">
+		<div class="ion-padding" *ngIf="list?.brief?.type === 'recipe'">
 			<ion-button expand="block" (click)="openCopyListItemsDialog()">
 				🛒 Add to groceries
 			</ion-button>
@@ -116,18 +115,17 @@
 			</ion-button>
 		</div>
 	</ng-container>
-	<div *ngIf="segment === 'cards' && listDto && listItems" [ngSwitch]="listDto.type"
+	<div *ngIf="segment === 'cards' && list?.dto?.items" [ngSwitch]="list?.brief?.type"
 		  style="padding-top: 0.5em; padding-bottom: 0.5em">
 		<ng-container *ngSwitchCase="'watch'">
 			<sneat-movie-card *ngFor="let listItem of listItems; trackBy: trackById"
 									[movie]="listItem"
 									[showWatchedMovies]="!isHideWatched"
-									[commune]="commune"
-									[shortListId]="shortListId"
-									[listDto]="listDto"
+									[team]="team"
+									[list]="list"
 									(addToWatchlist)="addMovieToWatchlist($event)"
 									(goMovie)="goMoviePage($event)"
-									(listChanged)="setListDto($event)"
+									(listChanged)="setList($event)"
 			></sneat-movie-card>
 		</ng-container>
 		<ng-container *ngSwitchDefault>
@@ -135,6 +133,7 @@
 						 button
 						 (click)="goListItem(item)"
 			>
+
 				<img alt="Item image" *ngIf="item.img" [src]="item.img">
 				<ion-card-content>
 					<h2>{{item.title}}</h2>
@@ -144,7 +143,7 @@
 		</ng-container>
 	</div>
 </ion-content>
-<ion-footer *ngIf="(segment === 'list' || segment === 'cards') && listDto && listDto.type === 'watch'">
+<ion-footer *ngIf="(segment === 'list' || segment === 'cards') && list?.brief?.type === 'watch'">
 	<ion-toolbar>
 		<ion-grid class="grid-layout">
 			<ion-row>

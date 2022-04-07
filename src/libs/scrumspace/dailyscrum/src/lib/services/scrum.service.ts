@@ -140,7 +140,7 @@ export class ScrumService extends BaseMeetingService {
 		if (!request.message) {
 			return throwError(() => 'message required');
 		}
-		if (!request.team) {
+		if (!request.teamID) {
 			return throwError(() => 'team required');
 		}
 		if (!request.member) {
@@ -217,7 +217,7 @@ export class ScrumService extends BaseMeetingService {
 		};
 		const request: IAddTaskRequest = {
 			type,
-			team: team.id,
+			teamID: team.id,
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			meeting: scrumId,

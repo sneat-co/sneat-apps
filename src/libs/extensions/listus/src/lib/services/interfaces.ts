@@ -1,6 +1,15 @@
 //
-import { ICommuneDto, IListDto, IListItemDto, IListItemInfo } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
+import {
+	CommuneType,
+	ICommuneDto,
+	IListBrief,
+	IListDto,
+	IListItemDto,
+	IListItemBrief,
+	ListType,
+	TeamType,
+} from '@sneat/dto';
+import { IListContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
 
 export interface GetOrCreateCommuneItemIds {
 	id?: string;
@@ -37,15 +46,10 @@ export interface IListItemResult {
 }
 
 
-export interface IList {
-	dto: IListDto;
-	shortId?: string;
-}
-
-export interface IListItemCommandParams {
+export interface IListItemsCommandParams {
 	team: ITeamContext;
-	list: IList;
-	items: IListItemInfo[];
+	list: IListContext;
+	items: IListItemBrief[];
 }
 
 export type ReorderListItemsWorker = (listDto: IListDto) => void;
@@ -72,3 +76,27 @@ export type ReorderListItemsWorker = (listDto: IListDto) => void;
 
 // export const TMDB_PROVIDER = new InjectionToken<ITmdbService>('tmdbService');
 
+// export function shortCommuneAndListIds(id: string): { shortCommuneId?: TeamType; shortListId?: ListType } {
+// 	const i = id.indexOf('-');
+// 	if (i < 0) {
+// 		return {};
+// 	}
+// 	return { shortCommuneId: id.substr(0, i) as CommuneType, shortListId: id.substr(i + 1) as ListType };
+// }
+
+export interface ICreateListRequest extends ITeamRequest, IListBrief {
+}
+
+export interface IListRequest extends ITeamRequest {
+	listID: string;
+}
+
+export interface IListItemRequest extends IListRequest {
+	itemID: string;
+}
+
+export interface IListItemIDsRequest extends IListRequest {
+	itemIDs: string[];
+}
+
+export type IDeleteListItemsRequest = IListItemIDsRequest;

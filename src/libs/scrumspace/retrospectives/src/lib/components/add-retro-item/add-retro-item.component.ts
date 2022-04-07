@@ -42,7 +42,7 @@ export class AddRetroItemComponent implements OnDestroy {
 		}
 		const title = this.titleControl.value as string;
 		const request: IAddRetroItemRequest = {
-			team: this.teamId,
+			teamID: this.teamId,
 			meeting: this.meetingId,
 			type: this.retroItemType,
 			title,

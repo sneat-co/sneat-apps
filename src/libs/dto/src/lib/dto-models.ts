@@ -4,8 +4,8 @@ import { AgeGroup, Gender, Restriction } from './types';
 
 // import {IPersonSize} from '../ui/dto-sizechart';
 
-export interface  ITitled {
-	title: string
+export interface ITitled {
+	title: string;
 }
 
 export interface ITitledRecord extends IRecord {
@@ -47,7 +47,7 @@ export interface DtoTotals {
 //     id: string;
 // }
 
-export interface ITeamRecord extends IDemoRecord {
+export interface ITeamRecord {
 	teamId?: string;
 }
 

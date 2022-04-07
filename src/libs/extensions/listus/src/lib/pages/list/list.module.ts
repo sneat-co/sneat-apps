@@ -1,22 +1,24 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { SharedWithModule } from '@sneat/extensions/contactus';
+import { ListusCoreServicesModule } from '@sneat/extensions/listus';
+import { MovieCardComponentModule } from '../../movie-card/movie-card.component.module';
+import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-items.module';
+import { ListDialogsService } from '../dialogs/ListDialogs.service';
+import { ListItemComponent } from './list-item/list-item.component';
 
-import {ListPageComponent, NewListItemComponent} from './list.page';
-import {ListDialogsService} from '../dialogs/ListDialogs.service';
-import {CopyListItemsPageModule} from '../dialogs/copy-list-items/copy-list-items.module';
-import {ListItemComponent} from './list-item/list-item.component';
-import {MovieCardComponentModule} from '../../movie-card/movie-card.component.module';
-import {SharedWithModule} from '../../../contactus/components/shared-with.module';
+import { ListPageComponent } from './list.page';
+import { NewListItemComponent } from './new-list-item.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ListPageComponent
-	}
+		component: ListPageComponent,
+	},
 ];
 
 @NgModule({
@@ -28,6 +30,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		MovieCardComponentModule,
 		SharedWithModule,
+		ListusCoreServicesModule,
 	],
 	declarations: [
 		ListItemComponent,

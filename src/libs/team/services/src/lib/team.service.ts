@@ -189,7 +189,7 @@ export class TeamService {
 			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberId);
 			if (member?.uid === this.userService.currentUserId) {
 				const teamRequest: ITeamRequest = {
-					team: teamRecord.id,
+					teamID: teamRecord.id,
 				};
 				this.sneatApiService
 					.post<ITeamDto>('team/leave_team', teamRequest)
@@ -204,7 +204,7 @@ export class TeamService {
 			}
 		}
 		const request: ITeamMemberRequest = {
-			team: teamRecord.id,
+			teamID: teamRecord.id,
 			member: memberId,
 		};
 		return this.sneatApiService

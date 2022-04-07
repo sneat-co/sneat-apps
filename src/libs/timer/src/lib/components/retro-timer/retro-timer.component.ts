@@ -175,6 +175,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 	};
 
 	private createRetroRequest(): IRetrospectiveRequest {
-		return { team: this.team.id, meeting: this.retrospective.id };
+		return { teamID: this.team.id, meeting: this.retrospective.id };
 	}
 }

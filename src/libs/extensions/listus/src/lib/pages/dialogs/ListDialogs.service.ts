@@ -1,7 +1,7 @@
-import {IListInfo, IListItemInfo} from '../../../../models/dto/dto-list';
-import {ModalController} from '@ionic/angular';
-import {Injectable} from '@angular/core';
-import {CopyListItemsPageComponent} from './copy-list-items/copy-list-items-page.component';
+import { Injectable } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { IListInfo, IListItemBrief } from '@sneat/dto';
+import { CopyListItemsPageComponent } from './copy-list-items/copy-list-items-page.component';
 
 @Injectable()
 export class ListDialogsService {
@@ -10,13 +10,13 @@ export class ListDialogsService {
 	) {
 	}
 
-	async copyListItems(listItems: IListItemInfo[], from: IListInfo, to?: IListInfo): Promise<void> {
+	async copyListItems(listItems: IListItemBrief[], from: IListInfo, to?: IListInfo): Promise<void> {
 		if (!to) {
 			to = {  // TODO: get rid of hardcoded?
 				type: 'buy',
 				shortId: 'groceries',
 				title: 'Groceries',
-				commune: {type: 'family', title: 'Family'}
+				team: { type: 'family', title: 'Family' },
 			};
 		}
 
@@ -28,9 +28,9 @@ export class ListDialogsService {
 				listItems,
 			},
 		});
-		// tslint:disable-next-line:ban-ts-ignore
-		// @ts-ignore
-		modal.componentProps.modal = modal; // Ionic bug with modal.dismiss() not finding modal
+		if (modal.componentProps) {
+			modal.componentProps['modal'] = modal; // Ionic bug with modal.dismiss() not finding modal
+		}
 
 		await modal.present();
 	}

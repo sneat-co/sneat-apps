@@ -1,7 +1,7 @@
 import { ITeamRecord } from './dto-models';
-import { IListItemInfo } from './dto-list';
+import { IListItemBrief } from './dto-list';
 
-export interface IMovie extends IListItemInfo {
+export interface IMovie extends IListItemBrief {
 	original_title?: string;
 	original_language?: string;
 	backdrop_path?: string;

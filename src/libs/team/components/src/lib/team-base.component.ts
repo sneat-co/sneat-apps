@@ -69,8 +69,17 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		}
 	}
 
-	public get team() {
+
+	public get team(): ITeamContext | undefined {
 		return this.teamContext;
+	}
+
+	public get preloader() {
+		return this.teamParams.preloader;
+	}
+
+	public get teamNav() {
+		return this.teamParams.teamNavService;
 	}
 
 	public get currentUserId() {

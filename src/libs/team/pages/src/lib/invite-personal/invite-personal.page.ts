@@ -95,7 +95,7 @@ export class InvitePersonalPage implements OnInit {
 
 		const acceptInvite = (token?: string) => {
 			const request: IAcceptPersonalInviteRequest = {
-				team: this.teamId,
+				teamID: this.teamId,
 				invite: this.inviteId,
 				pin: this.pin,
 				email: this.email,
@@ -160,7 +160,7 @@ export class InvitePersonalPage implements OnInit {
 		this.rejecting = true;
 		this.working = true;
 		const request: IRejectPersonalInviteRequest = {
-			team: this.teamId,
+			teamID: this.teamId,
 			invite: this.inviteId,
 			pin: this.pin,
 		};

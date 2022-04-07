@@ -85,7 +85,7 @@ export class MemberNewPageComponent {
 		this.addMemberForm.disable();
 		const title = (this.title.value as string).trim();
 		const request: IAddTeamMemberRequest = {
-			team: this.team.id,
+			teamID: this.team.id,
 			role: this.role.value,
 			gender: 'unknown',
 			ageGroup: 'unknown',

@@ -1,12 +1,11 @@
 //tslint:disable:no-unsafe-any
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {IListDto, IListItemInfo, IShortCommuneInfo, ListType} from '../../../../../models/dto/dto-list';
-import {IonItemSliding} from '@ionic/angular';
-import {IErrorLogger} from '../../../../../services/interfaces';
-import {Commune} from '../../../../../models/ui/ui-models';
-import {ListDialogsService} from '../../dialogs/ListDialogs.service';
-import {IListItemCommandParams, IListusService} from '../../../services/interfaces';
-import {listItemAnimations} from '../../../../../animations/list-animations';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IonItemSliding } from '@ionic/angular';
+import { listItemAnimations } from '@sneat/core';
+import { IListItemBrief, ListType } from '@sneat/dto';
+import { IListContext, ITeamContext } from '@sneat/team/models';
+import { ListusComponentBaseParams } from '../../../listus-component-base-params';
+import { ListDialogsService } from '../../dialogs/ListDialogs.service';
 
 @Component({
 	selector: 'sneat-list-item',
@@ -16,43 +15,40 @@ import {listItemAnimations} from '../../../../../animations/list-animations';
 })
 export class ListItemComponent {
 
+	@Input()
+	public listItems?: IListItemBrief[];
+
+	@Input()
+	public listItem?: IListItemBrief;
+
+	@Input() public team?: ITeamContext; // TODO: remove?
+
+	@Input() list?: IListContext;
+	@Input() listType?: ListType;
+
+	@Output()
+	public readonly itemClicked = new EventEmitter<IListItemBrief>();
+
+	@Output()
+	public readonly listChanged = new EventEmitter<IListContext>();
+
 	constructor(
-		protected readonly errorLogger: IErrorLogger,
+		private readonly params: ListusComponentBaseParams,
 		private readonly listDialogs: ListDialogsService,
-		private readonly listusService: IListusService,
 	) {
 	}
 
-	@Input()
-	public listItems: IListItemInfo[];
+	private get errorLogger() {
+		return this.params.teamParams.errorLogger;
+	}
 
-	@Input()
-	public listItem: IListItemInfo;
-
-	// public communeShortId: string; // TODO: remove
-
-	@Input() public commune: Commune; // TODO: remove
-
-	public shortCommuneInfo: IShortCommuneInfo;
-
-	@Input() listType: ListType;
-
-	@Input() public shortListId: string; // TODO: remove
-	@Input() public listDto: IListDto; // TODO: remove?
-
-	@Output()
-	public readonly itemClicked = new EventEmitter<IListItemInfo>();
-
-	@Output()
-	public readonly listChanged = new EventEmitter<IListDto>();
-
-	goListItem(item: IListItemInfo): void {
+	goListItem(item: IListItemBrief): void {
 		console.log(`goListItem(${item.id}), subListId=${item.subListId}`, item);
 		this.itemClicked.emit(item);
 	}
 
 	// tslint:disable-next-line:prefer-function-over-method
-	setIsCompleted(item: IListItemInfo, ionSliding: IonItemSliding | HTMLElement, isCompleted: boolean): void {
+	setIsCompleted(item: IListItemBrief, ionSliding: IonItemSliding | HTMLElement, isCompleted: boolean): void {
 		(ionSliding as IonItemSliding).close()
 			.then(
 				() => {
@@ -64,33 +60,35 @@ export class ListItemComponent {
 			);
 	}
 
-	deleteFromList(item: IListItemInfo, ionSliding: IonItemSliding | HTMLElement): void {
+	deleteFromList(item: IListItemBrief, ionSliding: IonItemSliding | HTMLElement): void {
 		console.log('ListItemComponent.deleteFromList()', item);
-		this.listusService.deleteListItem(this.createListItemCommandParams(item))
+		if (!item.id) {
+			return;
+		}
+		if (!this.list?.id) {
+			return;
+		}
+		if (!this.team?.id) {
+			return;
+		}
+		this.params.listService.deleteListItem({ teamID: this.team?.id, listID: this.list?.id, itemIDs: [item.id] })
 			.subscribe({
-				next: listDto => {
+				next: () => {
 					console.log('ListItemComponent => item deleted');
-					this.listChanged.emit(listDto);
+					// this.listChanged.emit(listDto);
 				},
 				error: this.errorLogger.logError,
 				complete: () => {
 					if (ionSliding) {
-						(ionSliding as IonItemSliding).closeOpened()
+						(ionSliding as IonItemSliding)
+							.closeOpened()
 							.catch(this.errorLogger.logError);
 					}
-				}
+				},
 			});
 	}
 
-	private createListItemCommandParams(item: IListItemInfo): IListItemCommandParams {
-		return {
-			commune: this.commune,
-			list: {dto: this.listDto, shortId: this.shortListId},
-			items: [item],
-		};
-	} // TODO delete on list.page
-
-	public openCopyListItemDialog(listItem: IListItemInfo, event: Event): void {
+	public openCopyListItemDialog(listItem: IListItemBrief, event: Event): void {
 		console.log(`openCopyListItemDialog()`, listItem);
 		event.stopPropagation();
 

@@ -49,7 +49,7 @@ export interface ITimerState {
 }
 
 export interface IMeetingTimerRequest extends IMeetingRequest {
-	team: string; // TODO: remove temporary workaround, should come from: IMeetingRequest < ITeamRequest
+	teamID: string; // TODO: remove temporary workaround, should come from: IMeetingRequest < ITeamRequest
 	operation: TimerOperation;
 }
 

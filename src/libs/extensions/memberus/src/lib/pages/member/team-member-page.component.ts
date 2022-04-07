@@ -30,7 +30,7 @@ export class TeamMemberPageComponent extends MemberBasePage implements AfterView
 	}
 
 	ngAfterViewInit(): void {
-		this.teamParams.preloader.preload([ // TODO: implement preloader
+		this.preloader.preload([ // TODO: implement preloader
 			'members',
 			'document',
 			'document-new',

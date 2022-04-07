@@ -3,12 +3,12 @@ import {Injectable} from '@angular/core';
 import {IRxReadwriteTransaction, RxRecordUpdater, RxRecordKey, RxMutationLogger, mutation} from 'rxstore';
 import {
 	IList,
-	IListItemCommandParams,
+	IListItemsCommandParams,
 	IListItemResult,
 	IListItemService,
 	IListService,
 	IListusService,
-	ReorderListItemsWorker
+	ReorderListItemsWorker, shortCommuneAndListIds,
 } from './interfaces';
 import {forkJoin, Observable, of, throwError} from 'rxjs';
 import {CommuneKind, ListItemKind, ListKind, MovieKind, UserKind} from '../../../models/kinds';
@@ -23,7 +23,6 @@ import {
 	ListItemModel
 } from '../../../models/dto/dto-list';
 import {IUserCommuneInfo, IUserDto, UserModel} from '../../../models/dto/dto-user';
-import {shortCommuneAndListIds} from './list.service';
 import {eq, ICommuneService} from '../../../services/interfaces';
 import {CommuneType} from '../../../models/types';
 import {CommuneModel, ICommuneDto} from '../../../models/dto/dto-commune';
@@ -130,7 +129,7 @@ export class ListusDbService extends IListusService {
 		return {dto: listDto, changed};
 	}
 
-	public reorderListItems(params: IListItemCommandParams, reorderItems: ReorderListItemsWorker): Observable<IListDto> {
+	public reorderListItems(params: IListItemsCommandParams, reorderItems: ReorderListItemsWorker): Observable<IListDto> {
 		const {commune, list} = params;
 		console.log(`ListusService.reorderListItems(shortListId=${list.shortId}`);
 		return this.readwriteTx(getKinds(commune, undefined, false), tx => {
@@ -200,7 +199,7 @@ export class ListusDbService extends IListusService {
 		});
 	}
 
-	public deleteListItem(params: IListItemCommandParams): Observable<IListDto> {
+	public deleteListItem(params: IListItemsCommandParams): Observable<IListDto> {
 		const {commune, list, items} = params;
 		if (!items) {
 			return throwError('Missing required parameter item');
@@ -266,7 +265,7 @@ export class ListusDbService extends IListusService {
 		});
 	}
 
-	public addListItem(params: IListItemCommandParams): Observable<IListItemResult> {
+	public addListItem(params: IListItemsCommandParams): Observable<IListItemResult> {
 		const {commune, list, items} = params;
 		console.log('ListusService.addListItem()', params);
 		const emoji = detectEmoji(items[0].title);

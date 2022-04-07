@@ -155,7 +155,7 @@ export class NewMemberPageComponent extends TeamBaseComponent implements AfterVi
 			throw new Error('Gender is a required field');
 		}
 		const request: IAddTeamMemberRequest = {
-			team: team.id,
+			teamID: team.id,
 			title: this.title,
 			gender: this.gender,
 			ageGroup: this.ageGroup,

@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="light">
-        <ion-title>Add to {{to.type}} {{to.title}}</ion-title>
+        <ion-title>Add to {{to?.type}} {{to?.title}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
     <ion-list>
         <ion-item button="" *ngFor="let item of listItems">
             <ion-label>{{item.emoji}} {{item.title}}</ion-label>
-            <ion-checkbox slot="end" [value]="item.id" checked="true" (ionChange)="onItemToggled($event.detail)"></ion-checkbox>
+            <ion-checkbox slot="end" [value]="item.id" checked="true" (ionChange)="onItemToggled($event)"></ion-checkbox>
         </ion-item>
     </ion-list>
     <ion-footer>

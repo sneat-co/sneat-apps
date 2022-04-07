@@ -101,7 +101,7 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 		};
 		const request: ICreateAssetRequest = {
 			type: 'vehicle',
-			team: this.team?.id,
+			teamID: this.team?.id,
 			subType: this.vehicleType,
 			countryID: this.countryIso2,
 			title,

@@ -11,7 +11,7 @@ export const validateMeetingRequest: (
 	if (!request.operation) {
 		return throwError(() => 'operation parameter is required');
 	}
-	if (!request.team) {
+	if (!request.teamID) {
 		return throwError(() => 'team parameter is required');
 	}
 	if (!request.meeting) {
