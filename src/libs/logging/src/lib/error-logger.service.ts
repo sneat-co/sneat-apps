@@ -16,11 +16,11 @@ export class ErrorLoggerService implements IErrorLogger {
 		(message?: string, options?: ILogErrorOptions) => (e: any) =>
 			this.logError(e, message, options);
 
-	public logError(
+	public logError = (
 		e: any,
 		message?: string,
 		options?: ILogErrorOptions,
-	): { error: any; message?: string } | any {
+	): { error: any; message?: string } | any => {
 		console.error(`${message || 'Error'}:`, e, options);
 		if (!options || options.report === undefined || options.report) {
 			try {
