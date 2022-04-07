@@ -3,9 +3,9 @@ import { ICommuneDto, IListBrief, IListDto, IListItemBrief, IListItemDto, ListTy
 import { IListContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
 
 export interface GetOrCreateCommuneItemIds {
-	id?: string;
-	shortId?: string;
-	communeShortId?: string;
+  id?: string;
+  shortId?: string;
+  communeShortId?: string;
 }
 
 // export abstract class IListService extends ICommuneItemService<IListDto, ListusAppSchema, typeof ListKind> {
@@ -22,25 +22,25 @@ export interface GetOrCreateCommuneItemIds {
 // }
 
 export interface IProgress {
-	current: number;
-	total: number;
-	state?: string;
+  current: number;
+  total: number;
+  state?: string;
 }
 
 export interface IListItemResult {
-	message?: string;
-	changed?: boolean;
-	success: boolean;
-	listDto: IListDto;
-	communeDto?: ICommuneDto;
-	listItemDto?: IListItemDto;
+  message?: string;
+  changed?: boolean;
+  success: boolean;
+  listDto: IListDto;
+  communeDto?: ICommuneDto;
+  listItemDto?: IListItemDto;
 }
 
 
 export interface IListItemsCommandParams {
-	team: ITeamContext;
-	list: IListContext;
-	items: IListItemBrief[];
+  team: ITeamContext;
+  list: IListContext;
+  items: IListItemBrief[];
 }
 
 export type ReorderListItemsWorker = (listDto: IListDto) => void;
@@ -79,16 +79,16 @@ export interface ICreateListRequest extends ITeamRequest, IListBrief {
 }
 
 export interface IListRequest extends ITeamRequest {
-	listID: string;
-	listType?: ListType;
+  listID: string;
+  listType: ListType;
 }
 
 export interface IListItemRequest extends IListRequest {
-	itemID: string;
+  itemID: string;
 }
 
 export interface IListItemIDsRequest extends IListRequest {
-	itemIDs: string[];
+  itemIDs: string[];
 }
 
 export type IDeleteListItemsRequest = IListItemIDsRequest;

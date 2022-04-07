@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
@@ -88,7 +89,15 @@ export class ListService {
 	}
 
 	public deleteListItem(request: IDeleteListItemsRequest): Observable<void> {
-		return throwError(() => 'not implemented yet');
+		const params = `teamID=${request.teamID}&listType=${request.listType}`;
+		return this.sneatApiService.delete(
+			`listus/delete_list_items?`, new HttpParams({
+				fromObject: {
+					teamID: request.teamID,
+					listType: request.listType,
+					listID: request.listID,
+				},
+			}), { itemIDs: request.itemIDs });
 	}
 
 	public getListById(teamID: string, listType: ListType, listID: string): Observable<IListContext | null> {

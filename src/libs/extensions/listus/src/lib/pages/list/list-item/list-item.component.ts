@@ -72,6 +72,9 @@ export class ListItemComponent {
 		if (!this.team?.id) {
 			return;
 		}
+		if (!this.list?.brief?.type) {
+			return;
+		}
 		const request: IListItemIDsRequest = {
 			teamID: this.team?.id,
 			listID: this.list?.id,

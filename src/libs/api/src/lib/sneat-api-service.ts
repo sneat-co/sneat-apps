@@ -1,8 +1,8 @@
-import { ISneatApiService } from './sneat-api-service.interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, Observable, Subject, takeUntil, throwError } from 'rxjs';
 import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { map, Observable, Subject, takeUntil, throwError } from 'rxjs';
+import { ISneatApiService } from './sneat-api-service.interface';
 
 const userIsNotAuthenticatedNoFirebaseToken =
 	'User is not authenticated yet - no Firebase ID token';
@@ -85,7 +85,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		});
 	}
 
-	public delete<T>(endpoint: string, params?: HttpParams): Observable<T> {
+	public delete<T>(endpoint: string, params?: HttpParams, body?: any): Observable<T> {
 		console.log('delete()', endpoint, params);
 		const url = this.baseUrl + endpoint;
 		return (
@@ -93,6 +93,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 			this.httpClient.delete<T>(url, {
 				params,
 				headers: this.headers(),
+				body,
 			})
 		);
 	}
