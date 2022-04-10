@@ -18,14 +18,16 @@ import { NewListItemComponent } from './new-list-item.component';
 export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public isPersisting = false;
+	public doneFilter: 'all' | 'active' | 'completed' = 'all';
 	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' = 'list';
 	public reordering = false;
-	public listItems?: IListItemBrief[];
+	public allListItems?: IListItemBrief[];
+	public filteredListItems?: IListItemBrief[];
 	public listType?: ListType;
 	public isHideWatched = false;
 	// tslint:disable-next-line:no-any
 	@ViewChild('newListItem', { static: false }) newListItem?: NewListItemComponent;
-	trackById = ListItemInfoModel.trackBy;
+	itemId = ListItemInfoModel.trackBy;
 	addingItems: IListItemBrief[] = [];
 
 	constructor(
@@ -56,7 +58,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			this.newListItem?.adding.subscribe({
 				next: (item: IListItemBrief) => {
 					this.addingItems.push(item);
-					this.listItems?.push(item);
+					this.allListItems?.push();
+					this.applyFilter();
 				},
 				error: this.errorLogger.logError,
 			});
@@ -66,7 +69,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 					this.addingItems = this.addingItems.filter(v => v.id !== item.id);
 				},
 				error: this.errorLogger.logError,
-			})
+			});
 			this.newListItem.failedToAdd.subscribe({
 				next: (id: string): void => {
 					console.log('failed to add:', id);
@@ -77,6 +80,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		} else {
 			this.errorLogger.logError('newListItem component is not initialized');
 		}
+	}
+
+	public clickShowWatchedMovies(): void {
+		this.listusAppStateService.setShowWatched(this.isHideWatched);
 	}
 
 	// ngOnInit(): void {
@@ -95,8 +102,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// 	this.preloader.preload(['lists']);
 	// }
 
-	public clickShowWatchedMovies(): void {
-		this.listusAppStateService.setShowWatched(this.isHideWatched);
+	public onIsDoneFilterChanged(event: Event): void {
+		this.applyFilter();
 	}
 
 	public override setList(list: IListContext): void {
@@ -104,14 +111,15 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			return;
 		}
 		super.setList(list);
-		this.listItems = list.dto === undefined ? undefined
+		this.allListItems = list.dto === undefined ? undefined
 			: list.dto?.items ? [...list.dto.items] : [];
-		if (this.listItems && this.addingItems.length) {
-			this.addingItems = this.addingItems.filter(v => !this.listItems?.some(li => li.id === v.id))
+		if (this.allListItems && this.addingItems.length) {
+			this.addingItems = this.addingItems.filter(v => !this.filteredListItems?.some(li => li.id === v.id));
 			if (this.addingItems.length) {
-				this.listItems = [...this.listItems, ...this.addingItems];
+				this.allListItems = [...this.allListItems, ...this.addingItems];
 			}
 		}
+		this.applyFilter();
 	}
 
 	public isWatched(movie: IMovie, userId: string): boolean {
@@ -120,7 +128,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		return false;
 		//return this.listusDbService.isWatched(movie, userId);
 	}
-
 
 	public removeIsWatchedFromWatchlist(movies?: IListItemBrief[]): void {
 		this.errorLogger.logError('removeIsWatchedFromWatchlist is not implemented yet');
@@ -155,10 +162,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	reorder(e: Event): void {
 		const event = e as CustomEvent<{ from: number; to: number; complete: (list: boolean | IListItemBrief[]) => IListItemBrief[] }>;
-		if (this.list?.dto?.items) { // temp mock
-			event.detail.complete(this.list?.dto?.items);
+		if (this.filteredListItems) { // temp mock
+			event.detail.complete(this.filteredListItems);
 		}
-		console.error(`ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`);
+		console.log(`ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`);
 		// this.listService.reorderListItems(
 		// 	this.createListItemCommandParams(undefined),
 		// 	listDto => {
@@ -229,7 +236,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		(this.newListItem as NewListItemComponent).focus();
 	}
 
-
 	public openCopyListItemsDialog(listItem?: IListItemBrief, event?: Event): void {
 		console.log(`openCopyListItemsDialog()`, listItem);
 		if (event) {
@@ -246,9 +252,9 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			// 	id: listItem.subListId || '',
 			// 	title: listItem.title || 'no title - to be fixed',
 			// };
-		} else if (this.list && this.listItems) {
+		} else if (this.list && this.filteredListItems) {
 			// list = ...;
-			listItems = this.listItems as IListItemBrief[];
+			listItems = this.filteredListItems as IListItemBrief[];
 			this.errorLogger.logError('not implemented yet');
 			return;
 		}
@@ -256,6 +262,14 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			this.listDialogs.copyListItems(listItems, list)
 				.catch(this.errorLogger.logError);
 		}
+	}
+
+	public deleteCompleted(): void {
+
+	}
+
+	public deleteAll(): void {
+
 	}
 
 	public goGroceries(): void {
@@ -268,6 +282,13 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		// 	`list/${this.list?.id}`, {
 		// 		state: { list: this.list },
 		// 	});
+	}
+
+	private applyFilter(): void {
+		const doneFilter = this.doneFilter;
+		this.filteredListItems = this.allListItems?.filter(li => doneFilter === 'all'
+			|| doneFilter === 'completed' && li.isDone
+			|| doneFilter === 'active' && !li.isDone);
 	}
 
 	// protected onListInfoChanged(): void {

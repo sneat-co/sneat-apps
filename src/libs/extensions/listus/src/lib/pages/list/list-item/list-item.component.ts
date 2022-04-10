@@ -2,7 +2,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonItemSliding } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
-import { IListItemBrief, ListType } from '@sneat/dto';
+import { IListItemBrief } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';
 import { IListItemIDsRequest, ISetListItemsIsComplete } from '../../../services/interfaces';
@@ -21,12 +21,17 @@ export class ListItemComponent {
 	public listItems?: IListItemBrief[];
 
 	@Input()
+	public showDoneCheckbox = false;
+
+	@Input()
+	public doneFilter: 'all' | 'active' | 'completed' = 'all';
+
+	@Input()
 	public listItem?: IListItemBrief;
 
 	@Input() public team?: ITeamContext; // TODO: remove?
 
 	@Input() list?: IListContext;
-	@Input() listType?: ListType;
 
 	@Output()
 	public readonly itemClicked = new EventEmitter<IListItemBrief>();
@@ -34,7 +39,7 @@ export class ListItemComponent {
 	@Output()
 	public readonly listChanged = new EventEmitter<IListContext>();
 
-	private isMarkingAsCompleted = false;
+	public isSettingIsDone = false;
 
 	constructor(
 		private readonly params: ListusComponentBaseParams,
@@ -55,42 +60,61 @@ export class ListItemComponent {
 		this.itemClicked.emit(item);
 	}
 
-	isComplete(item: IListItemBrief): boolean {
-		return !!item.isDone || this.isMarkingAsCompleted;
+	isDone(item: IListItemBrief): boolean {
+		return !!item.isDone || this.isSettingIsDone;
 	}
 
+	onIsDoneCheckboxChanged(event: Event): void {
+		if (!this.listItem) {
+			return;
+		}
+		const {checked} = (event as CustomEvent).detail;
+		console.log('onIsDoneChanged()', checked, this.doneFilter);
+		const isDone = !!checked;
+		// switch (this.doneFilter) {
+		// 	case 'active': isDone = checked; break;
+		// 	case 'completed': isDone = !checked; break;
+		// 	default:
+		// 		return;
+		// }
+		this.setIsDone(this.listItem, undefined, isDone);
+	}
 
 	// tslint:disable-next-line:prefer-function-over-method
-	setIsDone(item: IListItemBrief, ionSliding: IonItemSliding | HTMLElement, isDone: boolean): void {
-		(ionSliding as IonItemSliding).close()
-			.then(
-				() => {
-					this.isMarkingAsCompleted = true;
-					item.isDone = isDone;
-					if (!this.team || !this.list || !this.list.brief) {
-						return;
-					}
-					const request: ISetListItemsIsComplete = {
-						teamID: this.team.id,
-						listID: this.list.id,
-						listType: this.list.brief.type,
-						itemIDs: [item.id],
-						isDone: isDone,
-					};
-					this.listService.setListItemsIsCompleted(request).subscribe({
-						next: () => {
-							//
-						},
-						error: this.errorLogger.logErrorHandler('failed to mark list item as completed'),
-					});
+	setIsDone(item: IListItemBrief, ionSliding?: IonItemSliding | HTMLElement, isDone?: boolean): void {
+		if (isDone === undefined) {
+			isDone = !this.isDone(item);
+		}
+		const performSetIsDone = (): void => {
+			this.isSettingIsDone = true;
+			item.isDone = isDone;
+			if (!this.team || !this.list || !this.list.brief) {
+				return;
+			}
+			const request: ISetListItemsIsComplete = {
+				teamID: this.team.id,
+				listID: this.list.id,
+				listType: this.list.brief.type,
+				itemIDs: [item.id],
+				isDone: !!isDone,
+			};
+			this.listService.setListItemsIsCompleted(request).subscribe({
+				error: this.errorLogger.logErrorHandler('failed to mark list item as completed'),
+				complete: () => {
+					this.isSettingIsDone = false;
 				},
-				err => {
-					this.errorLogger.logError(err, 'Failed to set completed');
-				},
-			);
+			});
+		};
+		if (ionSliding) {
+			(ionSliding as IonItemSliding).close()
+				.then(performSetIsDone)
+				.catch(this.errorLogger.logErrorHandler('Failed to set completed'));
+		} else {
+			performSetIsDone();
+		}
 	}
 
-	deleteFromList(item: IListItemBrief, ionSliding: IonItemSliding | HTMLElement): void {
+	deleteFromList(item: IListItemBrief, ionSliding?: IonItemSliding | HTMLElement): void {
 		console.log('ListItemComponent.deleteFromList()', item);
 		if (!item.id) {
 			return;
@@ -120,7 +144,7 @@ export class ListItemComponent {
 				complete: () => {
 					if (ionSliding) {
 						(ionSliding as IonItemSliding)
-							.closeOpened()
+							?.closeOpened()
 							.catch(this.errorLogger.logError);
 					}
 				},

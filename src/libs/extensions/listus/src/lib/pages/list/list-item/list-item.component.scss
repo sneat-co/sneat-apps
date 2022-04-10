@@ -2,3 +2,8 @@
   text-decoration: line-through;
   color: darkgray;
 }
+
+ion-item ion-buttons[slot=end] ion-button { // TODO: better way to do it?
+  margin-right: -1em;
+  //border: 1px solid red !important;
+}
