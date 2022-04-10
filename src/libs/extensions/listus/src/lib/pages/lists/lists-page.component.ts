@@ -9,7 +9,6 @@ import { createShortCommuneInfoFromDto, ITeamContext } from '@sneat/team/models'
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
-import { getListUrlId } from '../helpers';
 import { NewListDialogComponent } from './new-list-dialog.component';
 
 @Component({

@@ -30,29 +30,29 @@
 	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img">
 
 	<ion-card>
-		<div class="segment" [ngSwitch]="list?.brief?.type">
-			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">
-				<ion-segment-button value="list">Ingredients</ion-segment-button>
-				<ion-segment-button value="recipe">Recipe</ion-segment-button>
-			</ion-segment>
-			<ion-segment *ngSwitchDefault [(ngModel)]="segment">
-				<ion-segment-button value="list" title="Brief list">
-					<ion-icon name="list-outline"></ion-icon>
-				</ion-segment-button>
-				<ion-segment-button value="cards" title="Cards">
-					<ion-icon name="albums-outline"></ion-icon>
-				</ion-segment-button>
-				<ion-segment-button value="aisle" *ngIf="list && list.id.indexOf('groceries') >= 0">
-					<ion-label>By aisle</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'to-watch' || listType === 'recipes'">
-					<ion-icon name="compass"></ion-icon>
-				</ion-segment-button>
-				<ion-segment-button value="settings" title="Shared with">
-					<ion-icon name="people"></ion-icon>
-				</ion-segment-button>
-			</ion-segment>
-		</div>
+<!--		<div class="segment" [ngSwitch]="list?.brief?.type">-->
+<!--			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">-->
+<!--				<ion-segment-button value="list">Ingredients</ion-segment-button>-->
+<!--				<ion-segment-button value="recipe">Recipe</ion-segment-button>-->
+<!--			</ion-segment>-->
+<!--			<ion-segment *ngSwitchDefault [(ngModel)]="segment">-->
+<!--				<ion-segment-button value="list" title="Brief list">-->
+<!--					<ion-icon name="list-outline"></ion-icon>-->
+<!--				</ion-segment-button>-->
+<!--				<ion-segment-button value="cards" title="Cards">-->
+<!--					<ion-icon name="albums-outline"></ion-icon>-->
+<!--				</ion-segment-button>-->
+<!--				<ion-segment-button value="aisle" *ngIf="list && list.id.indexOf('groceries') >= 0">-->
+<!--					<ion-label>By aisle</ion-label>-->
+<!--				</ion-segment-button>-->
+<!--				<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'to-watch' || listType === 'recipes'">-->
+<!--					<ion-icon name="compass"></ion-icon>-->
+<!--				</ion-segment-button>-->
+<!--				<ion-segment-button value="settings" title="Shared with">-->
+<!--					<ion-icon name="people"></ion-icon>-->
+<!--				</ion-segment-button>-->
+<!--			</ion-segment>-->
+<!--		</div>-->
 
 		<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>
 

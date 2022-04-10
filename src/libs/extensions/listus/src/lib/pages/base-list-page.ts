@@ -86,7 +86,8 @@ export abstract class BaseListPage extends TeamItemBaseComponent {
 					if (this.list?.id != id) {
 						this.listSubscription?.unsubscribe();
 						this.listSubscription = undefined;
-						this.setList({ id, brief: { id, type: type as ListType, title: type || id } });
+						const title = id.charAt(0).toUpperCase() + id.slice(1);
+						this.setList({ id, brief: { id, type: type as ListType, title } });
 						if (!teamID) {
 							throw new Error('no team context');
 						}
