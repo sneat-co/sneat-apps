@@ -22,7 +22,7 @@ export interface IListItemBrief extends IListItemCommon {
 	id: string;
 	readonly created?: string; // UTC datetime
 	readonly emoji?: string;
-	done?: boolean; // TODO: make readonly
+	isDone?: boolean; // TODO: make readonly
 	readonly img?: string;
 }
 
@@ -38,7 +38,7 @@ export interface IListCommon {
 	title: string;
 	img?: string;
 	emoji?: string;
-	done?: boolean;
+	isDone?: boolean;
 }
 
 export interface IListBase extends IListCommon, ITeamRecord {

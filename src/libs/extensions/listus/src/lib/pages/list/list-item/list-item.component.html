@@ -4,7 +4,7 @@
 </ion-item>
 <ion-item-sliding #ionSliding @listItem *ngIf="listItem">
     <ion-item button (click)="goListItem(listItem)">
-        <ion-label [class.done]="listItem.done">
+        <ion-label [class.done]="isComplete(listItem)">
             <ng-container *ngIf="listItem.emoji">{{listItem.emoji}}</ng-container>
             {{listItem.title}}
             <ion-text *ngIf="listItem.quantity" color="medium" style="font-style: italic">
@@ -19,14 +19,14 @@
     </ion-item>
     <!--suppress AngularUndefinedBinding -->
     <ion-item-options side="start"
-                      (ionSwipe)="setIsCompleted(listItem, ionSliding, !listItem.done)">
-        <ion-item-option *ngIf="!listItem.done" expandable="true" color="success"
-                         (click)="setIsCompleted(listItem, ionSliding, true)">
+                      (ionSwipe)="setIsDone(listItem, ionSliding, !isComplete(listItem))">
+        <ion-item-option *ngIf="!isComplete(listItem)" expandable="true" color="success"
+                         (click)="setIsDone(listItem, ionSliding, true)">
             <ion-icon class="with-label" name="checkmark"></ion-icon>
             Done
         </ion-item-option>
-        <ion-item-option *ngIf="!!listItem.done" expandable="true" color="primary"
-                         (click)="setIsCompleted(listItem, ionSliding, false)">
+        <ion-item-option *ngIf="isComplete(listItem)" expandable="true" color="primary"
+                         (click)="setIsDone(listItem, ionSliding, false)">
             Not done
         </ion-item-option>
     </ion-item-options>

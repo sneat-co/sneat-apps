@@ -11,6 +11,7 @@ import {
 	IDeleteListItemsRequest,
 	IListItemResult,
 	IListItemsCommandParams,
+	ISetListItemsIsComplete,
 	ReorderListItemsWorker,
 } from './interfaces';
 
@@ -85,13 +86,17 @@ export class ListService {
 			listType: params.list.brief?.type,
 			items: params.items,
 		};
-		return this.sneatApiService.post('listus/create_list_items', request);
+		return this.sneatApiService.post('listus/list_items_create', request);
+	}
+
+	public setListItemsIsCompleted(request: ISetListItemsIsComplete): Observable<void> {
+		const url = 'listus/list_items_set_is_done';
+		return this.sneatApiService.post(url, request);
 	}
 
 	public deleteListItem(request: IDeleteListItemsRequest): Observable<void> {
-		const params = `teamID=${request.teamID}&listType=${request.listType}`;
 		return this.sneatApiService.delete(
-			`listus/delete_list_items?`, new HttpParams({
+			`listus/list_items_delete?`, new HttpParams({
 				fromObject: {
 					teamID: request.teamID,
 					listType: request.listType,

@@ -5,7 +5,8 @@ import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief, ListType } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';
-import { IListItemIDsRequest } from '../../../services/interfaces';
+import { IListItemIDsRequest, ISetListItemsIsComplete } from '../../../services/interfaces';
+import { ListService } from '../../../services/list.service';
 import { ListDialogsService } from '../../dialogs/ListDialogs.service';
 
 @Component({
@@ -33,10 +34,16 @@ export class ListItemComponent {
 	@Output()
 	public readonly listChanged = new EventEmitter<IListContext>();
 
+	private isMarkingAsCompleted = false;
+
 	constructor(
 		private readonly params: ListusComponentBaseParams,
 		private readonly listDialogs: ListDialogsService,
 	) {
+	}
+
+	private get listService(): ListService {
+		return this.params.listService;
 	}
 
 	private get errorLogger() {
@@ -48,12 +55,34 @@ export class ListItemComponent {
 		this.itemClicked.emit(item);
 	}
 
+	isComplete(item: IListItemBrief): boolean {
+		return !!item.isDone || this.isMarkingAsCompleted;
+	}
+
+
 	// tslint:disable-next-line:prefer-function-over-method
-	setIsCompleted(item: IListItemBrief, ionSliding: IonItemSliding | HTMLElement, isCompleted: boolean): void {
+	setIsDone(item: IListItemBrief, ionSliding: IonItemSliding | HTMLElement, isDone: boolean): void {
 		(ionSliding as IonItemSliding).close()
 			.then(
 				() => {
-					item.done = isCompleted;
+					this.isMarkingAsCompleted = true;
+					item.isDone = isDone;
+					if (!this.team || !this.list || !this.list.brief) {
+						return;
+					}
+					const request: ISetListItemsIsComplete = {
+						teamID: this.team.id,
+						listID: this.list.id,
+						listType: this.list.brief.type,
+						itemIDs: [item.id],
+						isDone: isDone,
+					};
+					this.listService.setListItemsIsCompleted(request).subscribe({
+						next: () => {
+							//
+						},
+						error: this.errorLogger.logErrorHandler('failed to mark list item as completed'),
+					});
 				},
 				err => {
 					this.errorLogger.logError(err, 'Failed to set completed');
@@ -81,7 +110,7 @@ export class ListItemComponent {
 			listType: this.list?.brief?.type,
 			itemIDs: [item.id],
 		};
-		this.params.listService.deleteListItem(request)
+		this.listService.deleteListItem(request)
 			.subscribe({
 				next: () => {
 					console.log('ListItemComponent => item deleted');
