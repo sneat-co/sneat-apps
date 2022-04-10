@@ -82,7 +82,7 @@ export class AddToWatchPage extends BaseListPage implements CommuneBasePage {
 		})
 			.subscribe({
 				next: result => {
-					console.log('ListPage.addListItem', result);
+					console.log('ListPage.addListItem => result', result);
 					// if (result.success) {
 					//     (this.newListItem as NewListItem).clear();
 					// } else if (result.message) {

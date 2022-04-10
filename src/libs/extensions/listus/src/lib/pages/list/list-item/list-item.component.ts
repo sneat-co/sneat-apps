@@ -8,6 +8,7 @@ import { ListusComponentBaseParams } from '../../../listus-component-base-params
 import { IListItemIDsRequest, ISetListItemsIsComplete } from '../../../services/interfaces';
 import { ListService } from '../../../services/list.service';
 import { ListDialogsService } from '../../dialogs/ListDialogs.service';
+import { IListItemWithUiState } from '../list-item-with-ui-state';
 
 @Component({
 	selector: 'sneat-list-item',
@@ -18,7 +19,7 @@ import { ListDialogsService } from '../../dialogs/ListDialogs.service';
 export class ListItemComponent {
 
 	@Input()
-	public listItems?: IListItemBrief[];
+	public listItems?: IListItemWithUiState[];
 
 	@Input()
 	public showDoneCheckbox = false;
@@ -27,18 +28,13 @@ export class ListItemComponent {
 	public doneFilter: 'all' | 'active' | 'completed' = 'all';
 
 	@Input()
-	public listItem?: IListItemBrief;
-
+	public listItemWithUiState?: IListItemWithUiState;
 	@Input() public team?: ITeamContext; // TODO: remove?
-
 	@Input() list?: IListContext;
-
 	@Output()
 	public readonly itemClicked = new EventEmitter<IListItemBrief>();
-
 	@Output()
 	public readonly listChanged = new EventEmitter<IListContext>();
-
 	public isSettingIsDone = false;
 
 	constructor(
@@ -46,6 +42,10 @@ export class ListItemComponent {
 		private readonly listDialogs: ListDialogsService,
 	) {
 	}
+
+	public get listItem(): IListItemBrief | undefined {
+		return this.listItemWithUiState?.brief;
+	};
 
 	private get listService(): ListService {
 		return this.params.listService;
@@ -60,34 +60,32 @@ export class ListItemComponent {
 		this.itemClicked.emit(item);
 	}
 
-	isDone(item: IListItemBrief): boolean {
-		return !!item.isDone || this.isSettingIsDone;
+	isDone(item?: IListItemWithUiState): boolean {
+		return !!item?.brief.isDone;
 	}
 
 	onIsDoneCheckboxChanged(event: Event): void {
-		if (!this.listItem) {
+		if (!this.listItemWithUiState) {
 			return;
 		}
-		const {checked} = (event as CustomEvent).detail;
+		const { checked } = (event as CustomEvent).detail;
 		console.log('onIsDoneChanged()', checked, this.doneFilter);
 		const isDone = !!checked;
-		// switch (this.doneFilter) {
-		// 	case 'active': isDone = checked; break;
-		// 	case 'completed': isDone = !checked; break;
-		// 	default:
-		// 		return;
-		// }
-		this.setIsDone(this.listItem, undefined, isDone);
+		this.setIsDone(this.listItemWithUiState, isDone);
 	}
 
 	// tslint:disable-next-line:prefer-function-over-method
-	setIsDone(item: IListItemBrief, ionSliding?: IonItemSliding | HTMLElement, isDone?: boolean): void {
+	setIsDone(item?: IListItemWithUiState, isDone?: boolean, ionSliding?: IonItemSliding): void {
+		if (!item) {
+			return;
+		}
 		if (isDone === undefined) {
 			isDone = !this.isDone(item);
 		}
 		const performSetIsDone = (): void => {
+			item.state.isChangingIsDone = true;
 			this.isSettingIsDone = true;
-			item.isDone = isDone;
+			item.brief.isDone = isDone;
 			if (!this.team || !this.list || !this.list.brief) {
 				return;
 			}
@@ -95,7 +93,7 @@ export class ListItemComponent {
 				teamID: this.team.id,
 				listID: this.list.id,
 				listType: this.list.brief.type,
-				itemIDs: [item.id],
+				itemIDs: [item.brief.id],
 				isDone: !!isDone,
 			};
 			this.listService.setListItemsIsCompleted(request).subscribe({

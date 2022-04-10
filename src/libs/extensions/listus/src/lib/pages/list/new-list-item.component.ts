@@ -6,6 +6,7 @@ import { RandomIdService } from '@sneat/random';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { detectEmoji } from '../../services/emojis';
 import { ListService } from '../../services/list.service';
+import { IListItemWithUiState } from './list-item-with-ui-state';
 
 @Component({
 	selector: 'sneat-new-list-item',
@@ -17,8 +18,10 @@ import { ListService } from '../../services/list.service';
 									 placeholder="New item"
 									 (ionFocus)="focused()"
 				></ion-input>
-				<ion-button [disabled]="disabled" fill="outline" size="small" (click)="add()" slot="end"
-										*ngIf="isFocused && title.trim()">
+				<ion-button
+					[color]="isFocused && title.trim() ? 'primary' : 'medium'"
+					[disabled]="disabled" fill="outline" size="small" (click)="add()" slot="end"
+				>
 					Add
 				</ion-button>
 			</ion-item>
@@ -30,14 +33,15 @@ export class NewListItemComponent {
 
 	public isAdding = false;
 
+	@Input() isDone = false;
 	@Input() disabled = false;
 	@Input() team?: ITeamContext;
 	@Input() list?: IListContext;
 
 	@ViewChild('newItemInput', { static: false }) newItemInput?: IonInput;
 
-	@Output() readonly adding = new EventEmitter<IListItemBrief>();
-	@Output() readonly added = new EventEmitter<IListItemBrief>();
+	@Output() readonly adding = new EventEmitter<IListItemWithUiState>();
+	@Output() readonly added = new EventEmitter<IListItemWithUiState>();
 	@Output() readonly failedToAdd = new EventEmitter<string>();
 
 	public title = '';
@@ -76,6 +80,9 @@ export class NewListItemComponent {
 		if (emoji) {
 			item = { ...item, emoji };
 		}
+		if (this.isDone) {
+			item = { ...item, isDone: true };
+		}
 
 		this.createListItem(item);
 	}
@@ -108,7 +115,7 @@ export class NewListItemComponent {
 			throw new Error('no list context');
 		}
 		this.title = '';
-		this.adding.emit(listItemBrief);
+		this.adding.emit({brief: listItemBrief, state: {isAdding: true}});
 		this.listService.createListItems({
 			team: this.team,
 			list: this.list,
@@ -116,7 +123,7 @@ export class NewListItemComponent {
 		})
 			.subscribe({
 				next: result => {
-					console.log('ListPage.addListItem', result);
+					console.log('ListPage.addListItem() => result:', result);
 					if (result.success) {
 						this.clear();
 						this.focus();
@@ -135,7 +142,7 @@ export class NewListItemComponent {
 					// 	);
 					// }
 					this.isAdding = false;
-					this.added.emit(listItemBrief);
+					this.added.emit({brief: listItemBrief, state: {}});
 					setTimeout(
 						() => {
 							this.focus();

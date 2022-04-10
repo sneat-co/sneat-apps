@@ -26,7 +26,7 @@
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
-<ion-content [ngClass]="{cardy: segment === 'settings' || segment === 'cards'}">
+<ion-content class="cardy">
 	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img">
 
 	<ion-card>
@@ -55,7 +55,7 @@
 		<!--		</div>-->
 
 		<ion-segment [(ngModel)]="doneFilter" (ionChange)="onIsDoneFilterChanged($event)">
-			<ion-segment-button value="all" style="text-transform: none">All list items</ion-segment-button>
+			<ion-segment-button value="all" style="text-transform: none">All</ion-segment-button>
 			<ion-segment-button value="active" style="text-transform: none">Active</ion-segment-button>
 			<ion-segment-button value="completed" style="text-transform: none">Completed</ion-segment-button>
 		</ion-segment>
@@ -72,7 +72,7 @@
 			<sneat-list-item *ngFor="let item of filteredListItems; trackBy: itemId"
 											 [showDoneCheckbox]="doneFilter !== 'all'"
 											 [doneFilter]="doneFilter"
-											 [listItem]="item"
+											 [listItemWithUiState]="item"
 											 [listItems]="filteredListItems"
 											 [team]="team"
 											 [list]="list"
@@ -82,7 +82,7 @@
 		</ion-list>
 
 		<ng-container *ngIf="segment !== 'settings' && listType !== 'to-watch' && listType !== 'recipes'">
-			<sneat-new-list-item [team]="team" [list]="list" [disabled]="isPersisting" #newListItem>
+			<sneat-new-list-item [team]="team" [list]="list" [isDone]="doneFilter === 'completed'" [disabled]="isPersisting" #newListItem>
 			</sneat-new-list-item>
 		</ng-container>
 	</ion-card>
@@ -121,10 +121,25 @@
 		<ion-grid>
 			<ion-row>
 				<ion-col>
-					<ion-button color="warning" expand="full">Delete completed</ion-button>
+					<ion-button [disabled]="isReactivatingCompleted" color="light" expand="full"
+											(click)="reactivateCompleted()"
+					>
+						<ion-icon *ngIf="!isReactivatingCompleted" name="refresh-outline" slot="start"></ion-icon>
+						<ion-spinner *ngIf="isReactivatingCompleted" slot="start"></ion-spinner>
+						<ion-label>Reactivate completed</ion-label>
+					</ion-button>
 				</ion-col>
-				<ion-col>
-					<ion-button color="danger" expand="full">Clear list</ion-button>
+				<ion-col *ngIf="doneFilter !== 'active'">
+					<ion-button color="warning" expand="full" (click)="deleteCompleted()">
+						<ion-icon name="trash-outline" slot="start"></ion-icon>
+						<ion-label>Delete completed</ion-label>
+					</ion-button>
+				</ion-col>
+				<ion-col *ngIf="doneFilter === 'all'">
+					<ion-button color="danger" expand="full" (click)="deleteAll()">
+						<ion-icon name="trash-bin-outline" slot="start"></ion-icon>
+						<ion-label>Clear list</ion-label>
+					</ion-button>
 				</ion-col>
 			</ion-row>
 		</ion-grid>
@@ -140,24 +155,24 @@
 	<div *ngIf="segment === 'cards' && list?.dto?.items" [ngSwitch]="list?.brief?.type"
 			 style="padding-top: 0.5em; padding-bottom: 0.5em">
 		<ng-container *ngSwitchCase="'watch'">
-			<sneat-movie-card *ngFor="let listItem of filteredListItems; trackBy: itemId"
-												[movie]="listItem"
-												[showWatchedMovies]="!isHideWatched"
-												[team]="team"
-												[list]="list"
-												(goMovie)="goMoviePage($event)"
-												(listChanged)="setList($event)"
-			></sneat-movie-card>
+<!--			<sneat-movie-card *ngFor="let listItem of filteredListItems; trackBy: itemId"-->
+<!--												[movie]="listItem"-->
+<!--												[showWatchedMovies]="!isHideWatched"-->
+<!--												[team]="team"-->
+<!--												[list]="list"-->
+<!--												(goMovie)="goMoviePage($event)"-->
+<!--												(listChanged)="setList($event)"-->
+<!--			></sneat-movie-card>-->
 		</ng-container>
 		<ng-container *ngSwitchDefault>
 			<ion-card *ngFor="let item of filteredListItems; trackBy: itemId"
 								button
-								(click)="goListItem(item)"
+								(click)="goListItem(item.brief)"
 			>
 
-				<img alt="Item image" *ngIf="item.img" [src]="item.img">
+				<img alt="Item image" *ngIf="item.brief.img" [src]="item.brief.img">
 				<ion-card-content>
-					<h2>{{item.title}}</h2>
+					<h2>{{item.brief.title}}</h2>
 					Short description here
 				</ion-card-content>
 			</ion-card>
