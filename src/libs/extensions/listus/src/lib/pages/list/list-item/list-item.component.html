@@ -3,13 +3,14 @@
 <!--	<ion-spinner color="medium" name="lines-small"></ion-spinner>-->
 <!--</ion-item>-->
 <ion-item-sliding #ionSliding @listItem *ngIf="listItem">
-	<ion-item button (click)="goListItem(listItem)">
-		<ion-checkbox color="light"
-									[checked]="listItem.isDone"
-									[disabled]="isSettingIsDone"
-									slot="start"
-									[value]="listItem.isDone"
-									(ionChange)="onIsDoneCheckboxChanged($event)"></ion-checkbox>
+	<!--	<ion-item button (click)="goListItem(listItem)">-->
+	<ion-item>
+				<ion-checkbox *ngIf="doneFilter !== 'all'" color="light"
+											[checked]="listItem.isDone"
+											[disabled]="isSettingIsDone"
+											slot="start"
+											[value]="listItem.isDone"
+											(ionChange)="onIsDoneCheckboxChanged($event)"></ion-checkbox>
 		<ion-label [class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)">
 			<ng-container *ngIf="listItem.emoji">{{listItem.emoji}}</ng-container>
 			{{listItem.title}}
@@ -25,7 +26,7 @@
 		<!--			</ion-button>-->
 		<!--		</ion-buttons>-->
 		<!--		<ion-reorder slot="end"></ion-reorder>-->
-		<ion-spinner *ngIf="isSettingIsDone"></ion-spinner>
+		<ion-spinner color="medium" *ngIf="listItemWithUiState?.state?.isReordering || listItemWithUiState?.state?.isChangingIsDone"></ion-spinner>
 	</ion-item>
 	<ion-item-options side="start" (ionSwipe)="setIsDone(listItemWithUiState, undefined, ionSliding)">
 		<ion-item-option *ngIf="!isDone(listItemWithUiState)" expandable="true" color="success"

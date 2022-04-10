@@ -69,20 +69,25 @@
 		</ng-container>
 
 		<ion-list>
-			<sneat-list-item *ngFor="let item of filteredListItems; trackBy: itemId"
-											 [showDoneCheckbox]="doneFilter !== 'all'"
-											 [doneFilter]="doneFilter"
-											 [listItemWithUiState]="item"
-											 [listItems]="filteredListItems"
-											 [team]="team"
-											 [list]="list"
-											 (itemClicked)="goListItem($event)"
-											 (listChanged)="setList($event)"
-			></sneat-list-item>
+			<ion-reorder-group (ionItemReorder)="reorder($event)" [disabled]="!isReordering && doneFilter !== 'all'">
+				<ion-reorder *ngFor="let item of filteredListItems; trackBy: itemId">
+					<sneat-list-item
+						[showDoneCheckbox]="doneFilter !== 'all'"
+						[doneFilter]="doneFilter"
+						[listItemWithUiState]="item"
+						[listItems]="filteredListItems"
+						[team]="team"
+						[list]="list"
+						(itemClicked)="goListItem($event)"
+						(listChanged)="setList($event)"
+					></sneat-list-item>
+				</ion-reorder>
+			</ion-reorder-group>
 		</ion-list>
 
 		<ng-container *ngIf="segment !== 'settings' && listType !== 'to-watch' && listType !== 'recipes'">
-			<sneat-new-list-item [team]="team" [list]="list" [isDone]="doneFilter === 'completed'" [disabled]="isPersisting" #newListItem>
+			<sneat-new-list-item [team]="team" [list]="list" [isDone]="doneFilter === 'completed'" [disabled]="isPersisting"
+													 #newListItem>
 			</sneat-new-list-item>
 		</ng-container>
 	</ion-card>
@@ -155,14 +160,14 @@
 	<div *ngIf="segment === 'cards' && list?.dto?.items" [ngSwitch]="list?.brief?.type"
 			 style="padding-top: 0.5em; padding-bottom: 0.5em">
 		<ng-container *ngSwitchCase="'watch'">
-<!--			<sneat-movie-card *ngFor="let listItem of filteredListItems; trackBy: itemId"-->
-<!--												[movie]="listItem"-->
-<!--												[showWatchedMovies]="!isHideWatched"-->
-<!--												[team]="team"-->
-<!--												[list]="list"-->
-<!--												(goMovie)="goMoviePage($event)"-->
-<!--												(listChanged)="setList($event)"-->
-<!--			></sneat-movie-card>-->
+			<!--			<sneat-movie-card *ngFor="let listItem of filteredListItems; trackBy: itemId"-->
+			<!--												[movie]="listItem"-->
+			<!--												[showWatchedMovies]="!isHideWatched"-->
+			<!--												[team]="team"-->
+			<!--												[list]="list"-->
+			<!--												(goMovie)="goMoviePage($event)"-->
+			<!--												(listChanged)="setList($event)"-->
+			<!--			></sneat-movie-card>-->
 		</ng-container>
 		<ng-container *ngSwitchDefault>
 			<ion-card *ngFor="let item of filteredListItems; trackBy: itemId"

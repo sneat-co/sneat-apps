@@ -65,6 +65,8 @@ export class ListItemComponent {
 	}
 
 	onIsDoneCheckboxChanged(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
 		if (!this.listItemWithUiState) {
 			return;
 		}

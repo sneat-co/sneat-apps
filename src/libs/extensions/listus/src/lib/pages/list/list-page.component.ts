@@ -23,7 +23,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	public isPersisting = false;
 	public doneFilter: 'all' | 'active' | 'completed' = 'all';
 	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' = 'list';
-	public reordering = false;
+	public isReordering = false;
 	public allListItems?: IListItemWithUiState[];
 	public filteredListItems?: IListItemWithUiState[];
 	public listType?: ListType;
@@ -114,7 +114,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	}
 
 	public override setList(list: IListContext): void {
-		if (this.reordering) {
+		if (this.isReordering) {
 			return;
 		}
 		super.setList(list);
@@ -171,10 +171,19 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	reorder(e: Event): void {
 		const event = e as CustomEvent<{ from: number; to: number; complete: (list: boolean | IListItemWithUiState[]) => IListItemWithUiState[] }>;
-		if (this.filteredListItems) { // temp mock
-			event.detail.complete(this.filteredListItems);
+		if (this.allListItems) { // temp mock
+			this.allListItems[event.detail.from].state.isReordering = true;
+			event.detail.complete(this.allListItems);
+			this.applyFilter();
+			setTimeout(() => {
+				if (!this.allListItems) {
+					return;
+				}
+				this.allListItems[event.detail.to].state.isReordering = false;
+			}, 1000);
 		}
 		console.log(`ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`);
+
 		// this.listService.reorderListItems(
 		// 	this.createListItemCommandParams(undefined),
 		// 	listDto => {

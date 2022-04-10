@@ -6,5 +6,6 @@ export interface IListItemWithUiState {
 		isAdding?: boolean;
 		isDeleting?: boolean;
 		isChangingIsDone?: boolean;
+		isReordering?: boolean;
 	};
 }
