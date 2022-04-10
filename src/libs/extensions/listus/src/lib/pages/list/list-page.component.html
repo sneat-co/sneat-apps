@@ -77,7 +77,7 @@
 		</ion-list>
 
 		<ng-container *ngIf="segment !== 'settings' && listType !== 'to-watch' && listType !== 'recipes'">
-			<sneat-new-list-item [disabled]="isPersisting" #newListItem (added)="addMovieToWatchlist($event)">
+			<sneat-new-list-item [team]="team" [list]="list" [disabled]="isPersisting" #newListItem>
 			</sneat-new-list-item>
 		</ng-container>
 	</ion-card>
@@ -128,7 +128,6 @@
 									[showWatchedMovies]="!isHideWatched"
 									[team]="team"
 									[list]="list"
-									(addToWatchlist)="addMovieToWatchlist($event)"
 									(goMovie)="goMoviePage($event)"
 									(listChanged)="setList($event)"
 			></sneat-movie-card>

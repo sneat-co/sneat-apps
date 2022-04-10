@@ -1,6 +1,5 @@
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastController } from '@ionic/angular';
 import { IListInfo, IListItemBrief, IMovie, ListItemInfoModel, ListType } from '@sneat/dto';
 import { IListContext } from '@sneat/team/models';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
@@ -16,7 +15,7 @@ import { NewListItemComponent } from './new-list-item.component';
 	styleUrls: ['./list-page.component.scss'],
 	providers: [ListusComponentBaseParams],
 })
-export class ListPageComponent extends BaseListPage {
+export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public isPersisting = false;
 	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' = 'list';
@@ -25,14 +24,14 @@ export class ListPageComponent extends BaseListPage {
 	public listType?: ListType;
 	public isHideWatched = false;
 	// tslint:disable-next-line:no-any
-	@ViewChild('newListItem', { static: false }) newListItem: any;
+	@ViewChild('newListItem', { static: false }) newListItem?: NewListItemComponent;
 	trackById = ListItemInfoModel.trackBy;
+	addingItems: IListItemBrief[] = [];
 
 	constructor(
 		route: ActivatedRoute,
 		params: ListusComponentBaseParams,
 		private readonly zone: NgZone,
-		private readonly toastCtrl: ToastController,
 		// private readonly listusService: IListusService,
 		listService: ListService,
 		// private readonly listItemService: IListItemService,
@@ -50,6 +49,34 @@ export class ListPageComponent extends BaseListPage {
 		listusAppStateService.changed.subscribe(appState => {
 			this.isHideWatched = !appState.showWatched;
 		});
+	}
+
+	ngAfterViewInit(): void {
+		if (this.newListItem) {
+			this.newListItem?.adding.subscribe({
+				next: (item: IListItemBrief) => {
+					this.addingItems.push(item);
+					this.listItems?.push(item);
+				},
+				error: this.errorLogger.logError,
+			});
+			this.newListItem.added.subscribe({
+				next: (item: IListItemBrief) => {
+					console.log('added', item);
+					this.addingItems = this.addingItems.filter(v => v.id !== item.id);
+				},
+				error: this.errorLogger.logError,
+			})
+			this.newListItem.failedToAdd.subscribe({
+				next: (id: string): void => {
+					console.log('failed to add:', id);
+					this.addingItems = this.addingItems.filter(v => v.id !== id);
+				},
+				error: this.errorLogger.logError,
+			});
+		} else {
+			this.errorLogger.logError('newListItem component is not initialized');
+		}
 	}
 
 	// ngOnInit(): void {
@@ -79,6 +106,12 @@ export class ListPageComponent extends BaseListPage {
 		super.setList(list);
 		this.listItems = list.dto === undefined ? undefined
 			: list.dto?.items ? [...list.dto.items] : [];
+		if (this.listItems && this.addingItems.length) {
+			this.addingItems = this.addingItems.filter(v => !this.listItems?.some(li => li.id === v.id))
+			if (this.addingItems.length) {
+				this.listItems = [...this.listItems, ...this.addingItems];
+			}
+		}
 	}
 
 	public isWatched(movie: IMovie, userId: string): boolean {
@@ -196,58 +229,6 @@ export class ListPageComponent extends BaseListPage {
 		(this.newListItem as NewListItemComponent).focus();
 	}
 
-	addMovieToWatchlist(movie: IMovie): void {
-		console.log('ListPage.addMovieToWatchlist', movie, this.list, this.team);
-		if (!movie) {
-			throw new Error('movie is a required parameter');
-		}
-		if (!this.team) {
-			throw new Error('no team context');
-		}
-		const item: IListItemBrief = movie;
-		this.isPersisting = true;
-		if (!this.list) {
-			throw new Error('no list context');
-		}
-		this.listService.createListItems({
-			team: this.team,
-			list: this.list,
-			items: [item],
-		})
-			.subscribe({
-				next: result => {
-					console.log('ListPage.addListItem', result);
-					if (result.success) {
-						(this.newListItem as NewListItemComponent).clear();
-					} else if (result.message) {
-						this.showToast({ color: 'danger', message: result.message });
-					}
-
-					// if (!this.communeRealId && result.communeDto) {
-					// 	this.setPageCommuneIds(
-					// 		'addMovieToWatchlist',
-					// 		{
-					// 			short: this.communeShortId,
-					// 			real: result.communeDto.id,
-					// 		},
-					// 		result.communeDto,
-					// 	);
-					// }
-					this.listItems = result.listDto.items;
-					this.isPersisting = false;
-					setTimeout(
-						() => {
-							this.focusAddInput();
-						},
-						// tslint:disable-next-line:no-magic-numbers
-						100);
-				},
-				error: err => {
-					this.errorLogger.logError(err, 'Failed to add item to list');
-					this.isPersisting = false;
-				},
-			});
-	}
 
 	public openCopyListItemsDialog(listItem?: IListItemBrief, event?: Event): void {
 		console.log(`openCopyListItemsDialog()`, listItem);
@@ -315,22 +296,6 @@ export class ListPageComponent extends BaseListPage {
 	// 	}
 	// }
 
-	protected showToast(opts: { message: string; duration?: number; color?: string }): void {
-		const worker = async () => {
-			const toast = await this.toastCtrl.create({
-				...opts,
-				// tslint:disable-next-line:no-magic-numbers
-				duration: opts.duration || 2000,
-				buttons: [{ role: 'cancel', text: 'OK' }],
-			});
-			await toast.present();
-		};
-		worker()
-			.catch(err => {
-					this.errorLogger.logError(err, 'Failed to display toast');
-				},
-			);
-	}
 
 	// protected setDefaultBackUrl(page?: DefaultBackPage, params?: { member?: string }): void {
 	// 	if (this.appService.appId === 'listus') {

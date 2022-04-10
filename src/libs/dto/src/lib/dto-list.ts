@@ -20,10 +20,10 @@ export interface IListItemCommon extends IListCommon {
 
 export interface IListItemBrief extends IListItemCommon {
 	id: string;
-	created?: string; // UTC datetime
-	emoji?: string;
-	done?: boolean;
-	img?: string;
+	readonly created?: string; // UTC datetime
+	readonly emoji?: string;
+	done?: boolean; // TODO: make readonly
+	readonly img?: string;
 }
 
 export interface ListCounts {  // TODO: Use some enumerator as IDB library does.
