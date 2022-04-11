@@ -11,6 +11,7 @@ import {
 	IDeleteListItemsRequest,
 	IListItemResult,
 	IListItemsCommandParams,
+	IReorderListItemsRequest,
 	ISetListItemsIsComplete,
 	ReorderListItemsWorker,
 } from './interfaces';
@@ -49,8 +50,8 @@ export class ListService {
 		return this.sneatApiService.delete(`lists/delete_list?team=${team.id}&id=${listId}`);
 	}
 
-	public reorderListItems(params: IListItemsCommandParams, reorderItems: ReorderListItemsWorker): Observable<IListContext> {
-		return throwError(() => 'not implemented yet');
+	public reorderListItems(request: IReorderListItemsRequest): Observable<void> {
+		return this.sneatApiService.post(`listus/list_items_reorder?`, request);
 	}
 
 	getFullListID(team: string, type: ListType, shortID: string): string {

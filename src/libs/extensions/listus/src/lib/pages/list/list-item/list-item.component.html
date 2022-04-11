@@ -19,12 +19,12 @@
 		</ion-label>
 		<ion-badge *ngIf="listItem.category" slot="end" color="light"
 							 style="font-weight: normal">{{listItem.category}}</ion-badge>
-		<!--		<ion-buttons slot="end">-->
-		<!--			<ion-button *ngIf="listType === 'to-cook'" (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>-->
-		<!--			<ion-button (click)="deleteFromList(listItem)" color="medium">-->
-		<!--				<ion-icon name="close-outline"></ion-icon>-->
-		<!--			</ion-button>-->
-		<!--		</ion-buttons>-->
+				<ion-buttons slot="end">
+<!--					<ion-button *ngIf="listType === 'to-cook'" (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>-->
+					<ion-button (click)="deleteFromList(listItem)" color="medium">
+						<ion-icon name="close-outline"></ion-icon>
+					</ion-button>
+				</ion-buttons>
 		<!--		<ion-reorder slot="end"></ion-reorder>-->
 		<ion-spinner color="medium" *ngIf="listItemWithUiState?.state?.isReordering || listItemWithUiState?.state?.isChangingIsDone"></ion-spinner>
 	</ion-item>

@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, NgZone, TrackByFunction, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IListInfo, IListItemBrief, IMovie, ListItemInfoModel, ListType } from '@sneat/dto';
+import { IListInfo, IListItemBrief, IMovie, ListType } from '@sneat/dto';
 import { IListContext } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
-import { ISetListItemsIsComplete } from '../../services/interfaces';
+import { IReorderListItemsRequest, ISetListItemsIsComplete } from '../../services/interfaces';
 import { ListService } from '../../services/list.service';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
 import { BaseListPage } from '../base-list-page';
@@ -25,15 +25,15 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' = 'list';
 	public isReordering = false;
 	public allListItems?: IListItemWithUiState[];
-	public filteredListItems?: IListItemWithUiState[];
+	public completedListItems?: IListItemWithUiState[];
+	public activeListItems?: IListItemWithUiState[];
+	public listItems?: IListItemWithUiState[];
 	public listType?: ListType;
 	public isHideWatched = false;
 	// tslint:disable-next-line:no-any
 	@ViewChild('newListItem', { static: false }) newListItem?: NewListItemComponent;
 	addingItems: IListItemWithUiState[] = [];
-	public isReactivatingCompleted = false;
-
-	public readonly itemId = (i: number, li: IListItemWithUiState) => li.brief.id;
+	public performing?: 'reactivating completed' | 'deleting completed' | 'clear list';
 
 	constructor(
 		route: ActivatedRoute,
@@ -57,6 +57,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			this.isHideWatched = !appState.showWatched;
 		});
 	}
+
+	public readonly itemId = (i: number, li: IListItemWithUiState) => li.brief.id;
 
 	ngAfterViewInit(): void {
 		if (this.newListItem) {
@@ -120,10 +122,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		super.setList(list);
 		this.allListItems = list.dto === undefined ? undefined
 			: list.dto?.items ? list.dto.items.map(item => {
-				return {brief: item, state: {}};
+				return { brief: item, state: {} };
 			}) : [];
 		if (this.allListItems && this.addingItems.length) {
-			this.addingItems = this.addingItems.filter(v => !this.filteredListItems?.some(li => li.brief.id === v.brief.id));
+			this.addingItems = this.addingItems.filter(v => !this.listItems?.some(li => li.brief.id === v.brief.id));
 			if (this.addingItems.length) {
 				this.allListItems = [...this.allListItems, ...this.addingItems];
 			}
@@ -138,7 +140,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		//return this.listusDbService.isWatched(movie, userId);
 	}
 
-	public removeIsWatchedFromWatchlist(movies?: IListItemWithUiState[]): void {
+	public removeIsWatchedFromWatchlist(): void {
 		this.errorLogger.logError('removeIsWatchedFromWatchlist is not implemented yet');
 		// 	console.log('remove');
 		// 	movies.forEach(movie => {
@@ -172,14 +174,31 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	reorder(e: Event): void {
 		const event = e as CustomEvent<{ from: number; to: number; complete: (list: boolean | IListItemWithUiState[]) => IListItemWithUiState[] }>;
 		if (this.allListItems) { // temp mock
-			this.allListItems[event.detail.from].state.isReordering = true;
+			const movingItem = this.allListItems[event.detail.from];
+			movingItem.state.isReordering = true;
 			event.detail.complete(this.allListItems);
 			this.applyFilter();
+			if (!this.team || !this.list?.brief) {
+				return;
+			}
+			const request: IReorderListItemsRequest = {
+				teamID: this.team.id,
+				listID: this.list.id,
+				listType: this.list.brief?.type,
+				itemIDs: [movingItem.brief.id],
+				toIndex: event.detail.to,
+			};
+			this.listService.reorderListItems(request).subscribe({
+				complete: () => {
+					movingItem.state.isReordering = false;
+					this.isReordering = false;
+				},
+				error: this.errorLogger.logErrorHandler('failed to reorder list items'),
+			});
 			setTimeout(() => {
 				if (!this.allListItems) {
 					return;
 				}
-				this.allListItems[event.detail.to].state.isReordering = false;
 			}, 1000);
 		}
 		console.log(`ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`);
@@ -270,7 +289,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			// 	id: listItem.subListId || '',
 			// 	title: listItem.title || 'no title - to be fixed',
 			// };
-		} else if (this.list && this.filteredListItems) {
+		} else if (this.list && this.listItems) {
 			// list = ...;
 			// listItems = this.filteredListItems as IListItemWithUiState[];
 			this.errorLogger.logError('not implemented yet');
@@ -284,6 +303,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public deleteCompleted(): void {
 		console.log('deleteCompleted()');
+
 	}
 
 	public deleteAll(): void {
@@ -302,7 +322,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			isDone: false,
 			itemIDs: this.allListItems.filter(li => li.brief.isDone).map(li => li.brief.id),
 		};
-		this.isReactivatingCompleted = true;
+		this.performing = 'reactivating completed';
 		this.listService.setListItemsIsCompleted(request)
 			.pipe(
 				takeUntil(this.destroyed),
@@ -313,7 +333,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 				},
 				error: this.errorLogger.logErrorHandler('failed to reactivate all completed items'),
 				complete: () => {
-					this.isReactivatingCompleted = false;
+					this.performing = undefined;
 				},
 			});
 	}
@@ -332,11 +352,11 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	private applyFilter(): void {
 		const doneFilter = this.doneFilter;
-		this.filteredListItems = this.allListItems?.filter(li => doneFilter === 'all'
+		this.listItems = this.allListItems?.filter(li => doneFilter === 'all'
 			|| doneFilter === 'completed' && li.brief.isDone
 			|| doneFilter === 'active' && !li.brief.isDone);
-		if (this.filteredListItems) {
-			this.filteredListItems = [...this.filteredListItems, ...this.addingItems];
+		if (this.listItems) {
+			this.listItems = [...this.listItems, ...this.addingItems];
 		}
 	}
 

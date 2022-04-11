@@ -91,6 +91,10 @@ export interface IListItemIDsRequest extends IListRequest {
 	itemIDs: string[];
 }
 
+export interface IReorderListItemsRequest extends IListItemIDsRequest {
+	toIndex: number;
+}
+
 export type IDeleteListItemsRequest = IListItemIDsRequest;
 
 export interface ISetListItemsIsComplete extends IListItemIDsRequest {
