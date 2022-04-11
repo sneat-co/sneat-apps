@@ -142,7 +142,9 @@
 				<ng-container *ngIf="listMode === 'swipe'">
 					<span class="hint-sentence"> Swipe left to remove item.</span>
 					<span class="hint-sentence">Swipe right to mark as completed.</span>
-					<span class="hint-sentence">Switch to <a href="#edit-mode:reorder" (click)="setEditMode($event, 'reorder')">reorder mode</a> to sort.</span>
+					<span class="hint-sentence" *ngIf="(allListItems?.length || 0) > 1">
+						Switch to <a href="#edit-mode:reorder" (click)="setEditMode($event, 'reorder')">reorder mode</a> to sort.
+					</span>
 				</ng-container>
 				<ng-container *ngIf="listMode === 'reorder'">
 					<span class="hint-sentence">Drag & drop to reorder.</span>

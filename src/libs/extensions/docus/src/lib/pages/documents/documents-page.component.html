@@ -18,34 +18,35 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
-	<div class="segment">
-		<ion-segment [(ngModel)]="segment">
-			<ion-segment-button value="type">
-				<ion-label>By type</ion-label>
-			</ion-segment-button>
-			<ion-segment-button value="list">
-				<ion-label>List</ion-label>
-			</ion-segment-button>
-		</ion-segment>
-	</div>
+<ion-content class="cardy">
+	<ion-card>
+		<div class="segment">
+			<ion-segment [(ngModel)]="segment">
+				<ion-segment-button value="type">
+					<ion-label>By type</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="list">
+					<ion-label>List</ion-label>
+				</ion-segment-button>
+			</ion-segment>
+		</div>
 
 
-	<ng-container *ngIf="segment === 'list'">
-		<sneat-filter-item (changed)="applyFilter($event)"></sneat-filter-item>
-<!--		<sneat-documents-list [allDocuments]="documents"-->
-<!--													[filter]="filter"-->
-<!--													(goDoc)="goDoc($event)">-->
-<!--		</sneat-documents-list>-->
-	</ng-container>
+		<ng-container *ngIf="segment === 'list'">
+			<sneat-filter-item (changed)="applyFilter($event)"></sneat-filter-item>
+			<!--		<sneat-documents-list [allDocuments]="documents"-->
+			<!--													[filter]="filter"-->
+			<!--													(goDoc)="goDoc($event)">-->
+			<!--		</sneat-documents-list>-->
+		</ng-container>
 
-<!--	<sneat-documents-by-type [allDocuments]="documents" *ngIf="segment === 'type'"-->
-<!--												 (goDocType)="goType($event)"-->
-<!--												 (goNewDoc)="goNewDoc($event)"-->
-<!--												 (goDoc)="goDoc($event)"-->
-<!--	></sneat-documents-by-type>-->
+		<!--	<sneat-documents-by-type [allDocuments]="documents" *ngIf="segment === 'type'"-->
+		<!--												 (goDocType)="goType($event)"-->
+		<!--												 (goNewDoc)="goNewDoc($event)"-->
+		<!--												 (goDoc)="goDoc($event)"-->
+		<!--	></sneat-documents-by-type>-->
+	</ion-card>
 </ion-content>
-
 
 <ion-footer *ngIf="segment === 'list'">
 	<ion-toolbar color="light">

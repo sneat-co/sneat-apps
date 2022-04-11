@@ -18,51 +18,54 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
-	<sneat-filter-item (changed)="applyFilter($event, role)"></sneat-filter-item>
+<ion-content class="cardy">
+	<ion-card>
+		<sneat-filter-item (changed)="applyFilter($event, role)"></sneat-filter-item>
 
-	<div class="segment" *ngIf="!role">
-		<ion-segment [(ngModel)]="segment">
-			<ion-segment-button value="list">
-				<ion-label>List</ion-label>
-			</ion-segment-button>
-			<ion-segment-button value="groups">
-				<ion-label>Groups</ion-label>
-			</ion-segment-button>
-		</ion-segment>
-	</div>
+		<div class="segment" *ngIf="!role">
+			<ion-segment [(ngModel)]="segment">
+				<ion-segment-button value="list">
+					<ion-label>List</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="groups">
+					<ion-label>Groups</ion-label>
+				</ion-segment-button>
+			</ion-segment>
+		</div>
 
-	<ion-list *ngIf="segment === 'list'">
-		<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: id">
-			<sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
-													[excludeRole]="role"></sneat-contact-item>
-		</ion-item-sliding>
-		<ion-item button (click)="goNewContact()" *ngIf="canAdd">
-			<ion-icon name="add" color="primary"></ion-icon>
-			<ion-label color="primary">Add contact</ion-label>
-		</ion-item>
-	</ion-list>
-
-	<ion-list *ngIf="segment === 'groups'">
-		<ng-container *ngIf="team?.type === 'family'">
-			<sneat-contacts-family [contacts]="allContacts"
-														 [team]="team"
-														 [filter]="filter"
-														 [goContact]="goContact"
-														 [goMember]="goMember"
-			></sneat-contacts-family>
-		</ng-container>
-		<ng-container *ngIf="groups">
-			<ion-item *ngFor="let group of groups; trackBy: id" (click)="goGroup(group)" tappable>
-				<ion-label>
-					{{group.title}}
-				</ion-label>
-				<ion-badge color="light" *ngIf="group.numberOf && group.numberOf.members">
-					{{group.numberOf.members}}
-				</ion-badge>
+		<ion-list *ngIf="segment === 'list'">
+			<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: id">
+				<sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
+														[excludeRole]="role"></sneat-contact-item>
+			</ion-item-sliding>
+			<ion-item button (click)="goNewContact()" *ngIf="canAdd">
+				<ion-icon name="add" color="primary"></ion-icon>
+				<ion-label color="primary">Add contact</ion-label>
 			</ion-item>
-		</ng-container>
-	</ion-list>
+		</ion-list>
+
+		<ion-list *ngIf="segment === 'groups'">
+			<ng-container *ngIf="team?.type === 'family'">
+				<sneat-contacts-family [contacts]="allContacts"
+															 [team]="team"
+															 [filter]="filter"
+															 [goContact]="goContact"
+															 [goMember]="goMember"
+				></sneat-contacts-family>
+			</ng-container>
+			<ng-container *ngIf="groups">
+				<ion-item *ngFor="let group of groups; trackBy: id" (click)="goGroup(group)" tappable>
+					<ion-label>
+						{{group.title}}
+					</ion-label>
+					<ion-badge color="light" *ngIf="group.numberOf && group.numberOf.members">
+						{{group.numberOf.members}}
+					</ion-badge>
+				</ion-item>
+			</ng-container>
+		</ion-list>
+	</ion-card>
+
 </ion-content>
 
 <ion-footer>
