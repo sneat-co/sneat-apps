@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IListInfo, IListItemBrief, IMovie, ListType } from '@sneat/dto';
 import { IListContext } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
-import { IReorderListItemsRequest, ISetListItemsIsComplete } from '../../services/interfaces';
+import { IDeleteListItemsRequest, IReorderListItemsRequest, ISetListItemsIsComplete } from '../../services/interfaces';
 import { ListService } from '../../services/list.service';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
 import { BaseListPage } from '../base-list-page';
@@ -21,6 +21,7 @@ import { NewListItemComponent } from './new-list-item.component';
 export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public isPersisting = false;
+	public listMode: 'reorder' | 'swipe' = 'swipe';
 	public doneFilter: 'all' | 'active' | 'completed' = 'all';
 	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' = 'list';
 	public isReordering = false;
@@ -45,6 +46,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		private readonly listDialogs: ListDialogsService,
 		// private readonly shelfService: ShelfService,
 		private readonly listusAppStateService: IListusAppStateService,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 		// private readonly listusDbService: IListusService,
 	) {
 		super('ListPage', route, params);
@@ -89,6 +91,13 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		} else {
 			this.errorLogger.logError('newListItem component is not initialized');
 		}
+	}
+
+	public setEditMode(e: Event, v: 'reorder' | 'swipe'): boolean {
+		e.preventDefault();
+		e.stopPropagation();
+		this.listMode = v;
+		return false;
 	}
 
 	public clickShowWatchedMovies(): void {
@@ -303,11 +312,38 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public deleteCompleted(): void {
 		console.log('deleteCompleted()');
-
+		this.deleteItems(this.allListItems?.filter(li => li.brief.isDone))
 	}
 
 	public deleteAll(): void {
 		console.log('deleteAll()');
+		this.deleteItems(this.allListItems)
+	}
+
+	private deleteItems(items?: IListItemWithUiState[]): void {
+		if (!this.team || !this.list?.brief || !items) {
+			return;
+		}
+		const deletingItems: IListItemWithUiState[] = [];
+		items.forEach(li => {
+			deletingItems.push(li);
+			li.state.isDeleting = true;
+		});
+		const request: IDeleteListItemsRequest = {
+			teamID: this.team.id,
+			listID: this.list.id,
+			listType: this.list.brief.type,
+			itemIDs: deletingItems.map(li => li.brief.id),
+		};
+		this.changeDetectorRef.markForCheck();
+		this.listService.deleteListItems(request).subscribe({
+			error: this.errorLogger.logErrorHandler('failed to delete list items'),
+			complete: () => {
+				deletingItems.forEach(li => {
+					li.state.isDeleting = false;
+				});
+			},
+		});
 	}
 
 	public reactivateCompleted(): void {

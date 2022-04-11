@@ -7,3 +7,8 @@
   white-space: nowrap;
   margin-right: 1em;
 }
+
+ion-item.ion-item-no-border { // TODO: Reuse from shared file
+  //--inner-border-width: 0;
+  --border-width: 0;
+}

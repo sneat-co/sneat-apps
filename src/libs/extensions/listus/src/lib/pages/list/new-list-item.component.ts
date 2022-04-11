@@ -20,7 +20,7 @@ import { IListItemWithUiState } from './list-item-with-ui-state';
 				></ion-input>
 				<ion-button
 					[color]="isFocused && title.trim() ? 'primary' : 'medium'"
-					[disabled]="disabled" fill="outline" size="small" (click)="add()" slot="end"
+					[disabled]="disabled" [fill]="title.trim() ? 'solid' : 'outline'" size="small" (click)="add()" slot="end"
 				>
 					Add
 				</ion-button>

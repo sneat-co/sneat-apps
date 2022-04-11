@@ -5,7 +5,7 @@
 <ion-item-sliding #ionSliding @listItem *ngIf="listItem">
 	<!--	<ion-item button (click)="goListItem(listItem)">-->
 	<ion-item>
-				<ion-checkbox *ngIf="doneFilter !== 'all'" color="light"
+				<ion-checkbox *ngIf="listMode !== 'reorder'" color="light"
 											[checked]="listItem.isDone"
 											[disabled]="isSettingIsDone"
 											slot="start"
@@ -21,12 +21,13 @@
 							 style="font-weight: normal">{{listItem.category}}</ion-badge>
 				<ion-buttons slot="end">
 <!--					<ion-button *ngIf="listType === 'to-cook'" (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>-->
-					<ion-button (click)="deleteFromList(listItem)" color="medium">
+					<ion-button *ngIf="listMode !== 'reorder'" (click)="deleteFromList(listItem)" color="medium">
 						<ion-icon name="close-outline"></ion-icon>
 					</ion-button>
 				</ion-buttons>
 		<!--		<ion-reorder slot="end"></ion-reorder>-->
-		<ion-spinner color="medium" *ngIf="listItemWithUiState?.state?.isReordering || listItemWithUiState?.state?.isChangingIsDone"></ion-spinner>
+		<ion-spinner color="medium"
+								 *ngIf="isSpinning()"></ion-spinner>
 	</ion-item>
 	<ion-item-options side="start" (ionSwipe)="setIsDone(listItemWithUiState, undefined, ionSliding)">
 		<ion-item-option *ngIf="!isDone(listItemWithUiState)" expandable="true" color="success"

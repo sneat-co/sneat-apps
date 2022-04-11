@@ -54,33 +54,47 @@
 		<!--			</ion-segment>-->
 		<!--		</div>-->
 
-		<ion-segment [(ngModel)]="doneFilter" (ionChange)="onIsDoneFilterChanged($event)">
-			<ion-segment-button value="all" style="text-transform: none">All</ion-segment-button>
-			<ion-segment-button value="active" style="text-transform: none">Active</ion-segment-button>
-			<ion-segment-button value="completed" style="text-transform: none">Completed</ion-segment-button>
-		</ion-segment>
+		<ion-card-header>
+			<ion-grid class="ion-grid-layout">
+				<ion-row>
+					<ion-col sizeLg="8" sizeMd="6" sizeSm="12">
+						<ion-segment [(ngModel)]="doneFilter" (ionChange)="onIsDoneFilterChanged($event)">
+							<ion-segment-button value="all" style="text-transform: none">All</ion-segment-button>
+							<ion-segment-button value="active" style="text-transform: none">Active</ion-segment-button>
+							<ion-segment-button value="completed" style="text-transform: none">Completed</ion-segment-button>
+						</ion-segment>
+					</ion-col>
+					<ion-col sizeLg="4" sizeMd="6" sizeSm="12">
+						<ion-item class="ion-item-no-border" *ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1">
+							<ion-label slot="end" color="medium" style="font-size: smaller">List mode:</ion-label>
+							<ion-select slot="end" interface="popover" [(ngModel)]="listMode" style="font-size: smaller">
+								<ion-select-option value="reorder">Reorder</ion-select-option>
+								<ion-select-option value="swipe">Swipe</ion-select-option>
+							</ion-select>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-card-header>
 
 		<!--		<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>-->
 
-		<ng-container *ngIf="segment === 'recipes' && list?.dto">
-			<p class="ion-padding" *ngIf="list?.dto?.note">
-				{{list?.dto?.note}}
-			</p>
-		</ng-container>
+		<!--		<ng-container *ngIf="segment === 'recipes' && list?.dto">-->
+		<!--			<p class="ion-padding" *ngIf="list?.dto?.note">-->
+		<!--				{{list?.dto?.note}}-->
+		<!--			</p>-->
+		<!--		</ng-container>-->
 
 		<ion-list>
-			<ion-item *ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1" color="light">
-				<ion-label color="medium">Edit mode</ion-label>
-				<ion-select interface="popover" value="reorder">
-					<ion-select-option value="reorder">Reorder</ion-select-option>
-					<ion-select-option value="options">Swipe options</ion-select-option>
-				</ion-select>
-			</ion-item>
-			<ion-reorder-group (ionItemReorder)="reorder($event)" [disabled]="!isReordering && doneFilter !== 'all'">
+
+			<ion-reorder-group (ionItemReorder)="reorder($event)"
+												 [disabled]="isReordering || listMode !== 'reorder' || doneFilter !== 'all'"
+			>
 				<ion-reorder *ngFor="let item of listItems; trackBy: itemId">
 					<sneat-list-item
 						[showDoneCheckbox]="doneFilter !== 'all'"
 						[doneFilter]="doneFilter"
+						[listMode]="doneFilter === 'all' ? listMode : 'swipe'"
 						[listItemWithUiState]="item"
 						[listItems]="listItems"
 						[team]="team"
@@ -125,9 +139,16 @@
 	<ng-container *ngIf="segment === 'list' && listItems">
 		<div class="ion-padding" style="text-align: center">
 			<ion-text class="ion-padding" color="medium">
-				<span class="hint-sentence"> Swipe left to remove item.</span>
-				<span class="hint-sentence">Swipe right to mark as completed.</span>
-				<span class="hint-sentence">Drag & drop to reorder.</span>
+				<ng-container *ngIf="listMode === 'swipe'">
+					<span class="hint-sentence"> Swipe left to remove item.</span>
+					<span class="hint-sentence">Swipe right to mark as completed.</span>
+					<span class="hint-sentence">Switch to <a href="#edit-mode:reorder" (click)="setEditMode($event, 'reorder')">reorder mode</a> to sort.</span>
+				</ng-container>
+				<ng-container *ngIf="listMode === 'reorder'">
+					<span class="hint-sentence">Drag & drop to reorder.</span>
+					<span class="hint-sentence">Switch to <a href="#edit-mode:swipe" fill="clear"
+																									 (click)="setEditMode($event, 'swipe')">swipe mode</a> to edit.</span>
+				</ng-container>
 			</ion-text>
 		</div>
 		<ion-grid>

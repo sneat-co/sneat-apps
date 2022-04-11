@@ -28,6 +28,9 @@ export class ListItemComponent {
 	public doneFilter: 'all' | 'active' | 'completed' = 'all';
 
 	@Input()
+	public listMode: 'reorder' | 'swipe' = 'reorder';
+
+	@Input()
 	public listItemWithUiState?: IListItemWithUiState;
 	@Input() public team?: ITeamContext; // TODO: remove?
 	@Input() list?: IListContext;
@@ -55,6 +58,14 @@ export class ListItemComponent {
 		return this.params.teamParams.errorLogger;
 	}
 
+	public isSpinning(): boolean {
+		if (!this.listItemWithUiState) {
+			return false;
+		}
+		const { state } = this.listItemWithUiState;
+		return !!state.isReordering || !!state.isDeleting || !!state.isChangingIsDone;
+	}
+
 	goListItem(item: IListItemBrief): void {
 		console.log(`goListItem(${item.id}), subListId=${item.subListId}`, item);
 		this.itemClicked.emit(item);
@@ -71,7 +82,10 @@ export class ListItemComponent {
 			return;
 		}
 		const { checked } = (event as CustomEvent).detail;
-		console.log('onIsDoneChanged()', checked, this.doneFilter);
+		if (checked === undefined) {
+			return;
+		}
+		console.log('onIsDoneCheckboxChanged()', checked, this.doneFilter);
 		const isDone = !!checked;
 		this.setIsDone(this.listItemWithUiState, isDone);
 	}
@@ -111,6 +125,7 @@ export class ListItemComponent {
 				.catch(this.errorLogger.logErrorHandler('Failed to set completed'));
 		} else {
 			performSetIsDone();
+			// setTimeout(() => performSetIsDone(), 0);
 		}
 	}
 
@@ -134,7 +149,7 @@ export class ListItemComponent {
 			listType: this.list?.brief?.type,
 			itemIDs: [item.id],
 		};
-		this.listService.deleteListItem(request)
+		this.listService.deleteListItems(request)
 			.subscribe({
 				next: () => {
 					console.log('ListItemComponent => item deleted');

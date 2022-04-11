@@ -117,6 +117,10 @@ ion-label.deleting-list-item {
 	margin: 0 !important;
 }
 
+ion-item.ion-item-no-border {
+  --inner-border-width: 0;
+}
+
 ion-list.last-child-no-border ion-item:last-child {
 	--inner-border-width: 0;
 }

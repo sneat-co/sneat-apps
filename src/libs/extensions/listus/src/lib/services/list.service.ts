@@ -95,7 +95,7 @@ export class ListService {
 		return this.sneatApiService.post(url, request);
 	}
 
-	public deleteListItem(request: IDeleteListItemsRequest): Observable<void> {
+	public deleteListItems(request: IDeleteListItemsRequest): Observable<void> {
 		return this.sneatApiService.delete(
 			`listus/list_items_delete?`, new HttpParams({
 				fromObject: {

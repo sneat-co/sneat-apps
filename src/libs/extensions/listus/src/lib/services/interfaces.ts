@@ -79,8 +79,8 @@ export interface ICreateListRequest extends ITeamRequest, IListBrief {
 }
 
 export interface IListRequest extends ITeamRequest {
-	listID: string;
-	listType: ListType;
+	readonly listID: string;
+	readonly listType: ListType;
 }
 
 export interface IListItemRequest extends IListRequest {
@@ -88,7 +88,7 @@ export interface IListItemRequest extends IListRequest {
 }
 
 export interface IListItemIDsRequest extends IListRequest {
-	itemIDs: string[];
+	readonly itemIDs: string[];
 }
 
 export interface IReorderListItemsRequest extends IListItemIDsRequest {
