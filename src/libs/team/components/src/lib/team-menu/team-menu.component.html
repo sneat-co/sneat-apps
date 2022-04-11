@@ -62,12 +62,18 @@
 	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/lists"
 						routerDirection="root"
 						[disabled]="!team"
-						(click)="closeMenu()"
+						[class.currentPage]="isCurrentPage('lists')"
+						(click)="goTeamPage($event, 'lists')"
 	>
 		<ion-icon name="list-outline" slot="start"></ion-icon>
 		<ion-label>Lists</ion-label>
 		<ion-buttons slot="end">
-			<ion-button routerLink="./list/groceries">🛒</ion-button>
+			<ion-button routerDirection="root"
+									routerLink="/space/{{team?.type}}/{{team?.id}}/list/to-buy/groceries"
+									(click)="goTeamPage($event, 'list/to-buy/groceries')"
+			>
+				<ion-label>🛒</ion-label>
+			</ion-button>
 			<!--			<ion-button routerLink="./list/towatch">🍿</ion-button>-->
 		</ion-buttons>
 	</ion-item>
