@@ -105,5 +105,12 @@ export const carMakes: {
 			{model: 'Model S', engines: [{title: '90KW', fuel: 'battery'}]},
 			{model: 'Model X', engines: [{title: '90KW', fuel: 'battery'}]},
 		],
-	}
+	},
+	Hyundai: {
+		yearMin: 1900,
+		models: [
+			{model: 'Kona', engines: []},
+			{model: 'Tuscan', engines: []},
+		],
+	},
 };
