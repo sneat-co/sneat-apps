@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NewHappeningParams, SlotItem, SlotsGroup} from '../../view-models';
-import {isSlotVisible} from '../schedile-slots';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NewHappeningParams, SlotItem, SlotsGroup } from '../../view-models';
+import { isSlotVisible } from '../schedile-slots';
 
 @Component({
-	selector: 'app-schedule-weekday',
+	selector: 'sneat-schedule-weekday',
 	templateUrl: './schedule-weekday.component.html',
 })
 export class ScheduleWeekdayComponent {
 
-	@Input() weekday: SlotsGroup;
-	@Input() filter: string;
+	@Input() weekday?: SlotsGroup;
+	@Input() filter = '';
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
@@ -18,5 +18,12 @@ export class ScheduleWeekdayComponent {
 
 	showSlot(slot: SlotItem): boolean {
 		return isSlotVisible(slot, this.filter, this.showRegulars, this.showEvents);
+	}
+
+	onDateSelected(): void {
+		// console.log('onDateSelected', event);
+		if (this.weekday?.date) {
+			this.dateSelected.next(this.weekday?.date);
+		}
 	}
 }

@@ -1,6 +1,6 @@
 import { RxRecordKey } from '@sneat/rxstore';
 import { IBriefWithIdAndTitle } from './dto-brief';
-import { ITeamRecord, IWithRestrictions } from './dto-models';
+import { ITeamsRecord, IWithRestrictions } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
 import { ListStatus, TeamType } from './types';
 
@@ -41,7 +41,7 @@ export interface IListCommon {
 	isDone?: boolean;
 }
 
-export interface IListBase extends IListCommon, ITeamRecord {
+export interface IListBase extends IListCommon, ITeamsRecord {
 	type: ListType;
 	status?: ListStatus;
 }

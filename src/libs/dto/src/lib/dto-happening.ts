@@ -1,6 +1,7 @@
-import { ITeamRecord, ITitledRecord } from './dto-models';
+import { ITeamsRecord, ITitledRecord } from './dto-models';
 import { ActivityType, EventType, Repeats, Weekday } from './types';
 import { IPrice } from './dto-pricing';
+import { UiState } from './ui-state';
 
 export interface SlotParticipant {
 	id: string;
@@ -8,7 +9,7 @@ export interface SlotParticipant {
 	title: string;
 }
 
-export interface IHappening extends ITeamRecord, ITitledRecord {
+export interface IHappening extends ITeamsRecord, ITitledRecord {
 	// type: '';
 	teamIds?: string[];
 	assetId?: string;
@@ -69,6 +70,16 @@ export interface Slot {
 export interface IHappeningRegular extends IHappening, IHappeningTask {
 	kind: HappeningKind;
 	slots?: Slot[];
+}
+
+export interface IRegularActivityDto extends IHappeningRegular {
+	type: ActivityType;
+}
+
+export interface IRegularActivityWithUiState  {
+	readonly id: string;
+	readonly dto: IRegularActivityDto;
+	readonly state: UiState;
 }
 
 export interface IHappeningSingle extends IHappening {

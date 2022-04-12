@@ -1,11 +1,7 @@
 //tslint:disable:no-unsafe-any
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { concat } from 'rxjs';
-import { RxRecordKey } from 'rxstore/schema';
 
-import { wdCodeToWeekdayName } from 'sneat-shared/components/pipes';
 import {
 	hideVirtualSlide,
 	showVirtualSlide,
@@ -16,16 +12,13 @@ import {
 	VirtualSliderDirectPushedPrev,
 	VirtualSliderReversePushedNext,
 	VirtualSliderReversePushedPrev,
+	wdCodeToWeekdayName,
 } from '@sneat/components';
-import { DtoRegularActivity, IHappening } from 'sneat-shared/models/dto/dto-happening';
-import { SingleHappeningKind } from 'sneat-shared/models/kinds';
-import { Weekday } from '@sneat/dto';
-import { ICommuneIds, ISingleHappeningService } from 'sneat-shared/services/interfaces';
-import { getWeekdayDate, isoStringsToDate, localDateToIso } from 'sneat-shared/utils/datetimes';
-import { ICommuneMemberInfo } from '../../../models/dto/dto-commune';
-import { CommuneTopPage } from '../../../pages/constants';
+import { getWeekdayDate, isoStringsToDate, localDateToIso } from '@sneat/core';
+import { IHappening, IRegularActivityWithUiState, Weekday } from '@sneat/dto';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { IMemberContext } from '@sneat/team/models';
 import { jsDayToWeekday, NewHappeningParams, SlotItem, SlotsGroup, wd2, wdNumber } from '../view-models';
-import { eventToSlot, ISlotsProvider } from './slots-provider';
 
 function getWdDate(wd: Weekday, activeWd: Weekday, activeDate: Date): Date {
 	if (wd === activeWd) {
@@ -66,7 +59,7 @@ interface Week extends Sweepable {
 }
 
 function createWeekdays(week: Week): void {
-	week.weekdays = wd2.map(wd => ({ wd, title: wdCodeToWeekdayName(wd) }));
+	week.weekdays = wd2.map(wd => ({ wd, title: wdCodeToWeekdayName(wd), slots: [] }));
 }
 
 @Component({
@@ -83,10 +76,10 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	public showRegulars = true;
 	public showEvents = true;
 	todayAndFutureEvents?: SlotsGroup[];
-	public memberInfo: ICommuneMemberInfo;
+	public member?: IMemberContext;
 	filterFocused = false;
-	allRegulars?: DtoRegularActivity[];
-	regulars?: DtoRegularActivity[];
+	allRegulars?: IRegularActivityWithUiState[];
+	regulars?: IRegularActivityWithUiState[];
 	activeDayParity: Parity = 'odd';
 	activeWeekParity: Parity = 'odd';
 	oddDay: Day = {
@@ -113,7 +106,8 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	};
 	weekAnimationState: VirtualSliderAnimationStates = VirtualSliderDirectPushedPrev;
 	dayAnimationState: VirtualSliderAnimationStates = VirtualSliderDirectPushedPrev;
-	private filter = '';
+
+	public filter = '';
 
 	// nextWeekdays: SlotsGroup[];
 	// prevWeekdays: SlotsGroup[];
@@ -121,15 +115,15 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private readonly singleHappeningService: ISingleHappeningService,
-		private readonly slotsProvider: ISlotsProvider,
+		// private readonly singleHappeningService: ISingleHappeningService,
+		// private readonly slotsProvider: ISlotsProvider,
 	) {
-		super(CommuneTopPage.home, route, params);
+		super('SchedulePageComponent', route, params);
 
 		createWeekdays(this.oddWeek);
 		createWeekdays(this.evenWeek);
 
-		params.route.queryParamMap.subscribe(queryParams => {
+		this.route?.queryParamMap.subscribe(queryParams => {
 			const tab = queryParams.get('tab');
 			if (tab) {
 				switch (tab) {
@@ -193,34 +187,36 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 		history.replaceState(history.state, document.title, location.href.replace(/tab=\w+/, `tab=${this.segment}`));
 		switch (this.segment) {
 			case 'week':
-				// tslint:disable-next-line:no-non-null-assertion
-				this.setDay('segmentChanged', this.activeDay.date!);
+				if (this.activeDay.date) {
+					this.setDay('segmentChanged', this.activeDay.date);
+				} else {
+					throw new Error('activeDay has no date');
+				}
 				break;
 			case 'events':
-				this.slotsProvider.loadTodayAndFutureEvents(undefined)
-					.subscribe(
-						events => {
-							const slotGroupsByDate: { [dateKey: string]: SlotsGroup } = {};
-							events.forEach(event => {
-								const eventStartDate = new Date(event.dtStarts);
-								const dateKey = localDateToIso(eventStartDate);
-								let slotGroup = slotGroupsByDate[dateKey];
-								if (!slotGroup) {
-									const wd = 'we';
-									slotGroupsByDate[dateKey] = slotGroup = {
-										wd,
-										date: eventStartDate,
-										title: wdCodeToWeekdayName(wd),
-										slots: [],
-									};
-								}
-								// tslint:disable-next-line:no-non-null-assertion
-								slotGroup.slots!.push(eventToSlot(event));
-							});
-							this.todayAndFutureEvents = Object.values(slotGroupsByDate);
-						},
-						this.errorLogger.logError,
-					);
+				// this.slotsProvider.loadTodayAndFutureEvents(undefined)
+				// 	.subscribe({
+				// 		error: this.errorLogger.logError,
+				// 		next: events => {
+				// 			const slotGroupsByDate: { [dateKey: string]: SlotsGroup } = {};
+				// 			events.forEach(event => {
+				// 				const eventStartDate = new Date(event.dtStarts);
+				// 				const dateKey = localDateToIso(eventStartDate);
+				// 				let slotGroup = slotGroupsByDate[dateKey];
+				// 				if (!slotGroup) {
+				// 					const wd = 'we'; // TODO: why Wednesday?
+				// 					slotGroupsByDate[dateKey] = slotGroup = {
+				// 						wd,
+				// 						date: eventStartDate,
+				// 						title: wdCodeToWeekdayName(wd),
+				// 						slots: [],
+				// 					};
+				// 				}
+				// 				slotGroup.slots.push(eventToSlot(event));
+				// 			});
+				// 			this.todayAndFutureEvents = Object.values(slotGroupsByDate);
+				// 		},
+				// 	});
 				break;
 			default:
 				break;
@@ -228,11 +224,9 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		super.ngOnInit();
-		this.memberInfo = history.state.member as ICommuneMemberInfo;
-		if (this.memberInfo) {
-			// tslint:disable-next-line:no-non-null-assertion
-			this.slotsProvider.setMemberId(this.memberInfo.id!);
+		this.member = history.state.member as IMemberContext;
+		if (this.member) {
+			// this.slotsProvider.setMemberId(this.member.id);
 		}
 	}
 
@@ -258,17 +252,21 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 		if (weekday) {
 			state.wd = weekday.wd;
 			// tslint:disable-next-line:no-non-null-assertion
-			state.date = dateToParameter(weekday.date!);
+			if (weekday.date) {
+				state.date = dateToParameter(weekday.date);
+			}
 		} else if (this.segment === 'day') {
-			// tslint:disable-next-line:no-non-null-assertion
-			state.date = dateToParameter(this.activeDay.date!);
+			if (this.activeDay.date) {
+				state.date = dateToParameter(this.activeDay.date);
+			}
 		}
-
-		this.navigateForward('new-activity', { tab: type }, state);
+		this.errorLogger.logError('not implemented yet');
+		// this.navigateForward('new-activity', { tab: type }, state);
 	}
 
-	goRegular(activity: DtoRegularActivity): void {
-		this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
+	goRegular(activity: IRegularActivityWithUiState): void {
+		this.errorLogger.logError('not implemented yet');
+		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
 
 	applyFilter(filter: string): void {
@@ -314,9 +312,12 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	}
 
 	setToday(): void {
+		if (!this.activeDay.date) {
+			this.errorLogger.logError('!this.activeDay.date');
+			return;
+		}
 		const today = new Date();
-		// tslint:disable-next-line:no-non-null-assertion
-		const activeTime = this.activeDay.date!.getTime();
+		const activeTime = this.activeDay.date.getTime();
 		switch (this.segment) {
 			case 'day':
 				this.activeDayParity = this.activeDayParity === 'odd' ? 'even' : 'odd';
@@ -360,7 +361,8 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 		if (!happeningDto) {
 			throw new Error('!happeningDto');
 		}
-		this.navigateForward(slot.kind, { id: happeningDto.id }, { happeningDto }, { excludeCommuneId: true });
+		this.logError('not inplemented yet');
+		// this.navigateForward(slot.kind, { id: happeningDto.id }, { happeningDto }, { excludeCommuneId: true });
 	}
 
 	public onDateSelected(date: Date): void {
@@ -368,15 +370,10 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 		this.setDay('onDateSelected', date);
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
-	trackById(i: number, item: { id?: string }): RxRecordKey | undefined {
-		return item.id;
-	}
+	readonly id = (i: number, v: { id: string }): string => v.id;
 
 	// tslint:disable-next-line:prefer-function-over-method
-	trackByIndex(i: number): number {
-		return i;
-	}
+	readonly index = (i: number): number => i;
 
 	// get inactiveDay(): Day {
 	//     return this.activeDayParity === 'odd' ? this.evenDay : this.oddDay;
@@ -389,39 +386,39 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 
 	// noinspection JSMethodCanBeStatic
 
-	protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
-		super.onCommuneIdsChanged(communeIds);
-		if (this.communeRealId) {
-			this.slotsProvider.setCommuneId(this.communeRealId)
-				.subscribe(
-					(regulars) => {
-						console.log('Loaded regulars:', regulars);
-						this.allRegulars = regulars;
-						this.regulars = this.filterRegulars();
-					},
-					this.errorLogger.logError,
-					() => {
-						// this.activeWeek.weekdays = [...this.activeWeek.weekdays];
-						this.setDay('onCommuneIdChanged', this.activeDay.date || new Date());
-					},
-				);
+	protected override onTeamIdChanged(): void {
+		super.onTeamIdChanged();
+		if (this.team?.id) {
+			// this.slotsProvider.setCommuneId(this.team.id)
+			// 	.subscribe(
+			// 		(regulars) => {
+			// 			console.log('Loaded regulars:', regulars);
+			// 			this.allRegulars = regulars;
+			// 			this.regulars = this.filterRegulars();
+			// 		},
+			// 		this.errorLogger.logError,
+			// 		() => {
+			// 			// this.activeWeek.weekdays = [...this.activeWeek.weekdays];
+			// 			this.setDay('onCommuneIdChanged', this.activeDay.date || new Date());
+			// 		},
+			// 	);
 		}
 	}
 
 	// noinspection JSMethodCanBqw2se3333eStatic
 
-	private filterRegulars(): DtoRegularActivity[] | undefined {
+	private filterRegulars(): IRegularActivityWithUiState[] | undefined {
 		const filter = this.filter.toLowerCase();
 		if (!filter) {
 			return this.allRegulars;
 		}
-		return this.allRegulars?.filter(r => r.title.toLowerCase().indexOf(filter) >= 0);
+		return this.allRegulars?.filter(r => r.dto.title && r.dto.title.toLowerCase().indexOf(filter) >= 0);
 	}
 
 	// noinspection JSMethodCanBeStatic
 
 	private setDay(source: string, d: Date): void {
-		console.log(`${source}: setDay:`, d, this.communeRealId);
+		console.log(`${source}: setDay:`, d);
 		if (!d) {
 			return;
 		}
@@ -438,25 +435,29 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 			const weekdayDate = getWdDate(weekday.wd, activeWd, d);
 			if (!weekday.date || weekday.date.getTime() !== weekdayDate.getTime() || !weekday.slots) {
 				// console.log('weekday.date !== weekdayDate', weekday.date, weekdayDate);
-				weekday.date = weekdayDate;
+				weekday = { ...weekday, date: weekdayDate };
 				if (segment === 'week' || segment === 'day' && weekday.wd === activeWd) {
 					datesToLoad.push(weekday);
 					// tslint:disable-next-line:no-magic-numbers
 					const diff = segment === 'day' ? 1 : 7;
 					const wdDate = weekday.date;
-					datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() + diff));
-					datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() - diff));
+					if (wdDate) {
+						datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() + diff));
+						datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() - diff));
+					}
 					if (segment === 'day') {
 						const activeWeekDaysToPreload = activeWeek.weekdays
 							.filter(wd =>
 								!wd.date ||
 								// tslint:disable-next-line:no-non-null-assertion
-								!datesToPreload.some(dtp => dtp.getTime() === wd.date!.getTime()));
+								!datesToPreload.some(dtp => dtp.getTime() === wd.date?.getTime()));
 						activeWeekDaysToPreload.forEach(wd => {
 							if (!wd.date) {
-								wd.date = weekdayDate;
+								// wd.date = weekdayDate;
+								this.errorLogger.logError('not implemented yet: !wd.date');
+							} else {
+								datesToPreload.push(wd.date);
 							}
-							datesToPreload.push(wd.date);
 						});
 					}
 				}
@@ -467,17 +468,17 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 		});
 
 		console.log(`segment=${segment}, datesToPreload:`, datesToPreload);
-		this.singleHappeningService.readonlyTx([SingleHappeningKind], tx =>
-			concat(
-				this.slotsProvider.getDays(tx, ...datesToLoad),
-				this.slotsProvider.preloadEvents(tx, ...datesToPreload),
-			))
-			.subscribe(
-				() => {
-				},
-				err => {
-					this.errorLogger.logError(err, 'Failed to load data');
-				});
+		// this.singleHappeningService.readonlyTx([SingleHappeningKind], tx =>
+		// 	concat(
+		// 		this.slotsProvider.getDays(tx, ...datesToLoad),
+		// 		this.slotsProvider.preloadEvents(tx, ...datesToPreload),
+		// 	))
+		// 	.subscribe(
+		// 		() => {
+		// 		},
+		// 		err => {
+		// 			this.errorLogger.logError(err, 'Failed to load data');
+		// 		});
 
 		// Change URL
 		if (this.isToday()) {
@@ -496,6 +497,7 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	//     return this.activeWeekParity === 'odd' ? this.evenWeek : this.oddWeek;
 	// }
 }
+
 
 function animationState(activeParity: Parity, diff: number): VirtualSliderAnimationStates {
 	let result: VirtualSliderAnimationStates;

@@ -1,11 +1,11 @@
 <ion-item-divider color="light">
-    <ion-label slot="start" (click)="dateSelected.emit(weekday.date)" tappable>
-        <ng-container *ngIf="weekday.slots && weekday.slots.length"><b>{{weekday.title}}</b></ng-container>
-        <ng-container *ngIf="!weekday.slots || !weekday.slots.length">{{weekday.title}}</ng-container>
-        <ng-container *ngIf="weekday.date"
-        >, {{weekday.date.getDate()}} {{weekday.date.getMonth()|shortMonthName}}</ng-container>
+    <ion-label slot="start" (click)="onDateSelected()" tappable>
+        <ng-container *ngIf="weekday?.slots && weekday?.slots?.length"><b>{{weekday?.title}}</b></ng-container>
+        <ng-container *ngIf="!weekday?.slots || !weekday?.slots?.length">{{weekday?.title}}</ng-container>
+        <ng-container *ngIf="weekday?.date"
+        >, {{weekday?.date?.getDate()}} {{weekday?.date?.getMonth()|shortMonthName}}</ng-container>
     </ion-label>
-    <ion-spinner style="opacity: 0.2" name="lines-small" *ngIf="weekday.loadingEvents"
+    <ion-spinner style="opacity: 0.2" name="lines-small" *ngIf="weekday?.loadingEvents"
                  slot="end"></ion-spinner>
     <ion-buttons slot="end">
         <ion-button color="medium" title="Add activity" (click)="goNew.emit({type: 'regular', weekday: weekday})">
@@ -13,9 +13,9 @@
         </ion-button>
     </ion-buttons>
 </ion-item-divider>
-<ng-container *ngIf="weekday.slots && weekday.slots.length">
-    <ng-container *ngFor="let slot of weekday.slots">
-        <app-activity-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
-        </app-activity-item>
+<ng-container *ngIf="weekday?.slots && weekday?.slots?.length">
+    <ng-container *ngFor="let slot of weekday?.slots">
+        <sneat-activity-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
+        </sneat-activity-item>
     </ng-container>
 </ng-container>

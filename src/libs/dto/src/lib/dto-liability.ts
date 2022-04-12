@@ -1,7 +1,7 @@
 import { LiabilityDirection, LiabilityServiceType, LiabilityType, Period } from './types';
-import { ITeamRecord, ITitledRecord } from './dto-models';
+import { ITeamsRecord, ITitledRecord } from './dto-models';
 
-export interface DtoLiability extends ITeamRecord, ITitledRecord {
+export interface DtoLiability extends ITeamsRecord, ITitledRecord {
 	memberId?: string;
 	contactId?: string;
 	assetId?: string;

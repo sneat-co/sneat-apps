@@ -4,13 +4,14 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
+import { FilterItemModule, SneatPipesModule } from '@sneat/components';
+import { TeamCoreComponentsModule } from '@sneat/team/components';
 
 import {SchedulePageComponent} from './schedule-page.component';
 import {ActivityItemComponent} from '../components/regular-item/activity-item.component';
 import {ScheduleDayComponent} from '../components/schedule-day/schedule-day.component';
 import {ScheduleWeekComponent} from '../components/schedule-week/schedule-week.component';
 import {ScheduleWeekdayComponent} from '../components/schedule-weekday/schedule-weekday.component';
-import {SharedComponentsModule} from '../../../components/shared-components.module';
 
 const routes: Routes = [
 	{
@@ -24,8 +25,10 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		SharedComponentsModule,
-		RouterModule.forChild(routes)
+		RouterModule.forChild(routes),
+		SneatPipesModule,
+		TeamCoreComponentsModule,
+		FilterItemModule,
 	],
 	declarations: [
 		SchedulePageComponent,

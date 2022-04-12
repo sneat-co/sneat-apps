@@ -88,6 +88,7 @@
 	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/schedule"
 						routerDirection="root"
 						[disabled]="!team"
+						[class.currentPage]="isCurrentPage('schedule')"
 						(click)="closeMenu()"
 	>
 		<ion-icon name="calendar-outline" slot="start"></ion-icon>

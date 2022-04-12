@@ -1,18 +1,18 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SlotItem, SlotsGroup} from '../../view-models';
-import {isSlotVisible} from '../schedile-slots';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SlotItem, SlotsGroup } from '../../view-models';
+import { isSlotVisible } from '../schedile-slots';
 
 @Component({
-	selector: 'app-schedule-day',
+	selector: 'sneat-schedule-day',
 	templateUrl: './schedule-day.component.html',
 })
 export class ScheduleDayComponent {
 
-	@Input() filter: string;
+	@Input() filter = '';
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
 
-	@Input() dayWeekday: SlotsGroup;
+	@Input() dayWeekday?: SlotsGroup;
 	@Output() slotClicked = new EventEmitter<SlotItem>();
 
 	showSlot(slot: SlotItem): boolean {

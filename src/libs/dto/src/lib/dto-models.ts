@@ -48,7 +48,11 @@ export interface DtoTotals {
 // }
 
 export interface ITeamRecord {
-	teamId?: string;
+	teamID?: string;
+}
+
+export interface ITeamsRecord {
+	teamIDs?: string[];
 }
 
 export interface IRealEstate {
@@ -81,7 +85,7 @@ export function zeroIfEmptyTotals(totals: DtoTotals): DtoTotals {
 	return totals;
 }
 
-export interface IPersonRecord extends ITeamRecord/*, IPersonSize*/
+export interface IPersonRecord extends ITeamsRecord/*, IPersonSize*/
 {
 	userID?: string;
 	readonly email?: string;

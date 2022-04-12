@@ -119,6 +119,9 @@ export class NewHappeningPageComponent extends TeamBaseComponent {
 
 	createActivity(): void {
 		this.activityForm.markAsTouched();
+		if (!this.team) {
+			return;
+		}
 		if (!this.activityForm.valid) {
 			if (!this.activityForm.controls['title'].valid) {
 				this.titleInput?.setFocus()
@@ -128,7 +131,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent {
 		}
 		const activityFormValue = this.activityForm.value;
 		const dto: IHappening = {
-			teamId: this.team?.id,
+			teamIDs: [this.team.id],
 			title: activityFormValue.title,
 		};
 		{

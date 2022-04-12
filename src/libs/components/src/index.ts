@@ -1,3 +1,5 @@
+export * from './lib/pipes';
+//
 export * from './lib/virtual-slider/virtual-slider';
 //
 export * from './lib/card-list/sneat-card-list.module';

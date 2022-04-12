@@ -1,13 +1,9 @@
-import {IRegularHappeningService, ISingleHappeningService} from 'sneat-shared/services/interfaces';
+import { localDateToIso } from '@sneat/core';
 import {SlotItem, SlotsGroup, timeToStr, wd2} from '../view-models';
 import {EMPTY, from, merge, Observable, Subscription} from 'rxjs';
-import {localDateToIso} from 'sneat-shared/utils/datetimes';
 import {ignoreElements, map, tap} from 'rxjs/operators';
-import {IRxReadonlyTransaction, SelectResult} from 'rxstore';
 import {Injectable} from '@angular/core';
-import {Weekday} from 'sneat-shared/models/types';
-import {DtoRegularActivity, DtoSingleActivity, DtoSingleTask} from 'sneat-shared/models/dto/dto-happening';
-import {SneatAppSchema} from '../../../models/db-schemas-by-app';
+import { DtoRegularActivity, DtoSingleActivity, DtoSingleTask, Weekday } from '@sneat/dto';
 
 type RegularsByWeekday = {
 	[wd in Weekday]: SlotItem[] | undefined
@@ -42,11 +38,11 @@ export abstract class ISlotsProvider {
 
 	public abstract setMemberId(memberId: string): void;
 
-	public abstract preloadEvents(tx: IRxReadonlyTransaction<SneatAppSchema> | undefined, ...dates: Date[]): Observable<SlotsGroup>;
+	public abstract preloadEvents(...dates: Date[]): Observable<SlotsGroup>;
 
-	public abstract getDays(tx: IRxReadonlyTransaction<SneatAppSchema>, ...weekdays: SlotsGroup[]): Observable<SlotsGroup>;
+	public abstract getDays(...weekdays: SlotsGroup[]): Observable<SlotsGroup>;
 
-	public abstract loadTodayAndFutureEvents(tx?: IRxReadonlyTransaction<SneatAppSchema>): Observable<DtoSingleActivity[]>;
+	public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 
 }
 
@@ -65,12 +61,12 @@ export class SlotsProvider extends ISlotsProvider {
 		{} as RegularsByWeekday,
 	);
 
-	private communeId: string;
-	private memberId: string;
+	private teamId?: string;
+	private memberId?: string;
 
 	constructor(
-		private readonly regularService: IRegularHappeningService,
-		private readonly singleService: ISingleHappeningService,
+		// private readonly regularService: IRegularHappeningService,
+		// private readonly singleService: ISingleHappeningService,
 	) {
 		super();
 	}
@@ -147,7 +143,7 @@ export class SlotsProvider extends ISlotsProvider {
 
 	// private addEventsToSlotsGroup(weekday: SlotsGroup, date:)
 
-	public preloadEvents(tx: IRxReadonlyTransaction<SneatAppSchema>, ...dates: Date[]): Observable<SlotsGroup> {
+	public preloadEvents(...dates: Date[]): Observable<SlotsGroup> {
 		console.log('Preload events for:', dates);
 		const dateKeys = dates.filter(d => !!d)
 			.map(localDateToIso)
@@ -155,11 +151,11 @@ export class SlotsProvider extends ISlotsProvider {
 		if (!dateKeys.length) {
 			return EMPTY;
 		}
-		return this.loadEvents(tx, ...dates)
+		return this.loadEvents(...dates)
 			.pipe(ignoreElements());
 	}
 
-	private loadEvents(tx: IRxReadonlyTransaction<SneatAppSchema>, ...dates: Date[]): Observable<{ dateKey: string; events: SlotItem[] }> {
+	private loadEvents(...dates: Date[]): Observable<{ dateKey: string; events: SlotItem[] }> {
 		const dateISOs = dates.map(localDateToIso);
 
 		const mapSelectResult = (selectResult: SelectResult<DtoSingleActivity>) => {
@@ -171,17 +167,17 @@ export class SlotsProvider extends ISlotsProvider {
 			return {dateKey, events: this.singlesByDate[dateKey]};
 		};
 
-		return this.singleService.selectByDate(tx, this.communeId, ...dateISOs)
-			.pipe(
-				map(selectResult => {
-					console.log(`Loaded events ${selectResult.key}: ${selectResult.values.length}`);
-					return mapSelectResult(selectResult);
-				}),
-			);
+		// return this.singleService.selectByDate(tx, this.communeId, ...dateISOs)
+		// 	.pipe(
+		// 		map(selectResult => {
+		// 			console.log(`Loaded events ${selectResult.key}: ${selectResult.values.length}`);
+		// 			return mapSelectResult(selectResult);
+		// 		}),
+		// 	);
 	}
 
-	public getDays(tx: IRxReadonlyTransaction<SneatAppSchema>, ...weekdays: SlotsGroup[]): Observable<SlotsGroup> {
-		if (!this.communeId) {
+	public getDays(...weekdays: SlotsGroup[]): Observable<SlotsGroup> {
+		if (!this.teamId) {
 			return from(weekdays);
 		}
 		const weekdaysByDateKey: { [date: string]: SlotsGroup } = {};
@@ -199,13 +195,12 @@ export class SlotsProvider extends ISlotsProvider {
 			const dateSingleSlots = this.singlesByDate[dateKey];
 			if (dateSingleSlots) {
 				if (weekday.slots) {
-					weekday.slots = weekday.slots.filter(slot => !slot.single);
+					weekday = {...weekday, slots: weekday.slots.filter(slot => !slot.single)};
 				}
 				if (weekday.slots) {
-					weekday.slots = [];
+					weekday = {...weekday, slots: []};
 				}
-				// tslint:disable-next-line:no-non-null-assertion
-				dateSingleSlots.forEach(slot => weekday.slots!.push(slot));
+				dateSingleSlots.forEach(slot => weekday.slots.push(slot));
 				weekdaysLoaded.push(weekday);
 			} else {
 				weekdaysToLoad.push(weekday);
@@ -236,7 +231,7 @@ export class SlotsProvider extends ISlotsProvider {
 		return weekdaysLoaded ? merge(weekdaysLoaded, loadWeekdays$) : loadWeekdays$;
 	}
 
-	public loadTodayAndFutureEvents(tx: IRxReadonlyTransaction<SneatAppSchema>): Observable<DtoSingleActivity[]> {
+	public loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]> {
 
 		return this.singleService.selectFutureEvents(tx, this.communeId)
 			.pipe(

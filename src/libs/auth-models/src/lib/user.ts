@@ -10,7 +10,7 @@ export interface IUserRecord {
 	readonly teams?: IUserTeamInfo[];
 }
 
-export type TeamType = 'family' | 'personal' | 'company' | 'team' | 'educator' | 'realtor' | 'sport_club' | 'cohabit' | 'unknown';
+export type TeamType = 'family' | 'personal' | 'company' | 'team' | 'parish' | 'educator' | 'realtor' | 'sport_club' | 'cohabit' | 'unknown';
 export type MemberType = 'member' | 'pupil' | 'staff';
 
 export interface IUserTeamInfo {

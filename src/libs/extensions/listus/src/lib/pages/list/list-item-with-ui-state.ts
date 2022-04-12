@@ -1,11 +1,10 @@
-import { IListItemBrief } from '@sneat/dto';
+import { IListItemBrief, UiState } from '@sneat/dto';
+
+export interface IListItemUiState extends UiState {
+	isChangingIsDone?: boolean;
+}
 
 export interface IListItemWithUiState {
 	readonly brief: IListItemBrief;
-	readonly state: {
-		isAdding?: boolean;
-		isDeleting?: boolean;
-		isChangingIsDone?: boolean;
-		isReordering?: boolean;
-	};
+	readonly state: IListItemUiState;
 }

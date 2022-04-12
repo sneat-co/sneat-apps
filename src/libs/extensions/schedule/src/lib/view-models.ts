@@ -1,13 +1,13 @@
-import {Weekday} from 'sneat-shared/models/types';
 import {
-	IHappeningActivity,
-	IHappeningRegular,
+	IHappeningActivity, IHappeningRegular,
 	IHappeningSingle,
 	Level,
 	SlotLocation,
 	SlotParticipant,
-	SlotTime
-} from 'sneat-shared/models/dto/dto-happening';
+	SlotTime,
+	Weekday,
+} from '@sneat/dto';
+
 
 export interface NewHappeningParams {
 	type: 'regular' | 'single';
@@ -27,12 +27,12 @@ export interface SlotItem {
 }
 
 export interface SlotsGroup {
-	wd: Weekday;
-	title: string;
-	slots?: SlotItem[];
-	date?: Date;
-	loadingEvents?: boolean;
-	eventsLoaded?: boolean;
+	readonly wd: Weekday;
+	readonly title: string;
+	readonly slots: SlotItem[];
+	readonly date?: Date;
+	readonly loadingEvents?: boolean;
+	readonly eventsLoaded?: boolean;
 }
 
 export const wd2: Weekday[] = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];

@@ -4,8 +4,8 @@
     </div>
     <ng-container *ngIf="dayWeekday && dayWeekday.slots && dayWeekday.slots.length">
         <ng-container *ngFor="let slot of dayWeekday.slots; trackBy: trackByIndex">
-            <app-activity-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
-            </app-activity-item>
+            <sneat-activity-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
+            </sneat-activity-item>
         </ng-container>
     </ng-container>
 </ng-container>

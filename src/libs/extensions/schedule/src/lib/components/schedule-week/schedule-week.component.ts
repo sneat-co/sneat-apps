@@ -1,24 +1,25 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Weekday } from '@sneat/dto';
 import {NewHappeningParams, SlotItem, SlotsGroup} from '../../view-models';
-import {Weekday} from '../../../../models/types';
 
 @Component({
-	selector: 'app-schedule-week',
+	selector: 'sneat-schedule-week',
 	templateUrl: './schedule-week.component.html',
 })
 export class ScheduleWeekComponent {
 
-	@Input() filter: string;
+	@Input() filter = '';
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
+	@Input() weekdays?: SlotsGroup[];
+
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
 	@Output() slotClicked = new EventEmitter<SlotItem>();
-	@Input() weekdays: SlotsGroup[];
 
-	// noinspection JSMethodCanBeStatic
-	// tslint:disable-next-line:prefer-function-over-method
-	trackByWd(i: number, item: SlotsGroup): Weekday {
-		return item.wd;
+	readonly wd = (i: number, item: SlotsGroup): Weekday => item.wd;
+
+	onDateSelected(date: Date): void {
+		this.dateSelected.next(date);
 	}
 }
