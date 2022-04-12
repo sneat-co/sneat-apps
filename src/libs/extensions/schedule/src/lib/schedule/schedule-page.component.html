@@ -91,16 +91,18 @@
 		<ion-list lines="none" class="no-v-padding" *ngIf="segment === 'day' || segment === 'week'">
 			<ion-grid class="grid-layout">
 				<ion-row>
-					<ion-col [size]="filter && filter.length > 4 ? 6 : 4">
+					<ion-col [size]="filter.length > 4 ? 6 : 4">
 						<sneat-filter-item [filter]="filter" (changed)="applyFilter($event)"
 															 (blur)="filterFocused = false"></sneat-filter-item>
 					</ion-col>
-					<ion-col [size]="filter && filter.length > 4 ? 3 : 4">
+					<ion-col [size]="filter.length > 4 ? 3 : 4">
 						<ion-item style="border-bottom: none; padding: 0">
-							<ion-checkbox [(ngModel)]="showRegulars"
-														(ionChange)="onShowRegularChanged()"
+							<ion-checkbox slot="start"
 														color="light"
-														slot="start" checked="true">
+														checked="true"
+														[(ngModel)]="showRegulars"
+														(ionChange)="onShowRegularChanged()"
+							>
 							</ion-checkbox>
 							<ion-label color="medium">
 								<small>Regular</small>
@@ -109,10 +111,12 @@
 					</ion-col>
 					<ion-col [size]="filter && filter.length > 4 ? 3 : 4">
 						<ion-item>
-							<ion-checkbox [(ngModel)]="showEvents"
-														(ionChange)="onShowEventsChanged()"
+							<ion-checkbox slot="start"
 														color="light"
-														slot="start" checked="true">
+														checked="true"
+														[(ngModel)]="showEvents"
+														(ionChange)="onShowEventsChanged()"
+							>
 							</ion-checkbox>
 							<ion-label color="medium">
 								<small>Events</small>
@@ -246,14 +250,14 @@
 				<ion-col size="6">
 					<ion-button size="small" expand="full" color="light" (click)="goNew({type: 'regular'})">
 						<ion-icon name="add" slot="start"></ion-icon>
-						Add regular
+						Add repeatable
 						<ion-icon name="repeat" slot="end"></ion-icon>
 					</ion-button>
 				</ion-col>
 				<ion-col size="6">
 					<ion-button size="small" expand="full" color="light" (click)="goNew({type: 'single'})">
 						<ion-icon name="add" slot="start"></ion-icon>
-						Add event
+						Add 1-timer
 						<ion-icon name="calendar" slot="end"></ion-icon>
 					</ion-button>
 				</ion-col>
