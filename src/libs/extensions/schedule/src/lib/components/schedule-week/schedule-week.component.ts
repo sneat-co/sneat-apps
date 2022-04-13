@@ -9,7 +9,7 @@ import {NewHappeningParams, SlotItem, SlotsGroup} from '../../view-models';
 export class ScheduleWeekComponent {
 
 	@Input() filter = '';
-	@Input() showRegulars = true;
+	@Input() showRecurring = true;
 	@Input() showEvents = true;
 	@Input() weekdays?: SlotsGroup[];
 

@@ -42,17 +42,17 @@ function setWeekStartAndEndDates(week: Week, activeDate: Date): void {
 
 type Parity = 'odd' | 'even';
 
-interface Sweepable {
+interface Swipeable {
 	animationState: VirtualSlideAnimationsStates;
 	parity: Parity;
 }
 
-interface Day extends Sweepable {
+interface Day extends Swipeable {
 	date?: Date;
 	weekday?: SlotsGroup;
 }
 
-interface Week extends Sweepable {
+interface Week extends Swipeable {
 	weekdays: SlotsGroup[];
 	monday?: Date;
 	sunday?: Date;
@@ -69,11 +69,10 @@ function createWeekdays(week: Week): void {
 	providers: [TeamComponentBaseParams],
 	animations: virtualSliderAnimations,
 })
-// tslint:disable-next-line:component-class-suffix
 export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 
 	segment: 'day' | 'week' | 'regular' | 'events' = 'week';
-	public showRegulars = true;
+	public showRecurring = true;
 	public showEvents = true;
 	todayAndFutureEvents?: SlotsGroup[];
 	public member?: IMemberContext;
@@ -232,12 +231,12 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 
 	onShowEventsChanged(): void {
 		if (!this.showEvents) {
-			this.showRegulars = true;
+			this.showRecurring = true;
 		}
 	}
 
 	onShowRegularChanged(): void {
-		if (!this.showRegulars) {
+		if (!this.showRecurring) {
 			this.showEvents = true;
 		}
 	}

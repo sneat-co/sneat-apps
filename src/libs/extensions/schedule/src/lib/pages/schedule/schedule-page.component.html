@@ -100,7 +100,7 @@
 							<ion-checkbox slot="start"
 														color="light"
 														checked="true"
-														[(ngModel)]="showRegulars"
+														[(ngModel)]="showRecurring"
 														(ionChange)="onShowRegularChanged()"
 							>
 							</ion-checkbox>
@@ -137,7 +137,7 @@
 						<sneat-schedule-day
 							[filter]="filter"
 							[showEvents]="showEvents"
-							[showRegulars]="showRegulars"
+							[showRegulars]="showRecurring"
 							[dayWeekday]="oddDay.weekday"
 							(slotClicked)="goActivity($event)"
 						></sneat-schedule-day>
@@ -161,7 +161,7 @@
 						<sneat-schedule-week
 							[filter]="filter"
 							[showEvents]="showEvents"
-							[showRegulars]="showRegulars"
+							[showRecurring]="showRecurring"
 							[weekdays]="oddWeek.weekdays"
 							(goNew)="goNew($event)"
 							(dateSelected)="onDateSelected($event)"
@@ -172,7 +172,7 @@
 						<sneat-schedule-week
 							[filter]="filter"
 							[showEvents]="showEvents"
-							[showRegulars]="showRegulars"
+							[showRecurring]="showRecurring"
 							[weekdays]="evenWeek.weekdays"
 							(goNew)="goNew($event)"
 							(dateSelected)="onDateSelected($event)"
