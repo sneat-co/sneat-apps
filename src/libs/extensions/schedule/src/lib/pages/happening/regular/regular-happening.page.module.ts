@@ -6,7 +6,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 
 import {RegularHappeningPageComponent} from './regular-happening-page.component';
-import {RegularCommonModule} from '../../components/regular-common.module';
+import {RecurringCommonModule} from '../../components/recurring-common.module';
 
 const routes: Routes = [
 	{
@@ -20,7 +20,7 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		RegularCommonModule,
+		RecurringCommonModule,
 		RouterModule.forChild(routes)
 	],
 	declarations: [RegularHappeningPageComponent]

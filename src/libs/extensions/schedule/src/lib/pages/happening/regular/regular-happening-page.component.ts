@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CommuneBasePageParams} from 'sneat-shared/services/params';
-import {IRegularHappeningService} from 'sneat-shared/services/interfaces';
-import {HappeningBasePage} from '../happening-base-page';
-import {DtoRegularActivity, IHappening} from 'sneat-shared/models/dto/dto-happening';
+import { Component, OnInit } from '@angular/core';
+import { DtoRegularActivity, IHappening } from 'sneat-shared/models/dto/dto-happening';
+import { IRegularHappeningService } from 'sneat-shared/services/interfaces';
+import { CommuneBasePageParams } from 'sneat-shared/services/params';
+import { HappeningBasePage } from '../happening-base-page';
 
 @Component({
 	selector: 'app-activity',

@@ -1,7 +1,7 @@
 import {SlotItem} from '../view-models';
 
 export function isSlotVisible(slot: SlotItem, filter: string, showRegulars: boolean, showEvents: boolean): boolean {
-	return (!!slot.regular && showRegulars || !!slot.single && showEvents) &&
+	return (!!slot.recurring && showRegulars || !!slot.single && showEvents) &&
 		(
 			!filter ||
 			slot.title.toLowerCase()

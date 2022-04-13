@@ -8,10 +8,10 @@ import { FilterItemModule, SneatPipesModule } from '@sneat/components';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 
 import {SchedulePageComponent} from './schedule-page.component';
-import {ActivityItemComponent} from '../components/regular-item/activity-item.component';
-import {ScheduleDayComponent} from '../components/schedule-day/schedule-day.component';
-import {ScheduleWeekComponent} from '../components/schedule-week/schedule-week.component';
-import {ScheduleWeekdayComponent} from '../components/schedule-weekday/schedule-weekday.component';
+import {ActivityItemComponent} from '../../components/recurring-item/activity-item.component';
+import {ScheduleDayComponent} from '../../components/schedule-day/schedule-day.component';
+import {ScheduleWeekComponent} from '../../components/schedule-week/schedule-week.component';
+import {ScheduleWeekdayComponent} from '../../components/schedule-weekday/schedule-weekday.component';
 
 const routes: Routes = [
 	{

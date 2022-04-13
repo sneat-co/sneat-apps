@@ -3,7 +3,7 @@ import {
 	IAssetBrief,
 	IAssetDto,
 	IContactBrief,
-	IContactDto, IHappening,
+	IContactDto, IHappeningDto,
 	IListBrief,
 	IListDto,
 	IMemberBrief,

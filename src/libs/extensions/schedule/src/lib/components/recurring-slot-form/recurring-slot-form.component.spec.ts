@@ -1,22 +1,22 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RegularSlotFormComponent} from './regular-slot-form.component';
+import {RecurrinSlotFormComponent} from './regular-slot-form.component';
 
 describe('RegularSlotFormComponent', () => {
-	let component: RegularSlotFormComponent;
-	let fixture: ComponentFixture<RegularSlotFormComponent>;
+	let component: RecurrinSlotFormComponent;
+	let fixture: ComponentFixture<RecurrinSlotFormComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [RegularSlotFormComponent],
+			declarations: [RecurrinSlotFormComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(RegularSlotFormComponent);
+		fixture = TestBed.createComponent(RecurrinSlotFormComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

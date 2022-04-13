@@ -1,19 +1,19 @@
-import {Route} from '@angular/router';
+import { Route } from '@angular/router';
 // import {guardRoute} from '../../utils/guard-route';
 
 export const schedulusRoutes: Route[] = [
 	{
 		path: 'schedule',
-		loadChildren: () => import('./schedule/schedule-page.module')
+		loadChildren: () => import('./pages/schedule/schedule-page.module')
 			.then(m => m.SchedulePageModule),
 		// ...guardRoute,
 	},
-	// {
-	// 	path: 'new-activity',
-	// 	loadChildren: () => import('./new-happening/new-happening-page.module')
-	// 		.then(m => m.NewHappeningPageModule),
-	// 	...guardRoute,
-	// },
+	{
+		path: 'new-activity',
+		loadChildren: () => import('./pages/new-happening/new-happening-page.module')
+			.then(m => m.NewHappeningPageModule),
+		// ...guardRoute,
+	},
 	// {
 	// 	path: 'new-task',
 	// 	loadChildren: () => import('./new-happening/new-happening-page.module')

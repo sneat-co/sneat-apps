@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as Sentry from '@sentry/browser';
 import { ToastController } from '@ionic/angular';
+import * as Sentry from '@sentry/browser';
 import { IErrorLogger, ILogErrorOptions } from './error-logger.interface';
 
 const defaultErrorToastDuration = 7000;
@@ -22,6 +22,14 @@ export class ErrorLoggerService implements IErrorLogger {
 		options?: ILogErrorOptions,
 	): { error: any; message?: string } | any => {
 		console.error(`${message || 'Error'}:`, e, options);
+		if (e === true || e === false) {
+			try {
+				throw new Error(`got boolean value as an error: ${e}: ${message}`);
+			} catch (ex) {
+				console.error('Argument exception at logError():', ex, options);
+				return;
+			}
+		}
 		if (!options || options.report === undefined || options.report) {
 			try {
 				const eventId = Sentry.captureException(e);
@@ -44,7 +52,7 @@ export class ErrorLoggerService implements IErrorLogger {
 			this.showError(message as string, options?.showDuration);
 		}
 		return message ? { error: e, message } : e;
-	}
+	};
 
 	public showError(message: string, duration?: number): void {
 		if (!message) {

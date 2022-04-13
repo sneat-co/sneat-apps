@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { SharedWithModule } from '@sneat/extensions/contactus';
-import { ListusCoreServicesModule } from '@sneat/extensions/listus';
+import { ListusCoreServicesModule } from '../../services/listus-core-services.module';
 import { MovieCardComponentModule } from '../../movie-card/movie-card.component.module';
 import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-items.module';
 import { ListDialogsService } from '../dialogs/ListDialogs.service';

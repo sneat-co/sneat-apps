@@ -1,6 +1,6 @@
-import { ITeamsRecord, ITitledRecord } from './dto-models';
-import { ActivityType, EventType, Repeats, Weekday } from './types';
+import { ITeamsRecord } from './dto-models';
 import { IPrice } from './dto-pricing';
+import { ActivityType, EventType, Repeats, Weekday } from './types';
 import { UiState } from './ui-state';
 
 export interface SlotParticipant {
@@ -9,17 +9,29 @@ export interface SlotParticipant {
 	title: string;
 }
 
-export interface IHappening extends ITeamsRecord, ITitledRecord {
-	// type: '';
-	teamIds?: string[];
-	assetId?: string;
-	memberIds?: string[];
-	contactIds?: string[];
+export interface IHappeningBase {
+	title: string;
+	type: HappeningType;
+	activityType?: ActivityType;
+	kind: HappeningKind;
+	levels?: Level[];
+}
+
+export interface IHappeningBrief extends IHappeningBase {
+	id: string;
+}
+
+export interface IHappeningDto extends IHappeningBase, ITeamsRecord {
+	assetIDs?: string[];
+	memberIDs?: string[];
+	contactIDs?: string[];
 	participants?: SlotParticipant[];
 	note?: string;
 }
 
-export type HappeningKind = 'activity' | 'task';
+export type HappeningType = 'recurring' | 'single';
+
+export type HappeningKind = 'appointment' | 'activity' | 'task';
 
 export interface SlotLocation {
 	title?: string;
@@ -41,14 +53,14 @@ type MonthlyDay = -5 | -4 | -3 | -2 | -1
 
 export interface SlotTime {
 	starts: string;
-	ends: string;
+	ends?: string;
 	repeats: Repeats;
 	monthly?: MonthlyDay | 'week1' | 'week2' | 'week3' | 'week4';
 	fortnightly?: {
 		odd: IFortnightly;
 		even: IFortnightly;
 	};
-	weekdays: Weekday[];
+	weekdays?: Weekday[];
 }
 
 export type Level = 'beginners' | 'intermediate' | 'advanced';
@@ -61,56 +73,37 @@ export interface IHappeningTask {
 }
 
 export interface Slot {
+	readonly id: string;
 	time: SlotTime;
 	groupIds?: string[];
-	levels?: Level[];
+	// levels?: Level[];
 	location?: SlotLocation;
 }
 
-export interface IHappeningRegular extends IHappening, IHappeningTask {
+export interface IRecurringHappeningDto extends IHappeningDto, IHappeningTask {
+	type: 'recurring';
 	kind: HappeningKind;
 	slots?: Slot[];
 }
 
-export interface IRegularActivityDto extends IHappeningRegular {
-	type: ActivityType;
-}
-
-export interface IRegularActivityWithUiState  {
+export interface IRecurringActivityWithUiState {
 	readonly id: string;
-	readonly dto: IRegularActivityDto;
+	readonly dto: IRecurringHappeningDto;
 	readonly state: UiState;
 }
 
-export interface IHappeningSingle extends IHappening {
-	kind: 'activity' | 'task';
+export interface ISingleHappeningDto extends IHappeningDto {
 	dtStarts?: number; // UTC
 	dtEnds?: number;   // UTC
 	communeIdDates?: string[]; // ISO date strings prefixed with communeId e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	prices?: IPrice[];
 }
 
-export interface IHappeningActivity extends IHappening {
-	levels?: Level[];
+export interface IHappeningActivity extends IHappeningDto {
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface DtoRegularTask extends IHappeningRegular {
-	// liabilityId?: string;
-}
-
-export interface DtoSingleActivity extends IHappeningSingle, IHappeningActivity {
-	type?: EventType;
-	location?: SlotLocation;
-}
-
-export interface DtoSingleTask extends IHappeningSingle {
+export interface DtoSingleTask extends ISingleHappeningDto {
 	isCompleted: boolean;
 	completion?: number; // In percents, max value is 100.
 	responsibles?: SlotParticipant[];
-}
-
-export interface DtoRegularActivity extends IHappeningRegular, IHappeningActivity {
-	type?: ActivityType;
-	// liabilityId?: string;
 }

@@ -1,24 +1,34 @@
 //tslint:disable:no-unsafe-any
 //tslint:disable:no-unbound-method
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {isoStringsToDate} from 'sneat-shared/utils/datetimes';
-import {AlertController} from '@ionic/angular';
-import {wd2} from '../../view-models';
-import {wdCodeToWeekdayName} from 'sneat-shared/components/pipes';
-import {Weekday} from 'sneat-shared/models/types';
-import {Slot, SlotLocation} from 'sneat-shared/models/dto/dto-happening';
-import {IErrorLogger} from '../../../../services/interfaces';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
+import { wdCodeToWeekdayName } from '@sneat/components';
+import { isoStringsToDate } from '@sneat/core';
+import { HappeningType, Slot, SlotLocation, Weekday } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { newRandomId } from '@sneat/random';
+import { wd2 } from '../../view-models';
+
+const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+	const formGroup = control as FormGroup;
+	const weekdaySelected = Object.values(formGroup.value)
+		.indexOf(true) >= 0;
+	if (weekdaySelected) {
+		return null;
+	}
+	return { required: 'Please select at least 1 weekday.' };
+};
 
 @Component({
-	selector: 'app-regular-slot-form',
-	templateUrl: './regular-slot-form.component.html',
+	selector: 'sneat-recurring-slot-form',
+	templateUrl: './recurring-slot-form.component.html',
 })
-export class RegularSlotFormComponent implements OnInit {
+export class RecurringSlotFormComponent implements OnInit {
 
-	@Input() happeningKind: 'regular' | 'single';
-	@Input() isToDo: boolean;
-	@Input() slots: Slot[];
+	@Input() happeningType: HappeningType = 'recurring';
+	@Input() isToDo = false;
+	@Input() slots?: Slot[];
 	@Output() slotAdded = new EventEmitter<void>();
 	@Output() eventTimesChanged = new EventEmitter<{ from: Date; to: Date }>();
 
@@ -50,22 +60,9 @@ export class RegularSlotFormComponent implements OnInit {
 	happens: 'fortnightly' | 'weekly' | 'once' = 'weekly';
 
 	showWeekday = true;
-	date: string;
+	date = '';
 
-	// tslint:disable-next-line:ban-ts-ignore
-	// @ts-ignore
-	weekdayRequired: ValidatorFn = (formGroup: FormGroup): ValidationErrors | undefined => {
-		const weekdaySelected = Object.values(formGroup.value)
-			.indexOf(true) >= 0;
-		if (weekdaySelected) {
-			return undefined;
-		}
-		return {required: 'Please select at least 1 weekday.'};
-		// tslint:disable-next-line:semicolon
-	};
-
-	// tslint:disable-next-line:member-ordering
-	weekdaysForm = new FormGroup(
+	readonly weekdaysForm = new FormGroup(
 		{
 			mo: new FormControl(false),
 			tu: new FormControl(false),
@@ -75,11 +72,11 @@ export class RegularSlotFormComponent implements OnInit {
 			sa: new FormControl(false),
 			su: new FormControl(false),
 		},
-		this.weekdayRequired);
+		weekdayRequired);
 
 
 	constructor(
-		private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly alertCtrl: AlertController,
 	) {
 		const now = new Date();
@@ -105,9 +102,14 @@ export class RegularSlotFormComponent implements OnInit {
 
 	addSlot(): void {
 		// this.touchAllFormFields(this.slotForm);
-		this.weekdaysForm.markAsTouched({onlySelf: true});
+		this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
-		console.log('this.slotForm.errors:', this.slotForm.controls.locationTitle.errors);
+		console.log('addSlot() => this.slotForm.errors:',
+			this.slotForm.controls['locationTitle']?.errors,
+		);
+		console.log('addSlot() => timeStarts:',
+			this.timeStarts.value,
+		);
 		if (!this.weekdaysForm.valid) {
 			this.showWeekday = false;
 
@@ -151,12 +153,12 @@ export class RegularSlotFormComponent implements OnInit {
 			})
 				.then(alert => {
 					alert.present()
-						.catch(this.errorLogger.logError);
+						.catch(this.errorLogger.logErrorHandler('failed to present alert'));
 				})
 				.then(value => {
 					console.log('Alert value:', value);
 				})
-				.catch(this.errorLogger.logError);
+				.catch(this.errorLogger.logErrorHandler('failed to create an alert'));
 			return;
 		}
 		if (!this.slotForm.valid) {
@@ -164,13 +166,14 @@ export class RegularSlotFormComponent implements OnInit {
 		}
 		const formValue = this.slotForm.value;
 		const slot: Slot = {
+			id: newRandomId({ len: 3 }),
 			time: {
 				repeats: 'weekly',
-				starts: formValue.timeStarts as string,
-				ends: formValue.timeEnds as string,
+				starts: this.timeStarts.value as string,
+				ends: this.timeEnds.value as string,
 				weekdays: Object.entries(this.weekdaysForm.value)
 					.filter(entry => entry[1])
-					.map(entry => entry[0]) as Weekday[]
+					.map(entry => entry[0]) as Weekday[],
 			},
 		};
 		if (formValue.locationTitle || formValue.locationAddress) {
@@ -182,12 +185,13 @@ export class RegularSlotFormComponent implements OnInit {
 				l.address = formValue.locationAddress;
 			}
 		}
-		this.slots.push(slot);
+		this.slots?.push(slot);
 		this.slotAdded.emit();
 	}
 
-	onTimeStartsChanged(event: CustomEvent): void {
-		const startInMinutes = ionTimeToMinutes(event.detail.value);
+	onTimeStartsChanged(event: Event): void {
+		const { detail } = (event as CustomEvent);
+		const startInMinutes = ionTimeToMinutes(detail.value);
 		const durationInMinutes = ionTimeToMinutes(this.timeDuration.value);
 		const endInISO = minutesToIonTime(startInMinutes + durationInMinutes);
 		// console.log(startInMinutes, durationInMinutes, endInISO, 'timeEnds.value:', timeEnds.value);
@@ -219,7 +223,7 @@ export class RegularSlotFormComponent implements OnInit {
 		this.onEventTimesChanged();
 	}
 
-	private onEventTimesChanged(): void {
+	public onEventTimesChanged(): void {
 		if (!this.date) {
 			return;
 		}
@@ -227,7 +231,7 @@ export class RegularSlotFormComponent implements OnInit {
 			.getTime();
 		this.eventTimesChanged.emit({
 			from: new Date(timestamp(this.timeStarts)),
-			to: new Date(timestamp(this.timeEnds))
+			to: new Date(timestamp(this.timeEnds)),
 		});
 	}
 }

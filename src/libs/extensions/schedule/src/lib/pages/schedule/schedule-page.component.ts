@@ -15,10 +15,10 @@ import {
 	wdCodeToWeekdayName,
 } from '@sneat/components';
 import { getWeekdayDate, isoStringsToDate, localDateToIso } from '@sneat/core';
-import { IHappening, IRegularActivityWithUiState, Weekday } from '@sneat/dto';
+import { IHappeningDto, IRecurringActivityWithUiState, Weekday } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext } from '@sneat/team/models';
-import { jsDayToWeekday, NewHappeningParams, SlotItem, SlotsGroup, wd2, wdNumber } from '../view-models';
+import { jsDayToWeekday, NewHappeningParams, SlotItem, SlotsGroup, wd2, wdNumber } from '../../view-models';
 
 function getWdDate(wd: Weekday, activeWd: Weekday, activeDate: Date): Date {
 	if (wd === activeWd) {
@@ -78,8 +78,8 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	todayAndFutureEvents?: SlotsGroup[];
 	public member?: IMemberContext;
 	filterFocused = false;
-	allRegulars?: IRegularActivityWithUiState[];
-	regulars?: IRegularActivityWithUiState[];
+	allRegulars?: IRecurringActivityWithUiState[];
+	regulars?: IRecurringActivityWithUiState[];
 	activeDayParity: Parity = 'odd';
 	activeWeekParity: Parity = 'odd';
 	oddDay: Day = {
@@ -260,11 +260,16 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 				state.date = dateToParameter(this.activeDay.date);
 			}
 		}
-		this.errorLogger.logError('not implemented yet');
-		// this.navigateForward('new-activity', { tab: type }, state);
+		if (!this.team) {
+			this.errorLogger.logError('!this.team');
+			return;
+		}
+		this.teamNav
+			.navigateForwardToTeamPage(this.team, 'new-activity', {})
+			.then(this.errorLogger.logError);
 	}
 
-	goRegular(activity: IRegularActivityWithUiState): void {
+	goRegular(activity: IRecurringActivityWithUiState): void {
 		this.errorLogger.logError('not implemented yet');
 		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
@@ -357,11 +362,11 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 	}
 
 	goActivity(slot: SlotItem): void {
-		const happeningDto: IHappening | undefined = slot.regular || slot.single;
+		const happeningDto: IHappeningDto | undefined = slot.recurring || slot.single;
 		if (!happeningDto) {
 			throw new Error('!happeningDto');
 		}
-		this.logError('not inplemented yet');
+		this.logError('not implemented yet');
 		// this.navigateForward(slot.kind, { id: happeningDto.id }, { happeningDto }, { excludeCommuneId: true });
 	}
 
@@ -407,7 +412,7 @@ export class SchedulePageComponent extends TeamBaseComponent implements OnInit {
 
 	// noinspection JSMethodCanBqw2se3333eStatic
 
-	private filterRegulars(): IRegularActivityWithUiState[] | undefined {
+	private filterRegulars(): IRecurringActivityWithUiState[] | undefined {
 		const filter = this.filter.toLowerCase();
 		if (!filter) {
 			return this.allRegulars;
