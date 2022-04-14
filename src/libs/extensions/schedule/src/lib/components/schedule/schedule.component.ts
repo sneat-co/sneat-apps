@@ -13,17 +13,17 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { SlotsProvider } from '../../pages/schedule/slots-provider';
-import { jsDayToWeekday, NewHappeningParams, SlotItem, SlotsGroup, wdNumber } from '../../view-models';
+import { Day, jsDayToWeekday, NewHappeningParams, SlotItem, wdNumber } from '../../view-models';
 import {
 	animationState,
 	createWeekdays,
-	Day,
 	getWdDate,
 	Parity,
 	ScheduleTab,
 	setWeekStartAndEndDates,
 	SHIFT_1_DAY,
 	SHIFT_1_WEEK,
+	SwipeableDay,
 	Week,
 } from './schedule-core';
 
@@ -43,20 +43,20 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 	@Output() readonly dateChanged = new EventEmitter<string>();
 	public showRecurring = true;
 	public showEvents = true;
-	todayAndFutureEvents?: SlotsGroup[];
+	todayAndFutureEvents?: Day[];
 	public member?: IMemberContext;
 	filterFocused = false;
 	allRegulars?: IRecurringActivityWithUiState[];
 	regulars?: IRecurringActivityWithUiState[];
 	activeDayParity: Parity = 'odd';
 	activeWeekParity: Parity = 'odd';
-	oddDay: Day = {
+	oddDay: SwipeableDay = {
 		parity: 'odd',
 		animationState: showVirtualSlide,
 		weekday: undefined,
 		date: undefined,
 	};
-	evenDay: Day = {
+	evenDay: SwipeableDay = {
 		parity: 'even',
 		animationState: hideVirtualSlide,
 		weekday: undefined,
@@ -98,7 +98,7 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 		}, 10);
 	}
 
-	get activeDay(): Day {
+	get activeDay(): SwipeableDay {
 		return this.activeDayParity === 'odd' ? this.oddDay : this.evenDay;
 	}
 
@@ -352,7 +352,7 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 	// }
 
 	// tslint:disable-next-line:prefer-function-over-method
-	trackByDate(i: number, item: SlotsGroup): number | undefined {
+	trackByDate(i: number, item: Day): number | undefined {
 		return item.date && item.date.getTime();
 	}
 
@@ -398,7 +398,7 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 	// noinspection JSMethodCanBeStatic
 
 	private setDay(source: string, d: Date): void {
-		console.log(`setDay(source=${source}), d=`, d);
+		console.log(`ScheduleComponent.setDay(source=${source}), d=`, d);
 		if (!d) {
 			return;
 		}
@@ -410,7 +410,7 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 		const activeWeek = this.activeWeek;
 		setWeekStartAndEndDates(activeWeek, d);
 		const datesToPreload: Date[] = [];
-		const datesToLoad: SlotsGroup[] = [];
+		const datesToLoad: Day[] = [];
 		activeWeek.weekdays.forEach((weekday) => {
 			const weekdayDate = getWdDate(weekday.wd, activeWd, d);
 			if (!weekday.date || weekday.date.getTime() !== weekdayDate.getTime() || !weekday.slots) {
@@ -433,9 +433,9 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 								!datesToPreload.some(dtp => dtp.getTime() === wd.date?.getTime()));
 						activeWeekDaysToPreload.forEach(wd => {
 							if (!wd.date) {
-								wd.date = weekdayDate;
+								// wd.date = weekdayDate;
 								// this.errorLogger.logError('not implemented yet: !wd.date');
-								// console.error('not implemented yet: !wd.date')
+								console.error('not implemented yet: !wd.date')
 							} else {
 								datesToPreload.push(wd.date);
 							}
@@ -469,6 +469,22 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 				history.replaceState(history.state, document.title, location.href.replace(/\?date=\d{4}-\d{2}-\d{2}/, isoDate));
 			}
 		}
+	}
+
+	private onSetDateWhenDayTabIsActive(): void {
+		//
+	}
+
+	private onSetDateWhenWeekTabIsActive(): void {
+		//
+	}
+
+	private getDayData(d: Date): void {
+
+	}
+
+	private getWeeekData(): void {
+		//
 	}
 
 	// get inactiveWeek(): Week {

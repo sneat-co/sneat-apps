@@ -1,4 +1,6 @@
 import {
+	HappeningKind,
+	HappeningType,
 	IRecurringHappeningDto,
 	ISingleHappeningDto,
 	Level,
@@ -11,11 +13,12 @@ import {
 
 export interface NewHappeningParams {
 	type: 'regular' | 'single';
-	weekday?: SlotsGroup;
+	weekday?: Day;
 }
 
 export interface SlotItem {
-	kind: 'regular-activity' | 'regular-task' | 'event' | 'task';
+	type: HappeningType
+	kind: HappeningKind;
 	title: string;
 	time: SlotTime;
 	location?: SlotLocation;
@@ -25,11 +28,11 @@ export interface SlotItem {
 	levels?: Level[];
 }
 
-export interface SlotsGroup {
+export interface Day {
+	readonly date?: Date;
 	readonly wd: Weekday;
 	readonly title: string;
-	slots: SlotItem[];
-	date?: Date;
+	slots?: SlotItem[];
 	readonly loadingEvents?: boolean;
 	readonly eventsLoaded?: boolean;
 }

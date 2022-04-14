@@ -9,7 +9,7 @@ import {
 } from '@sneat/components';
 import { getWeekdayDate } from '@sneat/core';
 import { Weekday } from '@sneat/dto';
-import { SlotsGroup, wd2 } from '../../view-models';
+import { Day, wd2 } from '../../view-models';
 
 export function getWdDate(wd: Weekday, activeWd: Weekday, activeDate: Date): Date {
 	if (wd === activeWd) {
@@ -42,18 +42,18 @@ interface Swipeable {
 	readonly parity: Parity;
 }
 
-export interface Day extends Swipeable {
+export interface SwipeableDay extends Swipeable {
 	date?: Date;
-	weekday?: SlotsGroup;
+	weekday?: Day;
 }
 
 export interface Week extends Swipeable {
-	weekdays: SlotsGroup[];
+	weekdays: Day[];
 	startDate?: Date; // e.g. Monday
 	endDate?: Date; // e.g. Sunday
 }
 
-export const createWeekdays = (): SlotsGroup[] => wd2.map(
+export const createWeekdays = (): Day[] => wd2.map(
 	wd => ({ wd, title: wdCodeToWeekdayName(wd), slots: [] }));
 
 export function animationState(activeParity: Parity, diff: number): VirtualSliderAnimationStates {

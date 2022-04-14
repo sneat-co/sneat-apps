@@ -5,7 +5,7 @@ import { IHappeningBrief, IRecurringHappeningDto, ISingleHappeningDto, Weekday }
 import { ITeamContext } from '@sneat/team/models';
 import { EMPTY, from, merge, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { SlotItem, SlotsGroup, timeToStr, wd2 } from '../../view-models';
+import { SlotItem, Day, timeToStr, wd2 } from '../../view-models';
 
 type RecurringsByWeekday = {
 	[wd in Weekday]: SlotItem[]
@@ -27,7 +27,8 @@ export function eventToSlot(singleHappening: ISingleHappeningDto): SlotItem {
 	// const wd = jsDayToWeekday(date.getDay());
 	// noinspection UnnecessaryLocalVariableJS
 	const slot: SlotItem = {
-		kind: singleHappening.kind === 'activity' ? 'event' : 'task',
+		type: singleHappening.type,
+		kind: singleHappening.kind,
 		single: singleHappening,
 		title: singleHappening.title,
 		time: {
@@ -43,22 +44,22 @@ export function eventToSlot(singleHappening: ISingleHappeningDto): SlotItem {
 	return slot;
 }
 
-export abstract class ISlotsProvider {
-	// public abstract setTeamId(communeId: string): Observable<DtoRegularActivity[]>;
-
-	public abstract setMemberId(memberId: string): void;
-
-	public abstract preloadEvents(...dates: Date[]): Observable<SlotsGroup>;
-
-	public abstract getDays(...weekdays: SlotsGroup[]): Observable<SlotsGroup>;
-
-	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
-}
+// export abstract class ISlotsProvider {
+// 	// public abstract setTeamId(communeId: string): Observable<DtoRegularActivity[]>;
+//
+// 	public abstract setMemberId(memberId: string): void;
+//
+// 	public abstract preloadEvents(...dates: Date[]): Observable<SlotsGroup>;
+//
+// 	public abstract getDays(...weekdays: SlotsGroup[]): Observable<SlotsGroup>;
+//
+// 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
+// }
 
 // The idea fo this class is to cache loaded happenings per team
 // and provide slots to UI
 // @Injectable()
-export class SlotsProvider extends ISlotsProvider {
+export class SlotsProvider /*extends ISlotsProvider*/ {
 
 	private readonly sfsRecurrings: SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>;
 
@@ -76,7 +77,7 @@ export class SlotsProvider extends ISlotsProvider {
 		// private readonly regularService: IRegularHappeningService,
 		// private readonly singleService: ISingleHappeningService,
 	) {
-		super();
+		// super();
 		this.sfsRecurrings = new SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>(
 			'recurring_happenings', afs, (id: string, dto: IRecurringHappeningDto) => {
 				const brief: IHappeningBrief = {
@@ -99,7 +100,7 @@ export class SlotsProvider extends ISlotsProvider {
 		this.memberId = memberId;
 	}
 
-	public preloadEvents(...dates: Date[]): Observable<SlotsGroup> {
+	public preloadEvents(...dates: Date[]): Observable<Day> {
 		console.warn('not implemented: Preload events for:', dates);
 		return EMPTY;
 		// const dateKeys = dates.filter(d => !!d)
@@ -112,7 +113,7 @@ export class SlotsProvider extends ISlotsProvider {
 		// 	.pipe(ignoreElements());
 	}
 
-	public getDays(...weekdays: SlotsGroup[]): Observable<SlotsGroup> {
+	public getDays(...weekdays: Day[]): Observable<Day> {
 		console.log('SlotsProvider.getDays()', weekdays);
 		if (!weekdays?.length) {
 			return EMPTY;
@@ -120,10 +121,10 @@ export class SlotsProvider extends ISlotsProvider {
 		if (!this.team) {
 			return from(weekdays);
 		}
-		const weekdaysByDateKey: { [date: string]: SlotsGroup } = {};
+		const weekdaysByDateKey: { [date: string]: Day } = {};
 
-		const weekdaysToLoad: SlotsGroup[] = [];
-		const weekdaysLoaded: SlotsGroup[] = [];
+		const weekdaysToLoad: Day[] = [];
+		const weekdaysLoaded: Day[] = [];
 
 		weekdays.forEach(weekday => {
 			if (!weekday.date) {
@@ -137,10 +138,10 @@ export class SlotsProvider extends ISlotsProvider {
 				if (weekday.slots) {
 					weekday = { ...weekday, slots: weekday.slots.filter(slot => !slot.single) };
 				}
-				if (weekday.slots) {
+				if (!weekday.slots) {
 					weekday = { ...weekday, slots: [] };
 				}
-				dateSingleSlots.forEach(slot => weekday.slots.push(slot));
+				dateSingleSlots.forEach(slot => weekday.slots && weekday.slots.push(slot));
 				weekdaysLoaded.push(weekday);
 			} else {
 				weekdaysToLoad.push(weekday);
@@ -163,7 +164,7 @@ export class SlotsProvider extends ISlotsProvider {
 						weekday = { ...weekday, slots: weekday.slots.filter(slot => !slot.single) };
 					}
 					eventSlotsByDate.events.forEach(slot => {
-						weekday.slots.push(slot);
+						weekday.slots && weekday.slots.push(slot);
 					});
 					return weekday;
 				}),
@@ -240,16 +241,18 @@ export class SlotsProvider extends ISlotsProvider {
 		if (recurring.dto?.slots) {
 			recurring.dto.slots.forEach(slot => {
 				slot.time.weekdays?.forEach((wd, i) => {
-					if (!recurring.dto?.title) {
+					const { dto } = recurring;
+					if (!dto?.title) {
 						throw new Error(`!regular.title at index=${i}`);
 					}
 					const slotItem: SlotItem = {
-						kind: recurring.dto?.kind === 'task' ? 'regular-task' : 'regular-activity',
-						title: recurring.dto?.title,
+						type: dto.type,
+						kind: dto.kind,
+						title: dto.title,
 						time: slot.time,
 						location: slot.location,
-						levels: recurring.dto?.levels,
-						participants: recurring.dto?.participants,
+						levels: dto.levels,
+						participants: dto.participants,
 						recurring: recurring.dto,
 					};
 					const wdRecurrings = recurringByWd[wd];
@@ -261,7 +264,7 @@ export class SlotsProvider extends ISlotsProvider {
 		}
 	}
 
-	private addRecurringsToSlotsGroup(weekday: SlotsGroup): void {
+	private addRecurringsToSlotsGroup(weekday: Day): void {
 		const recurrings = this.recurringByWd[weekday.wd];
 		if (!recurrings) {
 			return;
@@ -273,7 +276,7 @@ export class SlotsProvider extends ISlotsProvider {
 		if (recurrings.length) {
 			weekday.slots = weekday.slots ? [
 				...recurrings,
-				...weekday.slots.filter(r => r.kind !== 'regular-activity'),
+				...weekday.slots.filter(r => r.type !== 'recurring'),
 			] : [...recurrings];
 		} else {
 			weekday.slots = weekday.slots ? weekday.slots.filter(r => !r.recurring) : [];
