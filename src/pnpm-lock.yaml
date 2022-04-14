@@ -62,7 +62,7 @@ specifiers:
   ionicons: 6.0.1
   jest: 27.5.1
   jest-preset-angular: 11.1.1
-  karma: 6.3.17
+  karma: 6.3.18
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.2
@@ -118,7 +118,7 @@ dependencies:
   zone.js: 0.11.5
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.3.3_42c3b9a81ada153ddcfc1e5cd915906e
+  '@angular-devkit/build-angular': 13.3.3_b63e2300e51172c2a7b86c308bd0be2f
   '@angular-eslint/eslint-plugin': 13.2.0_eslint@8.12.0+typescript@4.6.3
   '@angular-eslint/eslint-plugin-template': 13.2.0_eslint@8.12.0+typescript@4.6.3
   '@angular-eslint/template-parser': 13.2.0_eslint@8.12.0+typescript@4.6.3
@@ -152,11 +152,11 @@ devDependencies:
   eslint-plugin-cypress: 2.12.1_eslint@8.12.0
   jest: 27.5.1_ts-node@10.7.0
   jest-preset-angular: 11.1.1_14bccb44824c8a70eb606093824f7fdc
-  karma: 6.3.17
+  karma: 6.3.18
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
-  karma-jasmine: 4.0.2_karma@6.3.17
-  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.2+karma@6.3.17
+  karma-jasmine: 4.0.2_karma@6.3.18
+  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.2+karma@6.3.18
   ng-packagr: 13.3.0_15c1f017093fd3d46c93a097637fe921
   nx: 13.10.1
   postcss: 8.4.12
@@ -194,7 +194,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/13.3.3_42c3b9a81ada153ddcfc1e5cd915906e:
+  /@angular-devkit/build-angular/13.3.3_b63e2300e51172c2a7b86c308bd0be2f:
     resolution: {integrity: sha512-iEpNF3tF+9Gw+qQKL63fPFHIvWokJdrgVU4GzENQ5QeL8zk8iYTEbH3jWogq5tWy5+VmNP/mKkasq9i78lRiYw==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -251,7 +251,7 @@ packages:
       https-proxy-agent: 5.0.0
       inquirer: 8.2.0
       jsonc-parser: 3.0.0
-      karma: 6.3.17
+      karma: 6.3.18
       karma-source-map-support: 1.4.0
       less: 4.1.2
       less-loader: 10.2.0_less@4.1.2+webpack@5.70.0
@@ -8583,7 +8583,7 @@ packages:
       '@angular/core': '>=10.0.0'
       '@angular/platform-browser-dynamic': '>=10.0.0'
     dependencies:
-      '@angular-devkit/build-angular': 13.3.3_42c3b9a81ada153ddcfc1e5cd915906e
+      '@angular-devkit/build-angular': 13.3.3_b63e2300e51172c2a7b86c308bd0be2f
       '@angular/compiler-cli': 13.3.1_1f55b3f8421f973be83051aba9a0edcf
       '@angular/core': 13.3.1_rxjs@7.5.5+zone.js@0.11.5
       '@angular/platform-browser-dynamic': 13.3.1_85775b98ad41cef5dea4493c57d30b22
@@ -8989,25 +8989,25 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@4.0.2+karma@6.3.17:
+  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@4.0.2+karma@6.3.18:
     resolution: {integrity: sha512-pzum1TL7j90DTE86eFt48/s12hqwQuiD+e5aXx2Dc9wDEn2LfGq6RoAxEZZjFiN0RDSCOnosEKRZWxbQ+iMpQQ==}
     peerDependencies:
       jasmine-core: '>=3.8'
       karma: '>=0.9'
       karma-jasmine: '>=1.1'
     dependencies:
-      karma: 6.3.17
-      karma-jasmine: 4.0.2_karma@6.3.17
+      karma: 6.3.18
+      karma-jasmine: 4.0.2_karma@6.3.18
     dev: true
 
-  /karma-jasmine/4.0.2_karma@6.3.17:
+  /karma-jasmine/4.0.2_karma@6.3.18:
     resolution: {integrity: sha512-ggi84RMNQffSDmWSyyt4zxzh2CQGwsxvYYsprgyR1j8ikzIduEdOlcLvXjZGwXG/0j41KUXOWsUCBfbEHPWP9g==}
     engines: {node: '>= 10'}
     peerDependencies:
       karma: '*'
     dependencies:
       jasmine-core: 3.10.1
-      karma: 6.3.17
+      karma: 6.3.18
     dev: true
 
   /karma-source-map-support/1.4.0:
@@ -9016,8 +9016,8 @@ packages:
       source-map-support: 0.5.21
     dev: true
 
-  /karma/6.3.17:
-    resolution: {integrity: sha512-2TfjHwrRExC8yHoWlPBULyaLwAFmXmxQrcuFImt/JsAsSZu1uOWTZ1ZsWjqQtWpHLiatJOHL5jFjXSJIgCd01g==}
+  /karma/6.3.18:
+    resolution: {integrity: sha512-YEwXVHRILKWKN7uEW9IkgTPjnYGb3YA3MDvlp04xpSRAyrNPoRmsBayLDgHykKAwBm6/mAOckj4xi/1JdQfhzQ==}
     engines: {node: '>= 10'}
     hasBin: true
     dependencies:
@@ -9035,12 +9035,12 @@ packages:
       lodash: 4.17.21
       log4js: 6.4.1
       mime: 2.6.0
-      minimatch: 3.0.4
+      minimatch: 3.0.5
       mkdirp: 0.5.5
       qjobs: 1.2.0
       range-parser: 1.2.1
       rimraf: 3.0.2
-      socket.io: 4.4.0
+      socket.io: 4.4.1
       source-map: 0.6.1
       tmp: 0.2.1
       ua-parser-js: 0.7.31
@@ -11675,8 +11675,8 @@ packages:
       - supports-color
     dev: true
 
-  /socket.io/4.4.0:
-    resolution: {integrity: sha512-bnpJxswR9ov0Bw6ilhCvO38/1WPtE3eA2dtxi2Iq4/sFebiDJQzgKNYA7AuVVdGW09nrESXd90NbZqtDd9dzRQ==}
+  /socket.io/4.4.1:
+    resolution: {integrity: sha512-s04vrBswdQBUmuWJuuNTmXUVJhP0cVky8bBDhdkf8y0Ptsu7fKU2LuLbts9g+pdmAdyMMn8F/9Mf1/wbtUN0fg==}
     engines: {node: '>=10.0.0'}
     dependencies:
       accepts: 1.3.7

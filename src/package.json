@@ -101,7 +101,7 @@
     "eslint-plugin-cypress": "2.12.1",
     "jest": "27.5.1",
     "jest-preset-angular": "11.1.1",
-    "karma": "6.3.17",
+    "karma": "6.3.18",
     "karma-chrome-launcher": "3.1.1",
     "karma-coverage-istanbul-reporter": "3.0.3",
     "karma-jasmine": "4.0.2",
