@@ -67,7 +67,7 @@ specifiers:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.2
   karma-jasmine-html-reporter: 1.7.0
-  ng-packagr: 13.3.0
+  ng-packagr: 13.3.1
   nx: 13.10.1
   postcss: 8.4.12
   postcss-import: 14.1.0
@@ -118,7 +118,7 @@ dependencies:
   zone.js: 0.11.5
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.3.3_b63e2300e51172c2a7b86c308bd0be2f
+  '@angular-devkit/build-angular': 13.3.3_ff92f9c12b73d3335a8041ebef91f77f
   '@angular-eslint/eslint-plugin': 13.2.0_eslint@8.12.0+typescript@4.6.3
   '@angular-eslint/eslint-plugin-template': 13.2.0_eslint@8.12.0+typescript@4.6.3
   '@angular-eslint/template-parser': 13.2.0_eslint@8.12.0+typescript@4.6.3
@@ -157,7 +157,7 @@ devDependencies:
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 4.0.2_karma@6.3.18
   karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.2+karma@6.3.18
-  ng-packagr: 13.3.0_15c1f017093fd3d46c93a097637fe921
+  ng-packagr: 13.3.1_15c1f017093fd3d46c93a097637fe921
   nx: 13.10.1
   postcss: 8.4.12
   postcss-import: 14.1.0_postcss@8.4.12
@@ -194,7 +194,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/13.3.3_b63e2300e51172c2a7b86c308bd0be2f:
+  /@angular-devkit/build-angular/13.3.3_ff92f9c12b73d3335a8041ebef91f77f:
     resolution: {integrity: sha512-iEpNF3tF+9Gw+qQKL63fPFHIvWokJdrgVU4GzENQ5QeL8zk8iYTEbH3jWogq5tWy5+VmNP/mKkasq9i78lRiYw==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -259,7 +259,7 @@ packages:
       loader-utils: 3.2.0
       mini-css-extract-plugin: 2.5.3_webpack@5.70.0
       minimatch: 3.0.5
-      ng-packagr: 13.3.0_15c1f017093fd3d46c93a097637fe921
+      ng-packagr: 13.3.1_15c1f017093fd3d46c93a097637fe921
       open: 8.4.0
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -5361,18 +5361,6 @@ packages:
   /browser-process-hrtime/1.0.0:
     resolution: {integrity: sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==}
 
-  /browserslist/4.19.1:
-    resolution: {integrity: sha512-u2tbbG5PdKRTUoctO3NBD8FQ5HdPh1ZXPHzp1rwaa5jTc+RV9/+RlWiAIKmjRPQF+xbGM9Kklj5bZQFa2s/38A==}
-    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
-    hasBin: true
-    dependencies:
-      caniuse-lite: 1.0.30001319
-      electron-to-chromium: 1.4.89
-      escalade: 3.1.1
-      node-releases: 2.0.2
-      picocolors: 1.0.0
-    dev: true
-
   /browserslist/4.20.2:
     resolution: {integrity: sha512-CQOBCqp/9pDvDbx3xfMi+86pr4KXIf2FDkTTdeuYw8OxS9t898LA1Khq57gtufFILXpfgsSx5woNgsBgvGjpsA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
@@ -8583,7 +8571,7 @@ packages:
       '@angular/core': '>=10.0.0'
       '@angular/platform-browser-dynamic': '>=10.0.0'
     dependencies:
-      '@angular-devkit/build-angular': 13.3.3_b63e2300e51172c2a7b86c308bd0be2f
+      '@angular-devkit/build-angular': 13.3.3_ff92f9c12b73d3335a8041ebef91f77f
       '@angular/compiler-cli': 13.3.1_1f55b3f8421f973be83051aba9a0edcf
       '@angular/core': 13.3.1_rxjs@7.5.5+zone.js@0.11.5
       '@angular/platform-browser-dynamic': 13.3.1_85775b98ad41cef5dea4493c57d30b22
@@ -9614,8 +9602,8 @@ packages:
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  /ng-packagr/13.3.0_15c1f017093fd3d46c93a097637fe921:
-    resolution: {integrity: sha512-y0bmIkGp1YQJVPYX3/dOjZBTqN+qD6rDbVhJB//1y0WEs8WDjrwaRPp6JGT79z2jbUXoIOsDmPnIKNegpNAgPw==}
+  /ng-packagr/13.3.1_15c1f017093fd3d46c93a097637fe921:
+    resolution: {integrity: sha512-RFB6+03qPlhsOZc0wPenkyCceUYU0kRymbO7fIZ4Uz3y7RltXeknfjWKVcN6o5o42Md/lbNabt4gViXNzahhjA==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0}
     hasBin: true
     peerDependencies:
@@ -9628,7 +9616,7 @@ packages:
       '@rollup/plugin-node-resolve': 13.0.6_rollup@2.61.0
       ajv: 8.9.0
       ansi-colors: 4.1.1
-      browserslist: 4.19.1
+      browserslist: 4.20.2
       cacache: 15.3.0
       chokidar: 3.5.2
       commander: 8.3.0
@@ -9646,7 +9634,7 @@ packages:
       rollup: 2.61.0
       rollup-plugin-sourcemaps: 0.6.3_b0c5e1086133826d675023098846f620
       rxjs: 7.5.5
-      sass: 1.49.0
+      sass: 1.49.9
       stylus: 0.56.0
       tslib: 2.3.1
       typescript: 4.6.3
@@ -11400,16 +11388,6 @@ packages:
       neo-async: 2.6.2
       sass: 1.49.9
       webpack: 5.70.0_esbuild@0.14.22
-    dev: true
-
-  /sass/1.49.0:
-    resolution: {integrity: sha512-TVwVdNDj6p6b4QymJtNtRS2YtLJ/CqZriGg0eIAbAKMlN8Xy6kbv33FsEZSF7FufFFM705SQviHjjThfaQ4VNw==}
-    engines: {node: '>=8.9.0'}
-    hasBin: true
-    dependencies:
-      chokidar: 3.5.2
-      immutable: 4.0.0
-      source-map-js: 1.0.2
     dev: true
 
   /sass/1.49.9:

@@ -106,7 +106,7 @@
     "karma-coverage-istanbul-reporter": "3.0.3",
     "karma-jasmine": "4.0.2",
     "karma-jasmine-html-reporter": "1.7.0",
-    "ng-packagr": "13.3.0",
+    "ng-packagr": "13.3.1",
     "nx": "13.10.1",
     "postcss": "8.4.12",
     "postcss-import": "14.1.0",
