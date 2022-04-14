@@ -30,7 +30,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 	loadDocuments() {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
-			this.assetService.watchAssetsByTeamID<IDocumentDto, IDocumentContext>(this.team?.id)
+			this.assetService.watchAssetsByTeamID<IDocumentDto>(this.team?.id)
 				.pipe(
 					this.takeUntilNeeded(),
 				)

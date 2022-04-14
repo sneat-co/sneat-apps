@@ -11,17 +11,15 @@ export class ScheduleDayComponent {
 	@Input() filter = '';
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
-
 	@Input() dayWeekday?: SlotsGroup;
-	@Output() slotClicked = new EventEmitter<SlotItem>();
+
+	@Output() readonly slotClicked = new EventEmitter<SlotItem>();
 
 	showSlot(slot: SlotItem): boolean {
 		return isSlotVisible(slot, this.filter, this.showRegulars, this.showEvents);
 	}
 
-	// noinspection JSMethodCanBeStatic
-	// tslint:disable-next-line:prefer-function-over-method
-	trackByIndex(index: number/*, item: SlotItem*/): number {
+	byIndex(index: number/*, item: SlotItem*/): number {
 		return index;
 		// return item.kind + item.time.weekdays.join('') + item.time.starts + (item.time.ends || '');
 	}

@@ -26,6 +26,9 @@
 @import '~@ionic/angular/css/flex-utils.css';
 @import './sneat-grid-layout';
 
+//noinspection CssUnknownTarget
+@import "libs/components/src/lib/virtual-slider/virtual-slider.scss";
+
 .cardy {
   --ion-background-color: #fcfcfc;
 }
@@ -34,3 +37,4 @@
   --ion-background-color: #ffffff;
   background-color: #ffffff;
 }
+

@@ -3,7 +3,7 @@
         <p>No regular activities</p>
     </div>
     <ng-container *ngIf="dayWeekday && dayWeekday.slots && dayWeekday.slots.length">
-        <ng-container *ngFor="let slot of dayWeekday.slots; trackBy: trackByIndex">
+        <ng-container *ngFor="let slot of dayWeekday.slots; trackBy: byIndex">
             <sneat-activity-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
             </sneat-activity-item>
         </ng-container>

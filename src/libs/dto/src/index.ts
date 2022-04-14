@@ -23,3 +23,5 @@ export * from './lib/dto-user';
 export * from './lib/types';
 export { IContact2Asset } from './lib/dto-contact2';
 export { IContact2Member } from './lib/dto-contact2';
+export { equalTeamBriefs } from './lib/dto-team-brief';
+export { ITeamBrief } from './lib/dto-team-brief';

@@ -1,4 +1,4 @@
-import { IBriefWithIdAndTitle } from './dto-brief';
+import { IWithIdAndTitle } from './dto-brief';
 import { IContact2Asset, IContact2Member } from './dto-contact2';
 import { IPersonRecord } from './dto-models';
 
@@ -7,7 +7,7 @@ export interface IContactBase {
 	roles?: string[];
 }
 
-export interface IContactBrief extends IBriefWithIdAndTitle, IContactBase {
+export interface IContactBrief extends IWithIdAndTitle, IContactBase {
 	//
 }
 

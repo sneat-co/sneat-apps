@@ -1,5 +1,5 @@
 import { RxRecordKey } from '@sneat/rxstore';
-import { IBriefWithIdAndTitle } from './dto-brief';
+import { IWithIdAndTitle } from './dto-brief';
 import { ITeamsRecord, IWithRestrictions } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
 import { ListStatus, TeamType } from './types';
@@ -120,7 +120,7 @@ export interface IListInfo extends IWithRestrictions {
 	itemsCount?: number;
 }
 
-export interface IListBrief extends IListBase, IBriefWithIdAndTitle {
+export interface IListBrief extends IListBase, IWithIdAndTitle {
 	emoji?: string;
 }
 
