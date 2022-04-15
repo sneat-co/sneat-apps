@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import { Slot } from '@sneat/dto';
+import { IRecurringSlot } from '@sneat/dto';
 
 @Component({
 	selector: 'sneat-recurring-slots',
@@ -7,20 +7,20 @@ import { Slot } from '@sneat/dto';
 })
 export class RecurringSlotsComponent {
 
-	@Input() slots?: Slot[];
+	@Input() slots?: IRecurringSlot[];
 
-	@Output() slotRemoved = new EventEmitter<Slot[]>();
-	@Output() slotSelected = new EventEmitter<Slot>();
+	@Output() slotRemoved = new EventEmitter<IRecurringSlot[]>();
+	@Output() slotSelected = new EventEmitter<IRecurringSlot>();
 
 	readonly id = (i: number, record: { id: string}): string => record.id;
 
-	removeSlot(slot: Slot): void {
+	removeSlot(slot: IRecurringSlot): void {
 		//tslint:disable-next-line:strict-comparisons
 		this.slots = this.slots?.filter(v => v !== slot);
 		this.slotRemoved.emit(this.slots);
 	}
 
-	selectSlot(slot: Slot): void {
+	selectSlot(slot: IRecurringSlot): void {
 		this.slotSelected.emit(slot);
 	}
 }

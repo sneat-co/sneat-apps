@@ -1,6 +1,6 @@
 import { ITeamsRecord } from './dto-models';
 import { IPrice } from './dto-pricing';
-import { ActivityType, EventType, Repeats, Weekday } from './types';
+import { ActivityType, Repeats, Weekday } from './types';
 import { UiState } from './ui-state';
 
 export interface SlotParticipant {
@@ -10,11 +10,12 @@ export interface SlotParticipant {
 }
 
 export interface IHappeningBase {
-	title: string;
 	type: HappeningType;
-	activityType?: ActivityType;
 	kind: HappeningKind;
+	title: string;
+	activityType?: ActivityType;
 	levels?: Level[];
+	slots?: IRecurringSlot[];
 }
 
 export interface IHappeningBrief extends IHappeningBase {
@@ -51,16 +52,19 @@ type MonthlyDay = -5 | -4 | -3 | -2 | -1
 // tslint:disable-next-line:no-magic-numbers
 	| 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28;
 
-export interface SlotTime {
+export interface ITiming {
 	starts: string;
 	ends?: string;
+}
+
+export interface IRecurringSlotTiming extends ITiming {
 	repeats: Repeats;
-	monthly?: MonthlyDay | 'week1' | 'week2' | 'week3' | 'week4';
+	weekdays?: Weekday[];
+	weeks?: number[];
 	fortnightly?: {
 		odd: IFortnightly;
 		even: IFortnightly;
 	};
-	weekdays?: Weekday[];
 }
 
 export type Level = 'beginners' | 'intermediate' | 'advanced';
@@ -72,18 +76,13 @@ export interface IHappeningTask {
 	};
 }
 
-export interface Slot {
+export interface IRecurringSlot extends IRecurringSlotTiming {
 	readonly id: string;
-	time: SlotTime;
 	groupIds?: string[];
-	// levels?: Level[];
 	location?: SlotLocation;
 }
 
 export interface IRecurringHappeningDto extends IHappeningDto, IHappeningTask {
-	type: 'recurring';
-	kind: HappeningKind;
-	slots?: Slot[];
 }
 
 export interface IRecurringActivityWithUiState {
@@ -95,6 +94,7 @@ export interface IRecurringActivityWithUiState {
 export interface ISingleHappeningDto extends IHappeningDto {
 	dtStarts?: number; // UTC
 	dtEnds?: number;   // UTC
+	weekdays?: Weekday[];
 	communeIdDates?: string[]; // ISO date strings prefixed with communeId e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	prices?: IPrice[];
 }

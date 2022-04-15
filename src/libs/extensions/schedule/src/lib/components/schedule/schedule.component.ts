@@ -449,13 +449,15 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 		});
 
 		console.log(`segment=${tab}, datesToPreload:`, datesToPreload);
-		this.slotsProvider.getDays(...datesToLoad)
-			.pipe(
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				error: this.errorLogger.logErrorHandler('failed to get days'),
-			});
+		if (this.team) {
+			this.slotsProvider.getDays(...datesToLoad)
+				.pipe(
+					takeUntil(this.destroyed),
+				)
+				.subscribe({
+					error: this.errorLogger.logErrorHandler('failed to get days'),
+				});
+		}
 		// this.slotsProvider.preloadEvents(tx, ...datesToPreload),
 
 		// Change URL

@@ -3,9 +3,9 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { wdCodeToWeekdayName } from '@sneat/components';
+import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { isoStringsToDate } from '@sneat/core';
-import { HappeningType, Slot, SlotLocation, Weekday } from '@sneat/dto';
+import { HappeningType, IRecurringSlot, SlotLocation, Weekday } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { wd2 } from '../../view-models';
@@ -28,7 +28,7 @@ export class RecurringSlotFormComponent implements OnInit {
 
 	@Input() happeningType: HappeningType = 'recurring';
 	@Input() isToDo = false;
-	@Input() slots?: Slot[];
+	@Input() slots?: IRecurringSlot[];
 	@Output() slotAdded = new EventEmitter<void>();
 	@Output() eventTimesChanged = new EventEmitter<{ from: Date; to: Date }>();
 
@@ -121,7 +121,7 @@ export class RecurringSlotFormComponent implements OnInit {
 						type: 'checkbox',
 						name: wd,
 						value: wd,
-						label: wdCodeToWeekdayName(wd),
+						label: wdCodeToWeekdayLongName(wd),
 						handler: input => {
 							const v = this.weekdaysForm.get(wd);
 							if (v) {
@@ -165,7 +165,7 @@ export class RecurringSlotFormComponent implements OnInit {
 			return;
 		}
 		const formValue = this.slotForm.value;
-		const slot: Slot = {
+		const slot: IRecurringSlot = {
 			id: newRandomId({ len: 3 }),
 			time: {
 				repeats: 'weekly',

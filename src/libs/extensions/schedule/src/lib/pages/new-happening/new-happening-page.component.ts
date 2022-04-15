@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { HappeningType, IRecurringHappeningDto, ISingleHappeningDto, Slot, SlotParticipant } from '@sneat/dto';
+import { HappeningType, IRecurringHappeningDto, ISingleHappeningDto, IRecurringSlot, SlotParticipant } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { Member } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
@@ -23,7 +23,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 
 	happeningType: HappeningType = 'recurring';
 
-	slots: Slot[] = [];
+	slots: IRecurringSlot[] = [];
 	contacts: number[] = [];
 	showSlotForm = true;
 	public date: string;
@@ -93,7 +93,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		history.replaceState(history.state, document.title, href);
 	}
 
-	onSlotRemoved(slots: Slot[]): void {
+	onSlotRemoved(slots: IRecurringSlot[]): void {
 		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
 		this.slots = slots;
 		this.showSlotForm = !this.slots.length;

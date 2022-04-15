@@ -5,11 +5,11 @@ import {
 	VirtualSliderDirectPushedPrev,
 	VirtualSliderReversePushedNext,
 	VirtualSliderReversePushedPrev,
-	wdCodeToWeekdayName,
+	wdCodeToWeekdayLongName,
 } from '@sneat/components';
 import { getWeekdayDate } from '@sneat/core';
 import { Weekday } from '@sneat/dto';
-import { Day, wd2 } from '../../view-models';
+import { Day, jsDayToWeekday, wd2 } from '../../view-models';
 
 export function getWdDate(wd: Weekday, activeWd: Weekday, activeDate: Date): Date {
 	if (wd === activeWd) {
@@ -54,7 +54,7 @@ export interface Week extends Swipeable {
 }
 
 export const createWeekdays = (): Day[] => wd2.map(
-	wd => ({ wd, title: wdCodeToWeekdayName(wd), slots: [] }));
+	wd => ({ wd, title: wdCodeToWeekdayLongName(wd), slots: [] }));
 
 export function animationState(activeParity: Parity, diff: number): VirtualSliderAnimationStates {
 	let result: VirtualSliderAnimationStates;

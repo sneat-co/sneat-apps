@@ -3,9 +3,9 @@ import { SneatFirestoreService } from '@sneat/api';
 import { INavContext, localDateToIso } from '@sneat/core';
 import { IHappeningBrief, IRecurringHappeningDto, ISingleHappeningDto, Weekday } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { EMPTY, from, merge, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, EMPTY, from, merge, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { SlotItem, Day, timeToStr, wd2 } from '../../view-models';
+import { Day, DaySlotsProvider, RecurringSlots, SlotItem, timeToStr, wd2 } from '../../view-models';
 
 type RecurringsByWeekday = {
 	[wd in Weekday]: SlotItem[]
@@ -31,12 +31,12 @@ export function eventToSlot(singleHappening: ISingleHappeningDto): SlotItem {
 		kind: singleHappening.kind,
 		single: singleHappening,
 		title: singleHappening.title,
-		time: {
-			repeats: 'weekly',
+		repeats: 'once',
+		timing: {
 			starts: singleHappening.dtStarts ? timeToStr(singleHappening.dtStarts) : '',
 			ends: singleHappening.dtEnds ? timeToStr(singleHappening.dtEnds) : undefined,
-			weekdays: [], // [wd],
 		},
+		// weekdays: singleHappening.weekdays,
 		participants: singleHappening.participants,
 		// location: singleActivity.location ? singleActivity.location : undefined,
 		levels: singleHappening.levels ? singleHappening.levels : undefined,
@@ -56,6 +56,34 @@ export function eventToSlot(singleHappening: ISingleHappeningDto): SlotItem {
 // 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 // }
 
+function teamRecurringSlotsByWeekday(team?: ITeamContext): RecurringSlots {
+	const slots: RecurringSlots = {
+		byWeekday: {},
+	};
+	team?.dto?.recurringHappenings.forEach(r => {
+		r.slots?.forEach(rs => {
+			const si: SlotItem = {
+				recurring: r,
+				kind: r.kind,
+				type: r.type,
+				title: r.type,
+				levels: r.levels,
+				repeats: rs.repeats,
+				timing: { starts: rs.starts, ends: rs.ends },
+			};
+			rs.weekdays?.forEach(wd => {
+				let weekday = slots.byWeekday[wd];
+				if (!weekday) {
+					weekday = [];
+					slots.byWeekday[wd] = weekday;
+				}
+				weekday.push(si);
+			});
+		});
+	});
+	return slots;
+}
+
 // The idea fo this class is to cache loaded happenings per team
 // and provide slots to UI
 // @Injectable()
@@ -71,6 +99,9 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 	private team?: ITeamContext;
 	// private teamId?: string;
 	private memberId?: string;
+	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
+	private readonly recurrings$: Observable<RecurringSlots> = this.team$.pipe(map(teamRecurringSlotsByWeekday));
+	private readonly days: DaySlotsProvider[] = [];
 
 	constructor(
 		afs: AngularFirestore,
@@ -88,10 +119,15 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 		);
 	}
 
+	public getDay(date: Date): DaySlotsProvider {
+		const day = new DaySlotsProvider(date, this.recurrings$);
+		return day;
+	}
 
 	public setTeam(team: ITeamContext): void {
 		console.log('SlotsProvide.setTeam()', team);
 		this.team = team;
+		this.team$.next(team);
 		this.processRecurringBriefs();
 		// return this.loadRecurring();
 	}
@@ -240,7 +276,7 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 			});
 		if (recurring.dto?.slots) {
 			recurring.dto.slots.forEach(slot => {
-				slot.time.weekdays?.forEach((wd, i) => {
+				slot.weekdays?.forEach((wd, i) => {
 					const { dto } = recurring;
 					if (!dto?.title) {
 						throw new Error(`!regular.title at index=${i}`);
@@ -249,7 +285,8 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 						type: dto.type,
 						kind: dto.kind,
 						title: dto.title,
-						time: slot.time,
+						repeats: slot.repeats,
+						timing: { starts: slot.starts, ends: slot.ends },
 						location: slot.location,
 						levels: dto.levels,
 						participants: dto.participants,

@@ -27,7 +27,7 @@ export class TeamEmojiPipe implements PipeTransform {
 	}
 }
 
-export function wdCodeToWeekdayName(wd?: Weekday): string {
+export function wdCodeToWeekdayLongName(wd?: Weekday): string {
 	switch (wd) {
 		case 'mo':
 			return 'Monday';
@@ -52,7 +52,7 @@ export function wdCodeToWeekdayName(wd?: Weekday): string {
 export class WdToWeekdayPipe implements PipeTransform {
 	// tslint:disable-next-line:prefer-function-over-method
 	transform(wd?: Weekday): string {
-		return wdCodeToWeekdayName(wd);
+		return wdCodeToWeekdayLongName(wd);
 	}
 }
 
