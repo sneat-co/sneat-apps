@@ -182,17 +182,17 @@
 					</ion-label>
 				</ion-item>
 				<ion-item button *ngFor="let slot of regular.dto.slots; trackBy: index" (click)="goRegular(regular)">
-					<ion-badge color="light" slot="start">{{slot.time.starts}}</ion-badge>
+					<ion-badge color="light" slot="start">{{slot.starts}}</ion-badge>
 					<ion-label text-wrap>
 						<p>
 							<ion-badge color="light" style="margin-right: 4px;"
-												 *ngFor="let wd of slot.time.weekdays">{{wd|wdToWeekday}}</ion-badge>
+												 *ngFor="let wd of slot.weekdays">{{wd|wdToWeekday}}</ion-badge>
 						</p>
 						<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
 							@ {{slot.location.title || slot.location.address}},
-							ends at {{slot.time.ends}}</p>
+							ends at {{slot.ends}}</p>
 						<ng-template #noLocation>
-							<p>Ends at {{slot.time.ends}}</p>
+							<p>Ends at {{slot.ends}}</p>
 						</ng-template>
 					</ion-label>
 				</ion-item>

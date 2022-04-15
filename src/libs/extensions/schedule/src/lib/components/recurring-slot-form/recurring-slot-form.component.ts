@@ -167,14 +167,12 @@ export class RecurringSlotFormComponent implements OnInit {
 		const formValue = this.slotForm.value;
 		const slot: IRecurringSlot = {
 			id: newRandomId({ len: 3 }),
-			time: {
-				repeats: 'weekly',
-				starts: this.timeStarts.value as string,
-				ends: this.timeEnds.value as string,
-				weekdays: Object.entries(this.weekdaysForm.value)
-					.filter(entry => entry[1])
-					.map(entry => entry[0]) as Weekday[],
-			},
+			repeats: 'weekly',
+			starts: this.timeStarts.value as string,
+			ends: this.timeEnds.value as string,
+			weekdays: Object.entries(this.weekdaysForm.value)
+				.filter(entry => entry[1])
+				.map(entry => entry[0]) as Weekday[],
 		};
 		if (formValue.locationTitle || formValue.locationAddress) {
 			const l: SlotLocation = slot.location = {};
