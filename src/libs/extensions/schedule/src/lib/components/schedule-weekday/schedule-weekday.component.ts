@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NewHappeningParams, SlotItem, Day } from '../../view-models';
+import { NewHappeningParams, ISlotItem, Day } from '../../view-models';
 import { isSlotVisible } from '../schedile-slots';
 
 @Component({
@@ -14,9 +14,9 @@ export class ScheduleWeekdayComponent {
 	@Input() showEvents = true;
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<SlotItem>();
+	@Output() slotClicked = new EventEmitter<ISlotItem>();
 
-	showSlot(slot: SlotItem): boolean {
+	showSlot(slot: ISlotItem): boolean {
 		return isSlotVisible(slot, this.filter, this.showRegulars, this.showEvents);
 	}
 

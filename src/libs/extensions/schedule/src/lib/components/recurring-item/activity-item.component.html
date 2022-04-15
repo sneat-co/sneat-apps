@@ -1,9 +1,9 @@
 <ion-item button (click)="goActivity()">
-    <ion-badge color="light" slot="start" style="font-size: 1.5em; font-weight: normal; padding: 0.2em; background-color: white;">
-        Starts at {{slot?.timing?.starts}}
+    <ion-badge color="light" slot="start" style="font-weight: normal; background-color: white;">
+        From {{slot?.timing?.starts}}
         <div style="font-size: small; color: #777; text-align: center"><small>ends</small> {{slot?.timing?.ends}}</div>
     </ion-badge>
-    <ion-label>
+    <ion-label class="ion-wrap">
         <h3 style="font-size: 1em; margin-bottom: 0.4em">{{slot?.title}}</h3>
         <p *ngIf="slot?.location?.title || slot?.location?.address">
             {{slot?.location?.title || slot?.location?.address}}
@@ -22,6 +22,6 @@
                 </ion-badge>
             </ng-container>
         </p>
-
     </ion-label>
 </ion-item>
+

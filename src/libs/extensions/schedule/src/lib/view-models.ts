@@ -1,4 +1,5 @@
 import { wdCodeToWeekdayLongName } from '@sneat/components';
+import { dateToIso } from '@sneat/core';
 import {
 	HappeningKind,
 	HappeningType,
@@ -10,7 +11,8 @@ import {
 	IRecurringSlotTiming,
 	Weekday, ITiming, Repeats,
 } from '@sneat/dto';
-import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 
 export interface NewHappeningParams {
@@ -18,7 +20,7 @@ export interface NewHappeningParams {
 	weekday?: Day;
 }
 
-export interface SlotItem {
+export interface ISlotItem {
 	error?: any;
 	type: HappeningType;
 	kind: HappeningKind;
@@ -32,7 +34,7 @@ export interface SlotItem {
 	levels?: Level[];
 }
 
-export type SlotsByWeekday = { [wd: string]: SlotItem[] };
+export type SlotsByWeekday = { [wd: string]: ISlotItem[] };
 
 export interface RecurringSlots {
 	byWeekday: SlotsByWeekday;
@@ -41,8 +43,8 @@ export interface RecurringSlots {
 export interface Day {
 	readonly date?: Date;
 	readonly wd: Weekday;
-	readonly title: string;
-	slots?: SlotItem[];
+	readonly longTitle: string;
+	slots?: ISlotItem[];
 	readonly loadingEvents?: boolean;
 	readonly eventsLoaded?: boolean;
 }
@@ -53,21 +55,29 @@ export class DaySlotsProvider {
 	public readonly wdLongTitle: string;
 	private readonly destroyed = new Subject<boolean>();
 	private recurringSlots?: RecurringSlots;
-	private singles?: SlotItem[];
+	private singles?: ISlotItem[];
+	public isoTitle: string;
 
-	private readonly _slots = new BehaviorSubject<SlotItem[] | undefined>(undefined);
-	public readonly slots$ = this._slots.asObservable();
+	private readonly _slots = new BehaviorSubject<ISlotItem[] | undefined>(undefined);
+	public readonly slots$ = this._slots.asObservable().pipe(
+		shareReplay(1),
+		tap(slots => console.log(`DaySlotsProvider[${this.isoTitle}].slots$ =>`, slots)),
+	);
 
 	constructor(
 		public readonly date: Date,
 		recurrings$: Observable<RecurringSlots>,
 	) {
 		this.wd = getWd2(date);
+		this.isoTitle = dateToIso(date);
+		if (this.isoTitle === '1970-01-01') {
+			throw new Error('an attempt to set an empty date 1970-01-01');
+		}
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
 		this.subscribeForRecurrings(recurrings$);
 	}
 
-	public get slots(): SlotItem[] | undefined {
+	public get slots(): ISlotItem[] | undefined {
 		return this._slots.value;
 	}
 
@@ -87,16 +97,19 @@ export class DaySlotsProvider {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
+		console.log(`DaySlotsProvider[${this.isoTitle}].processRecurrings(), slots:`, slots);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
 
 	private joinRecurringsWithSinglesAndEmit(): void {
+		console.log(`DaySlotsProvider[${this.isoTitle}].joinRecurringsWithSinglesAndEmit(), wd=${this.wd}, recurringSlots:`, this.recurringSlots);
 		const slots = [];
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd];
 		if (weekdaySlots?.length) {
 			slots.push(...weekdaySlots);
 		}
+		console.log(`DaySlotsProvider[${this.isoTitle}].joinRecurringsWithSinglesAndEmit() => slots:`, slots);
 		this._slots.next(slots);
 	}
 }

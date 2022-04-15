@@ -1,5 +1,4 @@
 import {
-	VirtualSlideAnimationsStates,
 	VirtualSliderAnimationStates,
 	VirtualSliderDirectPushedNext,
 	VirtualSliderDirectPushedPrev,
@@ -9,7 +8,8 @@ import {
 } from '@sneat/components';
 import { getWeekdayDate } from '@sneat/core';
 import { Weekday } from '@sneat/dto';
-import { Day, jsDayToWeekday, wd2 } from '../../view-models';
+import { Day, wd2 } from '../../view-models';
+import { Parity, Swipeable } from './swipeable-ui';
 
 export function getWdDate(wd: Weekday, activeWd: Weekday, activeDate: Date): Date {
 	if (wd === activeWd) {
@@ -33,19 +33,7 @@ export function setWeekStartAndEndDates(week: Week, activeDate: Date): void {
 
 export type ScheduleTab = 'day' | 'week' | 'regular' | 'events';
 
-export type Parity = 'odd' | 'even';
-
 export const SHIFT_1_DAY = 1, SHIFT_1_WEEK = 7;
-
-interface Swipeable {
-	animationState: VirtualSlideAnimationsStates;
-	readonly parity: Parity;
-}
-
-export interface SwipeableDay extends Swipeable {
-	date?: Date;
-	weekday?: Day;
-}
 
 export interface Week extends Swipeable {
 	weekdays: Day[];
@@ -54,7 +42,7 @@ export interface Week extends Swipeable {
 }
 
 export const createWeekdays = (): Day[] => wd2.map(
-	wd => ({ wd, title: wdCodeToWeekdayLongName(wd), slots: [] }));
+	wd => ({ wd, longTitle: wdCodeToWeekdayLongName(wd), slots: [] }));
 
 export function animationState(activeParity: Parity, diff: number): VirtualSliderAnimationStates {
 	let result: VirtualSliderAnimationStates;

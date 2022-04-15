@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SlotItem} from '../../view-models';
+import {ISlotItem} from '../../view-models';
 
 @Component({
 	selector: 'sneat-activity-item',
@@ -8,9 +8,9 @@ import {SlotItem} from '../../view-models';
 export class ActivityItemComponent {
 
 	@Input()
-	public slot?: SlotItem;
+	public slot?: ISlotItem;
 
-	@Output() onclick = new EventEmitter<SlotItem>();
+	@Output() onclick = new EventEmitter<ISlotItem>();
 
 	// @Input()
 	// public communeBasePage: CommuneBasePage;

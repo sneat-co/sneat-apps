@@ -11,7 +11,7 @@
 			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 				<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState" *ngIf="tab === 'day'">
 					<h1 class="virtual-slide" [@virtualSlide]="oddDay.animationState">
-						<span *ngIf="isToday()" class="ion-margin-end">Today: {{oddDay.weekday}}</span>
+						<span *ngIf="isToday()" class="ion-margin-end">Today:</span>
 						<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>
 						<ng-container *ngIf="oddDay.weekday">
 							<b>{{oddDay.weekday?.wd|wdToWeekday}}</b><span
@@ -109,6 +109,12 @@
 										 (changed)="applyFilter($event)"></sneat-filter-item>
 
 	<div *ngIf="tab === 'day' && activeDay?.date" style="margin-top: 1em">
+<!--		<p class="ion-margin-horizontal">-->
+<!--			oddDay.weekday: {{oddDay.weekday|json}}-->
+<!--			activeDay.parity: {{activeDay.parity}},-->
+<!--			activeDayParity: {{activeDayParity}},-->
+<!--			activeDay.weekday: {{activeDay.weekday|json}}-->
+<!--		</p>-->
 		<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 			<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState">
 				<div class="virtual-slide" [@virtualSlide]="oddDay.animationState">
@@ -116,14 +122,14 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRegulars]="showRecurring"
-						[dayWeekday]="oddDay.weekday"
+						[day]="oddDay.weekday"
 						(slotClicked)="goActivity($event)"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
 				<div class="virtual-slide" [@virtualSlide]="evenDay.animationState">
 					<sneat-schedule-day
-						[dayWeekday]="evenDay.weekday"
+						[day]="evenDay.weekday"
 						(slotClicked)="goActivity($event)"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>

@@ -1,6 +1,6 @@
-import {SlotItem} from '../view-models';
+import {ISlotItem} from '../view-models';
 
-export function isSlotVisible(slot: SlotItem, filter: string, showRegulars: boolean, showEvents: boolean): boolean {
+export function isSlotVisible(slot: ISlotItem, filter: string, showRegulars: boolean, showEvents: boolean): boolean {
 	return (!!slot.recurring && showRegulars || !!slot.single && showEvents) &&
 		(
 			!filter ||

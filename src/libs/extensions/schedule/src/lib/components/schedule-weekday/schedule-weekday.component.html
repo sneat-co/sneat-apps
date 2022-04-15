@@ -1,7 +1,7 @@
 <ion-item-divider color="light">
 	<ion-label slot="start" (click)="onDateSelected()" tappable>
-		<ng-container *ngIf="weekday?.slots && weekday?.slots?.length"><b>{{weekday?.title}}</b></ng-container>
-		<ng-container *ngIf="!weekday?.slots || !weekday?.slots?.length">{{weekday?.title}}</ng-container>
+		<ng-container *ngIf="weekday?.slots && weekday?.slots?.length"><b>{{weekday?.longTitle}}</b></ng-container>
+		<ng-container *ngIf="!weekday?.slots || !weekday?.slots?.length">{{weekday?.longTitle}}</ng-container>
 		<ng-container *ngIf="weekday?.date"
 		>, {{weekday?.date?.getDate()}} {{weekday?.date?.getMonth()|shortMonthName}}</ng-container>
 	</ion-label>

@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Output } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {
 	hideVirtualSlide,
@@ -13,19 +23,18 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { SlotsProvider } from '../../pages/schedule/slots-provider';
-import { Day, jsDayToWeekday, NewHappeningParams, SlotItem, wdNumber } from '../../view-models';
+import { Day, ISlotItem, jsDayToWeekday, NewHappeningParams, wdNumber } from '../../view-models';
 import {
 	animationState,
 	createWeekdays,
 	getWdDate,
-	Parity,
 	ScheduleTab,
 	setWeekStartAndEndDates,
 	SHIFT_1_DAY,
 	SHIFT_1_WEEK,
-	SwipeableDay,
 	Week,
 } from './schedule-core';
+import { Parity, SwipeableDay } from './swipeable-ui';
 
 @Component({
 	selector: 'sneat-schedule',
@@ -33,7 +42,7 @@ import {
 	styleUrls: ['./schedule.component.scss'],
 	animations: virtualSliderAnimations,
 })
-export class ScheduleComponent implements AfterViewInit, OnDestroy {
+export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	@Input() team?: ITeamContext;
 	@Input() public tab: ScheduleTab = 'day';
@@ -50,18 +59,8 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 	regulars?: IRecurringActivityWithUiState[];
 	activeDayParity: Parity = 'odd';
 	activeWeekParity: Parity = 'odd';
-	oddDay: SwipeableDay = {
-		parity: 'odd',
-		animationState: showVirtualSlide,
-		weekday: undefined,
-		date: undefined,
-	};
-	evenDay: SwipeableDay = {
-		parity: 'even',
-		animationState: hideVirtualSlide,
-		weekday: undefined,
-		date: undefined,
-	};
+	oddDay: SwipeableDay;
+	evenDay: SwipeableDay;
 	readonly oddWeek: Week = {
 		parity: 'odd',
 		animationState: showVirtualSlide,
@@ -75,7 +74,7 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 	weekAnimationState?: VirtualSliderAnimationStates = undefined;
 	dayAnimationState?: VirtualSliderAnimationStates = undefined;
 	public filter = '';
-	private readonly destroyed = new Subject<boolean>();
+	private readonly destroyed = new Subject<void>();
 
 	// nextWeekdays: SlotsGroup[];
 	// prevWeekdays: SlotsGroup[];
@@ -88,14 +87,16 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 	) {
 		this.slotsProvider = new SlotsProvider(afs);
 		const today = new Date();
-		this.oddDay.date = today;
-		this.oddDay.date = today;
-		this.evenDay.date = new Date(today.getDate() + 1);
+		const tomorrow = new Date();
+		tomorrow.setDate(today.getDate() + 1)
+		const destroyed = this.destroyed.asObservable();
+		this.oddDay = new SwipeableDay('odd', today, showVirtualSlide, this.slotsProvider, destroyed);
+		this.evenDay = new SwipeableDay('even', tomorrow, hideVirtualSlide, this.slotsProvider, destroyed);
 
-		setTimeout(() => {
-			// TODO: Fix this dirty workaround for initial animations
-			this.setToday();
-		}, 10);
+		// setTimeout(() => {
+		// 	// TODO: Fix this dirty workaround for initial animations
+		// 	this.setToday();
+		// }, 10);
 	}
 
 	get activeDay(): SwipeableDay {
@@ -106,8 +107,14 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 		return this.activeWeekParity === 'odd' ? this.oddWeek : this.evenWeek;
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['team']) {
+			this.onTeamContextChanged();
+		}
+	}
+
 	ngOnDestroy(): void {
-		this.destroyed.next(true);
+		this.destroyed.next();
 		this.destroyed.complete();
 	}
 
@@ -285,6 +292,7 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 	}
 
 	setToday(): void {
+		console.log('ScheduleComponent.setToday()');
 		if (!this.activeDay.date) {
 			this.errorLogger.logError('!this.activeDay.date');
 			return;
@@ -328,7 +336,7 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 		}
 	}
 
-	goActivity(slot: SlotItem): void {
+	goActivity(slot: ISlotItem): void {
 		const happeningDto: IHappeningDto | undefined = slot.recurring || slot.single;
 		if (!happeningDto) {
 			throw new Error('!happeningDto');
@@ -402,62 +410,65 @@ export class ScheduleComponent implements AfterViewInit, OnDestroy {
 		if (!d) {
 			return;
 		}
-		// tslint:disable-next-line:no-this-assignment
+
 		const { tab } = this;
 		this.setSlidesAnimationState();
 		const activeWd = jsDayToWeekday(d.getDay() as wdNumber);
-		this.activeDay.date = d;
+
+		this.activeDay.changeDate(d);
+
+
 		const activeWeek = this.activeWeek;
 		setWeekStartAndEndDates(activeWeek, d);
-		const datesToPreload: Date[] = [];
-		const datesToLoad: Day[] = [];
-		activeWeek.weekdays.forEach((weekday) => {
-			const weekdayDate = getWdDate(weekday.wd, activeWd, d);
-			if (!weekday.date || weekday.date.getTime() !== weekdayDate.getTime() || !weekday.slots) {
-				// console.log('weekday.date !== weekdayDate', weekday.date, weekdayDate);
-				weekday = { ...weekday, date: weekdayDate };
-				if (tab === 'week' || tab === 'day' && weekday.wd === activeWd) {
-					datesToLoad.push(weekday);
-					// tslint:disable-next-line:no-magic-numbers
-					const diff = tab === 'day' ? SHIFT_1_DAY : SHIFT_1_WEEK;
-					const wdDate = weekday.date;
-					if (wdDate) {
-						datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() + diff));
-						datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() - diff));
-					}
-					if (tab === 'day') {
-						const activeWeekDaysToPreload = activeWeek.weekdays
-							.filter(wd =>
-								!wd.date ||
-								// tslint:disable-next-line:no-non-null-assertion
-								!datesToPreload.some(dtp => dtp.getTime() === wd.date?.getTime()));
-						activeWeekDaysToPreload.forEach(wd => {
-							if (!wd.date) {
-								// wd.date = weekdayDate;
-								// this.errorLogger.logError('not implemented yet: !wd.date');
-								console.error('not implemented yet: !wd.date')
-							} else {
-								datesToPreload.push(wd.date);
-							}
-						});
-					}
-				}
-			}
-			if (weekday.wd === activeWd) {
-				this.activeDay.weekday = weekday;
-			}
-		});
-
-		console.log(`segment=${tab}, datesToPreload:`, datesToPreload);
-		if (this.team) {
-			this.slotsProvider.getDays(...datesToLoad)
-				.pipe(
-					takeUntil(this.destroyed),
-				)
-				.subscribe({
-					error: this.errorLogger.logErrorHandler('failed to get days'),
-				});
-		}
+		// const datesToPreload: Date[] = [];
+		// const datesToLoad: Day[] = [];
+		// activeWeek.weekdays.forEach((weekday) => {
+		// 	const weekdayDate = getWdDate(weekday.wd, activeWd, d);
+		// 	if (!weekday.date || weekday.date.getTime() !== weekdayDate.getTime() || !weekday.slots) {
+		// 		// console.log('weekday.date !== weekdayDate', weekday.date, weekdayDate);
+		// 		weekday = { ...weekday, date: weekdayDate };
+		// 		if (tab === 'week' || tab === 'day' && weekday.wd === activeWd) {
+		// 			datesToLoad.push(weekday);
+		// 			// tslint:disable-next-line:no-magic-numbers
+		// 			const diff = tab === 'day' ? SHIFT_1_DAY : SHIFT_1_WEEK;
+		// 			const wdDate = weekday.date;
+		// 			if (wdDate) {
+		// 				datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() + diff));
+		// 				datesToPreload.push(new Date(wdDate.getFullYear(), wdDate.getMonth(), wdDate.getDate() - diff));
+		// 			}
+		// 			if (tab === 'day') {
+		// 				const activeWeekDaysToPreload = activeWeek.weekdays
+		// 					.filter(wd =>
+		// 						!wd.date ||
+		// 						// tslint:disable-next-line:no-non-null-assertion
+		// 						!datesToPreload.some(dtp => dtp.getTime() === wd.date?.getTime()));
+		// 				activeWeekDaysToPreload.forEach(wd => {
+		// 					if (!wd.date) {
+		// 						// wd.date = weekdayDate;
+		// 						// this.errorLogger.logError('not implemented yet: !wd.date');
+		// 						console.error('not implemented yet: !wd.date');
+		// 					} else {
+		// 						datesToPreload.push(wd.date);
+		// 					}
+		// 				});
+		// 			}
+		// 		}
+		// 	}
+		// 	if (weekday.wd === activeWd) {
+		// 		this.activeDay.weekday = weekday;
+		// 	}
+		// });
+		//
+		// console.log(`segment=${tab}, datesToPreload:`, datesToPreload);
+		// if (this.team) {
+		// 	this.slotsProvider.getDays(...datesToLoad)
+		// 		.pipe(
+		// 			takeUntil(this.destroyed),
+		// 		)
+		// 		.subscribe({
+		// 			error: this.errorLogger.logErrorHandler('failed to get days'),
+		// 		});
+		// }
 		// this.slotsProvider.preloadEvents(tx, ...datesToPreload),
 
 		// Change URL

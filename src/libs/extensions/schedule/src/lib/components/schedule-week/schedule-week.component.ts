@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { Weekday } from '@sneat/dto';
-import {NewHappeningParams, SlotItem, Day} from '../../view-models';
+import {NewHappeningParams, ISlotItem, Day} from '../../view-models';
 
 @Component({
 	selector: 'sneat-schedule-week',
@@ -15,7 +15,7 @@ export class ScheduleWeekComponent {
 
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<SlotItem>();
+	@Output() slotClicked = new EventEmitter<ISlotItem>();
 
 	readonly wd = (i: number, item: Day): Weekday => item.wd;
 
