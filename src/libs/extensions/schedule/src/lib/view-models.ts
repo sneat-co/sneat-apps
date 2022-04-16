@@ -5,11 +5,12 @@ import {
 	HappeningType,
 	IRecurringHappeningDto,
 	ISingleHappeningDto,
+	ITiming,
 	Level,
+	Repeats,
 	SlotLocation,
 	SlotParticipant,
-	IRecurringSlotTiming,
-	Weekday, ITiming, Repeats,
+	Weekday,
 } from '@sneat/dto';
 import { BehaviorSubject, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -51,18 +52,17 @@ export interface Day {
 
 export class DaySlotsProvider {
 
+	private readonly destroyed = new Subject<void>();
+	private readonly _slots = new BehaviorSubject<ISlotItem[] | undefined>(undefined);
 	public readonly wd: Weekday;
 	public readonly wdLongTitle: string;
-	private readonly destroyed = new Subject<boolean>();
-	private recurringSlots?: RecurringSlots;
-	private singles?: ISlotItem[];
 	public isoTitle: string;
-
-	private readonly _slots = new BehaviorSubject<ISlotItem[] | undefined>(undefined);
 	public readonly slots$ = this._slots.asObservable().pipe(
 		shareReplay(1),
 		tap(slots => console.log(`DaySlotsProvider[${this.isoTitle}].slots$ =>`, slots)),
 	);
+	private recurringSlots?: RecurringSlots;
+	private singles?: ISlotItem[];
 
 	constructor(
 		public readonly date: Date,
@@ -82,7 +82,7 @@ export class DaySlotsProvider {
 	}
 
 	public destroy(): void {
-		this.destroyed.next(true);
+		this.destroyed.next();
 		this.destroyed.complete();
 	}
 

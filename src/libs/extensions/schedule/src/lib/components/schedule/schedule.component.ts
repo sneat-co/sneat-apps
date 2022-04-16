@@ -17,17 +17,16 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { getWeekdayDate, localDateToIso } from '@sneat/core';
-import { IHappeningDto, IRecurringActivityWithUiState, Weekday } from '@sneat/dto';
+import { IHappeningDto, IRecurringWithUiState, Weekday } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SlotsProvider } from '../../pages/schedule/slots-provider';
 import { Day, ISlotItem, jsDayToWeekday, NewHappeningParams, wdNumber } from '../../view-models';
 import {
 	animationState,
 	createWeekdays,
-	getWdDate,
 	ScheduleTab,
 	setWeekStartAndEndDates,
 	SHIFT_1_DAY,
@@ -44,19 +43,21 @@ import { Parity, SwipeableDay } from './swipeable-ui';
 })
 export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
+	private readonly destroyed = new Subject<void>();
+	// prevWeekdays: SlotsGroup[];
+	private readonly slotsProvider: SlotsProvider;
 	@Input() team?: ITeamContext;
 	@Input() public tab: ScheduleTab = 'day';
 	@Input() public date = '';
-
 	@Output() readonly tabChanged = new EventEmitter<ScheduleTab>();
 	@Output() readonly dateChanged = new EventEmitter<string>();
-	public showRecurring = true;
+	public showRecurrings = true;
 	public showEvents = true;
 	todayAndFutureEvents?: Day[];
 	public member?: IMemberContext;
 	filterFocused = false;
-	allRegulars?: IRecurringActivityWithUiState[];
-	regulars?: IRecurringActivityWithUiState[];
+	allRecurrings?: IRecurringWithUiState[];
+	recurrings?: IRecurringWithUiState[];
 	activeDayParity: Parity = 'odd';
 	activeWeekParity: Parity = 'odd';
 	oddDay: SwipeableDay;
@@ -73,12 +74,9 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	};
 	weekAnimationState?: VirtualSliderAnimationStates = undefined;
 	dayAnimationState?: VirtualSliderAnimationStates = undefined;
-	public filter = '';
-	private readonly destroyed = new Subject<void>();
 
 	// nextWeekdays: SlotsGroup[];
-	// prevWeekdays: SlotsGroup[];
-	private readonly slotsProvider: SlotsProvider;
+	public filter = '';
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -88,7 +86,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.slotsProvider = new SlotsProvider(afs);
 		const today = new Date();
 		const tomorrow = new Date();
-		tomorrow.setDate(today.getDate() + 1)
+		tomorrow.setDate(today.getDate() + 1);
 		const destroyed = this.destroyed.asObservable();
 		this.oddDay = new SwipeableDay('odd', today, showVirtualSlide, this.slotsProvider, destroyed);
 		this.evenDay = new SwipeableDay('even', tomorrow, hideVirtualSlide, this.slotsProvider, destroyed);
@@ -116,6 +114,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
+		this.slotsProvider.destroy();
 	}
 
 	ngAfterViewInit(): void {
@@ -163,7 +162,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 					throw new Error('activeDay has no date');
 				}
 				break;
-			case 'events':
+			case 'singles':
 				// this.slotsProvider.loadTodayAndFutureEvents(undefined)
 				// 	.subscribe({
 				// 		error: this.errorLogger.logError,
@@ -195,12 +194,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	onShowEventsChanged(): void {
 		if (!this.showEvents) {
-			this.showRecurring = true;
+			this.showRecurrings = true;
 		}
 	}
 
-	onShowRegularChanged(): void {
-		if (!this.showRecurring) {
+	onShowRecurringsChanged(): void {
+		if (!this.showRecurrings) {
 			this.showEvents = true;
 		}
 	}
@@ -232,7 +231,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			.then(this.errorLogger.logError);
 	}
 
-	goRegular(activity: IRecurringActivityWithUiState): void {
+	goRegular(activity: IRecurringWithUiState): void {
 		this.errorLogger.logError('not implemented yet');
 		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
@@ -240,8 +239,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	applyFilter(filter: string): void {
 		console.log(`applyFilter(${filter})`);
 		this.filter = filter.toLowerCase();
-		if (this.tab === 'regular') {
-			this.regulars = this.filterRegulars();
+		if (this.tab === 'recurrings') {
+			this.recurrings = this.filterRecurrings();
 		}
 	}
 
@@ -387,20 +386,35 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private onTeamContextChanged(): void {
 		if (this.team) {
 			this.slotsProvider.setTeam(this.team);
+			this.populateRecurrings();
 		}
 		if (this.activeDay?.date) {
 			this.setDay('onTeamDtoChanged', this.activeDay.date);
 		}
 	}
 
+	private populateRecurrings(): void {
+		console.log('populateRecurrings()');
+		const prevAll = this.allRecurrings;
+		this.allRecurrings = this.team?.dto?.recurringHappenings?.map(brief => {
+			const { id } = brief;
+			const prev = prevAll?.find(p => p.id === id);
+			const result: IRecurringWithUiState = { id, brief: brief, state: prev?.state || {} };
+			return result;
+		});
+		this.recurrings = this.filterRecurrings();
+	}
+
 	// noinspection JSMethodCanBqw2se3333eStatic
 
-	private filterRegulars(): IRecurringActivityWithUiState[] | undefined {
+	private filterRecurrings(): IRecurringWithUiState[] | undefined {
+		console.log(`filterRecurrings(filter='${this.filter}')`, this.allRecurrings);
 		const filter = this.filter.toLowerCase();
+
 		if (!filter) {
-			return this.allRegulars;
+			return this.allRecurrings;
 		}
-		return this.allRegulars?.filter(r => r.dto.title && r.dto.title.toLowerCase().indexOf(filter) >= 0);
+		return this.allRecurrings?.filter(r => r.brief?.title && r.brief.title.toLowerCase().indexOf(filter) >= 0);
 	}
 
 	// noinspection JSMethodCanBeStatic

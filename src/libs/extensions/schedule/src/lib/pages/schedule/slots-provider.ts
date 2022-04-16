@@ -1,10 +1,10 @@
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatFirestoreService } from '@sneat/api';
-import { INavContext, localDateToIso } from '@sneat/core';
+import { INavContext } from '@sneat/core';
 import { IHappeningBrief, IRecurringHappeningDto, ISingleHappeningDto, Weekday } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { BehaviorSubject, EMPTY, from, merge, Observable, shareReplay, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, map, Observable, shareReplay, Subject, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Day, DaySlotsProvider, getWd2, ISlotItem, RecurringSlots, timeToStr, wd2 } from '../../view-models';
 
 type RecurringsByWeekday = {
@@ -63,17 +63,15 @@ export function eventToSlot(singleHappening: ISingleHappeningDto): ISlotItem {
 export class SlotsProvider /*extends ISlotsProvider*/ {
 
 	private readonly sfsRecurrings: SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>;
-
-	private recurringsSubscription?: Subscription;
-
 	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};
 	private readonly recurringByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
-
+	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
+	private readonly days: { [d: string]: DaySlotsProvider } = {};
+	private readonly destroyed = new Subject<void>();
+	private recurringsSubscription?: Subscription;
 	private team?: ITeamContext;
 	// private teamId?: string;
 	private memberId?: string;
-	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
-	private readonly days: { [d: string]: DaySlotsProvider } = {};
 
 	constructor(
 		afs: AngularFirestore,
@@ -90,6 +88,13 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 				return brief;
 			},
 		);
+	}
+
+	public destroy(): void {
+		this.destroyed.next();
+		Object.entries(this.days).forEach(([wd, dsp]) => {
+			dsp.destroy();
+		});
 	}
 
 	public getDaySlotsProvider(date: Date): DaySlotsProvider {
@@ -245,6 +250,25 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 		}
 	}
 
+	private addRecurringsToSlotsGroup(weekday: Day): void {
+		const recurrings = this.recurringByWd[weekday.wd];
+		if (!recurrings) {
+			return;
+		}
+		const wdRecurrings = weekday.slots && weekday.slots.filter(r => r.recurring);
+		if (wdRecurrings && wdRecurrings.length === recurrings.length) {
+			return;
+		}
+		if (recurrings.length) {
+			// weekday.slots = weekday.slots ? [
+			// 	...recurrings,
+			// 	...weekday.slots.filter(r => r.type !== 'recurring'),
+			// ] : [...recurrings];
+		} else {
+			// weekday.slots = weekday.slots ? weekday.slots.filter(r => !r.recurring) : [];
+		}
+	}
+
 	// private addEventsToSlotsGroup(weekday: SlotsGroup, date:)
 
 	// public loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]> {
@@ -278,25 +302,6 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 	// 			}),
 	// 		);
 	// }
-
-	private addRecurringsToSlotsGroup(weekday: Day): void {
-		const recurrings = this.recurringByWd[weekday.wd];
-		if (!recurrings) {
-			return;
-		}
-		const wdRecurrings = weekday.slots && weekday.slots.filter(r => r.recurring);
-		if (wdRecurrings && wdRecurrings.length === recurrings.length) {
-			return;
-		}
-		if (recurrings.length) {
-			// weekday.slots = weekday.slots ? [
-			// 	...recurrings,
-			// 	...weekday.slots.filter(r => r.type !== 'recurring'),
-			// ] : [...recurrings];
-		} else {
-			// weekday.slots = weekday.slots ? weekday.slots.filter(r => !r.recurring) : [];
-		}
-	}
 
 	private loadEvents(...dates: Date[]): Observable<{ dateKey: string; events: ISlotItem[] }> {
 		return EMPTY;
@@ -353,11 +358,12 @@ export class SlotsProvider /*extends ISlotsProvider*/ {
 		return slots;
 	};
 
-	// eslint-disable-next-line @typescript-eslint/member-ordering
 	private readonly recurrings$: Observable<RecurringSlots> = this.team$.pipe(
+		// TODO: Instead of providing all slots we can provide observables of slots for a specific day
+		// That would minimize number of handlers to be called on watching components
+		// Tough it's a micro optimization that does not seems to worth the effort now.
 		map(this.teamRecurringSlotsByWeekday),
 		shareReplay(1),
 		tap(slots => console.log('SlotsProvider.recurrings$ =>', slots)),
 	);
-
 }

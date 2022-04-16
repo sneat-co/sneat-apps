@@ -34,8 +34,8 @@ export class SchedulePageComponent extends TeamBaseComponent {
 				switch (tab) {
 					case 'day':
 					case 'week':
-					case 'regular':
-					case 'events':
+					case 'recurrings':
+					case 'singles':
 						this.tab = tab;
 						break;
 					default:

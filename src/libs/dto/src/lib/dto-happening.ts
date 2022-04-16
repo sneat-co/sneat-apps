@@ -85,9 +85,10 @@ export interface IRecurringSlot extends IRecurringSlotTiming {
 export interface IRecurringHappeningDto extends IHappeningDto, IHappeningTask {
 }
 
-export interface IRecurringActivityWithUiState {
+export interface IRecurringWithUiState {
 	readonly id: string;
-	readonly dto: IRecurringHappeningDto;
+	readonly brief: IHappeningBrief;
+	readonly dto?: IRecurringHappeningDto;
 	readonly state: UiState;
 }
 

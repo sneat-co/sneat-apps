@@ -31,7 +31,7 @@ export function setWeekStartAndEndDates(week: Week, activeDate: Date): void {
 	week.endDate = getWeekdayDate(activeDate, 6);
 }
 
-export type ScheduleTab = 'day' | 'week' | 'regular' | 'events';
+export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 
 export const SHIFT_1_DAY = 1, SHIFT_1_WEEK = 7;
 
