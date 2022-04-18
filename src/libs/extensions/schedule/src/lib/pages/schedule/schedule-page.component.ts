@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { virtualSliderAnimations } from '@sneat/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { IMemberContext } from '@sneat/team/models';
 import { ScheduleTab } from '../../components/schedule/schedule-core';
 
 
@@ -18,6 +19,7 @@ export class SchedulePageComponent extends TeamBaseComponent {
 
 	public tab: ScheduleTab = 'day';
 	public date = '';
+	member?: IMemberContext;
 
 	constructor(
 		route: ActivatedRoute,

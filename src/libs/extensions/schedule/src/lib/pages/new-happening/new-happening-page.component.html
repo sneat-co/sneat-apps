@@ -5,7 +5,7 @@
 		</ion-buttons>
 		<ng-container *ngIf="!isToDo">
 			<ion-title *ngIf="team else titleNoCommune">
-				New activity @ {{team?.brief?.title}}
+				New happening @ {{team?.brief?.title}}
 			</ion-title>
 			<ng-template #titleNoCommune>New activity</ng-template>
 		</ng-container>
@@ -24,8 +24,9 @@
 		<ion-card-header>
 			<ion-segment [(ngModel)]="happeningType" (ionChange)="segmentChanged()">
 				<ion-segment-button value="recurring">Recurring</ion-segment-button>
-				<ion-segment-button value="single" *ngIf="!isToDo">Event</ion-segment-button>
-				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>
+				<ion-segment-button value="single">One-timer</ion-segment-button>
+				<!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
+				<!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
 			</ion-segment>
 		</ion-card-header>
 
@@ -57,14 +58,14 @@
 				</ion-buttons>
 			</ion-item-divider>
 			<sneat-recurring-slots [slots]="slots"
-													 (slotRemoved)="onSlotRemoved($event)"
+														 (slotRemoved)="onSlotRemoved($event)"
 			></sneat-recurring-slots>
 			<ng-container *ngIf="showSlotForm">
 				<sneat-recurring-slot-form [happeningType]="happeningType"
-																 [isToDo]="isToDo"
-																 [slots]="slots"
-																 (slotAdded)="onSlotAdded()"
-																 (eventTimesChanged)="onEventTimesChanged($event)"
+																	 [isToDo]="isToDo"
+																	 [slots]="slots"
+																	 (slotAdded)="onSlotAdded()"
+																	 (eventTimesChanged)="onEventTimesChanged($event)"
 				></sneat-recurring-slot-form>
 			</ng-container>
 		</ion-item-group>

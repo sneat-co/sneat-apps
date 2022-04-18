@@ -169,7 +169,7 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"
-						(goNew)="goNew($event)"
+						(goNew)="goNewHappening($event)"
 						(dateSelected)="onDateSelected($event)"
 						(slotClicked)="goActivity($event)"></sneat-schedule-week>
 					<div class="virtual-slide-overflow-fixer"></div>
@@ -181,7 +181,7 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"
-						(goNew)="goNew($event)"
+						(goNew)="goNewHappening($event)"
 						(dateSelected)="onDateSelected($event)"
 						(slotClicked)="goActivity($event)"></sneat-schedule-week>
 					<div class="virtual-slide-overflow-fixer"></div>
@@ -240,7 +240,7 @@
 																[showEvents]="true"
 																(slotClicked)="goActivity($event)"
 																(dateSelected)="onDateSelected($event)"
-																(goNew)="goNew($event)"
+																(goNew)="goNewHappening($event)"
 				></sneat-schedule-weekday>
 			</ng-container>
 		</ng-container>

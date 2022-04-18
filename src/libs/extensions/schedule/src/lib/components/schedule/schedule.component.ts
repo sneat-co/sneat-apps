@@ -195,7 +195,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	goNew(params: NewHappeningParams): void {
+	goNewHappening(params: NewHappeningParams): void {
 		const { type, wd, date } = params;
 
 		const state: { type: HappeningType; date?: string; wd?: WeekdayCode2 } = { type };
