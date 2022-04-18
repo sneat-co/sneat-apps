@@ -73,6 +73,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	weekAnimationState?: VirtualSliderAnimationStates = undefined;
 	dayAnimationState?: VirtualSliderAnimationStates = undefined;
 
+	filterSegment: 'all' | 'mine' | 'filter' = 'all';
+
 	// nextWeekdays: SlotsGroup[];
 	public filter = '';
 
