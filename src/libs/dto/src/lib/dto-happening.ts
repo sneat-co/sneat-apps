@@ -70,16 +70,16 @@ export interface IRecurringSlotTiming extends ITiming {
 export type Level = 'beginners' | 'intermediate' | 'advanced';
 
 export interface IHappeningTask {
-	serviceProvider?: {
-		id: string;
-		title: string;
+	readonly serviceProvider?: {
+		readonly id: string;
+		readonly title: string;
 	};
 }
 
 export interface IRecurringSlot extends IRecurringSlotTiming {
 	readonly id: string;
-	groupIds?: string[];
-	location?: SlotLocation;
+	readonly groupIds?: string[];
+	location?: SlotLocation; // TODO: make readonly
 }
 
 export interface IRecurringHappeningDto extends IHappeningDto, IHappeningTask {
@@ -93,11 +93,11 @@ export interface IRecurringWithUiState {
 }
 
 export interface ISingleHappeningDto extends IHappeningDto {
-	dtStarts?: number; // UTC
-	dtEnds?: number;   // UTC
-	weekdays?: WeekdayCode2[];
-	communeIdDates?: string[]; // ISO date strings prefixed with communeId e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
-	prices?: IPrice[];
+	readonly dtStarts?: number; // UTC
+	readonly dtEnds?: number;   // UTC
+	readonly weekdays?: WeekdayCode2[];
+	readonly communeIdDates?: string[]; // ISO date strings prefixed with communeId e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
+	readonly prices?: IPrice[];
 }
 
 export interface IHappeningActivity extends IHappeningDto {
