@@ -23,7 +23,7 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
-import { ISlotItem, jsDayToWeekday, NewHappeningParams, TeamDay, wdNumber } from '../../view-models';
+import { ISlotItem, jsDayToWeekday, NewHappeningParams, wdNumber } from '../../view-models';
 import { Weekday } from '../schedule-week/schedule-week.component';
 import {
 	animationState,
@@ -422,15 +422,14 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			return;
 		}
 
-		const { tab } = this;
 		this.setSlidesAnimationState();
-		const activeWd = jsDayToWeekday(d.getDay() as wdNumber);
 
 		this.activeDay.changeDate(d);
 
-
 		const activeWeek = this.activeWeek;
 		setWeekStartAndEndDates(activeWeek, d);
+		// const { tab } = this;
+		// const activeWd = jsDayToWeekday(d.getDay() as wdNumber);
 		// const datesToPreload: Date[] = [];
 		// const datesToLoad: Day[] = [];
 		// activeWeek.weekdays.forEach((weekday) => {
