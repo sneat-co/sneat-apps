@@ -1,9 +1,15 @@
-import { VirtualSlideAnimationsStates, wdCodeToWeekdayLongName } from '@sneat/components';
-import { dateToIso } from '@sneat/core';
+import {
+	hideVirtualSlide,
+	showVirtualSlide,
+	VirtualSlideAnimationsStates,
+	wdCodeToWeekdayLongName,
+} from '@sneat/components';
+import { dateToIso, getWeekdayDate } from '@sneat/core';
 import { Observable, Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { getWd2 } from '../../view-models';
 import { Weekday } from '../schedule-week/schedule-week.component';
+import { Week } from './schedule-core';
 
 export type Parity = 'odd' | 'even'; // TODO: change to 'current' | 'next' | 'prev';
 
@@ -16,14 +22,15 @@ export class SwipeableDay implements Swipeable { // TODO: make an NG component o
 	private readonly dayChanged = new Subject<void>();
 	id: string;
 	weekday: Weekday;
+	public animationState: VirtualSlideAnimationsStates;
 
 	constructor(
 		public readonly parity: Parity,
 		public date: Date,
-		public animationState: VirtualSlideAnimationsStates,
 		private readonly teamDaysProvider: TeamDaysProvider,
 		private readonly destroyed: Observable<void>,
 	) {
+		this.animationState = parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
 		this.id = dateToIso(date);
 		console.log(`SwipeableDay.constructor(parity=${parity}, date=${this.id})`);
 		this.weekday = this.createDay(date);
@@ -52,5 +59,22 @@ export class SwipeableDay implements Swipeable { // TODO: make an NG component o
 			longTitle: wdCodeToWeekdayLongName(id),
 			day: this.teamDaysProvider.getTeamDay(date),
 		};
+	}
+}
+
+export class SwipeableWeek implements Swipeable, Week {
+	public startDate: Date;
+	public endDate: Date;
+	public animationState: VirtualSlideAnimationsStates;
+
+	constructor(
+		public readonly parity: Parity,
+		private readonly teamDaysProvider: TeamDaysProvider,
+		private readonly destroyed: Observable<void>,
+	) {
+		this.animationState = parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
+		const today = new Date();
+		this.startDate = getWeekdayDate(today, 0);
+		this.endDate = getWeekdayDate(today, 0);
 	}
 }

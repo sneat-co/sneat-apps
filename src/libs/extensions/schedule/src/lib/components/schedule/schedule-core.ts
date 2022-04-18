@@ -10,7 +10,7 @@ import { getWeekdayDate } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
 import { wd2 } from '../../view-models';
 import { Weekday } from '../schedule-week/schedule-week.component';
-import { Parity, Swipeable } from './swipeable-ui';
+import { Parity, SwipeableWeek } from './swipeable-ui';
 
 export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: Date): Date {
 	if (wd === activeWd) {
@@ -36,9 +36,9 @@ export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 
 export const SHIFT_1_DAY = 1, SHIFT_1_WEEK = 7;
 
-export interface SwipeableWeek extends Swipeable {
-	startDate?: Date; // e.g. Monday
-	endDate?: Date; // e.g. Sunday
+export interface Week {
+	startDate: Date; // e.g. Monday
+	endDate: Date; // e.g. Sunday
 }
 
 export const createWeekdays = (): Weekday[] => wd2.map(

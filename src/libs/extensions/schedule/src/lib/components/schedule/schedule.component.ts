@@ -31,9 +31,9 @@ import {
 	setWeekStartAndEndDates,
 	SHIFT_1_DAY,
 	SHIFT_1_WEEK,
-	SwipeableWeek,
+
 } from './schedule-core';
-import { Parity, SwipeableDay } from './swipeable-ui';
+import { Parity, SwipeableDay, SwipeableWeek } from './swipeable-ui';
 
 @Component({
 	selector: 'sneat-schedule',
@@ -45,7 +45,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 	// prevWeekdays: SlotsGroup[];
-	private readonly slotsProvider: TeamDaysProvider;
+	private readonly teamDaysProvider: TeamDaysProvider;
 	@Input() team?: ITeamContext;
 	@Input() public tab: ScheduleTab = 'day';
 	@Input() public date = '';
@@ -62,14 +62,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	activeWeekParity: Parity = 'odd';
 	oddDay: SwipeableDay;
 	evenDay: SwipeableDay;
-	readonly oddWeek: SwipeableWeek = {
-		parity: 'odd',
-		animationState: showVirtualSlide,
-	};
-	readonly evenWeek: SwipeableWeek = {
-		parity: 'even',
-		animationState: hideVirtualSlide,
-	};
+	readonly oddWeek: SwipeableWeek;
+	readonly evenWeek: SwipeableWeek;
 	weekAnimationState?: VirtualSliderAnimationStates = undefined;
 	dayAnimationState?: VirtualSliderAnimationStates = undefined;
 
@@ -91,13 +85,17 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		private readonly params: TeamComponentBaseParams,
 		afs: AngularFirestore,
 	) {
-		this.slotsProvider = new TeamDaysProvider(afs);
+		this.teamDaysProvider = new TeamDaysProvider(afs);
 		const today = new Date();
 		const tomorrow = new Date();
 		tomorrow.setDate(today.getDate() + 1);
 		const destroyed = this.destroyed.asObservable();
-		this.oddDay = new SwipeableDay('odd', today, showVirtualSlide, this.slotsProvider, destroyed);
-		this.evenDay = new SwipeableDay('even', tomorrow, hideVirtualSlide, this.slotsProvider, destroyed);
+		this.oddDay = new SwipeableDay('odd', today, this.teamDaysProvider, destroyed);
+		this.evenDay = new SwipeableDay('even', tomorrow, this.teamDaysProvider, destroyed);
+
+		this.oddWeek = new SwipeableWeek('odd', this.teamDaysProvider, destroyed);
+		this.evenWeek = new SwipeableWeek('even', this.teamDaysProvider, destroyed);
+
 
 		// setTimeout(() => {
 		// 	// TODO: Fix this dirty workaround for initial animations
@@ -114,7 +112,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
-		this.slotsProvider.destroy();
+		this.teamDaysProvider.destroy();
 	}
 
 	ngAfterViewInit(): void {
@@ -382,7 +380,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	private onTeamContextChanged(): void {
 		if (this.team) {
-			this.slotsProvider.setTeam(this.team);
+			this.teamDaysProvider.setTeam(this.team);
 			this.populateRecurrings();
 		}
 		if (this.activeDay?.date) {
@@ -506,7 +504,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	}
 
-	private getWeeekData(): void {
+	private getWeekData(): void {
 		//
 	}
 
