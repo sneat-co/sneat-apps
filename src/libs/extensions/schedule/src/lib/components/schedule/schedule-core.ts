@@ -25,12 +25,6 @@ export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: 
 	);
 }
 
-export function setWeekStartAndEndDates(week: SwipeableWeek, activeDate: Date): void {
-	console.log('setWeekRange', activeDate, week);
-	week.startDate = getWeekdayDate(activeDate, 0);
-	// tslint:disable-next-line:no-magic-numbers
-	week.endDate = getWeekdayDate(activeDate, 6);
-}
 
 export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 

@@ -28,8 +28,8 @@
 						</ng-container>
 					</h1>
 				</div>
-				<div class="virtual-slider-inner" [@virtualSlider]="weekAnimationState" *ngIf="tab === 'week'">
-					<h1 class="virtual-slide" [@virtualSlide]="oddWeek.animationState" *ngIf="oddWeek.startDate">
+				<div *ngIf="tab === 'week'" class="virtual-slider-inner" [@virtualSlider]="weekAnimationState">
+					<h1 *ngIf="oddWeek.startDate" class="virtual-slide" [@virtualSlide]="oddWeek.animationState">
 						{{oddWeek.startDate?.getDate()}} {{oddWeek.startDate?.getMonth()|shortMonthName}}
 						&mdash;
 						{{oddWeek.endDate?.getDate()}} {{oddWeek.endDate?.getMonth()|shortMonthName}}
@@ -108,26 +108,26 @@
 	<!--	<sneat-filter-item *ngIf="tab === 'regular' || tab === 'events'" [filter]="filter"-->
 	<!--										 (changed)="applyFilter($event)"></sneat-filter-item>-->
 
-<!--	<ion-segment [(ngModel)]="filterSegment" *ngIf="tab === 'day' || tab === 'week'">-->
-<!--		<ion-segment-button value="all">All</ion-segment-button>-->
-<!--		<ion-segment-button value="mine">Mine only</ion-segment-button>-->
-<!--		<ion-segment-button value="others">Others</ion-segment-button>-->
-<!--	</ion-segment>-->
+	<!--	<ion-segment [(ngModel)]="filterSegment" *ngIf="tab === 'day' || tab === 'week'">-->
+	<!--		<ion-segment-button value="all">All</ion-segment-button>-->
+	<!--		<ion-segment-button value="mine">Mine only</ion-segment-button>-->
+	<!--		<ion-segment-button value="others">Others</ion-segment-button>-->
+	<!--	</ion-segment>-->
 
-<!--	<ng-container *ngIf="filterSegment==='filter'">-->
-<!--		<ion-item>-->
-<!--			<ion-label>Member</ion-label>-->
-<!--			<ion-select value="all">-->
-<!--				<ion-select-option value="all">All</ion-select-option>-->
-<!--			</ion-select>-->
-<!--		</ion-item>-->
-<!--		<ion-item>-->
-<!--			<ion-label>Assets</ion-label>-->
-<!--			<ion-select value="all">-->
-<!--				<ion-select-option value="all">All</ion-select-option>-->
-<!--			</ion-select>-->
-<!--		</ion-item>-->
-<!--	</ng-container>-->
+	<!--	<ng-container *ngIf="filterSegment==='filter'">-->
+	<!--		<ion-item>-->
+	<!--			<ion-label>Member</ion-label>-->
+	<!--			<ion-select value="all">-->
+	<!--				<ion-select-option value="all">All</ion-select-option>-->
+	<!--			</ion-select>-->
+	<!--		</ion-item>-->
+	<!--		<ion-item>-->
+	<!--			<ion-label>Assets</ion-label>-->
+	<!--			<ion-select value="all">-->
+	<!--				<ion-select-option value="all">All</ion-select-option>-->
+	<!--			</ion-select>-->
+	<!--		</ion-item>-->
+	<!--	</ng-container>-->
 
 
 	<div *ngIf="tab === 'day' && activeDay?.date" style="margin-top: 1em">
@@ -164,6 +164,8 @@
 			<div class="virtual-slider-inner" [@virtualSlider]="weekAnimationState">
 				<div class="virtual-slide" [@virtualSlide]="oddWeek.animationState">
 					<sneat-schedule-week
+						[week]="oddWeek"
+						[teamDaysProvider]="teamDaysProvider"
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"
@@ -174,6 +176,8 @@
 				</div>
 				<div class="virtual-slide" [@virtualSlide]="evenWeek.animationState">
 					<sneat-schedule-week
+						[week]="evenWeek"
+						[teamDaysProvider]="teamDaysProvider"
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"

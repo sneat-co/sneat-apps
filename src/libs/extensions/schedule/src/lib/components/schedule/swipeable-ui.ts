@@ -67,14 +67,26 @@ export class SwipeableWeek implements Swipeable, Week {
 	public endDate: Date;
 	public animationState: VirtualSlideAnimationsStates;
 
+	public _activeDate: Date;
+
+	public get activeDate() {
+		return this._activeDate;
+	}
+
+	public set activeDate(v: Date) {
+		this._activeDate = v;
+		this.startDate = getWeekdayDate(v, 0);
+		this.endDate = getWeekdayDate(v, 6);
+	}
+
 	constructor(
 		public readonly parity: Parity,
 		private readonly teamDaysProvider: TeamDaysProvider,
 		private readonly destroyed: Observable<void>,
 	) {
 		this.animationState = parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
-		const today = new Date();
-		this.startDate = getWeekdayDate(today, 0);
-		this.endDate = getWeekdayDate(today, 0);
+		this._activeDate = new Date();
+		this.startDate = getWeekdayDate(this._activeDate, 0);
+		this.endDate = getWeekdayDate(this._activeDate, 6);
 	}
 }

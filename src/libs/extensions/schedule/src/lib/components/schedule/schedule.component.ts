@@ -23,16 +23,9 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
-import { ISlotItem, jsDayToWeekday, NewHappeningParams, wdNumber } from '../../view-models';
+import { ISlotItem, NewHappeningParams } from '../../view-models';
 import { Weekday } from '../schedule-week/schedule-week.component';
-import {
-	animationState,
-	ScheduleTab,
-	setWeekStartAndEndDates,
-	SHIFT_1_DAY,
-	SHIFT_1_WEEK,
-
-} from './schedule-core';
+import { animationState, ScheduleTab, SHIFT_1_DAY, SHIFT_1_WEEK } from './schedule-core';
 import { Parity, SwipeableDay, SwipeableWeek } from './swipeable-ui';
 
 @Component({
@@ -45,7 +38,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 	// prevWeekdays: SlotsGroup[];
-	private readonly teamDaysProvider: TeamDaysProvider;
+	public readonly teamDaysProvider: TeamDaysProvider;
 	@Input() team?: ITeamContext;
 	@Input() public tab: ScheduleTab = 'day';
 	@Input() public date = '';
@@ -424,8 +417,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 		this.activeDay.changeDate(d);
 
-		const activeWeek = this.activeWeek;
-		setWeekStartAndEndDates(activeWeek, d);
+		this.activeWeek.activeDate = d;
 		// const { tab } = this;
 		// const activeWd = jsDayToWeekday(d.getDay() as wdNumber);
 		// const datesToPreload: Date[] = [];
