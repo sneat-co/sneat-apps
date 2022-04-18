@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
         </ion-buttons>
-        <ion-title *ngIf="regular else titleNoActivity">{{regular.title}}</ion-title>
+        <ion-title *ngIf="recurring else titleNoActivity">{{recurring.title}}</ion-title>
         <ng-template #titleNoActivity>
             <ion-title>Regular</ion-title>
         </ng-template>
@@ -19,6 +19,6 @@
         <ion-item-divider>
             <ion-label>Timetable</ion-label>
         </ion-item-divider>
-        <sneat-recurring-slots [slots]="regular.slots"></sneat-recurring-slots>
+        <sneat-recurring-slots [slots]="recurring.slots"></sneat-recurring-slots>
     </ion-item-group>
 </ion-content>

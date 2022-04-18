@@ -1,10 +1,11 @@
 <ion-item-group *ngFor="let weekday of weekdays; trackBy: id" style="margin-top: -1px">
-    <sneat-schedule-weekday [day]="weekday.day"
-                          [filter]="filter"
-                          [showRegulars]="showRecurring"
-                          [showEvents]="showEvents"
-                          (goNew)="goNew.emit($event)"
-                          (slotClicked)="slotClicked.emit($event)"
-                          (dateSelected)="onDateSelected($event)"
-    ></sneat-schedule-weekday>
+	<sneat-schedule-weekday
+		[weekday]="weekday"
+		[filter]="filter"
+		[showRegulars]="showRecurring"
+		[showEvents]="showEvents"
+		(goNew)="goNew.emit($event)"
+		(slotClicked)="slotClicked.emit($event)"
+		(dateSelected)="onDateSelected($event)"
+	></sneat-schedule-weekday>
 </ion-item-group>

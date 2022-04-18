@@ -11,7 +11,7 @@ import { HappeningBasePage } from '../happening-base-page';
 })
 export class RegularHappeningPageComponent extends HappeningBasePage implements OnInit {
 
-	public regular: DtoRegularActivity;
+	public recurring: DtoRegularActivity;
 
 	constructor(
 		params: CommuneBasePageParams,
@@ -26,6 +26,6 @@ export class RegularHappeningPageComponent extends HappeningBasePage implements 
 
 	protected setHappeningDto(dto: IHappening): void {
 		super.setHappeningDto(dto);
-		this.regular = dto as DtoRegularActivity;
+		this.recurring = dto as DtoRegularActivity;
 	}
 }

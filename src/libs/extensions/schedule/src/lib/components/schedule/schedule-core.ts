@@ -25,7 +25,7 @@ export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: 
 	);
 }
 
-export function setWeekStartAndEndDates(week: Week, activeDate: Date): void {
+export function setWeekStartAndEndDates(week: SwipeableWeek, activeDate: Date): void {
 	console.log('setWeekRange', activeDate, week);
 	week.startDate = getWeekdayDate(activeDate, 0);
 	// tslint:disable-next-line:no-magic-numbers
@@ -36,14 +36,13 @@ export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 
 export const SHIFT_1_DAY = 1, SHIFT_1_WEEK = 7;
 
-export interface Week extends Swipeable {
-	days: Weekday[];
+export interface SwipeableWeek extends Swipeable {
 	startDate?: Date; // e.g. Monday
 	endDate?: Date; // e.g. Sunday
 }
 
 export const createWeekdays = (): Weekday[] => wd2.map(
-	id => ({ id, longTitle: wdCodeToWeekdayLongName(id), slots: [] }));
+	id => ({ id, longTitle: wdCodeToWeekdayLongName(id) }));
 
 export function animationState(activeParity: Parity, diff: number): VirtualSliderAnimationStates {
 	let result: VirtualSliderAnimationStates;

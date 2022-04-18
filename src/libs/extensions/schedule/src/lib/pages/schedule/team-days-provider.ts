@@ -57,10 +57,10 @@ export function eventToSlot(singleHappening: ISingleHappeningDto): ISlotItem {
 // }
 
 
-// The idea fo this class is to cache loaded happenings per team
-// and provide slots to UI
 // @Injectable()
 export class TeamDaysProvider /*extends ISlotsProvider*/ {
+	// At the moment tracks schedule of a single team
+	// but probably will track multiple teams at once.
 
 	private readonly sfsRecurrings: SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>;
 	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};

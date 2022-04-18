@@ -5,7 +5,7 @@ import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { getWd2 } from '../../view-models';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
-export type Parity = 'odd' | 'even';
+export type Parity = 'odd' | 'even'; // TODO: change to 'current' | 'next' | 'prev';
 
 export interface Swipeable {
 	animationState: VirtualSlideAnimationsStates;

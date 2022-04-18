@@ -17,11 +17,13 @@ import { tap } from 'rxjs/operators';
 
 
 export interface NewHappeningParams {
-	type: 'regular' | 'single';
-	day?: TeamDay;
+	type: HappeningType;
+	wd?: WeekdayCode2;
+	date?: Date;
 }
 
 export interface ISlotItem {
+	// id: string; Not sure how to make an ID yet
 	error?: any;
 	type: HappeningType;
 	kind: HappeningKind;

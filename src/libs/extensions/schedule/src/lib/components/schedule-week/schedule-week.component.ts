@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { WeekdayCode2 } from '@sneat/dto';
-import { TeamDay, ISlotItem, NewHappeningParams } from '../../view-models';
+import { ISlotItem, NewHappeningParams, TeamDay } from '../../view-models';
+import { createWeekdays } from '../schedule/schedule-core';
 
 export interface Weekday { // This is used to
 	readonly id: WeekdayCode2;
@@ -12,18 +13,25 @@ export interface Weekday { // This is used to
 	selector: 'sneat-schedule-week',
 	templateUrl: './schedule-week.component.html',
 })
-export class ScheduleWeekComponent {
+export class ScheduleWeekComponent implements OnChanges {
 
 	@Input() filter = '';
 	@Input() showRecurring = true;
 	@Input() showEvents = true;
-	@Input() weekdays?: Weekday[];
 
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
 	@Output() slotClicked = new EventEmitter<ISlotItem>();
 
+	weekdays: Weekday[] = createWeekdays();
+
 	readonly id = (i: number, item: Weekday): WeekdayCode2 => item.id;
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['day']) {
+			//
+		}
+	}
 
 	onDateSelected(date: Date): void {
 		this.dateSelected.next(date);

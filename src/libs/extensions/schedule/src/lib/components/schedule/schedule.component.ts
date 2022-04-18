@@ -16,22 +16,22 @@ import {
 	virtualSliderAnimations,
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
-import { getWeekdayDate, localDateToIso } from '@sneat/core';
-import { IHappeningDto, IRecurringWithUiState, WeekdayCode2 } from '@sneat/dto';
+import { dateToIso, getWeekdayDate, localDateToIso } from '@sneat/core';
+import { HappeningType, IHappeningDto, IRecurringWithUiState, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, jsDayToWeekday, NewHappeningParams, TeamDay, wdNumber } from '../../view-models';
+import { Weekday } from '../schedule-week/schedule-week.component';
 import {
 	animationState,
-	createWeekdays,
 	ScheduleTab,
 	setWeekStartAndEndDates,
 	SHIFT_1_DAY,
 	SHIFT_1_WEEK,
-	Week,
+	SwipeableWeek,
 } from './schedule-core';
 import { Parity, SwipeableDay } from './swipeable-ui';
 
@@ -53,7 +53,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	@Output() readonly dateChanged = new EventEmitter<string>();
 	public showRecurrings = true;
 	public showEvents = true;
-	todayAndFutureDays?: TeamDay[];
+	todayAndFutureDays?: Weekday[];
 	public member?: IMemberContext;
 	filterFocused = false;
 	allRecurrings?: IRecurringWithUiState[];
@@ -62,15 +62,13 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	activeWeekParity: Parity = 'odd';
 	oddDay: SwipeableDay;
 	evenDay: SwipeableDay;
-	readonly oddWeek: Week = {
+	readonly oddWeek: SwipeableWeek = {
 		parity: 'odd',
 		animationState: showVirtualSlide,
-		days: createWeekdays(),
 	};
-	readonly evenWeek: Week = {
+	readonly evenWeek: SwipeableWeek = {
 		parity: 'even',
 		animationState: hideVirtualSlide,
-		days: createWeekdays(),
 	};
 	weekAnimationState?: VirtualSliderAnimationStates = undefined;
 	dayAnimationState?: VirtualSliderAnimationStates = undefined;
@@ -82,7 +80,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		return this.activeDayParity === 'odd' ? this.oddDay : this.evenDay;
 	}
 
-	get activeWeek(): Week {
+	get activeWeek(): SwipeableWeek {
 		return this.activeWeekParity === 'odd' ? this.oddWeek : this.evenWeek;
 	}
 
@@ -205,21 +203,18 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	}
 
 	goNew(params: NewHappeningParams): void {
-		const { type, day } = params;
-		const dateToParameter = (d: Date): string => d.toISOString()
-			.split('T')[0];
+		const { type, wd, date } = params;
 
-		const state: { type: 'regular' | 'single'; date?: string; wd?: WeekdayCode2 } = { type };
+		const state: { type: HappeningType; date?: string; wd?: WeekdayCode2 } = { type };
 
-		if (day) {
-			state.wd = day.wd;
+		if (date) {
 			// tslint:disable-next-line:no-non-null-assertion
-			if (day.date) {
-				state.date = dateToParameter(day.date);
-			}
+			state.date = dateToIso(date);
+		} else if (wd) {
+			state.wd = wd;
 		} else if (this.tab === 'day') {
 			if (this.activeDay.date) {
-				state.date = dateToParameter(this.activeDay.date);
+				state.date = dateToIso(this.activeDay.date);
 			}
 		}
 		if (!this.team) {
@@ -359,8 +354,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// }
 
 	// tslint:disable-next-line:prefer-function-over-method
-	trackByDate(i: number, item: TeamDay): number | undefined {
-		return item.date && item.date.getTime();
+	trackByDate(i: number, item: Weekday): number | undefined {
+		return item.day?.date.getTime();
 	}
 
 	// noinspection JSMethodCanBeStatic

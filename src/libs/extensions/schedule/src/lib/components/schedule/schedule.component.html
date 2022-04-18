@@ -145,7 +145,6 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"
-						[weekdays]="oddWeek.days"
 						(goNew)="goNew($event)"
 						(dateSelected)="onDateSelected($event)"
 						(slotClicked)="goActivity($event)"></sneat-schedule-week>
@@ -156,7 +155,6 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"
-						[weekdays]="evenWeek.days"
 						(goNew)="goNew($event)"
 						(dateSelected)="onDateSelected($event)"
 						(slotClicked)="goActivity($event)"></sneat-schedule-week>
@@ -211,7 +209,7 @@
 		<p padding *ngIf="todayAndFutureDays && todayAndFutureDays.length === 0">No upcoming events.</p>
 		<ng-container *ngIf="todayAndFutureDays && todayAndFutureDays.length">
 			<ng-container *ngFor="let weekday of todayAndFutureDays; trackBy: trackByDate">
-				<sneat-schedule-weekday [day]="weekday"
+				<sneat-schedule-weekday [weekday]="weekday"
 																[filter]="filter"
 																[showEvents]="true"
 																(slotClicked)="goActivity($event)"
