@@ -7,11 +7,12 @@ import {
 	wdCodeToWeekdayLongName,
 } from '@sneat/components';
 import { getWeekdayDate } from '@sneat/core';
-import { Weekday } from '@sneat/dto';
-import { Day, wd2 } from '../../view-models';
+import { WeekdayCode2 } from '@sneat/dto';
+import { wd2 } from '../../view-models';
+import { Weekday } from '../schedule-week/schedule-week.component';
 import { Parity, Swipeable } from './swipeable-ui';
 
-export function getWdDate(wd: Weekday, activeWd: Weekday, activeDate: Date): Date {
+export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: Date): Date {
 	if (wd === activeWd) {
 		return activeDate;
 	}
@@ -36,13 +37,13 @@ export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 export const SHIFT_1_DAY = 1, SHIFT_1_WEEK = 7;
 
 export interface Week extends Swipeable {
-	weekdays: Day[];
+	days: Weekday[];
 	startDate?: Date; // e.g. Monday
 	endDate?: Date; // e.g. Sunday
 }
 
-export const createWeekdays = (): Day[] => wd2.map(
-	wd => ({ wd, longTitle: wdCodeToWeekdayLongName(wd), slots: [] }));
+export const createWeekdays = (): Weekday[] => wd2.map(
+	id => ({ id, longTitle: wdCodeToWeekdayLongName(id), slots: [] }));
 
 export function animationState(activeParity: Parity, diff: number): VirtualSliderAnimationStates {
 	let result: VirtualSliderAnimationStates;

@@ -2,10 +2,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ISlotItem} from '../../view-models';
 
 @Component({
-	selector: 'sneat-activity-item',
-	templateUrl: './activity-item.component.html',
+	selector: 'sneat-recurring-item',
+	templateUrl: './recurring-item.component.html',
 })
-export class ActivityItemComponent {
+export class RecurringItemComponent {
 
 	@Input()
 	public slot?: ISlotItem;

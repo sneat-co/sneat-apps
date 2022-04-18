@@ -1,6 +1,6 @@
 import { ITeamsRecord } from './dto-models';
 import { IPrice } from './dto-pricing';
-import { ActivityType, Repeats, Weekday } from './types';
+import { ActivityType, Repeats, WeekdayCode2 } from './types';
 import { UiState } from './ui-state';
 
 export interface SlotParticipant {
@@ -59,7 +59,7 @@ export interface ITiming {
 
 export interface IRecurringSlotTiming extends ITiming {
 	repeats: Repeats;
-	weekdays?: Weekday[];
+	weekdays?: WeekdayCode2[];
 	weeks?: number[];
 	fortnightly?: {
 		odd: IFortnightly;
@@ -95,7 +95,7 @@ export interface IRecurringWithUiState {
 export interface ISingleHappeningDto extends IHappeningDto {
 	dtStarts?: number; // UTC
 	dtEnds?: number;   // UTC
-	weekdays?: Weekday[];
+	weekdays?: WeekdayCode2[];
 	communeIdDates?: string[]; // ISO date strings prefixed with communeId e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	prices?: IPrice[];
 }

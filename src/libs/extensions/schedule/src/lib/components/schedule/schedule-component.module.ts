@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, SneatPipesModule } from '@sneat/components';
 import { ScheduleComponent } from '@sneat/extensions/schedule';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
-import { ActivityItemComponent } from '../recurring-item/activity-item.component';
+import { RecurringItemComponent } from '../recurring-item/recurring-item.component';
 import { ScheduleDayComponent } from '../schedule-day/schedule-day.component';
 import { ScheduleWeekComponent } from '../schedule-week/schedule-week.component';
 import { ScheduleWeekdayComponent } from '../schedule-weekday/schedule-weekday.component';
@@ -17,7 +17,7 @@ import { ScheduleWeekdayComponent } from '../schedule-weekday/schedule-weekday.c
 	],
 	declarations: [
 		ScheduleComponent,
-		ActivityItemComponent,
+		RecurringItemComponent,
 		ScheduleDayComponent,
 		ScheduleWeekComponent,
 		ScheduleWeekdayComponent,

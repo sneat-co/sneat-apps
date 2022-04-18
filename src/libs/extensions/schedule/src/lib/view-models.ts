@@ -10,7 +10,7 @@ import {
 	Repeats,
 	SlotLocation,
 	SlotParticipant,
-	Weekday,
+	WeekdayCode2,
 } from '@sneat/dto';
 import { BehaviorSubject, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -18,7 +18,7 @@ import { tap } from 'rxjs/operators';
 
 export interface NewHappeningParams {
 	type: 'regular' | 'single';
-	weekday?: Day;
+	day?: TeamDay;
 }
 
 export interface ISlotItem {
@@ -41,44 +41,41 @@ export interface RecurringSlots {
 	byWeekday: SlotsByWeekday;
 }
 
-export interface Day {
-	readonly date?: Date;
-	readonly wd: Weekday;
-	readonly longTitle: string;
-	slots?: ISlotItem[];
-	readonly loadingEvents?: boolean;
-	readonly eventsLoaded?: boolean;
-}
-
-export class DaySlotsProvider {
+export class TeamDay {
 
 	private readonly destroyed = new Subject<void>();
 	private readonly _slots = new BehaviorSubject<ISlotItem[] | undefined>(undefined);
-	public readonly wd: Weekday;
+	private recurringSlots?: RecurringSlots;
+	// private singles?: ISlotItem[];
+
+	public readonly date: Date;
+	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
-	public isoTitle: string;
+	public isoID: string;
+	readonly loadingEvents?: boolean;
+	readonly eventsLoaded?: boolean;
 	public readonly slots$ = this._slots.asObservable().pipe(
 		shareReplay(1),
-		tap(slots => console.log(`DaySlotsProvider[${this.isoTitle}].slots$ =>`, slots)),
+		takeUntil(this.destroyed),
+		tap(slots => console.log(`DaySlotsProvider[${this.isoID}].slots$ =>`, slots)),
 	);
-	private recurringSlots?: RecurringSlots;
-	private singles?: ISlotItem[];
+
+	public get slots(): ISlotItem[] | undefined {
+		return this._slots.value;
+	}
 
 	constructor(
-		public readonly date: Date,
+		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
 	) {
+		this.date = date;
 		this.wd = getWd2(date);
-		this.isoTitle = dateToIso(date);
-		if (this.isoTitle === '1970-01-01') {
+		this.isoID = dateToIso(date);
+		if (this.isoID === '1970-01-01') {
 			throw new Error('an attempt to set an empty date 1970-01-01');
 		}
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
 		this.subscribeForRecurrings(recurrings$);
-	}
-
-	public get slots(): ISlotItem[] | undefined {
-		return this._slots.value;
 	}
 
 	public destroy(): void {
@@ -97,36 +94,36 @@ export class DaySlotsProvider {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-		console.log(`DaySlotsProvider[${this.isoTitle}].processRecurrings(), slots:`, slots);
+		console.log(`DaySlotsProvider[${this.isoID}].processRecurrings(), slots:`, slots);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
 
 	private joinRecurringsWithSinglesAndEmit(): void {
-		console.log(`DaySlotsProvider[${this.isoTitle}].joinRecurringsWithSinglesAndEmit(), wd=${this.wd}, recurringSlots:`, this.recurringSlots);
+		console.log(`DaySlotsProvider[${this.isoID}].joinRecurringsWithSinglesAndEmit(), wd=${this.wd}, recurringSlots:`, this.recurringSlots);
 		const slots = [];
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd];
 		if (weekdaySlots?.length) {
 			slots.push(...weekdaySlots);
 		}
-		console.log(`DaySlotsProvider[${this.isoTitle}].joinRecurringsWithSinglesAndEmit() => slots:`, slots);
+		console.log(`DaySlotsProvider[${this.isoID}].joinRecurringsWithSinglesAndEmit() => slots:`, slots);
 		this._slots.next(slots);
 	}
 }
 
-export const wd2: Weekday[] = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
-const wd2js: Weekday[] = ['su', 'mo', 'tu', 'we', 'th', 'fr', 'sa'];
+export const wd2: WeekdayCode2[] = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
+const wd2js: WeekdayCode2[] = ['su', 'mo', 'tu', 'we', 'th', 'fr', 'sa'];
 
 export type wdNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export function jsDayToWeekday(day: wdNumber): Weekday {
+export function jsDayToWeekday(day: wdNumber): WeekdayCode2 {
 	if (day < 0 || day > 6) {
 		throw new Error(`Unknown day number: ${day}`);
 	}
 	return wd2js[day];
 }
 
-export function getWd2(d: Date): Weekday {
+export function getWd2(d: Date): WeekdayCode2 {
 	return jsDayToWeekday(d.getDay() as wdNumber);
 }
 

@@ -1,27 +1,27 @@
 <ion-item-divider color="light">
 	<ion-label slot="start" (click)="onDateSelected()" tappable>
-		<ng-container *ngIf="weekday?.slots && weekday?.slots?.length"><b>{{weekday?.longTitle}}</b></ng-container>
-		<ng-container *ngIf="!weekday?.slots || !weekday?.slots?.length">{{weekday?.longTitle}}</ng-container>
-		<ng-container *ngIf="weekday?.date"
-		>, {{weekday?.date?.getDate()}} {{weekday?.date?.getMonth()|shortMonthName}}</ng-container>
+		<ng-container *ngIf="day?.slots && day?.slots?.length"><b>{{day?.wdLongTitle}}</b></ng-container>
+		<ng-container *ngIf="!day?.slots || !day?.slots?.length">{{day?.wdLongTitle}}</ng-container>
+		<ng-container *ngIf="day?.date"
+		>, {{day?.date?.getDate()}} {{day?.date?.getMonth()|shortMonthName}}</ng-container>
 	</ion-label>
-	<ion-spinner style="opacity: 0.2" name="lines-small" *ngIf="weekday?.loadingEvents"
+	<ion-spinner style="opacity: 0.2" name="lines-small" *ngIf="day?.loadingEvents"
 							 slot="end"></ion-spinner>
 	<ion-buttons slot="end">
-		<ion-button color="medium" title="Add activity" (click)="goNew.emit({type: 'regular', weekday: weekday})">
+		<ion-button color="medium" title="Add activity" (click)="goNew.emit({type: 'regular', day})">
 			<ion-icon name="add" slot="start"></ion-icon>
 			<ion-label>Add</ion-label>
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-<ng-container *ngIf="weekday?.slots && weekday?.slots?.length; else noSlots">
-	<ng-container *ngFor="let slot of weekday?.slots">
-		<sneat-activity-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
-		</sneat-activity-item>
+<ng-container *ngIf="day?.slots && day?.slots?.length; else noSlots">
+	<ng-container *ngFor="let slot of day?.slots">
+		<sneat-recurring-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
+		</sneat-recurring-item>
 	</ng-container>
 </ng-container>
 <ng-template #noSlots>
 	<ion-item>
-		<ion-label color="medium" style="font-style: italic">Nothing scheduled yet for {{weekday?.wd|wdToWeekday}}.</ion-label>
+		<ion-label color="medium" style="font-style: italic">Nothing scheduled yet for {{day?.wd|wdToWeekday}}.</ion-label>
 	</ion-item>
 </ng-template>

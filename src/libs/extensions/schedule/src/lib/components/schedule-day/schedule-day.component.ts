@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ISlotItem, Day } from '../../view-models';
+import { ISlotItem } from '../../view-models';
 import { isSlotVisible } from '../schedile-slots';
+import { Weekday } from '../schedule-week/schedule-week.component';
 
 @Component({
 	selector: 'sneat-schedule-day',
@@ -11,7 +12,7 @@ export class ScheduleDayComponent {
 	@Input() filter = '';
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
-	@Input() day?: Day;
+	@Input() weekday?: Weekday;
 
 	@Output() readonly slotClicked = new EventEmitter<ISlotItem>();
 

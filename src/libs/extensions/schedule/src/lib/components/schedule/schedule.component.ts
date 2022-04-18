@@ -17,13 +17,13 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { getWeekdayDate, localDateToIso } from '@sneat/core';
-import { IHappeningDto, IRecurringWithUiState, Weekday } from '@sneat/dto';
+import { IHappeningDto, IRecurringWithUiState, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject } from 'rxjs';
-import { SlotsProvider } from '../../pages/schedule/slots-provider';
-import { Day, ISlotItem, jsDayToWeekday, NewHappeningParams, wdNumber } from '../../view-models';
+import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { ISlotItem, jsDayToWeekday, NewHappeningParams, TeamDay, wdNumber } from '../../view-models';
 import {
 	animationState,
 	createWeekdays,
@@ -45,7 +45,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 	// prevWeekdays: SlotsGroup[];
-	private readonly slotsProvider: SlotsProvider;
+	private readonly slotsProvider: TeamDaysProvider;
 	@Input() team?: ITeamContext;
 	@Input() public tab: ScheduleTab = 'day';
 	@Input() public date = '';
@@ -53,7 +53,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	@Output() readonly dateChanged = new EventEmitter<string>();
 	public showRecurrings = true;
 	public showEvents = true;
-	todayAndFutureEvents?: Day[];
+	todayAndFutureDays?: TeamDay[];
 	public member?: IMemberContext;
 	filterFocused = false;
 	allRecurrings?: IRecurringWithUiState[];
@@ -65,12 +65,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	readonly oddWeek: Week = {
 		parity: 'odd',
 		animationState: showVirtualSlide,
-		weekdays: createWeekdays(),
+		days: createWeekdays(),
 	};
 	readonly evenWeek: Week = {
 		parity: 'even',
 		animationState: hideVirtualSlide,
-		weekdays: createWeekdays(),
+		days: createWeekdays(),
 	};
 	weekAnimationState?: VirtualSliderAnimationStates = undefined;
 	dayAnimationState?: VirtualSliderAnimationStates = undefined;
@@ -78,12 +78,20 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// nextWeekdays: SlotsGroup[];
 	public filter = '';
 
+	get activeDay(): SwipeableDay {
+		return this.activeDayParity === 'odd' ? this.oddDay : this.evenDay;
+	}
+
+	get activeWeek(): Week {
+		return this.activeWeekParity === 'odd' ? this.oddWeek : this.evenWeek;
+	}
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly params: TeamComponentBaseParams,
 		afs: AngularFirestore,
 	) {
-		this.slotsProvider = new SlotsProvider(afs);
+		this.slotsProvider = new TeamDaysProvider(afs);
 		const today = new Date();
 		const tomorrow = new Date();
 		tomorrow.setDate(today.getDate() + 1);
@@ -95,14 +103,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		// 	// TODO: Fix this dirty workaround for initial animations
 		// 	this.setToday();
 		// }, 10);
-	}
-
-	get activeDay(): SwipeableDay {
-		return this.activeDayParity === 'odd' ? this.oddDay : this.evenDay;
-	}
-
-	get activeWeek(): Week {
-		return this.activeWeekParity === 'odd' ? this.oddWeek : this.evenWeek;
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -205,17 +205,17 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	}
 
 	goNew(params: NewHappeningParams): void {
-		const { type, weekday } = params;
+		const { type, day } = params;
 		const dateToParameter = (d: Date): string => d.toISOString()
 			.split('T')[0];
 
-		const state: { type: 'regular' | 'single'; date?: string; wd?: Weekday } = { type };
+		const state: { type: 'regular' | 'single'; date?: string; wd?: WeekdayCode2 } = { type };
 
-		if (weekday) {
-			state.wd = weekday.wd;
+		if (day) {
+			state.wd = day.wd;
 			// tslint:disable-next-line:no-non-null-assertion
-			if (weekday.date) {
-				state.date = dateToParameter(weekday.date);
+			if (day.date) {
+				state.date = dateToParameter(day.date);
 			}
 		} else if (this.tab === 'day') {
 			if (this.activeDay.date) {
@@ -359,7 +359,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// }
 
 	// tslint:disable-next-line:prefer-function-over-method
-	trackByDate(i: number, item: Day): number | undefined {
+	trackByDate(i: number, item: TeamDay): number | undefined {
 		return item.date && item.date.getTime();
 	}
 

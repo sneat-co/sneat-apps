@@ -5,7 +5,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 import { AlertController } from '@ionic/angular';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { isoStringsToDate } from '@sneat/core';
-import { HappeningType, IRecurringSlot, SlotLocation, Weekday } from '@sneat/dto';
+import { HappeningType, IRecurringSlot, SlotLocation, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { wd2 } from '../../view-models';
@@ -117,7 +117,7 @@ export class RecurringSlotFormComponent implements OnInit {
 				header: 'Please select day(s)',
 				inputs: wd2.map(wd => {
 					// tslint:disable-next-line:no-any
-					const result: { type: 'checkbox'; name: Weekday; value: Weekday; label: string; handler: (input: any) => void } = {
+					const result: { type: 'checkbox'; name: WeekdayCode2; value: WeekdayCode2; label: string; handler: (input: any) => void } = {
 						type: 'checkbox',
 						name: wd,
 						value: wd,
@@ -172,7 +172,7 @@ export class RecurringSlotFormComponent implements OnInit {
 			ends: this.timeEnds.value as string,
 			weekdays: Object.entries(this.weekdaysForm.value)
 				.filter(entry => entry[1])
-				.map(entry => entry[0]) as Weekday[],
+				.map(entry => entry[0]) as WeekdayCode2[],
 		};
 		if (formValue.locationTitle || formValue.locationAddress) {
 			const l: SlotLocation = slot.location = {};

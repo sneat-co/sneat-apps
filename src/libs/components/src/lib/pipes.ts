@@ -1,6 +1,6 @@
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { TeamType } from '@sneat/auth-models';
-import { Weekday } from '@sneat/dto';
+import { WeekdayCode2 } from '@sneat/dto';
 
 @Pipe({name: 'teamEmoji'})
 export class TeamEmojiPipe implements PipeTransform {
@@ -27,7 +27,7 @@ export class TeamEmojiPipe implements PipeTransform {
 	}
 }
 
-export function wdCodeToWeekdayLongName(wd?: Weekday): string {
+export function wdCodeToWeekdayLongName(wd?: WeekdayCode2): string {
 	switch (wd) {
 		case 'mo':
 			return 'Monday';
@@ -51,7 +51,7 @@ export function wdCodeToWeekdayLongName(wd?: Weekday): string {
 @Pipe({name: 'wdToWeekday'})
 export class WdToWeekdayPipe implements PipeTransform {
 	// tslint:disable-next-line:prefer-function-over-method
-	transform(wd?: Weekday): string {
+	transform(wd?: WeekdayCode2): string {
 		return wdCodeToWeekdayLongName(wd);
 	}
 }

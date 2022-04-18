@@ -14,7 +14,7 @@
 						<span *ngIf="isToday()" class="ion-margin-end">Today:</span>
 						<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>
 						<ng-container *ngIf="oddDay.weekday">
-							<b>{{oddDay.weekday?.wd|wdToWeekday}}</b><span
+							<b>{{oddDay.weekday.id|wdToWeekday}}</b><span
 							style="font-weight: normal">, {{oddDay.date?.getDate()}} {{oddDay.date?.getMonth()|longMonthName}}</span>
 						</ng-container>
 					</h1>
@@ -23,7 +23,7 @@
 						<span *ngIf="isToday()" class="ion-margin-end">Today:</span>
 						<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>
 						<ng-container *ngIf="evenDay.weekday">
-							<b>{{evenDay.weekday.wd|wdToWeekday}}</b><span
+							<b>{{evenDay.weekday.id|wdToWeekday}}</b><span
 							style="font-weight: normal">, {{evenDay.date?.getDate()}} {{evenDay.date?.getMonth()|longMonthName}}</span>
 						</ng-container>
 					</h1>
@@ -122,14 +122,14 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRegulars]="showRecurrings"
-						[day]="oddDay.weekday"
+						[weekday]="oddDay.weekday"
 						(slotClicked)="goActivity($event)"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
 				<div class="virtual-slide" [@virtualSlide]="evenDay.animationState">
 					<sneat-schedule-day
-						[day]="evenDay.weekday"
+						[weekday]="evenDay.weekday"
 						(slotClicked)="goActivity($event)"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
@@ -145,7 +145,7 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"
-						[weekdays]="oddWeek.weekdays"
+						[weekdays]="oddWeek.days"
 						(goNew)="goNew($event)"
 						(dateSelected)="onDateSelected($event)"
 						(slotClicked)="goActivity($event)"></sneat-schedule-week>
@@ -156,7 +156,7 @@
 						[filter]="filter"
 						[showEvents]="showEvents"
 						[showRecurring]="showRecurrings"
-						[weekdays]="evenWeek.weekdays"
+						[weekdays]="evenWeek.days"
 						(goNew)="goNew($event)"
 						(dateSelected)="onDateSelected($event)"
 						(slotClicked)="goActivity($event)"></sneat-schedule-week>
@@ -207,11 +207,11 @@
 	</ng-container>
 
 	<ng-container *ngIf="tab === 'singles'">
-		<p padding *ngIf="!todayAndFutureEvents">Loading...</p>
-		<p padding *ngIf="todayAndFutureEvents && todayAndFutureEvents.length === 0">No upcoming events.</p>
-		<ng-container *ngIf="todayAndFutureEvents && todayAndFutureEvents.length">
-			<ng-container *ngFor="let weekday of todayAndFutureEvents; trackBy: trackByDate">
-				<sneat-schedule-weekday [weekday]="weekday"
+		<p padding *ngIf="!todayAndFutureDays">Loading...</p>
+		<p padding *ngIf="todayAndFutureDays && todayAndFutureDays.length === 0">No upcoming events.</p>
+		<ng-container *ngIf="todayAndFutureDays && todayAndFutureDays.length">
+			<ng-container *ngFor="let weekday of todayAndFutureDays; trackBy: trackByDate">
+				<sneat-schedule-weekday [day]="weekday"
 																[filter]="filter"
 																[showEvents]="true"
 																(slotClicked)="goActivity($event)"

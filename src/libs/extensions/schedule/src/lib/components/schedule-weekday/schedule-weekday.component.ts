@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NewHappeningParams, ISlotItem, Day } from '../../view-models';
+import { ISlotItem, NewHappeningParams, TeamDay } from '../../view-models';
 import { isSlotVisible } from '../schedile-slots';
 
 @Component({
@@ -8,7 +8,7 @@ import { isSlotVisible } from '../schedile-slots';
 })
 export class ScheduleWeekdayComponent {
 
-	@Input() weekday?: Day;
+	@Input() day?: TeamDay;
 	@Input() filter = '';
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
@@ -22,8 +22,8 @@ export class ScheduleWeekdayComponent {
 
 	onDateSelected(): void {
 		// console.log('onDateSelected', event);
-		if (this.weekday?.date) {
-			this.dateSelected.next(this.weekday?.date);
+		if (this.day?.date) {
+			this.dateSelected.next(this.day?.date);
 		}
 	}
 }
