@@ -3,9 +3,9 @@ import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
-import { IUserTeamInfo } from '@sneat/auth-models';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
-import { IMemberBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
+import { IMemberBrief, ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreateTeamRequest,
@@ -18,11 +18,13 @@ import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { BehaviorSubject, Observable, Subscription, switchMap, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
+const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({...v, type: v.teamType});
+
 @Injectable({ providedIn: 'root' })
 export class TeamService {
 	private userID?: string;
 
-	private currentUserTeams?: IUserTeamInfo[];
+	private currentUserTeams?: IUserTeamBrief[];
 
 	private teams$: { [id: string]: BehaviorSubject<ITeamContext> } = {};
 	private subscriptions: Subscription[] = [];
@@ -98,7 +100,7 @@ export class TeamService {
 			if (this.currentUserTeams) {
 				const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
 				if (userTeamInfo) {
-					teamContext = { id, type: userTeamInfo.type, brief: userTeamInfo };
+					teamContext = { id, type: userTeamInfo.teamType, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
 				}
 			}
 			subj = new BehaviorSubject<ITeamContext>(teamContext);
@@ -291,22 +293,23 @@ export class TeamService {
 		);
 	}
 
-	private readonly subscribeForUserTeamChanges = (userTeamInfo: IUserTeamInfo): void => {
+	private readonly subscribeForUserTeamChanges = (userTeamInfo: IUserTeamBrief): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
 		const { id } = userTeamInfo;
 		let subj = this.teams$[id];
 		if (subj) {
 			let team = subj.value;
 			if (!team.type) {
-				team = { ...team, type: userTeamInfo.type, brief: userTeamInfo };
+				team = { ...team, type: userTeamInfo.teamType, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
 				subj.next(team);
 			}
 			return;
 		}
+
 		const team: ITeamContext = {
 			id: userTeamInfo.id,
-			type: userTeamInfo.type,
-			brief: userTeamInfo,
+			type: userTeamInfo.teamType,
+			brief: teamBriefFromUserTeamInfo(userTeamInfo),
 		};
 		this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(team);
 
@@ -366,5 +369,5 @@ export class TeamService {
 
 export interface IJoinTeamInfoResponse {
 	team: ITeamDto;
-	invitedBy: IUserTeamInfo;
+	invitedBy: IUserTeamBrief;
 }

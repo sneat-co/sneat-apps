@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AgeGroup, IContact2Member, isTeamSupportsMemberGroups, MemberType } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, IMemberGroupContext } from '@sneat/team/models';
-import { MemberGroupService, MemberService } from '@sneat/team/services';
+import { memberContextFromBrief, MemberGroupService, MemberService } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../members-base-page';
 
@@ -30,11 +30,11 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 	public contactsByMember: { [id: string]: IContact2Member[] } = {};
 	public adults?: IMemberContext[];
 	public children?: IMemberContext[];
-	public other?: IMemberContext[];
+	public noAgeMembers?: IMemberContext[];
 	public memberGroups?: IMemberGroupContext[];
 	public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
-	public listMode: 'short' | 'long' = 'short';
+	public listMode: 'list' | 'cards' = 'list';
 	public membersByGroupId: { [id: string]: IMemberContext[] } = {};
 	public noGroupMembers?: IMemberContext[];
 
@@ -87,21 +87,20 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		if (!this.team) {
 			throw new Error('!this.commune');
 		}
-		console.log(`CommuneMembersPage.onCommuneChanged() => members: oldCount=${this.prevMembersCount}, newCount=${this.team.dto?.numberOf?.members}`);
+		console.log(`MembersPageComponent.onCommuneChanged() => members: oldCount=${this.prevMembersCount}, newCount=${this.team.dto?.numberOf?.members}`);
 		if (this.team?.dto?.numberOf?.members) {
 			this.loadingStubs = Array(this.team?.dto?.numberOf?.members)
-				.fill(1)
-				.map((v, i) => i + 1);
+				.fill(1);
 		}
 		// if (!isNaN(this.prevMembersCount) && this.prevMembersCount != this.commune.numberOf.members) {
 		//     this.loadData();
 		// }
-		this.loadData('onCommuneChanged');
+		this.loadData('onTeamDtoChanged');
 		this.prevMembersCount = this.team?.dto?.numberOf?.members || 0;
 	}
 
 	private loadData(source: string): void {
-		console.log(`CommuneMembersPage.loadData(source=${source})`);
+		console.log(`MembersPageComponent.loadData(source=${source})`, this.team?.dto?.members);
 		// this.unsubscribe();
 		if (!this.team) {
 			throw new Error('!this.team');
@@ -109,29 +108,31 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
 
 		if (this.team.dto?.members) {
-			this.members = this.team.dto.members;
+			this.members = this.team.dto.members.map(m => memberContextFromBrief(m));
 			this.processMembers();
 		} else {
 			this.membersService.watchMembersByTeamID(this.team.id)
 				.pipe(
 					takeUntil(this.teamIDChanged$),
 				)
-				.subscribe(members => {
-					console.log('members:', members);
-					if (members && members.length) { // TODO: deep equal
-						members.forEach(m => {
-							if (m.id) {
-								if (m.dto?.contacts?.length) {
-									this.contactsByMember[m.id] = m.dto.contacts;
-								} else if (this.contactsByMember[m.id]) {
-									// tslint:disable-next-line:no-dynamic-delete
-									delete this.contactsByMember[m.id];
+				.subscribe({
+					next: members => {
+						console.log(`MembersPageComponent.loadData(source=${source}), members =>`, members);
+						if (members?.length) { // TODO: deep equal
+							members.forEach(m => {
+								if (m.id) {
+									if (m.dto?.contacts?.length) {
+										this.contactsByMember[m.id] = m.dto.contacts;
+									} else if (this.contactsByMember[m.id]) {
+										// tslint:disable-next-line:no-dynamic-delete
+										delete this.contactsByMember[m.id];
+									}
 								}
-							}
-						});
-						this.members = members;
-						this.processMembers();
-					}
+							});
+							this.members = members;
+							this.processMembers();
+						}
+					},
 				});
 		}
 
@@ -146,9 +147,10 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 	}
 
 	private processMembers(): void {
+		console.log('MembersPageComponent.processMembers()', this.members);
 		this.adults = [];
 		this.children = [];
-		this.other = [];
+		this.noAgeMembers = [];
 		this.members?.forEach(m => {
 			switch (m.dto?.age) {
 				case 'adult':
@@ -158,7 +160,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 					this.children?.push(m);
 					break;
 				default:
-					this.other?.push(m);
+					this.noAgeMembers?.push(m);
 					break;
 			}
 			if (!this.team) {

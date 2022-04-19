@@ -2,7 +2,7 @@ import { Component, Inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput, NavController } from '@ionic/angular';
-import { IUserTeamInfo } from '@sneat/auth-models';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -18,7 +18,7 @@ export class MemberNewPageComponent {
 
 	public tab: 'personal' | 'mass' = 'mass';
 	public team?: ITeamContext;
-	public teamInfo?: IUserTeamInfo;
+	public teamInfo?: IUserTeamBrief;
 	public title = new FormControl('', [
 		Validators.required,
 		Validators.maxLength(50),

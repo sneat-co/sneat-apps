@@ -15,7 +15,8 @@ import { Observable } from 'rxjs';
 import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { TeamService } from './team.service';
 
-const dto2brief = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
+export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
+export const memberContextFromBrief = (brief: IMemberBrief): IMemberContext => ({ id: brief.id, brief });
 
 @Injectable({
 	providedIn: 'root',
@@ -28,7 +29,7 @@ export class MemberService {
 		private readonly teamService: TeamService,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.sfs = new SneatFirestoreService<IMemberBrief, IMemberDto>('team_members', afs, dto2brief);
+		this.sfs = new SneatFirestoreService<IMemberBrief, IMemberDto>('team_members', afs, memberBriefFromDto);
 	}
 
 	public acceptPersonalInvite(
@@ -101,7 +102,7 @@ export class MemberService {
 	}
 
 	watchMembersByTeamID<IMemberDto>(teamID: string): Observable<IMemberContext[]> {
-		console.log('watchMembersByTeamID()', teamID);
+		console.log('MemberService.watchMembersByTeamID()', teamID);
 		return this.sfs.watchByTeamID(teamID, 'teamID');
 	}
 }

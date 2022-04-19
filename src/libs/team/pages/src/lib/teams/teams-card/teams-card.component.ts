@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { IUserTeamInfo } from '@sneat/auth-models';
+import { IUserTeamBrief, TeamMemberType } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
@@ -16,7 +16,7 @@ import { mergeMap, takeUntil } from 'rxjs/operators';
 export class TeamsCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addTeamInput?: IonInput; // TODO: IonInput;
 
-	public teams?: IUserTeamInfo[];
+	public teams?: IUserTeamBrief[];
 	public loadingState: 'Authenticating' | 'Loading' = 'Authenticating';
 	public teamName = '';
 	public adding = false;
@@ -46,7 +46,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		this.watchUserRecord();
 	}
 
-	public goTeam(team: IUserTeamInfo) {
+	public goTeam(team: IUserTeamBrief) {
 		this.navService
 			.navigateToTeam(team, 'forward')
 			.catch(this.errorLogger.logError);
@@ -99,16 +99,21 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 				);
 			return;
 		}
-		const request: ICreateTeamRequest = { type: 'team', title };
+		const request: ICreateTeamRequest = {
+			type: 'team',
+			memberType: TeamMemberType.creator,
+			title,
+		};
 		this.adding = true;
 		this.teamService.createTeam(request).subscribe({
 			next: (team) => {
 				this.analyticsService.logEvent('teamCreated', { team: team.id });
 				console.log('teamId:', team.id);
-				const userTeam: IUserTeamInfo = {
+				const userTeam: IUserTeamBrief = {
 					id: team.id,
 					title: team?.dto?.title || team.id,
-					type: team?.dto?.type || 'unknown',
+					memberType: request.memberType,
+					teamType: team?.dto?.type || 'unknown',
 				};
 				if (userTeam && !this.teams?.find((t) => t.id === team.id)) {
 					this.teams?.push(userTeam);
@@ -142,7 +147,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		}, 100);
 	}
 
-	public leaveTeam(teamInfo: IUserTeamInfo, event?: Event): void {
+	public leaveTeam(teamInfo: IUserTeamBrief, event?: Event): void {
 		if (event) {
 			event.stopPropagation();
 			event.preventDefault();

@@ -1,3 +1,4 @@
+import { EnumAsUnionOfKeys } from '@sneat/core';
 import { IAvatar } from './avatar';
 
 // Does not contain an ID as it's a key.
@@ -7,15 +8,42 @@ export interface IUserRecord {
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly avatar?: IAvatar;
-	readonly teams?: IUserTeamInfo[];
+	readonly teams?: IUserTeamBrief[];
 }
 
-export type TeamType = 'family' | 'personal' | 'company' | 'team' | 'parish' | 'educator' | 'realtor' | 'sport_club' | 'cohabit' | 'unknown';
-export type MemberType = 'member' | 'pupil' | 'staff';
+export type TeamType =
+	'family'
+	| 'personal'
+	| 'company'
+	| 'team'
+	| 'parish'
+	| 'educator'
+	| 'realtor'
+	| 'sport_club'
+	| 'cohabit'
+	| 'unknown';
 
-export interface IUserTeamInfo {
+export enum TeamMemberType {
+	creator = 'creator',
+	member = 'member',
+	child = 'child',
+	pet = 'pet',
+	pupil = 'pupil',
+	staff = 'staff',
+}
+
+export type MemberType = EnumAsUnionOfKeys<typeof TeamMemberType>;
+
+export const memberTypePlurals: { [id: string]: string } = {
+	'member': 'members',
+	'child': 'children',
+	'pet': 'pets',
+};
+
+export interface IUserTeamBrief {
 	readonly id: string;
-	readonly type: TeamType;
+	readonly teamType: TeamType;
+	readonly memberType: MemberType;
 	readonly title: string;
 	// retroItems?: { [type: string]: IRetroItem[] };
 }

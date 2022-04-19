@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute } from '@angular/router';
-import { IUserTeamInfo } from '@sneat/auth-models';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
@@ -23,7 +23,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 	public teamId?: string;
 	public pin?: number;
 	public team?: ITeamContext;
-	public invitedBy?: IUserTeamInfo;
+	public invitedBy?: IUserTeamBrief;
 	public joining?: boolean;
 	public refusing?: boolean;
 	public isUserAuthenticated?: boolean;

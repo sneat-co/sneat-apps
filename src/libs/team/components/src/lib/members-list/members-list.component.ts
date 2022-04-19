@@ -49,13 +49,17 @@ export class MembersListComponent implements OnChanges {
 		if (!member?.id) {
 			throw new Error('!member?.id');
 		}
+		if (!member.team) {
+			member = {...member, team: this.team};
+		}
 		this.navService.navigateToMember(this.navController, member);
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['allMembers'] || changes['role']) {
+			console.log('MembersListComponent.ngOnChanges()', changes);
 			this.members =
-				this.role === null
+				!this.role
 					? this.allMembers
 					: this.allMembers?.filter((m) =>
 						m.brief?.roles?.some((r) => r === this.role),

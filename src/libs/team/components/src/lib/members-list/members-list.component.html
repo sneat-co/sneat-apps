@@ -38,7 +38,7 @@
 			</ion-avatar>
 			<ion-label>
 				<h3>
-					{{ member.brief?.title }}
+					{{ member.brief?.title || member.dto?.title }}
 					<ng-container *ngIf="role === null">
 						<ion-badge
 							*ngFor="let role of member.brief?.roles"

@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { ISneatUserState, SneatUserService } from '@sneat/user';
-import { IUserTeamInfo } from '@sneat/auth-models';
-import { TeamService } from '@sneat/team/services';
-import { ICreateTeamRequest } from '@sneat/team/models';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
+import { IUserTeamBrief, TeamMemberType } from '@sneat/auth-models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ICreateTeamRequest } from '@sneat/team/models';
+import { TeamService } from '@sneat/team/services';
+import { ISneatUserState, SneatUserService } from '@sneat/user';
 
 @Component({
 	selector: 'sneat-teams-menu',
@@ -13,9 +13,9 @@ import { NavController } from '@ionic/angular';
 })
 export class TeamsMenuComponent {
 
-	teams?: IUserTeamInfo[];
-	familyTeams?: IUserTeamInfo[];
-	familyTeam?: IUserTeamInfo;
+	teams?: IUserTeamBrief[];
+	familyTeams?: IUserTeamBrief[];
+	familyTeam?: IUserTeamBrief;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -32,6 +32,7 @@ export class TeamsMenuComponent {
 		console.log('newFamily');
 		const request: ICreateTeamRequest = {
 			type: 'family',
+			memberType: TeamMemberType.creator,
 		};
 		this.teamService.createTeam(request).subscribe({
 			next: value => {
@@ -57,10 +58,10 @@ export class TeamsMenuComponent {
 		this.teams = user?.record?.teams || [];
 		console.log('onUserStateChanged', this.teams);
 		if (this.teams.length) {
-			this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
+			this.familyTeams = this.teams.filter(t => t.teamType === 'family') || [];
 			this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
 			if (this.familyTeam) {
-				this.teams = this.teams.filter(t => t.type !== 'family');
+				this.teams = this.teams.filter(t => t.teamType !== 'family');
 			}
 		}
 	};

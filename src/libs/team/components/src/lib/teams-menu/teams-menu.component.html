@@ -24,9 +24,9 @@
 		</ion-item>
 	</ng-template>
 	<ng-container *ngIf="teams?.length || 0 > 1">
-		<ion-item *ngFor="let team of teams" routerLink="/space/{{team.type}}/{{team.id}}">
+		<ion-item *ngFor="let team of teams" routerLink="/space/{{team.teamType}}/{{team.id}}">
 			<ion-icon name="person" slot="start"></ion-icon>
-			<ion-label>{{team.title || team.type}}</ion-label>
+			<ion-label>{{team.title || team.teamType}}</ion-label>
 		</ion-item>
 	</ng-container>
 </ng-container>

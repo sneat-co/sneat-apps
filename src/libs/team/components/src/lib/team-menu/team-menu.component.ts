@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { IUserTeamInfo } from '@sneat/auth-models';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { ISneatUserState } from '@sneat/user';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
@@ -14,7 +14,7 @@ import { TeamComponentBaseParams } from '../team-component-base-params';
 })
 export class TeamMenuComponent extends TeamBaseComponent {
 
-	public teams?: IUserTeamInfo[];
+	public teams?: IUserTeamBrief[];
 
 	constructor(
 		route: ActivatedRoute,
@@ -88,7 +88,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		}
 		const team = this.teams?.find(t => t.id === teamID);
 		if (team) {
-			this.teamParams.navController.navigateRoot(`/space/${team.type}/${team.id}`).catch(console.error);
+			this.teamParams.navController.navigateRoot(`/space/${team.teamType}/${team.id}`).catch(console.error);
 		}
 		this.menuCtrl.close().catch(console.error);
 		return;
