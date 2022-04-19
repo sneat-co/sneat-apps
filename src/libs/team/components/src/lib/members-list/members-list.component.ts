@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/animations';
-import { IMemberBrief } from '@sneat/dto';
+import { IContact2Member } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
@@ -14,13 +14,17 @@ import { SneatUserService } from '@sneat/user';
 	animations: listAddRemoveAnimation,
 })
 export class MembersListComponent implements OnChanges {
-	@Input() team?: ITeamContext;
-	@Input() allMembers?: IMemberBrief[];
-	@Input() role?: string;
-	@Output() selfRemoved = new EventEmitter<void>();
 
-	public members?: IMemberBrief[];
 	private selfRemove?: boolean;
+
+	@Input() public team?: ITeamContext;
+	@Input() public allMembers?: readonly IMemberContext[];
+	@Input() public role?: string;
+	@Output() selfRemoved = new EventEmitter<void>();
+	@Input() public contactsByMember: { [id: string]: IContact2Member[] } = {};
+
+	// Holds filtered entries, use `allMembers` to pass input
+	public members?: readonly IMemberContext[];
 
 	constructor(
 		private navService: TeamNavService,
@@ -32,9 +36,9 @@ export class MembersListComponent implements OnChanges {
 		//
 	}
 
-	public id = (_: number, m: IMemberBrief) => m.id;
+	public id = (_: number, m: { id: string }) => m.id;
 
-	public goMember(member?: IMemberBrief): void {
+	public goMember(member?: IMemberContext): void {
 		console.log('TeamPage.goMember()', member);
 		if (!this.team) {
 			this.errorLogger.logError(
@@ -45,12 +49,7 @@ export class MembersListComponent implements OnChanges {
 		if (!member?.id) {
 			throw new Error('!member?.id');
 		}
-		const memberContext: IMemberContext = {
-			id: member.id,
-			brief: member,
-			team: this.team,
-		};
-		this.navService.navigateToMember(this.navController, memberContext);
+		this.navService.navigateToMember(this.navController, member);
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
@@ -59,7 +58,7 @@ export class MembersListComponent implements OnChanges {
 				this.role === null
 					? this.allMembers
 					: this.allMembers?.filter((m) =>
-						m.roles?.some((r) => r === this.role),
+						m.brief?.roles?.some((r) => r === this.role),
 					);
 		}
 	}
@@ -68,31 +67,31 @@ export class MembersListComponent implements OnChanges {
 	// 	this.navService.navigateToAddMember(this.navController, this.team);
 	// }
 
-	public removeMember(event: Event, memberInfo: IMemberBrief) {
+	public removeMember(event: Event, member: IMemberContext) {
 		// event.preventDefault();
 		event.stopPropagation();
 		if (!this.team) {
 			return;
 		}
 		const members = this.team?.dto?.members;
-		const memberIndex = members?.findIndex((m) => m.id === memberInfo.id);
+		const memberIndex = members?.findIndex((m) => m.id === member.id);
 		if (members && this.team?.dto?.members) {
 			this.team = {
 				...this.team,
 				dto: {
 					...this.team.dto,
-					members: members.filter((m) => m.id !== memberInfo.id),
+					members: members.filter((m) => m.id !== member.id),
 				},
 			};
 		}
-		this.selfRemove = memberInfo.uid === this.userService.currentUserId;
+		this.selfRemove = member.brief?.uid === this.userService.currentUserId;
 		const teamId = this.team.id;
-		this.teamService.removeTeamMember(this.team, memberInfo.id).subscribe({
+		this.teamService.removeTeamMember(this.team, member.id).subscribe({
 			next: (team) => {
 				if (teamId !== this.team?.id) {
 					return;
 				}
-				this.team = team
+				this.team = team;
 				console.log('updated team:', team);
 				if (this.selfRemove) {
 					this.selfRemoved.emit();
@@ -110,10 +109,12 @@ export class MembersListComponent implements OnChanges {
 				this.errorLogger.logError(err, 'Failed to remove member from team');
 				if (
 					members &&
-					((!members.find((m) => m.id === memberInfo.id) && memberIndex) ||
+					((!members.find((m) => m.id === member.id) && memberIndex) ||
 						memberIndex === 0)
 				) {
-					members.splice(memberIndex, 0, memberInfo);
+					if (member.brief) {
+						members.splice(memberIndex, 0, member.brief);
+					}
 				}
 			},
 		});

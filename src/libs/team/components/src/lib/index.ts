@@ -1,6 +1,7 @@
 export * from './avatar/avatar.component';
 export * from './invite-links/invite-links.component';
 export * from './members-list/members-list.component';
+export * from './members-list/members-list.module';
 export * from './team-components.module';
 export * from './team-menu';
 export * from './teams-menu';

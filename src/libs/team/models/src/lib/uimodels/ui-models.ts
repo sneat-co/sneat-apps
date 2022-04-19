@@ -294,10 +294,10 @@ export class Commune implements ITeamContext {
 		return this.team.dto?.title;
 	}
 
-	public get isSupportingMemberGroups(): boolean {
-		const t = this.team.type;
-		return t === 'educator' || t === 'sport_club' || t === 'cohabit';
-	}
+	// public get isSupportingMemberGroups(): boolean {
+	// 	const t = this.team.type;
+	// 	return t === 'educator' || t === 'sport_club' || t === 'cohabit';
+	// }
 
 	public get numberOf(): TeamCounts {
 		if (this.team.dto?.numberOf) {

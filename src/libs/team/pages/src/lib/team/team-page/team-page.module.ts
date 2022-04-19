@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatCardListModule } from '@sneat/components';
-import { TeamComponentsModule, TeamMenuComponentModule } from '@sneat/team/components';
+import { MembersListModule, TeamComponentsModule, TeamMenuComponentModule } from '@sneat/team/components';
 import { MembersComponent } from '../members/members.component';
 import { MetricsComponent } from '../metrics/metrics.component';
 import { RetrospectivesComponent } from '../retrospectives/retrospectives.component';
@@ -20,6 +20,7 @@ import { TeamPageComponent } from './team-page.component';
 		TeamMenuComponentModule,
 		TeamComponentsModule,
 		SneatCardListModule,
+		MembersListModule,
 	],
 	declarations: [
 		MembersComponent,

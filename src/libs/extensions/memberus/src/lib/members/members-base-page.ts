@@ -1,0 +1,82 @@
+import { ActivatedRoute } from '@angular/router';
+import { MemberType, TeamType } from '@sneat/auth-models';
+import { IMemberBrief, isTeamSupportsMemberGroups } from '@sneat/dto';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { IMemberContext } from '@sneat/team/models';
+import { MemberService } from '@sneat/team/services';
+import { MemberPages } from '../constants';
+
+export abstract class MembersBasePage extends TeamBaseComponent {
+
+	public members?: readonly IMemberContext[];
+
+	// protected currentUserDto: IDtoUser;
+
+	abstract get memberType(): MemberType;
+
+	// protected setCurrentUser(dto: IDtoUser) {
+	//     this.currentUserDto = dto;
+	// }
+
+	protected constructor(
+		className: string,
+		route: ActivatedRoute,
+		params: TeamComponentBaseParams,
+		protected membersService: MemberService,
+	) {
+		super(className, route, params);
+		// this.userService.currentUserLoaded.subscribe(user => this.setCurrentUser(user));
+	}
+
+	goNewMember = () => { // TODO: use it?
+		this.navigateForwardToTeamPage('new-member')
+			.catch(this.logErrorHandler('failed to navigate to new member page'));
+	};
+
+	// goMember = (member: IMemberContext, page?: MemberPages) => {
+	// 	this.navigateForwardToTeamPage(
+	// 		(page || 'member') + '/' + member.id,
+	// 	).catch(this.logErrorHandler('failed to navigate to team member page'));
+	// };
+	//
+	// goContact = (id: string, event: Event) => {
+	// 	event.stopPropagation();
+	// 	this.navigateForwardToTeamPage(`contact/${id}`)
+	// 		.catch(this.logErrorHandler('failed to navigate to contact page'));
+	// };
+
+	// ngAfterViewInit(): void {
+	// 	this.preloader.preload([
+	// 		'member',
+	// 		'member-new',
+	// 		'commune-overview',
+	// 	]);
+	// 	this.onTeamIdChanged();
+	// }
+
+	override onTeamIdChanged(): void {
+		super.onTeamIdChanged();
+		// this.membersService.
+	}
+
+	public get supportsMemberGroups(): boolean {
+		return !!this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type);
+	}
+
+	public get teamType(): TeamType | undefined {
+		return this.team?.brief?.type;
+	}
+
+	// protected setPageCommuneIds(source: string, communeIds: ICommuneIds, communeDto?: ICommuneDto): void {
+	// 	super.setPageCommuneIds(source, communeIds, communeDto);
+	// 	if (this.communeRealId) {
+	// 		this.membersService.selectByType(this.communeRealId, this.memberType)
+	// 			.subscribe(
+	// 				members => {
+	// 					this.members = members;
+	// 				},
+	// 				this.errorLogger.logError,
+	// 			);
+	// 	}
+	// }
+}

@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
-import { IMemberBrief, IMemberDto, ITeamDto } from '@sneat/dto';
-import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
-import { SneatApiService } from '@sneat/api';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { IErrorResponse } from '@sneat/core';
+import { IMemberBrief, IMemberDto } from '@sneat/dto';
 import {
 	IAcceptPersonalInviteRequest,
 	IAddTeamMemberRequest,
 	IAddTeamMemberResponse,
-	IRejectPersonalInviteRequest, ITeamContext,
+	IMemberContext,
+	IRejectPersonalInviteRequest,
+	ITeamContext,
 } from '@sneat/team/models';
+import { Observable } from 'rxjs';
+import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { TeamService } from './team.service';
-import { IErrorResponse } from '@sneat/core';
+
+const dto2brief = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
 
 @Injectable({
 	providedIn: 'root',
 })
 export class MemberService {
+	private readonly sfs: SneatFirestoreService<IMemberBrief, IMemberDto>;
+
 	constructor(
-		private readonly db: AngularFirestore,
+		afs: AngularFirestore,
 		private readonly teamService: TeamService,
 		private readonly sneatApiService: SneatApiService,
 	) {
+		this.sfs = new SneatFirestoreService<IMemberBrief, IMemberDto>('team_members', afs, dto2brief);
 	}
 
 	public acceptPersonalInvite(
@@ -62,7 +69,7 @@ export class MemberService {
 				roles: [request.role],
 			};
 			if (okResponse.uid) {
-				member = {...member, uid: okResponse.uid};
+				member = { ...member, uid: okResponse.uid };
 			}
 			return this.teamService.getTeam(request.teamID).pipe(
 				tap((team) => {
@@ -91,5 +98,10 @@ export class MemberService {
 			.pipe(
 				map(findMember),
 			);
+	}
+
+	watchMembersByTeamID<IMemberDto>(teamID: string): Observable<IMemberContext[]> {
+		console.log('watchMembersByTeamID()', teamID);
+		return this.sfs.watchByTeamID(teamID, 'teamID');
 	}
 }

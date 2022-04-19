@@ -4,7 +4,7 @@ import { map, Observable, throwError } from 'rxjs';
 
 export interface IFilter {
 	field: string;
-	operator: 'array-contains';
+	operator: '==' | 'array-contains';
 	value: any;
 }
 
@@ -69,8 +69,15 @@ export class SneatFirestoreService<Brief, Dto> {
 	}
 
 	watchByTeamID<Dto2 extends Dto>(teamID: string, field: 'teamID' | 'teamIDs' = 'teamIDs'): Observable<INavContext<Brief, Dto2>[]> {
-		console.log(`watchByTeamID(${this.collection}[${field}=${teamID})`);
-		const filter: IFilter[] = [{ field, operator: 'array-contains', value: teamID }];
+		if (!teamID) {
+			throw new Error('!teamID');
+		}
+		if (!field) {
+			throw new Error('!field');
+		}
+		const operator = field === 'teamID' ? '==' : 'array-contains';
+		console.log(`SneatFirestoreService.watchByTeamID(${this.collection}[${field} ${operator} ${teamID})`);
+		const filter: IFilter[] = [{ field, operator, value: teamID }];
 		return this.watchByFilter<Dto2>(filter);
 	}
 }

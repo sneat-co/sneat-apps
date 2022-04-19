@@ -2,11 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { InviteLinksComponent } from './index';
-
-const exports = [
-	InviteLinksComponent,
-];
+import { MembersListComponent } from '@sneat/team/components';
 
 @NgModule({
 	imports: [
@@ -14,10 +10,9 @@ const exports = [
 		IonicModule,
 		FormsModule,
 	],
-	declarations: [
-		...exports,
-	],
-	exports: exports,
+	declarations: [MembersListComponent],
+	exports: [MembersListComponent],
 })
-export class TeamComponentsModule {
+export class MembersListModule {
+
 }

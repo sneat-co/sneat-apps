@@ -1,0 +1,182 @@
+import { AfterViewInit, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AgeGroup, IContact2Member, isTeamSupportsMemberGroups, MemberType } from '@sneat/dto';
+import { TeamComponentBaseParams } from '@sneat/team/components';
+import { IMemberContext, IMemberGroupContext } from '@sneat/team/models';
+import { MemberGroupService, MemberService } from '@sneat/team/services';
+import { takeUntil } from 'rxjs';
+import { MembersBasePage } from '../members-base-page';
+
+@Component({
+	selector: 'sneat-members-page',
+	templateUrl: 'members-page.component.html',
+	styleUrls: ['members-page.component.scss'],
+	providers: [TeamComponentBaseParams],
+	// animations: [
+	//     trigger('items', [
+	//         state('void', style({
+	//             opacity: 0,
+	//             // transform: 'translateY(-100%)',
+	//         })),
+	//         state('loaded', style({})),
+	//         transition('void => loaded', [
+	//             animate('0.2s'),
+	//         ])
+	//     ]),
+	// ],
+})
+export class MembersPageComponent extends MembersBasePage implements AfterViewInit {
+	private prevMembersCount?: number;
+	public contactsByMember: { [id: string]: IContact2Member[] } = {};
+	public adults?: IMemberContext[];
+	public children?: IMemberContext[];
+	public other?: IMemberContext[];
+	public memberGroups?: IMemberGroupContext[];
+	public loadingStubs?: number[];
+	public segment: 'all' | 'groups' = 'all';
+	public listMode: 'short' | 'long' = 'short';
+	public membersByGroupId: { [id: string]: IMemberContext[] } = {};
+	public noGroupMembers?: IMemberContext[];
+
+	readonly memberType: MemberType = 'member';
+
+	constructor(
+		route: ActivatedRoute,
+		// private readonly memberGroupService: MemberGroupService,
+		params: TeamComponentBaseParams,
+		memberService: MemberService,
+		private readonly memberGroupService: MemberGroupService,
+	) {
+		super('MembersPageComponent', route, params, memberService);
+	}
+
+
+	ngAfterViewInit(): void {
+		this.preloader.preload([
+			'member',
+			'member-new',
+			'commune-overview',
+		]);
+	}
+
+	goGroup(memberGroup: IMemberGroupContext): void {
+		this.navigateForwardToTeamPage(`group/${memberGroup.id}`, { state: { memberGroup } })
+			.catch(this.logErrorHandler('failed to navigate to members group page'));
+	}
+
+	public goNew(age?: AgeGroup): void {
+		switch (this.segment) {
+			case 'all':
+				this.navigateForwardToTeamPage('new-member', { queryParams: { age } })
+					.catch(this.logErrorHandler('failed to navigate to new member page with age parameter'));
+				break;
+			case 'groups':
+				this.navigateForwardToTeamPage('new-group')
+					.catch(this.logErrorHandler('failed to navigate to new group page'));
+				break;
+			default:
+				alert(`Unknown segment: ${this.segment}`);
+				return;
+		}
+	}
+
+	public readonly id = (i: number, v: { id: string }): string => v.id;
+
+	override onTeamDtoChanged(): void {
+		super.onTeamDtoChanged();
+		if (!this.team) {
+			throw new Error('!this.commune');
+		}
+		console.log(`CommuneMembersPage.onCommuneChanged() => members: oldCount=${this.prevMembersCount}, newCount=${this.team.dto?.numberOf?.members}`);
+		if (this.team?.dto?.numberOf?.members) {
+			this.loadingStubs = Array(this.team?.dto?.numberOf?.members)
+				.fill(1)
+				.map((v, i) => i + 1);
+		}
+		// if (!isNaN(this.prevMembersCount) && this.prevMembersCount != this.commune.numberOf.members) {
+		//     this.loadData();
+		// }
+		this.loadData('onCommuneChanged');
+		this.prevMembersCount = this.team?.dto?.numberOf?.members || 0;
+	}
+
+	private loadData(source: string): void {
+		console.log(`CommuneMembersPage.loadData(source=${source})`);
+		// this.unsubscribe();
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
+		this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
+
+		if (this.team.dto?.members) {
+			this.members = this.team.dto.members;
+			this.processMembers();
+		} else {
+			this.membersService.watchMembersByTeamID(this.team.id)
+				.pipe(
+					takeUntil(this.teamIDChanged$),
+				)
+				.subscribe(members => {
+					console.log('members:', members);
+					if (members && members.length) { // TODO: deep equal
+						members.forEach(m => {
+							if (m.id) {
+								if (m.dto?.contacts?.length) {
+									this.contactsByMember[m.id] = m.dto.contacts;
+								} else if (this.contactsByMember[m.id]) {
+									// tslint:disable-next-line:no-dynamic-delete
+									delete this.contactsByMember[m.id];
+								}
+							}
+						});
+						this.members = members;
+						this.processMembers();
+					}
+				});
+		}
+
+		if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
+			this.memberGroupService.watchMemberGroupsByTeamID(this.team.id)
+				.subscribe(memberGroups => {
+					if (memberGroups && (!this.memberGroups || memberGroups.length !== this.memberGroups.length)) { // TODO: deep equal
+						this.memberGroups = memberGroups;
+					}
+				});
+		}
+	}
+
+	private processMembers(): void {
+		this.adults = [];
+		this.children = [];
+		this.other = [];
+		this.members?.forEach(m => {
+			switch (m.dto?.age) {
+				case 'adult':
+					this.adults?.push(m);
+					break;
+				case 'child':
+					this.children?.push(m);
+					break;
+				default:
+					this.other?.push(m);
+					break;
+			}
+			if (!this.team) {
+				throw new Error('!this.team');
+			}
+			if (m.dto?.groupIDs?.length) {
+				m.dto.groupIDs.forEach(groupID => {
+					if (this.membersByGroupId[groupID]) {
+						this.membersByGroupId[groupID].push(m);
+					} else {
+						this.membersByGroupId[groupID] = [m];
+					}
+				});
+			} else if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
+				if (this.noGroupMembers) {
+					this.noGroupMembers.push(m);
+				}
+			}
+		});
+	}
+}

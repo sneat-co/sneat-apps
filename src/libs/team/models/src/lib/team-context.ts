@@ -3,11 +3,13 @@ import {
 	IAssetBrief,
 	IAssetDto,
 	IContactBrief,
-	IContactDto, IHappeningDto,
+	IContactDto,
 	IListBrief,
 	IListDto,
 	IMemberBrief,
 	IMemberDto,
+	IMemberGroupBrief,
+	IMemberGroupDto,
 	IShortTeamInfo,
 	ITeamBrief,
 	ITeamDto,
@@ -22,10 +24,12 @@ export interface ITeamContext extends INavContext<ITeamBrief, ITeamDto> {
 };
 
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
+export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IListContext = ITeamItemContext<IListBrief, IListDto>;
 export type IDocumentContext = IAssetContext;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
+
 export function createShortCommuneInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {
 		throw new Error('!team.type');

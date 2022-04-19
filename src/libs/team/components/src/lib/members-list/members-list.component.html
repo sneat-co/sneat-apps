@@ -22,50 +22,50 @@
 			<ion-avatar slot="start">
 				<ion-img
 					title="avatar"
-					*ngIf="member.avatar?.gravatar"
-					src="//www.gravatar.com/avatar/{{ member.avatar?.gravatar }}"
+					*ngIf="member.brief?.avatar?.gravatar"
+					src="//www.gravatar.com/avatar/{{ member.brief?.avatar?.gravatar }}"
 				></ion-img>
 				<ion-img
 					title="avatar"
-					*ngIf="member.avatar?.external?.url"
-					[src]="member.avatar?.external?.url"
+					*ngIf="member.brief?.avatar?.external?.url"
+					[src]="member.brief?.avatar?.external?.url"
 				></ion-img>
 				<ion-img
 					title="avatar"
-					*ngIf="!member.avatar"
+					*ngIf="!member.brief?.avatar"
 					src="//www.gravatar.com/avatar/gravatar"
 				></ion-img>
 			</ion-avatar>
 			<ion-label>
 				<h3>
-					{{ member.title }}
+					{{ member.brief?.title }}
 					<ng-container *ngIf="role === null">
 						<ion-badge
-							*ngFor="let role of member.roles"
+							*ngFor="let role of member.brief?.roles"
 							class="ion-margin-start sneat-team-member-role"
 							[color]="role === 'contributor' ? 'primary' : 'medium'"
 						>{{ role }}</ion-badge
 						>
 					</ng-container>
 				</h3>
-				<p style="margin-top: 0.5em" *ngIf="member.email || !member.uid">
+				<p style="margin-top: 0.5em" *ngIf="member.dto?.email || !member.brief?.uid">
 					<a
-						href="mailto:{{ member.email }}"
+						href="mailto:{{ member.brief?.email }}"
 						style="opacity: 0.7"
 						(click)="$event.stopPropagation()"
-					>{{ member.email }}</a
+					>{{ member.brief?.email }}</a
 					>
 					<ion-badge
 						class="ion-margin-start"
 						color="tertiary"
-						*ngIf="!member.uid"
+						*ngIf="!member.brief?.uid"
 					>not signed up yet
 					</ion-badge
 					>
 				</p>
 			</ion-label>
 			<ion-buttons slot="end">
-				<ion-button color="danger" *ngIf="!member.uid && member.email">
+				<ion-button color="danger" *ngIf="!member.brief?.uid && member.brief?.email">
 					<ion-label>Resend invite</ion-label>
 				</ion-button>
 			</ion-buttons>

@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar color="primary" class="with-back-button with-end-buttons">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+        </ion-buttons>
+        <ion-title *ngIf="commune else titleNoCommune">
+            <ng-container *ngIf="commune.type === 'educator'">👩‍🏫</ng-container>
+            <ng-container *ngIf="commune && commune.type === 'realtor'">👨‍💼</ng-container>
+            Staff @ {{commune.title}}
+        </ion-title>
+        <ng-template #titleNoCommune>
+            <ion-title>Staff</ion-title>
+        </ng-template>
+        <ion-buttons slot="end">
+            <ion-menu-button menu="mainMenu"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngIf="members">
+        <ion-item *ngFor="let member of members; trackBy: trackById" button (click)="goMember(member)">
+            <ion-label>{{member.title}}</ion-label>
+            <ng-container *ngIf="member.roles && member.roles.length">
+                <ion-badge style="margin-left: 5px; font-weight: normal;" color="light"
+                           *ngFor="let role of member.roles">{{role}}</ion-badge>
+            </ng-container>
+        </ion-item>
+        <ion-item button (click)="goNewStaff()">
+            <ion-icon name="add" color="primary"></ion-icon>
+            <ion-label color="primary">Add staff</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

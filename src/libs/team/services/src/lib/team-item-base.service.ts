@@ -16,8 +16,8 @@ interface ICreateTeamItemResponse<Dto> {
 @Injectable({ providedIn: 'root' })
 export class TeamItemBaseService {
 	constructor(
-		private readonly db: AngularFirestore,
-		private readonly sneatApiService: SneatApiService,
+		public readonly afs: AngularFirestore,
+		public readonly sneatApiService: SneatApiService,
 		public readonly teamService: TeamService,
 	) {
 	}
@@ -25,7 +25,7 @@ export class TeamItemBaseService {
 
 	public watchTeamItems<Brief extends { id: string }, Dto>(team: ITeamContext, path: string): Observable<ITeamItemContext<Brief, Dto>[]> {
 		console.log('watchTeamItems()', team.id);
-		const query = this.db
+		const query = this.afs
 			.collection<Dto>(path,
 				ref => ref.where('teamIDs', 'array-contains', team.id));
 		const result = query.get()

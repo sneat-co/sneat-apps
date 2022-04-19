@@ -1,6 +1,7 @@
 import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
 import { ILogger } from '@sneat/rxstore';
@@ -120,6 +121,13 @@ export abstract class TeamBaseComponent implements OnDestroy {
 				this.setNewTeamContext({ ...this.team, dto: undefined });
 			}
 		}
+	}
+
+	protected navigateForwardToTeamPage(page: string, navOptions?: NavigationOptions) {
+		if (!this.team) {
+			return Promise.reject('no team context');
+		}
+		return this.teamParams.teamNavService.navigateForwardToTeamPage(this.team, page, navOptions);
 	}
 
 	protected onTeamIdChanged(): void {

@@ -1,0 +1,178 @@
+<ion-header>
+	<ion-toolbar color="primary" class="with-back-button with-end-buttons">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<sneat-team-page-title
+			[team]="team"
+			generalTitle="Members"
+			icon="👪"
+			[titlesByTeamType]="{
+				family: 'Family members'
+			}"
+		>
+		</sneat-team-page-title>
+		<ion-buttons slot="end">
+			<ion-menu-button menu="mainMenu"></ion-menu-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<div class="segment" *ngIf="supportsMemberGroups">
+		<ion-segment [(ngModel)]="segment">
+			<ion-segment-button value="all">
+				<ion-label>All</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="groups">
+				<ion-label *ngIf="team?.brief?.type !== 'cohabit'">By group</ion-label>
+				<ion-label *ngIf="team?.brief?.type === 'cohabit'">By room</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+
+	<div class="segment" *ngIf="teamType === 'family'">
+		<ion-segment [(ngModel)]="listMode">
+			<ion-segment-button value="short">Short</ion-segment-button>
+			<ion-segment-button value="long">Long</ion-segment-button>
+		</ion-segment>
+	</div>
+
+	<ion-list *ngIf="segment === 'all' && teamType === 'family'">
+		<sneat-members-list *ngIf="adults"
+												[team]="team"
+												[allMembers]="members"
+												[contactsByMember]="contactsByMember"
+		></sneat-members-list>
+	</ion-list>
+	<ng-container *ngIf="segment === 'all' && teamType === 'family'">
+		<ion-item-group>
+			<ion-item-divider color="light">
+				<ion-label>Adults</ion-label>
+				<ion-buttons slot="end">
+					<ion-button title="Add adult" (click)="goNew('adult')">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item-divider>
+			<ion-item *ngIf="!adults">
+				<ion-spinner name="lines-small" color="light"></ion-spinner>
+				<ion-label color="light">Loading...</ion-label>
+			</ion-item>
+			<sneat-members-list *ngIf="adults"
+													[allMembers]="adults"
+													[contactsByMember]="contactsByMember"
+			></sneat-members-list>
+		</ion-item-group>
+		<ion-item-group>
+			<ion-item-divider color="light">
+				<ion-label>Children</ion-label>
+				<ion-buttons slot="end">
+					<ion-button title="Add child" (click)="goNew('child')">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item-divider>
+			<ion-item *ngIf="!children">
+				<ion-spinner name="lines-small" color="light"></ion-spinner>
+				<ion-label color="light">Loading...</ion-label>
+			</ion-item>
+			<sneat-members-list *ngIf="children"
+													[allMembers]="children"
+													[contactsByMember]="contactsByMember"
+			></sneat-members-list>
+		</ion-item-group>
+		<ion-item-group *ngIf="other && other.length">
+			<ion-item-divider color="light">
+				<ion-label>Other</ion-label>
+			</ion-item-divider>
+			<sneat-members-list *ngIf="members"
+													requireAge="true"
+													[allMembers]="other"
+													[contactsByMember]="contactsByMember"
+			></sneat-members-list>
+		</ion-item-group>
+	</ng-container>
+
+	<ng-container *ngIf="segment === 'groups'">
+		<ng-container *ngIf="teamType === 'cohabit'">
+			<ng-container *ngIf="memberGroups">
+				<ion-item-group *ngFor="let group of memberGroups; trackBy: id">
+					<ion-item-divider>
+						<ion-icon name="people" style="margin-right: 0.5em"></ion-icon>
+						<ion-label>
+							{{group.brief?.title}}
+						</ion-label>
+						<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
+							{{group.dto?.numberOf?.members}} members
+						</ion-badge>
+					</ion-item-divider>
+					<ng-container *ngIf="membersByGroupId[group.id]">
+						<sneat-members-list [allMembers]="this.membersByGroupId[group.id]"
+						></sneat-members-list>
+					</ng-container>
+				</ion-item-group>
+				<ng-container *ngIf="noGroupMembers && noGroupMembers.length">
+					<ion-item-divider>
+						<ion-label>No group members</ion-label>
+					</ion-item-divider>
+					<sneat-members-list [allMembers]="noGroupMembers"
+					></sneat-members-list>
+				</ng-container>
+			</ng-container>
+		</ng-container>
+		<ng-container *ngIf="teamType !== 'cohabit'">
+			<ng-container *ngIf="memberGroups">
+				<ion-item-group *ngFor="let group of memberGroups; trackBy: id">
+					<ion-item button (click)="goGroup(group)">
+						<ion-icon name="people" style="margin-right: 0.5em"></ion-icon>
+						<ion-label>
+							{{group.brief?.title}}
+						</ion-label>
+						<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
+							{{group?.dto?.numberOf?.members}} members
+						</ion-badge>
+					</ion-item>
+				</ion-item-group>
+				<ng-container *ngIf="noGroupMembers && noGroupMembers.length">
+					<ion-item-divider>
+						<ion-label>No group members</ion-label>
+						<ion-badge color="light" slot="end"
+											 style="margin-right: 1em">{{noGroupMembers.length}}</ion-badge>
+					</ion-item-divider>
+					<sneat-members-list
+						[allMembers]="noGroupMembers"
+						[contactsByMember]="contactsByMember"
+					></sneat-members-list>
+				</ng-container>
+			</ng-container>
+		</ng-container>
+	</ng-container>
+</ion-content>
+
+<ion-footer>
+	<ion-toolbar color="light">
+		<ion-label *ngIf="team?.dto && segment === 'all'">
+			<b>Total</b>:
+			{{ team?.dto?.numberOf?.members || 0}}
+			{{ team?.dto?.numberOf?.memberGroups === 1 ? 'member' : 'members' }}
+		</ion-label>
+		<ion-label *ngIf="team?.dto && segment === 'groups'">
+			<b>Total</b>:
+			{{ team?.dto?.numberOf?.memberGroups || 0}}
+			{{ team?.dto?.numberOf?.memberGroups === 1 ? 'group' : 'groups' }}
+		</ion-label>
+		<ion-label *ngIf="!team?.dto">Loading...</ion-label>
+		<ion-buttons slot="end">
+			<ion-button size="small" color="primary"
+									[disabled]="!team?.brief"
+									(click)="goNew()"
+									[title]="segment === 'groups' ? 'Add new group' : 'Add new member'"
+			>
+				<ion-icon name="add"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>

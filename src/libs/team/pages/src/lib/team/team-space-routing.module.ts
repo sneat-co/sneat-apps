@@ -8,7 +8,7 @@ import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
-import { memberRoutes } from '@sneat/extensions/memberus';
+import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus';
 import { schedulusRoutes } from '@sneat/extensions/schedule';
 import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 
@@ -36,6 +36,7 @@ const routes: Routes = [
 	...docusRoutes,
 	...listusRoutes,
 	...schedulusRoutes,
+	...membersRoutes,
 	// {
 	// 	path: '',
 	// 	component: SpacePageComponent, // intentionally not lazy loading

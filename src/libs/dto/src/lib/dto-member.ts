@@ -1,11 +1,10 @@
 import { IAvatar } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
-import { RxRecordKey } from '@sneat/rxstore';
 import { ITeamMemberInfo } from './dto-commune';
 import { IContact2Member } from './dto-contact2';
-import { IPersonRecord, ITeamRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
+import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
 import { DtoGroupTerms } from './dto-term';
-import { MembersVisibility, MemberType } from './types';
+import { AgeGroup, MembersVisibility, MemberType } from './types';
 
 export const MemberRoleContributor = 'contributor';
 export const MemberRoleSpectator = 'spectator';
@@ -45,15 +44,17 @@ export type MemberRelationship =
 	| typeof MemberRelationshipOther
 	| typeof MemberRelationshipUndisclosed;
 
-export interface DtoMemberGroupInfo {
-	id: RxRecordKey;
+export interface IMemberGroupBrief {
+	id: string;
 	title: string;
 }
 
 export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder {
 	readonly title: string;
+	readonly groupIDs?: string[];
 	readonly uid?: string; // User ID
 	readonly type?: MemberType;
+	readonly age?: AgeGroup;
 	readonly roles?: readonly MemberRole[];
 	readonly avatar?: IAvatar;
 }
@@ -64,8 +65,7 @@ export interface IMemberBrief extends IMemberBase {
 
 export interface IMemberDto extends IMemberBase {
 	position?: string;
-	readonly groupIds?: readonly string[]; // RxRecordKey[];
-	groups?: DtoMemberGroupInfo[];
+	groups?: IMemberGroupBrief[];
 	contacts?: IContact2Member[];
 }
 
@@ -78,7 +78,7 @@ export function newCommuneMemberInfo(id: string, m: IMemberDto): ITeamMemberInfo
 		age: m.ageGroup,
 		roles: m.roles,
 		gender: m.gender,
-		groupIds: m.groupIds,
+		groupIds: m.groupIDs,
 	});
 }
 
@@ -99,8 +99,9 @@ export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 	members: number;
 }
 
-export interface IMemberGroupDto extends ITeamRecord {
+export interface IMemberGroupDto {
 	id: string;
+	teamID: string;
 	title: string;
 	desc?: string;
 	timetable?: string;

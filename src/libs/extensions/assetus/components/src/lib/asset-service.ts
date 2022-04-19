@@ -15,12 +15,10 @@ export class AssetService {
 	private readonly sfs: SneatFirestoreService<IAssetBrief, IAssetDto>;
 
 	constructor(
-		afs: AngularFirestore,
-		private readonly sneatApiService: SneatApiService,
-		private readonly teamItemService: TeamItemBaseService,
+		private readonly teamItemBaseService: TeamItemBaseService,
 	) {
 		this.sfs = new SneatFirestoreService<IAssetBrief, IAssetDto>(
-			'assets', afs, (id: string, dto: IAssetDto) => {
+			'assets', teamItemBaseService.afs, (id: string, dto: IAssetDto) => {
 				const brief: IAssetBrief = {
 					id, ...dto,
 				};
@@ -34,13 +32,13 @@ export class AssetService {
 			return throwError(() => 'team ID is not supplied');
 		}
 		const request = new HttpParams({ fromObject: { id: asset.id, team: asset.team.id } });
-		return this.sneatApiService
+		return this.teamItemBaseService.sneatApiService
 			.delete<void>('assets/delete_asset', request);
 	}
 
 	public createAsset(request: ICreateAssetRequest): Observable<IAssetContext> {
 		console.log(`AssetService.createAsset()`, request);
-		return this.teamItemService.createTeamItem<IAssetBrief, IAssetDto>(
+		return this.teamItemBaseService.createTeamItem<IAssetBrief, IAssetDto>(
 			'assets/create_asset', TeamCounter.assets, request);
 	}
 
