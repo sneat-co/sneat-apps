@@ -2,19 +2,25 @@ import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
-import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
+import { equalTeamBriefs, ITeamBrief, ITeamDto, TeamType } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
 import { ILogger } from '@sneat/rxstore';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
-import { distinctUntilChanged, first, mergeMap, MonoTypeOperatorFunction, Subject, Subscription, tap } from 'rxjs';
+import { distinctUntilChanged, MonoTypeOperatorFunction, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
 @Injectable() // we need this decorator so we can implement Angular interfaces
 export abstract class TeamBaseComponent implements OnDestroy {
 
+	private readonly teamIDChanged = new Subject<string | undefined>();
+	private readonly teamTypeChanged = new Subject<TeamType | undefined>();
+	private readonly teamBriefChanged = new Subject<ITeamBrief | undefined | null>();
+	private readonly teamDtoChanged = new Subject<ITeamDto | undefined | null>();
+	private teamContext?: ITeamContext;
+	private teamRecordSubscription?: Subscription;
 	protected route?: ActivatedRoute;
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
@@ -31,19 +37,49 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		message?: string,
 		options?: ILogErrorOptions,
 	) => (error: any) => void;
-	private teamContext?: ITeamContext;
 
-	private readonly teamIDChanged = new Subject<string | undefined>();
-	public readonly teamIDChanged$ = this.teamIDChanged.asObservable().pipe(distinctUntilChanged());
+	public readonly teamIDChanged$ = this.teamIDChanged.asObservable().pipe(
+		takeUntil(this.destroyed),
+		distinctUntilChanged(),
+	);
 
-	private readonly teamBriefChanged = new Subject<ITeamBrief | undefined | null>();
+	public readonly teamTypeChanged$ = this.teamTypeChanged.asObservable().pipe(
+		takeUntil(this.destroyed),
+		distinctUntilChanged(),
+	);
+
 	public readonly teamBriefChanged$ = this.teamBriefChanged.asObservable()
-		.pipe(distinctUntilChanged(equalTeamBriefs));
+		.pipe(
+			takeUntil(this.destroyed),
+			distinctUntilChanged(equalTeamBriefs),
+		);
 
-	private readonly teamDtoChanged = new Subject<ITeamDto | undefined | null>();
-	public readonly teamDtoChanged$ = this.teamDtoChanged.asObservable().pipe(distinctUntilChanged());
+	public readonly teamDtoChanged$ = this.teamDtoChanged.asObservable()
+		.pipe(
+			takeUntil(this.destroyed),
+			distinctUntilChanged(),
+		);
 
-	private teamRecordSubscription?: Subscription;
+	public get team(): ITeamContext | undefined {
+		return this.teamContext;
+	}
+
+	public get preloader() {
+		return this.teamParams.preloader;
+	}
+
+	public get teamNav() {
+		return this.teamParams.teamNavService;
+	}
+
+	public get currentUserId() {
+		return this.userService.currentUserId;
+	}
+
+	public get defaultBackUrl(): string {
+		const t = this.teamContext;
+		return t ? `/space/${t.type}/${t.id}` : '';
+	}
 
 	protected constructor(
 		@Inject(new InjectionToken('className')) // we need this fake token so we can implement Angular interfaces
@@ -68,28 +104,6 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		} catch (e) {
 			this.logError(e, 'Failed in TeamBasePage.constructor()');
 		}
-	}
-
-
-	public get team(): ITeamContext | undefined {
-		return this.teamContext;
-	}
-
-	public get preloader() {
-		return this.teamParams.preloader;
-	}
-
-	public get teamNav() {
-		return this.teamParams.teamNavService;
-	}
-
-	public get currentUserId() {
-		return this.userService.currentUserId;
-	}
-
-	public get defaultBackUrl(): string {
-		const t = this.teamContext;
-		return t ? `/space/${t.type}/${t.id}` : '';
 	}
 
 	protected get errorLogger() {
@@ -166,10 +180,10 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		const prevTeam = this.teamContext;
 		console.log('prevTeam:', prevTeam);
 		if (team && prevTeam?.id === team?.id) {
-			team = {...prevTeam, ...team};
+			team = { ...prevTeam, ...team };
 			return;
 		}
-		this.setNewTeamContext(team)
+		this.setNewTeamContext(team);
 		if (!team) {
 			return;
 		}
@@ -235,12 +249,16 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			return;
 		}
 		const idChanged = this.teamContext?.id != teamContext?.id;
+		const teamTypeChange = this.teamContext?.type != teamContext?.type;
 		const briefChanged = equalTeamBriefs(this.teamContext?.brief, teamContext?.brief);
 		const dtoChanged = this.teamContext?.dto != teamContext?.dto;
 		console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}) => idChanged=${idChanged}, briefChanged=${briefChanged}, dtoChanged=${dtoChanged}`);
 		this.teamContext = teamContext;
 		if (idChanged) {
 			this.teamIDChanged.next(teamContext?.id);
+		}
+		if (teamTypeChange) {
+			this.teamTypeChanged.next(teamContext?.type);
 		}
 		if (briefChanged) {
 			this.teamBriefChanged.next(teamContext?.brief);
@@ -309,14 +327,14 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		const dtoChanged = team.dto !== this.teamContext?.dto;
 		console.log(`${this.className} extends TeamBasePage.onTeamLoaded() => dtoChanged=${dtoChanged}, team:`, team);
 		if (!team.brief && team.dto) {
-			team = {...team, brief: {id: team.id, ...team.dto}};
+			team = { ...team, brief: { id: team.id, ...team.dto } };
 		}
 		if (!team.type) {
 			if (team.brief?.type) {
-				team = {...team, type: team.brief.type};
+				team = { ...team, type: team.brief.type };
 			}
 		}
-		this.setNewTeamContext(team)
+		this.setNewTeamContext(team);
 		this.teamContext = team;
 		if (dtoChanged) {
 			this.onTeamDtoChanged();

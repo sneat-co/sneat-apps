@@ -19,7 +19,7 @@ export type MemberRole =
 	MemberRoleRealtor |
 	typeof MemberRoleParish;
 
-export const enum FamilyMemberRelation {
+export enum FamilyMemberRelation {
 	child = 'child',
 	parent = 'parent',
 	grandparent = 'grandparent',
@@ -29,9 +29,9 @@ export const enum FamilyMemberRelation {
 }
 
 
-export function familyRelationTitle(id: FamilyMemberRelation): string {
-	const s = (id as string);
-	return s ? s[0].toUpperCase() + s.substr(1) : '';
+
+export function relationshipTitle(id: string): string {
+	return id ? id[0].toUpperCase() + id.substr(1) : '';
 }
 
 export type FamilyMemberRelations = EnumAsUnionOfKeys<typeof FamilyMemberRelation>;

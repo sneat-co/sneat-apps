@@ -54,10 +54,10 @@ export abstract class MembersBasePage extends TeamBaseComponent {
 	// 	this.onTeamIdChanged();
 	// }
 
-	override onTeamIdChanged(): void {
-		super.onTeamIdChanged();
-		// this.membersService.
-	}
+	// override onTeamIdChanged(): void {
+	// 	super.onTeamIdChanged();
+	// 	// this.membersService.
+	// }
 
 	public get supportsMemberGroups(): boolean {
 		return !!this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type);

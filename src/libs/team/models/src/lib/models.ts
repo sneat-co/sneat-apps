@@ -1,4 +1,4 @@
-import { AgeGroup, Gender, MemberRole } from '@sneat/dto';
+import { AgeGroup, Gender, MemberRole, MemberType } from '@sneat/dto';
 
 
 export interface ITeamRequest {
@@ -24,6 +24,7 @@ export interface IRejectPersonalInviteRequest extends ITeamRequest {
 
 export interface IAddTeamMemberRequest extends ITeamRequest {
 	role: MemberRole;
+	memberType: MemberType;
 	title: string;
 	gender: Gender;
 	ageGroup?: AgeGroup;

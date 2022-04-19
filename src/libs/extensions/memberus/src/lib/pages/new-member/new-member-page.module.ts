@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { TeamComponentsModule } from '@sneat/team/components';
+import { NewMemberFormComponent } from './new-member-form.component';
 
 import { NewMemberPageComponent } from './new-member-page.component';
 
@@ -18,10 +20,15 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		FormsModule,
+		ReactiveFormsModule,
 		IonicModule,
 		RouterModule.forChild(routes),
+		TeamComponentsModule,
 	],
-	declarations: [NewMemberPageComponent],
+	declarations: [
+		NewMemberPageComponent,
+		NewMemberFormComponent,
+	],
 })
 export class NewMemberPageModule {
 }
