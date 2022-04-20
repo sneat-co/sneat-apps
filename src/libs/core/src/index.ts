@@ -12,3 +12,4 @@ export * from './lib/logging';
 export * from './lib/core-providers';
 export * from './lib/utils';
 export * from './lib/eq';
+export * from './lib/sneat-extensions';

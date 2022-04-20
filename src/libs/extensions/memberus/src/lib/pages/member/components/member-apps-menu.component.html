@@ -1,0 +1,16 @@
+<ion-item>
+	<ion-label color="medium">Apps</ion-label>
+</ion-item>
+<ion-item *ngFor="let ext of extensions" class="with-buttons" tappable (click)="goExt(ext)">
+	<ion-label>
+		<span class="ion-margin-end">{{ext.emoji}}</span>
+		{{ext.title}}
+	</ion-label>
+	<ion-buttons slot="end">
+		<ion-button color="medium" title="Add" (click)="goNew($event, ext)">
+			<ion-icon name="add"></ion-icon>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
+<!--		<app-menu-item-budget [goNew]="goNew" [memberInfo]="memberInfo"-->
+<!--													[communeDto]="commune && commune.dto"></app-menu-item-budget>-->

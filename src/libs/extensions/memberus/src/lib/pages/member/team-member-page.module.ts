@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { MemberAppsMenuComponent } from './components/member-apps-menu.component';
 
 import { TeamMemberPageComponent } from './team-member-page.component';
 
@@ -21,7 +22,10 @@ const routes: Routes = [
 		IonicModule,
 		RouterModule.forChild(routes),
 	],
-	declarations: [TeamMemberPageComponent],
+	declarations: [
+		TeamMemberPageComponent,
+		MemberAppsMenuComponent,
+	],
 })
 export class TeamMemberPageModule {
 }
