@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { first } from 'rxjs';
+import { filter, first, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -21,17 +21,29 @@ export class NewMemberPageComponent extends TeamBaseComponent {
 		params: TeamComponentBaseParams,
 	) {
 		super('NewMemberPageComponent', route, params);
-		this.teamTypeChanged$
-			.pipe(
-				first(),
-			)
-			.subscribe({
-				next: teamType => {
-					if (teamType === 'family' && this.tab === 'mass') {
-						this.tab = 'personal';
-					}
-				},
-			});
+		this.trackFirstTeamTypeChanged();
 	}
 
+	private readonly trackFirstTeamTypeChanged = (): void => {
+		console.log('NewMemberPageComponent.trackFirstTeamTypeChanged()');
+		try {
+			this.teamTypeChanged$
+				.pipe(
+					takeUntil(this.destroyed),
+					filter(v => !!v),
+					first(),
+				)
+				.subscribe({
+					next: teamType => {
+						console.log('NewMemberPageComponent: teamTypeChanged$ =>', teamType);
+						if (teamType === 'family' && this.tab === 'mass') {
+							this.tab = 'personal';
+						}
+					},
+					error: this.logErrorHandler('failed to process team type changes'),
+				});
+		} catch (e) {
+			this.logError(e, 'failed to subscribe for first team type change');
+		}
+	};
 }

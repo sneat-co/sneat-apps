@@ -43,8 +43,6 @@ export class NewMemberFormComponent implements OnChanges {
 	public relationships: ITitledRecord[] = getRelOptions(Object.values(FamilyMemberRelation));
 	public roles?: Role[];
 
-	public creating = false;
-
 	public readonly fullName = new FormControl('', [
 		Validators.required,
 		Validators.maxLength(50),
@@ -100,6 +98,7 @@ export class NewMemberFormComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('NewMemberFormComponent.ngOnChanges(), changes[team]:', changes['team']);
 		if (changes['team']) {
 			const previousValue = changes['team'].previousValue as ITeamContext | undefined,
 				currentValue = changes['team'].currentValue as ITeamContext | undefined;
@@ -135,7 +134,7 @@ export class NewMemberFormComponent implements OnChanges {
 			this.setFocusToNameInput();
 			return;
 		}
-		this.creating = true;
+		this.addMemberForm.disable();
 		let memberDto: IMemberDto = {
 			title: this.fullName.value,
 			ageGroup: this.ageGroup.value,
@@ -173,8 +172,14 @@ export class NewMemberFormComponent implements OnChanges {
 			request.phone = this.phone.value;
 		}
 
-		this.membersService.addMember(request).subscribe(member => {
-			console.log('member created:', member);
+		this.membersService.addMember(request).subscribe({
+			next: member => {
+				console.log('member created:', member);
+			},
+			error: err => {
+				this.errorLogger.logError(err, 'Failed to create a new member');
+				this.addMemberForm.enable();
+			}
 		});
 
 		// this.startCommuneReadwriteTx([MemberKind], (tx, communeDto, userDto) =>
@@ -234,7 +239,7 @@ export class NewMemberFormComponent implements OnChanges {
 
 	private onTeamTypeChanged(): void {
 		// noinspection JSRedundantSwitchStatement
-		console.log('onTeamChanged', this.team);
+		console.log('NewMemberFormComponent.onTeamTypeChanged()', this.team);
 		switch (this.team?.type) {
 			case 'educator':
 				if (location.pathname.indexOf('staff') >= 0) {

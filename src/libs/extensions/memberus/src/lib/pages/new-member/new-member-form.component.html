@@ -5,7 +5,7 @@
 	<ion-card>
 		<ion-item>
 			<ion-label position="floating">Full name</ion-label>
-			<ion-input [formControl]="fullName" #nameInput [disabled]="creating" placeholder="Firstname Lastname"></ion-input>
+			<ion-input [formControl]="fullName" #nameInput placeholder="Firstname Lastname"></ion-input>
 			<!--			<ion-buttons slot="end">-->
 			<!--				<ion-button fill="solid" color="primary">-->
 			<!--					<ion-label>Next</ion-label>-->
@@ -100,12 +100,12 @@
 
 		<ion-item>
 			<ion-label>Email</ion-label>
-			<ion-input type="email" [formControl]="email" [disabled]="creating"></ion-input>
+			<ion-input type="email" [formControl]="email" ></ion-input>
 		</ion-item>
 
 		<ion-item>
 			<ion-label>Phone</ion-label>
-			<ion-input type="phone" [formControl]="phone" [disabled]="creating"></ion-input>
+			<ion-input type="phone" [formControl]="phone"></ion-input>
 		</ion-item>
 	</ion-card>
 

@@ -8,7 +8,15 @@ import { ILogger } from '@sneat/rxstore';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
-import { distinctUntilChanged, MonoTypeOperatorFunction, Subject, Subscription } from 'rxjs';
+import {
+	distinctUntilChanged,
+	MonoTypeOperatorFunction,
+	Observable,
+	shareReplay,
+	Subject,
+	Subscription,
+	tap,
+} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
@@ -20,7 +28,6 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	private readonly teamBriefChanged = new Subject<ITeamBrief | undefined | null>();
 	private readonly teamDtoChanged = new Subject<ITeamDto | undefined | null>();
 	private teamContext?: ITeamContext;
-	private teamRecordSubscription?: Subscription;
 	protected route?: ActivatedRoute;
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
@@ -43,10 +50,14 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		distinctUntilChanged(),
 	);
 
-	public readonly teamTypeChanged$ = this.teamTypeChanged.asObservable().pipe(
-		takeUntil(this.destroyed),
-		distinctUntilChanged(),
-	);
+	public readonly teamTypeChanged$: Observable<TeamType | undefined> =
+		this.teamTypeChanged.pipe(
+			takeUntil(this.destroyed),
+			distinctUntilChanged(),
+			tap(v => console.log('teamTypeChanged$ before replay =>', v)),
+			shareReplay(1),
+			tap(v => console.log('teamTypeChanged$ after replay =>', v)),
+		);
 
 	public readonly teamBriefChanged$ = this.teamBriefChanged.asObservable()
 		.pipe(
@@ -87,22 +98,23 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		route: ActivatedRoute,
 		readonly teamParams: TeamComponentBaseParams,
 	) {
-		console.log(`${className} extends TeamBasePageDirective.constructor(), history.state:`, history.state);
-		this.route = route;
-
-		this.navController = teamParams.navController;
-		this.teamService = teamParams.teamService;
-		this.userService = teamParams.userService;
-		this.logger = teamParams.loggerFactory.getLogger(this.className);
-		this.logError = teamParams.errorLogger.logError;
-		this.logErrorHandler = teamParams.errorLogger.logErrorHandler;
-
+		console.log(`${className} extends TeamBasePageDirective.constructor()`);
 		try {
+			this.route = route;
+
+			this.navController = teamParams.navController;
+			this.teamService = teamParams.teamService;
+			this.userService = teamParams.userService;
+			this.logger = teamParams.loggerFactory.getLogger(this.className);
+			this.logError = teamParams.errorLogger.logError;
+			this.logErrorHandler = teamParams.errorLogger.logErrorHandler;
+
 			this.getTeamContextFromRouteState();
 			this.trackTeamIdFromRouteParams(route);
 			this.cleanupOnUserLogout();
 		} catch (e) {
-			this.logError(e, 'Failed in TeamBasePage.constructor()');
+			this.teamParams.errorLogger.logError(e, `Failed in (${className} extends TeamBasePage).constructor()`);
+			throw e;
 		}
 	}
 
@@ -171,30 +183,24 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			});
 	}
 
-	private onTeamIdChangedInUrl = (team?: ITeamContext): void => {
+	private readonly onTeamIdChangedInUrl = (team?: ITeamContext): void => {
 		console.log(`${this.className} extends TeamPageComponent.onTeamIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
-		if (this.teamRecordSubscription) {
-			this.teamRecordSubscription.unsubscribe();
-			this.teamRecordSubscription = undefined;
-		}
 		const prevTeam = this.teamContext;
-		console.log('prevTeam:', prevTeam);
+		if (team === prevTeam || team?.id === prevTeam?.id && team?.type === prevTeam?.type) {
+			return;
+		}
 		if (team && prevTeam?.id === team?.id) {
 			team = { ...prevTeam, ...team };
-			return;
 		}
 		this.setNewTeamContext(team);
-		if (!team) {
-			return;
-		}
-		this.subscribeForTeamChanges(team);
 	};
 
 	private subscribeForTeamChanges(team: ITeamContext): void {
 		console.log(`${this.className} extends TeamPageComponent.subscribeForTeamChanges()`, team);
-		this.teamRecordSubscription = this.teamService
+		this.teamService
 			.watchTeam(team.id)
 			.pipe(
+				takeUntil(this.teamIDChanged$),
 				this.takeUntilNeeded(),
 			)
 			.subscribe({
@@ -208,7 +214,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		if (!team?.id) {
 			return;
 		}
-		this.setNewTeamContext(team);
+		setTimeout(() => this.setNewTeamContext(team), 1);
 	}
 
 	private cleanupOnUserLogout(): void {
@@ -246,19 +252,24 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	private setNewTeamContext(teamContext?: ITeamContext): void {
 		console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
 		if (this.teamContext == teamContext) {
+			console.warn('Duplicate call to TeamPageComponent.setNewTeamContext() with same teamContext:', teamContext);
 			return;
 		}
 		const idChanged = this.teamContext?.id != teamContext?.id;
-		const teamTypeChange = this.teamContext?.type != teamContext?.type;
+		const teamTypeChanged = this.teamContext?.type != teamContext?.type;
 		const briefChanged = equalTeamBriefs(this.teamContext?.brief, teamContext?.brief);
 		const dtoChanged = this.teamContext?.dto != teamContext?.dto;
-		console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}) => idChanged=${idChanged}, briefChanged=${briefChanged}, dtoChanged=${dtoChanged}`);
+		console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}) => idChanged=${idChanged}, teamTypeChanged=${teamTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dtoChanged}`);
 		this.teamContext = teamContext;
 		if (idChanged) {
 			this.teamIDChanged.next(teamContext?.id);
+			if (teamContext) {
+				setTimeout(() => this.subscribeForTeamChanges(teamContext), 1);
+			}
 		}
-		if (teamTypeChange) {
-			this.teamTypeChanged.next(teamContext?.type);
+		if (teamTypeChanged && teamContext?.type) {
+			console.log('emitting teamTypeChanged$', teamContext.type);
+			this.teamTypeChanged.next(teamContext.type);
 		}
 		if (briefChanged) {
 			this.teamBriefChanged.next(teamContext?.brief);
