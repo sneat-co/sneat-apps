@@ -4,7 +4,7 @@ import { listAddRemoveAnimation } from '@sneat/animations';
 import { IContact2Member } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { memberContextFromBrief, TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 
 @Component({
@@ -16,15 +16,14 @@ import { SneatUserService } from '@sneat/user';
 export class MembersListComponent implements OnChanges {
 
 	private selfRemove?: boolean;
-
+	private _members?: readonly IMemberContext[];
 	@Input() public team?: ITeamContext;
-	@Input() public allMembers?: readonly IMemberContext[];
+	@Input() public members?: readonly IMemberContext[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
 	@Input() public contactsByMember: { [id: string]: IContact2Member[] } = {};
-
 	// Holds filtered entries, use `allMembers` to pass input
-	public members?: readonly IMemberContext[];
+	public membersToDisplay?: readonly IMemberContext[];
 
 	constructor(
 		private navService: TeamNavService,
@@ -50,26 +49,22 @@ export class MembersListComponent implements OnChanges {
 			throw new Error('!member?.id');
 		}
 		if (!member.team) {
-			member = {...member, team: this.team};
+			member = { ...member, team: this.team };
 		}
 		this.navService.navigateToMember(this.navController, member);
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['allMembers'] || changes['role']) {
-			console.log('MembersListComponent.ngOnChanges()', changes);
-			this.members =
-				!this.role
-					? this.allMembers
-					: this.allMembers?.filter((m) =>
-						m.brief?.roles?.some((r) => r === this.role),
-					);
+		console.log('MembersListComponent.ngOnChanges()', changes);
+		if (changes['team'] || changes['members'] || changes['role']) {
+			if (changes['members']) {
+				this._members = this.members;
+			} else if (changes['team'] && !this.members) {
+				this._members = this.team?.dto?.members.map(memberContextFromBrief);
+			}
+			this.membersToDisplay = this.filterMembers(this._members);
 		}
 	}
-
-	// public goAddMember(): void {
-	// 	this.navService.navigateToAddMember(this.navController, this.team);
-	// }
 
 	public removeMember(event: Event, member: IMemberContext) {
 		// event.preventDefault();
@@ -123,4 +118,16 @@ export class MembersListComponent implements OnChanges {
 			},
 		});
 	}
+
+	// public goAddMember(): void {
+	// 	this.navService.navigateToAddMember(this.navController, this.team);
+	// }
+
+	private readonly filterMembers = (members?: readonly IMemberContext[]) => {
+		return !this.role
+			? members
+			: members?.filter((m) =>
+				m.brief?.roles?.some((r) => r === this.role),
+			);
+	};
 }

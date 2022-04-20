@@ -63,7 +63,7 @@
 			</ion-item>
 			<sneat-members-list *ngIf="adults"
 													[team]="team"
-													[allMembers]="adults"
+													[members]="adults"
 													[contactsByMember]="contactsByMember"
 			></sneat-members-list>
 		</ion-card>
@@ -83,7 +83,7 @@
 			</ion-item>
 			<sneat-members-list *ngIf="children"
 													[team]="team"
-													[allMembers]="children"
+													[members]="children"
 													[contactsByMember]="contactsByMember"
 			></sneat-members-list>
 		</ion-card>
@@ -94,7 +94,7 @@
 			<sneat-members-list *ngIf="members"
 													[team]="team"
 													requireAge="true"
-													[allMembers]="noAgeMembers"
+													[members]="noAgeMembers"
 													[contactsByMember]="contactsByMember"
 			></sneat-members-list>
 		</ion-card>
@@ -114,7 +114,7 @@
 						</ion-badge>
 					</ion-item-divider>
 					<ng-container *ngIf="membersByGroupId[group.id]">
-						<sneat-members-list [allMembers]="this.membersByGroupId[group.id]"
+						<sneat-members-list [members]="this.membersByGroupId[group.id]"
 						></sneat-members-list>
 					</ng-container>
 				</ion-item-group>
@@ -122,7 +122,7 @@
 					<ion-item-divider>
 						<ion-label>No group members</ion-label>
 					</ion-item-divider>
-					<sneat-members-list [allMembers]="noGroupMembers"
+					<sneat-members-list [members]="noGroupMembers"
 					></sneat-members-list>
 				</ng-container>
 			</ng-container>
@@ -147,7 +147,7 @@
 											 style="margin-right: 1em">{{noGroupMembers.length}}</ion-badge>
 					</ion-item-divider>
 					<sneat-members-list
-						[allMembers]="noGroupMembers"
+						[members]="noGroupMembers"
 						[contactsByMember]="contactsByMember"
 					></sneat-members-list>
 				</ng-container>

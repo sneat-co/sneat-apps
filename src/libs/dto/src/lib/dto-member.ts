@@ -54,7 +54,6 @@ export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder
 	readonly groupIDs?: string[];
 	readonly uid?: string; // User ID
 	readonly type?: MemberType;
-	readonly age?: AgeGroup;
 	readonly roles?: readonly MemberRole[];
 	readonly avatar?: IAvatar;
 }

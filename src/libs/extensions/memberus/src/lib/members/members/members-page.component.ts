@@ -152,7 +152,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		this.children = [];
 		this.noAgeMembers = [];
 		this.members?.forEach(m => {
-			switch (m.dto?.age) {
+			switch (m.brief?.ageGroup) {
 				case 'adult':
 					this.adults?.push(m);
 					break;
