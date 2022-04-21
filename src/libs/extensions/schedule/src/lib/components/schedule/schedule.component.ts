@@ -40,6 +40,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// prevWeekdays: SlotsGroup[];
 	public readonly teamDaysProvider: TeamDaysProvider;
 	@Input() team?: ITeamContext;
+	@Input() member?: IMemberContext;
 	@Input() public tab: ScheduleTab = 'day';
 	@Input() public date = '';
 	@Output() readonly tabChanged = new EventEmitter<ScheduleTab>();
@@ -47,7 +48,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	public showRecurrings = true;
 	public showEvents = true;
 	todayAndFutureDays?: Weekday[];
-	public member?: IMemberContext;
 	filterFocused = false;
 	allRecurrings?: IRecurringWithUiState[];
 	recurrings?: IRecurringWithUiState[];
@@ -198,7 +198,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	goNewHappening(params: NewHappeningParams): void {
 		const { type, wd, date } = params;
 
-		const state: { type: HappeningType; date?: string; wd?: WeekdayCode2 } = { type };
+		const state: { type?: HappeningType; date?: string; wd?: WeekdayCode2 } = { type };
 
 		if (date) {
 			// tslint:disable-next-line:no-non-null-assertion

@@ -17,7 +17,7 @@ import { tap } from 'rxjs/operators';
 
 
 export interface NewHappeningParams {
-	type: HappeningType;
+	type?: HappeningType;
 	wd?: WeekdayCode2;
 	date?: Date;
 }

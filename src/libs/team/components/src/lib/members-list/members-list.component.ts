@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/animations';
-import { IContact2Member } from '@sneat/dto';
+import { Gender, IContact2Member } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief, TeamNavService, TeamService } from '@sneat/team/services';
@@ -36,6 +36,16 @@ export class MembersListComponent implements OnChanges {
 	}
 
 	public id = (_: number, m: { id: string }) => m.id;
+
+	public genderIcon(m: IMemberContext) {
+		switch (m.brief?.gender) {
+			case 'male':
+				return 'man-outline';
+			case 'female':
+				return 'woman-outline';
+		}
+		return 'person-outline';
+	}
 
 	public goMember(member?: IMemberContext): void {
 		console.log('TeamPage.goMember()', member);

@@ -4,9 +4,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { HappeningType, IRecurringHappeningDto, ISingleHappeningDto, IRecurringSlot, SlotParticipant } from '@sneat/dto';
+import { HappeningType, IRecurringHappeningDto, IRecurringSlot, SlotParticipant } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { Member } from '@sneat/team/models';
+import { IMemberContext, Member } from '@sneat/team/models';
+import { memberContextFromBrief } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
 import { ScheduleService } from '../../services/schedule.service';
 
@@ -17,25 +18,27 @@ import { ScheduleService } from '../../services/schedule.service';
 })
 export class NewHappeningPageComponent extends TeamBaseComponent implements OnInit {
 
+	private eventStarts?: Date;
+	private eventEnds?: Date;
 	isToDo: boolean;
-
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
-
 	happeningType: HappeningType = 'recurring';
-
 	slots: IRecurringSlot[] = [];
 	contacts: number[] = [];
 	showSlotForm = true;
 	public date: string;
-
-	members?: Member[];
-	adults?: Member[];
-	kids?: Member[];
 	activityForm = new FormGroup({
 		title: new FormControl('', Validators.required),
 	});
-	private eventStarts?: Date;
-	private eventEnds?: Date;
+	public checkedMemberIDs: string[] = [];
+
+	get members(): IMemberContext[] | undefined {
+		const members = this.team?.dto?.members;
+		if (!members) {
+			return undefined;
+		}
+		return members.map(memberContextFromBrief);
+	}
 
 	constructor(
 		route: ActivatedRoute,
@@ -104,12 +107,6 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		this.showSlotForm = false;
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
-	onMemberSelectChanged(m: Member, event: Event): void {
-		const { detail } = (event as CustomEvent);
-		m.isChecked = detail.checked;
-	}
-
 	// TODO(fix): protected onCommuneIdsChanged() {
 	//     super.onCommuneIdsChanged();
 	//     this.subscriptions.push(this.memberService.watchByCommuneId(this.communeRealId).subscribe(members => {
@@ -119,6 +116,12 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	//         this.kids = this.members.filter(m => m.dto.age === 'child');
 	//     }));
 	// }
+
+	// tslint:disable-next-line:prefer-function-over-method
+	onMemberSelectChanged(m: Member, event: Event): void {
+		const { detail } = (event as CustomEvent);
+		m.isChecked = detail.checked;
+	}
 
 	newSlot(): void {
 		this.showSlotForm = true;
@@ -132,7 +135,6 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		this.titleInput.setFocus()
 			.catch(this.errorLogger.logErrorHandler('failed to set focus to title input'));
 	}
-
 
 	addContact(): void {
 		this.contacts.push(1);
@@ -159,13 +161,14 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 			title: activityFormValue.title,
 			slots: this.slots,
 		};
-		{
-			const selectedMembers = this.members?.filter(m => m.isChecked);
+
+		{ // Populate selected members
+			const selectedMembers = this.members?.filter(m => this.checkedMemberIDs.some(v => v === m.id));
 			if (selectedMembers?.length) {
 				dto.memberIDs = selectedMembers.map(m => m.id)
 					.filter(v => !!v) as string[];
-				dto.participants = selectedMembers.map((m: Member) => {
-					const s: SlotParticipant = { type: 'member', id: m.id, title: m.title };
+				dto.participants = selectedMembers.map(m => {
+					const s: SlotParticipant = { type: 'member', id: m.id, title: m.brief?.title || m.id };
 					return s;
 				});
 			}
@@ -227,4 +230,26 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		this.eventEnds = times.to;
 	}
 
+	// public addNewMember(): void {
+	// 	alert('Not implemented yet. Please add from members page for now.');
+	// }
+
+	public isMemberChecked(member: IMemberContext): boolean {
+		const { id } = member;
+		return this.checkedMemberIDs.some(v => v === id);
+	}
+
+	public isMemberCheckChanged(member: IMemberContext, event: Event): void {
+		const ce = event as CustomEvent;
+		console.log('isMemberCheckChanged()', ce);
+		const checked = ce.detail.value === 'on';
+		const { id } = member;
+		if (!checked) {
+			this.checkedMemberIDs = this.checkedMemberIDs.filter(v => v !== id);
+			return;
+		}
+		if (!this.checkedMemberIDs.some(v => v === id)) {
+			this.checkedMemberIDs.push(id);
+		}
+	}
 }

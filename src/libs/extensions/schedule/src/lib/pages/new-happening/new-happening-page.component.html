@@ -18,19 +18,17 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="cardy">
 
-	<ion-card>
-		<ion-card-header>
-			<ion-segment [(ngModel)]="happeningType" (ionChange)="segmentChanged()">
-				<ion-segment-button value="recurring">Recurring</ion-segment-button>
-				<ion-segment-button value="single">One-timer</ion-segment-button>
-				<!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
-				<!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
-			</ion-segment>
-		</ion-card-header>
+	<ion-segment [(ngModel)]="happeningType" (ionChange)="segmentChanged()">
+		<ion-segment-button value="recurring">Recurring</ion-segment-button>
+		<ion-segment-button value="single">One-timer</ion-segment-button>
+		<!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
+		<!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
+	</ion-segment>
 
-		<form [formGroup]="activityForm" (ngSubmit)="createHappening()">
+	<form [formGroup]="activityForm" (ngSubmit)="createHappening()">
+		<ion-card>
 			<ion-item>
 				<!--            <ion-label>Title</ion-label>-->
 				<ion-input placeholder="Title" style="font-weight: bold" type="text" formControlName="title" #titleInput
@@ -46,76 +44,62 @@
 				</ng-container>
 				<ion-input type="number" style="text-align: right"></ion-input>
 			</ion-item>
-		</form>
 
-		<ion-item-group>
-			<ion-item-divider color="light" *ngIf="happeningType === 'recurring' && !isToDo">
-				<ion-label>When & Where</ion-label>
-				<ion-buttons slot="end" *ngIf="slots.length && !showSlotForm">
-					<ion-button title="Add slot" (click)="newSlot()">
-						<ion-icon name="add"></ion-icon>
-					</ion-button>
-				</ion-buttons>
-			</ion-item-divider>
-			<sneat-recurring-slots [slots]="slots"
-														 (slotRemoved)="onSlotRemoved($event)"
-			></sneat-recurring-slots>
-			<ng-container *ngIf="showSlotForm">
-				<sneat-recurring-slot-form [happeningType]="happeningType"
-																	 [isToDo]="isToDo"
-																	 [slots]="slots"
-																	 (slotAdded)="onSlotAdded()"
-																	 (eventTimesChanged)="onEventTimesChanged($event)"
-				></sneat-recurring-slot-form>
-			</ng-container>
-		</ion-item-group>
-
-		<!--    <div [style.display]="happeningKind === 'single' || !showSlotForm && slots.length ? '' : 'none'">-->
-		<div>
 			<ion-item-group>
-				<ng-container *ngIf="members else noMembers">
-					<ion-radio-group>
-						<ng-container *ngIf="adults?.length">
-							<ion-item-divider color="light">
-								<ion-label *ngIf="isToDo">Assign to (adults)</ion-label>
-								<ion-label *ngIf="!isToDo">Attendees (adults)</ion-label>
-								<ion-buttons slot="end">
-									<ion-button title="Add member">
-										<ion-icon name="add"></ion-icon>
-									</ion-button>
-								</ion-buttons>
-							</ion-item-divider>
-							<ion-item *ngFor="let member of adults; trackBy: id">
-								<ion-label>{{member.title || member.id}}</ion-label>
-								<ion-checkbox slot="start" *ngIf="!isToDo"></ion-checkbox>
-								<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
-							</ion-item>
-						</ng-container>
-						<ng-container *ngIf="kids?.length">
-							<ion-item-divider color="light">
-								<ion-label *ngIf="isToDo">Assign to (kids)</ion-label>
-								<ion-label *ngIf="!isToDo">Attendees (kids)</ion-label>
-								<ion-buttons slot="end">
-									<ion-button title="Add member">
-										<ion-icon name="add"></ion-icon>
-									</ion-button>
-								</ion-buttons>
-							</ion-item-divider>
-							<ion-item *ngFor="let member of kids; trackBy: id">
-								<ion-label>{{member.title || member.id}}</ion-label>
-								<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="member.isChecked"
-															(ionChange)="onMemberSelectChanged(member, $event)"></ion-checkbox>
-								<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
-							</ion-item>
-						</ng-container>
-					</ion-radio-group>
+				<ion-item-divider color="light" *ngIf="happeningType === 'recurring' && !isToDo">
+					<ion-label>When & Where</ion-label>
+					<ion-buttons slot="end" *ngIf="slots.length && !showSlotForm">
+						<ion-button title="Add slot" (click)="newSlot()">
+							<ion-icon name="add"></ion-icon>
+						</ion-button>
+					</ion-buttons>
+				</ion-item-divider>
+				<sneat-recurring-slots [slots]="slots"
+															 (slotRemoved)="onSlotRemoved($event)"
+				></sneat-recurring-slots>
+				<ng-container *ngIf="showSlotForm">
+					<sneat-recurring-slot-form [happeningType]="happeningType"
+																		 [isToDo]="isToDo"
+																		 [slots]="slots"
+																		 (slotAdded)="onSlotAdded()"
+																		 (eventTimesChanged)="onEventTimesChanged($event)"
+					></sneat-recurring-slot-form>
 				</ng-container>
+			</ion-item-group>
+
+			<!--    <div [style.display]="happeningKind === 'single' || !showSlotForm && slots.length ? '' : 'none'">-->
+		</ion-card>
+
+		<ion-card>
+			<ion-card-header>
+				<ion-card-title>Participants</ion-card-title>
+			</ion-card-header>
+			<ion-item-group>
+				<ion-radio-group *ngIf="members?.length else noMembers">
+					<ng-container *ngIf="members?.length">
+						<ion-item-divider color="light">
+							<ion-label *ngIf="isToDo">Assign to</ion-label>
+							<ion-label *ngIf="!isToDo">Family attendees</ion-label>
+<!--							<ion-buttons slot="end">-->
+<!--								<ion-button title="Add member" (click)="addNewMember()">-->
+<!--									<ion-icon name="add"></ion-icon>-->
+<!--								</ion-button>-->
+<!--							</ion-buttons>-->
+						</ion-item-divider>
+						<ion-item *ngFor="let member of members; trackBy: id">
+							<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)" (ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
+							<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
+							<ion-label>{{member.brief?.title || member.id}}</ion-label>
+						</ion-item>
+					</ng-container>
+				</ion-radio-group>
 				<ng-template #noMembers>
 					<ion-item>
-						<ion-label>Loading members...</ion-label>
+						<ion-label>No members.</ion-label>
 					</ion-item>
 				</ng-template>
 			</ion-item-group>
+
 			<ion-item-group>
 				<ion-item-divider color="light">
 					<ion-label>Teachers & Contacts</ion-label>
@@ -125,7 +109,7 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item-divider>
-				<p padding *ngIf="!contacts.length">
+				<p class="ion-padding" *ngIf="!contacts.length">
 					You can specify who teaches a lesson or a babysitter brings your kids to the class.
 				</p>
 				<ng-container *ngIf="contacts.length">
@@ -143,6 +127,18 @@
 					</ion-item>
 				</ng-container>
 			</ion-item-group>
+		</ion-card>
+
+		<ion-card>
+			<ion-list>
+				<ion-item color="danger" *ngIf="activityForm.touched && activityForm.controls['title'].errors">
+					<ng-container *ngIf="isToDo">Task title is required.</ng-container>
+					<ng-container *ngIf="!isToDo">Activity title is required.</ng-container>
+				</ion-item>
+				<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
+				<!--{{ weekdaysForm.errors['required'] }}-->
+				<!--</ion-item>-->
+			</ion-list>
 
 			<div class="ion-padding">
 				<ng-container *ngIf="isToDo">
@@ -155,16 +151,6 @@
 					<ng-container *ngIf="happeningType === 'single'">Add event</ng-container>
 				</ion-button>
 			</div>
-		</div>
-
-		<ion-list>
-			<ion-item color="danger" *ngIf="activityForm.touched && activityForm.controls['title'].errors">
-				<ng-container *ngIf="isToDo">Task title is required.</ng-container>
-				<ng-container *ngIf="!isToDo">Activity title is required.</ng-container>
-			</ion-item>
-			<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
-			<!--{{ weekdaysForm.errors['required'] }}-->
-			<!--</ion-item>-->
-		</ion-list>
-	</ion-card>
+		</ion-card>
+	</form>
 </ion-content>

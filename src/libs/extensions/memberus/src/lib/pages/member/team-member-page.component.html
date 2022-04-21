@@ -52,12 +52,12 @@
 			<ion-col>
 				<ion-card>
 					<ion-list>
-						<ion-item button class="with-buttons" (click)="go('edit-member')">
+						<ion-item class="with-buttons">
 							<ion-label style="font-weight: bold">
 								<ng-container *ngIf="member?.brief?.gender">
 									<ng-container [ngSwitch]="member?.brief?.gender">
-										<span *ngSwitchCase="'male'">🧑</span>
-										<span *ngSwitchCase="'female'">👩</span>
+										<span *ngSwitchCase="'male'" class="ion-margin-end">🧑</span>
+										<span *ngSwitchCase="'female'" class="ion-margin-end">👩</span>
 										<ion-icon name="person" *ngSwitchDefault></ion-icon>
 									</ng-container>
 
@@ -76,10 +76,16 @@
 							<ion-label *ngIf="member?.brief?.gender === 'male' && relatedAs === 'spouse'">My husband</ion-label>
 							<ion-label *ngIf="member?.brief?.gender === 'female' && relatedAs === 'spouse'">My wife</ion-label>
 						</ion-item-divider>
-					</ion-list>
-					<ion-list>
-
-
+						<ion-item>
+							<ion-label>Date of birth</ion-label>
+							<ion-input readonly="readonly"></ion-input>
+						</ion-item>
+						<ion-item>
+							<ion-label>Related to me as</ion-label>
+							<ion-select placeholder="not specified yet" interface="popover" [value]="relatedAs">
+								<ion-select-option value="undisclosed">Undisclosed</ion-select-option>
+							</ion-select>
+						</ion-item>
 						<ng-container *ngIf="member?.dto && (!member?.dto?.gender || !relatedAs)">
 							<ion-item
 								*ngIf="team?.type === 'family' && relatedAs && member?.dto?.userID !== currentUserId">

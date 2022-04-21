@@ -80,6 +80,7 @@
 	<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/members"
 						routerDirection="root"
 						[disabled]="!team"
+						[class.currentPage]="isCurrentPage('members')"
 						(click)="closeMenu()"
 	>
 		<ion-icon name="people-circle-outline" slot="start"></ion-icon>
