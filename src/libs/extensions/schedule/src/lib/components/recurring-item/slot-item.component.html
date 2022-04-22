@@ -1,4 +1,4 @@
-<ion-item button (click)="goActivity()">
+<ion-item button (click)="onSlotClicked($event)">
     <ion-badge color="light" slot="start" style="font-weight: normal; background-color: white;">
         From {{slot?.timing?.starts}}
         <div style="font-size: small; color: #777; text-align: center"><small>ends</small> {{slot?.timing?.ends}}</div>

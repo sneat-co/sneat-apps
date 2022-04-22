@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RecurringItemComponent} from './recurring-item.component';
+import {SlotItemComponent} from './slot-item.component';
 
 describe('ActivityItemComponent', () => {
-	let component: RecurringItemComponent;
-	let fixture: ComponentFixture<RecurringItemComponent>;
+	let component: SlotItemComponent;
+	let fixture: ComponentFixture<SlotItemComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [RecurringItemComponent]
+			declarations: [SlotItemComponent]
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(RecurringItemComponent);
+		fixture = TestBed.createComponent(SlotItemComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

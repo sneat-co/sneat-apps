@@ -3,7 +3,7 @@ import {
 	IAssetBrief,
 	IAssetDto,
 	IContactBrief,
-	IContactDto,
+	IContactDto, IHappeningBrief, IHappeningDto,
 	IListBrief,
 	IListDto,
 	IMemberBrief,
@@ -29,6 +29,7 @@ export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<
 export type IListContext = ITeamItemContext<IListBrief, IListDto>;
 export type IDocumentContext = IAssetContext;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
+export type IHappeningContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
 
 export function createShortCommuneInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {

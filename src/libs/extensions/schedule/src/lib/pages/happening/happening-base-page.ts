@@ -1,25 +1,21 @@
-//tslint:disable:no-unsafe-any
-import {CommuneBasePageParams} from 'sneat-shared/services/params';
-import {OnInit} from '@angular/core';
-import {RxStoreTableService} from 'rxstore';
-import {CommuneBasePage} from 'sneat-shared/pages/commune-base-page';
-import {IHappening} from 'sneat-shared/models/dto/dto-happening';
-import {ICommuneDto} from 'sneat-shared/models/dto/dto-commune';
-import {RegularHappeningKind, SingleHappeningKind} from 'sneat-shared/models/kinds';
-import {HappeningModuleSchema} from '../../../models/db-schemas-by-module';
-import {eq} from '../../../services/interfaces';
+import { OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { IHappeningContext } from '@sneat/team/models';
 
-export abstract class HappeningBasePage extends CommuneBasePage implements OnInit {
+export abstract class HappeningBasePage extends TeamBaseComponent implements OnInit {
 
-	public happeningDto: IHappening;
+	public happening?: IHappeningContext;
 
 	protected constructor(
-		params: CommuneBasePageParams,
-		private readonly happeningService: RxStoreTableService<IHappening,
-			HappeningModuleSchema,
-			typeof SingleHappeningKind | typeof RegularHappeningKind>,
+		className: string,
+		route: ActivatedRoute,
+		params: TeamComponentBaseParams,
+		// private readonly happeningService: RxStoreTableService<IHappening,
+		// 	HappeningModuleSchema,
+		// 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
 	) {
-		super('schedule', params);
+		super(className, route, params);
 	}
 
 	ngOnInit(): void {
@@ -35,32 +31,36 @@ export abstract class HappeningBasePage extends CommuneBasePage implements OnIni
 					window.history.state.communeDto as ICommuneDto);
 			}
 		} else {
-			this.route.queryParamMap.subscribe(params => {
-				const happeningId = params.get('id');
-				if (!happeningId) {
-					return;
-				}
-				this.subscriptions.push(this.happeningService.watchById(happeningId)
-					.subscribe(
-						happeningDto => {
-							if (!happeningDto) {
-								return;
-							}
-							this.setHappeningDto(happeningDto);
-							if (!eq(this.communeRealId, happeningDto.communeId)) {
-								this.setPageCommuneIds('HappeningBasePage.happeningFromObservable', {real: happeningDto.communeId});
-							}
-						},
-						this.errorLogger.logError,
-					));
-			});
+			this.trackUrl();
 		}
 	}
 
-	protected setHappeningDto(dto: IHappening): void {
-		if (!dto) {
-			return;
-		}
-		this.happeningDto = dto;
+	protected setHappeningDto(happening?: IHappeningContext): void {
+		this.happening = happening;
+	}
+
+	private trackUrl(): void {
+		this.route?.queryParamMap.subscribe(params => {
+			const happeningId = params.get('id');
+			if (!happeningId) {
+				return;
+			}
+			// this.happeningService.watchById(happeningId)
+			// 	.pipe(
+			// 		// takeUntil(this.destroyed),
+			// 	)
+			// 	.subscribe(
+			// 		happeningDto => {
+			// 			if (!happeningDto) {
+			// 				return;
+			// 			}
+			// 			this.setHappeningDto(happeningDto);
+			// 			if (!eq(this.communeRealId, happeningDto.communeId)) {
+			// 				this.setPageCommuneIds('HappeningBasePage.happeningFromObservable', { real: happeningDto.communeId });
+			// 			}
+			// 		},
+			// 		this.errorLogger.logError,
+			// 	);
+		});
 	}
 }

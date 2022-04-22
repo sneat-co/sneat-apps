@@ -30,6 +30,10 @@ export interface IHappeningDto extends IHappeningBase, ITeamsRecord {
 	note?: string;
 }
 
+export function happeningBriefFromDto(id: string, dto: IHappeningDto): IHappeningBrief {
+	return {id, ...dto};
+}
+
 export type HappeningType = 'recurring' | 'single';
 
 export type HappeningKind = 'appointment' | 'activity' | 'task';

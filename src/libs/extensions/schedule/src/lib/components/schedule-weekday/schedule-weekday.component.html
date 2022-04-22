@@ -16,8 +16,8 @@
 </ion-item-divider>
 <ng-container *ngIf="day?.slots && day?.slots?.length; else noSlots">
 	<ng-container *ngFor="let slot of day?.slots">
-		<sneat-recurring-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
-		</sneat-recurring-item>
+		<sneat-slot-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
+		</sneat-slot-item>
 	</ng-container>
 </ng-container>
 <ng-template #noSlots>

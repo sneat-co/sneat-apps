@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ISlotItem, NewHappeningParams, TeamDay } from '../../view-models';
-import { isSlotVisible } from '../schedile-slots';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ISlotItem, NewHappeningParams } from '../../view-models';
+import { isSlotVisible } from '../schedule-slots';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
 @Component({

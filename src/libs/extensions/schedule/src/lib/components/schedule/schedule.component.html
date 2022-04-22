@@ -148,14 +148,14 @@
 						[showEvents]="showEvents"
 						[showRegulars]="showRecurrings"
 						[weekday]="oddDay.weekday"
-						(slotClicked)="goActivity($event)"
+						(slotClicked)="onSlotClicked($event)"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
 				<div class="virtual-slide" [@virtualSlide]="evenDay.animationState">
 					<sneat-schedule-day
 						[weekday]="evenDay.weekday"
-						(slotClicked)="goActivity($event)"
+						(slotClicked)="onSlotClicked($event)"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
@@ -174,7 +174,7 @@
 						[showRecurring]="showRecurrings"
 						(goNew)="goNewHappening($event)"
 						(dateSelected)="onDateSelected($event)"
-						(slotClicked)="goActivity($event)"></sneat-schedule-week>
+						(slotClicked)="onSlotClicked($event)"></sneat-schedule-week>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
 				<div class="virtual-slide" [@virtualSlide]="evenWeek.animationState">
@@ -186,7 +186,7 @@
 						[showRecurring]="showRecurrings"
 						(goNew)="goNewHappening($event)"
 						(dateSelected)="onDateSelected($event)"
-						(slotClicked)="goActivity($event)"></sneat-schedule-week>
+						(slotClicked)="onSlotClicked($event)"></sneat-schedule-week>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
 			</div>
@@ -241,7 +241,7 @@
 				<sneat-schedule-weekday [weekday]="weekday"
 																[filter]="filter"
 																[showEvents]="true"
-																(slotClicked)="goActivity($event)"
+																(slotClicked)="onSlotClicked($event)"
 																(dateSelected)="onDateSelected($event)"
 																(goNew)="goNewHappening($event)"
 				></sneat-schedule-weekday>

@@ -1,27 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { DtoRegularActivity, IHappening } from 'sneat-shared/models/dto/dto-happening';
-import { IRegularHappeningService } from 'sneat-shared/services/interfaces';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 import { HappeningBasePage } from '../happening-base-page';
 
 @Component({
-	selector: 'app-activity',
+	selector: 'sneat-regular-happening-page',
 	templateUrl: './regular-happening.page.html',
-	providers: [CommuneBasePageParams],
+	providers: [TeamComponentBaseParams],
 })
-export class RegularHappeningPageComponent extends HappeningBasePage implements OnInit {
+export class RegularHappeningPageComponent extends HappeningBasePage {
 
 	public recurring: DtoRegularActivity;
 
 	constructor(
-		params: CommuneBasePageParams,
+		route: ActivatedRoute,
+		params: TeamComponentBaseParams,
 		regularService: IRegularHappeningService,
 	) {
-		super(params, regularService);
-	}
-
-	ngOnInit(): void {
-		super.ngOnInit();
+		super('RegularHappeningPageComponent', route, params, regularService);
 	}
 
 	protected setHappeningDto(dto: IHappening): void {

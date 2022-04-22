@@ -323,12 +323,14 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	goActivity(slot: ISlotItem): void {
+	onSlotClicked(slot: ISlotItem): void {
+		console.log('ScheduleComponent.onSlotClicked()', slot);
 		const happeningDto: IHappeningDto | undefined = slot.recurring || slot.single;
 		if (!happeningDto) {
 			throw new Error('!happeningDto');
 		}
 		this.errorLogger.logError('not implemented yet');
+		const url = `happening/${happeningDto}`
 		// this.navigateForward(slot.kind, { id: happeningDto.id }, { happeningDto }, { excludeCommuneId: true });
 	}
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ISlotItem } from '../../view-models';
-import { isSlotVisible } from '../schedile-slots';
+import { isSlotVisible } from '../schedule-slots';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
 @Component({
