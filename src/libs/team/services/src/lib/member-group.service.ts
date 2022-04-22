@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatFirestoreService } from '@sneat/api';
 import { IMemberGroupBrief, IMemberGroupDto } from '@sneat/dto';
 import { IMemberGroupContext } from '@sneat/team/models';
-import { TeamItemBaseService } from '@sneat/team/services';
+import { TeamItemBaseService } from './team-item-base.service';
 import { Observable } from 'rxjs';
 
 const dto2brief = (id: string, dto: IMemberGroupDto) => ({ id, title: dto.title });

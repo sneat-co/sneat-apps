@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, SneatPipesModule } from '@sneat/components';
-import { ScheduleComponent } from '@sneat/extensions/schedule';
+import { ScheduleComponent } from '../schedule/schedule.component';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { SlotItemComponent } from '../recurring-item/slot-item.component';
 import { ScheduleDayComponent } from '../schedule-day/schedule-day.component';
