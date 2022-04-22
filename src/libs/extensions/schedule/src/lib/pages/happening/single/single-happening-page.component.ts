@@ -20,8 +20,8 @@ export class SingleHappeningPageComponent extends HappeningBasePage {
 		super(params, singleHappeningService);
 	}
 
-	protected setHappeningDto(dto: IHappening): void {
-		super.setHappeningDto(dto);
+	protected setHappening(dto: IHappening): void {
+		super.setHappening(dto);
 		this.singleHappening = dto as IHappeningSingle;
 	}
 }

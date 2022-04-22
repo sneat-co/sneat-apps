@@ -14,16 +14,16 @@ export const schedulusRoutes: Route[] = [
 			.then(m => m.NewHappeningPageModule),
 		// ...guardRoute,
 	},
+	{
+		path: 'recurring/:recurringID',
+		loadChildren: () => import('./pages/happening/recurring/recurring-happening.page.module')
+			.then(m => m.RecurringHappeningPageModule),
+		// ...guardRoute,
+	},
 	// {
 	// 	path: 'new-task',
 	// 	loadChildren: () => import('./new-happening/new-happening-page.module')
 	// 		.then(m => m.NewHappeningPageModule),
-	// 	...guardRoute,
-	// },
-	// {
-	// 	path: 'regular-activity',
-	// 	loadChildren: () => import('./happening/regular/regular-happening.page.module')
-	// 		.then(m => m.RegularHappeningPageModule),
 	// 	...guardRoute,
 	// },
 	// {

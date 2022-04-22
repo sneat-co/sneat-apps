@@ -1,9 +1,8 @@
-import { OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext } from '@sneat/team/models';
 
-export abstract class HappeningBasePage extends TeamBaseComponent implements OnInit {
+export abstract class HappeningBasePage extends TeamBaseComponent {
 
 	public happening?: IHappeningContext;
 
@@ -16,26 +15,11 @@ export abstract class HappeningBasePage extends TeamBaseComponent implements OnI
 		// 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
 	) {
 		super(className, route, params);
+		this.setHappening(window.history.state.happeningDto as unknown as IHappeningContext);
+		this.trackUrl();
 	}
 
-	ngOnInit(): void {
-		super.ngOnInit();
-		this.setHappeningDto(window.history.state.happeningDto as unknown as IHappening);
-		if (this.happeningDto) {
-			if (!eq(this.happeningDto.communeId, this.communeRealId)) {
-				this.setPageCommuneIds(
-					'HappeningBasePage.ngOnInit',
-					{
-						real: this.happeningDto.communeId,
-					},
-					window.history.state.communeDto as ICommuneDto);
-			}
-		} else {
-			this.trackUrl();
-		}
-	}
-
-	protected setHappeningDto(happening?: IHappeningContext): void {
+	protected setHappening(happening?: IHappeningContext): void {
 		this.happening = happening;
 	}
 

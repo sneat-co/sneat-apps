@@ -1,22 +1,22 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RegularHappeningPageComponent} from './regular-happening-page.component';
+import {RecurringHappeningPageComponent} from './recurring-happening-page.component';
 
 describe('RegularHappeningPage', () => {
-	let component: RegularHappeningPageComponent;
-	let fixture: ComponentFixture<RegularHappeningPageComponent>;
+	let component: RecurringHappeningPageComponent;
+	let fixture: ComponentFixture<RecurringHappeningPageComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [RegularHappeningPageComponent],
+			declarations: [RecurringHappeningPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(RegularHappeningPageComponent);
+		fixture = TestBed.createComponent(RecurringHappeningPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
