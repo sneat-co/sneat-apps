@@ -35,7 +35,7 @@ specifiers:
   '@nrwl/eslint-plugin-nx': 13.10.3
   '@nrwl/jest': 13.10.3
   '@nrwl/linter': 13.10.3
-  '@nrwl/nx-cloud': 13.2.2
+  '@nrwl/nx-cloud': 13.3.1
   '@nrwl/workspace': 13.10.3
   '@nxtend/capacitor': 13.0.0
   '@nxtend/firebase': 12.1.0
@@ -134,7 +134,7 @@ devDependencies:
   '@nrwl/eslint-plugin-nx': 13.10.3_564dbdea5145129821119b5bd77d3843
   '@nrwl/jest': 13.10.3_ts-node@10.7.0
   '@nrwl/linter': 13.10.3_ac05dd2799c3b83e4ec5f1e40cd819ea
-  '@nrwl/nx-cloud': 13.2.2
+  '@nrwl/nx-cloud': 13.3.1
   '@nrwl/workspace': 13.10.3_6322cfd23f6bfbae767e7f615df794b2
   '@nxtend/capacitor': 13.0.0_@nrwl+workspace@13.10.3
   '@nxtend/firebase': 12.1.0_@nrwl+workspace@13.10.3
@@ -3304,6 +3304,14 @@ packages:
       - webpack-cli
     dev: false
 
+  /@nrwl/cli/13.10.2:
+    resolution: {integrity: sha512-e9TK7CBaOb2jvnnuypPTox+l3vr1Lubjrq7rvyVrUDfSFsRe33Em1FTEdT7RCwjzF1ypvGkF0Fm2Cxi9/ljxVg==}
+    dependencies:
+      nx: 13.10.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@nrwl/cli/13.10.3:
     resolution: {integrity: sha512-E5vBW3pSg0fW6F8VS2hTd5nf2UulJQcXGNK5jKVV9AwIfWUT1Sm91GmngU/OmS0uAaqzcikTPP19BUUn8hR05Q==}
     dependencies:
@@ -3412,6 +3420,19 @@ packages:
       '@nrwl/tao': 12.10.1
       ejs: 3.1.6
       ignore: 5.2.0
+      rxjs: 6.6.7
+      semver: 7.3.4
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@nrwl/devkit/13.10.2:
+    resolution: {integrity: sha512-7jM86MAHc/vvQ4jJt8QjMncC0lFfhkxZ/d5Nt5b+s3AUQgFPkwg1TXt/uj+qo0goS/Mbv5UNVIdMGlEchnbvVQ==}
+    dependencies:
+      ejs: 3.1.6
+      ignore: 5.2.0
+      nx: 13.10.2
       rxjs: 6.6.7
       semver: 7.3.4
       tslib: 2.3.1
@@ -3577,10 +3598,11 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@nrwl/nx-cloud/13.2.2:
-    resolution: {integrity: sha512-ryGE3JBkSGie0Oy+hFHfiYVNt1BQlNGa3Q7RjeZjILFyNFXkSFzufWYCt1gIRiGlQ7+Q48t1m6gLi2afElNGmg==}
+  /@nrwl/nx-cloud/13.3.1:
+    resolution: {integrity: sha512-txVZuDQE7KkpTLNVh4Rr7zWeCudqFt/nJEahaRIudm8uc6HoM41O63976zKG1xEtBbblBQpUBIdmOwSsSRBVbg==}
     hasBin: true
     dependencies:
+      '@nrwl/devkit': 13.10.2
       axios: 0.21.4
       chalk: 4.1.0
       node-machine-id: 1.1.12
@@ -3588,6 +3610,7 @@ packages:
       tar: 6.1.11
     transitivePeerDependencies:
       - debug
+      - supports-color
     dev: true
 
   /@nrwl/storybook/13.10.3_bb0257c5df00250e181bea9871b8f21f:
@@ -3633,6 +3656,15 @@ packages:
       tmp: 0.2.1
       tslib: 2.3.1
       yargs-parser: 20.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@nrwl/tao/13.10.2:
+    resolution: {integrity: sha512-Eq/u4tRRRtrMYBormdeTrRFj/rpcP5fsa3QrwcHjUSNnQDM/FZ9kt7fRgbnh+2QzdTJnU4QmaX6t4Kt+qYtsTQ==}
+    hasBin: true
+    dependencies:
+      nx: 13.10.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -9778,6 +9810,46 @@ packages:
     hasBin: true
     dependencies:
       '@nrwl/cli': 13.10.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /nx/13.10.2:
+    resolution: {integrity: sha512-6ac/7DO66asndgsMVC+YR5oa0jfEmmXjmE19gvIuAJtii00dSKd6o+n1G8lbl8RPZcz43wVY0zwV/eMpCSNFXw==}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@nrwl/cli': 13.10.2
+      '@nrwl/tao': 13.10.2
+      '@parcel/watcher': 2.0.4
+      '@swc-node/register': 1.4.2
+      '@swc/core': 1.2.159
+      chalk: 4.1.0
+      chokidar: 3.5.2
+      cli-cursor: 3.1.0
+      cli-spinners: 2.6.1
+      dotenv: 10.0.0
+      enquirer: 2.3.6
+      fast-glob: 3.2.7
+      figures: 3.2.0
+      flat: 5.0.2
+      fs-extra: 9.1.0
+      glob: 7.1.4
+      ignore: 5.2.0
+      jsonc-parser: 3.0.0
+      minimatch: 3.0.4
+      npm-run-path: 4.0.1
+      open: 8.4.0
+      rxjs: 6.6.7
+      rxjs-for-await: 0.0.2_rxjs@6.6.7
+      semver: 7.3.4
+      tar-stream: 2.2.0
+      tmp: 0.2.1
+      tsconfig-paths: 3.12.0
+      tslib: 2.3.1
+      v8-compile-cache: 2.3.0
+      yargs: 17.4.1
+      yargs-parser: 21.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
