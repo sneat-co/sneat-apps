@@ -65,7 +65,7 @@ specifiers:
   karma: 6.3.19
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
-  karma-jasmine: 4.0.2
+  karma-jasmine: 5.0.0
   karma-jasmine-html-reporter: 1.7.0
   ng-packagr: 13.3.1
   nx: 13.10.3
@@ -155,8 +155,8 @@ devDependencies:
   karma: 6.3.19
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
-  karma-jasmine: 4.0.2_karma@6.3.19
-  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@4.0.2+karma@6.3.19
+  karma-jasmine: 5.0.0_karma@6.3.19
+  karma-jasmine-html-reporter: 1.7.0_karma-jasmine@5.0.0+karma@6.3.19
   ng-packagr: 13.3.1_ff84aad7de6d94d777554dda1039b43b
   nx: 13.10.3
   postcss: 8.4.12
@@ -8256,8 +8256,8 @@ packages:
       filelist: 1.0.2
       minimatch: 3.0.5
 
-  /jasmine-core/3.10.1:
-    resolution: {integrity: sha512-ooZWSDVAdh79Rrj4/nnfklL3NQVra0BcuhcuWoAwwi+znLDoUeH87AFfeX8s+YeYi6xlv5nveRyaA1v7CintfA==}
+  /jasmine-core/4.1.0:
+    resolution: {integrity: sha512-8E8BiffCL8sBwK1zU9cbavLe8xpJAgOduSJ6N8PJVv8VosQ/nxVTuXj2kUeHxTlZBVvh24G19ga7xdiaxlceKg==}
     dev: true
 
   /jasmine-marbles/0.8.4_rxjs@7.5.5:
@@ -9025,7 +9025,7 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@4.0.2+karma@6.3.19:
+  /karma-jasmine-html-reporter/1.7.0_karma-jasmine@5.0.0+karma@6.3.19:
     resolution: {integrity: sha512-pzum1TL7j90DTE86eFt48/s12hqwQuiD+e5aXx2Dc9wDEn2LfGq6RoAxEZZjFiN0RDSCOnosEKRZWxbQ+iMpQQ==}
     peerDependencies:
       jasmine-core: '>=3.8'
@@ -9033,16 +9033,16 @@ packages:
       karma-jasmine: '>=1.1'
     dependencies:
       karma: 6.3.19
-      karma-jasmine: 4.0.2_karma@6.3.19
+      karma-jasmine: 5.0.0_karma@6.3.19
     dev: true
 
-  /karma-jasmine/4.0.2_karma@6.3.19:
-    resolution: {integrity: sha512-ggi84RMNQffSDmWSyyt4zxzh2CQGwsxvYYsprgyR1j8ikzIduEdOlcLvXjZGwXG/0j41KUXOWsUCBfbEHPWP9g==}
-    engines: {node: '>= 10'}
+  /karma-jasmine/5.0.0_karma@6.3.19:
+    resolution: {integrity: sha512-dsFkCoTwyoNyQnMgegS72wIA/2xPDJG5yzTry0448U6lAY7P60Wgg4UuLlbdLv8YHbimgNpDXjjmfPdc99EDWQ==}
+    engines: {node: '>=12'}
     peerDependencies:
-      karma: '*'
+      karma: ^6.0.0
     dependencies:
-      jasmine-core: 3.10.1
+      jasmine-core: 4.1.0
       karma: 6.3.19
     dev: true
 
