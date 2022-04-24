@@ -62,7 +62,7 @@
     "rxfire": "6.0.3",
     "rxjs": "7.5.5",
     "tabulator-tables": "5.2.2",
-    "tslib": "2.3.1",
+    "tslib": "2.4.0",
     "zone.js": "0.11.5"
   },
   "devDependencies": {
