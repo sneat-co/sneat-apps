@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { HappeningType, IRecurringHappeningDto, IRecurringSlot, SlotParticipant } from '@sneat/dto';
+import { HappeningType, IRecurringHappeningDto, IHappeningSlot, SlotParticipant } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, Member } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
@@ -23,9 +23,9 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	isToDo: boolean;
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	happeningType: HappeningType = 'recurring';
-	slots: IRecurringSlot[] = [];
+	slots: IHappeningSlot[] = [];
 	contacts: number[] = [];
-	showSlotForm = true;
+	showSlotForm = false;
 	public date: string;
 	activityForm = new FormGroup({
 		title: new FormControl('', Validators.required),
@@ -96,16 +96,12 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		history.replaceState(history.state, document.title, href);
 	}
 
-	onSlotRemoved(slots: IRecurringSlot[]): void {
+	onSlotRemoved(slots: IHappeningSlot[]): void {
 		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
 		this.slots = slots;
 		this.showSlotForm = !this.slots.length;
 	}
 
-	onSlotAdded(): void {
-		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', this.slots.length);
-		this.showSlotForm = false;
-	}
 
 	// TODO(fix): protected onCommuneIdsChanged() {
 	//     super.onCommuneIdsChanged();
@@ -224,11 +220,11 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		// }
 	}
 
-	onEventTimesChanged(times: { from: Date; to: Date }): void {
-		console.log('NewHappeningPage.onEventTimesChanged() =>', times);
-		this.eventStarts = times.from;
-		this.eventEnds = times.to;
-	}
+	// onEventTimesChanged(times: { from: Date; to: Date }): void {
+	// 	console.log('NewHappeningPage.onEventTimesChanged() =>', times);
+	// 	this.eventStarts = times.from;
+	// 	this.eventEnds = times.to;
+	// }
 
 	// public addNewMember(): void {
 	// 	alert('Not implemented yet. Please add from members page for now.');

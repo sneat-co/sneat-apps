@@ -15,7 +15,7 @@ export interface IHappeningBase {
 	title: string;
 	activityType?: ActivityType;
 	levels?: Level[];
-	slots?: IRecurringSlot[];
+	slots?: IHappeningSlot[];
 }
 
 export interface IHappeningBrief extends IHappeningBase {
@@ -31,7 +31,7 @@ export interface IHappeningDto extends IHappeningBase, ITeamsRecord {
 }
 
 export function happeningBriefFromDto(id: string, dto: IHappeningDto): IHappeningBrief {
-	return {id, ...dto};
+	return { id, ...dto };
 }
 
 export type HappeningType = 'recurring' | 'single';
@@ -56,12 +56,18 @@ type MonthlyDay = -5 | -4 | -3 | -2 | -1
 // tslint:disable-next-line:no-magic-numbers
 	| 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28;
 
-export interface ITiming {
-	starts: string;
-	ends?: string;
+export interface IDateTime  {
+	date?: string;
+	time: string;
 }
 
-export interface IRecurringSlotTiming extends ITiming {
+export interface ITiming {
+	start: IDateTime;
+	end?: IDateTime;
+	durationMinutes?: number;
+}
+
+export interface IHappeningSlotTiming extends ITiming {
 	repeats: Repeats;
 	weekdays?: WeekdayCode2[];
 	weeks?: number[];
@@ -80,7 +86,7 @@ export interface IHappeningTask {
 	};
 }
 
-export interface IRecurringSlot extends IRecurringSlotTiming {
+export interface IHappeningSlot extends IHappeningSlotTiming {
 	readonly id: string;
 	readonly groupIds?: string[];
 	location?: SlotLocation; // TODO: make readonly

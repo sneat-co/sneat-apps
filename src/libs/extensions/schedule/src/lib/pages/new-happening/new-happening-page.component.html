@@ -46,25 +46,9 @@
 			</ion-item>
 
 			<ion-item-group>
-				<ion-item-divider color="light" *ngIf="happeningType === 'recurring' && !isToDo">
-					<ion-label>When & Where</ion-label>
-					<ion-buttons slot="end" *ngIf="slots.length && !showSlotForm">
-						<ion-button title="Add slot" (click)="newSlot()">
-							<ion-icon name="add"></ion-icon>
-						</ion-button>
-					</ion-buttons>
-				</ion-item-divider>
 				<sneat-recurring-slots [slots]="slots"
 															 (slotRemoved)="onSlotRemoved($event)"
 				></sneat-recurring-slots>
-				<ng-container *ngIf="showSlotForm">
-					<sneat-recurring-slot-form [happeningType]="happeningType"
-																		 [isToDo]="isToDo"
-																		 [slots]="slots"
-																		 (slotAdded)="onSlotAdded()"
-																		 (eventTimesChanged)="onEventTimesChanged($event)"
-					></sneat-recurring-slot-form>
-				</ng-container>
 			</ion-item-group>
 
 			<!--    <div [style.display]="happeningKind === 'single' || !showSlotForm && slots.length ? '' : 'none'">-->
@@ -80,14 +64,15 @@
 						<ion-item-divider color="light">
 							<ion-label *ngIf="isToDo">Assign to</ion-label>
 							<ion-label *ngIf="!isToDo">Family attendees</ion-label>
-<!--							<ion-buttons slot="end">-->
-<!--								<ion-button title="Add member" (click)="addNewMember()">-->
-<!--									<ion-icon name="add"></ion-icon>-->
-<!--								</ion-button>-->
-<!--							</ion-buttons>-->
+							<!--							<ion-buttons slot="end">-->
+							<!--								<ion-button title="Add member" (click)="addNewMember()">-->
+							<!--									<ion-icon name="add"></ion-icon>-->
+							<!--								</ion-button>-->
+							<!--							</ion-buttons>-->
 						</ion-item-divider>
 						<ion-item *ngFor="let member of members; trackBy: id">
-							<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)" (ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
+							<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)"
+														(ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
 							<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
 							<ion-label>{{member.brief?.title || member.id}}</ion-label>
 						</ion-item>

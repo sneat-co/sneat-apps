@@ -7,6 +7,7 @@ import { SneatPipesModule } from '@sneat/components';
 import { HappeningCommonModule } from './happening-common.module';
 import { RecurringSlotFormComponent } from './recurring-slot-form/recurring-slot-form.component';
 import { RecurringSlotsComponent } from './recurring-slots/recurring-slots.component';
+import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
 
 @NgModule({
 	imports: [
@@ -20,11 +21,8 @@ import { RecurringSlotsComponent } from './recurring-slots/recurring-slots.compo
 	declarations: [
 		RecurringSlotsComponent,
 		RecurringSlotFormComponent,
+		SingleSlotFormComponent,
 	],
-	exports: [
-		RecurringSlotsComponent,
-		RecurringSlotFormComponent,
-	],
+	exports: [RecurringSlotsComponent, RecurringSlotFormComponent],
 })
-export class RecurringCommonModule {
-}
+export class RecurringCommonModule {}

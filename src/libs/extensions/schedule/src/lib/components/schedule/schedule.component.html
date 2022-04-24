@@ -215,7 +215,7 @@
 					</ion-label>
 				</ion-item>
 				<ion-item button *ngFor="let slot of recurring.brief.slots; trackBy: index" (click)="goRegular(recurring)">
-					<ion-badge color="light" slot="start">{{slot.starts}}</ion-badge>
+					<ion-badge color="light" slot="start">{{slot.start.time}}</ion-badge>
 					<ion-label text-wrap>
 						<p>
 							<ion-badge color="light" style="margin-right: 4px;"
@@ -223,9 +223,9 @@
 						</p>
 						<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
 							@ {{slot.location.title || slot.location.address}},
-							ends at {{slot.ends}}</p>
+							ends at {{slot.end?.time}}</p>
 						<ng-template #noLocation>
-							<p>Ends at {{slot.ends}}</p>
+							<p>Ends at {{slot.end?.time}}</p>
 						</ng-template>
 					</ion-label>
 				</ion-item>

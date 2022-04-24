@@ -2,10 +2,10 @@
 //tslint:disable:no-unbound-method
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { isoStringsToDate } from '@sneat/core';
-import { HappeningType, IRecurringSlot, SlotLocation, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, IHappeningSlot, SlotLocation, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { wd2 } from '../../view-models';
@@ -28,7 +28,7 @@ export class RecurringSlotFormComponent implements OnInit {
 
 	@Input() happeningType: HappeningType = 'recurring';
 	@Input() isToDo = false;
-	@Input() slots?: IRecurringSlot[];
+	@Input() slots?: IHappeningSlot[];
 	@Output() slotAdded = new EventEmitter<void>();
 	@Output() eventTimesChanged = new EventEmitter<{ from: Date; to: Date }>();
 
@@ -78,6 +78,7 @@ export class RecurringSlotFormComponent implements OnInit {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly alertCtrl: AlertController,
+		protected readonly modalCtrl: ModalController,
 	) {
 		const now = new Date();
 		this.minDate = now.getFullYear()
@@ -88,6 +89,11 @@ export class RecurringSlotFormComponent implements OnInit {
 		if (preselectedWd) {
 			this.weekdaysForm.controls[preselectedWd].setValue(true);
 		}
+	}
+
+	dismissModal(): void {
+		this.modalCtrl.dismiss()
+			.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
 	}
 
 	ngOnInit(): void {
@@ -165,11 +171,15 @@ export class RecurringSlotFormComponent implements OnInit {
 			return;
 		}
 		const formValue = this.slotForm.value;
-		const slot: IRecurringSlot = {
+		const slot: IHappeningSlot = {
 			id: newRandomId({ len: 3 }),
 			repeats: 'weekly',
-			starts: this.timeStarts.value as string,
-			ends: this.timeEnds.value as string,
+			start: {
+				time: this.timeStarts.value as string,
+			},
+			end: {
+				time: this.timeEnds.value as string,
+			},
 			weekdays: Object.entries(this.weekdaysForm.value)
 				.filter(entry => entry[1])
 				.map(entry => entry[0]) as WeekdayCode2[],

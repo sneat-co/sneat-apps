@@ -4,7 +4,8 @@ import { INavContext } from '@sneat/core';
 import {
 	happeningBriefFromDto,
 	IHappeningBrief,
-	IRecurringHappeningDto, IRecurringSlot,
+	IHappeningSlot,
+	IRecurringHappeningDto,
 	ISingleHappeningDto,
 	WeekdayCode2,
 } from '@sneat/dto';
@@ -30,6 +31,9 @@ export function eventToSlot(id: string, singleHappening: ISingleHappeningDto): I
 	if (!singleHappening.title) {
 		throw new Error('!singleHappening.title');
 	}
+	if (!singleHappening.dtStarts) {
+		throw new Error('!singleHappening.dtStarts');
+	}
 	// const wd = jsDayToWeekday(date.getDay());
 	// noinspection UnnecessaryLocalVariableJS
 	const slot: ISlotItem = {
@@ -38,8 +42,12 @@ export function eventToSlot(id: string, singleHappening: ISingleHappeningDto): I
 		title: singleHappening.title,
 		repeats: 'once',
 		timing: {
-			starts: singleHappening.dtStarts ? timeToStr(singleHappening.dtStarts) : '',
-			ends: singleHappening.dtEnds ? timeToStr(singleHappening.dtEnds) : undefined,
+			start: {
+				time: timeToStr(singleHappening.dtStarts) || '',
+			},
+			end: singleHappening.dtEnds ? {
+				time: timeToStr(singleHappening.dtEnds),
+			} : undefined,
 		},
 		// weekdays: singleHappening.weekdays,
 		participants: singleHappening.participants,
@@ -61,13 +69,13 @@ export function eventToSlot(id: string, singleHappening: ISingleHappeningDto): I
 // 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 // }
 
-const slotItemFromRecurringSlot = (r: IHappeningBrief, rs: IRecurringSlot): ISlotItem => ({
+const slotItemFromRecurringSlot = (r: IHappeningBrief, rs: IHappeningSlot): ISlotItem => ({
 	happening: r,
 	recurring: r,
 	title: r.title,
 	levels: r.levels,
 	repeats: rs.repeats,
-	timing: { starts: rs.starts, ends: rs.ends },
+	timing: { start: rs.start, end: rs.end },
 });
 
 const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
@@ -288,7 +296,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 						happening: recurring.brief,
 						title: dto.title,
 						repeats: slot.repeats,
-						timing: { starts: slot.starts, ends: slot.ends },
+						timing: { start: slot.start, end: slot.end },
 						location: slot.location,
 						levels: dto.levels,
 						participants: dto.participants,
