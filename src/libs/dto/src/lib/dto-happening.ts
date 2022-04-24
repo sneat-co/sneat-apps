@@ -100,11 +100,8 @@ export interface ISingleHappeningDto extends IHappeningDto {
 	readonly dtStarts?: number; // UTC
 	readonly dtEnds?: number;   // UTC
 	readonly weekdays?: WeekdayCode2[];
-	readonly communeIdDates?: string[]; // ISO date strings prefixed with communeId e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
+	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	readonly prices?: IPrice[];
-}
-
-export interface IHappeningActivity extends IHappeningDto {
 }
 
 export interface DtoSingleTask extends ISingleHappeningDto {
