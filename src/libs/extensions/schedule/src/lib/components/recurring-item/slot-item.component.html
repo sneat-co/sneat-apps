@@ -1,7 +1,7 @@
 <ion-item button (click)="onSlotClicked($event)">
     <ion-badge color="light" slot="start" style="font-weight: normal; background-color: white;">
-        From {{slot?.timing?.starts}}
-        <div style="font-size: small; color: #777; text-align: center"><small>ends</small> {{slot?.timing?.ends}}</div>
+        From {{slot?.timing?.start?.time}}
+        <div style="font-size: small; color: #777; text-align: center" *ngIf="slot?.timing?.end"><small>ends</small> {{slot?.timing?.end?.time}}</div>
     </ion-badge>
     <ion-label class="ion-wrap">
         <h3 style="font-size: 1em; margin-bottom: 0.4em">{{slot?.title}}</h3>
