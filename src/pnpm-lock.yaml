@@ -61,7 +61,7 @@ specifiers:
   idb: 7.0.1
   ionicons: 6.0.1
   jest: 27.5.1
-  jest-preset-angular: 11.1.1
+  jest-preset-angular: 11.1.2
   karma: 6.3.19
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
@@ -151,7 +151,7 @@ devDependencies:
   eslint-config-prettier: 8.5.0_eslint@8.14.0
   eslint-plugin-cypress: 2.12.1_eslint@8.14.0
   jest: 27.5.1_ts-node@10.7.0
-  jest-preset-angular: 11.1.1_49fa03b2b5192dd9d6c0a6b384670a72
+  jest-preset-angular: 11.1.2_49fa03b2b5192dd9d6c0a6b384670a72
   karma: 6.3.19
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
@@ -8610,8 +8610,8 @@ packages:
     dependencies:
       jest-resolve: 27.5.1
 
-  /jest-preset-angular/11.1.1_49fa03b2b5192dd9d6c0a6b384670a72:
-    resolution: {integrity: sha512-ZlYiKJhAQSU9wIjncX59xutcj49R4MiDsTPSwZiwdTAHQvHm32MS6SGimQIVBqh1DukfwYX0NXKS0D/onLAsLQ==}
+  /jest-preset-angular/11.1.2_49fa03b2b5192dd9d6c0a6b384670a72:
+    resolution: {integrity: sha512-qPvOP6wnLP8M01TDVSa3UC3PcDWxoj87T58mWEp5yWlWPrXBJ6rhnTEI+HPmZLyehwlK686+O/49hwFRVXFP0A==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0}
     peerDependencies:
       '@angular-devkit/build-angular': '>=0.1002.4'
