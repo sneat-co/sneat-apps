@@ -46,21 +46,19 @@
 		</ion-label>
 
 		<ion-buttons slot="end" >
-			<!--				[style.display]="segment === 'day' && isToday() || segment === 'week' && isCurrentWeek() ? 'none' : 'inherit'"-->
-			<ion-button *ngIf="!isToday()"
-									[color]="isToday() ? 'medium' : 'primary'"
-									[title]="tab === 'day' ? 'Today' : 'This week'"
-
-									(click)="setToday()">
-				<ion-icon slot="start" name="today-outline"></ion-icon>
-<!--				<ion-label>Today</ion-label>-->
-			</ion-button>
 			<ion-button title="Add" (click)="goNewHappening({type: 'single', date: activeDay.date})">
 				<ion-icon name="add-circle-outline" slot="start"></ion-icon>
 			</ion-button>
 			<ion-button [title]="tab === 'day' ? 'Previous day' : 'Previous week'"
 									(click)="changeDay(tab === 'day' ? -1 : -7)">
 				<ion-icon name="chevron-back-sharp"></ion-icon>
+			</ion-button>
+			<ion-button [disabled]="isToday()"
+									[color]="isToday() ? 'medium' : 'primary'"
+									[title]="tab === 'day' ? 'Today' : 'This week'"
+
+									(click)="setToday()">
+				<ion-icon slot="start" name="today-outline"></ion-icon>
 			</ion-button>
 			<ion-button [title]="tab === 'day' ? 'Next day' : 'Next week'"
 									(click)="changeDay(tab === 'day' ? +1 : +7)">
