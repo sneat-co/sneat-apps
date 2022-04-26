@@ -34,6 +34,21 @@
 				<ion-input placeholder="Title (required field)" style="font-weight: bold" type="text" formControlName="title" #titleInput
 									 (keyup.enter)="createHappening()"></ion-input>
 			</ion-item>
+
+			<ion-item-group>
+				<sneat-recurring-slots *ngIf="happeningType === 'recurring'" [slots]="slots"
+															 (slotRemoved)="onSlotRemoved($event)"
+				></sneat-recurring-slots>
+				<sneat-single-slot-form *ngIf="happeningType === 'single'"></sneat-single-slot-form>
+			</ion-item-group>
+
+			<!--    <div [style.display]="happeningKind === 'single' || !showSlotForm && slots.length ? '' : 'none'">-->
+		</ion-card>
+
+		<ion-card>
+			<ion-item-divider color="light">
+				<ion-label>Pricing</ion-label>
+			</ion-item-divider>
 			<ion-item>
 				<ng-container *ngIf="isToDo">
 					<ion-label>Cost</ion-label>
@@ -48,15 +63,6 @@
 					<ion-select-option value="USD">USD</ion-select-option>
 				</ion-select>
 			</ion-item>
-
-			<ion-item-group>
-				<sneat-recurring-slots *ngIf="happeningType === 'recurring'" [slots]="slots"
-															 (slotRemoved)="onSlotRemoved($event)"
-				></sneat-recurring-slots>
-				<sneat-single-slot-form *ngIf="happeningType === 'single'"></sneat-single-slot-form>
-			</ion-item-group>
-
-			<!--    <div [style.display]="happeningKind === 'single' || !showSlotForm && slots.length ? '' : 'none'">-->
 		</ion-card>
 
 		<ion-card>

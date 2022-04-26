@@ -215,7 +215,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			return;
 		}
 		this.params.teamNavService
-			.navigateForwardToTeamPage(this.team, 'new-activity', {})
+			.navigateForwardToTeamPage(this.team, 'new-happening', {})
 			.then(this.errorLogger.logError);
 	}
 

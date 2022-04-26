@@ -172,7 +172,7 @@ const allCommuneMenuItems: CommuneMenuItem[] = [
 		defaultEmoji: '📅',
 		defaultTitle: 'Schedule',
 		newDefaultTitle: 'New activity',
-		pages: { main: 'schedule', new: 'new-activity' },
+		pages: { main: 'schedule', new: 'new-happening' },
 	},
 	{
 		code: CommuneTopPage.terms,

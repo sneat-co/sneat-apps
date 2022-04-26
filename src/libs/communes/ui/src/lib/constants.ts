@@ -42,7 +42,7 @@ export type CommunePages = CommuneTopPages
 	| 'document'
 	| 'event'
 	| 'group'
-	| 'new-activity'
+	| 'new-happening'
 	| 'new-asset'
 	| 'new-contact'
 	| 'new-document'

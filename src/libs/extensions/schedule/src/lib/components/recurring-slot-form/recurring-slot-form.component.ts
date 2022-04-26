@@ -72,8 +72,8 @@ export class RecurringSlotFormComponent implements OnInit {
 			sa: new FormControl(false),
 			su: new FormControl(false),
 		},
-		weekdayRequired);
-
+		weekdayRequired,
+	);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

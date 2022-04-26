@@ -9,7 +9,7 @@ export const schedulusRoutes: Route[] = [
 		// ...guardRoute,
 	},
 	{
-		path: 'new-activity',
+		path: 'new-happening',
 		loadChildren: () => import('./pages/new-happening/new-happening-page.module')
 			.then(m => m.NewHappeningPageModule),
 		// ...guardRoute,
