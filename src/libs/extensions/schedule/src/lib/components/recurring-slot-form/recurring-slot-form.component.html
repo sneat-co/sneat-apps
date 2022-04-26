@@ -1,8 +1,8 @@
-<ion-item-divider color="light">
-	<ion-label>New slot</ion-label>
+<ion-item-divider color="primary">
+	<ion-label style="font-weight: bold">New slot</ion-label>
 	<ion-buttons slot="end">
-		<ion-button title="Cancel" role="cancel" color="medium" (click)="dismissModal()">
-			<ion-label>Cancel</ion-label>
+		<ion-button title="Cancel" role="cancel" (click)="dismissModal()">
+<!--			<ion-label>Cancel</ion-label>-->
 			<ion-icon name="close" slot="end"></ion-icon>
 		</ion-button>
 	</ion-buttons>
@@ -11,35 +11,39 @@
 	<ion-label *ngIf="isToDo && !date">Due</ion-label>
 	<ion-label *ngIf="isToDo && date">Due on</ion-label>
 	<ion-label *ngIf="!isToDo">Takes place on</ion-label>
-	<ion-datetime [min]="minDate" [max]="maxDate" [(ngModel)]="date" (ionChange)="onEventTimesChanged()"></ion-datetime>
+	<ion-datetime [min]="minDate" [max]="maxDate" [(ngModel)]="date"
+								(ionChange)="onEventTimesChanged()"></ion-datetime>
 </ion-item>
 
 <form [formGroup]="timeForm" *ngIf="happeningType === 'recurring' || date">
-	<ion-item>
-		<ion-label *ngIf="!isToDo">Starts at</ion-label>
-		<ion-label *ngIf="isToDo">Due at</ion-label>
-		<ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"
-									value="10:00"
-									(ionChange)="onTimeStartsChanged($event)"></ion-datetime>
-		<ion-input formControlName="timeStarts" [formControl]="timeStarts" placeholder="HH:MM"></ion-input>
-	</ion-item>
-	<ion-item>
-		<ion-label>Duration</ion-label>
-		<!--        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"-->
-		<!--                      formControlName="timeDuration"-->
-		<!--                      (ionChange)="onTimeDurationChanged()"></ion-datetime>-->
-	</ion-item>
-	<ion-item *ngIf="!isToDo">
-		<ion-label>Ends at</ion-label>
-		<!--        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"-->
-		<!--                      formControlName="timeEnds"-->
-		<!--                      (ionChange)="onTimeEndsChanged()"></ion-datetime>-->
-	</ion-item>
-	<ion-item *ngIf="happeningType === 'recurring'">
+	<sneat-stat-end-datetime-form
+		[hideStartDate]="happeningType === 'recurring'"
+	></sneat-stat-end-datetime-form>
+	<!--	<ion-item>-->
+	<!--		<ion-label *ngIf="!isToDo">Starts at</ion-label>-->
+	<!--		<ion-label *ngIf="isToDo">Due at</ion-label>-->
+	<!--		<ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"-->
+	<!--									value="10:00"-->
+	<!--									(ionChange)="onTimeStartsChanged($event)"></ion-datetime>-->
+	<!--		<ion-input formControlName="timeStarts" [formControl]="timeStarts" placeholder="HH:MM"></ion-input>-->
+	<!--	</ion-item>-->
+	<!--	<ion-item>-->
+	<!--		<ion-label>Duration</ion-label>-->
+	<!--		&lt;!&ndash;        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"&ndash;&gt;-->
+	<!--		&lt;!&ndash;                      formControlName="timeDuration"&ndash;&gt;-->
+	<!--		&lt;!&ndash;                      (ionChange)="onTimeDurationChanged()"></ion-datetime>&ndash;&gt;-->
+	<!--	</ion-item>-->
+	<!--	<ion-item *ngIf="!isToDo">-->
+	<!--		<ion-label>Ends at</ion-label>-->
+	<!--		&lt;!&ndash;        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"&ndash;&gt;-->
+	<!--		&lt;!&ndash;                      formControlName="timeEnds"&ndash;&gt;-->
+	<!--		&lt;!&ndash;                      (ionChange)="onTimeEndsChanged()"></ion-datetime>&ndash;&gt;-->
+	<!--	</ion-item>-->
+	<ion-item *ngIf="happeningType === 'recurring'" color="light">
 		<ion-label>Repeats</ion-label>
 		<ion-select formControlName="repeats" interface="popover" (ionChange)="repeatsChanged()">
 			<ion-select-option value="weekly">Weekly</ion-select-option>
-			<ion-select-option value="fortnightly">Fortnightly</ion-select-option>
+			<!--			<ion-select-option value="fortnightly">Fortnightly</ion-select-option>-->
 			<ion-select-option value="week-1st">Every 1st week</ion-select-option>
 			<ion-select-option value="week-2nd">Every 2nd week</ion-select-option>
 			<ion-select-option value="week-2nd">Every 3d week</ion-select-option>

@@ -27,9 +27,13 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	contacts: number[] = [];
 	showSlotForm = false;
 	public date: string;
-	activityForm = new FormGroup({
+
+	participantsTab: 'members' | 'others' = 'members';
+
+	happeningForm = new FormGroup({
 		title: new FormControl('', Validators.required),
 	});
+
 	public checkedMemberIDs: string[] = [];
 
 	get members(): IMemberContext[] | undefined {
@@ -138,18 +142,18 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 
 	createHappening(): void {
 		console.log('createActivity()');
-		this.activityForm.markAsTouched();
+		this.happeningForm.markAsTouched();
 		if (!this.team) {
 			return;
 		}
-		if (!this.activityForm.valid) {
-			if (!this.activityForm.controls['title'].valid) {
+		if (!this.happeningForm.valid) {
+			if (!this.happeningForm.controls['title'].valid) {
 				this.titleInput?.setFocus()
 					.catch(this.errorLogger.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
 			}
 			return;
 		}
-		const activityFormValue = this.activityForm.value;
+		const activityFormValue = this.happeningForm.value;
 		const dto: IRecurringHappeningDto = {
 			type: 'recurring',
 			kind: 'activity',

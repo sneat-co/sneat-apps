@@ -1,7 +1,9 @@
 <ion-item-divider color="light">
 	<ion-label>When</ion-label>
 	<ion-buttons slot="end">
-		<ion-button title="Add slot" (click)="showSlotForm = true" color="primary">
+		<ion-button title="Add slot" (click)="showSlotForm = true"
+								[color]="slots?.length ? 'primary' : 'danger'"
+		>
 			<ion-icon name="add-outline" slot="start"></ion-icon>
 			<ion-label>Add slot</ion-label>
 		</ion-button>
@@ -32,12 +34,15 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
-<ion-modal [isOpen]="showSlotForm" (ionModalDidDismiss)="showSlotForm = false">
+<ion-modal class="auto-height" [isOpen]="showSlotForm" (ionModalDidDismiss)="showSlotForm = false">
 	<ng-template>
-		<sneat-recurring-slot-form [happeningType]="'recurring'"
-															 [isToDo]="false"
-															 [slots]="slots"
-															 (slotAdded)="onSlotAdded()"
-		></sneat-recurring-slot-form>
+		<div class="modal-wrapper">
+			<sneat-recurring-slot-form
+				class="modal-content" [happeningType]="'recurring'"
+				[isToDo]="false"
+				[slots]="slots"
+				(slotAdded)="onSlotAdded()"
+			></sneat-recurring-slot-form>
+		</div>
 	</ng-template>
 </ion-modal>

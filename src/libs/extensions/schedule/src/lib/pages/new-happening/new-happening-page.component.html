@@ -27,11 +27,11 @@
 		<!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
 	</ion-segment>
 
-	<form [formGroup]="activityForm" (ngSubmit)="createHappening()">
+	<form [formGroup]="happeningForm" (ngSubmit)="createHappening()">
 		<ion-card>
 			<ion-item>
-				<!--            <ion-label>Title</ion-label>-->
-				<ion-input placeholder="Title" style="font-weight: bold" type="text" formControlName="title" #titleInput
+<!--				<ion-label>Title</ion-label>-->
+				<ion-input placeholder="Title (required field)" style="font-weight: bold" type="text" formControlName="title" #titleInput
 									 (keyup.enter)="createHappening()"></ion-input>
 			</ion-item>
 			<ion-item>
@@ -43,22 +43,28 @@
 					<ion-label *ngIf="happeningType === 'single'">Price</ion-label>
 				</ng-container>
 				<ion-input type="number" style="text-align: right"></ion-input>
+				<ion-select value="EUR">
+					<ion-select-option value="EUR">EUR</ion-select-option>
+					<ion-select-option value="USD">USD</ion-select-option>
+				</ion-select>
 			</ion-item>
 
 			<ion-item-group>
-				<sneat-recurring-slots [slots]="slots"
+				<sneat-recurring-slots *ngIf="happeningType === 'recurring'" [slots]="slots"
 															 (slotRemoved)="onSlotRemoved($event)"
 				></sneat-recurring-slots>
+				<sneat-single-slot-form *ngIf="happeningType === 'single'"></sneat-single-slot-form>
 			</ion-item-group>
 
 			<!--    <div [style.display]="happeningKind === 'single' || !showSlotForm && slots.length ? '' : 'none'">-->
 		</ion-card>
 
 		<ion-card>
-			<ion-card-header>
-				<ion-card-title>Participants</ion-card-title>
-			</ion-card-header>
-			<ion-item-group>
+			<ion-segment value="members">
+				<ion-segment-button value="members">Family members</ion-segment-button>
+				<ion-segment-button value="others">Others</ion-segment-button>
+			</ion-segment>
+			<ion-item-group *ngIf="participantsTab === 'members'">
 				<ion-radio-group *ngIf="members?.length else noMembers">
 					<ng-container *ngIf="members?.length">
 						<ion-item-divider color="light">
@@ -85,7 +91,7 @@
 				</ng-template>
 			</ion-item-group>
 
-			<ion-item-group>
+			<ion-item-group *ngIf="participantsTab === 'others'">
 				<ion-item-divider color="light">
 					<ion-label>Teachers & Contacts</ion-label>
 					<ion-buttons slot="end">
@@ -116,9 +122,9 @@
 
 		<ion-card>
 			<ion-list>
-				<ion-item color="danger" *ngIf="activityForm.touched && activityForm.controls['title'].errors">
+				<ion-item color="danger" *ngIf="happeningForm.touched && happeningForm.controls['title'].errors">
 					<ng-container *ngIf="isToDo">Task title is required.</ng-container>
-					<ng-container *ngIf="!isToDo">Activity title is required.</ng-container>
+					<ng-container *ngIf="!isToDo">Title is a required field.</ng-container>
 				</ion-item>
 				<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
 				<!--{{ weekdaysForm.errors['required'] }}-->

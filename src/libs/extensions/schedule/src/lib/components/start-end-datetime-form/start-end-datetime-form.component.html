@@ -1,0 +1,68 @@
+<ion-item *ngIf="!hideStartDate">
+	<ion-label>Starts on</ion-label>
+	<ion-input placeholder="date" style="text-align: right" [(ngModel)]="day"></ion-input>
+	<ion-select value="04" interface="popover">
+		<ion-select-option value="01">January</ion-select-option>
+		<ion-select-option value="02">February</ion-select-option>
+		<ion-select-option value="03">March</ion-select-option>
+		<ion-select-option value="04">April</ion-select-option>
+		<ion-select-option value="05">May</ion-select-option>
+		<ion-select-option value="06">June</ion-select-option>
+		<ion-select-option value="07">July</ion-select-option>
+		<ion-select-option value="08">August</ion-select-option>
+		<ion-select-option value="09">September</ion-select-option>
+		<ion-select-option value="10">October</ion-select-option>
+		<ion-select-option value="11">November</ion-select-option>
+		<ion-select-option value="12">December</ion-select-option>
+	</ion-select>
+	<ion-input value="2022"></ion-input>
+</ion-item>
+
+<ion-item>
+	<ion-label>Starts at</ion-label>
+	<ion-input type="time"
+		[formControl]="startTime"
+		maxlength="5"
+		placeholder="HH:MM - use 24 hours format"
+		(ionBlur)="onStartTimeBlur($event)"
+		(ionChange)="onStartTimeChanged($event)"
+	></ion-input>
+	<ng-container *ngIf="startTime.touched && !startTime.valid">
+		<ion-label color="danger" slot="end" *ngIf="startTime.errors && startTime.errors['required']">
+			Required field
+		</ion-label>
+	</ng-container>
+</ion-item>
+
+<!--<ion-item-divider color="light">-->
+<!--	<ion-segment [(ngModel)]="tab">-->
+<!--		<ion-segment-button value="duration">Duration</ion-segment-button>-->
+<!--		<ion-segment-button value="end">End time</ion-segment-button>-->
+<!--	</ion-segment>-->
+<!--</ion-item-divider>-->
+
+<ion-grid class="ion-grid-layout">
+	<ion-row>
+		<ion-col size="8">
+			<ion-item>
+				<ion-label slot="start">Takes</ion-label>
+				<ion-input slot="start"
+									 [formControl]="duration"
+									 (ionChange)="onDurationChanged($event)"
+									 type="number" style="text-align: right"></ion-input>
+				<ion-select slot="start" [(ngModel)]="durationUnits">
+					<ion-select-option value="minutes">minutes</ion-select-option>
+					<ion-select-option value="hours">hours</ion-select-option>
+				</ion-select>
+			</ion-item>
+		</ion-col>
+		<ion-col size="4">
+			<ion-item>
+				<ion-label>Ends at</ion-label>
+				<ion-input type="time" [formControl]="endTime" (ionChange)="onEndTimeChanged($event)"
+									 placeholder="HH:MM"></ion-input>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+</ion-grid>
+
