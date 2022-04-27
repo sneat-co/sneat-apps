@@ -35,14 +35,14 @@ export class MonthPageComponent {
 		private errorLogger: IErrorLogger,
 	) {
 		assetService.userAssets()
-			.subscribe(
-				assets => {
+			.subscribe({
+				next: assets => {
 					console.log('MonthPage.assets: ', assets);
 					this.allAssets = assets;
 					this.filterAndOrderAssets();
 				},
-				this.errorLogger.logError,
-			);
+				error: this.errorLogger.logErrorHandler('failed on loading assets'),
+			});
 	}
 
 	private filterAndOrderAssets(): void {

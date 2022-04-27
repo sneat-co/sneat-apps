@@ -205,7 +205,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			)
 			.subscribe({
 				next: this.onTeamLoaded,
-				error: this.errorLogger.logError,
+				error: this.errorLogger.logErrorHandler('failed on getting team record'),
 			});
 	}
 

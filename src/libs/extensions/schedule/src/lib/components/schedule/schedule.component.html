@@ -108,27 +108,27 @@
 	<!--	<sneat-filter-item *ngIf="tab === 'regular' || tab === 'events'" [filter]="filter"-->
 	<!--										 (changed)="applyFilter($event)"></sneat-filter-item>-->
 
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="8">
-				<ion-segment [(ngModel)]="filterSegment" *ngIf="tab === 'day' || tab === 'week'">
-					<ion-segment-button value="all">Everybody</ion-segment-button>
-					<ion-segment-button value="mine">Mine only</ion-segment-button>
-					<ion-segment-button value="others">Others</ion-segment-button>
-				</ion-segment>
-			</ion-col>
-			<ion-col size="4">
-				<ion-item>
-<!--					<ion-label>Select</ion-label>-->
-					<ion-select slot="end" [(ngModel)]="filterSegment">
-						<ion-select-option value="mine">Myself</ion-select-option>
-						<ion-select-option>Alisa</ion-select-option>
-						<ion-select-option>Vasilisa</ion-select-option>
-					</ion-select>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+<!--	<ion-grid class="ion-grid-layout">-->
+<!--		<ion-row>-->
+<!--			<ion-col size="8">-->
+<!--				<ion-segment [(ngModel)]="filterSegment" *ngIf="tab === 'day' || tab === 'week'">-->
+<!--					<ion-segment-button value="all">Everybody</ion-segment-button>-->
+<!--					<ion-segment-button value="mine">Mine only</ion-segment-button>-->
+<!--					<ion-segment-button value="others">Others</ion-segment-button>-->
+<!--				</ion-segment>-->
+<!--			</ion-col>-->
+<!--			<ion-col size="4">-->
+<!--				<ion-item>-->
+<!--&lt;!&ndash;					<ion-label>Select</ion-label>&ndash;&gt;-->
+<!--					<ion-select slot="end" [(ngModel)]="filterSegment">-->
+<!--						<ion-select-option value="mine">Myself</ion-select-option>-->
+<!--						<ion-select-option>Alisa</ion-select-option>-->
+<!--						<ion-select-option>Vasilisa</ion-select-option>-->
+<!--					</ion-select>-->
+<!--				</ion-item>-->
+<!--			</ion-col>-->
+<!--		</ion-row>-->
+<!--	</ion-grid>-->
 
 
 	<!--	<ng-container *ngIf="filterSegment==='filter'">-->

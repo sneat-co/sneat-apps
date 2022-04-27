@@ -129,11 +129,11 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 
 	ionViewDidEnter(): void {
 		if (!this.titleInput) {
-			this.errorLogger.logError('titleInput is not initialized');
+			this.logError(new Error('titleInput is not initialized'));
 			return;
 		}
 		this.titleInput.setFocus()
-			.catch(this.errorLogger.logErrorHandler('failed to set focus to title input'));
+			.catch(this.logErrorHandler('failed to set focus to title input'));
 	}
 
 	addContact(): void {
@@ -197,7 +197,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 			if (!this.happeningForm.valid) {
 				if (!this.happeningForm.controls['title'].valid) {
 					this.titleInput?.setFocus()
-						.catch(this.errorLogger.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
+						.catch(this.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
 				}
 				return;
 			}
@@ -206,7 +206,8 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 			const team = this.team;
 
 			if (!team) {
-				throw new Error('!team context');
+				this.logError(new Error('!team context'));
+				return;
 			}
 
 			this.scheduleService

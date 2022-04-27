@@ -24,6 +24,7 @@ export class SneatFirestoreService<Brief, Dto> {
 			.snapshotChanges()
 			.pipe(
 				map(changes => {
+					console.log(`SneatFirestoreService.watchByID(${this.collection}/${id}) => changes:`, changes);
 					if (!changes.payload.exists) {
 						return { id, dto: null };
 					}

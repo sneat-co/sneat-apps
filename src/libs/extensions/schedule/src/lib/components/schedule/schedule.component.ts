@@ -20,7 +20,7 @@ import { dateToIso, getWeekdayDate, localDateToIso } from '@sneat/core';
 import { HappeningType, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IMemberContext, IRecurringContext, ITeamContext } from '@sneat/team/models';
+import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
@@ -216,7 +216,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 		this.params.teamNavService
 			.navigateForwardToTeamPage(this.team, 'new-happening', {})
-			.then(this.errorLogger.logError);
+			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	}
 
 	goRegular(activity: IHappeningWithUiState): void {
@@ -332,10 +332,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		if (!this.team) {
 			throw new Error('!team');
 		}
-		const page = `happening/${slot.happening.id}`;
-		const recurring: IRecurringContext = slot.happening;
+		const happening: IHappeningContext = slot.happening;
+		const page = `happening/${happening.id}`;
 		this.params.teamNavService.navigateForwardToTeamPage(this.team, page, {
-			state: { recurring },
+			state: { happening },
 		})
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'));
 	}
