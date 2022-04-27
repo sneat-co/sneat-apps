@@ -10,7 +10,7 @@ import {
 	WeekdayCode2,
 } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
+import { IHappeningContext, ITeamContext } from '@sneat/team/models';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,
@@ -37,32 +37,33 @@ const emptyRecurringsByWeekday = () => wd2.reduce(
 	{} as RecurringsByWeekday,
 );
 
-export function eventToSlot(id: string, singleHappening: ISingleHappeningDto): ISlotItem {
-	if (!singleHappening.title) {
+export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotItem {
+	if (!dto.title) {
 		throw new Error('!singleHappening.title');
 	}
-	if (!singleHappening.dtStarts) {
+	if (!dto.dtStarts) {
 		throw new Error('!singleHappening.dtStarts');
 	}
+	const brief = happeningBriefFromDto(id, dto);
+	const happening: IHappeningContext = {id, brief, dto};
 	// const wd = jsDayToWeekday(date.getDay());
 	// noinspection UnnecessaryLocalVariableJS
 	const slot: ISlotItem = {
-		happening: happeningBriefFromDto(id, singleHappening),
-		single: singleHappening,
-		title: singleHappening.title,
+		happening,
+		title: dto.title,
 		repeats: 'once',
 		timing: {
 			start: {
-				time: timeToStr(singleHappening.dtStarts) || '',
+				time: timeToStr(dto.dtStarts) || '',
 			},
-			end: singleHappening.dtEnds ? {
-				time: timeToStr(singleHappening.dtEnds),
+			end: dto.dtEnds ? {
+				time: timeToStr(dto.dtEnds),
 			} : undefined,
 		},
 		// weekdays: singleHappening.weekdays,
-		participants: singleHappening.participants,
+		participants: dto.participants,
 		// location: singleActivity.location ? singleActivity.location : undefined,
-		levels: singleHappening.levels ? singleHappening.levels : undefined,
+		levels: dto.levels ? dto.levels : undefined,
 	};
 	return slot;
 }
@@ -81,7 +82,6 @@ export function eventToSlot(id: string, singleHappening: ISingleHappeningDto): I
 
 const slotItemFromRecurringSlot = (r: IHappeningBrief, rs: IHappeningSlot): ISlotItem => ({
 	happening: r,
-	recurring: r,
 	title: r.title,
 	levels: r.levels,
 	repeats: rs.repeats,
@@ -313,14 +313,13 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 						throw new Error('recurring context has no brief');
 					}
 					const slotItem: ISlotItem = {
-						happening: recurring.brief,
+						happening: recurring,
 						title: dto.title,
 						repeats: slot.repeats,
 						timing: { start: slot.start, end: slot.end },
 						location: slot.location,
 						levels: dto.levels,
 						participants: dto.participants,
-						recurring: recurring.dto,
 					};
 					const wdRecurrings = recurringByWd[wd];
 					if (wdRecurrings) {
@@ -370,7 +369,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		if (!recurrings) {
 			return;
 		}
-		const wdRecurrings = weekday.slots && weekday.slots.filter(r => r.recurring);
+		const wdRecurrings = weekday.slots && weekday.slots.filter(r => r.happening.brief?.type === 'recurring');
 		if (wdRecurrings && wdRecurrings.length === recurrings.length) {
 			return;
 		}

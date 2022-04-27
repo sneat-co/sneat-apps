@@ -17,7 +17,7 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { dateToIso, getWeekdayDate, localDateToIso } from '@sneat/core';
-import { HappeningType, IHappeningDto, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, IRecurringContext, ITeamContext } from '@sneat/team/models';
@@ -325,24 +325,19 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	onSlotClicked(slot: ISlotItem): void {
 		console.log('ScheduleComponent.onSlotClicked()', slot);
-		const happeningDto: IHappeningDto | undefined = slot.recurring || slot.single;
+		const happeningDto = slot.happening.dto;
 		if (!happeningDto) {
 			throw new Error('!happeningDto');
 		}
 		if (!this.team) {
 			throw new Error('!team');
 		}
-		const url = `happening/${happeningDto}`
-		const recurring: IRecurringContext = {
-			id: slot.happening.id,
-			team: this.team,
-			brief: slot.happening,
-			dto: slot.recurring,
-		}
-		this.params.teamNavService.navigateForwardToTeamPage(this.team,`recurring/${slot.happening.id}`, {
-			state: {recurring},
+		const page = `happening/${slot.happening.id}`;
+		const recurring: IRecurringContext = slot.happening;
+		this.params.teamNavService.navigateForwardToTeamPage(this.team, page, {
+			state: { recurring },
 		})
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'))
+			.catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'));
 	}
 
 	public onDateSelected(date: Date): void {
@@ -486,32 +481,34 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 		// Change URL
 		if (this.isToday()) {
-			history.replaceState(history.state, document.title, location.href.replace(/\?date=\d{4}-\d{2}-\d{2}/, ''));
+			history.replaceState(history.state, document.title,
+				location.href.replace(/\?date=\d{4}-\d{2}-\d{2}/, ''));
 		} else {
 			const isoDate = `?date=${localDateToIso(d)}`;
 			if (location.href.indexOf('?date') < 0) {
 				history.replaceState(history.state, document.title, location.href + isoDate);
 			} else {
-				history.replaceState(history.state, document.title, location.href.replace(/\?date=\d{4}-\d{2}-\d{2}/, isoDate));
+				history.replaceState(history.state, document.title,
+					location.href.replace(/\?date=\d{4}-\d{2}-\d{2}/, isoDate));
 			}
 		}
 	}
 
-	private onSetDateWhenDayTabIsActive(): void {
-		//
-	}
+	// private onSetDateWhenDayTabIsActive(): void {
+	// 	//
+	// }
+	//
+	// private onSetDateWhenWeekTabIsActive(): void {
+	// 	//
+	// }
 
-	private onSetDateWhenWeekTabIsActive(): void {
-		//
-	}
-
-	private getDayData(d: Date): void {
-
-	}
-
-	private getWeekData(): void {
-		//
-	}
+	// private getDayData(d: Date): void {
+	//
+	// }
+	//
+	// private getWeekData(): void {
+	// 	//
+	// }
 
 	// get inactiveWeek(): Week {
 	//     return this.activeWeekParity === 'odd' ? this.evenWeek : this.oddWeek;

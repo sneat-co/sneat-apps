@@ -4,15 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { RecurringCommonModule } from '../../../components/recurring-common.module';
-import { RecurringHappeningServiceModule } from '../../../services/recurring-happening.service';
+import { RecurringCommonModule } from '../../components/recurring-common.module';
+import { RecurringHappeningServiceModule } from '../../services/happening.service';
 
-import { RecurringHappeningPageComponent } from './recurring-happening-page.component';
+import { HappeningPageComponent } from './happening-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: RecurringHappeningPageComponent,
+		component: HappeningPageComponent,
 	},
 ];
 
@@ -25,7 +25,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		RecurringHappeningServiceModule,
 	],
-	declarations: [RecurringHappeningPageComponent],
+	declarations: [HappeningPageComponent],
 })
-export class RecurringHappeningPageModule {
+export class HappeningPageModule {
 }

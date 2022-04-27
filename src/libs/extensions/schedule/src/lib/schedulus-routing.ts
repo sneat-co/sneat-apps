@@ -15,9 +15,9 @@ export const schedulusRoutes: Route[] = [
 		// ...guardRoute,
 	},
 	{
-		path: 'recurring/:recurringID',
-		loadChildren: () => import('./pages/happening/recurring/recurring-happening.page.module')
-			.then(m => m.RecurringHappeningPageModule),
+		path: 'happening/:happeningID',
+		loadChildren: () => import('./pages/happening/happening-page.module')
+			.then(m => m.HappeningPageModule),
 		// ...guardRoute,
 	},
 	// {

@@ -29,14 +29,12 @@ export interface NewHappeningParams {
 export interface ISlotItem {
 	// id: string; Not sure how to make an ID yet
 	error?: unknown;
-	happening: IHappeningBrief;
+	happening: IHappeningContext;
 	title: string;
 	timing: ITiming;
 	repeats: Repeats,
 	location?: SlotLocation;
 	participants?: SlotParticipant[];
-	recurring?: IHappeningDto | null; // null indicates record was not found by ID // We need it to pass to regular page
-	single?: ISingleHappeningDto;     // We need it to pass to single page
 	levels?: Level[];
 }
 
@@ -151,9 +149,8 @@ export class TeamDay {
 				const slotItem: ISlotItem = {
 					title: brief.title,
 					timing,
-					single: dto,
 					repeats: 'once',
-					happening: brief,
+					happening: {id, brief, dto},
 				};
 				this.singles?.push(slotItem);
 			});

@@ -1,22 +1,22 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SingleHappeningPageComponent} from './single-happening-page.component';
+import {HappeningPageComponent} from './happening-page.component';
 
-describe('SingleHappeningPage', () => {
-	let component: SingleHappeningPageComponent;
-	let fixture: ComponentFixture<SingleHappeningPageComponent>;
+describe('RegularHappeningPage', () => {
+	let component: HappeningPageComponent;
+	let fixture: ComponentFixture<HappeningPageComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [SingleHappeningPageComponent],
+			declarations: [HappeningPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(SingleHappeningPageComponent);
+		fixture = TestBed.createComponent(HappeningPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

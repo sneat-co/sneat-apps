@@ -17,7 +17,7 @@ export class SneatFirestoreService<Brief, Dto> {
 	}
 
 	watchByID<Dto2 extends Dto>(id: string): Observable<INavContext<Brief, Dto2>> {
-		console.log(`watchByID(${this.collection}/${id})`);
+		console.log(`SneatFirestoreService.watchByID(${this.collection}/${id})`);
 		return this.afs
 			.collection<Dto2>(this.collection)
 			.doc(id)

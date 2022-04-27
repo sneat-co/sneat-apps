@@ -15,20 +15,24 @@ export abstract class HappeningBasePage extends TeamBaseComponent {
 		// 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
 	) {
 		super(className, route, params);
-		this.setHappening(window.history.state.happeningDto as unknown as IHappeningContext);
+		const happening = window.history.state.happening as unknown as IHappeningContext;
+		if (happening) {
+			this.setHappening(happening);
+		}
 		this.trackUrl();
 	}
 
-	protected setHappening(happening?: IHappeningContext): void {
+	protected readonly setHappening = (happening?: IHappeningContext): void => {
+		console.log(`${this.className}.setHappening()`, happening);
 		this.happening = happening;
 	}
 
 	private trackUrl(): void {
-		this.route?.queryParamMap.subscribe(params => {
-			const happeningId = params.get('id');
-			if (!happeningId) {
-				return;
-			}
+		this.route?.params.subscribe(params => {
+			// const happeningId = params.get('id');
+			// if (!happeningId) {
+			// 	return;
+			// }
 			// this.happeningService.watchById(happeningId)
 			// 	.pipe(
 			// 		// takeUntil(this.destroyed),
