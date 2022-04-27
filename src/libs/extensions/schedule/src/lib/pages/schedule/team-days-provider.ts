@@ -4,13 +4,23 @@ import { INavContext } from '@sneat/core';
 import {
 	happeningBriefFromDto,
 	IHappeningBrief,
-	IHappeningSlot,
 	IHappeningDto,
+	IHappeningSlot,
 	ISingleHappeningDto,
 	WeekdayCode2,
 } from '@sneat/dto';
+import { IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { BehaviorSubject, EMPTY, map, Observable, shareReplay, Subject, Subscription } from 'rxjs';
+import {
+	BehaviorSubject,
+	distinctUntilChanged,
+	EMPTY,
+	map,
+	Observable,
+	shareReplay,
+	Subject,
+	Subscription,
+} from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { getWd2, ISlotItem, RecurringSlots, TeamDay, timeToStr, wd2 } from '../../view-models';
 
@@ -112,6 +122,10 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};
 	private readonly recurringByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
 	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
+	private readonly teamID$ = this.team$.asObservable().pipe(
+		map(team => team?.id),
+		distinctUntilChanged(),
+	);
 	private readonly days: { [d: string]: TeamDay } = {};
 	private readonly destroyed = new Subject<void>();
 	private readonly recurrings$: Observable<RecurringSlots> = this.team$.pipe(
@@ -120,19 +134,25 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		// Tough it's a micro optimization that does not seems to worth the effort now.
 		map(groupRecurringSlotsByWeekday),
 		shareReplay(1),
-		tap(slots => console.log('SlotsProvider.recurrings$ =>', slots)),
+		tap(slots => console.log('TeamDaysProvider.recurrings$ =>', slots)),
 	);
 	private recurringsSubscription?: Subscription;
-	private team?: ITeamContext;
 	// private teamId?: string;
 	private memberId?: string;
 
+	private _team?: ITeamContext;
+
+	public get team(): ITeamContext | undefined {
+		return this._team;
+	}
+
 	constructor(
-		afs: AngularFirestore,
+		private readonly errorLogger: IErrorLogger,
+		private readonly afs: AngularFirestore,
 		// private readonly regularService: IRegularHappeningService,
 		// private readonly singleService: ISingleHappeningService,
 	) {
-		console.log('SlotsProvider.constructor()');
+		console.log('TeamDaysProvider.constructor()');
 		// super();
 		this.sfsRecurrings = new SneatFirestoreService<IHappeningBrief, IHappeningDto>(
 			'recurring_happenings', afs, (id: string, dto: IHappeningDto) => {
@@ -155,14 +175,14 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		const id = getWd2(date);
 		let day = this.days[id];
 		if (!day) {
-			this.days[id] = day = new TeamDay(date, this.recurrings$);
+			this.days[id] = day = new TeamDay(this.teamID$, date, this.recurrings$, this.errorLogger, this.afs);
 		}
 		return day;
 	}
 
 	public setTeam(team: ITeamContext): void {
 		console.log('SlotsProvide.setTeam()', team);
-		this.team = team;
+		this._team = team;
 		this.team$.next(team);
 		this.processRecurringBriefs();
 		// return this.loadRecurring();
@@ -186,7 +206,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	}
 
 	public getDays(...weekdays: TeamDay[]): Observable<TeamDay> {
-		console.log('SlotsProvider.getDays()', weekdays);
+		console.log('TeamDaysProvider.getDays()', weekdays);
 		return EMPTY;
 		// if (!weekdays?.length) {
 		// 	return EMPTY;
@@ -252,16 +272,16 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	}
 
 	private processRecurringBriefs(): void {
-		if (!this.team?.dto?.recurringHappenings) {
+		if (!this._team?.dto?.recurringHappenings) {
 			return;
 		}
-		this.team.dto.recurringHappenings.forEach(brief => {
+		this._team.dto.recurringHappenings.forEach(brief => {
 			this.processRecurring({ id: brief.id, brief });
 		});
 	}
 
 	private watchRecurringsByTeamID(teamID: string): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
-		console.log('SlotsProvider.loadRegulars()');
+		console.log('TeamDaysProvider.loadRegulars()');
 		const $recurrings = this.sfsRecurrings.watchByTeamID(teamID)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(

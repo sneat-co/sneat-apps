@@ -78,7 +78,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		private readonly params: TeamComponentBaseParams,
 		afs: AngularFirestore,
 	) {
-		this.teamDaysProvider = new TeamDaysProvider(afs);
+		this.teamDaysProvider = new TeamDaysProvider(this.errorLogger, afs);
 		const today = new Date();
 		const tomorrow = new Date();
 		tomorrow.setDate(today.getDate() + 1);

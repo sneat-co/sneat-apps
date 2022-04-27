@@ -20,6 +20,14 @@ export class SingleSlotFormComponent {
 	}
 
 	onTimingChanged(timing: ITiming): void {
+		if (!timing.end) {
+			this.errorLogger.logError('timing has no end');
+			return;
+		}
+		if (!timing.durationMinutes) {
+			this.errorLogger.logError('timing has no durationMinutes');
+			return;
+		}
 		this.timingChanged.emit(timing);
 	}
 }

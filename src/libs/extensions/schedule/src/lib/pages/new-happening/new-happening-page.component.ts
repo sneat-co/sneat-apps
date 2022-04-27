@@ -35,7 +35,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	});
 
 	public checkedMemberIDs: string[] = [];
-	timing?: ITiming;
+	singleTiming?: ITiming;
 
 	get members(): IMemberContext[] | undefined {
 		const members = this.team?.dto?.members;
@@ -142,7 +142,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 
 	onTimingChanged(timing: ITiming): void {
 		console.log('NewHappeningPageComponent.onTimingChanged()', timing);
-		this.timing = timing;
+		this.singleTiming = timing;
 	}
 
 	makeHappeningDto(): IHappeningDto {
@@ -161,13 +161,13 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 				dto.slots = this.slots;
 				break;
 			case 'single':
-				if (!this.timing) {
+				if (!this.singleTiming) {
 					throw new Error('timing is not set');
 				}
 				dto.slots = [{
 					id: 'once',
 					repeats: 'once',
-					...this.timing,
+					...this.singleTiming,
 				}];
 				break;
 			default:

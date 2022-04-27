@@ -1,6 +1,8 @@
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
 import {
+	happeningBriefFromDto,
 	HappeningType,
 	IHappeningBrief,
 	IHappeningDto,
@@ -12,6 +14,8 @@ import {
 	SlotParticipant,
 	WeekdayCode2,
 } from '@sneat/dto';
+import { IErrorLogger } from '@sneat/logging';
+import { IHappeningContext } from '@sneat/team/models';
 import { BehaviorSubject, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -47,9 +51,12 @@ export class TeamDay {
 	private readonly destroyed = new Subject<void>();
 	private readonly _slots = new BehaviorSubject<ISlotItem[] | undefined>(undefined);
 	private recurringSlots?: RecurringSlots;
+	private singles?: ISlotItem[];
 	// private singles?: ISlotItem[];
 
+	private teamID?: string;
 	public readonly date: Date;
+	public readonly dateID: string;
 	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
 	public isoID: string;
@@ -58,7 +65,7 @@ export class TeamDay {
 	public readonly slots$ = this._slots.asObservable().pipe(
 		shareReplay(1),
 		takeUntil(this.destroyed),
-		tap(slots => console.log(`DaySlotsProvider[${this.isoID}].slots$ =>`, slots)),
+		tap(slots => console.log(`TeamDay[${this.isoID}].slots$ =>`, slots)),
 	);
 
 	public get slots(): ISlotItem[] | undefined {
@@ -66,10 +73,18 @@ export class TeamDay {
 	}
 
 	constructor(
+		private readonly teamID$: Observable<string | undefined>, // intentionally not marking as public here to have public fields in 1 place
 		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
+		private readonly errorLogger: IErrorLogger,
+		private readonly afs: AngularFirestore,
 	) {
+		teamID$
+			.subscribe({
+				next: this.processTeamID,
+			});
 		this.date = date;
+		this.dateID = date.toISOString().substring(0, 10);
 		this.wd = getWd2(date);
 		this.isoID = dateToIso(date);
 		if (this.isoID === '1970-01-01') {
@@ -84,6 +99,71 @@ export class TeamDay {
 		this.destroyed.complete();
 	}
 
+	private readonly processTeamID = (teamID: string | undefined) => {
+		console.log(`TeamDay[${this.isoID}].processTeamID(teamID=${teamID})`);
+		this.teamID = teamID;
+		this.singles = undefined;
+		if (!this.teamID) {
+			this.recurringSlots = undefined;
+		}
+		this.subscribeForSingles();
+	};
+
+	private subscribeForSingles(): void {
+		if (!this.teamID) {
+			return;
+		}
+		try {
+			const teamDate = `${this.teamID}:${this.dateID}`;
+			console.log(`TeamDay[${this.isoID}].subscribeForSingles(), teamID:dateID=${teamDate}`);
+			this.afs
+				.collection<IHappeningDto>('happenings', ref => ref.where('teamDates', 'array-contains', teamDate))
+				.snapshotChanges()
+				.pipe(
+					// takeUntil(this.teamID$),
+				)
+				.subscribe({
+					next: this.processSingles,
+					error: this.errorLogger.logErrorHandler(`Failed to get single happenings for a given day: ${teamDate}`),
+				});
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to subscribe for team day single happenings');
+		}
+	}
+
+	private readonly processSingles = (changes: DocumentChangeAction<IHappeningDto>[]) => {
+		try {
+			this.singles = [];
+
+			changes.forEach(value => {
+				const id: string = value.payload.doc.ref.id;
+				const dto: IHappeningDto = value.payload.doc.data();
+				const brief: IHappeningBrief = happeningBriefFromDto(id, dto);
+				const slot = dto.slots && dto.slots[0];
+				if (!slot) {
+					return;
+				}
+				const timing: ITiming = {
+					start: slot.start,
+					end: slot.end,
+					durationMinutes: slot.durationMinutes,
+				};
+				const slotItem: ISlotItem = {
+					title: brief.title,
+					timing,
+					single: dto,
+					repeats: 'once',
+					happening: brief,
+				};
+				this.singles?.push(slotItem);
+			});
+			console.log(`TeamDay[${this.isoID}].processSingles()`, changes, this.singles);
+			this.joinRecurringsWithSinglesAndEmit();
+		} catch (e) {
+			this.errorLogger.logError(e, 'failed to process single happenings');
+		}
+	};
+
 	private subscribeForRecurrings(recurrings$: Observable<RecurringSlots>): void {
 		recurrings$
 			.pipe(
@@ -95,19 +175,23 @@ export class TeamDay {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-		console.log(`DaySlotsProvider[${this.isoID}].processRecurrings(), slots:`, slots);
+		console.log(`TeamDay[${this.isoID}].processRecurrings(), slots:`, slots);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
 
 	private joinRecurringsWithSinglesAndEmit(): void {
-		console.log(`DaySlotsProvider[${this.isoID}].joinRecurringsWithSinglesAndEmit(), wd=${this.wd}, recurringSlots:`, this.recurringSlots);
-		const slots = [];
+		console.log(`TeamDay[${this.isoID}].joinRecurringsWithSinglesAndEmit(), wd=${this.wd}, recurringSlots:`,
+			this.recurringSlots, ', singles:', this.singles);
+		const slots: ISlotItem[] = [];
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd];
 		if (weekdaySlots?.length) {
 			slots.push(...weekdaySlots);
 		}
-		console.log(`DaySlotsProvider[${this.isoID}].joinRecurringsWithSinglesAndEmit() => slots:`, slots);
+		if (this.singles) {
+			slots.push(...this.singles);
+		}
+		console.log(`TeamDay[${this.isoID}].joinRecurringsWithSinglesAndEmit() => slots:`, slots);
 		this._slots.next(slots);
 	}
 }

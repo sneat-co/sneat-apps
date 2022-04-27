@@ -93,6 +93,13 @@ export class StartEndDatetimeFormComponent implements AfterViewInit {
 
 	onStartDateChanged(event: Event): void {
 		console.log('StartEndDatetimeFormComponent.onStartDateChanged()', event);
+		if (
+			this.isValidTime(this.startTime.value as string) &&
+			this.isValidTime(this.endTime.value as string) &&
+			this.isValidDate(this.startDate.value as string)
+		) {
+			this.timingChanged.emit(this.timing);
+		}
 	}
 
 	onStartTimeChanged(event: Event): void {
@@ -105,6 +112,10 @@ export class StartEndDatetimeFormComponent implements AfterViewInit {
 
 	isValidTime(v: string): boolean {
 		return !!v.match(/^\d{2}:\d{2}$/);
+	}
+
+	isValidDate(v: string): boolean {
+		return !!v.match(/^\d{4}-\d{2}-\d{2}$/);
 	}
 
 	onDurationChanged(event: Event): void {
