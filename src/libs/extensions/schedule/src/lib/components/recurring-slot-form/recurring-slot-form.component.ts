@@ -1,11 +1,11 @@
 //tslint:disable:no-unsafe-any
 //tslint:disable:no-unbound-method
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { isoStringsToDate } from '@sneat/core';
-import { HappeningType, IHappeningSlot, SlotLocation, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, IHappeningSlot, ITiming, SlotLocation, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { wd2 } from '../../view-models';
@@ -24,53 +24,49 @@ const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationError
 	selector: 'sneat-recurring-slot-form',
 	templateUrl: './recurring-slot-form.component.html',
 })
-export class RecurringSlotFormComponent implements OnInit {
+export class RecurringSlotFormComponent {
 
+	private timing?: ITiming;
 	@Input() happeningType: HappeningType = 'recurring';
 	@Input() isToDo = false;
 	@Input() slots?: IHappeningSlot[];
 	@Output() slotAdded = new EventEmitter<void>();
-	@Output() eventTimesChanged = new EventEmitter<{ from: Date; to: Date }>();
-
+	@Output() eventTimesChanged = new EventEmitter<ITiming>();
 	minDate = '2019';
 	maxDate = '2023';
-
-	timeStarts = new FormControl('10:00', Validators.required);
-	timeDuration = new FormControl('00:00', Validators.required);
-	timeEnds = new FormControl('11:00', Validators.required);
 	repeats = new FormControl('weekly', Validators.required);
-
 	slotForm = new FormGroup({
 		locationTitle: new FormControl(''),
 		locationAddress: new FormControl(''),
 	});
 
-
-	timeForm = new FormGroup({
-		timeStarts: this.timeStarts,
-		timeDuration: this.timeDuration,
-		timeEnds: this.timeEnds,
-		repeats: this.repeats,
-	});
-
 	// dateForm = new FormGroup({
 	// 	date: new FormControl(undefined, Validators.required),
 	// });
-
+	timeForm = new FormGroup({
+		repeats: this.repeats,
+	});
 	happens: 'fortnightly' | 'weekly' | 'once' = 'weekly';
-
 	showWeekday = true;
 	date = '';
 
+	readonly weekdayMo = new FormControl(false);
+	readonly weekdayTu = new FormControl(false);
+	readonly weekdayWe = new FormControl(false);
+	readonly weekdayTh = new FormControl(false);
+	readonly weekdayFr = new FormControl(false);
+	readonly weekdaySa = new FormControl(false);
+	readonly weekdaySu = new FormControl(false);
+
 	readonly weekdaysForm = new FormGroup(
 		{
-			mo: new FormControl(false),
-			tu: new FormControl(false),
-			we: new FormControl(false),
-			th: new FormControl(false),
-			fr: new FormControl(false),
-			sa: new FormControl(false),
-			su: new FormControl(false),
+			mo: this.weekdayMo,
+			tu: this.weekdayTu,
+			we: this.weekdayWe,
+			th: this.weekdayTh,
+			fr: this.weekdayFr,
+			sa: this.weekdaySa,
+			su: this.weekdaySu,
 		},
 		weekdayRequired,
 	);
@@ -96,15 +92,9 @@ export class RecurringSlotFormComponent implements OnInit {
 			.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
 	}
 
-	ngOnInit(): void {
-		this.timeDuration.setValue(this.isToDo ? '00:00' : '01:00');
-		this.onTimeDurationChanged();
-	}
-
 	repeatsChanged(): void {
 		this.happens = this.repeats.value;
 	}
-
 
 	addSlot(): void {
 		// this.touchAllFormFields(this.slotForm);
@@ -112,9 +102,6 @@ export class RecurringSlotFormComponent implements OnInit {
 		this.slotForm.markAsTouched();
 		console.log('addSlot() => this.slotForm.errors:',
 			this.slotForm.controls['locationTitle']?.errors,
-		);
-		console.log('addSlot() => timeStarts:',
-			this.timeStarts.value,
 		);
 		if (!this.weekdaysForm.valid) {
 			this.showWeekday = false;
@@ -171,15 +158,13 @@ export class RecurringSlotFormComponent implements OnInit {
 			return;
 		}
 		const formValue = this.slotForm.value;
+		if (!this.timing) {
+			throw new Error('!this.timing');
+		}
 		const slot: IHappeningSlot = {
 			id: newRandomId({ len: 3 }),
 			repeats: 'weekly',
-			start: {
-				time: this.timeStarts.value as string,
-			},
-			end: {
-				time: this.timeEnds.value as string,
-			},
+			...this.timing,
 			weekdays: Object.entries(this.weekdaysForm.value)
 				.filter(entry => entry[1])
 				.map(entry => entry[0]) as WeekdayCode2[],
@@ -197,50 +182,52 @@ export class RecurringSlotFormComponent implements OnInit {
 		this.slotAdded.emit();
 	}
 
-	onTimeStartsChanged(event: Event): void {
-		const { detail } = (event as CustomEvent);
-		const startInMinutes = ionTimeToMinutes(detail.value);
-		const durationInMinutes = ionTimeToMinutes(this.timeDuration.value);
-		const endInISO = minutesToIonTime(startInMinutes + durationInMinutes);
-		// console.log(startInMinutes, durationInMinutes, endInISO, 'timeEnds.value:', timeEnds.value);
-		if (this.timeEnds.value !== endInISO) {
-			this.timeEnds.setValue(endInISO);
-			this.onEventTimesChanged();
-		}
-	}
-
-	onTimeDurationChanged(): void {
-		const startInMinutes = ionTimeToMinutes(this.timeStarts.value);
-		const durationInMinutes = ionTimeToMinutes(this.timeDuration.value);
-		const endInISO = minutesToIonTime(startInMinutes + durationInMinutes);
-		// console.log(startInMinutes, durationInMinutes, endInISO, 'timeEnds.value:', timeEnds.value);
-		if (this.timeEnds.value !== endInISO) {
-			this.timeEnds.setValue(endInISO);
-			this.onEventTimesChanged();
-		}
-	}
-
-	onTimeEndsChanged(/*event: CustomEvent*/): void {
-		const startInMinutes = ionTimeToMinutes(this.timeStarts.value);
-		const endInMinutes = ionTimeToMinutes(this.timeEnds.value);
-		const durationInISO = minutesToIonTime(endInMinutes - startInMinutes);
-		// console.log(startInMinutes, durationInISO, endInMinutes, 'timeDuration.value:', timeDuration.value);
-		if (this.timeDuration.value !== durationInISO) {
-			this.timeDuration.setValue(durationInISO);
-		}
-		this.onEventTimesChanged();
-	}
+	// onTimeStartsChanged(event: Event): void {
+	// 	const { detail } = (event as CustomEvent);
+	// 	const startInMinutes = ionTimeToMinutes(detail.value);
+	// 	const durationInMinutes = ionTimeToMinutes(this.timeDuration.value);
+	// 	const endInISO = minutesToIonTime(startInMinutes + durationInMinutes);
+	// 	// console.log(startInMinutes, durationInMinutes, endInISO, 'timeEnds.value:', timeEnds.value);
+	// 	if (this.timeEnds.value !== endInISO) {
+	// 		this.timeEnds.setValue(endInISO);
+	// 		this.onEventTimesChanged();
+	// 	}
+	// }
+	//
+	// onTimeDurationChanged(): void {
+	// 	const startInMinutes = ionTimeToMinutes(this.timeStarts.value);
+	// 	const durationInMinutes = ionTimeToMinutes(this.timeDuration.value);
+	// 	const endInISO = minutesToIonTime(startInMinutes + durationInMinutes);
+	// 	// console.log(startInMinutes, durationInMinutes, endInISO, 'timeEnds.value:', timeEnds.value);
+	// 	if (this.timeEnds.value !== endInISO) {
+	// 		this.timeEnds.setValue(endInISO);
+	// 		this.onEventTimesChanged();
+	// 	}
+	// }
+	//
+	// onTimeEndsChanged(/*event: CustomEvent*/): void {
+	// 	const startInMinutes = ionTimeToMinutes(this.timeStarts.value);
+	// 	const endInMinutes = ionTimeToMinutes(this.timeEnds.value);
+	// 	const durationInISO = minutesToIonTime(endInMinutes - startInMinutes);
+	// 	// console.log(startInMinutes, durationInISO, endInMinutes, 'timeDuration.value:', timeDuration.value);
+	// 	if (this.timeDuration.value !== durationInISO) {
+	// 		this.timeDuration.setValue(durationInISO);
+	// 	}
+	// 	this.onEventTimesChanged();
+	// }
 
 	public onEventTimesChanged(): void {
 		if (!this.date) {
 			return;
 		}
-		const timestamp = (c: FormControl): number => isoStringsToDate(this.date, c.value)
-			.getTime();
-		this.eventTimesChanged.emit({
-			from: new Date(timestamp(this.timeStarts)),
-			to: new Date(timestamp(this.timeEnds)),
-		});
+		// const timestamp = (c: FormControl): number => isoStringsToDate(this.date, c.value)
+		// 	.getTime();
+		this.eventTimesChanged.emit(this.timing);
+	}
+
+	public onTimingChanged(timing: ITiming): void {
+		console.log('onTimingChanged()', timing);
+		this.timing = timing;
 	}
 }
 

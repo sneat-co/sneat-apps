@@ -1,31 +1,50 @@
 <ion-item *ngIf="!hideStartDate">
 	<ion-label>Starts on</ion-label>
-	<ion-input placeholder="date" style="text-align: right" [(ngModel)]="day"></ion-input>
-	<ion-select value="04" interface="popover">
-		<ion-select-option value="01">January</ion-select-option>
-		<ion-select-option value="02">February</ion-select-option>
-		<ion-select-option value="03">March</ion-select-option>
-		<ion-select-option value="04">April</ion-select-option>
-		<ion-select-option value="05">May</ion-select-option>
-		<ion-select-option value="06">June</ion-select-option>
-		<ion-select-option value="07">July</ion-select-option>
-		<ion-select-option value="08">August</ion-select-option>
-		<ion-select-option value="09">September</ion-select-option>
-		<ion-select-option value="10">October</ion-select-option>
-		<ion-select-option value="11">November</ion-select-option>
-		<ion-select-option value="12">December</ion-select-option>
-	</ion-select>
-	<ion-input value="2022"></ion-input>
+	<ion-input type="date" [formControl]="startDate" (ionChange)="onStartDateChanged($event)"></ion-input>
+	<ion-buttons slot="end">
+		<ion-button id="quick-pick" color="medium">
+			<ion-label>Quick pick</ion-label>
+			<ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+		</ion-button>
+		<ion-popover trigger="quick-pick" dismissOnSelect="true">
+			<ng-template>
+				<ion-item tappable (click)="setStartDate($event, 'today')">Today</ion-item>
+				<ion-item tappable (click)="setStartDate($event, 'tomorrow')">Tomorrow</ion-item>
+				<!--				<ion-item tappable>Day after tomorrow</ion-item>-->
+				<!--				<ion-item>Next Monday</ion-item>-->
+				<!--				<ion-item>Next Tuesday</ion-item>-->
+				<!--				<ion-item>Next Wednesday</ion-item>-->
+				<!--				<ion-item>Next Thursday</ion-item>-->
+				<!--				<ion-item>Next Friday</ion-item>-->
+				<!--				<ion-item>Next Saturday</ion-item>-->
+				<!--				<ion-item>Next Sunday</ion-item>-->
+			</ng-template>
+		</ion-popover>
+	</ion-buttons>
+	<!--	<ion-input placeholder="date" style="text-align: right" [(ngModel)]="day"></ion-input>-->
+	<!--	<ion-select value="04" interface="popover">-->
+	<!--		<ion-select-option value="01">January</ion-select-option>-->
+	<!--		<ion-select-option value="02">February</ion-select-option>-->
+	<!--		<ion-select-option value="03">March</ion-select-option>-->
+	<!--		<ion-select-option value="04">April</ion-select-option>-->
+	<!--		<ion-select-option value="05">May</ion-select-option>-->
+	<!--		<ion-select-option value="06">June</ion-select-option>-->
+	<!--		<ion-select-option value="07">July</ion-select-option>-->
+	<!--		<ion-select-option value="08">August</ion-select-option>-->
+	<!--		<ion-select-option value="09">September</ion-select-option>-->
+	<!--		<ion-select-option value="10">October</ion-select-option>-->
+	<!--		<ion-select-option value="11">November</ion-select-option>-->
+	<!--		<ion-select-option value="12">December</ion-select-option>-->
+	<!--	</ion-select>-->
+	<!--	<ion-input value="2022"></ion-input>-->
 </ion-item>
 
 <ion-item>
 	<ion-label>Starts at</ion-label>
 	<ion-input type="time"
-		[formControl]="startTime"
-		maxlength="5"
-		placeholder="HH:MM - use 24 hours format"
-		(ionBlur)="onStartTimeBlur($event)"
-		(ionChange)="onStartTimeChanged($event)"
+						 [formControl]="startTime"
+						 (ionBlur)="onStartTimeBlur($event)"
+						 (ionChange)="onStartTimeChanged($event)"
 	></ion-input>
 	<ng-container *ngIf="startTime.touched && !startTime.valid">
 		<ion-label color="danger" slot="end" *ngIf="startTime.errors && startTime.errors['required']">

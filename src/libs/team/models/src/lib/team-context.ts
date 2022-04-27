@@ -3,13 +3,15 @@ import {
 	IAssetBrief,
 	IAssetDto,
 	IContactBrief,
-	IContactDto, IHappeningBrief, IHappeningDto,
+	IContactDto,
+	IHappeningBrief,
+	IHappeningDto,
 	IListBrief,
 	IListDto,
 	IMemberBrief,
 	IMemberDto,
 	IMemberGroupBrief,
-	IMemberGroupDto, IRecurringHappeningDto,
+	IMemberGroupDto,
 	IShortTeamInfo,
 	ITeamBrief,
 	ITeamDto,
@@ -30,7 +32,7 @@ export type IListContext = ITeamItemContext<IListBrief, IListDto>;
 export type IDocumentContext = IAssetContext;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
 export type IHappeningContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
-export type IRecurringContext = ITeamItemContext<IHappeningBrief, IRecurringHappeningDto>;
+export type IRecurringContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
 
 export function createShortCommuneInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {

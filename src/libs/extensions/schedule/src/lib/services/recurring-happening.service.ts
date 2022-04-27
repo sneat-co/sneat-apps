@@ -1,19 +1,19 @@
 import { Injectable, NgModule } from '@angular/core';
 import { SneatFirestoreService } from '@sneat/api';
-import { IAssetBrief, IAssetDto, IHappeningBrief, IRecurringHappeningDto } from '@sneat/dto';
+import { IAssetBrief, IAssetDto, IHappeningBrief, IHappeningDto } from '@sneat/dto';
 import { IRecurringContext, ITeamContext } from '@sneat/team/models';
 import { TeamItemBaseService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
 
 @Injectable()
 export class RecurringHappeningService {
-	private readonly sfs: SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>;
+	private readonly sfs: SneatFirestoreService<IHappeningBrief, IHappeningDto>;
 
 	constructor(
 		private readonly teamItemBaseService: TeamItemBaseService,
 	) {
-		this.sfs = new SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>(
-			'recurring_happenings', teamItemBaseService.afs, (id: string, dto: IRecurringHappeningDto) => {
+		this.sfs = new SneatFirestoreService<IHappeningBrief, IHappeningDto>(
+			'recurring_happenings', teamItemBaseService.afs, (id: string, dto: IHappeningDto) => {
 				const brief: IHappeningBrief = {
 					id, ...dto,
 				};

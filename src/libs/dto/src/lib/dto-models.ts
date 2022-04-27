@@ -51,8 +51,20 @@ export interface ITeamRecord {
 	teamID?: string;
 }
 
-export interface ITeamsRecord {
+export interface IWithTeamIDs {
 	teamIDs?: string[];
+}
+
+export interface IWithAssetIDs {
+	assetIDs?: string[];
+}
+
+export interface IWithMemberIDs {
+
+}
+
+// eslint-disable-next-line
+export interface ITeamsRecord extends IWithTeamIDs { // TODO: fix it
 }
 
 export interface IRealEstate {

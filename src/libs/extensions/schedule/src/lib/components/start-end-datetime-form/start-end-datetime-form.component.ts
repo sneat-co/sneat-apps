@@ -1,20 +1,23 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { IDateTime, ITiming } from '@sneat/dto';
 
 @Component({
-	selector: 'sneat-stat-end-datetime-form',
+	selector: 'sneat-start-end-datetime-form',
 	templateUrl: 'start-end-datetime-form.component.html',
 })
-export class StartEndDatetimeFormComponent {
+export class StartEndDatetimeFormComponent implements AfterViewInit {
 	@Input() hideStartDate = false;
+	@Output() readonly timingChanged = new EventEmitter<ITiming>();
 
 	public tab: 'duration' | 'end' = 'duration';
 	public durationUnits: 'minutes' | 'hours' = 'minutes';
-
-	public date: Date = new Date();
-	public day: string = '' + this.date.getDate();
-
-	@Output() changed = new EventEmitter<void>();
+	public startDate = new FormControl('', { // new Date().toISOString().substring(0, 10)
+		// validators: Validators.required,
+	});
+	public endDate = new FormControl('', {
+		// validators: Validators.required,
+	});
 
 	public readonly startTime = new FormControl('10:00', {
 		validators: [
@@ -28,10 +31,56 @@ export class StartEndDatetimeFormComponent {
 		],
 	});
 
-	public readonly duration = new FormControl(60);
+	public readonly duration = new FormControl(60, {
+		validators: [
+			Validators.required,
+		],
+	});
+
+	public get timing(): ITiming {
+		let start: IDateTime = {
+			time: this.startTime.value,
+		};
+		if (this.startDate.value) {
+			start = { ...start, date: this.startDate.value };
+		}
+		let end: IDateTime = {
+			time: this.endTime.value,
+		};
+		if (this.endDate.value) {
+			end = { ...end, date: this.endDate.value };
+		}
+		const timing: ITiming = {
+			start, end,
+			durationMinutes: Number(this.duration.value),
+		};
+		return timing;
+	}
 
 	public get isValid(): boolean {
 		return this.isValidTime(this.startTime.value) && this.isValidTime(this.endTime.value);
+	}
+
+	setStartDate(event: Event, code: 'today' | 'tomorrow'): void {
+		console.log('setStartDate()', event);
+		const today = new Date();
+		let date: Date;
+		switch (code) {
+			case 'today':
+				date = today;
+				break;
+			case 'tomorrow':
+				date = new Date();
+				date.setDate(today.getDate() + 1);
+				break;
+		}
+		if (date) {
+			this.startDate.setValue(date.toISOString().substring(0, 10));
+		}
+	}
+
+	ngAfterViewInit(): void {
+		this.timingChanged.emit(this.timing);
 	}
 
 	onStartTimeBlur(event: Event): void {
@@ -42,12 +91,16 @@ export class StartEndDatetimeFormComponent {
 		}
 	}
 
+	onStartDateChanged(event: Event): void {
+		console.log('StartEndDatetimeFormComponent.onStartDateChanged()', event);
+	}
+
 	onStartTimeChanged(event: Event): void {
 		console.log('StartEndDatetimeFormComponent.onStartTimeChanged()', event);
 		if (this.isValidTime(this.startTime.value as string)) {
 			this.setEndTime();
 		}
-		this.changed.emit();
+		this.timingChanged.emit(this.timing);
 	}
 
 	isValidTime(v: string): boolean {
@@ -59,7 +112,7 @@ export class StartEndDatetimeFormComponent {
 		if (this.isValidTime(this.startTime.value as string)) {
 			this.setEndTime();
 		}
-		this.changed.emit();
+		this.timingChanged.emit(this.timing);
 	}
 
 	setEndTime(): void {
@@ -87,7 +140,7 @@ export class StartEndDatetimeFormComponent {
 		if (this.isValidTime(this.startTime.value as string)) {
 			this.setDuration();
 		}
-		this.changed.emit();
+		this.timingChanged.emit(this.timing);
 	}
 
 	setDuration(): void {

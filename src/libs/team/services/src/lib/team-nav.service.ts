@@ -199,7 +199,17 @@ export class TeamNavService {
 			);
 	}
 
+	public navigateBackToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
+		navOptions.animationDirection = 'back';
+		return this.navigateToTeamPage(team, page, navOptions);
+	}
+
 	public navigateForwardToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
+		navOptions.animationDirection = 'forward';
+		return this.navigateToTeamPage(team, page, navOptions);
+	}
+
+	private navigateToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions): Promise<boolean> {
 		const url = `space/${team?.type}/${team?.id}/${page}`;
 		const state = navOptions.state || {};
 		navOptions = { ...navOptions, state: { team, ...state } };

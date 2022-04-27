@@ -1,9 +1,9 @@
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
 import {
-	HappeningKind,
-	HappeningType, IHappeningBrief,
-	IRecurringHappeningDto,
+	HappeningType,
+	IHappeningBrief,
+	IHappeningDto,
 	ISingleHappeningDto,
 	ITiming,
 	Level,
@@ -31,7 +31,7 @@ export interface ISlotItem {
 	repeats: Repeats,
 	location?: SlotLocation;
 	participants?: SlotParticipant[];
-	recurring?: IRecurringHappeningDto | null; // null indicates record was not found by ID // We need it to pass to regular page
+	recurring?: IHappeningDto | null; // null indicates record was not found by ID // We need it to pass to regular page
 	single?: ISingleHappeningDto;     // We need it to pass to single page
 	levels?: Level[];
 }

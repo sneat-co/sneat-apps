@@ -13,7 +13,13 @@
 	<ion-label><i>No slots have been added yet.</i></ion-label>
 </ion-item>
 <ion-item button *ngFor="let slot of slots; trackBy: id" class="with-buttons" (click)="selectSlot(slot)">
-	<ion-badge color="light" slot="start">{{slot.start.time}}</ion-badge>
+	<ion-buttons slot="start">
+		<div style="text-align: center">
+			<ion-badge style="display: block" color="light">{{slot.start.time}}</ion-badge>
+			<ion-text *ngIf="slot.durationMinutes" color="medium" style="display: block; font-size: small; margin-top: 0.75em">{{slot.durationMinutes}} mins</ion-text>
+		</div>
+	</ion-buttons>
+
 	<ion-label text-wrap>
 		<p>
 			<ion-badge color="light" style="margin-right: 4px;"
@@ -23,9 +29,7 @@
 			@ {{slot.location.title || slot.location.address}},
 			ends at {{slot.end?.time}}</p>
 		<ng-template #noLocation>
-			<p>Starts at {{slot.start.time}}
-				<ng-container *ngIf="slot.end">, ends at {{slot.end.time}}</ng-container>
-			</p>
+			<p *ngIf="slot.end">Ends at {{slot.end.time}}</p>
 		</ng-template>
 	</ion-label>
 	<ion-buttons slot="end">

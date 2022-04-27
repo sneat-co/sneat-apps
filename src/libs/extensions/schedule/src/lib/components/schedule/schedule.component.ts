@@ -17,7 +17,7 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { dateToIso, getWeekdayDate, localDateToIso } from '@sneat/core';
-import { HappeningType, IHappeningDto, IRecurringWithUiState, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, IHappeningDto, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, IRecurringContext, ITeamContext } from '@sneat/team/models';
@@ -49,8 +49,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	public showEvents = true;
 	todayAndFutureDays?: Weekday[];
 	filterFocused = false;
-	allRecurrings?: IRecurringWithUiState[];
-	recurrings?: IRecurringWithUiState[];
+	allRecurrings?: IHappeningWithUiState[];
+	recurrings?: IHappeningWithUiState[];
 	activeDayParity: Parity = 'odd';
 	activeWeekParity: Parity = 'odd';
 	oddDay: SwipeableDay;
@@ -219,7 +219,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			.then(this.errorLogger.logError);
 	}
 
-	goRegular(activity: IRecurringWithUiState): void {
+	goRegular(activity: IHappeningWithUiState): void {
 		this.errorLogger.logError('not implemented yet');
 		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
@@ -400,7 +400,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.allRecurrings = this.team?.dto?.recurringHappenings?.map(brief => {
 			const { id } = brief;
 			const prev = prevAll?.find(p => p.id === id);
-			const result: IRecurringWithUiState = { id, brief: brief, state: prev?.state || {} };
+			const result: IHappeningWithUiState = { id, brief: brief, state: prev?.state || {} };
 			return result;
 		});
 		this.recurrings = this.filterRecurrings();
@@ -408,7 +408,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	// noinspection JSMethodCanBqw2se3333eStatic
 
-	private filterRecurrings(): IRecurringWithUiState[] | undefined {
+	private filterRecurrings(): IHappeningWithUiState[] | undefined {
 		console.log(`filterRecurrings(filter='${this.filter}')`, this.allRecurrings);
 		const filter = this.filter.toLowerCase();
 

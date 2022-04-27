@@ -23,6 +23,7 @@ export interface IHappeningBrief extends IHappeningBase {
 }
 
 export interface IHappeningDto extends IHappeningBase, ITeamsRecord {
+	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	assetIDs?: string[];
 	memberIDs?: string[];
 	contactIDs?: string[];
@@ -57,8 +58,8 @@ type MonthlyDay = -5 | -4 | -3 | -2 | -1
 	| 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28;
 
 export interface IDateTime  {
-	date?: string;
-	time: string;
+	readonly date?: string;
+	readonly time: string;
 }
 
 export interface ITiming {
@@ -92,13 +93,10 @@ export interface IHappeningSlot extends IHappeningSlotTiming {
 	location?: SlotLocation; // TODO: make readonly
 }
 
-export interface IRecurringHappeningDto extends IHappeningDto, IHappeningTask {
-}
-
-export interface IRecurringWithUiState {
+export interface IHappeningWithUiState {
 	readonly id: string;
 	readonly brief: IHappeningBrief;
-	readonly dto?: IRecurringHappeningDto;
+	readonly dto?: IHappeningDto;
 	readonly state: UiState;
 }
 
@@ -106,7 +104,6 @@ export interface ISingleHappeningDto extends IHappeningDto {
 	readonly dtStarts?: number; // UTC
 	readonly dtEnds?: number;   // UTC
 	readonly weekdays?: WeekdayCode2[];
-	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	readonly prices?: IPrice[];
 }
 

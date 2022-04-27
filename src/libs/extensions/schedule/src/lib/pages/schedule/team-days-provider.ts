@@ -5,7 +5,7 @@ import {
 	happeningBriefFromDto,
 	IHappeningBrief,
 	IHappeningSlot,
-	IRecurringHappeningDto,
+	IHappeningDto,
 	ISingleHappeningDto,
 	WeekdayCode2,
 } from '@sneat/dto';
@@ -108,7 +108,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	// At the moment tracks schedule of a single team
 	// but probably will track multiple teams at once.
 
-	private readonly sfsRecurrings: SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>;
+	private readonly sfsRecurrings: SneatFirestoreService<IHappeningBrief, IHappeningDto>;
 	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};
 	private readonly recurringByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
 	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
@@ -134,8 +134,8 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	) {
 		console.log('SlotsProvider.constructor()');
 		// super();
-		this.sfsRecurrings = new SneatFirestoreService<IHappeningBrief, IRecurringHappeningDto>(
-			'recurring_happenings', afs, (id: string, dto: IRecurringHappeningDto) => {
+		this.sfsRecurrings = new SneatFirestoreService<IHappeningBrief, IHappeningDto>(
+			'recurring_happenings', afs, (id: string, dto: IHappeningDto) => {
 				const brief: IHappeningBrief = {
 					id, ...dto,
 				};
@@ -260,7 +260,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		});
 	}
 
-	private watchRecurringsByTeamID(teamID: string): Observable<INavContext<IHappeningBrief, IRecurringHappeningDto>[]> {
+	private watchRecurringsByTeamID(teamID: string): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
 		console.log('SlotsProvider.loadRegulars()');
 		const $recurrings = this.sfsRecurrings.watchByTeamID(teamID)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
@@ -273,7 +273,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		return $recurrings;
 	}
 
-	private processRecurring(recurring: INavContext<IHappeningBrief, IRecurringHappeningDto>): void {
+	private processRecurring(recurring: INavContext<IHappeningBrief, IHappeningDto>): void {
 		if (this.memberId && (!recurring.dto?.participants || !recurring?.dto.participants.find(p => p.type === 'member' && p.id === this.memberId))) {
 			return;
 		}

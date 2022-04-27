@@ -30,16 +30,25 @@
 	<form [formGroup]="happeningForm" (ngSubmit)="createHappening()">
 		<ion-card>
 			<ion-item>
-<!--				<ion-label>Title</ion-label>-->
-				<ion-input placeholder="Title (required field)" style="font-weight: bold" type="text" formControlName="title" #titleInput
-									 (keyup.enter)="createHappening()"></ion-input>
+				<ion-input #titleInput
+									 [formControl]="happeningTitle"
+									 (keyup.enter)="createHappening()"
+									 placeholder="Title (required field)"
+									 style="font-weight: bold" type="text"
+				></ion-input>
 			</ion-item>
 
 			<ion-item-group>
-				<sneat-recurring-slots *ngIf="happeningType === 'recurring'" [slots]="slots"
+				<sneat-recurring-slots *ngIf="happeningType === 'recurring'"
+															 [slots]="slots"
 															 (slotRemoved)="onSlotRemoved($event)"
 				></sneat-recurring-slots>
-				<sneat-single-slot-form *ngIf="happeningType === 'single'"></sneat-single-slot-form>
+				<sneat-single-slot-form
+					[style.display]="happeningType === 'single' ? 'block' : 'none'"
+					(timingChanged)="onTimingChanged($event)"
+				>
+					<!-- hide with [style.display] to preserve input values if tab switched back and forth -->
+				</sneat-single-slot-form>
 			</ion-item-group>
 
 			<!--    <div [style.display]="happeningKind === 'single' || !showSlotForm && slots.length ? '' : 'none'">-->
@@ -144,8 +153,7 @@
 					</ion-button>
 				</ng-container>
 				<ion-button *ngIf="!isToDo" size="large" (click)="createHappening()">
-					<ng-container *ngIf="happeningType === 'recurring'">Add activity</ng-container>
-					<ng-container *ngIf="happeningType === 'single'">Add event</ng-container>
+					Create
 				</ion-button>
 			</div>
 		</ion-card>

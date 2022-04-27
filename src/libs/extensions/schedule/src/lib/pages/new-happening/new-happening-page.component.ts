@@ -4,7 +4,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { HappeningType, IRecurringHappeningDto, IHappeningSlot, SlotParticipant } from '@sneat/dto';
+import { RoutingState } from '@sneat/core';
+import { HappeningType, IHappeningDto, IHappeningSlot, ITiming, SlotParticipant } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, Member } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
@@ -18,23 +19,23 @@ import { ScheduleService } from '../../services/schedule.service';
 })
 export class NewHappeningPageComponent extends TeamBaseComponent implements OnInit {
 
-	private eventStarts?: Date;
-	private eventEnds?: Date;
 	isToDo: boolean;
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	happeningType: HappeningType = 'recurring';
 	slots: IHappeningSlot[] = [];
 	contacts: number[] = [];
-	showSlotForm = false;
 	public date: string;
 
 	participantsTab: 'members' | 'others' = 'members';
 
+	happeningTitle = new FormControl('', Validators.required);
+
 	happeningForm = new FormGroup({
-		title: new FormControl('', Validators.required),
+		title: this.happeningTitle,
 	});
 
 	public checkedMemberIDs: string[] = [];
+	timing?: ITiming;
 
 	get members(): IMemberContext[] | undefined {
 		const members = this.team?.dto?.members;
@@ -44,9 +45,12 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		return members.map(memberContextFromBrief);
 	}
 
+	private readonly hasNavHistory: boolean;
+
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
+		routingState: RoutingState,
 		private readonly scheduleService: ScheduleService,
 		// private readonly memberService: IMemberService,
 		// private readonly regularHappeningService: IRegularHappeningService,
@@ -54,6 +58,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	) {
 		// window.location.pathname.indexOf('/new-task') >= 0 ? 'tasks' : 'schedule'
 		super('NewHappeningPageComponent', route, params);
+		this.hasNavHistory = routingState.hasHistory();
 		this.isToDo = location.pathname.indexOf('/new-task') >= 0;
 		this.date = history.state.date as string;
 		console.log('date', this.date);
@@ -100,12 +105,6 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		history.replaceState(history.state, document.title, href);
 	}
 
-	onSlotRemoved(slots: IHappeningSlot[]): void {
-		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
-		this.slots = slots;
-		this.showSlotForm = !this.slots.length;
-	}
-
 
 	// TODO(fix): protected onCommuneIdsChanged() {
 	//     super.onCommuneIdsChanged();
@@ -117,14 +116,15 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	//     }));
 	// }
 
+	onSlotRemoved(slots: IHappeningSlot[]): void {
+		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
+		this.slots = slots;
+	}
+
 	// tslint:disable-next-line:prefer-function-over-method
 	onMemberSelectChanged(m: Member, event: Event): void {
 		const { detail } = (event as CustomEvent);
 		m.isChecked = detail.checked;
-	}
-
-	newSlot(): void {
-		this.showSlotForm = true;
 	}
 
 	ionViewDidEnter(): void {
@@ -140,28 +140,39 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		this.contacts.push(1);
 	}
 
-	createHappening(): void {
-		console.log('createActivity()');
-		this.happeningForm.markAsTouched();
+	onTimingChanged(timing: ITiming): void {
+		console.log('NewHappeningPageComponent.onTimingChanged()', timing);
+		this.timing = timing;
+	}
+
+	makeHappeningDto(): IHappeningDto {
 		if (!this.team) {
-			return;
-		}
-		if (!this.happeningForm.valid) {
-			if (!this.happeningForm.controls['title'].valid) {
-				this.titleInput?.setFocus()
-					.catch(this.errorLogger.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
-			}
-			return;
+			throw new Error('!this.team');
 		}
 		const activityFormValue = this.happeningForm.value;
-		const dto: IRecurringHappeningDto = {
-			type: 'recurring',
+		const dto: IHappeningDto = {
+			type: this.happeningType,
 			kind: 'activity',
 			teamIDs: [this.team.id],
 			title: activityFormValue.title,
-			slots: this.slots,
 		};
-
+		switch (dto.type) {
+			case 'recurring':
+				dto.slots = this.slots;
+				break;
+			case 'single':
+				if (!this.timing) {
+					throw new Error('timing is not set');
+				}
+				dto.slots = [{
+					id: 'once',
+					repeats: 'once',
+					...this.timing,
+				}];
+				break;
+			default:
+				throw new Error('unknown happening type: ' + dto.type);
+		}
 		{ // Populate selected members
 			const selectedMembers = this.members?.filter(m => this.checkedMemberIDs.some(v => v === m.id));
 			if (selectedMembers?.length) {
@@ -173,55 +184,49 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 				});
 			}
 		}
+		return dto;
+	}
 
-		this.scheduleService
-			.createHappening({ teamID: this.team.id, dto })
-			.subscribe({
-				next: () => {
-					console.log('new happening created');
-					this.teamParams.navController.pop()
-						.catch(this.logErrorHandler('failed to pop back after creating a happening'));
-				},
-				error: this.logErrorHandler('failed to create new happening'),
-			});
+	createHappening(): void {
+		console.log('onTimingChanged.createHappening()');
+		try {
+			this.happeningForm.markAsTouched();
+			if (!this.team) {
+				return;
+			}
+			if (!this.happeningForm.valid) {
+				if (!this.happeningForm.controls['title'].valid) {
+					this.titleInput?.setFocus()
+						.catch(this.errorLogger.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
+				}
+				return;
+			}
+			const dto = this.makeHappeningDto();
 
-		// switch (this.happeningType) {
-		// 	case 'recurring': {
-		// 		const regularDto: IRecurringHappeningDto = {
-		// 			...dto,
-		// 			kind: 'activity',
-		// 			type: 'recurring',
-		// 			slots: this.slots,
-		// 		};
-		// 		// this.regularHappeningService.addCommuneItem(regularDto)
-		// 		// 	.subscribe(
-		// 		// 		() => {
-		// 		// 			this.navController.back();
-		// 		// 		},
-		// 		// 		this.errorLogger.logError,
-		// 		// 	);
-		// 		break;
-		// 	}
-		// 	case 'single': {
-		// 		const eventDto: ISingleHappeningDto = {
-		// 			...dto,
-		// 			dtStarts: this.eventStarts?.getTime(),
-		// 			dtEnds: this.eventEnds?.getTime(),
-		// 		};
-		// 		// this.singleHappeningService.addCommuneItem(eventDto)
-		// 		// 	.subscribe(
-		// 		// 		() => {
-		// 		// 			this.navController.back();
-		// 		// 		},
-		// 		// 		this.errorLogger.logError,
-		// 		// 	);
-		// 		break;
-		// 	}
-		//
-		// 	default:
-		// 		this.errorLogger.logError(new Error(`Unknown happening kind: ${this.happeningType}`));
-		// 		break;
-		// }
+			const team = this.team;
+
+			if (!team) {
+				throw new Error('!team context');
+			}
+
+			this.scheduleService
+				.createHappening({ teamID: team.id, dto })
+				.subscribe({
+					next: () => {
+						console.log('new happening created');
+						if (this.hasNavHistory) {
+							this.teamParams.navController.pop()
+								.catch(this.logErrorHandler('failed to pop back after creating a happening'));
+						} else {
+							this.teamParams.teamNavService.navigateBackToTeamPage(team, 'schedule')
+								.catch(this.logErrorHandler('failed to team schedule after creating a happening'));
+						}
+					},
+					error: this.logErrorHandler('failed to create new happening'),
+				});
+		} catch (e) {
+			this.errorLogger.logError(e, 'failed to create new happening');
+		}
 	}
 
 	// onEventTimesChanged(times: { from: Date; to: Date }): void {
