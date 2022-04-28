@@ -1,11 +1,19 @@
 <ng-container *ngIf="weekday">
-	<div class="ion-padding" *ngIf="!weekday.day?.slots?.length; else daySlots">
+	<ion-item-divider class="ion-padding" *ngIf="!weekday.day?.slots?.length; else daySlots">
 		<p>Nothing scheduled for this day.</p>
-	</div>
+	</ion-item-divider>
 	<ng-template #daySlots>
-		<ng-container *ngFor="let slot of weekday.day?.slots; trackBy: byIndex">
-			<sneat-slot-item *ngIf="showSlot(slot)" [slot]="slot" (onclick)="slotClicked.emit($event)">
-			</sneat-slot-item>
-		</ng-container>
+		<ion-item-divider color="light" *ngIf="slotsHiddenByFilter">
+			<ion-label>{{slotsHiddenByFilter}} hidden by filter.</ion-label>
+			<ion-buttons slot="end">
+				<ion-button (click)="resetFilter.next($event)">
+					<ion-icon color="medium" name="close-outline" slot="end"></ion-icon>
+					<ion-label color="medium">Reset filter</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item-divider>
+		<sneat-slot-item *ngFor="let slot of slots; trackBy: index"
+										 [slot]="slot" (onclick)="slotClicked.emit($event)">
+		</sneat-slot-item>
 	</ng-template>
 </ng-container>

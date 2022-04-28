@@ -35,8 +35,8 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		super(false);
 	}
 
-	clearFilter(event: Event): void {
-		event.stopPropagation();
+	clearFilter(event?: Event): void {
+		event?.stopPropagation();
 		this.resetting = true;
 		try {
 			this.memberIDs = [];

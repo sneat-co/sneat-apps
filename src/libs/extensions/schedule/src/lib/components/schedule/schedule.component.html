@@ -7,7 +7,7 @@
 	<ion-segment-button value="singles">One-timers</ion-segment-button>
 </ion-segment>
 
-<sneat-schedule-filter
+<sneat-schedule-filter #scheduleFilterComponent
 	[showWeekdays]="tab === 'recurrings'"
 	[showRepeats]="tab === 'recurrings'"
 	(changed)="onFilterChanged($event)"
@@ -158,7 +158,7 @@
 	<!--	</ng-container>-->
 
 
-	<div *ngIf="tab === 'day' && activeDay?.date" style="margin-top: 1em">
+	<div *ngIf="tab === 'day' && activeDay?.date">
 		<!--		<p class="ion-margin-horizontal">-->
 		<!--			oddDay.weekday: {{oddDay.weekday|json}}-->
 		<!--			activeDay.parity: {{activeDay.parity}},-->
@@ -174,6 +174,7 @@
 						[showRegulars]="showRecurrings"
 						[weekday]="oddDay.weekday"
 						(slotClicked)="onSlotClicked($event)"
+						(resetFilter)="resetFilter()"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
@@ -221,6 +222,7 @@
 </ion-card>
 
 <sneat-recurrings-tab *ngIf="tab === 'recurrings'"
+											[filter]="filter"
 											[recurrings]="recurrings"
 											[allRecurrings]="allRecurrings"
 ></sneat-recurrings-tab>

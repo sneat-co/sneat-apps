@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
+import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { isSlotVisible } from '../schedule-slots';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
@@ -9,7 +10,7 @@ import { Weekday } from '../schedule-week/schedule-week.component';
 })
 export class ScheduleWeekdayComponent {
 	@Input() weekday?: Weekday;
-	@Input() filter = '';
+	@Input() filter?: IScheduleFilter;
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
@@ -23,7 +24,7 @@ export class ScheduleWeekdayComponent {
 	// public readonly id = (_: number, v: {id: string}) => v.id;
 
 	showSlot(slot: ISlotItem): boolean {
-		return isSlotVisible(slot, this.filter, this.showRegulars, this.showEvents);
+		return isSlotVisible(slot, this.filter || {text: ''}, this.showRegulars, this.showEvents);
 	}
 
 	onDateSelected(): void {

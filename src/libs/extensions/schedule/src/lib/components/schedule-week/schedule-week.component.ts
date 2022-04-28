@@ -3,6 +3,7 @@ import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams, TeamDay } from '../../view-models';
+import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { createWeekdays, Week } from '../schedule/schedule-core';
 
 export interface Weekday { // This is used to
@@ -18,7 +19,7 @@ export interface Weekday { // This is used to
 export class ScheduleWeekComponent implements OnChanges {
 
 	@Input() week?: Week;
-	@Input() filter = '';
+	@Input() filter?: IScheduleFilter;
 	@Input() showRecurring = true;
 	@Input() showEvents = true;
 	@Input() teamDaysProvider?: TeamDaysProvider;

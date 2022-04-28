@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { IHappeningWithUiState } from '@sneat/dto';
 import { Subject, takeUntil } from 'rxjs';
 import { HappeningComponentBaseParams } from '../happening-component-base-params';
+import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 
 @Component({
 	selector: 'sneat-recurrings-tab',
@@ -10,6 +11,7 @@ import { HappeningComponentBaseParams } from '../happening-component-base-params
 })
 export class RecurringsTabComponent implements OnDestroy {
 	private readonly destroyed = new Subject<void>();
+	@Input() filter?: IScheduleFilter;
 	@Input() recurrings?: IHappeningWithUiState[];
 	@Input() allRecurrings?: IHappeningWithUiState[];
 

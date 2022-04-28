@@ -7,7 +7,7 @@ import {
 	OnChanges,
 	OnDestroy,
 	Output,
-	SimpleChanges,
+	SimpleChanges, ViewChild,
 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {
@@ -25,6 +25,7 @@ import { Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
+import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
 import { Weekday } from '../schedule-week/schedule-week.component';
 import { animationState, ScheduleTab, SHIFT_1_DAY, SHIFT_1_WEEK } from './schedule-core';
 import { Parity, SwipeableDay, SwipeableWeek } from './swipeable-ui';
@@ -40,6 +41,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private readonly destroyed = new Subject<void>();
 	// prevWeekdays: SlotsGroup[];
 	public readonly teamDaysProvider: TeamDaysProvider;
+	@ViewChild('scheduleFilterComponent') scheduleFilterComponent?: ScheduleFilterComponent;
 	@Input() team?: ITeamContext;
 	@Input() member?: IMemberContext;
 	@Input() public tab: ScheduleTab = 'day';
@@ -64,7 +66,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	filterSegment: 'all' | 'mine' | 'filter' = 'all';
 
 	// nextWeekdays: SlotsGroup[];
-	public filter = '';
+	public filter?: IScheduleFilter;
 
 	get activeDay(): SwipeableDay {
 		return this.activeDayParity === 'odd' ? this.oddDay : this.evenDay;
@@ -100,7 +102,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	onFilterChanged(filter: IScheduleFilter): void {
 		console.log('onFilterChanged()', filter);
+		this.filter = filter;
+		this.recurrings = this.filterRecurrings();
 	}
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
 			this.onTeamContextChanged();
@@ -224,16 +229,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 				queryParams: params,
 			})
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
-	}
+	};
 
-
-	applyFilter(filter: string): void {
-		console.log(`applyFilter(${filter})`);
-		this.filter = filter.toLowerCase();
-		if (this.tab === 'recurrings') {
-			this.recurrings = this.filterRecurrings();
-		}
-	}
 
 	isToday(): boolean {
 		const day = this.activeDay.date;
@@ -329,6 +326,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
+	public resetFilter(event?: Event): void {
+		this.scheduleFilterComponent?.clearFilter();
+	}
+
 	readonly onSlotClicked = (slot: ISlotItem): void => {
 		console.log('ScheduleComponent.onSlotClicked()', slot);
 		const happeningDto = slot.happening.dto;
@@ -344,12 +345,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			state: { happening },
 		})
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'));
-	}
+	};
 
 	public readonly onDateSelected = (date: Date): void => {
 		this.tab = 'day';
 		this.setDay('onDateSelected', date);
-	}
+	};
 
 	readonly id = (i: number, v: { id: string }): string => v.id;
 
@@ -405,12 +406,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	private filterRecurrings(): IHappeningWithUiState[] | undefined {
 		console.log(`filterRecurrings(filter='${this.filter}')`, this.allRecurrings);
-		const filter = this.filter.toLowerCase();
+		const text = this.filter?.text?.toLowerCase();
 
-		if (!filter) {
+		if (!text) {
 			return this.allRecurrings;
 		}
-		return this.allRecurrings?.filter(r => r.brief?.title && r.brief.title.toLowerCase().indexOf(filter) >= 0);
+		return this.allRecurrings?.filter(r => r.brief?.title && r.brief.title.toLowerCase().indexOf(text) >= 0);
 	}
 
 	// noinspection JSMethodCanBeStatic

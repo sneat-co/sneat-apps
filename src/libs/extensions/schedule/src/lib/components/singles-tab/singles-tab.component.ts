@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
+import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
 @Component({
@@ -8,7 +9,7 @@ import { Weekday } from '../schedule-week/schedule-week.component';
 })
 export class SinglesTabComponent {
 	@Input() todayAndFutureDays?: Weekday[];
-	@Input() filter = '';
+	@Input() filter?: IScheduleFilter;
 	@Input() onSlotClicked?: (slot: ISlotItem) => void;
 	@Input() onDateSelected?: (date: Date) => void;
 	@Input() goNewHappening?: (params: NewHappeningParams) => void;
