@@ -102,8 +102,8 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 
 	readonly id = (i: number, v: { id: string }) => v.id;
 
-	happeningTypeChanged(): void {
-		console.log('happeningTypeChanged()');
+	onHappeningTypeChanged(): void {
+		console.log('onHappeningTypeChanged()');
 		let { href } = location;
 		if (href.indexOf('?') < 0) {
 			href += '?type=';

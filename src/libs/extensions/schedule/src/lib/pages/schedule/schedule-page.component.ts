@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -55,6 +54,16 @@ export class SchedulePageComponent extends TeamBaseComponent {
 
 	onTabChanged(tab: ScheduleTab): void {
 		this.tab = tab;
+		let { href } = location;
+		if (href.indexOf('?') < 0) {
+			href += '?tab=';
+		}
+		href = href.replace(
+			/tab=\w*/,
+			`tab=${this.tab}`,
+		);
+		history.replaceState(history.state, document.title, href);
+
 	}
 
 	onDateChanged(date: string): void {

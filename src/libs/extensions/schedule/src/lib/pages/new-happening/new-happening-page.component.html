@@ -20,7 +20,7 @@
 
 <ion-content class="cardy">
 
-	<ion-segment class="ion-padding-horizontal" [(ngModel)]="happeningType" (ionChange)="happeningTypeChanged()">
+	<ion-segment class="ion-padding-horizontal" [(ngModel)]="happeningType" (ionChange)="onHappeningTypeChanged()">
 		<ion-segment-button value="recurring">Recurring</ion-segment-button>
 		<ion-segment-button value="single">One-timer</ion-segment-button>
 		<!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
