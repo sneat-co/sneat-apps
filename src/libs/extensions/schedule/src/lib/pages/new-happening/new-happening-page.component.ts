@@ -1,15 +1,16 @@
 //tslint:disable:no-unbound-method
 //tslint:disable:no-unsafe-any
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
-import { HappeningType, IHappeningDto, IHappeningSlot, ITiming, SlotParticipant } from '@sneat/dto';
+import { HappeningType, IHappeningDto, IHappeningSlot, ITiming, SlotParticipant, WeekdayCode2 } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, Member } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
+import { RecurringSlotsComponent } from '../../components/recurring-slots/recurring-slots.component';
 import { ScheduleService } from '../../services/schedule.service';
 
 @Component({
@@ -17,35 +18,34 @@ import { ScheduleService } from '../../services/schedule.service';
 	templateUrl: './new-happening-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewHappeningPageComponent extends TeamBaseComponent implements OnInit {
+export class NewHappeningPageComponent extends TeamBaseComponent implements OnInit, AfterViewInit {
 
-	isToDo: boolean;
+	private readonly hasNavHistory: boolean;
+
+	@ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: RecurringSlotsComponent;
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
-	happeningType: HappeningType = 'recurring';
-	slots: IHappeningSlot[] = [];
-	contacts: number[] = [];
+
+	public isToDo: boolean;
+	public wd?: WeekdayCode2;
+	public happeningType: HappeningType = 'recurring';
+	public slots: IHappeningSlot[] = [];
+	public contacts: number[] = [];
 	public date: string;
-
-	participantsTab: 'members' | 'others' = 'members';
-
-	happeningTitle = new FormControl('', Validators.required);
-
-	happeningForm = new FormGroup({
+	public participantsTab: 'members' | 'others' = 'members';
+	public happeningTitle = new FormControl('', Validators.required);
+	public happeningForm = new FormGroup({
 		title: this.happeningTitle,
 	});
-
 	public checkedMemberIDs: string[] = [];
-	singleTiming?: ITiming;
+	public singleTiming?: ITiming;
 
-	get members(): IMemberContext[] | undefined {
+	public get members(): IMemberContext[] | undefined {
 		const members = this.team?.dto?.members;
 		if (!members) {
 			return undefined;
 		}
 		return members.map(memberContextFromBrief);
 	}
-
-	private readonly hasNavHistory: boolean;
 
 	constructor(
 		route: ActivatedRoute,
@@ -74,15 +74,26 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 			.subscribe({
 				next: queryParams => {
 					console.log('NewHappeningPage.constructor() => queryParams:', queryParams);
-					if (!type) {
-						const tab = queryParams.get('tab');
-						if (tab === 'single' || tab === 'recurring') {
-							this.happeningType = tab;
-						}
+					const type = queryParams.get('type');
+					if (type !== 'single' && type !== 'recurring') {
+						console.warn('unknown happening type passed in URL: type=' + type);
+						return;
 					}
+					this.happeningType = type;
+					this.wd = queryParams.get('wd') as WeekdayCode2;
 				},
 				error: this.logErrorHandler('failed to get query params'),
 			});
+	}
+
+	ngAfterViewInit(): void {
+		if (this.happeningType === 'recurring' && !this.slots?.length) {
+			if (this.happeningSlotsComponent) {
+				this.happeningSlotsComponent?.showAddSlot({wd: this.wd});
+			} else {
+				console.warn('happeningSlotsComponent is not found');
+			}
+		}
 	}
 
 	ngOnInit(): void {
@@ -91,17 +102,16 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 
 	readonly id = (i: number, v: { id: string }) => v.id;
 
-	segmentChanged(): void {
-		console.log('segmentChanged()');
+	happeningTypeChanged(): void {
+		console.log('happeningTypeChanged()');
 		let { href } = location;
 		if (href.indexOf('?') < 0) {
-			href += '?tab=';
+			href += '?type=';
 		}
 		href = href.replace(
-			/tab=\w*/,
-			`tab=${this.happeningType}`,
+			/type=\w*/,
+			`type=${this.happeningType}`,
 		);
-		console.log('href:', href);
 		history.replaceState(history.state, document.title, href);
 	}
 
@@ -119,6 +129,19 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	onSlotRemoved(slots: IHappeningSlot[]): void {
 		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
 		this.slots = slots;
+	}
+
+	onAddSlotModalDismissed(): void {
+		console.log('NewHappeningPage.onAddSlotModalDismissed()');
+		if (!this.titleInput?.value) {
+			if (this.titleInput) {
+				setTimeout(() => {
+					this.titleInput?.setFocus().catch(this.logErrorHandler('failed to set focus to title input'));
+				}, 50);
+			} else {
+				console.warn('View child #titleInput is not initialized')
+			}
+		}
 	}
 
 	// tslint:disable-next-line:prefer-function-over-method

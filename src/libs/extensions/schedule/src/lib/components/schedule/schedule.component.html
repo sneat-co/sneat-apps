@@ -6,7 +6,7 @@
 </ion-segment>
 
 <ion-card>
-	<ion-item class="with-buttons" *ngIf="tab === 'day' || tab === 'week'">
+	<ion-item class="sneat-small-end-padding" *ngIf="tab === 'day' || tab === 'week'">
 		<ion-label>
 			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 				<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState" *ngIf="tab === 'day'">
@@ -45,9 +45,12 @@
 			</div>
 		</ion-label>
 
-		<ion-buttons slot="end" >
-			<ion-button title="Add" (click)="goNewHappening({type: 'single', date: activeDay.date})">
-				<ion-icon name="add-circle-outline" slot="start"></ion-icon>
+		<ion-buttons slot="end">
+			<ion-button title="Add" (click)="goNewHappening({type: 'recurring', wd: activeDay.weekday.id})">
+				<ion-icon name="duplicate-outline"></ion-icon>
+			</ion-button>
+			<ion-button title="Add" (click)="goNewHappening({type: 'single', date: activeDay.id})">
+				<ion-icon name="add-circle-outline"></ion-icon>
 			</ion-button>
 			<ion-button [title]="tab === 'day' ? 'Previous day' : 'Previous week'"
 									(click)="changeDay(tab === 'day' ? -1 : -7)">

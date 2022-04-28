@@ -1,10 +1,9 @@
 //tslint:disable:no-unsafe-any
 //tslint:disable:no-unbound-method
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
-import { isoStringsToDate } from '@sneat/core';
 import { HappeningType, IHappeningSlot, ITiming, SlotLocation, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
@@ -24,13 +23,14 @@ const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationError
 	selector: 'sneat-recurring-slot-form',
 	templateUrl: './recurring-slot-form.component.html',
 })
-export class RecurringSlotFormComponent {
+export class RecurringSlotFormComponent implements OnChanges {
 
 	private timing?: ITiming;
 	@Input() happeningType: HappeningType = 'recurring';
+	@Input() wd?: WeekdayCode2;
 	@Input() isToDo = false;
 	@Input() slots?: IHappeningSlot[];
-	@Output() slotAdded = new EventEmitter<void>();
+	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
 	@Output() eventTimesChanged = new EventEmitter<ITiming>();
 	minDate = '2019';
 	maxDate = '2023';
@@ -57,6 +57,15 @@ export class RecurringSlotFormComponent {
 	readonly weekdayFr = new FormControl(false);
 	readonly weekdaySa = new FormControl(false);
 	readonly weekdaySu = new FormControl(false);
+	private readonly weekdayById = {
+		'mo': this.weekdayMo,
+		'tu': this.weekdayTu,
+		'we': this.weekdayWe,
+		'th': this.weekdayTh,
+		'fr': this.weekdayFr,
+		'sa': this.weekdaySa,
+		'su': this.weekdaySu,
+	}
 
 	readonly weekdaysForm = new FormGroup(
 		{
@@ -84,6 +93,12 @@ export class RecurringSlotFormComponent {
 		const preselectedWd = window.history.state.wd as string;
 		if (preselectedWd) {
 			this.weekdaysForm.controls[preselectedWd].setValue(true);
+		}
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (this.wd) {
+			this.weekdayById[this.wd]?.setValue(true);
 		}
 	}
 
@@ -179,7 +194,7 @@ export class RecurringSlotFormComponent {
 			}
 		}
 		this.slots?.push(slot);
-		this.slotAdded.emit();
+		this.slotAdded.emit(slot);
 	}
 
 	// onTimeStartsChanged(event: Event): void {

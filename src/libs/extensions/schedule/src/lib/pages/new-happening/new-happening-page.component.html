@@ -20,7 +20,7 @@
 
 <ion-content class="cardy">
 
-	<ion-segment class="ion-padding-horizontal" [(ngModel)]="happeningType" (ionChange)="segmentChanged()">
+	<ion-segment class="ion-padding-horizontal" [(ngModel)]="happeningType" (ionChange)="happeningTypeChanged()">
 		<ion-segment-button value="recurring">Recurring</ion-segment-button>
 		<ion-segment-button value="single">One-timer</ion-segment-button>
 		<!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
@@ -39,9 +39,12 @@
 			</ion-item>
 
 			<ion-item-group>
-				<sneat-recurring-slots *ngIf="happeningType === 'recurring'"
-															 [slots]="slots"
-															 (slotRemoved)="onSlotRemoved($event)"
+				<sneat-recurring-slots
+					#happeningSlotsComponent
+					*ngIf="happeningType === 'recurring'"
+					[slots]="slots"
+					(slotRemoved)="onSlotRemoved($event)"
+					(addSlotDismissed)="onAddSlotModalDismissed()"
 				></sneat-recurring-slots>
 				<sneat-single-slot-form
 					[style.display]="happeningType === 'single' ? 'block' : 'none'"

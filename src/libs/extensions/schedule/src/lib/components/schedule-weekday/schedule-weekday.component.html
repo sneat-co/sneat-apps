@@ -8,7 +8,7 @@
 	<ion-spinner style="opacity: 0.2" name="lines-small" *ngIf="day?.loadingEvents"
 							 slot="end"></ion-spinner>
 	<ion-buttons slot="end">
-		<ion-button color="medium" title="Add activity" (click)="goNew.emit({type: 'recurring', wd: weekday?.id, date:weekday?.day?.date})">
+		<ion-button color="medium" title="Add activity" (click)="goNew.emit({type: 'recurring', wd: weekday?.id})">
 			<ion-icon name="add" slot="start"></ion-icon>
 			<ion-label>Add</ion-label>
 		</ion-button>

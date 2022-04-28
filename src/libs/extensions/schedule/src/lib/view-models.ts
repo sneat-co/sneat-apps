@@ -23,7 +23,7 @@ import { tap } from 'rxjs/operators';
 export interface NewHappeningParams {
 	type?: HappeningType;
 	wd?: WeekdayCode2;
-	date?: Date;
+	date?: string;
 }
 
 export interface ISlotItem {

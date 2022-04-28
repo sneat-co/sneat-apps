@@ -202,7 +202,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 		if (date) {
 			// tslint:disable-next-line:no-non-null-assertion
-			state.date = dateToIso(date);
+			state.date = date;
 		} else if (wd) {
 			state.wd = wd;
 		} else if (this.tab === 'day') {
@@ -215,7 +215,9 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			return;
 		}
 		this.params.teamNavService
-			.navigateForwardToTeamPage(this.team, 'new-happening', {})
+			.navigateForwardToTeamPage(this.team, 'new-happening', {
+				queryParams: params,
+			})
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	}
 

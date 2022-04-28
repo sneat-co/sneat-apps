@@ -1,7 +1,7 @@
 <ion-item-divider color="light">
 	<ion-label>When</ion-label>
 	<ion-buttons slot="end">
-		<ion-button title="Add slot" (click)="showSlotForm = true"
+		<ion-button title="Add slot" (click)="showAddSlot()"
 								[color]="slots?.length ? 'primary' : 'danger'"
 		>
 			<ion-icon name="add-outline" slot="start"></ion-icon>
@@ -16,7 +16,9 @@
 	<ion-buttons slot="start">
 		<div style="text-align: center">
 			<ion-badge style="display: block" color="light">{{slot.start.time}}</ion-badge>
-			<ion-text *ngIf="slot.durationMinutes" color="medium" style="display: block; font-size: small; margin-top: 0.75em">{{slot.durationMinutes}} mins</ion-text>
+			<ion-text *ngIf="slot.durationMinutes" color="medium"
+								style="display: block; font-size: small; margin-top: 0.75em">{{slot.durationMinutes}} mins
+			</ion-text>
 		</div>
 	</ion-buttons>
 
@@ -38,14 +40,19 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
-<ion-modal class="auto-height" [isOpen]="showSlotForm" (ionModalDidDismiss)="showSlotForm = false">
+<ion-modal class="auto-height"
+					 [isOpen]="isShowingAddSlot"
+					 (ionModalDidDismiss)="onAddSlotModalDismissed($event)"
+>
 	<ng-template>
 		<div class="modal-wrapper">
 			<sneat-recurring-slot-form
-				class="modal-content" [happeningType]="'recurring'"
+				class="modal-content"
+				[wd]="addSlotParams?.wd"
+				[happeningType]="'recurring'"
 				[isToDo]="false"
 				[slots]="slots"
-				(slotAdded)="onSlotAdded()"
+				(slotAdded)="onSlotAdded($event)"
 			></sneat-recurring-slot-form>
 		</div>
 	</ng-template>

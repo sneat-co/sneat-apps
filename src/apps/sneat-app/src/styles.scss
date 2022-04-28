@@ -39,6 +39,10 @@
 }
 
 
+ion-item.sneat-small-end-padding  {
+  --inner-padding-end: 0.5em;
+}
+
 ion-modal.auto-height {
   --height: auto;
 
@@ -54,5 +58,6 @@ ion-modal.auto-height {
 	  overflow: auto;
 	}
   }
+
   //}
 }
