@@ -262,6 +262,9 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	changeDay(v: number): void {
 		const d = this.activeDay.date;
 		console.log(`changeDay(${v}) => segment=${this.tab}, activeDay.date:`, d);
+		if (!d) {
+			throw new Error('!this.activeDay.date');
+		}
 		switch (this.tab) {
 			case 'day':
 				this.activeDayParity = this.activeDayParity === 'odd' ? 'even' : 'odd';
@@ -273,9 +276,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 				break;
 			default:
 				return;
-		}
-		if (!d) {
-			throw new Error('!d');
 		}
 		this.setDay('changeDay', new Date(d.getFullYear(), d.getMonth(), d.getDate() + v));
 	}
@@ -312,16 +312,19 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	}
 
 	setSlidesAnimationState(): void {
-		const isOdd = this.activeDayParity === 'odd';
 		switch (this.tab) {
-			case 'day':
+			case 'day': {
+				const isOdd = this.activeDayParity === 'odd';
 				this.oddDay.animationState = isOdd ? showVirtualSlide : hideVirtualSlide;
 				this.evenDay.animationState = !isOdd ? showVirtualSlide : hideVirtualSlide;
 				break;
-			case 'week':
+			}
+			case 'week': {
+				const isOdd = this.activeWeekParity === 'odd';
 				this.oddWeek.animationState = isOdd ? showVirtualSlide : hideVirtualSlide;
 				this.evenWeek.animationState = !isOdd ? showVirtualSlide : hideVirtualSlide;
 				break;
+			}
 		}
 	}
 
@@ -484,14 +487,14 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		// Change URL
 		if (this.isToday()) {
 			history.replaceState(history.state, document.title,
-				location.href.replace(/\?date=\d{4}-\d{2}-\d{2}/, ''));
+				location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, ''));
 		} else {
-			const isoDate = `?date=${localDateToIso(d)}`;
-			if (location.href.indexOf('?date') < 0) {
+			const isoDate = `&date=${localDateToIso(d)}`;
+			if (location.href.indexOf('&date') < 0) {
 				history.replaceState(history.state, document.title, location.href + isoDate);
 			} else {
 				history.replaceState(history.state, document.title,
-					location.href.replace(/\?date=\d{4}-\d{2}-\d{2}/, isoDate));
+					location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, isoDate));
 			}
 		}
 	}
