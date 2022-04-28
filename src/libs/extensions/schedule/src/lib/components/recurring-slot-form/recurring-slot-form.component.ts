@@ -8,22 +8,13 @@ import { HappeningType, IHappeningSlot, ITiming, SlotLocation, WeekdayCode2 } fr
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { wd2 } from '../../view-models';
-
-const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-	const formGroup = control as FormGroup;
-	const weekdaySelected = Object.values(formGroup.value)
-		.indexOf(true) >= 0;
-	if (weekdaySelected) {
-		return null;
-	}
-	return { required: 'Please select at least 1 weekday.' };
-};
+import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
 @Component({
 	selector: 'sneat-recurring-slot-form',
 	templateUrl: './recurring-slot-form.component.html',
 })
-export class RecurringSlotFormComponent implements OnChanges {
+export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnChanges {
 
 	private timing?: ITiming;
 	@Input() happeningType: HappeningType = 'recurring';
@@ -50,41 +41,12 @@ export class RecurringSlotFormComponent implements OnChanges {
 	showWeekday = true;
 	date = '';
 
-	readonly weekdayMo = new FormControl(false);
-	readonly weekdayTu = new FormControl(false);
-	readonly weekdayWe = new FormControl(false);
-	readonly weekdayTh = new FormControl(false);
-	readonly weekdayFr = new FormControl(false);
-	readonly weekdaySa = new FormControl(false);
-	readonly weekdaySu = new FormControl(false);
-	private readonly weekdayById = {
-		'mo': this.weekdayMo,
-		'tu': this.weekdayTu,
-		'we': this.weekdayWe,
-		'th': this.weekdayTh,
-		'fr': this.weekdayFr,
-		'sa': this.weekdaySa,
-		'su': this.weekdaySu,
-	}
-
-	readonly weekdaysForm = new FormGroup(
-		{
-			mo: this.weekdayMo,
-			tu: this.weekdayTu,
-			we: this.weekdayWe,
-			th: this.weekdayTh,
-			fr: this.weekdayFr,
-			sa: this.weekdaySa,
-			su: this.weekdaySu,
-		},
-		weekdayRequired,
-	);
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly alertCtrl: AlertController,
 		protected readonly modalCtrl: ModalController,
 	) {
+		super(true);
 		const now = new Date();
 		this.minDate = now.getFullYear()
 			.toString();

@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { RecurringCommonModule } from '../../components/recurring-common.module';
-import { RecurringHappeningServiceModule } from '../../services/happening.service';
+import { HappeningServiceModule } from '../../services/happening.service';
 
 import { HappeningPageComponent } from './happening-page.component';
 
@@ -23,7 +23,7 @@ const routes: Routes = [
 		IonicModule,
 		RecurringCommonModule,
 		RouterModule.forChild(routes),
-		RecurringHappeningServiceModule,
+		HappeningServiceModule,
 	],
 	declarations: [HappeningPageComponent],
 })

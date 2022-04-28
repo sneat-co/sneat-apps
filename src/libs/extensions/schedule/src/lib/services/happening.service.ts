@@ -35,5 +35,5 @@ export class HappeningService {
 		HappeningService,
 	],
 })
-export class RecurringHappeningServiceModule {
+export class HappeningServiceModule {
 }

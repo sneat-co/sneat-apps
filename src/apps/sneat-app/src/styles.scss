@@ -43,6 +43,19 @@ ion-item.sneat-small-end-padding  {
   --inner-padding-end: 0.5em;
 }
 
+ion-item.sneat-no-end-padding  {
+  --inner-padding-end: 0;
+}
+
+ion-checkbox.sneat-small-end-margin {
+  margin-right: 0.75em;
+}
+
+ion-item.sneat-no-bottom-border {
+  --border-width: 0;
+  --inner-border-width: 0;
+}
+
 ion-modal.auto-height {
   --height: auto;
 

@@ -24,6 +24,7 @@ import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/mod
 import { Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
+import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { Weekday } from '../schedule-week/schedule-week.component';
 import { animationState, ScheduleTab, SHIFT_1_DAY, SHIFT_1_WEEK } from './schedule-core';
 import { Parity, SwipeableDay, SwipeableWeek } from './swipeable-ui';
@@ -96,6 +97,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		// }, 10);
 	}
 
+
+	onFilterChanged(filter: IScheduleFilter): void {
+		console.log('onFilterChanged()', filter);
+	}
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
 			this.onTeamContextChanged();
@@ -195,7 +200,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	goNewHappening(params: NewHappeningParams): void {
+	readonly goNewHappening = (params: NewHappeningParams): void => {
 		const { type, wd, date } = params;
 
 		const state: { type?: HappeningType; date?: string; wd?: WeekdayCode2 } = { type };
@@ -221,10 +226,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	}
 
-	goRegular(activity: IHappeningWithUiState): void {
-		this.errorLogger.logError('not implemented yet');
-		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
-	}
 
 	applyFilter(filter: string): void {
 		console.log(`applyFilter(${filter})`);
@@ -328,7 +329,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	onSlotClicked(slot: ISlotItem): void {
+	readonly onSlotClicked = (slot: ISlotItem): void => {
 		console.log('ScheduleComponent.onSlotClicked()', slot);
 		const happeningDto = slot.happening.dto;
 		if (!happeningDto) {
@@ -345,24 +346,18 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'));
 	}
 
-	public onDateSelected(date: Date): void {
+	public readonly onDateSelected = (date: Date): void => {
 		this.tab = 'day';
 		this.setDay('onDateSelected', date);
 	}
 
 	readonly id = (i: number, v: { id: string }): string => v.id;
 
-	// tslint:disable-next-line:prefer-function-over-method
 	readonly index = (i: number): number => i;
 
 	// get inactiveDay(): Day {
 	//     return this.activeDayParity === 'odd' ? this.evenDay : this.oddDay;
 	// }
-
-	// tslint:disable-next-line:prefer-function-over-method
-	trackByDate(i: number, item: Weekday): number | undefined {
-		return item.day?.date.getTime();
-	}
 
 	// noinspection JSMethodCanBeStatic
 

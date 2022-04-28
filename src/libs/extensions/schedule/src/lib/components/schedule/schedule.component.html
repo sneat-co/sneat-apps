@@ -1,3 +1,5 @@
+
+
 <ion-segment class="ion-padding-horizontal" [(ngModel)]="tab" (ionChange)="segmentChanged($event)">
 	<ion-segment-button value="day">Day</ion-segment-button>
 	<ion-segment-button value="week">Week</ion-segment-button>
@@ -5,8 +7,14 @@
 	<ion-segment-button value="singles">One-timers</ion-segment-button>
 </ion-segment>
 
-<ion-card>
-	<ion-item *ngIf="tab === 'day' || tab === 'week'" class="sneat-small-end-padding">
+<sneat-schedule-filter
+	[showWeekdays]="tab === 'recurrings'"
+	[showRepeats]="tab === 'recurrings'"
+	(changed)="onFilterChanged($event)"
+></sneat-schedule-filter>
+
+<ion-card *ngIf="tab === 'day' || tab === 'week'">
+	<ion-item class="sneat-small-end-padding">
 		<ion-label>
 			<div *ngIf="tab === 'day'" class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 				<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState">
@@ -210,62 +218,20 @@
 		</div>
 	</div>
 
-	<ng-container *ngIf="tab === 'recurrings'">
-		<div class="ion-padding" *ngIf="!recurrings">
-			<p>Loading...</p>
-		</div>
-		<ng-container *ngIf="recurrings">
-			<p *ngIf="!recurrings?.length && !allRecurrings?.length" padding>No recurring activities added yet.</p>
-			<p *ngIf="!recurrings?.length && allRecurrings?.length" padding>No recurring activities matching filter.</p>
-			<ion-item-group *ngFor="let recurring of recurrings; trackBy: id">
-				<ion-item color="light" button (click)="goRegular(recurring)">
-					<ion-label>
-						<h2><b>{{recurring.brief.type|titlecase}}</b>: <span
-							style="font-weight: normal">{{recurring.brief.title}}</span>
-						</h2>
-						<p *ngIf="recurring.dto?.participants?.length">
-							<ion-badge color="medium" style="margin-right: 0.5em"
-												 *ngFor="let participant of recurring.dto?.participants; trackBy: id">
-								{{participant.title}}
-							</ion-badge>
-						</p>
-					</ion-label>
-				</ion-item>
-				<ion-item button *ngFor="let slot of recurring.brief.slots; trackBy: index" (click)="goRegular(recurring)">
-					<ion-badge color="light" slot="start">{{slot.start.time}}</ion-badge>
-					<ion-label text-wrap>
-						<p>
-							<ion-badge color="light" style="margin-right: 4px;"
-												 *ngFor="let wd of slot.weekdays">{{wd|wdToWeekday}}</ion-badge>
-						</p>
-						<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
-							@ {{slot.location.title || slot.location.address}},
-							ends at {{slot.end?.time}}</p>
-						<ng-template #noLocation>
-							<p>Ends at {{slot.end?.time}}</p>
-						</ng-template>
-					</ion-label>
-				</ion-item>
-			</ion-item-group>
-		</ng-container>
-	</ng-container>
-
-	<ng-container *ngIf="tab === 'singles'">
-		<p padding *ngIf="!todayAndFutureDays">Loading...</p>
-		<p padding *ngIf="todayAndFutureDays && todayAndFutureDays.length === 0">No upcoming events.</p>
-		<ng-container *ngIf="todayAndFutureDays && todayAndFutureDays.length">
-			<ng-container *ngFor="let weekday of todayAndFutureDays; trackBy: trackByDate">
-				<sneat-schedule-weekday [weekday]="weekday"
-																[filter]="filter"
-																[showEvents]="true"
-																(slotClicked)="onSlotClicked($event)"
-																(dateSelected)="onDateSelected($event)"
-																(goNew)="goNewHappening($event)"
-				></sneat-schedule-weekday>
-			</ng-container>
-		</ng-container>
-	</ng-container>
 </ion-card>
+
+<sneat-recurrings-tab *ngIf="tab === 'recurrings'"
+											[recurrings]="recurrings"
+											[allRecurrings]="allRecurrings"
+></sneat-recurrings-tab>
+
+<sneat-singles-tab *ngIf="tab === 'singles'"
+									 [todayAndFutureDays]="todayAndFutureDays"
+									 [filter]="filter"
+									 [onSlotClicked]="onSlotClicked"
+									 [onDateSelected]="onDateSelected"
+									 [goNewHappening]="goNewHappening"
+></sneat-singles-tab>
 
 <div class="ion-padding-bottom ion-text-center" *ngIf="tab === 'day' || tab === 'week'">
 	<ion-text color="medium">

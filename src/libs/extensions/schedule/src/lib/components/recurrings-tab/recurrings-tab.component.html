@@ -1,0 +1,40 @@
+<div class="ion-padding" *ngIf="!recurrings">
+	<p>Loading...</p>
+</div>
+<ng-container *ngIf="recurrings">
+	<p *ngIf="!recurrings?.length && !allRecurrings?.length" padding>No recurring activities added yet.</p>
+	<p *ngIf="!recurrings?.length && allRecurrings?.length" padding>No recurring activities matching filter.</p>
+	<ion-card *ngFor="let recurring of recurrings; trackBy: id">
+		<ion-item color="light" class="sneat-no-end-padding" button (click)="goRegular(recurring)">
+			<ion-label>
+				<h2>{{recurring.brief.title}}</h2>
+				<p *ngIf="recurring.dto?.participants?.length">
+					<ion-badge color="medium" style="margin-right: 0.5em"
+										 *ngFor="let participant of recurring.dto?.participants; trackBy: id">
+						{{participant.title}}
+					</ion-badge>
+				</p>
+			</ion-label>
+			<ion-buttons slot="end">
+				<ion-button (click)="deleteRecurring($event, recurring)">
+					<ion-icon name="close-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item button *ngFor="let slot of recurring.brief.slots; trackBy: index" (click)="goRegular(recurring)">
+			<ion-badge color="light" slot="start">{{slot.start.time}}</ion-badge>
+			<ion-label text-wrap>
+				<p>
+					<ion-badge color="light" style="margin-right: 4px;"
+										 *ngFor="let wd of slot.weekdays">{{wd|wdToWeekday}}</ion-badge>
+				</p>
+				<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
+					@ {{slot.location.title || slot.location.address}},
+					ends at {{slot.end?.time}}</p>
+				<ng-template #noLocation>
+					<p>Ends at {{slot.end?.time}}</p>
+				</ng-template>
+			</ion-label>
+		</ion-item>
+	</ion-card>
+</ng-container>

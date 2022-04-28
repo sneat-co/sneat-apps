@@ -10,7 +10,7 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 import { IMemberContext, Member } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
-import { RecurringSlotsComponent } from '../../components/recurring-slots/recurring-slots.component';
+import { HappeningSlotsComponent } from '../../components/happening-slots/happening-slots.component';
 import { ScheduleService } from '../../services/schedule.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 
 	private readonly hasNavHistory: boolean;
 
-	@ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: RecurringSlotsComponent;
+	@ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: HappeningSlotsComponent;
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 
 	public isToDo: boolean;

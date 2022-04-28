@@ -10,9 +10,9 @@ export interface AddSlotParams {
 
 @Component({
 	selector: 'sneat-recurring-slots',
-	templateUrl: './recurring-slots.component.html',
+	templateUrl: './happening-slots.component.html',
 })
-export class RecurringSlotsComponent {
+export class HappeningSlotsComponent {
 
 	@Input() slots?: IHappeningSlot[];
 

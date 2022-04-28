@@ -1,22 +1,22 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RecurringSlotsComponent} from './recurring-slots.component';
+import {HappeningSlotsComponent} from './happening-slots.component';
 
 describe('RegularSlotsComponent', () => {
-	let component: RecurringSlotsComponent;
-	let fixture: ComponentFixture<RecurringSlotsComponent>;
+	let component: HappeningSlotsComponent;
+	let fixture: ComponentFixture<HappeningSlotsComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [RecurringSlotsComponent],
+			declarations: [HappeningSlotsComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(RecurringSlotsComponent);
+		fixture = TestBed.createComponent(HappeningSlotsComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

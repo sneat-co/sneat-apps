@@ -6,7 +6,7 @@ import { SneatPipesModule } from '@sneat/components';
 
 import { HappeningCommonModule } from './happening-common.module';
 import { RecurringSlotFormComponent } from './recurring-slot-form/recurring-slot-form.component';
-import { RecurringSlotsComponent } from './recurring-slots/recurring-slots.component';
+import { HappeningSlotsComponent } from './happening-slots/happening-slots.component';
 import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
 import { StartEndDatetimeFormComponent } from './start-end-datetime-form/start-end-datetime-form.component';
 
@@ -20,13 +20,13 @@ import { StartEndDatetimeFormComponent } from './start-end-datetime-form/start-e
 		SneatPipesModule,
 	],
 	declarations: [
-		RecurringSlotsComponent,
+		HappeningSlotsComponent,
 		RecurringSlotFormComponent,
 		SingleSlotFormComponent,
 		StartEndDatetimeFormComponent,
 	],
 	exports: [
-		RecurringSlotsComponent,
+		HappeningSlotsComponent,
 		RecurringSlotFormComponent,
 		SingleSlotFormComponent,
 		StartEndDatetimeFormComponent,
