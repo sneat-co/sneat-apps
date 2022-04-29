@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ITeamContext } from '@sneat/team/models';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { isSlotVisible } from '../schedule-slots';
@@ -9,6 +10,7 @@ import { Weekday } from '../schedule-week/schedule-week.component';
 	templateUrl: './schedule-weekday.component.html',
 })
 export class ScheduleWeekdayComponent {
+	@Input() team?: ITeamContext;
 	@Input() weekday?: Weekday;
 	@Input() filter?: IScheduleFilter;
 	@Input() showRegulars = true;

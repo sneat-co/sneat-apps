@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
+import { ITeamContext } from '@sneat/team/models';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams, TeamDay } from '../../view-models';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
@@ -18,6 +19,7 @@ export interface Weekday { // This is used to
 })
 export class ScheduleWeekComponent implements OnChanges {
 
+	@Input() team?: ITeamContext;
 	@Input() week?: Week;
 	@Input() filter?: IScheduleFilter;
 	@Input() showRecurring = true;
