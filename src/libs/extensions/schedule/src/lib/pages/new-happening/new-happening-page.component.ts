@@ -12,13 +12,14 @@ import { memberContextFromBrief } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
 import { HappeningSlotsComponent } from '../../components/happening-slots/happening-slots.component';
 import { ScheduleService } from '../../services/schedule.service';
+import { ScheduleBasePage } from '../schedule-base-page';
 
 @Component({
 	selector: 'sneat-happening-new',
 	templateUrl: './new-happening-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewHappeningPageComponent extends TeamBaseComponent implements OnInit, AfterViewInit {
+export class NewHappeningPageComponent extends ScheduleBasePage implements OnInit, AfterViewInit {
 
 	private readonly hasNavHistory: boolean;
 
