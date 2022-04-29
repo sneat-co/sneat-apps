@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { WeekdayCode2 } from '@sneat/dto';
+import { IMemberBrief, WeekdayCode2 } from '@sneat/dto';
+import { ITeamContext } from '@sneat/team/models';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 import { IScheduleFilter } from './schedule-filter';
 
-type Repeat = 'w'
 @Component({
 	selector: 'sneat-schedule-filter',
 	templateUrl: 'schedule-filter.component.html',
 })
-export class ScheduleFilterComponent extends WeekdaysFormBase {
+export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChanges {
 	private resetting = false;
+	@Input() team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	@Output() readonly changed = new EventEmitter<IScheduleFilter>();
@@ -18,6 +19,9 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 	weekdays: WeekdayCode2[] = [];
 	memberIDs: string[] = [];
 	repeats: string[] = [];
+	memberID = '';
+
+	members?: IMemberBrief[];
 
 	readonly repeatWeekly = new FormControl(false);
 	readonly repeatMonthly = new FormControl(false);
@@ -35,6 +39,10 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		super(false);
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		this.members = this.team?.dto?.members;
+	}
+
 	clearFilter(event?: Event): void {
 		event?.stopPropagation();
 		this.resetting = true;
@@ -42,6 +50,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 			this.memberIDs = [];
 			this.repeats = [];
 			this.weekdays = [];
+			this.memberID = '';
 
 			const resetFormControlOptions = {
 				onlySelf: true,
@@ -98,5 +107,10 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 			filter = { ...filter, repeats: [...this.repeats] };
 		}
 		this.changed.emit(filter);
+	}
+
+	onMemberChanged(event: Event): void {
+		console.log('ScheduleFilterComponent.onMemberChanged()', event);
+		this.memberIDs = this.memberID ? [this.memberID] : [];
 	}
 }

@@ -6,6 +6,7 @@
 </ion-segment>
 
 <sneat-schedule-filter #scheduleFilterComponent
+											 [team]="team"
 											 [showWeekdays]="tab === 'recurrings'"
 											 [showRepeats]="tab === 'recurrings'"
 											 (changed)="onFilterChanged($event)"
