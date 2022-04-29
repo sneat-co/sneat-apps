@@ -7,6 +7,7 @@ import { MembersAsBadgesModule } from '@sneat/core';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { HappeningServiceModule } from '../../services/happening.service';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
+import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
 import { RecurringsTabComponent } from '../recurrings-tab/recurrings-tab.component';
 import { ScheduleDayComponent } from '../schedule-day/schedule-day.component';
 import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
@@ -38,6 +39,7 @@ import { SinglesTabComponent } from '../singles-tab/singles-tab.component';
 		ScheduleWeekComponent,
 		ScheduleWeekdayComponent,
 		RecurringsTabComponent,
+		RecurringCardComponent,
 		SinglesTabComponent,
 		ScheduleFilterComponent,
 	],
