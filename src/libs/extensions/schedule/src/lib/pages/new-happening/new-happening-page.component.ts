@@ -39,6 +39,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 	});
 	public checkedMemberIDs: string[] = [];
 	public singleTiming?: ITiming;
+	public isCreating = false;
 
 	public get members(): IMemberContext[] | undefined {
 		const members = this.team?.dto?.members;
@@ -94,7 +95,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 	ngAfterViewInit(): void {
 		if (this.happeningType === 'recurring' && !this.slots?.length) {
 			if (this.happeningSlotsComponent) {
-				this.happeningSlotsComponent?.showAddSlot({wd: this.wd});
+				this.happeningSlotsComponent?.showAddSlot({ wd: this.wd });
 			} else {
 				console.warn('happeningSlotsComponent is not found');
 			}
@@ -106,6 +107,17 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 	}
 
 	readonly id = (i: number, v: { id: string }) => v.id;
+
+
+	// TODO(fix): protected onCommuneIdsChanged() {
+	//     super.onCommuneIdsChanged();
+	//     this.subscriptions.push(this.memberService.watchByCommuneId(this.communeRealId).subscribe(members => {
+	//         this.members = members.map(m => new Member(m));
+	//         this.members.sort((a, b) => a.title > b.title ? 1 : b.title > a.title ? -1 : 0); // TODO: Decouple
+	//         this.adults = this.members.filter(m => m.dto.age === 'adult');
+	//         this.kids = this.members.filter(m => m.dto.age === 'child');
+	//     }));
+	// }
 
 	onHappeningTypeChanged(): void {
 		console.log('onHappeningTypeChanged()');
@@ -120,17 +132,6 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 		history.replaceState(history.state, document.title, href);
 	}
 
-
-	// TODO(fix): protected onCommuneIdsChanged() {
-	//     super.onCommuneIdsChanged();
-	//     this.subscriptions.push(this.memberService.watchByCommuneId(this.communeRealId).subscribe(members => {
-	//         this.members = members.map(m => new Member(m));
-	//         this.members.sort((a, b) => a.title > b.title ? 1 : b.title > a.title ? -1 : 0); // TODO: Decouple
-	//         this.adults = this.members.filter(m => m.dto.age === 'adult');
-	//         this.kids = this.members.filter(m => m.dto.age === 'child');
-	//     }));
-	// }
-
 	onSlotRemoved(slots: IHappeningSlot[]): void {
 		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
 		this.slots = slots;
@@ -144,7 +145,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 					this.titleInput?.setFocus().catch(this.logErrorHandler('failed to set focus to title input'));
 				}, 50);
 			} else {
-				console.warn('View child #titleInput is not initialized')
+				console.warn('View child #titleInput is not initialized');
 			}
 		}
 	}
@@ -244,8 +245,6 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 				}
 				return;
 			}
-			const dto = this.makeHappeningDto();
-
 			const team = this.team;
 
 			if (!team) {
@@ -253,8 +252,15 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 				return;
 			}
 
+			this.isCreating = true;
+
+			const dto = this.makeHappeningDto();
+
 			this.scheduleService
 				.createHappening({ teamID: team.id, dto })
+				.pipe(
+					takeUntil(this.destroyed),
+				)
 				.subscribe({
 					next: () => {
 						console.log('new happening created');
@@ -267,8 +273,10 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 						}
 					},
 					error: this.logErrorHandler('failed to create new happening'),
+					complete: () => this.isCreating = false,
 				});
 		} catch (e) {
+			this.isCreating = false;
 			this.errorLogger.logError(e, 'failed to create new happening');
 		}
 	}

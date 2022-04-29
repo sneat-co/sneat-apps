@@ -160,9 +160,10 @@
 			<!--</ion-item>-->
 
 			<div class="ion-padding">
-				<ion-button [color]="formIsValid() ? 'primary' : 'medium'" size="large" (click)="createHappening()">
+				<ion-button [disabled]="isCreating" [color]="formIsValid() ? 'primary' : 'medium'" size="large" (click)="createHappening()">
 					<ion-label *ngIf="isToDo">Add task</ion-label>
 					<ion-label *ngIf="!isToDo">Create {{happeningType}} happening</ion-label>
+					<ion-spinner *ngIf="isCreating" slot="end" class="ion-margin-horizontal"></ion-spinner>
 				</ion-button>
 			</div>
 		</ion-card>
