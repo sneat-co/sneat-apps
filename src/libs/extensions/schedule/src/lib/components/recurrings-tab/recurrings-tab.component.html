@@ -1,9 +1,18 @@
 <div class="ion-padding" *ngIf="!recurrings">
 	<p>Loading...</p>
 </div>
+<ion-item *ngIf="!!numberOfHidden" class="ion-margin sneat-no-end-padding" >
+	<ion-label color="medium" *ngIf="numberOfHidden === 1">{{numberOfHidden}} out of {{allRecurrings?.length}} happenings is hidden by filter.</ion-label>
+	<ion-label color="medium" *ngIf="numberOfHidden > 1">{{numberOfHidden}} out of {{allRecurrings?.length}} happenings are hidden by filter.</ion-label>
+	<ion-buttons slot="end">
+		<ion-button fill="clear"  (click)="resetFilter.next($event)">
+			<ion-icon slot="start" name="close-circle-outline" color="medium"></ion-icon>
+			<ion-label color="medium">Reset filter</ion-label>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
 <ng-container *ngIf="recurrings">
-	<p *ngIf="!recurrings?.length && !allRecurrings?.length" padding>No recurring activities added yet.</p>
-	<p *ngIf="!recurrings?.length && allRecurrings?.length" padding>No recurring activities matching filter.</p>
+	<p class="ion-margin" *ngIf="!recurrings?.length && !allRecurrings?.length" padding>No recurring activities added yet.</p>
 	<sneat-recurring-card *ngFor="let recurring of recurrings; trackBy: id"
 												[recurring]="recurring"
 												[team]="team"

@@ -228,6 +228,7 @@
 											[filter]="filter"
 											[recurrings]="recurrings"
 											[allRecurrings]="allRecurrings"
+											(resetFilter)="resetFilter($event)"
 ></sneat-recurrings-tab>
 
 <sneat-singles-tab *ngIf="tab === 'singles'"
