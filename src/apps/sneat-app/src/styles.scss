@@ -39,16 +39,24 @@
 }
 
 
-ion-item.sneat-small-end-padding  {
+.sneat-small-end-padding  {
   --inner-padding-end: 0.5em;
 }
 
-ion-item.sneat-no-end-padding  {
+.sneat-no-end-padding  {
   --inner-padding-end: 0;
 }
 
-ion-checkbox.sneat-small-end-margin {
-  margin-right: 0.75em;
+.sneat-small-end-margin {
+  margin-right: 0.5em;
+}
+
+.sneat-tiny-end-margin {
+  margin-right: 0.25em;
+}
+
+.sneat-no-end-margin {
+  margin-right: 0;
 }
 
 ion-item.sneat-no-bottom-border {

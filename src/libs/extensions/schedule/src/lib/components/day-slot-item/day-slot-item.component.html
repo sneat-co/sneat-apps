@@ -1,5 +1,6 @@
 <ion-item button (click)="onSlotClicked($event)">
-	<ion-badge color="light" slot="start" style="font-weight: normal; background-color: white;">
+	<ion-icon class="sneat-tiny-end-margin" [name]="slot?.happening?.brief?.type === 'recurring' ? 'calendar-outline' : 'today-outline'" slot="start"></ion-icon>
+	<ion-badge color="light" slot="start" class="sneat-small-end-margin" style="font-weight: normal; background-color: white;">
 		From {{slot?.timing?.start?.time}}
 		<div style="font-size: small; color: #777; text-align: center" *ngIf="slot?.timing?.end">
 			<small>ends</small> {{slot?.timing?.end?.time}}</div>

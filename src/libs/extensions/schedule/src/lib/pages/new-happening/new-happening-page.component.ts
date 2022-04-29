@@ -211,7 +211,17 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 	}
 
 	formIsValid(): boolean {
-		return this.happeningForm.valid && !!this.slots.length;
+		if (!this.happeningForm.valid) {
+			return false;
+		}
+		switch (this.happeningType) {
+			case 'recurring':
+				return !!this.slots.length;
+			case 'single':
+				return !!this.singleTiming;
+			default:
+				throw new Error('unknown happening type: ' + this.happeningType);
+		}
 	}
 
 	createHappening(): void {
