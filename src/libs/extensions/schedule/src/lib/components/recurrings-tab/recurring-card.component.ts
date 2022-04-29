@@ -2,6 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnDestroy } from '@angular/core
 import { IHappeningWithUiState } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
+import { TeamNavService } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
 import { HappeningService } from '../../services/happening.service';
 
@@ -17,6 +18,7 @@ export class RecurringCardComponent implements OnDestroy {
 	constructor(
 		private readonly happeningService: HappeningService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly teamNavService: TeamNavService,
 	) {
 		//
 	}
@@ -30,7 +32,13 @@ export class RecurringCardComponent implements OnDestroy {
 	}
 
 	goHappening(happening?: IHappeningWithUiState): void {
-		console.error('goHappening(): not implemented yet');
+		if (!this.team) {
+			this.errorLogger.logErrorHandler('not able to navigate to happening without team context')
+			return;
+		}
+		this.teamNavService.navigateForwardToTeamPage(this.team, `happening/${happening?.id}`, {
+			state: { happening },
+		}).catch(this.errorLogger.logErrorHandler('failed to navigate to happening page'));
 		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
 
