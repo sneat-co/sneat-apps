@@ -9,7 +9,7 @@ import { createWeekdays, Week } from '../schedule/schedule-core';
 export interface Weekday { // This is used to
 	readonly id: WeekdayCode2;
 	readonly longTitle: string;
-	day?: TeamDay;
+	day?: TeamDay; // TODO: make readonly
 }
 
 @Component({
@@ -28,7 +28,6 @@ export class ScheduleWeekComponent implements OnChanges {
 	@Output() dateSelected = new EventEmitter<Date>();
 	@Output() slotClicked = new EventEmitter<ISlotItem>();
 
-
 	weekdays: Weekday[] = createWeekdays();
 
 	readonly id = (i: number, item: Weekday): WeekdayCode2 => item.id;
@@ -42,7 +41,7 @@ export class ScheduleWeekComponent implements OnChanges {
 	}
 
 	private onWeekInputChanged(week: SimpleChange): void {
-		console.log('onWeekInputChanged()', week);
+		console.log('ScheduleWeekComponent.onWeekInputChanged()', week);
 		const prevWeek = week.previousValue as Week | undefined;
 		const currentWeek = week.currentValue as Week | undefined;
 		if (!currentWeek || prevWeek === currentWeek || prevWeek && currentWeek && dateToIso(prevWeek.startDate) == dateToIso(currentWeek.startDate)) {

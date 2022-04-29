@@ -7,7 +7,8 @@ import {
 	OnChanges,
 	OnDestroy,
 	Output,
-	SimpleChanges, ViewChild,
+	SimpleChanges,
+	ViewChild,
 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {
@@ -231,23 +232,22 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	};
 
-
 	isToday(): boolean {
-		const day = this.activeDay.date;
+		const { date } = this.activeDay;
 		const today = new Date();
-		return !day ||
-			day.getDate() === today.getDate() &&
-			day.getMonth() === today.getMonth() &&
-			day.getFullYear() === today.getFullYear();
+		return !date ||
+			date.getDate() === today.getDate() &&
+			date.getMonth() === today.getMonth() &&
+			date.getFullYear() === today.getFullYear();
 	}
 
 	isTomorrow(): boolean {
-		const day = this.activeDay.date;
+		const { date } = this.activeDay;
 		const today = new Date();
-		return !day ||
-			day.getDate() === today.getDate() + 1 &&
-			day.getMonth() === today.getMonth() &&
-			day.getFullYear() === today.getFullYear();
+		return !date ||
+			date.getDate() === today.getDate() + 1 &&
+			date.getMonth() === today.getMonth() &&
+			date.getFullYear() === today.getFullYear();
 	}
 
 	isCurrentWeek(): boolean {
@@ -332,10 +332,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	readonly onSlotClicked = (slot: ISlotItem): void => {
 		console.log('ScheduleComponent.onSlotClicked()', slot);
-		const happeningDto = slot.happening.dto;
-		if (!happeningDto) {
-			throw new Error('!happeningDto');
-		}
 		if (!this.team) {
 			throw new Error('!team');
 		}
@@ -343,8 +339,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		const page = `happening/${happening.id}`;
 		this.params.teamNavService.navigateForwardToTeamPage(this.team, page, {
 			state: { happening },
-		})
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'));
+		}).catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'));
 	};
 
 	public readonly onDateSelected = (date: Date): void => {

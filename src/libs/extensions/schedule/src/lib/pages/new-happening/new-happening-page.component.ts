@@ -210,14 +210,19 @@ export class NewHappeningPageComponent extends TeamBaseComponent implements OnIn
 		return dto;
 	}
 
+	formIsValid(): boolean {
+		return this.happeningForm.valid && !!this.slots.length;
+	}
+
 	createHappening(): void {
-		console.log('onTimingChanged.createHappening()');
+		console.log('NewHappeningPageComponent.createHappening()');
+		if (!this.team) {
+			return;
+		}
 		try {
 			this.happeningForm.markAsTouched();
-			if (!this.team) {
-				return;
-			}
 			if (!this.happeningForm.valid) {
+				alert('title is a required field');
 				if (!this.happeningForm.controls['title'].valid) {
 					this.titleInput?.setFocus()
 						.catch(this.logErrorHandler('failed to set focus to title input after happening found to be not valid'));

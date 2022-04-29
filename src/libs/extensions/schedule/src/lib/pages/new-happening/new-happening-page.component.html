@@ -139,24 +139,29 @@
 		</ion-card>
 
 		<ion-card>
-			<ion-list>
-				<ion-item color="danger" *ngIf="happeningForm.touched && happeningForm.controls['title'].errors">
-					<ng-container *ngIf="isToDo">Task title is required.</ng-container>
-					<ng-container *ngIf="!isToDo">Title is a required field.</ng-container>
+			<ng-container *ngIf="!formIsValid()">
+				<ion-item>
+					<ion-label color="danger">
+						<ul>
+							<li *ngIf="happeningForm.touched && happeningForm.controls['title'].errors">
+								<ng-container *ngIf="isToDo">Task title is required.</ng-container>
+								<ng-container *ngIf="!isToDo">Please enter a required "Title" field at top of the page.</ng-container>
+							</li>
+							<li *ngIf="happeningType === 'recurring' &&  !slots?.length">
+								<ng-container>At least 1 slot should be specified for a recurring happening.</ng-container>
+							</li>
+						</ul>
+					</ion-label>
 				</ion-item>
-				<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
-				<!--{{ weekdaysForm.errors['required'] }}-->
-				<!--</ion-item>-->
-			</ion-list>
+			</ng-container>
+			<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
+			<!--{{ weekdaysForm.errors['required'] }}-->
+			<!--</ion-item>-->
 
 			<div class="ion-padding">
-				<ng-container *ngIf="isToDo">
-					<ion-button size="large" (click)="createHappening()">
-						Add task
-					</ion-button>
-				</ng-container>
-				<ion-button *ngIf="!isToDo" size="large" (click)="createHappening()">
-					Create
+				<ion-button [color]="formIsValid() ? 'primary' : 'medium'" size="large" (click)="createHappening()">
+					<ion-label *ngIf="isToDo">Add task</ion-label>
+					<ion-label *ngIf="!isToDo">Create {{happeningType}} happening</ion-label>
 				</ion-button>
 			</div>
 		</ion-card>
