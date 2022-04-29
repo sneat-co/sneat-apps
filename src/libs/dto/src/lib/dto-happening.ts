@@ -16,6 +16,9 @@ export interface IHappeningBase {
 	activityType?: ActivityType;
 	levels?: Level[];
 	slots?: IHappeningSlot[];
+	assetIDs?: string[];
+	memberIDs?: string[];
+	contactIDs?: string[];
 }
 
 export interface IHappeningBrief extends IHappeningBase {
@@ -24,9 +27,6 @@ export interface IHappeningBrief extends IHappeningBase {
 
 export interface IHappeningDto extends IHappeningBase, ITeamsRecord {
 	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
-	assetIDs?: string[];
-	memberIDs?: string[];
-	contactIDs?: string[];
 	participants?: SlotParticipant[];
 	note?: string;
 }

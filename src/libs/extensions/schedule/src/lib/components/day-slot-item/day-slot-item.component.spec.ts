@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SlotItemComponent} from './slot-item.component';
+import {DaySlotItemComponent} from './day-slot-item.component';
 
 describe('ActivityItemComponent', () => {
-	let component: SlotItemComponent;
-	let fixture: ComponentFixture<SlotItemComponent>;
+	let component: DaySlotItemComponent;
+	let fixture: ComponentFixture<DaySlotItemComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [SlotItemComponent]
+			declarations: [DaySlotItemComponent]
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(SlotItemComponent);
+		fixture = TestBed.createComponent(DaySlotItemComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

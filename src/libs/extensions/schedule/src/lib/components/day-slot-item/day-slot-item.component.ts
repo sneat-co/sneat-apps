@@ -1,14 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ITeamContext } from '@sneat/team/models';
 import { ISlotItem } from '../../view-models';
 
 @Component({
-	selector: 'sneat-slot-item',
-	templateUrl: './slot-item.component.html',
+	selector: 'sneat-day-slot-item',
+	templateUrl: './day-slot-item.component.html',
 })
-export class SlotItemComponent {
+export class DaySlotItemComponent {
 
 	@Input()
 	public slot?: ISlotItem;
+
+	@Input() team?: ITeamContext;
 
 	@Output() onclick = new EventEmitter<ISlotItem>();
 

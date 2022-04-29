@@ -45,7 +45,7 @@ export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotI
 		throw new Error('!singleHappening.dtStarts');
 	}
 	const brief = happeningBriefFromDto(id, dto);
-	const happening: IHappeningContext = {id, brief, dto};
+	const happening: IHappeningContext = { id, brief, dto };
 	// const wd = jsDayToWeekday(date.getDay());
 	// noinspection UnnecessaryLocalVariableJS
 	const slot: ISlotItem = {
@@ -80,10 +80,10 @@ export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotI
 // 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 // }
 
-const slotItemFromRecurringSlot = (r: IHappeningBrief, rs: IHappeningSlot): ISlotItem => ({
+const slotItemFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): ISlotItem => ({
 	happening: r,
-	title: r.title,
-	levels: r.levels,
+	title: r.brief?.title || r.id,
+	levels: r.brief?.levels,
 	repeats: rs.repeats,
 	timing: { start: rs.start, end: rs.end },
 });
@@ -97,9 +97,10 @@ const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
 	if (!team?.dto?.recurringHappenings) {
 		return slots;
 	}
-	team.dto.recurringHappenings.forEach(r => {
-		r.slots?.forEach(rs => {
-			const si: ISlotItem = slotItemFromRecurringSlot(r, rs);
+	team.dto.recurringHappenings.forEach(brief => {
+		brief.slots?.forEach(rs => {
+			const happening: IHappeningContext = { id: brief.id, brief };
+			const si: ISlotItem = slotItemFromRecurringSlot(happening, rs);
 			rs.weekdays?.forEach(wd => {
 				let weekday = slots.byWeekday[wd];
 				if (!weekday) {
@@ -297,29 +298,30 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		if (this.memberId && (!recurring.dto?.participants || !recurring?.dto.participants.find(p => p.type === 'member' && p.id === this.memberId))) {
 			return;
 		}
+		console.log('processRecurring()', recurring);
 		const { recurringByWd } = this;
 		Object.keys(recurringByWd)
 			.forEach(wd => {
 				recurringByWd[wd as WeekdayCode2] = [];
 			});
-		if (recurring.dto?.slots) {
-			recurring.dto.slots.forEach(slot => {
+		if (recurring.brief?.slots) {
+			recurring.brief.slots.forEach(slot => {
 				slot.weekdays?.forEach((wd, i) => {
-					const { dto } = recurring;
-					if (!dto?.title) {
-						throw new Error(`!regular.title at index=${i}`);
-					}
-					if (!recurring.brief) {
+					const { brief, dto } = recurring;
+					if (!brief) {
 						throw new Error('recurring context has no brief');
+					}
+					if (!brief.title) {
+						throw new Error(`!brief.title at index=${i}`);
 					}
 					const slotItem: ISlotItem = {
 						happening: recurring,
-						title: dto.title,
+						title: brief.title,
 						repeats: slot.repeats,
 						timing: { start: slot.start, end: slot.end },
 						location: slot.location,
-						levels: dto.levels,
-						participants: dto.participants,
+						levels: brief.levels,
+						// participants: dto.participants,
 					};
 					const wdRecurrings = recurringByWd[wd];
 					if (wdRecurrings) {

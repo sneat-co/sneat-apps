@@ -12,8 +12,9 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item-divider>
-		<sneat-slot-item *ngFor="let slot of slots; trackBy: index"
-										 [slot]="slot" (onclick)="slotClicked.emit($event)">
-		</sneat-slot-item>
+		<sneat-day-slot-item *ngFor="let slot of slots; trackBy: index"
+												 [team]="team"
+												 [slot]="slot" (onclick)="slotClicked.emit($event)">
+		</sneat-day-slot-item>
 	</ng-template>
 </ng-container>

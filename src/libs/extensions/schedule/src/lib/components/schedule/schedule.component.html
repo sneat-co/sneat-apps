@@ -1,5 +1,3 @@
-
-
 <ion-segment class="ion-padding-horizontal" [(ngModel)]="tab" (ionChange)="segmentChanged($event)">
 	<ion-segment-button value="day">Day</ion-segment-button>
 	<ion-segment-button value="week">Week</ion-segment-button>
@@ -8,9 +6,9 @@
 </ion-segment>
 
 <sneat-schedule-filter #scheduleFilterComponent
-	[showWeekdays]="tab === 'recurrings'"
-	[showRepeats]="tab === 'recurrings'"
-	(changed)="onFilterChanged($event)"
+											 [showWeekdays]="tab === 'recurrings'"
+											 [showRepeats]="tab === 'recurrings'"
+											 (changed)="onFilterChanged($event)"
 ></sneat-schedule-filter>
 
 <ion-card *ngIf="tab === 'day' || tab === 'week'">
@@ -168,20 +166,24 @@
 		<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 			<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState">
 				<div class="virtual-slide" [@virtualSlide]="oddDay.animationState">
-					<sneat-schedule-day
-						[filter]="filter"
-						[showEvents]="showEvents"
-						[showRegulars]="showRecurrings"
-						[weekday]="oddDay.weekday"
-						(slotClicked)="onSlotClicked($event)"
-						(resetFilter)="resetFilter()"
+					<sneat-schedule-day [weekday]="oddDay.weekday"
+															[team]="team"
+															[filter]="filter"
+															[showEvents]="showEvents"
+															[showRegulars]="showRecurrings"
+															(slotClicked)="onSlotClicked($event)"
+															(resetFilter)="resetFilter()"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>
 				<div class="virtual-slide" [@virtualSlide]="evenDay.animationState">
-					<sneat-schedule-day
-						[weekday]="evenDay.weekday"
-						(slotClicked)="onSlotClicked($event)"
+					<sneat-schedule-day [weekday]="evenDay.weekday"
+															[team]="team"
+															[filter]="filter"
+															[showEvents]="showEvents"
+															[showRegulars]="showRecurrings"
+															(slotClicked)="onSlotClicked($event)"
+															(resetFilter)="resetFilter()"
 					></sneat-schedule-day>
 					<div class="virtual-slide-overflow-fixer"></div>
 				</div>

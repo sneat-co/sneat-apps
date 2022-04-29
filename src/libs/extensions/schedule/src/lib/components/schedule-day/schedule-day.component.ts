@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { ISlotItem } from '../../view-models';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
@@ -12,6 +13,7 @@ import { Weekday } from '../schedule-week/schedule-week.component';
 export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	private readonly destroyed = new Subject<void>();
 	private slotsSubscription?: Subscription;
+	@Input() team?: ITeamContext;
 	@Input() filter?: IScheduleFilter;
 	@Input() showRegulars = true;
 	@Input() showEvents = true;
