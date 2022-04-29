@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ITiming } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
@@ -7,11 +6,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-single-slot-form',
 	templateUrl: './single-slot-form.component.html',
 	styleUrls: ['./single-slot-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SingleSlotFormComponent {
 
 	@Output() readonly validChanged = new EventEmitter<boolean>();
 	@Output() readonly timingChanged = new EventEmitter<ITiming>();
+
+	@Input() date = '';
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IDateTime, ITiming } from '@sneat/dto';
 
@@ -6,10 +6,10 @@ import { IDateTime, ITiming } from '@sneat/dto';
 	selector: 'sneat-start-end-datetime-form',
 	templateUrl: 'start-end-datetime-form.component.html',
 })
-export class StartEndDatetimeFormComponent implements AfterViewInit {
+export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
+	@Input() date = '';
 	@Input() hideStartDate = false;
 	@Output() readonly timingChanged = new EventEmitter<ITiming>();
-
 	public tab: 'duration' | 'end' = 'duration';
 	public durationUnits: 'minutes' | 'hours' = 'minutes';
 	public startDate = new FormControl('', { // new Date().toISOString().substring(0, 10)
@@ -18,19 +18,16 @@ export class StartEndDatetimeFormComponent implements AfterViewInit {
 	public endDate = new FormControl('', {
 		// validators: Validators.required,
 	});
-
 	public readonly startTime = new FormControl('10:00', {
 		validators: [
 			Validators.required,
 		],
 	});
-
 	public readonly endTime = new FormControl('11:00', {
 		validators: [
 			Validators.required,
 		],
 	});
-
 	public readonly duration = new FormControl(60, {
 		validators: [
 			Validators.required,
@@ -59,6 +56,12 @@ export class StartEndDatetimeFormComponent implements AfterViewInit {
 
 	public get isValid(): boolean {
 		return this.isValidTime(this.startTime.value) && this.isValidTime(this.endTime.value);
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (this.date) {
+			this.startDate.setValue(this.date);
+		}
 	}
 
 	setStartDate(event: Event, code: 'today' | 'tomorrow'): void {

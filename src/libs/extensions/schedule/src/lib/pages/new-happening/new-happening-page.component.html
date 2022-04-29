@@ -47,6 +47,7 @@
 					(addSlotDismissed)="onAddSlotModalDismissed()"
 				></sneat-recurring-slots>
 				<sneat-single-slot-form
+					[date]="date"
 					[style.display]="happeningType === 'single' ? 'block' : 'none'"
 					(timingChanged)="onTimingChanged($event)"
 				>

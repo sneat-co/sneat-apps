@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { HappeningType } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
@@ -34,5 +35,9 @@ export class ScheduleWeekdayComponent {
 		if (this.weekday?.day?.date) {
 			this.dateSelected.next(this.weekday?.day?.date);
 		}
+	}
+
+	goNewHappening(type: HappeningType): void {
+		this.goNew.emit({type, wd: this.weekday?.id, date: this.weekday?.day?.dateID})
 	}
 }

@@ -6,10 +6,10 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
 import { HappeningType, IHappeningDto, IHappeningSlot, ITiming, SlotParticipant, WeekdayCode2 } from '@sneat/dto';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, Member } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
-import { takeUntil } from 'rxjs';
+import { first, takeUntil } from 'rxjs';
 import { HappeningSlotsComponent } from '../../components/happening-slots/happening-slots.component';
 import { ScheduleService } from '../../services/schedule.service';
 import { ScheduleBasePage } from '../schedule-base-page';
@@ -31,7 +31,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 	public happeningType: HappeningType = 'recurring';
 	public slots: IHappeningSlot[] = [];
 	public contacts: number[] = [];
-	public date: string;
+	public date = '';
 	public participantsTab: 'members' | 'others' = 'members';
 	public happeningTitle = new FormControl('', Validators.required);
 	public happeningForm = new FormGroup({
@@ -61,7 +61,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 		super('NewHappeningPageComponent', route, params);
 		this.hasNavHistory = routingState.hasHistory();
 		this.isToDo = location.pathname.indexOf('/new-task') >= 0;
-		this.date = history.state.date as string;
+		this.date = history.state.date as string || '';
 		console.log('date', this.date);
 
 		const type = window.history.state.type as HappeningType;
@@ -71,6 +71,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 		route.queryParamMap
 			.pipe(
 				takeUntil(this.destroyed),
+				first(),
 			)
 			.subscribe({
 				next: queryParams => {
@@ -82,6 +83,9 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 					}
 					this.happeningType = type;
 					this.wd = queryParams.get('wd') as WeekdayCode2;
+					if (!this.date) {
+						this.date = queryParams.get('date') || '';
+					}
 				},
 				error: this.logErrorHandler('failed to get query params'),
 			});
