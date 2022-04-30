@@ -18,7 +18,7 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { dateToIso, getWeekdayDate, localDateToIso } from '@sneat/core';
-import { HappeningType, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, IHappeningSlot, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
@@ -67,7 +67,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	filterSegment: 'all' | 'mine' | 'filter' = 'all';
 
 	// nextWeekdays: SlotsGroup[];
-	public filter?: IScheduleFilter;
+	public filter: IScheduleFilter = { text: '' };
 
 	get activeDay(): SwipeableDay {
 		return this.activeDayParity === 'odd' ? this.oddDay : this.evenDay;
@@ -399,16 +399,41 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	// noinspection JSMethodCanBqw2se3333eStatic
 
+	// We filter recurring at schedule level so we can share it across different components?
 	private filterRecurrings(): IHappeningWithUiState[] | undefined {
-		console.log(`filterRecurrings(filter='${this.filter}')`, this.allRecurrings);
-		const text = this.filter?.text?.toLowerCase();
+		const text = this.filter.text.toLowerCase();
+		const { memberIDs, repeats, weekdays } = this.filter;
 
-		if (!text) {
-			return this.allRecurrings;
-		}
-		return this.allRecurrings?.filter(r => r.brief?.title && r.brief.title.toLowerCase().indexOf(text) >= 0);
+		const filtered = this.allRecurrings?.filter(r => {
+			const { title } = r.brief;
+			if (title && title.trim().toLowerCase().indexOf(text) < 0) {
+				return false;
+			}
+			if (!this.hasMember(r.brief, memberIDs)) {
+				return false;
+			}
+			if (!this.hasWeekday(r.brief?.slots || r.dto?.slots, weekdays)) {
+				return false
+			}
+			if (repeats?.length && !r.brief?.slots?.some(slot => repeats.includes(slot.repeats))) {
+				return false;
+			}
+
+			return true;
+		});
+		console.log(`ScheduleComponent.filterRecurrings(filter='${this.filter}')`, this.allRecurrings, ' => ', filtered);
+
+		return filtered;
 	}
 
+	// TODO: Decouple and reuse
+	private hasMember(item: { memberIDs?: string[] } | undefined, memberIDs?: string[]): boolean {
+		return !memberIDs?.length || !!item?.memberIDs?.some(id => memberIDs.includes(id));
+	}
+
+	private hasWeekday(slots: IHappeningSlot[] | undefined, weekdays?: WeekdayCode2[]): boolean {
+		return !weekdays || !!slots?.some(slot => slot.weekdays?.some(wd => weekdays.includes(wd)))
+	}
 	// noinspection JSMethodCanBeStatic
 
 	private setDay(source: string, d: Date): void {

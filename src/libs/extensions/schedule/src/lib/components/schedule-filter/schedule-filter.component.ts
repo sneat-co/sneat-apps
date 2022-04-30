@@ -112,5 +112,6 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	onMemberChanged(event: Event): void {
 		console.log('ScheduleFilterComponent.onMemberChanged()', event);
 		this.memberIDs = this.memberID ? [this.memberID] : [];
+		this.emitChanged();
 	}
 }
