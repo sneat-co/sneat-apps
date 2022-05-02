@@ -1,6 +1,11 @@
-import { hideVirtualSlide, showVirtualSlide, VirtualSlideAnimationsStates } from '@sneat/components';
+import {
+	hideVirtualSlide,
+	showVirtualSlide,
+	VirtualSlideAnimationsStates,
+	VirtualSliderAnimationStates,
+} from '@sneat/components';
 import { Subject } from 'rxjs';
-import { isToday } from './schedule-core';
+import { animationState, isToday } from './schedule-core';
 import { addDays, getToday, IDateChanged, ScheduleStateService } from './schedule-state.service';
 import { Parity, Swipeable } from './swipeable-ui';
 
@@ -10,7 +15,7 @@ export abstract class SwipeableBaseComponent {
 	protected readonly destroyed = new Subject<void>();
 	public parity: Parity = 'odd';
 	public date = getToday();
-	public animationState: VirtualSlideAnimationsStates = hideVirtualSlide;
+	public animationState?: VirtualSliderAnimationStates;
 	public oddSlide?: Swipeable;
 	public evenSlide?: Swipeable;
 
@@ -27,7 +32,7 @@ export abstract class SwipeableBaseComponent {
 		protected readonly scheduleSateService: ScheduleStateService,
 		private readonly stepDays: number,
 	) {
-		this.animationState = this.parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
+		// this.animationState = this.parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
 		scheduleSateService.dateChanged.subscribe({
 			next: value => this.onDateChanged(value),
 		});
@@ -87,28 +92,28 @@ export abstract class SwipeableBaseComponent {
 			const passive: IDateChanged = {...changed, date: addDays(changed.date, this.stepDays)};
 			switch (this.parity) {
 				case 'odd':
-					this.oddSlide = this.oddSlide.setActiveDate(changed);
-					this.evenSlide = this.evenSlide.setActiveDate(passive)
+					this.oddSlide = this.oddSlide.setActiveDate(changed, 'show');
+					this.evenSlide = this.evenSlide.setActiveDate(passive, 'hide')
 					break;
 				case 'even':
-					this.evenSlide = this.evenSlide.setActiveDate(changed);
-					this.oddSlide = this.oddSlide.setActiveDate(passive);
+					this.evenSlide = this.evenSlide.setActiveDate(changed, 'show');
+					this.oddSlide = this.oddSlide.setActiveDate(passive, 'hide');
 					break;
 			}
 			return;
 		}
 		switch (this.parity) {
 			case 'odd':
-				this.oddSlide = { ...this.oddSlide, animationState: hideVirtualSlide };
-				this.evenSlide = this.evenSlide.setActiveDate(changed);
+				this.oddSlide = { ...this.oddSlide, animationState:  hideVirtualSlide};
+				this.evenSlide = this.evenSlide.setActiveDate(changed, showVirtualSlide);
 				this.parity = 'even';
 				break;
 			case 'even':
 				this.evenSlide = { ...this.evenSlide, animationState: hideVirtualSlide };
-				this.oddSlide = this.oddSlide.setActiveDate(changed);
+				this.oddSlide = this.oddSlide.setActiveDate(changed, showVirtualSlide);
 				this.parity = 'odd';
 				break;
 		}
+		this.animationState = animationState(this.parity, changed.shiftDirection)
 	};
-
 }

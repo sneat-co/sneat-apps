@@ -27,13 +27,13 @@ export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
 
 	override onDateChanged(changed: IDateChanged): void {
 		console.log(`ScheduleDayBaseComponent.onDateChanged(shiftDays=${this.shiftDays})`, changed)
-		const d = changed.date;
-		if (this.shiftDays)
+		if (this.shiftDays) {
+			const d = changed.date;
 			changed = {
-			...changed,
+				...changed,
 				date: new Date(d.getFullYear(), d.getMonth(), d.getDate() + this.shiftDays),
 			};
-
+		}
 		super.onDateChanged(changed);
 	}
 }

@@ -49,25 +49,31 @@ export interface Week {
 export const createWeekdays = (): Weekday[] => wd2.map(
 	id => ({ id, longTitle: wdCodeToWeekdayLongName(id) }));
 
-export function animationState(activeParity: Parity, diff: number): VirtualSliderAnimationStates {
+export function animationState(activeParity: Parity, direction: 'forward' | 'back'): VirtualSliderAnimationStates {
 	let result: VirtualSliderAnimationStates;
 	switch (activeParity) {
 		case 'odd':
-			if (diff > 0) {
-				result = VirtualSliderReversePushedNext;
-			} else if (diff < 0) {
-				result = VirtualSliderDirectPushedPrev;
-			} else {
-				throw new Error(`Invalid v: ${diff}`);
+			switch (direction) {
+				case 'forward':
+					result = VirtualSliderReversePushedNext;
+					break;
+				case 'back':
+					result = VirtualSliderDirectPushedPrev;
+					break;
+				default:
+					throw new Error(`Invalid direction: ${direction}`);
 			}
 			break;
 		case 'even':
-			if (diff > 0) {
-				result = VirtualSliderDirectPushedNext;
-			} else if (diff < 0) {
-				result = VirtualSliderReversePushedPrev;
-			} else {
-				throw new Error(`Invalid v: ${diff}`);
+			switch (direction) {
+				case 'forward':
+					result = VirtualSliderDirectPushedNext;
+					break;
+				case 'back':
+					result = VirtualSliderReversePushedPrev;
+					break;
+				default:
+					throw new Error(`Invalid direction: ${direction}`);
 			}
 			break;
 		default:

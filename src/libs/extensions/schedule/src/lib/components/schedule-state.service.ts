@@ -31,6 +31,7 @@ export class ScheduleStateService {
 	}
 
 	public shiftDays(shiftDays: number): Date {
+		console.log('ScheduleStateService.shiftDays()', shiftDays);
 		const date = addDays(this.date, shiftDays);
 		this.setActiveDate(date);
 		return date;
@@ -38,8 +39,9 @@ export class ScheduleStateService {
 
 	public setActiveDate(date: Date): void {
 		date.setHours(0, 0, 0, 0);
-		const dayDifference = diffInDays(this.date, date);
+		const dayDifference = diffInDays(date, this.date);
 		const shiftDirection = dayDifference == 0 ? '' : dayDifference > 0 ? 'forward' : 'back';
+		this.date = date;
 		this.dateChanged$.next({ date, shiftDirection });
 	}
 

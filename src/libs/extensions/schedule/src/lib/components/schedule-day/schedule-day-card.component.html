@@ -58,7 +58,7 @@
 				></sneat-schedule-day>
 				<div class="virtual-slide-overflow-fixer"></div>
 			</div>
-			<div class="virtual-slide" [@virtualSlide]="oddSlide?.animationState">
+			<div class="virtual-slide" [@virtualSlide]="evenSlide?.animationState">
 				<sneat-schedule-day [weekday]="evenDay?.weekday"
 														[team]="team"
 														(slotClicked)="onSlotClicked && onSlotClicked($event)"
