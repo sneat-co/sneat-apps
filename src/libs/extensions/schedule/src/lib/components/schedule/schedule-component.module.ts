@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, MembersAsBadgesModule, SneatPipesModule } from '@sneat/components';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
+import { ScheduleNavServiceModule } from '../../schedule-nav.service';
 import { HappeningServiceModule } from '../../services/happening.service';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
@@ -36,6 +37,7 @@ import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title
 		HappeningServiceModule,
 		ReactiveFormsModule,
 		MembersAsBadgesModule,
+		ScheduleNavServiceModule,
 	],
 	exports: [
 		ScheduleComponent,

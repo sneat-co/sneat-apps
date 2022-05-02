@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/
 import { virtualSliderAnimations } from '@sneat/components';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { ScheduleNavService } from '../../schedule-nav.service';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
 import { getToday, ScheduleStateService } from '../schedule-state.service';
 import { swipeableDay } from '../swipeable-ui';
@@ -11,7 +12,7 @@ import { ScheduleDayBaseComponent } from './schedule-day-base.component';
 // The 1st is the "active day" (e.g. today), and the 2nd is "next day" (e.g. tomorrow).
 // The 2nd should set the [activeDayPlus]="1"
 @Component({
-	selector: 'sneat-swipeable-day-card',
+	selector: 'sneat-schedule-day-card',
 	templateUrl: 'schedule-day-card.component.html',
 	animations: virtualSliderAnimations,
 })
@@ -28,6 +29,7 @@ export class ScheduleDayCardComponent extends ScheduleDayBaseComponent implement
 
 	constructor(
 		scheduleSateService: ScheduleStateService,
+		private readonly scheduleNavService: ScheduleNavService,
 		// private readonly teamDaysProvider: TeamDaysProvider,
 	) {
 		super('ScheduleDayCardComponent', scheduleSateService);
@@ -46,7 +48,10 @@ export class ScheduleDayCardComponent extends ScheduleDayBaseComponent implement
 	}
 
 	goNewHappening(params: NewHappeningParams): void {
-		this.goNew.emit(params);
+		if (!this.team) {
+			return;
+		}
+		this.scheduleNavService.goNewHappening(this.team, params);
 	}
 
 	private createSlides(): void {

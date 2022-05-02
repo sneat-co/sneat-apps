@@ -157,29 +157,29 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	readonly goNewHappening = (params: NewHappeningParams): void => {
-		const { type, wd, date } = params;
-
-		const state: { type?: HappeningType; date?: string; wd?: WeekdayCode2 } = { type };
-
-		if (date) {
-			// tslint:disable-next-line:no-non-null-assertion
-			state.date = date;
-		} else if (wd) {
-			state.wd = wd;
-		} else if (this.tab === 'day') {
-			state.date = dateToIso(this.date);
-		}
-		if (!this.team) {
-			this.errorLogger.logError('!this.team');
-			return;
-		}
-		this.params.teamNavService
-			.navigateForwardToTeamPage(this.team, 'new-happening', {
-				queryParams: params,
-			})
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
-	};
+	// readonly goNewHappening = (params: NewHappeningParams): void => {
+	// 	const { type, wd, date } = params;
+	//
+	// 	const state: { type?: HappeningType; date?: string; wd?: WeekdayCode2 } = { type };
+	//
+	// 	if (date) {
+	// 		// tslint:disable-next-line:no-non-null-assertion
+	// 		state.date = date;
+	// 	} else if (wd) {
+	// 		state.wd = wd;
+	// 	} else if (this.tab === 'day') {
+	// 		state.date = dateToIso(this.date);
+	// 	}
+	// 	if (!this.team) {
+	// 		this.errorLogger.logError('!this.team');
+	// 		return;
+	// 	}
+	// 	this.params.teamNavService
+	// 		.navigateForwardToTeamPage(this.team, 'new-happening', {
+	// 			queryParams: params,
+	// 		})
+	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
+	// };
 
 
 	readonly onSlotClicked = (slot: ISlotItem): void => {

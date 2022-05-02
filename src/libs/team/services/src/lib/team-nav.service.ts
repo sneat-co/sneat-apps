@@ -199,6 +199,7 @@ export class TeamNavService {
 			);
 	}
 
+
 	public navigateBackToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
 		navOptions.animationDirection = 'back';
 		return this.navigateToTeamPage(team, page, navOptions);

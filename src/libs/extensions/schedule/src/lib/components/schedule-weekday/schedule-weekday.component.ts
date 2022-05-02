@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 import { HappeningType } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
+import { ScheduleNavService } from '../../schedule-nav.service';
 import { ISlotItem, NewHappeningParams, TeamDay } from '../../view-models';
 import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
 import { isSlotVisible } from '../schedule-slots';
@@ -16,7 +17,6 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 	private filter = emptyScheduleFilter;
 	@Input() team?: ITeamContext;
 	@Input() weekday?: Weekday;
-	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
 	@Output() slotClicked = new EventEmitter<ISlotItem>();
 
@@ -26,6 +26,7 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 
 	constructor(
 		filterService: ScheduleFilterService,
+		private readonly scheduleNavService: ScheduleNavService,
 	) {
 		filterService.filter
 			.pipe(
@@ -57,7 +58,11 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 	}
 
 	goNewHappening(type: HappeningType): void {
-		this.goNew.emit({ type, wd: this.weekday?.id, date: this.weekday?.day?.dateID });
+		if (!this.team) {
+			return;
+		}
+		const params: NewHappeningParams = { type, wd: this.weekday?.id, date: this.weekday?.day?.dateID };
+		this.scheduleNavService.goNewHappening(this.team, params);
 	}
 
 }

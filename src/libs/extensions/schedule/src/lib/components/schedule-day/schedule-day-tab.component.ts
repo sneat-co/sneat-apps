@@ -11,6 +11,7 @@ import { ISlotItem } from '../../view-models';
 export class ScheduleDayTabComponent {
 	@Input() team?: ITeamContext;
 	@Input() teamDaysProvider?: TeamDaysProvider;
+
 	@Input() onSlotClicked?: (slot: ISlotItem) => void = (_: ISlotItem) => {
 		throw new Error('onSlotClicked not set');
 	};
