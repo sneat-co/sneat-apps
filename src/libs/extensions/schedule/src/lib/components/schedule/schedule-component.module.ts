@@ -20,9 +20,9 @@ import { ScheduleWeekComponent } from '../schedule-week/schedule-week.component'
 import { ScheduleWeekdayComponent } from '../schedule-weekday/schedule-weekday.component';
 import { ScheduleComponent } from '../schedule/schedule.component';
 import { SinglesTabComponent } from '../singles-tab/singles-tab.component';
-import { ScheduleWeekCardComponent } from '../week-tab/schedule-week-card.component';
-import { ScheduleWeekTabComponent } from '../week-tab/schedule-week-tab.component';
-import { ScheduleWeekTitleComponent } from '../week-tab/schedule-week-title.component';
+import { ScheduleWeekCardComponent } from '../schedule-week/schedule-week-card.component';
+import { ScheduleWeekTabComponent } from '../schedule-week/schedule-week-tab.component';
+import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title.component';
 
 
 @NgModule({

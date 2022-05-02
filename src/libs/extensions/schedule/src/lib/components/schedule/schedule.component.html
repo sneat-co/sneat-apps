@@ -11,14 +11,15 @@
 											 [showRepeats]="tab === 'recurrings'"
 ></sneat-schedule-filter>
 
-<sneat-day-tab *ngIf="tab === 'day'"
+<sneat-day-tab [style.display]="tab === 'day' ? 'block': 'none'"
 							 [team]="team"
 							 [teamDaysProvider]="teamDaysProvider"
 							 [onSlotClicked]="onSlotClicked"
 ></sneat-day-tab>
 
-<sneat-week-tab *ngIf="tab === 'week'"
+<sneat-week-tab [style.display]="tab === 'week' ? 'block': 'none'"
 								[team]="team"
+								[teamDaysProvider]="teamDaysProvider"
 								[onSlotClicked]="onSlotClicked"
 ></sneat-week-tab>
 

@@ -1,18 +1,6 @@
-<!--<div activeDay?.date">-->
-<!--		<p class="ion-margin-horizontal">-->
-<!--			oddDay.weekday: {{oddDay.weekday|json}}-->
-<!--			activeDay.parity: {{activeDay.parity}},-->
-<!--			activeDayParity: {{activeDayParity}},-->
-<!--			activeDay.weekday: {{activeDay.weekday|json}}-->
-<!--		</p>-->
 <ion-card>
-<!--	parity: {{parity}}, date: {{date}}-->
 	<ion-item class="sneat-small-end-padding">
 		<ion-label>
-<!--			date: {{date}}<br>-->
-<!--			oddDate: {{oddDay?.weekday?.day?.date}}<br>-->
-<!--			evenDate: {{evenDay?.weekday?.day?.date}}<br>-->
-
 			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
 					<h1 class="virtual-slide" [@virtualSlide]="oddDay?.animationState">

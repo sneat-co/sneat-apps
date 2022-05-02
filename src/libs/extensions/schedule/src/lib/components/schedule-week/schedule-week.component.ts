@@ -42,6 +42,9 @@ export class ScheduleWeekComponent implements OnChanges {
 
 	private onWeekInputChanged(week: SimpleChange): void {
 		console.log('ScheduleWeekComponent.onWeekInputChanged()', week);
+		if (!week) {
+			return;
+		}
 		const prevWeek = week.previousValue as Week | undefined;
 		const currentWeek = week.currentValue as Week | undefined;
 		if (!currentWeek || prevWeek === currentWeek || prevWeek && currentWeek && dateToIso(prevWeek.startDate) == dateToIso(currentWeek.startDate)) {
