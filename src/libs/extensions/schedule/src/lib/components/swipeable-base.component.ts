@@ -1,16 +1,14 @@
-import { EventEmitter, Output } from '@angular/core';
 import { hideVirtualSlide, showVirtualSlide, VirtualSlideAnimationsStates } from '@sneat/components';
 import { Subject } from 'rxjs';
-import { NewHappeningParams } from '../view-models';
-import { isToday, isTomorrow } from './schedule-core';
-import { getToday, IDateChanged, ScheduleStateService } from './schedule-state.service';
+import { isToday } from './schedule-core';
+import { addDays, getToday, IDateChanged, ScheduleStateService } from './schedule-state.service';
 import { Parity, Swipeable } from './swipeable-ui';
 
 
 // @Injectable()
 export abstract class SwipeableBaseComponent {
 	protected readonly destroyed = new Subject<void>();
-	protected parity: Parity = 'odd';
+	public parity: Parity = 'odd';
 	public date = getToday();
 	public animationState: VirtualSlideAnimationsStates = hideVirtualSlide;
 	public oddSlide?: Swipeable;
@@ -25,12 +23,13 @@ export abstract class SwipeableBaseComponent {
 	}
 
 	protected constructor(
+		protected readonly className: string,
 		protected readonly scheduleSateService: ScheduleStateService,
 		private readonly stepDays: number,
 	) {
 		this.animationState = this.parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
 		scheduleSateService.dateChanged.subscribe({
-			next: this.onDateChanged,
+			next: value => this.onDateChanged(value),
 		});
 	}
 
@@ -77,26 +76,36 @@ export abstract class SwipeableBaseComponent {
 		this.scheduleSateService.shiftDays(-this.stepDays);
 	}
 
-	private onDateChanged = (changed: IDateChanged): void => {
+	protected onDateChanged(changed: IDateChanged): void {
+		console.log(`${this.className} extends SwipeableBaseComponent.onDateChanged()`, changed);
 		// this.parity = this.parity === 'odd' ? 'even' : 'odd';
-		const
-			oddSlide = this.oddSlide,
-			evenSlide = this.evenSlide;
-		if (!oddSlide || !evenSlide) {
+		if (!this.oddSlide || !this.evenSlide) {
 			return;
 		}
-		const d = changed.date;
-		this.date = new Date(d.getFullYear(), d.getMonth(), d.getDate() + this.stepDays);
-		changed = {...changed, date: this.date};
+		this.date = changed.date;
+		if (!changed.shiftDirection) {
+			const passive: IDateChanged = {...changed, date: addDays(changed.date, this.stepDays)};
+			switch (this.parity) {
+				case 'odd':
+					this.oddSlide = this.oddSlide.setActiveDate(changed);
+					this.evenSlide = this.evenSlide.setActiveDate(passive)
+					break;
+				case 'even':
+					this.evenSlide = this.evenSlide.setActiveDate(changed);
+					this.oddSlide = this.oddSlide.setActiveDate(passive);
+					break;
+			}
+			return;
+		}
 		switch (this.parity) {
 			case 'odd':
-				this.oddSlide = { ...oddSlide, animationState: hideVirtualSlide };
-				this.evenSlide = evenSlide.setActiveDate(changed);
+				this.oddSlide = { ...this.oddSlide, animationState: hideVirtualSlide };
+				this.evenSlide = this.evenSlide.setActiveDate(changed);
 				this.parity = 'even';
 				break;
 			case 'even':
-				this.evenSlide = { ...evenSlide, animationState: hideVirtualSlide };
-				this.oddSlide = oddSlide?.setActiveDate(changed);
+				this.evenSlide = { ...this.evenSlide, animationState: hideVirtualSlide };
+				this.oddSlide = this.oddSlide.setActiveDate(changed);
 				this.parity = 'odd';
 				break;
 		}

@@ -13,7 +13,7 @@ export class ScheduleWeekCardComponent extends SwipeableBaseComponent {
 		private readonly scheduleStateService: ScheduleStateService,
 		teamDaysProvider: TeamDaysProvider,
 	) {
-		super(scheduleStateService, 7);
+		super('ScheduleWeekCardComponent', scheduleStateService, 7);
 		const current = getToday();
 		const next = new Date();
 		next.setDate(current.getDate() + 7);

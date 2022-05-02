@@ -11,7 +11,7 @@ import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
 import { RecurringsTabComponent } from '../recurrings-tab/recurrings-tab.component';
 import { ScheduleCardHeaderComponent } from '../schedule-card-hearder/schedule-card-header.component';
-import { ScheduleDayCardHeaderComponent } from '../schedule-day/schedule-day-card-header.component';
+import { ScheduleDayHeaderComponent } from '../schedule-day/schedule-day-header.component';
 import { ScheduleDayCardComponent } from '../schedule-day/schedule-day-card.component';
 import { ScheduleDayTabComponent } from '../schedule-day/schedule-day-tab.component';
 import { ScheduleDayTitleComponent } from '../schedule-day/schedule-day-title.component';
@@ -54,7 +54,7 @@ import { ScheduleWeekCardComponent } from '../week-tab/schedule-week-card.compon
 		SinglesTabComponent,
 		ScheduleDayCardComponent,
 		ScheduleDayTabComponent,
-		ScheduleDayCardHeaderComponent,
+		ScheduleDayHeaderComponent,
 		ScheduleDayTitleComponent,
 		ScheduleWeekTabComponent,
 		ScheduleWeekCardComponent,

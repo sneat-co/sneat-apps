@@ -34,13 +34,3 @@
 									 [onDateSelected]="onDateSelected"
 									 [goNewHappening]="goNewHappening"
 ></sneat-singles-tab>
-
-<div class="ion-padding-bottom ion-text-center" *ngIf="tab === 'day' || tab === 'week'">
-	<ion-text color="medium">
-		&larr;
-		<span *ngIf="tab === 'day'">Swipe to change day</span>
-		<span *ngIf="tab === 'week'">Swipe to change week</span>
-		&rarr;
-	</ion-text>
-</div>
-

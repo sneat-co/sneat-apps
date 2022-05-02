@@ -1,9 +1,10 @@
-import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
-import { ScheduleStateService } from '../schedule-state.service';
+import { IDateChanged, ScheduleStateService } from '../schedule-state.service';
 import { SwipeableBaseComponent } from '../swipeable-base.component';
 import { SwipeableDay } from '../swipeable-ui';
 
 export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
+
+	protected shiftDays = 0;
 
 	get oddDay(): SwipeableDay {
 		return this.oddSlide as SwipeableDay;
@@ -18,8 +19,21 @@ export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
 	}
 
 	protected constructor(
+		className: string,
 		scheduleSateService: ScheduleStateService,
 	) {
-		super(scheduleSateService, 1);
+		super(className, scheduleSateService, 1);
+	}
+
+	override onDateChanged(changed: IDateChanged): void {
+		console.log(`ScheduleDayBaseComponent.onDateChanged(shiftDays=${this.shiftDays})`, changed)
+		const d = changed.date;
+		if (this.shiftDays)
+			changed = {
+			...changed,
+				date: new Date(d.getFullYear(), d.getMonth(), d.getDate() + this.shiftDays),
+			};
+
+		super.onDateChanged(changed);
 	}
 }

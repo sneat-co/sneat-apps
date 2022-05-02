@@ -17,6 +17,10 @@ export function getToday(): Date {
 	return d;
 }
 
+export function addDays(d: Date, daysToAdd: number): Date {
+	return new Date(d.getFullYear(), d.getMonth(), d.getDate() + daysToAdd);
+}
+
 export class ScheduleStateService {
 	private date = getToday();
 	private readonly dateChanged$ = new BehaviorSubject<IDateChanged>({ date: this.date, shiftDirection: '' });
@@ -27,8 +31,7 @@ export class ScheduleStateService {
 	}
 
 	public shiftDays(shiftDays: number): Date {
-		const d = this.date;
-		const date = new Date(d.getFullYear(), d.getMonth(), d.getDate() + shiftDays);
+		const date = addDays(this.date, shiftDays);
 		this.setActiveDate(date);
 		return date;
 	}

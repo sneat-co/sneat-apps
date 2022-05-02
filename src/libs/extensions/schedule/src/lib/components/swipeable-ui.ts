@@ -46,7 +46,12 @@ export function swipeableDay(
 		setActiveDate: undefined as unknown as (changed: IDateChanged) => SwipeableDay,
 	};
 	const setActiveDate = (changed: IDateChanged) => {
-		const v: SwipeableDay = { ...result, weekday: createWeekday(date, teamDaysProvider) };
+		const { date } = changed;
+		const v: SwipeableDay = {
+			...result,
+			activeDateID: dateToIso(date),
+			weekday: createWeekday(date, teamDaysProvider),
+		};
 		return v;
 	};
 	return { ...result, setActiveDate: setActiveDate };
