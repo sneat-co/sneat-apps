@@ -11,6 +11,7 @@ import { IScheduleFilter } from './schedule-filter';
 	templateUrl: 'schedule-filter.component.html',
 })
 export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChanges {
+	public expanded = false;
 	private resetting = false;
 	@Input() team?: ITeamContext;
 	@Input() showWeekdays = false;
