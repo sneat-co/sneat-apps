@@ -1,0 +1,62 @@
+<!--<ion-item class="sneat-small-end-padding">-->
+<!--	<ion-label>-->
+<!--		<div *ngIf="tab === 'day'" class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">-->
+<!--			<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState">-->
+<!--				<h1 class="virtual-slide" [@virtualSlide]="oddDay.animationState">-->
+
+<!--					<sneat-schedule-day-title [day]=""></sneat-schedule-day-title>-->
+<!--					<span *ngIf="isToday()" class="ion-margin-end">Today:</span>-->
+<!--					<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>-->
+<!--					<ng-container *ngIf="oddDay.weekday">-->
+<!--						<b>{{oddDay.weekday.id|wdToWeekday}}</b><span-->
+<!--						style="font-weight: normal">, {{oddDay.date?.getDate()}} {{oddDay.date?.getMonth()|longMonthName}}</span>-->
+<!--					</ng-container>-->
+<!--				</h1>-->
+
+<!--				<h1 class="virtual-slide" [@virtualSlide]="evenDay.animationState">-->
+<!--					<span *ngIf="isToday()" class="ion-margin-end">Today:</span>-->
+<!--					<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>-->
+<!--					<ng-container *ngIf="evenDay.weekday">-->
+<!--						<b>{{evenDay.weekday.id|wdToWeekday}}</b><span-->
+<!--						style="font-weight: normal">, {{evenDay.date?.getDate()}} {{evenDay.date?.getMonth()|longMonthName}}</span>-->
+<!--					</ng-container>-->
+<!--				</h1>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--		<div *ngIf="tab === 'week'" class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">-->
+<!--			<div class="virtual-slider-inner" [@virtualSlider]="weekAnimationState">-->
+<!--				<h1 class="virtual-slide" [@virtualSlide]="oddWeek.animationState">-->
+<!--					<sneat-schedule-week-title [week]="oddWeek"></sneat-schedule-week-title>-->
+<!--				</h1>-->
+<!--				<h1 class="virtual-slide" [@virtualSlide]="evenWeek.animationState">-->
+<!--					<sneat-schedule-week-title [week]="evenWeek"></sneat-schedule-week-title>-->
+<!--				</h1>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</ion-label>-->
+
+<!--	<ion-buttons slot="end">-->
+<!--		<ng-container *ngIf="tab === 'day'">-->
+<!--			<ion-button title="Add recurring" (click)="goNewHappening({type: 'recurring', wd: activeDay.weekday.id})">-->
+<!--				<ion-icon name="duplicate-outline"></ion-icon>-->
+<!--			</ion-button>-->
+<!--			<ion-button title="Add one-timer" (click)="goNewHappening({type: 'single', date: activeDay.id})">-->
+<!--				<ion-icon name="add-circle-outline"></ion-icon>-->
+<!--			</ion-button>-->
+<!--		</ng-container>-->
+<!--		<ion-button [title]="tab === 'day' ? 'Previous day' : 'Previous week'"-->
+<!--								(click)="changeDay(tab === 'day' ? -1 : -7)">-->
+<!--			<ion-icon name="chevron-back-sharp"></ion-icon>-->
+<!--		</ion-button>-->
+<!--		<ion-button [disabled]="isToday()"-->
+<!--								[color]="isToday() ? 'medium' : 'primary'"-->
+<!--								[title]="tab === 'day' ? 'Today' : 'This week'"-->
+<!--								(click)="setToday()">-->
+<!--			<ion-icon slot="start" name="today-outline"></ion-icon>-->
+<!--		</ion-button>-->
+<!--		<ion-button [title]="tab === 'day' ? 'Next day' : 'Next week'"-->
+<!--								(click)="changeDay(tab === 'day' ? +1 : +7)">-->
+<!--			<ion-icon name="chevron-forward-sharp"></ion-icon>-->
+<!--		</ion-button>-->
+<!--	</ion-buttons>-->
+<!--</ion-item>-->

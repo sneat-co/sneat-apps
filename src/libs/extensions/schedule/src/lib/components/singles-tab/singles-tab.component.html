@@ -4,8 +4,6 @@
 	<ng-container *ngIf="todayAndFutureDays && todayAndFutureDays.length">
 		<ng-container *ngFor="let weekday of todayAndFutureDays; trackBy: trackByDate">
 			<sneat-schedule-weekday [weekday]="weekday"
-															[filter]="filter"
-															[showEvents]="true"
 															(slotClicked)="onSlotClicked && onSlotClicked($event)"
 															(dateSelected)="onDateSelected && onDateSelected($event)"
 															(goNew)="goNewHappening && goNewHappening($event)"

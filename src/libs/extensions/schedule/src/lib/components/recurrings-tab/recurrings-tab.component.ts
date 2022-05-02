@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IHappeningWithUiState } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { IScheduleFilter } from '../schedule-filter/schedule-filter';
+import { ScheduleFilterService } from '../schedule-filter.service';
 
 @Component({
 	selector: 'sneat-recurrings-tab',
@@ -9,15 +9,20 @@ import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 	templateUrl: 'recurrings-tab.component.html',
 })
 export class RecurringsTabComponent {
-	@Input() filter?: IScheduleFilter;
 	@Input() recurrings?: IHappeningWithUiState[];
 	@Input() allRecurrings?: IHappeningWithUiState[];
 	@Input() team?: ITeamContext;
-
-	@Output() resetFilter = new EventEmitter<Event>();
+	public readonly resetFilter: (event: Event) => void;
 
 	public get numberOfHidden(): number {
-		return (this.allRecurrings?.length || 0) - (this.recurrings?.length || 0)
+		return (this.allRecurrings?.length || 0) - (this.recurrings?.length || 0);
 	}
+
+	constructor(
+		filterService: ScheduleFilterService,
+	) {
+		this.resetFilter = filterService.resetFilterHandler;
+	}
+
 	readonly id = (i: number, v: { id: string }): string => v.id;
 }

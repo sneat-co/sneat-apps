@@ -5,12 +5,12 @@ import { ITeamContext } from '@sneat/team/models';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams, TeamDay } from '../../view-models';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
-import { createWeekdays, Week } from '../schedule/schedule-core';
+import { createWeekdays, Week } from '../schedule-core';
 
 export interface Weekday { // This is used to
 	readonly id: WeekdayCode2;
 	readonly longTitle: string;
-	day?: TeamDay; // TODO: make readonly
+	readonly day?: TeamDay; // TODO: make readonly
 }
 
 @Component({
@@ -22,8 +22,6 @@ export class ScheduleWeekComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() week?: Week;
 	@Input() filter?: IScheduleFilter;
-	@Input() showRecurring = true;
-	@Input() showEvents = true;
 	@Input() teamDaysProvider?: TeamDaysProvider;
 
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
@@ -57,7 +55,7 @@ export class ScheduleWeekComponent implements OnChanges {
 		for (let i = 0; i < 7; i++) {
 			const date = new Date();
 			date.setDate(startDate + i);
-			this.weekdays[i].day = teamDaysProvider.getTeamDay(date);
+			this.weekdays[i] = {...this.weekdays[i], day: teamDaysProvider.getTeamDay(date)};
 		}
 	}
 }

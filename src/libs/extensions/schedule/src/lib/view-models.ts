@@ -6,7 +6,6 @@ import {
 	HappeningType,
 	IHappeningBrief,
 	IHappeningDto,
-	ISingleHappeningDto,
 	ITiming,
 	Level,
 	Repeats,
@@ -55,9 +54,9 @@ export class TeamDay {
 	private teamID?: string;
 	public readonly date: Date;
 	public readonly dateID: string;
+	public isoID: string; // TODO: is it same as dateID?
 	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
-	public isoID: string;
 	readonly loadingEvents?: boolean;
 	readonly eventsLoaded?: boolean;
 	public readonly slots$ = this._slots.asObservable().pipe(
@@ -150,7 +149,7 @@ export class TeamDay {
 					title: brief.title,
 					timing,
 					repeats: 'once',
-					happening: {id, brief, dto},
+					happening: { id, brief, dto },
 				};
 				this.singles?.push(slotItem);
 			});

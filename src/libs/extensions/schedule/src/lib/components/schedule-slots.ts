@@ -1,8 +1,8 @@
 import {ISlotItem} from '../view-models';
 import { IScheduleFilter } from './schedule-filter/schedule-filter';
 
-export function isSlotVisible(slot: ISlotItem, filter: IScheduleFilter, showRegulars: boolean, showEvents: boolean): boolean {
-	return (!!slot.happening && showRegulars || !!slot.happening && showEvents) &&
+export function isSlotVisible(slot: ISlotItem, filter: IScheduleFilter): boolean {
+	return (!!slot.happening && filter.showRecurrings || !!slot.happening && filter.showSingles) &&
 		(
 			!filter ||
 			slot.title.toLowerCase()

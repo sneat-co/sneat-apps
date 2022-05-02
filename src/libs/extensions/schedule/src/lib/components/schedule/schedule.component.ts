@@ -11,13 +11,8 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {
-	hideVirtualSlide,
-	showVirtualSlide,
-	virtualSliderAnimations,
-	VirtualSliderAnimationStates,
-} from '@sneat/components';
-import { dateToIso, getWeekdayDate, localDateToIso } from '@sneat/core';
+import { virtualSliderAnimations } from '@sneat/components';
+import { dateToIso, localDateToIso } from '@sneat/core';
 import { HappeningType, IHappeningSlot, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
@@ -25,74 +20,66 @@ import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/mod
 import { Subject } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams } from '../../view-models';
+import { isToday } from '../schedule-core';
+import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
+import { ScheduleStateService } from '../schedule-state.service';
 import { Weekday } from '../schedule-week/schedule-week.component';
-import { animationState, ScheduleTab, SHIFT_1_DAY, SHIFT_1_WEEK } from './schedule-core';
-import { Parity, SwipeableDay, SwipeableWeek } from './swipeable-ui';
+
+export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 
 @Component({
 	selector: 'sneat-schedule',
 	templateUrl: './schedule.component.html',
 	styleUrls: ['./schedule.component.scss'],
-	animations: virtualSliderAnimations,
 })
 export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
+	private filter = emptyScheduleFilter;
+	private date = new Date();
 	// prevWeekdays: SlotsGroup[];
 	public readonly teamDaysProvider: TeamDaysProvider;
 	@ViewChild('scheduleFilterComponent') scheduleFilterComponent?: ScheduleFilterComponent;
 	@Input() team?: ITeamContext;
 	@Input() member?: IMemberContext;
 	@Input() public tab: ScheduleTab = 'day';
-	@Input() public date = '';
+	@Input() public dateID = '';
 	@Output() readonly tabChanged = new EventEmitter<ScheduleTab>();
 	@Output() readonly dateChanged = new EventEmitter<string>();
 	public showRecurrings = true;
 	public showEvents = true;
 	todayAndFutureDays?: Weekday[];
-	filterFocused = false;
 	allRecurrings?: IHappeningWithUiState[];
+
+	// private date: Date;
 	recurrings?: IHappeningWithUiState[];
-	activeDayParity: Parity = 'odd';
-	activeWeekParity: Parity = 'odd';
-	oddDay: SwipeableDay;
-	evenDay: SwipeableDay;
-	readonly oddWeek: SwipeableWeek;
-	readonly evenWeek: SwipeableWeek;
-	weekAnimationState?: VirtualSliderAnimationStates = undefined;
-	dayAnimationState?: VirtualSliderAnimationStates = undefined;
-
-	filterSegment: 'all' | 'mine' | 'filter' = 'all';
-
-	// nextWeekdays: SlotsGroup[];
-	public filter: IScheduleFilter = { text: '' };
-
-	get activeDay(): SwipeableDay {
-		return this.activeDayParity === 'odd' ? this.oddDay : this.evenDay;
-	}
-
-	get activeWeek(): SwipeableWeek {
-		return this.activeWeekParity === 'odd' ? this.oddWeek : this.evenWeek;
-	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly params: TeamComponentBaseParams,
+		filterService: ScheduleFilterService,
+		scheduleStateService: ScheduleStateService,
 		afs: AngularFirestore,
 	) {
 		this.teamDaysProvider = new TeamDaysProvider(this.errorLogger, afs);
-		const today = new Date();
-		const tomorrow = new Date();
-		tomorrow.setDate(today.getDate() + 1);
-		const destroyed = this.destroyed.asObservable();
-		this.oddDay = new SwipeableDay('odd', today, this.teamDaysProvider, destroyed);
-		this.evenDay = new SwipeableDay('even', tomorrow, this.teamDaysProvider, destroyed);
 
-		this.oddWeek = new SwipeableWeek('odd', this.teamDaysProvider, destroyed);
-		this.evenWeek = new SwipeableWeek('even', this.teamDaysProvider, destroyed);
+		filterService.filter.subscribe({
+			next: filter => {
+				this.filter = filter;
+				this.recurrings = this.filterRecurrings(filter);
+			},
+			error: this.errorLogger.logErrorHandler('failed to get schedule filter'),
+		});
 
+		scheduleStateService.dateChanged.subscribe({
+			next: changed => {
+				const { date } = changed;
+				this.date = date;
+				this.dateID = dateToIso(date);
+			},
+		});
 
 		// setTimeout(() => {
 		// 	// TODO: Fix this dirty workaround for initial animations
@@ -100,12 +87,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		// }, 10);
 	}
 
-
-	onFilterChanged(filter: IScheduleFilter): void {
-		console.log('onFilterChanged()', filter);
-		this.filter = filter;
-		this.recurrings = this.filterRecurrings();
-	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
@@ -123,46 +104,16 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.tabChanged.emit(this.tab);
 	}
 
-	swipeLeft(): void {
-		console.log('swipeLeft()');
-		switch (this.tab) {
-			case 'day':
-				this.changeDay(+SHIFT_1_DAY);
-				break;
-			case 'week':
-				// tslint:disable-next-line:no-magic-numbers
-				this.changeDay(+SHIFT_1_WEEK);
-				break;
-			default:
-				break;
-		}
-	}
-
-	swipeRight(): void {
-		console.log('swipeRight()');
-		switch (this.tab) {
-			case 'day':
-				this.changeDay(-SHIFT_1_DAY);
-				break;
-			case 'week':
-				// tslint:disable-next-line:no-magic-numbers
-				this.changeDay(-SHIFT_1_WEEK);
-				break;
-			default:
-				break;
-		}
-	}
-
 	segmentChanged(event: Event): void {
 		console.log('ScheduleComponent.segmentChanged()', event);
 		history.replaceState(history.state, document.title, location.href.replace(/tab=\w+/, `tab=${this.tab}`));
 		switch (this.tab) {
 			case 'week':
-				if (this.activeDay.date) {
-					this.setDay('segmentChanged', this.activeDay.date);
-				} else {
-					throw new Error('activeDay has no date');
-				}
+				// if (this.activeDay.date) {
+				// 	this.setDay('segmentChanged', this.activeDay.date);
+				// } else {
+				// 	throw new Error('activeDay has no date');
+				// }
 				break;
 			case 'singles':
 				// this.slotsProvider.loadTodayAndFutureEvents(undefined)
@@ -217,9 +168,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		} else if (wd) {
 			state.wd = wd;
 		} else if (this.tab === 'day') {
-			if (this.activeDay.date) {
-				state.date = dateToIso(this.activeDay.date);
-			}
+			state.date = dateToIso(this.date);
 		}
 		if (!this.team) {
 			this.errorLogger.logError('!this.team');
@@ -232,103 +181,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	};
 
-	isToday(): boolean {
-		const { date } = this.activeDay;
-		const today = new Date();
-		return !date ||
-			date.getDate() === today.getDate() &&
-			date.getMonth() === today.getMonth() &&
-			date.getFullYear() === today.getFullYear();
-	}
-
-	isTomorrow(): boolean {
-		const { date } = this.activeDay;
-		const today = new Date();
-		return !date ||
-			date.getDate() === today.getDate() + 1 &&
-			date.getMonth() === today.getMonth() &&
-			date.getFullYear() === today.getFullYear();
-	}
-
-	isCurrentWeek(): boolean {
-		const monday = this.activeWeek && this.activeWeek.startDate;
-		const today = new Date();
-		return !monday || monday.getTime() === getWeekdayDate(today, 0)
-			.getTime();
-	}
-
-	changeDay(v: number): void {
-		const d = this.activeDay.date;
-		console.log(`changeDay(${v}) => segment=${this.tab}, activeDay.date:`, d);
-		if (!d) {
-			throw new Error('!this.activeDay.date');
-		}
-		switch (this.tab) {
-			case 'day':
-				this.activeDayParity = this.activeDayParity === 'odd' ? 'even' : 'odd';
-				this.dayAnimationState = animationState(this.activeDayParity, v);
-				break;
-			case 'week':
-				this.activeWeekParity = this.activeWeekParity === 'odd' ? 'even' : 'odd';
-				this.weekAnimationState = animationState(this.activeWeekParity, v);
-				break;
-			default:
-				return;
-		}
-		this.setDay('changeDay', new Date(d.getFullYear(), d.getMonth(), d.getDate() + v));
-	}
-
-	setToday(): void {
-		console.log('ScheduleComponent.setToday()');
-		if (!this.activeDay.date) {
-			this.errorLogger.logError('!this.activeDay.date');
-			return;
-		}
-		const today = new Date();
-		const activeTime = this.activeDay.date.getTime();
-		switch (this.tab) {
-			case 'day':
-				this.activeDayParity = this.activeDayParity === 'odd' ? 'even' : 'odd';
-				if (today.getTime() > activeTime) {
-					this.dayAnimationState = animationState(this.activeDayParity, +1);
-				} else if (today.getTime() < activeTime) {
-					this.dayAnimationState = animationState(this.activeDayParity, -1);
-				}
-				break;
-			case 'week':
-				this.activeWeekParity = this.activeWeekParity === 'odd' ? 'even' : 'odd';
-				if (today.getTime() > activeTime) {
-					this.weekAnimationState = animationState(this.activeWeekParity, +1);
-				} else if (today.getTime() < activeTime) {
-					this.weekAnimationState = animationState(this.activeWeekParity, -1);
-				}
-				break;
-			default:
-				break;
-		}
-		this.setDay('today', today);
-	}
-
-	setSlidesAnimationState(): void {
-		switch (this.tab) {
-			case 'day': {
-				const isOdd = this.activeDayParity === 'odd';
-				this.oddDay.animationState = isOdd ? showVirtualSlide : hideVirtualSlide;
-				this.evenDay.animationState = !isOdd ? showVirtualSlide : hideVirtualSlide;
-				break;
-			}
-			case 'week': {
-				const isOdd = this.activeWeekParity === 'odd';
-				this.oddWeek.animationState = isOdd ? showVirtualSlide : hideVirtualSlide;
-				this.evenWeek.animationState = !isOdd ? showVirtualSlide : hideVirtualSlide;
-				break;
-			}
-		}
-	}
-
-	public resetFilter(event?: Event): void {
-		this.scheduleFilterComponent?.clearFilter();
-	}
 
 	readonly onSlotClicked = (slot: ISlotItem): void => {
 		console.log('ScheduleComponent.onSlotClicked()', slot);
@@ -357,6 +209,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	// noinspection JSMethodCanBeStatic
 
+	public isToday(): boolean {
+		return isToday(this.date);
+	}
+
 	protected onTeamIdChanged(): void {
 		if (this.team?.id) {
 			// this.slotsProvider.setCommuneId(this.team.id)
@@ -380,10 +236,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			this.teamDaysProvider.setTeam(this.team);
 			this.populateRecurrings();
 		}
-		if (this.activeDay?.date) {
-			this.setDay('onTeamDtoChanged', this.activeDay.date);
-		}
+		this.setDay('onTeamDtoChanged', this.date);
 	}
+
+	// noinspection JSMethodCanBqw2se3333eStatic
 
 	private populateRecurrings(): void {
 		console.log('populateRecurrings()');
@@ -394,15 +250,13 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			const result: IHappeningWithUiState = { id, brief: brief, state: prev?.state || {} };
 			return result;
 		});
-		this.recurrings = this.filterRecurrings();
+		this.recurrings = this.filterRecurrings(this.filter || emptyScheduleFilter);
 	}
 
-	// noinspection JSMethodCanBqw2se3333eStatic
-
-	// We filter recurring at schedule level so we can share it across different components?
-	private filterRecurrings(): IHappeningWithUiState[] | undefined {
-		const text = this.filter.text.toLowerCase();
-		const { memberIDs, repeats, weekdays } = this.filter;
+	// We filter recurring at schedule level, so we can share it across different components?
+	private filterRecurrings(filter: IScheduleFilter): IHappeningWithUiState[] | undefined {
+		const text = filter.text.toLowerCase();
+		const { memberIDs, repeats, weekdays } = filter;
 
 		const filtered = this.allRecurrings?.filter(r => {
 			const { title } = r.brief;
@@ -413,7 +267,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 				return false;
 			}
 			if (!this.hasWeekday(r.brief?.slots || r.dto?.slots, weekdays)) {
-				return false
+				return false;
 			}
 			if (repeats?.length && !r.brief?.slots?.some(slot => repeats.includes(slot.repeats))) {
 				return false;
@@ -421,7 +275,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 			return true;
 		});
-		console.log(`ScheduleComponent.filterRecurrings(filter='${this.filter}')`, this.allRecurrings, ' => ', filtered);
+		console.log(`ScheduleComponent.filterRecurrings(filter='${filter}')`, this.allRecurrings, ' => ', filtered);
 
 		return filtered;
 	}
@@ -431,10 +285,11 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		return !memberIDs?.length || !!item?.memberIDs?.some(id => memberIDs.includes(id));
 	}
 
-	private hasWeekday(slots: IHappeningSlot[] | undefined, weekdays?: WeekdayCode2[]): boolean {
-		return !weekdays || !!slots?.some(slot => slot.weekdays?.some(wd => weekdays.includes(wd)))
-	}
 	// noinspection JSMethodCanBeStatic
+
+	private hasWeekday(slots: IHappeningSlot[] | undefined, weekdays?: WeekdayCode2[]): boolean {
+		return !weekdays || !!slots?.some(slot => slot.weekdays?.some(wd => weekdays.includes(wd)));
+	}
 
 	private setDay(source: string, d: Date): void {
 		console.log(`ScheduleComponent.setDay(source=${source}), d=`, d);
@@ -442,11 +297,11 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			return;
 		}
 
-		this.setSlidesAnimationState();
-
-		this.activeDay.changeDate(d);
-
-		this.activeWeek.activeDate = d;
+		// this.setSlidesAnimationState();
+		//
+		// this.activeDay.changeDate(d);
+		//
+		// this.activeWeek.activeDate = d;
 		// const { tab } = this;
 		// const activeWd = jsDayToWeekday(d.getDay() as wdNumber);
 		// const datesToPreload: Date[] = [];
@@ -515,23 +370,4 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	// private onSetDateWhenDayTabIsActive(): void {
-	// 	//
-	// }
-	//
-	// private onSetDateWhenWeekTabIsActive(): void {
-	// 	//
-	// }
-
-	// private getDayData(d: Date): void {
-	//
-	// }
-	//
-	// private getWeekData(): void {
-	// 	//
-	// }
-
-	// get inactiveWeek(): Week {
-	//     return this.activeWeekParity === 'odd' ? this.evenWeek : this.oddWeek;
-	// }
 }

@@ -1,0 +1,16 @@
+<!--Today -->
+<sneat-swipeable-day-card [team]="team"
+													[teamDaysProvider]="teamDaysProvider"
+													[onSlotClicked]="onSlotClicked"
+></sneat-swipeable-day-card>
+
+<div class="ion-text-center ion-margin">
+	<ion-text color="medium">&larr; Swipe to change day &rarr;</ion-text>
+</div>
+
+<!--Tomorrow -->
+<sneat-swipeable-day-card [team]="team"
+													[teamDaysProvider]="teamDaysProvider"
+													[activeDayPlus]="1"
+													[onSlotClicked]="onSlotClicked"
+></sneat-swipeable-day-card>

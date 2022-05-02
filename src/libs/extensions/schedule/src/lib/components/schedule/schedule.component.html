@@ -9,236 +9,27 @@
 											 [team]="team"
 											 [showWeekdays]="tab === 'recurrings'"
 											 [showRepeats]="tab === 'recurrings'"
-											 (changed)="onFilterChanged($event)"
 ></sneat-schedule-filter>
 
-<ion-card *ngIf="tab === 'day' || tab === 'week'">
-	<ion-item class="sneat-small-end-padding">
-		<ion-label>
-			<div *ngIf="tab === 'day'" class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
-				<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState">
-					<h1 class="virtual-slide" [@virtualSlide]="oddDay.animationState">
-						<span *ngIf="isToday()" class="ion-margin-end">Today:</span>
-						<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>
-						<ng-container *ngIf="oddDay.weekday">
-							<b>{{oddDay.weekday.id|wdToWeekday}}</b><span
-							style="font-weight: normal">, {{oddDay.date?.getDate()}} {{oddDay.date?.getMonth()|longMonthName}}</span>
-						</ng-container>
-					</h1>
+<sneat-day-tab *ngIf="tab === 'day'"
+							 [team]="team"
+							 [teamDaysProvider]="teamDaysProvider"
+							 [onSlotClicked]="onSlotClicked"
+></sneat-day-tab>
 
-					<h1 class="virtual-slide" [@virtualSlide]="evenDay.animationState">
-						<span *ngIf="isToday()" class="ion-margin-end">Today:</span>
-						<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>
-						<ng-container *ngIf="evenDay.weekday">
-							<b>{{evenDay.weekday.id|wdToWeekday}}</b><span
-							style="font-weight: normal">, {{evenDay.date?.getDate()}} {{evenDay.date?.getMonth()|longMonthName}}</span>
-						</ng-container>
-					</h1>
-				</div>
-			</div>
-			<div *ngIf="tab === 'week'" class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
-				<div class="virtual-slider-inner" [@virtualSlider]="weekAnimationState">
-					<h1 class="virtual-slide" [@virtualSlide]="oddWeek.animationState">
-						{{oddWeek.startDate?.getDate()}} {{oddWeek.startDate?.getMonth()|shortMonthName}}
-						&mdash;
-						{{oddWeek.endDate?.getDate()}} {{oddWeek.endDate?.getMonth()|shortMonthName}}
-					</h1>
-					<h1 class="virtual-slide" [@virtualSlide]="evenWeek.animationState">
-						{{evenWeek.startDate?.getDate()}} {{evenWeek.startDate?.getMonth()|shortMonthName}}
-						&mdash;
-						{{evenWeek.endDate?.getDate()}} {{evenWeek.endDate?.getMonth()|shortMonthName}}
-					</h1>
-				</div>
-			</div>
-		</ion-label>
-
-		<ion-buttons slot="end">
-			<ng-container *ngIf="tab === 'day'">
-				<ion-button title="Add recurring" (click)="goNewHappening({type: 'recurring', wd: activeDay.weekday.id})">
-					<ion-icon name="duplicate-outline"></ion-icon>
-				</ion-button>
-				<ion-button title="Add one-timer" (click)="goNewHappening({type: 'single', date: activeDay.id})">
-					<ion-icon name="add-circle-outline"></ion-icon>
-				</ion-button>
-			</ng-container>
-			<ion-button [title]="tab === 'day' ? 'Previous day' : 'Previous week'"
-									(click)="changeDay(tab === 'day' ? -1 : -7)">
-				<ion-icon name="chevron-back-sharp"></ion-icon>
-			</ion-button>
-			<ion-button [disabled]="isToday()"
-									[color]="isToday() ? 'medium' : 'primary'"
-									[title]="tab === 'day' ? 'Today' : 'This week'"
-									(click)="setToday()">
-				<ion-icon slot="start" name="today-outline"></ion-icon>
-			</ion-button>
-			<ion-button [title]="tab === 'day' ? 'Next day' : 'Next week'"
-									(click)="changeDay(tab === 'day' ? +1 : +7)">
-				<ion-icon name="chevron-forward-sharp"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-
-	<!--	<ion-list lines="none" class="no-v-padding" *ngIf="tab === 'day' || tab === 'week'">-->
-	<!--		<ion-grid class="grid-layout">-->
-	<!--			<ion-row>-->
-	<!--				<ion-col [size]="filter.length > 4 ? 6 : 4">-->
-	<!--					<sneat-filter-item [filter]="filter" (changed)="applyFilter($event)"-->
-	<!--														 (blur)="filterFocused = false"></sneat-filter-item>-->
-	<!--				</ion-col>-->
-	<!--				<ion-col [size]="filter.length > 4 ? 3 : 4">-->
-	<!--					<ion-item style="border-bottom: none; padding: 0">-->
-	<!--						<ion-checkbox slot="start"-->
-	<!--													color="light"-->
-	<!--													checked="true"-->
-	<!--													[(ngModel)]="showRecurring"-->
-	<!--													(ionChange)="onShowRecurringsChanged()"-->
-	<!--						>-->
-	<!--						</ion-checkbox>-->
-	<!--						<ion-label color="medium">-->
-	<!--							<small>Regular</small>-->
-	<!--						</ion-label>-->
-	<!--					</ion-item>-->
-	<!--				</ion-col>-->
-	<!--				<ion-col [size]="filter && filter.length > 4 ? 3 : 4">-->
-	<!--					<ion-item>-->
-	<!--						<ion-checkbox slot="start"-->
-	<!--													color="light"-->
-	<!--													checked="true"-->
-	<!--													[(ngModel)]="showEvents"-->
-	<!--													(ionChange)="onShowEventsChanged()"-->
-	<!--						>-->
-	<!--						</ion-checkbox>-->
-	<!--						<ion-label color="medium">-->
-	<!--							<small>Events</small>-->
-	<!--						</ion-label>-->
-	<!--					</ion-item>-->
-	<!--				</ion-col>-->
-	<!--			</ion-row>-->
-	<!--		</ion-grid>-->
-	<!--	</ion-list>-->
-
-	<!--	<sneat-filter-item *ngIf="tab === 'regular' || tab === 'events'" [filter]="filter"-->
-	<!--										 (changed)="applyFilter($event)"></sneat-filter-item>-->
-
-	<!--	<ion-grid class="ion-grid-layout">-->
-	<!--		<ion-row>-->
-	<!--			<ion-col size="8">-->
-	<!--				<ion-segment [(ngModel)]="filterSegment" *ngIf="tab === 'day' || tab === 'week'">-->
-	<!--					<ion-segment-button value="all">Everybody</ion-segment-button>-->
-	<!--					<ion-segment-button value="mine">Mine only</ion-segment-button>-->
-	<!--					<ion-segment-button value="others">Others</ion-segment-button>-->
-	<!--				</ion-segment>-->
-	<!--			</ion-col>-->
-	<!--			<ion-col size="4">-->
-	<!--				<ion-item>-->
-	<!--&lt;!&ndash;					<ion-label>Select</ion-label>&ndash;&gt;-->
-	<!--					<ion-select slot="end" [(ngModel)]="filterSegment">-->
-	<!--						<ion-select-option value="mine">Myself</ion-select-option>-->
-	<!--						<ion-select-option>Alisa</ion-select-option>-->
-	<!--						<ion-select-option>Vasilisa</ion-select-option>-->
-	<!--					</ion-select>-->
-	<!--				</ion-item>-->
-	<!--			</ion-col>-->
-	<!--		</ion-row>-->
-	<!--	</ion-grid>-->
-
-
-	<!--	<ng-container *ngIf="filterSegment==='filter'">-->
-	<!--		<ion-item>-->
-	<!--			<ion-label>Member</ion-label>-->
-	<!--			<ion-select value="all">-->
-	<!--				<ion-select-option value="all">All</ion-select-option>-->
-	<!--			</ion-select>-->
-	<!--		</ion-item>-->
-	<!--		<ion-item>-->
-	<!--			<ion-label>Assets</ion-label>-->
-	<!--			<ion-select value="all">-->
-	<!--				<ion-select-option value="all">All</ion-select-option>-->
-	<!--			</ion-select>-->
-	<!--		</ion-item>-->
-	<!--	</ng-container>-->
-
-
-	<div *ngIf="tab === 'day' && activeDay?.date">
-		<!--		<p class="ion-margin-horizontal">-->
-		<!--			oddDay.weekday: {{oddDay.weekday|json}}-->
-		<!--			activeDay.parity: {{activeDay.parity}},-->
-		<!--			activeDayParity: {{activeDayParity}},-->
-		<!--			activeDay.weekday: {{activeDay.weekday|json}}-->
-		<!--		</p>-->
-		<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
-			<div class="virtual-slider-inner" [@virtualSlider]="dayAnimationState">
-				<div class="virtual-slide" [@virtualSlide]="oddDay.animationState">
-					<sneat-schedule-day [weekday]="oddDay.weekday"
-															[team]="team"
-															[filter]="filter"
-															[showEvents]="showEvents"
-															[showRegulars]="showRecurrings"
-															(slotClicked)="onSlotClicked($event)"
-															(resetFilter)="resetFilter()"
-					></sneat-schedule-day>
-					<div class="virtual-slide-overflow-fixer"></div>
-				</div>
-				<div class="virtual-slide" [@virtualSlide]="evenDay.animationState">
-					<sneat-schedule-day [weekday]="evenDay.weekday"
-															[team]="team"
-															[filter]="filter"
-															[showEvents]="showEvents"
-															[showRegulars]="showRecurrings"
-															(slotClicked)="onSlotClicked($event)"
-															(resetFilter)="resetFilter()"
-					></sneat-schedule-day>
-					<div class="virtual-slide-overflow-fixer"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div *ngIf="tab === 'week' && activeWeek">
-		<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
-			<div class="virtual-slider-inner" [@virtualSlider]="weekAnimationState">
-				<div class="virtual-slide" [@virtualSlide]="oddWeek.animationState">
-					<sneat-schedule-week
-						[team]="team"
-						[week]="oddWeek"
-						[teamDaysProvider]="teamDaysProvider"
-						[filter]="filter"
-						[showEvents]="showEvents"
-						[showRecurring]="showRecurrings"
-						(goNew)="goNewHappening($event)"
-						(dateSelected)="onDateSelected($event)"
-						(slotClicked)="onSlotClicked($event)"></sneat-schedule-week>
-					<div class="virtual-slide-overflow-fixer"></div>
-				</div>
-				<div class="virtual-slide" [@virtualSlide]="evenWeek.animationState">
-					<sneat-schedule-week
-						[team]="team"
-						[week]="evenWeek"
-						[teamDaysProvider]="teamDaysProvider"
-						[filter]="filter"
-						[showEvents]="showEvents"
-						[showRecurring]="showRecurrings"
-						(goNew)="goNewHappening($event)"
-						(dateSelected)="onDateSelected($event)"
-						(slotClicked)="onSlotClicked($event)"></sneat-schedule-week>
-					<div class="virtual-slide-overflow-fixer"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-</ion-card>
+<sneat-week-tab *ngIf="tab === 'week'"
+								[team]="team"
+								[onSlotClicked]="onSlotClicked"
+></sneat-week-tab>
 
 <sneat-recurrings-tab *ngIf="tab === 'recurrings'"
 											[team]="team"
-											[filter]="filter"
 											[recurrings]="recurrings"
 											[allRecurrings]="allRecurrings"
-											(resetFilter)="resetFilter($event)"
 ></sneat-recurrings-tab>
 
 <sneat-singles-tab *ngIf="tab === 'singles'"
 									 [todayAndFutureDays]="todayAndFutureDays"
-									 [filter]="filter"
 									 [onSlotClicked]="onSlotClicked"
 									 [onDateSelected]="onDateSelected"
 									 [goNewHappening]="goNewHappening"

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IMemberBrief, WeekdayCode2 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
+import { ScheduleFilterService } from '../schedule-filter.service';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 import { IScheduleFilter } from './schedule-filter';
 
@@ -14,7 +15,6 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	@Input() team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
-	@Output() readonly changed = new EventEmitter<IScheduleFilter>();
 	readonly text = new FormControl('');
 	weekdays: WeekdayCode2[] = [];
 	memberIDs: string[] = [];
@@ -35,7 +35,9 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 			!!this.repeats?.length;
 	}
 
-	constructor() {
+	constructor(
+		private readonly filterService: ScheduleFilterService,
+	) {
 		super(false);
 	}
 
@@ -95,7 +97,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 		if (this.resetting) {
 			return;
 		}
-		let filter: IScheduleFilter = { text: this.text.value };
+		let filter: IScheduleFilter = { text: this.text.value, showRecurrings: true, showSingles: true };
 		if (this.memberIDs.length) {
 			filter = { ...filter, memberIDs: [...this.memberIDs] };
 		}
@@ -106,7 +108,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 		if (this.repeats.length) {
 			filter = { ...filter, repeats: [...this.repeats] };
 		}
-		this.changed.emit(filter);
+		this.filterService.next(filter);
 	}
 
 	onMemberChanged(event: Event): void {

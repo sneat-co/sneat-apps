@@ -6,11 +6,24 @@ import {
 	VirtualSliderReversePushedPrev,
 	wdCodeToWeekdayLongName,
 } from '@sneat/components';
-import { getWeekdayDate } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
-import { wd2 } from '../../view-models';
-import { Weekday } from '../schedule-week/schedule-week.component';
-import { Parity, SwipeableWeek } from './swipeable-ui';
+import { wd2 } from '../view-models';
+import { Weekday } from './schedule-week/schedule-week.component';
+import { Parity } from './swipeable-ui';
+
+export function isToday(date: Date): boolean {
+	const today = new Date();
+	return date.getDate() === today.getDate() &&
+		date.getMonth() === today.getMonth() &&
+		date.getFullYear() === today.getFullYear();
+}
+
+export function isTomorrow(date: Date): boolean {
+	const today = new Date();
+	return date.getDate() === today.getDate() + 1 &&
+		date.getMonth() === today.getMonth() &&
+		date.getFullYear() === today.getFullYear();
+}
 
 export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: Date): Date {
 	if (wd === activeWd) {
@@ -25,8 +38,6 @@ export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: 
 	);
 }
 
-
-export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 
 export const SHIFT_1_DAY = 1, SHIFT_1_WEEK = 7;
 

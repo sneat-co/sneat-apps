@@ -1,6 +1,5 @@
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { WeekdayCode2 } from '@sneat/dto';
-import { Week } from '../schedule/schedule-core';
 
 const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
 	const formGroup = control as FormGroup;
@@ -63,6 +62,6 @@ export abstract class WeekdaysFormBase {
 		return Object
 			.entries(this.weekdayById)
 			.filter(([wd, c]) => c.value)
-			.map(([wd, c]) => wd as WeekdayCode2)
+			.map(([wd, c]) => wd as WeekdayCode2);
 	}
 }

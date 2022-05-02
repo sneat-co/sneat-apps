@@ -16,3 +16,7 @@ export * from './lib/filter-item/filter-item.module';
 //
 export * from './lib/select-from-list/select-from-list.module';
 export * from './lib/select-from-list/select-from-list.component';
+
+export * from './lib/copyright';
+
+export * from './lib/members-as-badges';

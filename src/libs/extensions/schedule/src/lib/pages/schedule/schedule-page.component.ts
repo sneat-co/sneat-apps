@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { virtualSliderAnimations } from '@sneat/components';
+import { ScheduleTab } from '../../components/schedule/schedule.component';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext } from '@sneat/team/models';
-import { ScheduleTab } from '../../components/schedule/schedule-core';
 
 
 @Component({

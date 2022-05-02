@@ -6,7 +6,7 @@
 		<ion-item-divider color="light" *ngIf="slotsHiddenByFilter">
 			<ion-label>{{slotsHiddenByFilter}} hidden by filter.</ion-label>
 			<ion-buttons slot="end">
-				<ion-button (click)="resetFilter.next($event)">
+				<ion-button (click)="resetFilter($event)">
 					<ion-icon color="medium" name="close-outline" slot="end"></ion-icon>
 					<ion-label color="medium">Reset filter</ion-label>
 				</ion-button>

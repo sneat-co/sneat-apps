@@ -1,0 +1,6 @@
+<span *ngIf="isToday()" class="ion-margin-end">Today:</span>
+<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>
+<ng-container *ngIf="day?.weekday">
+	<b>{{day?.weekday?.id|wdToWeekday}}</b><span
+	style="font-weight: normal">, {{date?.getDate()}} {{date?.getMonth()|longMonthName}}</span>
+</ng-container>

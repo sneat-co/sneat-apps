@@ -9,7 +9,6 @@ import { Weekday } from '../schedule-week/schedule-week.component';
 })
 export class SinglesTabComponent {
 	@Input() todayAndFutureDays?: Weekday[];
-	@Input() filter?: IScheduleFilter;
 	@Input() onSlotClicked?: (slot: ISlotItem) => void;
 	@Input() onDateSelected?: (date: Date) => void;
 	@Input() goNewHappening?: (params: NewHappeningParams) => void;

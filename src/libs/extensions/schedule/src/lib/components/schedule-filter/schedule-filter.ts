@@ -5,4 +5,6 @@ export interface IScheduleFilter {
 	readonly memberIDs?: string[];
 	readonly weekdays?: WeekdayCode2[];
 	readonly repeats?: string[];
+	readonly showRecurrings: boolean;
+	readonly showSingles: boolean;
 }

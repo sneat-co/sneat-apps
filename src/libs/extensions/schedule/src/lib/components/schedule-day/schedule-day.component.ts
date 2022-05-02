@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleCha
 import { ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { ISlotItem } from '../../view-models';
-import { IScheduleFilter } from '../schedule-filter/schedule-filter';
+import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
 import { isSlotVisible } from '../schedule-slots';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
@@ -13,15 +13,30 @@ import { Weekday } from '../schedule-week/schedule-week.component';
 export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	private readonly destroyed = new Subject<void>();
 	private slotsSubscription?: Subscription;
+	private filter = emptyScheduleFilter;
+	// @Input() filter?: IScheduleFilter;
+	// @Input() showRegulars = true;
 	@Input() team?: ITeamContext;
-	@Input() filter?: IScheduleFilter;
-	@Input() showRegulars = true;
-	@Input() showEvents = true;
+	// @Input() showEvents = true;
 	@Input() weekday?: Weekday;
 	@Output() readonly slotClicked = new EventEmitter<ISlotItem>();
-	@Output() readonly resetFilter = new EventEmitter<Event>();
 	public slots?: ISlotItem[];
 	public slotsHiddenByFilter?: number;
+
+	constructor(
+		private filterService: ScheduleFilterService,
+	) {
+		filterService.filter.subscribe({
+			next: filter => {
+				this.filter = filter;
+			},
+		});
+	}
+
+	resetFilter(event: Event): void {
+		event.stopPropagation();
+		this.filterService.resetScheduleFilter();
+	}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();
@@ -49,8 +64,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 					next: slots => {
 						if (slots) {
 							this.slots = slots.filter(
-								slot => isSlotVisible(slot, this.filter || { text: '' },
-									this.showRegulars, this.showEvents));
+								slot => isSlotVisible(slot, this.filter));
 							this.slotsHiddenByFilter = slots.length - this.slots.length;
 							console.log('ScheduleDayComponent.applyFilter() => slotsHiddenByFilter:', this.slotsHiddenByFilter, this.slots, slots);
 						} else {
