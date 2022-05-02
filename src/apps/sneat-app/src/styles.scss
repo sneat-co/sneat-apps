@@ -39,6 +39,14 @@
 }
 
 
+.sneat-tiny-start-padding  {
+  --padding-start: 0.25em;
+}
+
+.sneat-small-start-padding  {
+  --padding-start: 0.5em;
+}
+
 .sneat-small-end-padding  {
   --inner-padding-end: 0.5em;
 }
@@ -53,6 +61,11 @@
 
 .sneat-tiny-end-margin {
   margin-right: 0.25em;
+}
+
+ion-buttons.sneat-no-horizontal-margins ion-button {
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .sneat-no-end-margin {

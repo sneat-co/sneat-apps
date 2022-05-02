@@ -135,8 +135,8 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		// That would minimize number of handlers to be called on watching components
 		// Tough it's a micro optimization that does not seems to worth the effort now.
 		map(groupRecurringSlotsByWeekday),
-		shareReplay(1),
 		tap(slots => console.log('TeamDaysProvider.recurrings$ =>', slots)),
+		shareReplay(1),
 	);
 	private recurringsSubscription?: Subscription;
 	// private teamId?: string;

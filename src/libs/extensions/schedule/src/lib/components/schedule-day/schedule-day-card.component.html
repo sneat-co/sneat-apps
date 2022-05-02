@@ -1,5 +1,21 @@
 <ion-card>
-	<ion-item class="sneat-small-end-padding">
+	<ion-item class="sneat-small-end-padding sneat-small-start-padding">
+		<ion-buttons slot="start" class="sneat-tiny-end-margin sneat-no-horizontal-margins">
+			<ion-button [disabled]="isToday()"
+									[color]="isToday() ? 'medium' : 'primary'"
+									[title]="'Today'"
+									(click)="setToday()">
+				<ion-icon name="today-outline"></ion-icon>
+			</ion-button>
+			<ion-button title="Previous day"
+									(click)="swipePrev()">
+				<ion-icon name="chevron-back-sharp"></ion-icon>
+			</ion-button>
+			<ion-button title="Next day"
+									(click)="swipeNext()">
+				<ion-icon name="chevron-forward-sharp"></ion-icon>
+			</ion-button>
+		</ion-buttons>
 		<ion-label>
 			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
@@ -19,20 +35,6 @@
 			</ion-button>
 			<ion-button title="Add one-timer" (click)="goNewHappening({type: 'single', date: activeDay.activeDateID})">
 				<ion-icon name="add-circle-outline"></ion-icon>
-			</ion-button>
-			<ion-button title="Previous day"
-									(click)="swipePrev()">
-				<ion-icon name="chevron-back-sharp"></ion-icon>
-			</ion-button>
-			<ion-button [disabled]="isToday()"
-									[color]="isToday() ? 'medium' : 'primary'"
-									[title]="'Today'"
-									(click)="setToday()">
-				<ion-icon slot="start" name="today-outline"></ion-icon>
-			</ion-button>
-			<ion-button title="Next day"
-									(click)="swipeNext()">
-				<ion-icon name="chevron-forward-sharp"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>

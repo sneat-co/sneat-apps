@@ -59,6 +59,10 @@ export abstract class SwipeableBaseComponent {
 		this.swipePrev();
 	}
 
+	setToday(): void {
+		this.scheduleSateService.setToday();
+	}
+
 
 	// setSlidesAnimationState(): void {
 	// 	switch (this.tab) {

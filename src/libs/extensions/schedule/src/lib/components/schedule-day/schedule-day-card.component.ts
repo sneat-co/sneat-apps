@@ -45,10 +45,6 @@ export class ScheduleDayCardComponent extends ScheduleDayBaseComponent implement
 		this.createSlides();
 	}
 
-	setToday(): void {
-		this.scheduleSateService.setToday();
-	}
-
 	goNewHappening(params: NewHappeningParams): void {
 		this.goNew.emit(params);
 	}
