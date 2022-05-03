@@ -17,7 +17,7 @@ import { HappeningType, IHappeningSlot, IHappeningWithUiState, WeekdayCode2 } fr
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem, NewHappeningParams } from '@sneat/extensions/schedulus/shared';
 import { isToday } from '../schedule-core';
@@ -65,7 +65,9 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	) {
 		this.teamDaysProvider = new TeamDaysProvider(this.errorLogger, afs);
 
-		filterService.filter.subscribe({
+		filterService.filter
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
 			next: filter => {
 				this.filter = filter;
 				this.recurrings = this.filterRecurrings(filter);
@@ -275,7 +277,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 			return true;
 		});
-		console.log(`ScheduleComponent.filterRecurrings(filter='${filter}')`, this.allRecurrings, ' => ', filtered);
+		console.log(`ScheduleComponent.filterRecurrings(')`, filter, this.allRecurrings, ' => ', filtered);
 
 		return filtered;
 	}
