@@ -60,7 +60,7 @@ export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder
 
 export interface IMemberBrief extends IMemberBase {
 	id: string;
-	shortUniqueTitle?: string;
+	shortTitle?: string;
 }
 
 export interface IMemberDto extends IMemberBase {

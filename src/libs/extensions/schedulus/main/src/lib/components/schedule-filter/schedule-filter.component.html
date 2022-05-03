@@ -109,7 +109,7 @@
 				<ion-segment [(ngModel)]="memberID" color="dark" *ngIf="members && members.length < 5" (ionChange)="onMemberChanged($event)">
 					<ion-segment-button value="">Anyone</ion-segment-button>
 					<ion-segment-button [value]="member.id" *ngFor="let member of members">
-						<ion-label>{{member.shortUniqueTitle || member.title}}</ion-label>
+						<ion-label>{{member.shortTitle || member.title}}</ion-label>
 					</ion-segment-button>
 				</ion-segment>
 			</ion-item-group>
