@@ -75,6 +75,12 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 		this.emitChanged();
 	}
 
+	public accordionChanged(event: Event): void {
+		console.log('accordionChanged', event);
+		event.stopPropagation();
+		this.expanded = !!(event as CustomEvent).detail.value;
+	}
+
 	// repeatChecked(id: string): boolean {
 	// 	return this.repeats.indexOf(id) >= 0;
 	// }
@@ -114,6 +120,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 
 	onMemberChanged(event: Event): void {
 		console.log('ScheduleFilterComponent.onMemberChanged()', event);
+		event.stopPropagation();
 		this.memberIDs = this.memberID ? [this.memberID] : [];
 		this.emitChanged();
 	}
