@@ -4,7 +4,7 @@ import { IonAccordionGroup } from '@ionic/angular';
 import { IMemberBrief, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { ScheduleFilterService } from '../schedule-filter.service';
+import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 import { IScheduleFilter } from './schedule-filter';
 
@@ -12,7 +12,7 @@ import { IScheduleFilter } from './schedule-filter';
 	selector: 'sneat-schedule-filter',
 	templateUrl: 'schedule-filter.component.html',
 })
-export class ScheduleFilterComponent extends WeekdaysFormBase implements AfterViewInit, OnChanges {
+export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChanges {
 	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;
 	public expanded = false;
 	public accordionValue?: string;
@@ -40,6 +40,8 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements AfterVi
 			!!this.repeats?.length;
 	}
 
+	private filter: IScheduleFilter = emptyScheduleFilter;
+
 	constructor(
 		private readonly filterService: ScheduleFilterService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -50,12 +52,12 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements AfterVi
 		});
 	}
 
-	ngAfterViewInit(): void {
-		// this.accordionGroup?.e('filter', this.expanded)
-		// 	.catch(this.errorLogger.logErrorHandler('failed to expand filter'));
-	}
-
 	private readonly onFilterChanged = (filter: IScheduleFilter): void => {
+		if (this.filter === filter) {
+			return;
+		}
+		console.log('ScheduleFilterComponent.onFilterChanged()', filter);
+		this.filter = filter;
 		const { memberIDs } = filter;
 		if (memberIDs) {
 			this.memberIDs = [...memberIDs];
@@ -65,6 +67,13 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements AfterVi
 				this.expanded = true;
 			}
 		}
+		if (!memberIDs?.length) {
+			this.memberIDs = [];
+			this.memberID = '';
+		}
+		this.weekdays = filter.weekdays || [];
+		this.repeats = filter.repeats || [];
+		// TODO: reset weekday & repeats controls
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -140,6 +149,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements AfterVi
 		if (this.repeats.length) {
 			filter = { ...filter, repeats: [...this.repeats] };
 		}
+		this.filter = filter;
 		this.filterService.next(filter);
 	}
 
