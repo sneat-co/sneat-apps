@@ -71,8 +71,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			distinctUntilChanged(),
 		);
 
-	public get team(): ITeamContext | undefined {
-		return this.teamContext;
+	public get team(): ITeamContext {
+		return this.teamContext || {id: ''};
 	}
 
 	public get preloader() {

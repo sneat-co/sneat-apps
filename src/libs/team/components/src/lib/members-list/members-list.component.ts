@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/animations';
-import { Gender, IContact2Member } from '@sneat/dto';
+import { IContact2Member } from '@sneat/dto';
+import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief, TeamNavService, TeamService } from '@sneat/team/services';
@@ -17,7 +18,7 @@ export class MembersListComponent implements OnChanges {
 
 	private selfRemove?: boolean;
 	private _members?: readonly IMemberContext[];
-	@Input() public team?: ITeamContext;
+	@Input() public team: ITeamContext = { id: '' };
 	@Input() public members?: readonly IMemberContext[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
@@ -26,10 +27,11 @@ export class MembersListComponent implements OnChanges {
 	public membersToDisplay?: readonly IMemberContext[];
 
 	constructor(
-		private navService: TeamNavService,
-		private navController: NavController,
-		private userService: SneatUserService,
-		private teamService: TeamService,
+		private readonly navService: TeamNavService,
+		private readonly navController: NavController,
+		private readonly userService: SneatUserService,
+		private readonly teamService: TeamService,
+		private readonly scheduleNavService: ScheduleNavService,
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
 	) {
 		//
@@ -74,6 +76,13 @@ export class MembersListComponent implements OnChanges {
 			}
 			this.membersToDisplay = this.filterMembers(this._members);
 		}
+	}
+
+	public goSchedule(event: Event, member: IMemberContext) {
+		console.log('MembersListComponent.goSchedule()');
+		event.stopPropagation();
+		this.scheduleNavService.goSchedule(this.team, { member: member.id })
+			.catch(this.errorLogger.logErrorHandler('failed to navigate to member\'s schedule page'));
 	}
 
 	public removeMember(event: Event, member: IMemberContext) {

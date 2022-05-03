@@ -99,7 +99,12 @@
 			"@sneat/extensions/docus": ["libs/extensions/docus/src/index.ts"],
 			"@sneat/extensions/listus": ["libs/extensions/listus/src/index.ts"],
 			"@sneat/extensions/memberus": ["libs/extensions/memberus/src/index.ts"],
-			"@sneat/extensions/schedule": ["libs/extensions/schedule/src/index.ts"],
+			"@sneat/extensions/schedulus/main": [
+				"libs/extensions/schedulus/main/src/index.ts"
+			],
+			"@sneat/extensions/schedulus/shared": [
+				"libs/extensions/schedulus/shared/src/index.ts"
+			],
 			"@sneat/grid": ["libs/grid/src/index.ts"],
 			"@sneat/logging": ["libs/logging/src/index.ts"],
 			"@sneat/meeting": ["libs/meeting/src/index.ts"],

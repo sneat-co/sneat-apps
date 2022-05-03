@@ -2770,33 +2770,33 @@
 			},
 			"tags": []
 		},
-		"extensions-schedule": {
+		"extensions-schedulus-main": {
 			"projectType": "library",
-			"root": "libs/extensions/schedule",
-			"sourceRoot": "libs/extensions/schedule/src",
+			"root": "libs/extensions/schedulus/main",
+			"sourceRoot": "libs/extensions/schedulus/main/src",
 			"prefix": "sneat",
 			"architect": {
 				"build": {
 					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/extensions/schedule"],
+					"outputs": ["dist/libs/extensions/schedulus/main"],
 					"options": {
-						"project": "libs/extensions/schedule/ng-package.json"
+						"project": "libs/extensions/schedulus/main/ng-package.json"
 					},
 					"configurations": {
 						"production": {
-							"tsConfig": "libs/extensions/schedule/tsconfig.lib.prod.json"
+							"tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.prod.json"
 						},
 						"development": {
-							"tsConfig": "libs/extensions/schedule/tsconfig.lib.json"
+							"tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.json"
 						}
 					},
 					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/extensions/schedule"],
+					"outputs": ["coverage/libs/extensions/schedulus/main"],
 					"options": {
-						"jestConfig": "libs/extensions/schedule/jest.config.js",
+						"jestConfig": "libs/extensions/schedulus/main/jest.config.ts",
 						"passWithNoTests": true
 					}
 				},
@@ -2804,8 +2804,50 @@
 					"builder": "@nrwl/linter:eslint",
 					"options": {
 						"lintFilePatterns": [
-							"libs/extensions/schedule/src/**/*.ts",
-							"libs/extensions/schedule/src/**/*.html"
+							"libs/extensions/schedulus/main/**/*.ts",
+							"libs/extensions/schedulus/main/**/*.html"
+						]
+					}
+				}
+			},
+			"tags": []
+		},
+		"extensions-schedulus-shared": {
+			"projectType": "library",
+			"root": "libs/extensions/schedulus/shared",
+			"sourceRoot": "libs/extensions/schedulus/shared/src",
+			"prefix": "sneat",
+			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"outputs": ["dist/libs/extensions/schedulus/shared"],
+					"options": {
+						"project": "libs/extensions/schedulus/shared/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/extensions/schedulus/shared/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "libs/extensions/schedulus/shared/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"outputs": ["coverage/libs/extensions/schedulus/shared"],
+					"options": {
+						"jestConfig": "libs/extensions/schedulus/shared/jest.config.ts",
+						"passWithNoTests": true
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/extensions/schedulus/shared/**/*.ts",
+							"libs/extensions/schedulus/shared/**/*.html"
 						]
 					}
 				}

@@ -18,7 +18,7 @@
 		[@addRemove]="'added'"
 		*ngFor="let member of membersToDisplay; trackBy: id"
 	>
-		<ion-item tappable (click)="goMember(member)">
+		<ion-item tappable (click)="goMember(member)" class="sneat-tiny-end-padding">
 			<ion-avatar *ngIf="member?.brief?.avatar as avatar; else memberIcon">
 				<ion-img *ngIf="member.brief?.avatar?.external?.url"
 								 title="avatar"
@@ -48,6 +48,9 @@
 <!--				<ion-button *ngIf="!member.brief?.uid">-->
 <!--					<ion-label>Invite!</ion-label>-->
 <!--				</ion-button>-->
+				<ion-button (click)="goSchedule($event, member)">
+					<ion-icon name="calendar-outline"></ion-icon>
+				</ion-button>
 				<ion-button color="danger" *ngIf="!member.brief?.uid && member.brief?.email">
 					<ion-label>Resend invite</ion-label>
 				</ion-button>

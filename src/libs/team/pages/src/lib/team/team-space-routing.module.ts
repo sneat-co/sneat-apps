@@ -9,7 +9,7 @@ import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
 import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus';
-import { schedulusRoutes } from '@sneat/extensions/schedule';
+import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 
 const routes: Routes = [
