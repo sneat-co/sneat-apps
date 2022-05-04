@@ -16,6 +16,6 @@ import { SneatAuthGuard } from './sneat-auth-guard';
 })
 export class SneatAuthServicesModule {
 	constructor() {
-		console.log('SneatAuthModule.constructor()');
+		console.log('SneatAuthServicesModule.constructor()');
 	}
 }

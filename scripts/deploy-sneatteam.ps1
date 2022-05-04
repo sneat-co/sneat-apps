@@ -7,6 +7,6 @@ Set-Location -Path $PSScriptRoot/..
 $pwaIndexHtml = 'websites/sneatteam/pwa/index.html'
 (Get-Content $pwaIndexHtml) -replace '<base href="/"', '<base href="/pwa/"' | Out-File -encoding UTF8 $pwaIndexHtml
 Set-Location -Path $PSScriptRoot/../websites
-firebase deploy --only hosting:sneatapp
+firebase deploy --only hosting:sneatteam
 Set-Location -Path $location
 `

@@ -14,6 +14,7 @@ export interface IFirebaseConfig {
 	apiKey: string;
 	authDomain: string;
 	databaseURL?: string;
+	storageBucket?: string;
 }
 
 export interface IEnvironmentConfig {

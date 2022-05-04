@@ -24,7 +24,7 @@ interface IFirebaseAppSpecificConfig {
 }
 
 export interface IAppSpecificConfig {
-	firebase: IFirebaseAppSpecificConfig;
+	firebase?: IFirebaseAppSpecificConfig;
 }
 
 export function appSpecificConfig(useEmulators: boolean, envConfig: IEnvironmentConfig, appConfig: IAppSpecificConfig): IEnvironmentConfig {
