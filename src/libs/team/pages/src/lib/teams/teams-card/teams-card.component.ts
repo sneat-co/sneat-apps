@@ -101,7 +101,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		}
 		const request: ICreateTeamRequest = {
 			type: 'team',
-			memberType: TeamMemberType.creator,
+			// memberType: TeamMemberType.creator,
 			title,
 		};
 		this.adding = true;
@@ -112,7 +112,8 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 				const userTeam: IUserTeamBrief = {
 					id: team.id,
 					title: team?.dto?.title || team.id,
-					memberType: request.memberType,
+					roles: ["creator"],
+					// memberType: request.memberType,
 					teamType: team?.dto?.type || 'unknown',
 				};
 				if (userTeam && !this.teams?.find((t) => t.id === team.id)) {
@@ -156,11 +157,11 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.teamService
-			.getTeam({id: teamInfo.id, type: teamInfo.teamType})
+			.getTeam({ id: teamInfo.id, type: teamInfo.teamType })
 			.pipe(
 				mergeMap(team => {
 					const { currentUserId } = this.userService;
-					const userMember = team?.dto?.members.find((m) => m.uid === currentUserId);
+					const userMember = team?.dto?.members.find((m) => m.userID === currentUserId);
 					if (!userMember) {
 						return [team];
 					}

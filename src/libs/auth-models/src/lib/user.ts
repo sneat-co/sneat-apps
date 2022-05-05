@@ -43,7 +43,8 @@ export const memberTypePlurals: { [id: string]: string } = {
 export interface IUserTeamBrief {
 	readonly id: string;
 	readonly teamType: TeamType;
-	readonly memberType: MemberType;
+	// readonly memberType: MemberType; -- replaced with roles
+	readonly roles: string[];
 	readonly title: string;
 	// retroItems?: { [type: string]: IRetroItem[] };
 }

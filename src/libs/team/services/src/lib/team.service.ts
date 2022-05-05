@@ -188,7 +188,7 @@ export class TeamService {
 		});
 		if (teamRecord?.dto?.members) {
 			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberId);
-			if (member?.uid === this.userService.currentUserId) {
+			if (member?.userID === this.userService.currentUserId) {
 				const teamRequest: ITeamRequest = {
 					teamID: teamRecord.id,
 				};

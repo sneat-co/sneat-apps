@@ -4,6 +4,7 @@ import { RxRecordKey } from '@sneat/rxstore';
 import { IListGroupsHolder } from './dto-list';
 import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
+import { IPerson } from './dto-person';
 import { ITeamDto } from './dto-team';
 import { AgeGroup, CommuneType, CountryId, Gender } from './types';
 
@@ -77,12 +78,10 @@ export function newTeamCounts(numberOf?: TeamCounts): TeamCounts {
 	};
 }
 
-export interface ITeamMemberInfo {
+export interface ITeamMemberInfo extends IPerson {
 	readonly id?: string;
 	readonly userID?: string;
 	readonly title?: string;
-	readonly gender?: Gender;
-	readonly age?: AgeGroup;
 	readonly groupIds?: readonly RxRecordKey[];
 	readonly roles?: readonly MemberRole[];
 }

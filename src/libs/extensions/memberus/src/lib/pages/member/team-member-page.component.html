@@ -16,7 +16,7 @@
 		<ion-buttons slot="end">
 			<ion-button
 				*ngIf="member"
-				[title]="member?.brief?.uid === teamParams.userService.currentUserId ? 'Leave team' : 'Remove team member'"
+				[title]="member?.brief?.userID === teamParams.userService.currentUserId ? 'Leave team' : 'Remove team member'"
 				(click)="removeMember()"
 			>
 				<ion-icon name="trash"></ion-icon>
@@ -61,7 +61,7 @@
 										<ion-icon name="person" *ngSwitchDefault></ion-icon>
 									</ng-container>
 
-									{{member?.brief?.title || (member?.dto?.userID === currentUserId ? 'Me' : '(no title)')}}
+									{{member?.brief?.title || member?.brief?.shortTitle || (member?.dto?.userID === currentUserId ? 'Me' : '(no title)')}}
 								</ng-container>
 							</ion-label>
 							<ion-buttons slot="end">

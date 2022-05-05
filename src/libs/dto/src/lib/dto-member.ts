@@ -29,7 +29,6 @@ export enum FamilyMemberRelation {
 }
 
 
-
 export function relationshipTitle(id: string): string {
 	return id ? id[0].toUpperCase() + id.substr(1) : '';
 }
@@ -50,9 +49,9 @@ export interface IMemberGroupBrief {
 }
 
 export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder {
-	readonly title: string;
+	readonly title?: string;
 	readonly groupIDs?: string[];
-	readonly uid?: string; // User ID
+	readonly userID?: string; // User ID
 	readonly type?: MemberType;
 	readonly roles?: readonly MemberRole[];
 	readonly avatar?: IAvatar;
@@ -70,17 +69,17 @@ export interface IMemberDto extends IMemberBase {
 }
 
 
-export function newCommuneMemberInfo(id: string, m: IMemberDto): ITeamMemberInfo {
-	return excludeUndefined({
-		id: id,
-		userID: m.userID,
-		title: m.title && m.userID && m.title === m.userID ? undefined : m.title,
-		age: m.ageGroup,
-		roles: m.roles,
-		gender: m.gender,
-		groupIds: m.groupIDs,
-	});
-}
+// export function newCommuneMemberInfo(id: string, m: IMemberDto): ITeamMemberInfo {
+// 	return excludeUndefined({
+// 		id: id,
+// 		userID: m.uid,
+// 		title: m.title && m.uid && m.title === m.uid ? undefined : m.title,
+// 		ageGroup: m.ageGroup,
+// 		roles: m.roles,
+// 		gender: m.gender,
+// 		groupIds: m.groupIDs,
+// 	});
+// }
 
 export function memberDtoFromMemberInfo(memberInfo: ITeamMemberInfo, communeId: string, title: string): IMemberDto {
 	return excludeUndefined({

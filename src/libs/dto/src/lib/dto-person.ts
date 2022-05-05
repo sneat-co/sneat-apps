@@ -1,16 +1,19 @@
 import { AgeGroup, Gender } from '@sneat/dto';
 
 export interface IName {
-	first?: string;
-	last?: string;
-	middle?: string;
-	full?: string;
+	readonly first?: string;
+	readonly last?: string;
+	readonly middle?: string;
+	readonly full?: string;
 }
 
 export interface IPerson {
-	name: IName;
-	gender: Gender;
-	ageGroup: AgeGroup;
-	email?: string;
-	phone?: string;
+	readonly userID?: string;
+	readonly name?: IName;
+	readonly gender?: Gender;
+	readonly ageGroup?: AgeGroup;
+	readonly email?: string;
+	readonly phone?: string;
+	readonly website?: string;
+	readonly dob?: string;  // Date of birth
 }

@@ -57,6 +57,7 @@ export interface IPersonalInvite extends IInvite {
 export interface IAddTeamMemberResponse {
 	id: string;
 	uid?: string;
+	shortTitle?: string;
 }
 
 export interface ITaskRequest extends ITeamMemberRequest {

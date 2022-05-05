@@ -32,7 +32,7 @@ export class TeamsMenuComponent {
 		console.log('newFamily');
 		const request: ICreateTeamRequest = {
 			type: 'family',
-			memberType: TeamMemberType.creator,
+			// roles: [TeamMemberType.creator],
 		};
 		this.teamService.createTeam(request).subscribe({
 			next: value => {

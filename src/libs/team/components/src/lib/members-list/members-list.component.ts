@@ -102,7 +102,7 @@ export class MembersListComponent implements OnChanges {
 				},
 			};
 		}
-		this.selfRemove = member.brief?.uid === this.userService.currentUserId;
+		this.selfRemove = member.brief?.userID === this.userService.currentUserId;
 		const teamId = this.team.id;
 		this.teamService.removeTeamMember(this.team, member.id).subscribe({
 			next: (team) => {

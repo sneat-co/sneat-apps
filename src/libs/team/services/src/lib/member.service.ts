@@ -57,7 +57,7 @@ export class MemberService {
 
 	public addMember(request: ICreateTeamMemberRequest): Observable<IMemberBrief> {
 		console.log(`MemberService.addMember()`, request);
-		const fullName = request.name.full || '';
+		const fullName = request.name?.full || '';
 		if (!fullName) {
 			return throwError(() => new Error('full name is required'));
 		}
@@ -70,13 +70,18 @@ export class MemberService {
 			const okResponse = response as IAddTeamMemberResponse;
 			let member: IMemberBrief = {
 				id: okResponse.id,
-				title: fullName,
+				shortTitle: okResponse.shortTitle,
+				name: {
+					full: fullName,
+				},
+				gender: request.gender,
+				ageGroup: request.ageGroup,
 				roles: [request.role],
 			};
 			if (okResponse.uid) {
-				member = { ...member, uid: okResponse.uid };
+				member = { ...member, userID: okResponse.uid };
 			}
-			return this.teamService.getTeam({id: request.teamID}).pipe(
+			return this.teamService.getTeam({ id: request.teamID }).pipe(
 				tap((team) => {
 					if (team) {
 						team?.dto?.members.push(member);

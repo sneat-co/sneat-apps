@@ -41,12 +41,12 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [...r.map(
 
 const isFormValid = (control: AbstractControl): ValidationErrors | null => {
 	const formGroup = control as FormGroup;
-	const firstName = formGroup.controls["firstName"];
-	const lastName = formGroup.controls["lastName"];
-	const fullName = formGroup.controls["fullName"];
-	const gender = formGroup.controls["gender"];
+	const firstName = formGroup.controls['firstName'];
+	const lastName = formGroup.controls['lastName'];
+	const fullName = formGroup.controls['fullName'];
+	const gender = formGroup.controls['gender'];
 	if (gender?.value && !firstName?.value && !lastName?.value && !fullName?.value) {
-		return {"fullName": "If full name is not provided either first or last name or both should be supplied"};
+		return { 'fullName': 'If full name is not provided either first or last name or both should be supplied' };
 	}
 	return null;
 };
@@ -219,7 +219,11 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 		}
 		this.addMemberForm.disable();
 		let memberDto: IMemberDto = {
-			title: this.fullName.value,
+			name: {
+				full: this.fullName.value,
+				first: this.firstName.value,
+				last: this.lastName.value,
+			},
 			ageGroup: this.ageGroup.value,
 			gender: this.gender.value,
 			email: this.email.value.trim() ? this.email.value.trim() : undefined,
@@ -240,7 +244,7 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 		if (!this.gender) {
 			throw new Error('Gender is a required field');
 		}
-		const request: ICreateTeamMemberRequest = {
+		let request: ICreateTeamMemberRequest = {
 			memberType: this.memberType.value,
 			teamID: team.id,
 			name: {
@@ -254,10 +258,16 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 			role: MemberRoleContributor,
 		};
 		if (this.email) {
-			request.email = this.email.value;
+			request = {
+				...request,
+				email: this.email.value,
+			};
 		}
 		if (this.phone) {
-			request.phone = this.phone.value;
+			request = {
+				...request,
+				phone: this.phone.value,
+			};
 		}
 
 		this.membersService.addMember(request).subscribe({
@@ -310,10 +320,10 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 		this.isNameSet = true;
 		setTimeout(() => {
 			const setFocus = this.genderFirstInput?.setFocus;
-				if(setFocus) {
-					setFocus(event)
-						.catch(this.errorLogger.logErrorHandler('failed to set focus to gender'));
-				}
+			if (setFocus) {
+				setFocus(event)
+					.catch(this.errorLogger.logErrorHandler('failed to set focus to gender'));
+			}
 		}, 500);
 	}
 

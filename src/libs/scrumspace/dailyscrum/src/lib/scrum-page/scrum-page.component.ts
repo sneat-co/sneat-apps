@@ -258,7 +258,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 				m.roles?.indexOf(MemberRoleSpectator),
 			);
 			const uid = this.currentUserId;
-			const member = Object.values(team.members).find((m) => m.uid === uid);
+			const member = Object.values(team.members).find((m) => m.userID === uid);
 			if (member) {
 				this.userMemberId = member.id;
 				this.setStatuses();

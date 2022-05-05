@@ -44,14 +44,14 @@
 					</ion-badge>
 				</ng-container>
 			</ion-label>
-			<ion-buttons slot="end" >
-<!--				<ion-button *ngIf="!member.brief?.uid">-->
-<!--					<ion-label>Invite!</ion-label>-->
-<!--				</ion-button>-->
+			<ion-buttons slot="end">
+				<!--				<ion-button *ngIf="!member.brief?.uid">-->
+				<!--					<ion-label>Invite!</ion-label>-->
+				<!--				</ion-button>-->
 				<ion-button (click)="goSchedule($event, member)">
 					<ion-icon name="calendar-outline"></ion-icon>
 				</ion-button>
-				<ion-button color="danger" *ngIf="!member.brief?.uid && member.brief?.email">
+				<ion-button color="danger" *ngIf="!member.brief?.userID && member.brief?.email">
 					<ion-label>Resend invite</ion-label>
 				</ion-button>
 			</ion-buttons>
