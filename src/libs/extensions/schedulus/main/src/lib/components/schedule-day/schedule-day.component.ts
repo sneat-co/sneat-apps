@@ -9,7 +9,14 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ISlotItem, NewHappeningParams, ScheduleNavService } from '@sneat/extensions/schedulus/shared';
+import { dateToIso } from '@sneat/core';
+import {
+	ISlotItem,
+	jsDayToWeekday,
+	NewHappeningParams,
+	ScheduleNavService,
+	WeekdayNumber,
+} from '@sneat/extensions/schedulus/shared';
 import { ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
@@ -107,6 +114,18 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	goNewHappening(params: NewHappeningParams): void {
 		if (!this.team) {
 			return;
+		}
+		const date = this.weekday?.day?.date;
+		if (!date) {
+			return;
+		}
+		switch (params.type) {
+			case 'recurring':
+				params = {...params, wd: jsDayToWeekday(date.getDay() as WeekdayNumber)};
+				break;
+			case 'single':
+				params = {...params, date: dateToIso(date)};
+				break;
 		}
 		this.scheduleNavService.goNewHappening(this.team, params);
 	}

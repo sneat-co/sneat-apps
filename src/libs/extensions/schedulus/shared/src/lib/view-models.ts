@@ -200,9 +200,9 @@ export class TeamDay {
 export const wd2: WeekdayCode2[] = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
 const wd2js: WeekdayCode2[] = ['su', 'mo', 'tu', 'we', 'th', 'fr', 'sa'];
 
-export type wdNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type WeekdayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export function jsDayToWeekday(day: wdNumber): WeekdayCode2 {
+export function jsDayToWeekday(day: WeekdayNumber): WeekdayCode2 {
 	if (day < 0 || day > 6) {
 		throw new Error(`Unknown day number: ${day}`);
 	}
@@ -210,7 +210,7 @@ export function jsDayToWeekday(day: wdNumber): WeekdayCode2 {
 }
 
 export function getWd2(d: Date): WeekdayCode2 {
-	return jsDayToWeekday(d.getDay() as wdNumber);
+	return jsDayToWeekday(d.getDay() as WeekdayNumber);
 }
 
 
