@@ -9,7 +9,7 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ISlotItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotItem, NewHappeningParams, ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
@@ -38,6 +38,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	constructor(
 		private readonly filterService: ScheduleFilterService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
+		private readonly scheduleNavService: ScheduleNavService,
 	) {
 		filterService.filter.subscribe({
 			next: filter => {
@@ -101,6 +102,13 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 			this.slots = undefined;
 			this.slotsHiddenByFilter = undefined;
 		}
+	}
+
+	goNewHappening(params: NewHappeningParams): void {
+		if (!this.team) {
+			return;
+		}
+		this.scheduleNavService.goNewHappening(this.team, params);
 	}
 
 }
