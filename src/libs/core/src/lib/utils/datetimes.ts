@@ -14,6 +14,7 @@ export function isoStringsToDate(date: string, time?: string): Date {
 }
 
 export function dateToIso(d: Date): string {
+	d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
 	return d
 		.toISOString()
 		.split('T')[0];

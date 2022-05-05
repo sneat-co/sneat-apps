@@ -127,6 +127,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 				params = {...params, date: dateToIso(date)};
 				break;
 		}
+		console.log('goNewHappening()', date, params);
 		this.scheduleNavService.goNewHappening(this.team, params);
 	}
 

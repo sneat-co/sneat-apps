@@ -214,6 +214,7 @@ export class TeamNavService {
 		const url = `space/${team?.type}/${team?.id}/${page}`;
 		const state = navOptions.state || {};
 		navOptions = { ...navOptions, state: { team, ...state } };
+		console.log('navigateToTeamPage()', url, navOptions);
 		return this.navController
 			.navigateForward(url, navOptions);
 	}
