@@ -4,8 +4,6 @@ import { SwipeableDay } from '../swipeable-ui';
 
 export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
 
-	protected shiftDays = 0;
-
 	get oddDay(): SwipeableDay {
 		return this.oddSlide as SwipeableDay;
 	}

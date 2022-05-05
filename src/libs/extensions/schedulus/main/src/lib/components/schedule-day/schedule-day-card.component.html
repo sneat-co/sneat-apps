@@ -1,9 +1,9 @@
 <ion-card>
 	<ion-item class="sneat-small-end-padding sneat-small-start-padding">
 		<ion-buttons slot="start" class="sneat-tiny-end-margin sneat-no-horizontal-margins">
-			<ion-button [disabled]="isToday()"
-									[color]="isToday() ? 'medium' : 'primary'"
-									[title]="'Today'"
+			<ion-button [disabled]="isDefaultDate()"
+									[color]="isDefaultDate() ? 'medium' : 'primary'"
+									[title]="shiftDays === 0 ? 'Jump to today' : 'Jump to tomorrow'"
 									(click)="setToday()">
 				<ion-icon name="today-outline"></ion-icon>
 			</ion-button>

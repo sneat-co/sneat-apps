@@ -8,21 +8,23 @@ import {
 } from '@sneat/components';
 import { WeekdayCode2 } from '@sneat/dto';
 import { wd2 } from '@sneat/extensions/schedulus/shared';
+import { addDays } from './schedule-state.service';
 import { Weekday } from './schedule-week/schedule-week.component';
 import { Parity } from './swipeable-ui';
 
 export function isToday(date: Date): boolean {
-	const today = new Date();
-	return date.getDate() === today.getDate() &&
-		date.getMonth() === today.getMonth() &&
-		date.getFullYear() === today.getFullYear();
+	return areSameDates(date, new Date());
 }
 
 export function isTomorrow(date: Date): boolean {
-	const today = new Date();
-	return date.getDate() === today.getDate() + 1 &&
-		date.getMonth() === today.getMonth() &&
-		date.getFullYear() === today.getFullYear();
+	const tomorrow = addDays(new Date(), 1);
+	return areSameDates(date, tomorrow);
+}
+
+export function areSameDates(d1: Date, d2: Date): boolean {
+	return d1.getDate() === d2.getDate() &&
+		d1.getMonth() === d2.getMonth() &&
+		d1.getFullYear() === d2.getFullYear();
 }
 
 export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: Date): Date {

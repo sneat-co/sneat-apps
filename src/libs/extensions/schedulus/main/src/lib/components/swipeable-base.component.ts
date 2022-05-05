@@ -5,7 +5,7 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { Subject } from 'rxjs';
-import { animationState, isToday } from './schedule-core';
+import { animationState, areSameDates, isToday } from './schedule-core';
 import { addDays, getToday, IDateChanged, ScheduleStateService } from './schedule-state.service';
 import { Parity, Swipeable } from './swipeable-ui';
 
@@ -13,6 +13,8 @@ import { Parity, Swipeable } from './swipeable-ui';
 // @Injectable()
 export abstract class SwipeableBaseComponent {
 	protected readonly destroyed = new Subject<void>();
+	public shiftDays = 0;
+
 	public parity: Parity = 'odd';
 	public date = getToday();
 	public animationState?: VirtualSliderAnimationStates;
@@ -40,6 +42,11 @@ export abstract class SwipeableBaseComponent {
 
 	public isToday(): boolean {
 		return isToday(this.date);
+	}
+
+	public isDefaultDate(): boolean {
+		const defaultDate = addDays(new Date(), this.shiftDays);
+		return areSameDates(this.date, defaultDate);
 	}
 
 	onDestroy(): void { // TODO: Make sure called by every child
@@ -93,11 +100,11 @@ export abstract class SwipeableBaseComponent {
 		}
 		this.date = changed.date;
 		if (!changed.shiftDirection) {
-			const passive: IDateChanged = {...changed, date: addDays(changed.date, this.stepDays)};
+			const passive: IDateChanged = { ...changed, date: addDays(changed.date, this.stepDays) };
 			switch (this.parity) {
 				case 'odd':
 					this.oddSlide = this.oddSlide.setActiveDate(changed, 'show');
-					this.evenSlide = this.evenSlide.setActiveDate(passive, 'hide')
+					this.evenSlide = this.evenSlide.setActiveDate(passive, 'hide');
 					break;
 				case 'even':
 					this.evenSlide = this.evenSlide.setActiveDate(changed, 'show');
@@ -108,7 +115,7 @@ export abstract class SwipeableBaseComponent {
 		}
 		switch (this.parity) {
 			case 'odd':
-				this.oddSlide = { ...this.oddSlide, animationState:  hideVirtualSlide};
+				this.oddSlide = { ...this.oddSlide, animationState: hideVirtualSlide };
 				this.evenSlide = this.evenSlide.setActiveDate(changed, showVirtualSlide);
 				this.parity = 'even';
 				break;
@@ -118,6 +125,6 @@ export abstract class SwipeableBaseComponent {
 				this.parity = 'odd';
 				break;
 		}
-		this.animationState = animationState(this.parity, changed.shiftDirection)
+		this.animationState = animationState(this.parity, changed.shiftDirection);
 	};
 }
