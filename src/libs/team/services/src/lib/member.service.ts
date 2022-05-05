@@ -5,13 +5,13 @@ import { IErrorResponse } from '@sneat/core';
 import { IMemberBrief, IMemberDto } from '@sneat/dto';
 import {
 	IAcceptPersonalInviteRequest,
-	IAddTeamMemberRequest,
+	ICreateTeamMemberRequest,
 	IAddTeamMemberResponse,
 	IMemberContext,
 	IRejectPersonalInviteRequest,
 	ITeamContext, ITeamRef,
 } from '@sneat/team/models';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { TeamService } from './team.service';
 
@@ -55,8 +55,12 @@ export class MemberService {
 		);
 	}
 
-	public addMember(request: IAddTeamMemberRequest): Observable<IMemberBrief> {
+	public addMember(request: ICreateTeamMemberRequest): Observable<IMemberBrief> {
 		console.log(`MemberService.addMember()`, request);
+		const fullName = request.name.full || '';
+		if (!fullName) {
+			return throwError(() => new Error('full name is required'));
+		}
 		const processAddMemberResponse = (
 			response: IAddTeamMemberResponse | IErrorResponse,
 		) => {
@@ -66,7 +70,7 @@ export class MemberService {
 			const okResponse = response as IAddTeamMemberResponse;
 			let member: IMemberBrief = {
 				id: okResponse.id,
-				title: request.title,
+				title: fullName,
 				roles: [request.role],
 			};
 			if (okResponse.uid) {

@@ -8,9 +8,9 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonInput } from '@ionic/angular';
+import { IonInput, IonRadio, IonRadioGroup } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
 import {
 	AgeGroup,
@@ -24,7 +24,7 @@ import {
 	relationshipTitle,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAddTeamMemberRequest, ITeamContext } from '@sneat/team/models';
+import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberService } from '@sneat/team/services';
 
 interface Role {
@@ -39,6 +39,18 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [...r.map(
 	title: relationshipTitle(id),
 })), { id: 'other', title: 'Other' }, { id: 'undisclosed', title: 'Undisclosed' }];
 
+const isFormValid = (control: AbstractControl): ValidationErrors | null => {
+	const formGroup = control as FormGroup;
+	const firstName = formGroup.controls["firstName"];
+	const lastName = formGroup.controls["lastName"];
+	const fullName = formGroup.controls["fullName"];
+	const gender = formGroup.controls["gender"];
+	if (gender?.value && !firstName?.value && !lastName?.value && !fullName?.value) {
+		return {"fullName": "If full name is not provided either first or last name or both should be supplied"};
+	}
+	return null;
+};
+
 @Component({
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
@@ -49,16 +61,21 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
 	@ViewChild('fullNameInput', { static: true }) fullNameInput?: IonInput;
+	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
 	public relationships: ITitledRecord[] = getRelOptions(Object.values(FamilyMemberRelation));
 	public roles?: Role[];
 
 	public readonly fullName = new FormControl('', [
-		Validators.required,
+		// Validators.required,
 		Validators.maxLength(50),
 	]);
 
 	public readonly firstName = new FormControl('', [
+		Validators.maxLength(50),
+	]);
+
+	public readonly middleName = new FormControl('', [
 		Validators.maxLength(50),
 	]);
 
@@ -96,14 +113,19 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 
 	public readonly phone = new FormControl('', []);
 
+
 	public addMemberForm = new FormGroup({
 		fullName: this.fullName,
+		firstName: this.firstName,
+		lastName: this.lastName,
+		middleName: this.middleName,
 		email: this.email,
 		phone: this.phone,
 		ageGroup: this.ageGroup,
 		gender: this.gender,
 		relationship: this.relationship,
-	});
+	}, isFormValid);
+
 
 	public get isComplete(): boolean {
 		return !!this.fullName.value.trim() && !!this.ageGroup.value && !!this.gender.value && !!this.relationship;
@@ -115,7 +137,6 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		route: ActivatedRoute,
 		private readonly membersService: MemberService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
 		route.queryParams.subscribe(params => {
 			this.role.setValue(params['role'] || '');
@@ -126,21 +147,44 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 	onNameChanged(event: Event): void {
 		console.log('onNameChanged()', this.firstName.value, this.lastName.value, event);
 		if (!this.isFullNameChanged) {
-			const fullName = (this.firstName.value + ' ' + this.lastName.value).trim();
-			this.fullName.setValue(fullName, {
-				onlySelf: true,
-				emitEvent: false,
-				emitModelToViewChange: true,
-				emitViewToModelChange: false,
-			});
-			this.changeDetectorRef.markForCheck();
+
+			const fullName = this.generateFullName();
+
+			if (fullName !== this.fullName.value) {
+				this.fullName.setValue(fullName, {
+					onlySelf: true,
+					emitEvent: false,
+					emitModelToViewChange: true,
+					emitViewToModelChange: false,
+				});
+			}
 		}
+	}
+
+	public nameKeyupEnter(event: Event): void {
+		if (!this.isNameSet) {
+			this.nextFromName(event);
+		} else {
+			this.submit();
+		}
+	}
+
+	private generateFullName(): string {
+		const
+			first = this.firstName.value.trim(),
+			middle = this.middleName.value.trim(),
+			last = this.lastName.value.trim();
+		if (first && last || first && middle || middle && last) {
+			return (first + ' ' + middle + ' ' + last)
+				.replace('  ', ' ').trim();
+		}
+		return '';
 	}
 
 	onFullNameChanged(event: Event): void {
 		console.log('onFullNameChanged()', this.firstName.value, this.lastName.value, event);
 		if (!this.isFullNameChanged) {
-			const fullName = (this.firstName.value + ' ' + this.lastName.value).trim();
+			const fullName = this.generateFullName();
 			if (this.fullName.value !== fullName) {
 				this.isFullNameChanged = true;
 			}
@@ -196,10 +240,15 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 		if (!this.gender) {
 			throw new Error('Gender is a required field');
 		}
-		const request: IAddTeamMemberRequest = {
+		const request: ICreateTeamMemberRequest = {
 			memberType: this.memberType.value,
 			teamID: team.id,
-			title: this.fullName.value,
+			name: {
+				full: this.fullName.value,
+				first: this.firstName.value,
+				middle: this.middleName.value,
+				last: this.lastName.value,
+			},
 			gender: this.gender.value,
 			ageGroup: this.ageGroup.value,
 			role: MemberRoleContributor,
@@ -253,12 +302,19 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 
 	readonly id = (i: number, record: { id: string }) => record.id;
 
-	public nextFromName(): void {
+	public nextFromName(event: Event): void {
 		if (!this.canGoNextFromName) {
 			alert('At least 1 of names should be set');
 			return;
 		}
 		this.isNameSet = true;
+		setTimeout(() => {
+			const setFocus = this.genderFirstInput?.setFocus;
+				if(setFocus) {
+					setFocus(event)
+						.catch(this.errorLogger.logErrorHandler('failed to set focus to gender'));
+				}
+		}, 500);
 	}
 
 	public onRelationshipChanged(): void {

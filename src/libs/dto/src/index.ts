@@ -12,6 +12,7 @@ export * from './lib/dto-list';
 export * from './lib/dto-member';
 export * from './lib/dto-models';
 export * from './lib/dto-movie';
+export * from './lib/dto-person';
 export * from './lib/dto-pricing';
 export * from './lib/dto-reminders';
 export * from './lib/dto-service-provider';
