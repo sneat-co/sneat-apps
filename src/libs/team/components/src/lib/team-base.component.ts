@@ -71,7 +71,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			distinctUntilChanged(),
 		);
 
-	public get team(): ITeamContext {
+	public get team(): ITeamContext { // TODO: Document why we do not allow undefined
 		return this.teamContext || {id: ''};
 	}
 
@@ -174,7 +174,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 				// tap(v => console.log('trackTeamIdFromRouteParams 1', v)),
 				this.takeUntilNeeded(),
 				// tap(v => console.log('trackTeamIdFromRouteParams 2', v)),
-				distinctUntilChanged((previous, current) => previous?.id === current?.id),
+				// distinctUntilChanged((previous, current) => previous?.id === current?.id),
 				// tap(v => console.log('trackTeamIdFromRouteParams 3', v)),
 			)
 			.subscribe({
@@ -198,7 +198,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	private subscribeForTeamChanges(team: ITeamContext): void {
 		console.log(`${this.className} extends TeamPageComponent.subscribeForTeamChanges()`, team);
 		this.teamService
-			.watchTeam(team.id)
+			.watchTeam(team)
 			.pipe(
 				takeUntil(this.teamIDChanged$),
 				this.takeUntilNeeded(),
@@ -251,6 +251,9 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	private setNewTeamContext(teamContext?: ITeamContext): void {
 		console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
+		if (!teamContext?.type && this.teamContext?.type) {
+			throw new Error('!teamContext?.type && this.teamContext?.type');
+		}
 		if (this.teamContext == teamContext) {
 			console.warn('Duplicate call to TeamPageComponent.setNewTeamContext() with same teamContext:', teamContext);
 			return;

@@ -4,15 +4,28 @@
 >
 	<ion-card>
 		<ion-item>
-			<ion-label position="floating">Full name</ion-label>
-			<ion-input [formControl]="fullName" #nameInput placeholder="Firstname Lastname"></ion-input>
-			<!--			<ion-buttons slot="end">-->
-			<!--				<ion-button fill="solid" color="primary">-->
-			<!--					<ion-label>Next</ion-label>-->
-			<!--					<ion-icon name="chevron-forward-outline" slot="end"></ion-icon>-->
-			<!--				</ion-button>-->
-			<!--			</ion-buttons>-->
+			<ion-label color="medium">First name</ion-label>
+			<ion-input #firstNameInput [formControl]="firstName" (ionChange)="onNameChanged($event)"></ion-input>
 		</ion-item>
+		<ion-item>
+			<ion-label color="medium">Last name</ion-label>
+			<ion-input [formControl]="lastName" (ionChange)="onNameChanged($event)"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium" position="floating">Full name</ion-label>
+			<ion-input #fulltNameInput [formControl]="fullName" (ionChange)="onFullNameChanged($event)"></ion-input>
+		</ion-item>
+		<ion-item-divider color="light" *ngIf="!isNameSet">
+			<ion-label>
+				<ion-button size="medium" (click)="nextFromName()" [color]="canGoNextFromName ? 'primary' : 'medium'">
+					<ion-label>Next</ion-label>
+					<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+				</ion-button>
+			</ion-label>
+		</ion-item-divider>
+	</ion-card>
+
+	<ion-card *ngIf="isNameSet">
 
 		<ion-item-group *ngIf="!gender.value">
 			<ion-item-divider color="light">
@@ -64,7 +77,7 @@
 				</ion-radio-group>
 			</ion-item-group>
 			<ion-item *ngIf="ageGroup.value">
-				<ion-label>Age</ion-label>
+				<ion-label>Age group</ion-label>
 				<ion-select [formControl]="ageGroup" interface="popover">
 					<ion-select-option value="adult">Adult</ion-select-option>
 					<ion-select-option value="child">Child</ion-select-option>
@@ -100,7 +113,7 @@
 
 		<ion-item>
 			<ion-label>Email</ion-label>
-			<ion-input type="email" [formControl]="email" ></ion-input>
+			<ion-input type="email" [formControl]="email"></ion-input>
 		</ion-item>
 
 		<ion-item>

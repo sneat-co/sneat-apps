@@ -137,8 +137,8 @@ export class MemberPageComponent implements OnDestroy {
 		}
 		this.memberId = undefined;
 		const teamId = this.team?.id;
-		if (teamId) {
-			this.teamSubscription = this.teamService.watchTeam(teamId).subscribe({
+		if (this.team && teamId) {
+			this.teamSubscription = this.teamService.watchTeam(this.team).subscribe({
 				next: team => {
 					console.log('MemberPage: teamService.watchTeam =>', team);
 

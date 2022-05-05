@@ -1,4 +1,13 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput } from '@ionic/angular';
@@ -34,17 +43,26 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [...r.map(
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
 })
-export class NewMemberFormComponent implements OnChanges {
+export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 
 	@Input() team?: ITeamContext;
 
-	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
+	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
+	@ViewChild('fullNameInput', { static: true }) fullNameInput?: IonInput;
 
 	public relationships: ITitledRecord[] = getRelOptions(Object.values(FamilyMemberRelation));
 	public roles?: Role[];
 
 	public readonly fullName = new FormControl('', [
 		Validators.required,
+		Validators.maxLength(50),
+	]);
+
+	public readonly firstName = new FormControl('', [
+		Validators.maxLength(50),
+	]);
+
+	public readonly lastName = new FormControl('', [
 		Validators.maxLength(50),
 	]);
 
@@ -70,8 +88,13 @@ export class NewMemberFormComponent implements OnChanges {
 		Validators.email,
 	]);
 
-	public readonly phone = new FormControl('', [
-	]);
+	public isNameSet = false;
+
+	public get canGoNextFromName(): boolean {
+		return this.firstName.value || this.lastName.value || this.fullName.value;
+	}
+
+	public readonly phone = new FormControl('', []);
 
 	public addMemberForm = new FormGroup({
 		fullName: this.fullName,
@@ -86,10 +109,13 @@ export class NewMemberFormComponent implements OnChanges {
 		return !!this.fullName.value.trim() && !!this.ageGroup.value && !!this.gender.value && !!this.relationship;
 	}
 
+	private isFullNameChanged = false;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		route: ActivatedRoute,
 		private readonly membersService: MemberService,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
 		route.queryParams.subscribe(params => {
 			this.role.setValue(params['role'] || '');
@@ -97,8 +123,32 @@ export class NewMemberFormComponent implements OnChanges {
 		});
 	}
 
+	onNameChanged(event: Event): void {
+		console.log('onNameChanged()', this.firstName.value, this.lastName.value, event);
+		if (!this.isFullNameChanged) {
+			const fullName = (this.firstName.value + ' ' + this.lastName.value).trim();
+			this.fullName.setValue(fullName, {
+				onlySelf: true,
+				emitEvent: false,
+				emitModelToViewChange: true,
+				emitViewToModelChange: false,
+			});
+			this.changeDetectorRef.markForCheck();
+		}
+	}
+
+	onFullNameChanged(event: Event): void {
+		console.log('onFullNameChanged()', this.firstName.value, this.lastName.value, event);
+		if (!this.isFullNameChanged) {
+			const fullName = (this.firstName.value + ' ' + this.lastName.value).trim();
+			if (this.fullName.value !== fullName) {
+				this.isFullNameChanged = true;
+			}
+		}
+	}
+
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log('NewMemberFormComponent.ngOnChanges(), changes[team]:', changes['team']);
+		console.log('NewMemberFormComponent.ngOnChanges(), changes:', changes);
 		if (changes['team']) {
 			const previousValue = changes['team'].previousValue as ITeamContext | undefined,
 				currentValue = changes['team'].currentValue as ITeamContext | undefined;
@@ -108,30 +158,19 @@ export class NewMemberFormComponent implements OnChanges {
 		}
 	}
 
-	ionViewDidEnter(): void {
-		if (!this.fullName.value) {
-			this.setFocusToNameInput();
-		}
+	ngAfterViewInit(): void {
+		this.setFocusToInput(this.firstNameInput, 333);
 	}
 
-	public setFocusToTitleInput(delay = 1): void {
-		console.log('setFocusToTitleInput');
-		setTimeout(() => {
-			const errMsg = 'Failed to set focus to title input',
-				errOpts = { feedback: false };
-			if (this.nameInput) {
-				this.nameInput.setFocus()
-					.catch((err) => this.errorLogger.logError(err, errMsg, errOpts));
-			} else {
-				this.errorLogger.logError('this.titleInput not found', errMsg, errOpts);
-			}
-		}, delay);
-	}
 
 	submit(): void {
 		if (!this.fullName.value.trim()) {
 			alert('Please enter full name of the new member');
-			this.setFocusToNameInput();
+			if (!this.firstName.value && !this.lastName.value) {
+				this.setFocusToInput(this.firstNameInput);
+			} else {
+				this.setFocusToInput(this.fullNameInput);
+			}
 			return;
 		}
 		this.addMemberForm.disable();
@@ -179,7 +218,7 @@ export class NewMemberFormComponent implements OnChanges {
 			error: err => {
 				this.errorLogger.logError(err, 'Failed to create a new member');
 				this.addMemberForm.enable();
-			}
+			},
 		});
 
 		// this.startCommuneReadwriteTx([MemberKind], (tx, communeDto, userDto) =>
@@ -214,6 +253,14 @@ export class NewMemberFormComponent implements OnChanges {
 
 	readonly id = (i: number, record: { id: string }) => record.id;
 
+	public nextFromName(): void {
+		if (!this.canGoNextFromName) {
+			alert('At least 1 of names should be set');
+			return;
+		}
+		this.isNameSet = true;
+	}
+
 	public onRelationshipChanged(): void {
 		if (!this.ageGroup.value) {
 			const relationship = this.relationship.value;
@@ -223,17 +270,24 @@ export class NewMemberFormComponent implements OnChanges {
 				this.ageGroup.setValue('child');
 			}
 		}
-		this.setFocusToNameInput();
+		this.setFocusToInput(this.firstNameInput);
 	}
 
-	public setFocusToNameInput(): void {
+	public setFocusToInput(input?: IonInput, delay = 100): void {
+		console.log('setFocusToInput()', input);
+		if (!input) {
+			console.error('can not set focus to undefined input');
+			return;
+		}
 		setTimeout(
 			() => {
-				console.log('focus to name input');
-				this.nameInput?.setFocus().catch(this.errorLogger.logError);
+				requestAnimationFrame(() => {
+					console.log('focus to name input');
+					input.setFocus()
+						.catch(this.errorLogger.logErrorHandler('failed to set focus to input'));
+				});
 			},
-			// tslint:disable-next-line:no-magic-numbers
-			100,
+			delay,
 		);
 	}
 

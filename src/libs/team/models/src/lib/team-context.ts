@@ -19,8 +19,13 @@ import {
 } from '@sneat/dto';
 import { ITeamItemContext } from './team-item-context';
 
-export interface ITeamContext extends INavContext<ITeamBrief, ITeamDto> {
+export interface ITeamRef {
+	readonly id: string;
 	readonly type?: TeamType;
+}
+
+export interface ITeamContext extends ITeamRef, INavContext<ITeamBrief, ITeamDto> {
+	// readonly type?: TeamType;
 	readonly assets?: IAssetContext[];
 	readonly contacts?: IContactContext[];
 };

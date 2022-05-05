@@ -11,14 +11,14 @@ import {
 	ICreateTeamRequest,
 	ICreateTeamResponse,
 	ITeamContext,
-	ITeamMemberRequest,
+	ITeamMemberRequest, ITeamRef,
 	ITeamRequest,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { BehaviorSubject, Observable, Subscription, switchMap, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
-const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({...v, type: v.teamType});
+const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({ ...v, type: v.teamType });
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
@@ -44,37 +44,35 @@ export class TeamService {
 		};
 		sneatAuthStateService.authStatus.subscribe(onAuthStatusChanged);
 
-		const processUserRecordInTeamService = (
-			userState: ISneatUserState,
-		): void => {
-			console.log('TeamService.processUserRecordInTeamService()', userState);
-			const user = userState?.record;
-			if (!user) {
-				// this.userID = undefined;
-				if (userState.status === AuthStatuses.notAuthenticated && this.subscriptions?.length) {
-					this.unsubscribe('user is not authenticated and active team subscriptions');
-				}
-				return;
-			}
-			if (userState.user?.uid !== this.userID) {
-				if (this.userID) {
-					this.unsubscribe('user id changed');
-				}
-				this.userID = userState.user?.uid;
-			}
-			this.currentUserTeams = user?.teams;
-
-			if (user?.teams) {
-				user.teams?.forEach(this.subscribeForUserTeamChanges);
-			}
-		};
 		// We are intentionally not un-subscribing from user record updates. TODO: why?
 		this.userService.userState.subscribe({
-			next: processUserRecordInTeamService,
-			error: (err) =>
-				this.errorLogger.logError(err, 'failed to load user record'),
+			next: this.processUserRecordInTeamService,
+			error: this.errorLogger.logErrorHandler('failed to load user record'),
 		});
 	}
+
+	private readonly processUserRecordInTeamService = (userState: ISneatUserState) => {
+		console.log('TeamService.processUserRecordInTeamService()', userState);
+		const user = userState?.record;
+		if (!user) {
+			// this.userID = undefined;
+			if (userState.status === AuthStatuses.notAuthenticated && this.subscriptions?.length) {
+				this.unsubscribe('user is not authenticated and active team subscriptions');
+			}
+			return;
+		}
+		if (userState.user?.uid !== this.userID) {
+			if (this.userID) {
+				this.unsubscribe('user id changed');
+			}
+			this.userID = userState.user?.uid;
+		}
+		this.currentUserTeams = user?.teams;
+
+		if (user?.teams) {
+			user.teams?.forEach(this.subscribeForUserTeamChanges);
+		}
+	};
 
 	public createTeam(request: ICreateTeamRequest): Observable<IRecord<ITeamDto>> {
 		return this.sneatApiService
@@ -82,41 +80,42 @@ export class TeamService {
 			.pipe(map((response) => response.team));
 	}
 
-	public getTeam(id: string): Observable<ITeamContext> {
-		return this.watchTeam(id)
+	public getTeam(ref: ITeamRef): Observable<ITeamContext> {
+		return this.watchTeam(ref)
 			.pipe(
 				first(),
 			);
 	}
 
-	public watchTeam(id: string): Observable<ITeamContext> {
-		console.log(`TeamService.watchTeam(${id})`);
-		if (!id) {
-			throw new Error('team ID is a required parameter');
+	public watchTeam(ref: ITeamRef): Observable<ITeamContext> {
+		console.log(`TeamService.watchTeam(ref=${JSON.stringify(ref)})`);
+		if (!ref) {
+			throw new Error('team ref is a required parameter');
 		}
+		const {id} = ref;
 		let subj = this.teams$[id];
-		if (!subj) {
-			let teamContext: ITeamContext = { id };
-			if (this.currentUserTeams) {
-				const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
-				if (userTeamInfo) {
-					teamContext = { id, type: userTeamInfo.teamType, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
-				}
+		if (subj) {
+			return subj.asObservable();
+		}
+		let teamContext: ITeamContext = ref;
+		if (this.currentUserTeams) {
+			const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
+			if (userTeamInfo) {
+				teamContext = { id, type: userTeamInfo.teamType, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
 			}
-			subj = new BehaviorSubject<ITeamContext>(teamContext);
-			this.teams$[id] = subj;
-			if (this.userService.currentUserId) {
-				this.subscribeForTeamChanges(subj);
-			} else {
-				this.userService.userState
-					.pipe(
-						filter(v => v.status === AuthStatuses.authenticated),
-						first(),
-					).subscribe({
-					next: () => this.subscribeForTeamChanges(subj),
-				});
-			}
-
+		}
+		subj = new BehaviorSubject<ITeamContext>(teamContext);
+		this.teams$[id] = subj;
+		if (this.userService.currentUserId) {
+			this.subscribeForTeamChanges(subj);
+		} else {
+			this.userService.userState
+				.pipe(
+					filter(v => v.status === AuthStatuses.authenticated),
+					first(),
+				).subscribe({
+				next: () => this.subscribeForTeamChanges(subj),
+			});
 		}
 		return subj.asObservable();
 	}
@@ -176,8 +175,8 @@ export class TeamService {
 			}
 			this.onTeamUpdated(team);
 		};
-		const processRemoveTeamMemberResponse = (): Observable<ITeamContext> =>
-			this.getTeam(teamRecord.id).pipe(
+		const processRemoveTeamMemberResponse = (team: ITeamRef): Observable<ITeamContext> =>
+			this.getTeam(team).pipe(
 				tap(updateTeam),
 				// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
 			);
@@ -212,7 +211,7 @@ export class TeamService {
 		return this.sneatApiService
 			.post('team/remove_member', request)
 			.pipe(
-				switchMap(processRemoveTeamMemberResponse),
+				switchMap(() => processRemoveTeamMemberResponse(teamRecord)),
 				ensureTeamRecordExists,
 			);
 	}

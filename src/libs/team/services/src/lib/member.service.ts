@@ -9,7 +9,7 @@ import {
 	IAddTeamMemberResponse,
 	IMemberContext,
 	IRejectPersonalInviteRequest,
-	ITeamContext,
+	ITeamContext, ITeamRef,
 } from '@sneat/team/models';
 import { Observable } from 'rxjs';
 import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
@@ -72,7 +72,7 @@ export class MemberService {
 			if (okResponse.uid) {
 				member = { ...member, uid: okResponse.uid };
 			}
-			return this.teamService.getTeam(request.teamID).pipe(
+			return this.teamService.getTeam({id: request.teamID}).pipe(
 				tap((team) => {
 					if (team) {
 						team?.dto?.members.push(member);
@@ -88,14 +88,14 @@ export class MemberService {
 	}
 
 	public watchMember(
-		teamId: string,
+		team: ITeamRef,
 		memberId: string,
 	): Observable<{ team: ITeamContext; member?: IMemberDto } | undefined | null> {
 		const findMember = (team: ITeamContext) => team ? {
 			team,
 			member: team?.dto?.members?.find(m => m.id === memberId),
 		} : team === null ? null : undefined;
-		return this.teamService.watchTeam(teamId)
+		return this.teamService.watchTeam(team)
 			.pipe(
 				map(findMember),
 			);

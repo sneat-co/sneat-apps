@@ -10,18 +10,18 @@ import { TeamType } from '@sneat/dto';
 })
 export class TeamContextService {
 
-	public trackUrl(
-		route: ActivatedRoute,
-		paramName: string,
-	): Observable<ITeamContext | undefined> {
-		return route.paramMap.pipe(
-			map(params => {
-				const id = params.get('teamId') || undefined;
-				const teamContext: ITeamContext | undefined = id ? { id } : undefined;
-				return teamContext;
-			}),
-		);
-	}
+	// public trackUrl(
+	// 	route: ActivatedRoute,
+	// 	paramName: string,
+	// ): Observable<ITeamContext | undefined> {
+	// 	return route.paramMap.pipe(
+	// 		map(params => {
+	// 			const id = params.get('teamId') || undefined;
+	// 			const teamContext: ITeamContext | undefined = id ? { id } : undefined;
+	// 			return teamContext;
+	// 		}),
+	// 	);
+	// }
 }
 
 export function trackTeamIdAndTypeFromRouteParameter(route: ActivatedRoute): Observable<ITeamContext | undefined> {
@@ -30,6 +30,7 @@ export function trackTeamIdAndTypeFromRouteParameter(route: ActivatedRoute): Obs
 			const
 				id = params.get('teamId'),
 				type = params.get('teamType') as TeamType;
+			console.log('trackTeamIdAndTypeFromRouteParameter', params, id, type);
 			const teamContext: ITeamContext | undefined = id ? { id: id, type: type || undefined } : undefined;
 			// console.log('trackTeamIdAndTypeFromRouteParameter() => teamContext:', teamContext)
 			return teamContext;
