@@ -1,0 +1,143 @@
+<form [formGroup]="happeningForm" (ngSubmit)="submit($event)">
+	<ion-card>
+		<ion-item>
+			<ion-input #titleInput
+								 [formControl]="happeningTitle"
+								 (keyup.enter)="onTitleEnter()"
+								 placeholder="Title (required field)"
+								 style="font-weight: bold" type="text"
+			></ion-input>
+		</ion-item>
+
+		<ion-item-group>
+			<sneat-recurring-slots
+				#happeningSlotsComponent
+				*ngIf="happeningType === 'recurring'"
+				[slots]="slots"
+				(slotRemoved)="onSlotRemoved($event)"
+				(addSlotDismissed)="onAddSlotModalDismissed()"
+			></sneat-recurring-slots>
+			<sneat-single-slot-form
+				[date]="date"
+				[style.display]="happeningType === 'single' ? 'block' : 'none'"
+				(timingChanged)="onTimingChanged($event)"
+			>
+				<!-- hide with [style.display] to preserve input values if tab switched back and forth -->
+			</sneat-single-slot-form>
+		</ion-item-group>
+
+	</ion-card>
+
+	<ion-card>
+		<ion-item-divider color="light">
+			<ion-label>Pricing</ion-label>
+		</ion-item-divider>
+		<ion-item>
+			<ng-container *ngIf="isToDo">
+				<ion-label>Cost</ion-label>
+			</ng-container>
+			<ng-container *ngIf="!isToDo">
+				<ion-label *ngIf="happeningType === 'recurring'">Price per visit</ion-label>
+				<ion-label *ngIf="happeningType === 'single'">Price</ion-label>
+			</ng-container>
+			<ion-input type="number" style="text-align: right"></ion-input>
+			<ion-select value="EUR">
+				<ion-select-option value="EUR">EUR</ion-select-option>
+				<ion-select-option value="USD">USD</ion-select-option>
+			</ion-select>
+		</ion-item>
+	</ion-card>
+
+	<ion-card>
+		<ion-segment value="members">
+			<ion-segment-button value="members">Family members</ion-segment-button>
+			<ion-segment-button value="others">Others</ion-segment-button>
+		</ion-segment>
+		<ion-item-group *ngIf="participantsTab === 'members'">
+			<ion-radio-group *ngIf="members?.length else noMembers">
+				<ng-container *ngIf="members?.length">
+					<ion-item-divider color="light">
+						<ion-label *ngIf="isToDo">Assign to</ion-label>
+						<ion-label *ngIf="!isToDo">Family attendees</ion-label>
+						<!--							<ion-buttons slot="end">-->
+						<!--								<ion-button title="Add member" (click)="addNewMember()">-->
+						<!--									<ion-icon name="add"></ion-icon>-->
+						<!--								</ion-button>-->
+						<!--							</ion-buttons>-->
+					</ion-item-divider>
+					<ion-item *ngFor="let member of members; trackBy: id">
+						<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)"
+													(ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
+						<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
+						<ion-label>{{member|memberTitle}}</ion-label>
+					</ion-item>
+				</ng-container>
+			</ion-radio-group>
+			<ng-template #noMembers>
+				<ion-item>
+					<ion-label>No members.</ion-label>
+				</ion-item>
+			</ng-template>
+		</ion-item-group>
+
+		<ion-item-group *ngIf="participantsTab === 'others'">
+			<ion-item-divider color="light">
+				<ion-label>Teachers & Contacts</ion-label>
+				<ion-buttons slot="end">
+					<ion-button (click)="addContact()" title="Add contact">
+						<ion-icon name="add"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item-divider>
+			<p class="ion-padding" *ngIf="!contacts.length">
+				You can specify who teaches a lesson or a babysitter brings your kids to the class.
+			</p>
+			<ng-container *ngIf="contacts.length">
+				<ion-item>
+					<ion-label>Superman</ion-label>
+					<ion-badge>Teacher</ion-badge>
+				</ion-item>
+				<ion-item *ngIf="contacts.length > 1">
+					<ion-label>Alison</ion-label>
+					<ion-badge color="medium">Babysitter</ion-badge>
+				</ion-item>
+				<ion-item *ngIf="contacts.length > 2">
+					<ion-label>Bob</ion-label>
+					<ion-badge color="light">co-participant</ion-badge>
+				</ion-item>
+			</ng-container>
+		</ion-item-group>
+	</ion-card>
+
+	<ion-card>
+		<ng-container *ngIf="!formIsValid()">
+			<ion-item>
+				<ion-label color="danger">
+					<ul>
+						<li *ngIf="happeningForm.touched && happeningForm.controls['title'].errors">
+							<ng-container *ngIf="isToDo">Task title is required.</ng-container>
+							<ng-container *ngIf="!isToDo">Please enter a required "Title" field at top of the page.</ng-container>
+						</li>
+						<li *ngIf="happeningType === 'recurring' &&  !slots?.length">
+							<ng-container>At least 1 slot should be specified for a recurring happening.</ng-container>
+						</li>
+					</ul>
+				</ion-label>
+			</ion-item>
+		</ng-container>
+		<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
+		<!--{{ weekdaysForm.errors['required'] }}-->
+		<!--</ion-item>-->
+
+		<div class="ion-padding">
+			<ion-button [disabled]="isCreating"
+									[color]="formIsValid() ? 'primary' : 'medium'" size="large"
+									(click)="submit($event)"
+			>
+				<ion-label *ngIf="isToDo">Add task</ion-label>
+				<ion-label *ngIf="!isToDo">Create {{happeningType}} happening</ion-label>
+				<ion-spinner *ngIf="isCreating" slot="end" class="ion-margin-horizontal"></ion-spinner>
+			</ion-button>
+		</div>
+	</ion-card>
+</form>

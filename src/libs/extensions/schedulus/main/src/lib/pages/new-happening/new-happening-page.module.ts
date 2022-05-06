@@ -5,9 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
+import { HappeningPageFormModule } from '../../components/happening-page-form/happening-page-form.module';
 
 import { NewHappeningPageComponent } from './new-happening-page.component';
-import { RecurringCommonModule } from '../../components/recurring-common.module';
 
 const routes: Routes = [
 	{
@@ -22,9 +22,9 @@ const routes: Routes = [
 		FormsModule,
 		IonicModule,
 		ReactiveFormsModule,
-		RecurringCommonModule,
 		RouterModule.forChild(routes),
 		SneatPipesModule,
+		HappeningPageFormModule,
 	],
 	declarations: [NewHappeningPageComponent],
 })

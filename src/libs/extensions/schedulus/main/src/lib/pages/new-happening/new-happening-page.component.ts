@@ -1,16 +1,13 @@
 //tslint:disable:no-unbound-method
 //tslint:disable:no-unsafe-any
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
-import { HappeningType, IHappeningDto, IHappeningSlot, ITiming, SlotParticipant, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, WeekdayCode2 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IMemberContext, Member } from '@sneat/team/models';
-import { memberContextFromBrief } from '@sneat/team/services';
+import { Member } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
-import { HappeningSlotsComponent } from '../../components/happening-slots/happening-slots.component';
+import { HappeningPageFormComponent } from '../../components/happening-page-form/happening-page-form.component';
 import { ScheduleService } from '../../services/schedule.service';
 import { ScheduleBasePage } from '../schedule-base-page';
 
@@ -19,35 +16,19 @@ import { ScheduleBasePage } from '../schedule-base-page';
 	templateUrl: './new-happening-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewHappeningPageComponent extends ScheduleBasePage implements OnInit, AfterViewInit {
+export class NewHappeningPageComponent extends ScheduleBasePage {
 
 	private readonly hasNavHistory: boolean;
 
-	@ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: HappeningSlotsComponent;
-	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
+	@ViewChild('happeningPageFormComponent') happeningPageFormComponent?: HappeningPageFormComponent;
 
 	public isToDo: boolean;
 	public wd?: WeekdayCode2;
 	public happeningType: HappeningType = 'recurring';
-	public slots: IHappeningSlot[] = [];
-	public contacts: number[] = [];
 	public date = '';
-	public participantsTab: 'members' | 'others' = 'members';
-	public happeningTitle = new FormControl('', Validators.required);
-	public happeningForm = new FormGroup({
-		title: this.happeningTitle,
-	});
-	public checkedMemberIDs: string[] = [];
-	public singleTiming?: ITiming;
 	public isCreating = false;
 
-	public get members(): IMemberContext[] | undefined {
-		const members = this.team?.dto?.members;
-		if (!members) {
-			return undefined;
-		}
-		return members.map(memberContextFromBrief);
-	}
+	isFormValid = false;
 
 	constructor(
 		route: ActivatedRoute,
@@ -92,21 +73,6 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 			});
 	}
 
-	ngAfterViewInit(): void {
-		if (this.happeningType === 'recurring' && !this.slots?.length) {
-			if (this.happeningSlotsComponent) {
-				this.happeningSlotsComponent?.showAddSlot({ wd: this.wd });
-			} else {
-				console.warn('happeningSlotsComponent is not found');
-			}
-		}
-	}
-
-	ngOnInit(): void {
-		console.log('NewHappeningPageComponent.ngOnInit()');
-	}
-
-	readonly id = (i: number, v: { id: string }) => v.id;
 
 
 	// TODO(fix): protected onCommuneIdsChanged() {
@@ -132,23 +98,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 		history.replaceState(history.state, document.title, href);
 	}
 
-	onSlotRemoved(slots: IHappeningSlot[]): void {
-		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
-		this.slots = slots;
-	}
 
-	onAddSlotModalDismissed(): void {
-		console.log('NewHappeningPage.onAddSlotModalDismissed()');
-		if (!this.titleInput?.value) {
-			if (this.titleInput) {
-				setTimeout(() => {
-					this.titleInput?.setFocus().catch(this.logErrorHandler('failed to set focus to title input'));
-				}, 50);
-			} else {
-				console.warn('View child #titleInput is not initialized');
-			}
-		}
-	}
 
 	// tslint:disable-next-line:prefer-function-over-method
 	onMemberSelectChanged(m: Member, event: Event): void {
@@ -156,95 +106,26 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 		m.isChecked = detail.checked;
 	}
 
-	ionViewDidEnter(): void {
-		if (!this.titleInput) {
-			this.logError(new Error('titleInput is not initialized'));
-			return;
-		}
-		this.titleInput.setFocus()
-			.catch(this.logErrorHandler('failed to set focus to title input'));
-	}
 
-	addContact(): void {
-		this.contacts.push(1);
-	}
-
-	onTimingChanged(timing: ITiming): void {
-		console.log('NewHappeningPageComponent.onTimingChanged()', timing);
-		this.singleTiming = timing;
-	}
-
-	makeHappeningDto(): IHappeningDto {
-		if (!this.team) {
-			throw new Error('!this.team');
-		}
-		const activityFormValue = this.happeningForm.value;
-		const dto: IHappeningDto = {
-			type: this.happeningType,
-			kind: 'activity',
-			teamIDs: [this.team.id],
-			title: activityFormValue.title,
-		};
-		switch (dto.type) {
-			case 'recurring':
-				dto.slots = this.slots;
-				break;
-			case 'single':
-				if (!this.singleTiming) {
-					throw new Error('timing is not set');
-				}
-				dto.slots = [{
-					id: 'once',
-					repeats: 'once',
-					...this.singleTiming,
-				}];
-				break;
-			default:
-				throw new Error('unknown happening type: ' + dto.type);
-		}
-		{ // Populate selected members
-			const selectedMembers = this.members?.filter(m => this.checkedMemberIDs.some(v => v === m.id));
-			if (selectedMembers?.length) {
-				dto.memberIDs = selectedMembers.map(m => m.id)
-					.filter(v => !!v) as string[];
-				dto.participants = selectedMembers.map(m => {
-					const s: SlotParticipant = { type: 'member', id: m.id, title: m.brief?.title || m.id };
-					return s;
-				});
-			}
-		}
-		return dto;
-	}
-
-	formIsValid(): boolean {
-		if (!this.happeningForm.valid) {
-			return false;
-		}
-		switch (this.happeningType) {
-			case 'recurring':
-				return !!this.slots.length;
-			case 'single':
-				return !!this.singleTiming;
-			default:
-				throw new Error('unknown happening type: ' + this.happeningType);
-		}
-	}
 
 	createHappening(): void {
 		console.log('NewHappeningPageComponent.createHappening()');
 		if (!this.team) {
 			return;
 		}
+		if (!this.happeningPageFormComponent) {
+			return;
+		}
 		try {
-			this.happeningForm.markAsTouched();
-			if (!this.happeningForm.valid) {
-				alert('title is a required field');
-				if (!this.happeningForm.controls['title'].valid) {
-					this.titleInput?.setFocus()
-						.catch(this.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
-				}
-				return;
-			}
+			// this.happeningForm.markAsTouched();
+			// if (!this.happeningForm.valid) {
+			// 	alert('title is a required field');
+			// 	// if (!this.happeningForm.controls['title'].valid) {
+			// 	// 	this.titleInput?.setFocus()
+			// 	// 		.catch(this.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
+			// 	// }
+			// 	return;
+			// }
 			const team = this.team;
 
 			if (!team) {
@@ -254,7 +135,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 
 			this.isCreating = true;
 
-			const dto = this.makeHappeningDto();
+			const dto = this.happeningPageFormComponent.makeHappeningDto();
 
 			this.scheduleService
 				.createHappening({ teamID: team.id, dto })
@@ -291,22 +172,5 @@ export class NewHappeningPageComponent extends ScheduleBasePage implements OnIni
 	// 	alert('Not implemented yet. Please add from members page for now.');
 	// }
 
-	public isMemberChecked(member: IMemberContext): boolean {
-		const { id } = member;
-		return this.checkedMemberIDs.some(v => v === id);
-	}
 
-	public isMemberCheckChanged(member: IMemberContext, event: Event): void {
-		const ce = event as CustomEvent;
-		console.log('isMemberCheckChanged()', ce);
-		const checked = ce.detail.value === 'on';
-		const { id } = member;
-		if (!checked) {
-			this.checkedMemberIDs = this.checkedMemberIDs.filter(v => v !== id);
-			return;
-		}
-		if (!this.checkedMemberIDs.some(v => v === id)) {
-			this.checkedMemberIDs.push(id);
-		}
-	}
 }

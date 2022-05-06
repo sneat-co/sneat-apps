@@ -1,30 +1,30 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title *ngIf="happening else titleNoActivity">{{happening?.brief?.title}}</ion-title>
 		<ng-template #titleNoActivity>
 			<ion-title>Recurring</ion-title>
 		</ng-template>
-		<ion-buttons slot="end">
-			<ion-menu-button menu="mainMenu"></ion-menu-button>
-		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<ion-card>
-		<ion-item>
-			<ion-label>Title: {{happening?.brief?.title}}</ion-label>
-		</ion-item>
-	</ion-card>
-	<ion-card>
-		<ion-item-group>
-			<ion-item-divider>
-				<ion-label>Timetable</ion-label>
-			</ion-item-divider>
-			<sneat-recurring-slots [slots]="happening?.dto?.slots"></sneat-recurring-slots>
-		</ion-item-group>
-	</ion-card>
+
+	<sneat-happening-page-form [team]="team" [happening]="happening"></sneat-happening-page-form>
+<!--	<ion-card>-->
+<!--		<ion-item>-->
+<!--			<ion-label>Title: {{happening?.brief?.title}}</ion-label>-->
+<!--		</ion-item>-->
+<!--	</ion-card>-->
+<!--	<ion-card>-->
+<!--		<ion-item-group>-->
+<!--			<ion-item-divider>-->
+<!--				<ion-label>Timetable</ion-label>-->
+<!--			</ion-item-divider>-->
+<!--			<sneat-recurring-slots [slots]="happening?.dto?.slots"></sneat-recurring-slots>-->
+<!--		</ion-item-group>-->
+<!--	</ion-card>-->
 </ion-content>
