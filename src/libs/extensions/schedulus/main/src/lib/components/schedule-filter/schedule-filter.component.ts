@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
 import { IMemberBrief, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
+import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 import { IScheduleFilter } from './schedule-filter';
@@ -26,7 +26,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	repeats: string[] = [];
 	memberID = '';
 
-	members?: IMemberBrief[];
+	members?: IMemberContext[];
 
 	readonly repeatWeekly = new FormControl(false);
 	readonly repeatMonthly = new FormControl(false);
@@ -77,7 +77,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
-		this.members = this.team?.dto?.members;
+		this.members = this.team?.dto?.members?.map(m => ({id: m.id, brief: m}));
 	}
 
 	clearFilter(event?: Event): void {
