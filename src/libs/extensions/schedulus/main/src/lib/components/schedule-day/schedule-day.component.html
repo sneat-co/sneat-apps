@@ -1,17 +1,7 @@
 <ng-container *ngIf="weekday">
-	<ion-item-group *ngIf="!weekday.day?.slots?.length; else daySlots">
-		<ion-item-divider class="ion-padding" color="light">
-			<p>Nothing scheduled for this day.</p>
-		</ion-item-divider>
-		<ion-item tappable (click)="goNewHappening({type: 'recurring'})">
-			<ion-icon name="duplicate-outline" slot="start"></ion-icon>
-			<ion-label>Add recurring</ion-label>
-		</ion-item>
-		<ion-item tappable (click)="goNewHappening({type: 'single'})">
-			<ion-icon name="add-circle-outline" slot="start"></ion-icon>
-			<ion-label>Add one-timer</ion-label>
-		</ion-item>
-	</ion-item-group>
+	<ion-item *ngIf="!weekday.day?.slots?.length; else daySlots" color="light">
+		<ion-label color="medium">Nothing scheduled for this day.</ion-label>
+	</ion-item>
 	<ng-template #daySlots>
 		<ion-item-divider color="light" *ngIf="slotsHiddenByFilter">
 			<ion-label>{{slotsHiddenByFilter}} hidden by filter.</ion-label>
@@ -27,4 +17,12 @@
 												 [slot]="slot" (onclick)="slotClicked.emit($event)">
 		</sneat-day-slot-item>
 	</ng-template>
+	<ion-item tappable (click)="goNewHappening({type: 'recurring'})">
+		<ion-icon name="duplicate-outline" color="medium" slot="start"></ion-icon>
+		<ion-label color="medium">Add recurring</ion-label>
+	</ion-item>
+	<ion-item tappable (click)="goNewHappening({type: 'single'})">
+		<ion-icon name="add-circle-outline" color="medium" slot="start"></ion-icon>
+		<ion-label color="medium">Add one-timer</ion-label>
+	</ion-item>
 </ng-container>
