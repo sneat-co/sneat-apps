@@ -176,14 +176,12 @@ export class TeamDay {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-		console.log(`TeamDay[${this.isoID}].processRecurrings(), slots:`, slots);
+		console.log(`TeamDay[${this.isoID}].processRecurrings(), ${Object.keys(slots.byWeekday).length} weekdays with slots:`, slots);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
 
 	private joinRecurringsWithSinglesAndEmit(): void {
-		console.log(`TeamDay[${this.isoID}].joinRecurringsWithSinglesAndEmit(), wd=${this.wd}, recurringSlots:`,
-			this.recurringSlots, ', singles:', this.singles);
 		const slots: ISlotItem[] = [];
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd];
 		if (weekdaySlots?.length) {
@@ -192,7 +190,11 @@ export class TeamDay {
 		if (this.singles) {
 			slots.push(...this.singles);
 		}
-		console.log(`TeamDay[${this.isoID}].joinRecurringsWithSinglesAndEmit() => slots:`, slots);
+		console.log(
+			`TeamDay[id=${this.isoID}, wd=${this.wd}].joinRecurringsWithSinglesAndEmit()`,
+			`${weekdaySlots?.length || 0} recurrings:`, weekdaySlots,
+			`${this.singles?.length || 0} singles:`, weekdaySlots,
+			`=> ${slots.length} slots:`, slots);
 		this._slots.next(slots);
 	}
 }

@@ -91,11 +91,11 @@ const slotItemFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): IS
 
 const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
 	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${team?.id})`;
-	console.log(logPrefix + ', team:', team);
 	const slots: RecurringSlots = {
 		byWeekday: {},
 	};
 	if (!team?.dto?.recurringHappenings) {
+		console.log(logPrefix + ', no slots for team:', team);
 		return slots;
 	}
 	team.dto.recurringHappenings.forEach(brief => {
@@ -112,6 +112,7 @@ const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
 			});
 		});
 	});
+	console.log(logPrefix + ', slots:', slots);
 	return slots;
 };
 
