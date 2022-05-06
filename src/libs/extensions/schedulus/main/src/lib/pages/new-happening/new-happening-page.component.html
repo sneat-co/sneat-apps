@@ -99,7 +99,7 @@
 							<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)"
 														(ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
 							<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
-							<ion-label>{{member.brief?.title || member.id}}</ion-label>
+							<ion-label>{{member|memberTitle}}</ion-label>
 						</ion-item>
 					</ng-container>
 				</ion-radio-group>

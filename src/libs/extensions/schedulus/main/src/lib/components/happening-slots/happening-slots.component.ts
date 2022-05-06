@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { RecurringSlotFormComponent } from '../recurring-slot-form/recurring-slot-form.component';
 
 export interface AddSlotParams {
 	wd?: WeekdayCode2;
@@ -28,7 +26,7 @@ export class HappeningSlotsComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
+		// private readonly modalController: ModalController,
 	) {
 	}
 

@@ -1,6 +1,18 @@
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { TeamType } from '@sneat/auth-models';
-import { WeekdayCode2 } from '@sneat/dto';
+import { IName, WeekdayCode2 } from '@sneat/dto';
+import { IMemberContext } from '@sneat/team/models';
+
+function memberName(name?: IName): string | undefined {
+	return name && (name.full || name.first || name.full);
+}
+@Pipe({name: 'memberTitle'})
+export class MemberTitle implements PipeTransform {
+	transform(m: IMemberContext, shortTitle?: string): string {
+		return shortTitle || m.brief?.title || m.dto?.title || memberName(m.brief?.name) || m.id;
+	}
+}
+
 
 @Pipe({name: 'teamEmoji'})
 export class TeamEmojiPipe implements PipeTransform {
@@ -155,6 +167,7 @@ const pipes: any[] = [
 	WdToWeekdayPipe,
 	LongMonthNamePipe,
 	ShortMonthNamePipe,
+	MemberTitle,
 ];
 
 @NgModule({
