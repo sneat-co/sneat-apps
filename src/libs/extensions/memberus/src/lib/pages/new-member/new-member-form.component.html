@@ -9,23 +9,30 @@
 		</ion-item-divider>
 		<ion-item>
 			<ion-label color="medium">First name</ion-label>
-			<ion-input #firstNameInput [formControl]="firstName" (keyup.enter)="nameKeyupEnter($event)" (ionChange)="onNameChanged($event)"></ion-input>
+			<ion-input #firstNameInput [formControl]="firstName" (keyup.enter)="nameKeyupEnter($event)"
+								 (ionChange)="onNameChanged($event)"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label color="medium">Last name</ion-label>
-			<ion-input [formControl]="lastName" (keyup.enter)="nameKeyupEnter($event)" (ionChange)="onNameChanged($event)"></ion-input>
+			<ion-input [formControl]="lastName" (keyup.enter)="nameKeyupEnter($event)"
+								 (ionChange)="onNameChanged($event)"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label color="medium">Middle name</ion-label>
-			<ion-input [formControl]="middleName" (keyup.enter)="nameKeyupEnter($event)" (ionChange)="onNameChanged($event)"></ion-input>
+			<ion-input [formControl]="middleName" (keyup.enter)="nameKeyupEnter($event)"
+								 (ionChange)="onNameChanged($event)"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label color="medium" position="floating">Full name</ion-label>
-			<ion-input #fulltNameInput [formControl]="fullName" (keyup.enter)="nameKeyupEnter($event)" (ionChange)="onFullNameChanged($event)"></ion-input>
+			<ion-input #fullNameInput [formControl]="fullName" (keyup.enter)="nameKeyupEnter($event)"
+								 (ionChange)="onFullNameChanged($event)"></ion-input>
 		</ion-item>
 		<ion-item-divider color="light" *ngIf="!isNameSet">
 			<ion-label>
-				<ion-button size="medium" (click)="nextFromName($event)" [color]="canGoNextFromName ? 'primary' : 'medium'">
+				<ion-button size="medium"
+										[color]="hasNames ? 'primary' : 'medium'"
+										(click)="nextFromName($event)"
+				>
 					<ion-label>Next</ion-label>
 					<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
 				</ion-button>
@@ -35,8 +42,8 @@
 
 	<ion-grid *ngIf="isNameSet" class="ion-grid-layout">
 		<ion-row>
-			<ion-col>
-				<ion-card>
+			<ion-col size="12" size-md="4">
+				<ion-card @nextIn>
 					<ion-item-group *ngIf="!gender.value">
 						<ion-item-divider color="primary">
 							<ion-label><b>Gender</b></ion-label>
@@ -61,7 +68,7 @@
 						</ion-radio-group>
 					</ion-item-group>
 					<ion-item *ngIf="gender.value">
-						<ion-label color="medium">Gender</ion-label>
+						<ion-label color="medium" position="stacked">Gender</ion-label>
 						<ion-select [formControl]="gender" interface="popover">
 							<ion-select-option value="male">Male</ion-select-option>
 							<ion-select-option value="female">Female</ion-select-option>
@@ -72,8 +79,8 @@
 				</ion-card>
 			</ion-col>
 
-			<ion-col *ngIf="gender.value">
-				<ion-card *ngIf="!ageGroup.value">
+			<ion-col size="12" size-md="4" *ngIf="gender.value">
+				<ion-card @nextIn *ngIf="!ageGroup.value">
 					<ion-item-divider color="primary">
 						<ion-label><b>Age group</b></ion-label>
 					</ion-item-divider>
@@ -90,7 +97,7 @@
 				</ion-card>
 				<ion-card *ngIf="ageGroup.value">
 					<ion-item>
-						<ion-label color="medium">Age group</ion-label>
+						<ion-label color="medium" position="stacked">Age group</ion-label>
 						<ion-select [formControl]="ageGroup" interface="popover">
 							<ion-select-option value="adult">Adult</ion-select-option>
 							<ion-select-option value="child">Child</ion-select-option>
@@ -99,8 +106,8 @@
 				</ion-card>
 			</ion-col>
 
-			<ion-col *ngIf="ageGroup.value && gender.value">
-				<ion-card>
+			<ion-col size="12" size-md="4" *ngIf="ageGroup.value && gender.value">
+				<ion-card @nextIn>
 					<ion-item-group *ngIf="!relationship.value">
 						<ion-item-divider color="primary">
 							<ion-label><b>Related to me as</b></ion-label>
@@ -113,7 +120,7 @@
 						</ion-radio-group>
 					</ion-item-group>
 					<ion-item *ngIf="relationship.value">
-						<ion-label color="medium">Related to me as</ion-label>
+						<ion-label color="medium" position="stacked">Related to me as</ion-label>
 						<ion-select [formControl]="relationship" interface="popover">
 							<ion-select-option *ngFor="let rel of relationships" [value]="rel.id">{{rel.title}}</ion-select-option>
 						</ion-select>
@@ -124,14 +131,18 @@
 	</ion-grid>
 
 
-	<ion-card *ngIf="ageGroup.value && gender.value && relationship.value">
+	<!-- TODO: setFocus() does not work with *ngIf and animation does not work with [style.display] -->
+	<!-- *ngIf="ageGroup.value && gender.value && relationship.value" -->
+	<ion-card @nextIn
+						[style.display]="ageGroup.value && gender.value && relationship.value ? 'block' : 'none'"
+	>
 		<ion-item-divider color="primary">
 			<ion-label><b>Contacts</b></ion-label>
 		</ion-item-divider>
 
 		<ion-item>
 			<ion-label>Email</ion-label>
-			<ion-input type="email" [formControl]="email"></ion-input>
+			<ion-input #emailInput type="text" typeThatDoesNotWorkInChrome="email" [formControl]="email"></ion-input>
 		</ion-item>
 
 		<ion-item>
@@ -183,7 +194,7 @@
 		</ion-card-content>
 	</ion-card>
 
-	<div class="ion-padding" *ngIf="isNameSet">
+	<div class="ion-padding" *ngIf="isNameSet && relationship.value">
 		<ion-button
 			(click)="submit()"
 			[disabled]="!team || addMemberForm.disabled || !addMemberForm.valid"
@@ -191,8 +202,11 @@
 			<ion-spinner
 				name="lines-small"
 				*ngIf="addMemberForm.disabled"
+				slot="start"
 			></ion-spinner>
 			<ion-label>Add member</ion-label>
 		</ion-button>
 	</div>
+
 </form>
+

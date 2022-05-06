@@ -12,8 +12,8 @@
 
 <ion-content class="cardy">
 
-	<ion-segment [(ngModel)]="tab">
-		<ion-segment-button value="mass" *ngIf="team.id && team?.type !== 'family'">
+	<ion-segment [(ngModel)]="tab" *ngIf="team.id && team?.type !== 'family'">
+		<ion-segment-button value="mass">
 			Mass invite [{{team.id}} - {{team.type}}]
 		</ion-segment-button>
 		<ion-segment-button value="personal">Personal invite</ion-segment-button>

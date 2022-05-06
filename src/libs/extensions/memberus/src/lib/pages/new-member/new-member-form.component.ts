@@ -1,6 +1,6 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import {
 	AfterViewInit,
-	ChangeDetectorRef,
 	Component,
 	Inject,
 	Input,
@@ -10,10 +10,9 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonInput, IonRadio, IonRadioGroup } from '@ionic/angular';
-import { excludeUndefined } from '@sneat/core';
+import { IonInput, IonRadio, IonRadioGroup, NavController } from '@ionic/angular';
+import { excludeUndefined, RoutingState } from '@sneat/core';
 import {
-	AgeGroup,
 	FamilyMemberRelation,
 	IMemberDto,
 	ITitledRecord,
@@ -25,7 +24,7 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
-import { MemberService } from '@sneat/team/services';
+import { MemberService, TeamNavService } from '@sneat/team/services';
 
 interface Role {
 	checked?: boolean;
@@ -54,13 +53,26 @@ const isFormValid = (control: AbstractControl): ValidationErrors | null => {
 @Component({
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
+	animations: [
+		trigger('nextIn', [
+			transition(':enter', [
+				style({ opacity: 0 }),           // initial styles
+				animate('250ms',
+					style({ opacity: 1 }),          // final style after the transition has finished
+				),
+			]),
+		]),
+	],
 })
 export class NewMemberFormComponent implements AfterViewInit, OnChanges {
+
+	private readonly hasNavHistory: boolean;
 
 	@Input() team?: ITeamContext;
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
 	@ViewChild('fullNameInput', { static: true }) fullNameInput?: IonInput;
+	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
 	public relationships: ITitledRecord[] = getRelOptions(Object.values(FamilyMemberRelation));
@@ -107,7 +119,7 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 
 	public isNameSet = false;
 
-	public get canGoNextFromName(): boolean {
+	public get hasNames(): boolean {
 		return this.firstName.value || this.lastName.value || this.fullName.value;
 	}
 
@@ -128,7 +140,7 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 
 
 	public get isComplete(): boolean {
-		return !!this.fullName.value.trim() && !!this.ageGroup.value && !!this.gender.value && !!this.relationship;
+		return this.hasNames && !!this.ageGroup.value && !!this.gender.value && !!this.relationship;
 	}
 
 	private isFullNameChanged = false;
@@ -136,8 +148,12 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		route: ActivatedRoute,
+		routingState: RoutingState,
+		private readonly navController: NavController,
 		private readonly membersService: MemberService,
+		private readonly teamNavService: TeamNavService,
 	) {
+		this.hasNavHistory = routingState.hasHistory();
 		route.queryParams.subscribe(params => {
 			this.role.setValue(params['role'] || '');
 			this.ageGroup.setValue(params['age'] || '');
@@ -208,8 +224,8 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 
 
 	submit(): void {
-		if (!this.fullName.value.trim()) {
-			alert('Please enter full name of the new member');
+		if (!this.hasNames) {
+			alert('Please enter first or last or full name of the new member');
 			if (!this.firstName.value && !this.lastName.value) {
 				this.setFocusToInput(this.firstNameInput);
 			} else {
@@ -270,9 +286,16 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 			};
 		}
 
-		this.membersService.addMember(request).subscribe({
+		this.membersService.createMember(request).subscribe({
 			next: member => {
 				console.log('member created:', member);
+				if (this.hasNavHistory) {
+					this.navController.pop()
+						.catch(this.errorLogger.logErrorHandler('failed to navigate to prev page'));
+				} else {
+					this.teamNavService.navigateBackToTeamPage(team, 'members')
+						.catch(this.errorLogger.logErrorHandler('failed to navigate back to members page'));
+				}
 			},
 			error: err => {
 				this.errorLogger.logError(err, 'Failed to create a new member');
@@ -313,7 +336,7 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 	readonly id = (i: number, record: { id: string }) => record.id;
 
 	public nextFromName(event: Event): void {
-		if (!this.canGoNextFromName) {
+		if (!this.hasNames) {
 			alert('At least 1 of names should be set');
 			return;
 		}
@@ -336,7 +359,7 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 				this.ageGroup.setValue('child');
 			}
 		}
-		this.setFocusToInput(this.firstNameInput);
+		this.setFocusToInput(this.emailInput);
 	}
 
 	public setFocusToInput(input?: IonInput, delay = 100): void {

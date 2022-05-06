@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { IErrorResponse } from '@sneat/core';
 import { IMemberBrief, IMemberDto } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
 	ICreateTeamMemberRequest,
@@ -12,7 +13,7 @@ import {
 	ITeamContext, ITeamRef,
 } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
-import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { TeamService } from './team.service';
 
 export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
@@ -25,6 +26,7 @@ export class MemberService {
 	private readonly sfs: SneatFirestoreService<IMemberBrief, IMemberDto>;
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		afs: AngularFirestore,
 		private readonly teamService: TeamService,
 		private readonly sneatApiService: SneatApiService,
@@ -55,12 +57,8 @@ export class MemberService {
 		);
 	}
 
-	public addMember(request: ICreateTeamMemberRequest): Observable<IMemberBrief> {
+	public createMember(request: ICreateTeamMemberRequest): Observable<IMemberContext> {
 		console.log(`MemberService.addMember()`, request);
-		const fullName = request.name?.full || '';
-		if (!fullName) {
-			return throwError(() => new Error('full name is required'));
-		}
 		const processAddMemberResponse = (
 			response: IAddTeamMemberResponse | IErrorResponse,
 		) => {
@@ -68,27 +66,23 @@ export class MemberService {
 				throw (response as IErrorResponse).error;
 			}
 			const okResponse = response as IAddTeamMemberResponse;
-			let member: IMemberBrief = {
-				id: okResponse.id,
-				shortTitle: okResponse.shortTitle,
-				name: {
-					full: fullName,
-				},
-				gender: request.gender,
-				ageGroup: request.ageGroup,
-				roles: [request.role],
-			};
-			if (okResponse.uid) {
-				member = { ...member, userID: okResponse.uid };
+			if (!okResponse.dto) {
+				this.errorLogger.logError('okResponse.dto is undefined', undefined, {show: false});
 			}
+			const member: IMemberBrief = {
+				id: okResponse.id,
+				...okResponse.dto,
+			};
 			return this.teamService.getTeam({ id: request.teamID }).pipe(
 				tap((team) => {
-					if (team) {
-						team?.dto?.members.push(member);
+					if (team?.dto) {
+						const members = team.dto.members ? [...team.dto.members] : [];
+						members.push(member);
+						team = {...team, dto: {...team.dto, members}};
+						this.teamService.onTeamUpdated(team);
 					}
-					this.teamService.onTeamUpdated(team);
 				}),
-				mapTo(member),
+				map(() => member),
 			);
 		};
 		return this.sneatApiService

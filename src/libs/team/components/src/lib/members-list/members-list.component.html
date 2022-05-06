@@ -33,7 +33,7 @@
 				<ion-icon slot="start" [name]="genderIcon(member)"></ion-icon>
 			</ng-template>
 			<ion-label>
-				{{ member?.brief?.shortTitle || member.brief?.title || member.dto?.title }}
+				{{ member?.brief?.shortTitle || member.brief?.title || member.dto?.title || member.dto?.name?.full }}
 				<ng-container *ngIf="role === null">
 					<ion-badge
 						*ngFor="let role of member.brief?.roles"
