@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { dateToIso } from '@sneat/core';
 import { IDateTime, ITiming } from '@sneat/dto';
 
 @Component({
@@ -12,7 +13,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	@Output() readonly timingChanged = new EventEmitter<ITiming>();
 	public tab: 'duration' | 'end' = 'duration';
 	public durationUnits: 'minutes' | 'hours' = 'minutes';
-	public startDate = new FormControl('', { // new Date().toISOString().substring(0, 10)
+	public startDate = new FormControl('', { // dateToIso(new Date())
 		// validators: Validators.required,
 	});
 	public endDate = new FormControl('', {
@@ -78,7 +79,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 				break;
 		}
 		if (date) {
-			this.startDate.setValue(date.toISOString().substring(0, 10));
+			this.startDate.setValue(dateToIso(date));
 		}
 	}
 

@@ -66,7 +66,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log('ScheduleDayComponent.ngOnChanges()', changes);
+		console.log(this.logPrefix() + '.ngOnChanges()', changes);
 		if (changes['weekday']) {
 			this.subscribeForSlots();
 		}
@@ -78,14 +78,14 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 		if (this.allSlots?.length) {
 			this.slots = this.allSlots.filter(slot => isSlotVisible(slot, this.filter));
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
-			console.log('ScheduleDayComponent.applyFilter() =>',
+			console.log(this.logPrefix() + '.applyFilter() =>',
 				'slotsHiddenByFilter:', this.slotsHiddenByFilter,
 				'filter:', this.filter,
 				'slots before filter:', this.allSlots,
 				'slots after filter:', this.slots,
-				);
+			);
 		} else {
-			console.log('ScheduleDayComponent.applyFilter() for empty slots');
+			console.log(this.logPrefix() + '.applyFilter() for empty slots');
 			this.slots = this.allSlots;
 			this.slotsHiddenByFilter = this.allSlots?.length;
 		}
@@ -93,23 +93,29 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	}
 
 	private subscribeForSlots(): void {
+		this.slotsSubscription?.unsubscribe();
 		if (this.weekday?.day) {
-			this.slotsSubscription?.unsubscribe();
+			console.log(`ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}].subscribeForSlots()`);
 			this.slotsSubscription = this.weekday.day.slots$
 				.pipe(
 					takeUntil(this.destroyed),
 				)
 				.subscribe({
-					next: slots => {
-						this.allSlots = slots;
-						this.applyFilter();
-					},
+					next: this.processSlots,
 				});
 		} else {
 			this.slots = undefined;
 			this.slotsHiddenByFilter = undefined;
 		}
 	}
+
+	private readonly processSlots = (slots?: ISlotItem[]) => {
+		console.log(this.logPrefix() + `.processSlots(), slots:`, slots);
+		this.allSlots = slots;
+		this.applyFilter();
+	};
+
+	private readonly logPrefix = () => `ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}]`;
 
 	goNewHappening(params: NewHappeningParams): void {
 		if (!this.team) {
@@ -121,10 +127,10 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 		}
 		switch (params.type) {
 			case 'recurring':
-				params = {...params, wd: jsDayToWeekday(date.getDay() as WeekdayNumber)};
+				params = { ...params, wd: jsDayToWeekday(date.getDay() as WeekdayNumber) };
 				break;
 			case 'single':
-				params = {...params, date: dateToIso(date)};
+				params = { ...params, date: dateToIso(date) };
 				break;
 		}
 		console.log('goNewHappening()', date, params);

@@ -86,7 +86,7 @@ export class TeamDay {
 				next: this.processTeamID,
 			});
 		this.date = date;
-		this.dateID = date.toISOString().substring(0, 10);
+		this.dateID = dateToIso(date);
 		this.wd = getWd2(date);
 		this.isoID = dateToIso(date);
 		if (this.isoID === '1970-01-01') {
