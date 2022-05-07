@@ -1,5 +1,7 @@
 **/.idea/
 
+.firebase/
+
 .DS_Store
 
 # Logs
