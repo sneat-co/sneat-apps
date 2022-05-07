@@ -1,4 +1,4 @@
-import { AgeGroup, Gender } from '@sneat/dto';
+import { AgeGroup, Gender } from './types';
 
 export interface IName {
 	readonly first?: string;
