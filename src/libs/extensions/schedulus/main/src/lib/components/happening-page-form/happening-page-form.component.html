@@ -130,6 +130,12 @@
 		<!--</ion-item>-->
 
 		<div class="ion-padding">
+			<ion-button size="large">
+				<ion-label>Save changes</ion-label>
+			</ion-button>
+		</div>
+
+		<div class="ion-padding" *ngIf="!happening?.id">
 			<ion-button [disabled]="isCreating"
 									[color]="formIsValid() ? 'primary' : 'medium'" size="large"
 									(click)="submit($event)"
