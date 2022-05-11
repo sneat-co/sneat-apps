@@ -4,6 +4,7 @@ import {
 	VirtualSlideAnimationsStates,
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
+import { dateToIso } from '@sneat/core';
 import { Subject } from 'rxjs';
 import { animationState, areSameDates, isToday } from './schedule-core';
 import { addDays, getToday, IDateChanged, ScheduleStateService } from './schedule-state.service';
@@ -17,6 +18,9 @@ export abstract class SwipeableBaseComponent {
 
 	public parity: Parity = 'odd';
 	public date = getToday();
+	public get dateAsIsoString(): string {
+		return dateToIso(this.date);
+	}
 	public animationState?: VirtualSliderAnimationStates;
 	public oddSlide?: Swipeable;
 	public evenSlide?: Swipeable;
@@ -93,7 +97,8 @@ export abstract class SwipeableBaseComponent {
 	}
 
 	protected onDateChanged(changed: IDateChanged): void {
-		console.log(`${this.className} extends SwipeableBaseComponent.onDateChanged()`, changed);
+		const changedToLog = {...changed, date: dateToIso(changed.date)}
+		console.log(`${this.className} extends SwipeableBaseComponent.onDateChanged(), changed:`, changedToLog);
 		// this.parity = this.parity === 'odd' ? 'even' : 'odd';
 		if (!this.oddSlide || !this.evenSlide) {
 			return;
@@ -103,12 +108,12 @@ export abstract class SwipeableBaseComponent {
 			const passive: IDateChanged = { ...changed, date: addDays(changed.date, this.stepDays) };
 			switch (this.parity) {
 				case 'odd':
-					this.oddSlide = this.oddSlide.setActiveDate(changed, 'show');
-					this.evenSlide = this.evenSlide.setActiveDate(passive, 'hide');
+					this.oddSlide = this.oddSlide.setDate(changed, 'show');
+					this.evenSlide = this.evenSlide.setDate(passive, 'hide');
 					break;
 				case 'even':
-					this.evenSlide = this.evenSlide.setActiveDate(changed, 'show');
-					this.oddSlide = this.oddSlide.setActiveDate(passive, 'hide');
+					this.evenSlide = this.evenSlide.setDate(changed, 'show');
+					this.oddSlide = this.oddSlide.setDate(passive, 'hide');
 					break;
 			}
 			return;
@@ -116,15 +121,17 @@ export abstract class SwipeableBaseComponent {
 		switch (this.parity) {
 			case 'odd':
 				this.oddSlide = { ...this.oddSlide, animationState: hideVirtualSlide };
-				this.evenSlide = this.evenSlide.setActiveDate(changed, showVirtualSlide);
+				this.evenSlide = this.evenSlide.setDate(changed, showVirtualSlide);
 				this.parity = 'even';
 				break;
 			case 'even':
 				this.evenSlide = { ...this.evenSlide, animationState: hideVirtualSlide };
-				this.oddSlide = this.oddSlide.setActiveDate(changed, showVirtualSlide);
+				this.oddSlide = this.oddSlide.setDate(changed, showVirtualSlide);
 				this.parity = 'odd';
 				break;
 		}
+		console.log('oddSlide', this.oddSlide);
+		console.log('evenSlide', this.evenSlide);
 		this.animationState = animationState(this.parity, changed.shiftDirection);
 	};
 }

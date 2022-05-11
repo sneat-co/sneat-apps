@@ -20,7 +20,7 @@ export interface Swipeable { // TODO: Is in process of migrating to SwipeableCar
 	readonly parity: Parity;
 	readonly destroyed: Observable<void>;
 	readonly activeDateID: string;
-	readonly setActiveDate: (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => Swipeable;
+	readonly setDate: (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => Swipeable;
 }
 
 function initialAnimationState(parity: Parity): VirtualSlideAnimationsStates {
@@ -43,9 +43,11 @@ export function swipeableDay(
 		destroyed,
 		animationState,
 		activeDateID,
-		setActiveDate: undefined as unknown as (changed: IDateChanged) => SwipeableDay,
+		setDate: undefined as unknown as (changed: IDateChanged) => SwipeableDay,
 	};
-	const setActiveDate = (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => {
+	const setDate = (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => {
+		const changedToLog = {...changed, date: dateToIso(changed.date)}
+		console.log(`swipeableDay.setDate(), changed:`, changedToLog);
 		const { date } = changed;
 		const v: SwipeableDay = {
 			...result,
@@ -55,7 +57,7 @@ export function swipeableDay(
 		};
 		return v;
 	};
-	result = { ...result, setActiveDate: setActiveDate };
+	result = { ...result, setDate };
 	return result;
 }
 
@@ -155,7 +157,7 @@ export function swipeableWeek(
 		parity,
 		activeDateID,
 		destroyed,
-		setActiveDate: undefined as unknown as (changed: IDateChanged) => SwipeableDay,
+		setDate: undefined as unknown as (changed: IDateChanged) => SwipeableWeek,
 	};
 	const setActiveDate = (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => {
 		const { date } = changed;
@@ -168,6 +170,6 @@ export function swipeableWeek(
 		};
 		return v;
 	};
-	result = { ...result, setActiveDate: setActiveDate }
+	result = { ...result, setDate: setActiveDate };
 	return result;
 }

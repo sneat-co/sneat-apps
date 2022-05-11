@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatFirestoreService } from '@sneat/api';
-import { INavContext } from '@sneat/core';
+import { dateToIso, INavContext } from '@sneat/core';
 import {
 	happeningBriefFromDto,
 	IHappeningBrief,
@@ -175,7 +175,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	}
 
 	public getTeamDay(date: Date): TeamDay {
-		const id = getWd2(date);
+		const id = dateToIso(date);
 		let day = this.days[id];
 		if (!day) {
 			this.days[id] = day = new TeamDay(this.teamID$, date, this.recurrings$, this.errorLogger, this.afs);

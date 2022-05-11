@@ -20,7 +20,22 @@
 <ion-popover trigger="pick-date" reference="event" arrow="true" side="bottom" alignment="center">
 	<ng-template>
 		<ion-card>
-			<ion-datetime [value]="dateAsIsoString" presentation="date" (ionChange)="onPickerDateChanged($event)"></ion-datetime>
+			<ion-datetime
+				[value]="dateAsIsoString"
+				presentation="date"
+				(ionChange)="onPickerDateChanged($event)"
+			></ion-datetime>
+			<ion-list>
+			<ion-item-divider>
+				<ion-label>Quick links</ion-label>
+			</ion-item-divider>
+			<ion-item tappable (click)="goToday()">
+				<ion-label>Today</ion-label>
+			</ion-item>
+			<ion-item tappable (click)="goTomorrow()">
+				<ion-label>Tomorrow</ion-label>
+			</ion-item>
+			</ion-list>
 		</ion-card>
 	</ng-template>
 </ion-popover>
@@ -38,9 +53,9 @@
 
 
 <!--Tomorrow -->
-<!--<sneat-schedule-day-card-->
-<!--	[activeDayPlus]="1"-->
-<!--	[team]="team"-->
-<!--	[teamDaysProvider]="teamDaysProvider"-->
-<!--	[onSlotClicked]="onSlotClicked"-->
-<!--&gt;</sneat-schedule-day-card>-->
+<sneat-schedule-day-card
+	[activeDayPlus]="1"
+	[team]="team"
+	[teamDaysProvider]="teamDaysProvider"
+	[onSlotClicked]="onSlotClicked"
+></sneat-schedule-day-card>
