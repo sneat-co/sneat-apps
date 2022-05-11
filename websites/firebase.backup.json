@@ -1,6 +1,21 @@
 {
   "hosting": [
     {
+      "target": "sneatapp",
+      "public": "sneat.app",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/pwa/**",
+          "destination": "/pwa/index.html"
+        }
+      ]
+    },
+    {
       "target": "datatug",
       "public": "datatug",
       "ignore": [
@@ -48,21 +63,6 @@
     {
       "target": "sneatteam",
       "public": "sneatteam",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "/pwa/**",
-          "destination": "/pwa/index.html"
-        }
-      ]
-    },
-    {
-      "target": "sneatapp",
-      "public": "sneat.app",
       "ignore": [
         "firebase.json",
         "**/.*",

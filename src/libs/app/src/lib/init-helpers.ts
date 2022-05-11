@@ -43,7 +43,7 @@ export function appSpecificConfig(useEmulators: boolean, envConfig: IEnvironment
 			...config.firebaseConfig,
 			apiKey: firebaseApiKey(useEmulators, config.firebaseConfig.apiKey),
 			projectId: projectId,
-			databaseURL: firebaseDatabaseURL(useEmulators, projectId),
+			// databaseURL: firebaseDatabaseURL(useEmulators, projectId),
 		},
 	};
 	return config;

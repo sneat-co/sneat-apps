@@ -10,14 +10,12 @@ export function isSneatTeam(): boolean {
 }
 
 export const firebaseConfigForSneatApp: IFirebaseConfig = {
-	apiKey: 'AIzaSyCxsZ2TxLSO9voSEhlHbmp5lto2xj0R2z8',
-	authDomain: 'sneatapp.firebaseapp.com',
-	databaseURL: 'https://sneatapp.firebaseio.com',
-	projectId: 'sneatapp',
-	storageBucket: 'sneatapp.appspot.com',
-	messagingSenderId: '5233273170',
-	appId: '1:5233273170:web:61e8d4f12d03a07e',
-	measurementId: 'G-CMCYD6HVGN',
+	apiKey: "AIzaSyA7xKWO_2YWa6u7VQ32fWnpgC-BbDZYsEA",
+	authDomain: "sneat.app",
+	projectId: "sneat-eu",
+	messagingSenderId: "802813395701",
+	appId: "1:802813395701:web:5f7f36d74bd3d4a35c3bbc",
+	measurementId: "G-J7WLMWPCJW"
 };
 
 export const firebaseConfigForSneatTeam: IFirebaseConfig = {
@@ -25,7 +23,6 @@ export const firebaseConfigForSneatTeam: IFirebaseConfig = {
 	authDomain: 'sneat-team.firebaseapp.com',
 	databaseURL: 'https://sneat-team.firebaseio.com',
 	projectId: 'sneat-team',
-	storageBucket: 'sneat-team.appspot.com',
 	messagingSenderId: '724666284649',
 	appId: '1:724666284649:web:080ffaab56bb71e49740f8',
 	measurementId: 'G-RRM3BNCN0S',

@@ -9,7 +9,8 @@ const userIsNotAuthenticatedNoFirebaseToken =
 
 export const SneatApiAuthTokenProvider = new InjectionToken('SneatApiAuthTokenProvider');
 export const SneatApiBaseUrl = new InjectionToken('SneatApiBaseUrl');
-export const DefaultSneatApiBaseUrl = 'https://api.sneat.team/v0/';
+export const DefaultSneatTeamApiBaseUrl = 'https://api.sneat.team/v0/';
+export const DefaultSneatAppApiBaseUrl = 'https://sneat.eu/v0/';
 
 @Injectable({ providedIn: 'root' }) // Should it be in root? Maybe not
 export class SneatApiService implements ISneatApiService, OnDestroy {
@@ -24,7 +25,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	) {
 		console.log('SneatApiService.constructor()', baseUrl);
 		if (!baseUrl) {
-			this.baseUrl = DefaultSneatApiBaseUrl;
+			this.baseUrl = DefaultSneatAppApiBaseUrl;
 		}
 		afAuth.idToken
 			.pipe(

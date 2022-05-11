@@ -9,7 +9,7 @@ export interface IFirebaseConfig {
 	//
 	projectId: string;
 	appId: string;
-	measurementId: string;
+	measurementId?: string;
 	messagingSenderId?: string;
 	apiKey: string;
 	authDomain: string;

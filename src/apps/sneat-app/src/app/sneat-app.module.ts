@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { DefaultSneatApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
+import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { initFirebase, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunesUiModule } from '@sneat/communes/ui';
@@ -52,7 +52,7 @@ const appInfo: IAppInfo = {
 		},
 		{
 			provide: SneatApiBaseUrl,
-			useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatApiBaseUrl,
+			useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatAppApiBaseUrl,
 		},
 		{
 			provide: RANDOM_ID_OPTIONS,
