@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import * as Sentry from '@sentry/angular';
+// import * as Sentry from '@sentry/angular';
 import { IErrorLogger, ILogErrorOptions } from './error-logger.interface';
 
 const defaultErrorToastDuration = 7000;
@@ -32,10 +32,10 @@ export class ErrorLoggerService implements IErrorLogger {
 		}
 		if (!options || options.report === undefined || options.report) {
 			try {
-				const eventId = Sentry.captureException(e);
-				if (!options || options.feedback === undefined || options.feedback) {
-					Sentry.showReportDialog({ eventId });
-				}
+				// const eventId = Sentry.captureException(e);
+				// if (!options || options.feedback === undefined || options.feedback) {
+				// 	Sentry.showReportDialog({ eventId });
+				// }
 			} catch (ex) {
 				console.error(
 					'Sentry failed to capture or show  error report dialog',
