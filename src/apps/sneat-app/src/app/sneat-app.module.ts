@@ -16,6 +16,12 @@ import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu
 import { SneatAppRoutingModule } from './sneat-app-routing.module';
 import { SneatAppComponent } from './sneat-app.component';
 
+if (environment.production) {
+	console.log('SneatAppModule: PRODUCTION mode');
+} else {
+	console.log('SneatAppModule: NOT PRODUCTION mode');
+}
+
 initFirebase(environment.firebaseConfig);
 
 const appInfo: IAppInfo = {

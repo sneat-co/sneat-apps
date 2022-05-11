@@ -8,7 +8,7 @@ import { environment } from './environments/environment';
 import { init, instrumentAngularRouting } from '@sentry/angular';
 
 if (environment.production) {
-
+	console.log('main.ts: PRODUCTION mode')
 	init({
 		dsn: "https://2cdec43e82bc42e98821becbfe251778@o355000.ingest.sentry.io/6395241",
 		integrations: [
@@ -24,6 +24,8 @@ if (environment.production) {
 		tracesSampleRate: 1.0,
 	});
 	enableProdMode();
+} else {
+	console.log('main.ts: NOT PRODUCTION mode')
 }
 
 platformBrowserDynamic()
