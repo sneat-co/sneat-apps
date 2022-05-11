@@ -1,20 +1,26 @@
 import {
-	AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, SimpleChanges,
+	AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
+import { RoutingState } from '@sneat/core';
 import { HappeningType, IHappeningDto, IHappeningSlot, ITiming, SlotParticipant, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
+import { Subject, takeUntil } from 'rxjs';
+import { ScheduleService } from '../../services/schedule.service';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
 @Component({
 	selector: 'sneat-happening-page-form',
 	templateUrl: 'happening-page-form.component.html',
 })
-export class HappeningPageFormComponent implements OnChanges, AfterViewInit {
+export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnDestroy {
+
+	private readonly destroyed = new Subject<void>();
 
 	public readonly changed = new EventEmitter<IHappeningContext>();
 
@@ -45,14 +51,19 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit {
 
 	private readonly logErrorHandler = this.errorLogger.logErrorHandler;
 	private readonly logError = this.errorLogger.logError;
+	private readonly hasNavHistory: boolean;
+
 	public participantsTab: 'members' | 'others' = 'members';
 
-	readonly id = (i: number, v: { id: string }) => v.id;
+	public readonly id = (i: number, v: { id: string }) => v.id;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		routingState: RoutingState,
+		private readonly scheduleService: ScheduleService,
+		private readonly params: TeamComponentBaseParams,
 	) {
-		//
+		this.hasNavHistory = routingState.hasHistory();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -132,7 +143,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit {
 	}
 
 
-	public makeHappeningDto(): IHappeningDto {
+	private makeHappeningDto(): IHappeningDto {
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
@@ -206,6 +217,73 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit {
 	}
 
 	submit(event: Event): void {
-		//
+		if (this.happening?.id) {
+			// Update happening
+		} else {
+			//Create happening
+			this.createHappening();
+		}
 	}
+
+	createHappening(): void {
+		console.log('NewHappeningPageComponent.createHappening()');
+		if (!this.team) {
+			return;
+		}
+		try {
+			// this.happeningForm.markAsTouched();
+			// if (!this.happeningForm.valid) {
+			// 	alert('title is a required field');
+			// 	// if (!this.happeningForm.controls['title'].valid) {
+			// 	// 	this.titleInput?.setFocus()
+			// 	// 		.catch(this.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
+			// 	// }
+			// 	return;
+			// }
+			const team = this.team;
+
+			if (!team) {
+				this.logError(new Error('!team context'));
+				return;
+			}
+
+			this.isCreating = true;
+
+			const dto = this.makeHappeningDto();
+
+			this.scheduleService
+				.createHappening({ teamID: team.id, dto })
+				.pipe(
+					takeUntil(this.destroyed),
+				)
+				.subscribe({
+					next: () => {
+						console.log('new happening created');
+						if (this.hasNavHistory) {
+							this.params.navController.pop()
+								.catch(this.logErrorHandler('failed to pop back after creating a happening'));
+						} else {
+							this.params.teamNavService.navigateBackToTeamPage(team, 'schedule')
+								.catch(this.logErrorHandler('failed to team schedule after creating a happening'));
+						}
+					},
+					error: err => {
+						this.isCreating = false;
+						this.logError(err, 'failed to create new happening');
+					},
+					complete: () => {
+						this.isCreating = false;
+					},
+				});
+		} catch (e) {
+			this.isCreating = false;
+			this.errorLogger.logError(e, 'failed to create new happening');
+		}
+	}
+
+	ngOnDestroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
+
 }
