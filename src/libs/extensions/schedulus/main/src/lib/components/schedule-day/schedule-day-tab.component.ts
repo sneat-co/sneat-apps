@@ -10,6 +10,7 @@ import { addDays, ScheduleStateService } from '../schedule-state.service';
 @Component({
 	selector: 'sneat-day-tab',
 	templateUrl: 'schedule-day-tab.component.html',
+	styleUrls: ['schedule-day-tab.component.scss'],
 	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScheduleDayTabComponent implements OnDestroy {

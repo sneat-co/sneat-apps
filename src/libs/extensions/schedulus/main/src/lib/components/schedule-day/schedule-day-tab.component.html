@@ -2,41 +2,44 @@
 	<ion-buttons slot="start">
 		<ion-button title="Previous day" (click)="swipe(-1, $event)">
 			<ion-icon name="chevron-back-sharp" slot="start"></ion-icon>
-			<ion-label>Previous</ion-label>
+			<ion-label><span class="sneat-hide-on-small-screen">Previous</span></ion-label>
 		</ion-button>
 	</ion-buttons>
-	<ion-label style="text-align: center" tappable color="secondary">
+	<ion-label style="text-align: center; width: 100%" tappable color="secondary">
 		Pick date
 	</ion-label>
 	<!--	<ion-label style="text-align: center" color="medium">Swipe to change day</ion-label>-->
 	<ion-buttons slot="end">
 		<ion-button title="Next day" (click)="swipe(1, $event)">
 			<ion-icon name="chevron-forward-sharp" slot="end"></ion-icon>
-			<ion-label>Next</ion-label>
+			<ion-label><span class="sneat-hide-on-small-screen">Next</span></ion-label>
 		</ion-button>
 	</ion-buttons>
 </ion-item>
 
-<ion-popover trigger="pick-date" reference="event" arrow="true" side="bottom" alignment="center">
+<ion-popover trigger="pick-date" alignment="center">
 	<ng-template>
-		<ion-card>
-			<ion-datetime
+		<ion-item>
+			<ion-button fill="clear" color="primary" (click)="goToday()">Today</ion-button>
+			<ion-button fill="clear" color="tertiary" (click)="goTomorrow()" slot="end">Tomorrow</ion-button>
+		</ion-item>
+		<ion-datetime
 				[value]="dateAsIsoString"
 				presentation="date"
 				(ionChange)="onPickerDateChanged($event)"
 			></ion-datetime>
-			<ion-list>
-			<ion-item-divider>
-				<ion-label>Quick links</ion-label>
-			</ion-item-divider>
-			<ion-item tappable (click)="goToday()">
-				<ion-label>Today</ion-label>
-			</ion-item>
-			<ion-item tappable (click)="goTomorrow()">
-				<ion-label>Tomorrow</ion-label>
-			</ion-item>
-			</ion-list>
-		</ion-card>
+
+<!--			<ion-list>-->
+<!--			<ion-item-divider>-->
+<!--				<ion-label>Quick links</ion-label>-->
+<!--			</ion-item-divider>-->
+<!--			<ion-item tappable (click)="goToday()">-->
+<!--				<ion-label>Today</ion-label>-->
+<!--			</ion-item>-->
+<!--			<ion-item tappable (click)="goTomorrow()">-->
+<!--				<ion-label>Tomorrow</ion-label>-->
+<!--			</ion-item>-->
+<!--			</ion-list>-->
 	</ng-template>
 </ion-popover>
 
