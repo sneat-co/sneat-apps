@@ -42,7 +42,9 @@ specifiers:
   '@nxtend/capacitor': 13.0.0
   '@nxtend/firebase': 12.1.0
   '@nxtend/ionic-angular': 13.1.0
+  '@sentry/angular': ^6.19.7
   '@sentry/browser': 6.19.7
+  '@sentry/tracing': ^6.19.7
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.11
@@ -111,7 +113,9 @@ dependencies:
   '@ionic-native/status-bar': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
   '@ionic/angular': 6.1.3_ke6huzjtu2wiwgfgutpjuojrri
   '@nrwl/angular': 14.0.2_vtibquyjx2ngktznc6htsohrs4
+  '@sentry/angular': 6.19.7_45u52y5czddrwqe3chh4p2klz4
   '@sentry/browser': 6.19.7
+  '@sentry/tracing': 6.19.7
   '@sneat/random': 0.0.3_2ujufvzwxwptccu3xcgiinx3b4
   '@sneat/wormhole': 0.0.5_lrmuj3y4hnoigzeej5bhfkr3ta
   codemirror: 5.65.3
@@ -310,6 +314,7 @@ packages:
       esbuild: 0.14.22
     transitivePeerDependencies:
       - '@swc/core'
+      - bluebird
       - bufferutil
       - chokidar
       - debug
@@ -650,6 +655,7 @@ packages:
       symbol-observable: 4.0.0
       uuid: 8.3.2
     transitivePeerDependencies:
+      - bluebird
       - chokidar
       - supports-color
     dev: true
@@ -1247,6 +1253,8 @@ packages:
     resolution: {integrity: sha512-n2Q6i+fnJqzOaq2VkdXxy2TCPCWQZHiCo0XqmrCvDWcZQKRyZzYi4Z0yxlBuN0w+r2ZHmre+Q087DSrw3pbJDQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.17.10
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/7.16.7_@babel+core@7.16.12:
     resolution: {integrity: sha512-anv/DObl7waiGEnC24O9zqL0pSuI9hljihqiDuFHC8d7/bjr/4RLGPWuc8rYOff/QPzbEPSkzG8wGG9aDuhHRg==}
@@ -4060,6 +4068,8 @@ packages:
       promise-retry: 2.0.1
       semver: 7.3.5
       which: 2.0.2
+    transitivePeerDependencies:
+      - bluebird
     dev: true
 
   /@npmcli/installed-package-contents/1.0.7:
@@ -4097,6 +4107,7 @@ packages:
       node-gyp: 8.4.1
       read-package-json-fast: 2.0.3
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -4141,6 +4152,7 @@ packages:
       - typescript
       - uglify-js
       - utf-8-validate
+      - vue-template-compiler
       - webpack-cli
     dev: false
 
@@ -4193,7 +4205,7 @@ packages:
       '@nrwl/workspace': 14.0.2_nob2iy43alpbny3qblnhs4tqnq
       chalk: 4.1.0
       enhanced-resolve: 5.9.2
-      fork-ts-checker-webpack-plugin: 6.2.10
+      fork-ts-checker-webpack-plugin: 6.2.10_gwpgu7zgfyn62yzbc4aglubnam
       rxjs: 6.6.7
       ts-loader: 9.2.6_dgip6vjrhmffcc4ihrseicj6om
       tsconfig-paths: 3.12.0
@@ -4213,6 +4225,7 @@ packages:
       - ts-node
       - typescript
       - utf-8-validate
+      - vue-template-compiler
       - webpack
     dev: false
 
@@ -4440,6 +4453,7 @@ packages:
       - ts-node
       - typescript
       - utf-8-validate
+      - vue-template-compiler
       - webpack
     dev: false
 
@@ -4766,6 +4780,24 @@ packages:
       - chokidar
     dev: true
 
+  /@sentry/angular/6.19.7_45u52y5czddrwqe3chh4p2klz4:
+    resolution: {integrity: sha512-xIMxAM/2+XCZFiPntp05kg1q3TG4qeGEg9ouVYCULXaj6f7cqzVQhN4LQOuo+m9W6qMaAKK6QigHdSVOQJkTiw==}
+    engines: {node: '>=6'}
+    peerDependencies:
+      '@angular/common': 10.x || 11.x || 12.x || 13.x
+      '@angular/core': 10.x || 11.x || 12.x || 13.x
+      '@angular/router': 10.x || 11.x || 12.x || 13.x
+    dependencies:
+      '@angular/common': 13.3.5_2z7dbvhq353ts3uotj6ox4qkcy
+      '@angular/core': 13.3.5_rxjs@7.5.5+zone.js@0.11.5
+      '@angular/router': 13.3.5_c5gzyfnqtcgi7vock5omrpo3gy
+      '@sentry/browser': 6.19.7
+      '@sentry/types': 6.19.7
+      '@sentry/utils': 6.19.7
+      rxjs: 6.6.7
+      tslib: 1.14.1
+    dev: false
+
   /@sentry/browser/6.19.7:
     resolution: {integrity: sha512-oDbklp4O3MtAM4mtuwyZLrgO1qDVYIujzNJQzXmi9YzymJCuzMLSRDvhY83NNDCRxf0pds4DShgYeZdbSyKraA==}
     engines: {node: '>=6'}
@@ -4802,6 +4834,17 @@ packages:
     dependencies:
       '@sentry/hub': 6.19.7
       '@sentry/types': 6.19.7
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/tracing/6.19.7:
+    resolution: {integrity: sha512-ol4TupNnv9Zd+bZei7B6Ygnr9N3Gp1PUrNI761QSlHtPC25xXC5ssSD3GMhBgyQrcvpuRcCFHVNNM97tN5cZiA==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/hub': 6.19.7
+      '@sentry/minimal': 6.19.7
+      '@sentry/types': 6.19.7
+      '@sentry/utils': 6.19.7
       tslib: 1.14.1
     dev: false
 
@@ -6181,6 +6224,8 @@ packages:
       qs: 6.7.0
       raw-body: 2.4.0
       type-is: 1.6.18
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /bonjour/3.5.0:
@@ -6313,6 +6358,8 @@ packages:
       ssri: 8.0.1
       tar: 6.1.11
       unique-filename: 1.1.1
+    transitivePeerDependencies:
+      - bluebird
     dev: true
 
   /call-bind/1.0.2:
@@ -6550,6 +6597,8 @@ packages:
       on-headers: 1.0.2
       safe-buffer: 5.1.2
       vary: 1.1.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /concat-map/0.0.1:
@@ -6572,6 +6621,8 @@ packages:
       finalhandler: 1.1.2
       parseurl: 1.3.3
       utils-merge: 1.0.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /console-control-strings/1.1.0:
@@ -6864,12 +6915,22 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.0.0
     dev: true
 
   /debug/3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.1.3
     dev: true
@@ -8075,6 +8136,8 @@ packages:
       type-is: 1.6.18
       utils-merge: 1.0.1
       vary: 1.1.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /extend/3.0.2:
@@ -8180,6 +8243,8 @@ packages:
       parseurl: 1.3.3
       statuses: 1.5.0
       unpipe: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /find-cache-dir/3.3.2:
@@ -8263,9 +8328,19 @@ packages:
         optional: true
     dev: true
 
-  /fork-ts-checker-webpack-plugin/6.2.10:
+  /fork-ts-checker-webpack-plugin/6.2.10_gwpgu7zgfyn62yzbc4aglubnam:
     resolution: {integrity: sha512-HveFCHWSH2WlYU1tU3PkrupvW8lNFMTfH3Jk0TfC2mtktE9ibHGcifhCsCFvj+kqlDfNIlwmNLiNqR9jnSA7OQ==}
     engines: {node: '>=10', yarn: '>=1.0.0'}
+    peerDependencies:
+      eslint: '>= 6'
+      typescript: '>= 2.7'
+      vue-template-compiler: '*'
+      webpack: '>= 4'
+    peerDependenciesMeta:
+      eslint:
+        optional: true
+      vue-template-compiler:
+        optional: true
     dependencies:
       '@babel/code-frame': 7.16.7
       '@types/json-schema': 7.0.9
@@ -8273,6 +8348,7 @@ packages:
       chokidar: 3.5.2
       cosmiconfig: 6.0.0
       deepmerge: 4.2.2
+      eslint: 8.14.0
       fs-extra: 9.1.0
       glob: 7.2.0
       memfs: 3.4.0
@@ -8280,6 +8356,8 @@ packages:
       schema-utils: 2.7.0
       semver: 7.3.5
       tapable: 1.1.3
+      typescript: 4.6.4
+      webpack: 5.72.0
     dev: false
 
   /form-data/3.0.1:
@@ -9860,6 +9938,8 @@ packages:
       mime: 1.6.0
       needle: 2.9.1
       source-map: 0.6.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /leven/3.1.0:
@@ -10045,6 +10125,7 @@ packages:
       socks-proxy-agent: 6.1.1
       ssri: 8.0.1
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -10069,6 +10150,7 @@ packages:
       socks-proxy-agent: 6.1.1
       ssri: 8.0.1
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -10326,6 +10408,8 @@ packages:
       debug: 3.2.7
       iconv-lite: 0.4.24
       sax: 1.2.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
     optional: true
 
@@ -10382,6 +10466,7 @@ packages:
       esbuild: 0.14.38
     transitivePeerDependencies:
       - '@types/node'
+      - bluebird
       - supports-color
     dev: true
 
@@ -10435,6 +10520,7 @@ packages:
       tar: 6.1.11
       which: 2.0.2
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -10529,6 +10615,7 @@ packages:
       minizlib: 2.1.2
       npm-package-arg: 8.1.5
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -10855,6 +10942,7 @@ packages:
       ssri: 8.0.1
       tar: 6.1.11
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -10988,6 +11076,8 @@ packages:
       async: 2.6.4
       debug: 3.2.7
       mkdirp: 0.5.5
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /postcss-attribute-case-insensitive/5.0.0_postcss@8.4.12:
@@ -11748,6 +11838,11 @@ packages:
 
   /promise-inflight/1.0.1:
     resolution: {integrity: sha1-mEcocL8igTL8vdhoEputEsPAKeM=}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
     dev: true
 
   /promise-polyfill/8.1.3:
@@ -12314,6 +12409,8 @@ packages:
       on-finished: 2.3.0
       range-parser: 1.2.1
       statuses: 1.5.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /serialize-javascript/6.0.0:
@@ -12332,6 +12429,8 @@ packages:
       http-errors: 1.6.3
       mime-types: 2.1.35
       parseurl: 1.3.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /serve-static/1.14.1:
@@ -12342,6 +12441,8 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.17.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /set-blocking/2.0.0:
@@ -13513,6 +13614,7 @@ packages:
     resolution: {integrity: sha512-Lc7/p3GtqtqPBYYtS6KCN3c77/2QCev51DvcJKbkFPQNoj1sinkGwLGFDxkXY9J6p9+EPnYs+D90uwbnaiURTw==}
     engines: {node: '>= 6.4.0'}
     dependencies:
+      logform: 2.3.0
       readable-stream: 2.3.7
       triple-beam: 1.3.0
     dev: false
