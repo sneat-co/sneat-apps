@@ -19,7 +19,7 @@ const firebaseConfig: IFirebaseConfig = {
 	},
 	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 	authDomain: 'sneat.app',
-	projectId: 'sneatapp',
+	projectId: 'local-sneat-app',
 	// 	storageBucket: 'sneat-team.appspot.com',
 	// 	messagingSenderId: '724666284649',
 	appId: '1:724666284649:web:080ffaab56bb71e49740f8',
