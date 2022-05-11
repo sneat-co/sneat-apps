@@ -2,7 +2,7 @@ export function isoStringsToDate(date: string, time?: string): Date {
 	const [year, month, day] = date
 		.split('T')[0]
 		.split('-');
-	if (!!time) {
+	if (time) {
 		if (time.indexOf('T') >= 0) {
 			time = time.split('T')[1];
 		}

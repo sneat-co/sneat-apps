@@ -1,3 +1,30 @@
+<ion-item id="pick-date">
+	<ion-buttons slot="start">
+		<ion-button title="Previous day" (click)="swipe(-1, $event)">
+			<ion-icon name="chevron-back-sharp" slot="start"></ion-icon>
+			<ion-label>Previous</ion-label>
+		</ion-button>
+	</ion-buttons>
+	<ion-label style="text-align: center" tappable color="secondary">
+		Pick date
+	</ion-label>
+	<!--	<ion-label style="text-align: center" color="medium">Swipe to change day</ion-label>-->
+	<ion-buttons slot="end">
+		<ion-button title="Next day" (click)="swipe(1, $event)">
+			<ion-icon name="chevron-forward-sharp" slot="end"></ion-icon>
+			<ion-label>Next</ion-label>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
+
+<ion-popover trigger="pick-date" reference="event" arrow="true" side="bottom" alignment="center">
+	<ng-template>
+		<ion-card>
+			<ion-datetime [value]="dateAsIsoString" presentation="date" (ionChange)="onPickerDateChanged($event)"></ion-datetime>
+		</ion-card>
+	</ng-template>
+</ion-popover>
+
 <!--Today -->
 <sneat-schedule-day-card
 	[team]="team"
@@ -5,14 +32,15 @@
 	[onSlotClicked]="onSlotClicked"
 ></sneat-schedule-day-card>
 
-<div class="ion-text-center ion-margin">
-	<ion-text color="medium">&larr; Swipe to change day &rarr;</ion-text>
-</div>
+<!--<div class="ion-text-center ion-margin">-->
+<!--	<ion-text color="medium">&larr; Swipe to change day &rarr;</ion-text>-->
+<!--</div>-->
+
 
 <!--Tomorrow -->
-<sneat-schedule-day-card
-	[activeDayPlus]="1"
-	[team]="team"
-	[teamDaysProvider]="teamDaysProvider"
-	[onSlotClicked]="onSlotClicked"
-></sneat-schedule-day-card>
+<!--<sneat-schedule-day-card-->
+<!--	[activeDayPlus]="1"-->
+<!--	[team]="team"-->
+<!--	[teamDaysProvider]="teamDaysProvider"-->
+<!--	[onSlotClicked]="onSlotClicked"-->
+<!--&gt;</sneat-schedule-day-card>-->
