@@ -23,7 +23,7 @@
 			<ion-button fill="clear" color="primary" (click)="goToday()">Today</ion-button>
 			<ion-button fill="clear" color="tertiary" (click)="goTomorrow()" slot="end">Tomorrow</ion-button>
 		</ion-item>
-		<ion-datetime
+		<ion-datetime class="sneat-date-picker"
 				[value]="dateAsIsoString"
 				presentation="date"
 				(ionChange)="onPickerDateChanged($event)"
