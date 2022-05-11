@@ -99,3 +99,9 @@ ion-modal.auto-height {
 
   //}
 }
+
+@media screen and (max-width: 620px) {
+  .sneat-hide-on-small-screen {display: none}
+  .sneat-smaller-on-small-screen {font-size: smaller}
+  .sneat-small-on-small-screen {font-size: small}
+}

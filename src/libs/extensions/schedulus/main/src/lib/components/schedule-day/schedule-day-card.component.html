@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-item class="sneat-small-end-padding sneat-small-start-padding">
-		<ion-buttons slot="start" class="sneat-tiny-end-margin sneat-no-horizontal-margins">
+		<ion-buttons slot="start" class="sneat-hide-on-small-screen sneat-tiny-end-margin sneat-no-horizontal-margins">
 			<ion-button [disabled]="isDefaultDate()"
 									[color]="isDefaultDate() ? 'medium' : 'primary'"
 									[title]="shiftDays === 0 ? 'Jump to today' : 'Jump to tomorrow'"
@@ -19,7 +19,7 @@
 		<ion-label>
 			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-					<h1 class="virtual-slide" [@virtualSlide]="oddDay?.animationState">
+					<h1 class="virtual-slide sneat-smaller-on-small-screen" [@virtualSlide]="oddDay?.animationState">
 						<sneat-schedule-day-title [day]="oddDay"></sneat-schedule-day-title>
 					</h1>
 					<h1 class="virtual-slide" [@virtualSlide]="evenDay?.animationState || 'hide'">
@@ -29,7 +29,7 @@
 			</div>
 		</ion-label>
 
-		<ion-buttons slot="end">
+		<ion-buttons slot="end" class="sneat-hide-on-small-screen">
 			<ion-button title="Add recurring" (click)="goNewHappening({type: 'recurring', wd: activeDay?.weekday?.id})">
 				<ion-icon name="duplicate-outline"></ion-icon>
 			</ion-button>
