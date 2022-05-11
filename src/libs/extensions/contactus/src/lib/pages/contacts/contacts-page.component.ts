@@ -19,7 +19,7 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 	public allContacts: IContactContext[];
 	public contacts?: IContactContext[];
 	public groups: IMemberGroupDto[] = [];
-	public segment: 'list' | 'groups' = 'list';
+	public segment: 'list' | 'groups' = 'groups';
 	public filter = '';
 	public role?: ContactType;
 	private contactsSubscription?: Subscription;

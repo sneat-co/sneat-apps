@@ -6,6 +6,15 @@ import { IContactGroup, IContactRole } from './contacts-base.component';
 function familyContactGroups(): IContactGroup[] {
 	return [
 		{
+			id: 'kids',
+			title: 'Kids',
+			roles: [
+				{ id: 'teacher', title: 'Teacher', emoji: '👩‍🏫' },
+				{ id: 'babysitter', title: 'Babysitter', emoji: '👧', finder: 'babysitters.express' },
+				{ id: 'friends', title: 'Friends', emoji: '🚸' },
+			],
+		},
+		{
 			id: 'medics',
 			title: 'Medical',
 			roles: [
@@ -19,6 +28,7 @@ function familyContactGroups(): IContactGroup[] {
 				{ id: 'plumber', title: 'Plumber', emoji: '🚽', finder: 'plumbers.express' },
 				{ id: 'electrician', title: 'Electrician', emoji: '🔌', finder: 'electricians.express' },
 				{ id: 'gardener', title: 'Gardener', emoji: '👨‍🌾', finder: 'gardeners.express' },
+				{ id: 'insurer', title: 'Insurer', emoji: '🧾' },
 			],
 		},
 		{
@@ -27,15 +37,6 @@ function familyContactGroups(): IContactGroup[] {
 			roles: [
 				{ id: 'mechanic', title: 'Mechanic', emoji: '👨‍🔧' },
 				{ id: 'insurer', title: 'Insurer', emoji: '🧾' },
-			],
-		},
-		{
-			id: 'kids',
-			title: 'Kids',
-			roles: [
-				{ id: 'teacher', title: 'Teacher', emoji: '👩‍🏫' },
-				{ id: 'babysitter', title: 'Babysitter', emoji: '👧', finder: 'babysitters.express' },
-				{ id: 'friends', title: 'Friends', emoji: '🚸' },
 			],
 		},
 	];
