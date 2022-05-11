@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "sneat.app",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/pwa/**",
+        "destination": "/pwa/index.html"
+      }
+    ]
+  }
+}
