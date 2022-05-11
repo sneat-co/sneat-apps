@@ -1,4 +1,10 @@
-<sneat-for-team-card emptyTitle="For families">
+<sneat-for-team-card
+	emptyTitle="For families"
+	itemsTitle="Your families"
+	buttonColor="danger"
+	buttonText="Start now"
+	[teamTypes]="['family']"
+>
 	<p>
 		Get your personal life together!
 	</p>
@@ -10,6 +16,5 @@
 		<li>Bills & debts management</li>
 		<li>more...</li>
 	</ul>
-	<ion-button routerLink="/new-family" color="danger" style="text-transform: none">Start now</ion-button>
 </sneat-for-team-card>
 

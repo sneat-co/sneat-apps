@@ -1,4 +1,10 @@
-<sneat-for-team-card emptyTitle="For work">
+<sneat-for-team-card
+	emptyTitle="For work"
+	itemsTitle="Teams"
+	buttonColor="secondary"
+	buttonText="Add your team"
+	[teamTypes]="['company', 'team']"
+>
 	<p>You can use Sneat.app to improve your work processes with agile tools.</p>
 	<ul>
 		<li>Daily scrums</li>
@@ -6,5 +12,4 @@
 		<li>Agenda management</li>
 		<li>more...</li>
 	</ul>
-	<ion-button color="secondary" style="text-transform: none">Add your team</ion-button>
 </sneat-for-team-card>
