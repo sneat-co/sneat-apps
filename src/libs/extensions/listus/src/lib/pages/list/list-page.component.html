@@ -7,7 +7,10 @@
 			<ng-container *ngIf="list?.brief?.emoji"><span style="margin-right: 0.3em">{{list?.brief?.emoji}}</span>
 			</ng-container>
 			<ng-container [ngSwitch]="list?.brief?.type">
-				<ng-container *ngSwitchCase="'to-buy'">{{list?.brief?.title}} to buy</ng-container>
+				<ng-container *ngSwitchCase="'to-buy'">
+					<ng-container *ngIf="!list?.brief?.emoji">🛒</ng-container>
+					{{list?.brief?.title}} to buy
+				</ng-container>
 				<ng-container *ngSwitchCase="'to-cook'">{{list?.brief?.title}} to cook</ng-container>
 				<ng-container *ngSwitchCase="'recipes'">{{list?.brief?.title}}</ng-container>
 				<ng-container *ngSwitchCase="'to-watch'">To watch: {{list?.brief?.title}}</ng-container>

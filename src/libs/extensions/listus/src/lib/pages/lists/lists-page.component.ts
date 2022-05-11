@@ -318,7 +318,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 								id: 'to-buy',
 								type: 'to-buy',
 								title: 'To buy',
-								lists: [{ id: 'groceries', type: 'to-buy', title: 'Groceries' }],
+								lists: [{ id: 'groceries', type: 'to-buy', emoji: '🛒', title: 'Groceries' }],
 							},
 						],
 					},
