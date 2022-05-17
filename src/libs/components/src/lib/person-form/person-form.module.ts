@@ -17,6 +17,6 @@ import { GenderFormComponent } from './gender-form/gender-form.component';
 		PhonesFormComponent,
 		GenderFormComponent,
 	],
-	exports: [PersonFormComponent, GenderFormComponent],
+	exports: [PersonFormComponent, NamesFormComponent, GenderFormComponent],
 })
 export class PersonFormModule {}

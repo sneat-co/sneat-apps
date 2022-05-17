@@ -2,42 +2,18 @@
 	[formGroup]="addMemberForm"
 	(ngSubmit)="submit()"
 >
+	<sneat-names-form></sneat-names-form>
 	<ion-card>
-		<ion-item-divider [color]="isNameSet ? 'light' : 'primary'">
-			<ion-label *ngIf="!isNameSet"><b>Names</b></ion-label>
-			<ion-label *ngIf="isNameSet">Names</ion-label>
-		</ion-item-divider>
-		<ion-item>
-			<ion-label color="medium">First name</ion-label>
-			<ion-input #firstNameInput [formControl]="firstName" (keyup.enter)="nameKeyupEnter($event)"
-								 (ionChange)="onNameChanged($event)"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label color="medium">Last name</ion-label>
-			<ion-input [formControl]="lastName" (keyup.enter)="nameKeyupEnter($event)"
-								 (ionChange)="onNameChanged($event)"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label color="medium">Middle name</ion-label>
-			<ion-input [formControl]="middleName" (keyup.enter)="nameKeyupEnter($event)"
-								 (ionChange)="onNameChanged($event)"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label color="medium" position="floating">Full name</ion-label>
-			<ion-input #fullNameInput [formControl]="fullName" (keyup.enter)="nameKeyupEnter($event)"
-								 (ionChange)="onFullNameChanged($event)"></ion-input>
-		</ion-item>
-		<ion-item-divider color="light" *ngIf="!isNameSet">
-			<ion-label>
-				<ion-button size="medium"
-										[color]="hasNames ? 'primary' : 'medium'"
-										(click)="nextFromName($event)"
-				>
-					<ion-label>Next</ion-label>
-					<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
-				</ion-button>
-			</ion-label>
-		</ion-item-divider>
+	<ion-item-divider color="light" *ngIf="!isNameSet">
+		<ion-label>
+			<ion-button size="medium"
+									(click)="nextFromName($event)"
+			>
+				<ion-label>Next</ion-label>
+				<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+			</ion-button>
+		</ion-label>
+	</ion-item-divider>
 	</ion-card>
 
 	<ion-grid *ngIf="isNameSet" class="ion-grid-layout">
