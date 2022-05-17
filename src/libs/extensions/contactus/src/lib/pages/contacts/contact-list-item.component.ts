@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { ContactType } from '@sneat/dto';
+import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
 import { ContactService } from '../../contact.service';
@@ -11,7 +11,7 @@ import { ContactService } from '../../contact.service';
 })
 export class ContactListItemComponent {
 
-	@Input() excludeRole?: ContactType;
+	@Input() excludeRole?: ContactRole;
 	@Input() contact?: IContactContext;
 
 	constructor(

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { PersonFormModule } from '@sneat/components';
 import { TeamComponentsModule } from '@sneat/team/components';
 import { NewMemberFormComponent } from './new-member-form.component';
 
@@ -24,6 +25,7 @@ const routes: Routes = [
 		IonicModule,
 		RouterModule.forChild(routes),
 		TeamComponentsModule,
+		PersonFormModule,
 	],
 	declarations: [
 		NewMemberPageComponent,

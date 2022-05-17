@@ -93,11 +93,24 @@ export class MemberService {
 	public watchMember(
 		team: ITeamRef,
 		memberId: string,
-	): Observable<{ team: ITeamContext; member?: IMemberDto } | undefined | null> {
-		const findMember = (team: ITeamContext) => team ? {
-			team,
-			member: team?.dto?.members?.find(m => m.id === memberId),
-		} : team === null ? null : undefined;
+	): Observable<{ team: ITeamContext; member?: IMemberContext | null } | undefined | null> {
+		const findMember = (team: ITeamContext) => {
+			if (team) {
+				const memberBrief = team?.dto?.members?.find(m => m.id === memberId);
+				if (!memberBrief) {
+					return {team, member: null};
+				}
+				const member: IMemberContext = {id: memberBrief.id, brief: memberBrief};
+				return {
+					team,
+					member,
+				};
+			} else if (team == null) {
+				return null
+			} else {
+				return undefined;
+			}
+		};
 		return this.teamService.watchTeam(team)
 			.pipe(
 				map(findMember),

@@ -2,17 +2,21 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SharedWithComponent } from './shared-with.component';
+import { ContactRoleFormComponent } from './contact-role-form.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
-		FormsModule,
 		IonicModule,
+		FormsModule,
 	],
-	entryComponents: [SharedWithComponent],
-	declarations: [SharedWithComponent],
-	exports: [SharedWithComponent],
+	declarations: [
+		ContactRoleFormComponent,
+	],
+	exports: [
+		ContactRoleFormComponent,
+	]
 })
-export class SharedWithModule {
+export class ContactRoleFormModule {
+
 }

@@ -1,0 +1,19 @@
+<ion-card>
+	<ion-item-group *ngIf="!gender" @radioOut>
+		<ion-item-divider [color]="!gender ? 'primary' : 'medium'">
+			<ion-label><b>Gender</b></ion-label>
+		</ion-item-divider>
+		<ion-radio-group [(ngModel)]="gender" [disabled]="!gender" (ionChange)="onChanged()">
+			<ion-item *ngFor="let gender of genders">
+				<ion-label>{{gender.title}}</ion-label>
+				<ion-radio [value]="gender.id" slot="start"></ion-radio>
+			</ion-item>
+		</ion-radio-group>
+	</ion-item-group>
+	<ion-item *ngIf="gender" @selectIn>
+		<ion-label color="medium" position="stacked">Gender</ion-label>
+		<ion-select [(ngModel)]="gender" interface="popover" (ionChange)="onChanged()">
+			<ion-select-option *ngFor="let g of genders" [value]="g.id">{{g.title}}</ion-select-option>
+		</ion-select>
+	</ion-item>
+</ion-card>

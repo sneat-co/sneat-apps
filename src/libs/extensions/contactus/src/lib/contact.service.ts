@@ -3,9 +3,10 @@ import { IContactBrief, IContactDto, TeamCounter } from '@sneat/dto';
 import { IContactContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
 import { TeamItemBaseService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
+import { ContactNavService } from './contact-nav-service';
 
 export interface ICreateContactRequest extends ITeamRequest {
-	title: string;
+	contactDto: IContactDto;
 }
 
 @Injectable()
@@ -32,6 +33,7 @@ export class ContactService {
 @NgModule({
 	providers: [
 		ContactService,
+		ContactNavService,
 	],
 })
 export class ContactServiceModule {

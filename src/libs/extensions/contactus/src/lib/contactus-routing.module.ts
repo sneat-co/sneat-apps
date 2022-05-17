@@ -9,6 +9,12 @@ export const contactusRoutes: Route[] = [
 			.then(m => m.ContactsPageModule),
 		// ...guardRoute,
 	},
+	{
+		path: 'new-contact',
+		loadChildren: () => import('./pages/new-contact/new-contact-page.module')
+			.then(m => m.NewContactPageModule),
+		// ...guardRoute,
+	},
 	// {
 	// 	path: 'contact/:contactID',
 	// 	loadChildren: () => import('./pages/contact/contact-page.module')
@@ -31,12 +37,6 @@ export const contactusRoutes: Route[] = [
 	// 	path: 'landlords',
 	// 	loadChildren: () => import('./pages/contacts/contacts-page.module')
 	// 		.then(m => m.ContactsPageModule),
-	// 	// ...guardRoute,
-	// },
-	// {
-	// 	path: 'new-contact',
-	// 	loadChildren: () => import('./pages/contact-new/contact-new-page.module')
-	// 		.then(m => m.ContactNewPageModule),
 	// 	// ...guardRoute,
 	// },
 ];

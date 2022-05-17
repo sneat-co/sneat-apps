@@ -1,0 +1,15 @@
+<ion-card>
+	<ion-item-divider color="light">
+		<ion-label>Names</ion-label>
+	</ion-item-divider>
+	<ion-item>
+		<ion-input placeholder="First name" [(ngModel)]="firstName"
+							 [disabled]="disabled"
+		></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-input placeholder="Last name" [(ngModel)]="lastName"
+							 [disabled]="disabled"
+		></ion-input>
+	</ion-item>
+</ion-card>

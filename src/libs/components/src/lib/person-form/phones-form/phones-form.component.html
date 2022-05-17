@@ -1,0 +1,33 @@
+<ion-card>
+
+	<ion-item-divider color="light">
+		<ion-label>
+			<ion-icon name="call" class="ion-margin-end"></ion-icon>
+			Phone numbers
+		</ion-label>
+	</ion-item-divider>
+
+	<ion-grid class="ion-grid-layout">
+
+		<ion-row *ngFor="let phone of phones">
+
+			<ion-col size="auto">
+				<ion-item>
+					<ion-select [(ngModel)]="phone.type" interface="popover">
+						<ion-select-option *ngFor="let t of types"
+															 [value]="t.id"
+															 [disabled]="disabled"
+						>{{t.title}}</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-input type="tel" placeholder="phone #" [(ngModel)]="phone.number" [disabled]="disabled"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+	</ion-grid>
+</ion-card>

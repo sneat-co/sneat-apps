@@ -1,19 +1,7 @@
 import { TeamType } from '@sneat/auth-models';
+import { ContactRole } from './contact-roles';
 
 export {TeamType, MemberType} from '@sneat/auth-models';
-export type InsurerType = 'insurer';
-export type DwellingContacts =
-	InsurerType
-	| 'cleaner'
-	| 'gardener'
-	| 'plumber'
-	| 'handyman'
-	| 'gp'
-	| 'landlord'
-	| 'tenant'
-	| 'realtor';
-type VehicleContacts = InsurerType | 'mechanic' | 'electric' | 'handyman';
-export type ContactType = DwellingContacts | VehicleContacts | 'applicant';
 export type MembersVisibility = 'private' | 'protected' | 'public';
 export type WeekdayCode2 = 'mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su';
 export type Repeats = 'once' | 'weekly' | 'fortnightly' | 'monthly' | 'yearly';
@@ -83,4 +71,6 @@ export type CommuneItemCounter =
 	| 'regularTasks'
 	| 'todos'
 	| 'upcomings';
+
 export type ContactToMemberRelation = 'parent' | 'mother' | 'father' | 'sibling' | 'childminder' | 'friend' | 'child';
+export type ContactToAssetRelation = ContactRole;

@@ -20,6 +20,8 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
+const EMPTY_TEAM_CONTEXT = {id: ''};
+
 @Injectable() // we need this decorator so we can implement Angular interfaces
 export abstract class TeamBaseComponent implements OnDestroy {
 
@@ -28,7 +30,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	private readonly teamBriefChanged = new Subject<ITeamBrief | undefined | null>();
 	private readonly teamDtoChanged = new Subject<ITeamDto | undefined | null>();
 	private teamContext?: ITeamContext;
-	protected route?: ActivatedRoute;
+	protected route: ActivatedRoute;
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
 	protected readonly userService: SneatUserService;
@@ -39,6 +41,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	protected readonly subs = new Subscription();
 	protected readonly destroyed = new Subject<boolean>();
 	// protected readonly willLeave = new Subject<void>();
+	protected defaultBackPage?: string;
+
 	protected readonly logError: (e: any, message?: string, options?: ILogErrorOptions) => void;
 	protected readonly logErrorHandler: (
 		message?: string,
@@ -72,7 +76,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		);
 
 	public get team(): ITeamContext { // TODO: Document why we do not allow undefined
-		return this.teamContext || {id: ''};
+		return this.teamContext || EMPTY_TEAM_CONTEXT;
 	}
 
 	public get preloader() {
@@ -89,7 +93,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	public get defaultBackUrl(): string {
 		const t = this.teamContext;
-		return t ? `/space/${t.type}/${t.id}` : '';
+		const url = t ? `/space/${t.type}/${t.id}` : ''
+		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
 	protected constructor(

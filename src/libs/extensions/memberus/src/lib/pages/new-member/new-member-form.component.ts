@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInput, IonRadio, IonRadioGroup, NavController } from '@ionic/angular';
 import { excludeUndefined, RoutingState } from '@sneat/core';
 import {
-	FamilyMemberRelation,
+	FamilyMemberRelation, Gender,
 	IMemberDto,
 	ITitledRecord,
 	MemberRelationshipOther,
@@ -103,9 +103,8 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 		Validators.required,
 	]);
 
-	public readonly gender = new FormControl('', [
-		Validators.required,
-	]);
+	public gender?: Gender;
+
 	public readonly role = new FormControl('', [
 		Validators.required,
 	]);
@@ -134,13 +133,12 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 		email: this.email,
 		phone: this.phone,
 		ageGroup: this.ageGroup,
-		gender: this.gender,
 		relationship: this.relationship,
 	}, isFormValid);
 
 
 	public get isComplete(): boolean {
-		return this.hasNames && !!this.ageGroup.value && !!this.gender.value && !!this.relationship;
+		return this.hasNames && !!this.ageGroup.value && !!this.gender && !!this.relationship;
 	}
 
 	private isFullNameChanged = false;
@@ -241,7 +239,7 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 				last: this.lastName.value,
 			},
 			ageGroup: this.ageGroup.value,
-			gender: this.gender.value,
+			gender: this.gender,
 			email: this.email.value.trim() ? this.email.value.trim() : undefined,
 			phone: this.phone.value.trim() ? this.phone.value.trim() : undefined,
 		};
@@ -269,7 +267,7 @@ export class NewMemberFormComponent implements AfterViewInit, OnChanges {
 				middle: this.middleName.value,
 				last: this.lastName.value,
 			},
-			gender: this.gender.value,
+			gender: this.gender,
 			ageGroup: this.ageGroup.value,
 			role: MemberRoleContributor,
 		};

@@ -20,3 +20,4 @@ export * from './lib/select-from-list/select-from-list.component';
 export * from './lib/copyright';
 
 export * from './lib/members-as-badges';
+export * from './lib/person-form/person-form.module';

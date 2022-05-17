@@ -1,0 +1,41 @@
+<ion-card>
+	<ng-container *ngIf="!contactType">
+		<ion-item-divider color="primary">
+			<ion-label>Please select contact type</ion-label>
+		</ion-item-divider>
+		<ion-segment [(ngModel)]="groupID">
+			<ion-segment-button *ngFor="let g of groups; trackBy: id"
+													[value]="g.id"
+			>
+				<ion-label>{{g.title}}</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+
+
+		<ion-radio-group [(ngModel)]="contactType" (ionChange)="emitChanged()">
+			<ion-item *ngFor="let ct of group?.roles; trackBy: id">
+				<ion-radio slot="start" [value]="ct.id"></ion-radio>
+				<ion-label>{{ct.title || ct.id|titlecase}}</ion-label>
+			</ion-item>
+		</ion-radio-group>
+	</ng-container>
+
+	<ng-container *ngIf="contactType">
+		<ion-item>
+			<ion-label position="stacked">Contact group</ion-label>
+			<ion-select interface="popover" [(ngModel)]="groupID" (ionChange)="clearContactType()">
+				<ion-select-option *ngFor="let g of groups; trackBy: id"
+													 [value]="g.id"
+				>{{g.title || g.id}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label position="stacked">Contact type</ion-label>
+			<ion-select interface="popover" [(ngModel)]="contactType" (ionChange)="emitChanged()">
+				<ion-select-option *ngFor="let ct of group?.roles; trackBy: id"
+													 [value]="ct.id"
+				>{{ct.title || ct.id}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+	</ng-container>
+</ion-card>

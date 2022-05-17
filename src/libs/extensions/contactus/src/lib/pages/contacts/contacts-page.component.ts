@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { listItemAnimations } from '@sneat/core';
-import { ContactType, IMemberGroupDto } from '@sneat/dto';
+import { ContactRole, IMemberGroupDto } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemBaseComponent } from '@sneat/team/components';
 import { IContactContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
@@ -21,7 +21,7 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 	public groups: IMemberGroupDto[] = [];
 	public segment: 'list' | 'groups' = 'groups';
 	public filter = '';
-	public role?: ContactType;
+	public role?: ContactRole;
 	private contactsSubscription?: Subscription;
 
 	constructor(
@@ -32,7 +32,7 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 		super('ContactsPageComponent', route, params, '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
 		if (role) {
-			this.role = role[1] as ContactType;
+			this.role = role[1] as ContactRole;
 		}
 		this.allContacts = window.history.state.contacts as IContactContext[];
 

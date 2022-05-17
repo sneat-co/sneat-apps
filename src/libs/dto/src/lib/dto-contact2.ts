@@ -1,4 +1,5 @@
-import { ContactToMemberRelation, ContactType } from './types';
+import { ContactRole } from './contact-roles';
+import { ContactToAssetRelation, ContactToMemberRelation} from './types';
 import { IWithIdAndTitle } from './dto-brief';
 
 export interface IContact2Member extends IWithIdAndTitle {
@@ -6,5 +7,5 @@ export interface IContact2Member extends IWithIdAndTitle {
 }
 
 export interface IContact2Asset extends IWithIdAndTitle {
-	relation: ContactType;
+	relation: ContactToAssetRelation;
 }

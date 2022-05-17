@@ -43,43 +43,10 @@
 	<ion-grid *ngIf="isNameSet" class="ion-grid-layout">
 		<ion-row>
 			<ion-col size="12" size-md="4">
-				<ion-card @nextIn>
-					<ion-item-group *ngIf="!gender.value">
-						<ion-item-divider color="primary">
-							<ion-label><b>Gender</b></ion-label>
-						</ion-item-divider>
-						<ion-radio-group [formControl]="gender">
-							<ion-item>
-								<ion-label>Male</ion-label>
-								<ion-radio value="male" slot="start" #genderFirstInput></ion-radio>
-							</ion-item>
-							<ion-item>
-								<ion-label>Female</ion-label>
-								<ion-radio value="female" slot="start"></ion-radio>
-							</ion-item>
-							<ion-item>
-								<ion-label>Other</ion-label>
-								<ion-radio value="other" slot="start"></ion-radio>
-							</ion-item>
-							<ion-item>
-								<ion-label>Undisclosed</ion-label>
-								<ion-radio value="undisclosed" slot="start"></ion-radio>
-							</ion-item>
-						</ion-radio-group>
-					</ion-item-group>
-					<ion-item *ngIf="gender.value">
-						<ion-label color="medium" position="stacked">Gender</ion-label>
-						<ion-select [formControl]="gender" interface="popover">
-							<ion-select-option value="male">Male</ion-select-option>
-							<ion-select-option value="female">Female</ion-select-option>
-							<ion-select-option value="other">other</ion-select-option>
-							<ion-select-option value="undisclosed">undisclosed</ion-select-option>
-						</ion-select>
-					</ion-item>
-				</ion-card>
+				<sneat-gender-form @nextIn [(gender)]="gender"></sneat-gender-form>
 			</ion-col>
 
-			<ion-col size="12" size-md="4" *ngIf="gender.value">
+			<ion-col size="12" size-md="4" *ngIf="gender">
 				<ion-card @nextIn *ngIf="!ageGroup.value">
 					<ion-item-divider color="primary">
 						<ion-label><b>Age group</b></ion-label>
@@ -106,7 +73,7 @@
 				</ion-card>
 			</ion-col>
 
-			<ion-col size="12" size-md="4" *ngIf="ageGroup.value && gender.value">
+			<ion-col size="12" size-md="4" *ngIf="ageGroup.value && gender">
 				<ion-card @nextIn>
 					<ion-item-group *ngIf="!relationship.value">
 						<ion-item-divider color="primary">
@@ -134,7 +101,7 @@
 	<!-- TODO: setFocus() does not work with *ngIf and animation does not work with [style.display] -->
 	<!-- *ngIf="ageGroup.value && gender.value && relationship.value" -->
 	<ion-card @nextIn
-						[style.display]="ageGroup.value && gender.value && relationship.value ? 'block' : 'none'"
+						[style.display]="ageGroup.value && gender && relationship.value ? 'block' : 'none'"
 	>
 		<ion-item-divider color="primary">
 			<ion-label><b>Contacts</b></ion-label>

@@ -1,0 +1,31 @@
+<ion-card>
+	<ion-item-divider color="light">
+		<ion-label>
+			<ion-icon name="at" class="ion-margin-end"></ion-icon>
+			Emails
+		</ion-label>
+	</ion-item-divider>
+	<ion-grid class="ion-grid-layout">
+
+		<ion-row *ngFor="let email of emails">
+
+			<ion-col size="auto">
+				<ion-item>
+					<ion-select [(ngModel)]="email.type" interface="popover">
+						<ion-select-option *ngFor="let t of types"
+															 [value]="t.id"
+															 [disabled]="disabled"
+						>{{t.title}}</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-input type="email" placeholder="email" [(ngModel)]="email.address" [disabled]="disabled"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+	</ion-grid>
+</ion-card>

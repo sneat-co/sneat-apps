@@ -8,7 +8,7 @@ import { FilterItemModule } from '@sneat/components';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ContactServiceModule } from '../../contact.service';
 import { ContactListItemComponent } from './contact-list-item.component';
-import { ContactsFamilyComponent } from './contacts-family.component';
+import { ContactsByTypeComponent } from './contacts-by-type.component';
 
 import { ContactsPageComponent } from './contacts-page.component';
 
@@ -31,7 +31,7 @@ const routes: Routes = [
 	],
 	declarations: [
 		ContactsPageComponent,
-		ContactsFamilyComponent,
+		ContactsByTypeComponent,
 		ContactListItemComponent,
 	],
 })
