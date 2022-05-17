@@ -1,6 +1,6 @@
 import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2';
-import { IDemoRecord, ITeamsRecord, ITitled, ITitledRecord, ITotalsHolder } from './dto-models';
+import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
 import { AssetType, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
 
 export interface AssetLiabilityInfo {
@@ -92,7 +92,7 @@ export interface IAssetDtoGroupCounts {
 	assets?: number;
 }
 
-export interface IAssetDtoGroup extends ITeamsRecord, ITitledRecord, ITotalsHolder {
+export interface IAssetDtoGroup extends IWithTeamIDs, ITitledRecord, ITotalsHolder {
 	order: number;
 	desc?: string;
 	categoryId?: AssetType;

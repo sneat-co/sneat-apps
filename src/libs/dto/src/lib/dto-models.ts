@@ -1,7 +1,7 @@
 /* tslint:disable:no-bitwise */
 import { IRecord, RxRecordKey } from '@sneat/rxstore';
 import { IPerson } from './dto-person';
-import { AgeGroup, Gender, Restriction } from './types';
+import { Restriction } from './types';
 
 // import {IPersonSize} from '../ui/dto-sizechart';
 
@@ -48,9 +48,6 @@ export interface DtoTotals {
 //     id: string;
 // }
 
-export interface ITeamRecord {
-	teamID?: string;
-}
 
 export interface IWithTeamIDs {
 	teamIDs?: string[];
@@ -61,11 +58,7 @@ export interface IWithAssetIDs {
 }
 
 export interface IWithMemberIDs {
-
-}
-
-// eslint-disable-next-line
-export interface ITeamsRecord extends IWithTeamIDs { // TODO: fix it
+	memberIDs?: string[];
 }
 
 export interface IRealEstate {
@@ -98,7 +91,7 @@ export function zeroIfEmptyTotals(totals: DtoTotals): DtoTotals {
 	return totals;
 }
 
-export interface IPersonRecord extends ITeamsRecord, IPerson /*, IPersonSize*/
+export interface IPersonRecord extends IWithTeamIDs, IPerson /*, IPersonSize*/
 {
 }
 

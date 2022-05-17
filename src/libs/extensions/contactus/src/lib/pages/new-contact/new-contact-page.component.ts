@@ -72,9 +72,9 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		this.asset = window.history.state.asset as IAssetContext;
 	}
 
-	onContactTypeChanged(v: ContactRole): void {
-
-	}
+	// onContactTypeChanged(v: ContactRole): void {
+	//
+	// }
 
 	ngOnInit(): void {
 		this.route.queryParamMap.subscribe(params => {
@@ -124,7 +124,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		this.creating = true;
 		const contactDto: IContactDto = excludeUndefined({
 			teamIDs: [this.team.id],
-			title: this.name,
+			name: {full: this.name},
 			email: this.email.trim() || undefined,
 			phone: this.phone.trim() || undefined,
 			gender: this.gender,

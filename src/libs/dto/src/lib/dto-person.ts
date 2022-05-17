@@ -7,17 +7,43 @@ export interface IName {
 	readonly full?: string;
 }
 
-export interface IPerson {
+export interface IEmail {
+	readonly type: 'work' | 'personal';
+	readonly address: string;
+}
+
+export interface IPhone {
+	readonly type: 'work' | 'mobile' | 'personal' | 'fax';
+	readonly number: string;
+}
+
+export interface IPersonBase {
+	readonly name: IName;
 	readonly userID?: string;
-	readonly name?: IName;
 	readonly gender?: Gender;
 	readonly ageGroup?: AgeGroup;
-	readonly email?: string;
-	readonly phone?: string;
+}
+
+export const emptyPersonBase: IPersonBase = {name: {}};
+
+export interface IPersonBrief extends IPersonBase {
+	readonly id: string
+}
+
+export interface IPerson extends IPersonBase {
+	readonly emails?: IEmail[];
+	readonly phones?: IEmail[];
 	readonly website?: string;
 	readonly dob?: string;  // Date of birth
 }
 
 export interface IMyPerson extends IPerson {
-	relationship?: string;
+	readonly relationship?: string; // relative to current user
+	readonly roles?: string[]; // Either member roles or contact roles
+}
+
+export function myPersonToPerson(v: IMyPerson): IPerson {
+	const v2 = {...v} as any;
+	delete v2['relationship'];
+	return v2;
 }

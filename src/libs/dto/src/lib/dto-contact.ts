@@ -1,9 +1,10 @@
 import { IWithIdAndTitle } from './dto-brief';
 import { IContact2Asset, IContact2Member } from './dto-contact2';
 import { IPersonRecord } from './dto-models';
+import { IPersonBase } from './dto-person';
 
-export interface IContactBase {
-	title: string; // Mandatory title
+export interface IContactBase extends IPersonBase {
+	// title: string; // Mandatory title
 	roles?: string[];
 }
 

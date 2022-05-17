@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { formNexInAnimation } from '@sneat/animations';
-import { AgeGroup, Gender, IMyPerson, IPerson } from '@sneat/dto';
+import { AgeGroup, emptyPersonBase, Gender, IMyPerson } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
 
 
@@ -14,8 +14,10 @@ import { ITeamContext } from '@sneat/team/models';
 export class PersonFormComponent {
 
 	@Input() team?: ITeamContext;
+	@Input() disabled = false;
 
-	myPerson: IMyPerson = {};
+	@Input() myPerson: IMyPerson = emptyPersonBase;
+	@Output() readonly myPersonChange = new EventEmitter<IMyPerson>();
 
 	showGender = false;
 	showPersonProps = false;
@@ -34,7 +36,6 @@ export class PersonFormComponent {
 		return this.myPerson.relationship;
 	};
 
-	@Output() readonly myPersonChange = new EventEmitter<IMyPerson>();
 
 	private setMyPerson(myPerson: IMyPerson): void {
 		this.myPerson = myPerson;
@@ -62,4 +63,19 @@ export class PersonFormComponent {
 			}
 		}
 	}
+
+	// public nextFromName(event: Event): void {
+	// 	if (!this.namesFormComponent?.namesForm.valid) {
+	// 		alert('Problem with names: ' + JSON.stringify(this.namesFormComponent?.namesForm.errors));
+	// 		return;
+	// 	}
+	// 	setTimeout(() => {
+	// 		const setFocus = this.genderFirstInput?.setFocus;
+	// 		if (setFocus) {
+	// 			setFocus(event)
+	// 				.catch(this.errorLogger.logErrorHandler('failed to set focus to gender'));
+	// 		}
+	// 	}, 500);
+	// }
+
 }

@@ -2,53 +2,10 @@
 	[formGroup]="addMemberForm"
 	(ngSubmit)="submit()"
 >
-	<sneat-person-form [team]="team" (myPersonChange)="onPersonFormReady()"></sneat-person-form>
-
-
-	<!-- TODO: setFocus() does not work with *ngIf and animation does not work with [style.display] -->
-	<!-- *ngIf="ageGroup.value && gender.value && relationship.value" -->
-	<ion-card @formNextIn
-						[style.display]="ageGroup.value && gender && relationship.value ? 'block' : 'none'"
-	>
-		<ion-item-divider color="primary">
-			<ion-label><b>Contacts</b></ion-label>
-		</ion-item-divider>
-
-		<ion-item>
-			<ion-label>Email</ion-label>
-			<ion-input #emailInput type="text" typeThatDoesNotWorkInChrome="email" [formControl]="email"></ion-input>
-		</ion-item>
-
-		<ion-item>
-			<ion-label>Phone</ion-label>
-			<ion-input type="phone" [formControl]="phone"></ion-input>
-		</ion-item>
-		<ion-item-group *ngIf="ageGroup.value === 'child' && this.team?.dto && this.team?.dto?.type !== 'family'">
-			<ion-item>
-				<ion-label>Adult contact</ion-label>
-				<ion-select value="mother" interface="action-sheet">
-					<ion-select-option value="mother">Mother</ion-select-option>
-					<ion-select-option value="father">Father</ion-select-option>
-					<ion-select-option value="sibling">Sibling</ion-select-option>
-				</ion-select>
-			</ion-item>
-			<ion-item>
-				<ion-label>Adult's name</ion-label>
-				<ion-input type="text"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-label>Adult's phone</ion-label>
-				<ion-input type="phone"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-label>Adult's email</ion-label>
-				<ion-input type="email"></ion-input>
-			</ion-item>
-		</ion-item-group>
-	</ion-card>
-
-
-
+	<sneat-person-form [team]="team"
+										 [disabled]="disabled"
+										 (myPersonChange)="onMyPersonChanged($event)"
+	></sneat-person-form>
 
 	<ion-card *ngIf="addMemberForm.errors">
 		<ion-card-header color="danger">
@@ -59,7 +16,7 @@
 		</ion-card-content>
 	</ion-card>
 
-	<div class="ion-padding" *ngIf="isPersonFormReady && relationship.value">
+	<div class="ion-padding" *ngIf="isPersonFormReady">
 		<ion-button
 			(click)="submit()"
 			[disabled]="!team || addMemberForm.disabled || !addMemberForm.valid"

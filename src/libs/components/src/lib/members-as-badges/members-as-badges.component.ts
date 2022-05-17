@@ -28,7 +28,7 @@ export class MembersAsBadgesComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		this.members = this.memberIDs?.map(
-			(id: string): IMemberBrief => this.briefs?.find(m => m.id === id) || ({ id, title: `member:${id}` }),
+			(id: string): IMemberBrief => this.briefs?.find(m => m.id === id) || ({ id, name: {full: `member:${id}`} }),
 		);
 	}
 }

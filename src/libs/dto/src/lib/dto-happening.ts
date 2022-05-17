@@ -1,4 +1,4 @@
-import { ITeamsRecord } from './dto-models';
+import { IWithTeamIDs } from './dto-models';
 import { IPrice } from './dto-pricing';
 import { ActivityType, Repeats, WeekdayCode2 } from './types';
 import { UiState } from './ui-state';
@@ -25,7 +25,7 @@ export interface IHappeningBrief extends IHappeningBase {
 	id: string;
 }
 
-export interface IHappeningDto extends IHappeningBase, ITeamsRecord {
+export interface IHappeningDto extends IHappeningBase, IWithTeamIDs {
 	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	participants?: SlotParticipant[];
 	note?: string;

@@ -23,7 +23,6 @@ export interface IRejectPersonalInviteRequest extends ITeamRequest {
 
 
 export interface ICreateTeamMemberRequest extends ITeamRequest, IPerson {
-	role: MemberRole;
 	memberType: MemberType;
 	message?: string;
 }

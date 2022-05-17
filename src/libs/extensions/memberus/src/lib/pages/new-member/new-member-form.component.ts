@@ -1,29 +1,11 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import {
-	AfterViewInit,
-	Component,
-	Inject,
-	Input,
-	OnChanges,
-	SimpleChanges,
-	ViewChild,
-} from '@angular/core';
+import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonInput, IonRadio, IonRadioGroup, NavController } from '@ionic/angular';
+import { IonInput, IonRadio, NavController } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/animations';
 import { createSetFocusToInput, NamesFormComponent } from '@sneat/components';
 import { excludeUndefined, RoutingState } from '@sneat/core';
-import {
-	FamilyMemberRelation, Gender,
-	IMemberDto, IName,
-	ITitledRecord,
-	MemberRelationshipOther,
-	MemberRelationshipUndisclosed,
-	MemberRole,
-	MemberRoleContributor,
-	relationshipTitle,
-} from '@sneat/dto';
+import { emptyPersonBase, IMemberDto, IMyPerson, MemberRoleContributor, myPersonToPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberService, TeamNavService } from '@sneat/team/services';
@@ -51,15 +33,21 @@ const isFormValid = (control: AbstractControl): ValidationErrors | null => {
 export class NewMemberFormComponent {
 
 	private readonly hasNavHistory: boolean;
-	public isPersonFormReady = false;
+	public disabled = false;
 
 	@Input() team?: ITeamContext;
+
+	myPerson: IMyPerson = emptyPersonBase;
 
 	@ViewChild(NamesFormComponent, { static: false }) namesFormComponent?: NamesFormComponent;
 	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
-	public roles?: string[];
+	public get isPersonFormReady(): boolean {
+		const p = this.myPerson;
+		return !!p.ageGroup && !!p.gender;
+	};
+
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
@@ -67,37 +55,12 @@ export class NewMemberFormComponent {
 		Validators.required,
 	]);
 
-	public readonly ageGroup = new FormControl('', [
-		Validators.required,
-	]);
-
-	public gender?: Gender;
-
-	public readonly role = new FormControl('', [
-		Validators.required,
-	]);
-	public readonly relationship = new FormControl('', [
-		Validators.required,
-	]);
-
-	public readonly email = new FormControl('', [
-		Validators.email,
-	]);
-
-	public readonly phone = new FormControl('', []);
-
-
 	public addMemberForm = new FormGroup({
-		email: this.email,
-		phone: this.phone,
-		ageGroup: this.ageGroup,
-		relationship: this.relationship,
+		// email: this.email,
+		// phone: this.phone,
+		// ageGroup: this.ageGroup,
+		// relationship: this.relationship,
 	}, isFormValid);
-
-
-	public get isComplete(): boolean {
-		return !!this.namesFormComponent?.namesForm.valid && !!this.ageGroup.value && !!this.gender && !!this.relationship;
-	}
 
 
 	constructor(
@@ -109,9 +72,16 @@ export class NewMemberFormComponent {
 		private readonly teamNavService: TeamNavService,
 	) {
 		this.hasNavHistory = routingState.hasHistory();
+
 		route.queryParams.subscribe(params => {
-			this.role.setValue(params['role'] || '');
-			this.ageGroup.setValue(params['age'] || '');
+			const ageGroup = params['ageGroup'];
+			if (ageGroup) {
+				this.myPerson = { ...this.myPerson, ageGroup: ageGroup };
+			}
+			const roles = params['roles'] || '';
+			if (roles) {
+				this.myPerson = { ...this.myPerson, roles: roles.split(',') };
+			}
 		});
 	}
 
@@ -129,50 +99,31 @@ export class NewMemberFormComponent {
 			throw ('!this.namesFormComponent');
 		}
 		this.addMemberForm.disable();
-		const name: IName = this.namesFormComponent.names();
 		let memberDto: IMemberDto = {
-			name,
-			ageGroup: this.ageGroup.value,
-			gender: this.gender,
-			email: this.email.value.trim() ? this.email.value.trim() : undefined,
-			phone: this.phone.value.trim() ? this.phone.value.trim() : undefined,
+			...myPersonToPerson(this.myPerson),
 		};
-		if (this.role) {
-			memberDto = { ...memberDto, roles: [this.role.value as MemberRole] };
-		}
 		memberDto = excludeUndefined(memberDto);
 		const team = this.team;
 		if (!team) {
 			this.errorLogger.logError('not able to add new member without team context');
 			return;
 		}
-		if (!this.ageGroup) {
+		if (!memberDto.ageGroup) {
 			throw new Error('Age group is a required field');
 		}
-		if (!this.gender) {
+		if (!memberDto.gender) {
 			throw new Error('Gender is a required field');
 		}
-		let request: ICreateTeamMemberRequest = {
+		if (!memberDto.roles?.length) {
+			memberDto = {...memberDto, roles: [MemberRoleContributor]}
+		}
+		const request: ICreateTeamMemberRequest = {
+			...memberDto,
 			memberType: this.memberType.value,
 			teamID: team.id,
-			name,
-			gender: this.gender,
-			ageGroup: this.ageGroup.value,
-			role: MemberRoleContributor,
 		};
-		if (this.email) {
-			request = {
-				...request,
-				email: this.email.value,
-			};
-		}
-		if (this.phone) {
-			request = {
-				...request,
-				phone: this.phone.value,
-			};
-		}
 
+		this.disabled = true;
 		this.membersService.createMember(request).subscribe({
 			next: member => {
 				console.log('member created:', member);
@@ -222,23 +173,7 @@ export class NewMemberFormComponent {
 
 	readonly id = (i: number, record: { id: string }) => record.id;
 
-	public nextFromName(event: Event): void {
-		if (!this.namesFormComponent?.namesForm.valid) {
-			alert('Problem with names: ' + JSON.stringify(this.namesFormComponent?.namesForm.errors));
-			return;
-		}
-		this.isPersonFormReady = true;
-		setTimeout(() => {
-			const setFocus = this.genderFirstInput?.setFocus;
-			if (setFocus) {
-				setFocus(event)
-					.catch(this.errorLogger.logErrorHandler('failed to set focus to gender'));
-			}
-		}, 500);
-	}
-
-
-	onPersonFormReady(): void {
-		this.isPersonFormReady = true;
+	onMyPersonChanged(myPerson: IMyPerson): void {
+		this.myPerson = myPerson;
 	}
 }
