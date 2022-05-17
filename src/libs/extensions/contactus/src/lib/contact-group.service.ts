@@ -52,6 +52,11 @@ const
 		emoji: '🔌',
 		finder: 'electricians.express',
 	},
+	contactTypeHandyman: IContactRoleBrief = {
+		id: 'handyman',
+		title: 'Handyman',
+		emoji: '🔨',
+	},
 	contactTypeGardener: IContactRoleBrief = {
 		id: 'gardener',
 		title: 'Gardener',
@@ -71,6 +76,7 @@ export const defaultContactGroups: IContactGroup[] = [
 	},
 	{
 		id: 'house', title: 'House', roles: [
+			contactTypeHandyman,
 			contactTypePlumber,
 			contactTypeElectrician,
 			contactTypeGardener,
