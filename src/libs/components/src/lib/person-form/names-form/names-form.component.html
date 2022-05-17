@@ -1,7 +1,7 @@
 <ion-card>
-	<ion-item-divider [color]="isNameSet ? 'light' : 'primary'">
-		<ion-label *ngIf="!isNameSet"><b>Names</b></ion-label>
-		<ion-label *ngIf="isNameSet">Names</ion-label>
+	<ion-item-divider [color]="isActive ? 'primary' : 'light'">
+		<ion-label *ngIf="isActive"><b>Names</b></ion-label>
+		<ion-label *ngIf="!isActive">Names</ion-label>
 	</ion-item-divider>
 	<ion-item>
 		<ion-label color="medium">First name</ion-label>

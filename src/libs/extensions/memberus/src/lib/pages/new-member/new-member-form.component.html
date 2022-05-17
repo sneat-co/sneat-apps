@@ -2,81 +2,12 @@
 	[formGroup]="addMemberForm"
 	(ngSubmit)="submit()"
 >
-	<sneat-names-form></sneat-names-form>
-	<ion-card>
-	<ion-item-divider color="light" *ngIf="!isNameSet">
-		<ion-label>
-			<ion-button size="medium"
-									(click)="nextFromName($event)"
-			>
-				<ion-label>Next</ion-label>
-				<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
-			</ion-button>
-		</ion-label>
-	</ion-item-divider>
-	</ion-card>
-
-	<ion-grid *ngIf="isNameSet" class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="12" size-md="4">
-				<sneat-gender-form @nextIn [(gender)]="gender"></sneat-gender-form>
-			</ion-col>
-
-			<ion-col size="12" size-md="4" *ngIf="gender">
-				<ion-card @nextIn *ngIf="!ageGroup.value">
-					<ion-item-divider color="primary">
-						<ion-label><b>Age group</b></ion-label>
-					</ion-item-divider>
-					<ion-radio-group [formControl]="ageGroup">
-						<ion-item>
-							<ion-label>Adult</ion-label>
-							<ion-radio slot="start" value="adult"></ion-radio>
-						</ion-item>
-						<ion-item>
-							<ion-label>Child</ion-label>
-							<ion-radio slot="start" value="child"></ion-radio>
-						</ion-item>
-					</ion-radio-group>
-				</ion-card>
-				<ion-card *ngIf="ageGroup.value">
-					<ion-item>
-						<ion-label color="medium" position="stacked">Age group</ion-label>
-						<ion-select [formControl]="ageGroup" interface="popover">
-							<ion-select-option value="adult">Adult</ion-select-option>
-							<ion-select-option value="child">Child</ion-select-option>
-						</ion-select>
-					</ion-item>
-				</ion-card>
-			</ion-col>
-
-			<ion-col size="12" size-md="4" *ngIf="ageGroup.value && gender">
-				<ion-card @nextIn>
-					<ion-item-group *ngIf="!relationship.value">
-						<ion-item-divider color="primary">
-							<ion-label><b>Related to me as</b></ion-label>
-						</ion-item-divider>
-						<ion-radio-group [formControl]="relationship" (ionChange)="onRelationshipChanged()">
-							<ion-item *ngFor="let rel of relationships">
-								<ion-label>{{rel.title}}</ion-label>
-								<ion-radio slot="start" [value]="rel.id"></ion-radio>
-							</ion-item>
-						</ion-radio-group>
-					</ion-item-group>
-					<ion-item *ngIf="relationship.value">
-						<ion-label color="medium" position="stacked">Related to me as</ion-label>
-						<ion-select [formControl]="relationship" interface="popover">
-							<ion-select-option *ngFor="let rel of relationships" [value]="rel.id">{{rel.title}}</ion-select-option>
-						</ion-select>
-					</ion-item>
-				</ion-card>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	<sneat-person-form [team]="team" (myPersonChange)="onPersonFormReady()"></sneat-person-form>
 
 
 	<!-- TODO: setFocus() does not work with *ngIf and animation does not work with [style.display] -->
 	<!-- *ngIf="ageGroup.value && gender.value && relationship.value" -->
-	<ion-card @nextIn
+	<ion-card @formNextIn
 						[style.display]="ageGroup.value && gender && relationship.value ? 'block' : 'none'"
 	>
 		<ion-item-divider color="primary">
@@ -117,15 +48,6 @@
 	</ion-card>
 
 
-	<ion-item-group *ngIf="roles">
-		<ion-item-divider>
-			<ion-label>Roles</ion-label>
-		</ion-item-divider>
-		<ion-item *ngFor="let role of roles">
-			<ion-label>{{role.title}}</ion-label>
-			<ion-checkbox [(ngModel)]="role.checked">{{role.title}}</ion-checkbox>
-		</ion-item>
-	</ion-item-group>
 
 
 	<ion-card *ngIf="addMemberForm.errors">
@@ -137,7 +59,7 @@
 		</ion-card-content>
 	</ion-card>
 
-	<div class="ion-padding" *ngIf="isNameSet && relationship.value">
+	<div class="ion-padding" *ngIf="isPersonFormReady && relationship.value">
 		<ion-button
 			(click)="submit()"
 			[disabled]="!team || addMemberForm.disabled || !addMemberForm.valid"

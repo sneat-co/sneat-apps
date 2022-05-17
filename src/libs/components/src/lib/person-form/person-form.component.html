@@ -1,9 +1,24 @@
-<sneat-gender-form [(gender)]="gender"></sneat-gender-form>
-<div style="text-align: center" *ngIf="!gender; else hasGender">
-	<ion-text class="ion-padding" color="medium">Please specify gender first.</ion-text>
-</div>
-<ng-template #hasGender>
-	<sneat-names-form [disabled]="!gender"></sneat-names-form>
-	<sneat-phones-form [disabled]="!gender"></sneat-phones-form>
-	<sneat-emails-form> [disabled]="!gender"</sneat-emails-form>
-</ng-template>
+<sneat-names-form [isActive]="!showGender"></sneat-names-form>
+<ion-card>
+	<ion-item-divider color="light" *ngIf="!showGender">
+		<ion-label>
+			<ion-button size="medium"
+									(click)="showGender = true"
+			>
+				<ion-label>Next</ion-label>
+				<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+			</ion-button>
+		</ion-label>
+	</ion-item-divider>
+</ion-card>
+<sneat-gender-form *ngIf="showGender" [gender]="myPerson.gender" (genderChange)="onGenderChanged($event)"></sneat-gender-form>
+<sneat-age-group-form *ngIf="myPerson.gender" [ageGroup]="myPerson.ageGroup" (ageGroupChange)="onAgeGroupChanged($event)"></sneat-age-group-form>
+<sneat-relationship-form *ngIf="showRelationship"
+												 [team]="team"
+												 [ageGroup]="myPerson.ageGroup"
+												 [relationship]="myPerson.relationship"
+												 (relationshipChange)="onRelationshipChanged($event)"
+></sneat-relationship-form>
+<sneat-roles-form *ngIf="showRoles" [team]="team"></sneat-roles-form>
+<sneat-phones-form *ngIf="showPhones"></sneat-phones-form>
+<sneat-emails-form *ngIf="showEmails"></sneat-emails-form>

@@ -24,9 +24,7 @@
 		[groupID]="contactGroup"
 	></sneat-contact-role-form>
 
-	<sneat-person-form *ngIf="contactType"></sneat-person-form>
-
-
+	<sneat-person-form *ngIf="contactType" [team]="team"></sneat-person-form>
 
 	<ng-container *ngIf="member && !relation">
 		<p *ngIf="!member">Please select relation to member</p>

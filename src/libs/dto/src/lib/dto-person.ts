@@ -17,3 +17,7 @@ export interface IPerson {
 	readonly website?: string;
 	readonly dob?: string;  // Date of birth
 }
+
+export interface IMyPerson extends IPerson {
+	relationship?: string;
+}

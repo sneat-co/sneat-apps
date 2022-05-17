@@ -11,6 +11,7 @@ import {
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput, IonRadio, IonRadioGroup, NavController } from '@ionic/angular';
+import { formNexInAnimation } from '@sneat/animations';
 import { createSetFocusToInput, NamesFormComponent } from '@sneat/components';
 import { excludeUndefined, RoutingState } from '@sneat/core';
 import {
@@ -27,17 +28,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberService, TeamNavService } from '@sneat/team/services';
 
-interface Role {
-	checked?: boolean;
-	id: string;
-	title: string;
-	icon: string;
-}
-
-const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [...r.map(id => ({
-	id,
-	title: relationshipTitle(id),
-})), { id: 'other', title: 'Other' }, { id: 'undisclosed', title: 'Undisclosed' }];
 
 const isFormValid = (control: AbstractControl): ValidationErrors | null => {
 	const formGroup = control as FormGroup;
@@ -55,20 +45,13 @@ const isFormValid = (control: AbstractControl): ValidationErrors | null => {
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
 	animations: [
-		trigger('nextIn', [
-			transition(':enter', [
-				style({ opacity: 0 }),           // initial styles
-				animate('250ms',
-					style({ opacity: 1 }),          // final style after the transition has finished
-				),
-			]),
-		]),
+		formNexInAnimation,
 	],
 })
-export class NewMemberFormComponent implements OnChanges {
+export class NewMemberFormComponent {
 
 	private readonly hasNavHistory: boolean;
-	public isNameSet = false;
+	public isPersonFormReady = false;
 
 	@Input() team?: ITeamContext;
 
@@ -76,8 +59,7 @@ export class NewMemberFormComponent implements OnChanges {
 	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
-	public relationships: ITitledRecord[] = getRelOptions(Object.values(FamilyMemberRelation));
-	public roles?: Role[];
+	public roles?: string[];
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
@@ -118,7 +100,6 @@ export class NewMemberFormComponent implements OnChanges {
 	}
 
 
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		route: ActivatedRoute,
@@ -133,18 +114,6 @@ export class NewMemberFormComponent implements OnChanges {
 			this.ageGroup.setValue(params['age'] || '');
 		});
 	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log('NewMemberFormComponent.ngOnChanges(), changes:', changes);
-		if (changes['team']) {
-			const previousValue = changes['team'].previousValue as ITeamContext | undefined,
-				currentValue = changes['team'].currentValue as ITeamContext | undefined;
-			if (previousValue?.type !== currentValue?.type) {
-				this.onTeamTypeChanged();
-			}
-		}
-	}
-
 
 	submit(): void {
 		// if (!this.hasNames) {
@@ -258,7 +227,7 @@ export class NewMemberFormComponent implements OnChanges {
 			alert('Problem with names: ' + JSON.stringify(this.namesFormComponent?.namesForm.errors));
 			return;
 		}
-		this.isNameSet = true;
+		this.isPersonFormReady = true;
 		setTimeout(() => {
 			const setFocus = this.genderFirstInput?.setFocus;
 			if (setFocus) {
@@ -268,62 +237,8 @@ export class NewMemberFormComponent implements OnChanges {
 		}, 500);
 	}
 
-	public onRelationshipChanged(): void {
-		if (!this.ageGroup.value) {
-			const relationship = this.relationship.value;
-			if (relationship.value === 'parent' || relationship === 'spouse' || relationship === 'partner' || relationship === 'grandparent') {
-				this.ageGroup.setValue('adult');
-			} else if (relationship === 'child') {
-				this.ageGroup.setValue('child');
-			}
-		}
-		this.setFocusToInput(this.emailInput);
+
+	onPersonFormReady(): void {
+		this.isPersonFormReady = true;
 	}
-
-
-	private onTeamTypeChanged(): void {
-		// noinspection JSRedundantSwitchStatement
-		console.log('NewMemberFormComponent.onTeamTypeChanged()', this.team);
-		switch (this.team?.type) {
-			case 'educator':
-				if (location.pathname.indexOf('staff') >= 0) {
-					// this.title = 'New staff';
-					// this.setDefaultBackUrl('staff');
-					this.roles = [
-						{ id: 'teacher', title: 'Teacher', icon: 'person' },
-						{ id: 'administrator', title: 'Administrator', icon: 'robot' },
-					];
-				}
-				break;
-			case 'family': {
-				this.relationships = getRelOptions(
-					this.ageGroup.value === 'child'
-						?
-						[
-							FamilyMemberRelation.child,
-							FamilyMemberRelation.sibling,
-							MemberRelationshipOther,
-						] as FamilyMemberRelation[]
-						: [
-							FamilyMemberRelation.spouse,
-							FamilyMemberRelation.partner,
-							FamilyMemberRelation.child,
-							FamilyMemberRelation.sibling,
-							FamilyMemberRelation.parent,
-							FamilyMemberRelation.grandparent,
-							MemberRelationshipUndisclosed,
-							MemberRelationshipOther,
-						] as FamilyMemberRelation[],
-				);
-				if (this.relationship) {
-					console.log('rel options:', this.ageGroup, [...this.relationships]);
-				}
-				break;
-			}
-			default:
-				break;
-		}
-		console.log('roles:', this.roles);
-	}
-
 }

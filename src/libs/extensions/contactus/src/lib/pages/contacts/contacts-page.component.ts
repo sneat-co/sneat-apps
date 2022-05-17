@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { listItemAnimations } from '@sneat/core';
 import { ContactRole, IMemberGroupDto } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemBaseComponent } from '@sneat/team/components';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
 import { ContactService } from '../../contact.service';
 
@@ -18,7 +18,7 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 
 	public allContacts: IContactContext[];
 	public contacts?: IContactContext[];
-	public groups: IMemberGroupDto[] = [];
+	public groups: IMemberGroupContext[] = [];
 	public segment: 'list' | 'groups' = 'groups';
 	public filter = '';
 	public role?: ContactRole;
@@ -120,7 +120,7 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 		return false;
 	}
 
-	goGroup(group: IMemberGroupDto): void {
+	goGroup(group: IMemberGroupContext): void {
 		if (!this.team) {
 			return;
 		}

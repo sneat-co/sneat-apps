@@ -43,9 +43,21 @@ export type MemberRelationship =
 	| typeof MemberRelationshipOther
 	| typeof MemberRelationshipUndisclosed;
 
-export interface IMemberGroupBrief {
-	id: string;
+export interface IMemberGroupBase {
 	title: string;
+}
+
+export interface IMemberGroupBrief extends IMemberGroupBase {
+	id: string;
+}
+
+export interface IMemberGroupDto extends IMemberGroupBase {
+	teamID: string;
+	desc?: string;
+	timetable?: string;
+	membersVisibility: MembersVisibility;
+	numberOf?: IMemberGroupDtoCounts;
+	terms?: DtoGroupTerms;
 }
 
 export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder {
@@ -98,13 +110,3 @@ export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 	members: number;
 }
 
-export interface IMemberGroupDto {
-	id: string;
-	teamID: string;
-	title: string;
-	desc?: string;
-	timetable?: string;
-	membersVisibility: MembersVisibility;
-	numberOf?: IMemberGroupDtoCounts;
-	terms?: DtoGroupTerms;
-}

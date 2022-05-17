@@ -3,7 +3,7 @@ import {
 	DtoTotal,
 	DtoTotals,
 	IAssetDtoGroup,
-	IAssetDtoGroupCounts, IAssetGroupContext,
+	IAssetDtoGroupCounts, IAssetGroupContext, IMemberGroupBrief,
 	IMemberGroupDto,
 	IMemberGroupDtoCounts,
 	newTeamCounts,
@@ -11,7 +11,7 @@ import {
 	TeamCounts,
 	TeamType,
 } from '@sneat/dto';
-import { IMemberContext, ITeamContext } from '../team-context';
+import { IMemberContext, IMemberGroupContext, ITeamContext } from '../team-context';
 
 export class Total {
 	constructor(
@@ -338,28 +338,33 @@ export class Commune implements ITeamContext {
 }
 
 export class MemberGroup {
+	public readonly id: string;
+	public readonly dto?: IMemberGroupDto | null;
+	public readonly brief?: IMemberGroupBrief | null;
+
 	constructor(
-		public readonly dto: IMemberGroupDto,
+		memberGroup: IMemberGroupContext,
 	) {
+		this.id = memberGroup.id;
+		this.brief = memberGroup.brief;
+		this.dto = memberGroup.dto;
+
 	}
 
 	public get numberOf(): IMemberGroupDtoCounts {
-		const n = this.dto.numberOf || {};
+		const n = this.dto?.numberOf || {};
 		if (!n.members) {
 			n.members = 0;
 		}
 		return n;
 	}
 
-	public get id(): string | undefined {
-		return this.dto.id;
+	public get title(): string {
+		return this.brief?.title || '';
 	}
 
-	public get title(): string {
-		return this.dto.title;
-	}
 
 	public get terms(): DtoGroupTerms {
-		return this.dto.terms || {};
+		return this.dto?.terms || {};
 	}
 }

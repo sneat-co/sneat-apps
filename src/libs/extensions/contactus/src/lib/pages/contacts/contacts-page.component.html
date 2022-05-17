@@ -56,10 +56,10 @@
 			<ng-container *ngIf="groups">
 				<ion-item *ngFor="let group of groups; trackBy: id" (click)="goGroup(group)" tappable>
 					<ion-label>
-						{{group.title}}
+						{{group.brief?.title}}
 					</ion-label>
-					<ion-badge color="light" *ngIf="group.numberOf && group.numberOf.members">
-						{{group.numberOf.members}}
+					<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
+						{{group.dto?.numberOf?.members}}
 					</ion-badge>
 				</ion-item>
 			</ng-container>

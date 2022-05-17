@@ -10,6 +10,7 @@ import { createSetFocusToInput } from '../../focus';
 	templateUrl: './names-form.component.html',
 })
 export class NamesFormComponent implements AfterViewInit {
+	@Input() isActive = true;
 	@Input() disabled = false;
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
@@ -18,7 +19,6 @@ export class NamesFormComponent implements AfterViewInit {
 	@Output() readonly keyupEnter = new EventEmitter<Event>();
 
 	private isFullNameChanged = false;
-	public isNameSet = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

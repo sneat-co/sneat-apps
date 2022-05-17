@@ -1,0 +1,24 @@
+<ion-card @formNextIn *ngIf="!ageGroup">
+	<ion-item-divider color="primary">
+		<ion-label><b>Age group</b></ion-label>
+	</ion-item-divider>
+	<ion-radio-group [(ngModel)]="ageGroup" (ionChange)="onAgeGroupChanged($event)">
+		<ion-item>
+			<ion-label>Adult</ion-label>
+			<ion-radio slot="start" value="adult"></ion-radio>
+		</ion-item>
+		<ion-item>
+			<ion-label>Child</ion-label>
+			<ion-radio slot="start" value="child"></ion-radio>
+		</ion-item>
+	</ion-radio-group>
+</ion-card>
+<ion-card *ngIf="ageGroup">
+	<ion-item>
+		<ion-label color="medium" position="stacked">Age group</ion-label>
+		<ion-select [(ngModel)]="ageGroup" interface="popover" (ionChange)="onAgeGroupChanged($event)">
+			<ion-select-option value="adult">Adult</ion-select-option>
+			<ion-select-option value="child">Child</ion-select-option>
+		</ion-select>
+	</ion-item>
+</ion-card>
