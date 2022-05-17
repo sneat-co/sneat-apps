@@ -366,5 +366,6 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		// 	this.errorLogger.logError(`got team record after team context changed: received id=${newTeam.id}, current id=${this.teamContext?.id}`);
 		// }
 	};
+
 }
 

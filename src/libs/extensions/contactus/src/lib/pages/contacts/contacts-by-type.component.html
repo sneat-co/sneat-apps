@@ -1,11 +1,11 @@
 <ion-item-group *ngFor="let contactGroup of contactGroups; trackBy: id" @listItem>
     <ion-item-divider color="light">
         <ion-label>{{contactGroup.title}}</ion-label>
-<!--        <ion-buttons slot="end">-->
-<!--            <ion-button>-->
-<!--                <ion-icon name="add"></ion-icon>-->
-<!--            </ion-button>-->
-<!--        </ion-buttons>-->
+        <ion-buttons slot="end">
+            <ion-button (click)="addContact($event, contactGroup.id)">
+                <ion-icon name="add"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-item-divider>
     <ng-container *ngFor="let role of contactGroup.roles; trackBy: id">
         <ng-container *ngIf="role.contacts && role.contacts">

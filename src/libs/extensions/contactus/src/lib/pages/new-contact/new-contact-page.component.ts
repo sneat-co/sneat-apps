@@ -9,7 +9,7 @@ import {
 	Gender,
 	IContact2Asset,
 	IContactDto,
-	ITitledRecord,
+	ITitledRecord, IMyPerson, emptyPersonBase,
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -32,15 +32,18 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	public email = '';
 	public phone = '';
 	public creating = false;
-	public readonly relations: { id: string; title: string }[] = [
-		{ id: 'mother', title: 'Mother' },
-		{ id: 'father', title: 'Father' },
-		{ id: 'parent', title: 'Parent' },
-		{ id: 'grandparent', title: 'Grand-parent' },
-		{ id: 'sibling', title: 'Sibling' },
-		{ id: 'child', title: 'Child' },
-		{ id: 'gp', title: 'GP - Family Doctor' },
-	];
+	// public readonly relations: { id: string; title: string }[] = [
+	// 	{ id: 'mother', title: 'Mother' },
+	// 	{ id: 'father', title: 'Father' },
+	// 	{ id: 'parent', title: 'Parent' },
+	// 	{ id: 'grandparent', title: 'Grand-parent' },
+	// 	{ id: 'sibling', title: 'Sibling' },
+	// 	{ id: 'child', title: 'Child' },
+	// 	{ id: 'gp', title: 'GP - Family Doctor' },
+	// ];
+
+	myPerson: IMyPerson = emptyPersonBase;
+
 
 	public member?: IMemberContext;
 
@@ -82,11 +85,13 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 			if (relation) {
 				this.relation = relation as ContactToMemberRelation; // TODO: verify
 			}
-			let contactType = params.get('type');
-			if (contactType) {
-				if (contactType.includes(':')) {
-					[this.contactGroup, contactType] = contactType.split(':');
-				}
+			const contactGroup = params.get('group');
+			if (contactGroup && !this.contactGroup) {
+				this.contactGroup = contactGroup
+			}
+			const contactType = params.get('type');
+
+			if (contactType && !this.contactType) {
 				this.contactType = contactType as ContactRole;
 			}
 
@@ -114,6 +119,11 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 					});
 			}
 		});
+	}
+
+
+	public onMyPersonChange(myPerson: IMyPerson): void {
+		this.myPerson = myPerson;
 	}
 
 	submit(): void {

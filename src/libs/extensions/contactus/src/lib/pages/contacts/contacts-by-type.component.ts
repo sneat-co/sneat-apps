@@ -110,11 +110,11 @@ export class ContactsByTypeComponent implements OnChanges {
 		this.otherContacts = otherContacts;
 	}
 
-	public addContact(event: Event, group: string, type: string): void {
+	public addContact(event: Event, group: string, type?: string): void {
 		event.stopPropagation();
 		if (!this.team) {
 			return;
 		}
-		this.contactNavService.goNewContactPage(this.team, { type: `${group}:${type}` });
+		this.contactNavService.goNewContactPage(this.team, { group, type });
 	}
 }
