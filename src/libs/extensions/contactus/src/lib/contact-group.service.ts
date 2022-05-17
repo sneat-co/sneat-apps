@@ -79,8 +79,8 @@ export const defaultContactGroups: IContactGroup[] = [
 	},
 	{
 		id: 'med', title: 'Medical', roles: [
-			{ id: 'gp', title: 'GP' },
-			{ id: 'med_specialist', 'title': 'Specialist' },
+			{ id: 'gp', title: 'GP / Family doctor', emoji: '🩺' },
+			{ id: 'med_specialist', 'title': 'Medical specialist', emoji: '🥼' },
 		],
 	},
 	{
