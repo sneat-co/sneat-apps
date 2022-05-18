@@ -1,15 +1,23 @@
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { TeamType } from '@sneat/auth-models';
 import { IName, WeekdayCode2 } from '@sneat/dto';
-import { IMemberContext } from '@sneat/team/models';
+import { IMemberContext, IPersonContext } from '@sneat/team/models';
 
 function memberName(name?: IName): string | undefined {
 	return name && (name.full || name.first || name.full);
 }
+
+@Pipe({name: 'personTitle'})
+export class PersonTitle implements PipeTransform {
+	transform(p: IPersonContext, shortTitle?: string): string {
+		return shortTitle || memberName(p.brief?.name) || p.id;
+	}
+}
+
 @Pipe({name: 'memberTitle'})
-export class MemberTitle implements PipeTransform {
-	transform(m: IMemberContext, shortTitle?: string): string {
-		return shortTitle || m.brief?.title || m.dto?.title || memberName(m.brief?.name) || m.id;
+export class MemberTitle extends PersonTitle implements PipeTransform {
+	override transform(m: IMemberContext, shortTitle?: string): string {
+		return shortTitle || m.brief?.title || m.dto?.title || super.transform(m, shortTitle);
 	}
 }
 
@@ -168,6 +176,7 @@ const pipes: any[] = [
 	LongMonthNamePipe,
 	ShortMonthNamePipe,
 	MemberTitle,
+	PersonTitle,
 ];
 
 @NgModule({

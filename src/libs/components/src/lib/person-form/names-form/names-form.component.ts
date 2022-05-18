@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
+import { excludeUndefined } from '@sneat/core';
 import { IName } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { createSetFocusToInput } from '../../focus';
@@ -22,7 +23,7 @@ const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => 
 	}
 	if (firstName && lastName && !fullName)
 		return { 'fullName': 'If first & last names are supplied the full name should be supplied as well' };
-	return null
+	return null;
 };
 
 @Component({
@@ -30,6 +31,7 @@ const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => 
 	templateUrl: './names-form.component.html',
 })
 export class NamesFormComponent implements AfterViewInit {
+	@Input() name?: IName = {};
 	@Input() isActive = true;
 	@Input() disabled = false;
 
@@ -37,6 +39,7 @@ export class NamesFormComponent implements AfterViewInit {
 	@ViewChild('fullNameInput', { static: true }) fullNameInput?: IonInput;
 
 	@Output() readonly keyupEnter = new EventEmitter<Event>();
+	@Output() readonly namesChanged = new EventEmitter<IName>();
 
 	private isFullNameChanged = false;
 
@@ -94,6 +97,13 @@ export class NamesFormComponent implements AfterViewInit {
 				});
 			}
 		}
+		this.name = {
+			first: this.firstName.value,
+			last: this.lastName.value,
+			full: this.fullName.value,
+			middle: this.middleName.value,
+		};
+		this.namesChanged.emit(this.name);
 	}
 
 	public names(): IName {

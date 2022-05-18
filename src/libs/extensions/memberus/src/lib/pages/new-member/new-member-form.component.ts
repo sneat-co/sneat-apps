@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput, IonRadio, NavController } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/animations';
-import { createSetFocusToInput, NamesFormComponent } from '@sneat/components';
+import { createSetFocusToInput, NamesFormComponent, PersonFormComponent } from '@sneat/components';
 import { excludeUndefined, RoutingState } from '@sneat/core';
 import {
 	emptyRelatedPerson,
@@ -33,7 +33,7 @@ export class NewMemberFormComponent {
 	@Input() relatedPerson: IRelatedPerson = emptyRelatedPerson;
 	@Output() readonly relatedPersonChange = new EventEmitter<IRelatedPerson>();
 
-	@ViewChild(NamesFormComponent, { static: false }) namesFormComponent?: NamesFormComponent;
+	@ViewChild(PersonFormComponent, { static: false }) personFormComponent?: PersonFormComponent;
 	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
@@ -77,8 +77,8 @@ export class NewMemberFormComponent {
 		// 	}
 		// 	return;
 		// }
-		if (!this.namesFormComponent) {
-			throw ('!this.namesFormComponent');
+		if (!this.personFormComponent) {
+			throw ('!this.personFormComponent');
 		}
 		this.addMemberForm.disable();
 		let memberDto: IMemberDto = {

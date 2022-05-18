@@ -11,7 +11,7 @@ import {
 	IMemberBrief,
 	IMemberDto,
 	IMemberGroupBrief,
-	IMemberGroupDto,
+	IMemberGroupDto, IPerson, IPersonBrief,
 	IShortTeamInfo,
 	ITeamBrief,
 	ITeamDto,
@@ -31,6 +31,7 @@ export interface ITeamContext extends ITeamRef, INavContext<ITeamBrief, ITeamDto
 };
 
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
+export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;
 export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IListContext = ITeamItemContext<IListBrief, IListDto>;

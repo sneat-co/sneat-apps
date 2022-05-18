@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { formNexInAnimation } from '@sneat/animations';
 import { NamesFormComponent } from '@sneat/components';
-import { AgeGroup, emptyRelatedPerson, Gender, IRelatedPerson } from '@sneat/dto';
+import { AgeGroup, emptyRelatedPerson, Gender, IName, IRelatedPerson } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
 import { GenderFormComponent } from './gender-form/gender-form.component';
 
@@ -47,9 +47,14 @@ export class PersonFormComponent {
 	}
 
 
-	private setRelatedPerson(myPerson: IRelatedPerson): void {
-		this.relatedPerson = myPerson;
-		this.relatedPersonChange.emit(myPerson);
+	private setRelatedPerson(relatedPerson: IRelatedPerson): void {
+		this.relatedPerson = relatedPerson;
+		this.relatedPersonChange.emit(relatedPerson);
+	}
+
+	onNameChanged(name: IName): void {
+		// console.log('PersonFormComponent.onNameChanged()', name);
+		this.setRelatedPerson({ ...this.relatedPerson, name });
 	}
 
 	onGenderChanged(gender?: Gender): void {

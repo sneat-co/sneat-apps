@@ -1,4 +1,4 @@
-<sneat-names-form [isActive]="!showGender"></sneat-names-form>
+<sneat-names-form [isActive]="!showGender" (namesChanged)="onNameChanged($event)"></sneat-names-form>
 <ion-button *ngIf="!showGender"
 						class="ion-margin"
 						size="medium"
