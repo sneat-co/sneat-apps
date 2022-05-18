@@ -66,18 +66,18 @@ export class MemberService {
 				throw (response as IErrorResponse).error;
 			}
 			const okResponse = response as IAddTeamMemberResponse;
-			if (!okResponse.dto) {
-				this.errorLogger.logError('okResponse.dto is undefined', undefined, {show: false});
+			if (!okResponse.member) {
+				this.errorLogger.logError('okResponse.member is undefined', undefined, {show: false});
 			}
-			const member: IMemberBrief = {
-				id: okResponse.id,
-				...okResponse.dto,
-			};
+			const member = okResponse.member;
 			return this.teamService.getTeam({ id: request.teamID }).pipe(
 				tap((team) => {
 					if (team?.dto) {
-						const members = team.dto.members ? [...team.dto.members] : [];
-						members.push(member);
+						const members: IMemberBrief[] = team.dto.members ? [...team.dto.members] : [];
+						if (!member.brief) {
+							throw new Error('!member.brief');
+						}
+						members.push(member.brief);
 						team = {...team, dto: {...team.dto, members}};
 						this.teamService.onTeamUpdated(team);
 					}

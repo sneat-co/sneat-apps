@@ -1,4 +1,5 @@
 import { AgeGroup, Gender, IMemberDto, IPerson, MemberRole, MemberType } from '@sneat/dto';
+import { IMemberContext } from './team-context';
 
 
 export interface ITeamRequest {
@@ -53,8 +54,7 @@ export interface IPersonalInvite extends IInvite {
 }
 
 export interface IAddTeamMemberResponse {
-	id: string;
-	dto: IMemberDto;
+	member: IMemberContext;
 }
 
 export interface ITaskRequest extends ITeamMemberRequest {

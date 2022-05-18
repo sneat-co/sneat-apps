@@ -7,6 +7,13 @@ import { memberContextFromBrief, MemberGroupService, MemberService } from '@snea
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../members-base-page';
 
+interface AgeGroupWithMembers {
+	readonly id: AgeGroup;
+	readonly plural: string;
+	readonly addLabel: string;
+	members?: IMemberContext[];
+}
+
 @Component({
 	selector: 'sneat-members-page',
 	templateUrl: 'members-page.component.html',
@@ -28,15 +35,21 @@ import { MembersBasePage } from '../members-base-page';
 export class MembersPageComponent extends MembersBasePage implements AfterViewInit {
 	private prevMembersCount?: number;
 	public contactsByMember: { [id: string]: IContact2Member[] } = {};
-	public adults?: IMemberContext[];
-	public children?: IMemberContext[];
-	public noAgeMembers?: IMemberContext[];
+	public readonly adults: AgeGroupWithMembers = {id: 'adult', plural: 'Adults', addLabel: 'Add adult'};
+	public readonly children: AgeGroupWithMembers = {id: 'child', plural: 'Children', addLabel: 'Add child'};
+	public readonly unknownAge: AgeGroupWithMembers = {id: 'unknown', plural: 'Other', addLabel: ''};
 	public memberGroups?: IMemberGroupContext[];
 	public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
 	public listMode: 'list' | 'cards' = 'list';
 	public membersByGroupId: { [id: string]: IMemberContext[] } = {};
 	public noGroupMembers?: IMemberContext[];
+
+	public readonly memberByAgeGroup: readonly AgeGroupWithMembers[] = [
+		this.adults,
+		this.children,
+		this.unknownAge,
+	];
 
 	readonly memberType: MemberType = 'member';
 
@@ -148,19 +161,19 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 
 	private processMembers(): void {
 		console.log('MembersPageComponent.processMembers()', this.members);
-		this.adults = [];
-		this.children = [];
-		this.noAgeMembers = [];
+		this.adults.members = [];
+		this.children.members = [];
+		this.unknownAge.members = [];
 		this.members?.forEach(m => {
 			switch (m.brief?.ageGroup) {
 				case 'adult':
-					this.adults?.push(m);
+					this.adults.members?.push(m);
 					break;
 				case 'child':
-					this.children?.push(m);
+					this.children.members?.push(m);
 					break;
 				default:
-					this.noAgeMembers?.push(m);
+					this.unknownAge.members?.push(m);
 					break;
 			}
 			if (!this.team) {

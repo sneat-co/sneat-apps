@@ -48,11 +48,11 @@
 <!--	</ion-list>-->
 
 	<ng-container *ngIf="segment === 'all' && teamType === 'family'">
-		<ion-card>
+		<ion-card *ngFor="let ageGroup of memberByAgeGroup">
 			<ion-item-divider color="light">
-				<ion-label>Adults</ion-label>
+				<ion-label>{{ageGroup.plural}}</ion-label>
 				<ion-buttons slot="end">
-					<ion-button title="Add adult" (click)="goNew('adult')">
+					<ion-button *ngIf="ageGroup.addLabel" [title]="ageGroup.addLabel" (click)="goNew(ageGroup.id)">
 						<ion-icon name="add" slot="start"></ion-icon>
 						<ion-label>Add</ion-label>
 					</ion-button>
@@ -64,41 +64,11 @@
 			</ion-item>
 			<sneat-members-list *ngIf="adults"
 													[team]="team"
-													[members]="adults"
+													[members]="ageGroup.members"
 													[contactsByMember]="contactsByMember"
 			></sneat-members-list>
 		</ion-card>
 
-		<ion-card>
-			<ion-item-divider color="light">
-				<ion-label>Children</ion-label>
-				<ion-buttons slot="end">
-					<ion-button title="Add child" (click)="goNew('child')">
-						<ion-icon name="add"></ion-icon>
-					</ion-button>
-				</ion-buttons>
-			</ion-item-divider>
-			<ion-item *ngIf="!children">
-				<ion-spinner name="lines-small" color="light"></ion-spinner>
-				<ion-label color="light">Loading...</ion-label>
-			</ion-item>
-			<sneat-members-list *ngIf="children"
-													[team]="team"
-													[members]="children"
-													[contactsByMember]="contactsByMember"
-			></sneat-members-list>
-		</ion-card>
-		<ion-card *ngIf="noAgeMembers?.length">
-			<ion-item-divider color="light">
-				<ion-label>Other</ion-label>
-			</ion-item-divider>
-			<sneat-members-list *ngIf="members"
-													[team]="team"
-													requireAge="true"
-													[members]="noAgeMembers"
-													[contactsByMember]="contactsByMember"
-			></sneat-members-list>
-		</ion-card>
 	</ng-container>
 
 	<ng-container *ngIf="segment === 'groups'">
