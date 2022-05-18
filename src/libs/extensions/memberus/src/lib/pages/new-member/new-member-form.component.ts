@@ -1,27 +1,20 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput, IonRadio, NavController } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/animations';
 import { createSetFocusToInput, NamesFormComponent } from '@sneat/components';
 import { excludeUndefined, RoutingState } from '@sneat/core';
-import { emptyRelatedPerson, IMemberDto, IRelatedPerson, MemberRoleContributor, relatedPersonToPerson } from '@sneat/dto';
+import {
+	emptyRelatedPerson,
+	IMemberDto,
+	IRelatedPerson,
+	MemberRoleContributor,
+	relatedPersonToPerson,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberService, TeamNavService } from '@sneat/team/services';
 
-
-const isFormValid = (control: AbstractControl): ValidationErrors | null => {
-	const formGroup = control as FormGroup;
-	const firstName = formGroup.controls['firstName'];
-	const lastName = formGroup.controls['lastName'];
-	const fullName = formGroup.controls['fullName'];
-	const gender = formGroup.controls['gender'];
-	if (gender?.value && !firstName?.value && !lastName?.value && !fullName?.value) {
-		return { 'fullName': 'If full name is not provided either first or last name or both should be supplied' };
-	}
-	return null;
-};
 
 @Component({
 	selector: 'sneat-new-member-form',
@@ -37,7 +30,8 @@ export class NewMemberFormComponent {
 
 	@Input() team?: ITeamContext;
 
-	relatedPerson: IRelatedPerson = emptyRelatedPerson;
+	@Input() relatedPerson: IRelatedPerson = emptyRelatedPerson;
+	@Output() readonly relatedPersonChange = new EventEmitter<IRelatedPerson>();
 
 	@ViewChild(NamesFormComponent, { static: false }) namesFormComponent?: NamesFormComponent;
 	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
@@ -60,29 +54,17 @@ export class NewMemberFormComponent {
 		// phone: this.phone,
 		// ageGroup: this.ageGroup,
 		// relationship: this.relationship,
-	}, isFormValid);
+	});
 
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		route: ActivatedRoute,
 		routingState: RoutingState,
 		private readonly navController: NavController,
 		private readonly membersService: MemberService,
 		private readonly teamNavService: TeamNavService,
 	) {
 		this.hasNavHistory = routingState.hasHistory();
-
-		route.queryParams.subscribe(params => {
-			const ageGroup = params['ageGroup'];
-			if (ageGroup) {
-				this.relatedPerson = { ...this.relatedPerson, ageGroup: ageGroup };
-			}
-			const roles = params['roles'] || '';
-			if (roles) {
-				this.relatedPerson = { ...this.relatedPerson, roles: roles.split(',') };
-			}
-		});
 	}
 
 	submit(): void {
@@ -173,7 +155,8 @@ export class NewMemberFormComponent {
 
 	readonly id = (i: number, record: { id: string }) => record.id;
 
-	onRelatedPersonChanged(myPerson: IRelatedPerson): void {
-		this.relatedPerson = myPerson;
+	onRelatedPersonChanged(relatedPerson: IRelatedPerson): void {
+		this.relatedPerson = relatedPerson;
+		this.relatedPersonChange.emit(relatedPerson);
 	}
 }

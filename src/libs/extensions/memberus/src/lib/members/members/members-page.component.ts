@@ -64,10 +64,10 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 			.catch(this.logErrorHandler('failed to navigate to members group page'));
 	}
 
-	public goNew(age?: AgeGroup): void {
+	public goNew(ageGroup?: AgeGroup): void {
 		switch (this.segment) {
 			case 'all':
-				this.navigateForwardToTeamPage('new-member', { queryParams: { age } })
+				this.navigateForwardToTeamPage('new-member', { queryParams: { ageGroup } })
 					.catch(this.logErrorHandler('failed to navigate to new member page with age parameter'));
 				break;
 			case 'groups':

@@ -4,7 +4,12 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title *ngIf="team?.brief || team?.type else titleNoCommune">
-			New member @ {{team?.brief?.title || team?.type }}
+			<ng-container *ngIf="!relatedPerson.ageGroup; else hasAgeGroup">New member</ng-container>
+			<ng-template #hasAgeGroup>
+				<ng-container *ngIf="relatedPerson.ageGroup === 'child'">New child</ng-container>
+				<ng-container *ngIf="relatedPerson.ageGroup === 'adult'">New adult</ng-container>
+			</ng-template>
+			@ {{team?.brief?.title || team?.type }}
 		</ion-title>
 		<ng-template #titleNoCommune>New member</ng-template>
 	</ion-toolbar>
@@ -21,6 +26,7 @@
 
 	<sneat-new-member-form *ngIf="tab === 'personal'"
 												 [team]="team"
+												 [(relatedPerson)]="relatedPerson"
 	></sneat-new-member-form>
 
 	<ion-card *ngIf="tab === 'mass'">

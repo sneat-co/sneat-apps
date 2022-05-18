@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { formNexInAnimation } from '@sneat/animations';
+import { NamesFormComponent } from '@sneat/components';
 import { AgeGroup, emptyRelatedPerson, Gender, IRelatedPerson } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
+import { GenderFormComponent } from './gender-form/gender-form.component';
 
 
 @Component({
@@ -15,6 +17,7 @@ export class PersonFormComponent {
 
 	@Input() team?: ITeamContext;
 	@Input() disabled = false;
+	@Input() hideRelationship = false;
 
 	@Input() relatedPerson: IRelatedPerson = emptyRelatedPerson;
 	@Output() readonly relatedPersonChange = new EventEmitter<IRelatedPerson>();
@@ -23,9 +26,8 @@ export class PersonFormComponent {
 	showPersonProps = false;
 	showRoles = false;
 
-	isReady = false;
-
-	@Input() hideRelationship = false;
+	@ViewChild(NamesFormComponent) namesFormComponent?: NamesFormComponent;
+	@ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
 
 	get showRelationship() {
 		return !this.hideRelationship && this.relatedPerson.gender && this.relatedPerson.ageGroup;
@@ -72,18 +74,22 @@ export class PersonFormComponent {
 		}
 	}
 
-	// public nextFromName(event: Event): void {
-	// 	if (!this.namesFormComponent?.namesForm.valid) {
-	// 		alert('Problem with names: ' + JSON.stringify(this.namesFormComponent?.namesForm.errors));
-	// 		return;
-	// 	}
-	// 	setTimeout(() => {
-	// 		const setFocus = this.genderFirstInput?.setFocus;
-	// 		if (setFocus) {
-	// 			setFocus(event)
-	// 				.catch(this.errorLogger.logErrorHandler('failed to set focus to gender'));
-	// 		}
-	// 	}, 500);
-	// }
+	public nextFromName(event: Event): void {
+		event.stopPropagation();
+
+		if (!this.namesFormComponent) {
+			throw Error('!namesFormComponent');
+		}
+		if (!this.namesFormComponent.namesForm) {
+			throw Error('!namesFormComponent.namesForm');
+		}
+
+		this.namesFormComponent.namesForm.markAllAsTouched();
+		if (!this.namesFormComponent.namesForm.valid) {
+			alert('Problem with names: ' + JSON.stringify(this.namesFormComponent?.namesForm.errors));
+			return;
+		}
+		this.showGender = true;
+	}
 
 }

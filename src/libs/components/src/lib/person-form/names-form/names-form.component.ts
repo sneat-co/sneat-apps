@@ -1,9 +1,29 @@
 import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { IName } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { createSetFocusToInput } from '../../focus';
+
+const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => {
+	const formGroup = control as FormGroup;
+	const mustHave = function(name: string): string {
+		const c = formGroup.controls[name];
+		if (!c) {
+			throw new Error(`form is missing control: "${name}"`);
+		}
+		return (c.value as string).trim();
+	};
+	const firstName = mustHave('firstName');
+	const lastName = mustHave('lastName');
+	const fullName = mustHave('fullName');
+	if (!firstName && !lastName && !fullName) {
+		return { 'fullName': 'If full name is not provided either first or last name or both should be supplied' };
+	}
+	if (firstName && lastName && !fullName)
+		return { 'fullName': 'If first & last names are supplied the full name should be supplied as well' };
+	return null
+};
 
 @Component({
 	selector: 'sneat-names-form',
@@ -26,7 +46,7 @@ export class NamesFormComponent implements AfterViewInit {
 	}
 
 	public readonly fullName = new FormControl('', [
-		// Validators.required,
+		// Validators.required, -- not required if user entered only first name for example. In future may require to be an option
 		Validators.maxLength(50),
 	]);
 
@@ -49,7 +69,7 @@ export class NamesFormComponent implements AfterViewInit {
 		firstName: this.firstName,
 		lastName: this.lastName,
 		middleName: this.middleName,
-	});
+	}, isNamesFormValid);
 
 	public get hasNames(): boolean {
 		return this.firstName.value || this.lastName.value || this.fullName.value;
@@ -82,7 +102,7 @@ export class NamesFormComponent implements AfterViewInit {
 			last: this.lastName.value,
 			middle: this.lastName.value,
 			full: this.fullName.value,
-		}
+		};
 	}
 
 	private generateFullName(): string {

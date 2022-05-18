@@ -1,15 +1,18 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
+import { IonRadioGroup } from '@ionic/angular';
+import { createSetFocusToInput } from '@sneat/components';
 import { Gender } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 const animationTimings = '150ms';
 
-const genders: {id: Gender, title: string}[] = [
-	{id: 'male', title: 'Male'},
-	{id: 'female', title: 'Female'},
-	{id: 'other', title: 'Other'},
-	{id: 'unknown', title: 'Unknown'},
-	{id: 'undisclosed', title: 'Undisclosed'},
+const genders: { id: Gender, title: string }[] = [
+	{ id: 'male', title: 'Male' },
+	{ id: 'female', title: 'Female' },
+	{ id: 'other', title: 'Other' },
+	{ id: 'unknown', title: 'Unknown' },
+	{ id: 'undisclosed', title: 'Undisclosed' },
 ];
 
 @Component({
@@ -40,7 +43,19 @@ export class GenderFormComponent {
 	@Input() gender?: Gender;
 	@Output() genderChange = new EventEmitter<Gender>();
 
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+	) {
+	}
+
+
 	onChanged(): void {
 		this.genderChange.emit(this.gender);
 	}
+
+	// TODO: Find a way to set focus to a radio group
+	// private readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
+	// ngAfterViewInit(): void {
+	// 	this.setFocusToInput(this.radioGroup, 100);
+	// }
 }

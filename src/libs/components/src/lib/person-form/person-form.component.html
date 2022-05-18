@@ -1,18 +1,16 @@
 <sneat-names-form [isActive]="!showGender"></sneat-names-form>
-<ion-card>
-	<ion-item-divider color="light" *ngIf="!showGender">
-		<ion-label>
-			<ion-button size="medium"
-									(click)="showGender = true"
-			>
-				<ion-label>Next</ion-label>
-				<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
-			</ion-button>
-		</ion-label>
-	</ion-item-divider>
-</ion-card>
-<sneat-gender-form *ngIf="showGender" [gender]="relatedPerson.gender" (genderChange)="onGenderChanged($event)"></sneat-gender-form>
-<sneat-age-group-form *ngIf="relatedPerson.gender" [ageGroup]="relatedPerson.ageGroup" (ageGroupChange)="onAgeGroupChanged($event)"></sneat-age-group-form>
+<ion-button *ngIf="!showGender"
+						class="ion-margin"
+						size="medium"
+						(click)="nextFromName($event)"
+>
+	<ion-label>Next</ion-label>
+	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+</ion-button>
+<sneat-gender-form *ngIf="showGender" [gender]="relatedPerson.gender"
+									 (genderChange)="onGenderChanged($event)"></sneat-gender-form>
+<sneat-age-group-form *ngIf="relatedPerson.gender" [ageGroup]="relatedPerson.ageGroup"
+											(ageGroupChange)="onAgeGroupChanged($event)"></sneat-age-group-form>
 <sneat-relationship-form *ngIf="showRelationship"
 												 [team]="team"
 												 [ageGroup]="relatedPerson.ageGroup"

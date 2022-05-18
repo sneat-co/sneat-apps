@@ -10,10 +10,11 @@ import {
 import { ITeamContext } from '@sneat/team/models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 
-const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [...r.map(id => ({
-	id,
-	title: relationshipTitle(id),
-})), { id: 'other', title: 'Other' }, { id: 'undisclosed', title: 'Undisclosed' }];
+const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
+	...r.map(id => ({ id, title: relationshipTitle(id) })),
+	{ id: MemberRelationshipOther, title: 'Other' },
+	{ id: MemberRelationshipUndisclosed, title: 'Undisclosed' },
+];
 
 @Component({
 	selector: 'sneat-relationship-form',
@@ -37,6 +38,7 @@ export class RelationshipFormComponent extends TeamRelatedFormComponent implemen
 			this.setRelationships();
 		}
 	}
+
 	//
 	// override onTeamTypeChanged(): void {
 	//
@@ -52,7 +54,6 @@ export class RelationshipFormComponent extends TeamRelatedFormComponent implemen
 						[
 							FamilyMemberRelation.child,
 							FamilyMemberRelation.sibling,
-							MemberRelationshipOther,
 						] as FamilyMemberRelation[]
 						: [
 							FamilyMemberRelation.spouse,
@@ -61,8 +62,6 @@ export class RelationshipFormComponent extends TeamRelatedFormComponent implemen
 							FamilyMemberRelation.sibling,
 							FamilyMemberRelation.parent,
 							FamilyMemberRelation.grandparent,
-							MemberRelationshipUndisclosed,
-							MemberRelationshipOther,
 						] as FamilyMemberRelation[],
 				);
 				break;
