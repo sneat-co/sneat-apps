@@ -28,6 +28,8 @@ export class RelationshipFormComponent extends TeamRelatedFormComponent implemen
 	@Input() ageGroup?: AgeGroup;
 	@Output() readonly relationshipChange = new EventEmitter<string>();
 
+	public readonly label = 'Related to me as';
+
 	public relationships?: ITitledRecord[];
 
 	override ngOnChanges(changes: SimpleChanges): void {

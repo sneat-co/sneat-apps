@@ -5,7 +5,7 @@ import { IonInput, IonRadio, NavController } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/animations';
 import { createSetFocusToInput, NamesFormComponent } from '@sneat/components';
 import { excludeUndefined, RoutingState } from '@sneat/core';
-import { emptyPersonBase, IMemberDto, IMyPerson, MemberRoleContributor, myPersonToPerson } from '@sneat/dto';
+import { emptyRelatedPerson, IMemberDto, IRelatedPerson, MemberRoleContributor, relatedPersonToPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberService, TeamNavService } from '@sneat/team/services';
@@ -37,14 +37,14 @@ export class NewMemberFormComponent {
 
 	@Input() team?: ITeamContext;
 
-	myPerson: IMyPerson = emptyPersonBase;
+	relatedPerson: IRelatedPerson = emptyRelatedPerson;
 
 	@ViewChild(NamesFormComponent, { static: false }) namesFormComponent?: NamesFormComponent;
 	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
 	public get isPersonFormReady(): boolean {
-		const p = this.myPerson;
+		const p = this.relatedPerson;
 		return !!p.ageGroup && !!p.gender;
 	};
 
@@ -76,11 +76,11 @@ export class NewMemberFormComponent {
 		route.queryParams.subscribe(params => {
 			const ageGroup = params['ageGroup'];
 			if (ageGroup) {
-				this.myPerson = { ...this.myPerson, ageGroup: ageGroup };
+				this.relatedPerson = { ...this.relatedPerson, ageGroup: ageGroup };
 			}
 			const roles = params['roles'] || '';
 			if (roles) {
-				this.myPerson = { ...this.myPerson, roles: roles.split(',') };
+				this.relatedPerson = { ...this.relatedPerson, roles: roles.split(',') };
 			}
 		});
 	}
@@ -100,7 +100,7 @@ export class NewMemberFormComponent {
 		}
 		this.addMemberForm.disable();
 		let memberDto: IMemberDto = {
-			...myPersonToPerson(this.myPerson),
+			...relatedPersonToPerson(this.relatedPerson),
 		};
 		memberDto = excludeUndefined(memberDto);
 		const team = this.team;
@@ -173,7 +173,7 @@ export class NewMemberFormComponent {
 
 	readonly id = (i: number, record: { id: string }) => record.id;
 
-	onMyPersonChanged(myPerson: IMyPerson): void {
-		this.myPerson = myPerson;
+	onRelatedPersonChanged(myPerson: IRelatedPerson): void {
+		this.relatedPerson = myPerson;
 	}
 }

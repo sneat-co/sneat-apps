@@ -1,7 +1,7 @@
 <ion-card @formNextIn>
 	<ion-item-group *ngIf="!relationship">
 		<ion-item-divider color="primary">
-			<ion-label><b>Related to me as</b></ion-label>
+			<ion-label><b>{{label}}</b></ion-label>
 		</ion-item-divider>
 		<ion-radio-group [(ngModel)]="relationship" (ionChange)="onRelationshipChanged($event)">
 			<ion-item *ngFor="let rel of relationships">
@@ -11,7 +11,7 @@
 		</ion-radio-group>
 	</ion-item-group>
 	<ion-item *ngIf="relationship">
-		<ion-label color="medium" position="stacked">Related to me as</ion-label>
+		<ion-label color="medium" position="stacked">{{label}}</ion-label>
 		<ion-select [(ngModel)]="relationship" interface="popover">
 			<ion-select-option *ngFor="let rel of relationships" [value]="rel.id">{{rel.title}}</ion-select-option>
 		</ion-select>

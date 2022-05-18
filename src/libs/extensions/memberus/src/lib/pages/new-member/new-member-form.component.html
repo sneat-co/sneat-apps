@@ -4,7 +4,7 @@
 >
 	<sneat-person-form [team]="team"
 										 [disabled]="disabled"
-										 (myPersonChange)="onMyPersonChanged($event)"
+										 (relatedPersonChange)="onRelatedPersonChanged($event)"
 	></sneat-person-form>
 
 	<ion-card *ngIf="addMemberForm.errors">

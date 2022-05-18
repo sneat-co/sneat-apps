@@ -26,7 +26,8 @@
 
 	<sneat-person-form *ngIf="contactType"
 										 [team]="team"
-										 (myPersonChange)="onMyPersonChange($event)"
+										 [hideRelationship]="true"
+										 (relatedPersonChange)="onRelatedPersonChange($event)"
 	></sneat-person-form>
 
 <!--	<ng-container *ngIf="member && !relation">-->

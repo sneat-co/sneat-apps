@@ -39,12 +39,14 @@ export interface IPerson extends IPersonBase {
 	readonly dob?: string;  // Date of birth
 }
 
-export interface IMyPerson extends IPerson {
+export interface IRelatedPerson extends IPerson {
 	readonly relationship?: string; // relative to current user
 	readonly roles?: string[]; // Either member roles or contact roles
 }
 
-export function myPersonToPerson(v: IMyPerson): IPerson {
+export const emptyRelatedPerson = emptyPersonBase;
+
+export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
 	const v2 = {...v} as any;
 	delete v2['relationship'];
 	return v2;

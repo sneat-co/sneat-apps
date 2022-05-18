@@ -9,7 +9,7 @@ import {
 	Gender,
 	IContact2Asset,
 	IContactDto,
-	ITitledRecord, IMyPerson, emptyPersonBase,
+	ITitledRecord, IRelatedPerson, emptyPersonBase,
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -42,7 +42,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	// 	{ id: 'gp', title: 'GP - Family Doctor' },
 	// ];
 
-	myPerson: IMyPerson = emptyPersonBase;
+	relatedPerson: IRelatedPerson = emptyPersonBase;
 
 
 	public member?: IMemberContext;
@@ -122,8 +122,8 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	}
 
 
-	public onMyPersonChange(myPerson: IMyPerson): void {
-		this.myPerson = myPerson;
+	public onRelatedPersonChange(myPerson: IRelatedPerson): void {
+		this.relatedPerson = myPerson;
 	}
 
 	submit(): void {
