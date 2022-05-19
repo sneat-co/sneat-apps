@@ -104,7 +104,7 @@
 	"async": "2.6.4",
 	"babel-loader": "8.2.5",
 	"cypress": "^9.1.0",
-	"dotenv": "16.0.0",
+	"dotenv": "16.0.1",
 	"ejs": "3.1.7",
 	"engine.io": "6.2.0",
 	"eslint": "8.14.0",
