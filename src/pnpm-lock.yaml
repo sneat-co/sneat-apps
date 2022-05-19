@@ -24,7 +24,7 @@ specifiers:
   '@babel/preset-env': 7.17.12
   '@capacitor/android': 3.5.1
   '@capacitor/cli': 3.5.1
-  '@capacitor/core': 3.5.0
+  '@capacitor/core': 3.5.1
   '@capacitor/ios': 3.5.1
   '@ctrl/ngx-codemirror': 5.1.1
   '@ionic-native/core': 5.36.0
@@ -110,7 +110,7 @@ dependencies:
   '@angular/platform-browser': 13.3.9_dqq6bam42gj54rld5uipnmqzs4
   '@angular/platform-browser-dynamic': 13.3.9_2k4rivkxnvexphdpkfvakgfjci
   '@angular/router': 13.3.9_pm4vdonypbpigl6cfdce4sfmdq
-  '@capacitor/core': 3.5.0
+  '@capacitor/core': 3.5.1
   '@ctrl/ngx-codemirror': 5.1.1_wlc3e6h6ty54yxwrtokuetzrh4
   '@ionic-native/core': 5.36.0_rxjs@7.5.5
   '@ionic-native/splash-screen': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
@@ -147,9 +147,9 @@ devDependencies:
   '@angular/language-service': 13.3.9
   '@babel/core': 7.17.12
   '@babel/preset-env': 7.17.12_@babel+core@7.17.12
-  '@capacitor/android': 3.5.1_@capacitor+core@3.5.0
+  '@capacitor/android': 3.5.1_@capacitor+core@3.5.1
   '@capacitor/cli': 3.5.1
-  '@capacitor/ios': 3.5.1_@capacitor+core@3.5.0
+  '@capacitor/ios': 3.5.1_@capacitor+core@3.5.1
   '@ionic/angular-toolkit': 6.1.0
   '@nrwl/cli': 14.1.7
   '@nrwl/cypress': 14.1.7_mgtifobxciw7rqby5n7wei7wwm
@@ -2884,12 +2884,12 @@ packages:
   /@bcoe/v8-coverage/0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  /@capacitor/android/3.5.1_@capacitor+core@3.5.0:
+  /@capacitor/android/3.5.1_@capacitor+core@3.5.1:
     resolution: {integrity: sha512-rjehS0+BQBlwoN8hUyrMuzexn/9QJsONb1kmN5uXcL8JuTEbv35fa7z0tSD4x1LKwUFd+3Zeuwt60QRuwijlmw==}
     peerDependencies:
       '@capacitor/core': ^3.5.0
     dependencies:
-      '@capacitor/core': 3.5.0
+      '@capacitor/core': 3.5.1
     dev: true
 
   /@capacitor/cli/3.5.1:
@@ -2917,18 +2917,18 @@ packages:
       - supports-color
     dev: true
 
-  /@capacitor/core/3.5.0:
-    resolution: {integrity: sha512-+CFSG+CztpFIir9gGqNEtAYuf6OWryQ8dojXoeozAkoz3mKvyFfcEfvLVPo/pw/B4zHIlNnJLHne6vbjAFbDKQ==}
+  /@capacitor/core/3.5.1:
+    resolution: {integrity: sha512-UTROxB7q/hZBnhDLcCN7mVsAX3SxXNMhVuPbtddsDOUCm4hExLXN62gPD7rjgmumhfHMjeXmkw/EfRzSjttL1g==}
     dependencies:
       tslib: 2.4.0
     dev: false
 
-  /@capacitor/ios/3.5.1_@capacitor+core@3.5.0:
+  /@capacitor/ios/3.5.1_@capacitor+core@3.5.1:
     resolution: {integrity: sha512-295L9dHe/QaejUpGI8Pxwb1i2yVgick1ExIDK26xk+tk1km3B1HVjsIS8qkf2SOp7tuwP9+W5T5p7rLMNN4v5g==}
     peerDependencies:
       '@capacitor/core': ^3.5.0
     dependencies:
-      '@capacitor/core': 3.5.0
+      '@capacitor/core': 3.5.1
     dev: true
 
   /@colors/colors/1.5.0:
