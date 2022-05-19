@@ -55,7 +55,7 @@ specifiers:
   '@types/node': 16.11.36
   '@typescript-eslint/eslint-plugin': 5.25.0
   '@typescript-eslint/parser': 5.25.0
-  async: 2.6.4
+  async: 3.2.3
   babel-loader: 8.2.5
   codemirror: 5.65.3
   cypress: ^9.1.0
@@ -167,7 +167,7 @@ devDependencies:
   '@types/node': 16.11.36
   '@typescript-eslint/eslint-plugin': 5.25.0_qo2hgs5jt7x2a3p77h2rutcdae
   '@typescript-eslint/parser': 5.25.0_hcfsmds2fshutdssjqluwm76uu
-  async: 2.6.4
+  async: 3.2.3
   babel-loader: 8.2.5_72ctybzk7ntig5kqkayinqycte
   cypress: 9.6.1
   dotenv: 16.0.1
