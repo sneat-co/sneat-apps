@@ -124,7 +124,7 @@
 	"plist": "3.0.5",
 	"postcss": "8.4.14",
 	"postcss-import": "14.1.0",
-	"postcss-preset-env": "7.4.4",
+	"postcss-preset-env": "7.6.0",
 	"postcss-url": "10.1.3",
 	"prettier": "2.6.2",
 	"ts-jest": "27.1.5",
