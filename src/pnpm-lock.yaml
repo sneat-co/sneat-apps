@@ -45,6 +45,8 @@ specifiers:
   '@nxtend/ionic-angular': 13.1.0
   '@sentry/angular': ^6.19.7
   '@sentry/tracing': ^6.19.7
+  '@sneat-dnd/core': 0.0.10
+  '@sneat-dnd/tree': 0.0.10
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.11
@@ -58,6 +60,7 @@ specifiers:
   codemirror: 5.65.3
   cypress: ^9.1.0
   date-fns: ^2.28.0
+  dnd-core: 10.0.2
   dotenv: 16.0.0
   ejs: 3.1.7
   engine.io: 6.2.0
@@ -96,8 +99,8 @@ specifiers:
   zone.js: 0.11.5
 
 dependencies:
-  '@angular-dnd/core': 0.0.25_cb5zb3n5p5yzf3npbdtjwdnyhm
-  '@angular-dnd/tree': 0.0.25_abaabsfhwejpl3p3jquv6iznja
+  '@angular-dnd/core': 0.0.25_ok54q6cpkdpa67bmjicrpsgiie
+  '@angular-dnd/tree': 0.0.25_5pmeg5b7tzgd74r4rna7jzsr6q
   '@angular/animations': 13.3.9_@angular+core@13.3.9
   '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
   '@angular/compiler': 13.3.9
@@ -116,10 +119,13 @@ dependencies:
   '@nrwl/angular': 14.0.2_bod65dpki4ph2icywbrqxpb34m
   '@sentry/angular': 6.19.7_qydfz5ougadj7irz3px6dl7pue
   '@sentry/tracing': 6.19.7
+  '@sneat-dnd/core': 0.0.10
+  '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.0.10
   '@sneat/random': 0.0.3_hp6y74w6qqryugff64cyx55xya
   '@sneat/wormhole': 0.0.5_fzk4jfqydxu2c4jsqrwugc5eue
   codemirror: 5.65.3
   date-fns: 2.28.0
+  dnd-core: 10.0.2
   firebase: 9.8.1
   hogan.js: 3.0.2
   idb: 7.0.1
@@ -487,7 +493,7 @@ packages:
       - chokidar
     dev: false
 
-  /@angular-dnd/core/0.0.25_cb5zb3n5p5yzf3npbdtjwdnyhm:
+  /@angular-dnd/core/0.0.25_ok54q6cpkdpa67bmjicrpsgiie:
     resolution: {integrity: sha512-QpL7sYcEUVxXEsoLJoY9VkbseFiptd249dzFHbjuBtBlWxLM1I/p3CTPWt51jep5T5/b1Bnng6FEi/YDaUaDoQ==}
     peerDependencies:
       '@angular/common': ^10.0.1
@@ -499,12 +505,14 @@ packages:
     dependencies:
       '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
       '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
+      '@sneat-dnd/core': 0.0.10
+      dnd-core: 10.0.2
       rxjs: 7.5.5
       tslib: 2.4.0
       zone.js: 0.11.5
     dev: false
 
-  /@angular-dnd/tree/0.0.25_abaabsfhwejpl3p3jquv6iznja:
+  /@angular-dnd/tree/0.0.25_5pmeg5b7tzgd74r4rna7jzsr6q:
     resolution: {integrity: sha512-+/Bc0c9n6Vc2Z5KIPTaUBYGgCIeHD91bGZciEUz8hIZkNgGtTu0cZRJpcE+uAEHDckcPU+tHUU4ChqDXOTLNPQ==}
     peerDependencies:
       '@angular-dnd/core': ^0.0.16
@@ -516,9 +524,12 @@ packages:
       rxjs: ~6.5.1
       zone.js: ~0.10.3
     dependencies:
-      '@angular-dnd/core': 0.0.25_cb5zb3n5p5yzf3npbdtjwdnyhm
+      '@angular-dnd/core': 0.0.25_ok54q6cpkdpa67bmjicrpsgiie
       '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
       '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
+      '@sneat-dnd/core': 0.0.10
+      '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.0.10
+      dnd-core: 10.0.2
       rxjs: 7.5.5
       tslib: 2.4.0
       zone.js: 0.11.5
@@ -2837,7 +2848,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.9
-    dev: true
 
   /@babel/template/7.16.7:
     resolution: {integrity: sha512-I8j/x8kHUrbYRTUxXrrMbfCa7jxkE7tZre39x3kjr9hvI82cK1FfqLygotcWN5kdPGWcLdWMHpSBavse5tWw3w==}
@@ -4736,6 +4746,14 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
+  /@react-dnd/asap/4.0.1:
+    resolution: {integrity: sha512-kLy0PJDDwvwwTXxqTFNAAllPHD73AycE9ypWeln/IguoGBEbvFcPDbCV03G52bEcC5E+YgupBE0VzHGdC8SIXg==}
+    dev: false
+
+  /@react-dnd/invariant/2.0.0:
+    resolution: {integrity: sha512-xL4RCQBCBDJ+GRwKTFhGUW8GXa4yoDfJrPbLblc3U09ciS+9ZJXJ3Qrcs/x2IODOdIE5kQxvMmE2UKyqUictUw==}
+    dev: false
+
   /@rollup/plugin-json/4.1.0_rollup@2.61.0:
     resolution: {integrity: sha512-yfLbTdNS6amI/2OpmbiBoW12vngr5NW2jCJVZSBEz+H5KfUJZ2M7sDjk0U6GOOdCWFVScShte29o9NezJ53TPw==}
     peerDependencies:
@@ -4906,6 +4924,21 @@ packages:
     resolution: {integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==}
     dependencies:
       '@sinonjs/commons': 1.8.3
+
+  /@sneat-dnd/core/0.0.10:
+    resolution: {integrity: sha512-yMeWd8JsNJ6XyFICtR0dPbdVWHYSK5mMqkTrzmBVgpL8M37gXqWDlIYukb4kiDDIvPhKb3IEkB7E6IDv52Pocw==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
+  /@sneat-dnd/tree/0.0.10_@sneat-dnd+core@0.0.10:
+    resolution: {integrity: sha512-jq/D1ygfDF1AVEO59ur6ajwjqyMmNYxPUSXLxyuP341nWnkV3eTM19tYpC8iQA+2+MiSKKJA1Wcb/+5ejrjQXQ==}
+    peerDependencies:
+      '@sneat-dnd/core': ^0.0.6
+    dependencies:
+      '@sneat-dnd/core': 0.0.10
+      tslib: 2.4.0
+    dev: false
 
   /@sneat/random/0.0.3_hp6y74w6qqryugff64cyx55xya:
     resolution: {integrity: sha512-LbIaRrh0WwsplxerYmu1IN4Jz735NW5vU2Y0e0jUcGJhKzTPuBJwSBTa+c5WD99QVMwWTyeBUd5dW3Y15o3p6w==}
@@ -7301,6 +7334,14 @@ packages:
     dependencies:
       path-type: 4.0.0
     dev: true
+
+  /dnd-core/10.0.2:
+    resolution: {integrity: sha512-PrxEjxF0+6Y1n1n1Z9hSWZ1tvnDXv9syL+BccV1r1RC08uWNsyetf8AnWmUF3NgYPwy0HKQJwTqGkZK+1NlaFA==}
+    dependencies:
+      '@react-dnd/asap': 4.0.1
+      '@react-dnd/invariant': 2.0.0
+      redux: 4.2.0
+    dev: false
 
   /dns-equal/1.0.0:
     resolution: {integrity: sha1-s55/HabrCnW6nBcySzR1PEfgZU0=}
@@ -12408,6 +12449,12 @@ packages:
     dependencies:
       picomatch: 2.3.0
 
+  /redux/4.2.0:
+    resolution: {integrity: sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==}
+    dependencies:
+      '@babel/runtime': 7.16.7
+    dev: false
+
   /reflect-metadata/0.1.13:
     resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
     dev: true
@@ -12425,7 +12472,6 @@ packages:
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
-    dev: true
 
   /regenerator-transform/0.15.0:
     resolution: {integrity: sha512-LsrGtPmbYg19bcPHwdtmXwbW+TqNvtY4riE3P83foeHRroMbH6/2ddFBfab3t7kbzc7v7p4wbkIecHImqt0QNg==}
