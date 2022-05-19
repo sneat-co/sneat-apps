@@ -46,7 +46,7 @@ specifiers:
   '@sentry/angular': ^6.19.7
   '@sentry/tracing': ^6.19.7
   '@sneat-dnd/core': 0.1.1
-  '@sneat-dnd/tree': 0.0.10
+  '@sneat-dnd/tree': 0.1.1
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.11
@@ -100,7 +100,7 @@ specifiers:
 
 dependencies:
   '@angular-dnd/core': 0.0.25_tfpl5wqq2ne7exdnyl5mx4x74y
-  '@angular-dnd/tree': 0.0.25_uqim7kdxlre7a2zucbjufe5xlm
+  '@angular-dnd/tree': 0.0.25_vlgqlh2fdnli66d3ti7me7wmky
   '@angular/animations': 13.3.9_@angular+core@13.3.9
   '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
   '@angular/compiler': 13.3.9
@@ -120,7 +120,7 @@ dependencies:
   '@sentry/angular': 6.19.7_qydfz5ougadj7irz3px6dl7pue
   '@sentry/tracing': 6.19.7
   '@sneat-dnd/core': 0.1.1_fzk4jfqydxu2c4jsqrwugc5eue
-  '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.1.1
+  '@sneat-dnd/tree': 0.1.1_cqolhwjzkb3onkbyeyjrzcw7rm
   '@sneat/random': 0.0.3_hp6y74w6qqryugff64cyx55xya
   '@sneat/wormhole': 0.0.5_fzk4jfqydxu2c4jsqrwugc5eue
   codemirror: 5.65.3
@@ -512,7 +512,7 @@ packages:
       zone.js: 0.11.5
     dev: false
 
-  /@angular-dnd/tree/0.0.25_uqim7kdxlre7a2zucbjufe5xlm:
+  /@angular-dnd/tree/0.0.25_vlgqlh2fdnli66d3ti7me7wmky:
     resolution: {integrity: sha512-+/Bc0c9n6Vc2Z5KIPTaUBYGgCIeHD91bGZciEUz8hIZkNgGtTu0cZRJpcE+uAEHDckcPU+tHUU4ChqDXOTLNPQ==}
     peerDependencies:
       '@angular-dnd/core': ^0.0.16
@@ -528,7 +528,7 @@ packages:
       '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
       '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
       '@sneat-dnd/core': 0.1.1_fzk4jfqydxu2c4jsqrwugc5eue
-      '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.1.1
+      '@sneat-dnd/tree': 0.1.1_cqolhwjzkb3onkbyeyjrzcw7rm
       dnd-core: 10.0.2
       rxjs: 7.5.5
       tslib: 2.4.0
@@ -5196,13 +5196,19 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@sneat-dnd/tree/0.0.10_@sneat-dnd+core@0.1.1:
-    resolution: {integrity: sha512-jq/D1ygfDF1AVEO59ur6ajwjqyMmNYxPUSXLxyuP341nWnkV3eTM19tYpC8iQA+2+MiSKKJA1Wcb/+5ejrjQXQ==}
+  /@sneat-dnd/tree/0.1.1_cqolhwjzkb3onkbyeyjrzcw7rm:
+    resolution: {integrity: sha512-OcCKVvAt1TtqznfOiMgxLTkIje4O4x+DIcqi0LzwgCz0u6WQXB4NndZPuTZ2BFHfhU9/4G5QJt3Hro6QY5qltA==}
     peerDependencies:
-      '@sneat-dnd/core': ^0.0.6
+      '@angular/common': ^12.2.0
+      '@angular/core': ^12.2.0
+      '@sneat-dnd/core': 0.1.1
+      rxjs: 6.6.7
     dependencies:
+      '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
+      '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
       '@sneat-dnd/core': 0.1.1_fzk4jfqydxu2c4jsqrwugc5eue
-      tslib: 2.4.0
+      rxjs: 7.5.5
+      tslib: 2.3.1
     dev: false
 
   /@sneat/random/0.0.3_hp6y74w6qqryugff64cyx55xya:
