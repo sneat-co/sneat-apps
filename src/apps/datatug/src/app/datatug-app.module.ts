@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
+import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { DatatugAppComponent } from './datatug-app.component';
 import { DatatugAppRoutingModule } from './datatug-app-routing.module';
-import { CoreModule } from '@sneat/core';
+// import { CoreModule } from '@sneat/core';
 import { EnvConfigToken, initFirebase, SneatApplicationModule } from '@sneat/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
@@ -24,17 +25,22 @@ initFirebase(environment.firebaseConfig);
 
 // ***********************************************************************************************
 
+const appInfo: IAppInfo = {
+	appId: 'sneat',
+	appTitle: 'sneat.app',
+};
+
 @NgModule({
 	declarations: [DatatugAppComponent, HelloWorldPageComponent],
 	imports: [
 		BrowserModule,
-		IonicModule.forRoot(undefined),
+		IonicModule.forRoot(),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		// AngularFireAnalyticsModule,
 		// AngularFireAuthModule,
 		// AngularFirestoreModule,
 		CommonModule,
-		CoreModule,
+		// CoreModule,
 		HttpClientModule,
 		// GuiGridModule,
 		RandomModule,
@@ -45,6 +51,12 @@ initFirebase(environment.firebaseConfig);
 		// DatatugMenuModule,
 	],
 	providers: [
+		...coreProviders,
+		{
+			provide: APP_INFO,
+			useValue: appInfo,
+		},
+
 		// StatusBar,
 		// SplashScreen,
 		// AngularFireAuth,
