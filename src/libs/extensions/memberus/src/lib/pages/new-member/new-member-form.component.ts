@@ -81,23 +81,19 @@ export class NewMemberFormComponent {
 			throw ('!this.personFormComponent');
 		}
 		this.addMemberForm.disable();
-		const memberDto: IMemberDto = {
-			...relatedPersonToPerson(this.relatedPerson),
-			roles: this.relatedPerson.roles as MemberRole[] || [MemberRoleContributor],
-		};
 		const team = this.team;
 		if (!team) {
 			this.errorLogger.logError('not able to add new member without team context');
 			return;
 		}
-		if (!memberDto.ageGroup) {
+		if (!this.relatedPerson.ageGroup) {
 			throw new Error('Age group is a required field');
 		}
-		if (!memberDto.gender) {
+		if (!this.relatedPerson.gender) {
 			throw new Error('Gender is a required field');
 		}
 		const request: ICreateTeamMemberRequest = {
-			...memberDto,
+			...this.relatedPerson,
 			memberType: this.memberType.value,
 			teamID: team.id,
 		};
