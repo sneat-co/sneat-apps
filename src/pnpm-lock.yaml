@@ -62,7 +62,7 @@ specifiers:
   date-fns: ^2.28.0
   dnd-core: 10.0.2
   dotenv: 16.0.1
-  ejs: 3.1.7
+  ejs: 3.1.8
   engine.io: 6.2.0
   eslint: 8.14.0
   eslint-config-prettier: 8.5.0
@@ -171,7 +171,7 @@ devDependencies:
   babel-loader: 8.2.5_72ctybzk7ntig5kqkayinqycte
   cypress: 9.6.1
   dotenv: 16.0.1
-  ejs: 3.1.7
+  ejs: 3.1.8
   engine.io: 6.2.0
   eslint: 8.14.0
   eslint-config-prettier: 8.5.0_eslint@8.14.0
@@ -4332,7 +4332,7 @@ packages:
     resolution: {integrity: sha512-l8S5uNVONiaHN0ieaFsx1BwVn2NluxhORzIVd1vjxP/f5yR302nHMG2MKhjkWd0DPjI7rnngaWC3WsH06SptWg==}
     dependencies:
       '@nrwl/tao': 12.10.1
-      ejs: 3.1.7
+      ejs: 3.1.8
       ignore: 5.2.0
       rxjs: 6.6.7
       semver: 7.3.4
@@ -4343,7 +4343,7 @@ packages:
     resolution: {integrity: sha512-i1LC2ha/RnmwF3TJLgus1yKWG4uFWKMYwOlngIrS6Zi0qSx2tCKknhaMqLZxn84vw5C42u1vUzm9C483ueASRQ==}
     dependencies:
       '@nrwl/tao': 13.8.2
-      ejs: 3.1.7
+      ejs: 3.1.8
       ignore: 5.2.0
       rxjs: 6.6.7
       semver: 7.3.4
@@ -4353,7 +4353,7 @@ packages:
   /@nrwl/devkit/13.9.4:
     resolution: {integrity: sha512-Kg7UyRqkw6URHZcCCmUy0k+8Kcae8bN4InVxgjoTl3mqe0xt3auuhgWUf7r6bzGeO9wsYqozzOBlOZeo6/g9pw==}
     dependencies:
-      ejs: 3.1.7
+      ejs: 3.1.8
       ignore: 5.2.0
       nx: 13.9.4
       rxjs: 6.6.7
@@ -4366,7 +4366,7 @@ packages:
   /@nrwl/devkit/14.0.2:
     resolution: {integrity: sha512-T8YxAM0TzC0B7xksAhcjUtwl3EbcMD0YIMnMc8qaNaIlgWDbUVf7P3H6WrRKCiOtEH5/5BCPU+nQL21ZUpj01Q==}
     dependencies:
-      ejs: 3.1.7
+      ejs: 3.1.8
       ignore: 5.2.0
       nx: 14.0.2
       rxjs: 6.6.7
@@ -4381,7 +4381,7 @@ packages:
     peerDependencies:
       nx: '>= 13.10 <= 15'
     dependencies:
-      ejs: 3.1.7
+      ejs: 3.1.8
       ignore: 5.2.0
       nx: 14.1.7
       rxjs: 6.6.7
@@ -7486,8 +7486,8 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /ejs/3.1.7:
-    resolution: {integrity: sha512-BIar7R6abbUxDA3bfXrO4DSgwo8I+fB5/1zgujl3HLLjwd6+9iOnrT+t3grn2qbk9vOgBubXOFwX2m9axoFaGw==}
+  /ejs/3.1.8:
+    resolution: {integrity: sha512-/sXZeMlhS0ArkfX2Aw780gJzXSMPnKjtspYZv+f3NiKLlubezAHDU5+9xz6gd3/NhG3txQCo6xlglmTS+oTGEQ==}
     engines: {node: '>=0.10.0'}
     hasBin: true
     dependencies:
