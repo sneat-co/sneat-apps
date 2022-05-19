@@ -74,7 +74,7 @@ specifiers:
   jasmine-core: 4.1.1
   jest: 28.1.0
   jest-preset-angular: 12.0.1
-  karma: 6.3.19
+  karma: 6.3.20
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 5.0.0
@@ -137,7 +137,7 @@ dependencies:
   zone.js: 0.11.5
 
 devDependencies:
-  '@angular-devkit/build-angular': 13.3.6_rtjbjcmltusg4c45pneyvqmhku
+  '@angular-devkit/build-angular': 13.3.6_yv6uzmjmlb42vm4qqkntymsjvm
   '@angular-devkit/schematics': 13.3.6
   '@angular-eslint/eslint-plugin': 13.2.1_hcfsmds2fshutdssjqluwm76uu
   '@angular-eslint/eslint-plugin-template': 13.2.1_hcfsmds2fshutdssjqluwm76uu
@@ -179,11 +179,11 @@ devDependencies:
   jasmine-core: 4.1.1
   jest: 28.1.0_i7qvqa3es2whznbpt45mwrvksm
   jest-preset-angular: 12.0.1_3opi64rkgn34klt74xei67x7zi
-  karma: 6.3.19
+  karma: 6.3.20
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
-  karma-jasmine: 5.0.0_karma@6.3.19
-  karma-jasmine-html-reporter: 1.7.0_h5kavcec5mk5shvgnx5rs5hu5i
+  karma-jasmine: 5.0.0_karma@6.3.20
+  karma-jasmine-html-reporter: 1.7.0_3c42ywn4b6nhfw2dkyuuxvmz6q
   ng-packagr: 13.3.1_46eygwrkelgtyizzr7vx4v6xeq
   node-forge: 1.3.1
   nx: 14.1.7
@@ -217,7 +217,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/13.3.6_rtjbjcmltusg4c45pneyvqmhku:
+  /@angular-devkit/build-angular/13.3.6_yv6uzmjmlb42vm4qqkntymsjvm:
     resolution: {integrity: sha512-VrEw9AhS0BBPRA59aZZYDXelXX8SdTfo7mW1gSeuvyeqk8RpMdjHWJPUmuvNJro6s5zOe4lc9dVrGxdevCbQFQ==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -274,7 +274,7 @@ packages:
       https-proxy-agent: 5.0.0
       inquirer: 8.2.0
       jsonc-parser: 3.0.0
-      karma: 6.3.19
+      karma: 6.3.20
       karma-source-map-support: 1.4.0
       less: 4.1.2
       less-loader: 10.2.0_less@4.1.2+webpack@5.70.0
@@ -6042,14 +6042,6 @@ packages:
   /abbrev/1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
 
-  /accepts/1.3.7:
-    resolution: {integrity: sha512-Il80Qs2WjYlJIBNzNkK6KYqlVMTbZLXgHx2oT0pU/fjRHyEp+PEfEPY0R3WCwAGVOtauxh1hOxNgIf5bv7dQpA==}
-    engines: {node: '>= 0.6'}
-    dependencies:
-      mime-types: 2.1.35
-      negotiator: 0.6.2
-    dev: true
-
   /accepts/1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
@@ -6757,7 +6749,7 @@ packages:
     dev: true
 
   /bytes/3.0.0:
-    resolution: {integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=}
+    resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
     engines: {node: '>= 0.8'}
     dev: true
 
@@ -9111,10 +9103,6 @@ packages:
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
 
-  /graceful-fs/4.2.9:
-    resolution: {integrity: sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==}
-    dev: true
-
   /handle-thing/2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
     dev: true
@@ -10256,7 +10244,7 @@ packages:
       jest: ^28.0.0
       typescript: '>=4.3'
     dependencies:
-      '@angular-devkit/build-angular': 13.3.6_rtjbjcmltusg4c45pneyvqmhku
+      '@angular-devkit/build-angular': 13.3.6_yv6uzmjmlb42vm4qqkntymsjvm
       '@angular/compiler-cli': 13.3.9_p6rnabs4674uzfsi7vl7zwqdi4
       '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
       '@angular/platform-browser-dynamic': 13.3.9_2k4rivkxnvexphdpkfvakgfjci
@@ -10818,7 +10806,7 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter/1.7.0_h5kavcec5mk5shvgnx5rs5hu5i:
+  /karma-jasmine-html-reporter/1.7.0_3c42ywn4b6nhfw2dkyuuxvmz6q:
     resolution: {integrity: sha512-pzum1TL7j90DTE86eFt48/s12hqwQuiD+e5aXx2Dc9wDEn2LfGq6RoAxEZZjFiN0RDSCOnosEKRZWxbQ+iMpQQ==}
     peerDependencies:
       jasmine-core: '>=3.8'
@@ -10826,18 +10814,18 @@ packages:
       karma-jasmine: '>=1.1'
     dependencies:
       jasmine-core: 4.1.1
-      karma: 6.3.19
-      karma-jasmine: 5.0.0_karma@6.3.19
+      karma: 6.3.20
+      karma-jasmine: 5.0.0_karma@6.3.20
     dev: true
 
-  /karma-jasmine/5.0.0_karma@6.3.19:
+  /karma-jasmine/5.0.0_karma@6.3.20:
     resolution: {integrity: sha512-dsFkCoTwyoNyQnMgegS72wIA/2xPDJG5yzTry0448U6lAY7P60Wgg4UuLlbdLv8YHbimgNpDXjjmfPdc99EDWQ==}
     engines: {node: '>=12'}
     peerDependencies:
       karma: ^6.0.0
     dependencies:
       jasmine-core: 4.1.1
-      karma: 6.3.19
+      karma: 6.3.20
     dev: true
 
   /karma-source-map-support/1.4.0:
@@ -10846,8 +10834,8 @@ packages:
       source-map-support: 0.5.21
     dev: true
 
-  /karma/6.3.19:
-    resolution: {integrity: sha512-NDhWckzES/Y9xMiddyU1RzaKL76/scCsu8Mp0vR0Z3lQRvC3p72+Ab4ppoxs36S9tyPNX5V48yvaV++RNEBPZw==}
+  /karma/6.3.20:
+    resolution: {integrity: sha512-HRNQhMuKOwKpjYlWiJP0DUrJOh+QjaI/DTaD8b9rEm4Il3tJ8MijutVZH4ts10LuUFst/CedwTS6vieCN8yTSw==}
     engines: {node: '>= 10'}
     hasBin: true
     dependencies:
@@ -10859,13 +10847,13 @@ packages:
       di: 0.0.1
       dom-serialize: 2.2.1
       glob: 7.2.0
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.10
       http-proxy: 1.18.1
       isbinaryfile: 4.0.8
       lodash: 4.17.21
       log4js: 6.4.1
       mime: 2.6.0
-      minimatch: 3.0.5
+      minimatch: 3.1.2
       mkdirp: 0.5.5
       qjobs: 1.2.0
       range-parser: 1.2.1
@@ -11432,11 +11420,6 @@ packages:
       - supports-color
     dev: true
     optional: true
-
-  /negotiator/0.6.2:
-    resolution: {integrity: sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==}
-    engines: {node: '>= 0.6'}
-    dev: true
 
   /negotiator/0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
@@ -13579,7 +13562,7 @@ packages:
     resolution: {integrity: sha512-s04vrBswdQBUmuWJuuNTmXUVJhP0cVky8bBDhdkf8y0Ptsu7fKU2LuLbts9g+pdmAdyMMn8F/9Mf1/wbtUN0fg==}
     engines: {node: '>=10.0.0'}
     dependencies:
-      accepts: 1.3.7
+      accepts: 1.3.8
       base64id: 2.0.0
       debug: 4.3.4
       engine.io: 6.1.0
