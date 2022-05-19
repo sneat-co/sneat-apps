@@ -40,8 +40,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: PNPM install
-          run: pnpm install
+      - run: pnpm install
 
       - run: git rev-parse HEAD
       - run: git rev-parse HEAD~1
