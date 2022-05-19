@@ -45,7 +45,7 @@ specifiers:
   '@nxtend/ionic-angular': 13.1.0
   '@sentry/angular': ^6.19.7
   '@sentry/tracing': ^6.19.7
-  '@sneat-dnd/core': 0.0.10
+  '@sneat-dnd/core': 0.1.1
   '@sneat-dnd/tree': 0.0.10
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
@@ -99,8 +99,8 @@ specifiers:
   zone.js: 0.11.5
 
 dependencies:
-  '@angular-dnd/core': 0.0.25_ok54q6cpkdpa67bmjicrpsgiie
-  '@angular-dnd/tree': 0.0.25_5pmeg5b7tzgd74r4rna7jzsr6q
+  '@angular-dnd/core': 0.0.25_tfpl5wqq2ne7exdnyl5mx4x74y
+  '@angular-dnd/tree': 0.0.25_uqim7kdxlre7a2zucbjufe5xlm
   '@angular/animations': 13.3.9_@angular+core@13.3.9
   '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
   '@angular/compiler': 13.3.9
@@ -119,8 +119,8 @@ dependencies:
   '@nrwl/angular': 14.0.2_4xb26j5r2g7dp7kvv65t6rovcq
   '@sentry/angular': 6.19.7_qydfz5ougadj7irz3px6dl7pue
   '@sentry/tracing': 6.19.7
-  '@sneat-dnd/core': 0.0.10
-  '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.0.10
+  '@sneat-dnd/core': 0.1.1_fzk4jfqydxu2c4jsqrwugc5eue
+  '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.1.1
   '@sneat/random': 0.0.3_hp6y74w6qqryugff64cyx55xya
   '@sneat/wormhole': 0.0.5_fzk4jfqydxu2c4jsqrwugc5eue
   codemirror: 5.65.3
@@ -493,7 +493,7 @@ packages:
       - chokidar
     dev: false
 
-  /@angular-dnd/core/0.0.25_ok54q6cpkdpa67bmjicrpsgiie:
+  /@angular-dnd/core/0.0.25_tfpl5wqq2ne7exdnyl5mx4x74y:
     resolution: {integrity: sha512-QpL7sYcEUVxXEsoLJoY9VkbseFiptd249dzFHbjuBtBlWxLM1I/p3CTPWt51jep5T5/b1Bnng6FEi/YDaUaDoQ==}
     peerDependencies:
       '@angular/common': ^10.0.1
@@ -505,14 +505,14 @@ packages:
     dependencies:
       '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
       '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
-      '@sneat-dnd/core': 0.0.10
+      '@sneat-dnd/core': 0.1.1_fzk4jfqydxu2c4jsqrwugc5eue
       dnd-core: 10.0.2
       rxjs: 7.5.5
       tslib: 2.4.0
       zone.js: 0.11.5
     dev: false
 
-  /@angular-dnd/tree/0.0.25_5pmeg5b7tzgd74r4rna7jzsr6q:
+  /@angular-dnd/tree/0.0.25_uqim7kdxlre7a2zucbjufe5xlm:
     resolution: {integrity: sha512-+/Bc0c9n6Vc2Z5KIPTaUBYGgCIeHD91bGZciEUz8hIZkNgGtTu0cZRJpcE+uAEHDckcPU+tHUU4ChqDXOTLNPQ==}
     peerDependencies:
       '@angular-dnd/core': ^0.0.16
@@ -524,11 +524,11 @@ packages:
       rxjs: ~6.5.1
       zone.js: ~0.10.3
     dependencies:
-      '@angular-dnd/core': 0.0.25_ok54q6cpkdpa67bmjicrpsgiie
+      '@angular-dnd/core': 0.0.25_tfpl5wqq2ne7exdnyl5mx4x74y
       '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
       '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
-      '@sneat-dnd/core': 0.0.10
-      '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.0.10
+      '@sneat-dnd/core': 0.1.1_fzk4jfqydxu2c4jsqrwugc5eue
+      '@sneat-dnd/tree': 0.0.10_@sneat-dnd+core@0.1.1
       dnd-core: 10.0.2
       rxjs: 7.5.5
       tslib: 2.4.0
@@ -5156,18 +5156,25 @@ packages:
       '@sinonjs/commons': 1.8.3
     dev: true
 
-  /@sneat-dnd/core/0.0.10:
-    resolution: {integrity: sha512-yMeWd8JsNJ6XyFICtR0dPbdVWHYSK5mMqkTrzmBVgpL8M37gXqWDlIYukb4kiDDIvPhKb3IEkB7E6IDv52Pocw==}
+  /@sneat-dnd/core/0.1.1_fzk4jfqydxu2c4jsqrwugc5eue:
+    resolution: {integrity: sha512-3Ua8ler9XZPeKtcFw36uJEdU5TmJpJUF9SZi0tQgJPrBG6npwdLR8wX0r6az6kN+JRY462PH1era74/Ogc9sgw==}
+    peerDependencies:
+      '@angular/common': ^12.2.0
+      '@angular/core': ^12.2.0
+      rxjs: 6.6.7
     dependencies:
-      tslib: 2.4.0
+      '@angular/common': 13.3.9_ykbm67bhu2bcu7yn4wh7ib7zmq
+      '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
+      rxjs: 7.5.5
+      tslib: 2.3.1
     dev: false
 
-  /@sneat-dnd/tree/0.0.10_@sneat-dnd+core@0.0.10:
+  /@sneat-dnd/tree/0.0.10_@sneat-dnd+core@0.1.1:
     resolution: {integrity: sha512-jq/D1ygfDF1AVEO59ur6ajwjqyMmNYxPUSXLxyuP341nWnkV3eTM19tYpC8iQA+2+MiSKKJA1Wcb/+5ejrjQXQ==}
     peerDependencies:
       '@sneat-dnd/core': ^0.0.6
     dependencies:
-      '@sneat-dnd/core': 0.0.10
+      '@sneat-dnd/core': 0.1.1_fzk4jfqydxu2c4jsqrwugc5eue
       tslib: 2.4.0
     dev: false
 
@@ -14238,7 +14245,6 @@ packages:
 
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
-    dev: true
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
