@@ -49,7 +49,7 @@ specifiers:
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.11
   '@types/jasmine': 4.0.3
-  '@types/jest': 27.4.1
+  '@types/jest': 27.5.1
   '@types/node': 16.11.32
   '@typescript-eslint/eslint-plugin': 5.21.0
   '@typescript-eslint/parser': 5.21.0
@@ -157,7 +157,7 @@ devDependencies:
   '@nxtend/ionic-angular': 13.1.0_qls5rs34naz76mfwuauagbum3q
   '@trellisorg/make-buildable': 0.0.11_vv6s3uki3q2adeglbirgux56je
   '@types/jasmine': 4.0.3
-  '@types/jest': 27.4.1
+  '@types/jest': 27.5.1
   '@types/node': 16.11.32
   '@typescript-eslint/eslint-plugin': 5.21.0_vxtfsxfxxyksjzzdyas4bgfolu
   '@typescript-eslint/parser': 5.21.0_t725usgvqspm5woeqpaxbfp2qu
@@ -172,7 +172,7 @@ devDependencies:
   follow-redirects: 1.15.0
   jasmine-core: 4.1.0
   jest: 27.5.1_ts-node@10.7.0
-  jest-preset-angular: 11.1.2_xwakcfy2loy4drlkyl4nfq5cmi
+  jest-preset-angular: 11.1.2_g5m4hsxpi3ltukwmiok2gclmei
   karma: 6.3.19
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
@@ -187,7 +187,7 @@ devDependencies:
   postcss-preset-env: 7.4.4_postcss@8.4.12
   postcss-url: 10.1.3_postcss@8.4.12
   prettier: 2.6.2
-  ts-jest: 27.1.4_e5ptpkwerp6mcerntfy7vi2trq
+  ts-jest: 27.1.4_rkajwk7vfnl33n6tosf7plrz7m
   ts-node: 10.7.0_au3bf4ahy5qxm3xc5mdsnlgvre
   typescript: 4.6.4
   webpack: 5.72.0
@@ -5390,8 +5390,8 @@ packages:
     resolution: {integrity: sha512-Opp1LvvEuZdk8fSSvchK2mZwhVrsNT0JgJE9Di6MjnaIpmEXM8TLCPPrVtNTYh8+5MPdY8j9bAHMu2SSfwpZJg==}
     dev: true
 
-  /@types/jest/27.4.1:
-    resolution: {integrity: sha512-23iPJADSmicDVrWk+HT58LMJtzLAnB2AgIzplQuq/bSrGaxCrlvRFjGbXmamnnk/mAmCdLStiGqggu28ocUyiw==}
+  /@types/jest/27.5.1:
+    resolution: {integrity: sha512-fUy7YRpT+rHXto1YlL+J9rs0uLGyiqVt3ZOTQR+4ROc47yNl8WLdVLgUloBRhOxP1PZvguHl44T3H0wAWxahYQ==}
     dependencies:
       jest-matcher-utils: 27.5.1
       pretty-format: 27.5.1
@@ -9917,7 +9917,7 @@ packages:
     dependencies:
       jest-resolve: 27.5.1
 
-  /jest-preset-angular/11.1.2_xwakcfy2loy4drlkyl4nfq5cmi:
+  /jest-preset-angular/11.1.2_g5m4hsxpi3ltukwmiok2gclmei:
     resolution: {integrity: sha512-qPvOP6wnLP8M01TDVSa3UC3PcDWxoj87T58mWEp5yWlWPrXBJ6rhnTEI+HPmZLyehwlK686+O/49hwFRVXFP0A==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0}
     peerDependencies:
@@ -9934,7 +9934,7 @@ packages:
       esbuild-wasm: 0.14.11
       jest-environment-jsdom: 27.5.1
       pretty-format: 27.5.1
-      ts-jest: 27.1.4_d6o2sesuzzzhhipqpg3potkr3u
+      ts-jest: 27.1.4_kj2wzc23rj2trzzhpjqnot4lzi
     optionalDependencies:
       esbuild: 0.14.11
     transitivePeerDependencies:
@@ -13587,7 +13587,7 @@ packages:
     resolution: {integrity: sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==}
     dev: false
 
-  /ts-jest/27.1.4_d6o2sesuzzzhhipqpg3potkr3u:
+  /ts-jest/27.1.4_kj2wzc23rj2trzzhpjqnot4lzi:
     resolution: {integrity: sha512-qjkZlVPWVctAezwsOD1OPzbZ+k7zA5z3oxII4dGdZo5ggX/PL7kvwTM0pXTr10fAtbiVpJaL3bWd502zAhpgSQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     hasBin: true
@@ -13609,7 +13609,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.17.10
-      '@types/jest': 27.4.1
+      '@types/jest': 27.5.1
       bs-logger: 0.2.6
       esbuild: 0.14.11
       fast-json-stable-stringify: 2.1.0
@@ -13623,7 +13623,7 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /ts-jest/27.1.4_e5ptpkwerp6mcerntfy7vi2trq:
+  /ts-jest/27.1.4_rkajwk7vfnl33n6tosf7plrz7m:
     resolution: {integrity: sha512-qjkZlVPWVctAezwsOD1OPzbZ+k7zA5z3oxII4dGdZo5ggX/PL7kvwTM0pXTr10fAtbiVpJaL3bWd502zAhpgSQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     hasBin: true
@@ -13645,7 +13645,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.17.10
-      '@types/jest': 27.4.1
+      '@types/jest': 27.5.1
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
       jest: 27.5.1_ts-node@10.7.0
