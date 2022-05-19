@@ -1,4 +1,8 @@
-<sneat-names-form [isActive]="!showGender" (namesChanged)="onNameChanged($event)"></sneat-names-form>
+<sneat-names-form
+	[isActive]="!showGender"
+	(namesChanged)="onNameChanged($event)"
+></sneat-names-form>
+
 <ion-button *ngIf="!showGender"
 						class="ion-margin"
 						size="medium"
@@ -7,16 +11,34 @@
 	<ion-label>Next</ion-label>
 	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
 </ion-button>
-<sneat-gender-form *ngIf="showGender" [gender]="relatedPerson.gender"
-									 (genderChange)="onGenderChanged($event)"></sneat-gender-form>
-<sneat-age-group-form *ngIf="relatedPerson.gender" [ageGroup]="relatedPerson.ageGroup"
-											(ageGroupChange)="onAgeGroupChanged($event)"></sneat-age-group-form>
+
+<sneat-gender-form *ngIf="showGender"
+									 [gender]="relatedPerson.gender"
+									 (genderChange)="onGenderChanged($event)"
+></sneat-gender-form>
+
+<sneat-age-group-form *ngIf="relatedPerson.gender"
+											[ageGroup]="relatedPerson.ageGroup"
+											(ageGroupChange)="onAgeGroupChanged($event)"
+></sneat-age-group-form>
+
 <sneat-relationship-form *ngIf="showRelationship"
 												 [team]="team"
 												 [ageGroup]="relatedPerson.ageGroup"
 												 [relationship]="relatedPerson.relationship"
 												 (relationshipChange)="onRelationshipChanged($event)"
 ></sneat-relationship-form>
-<sneat-roles-form *ngIf="showRoles" [team]="team"></sneat-roles-form>
-<sneat-phones-form *ngIf="showPhones"></sneat-phones-form>
-<sneat-emails-form *ngIf="showEmails"></sneat-emails-form>
+
+<sneat-roles-form *ngIf="showRoles"
+									[team]="team"
+></sneat-roles-form>
+
+<sneat-phones-form *ngIf="showPhones"
+									 [phones]="relatedPerson.phones"
+									 (phonesChange)="onPhoneChanged($event)"
+></sneat-phones-form>
+
+<sneat-emails-form *ngIf="showEmails"
+									 [emails]="relatedPerson.emails"
+									 (emailsChange)="onEmailsChanged($event)"
+></sneat-emails-form>

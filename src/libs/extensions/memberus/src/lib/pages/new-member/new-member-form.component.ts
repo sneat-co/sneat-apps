@@ -7,7 +7,7 @@ import { excludeUndefined, RoutingState } from '@sneat/core';
 import {
 	emptyRelatedPerson,
 	IMemberDto,
-	IRelatedPerson,
+	IRelatedPerson, MemberRole,
 	MemberRoleContributor,
 	relatedPersonToPerson,
 } from '@sneat/dto';
@@ -81,10 +81,10 @@ export class NewMemberFormComponent {
 			throw ('!this.personFormComponent');
 		}
 		this.addMemberForm.disable();
-		let memberDto: IMemberDto = {
+		const memberDto: IMemberDto = {
 			...relatedPersonToPerson(this.relatedPerson),
+			roles: this.relatedPerson.roles as MemberRole[] || [MemberRoleContributor],
 		};
-		memberDto = excludeUndefined(memberDto);
 		const team = this.team;
 		if (!team) {
 			this.errorLogger.logError('not able to add new member without team context');
@@ -95,9 +95,6 @@ export class NewMemberFormComponent {
 		}
 		if (!memberDto.gender) {
 			throw new Error('Gender is a required field');
-		}
-		if (!memberDto.roles?.length) {
-			memberDto = {...memberDto, roles: [MemberRoleContributor]}
 		}
 		const request: ICreateTeamMemberRequest = {
 			...memberDto,
@@ -156,6 +153,7 @@ export class NewMemberFormComponent {
 	readonly id = (i: number, record: { id: string }) => record.id;
 
 	onRelatedPersonChanged(relatedPerson: IRelatedPerson): void {
+		console.log('NewMemberFormComponent.onRelatedPersonChanged()', relatedPerson);
 		this.relatedPerson = relatedPerson;
 		this.relatedPersonChange.emit(relatedPerson);
 	}

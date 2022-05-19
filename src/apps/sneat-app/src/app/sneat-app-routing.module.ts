@@ -29,6 +29,14 @@ const routes: Routes = [
 			import('@sneat/team/pages').then(m => m.TeamSpaceRoutingModule),
 	},
 	{
+		path: 'join/:teamType',
+		loadChildren: () => import('@sneat/team/pages').then(m => m.JoinTeamPageModule)
+	},
+	// {
+	// 	path: 'invite-to/:teamType',
+	// 	loadChildren: () => import('@sneat/team/pages').then(m => m.)
+	// },
+	{
 		path: 'communes',
 		loadChildren: () =>
 			import('@sneat/communes/ui').then(m => m.CommunesRoutingModule),

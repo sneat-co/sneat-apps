@@ -1,3 +1,4 @@
+import { excludeUndefined } from '@sneat/core';
 import { AgeGroup, Gender } from './types';
 
 export interface IName {
@@ -32,9 +33,9 @@ export interface IPersonBrief extends IPersonBase {
 
 export interface IPerson extends IPersonBase {
 	readonly email?: string;
-	readonly phone?: string;
 	readonly emails?: IEmail[];
-	readonly phones?: IEmail[];
+	readonly phone?: string;
+	readonly phones?: IPhone[];
 	readonly website?: string;
 	readonly dob?: string;  // Date of birth
 }
@@ -47,7 +48,7 @@ export interface IRelatedPerson extends IPerson {
 export const emptyRelatedPerson = emptyPersonBase;
 
 export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
-	const v2 = {...v} as any;
+	const v2 = {...excludeUndefined(v)} as any;
 	delete v2['relationship'];
 	return v2;
 }

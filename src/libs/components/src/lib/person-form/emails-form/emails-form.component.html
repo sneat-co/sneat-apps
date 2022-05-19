@@ -7,11 +7,14 @@
 	</ion-item-divider>
 	<ion-grid class="ion-grid-layout">
 
-		<ion-row *ngFor="let email of emails">
+		<ion-row *ngFor="let email of emailInputs; let i = index">
 
 			<ion-col size="auto">
 				<ion-item>
-					<ion-select [(ngModel)]="email.type" interface="popover">
+					<ion-select interface="popover"
+											[(ngModel)]="email.type"
+											(ionChange)="typeChanged($event, i)"
+					>
 						<ion-select-option *ngFor="let t of types"
 															 [value]="t.id"
 															 [disabled]="disabled"
@@ -22,7 +25,11 @@
 
 			<ion-col>
 				<ion-item>
-					<ion-input type="email" placeholder="email" [(ngModel)]="email.address" [disabled]="disabled"></ion-input>
+					<ion-input type="email" email="true" placeholder="email"
+										 [(ngModel)]="email.address"
+										 [disabled]="disabled"
+										 (ionBlur)="addressChanged($event)"
+					></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>

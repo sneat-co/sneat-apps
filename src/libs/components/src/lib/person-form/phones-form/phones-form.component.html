@@ -9,11 +9,14 @@
 
 	<ion-grid class="ion-grid-layout">
 
-		<ion-row *ngFor="let phone of phones">
+		<ion-row *ngFor="let phone of phones; let i = index">
 
 			<ion-col size="auto">
 				<ion-item>
-					<ion-select [(ngModel)]="phone.type" interface="popover">
+					<ion-select interface="popover"
+											[value]="phone.type"
+											(ionChange)="typeChanged($event, i)"
+					>
 						<ion-select-option *ngFor="let t of types"
 															 [value]="t.id"
 															 [disabled]="disabled"
@@ -24,7 +27,12 @@
 
 			<ion-col>
 				<ion-item>
-					<ion-input type="tel" placeholder="phone #" [(ngModel)]="phone.number" [disabled]="disabled"></ion-input>
+					<ion-input type="tel" placeholder="phone #"
+										 [disabled]="disabled"
+										 [value]="phone.number"
+										 (ionChange)="numberChanged($event, i)"
+										 (ionBlur)="numberChanged($event, i)"
+					></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>

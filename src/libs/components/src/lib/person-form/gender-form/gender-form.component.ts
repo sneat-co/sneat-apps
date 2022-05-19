@@ -1,7 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { IonRadioGroup } from '@ionic/angular';
-import { createSetFocusToInput } from '@sneat/components';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Gender } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 

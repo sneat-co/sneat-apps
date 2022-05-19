@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
-import { excludeUndefined } from '@sneat/core';
+import { excludeEmpty } from '@sneat/core';
 import { IName } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { createSetFocusToInput } from '../../focus';
@@ -100,19 +100,19 @@ export class NamesFormComponent implements AfterViewInit {
 		this.name = {
 			first: this.firstName.value,
 			last: this.lastName.value,
-			full: this.fullName.value,
 			middle: this.middleName.value,
+			full: this.fullName.value,
 		};
 		this.namesChanged.emit(this.name);
 	}
 
 	public names(): IName {
-		return {
+		return excludeEmpty( {
 			first: this.firstName.value,
 			last: this.lastName.value,
 			middle: this.lastName.value,
 			full: this.fullName.value,
-		};
+		});
 	}
 
 	private generateFullName(): string {
