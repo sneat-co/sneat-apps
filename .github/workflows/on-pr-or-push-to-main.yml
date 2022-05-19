@@ -32,7 +32,7 @@ jobs:
       - name: Install PNPM
         uses: pnpm/action-setup@v2.2.1
         with:
-          version: 6.19.0
+          version: 7.1.0
           run_install: true
 
       - run: git rev-parse HEAD
