@@ -40,7 +40,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - run: pnpm install
+      - run: pnpm install --no-frozen-lockfile
         working-directory: ./src
 
       - run: git rev-parse HEAD
