@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { InvitePersonalPageRoutingModule } from './invite-personal-routing.module';
 
-import { InvitePersonalPage } from './invite-personal.page';
+import { InvitePersonalPageComponent } from './invite-personal-page.component';
 
 @NgModule({
 	imports: [
@@ -15,7 +15,7 @@ import { InvitePersonalPage } from './invite-personal.page';
 		IonicModule,
 		InvitePersonalPageRoutingModule,
 	],
-	declarations: [InvitePersonalPage],
+	declarations: [InvitePersonalPageComponent],
 })
 export class InvitePersonalPageModule {
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/animations';
 import { IContact2Member } from '@sneat/dto';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
@@ -7,6 +7,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief, TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
+import { InviteModalComponent } from '../invite-modal/invite-modal.component';
 
 @Component({
 	selector: 'sneat-members-list',
@@ -33,6 +34,8 @@ export class MembersListComponent implements OnChanges {
 		private readonly teamService: TeamService,
 		private readonly scheduleNavService: ScheduleNavService,
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
+		private readonly modalController: ModalController,
+		public readonly routerOutlet: IonRouterOutlet,
 	) {
 		//
 	}
@@ -149,4 +152,18 @@ export class MembersListComponent implements OnChanges {
 				m.brief?.roles?.some((r) => r === this.role),
 			);
 	};
+
+	async showInviteModal(event: Event, member: IMemberContext): Promise<void> {
+		event.stopPropagation();
+		const modal = await this.modalController.create({
+			component: InviteModalComponent,
+			swipeToClose: true,
+			presentingElement: this.routerOutlet.nativeEl,
+			componentProps: {
+				team: this.team,
+				member,
+			},
+		});
+		await modal.present();
+	}
 }

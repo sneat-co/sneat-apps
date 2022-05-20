@@ -9,7 +9,7 @@ import { IMemberBrief, ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sn
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreateTeamRequest,
-	ICreateTeamResponse,
+	ICreateTeamResponse, IInviteFromContact, IInviteToContact,
 	ITeamContext,
 	ITeamMemberRequest, ITeamRef,
 	ITeamRequest,
@@ -366,7 +366,13 @@ export class TeamService {
 	}
 }
 
+export interface IInviteTeam {
+	id: string;
+	type: string;
+	title?: string;
+}
 export interface IJoinTeamInfoResponse {
-	team: ITeamDto;
-	invitedBy: IUserTeamBrief;
+	team: IInviteTeam;
+	from: IInviteFromContact;
+	to: IInviteToContact;
 }

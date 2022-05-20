@@ -6,13 +6,14 @@ import { IMemberBrief, IMemberDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
-	ICreateTeamMemberRequest,
 	IAddTeamMemberResponse,
+	ICreateTeamMemberRequest,
 	IMemberContext,
 	IRejectPersonalInviteRequest,
-	ITeamContext, ITeamRef,
+	ITeamContext,
+	ITeamRef,
 } from '@sneat/team/models';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { TeamService } from './team.service';
 

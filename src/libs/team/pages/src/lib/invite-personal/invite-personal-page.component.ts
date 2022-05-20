@@ -16,11 +16,11 @@ import { RandomIdService } from '@sneat/random';
 import { MemberService } from '@sneat/team/services';
 
 @Component({
-	selector: 'sneat-invite-personal',
-	templateUrl: './invite-personal.page.html',
-	styleUrls: ['./invite-personal.page.scss'],
+	selector: 'sneat-invite-personal-page',
+	templateUrl: './invite-personal-page.component.html',
+	styleUrls: ['./invite-personal-page.component.scss'],
 })
-export class InvitePersonalPage implements OnInit {
+export class InvitePersonalPageComponent implements OnInit {
 	public fullName = '';
 	public email = '';
 	public pin = '';
@@ -77,9 +77,9 @@ export class InvitePersonalPage implements OnInit {
 							(m) => m.id !== response.invite?.memberID,
 						);
 						if (response.invite) {
-							this.fullName = response.invite.to.title;
-							if (response.invite.channel === 'email') {
-								this.email = response.invite.address;
+							this.fullName = response.invite.to.title || '';
+							if (response.invite.to.channel === 'email') {
+								this.email = response.invite.to.address;
 							}
 						}
 					},

@@ -44,9 +44,9 @@
 				</ng-container>
 			</ion-label>
 			<ion-buttons slot="end">
-				<!--				<ion-button *ngIf="!member.brief?.uid">-->
-				<!--					<ion-label>Invite!</ion-label>-->
-				<!--				</ion-button>-->
+				<ion-button *ngIf="!member.brief?.userID" (click)="showInviteModal($event, member)">
+					<ion-label>Invite</ion-label>
+				</ion-button>
 				<ion-button (click)="goSchedule($event, member)">
 					<ion-icon name="calendar-outline"></ion-icon>
 				</ion-button>

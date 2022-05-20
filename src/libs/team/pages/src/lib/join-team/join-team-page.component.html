@@ -1,39 +1,82 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-title>Join team @ Sneat.app</ion-title>
+	<ion-toolbar color="light">
+		<ion-title *ngIf="invite?.team?.type !== 'family'">Join team @ Sneat.app</ion-title>
+		<ion-title *ngIf="invite?.team?.type === 'family'">Join family @ Sneat.app</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+	<ion-card *ngIf="invite" color="tertiary">
+		<ion-card-content>
+			<p *ngIf="invite?.team?.title">
+				You've been invited by <b>{{invite?.from?.title}}</b> to join team {{invite?.team?.title}}
+			</p>
+			<p *ngIf="!invite?.team?.title">
+				You've been invited by <b>{{invite?.from?.title}}</b> to join {{invite?.team?.type}} team
+			</p>
+		</ion-card-content>
+	</ion-card>
 	<p>
-		You've been invited
-		<ng-container *ngIf="invitedBy">by <i>{{invitedBy.title}}</i></ng-container>
-	</p>
-	<p>
-		to join team <b *ngIf="team">{{team?.brief?.title}}</b>
-		<ion-spinner name="lines-small" *ngIf="!team" color="medium"></ion-spinner>
+		<ion-spinner name="lines-small" *ngIf="!invite?.team" color="medium"></ion-spinner>
 	</p>
 
-	<ion-button [disabled]="!team || joining || refusing" (click)="join()">
-		<ng-container *ngIf="!joining">Join team</ng-container>
-		<ng-container *ngIf="joining">
-			Joining team
-			<ion-spinner name="lines-small"></ion-spinner>
-		</ng-container>
-	</ion-button>
-	<ion-button
-		*ngIf="team"
-		[disabled]="joining || refusing"
-		fill="clear"
-		color="medium"
-		(click)="refuse()"
-	>
-		Refuse
-		<ion-spinner name="lines-small" *ngIf="refusing"></ion-spinner>
-	</ion-button>
+	<ion-card *ngIf="invite?.to?.channel === 'email'">
+		<ion-item-divider color="light">
+			<ion-icon name="mail-outline" slot="start"></ion-icon>
+			<ion-label>My email</ion-label>
+		</ion-item-divider>
+		<ion-item>
+			<ion-label color="medium">Address</ion-label>
+			<ion-input readonly="true" color="primary" type="email" [value]="invite?.to?.address"></ion-input>
+		</ion-item>
+		<ion-radio-group>
+			<ion-item>
+				<ion-radio slot="start" value="personal"></ion-radio>
+				<ion-label>Personal</ion-label>
+			</ion-item>
+			<ion-item>
+				<ion-radio slot="start" value="work"></ion-radio>
+				<ion-label>Work</ion-label>
+			</ion-item>
+		</ion-radio-group>
+	</ion-card>
 
-	<ion-list *ngIf="team?.dto?.members?.length">
-		<ion-item-divider>Members</ion-item-divider>
-		<ion-item *ngFor="let member of team?.dto?.members">{{member.title}}</ion-item>
-	</ion-list>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Why to join?</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			Benefits of using Sneat.app.
+		</ion-card-content>
+	</ion-card>
+
+	<ion-card>
+		<ion-card-content>
+			<ion-button color="success" [disabled]="!invite?.team || joining || refusing" (click)="join()">
+				<ng-container *ngIf="!joining">Join team</ng-container>
+				<ng-container *ngIf="joining">
+					Joining team
+					<ion-spinner name="lines-small"></ion-spinner>
+				</ng-container>
+			</ion-button>
+			<ion-button fill="clear" disabled="true" color="medium">or</ion-button>
+			<ion-button
+				*ngIf="invite?.team"
+				[disabled]="joining || refusing"
+				fill="clear"
+				color="medium"
+				(click)="refuse()"
+				style="text-transform: none"
+			>
+				Refuse to join
+				<ion-spinner name="lines-small" *ngIf="refusing"></ion-spinner>
+			</ion-button>
+		</ion-card-content>
+	</ion-card>
+
+
+	<!--	<ion-list *ngIf="team?.dto?.members?.length">-->
+	<!--		<ion-item-divider>Members</ion-item-divider>-->
+	<!--		<ion-item *ngFor="let member of team?.dto?.members">{{member.title}}</ion-item>-->
+	<!--	</ion-list>-->
 </ion-content>

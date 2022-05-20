@@ -1,0 +1,46 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>Invite member to join</ion-title>
+		<ion-buttons slot="end">
+			<ion-button role="close" (click)="close()">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="email">By Email</ion-segment-button>
+		<ion-segment-button value="sms">By SMS</ion-segment-button>
+		<ion-segment-button value="link">Get link</ion-segment-button>
+	</ion-segment>
+	<form *ngIf="tab === 'email' || tab === 'sms'">
+		<ion-item>
+			<ion-label>To</ion-label>
+			<ion-input *ngIf="tab === 'email'" placeholder="email@address" [formControl]="email"></ion-input>
+			<ion-input *ngIf="tab === 'sms'" placeholder="phone #" [formControl]="phone"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium" position="stacked">Message</ion-label>
+			<ion-textarea></ion-textarea>
+		</ion-item>
+		<ion-card-content>
+			<ion-button (click)="sendInvite()">Send invite</ion-button>
+			<ion-text class="ion-margin" color="danger" *ngIf="error">{{error}}</ion-text>
+		</ion-card-content>
+
+	</form>
+
+	<ng-container *ngIf="tab === 'link'">
+		<ion-item>
+			<ion-label position="stacked" color="medium">Invite link</ion-label>
+			<ion-input readonly="readonly" [value]="link" color="primary"></ion-input>
+		</ion-item>
+		<ion-card-content>
+			<ion-button fill="outline" (click)="copyToClipboard()">
+				<ion-icon slot="start" name="copy-outline"></ion-icon>
+				<ion-label>Copy link</ion-label>
+			</ion-button>
+		</ion-card-content>
+	</ng-container>
+</ion-content>

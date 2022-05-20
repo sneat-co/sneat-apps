@@ -39,18 +39,23 @@ interface IInvite {
 	message?: string;
 }
 
-interface IPersonWithEmail {
-	title: string;
-	email: string;
+export interface IInviteFromContact {
+	memberID: string;
+	title?: string
+}
+
+export interface IInviteToContact {
+	channel: 'email' | 'sms' | 'link';
+	address: string;
+	memberID?: string;
+	title?: string;
 }
 
 export interface IPersonalInvite extends IInvite {
-	channel: string;
-	address: string;
 	team: { id: string; title: string };
 	memberID: string;
-	from: IPersonWithEmail;
-	to: IPersonWithEmail;
+	from: IInviteFromContact;
+	to: IInviteToContact;
 }
 
 export interface IAddTeamMemberResponse {
