@@ -122,12 +122,20 @@ export class InviteModalComponent {
 		});
 	}
 
-	async copyToClipboard() {
+	async copyLinkToClipboard() {
 		if (!this.link) {
 			return;
 		}
 		await navigator.clipboard.writeText(this.link);
 		await this.showToast('Invite link has been copied to your clipboard');
+	}
+
+	async copyLinkWithInviteTextToClipboard() {
+		if (!this.link) {
+			return;
+		}
+		await navigator.clipboard.writeText(this.link);
+		await this.showToast('Invite text with a link has been copied to your clipboard');
 	}
 
 	private async showToast(message: string, duration = 1500): Promise<void> {

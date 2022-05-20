@@ -31,6 +31,9 @@
 								 [value]="link ?? 'Generating...'"
 								 [color]="link ? 'primary' : 'medium'"
 			></ion-input>
+			<ion-buttons *ngIf="tab === 'link' && link" slot="end">
+				<ion-button color="medium" (click)="copyLinkToClipboard()"><ion-icon name="copy-outline"></ion-icon></ion-button>
+			</ion-buttons>
 		</ion-item>
 		<ion-item>
 			<ion-label color="medium" position="stacked">Message</ion-label>
@@ -64,7 +67,7 @@
 
 	<ng-container *ngIf="tab === 'link'">
 		<ion-card-content>
-			<ion-button fill="outline" (click)="copyToClipboard()" [disabled]="creatingInvite || !link">
+			<ion-button fill="outline" (click)="copyLinkWithInviteTextToClipboard()" [disabled]="creatingInvite || !link">
 				<ion-icon slot="start" name="copy-outline"></ion-icon>
 				<ion-label style="text-transform: none">Copy invite text with a link</ion-label>
 			</ion-button>
