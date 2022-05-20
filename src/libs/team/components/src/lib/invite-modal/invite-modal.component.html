@@ -9,37 +9,63 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content>
-	<ion-segment [(ngModel)]="tab">
+	<ion-segment [(ngModel)]="tab" (ionChange)="onTabChanged($event)">
 		<ion-segment-button value="email">By Email</ion-segment-button>
 		<ion-segment-button value="sms">By SMS</ion-segment-button>
 		<ion-segment-button value="link">Get link</ion-segment-button>
 	</ion-segment>
-	<form *ngIf="tab === 'email' || tab === 'sms'">
+	<form>
 		<ion-item>
-			<ion-label>To</ion-label>
-			<ion-input *ngIf="tab === 'email'" placeholder="email@address" [formControl]="email"></ion-input>
-			<ion-input *ngIf="tab === 'sms'" placeholder="phone #" [formControl]="phone"></ion-input>
+			<ion-label position="stacked" color="medium">
+				<ng-container *ngIf="tab !== 'link'">To</ng-container>
+				<ng-container *ngIf="tab === 'link'">Invite link</ng-container>
+			</ion-label>
+			<ion-input *ngIf="tab === 'email'" [disabled]="creatingInvite" placeholder="email@address"
+								 [formControl]="email"></ion-input>
+			<ion-input *ngIf="tab === 'sms'" [disabled]="creatingInvite" placeholder="phone #"
+								 [formControl]="phone"></ion-input>
+			<ion-input *ngIf="tab === 'link'"
+								 readonly="readonly"
+								 [disabled]="creatingInvite"
+								 [value]="link ?? 'Generating...'"
+								 [color]="link ? 'primary' : 'medium'"
+			></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label color="medium" position="stacked">Message</ion-label>
-			<ion-textarea></ion-textarea>
+			<ion-textarea [disabled]="creatingInvite" [formControl]="message" maxlength="100"></ion-textarea>
 		</ion-item>
-		<ion-card-content>
-			<ion-button (click)="sendInvite()">Send invite</ion-button>
-			<ion-text class="ion-margin" color="danger" *ngIf="error">{{error}}</ion-text>
+		<ion-card-content *ngIf="tab === 'email'">
+			<ion-button (click)="sendInvite()">
+				<ion-icon name="mail-outline" slot="start"></ion-icon>
+				<ion-label>Send invite</ion-label>
+			</ion-button>
 		</ion-card-content>
-
+		<ion-card-content *ngIf="tab === 'sms'">
+			<ion-button
+				style="text-transform: none"
+				fill="outline"
+				(click)="composeSMS()"
+			>
+				<ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+				<ion-label>Compose SMS</ion-label>
+				<ion-spinner name="lines-small" color="medium" class="ion-margin-start" slot="end"
+										 *ngIf="creatingInvite"></ion-spinner>
+			</ion-button>
+			<p>
+				<ion-text color="medium">This works on mobiles or if your computer supports sending SMS</ion-text>
+			</p>
+		</ion-card-content>
+		<ion-card-content *ngIf="error">
+			<ion-text class="ion-margin" color="danger">{{error}}</ion-text>
+		</ion-card-content>
 	</form>
 
 	<ng-container *ngIf="tab === 'link'">
-		<ion-item>
-			<ion-label position="stacked" color="medium">Invite link</ion-label>
-			<ion-input readonly="readonly" [value]="link" color="primary"></ion-input>
-		</ion-item>
 		<ion-card-content>
-			<ion-button fill="outline" (click)="copyToClipboard()">
+			<ion-button fill="outline" (click)="copyToClipboard()" [disabled]="creatingInvite || !link">
 				<ion-icon slot="start" name="copy-outline"></ion-icon>
-				<ion-label>Copy link</ion-label>
+				<ion-label style="text-transform: none">Copy invite text with a link</ion-label>
 			</ion-button>
 		</ion-card-content>
 	</ng-container>

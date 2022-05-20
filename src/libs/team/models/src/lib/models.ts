@@ -46,7 +46,7 @@ export interface IInviteFromContact {
 
 export interface IInviteToContact {
 	channel: 'email' | 'sms' | 'link';
-	address: string;
+	address?: string;
 	memberID?: string;
 	title?: string;
 }

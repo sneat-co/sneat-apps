@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { InviteModalComponent } from './invite-modal.component';
+import { EncodeSmsText, InviteModalComponent } from './invite-modal.component';
 
 @NgModule({
 	imports: [
@@ -13,6 +13,7 @@ import { InviteModalComponent } from './invite-modal.component';
 	],
 	declarations: [
 		InviteModalComponent,
+		EncodeSmsText,
 	],
 	exports: [
 		InviteModalComponent,

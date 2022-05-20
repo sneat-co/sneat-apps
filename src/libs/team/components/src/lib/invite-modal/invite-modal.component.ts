@@ -1,10 +1,19 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, Pipe, PipeTransform } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
+import { TeamType } from '@sneat/auth-models';
 import { excludeEmpty, excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreatePersonalInviteRequest, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { InviteService } from '@sneat/team/services';
+
+@Pipe({ name: 'encodeSmsText' })
+export class EncodeSmsText implements PipeTransform {
+	// tslint:disable-next-line:prefer-function-over-method
+	transform(text: string): string | undefined {
+		return encodeURIComponent(text);
+	}
+}
 
 @Component({
 	selector: 'sneat-invite-modal',
@@ -15,8 +24,10 @@ export class InviteModalComponent {
 	@Input() member?: IMemberContext;
 
 	tab: 'email' | 'sms' | 'link' = 'email';
-	link = 'https://sneat.app/join/family?id=';
+	link?: string;
 	error?: string;
+
+	creatingInvite = false;
 
 	readonly email = new FormControl('', Validators.required);
 	readonly phone = new FormControl('', Validators.required);
@@ -43,6 +54,25 @@ export class InviteModalComponent {
 
 	async close(): Promise<void> {
 		await this.modalController.dismiss();
+	}
+
+	getInviteText(invite: { id: string; pin: string }): string {
+		let m = `Join our family @ Sneat.app - https://sneat.app/join/family?id=${invite.id}#pin=${invite.pin}`;
+		if (this.message.value) {
+			m += '\n\n' + this.message.value;
+		}
+		return m;
+	}
+
+	async composeSMS(): Promise<void> {
+		this.creatingInvite = true;
+		setTimeout(() => {
+			const m = this.getInviteText({ id: '123', pin: '456' });
+			const body = encodeURIComponent(m);
+			const url = `sms:${this.phone.value}?&body=${body}`;
+			this.creatingInvite = false;
+			window.open(url);
+		}, 1000);
 	}
 
 	async sendInvite(): Promise<void> {
@@ -82,7 +112,7 @@ export class InviteModalComponent {
 			},
 			message: this.message.value,
 		});
-		this.inviteService.CreatePersonalInvite(request).subscribe({
+		this.inviteService.createPersonalInvite(request).subscribe({
 			next: async response => {
 				console.log('personal invite created:', response);
 				await this.showToast('Invite has been created and will be sent shortly', 2000);
@@ -93,6 +123,9 @@ export class InviteModalComponent {
 	}
 
 	async copyToClipboard() {
+		if (!this.link) {
+			return;
+		}
 		await navigator.clipboard.writeText(this.link);
 		await this.showToast('Invite link has been copied to your clipboard');
 	}
@@ -108,5 +141,30 @@ export class InviteModalComponent {
 			buttons: [{ role: 'cancel', icon: 'close' }],
 		});
 		await toast.present();
+	}
+
+	onTabChanged(event: Event): void {
+		if (this.tab === 'link' && !this.link && !this.creatingInvite) {
+			this.generateLink();
+		}
+	}
+
+	private generateLink(): void {
+		if (!this.team) {
+			return;
+		}
+		if (!this.member) {
+			return;
+		}
+		this.creatingInvite = true;
+		const request: ICreatePersonalInviteRequest = excludeEmpty({
+			teamID: this.team.id,
+			to: {
+				channel: 'link',
+				memberID: this.member.id,
+			},
+			message: this.message.value,
+		});
+		this.inviteService.createPersonalInvite(request);
 	}
 }

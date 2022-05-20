@@ -79,7 +79,7 @@ export class InvitePersonalPageComponent implements OnInit {
 						if (response.invite) {
 							this.fullName = response.invite.to.title || '';
 							if (response.invite.to.channel === 'email') {
-								this.email = response.invite.to.address;
+								this.email = response.invite.to.address || '';
 							}
 						}
 					},
