@@ -14,17 +14,18 @@ export class InviteService {
 	) {
 	}
 
-	public createPersonalInvite(request: ICreatePersonalInviteRequest): Observable<ICreatePersonalInviteResponse> {
-		const result: Observable<ICreatePersonalInviteResponse> = request.to.channel === 'link'
-			? this.sneatApiService
-				.get<ICreatePersonalInviteResponse>(
-					`invites/get_invite_link_for_member?team=${request.teamID}&member=${request.to.memberID}`,
-				)
-			: this.sneatApiService
-				.post<ICreatePersonalInviteResponse>(
-					'invites/create_invite_for_member',
-					request,
-				);
-		return result;
+	public createInviteForMember(request: ICreatePersonalInviteRequest): Observable<ICreatePersonalInviteResponse> {
+		return this.sneatApiService
+			.post<ICreatePersonalInviteResponse>(
+				'invites/create_invite_for_member',
+				request,
+			);
+	}
+
+	public getInviteLinkForMember(request: ICreatePersonalInviteRequest): Observable<ICreatePersonalInviteResponse> {
+		return this.sneatApiService
+			.get<ICreatePersonalInviteResponse>(
+				`invites/invite_link_for_member?team=${request.teamID}&member=${request.to.memberID}`,
+			);
 	}
 }

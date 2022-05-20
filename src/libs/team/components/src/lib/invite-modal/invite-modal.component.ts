@@ -112,7 +112,7 @@ export class InviteModalComponent {
 			},
 			message: this.message.value,
 		});
-		this.inviteService.createPersonalInvite(request).subscribe({
+		this.inviteService.createInviteForMember(request).subscribe({
 			next: async response => {
 				console.log('personal invite created:', response);
 				await this.showToast('Invite has been created and will be sent shortly', 2000);
@@ -165,6 +165,14 @@ export class InviteModalComponent {
 			},
 			message: this.message.value,
 		});
-		this.inviteService.createPersonalInvite(request);
+		this.inviteService.getInviteLinkForMember(request).subscribe({
+			next: response => {
+				console.log('response', response);
+				const {id, pin} = response.invite;
+				this.link = `https://sneat.app/pwa/join/${this.team?.brief?.type}?id=${id}#pin=${pin}`;
+				this.creatingInvite = false;
+			},
+			error: this.errorLogger.logErrorHandler('failed to generate an invite link'),
+		});
 	}
 }
