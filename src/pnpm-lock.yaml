@@ -57,7 +57,7 @@ specifiers:
   '@typescript-eslint/parser': 5.25.0
   async: 3.2.3
   babel-loader: 8.2.5
-  codemirror: 5.65.3
+  codemirror: 5.65.4
   cypress: ^9.1.0
   date-fns: ^2.28.0
   dnd-core: 10.0.2
@@ -111,7 +111,7 @@ dependencies:
   '@angular/platform-browser-dynamic': 13.3.9_2k4rivkxnvexphdpkfvakgfjci
   '@angular/router': 13.3.9_pm4vdonypbpigl6cfdce4sfmdq
   '@capacitor/core': 3.5.1
-  '@ctrl/ngx-codemirror': 5.1.1_wlc3e6h6ty54yxwrtokuetzrh4
+  '@ctrl/ngx-codemirror': 5.1.1_ea4vixriuapmkpsbw6cvi6twcu
   '@ionic-native/core': 5.36.0_rxjs@7.5.5
   '@ionic-native/splash-screen': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
   '@ionic-native/status-bar': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
@@ -123,7 +123,7 @@ dependencies:
   '@sneat-dnd/tree': 0.1.1_cqolhwjzkb3onkbyeyjrzcw7rm
   '@sneat/random': 0.0.3_hp6y74w6qqryugff64cyx55xya
   '@sneat/wormhole': 0.0.5_fzk4jfqydxu2c4jsqrwugc5eue
-  codemirror: 5.65.3
+  codemirror: 5.65.4
   date-fns: 2.28.0
   dnd-core: 10.0.2
   firebase: 9.8.1
@@ -3121,7 +3121,7 @@ packages:
       postcss-selector-parser: 6.0.10
     dev: true
 
-  /@ctrl/ngx-codemirror/5.1.1_wlc3e6h6ty54yxwrtokuetzrh4:
+  /@ctrl/ngx-codemirror/5.1.1_ea4vixriuapmkpsbw6cvi6twcu:
     resolution: {integrity: sha512-MAByA/cJBZY3yv/cpO87mF9Q24/ptCWf2Pr4n4V1w3G0ya5cKAIyHwIfvJ5nJz/4Gj2i2O/pteDWkyxrbyICoA==}
     peerDependencies:
       '@angular/core': '>=12.0.0-0'
@@ -3131,7 +3131,7 @@ packages:
       '@angular/core': 13.3.9_rxjs@7.5.5+zone.js@0.11.5
       '@angular/forms': 13.3.9_pm4vdonypbpigl6cfdce4sfmdq
       '@types/codemirror': 5.60.5
-      codemirror: 5.65.3
+      codemirror: 5.65.4
       tslib: 2.4.0
     dev: false
 
@@ -6990,8 +6990,8 @@ packages:
     resolution: {integrity: sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
-  /codemirror/5.65.3:
-    resolution: {integrity: sha512-kCC0iwGZOVZXHEKW3NDTObvM7pTIyowjty4BUqeREROc/3I6bWbgZDA3fGDwlA+rbgRjvnRnfqs9SfXynel1AQ==}
+  /codemirror/5.65.4:
+    resolution: {integrity: sha512-tytrSm5Rh52b6j36cbDXN+FHwHCl9aroY4BrDZB2NFFL3Wjfq9nuYVLFFhaOYOczKAg3JXTr8BuT8LcE5QY4Iw==}
     dev: false
 
   /collect-v8-coverage/1.0.1:
