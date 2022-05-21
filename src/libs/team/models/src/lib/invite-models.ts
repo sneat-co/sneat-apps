@@ -1,4 +1,4 @@
-import { IInviteToContact, ITeamRequest } from '@sneat/team/models';
+import { IInviteToContact, ITeamRequest } from './models';
 
 export interface ICreatePersonalInviteRequest extends ITeamRequest {
 	to: IInviteToContact;
