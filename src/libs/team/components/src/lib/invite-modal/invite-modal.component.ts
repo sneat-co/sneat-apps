@@ -4,8 +4,14 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { TeamType } from '@sneat/auth-models';
 import { excludeEmpty, excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ICreatePersonalInviteRequest, IMemberContext, ITeamContext } from '@sneat/team/models';
+import {
+	ICreatePersonalInviteRequest,
+	ICreatePersonalInviteResponse,
+	IMemberContext, InviteChannel,
+	ITeamContext,
+} from '@sneat/team/models';
 import { InviteService } from '@sneat/team/services';
+import { Observable, throwError } from 'rxjs';
 
 @Pipe({ name: 'encodeSmsText' })
 export class EncodeSmsText implements PipeTransform {
@@ -23,7 +29,7 @@ export class InviteModalComponent {
 	@Input() team?: ITeamContext;
 	@Input() member?: IMemberContext;
 
-	tab: 'email' | 'sms' | 'link' = 'email';
+	tab: InviteChannel = 'email';
 	link?: string;
 	error?: string;
 
@@ -56,7 +62,7 @@ export class InviteModalComponent {
 		await this.modalController.dismiss();
 	}
 
-	getInviteText(invite: { id: string; pin: string }): string {
+	getInviteText(invite: { id: string; pin?: string }): string {
 		let m = `Join our family @ Sneat.app - https://sneat.app/join/family?id=${invite.id}#pin=${invite.pin}`;
 		if (this.message.value) {
 			m += '\n\n' + this.message.value;
@@ -64,18 +70,33 @@ export class InviteModalComponent {
 		return m;
 	}
 
-	async composeSMS(): Promise<void> {
+	private composeInvite(channel: InviteChannel, protocol: 'sms' | 'mailto', address: string): void {
 		this.creatingInvite = true;
-		setTimeout(() => {
-			const m = this.getInviteText({ id: '123', pin: '456' });
-			const body = encodeURIComponent(m);
-			const url = `sms:${this.phone.value}?&body=${body}`;
-			this.creatingInvite = false;
-			window.open(url);
-		}, 1000);
+		this.createInvite({ channel, address })
+			.subscribe({
+				next: response => {
+					const m = this.getInviteText(response.invite);
+					const body = encodeURIComponent(m);
+					const url = protocol + `:${address}?subject=You+are+invited+to+join+${this.team?.type}&body=${body}`;
+					this.creatingInvite = false;
+					window.open(url);
+				},
+				error: err => {
+					this.creatingInvite = false;
+					this.errorLogger.logError(err, 'failed to create an invite for SMS channel');
+				}
+			});
 	}
 
-	async sendInvite(): Promise<void> {
+	composeEmail(): void {
+		this.composeInvite('email', 'mailto', this.email.value);
+	}
+
+	composeSMS(): void {
+		this.composeInvite('sms', 'sms', this.phone.value);
+	}
+
+	sendInvite(): void {
 		if (!this.team) {
 			this.errorLogger.logError('can not send invite without team context');
 			return;
@@ -103,16 +124,7 @@ export class InviteModalComponent {
 		}
 		const address = this.tab === 'email' ? this.email.value : this.phone.value;
 
-		const request: ICreatePersonalInviteRequest = excludeEmpty({
-			teamID: this.team.id,
-			to: {
-				channel: this.tab,
-				address,
-				memberID: this.member.id,
-			},
-			message: this.message.value,
-		});
-		this.inviteService.createInviteForMember(request).subscribe({
+		this.createInvite({ channel: this.tab, address, send: true }).subscribe({
 			next: async response => {
 				console.log('personal invite created:', response);
 				await this.showToast('Invite has been created and will be sent shortly', 2000);
@@ -120,6 +132,25 @@ export class InviteModalComponent {
 			},
 			error: this.errorLogger.logErrorHandler('failed to create an invite for a member'),
 		});
+
+	}
+
+	createInvite(to: { channel: InviteChannel; address?: string, send?: boolean }): Observable<ICreatePersonalInviteResponse> {
+		if (!this.team) {
+			return throwError(() => 'can not create invite without team context');
+		}
+		if (!this.member) {
+			return throwError(() => 'can not create invite without member context');
+		}
+		const request: ICreatePersonalInviteRequest = excludeEmpty({
+			teamID: this.team.id,
+			to: {
+				...to,
+				memberID: this.member.id,
+			},
+			message: this.message.value,
+		});
+		return this.inviteService.createInviteForMember(request);
 	}
 
 	async copyLinkToClipboard() {
@@ -176,7 +207,7 @@ export class InviteModalComponent {
 		this.inviteService.getInviteLinkForMember(request).subscribe({
 			next: response => {
 				console.log('response', response);
-				const {id, pin} = response.invite;
+				const { id, pin } = response.invite;
 				this.link = `https://sneat.app/pwa/join/${this.team?.brief?.type}?id=${id}#pin=${pin}`;
 				this.creatingInvite = false;
 			},
