@@ -45,7 +45,10 @@
 				<ion-label>Send invite</ion-label>
 			</ion-button>
 			<ion-button disabled fill="clear" color="medium" style="text-transform: none">or</ion-button>
-			<ion-button (click)="composeEmail()" fill="outline">Compose email</ion-button>
+			<ion-button (click)="composeEmail()" fill="outline">
+				<ion-icon name="mail-outline" slot="start"></ion-icon>
+				<ion-label>Compose email</ion-label>
+			</ion-button>
 		</ion-card-content>
 		<ion-card-content *ngIf="tab === 'sms'">
 			<ion-button

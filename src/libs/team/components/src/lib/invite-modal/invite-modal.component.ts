@@ -2,6 +2,7 @@ import { Component, Inject, Input, Pipe, PipeTransform } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { TeamType } from '@sneat/auth-models';
+import { getMemberTitle } from '@sneat/components';
 import { excludeEmpty, excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -63,7 +64,11 @@ export class InviteModalComponent {
 	}
 
 	getInviteText(invite: { id: string; pin?: string }): string {
-		let m = `Join our family @ Sneat.app - https://sneat.app/join/family?id=${invite.id}#pin=${invite.pin}`;
+		if (!this.member) {
+			throw new Error('!this.member');
+		}
+		const receiver = getMemberTitle(this.member);
+		let m = `Hi ${receiver}, please join our family @ Sneat.app - https://sneat.app/join/family?id=${invite.id}#pin=${invite.pin}`;
 		if (this.message.value) {
 			m += '\n\n' + this.message.value;
 		}
@@ -84,7 +89,7 @@ export class InviteModalComponent {
 				error: err => {
 					this.creatingInvite = false;
 					this.errorLogger.logError(err, 'failed to create an invite for SMS channel');
-				}
+				},
 			});
 	}
 

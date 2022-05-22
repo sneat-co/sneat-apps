@@ -7,22 +7,26 @@ function memberName(name?: IName): string | undefined {
 	return name && (name.full || name.first || name.full);
 }
 
-@Pipe({name: 'personTitle'})
+@Pipe({ name: 'personTitle' })
 export class PersonTitle implements PipeTransform {
 	transform(p: IPersonContext, shortTitle?: string): string {
 		return shortTitle || memberName(p.brief?.name) || p.id;
 	}
 }
 
-@Pipe({name: 'memberTitle'})
-export class MemberTitle extends PersonTitle implements PipeTransform {
-	override transform(m: IMemberContext, shortTitle?: string): string {
-		return shortTitle || m.brief?.title || m.dto?.title || super.transform(m, shortTitle);
+export function getMemberTitle(m: IMemberContext, shortTitle?: string): string {
+	return shortTitle || m.brief?.title || m.dto?.title || memberName(m.brief?.name) || m.id;
+}
+
+@Pipe({ name: 'memberTitle' })
+export class MemberTitle implements PipeTransform {
+	transform(m: IMemberContext, shortTitle?: string): string {
+		return getMemberTitle(m, shortTitle);
 	}
 }
 
 
-@Pipe({name: 'teamEmoji'})
+@Pipe({ name: 'teamEmoji' })
 export class TeamEmojiPipe implements PipeTransform {
 	// tslint:disable-next-line:prefer-function-over-method
 	transform(communeType: TeamType): string | undefined {
@@ -68,7 +72,7 @@ export function wdCodeToWeekdayLongName(wd?: WeekdayCode2): string {
 	}
 }
 
-@Pipe({name: 'wdToWeekday'})
+@Pipe({ name: 'wdToWeekday' })
 export class WdToWeekdayPipe implements PipeTransform {
 	// tslint:disable-next-line:prefer-function-over-method
 	transform(wd?: WeekdayCode2): string {
@@ -76,7 +80,7 @@ export class WdToWeekdayPipe implements PipeTransform {
 	}
 }
 
-@Pipe({name: 'longMonthName'})
+@Pipe({ name: 'longMonthName' })
 export class LongMonthNamePipe implements PipeTransform {
 	// tslint:disable-next-line:prefer-function-over-method
 	transform(month?: number): string {
@@ -123,7 +127,7 @@ export class LongMonthNamePipe implements PipeTransform {
 	}
 }
 
-@Pipe({name: 'shortMonthName'})
+@Pipe({ name: 'shortMonthName' })
 export class ShortMonthNamePipe implements PipeTransform {
 	// tslint:disable-next-line:prefer-function-over-method
 	transform(month?: number): string {
@@ -183,6 +187,6 @@ const pipes: any[] = [
 	declarations: pipes,
 	exports: pipes,
 })
-export  class SneatPipesModule {
+export class SneatPipesModule {
 
 }
