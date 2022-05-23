@@ -1,18 +1,14 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute } from '@angular/router';
-import { IUserTeamBrief } from '@sneat/auth-models';
+import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
 import { IJoinTeamInfoResponse, TeamNavService, TeamService } from '@sneat/team/services';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-export const getPinFromUrl: () => number | undefined = () => {
+export const getPinFromUrl: () => string = () => {
 	const m = location.hash.match(/[#&]pin=(\d+)($|&)/);
-	if (m) {
-		return +m[1];
-	}
-	return undefined;
+	return m && m[1] || '';
 };
 
 @Component({
@@ -20,23 +16,31 @@ export const getPinFromUrl: () => number | undefined = () => {
 	templateUrl: './join-team-page.component.html',
 })
 export class JoinTeamPageComponent implements OnDestroy {
-	private id?: string;
+	private readonly destroyed = new Subject<void>();
+	private readonly id?: string;
 	public invite?: IJoinTeamInfoResponse;
-	public pin?: number;
-	public joining?: boolean;
-	public refusing?: boolean;
-	public isUserAuthenticated?: boolean;
+	public pin?: string;
+	public userID?: string;
 
-	private subscriptions: Subscription[] = [];
+	get userOwnInvite(): boolean {
+		return this.invite?.from?.userID === this.userID;
+	}
+
+	private action?: 'join'| 'refuse';
+
+	public status: 'loading' | 'reviewing' | 'joining' | 'refusing' | 'refused' = 'loading';
+
+	public authStatus: AuthStatus = AuthStatuses.authenticating;
 
 	constructor(
 		protected readonly route: ActivatedRoute,
 		private readonly navService: TeamNavService,
 		private readonly teamService: TeamService,
-		private readonly afAuth: AngularFireAuth,
+		private readonly authStateService: SneatAuthStateService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		console.log('JoinTeamPage.constructor()');
+		this.getActionFromLocationHash();
 		this.id = this.route.snapshot.queryParamMap.get('id') || undefined;
 		try {
 			this.pin = getPinFromUrl();
@@ -50,6 +54,13 @@ export class JoinTeamPageComponent implements OnDestroy {
 					console.log('join_team:', response);
 					if (response) {
 						this.invite = response;
+						if (this.status === 'loading') {
+							if (this.authStatus === 'authenticated' && this.action) {
+								this.processAction();
+							} else {
+								this.status = 'reviewing';
+							}
+						}
 					} else {
 						this.errorLogger.logError('EmptyResponse', errMsg);
 					}
@@ -58,41 +69,63 @@ export class JoinTeamPageComponent implements OnDestroy {
 			});
 		}
 
-		this.subscriptions.push(
-			this.afAuth.idToken.subscribe((token) => {
-				this.isUserAuthenticated = !!token;
-				if (this.isUserAuthenticated) {
-					const m = location.hash.match(/[#&]action=(\w+)/);
-					console.log('m:', m);
-					if (m && this.invite?.team?.id && this.pin) {
-						switch (m[1]) {
-							case 'join':
-								this.joinTeam();
-								break;
-							case 'refuse':
-								this.refuseToJoinTeam(this.invite.team?.id, this.pin);
-								break;
-							default:
-								console.warn('Unknown action:', m[1]);
-						}
+
+		this.authStateService.authState
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: authState => {
+					this.userID = authState.user?.uid;
+					this.authStatus = authState.status;
+					if (authState.status === 'authenticated' && this.invite) {
+						setTimeout(() => {
+							this.processAction();
+						}, 10);
 					}
-				}
-			}),
-		);
+				},
+				error: this.errorLogger.logErrorHandler('failed to get authState'),
+			})
+	}
+
+	private processAction(): void {
+		console.log(`processAction(), authState=${this.authStatus}, action: ${this.action}`);
+		switch (this.action) {
+			case 'join':
+				this.joinTeam();
+				break;
+			case 'refuse':
+				this.refuse();
+				break;
+		}
+	}
+
+	private getActionFromLocationHash(): void {
+		const m = location.hash.match(/[#&]action=(\w+)/);
+		if (!m) {
+			return
+		}
+		if (m[1] === 'join' || m[1] === 'refuse') {
+			this.action = m[1];
+		} else {
+			console.warn('Unknown action:', m[1]);
+		}
 	}
 
 	public ngOnDestroy(): void {
-		this.unsubscribe();
+		this.destroyed.next();
+		this.destroyed.complete();
 	}
 
 	public join(): void {
+		if (!this.id) {
+			return;
+		}
 		const teamID = this.invite?.team.id;
 		if (!teamID) {
 			const m = 'Not able to join a team without ID';
 			this.errorLogger.logError(m, undefined, { show: true });
 			return;
 		}
-		if (this.isUserAuthenticated) {
+		if (this.authStatus === 'authenticated') {
 			if (this.pin) {
 				this.joinTeam();
 			} else {
@@ -100,37 +133,26 @@ export class JoinTeamPageComponent implements OnDestroy {
 			}
 		} else {
 			this.navService.navigateToLogin({
-				returnTo: 'join-team',
-				queryParams: { id: teamID },
-				fragment: `pin=${this.pin}&action=join`,
+				queryParams: {to: 'join-team'},
+				returnTo: `/join/${this.invite?.team?.type}?id=${this.id}#pin=${this.pin}&action=join`,
 			});
 		}
 	}
 
 	public refuse(): void {
-		const id = this.invite?.team?.id;
-		if (this.isUserAuthenticated) {
-			if (!id) {
-				this.errorLogger.logError('no team ID', undefined, { show: true });
-				return;
-			}
-			if (!this.pin) {
-				this.errorLogger.logError('no PIN', undefined, { show: true });
-				return;
-			}
-			this.refuseToJoinTeam(id, this.pin);
-		} else {
-			this.navService.navigateToLogin({
-				returnTo: 'join-team',
-				queryParams: { id },
-				fragment: `pin=${this.pin}&action=refuse`,
-			});
+		if (!this.id || !this.pin) {
+			return;
 		}
-	}
-
-	private unsubscribe(): void {
-		this.subscriptions.forEach((s) => s.unsubscribe());
-		this.subscriptions = [];
+		this.status = 'refusing';
+		this.teamService.refuseToJoinTeam(this.id, this.pin).subscribe({
+			next: () => {
+				this.status = 'refused';
+			},
+			error: (err) => {
+				this.status = 'reviewing';
+				this.errorLogger.logError(err, 'Failed to refuse joining a team');
+			},
+		});
 	}
 
 	private joinTeam(): void {
@@ -143,31 +165,29 @@ export class JoinTeamPageComponent implements OnDestroy {
 			this.errorLogger.logError('no pin');
 			return;
 		}
-		this.joining = true;
+		if (!this.id) {
+			this.errorLogger.logError('no invite id');
+			return;
+		}
+		this.status = 'joining';
 		const teamID = team.id;
-		this.teamService.joinTeam(teamID, this.pin).subscribe({
+		this.teamService.joinTeam({
+			inviteID: this.id,
+			teamID: teamID,
+			pin: this.pin,
+		}).subscribe({
 			next: (dto) => {
-				const team = {id: teamID, dto, brief: {id: teamID, ...dto}}
+				const team = { id: teamID, dto, brief: { id: teamID, ...dto } };
 				// this.team = newTeam;
 				this.navService
 					.navigateToTeam(team, undefined)
 					.catch(this.errorLogger.logError);
 			},
 			error: (err) => {
-				this.joining = false;
-				this.errorLogger.logError(err, 'Failed to join team');
+				this.status = 'reviewing';
+				this.errorLogger.logError(err, 'Failed to join a team');
 			},
 		});
 	}
 
-	private refuseToJoinTeam(id: string, pin: number): void {
-		this.refusing = true;
-		this.teamService.refuseToJoinTeam(id, pin).subscribe({
-			next: () => this.navService.navigateToTeams('forward'),
-			error: (err) => {
-				this.refusing = false;
-				this.errorLogger.logError(err, 'Failed to join team');
-			},
-		});
-	}
 }

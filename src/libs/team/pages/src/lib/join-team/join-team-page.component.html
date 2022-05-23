@@ -5,19 +5,28 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 	<ion-card *ngIf="invite" color="tertiary">
-		<ion-card-content>
-			<p *ngIf="invite?.team?.title">
-				You've been invited by <b>{{invite?.from?.title}}</b> to join team {{invite?.team?.title}}
-			</p>
-			<p *ngIf="!invite?.team?.title">
-				You've been invited by <b>{{invite?.from?.title}}</b> to join {{invite?.team?.type}} team
-			</p>
+		<ion-card-content *ngIf="userOwnInvite; else notUserOwnInvite">
+			<p>You've invited <b>{{invite?.to?.title}}</b> to join <b>{{invite?.team?.title || invite?.team?.type}}</b></p>
 		</ion-card-content>
+		<ng-template #notUserOwnInvite>
+			<ion-card-content>
+				<p *ngIf="invite?.to?.title">
+					Hello <b>{{invite?.to?.title}}</b>,
+				</p>
+				<p *ngIf="invite?.team?.title">
+					You've been invited by <b>{{invite?.from?.title}}</b> to join team {{invite?.team?.title}}
+				</p>
+				<p *ngIf="!invite?.team?.title">
+					You've been invited by <b>{{invite?.from?.title}}</b> to join {{invite?.team?.type}} team
+				</p>
+			</ion-card-content>
+		</ng-template>
 	</ion-card>
-	<p>
-		<ion-spinner name="lines-small" *ngIf="!invite?.team" color="medium"></ion-spinner>
+	<p *ngIf="!invite?.team">
+		<ion-spinner name="lines-small" color="medium"></ion-spinner>
+		Loading...
 	</p>
 
 	<ion-card *ngIf="invite?.to?.channel === 'email'">
@@ -52,25 +61,36 @@
 
 	<ion-card>
 		<ion-card-content>
-			<ion-button color="success" [disabled]="!invite?.team || joining || refusing" (click)="join()">
-				<ng-container *ngIf="!joining">Join team</ng-container>
-				<ng-container *ngIf="joining">
-					Joining team
+			<ion-button color="primary" size="large"
+									[disabled]="status !== 'reviewing' || userOwnInvite"
+									(click)="join()"
+			>
+				<ng-container *ngIf="status !== 'joining'">Join {{invite?.team?.type || 'team'}}</ng-container>
+				<ng-container *ngIf="status === 'joining'">
+					Joining {{invite?.team?.type || 'team'}}...
 					<ion-spinner name="lines-small"></ion-spinner>
 				</ng-container>
 			</ion-button>
-			<ion-button fill="clear" disabled="true" color="medium">or</ion-button>
+			<ion-button fill="clear" disabled="true" color="medium" class="ion-margin-start">or</ion-button>
 			<ion-button
 				*ngIf="invite?.team"
-				[disabled]="joining || refusing"
+				[disabled]="status !== 'reviewing' || userOwnInvite"
 				fill="clear"
-				color="medium"
+				color="secondary"
 				(click)="refuse()"
 				style="text-transform: none"
 			>
 				Refuse to join
-				<ion-spinner name="lines-small" *ngIf="refusing"></ion-spinner>
+				<ion-spinner name="lines-small" *ngIf="status === 'refusing'"></ion-spinner>
 			</ion-button>
+			<p class="ion-padding-top" *ngIf="authStatus === 'notAuthenticated'">
+				You would need to sign-in to join the {{invite?.team?.type || 'team'}}.
+			</p>
+
+			<p class="ion-padding-top" *ngIf="userOwnInvite">
+				You can not use your own invite to join the team.
+			</p>
+
 		</ion-card-content>
 	</ion-card>
 

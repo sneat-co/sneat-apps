@@ -11,10 +11,10 @@ export interface ITeamMemberRequest extends ITeamRequest {
 }
 
 export interface IAcceptPersonalInviteRequest extends ITeamRequest {
-	invite: string;
-	pin: string;
-	fullName: string;
-	email: string;
+	inviteID: string;
+	pin: string; // Do not make number as we can lose leading 0's
+	fullName?: string;
+	email?: string;
 }
 
 export interface IRejectPersonalInviteRequest extends ITeamRequest {
@@ -41,6 +41,7 @@ interface IInvite {
 
 export interface IInviteFromContact {
 	memberID: string;
+	userID?: string;
 	title?: string
 }
 

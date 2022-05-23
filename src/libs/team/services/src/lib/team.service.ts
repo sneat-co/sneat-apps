@@ -8,6 +8,7 @@ import { IRecord } from '@sneat/data';
 import { IMemberBrief, ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IAcceptPersonalInviteRequest,
 	ICreateTeamRequest,
 	ICreateTeamResponse, IInviteFromContact, IInviteToContact,
 	ITeamContext,
@@ -92,7 +93,7 @@ export class TeamService {
 		if (!ref) {
 			throw new Error('team ref is a required parameter');
 		}
-		const {id} = ref;
+		const { id } = ref;
 		let subj = this.teams$[id];
 		if (subj) {
 			return subj.asObservable();
@@ -233,42 +234,29 @@ export class TeamService {
 
 	public getTeamJoinInfo(
 		teamId: string,
-		pin: number,
+		pin: string,
 	): Observable<IJoinTeamInfoResponse> {
-		return this.sneatApiService.getAsAnonymous(
+		return this.sneatApiService.postAsAnonymous(
 			'team/join_info',
-			new HttpParams({
-				fromObject: {
-					id: teamId,
-					pin: pin.toString(),
-				},
-			}),
+			{
+				id: teamId,
+				pin: pin,
+			},
 		);
 	}
 
-	public joinTeam(teamId: string, pin: number): Observable<ITeamDto> {
-		const params = new HttpParams({
-			fromObject: {
-				id: teamId,
-				pin: pin.toString(),
-			},
-		});
+	public joinTeam(request: IAcceptPersonalInviteRequest): Observable<ITeamDto> {
 		return this.sneatApiService.post(
-			'team/join_team?' + params.toString(),
-			null,
+			'team/join_team',
+			request,
 		);
 	}
 
-	public refuseToJoinTeam(teamId: string, pin: number): Observable<ITeamDto> {
-		const params = new HttpParams({
-			fromObject: {
-				id: teamId,
-				pin: pin.toString(),
-			},
-		});
+	public refuseToJoinTeam(inviteID: string, pin: string): Observable<void> {
+		const body = { inviteID, pin };
 		return this.sneatApiService.post(
-			'team/refuse_to_join_team?' + params.toString(),
-			null,
+			'invites/refuse_to_join_team',
+			body,
 		);
 	}
 
@@ -371,6 +359,7 @@ export interface IInviteTeam {
 	type: string;
 	title?: string;
 }
+
 export interface IJoinTeamInfoResponse {
 	team: IInviteTeam;
 	from: IInviteFromContact;

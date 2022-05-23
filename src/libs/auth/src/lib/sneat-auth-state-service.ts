@@ -61,11 +61,10 @@ export class SneatAuthStateService {
 		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
 		afAuth.idToken.subscribe({
 			next: (token) => {
-				// console.log('SneatAuthStateService => token', token);
+				console.log('SneatAuthStateService => token', token);
 				const status: AuthStatus = token
 					? AuthStatuses.authenticated
 					: AuthStatuses.notAuthenticated;
-				this.authStatus$.next(status);
 				const current = this.authState$.value || {};
 				this.authState$.next({
 					...current,
@@ -73,6 +72,7 @@ export class SneatAuthStateService {
 					token,
 					user: this.authUser$.value,
 				});
+				this.authStatus$.next(status); // Should be after authState$
 			},
 			error: errorLogger.logErrorHandler('failed to get Firebase auth token'),
 		});

@@ -3,25 +3,32 @@
 		<ion-buttons slot="start">
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-title> Sneat.team </ion-title>
+		<ion-title> Sneat.team</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-card *ngIf="to" [ngSwitch]="to" color="tertiary">
-		<ion-card-content *ngSwitchCase="'join-team'">
-			<p *ngIf="action === 'join'">Please sign in to join team</p>
-			<p *ngIf="action === 'refuse'">
-				Please sign in to send refusal to join team to the inviter.
-			</p>
+	<ion-card *ngIf="to" color="tertiary">
+		<ion-card-content >
+			<p>Please sign in to join a team</p>
 		</ion-card-content>
 	</ion-card>
+
+	<!--	<ion-card *ngIf="to" [ngSwitch]="to" color="tertiary">-->
+<!--		<ion-card-content *ngSwitchCase="'join-team'">-->
+<!--			<p>Please sign in to join a team</p>-->
+<!--			<p *ngIf="action === 'join'">Please sign in to join team</p>-->
+<!--			<p *ngIf="action === 'refuse'">-->
+<!--				Please sign in to send refusal to join team to the inviter.-->
+<!--			</p>-->
+<!--		</ion-card-content>-->
+<!--	</ion-card>-->
 
 	<p style="text-align: center; font-size: smaller">
 		<ion-text color="medium">
 			This app is free to use &
 			<a target="_blank" href="https://github.com/sneat-team/dailyscrum-pwa"
-				>open source</a
+			>open source</a
 			>.
 		</ion-text>
 	</p>
@@ -49,7 +56,7 @@
 								*ngIf="signingWith === 'Google'"
 							>
 							</ion-spinner>
-							<ion-label color="danger"> Login with Google </ion-label>
+							<ion-label color="danger"> Login with Google</ion-label>
 						</ion-item>
 						<ion-item
 							(click)="loginWith('Facebook')"
@@ -131,10 +138,8 @@
 	<p style="text-align: center; font-size: smaller">
 		<ion-text color="medium">
 			If any issues get
-			<a
-				href="mailto:help@dailyscrum.app?subject=Problem+with+login+at+DailyScrum.app"
-				>help@dailyscrum.app</a
-			>
+			<a href="mailto:help@sneat.app?subject=Problem+with+login+at+Sneat.app"
+			>help@sneat.app</a>
 		</ion-text>
 	</p>
 
@@ -158,7 +163,7 @@
 					name="email"
 					id="email"
 					required
-					placeholder="my@work.email"
+					placeholder="my@work-or-personal.email"
 					(keyup.enter)="keyupEnter()"
 				>
 				</ion-input>
@@ -196,7 +201,7 @@
 						[disabled]="!validEmail"
 						(click)="resetPassword()"
 						title="Send email with a link to reset password "
-						>Reset
+					>Reset
 					</ion-button>
 				</ion-buttons>
 			</ion-item>

@@ -213,7 +213,9 @@ export class InviteModalComponent {
 			next: response => {
 				console.log('response', response);
 				const { id, pin } = response.invite;
-				this.link = `https://sneat.app/pwa/join/${this.team?.brief?.type}?id=${id}#pin=${pin}`;
+				const host = location.host.startsWith('localhost:') ? location.host : 'sneat.app/pwa';
+				const protocol = location.host.startsWith('localhost:') ? 'http' : 'https';
+				this.link = `${protocol}://${host}/join/${this.team?.brief?.type}?id=${id}#pin=${pin}`;
 				this.creatingInvite = false;
 			},
 			error: this.errorLogger.logErrorHandler('failed to generate an invite link'),

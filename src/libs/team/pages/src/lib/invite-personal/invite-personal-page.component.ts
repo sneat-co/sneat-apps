@@ -96,7 +96,7 @@ export class InvitePersonalPageComponent implements OnInit {
 		const acceptInvite = (token?: string) => {
 			const request: IAcceptPersonalInviteRequest = {
 				teamID: this.teamId,
-				invite: this.inviteId,
+				inviteID: this.inviteId,
 				pin: this.pin,
 				email: this.email,
 				fullName: this.fullName,

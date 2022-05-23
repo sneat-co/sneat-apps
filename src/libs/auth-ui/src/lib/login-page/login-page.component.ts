@@ -8,10 +8,17 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { AuthStatuses, ILoginEventsHandler, ISneatAuthState, LoginEventsHandler } from '@sneat/auth';
+import {
+	AuthStatuses,
+	ILoginEventsHandler,
+	ISneatAuthState,
+	LoginEventsHandler,
+	SneatAuthStateService,
+} from '@sneat/auth';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/user';
+import { Subject, takeUntil } from 'rxjs';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import OAuthProvider = firebase.auth.OAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
@@ -55,16 +62,17 @@ export class LoginPageComponent {
 		private readonly afAuth: AngularFireAuth,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
+		private readonly authStateService: SneatAuthStateService,
 		// private readonly toastController: ToastController,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		console.log('LoginPageComponent.constructor()')
+		console.log('LoginPageComponent.constructor()');
 		this.email = localStorage.getItem('emailForSignIn') || '';
 		if (this.email) {
 			this.sign = 'in';
 		}
 		if (location.hash.startsWith('#/')) {
-			this.redirectTo = location.hash;
+			this.redirectTo = location.hash.substring(1);
 		}
 		this.to = this.route.snapshot.queryParams['to']; // should we subscribe? I believe no.
 		const action = location.hash.match(/[#&]action=(\w+)/);
@@ -94,7 +102,7 @@ export class LoginPageComponent {
 
 	loginWith(provider: AuthProviderName) {
 		this.signingWith = provider;
-		const eventParams = { authProvider: provider };
+		const eventParams = { provider };
 		let authProvider: AuthProvider;
 		switch (provider) {
 			case 'Google':
@@ -128,63 +136,61 @@ export class LoginPageComponent {
 				this.onLoggedIn(userCredential);
 			})
 			.catch(
-				this.handleError(
+				this.errorHandler(
 					'Failed to sign in with: ' + provider,
 					'FailedToSignInWith',
-					{ authProvider: provider },
+					eventParams,
 				),
 			);
 	}
 
-	public signUp(): void {
+	private sendVerificationEmail(userCredential: UserCredential): void {
+		setTimeout(async () => {
+			try {
+				await userCredential.user?.sendEmailVerification();
+			} catch (e) {
+				this.handleError(e, 'Failed to send verification email');
+			}
+		});
+	}
+
+	public async signUp(): Promise<void> {
 		if (!this.fullName) {
 			// this.toaster.showToast('Full name is required');
 			return;
 		}
 		this.signingWith = 'email';
 		this.email = this.email.trim();
-		const errorLoggerService = this.errorLogger; // In case if page gets disposed by time we send verification email.
+		const email = this.email;
+		localStorage.setItem('emailForSignIn', email);
 		const password = this.randomIdService.newRandomId({ len: 9 });
-		this.afAuth
-			.createUserWithEmailAndPassword(this.email, password)
-			.then((userCredential) => {
-				localStorage.setItem('emailForSignIn', this.email);
-				setTimeout(() => {
-					userCredential.user?.sendEmailVerification().catch((err) => {
-						errorLoggerService.logError(
-							err,
-							'Failed to send verification email',
-						);
+		try {
+			const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+			this.sendVerificationEmail(userCredential);
+			userCredential.user
+				?.getIdToken()
+				.then((token) => {
+					this.sneatApiService.setApiAuthToken(token);
+					this.userService.setUserTitle(this.fullName.trim()).subscribe({
+						next: () => this.onLoggedIn(userCredential),
+						error: (err) => {
+							this.analyticsService.logEvent('FailedToSetUserTitle');
+							this.errorLogger.logError(err, 'Failed to set user title', {
+								feedback: false,
+							});
+							this.onLoggedIn(userCredential);
+						},
 					});
-				});
-				userCredential.user
-					?.getIdToken()
-					.then((token) => {
-						this.sneatApiService.setApiAuthToken(token);
-						this.userService.setUserTitle(this.fullName.trim()).subscribe({
-							next: () => this.onLoggedIn(userCredential),
-							error: (err) => {
-								this.analyticsService.logEvent('FailedToSetUserTitle');
-								this.errorLogger.logError(err, 'Failed to set user title', {
-									feedback: false,
-								});
-								this.onLoggedIn(userCredential);
-							},
-						});
-					})
-					.catch(
-						this.handleError(
-							'Failed to get Firebase ID token',
-							'FirebaseGetIdTokenFailed',
-						),
-					);
-			})
-			.catch(
-				this.handleError(
-					'Failed to sign up with email',
-					'FailedToSignUpWithEmail',
-				),
-			);
+				})
+				.catch(
+					this.errorHandler(
+						'Failed to get Firebase ID token',
+						'FirebaseGetIdTokenFailed',
+					),
+				);
+		} catch (e) {
+			this.handleError(e, 'Failed to sign up with email', 'FailedToSignUpWithEmail');
+		}
 	}
 
 	public keyupEnter(): void {
@@ -193,7 +199,7 @@ export class LoginPageComponent {
 				this.signIn();
 				break;
 			case 'up':
-				this.signUp();
+				this.signUp().catch(() => this.errorHandler('Failed to sign up'));
 				break;
 		}
 	}
@@ -208,7 +214,7 @@ export class LoginPageComponent {
 				this.onLoggedIn(userCredential);
 			})
 			.catch(
-				this.handleError('Failed to sign in with email & password', 'email'),
+				this.errorHandler('Failed to sign in with email & password', 'email'),
 			);
 	}
 
@@ -223,7 +229,7 @@ export class LoginPageComponent {
 				handleCodeInApp: true,
 			})
 			.catch(
-				this.handleError(
+				this.errorHandler(
 					'Failed to send sign in link to email',
 					'FailedToSendSignInLinkToEmail',
 				),
@@ -243,7 +249,7 @@ export class LoginPageComponent {
 				// });
 			})
 			.catch(
-				this.handleError(
+				this.errorHandler(
 					'Failed to send password reset email',
 					'FailedToSendPasswordResetEmail',
 				),
@@ -252,46 +258,75 @@ export class LoginPageComponent {
 
 	private onLoggedIn(userCredential: UserCredential): void {
 		console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
-		if (userCredential.user) {
-			const authState: ISneatAuthState = {
-				status: AuthStatuses.authenticated,
-				user: userCredential.user,
-			};
-			this.userService.onUserSignedIn(authState);
+		if (!userCredential.user) {
+			return;
 		}
-		const { to } = this.route.snapshot.queryParams;
-		const queryParams = to ? { ...this.route.snapshot.queryParams } : undefined;
-		if (queryParams) {
-			delete queryParams['to'];
-		}
-		// if (to) {
-		// 	// this.navController.navigateRoot(to, {queryParams, fragment: location.hash.substring(1)})
-		// 	// 	.catch(this.errorLogger.logErrorHandler('Failed to naviage to: ' + to));
+		const authState: ISneatAuthState = {
+			status: AuthStatuses.authenticated,
+			user: userCredential.user,
+		};
+		this.userService.onUserSignedIn(authState);
+		// const { to } = this.route.snapshot.queryParams;
+		// if (this.to) {
+		// 	const queryParams = to ? { ...this.route.snapshot.queryParams } : undefined;
+		// 	if (queryParams) {
+		// 		delete queryParams['to'];
+		// 	}
+		// 	this.navController.navigateRoot(this.to, {
+		// 		queryParams,
+		// 		fragment: location.hash.substring(1),
+		// 	}).catch(this.errorLogger.logErrorHandler('Failed to navigate to: ' + to));
 		// } else {
-		// 	this.loginEventsHandler.onLoggedIn();
+		// 	this.loginEventsHandler?.onLoggedIn();
 		// }
-		console.log('this.redirectTo:', this.redirectTo);
-		const redirectTo = this.redirectTo || '/'; // TODO: default one should be app specific.
-		this.navController
-			.navigateRoot(redirectTo)
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'Failed to navigate back to ' + redirectTo,
-				),
-			);
+		const userRecordLoaded = new Subject<void>();
+		this.userService.userState
+			.pipe(takeUntil(userRecordLoaded))
+			.subscribe({
+				next: userState => {
+					if (userState.record) {
+						userRecordLoaded.next();
+					} else {
+						return;
+					}
+					console.log('this.redirectTo:', this.redirectTo);
+					const redirectTo = this.redirectTo || '/'; // TODO: default one should be app specific.
+					this.navController
+						.navigateRoot(redirectTo)
+						.catch(
+							this.errorLogger.logErrorHandler(
+								'Failed to navigate back to ' + redirectTo,
+							),
+						);
+				},
+				error: this.errorHandler('Failed to get user state after login'),
+			});
+		// this.userService.
+		// this.authStateService.authState.subscribe({
+		// 	next: authState => {
+		// 	if (authState.user.)
+		// 	},
+		// 	error: this.errorHandler('Failed to get auth state after logged in'),
+		// })
 	}
 
-	private handleError(
+	private errorHandler(
 		m: string,
 		eventName?: string,
 		eventParams?: { [key: string]: string },
 	): (err: any) => void {
-		return (err) => {
-			if (eventName) {
-				this.analyticsService.logEvent(eventName, eventParams);
-			}
-			this.errorLogger.logError(err, m, { report: !err.code });
-			this.signingWith = undefined;
-		};
+		return err => this.handleError(err, m, eventName, eventParams);
+	}
+
+	private handleError(
+		err: any, m: string,
+		eventName?: string,
+		eventParams?: { [key: string]: string },
+	): void {
+		if (eventName) {
+			this.analyticsService.logEvent(eventName, eventParams);
+		}
+		this.errorLogger.logError(err, m, { report: !err.code });
+		this.signingWith = undefined;
 	}
 }

@@ -37,20 +37,22 @@ export class TeamNavService {
 	public navigateToLogin(options?: {
 		returnTo?: string;
 		queryParams?: Params;
-		fragment?: string;
+		// fragment?: string;
 	}): void {
-		console.log('navigateToLogin()', options);
-		this.analyticsService.logEvent('navigateToLogin', {
-			returnTo: options?.returnTo,
-		});
+		console.log('navigateToLogin()', options?.queryParams);
+
+		// Do not log `returnTo` as it might holds sensitive info
+		this.analyticsService.logEvent('navigateToLogin');
+
+		const navOptions: NavigationOptions = {
+			queryParams: options?.queryParams,
+			animationDirection: 'back',
+		};
 		if (options?.returnTo) {
-			options.queryParams = options && {
-				to: options.returnTo, // Make `to`first parameter for sake of URL readability
-				...options.queryParams, // TODO: make sure query parameter `to` does not overrides returnTo passed above.
-			};
+			navOptions.fragment = options.returnTo;
 		}
 		this.navController
-			.navigateRoot('login', { ...options, animationDirection: 'back' })
+			.navigateRoot('login', navOptions)
 			.catch((err) =>
 				this.errorLogger.logError(err, 'Failed to navigate to login page'),
 			);

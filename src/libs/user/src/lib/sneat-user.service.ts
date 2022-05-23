@@ -71,7 +71,7 @@ export class SneatUserService {
 	}
 
 	public onUserSignedIn(authState: ISneatAuthState): void {
-		// console.log('onUserSignedIn()', authState);
+		console.log('onUserSignedIn()', authState);
 		const authUser = authState.user;
 		// afUser.getIdToken().then(idToken => {
 		// 	console.log('Firebase idToken:', idToken);
@@ -82,10 +82,8 @@ export class SneatUserService {
 		if (this.uid === authUser?.uid) {
 			return;
 		}
-		if (this.userDocSubscription) {
-			this.userDocSubscription.unsubscribe();
-			this.userDocSubscription = undefined;
-		}
+		this.userDocSubscription?.unsubscribe();
+		this.userDocSubscription = undefined;
 		if (!authUser) {
 			if (this.userState$.value?.record !== null) {
 				this.userState$.next({ ...this.userState$.value });
@@ -130,15 +128,18 @@ export class SneatUserService {
 				return; // Should always be equal as we unsubscribe if uid changes
 			}
 			// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
-			const fbUser = authState.user;
+			const authUser = authState.user;
 			if (!userDocSnapshot.exists) {
 				this.sneatApiService
 					.post('users/create_user', {
 						creator: location.host,
-						title: fbUser?.displayName,
-						email: fbUser?.email,
+						title: authUser?.displayName,
+						email: authUser?.email,
 					})
 					.subscribe({
+						next: response => {
+							console.log('User record created:', response);
+						},
 						error: this.errorLogger.logErrorHandler('failed to create user record'),
 					});
 			}
@@ -146,7 +147,7 @@ export class SneatUserService {
 				...authState,
 				record: userDocSnapshot.exists
 					? (userDocSnapshot.data() as IUserRecord)
-					: fbUser ? { title: fbUser.displayName || fbUser.email || fbUser.uid } : null,
+					: authUser ? { title: authUser.displayName || authUser.email || authUser.uid } : null,
 			});
 		}
 	}

@@ -86,6 +86,16 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		});
 	}
 
+	public postAsAnonymous<T>(
+		endpoint: string,
+		body: any,
+	): Observable<T> {
+		return this.httpClient.post<T>(this.baseUrl + endpoint, body, {
+			headers: this.headers(),
+		});
+	}
+
+
 	public delete<T>(endpoint: string, params?: HttpParams, body?: any): Observable<T> {
 		console.log('delete()', endpoint, params);
 		const url = this.baseUrl + endpoint;
