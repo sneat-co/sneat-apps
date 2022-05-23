@@ -104,7 +104,6 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		readonly teamParams: TeamComponentBaseParams,
 	) {
 		console.log(`${className} extends TeamBasePageDirective.constructor()`);
-		this.defaultBackPage = 'members';
 		try {
 			this.route = route;
 

@@ -26,6 +26,7 @@ export abstract class MemberBasePage extends TeamBaseComponent {
 		// protected assetService: IAssetService,
 	) {
 		super(className, route, params.teamParams);
+		this.defaultBackPage = 'members';
 		this.tryToGetMemberFromHistoryState();
 		this.tackMemberId();
 	}
