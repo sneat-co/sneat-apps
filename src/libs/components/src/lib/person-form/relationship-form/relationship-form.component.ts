@@ -54,12 +54,14 @@ export class RelationshipFormComponent extends TeamRelatedFormComponent implemen
 						[
 							FamilyMemberRelation.child,
 							FamilyMemberRelation.sibling,
+							FamilyMemberRelation.cousin,
 						] as FamilyMemberRelation[]
 						: [
 							FamilyMemberRelation.spouse,
 							FamilyMemberRelation.partner,
 							FamilyMemberRelation.child,
 							FamilyMemberRelation.sibling,
+							FamilyMemberRelation.cousin,
 							FamilyMemberRelation.parent,
 							FamilyMemberRelation.grandparent,
 						] as FamilyMemberRelation[],

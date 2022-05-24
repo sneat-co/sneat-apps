@@ -36,7 +36,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 	public readonly personRequires: IPersonRequirements = {
 		ageGroup: 'excluded',
-		gender: 'optional',
+		relatedAs: 'excluded',
 	};
 
 	public relation?: ContactToMemberRelation;
@@ -73,6 +73,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 			: 'New contact';
 	}
 
+	public personFormIsReadyToSubmit = false;
 	public readonly id = (i: number, v: { id: string }): string => v.id;
 
 	constructor(
@@ -177,18 +178,18 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		this.relatedPerson = myPerson;
 	}
 
+	public onPersonFormIsReadyToSubmit(): void {
+		this.personFormIsReadyToSubmit = true;
+	}
+
 	submit(): void {
-		if (!this.relation) {
-			alert('relation is not set');
-			return;
-		}
 		this.creating = true;
 		const contactDto: IContactDto = excludeUndefined({
 			teamIDs: [this.team.id],
 			name: { full: this.name },
 			email: this.email.trim() || undefined,
 			phone: this.phone.trim() || undefined,
-			gender: this.gender,
+			gender: this.relatedPerson.gender,
 		});
 		if (this.member) {
 			if (!this.member.brief?.title) {

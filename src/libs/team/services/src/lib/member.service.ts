@@ -87,7 +87,7 @@ export class MemberService {
 			);
 		};
 		return this.sneatApiService
-			.post<IAddTeamMemberResponse>('team/add_member', request)
+			.post<IAddTeamMemberResponse>('members/create_member', request)
 			.pipe(mergeMap(processAddMemberResponse));
 	}
 

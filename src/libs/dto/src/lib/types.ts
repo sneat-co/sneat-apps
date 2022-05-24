@@ -72,5 +72,5 @@ export type CommuneItemCounter =
 	| 'todos'
 	| 'upcomings';
 
-export type ContactToMemberRelation = 'parent' | 'mother' | 'father' | 'sibling' | 'childminder' | 'friend' | 'child';
+export type ContactToMemberRelation = 'undefined' | 'parent' | 'mother' | 'father' | 'sibling' | 'childminder' | 'friend' | 'child';
 export type ContactToAssetRelation = ContactRole;

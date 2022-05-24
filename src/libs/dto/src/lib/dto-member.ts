@@ -24,6 +24,7 @@ export enum FamilyMemberRelation {
 	parent = 'parent',
 	grandparent = 'grandparent',
 	sibling = 'sibling',
+	cousin = 'cousin',
 	spouse = 'spouse',
 	partner = 'partner',
 }

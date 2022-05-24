@@ -131,7 +131,7 @@ export class TeamService {
 			return throwError(() => 'member not found by ID in team record');
 		}
 		return this.sneatApiService
-			.post(`team/change_member_role`, {
+			.post(`members/change_member_role`, {
 				team: team.id,
 				member: memberId,
 				role,
@@ -194,7 +194,7 @@ export class TeamService {
 					teamID: teamRecord.id,
 				};
 				this.sneatApiService
-					.post<ITeamDto>('team/leave_team', teamRequest)
+					.post<ITeamDto>('members/leave_team', teamRequest)
 					.pipe(
 						map(teamDto => {
 							const teamContext: ITeamContext = { id, type: teamDto.type, brief: { id, ...teamDto }, dto: teamDto };
@@ -210,7 +210,7 @@ export class TeamService {
 			member: memberId,
 		};
 		return this.sneatApiService
-			.post('team/remove_member', request)
+			.post('members/remove_member', request)
 			.pipe(
 				switchMap(() => processRemoveTeamMemberResponse(teamRecord)),
 				ensureTeamRecordExists,

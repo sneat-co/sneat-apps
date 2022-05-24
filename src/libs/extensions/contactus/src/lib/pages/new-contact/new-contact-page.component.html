@@ -33,6 +33,7 @@
 										 [hideRelationship]="true"
 										 [requires]="personRequires"
 										 (relatedPersonChange)="onRelatedPersonChange($event)"
+										 (isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
 	></sneat-person-form>
 
 	<!--	<ng-container *ngIf="member && !relation">-->
@@ -54,8 +55,7 @@
 	<!--		</ion-item>-->
 	<!--	</ion-list>-->
 
-	<div class="ion-padding">
-		relatedPerson.name: {{relatedPerson.name.full}}
+	<div class="ion-padding" *ngIf="personFormIsReadyToSubmit">
 		<ion-button expand="full" [disabled]="creating || isContactNotReady" (click)="submit()">
 			<ion-label>Create contact</ion-label>
 		</ion-button>
