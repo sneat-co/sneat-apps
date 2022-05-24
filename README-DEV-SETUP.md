@@ -7,7 +7,7 @@ Here is how to start.
 
 ## Installing required tools & dependencies
 
-To develop & run **Sneat.app** locally you need:
+To develop & run **Sneat.app** locally you would need:
 
 1. Install [Node.js](https://nodejs.org/).
 2. Install [PNPM](https://pnpm.io/) - like NPM but faster
