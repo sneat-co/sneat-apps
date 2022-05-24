@@ -2,15 +2,26 @@
 
 A suit of open source apps that help in work & personal life.
 
-## Apps for work
-- **Sneat.team** - provides authentication & org structure for below apps:
-    - [DataTug](src/apps/datatug) - SQL & HTTP queries workbench
-    - [ScrumSpace](src/apps/scrumspace) - daily scrums & retrospectives for agile teams 
-    - [IssueNumber.One](src/apps/issuenumberone) - facilitates continuous **focused** feedback & improvements
+## Apps for family & personal life
+ - [Sneat.app] - a "super" family app that saves you time & money.
+   - Members
+   - Schedule / calendar
+   - Contacts
+   - Assets management (details, log book, renewal reminders, etc.)
+   - Budgeting (integrated with assets management)
+   - Lists: ToDo, ToBuy, ToWatch, etc.
+   - etc.
 
 
-## Apps for family & personal life 
-- to be listed here
+[//]: # (## Apps for work)
+
+[//]: # (- **Sneat.team** - provides authentication & org structure for below apps:)
+
+[//]: # (    - [DataTug]&#40;src/apps/datatug&#41; - SQL & HTTP queries workbench)
+
+[//]: # (    - [ScrumSpace]&#40;src/apps/scrumspace&#41; - daily scrums & retrospectives for agile teams )
+
+[//]: # (    - [IssueNumber.One]&#40;src/apps/issuenumberone&#41; - facilitates continuous **focused** feedback & improvements)
 
 ## Tech stack
 - [TypeScript](https://www.typescriptlang.org/) - typed JavaScript at Any Scale
