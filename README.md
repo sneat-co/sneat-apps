@@ -19,54 +19,17 @@ A suit of open source apps that help in work & personal life.
 - [Capacitor](https://capacitorjs.com/) - a cross-platform native runtime for web apps.
 - [nx](https://nx.dev/) by [Nrwl](https://nrwl.io/) - extensible dev tools for monorepos
 
+# Setting up development environment
+
+If you want to contribute to this open source project you can 
+read instructions on how to set up local dev environment in [README-DEV-SETUP.md](README-DEV-SETUP.md). 
 
 ## Concepts
 - `Team`
   - `Squad`
   - `Commune`
 
-## How to run
 
-Preferable way is not to use global `nx` but to use:
-```shell
-pnpm run nx serve <APP_NAME>
-```
-
-Shorter way:
-```shell
-pnpx nx serve <APP_NAME>
-```
-
-To make it even shorter first create a shortcut:
-```shell
-alias pnx="pnpm run nx --"
-```
-
-Then run as:
-```shell
-pnx serve <APP_NAME>
-```
-
-### Run with source maps
-
-For some reason the serve is running with enabled optimization and no source maps.
-It results in troubles with debugging.
-
-Here is how to run dev server properly for datatug app:
-
-```shell
-pnx serve datatug --optimization=false --sourceMap=true
-```
-
-
-## Troubleshooting
-
-### Performance: Bundles size
-
-To see chunks content:
-
-1. Build with source maps
-2. Run `source-map-explorer dist/apps/datatug/main.js`
 
 ## Known issues
 
