@@ -7,7 +7,7 @@ Here is how to start.
 
 ## Installing required tools & dependencies
 
-To develop & run Sneat.app locally you need:
+To develop & run **Sneat.app** locally you need:
 
 1. Install [Node.js](https://nodejs.org/).
 2. Install [PNPM](https://pnpm.io/) - like NPM but faster
@@ -107,9 +107,24 @@ pnx serve <APP_NAME>
 
 ## Troubleshooting
 
-### Performance: Bundles size
+### Performance: Sizes of bundles
 
-To see chunks content:
+To see chunks size graph:
 
-1. Build with source maps
-2. Run `source-map-explorer dist/apps/datatug/main.js`
+1. Install NMP package **source-map-explorer**: `pnpm add -g source-map-explorer`
+2. Build with source maps
+3. Run `source-map-explorer dist/apps/datatug/main.js`
+
+## Have we missed anything?
+
+If you noticed we've missed anything that could help
+to set up quicker and develop easier please
+[create an issue](https://github.com/sneat-co/sneat-apps/issues/new?labels=development)
+with a `development` label.
+
+## Give it a try?
+
+Before deciding if you want to join why not to try the app - [https://sneat.app/pwa/](https://sneat.app/pwa/).
+
+If you found an issue with the app please [create a bug](https://github.com/sneat-co/sneat-apps/issues/new?labels=bug).
+Even better if you submit a pull request to fix it! :)
