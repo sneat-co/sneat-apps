@@ -1,4 +1,5 @@
 export type ContactRoleInsurer = 'insurer';
+export type ContactRoleFriend = 'friend';
 export type ContactRoleDwellingRelated =
 	ContactRoleInsurer
 	| 'cleaner'
@@ -11,5 +12,6 @@ export type ContactRoleDwellingRelated =
 	| 'realtor';
 export type ContactRoleVehicle = ContactRoleInsurer | 'mechanic' | 'electrician' | 'handyman';
 export type ContactRoleMedRelated = 'GP' | 'med_specialist'
-export type ContactRoleKidRelated = 'teacher' | 'babysitter';
-export type ContactRole = ContactRoleKidRelated | ContactRoleMedRelated | ContactRoleDwellingRelated | ContactRoleVehicle | 'applicant';
+export type ContactRoleFamilyRelated = ContactRoleFriend;
+export type ContactRoleKidRelated = ContactRoleFriend | 'teacher' | 'babysitter';
+export type ContactRole = ContactRoleFamilyRelated | ContactRoleKidRelated | ContactRoleMedRelated | ContactRoleDwellingRelated | ContactRoleVehicle | 'applicant';

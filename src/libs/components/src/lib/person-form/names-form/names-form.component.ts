@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChil
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { excludeEmpty } from '@sneat/core';
-import { IName } from '@sneat/dto';
+import { IName, isEmptyName } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { createSetFocusToInput } from '../../focus';
 
@@ -83,7 +83,7 @@ export class NamesFormComponent implements AfterViewInit {
 	}
 
 	onNameChanged(event: Event): void {
-		console.log('onNameChanged()', this.firstName.value, this.lastName.value, event);
+		console.log('onNameChanged()', this.isFullNameChanged, this.firstName.value, this.lastName.value, event);
 		if (!this.isFullNameChanged) {
 
 			const fullName = this.generateFullName();
@@ -97,17 +97,24 @@ export class NamesFormComponent implements AfterViewInit {
 				});
 			}
 		}
+		this.setName();
+	}
+
+	private setName(): void {
 		this.name = {
 			first: this.firstName.value,
 			last: this.lastName.value,
 			middle: this.middleName.value,
 			full: this.fullName.value,
 		};
+		if (this.isFullNameChanged && isEmptyName(this.name)) {
+			this.isFullNameChanged = false;
+		}
 		this.namesChanged.emit(this.name);
 	}
 
 	public names(): IName {
-		return excludeEmpty( {
+		return excludeEmpty({
 			first: this.firstName.value,
 			last: this.lastName.value,
 			middle: this.lastName.value,
@@ -129,7 +136,9 @@ export class NamesFormComponent implements AfterViewInit {
 
 	onFullNameChanged(event: Event): void {
 		console.log('onFullNameChanged()', this.firstName.value, this.lastName.value, event);
-		if (!this.isFullNameChanged) {
+		if (this.isFullNameChanged) {
+			this.setName();
+		} else {
 			const fullName = this.generateFullName();
 			if (this.fullName.value !== fullName) {
 				this.isFullNameChanged = true;

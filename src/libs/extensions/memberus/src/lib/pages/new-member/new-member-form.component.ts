@@ -7,7 +7,7 @@ import { excludeUndefined, RoutingState } from '@sneat/core';
 import {
 	emptyRelatedPerson,
 	IMemberDto,
-	IRelatedPerson, MemberRole,
+	IRelatedPerson, isRelatedPersonNotReady, MemberRole,
 	MemberRoleContributor,
 	relatedPersonToPerson,
 } from '@sneat/dto';
@@ -38,8 +38,7 @@ export class NewMemberFormComponent {
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
 	public get isPersonFormReady(): boolean {
-		const p = this.relatedPerson;
-		return !!p.ageGroup && !!p.gender;
+		return isRelatedPersonNotReady(this.relatedPerson, {ageGroup: true, gender: true});
 	};
 
 

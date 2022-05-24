@@ -8,6 +8,10 @@ export interface IName {
 	readonly full?: string;
 }
 
+export function isEmptyName(n?: IName): boolean {
+	return !n || !n.full && !n.first && !n.last && !n.middle;
+}
+
 export interface IEmail {
 	readonly type: 'work' | 'personal';
 	readonly address: string;
@@ -25,10 +29,10 @@ export interface IPersonBase {
 	readonly ageGroup?: AgeGroup;
 }
 
-export const emptyPersonBase: IPersonBase = {name: {}};
+export const emptyPersonBase: IPersonBase = { name: {} };
 
 export interface IPersonBrief extends IPersonBase {
-	readonly id: string
+	readonly id: string;
 }
 
 export interface IPerson extends IPersonBase {
@@ -45,10 +49,23 @@ export interface IRelatedPerson extends IPerson {
 	readonly roles?: string[]; // Either member roles or contact roles
 }
 
+export interface IPersonRequirements {
+	ageGroup?: boolean;
+	gender?: boolean;
+}
+
+export function isPersonNotReady(p: IPerson, requires: IPersonRequirements): boolean {
+	return !!requires.ageGroup && !p.ageGroup || isEmptyName(p.name);
+}
+
+export function isRelatedPersonNotReady(p: IRelatedPerson, requires: IPersonRequirements): boolean {
+	return isPersonNotReady(p, requires);
+}
+
 export const emptyRelatedPerson = emptyPersonBase;
 
 export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
-	const v2 = {...excludeUndefined(v)} as any;
+	const v2 = { ...excludeUndefined(v) } as any;
 	delete v2['relationship'];
 	return v2;
 }

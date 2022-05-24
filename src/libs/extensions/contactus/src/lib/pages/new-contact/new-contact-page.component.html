@@ -9,6 +9,7 @@
 	</ion-toolbar>
 </ion-header>
 
+
 <ion-content>
 
 	<ion-item-divider color="light" *ngIf="asset?.id">
@@ -20,37 +21,41 @@
 	</ion-item-divider>
 
 	<sneat-contact-role-form
-		[(contactType)]="contactType"
-		[groupID]="contactGroup"
+		[contactGroupID]="contactGroup?.id"
+		(contactGroupChange)="onContactGroupChanged($event)"
+
+		[contactRoleID]="contactRole?.id"
+		(contactRoleIDChange)="onContactRoleIDChanged($event)"
 	></sneat-contact-role-form>
 
-	<sneat-person-form *ngIf="contactType"
+	<sneat-person-form *ngIf="contactRole"
 										 [team]="team"
 										 [hideRelationship]="true"
 										 (relatedPersonChange)="onRelatedPersonChange($event)"
 	></sneat-person-form>
 
-<!--	<ng-container *ngIf="member && !relation">-->
-<!--		<p *ngIf="!member">Please select relation to member</p>-->
-<!--		<p *ngIf="member">Please select relation to <b>{{member?.brief?.title || member?.id}}</b></p>-->
-<!--		<ion-list mode="ios">-->
-<!--			<ion-item mode="ios" button *ngFor="let rel of relations; trackBy: id"-->
-<!--								(click)="selectRel(rel)">{{rel.title}}</ion-item>-->
-<!--		</ion-list>-->
-<!--	</ng-container>-->
+	<!--	<ng-container *ngIf="member && !relation">-->
+	<!--		<p *ngIf="!member">Please select relation to member</p>-->
+	<!--		<p *ngIf="member">Please select relation to <b>{{member?.brief?.title || member?.id}}</b></p>-->
+	<!--		<ion-list mode="ios">-->
+	<!--			<ion-item mode="ios" button *ngFor="let rel of relations; trackBy: id"-->
+	<!--								(click)="selectRel(rel)">{{rel.title}}</ion-item>-->
+	<!--		</ion-list>-->
+	<!--	</ng-container>-->
 
-<!--	<ion-list *ngIf="relation">-->
-<!--		<ion-item>-->
-<!--			<ion-label>Relation</ion-label>-->
-<!--			<ion-select [(ngModel)]="relation" [disabled]="creating" interface="action-sheet">-->
-<!--				<ion-select-option *ngFor="let rel of relations; trackBy: id"-->
-<!--													 [value]="rel.id">{{rel.title}}</ion-select-option>-->
-<!--			</ion-select>-->
-<!--		</ion-item>-->
-<!--	</ion-list>-->
+	<!--	<ion-list *ngIf="relation">-->
+	<!--		<ion-item>-->
+	<!--			<ion-label>Relation</ion-label>-->
+	<!--			<ion-select [(ngModel)]="relation" [disabled]="creating" interface="action-sheet">-->
+	<!--				<ion-select-option *ngFor="let rel of relations; trackBy: id"-->
+	<!--													 [value]="rel.id">{{rel.title}}</ion-select-option>-->
+	<!--			</ion-select>-->
+	<!--		</ion-item>-->
+	<!--	</ion-list>-->
 
 	<div class="ion-padding">
-		<ion-button expand="full" [disabled]="!name || creating" (click)="submit()">
+		relatedPerson.name: {{relatedPerson.name.full}}
+		<ion-button expand="full" [disabled]="creating || isContactNotReady" (click)="submit()">
 			<ion-label>Create contact</ion-label>
 		</ion-button>
 	</div>

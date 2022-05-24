@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { eq, listItemAnimations } from '@sneat/core';
+import { ContactRole } from '@sneat/dto';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { defaultContactGroups, IContactGroup, IContactRoleBrief } from '../../contact-group.service';
 import { ContactNavService } from '../../contact-nav-service';
@@ -110,11 +111,11 @@ export class ContactsByTypeComponent implements OnChanges {
 		this.otherContacts = otherContacts;
 	}
 
-	public addContact(event: Event, group: string, type?: string): void {
+	public addContact(event: Event, group: string, role?: ContactRole): void {
 		event.stopPropagation();
 		if (!this.team) {
 			return;
 		}
-		this.contactNavService.goNewContactPage(this.team, { group, type });
+		this.contactNavService.goNewContactPage(this.team, { group, role });
 	}
 }
