@@ -9,7 +9,7 @@ Here is how to start.
 
 To develop & run **Sneat.app** locally you would need:
 
-1. Install [Node.js](https://nodejs.org/).
+1. Install [Node.js](https://nodejs.org/) - a JavaScript runtime.
 2. Install [PNPM](https://pnpm.io/) - like NPM but faster
 3. Install [Firebase Tools](https://firebase.google.com/docs/cli) (_for
    running [Firebase emulators](https://firebase.google.com/docs/emulator-suite)_)
