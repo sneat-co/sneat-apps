@@ -52,13 +52,13 @@ export class MembersListComponent implements OnChanges {
 		return 'person-outline';
 	}
 
-	public goMember(member?: IMemberContext): void {
+	public goMember(member?: IMemberContext): boolean {
 		console.log('TeamPage.goMember()', member);
 		if (!this.team) {
 			this.errorLogger.logError(
 				'Can not navigate to team member without team context',
 			);
-			return;
+			return false;
 		}
 		if (!member?.id) {
 			throw new Error('!member?.id');
@@ -67,6 +67,7 @@ export class MembersListComponent implements OnChanges {
 			member = { ...member, team: this.team };
 		}
 		this.navService.navigateToMember(this.navController, member);
+		return false;
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {

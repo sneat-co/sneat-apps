@@ -17,6 +17,7 @@
 						[disabled]="!team?.type"
 						[class.currentPage]="isCurrentPage('overview')"
 						(click)="goOverview()"
+						routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}"
 	>
 		<ion-icon name="home-outline" slot="start"></ion-icon>
 		<ion-label>Overview</ion-label>

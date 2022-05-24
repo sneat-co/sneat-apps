@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
@@ -15,6 +16,7 @@ import { MembersListComponent } from './members-list.component';
     ScheduleNavServiceModule,
     SneatPipesModule,
     InviteModalModule,
+		RouterModule,
   ],
 	declarations: [MembersListComponent],
 	exports: [MembersListComponent],

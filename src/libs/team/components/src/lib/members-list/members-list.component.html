@@ -9,7 +9,7 @@
 </ion-item>
 
 <ion-item *ngIf="membersToDisplay && !membersToDisplay.length; else list">
-	<ion-label color="medium">No members of this type: {{ role }}</ion-label>
+	<ion-label color="medium">No members</ion-label>
 </ion-item>
 
 <ng-template #list>
@@ -17,7 +17,7 @@
 		[@addRemove]="'added'"
 		*ngFor="let member of membersToDisplay; trackBy: id"
 	>
-		<ion-item tappable (click)="goMember(member)" class="sneat-tiny-end-padding">
+		<ion-item routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}/member/{{member.id}}"  (click)="goMember(member)" class="sneat-tiny-end-padding">
 			<ion-avatar *ngIf="member?.brief?.avatar as avatar; else memberIcon">
 				<ion-img *ngIf="member.brief?.avatar?.external?.url"
 								 title="avatar"
