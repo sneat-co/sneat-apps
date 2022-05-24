@@ -21,14 +21,49 @@
       ]
     },
     {
-      "matchSourceUrlPrefixes": [
-        "https://github.com/angular/angular",
-        "https://github.com/angular/angular-cli",
-        "https://github.com/angular/angularfire"
+      "matchPackagePrefixes": [
+        "@angular/",
+        "@angular-devkit/",
+        "@angular-eslint/"
       ],
       "matchUpdateTypes": [
         "minor",
         "patch"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackagePrefixes": [
+        "@angular/",
+        "@angular-devkit/",
+        "@angular-eslint/"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ]
+    },
+    {
+      "matchPackagePrefixes": [
+        "@ionic-native/"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackagePrefixes": [
+        "@sentry/"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackagePrefixes": [
+        "postcss"
       ],
       "automerge": true,
       "automergeType": "pr"
@@ -36,18 +71,48 @@
     {
       "matchPackagePatterns": [
         "karma",
-        "jasmine"
+        "jasmine",
+        "jest"
       ],
       "automerge": true,
       "automergeType": "pr"
     },
     {
       "matchPackagePrefixes": [
-        "@ionic"
+        "@ionic/"
       ],
       "matchUpdateTypes": [
         "minor",
         "patch"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackagePrefixes": [
+        "@ionic/"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ]
+    },
+    {
+      "matchPackagePrefixes": [
+        "@capacitor/"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackagePrefixes": [
+        "@nxtend/"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackagePrefixes": [
+        "@types/"
       ],
       "automerge": true,
       "automergeType": "pr"
