@@ -47,7 +47,7 @@ It is used emulate locally Firebase authentication & datastore.
 
 Installation instructions can be found [here](https://firebase.google.com/docs/cli#install_the_firebase_cli).
 
-### 4. Install Java
+### 4. Install Java SE runtime
 
 To run Firebase emulators you need Java runtime. If you don't have one you can download and install it
 from [Java Downloads](https://www.oracle.com/java/technologies/downloads/) page.
