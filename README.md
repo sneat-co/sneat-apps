@@ -3,7 +3,7 @@
 A suit of open source apps that help in work & personal life.
 
 ## Apps for family & personal life
- - [Sneat.app](https://sneat.app) - a "super" family app that saves you time & money.
+ - [Sneat.app](https://sneat.app) - a "super" neat family app that saves you time & money.
    - Members
    - Schedule / calendar
    - Contacts
