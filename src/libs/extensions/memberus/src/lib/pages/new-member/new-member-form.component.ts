@@ -6,7 +6,7 @@ import { createSetFocusToInput, NamesFormComponent, PersonFormComponent } from '
 import { excludeUndefined, RoutingState } from '@sneat/core';
 import {
 	emptyRelatedPerson,
-	IMemberDto,
+	IMemberDto, IPersonRequirements,
 	IRelatedPerson, isRelatedPersonNotReady, MemberRole,
 	MemberRoleContributor,
 	relatedPersonToPerson,
@@ -25,6 +25,10 @@ import { MemberService, TeamNavService } from '@sneat/team/services';
 })
 export class NewMemberFormComponent {
 
+	public readonly personRequirements: IPersonRequirements = {
+		ageGroup: 'required',
+		gender: 'required',
+	};
 	private readonly hasNavHistory: boolean;
 	public disabled = false;
 
@@ -38,7 +42,7 @@ export class NewMemberFormComponent {
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
 	public get isPersonFormReady(): boolean {
-		return isRelatedPersonNotReady(this.relatedPerson, {ageGroup: true, gender: true});
+		return isRelatedPersonNotReady(this.relatedPerson, this.personRequirements);
 	};
 
 

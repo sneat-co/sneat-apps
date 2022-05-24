@@ -31,6 +31,7 @@
 	<sneat-person-form *ngIf="contactRole"
 										 [team]="team"
 										 [hideRelationship]="true"
+										 [requires]="personRequires"
 										 (relatedPersonChange)="onRelatedPersonChange($event)"
 	></sneat-person-form>
 

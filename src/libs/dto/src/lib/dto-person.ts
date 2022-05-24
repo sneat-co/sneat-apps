@@ -49,9 +49,16 @@ export interface IRelatedPerson extends IPerson {
 	readonly roles?: string[]; // Either member roles or contact roles
 }
 
+// // Default value: 'optional'
+export type RequirementOption = 'required' | 'optional' | 'excluded';
+
 export interface IPersonRequirements {
-	ageGroup?: boolean;
-	gender?: boolean;
+	readonly ageGroup?: RequirementOption;
+	readonly gender?: RequirementOption;
+	readonly phone?: RequirementOption;
+	readonly email?: RequirementOption;
+	readonly relatedAs?: RequirementOption;
+	readonly roles?: RequirementOption;
 }
 
 export function isPersonNotReady(p: IPerson, requires: IPersonRequirements): boolean {

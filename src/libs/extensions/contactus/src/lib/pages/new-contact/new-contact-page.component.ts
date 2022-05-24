@@ -9,7 +9,7 @@ import {
 	Gender,
 	IContact2Asset,
 	IContactDto,
-	ITitledRecord, IRelatedPerson, emptyPersonBase, isRelatedPersonNotReady,
+	ITitledRecord, IRelatedPerson, emptyPersonBase, isRelatedPersonNotReady, IPersonRequirements,
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -33,6 +33,11 @@ import { ContactService, ICreateContactRequest } from '../../contact.service';
 export class NewContactPageComponent extends TeamBaseComponent implements OnInit {
 
 	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
+
+	public readonly personRequires: IPersonRequirements = {
+		ageGroup: 'excluded',
+		gender: 'optional',
+	};
 
 	public relation?: ContactToMemberRelation;
 	public name = '';
@@ -164,7 +169,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 	public onContactRoleIDChanged(contactRoleID?: string): void {
 		const brief: IContactRoleBrief | undefined = this.contactGroup?.dto?.roles.find(r => r.id === contactRoleID);
-		this.contactRole = brief && {id: brief.id, brief};
+		this.contactRole = brief && { id: brief.id, brief };
 		console.log('onContactRoleIDChanged()', contactRoleID, this.contactRole);
 	}
 
