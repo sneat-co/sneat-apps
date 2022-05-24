@@ -11,12 +11,20 @@ To develop & run **Sneat.app** locally you need:
 
 1. Install [Node.js](https://nodejs.org/).
 2. Install [PNPM](https://pnpm.io/) - like NPM but faster
-3. Install [Firebase Tools](https://firebase.google.com/docs/cli) (_for running [Firebase emulators](https://firebase.google.com/docs/emulator-suite)_)
+3. Install [Firebase Tools](https://firebase.google.com/docs/cli) (_for
+   running [Firebase emulators](https://firebase.google.com/docs/emulator-suite)_)
 4. Install Java (_for running Firebase emulators_)
-5. Install [Go](https://go.dev/) language
+5. Install [Go](https://go.dev/) language (_for running server side code_)
 6. Clone repositories
     1. [github.com/sneat-co/sneat-apps](https://github.com/sneat-co/sneat-apps) - client side (_Progressive Web App_)
     2. [github.com/sneat-co/sneat-go](https://github.com/sneat-co/sneat-go) - server side (_writes data to DB_)
+7. Running Sneat.app locally processes:
+   1. Run Firebase emulators
+   2. Run Server side
+   3. Run Client side progressive web app
+
+After above steps successful the local development version of the Sneat.app
+should be available at [http://localhost:4200](http://localhost:4200).  
 
 Here is the instructions how to do this step by step.
 
@@ -48,7 +56,8 @@ from [Java Downloads](https://www.oracle.com/java/technologies/downloads/) page.
 
 The server side of the Sneat.app is being developed using mostly Go language.
 
-[Go](https://go.dev/) is a language developed & maintained by Google. It is strongly typed, lightweight, reliable & fairly simple.
+[Go](https://go.dev/) is a language developed & maintained by Google. It is strongly typed, lightweight, reliable &
+fairly simple.
 It's well suited for server APIs and handling concurrent requests.
 
 You can download it here https://go.dev/dl/
@@ -57,9 +66,35 @@ You can use the latest version locally but beer in mind that
 when deployed v15 will be used due to limitations
 of the [Google App Engine Standard](https://cloud.google.com/appengine/docs/standard/go) environment.
 In the future we might consider migrating to Google App Engine Flex or Compute Engine or something different
-but for now App Engine Standard works best for us. 
+but for now App Engine Standard works best for us.
 
-## How to run
+## 7. Running Sneat.app locally
+
+### 7.1 Running Firebase Emulators
+```shell
+> cd ~/sneat/sneat-go
+~/sneat/sneat-go> firebase emulators:start --only auth,firestore --config firebase/firebase.json --import ./firebase/local_data --export-on-exit ./firebase/local_data
+```
+There is a shortcut batch file `serve_fb_emulator.sh`:
+```shell
+~/sneat/sneat-go> ./serve_fb_emulator.sh
+```
+
+## 7.2 Running server side
+```shell
+> cd ~/sneat/sneat-go
+~/sneat/sneat-go> export GCLOUD_PROJECT="demo-local-sneat-app"
+~/sneat/sneat-go> export FIREBASE_AUTH_EMULATOR_HOST="localhost:9099"
+~/sneat/sneat-go> export FIRESTORE_EMULATOR_HOST="localhost:8080"
+~/sneat/sneat-go> go run ./gae
+```
+
+There is a shortcut batch file `serve_gae.sh`:
+```shell
+~/sneat/sneat-go> ./serve_gae.sh
+```
+
+## 7.3 Running Client progressive web app
 
 Preferable way is not to use global `nx` but to use:
 
