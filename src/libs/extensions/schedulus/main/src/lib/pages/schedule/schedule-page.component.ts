@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { virtualSliderAnimations } from '@sneat/components';
+import { HappeningType } from '@sneat/dto';
+import { NewHappeningParams, ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { emptyScheduleFilter, ScheduleFilterService } from '../../components/schedule-filter.service';
 import { IScheduleFilter } from '../../components/schedule-filter/schedule-filter';
 import { ScheduleTab } from '../../components/schedule/schedule.component';
@@ -26,8 +28,7 @@ export class SchedulePageComponent extends TeamBaseComponent {
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		private filterService: ScheduleFilterService,
-		// private readonly singleHappeningService: ISingleHappeningService,
-		// private readonly slotsProvider: ISlotsProvider,
+		private readonly scheduleNavService: ScheduleNavService,
 	) {
 		super('SchedulePageComponent', route, params);
 
@@ -86,6 +87,15 @@ export class SchedulePageComponent extends TeamBaseComponent {
 
 	onDateChanged(date: string): void {
 		this.date = date;
+	}
+
+	goNew(type: HappeningType): void {
+		if (!this.team) {
+			return;
+		}
+		const params: NewHappeningParams = { type: type};
+		this.scheduleNavService.goNewHappening(this.team, params);
+
 	}
 }
 
