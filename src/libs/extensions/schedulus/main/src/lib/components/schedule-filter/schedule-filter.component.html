@@ -1,5 +1,8 @@
 <ion-card>
-	<ion-accordion-group [value]="accordionValue" #accordionGroup [multiple]="false" (ionChange)="accordionChanged($event)" >
+	<ion-accordion-group #accordionGroup
+											 [multiple]="false"
+											 (ionChange)="accordionChanged($event)"
+	>
 		<ion-accordion value="filter">
 			<ion-item slot="header">
 				<ion-icon name="search-outline" slot="start"></ion-icon>
@@ -17,10 +20,10 @@
 			</ion-item>
 			<ion-item-group slot="content">
 
-<!--				<ion-item>-->
-<!--					<ion-checkbox (ionChange)="emitChanged()" slot="start"></ion-checkbox>-->
-<!--					<ion-label>Myself</ion-label>-->
-<!--				</ion-item>-->
+				<!--				<ion-item>-->
+				<!--					<ion-checkbox (ionChange)="emitChanged()" slot="start"></ion-checkbox>-->
+				<!--					<ion-label>Myself</ion-label>-->
+				<!--				</ion-item>-->
 				<ion-item-divider color="light" *ngIf="showWeekdays">Weekdays</ion-item-divider>
 				<ion-grid class="ion-grid-layout" *ngIf="showWeekdays">
 					<ion-row>
@@ -80,52 +83,99 @@
 					<ion-row>
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-								<ion-checkbox value="weekly" [formControl]="repeatWeekly"  (ionChange)="repeatChanged($event)" slot="start" class="sneat-small-end-margin"></ion-checkbox>
+								<ion-checkbox value="weekly" [formControl]="repeatWeekly" (ionChange)="repeatChanged($event)"
+															slot="start" class="sneat-small-end-margin"></ion-checkbox>
 								<ion-label>Weekly</ion-label>
 							</ion-item>
 						</ion-col>
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-								<ion-checkbox value="monthly" [formControl]="repeatMonthly"  (ionChange)="repeatChanged($event)" slot="start" class="sneat-small-end-margin"></ion-checkbox>
+								<ion-checkbox value="monthly" [formControl]="repeatMonthly" (ionChange)="repeatChanged($event)"
+															slot="start" class="sneat-small-end-margin"></ion-checkbox>
 								<ion-label>Monthly</ion-label>
 							</ion-item>
 						</ion-col>
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-								<ion-checkbox value="quarterly" [formControl]="repeatQuarterly" (ionChange)="repeatChanged($event)" slot="start" class="sneat-small-end-margin"></ion-checkbox>
+								<ion-checkbox value="quarterly" [formControl]="repeatQuarterly" (ionChange)="repeatChanged($event)"
+															slot="start" class="sneat-small-end-margin"></ion-checkbox>
 								<ion-label>Quarterly</ion-label>
 							</ion-item>
 						</ion-col>
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-								<ion-checkbox value="yearly" [formControl]="repeatYearly" (ionChange)="repeatChanged($event)" slot="start" class="sneat-small-end-margin"></ion-checkbox>
+								<ion-checkbox value="yearly" [formControl]="repeatYearly" (ionChange)="repeatChanged($event)"
+															slot="start" class="sneat-small-end-margin"></ion-checkbox>
 								<ion-label>Yearly</ion-label>
 							</ion-item>
 						</ion-col>
 					</ion-row>
 				</ion-grid>
 
-<!--				<ng-container *ngIf="members && members.length <= 5; else manyMembers">-->
-<!--					<ion-item-divider color="light">Members</ion-item-divider>-->
-<!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
-<!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
-<!--						<ion-segment-button [value]="member.id" *ngFor="let member of members">-->
-<!--							<ion-label>{{member|memberTitle}}</ion-label>-->
-<!--						</ion-segment-button>-->
-<!--					</ion-segment>-->
-<!--				</ng-container>-->
-<!--				<ng-template #manyMembers></ng-template>-->
-				<ion-item>
-					<ion-label color="medium">Member</ion-label>
-					<ion-select interface="popover" [(ngModel)]="memberID" (ionChange)="onMemberChanged($event)">
-						<ion-select-option value="">* Anyone</ion-select-option>
-						<ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
-						<ion-select-option *ngFor="let member of members" [value]="member.id">
-							{{member|memberTitle}}
-						</ion-select-option>
-					</ion-select>
-				</ion-item>
+				<ng-container *ngIf="members && members.length <= 7; else manyMembers">
+					<ion-item-divider color="light">
+						<ion-label>Members</ion-label>
+						<ion-buttons slot="end">
+							<ion-button *ngIf="memberIDs.length"
+													title="Clear members filter"
+													color="medium"
+													(click)="clearMembers()"
+							>
+								<ion-icon name="close"></ion-icon>
+							</ion-button>
+						</ion-buttons>
+					</ion-item-divider>
+					<ion-item>
+						<ion-checkbox slot="start"
+													value=""
+													[checked]="memberIDs.includes('')"
+													(ionChange)="onMemberChanged($event)"
+						></ion-checkbox>
+						<ion-label color="medium">Unassigned</ion-label>
+					</ion-item>
+					<ion-item *ngFor="let member of members">
+						<ion-checkbox slot="start"
+													[value]="member.id"
+													[checked]="memberIDs.includes(member.id)"
+													(ionChange)="onMemberChanged($event)"
+						></ion-checkbox>
+						<ion-label>{{member|memberTitle}}</ion-label>
+					</ion-item>
+					<!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
+					<!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
+					<!--						<ion-segment-button [value]="member.id" *ngFor="let member of members">-->
+
+					<!--						</ion-segment-button>-->
+					<!--					</ion-segment>-->
+				</ng-container>
+				<ng-template #manyMembers>
+					<ion-item>
+						<ion-label color="medium">Member</ion-label>
+						<ion-select interface="popover" [(ngModel)]="memberID" (ionChange)="onMemberChanged($event)">
+							<ion-select-option value="">* Anyone</ion-select-option>
+							<ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
+							<ion-select-option *ngFor="let member of members" [value]="member.id">
+								{{member|memberTitle}}
+							</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ng-template>
 			</ion-item-group>
 		</ion-accordion>
 	</ion-accordion-group>
+	<ion-item *ngIf="!expanded && memberIDs.length">
+		<ion-label>
+			<ng-container *ngIf="selectedMembers.length === 1">Member:</ng-container>
+			<ng-container *ngIf="selectedMembers.length > 1">Members:</ng-container>
+			<ion-badge style="margin: 0 0.5em" color="light" *ngFor="let member of selectedMembers">{{member|memberTitle}}</ion-badge>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button title="Clear members filter"
+									color="medium"
+									(click)="clearMembers()"
+			>
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
 </ion-card>

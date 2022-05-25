@@ -4,6 +4,8 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription } from 'rxjs';
 import { HappeningService } from '../../services/happening.service';
+import { ScheduleFilterService } from '../schedule-filter.service';
+import { IScheduleFilter, isMatchingScheduleFilter } from '../schedule-filter/schedule-filter';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
 @Component({
@@ -14,6 +16,7 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 	private singlesSubscription?: Subscription;
+	public allUpcomingSingles?: IHappeningContext[];
 	public upcomingSingles?: IHappeningContext[];
 
 	public tab: 'upcoming' | 'past' = 'upcoming';
@@ -22,12 +25,24 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 	@Input() onSlotClicked?: (slot: ISlotItem) => void;
 	@Input() onDateSelected?: (date: Date) => void;
 
+	private filter?: IScheduleFilter;
+
 	readonly trackByDate = (i: number, item: Weekday): number | undefined => item.day?.date.getTime();
+	readonly id = (_: number, item: {id: string }) => item.id;
+
+	get numberOfHidden(): number {
+		return (this.allUpcomingSingles?.length || 0) - (this.upcomingSingles?.length || 0)
+	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly filterService: ScheduleFilterService,
 		private readonly happeningService: HappeningService,
 	) {
+		filterService.filter.subscribe(filter => {
+			this.filter = filter;
+			this.applyFilter();
+		});
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -46,6 +61,10 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 	}
 
 
+	public clearFilter(): void {
+		this.filterService.resetScheduleFilter();
+	}
+
 	watchUpcomingSingles(): void {
 		if (this.singlesSubscription) {
 			this.singlesSubscription?.unsubscribe();
@@ -53,7 +72,8 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 		if (this.team) {
 			this.singlesSubscription = this.happeningService.watchUpcomingSingles(this.team?.id).subscribe({
 				next: singles => {
-					this.upcomingSingles = singles;
+					this.allUpcomingSingles = singles;
+					this.applyFilter();
 					console.log('upcoming single:', singles);
 				},
 				error: e => {
@@ -67,4 +87,9 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 		alert('Sorry, not implemented yet.');
 	}
 
+	private applyFilter(): void {
+		const f = this.filter;
+		console.log('applyFilter()', f);
+		this.upcomingSingles = this.allUpcomingSingles?.filter(h => isMatchingScheduleFilter(h, f))
+	}
 }

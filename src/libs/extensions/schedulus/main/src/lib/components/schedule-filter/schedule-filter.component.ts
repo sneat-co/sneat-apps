@@ -23,6 +23,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	readonly text = new FormControl('');
 	weekdays: WeekdayCode2[] = [];
 	memberIDs: string[] = [];
+	selectedMembers: IMemberContext[] = []
 	repeats: string[] = [];
 	memberID = '';
 
@@ -58,6 +59,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 		}
 		console.log('ScheduleFilterComponent.onFilterChanged()', filter);
 		this.filter = filter;
+		this.text.setValue(filter.text || '');
 		const { memberIDs } = filter;
 		if (memberIDs) {
 			this.memberIDs = [...memberIDs];
@@ -71,9 +73,11 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 			this.memberIDs = [];
 			this.memberID = '';
 		}
+		this.setSelectedMembers();
 		this.weekdays = filter.weekdays || [];
 		this.repeats = filter.repeats || [];
 		// TODO: reset weekday & repeats controls
+		this.emitChanged();
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -153,10 +157,31 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 		this.filterService.next(filter);
 	}
 
+	clearMembers(): void {
+		this.memberIDs = [];
+		this.emitChanged();
+	}
+
 	onMemberChanged(event: Event): void {
 		console.log('ScheduleFilterComponent.onMemberChanged()', event);
 		event.stopPropagation();
-		this.memberIDs = this.memberID ? [this.memberID] : [];
+		const cs = event as CustomEvent;
+		const {checked, value} = cs.detail;
+		if (checked === undefined) {
+			// a dropdown
+			this.memberIDs = this.memberID ? [this.memberID] : [];
+		} else if (checked === true) {
+			this.memberIDs.push(value);
+		} else if (checked === false) {
+			this.memberIDs = this.memberIDs.filter(id => id !== value);
+		}
+		this.setSelectedMembers();
 		this.emitChanged();
 	}
+
+	private setSelectedMembers(): void {
+		this.selectedMembers = this.memberIDs.map(mID => this.members?.find(m => m.id == mID) as IMemberContext);
+	}
+
+
 }
