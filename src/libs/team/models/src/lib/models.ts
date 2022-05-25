@@ -1,4 +1,13 @@
-import { AgeGroup, Gender, IMemberDto, IPerson, IRelatedPerson, MemberRole, MemberType } from '@sneat/dto';
+import {
+	AgeGroup,
+	Gender,
+	IContact2Asset,
+	IMemberDto,
+	IPerson,
+	IRelatedPerson,
+	MemberRole,
+	MemberType,
+} from '@sneat/dto';
 import { IMemberContext } from './team-context';
 
 
@@ -26,6 +35,11 @@ export interface IRejectPersonalInviteRequest extends ITeamRequest {
 export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
 	memberType: MemberType;
 	message?: string;
+}
+
+export interface ICreateContactRequest extends ITeamRequest, IRelatedPerson {
+	// message?: string;
+	assetIDs?: IContact2Asset[];
 }
 
 export interface IBy {

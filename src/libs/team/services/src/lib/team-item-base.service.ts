@@ -8,10 +8,7 @@ import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TeamService } from './team.service';
 
-interface ICreateTeamItemResponse<Dto> {
-	id: string;
-	dto: Dto;
-}
+type ICreateTeamItemResponse<Brief, Dto> = INavContext<Brief, Dto>;
 
 @Injectable({ providedIn: 'root' })
 export class TeamItemBaseService {
@@ -48,7 +45,7 @@ export class TeamItemBaseService {
 	public createTeamItem<Brief extends { id: string }, Dto>(endpoint: string, numberOfCounter: TeamCounter, request: ITeamRequest): Observable<INavContext<Brief, Dto>> {
 		console.log(`TeamItemBaseService.createTeamItem()`, request);
 		return this.sneatApiService
-			.post<ICreateTeamItemResponse<Dto>>(endpoint, request)
+			.post<ICreateTeamItemResponse<Brief, Dto>>(endpoint, request)
 			.pipe(
 				map(response => {
 					if (!response) {

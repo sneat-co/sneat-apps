@@ -1,13 +1,9 @@
 import { Injectable, NgModule } from '@angular/core';
 import { IContactBrief, IContactDto, TeamCounter } from '@sneat/dto';
-import { IContactContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
+import { IContactContext, ICreateContactRequest, ITeamContext, ITeamRequest } from '@sneat/team/models';
 import { TeamItemBaseService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
 import { ContactNavService } from './contact-nav-service';
-
-export interface ICreateContactRequest extends ITeamRequest {
-	contactDto: IContactDto;
-}
 
 @Injectable()
 export class ContactService {

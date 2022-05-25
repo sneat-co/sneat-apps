@@ -1,29 +1,29 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { excludeUndefined } from '@sneat/core';
 import {
 	ContactToAssetRelation,
 	ContactToMemberRelation,
-	ContactRole,
+	emptyPersonBase,
 	Gender,
 	IContact2Asset,
-	IContactDto,
-	ITitledRecord, IRelatedPerson, emptyPersonBase, isRelatedPersonNotReady, IPersonRequirements,
+	IPersonRequirements,
+	IRelatedPerson,
+	isRelatedPersonNotReady,
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IAssetContext, IMemberContext } from '@sneat/team/models';
+import { IAssetContext, ICreateContactRequest, IMemberContext } from '@sneat/team/models';
 import { MemberService } from '@sneat/team/services';
-import { toLower } from 'ionicons/dist/types/components/icon/utils';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
 	ContactRoleService,
-	IContactGroupContext, IContactRoleBrief,
+	IContactGroupContext,
+	IContactRoleBrief,
 	IContactRoleContext,
 } from '../../contact-group.service';
-import { ContactService, ICreateContactRequest } from '../../contact.service';
+import { ContactService } from '../../contact.service';
 
 @Component({
 	selector: 'sneat-new-contact-page',
@@ -184,24 +184,13 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 	submit(): void {
 		this.creating = true;
-		const contactDto: IContactDto = excludeUndefined({
-			teamIDs: [this.team.id],
-			name: { full: this.name },
-			email: this.email.trim() || undefined,
-			phone: this.phone.trim() || undefined,
-			gender: this.relatedPerson.gender,
-		});
-		if (this.member) {
-			if (!this.member.brief?.title) {
-				throw new Error('!this.member.brief.title');
-			}
-			contactDto.members = [
-				{ id: this.member.id, title: this.member.brief.title, relation: this.relation },
-			];
-		}
+		let request: ICreateContactRequest = {
+			teamID: this.team.id,
+			...this.relatedPerson,
+			ageGroup: this.relatedPerson.ageGroup || 'unknown',
+		};
 
-		// tslint:disable-next-line:no-this-assignment
-		const { asset } = this;
+		const asset = this.asset;
 		if (asset) {
 			if (!asset.id) {
 				throw new Error('!assetDto.id');
@@ -218,15 +207,16 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 				title: asset.brief.title,
 				relation: this.assetRelation,
 			};
-			contactDto.assets = [contact2Asset];
+			request.assetIDs = [contact2Asset];
 		}
-		if (this.contactRole) {
-			contactDto.roles = [this.contactRole.id];
+		const roleID = this.contactRole?.id;
+		if (roleID) {
+			if (!request.roles) {
+				request = { ...request, roles: [roleID] };
+			} else if (request.roles.some(r => r === roleID)) {
+				request.roles.push(roleID);
+			}
 		}
-		const request: ICreateContactRequest = {
-			teamID: this.team.id,
-			contactDto,
-		};
 		this.contactService.createContact(request)
 			.subscribe({
 				next: contact => {
@@ -235,19 +225,22 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 						{ state: { contact } },
 					).catch(this.logErrorHandler('failed to navigate to contact page'));
 				},
-				error: this.errorLogger.logError,
+				error: err => {
+					this.creating = false;
+					this.errorLogger.logError(err, 'Failed to create new contact');
+				},
 			});
 	}
 
-	selectRel(rel: ITitledRecord): void {
-		this.relation = rel.id as ContactToMemberRelation;
-		setTimeout(
-			() => {
-				this.nameInput?.setFocus()
-					.catch(this.logErrorHandler('failed to set focus to name input'));
-			},
-			100);
-	}
+	// selectRel(rel: ITitledRecord): void {
+	// 	this.relation = rel.id as ContactToMemberRelation;
+	// 	setTimeout(
+	// 		() => {
+	// 			this.nameInput?.setFocus()
+	// 				.catch(this.logErrorHandler('failed to set focus to name input'));
+	// 		},
+	// 		100);
+	// }
 
 	public get isContactNotReady(): boolean {
 		return isRelatedPersonNotReady(this.relatedPerson, {});
