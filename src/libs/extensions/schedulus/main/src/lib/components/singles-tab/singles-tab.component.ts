@@ -63,4 +63,8 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 		}
 	}
 
+	public notImplemented(): void {
+		alert('Sorry, not implemented yet.');
+	}
+
 }

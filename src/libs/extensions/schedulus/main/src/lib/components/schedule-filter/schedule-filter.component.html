@@ -105,19 +105,21 @@
 					</ion-row>
 				</ion-grid>
 
-				<ng-container *ngIf="members && members.length <= 5; else manyMembers">
-					<ion-item-divider color="light">Members</ion-item-divider>
-					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">
-						<ion-segment-button value="">Anyone</ion-segment-button>
-						<ion-segment-button [value]="member.id" *ngFor="let member of members">
-							<ion-label>{{member|memberTitle}}</ion-label>
-						</ion-segment-button>
-					</ion-segment>
-				</ng-container>
-				<ng-template #manyMembers></ng-template>
+<!--				<ng-container *ngIf="members && members.length <= 5; else manyMembers">-->
+<!--					<ion-item-divider color="light">Members</ion-item-divider>-->
+<!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
+<!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
+<!--						<ion-segment-button [value]="member.id" *ngFor="let member of members">-->
+<!--							<ion-label>{{member|memberTitle}}</ion-label>-->
+<!--						</ion-segment-button>-->
+<!--					</ion-segment>-->
+<!--				</ng-container>-->
+<!--				<ng-template #manyMembers></ng-template>-->
 				<ion-item>
 					<ion-label color="medium">Member</ion-label>
 					<ion-select interface="popover" [(ngModel)]="memberID" (ionChange)="onMemberChanged($event)">
+						<ion-select-option value="">* Anyone</ion-select-option>
+						<ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
 						<ion-select-option *ngFor="let member of members" [value]="member.id">
 							{{member|memberTitle}}
 						</ion-select-option>
