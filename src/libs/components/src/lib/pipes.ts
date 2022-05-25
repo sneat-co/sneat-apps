@@ -3,6 +3,18 @@ import { TeamType } from '@sneat/auth-models';
 import { IName, WeekdayCode2 } from '@sneat/dto';
 import { IMemberContext, IPersonContext } from '@sneat/team/models';
 
+@Pipe({name: 'genderIconName'})
+export class GenderIconName implements PipeTransform {
+	transform(gender?: 'male' | 'female' | 'other' | 'unknown' | 'undisclosed'): string {
+		switch (gender) {
+			case 'male':
+				return 'man-outline';
+			case 'female':
+				return 'woman-outline';
+		}
+		return 'person-outline';
+	}
+}
 function personName(name?: IName): string | undefined {
 	return name && (name.full || name.first || name.full);
 }
@@ -180,6 +192,7 @@ const pipes: any[] = [
 	ShortMonthNamePipe,
 	MemberTitle,
 	PersonTitle,
+	GenderIconName,
 ];
 
 @NgModule({

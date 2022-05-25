@@ -160,18 +160,19 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (!this.team) {
 			return;
 		}
-		this.contactsSubscription = this.contactsService.watchByTeam(this.team)
-			.pipe(
-				this.takeUntilNeeded(),
-			)
-			.subscribe({
-				next: contacts => {
-					console.log('CommuneContactsPage => contacts loaded', contacts);
-					this.allContacts = contacts;
-					this.applyFilter(this.filter, this.role);
-				},
-				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
-			});
+		// DO NOT QUERY FROM DB FOR NOW
+		// this.contactsSubscription = this.contactsService.watchByTeam(this.team)
+		// 	.pipe(
+		// 		this.takeUntilNeeded(),
+		// 	)
+		// 	.subscribe({
+		// 		next: contacts => {
+		// 			console.log('CommuneContactsPage => contacts loaded', contacts);
+		// 			this.allContacts = contacts;
+		// 			this.applyFilter(this.filter, this.role);
+		// 		},
+		// 		error: this.errorLogger.logErrorHandler('failed to get team contacts'),
+		// 	});
 	};
 
 }

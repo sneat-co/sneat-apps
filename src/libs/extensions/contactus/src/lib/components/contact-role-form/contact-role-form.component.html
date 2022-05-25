@@ -7,7 +7,7 @@
 			<ion-segment-button *ngFor="let g of groups; trackBy: id"
 													[value]="g.id"
 			>
-				<ion-label>{{g.brief?.title || g.id}}</ion-label>
+				<ion-label>{{g.brief?.emoji}} {{g.brief?.title || g.id}}</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 
@@ -15,7 +15,7 @@
 		<ion-radio-group [(ngModel)]="contactRoleID" (ionChange)="onContactRoleIDChanged($event)">
 			<ion-item *ngFor="let r of contactGroup?.dto?.roles; trackBy: id">
 				<ion-radio slot="start" [value]="r.id"></ion-radio>
-				<ion-label>{{r.title || r.id|titlecase}}</ion-label>
+				<ion-label>{{r.emoji}} {{r.title || r.id|titlecase}}</ion-label>
 			</ion-item>
 		</ion-radio-group>
 	</ng-container>

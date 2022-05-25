@@ -1,6 +1,13 @@
 <ion-item (click)="goContact(contact)" tappable class="with-buttons">
+	<ion-icon slot="start" [name]="contact?.brief?.gender|genderIconName"></ion-icon>
 	<ion-label>
-		<h2>{{contact|personTitle}}</h2>
+		{{contact|personTitle}}
+		<ng-container *ngIf="contact?.brief?.roles?.length">
+			<ng-container *ngFor="let role of contact?.brief?.roles">
+				<ion-badge *ngIf="!excludeRole || role !== excludeRole" color="light" class="light">{{role}}</ion-badge>
+			</ng-container>
+		</ng-container>
+
 		<ng-container *ngIf="contact?.dto?.members && contact?.dto?.members?.length">
 			<p *ngFor="let member of contact?.dto?.members; trackBy: id">
 				{{member.relation}} of <a [href]="member.id"
@@ -9,11 +16,6 @@
 		</ng-container>
 	</ion-label>
 
-	<ng-container *ngIf="contact?.dto?.roles?.length">
-		<ng-container *ngFor="let role of contact?.dto?.roles">
-			<ion-badge *ngIf="!excludeRole || role !== excludeRole" color="light" class="light">{{role}}</ion-badge>
-		</ng-container>
-	</ng-container>
 	<ion-buttons slot="end">
 		<ion-button *ngIf="contact?.dto?.email" href="mailto:{{contact?.dto?.email}}"
 								color="primary"
