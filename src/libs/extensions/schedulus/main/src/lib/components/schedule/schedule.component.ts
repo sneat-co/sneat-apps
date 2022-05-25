@@ -50,7 +50,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	@Output() readonly dateChanged = new EventEmitter<string>();
 	public showRecurrings = true;
 	public showEvents = true;
-	todayAndFutureDays?: Weekday[];
 	allRecurrings?: IHappeningWithUiState[];
 
 	// private date: Date;

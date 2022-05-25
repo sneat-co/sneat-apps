@@ -27,6 +27,7 @@ export interface IHappeningBrief extends IHappeningBase {
 
 export interface IHappeningDto extends IHappeningBase, IWithTeamIDs {
 	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
+	readonly date?: string;
 	participants?: SlotParticipant[];
 	note?: string;
 }

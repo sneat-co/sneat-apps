@@ -1,10 +1,12 @@
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { INavContext } from '@sneat/core';
+import firebase from 'firebase/compat';
 import { map, Observable, throwError } from 'rxjs';
+import WhereFilterOp = firebase.firestore.WhereFilterOp;
 
 export interface IFilter {
 	field: string;
-	operator: '==' | 'array-contains';
+	operator: WhereFilterOp;
 	value: any;
 }
 
@@ -42,6 +44,7 @@ export class SneatFirestoreService<Brief, Dto> {
 		if (!filter || filter.length === 0) {
 			return throwError(() => 'requires at least 1 element in filter');
 		}
+		console.log('watchByFilter()', this.collection, filter);
 		return this.afs
 			.collection<Dto2>(this.collection,
 				ref => {

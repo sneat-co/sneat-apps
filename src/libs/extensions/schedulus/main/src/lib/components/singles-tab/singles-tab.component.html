@@ -1,12 +1,33 @@
-<ion-card-content>
-	<p *ngIf="!todayAndFutureDays">Loading...</p>
-	<p *ngIf="todayAndFutureDays && todayAndFutureDays.length === 0">No upcoming events.</p>
-	<ng-container *ngIf="todayAndFutureDays && todayAndFutureDays.length">
-		<ng-container *ngFor="let weekday of todayAndFutureDays; trackBy: trackByDate">
-			<sneat-schedule-weekday [weekday]="weekday"
-															(slotClicked)="onSlotClicked && onSlotClicked($event)"
-															(dateSelected)="onDateSelected && onDateSelected($event)"
-			></sneat-schedule-weekday>
-		</ng-container>
-	</ng-container>
-</ion-card-content>
+
+
+<ion-segment [(ngModel)]="tab">
+	<ion-segment-button value="upcoming">Upcoming</ion-segment-button>
+	<ion-segment-button value="past">Past</ion-segment-button>
+</ion-segment>
+
+<ion-card *ngIf="!upcomingSingles">
+	<ion-card-content>
+		<ion-spinner name="lines" class="ion-margin-end"></ion-spinner>
+		<ion-text color="medium">Loading 1-timers...</ion-text>
+	</ion-card-content>
+</ion-card>
+
+<ng-container *ngIf="tab === 'upcoming'">
+	<ion-card *ngFor="let happening of upcomingSingles">
+		<ion-item>
+			<ion-label><b>{{happening.dto?.title}}</b></ion-label>
+		</ion-item>
+		<ion-item *ngFor="let slot of happening?.dto?.slots">
+			<ion-label>On {{slot.start.date}} at {{slot.start.time}}</ion-label>
+		</ion-item>
+		<ion-card-content>
+			Some note here?
+		</ion-card-content>
+	</ion-card>
+</ng-container>
+
+<ion-card *ngIf="tab === 'past'">
+	<ion-card-content>
+		<p style="font-style: italic">Not implemented yet</p>
+	</ion-card-content>
+</ion-card>
