@@ -3,19 +3,19 @@ import { TeamType } from '@sneat/auth-models';
 import { IName, WeekdayCode2 } from '@sneat/dto';
 import { IMemberContext, IPersonContext } from '@sneat/team/models';
 
-function memberName(name?: IName): string | undefined {
+function personName(name?: IName): string | undefined {
 	return name && (name.full || name.first || name.full);
 }
 
 @Pipe({ name: 'personTitle' })
 export class PersonTitle implements PipeTransform {
-	transform(p: IPersonContext, shortTitle?: string): string {
-		return shortTitle || memberName(p.brief?.name) || p.id;
+	transform(p?: IPersonContext, shortTitle?: string): string {
+		return shortTitle || personName(p?.brief?.name) || p?.id || 'NO TITLE';
 	}
 }
 
 export function getMemberTitle(m: IMemberContext, shortTitle?: string): string {
-	return shortTitle || m.brief?.title || m.dto?.title || memberName(m.brief?.name) || m.id;
+	return shortTitle || m.brief?.title || m.dto?.title || personName(m.brief?.name) || m.id;
 }
 
 @Pipe({ name: 'memberTitle' })
@@ -24,7 +24,6 @@ export class MemberTitle implements PipeTransform {
 		return getMemberTitle(m, shortTitle);
 	}
 }
-
 
 @Pipe({ name: 'teamEmoji' })
 export class TeamEmojiPipe implements PipeTransform {

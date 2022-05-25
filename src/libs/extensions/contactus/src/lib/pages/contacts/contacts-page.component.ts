@@ -1,9 +1,8 @@
-//tslint:disable:no-unsafe-any
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { listItemAnimations } from '@sneat/core';
-import { ContactRole, IMemberGroupDto } from '@sneat/dto';
-import { TeamComponentBaseParams, TeamItemBaseComponent } from '@sneat/team/components';
+import { ContactRole, ITeamDto } from '@sneat/dto';
+import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
 import { ContactService } from '../../contact.service';
@@ -14,9 +13,9 @@ import { ContactService } from '../../contact.service';
 	providers: [TeamComponentBaseParams],
 	animations: [listItemAnimations],
 })
-export class ContactsPageComponent extends TeamItemBaseComponent {
+export class ContactsPageComponent extends TeamItemsBaseComponent {
 
-	public allContacts: IContactContext[];
+	public allContacts?: IContactContext[];
 	public contacts?: IContactContext[];
 	public groups: IMemberGroupContext[] = [];
 	public segment: 'list' | 'groups' = 'groups';
@@ -42,6 +41,22 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 		this.teamIDChanged$.subscribe({
 			next: this.onTeamIDChanged,
 		});
+		// this.teamDtoChanged$.subscribe({
+		// 	next: this.onTeamDtoChanged,
+		// })
+	}
+
+	protected override onTeamDtoChanged() {
+		super.onTeamDtoChanged();
+		const teamDto = this.team?.dto;
+		console.log('ContactsPageComponent.onTeamDtoChanged', teamDto?.contacts)
+		if (!teamDto) {
+			return;
+		}
+		if (!this.allContacts?.length) {
+			this.allContacts = teamDto.contacts?.map(brief => ({id: brief.id, brief}));
+			this.applyFilter(this.filter, this.role);
+		}
 	}
 
 	get pageTitle(): string {
@@ -71,13 +86,13 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 	}
 
 	applyFilter(filter: string, role?: string): void {
+		console.log('ContactsPageComponent.applyFilter()', filter, role, this.allContacts);
 		filter = filter && filter.toLowerCase();
 		this.filter = filter;
 		this.contacts = !filter && !role
 			? this.allContacts
-			: this.allContacts.filter(c =>
-				(!filter || c.brief?.title && c.brief?.title.toLowerCase()
-					.indexOf(filter) >= 0)
+			: this.allContacts?.filter(c =>
+				(!filter || c.brief?.title?.toLowerCase().includes(filter))
 				&& (!role || c.dto?.roles && c?.dto.roles.includes(role)),
 			);
 	}
@@ -151,6 +166,7 @@ export class ContactsPageComponent extends TeamItemBaseComponent {
 			)
 			.subscribe({
 				next: contacts => {
+					console.log('CommuneContactsPage => contacts loaded', contacts);
 					this.allContacts = contacts;
 					this.applyFilter(this.filter, this.role);
 				},

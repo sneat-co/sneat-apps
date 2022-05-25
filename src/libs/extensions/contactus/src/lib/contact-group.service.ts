@@ -69,7 +69,7 @@ const
 	contactTypeInsurer: IContactRoleBrief = { id: 'insurer', title: 'Insurer', emoji: '🧾' },
 	contactTypeMechanic: IContactRoleBrief = { id: 'mechanic', title: 'Mechanic', emoji: '👨‍🔧' };
 
-export const defaultContactGroups: IContactGroup[] = [
+export const defaultFamilyContactGroups: IContactGroup[] = [
 	{
 		id: 'kid', title: 'Kids', roles: [
 			contactTypeTeacher,
@@ -105,11 +105,11 @@ export const defaultContactGroups: IContactGroup[] = [
 export class ContactGroupService {
 
 	getContactGroups(): Observable<IContactGroupContext[]> {
-		return of(defaultContactGroups.map(g => ({ id: g.id, brief: g, dto: g })));
+		return of(defaultFamilyContactGroups.map(g => ({ id: g.id, brief: g, dto: g })));
 	}
 
 	getContactGroupByID(id: string): Observable<IContactGroupContext> {
-		const cg = defaultContactGroups.find(cg => cg.id === id);
+		const cg = defaultFamilyContactGroups.find(cg => cg.id === id);
 		if (!cg) {
 			return of({ id, dto: null, brief: null });
 		}
@@ -123,8 +123,8 @@ export class ContactGroupService {
 @Injectable({ providedIn: 'root' }) // TODO: Dedicated module?
 export class ContactRoleService {
 	getContactRoleByID(id: string): Observable<IContactRoleContext> {
-		for (let i = 0; i < defaultContactGroups.length; i++) {
-			const cg = defaultContactGroups[i];
+		for (let i = 0; i < defaultFamilyContactGroups.length; i++) {
+			const cg = defaultFamilyContactGroups[i];
 			for (let j = 0; j < cg.roles.length; j++) {
 				const role = cg.roles[j];
 				if (role.id === id) {

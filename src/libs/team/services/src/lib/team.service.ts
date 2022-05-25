@@ -126,7 +126,7 @@ export class TeamService {
 		memberId: string,
 		role: MemberRole,
 	): Observable<ITeamContext> {
-		let member = team?.dto?.members.find((m: IMemberBrief) => m.id === memberId);
+		let member = team?.dto?.members?.find((m: IMemberBrief) => m.id === memberId);
 		if (!member) {
 			return throwError(() => 'member not found by ID in team record');
 		}
@@ -170,7 +170,7 @@ export class TeamService {
 					...team,
 					dto: {
 						...team.dto,
-						members: team.dto.members.filter((m: IMemberBrief) => m.id !== memberId),
+						members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberId),
 					},
 				};
 			}

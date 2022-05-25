@@ -1,12 +1,12 @@
 //tslint:disable:no-unsafe-any
 import { ActivatedRoute } from '@angular/router';
-import { IMovie, ListType } from '@sneat/dto';
+import { IListBrief, IListDto, IMovie, ListType } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IListContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
-export abstract class BaseListPage extends TeamItemBaseComponent {
+export abstract class BaseListPage extends TeamItemBaseComponent<IListBrief, IListDto> {
 
 	public list?: IListContext;
 	public listGroupTitle?: string;
@@ -18,8 +18,25 @@ export abstract class BaseListPage extends TeamItemBaseComponent {
 		route: ActivatedRoute,
 		protected readonly params: ListusComponentBaseParams,
 	) {
-		super(className, route, params.teamParams, 'lists');
+		super(className, route, params.teamParams, 'lists', 'list', undefined);
 		this.trackListParamsFromUrl();
+	}
+
+	protected override setItemContext(item?: IListContext): void {
+		this.list = item;
+	}
+
+	protected override get item(): IListContext | undefined {
+		return this.list;
+	}
+
+	protected override briefs(): IListBrief[] | undefined {
+		// const briefs: IListBrief[] = [];
+		// this.team?.dto?.listGroups?.forEach(lg => {
+		// 	lg.lists?.forEach(l => briefs.push({id: l.id}));
+		// });
+		// return briefs;
+		return undefined;
 	}
 
 	public get listService() {

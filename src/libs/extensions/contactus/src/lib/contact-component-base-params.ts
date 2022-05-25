@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { MemberService } from '@sneat/team/services';
+import { ContactService } from './contact.service';
 
 @Injectable()
-export class MemberComponentBaseParams {
+export class ContactComponentBaseParams {
 
 	public readonly errorLogger = this.teamParams.errorLogger;
 	public readonly navController = this.teamParams.navController;
@@ -12,7 +12,7 @@ export class MemberComponentBaseParams {
 
 	constructor(
 		public readonly teamParams: TeamComponentBaseParams,
-		public readonly memberService: MemberService,
+		public readonly contactService: ContactService,
 	) {
 	}
 

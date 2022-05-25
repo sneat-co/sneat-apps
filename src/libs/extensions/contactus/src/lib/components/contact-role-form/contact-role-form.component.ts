@@ -3,7 +3,7 @@ import { ContactRole } from '@sneat/dto';
 import { Subject, takeUntil } from 'rxjs';
 import {
 	IContactGroupDto,
-	defaultContactGroups,
+	defaultFamilyContactGroups,
 	IContactRoleContext,
 	ContactGroupService, IContactGroupContext,
 } from '../../contact-group.service';
@@ -20,7 +20,7 @@ export class ContactRoleFormComponent implements OnChanges, OnDestroy {
 
 	public contactGroup?: IContactGroupContext | null;
 
-	@Input() public contactGroupID? = defaultContactGroups[0].id;
+	@Input() public contactGroupID? = defaultFamilyContactGroups[0].id;
 	@Output() readonly contactGroupIDChange = new EventEmitter<string | undefined>();
 	@Output() readonly contactGroupChange = new EventEmitter<IContactGroupContext | undefined>();
 

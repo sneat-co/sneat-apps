@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { eq, listItemAnimations } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { defaultContactGroups, IContactGroup, IContactRoleBrief } from '../../contact-group.service';
+import { defaultFamilyContactGroups, IContactGroup, IContactRoleBrief } from '../../contact-group.service';
 import { ContactNavService } from '../../contact-nav-service';
 import { IContactGroupWithContacts, IContactRoleWithContacts } from './ui-types';
 
@@ -29,7 +29,7 @@ export class ContactsByTypeComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['contacts'] || changes['team'] || changes['filter']) {
+		if (changes['contacts'] || changes['filter']) {
 			this.setContactGroups();
 		}
 	}
@@ -66,23 +66,19 @@ export class ContactsByTypeComponent implements OnChanges {
 		const noContactRoles = this.team?.dto?.noContactRoles;
 		let otherContacts = this.otherContacts = !filter ? contacts :
 			contacts && contacts.filter(
-				c => c.brief?.title && c.brief?.title.toLowerCase()
-					.indexOf(filter) >= 0);
+				c => c.brief?.title?.toLowerCase().includes(filter));
 
-		defaultContactGroups
+		defaultFamilyContactGroups
 			.forEach(group => {
 
-				const groupRoles = group.roles;
-
-				const roles: IContactRoleWithContacts[] = [];
-				groupRoles.forEach(role => {
+				const rolesWithContacts: IContactRoleWithContacts[] = [];
+				group.roles.forEach(role => {
 					const roleWithContacts: IContactRoleWithContacts = {
 						...role,
-						contacts: contacts.filter(c => c.dto?.roles && c.dto?.roles.includes(role.id)),
+						contacts: contacts.filter(c => c.brief?.roles?.includes(role.id)),
 					};
-					if (filter && role.title.toLowerCase()
-						.indexOf(filter) >= 0) {
-						roles.push(roleWithContacts); // Show all contacts in role that filtered by title
+					if (filter && role.title.toLowerCase().includes(filter)) {
+						rolesWithContacts.push(roleWithContacts); // Show all contacts in role that filtered by title
 						return;
 					}
 					if (roleWithContacts.contacts) {
@@ -90,19 +86,18 @@ export class ContactsByTypeComponent implements OnChanges {
 							otherContacts = otherContacts.filter(oc => !eq(oc.id, c.id));
 						});
 						if (roleWithContacts.contacts.length && filter) {
-							roleWithContacts.contacts = roleWithContacts.contacts.filter(c => c?.brief?.title && c?.brief?.title.toLowerCase()
-								.indexOf(filter) >= 0);
+							roleWithContacts.contacts = roleWithContacts.contacts.filter(c => c?.brief?.title?.toLowerCase().includes(filter));
 							if (roleWithContacts.contacts.length) {
-								roles.push(roleWithContacts);
+								rolesWithContacts.push(roleWithContacts);
 							}
 						}
 					}
-					if (!filter && (!noContactRoles || noContactRoles.indexOf(role.id) < 0)) {
-						roles.push(roleWithContacts);
+					if (!filter && (!noContactRoles || !noContactRoles.includes(role.id))) {
+						rolesWithContacts.push(roleWithContacts);
 					}
 				});
 
-				const groupWithContacts: IContactGroupWithContacts = { ...group, roles };
+				const groupWithContacts: IContactGroupWithContacts = { ...group, roles: rolesWithContacts };
 
 				if (groupWithContacts.roles.length) {
 					this.contactGroups?.push(groupWithContacts);

@@ -14,6 +14,7 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberService, TeamNavService } from '@sneat/team/services';
+import { MemberComponentBaseParams } from '../../member-component-base-params';
 
 
 @Component({
@@ -22,6 +23,9 @@ import { MemberService, TeamNavService } from '@sneat/team/services';
 	animations: [
 		formNexInAnimation,
 	],
+	providers: [
+		MemberComponentBaseParams,
+	]
 })
 export class NewMemberFormComponent {
 
@@ -45,8 +49,7 @@ export class NewMemberFormComponent {
 		return isRelatedPersonNotReady(this.relatedPerson, this.personRequirements);
 	};
 
-
-	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
+	public readonly setFocusToInput = createSetFocusToInput(this.params.errorLogger);
 
 	public readonly memberType = new FormControl('member', [
 		Validators.required,
@@ -61,11 +64,8 @@ export class NewMemberFormComponent {
 
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly params: MemberComponentBaseParams,
 		routingState: RoutingState,
-		private readonly navController: NavController,
-		private readonly membersService: MemberService,
-		private readonly teamNavService: TeamNavService,
 	) {
 		this.hasNavHistory = routingState.hasHistory();
 	}
@@ -86,7 +86,7 @@ export class NewMemberFormComponent {
 		this.addMemberForm.disable();
 		const team = this.team;
 		if (!team) {
-			this.errorLogger.logError('not able to add new member without team context');
+			this.params.errorLogger.logError('not able to add new member without team context');
 			return;
 		}
 		if (!this.relatedPerson.ageGroup) {
@@ -102,19 +102,19 @@ export class NewMemberFormComponent {
 		};
 
 		this.disabled = true;
-		this.membersService.createMember(request).subscribe({
+		this.params.memberService.createMember(request).subscribe({
 			next: member => {
 				console.log('member created:', member);
 				if (this.hasNavHistory) {
-					this.navController.pop()
-						.catch(this.errorLogger.logErrorHandler('failed to navigate to prev page'));
+					this.params.navController.pop()
+						.catch(this.params.errorLogger.logErrorHandler('failed to navigate to prev page'));
 				} else {
-					this.teamNavService.navigateBackToTeamPage(team, 'members')
-						.catch(this.errorLogger.logErrorHandler('failed to navigate back to members page'));
+					this.params.teamNavService.navigateBackToTeamPage(team, 'members')
+						.catch(this.params.errorLogger.logErrorHandler('failed to navigate back to members page'));
 				}
 			},
 			error: err => {
-				this.errorLogger.logError(err, 'Failed to create a new member');
+				this.params.errorLogger.logError(err, 'Failed to create a new member');
 				this.addMemberForm.enable();
 			},
 		});

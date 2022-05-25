@@ -1,6 +1,6 @@
 <ion-item (click)="goContact(contact)" tappable class="with-buttons">
 	<ion-label>
-		<h2>{{contact?.brief?.title}}</h2>
+		<h2>{{contact|personTitle}}</h2>
 		<ng-container *ngIf="contact?.dto?.members && contact?.dto?.members?.length">
 			<p *ngFor="let member of contact?.dto?.members; trackBy: id">
 				{{member.relation}} of <a [href]="member.id"

@@ -10,5 +10,6 @@ export * from './team-base.component';
 export * from './team-core-components.module';
 export * from './team-component-base-params';
 export * from './team-item-base.component';
+export * from './team-items-base.component';
 export * from './invite-modal/invite-modal.module';
 export * from './invite-modal/invite-modal.component';

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { FilterItemModule } from '@sneat/components';
+import { FilterItemModule, SneatPipesModule } from '@sneat/components';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ContactServiceModule } from '../../contact.service';
 import { ContactListItemComponent } from './contact-list-item.component';
@@ -28,12 +28,15 @@ const routes: Routes = [
 		TeamCoreComponentsModule,
 		FilterItemModule,
 		ContactServiceModule,
+		SneatPipesModule,
 	],
 	declarations: [
 		ContactsPageComponent,
 		ContactsByTypeComponent,
 		ContactListItemComponent,
 	],
+	providers: [
+	]
 })
 export class ContactsPageModule {
 }

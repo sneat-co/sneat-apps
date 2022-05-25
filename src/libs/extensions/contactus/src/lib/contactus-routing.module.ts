@@ -15,12 +15,12 @@ export const contactusRoutes: Route[] = [
 			.then(m => m.NewContactPageModule),
 		// ...guardRoute,
 	},
-	// {
-	// 	path: 'contact/:contactID',
-	// 	loadChildren: () => import('./pages/contact/contact-page.module')
-	// 		.then(m => m.ContactPageModule),
-	// 	// ...guardRoute,
-	// },
+	{
+		path: 'contact/:contactID',
+		loadChildren: () => import('./pages/contact/contact-page.module')
+			.then(m => m.ContactPageModule),
+		// ...guardRoute,
+	},
 	// {
 	// 	path: 'applicants',
 	// 	loadChildren: () => import('./pages/contacts/contacts-page.module')

@@ -1,32 +1,25 @@
-//tslint:disable:no-unsafe-any
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Gender, MemberRelationship } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team/components';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
-// import { MemberRelationship } from 'sneat-shared/models/dto/dto-member';
-// import { CommuneBasePageParams } from 'sneat-shared/services/params';
 import { MemberBasePage } from '../member-base-page';
 
 @Component({
 	selector: 'sneat-team-member-page',
 	templateUrl: './team-member-page.component.html',
 	providers: [
-		TeamComponentBaseParams,
 		MemberComponentBaseParams,
 	],
 })
 export class TeamMemberPageComponent extends MemberBasePage implements AfterViewInit {
 
-
-	public dob?: string;
 	public relatedAs?: MemberRelationship;
 
 	constructor(
 		route: ActivatedRoute,
 		params: MemberComponentBaseParams,
 	) {
-		super('MemberPage', route, params);
+		super('TeamMemberPageComponent', route, params);
 	}
 
 	ngAfterViewInit(): void {

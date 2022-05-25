@@ -24,6 +24,10 @@ export class ContactService {
 	watchByTeam(team: ITeamContext): Observable<IContactContext[]> {
 		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, 'team_contacts');
 	}
+
+	watchById(contactID: string): Observable<IContactContext> {
+		return throwError(() => 'not implemented');
+	}
 }
 
 @NgModule({

@@ -164,17 +164,7 @@ export abstract class MemberBasePage extends TeamBaseComponent {
 	// 	}
 	// }
 
-	private tryToGetMemberFromHistoryState(memberId?: string): void {
+	private tryToGetMemberFromHistoryState(): void {
 		this.memberContext = window.history.state.member as IMemberContext;
-		// const memberDto = window.history.state.memberDto as IMemberDto;
-		// if (memberDto && !memberInfo) {
-		// 	memberInfo = newCommuneMemberInfo(memberDto);
-		// }
-		// if (memberInfo) {
-		// 	this.setMemberInfo(memberInfo);
-		// }
-		// if (memberDto && (!memberId || memberDto.id === memberId)) {
-		// 	this.setMemberDto(memberDto);
-		// }
 	}
 }
