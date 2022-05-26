@@ -61,6 +61,14 @@ export class HappeningCardComponent implements OnChanges, OnDestroy {
 			this.errorLogger.logError(new Error('Single happening card has no happening context at moment of delete attempt'));
 			return;
 		}
+		if (!confirm(`
+DELETING: ${this.happening?.brief?.title}
+
+Are you sure you want to delete this happening?
+
+This operation can NOT be undone.`)) {
+			return;
+		}
 		this.deleting = true;
 
 		const happening: IHappeningContext = this.happening.team ? this.happening : { ...this.happening, team: this.team };
@@ -91,7 +99,7 @@ export class HappeningCardComponent implements OnChanges, OnDestroy {
 			onRemoved: this.onMemberRemoved,
 		}).catch(err => {
 			this.errorLogger.logError(err, 'Failed to select members');
-		})
+		});
 	}
 
 	private readonly onMemberAdded = (teamID: string, memberID: string): Observable<void> => {
@@ -99,14 +107,14 @@ export class HappeningCardComponent implements OnChanges, OnDestroy {
 			return NEVER;
 		}
 		return this.happeningService.addMember(this.happening, memberID);
-	}
+	};
 
 	private readonly onMemberRemoved = (teamID: string, memberID: string): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
 		return this.happeningService.removeMember(this.happening, memberID);
-	}
+	};
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('HappeningCardComponent.ngOnChanges()', this.happening?.id, changes);
