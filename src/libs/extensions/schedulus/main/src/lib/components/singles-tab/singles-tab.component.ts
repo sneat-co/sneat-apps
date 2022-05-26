@@ -61,6 +61,11 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 	}
 
 
+	public removed(id: string): void {
+		this.allUpcomingSingles = this.allUpcomingSingles?.filter(h => h.id !== id);
+		this.applyFilter();
+	}
+
 	public clearFilter(): void {
 		this.filterService.resetScheduleFilter();
 	}
@@ -83,9 +88,7 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 		}
 	}
 
-	public notImplemented(): void {
-		alert('Sorry, not implemented yet.');
-	}
+
 
 	private applyFilter(): void {
 		const f = this.filter;

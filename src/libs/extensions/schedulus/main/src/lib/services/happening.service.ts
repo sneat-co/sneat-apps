@@ -1,25 +1,53 @@
-import { Injectable, NgModule } from '@angular/core';
-import { SneatFirestoreService } from '@sneat/api';
+import { Inject, Injectable, NgModule } from '@angular/core';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import { happeningBriefFromDto, IAssetBrief, IAssetDto, IHappeningBrief, IHappeningDto } from '@sneat/dto';
-import { IHappeningContext, IRecurringContext, ITeamContext } from '@sneat/team/models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IHappeningContext, IRecurringContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
 import { TeamItemBaseService } from '@sneat/team/services';
 import { map, Observable, throwError } from 'rxjs';
+import { ICreateHappeningRequest } from './schedule.service';
+
+export interface IHappeningRequest extends ITeamRequest {
+	happeningID: string
+	happeningType?: string;
+}
 
 @Injectable()
 export class HappeningService {
 	private readonly sfs: SneatFirestoreService<IHappeningBrief, IHappeningDto>;
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly teamItemBaseService: TeamItemBaseService,
+		private readonly sneatApiService: SneatApiService,
 	) {
 		this.sfs = new SneatFirestoreService<IHappeningBrief, IHappeningDto>(
 			'happenings', teamItemBaseService.afs, happeningBriefFromDto,
 		);
 	}
 
+	createHappening(request: ICreateHappeningRequest): Observable<any> {
+		if (!request) {
+			return throwError(() => new Error('missing required parameter: request'));
+		}
+		return this.sneatApiService.post('happenings/create_happening', request);
+	}
+
 	deleteHappening(happening: IHappeningContext): Observable<void> {
-		return throwError(() => 'not implemented yet');
+		console.log('deleteHappening', happening);
+		if (!happening) {
+			return throwError(() => new Error('missing required parameter: happening'));
+		}
+		if (!happening?.team?.id) {
+			return throwError(() => new Error('missing required parameter: happening.team.id'));
+		}
+		const request: IHappeningRequest = {
+			teamID: happening.team?.id,
+			happeningID: happening.id,
+			happeningType: happening.brief?.type || happening.dto?.type,
+		}
+		return this.sneatApiService.delete('happenings/delete_happening', undefined, request);
 	}
 
 	// watchByTeam(team: ITeamContext): Observable<IHappeningContext[]> {

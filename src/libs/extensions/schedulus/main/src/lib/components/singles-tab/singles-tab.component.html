@@ -11,30 +11,11 @@
 </ion-card>
 
 <ng-container *ngIf="tab === 'upcoming'">
-	<ion-card *ngFor="let happening of upcomingSingles; trackBy: id">
-		<ion-item color="light" class="sneat-no-end-padding">
-			<ion-label><b>{{happening.dto?.title}}</b></ion-label>
-			<ion-buttons slot="end">
-				<ion-button>
-					<ion-icon name="close"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		<ion-item *ngFor="let slot of happening?.dto?.slots">
-			<ion-label>From {{slot.start.time}}
-				<ng-container *ngIf="slot.end"> to {{slot.end?.time}}</ng-container>
-				on {{slot.start.date}}</ion-label>
-			<ion-buttons slot="end">
-				<ion-button color="tertiary" (click)="notImplemented()">
-					<ion-icon slot="start" name="calendar-outline"></ion-icon>
-					<ion-label>Change</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		<ion-card-content>
-			Some note here?
-		</ion-card-content>
-	</ion-card>
+	<sneat-single-happening-card *ngFor="let happening of upcomingSingles; trackBy: id"
+															 [happening]="happening"
+															 (deleted)="removed($event)"
+	>
+	</sneat-single-happening-card>
 
 	<div class="ion-margin-top" *ngIf="!!numberOfHidden">
 

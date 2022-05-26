@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, OnDestroy } from '@angular/core';
 import { IHappeningWithUiState } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
+import { IHappeningContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
 import { HappeningService } from '../../services/happening.service';
@@ -33,7 +33,7 @@ export class RecurringCardComponent implements OnDestroy {
 
 	goHappening(happening?: IHappeningWithUiState): void {
 		if (!this.team) {
-			this.errorLogger.logErrorHandler('not able to navigate to happening without team context')
+			this.errorLogger.logErrorHandler('not able to navigate to happening without team context');
 			return;
 		}
 		this.teamNavService.navigateForwardToTeamPage(this.team, `happening/${happening?.id}`, {
@@ -48,7 +48,16 @@ export class RecurringCardComponent implements OnDestroy {
 		if (!happeningWithUiState) {
 			return;
 		}
-		this.happeningService.deleteHappening(happeningWithUiState)
+		if (!this.team?.id) {
+			return;
+		}
+		const happening: IHappeningContext = {
+			id: happeningWithUiState.id,
+			team: { id: this.team?.id },
+			brief: happeningWithUiState.brief,
+			dto: happeningWithUiState.dto,
+		};
+		this.happeningService.deleteHappening(happening)
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				error: this.errorLogger.logErrorHandler('failed to delete recurring happening'),

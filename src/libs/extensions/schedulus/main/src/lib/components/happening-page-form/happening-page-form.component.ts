@@ -11,6 +11,7 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
+import { HappeningService } from '../../services/happening.service';
 import { ScheduleService } from '../../services/schedule.service';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
@@ -60,7 +61,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		routingState: RoutingState,
-		private readonly scheduleService: ScheduleService,
+		private readonly happeningService: HappeningService,
 		private readonly params: TeamComponentBaseParams,
 	) {
 		this.hasNavHistory = routingState.hasHistory();
@@ -251,7 +252,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 
 			const dto = this.makeHappeningDto();
 
-			this.scheduleService
+			this.happeningService
 				.createHappening({ teamID: team.id, dto })
 				.pipe(
 					takeUntil(this.destroyed),

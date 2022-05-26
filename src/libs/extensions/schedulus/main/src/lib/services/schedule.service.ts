@@ -17,8 +17,4 @@ export class ScheduleService {
 		private readonly sneatApiService: SneatApiService,
 	) {
 	}
-
-	createHappening(request: ICreateHappeningRequest): Observable<any> {
-		return this.sneatApiService.post('schedulus/create_happening', request);
-	}
 }
