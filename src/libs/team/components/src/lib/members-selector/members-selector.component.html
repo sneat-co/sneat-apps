@@ -17,6 +17,6 @@
 									[checked]="isSelected(member.id)"
 									(ionChange)="onCheckboxChanged($event)"
 		></ion-checkbox>
-		<ion-label>{{member|personTitle}}</ion-label>
+		<ion-label>{{{id: member.id, brief: member}|personTitle}}</ion-label>
 	</ion-item>
 </ion-item-group>
