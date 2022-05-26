@@ -9,12 +9,14 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MembersSelectorService } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '../services/happening.service';
+import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
 
 @Injectable()
 export class HappeningBaseComponentParams {
@@ -23,6 +25,7 @@ export class HappeningBaseComponentParams {
 		public readonly happeningService: HappeningService,
 		public readonly teamNavService: TeamNavService,
 		public readonly membersSelectorService: MembersSelectorService,
+		public readonly modalController: ModalController,
 	) {
 	}
 }
@@ -151,6 +154,16 @@ This operation can NOT be undone.`)) {
 		}).catch(err => {
 			this.errorLogger.logError(err, 'Failed to select members');
 		});
+	}
+
+	async editSingleHappeningSlot(event: Event): Promise<void> {
+		const modal = await this.happeningBaseComponentParams.modalController.create({
+			component: SingleSlotFormComponent,
+			componentProps: {
+				happening: this.happening,
+			},
+		});
+		await modal.present();
 	}
 
 	private readonly onMemberAdded = (teamID: string, memberID: string): Observable<void> => {

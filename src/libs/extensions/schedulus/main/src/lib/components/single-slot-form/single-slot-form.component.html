@@ -1,8 +1,24 @@
-<ion-item-divider color="light">When</ion-item-divider>
-<sneat-start-end-datetime-form [date]="date" (timingChanged)="onTimingChanged($event)"></sneat-start-end-datetime-form>
+<ion-item-group>
+	<ion-item color="primary" *ngIf="happening" class="sneat-tiny-end-padding">
+		<ion-label>{{happening.brief?.title}}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="close($event)" title="Close">
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item-divider color="light">When</ion-item-divider>
+	<sneat-start-end-datetime-form [date]="date"
+																 (timingChanged)="onTimingChanged($event)"
+	></sneat-start-end-datetime-form>
 
-<ion-item-divider color="light">Where</ion-item-divider>
-<ion-item>
-	<ion-label position="floating">Address</ion-label>
-	<ion-textarea></ion-textarea>
-</ion-item>
+	<ion-item-divider color="light">Where</ion-item-divider>
+	<ion-item>
+		<ion-label position="floating">Address</ion-label>
+		<ion-textarea></ion-textarea>
+	</ion-item>
+	<div class="ion-padding">
+		<ion-button color="primary" size="large">Save changes</ion-button>
+		<ion-button color="danger" fill="clear" class="ion-margin-horizontal" (click)="close($event)">Cancel</ion-button>
+	</div>
+</ion-item-group>
