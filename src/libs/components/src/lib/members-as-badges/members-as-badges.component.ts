@@ -41,7 +41,7 @@ export class MembersAsBadgesComponent implements OnChanges {
 					return { id, brief };
 				},
 			);
-			console.log('MembersAsBadgesComponent =>', this.memberIDs, this.briefs, this.members);
+			// console.log('MembersAsBadgesComponent =>', this.memberIDs, this.briefs, this.members);
 		}
 	}
 

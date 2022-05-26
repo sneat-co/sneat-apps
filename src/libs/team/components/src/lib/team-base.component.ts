@@ -58,9 +58,9 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		this.teamTypeChanged.pipe(
 			takeUntil(this.destroyed),
 			distinctUntilChanged(),
-			tap(v => console.log('teamTypeChanged$ before replay =>', v)),
+			// tap(v => console.log('teamTypeChanged$ before replay =>', v)),
 			shareReplay(1),
-			tap(v => console.log('teamTypeChanged$ after replay =>', v)),
+			// tap(v => console.log('teamTypeChanged$ after replay =>', v)),
 		);
 
 	public readonly teamBriefChanged$ = this.teamBriefChanged.asObservable()
@@ -103,7 +103,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		route: ActivatedRoute,
 		readonly teamParams: TeamComponentBaseParams,
 	) {
-		console.log(`${className} extends TeamBasePageDirective.constructor()`);
+		// console.log(`${className} extends TeamBasePageDirective.constructor()`);
 		try {
 			this.route = route;
 
@@ -133,14 +133,14 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// }
 
 	public ngOnDestroy(): void {
-		console.log(`${this.className} extends TeamBasePage.ngOnDestroy()`);
+		// console.log(`${this.className} extends TeamBasePage.ngOnDestroy()`);
 		this.unsubscribe(`${this.className} extends TeamBasePage.ngOnDestroy`);
 		this.destroyed.next(true);
 		this.destroyed.complete();
 	}
 
 	protected unsubscribe(reason: string): void {
-		console.log(`unsubscribe(reason: ${reason})`);
+		// console.log(`unsubscribe(reason: ${reason})`);
 		this.subs.unsubscribe();
 	}
 
@@ -189,7 +189,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	private readonly onTeamIdChangedInUrl = (team?: ITeamContext): void => {
-		console.log(`${this.className} extends TeamPageComponent.onTeamIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
+		// console.log(`${this.className} extends TeamPageComponent.onTeamIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
 		const prevTeam = this.teamContext;
 		if (team === prevTeam || team?.id === prevTeam?.id && team?.type === prevTeam?.type) {
 			return;
@@ -255,7 +255,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// }
 
 	private setNewTeamContext(teamContext?: ITeamContext): void {
-		console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
+		// console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
 		if (!teamContext?.type && this.teamContext?.type) {
 			throw new Error('!teamContext?.type && this.teamContext?.type');
 		}
@@ -276,7 +276,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			}
 		}
 		if (teamTypeChanged && teamContext?.type) {
-			console.log('emitting teamTypeChanged$', teamContext.type);
+			// console.log('emitting teamTypeChanged$', teamContext.type);
 			this.teamTypeChanged.next(teamContext.type);
 		}
 		if (briefChanged) {
@@ -344,7 +344,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	private readonly onTeamLoaded = (team: ITeamContext): void => {
 		const dtoChanged = team.dto !== this.teamContext?.dto;
-		console.log(`${this.className} extends TeamBasePage.onTeamLoaded() => dtoChanged=${dtoChanged}, team:`, team);
+		// console.log(`${this.className} extends TeamBasePage.onTeamLoaded() => dtoChanged=${dtoChanged}, team:`, team);
 		if (!team.brief && team.dto) {
 			team = { ...team, brief: { id: team.id, ...team.dto } };
 		}

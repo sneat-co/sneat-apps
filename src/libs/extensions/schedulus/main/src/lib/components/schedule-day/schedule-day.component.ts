@@ -85,7 +85,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 				'slots after filter:', this.slots,
 			);
 		} else {
-			console.log(this.logPrefix() + '.applyFilter() for empty slots');
+			// console.log(this.logPrefix() + '.applyFilter() for empty slots');
 			this.slots = this.allSlots;
 			this.slotsHiddenByFilter = this.allSlots?.length;
 		}

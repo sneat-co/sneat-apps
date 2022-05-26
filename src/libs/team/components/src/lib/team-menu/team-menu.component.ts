@@ -58,7 +58,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 
 	override onTeamDtoChanged(): void {
 		super.onTeamDtoChanged();
-		console.log('TeamMenuComponent.onTeamDtoChanged()', this.team?.dto);
+		// console.log('TeamMenuComponent.onTeamDtoChanged()', this.team?.dto);
 	}
 
 	spaceLabelClicked(event: Event): void {
@@ -82,7 +82,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	onTeamSelected(event: Event): void {
 		const teamID = (event as CustomEvent).detail.value as string;
 
-		console.log('TeamMenuComponent.onTeamSelected', teamID);
+		// console.log('TeamMenuComponent.onTeamSelected', teamID);
 		if (teamID === this.team?.id) {
 			return;
 		}

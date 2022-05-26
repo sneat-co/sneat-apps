@@ -158,7 +158,7 @@ export class TeamDay {
 				};
 				this.singles?.push(slotItem);
 			});
-			console.log(`TeamDay[${this.isoID}].processSingles()`, changes, this.singles);
+			// console.log(`TeamDay[${this.isoID}].processSingles()`, changes, this.singles);
 			this.joinRecurringsWithSinglesAndEmit();
 		} catch (e) {
 			this.errorLogger.logError(e, 'failed to process single happenings');
@@ -176,7 +176,7 @@ export class TeamDay {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-		console.log(`TeamDay[${this.isoID}].processRecurrings(), ${Object.keys(slots.byWeekday).length} weekdays with slots:`, slots);
+		// console.log(`TeamDay[${this.isoID}].processRecurrings(), ${Object.keys(slots.byWeekday).length} weekdays with slots:`, slots);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
@@ -190,11 +190,11 @@ export class TeamDay {
 		if (this.singles) {
 			slots.push(...this.singles);
 		}
-		console.log(
-			`TeamDay[id=${this.isoID}, wd=${this.wd}].joinRecurringsWithSinglesAndEmit()`,
-			`${weekdaySlots?.length || 0} recurrings:`, weekdaySlots,
-			`${this.singles?.length || 0} singles:`, weekdaySlots,
-			`=> ${slots.length} slots:`, slots);
+		// console.log(
+		// 	`TeamDay[id=${this.isoID}, wd=${this.wd}].joinRecurringsWithSinglesAndEmit()`,
+		// 	`${weekdaySlots?.length || 0} recurrings:`, weekdaySlots,
+		// 	`${this.singles?.length || 0} singles:`, weekdaySlots,
+		// 	`=> ${slots.length} slots:`, slots);
 		this._slots.next(slots);
 	}
 }
