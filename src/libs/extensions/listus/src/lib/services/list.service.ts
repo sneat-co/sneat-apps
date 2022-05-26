@@ -78,13 +78,14 @@ export class ListService {
 
 	public createListItems(params: IListItemsCommandParams): Observable<IListItemResult> {
 		console.log('createListItems', params);
-		if (!params.list?.brief?.type) {
+		const listType = params.list?.brief?.type || params.list?.dto?.type;
+		if (!listType ) {
 			return throwError(() => 'list is of unknown type');
 		}
 		const request = {
 			teamID: params.team.id,
 			listID: params.list.id,
-			listType: params.list.brief?.type,
+			listType,
 			items: params.items,
 		};
 		return this.sneatApiService.post('listus/list_items_create', request);

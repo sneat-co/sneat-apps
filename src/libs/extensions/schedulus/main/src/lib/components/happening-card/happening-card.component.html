@@ -1,6 +1,8 @@
 <ion-card [class.deleting]="deleting">
 	<ion-item color="light" class="sneat-no-end-padding" button (click)="goHappening($event)">
 		<ion-label>
+			<b>{{wd|wdToWeekday}}</b>, {{date?.getDate()}} {{date?.getMonth()|longMonthName}}
+			&mdash;
 			<ion-text color="primary" style="font-weight: bold">
 				{{happening?.brief?.title || happening?.dto?.title || 'Loading...'}}
 			</ion-text>

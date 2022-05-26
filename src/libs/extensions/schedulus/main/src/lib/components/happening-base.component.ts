@@ -10,6 +10,9 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { isoStringsToDate } from '@sneat/core';
+import { WeekdayCode2 } from '@sneat/dto';
+import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MembersSelectorService } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
@@ -60,6 +63,18 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	@Input() happening?: IHappeningContext;
 
 	@Output() readonly deleted = new EventEmitter<string>();
+
+	get date(): Date | undefined {
+		if (!this.happening?.dto?.date) {
+			return undefined
+		}
+		return isoStringsToDate(this.happening.dto.date);
+	}
+
+	get wd(): WeekdayCode2 | undefined {
+		const date = this.date;
+		return date && getWd2(date);
+	}
 
 	public deleting = false;
 
@@ -161,6 +176,7 @@ This operation can NOT be undone.`)) {
 			component: SingleSlotFormComponent,
 			componentProps: {
 				happening: this.happening,
+				isModal: true,
 			},
 		});
 		await modal.present();

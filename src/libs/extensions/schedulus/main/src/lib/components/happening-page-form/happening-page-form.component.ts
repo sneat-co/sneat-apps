@@ -5,7 +5,15 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
-import { HappeningType, IHappeningDto, IHappeningSlot, ITiming, SlotParticipant, WeekdayCode2 } from '@sneat/dto';
+import {
+	emptySingleHappeningSlot,
+	HappeningType,
+	IHappeningDto,
+	IHappeningSlot,
+	ITiming,
+	SlotParticipant,
+	WeekdayCode2,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';

@@ -25,7 +25,7 @@
 	<ion-item-divider color="light">When</ion-item-divider>
 	<sneat-start-end-datetime-form
 		[hideStartDate]="happeningType === 'recurring'"
-		(timingChanged)="onTimingChanged($event)"
+		(slotChanged)="onTimingChanged($event)"
 	></sneat-start-end-datetime-form>
 
 	<ion-item *ngIf="happeningType === 'recurring'" color="light">

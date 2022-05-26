@@ -1,15 +1,16 @@
 import {
+	AfterViewInit,
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Inject,
 	Input,
-	OnChanges,
+	OnChanges, OnInit,
 	Output,
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ITiming } from '@sneat/dto';
+import { emptySingleHappeningSlot, IHappeningSlot, ITiming } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/team/models';
 
@@ -19,13 +20,15 @@ import { IHappeningContext } from '@sneat/team/models';
 	styleUrls: ['./single-slot-form.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SingleSlotFormComponent implements OnChanges {
+export class SingleSlotFormComponent implements AfterViewInit, OnChanges {
 
 	@Input() happening?: IHappeningContext;
-	@Input() date = '';
+	@Input() isModal = false;
 
 	@Output() readonly validChanged = new EventEmitter<boolean>();
 	@Output() readonly timingChanged = new EventEmitter<ITiming>();
+
+	singleSlot: IHappeningSlot = emptySingleHappeningSlot;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -35,6 +38,9 @@ export class SingleSlotFormComponent implements OnChanges {
 	}
 
 	onTimingChanged(timing: ITiming): void {
+		if (timing == emptySingleHappeningSlot) {
+			return;
+		}
 		if (!timing.end) {
 			this.errorLogger.logError('timing has no end');
 			return;
@@ -48,17 +54,31 @@ export class SingleSlotFormComponent implements OnChanges {
 
 	async close(event: Event): Promise<void> {
 		event.stopPropagation();
-		await this.modalController.dismiss()
+		await this.modalController.dismiss();
+	}
+
+	async save(event: Event): Promise<void> {
+		event.stopPropagation();
+		await this.modalController.dismiss();
+	}
+
+	ngAfterViewInit(): void {
+		this.processHappening();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['happening']) {
-
+			this.processHappening();
 		}
 	}
 
 	private processHappening(): void {
-
+		if (this.happening?.brief?.type === 'single') {
+			if (this.happening?.brief?.slots?.length === 1) {
+				this.singleSlot = this.happening.brief.slots[0];
+			}
+		}
 	}
+
 }
 

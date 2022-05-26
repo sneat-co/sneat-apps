@@ -1,23 +1,31 @@
 <ion-item *ngIf="!hideStartDate">
 	<ion-label>Starts on</ion-label>
 	<ion-input type="date" [formControl]="startDate" (ionChange)="onStartDateChanged($event)"></ion-input>
-	<ion-buttons slot="end">
-		<ion-button id="quick-pick" color="medium">
-			<ion-label>Quick pick</ion-label>
+	<ion-buttons slot="end" >
+		<ion-button id="quick-pick-start-date" color="medium">
+<!--			<ion-label>Pick</ion-label>-->
 			<ion-icon name="chevron-down-outline" slot="end"></ion-icon>
 		</ion-button>
-		<ion-popover trigger="quick-pick" dismissOnSelect="true">
+		<ion-button color="medium">
+			<ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+			<ion-label>-1d</ion-label>
+		</ion-button>
+		<ion-button color="medium">
+			<ion-label>+1d</ion-label>
+			<ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+		</ion-button>
+		<ion-popover trigger="quick-pick-start-date" dismissOnSelect="true">
 			<ng-template>
 				<ion-item tappable (click)="setStartDate($event, 'today')">Today</ion-item>
 				<ion-item tappable (click)="setStartDate($event, 'tomorrow')">Tomorrow</ion-item>
-				<!--				<ion-item tappable>Day after tomorrow</ion-item>-->
-				<!--				<ion-item>Next Monday</ion-item>-->
-				<!--				<ion-item>Next Tuesday</ion-item>-->
-				<!--				<ion-item>Next Wednesday</ion-item>-->
-				<!--				<ion-item>Next Thursday</ion-item>-->
-				<!--				<ion-item>Next Friday</ion-item>-->
-				<!--				<ion-item>Next Saturday</ion-item>-->
-				<!--				<ion-item>Next Sunday</ion-item>-->
+<!--				<ion-item-divider color="light">Next week</ion-item-divider>-->
+<!--				<ion-item><ion-text color="medium">Next week -</ion-text> Monday</ion-item>-->
+<!--				<ion-item><ion-text color="medium">Next week -</ion-text> Tuesday</ion-item>-->
+<!--				<ion-item><ion-text color="medium">Next week -</ion-text> Wednesday</ion-item>-->
+<!--				<ion-item><ion-text color="medium">Next week -</ion-text> Thursday</ion-item>-->
+<!--				<ion-item><ion-text color="medium">Next week -</ion-text> Friday</ion-item>-->
+<!--				<ion-item><ion-text color="medium">Next week -</ion-text> Saturday</ion-item>-->
+<!--				<ion-item><ion-text color="medium">Next week -</ion-text> Sunday</ion-item>-->
 			</ng-template>
 		</ion-popover>
 	</ion-buttons>
@@ -51,6 +59,26 @@
 			Required field
 		</ion-label>
 	</ng-container>
+	<ion-buttons slot="end">
+		<ion-button id="quick-pick-start-time" color="medium">
+<!--			<ion-label>Pick</ion-label>-->
+			<ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+		</ion-button>
+		<ion-popover trigger="quick-pick-start-time" dismissOnSelect="true">
+			<ng-template>
+				<ion-item tappable (click)="setStartTime($event, '08:00')">08:00</ion-item>
+				<ion-item tappable (click)="setStartTime($event, '09:00')">09:00</ion-item>
+			</ng-template>
+		</ion-popover>
+		<ion-button color="medium">
+			<ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+			<ion-label>-1h</ion-label>
+		</ion-button>
+		<ion-button color="medium">
+			<ion-label>+1h</ion-label>
+			<ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+		</ion-button>
+	</ion-buttons>
 </ion-item>
 
 <!--<ion-item-divider color="light">-->
@@ -69,7 +97,7 @@
 									 [formControl]="duration"
 									 (ionChange)="onDurationChanged($event)"
 									 type="number" style="text-align: right"></ion-input>
-				<ion-select slot="start" [(ngModel)]="durationUnits">
+				<ion-select slot="start" interface="popover" [(ngModel)]="durationUnits">
 					<ion-select-option value="minutes">minutes</ion-select-option>
 					<ion-select-option value="hours">hours</ion-select-option>
 				</ion-select>

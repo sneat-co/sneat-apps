@@ -59,7 +59,7 @@ type MonthlyDay = -5 | -4 | -3 | -2 | -1
 // tslint:disable-next-line:no-magic-numbers
 	| 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28;
 
-export interface IDateTime  {
+export interface IDateTime {
 	readonly date?: string;
 	readonly time: string;
 }
@@ -91,11 +91,18 @@ export interface IHappeningTask {
 
 export interface IHappeningSlot extends IHappeningSlotTiming {
 	readonly id: string;
-	readonly groupIds?: string[];
+	readonly groupIds?: string[]; // TODO: What is this?
 	location?: SlotLocation; // TODO: make readonly
 }
 
-export interface IHappeningWithUiState extends IHappeningContext{
+export const emptySingleHappeningSlot: IHappeningSlot = {
+	id: '',
+	repeats: 'once',
+	start: {date: '', time: ''},
+}
+
+
+export interface IHappeningWithUiState extends IHappeningContext {
 	readonly state: UiState;
 }
 
