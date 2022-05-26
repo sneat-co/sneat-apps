@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { IHappeningWithUiState, IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { MembersSelectorService } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
-import { takeUntil } from 'rxjs';
+import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '../../services/happening.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class HappeningCardComponent implements OnChanges, OnDestroy {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly happeningService: HappeningService,
 		private readonly teamNavService: TeamNavService,
+		private readonly membersSelectorService: MembersSelectorService,
 	) {
 	}
 
@@ -73,6 +75,37 @@ export class HappeningCardComponent implements OnChanges, OnDestroy {
 					this.deleting = false;
 				},
 			});
+	}
+
+	selectMembers(event: Event): void {
+		event.stopPropagation();
+		const teamID = this.team?.id;
+		if (!teamID) {
+			return;
+		}
+		this.membersSelectorService.selectMembers({
+			teamIDs: this.happening?.dto?.teamIDs || [teamID],
+			selectedMemberIDs: this.happening?.brief?.memberIDs || [],
+			members: this.team?.dto?.members,
+			onAdded: this.onMemberAdded,
+			onRemoved: this.onMemberRemoved,
+		}).catch(err => {
+			this.errorLogger.logError(err, 'Failed to select members');
+		})
+	}
+
+	private readonly onMemberAdded = (teamID: string, memberID: string): Observable<void> => {
+		if (!this.happening) {
+			return NEVER;
+		}
+		return this.happeningService.addMember(this.happening, memberID);
+	}
+
+	private readonly onMemberRemoved = (teamID: string, memberID: string): Observable<void> => {
+		if (!this.happening) {
+			return NEVER;
+		}
+		return this.happeningService.removeMember(this.happening, memberID);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

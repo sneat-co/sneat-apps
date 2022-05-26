@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, MembersAsBadgesModule, SneatPipesModule } from '@sneat/components';
-import { TeamCoreComponentsModule } from '@sneat/team/components';
+import { MembersSelectorModule, TeamCoreComponentsModule } from '@sneat/team/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import { HappeningServiceModule } from '../../services/happening.service';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
@@ -39,6 +39,7 @@ import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title
 		ReactiveFormsModule,
 		MembersAsBadgesModule,
 		ScheduleNavServiceModule,
+		MembersSelectorModule,
 	],
 	exports: [
 		ScheduleComponent,

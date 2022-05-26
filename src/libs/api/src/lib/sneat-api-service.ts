@@ -110,11 +110,12 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	}
 
 	private errorIfNotAuthenticated(): Observable<never> | undefined {
-		return (
+		const result: Observable<never> | undefined = (
 			(!this.authToken &&
 				throwError(() => userIsNotAuthenticatedNoFirebaseToken)) ||
 			undefined
 		);
+		return result;
 	}
 
 	private headers(): HttpHeaders {
