@@ -109,7 +109,7 @@ export class HappeningCardComponent implements OnChanges, OnDestroy {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log('HappeningCardComponent.ngOnChanges()', changes);
+		console.log('HappeningCardComponent.ngOnChanges()', this.happening?.id, changes);
 	}
 
 	removeMember(member: IMemberContext): void {
