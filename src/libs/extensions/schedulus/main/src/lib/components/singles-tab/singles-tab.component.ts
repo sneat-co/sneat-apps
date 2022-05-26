@@ -61,7 +61,7 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 	}
 
 
-	public removed(id: string): void {
+	public onHappeningRemoved(id: string): void {
 		this.allUpcomingSingles = this.allUpcomingSingles?.filter(h => h.id !== id);
 		this.applyFilter();
 	}

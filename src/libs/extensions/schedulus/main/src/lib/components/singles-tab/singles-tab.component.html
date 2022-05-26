@@ -1,4 +1,4 @@
-<ion-segment [(ngModel)]="tab">
+<ion-segment [(ngModel)]="tab" color="dark">
 	<ion-segment-button value="upcoming">Upcoming</ion-segment-button>
 	<ion-segment-button value="past">Past</ion-segment-button>
 </ion-segment>
@@ -11,11 +11,12 @@
 </ion-card>
 
 <ng-container *ngIf="tab === 'upcoming'">
-	<sneat-single-happening-card *ngFor="let happening of upcomingSingles; trackBy: id"
-															 [happening]="happening"
-															 (deleted)="removed($event)"
+	<sneat-happening-card *ngFor="let happening of upcomingSingles; trackBy: id"
+												[team]="team"
+												[happening]="happening"
+												(deleted)="onHappeningRemoved($event)"
 	>
-	</sneat-single-happening-card>
+	</sneat-happening-card>
 
 	<div class="ion-margin-top" *ngIf="!!numberOfHidden">
 

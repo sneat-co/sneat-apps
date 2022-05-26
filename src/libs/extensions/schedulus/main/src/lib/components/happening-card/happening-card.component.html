@@ -1,0 +1,62 @@
+<ion-card [class.deleting]="deleting">
+	<ion-item color="light" class="sneat-no-end-padding" button (click)="goHappening($event)">
+		<ion-label>
+			<ion-text color="primary" style="font-weight: bold">
+				{{happening?.brief?.title || happening?.dto?.title || 'Loading...'}}
+			</ion-text>
+			<p *ngIf="happening?.dto?.participants?.length">
+				<ion-badge color="medium" style="margin-right: 0.5em"
+									 *ngFor="let participant of happening?.dto?.participants; trackBy: id">
+					{{participant.title}}
+				</ion-badge>
+			</p>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="delete($event)">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item *ngFor="let slot of happening?.brief?.slots; trackBy: index">
+		<ion-badge color="light" slot="start">{{slot.start.time}}</ion-badge>
+		<ion-label text-wrap>
+			<p>
+				<ion-badge color="light" style="margin-right: 4px;"
+									 *ngFor="let wd of slot.weekdays">{{wd|wdToWeekday}}</ion-badge>
+			</p>
+			<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
+				@ {{slot.location.title || slot.location.address}},
+				ends at {{slot.end?.time}}</p>
+			<ng-template #noLocation>
+				<p>Ends at {{slot.end?.time}}</p>
+			</ng-template>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="tertiary" (click)="notImplemented()" [disabled]="deleting">
+				<ion-icon slot="start" name="calendar-outline"></ion-icon>
+				<ion-label>Change</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium">
+			<sneat-members-as-badges *ngIf="happening?.brief?.memberIDs?.length"
+															 [briefs]="team?.dto?.members"
+															 [memberIDs]="happening?.dto?.memberIDs || happening?.brief?.memberIDs"
+															 (delete)="removeMember($event)"
+			></sneat-members-as-badges>
+			<ng-container *ngIf="!happening?.brief?.memberIDs">
+				Nobody assigned
+			</ng-container>
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="tertiary">
+				<ion-icon name="person-add-outline" slot="start"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<!--	<ion-card-content>-->
+	<!--		Some note here?-->
+	<!--	</ion-card-content>-->
+</ion-card>

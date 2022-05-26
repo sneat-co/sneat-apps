@@ -13,6 +13,11 @@ export interface IHappeningRequest extends ITeamRequest {
 	happeningType?: string;
 }
 
+export interface IHappeningMemberRequest extends ITeamRequest {
+	happeningID: string
+	memberID: string;
+}
+
 @Injectable()
 export class HappeningService {
 	private readonly sfs: SneatFirestoreService<IHappeningBrief, IHappeningDto>;
@@ -36,18 +41,30 @@ export class HappeningService {
 
 	deleteHappening(happening: IHappeningContext): Observable<void> {
 		console.log('deleteHappening', happening);
-		if (!happening) {
-			return throwError(() => new Error('missing required parameter: happening'));
-		}
-		if (!happening?.team?.id) {
-			return throwError(() => new Error('missing required parameter: happening.team.id'));
-		}
 		const request: IHappeningRequest = {
-			teamID: happening.team?.id,
+			teamID: happening.team?.id || '',
 			happeningID: happening.id,
 			happeningType: happening.brief?.type || happening.dto?.type,
 		}
 		return this.sneatApiService.delete('happenings/delete_happening', undefined, request);
+	}
+
+	removeMember(happening: IHappeningContext, memberID: string): Observable<void> {
+		const request: IHappeningMemberRequest = {
+			teamID: happening.team?.id || '',
+			happeningID: happening.id,
+			memberID,
+		}
+		return this.sneatApiService.post('happenings/remove_member', request);
+	}
+
+	addMember(happening: IHappeningContext, memberID: string): Observable<void> {
+		const request: IHappeningMemberRequest = {
+			teamID: happening.team?.id || '',
+			happeningID: happening.id,
+			memberID,
+		}
+		return this.sneatApiService.post('happenings/add_member', request);
 	}
 
 	// watchByTeam(team: ITeamContext): Observable<IHappeningContext[]> {

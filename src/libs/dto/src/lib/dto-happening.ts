@@ -1,3 +1,4 @@
+import { IHappeningContext } from '@sneat/team/models';
 import { IWithTeamIDs } from './dto-models';
 import { IPrice } from './dto-pricing';
 import { ActivityType, Repeats, WeekdayCode2 } from './types';
@@ -94,10 +95,7 @@ export interface IHappeningSlot extends IHappeningSlotTiming {
 	location?: SlotLocation; // TODO: make readonly
 }
 
-export interface IHappeningWithUiState {
-	readonly id: string;
-	readonly brief: IHappeningBrief;
-	readonly dto?: IHappeningDto;
+export interface IHappeningWithUiState extends IHappeningContext{
 	readonly state: UiState;
 }
 

@@ -17,8 +17,8 @@
 </ion-item>
 <p class="ion-margin" *ngIf="!allRecurrings?.length; else list">No recurring activities added yet.</p>
 <ng-template #list>
-	<sneat-recurring-card *ngFor="let recurring of recurrings; trackBy: id"
-												[recurring]="recurring"
+	<sneat-happening-card *ngFor="let recurring of recurrings; trackBy: id"
+												[happening]="recurring"
 												[team]="team"
-	></sneat-recurring-card>
+	></sneat-happening-card>
 </ng-template>

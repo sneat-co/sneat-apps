@@ -1,38 +1,3 @@
 <ion-card>
-	<ion-item color="light" class="sneat-no-end-padding" button (click)="goHappening(recurring)">
-		<ion-label>
-			<h2>{{recurring?.brief?.title || 'Loading...'}}</h2>
-			<p *ngIf="recurring?.dto?.participants?.length">
-				<ion-badge color="medium" style="margin-right: 0.5em"
-									 *ngFor="let participant of recurring?.dto?.participants; trackBy: id">
-					{{participant.title}}
-				</ion-badge>
-			</p>
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button (click)="deleteRecurring($event, recurring)">
-				<ion-icon name="close-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ion-item *ngIf="recurring?.brief?.memberIDs?.length">
-		<ion-label>
-			<sneat-members-as-badges [briefs]="team?.dto?.members" [memberIDs]="recurring?.brief?.memberIDs"></sneat-members-as-badges>
-		</ion-label>
-	</ion-item>
-	<ion-item button *ngFor="let slot of recurring?.brief?.slots; trackBy: index" (click)="goHappening(recurring)">
-		<ion-badge color="light" slot="start">{{slot.start.time}}</ion-badge>
-		<ion-label text-wrap>
-			<p>
-				<ion-badge color="light" style="margin-right: 4px;"
-									 *ngFor="let wd of slot.weekdays">{{wd|wdToWeekday}}</ion-badge>
-			</p>
-			<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
-				@ {{slot.location.title || slot.location.address}},
-				ends at {{slot.end?.time}}</p>
-			<ng-template #noLocation>
-				<p>Ends at {{slot.end?.time}}</p>
-			</ng-template>
-		</ion-label>
-	</ion-item>
+
 </ion-card>

@@ -260,11 +260,11 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		const { memberIDs, repeats, weekdays } = filter;
 
 		const filtered = this.allRecurrings?.filter(r => {
-			const { title } = r.brief;
+			const title = r.brief?.title || r.dto?.title;
 			if (title && title.trim().toLowerCase().indexOf(text) < 0) {
 				return false;
 			}
-			if (!this.hasMember(r.brief, memberIDs)) {
+			if (!r.brief || !this.hasMember(r.brief, memberIDs)) {
 				return false;
 			}
 			if (!this.hasWeekday(r.brief?.slots || r.dto?.slots, weekdays)) {
