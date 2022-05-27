@@ -95,7 +95,7 @@
 	"@nxtend/capacitor": "13.0.0",
 	"@nxtend/firebase": "12.1.0",
 	"@nxtend/ionic-angular": "13.1.0",
-	"@trellisorg/make-buildable": "0.0.11",
+	"@trellisorg/make-buildable": "0.0.12",
 	"@types/jasmine": "4.0.3",
 	"@types/jest": "27.5.1",
 	"@types/node": "16.11.36",

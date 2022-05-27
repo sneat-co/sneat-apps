@@ -49,7 +49,7 @@ specifiers:
   '@sneat-dnd/tree': 0.1.1
   '@sneat/random': 0.0.3
   '@sneat/wormhole': 0.0.5
-  '@trellisorg/make-buildable': 0.0.11
+  '@trellisorg/make-buildable': 0.0.12
   '@types/jasmine': 4.0.3
   '@types/jest': 27.5.1
   '@types/node': 16.11.36
@@ -161,7 +161,7 @@ devDependencies:
   '@nxtend/capacitor': 13.0.0_@nrwl+workspace@14.1.9
   '@nxtend/firebase': 12.1.0_@nrwl+workspace@14.1.9
   '@nxtend/ionic-angular': 13.1.0_l7alqczfi7nsb7rvv26j7yytum
-  '@trellisorg/make-buildable': 0.0.11_rrj2mdbsk4wau2iefy2gilyejq
+  '@trellisorg/make-buildable': 0.0.12_su3ruuw4zza6tcezevwlvro4wm
   '@types/jasmine': 4.0.3
   '@types/jest': 27.5.1
   '@types/node': 16.11.36
@@ -5265,15 +5265,18 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /@trellisorg/make-buildable/0.0.11_rrj2mdbsk4wau2iefy2gilyejq:
-    resolution: {integrity: sha512-0/LmWJh9btfTx31P2EUqLgoiE73Zeo5SdYjSA7PUYrvkPiPCliUp69uTZ+gOo57Qdsd2A3WHBqoSgEtS9Sa3kg==}
+  /@trellisorg/make-buildable/0.0.12_su3ruuw4zza6tcezevwlvro4wm:
+    resolution: {integrity: sha512-1x8YYe4xiIlChl25kmY1DZk5iNMOc2Am+D7bx+TCmNvbTMLxMBUMFupGiyTZ5xZbNP+bhShXgTsyp/DSq9VLQg==}
     peerDependencies:
       '@angular-devkit/schematics': '>=9'
+      '@nrwl/devkit': '*'
       '@nrwl/workspace': '>=9'
+      tslib: ^2.0.0
     dependencies:
       '@angular-devkit/schematics': 13.3.7
       '@nrwl/workspace': 14.1.9_v7i6aqhxfnrj2kvwobghyq4bye
       lodash.merge: 4.6.2
+      tslib: 2.4.0
     dev: true
 
   /@tsconfig/node10/1.0.8:
