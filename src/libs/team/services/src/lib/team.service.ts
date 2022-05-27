@@ -313,7 +313,7 @@ export class TeamService {
 			.snapshotChanges()
 			.pipe(
 				tap((team) => {
-					console.log('TeamService.subscribeForTeamChanges() => New team snapshot from Firestore:', team);
+					console.log('TeamService.subscribeForTeamChanges() => New team snapshot from Firestore:', team, team.payload.data());
 				}),
 				filter((documentSnapshot) => documentSnapshot.type === 'value' || documentSnapshot.type === 'added'),
 				map((documentSnapshot) => documentSnapshot.payload),

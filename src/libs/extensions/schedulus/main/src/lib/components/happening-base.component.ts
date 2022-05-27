@@ -1,4 +1,5 @@
 import {
+	ChangeDetectorRef,
 	Directive,
 	EventEmitter,
 	Inject,
@@ -66,7 +67,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	get date(): Date | undefined {
 		if (!this.happening?.dto?.date) {
-			return undefined
+			return undefined;
 		}
 		return isoStringsToDate(this.happening.dto.date);
 	}
@@ -99,6 +100,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	protected constructor(
 		private readonly happeningBaseComponentParams: HappeningBaseComponentParams,
+		protected changeDetectorRef: ChangeDetectorRef,
 	) {
 	}
 
@@ -189,14 +191,28 @@ This operation can NOT be undone.`)) {
 		if (!this.happening) {
 			return NEVER;
 		}
-		return this.happeningService.addMember(this.happening, memberID);
+		if (!this.team) {
+			return NEVER;
+		}
+		const result = this.happeningService.addMember(this.team.id, this.happening, memberID);
+		// result
+		// 	.pipe(takeUntil(this.destroyed))
+		// 	.subscribe({
+		// 		next: () => {
+		// 			this.changeDetectorRef.markForCheck();
+		// 		},
+		// 	});
+		return result;
 	};
 
 	private readonly onMemberRemoved = (teamID: string, memberID: string): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
-		return this.happeningService.removeMember(this.happening, memberID);
+		if (!this.team) {
+			return NEVER;
+		}
+		return this.happeningService.removeMember(this.team?.id, this.happening, memberID);
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -208,7 +224,10 @@ This operation can NOT be undone.`)) {
 		if (!this.happening) {
 			return;
 		}
-		this.happeningService.removeMember(this.happening, member.id).subscribe({
+		if (!this.team) {
+			return;
+		}
+		this.happeningService.removeMember(this.team.id, this.happening, member.id).subscribe({
 			next: () => {
 				if (this.happening?.brief?.memberIDs) {
 					this.happening.brief.memberIDs = this.happening.brief.memberIDs.filter(id => id !== member.id);
@@ -216,6 +235,7 @@ This operation can NOT be undone.`)) {
 				if (this.happening?.dto?.memberIDs) {
 					this.happening.dto.memberIDs = this.happening.dto.memberIDs.filter(id => id !== member.id);
 				}
+				this.changeDetectorRef.markForCheck();
 			},
 			error: this.errorLogger.logErrorHandler('Failed to remove member from happening'),
 		});
@@ -227,7 +247,8 @@ export class HappeningComponent extends HappeningBaseComponent {
 
 	constructor(
 		happeningBaseComponentParams: HappeningBaseComponentParams,
+		changeDetectorRef: ChangeDetectorRef,
 	) {
-		super(happeningBaseComponentParams);
+		super(happeningBaseComponentParams, changeDetectorRef);
 	}
 }

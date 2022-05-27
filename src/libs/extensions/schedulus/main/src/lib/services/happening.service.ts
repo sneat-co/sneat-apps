@@ -60,18 +60,18 @@ export class HappeningService {
 		return this.sneatApiService.delete('happenings/delete_happening', undefined, request);
 	}
 
-	removeMember(happening: IHappeningContext, memberID: string): Observable<void> {
+	removeMember(teamID: string, happening: IHappeningContext, memberID: string): Observable<void> {
 		const request: IHappeningMemberRequest = {
-			teamID: happening.team?.id || '',
+			teamID: teamID,
 			happeningID: happening.id,
 			memberID,
 		}
 		return this.sneatApiService.post('happenings/remove_member', request);
 	}
 
-	addMember(happening: IHappeningContext, memberID: string): Observable<void> {
+	addMember(teamID: string, happening: IHappeningContext, memberID: string): Observable<void> {
 		const request: IHappeningMemberRequest = {
-			teamID: happening.team?.id || '',
+			teamID,
 			happeningID: happening.id,
 			memberID,
 		}

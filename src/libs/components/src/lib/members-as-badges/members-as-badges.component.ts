@@ -17,22 +17,31 @@ import { SneatPipesModule } from '../pipes';
 @Component({
 	selector: 'sneat-members-as-badges',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	styles: ['.deleting {text-decoration: line-through}'],
 	template: `
 		<ion-chip outline color="medium" *ngFor="let member of members">
-			<ion-label color="dark">{{member|personTitle}}</ion-label>
-			<ion-icon name="close" (click)="delete.emit(member)"></ion-icon>
+			<ion-label [color]="isDeleting(member.id) ? 'medium' : 'dark'" [class.deleting]="isDeleting(member.id)">{{member|personTitle}}</ion-label>
+			<ion-icon *ngIf="!isDeleting(member.id)" name="close" (click)="delete(member)"></ion-icon>
+			<ion-spinner name="lines-sharp-small" *ngIf="isDeleting(member.id)"></ion-spinner>
 		</ion-chip>
 	`,
 })
 export class MembersAsBadgesComponent implements OnChanges {
+
+	private readonly deletingMemberIDs: string[] = [];
+
 	@Input() memberIDs?: string[];
 	@Input() briefs?: IMemberBrief[];
 	@Input() color: 'primary' | 'light' | 'dark' | 'medium' | 'secondary' | 'tertiary' = 'light';
 
-	@Output() readonly delete = new EventEmitter<IMemberContext>();
+	@Output() readonly deleteMember = new EventEmitter<IMemberContext>();
 	public members?: IMemberContext[];
 
 	readonly id = (_: number, m: { id: string }) => m.id;
+
+	public isDeleting(id: string): boolean {
+		return this.deletingMemberIDs.includes(id);
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['members'] || changes['memberIDs'] || changes['briefs']) {
@@ -45,6 +54,10 @@ export class MembersAsBadgesComponent implements OnChanges {
 		}
 	}
 
+	delete(member: IMemberContext): void {
+		this.deletingMemberIDs.push(member.id);
+		this.deleteMember.emit(member);
+	}
 }
 
 @NgModule({
