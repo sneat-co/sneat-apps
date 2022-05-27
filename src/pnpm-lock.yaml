@@ -67,7 +67,7 @@ specifiers:
   eslint: 8.16.0
   eslint-config-prettier: 8.5.0
   firebase: 9.8.1
-  follow-redirects: 1.15.0
+  follow-redirects: 1.15.1
   hogan.js: 3.0.2
   idb: 7.0.1
   ionicons: 6.0.1
@@ -175,7 +175,7 @@ devDependencies:
   engine.io: 6.2.0
   eslint: 8.16.0
   eslint-config-prettier: 8.5.0_eslint@8.16.0
-  follow-redirects: 1.15.0
+  follow-redirects: 1.15.1
   jasmine-core: 4.1.1
   jest: 28.1.0_2cnx3q6hfnpx7nryv75xx7ahte
   jest-preset-angular: 12.0.1_nzljypw32c7nraubbmmxwdaxii
@@ -6245,7 +6245,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.15.0
+      follow-redirects: 1.15.1
     transitivePeerDependencies:
       - debug
     dev: true
@@ -8649,8 +8649,8 @@ packages:
     resolution: {integrity: sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==}
     dev: false
 
-  /follow-redirects/1.15.0:
-    resolution: {integrity: sha512-aExlJShTV4qOUOL7yF1U5tvLCB0xQuudbf6toyYA0E/acBNw71mvjFTnLaRp50aQaYocMR0a/RMMBIHeZnGyjQ==}
+  /follow-redirects/1.15.1:
+    resolution: {integrity: sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -9100,7 +9100,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.0
+      follow-redirects: 1.15.1
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
