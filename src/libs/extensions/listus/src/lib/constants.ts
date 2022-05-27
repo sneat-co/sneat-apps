@@ -1,4 +1,4 @@
-import {EnumAsUnionOfKeys} from '../../sneat-enum-keys';
+import { EnumAsUnionOfKeys } from '@sneat/core';
 
 export const enum ListPage {
 	list = 'list',

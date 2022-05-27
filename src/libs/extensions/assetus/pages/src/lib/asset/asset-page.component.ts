@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { LiabilityServiceType } from '@sneat/dto';
 import { AssetBasePage, AssetComponentBaseParams } from '@sneat/extensions/assetus/components';
 

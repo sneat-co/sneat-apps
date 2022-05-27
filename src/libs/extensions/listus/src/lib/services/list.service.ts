@@ -78,7 +78,8 @@ export class ListService {
 
 	public createListItems(params: IListItemsCommandParams): Observable<IListItemResult> {
 		console.log('createListItems', params);
-		const listType = params.list?.brief?.type || params.list?.dto?.type;
+		const listType: ListType | undefined =
+			params.list?.brief?.type || params.list?.dto?.type || (params.list.id === 'groceries' ? 'to-buy' : undefined);
 		if (!listType ) {
 			return throwError(() => 'list is of unknown type');
 		}

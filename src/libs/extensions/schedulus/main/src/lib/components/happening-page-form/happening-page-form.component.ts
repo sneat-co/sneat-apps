@@ -15,6 +15,7 @@ import {
 	WeekdayCode2,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { newRandomId } from '@sneat/random';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
@@ -168,7 +169,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		};
 		switch (dto.type) {
 			case 'recurring':
-				dto.slots = this.slots;
+				dto.slots = this.slots.map(slot => ({...slot, repeats: 'weekly', id: slot.id || newRandomId({len: 5})}));
 				break;
 			case 'single':
 				if (!this.singleSlot) {

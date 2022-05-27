@@ -1,10 +1,10 @@
-import { ActivatedRoute } from '@angular/router';
-import { INavContext } from '@sneat/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { INavContext, TeamItem } from '@sneat/core';
 import { Observable, Subscription } from 'rxjs';
 import { TeamBaseComponent } from './team-base.component';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
-type watchByIdFunc<Brief, Dto> = (itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
+// type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
 
 export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> extends TeamBaseComponent {
 
@@ -13,13 +13,12 @@ export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> e
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		defaultBackPage: string,
-		private readonly itemName: string,
-		watchById?: watchByIdFunc<Brief, Dto>,
+		private readonly itemName: TeamItem,
 	) {
 		super(className, route, teamParams);
 		this.defaultBackPage = defaultBackPage;
 		this.setItemContext(window.history.state[itemName] as INavContext<Brief, Dto>);
-		this.trackItemID(watchById);
+		this.trackUrlParams();
 	}
 
 
@@ -31,13 +30,18 @@ export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> e
 
 	private itemSubscription?: Subscription;
 
-	trackItemID(watchById?: watchByIdFunc<Brief, Dto>): void {
+	protected abstract onRouteParamsChanged(params: ParamMap, itemID?: string, teamID?: string): void;
+
+	protected abstract watchItemChanges(): Observable<INavContext<Brief, Dto>>;
+
+	private trackUrlParams(): void {
 		this.route.paramMap
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: params => {
-					const itemID = params.get(this.itemName + 'ID');
-					// const teamID = params.get('teamID');
+					const itemID = params.get(this.itemName + 'ID') || undefined;
+					const teamID = params.get('teamID') || this.team?.id;
+					this.onRouteParamsChanged(params, itemID, teamID);
 					if (itemID) {
 						const item = this.item;
 						if (item?.id !== itemID) {
@@ -46,16 +50,15 @@ export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> e
 							if (this.itemSubscription) {
 								this.itemSubscription.unsubscribe();
 							}
-							if (watchById) {
-								this.itemSubscription = watchById(this.team?.id, itemID)
-									.pipe(this.takeUntilNeeded())
-									.subscribe({
-										next: item => {
-											this.setItemContext(item);
-										},
-										error: err => this.logError(err, 'failed to get item by ID')
-									});
-							}
+							this.onRouteParamsChanged(params, itemID, teamID);
+							this.itemSubscription = this.watchItemChanges()
+								.pipe(this.takeUntilNeeded())
+								.subscribe({
+									next: item => {
+										this.setItemContext(item);
+									},
+									error: err => this.logError(err, 'failed to get item by ID')
+								});
 						}
 					} else {
 						this.setItemContext(undefined);

@@ -21,7 +21,7 @@ import { SneatPipesModule } from '../pipes';
 	template: `
 		<ion-chip outline color="medium" *ngFor="let member of members">
 			<ion-label [color]="isDeleting(member.id) ? 'medium' : 'dark'" [class.deleting]="isDeleting(member.id)">{{member|personTitle}}</ion-label>
-			<ion-icon *ngIf="!isDeleting(member.id)" name="close" (click)="delete(member)"></ion-icon>
+			<ion-icon *ngIf="!isDeleting(member.id)" name="close" (click)="delete($event, member)"></ion-icon>
 			<ion-spinner name="lines-sharp-small" *ngIf="isDeleting(member.id)"></ion-spinner>
 		</ion-chip>
 	`,
@@ -54,7 +54,8 @@ export class MembersAsBadgesComponent implements OnChanges {
 		}
 	}
 
-	delete(member: IMemberContext): void {
+	delete(event: Event, member: IMemberContext): void {
+		event.stopPropagation();
 		this.deletingMemberIDs.push(member.id);
 		this.deleteMember.emit(member);
 	}

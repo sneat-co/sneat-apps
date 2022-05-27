@@ -41,7 +41,7 @@ export class HappeningSlotsComponent {
 	}
 
 	onSlotAdded(slot: IHappeningSlot): void {
-		console.log('RecurringSlotsComponent.onSlotAdded()');
+		console.log('HappeningSlotsComponent.onSlotAdded()');
 		this.isShowingAddSlot = false;
 		this.slotAdded.emit(slot);
 	}

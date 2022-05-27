@@ -14,7 +14,7 @@ import {
 	IMemberGroupDto, IPerson, IPersonBrief,
 	IShortTeamInfo,
 	ITeamBrief,
-	ITeamDto,
+	ITeamDto, ListType,
 	TeamType, UiState,
 } from '@sneat/dto';
 import { ITeamItemContext } from './team-item-context';
@@ -30,15 +30,24 @@ export interface ITeamContext extends ITeamRef, INavContext<ITeamBrief, ITeamDto
 	readonly contacts?: IContactContext[];
 };
 
+
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
 export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;
 export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
-export type IListContext = ITeamItemContext<IListBrief, IListDto>;
 export type IDocumentContext = IAssetContext;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
 export type IHappeningContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
 export type IRecurringContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
+
+export interface IListKey {
+	id: string;
+	type: ListType;
+}
+
+export interface IListContext extends ITeamItemContext<IListBrief, IListDto> {
+	type?: ListType;
+}
 
 export function createShortCommuneInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {

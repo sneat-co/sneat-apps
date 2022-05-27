@@ -1,9 +1,9 @@
 //tslint:disable:no-unsafe-any
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IListBrief, IListDto, IMovie, ListType } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IListContext } from '@sneat/team/models';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
 export abstract class BaseListPage extends TeamItemBaseComponent<IListBrief, IListDto> {
@@ -18,11 +18,24 @@ export abstract class BaseListPage extends TeamItemBaseComponent<IListBrief, ILi
 		route: ActivatedRoute,
 		protected readonly params: ListusComponentBaseParams,
 	) {
-		super(className, route, params.teamParams, 'lists', 'list', undefined);
-		this.trackListParamsFromUrl();
+		super(className, route, params.teamParams, 'lists', 'list');
+	}
+
+	protected override watchItemChanges(): Observable<IListContext> {
+		if (!this.team) {
+			return throwError(() => new Error('no team context'));
+		}
+		if (!this.list) {
+			return throwError(() => new Error('no list context'));
+		}
+		if (!this.list.type) {
+			return throwError(() => new Error('no list type context'));
+		}
+		return this.listService.watchList(this.team.id, this.list.type, this.list.id);
 	}
 
 	protected override setItemContext(item?: IListContext): void {
+		console.log('BaseListPage.setItemContext()', item)
 		this.list = item;
 	}
 
@@ -87,35 +100,29 @@ export abstract class BaseListPage extends TeamItemBaseComponent<IListBrief, ILi
 		});
 	}
 
-	private trackListParamsFromUrl(): void {
-		try {
-			this.route?.paramMap
-				.pipe(this.takeUntilNeeded())
-				.subscribe(params => {
-					const id = params.get('listID'),
-						type = params.get('listType'),
-						teamID = params.get('teamID') || this.team?.id;
-					if (!id) {
-						this.listSubscription?.unsubscribe();
-						this.listSubscription = undefined;
-						return;
-					}
-					if (this.list?.id != id) {
-						this.listSubscription?.unsubscribe();
-						this.listSubscription = undefined;
-						const title = id.charAt(0).toUpperCase() + id.slice(1);
-						this.setList({ id, brief: { id, type: type as ListType, title } });
-						if (!teamID) {
-							throw new Error('no team context');
-						}
-						if (!this.list?.brief?.type) {
-							throw new Error('unknown list type');
-						}
-						this.subscribeForListChanges(teamID, this.list.brief.type, id);
-					}
-				});
-		} catch (e) {
-			this.errorLogger.logError(e, 'trackListParamsFromUrl() failed');
+	protected override onRouteParamsChanged(params: ParamMap) {
+		const
+			id = params.get('listID'),
+			type = params.get('listType'),
+			teamID = params.get('teamID') || this.team?.id;
+		if (!id) {
+			this.listSubscription?.unsubscribe();
+			this.listSubscription = undefined;
+			return;
 		}
+		if (this.list?.id == id) {
+			return;
+		}
+		this.listSubscription?.unsubscribe();
+		this.listSubscription = undefined;
+		const title = id.charAt(0).toUpperCase() + id.slice(1);
+		this.setList({ id, brief: { id, type: type as ListType, title } });
+		if (!teamID) {
+			throw new Error('no team context');
+		}
+		if (!this.list?.brief?.type) {
+			throw new Error('unknown list type');
+		}
+		this.subscribeForListChanges(teamID, this.list.brief.type, id);
 	}
 }
