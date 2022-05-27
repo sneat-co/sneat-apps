@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
 import {
-	emptySingleHappeningSlot,
+	emptyHappeningSlot,
 	HappeningType,
 	IHappeningDto,
 	IHappeningSlot,
@@ -56,7 +56,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	});
 
 	public checkedMemberIDs: string[] = [];
-	public singleTiming?: ITiming;
+	public singleSlot?: IHappeningSlot;
 
 	private readonly logErrorHandler = this.errorLogger.logErrorHandler;
 	private readonly logError = this.errorLogger.logError;
@@ -131,9 +131,9 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		this.slots = slots;
 	}
 
-	onTimingChanged(timing: ITiming): void {
-		console.log('NewHappeningPageComponent.onTimingChanged()', timing);
-		this.singleTiming = timing;
+	onSingleSlotChanged(slot: IHappeningSlot): void {
+		console.log('NewHappeningPageComponent.onTimingChanged()', slot);
+		this.singleSlot = slot;
 	}
 
 
@@ -145,7 +145,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 			case 'recurring':
 				return !!this.slots.length;
 			case 'single':
-				return !!this.singleTiming;
+				return !!this.singleSlot;
 			default:
 				return false;
 		}
@@ -171,13 +171,13 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 				dto.slots = this.slots;
 				break;
 			case 'single':
-				if (!this.singleTiming) {
+				if (!this.singleSlot) {
 					throw new Error('timing is not set');
 				}
 				dto.slots = [{
+					...this.singleSlot,
 					id: 'once',
 					repeats: 'once',
-					...this.singleTiming,
 				}];
 				break;
 			default:

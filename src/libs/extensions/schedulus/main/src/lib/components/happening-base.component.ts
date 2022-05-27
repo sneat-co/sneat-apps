@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { isoStringsToDate } from '@sneat/core';
-import { WeekdayCode2 } from '@sneat/dto';
+import { emptyHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MembersSelectorService } from '@sneat/team/components';
@@ -172,10 +172,13 @@ This operation can NOT be undone.`)) {
 	}
 
 	async editSingleHappeningSlot(event: Event): Promise<void> {
+		const slots = this.happening?.brief?.slots;
 		const modal = await this.happeningBaseComponentParams.modalController.create({
 			component: SingleSlotFormComponent,
 			componentProps: {
+				team: this.team,
 				happening: this.happening,
+				happeningSlot: slots && slots[0] || emptyHappeningSlot,
 				isModal: true,
 			},
 		});

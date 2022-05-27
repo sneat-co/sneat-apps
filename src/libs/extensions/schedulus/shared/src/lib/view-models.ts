@@ -215,12 +215,15 @@ export function getWd2(d: Date): WeekdayCode2 {
 	return jsDayToWeekday(d.getDay() as WeekdayNumber);
 }
 
-
-export function timeToStr(n: number): string {
-	const d = new Date(n);
+export function dateToTimeOnlyStr(d: Date): string {
 	const h = d.getHours()
 		.toString();
 	const m = d.getMinutes()
 		.toString();
 	return `${h.length === 1 ? `0${h}` : h}:${m.length === 1 ? `0${m}` : m}`;
+}
+
+export function timeToStr(n: number): string {
+	const d = new Date(n);
+	return dateToTimeOnlyStr(d);
 }

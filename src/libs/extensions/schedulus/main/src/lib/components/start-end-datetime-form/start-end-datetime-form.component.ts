@@ -1,15 +1,18 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { dateToIso } from '@sneat/core';
-import { emptySingleHappeningSlot, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { dateToIso, isoStringsToDate, isValidaTimeString, isValidDateString } from '@sneat/core';
+import { emptyHappeningSlot, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
+import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-start-end-datetime-form',
 	templateUrl: 'start-end-datetime-form.component.html',
 })
 export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
-	@Input() mode?: 'new' | 'edit' = 'new';
-	@Input() singleSlot: IHappeningSlot = emptySingleHappeningSlot;
+	// @Input() mode?: 'new' | 'edit' = 'new';
+	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
 	@Input() hideStartDate = false;
 	@Output() readonly slotChanged = new EventEmitter<IHappeningSlot>();
 	public tab: 'duration' | 'end' = 'duration';
@@ -56,24 +59,49 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		return timing;
 	}
 
+
 	public get isValid(): boolean {
-		return this.isValidTime(this.startTime.value) && this.isValidTime(this.endTime.value);
+		return isValidaTimeString(this.startTime.value) && isValidaTimeString(this.endTime.value);
+	}
+
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly modalController: ModalController,
+		private readonly popoverController: PopoverController,
+	) {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		const singleSlotChanges = changes['singleSlot'];
-		console.log('StartEndDatetimeFormComponent.ngOnChanges()', singleSlotChanges);
-		if (singleSlotChanges?.currentValue) {
-			this.startDate.setValue(this.singleSlot.start.date);
-			this.startTime.setValue(this.singleSlot.start.time);
-			this.endDate.setValue(this.singleSlot.end?.date);
-			this.endTime.setValue(this.singleSlot.end?.time);
+		const happeningSlotChange = changes['happeningSlot'];
+		console.log('StartEndDatetimeFormComponent.ngOnChanges()', happeningSlotChange);
+		if (happeningSlotChange?.currentValue) {
+			this.startDate.setValue(this.happeningSlot.start.date);
+			this.startTime.setValue(this.happeningSlot.start.time);
+			this.endDate.setValue(this.happeningSlot.end?.date);
+			this.endTime.setValue(this.happeningSlot.end?.time);
 			this.setDuration();
 		}
 	}
 
-	setStartTime(event: Event, value: string): void {
+	setStartTime(value: string): void {
+		if (!isValidaTimeString(value)) {
+			this.errorLogger.logError(new Error('not valid time string:' + value), 'Invalid start time');
+			return;
+		}
+		this.modalController.dismiss().catch(console.error);
 		this.startTime.setValue(value);
+	}
+
+	addToStart(v: { days?: number; hours?: number }): void {
+		const d = isoStringsToDate(this.startDate.value, this.startTime.value);
+		if (v.days) {
+			d.setDate(d.getDate() + v.days);
+		}
+		if (v.hours) {
+			d.setTime(d.getTime() + v.hours * 60 * 60 * 1000);
+		}
+		this.startDate.setValue(dateToIso(d));
+		this.startTime.setValue(dateToTimeOnlyStr(d));
 	}
 
 	setStartDate(event: Event, code: 'today' | 'tomorrow'): void {
@@ -95,11 +123,11 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	ngAfterViewInit(): void {
-		this.emitSlotChanged();
+		console.log('StartEndDatetimeFormComponent.ngAfterViewInit', this.happeningSlot);
 	}
 
 	emitSlotChanged(): void {
-		this.slotChanged.emit(this.singleSlot);
+		this.slotChanged.emit(this.happeningSlot);
 	}
 
 	onStartTimeBlur(event: Event): void {
@@ -112,10 +140,12 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	onStartDateChanged(event: Event): void {
 		console.log('StartEndDatetimeFormComponent.onStartDateChanged()', event);
+		const slot = this.happeningSlot;
+		this.happeningSlot = { ...slot, start: { ...(slot.start || {}), date: this.startDate.value } };
 		if (
-			this.isValidTime(this.startTime.value as string) &&
-			this.isValidTime(this.endTime.value as string) &&
-			this.isValidDate(this.startDate.value as string)
+			isValidaTimeString(this.startTime.value as string) &&
+			isValidaTimeString(this.endTime.value as string) &&
+			isValidDateString(this.startDate.value as string)
 		) {
 			this.emitSlotChanged();
 		}
@@ -123,29 +153,23 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	onStartTimeChanged(event: Event): void {
 		console.log('StartEndDatetimeFormComponent.onStartTimeChanged()', event);
-		if (this.isValidTime(this.startTime.value as string)) {
+		const slot = this.happeningSlot;
+		this.happeningSlot = { ...slot, start: { ...(slot.start || {}), time: this.startTime.value } };
+		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setEndTime();
 		}
-		this.emitSlotChanged();
-	}
-
-	isValidTime(v: string): boolean {
-		return !!v.match(/^\d{2}:\d{2}$/);
-	}
-
-	isValidDate(v: string): boolean {
-		return !!v.match(/^\d{4}-\d{2}-\d{2}$/);
 	}
 
 	onDurationChanged(event: Event): void {
 		console.log('StartEndDatetimeFormComponent.onDurationChanged()', event);
-		if (this.isValidTime(this.startTime.value as string)) {
+		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setEndTime();
 		}
 		this.emitSlotChanged();
 	}
 
 	setEndTime(): void {
+		console.log('setEndTime()');
 		const startTime = this.startTime.value as string;
 		const startHour = Number(startTime.substring(0, 2));
 		const startMin = Number(startTime.substring(3, 5));
@@ -167,11 +191,15 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	onEndTimeChanged(event: Event): void {
-		if (this.isValidTime(this.startTime.value as string)) {
+		event.stopPropagation();
+		const slot = this.happeningSlot;
+		this.happeningSlot = { ...slot, end: { ...(slot.end || {}), time: this.endTime.value } };
+		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setDuration();
 		}
 		this.emitSlotChanged();
 	}
+
 
 	setDuration(): void {
 		const startTime = this.startTime.value as string;
@@ -191,6 +219,6 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 		const durationMinutes = endAt - startAt;
 		this.duration.setValue(durationMinutes);
-		this.singleSlot = {...this.singleSlot, durationMinutes};
+		this.happeningSlot = { ...this.happeningSlot, durationMinutes };
 	}
 }

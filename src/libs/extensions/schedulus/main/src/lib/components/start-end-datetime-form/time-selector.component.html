@@ -1,0 +1,26 @@
+<ion-item color="primary" class="sneat-tiny-end-padding">
+	<ion-label>Start time</ion-label>
+	<ion-buttons slot="end">
+		<ion-button (click)="close()"><ion-icon name="close"></ion-icon></ion-button>
+	</ion-buttons>
+</ion-item>
+<ion-segment [(ngModel)]="tab" (ionChange)="onTabChanged($event)">
+	<ion-segment-button value="morning">Morning</ion-segment-button>
+	<ion-segment-button value="day">Day</ion-segment-button>
+	<ion-segment-button value="evening">Evening</ion-segment-button>
+</ion-segment>
+<ion-list>
+	<ion-item *ngFor="let hh of hours">
+		<ion-buttons slot="start">
+			<ion-button style="font-weight: bold" (click)="select(hh, '00')">{{hh}}:00</ion-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button (click)="select(hh, '10')"><ion-text color="medium">{{hh}}</ion-text>:10</ion-button>
+			<ion-button (click)="select(hh, '15')"><ion-text color="medium">{{hh}}</ion-text>:15</ion-button>
+			<ion-button (click)="select(hh, '20')"><ion-text color="medium">{{hh}}</ion-text>:20</ion-button>
+			<ion-button (click)="select(hh, '30')"><ion-text color="medium">{{hh}}</ion-text>:30</ion-button>
+			<ion-button (click)="select(hh, '45')"><ion-text color="medium">{{hh}}</ion-text>:45</ion-button>
+			<ion-button (click)="select(hh, '50')"><ion-text color="medium">{{hh}}</ion-text>:50</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-list>

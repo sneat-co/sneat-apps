@@ -20,7 +20,7 @@
 			<sneat-single-slot-form
 				[happening]="happening"
 				[style.display]="happeningType === 'single' ? 'block' : 'none'"
-				(timingChanged)="onTimingChanged($event)"
+				(happeningSlotChange)="onSingleSlotChanged($event)"
 			>
 				<!-- hide with [style.display] to preserve input values if tab switched back and forth -->
 			</sneat-single-slot-form>

@@ -1,7 +1,14 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
-import { happeningBriefFromDto, IAssetBrief, IAssetDto, IHappeningBrief, IHappeningDto } from '@sneat/dto';
+import {
+	happeningBriefFromDto,
+	IAssetBrief,
+	IAssetDto,
+	IHappeningBrief,
+	IHappeningDto,
+	IHappeningSlot,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, IRecurringContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
 import { TeamItemBaseService } from '@sneat/team/services';
@@ -16,6 +23,10 @@ export interface IHappeningRequest extends ITeamRequest {
 export interface IHappeningMemberRequest extends ITeamRequest {
 	happeningID: string
 	memberID: string;
+}
+
+export interface IHappeningSlotRequest extends IHappeningRequest {
+	slot: IHappeningSlot;
 }
 
 @Injectable()
@@ -65,6 +76,15 @@ export class HappeningService {
 			memberID,
 		}
 		return this.sneatApiService.post('happenings/add_member', request);
+	}
+
+	updateSlot(teamID: string, happeningID: string, slot: IHappeningSlot): Observable<void> {
+		const request: IHappeningSlotRequest = {
+			teamID,
+			happeningID,
+			slot,
+		}
+		return this.sneatApiService.post('happenings/update_slot', request);
 	}
 
 	// watchByTeam(team: ITeamContext): Observable<IHappeningContext[]> {

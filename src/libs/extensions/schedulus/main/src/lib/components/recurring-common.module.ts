@@ -9,6 +9,7 @@ import { RecurringSlotFormComponent } from './recurring-slot-form/recurring-slot
 import { HappeningSlotsComponent } from './happening-slots/happening-slots.component';
 import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
 import { StartEndDatetimeFormComponent } from './start-end-datetime-form/start-end-datetime-form.component';
+import { TimeSelectorComponent } from './start-end-datetime-form/time-selector.component';
 
 @NgModule({
 	imports: [
@@ -24,6 +25,7 @@ import { StartEndDatetimeFormComponent } from './start-end-datetime-form/start-e
 		RecurringSlotFormComponent,
 		SingleSlotFormComponent,
 		StartEndDatetimeFormComponent,
+		TimeSelectorComponent,
 	],
 	exports: [
 		HappeningSlotsComponent,

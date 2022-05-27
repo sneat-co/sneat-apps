@@ -95,7 +95,7 @@ export interface IHappeningSlot extends IHappeningSlotTiming {
 	location?: SlotLocation; // TODO: make readonly
 }
 
-export const emptySingleHappeningSlot: IHappeningSlot = {
+export const emptyHappeningSlot: IHappeningSlot = {
 	id: '',
 	repeats: 'once',
 	start: {date: '', time: ''},

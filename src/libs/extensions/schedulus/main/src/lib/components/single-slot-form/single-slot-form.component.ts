@@ -5,14 +5,16 @@ import {
 	EventEmitter,
 	Inject,
 	Input,
-	OnChanges, OnInit,
+	OnChanges, OnDestroy, OnInit,
 	Output,
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { emptySingleHappeningSlot, IHappeningSlot, ITiming } from '@sneat/dto';
+import { emptyHappeningSlot, IHappeningSlot, ITiming } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { Subject, takeUntil } from 'rxjs';
+import { HappeningService } from '../../services/happening.service';
 
 @Component({
 	selector: 'sneat-single-slot-form',
@@ -20,25 +22,30 @@ import { IHappeningContext } from '@sneat/team/models';
 	styleUrls: ['./single-slot-form.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SingleSlotFormComponent implements AfterViewInit, OnChanges {
+export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDestroy {
 
+	private readonly destroyed = new Subject<void>();
+
+	@Input() team?: ITeamContext;
 	@Input() happening?: IHappeningContext;
+	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
+
 	@Input() isModal = false;
 
 	@Output() readonly validChanged = new EventEmitter<boolean>();
-	@Output() readonly timingChanged = new EventEmitter<ITiming>();
-
-	singleSlot: IHappeningSlot = emptySingleHappeningSlot;
+	@Output() readonly happeningSlotChange = new EventEmitter<IHappeningSlot>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
+		private readonly happeningService: HappeningService,
 	) {
 		console.log('SingleSlotFormComponent.constructor()');
 	}
 
 	onTimingChanged(timing: ITiming): void {
-		if (timing == emptySingleHappeningSlot) {
+		console.log('onTimingChanged', timing);
+		if (timing == emptyHappeningSlot) {
 			return;
 		}
 		if (!timing.end) {
@@ -49,7 +56,12 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges {
 			this.errorLogger.logError('timing has no durationMinutes');
 			return;
 		}
-		this.timingChanged.emit(timing);
+		this.happeningSlot = { ...this.happeningSlot, ...timing };
+		this.emitHappeningSlotChange();
+	}
+
+	private emitHappeningSlotChange(): void {
+		this.happeningSlotChange.emit(this.happeningSlot);
 	}
 
 	async close(event: Event): Promise<void> {
@@ -58,11 +70,26 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	async save(event: Event): Promise<void> {
+		console.log('save()', event);
 		event.stopPropagation();
-		await this.modalController.dismiss();
+		if (!this.team) {
+			this.errorLogger.logError('team context is not set');
+			return;
+		}
+		if (!this.happening) {
+			this.errorLogger.logError('happening context is not set');
+			return;
+		}
+		this.happeningService.updateSlot(this.team.id, this.happening.id, this.happeningSlot)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: () => this.modalController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close modal')),
+				error: e => this.errorLogger.logError(e, 'Failed to update happening slot'),
+			});
 	}
 
 	ngAfterViewInit(): void {
+		console.log('ngAfterViewInit', this.happeningSlot);
 		this.processHappening();
 	}
 
@@ -73,11 +100,16 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	private processHappening(): void {
-		if (this.happening?.brief?.type === 'single') {
-			if (this.happening?.brief?.slots?.length === 1) {
-				this.singleSlot = this.happening.brief.slots[0];
-			}
-		}
+		// if (this.happening?.brief?.type === 'single') {
+		// 	if (this.happening?.brief?.slots?.length === 1) {
+		// 		this.singleSlot = this.happening.brief.slots[0];
+		// 	}
+		// }
+	}
+
+	ngOnDestroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
 	}
 
 }

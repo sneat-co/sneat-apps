@@ -13,6 +13,14 @@ export function isoStringsToDate(date: string, time?: string): Date {
 	return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
 }
 
+export function isValidaTimeString(v?: string): boolean {
+	return !!v?.match(/^\d{2}:\d{2}$/);
+}
+
+export function isValidDateString(v?: string): boolean {
+	return !!v?.match(/^\d{4}-\d{2}-\d{2}$/);
+}
+
 export function dateToIso(d: Date): string {
 	d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
 	return d
