@@ -1,4 +1,3 @@
-import { IHappeningContext } from '@sneat/team/models';
 import { IWithTeamIDs } from './dto-models';
 import { IPrice } from './dto-pricing';
 import { ActivityType, Repeats, WeekdayCode2 } from './types';
@@ -99,11 +98,6 @@ export const emptyHappeningSlot: IHappeningSlot = {
 	id: '',
 	repeats: 'once',
 	start: {date: '', time: ''},
-}
-
-
-export interface IHappeningWithUiState extends IHappeningContext {
-	readonly state: UiState;
 }
 
 export interface ISingleHappeningDto extends IHappeningDto {

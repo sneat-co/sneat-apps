@@ -15,7 +15,7 @@ import {
 	IShortTeamInfo,
 	ITeamBrief,
 	ITeamDto,
-	TeamType,
+	TeamType, UiState,
 } from '@sneat/dto';
 import { ITeamItemContext } from './team-item-context';
 
@@ -45,4 +45,9 @@ export function createShortCommuneInfoFromDto(team: ITeamContext): IShortTeamInf
 		throw new Error('!team.type');
 	}
 	return { id: team.id, title: team.brief?.title, type: team.type };
+}
+
+
+export interface IHappeningWithUiState extends IHappeningContext {
+	readonly state: UiState;
 }

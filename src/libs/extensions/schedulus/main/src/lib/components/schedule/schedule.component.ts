@@ -11,21 +11,19 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { virtualSliderAnimations } from '@sneat/components';
 import { dateToIso, localDateToIso } from '@sneat/core';
-import { HappeningType, IHappeningSlot, IHappeningWithUiState, WeekdayCode2 } from '@sneat/dto';
+import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
+import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
+import { IHappeningContext, IHappeningWithUiState, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
-import { ISlotItem, NewHappeningParams } from '@sneat/extensions/schedulus/shared';
 import { isToday } from '../schedule-core';
 import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
 import { ScheduleStateService } from '../schedule-state.service';
-import { Weekday } from '../schedule-week/schedule-week.component';
 
 export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 

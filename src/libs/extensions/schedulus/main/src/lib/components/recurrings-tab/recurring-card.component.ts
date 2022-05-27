@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnDestroy } from '@angular/core';
-import { IHappeningWithUiState } from '@sneat/dto';
+import { IHappeningWithUiState } from '@sneat/team/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
