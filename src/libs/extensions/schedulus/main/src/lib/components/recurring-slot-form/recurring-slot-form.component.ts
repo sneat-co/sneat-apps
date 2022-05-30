@@ -23,14 +23,16 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 
 	public error?: string;
 
+	public tab: 'when' | 'where' = 'when';
+
 	@Input() happeningType: HappeningType = 'recurring';
 	@Input() wd?: WeekdayCode2;
 	@Input() isToDo = false;
 	@Input() slots?: IHappeningSlot[];
 	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
 	@Output() eventTimesChanged = new EventEmitter<ITiming>();
-	minDate = '2019';
-	maxDate = '2023';
+	minDate = '2000';
+	maxDate = '' + (new Date().getFullYear() + 5);
 	repeats = new FormControl('weekly', Validators.required);
 	slotForm = new FormGroup({
 		locationTitle: new FormControl(''),
@@ -54,10 +56,6 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	) {
 		super(true);
 		const now = new Date();
-		this.minDate = now.getFullYear()
-			.toString();
-		this.maxDate = (now.getFullYear() + 5)
-			.toString();
 		const preselectedWd = window.history.state.wd as string;
 		if (preselectedWd) {
 			this.weekdaysForm.controls[preselectedWd].setValue(true);
@@ -153,7 +151,7 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		if (!this.timing) {
 			throw new Error('!this.timing');
 		}
-		const slot: IHappeningSlot = {
+		let slot: IHappeningSlot = {
 			id: newRandomId({ len: 3 }),
 			repeats: 'weekly',
 			...this.timing,
@@ -162,7 +160,8 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 				.map(entry => entry[0]) as WeekdayCode2[],
 		};
 		if (formValue.locationTitle || formValue.locationAddress) {
-			const l: SlotLocation = slot.location = {};
+			const l: SlotLocation = {};
+			slot = {...slot, location: l}
 			if (formValue.locationTitle) {
 				l.title = formValue.locationTitle;
 			}

@@ -8,8 +8,10 @@
 		</ion-buttons>
 	</ion-item>
 	<ion-item-divider color="light">When</ion-item-divider>
-	<sneat-start-end-datetime-form [happeningSlot]="happeningSlot"
-																 (slotChanged)="onTimingChanged($event)"
+	<sneat-start-end-datetime-form
+		happeningType="single"
+		[happeningSlot]="happeningSlot"
+		(slotChanged)="onTimingChanged($event)"
 	></sneat-start-end-datetime-form>
 
 	<ion-item-divider color="light">Where</ion-item-divider>

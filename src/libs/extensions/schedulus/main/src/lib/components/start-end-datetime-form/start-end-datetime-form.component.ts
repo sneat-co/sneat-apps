@@ -1,8 +1,18 @@
-import { AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { IonInput, ModalController, PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate, isValidaTimeString, isValidDateString } from '@sneat/core';
-import { emptyHappeningSlot, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
+import { emptyHappeningSlot, HappeningType, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
 import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
@@ -11,10 +21,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	templateUrl: 'start-end-datetime-form.component.html',
 })
 export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
+	@ViewChild('startTimeInput') startTimeInput?: IonInput;
+
 	// @Input() mode?: 'new' | 'edit' = 'new';
+	@Input() happeningType?: HappeningType;
 	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
-	@Input() hideStartDate = false;
+
 	@Output() readonly slotChanged = new EventEmitter<IHappeningSlot>();
+
 	public tab: 'duration' | 'end' = 'duration';
 	public durationUnits: 'minutes' | 'hours' = 'minutes';
 	public startDate = new FormControl('', { // dateToIso(new Date())
@@ -23,14 +37,16 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	public endDate = new FormControl('', {
 		// validators: Validators.required,
 	});
-	public readonly startTime = new FormControl('10:00', {
+	public readonly startTime = new FormControl('', {
 		validators: [
 			Validators.required,
+			Validators.pattern(/[0-2]\d:[0-5]\d/)
 		],
 	});
-	public readonly endTime = new FormControl('11:00', {
+	public readonly endTime = new FormControl('', {
 		validators: [
 			Validators.required,
+			Validators.pattern(/[0-2]\d:[0-5]\d/)
 		],
 	});
 	public readonly duration = new FormControl(60, {
@@ -38,6 +54,14 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			Validators.required,
 		],
 	});
+
+	public get disabled(): boolean {
+		return !this.happeningType;
+	}
+
+	public get hideStartDate(): boolean {
+		return this.happeningType === 'recurring';
+	}
 
 	public get timing(): ITiming {
 		let start: IDateTime = {
@@ -67,14 +91,19 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
-		private readonly popoverController: PopoverController,
+		// private readonly popoverController: PopoverController,
 	) {
+		console.log('StartEndDatetimeFormComponent.constructor()');
+		this.endTime.disable();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const happeningSlotChange = changes['happeningSlot'];
-		console.log('StartEndDatetimeFormComponent.ngOnChanges()', happeningSlotChange);
+		console.log('StartEndDatetimeFormComponent.ngOnChanges()', changes);
 		if (happeningSlotChange?.currentValue) {
+			if (this.happeningSlot.repeats === 'UNKNOWN') {
+				this.setRepeatsBasedOnHappeningType();
+			}
 			this.startDate.setValue(this.happeningSlot.start.date);
 			this.startTime.setValue(this.happeningSlot.start.time);
 			this.endDate.setValue(this.happeningSlot.end?.date);
@@ -104,6 +133,17 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		this.startTime.setValue(dateToTimeOnlyStr(d));
 	}
 
+	private setRepeatsBasedOnHappeningType(): void {
+		switch (this.happeningType) {
+			case 'recurring':
+				this.happeningSlot = {...this.happeningSlot, repeats: 'weekly'};
+				break;
+			case 'single':
+				this.happeningSlot = {...this.happeningSlot, repeats: 'once'};
+				break;
+		}
+	}
+
 	setStartDate(event: Event, code: 'today' | 'tomorrow'): void {
 		console.log('setStartDate()', event);
 		const today = new Date();
@@ -123,11 +163,20 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	ngAfterViewInit(): void {
-		console.log('StartEndDatetimeFormComponent.ngAfterViewInit', this.happeningSlot);
-		this.emitSlotChanged();
+		console.log(`StartEndDatetimeFormComponent.ngAfterViewInit(), happeningType=${this.happeningType}, happeningSlot:`, this.happeningSlot);
+		this.setRepeatsBasedOnHappeningType();
+		// setTimeout(() => {
+		// 	if (this.startTimeInput) {
+		// 		this.startTimeInput.setFocus().catch(console.error);
+		// 	} else {
+		// 		console.warn('no startTimeInput');
+		// 	}
+		// }, 300);
+		// this.emitSlotChanged('ngAfterViewInit');
 	}
 
-	emitSlotChanged(): void {
+	emitSlotChanged(from: string): void {
+		console.log(`StartEndDatetimeFormComponent.emitSlotChanged(from=${from})`, this.happeningSlot);
 		this.slotChanged.emit(this.happeningSlot);
 	}
 
@@ -148,7 +197,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			isValidaTimeString(this.endTime.value as string) &&
 			isValidDateString(this.startDate.value as string)
 		) {
-			this.emitSlotChanged();
+			this.emitSlotChanged('onStartDateChanged');
 		}
 	}
 
@@ -165,8 +214,9 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		console.log('StartEndDatetimeFormComponent.onDurationChanged()', event);
 		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setEndTime();
+		} else {
+			this.emitSlotChanged('onDurationChanged');
 		}
-		this.emitSlotChanged();
 	}
 
 	setEndTime(): void {
@@ -198,7 +248,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setDuration();
 		}
-		this.emitSlotChanged();
+		this.emitSlotChanged('onEndTimeChanged');
 	}
 
 

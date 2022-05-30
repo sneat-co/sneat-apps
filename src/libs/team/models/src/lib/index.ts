@@ -5,3 +5,4 @@ export * from './invite-models';
 export * from './dto-models';
 export * from './team-context';
 export * from './team-item-context';
+export * from './happening-context';

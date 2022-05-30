@@ -4,32 +4,32 @@ import { ActivityType, Repeats, WeekdayCode2 } from './types';
 import { UiState } from './ui-state';
 
 export interface SlotParticipant {
-	id: string;
-	type: 'member' | 'contact';
-	title: string;
+	readonly id: string;
+	readonly type: 'member' | 'contact';
+	readonly title: string;
 }
 
 export interface IHappeningBase {
-	type: HappeningType;
-	kind: HappeningKind;
-	title: string;
-	activityType?: ActivityType;
-	levels?: Level[];
-	slots?: IHappeningSlot[];
-	assetIDs?: string[];
-	memberIDs?: string[];
-	contactIDs?: string[];
+	readonly type: HappeningType;
+	readonly kind: HappeningKind;
+	readonly activityType?: ActivityType; // TODO: Is it same as HappeningKind?
+	readonly title: string;
+	readonly levels?: Level[];
+	readonly assetIDs?: string[];
+	readonly contactIDs?: string[];
+	slots?: IHappeningSlot[]; // TODO: make readonly
+	memberIDs?: string[]; // TODO: make readonly
 }
 
 export interface IHappeningBrief extends IHappeningBase {
-	id: string;
+	readonly id: string;
 }
 
 export interface IHappeningDto extends IHappeningBase, IWithTeamIDs {
 	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 	readonly date?: string;
-	participants?: SlotParticipant[];
-	note?: string;
+	participants?: SlotParticipant[]; // TODO: make readonly
+	readonly note?: string;
 }
 
 export function validateHappeningDto(dto: IHappeningDto): void {
@@ -96,16 +96,16 @@ export interface IDateTime {
 }
 
 export interface ITiming {
-	start: IDateTime;
-	end?: IDateTime;
-	durationMinutes?: number;
+	readonly start: IDateTime;
+	readonly end?: IDateTime;
+	readonly durationMinutes?: number;
 }
 
 export interface IHappeningSlotTiming extends ITiming {
-	repeats: Repeats;
-	weekdays?: WeekdayCode2[];
-	weeks?: number[];
-	fortnightly?: {
+	readonly repeats: Repeats;
+	readonly weekdays?: WeekdayCode2[];
+	readonly weeks?: number[];
+	readonly fortnightly?: {
 		odd: IFortnightly;
 		even: IFortnightly;
 	};
@@ -122,13 +122,13 @@ export interface IHappeningTask {
 
 export interface IHappeningSlot extends IHappeningSlotTiming {
 	readonly id: string;
+	readonly location?: SlotLocation;
 	readonly groupIds?: string[]; // TODO: What is this?
-	location?: SlotLocation; // TODO: make readonly
 }
 
 export const emptyHappeningSlot: IHappeningSlot = {
 	id: '',
-	repeats: 'once',
+	repeats: 'UNKNOWN',
 	start: { date: '', time: '' },
 };
 

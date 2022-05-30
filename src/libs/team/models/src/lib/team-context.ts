@@ -37,8 +37,6 @@ export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGro
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IDocumentContext = IAssetContext;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
-export type IHappeningContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
-export type IRecurringContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
 
 export interface IListKey {
 	id: string;
@@ -56,7 +54,3 @@ export function createShortCommuneInfoFromDto(team: ITeamContext): IShortTeamInf
 	return { id: team.id, title: team.brief?.title, type: team.type };
 }
 
-
-export interface IHappeningWithUiState extends IHappeningContext {
-	readonly state: UiState;
-}
