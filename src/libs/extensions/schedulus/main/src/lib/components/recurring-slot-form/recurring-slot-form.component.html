@@ -2,7 +2,7 @@
 	<ion-label style="font-weight: bold">New slot</ion-label>
 	<ion-buttons slot="end">
 		<ion-button title="Cancel" role="cancel" (click)="dismissModal()">
-<!--			<ion-label>Cancel</ion-label>-->
+			<ion-label color="light">Cancel</ion-label>
 			<ion-icon name="close" slot="end"></ion-icon>
 		</ion-button>
 	</ion-buttons>
@@ -16,11 +16,11 @@
 </ion-item>
 
 <form [formGroup]="timeForm" *ngIf="happeningType === 'recurring' || date">
-<!--	<ion-item-divider color="light">Where</ion-item-divider>-->
-<!--	<ion-item>-->
-<!--		<ion-label position="floating">Address</ion-label>-->
-<!--		<ion-textarea></ion-textarea>-->
-<!--	</ion-item>-->
+	<!--	<ion-item-divider color="light">Where</ion-item-divider>-->
+	<!--	<ion-item>-->
+	<!--		<ion-label position="floating">Address</ion-label>-->
+	<!--		<ion-textarea></ion-textarea>-->
+	<!--	</ion-item>-->
 
 	<ion-item-divider color="light">When</ion-item-divider>
 	<sneat-start-end-datetime-form
@@ -36,13 +36,14 @@
 			<ion-select-option value="week-1st">Every 1st week of a month</ion-select-option>
 			<ion-select-option value="week-2nd">Every 2nd week of a month</ion-select-option>
 			<ion-select-option value="week-3d">Every 3d week of a month</ion-select-option>
+			<ion-select-option value="week-4th">Every 4th week of a month</ion-select-option>
 			<ion-select-option value="week-last">Every last week of a month</ion-select-option>
 		</ion-select>
 	</ion-item>
 </form>
 
 <ng-container *ngIf="happeningType === 'recurring'">
-	<form [formGroup]="weekdaysForm" *ngIf="happens === 'weekly' && showWeekday">
+	<form [formGroup]="weekdaysForm" *ngIf="happens.startsWith('week') && showWeekday">
 		<ion-grid class="grid-layout">
 			<ion-row>
 				<ion-col size="6">
@@ -83,4 +84,7 @@
 			</ion-row>
 		</ion-grid>
 	</form>
+	<ion-item *ngIf="error">
+		<ion-label color="danger">{{error}}</ion-label>
+	</ion-item>
 </ng-container>

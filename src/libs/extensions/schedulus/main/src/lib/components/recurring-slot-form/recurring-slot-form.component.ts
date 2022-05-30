@@ -1,22 +1,28 @@
 //tslint:disable:no-unsafe-any
 //tslint:disable:no-unbound-method
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
-import { HappeningType, IHappeningSlot, ITiming, SlotLocation, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, IHappeningSlot, ITiming, RepeatsWeek, SlotLocation, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { wd2 } from '@sneat/extensions/schedulus/shared';
+import { Subject, takeUntil } from 'rxjs';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
 @Component({
 	selector: 'sneat-recurring-slot-form',
 	templateUrl: './recurring-slot-form.component.html',
 })
-export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnChanges {
+export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnChanges, OnDestroy {
+
+	private readonly destroyed = new Subject<void>();
 
 	private timing?: ITiming;
+
+	public error?: string;
+
 	@Input() happeningType: HappeningType = 'recurring';
 	@Input() wd?: WeekdayCode2;
 	@Input() isToDo = false;
@@ -37,7 +43,7 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	timeForm = new FormGroup({
 		repeats: this.repeats,
 	});
-	happens: 'fortnightly' | 'weekly' | 'once' = 'weekly';
+	happens: 'once' | 'weekly' | RepeatsWeek | 'fortnightly' = 'weekly';
 	showWeekday = true;
 	date = '';
 
@@ -56,6 +62,11 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		if (preselectedWd) {
 			this.weekdaysForm.controls[preselectedWd].setValue(true);
 		}
+		this.weekdaysForm.valueChanges
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: () => this.error = undefined,
+			});
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -81,56 +92,60 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 			this.slotForm.controls['locationTitle']?.errors,
 		);
 		if (!this.weekdaysForm.valid) {
-			this.showWeekday = false;
-
-			this.alertCtrl.create({
-				header: 'Please select day(s)',
-				inputs: wd2.map(wd => {
-					// tslint:disable-next-line:no-any
-					const result: { type: 'checkbox'; name: WeekdayCode2; value: WeekdayCode2; label: string; handler: (input: any) => void } = {
-						type: 'checkbox',
-						name: wd,
-						value: wd,
-						label: wdCodeToWeekdayLongName(wd),
-						handler: input => {
-							const v = this.weekdaysForm.get(wd);
-							if (v) {
-								v.setValue(input.checked);
-							} else {
-								console.error('!v', v);
-							}
-							console.log(input);
-						},
-					};
-					return result;
-				}),
-				buttons: [
-					{
-						text: 'OK',
-						handler: () => {
-							this.showWeekday = true;
-							if (this.weekdaysForm.valid) {
-								this.addSlot();
-							}
-						},
-					},
-					{
-						text: 'Cancel',
-						handler: () => {
-							this.showWeekday = true;
-						},
-					}],
-			})
-				.then(alert => {
-					alert.present()
-						.catch(this.errorLogger.logErrorHandler('failed to present alert'));
-				})
-				.then(value => {
-					console.log('Alert value:', value);
-				})
-				.catch(this.errorLogger.logErrorHandler('failed to create an alert'));
+			this.error = 'At least 1 weekday should be selected';
 			return;
 		}
+		// if (!this.weekdaysForm.valid) {
+		// 	this.showWeekday = false;
+		//
+		// 	this.alertCtrl.create({
+		// 		header: 'Please select day(s)',
+		// 		inputs: wd2.map(wd => {
+		// 			// tslint:disable-next-line:no-any
+		// 			const result: { type: 'checkbox'; name: WeekdayCode2; value: WeekdayCode2; label: string; handler: (input: any) => void } = {
+		// 				type: 'checkbox',
+		// 				name: wd,
+		// 				value: wd,
+		// 				label: wdCodeToWeekdayLongName(wd),
+		// 				handler: input => {
+		// 					const v = this.weekdaysForm.get(wd);
+		// 					if (v) {
+		// 						v.setValue(input.checked);
+		// 					} else {
+		// 						console.error('!v', v);
+		// 					}
+		// 					console.log(input);
+		// 				},
+		// 			};
+		// 			return result;
+		// 		}),
+		// 		buttons: [
+		// 			{
+		// 				text: 'OK',
+		// 				handler: () => {
+		// 					this.showWeekday = true;
+		// 					if (this.weekdaysForm.valid) {
+		// 						this.addSlot();
+		// 					}
+		// 				},
+		// 			},
+		// 			{
+		// 				text: 'Cancel',
+		// 				handler: () => {
+		// 					this.showWeekday = true;
+		// 				},
+		// 			}],
+		// 	})
+		// 		.then(alert => {
+		// 			alert.present()
+		// 				.catch(this.errorLogger.logErrorHandler('failed to present alert'));
+		// 		})
+		// 		.then(value => {
+		// 			console.log('Alert value:', value);
+		// 		})
+		// 		.catch(this.errorLogger.logErrorHandler('failed to create an alert'));
+		// 	return;
+		// }
 		if (!this.slotForm.valid) {
 			return;
 		}
@@ -205,6 +220,11 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	public onTimingChanged(timing: ITiming): void {
 		console.log('onTimingChanged()', timing);
 		this.timing = timing;
+	}
+
+	ngOnDestroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
 	}
 }
 

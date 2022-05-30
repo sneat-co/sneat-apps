@@ -33,6 +33,23 @@ export interface IHappeningDto extends IHappeningBase, IWithTeamIDs {
 }
 
 export function validateHappeningDto(dto: IHappeningDto): void {
+	if (!dto.title) {
+		throw new Error('happening has no title');
+	}
+	switch (dto.type) {
+		case 'single':
+			break;
+		case 'recurring':
+			break;
+		default:
+			if (!dto.type) {
+				throw new Error('happening has no type');
+			}
+			throw new Error('happening has unknown type: ' + dto.type);
+	}
+	if (!dto.type) {
+		throw new Error('happening has no type');
+	}
 	if (!dto.slots?.length) {
 		throw new Error('!dto.slots?.length');
 	}

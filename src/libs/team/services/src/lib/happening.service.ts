@@ -31,6 +31,20 @@ export interface IHappeningSlotRequest extends IHappeningRequest {
 	slot: IHappeningSlot;
 }
 
+function processHappeningContext(h: IHappeningContext, teamID?: string): IHappeningContext {
+	if (h.dto) {
+		try {
+			validateHappeningDto(h.dto);
+		} catch (e) {
+			console.warn(`Received invalid happening DTO (id=${h.id}: ${e}`);
+		}
+	}
+	if (!h.team && teamID) {
+		h = { ...h, team: { id: teamID } };
+	}
+	return h;
+}
+
 @Injectable()
 export class HappeningService {
 	private readonly sfs: SneatFirestoreService<IHappeningBrief, IHappeningDto>;
@@ -96,7 +110,9 @@ export class HappeningService {
 	// }
 
 	watchHappeningByID(id: string): Observable<IHappeningContext> {
-		return this.sfs.watchByID(id);
+		return this.sfs.watchByID(id).pipe(
+			map(h => processHappeningContext(h)),
+		);
 	}
 
 	watchUpcomingSingles(teamID: string, statuses: HappeningStatus[] = ['active']): Observable<IHappeningContext[]> {
@@ -106,12 +122,10 @@ export class HappeningService {
 			HappeningService.statusFilter(statuses),
 			{ field: 'dateMin', operator: '>=', value: date },
 		]).pipe(map(happenings => {
-			return happenings.map(h => {
-				const happening: IHappeningContext = { ...h, team: { id: teamID } };
-				return happening;
-			});
+			return happenings.map(h => processHappeningContext(h, teamID));
 		}));
 	}
+
 
 	static statusFilter(statuses: HappeningStatus[]): IFilter {
 		const operator = statuses?.length === 1 ? '==' : 'in';
@@ -132,10 +146,7 @@ export class HappeningService {
 			{ field: 'teamDates', operator: 'array-contains', value: teamDate },
 			HappeningService.statusFilter(statuses),
 		]).pipe(map(happenings => {
-			return happenings.map(h => {
-				const happening: IHappeningContext = { ...h, team: { id: teamID } };
-				return happening;
-			});
+			return happenings.map(h => processHappeningContext(h, teamID));
 		}));
 	}
 }
