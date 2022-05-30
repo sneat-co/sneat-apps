@@ -11,7 +11,10 @@ export type SettlementType = 'rural' | 'urban';
 export type AgeGroup = 'adult' | 'child' | 'undisclosed' | 'unknown';
 export type Gender = 'male' | 'female' | 'undisclosed' | 'other' | 'unknown';
 export type Restriction = 'adults_only' | 'personal' | string;
-export type ListStatus = 'active' | 'archived' | 'deleted';
+
+export type SneatRecordStatus = 'active' | 'archived' | 'deleted';
+export type HappeningStatus = SneatRecordStatus;
+export type ListStatus = SneatRecordStatus;
 
 export type CommuneType = TeamType;
 

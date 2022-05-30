@@ -2,7 +2,7 @@ import { Inject, Injectable, NgModule } from '@angular/core';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import {
-	happeningBriefFromDto,
+	happeningBriefFromDto, HappeningStatus,
 	IAssetBrief,
 	IAssetDto,
 	IHappeningBrief,
@@ -95,11 +95,11 @@ export class HappeningService {
 		return this.sfs.watchByID(id);
 	}
 
-	watchUpcomingSingles(teamID: string, status: 'active' | 'archived' = 'active'): Observable<IHappeningContext[]> {
+	watchUpcomingSingles(teamID: string, statuses: HappeningStatus[] = ['active']): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
 		return this.sfs.watchByFilter([
 			{ field: 'teamIDs', operator: 'array-contains', value: teamID },
-			{ field: 'status', operator: '==', value: status },
+			{ field: 'status', operator: statuses?.length === 1 ? '==' : 'in', value: statuses.length === 1 ? statuses[0] : statuses },
 			{ field: 'dateMin', operator: '>=', value: date},
 		]).pipe(map(happenings => {
 			return happenings.map(h => {
