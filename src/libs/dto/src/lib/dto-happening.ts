@@ -32,6 +32,21 @@ export interface IHappeningDto extends IHappeningBase, IWithTeamIDs {
 	note?: string;
 }
 
+export function validateHappeningDto(dto: IHappeningDto): void {
+	if (!dto.slots?.length) {
+		throw new Error('!dto.slots?.length');
+	}
+	if (dto.type === 'recurring') {
+		dto.slots?.forEach(validateRecurringHappeningSlot);
+	}
+}
+
+export function validateRecurringHappeningSlot(slot: IHappeningSlot, index: number): void {
+	if (!slot.start.time) {
+		throw new Error(`slot at index ${index} has no start time`);
+	}
+}
+
 export function happeningBriefFromDto(id: string, dto: IHappeningDto): IHappeningBrief {
 	return { id, ...dto };
 }
@@ -97,8 +112,8 @@ export interface IHappeningSlot extends IHappeningSlotTiming {
 export const emptyHappeningSlot: IHappeningSlot = {
 	id: '',
 	repeats: 'once',
-	start: {date: '', time: ''},
-}
+	start: { date: '', time: '' },
+};
 
 export interface ISingleHappeningDto extends IHappeningDto {
 	readonly dtStarts?: number; // UTC

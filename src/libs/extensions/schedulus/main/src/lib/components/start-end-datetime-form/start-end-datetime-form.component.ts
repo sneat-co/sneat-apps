@@ -124,6 +124,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	ngAfterViewInit(): void {
 		console.log('StartEndDatetimeFormComponent.ngAfterViewInit', this.happeningSlot);
+		this.emitSlotChanged();
 	}
 
 	emitSlotChanged(): void {

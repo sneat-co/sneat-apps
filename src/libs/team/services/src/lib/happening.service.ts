@@ -5,7 +5,7 @@ import {
 	happeningBriefFromDto, HappeningStatus,
 	IHappeningBrief,
 	IHappeningDto,
-	IHappeningSlot,
+	IHappeningSlot, validateHappeningDto,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamRequest } from '@sneat/team/models';
@@ -46,8 +46,10 @@ export class HappeningService {
 	}
 
 	createHappening(request: ICreateHappeningRequest): Observable<any> {
-		if (!request) {
-			return throwError(() => new Error('missing required parameter: request'));
+		try {
+			validateHappeningDto(request.dto);
+		} catch (e) {
+			return throwError(() => e);
 		}
 		return this.sneatApiService.post('happenings/create_happening', request);
 	}
