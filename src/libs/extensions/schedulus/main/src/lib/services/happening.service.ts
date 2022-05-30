@@ -100,7 +100,7 @@ export class HappeningService {
 		return this.sfs.watchByFilter([
 			{ field: 'teamIDs', operator: 'array-contains', value: teamID },
 			{ field: 'status', operator: '==', value: status },
-			{ field: 'date', operator: '>=', value: date},
+			{ field: 'dateMin', operator: '>=', value: date},
 		]).pipe(map(happenings => {
 			return happenings.map(h => {
 				const happening: IHappeningContext = {...h, team: {id: teamID}};
