@@ -57,7 +57,7 @@ specifiers:
   '@typescript-eslint/parser': 5.26.0
   async: 3.2.3
   babel-loader: 8.2.5
-  codemirror: 5.65.4
+  codemirror: 5.65.5
   cypress: 9.7.0
   date-fns: 2.28.0
   dnd-core: 10.0.2
@@ -111,7 +111,7 @@ dependencies:
   '@angular/platform-browser-dynamic': 13.3.10_rkvycnsm3ph4lfbdmkvvyalxkm
   '@angular/router': 13.3.10_utvbo5zggxyocsfwx6d4gvwut4
   '@capacitor/core': 3.5.1
-  '@ctrl/ngx-codemirror': 5.1.1_rmz6jlhx5djygt3aajulw2k2ie
+  '@ctrl/ngx-codemirror': 5.1.1_2tpqn37kfwzi4tdevtqke3onru
   '@ionic-native/core': 5.36.0_rxjs@7.5.5
   '@ionic-native/splash-screen': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
   '@ionic-native/status-bar': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
@@ -123,7 +123,7 @@ dependencies:
   '@sneat-dnd/tree': 0.1.1_igdhlmb4stuynunfcwkjvzuifu
   '@sneat/random': 0.0.3_2rslyynwcxgn442jm7x7jepieq
   '@sneat/wormhole': 0.0.5_eueysaf6qr7b4na6vv73l2nbei
-  codemirror: 5.65.4
+  codemirror: 5.65.5
   date-fns: 2.28.0
   dnd-core: 10.0.2
   firebase: 9.8.2
@@ -3004,7 +3004,7 @@ packages:
       postcss-selector-parser: 6.0.10
     dev: true
 
-  /@ctrl/ngx-codemirror/5.1.1_rmz6jlhx5djygt3aajulw2k2ie:
+  /@ctrl/ngx-codemirror/5.1.1_2tpqn37kfwzi4tdevtqke3onru:
     resolution: {integrity: sha512-MAByA/cJBZY3yv/cpO87mF9Q24/ptCWf2Pr4n4V1w3G0ya5cKAIyHwIfvJ5nJz/4Gj2i2O/pteDWkyxrbyICoA==}
     peerDependencies:
       '@angular/core': '>=12.0.0-0'
@@ -3014,7 +3014,7 @@ packages:
       '@angular/core': 13.3.10_rxjs@7.5.5+zone.js@0.11.5
       '@angular/forms': 13.3.10_utvbo5zggxyocsfwx6d4gvwut4
       '@types/codemirror': 5.60.5
-      codemirror: 5.65.4
+      codemirror: 5.65.5
       tslib: 2.4.0
     dev: false
 
@@ -6824,8 +6824,8 @@ packages:
     resolution: {integrity: sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
-  /codemirror/5.65.4:
-    resolution: {integrity: sha512-tytrSm5Rh52b6j36cbDXN+FHwHCl9aroY4BrDZB2NFFL3Wjfq9nuYVLFFhaOYOczKAg3JXTr8BuT8LcE5QY4Iw==}
+  /codemirror/5.65.5:
+    resolution: {integrity: sha512-HNyhvGLnYz5c+kIsB9QKVitiZUevha3ovbIYaQiGzKo7ECSL/elWD9RXt3JgNr0NdnyqE9/Rc/7uLfkJQL638w==}
     dev: false
 
   /collect-v8-coverage/1.0.1:
@@ -9207,7 +9207,7 @@ packages:
     engines: {node: '>= 4'}
 
   /image-size/0.5.5:
-    resolution: {integrity: sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=}
+    resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
     engines: {node: '>=0.10.0'}
     hasBin: true
     requiresBuild: true
