@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { HappeningServiceModule } from '@sneat/team/services';
 import { HappeningPageFormModule } from '../../components/happening-page-form/happening-page-form.module';
 import { RecurringCommonModule } from '../../components/recurring-common.module';
-import { HappeningServiceModule } from '../../services/happening.service';
 
 import { HappeningPageComponent } from './happening-page.component';
 

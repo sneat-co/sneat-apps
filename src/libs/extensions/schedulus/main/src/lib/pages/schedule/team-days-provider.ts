@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatFirestoreService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
@@ -12,6 +11,7 @@ import {
 } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { HappeningService } from '@sneat/team/services';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,
@@ -23,7 +23,7 @@ import {
 	Subscription,
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { getWd2, ISlotItem, RecurringSlots, TeamDay, timeToStr, wd2 } from '@sneat/extensions/schedulus/shared';
+import { ISlotItem, RecurringSlots, TeamDay, timeToStr, wd2 } from '@sneat/extensions/schedulus/shared';
 
 type RecurringsByWeekday = {
 	[wd in WeekdayCode2]: ISlotItem[]
@@ -151,7 +151,8 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 
 	constructor(
 		private readonly errorLogger: IErrorLogger,
-		private readonly afs: AngularFirestore,
+		private readonly happeningService: HappeningService,
+		afs: AngularFirestore,
 		// private readonly regularService: IRegularHappeningService,
 		// private readonly singleService: ISingleHappeningService,
 	) {
@@ -178,7 +179,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		const id = dateToIso(date);
 		let day = this.days[id];
 		if (!day) {
-			this.days[id] = day = new TeamDay(this.teamID$, date, this.recurrings$, this.errorLogger, this.afs);
+			this.days[id] = day = new TeamDay(this.teamID$, date, this.recurrings$, this.errorLogger, this.happeningService);
 		}
 		return day;
 	}

@@ -1,11 +1,7 @@
-import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
 import {
-	happeningBriefFromDto,
 	HappeningType,
-	IHappeningBrief,
-	IHappeningDto,
 	ITiming,
 	Level,
 	Repeats,
@@ -15,6 +11,7 @@ import {
 } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/team/models';
+import { HappeningService } from '@sneat/team/services';
 import { BehaviorSubject, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -79,14 +76,21 @@ export class TeamDay {
 		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
 		private readonly errorLogger: IErrorLogger,
-		private readonly afs: AngularFirestore,
+		// private readonly afs: AngularFirestore,
+		private readonly happeningService: HappeningService,
 	) {
+		if (!date) {
+			throw new Error('missing required parameter: date');
+		}
+		this.date = date;
+		this.dateID = dateToIso(date);
+		if (!this.dateID) {
+			throw new Error('dateID is missing');
+		}
 		teamID$
 			.subscribe({
 				next: this.processTeamID,
 			});
-		this.date = date;
-		this.dateID = dateToIso(date);
 		this.wd = getWd2(date);
 		this.isoID = dateToIso(date);
 		if (this.isoID === '1970-01-01') {
@@ -111,37 +115,39 @@ export class TeamDay {
 		this.subscribeForSingles();
 	};
 
-	private subscribeForSingles(): void {
-		if (!this.teamID) {
+	private readonly subscribeForSingles = (): void => {
+		if (!this.teamID ) {
+			console.error('Tried to subscribe for single happenings without teamID');
+			return;
+		}
+		if (!this.dateID ) {
+			console.error('Tried to subscribe for single happenings without dateID');
 			return;
 		}
 		try {
-			const teamDate = `${this.teamID}:${this.dateID}`;
-			console.log(`TeamDay[${this.isoID}].subscribeForSingles(), teamID:dateID=${teamDate}`);
-			this.afs
-				.collection<IHappeningDto>('happenings', ref => ref.where('teamDates', 'array-contains', teamDate))
-				.snapshotChanges()
+			const teamID = this.teamID;
+			const date = this.dateID;
+			console.log(`TeamDay[${this.isoID}].subscribeForSingles(), teamID=${teamID}, date=${date}`);
+			this.happeningService
+				.watchSinglesOnSpecificDay(this.teamID, this.dateID)
 				.pipe(
-					// takeUntil(this.teamID$),
+					takeUntil(this.destroyed),
 				)
 				.subscribe({
 					next: this.processSingles,
-					error: this.errorLogger.logErrorHandler(`Failed to get single happenings for a given day: ${teamDate}`),
+					error: this.errorLogger.logErrorHandler(`Failed to get single happenings for a given day: teamID=${teamID}, date=${date}`),
 				});
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to subscribe for team day single happenings');
 		}
 	}
 
-	private readonly processSingles = (changes: DocumentChangeAction<IHappeningDto>[]) => {
+	private readonly processSingles = (singleHappenings: IHappeningContext[]): void => {
 		try {
 			this.singles = [];
 
-			changes.forEach(value => {
-				const id: string = value.payload.doc.ref.id;
-				const dto: IHappeningDto = value.payload.doc.data();
-				const brief: IHappeningBrief = happeningBriefFromDto(id, dto);
-				const slot = dto.slots && dto.slots[0];
+			singleHappenings.forEach(happening => {
+				const slot = happening.dto?.slots && happening.dto?.slots[0];
 				if (!slot) {
 					return;
 				}
@@ -151,10 +157,10 @@ export class TeamDay {
 					durationMinutes: slot.durationMinutes,
 				};
 				const slotItem: ISlotItem = {
-					title: brief.title,
+					title: happening.brief?.title || happening?.dto?.title || 'NO TITLE',
 					timing,
 					repeats: 'once',
-					happening: { id, brief, dto },
+					happening,
 				};
 				this.singles?.push(slotItem);
 			});

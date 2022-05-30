@@ -2,9 +2,8 @@ import { Component, EventEmitter, Inject, Input, OnDestroy } from '@angular/core
 import { IHappeningWithUiState } from '@sneat/team/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { HappeningService, TeamNavService } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
-import { HappeningService } from '../../services/happening.service';
 
 @Component({
 	selector: 'sneat-recurring-card',

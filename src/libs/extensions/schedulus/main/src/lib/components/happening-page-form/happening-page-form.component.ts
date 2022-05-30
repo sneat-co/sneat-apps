@@ -6,22 +6,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
 import {
-	emptyHappeningSlot,
 	HappeningType,
 	IHappeningDto,
 	IHappeningSlot,
-	ITiming,
 	SlotParticipant,
 	WeekdayCode2,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { memberContextFromBrief } from '@sneat/team/services';
+import { HappeningService, memberContextFromBrief } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
-import { HappeningService } from '../../services/happening.service';
-import { ScheduleService } from '../../services/schedule.service';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
 @Component({
@@ -169,7 +165,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		};
 		switch (dto.type) {
 			case 'recurring':
-				dto.slots = this.slots.map(slot => ({...slot, repeats: 'weekly', id: slot.id || newRandomId({len: 5})}));
+				dto.slots = this.slots.map(slot => ({ ...slot, repeats: 'weekly', id: slot.id || newRandomId({ len: 5 }) }));
 				break;
 			case 'single':
 				if (!this.singleSlot) {
@@ -277,7 +273,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 								.catch(this.logErrorHandler('failed to team schedule after creating a happening'));
 						}
 					},
-					error: err => {
+					error: (err: any) => {
 						this.isCreating = false;
 						this.logError(err, 'failed to create new happening');
 					},

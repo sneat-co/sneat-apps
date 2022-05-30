@@ -5,7 +5,7 @@ import {
 	EventEmitter,
 	Inject,
 	Input,
-	OnChanges, OnDestroy, OnInit,
+	OnChanges, OnDestroy,
 	Output,
 	SimpleChanges,
 } from '@angular/core';
@@ -13,8 +13,8 @@ import { ModalController } from '@ionic/angular';
 import { emptyHappeningSlot, IHappeningSlot, ITiming } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { HappeningService } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
-import { HappeningService } from '../../services/happening.service';
 
 @Component({
 	selector: 'sneat-single-slot-form',
@@ -84,7 +84,7 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDest
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: () => this.modalController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close modal')),
-				error: e => this.errorLogger.logError(e, 'Failed to update happening slot'),
+				error: this.errorLogger.logErrorHandler('Failed to update happening slot'),
 			});
 	}
 

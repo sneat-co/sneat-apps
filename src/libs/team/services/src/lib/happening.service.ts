@@ -1,27 +1,29 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
-import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import {
 	happeningBriefFromDto, HappeningStatus,
-	IAssetBrief,
-	IAssetDto,
 	IHappeningBrief,
 	IHappeningDto,
 	IHappeningSlot,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, IRecurringContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
+import { IHappeningContext, ITeamRequest } from '@sneat/team/models';
 import { TeamItemBaseService } from '@sneat/team/services';
 import { map, Observable, throwError } from 'rxjs';
-import { ICreateHappeningRequest } from './schedule.service';
+
+export interface ICreateHappeningRequest {
+	teamID: string;
+	dto: IHappeningDto;
+}
 
 export interface IHappeningRequest extends ITeamRequest {
-	happeningID: string
+	happeningID: string;
 	happeningType?: string;
 }
 
 export interface IHappeningMemberRequest extends ITeamRequest {
-	happeningID: string
+	happeningID: string;
 	memberID: string;
 }
 
@@ -56,7 +58,7 @@ export class HappeningService {
 			teamID: happening.team?.id || '',
 			happeningID: happening.id,
 			happeningType: happening.brief?.type || happening.dto?.type,
-		}
+		};
 		return this.sneatApiService.delete('happenings/delete_happening', undefined, request);
 	}
 
@@ -65,7 +67,7 @@ export class HappeningService {
 			teamID: teamID,
 			happeningID: happening.id,
 			memberID,
-		}
+		};
 		return this.sneatApiService.post('happenings/remove_member', request);
 	}
 
@@ -74,7 +76,7 @@ export class HappeningService {
 			teamID,
 			happeningID: happening.id,
 			memberID,
-		}
+		};
 		return this.sneatApiService.post('happenings/add_member', request);
 	}
 
@@ -83,7 +85,7 @@ export class HappeningService {
 			teamID,
 			happeningID,
 			slot,
-		}
+		};
 		return this.sneatApiService.post('happenings/update_slot', request);
 	}
 
@@ -99,11 +101,37 @@ export class HappeningService {
 		const date = dateToIso(new Date());
 		return this.sfs.watchByFilter([
 			{ field: 'teamIDs', operator: 'array-contains', value: teamID },
-			{ field: 'status', operator: statuses?.length === 1 ? '==' : 'in', value: statuses.length === 1 ? statuses[0] : statuses },
-			{ field: 'dateMin', operator: '>=', value: date},
+			HappeningService.statusFilter(statuses),
+			{ field: 'dateMin', operator: '>=', value: date },
 		]).pipe(map(happenings => {
 			return happenings.map(h => {
-				const happening: IHappeningContext = {...h, team: {id: teamID}};
+				const happening: IHappeningContext = { ...h, team: { id: teamID } };
+				return happening;
+			});
+		}));
+	}
+
+	static statusFilter(statuses: HappeningStatus[]): IFilter {
+		const operator = statuses?.length === 1 ? '==' : 'in';
+		const value = statuses.length === 1 ? statuses[0] : statuses;
+		return { field: 'status', operator, value };
+	}
+
+	watchSinglesOnSpecificDay(teamID: string, date: string, statuses: HappeningStatus[] = ['active']): Observable<IHappeningContext[]> {
+		if (!teamID) {
+			return throwError(() => 'missing required field "teamID"');
+		}
+		if (!date) {
+			return throwError(() => 'missing required field "date"');
+		}
+		console.log('watchSinglesOnSpecificDay()', teamID, date, statuses);
+		const teamDate = teamID + ':' + date;
+		return this.sfs.watchByFilter([
+			{ field: 'teamDates', operator: 'array-contains', value: teamDate },
+			HappeningService.statusFilter(statuses),
+		]).pipe(map(happenings => {
+			return happenings.map(h => {
+				const happening: IHappeningContext = { ...h, team: { id: teamID } };
 				return happening;
 			});
 		}));

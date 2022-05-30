@@ -2,8 +2,8 @@ import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { HappeningService } from '@sneat/team/services';
 import { Subject, Subscription } from 'rxjs';
-import { HappeningService } from '../../services/happening.service';
 import { ScheduleFilterService } from '../schedule-filter.service';
 import { IScheduleFilter, isMatchingScheduleFilter } from '../schedule-filter/schedule-filter';
 import { Weekday } from '../schedule-week/schedule-week.component';
@@ -28,10 +28,10 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 	private filter?: IScheduleFilter;
 
 	readonly trackByDate = (i: number, item: Weekday): number | undefined => item.day?.date.getTime();
-	readonly id = (_: number, item: {id: string }) => item.id;
+	readonly id = (_: number, item: { id: string }) => item.id;
 
 	get numberOfHidden(): number {
-		return (this.allUpcomingSingles?.length || 0) - (this.upcomingSingles?.length || 0)
+		return (this.allUpcomingSingles?.length || 0) - (this.upcomingSingles?.length || 0);
 	}
 
 	constructor(
@@ -81,18 +81,15 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 					this.applyFilter();
 					console.log('upcoming single:', singles);
 				},
-				error: e => {
-					this.errorLogger.logError(e, 'Failed to load upcoming happenings');
-				}
-			})
+				error: this.errorLogger.logErrorHandler('Failed to load upcoming happenings'),
+			});
 		}
 	}
-
 
 
 	private applyFilter(): void {
 		const f = this.filter;
 		console.log('applyFilter()', f);
-		this.upcomingSingles = this.allUpcomingSingles?.filter(h => isMatchingScheduleFilter(h, f))
+		this.upcomingSingles = this.allUpcomingSingles?.filter(h => isMatchingScheduleFilter(h, f));
 	}
 }
