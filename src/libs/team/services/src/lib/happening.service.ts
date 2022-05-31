@@ -9,8 +9,8 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamRequest } from '@sneat/team/models';
-import { TeamItemBaseService } from '@sneat/team/services';
 import { map, Observable, throwError } from 'rxjs';
+import { TeamItemBaseService } from './team-item-base.service';
 
 export interface ICreateHappeningRequest {
 	teamID: string;
