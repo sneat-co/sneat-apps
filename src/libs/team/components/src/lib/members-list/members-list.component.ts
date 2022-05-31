@@ -85,6 +85,7 @@ export class MembersListComponent implements OnChanges {
 	public goSchedule(event: Event, member: IMemberContext) {
 		console.log('MembersListComponent.goSchedule()');
 		event.stopPropagation();
+		event.preventDefault();
 		this.scheduleNavService.goSchedule(this.team, { member: member.id })
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to member\'s schedule page'));
 	}
@@ -155,7 +156,9 @@ export class MembersListComponent implements OnChanges {
 	};
 
 	async showInviteModal(event: Event, member: IMemberContext): Promise<void> {
+		console.log('showInviteModal()', event, member);
 		event.stopPropagation();
+		event.preventDefault();
 		const modal = await this.modalController.create({
 			component: InviteModalComponent,
 			swipeToClose: true,

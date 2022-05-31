@@ -1,4 +1,7 @@
+relatedPerson: {{relatedPerson|json}}
+
 <sneat-names-form
+	[name]="relatedPerson.name"
 	[isActive]="!show.gender"
 	(namesChanged)="onNameChanged($event)"
 ></sneat-names-form>

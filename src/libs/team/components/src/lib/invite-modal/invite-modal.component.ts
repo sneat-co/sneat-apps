@@ -68,7 +68,7 @@ export class InviteModalComponent {
 			throw new Error('!this.member');
 		}
 		const receiver = getMemberTitle(this.member);
-		let m = `Hi ${receiver}, please join our family @ Sneat.app - https://sneat.app/join/family?id=${invite.id}#pin=${invite.pin}`;
+		let m = `Hi ${receiver}, please join our family @ Sneat.app - https://sneat.app/pwa/join/family?id=${invite.id}#pin=${invite.pin}`;
 		if (this.message.value) {
 			m += '\n\n' + this.message.value;
 		}

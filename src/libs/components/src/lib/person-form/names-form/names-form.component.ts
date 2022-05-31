@@ -1,4 +1,7 @@
-import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
+import {
+	AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { excludeEmpty } from '@sneat/core';
@@ -30,7 +33,7 @@ const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => 
 	selector: 'sneat-names-form',
 	templateUrl: './names-form.component.html',
 })
-export class NamesFormComponent implements AfterViewInit {
+export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input() name?: IName = {};
 	@Input() isActive = true;
 	@Input() disabled = false;
@@ -76,6 +79,27 @@ export class NamesFormComponent implements AfterViewInit {
 
 	public get hasNames(): boolean {
 		return this.firstName.value || this.lastName.value || this.fullName.value;
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		const nameChange = changes['name'];
+		if (nameChange && nameChange.currentValue) {
+			const name = this.name;
+			if (name) {
+				if (name.first) {
+					this.firstName.setValue(name.first);
+				}
+				if (name.last) {
+					this.lastName.setValue(name.last);
+				}
+				if (name.middle) {
+					this.middleName.setValue(name.middle);
+				}
+				if (name.full) {
+					this.fullName.setValue(name.full)
+				}
+			}
+		}
 	}
 
 	ngAfterViewInit(): void {

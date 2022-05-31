@@ -78,9 +78,11 @@ export class MemberService {
 						if (!member.brief) {
 							throw new Error('!member.brief');
 						}
-						members.push(member.brief);
-						team = {...team, dto: {...team.dto, members}};
-						this.teamService.onTeamUpdated(team);
+						if (!members.some(m => m.id === member.id)) {
+							members.push(member.brief);
+							team = {...team, dto: {...team.dto, members}};
+							this.teamService.onTeamUpdated(team);
+						}
 					}
 				}),
 				map(() => member),

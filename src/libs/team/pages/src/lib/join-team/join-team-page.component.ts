@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
+import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IJoinTeamInfoResponse, TeamNavService, TeamService } from '@sneat/team/services';
 import { Subject } from 'rxjs';
@@ -18,15 +19,16 @@ export const getPinFromUrl: () => string = () => {
 export class JoinTeamPageComponent implements OnDestroy {
 	private readonly destroyed = new Subject<void>();
 	private readonly id?: string;
-	public invite?: IJoinTeamInfoResponse;
+	public inviteInfo?: IJoinTeamInfoResponse;
+	public relatedPerson: IRelatedPerson = emptyRelatedPerson;
 	public pin?: string;
 	public userID?: string;
 
 	get userOwnInvite(): boolean {
-		return this.invite?.from?.userID === this.userID;
+		return this.inviteInfo?.invite.from.userID === this.userID;
 	}
 
-	private action?: 'join'| 'refuse';
+	private action?: 'join' | 'refuse';
 
 	public status: 'loading' | 'reviewing' | 'joining' | 'refusing' | 'refused' = 'loading';
 
@@ -53,7 +55,16 @@ export class JoinTeamPageComponent implements OnDestroy {
 				next: (response) => {
 					console.log('join_team:', response);
 					if (response) {
-						this.invite = response;
+						this.inviteInfo = response;
+						if (response.member) {
+							this.relatedPerson = {
+								...response.member,
+								roles: undefined,
+							};
+						}
+						// this.relatedPerson = {
+						// 	gender: this.invite.to.
+						// }
 						if (this.status === 'loading') {
 							if (this.authStatus === 'authenticated' && this.action) {
 								this.processAction();
@@ -76,14 +87,14 @@ export class JoinTeamPageComponent implements OnDestroy {
 				next: authState => {
 					this.userID = authState.user?.uid;
 					this.authStatus = authState.status;
-					if (authState.status === 'authenticated' && this.invite) {
+					if (authState.status === 'authenticated' && this.inviteInfo) {
 						setTimeout(() => {
 							this.processAction();
 						}, 10);
 					}
 				},
 				error: this.errorLogger.logErrorHandler('failed to get authState'),
-			})
+			});
 	}
 
 	private processAction(): void {
@@ -101,7 +112,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 	private getActionFromLocationHash(): void {
 		const m = location.hash.match(/[#&]action=(\w+)/);
 		if (!m) {
-			return
+			return;
 		}
 		if (m[1] === 'join' || m[1] === 'refuse') {
 			this.action = m[1];
@@ -119,7 +130,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 		if (!this.id) {
 			return;
 		}
-		const teamID = this.invite?.team.id;
+		const teamID = this.inviteInfo?.team.id;
 		if (!teamID) {
 			const m = 'Not able to join a team without ID';
 			this.errorLogger.logError(m, undefined, { show: true });
@@ -133,8 +144,8 @@ export class JoinTeamPageComponent implements OnDestroy {
 			}
 		} else {
 			this.navService.navigateToLogin({
-				queryParams: {to: 'join-team'},
-				returnTo: `/join/${this.invite?.team?.type}?id=${this.id}#pin=${this.pin}&action=join`,
+				queryParams: { to: 'join-team' },
+				returnTo: `/join/${this.inviteInfo?.team?.type}?id=${this.id}#pin=${this.pin}&action=join`,
 			});
 		}
 	}
@@ -156,7 +167,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 	}
 
 	private joinTeam(): void {
-		const team = this.invite?.team;
+		const team = this.inviteInfo?.team;
 		if (!team) {
 			this.errorLogger.logError('no team context');
 			return;

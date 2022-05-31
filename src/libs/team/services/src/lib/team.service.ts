@@ -366,6 +366,10 @@ export interface IInviteTeam {
 
 export interface IJoinTeamInfoResponse {
 	team: IInviteTeam;
-	from: IInviteFromContact;
-	to: IInviteToContact;
+	invite: {
+		from: IInviteFromContact;
+		to: IInviteToContact;
+		message?: string;
+	}
+	member?: IMemberBrief;
 }
