@@ -8,7 +8,8 @@
 <ion-content>
 	<ion-card *ngIf="inviteInfo" color="tertiary">
 		<ion-card-content *ngIf="userOwnInvite; else notUserOwnInvite">
-			<p>You've invited <b>{{inviteInfo?.invite?.to?.title}}</b> to join <b>{{inviteInfo?.team?.title || inviteInfo?.team?.type}}</b></p>
+			<p>You've invited <b>{{inviteInfo?.invite?.to?.title}}</b> to join
+				<b>{{inviteInfo?.team?.title || inviteInfo?.team?.type}}</b></p>
 		</ion-card-content>
 		<ng-template #notUserOwnInvite>
 			<ion-card-content>
@@ -49,14 +50,19 @@
 		</ion-card-content>
 	</ion-card>
 
-	<sneat-person-form [relatedPerson]="relatedPerson"></sneat-person-form>
+	<sneat-person-form-wizard
+		[relatedPerson]="relatedPerson"
+		[showAll]="true"
+	></sneat-person-form-wizard>
 
 	<ion-card>
 		<ion-card-content>
+			authStatus: {{authStatus}}
 			<ion-button color="primary" size="large"
 									[disabled]="status !== 'reviewing' || userOwnInvite"
 									(click)="join()"
 			>
+				<ion-icon name="enter-outline" slot="end"></ion-icon>
 				<ng-container *ngIf="status !== 'joining'">Join {{inviteInfo?.team?.type || 'team'}}</ng-container>
 				<ng-container *ngIf="status === 'joining'">
 					Joining {{inviteInfo?.team?.type || 'team'}}...

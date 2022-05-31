@@ -13,7 +13,7 @@ import {
 } from '@sneat/team/models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
-import { MemberService } from '@sneat/team/services';
+import { InviteService, MemberService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-invite-personal-page',
@@ -43,6 +43,7 @@ export class InvitePersonalPageComponent implements OnInit {
 		private readonly route: ActivatedRoute,
 		private readonly sneatApiService: SneatApiService,
 		private readonly memberService: MemberService,
+		private readonly inviteService: InviteService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
 		private readonly randomIdService: RandomIdService,
@@ -98,8 +99,8 @@ export class InvitePersonalPageComponent implements OnInit {
 				teamID: this.teamId,
 				inviteID: this.inviteId,
 				pin: this.pin,
-				email: this.email,
-				fullName: this.fullName,
+				// email: this.email,
+				// fullName: this.fullName,
 			};
 			if (!token) {
 				throw new Error('token is undefined or empty');
@@ -161,10 +162,10 @@ export class InvitePersonalPageComponent implements OnInit {
 		this.working = true;
 		const request: IRejectPersonalInviteRequest = {
 			teamID: this.teamId,
-			invite: this.inviteId,
+			inviteID: this.inviteId,
 			pin: this.pin,
 		};
-		this.memberService.rejectPersonalInvite(request).subscribe(
+		this.inviteService.rejectPersonalInvite(request).subscribe(
 			() => {
 				console.log('Refused to join team');
 				this.navController.navigateRoot('teams').catch((err) => {

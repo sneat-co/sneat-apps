@@ -2,12 +2,12 @@
 	[formGroup]="addMemberForm"
 	(ngSubmit)="submit()"
 >
-	<sneat-person-form [team]="team"
+	<sneat-person-form-wizard [team]="team"
 										 [disabled]="disabled"
 										 [relatedPerson]="relatedPerson"
 										 [requires]="personRequirements"
 										 (relatedPersonChange)="onRelatedPersonChanged($event)"
-	></sneat-person-form>
+	></sneat-person-form-wizard>
 
 	<ion-card *ngIf="addMemberForm.errors">
 		<ion-card-header color="danger">

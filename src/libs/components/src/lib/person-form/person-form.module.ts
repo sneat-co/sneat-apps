@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AgeGroupComponent } from './age-group/age-group.component';
-import { PersonFormComponent } from './person-form.component';
+import { PersonFormWizardComponent } from './person-form-wizard.component';
 import { EmailsFormComponent } from './emails-form/emails-form.component';
 import { NamesFormComponent } from './names-form/names-form.component';
 import { PhonesFormComponent } from './phones-form/phones-form.component';
@@ -14,7 +14,7 @@ import { RolesFormComponent } from './roles-form/roles-form.component';
 @NgModule({
 	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 	declarations: [
-		PersonFormComponent,
+		PersonFormWizardComponent,
 		EmailsFormComponent,
 		NamesFormComponent,
 		PhonesFormComponent,
@@ -23,6 +23,6 @@ import { RolesFormComponent } from './roles-form/roles-form.component';
 		RolesFormComponent,
 		RelationshipFormComponent,
 	],
-	exports: [PersonFormComponent, NamesFormComponent, GenderFormComponent],
+	exports: [PersonFormWizardComponent, NamesFormComponent, GenderFormComponent],
 })
 export class PersonFormModule {}

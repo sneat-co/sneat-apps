@@ -49,15 +49,6 @@ export class MemberService {
 		);
 	}
 
-	public rejectPersonalInvite(
-		request: IRejectPersonalInviteRequest,
-	): Observable<void> {
-		return this.sneatApiService.post(
-			'invites/reject_personal_invite',
-			request,
-		);
-	}
-
 	public createMember(request: ICreateTeamMemberRequest): Observable<IMemberContext> {
 		console.log(`MemberService.addMember()`, request);
 		const processAddMemberResponse = (

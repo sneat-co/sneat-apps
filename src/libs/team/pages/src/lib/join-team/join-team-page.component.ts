@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
 import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IJoinTeamInfoResponse, TeamNavService, TeamService } from '@sneat/team/services';
+import { IJoinTeamInfoResponse, IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team/models';
+import { InviteService, TeamNavService, TeamService } from '@sneat/team/services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -38,6 +39,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 		protected readonly route: ActivatedRoute,
 		private readonly navService: TeamNavService,
 		private readonly teamService: TeamService,
+		private readonly inviteService: InviteService,
 		private readonly authStateService: SneatAuthStateService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
@@ -136,7 +138,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 			this.errorLogger.logError(m, undefined, { show: true });
 			return;
 		}
-		if (this.authStatus === 'authenticated') {
+		if (this.authStatus === 'authenticated' || this.inviteInfo?.invite?.to.channel === 'email') {
 			if (this.pin) {
 				this.joinTeam();
 			} else {
@@ -151,11 +153,16 @@ export class JoinTeamPageComponent implements OnDestroy {
 	}
 
 	public refuse(): void {
-		if (!this.id || !this.pin) {
+		if (!this.id || !this.pin || !this.inviteInfo?.team) {
 			return;
 		}
 		this.status = 'refusing';
-		this.teamService.refuseToJoinTeam(this.id, this.pin).subscribe({
+		const request: IRejectPersonalInviteRequest = {
+			teamID: this.inviteInfo.team.id,
+			inviteID: this.id,
+			pin: this.pin,
+		};
+		this.inviteService.rejectPersonalInvite(request).subscribe({
 			next: () => {
 				this.status = 'refused';
 			},
@@ -181,24 +188,47 @@ export class JoinTeamPageComponent implements OnDestroy {
 			return;
 		}
 		this.status = 'joining';
-		const teamID = team.id;
-		this.teamService.joinTeam({
-			inviteID: this.id,
-			teamID: teamID,
-			pin: this.pin,
-		}).subscribe({
-			next: (dto) => {
-				const team = { id: teamID, dto, brief: { id: teamID, ...dto } };
-				// this.team = newTeam;
-				this.navService
-					.navigateToTeam(team, undefined)
-					.catch(this.errorLogger.logError);
-			},
-			error: (err) => {
-				this.status = 'reviewing';
-				this.errorLogger.logError(err, 'Failed to join a team');
-			},
-		});
+		const teamID: string = team.id;
+		const inviteInfo = this.inviteInfo;
+		if (!inviteInfo) {
+			return;
+		}
+		switch (this.authStatus) {
+			case 'authenticating':
+				throw new Error('tried to join while still authenticating');
+			case 'authenticated':
+				this.inviteService.acceptInviteByAuthenticatedUser(inviteInfo)
+					.subscribe({
+						next: (dto) => {
+							const team: ITeamContext = { id: teamID, brief: inviteInfo.team };
+							// this.team = newTeam;
+							this.navService
+								.navigateToTeam(team, undefined)
+								.catch(this.errorLogger.logError);
+						},
+						error: (err) => {
+							this.status = 'reviewing';
+							this.errorLogger.logError(err, 'Failed to join a team');
+						},
+					});
+				break;
+			case 'notAuthenticated':
+				this.inviteService.acceptInviteByUnauthenticatedUser(inviteInfo)
+					.subscribe({
+						next: (dto) => {
+							const team: ITeamContext = { id: teamID, brief: inviteInfo.team };
+							// this.team = newTeam;
+							this.navService
+								.navigateToTeam(team, undefined)
+								.catch(this.errorLogger.logError);
+						},
+						error: (err) => {
+							this.status = 'reviewing';
+							this.errorLogger.logError(err, 'Failed to join a team');
+						},
+					});
+				break;
+		}
 	}
 
 }

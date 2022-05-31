@@ -23,7 +23,7 @@ export * from './lib/members-as-badges';
 export * from './lib/focus';
 export * from './lib/person-form/person-form.module';
 export * from './lib/person-form/names-form/names-form.component';
-export * from './lib/person-form/person-form.component';
+export * from './lib/person-form/person-form-wizard.component';
 export * from './lib/person-form/gender-form/gender-form.component';
 export * from './lib/person-form/emails-form/emails-form.component';
 export * from './lib/person-form/phones-form/phones-form.component';

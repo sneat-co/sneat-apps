@@ -1,13 +1,4 @@
-import {
-	AgeGroup,
-	Gender,
-	IContact2Asset,
-	IMemberDto,
-	IPerson,
-	IRelatedPerson,
-	MemberRole,
-	MemberType,
-} from '@sneat/dto';
+import { IContact2Asset, IMemberBrief, IPerson, IRelatedPerson, MemberType, TeamType } from '@sneat/dto';
 import { IMemberContext } from './team-context';
 
 
@@ -19,15 +10,38 @@ export interface ITeamMemberRequest extends ITeamRequest {
 	member: string;
 }
 
+export interface IAcceptInviteResponse {
+	id: string;
+}
+
+export interface IInviteTeam {
+	id: string;
+	type: TeamType;
+	title: string;
+}
+
+export interface IJoinTeamInfoResponse {
+	team: IInviteTeam;
+	invite: {
+		id: string;
+		pin: string;
+		from: IInviteFromContact;
+		to: IInviteToContact;
+		message?: string;
+	}
+	member?: IMemberBrief;
+}
+
 export interface IAcceptPersonalInviteRequest extends ITeamRequest {
 	inviteID: string;
 	pin: string; // Do not make number as we can lose leading 0's
-	fullName?: string;
-	email?: string;
+	member?: IMemberBrief
+	// fullName?: string;
+	// email?: string;
 }
 
 export interface IRejectPersonalInviteRequest extends ITeamRequest {
-	invite: string;
+	inviteID: string;
 	pin: string;
 }
 

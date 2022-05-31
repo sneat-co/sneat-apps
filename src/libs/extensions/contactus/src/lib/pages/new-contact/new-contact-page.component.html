@@ -28,13 +28,13 @@
 		(contactRoleIDChange)="onContactRoleIDChanged($event)"
 	></sneat-contact-role-form>
 
-	<sneat-person-form *ngIf="contactRole"
+	<sneat-person-form-wizard *ngIf="contactRole"
 										 [team]="team"
 										 [hideRelationship]="true"
 										 [requires]="personRequires"
 										 (relatedPersonChange)="onRelatedPersonChange($event)"
 										 (isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
-	></sneat-person-form>
+	></sneat-person-form-wizard>
 
 	<!--	<ng-container *ngIf="member && !relation">-->
 	<!--		<p *ngIf="!member">Please select relation to member</p>-->

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { formNexInAnimation } from '@sneat/animations';
 import {
 	AgeGroup,
@@ -8,10 +8,10 @@ import {
 	IName,
 	IPersonRequirements,
 	IPhone,
-	IRelatedPerson, isEmptyName,
+	IRelatedPerson,
+	isEmptyName,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { RequiredOptions } from 'prettier';
 import { GenderFormComponent } from './gender-form/gender-form.component';
 import { NamesFormComponent } from './names-form/names-form.component';
 
@@ -29,18 +29,19 @@ interface show {
 }
 
 @Component({
-	selector: 'sneat-person-form',
-	templateUrl: 'person-form.component.html',
+	selector: 'sneat-person-form-wizard',
+	templateUrl: 'person-form-wizard.component.html',
 	animations: [
 		formNexInAnimation,
 	],
 })
-export class PersonFormComponent {
+export class PersonFormWizardComponent implements OnChanges {
 
 	@Input() requires: IPersonRequirements = {};
 	@Input() team?: ITeamContext;
 	@Input() disabled = false;
 	@Input() hideRelationship = false;
+	@Input() showAll = false;
 
 	@Input() relatedPerson: IRelatedPerson = emptyRelatedPerson;
 	@Output() readonly relatedPersonChange = new EventEmitter<IRelatedPerson>();
@@ -66,6 +67,22 @@ export class PersonFormComponent {
 		'submitButton',
 	];
 
+	ngOnChanges(changes: SimpleChanges) {
+		const showAllChange = changes['showAll'];
+		if (showAllChange && this.showAll) {
+		this.show = {
+			name: true,
+			submitButton: true,
+			emails: false,
+			phones: false,
+			nameNext: false,
+			gender: true,
+			roles: true,
+			ageGroup: true,
+			relatedAs: false,
+		}
+		}
+	}
 
 	private showRestOfTheForm(): boolean {
 		const p = this.relatedPerson;

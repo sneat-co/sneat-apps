@@ -10,7 +10,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
 	ICreateTeamRequest,
-	ICreateTeamResponse, IInviteFromContact, IInviteToContact,
+	ICreateTeamResponse, IInviteFromContact, IInviteToContact, IJoinTeamInfoResponse,
 	ITeamContext,
 	ITeamMemberRequest, ITeamRef,
 	ITeamRequest,
@@ -233,30 +233,23 @@ export class TeamService {
 	}
 
 	public getTeamJoinInfo(
-		teamId: string,
+		inviteID: string,
 		pin: string,
 	): Observable<IJoinTeamInfoResponse> {
-		return this.sneatApiService.postAsAnonymous(
+		return this.sneatApiService.postAsAnonymous<IJoinTeamInfoResponse>(
 			'team/join_info',
 			{
-				id: teamId,
-				pin: pin,
+				inviteID,
+				pin,
 			},
-		);
-	}
-
-	public joinTeam(request: IAcceptPersonalInviteRequest): Observable<ITeamDto> {
-		return this.sneatApiService.post(
-			'team/join_team',
-			request,
-		);
-	}
-
-	public refuseToJoinTeam(inviteID: string, pin: string): Observable<void> {
-		const body = { inviteID, pin };
-		return this.sneatApiService.post(
-			'invites/refuse_to_join_team',
-			body,
+		).pipe(
+			map(response => ({
+				...response, invite: {
+					...response.invite,
+					id: inviteID,
+					pin,
+				},
+			})),
 		);
 	}
 
@@ -318,7 +311,7 @@ export class TeamService {
 				filter((documentSnapshot) =>
 					documentSnapshot.type === 'value' ||
 					documentSnapshot.type === 'added' ||
-					documentSnapshot.type === 'modified'
+					documentSnapshot.type === 'modified',
 				),
 				map((documentSnapshot) => documentSnapshot.payload),
 				map((teamDoc) =>
@@ -358,18 +351,5 @@ export class TeamService {
 	}
 }
 
-export interface IInviteTeam {
-	id: string;
-	type: string;
-	title?: string;
-}
 
-export interface IJoinTeamInfoResponse {
-	team: IInviteTeam;
-	invite: {
-		from: IInviteFromContact;
-		to: IInviteToContact;
-		message?: string;
-	}
-	member?: IMemberBrief;
-}
+
