@@ -58,71 +58,11 @@
 			</ion-item>
 		</ion-card>
 
-		<ion-card>
-			<ion-segment value="members">
-				<ion-segment-button value="members">Family members</ion-segment-button>
-				<ion-segment-button value="others">Others</ion-segment-button>
-			</ion-segment>
-			<ion-item-group *ngIf="participantsTab === 'members'">
-				<ion-radio-group *ngIf="members?.length else noMembers">
-					<ng-container *ngIf="members?.length">
-						<ion-item-divider color="light">
-							<ion-label *ngIf="isToDo">Assign to</ion-label>
-							<ion-label *ngIf="!isToDo">Family attendees</ion-label>
-							<!--							<ion-buttons slot="end">-->
-							<!--								<ion-button title="Add member" (click)="addNewMember()">-->
-							<!--									<ion-icon name="add"></ion-icon>-->
-							<!--								</ion-button>-->
-							<!--							</ion-buttons>-->
-						</ion-item-divider>
-						<ion-item *ngFor="let member of members; trackBy: id">
-							<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)"
-														(ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
-							<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
-							<ion-label>{{member|memberTitle}}</ion-label>
-							<!--						<ion-select interface="popover">-->
-							<!--							<ion-select-option value="busy">Busy</ion-select-option>-->
-							<!--							<ion-select-option value="out_of_house">Out of house</ion-select-option>-->
-							<!--							<ion-select-option value="out_of_office">Out of office</ion-select-option>-->
-							<!--						</ion-select>-->
-						</ion-item>
-					</ng-container>
-				</ion-radio-group>
-				<ng-template #noMembers>
-					<ion-item>
-						<ion-label>No members.</ion-label>
-					</ion-item>
-				</ng-template>
-			</ion-item-group>
-
-			<ion-item-group *ngIf="participantsTab === 'others'">
-				<ion-item-divider color="light">
-					<ion-label>Teachers & Contacts</ion-label>
-					<ion-buttons slot="end">
-						<ion-button (click)="addContact()" title="Add contact">
-							<ion-icon name="add"></ion-icon>
-						</ion-button>
-					</ion-buttons>
-				</ion-item-divider>
-				<p class="ion-padding" *ngIf="!contacts.length">
-					You can specify who teaches a lesson or a babysitter brings your kids to the class.
-				</p>
-				<ng-container *ngIf="contacts.length">
-					<ion-item>
-						<ion-label>Superman</ion-label>
-						<ion-badge>Teacher</ion-badge>
-					</ion-item>
-					<ion-item *ngIf="contacts.length > 1">
-						<ion-label>Alison</ion-label>
-						<ion-badge color="medium">Babysitter</ion-badge>
-					</ion-item>
-					<ion-item *ngIf="contacts.length > 2">
-						<ion-label>Bob</ion-label>
-						<ion-badge color="light">co-participant</ion-badge>
-					</ion-item>
-				</ng-container>
-			</ion-item-group>
-		</ion-card>
+		<sneat-happening-members-form
+			[team]="team"
+			[happening]="happening"
+			(happeningChange)="onHappeningChanged($event)"
+		></sneat-happening-members-form>
 
 		<ion-card>
 			<ng-container *ngIf="!formIsValid()">

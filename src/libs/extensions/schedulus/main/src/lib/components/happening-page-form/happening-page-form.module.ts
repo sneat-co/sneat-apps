@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { HappeningServiceModule } from '@sneat/team/services';
+import { HappeningMembersFormComponent } from '../happening-members-form/happening-members-form.component';
 import { RecurringCommonModule } from '../recurring-common.module';
 import { HappeningPageFormComponent } from './happening-page-form.component';
 
@@ -19,6 +20,7 @@ import { HappeningPageFormComponent } from './happening-page-form.component';
 	],
 	declarations: [
 		HappeningPageFormComponent,
+		HappeningMembersFormComponent,
 	],
 	exports: [
 		HappeningPageFormComponent,

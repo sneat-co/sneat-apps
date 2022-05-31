@@ -6,7 +6,7 @@ import {
 	Level,
 	Repeats,
 	SlotLocation,
-	SlotParticipant,
+	ISlotParticipant,
 	WeekdayCode2,
 } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
@@ -35,7 +35,7 @@ export interface ISlotItem {
 	timing: ITiming;
 	repeats: Repeats,
 	location?: SlotLocation;
-	participants?: SlotParticipant[];
+	participants?: ISlotParticipant[];
 	levels?: Level[];
 }
 

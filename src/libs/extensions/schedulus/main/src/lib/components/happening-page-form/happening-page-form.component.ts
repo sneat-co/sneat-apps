@@ -9,7 +9,7 @@ import {
 	HappeningType,
 	IHappeningDto,
 	IHappeningSlot,
-	SlotParticipant,
+	ISlotParticipant,
 	WeekdayCode2,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -31,8 +31,6 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	public readonly changed = new EventEmitter<IHappeningContext>();
 
 	date = '';
-	public contacts: number[] = [];
-	public isToDo = false;
 
 	isCreating = false;
 
@@ -56,16 +54,13 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		title: this.happeningTitle,
 	});
 
-	public checkedMemberIDs: string[] = [];
 	public singleSlot?: IHappeningSlot;
 
 	private readonly logErrorHandler = this.errorLogger.logErrorHandler;
 	private readonly logError = this.errorLogger.logError;
 	private readonly hasNavHistory: boolean;
 
-	public participantsTab: 'members' | 'others' = 'members';
-
-	public readonly id = (i: number, v: { id: string }) => v.id;
+	public isToDo = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -122,17 +117,15 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	// 	}
 	// }
 
-	addContact(): void {
-		this.contacts.push(1);
-	}
 
 	onSlotAdded(slot: IHappeningSlot): void {
 		console.log('onSlotAdded()', slot, this.happening);
-		this.happeningTitle.markAsTouched();
+		this.happeningForm.markAllAsTouched();
 	}
 
 	onHappeningChanged(happening: IHappeningContext): void {
 		this.happening = happening;
+		this.happeningForm.markAllAsTouched();
 	}
 
 	onSingleSlotChanged(slot: IHappeningSlot): void {
@@ -164,6 +157,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		}
 		const activityFormValue = this.happeningForm.value;
 		const dto: IHappeningDto = {
+			...this.happening.dto,
 			...this.happening.brief,
 			teamIDs: [this.team.id], // TODO: should be already in this.happening.brief
 			title: activityFormValue.title, // TODO: should be already in this.happening.brief
@@ -185,46 +179,8 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		// 	default:
 		// 		throw new Error('unknown happening type: ' + dto.type);
 		// }
-		{ // Populate selected members
-			const selectedMembers = this.members?.filter(m => this.checkedMemberIDs.some(v => v === m.id));
-			if (selectedMembers?.length) {
-				dto.memberIDs = selectedMembers.map(m => m.id)
-					.filter(v => !!v) as string[];
-				dto.participants = selectedMembers.map(m => {
-					const s: SlotParticipant = { type: 'member', id: m.id, title: m.brief?.title || m.id };
-					return s;
-				});
-			}
-		}
+
 		return dto;
-	}
-
-	public get members(): IMemberContext[] | undefined {
-		const members = this.team?.dto?.members;
-		if (!members) {
-			return undefined;
-		}
-		return members.map(memberContextFromBrief);
-	}
-
-
-	public isMemberChecked(member: IMemberContext): boolean {
-		const { id } = member;
-		return this.checkedMemberIDs.some(v => v === id);
-	}
-
-	public isMemberCheckChanged(member: IMemberContext, event: Event): void {
-		const ce = event as CustomEvent;
-		console.log('isMemberCheckChanged()', ce);
-		const checked = ce.detail.value === 'on';
-		const { id } = member;
-		if (!checked) {
-			this.checkedMemberIDs = this.checkedMemberIDs.filter(v => v !== id);
-			return;
-		}
-		if (!this.checkedMemberIDs.some(v => v === id)) {
-			this.checkedMemberIDs.push(id);
-		}
 	}
 
 	submit(event: Event): void {

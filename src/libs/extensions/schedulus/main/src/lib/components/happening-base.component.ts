@@ -66,10 +66,10 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	@Output() readonly deleted = new EventEmitter<string>();
 
 	get date(): Date | undefined {
-		if (!this.happening?.dto?.date) {
+		if (!this.happening?.dto?.dates?.length) {
 			return undefined;
 		}
-		return isoStringsToDate(this.happening.dto.date);
+		return isoStringsToDate(this.happening.dto.dates[0]);
 	}
 
 	get wd(): WeekdayCode2 | undefined {
