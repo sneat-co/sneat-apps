@@ -1,5 +1,6 @@
 import { HappeningKind, HappeningType, IHappeningBrief, IHappeningDto, UiState } from '@sneat/dto';
-import { ITeamContext, ITeamItemContext } from '@sneat/team/models';
+import { ITeamContext } from './team-context';
+import { ITeamItemContext } from './team-item-context';
 
 export type IHappeningContext = ITeamItemContext<IHappeningBrief, IHappeningDto>;
 
