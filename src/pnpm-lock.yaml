@@ -90,7 +90,7 @@ specifiers:
   prettier: 2.6.2
   rxfire: 6.0.3
   rxjs: 7.5.5
-  tabulator-tables: 5.2.5
+  tabulator-tables: 5.2.6
   ts-jest: 28.0.3
   ts-node: 10.8.0
   tslib: 2.4.0
@@ -132,7 +132,7 @@ dependencies:
   ionicons: 6.0.1
   rxfire: 6.0.3_firebase@9.8.2+rxjs@7.5.5
   rxjs: 7.5.5
-  tabulator-tables: 5.2.5
+  tabulator-tables: 5.2.6
   tslib: 2.4.0
   zone.js: 0.11.5
 
@@ -13599,8 +13599,8 @@ packages:
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  /tabulator-tables/5.2.5:
-    resolution: {integrity: sha512-e+0ymRlfcOCBolJB657eFxD2C5H7rgjza/za+PapiNTSTq244DrPMjyzcDQLXE+bafCSqolZCuF63S9KLqHm7Q==}
+  /tabulator-tables/5.2.6:
+    resolution: {integrity: sha512-4uproic0QtJxOkarp5JpOh1xU9JJUXf1FDDfisj9nI10fQiKH6Xp91LkGeCSYoJEwL6T+A67HivaZ8Vqowto1g==}
     dev: false
 
   /tapable/1.1.3:
