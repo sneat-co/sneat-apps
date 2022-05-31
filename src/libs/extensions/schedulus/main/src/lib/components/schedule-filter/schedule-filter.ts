@@ -10,6 +10,11 @@ export interface IScheduleFilter {
 	readonly showSingles: boolean;
 }
 
+// export function areSameFilters(f1: IScheduleFilter, f2: IScheduleFilter): boolean {
+// 	return f1 === f2 || f1.text == f2.text && f1.memberIDs
+//
+// }
+
 export function isMatchingScheduleFilter(h: IHappeningContext, f?: IScheduleFilter, ): boolean {
 	if (!f) {
 		return true;

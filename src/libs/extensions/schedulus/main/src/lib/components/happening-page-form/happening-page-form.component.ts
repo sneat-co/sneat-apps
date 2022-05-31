@@ -43,7 +43,9 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: HappeningSlotsComponent;
 
-	@Input() happeningType?: HappeningType;
+	get happeningType(): HappeningType | undefined {
+		return this.happening?.brief?.type;
+	}
 
 	public slots: IHappeningSlot[] = [];
 
@@ -76,7 +78,6 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		if (changes['happening']) {
 			if (this.happening?.brief?.title) {
 				this.happeningTitle.setValue(this.happening?.brief?.title);
-				this.happeningType = this?.happening?.brief?.type;
 				this.slots = this?.happening?.brief?.slots || [];
 			}
 		}
@@ -121,6 +122,14 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 
 	addContact(): void {
 		this.contacts.push(1);
+	}
+
+	onSlotAdded(slot: IHappeningSlot): void {
+		console.log('onSlotAdded()', slot, this.happening);
+	}
+
+	onHappeningChanged(happening: IHappeningContext): void {
+		this.happening = happening;
 	}
 
 	onSlotRemoved(slots: IHappeningSlot[]): void {

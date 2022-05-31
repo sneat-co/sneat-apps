@@ -8,6 +8,7 @@ import { HappeningType, IHappeningSlot, ITiming, RepeatsWeek, SlotLocation, Week
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { wd2 } from '@sneat/extensions/schedulus/shared';
+import { IHappeningContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
@@ -25,11 +26,19 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 
 	public tab: 'when' | 'where' = 'when';
 
-	@Input() happeningType: HappeningType = 'recurring';
+	@Input() mode: 'modal' | 'in-form' = 'modal'
+	@Input() happening?: IHappeningContext;
+	get happeningType(): HappeningType | undefined {
+		return this.happening?.brief?.type;
+	}
 	@Input() wd?: WeekdayCode2;
 	@Input() isToDo = false;
-	@Input() slots?: IHappeningSlot[];
+
+	get slots(): IHappeningSlot[] | undefined {
+		return this.happening?.brief?.slots;
+	}
 	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
+	@Output() happeningChange = new EventEmitter<IHappeningContext>();
 	@Output() eventTimesChanged = new EventEmitter<ITiming>();
 	minDate = '2000';
 	maxDate = '' + (new Date().getFullYear() + 5);
@@ -152,9 +161,9 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 			throw new Error('!this.timing');
 		}
 		let slot: IHappeningSlot = {
+			...this.timing,
 			id: newRandomId({ len: 3 }),
 			repeats: 'weekly',
-			...this.timing,
 			weekdays: Object.entries(this.weekdaysForm.value)
 				.filter(entry => entry[1])
 				.map(entry => entry[0]) as WeekdayCode2[],
@@ -169,8 +178,19 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 				l.address = formValue.locationAddress;
 			}
 		}
-		this.slots?.push(slot);
+		if (!this.happening?.brief) {
+			throw new Error('!this.happening?.brief');
+		}
+		this.happening = {
+			...this.happening,
+			brief: {
+				...this.happening.brief,
+				slots: [...(this.happening.brief.slots || []), slot],
+			}
+		}
+		console.log('happening:', this.happening);
 		this.slotAdded.emit(slot);
+		this.happeningChange.emit(this.happening);
 	}
 
 	// onTimeStartsChanged(event: Event): void {

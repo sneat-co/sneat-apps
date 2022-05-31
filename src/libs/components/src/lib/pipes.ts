@@ -16,7 +16,7 @@ export class GenderIconName implements PipeTransform {
 	}
 }
 function personName(name?: IName): string | undefined {
-	return name && (name.full || name.first || name.full);
+	return name && (name.full || name.first || name.last || name.middle);
 }
 
 @Pipe({ name: 'personTitle' })
@@ -27,7 +27,7 @@ export class PersonTitle implements PipeTransform {
 }
 
 export function getMemberTitle(m: IMemberContext, shortTitle?: string): string {
-	return shortTitle || m.brief?.title || m.dto?.title || personName(m.brief?.name) || m.id;
+	return shortTitle || m?.brief?.title || m?.dto?.title || personName(m?.brief?.name) || m?.id || 'MEMBER is UNDEFINED';
 }
 
 @Pipe({ name: 'memberTitle' })

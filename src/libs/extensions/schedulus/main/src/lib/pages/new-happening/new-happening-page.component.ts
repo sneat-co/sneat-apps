@@ -4,7 +4,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HappeningType, WeekdayCode2 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { Member } from '@sneat/team/models';
+import { IHappeningContext, Member, newEmptyHappeningContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import { HappeningPageFormComponent } from '../../components/happening-page-form/happening-page-form.component';
 import { ScheduleBasePage } from '../schedule-base-page';
@@ -21,6 +21,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	public isToDo: boolean;
 	public wd?: WeekdayCode2;
 	public happeningType: HappeningType = 'recurring';
+	public happening?: IHappeningContext;
 	public date = '';
 
 	constructor(
@@ -37,8 +38,8 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 		console.log('date', this.date);
 
 		const type = window.history.state.type as HappeningType;
-		if (type) {
-			this.happeningType = type;
+		if (type && this.team && !this.happening) {
+			this.createHappeningContext(type);
 		}
 		route.queryParamMap
 			.pipe(
@@ -54,6 +55,9 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 						return;
 					}
 					this.happeningType = type;
+					if (this.team && !this.happening) {
+						this.createHappeningContext(type);
+					}
 					this.wd = queryParams.get('wd') as WeekdayCode2;
 					if (!this.date) {
 						this.date = queryParams.get('date') || '';
@@ -63,6 +67,9 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 			});
 	}
 
+	private createHappeningContext(type: HappeningType): void {
+		this.happening = newEmptyHappeningContext(this.team, type, 'appointment');
+	}
 
 
 	// TODO(fix): protected onCommuneIdsChanged() {
@@ -86,8 +93,14 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 			`type=${this.happeningType}`,
 		);
 		history.replaceState(history.state, document.title, href);
+		if (!this.happening?.brief) {
+			throw new Error('!this.happening?.brief');
+		}
+		this.happening = {
+			...this.happening,
+			brief: { ...this.happening.brief, type: this.happeningType },
+		};
 	}
-
 
 
 	// tslint:disable-next-line:prefer-function-over-method
@@ -95,8 +108,6 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 		const { detail } = (event as CustomEvent);
 		m.isChecked = detail.checked;
 	}
-
-
 
 
 	// onEventTimesChanged(times: { from: Date; to: Date }): void {

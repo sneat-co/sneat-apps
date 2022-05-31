@@ -49,10 +49,10 @@
 			<sneat-recurring-slot-form
 				class="modal-content"
 				[wd]="addSlotParams?.wd"
-				[happeningType]="'recurring'"
+				[(happening)]="happening"
 				[isToDo]="false"
-				[slots]="slots"
 				(slotAdded)="onSlotAdded($event)"
+				(happeningChange)="onHappeningChanged($event)"
 			></sneat-recurring-slot-form>
 		</div>
 	</ng-template>

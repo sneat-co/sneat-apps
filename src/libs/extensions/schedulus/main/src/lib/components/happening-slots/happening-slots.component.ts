@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IHappeningContext } from '@sneat/team/models';
 
 export interface AddSlotParams {
 	wd?: WeekdayCode2;
@@ -12,12 +13,16 @@ export interface AddSlotParams {
 })
 export class HappeningSlotsComponent {
 
-	@Input() slots?: IHappeningSlot[];
+	@Input() happening?: IHappeningContext;
 
 	@Output() addSlotDismissed = new EventEmitter<void>();
 	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
 	@Output() slotRemoved = new EventEmitter<IHappeningSlot[]>();
 	@Output() slotSelected = new EventEmitter<IHappeningSlot>();
+
+	get slots(): IHappeningSlot[] | undefined {
+		return this.happening?.brief?.slots;
+	}
 
 	isShowingAddSlot = false;
 	public addSlotParams?: AddSlotParams;
@@ -31,9 +36,17 @@ export class HappeningSlotsComponent {
 	}
 
 	removeSlot(slot: IHappeningSlot): void {
-		//tslint:disable-next-line:strict-comparisons
-		this.slots = this.slots?.filter(v => v !== slot);
-		this.slotRemoved.emit(this.slots);
+		if (!this.happening?.brief) {
+			throw new Error('!this.happening?.brief');
+		}
+		this.happening = {
+			...this.happening,
+			brief: {
+				...this.happening.brief,
+				slots: this.happening.brief.slots?.filter(v => v !== slot) || [],
+			},
+		}
+		this.slotRemoved.emit(this.happening.brief?.slots || []);
 	}
 
 	selectSlot(slot: IHappeningSlot): void {
@@ -44,6 +57,11 @@ export class HappeningSlotsComponent {
 		console.log('HappeningSlotsComponent.onSlotAdded()');
 		this.isShowingAddSlot = false;
 		this.slotAdded.emit(slot);
+	}
+
+	onHappeningChanged(happening: IHappeningContext): void {
+		console.log('HappeningSlotsComponent.onSlotAdded()');
+		this.happening = happening;
 	}
 
 	showAddSlot(params?: AddSlotParams): void {
