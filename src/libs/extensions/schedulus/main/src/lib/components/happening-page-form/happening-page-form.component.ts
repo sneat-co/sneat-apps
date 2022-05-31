@@ -1,22 +1,22 @@
 import {
-	AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, SimpleChanges,
+	AfterViewInit,
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy, Output,
+	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
-import {
-	HappeningType,
-	IHappeningDto,
-	IHappeningSlot,
-	ISlotParticipant,
-	WeekdayCode2,
-} from '@sneat/dto';
+import { HappeningType, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { newRandomId } from '@sneat/random';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService, memberContextFromBrief } from '@sneat/team/services';
+import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { HappeningService } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
@@ -37,6 +37,8 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	@Input() public team?: ITeamContext;
 	@Input() public happening?: IHappeningContext;
 	@Input() public wd?: WeekdayCode2;
+
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: HappeningSlotsComponent;
@@ -126,6 +128,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	onHappeningChanged(happening: IHappeningContext): void {
 		this.happening = happening;
 		this.happeningForm.markAllAsTouched();
+		this.happeningChange.emit(happening);
 	}
 
 	onSingleSlotChanged(slot: IHappeningSlot): void {

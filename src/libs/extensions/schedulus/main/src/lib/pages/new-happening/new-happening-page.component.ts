@@ -2,7 +2,7 @@
 //tslint:disable:no-unsafe-any
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HappeningType, WeekdayCode2 } from '@sneat/dto';
+import { HappeningType, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, Member, newEmptyHappeningContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
@@ -22,6 +22,8 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	public wd?: WeekdayCode2;
 	public happeningType: HappeningType = 'recurring';
 	public happening?: IHappeningContext;
+	private singleHappening?: IHappeningContext;
+	private recurringHappening?: IHappeningContext;
 	public date = '';
 
 	constructor(
@@ -82,6 +84,10 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	//     }));
 	// }
 
+	onHappeningChanged(happening: IHappeningContext): void {
+		this.happening = happening;
+	}
+
 	onHappeningTypeChanged(): void {
 		console.log('onHappeningTypeChanged()');
 		let { href } = location;
@@ -96,10 +102,40 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
+		if (this.happening) {
+			switch (this.happeningType) {
+				case 'single':
+					this.recurringHappening = this.happening;
+					break;
+				case 'recurring':
+					this.singleHappening = this.happening;
+					break;
+			}
+		}
 		this.happening = {
 			...this.happening,
-			brief: { ...this.happening.brief, type: this.happeningType },
+			brief: { ...this.happening.brief, type: this.happeningType, slots: undefined },
 		};
+		const setSlots = (slots?: IHappeningSlot[]) => {
+			if (slots && this.happening?.brief) {
+				this.happening = {
+					...this.happening,
+					brief: {
+						...this.happening.brief,
+						slots,
+					},
+				};
+			}
+		};
+		switch (this.happeningType) {
+			case 'single':
+				setSlots(this.singleHappening?.brief?.slots);
+				break;
+			case 'recurring':
+				setSlots(this.recurringHappening?.brief?.slots);
+				break;
+		}
+		console.log('singleHappening', this.singleHappening, this.happening);
 	}
 
 

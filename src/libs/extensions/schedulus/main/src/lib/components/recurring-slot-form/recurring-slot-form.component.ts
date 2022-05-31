@@ -39,17 +39,20 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 
 	public tab: 'when' | 'where' = 'when';
 
-	@Input() mode: 'modal' | 'in-form' = 'modal'
+	@Input() mode: 'modal' | 'in-form' = 'modal';
 	@Input() happening?: IHappeningContext;
+
 	get happeningType(): HappeningType | undefined {
 		return this.happening?.brief?.type;
 	}
+
 	@Input() wd?: WeekdayCode2;
 	@Input() isToDo = false;
 
 	get slots(): IHappeningSlot[] | undefined {
 		return this.happening?.brief?.slots;
 	}
+
 	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
 	@Output() happeningChange = new EventEmitter<IHappeningContext>();
 	@Output() eventTimesChanged = new EventEmitter<ITiming>();
@@ -93,6 +96,12 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		if (this.wd) {
 			this.weekdayById[this.wd]?.setValue(true);
 		}
+		const happeningChange = changes['happening'];
+		if (happeningChange) {
+			if (this.happeningType === 'single' && this.happens !== 'once') {
+				this.happens = 'once';
+			}
+		}
 	}
 
 	dismissModal(): void {
@@ -111,10 +120,15 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		console.log('addSlot() => this.slotForm.errors:',
 			this.slotForm.controls['locationTitle']?.errors,
 		);
-		if (!this.weekdaysForm.valid) {
+		if (this.happeningType === 'recurring' && !this.weekdaysForm.valid) {
 			this.error = 'At least 1 weekday should be selected';
 		}
-		if (!this.startEndDatetimeForm?.isValid || !this.weekdaysForm.valid) {
+		if (!this.startEndDatetimeForm?.isValid) {
+			console.log('startEndDatetimeForm is not valid');
+			return;
+		}
+		if (this.happeningType === 'recurring' && !this.weekdaysForm.valid) {
+			console.log('weekdaysForm is not valid');
 			return;
 		}
 		// if (!this.weekdaysForm.valid) {
@@ -178,14 +192,19 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		let slot: IHappeningSlot = {
 			...this.timing,
 			id: newRandomId({ len: 3 }),
-			repeats: 'weekly',
-			weekdays: Object.entries(this.weekdaysForm.value)
-				.filter(entry => entry[1])
-				.map(entry => entry[0]) as WeekdayCode2[],
+			repeats: this.happens,
 		};
+		if (this.happeningType === 'recurring') {
+			slot = {
+				...slot,
+				weekdays: Object.entries(this.weekdaysForm.value)
+					.filter(entry => entry[1])
+					.map(entry => entry[0]) as WeekdayCode2[],
+			};
+		}
 		if (formValue.locationTitle || formValue.locationAddress) {
 			const l: SlotLocation = {};
-			slot = {...slot, location: l}
+			slot = { ...slot, location: l };
 			if (formValue.locationTitle) {
 				l.title = formValue.locationTitle;
 			}
@@ -201,8 +220,8 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 			brief: {
 				...this.happening.brief,
 				slots: [...(this.happening.brief.slots || []), slot],
-			}
-		}
+			},
+		};
 		console.log('happening:', this.happening);
 		this.slotAdded.emit(slot);
 		this.happeningChange.emit(this.happening);

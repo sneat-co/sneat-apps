@@ -33,6 +33,7 @@
 	<sneat-happening-page-form #happeningPageFormComponent
 														 [team]="team"
 														 [happening]="happening"
+														 (happeningChange)="onHappeningChanged($event)"
 														 [wd]="wd"
 	></sneat-happening-page-form>
 </ion-content>
