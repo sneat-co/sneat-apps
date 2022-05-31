@@ -315,7 +315,11 @@ export class TeamService {
 				tap((team) => {
 					console.log('TeamService.subscribeForTeamChanges() => New team snapshot from Firestore:', team, team.payload.data());
 				}),
-				filter((documentSnapshot) => documentSnapshot.type === 'value' || documentSnapshot.type === 'added'),
+				filter((documentSnapshot) =>
+					documentSnapshot.type === 'value' ||
+					documentSnapshot.type === 'added' ||
+					documentSnapshot.type === 'modified'
+				),
 				map((documentSnapshot) => documentSnapshot.payload),
 				map((teamDoc) =>
 					teamDoc.exists ? (teamDoc.data() as ITeamDto) : null,

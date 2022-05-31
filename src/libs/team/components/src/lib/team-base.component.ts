@@ -20,7 +20,7 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
-const EMPTY_TEAM_CONTEXT = {id: ''};
+const EMPTY_TEAM_CONTEXT = { id: '' };
 
 @Injectable() // we need this decorator so we can implement Angular interfaces
 export abstract class TeamBaseComponent implements OnDestroy {
@@ -52,6 +52,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	public readonly teamIDChanged$ = this.teamIDChanged.asObservable().pipe(
 		takeUntil(this.destroyed),
 		distinctUntilChanged(),
+		tap(id => console.log('teamIDChanged$ => ')),
 	);
 
 	public readonly teamTypeChanged$: Observable<TeamType | undefined> =
@@ -93,7 +94,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	public get defaultBackUrl(): string {
 		const t = this.teamContext;
-		const url = t ? `/space/${t.type}/${t.id}` : ''
+		const url = t ? `/space/${t.type}/${t.id}` : '';
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
@@ -118,7 +119,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			this.trackTeamIdFromRouteParams(route);
 			this.cleanupOnUserLogout();
 		} catch (e) {
-			this.teamParams.errorLogger.logError(e, `Failed in (${className} extends TeamBasePage).constructor()`);
+			this.teamParams.errorLogger.logError(e, `Failed in (${this.logClassName}).constructor()`);
 			throw e;
 		}
 	}
@@ -128,15 +129,19 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	// public ionViewWillLeave(): void {
-	// 	// console.log(`${this.className} extends TeamBasePage.ionViewWillLeave()`);
+	// 	// console.log(`${this.logClassName}.ionViewWillLeave()`);
 	// 	this.willLeave.next();
 	// }
 
 	public ngOnDestroy(): void {
-		// console.log(`${this.className} extends TeamBasePage.ngOnDestroy()`);
-		this.unsubscribe(`${this.className} extends TeamBasePage.ngOnDestroy`);
+		// console.log(`${this.logClassName}.ngOnDestroy()`);
+		this.unsubscribe(`${this.logClassName}.ngOnDestroy`);
 		this.destroyed.next(true);
 		this.destroyed.complete();
+	}
+
+	private get logClassName(): string {
+		return `${this.className} extends TeamBaseComponent`;
 	}
 
 	protected unsubscribe(reason: string): void {
@@ -147,7 +152,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	protected onUserIdChanged(): void {
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
-			if (this.team) {
+			if (this.team && this.team.dto) {
 				// TODO: What if it is a public team? Should we keep dto or hide brief as well?
 				this.setNewTeamContext({ ...this.team, dto: undefined });
 			}
@@ -166,7 +171,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	protected onTeamDtoChanged(): void {
-		console.log(`${this.className} extends TeamBasePage.onTeamDtoChanged()`, this.className, this.team?.dto);
+		console.log(`${this.logClassName}.onTeamDtoChanged()`, this.className, this.team?.dto);
 	}
 
 	protected takeUntilNeeded<T>(): MonoTypeOperatorFunction<T> {
@@ -189,7 +194,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	private readonly onTeamIdChangedInUrl = (team?: ITeamContext): void => {
-		// console.log(`${this.className} extends TeamPageComponent.onTeamIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
+		// console.log(`${this.logClassName}.onTeamIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
 		const prevTeam = this.teamContext;
 		if (team === prevTeam || team?.id === prevTeam?.id && team?.type === prevTeam?.type) {
 			return;
@@ -201,7 +206,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	};
 
 	private subscribeForTeamChanges(team: ITeamContext): void {
-		console.log(`${this.className} extends TeamPageComponent.subscribeForTeamChanges()`, team);
+		console.log(`${this.logClassName}.subscribeForTeamChanges()`, team);
 		this.teamService
 			.watchTeam(team)
 			.pipe(
@@ -209,7 +214,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 				this.takeUntilNeeded(),
 			)
 			.subscribe({
-				next: this.onTeamLoaded,
+				next: this.onTeamContextChanged,
 				error: this.errorLogger.logErrorHandler('failed on getting team record'),
 			});
 	}
@@ -255,7 +260,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// }
 
 	private setNewTeamContext(teamContext?: ITeamContext): void {
-		// console.log(`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
+		// console.log(`${this.logClassName}.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
 		if (!teamContext?.type && this.teamContext?.type) {
 			throw new Error('!teamContext?.type && this.teamContext?.type');
 		}
@@ -342,9 +347,9 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// 	}
 	// };
 
-	private readonly onTeamLoaded = (team: ITeamContext): void => {
+	private readonly onTeamContextChanged = (team: ITeamContext): void => {
 		const dtoChanged = team.dto !== this.teamContext?.dto;
-		// console.log(`${this.className} extends TeamBasePage.onTeamLoaded() => dtoChanged=${dtoChanged}, team:`, team);
+		console.log(`${this.logClassName}.onTeamContextChanged() => dtoChanged=${dtoChanged}, team:`, team);
 		if (!team.brief && team.dto) {
 			team = { ...team, brief: { id: team.id, ...team.dto } };
 		}
@@ -358,7 +363,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		if (dtoChanged) {
 			this.onTeamDtoChanged();
 		}
-		// console.log(`${this.className} extends TeamBaseComponent => loaded team record:`, newTeam);
+		// console.log(`${this.logClassName} => loaded team record:`, newTeam);
 		// if (newTeam.id === this.teamContext?.id) {
 		// 	this.setNewTeamContext({ ...this.teamContext, ...newTeam });
 		// 	// this.teamContext = ;
