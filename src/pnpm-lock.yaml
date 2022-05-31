@@ -70,7 +70,7 @@ specifiers:
   follow-redirects: 1.15.1
   hogan.js: 3.0.2
   idb: 7.0.1
-  ionicons: 6.0.1
+  ionicons: 6.0.2
   jasmine-core: 4.1.1
   jest: 28.1.0
   jest-preset-angular: 12.0.1
@@ -129,7 +129,7 @@ dependencies:
   firebase: 9.8.2
   hogan.js: 3.0.2
   idb: 7.0.1
-  ionicons: 6.0.1
+  ionicons: 6.0.2
   rxfire: 6.0.3_firebase@9.8.2+rxjs@7.5.5
   rxjs: 7.5.5
   tabulator-tables: 5.2.6
@@ -3671,8 +3671,8 @@ packages:
   /@ionic/core/6.1.7:
     resolution: {integrity: sha512-CUbH7xtKcPejHTyMvvUJZq4GIyLbL2YflzFH+mad1PoLN4TLwFTTKTDB1oeFNqwnTzaByeBvhEWSayxCbLgvjQ==}
     dependencies:
-      '@stencil/core': 2.14.2
-      ionicons: 6.0.1
+      '@stencil/core': 2.16.0
+      ionicons: 6.0.2
       tslib: 2.4.0
     dev: false
 
@@ -5097,14 +5097,8 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@stencil/core/2.12.1:
-    resolution: {integrity: sha512-u24TZ+FEvjnZt5ZgIkLjLpUNsO6Ml3mUZqwmqk81w6RWWz75hgB5p4RFI5rvuErFeh2xvMIGo+pNdG24XUBz1A==}
-    engines: {node: '>=12.10.0', npm: '>=6.0.0'}
-    hasBin: true
-    dev: false
-
-  /@stencil/core/2.14.2:
-    resolution: {integrity: sha512-NMC5Xi8sPFJxaO4rz6CbMHuD6PteE/RJWtjrbkusmpjKRtMXkfZJPIgOrleZ4xO+vXcNyL535Ru7vUADqEsTiQ==}
+  /@stencil/core/2.16.0:
+    resolution: {integrity: sha512-oKxPYxpH1no0oMFSf8EesuFBcn9hVpoqrpiS2WH0H50RKKL8hhKoxDfn/cNeD12L0Aj7kf6nNtexIllmkYG6lw==}
     engines: {node: '>=12.10.0', npm: '>=6.0.0'}
     hasBin: true
     dev: false
@@ -9310,10 +9304,10 @@ packages:
       strip-ansi: 6.0.1
       through: 2.3.8
 
-  /ionicons/6.0.1:
-    resolution: {integrity: sha512-xQekOJsxH82O7oB+3F60zeRggCdND9pJ/k0E6IJDVUGGlCj5mlyFqNgxUimytKgstPGv3S+3EmCxjefvtGgWUg==}
+  /ionicons/6.0.2:
+    resolution: {integrity: sha512-AyKfFaUKVoBz4eB8XkU7H1R5HFnVsgq5ijqSdbXC0lES9PDK/J6LUQz6XUJq0mVVQF5k9kczSPOLMW3mszG0mQ==}
     dependencies:
-      '@stencil/core': 2.12.1
+      '@stencil/core': 2.16.0
     dev: false
 
   /ip/1.1.5:
