@@ -30,7 +30,7 @@
 			<form [formGroup]="timeForm" *ngIf="happeningType === 'recurring' || date">
 
 				<!--		<ion-item-divider color="light">When</ion-item-divider>-->
-				<sneat-start-end-datetime-form
+				<sneat-start-end-datetime-form #startEndDatetimeForm
 					[happeningType]="happeningType"
 					(slotChanged)="onTimingChanged($event)"
 				></sneat-start-end-datetime-form>

@@ -25,8 +25,6 @@
 				#happeningSlotsComponent
 				*ngIf="happeningType === 'recurring' && (happening?.id || happening?.brief?.slots?.length)"
 				[happening]="happening"
-				(slotRemoved)="onSlotRemoved($event)"
-				(addSlotDismissed)="onAddSlotModalDismissed()"
 			></sneat-happening-slots>
 			<sneat-single-slot-form
 				[happening]="happening"

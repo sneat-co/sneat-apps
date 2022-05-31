@@ -39,13 +39,14 @@ export class HappeningSlotsComponent {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
-		this.happening = {
+		// this.happening =
+		this.onHappeningChanged({
 			...this.happening,
 			brief: {
 				...this.happening.brief,
 				slots: this.happening.brief.slots?.filter(v => v !== slot) || [],
 			},
-		}
+		});
 		this.slotRemoved.emit(this.happening.brief?.slots || []);
 	}
 

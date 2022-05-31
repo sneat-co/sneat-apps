@@ -1,6 +1,16 @@
 //tslint:disable:no-unsafe-any
 //tslint:disable:no-unbound-method
-import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	Output,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
@@ -10,6 +20,7 @@ import { newRandomId } from '@sneat/random';
 import { wd2 } from '@sneat/extensions/schedulus/shared';
 import { IHappeningContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
+import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
 @Component({
@@ -17,6 +28,8 @@ import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 	templateUrl: './recurring-slot-form.component.html',
 })
 export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnChanges, OnDestroy {
+
+	@ViewChild('startEndDatetimeForm') startEndDatetimeForm?: StartEndDatetimeFormComponent;
 
 	private readonly destroyed = new Subject<void>();
 
@@ -100,6 +113,8 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		);
 		if (!this.weekdaysForm.valid) {
 			this.error = 'At least 1 weekday should be selected';
+		}
+		if (!this.startEndDatetimeForm?.isValid || !this.weekdaysForm.valid) {
 			return;
 		}
 		// if (!this.weekdaysForm.valid) {

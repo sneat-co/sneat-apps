@@ -9,7 +9,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput, ModalController, PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate, isValidaTimeString, isValidDateString } from '@sneat/core';
 import { emptyHappeningSlot, HappeningType, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
@@ -54,6 +54,12 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			Validators.required,
 		],
 	});
+	public readonly form = new FormGroup({
+		startDate: this.startDate,
+		startTime: this.startTime,
+		endTime: this.endTime,
+		duration: this.duration,
+	});
 
 	public get disabled(): boolean {
 		return !this.happeningType;
@@ -85,6 +91,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 
 	public get isValid(): boolean {
+		this.form.markAllAsTouched();
 		return isValidaTimeString(this.startTime.value) && isValidaTimeString(this.endTime.value);
 	}
 

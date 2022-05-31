@@ -47,7 +47,9 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		return this.happening?.brief?.type;
 	}
 
-	public slots: IHappeningSlot[] = [];
+	public get slots(): IHappeningSlot[] | undefined {
+		return this.happening?.brief?.slots;
+	}
 
 	public happeningTitle = new FormControl('', Validators.required);
 	public happeningForm = new FormGroup({
@@ -78,7 +80,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		if (changes['happening']) {
 			if (this.happening?.brief?.title) {
 				this.happeningTitle.setValue(this.happening?.brief?.title);
-				this.slots = this?.happening?.brief?.slots || [];
+				// this.slots = this?.happening?.brief?.slots || [];
 			}
 		}
 	}
@@ -107,18 +109,18 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 			.catch(this.logErrorHandler('failed to set focus to title input'));
 	}
 
-	onAddSlotModalDismissed(): void {
-		console.log('NewHappeningPage.onAddSlotModalDismissed()');
-		if (!this.titleInput?.value) {
-			if (this.titleInput) {
-				setTimeout(() => {
-					this.titleInput?.setFocus().catch(this.logErrorHandler('failed to set focus to title input'));
-				}, 50);
-			} else {
-				console.warn('View child #titleInput is not initialized');
-			}
-		}
-	}
+	// onAddSlotModalDismissed(): void {
+	// 	console.log('NewHappeningPage.onAddSlotModalDismissed()');
+	// 	if (!this.titleInput?.value) {
+	// 		if (this.titleInput) {
+	// 			setTimeout(() => {
+	// 				this.titleInput?.setFocus().catch(this.logErrorHandler('failed to set focus to title input'));
+	// 			}, 50);
+	// 		} else {
+	// 			console.warn('View child #titleInput is not initialized');
+	// 		}
+	// 	}
+	// }
 
 	addContact(): void {
 		this.contacts.push(1);
@@ -126,15 +128,11 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 
 	onSlotAdded(slot: IHappeningSlot): void {
 		console.log('onSlotAdded()', slot, this.happening);
+		this.happeningTitle.markAsTouched();
 	}
 
 	onHappeningChanged(happening: IHappeningContext): void {
 		this.happening = happening;
-	}
-
-	onSlotRemoved(slots: IHappeningSlot[]): void {
-		console.log('NewHappeningPage.onSlotRemoved() => slots.length:', slots.length);
-		this.slots = slots;
 	}
 
 	onSingleSlotChanged(slot: IHappeningSlot): void {
@@ -147,14 +145,10 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		if (!this.happeningForm.valid) {
 			return false;
 		}
-		switch (this.happeningType) {
-			case 'recurring':
-				return !!this.slots.length;
-			case 'single':
-				return !!this.singleSlot;
-			default:
-				return false;
+		if (!this.slots?.length) {
+			return false;
 		}
+		return true;
 	}
 
 
@@ -162,33 +156,35 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
-		if (!this.happeningType) {
-			throw new Error('!this.happeningType');
+		if (!this.happening) {
+			throw new Error('!this.happening');
+		}
+		if (!this.happening.brief) {
+			throw new Error('!this.happening.brief');
 		}
 		const activityFormValue = this.happeningForm.value;
 		const dto: IHappeningDto = {
-			type: this.happeningType,
-			kind: 'activity',
-			teamIDs: [this.team.id],
-			title: activityFormValue.title,
+			...this.happening.brief,
+			teamIDs: [this.team.id], // TODO: should be already in this.happening.brief
+			title: activityFormValue.title, // TODO: should be already in this.happening.brief
 		};
-		switch (dto.type) {
-			case 'recurring':
-				dto.slots = this.slots.map(slot => ({ ...slot, repeats: 'weekly', id: slot.id || newRandomId({ len: 5 }) }));
-				break;
-			case 'single':
-				if (!this.singleSlot) {
-					throw new Error('timing is not set');
-				}
-				dto.slots = [{
-					...this.singleSlot,
-					id: 'once',
-					repeats: 'once',
-				}];
-				break;
-			default:
-				throw new Error('unknown happening type: ' + dto.type);
-		}
+		// switch (dto.type) {
+		// 	case 'recurring':
+		// 		// dto.slots = this.slots.map(slot => ({ ...slot, repeats: 'weekly', id: slot.id || newRandomId({ len: 5 }) }));
+		// 		break;
+		// 	case 'single':
+		// 		if (!this.singleSlot) {
+		// 			throw new Error('timing is not set');
+		// 		}
+		// 		dto.slots = [{
+		// 			...this.singleSlot,
+		// 			id: 'once',
+		// 			repeats: 'once',
+		// 		}];
+		// 		break;
+		// 	default:
+		// 		throw new Error('unknown happening type: ' + dto.type);
+		// }
 		{ // Populate selected members
 			const selectedMembers = this.members?.filter(m => this.checkedMemberIDs.some(v => v === m.id));
 			if (selectedMembers?.length) {
