@@ -31,7 +31,7 @@ export interface IJoinTeamInfoResponse {
 		to: IInviteToContact;
 		message?: string;
 	}
-	member?: IMemberBrief;
+	member: IMemberBrief;
 }
 
 export interface IAcceptPersonalInviteRequest extends ITeamRequest {

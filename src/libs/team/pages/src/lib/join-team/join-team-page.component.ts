@@ -189,7 +189,18 @@ export class JoinTeamPageComponent implements OnDestroy {
 		}
 		this.status = 'joining';
 		const teamID: string = team.id;
-		const inviteInfo = this.inviteInfo;
+		if (!this.inviteInfo) {
+			return;
+		}
+		const inviteInfo: IJoinTeamInfoResponse = {
+			...this.inviteInfo,
+			member: {
+				...this.inviteInfo.member,
+				name: this.relatedPerson.name,
+				gender: this.relatedPerson.gender,
+				ageGroup: this.relatedPerson.ageGroup,
+			}
+		};
 		if (!inviteInfo) {
 			return;
 		}
