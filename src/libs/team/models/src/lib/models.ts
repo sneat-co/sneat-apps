@@ -25,6 +25,8 @@ export interface IJoinTeamInfoResponse {
 	invite: {
 		id: string;
 		pin: string;
+		status: string;
+		created: string;
 		from: IInviteFromContact;
 		to: IInviteToContact;
 		message?: string;

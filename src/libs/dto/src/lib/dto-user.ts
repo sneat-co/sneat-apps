@@ -24,7 +24,10 @@ export function createUserCommuneInfoFromCommuneDto(communeDto: ICommuneDto, sho
 
 export interface IUserDto extends ITitledRecord {
 	countryIds?: CountryId[];
-	created: string;
+	created: {
+		hostOrApp: string;
+		at: string
+	};
 	readonly communes?: readonly IUserCommuneInfo[]; // Returns real ID and Title, find by shortId
 	communesCount?: number;
 	isAnonymous: boolean;

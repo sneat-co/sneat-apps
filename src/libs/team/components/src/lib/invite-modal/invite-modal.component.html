@@ -40,11 +40,11 @@
 			<ion-textarea [disabled]="creatingInvite" [formControl]="message" maxlength="100"></ion-textarea>
 		</ion-item>
 		<ion-card-content *ngIf="tab === 'email'">
-			<ion-button (click)="sendInvite()">
-				<ion-icon name="mail-outline" slot="start"></ion-icon>
-				<ion-label>Send invite</ion-label>
-			</ion-button>
-			<ion-button disabled fill="clear" color="medium" style="text-transform: none">or</ion-button>
+<!--			<ion-button (click)="sendInvite()">-->
+<!--				<ion-icon name="mail-outline" slot="start"></ion-icon>-->
+<!--				<ion-label>Send invite</ion-label>-->
+<!--			</ion-button>-->
+<!--			<ion-button disabled fill="clear" color="medium" style="text-transform: none">or</ion-button>-->
 			<ion-button (click)="composeEmail()" fill="outline">
 				<ion-icon name="mail-outline" slot="start"></ion-icon>
 				<ion-label>Compose email</ion-label>
