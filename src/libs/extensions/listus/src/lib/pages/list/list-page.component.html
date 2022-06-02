@@ -32,7 +32,15 @@
 <ion-content class="cardy">
 	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img">
 
+<!--	<div class="ion-padding-top ion-padding-horizontal">-->
+<!--	</div>-->
+
 	<ion-card>
+		<ion-segment [(ngModel)]="doneFilter" (ionChange)="onIsDoneFilterChanged($event)">
+			<ion-segment-button value="all" style="text-transform: none">All</ion-segment-button>
+			<ion-segment-button value="active" style="text-transform: none">Active</ion-segment-button>
+			<ion-segment-button value="completed" style="text-transform: none">Completed</ion-segment-button>
+		</ion-segment>
 		<!--		<div class="segment" [ngSwitch]="list?.brief?.type">-->
 		<!--			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">-->
 		<!--				<ion-segment-button value="list">Ingredients</ion-segment-button>-->
@@ -57,28 +65,14 @@
 		<!--			</ion-segment>-->
 		<!--		</div>-->
 
-		<ion-card-header>
-			<ion-grid class="ion-grid-layout">
-				<ion-row>
-					<ion-col sizeLg="8" sizeMd="6" sizeSm="12">
-						<ion-segment [(ngModel)]="doneFilter" (ionChange)="onIsDoneFilterChanged($event)">
-							<ion-segment-button value="all" style="text-transform: none">All</ion-segment-button>
-							<ion-segment-button value="active" style="text-transform: none">Active</ion-segment-button>
-							<ion-segment-button value="completed" style="text-transform: none">Completed</ion-segment-button>
-						</ion-segment>
-					</ion-col>
-					<ion-col sizeLg="4" sizeMd="6" sizeSm="12">
-						<ion-item class="ion-item-no-border" *ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1">
-							<ion-label slot="end" color="medium" style="font-size: smaller">List mode:</ion-label>
-							<ion-select slot="end" interface="popover" [(ngModel)]="listMode" style="font-size: smaller">
-								<ion-select-option value="reorder">Reorder</ion-select-option>
-								<ion-select-option value="swipe">Swipe</ion-select-option>
-							</ion-select>
-						</ion-item>
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-		</ion-card-header>
+
+		<ion-item color="light" class="ion-item-no-border" *ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1">
+			<ion-label slot="end" color="medium" style="font-size: smaller">List mode:</ion-label>
+			<ion-select slot="end" interface="popover" [(ngModel)]="listMode" style="font-size: smaller">
+				<ion-select-option value="reorder">Reorder</ion-select-option>
+				<ion-select-option value="swipe">Swipe</ion-select-option>
+			</ion-select>
+		</ion-item>
 
 		<!--		<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>-->
 

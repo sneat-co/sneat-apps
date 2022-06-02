@@ -13,6 +13,7 @@ import { IListItemWithUiState } from './list-item-with-ui-state';
 	template: `
 		<form (ngSubmit)="add()">
 			<ion-item>
+				<ion-icon name="bag-add-outline" slot="start" color="medium"></ion-icon>
 				<!--suppress AngularUndefinedBinding -->
 				<ion-input [disabled]="disabled" #newItemInput autofocus="true" [(ngModel)]="title" name="title"
 									 placeholder="New item"

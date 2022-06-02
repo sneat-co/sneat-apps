@@ -144,6 +144,10 @@ const emojiKeywords: [string, string[]][] = [
 		'cheese', 'cheeses', // en
 		'сыр', 'сыра', 'сыров' // ru
 	]],
+	['🚰', [
+		'water',
+		'вода', 'воды',
+	]],
 	['🍖', [
 		'meat', 'meats', // en
 		'мясо', 'мяса', // ru
@@ -267,6 +271,13 @@ const emojiKeywords: [string, string[]][] = [
 	['🍾', [
 		'champagne', // en
 		'шампанское', 'шампанского', // ru
+		'bottle',
+		'botle',
+		'vine', 'вино',
+		'vodka', 'водка', 'водки',
+		'whisky',
+		'brandy',
+		'martini',
 	]],
 	['🍷', [
 		'wine', // en

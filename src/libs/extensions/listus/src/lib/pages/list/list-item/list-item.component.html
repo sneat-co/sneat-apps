@@ -11,7 +11,7 @@
 											slot="start"
 											[value]="listItem.isDone"
 											(ionChange)="onIsDoneCheckboxChanged($event)"></ion-checkbox>
-		<ion-label [class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)">
+		<ion-label [class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)" class="ion-text-wrap">
 			<ng-container *ngIf="listItem.emoji">{{listItem.emoji}}</ng-container>
 			{{listItem.title}}
 			<ion-text *ngIf="listItem.quantity" color="medium" style="font-style: italic">
