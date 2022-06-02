@@ -1,15 +1,15 @@
 <ion-card>
-	<ion-accordion-group [multiple]="false"
+	<ion-accordion-group value="filter" [multiple]="false"
 											 (ionChange)="accordionChanged($event)"
 	>
 		<ion-accordion value="filter">
 			<ion-item slot="header">
 				<ion-icon name="search-outline" slot="start"></ion-icon>
-				<ion-label color="medium">Filter</ion-label>
+				<ion-label color="medium" position="floating">Filter</ion-label>
 				<ion-input [formControl]="text"
 									 (ionChange)="emitChanged()"
 									 (click)="$event.stopPropagation()"
-									 [placeholder]="expanded ? '— type to search' : '— type to search / click ᐯ at right to expand'"
+									 [placeholder]="expanded ? 'text       | click △ to collapse ☞' : 'text       | click ▽ to expand ☞'"
 				></ion-input>
 				<ion-buttons slot="end" *ngIf="hasFilter">
 					<ion-button (click)="clearFilter($event)" title="Clear filter">

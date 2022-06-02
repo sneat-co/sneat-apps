@@ -14,7 +14,7 @@ import { IScheduleFilter } from './schedule-filter';
 })
 export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChanges {
 	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;
-	public expanded = false;
+	public expanded = true;
 	public accordionValue?: string;
 	private resetting = false;
 	@Input() team?: ITeamContext;

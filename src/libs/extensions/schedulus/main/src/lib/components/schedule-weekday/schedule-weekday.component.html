@@ -4,7 +4,6 @@
 		<ng-container *ngIf="!day?.slots || !day?.slots?.length">{{weekday?.longTitle}}</ng-container>
 		<ng-container *ngIf="day?.date"
 		>, {{day?.date?.getDate()}} {{day?.date?.getMonth()|shortMonthName}}</ng-container>
-		| {{day?.dateID}} : {{day?.date}} : {{day?.wd}} : {{day?.isoID}}
 	</ion-label>
 	<ion-spinner style="opacity: 0.2" name="lines-small" *ngIf="day?.loadingEvents"
 							 slot="end"></ion-spinner>

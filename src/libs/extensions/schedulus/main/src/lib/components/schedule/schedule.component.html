@@ -1,8 +1,8 @@
 <ion-segment class="ion-padding-horizontal" [(ngModel)]="tab" (ionChange)="segmentChanged($event)">
-	<ion-segment-button value="day">Day</ion-segment-button>
-	<ion-segment-button value="week">Week</ion-segment-button>
-	<ion-segment-button value="recurrings">Recurring</ion-segment-button>
-	<ion-segment-button value="singles">One-timers</ion-segment-button>
+	<ion-segment-button value="day"><span class="smaller">Day</span></ion-segment-button>
+	<ion-segment-button value="week"><span class="smaller">Week</span></ion-segment-button>
+	<ion-segment-button value="recurrings"><span class="smaller">Recurring</span></ion-segment-button>
+	<ion-segment-button value="singles"><span class="smaller">1-timers</span></ion-segment-button>
 </ion-segment>
 
 <sneat-schedule-filter #scheduleFilterComponent

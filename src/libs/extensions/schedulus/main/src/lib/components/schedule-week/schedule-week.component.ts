@@ -41,7 +41,7 @@ export class ScheduleWeekComponent implements OnChanges {
 	}
 
 	private onWeekInputChanged(week: SimpleChange): void {
-		console.log('ScheduleWeekComponent.onWeekInputChanged()', week);
+		// console.log('ScheduleWeekComponent.onWeekInputChanged()', week);
 		if (!week) {
 			return;
 		}
@@ -55,9 +55,11 @@ export class ScheduleWeekComponent implements OnChanges {
 			return;
 		}
 		const startDate = currentWeek.startDate.getDate();
+		// console.log('ScheduleWeekComponent.onWeekInputChanged() => startDate', startDate, currentWeek.startDate);
 		for (let i = 0; i < 7; i++) {
-			const date = new Date();
-			date.setDate(startDate + i);
+			let date = new Date(currentWeek.startDate);
+			date = new Date(date.setDate(startDate + i));
+			// console.log('ScheduleWeekComponent.onWeekInputChanged() => i=', i, '; startDate:', currentWeek.startDate, '; date:', date);
 			this.weekdays[i] = {...this.weekdays[i], day: teamDaysProvider.getTeamDay(date)};
 		}
 	}
