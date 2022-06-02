@@ -1,13 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
 import { Component, Inject, Optional } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	AuthStatuses,
 	ILoginEventsHandler,
@@ -15,15 +11,17 @@ import {
 	LoginEventsHandler,
 	SneatAuthStateService,
 } from '@sneat/auth';
-import { SneatApiService } from '@sneat/api';
-import { RandomIdService } from '@sneat/random';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatUserService } from '@sneat/user';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 import { Subject, takeUntil } from 'rxjs';
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-import OAuthProvider = firebase.auth.OAuthProvider;
+import { EmailFormSigningWith } from './email-login-form/email-login-form.component';
+import AuthProvider = firebase.auth.AuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import GithubAuthProvider = firebase.auth.GithubAuthProvider;
-import AuthProvider = firebase.auth.AuthProvider;
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import OAuthProvider = firebase.auth.OAuthProvider;
 import UserCredential = firebase.auth.UserCredential;
 
 type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
@@ -40,37 +38,22 @@ export class LoginPageComponent {
 		| 'email'
 		| 'emailLink'
 		| 'resetPassword';
-	public email = '';
-	public password = '';
-	public fullName = '';
 	public redirectTo?: string;
 	public to?: string;
 	public action?: Action; // TODO: document possible values?
-	public sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means
 
 	constructor(
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
+		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		// @Inject(Toaster) private readonly toaster: IToaster,
-
-		private readonly randomIdService: RandomIdService,
-		@Inject(LoginEventsHandler)
-		@Optional()
-		private readonly loginEventsHandler: ILoginEventsHandler,
+		@Inject(LoginEventsHandler) @Optional() private readonly loginEventsHandler: ILoginEventsHandler,
 		private readonly route: ActivatedRoute,
 		private readonly afAuth: AngularFireAuth,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		private readonly authStateService: SneatAuthStateService,
 		// private readonly toastController: ToastController,
-		private readonly sneatApiService: SneatApiService,
 	) {
 		console.log('LoginPageComponent.constructor()');
-		this.email = localStorage.getItem('emailForSignIn') || '';
-		if (this.email) {
-			this.sign = 'in';
-		}
 		if (location.hash.startsWith('#/')) {
 			this.redirectTo = location.hash.substring(1);
 		}
@@ -79,26 +62,11 @@ export class LoginPageComponent {
 		this.action = action?.[1] as Action;
 	}
 
-	// @ViewChild('emailInput', {static: true}) emailInput: IonInput;
 
-	public get validEmail(): boolean {
-		const email = this.email,
-			i = email?.indexOf('@');
-		return i > 0 && i < email.length - 1;
+	onEmailFormStatusChanged(signingWith?: EmailFormSigningWith): void {
+		this.signingWith = signingWith;
 	}
 
-	ionViewDidEnter(): void {
-		// this.setFocusToEmail();
-	}
-
-	signChanged(): void {
-		// this.setFocusToEmail();
-	}
-
-	// private setFocusToEmail(): void {
-	// 	this.emailInput.setFocus()
-	// 		.catch(err => this.errorLoggerService.logError(err, 'Failed to set focus to email input'));
-	// }
 
 	loginWith(provider: AuthProviderName) {
 		this.signingWith = provider;
@@ -144,117 +112,6 @@ export class LoginPageComponent {
 			);
 	}
 
-	private sendVerificationEmail(userCredential: UserCredential): void {
-		setTimeout(async () => {
-			try {
-				await userCredential.user?.sendEmailVerification();
-			} catch (e) {
-				this.handleError(e, 'Failed to send verification email');
-			}
-		});
-	}
-
-	public async signUp(): Promise<void> {
-		if (!this.fullName) {
-			// this.toaster.showToast('Full name is required');
-			return;
-		}
-		this.signingWith = 'email';
-		this.email = this.email.trim();
-		const email = this.email;
-		localStorage.setItem('emailForSignIn', email);
-		const password = this.randomIdService.newRandomId({ len: 9 });
-		try {
-			const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-			this.sendVerificationEmail(userCredential);
-			userCredential.user
-				?.getIdToken()
-				.then((token) => {
-					this.sneatApiService.setApiAuthToken(token);
-					this.userService.setUserTitle(this.fullName.trim()).subscribe({
-						next: () => this.onLoggedIn(userCredential),
-						error: (err) => {
-							this.analyticsService.logEvent('FailedToSetUserTitle');
-							this.errorLogger.logError(err, 'Failed to set user title', {
-								feedback: false,
-							});
-							this.onLoggedIn(userCredential);
-						},
-					});
-				})
-				.catch(
-					this.errorHandler(
-						'Failed to get Firebase ID token',
-						'FirebaseGetIdTokenFailed',
-					),
-				);
-		} catch (e) {
-			this.handleError(e, 'Failed to sign up with email', 'FailedToSignUpWithEmail');
-		}
-	}
-
-	public keyupEnter(): void {
-		switch (this.sign) {
-			case 'in':
-				this.signIn();
-				break;
-			case 'up':
-				this.signUp().catch(() => this.errorHandler('Failed to sign up'));
-				break;
-		}
-	}
-
-	public signIn(): void {
-		this.signingWith = 'email';
-		this.email = this.email.trim();
-		this.afAuth
-			.signInWithEmailAndPassword(this.email, this.password)
-			.then((userCredential) => {
-				// TODO: add analytics event
-				this.onLoggedIn(userCredential);
-			})
-			.catch(
-				this.errorHandler('Failed to sign in with email & password', 'email'),
-			);
-	}
-
-	public sendSignInLink(): void {
-		this.signingWith = 'emailLink';
-		this.email = this.email.trim();
-		localStorage.setItem('emailForSignIn', this.email);
-		this.afAuth
-			.sendSignInLinkToEmail(this.email, {
-				// url: 'https://dailyscrum.app/pwa/sign-in',
-				url: document.baseURI + 'sign-in',
-				handleCodeInApp: true,
-			})
-			.catch(
-				this.errorHandler(
-					'Failed to send sign in link to email',
-					'FailedToSendSignInLinkToEmail',
-				),
-			);
-	}
-
-	public resetPassword(): void {
-		this.signingWith = 'resetPassword';
-		this.afAuth
-			.sendPasswordResetEmail(this.email)
-			.then(() => {
-				this.signingWith = undefined;
-				// this.toastController.create({
-				// 	message: `Password reset link has been sent to email: ${this.email}`,
-				// }).then(toast => {
-				// 	toast.present().catch(this.errorLogger.logErrorHandler('Failed to present toast about password reset email sent success'));
-				// });
-			})
-			.catch(
-				this.errorHandler(
-					'Failed to send password reset email',
-					'FailedToSendPasswordResetEmail',
-				),
-			);
-	}
 
 	private onLoggedIn(userCredential: UserCredential): void {
 		console.log('LoginPage.onLoggedIn(userCredential):', userCredential);

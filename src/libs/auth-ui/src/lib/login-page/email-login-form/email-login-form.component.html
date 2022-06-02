@@ -1,0 +1,112 @@
+<ion-card>
+	<ion-item-divider color="light">
+		<ion-label color="medium" style="text-align: center; width: 100%">
+			Or login with email
+		</ion-label>
+	</ion-item-divider>
+	<ion-segment [(ngModel)]="sign" (ionChange)="signChanged()">
+		<ion-segment-button value="up">Sign up</ion-segment-button>
+		<ion-segment-button value="in">Sign in</ion-segment-button>
+	</ion-segment>
+	<ion-card-content class="ion-no-padding">
+		<ion-item>
+			<ion-label>
+				<ion-icon name="mail-outline"></ion-icon>
+			</ion-label>
+			<ion-input
+				[disabled]="!!signingWith"
+				[(ngModel)]="email"
+				email
+				type="email"
+				name="email"
+				id="email"
+				required
+				placeholder="my@work-or-personal.email"
+				(keyup.enter)="keyupEnter()"
+			>
+			</ion-input>
+		</ion-item>
+		<ion-item *ngIf="sign === 'up'">
+			<ion-label>
+				<ion-icon name="person-add-outline"></ion-icon>
+			</ion-label>
+			<ion-input
+				placeholder="First name"
+				[(ngModel)]="firstName"
+				type="text"
+				required
+				(keyup.enter)="keyupEnter()"
+				[disabled]="!!signingWith"
+			></ion-input>
+			<ion-input
+				placeholder="Last name"
+				[(ngModel)]="lastName"
+				type="text"
+				required
+				(keyup.enter)="keyupEnter()"
+				[disabled]="!!signingWith"
+			></ion-input>
+		</ion-item>
+		<ion-item *ngIf="sign === 'in'">
+			<ion-label>
+				<ion-icon name="key-outline"></ion-icon>
+			</ion-label>
+			<ion-input
+				[(ngModel)]="password"
+				placeholder="Password"
+				type="password"
+				required
+				(keyup.enter)="keyupEnter()"
+				[disabled]="!!signingWith"
+			>
+			</ion-input>
+			<ion-buttons slot="end">
+				<ion-button
+					*ngIf="sign === 'in'"
+					color="danger"
+					[disabled]="!validEmail"
+					(click)="resetPassword()"
+					title="Send email with a link to reset password "
+				>
+					<ion-label>Forgot? Reset!</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+	</ion-card-content>
+	<ion-card-content>
+		<ion-button
+			*ngIf="sign === 'up'"
+			[disabled]="!!signingWith || !validEmail || !firstName && !lastName"
+			(click)="signUp()"
+		>
+			<ion-icon name="enter-outline" slot="start"></ion-icon>
+			<ion-label *ngIf="signingWith !== 'email'">Sign up</ion-label>
+			<ion-label *ngIf="signingWith === 'email'">Signing up...</ion-label>
+			<ion-spinner class="ion-margin-start" *ngIf="signingWith === 'email'" slot="end" name="lines-small"></ion-spinner>
+		</ion-button>
+		<ng-container *ngIf="sign === 'in'">
+			<ion-button
+				[disabled]="!!signingWith || !validEmail || !password"
+				(click)="signIn()"
+			>
+				<ion-icon name="enter-outline" slot="start"></ion-icon>
+				<ion-label *ngIf="signingWith !== 'email'">Sign in</ion-label>
+				<ion-label *ngIf="signingWith === 'email'">Signing in...</ion-label>
+				<ion-spinner class="ion-margin-start" *ngIf="signingWith === 'email'" slot="end" name="lines-small"></ion-spinner>
+			</ion-button>
+			<ion-button disabled="disabled" fill="clear" color="medium">
+				or
+			</ion-button>
+			<ion-button
+				size="small"
+				[disabled]="!validEmail || signingWith"
+				(click)="sendSignInLink()"
+				fill="outline"
+				color="tertiary"
+			>
+				<ion-icon name="mail-outline" slot="start"></ion-icon>
+				<ion-label>Get sign-in link</ion-label>
+			</ion-button>
+		</ng-container>
+	</ion-card-content>
+</ion-card>

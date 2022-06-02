@@ -3,26 +3,26 @@
 		<ion-buttons slot="start">
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-title> Sneat.team</ion-title>
+		<ion-title>Login @ Sneat.app</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
 	<ion-card *ngIf="to" color="tertiary">
-		<ion-card-content >
+		<ion-card-content>
 			<p>Please sign in to join a team</p>
 		</ion-card-content>
 	</ion-card>
 
 	<!--	<ion-card *ngIf="to" [ngSwitch]="to" color="tertiary">-->
-<!--		<ion-card-content *ngSwitchCase="'join-team'">-->
-<!--			<p>Please sign in to join a team</p>-->
-<!--			<p *ngIf="action === 'join'">Please sign in to join team</p>-->
-<!--			<p *ngIf="action === 'refuse'">-->
-<!--				Please sign in to send refusal to join team to the inviter.-->
-<!--			</p>-->
-<!--		</ion-card-content>-->
-<!--	</ion-card>-->
+	<!--		<ion-card-content *ngSwitchCase="'join-team'">-->
+	<!--			<p>Please sign in to join a team</p>-->
+	<!--			<p *ngIf="action === 'join'">Please sign in to join team</p>-->
+	<!--			<p *ngIf="action === 'refuse'">-->
+	<!--				Please sign in to send refusal to join team to the inviter.-->
+	<!--			</p>-->
+	<!--		</ion-card-content>-->
+	<!--	</ion-card>-->
 
 	<p style="text-align: center; font-size: smaller">
 		<ion-text color="medium">
@@ -33,11 +33,17 @@
 		</ion-text>
 	</p>
 
+
 	<ion-card>
-		<ion-grid>
-			<ion-row class="ion-no-padding ion-no-margin">
-				<ion-col class="ion-no-padding ion-no-margin">
-					<ion-list lines="none" class="ion-no-margin ion-no-padding">
+		<ion-item-divider color="light">
+			<ion-label color="medium" style="text-align: center; width: 100%">
+				Quick login
+			</ion-label>
+		</ion-item-divider>
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col>
+					<ion-list lines="none">
 						<ion-item
 							(click)="loginWith('Google')"
 							tappable
@@ -81,8 +87,8 @@
 						</ion-item>
 					</ion-list>
 				</ion-col>
-				<ion-col class="ion-no-padding ion-no-margin">
-					<ion-list lines="none" class="ion-no-margin ion-no-padding">
+				<ion-col>
+					<ion-list lines="none">
 						<ion-item
 							(click)="loginWith('Microsoft')"
 							tappable
@@ -143,98 +149,6 @@
 		</ion-text>
 	</p>
 
-	<ion-card>
-		<ion-card-header>
-			<ion-segment [(ngModel)]="sign" (ionChange)="signChanged()">
-				<ion-segment-button value="up">Sign up</ion-segment-button>
-				<ion-segment-button value="in">Sign in</ion-segment-button>
-			</ion-segment>
-		</ion-card-header>
-		<ion-card-content class="ion-no-padding">
-			<ion-item>
-				<ion-label>
-					<ion-icon name="mail-outline"></ion-icon>
-				</ion-label>
-				<ion-input
-					[disabled]="!!signingWith"
-					[(ngModel)]="email"
-					email
-					type="email"
-					name="email"
-					id="email"
-					required
-					placeholder="my@work-or-personal.email"
-					(keyup.enter)="keyupEnter()"
-				>
-				</ion-input>
-			</ion-item>
-			<ion-item *ngIf="sign === 'up'">
-				<ion-label>
-					<ion-icon name="person-add-outline"></ion-icon>
-				</ion-label>
-				<ion-input
-					placeholder="Full name"
-					[(ngModel)]="fullName"
-					type="text"
-					required
-					(keyup.enter)="keyupEnter()"
-					[disabled]="!!signingWith"
-				></ion-input>
-			</ion-item>
-			<ion-item *ngIf="sign === 'in'">
-				<ion-label>
-					<ion-icon name="key-outline"></ion-icon>
-				</ion-label>
-				<ion-input
-					[(ngModel)]="password"
-					placeholder="Password"
-					type="password"
-					required
-					(keyup.enter)="keyupEnter()"
-					[disabled]="!!signingWith"
-				>
-				</ion-input>
-				<ion-buttons slot="end">
-					<ion-button
-						*ngIf="sign === 'in'"
-						color="secondary"
-						[disabled]="!validEmail"
-						(click)="resetPassword()"
-						title="Send email with a link to reset password "
-					>Reset
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		</ion-card-content>
-		<ion-card-content>
-			<ion-button
-				*ngIf="sign === 'up'"
-				[disabled]="!!signingWith || !validEmail || !fullName"
-				(click)="signUp()"
-			>
-				<ion-icon name="enter-outline" slot="start"></ion-icon>
-				<ion-label>Sign up</ion-label>
-			</ion-button>
-			<ng-container *ngIf="sign === 'in'">
-				<ion-button
-					[disabled]="!!signingWith || !validEmail || !password"
-					(click)="signIn()"
-				>
-					<ion-icon name="enter-outline" slot="start"></ion-icon>
-					<ion-label>Sign in</ion-label>
-				</ion-button>
-				or
-				<ion-button
-					size="small"
-					[disabled]="!validEmail || signingWith"
-					(click)="sendSignInLink()"
-					fill="outline"
-					color="medium"
-				>
-					<ion-icon name="mail-outline" slot="start"></ion-icon>
-					<ion-label>Get sign-in link</ion-label>
-				</ion-button>
-			</ng-container>
-		</ion-card-content>
-	</ion-card>
+	<sneat-email-login-form (signingWithChange)="onEmailFormStatusChanged()"></sneat-email-login-form>
+
 </ion-content>

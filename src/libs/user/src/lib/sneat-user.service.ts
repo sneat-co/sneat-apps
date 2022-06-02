@@ -5,7 +5,7 @@ import {
 	AngularFirestoreCollection,
 	DocumentSnapshot,
 } from '@angular/fire/compat/firestore';
-import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of, ReplaySubject, Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import { SneatTeamApiService } from '@sneat/api';
 import { IUserRecord } from '@sneat/auth-models';
@@ -63,12 +63,6 @@ export class SneatUserService {
 		return this.$userTitle;
 	}
 
-	public setUserTitle(title: string): Observable<void> {
-		throw new Error('not implemented yet'); // due to circle deps
-		// return this.sneatTeamApiService.post<void>('users/set_user_title', {
-		// 	title,
-		// });
-	}
 
 	public onUserSignedIn(authState: ISneatAuthState): void {
 		console.log('onUserSignedIn()', authState);
