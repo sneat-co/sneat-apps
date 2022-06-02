@@ -87,16 +87,16 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 			const name = this.name;
 			if (name) {
 				if (name.first) {
-					this.firstName.setValue(name.first?.trim());
+					this.firstName.setValue(name.first);
 				}
 				if (name.last) {
-					this.lastName.setValue(name.last?.trim());
+					this.lastName.setValue(name.last);
 				}
 				if (name.middle) {
-					this.middleName.setValue(name.middle?.trim());
+					this.middleName.setValue(name.middle);
 				}
 				if (name.full) {
-					this.fullName.setValue(name.full?.trim())
+					this.fullName.setValue(name.full)
 				}
 			}
 		}
@@ -126,10 +126,10 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	private setName(): void {
 		this.name = {
-			first: this.firstName.value?.trim(),
-			last: this.lastName.value?.trim(),
-			middle: this.middleName.value?.trim(),
-			full: this.fullName.value?.trim(),
+			first: this.firstName.value,
+			last: this.lastName.value,
+			middle: this.middleName.value,
+			full: this.fullName.value,
 		};
 		if (this.isFullNameChanged && isNameEmpty(this.name)) {
 			this.isFullNameChanged = false;
@@ -139,10 +139,10 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	public names(): IName {
 		return excludeEmpty({
-			first: this.firstName.value?.trim(),
-			last: this.lastName.value?.trim(),
-			middle: this.lastName.value?.trim(),
-			full: this.fullName.value?.trim(),
+			first: this.firstName.value,
+			last: this.lastName.value,
+			middle: this.lastName.value,
+			full: this.fullName.value,
 		});
 	}
 

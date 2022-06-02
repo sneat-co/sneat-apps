@@ -60,6 +60,16 @@ export class HappeningService {
 	}
 
 	createHappening(request: ICreateHappeningRequest): Observable<any> {
+		const title = request.dto.title.trim();
+		if (title !== request.dto.title) {
+			request = {
+				...request,
+				dto: {
+					...request.dto,
+					title,
+				},
+			};
+		}
 		try {
 			validateHappeningDto(request.dto);
 		} catch (e) {

@@ -40,6 +40,9 @@ export function validateHappeningDto(dto: IHappeningDto): void {
 	if (!dto.title) {
 		throw new Error('happening has no title');
 	}
+	if (dto.title !== dto.title.trim()) {
+		throw new Error('happening title has leading or closing whitespace characters');
+	}
 	switch (dto.type) {
 		case 'single':
 			break;
