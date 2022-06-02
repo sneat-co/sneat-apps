@@ -9,7 +9,7 @@ import {
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
-	isEmptyName,
+	isNameEmpty,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
 import { GenderFormComponent } from './gender-form/gender-form.component';
@@ -100,7 +100,7 @@ export class PersonFormWizardComponent implements OnChanges {
 
 	onNameChanged(name: IName): void {
 		console.log('PersonFormComponent.onNameChanged()', name);
-		if (!this.show.nameNext && !isEmptyName(name)) {
+		if (!this.show.nameNext && !isNameEmpty(name)) {
 			this.show = {...this.show, nameNext: true};
 		}
 		this.setRelatedPerson(

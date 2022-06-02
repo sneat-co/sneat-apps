@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { IErrorResponse } from '@sneat/core';
-import { IMemberBrief, IMemberDto } from '@sneat/dto';
+import { IMemberBrief, IMemberDto, trimNames } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
@@ -51,6 +51,7 @@ export class MemberService {
 
 	public createMember(request: ICreateTeamMemberRequest): Observable<IMemberContext> {
 		console.log(`MemberService.addMember()`, request);
+		request = {...request, name: trimNames(request.name)};
 		const processAddMemberResponse = (
 			response: IAddTeamMemberResponse | IErrorResponse,
 		) => {

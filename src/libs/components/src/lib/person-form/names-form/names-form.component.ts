@@ -5,7 +5,7 @@ import {
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { excludeEmpty } from '@sneat/core';
-import { IName, isEmptyName } from '@sneat/dto';
+import { IName, isNameEmpty } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { createSetFocusToInput } from '../../focus';
 
@@ -87,16 +87,16 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 			const name = this.name;
 			if (name) {
 				if (name.first) {
-					this.firstName.setValue(name.first);
+					this.firstName.setValue(name.first?.trim());
 				}
 				if (name.last) {
-					this.lastName.setValue(name.last);
+					this.lastName.setValue(name.last?.trim());
 				}
 				if (name.middle) {
-					this.middleName.setValue(name.middle);
+					this.middleName.setValue(name.middle?.trim());
 				}
 				if (name.full) {
-					this.fullName.setValue(name.full)
+					this.fullName.setValue(name.full?.trim())
 				}
 			}
 		}
@@ -126,12 +126,12 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	private setName(): void {
 		this.name = {
-			first: this.firstName.value,
-			last: this.lastName.value,
-			middle: this.middleName.value,
-			full: this.fullName.value,
+			first: this.firstName.value?.trim(),
+			last: this.lastName.value?.trim(),
+			middle: this.middleName.value?.trim(),
+			full: this.fullName.value?.trim(),
 		};
-		if (this.isFullNameChanged && isEmptyName(this.name)) {
+		if (this.isFullNameChanged && isNameEmpty(this.name)) {
 			this.isFullNameChanged = false;
 		}
 		this.namesChanged.emit(this.name);
@@ -139,10 +139,10 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	public names(): IName {
 		return excludeEmpty({
-			first: this.firstName.value,
-			last: this.lastName.value,
-			middle: this.lastName.value,
-			full: this.fullName.value,
+			first: this.firstName.value?.trim(),
+			last: this.lastName.value?.trim(),
+			middle: this.lastName.value?.trim(),
+			full: this.fullName.value?.trim(),
 		});
 	}
 
@@ -164,7 +164,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 			this.setName();
 		} else {
 			const fullName = this.generateFullName();
-			if (this.fullName.value !== fullName) {
+			if (this.fullName.value?.trim() !== fullName) {
 				this.isFullNameChanged = true;
 			}
 		}

@@ -8,9 +8,22 @@ export interface IName {
 	readonly full?: string;
 }
 
-export function isEmptyName(n?: IName): boolean {
+export function isNameEmpty(n?: IName): boolean {
 	return !n || !n.full && !n.first && !n.last && !n.middle;
 }
+
+export function trimNames(n: IName): IName {
+	const
+		first = n.first?.trim(),
+		middle = n.middle?.trim(),
+		last = n.last?.trim(),
+		full = n.full?.trim();
+	if (first !== n?.first || last !== n?.last || middle != n.middle || full != n.full) {
+		n = {first, middle, last, full};
+	}
+	return n;
+}
+
 
 export interface IEmail {
 	readonly type: 'work' | 'personal';
@@ -62,7 +75,7 @@ export interface IPersonRequirements {
 }
 
 export function isPersonNotReady(p: IPerson, requires: IPersonRequirements): boolean {
-	return !!requires.ageGroup && !p.ageGroup || isEmptyName(p.name);
+	return !!requires.ageGroup && !p.ageGroup || isNameEmpty(p.name);
 }
 
 export function isRelatedPersonNotReady(p: IRelatedPerson, requires: IPersonRequirements): boolean {
