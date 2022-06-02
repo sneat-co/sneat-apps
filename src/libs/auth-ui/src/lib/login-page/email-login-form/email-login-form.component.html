@@ -31,6 +31,7 @@
 				<ion-icon name="person-add-outline"></ion-icon>
 			</ion-label>
 			<ion-input
+				name="first_name"
 				placeholder="First name"
 				[(ngModel)]="firstName"
 				type="text"
@@ -39,6 +40,7 @@
 				[disabled]="!!signingWith"
 			></ion-input>
 			<ion-input
+				name="last_name"
 				placeholder="Last name"
 				[(ngModel)]="lastName"
 				type="text"
@@ -92,7 +94,8 @@
 				<ion-icon name="enter-outline" slot="start"></ion-icon>
 				<ion-label *ngIf="signingWith !== 'email'">Sign in</ion-label>
 				<ion-label *ngIf="signingWith === 'email'">Signing in...</ion-label>
-				<ion-spinner class="ion-margin-start" *ngIf="signingWith === 'email'" slot="end" name="lines-small"></ion-spinner>
+				<ion-spinner class="ion-margin-start" *ngIf="signingWith === 'email'" slot="end"
+										 name="lines-small"></ion-spinner>
 			</ion-button>
 			<ion-button disabled="disabled" fill="clear" color="medium">
 				or

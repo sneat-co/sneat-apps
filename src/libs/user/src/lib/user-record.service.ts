@@ -1,27 +1,36 @@
 import { Injectable } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { excludeUndefined } from '@sneat/core';
-import { IName } from '@sneat/dto';
-import { Observable } from 'rxjs';
+import { IName, IUserDto } from '@sneat/dto';
+import { Observable, share } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class UserRecordService {
 	constructor(
 		private readonly sneatApiService: SneatApiService,
 	) {
 	}
 
-	public setUserNames(names: ISetNamesRequest): Observable<void> {
-		console.log(`setUserTitle()`, names);
-		names = excludeUndefined(names);
-		// throw new Error('not implemented yet'); // due to circle deps
-		return this.sneatApiService.post<void>('users/set_user_names', names);
+	private initUserRecord$?: Observable<IUserDto>;
+
+	public initUserRecord(request: IInitUserRecordRequest): Observable<IUserDto> {
+		if (!request.ianaTimezone) {
+			request = { ...request, ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone };
+		}
+		console.log(`initUserRecord()`, request);
+		request = excludeUndefined(request);
+		this.initUserRecord$ = this.sneatApiService
+			.post<IUserDto>('users/init_user_record', request)
+			.pipe(share());
+		return this.initUserRecord$;
 	}
 
 }
 
-export interface ISetNamesRequest {
-	name: IName;
-	email: string;
-	ianaTimezone: string;
+export interface IInitUserRecordRequest {
+	readonly authProvider: string;
+	readonly name?: IName;
+	readonly email?: string;
+	readonly emailIsVerified?: boolean;
+	readonly ianaTimezone?: string;
 }

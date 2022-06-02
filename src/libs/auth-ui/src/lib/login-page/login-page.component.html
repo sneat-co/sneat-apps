@@ -64,7 +64,7 @@
 							</ion-spinner>
 							<ion-label color="danger"> Login with Google</ion-label>
 						</ion-item>
-						<ion-item
+						<ion-item *ngIf="false"
 							(click)="loginWith('Facebook')"
 							tappable
 							[disabled]="!!signingWith"
@@ -110,7 +110,7 @@
 							</ion-spinner>
 							<ion-label color="secondary">Login with Microsoft</ion-label>
 						</ion-item>
-						<ion-item
+						<ion-item *ngIf="false"
 							(click)="loginWith('GitHub')"
 							tappable
 							[disabled]="!!signingWith"
@@ -149,6 +149,9 @@
 		</ion-text>
 	</p>
 
-	<sneat-email-login-form (signingWithChange)="onEmailFormStatusChanged()"></sneat-email-login-form>
+	<sneat-email-login-form
+		(signingWithChange)="onEmailFormStatusChanged()"
+		(loggedIn)="onLoggedIn($event)"
+	></sneat-email-login-form>
 
 </ion-content>

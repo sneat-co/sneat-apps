@@ -113,7 +113,7 @@ export class LoginPageComponent {
 	}
 
 
-	private onLoggedIn(userCredential: UserCredential): void {
+	public onLoggedIn(userCredential: UserCredential): void {
 		console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
 		if (!userCredential.user) {
 			return;

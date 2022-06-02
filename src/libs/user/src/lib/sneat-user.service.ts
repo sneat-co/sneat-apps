@@ -12,6 +12,7 @@ import { IUserRecord } from '@sneat/auth-models';
 import { initialSneatAuthState, ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
 import { SneatApiService } from '@sneat/api';
 import { HttpClient } from '@angular/common/http';
+import { IInitUserRecordRequest, UserRecordService } from './user-record.service';
 
 export interface ISneatUserState extends ISneatAuthState {
 	record?: IUserRecord | null; // undefined => not loaded yet, null = does not exists
@@ -41,6 +42,7 @@ export class SneatUserService {
 		private readonly db: AngularFirestore,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly sneatApiService: SneatApiService,
+		private readonly userRecordService: UserRecordService,
 		// private readonly sneatTeamApiService: SneatTeamApiService
 	) {
 
@@ -123,16 +125,19 @@ export class SneatUserService {
 			}
 			// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
 			const authUser = authState.user;
-			if (!userDocSnapshot.exists) {
-				this.sneatApiService
-					.post('users/create_user', {
-						creator: location.host,
-						title: authUser?.displayName,
-						email: authUser?.email,
-					})
+			if (authUser && !userDocSnapshot.exists) {
+				let request: IInitUserRecordRequest = {
+					email: authUser.email || undefined,
+					emailIsVerified: authUser.emailVerified,
+					authProvider: authUser?.providerId,
+				};
+				if (authUser?.displayName) {
+					request = {...request, name: {full: authUser.displayName}}
+				}
+				this.userRecordService.initUserRecord(request)
 					.subscribe({
-						next: response => {
-							console.log('User record created:', response);
+						next: userDto => {
+							console.log('User record created:', userDto);
 						},
 						error: this.errorLogger.logErrorHandler('failed to create user record'),
 					});

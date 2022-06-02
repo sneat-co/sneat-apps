@@ -78,7 +78,7 @@ export class SneatAuthStateService {
 		});
 		afAuth.user.subscribe({
 			next: (fbUser) => {
-				// console.log(`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`, fbUser);
+				console.log(`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`, fbUser);
 				const user: ISneatAuthUser | null = fbUser && {
 					isAnonymous: fbUser.isAnonymous,
 					emailVerified: fbUser.emailVerified,
@@ -87,7 +87,7 @@ export class SneatAuthStateService {
 					displayName: fbUser.displayName,
 					phoneNumber: fbUser.phoneNumber,
 					photoURL: fbUser.photoURL,
-					providerId: fbUser.providerId,
+					providerId: fbUser.providerData?.length === 1 && fbUser.providerData[0] ? fbUser.providerData[0].providerId: fbUser.providerId,
 				};
 				const status = user
 					? AuthStatuses.authenticated

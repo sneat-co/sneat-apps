@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { IonInput } from '@ionic/angular';
+import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
-import { ISetNamesRequest, SneatUserService, UserRecordService } from '@sneat/user';
+import { IInitUserRecordRequest, SneatUserService, UserRecordService } from '@sneat/user';
 import firebase from 'firebase/compat';
 import UserCredential = firebase.auth.UserCredential;
 
@@ -25,12 +25,14 @@ export class EmailLoginFormComponent {
 	signingWith?: EmailFormSigningWith;
 
 	@Output() readonly signingWithChange = new EventEmitter<EmailFormSigningWith | undefined>();
+	@Output() readonly loggedIn = new EventEmitter<UserCredential>();
 
 	@ViewChild('emailInput', { static: true }) emailInput?: IonInput;
 
 	constructor(
 		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly toastController: ToastController,
 		private readonly afAuth: AngularFireAuth,
 		private readonly randomIdService: RandomIdService,
 		private readonly sneatApiService: SneatApiService,
@@ -57,6 +59,20 @@ export class EmailLoginFormComponent {
 		// this.signingWith = 'email';
 		this.email = this.email.trim();
 		const email = this.email;
+		const first = this.firstName.trim();
+		const last = this.lastName.trim();
+		if (!email) {
+			alert('Email is a required field');
+			return;
+		}
+		if (!first) {
+			alert('First name is a required field');
+			return;
+		}
+		if (!last) {
+			alert('Last name is a required field');
+			return;
+		}
 		localStorage.setItem('emailForSignIn', email);
 		const password = this.randomIdService.newRandomId({ len: 9 });
 		try {
@@ -66,12 +82,13 @@ export class EmailLoginFormComponent {
 				?.getIdToken()
 				.then((token) => {
 					this.sneatApiService.setApiAuthToken(token);
-					const request: ISetNamesRequest = {
+					const request: IInitUserRecordRequest = {
+						authProvider: 'password',
 						email,
 						ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-						name: {first: this.firstName.trim(), last: this.lastName.trim()},
+						name: { first, last },
 					};
-					this.userRecordService.setUserNames(request).subscribe({
+					this.userRecordService.initUserRecord(request).subscribe({
 						next: () => this.onLoggedIn(userCredential),
 						error: (err) => {
 							this.analyticsService.logEvent('FailedToSetUserTitle');
@@ -119,7 +136,7 @@ export class EmailLoginFormComponent {
 	}
 
 	public sendSignInLink(): void {
-		this.signingWith = 'emailLink';
+		this.setSigningWith('emailLink');
 		this.email = this.email.trim();
 		localStorage.setItem('emailForSignIn', this.email);
 		this.afAuth
@@ -127,8 +144,10 @@ export class EmailLoginFormComponent {
 				// url: 'https://dailyscrum.app/pwa/sign-in',
 				url: document.baseURI + 'sign-in',
 				handleCodeInApp: true,
-			})
-			.catch(
+			}).then(() => {
+				this.showToast(`Sign-in link has been sent to email: ${this.email}`);
+				this.setSigningWith(undefined);
+			}).catch(
 				this.errorHandler(
 					'Failed to send sign in link to email',
 					'FailedToSendSignInLinkToEmail',
@@ -136,17 +155,28 @@ export class EmailLoginFormComponent {
 			);
 	}
 
+	private showToast(message: string): void {
+		this.toastController.create({
+			message,
+			position: 'middle',
+			keyboardClose: true,
+			duration: 3000,
+			color: 'tertiary',
+			icon: 'send-outline',
+			buttons: [{icon: 'close', role: 'cancel'}]
+		}).then(toast => {
+			toast.present().catch(this.errorLogger.logErrorHandler('Failed to present toast about password reset email sent success'));
+		});
+
+	}
+
 	public resetPassword(): void {
 		this.setSigningWith('resetPassword');
 		this.afAuth
 			.sendPasswordResetEmail(this.email)
 			.then(() => {
-				this.signingWith = undefined;
-				// this.toastController.create({
-				// 	message: `Password reset link has been sent to email: ${this.email}`,
-				// }).then(toast => {
-				// 	toast.present().catch(this.errorLogger.logErrorHandler('Failed to present toast about password reset email sent success'));
-				// });
+				this.setSigningWith(undefined);
+				this.showToast(`Password reset link has been sent to email: ${this.email}`);
 			})
 			.catch(
 				this.errorHandler(
@@ -167,7 +197,7 @@ export class EmailLoginFormComponent {
 	}
 
 	private onLoggedIn(userCredential: UserCredential): void {
-		//
+		this.loggedIn.emit(userCredential);
 	}
 
 	private errorHandler(
