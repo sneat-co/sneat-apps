@@ -182,7 +182,8 @@ export class TeamDay {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-		// console.log(`TeamDay[${this.isoID}].processRecurrings(), ${Object.keys(slots.byWeekday).length} weekdays with slots:`, slots);
+
+		console.log(`TeamDay[${this.isoID},date=${this.date},wd=${this.wd}].processRecurrings(), ${Object.keys(slots.byWeekday).length} weekdays with slots:`, slots);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};

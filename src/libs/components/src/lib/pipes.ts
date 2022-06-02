@@ -138,50 +138,16 @@ export class LongMonthNamePipe implements PipeTransform {
 	}
 }
 
+const shortMonthNamesByNumber = [
+	'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+]
 @Pipe({ name: 'shortMonthName' })
 export class ShortMonthNamePipe implements PipeTransform {
-	// tslint:disable-next-line:prefer-function-over-method
 	transform(month?: number): string {
-		switch (month) {
-			// tslint:disable-next-line:no-magic-numbers
-			case 0:
-				return 'Jan';
-			// tslint:disable-next-line:no-magic-numbers
-			case 1:
-				return 'Feb';
-			// tslint:disable-next-line:no-magic-numbers
-			case 2:
-				return 'Mar';
-			// tslint:disable-next-line:no-magic-numbers
-			case 3:
-				return 'Apr';
-			// tslint:disable-next-line:no-magic-numbers
-			case 4:
-				return 'May';
-			// tslint:disable-next-line:no-magic-numbers
-			case 5:
-				return 'Jun';
-			// tslint:disable-next-line:no-magic-numbers
-			case 6:
-				return 'Jul';
-			// tslint:disable-next-line:no-magic-numbers
-			case 7:
-				return 'Aug';
-			// tslint:disable-next-line:no-magic-numbers
-			case 8:
-				return 'Sep';
-			// tslint:disable-next-line:no-magic-numbers
-			case 9:
-				return 'Oct';
-			// tslint:disable-next-line:no-magic-numbers
-			case 10:
-				return 'Nov';
-			// tslint:disable-next-line:no-magic-numbers
-			case 11:
-				return 'Dec';
-			default:
-				return '' + month;
+		if (month !== undefined && month >= 0 &&  month <= 11) {
+			return shortMonthNamesByNumber[month];
 		}
+		return '' + month;
 	}
 }
 
