@@ -100,10 +100,14 @@ ion-modal.auto-height {
   //}
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 766px) { // 768=PAL @ https://en.wikipedia.org/wiki/Computer_display_standard
   .sneat-hide-on-small-screen {display: none}
-  .sneat-smaller-on-small-screen {font-size: smaller}
-  .sneat-small-on-small-screen {font-size: small}
+}
+
+@media screen and (max-width: 638px) { // 640=VGA @ https://en.wikipedia.org/wiki/Computer_display_standard
+  .sneat-hide-on-tiny-screen {display: none}
+  .sneat-smaller-on-tiny-screen {font-size: smaller}
+  .sneat-small-on-tiny-screen {font-size: small}
 }
 
 ion-popover {
