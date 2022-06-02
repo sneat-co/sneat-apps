@@ -51,7 +51,7 @@ specifiers:
   '@sneat/wormhole': 0.0.5
   '@trellisorg/make-buildable': 0.0.12
   '@types/jasmine': 4.0.3
-  '@types/jest': 27.5.2
+  '@types/jest': 28.1.0
   '@types/node': 16.11.38
   '@typescript-eslint/eslint-plugin': 5.27.0
   '@typescript-eslint/parser': 5.27.0
@@ -163,7 +163,7 @@ devDependencies:
   '@nxtend/ionic-angular': 13.1.0_l7alqczfi7nsb7rvv26j7yytum
   '@trellisorg/make-buildable': 0.0.12_su3ruuw4zza6tcezevwlvro4wm
   '@types/jasmine': 4.0.3
-  '@types/jest': 27.5.2
+  '@types/jest': 28.1.0
   '@types/node': 16.11.38
   '@typescript-eslint/eslint-plugin': 5.27.0_wty7taswolhs3dkiohqfkuwyye
   '@typescript-eslint/parser': 5.27.0_utdtartgf6fqqgkivzeynh76la
@@ -178,7 +178,7 @@ devDependencies:
   follow-redirects: 1.15.1
   jasmine-core: 4.1.1
   jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
-  jest-preset-angular: 12.0.1_ktrhbx67sbvk5tjvhgvs4qn7by
+  jest-preset-angular: 12.0.1_3lcf2nfc73pwzrcmwqndsebe2m
   karma: 6.3.20
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
@@ -193,7 +193,7 @@ devDependencies:
   postcss-preset-env: 7.7.0_postcss@8.4.14
   postcss-url: 10.1.3_postcss@8.4.14
   prettier: 2.6.2
-  ts-jest: 28.0.3_zjiisyiocj24hlcxqje3u42dum
+  ts-jest: 28.0.3_7467kmlv6pd2tf3zru36djldpq
   ts-node: 10.8.0_ukj7ket6x7kbcdkmawseogdx4e
   typescript: 4.6.4
   webpack: 5.72.1
@@ -5426,8 +5426,8 @@ packages:
     resolution: {integrity: sha512-Opp1LvvEuZdk8fSSvchK2mZwhVrsNT0JgJE9Di6MjnaIpmEXM8TLCPPrVtNTYh8+5MPdY8j9bAHMu2SSfwpZJg==}
     dev: true
 
-  /@types/jest/27.5.2:
-    resolution: {integrity: sha512-mpT8LJJ4CMeeahobofYWIjFo0xonRS/HfxnVEPMPFSQdGUt1uHCnoPT7Zhb+sjDU2wz0oKV0OLUR0WzrHNgfeA==}
+  /@types/jest/28.1.0:
+    resolution: {integrity: sha512-ITfF6JJIl9zbEi2k6NmhNE/BiDqfsI/ceqfvdaWaPbcrCpYyyRq4KtDQIWh6vQUru6SqwppODiom/Zhid+np6A==}
     dependencies:
       jest-matcher-utils: 27.5.1
       pretty-format: 27.5.1
@@ -10062,7 +10062,7 @@ packages:
       jest-resolve: 28.1.0
     dev: true
 
-  /jest-preset-angular/12.0.1_ktrhbx67sbvk5tjvhgvs4qn7by:
+  /jest-preset-angular/12.0.1_3lcf2nfc73pwzrcmwqndsebe2m:
     resolution: {integrity: sha512-/3tpZTOhBE2Qmdga9jRTGu3OxgRfAzg2xDxtVSvR1SZvFZLHRik6jw+NznuirXtchgcYGt4tBE0wPDTJvtUeDw==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
@@ -10082,7 +10082,7 @@ packages:
       jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
       jest-environment-jsdom: 28.1.0
       pretty-format: 28.1.0
-      ts-jest: 28.0.3_w5niq5viy3hypbuibf4yg4exzu
+      ts-jest: 28.0.3_jkd5dnhjt2e2ag25iqsifw5n4a
       typescript: 4.6.4
     optionalDependencies:
       esbuild: 0.14.38
@@ -13808,7 +13808,7 @@ packages:
     resolution: {integrity: sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==}
     dev: false
 
-  /ts-jest/28.0.3_w5niq5viy3hypbuibf4yg4exzu:
+  /ts-jest/28.0.3_7467kmlv6pd2tf3zru36djldpq:
     resolution: {integrity: sha512-HzgbEDQ2KgVtDmpXToqAcKTyGHdHsG23i/iUjfxji92G5eT09S1m9UHZd7csF0Bfgh9txM4JzwHnv7r1waFPlw==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
@@ -13830,9 +13830,8 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.18.2
-      '@types/jest': 27.5.2
+      '@types/jest': 28.1.0
       bs-logger: 0.2.6
-      esbuild: 0.14.38
       fast-json-stable-stringify: 2.1.0
       jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
       jest-util: 28.1.0
@@ -13844,7 +13843,7 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /ts-jest/28.0.3_zjiisyiocj24hlcxqje3u42dum:
+  /ts-jest/28.0.3_jkd5dnhjt2e2ag25iqsifw5n4a:
     resolution: {integrity: sha512-HzgbEDQ2KgVtDmpXToqAcKTyGHdHsG23i/iUjfxji92G5eT09S1m9UHZd7csF0Bfgh9txM4JzwHnv7r1waFPlw==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
@@ -13866,8 +13865,9 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.18.2
-      '@types/jest': 27.5.2
+      '@types/jest': 28.1.0
       bs-logger: 0.2.6
+      esbuild: 0.14.38
       fast-json-stable-stringify: 2.1.0
       jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
       jest-util: 28.1.0
