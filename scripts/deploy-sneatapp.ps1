@@ -1,6 +1,6 @@
 $location = Get-Location
 Set-Location -Path $PSScriptRoot/../src
-pnpm run nx build sneat-app
+pnpm run nx build sneat-app --source-map=true
 rm -rf $PSScriptRoot/../websites/sneat.app/pwa
 copy-item $PSScriptRoot/../src/dist/apps/sneat-app $PSScriptRoot/../websites/sneat.app/pwa -force -recurse
 Set-Location -Path $PSScriptRoot/..
