@@ -9,7 +9,7 @@ import { BehaviorSubject, EMPTY, Observable, of, ReplaySubject, Subscription } f
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import { SneatTeamApiService } from '@sneat/api';
 import { IUserRecord } from '@sneat/auth-models';
-import { initialSneatAuthState, ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { initialSneatAuthState, ISneatAuthState, ISneatAuthUser, SneatAuthStateService } from '@sneat/auth';
 import { SneatApiService } from '@sneat/api';
 import { HttpClient } from '@angular/common/http';
 import { IInitUserRecordRequest, UserRecordService } from './user-record.service';
@@ -126,21 +126,7 @@ export class SneatUserService {
 			// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
 			const authUser = authState.user;
 			if (authUser && !userDocSnapshot.exists) {
-				let request: IInitUserRecordRequest = {
-					email: authUser.email || undefined,
-					emailIsVerified: authUser.emailVerified,
-					authProvider: authUser?.providerId,
-				};
-				if (authUser?.displayName) {
-					request = {...request, name: {full: authUser.displayName}}
-				}
-				this.userRecordService.initUserRecord(request)
-					.subscribe({
-						next: userDto => {
-							console.log('User record created:', userDto);
-						},
-						error: this.errorLogger.logErrorHandler('failed to create user record'),
-					});
+				this.initUserRecordFromAuthUser(authUser);
 			}
 			this.userState$.next({
 				...authState,
@@ -151,6 +137,25 @@ export class SneatUserService {
 		}
 	}
 
+
+	private initUserRecordFromAuthUser(authUser: ISneatAuthUser): void {
+		let request: IInitUserRecordRequest = {
+			email: authUser.email || undefined,
+			emailIsVerified: authUser.emailVerified,
+			authProvider: authUser?.providerId,
+		};
+		if (authUser?.displayName) {
+			request = {...request, name: {full: authUser.displayName}}
+		}
+		this.userRecordService.initUserRecord(request)
+			.subscribe({
+				next: userDto => {
+					console.log('User record created:', userDto);
+				},
+				error: this.errorLogger.logErrorHandler('failed to create user record'),
+			});
+
+	}
 	private onUserSignedOut(): void {
 		this.uid = undefined;
 		if (this.userDocSubscription) {

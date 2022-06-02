@@ -1,4 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
+import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { BehaviorSubject, from, Observable, share, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Inject, Injectable } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -6,6 +7,12 @@ import firebase from 'firebase/compat/app';
 import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { newRandomId } from '@sneat/random';
+import AuthProvider = firebase.auth.AuthProvider;
+import UserCredential = firebase.auth.UserCredential;
+import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import GithubAuthProvider = firebase.auth.GithubAuthProvider;
+import OAuthProvider = firebase.auth.OAuthProvider;
 
 export enum AuthStatuses {
 	authenticating = 'authenticating',
@@ -56,6 +63,7 @@ export class SneatAuthStateService {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
 		private readonly afAuth: AngularFireAuth,
 	) {
 		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
@@ -105,4 +113,44 @@ export class SneatAuthStateService {
 	public signOut(): Promise<void> {
 		return this.afAuth.signOut();
 	}
+
+	public signInWith(authProviderName: AuthProviderName): Observable<UserCredential> {
+		const eventParams = { provider: authProviderName };
+		let authProvider: AuthProvider;
+		switch (authProviderName) {
+			case 'Google':
+				authProvider = new GoogleAuthProvider();
+				break;
+			case 'Microsoft':
+				authProvider = new OAuthProvider('microsoft.com');
+				break;
+			case 'Facebook':
+				authProvider = new FacebookAuthProvider();
+				(authProvider as FacebookAuthProvider).addScope('email');
+				break;
+			case 'GitHub':
+				authProvider = new GithubAuthProvider();
+				(authProvider as GithubAuthProvider).addScope('read:user');
+				(authProvider as GithubAuthProvider).addScope('user:email');
+				break;
+			default:
+			{
+				const e = new Error('Unknown or unsupported auth provider: ' + authProviderName);
+				this.errorLogger.logError(e, 'Coding error');
+				return throwError(() => e);
+			}
+		}
+		this.analyticsService.logEvent('loginWith', eventParams);
+		const result = from(this.afAuth.signInWithPopup(authProvider))
+			.pipe(share());
+		result.subscribe({
+			next: () => {
+				this.analyticsService.logEvent('signInWithPopup', eventParams);
+			},
+			error: this.errorLogger.logErrorHandler(`Failed to sign-in with ${authProviderName}`),
+		})
+		return result;
+	}
 }
+
+export type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';

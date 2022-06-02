@@ -138,12 +138,18 @@ export class JoinTeamPageComponent implements OnDestroy {
 			this.errorLogger.logError(m, undefined, { show: true });
 			return;
 		}
+		if (!this.pin) {
+			alert('Please enter the PIN');
+		}
+		const to = this.inviteInfo?.invite?.to;
+		if (to?.channel === 'email' && to.address?.toLowerCase().endsWith('gmail.com')) {
+			this.authStateService.signInWith('Google').subscribe({
+				next: () => this.joinTeam(),
+				error: () => this.joinTeam(),
+			})
+		}
 		if (this.authStatus === 'authenticated' || this.inviteInfo?.invite?.to.channel === 'email') {
-			if (this.pin) {
-				this.joinTeam();
-			} else {
-				alert('Please enter the PIN');
-			}
+			this.joinTeam();
 		} else {
 			this.navService.navigateToLogin({
 				queryParams: { to: 'join-team' },

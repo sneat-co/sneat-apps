@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import {
+	AuthProviderName,
 	AuthStatuses,
 	ILoginEventsHandler,
 	ISneatAuthState,
@@ -24,7 +25,6 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import OAuthProvider = firebase.auth.OAuthProvider;
 import UserCredential = firebase.auth.UserCredential;
 
-type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
 
 type Action = 'join' | 'refuse'; // TODO: inject provider for action descriptions/messages.
 
@@ -70,51 +70,19 @@ export class LoginPageComponent {
 
 	loginWith(provider: AuthProviderName) {
 		this.signingWith = provider;
-		const eventParams = { provider };
-		let authProvider: AuthProvider;
-		switch (provider) {
-			case 'Google':
-				authProvider = new GoogleAuthProvider();
-				break;
-			case 'Microsoft':
-				authProvider = new OAuthProvider('microsoft.com');
-				break;
-			case 'Facebook':
-				authProvider = new FacebookAuthProvider();
-				(authProvider as FacebookAuthProvider).addScope('email');
-				break;
-			case 'GitHub':
-				authProvider = new GithubAuthProvider();
-				(authProvider as GithubAuthProvider).addScope('read:user');
-				(authProvider as GithubAuthProvider).addScope('user:email');
-				break;
-			default:
-				this.errorLogger.logError(
-					'Coding error',
-					'Unknown or unsupported auth provider: ' + provider,
-				);
-				return;
-		}
-		this.analyticsService.logEvent('loginWith', eventParams);
-		this.afAuth
-			.signInWithPopup(authProvider)
-			.then((userCredential) => {
-				// console.log('LoginPage => userCredential:', userCredential);
-				this.analyticsService.logEvent('signInWithPopup', eventParams);
-				this.onLoggedIn(userCredential);
-			})
-			.catch(
-				this.errorHandler(
-					'Failed to sign in with: ' + provider,
-					'FailedToSignInWith',
-					eventParams,
-				),
-			);
+		this.authStateService.signInWith(provider).subscribe({
+			next: userCredential => this.onLoggedIn(userCredential),
+			complete: () => {
+				this.signingWith = undefined;
+			},
+			// error: undefined, No need to handle or log error as it will be logged in service
+		});
 	}
 
 
 	public onLoggedIn(userCredential: UserCredential): void {
 		console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
+		this.signingWith = undefined;
 		if (!userCredential.user) {
 			return;
 		}
