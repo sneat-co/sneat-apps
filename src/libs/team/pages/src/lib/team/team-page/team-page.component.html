@@ -66,7 +66,7 @@
 						<ion-icon name="cart-outline" slot="start"></ion-icon>
 						<ion-label>Lists</ion-label>
 						<ion-buttons slot="end">
-							<ion-button>
+							<ion-button routerLink="./list/to-buy/groceries" (click)="$event.stopPropagation()">
 								<ion-label style="text-transform: none" color="primary">🛒 Groceries</ion-label>
 							</ion-button>
 						</ion-buttons>
