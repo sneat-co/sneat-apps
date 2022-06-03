@@ -114,6 +114,10 @@ export class SneatAuthStateService {
 		return this.afAuth.signOut();
 	}
 
+	public signInWithEmailLink(email: string): Observable<UserCredential> {
+		return from(this.afAuth.signInWithEmailLink(email));
+	}
+
 	public signInWith(authProviderName: AuthProviderName): Observable<UserCredential> {
 		const eventParams = { provider: authProviderName };
 		let authProvider: AuthProvider;

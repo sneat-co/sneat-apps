@@ -7,6 +7,12 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./login-page').then((m) => m.LoginPageComponentModule),
 	},
+	{
+		path: 'sign-in-from-email-link',
+		loadChildren: () =>
+			import('./sign-in-from-email-link/sign-in-from-email-link-page.module')
+				.then(m => m.SignInFromEmailLinkPageModule),
+	},
 ];
 
 @NgModule({

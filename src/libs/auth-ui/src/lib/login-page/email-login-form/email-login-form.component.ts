@@ -142,7 +142,7 @@ export class EmailLoginFormComponent {
 		this.afAuth
 			.sendSignInLinkToEmail(this.email, {
 				// url: 'https://dailyscrum.app/pwa/sign-in',
-				url: document.baseURI + 'sign-in',
+				url: document.baseURI + 'sign-in-from-email-link',
 				handleCodeInApp: true,
 			}).then(() => {
 				this.showToast(`Sign-in link has been sent to email: ${this.email}`);
