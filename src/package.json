@@ -130,6 +130,6 @@
 	"ts-jest": "28.0.3",
 	"ts-node": "10.8.0",
 	"typescript": "4.6.4",
-	"webpack": "5.72.1"
+	"webpack": "5.73.0"
   }
 }
