@@ -1,13 +1,17 @@
+<div class="ion-padding-horizontal">
+</div>
 <ion-card>
-	<ion-item-divider color="light">
-		<ion-label color="medium" style="text-align: center; width: 100%">
-			Or login with email
-		</ion-label>
+	<ion-item-divider color="light" class="ion-no-padding">
+		<ion-segment [(ngModel)]="sign" (ionChange)="signChanged()">
+			<ion-segment-button value="up">Sign up</ion-segment-button>
+			<ion-segment-button value="in">Sign in</ion-segment-button>
+		</ion-segment>
 	</ion-item-divider>
-	<ion-segment [(ngModel)]="sign" (ionChange)="signChanged()">
-		<ion-segment-button value="up">Sign up</ion-segment-button>
-		<ion-segment-button value="in">Sign in</ion-segment-button>
-	</ion-segment>
+	<!--	<ion-item-divider color="light">-->
+	<!--		<ion-label color="medium" style="text-align: center; width: 100%">-->
+	<!--			Or login with email-->
+	<!--		</ion-label>-->
+	<!--	</ion-item-divider>-->
 	<ion-card-content class="ion-no-padding">
 		<ion-item>
 			<ion-label>
