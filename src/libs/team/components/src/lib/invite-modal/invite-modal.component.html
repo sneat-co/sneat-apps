@@ -21,8 +21,11 @@
 				<ng-container *ngIf="tab !== 'link'">To</ng-container>
 				<ng-container *ngIf="tab === 'link'">Invite link</ng-container>
 			</ion-label>
-			<ion-input *ngIf="tab === 'email'" [disabled]="creatingInvite" placeholder="email@address"
-								 [formControl]="email"></ion-input>
+			<ion-input *ngIf="tab === 'email'" placeholder="email@address"
+								 [required]="true"
+								 [disabled]="creatingInvite"
+								 [formControl]="email"
+			></ion-input>
 			<ion-input *ngIf="tab === 'sms'" [disabled]="creatingInvite" placeholder="phone #"
 								 [formControl]="phone"></ion-input>
 			<ion-input *ngIf="tab === 'link'"
