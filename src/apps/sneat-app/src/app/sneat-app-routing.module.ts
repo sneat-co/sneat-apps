@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { RoutesToCommuneModule } from '@sneat/communes/ui';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
+import { SneatAppMyRoutingModule } from './sneat-app-my-routing.module';
 
 const routes: Routes = [
 	{
@@ -22,6 +23,10 @@ const routes: Routes = [
 		pathMatch: 'full',
 		loadChildren: () =>
 			import('./pages/sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
+	},
+	{
+		path: 'my',
+		loadChildren: () => import('./sneat-app-my-routing.module').then(m => m.SneatAppMyRoutingModule),
 	},
 	{
 		path: 'space/:teamType/:teamId',

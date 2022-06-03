@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ISneatAuthState, SneatAuthStateService } from '../sneat-auth-state-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { NavController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 @Component({
 	selector: 'sneat-auth-menu-item',
@@ -16,11 +16,16 @@ export class AuthMenuItemComponent {
 		private readonly errorLogger: IErrorLogger,
 		private readonly navCtrl: NavController,
 		readonly authStateService: SneatAuthStateService,
+		private readonly menuController: MenuController,
 	) {
 		authStateService.authState.subscribe({
 			next: authState => this.authState = authState,
 			error: errorLogger.logErrorHandler('failed to get auth state'),
 		});
+	}
+
+	public closeMenu(): void {
+		this.menuController.close().catch(this.errorLogger.logErrorHandler('Failed to close menu'));
 	}
 
 	public logout(event: Event): boolean {

@@ -14,7 +14,11 @@
 		Please sign in
 	</ion-label>
 </ion-item>
-<ion-item routerLink="/my" routerDirection="root" *ngIf="authState?.status === 'authenticated'">
+<ion-item *ngIf="authState?.status === 'authenticated'"
+					routerLink="/my"
+					routerDirection="forward"
+					(click)="closeMenu()"
+>
 	<!--    <ion-buttons slot="start" class="ion-no-margin">-->
 	<!--      <ion-button disabled color="medium" >-->
 	<!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
