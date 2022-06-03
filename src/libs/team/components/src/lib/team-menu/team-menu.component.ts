@@ -88,7 +88,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		}
 		const team = this.teams?.find(t => t.id === teamID);
 		if (team) {
-			this.teamParams.navController.navigateRoot(`/space/${team.teamType}/${team.id}`).catch(console.error);
+			this.teamNav.navigateToTeam(this.team).catch(this.errorLogger.logErrorHandler('Failed to navigate to teams page on current team changed from team menu dropdown'));
 		}
 		this.menuCtrl.close().catch(console.error);
 		return;

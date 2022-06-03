@@ -1,10 +1,10 @@
 <ion-item>
 	<ion-label color="medium">Spaces</ion-label>
-<!--	<ion-buttons slot="end">-->
-<!--		<ion-button (click)="newTeam()">-->
-<!--			<ion-icon name="add-outline" color="medium"></ion-icon>-->
-<!--		</ion-button>-->
-<!--	</ion-buttons>-->
+	<!--	<ion-buttons slot="end">-->
+	<!--		<ion-button (click)="newTeam()">-->
+	<!--			<ion-icon name="add-outline" color="medium"></ion-icon>-->
+	<!--		</ion-button>-->
+	<!--	</ion-buttons>-->
 </ion-item>
 <ion-item *ngIf="!teams" [disabled]="true">
 	<ion-icon name="person" slot="start"></ion-icon>
@@ -14,21 +14,16 @@
 <ng-container *ngIf="teams">
 	<ion-item *ngIf="familyTeams && !familyTeams.length" tappable [disabled]="!teams" (click)="newFamily($event)">
 		<ion-icon name="people-circle-outline" slot="start"></ion-icon>
-		<ion-label>Family <ion-text color="medium"><i>(new)</i></ion-text></ion-label>
+		<ion-label>Family
+			<ion-text color="medium"><i>(new)</i></ion-text>
+		</ion-label>
 		<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
 	</ion-item>
-	<ion-item *ngFor="let team of familyTeams"
-						routerLink="/space/family/{{team.id}}"
-						(click)="goTeam($event, team)"
-	>
-		<ion-icon name="people-circle-outline" slot="start"></ion-icon>
-		<ion-label>{{team.title || team.teamType}}</ion-label>
-	</ion-item>
-	<ion-item *ngFor="let team of teams"
-						routerLink="/space/{{team.teamType}}/{{team.id}}"
-						(click)="goTeam($event, team)"
-	>
-		<ion-icon name="people-outline" slot="start"></ion-icon>
-		<ion-label>{{team.title || team.teamType}}</ion-label>
-	</ion-item>
+	<sneat-teams-list [teams]="familyTeams"
+										iconName="people-circle-outline"
+										(beforeNavigateToTeam)="closeMenu()"
+	></sneat-teams-list>
+	<sneat-teams-list [teams]="teams"
+										(beforeNavigateToTeam)="closeMenu()"
+	></sneat-teams-list>
 </ng-container>

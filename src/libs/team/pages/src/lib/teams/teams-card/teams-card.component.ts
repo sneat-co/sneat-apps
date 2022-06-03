@@ -114,7 +114,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 					title: team?.dto?.title || team.id,
 					roles: ["creator"],
 					// memberType: request.memberType,
-					teamType: team?.dto?.type || 'unknown',
+					type: team?.dto?.type || 'unknown',
 				};
 				if (userTeam && !this.teams?.find((t) => t.id === team.id)) {
 					this.teams?.push(userTeam);
@@ -157,7 +157,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.teamService
-			.getTeam({ id: teamInfo.id, type: teamInfo.teamType })
+			.getTeam({ id: teamInfo.id, type: teamInfo.type })
 			.pipe(
 				mergeMap(team => {
 					const { currentUserId } = this.userService;

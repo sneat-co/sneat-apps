@@ -1,0 +1,24 @@
+<ion-card>
+	<ion-card-header>
+		<ion-card-title>
+			{{emptyTitle}}
+		</ion-card-title>
+	</ion-card-header>
+	<ion-card-content>
+
+		<ng-content></ng-content> <!-- DO NOT DELETE: This shows content -->
+
+		<ion-button *ngIf="teams && !teams.length" routerLink="/new-family" [color]="buttonColor" style="text-transform: none"
+		>
+			<ion-label>{{newTeamButtonText}}</ion-label>
+		</ion-button>
+		<ion-button *ngIf="teams?.length === 1" routerLink="/space/{{teams && teams[0].type}}/{{teams && teams[0].id}}" [color]="buttonColor" style="text-transform: none"
+		>
+			<ion-label>{{singleTeamButtonText}}</ion-label>
+		</ion-button>
+	</ion-card-content>
+	<ion-list *ngIf="teams && teams.length > 1">
+		<ion-item-divider color="light">{{itemsTitle}}</ion-item-divider>
+		<sneat-teams-list [teams]="teams"></sneat-teams-list>
+	</ion-list>
+</ion-card>

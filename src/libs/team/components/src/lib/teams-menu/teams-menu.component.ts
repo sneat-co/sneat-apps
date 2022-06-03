@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
 import { IUserTeamBrief, TeamMemberType } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ICreateTeamRequest, ITeamContext } from '@sneat/team/models';
+import { ICreateTeamRequest, ITeamContext, teamContextFromBrief } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
 
@@ -13,9 +13,9 @@ import { ISneatUserState, SneatUserService } from '@sneat/user';
 })
 export class TeamsMenuComponent {
 
-	teams?: IUserTeamBrief[];
-	familyTeams?: IUserTeamBrief[];
-	familyTeam?: IUserTeamBrief;
+	teams?: ITeamContext[];
+	familyTeams?: ITeamContext[];
+	familyTeam?: ITeamContext;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -30,14 +30,6 @@ export class TeamsMenuComponent {
 		});
 	}
 
-	public goTeam(event: Event, team: ITeamContext): boolean {
-		event.stopPropagation();
-		this.closeMenu();
-		this.teamNavService.navigateToTeam(team)
-			.catch(this.errorLogger.logErrorHandler(
-				'Failed to navigate to teams overview page from teams menu'));
-		return false;
-	}
 
 	public newFamily(event: Event): boolean {
 		event.stopPropagation();
@@ -69,13 +61,13 @@ export class TeamsMenuComponent {
 			this.familyTeam = undefined;
 			return;
 		}
-		this.teams = user?.record?.teams || [];
+		this.teams = user?.record?.teams?.map(teamContextFromBrief) || [];
 		console.log('onUserStateChanged', this.teams);
 		if (this.teams.length) {
-			this.familyTeams = this.teams.filter(t => t.teamType === 'family') || [];
+			this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
 			this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
 			if (this.familyTeam) {
-				this.teams = this.teams.filter(t => t.teamType !== 'family');
+				this.teams = this.teams.filter(t => t.type !== 'family');
 			}
 		}
 	};

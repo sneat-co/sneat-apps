@@ -21,7 +21,7 @@ const routes: Routes = [
 		path: '',
 		pathMatch: 'full',
 		loadChildren: () =>
-			import('./sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
+			import('./pages/sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
 	},
 	{
 		path: 'space/:teamType/:teamId',

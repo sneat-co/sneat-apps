@@ -15,3 +15,4 @@ export * from './invite-modal/invite-modal.module';
 export * from './invite-modal/invite-modal.component';
 export * from './members-selector/members-selector.service';
 export * from './members-selector/members-selector.module';
+export * from './teams-list';

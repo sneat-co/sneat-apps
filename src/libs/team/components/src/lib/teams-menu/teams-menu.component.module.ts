@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { TeamsListModule } from '../teams-list/teams-list.module';
 import { TeamsMenuComponent } from './teams-menu.component';
 
 const exports = [TeamsMenuComponent];
@@ -13,6 +14,7 @@ const exports = [TeamsMenuComponent];
 		IonicModule,
 		FormsModule,
 		RouterModule,
+		TeamsListModule,
 	],
 	declarations: [...exports],
 	exports,

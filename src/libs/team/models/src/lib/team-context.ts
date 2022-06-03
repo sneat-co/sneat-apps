@@ -30,6 +30,7 @@ export interface ITeamContext extends ITeamRef, INavContext<ITeamBrief, ITeamDto
 	readonly contacts?: IContactContext[];
 };
 
+export const teamContextFromBrief = (brief: ITeamBrief): ITeamContext => ({ id: brief.id, type: brief.type, brief });
 
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
 export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;

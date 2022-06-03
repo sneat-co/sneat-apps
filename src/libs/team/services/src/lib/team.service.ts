@@ -19,7 +19,7 @@ import { ISneatUserState, SneatUserService } from '@sneat/user';
 import { BehaviorSubject, Observable, Subscription, switchMap, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
-const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({ ...v, type: v.teamType });
+const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({ ...v, type: v.type });
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
@@ -102,7 +102,7 @@ export class TeamService {
 		if (this.currentUserTeams) {
 			const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
 			if (userTeamInfo) {
-				teamContext = { id, type: userTeamInfo.teamType, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
+				teamContext = { id, type: userTeamInfo.type, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
 			}
 		}
 		subj = new BehaviorSubject<ITeamContext>(teamContext);
@@ -280,7 +280,7 @@ export class TeamService {
 		if (subj) {
 			let team = subj.value;
 			if (!team.type) {
-				team = { ...team, type: userTeamInfo.teamType, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
+				team = { ...team, type: userTeamInfo.type, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
 				subj.next(team);
 			}
 			return;
@@ -288,7 +288,7 @@ export class TeamService {
 
 		const team: ITeamContext = {
 			id: userTeamInfo.id,
-			type: userTeamInfo.teamType,
+			type: userTeamInfo.type,
 			brief: teamBriefFromUserTeamInfo(userTeamInfo),
 		};
 		this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(team);
