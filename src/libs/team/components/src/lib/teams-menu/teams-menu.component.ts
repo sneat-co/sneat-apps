@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { IUserTeamBrief, TeamMemberType } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ICreateTeamRequest } from '@sneat/team/models';
-import { TeamService } from '@sneat/team/services';
+import { ICreateTeamRequest, ITeamContext } from '@sneat/team/models';
+import { TeamNavService, TeamService } from '@sneat/team/services';
 import { ISneatUserState, SneatUserService } from '@sneat/user';
 
 @Component({
@@ -21,19 +21,32 @@ export class TeamsMenuComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		readonly userService: SneatUserService,
 		private readonly teamService: TeamService,
+		private readonly teamNavService: TeamNavService,
 		private readonly navController: NavController,
+		private readonly menuController: MenuController,
 	) {
 		userService.userState.subscribe({
 			next: this.onUserStateChanged,
 		});
 	}
 
-	public newFamily(): void {
+	public goTeam(event: Event, team: ITeamContext): boolean {
+		event.stopPropagation();
+		this.closeMenu();
+		this.teamNavService.navigateToTeam(team)
+			.catch(this.errorLogger.logErrorHandler(
+				'Failed to navigate to teams overview page from teams menu'));
+		return false;
+	}
+
+	public newFamily(event: Event): boolean {
+		event.stopPropagation();
 		console.log('newFamily');
 		const request: ICreateTeamRequest = {
 			type: 'family',
 			// roles: [TeamMemberType.creator],
 		};
+		this.closeMenu();
 		this.teamService.createTeam(request).subscribe({
 			next: value => {
 				console.log('Team created:', value);
@@ -42,6 +55,7 @@ export class TeamsMenuComponent {
 			},
 			error: this.errorLogger.logErrorHandler('failed to create a new family team'),
 		});
+		return false;
 	}
 
 	public newTeam(): void {
@@ -65,4 +79,8 @@ export class TeamsMenuComponent {
 			}
 		}
 	};
+
+	public closeMenu(): void {
+		this.menuController.close().catch(this.errorLogger.logErrorHandler('Failed to close teams menu'));
+	}
 }
