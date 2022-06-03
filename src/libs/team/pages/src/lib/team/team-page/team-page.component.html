@@ -67,11 +67,14 @@
 						<ion-label>Lists</ion-label>
 						<ion-buttons slot="end">
 							<ion-button routerLink="./list/to-buy/groceries" (click)="$event.stopPropagation()">
-								<ion-label style="text-transform: none" color="primary">🛒 Groceries</ion-label>
+								<ion-label style="text-transform: none" color="primary">
+									<span>🛒</span>
+									<span class="sneat-hide-if-width-less-320" style="margin-left: 0.5em">Groceries</span>
+								</ion-label>
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
-					<ion-item routerLink="./schedule">
+					<ion-item routerLink="./schedule" detail="">
 						<ion-icon name="calendar-outline" slot="start"></ion-icon>
 						<ion-label>Schedule</ion-label>
 <!--						<ion-buttons slot="end">-->
@@ -90,7 +93,9 @@
 			<ion-col *ngIf="team?.type === 'family' || team?.type === 'team'">
 				<ion-card>
 					<ion-item routerLink="./members" class="sneat-tiny-end-padding">
-						<ion-icon name="people-circle-outline" slot="start"></ion-icon>
+						<ion-icon name="people-circle-outline" slot="start" color="primary"
+											class="sneat-hide-if-width-less-240"
+						></ion-icon>
 						<ion-label color="primary" style="font-weight: bold">Members</ion-label>
 						<ion-buttons slot="end">
 							<ion-button routerLink="new-member">

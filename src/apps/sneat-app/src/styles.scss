@@ -101,13 +101,37 @@ ion-modal.auto-height {
 }
 
 @media screen and (max-width: 766px) { // 768=PAL @ https://en.wikipedia.org/wiki/Computer_display_standard
-  .sneat-hide-on-small-screen {display: none}
+  .sneat-hide-if-width-less-766 {display: none}
+  .sneat-hide-if-width-less-766 {font-size: smaller}
+  .sneat-hide-if-width-less-766 {font-size: small}
 }
 
 @media screen and (max-width: 638px) { // 640=VGA @ https://en.wikipedia.org/wiki/Computer_display_standard
-  .sneat-hide-on-tiny-screen {display: none}
-  .sneat-smaller-on-tiny-screen {font-size: smaller}
-  .sneat-small-on-tiny-screen {font-size: small}
+  .sneat-hide-if-width-less-638 {display: none}
+  .sneat-smaller-if-width-less-638 {font-size: smaller}
+  .sneat-small-if-width-less-638 {font-size: small}
+}
+
+@media screen and (max-width: 420px) {
+  .sneat-hide-if-width-less-420 {display: none}
+  .sneat-smaller-if-width-less-420 {font-size: smaller}
+  .sneat-small-if-width-less-420 {font-size: small}
+}
+
+@media screen and (min-width: 321px) {
+  .sneat-hide-if-width-greater-320 {display: none}
+}
+
+@media screen and (max-width: 320px) {
+  .sneat-hide-if-width-less-320 {display: none}
+  .sneat-smaller-if-width-less-320 {font-size: smaller}
+  .sneat-small-if-width-less-320 {font-size: small}
+}
+
+@media screen and (max-width: 240px) {
+  .sneat-hide-if-width-less-240 {display: none}
+  .sneat-smaller-if-width-less-240 {font-size: smaller}
+  .sneat-small-if-width-less-240 {font-size: small}
 }
 
 ion-popover {

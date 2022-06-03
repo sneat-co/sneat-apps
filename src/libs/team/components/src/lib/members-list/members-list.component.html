@@ -17,7 +17,8 @@
 		[@addRemove]="'added'"
 		*ngFor="let member of membersToDisplay; trackBy: id"
 	>
-		<ion-item routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}/member/{{member.id}}"  (click)="goMember(member)" class="sneat-tiny-end-padding">
+		<ion-item routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}/member/{{member.id}}"
+							(click)="goMember(member)" class="sneat-tiny-end-padding">
 			<ion-avatar *ngIf="member?.brief?.avatar as avatar; else memberIcon">
 				<ion-img *ngIf="member.brief?.avatar?.external?.url"
 								 title="avatar"
@@ -29,7 +30,7 @@
 				></ion-img>
 			</ion-avatar>
 			<ng-template #memberIcon>
-				<ion-icon slot="start" [name]="genderIcon(member)"></ion-icon>
+				<ion-icon slot="start" [name]="genderIcon(member)" class="sneat-hide-if-width-less-240"></ion-icon>
 			</ng-template>
 			<ion-label>
 				{{ member|memberTitle }}
@@ -44,14 +45,18 @@
 				</ng-container>
 			</ion-label>
 			<ion-buttons slot="end">
-				<ion-button *ngIf="!member.brief?.userID" (click)="showInviteModal($event, member)">
-					<ion-label>Invite</ion-label>
+				<ion-button *ngIf="!member.brief?.userID && member.brief?.ageGroup !== 'child'" (click)="showInviteModal($event, member)"
+										title="Invite"
+										color="danger"
+				>
+					<ion-icon name="ticket-outline" class="sneat-hide-if-width-greater-320"></ion-icon>
+					<span class="sneat-hide-if-width-less-320" style="margin-left: 0.5em;">Invite</span>
 				</ion-button>
 				<ion-button (click)="goSchedule($event, member)">
 					<ion-icon name="calendar-outline"></ion-icon>
 				</ion-button>
 				<ion-button color="danger" *ngIf="!member.brief?.userID && member.brief?.email">
-					<ion-label>Resend invite</ion-label>
+					Resend invite
 				</ion-button>
 			</ion-buttons>
 		</ion-item>

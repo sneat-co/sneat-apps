@@ -18,7 +18,7 @@
 			}">
 			</sneat-team-page-title>
 		</ng-template>
-		<ion-buttons slot="end" class="sneat-hide-on-tiny-screen">
+		<ion-buttons slot="end" class="sneat-hide-if-width-less-638">
 			<ion-button
 				color="primary"
 				[disabled]="!team?.id"
@@ -26,7 +26,7 @@
 				style="text-transform: none"
 			>
 				<ion-icon name="duplicate-outline" slot="start"></ion-icon>
-				<ion-label class="sneat-hide-on-small-screen">Add recurring</ion-label>
+				<ion-label class="sneat-hide-if-width-less-766">Add recurring</ion-label>
 			</ion-button>
 			<ion-button
 				color="primary"
@@ -35,7 +35,7 @@
 				style="text-transform: none"
 			>
 				<ion-icon name="add-circle-outline" slot="start"></ion-icon>
-				<ion-label class="sneat-hide-on-small-screen">Add 1-timer</ion-label>
+				<ion-label class="sneat-hide-if-width-less-766">Add 1-timer</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
