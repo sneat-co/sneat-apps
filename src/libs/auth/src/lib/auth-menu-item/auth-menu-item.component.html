@@ -26,11 +26,11 @@
 		{{ authState?.user?.displayName || authState?.user?.email || authState?.user?.phoneNumber || authState?.user?.uid }}
 	</ion-label>
 
-	<ion-buttons slot="end" *ngIf="authState?.status === 'authenticated'">
+	<ion-buttons slot="end">
 <!--		<ion-button color="medium" title="Settings">-->
 <!--			<ion-icon name="settings-outline"></ion-icon>-->
 <!--		</ion-button>-->
-		<ion-button color="medium" title="Sign-out" (click)="logout()">
+		<ion-button color="medium" title="Sign-out" (click)="logout($event)">
 			<ion-icon name="log-out-outline"></ion-icon>
 		</ion-button>
 	</ion-buttons>

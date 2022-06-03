@@ -23,7 +23,9 @@ export class AuthMenuItemComponent {
 		});
 	}
 
-	public logout(): void {
+	public logout(event: Event): boolean {
+		event.stopPropagation();
+		event.preventDefault();
 		try {
 			this.authStateService
 				.signOut()
@@ -40,6 +42,7 @@ export class AuthMenuItemComponent {
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to logout');
 		}
+		return false;
 	}
 
 }
