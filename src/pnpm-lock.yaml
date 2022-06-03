@@ -91,7 +91,7 @@ specifiers:
   rxfire: 6.0.3
   rxjs: 7.5.5
   tabulator-tables: 5.2.6
-  ts-jest: 28.0.3
+  ts-jest: 28.0.4
   ts-node: 10.8.0
   tslib: 2.4.0
   typescript: 4.6.4
@@ -178,7 +178,7 @@ devDependencies:
   follow-redirects: 1.15.1
   jasmine-core: 4.1.1
   jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
-  jest-preset-angular: 12.1.0_3lcf2nfc73pwzrcmwqndsebe2m
+  jest-preset-angular: 12.1.0_x4clrzv6instmpe6zcenkalqnq
   karma: 6.3.20
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
@@ -193,7 +193,7 @@ devDependencies:
   postcss-preset-env: 7.7.1_postcss@8.4.14
   postcss-url: 10.1.3_postcss@8.4.14
   prettier: 2.6.2
-  ts-jest: 28.0.3_7467kmlv6pd2tf3zru36djldpq
+  ts-jest: 28.0.4_psbcblgq4srpovj4nmov3faq54
   ts-node: 10.8.0_ukj7ket6x7kbcdkmawseogdx4e
   typescript: 4.6.4
   webpack: 5.73.0
@@ -10049,7 +10049,7 @@ packages:
       jest-resolve: 28.1.0
     dev: true
 
-  /jest-preset-angular/12.1.0_3lcf2nfc73pwzrcmwqndsebe2m:
+  /jest-preset-angular/12.1.0_x4clrzv6instmpe6zcenkalqnq:
     resolution: {integrity: sha512-zOiUvAMqIYkr8yRRO9x2NwVD8rzx0GtDaWxxox5GdgFQ/EEeIMI2Wqf5gfuX0t3Cnrq+K6cJCr181VMrjPkLPA==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
@@ -10069,13 +10069,12 @@ packages:
       jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
       jest-environment-jsdom: 28.1.0
       pretty-format: 28.1.0
-      ts-jest: 28.0.3_jkd5dnhjt2e2ag25iqsifw5n4a
+      ts-jest: 28.0.4_qb7trbb7dgsa6w7byervjgg2km
       typescript: 4.6.4
     optionalDependencies:
       esbuild: 0.14.38
     transitivePeerDependencies:
       - '@babel/core'
-      - '@types/jest'
       - babel-jest
       - bufferutil
       - canvas
@@ -10829,7 +10828,7 @@ packages:
     resolution: {integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=}
 
   /lodash.memoize/4.1.2:
-    resolution: {integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=}
+    resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
     dev: true
 
   /lodash.merge/4.6.2:
@@ -13798,13 +13797,12 @@ packages:
     resolution: {integrity: sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==}
     dev: false
 
-  /ts-jest/28.0.3_7467kmlv6pd2tf3zru36djldpq:
-    resolution: {integrity: sha512-HzgbEDQ2KgVtDmpXToqAcKTyGHdHsG23i/iUjfxji92G5eT09S1m9UHZd7csF0Bfgh9txM4JzwHnv7r1waFPlw==}
+  /ts-jest/28.0.4_psbcblgq4srpovj4nmov3faq54:
+    resolution: {integrity: sha512-S6uRDDdCJBvnZqyGjB4VCnwbQrbgdL8WPeP4jevVSpYsBaeGRQAIS08o3Svav2Ex+oXwLgJ/m7F24TNq62kA1A==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
     peerDependencies:
       '@babel/core': '>=7.0.0-beta.0 <8'
-      '@types/jest': ^27.0.0
       babel-jest: ^28.0.0
       esbuild: '*'
       jest: ^28.0.0
@@ -13812,15 +13810,12 @@ packages:
     peerDependenciesMeta:
       '@babel/core':
         optional: true
-      '@types/jest':
-        optional: true
       babel-jest:
         optional: true
       esbuild:
         optional: true
     dependencies:
       '@babel/core': 7.18.2
-      '@types/jest': 28.1.0
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
       jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
@@ -13833,13 +13828,12 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /ts-jest/28.0.3_jkd5dnhjt2e2ag25iqsifw5n4a:
-    resolution: {integrity: sha512-HzgbEDQ2KgVtDmpXToqAcKTyGHdHsG23i/iUjfxji92G5eT09S1m9UHZd7csF0Bfgh9txM4JzwHnv7r1waFPlw==}
+  /ts-jest/28.0.4_qb7trbb7dgsa6w7byervjgg2km:
+    resolution: {integrity: sha512-S6uRDDdCJBvnZqyGjB4VCnwbQrbgdL8WPeP4jevVSpYsBaeGRQAIS08o3Svav2Ex+oXwLgJ/m7F24TNq62kA1A==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
     peerDependencies:
       '@babel/core': '>=7.0.0-beta.0 <8'
-      '@types/jest': ^27.0.0
       babel-jest: ^28.0.0
       esbuild: '*'
       jest: ^28.0.0
@@ -13847,15 +13841,12 @@ packages:
     peerDependenciesMeta:
       '@babel/core':
         optional: true
-      '@types/jest':
-        optional: true
       babel-jest:
         optional: true
       esbuild:
         optional: true
     dependencies:
       '@babel/core': 7.18.2
-      '@types/jest': 28.1.0
       bs-logger: 0.2.6
       esbuild: 0.14.38
       fast-json-stable-stringify: 2.1.0
