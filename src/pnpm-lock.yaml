@@ -73,7 +73,7 @@ specifiers:
   ionicons: 6.0.2
   jasmine-core: 4.1.1
   jest: 28.1.0
-  jest-preset-angular: 12.0.1
+  jest-preset-angular: 12.1.0
   karma: 6.3.20
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
@@ -178,7 +178,7 @@ devDependencies:
   follow-redirects: 1.15.1
   jasmine-core: 4.1.1
   jest: 28.1.0_l4jihfzjwwvrrx5po75gyqubsq
-  jest-preset-angular: 12.0.1_3lcf2nfc73pwzrcmwqndsebe2m
+  jest-preset-angular: 12.1.0_3lcf2nfc73pwzrcmwqndsebe2m
   karma: 6.3.20
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
@@ -8489,7 +8489,7 @@ packages:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
 
   /fast-levenshtein/2.0.6:
-    resolution: {integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=}
+    resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
   /fastq/1.13.0:
     resolution: {integrity: sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==}
@@ -10049,14 +10049,14 @@ packages:
       jest-resolve: 28.1.0
     dev: true
 
-  /jest-preset-angular/12.0.1_3lcf2nfc73pwzrcmwqndsebe2m:
-    resolution: {integrity: sha512-/3tpZTOhBE2Qmdga9jRTGu3OxgRfAzg2xDxtVSvR1SZvFZLHRik6jw+NznuirXtchgcYGt4tBE0wPDTJvtUeDw==}
+  /jest-preset-angular/12.1.0_3lcf2nfc73pwzrcmwqndsebe2m:
+    resolution: {integrity: sha512-zOiUvAMqIYkr8yRRO9x2NwVD8rzx0GtDaWxxox5GdgFQ/EEeIMI2Wqf5gfuX0t3Cnrq+K6cJCr181VMrjPkLPA==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
-      '@angular-devkit/build-angular': '>=0.1102.19 <14.0.0'
-      '@angular/compiler-cli': '>=11.2.14 <14.0.0'
-      '@angular/core': '>=11.2.14 <14.0.0'
-      '@angular/platform-browser-dynamic': '>=11.2.14 <14.0.0'
+      '@angular-devkit/build-angular': '>=0.1102.19 <15.0.0'
+      '@angular/compiler-cli': '>=11.2.14 <15.0.0'
+      '@angular/core': '>=11.2.14 <15.0.0'
+      '@angular/platform-browser-dynamic': '>=11.2.14 <15.0.0'
       jest: ^28.0.0
       typescript: '>=4.3'
     dependencies:
@@ -10743,7 +10743,7 @@ packages:
     engines: {node: '>=6'}
 
   /levn/0.3.0:
-    resolution: {integrity: sha1-OwmSTt+fCDwEkP3UwLxEIeBHZO4=}
+    resolution: {integrity: sha512-0OO4y2iOHix2W6ujICbKIaEQXvFQHue65vUG3pb5EUomzPI90z9hsA1VsO/dbIIpC53J8gxM9Q4Oho0jrCM/yA==}
     engines: {node: '>= 0.8.0'}
     dependencies:
       prelude-ls: 1.1.2
@@ -12574,7 +12574,7 @@ packages:
     dev: true
 
   /prelude-ls/1.1.2:
-    resolution: {integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=}
+    resolution: {integrity: sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==}
     engines: {node: '>= 0.8.0'}
 
   /prelude-ls/1.2.1:
