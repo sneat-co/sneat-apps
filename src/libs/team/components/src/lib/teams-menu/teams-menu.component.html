@@ -11,6 +11,7 @@
 	<ion-label>Family</ion-label>
 	<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
 </ion-item>
+
 <ng-container *ngIf="teams">
 	<ion-item *ngIf="familyTeams && !familyTeams.length" tappable [disabled]="!teams" (click)="newFamily($event)">
 		<ion-icon name="people-circle-outline" slot="start"></ion-icon>

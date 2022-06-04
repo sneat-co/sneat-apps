@@ -63,12 +63,10 @@ export class TeamsMenuComponent {
 		}
 		this.teams = user?.record?.teams?.map(teamContextFromBrief) || [];
 		console.log('onUserStateChanged', this.teams);
-		if (this.teams.length) {
-			this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
-			this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
-			if (this.familyTeam) {
-				this.teams = this.teams.filter(t => t.type !== 'family');
-			}
+		this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
+		this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
+		if (this.familyTeam) {
+			this.teams = this.teams.filter(t => t.type !== 'family');
 		}
 	};
 
