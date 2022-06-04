@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IDocumentDto } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
+import { DocumentService } from '@sneat/extensions/docus';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IAssetContext, IDocumentContext, IMemberContext } from '@sneat/team/models';
 
@@ -21,7 +22,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private assetService: AssetService,
+		private documentService: DocumentService,
 	) {
 		super('DocumentsPageComponent', route, params);
 		this.documents = window.history.state.documents as IDocumentContext[];
@@ -30,18 +31,15 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 	loadDocuments() {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
-			this.assetService.watchAssetsByTeamID<IDocumentDto>(this.team?.id)
+			this.documentService.watchDocumentsByTeamID(this.team?.id)
 				.pipe(
 					this.takeUntilNeeded(),
 				)
-				.subscribe(documents => {
-						documents = documents.filter(a => a.brief?.type === 'document');
-						if (documents && (!this.documents || this.documents.length !== documents.length)) { // TODO: deep equal
-							this.documents = documents;
-							this.rootDocs = documents.filter(d => !d.dto?.parentAssetID);
-						}
-					},
-				);
+				.subscribe({
+					next: documents => {
+						this.documents = documents;
+					}
+				});
 		}
 	}
 

@@ -53,6 +53,10 @@ export interface IWithTeamIDs {
 	teamIDs?: string[];
 }
 
+export interface IWithTag {
+	tags?: string[]
+}
+
 export interface IWithAssetIDs {
 	assetIDs?: string[];
 }

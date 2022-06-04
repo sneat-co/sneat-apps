@@ -4,9 +4,10 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
+import { CountrySelectorModule, SneatPipesModule } from '@sneat/components';
+import { DocumentServiceModule } from '@sneat/extensions/docus';
 
 import {NewDocumentPageComponent} from './new-document-page.component';
-import {CountrySelectorModule} from 'sneat-shared/components/country-selector/country-selector.module';
 
 const routes: Routes = [
 	{
@@ -22,6 +23,8 @@ const routes: Routes = [
 		IonicModule,
 		RouterModule.forChild(routes),
 		CountrySelectorModule,
+		DocumentServiceModule,
+		SneatPipesModule,
 	],
 	declarations: [NewDocumentPageComponent]
 })

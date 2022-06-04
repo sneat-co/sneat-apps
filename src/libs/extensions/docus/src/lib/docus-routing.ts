@@ -14,10 +14,10 @@ export const docusRoutes: Route[] = [
 	// 		.then(m => m.CommuneDocumentPageModule),
 	// 	// ...guardRoute,
 	// },
-	// {
-	// 	path: 'new-document',
-	// 	loadChildren: () => import('./pages/document-new/document-new.module')
-	// 		.then(m => m.DocumentNewPageModule),
-	// 	// ...guardRoute,
-	// },
+	{
+		path: 'new-document',
+		loadChildren: () => import('./pages/document-new/document-new.module')
+			.then(m => m.DocumentNewPageModule),
+		// ...guardRoute,
+	},
 ];

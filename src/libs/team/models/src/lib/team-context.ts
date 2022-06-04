@@ -3,7 +3,7 @@ import {
 	IAssetBrief,
 	IAssetDto,
 	IContactBrief,
-	IContactDto,
+	IContactDto, IDocumentBrief, IDocumentDto,
 	IHappeningBrief,
 	IHappeningDto,
 	IListBrief,
@@ -36,7 +36,7 @@ export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
 export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;
 export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
-export type IDocumentContext = IAssetContext;
+export type IDocumentContext = ITeamItemContext<IDocumentBrief, IDocumentDto>;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
 
 export interface IListKey {

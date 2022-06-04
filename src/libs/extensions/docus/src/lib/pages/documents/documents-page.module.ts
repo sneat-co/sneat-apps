@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule } from '@sneat/components';
+import { DocumentServiceModule } from '@sneat/extensions/docus';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { DocumentsByTypeComponent } from './components/documents-by-type/documents-by-type.component';
 import { DocumentsListComponent } from './components/documents-list/documents-list.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		TeamCoreComponentsModule,
 		FilterItemModule,
+		DocumentServiceModule,
 	],
 	declarations: [
 		DocumentsListComponent,

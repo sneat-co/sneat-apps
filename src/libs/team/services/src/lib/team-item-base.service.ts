@@ -42,6 +42,10 @@ export class TeamItemBaseService {
 	}
 
 
+	public deleteTeamItem<Response>(endpoint: string, request: ITeamRequest): Observable<Response> {
+		return this.sneatApiService.delete<Response>(endpoint, undefined, request);
+	}
+
 	public createTeamItem<Brief extends { id: string }, Dto>(endpoint: string, numberOfCounter: TeamCounter, request: ITeamRequest): Observable<INavContext<Brief, Dto>> {
 		console.log(`TeamItemBaseService.createTeamItem()`, request);
 		return this.sneatApiService

@@ -73,12 +73,6 @@ export interface IVehicle {
 	nextServiceDueTaskId?: string;
 }
 
-export interface IDocumentDto extends IAssetDto {
-	issuedOn?: string; // ISO date string 'YYYY-MM-DD'
-	issuedBy?: string;
-	expiresOn?: string; // ISO date string 'YYYY-MM-DD'
-}
-
 export interface IAssetType extends ITitledRecord {
 	id: AssetType;
 	iconName?: string;

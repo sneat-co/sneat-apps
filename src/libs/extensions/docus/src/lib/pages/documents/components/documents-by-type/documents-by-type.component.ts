@@ -2,6 +2,7 @@ import { Component, EventEmitter, Inject, OnChanges, Output, SimpleChanges } fro
 import { ToastController } from '@ionic/angular';
 import { eq, listItemAnimations } from '@sneat/core';
 import { AssetService } from '@sneat/extensions/assetus/components';
+import { DocumentService } from '@sneat/extensions/docus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IDocumentContext } from '@sneat/team/models';
 import { DocumentsBaseComponent } from '../documents-base.component';
@@ -39,10 +40,10 @@ export class DocumentsByTypeComponent extends DocumentsBaseComponent implements 
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		assetService: AssetService,
+		documentService: DocumentService,
 		toastCtrl: ToastController,
 	) {
-		super(errorLogger, assetService, toastCtrl);
+		super(errorLogger, documentService, toastCtrl);
 	}
 
 	selectDocType(docType: IDocumentType): void {
@@ -82,7 +83,7 @@ export class DocumentsByTypeComponent extends DocumentsBaseComponent implements 
 					docType.documents = [];
 				}
 				docType.documents.push(d);
-			} else if (d.brief?.type !== 'document') {
+			} else  {
 				if (!other.documents) {
 					other.documents = [];
 				}

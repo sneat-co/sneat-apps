@@ -1,6 +1,7 @@
 import { Inject, Injectable, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
+import { DocumentService } from '@sneat/extensions/docus';
 import { IDocumentContext } from '@sneat/team/models';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -14,13 +15,13 @@ export abstract class DocumentsBaseComponent {
 
 	protected constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		protected readonly assetService: AssetService,
+		protected readonly documentService: DocumentService,
 		protected readonly toastCtrl: ToastController,
 	) {
 	}
 
 	deleteDocument(doc: IDocumentContext, slidingItem: IonItemSliding): void {
-		this.assetService.deleteAsset(doc)
+		this.documentService.deleteDocument(doc)
 			.pipe(ignoreElements())
 			.subscribe({
 				complete: async () => {
