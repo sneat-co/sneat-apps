@@ -167,7 +167,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	protected onTeamIdChanged(): void {
-		console.log('TeamBasePage.onTeamIdChanged()', this.className);
+		console.log(`${this.logClassName}.onTeamIdChanged()`, this.className, this.team?.id);
 	}
 
 	protected onTeamDtoChanged(): void {
@@ -276,6 +276,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		this.teamContext = teamContext;
 		if (idChanged) {
 			this.teamIDChanged.next(teamContext?.id);
+			this.onTeamIdChanged();
 			if (teamContext) {
 				setTimeout(() => this.subscribeForTeamChanges(teamContext), 1);
 			}

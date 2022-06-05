@@ -36,17 +36,17 @@
 
 		<ng-container *ngIf="segment === 'list'">
 			<sneat-filter-item (changed)="applyFilter($event)"></sneat-filter-item>
-			<!--		<sneat-documents-list [allDocuments]="documents"-->
-			<!--													[filter]="filter"-->
-			<!--													(goDoc)="goDoc($event)">-->
-			<!--		</sneat-documents-list>-->
+			<sneat-documents-list [allDocuments]="documents"
+														[filter]="filter"
+														(goDoc)="goDoc($event)">
+			</sneat-documents-list>
 		</ng-container>
 
-		<!--	<sneat-documents-by-type [allDocuments]="documents" *ngIf="segment === 'type'"-->
-		<!--												 (goDocType)="goType($event)"-->
-		<!--												 (goNewDoc)="goNewDoc($event)"-->
-		<!--												 (goDoc)="goDoc($event)"-->
-		<!--	></sneat-documents-by-type>-->
+			<sneat-documents-by-type [allDocuments]="documents" *ngIf="segment === 'type'"
+														 (goDocType)="goType($event)"
+														 (goNewDoc)="goNewDoc($event)"
+														 (goDoc)="goDoc($event)"
+			></sneat-documents-by-type>
 	</ion-card>
 </ion-content>
 

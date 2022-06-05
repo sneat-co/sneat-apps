@@ -10,6 +10,7 @@ import { DocumentsBaseComponent } from '../documents-base.component';
 @Component({
 	selector: 'sneat-documents-list',
 	templateUrl: './documents-list.component.html',
+	...DocumentsBaseComponent.metadata,
 })
 export class DocumentsListComponent extends DocumentsBaseComponent implements OnChanges {
 
@@ -30,13 +31,19 @@ export class DocumentsListComponent extends DocumentsBaseComponent implements On
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('DocumentsListComponent.ngOnChanges', changes, [...this.allDocuments], ''+this.filter);
-		this.onDocsChanged();
+		if (changes['allDocuments'] || changes['filter']) {
+			this.onDocsChanged();
+		}
 	}
 
 	protected onDocsChanged(): void {
+		this.filteredDocs = this.allDocuments;
 		const text: string = this.filter;
 		this.filteredDocs = this.allDocuments
-			?.filter(d => (!text || d.brief?.title && d.brief.title.toLowerCase()?.indexOf(text) >= 0))
-			|| [];
+			?.filter(d => (
+				!text
+				|| d.brief?.title && d.brief.title.toLowerCase().indexOf(text) >= 0
+				|| d.brief?.type && d.brief.type.toLowerCase().indexOf(text) >= 0
+			)) || [];
 	}
 }

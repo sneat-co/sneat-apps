@@ -3,7 +3,7 @@ import { SneatFirestoreService } from '@sneat/api';
 import { IDocumentBrief, IDocumentDto, TeamCounter } from '@sneat/dto';
 import { IDocumentContext, ITeamRequest } from '@sneat/team/models';
 import { TeamItemBaseService } from '@sneat/team/services';
-import { Observable, throwError } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 
 export interface ICreateDocumentRequest extends ITeamRequest {
 	memberID?: string;
@@ -26,7 +26,7 @@ export class DocumentService {
 		private readonly teamItemService: TeamItemBaseService,
 	) {
 		this.sfs = new SneatFirestoreService<IDocumentBrief, IDocumentDto>(
-			'team_members', teamItemService.afs, documentBriefFromDto);
+			'documents', teamItemService.afs, documentBriefFromDto);
 	}
 
 	createDocument(request: ICreateDocumentRequest): Observable<IDocumentContext> {
@@ -37,7 +37,9 @@ export class DocumentService {
 
 	watchDocumentsByTeamID(teamID: string): Observable<IDocumentContext[]> {
 		console.log('watchDocumentsByTeamID()', teamID);
-		return this.sfs.watchByTeamID(teamID);
+		return this.sfs.watchByTeamID(teamID).pipe(
+			tap(docs => console.log('documents loaded:', docs)),
+		);
 	}
 
 	deleteDocument(doc: IDocumentContext): Observable<void> {

@@ -28,6 +28,11 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		this.documents = window.history.state.documents as IDocumentContext[];
 	}
 
+	protected override onTeamIdChanged() {
+		super.onTeamIdChanged();
+		this.loadDocuments();
+	}
+
 	loadDocuments() {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
@@ -47,14 +52,14 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		console.log(`goType(${type})`);
 	}
 
-	public goDoc(asset: IAssetContext) {
+	public goDoc(doc: IDocumentContext) {
 		if (!this.team) {
 			this.errorLogger.logError('not able to navigate to document without team context');
 			return;
 		}
 		this.teamParams.teamNavService.navigateForwardToTeamPage(
-			this.team, `document/${asset.id}`,
-			{ state: { asset } })
+			this.team, `document/${doc.id}`,
+			{ state: { doc } })
 			.catch(this.errorLogger.logError);
 	}
 

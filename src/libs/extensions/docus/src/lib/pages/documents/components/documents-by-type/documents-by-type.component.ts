@@ -20,6 +20,7 @@ interface IDocumentType {
 	templateUrl: './documents-by-type.component.html',
 	styleUrls: ['./documents-by-type.component.scss'],
 	animations: [listItemAnimations],
+	...DocumentsBaseComponent.metadata,
 })
 export class DocumentsByTypeComponent extends DocumentsBaseComponent implements OnChanges {
 

@@ -1,4 +1,4 @@
-import { Inject, Injectable, Input } from '@angular/core';
+import { Directive, Inject, Injectable, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
 import { DocumentService } from '@sneat/extensions/docus';
@@ -8,10 +8,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ignoreElements } from 'rxjs/operators';
 
 
-@Injectable()
+@Directive()
 export abstract class DocumentsBaseComponent {
 
 	@Input() allDocuments?: IDocumentContext[];
+
+	static metadata = {
+		inputs: ['allDocuments'],
+	};
 
 	protected constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
