@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
-import { CountrySelectorModule, SneatPipesModule } from '@sneat/components';
+import { CountrySelectorModule, SelectFromListModule, SneatPipesModule } from '@sneat/components';
 import { DocumentServiceModule } from '@sneat/extensions/docus';
 
 import {NewDocumentPageComponent} from './new-document-page.component';
@@ -25,8 +25,9 @@ const routes: Routes = [
 		CountrySelectorModule,
 		DocumentServiceModule,
 		SneatPipesModule,
+		SelectFromListModule,
 	],
 	declarations: [NewDocumentPageComponent]
 })
-export class DocumentNewPageModule {
+export class NewDocumentPageModule {
 }

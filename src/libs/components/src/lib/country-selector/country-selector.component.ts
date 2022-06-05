@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ISelectItem } from '../select-from-list/select-from-list.component';
 
 @Component({
 	selector: 'sneat-country-selector',
@@ -8,11 +9,21 @@ export class CountrySelectorComponent {
 
 	@Input() label: string = 'Country';
 	@Input() country?: string;
-	@Output() changed = new EventEmitter<string>();
+	@Output() countryChange = new EventEmitter<string>();
 
-	// tslint:disable-next-line:prefer-function-over-method
-	onChanged(event: Event): void {
-		console.log('event:', event);
-		// this.changed.emit(s);
+	readonly countries: ISelectItem[] = [
+		{id: 'au', title: 'Australia', emoji: '🇦🇺'},
+		{id: 'ie', title: 'Ireland', emoji: '🇮🇪'},
+		{id: 'nz', title: 'New Zealand', emoji: '🇳🇿'},
+		{id: 'ru', title: 'Russia', emoji: '🇷🇺'},
+		{id: 'uk', title: 'United Kingdom', emoji: '🇬🇧'},
+		{id: 'ua', title: 'Ukraine', emoji: '🇺🇦'},
+		{id: 'us', title: 'United States Of America', emoji: '🇺🇸'},
+	];
+
+	onChanged(): void {
+		console.log('CountrySelectorComponent.onChanged()', this.country);
+		this.countryChange.emit(this.country);
 	}
+
 }

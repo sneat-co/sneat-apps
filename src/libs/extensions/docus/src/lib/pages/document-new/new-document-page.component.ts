@@ -1,6 +1,7 @@
 //tslint:disable:no-unsafe-any
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ISelectItem } from '@sneat/components';
 import { IDocTypeStandardFields, IDocumentDto, SneatDocType, standardFieldsByDocType } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IDocumentContext, IMemberContext } from '@sneat/team/models';
@@ -20,6 +21,11 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 	public member?: IMemberContext;
 
 	public isMissingRequiredParams = false;
+
+	public readonly docTypes: ISelectItem[] = [
+		{id: 'passport', title: 'Passport', emoji: '🛂'},
+		{id: 'driving_license', title: 'Driving license', emoji: '🚗'},
+	];
 
 	public country = '';
 	public docTitle = '';

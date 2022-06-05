@@ -16,8 +16,8 @@ export const docusRoutes: Route[] = [
 	// },
 	{
 		path: 'new-document',
-		loadChildren: () => import('./pages/document-new/document-new.module')
-			.then(m => m.DocumentNewPageModule),
+		loadChildren: () => import('./pages/document-new/new-document-page.module')
+			.then(m => m.NewDocumentPageModule),
 		// ...guardRoute,
 	},
 ];

@@ -4,10 +4,10 @@ import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 export interface ISelectItem {
-	id: string;
-	title: string;
-	emoji?: string;
-	iconName?: string;
+	readonly id: string;
+	readonly title: string;
+	readonly emoji?: string;
+	readonly iconName?: string;
 }
 
 @Component({
@@ -25,6 +25,10 @@ export class SelectFromListComponent implements ControlValueAccessor {
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
 	@Input() items?: ISelectItem[];
+	@Input() radioSlot: 'start' | 'end' = 'start';
+	@Input() other: 'top' | 'bottom' | 'none' = 'none';
+	// @Input() ngModel?: string;
+	// @Output() readonly ngModelChange = new EventEmitter<string>();
 
 	@Output() changed = new EventEmitter<string>();
 
@@ -45,7 +49,7 @@ export class SelectFromListComponent implements ControlValueAccessor {
 	}
 
 	onChange = (_: any) => {
-		//
+		// this.ngModelChange.emit(this.ngModel);
 	};
 
 	onTouched = () => {
