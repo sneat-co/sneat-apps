@@ -1,9 +1,10 @@
 import { IMemberBrief } from '@sneat/dto';
+import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { Observable } from 'rxjs';
 
 export interface ISelectMembersOptions {
-	readonly teamIDs: readonly string[];
-	readonly members?: readonly IMemberBrief[];
+	readonly team: ITeamContext;
+	readonly members?: readonly IMemberContext[];
 	readonly selectedMemberIDs?: readonly string[];
 	readonly max?: number;
 	readonly onAdded?: (teamID: string, memberID: string) => Observable<void>;

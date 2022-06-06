@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalOptions } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IMemberContext } from '@sneat/team/models';
 import { ISelectMembersOptions } from './member-selector.options';
-import { MembersSelectorComponent } from './members-selector.component';
-
+import { MembersSelectorModalComponent } from './members-selector-modal.component';
 
 @Injectable()
 export class MembersSelectorService {
@@ -16,21 +16,24 @@ export class MembersSelectorService {
 	}
 
 
-	async selectMembers(options: ISelectMembersOptions): Promise<void> {
+	selectMembersInModal(options: ISelectMembersOptions): Promise<IMemberContext[]> {
 		console.log('selectMembers(), options:', options);
-		if (!options.teamIDs.length) {
-			throw new Error('at least 1 team should be specified');
+		if (!options.team) {
+			throw new Error('team context is required parameter to select members');
 		}
 
-		const modalOptions: ModalOptions = {
-			component: MembersSelectorComponent,
-			componentProps: {
-				foo: 'bar',
-				options: options,
-			},
-			keyboardClose: true,
-		}
-		const modal = await this.modalController.create(modalOptions);
-		await modal.present();
+		const result = new Promise<IMemberContext[]>(async (resolve, reject) => {
+			const modalOptions: ModalOptions = {
+				component: MembersSelectorModalComponent,
+				componentProps: {
+					...options,
+				},
+				keyboardClose: true,
+			}
+			const modal = await this.modalController.create(modalOptions);
+			await modal.present();
+		});
+
+		return result;
 	}
 }

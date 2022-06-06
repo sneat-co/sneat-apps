@@ -43,6 +43,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// protected readonly willLeave = new Subject<void>();
 	protected defaultBackPage?: string;
 
+	public selectedMemberIDs: readonly string[] = [];
+
 	protected readonly logError: (e: any, message?: string, options?: ILogErrorOptions) => void;
 	protected readonly logErrorHandler: (
 		message?: string,

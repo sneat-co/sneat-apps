@@ -12,6 +12,7 @@ export interface IDocTypeField {
 	type?: 'str' | 'int' | 'date';
 	required?: boolean;
 	exclude?: boolean;
+	max?: number;
 }
 
 export interface IDocTypeStandardFields {
@@ -20,6 +21,7 @@ export interface IDocTypeStandardFields {
 	issuedBy?: IDocTypeField;
 	issuedOn?: IDocTypeField;
 	validTill?: IDocTypeField;
+	members?: IDocTypeField;
 }
 
 export const standardFieldsByDocType: { [id: string]: IDocTypeStandardFields } = {
@@ -29,6 +31,7 @@ export const standardFieldsByDocType: { [id: string]: IDocTypeStandardFields } =
 	'passport': {
 		number: { required: true },
 		validTill: { required: true },
+		members: {max: 1},
 	},
 	'driving_license': {
 		number: { required: true },

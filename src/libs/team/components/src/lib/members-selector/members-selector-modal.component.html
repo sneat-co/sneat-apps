@@ -12,11 +12,12 @@
 		<ion-label color="medium" style="font-style: italic">Loading...</ion-label>
 	</ion-item>
 	<ion-item *ngFor="let member of members">
-		<ion-checkbox slot="start"
+		<ion-checkbox *ngIf="max === undefined || max > 1"
+			slot="start"
 									[value]="member.id"
 									[checked]="isSelected(member.id)"
 									(ionChange)="onCheckboxChanged($event)"
 		></ion-checkbox>
-		<ion-label>{{{id: member.id, brief: member}|personTitle}}</ion-label>
+		<ion-label>{{member|personTitle}}</ion-label>
 	</ion-item>
 </ion-item-group>

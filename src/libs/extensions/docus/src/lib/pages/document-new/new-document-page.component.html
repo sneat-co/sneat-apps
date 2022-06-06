@@ -82,6 +82,15 @@
 				</ion-card>
 
 
+				<ion-card>
+					<ion-item-divider color="primary">Belongs to</ion-item-divider>
+					<sneat-members-selector-input
+						[team]="team"
+						[max]="docFields.members?.max"
+						[(selectedMemberIDs)]="selectedMemberIDs"
+					></sneat-members-selector-input>
+				</ion-card>
+
 				<ion-card *ngIf="docType === 'driving_license'">
 					<ion-item-divider color="light">
 						<ion-label>Categories</ion-label>

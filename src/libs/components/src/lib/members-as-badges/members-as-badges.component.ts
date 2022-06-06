@@ -30,7 +30,7 @@ export class MembersAsBadgesComponent implements OnChanges {
 
 	private readonly deletingMemberIDs: string[] = [];
 
-	@Input() memberIDs?: string[];
+	@Input() memberIDs?: readonly string[];
 	@Input() briefs?: IMemberBrief[];
 	@Input() color: 'primary' | 'light' | 'dark' | 'medium' | 'secondary' | 'tertiary' = 'light';
 

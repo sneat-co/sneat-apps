@@ -162,8 +162,8 @@ This operation can NOT be undone.`)) {
 		if (!teamID) {
 			return;
 		}
-		this.membersSelectorService.selectMembers({
-			teamIDs: this.happening?.dto?.teamIDs || [teamID],
+		this.membersSelectorService.selectMembersInModal({
+			team: this.team || {id: ''},
 			selectedMemberIDs: this.happening?.brief?.memberIDs || [],
 			members: this.team?.dto?.members,
 			onAdded: this.onMemberAdded,
