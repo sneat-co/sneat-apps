@@ -5,7 +5,7 @@
 <ion-radio-group *ngIf="members" (ionChange)="onRadioChanged($event)">
 	<ion-item *ngFor="let member of members; trackBy: fulLMemberID">
 		<ion-icon name="person-outline" slot="start"></ion-icon>
-		<ion-checkbox *ngIf="max === undefined || max > 1"
+		<ion-checkbox *ngIf="useCheckbox"
 									slot="end"
 									[value]="member.id"
 									[checked]="isSelected(member)"

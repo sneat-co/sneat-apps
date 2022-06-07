@@ -16,6 +16,12 @@ export class MembersSelectorListComponent {
 	@Input() onAdded?: (member: IMemberContext) => Observable<void>;
 	@Input() onRemoved?: (member: IMemberContext) => Observable<void>;
 
+	get useCheckbox(): boolean {
+		const max = this.max;
+		// The `!max && max !== 0` is to properly check for possible null
+		// that sometimes is not get caught by TypeScript
+		return !max && max !== 0 || max > 1;
+	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

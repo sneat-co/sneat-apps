@@ -16,7 +16,7 @@ export class MembersSelectorInputComponent {
 
 	@Input() max?: number;
 
-	@Input()selectedMembers?: readonly IMemberContext[];
+	@Input() selectedMembers?: readonly IMemberContext[];
 	@Output() readonly selectedMembersChange = new EventEmitter<readonly IMemberContext[]>();
 
 	@Output() readonly removeMember = new EventEmitter<IMemberContext>();
@@ -27,7 +27,7 @@ export class MembersSelectorInputComponent {
 	) {
 	}
 
-	get selectedMemberID(): string |undefined {
+	get selectedMemberID(): string | undefined {
 		return this.selectedMembers && this.selectedMembers[0].id || undefined;
 	}
 
@@ -41,7 +41,7 @@ export class MembersSelectorInputComponent {
 		const options: ISelectMembersOptions = {
 			selectedMembers: this.selectedMembers,
 			members: team.dto?.members?.map(m => memberContextFromBrief(m, team)),
-				max: this.max,
+			max: this.max,
 		};
 		this.membersSelectorService
 			.selectMembersInModal(options)
@@ -64,5 +64,6 @@ export class MembersSelectorInputComponent {
 
 	clear(): void {
 		this.selectedMembers = [];
+		this.selectedMembersChange.emit(this.selectedMembers);
 	}
 }
