@@ -12,15 +12,14 @@ import { ISelectMembersOptions } from './member-selector.options';
 export class MembersSelectorInputComponent {
 
 	@Input() team?: ITeamContext;
+	@Input() members?: IMemberContext[];
 
 	@Input() max?: number;
 
-	@Input() selectedMemberIDs?: readonly string[];
-	@Output() readonly selectedMemberIDsChange = new EventEmitter<readonly string[]>();
+	@Input()selectedMembers?: readonly IMemberContext[];
+	@Output() readonly selectedMembersChange = new EventEmitter<readonly IMemberContext[]>();
 
 	@Output() readonly removeMember = new EventEmitter<IMemberContext>();
-
-	selectedMembers?: readonly IMemberContext[] = [];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -28,24 +27,27 @@ export class MembersSelectorInputComponent {
 	) {
 	}
 
+	get selectedMemberID(): string |undefined {
+		return this.selectedMembers && this.selectedMembers[0].id || undefined;
+	}
+
 	selectMembers(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
-		if (!this.team) {
+		const team = this.team;
+		if (!team) {
 			return;
 		}
 		const options: ISelectMembersOptions = {
-			team: this.team,
-			selectedMemberIDs: this.selectedMemberIDs,
-			members: this.team.dto?.members?.map(memberContextFromBrief),
-			max: this.max,
+			selectedMembers: this.selectedMembers,
+			members: team.dto?.members?.map(m => memberContextFromBrief(m, team)),
+				max: this.max,
 		};
 		this.membersSelectorService
 			.selectMembersInModal(options)
 			.then(selectedMembers => {
 				this.selectedMembers = selectedMembers;
-				this.selectedMemberIDs = selectedMembers.map(m => m.id);
-				this.selectedMemberIDsChange.emit(this.selectedMemberIDs);
+				this.selectedMembersChange.emit(selectedMembers);
 
 			})
 			.catch(this.errorLogger.logErrorHandler('Failed to select members in modal'));
@@ -53,5 +55,14 @@ export class MembersSelectorInputComponent {
 
 	onRemoveMember(member: IMemberContext): void {
 		this.removeMember.emit(member);
+	}
+
+	onSelectedMembersChanged(members: readonly IMemberContext[]): void {
+		console.log('onSelectedMembersChanged()', members);
+		this.selectedMembersChange.emit(members);
+	}
+
+	clear(): void {
+		this.selectedMembers = [];
 	}
 }

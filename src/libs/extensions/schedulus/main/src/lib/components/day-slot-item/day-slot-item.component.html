@@ -11,8 +11,7 @@
 		</span>
 
 		<sneat-members-as-badges
-			[memberIDs]="slot?.happening?.brief?.memberIDs"
-			[briefs]="team?.dto?.members"
+			[members]="(slot?.happening?.brief?.memberIDs || [])|selectedMembers:team?.dto?.members"
 		></sneat-members-as-badges>
 
 		<p *ngIf="slot?.location?.title || slot?.location?.address">

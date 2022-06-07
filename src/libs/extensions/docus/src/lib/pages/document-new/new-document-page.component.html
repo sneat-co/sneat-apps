@@ -13,10 +13,12 @@
 </ion-header>
 
 <ion-content>
+	<p class="ion-margin" *ngIf="!docType"><ion-text color="medium">Step 1 of 4</ion-text></p>
 	<ion-card>
 
 		<sneat-select-from-list
 			[(ngModel)]="docType"
+			(ngModelChange)="onDocTypeChange($event)"
 			[isFilterable]="false"
 			title="Document Type"
 			[items]="docTypes"
@@ -30,66 +32,56 @@
 	</ion-card>
 
 	<ng-container *ngIf="docType && docType !== 'unspecified'">
+		<p class="ion-margin" *ngIf="!country"><ion-text color="medium">Step 2 of 4</ion-text></p>
 		<ion-card>
 			<sneat-country-selector [(country)]="country"></sneat-country-selector>
 		</ion-card>
 
 		<ng-container *ngIf="country">
-			<ion-card>
-				<ion-item-divider color="light">Belongs to</ion-item-divider>
-				<ion-segment>
-					<ion-segment-button>Family</ion-segment-button>
-					<ion-segment-button>Other</ion-segment-button>
-				</ion-segment>
-				<ion-item>
-					<ion-label>Member</ion-label>
-					<ion-select>
-						<ion-select-option>Myself</ion-select-option>
-					</ion-select>
-				</ion-item>
-			</ion-card>
 			<p *ngIf="isMissingRequiredParams">This page is missing a required parameter.</p>
-			<ng-container *ngIf="!isMissingRequiredParams">
 
-				<ion-card>
-					<ion-item-divider color="light">
-						<ion-label>Required fields</ion-label>
-					</ion-item-divider>
-					<ion-item>
-						<ion-label>Number</ion-label>
-						<ion-input [(ngModel)]="docNumber"></ion-input>
-					</ion-item>
-					<ion-item>
-						<ion-label color="medium">Issued by</ion-label>
-						<ion-input></ion-input>
-					</ion-item>
-					<ion-grid class="ion-grid-layout">
-						<ion-row>
-							<ion-col>
-								<ion-item>
-									<ion-label color="medium">Issued on</ion-label>
-									<ion-input type="date"></ion-input>
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item>
-									<ion-label color="medium">Valid till</ion-label>
-									<ion-input type="date"></ion-input>
-								</ion-item>
-							</ion-col>
-						</ion-row>
-					</ion-grid>
-				</ion-card>
+			<p class="ion-margin" *ngIf="!selectedMembers"><ion-text color="medium">Step 3 of 4</ion-text></p>
+			<ion-card>
+				<sneat-members-selector-input
+					[members]="members"
+					[max]="docFields.members?.max"
+					[(selectedMembers)]="selectedMembers"
+				></sneat-members-selector-input>
+			</ion-card>
 
-
-				<ion-card>
-					<ion-item-divider color="primary">Belongs to</ion-item-divider>
-					<sneat-members-selector-input
-						[team]="team"
-						[max]="docFields.members?.max"
-						[(selectedMemberIDs)]="selectedMemberIDs"
-					></sneat-members-selector-input>
-				</ion-card>
+			<ng-container *ngIf="selectedMembers">
+				<ng-container *ngIf="!isMissingRequiredParams">
+					<p class="ion-margin"><ion-text color="medium">Step 4 of 4</ion-text></p>
+					<ion-card>
+						<ion-item-divider [color]="docNumber ? 'light' : 'primary'">
+							<ion-label>Required fields</ion-label>
+						</ion-item-divider>
+						<ion-item>
+							<ion-label>Number</ion-label>
+							<ion-input [(ngModel)]="docNumber"></ion-input>
+						</ion-item>
+						<ion-item>
+							<ion-label color="medium">Issued by</ion-label>
+							<ion-input></ion-input>
+						</ion-item>
+						<ion-grid class="ion-grid-layout">
+							<ion-row>
+								<ion-col>
+									<ion-item>
+										<ion-label color="medium">Issued on</ion-label>
+										<ion-input type="date"></ion-input>
+									</ion-item>
+								</ion-col>
+								<ion-col>
+									<ion-item>
+										<ion-label color="medium">Valid till</ion-label>
+										<ion-input type="date"></ion-input>
+									</ion-item>
+								</ion-col>
+							</ion-row>
+						</ion-grid>
+					</ion-card>
+				</ng-container>
 
 				<ion-card *ngIf="docType === 'driving_license'">
 					<ion-item-divider color="light">

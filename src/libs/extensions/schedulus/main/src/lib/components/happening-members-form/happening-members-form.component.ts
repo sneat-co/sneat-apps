@@ -20,11 +20,15 @@ export class HappeningMembersFormComponent {
 	public participantsTab: 'members' | 'others' = 'members';
 
 	public get members(): IMemberContext[] | undefined {
-		const members = this.team?.dto?.members;
+		const team = this.team;
+		if (!team) {
+			return;
+		}
+		const members = team.dto?.members;
 		if (!members) {
 			return undefined;
 		}
-		return members.map(memberContextFromBrief);
+		return members.map(m => memberContextFromBrief(m, team));
 	}
 
 	public readonly id = (i: number, v: { id: string }) => v.id;
@@ -55,9 +59,9 @@ export class HappeningMembersFormComponent {
 		if (!this.happening) {
 			return;
 		}
-		const {brief, dto} = this.happening;
+		const { brief, dto } = this.happening;
 		if (!brief || !dto) {
-			return
+			return;
 		}
 		const selectedMembers = this.members?.filter(m => this.checkedMemberIDs.some(v => v === m.id)) || [];
 		this.happening = {
@@ -72,8 +76,8 @@ export class HappeningMembersFormComponent {
 					const s: ISlotParticipant = { type: 'member', id: m.id, title: m.brief?.title || m.id };
 					return s;
 				}),
-			}
-		}
+			},
+		};
 		this.emitHappeningChange();
 	}
 

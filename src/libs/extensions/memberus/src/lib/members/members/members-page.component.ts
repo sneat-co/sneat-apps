@@ -121,7 +121,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
 
 		if (this.team.dto?.members) {
-			this.members = this.team.dto.members.map(m => memberContextFromBrief(m));
+			this.members = this.team.dto.members.map(m => memberContextFromBrief(m, this.team));
 			this.processMembers();
 		} else {
 			this.membersService.watchMembersByTeamID(this.team.id)

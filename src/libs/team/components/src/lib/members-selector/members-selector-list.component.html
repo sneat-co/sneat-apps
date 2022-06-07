@@ -1,0 +1,17 @@
+<ion-item *ngIf="!members">
+	<ion-spinner name="lines" slot="start" color="medium"></ion-spinner>
+	<ion-label color="medium" style="font-style: italic">Loading...</ion-label>
+</ion-item>
+<ion-radio-group *ngIf="members" (ionChange)="onRadioChanged($event)">
+	<ion-item *ngFor="let member of members; trackBy: fulLMemberID">
+		<ion-icon name="person-outline" slot="start"></ion-icon>
+		<ion-checkbox *ngIf="max === undefined || max > 1"
+									slot="end"
+									[value]="member.id"
+									[checked]="isSelected(member)"
+									(ionChange)="onCheckboxChanged($event)"
+		></ion-checkbox>
+		<ion-label>{{member|personTitle}}</ion-label>
+		<ion-radio *ngIf="max === 1" [value]="member.id"></ion-radio>
+	</ion-item>
+</ion-radio-group>

@@ -1,5 +1,5 @@
 <ion-item-group>
-	<ion-item-divider color="light">
+	<ion-item-divider color="light" *ngIf="mode === 'modal'">
 		<ion-label>Select members</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="close($event)">
@@ -7,17 +7,9 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-	<ion-item *ngIf="!members">
-		<ion-spinner name="lines" slot="start" color="medium"></ion-spinner>
-		<ion-label color="medium" style="font-style: italic">Loading...</ion-label>
-	</ion-item>
-	<ion-item *ngFor="let member of members">
-		<ion-checkbox *ngIf="max === undefined || max > 1"
-			slot="start"
-									[value]="member.id"
-									[checked]="isSelected(member.id)"
-									(ionChange)="onCheckboxChanged($event)"
-		></ion-checkbox>
-		<ion-label>{{member|personTitle}}</ion-label>
-	</ion-item>
+	<sneat-members-selector-list
+		[members]="members"
+		[max]="max"
+		[selectedMembers]="selectedMembers"
+	></sneat-members-selector-list>
 </ion-item-group>

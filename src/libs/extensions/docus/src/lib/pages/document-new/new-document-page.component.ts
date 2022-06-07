@@ -2,10 +2,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { IDocTypeStandardFields, IDocumentDto, SneatDocType, standardFieldsByDocType } from '@sneat/dto';
+import { IDocTypeStandardFields, IDocumentDto, SneatDocType, standardDocTypesByID } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IDocumentContext, IMemberContext } from '@sneat/team/models';
-import { MemberService, TeamNavService } from '@sneat/team/services';
+import { memberContextFromBrief, MemberService, TeamNavService } from '@sneat/team/services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 import { DocumentService, ICreateDocumentRequest } from '../../document.service';
 
@@ -22,10 +22,7 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 
 	public isMissingRequiredParams = false;
 
-	public readonly docTypes: ISelectItem[] = [
-		{id: 'passport', title: 'Passport', emoji: '🛂'},
-		{id: 'driving_license', title: 'Driving license', emoji: '🚗'},
-	];
+	public readonly docTypes: ISelectItem[] = Object.values(standardDocTypesByID);
 
 	public country = '';
 	public docTitle = '';
@@ -34,6 +31,8 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 	public docNumber = '';
 
 	private readonly memberChanged = new Subject<void>();
+
+	public members?: IMemberContext[]
 
 	constructor(
 		route: ActivatedRoute,
@@ -46,14 +45,18 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 		this.trackUrl();
 	}
 
+	onDocTypeChange(docType: SneatDocType): void {
+		this.docFields = standardDocTypesByID[docType].fields || {};
+	}
+
 	private trackUrl(): void {
 		this.trackUrlMemberID();
 		this.trackUrlDocType();
 	}
 
 	public get isFormValid(): boolean {
-		const fields = standardFieldsByDocType[this.docType];
-		this.docFields = fields;
+		const fields = standardDocTypesByID[this.docType].fields;
+		this.docFields = fields || {};
 		if (!fields) {
 			return false;
 		}
@@ -67,6 +70,12 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 		// 	return false;
 		// }
 		return true;
+	}
+
+	protected override onTeamDtoChanged() {
+		super.onTeamDtoChanged();
+		const team = this.team;
+		this.members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team))
 	}
 
 	private trackUrlMemberID(): void {

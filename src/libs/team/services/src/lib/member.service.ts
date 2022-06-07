@@ -18,7 +18,7 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { TeamService } from './team.service';
 
 export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
-export const memberContextFromBrief = (brief: IMemberBrief): IMemberContext => ({ id: brief.id, brief });
+export const memberContextFromBrief = (brief: IMemberBrief, team: ITeamContext): IMemberContext => ({ id: brief.id, brief, team });
 
 @Injectable({
 	providedIn: 'root',

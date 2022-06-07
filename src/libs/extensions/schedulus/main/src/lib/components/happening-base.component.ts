@@ -17,7 +17,7 @@ import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MembersSelectorService } from '@sneat/team/components';
 import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { memberContextFromBrief, TeamNavService } from '@sneat/team/services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team/services';
 import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
@@ -158,14 +158,19 @@ This operation can NOT be undone.`)) {
 
 	selectMembers(event: Event): void {
 		event.stopPropagation();
-		const teamID = this.team?.id;
+		const team = this.team;
+		if (!team) {
+			return;
+		}
+		const teamID = team?.id;
 		if (!teamID) {
 			return;
 		}
+		const teamMembers: IMemberContext[] | undefined  = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+
 		this.membersSelectorService.selectMembersInModal({
-			team: this.team || {id: ''},
-			selectedMemberIDs: this.happening?.brief?.memberIDs || [],
-			members: this.team?.dto?.members,
+			selectedMembers: teamMembers?.filter(m => this.happening?.brief?.memberIDs?.some(id => id === m.id)) || [],
+			members: teamMembers,
 			onAdded: this.onMemberAdded,
 			onRemoved: this.onMemberRemoved,
 		}).catch(err => {

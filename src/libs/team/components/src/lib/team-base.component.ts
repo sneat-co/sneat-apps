@@ -5,7 +5,7 @@ import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { equalTeamBriefs, ITeamBrief, ITeamDto, TeamType } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
 import { ILogger } from '@sneat/rxstore';
-import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/user';
 import {
@@ -43,7 +43,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// protected readonly willLeave = new Subject<void>();
 	protected defaultBackPage?: string;
 
-	public selectedMemberIDs: readonly string[] = [];
+	public selectedMembers?: readonly IMemberContext[];
 
 	protected readonly logError: (e: any, message?: string, options?: ILogErrorOptions) => void;
 	protected readonly logErrorHandler: (

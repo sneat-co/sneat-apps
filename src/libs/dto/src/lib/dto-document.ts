@@ -13,6 +13,7 @@ export interface IDocTypeField {
 	required?: boolean;
 	exclude?: boolean;
 	max?: number;
+	min?: number;
 }
 
 export interface IDocTypeStandardFields {
@@ -24,30 +25,65 @@ export interface IDocTypeStandardFields {
 	members?: IDocTypeField;
 }
 
-export const standardFieldsByDocType: { [id: string]: IDocTypeStandardFields } = {
+export interface DocTypeDef {
+	id: SneatDocType;
+	title: string;
+	emoji?: string;
+	fields?: IDocTypeStandardFields;
+}
+
+
+export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 	'other': {
-		title: { required: true },
+		id: 'other',
+		title: 'Other',
+		fields: {
+			title: { required: true },
+		},
 	},
 	'passport': {
-		number: { required: true },
-		validTill: { required: true },
-		members: {max: 1},
+		id: 'passport',
+		title: 'Passport',
+		emoji: '🛂',
+		fields: {
+			number: { required: true },
+			validTill: { required: true },
+			members: { max: 1 },
+		},
 	},
 	'driving_license': {
-		number: { required: true },
-		validTill: { required: true },
+		id: 'driving_license',
+		title: 'Driving license',
+		emoji: '🚗',
+		fields: {
+			number: { required: true },
+			validTill: { required: true },
+			members: { max: 1 },
+		},
 	},
 	'birth_certificate': {
-		number: { required: true },
-		issuedBy: {},
-		issuedOn: { required: true },
-		validTill: { exclude: true },
+		id: 'birth_certificate',
+		title: 'Birth certificate',
+		emoji: '👼',
+		fields: {
+			number: { required: true },
+			issuedBy: {},
+			issuedOn: { required: true },
+			validTill: { exclude: true },
+			members: { max: 1 },
+		},
 	},
 	'marriage_certificate': {
-		number: { required: true },
-		issuedBy: {},
-		issuedOn: { required: true },
-		validTill: { exclude: true },
+		id: 'marriage_certificate',
+		title: 'Marriage certificate',
+		emoji: '💒',
+		fields: {
+			number: { required: true },
+			issuedBy: {},
+			issuedOn: { required: true },
+			validTill: { exclude: true },
+			members: { max: 2 },
+		},
 	},
 };
 

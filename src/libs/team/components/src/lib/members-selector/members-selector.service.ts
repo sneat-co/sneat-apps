@@ -18,20 +18,23 @@ export class MembersSelectorService {
 
 	selectMembersInModal(options: ISelectMembersOptions): Promise<IMemberContext[]> {
 		console.log('selectMembers(), options:', options);
-		if (!options.team) {
-			throw new Error('team context is required parameter to select members');
+		if (!options.members) {
+			throw new Error('members is required parameter to select members');
 		}
 
-		const result = new Promise<IMemberContext[]>(async (resolve, reject) => {
+		const result = new Promise<IMemberContext[]>((resolve, reject) => {
 			const modalOptions: ModalOptions = {
 				component: MembersSelectorModalComponent,
 				componentProps: {
 					...options,
+					mode: 'modal',
 				},
 				keyboardClose: true,
 			}
-			const modal = await this.modalController.create(modalOptions);
-			await modal.present();
+			this.modalController.create(modalOptions)
+				.then(
+					modal => modal.present().catch(this.errorLogger.logErrorHandler('Failed to present modal'))
+				).catch(this.errorLogger.logErrorHandler('Failed to create modal'));
 		});
 
 		return result;

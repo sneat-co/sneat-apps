@@ -12,7 +12,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { IMemberBrief } from '@sneat/dto';
 import { IMemberContext } from '@sneat/team/models';
-import { SneatPipesModule } from '../pipes';
+import { SneatPipesModule } from '../pipes/sneat-pipes.module';
 
 @Component({
 	selector: 'sneat-members-as-badges',
@@ -26,32 +26,19 @@ import { SneatPipesModule } from '../pipes';
 		</ion-chip>
 	`,
 })
-export class MembersAsBadgesComponent implements OnChanges {
+export class MembersAsBadgesComponent {
 
 	private readonly deletingMemberIDs: string[] = [];
 
-	@Input() memberIDs?: readonly string[];
-	@Input() briefs?: IMemberBrief[];
+	@Input() public members?: readonly IMemberContext[];
 	@Input() color: 'primary' | 'light' | 'dark' | 'medium' | 'secondary' | 'tertiary' = 'light';
 
 	@Output() readonly deleteMember = new EventEmitter<IMemberContext>();
-	public members?: IMemberContext[];
 
 	readonly id = (_: number, m: { id: string }) => m.id;
 
 	public isDeleting(id: string): boolean {
 		return this.deletingMemberIDs.includes(id);
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['members'] || changes['memberIDs'] || changes['briefs']) {
-			this.members = this.memberIDs?.map((id: string): IMemberContext => {
-					const brief = this.briefs?.find(m => m.id === id) || ({ id, name: { full: `member:${id}` } });
-					return { id, brief };
-				},
-			);
-			// console.log('MembersAsBadgesComponent =>', this.memberIDs, this.briefs, this.members);
-		}
 	}
 
 	delete(event: Event, member: IMemberContext): void {

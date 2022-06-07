@@ -46,8 +46,7 @@
 	<ion-item>
 		<ion-label color="medium">
 			<sneat-members-as-badges *ngIf="happening?.brief?.memberIDs?.length"
-															 [briefs]="team?.dto?.members"
-															 [memberIDs]="happening?.dto?.memberIDs || happening?.brief?.memberIDs"
+															 [members]="(happening?.dto?.memberIDs || happening?.brief?.memberIDs || [])|selectedMembers:team?.dto?.members"
 															 (deleteMember)="removeMember($event)"
 			></sneat-members-as-badges>
 			<ng-container *ngIf="!happening?.brief?.memberIDs">
