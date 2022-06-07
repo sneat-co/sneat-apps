@@ -6,7 +6,9 @@ export type SneatDocType =
 	'passport' |
 	'driving_license' |
 	'birth_certificate' |
-	'marriage_certificate';
+	'marriage_certificate' |
+	'rent_lease' |
+	'insurance_policy';
 
 export interface IDocTypeField {
 	type?: 'str' | 'int' | 'date';
@@ -32,7 +34,6 @@ export interface DocTypeDef {
 	fields?: IDocTypeStandardFields;
 }
 
-
 export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 	'other': {
 		id: 'other',
@@ -40,6 +41,18 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 		fields: {
 			title: { required: true },
 		},
+	},
+	'rent_lease': {
+		id: 'rent_lease',
+		title: 'Rent lease',
+		emoji: '🏘️️️',
+		fields: {},
+	},
+	'insurance_policy': {
+		id: 'insurance_policy',
+		title: 'Insurance policy',
+		emoji: '💸️️',
+		fields: {},
 	},
 	'passport': {
 		id: 'passport',
@@ -76,7 +89,7 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 	'marriage_certificate': {
 		id: 'marriage_certificate',
 		title: 'Marriage certificate',
-		emoji: '💒',
+		emoji: '💍',
 		fields: {
 			number: { required: true },
 			issuedBy: {},

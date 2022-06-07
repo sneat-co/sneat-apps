@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { eq, listItemAnimations } from '@sneat/core';
+import { standardDocTypesByID } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { DocumentService } from '@sneat/extensions/docus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -24,16 +25,7 @@ interface IDocumentType {
 })
 export class DocumentsByTypeComponent extends DocumentsBaseComponent implements OnChanges {
 
-	docTypes: IDocumentType[] = [
-		{ id: 'passport', title: 'Passports', emoji: '📘' },
-		// {id: 'visa', title: 'Visas'},
-		{ id: 'driving_license', title: 'Driving licenses', emoji: '🚗' },
-		{ id: 'rent_lease', title: 'Rent lease', emoji: '🏘️' },
-		{ id: 'insurance', title: 'Insurance', emoji: '💸' },
-		{ id: 'birth_certificate', title: 'Birth certificates', emoji: '👶' },
-		{ id: 'marriage_certificate', title: 'Marriage certificates', emoji: '💍' },
-		{ id: 'other', title: 'Other', emoji: '🗂️' },
-	];
+	docTypes: IDocumentType[] = Object.values(standardDocTypesByID).map(v => ({...v}));
 
 	@Output() goNewDoc = new EventEmitter<string>();
 	@Output() goDocType = new EventEmitter<string>();
