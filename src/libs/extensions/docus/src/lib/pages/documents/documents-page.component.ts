@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IDocumentDto } from '@sneat/dto';
-import { AssetService } from '@sneat/extensions/assetus/components';
-import { DocumentService } from '@sneat/extensions/docus';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IAssetContext, IDocumentContext, IMemberContext } from '@sneat/team/models';
+import { IDocumentContext, IMemberContext } from '@sneat/team/models';
+import { DocumentService } from '../../document.service';
 
 @Component({
 	selector: 'sneat-documents-page',
@@ -43,7 +41,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 				.subscribe({
 					next: documents => {
 						this.documents = documents;
-					}
+					},
 				});
 		}
 	}
@@ -69,7 +67,9 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 			queryParams['member'] = member.id;
 		}
 		const state = member ? { member } : undefined;
-		// this.navigateForward('new-document', queryParams, state);
+		this.teamNav.navigateForwardToTeamPage(this.team, 'new-document', {
+			state: { docType: type },
+		}).catch(this.errorLogger.logErrorHandler('Failed to navigate to new doc page'));
 	};
 
 	applyFilter(filter: string) {
