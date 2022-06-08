@@ -5,28 +5,34 @@
 	</ion-item-divider>
 	<ion-item>
 		<ion-label color="medium">First name</ion-label>
-		<ion-input #firstNameInput [formControl]="firstName"
+		<ion-input #firstNameInput
+							 name="first_name"
+							 [formControl]="firstName"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
 		></ion-input>
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium">Last name</ion-label>
-		<ion-input [formControl]="lastName"
+		<ion-input #lastNameInput
+							 name="last_name"
+							 [formControl]="lastName"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
 		></ion-input>
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium">Middle name</ion-label>
-		<ion-input [formControl]="middleName"
+		<ion-input name="medium_name" [formControl]="middleName"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
 		></ion-input>
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium" position="floating">Full name</ion-label>
-		<ion-input #fullNameInput [formControl]="fullName"
+		<ion-input #fullNameInput
+							 name="full_name"
+							 [formControl]="fullName"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onFullNameChanged($event)"
 		></ion-input>

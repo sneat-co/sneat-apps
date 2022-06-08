@@ -47,12 +47,17 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input() fields?: INamesFormFields;
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
+	@ViewChild('lastNameInput', { static: true }) lastNameInput?: IonInput;
 	@ViewChild('fullNameInput', { static: true }) fullNameInput?: IonInput;
 
 	@Output() readonly keyupEnter = new EventEmitter<Event>();
 	@Output() readonly namesChanged = new EventEmitter<IName>();
 
+	private initialNameChange = true;
 	private isFullNameChanged = false;
+	private isViewInitiated = false;
+
+	private inputToFocus?: IonInput;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -76,8 +81,6 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		maxNameLenValidator,
 	]);
 
-	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
-
 	public readonly namesForm = new FormGroup({
 		fullName: this.fullName,
 		firstName: this.firstName,
@@ -88,6 +91,12 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	public get hasNames(): boolean {
 		return this.firstName.value || this.lastName.value || this.fullName.value;
 	}
+
+	public setFocusToInput(input: IonInput, delay = 1000): void {
+		const setFocusTo = createSetFocusToInput(this.errorLogger);
+		setFocusTo(input, delay);
+	};
+
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const fieldsChange = changes['fields'];
@@ -112,11 +121,26 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 					this.fullName.setValue(name.full)
 				}
 			}
+			if (this.initialNameChange) {
+				this.initialNameChange = false;
+				if (!this.firstName.value ) {
+					this.inputToFocus = this.firstNameInput;
+				}
+				if (!this.lastName.value ) {
+					this.inputToFocus = this.lastNameInput;
+				}
+				if (this.isViewInitiated && this.inputToFocus) {
+					this.setFocusToInput(this.inputToFocus);
+				}
+			}
 		}
 	}
 
 	ngAfterViewInit(): void {
-		this.setFocusToInput(this.firstNameInput, 333);
+		this.isViewInitiated = true;
+		if (this.inputToFocus) {
+			this.setFocusToInput(this.inputToFocus);
+		}
 	}
 
 	onNameChanged(event: Event): void {

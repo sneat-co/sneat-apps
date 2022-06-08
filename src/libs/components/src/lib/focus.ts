@@ -3,7 +3,7 @@ import { IErrorLogger } from '@sneat/logging';
 
 export function createSetFocusToInput(errorLogger: IErrorLogger) {
 	return (input?: IonInput, delay = 100): void => {
-		console.log('setFocusToInput()', input);
+		console.log('setFocusToInput()', input?.name, delay);
 		if (!input) {
 			console.error('can not set focus to undefined input');
 			return;
@@ -11,9 +11,9 @@ export function createSetFocusToInput(errorLogger: IErrorLogger) {
 		setTimeout(
 			() => {
 				requestAnimationFrame(() => {
-					console.log('focus to name input');
-					input.setFocus()
-						.catch(errorLogger.logErrorHandler('failed to set focus to input'));
+					console.log('focusing to input ', input.name);
+					// input.getInputElement().then(el => el.focus()).catch(errorLogger.logErrorHandler('failed to set focus to input'));
+					input.setFocus().catch(errorLogger.logErrorHandler('failed to set focus to input'));
 				});
 			},
 			delay,
