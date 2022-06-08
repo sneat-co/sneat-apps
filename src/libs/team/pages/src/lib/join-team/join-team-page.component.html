@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content>
-	<ion-card *ngIf="inviteInfo" color="tertiary">
+	<ion-card *ngIf="inviteInfo" color="warning">
 		<ion-card-content *ngIf="userOwnInvite; else notUserOwnInvite">
 			<p>You've invited <b>{{inviteInfo?.invite?.to?.title}}</b> to join
 				<b>{{inviteInfo?.team?.title || inviteInfo?.team?.type}}</b></p>
@@ -52,7 +52,7 @@
 
 	<sneat-person-form-wizard
 		[(relatedPerson)]="relatedPerson"
-		[showAll]="true"
+		[fields]="{lastName: {required: true}}"
 	></sneat-person-form-wizard>
 
 

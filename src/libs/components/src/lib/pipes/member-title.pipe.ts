@@ -8,7 +8,7 @@ export function getMemberTitle(m: IMemberContext, shortTitle?: string): string {
 
 @Pipe({ name: 'memberTitle' })
 export class MemberTitle implements PipeTransform {
-	transform(m: IMemberContext, shortTitle?: string): string {
-		return getMemberTitle(m, shortTitle);
+	transform(m?: IMemberContext, shortTitle?: string): string {
+		return m ? getMemberTitle(m, shortTitle) : '';
 	}
 }

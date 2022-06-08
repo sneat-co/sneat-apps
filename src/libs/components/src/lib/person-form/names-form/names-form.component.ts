@@ -8,6 +8,7 @@ import { excludeEmpty } from '@sneat/core';
 import { IName, isNameEmpty } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { createSetFocusToInput } from '../../focus';
+import { IFormField } from '../../form-field';
 
 const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => {
 	const formGroup = control as FormGroup;
@@ -29,6 +30,12 @@ const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => 
 	return null;
 };
 
+export interface INamesFormFields {
+	lastName?: IFormField;
+}
+
+const maxNameLenValidator = Validators.maxLength(50);
+
 @Component({
 	selector: 'sneat-names-form',
 	templateUrl: './names-form.component.html',
@@ -37,6 +44,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input() name?: IName = {};
 	@Input() isActive = true;
 	@Input() disabled = false;
+	@Input() fields?: INamesFormFields;
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
 	@ViewChild('fullNameInput', { static: true }) fullNameInput?: IonInput;
@@ -53,19 +61,19 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	public readonly fullName = new FormControl('', [
 		// Validators.required, -- not required if user entered only first name for example. In future may require to be an option
-		Validators.maxLength(50),
+		maxNameLenValidator,
 	]);
 
 	public readonly firstName = new FormControl('', [
-		Validators.maxLength(50),
+		maxNameLenValidator,
 	]);
 
 	public readonly middleName = new FormControl('', [
-		Validators.maxLength(50),
+		maxNameLenValidator,
 	]);
 
 	public readonly lastName = new FormControl('', [
-		Validators.maxLength(50),
+		maxNameLenValidator,
 	]);
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
@@ -82,6 +90,11 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		const fieldsChange = changes['fields'];
+		if (fieldsChange) {
+			this.lastName.clearValidators();
+			this.lastName.addValidators(this.fields?.lastName?.required ? [Validators.required, maxNameLenValidator] : Validators.required);
+		}
 		const nameChange = changes['name'];
 		if (nameChange && nameChange.currentValue) {
 			const name = this.name;

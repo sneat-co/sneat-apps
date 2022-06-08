@@ -51,8 +51,7 @@
 		<ion-row>
 			<ion-col>
 				<ion-card>
-					<ion-list>
-						<ion-item class="with-buttons">
+						<ion-item class="sneat-no-end-padding">
 							<ion-label style="font-weight: bold">
 								<ng-container *ngIf="member?.brief?.gender">
 									<ng-container [ngSwitch]="member?.brief?.gender">
@@ -60,8 +59,7 @@
 										<span *ngSwitchCase="'female'" class="ion-margin-end">👩</span>
 										<ion-icon name="person" *ngSwitchDefault></ion-icon>
 									</ng-container>
-
-									{{member?.brief?.title || member?.brief?.shortTitle || (member?.dto?.userID === currentUserId ? 'Me' : '(no title)')}}
+									{{(member|memberTitle) || member?.brief?.shortTitle || (member?.dto?.userID === currentUserId ? 'Me' : '(no title)')}}
 								</ng-container>
 							</ion-label>
 							<ion-buttons slot="end">
@@ -77,8 +75,8 @@
 							<ion-label *ngIf="member?.brief?.gender === 'female' && relatedAs === 'spouse'">My wife</ion-label>
 						</ion-item-divider>
 						<ion-item>
-							<ion-label>Date of birth</ion-label>
-							<ion-input readonly="readonly"></ion-input>
+							<ion-label [color]="member?.brief && !member?.brief?.dob ? 'danger' : 'medium'">Date of birth</ion-label>
+							<ion-input [readonly]="true" type="date" placeholder="missing"></ion-input>
 						</ion-item>
 						<ion-item>
 							<ion-label>Related to me as</ion-label>
@@ -87,8 +85,7 @@
 							</ion-select>
 						</ion-item>
 						<ng-container *ngIf="member?.dto && (!member?.dto?.gender || !relatedAs)">
-							<ion-item
-								*ngIf="team?.type === 'family' && relatedAs && member?.dto?.userID !== currentUserId">
+							<ion-item *ngIf="team?.type === 'family' && relatedAs && member?.dto?.userID !== currentUserId">
 								<ion-label>
 									Relationship to me
 								</ion-label>
@@ -141,7 +138,6 @@
 								</ion-radio-group>
 							</ion-item-group>
 						</ng-container>
-					</ion-list>
 				</ion-card>
 			</ion-col>
 			<ion-col>

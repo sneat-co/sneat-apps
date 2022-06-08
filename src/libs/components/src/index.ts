@@ -1,3 +1,4 @@
+export * from './lib/form-field';
 export * from './lib/pipes';
 //
 export * from './lib/virtual-slider/virtual-slider';

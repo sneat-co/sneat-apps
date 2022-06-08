@@ -36,7 +36,7 @@ export class InviteModalComponent {
 
 	creatingInvite = false;
 
-	readonly email = new FormControl('', Validators.required);
+	readonly email = new FormControl('', [Validators.required, Validators.email]);
 	readonly phone = new FormControl('', Validators.required);
 	readonly message = new FormControl('');
 

@@ -12,8 +12,9 @@ import {
 	isNameEmpty,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
+import { IFormField } from '../form-field';
 import { GenderFormComponent } from './gender-form/gender-form.component';
-import { NamesFormComponent } from './names-form/names-form.component';
+import { INamesFormFields, NamesFormComponent } from './names-form/names-form.component';
 
 
 interface show {
@@ -26,6 +27,11 @@ interface show {
 	readonly phones?: boolean;
 	readonly emails?: boolean;
 	readonly submitButton?: boolean;
+}
+
+
+export interface IPersonFormWizardFields extends INamesFormFields {
+	relatedAs?: IFormField
 }
 
 @Component({
@@ -43,8 +49,11 @@ export class PersonFormWizardComponent implements OnChanges {
 	@Input() hideRelationship = false;
 	@Input() showAll = false;
 
+	@Input() fields?: IPersonFormWizardFields;
+
 	@Input() relatedPerson: IRelatedPerson = emptyRelatedPerson;
 	@Output() readonly relatedPersonChange = new EventEmitter<IRelatedPerson>();
+	@Input()
 
 	public isReadyToSubmit = false;
 	@Output() readonly isReadyToSubmitChange = new EventEmitter<boolean>();
