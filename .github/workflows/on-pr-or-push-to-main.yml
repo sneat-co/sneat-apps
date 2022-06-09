@@ -1,6 +1,6 @@
 name: On PR or push to main
 
-'on':
+on:
   pull_request:
     branches:
       - main
