@@ -47,8 +47,8 @@ specifiers:
   '@sentry/tracing': 7.0.0
   '@sneat-dnd/core': 0.1.1
   '@sneat-dnd/tree': 0.1.1
-  '@sneat/random': 0.0.3
-  '@sneat/wormhole': 0.0.5
+  '@sneat/random': 0.0.4
+  '@sneat/wormhole': 0.0.6
   '@trellisorg/make-buildable': 0.0.12
   '@types/jasmine': 4.0.3
   '@types/jest': 28.1.1
@@ -121,8 +121,8 @@ dependencies:
   '@sentry/tracing': 7.0.0
   '@sneat-dnd/core': 0.1.1_x4j7wrj2gwckj73g5cgp5mf2fu
   '@sneat-dnd/tree': 0.1.1_sbtxsvw7ynvjcq3rxqojjmx77m
-  '@sneat/random': 0.0.3_lq2jwh535o536ywu7wmvu7skkm
-  '@sneat/wormhole': 0.0.5_x4j7wrj2gwckj73g5cgp5mf2fu
+  '@sneat/random': 0.0.4_lq2jwh535o536ywu7wmvu7skkm
+  '@sneat/wormhole': 0.0.6_x4j7wrj2gwckj73g5cgp5mf2fu
   codemirror: 5.65.5
   date-fns: 2.28.0
   dnd-core: 10.0.2
@@ -5223,28 +5223,28 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@sneat/random/0.0.3_lq2jwh535o536ywu7wmvu7skkm:
-    resolution: {integrity: sha512-LbIaRrh0WwsplxerYmu1IN4Jz735NW5vU2Y0e0jUcGJhKzTPuBJwSBTa+c5WD99QVMwWTyeBUd5dW3Y15o3p6w==}
+  /@sneat/random/0.0.4_lq2jwh535o536ywu7wmvu7skkm:
+    resolution: {integrity: sha512-zRoBe1rtSgDOWvz8xfSbE9SB6Rn/rGJ7oVvmTmA5X7m89NzW359LROwCTHVnf7o9niD1T9lW7AvsZLdCaM7QOw==}
     peerDependencies:
-      '@angular/common': ^12.2.0
-      '@angular/core': ^12.2.0
+      '@angular/common': '>=12.0.0'
+      '@angular/core': '>=12.0.0'
     dependencies:
       '@angular/common': 14.0.1_sc2cxsu4vfcn33t2tbzpvm4ohe
       '@angular/core': 14.0.1_rxjs@7.5.5+zone.js@0.11.5
-      tslib: 2.4.0
+      tslib: 2.3.1
     dev: false
 
-  /@sneat/wormhole/0.0.5_x4j7wrj2gwckj73g5cgp5mf2fu:
-    resolution: {integrity: sha512-tT20De8eGIwtjmcL5CKzChStgn9gAi6Zc51waGUPQ5kGPO6kDDBCsx8GxL9hzmlAl0zhWKHdyKEdf2fx2QRL+g==}
+  /@sneat/wormhole/0.0.6_x4j7wrj2gwckj73g5cgp5mf2fu:
+    resolution: {integrity: sha512-wIuHJAgUv8jgJ8lAdu5felkA4XHAD33H5GIJcz0FYX2rFyh3kLP4YTWdDYSFY38vLRWKlHQyClxGYlCW/Lxz7w==}
     peerDependencies:
-      '@angular/common': ^11.2.5
-      '@angular/core': ^11.2.5
-      rxjs: ~6.6.3
+      '@angular/common': ^11.2.5 || ^12.0.0 || ^13.0.0 || ^14.0.0
+      '@angular/core': ^11.2.5 || ^12.0.0 || ^13.0.0 || ^14.0.0
+      rxjs: 7.4.0
     dependencies:
       '@angular/common': 14.0.1_sc2cxsu4vfcn33t2tbzpvm4ohe
       '@angular/core': 14.0.1_rxjs@7.5.5+zone.js@0.11.5
       rxjs: 7.5.5
-      tslib: 2.4.0
+      tslib: 2.3.1
     dev: false
 
   /@stencil/core/2.16.0:
