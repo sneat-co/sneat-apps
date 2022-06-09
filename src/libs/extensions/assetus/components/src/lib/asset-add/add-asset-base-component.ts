@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { AssetService } from '../asset-service';
@@ -9,8 +9,8 @@ export abstract class AddAssetBaseComponent {
 
 	public isSubmitting = false;
 
-	public titleForm = new FormGroup({
-		title: new FormControl('', Validators.required),
+	public titleForm = new UntypedFormGroup({
+		title: new UntypedFormControl('', Validators.required),
 	});
 
 	protected constructor(

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
 import { IMemberBrief, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -20,7 +20,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	@Input() team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
-	readonly text = new FormControl('');
+	readonly text = new UntypedFormControl('');
 	weekdays: WeekdayCode2[] = [];
 	memberIDs: string[] = [];
 	selectedMembers: IMemberContext[] = []
@@ -29,10 +29,10 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 
 	members?: IMemberContext[];
 
-	readonly repeatWeekly = new FormControl(false);
-	readonly repeatMonthly = new FormControl(false);
-	readonly repeatQuarterly = new FormControl(false);
-	readonly repeatYearly = new FormControl(false);
+	readonly repeatWeekly = new UntypedFormControl(false);
+	readonly repeatMonthly = new UntypedFormControl(false);
+	readonly repeatQuarterly = new UntypedFormControl(false);
+	readonly repeatYearly = new UntypedFormControl(false);
 
 	public get hasFilter(): boolean {
 		return !!this.text.value.trim() ||

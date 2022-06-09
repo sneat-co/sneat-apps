@@ -46,44 +46,43 @@ const appInfo: IAppInfo = {
 };
 
 @NgModule({
-	declarations: [
-		SneatAppComponent,
-		SneatAppMenuComponent,
-	],
-	entryComponents: [],
-	imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		IonicModule.forRoot(),
-		AngularFireModule.initializeApp(environment.firebaseConfig),
-		RandomModule,
-		SneatAppRoutingModule,
-		SneatApplicationModule,
-		SneatAuthServicesModule,
-		AuthMenuItemModule,
-		CommunesUiModule,
-		TeamsMenuComponentModule,
-		HttpClientModule,
-	],
-	providers: [
-		...coreProviders,
-		{
-			provide: SneatApiBaseUrl,
-			useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatAppApiBaseUrl,
-		},
-		{
-			provide: RANDOM_ID_OPTIONS,
-			useValue: { len: 9 },
-		},
-		{
-			provide: APP_INFO,
-			useValue: appInfo,
-		},
-	],
-	bootstrap: [SneatAppComponent],
-	exports: [
-		SneatAppMenuComponent,
-	],
+    declarations: [
+        SneatAppComponent,
+        SneatAppMenuComponent,
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        IonicModule.forRoot(),
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        RandomModule,
+        SneatAppRoutingModule,
+        SneatApplicationModule,
+        SneatAuthServicesModule,
+        AuthMenuItemModule,
+        CommunesUiModule,
+        TeamsMenuComponentModule,
+        HttpClientModule,
+    ],
+    providers: [
+        ...coreProviders,
+        {
+            provide: SneatApiBaseUrl,
+            useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatAppApiBaseUrl,
+        },
+        {
+            provide: RANDOM_ID_OPTIONS,
+            useValue: { len: 9 },
+        },
+        {
+            provide: APP_INFO,
+            useValue: appInfo,
+        },
+    ],
+    bootstrap: [SneatAppComponent],
+    exports: [
+        SneatAppMenuComponent,
+    ]
 })
 export class SneatAppModule {
 	constructor() {

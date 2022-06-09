@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { IUserRecord } from '@sneat/auth-models';
 import { SneatUserService } from '@sneat/user';
 
@@ -10,7 +10,7 @@ import { SneatUserService } from '@sneat/user';
 })
 export class UserProfilePage {
 	public user?: IUserRecord | null;
-	public userTitle = new FormControl('', [Validators.required]);
+	public userTitle = new UntypedFormControl('', [Validators.required]);
 
 	edit = false;
 

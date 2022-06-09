@@ -9,15 +9,14 @@ import {NewListDialogComponent} from './new-list-dialog.component';
 // import {RouterModule} from "@angular/router";
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		// RouterModule.forChild([{path: '', component: NewListDialog}]),
-	],
-	declarations: [NewListDialogComponent],
-	entryComponents: [NewListDialogComponent],
-	exports: [NewListDialogComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        // RouterModule.forChild([{path: '', component: NewListDialog}]),
+    ],
+    declarations: [NewListDialogComponent],
+    exports: [NewListDialogComponent]
 })
 export class NewListDialogModule {
 }

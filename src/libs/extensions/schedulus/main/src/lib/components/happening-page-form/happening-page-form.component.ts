@@ -9,7 +9,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
 import { HappeningType, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
@@ -51,8 +51,8 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		return this.happening?.brief?.slots;
 	}
 
-	public happeningTitle = new FormControl('', Validators.required);
-	public happeningForm = new FormGroup({
+	public happeningTitle = new UntypedFormControl('', Validators.required);
+	public happeningForm = new UntypedFormGroup({
 		title: this.happeningTitle,
 	});
 

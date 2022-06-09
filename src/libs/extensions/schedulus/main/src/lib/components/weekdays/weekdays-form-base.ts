@@ -1,8 +1,8 @@
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { WeekdayCode2 } from '@sneat/dto';
 
 const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-	const formGroup = control as FormGroup;
+	const formGroup = control as UntypedFormGroup;
 	const weekdaySelected = Object.values(formGroup.value)
 		.indexOf(true) >= 0;
 	if (weekdaySelected) {
@@ -12,13 +12,13 @@ const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationError
 };
 
 export abstract class WeekdaysFormBase {
-	readonly weekdayMo = new FormControl(false);
-	readonly weekdayTu = new FormControl(false);
-	readonly weekdayWe = new FormControl(false);
-	readonly weekdayTh = new FormControl(false);
-	readonly weekdayFr = new FormControl(false);
-	readonly weekdaySa = new FormControl(false);
-	readonly weekdaySu = new FormControl(false);
+	readonly weekdayMo = new UntypedFormControl(false);
+	readonly weekdayTu = new UntypedFormControl(false);
+	readonly weekdayWe = new UntypedFormControl(false);
+	readonly weekdayTh = new UntypedFormControl(false);
+	readonly weekdayFr = new UntypedFormControl(false);
+	readonly weekdaySa = new UntypedFormControl(false);
+	readonly weekdaySu = new UntypedFormControl(false);
 
 	protected readonly weekdayById = {
 		'mo': this.weekdayMo,
@@ -30,7 +30,7 @@ export abstract class WeekdaysFormBase {
 		'su': this.weekdaySu,
 	};
 
-	readonly weekdaysForm: FormGroup = new FormGroup(
+	readonly weekdaysForm: UntypedFormGroup = new UntypedFormGroup(
 		{
 			mo: this.weekdayMo,
 			tu: this.weekdayTu,
@@ -44,7 +44,7 @@ export abstract class WeekdaysFormBase {
 	);
 
 	protected constructor(isWeekdayRequired: boolean) {
-		this.weekdaysForm = new FormGroup(
+		this.weekdaysForm = new UntypedFormGroup(
 			{
 				mo: this.weekdayMo,
 				tu: this.weekdayTu,

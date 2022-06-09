@@ -9,7 +9,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput, ModalController, PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate, isValidaTimeString, isValidDateString } from '@sneat/core';
 import { emptyHappeningSlot, HappeningType, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
@@ -31,30 +31,30 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	public tab: 'duration' | 'end' = 'duration';
 	public durationUnits: 'minutes' | 'hours' = 'minutes';
-	public startDate = new FormControl('', { // dateToIso(new Date())
+	public startDate = new UntypedFormControl('', { // dateToIso(new Date())
 		// validators: Validators.required,
 	});
-	public endDate = new FormControl('', {
+	public endDate = new UntypedFormControl('', {
 		// validators: Validators.required,
 	});
-	public readonly startTime = new FormControl('', {
+	public readonly startTime = new UntypedFormControl('', {
 		validators: [
 			Validators.required,
 			Validators.pattern(/[0-2]\d:[0-5]\d/)
 		],
 	});
-	public readonly endTime = new FormControl('', {
+	public readonly endTime = new UntypedFormControl('', {
 		validators: [
 			Validators.required,
 			Validators.pattern(/[0-2]\d:[0-5]\d/)
 		],
 	});
-	public readonly duration = new FormControl(60, {
+	public readonly duration = new UntypedFormControl(60, {
 		validators: [
 			Validators.required,
 		],
 	});
-	public readonly form = new FormGroup({
+	public readonly form = new UntypedFormGroup({
 		startDate: this.startDate,
 		startTime: this.startTime,
 		endTime: this.endTime,
