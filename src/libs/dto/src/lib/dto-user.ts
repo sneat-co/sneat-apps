@@ -3,8 +3,6 @@ import { ITitledRecord } from './dto-models';
 import { ICommuneDto } from './dto-commune';
 import { CommuneType, CountryId } from './types';
 
-// import {RxRecordKey} from '@sneat/rxstore';
-
 export interface IUserCommuneInfo {
 	id?: string;
 	shortId?: string;

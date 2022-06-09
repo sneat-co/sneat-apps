@@ -1,8 +1,8 @@
+import { loggerFactory } from '@sneat/core';
+import { IRecord } from './schema';
 import { IdbUpgradeCallback, IndexedDbRxStore, IndexedDbRxStoreProvider } from './rx-indexeddb';
 import { deleteDB, IDBPDatabase, IDBPTransaction, openDB } from 'idb';
-import { loggerFactory } from './logging';
 import { IValidator } from './interfaces';
-import { IRecord } from 'rxstore/schema';
 
 describe('RxIndexedDb', () => {
 	const testDbName = 'test-db';
@@ -45,9 +45,8 @@ describe('RxIndexedDb', () => {
 
 	describe('IndexedDbRxStore', () => {
 
-		afterAll(async (done) => {
-			await deleteDB(testDbName);
-			done();
+		afterAll((done) => {
+			deleteDB(testDbName).then(() => done());
 		});
 
 		it('should be created', () => {

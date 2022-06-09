@@ -1,4 +1,3 @@
-import { RxRecordKey } from '@sneat/rxstore';
 import { IWithIdAndTitle } from './dto-brief';
 import { IWithRestrictions, IWithTeamIDs } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
@@ -12,7 +11,7 @@ export interface IQuantity {
 }
 
 export interface IListItemCommon extends IListCommon {
-	subListId?: RxRecordKey;
+	subListId?: string;
 	subListType?: ListType;
 	quantity?: IQuantity;
 	category?: string;
@@ -109,7 +108,7 @@ export interface IListInfo extends IWithRestrictions {
 	parentListId?: string;
 	parentListType?: ListType;
 	type: ListType;
-	id?: RxRecordKey;
+	id?: string;
 	shortId?: string;
 	title?: string;
 	hidden?: boolean;

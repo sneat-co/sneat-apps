@@ -1,5 +1,3 @@
-/* tslint:disable:no-bitwise */
-import { IRecord, RxRecordKey } from '@sneat/rxstore';
 import { IPerson } from './dto-person';
 import { Restriction } from './types';
 
@@ -9,12 +7,13 @@ export interface ITitled {
 	title: string;
 }
 
-export interface ITitledRecord extends IRecord {
+export interface ITitledRecord {
+	id?: string;
 	title?: string;
 }
 
 export interface ITitledRecordInfo {
-	id: RxRecordKey;
+	id: string;
 	title: string;
 }
 
@@ -29,7 +28,8 @@ export interface DtoTotal {
 	year?: number;
 }
 
-export interface IDemoRecord extends IRecord {
+export interface IDemoRecord {
+	id?: string;
 	isDemo?: boolean;
 	isLocal?: boolean;
 }

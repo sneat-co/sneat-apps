@@ -1,12 +1,10 @@
-/* tslint:disable:no-bitwise */
 import { EnumAsUnionOfKeys } from '@sneat/core';
-import { RxRecordKey } from '@sneat/rxstore';
 import { IListGroupsHolder } from './dto-list';
 import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
 import { IPerson } from './dto-person';
 import { ITeamDto } from './dto-team';
-import { AgeGroup, CommuneType, CountryId, Gender } from './types';
+import { CommuneType, CountryId } from './types';
 
 export const enum TeamCounter {
 	activities = 'activities',
@@ -82,7 +80,7 @@ export interface ITeamMemberInfo extends IPerson {
 	readonly id?: string;
 	readonly userID?: string;
 	readonly title?: string;
-	readonly groupIds?: readonly RxRecordKey[];
+	readonly groupIDs?: readonly string[];
 	readonly roles?: readonly MemberRole[];
 }
 
@@ -90,7 +88,7 @@ export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder, 
 	readonly countryId?: CountryId;
 	readonly type: CommuneType;
 	readonly desc?: string;
-	readonly userID: RxRecordKey;
+	readonly userID: string;
 	readonly order?: number;
 	readonly numberOf?: TeamCounts;
 	readonly membersCountByRole?: { [id: string]: number };
