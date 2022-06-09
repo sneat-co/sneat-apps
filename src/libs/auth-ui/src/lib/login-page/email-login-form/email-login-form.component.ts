@@ -3,9 +3,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { SneatApiService } from '@sneat/api';
+import { IInitUserRecordRequest, UserRecordService } from '@sneat/auth';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
-import { IInitUserRecordRequest, SneatUserService, UserRecordService } from '@sneat/user';
 import firebase from 'firebase/compat';
 import UserCredential = firebase.auth.UserCredential;
 

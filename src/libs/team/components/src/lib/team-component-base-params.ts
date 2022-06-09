@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { APP_INFO, IAppInfo, ILoggerFactory, LOGGER_FACTORY, NgModulePreloaderService } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 
 @Injectable()
 export class TeamComponentBaseParams { // TODO: verify it should be declared in providers attribute for each page or can be just on app level?

@@ -13,7 +13,7 @@ import {
 	SneatAuthStateService,
 } from '@sneat/auth';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { Subject, takeUntil } from 'rxjs';

@@ -4,7 +4,7 @@ import { IUserTeamBrief, TeamMemberType } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest, ITeamContext, teamContextFromBrief } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { ISneatUserState, SneatUserService } from '@sneat/user';
+import { ISneatUserState, SneatUserService } from '@sneat/auth';
 
 @Component({
 	selector: 'sneat-teams-menu',

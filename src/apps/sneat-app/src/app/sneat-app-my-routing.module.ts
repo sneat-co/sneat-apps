@@ -12,7 +12,11 @@ import { RouterModule } from '@angular/router';
 			},
 			{
 				path: 'profile',
-				loadChildren: () => import('@sneat/user').then(m => m.UserMyPageRoutingModule),
+				loadChildren: () => import('@sneat/user').then(m => m.UserMyProfilePageRoutingModule),
+			},
+			{
+				path: 'spaces',
+				loadChildren: () => import('@sneat/team/pages').then(m => m.TeamsPageModule),
 			}
 		])
 	]

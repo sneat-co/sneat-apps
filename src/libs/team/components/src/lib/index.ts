@@ -19,3 +19,4 @@ export * from './members-selector/members-selector-list.component';
 export * from './members-selector/members-selector-input.component';
 export * from './members-selector/members-selector-modal.component';
 export * from './teams-list';
+export * from './teams-card';

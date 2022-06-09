@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
-import { IUserTeamBrief, TeamMemberType } from '@sneat/auth-models';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { ISneatUserState, SneatUserService } from '@sneat/user';
+import { ISneatUserState, SneatUserService } from '@sneat/auth';
 import { Subject, Subscription } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 

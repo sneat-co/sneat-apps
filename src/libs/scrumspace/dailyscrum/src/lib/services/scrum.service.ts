@@ -25,7 +25,7 @@ import {
 	TaskType,
 } from '@sneat/scrumspace/scrummodels';
 import { RandomIdService } from '@sneat/random';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import firebase from 'firebase/compat/app';
 import FieldPath = firebase.firestore.FieldPath;
 
@@ -143,7 +143,7 @@ export class ScrumService extends BaseMeetingService {
 		if (!request.teamID) {
 			return throwError(() => 'team required');
 		}
-		if (!request.member) {
+		if (!request.memberID) {
 			return throwError(() => 'member required');
 		}
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -221,7 +221,7 @@ export class ScrumService extends BaseMeetingService {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			meeting: scrumId,
-			member: member.id,
+			memberID: member.id,
 			task: task.id,
 			title: task.title,
 		};

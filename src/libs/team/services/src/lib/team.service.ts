@@ -15,7 +15,7 @@ import {
 	ITeamMemberRequest, ITeamRef,
 	ITeamRequest,
 } from '@sneat/team/models';
-import { ISneatUserState, SneatUserService } from '@sneat/user';
+import { ISneatUserState, SneatUserService } from '@sneat/auth';
 import { BehaviorSubject, Observable, Subscription, switchMap, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
@@ -149,10 +149,10 @@ export class TeamService {
 
 	public removeTeamMember(
 		teamRecord: ITeamContext,
-		memberId: string,
+		memberID: string,
 	): Observable<ITeamContext> {
 		console.log(
-			`removeTeamMember(teamId: ${teamRecord?.id}, memberId=${memberId})`,
+			`removeTeamMember(teamID: ${teamRecord?.id}, memberID=${memberID})`,
 		);
 		if (!teamRecord) {
 			return throwError(() => 'teamRecord parameters is required');
@@ -161,7 +161,7 @@ export class TeamService {
 		if (!id) {
 			return throwError(() => 'teamRecord.id parameters is required');
 		}
-		if (!memberId) {
+		if (!memberID) {
 			return throwError(() => 'memberId is required parameter');
 		}
 		const updateTeam = (team: ITeamContext) => {
@@ -170,7 +170,7 @@ export class TeamService {
 					...team,
 					dto: {
 						...team.dto,
-						members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberId),
+						members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberID),
 					},
 				};
 			}
@@ -188,7 +188,7 @@ export class TeamService {
 			return team;
 		});
 		if (teamRecord?.dto?.members) {
-			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberId);
+			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberID);
 			if (member?.userID === this.userService.currentUserId) {
 				const teamRequest: ITeamRequest = {
 					teamID: teamRecord.id,
@@ -207,7 +207,7 @@ export class TeamService {
 		}
 		const request: ITeamMemberRequest = {
 			teamID: teamRecord.id,
-			member: memberId,
+			memberID: memberID,
 		};
 		return this.sneatApiService
 			.post('members/remove_member', request)

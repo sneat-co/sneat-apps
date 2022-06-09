@@ -13,7 +13,7 @@ import {
 	RetroItemTypeEnum,
 	RetrospectiveStage,
 } from '@sneat/scrumspace/scrummodels';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import { IRecord } from '@sneat/data';
 import { IUserRecord } from '@sneat/auth-models';
 

@@ -5,7 +5,7 @@ import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import {
 	IAcceptPersonalInviteRequest,
 	IPersonalInvite,

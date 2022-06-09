@@ -5,7 +5,7 @@ import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamService } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import { Subscription } from 'rxjs';
 
 @Component({

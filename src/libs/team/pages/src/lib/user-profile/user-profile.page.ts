@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { IUserRecord } from '@sneat/auth-models';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 
 @Component({
 	selector: 'sneat-user-profile',

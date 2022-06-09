@@ -7,7 +7,7 @@ export interface ITeamRequest {
 }
 
 export interface ITeamMemberRequest extends ITeamRequest {
-	member: string;
+	memberID: string;
 }
 
 export interface IAcceptInviteResponse {

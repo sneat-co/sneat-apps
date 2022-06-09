@@ -1,2 +1,2 @@
-export * from './user-my/user-my-page.component.module';
-export * from './user-my/user-my-page.routing.module';
+export * from './user-my-profile/user-my-profile-page.component.module';
+export * from './user-my-profile/user-my-profile-page.routing.module';

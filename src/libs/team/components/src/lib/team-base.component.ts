@@ -7,7 +7,7 @@ import { equalTeamBriefs, ITeamBrief, ITeamDto, TeamType } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import {
 	distinctUntilChanged,
 	MonoTypeOperatorFunction,

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { IUserTeamBrief, TeamType } from '@sneat/auth-models';
 import { ITeamContext, teamContextFromBrief } from '@sneat/team/models';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({

@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '@sneat/team/components';
 import { IRetroItem, IRetrospective, RetrospectiveStage } from '@sneat/scrumspace/scrummodels';
 import { TeamService } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/user';
+import { SneatUserService } from '@sneat/auth';
 import { getMeetingIdFromDate } from '@sneat/meeting';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
