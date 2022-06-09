@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonDatetime, IonInput, ToastController} from '@ionic/angular';
 import {AssetKind, CommuneKind} from 'sneat-shared/models/kinds';

@@ -1,11 +1,10 @@
-import { Directive, Inject, Injectable, Input } from '@angular/core';
+import { Directive, Inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
-import { DocumentService } from '@sneat/extensions/docus';
-import { IDocumentContext } from '@sneat/team/models';
-import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IDocumentContext } from '@sneat/team/models';
 import { ignoreElements } from 'rxjs/operators';
+import { DocumentService } from '../../../services/document.service';
 
 
 @Directive()

@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { MembersSelectorService } from '@sneat/team/components';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
 import { ISelectMembersOptions } from './member-selector.options';
+import { MembersSelectorService } from './members-selector.service';
 
 @Component({
 	selector: 'sneat-members-selector-input',

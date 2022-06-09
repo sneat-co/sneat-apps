@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SneatFirestoreService } from '@sneat/api';
 import { IDocumentBrief, IDocumentDto, TeamCounter } from '@sneat/dto';
 import { IDocumentContext, ITeamRequest } from '@sneat/team/models';
@@ -54,11 +54,3 @@ export class DocumentService {
 	}
 }
 
-@NgModule({
-	imports: [],
-	providers: [
-		DocumentService,
-	],
-})
-export class DocumentServiceModule {
-}

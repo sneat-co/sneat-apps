@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { IAssetDto } from '@sneat/dto';
-import { AssetService } from '@sneat/extensions/assetus/components';
-import { DocumentService } from '@sneat/extensions/docus';
+import { DocumentService } from '../../../../services/document.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext, IDocumentContext } from '@sneat/team/models';
+import { IDocumentContext } from '@sneat/team/models';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({

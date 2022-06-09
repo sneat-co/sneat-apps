@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
+import { IPersonFormWizardFields } from '@sneat/components';
 import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IJoinTeamInfoResponse, IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team/models';
@@ -24,6 +25,11 @@ export class JoinTeamPageComponent implements OnDestroy {
 	public relatedPerson: IRelatedPerson = emptyRelatedPerson;
 	public pin?: string;
 	public userID?: string;
+
+	readonly wizardFields: IPersonFormWizardFields = {
+		lastName: {required: true},
+		relatedAs: {hide: true},
+	};
 
 	get userOwnInvite(): boolean {
 		return this.inviteInfo?.invite.from.userID === this.userID;

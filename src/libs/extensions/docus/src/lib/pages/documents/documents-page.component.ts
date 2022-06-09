@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IDocumentContext, IMemberContext } from '@sneat/team/models';
-import { DocumentService } from '../../document.service';
+import { DocumentService } from '../../services/document.service';
 
 @Component({
 	selector: 'sneat-documents-page',

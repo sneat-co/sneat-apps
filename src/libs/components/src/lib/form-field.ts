@@ -1,4 +1,4 @@
 export interface IFormField {
-	show?: boolean;
+	hide?: boolean;
 	required?: boolean;
 }

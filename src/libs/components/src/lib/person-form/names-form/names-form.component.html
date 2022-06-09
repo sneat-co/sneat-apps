@@ -10,6 +10,7 @@
 							 [formControl]="firstName"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
+							 [disabled]="disabled"
 		></ion-input>
 	</ion-item>
 	<ion-item>
@@ -17,13 +18,16 @@
 		<ion-input #lastNameInput
 							 name="last_name"
 							 [formControl]="lastName"
+							 [disabled]="disabled"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
 		></ion-input>
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium">Middle name</ion-label>
-		<ion-input name="medium_name" [formControl]="middleName"
+		<ion-input name="medium_name"
+							 [formControl]="middleName"
+							 [disabled]="disabled"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
 		></ion-input>
@@ -33,6 +37,7 @@
 		<ion-input #fullNameInput
 							 name="full_name"
 							 [formControl]="fullName"
+							 [disabled]="disabled"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onFullNameChanged($event)"
 		></ion-input>

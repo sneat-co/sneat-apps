@@ -1,11 +1,12 @@
 <sneat-names-form
 	[name]="relatedPerson.name"
-	[isActive]="!show.gender"
+	[isActive]="!disabled && !show.gender"
 	[fields]="fields"
 	(namesChanged)="onNameChanged($event)"
+	[disabled]="disabled"
 ></sneat-names-form>
 
-<ion-button *ngIf="!show.gender"
+<ion-button *ngIf="!disabled && !show.gender"
 						class="ion-margin"
 						size="medium"
 						[color]="show.nameNext ? 'primary' : 'medium'"

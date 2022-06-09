@@ -7,7 +7,7 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 import { IDocumentContext, IMemberContext } from '@sneat/team/models';
 import { memberContextFromBrief, MemberService, TeamNavService } from '@sneat/team/services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
-import { DocumentService, ICreateDocumentRequest } from '../../document.service';
+import { DocumentService, ICreateDocumentRequest } from '../../services/document.service';
 
 @Component({
 	selector: 'sneat-new-document',

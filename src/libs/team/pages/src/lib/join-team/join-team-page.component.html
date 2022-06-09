@@ -20,7 +20,8 @@
 					You've been invited by <b>{{inviteInfo?.invite?.from?.title}}</b> to join team {{inviteInfo?.team?.title}}
 				</p>
 				<p *ngIf="!inviteInfo?.team?.title">
-					You've been invited by <b>{{inviteInfo?.invite?.from?.title}}</b> to join {{inviteInfo?.team?.type}} team
+					You've been invited by <b>{{inviteInfo?.invite?.from?.title}}</b> to join {{inviteInfo?.team?.type}}
+					space @ <a href="https://sneat.app" target="_blank">Sneat.app</a>
 				</p>
 			</ion-card-content>
 		</ng-template>
@@ -60,21 +61,22 @@
 		</ion-card-content>
 	</ion-card>
 
-	<sneat-person-form-wizard
+	<sneat-person-form-wizard #personFormWizardComponent
 		[(relatedPerson)]="relatedPerson"
-		[fields]="{lastName: {required: true}}"
+		[fields]="wizardFields"
+		[disabled]="userOwnInvite"
 	></sneat-person-form-wizard>
 
 
-<!--	<ion-card>-->
-<!--		<ion-card-content>-->
-<!--			relatedPerson: {{relatedPerson|json}}-->
-<!--		</ion-card-content>-->
-<!--	</ion-card>-->
+	<!--	<ion-card>-->
+	<!--		<ion-card-content>-->
+	<!--			relatedPerson: {{relatedPerson|json}}-->
+	<!--		</ion-card-content>-->
+	<!--	</ion-card>-->
 
-	<ion-card>
+	<ion-card *ngIf="!userOwnInvite && personFormWizardComponent.isReadyToSubmit">
 		<ion-card-content>
-<!--			authStatus: {{authStatus}}-->
+			<!--			authStatus: {{authStatus}}-->
 			<ion-button color="primary" size="large"
 									[disabled]="status !== 'reviewing' || userOwnInvite"
 									(click)="join()"
@@ -106,6 +108,12 @@
 				You can not use your own invite to join the team.
 			</p>
 
+		</ion-card-content>
+	</ion-card>
+
+	<ion-card *ngIf="userOwnInvite">
+		<ion-card-content>
+			<p>You can not use your own invite to join but the peron you've invite can fill the form above and join.</p>
 		</ion-card-content>
 	</ion-card>
 
