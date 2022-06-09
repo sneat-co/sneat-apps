@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { IUserRecord } from '@sneat/auth-models';
+import { FormControl, Validators } from '@angular/forms';
 import { SneatUserService } from '@sneat/auth';
+import { IUserRecord } from '@sneat/auth-models';
 
 @Component({
 	selector: 'sneat-user-profile',
-	templateUrl: './user-profile.page.html',
-	styleUrls: ['./user-profile.page.scss'],
+	templateUrl: './user-profile-page.component.html',
+	styleUrls: ['./user-profile-page.component.scss'],
 })
-export class UserProfilePage {
+export class UserProfilePageComponent {
 	public user?: IUserRecord | null;
-	public userTitle = new UntypedFormControl('', [Validators.required]);
+	public userTitle = new FormControl<string>('', [Validators.required]);
 
 	edit = false;
 

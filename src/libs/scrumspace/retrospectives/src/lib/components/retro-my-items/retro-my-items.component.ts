@@ -1,7 +1,7 @@
 import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IRetroItem, RetroItemType } from '@sneat/scrumspace/scrummodels';
 import { IAddRetroItemRequest, IRetroItemRequest, RetrospectiveService } from '../../retrospective.service';
 
@@ -16,7 +16,7 @@ export class RetroMyItemsComponent {
 	@Input() public teamId: string;
 	@Input() public retroId: string;
 
-	public titleControl = new UntypedFormControl('', [Validators.required]);
+	public titleControl = new FormControl<string>('', [Validators.required]);
 
 	public addRetroItemForm = new UntypedFormGroup({
 		titleControl: this.titleControl,

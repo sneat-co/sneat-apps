@@ -14,5 +14,4 @@ import { TeamsCardComponent } from './teams-card.component';
 	exports: [TeamsCardComponent],
 })
 export class TeamsCardModule {
-
 }

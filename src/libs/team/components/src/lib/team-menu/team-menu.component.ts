@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { IUserTeamBrief } from '@sneat/auth-models';
 import { ISneatUserState } from '@sneat/auth';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
 import { TeamComponentBaseParams } from '../team-component-base-params';

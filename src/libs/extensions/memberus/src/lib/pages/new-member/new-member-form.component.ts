@@ -1,19 +1,17 @@
-import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { IonInput, IonRadio, NavController } from '@ionic/angular';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { IonInput, IonRadio } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/animations';
-import { createSetFocusToInput, NamesFormComponent, PersonFormWizardComponent } from '@sneat/components';
-import { excludeUndefined, RoutingState } from '@sneat/core';
+import { createSetFocusToInput, PersonFormWizardComponent } from '@sneat/components';
+import { RoutingState } from '@sneat/core';
 import {
 	emptyRelatedPerson,
-	IMemberDto, IPersonRequirements,
-	IRelatedPerson, isRelatedPersonNotReady, MemberRole,
-	MemberRoleContributor,
-	relatedPersonToPerson,
+	IPersonRequirements,
+	IRelatedPerson,
+	isRelatedPersonNotReady,
+	MemberType,
 } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
-import { MemberService, TeamNavService } from '@sneat/team/services';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 
 
@@ -25,7 +23,7 @@ import { MemberComponentBaseParams } from '../../member-component-base-params';
 	],
 	providers: [
 		MemberComponentBaseParams,
-	]
+	],
 })
 export class NewMemberFormComponent {
 
@@ -51,7 +49,7 @@ export class NewMemberFormComponent {
 
 	public readonly setFocusToInput = createSetFocusToInput(this.params.errorLogger);
 
-	public readonly memberType = new UntypedFormControl('member', [
+	public readonly memberType = new FormControl<MemberType>('member', [
 		Validators.required,
 	]);
 
@@ -97,7 +95,7 @@ export class NewMemberFormComponent {
 		}
 		const request: ICreateTeamMemberRequest = {
 			...this.relatedPerson,
-			memberType: this.memberType.value,
+			memberType: this.memberType.value || 'member',
 			teamID: team.id,
 		};
 

@@ -1,14 +1,13 @@
 import { Component, Inject, Input, Pipe, PipeTransform } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
-import { TeamType } from '@sneat/auth-models';
 import { getMemberTitle } from '@sneat/components';
-import { excludeEmpty, excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
-	IMemberContext, InviteChannel,
+	IMemberContext,
+	InviteChannel,
 	ITeamContext,
 } from '@sneat/team/models';
 import { InviteService } from '@sneat/team/services';
@@ -36,9 +35,9 @@ export class InviteModalComponent {
 
 	creatingInvite = false;
 
-	readonly email = new UntypedFormControl('', [Validators.required, Validators.email]);
-	readonly phone = new UntypedFormControl('', Validators.required);
-	readonly message = new UntypedFormControl('');
+	readonly email = new FormControl<string>('', [Validators.required, Validators.email]);
+	readonly phone = new FormControl<string>('', Validators.required);
+	readonly message = new FormControl<string>('');
 
 	readonly emailForm = new UntypedFormGroup({
 		email: this.email,
@@ -94,11 +93,11 @@ export class InviteModalComponent {
 	}
 
 	composeEmail(): void {
-		this.composeInvite('email', 'mailto', this.email.value);
+		this.composeInvite('email', 'mailto', this.email.value || '');
 	}
 
 	composeSMS(): void {
-		this.composeInvite('sms', 'sms', this.phone.value);
+		this.composeInvite('sms', 'sms', this.phone.value || '');
 	}
 
 	sendInvite(): void {
@@ -129,7 +128,7 @@ export class InviteModalComponent {
 		}
 		const address = this.tab === 'email' ? this.email.value : this.phone.value;
 
-		this.createInvite({ channel: this.tab, address, send: true }).subscribe({
+		this.createInvite({ channel: this.tab, address: address || '', send: true }).subscribe({
 			next: async response => {
 				console.log('personal invite created:', response);
 				await this.showToast('Invite has been created and will be sent shortly', 2000);
@@ -147,14 +146,14 @@ export class InviteModalComponent {
 		if (!this.member) {
 			return throwError(() => 'can not create invite without member context');
 		}
-		const request: ICreatePersonalInviteRequest = excludeEmpty({
+		const request: ICreatePersonalInviteRequest = {
 			teamID: this.team.id,
 			to: {
 				...to,
 				memberID: this.member.id,
 			},
-			message: this.message.value,
-		});
+			message: this.message.value || '',
+		};
 		return this.inviteService.createInviteForMember(request);
 	}
 
@@ -201,14 +200,14 @@ export class InviteModalComponent {
 			return;
 		}
 		this.creatingInvite = true;
-		const request: ICreatePersonalInviteRequest = excludeEmpty({
+		const request: ICreatePersonalInviteRequest = {
 			teamID: this.team.id,
 			to: {
 				channel: 'link',
 				memberID: this.member.id,
 			},
-			message: this.message.value,
-		});
+			message: this.message.value || '',
+		};
 		this.inviteService.getInviteLinkForMember(request).subscribe({
 			next: response => {
 				console.log('response', response);

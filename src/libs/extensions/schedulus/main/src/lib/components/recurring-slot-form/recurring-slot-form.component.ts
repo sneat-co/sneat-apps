@@ -11,17 +11,17 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
-import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { HappeningType, IHappeningSlot, ITiming, RepeatsWeek, SlotLocation, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
-import { wd2 } from '@sneat/extensions/schedulus/shared';
 import { IHappeningContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
+
+type Happens = 'once' | 'weekly' | RepeatsWeek | 'fortnightly';
 
 @Component({
 	selector: 'sneat-recurring-slot-form',
@@ -58,10 +58,10 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	@Output() eventTimesChanged = new EventEmitter<ITiming>();
 	minDate = '2000';
 	maxDate = '' + (new Date().getFullYear() + 5);
-	repeats = new UntypedFormControl('weekly', Validators.required);
+	repeats = new FormControl<Happens>('weekly', Validators.required);
 	slotForm = new UntypedFormGroup({
-		locationTitle: new UntypedFormControl(''),
-		locationAddress: new UntypedFormControl(''),
+		locationTitle: new FormControl<string>(''),
+		locationAddress: new FormControl<string>(''),
 	});
 
 	// dateForm = new FormGroup({
@@ -70,7 +70,7 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	timeForm = new UntypedFormGroup({
 		repeats: this.repeats,
 	});
-	happens: 'once' | 'weekly' | RepeatsWeek | 'fortnightly' = 'weekly';
+	happens: Happens = 'weekly';
 	showWeekday = true;
 	date = '';
 
@@ -110,7 +110,7 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	}
 
 	repeatsChanged(): void {
-		this.happens = this.repeats.value;
+		this.happens = this.repeats.value || 'weekly';
 	}
 
 	addSlot(): void {
@@ -189,10 +189,14 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		if (!this.timing) {
 			throw new Error('!this.timing');
 		}
+		const repeats = this.happens;
+		if (!repeats) {
+			throw new Error('!repeats')
+		}
 		let slot: IHappeningSlot = {
 			...this.timing,
 			id: newRandomId({ len: 3 }),
-			repeats: this.happens,
+			repeats,
 		};
 		if (this.happeningType === 'recurring') {
 			slot = {

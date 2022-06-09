@@ -1,8 +1,7 @@
 //tslint:disable:no-unbound-method
 //tslint:disable:no-unsafe-any
 import { Component, Input } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { IDwelling } from '@sneat/dto';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { AssetService } from '../../asset-service';
@@ -19,11 +18,10 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 	@Input() team?: ITeamContext;
 
 	form = new UntypedFormGroup({
-		address: new UntypedFormControl(''),
-		ownership: new UntypedFormControl('', Validators.required),
+		address: new FormControl<string>(''),
+		ownership: new FormControl<string>('', Validators.required),
 	});
 
-	isSubmitting = false;
 
 	constructor(
 		teamParams: TeamComponentBaseParams,
@@ -40,6 +38,9 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 		if (this.form.invalid) {
 			alert('Form is invalid');
 			return;
+		}
+		if (!this.team?.id) {
+			throw new Error('can not create asset without team context');
 		}
 
 		const request: ICreateAssetRequest = {
@@ -59,14 +60,17 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 		// 		break;
 		// }
 		this.assetService.createAsset(request)
-			.subscribe(
-				dto => {
-					this.navigateForward('asset', { id: dto.id }, { assetDto: request }, { excludeCommuneId: true, replaceUrl: true });
+			.subscribe({
+				next: dto => {
+					// this.navigateForward('asset', { id: dto.id }, { assetDto: request }, {
+					// 	excludeCommuneId: true,
+					// 	replaceUrl: true,
+					// });
 				},
-				err => {
+				error: err => {
 					this.isSubmitting = false;
 					alert(err);
-				});
-
+				}
+			});
 	}
 }

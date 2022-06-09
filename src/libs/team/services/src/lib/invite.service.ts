@@ -2,16 +2,18 @@ import { Inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from '@sneat/auth';
+import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
 import {
-	IAcceptInviteResponse, IAcceptPersonalInviteRequest,
+	IAcceptInviteResponse,
+	IAcceptPersonalInviteRequest,
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
-	IJoinTeamInfoResponse, IRejectPersonalInviteRequest,
+	IJoinTeamInfoResponse,
+	IRejectPersonalInviteRequest,
 } from '@sneat/team/models';
-import { from, Observable, of, switchMap, throwError } from 'rxjs';
-
+import { from, Observable, switchMap, throwError } from 'rxjs';
 
 
 @Injectable({
@@ -31,11 +33,12 @@ export class InviteService {
 		return this.sneatApiService
 			.post<ICreatePersonalInviteResponse>(
 				'invites/create_invite_for_member',
-				request,
+				excludeEmpty(request),
 			);
 	}
 
 	public getInviteLinkForMember(request: ICreatePersonalInviteRequest): Observable<ICreatePersonalInviteResponse> {
+		// TODO: Should we pass `request.message`? If not should be excluded from request
 		return this.sneatApiService
 			.get<ICreatePersonalInviteResponse>(
 				`invites/invite_link_for_member?team=${request.teamID}&member=${request.to.memberID}`,
@@ -95,7 +98,7 @@ export class InviteService {
 			switchMap(firebaseToken => {
 				this.sneatApiService.setApiAuthToken(firebaseToken);
 				return this.acceptInviteByAuthenticatedUser(inviteInfo);
-			})
+			}),
 		);
 	}
 }

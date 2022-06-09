@@ -2,7 +2,14 @@ import {
 	AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	UntypedFormControl,
+	UntypedFormGroup,
+	ValidationErrors,
+	Validators,
+} from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { excludeEmpty } from '@sneat/core';
 import { IName, isNameEmpty } from '@sneat/dto';
@@ -64,20 +71,20 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	) {
 	}
 
-	public readonly fullName = new UntypedFormControl('', [
+	public readonly fullName = new FormControl<string>('', [
 		// Validators.required, -- not required if user entered only first name for example. In future may require to be an option
 		maxNameLenValidator,
 	]);
 
-	public readonly firstName = new UntypedFormControl('', [
+	public readonly firstName = new FormControl<string>('', [
 		maxNameLenValidator,
 	]);
 
-	public readonly middleName = new UntypedFormControl('', [
+	public readonly middleName = new FormControl<string>('', [
 		maxNameLenValidator,
 	]);
 
-	public readonly lastName = new UntypedFormControl('', [
+	public readonly lastName = new FormControl<string>('', [
 		maxNameLenValidator,
 	]);
 
@@ -89,7 +96,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	}, isNamesFormValid);
 
 	public get hasNames(): boolean {
-		return this.firstName.value || this.lastName.value || this.fullName.value;
+		return !!(this.firstName.value || this.lastName.value || this.fullName.value);
 	}
 
 	public setFocusToInput(input: IonInput, delay = 1000): void {
@@ -118,15 +125,15 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 					this.middleName.setValue(name.middle);
 				}
 				if (name.full) {
-					this.fullName.setValue(name.full)
+					this.fullName.setValue(name.full);
 				}
 			}
 			if (this.initialNameChange) {
 				this.initialNameChange = false;
-				if (!this.firstName.value ) {
+				if (!this.firstName.value) {
 					this.inputToFocus = this.firstNameInput;
 				}
-				if (!this.lastName.value ) {
+				if (!this.lastName.value) {
 					this.inputToFocus = this.lastNameInput;
 				}
 				if (this.isViewInitiated && this.inputToFocus) {
@@ -163,10 +170,10 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	private setName(): void {
 		this.name = {
-			first: this.firstName.value,
-			last: this.lastName.value,
-			middle: this.middleName.value,
-			full: this.fullName.value,
+			first: this.firstName.value || '',
+			last: this.lastName.value || '',
+			middle: this.middleName.value || '',
+			full: this.fullName.value || '',
 		};
 		if (this.isFullNameChanged && isNameEmpty(this.name)) {
 			this.isFullNameChanged = false;
@@ -176,18 +183,18 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	public names(): IName {
 		return excludeEmpty({
-			first: this.firstName.value,
-			last: this.lastName.value,
-			middle: this.lastName.value,
-			full: this.fullName.value,
+			first: this.firstName.value || '',
+			last: this.lastName.value || '',
+			middle: this.lastName.value || '',
+			full: this.fullName.value || '',
 		});
 	}
 
 	private generateFullName(): string {
 		const
-			first = this.firstName.value.trim(),
-			middle = this.middleName.value.trim(),
-			last = this.lastName.value.trim();
+			first = (this.firstName.value || '').trim(),
+			middle = (this.middleName.value || '').trim(),
+			last = (this.lastName.value || '').trim();
 		if (first && last || first && middle || middle && last) {
 			return (first + ' ' + middle + ' ' + last)
 				.replace('  ', ' ').trim();

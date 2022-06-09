@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { Component, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
-import { IMemberBrief, WeekdayCode2 } from '@sneat/dto';
+import { WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
@@ -20,7 +20,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	@Input() team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
-	readonly text = new UntypedFormControl('');
+	readonly text = new FormControl<string>('');
 	weekdays: WeekdayCode2[] = [];
 	memberIDs: string[] = [];
 	selectedMembers: IMemberContext[] = []
@@ -29,13 +29,13 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 
 	members?: IMemberContext[];
 
-	readonly repeatWeekly = new UntypedFormControl(false);
-	readonly repeatMonthly = new UntypedFormControl(false);
-	readonly repeatQuarterly = new UntypedFormControl(false);
-	readonly repeatYearly = new UntypedFormControl(false);
+	readonly repeatWeekly = new FormControl<boolean>(false);
+	readonly repeatMonthly = new FormControl<boolean>(false);
+	readonly repeatQuarterly = new FormControl<boolean>(false);
+	readonly repeatYearly = new FormControl<boolean>(false);
 
 	public get hasFilter(): boolean {
-		return !!this.text.value.trim() ||
+		return !!this.text.value?.trim() ||
 			!!this.weekdays?.length ||
 			!!this.memberIDs?.length ||
 			!!this.repeats?.length;
@@ -142,7 +142,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 		if (this.resetting) {
 			return;
 		}
-		let filter: IScheduleFilter = { text: this.text.value, showRecurrings: true, showSingles: true };
+		let filter: IScheduleFilter = { text: this.text.value || '', showRecurrings: true, showSingles: true };
 		if (this.memberIDs.length) {
 			filter = { ...filter, memberIDs: [...this.memberIDs] };
 		}

@@ -9,8 +9,8 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { IonInput, ModalController, PopoverController } from '@ionic/angular';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { IonInput, ModalController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate, isValidaTimeString, isValidDateString } from '@sneat/core';
 import { emptyHappeningSlot, HappeningType, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
 import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
@@ -31,25 +31,25 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	public tab: 'duration' | 'end' = 'duration';
 	public durationUnits: 'minutes' | 'hours' = 'minutes';
-	public startDate = new UntypedFormControl('', { // dateToIso(new Date())
+	public startDate = new FormControl<string>('', { // dateToIso(new Date())
 		// validators: Validators.required,
 	});
-	public endDate = new UntypedFormControl('', {
+	public endDate = new FormControl<string>('', {
 		// validators: Validators.required,
 	});
-	public readonly startTime = new UntypedFormControl('', {
+	public readonly startTime = new FormControl<string>('', {
 		validators: [
 			Validators.required,
 			Validators.pattern(/[0-2]\d:[0-5]\d/)
 		],
 	});
-	public readonly endTime = new UntypedFormControl('', {
+	public readonly endTime = new FormControl<string>('', {
 		validators: [
 			Validators.required,
 			Validators.pattern(/[0-2]\d:[0-5]\d/)
 		],
 	});
-	public readonly duration = new UntypedFormControl(60, {
+	public readonly duration = new FormControl<number>(60, {
 		validators: [
 			Validators.required,
 		],
@@ -71,13 +71,13 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	public get timing(): ITiming {
 		let start: IDateTime = {
-			time: this.startTime.value,
+			time: this.startTime.value || '',
 		};
 		if (this.startDate.value) {
 			start = { ...start, date: this.startDate.value };
 		}
 		let end: IDateTime = {
-			time: this.endTime.value,
+			time: this.endTime.value || '',
 		};
 		if (this.endDate.value) {
 			end = { ...end, date: this.endDate.value };
@@ -92,7 +92,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	public get isValid(): boolean {
 		this.form.markAllAsTouched();
-		return isValidaTimeString(this.startTime.value) && isValidaTimeString(this.endTime.value);
+		return isValidaTimeString(this.startTime.value || '') && isValidaTimeString(this.endTime.value || '');
 	}
 
 	constructor(
@@ -111,10 +111,10 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			if (this.happeningSlot.repeats === 'UNKNOWN') {
 				this.setRepeatsBasedOnHappeningType();
 			}
-			this.startDate.setValue(this.happeningSlot.start.date);
-			this.startTime.setValue(this.happeningSlot.start.time);
-			this.endDate.setValue(this.happeningSlot.end?.date);
-			this.endTime.setValue(this.happeningSlot.end?.time);
+			this.startDate.setValue(this.happeningSlot.start.date || '');
+			this.startTime.setValue(this.happeningSlot.start.time || '');
+			this.endDate.setValue(this.happeningSlot.end?.date || '');
+			this.endTime.setValue(this.happeningSlot.end?.time || '');
 			this.setDuration();
 		}
 	}
@@ -129,7 +129,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	addToStart(v: { days?: number; hours?: number }): void {
-		const d = isoStringsToDate(this.startDate.value, this.startTime.value);
+		const d = isoStringsToDate(this.startDate.value || '', this.startTime.value || '');
 		if (v.days) {
 			d.setDate(d.getDate() + v.days);
 		}
@@ -198,7 +198,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	onStartDateChanged(event: Event): void {
 		console.log('StartEndDatetimeFormComponent.onStartDateChanged()', event);
 		const slot = this.happeningSlot;
-		this.happeningSlot = { ...slot, start: { ...(slot.start || {}), date: this.startDate.value } };
+		this.happeningSlot = { ...slot, start: { ...(slot.start || {}), date: this.startDate.value || '' } };
 		if (
 			isValidaTimeString(this.startTime.value as string) &&
 			isValidaTimeString(this.endTime.value as string) &&
@@ -211,7 +211,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	onStartTimeChanged(event: Event): void {
 		console.log('StartEndDatetimeFormComponent.onStartTimeChanged()', event);
 		const slot = this.happeningSlot;
-		this.happeningSlot = { ...slot, start: { ...(slot.start || {}), time: this.startTime.value } };
+		this.happeningSlot = { ...slot, start: { ...(slot.start || {}), time: this.startTime.value || '' } };
 		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setEndTime();
 		}
@@ -251,7 +251,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	onEndTimeChanged(event: Event): void {
 		event.stopPropagation();
 		const slot = this.happeningSlot;
-		this.happeningSlot = { ...slot, end: { ...(slot.end || {}), time: this.endTime.value } };
+		this.happeningSlot = { ...slot, end: { ...(slot.end || {}), time: this.endTime.value || ''} };
 		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setDuration();
 		}

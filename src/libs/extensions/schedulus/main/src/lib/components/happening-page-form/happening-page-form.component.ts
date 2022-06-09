@@ -5,11 +5,12 @@ import {
 	Inject,
 	Input,
 	OnChanges,
-	OnDestroy, Output,
+	OnDestroy,
+	Output,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
 import { HappeningType, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
@@ -51,7 +52,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		return this.happening?.brief?.slots;
 	}
 
-	public happeningTitle = new UntypedFormControl('', Validators.required);
+	public happeningTitle = new FormControl<string>('', Validators.required);
 	public happeningForm = new UntypedFormGroup({
 		title: this.happeningTitle,
 	});
