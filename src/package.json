@@ -107,7 +107,7 @@
     "dotenv": "16.0.1",
     "ejs": "3.1.8",
     "engine.io": "6.2.0",
-    "eslint": "8.16.0",
+    "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
     "follow-redirects": "1.15.1",
     "jasmine-core": "4.1.1",
