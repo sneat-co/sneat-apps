@@ -3409,47 +3409,6 @@
 				}
 			}
 		},
-		"rxstore": {
-			"projectType": "library",
-			"root": "libs/rxstore",
-			"sourceRoot": "libs/rxstore/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:package",
-					"outputs": ["dist/libs/rxstore"],
-					"options": {
-						"project": "libs/rxstore/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/rxstore/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/rxstore/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/rxstore"],
-					"options": {
-						"jestConfig": "libs/rxstore/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/rxstore/src/**/*.ts",
-							"libs/rxstore/src/**/*.html"
-						]
-					}
-				}
-			}
-		},
 		"scrumspace": {
 			"projectType": "application",
 			"root": "apps/scrumspace",
