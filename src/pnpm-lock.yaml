@@ -30,7 +30,7 @@ specifiers:
   '@ionic-native/core': 5.36.0
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
-  '@ionic/angular': 6.1.8
+  '@ionic/angular': 6.1.9
   '@ionic/angular-toolkit': 6.1.0
   '@nrwl/angular': 14.1.9
   '@nrwl/cli': 14.1.9
@@ -115,7 +115,7 @@ dependencies:
   '@ionic-native/core': 5.36.0_rxjs@7.5.5
   '@ionic-native/splash-screen': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
   '@ionic-native/status-bar': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
-  '@ionic/angular': 6.1.8_eme2rbiyetl7ejhsmxbqhc2s4e
+  '@ionic/angular': 6.1.9_eme2rbiyetl7ejhsmxbqhc2s4e
   '@nrwl/angular': 14.1.9_yhpz6hfn23xrozojso5gcz7ny4
   '@sentry/angular': 7.0.0_k67v43wimobkiyk2axvyhdmx6a
   '@sentry/tracing': 7.0.0
@@ -3608,8 +3608,8 @@ packages:
       - chokidar
     dev: true
 
-  /@ionic/angular/6.1.8_eme2rbiyetl7ejhsmxbqhc2s4e:
-    resolution: {integrity: sha512-OBANGKm+/EN6PsTRZ9RZQcHwgYa4OnBX1ebvsKdk4eNFzvCwQJ0WfzScJEwyz6bcnuZUlt7WwYJd+Es8O+LC/A==}
+  /@ionic/angular/6.1.9_eme2rbiyetl7ejhsmxbqhc2s4e:
+    resolution: {integrity: sha512-TeuMZnDMTpmueOJNACQ52ERUlb0pgwl5EgdRzl1R5bl8d8qjkUCnXgn042xPVfsEjD2ZxPGDFfOuYGqeYIfYkQ==}
     peerDependencies:
       '@angular/core': '>=12.0.0'
       '@angular/forms': '>=12.0.0'
@@ -3620,7 +3620,7 @@ packages:
       '@angular/core': 13.3.11_rxjs@7.5.5+zone.js@0.11.5
       '@angular/forms': 13.3.11_k5i434uah3ayhhpzgo76tjk2ai
       '@angular/router': 13.3.11_k5i434uah3ayhhpzgo76tjk2ai
-      '@ionic/core': 6.1.8
+      '@ionic/core': 6.1.9
       jsonc-parser: 3.0.0
       rxjs: 7.5.5
       tslib: 2.4.0
@@ -3638,8 +3638,8 @@ packages:
       - supports-color
     dev: true
 
-  /@ionic/core/6.1.8:
-    resolution: {integrity: sha512-EMYebwmS4UogpNrTyuCgIETKwE7XA93V7X3YacK2UArm1Xf98w3FsnfAYeMaUqY93bDxih/CSKm3NpUhVWP44A==}
+  /@ionic/core/6.1.9:
+    resolution: {integrity: sha512-EaClsiGB/E9wPkujnrMZ71BLVcA8t6DBZu+caJMmqPLF/64S37CiyfrrMbL1UnxDWP2TXsPFH3seWl6Ek/W1bw==}
     dependencies:
       '@stencil/core': 2.16.0
       ionicons: 6.0.2
