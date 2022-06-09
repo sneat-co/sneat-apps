@@ -38,7 +38,7 @@ specifiers:
   '@nrwl/eslint-plugin-nx': 14.1.9
   '@nrwl/jest': 14.1.9
   '@nrwl/linter': 14.1.9
-  '@nrwl/nx-cloud': 14.0.5
+  '@nrwl/nx-cloud': 14.0.8
   '@nrwl/workspace': 14.1.9
   '@nxtend/capacitor': 13.0.0
   '@nxtend/firebase': 12.1.0
@@ -156,7 +156,7 @@ devDependencies:
   '@nrwl/eslint-plugin-nx': 14.1.9_2z5qxlnydatgtbgcmfrmapott4
   '@nrwl/jest': 14.1.9_ta3ndwd66kqb3q3d24bqycavri
   '@nrwl/linter': 14.1.9_x2bva7kpj4zgtpioxo5f62ln4m
-  '@nrwl/nx-cloud': 14.0.5
+  '@nrwl/nx-cloud': 14.0.8
   '@nrwl/workspace': 14.1.9_qaenaoky4vcakyli2vx7vl4ie4
   '@nxtend/capacitor': 13.0.0_@nrwl+workspace@14.1.9
   '@nxtend/firebase': 12.1.0_@nrwl+workspace@14.1.9
@@ -4739,8 +4739,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@nrwl/nx-cloud/14.0.5:
-    resolution: {integrity: sha512-ADLGWiorW7sHT9hJw1OrxCG9JE9ALYfzNtXWJbvn4ulERul3hSsj+7P+uyUBtflpCrG1bmw5SxkQ77EH/DkY5A==}
+  /@nrwl/nx-cloud/14.0.8:
+    resolution: {integrity: sha512-OOqJrDSo6kyGALdo3fWoZtn8VmHKmVi23ODkJYPQDR+41v15wHiKq7cMFqc9fCaJGYhilBUPFeNOXIhlvQMCDw==}
     hasBin: true
     dependencies:
       axios: 0.21.4
