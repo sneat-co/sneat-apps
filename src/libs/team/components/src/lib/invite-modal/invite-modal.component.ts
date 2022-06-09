@@ -1,5 +1,5 @@
 import { Component, Inject, Input, Pipe, PipeTransform } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { TeamType } from '@sneat/auth-models';
 import { getMemberTitle } from '@sneat/components';
@@ -36,16 +36,16 @@ export class InviteModalComponent {
 
 	creatingInvite = false;
 
-	readonly email = new FormControl('', [Validators.required, Validators.email]);
-	readonly phone = new FormControl('', Validators.required);
-	readonly message = new FormControl('');
+	readonly email = new UntypedFormControl('', [Validators.required, Validators.email]);
+	readonly phone = new UntypedFormControl('', Validators.required);
+	readonly message = new UntypedFormControl('');
 
-	readonly emailForm = new FormGroup({
+	readonly emailForm = new UntypedFormGroup({
 		email: this.email,
 		message: this.message,
 	});
 
-	readonly smsForm = new FormGroup({
+	readonly smsForm = new UntypedFormGroup({
 		phone: this.phone,
 		message: this.message,
 	});

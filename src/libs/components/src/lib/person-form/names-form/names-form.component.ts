@@ -2,7 +2,7 @@ import {
 	AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { excludeEmpty } from '@sneat/core';
 import { IName, isNameEmpty } from '@sneat/dto';
@@ -11,7 +11,7 @@ import { createSetFocusToInput } from '../../focus';
 import { IFormField } from '../../form-field';
 
 const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => {
-	const formGroup = control as FormGroup;
+	const formGroup = control as UntypedFormGroup;
 	const mustHave = function(name: string): string {
 		const c = formGroup.controls[name];
 		if (!c) {
@@ -64,24 +64,24 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	) {
 	}
 
-	public readonly fullName = new FormControl('', [
+	public readonly fullName = new UntypedFormControl('', [
 		// Validators.required, -- not required if user entered only first name for example. In future may require to be an option
 		maxNameLenValidator,
 	]);
 
-	public readonly firstName = new FormControl('', [
+	public readonly firstName = new UntypedFormControl('', [
 		maxNameLenValidator,
 	]);
 
-	public readonly middleName = new FormControl('', [
+	public readonly middleName = new UntypedFormControl('', [
 		maxNameLenValidator,
 	]);
 
-	public readonly lastName = new FormControl('', [
+	public readonly lastName = new UntypedFormControl('', [
 		maxNameLenValidator,
 	]);
 
-	public readonly namesForm = new FormGroup({
+	public readonly namesForm = new UntypedFormGroup({
 		fullName: this.fullName,
 		firstName: this.firstName,
 		lastName: this.lastName,

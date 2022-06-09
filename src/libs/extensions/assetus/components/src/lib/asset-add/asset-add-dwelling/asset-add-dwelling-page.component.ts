@@ -1,7 +1,7 @@
 //tslint:disable:no-unbound-method
 //tslint:disable:no-unsafe-any
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IDwelling } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
@@ -18,9 +18,9 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 
 	@Input() team?: ITeamContext;
 
-	form = new FormGroup({
-		address: new FormControl(''),
-		ownership: new FormControl('', Validators.required),
+	form = new UntypedFormGroup({
+		address: new UntypedFormControl(''),
+		ownership: new UntypedFormControl('', Validators.required),
 	});
 
 	isSubmitting = false;

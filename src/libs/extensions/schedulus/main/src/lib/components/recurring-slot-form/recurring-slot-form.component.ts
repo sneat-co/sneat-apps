@@ -11,7 +11,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { HappeningType, IHappeningSlot, ITiming, RepeatsWeek, SlotLocation, WeekdayCode2 } from '@sneat/dto';
@@ -58,16 +58,16 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	@Output() eventTimesChanged = new EventEmitter<ITiming>();
 	minDate = '2000';
 	maxDate = '' + (new Date().getFullYear() + 5);
-	repeats = new FormControl('weekly', Validators.required);
-	slotForm = new FormGroup({
-		locationTitle: new FormControl(''),
-		locationAddress: new FormControl(''),
+	repeats = new UntypedFormControl('weekly', Validators.required);
+	slotForm = new UntypedFormGroup({
+		locationTitle: new UntypedFormControl(''),
+		locationAddress: new UntypedFormControl(''),
 	});
 
 	// dateForm = new FormGroup({
 	// 	date: new FormControl(undefined, Validators.required),
 	// });
-	timeForm = new FormGroup({
+	timeForm = new UntypedFormGroup({
 		repeats: this.repeats,
 	});
 	happens: 'once' | 'weekly' | RepeatsWeek | 'fortnightly' = 'weekly';

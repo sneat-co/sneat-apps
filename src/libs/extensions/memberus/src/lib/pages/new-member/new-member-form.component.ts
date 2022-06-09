@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput, IonRadio, NavController } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/animations';
 import { createSetFocusToInput, NamesFormComponent, PersonFormWizardComponent } from '@sneat/components';
@@ -51,11 +51,11 @@ export class NewMemberFormComponent {
 
 	public readonly setFocusToInput = createSetFocusToInput(this.params.errorLogger);
 
-	public readonly memberType = new FormControl('member', [
+	public readonly memberType = new UntypedFormControl('member', [
 		Validators.required,
 	]);
 
-	public addMemberForm = new FormGroup({
+	public addMemberForm = new UntypedFormGroup({
 		// email: this.email,
 		// phone: this.phone,
 		// ageGroup: this.ageGroup,
