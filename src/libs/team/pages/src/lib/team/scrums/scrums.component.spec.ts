@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { SneatUserService } from '@sneat/auth';
 
 import { ScrumsComponent } from './scrums.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../../environments/environment';
-import { UserService } from '../../../services/user-service';
+// import { environment } from '../../../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ScrumsComponent', () => {
@@ -20,9 +20,9 @@ describe('ScrumsComponent', () => {
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
 					RouterTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
+					// AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
-				providers: [UserService],
+				providers: [SneatUserService],
 			}).compileComponents();
 
 			fixture = TestBed.createComponent(ScrumsComponent);
