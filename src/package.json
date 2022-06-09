@@ -101,7 +101,7 @@
     "@types/node": "16.11.39",
     "@typescript-eslint/eslint-plugin": "5.27.0",
     "@typescript-eslint/parser": "5.27.0",
-    "async": "3.2.3",
+    "async": "3.2.4",
     "babel-loader": "8.2.5",
     "cypress": "10.0.3",
     "dotenv": "16.0.1",
