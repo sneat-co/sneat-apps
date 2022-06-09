@@ -90,7 +90,7 @@
     "@nrwl/eslint-plugin-nx": "14.1.9",
     "@nrwl/jest": "14.1.9",
     "@nrwl/linter": "14.1.9",
-    "@nrwl/nx-cloud": "14.0.5",
+    "@nrwl/nx-cloud": "14.0.8",
     "@nrwl/workspace": "14.1.9",
     "@nxtend/capacitor": "13.0.0",
     "@nxtend/firebase": "12.1.0",
