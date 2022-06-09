@@ -16,17 +16,3 @@ export interface ILoggerFactory {
 	getLogger(name: string): ILogger;
 }
 
-export const loggerFactory: ILoggerFactory = {
-	getLogger(name: string): ILogger {
-		return {
-			// tslint:disable-next-line:no-unbound-method
-			debug: console.log,
-			// tslint:disable-next-line:no-unbound-method
-			info: console.log,
-			// tslint:disable-next-line:no-unbound-method
-			error: console.error,
-			// tslint:disable-next-line:no-unbound-method
-			warn: console.warn,
-		};
-	},
-};
