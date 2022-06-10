@@ -1,47 +1,48 @@
 import { Component, Inject, Input, NgZone, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
-import { IMemberInfo, IRecord, ITask, ITeam, TaskType } from '../../../models/interfaces';
-import { ITaskWithUiStatus, ScrumService } from '../../../services/scrum.service';
 import { IonInput, ModalController } from '@ionic/angular';
-import { IReorderTaskRequest, IThumbUpRequest } from '../../../models/dto-models';
+import { listAddRemoveAnimation } from '@sneat/animations';
+import { IRecord } from '@sneat/data';
+import { IMemberBrief, ITeamDto } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITaskWithUiStatus, ScrumService } from '../../services/scrum.service';
+import { IReorderTaskRequest, ITask, IThumbUpRequest, TaskType } from '@sneat/scrumspace/scrummodels';
 import { Subscription } from 'rxjs';
-import { listAddRemoveAnimation } from '../../../animations/list-animations';
-import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 
 @Component({
-	selector: 'app-scrum-tasks',
+	selector: 'sneat-scrum-tasks',
 	templateUrl: './scrum-tasks.component.html',
 	styleUrls: ['./scrum-tasks.component.scss'],
 	animations: listAddRemoveAnimation,
 })
 export class ScrumTasksComponent implements OnDestroy, OnChanges {
-	@Input() team: IRecord<ITeam>;
-	@Input() public scrumId: string;
+	@Input() team?: IRecord<ITeamDto>;
+	@Input() public scrumId?: string;
 
-	@Input() member: IMemberInfo;
-	@Input() taskType: TaskType | 'qna';
+	@Input() member?: IMemberBrief;
+	@Input() taskType?: TaskType | 'qna';
 
-	@Input() public disabled: boolean;
+	@Input() public disabled?: boolean;
 
-	@Input() tasks: ITaskWithUiStatus[];
-	@Input() currentMemberId: string;
-	@Input() public hideTitle: boolean;
-	@Input() public cardMode: 'by-person';
+	@Input() tasks?: ITaskWithUiStatus[];
+	@Input() currentMemberId?: string;
+	@Input() public hideTitle?: boolean;
+	@Input() public cardMode?: 'by-person';
 
-	@ViewChild(IonInput, { static: false }) titleInput; // TODO: IonInput;
+	@ViewChild(IonInput, { static: false }) titleInput?: IonInput; // TODO: IonInput;
 
-	public visibleTasks: ITaskWithUiStatus[];
+	public visibleTasks?: ITaskWithUiStatus[];
 
 	addingTasks: ITask[] = [];
 
 	// @Output() newTask = new EventEmitter<{ member: IMemberInfo, task: ITask, type: TaskType }>();
 
 	public newTaskTitle = '';
-	public isAdding: boolean;
+	public isAdding?: boolean;
 
-	public showAddInput: boolean;
+	public showAddInput?: boolean;
 
-	private userSubscription: Subscription;
+	private userSubscription?: Subscription;
 	private deletingTaskIds: string[] = [];
 
 	constructor(
@@ -98,7 +99,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			this.showAddInput = true;
 			setTimeout(() => {
 				this.titleInput
-					.setFocus()
+					?.setFocus()
 					.catch((err) =>
 						this.errorLogger.logError(err, 'Failed to set focus to title input'),
 					);
@@ -110,10 +111,16 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		}
 		const title = this.newTaskTitle;
 		this.newTaskTitle = '';
+    if (!this.member) {
+      throw new Error('!this.member')
+    }
+    if (!this.team) {
+      throw new Error('!this.team')
+    }
 		this.scrumService
 			.addTask(
 				this.team,
-				this.scrumId,
+				this.scrumId || 'EMPTY_SCRUM_ID',
 				this.member,
 				this.taskType as TaskType,
 				title,
@@ -127,10 +134,10 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 					}
 					this.addingTasks = this.addingTasks.filter((t) => t.id !== task.id);
 					if (this.tasks) {
-						const i = this.visibleTasks.findIndex((t) => t.id === task.id);
+						const i = this.visibleTasks?.findIndex((t) => t.id === task.id) ?? -1;
 						if (i < 0) {
 							// if existing task update array
-							this.visibleTasks.push(task);
+							this.visibleTasks?.push(task);
 						}
 					} else {
 						this.visibleTasks = [task];
@@ -159,17 +166,29 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (!task.thumbUps) {
 			task.thumbUps = [];
 		}
-		const oldState = task.thumbUps.indexOf(this.currentMemberId) >= 0;
+    if (!this.currentMemberId) {
+      throw new Error('!currentMemberId');
+    }
+    if (!this.team) {
+      throw new Error('!team');
+    }
+    if (!this.taskType) {
+      throw new Error('!taskType');
+    }
+    if (!this.member) {
+      throw new Error('!member');
+    }
+		const oldState = task.thumbUps.indexOf(this.currentMemberId || '') >= 0;
 		if (oldState) {
 			task.thumbUps = task.thumbUps.filter((v) => v !== this.currentMemberId);
 		} else {
 			task.thumbUps.push(this.currentMemberId);
 		}
 		const request: IThumbUpRequest = {
-			team: this.team.id,
-			member: this.member.id,
+			teamID: this.team.id,
+			memberID: this.member.id,
 			type: this.taskType,
-			meeting: this.scrumId,
+			// meetingID: this.scrumId,
 			task: task.id,
 			value: !oldState,
 		};
@@ -183,11 +202,23 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 	public deleteTask(event: Event, id: string): void {
 		event.stopPropagation();
 		const tasks = this.visibleTasks;
+    if (!tasks) {
+      throw new Error('!visibleTasks')
+    }
 		const index = tasks.findIndex((t) => t.id === id);
 		const task = tasks[index];
 		tasks.splice(index, 1);
 		this.tasks = [...tasks];
 		this.deletingTaskIds.push(id);
+    if (!this.scrumId) {
+      throw new Error('!this.scrumID')
+    }
+    if (!this.member) {
+      throw new Error('!this.member')
+    }
+    if (!this.team) {
+      throw new Error('!this.team')
+    }
 		this.scrumService
 			.deleteTask(
 				this.team.id,
@@ -198,7 +229,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			)
 			.subscribe({
 				next: () => {
-					this.visibleTasks = this.visibleTasks.filter((t) => t.id !== id);
+					this.visibleTasks = this.visibleTasks?.filter((t) => t.id !== id);
 					if (this.deletingTaskIds.find((v) => v === id)) {
 						this.zone.runOutsideAngular(() => {
 							this.deletingTaskIds = this.deletingTaskIds.filter(
@@ -210,7 +241,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 				error: (err) => {
 					this.errorLogger.logError(err, 'Failed to delete task');
 					if (!tasks.find((t) => t.id === id)) {
-						this.tasks.splice(index, 0, task);
+						this.tasks?.splice(index, 0, task);
 					}
 				},
 			});
@@ -224,24 +255,43 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			tasks?.length === 1
 		) {
 			(event.detail as { complete: (v: ITaskWithUiStatus[]) => void }).complete(
-				this.visibleTasks,
-			); // Should be before setting before & after values
+				this.visibleTasks|| [],
+			); // Should be before setting & after values
 			return;
 		}
+    if (!this.taskType) {
+      throw new Error('!this.taskType')
+    }
+    if (!this.member) {
+      throw new Error('!this.member')
+    }
+    if (!this.scrumId) {
+      throw new Error('!this.scrumId')
+    }
+    if (!this.visibleTasks) {
+      throw new Error('!this.visibleTasks')
+    }
+    const taskID = this.visibleTasks[event.detail.from].id;
+    if (!taskID) {
+      throw new Error(`!this.visibleTasks[${event.detail.from}]`);
+    }
+    if (!this.team) {
+      throw new Error('!this.team')
+    }
 		const request: IReorderTaskRequest = {
-			team: this.team.id,
-			meeting: this.scrumId,
+			teamID: this.team.id,
+			// meetingID: this.scrumId,
 			type: this.taskType,
-			member: this.member.id,
-			task: this.visibleTasks[event.detail.from].id,
-			len: this.tasks.length,
+			memberID: this.member.id,
+			task: taskID,
+			len: this.tasks?.length || 0,
 			from: event.detail.from,
 			to: event.detail.to,
 		};
 		(event.detail as { complete: (v: ITaskWithUiStatus[]) => void }).complete(
 			this.visibleTasks,
 		); // Should be before setting before & after values
-		if (request.to < this.tasks?.length - 1) {
+		if (this.tasks && request.to < this.tasks?.length - 1) {
 			request.before = this.visibleTasks[request.to + 1].id;
 		}
 		if (request.to > 0) {
@@ -253,13 +303,13 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.tasks) {
+		if (changes['tasks']) {
 			if (this.taskType === 'risk') {
 				console.log(
 					`ScrumTasksComponent.ngOnChanges: deletingTaskIds: ${this.deletingTaskIds}, tasks: ${this.tasks}`,
 				);
 			}
-			this.visibleTasks = this.tasks.filter(
+			this.visibleTasks = this.tasks?.filter(
 				(t) => this.deletingTaskIds.findIndex((v) => v === t.id) < 0,
 			);
 		}
@@ -267,6 +317,9 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 
 	async showTaskPopover(event: Event, task: ITask) {
 		console.log('showTaskPopover()', task);
+    if (!this.team) {
+      throw new Error('!this.team')
+    }
 		try {
 			const modal = await this.modalController.create({
 				component: ScrumTaskComponent,
@@ -275,7 +328,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 					task,
 					teamId: this.team.id,
 					date: this.scrumId,
-					memberId: this.member.id,
+					memberId: this.member?.id,
 					type: this.taskType,
 				},
 			});

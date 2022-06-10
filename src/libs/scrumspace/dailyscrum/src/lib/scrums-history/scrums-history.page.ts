@@ -2,10 +2,12 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { IRecord } from '@sneat/data';
-import { ITeamDto, TeamService } from '@sneat/team/models';
-import { IScrumDto } from '@sneat/scrumspace/scrummodels';
-import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { NavService } from '@sneat/datatug/core';
+import { ITeamDto } from '@sneat/dto';
+import { IScrumDto } from '@sneat/scrumspace/scrummodels';
+import { ITeamContext } from '@sneat/team/models';
+import { TeamService } from '@sneat/team/services';
+import { ScrumService } from '../services/scrum.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
@@ -14,8 +16,8 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	styleUrls: ['./scrums-history.page.scss'],
 })
 export class ScrumsHistoryPageComponent {
-	public team: IRecord<ITeamDto>;
-	public scrums: IRecord<IScrumDto>[];
+	public team?: ITeamContext;
+	public scrums?: IRecord<IScrumDto>[];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -33,8 +35,8 @@ export class ScrumsHistoryPageComponent {
 			const id = route.snapshot.queryParamMap.get('team');
 			if (id) {
 				this.team = { id };
-				this.teamService.watchTeam(id).subscribe((teamData) => {
-					this.team.dto = teamData;
+				this.teamService.watchTeam(this.team).subscribe((team) => {
+					this.team = team;
 				});
 			}
 		}
@@ -43,6 +45,9 @@ export class ScrumsHistoryPageComponent {
 				if (token) {
 					console.log('token', token);
 					setTimeout(() => {
+            if (!this.team) {
+              throw new Error('!this.team');
+            }
 						this.scrumService.getScrums(this.team.id).subscribe({
 							next: (scrums) => {
 								console.log('scrums', scrums);
@@ -58,6 +63,7 @@ export class ScrumsHistoryPageComponent {
 	}
 
 	goScrum(scrum: IRecord<IScrumDto>): void {
-		this.navService.navigateToScrum(scrum.id, this.team, scrum);
+		// this.navService.navigateToScrum(scrum.id, this.team, scrum);
+    throw new Error('not implemented')
 	}
 }

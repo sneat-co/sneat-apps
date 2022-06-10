@@ -1,0 +1,41 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/datatug/core/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/datatug/core"],
+      "options": {
+        "project": "libs/datatug/core/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/datatug/core/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/datatug/core/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/datatug/core"],
+      "options": {
+        "jestConfig": "libs/datatug/core/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/datatug/core/**/*.ts",
+          "libs/datatug/core/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

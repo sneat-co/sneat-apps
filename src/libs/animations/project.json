@@ -1,0 +1,41 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/animations/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/animations"],
+      "options": {
+        "project": "libs/animations/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/animations/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/animations/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/animations"],
+      "options": {
+        "jestConfig": "libs/animations/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/animations/**/*.ts",
+          "libs/animations/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

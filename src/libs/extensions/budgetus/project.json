@@ -1,0 +1,41 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/extensions/budgetus/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/extensions/budgetus"],
+      "options": {
+        "project": "libs/extensions/budgetus/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extensions/budgetus/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/extensions/budgetus/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/extensions/budgetus"],
+      "options": {
+        "jestConfig": "libs/extensions/budgetus/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/extensions/budgetus/**/*.ts",
+          "libs/extensions/budgetus/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

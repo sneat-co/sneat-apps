@@ -51,8 +51,8 @@
 					[disabled]="!timer"
 					*ngIf="
 						retrospective?.dto &&
-						retrospective.dto.stage !== 'upcoming' &&
-						retrospective.dto.timer?.status !== 'stopped'
+						retrospective?.dto?.stage !== 'upcoming' &&
+						retrospective?.dto?.timer?.status !== 'stopped'
 					"
 				>
 					<ion-icon name="pause-circle-outline" slot="start"></ion-icon>
@@ -64,8 +64,8 @@
 					[disabled]="!timer"
 					*ngIf="
 						retrospective?.dto &&
-						retrospective.dto.stage !== 'upcoming' &&
-						retrospective.dto.timer?.status === 'stopped'
+						retrospective?.dto?.stage !== 'upcoming' &&
+						retrospective?.dto?.timer?.status === 'stopped'
 					"
 				>
 					<ion-icon name="play-outline" slot="start"></ion-icon>

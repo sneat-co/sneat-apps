@@ -1,9 +1,12 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
 import { ITeamMemberInfo, MemberRoleSpectator } from '@sneat/dto';
-import { getMeetingIdFromDate, getToday, ITimerState, Timer } from '@sneat/meeting';
+import { getMeetingIdFromDate, getToday, ITimerState, Timer, TimerFactory } from '@sneat/meeting';
+import { ScrumService } from '../services/scrum.service';
 import { IScrumDto, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ScrumPageTab } from '@sneat/team/services';
@@ -60,7 +63,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		private readonly scrumService: ScrumService,
-		private readonly analyticsService: AnalyticsService,
+		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
 		private readonly location: Location,
 		private readonly timerFactory: TimerFactory,
 	) {
@@ -83,7 +86,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 			: 'Next scrum';
 	}
 
-	public get defaultBackUrl(): string {
+	public override get defaultBackUrl(): string {
 		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
 	}
 
@@ -101,9 +104,9 @@ export class ScrumPageComponent extends TeamBaseComponent
 			this.tab = (tab?.[1] || this.tab) as ScrumPageTab;
 
 			const scrum = history.state.scrum as IRecord<IScrumDto>;
-			if (scrum) {
+			if (scrum?.dto) {
 				this.setScrumId(scrum.id);
-				this.scrumLoaded(scrum.id, scrum.data, 'history.state.scrum');
+				this.scrumLoaded(scrum.id, scrum.dto, 'history.state.scrum');
 			} else {
 				if (this.route) {
 					this.setCurrentScrumIdFromUrl(this.route.snapshot.queryParamMap);
@@ -139,7 +142,8 @@ export class ScrumPageComponent extends TeamBaseComponent
 	}
 
 	public goScrumsList(): void {
-		this.navController.navigateToScrums(this.navController, this.team);
+		// this.navController.navigateToScrums(this.navController, this.team);
+    throw new Error('not implemented')
 	}
 
 	public changeDate(to: 'prev' | 'next' | 'today' | string): void {
@@ -163,7 +167,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 			case 'prev': {
 				const prevScrumId =
 					this.scrum?.scrumIds?.prev ||
-					(this.isToday && this.team?.data?.last?.scrum?.id);
+					(this.isToday && this.team?.dto?.last?.scrum?.id);
 				if (!prevScrumId) {
 					this.errorLogger.logError(
 						`Attempted to go PREV non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumID})`,
@@ -185,8 +189,9 @@ export class ScrumPageComponent extends TeamBaseComponent
 				break;
 			}
 		}
-		if (this.team?.data) {
-			this.merge(this.scrum, undefined, this.team.data.members);
+		if (this.team?.dto) {
+			// this.merge(this.scrum, undefined, this.team.dto?.members);
+      throw new Error('not implmented')
 		}
 
 		const path = this.location.path().split('?')[0];
@@ -209,7 +214,9 @@ export class ScrumPageComponent extends TeamBaseComponent
 	public onScrumExpandChanged(memberId: string, isExpanded: boolean) {
 		if (isExpanded) {
 			this.expandedMemberId = memberId;
-			this.displayStatuses = [...this.displayStatuses];
+      if (this.displayStatuses) {
+        this.displayStatuses = [...this.displayStatuses];
+      }
 		} else {
 			this.expandedMemberId = null;
 		}
@@ -217,7 +224,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 
 	public toggleScrumTimer(): void {
 		try {
-			this.timer.toggleTimer().subscribe({
+			this.timer?.toggleTimer().subscribe({
 				error: (err) =>
 					this.errorLogger.logError(err, 'Failed to toggle scrum timer'),
 			});
@@ -226,12 +233,12 @@ export class ScrumPageComponent extends TeamBaseComponent
 		}
 	}
 
-	protected onTeamIdChanged(): void {
+	protected override onTeamIdChanged(): void {
 		super.onTeamIdChanged();
 		if (!this.team?.id) {
 			return;
 		}
-		if (this.scrumDate) {
+		if (this.scrumDate && this.scrumID) {
 			this.subscribeScrum(
 				this.team.id,
 				this.scrumID,
@@ -240,7 +247,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 		}
 	}
 
-	protected onTeamDtoChanged(): void {
+	protected override onTeamDtoChanged(): void {
 		const team = this.team?.dto;
 		if (!team) {
 			return;
@@ -270,21 +277,23 @@ export class ScrumPageComponent extends TeamBaseComponent
 			this.teamMetrics = team.metrics
 				.filter((m) => m.mode === 'team')
 				.map((m) => {
-					const m3 = this.teamMetrics?.find((m2) => m2.id === m.id);
-					return { ...m, value: m3?.value } as IMetric;
+					// const m3 = this.teamMetrics?.find((m2) => m2.id === m.id);
+					// return { ...m, value: m3?.value } as IMetric;
+          throw new Error('not implemented')
 				});
 			this.personalMetrics = team.metrics
 				.filter((m) => m.mode === 'personal')
 				.map((m) => {
-					const m3 = this.personalMetrics?.find((m2) => m2.id === m.id);
-					return { ...m, value: m3?.value } as IMetric;
+					// const m3 = this.personalMetrics?.find((m2) => m2.id === m.id);
+					// return { ...m, value: m3?.value } as IMetric;
+          throw new Error('not implemented')
 				});
 		}
 		this.merge(this.scrum, undefined, team.members);
 	}
 
-	protected unsubscribe(reason?: string): void {
-		super.unsubscribe(reason);
+	protected override unsubscribe(reason?: string): void {
+		super.unsubscribe(reason );
 		this.subscriptions.forEach((s) => s.unsubscribe());
 		this.subscriptions = [];
 		this.scrumsById = {};
@@ -317,13 +326,13 @@ export class ScrumPageComponent extends TeamBaseComponent
 		this.scrumsById[id] = scrum;
 		switch (id) {
 			case this.scrumID:
-				this.timer.updateTimerState(scrum?.timer);
+				this.timer?.updateTimerState(scrum?.timer);
 				this.scrum = scrum || {
 					...this.scrum,
 					statuses: [],
 					risksCount: undefined,
 					questionsCount: undefined,
-					timer: scrum?.timer,
+					timer: undefined,
 				};
 				// if (scrum?.timer?.status === 'active') {
 				// 	this.startTimer();
@@ -331,8 +340,8 @@ export class ScrumPageComponent extends TeamBaseComponent
 				// 	this.setTotalElapsed();
 				// }
 				console.log('this.scrum', this.scrum);
-				if (this.team?.data) {
-					this.merge(this.scrum, undefined, this.team.data.members);
+				if (this.team?.dto) {
+					this.merge(this.scrum, undefined, this.team.dto.members);
 				}
 				this.prevScrumID = scrum?.scrumIds?.prev;
 				if (this.prevScrumID) {
@@ -362,7 +371,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 
 	private subscribeScrum(teamId: string, scrumId: string, from: string) {
 		console.log(`${from}: subscribeScrum(team=${teamId}, scrumId=${scrumId})`);
-		if (this.scrumsById.hasOwnProperty(scrumId)) {
+		if (this.scrumsById[scrumId]) {
 			return;
 		}
 		this.subscriptions.push(
@@ -379,12 +388,13 @@ export class ScrumPageComponent extends TeamBaseComponent
 							err,
 							`failed to load scrum by id=${scrumId}`,
 						);
-						this.navService.navigateToTeam(
-							this.team.id,
-							undefined,
-							this.team.data,
-							'back',
-						);
+						// this.navService?.navigateToTeam(
+						// 	this.team.id,
+						// 	undefined,
+						// 	this.team.data,
+						// 	'back',
+						// );
+            throw new Error('not implemented')
 					},
 				}),
 		);
@@ -392,8 +402,8 @@ export class ScrumPageComponent extends TeamBaseComponent
 
 	private merge(
 		scrum: IScrumDto,
-		prevScrum: IScrumDto,
-		members: ITeamMemberInfo[],
+		prevScrum?: IScrumDto,
+		members?: ITeamMemberInfo[],
 	): void {
 		console.log(
 			'ScrumPage.merge(),\n\tscrum:',
@@ -403,76 +413,77 @@ export class ScrumPageComponent extends TeamBaseComponent
 			'\n\tmembers:',
 			members,
 		);
-		this.allStatuses = members
-			.filter((m) => m.roles?.indexOf(MemberRoleEnum.contributor) >= 0)
-			.map((member) => ({
-				member,
-				byType: {},
-			}));
-		if (scrum?.statuses) {
-			Object.values(scrum.statuses).forEach((item) => {
-				console.log('item1:', item);
-				const { id } = item.member;
-				item = {
-					...item,
-					byType: {
-						done: item.byType.done || [],
-						risk: item.byType.risk || [],
-						plan: item.byType.plan || [],
-						todo: item.byType.todo || [],
-						qna: item.byType.qna || [],
-					},
-				};
-				if (this.allStatuses) {
-					const index = this.allStatuses.findIndex(
-						(v) => id && id === v.member.id,
-					);
-					console.log('item:', item);
-					if (index < 0) {
-						this.allStatuses.push(item);
-					} else {
-						this.allStatuses[index] = item;
-					}
-				}
-			});
-		} else {
-			this.allStatuses?.forEach((status) => {
-				status.byType.todo = [];
-				status.byType.done = [];
-				status.byType.risk = [];
-			});
-		}
-
-		if (prevScrum?.statuses) {
-			Object.values(prevScrum.statuses).forEach((item) => {
-				const { id } = item.member;
-				if (this.allStatuses) {
-					const index = this.allStatuses.findIndex(
-						(v) => id && id === v.member.id,
-					);
-					if (index < 0) {
-						this.allStatuses.push({
-							member: item.member,
-							byType: {
-								plan: item.byType.todo,
-								risk: [],
-								todo: [],
-								done: [],
-								qna: [],
-							},
-						});
-					} else {
-						this.allStatuses[index].byType.plan = item.byType.todo;
-					}
-				}
-			});
-		} else {
-			this.allStatuses?.forEach((status) => {
-				status.byType.plan = [];
-			});
-		}
-
-		this.setStatuses();
+    throw new Error('not implemented')
+		// this.allStatuses = members
+		// 	.filter((m) => m.roles?.indexOf(MemberRoleEnum.contributor) >= 0)
+		// 	.map((member) => ({
+		// 		member,
+		// 		byType: {},
+		// 	}));
+		// if (scrum?.statuses) {
+		// 	Object.values(scrum.statuses).forEach((item) => {
+		// 		console.log('item1:', item);
+		// 		const { id } = item.member;
+		// 		item = {
+		// 			...item,
+		// 			byType: {
+		// 				done: item.byType.done || [],
+		// 				risk: item.byType.risk || [],
+		// 				plan: item.byType.plan || [],
+		// 				todo: item.byType.todo || [],
+		// 				qna: item.byType.qna || [],
+		// 			},
+		// 		};
+		// 		if (this.allStatuses) {
+		// 			const index = this.allStatuses.findIndex(
+		// 				(v) => id && id === v.member.id,
+		// 			);
+		// 			console.log('item:', item);
+		// 			if (index < 0) {
+		// 				this.allStatuses.push(item);
+		// 			} else {
+		// 				this.allStatuses[index] = item;
+		// 			}
+		// 		}
+		// 	});
+		// } else {
+		// 	this.allStatuses?.forEach((status) => {
+		// 		status.byType.todo = [];
+		// 		status.byType.done = [];
+		// 		status.byType.risk = [];
+		// 	});
+		// }
+    //
+		// if (prevScrum?.statuses) {
+		// 	Object.values(prevScrum.statuses).forEach((item) => {
+		// 		const { id } = item.member;
+		// 		if (this.allStatuses) {
+		// 			const index = this.allStatuses.findIndex(
+		// 				(v) => id && id === v.member.id,
+		// 			);
+		// 			if (index < 0) {
+		// 				this.allStatuses.push({
+		// 					member: item.member,
+		// 					byType: {
+		// 						plan: item.byType.todo,
+		// 						risk: [],
+		// 						todo: [],
+		// 						done: [],
+		// 						qna: [],
+		// 					},
+		// 				});
+		// 			} else {
+		// 				this.allStatuses[index].byType.plan = item.byType.todo;
+		// 			}
+		// 		}
+		// 	});
+		// } else {
+		// 	this.allStatuses?.forEach((status) => {
+		// 		status.byType.plan = [];
+		// 	});
+		// }
+    //
+		// this.setStatuses();
 	}
 
 	private setStatuses() {
@@ -554,7 +565,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 				/*if (scrum) - we need to set prevScrumId even if no scrum record */
 				this.prevScrumID =
 					scrum?.scrumIds?.prev ||
-					(this.isToday && this.team?.dto?.last?.scrum?.id);
+					(this.isToday && this.team?.dto?.last?.scrum?.id) || undefined;
 				if (this.prevScrumID) {
 					this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
 				}

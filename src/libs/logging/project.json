@@ -1,0 +1,38 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/logging/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/logging"],
+      "options": {
+        "project": "libs/logging/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/logging/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/logging/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/logging"],
+      "options": {
+        "jestConfig": "libs/logging/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/logging/**/*.ts", "libs/logging/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

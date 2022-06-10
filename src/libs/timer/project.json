@@ -1,0 +1,38 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/timer/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/timer"],
+      "options": {
+        "project": "libs/timer/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/timer/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/timer/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/timer"],
+      "options": {
+        "jestConfig": "libs/timer/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/timer/**/*.ts", "libs/timer/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

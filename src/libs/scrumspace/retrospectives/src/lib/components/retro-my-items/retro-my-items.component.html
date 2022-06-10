@@ -20,7 +20,7 @@
 			<ion-buttons slot="end">
 				<ion-button
 					(click)="add()"
-					[color]="titleControl.value.trim().length ? 'primary' : 'medium'"
+					[color]="titleControl.value?.trim()?.length ? 'primary' : 'medium'"
 				>
 					Add
 				</ion-button>

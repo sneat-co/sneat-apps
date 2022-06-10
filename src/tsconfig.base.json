@@ -1,0 +1,77 @@
+{
+  "extends": "./tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@sneat/analytics": ["libs/analytics/src/index.ts"],
+      "@sneat/animations": ["libs/animations/src/index.ts"],
+      "@sneat/api": ["libs/api/src/index.ts"],
+      "@sneat/app": ["libs/app/src/index.ts"],
+      "@sneat/auth": ["libs/auth/src/index.ts"],
+      "@sneat/auth-models": ["libs/auth-models/src/index.ts"],
+      "@sneat/auth-ui": ["libs/auth-ui/src/index.ts"],
+      "@sneat/communes/ui": ["libs/communes/ui/src/index.ts"],
+      "@sneat/components": ["libs/components/src/index.ts"],
+      "@sneat/core": ["libs/core/src/index.ts"],
+      "@sneat/data": ["libs/data/src/index.ts"],
+      "@sneat/datatug/core": ["libs/datatug/core/src/index.ts"],
+      "@sneat/datatug/dto": ["libs/datatug/dto/src/index.ts"],
+      "@sneat/datatug/models": ["libs/datatug/models/src/index.ts"],
+      "@sneat/datetime": ["libs/datetime/src/index.ts"],
+      "@sneat/dto": ["libs/dto/src/index.ts"],
+      "@sneat/ext-shared": ["libs/ext-shared/src/index.ts"],
+      "@sneat/extensions/assetus/components": [
+        "libs/extensions/assetus/components/src/index.ts"
+      ],
+      "@sneat/extensions/assetus/pages": [
+        "libs/extensions/assetus/pages/src/index.ts"
+      ],
+      "@sneat/extensions/budgetus": ["libs/extensions/budgetus/src/index.ts"],
+      "@sneat/extensions/contactus": ["libs/extensions/contactus/src/index.ts"],
+      "@sneat/extensions/debtus": ["libs/extensions/debtus/src/index.ts"],
+      "@sneat/extensions/docus": ["libs/extensions/docus/src/index.ts"],
+      "@sneat/extensions/listus": ["libs/extensions/listus/src/index.ts"],
+      "@sneat/extensions/memberus": ["libs/extensions/memberus/src/index.ts"],
+      "@sneat/extensions/schedulus/main": [
+        "libs/extensions/schedulus/main/src/index.ts"
+      ],
+      "@sneat/extensions/schedulus/shared": [
+        "libs/extensions/schedulus/shared/src/index.ts"
+      ],
+      "@sneat/grid": ["libs/grid/src/index.ts"],
+      "@sneat/logging": ["libs/logging/src/index.ts"],
+      "@sneat/meeting": ["libs/meeting/src/index.ts"],
+      "@sneat/scrumspace/dailyscrum": [
+        "libs/scrumspace/dailyscrum/src/index.ts"
+      ],
+      "@sneat/scrumspace/retrospectives": [
+        "libs/scrumspace/retrospectives/src/index.ts"
+      ],
+      "@sneat/scrumspace/scrummodels": [
+        "libs/scrumspace/scrummodels/src/index.ts"
+      ],
+      "@sneat/team/components": ["libs/team/components/src/index.ts"],
+      "@sneat/team/models": ["libs/team/models/src/index.ts"],
+      "@sneat/team/pages": ["libs/team/pages/src/index.ts"],
+      "@sneat/team/services": ["libs/team/services/src/index.ts"],
+      "@sneat/timer": ["libs/timer/src/index.ts"],
+      "@sneat/ui": ["libs/ui/src/index.ts"],
+      "@sneat/user": ["libs/user/src/index.ts"],
+      "@sneat/wizard": ["libs/wizard/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

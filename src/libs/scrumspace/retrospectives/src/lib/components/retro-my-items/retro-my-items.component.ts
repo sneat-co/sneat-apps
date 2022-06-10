@@ -10,11 +10,11 @@ import { IAddRetroItemRequest, IRetroItemRequest, RetrospectiveService } from '.
 	templateUrl: './retro-my-items.component.html',
 })
 export class RetroMyItemsComponent {
-	@ViewChild(IonInput, { static: true }) titleInput; // TODO: strong typing : IonInput;
+	@ViewChild(IonInput, { static: true }) titleInput?: IonInput; // TODO: strong typing : IonInput;
 
-	@Input() public question: RetroItemType;
-	@Input() public teamId: string;
-	@Input() public retroId: string;
+	@Input() public question?: RetroItemType;
+	@Input() public teamId?: string;
+	@Input() public retroId?: string;
 
 	public titleControl = new FormControl<string>('', [Validators.required]);
 
@@ -22,7 +22,7 @@ export class RetroMyItemsComponent {
 		titleControl: this.titleControl,
 	});
 
-	public items: IRetroItem[];
+	public items?: IRetroItem[];
 
 	constructor(
 		private readonly retrospectiveService: RetrospectiveService,
@@ -33,6 +33,9 @@ export class RetroMyItemsComponent {
 	public trackById = (i: number, item: IRetroItem) => item.ID;
 
 	public delete(item: IRetroItem): void {
+    if (!this.teamId || !this.retroId || !item.type) {
+      return;
+    }
 		const request: IRetroItemRequest = {
 			teamID: this.teamId,
 			meeting: this.retroId,
@@ -86,14 +89,16 @@ export class RetroMyItemsComponent {
 					// }
 				},
 				(err) => {
-					this.items = this.items.filter(
+					this.items = this.items?.filter(
 						(item) => item.ID || item.title !== title,
 					);
-					if (!this.titleInput.value) {
+					if (this.titleInput && !this.titleInput?.value) {
 						this.titleInput.value = title;
 					}
 					this.errorLogger.logError(err, 'Failed to add a retrospective item');
-					this.titleInput.ionFocus.emit();
+          if (this.titleInput) {
+            this.titleInput.ionFocus.emit();
+          }
 				},
 			);
 		} catch (e) {

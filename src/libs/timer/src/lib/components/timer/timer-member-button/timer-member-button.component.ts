@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITimerState, TimerStatusEnum } from '../../../../../../meeting/src/lib/timer/models';
-import { secondsToStr } from '@sneat/datetime';
-import { Timer } from '../../../../../../meeting/src/lib/timer/timer.service';
-import { IScrumDto } from '@sneat/scrumspace/scrummodels';
+import { ITimerState, Timer } from '@sneat/meeting';
+import { IScrumDto, TimerStatusEnum } from '@sneat/scrumspace/scrummodels';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'sneat-timer-member-button',
@@ -12,17 +10,17 @@ import { IScrumDto } from '@sneat/scrumspace/scrummodels';
 	styleUrls: ['./timer-member-button.component.scss'],
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
-	@Input() public scrumId: string;
+	@Input() public scrumId?: string;
 	@Input() public scrum?: IScrumDto;
-	@Input() public memberId: string;
-	@Input() public teamId: string;
+	@Input() public memberId?: string;
+	@Input() public teamId?: string;
 	@Output() public toggled = new EventEmitter<boolean>();
-	@Input() public timer: Timer;
+	@Input() public timer?: Timer;
 
-	public totalElapsed: string;
-	public timerState: ITimerState;
+	public totalElapsed?: string;
+	public timerState?: ITimerState;
 
-	private timerSubscription: Subscription;
+	private timerSubscription?: Subscription;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -30,7 +28,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	}
 
 	public get isDisabled(): boolean {
-		return (
+		return !!(
 			!(this.teamId && this.memberId && this.scrumId && this.timerState) ||
 			this.timerState?.isToggling
 		);
@@ -43,7 +41,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('TimerMemberButton.ngOnChanges()', changes);
 		try {
-			if (changes.timer && this.timer) {
+			if (changes['timer'] && this.timer) {
 				this.unsubscribeFromTimer();
 				this.timerSubscription = this.timer.onTick.subscribe(
 					this.onTimerTicked,
@@ -65,12 +63,15 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 		if (event) {
 			event.stopPropagation();
 		}
+    if (!this.timerState) {
+      throw new Error('!this.timerState')
+    }
 		const { status, activeMemberId } = this.timerState;
 		this.toggled.emit(
 			status !== TimerStatusEnum.active ||
 			(status === TimerStatusEnum.active && activeMemberId !== this.memberId),
 		);
-		this.timer.toggleTimer(this.memberId).subscribe({
+		this.timer?.toggleTimer(this.memberId).subscribe({
 			error: (err) =>
 				this.errorLogger.logError(err, 'Failed toggle timer for a member`'),
 		});
@@ -86,8 +87,9 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	private onTimerTicked = (timerState: ITimerState): void => {
 		try {
 			this.timerState = timerState;
-			this.totalElapsed =
-				timerState && secondsToStr(timerState.secondsByMember?.[this.memberId]);
+			// this.totalElapsed =
+			// 	timerState && secondsToStr(timerState.secondsByMember?.[this.memberId]);
+      throw new Error('Not implemented yet');
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process');
 		}
