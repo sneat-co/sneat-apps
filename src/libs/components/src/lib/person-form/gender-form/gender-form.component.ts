@@ -40,6 +40,7 @@ export class GenderFormComponent {
 
 	readonly genders = gendersOptions;
 
+	@Input() disabled = false;
 	@Input() genderID?: Gender;
 	@Output() genderChange = new EventEmitter<Gender>();
 

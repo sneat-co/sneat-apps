@@ -1,5 +1,5 @@
 <ion-card>
-	<ion-item-divider>
+	<ion-item-divider [color]="isActive ? 'primary' : 'light'">
 		<ion-label>Roles</ion-label>
 	</ion-item-divider>
 	<ion-item>
@@ -8,7 +8,8 @@
 	<ion-item-group *ngIf="roles">
 		<ion-item *ngFor="let role of roles">
 			<ion-label>{{role.title}}</ion-label>
-			<ion-checkbox [(ngModel)]="role.checked" (ionChange)="roleChecked($event)">{{role.title}}</ion-checkbox>
+			<ion-checkbox [disabled]="disabled" [(ngModel)]="role.checked"
+										(ionChange)="roleChecked($event)">{{role.title}}</ion-checkbox>
 		</ion-item>
 	</ion-item-group>
 </ion-card>

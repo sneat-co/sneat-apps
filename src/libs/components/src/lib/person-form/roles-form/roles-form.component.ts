@@ -18,6 +18,8 @@ interface Role {
 	]
 })
 export class RolesFormComponent extends TeamRelatedFormComponent {
+	@Input() isActive = false;
+	@Input() disabled = false;
 	@Input() team?: ITeamContext;
 	roles?: Role[];
 

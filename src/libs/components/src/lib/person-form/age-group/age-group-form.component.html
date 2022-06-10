@@ -5,11 +5,11 @@
 	<ion-radio-group [(ngModel)]="ageGroup" (ionChange)="onAgeGroupChanged($event)">
 		<ion-item>
 			<ion-label>Adult</ion-label>
-			<ion-radio slot="start" value="adult"></ion-radio>
+			<ion-radio slot="start" value="adult" [disabled]="disabled"></ion-radio>
 		</ion-item>
 		<ion-item>
 			<ion-label>Child</ion-label>
-			<ion-radio slot="start" value="child"></ion-radio>
+			<ion-radio slot="start" value="child" [disabled]="disabled"></ion-radio>
 		</ion-item>
 	</ion-radio-group>
 </ion-card>
@@ -17,7 +17,7 @@
 	<ion-item>
 		<ion-icon name="text-outline" slot="start" color="medium"></ion-icon>
 		<ion-label color="medium" position="stacked">Age group</ion-label>
-		<ion-select [(ngModel)]="ageGroup" interface="popover" (ionChange)="onAgeGroupChanged($event)">
+		<ion-select [disabled]="disabled" [(ngModel)]="ageGroup" interface="popover" (ionChange)="onAgeGroupChanged($event)">
 			<ion-select-option value="adult">Adult</ion-select-option>
 			<ion-select-option value="child">Child</ion-select-option>
 		</ion-select>

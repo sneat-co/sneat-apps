@@ -10,6 +10,7 @@ import { AgeGroup } from '@sneat/dto';
 	],
 })
 export class AgeGroupFormComponent {
+	@Input() disabled = false;
 	@Input() ageGroup?: AgeGroup;
 	@Output() readonly ageGroupChange = new EventEmitter<AgeGroup|undefined>();
 
