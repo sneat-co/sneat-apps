@@ -30,6 +30,7 @@
     "@sentry/tracing": "^7.1.1",
     "@sneat/random": "^0.0.4",
     "date-fns": "^2.28.0",
+    "firebase": "^9.8.3",
     "ionicons": "^6.0.2",
     "rxjs": "~7.4.0",
     "ts-md5": "^1.2.11",
