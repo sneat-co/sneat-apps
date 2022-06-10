@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {
 	AbstractControl,
-	FormControl,
+	FormControl, FormGroup,
 	UntypedFormControl,
 	UntypedFormGroup,
 	ValidationErrors,
@@ -88,7 +88,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		maxNameLenValidator,
 	]);
 
-	public readonly namesForm = new UntypedFormGroup({
+	public readonly namesForm = new FormGroup({
 		fullName: this.fullName,
 		firstName: this.firstName,
 		lastName: this.lastName,
@@ -106,41 +106,64 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 
 	ngOnChanges(changes: SimpleChanges): void {
-		const fieldsChange = changes['fields'];
-		if (fieldsChange) {
-			this.lastName.clearValidators();
-			this.lastName.addValidators(this.fields?.lastName?.required ? [Validators.required, maxNameLenValidator] : Validators.required);
+		if (changes['fields']) {
+			this.onInputChangeFields();
 		}
-		const nameChange = changes['name'];
-		if (nameChange && nameChange.currentValue) {
-			const name = this.name;
-			if (name) {
-				if (name.first) {
-					this.firstName.setValue(name.first);
-				}
-				if (name.last) {
-					this.lastName.setValue(name.last);
-				}
-				if (name.middle) {
-					this.middleName.setValue(name.middle);
-				}
-				if (name.full) {
-					this.fullName.setValue(name.full);
-				}
+		if (changes['name']) {
+			this.onInputChangeName();
+		}
+		if (changes['disabled']) {
+			this.onInputChangeDisabled();
+		}
+	}
+
+	private onInputChangeDisabled(): void {
+		if (this.disabled) {
+			this.namesForm.disable();
+		} else {
+			this.namesForm.enable();
+		}
+	}
+
+	private onInputChangeName(): void {
+		const name = this.name;
+		if (name) {
+			if (name.first) {
+				this.firstName.setValue(name.first);
 			}
-			if (this.initialNameChange) {
-				this.initialNameChange = false;
-				if (!this.firstName.value) {
-					this.inputToFocus = this.firstNameInput;
-				}
-				if (!this.lastName.value) {
-					this.inputToFocus = this.lastNameInput;
-				}
-				if (this.isViewInitiated && this.inputToFocus) {
-					this.setFocusToInput(this.inputToFocus);
-				}
+			if (name.last) {
+				this.lastName.setValue(name.last);
+			}
+			if (name.middle) {
+				this.middleName.setValue(name.middle);
+			}
+			if (name.full) {
+				this.fullName.setValue(name.full);
 			}
 		}
+		if (this.initialNameChange) {
+			this.initialNameChange = false;
+			if (!this.firstName.value) {
+				this.inputToFocus = this.firstNameInput;
+			}
+			if (!this.lastName.value) {
+				this.inputToFocus = this.lastNameInput;
+			}
+			if (this.isViewInitiated && this.inputToFocus) {
+				this.setFocusToInput(this.inputToFocus);
+			}
+		}
+	}
+	private onInputChangeFields(): void {
+		this.lastName.clearValidators();
+		const validators = [maxNameLenValidator];
+		if (this.fields?.lastName?.required) {
+			validators.push(Validators.required);
+			console.log('Last name is required field');
+		} else {
+			console.log('Last name is optional field');
+		}
+		this.lastName.addValidators(validators);
 	}
 
 	ngAfterViewInit(): void {

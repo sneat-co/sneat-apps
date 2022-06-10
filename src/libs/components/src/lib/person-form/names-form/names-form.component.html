@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card [formGroup]="namesForm">
 	<ion-item-divider [color]="isActive ? 'primary' : 'light'">
 		<ion-label *ngIf="isActive"><b>Names</b></ion-label>
 		<ion-label *ngIf="!isActive">Names</ion-label>
@@ -10,7 +10,6 @@
 							 [formControl]="firstName"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
-							 [disabled]="disabled"
 		></ion-input>
 	</ion-item>
 	<ion-item>
@@ -18,7 +17,6 @@
 		<ion-input #lastNameInput
 							 name="last_name"
 							 [formControl]="lastName"
-							 [disabled]="disabled"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
 		></ion-input>
@@ -27,7 +25,6 @@
 		<ion-label color="medium">Middle name</ion-label>
 		<ion-input name="medium_name"
 							 [formControl]="middleName"
-							 [disabled]="disabled"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
 		></ion-input>
@@ -37,7 +34,6 @@
 		<ion-input #fullNameInput
 							 name="full_name"
 							 [formControl]="fullName"
-							 [disabled]="disabled"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onFullNameChanged($event)"
 		></ion-input>
