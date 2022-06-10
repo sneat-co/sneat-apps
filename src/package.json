@@ -59,7 +59,7 @@
     "@sneat/wormhole": "0.0.6",
     "codemirror": "5.65.5",
     "date-fns": "2.28.0",
-    "firebase": "9.8.2",
+    "firebase": "9.8.3",
     "hogan.js": "3.0.2",
     "idb": "7.0.1",
     "ionicons": "6.0.2",
