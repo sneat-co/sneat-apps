@@ -17,7 +17,7 @@ import { GenderFormComponent } from './gender-form/gender-form.component';
 import { INamesFormFields, NamesFormComponent } from './names-form/names-form.component';
 
 
-interface show { // wizard state
+interface personWizardState { // wizard state
 	readonly name: boolean;
 	readonly nameNext?: boolean;
 	readonly gender?: boolean;
@@ -29,6 +29,7 @@ interface show { // wizard state
 	readonly submitButton?: boolean;
 }
 
+type WizardItem = keyof personWizardState;
 
 export interface IPersonFormWizardFields extends INamesFormFields {
 	relatedAs?: IFormField
@@ -41,13 +42,12 @@ export interface IPersonFormWizardFields extends INamesFormFields {
 		formNexInAnimation,
 	],
 })
-export class PersonFormWizardComponent implements OnChanges {
+export class PersonFormWizardComponent {
 
 	@Input() requires: IPersonRequirements = {};
 	@Input() team?: ITeamContext;
 	@Input() disabled = false;
 	@Input() hideRelationship = false;
-	@Input() showAll = false;
 
 	@Input() fields?: IPersonFormWizardFields;
 
@@ -57,14 +57,14 @@ export class PersonFormWizardComponent implements OnChanges {
 	public isReadyToSubmit = false;
 	@Output() readonly isReadyToSubmitChange = new EventEmitter<boolean>();
 
-	public show: show = { name: true };
+	public show: personWizardState = { name: false, gender: true };
 
-	public wizardStep: keyof show = 'name';
+	public wizardStep: keyof personWizardState = 'name';
 
 	@ViewChild(NamesFormComponent) namesFormComponent?: NamesFormComponent;
 	@ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
 
-	private readonly formOrder: readonly (keyof show)[] = [
+	private readonly formOrder: readonly (keyof personWizardState)[] = [
 		'name',
 		'gender',
 		'ageGroup',
@@ -75,30 +75,13 @@ export class PersonFormWizardComponent implements OnChanges {
 		'submitButton',
 	];
 
-	ngOnChanges(changes: SimpleChanges) {
-		const showAllChange = changes['showAll'];
-		if (showAllChange && this.showAll) {
-		this.show = {
-			name: true,
-			submitButton: true,
-			emails: false,
-			phones: false,
-			nameNext: false,
-			gender: true,
-			roles: true,
-			ageGroup: true,
-			relatedAs: false,
-		}
-		}
-	}
-
 	private showRestOfTheForm(): boolean {
 		const p = this.relatedPerson;
 		return !!p.ageGroup && (this.hideRelationship || !!p.relationship);
 	}
 
 
-	private setRelatedPerson(relatedPerson: IRelatedPerson, changedProp: { name: keyof show; hasValue: boolean }): void {
+	private setRelatedPerson(relatedPerson: IRelatedPerson, changedProp: { name: keyof personWizardState; hasValue: boolean }): void {
 		this.relatedPerson = relatedPerson;
 		this.relatedPersonChange.emit(relatedPerson);
 		if (changedProp.hasValue) {
@@ -118,6 +101,7 @@ export class PersonFormWizardComponent implements OnChanges {
 	}
 
 	onGenderChanged(gender?: Gender): void {
+		this.show = {...this.show, name: true};
 		this.setRelatedPerson(
 			{ ...this.relatedPerson, gender },
 			{ name: 'gender', hasValue: !!gender },
@@ -186,7 +170,7 @@ export class PersonFormWizardComponent implements OnChanges {
 		this.openNext('name');
 	}
 
-	public openNext(changedPropName: keyof show): void {
+	public openNext(changedPropName: keyof personWizardState): void {
 		for (;;) {
 			console.log('openNext()', changedPropName);
 			const i = this.formOrder.indexOf(changedPropName);

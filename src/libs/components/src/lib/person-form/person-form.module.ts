@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '../pipes';
 import { AgeGroupComponent } from './age-group/age-group.component';
 import { PersonFormWizardComponent } from './person-form-wizard.component';
 import { EmailsFormComponent } from './emails-form/emails-form.component';
@@ -12,7 +13,7 @@ import { RelationshipFormComponent } from './relationship-form/relationship-form
 import { RolesFormComponent } from './roles-form/roles-form.component';
 
 @NgModule({
-	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule, SneatPipesModule],
 	declarations: [
 		PersonFormWizardComponent,
 		EmailsFormComponent,

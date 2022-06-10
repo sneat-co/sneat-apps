@@ -30,7 +30,9 @@ export class NewMemberFormComponent {
 	public readonly personRequirements: IPersonRequirements = {
 		ageGroup: {required: true},
 		gender: {required: true},
+		lastName: {required: false},
 	};
+
 	private readonly hasNavHistory: boolean;
 	public disabled = false;
 

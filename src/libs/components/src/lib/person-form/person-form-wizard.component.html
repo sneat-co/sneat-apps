@@ -1,6 +1,11 @@
-<sneat-names-form
+<sneat-gender-form *ngIf="show.gender"
+									 [genderID]="relatedPerson.gender"
+									 (genderChange)="onGenderChanged($event)"
+></sneat-gender-form>
+
+<sneat-names-form *ngIf="show.name"
 	[name]="relatedPerson.name"
-	[isActive]="!disabled && !show.gender"
+	[isActive]="!disabled"
 	[fields]="fields"
 	(namesChanged)="onNameChanged($event)"
 	[disabled]="disabled"
@@ -16,10 +21,6 @@
 	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
 </ion-button>
 
-<sneat-gender-form *ngIf="requires.gender !== 'excluded' && show.gender"
-									 [gender]="relatedPerson.gender"
-									 (genderChange)="onGenderChanged($event)"
-></sneat-gender-form>
 
 <sneat-age-group-form *ngIf="requires.ageGroup !== 'excluded' && show.ageGroup"
 											[ageGroup]="relatedPerson.ageGroup"

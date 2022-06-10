@@ -1,4 +1,4 @@
-export * from './gender-icon-name.pipe';
+export * from './gender.pipes';
 export * from './person-title.pipe';
 export * from './sneat-pipes.module';
 export * from './member-title.pipe';
