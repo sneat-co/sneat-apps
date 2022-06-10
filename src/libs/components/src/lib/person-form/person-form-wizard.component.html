@@ -1,63 +1,60 @@
+<sneat-names-form *ngIf="show.name"
+									[name]="relatedPerson.name"
+									[isActive]="wizardStep === 'name'"
+									[showNextButton]="true"
+									[fields]="fields"
+									(namesChanged)="onNameChanged($event)"
+									[disabled]="disabled"
+									(next)="nextFromName($event)"
+></sneat-names-form>
+
+
 <sneat-gender-form *ngIf="show.gender"
 									 [genderID]="relatedPerson.gender"
 									 (genderChange)="onGenderChanged($event)"
 ></sneat-gender-form>
 
-<sneat-names-form *ngIf="show.name"
-	[name]="relatedPerson.name"
-	[isActive]="!disabled"
-	[fields]="fields"
-	(namesChanged)="onNameChanged($event)"
-	[disabled]="disabled"
-></sneat-names-form>
-
-<ion-button *ngIf="!disabled && !show.gender"
-						class="ion-margin"
-						size="medium"
-						[color]="show.nameNext ? 'primary' : 'medium'"
-						(click)="nextFromName($event)"
->
-	<ion-label>Next</ion-label>
-	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
-</ion-button>
-
-
-<sneat-age-group-form *ngIf="requires.ageGroup !== 'excluded' && show.ageGroup"
+<sneat-age-group-form *ngIf="!requires.ageGroup?.hide && show.ageGroup"
 											[ageGroup]="relatedPerson.ageGroup"
 											(ageGroupChange)="onAgeGroupChanged($event)"
 ></sneat-age-group-form>
 
-<sneat-relationship-form *ngIf="requires.relatedAs !== 'excluded' && show.relatedAs"
+<sneat-relationship-form *ngIf="!requires.relatedAs?.hide && show.relatedAs"
 												 [team]="team"
 												 [ageGroup]="relatedPerson.ageGroup"
 												 [relationship]="relatedPerson.relationship"
 												 (relationshipChange)="onRelationshipChanged($event)"
 ></sneat-relationship-form>
 
-<sneat-roles-form *ngIf="requires.roles !== 'excluded' && show.roles"
+<sneat-roles-form *ngIf="!requires.roles?.hide && show.roles"
 									[team]="team"
 ></sneat-roles-form>
 
-<sneat-emails-form *ngIf="!requires.email?.hide && show.emails"
-									 [isActiveInWizard]="wizardStep === 'emails'"
-									 [emails]="relatedPerson.emails"
-									 (emailsChange)="onEmailsChanged($event)"
-></sneat-emails-form>
+<ng-container *ngIf="wizardStep === 'emails' || wizardStep === 'phones'">
+	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="emails">Emails</ion-segment-button>
+		<ion-segment-button value="phones">Phones</ion-segment-button>
+	</ion-segment>
+	<sneat-emails-form *ngIf="tab === 'emails' && !requires.email?.hide"
+										 [hideHeader]="true"
+										 [emails]="relatedPerson.emails"
+										 (emailsChange)="onEmailsChanged($event)"
+	></sneat-emails-form>
 
 
-<sneat-phones-form *ngIf="!requires.phone?.hide && show.phones"
-									 [isActiveInWizard]="wizardStep === 'phones'"
-									 [phones]="relatedPerson.phones"
-									 (phonesChange)="onPhoneChanged($event)"
-></sneat-phones-form>
+	<sneat-phones-form *ngIf="tab === 'phones'  && !requires.phone?.hide"
+										 [hideHeader]="true"
+										 [phones]="relatedPerson.phones"
+										 (phonesChange)="onPhoneChanged($event)"
+	></sneat-phones-form>
+</ng-container>
 
-
-<ion-button *ngIf="wizardStep === 'emails' || wizardStep === 'phones'"
-						class="ion-margin"
-						size="medium"
-						[color]="show.nameNext ? 'primary' : 'medium'"
-						(click)="openNext(wizardStep)"
->
-	<ion-label>Next</ion-label>
-	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
-</ion-button>
+<!--<ion-button *ngIf="wizardStep === 'emails' || wizardStep === 'phones'"-->
+<!--						class="ion-margin"-->
+<!--						size="medium"-->
+<!--						[color]="show.nameNext ? 'primary' : 'medium'"-->
+<!--						(click)="openNext(wizardStep)"-->
+<!--&gt;-->
+<!--	<ion-label>Next</ion-label>-->
+<!--	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>-->
+<!--</ion-button>-->

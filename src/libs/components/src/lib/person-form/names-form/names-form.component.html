@@ -39,3 +39,13 @@
 		></ion-input>
 	</ion-item>
 </ion-card>
+
+<ion-button *ngIf="showNextButton && isActive"
+						class="ion-margin"
+						size="medium"
+						[color]="canGoNext ? 'primary' : 'medium'"
+						(click)="onNext($event)"
+>
+	<ion-label>Next</ion-label>
+	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+</ion-button>

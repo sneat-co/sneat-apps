@@ -52,6 +52,8 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input() isActive = true;
 	@Input() disabled = false;
 	@Input() fields?: INamesFormFields;
+	@Input() showNextButton = false;
+
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
 	@ViewChild('lastNameInput', { static: true }) lastNameInput?: IonInput;
@@ -59,6 +61,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	@Output() readonly keyupEnter = new EventEmitter<Event>();
 	@Output() readonly namesChanged = new EventEmitter<IName>();
+	@Output() readonly next = new EventEmitter<Event>();
 
 	private initialNameChange = true;
 	private isFullNameChanged = false;
@@ -241,5 +244,13 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		if (this.namesForm?.valid) {
 			this.keyupEnter.emit(event);
 		}
+	}
+
+	public get canGoNext(): boolean {
+		return !isNameEmpty(this.name);
+	}
+
+	public onNext(event: Event): void {
+		this.next.emit(event);
 	}
 }

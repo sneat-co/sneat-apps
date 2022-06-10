@@ -23,6 +23,7 @@ export class PhonesFormComponent implements OnChanges {
 
 	@Input() disabled = false;
 
+	@Input() hideHeader = false;
 	@Input() isActiveInWizard = false;
 
 	readonly types = phoneTypes;

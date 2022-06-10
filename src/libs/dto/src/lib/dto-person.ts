@@ -20,7 +20,7 @@ export function trimNames(n: IName): IName {
 		last = n.last?.trim(),
 		full = n.full?.trim();
 	if (first !== n?.first || last !== n?.last || middle != n.middle || full != n.full) {
-		n = {first, middle, last, full};
+		n = { first, middle, last, full };
 	}
 	return n;
 }
@@ -77,11 +77,23 @@ export interface IPersonRequirements {
 }
 
 export function isPersonNotReady(p: IPerson, requires: IPersonRequirements): boolean {
-	return !!requires.ageGroup && !p.ageGroup || isNameEmpty(p.name);
+	return isNameEmpty(p.name) ||
+		!!requires.lastName?.required && !p.name?.last ||
+		!!requires.ageGroup?.required && !p.ageGroup ||
+		!!requires.gender?.required && !p.gender;
 }
 
+export function isPersonReady(p: IPerson, requires: IPersonRequirements): boolean {
+	return !isPersonNotReady(p, requires);
+}
+
+
 export function isRelatedPersonNotReady(p: IRelatedPerson, requires: IPersonRequirements): boolean {
-	return isPersonNotReady(p, requires);
+	return isPersonNotReady(p, requires) || !!requires.relatedAs?.required && !p.relationship;
+}
+
+export function isRelatedPersonReady(p: IPerson, requires: IPersonRequirements): boolean {
+	return !isRelatedPersonNotReady(p, requires);
 }
 
 export const emptyRelatedPerson = emptyPersonBase;

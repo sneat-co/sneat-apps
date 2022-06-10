@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { formNexInAnimation } from '@sneat/animations';
+import { IFormField } from '@sneat/core';
 import {
 	AgeGroup,
 	emptyRelatedPerson,
@@ -12,7 +13,6 @@ import {
 	isNameEmpty,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { IFormField } from '@sneat/core';
 import { GenderFormComponent } from './gender-form/gender-form.component';
 import { INamesFormFields, NamesFormComponent } from './names-form/names-form.component';
 
@@ -57,19 +57,21 @@ export class PersonFormWizardComponent {
 	public isReadyToSubmit = false;
 	@Output() readonly isReadyToSubmitChange = new EventEmitter<boolean>();
 
-	public show: personWizardState = { name: false, gender: true };
+	public show: personWizardState = { name: true, gender: false };
 
-	public wizardStep: keyof personWizardState = 'name';
+	public wizardStep: WizardItem = 'name';
+
+	tab?: 'emails' | 'phones' = 'emails';
 
 	@ViewChild(NamesFormComponent) namesFormComponent?: NamesFormComponent;
 	@ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
 
-	private readonly formOrder: readonly (keyof personWizardState)[] = [
+	private readonly formOrder: readonly WizardItem[] = [
 		'name',
 		'gender',
 		'ageGroup',
 		'relatedAs',
-		// 'roles',
+		'roles',
 		'emails',
 		'phones',
 		'submitButton',
@@ -81,7 +83,7 @@ export class PersonFormWizardComponent {
 	}
 
 
-	private setRelatedPerson(relatedPerson: IRelatedPerson, changedProp: { name: keyof personWizardState; hasValue: boolean }): void {
+	private setRelatedPerson(relatedPerson: IRelatedPerson, changedProp: { name: WizardItem; hasValue: boolean }): void {
 		this.relatedPerson = relatedPerson;
 		this.relatedPersonChange.emit(relatedPerson);
 		if (changedProp.hasValue) {
@@ -101,11 +103,11 @@ export class PersonFormWizardComponent {
 	}
 
 	onGenderChanged(gender?: Gender): void {
-		this.show = {...this.show, name: true};
 		this.setRelatedPerson(
 			{ ...this.relatedPerson, gender },
 			{ name: 'gender', hasValue: !!gender },
 		);
+		this.openNext('gender');
 	}
 
 
@@ -168,6 +170,7 @@ export class PersonFormWizardComponent {
 			return;
 		}
 		this.openNext('name');
+		this.show = {...this.show, nameNext: false};
 	}
 
 	public openNext(changedPropName: keyof personWizardState): void {
@@ -183,12 +186,15 @@ export class PersonFormWizardComponent {
 				return;
 			}
 			const nextName = this.formOrder[i+1];
-			if (this.requires[nextName as keyof IPersonRequirements] !== 'excluded') {
+			if (!this.requires[nextName as keyof IPersonRequirements]?.hide) {
 				if (!this.show[nextName]) {
 					this.show = {...this.show, [nextName]: true};
 					this.wizardStep = nextName;
 				}
 				break;
+			}
+			if (nextName === 'emails' || nextName === 'phones') {
+				this.tab = nextName;
 			}
 			changedPropName = nextName;
 		}

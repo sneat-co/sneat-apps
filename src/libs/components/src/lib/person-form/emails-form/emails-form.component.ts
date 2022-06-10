@@ -25,6 +25,7 @@ const emptyEmails: emailInput[] = [
 export class EmailsFormComponent implements OnChanges {
 	readonly types = emailTypes;
 
+	@Input() hideHeader = false;
 	@Input() isActiveInWizard = false;
 	@Input() disabled = false;
 

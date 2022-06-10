@@ -1,6 +1,6 @@
 <ion-card>
 
-	<ion-item-divider [color]="isActiveInWizard ? 'primary' : 'light'">
+	<ion-item-divider *ngIf="!hideHeader" [color]="isActiveInWizard ? 'primary' : 'light'">
 		<ion-label>
 			<ion-icon name="call" class="ion-margin-end"></ion-icon>
 			Phone numbers
@@ -14,6 +14,7 @@
 			<ion-col size="auto">
 				<ion-item>
 					<ion-select interface="popover"
+											[disabled]="true"
 											[value]="phone.type"
 											(ionChange)="typeChanged($event, i)"
 					>
