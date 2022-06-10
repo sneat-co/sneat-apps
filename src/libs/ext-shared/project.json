@@ -1,0 +1,41 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/ext-shared/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/ext-shared"],
+      "options": {
+        "project": "libs/ext-shared/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ext-shared/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ext-shared/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ext-shared"],
+      "options": {
+        "jestConfig": "libs/ext-shared/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/ext-shared/**/*.ts",
+          "libs/ext-shared/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

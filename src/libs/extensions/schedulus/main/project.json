@@ -1,0 +1,41 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/extensions/schedulus/main/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/extensions/schedulus/main"],
+      "options": {
+        "project": "libs/extensions/schedulus/main/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/extensions/schedulus/main"],
+      "options": {
+        "jestConfig": "libs/extensions/schedulus/main/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/extensions/schedulus/main/**/*.ts",
+          "libs/extensions/schedulus/main/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

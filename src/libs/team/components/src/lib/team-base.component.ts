@@ -146,7 +146,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		return `${this.className} extends TeamBaseComponent`;
 	}
 
-	protected unsubscribe(reason: string): void {
+	protected unsubscribe(reason?: string): void {
 		// console.log(`unsubscribe(reason: ${reason})`);
 		this.subs.unsubscribe();
 	}

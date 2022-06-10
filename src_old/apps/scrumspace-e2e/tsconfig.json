@@ -1,0 +1,10 @@
+{
+	"extends": "../../old-tsconfig.json",
+	"files": [],
+	"include": [],
+	"references": [
+		{
+			"path": "./tsconfig.e2e.json"
+		}
+	]
+}

@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ScrumPageComponent } from './scrum-page.component';
-import { TeamService } from '../../services/team.service';
-import { UserService } from '../../services/user-service';
+// import { TeamService } from '../../services/team.service';
+// import { UserService } from '../../services/user-service';
 import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../environments/environment';
+// import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -21,9 +21,9 @@ describe('ScrumPage', () => {
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
 					RouterTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
+					// AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
-				providers: [TeamService, UserService],
+				// providers: [TeamService, UserService],
 			}).compileComponents();
 
 			fixture = TestBed.createComponent(ScrumPageComponent);

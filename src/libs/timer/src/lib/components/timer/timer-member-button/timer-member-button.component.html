@@ -6,7 +6,7 @@
 	<ion-spinner
 		name="lines-small"
 		*ngIf="
-			(timerState?.isToggling && timerState.activeMemberId === memberId) ||
+			(timerState?.isToggling && timerState?.activeMemberId === memberId) ||
 			!timerState
 		"
 	></ion-spinner>

@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
-import { ScrumPageRoutingModule } from './scrum-page/scrum-routing.module';
+import { ScrumPageRoutingModule } from './scrum-page/scrum-page-routing.module';
 
 import { ScrumPageComponent } from './scrum-page/scrum-page.component';
 import { ScrumCardComponent } from './components/scrum-card/scrum-card.component';
@@ -13,7 +12,7 @@ import { SrumQnaComponent } from './components/srum-qna/srum-qna.component';
 import { ScrumBlockersComponent } from './components/scrum-blockers/scrum-blockers.component';
 import { MetricsComponent } from './components/metrics/metrics.component';
 import { ScrumTaskComponent } from './components/scrum-task/scrum-task.component';
-import { TimerModule } from '@sneat/timer';
+// import { TimerModule } from '@sneat/timer';
 
 @NgModule({
 	imports: [
@@ -22,7 +21,7 @@ import { TimerModule } from '@sneat/timer';
 		ReactiveFormsModule,
 		IonicModule,
 		ScrumPageRoutingModule,
-		TimerModule,
+		// TimerModule,
 	],
 	declarations: [
 		ScrumPageComponent,
