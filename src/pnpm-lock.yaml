@@ -60,7 +60,7 @@ specifiers:
   codemirror: 5.65.5
   cypress: 10.0.3
   date-fns: 2.28.0
-  dnd-core: 10.0.2
+  dnd-core: 16.0.1
   dotenv: 16.0.1
   ejs: 3.1.8
   engine.io: 6.2.0
@@ -99,8 +99,8 @@ specifiers:
   zone.js: 0.11.5
 
 dependencies:
-  '@angular-dnd/core': 0.0.25_pz6knsbl2c4zqfztutvgtnhhmm
-  '@angular-dnd/tree': 0.0.25_yi4u57u4wdeo6dpiz4opnol5dy
+  '@angular-dnd/core': 0.0.25_iouqlzuobicv5tqqy3jm7bdosa
+  '@angular-dnd/tree': 0.0.25_irydrmnxegxcklgeqjot2nd2nu
   '@angular/animations': 14.0.1_@angular+core@14.0.1
   '@angular/common': 14.0.1_sc2cxsu4vfcn33t2tbzpvm4ohe
   '@angular/compiler': 14.0.1_@angular+core@14.0.1
@@ -125,7 +125,7 @@ dependencies:
   '@sneat/wormhole': 0.0.6_x4j7wrj2gwckj73g5cgp5mf2fu
   codemirror: 5.65.5
   date-fns: 2.28.0
-  dnd-core: 10.0.2
+  dnd-core: 16.0.1
   firebase: 9.8.3
   hogan.js: 3.0.2
   idb: 7.0.1
@@ -455,7 +455,7 @@ packages:
     transitivePeerDependencies:
       - chokidar
 
-  /@angular-dnd/core/0.0.25_pz6knsbl2c4zqfztutvgtnhhmm:
+  /@angular-dnd/core/0.0.25_iouqlzuobicv5tqqy3jm7bdosa:
     resolution: {integrity: sha512-QpL7sYcEUVxXEsoLJoY9VkbseFiptd249dzFHbjuBtBlWxLM1I/p3CTPWt51jep5T5/b1Bnng6FEi/YDaUaDoQ==}
     peerDependencies:
       '@angular/common': ^10.0.1
@@ -468,13 +468,13 @@ packages:
       '@angular/common': 14.0.1_sc2cxsu4vfcn33t2tbzpvm4ohe
       '@angular/core': 14.0.1_rxjs@7.5.5+zone.js@0.11.5
       '@sneat-dnd/core': 0.1.1_x4j7wrj2gwckj73g5cgp5mf2fu
-      dnd-core: 10.0.2
+      dnd-core: 16.0.1
       rxjs: 7.5.5
       tslib: 2.4.0
       zone.js: 0.11.5
     dev: false
 
-  /@angular-dnd/tree/0.0.25_yi4u57u4wdeo6dpiz4opnol5dy:
+  /@angular-dnd/tree/0.0.25_irydrmnxegxcklgeqjot2nd2nu:
     resolution: {integrity: sha512-+/Bc0c9n6Vc2Z5KIPTaUBYGgCIeHD91bGZciEUz8hIZkNgGtTu0cZRJpcE+uAEHDckcPU+tHUU4ChqDXOTLNPQ==}
     peerDependencies:
       '@angular-dnd/core': ^0.0.16
@@ -486,12 +486,12 @@ packages:
       rxjs: ~6.5.1
       zone.js: ~0.10.3
     dependencies:
-      '@angular-dnd/core': 0.0.25_pz6knsbl2c4zqfztutvgtnhhmm
+      '@angular-dnd/core': 0.0.25_iouqlzuobicv5tqqy3jm7bdosa
       '@angular/common': 14.0.1_sc2cxsu4vfcn33t2tbzpvm4ohe
       '@angular/core': 14.0.1_rxjs@7.5.5+zone.js@0.11.5
       '@sneat-dnd/core': 0.1.1_x4j7wrj2gwckj73g5cgp5mf2fu
       '@sneat-dnd/tree': 0.1.1_sbtxsvw7ynvjcq3rxqojjmx77m
-      dnd-core: 10.0.2
+      dnd-core: 16.0.1
       rxjs: 7.5.5
       tslib: 2.4.0
       zone.js: 0.11.5
@@ -4865,12 +4865,12 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@react-dnd/asap/4.0.1:
-    resolution: {integrity: sha512-kLy0PJDDwvwwTXxqTFNAAllPHD73AycE9ypWeln/IguoGBEbvFcPDbCV03G52bEcC5E+YgupBE0VzHGdC8SIXg==}
+  /@react-dnd/asap/5.0.2:
+    resolution: {integrity: sha512-WLyfoHvxhs0V9U+GTsGilGgf2QsPl6ZZ44fnv0/b8T3nQyvzxidxsg/ZltbWssbsRDlYW8UKSQMTGotuTotZ6A==}
     dev: false
 
-  /@react-dnd/invariant/2.0.0:
-    resolution: {integrity: sha512-xL4RCQBCBDJ+GRwKTFhGUW8GXa4yoDfJrPbLblc3U09ciS+9ZJXJ3Qrcs/x2IODOdIE5kQxvMmE2UKyqUictUw==}
+  /@react-dnd/invariant/4.0.2:
+    resolution: {integrity: sha512-xKCTqAK/FFauOM9Ta2pswIyT3D8AQlfrYdOi/toTPEhqCuAs1v5tcJ3Y08Izh1cJ5Jchwy9SeAXmMg6zrKs2iw==}
     dev: false
 
   /@rollup/plugin-json/4.1.0_rollup@2.75.6:
@@ -7566,11 +7566,11 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /dnd-core/10.0.2:
-    resolution: {integrity: sha512-PrxEjxF0+6Y1n1n1Z9hSWZ1tvnDXv9syL+BccV1r1RC08uWNsyetf8AnWmUF3NgYPwy0HKQJwTqGkZK+1NlaFA==}
+  /dnd-core/16.0.1:
+    resolution: {integrity: sha512-HK294sl7tbw6F6IeuK16YSBUoorvHpY8RHO+9yFfaJyCDVb6n7PRcezrOEOa2SBCqiYpemh5Jx20ZcjKdFAVng==}
     dependencies:
-      '@react-dnd/asap': 4.0.1
-      '@react-dnd/invariant': 2.0.0
+      '@react-dnd/asap': 5.0.2
+      '@react-dnd/invariant': 4.0.2
       redux: 4.2.0
     dev: false
 
