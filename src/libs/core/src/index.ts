@@ -11,3 +11,4 @@ export * from './lib/core-providers';
 export * from './lib/utils';
 export * from './lib/eq';
 export * from './lib/sneat-extensions';
+export * from './lib/form-field';

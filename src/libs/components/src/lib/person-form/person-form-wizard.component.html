@@ -37,14 +37,14 @@
 									[team]="team"
 ></sneat-roles-form>
 
-<sneat-emails-form *ngIf="requires.email !== 'excluded' && show.emails"
+<sneat-emails-form *ngIf="!requires.email?.hide && show.emails"
 									 [isActiveInWizard]="wizardStep === 'emails'"
 									 [emails]="relatedPerson.emails"
 									 (emailsChange)="onEmailsChanged($event)"
 ></sneat-emails-form>
 
 
-<sneat-phones-form *ngIf="requires.phone !== 'excluded' && show.phones"
+<sneat-phones-form *ngIf="!requires.phone?.hide && show.phones"
 									 [isActiveInWizard]="wizardStep === 'phones'"
 									 [phones]="relatedPerson.phones"
 									 (phonesChange)="onPhoneChanged($event)"

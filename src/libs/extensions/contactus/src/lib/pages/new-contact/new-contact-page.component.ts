@@ -35,8 +35,8 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
 
 	public readonly personRequires: IPersonRequirements = {
-		ageGroup: 'excluded',
-		relatedAs: 'excluded',
+		ageGroup: {hide: true},
+		relatedAs: {hide: true},
 	};
 
 	public relation?: ContactToMemberRelation;

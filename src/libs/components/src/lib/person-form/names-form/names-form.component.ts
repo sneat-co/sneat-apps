@@ -15,7 +15,7 @@ import { excludeEmpty } from '@sneat/core';
 import { IName, isNameEmpty } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { createSetFocusToInput } from '../../focus';
-import { IFormField } from '../../form-field';
+import { IFormField } from '@sneat/core';
 
 const isNamesFormValid = (control: AbstractControl): ValidationErrors | null => {
 	const formGroup = control as UntypedFormGroup;

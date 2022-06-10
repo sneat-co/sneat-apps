@@ -12,12 +12,12 @@ import {
 	isNameEmpty,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { IFormField } from '../form-field';
+import { IFormField } from '@sneat/core';
 import { GenderFormComponent } from './gender-form/gender-form.component';
 import { INamesFormFields, NamesFormComponent } from './names-form/names-form.component';
 
 
-interface show {
+interface show { // wizard state
 	readonly name: boolean;
 	readonly nameNext?: boolean;
 	readonly gender?: boolean;

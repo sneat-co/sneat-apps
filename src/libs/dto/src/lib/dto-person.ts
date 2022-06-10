@@ -1,3 +1,4 @@
+import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
 import { AgeGroup, Gender } from './types';
 
@@ -66,12 +67,13 @@ export interface IRelatedPerson extends IPerson {
 export type RequirementOption = 'required' | 'optional' | 'excluded';
 
 export interface IPersonRequirements {
-	readonly ageGroup?: RequirementOption;
-	readonly gender?: RequirementOption;
-	readonly phone?: RequirementOption;
-	readonly email?: RequirementOption;
-	readonly relatedAs?: RequirementOption;
-	readonly roles?: RequirementOption;
+	readonly lastName?: IFormField;
+	readonly ageGroup?: IFormField;
+	readonly gender?: IFormField;
+	readonly phone?: IFormField;
+	readonly email?: IFormField;
+	readonly relatedAs?: IFormField;
+	readonly roles?: IFormField;
 }
 
 export function isPersonNotReady(p: IPerson, requires: IPersonRequirements): boolean {

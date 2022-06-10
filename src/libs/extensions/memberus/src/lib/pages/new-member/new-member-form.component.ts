@@ -28,8 +28,8 @@ import { MemberComponentBaseParams } from '../../member-component-base-params';
 export class NewMemberFormComponent {
 
 	public readonly personRequirements: IPersonRequirements = {
-		ageGroup: 'required',
-		gender: 'required',
+		ageGroup: {required: true},
+		gender: {required: true},
 	};
 	private readonly hasNavHistory: boolean;
 	public disabled = false;
