@@ -11,6 +11,7 @@
 		</ion-radio-group>
 	</ion-item-group>
 	<ion-item *ngIf="relationship">
+		<ion-icon name="people-outline" slot="start"></ion-icon>
 		<ion-label color="medium" position="stacked">{{label}}</ion-label>
 		<ion-select [(ngModel)]="relationship" interface="popover">
 			<ion-select-option *ngFor="let rel of relationships" [value]="rel.id">{{rel.title}}</ion-select-option>

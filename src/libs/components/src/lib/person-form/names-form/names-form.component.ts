@@ -10,7 +10,7 @@ import {
 	ValidationErrors,
 	Validators,
 } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
+import { IonButton, IonInput } from '@ionic/angular';
 import { excludeEmpty } from '@sneat/core';
 import { IName, isNameEmpty } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -57,7 +57,10 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
 	@ViewChild('lastNameInput', { static: true }) lastNameInput?: IonInput;
+	@ViewChild('middleNameInput', { static: true }) middleNameInput?: IonInput;
 	@ViewChild('fullNameInput', { static: true }) fullNameInput?: IonInput;
+
+	// @ViewChild('nextButton', {static: false}) nextButton?: IonButton;
 
 	@Output() readonly keyupEnter = new EventEmitter<Event>();
 	@Output() readonly namesChanged = new EventEmitter<IName>();
@@ -102,7 +105,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		return !!(this.firstName.value || this.lastName.value || this.fullName.value);
 	}
 
-	public setFocusToInput(input: IonInput, delay = 1000): void {
+	private setFocusToInput(input: IonInput, delay = 333): void {
 		const setFocusTo = createSetFocusToInput(this.errorLogger);
 		setFocusTo(input, delay);
 	};
@@ -148,15 +151,19 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 			this.initialNameChange = false;
 			if (!this.firstName.value) {
 				this.inputToFocus = this.firstNameInput;
-			}
-			if (!this.lastName.value) {
+			} else if (!this.lastName.value) {
 				this.inputToFocus = this.lastNameInput;
+			} else if (!this.middleName.value) {
+				this.inputToFocus = this.middleNameInput;
+			} else if (!this.fullName.value) {
+				this.inputToFocus = this.fullNameInput;
 			}
 			if (this.isViewInitiated && this.inputToFocus) {
 				this.setFocusToInput(this.inputToFocus);
 			}
 		}
 	}
+
 	private onInputChangeFields(): void {
 		this.lastName.clearValidators();
 		const validators = [maxNameLenValidator];
@@ -243,6 +250,9 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	public nameKeyupEnter(event: Event): void {
 		if (this.namesForm?.valid) {
 			this.keyupEnter.emit(event);
+		}
+		if (this.canGoNext) {
+			this.next.emit(event);
 		}
 	}
 

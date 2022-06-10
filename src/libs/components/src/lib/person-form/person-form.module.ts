@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '../pipes';
-import { AgeGroupComponent } from './age-group/age-group.component';
+import { AgeGroupFormComponent } from './age-group/age-group-form.component';
 import { PersonFormWizardComponent } from './person-form-wizard.component';
 import { EmailsFormComponent } from './emails-form/emails-form.component';
 import { NamesFormComponent } from './names-form/names-form.component';
@@ -20,7 +20,7 @@ import { RolesFormComponent } from './roles-form/roles-form.component';
 		NamesFormComponent,
 		PhonesFormComponent,
 		GenderFormComponent,
-		AgeGroupComponent,
+		AgeGroupFormComponent,
 		RolesFormComponent,
 		RelationshipFormComponent,
 	],

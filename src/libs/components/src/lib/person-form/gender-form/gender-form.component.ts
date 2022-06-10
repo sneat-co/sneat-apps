@@ -8,7 +8,7 @@ const animationTimings = '150ms';
 type GenderOption = { id: Gender; title: string; icon: string; emoji?: string };
 
 const gendersOptions: GenderOption[] = [
-	{ id: 'male', title: 'Male', icon: 'man-outline', emoji: '👨'},
+	{ id: 'male', title: 'Male', icon: 'man-outline', emoji: '👨' },
 	{ id: 'female', title: 'Female', icon: 'woman-outline', emoji: '👩' },
 	{ id: 'other', title: 'Other', icon: 'person-outline' },
 	{ id: 'unknown', title: 'Unknown', icon: 'person-circle-outline' },
@@ -43,26 +43,28 @@ export class GenderFormComponent {
 	@Input() genderID?: Gender;
 	@Output() genderChange = new EventEmitter<Gender>();
 
+	// @ViewChild(IonRadioGroup, { static: true }) radioGroup?: IonRadioGroup;
+
 	gender?: GenderOption;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		// private readonly elemRef: ElementRef,
 	) {
 	}
 
-	genderColor(gender: Gender):  'medium' | 'dark' | 'danger' | 'primary' {
-		switch (gender) {
-			case 'male':
-				return 'primary';
-			case 'female':
-				return 'danger';
-			case 'unknown':
-				return 'medium';
-			case 'undisclosed':
-				return 'medium';
-		}
-		return 'dark';
-	}
+	// ngAfterViewInit(): void {
+	// 	const el = this.elemRef.nativeElement as Element;
+	// 	setTimeout(() => {
+	// 		const inputs = el.querySelectorAll('input');
+	// 		if (inputs.length > 0) {
+	// 			inputs[0].focus();
+	// 		}
+	// 		console.log('el', el, 'inputs', inputs);
+	// 	}, 1000);
+	// }
+
+
 
 	onGenderChanged(): void {
 		this.gender = this.genders.find(gender => gender.id === this.genderID);

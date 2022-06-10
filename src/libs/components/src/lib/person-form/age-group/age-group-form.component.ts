@@ -4,12 +4,12 @@ import { AgeGroup } from '@sneat/dto';
 
 @Component({
 	selector: 'sneat-age-group-form',
-	templateUrl: 'age-group.component.html',
+	templateUrl: 'age-group-form.component.html',
 	animations: [
 		formNexInAnimation,
 	],
 })
-export class AgeGroupComponent {
+export class AgeGroupFormComponent {
 	@Input() ageGroup?: AgeGroup;
 	@Output() readonly ageGroupChange = new EventEmitter<AgeGroup|undefined>();
 

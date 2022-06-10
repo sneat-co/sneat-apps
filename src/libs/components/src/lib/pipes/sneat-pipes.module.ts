@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { GenderEmojiPipe, GenderIconNamePipe } from './gender.pipes';
+import { GenderColorPipe, GenderEmojiPipe, GenderIconNamePipe } from './gender.pipes';
 import { LongMonthNamePipe } from './long-month-name.pipe';
 import { MemberTitle } from './member-title.pipe';
 import { PersonTitle } from './person-title.pipe';
@@ -17,6 +17,7 @@ const pipes: any[] = [
 	PersonTitle,
 	GenderIconNamePipe,
 	GenderEmojiPipe,
+	GenderColorPipe,
 	SelectedMembersPipe,
 ];
 

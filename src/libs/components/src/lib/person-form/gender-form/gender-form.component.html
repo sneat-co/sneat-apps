@@ -7,22 +7,21 @@
 			<ion-item *ngFor="let gender of genders">
 				<ion-icon *ngIf="gender.icon"
 									[name]="gender.id|genderIconName"
-									[color]="genderColor(gender.id)"
+									[color]="gender.id|genderColor"
 									slot="start"></ion-icon>
-				<ion-label [color]="genderColor(gender.id)">{{gender.title}}</ion-label>
+				<ion-label [color]="gender.id|genderColor">{{gender.title}}</ion-label>
 				<ion-radio [value]="gender.id" slot="end"></ion-radio>
 			</ion-item>
 		</ion-radio-group>
 	</ion-item-group>
 	<ion-item *ngIf="genderID" @selectIn>
-		<ion-icon [color]="genderColor(genderID)" [name]="gender?.icon" *ngIf="gender" slot="start"></ion-icon>
-		<ion-label color="medium">Gender</ion-label>
+		<ion-icon [color]="genderID|genderColor" [name]="gender?.icon" *ngIf="gender" slot="start"></ion-icon>
+		<ion-label color="medium" position="stacked">Gender</ion-label>
 		<ion-select [(ngModel)]="genderID"
 								interface="popover"
 								(ionChange)="onGenderChanged()"
 		>
 			<ion-select-option *ngFor="let g of genders" [value]="g.id">
-				{{g.emoji}}
 				{{g.title}}
 			</ion-select-option>
 		</ion-select>

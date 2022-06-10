@@ -32,3 +32,22 @@ export class GenderEmojiPipe implements PipeTransform {
 		return 'person-outline';
 	}
 }
+
+@Pipe({name: 'genderColor'})
+export class GenderColorPipe implements PipeTransform {
+	transform(gender?: Gender): 'medium' | 'warning' | 'dark' | 'danger' | 'primary' {
+		switch (gender) {
+			case 'male':
+				return 'primary';
+			case 'female':
+				return 'danger';
+			case 'other':
+				return 'warning';
+			case 'unknown':
+				return 'medium';
+			case 'undisclosed':
+				return 'medium';
+		}
+		return 'dark';
+	}
+}

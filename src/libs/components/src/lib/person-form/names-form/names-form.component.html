@@ -23,7 +23,8 @@
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium">Middle name</ion-label>
-		<ion-input name="medium_name"
+		<ion-input #middleNameInput
+							 name="medium_name"
 							 [formControl]="middleName"
 							 (keyup.enter)="nameKeyupEnter($event)"
 							 (ionChange)="onNameChanged($event)"
@@ -40,7 +41,7 @@
 	</ion-item>
 </ion-card>
 
-<ion-button *ngIf="showNextButton && isActive"
+<ion-button #nextButton *ngIf="showNextButton && isActive"
 						class="ion-margin"
 						size="medium"
 						[color]="canGoNext ? 'primary' : 'medium'"
