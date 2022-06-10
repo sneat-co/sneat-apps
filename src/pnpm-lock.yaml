@@ -71,7 +71,7 @@ specifiers:
   hogan.js: 3.0.2
   idb: 7.0.1
   ionicons: 6.0.2
-  jasmine-core: 4.1.1
+  jasmine-core: 4.2.0
   jest: 28.1.1
   jest-preset-angular: 12.1.0
   karma: 6.3.20
@@ -176,14 +176,14 @@ devDependencies:
   eslint: 8.17.0
   eslint-config-prettier: 8.5.0_eslint@8.17.0
   follow-redirects: 1.15.1
-  jasmine-core: 4.1.1
+  jasmine-core: 4.2.0
   jest: 28.1.1_sxvwizcnvn4mgz6mpodobsoami
   jest-preset-angular: 12.1.0_jzbjkadyxnyv7wgwqta4fefu7m
   karma: 6.3.20
   karma-chrome-launcher: 3.1.1
   karma-coverage-istanbul-reporter: 3.0.3
   karma-jasmine: 5.0.1_karma@6.3.20
-  karma-jasmine-html-reporter: 2.0.0_vkuxrcz7dkokejy2pe2kfqtj5q
+  karma-jasmine-html-reporter: 2.0.0_txrm45gcwwenhsaq4lv3lvvaru
   ng-packagr: 14.0.1_nnbqtahli6o3srh34nkde6epxi
   node-forge: 1.3.1
   nx: 14.2.4
@@ -9457,8 +9457,8 @@ packages:
       filelist: 1.0.2
       minimatch: 3.1.2
 
-  /jasmine-core/4.1.1:
-    resolution: {integrity: sha512-lmUfT5XcK9KKvt3lLYzn93hc4MGzlUBowExFVgzbSW0ZCrdeyS574dfsyfRhxbg81Wj4gk+RxUiTnj7KBfDA1g==}
+  /jasmine-core/4.2.0:
+    resolution: {integrity: sha512-OcFpBrIhnbmb9wfI8cqPSJ50pv3Wg4/NSgoZIqHzIwO/2a9qivJWzv8hUvaREIMYYJBas6AvfXATFdVuzzCqVw==}
     dev: true
 
   /jasmine-marbles/0.8.4_rxjs@7.5.5:
@@ -10504,14 +10504,14 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter/2.0.0_vkuxrcz7dkokejy2pe2kfqtj5q:
+  /karma-jasmine-html-reporter/2.0.0_txrm45gcwwenhsaq4lv3lvvaru:
     resolution: {integrity: sha512-SB8HNNiazAHXM1vGEzf8/tSyEhkfxuDdhYdPBX2Mwgzt0OuF2gicApQ+uvXLID/gXyJQgvrM9+1/2SxZFUUDIA==}
     peerDependencies:
       jasmine-core: ^4.0.0
       karma: ^6.0.0
       karma-jasmine: ^5.0.0
     dependencies:
-      jasmine-core: 4.1.1
+      jasmine-core: 4.2.0
       karma: 6.3.20
       karma-jasmine: 5.0.1_karma@6.3.20
     dev: true
@@ -10522,7 +10522,7 @@ packages:
     peerDependencies:
       karma: ^6.0.0
     dependencies:
-      jasmine-core: 4.1.1
+      jasmine-core: 4.2.0
       karma: 6.3.20
     dev: true
 
