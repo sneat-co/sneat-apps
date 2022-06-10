@@ -186,21 +186,35 @@ export class PersonFormWizardComponent {
 				return;
 			}
 			const nextName = this.formOrder[i+1];
+			changedPropName = nextName;
 			if (!this.requires[nextName as keyof IPersonRequirements]?.hide) {
 				if (!this.show[nextName]) {
 					this.show = {...this.show, [nextName]: true};
 					this.wizardStep = nextName;
+					if (this.hasValue(nextName)) {
+						continue;
+					}
 				}
-				break;
+
+				break; // <---------- Exit point
 			}
-			if (nextName === 'emails' || nextName === 'phones') {
-				this.tab = nextName;
-			}
-			changedPropName = nextName;
 		}
 		if (this.show.submitButton) {
 			this.isReadyToSubmit = true;
 			this.isReadyToSubmitChange.emit();
 		}
+	}
+	private hasValue(name: WizardItem): boolean | undefined {
+		switch (name) {
+			case 'ageGroup':
+				return !!this.relatedPerson.ageGroup;
+			case 'gender':
+				return !!this.relatedPerson.gender;
+			case 'relatedAs':
+				return !!this.relatedPerson.relationship;
+			case 'roles':
+				return !!this.relatedPerson.roles?.length;
+		}
+		return undefined;
 	}
 }

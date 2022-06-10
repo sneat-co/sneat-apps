@@ -22,7 +22,7 @@
 ></sneat-age-group-form>
 
 <sneat-relationship-form *ngIf="!requires.relatedAs?.hide && show.relatedAs"
-												 [isActive]="wizardStep === 'roles'"
+												 [isActive]="wizardStep === 'relatedAs'"
 												 [disabled]="disabled"
 												 [team]="team"
 												 [ageGroup]="relatedPerson.ageGroup"
@@ -64,3 +64,5 @@
 <!--	<ion-label>Next</ion-label>-->
 <!--	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>-->
 <!--</ion-button>-->
+
+wizardStep: {{wizardStep}}
