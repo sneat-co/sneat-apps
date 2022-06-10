@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "sneat-app": "apps/sneat-app",
+    "sneat-app-e2e": "apps/sneat-app-e2e"
+  }
+}
