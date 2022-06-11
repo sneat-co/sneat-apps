@@ -26,6 +26,7 @@ import { SinglesTabComponent } from '../singles-tab/singles-tab.component';
 import { ScheduleWeekCardComponent } from '../schedule-week/schedule-week-card.component';
 import { ScheduleWeekTabComponent } from '../schedule-week/schedule-week-tab.component';
 import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title.component';
+import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title
 	],
 	declarations: [
 		ScheduleComponent,
+		SlotContextMenuComponent,
 		DaySlotItemComponent,
 		ScheduleDayComponent,
 		ScheduleWeekComponent,

@@ -1,4 +1,4 @@
-<ion-item button (click)="onSlotClicked($event)">
+<ion-item button (click)="onSlotClicked($event)" class="sneat-tiny-end-padding" [color]="color">
 	<ion-icon class="sneat-tiny-end-margin" [name]="slot?.happening?.brief?.type === 'recurring' ? 'calendar-outline' : 'today-outline'" slot="start"></ion-icon>
 	<ion-badge color="light" slot="start" class="sneat-small-end-margin" style="font-weight: normal; background-color: white;">
 		From {{slot?.timing?.start?.time}}
@@ -10,15 +10,15 @@
 			{{slot?.title}}
 		</span>
 
-		<sneat-members-as-badges
+		<sneat-members-as-badges *ngIf="mode === 'full'"
 			[members]="(slot?.happening?.brief?.memberIDs || [])|selectedMembers:team?.dto?.members"
 		></sneat-members-as-badges>
 
-		<p *ngIf="slot?.location?.title || slot?.location?.address">
+		<p *ngIf="mode === 'full' && (slot?.location?.title || slot?.location?.address)">
 			{{slot?.location?.title || slot?.location?.address}}
 		</p>
 		<!--<p>Ends at {{slot.time.ends}}</p>-->
-		<p *ngIf="slot?.participants?.length || slot?.levels?.length">
+		<p *ngIf="mode === 'full' && (slot?.participants?.length || slot?.levels?.length)">
 			<ng-container *ngIf="slot?.participants?.length">
 				<ion-badge color="light" style="margin-right: 0.5em"
 									 *ngFor="let participant of slot?.participants">
@@ -27,10 +27,13 @@
 			</ng-container>
 			<ng-container *ngIf="slot?.levels?.length">
 				<ion-badge color="light" style="margin-right: 0.5em" *ngFor="let level of slot?.levels">
-					🎚️ {{level[0].toUpperCase() + level.substr(1)}}
+					🎚️ {{level[0].toUpperCase() + level.substring(1)}}
 				</ion-badge>
 			</ng-container>
 		</p>
 	</ion-label>
+	<ion-buttons *ngIf="mode === 'full'">
+		<ion-button (click)="showContextMenu($event)">...</ion-button>
+	</ion-buttons>
 </ion-item>
 
