@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, MembersAsBadgesModule, SneatPipesModule } from '@sneat/components';
 import { MembersSelectorModule, TeamCoreComponentsModule } from '@sneat/team/components';
@@ -32,6 +33,7 @@ import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title
 		CommonModule,
 		IonicModule,
 		FormsModule,
+		RouterModule,
 		SneatPipesModule,
 		TeamCoreComponentsModule,
 		FilterItemModule,

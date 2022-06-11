@@ -250,7 +250,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			const prev = prevAll?.find(p => p.id === id);
 			const result: IHappeningWithUiState = { id, brief: brief, state: prev?.state || {} };
 			return result;
-		});
+		}) || [];
 		this.recurrings = this.filterRecurrings(this.filter || emptyScheduleFilter);
 	}
 
