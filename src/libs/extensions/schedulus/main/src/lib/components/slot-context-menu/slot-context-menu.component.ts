@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext } from '@sneat/team/models';
+import { IHappeningContext, ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-slot-context-menu',
@@ -21,5 +21,27 @@ export class SlotContextMenuComponent {
 	}
 	archive(): void {
 		console.log(`SlotContextMenuComponent.archive()`);
+	}
+	markCanceled(): void {
+		console.log(`SlotContextMenuComponent.markCanceled()`);
+	}
+
+	numberOfSlots(happening?: IHappeningContext): number {
+		let n = 0;
+		if (!happening) {
+			return n;
+		}
+		const brief = happening?.brief;
+		if (!brief) {
+			return n;
+		}
+		const slots = brief.slots;
+		if (!slots) {
+			return n;
+		}
+		slots.forEach(slot => {
+			slot.weekdays?.forEach(() => n++);
+		})
+		return n;
 	}
 }

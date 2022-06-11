@@ -11,17 +11,29 @@
 	<ion-icon name="person-add-outline" slot="start" color="secondary"></ion-icon>
 	<ion-label>Assign to contact</ion-label>
 </ion-item>
-<ion-item tappable (click)="archive()">
+<ion-item tappable (click)="markCanceled()">
 	<ion-icon name="archive-outline" slot="start" color="medium"></ion-icon>
 	<ion-label color="medium">Archive</ion-label>
 </ion-item>
 
 <ion-item tappable (click)="delete()">
+	<ion-icon name="close-circle-outline" slot="start" color="warning"></ion-icon>
+	<ion-label>Mark as canceled</ion-label>
+</ion-item>
+
+
+<ion-item tappable (click)="delete()" *ngIf="numberOfSlots(slot?.happening) > 1">
 	<ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
 	<ion-label>Delete slot</ion-label>
 </ion-item>
 
-<ion-item tappable (click)="delete()">
+<ion-item tappable *ngIf="slot?.happening?.brief?.type === 'recurring'" (click)="delete()">
 	<ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
-	<ion-label color="danger"><b>Delete recurring</b></ion-label>
+	<ion-label color="danger"><b>Delete recurring</b> ({{numberOfSlots(slot?.happening)}} slots)</ion-label>
 </ion-item>
+
+<ion-item tappable *ngIf="slot?.happening?.brief?.type === 'single'" (click)="delete()">
+	<ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
+	<ion-label color="danger"><b>Delete 1-timer</b></ion-label>
+</ion-item>
+
