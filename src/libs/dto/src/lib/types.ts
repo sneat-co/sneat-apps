@@ -14,7 +14,6 @@ export type Gender = 'male' | 'female' | 'undisclosed' | 'other' | 'unknown';
 export type Restriction = 'adults_only' | 'personal' | string;
 
 export type SneatRecordStatus = 'active' | 'archived' | 'deleted';
-export type HappeningStatus = SneatRecordStatus;
 export type ListStatus = SneatRecordStatus;
 
 export type CommuneType = TeamType;

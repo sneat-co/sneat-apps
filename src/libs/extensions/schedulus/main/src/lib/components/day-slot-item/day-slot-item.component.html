@@ -1,17 +1,29 @@
+<style>
+	.canceled {
+		text-decoration: line-through;
+			color: grey;
+	}
+</style>
 <ion-item button (click)="onSlotClicked($event)" class="sneat-tiny-end-padding" [color]="color">
-	<ion-icon class="sneat-tiny-end-margin" [name]="slot?.happening?.brief?.type === 'recurring' ? 'calendar-outline' : 'today-outline'" slot="start"></ion-icon>
-	<ion-badge color="light" slot="start" class="sneat-small-end-margin" style="font-weight: normal; background-color: white;">
+	<ion-icon class="sneat-tiny-end-margin"
+						[name]="slot?.happening?.brief?.type === 'recurring' ? 'calendar-outline' : 'today-outline'"
+						slot="start"></ion-icon>
+	<ion-badge color="light" slot="start" class="sneat-small-end-margin"
+						 style="font-weight: normal; background-color: white;">
 		From {{slot?.timing?.start?.time}}
 		<div style="font-size: small; color: #777; text-align: center" *ngIf="slot?.timing?.end">
 			<small>ends</small> {{slot?.timing?.end?.time}}</div>
 	</ion-badge>
 	<ion-label class="ion-text-wrap">
-		<span style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold">
+		<span style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
+					[class.canceled]="isCanceled"
+		>
 			{{slot?.title}}
 		</span>
+		<ion-text color="medium" *ngIf="isCanceled">&nbsp;&mdash; canceled</ion-text>
 
 		<sneat-members-as-badges *ngIf="mode === 'full'"
-			[members]="(slot?.happening?.brief?.memberIDs || [])|selectedMembers:team?.dto?.members"
+														 [members]="(slot?.happening?.brief?.memberIDs || [])|selectedMembers:team?.dto?.members"
 		></sneat-members-as-badges>
 
 		<p *ngIf="mode === 'full' && (slot?.location?.title || slot?.location?.address)">

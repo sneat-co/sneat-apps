@@ -1,39 +1,54 @@
 <sneat-day-slot-item [team]="team" [slot]="slot" color="light" mode="brief"></sneat-day-slot-item>
-<ion-item tappable (click)="edit()">
-	<ion-icon name="create-outline" slot="start" color="success"></ion-icon>
-	<ion-label>Edit</ion-label>
+<ion-item tappable (click)="edit()" [disabled]="disabled">
+	<ion-icon name="move-outline" slot="start" color="tertiary"></ion-icon>
+	<ion-label>Change date or time</ion-label>
 </ion-item>
-<ion-item tappable (click)="assign('member')">
+<!--<ion-item tappable (click)="edit()" [disabled]="disabled">-->
+<!--	<ion-icon name="create-outline" slot="start" color="success"></ion-icon>-->
+<!--	<ion-label>Edit</ion-label>-->
+<!--</ion-item>-->
+<ion-item tappable (click)="assign('member')" [disabled]="disabled">
 	<ion-icon name="person-add-outline" slot="start" color="primary"></ion-icon>
 	<ion-label>Assign to member</ion-label>
 </ion-item>
-<ion-item tappable (click)="assign('contact')">
-	<ion-icon name="person-add-outline" slot="start" color="secondary"></ion-icon>
-	<ion-label>Assign to contact</ion-label>
-</ion-item>
-<ion-item tappable (click)="markCanceled()">
-	<ion-icon name="archive-outline" slot="start" color="medium"></ion-icon>
-	<ion-label color="medium">Archive</ion-label>
-</ion-item>
+<!--<ion-item tappable (click)="assign('contact')" [disabled]="disabled">-->
+<!--	<ion-icon name="person-add-outline" slot="start" color="secondary"></ion-icon>-->
+<!--	<ion-label>Assign to contact</ion-label>-->
+<!--</ion-item>-->
 
-<ion-item tappable (click)="delete()">
+<!--<ion-item-divider color="light">-->
+<!--	<ion-label color="medium">Remove from calendar</ion-label>-->
+<!--</ion-item-divider>-->
+
+<!--<ion-item tappable (click)="markCanceled()" [disabled]="disabled">-->
+<!--	<ion-icon name="archive-outline" slot="start" color="medium"></ion-icon>-->
+<!--	<ion-label color="medium">Archive</ion-label>-->
+<!--</ion-item>-->
+
+<ion-item tappable (click)="markCanceled($event)" [disabled]="disabled">
 	<ion-icon name="close-circle-outline" slot="start" color="warning"></ion-icon>
-	<ion-label>Mark as canceled</ion-label>
+	<ion-label *ngIf="happeningState !== 'canceling'">Mark as canceled</ion-label>
+	<ion-label *ngIf="happeningState === 'canceling'">Marking as canceled...</ion-label>
+	<ion-spinner slot="end" *ngIf="happeningState === 'canceling'"></ion-spinner>
 </ion-item>
 
 
-<ion-item tappable (click)="delete()" *ngIf="numberOfSlots(slot?.happening) > 1">
+<ion-item tappable (click)="delete($event)" *ngIf="numberOfSlots(slot?.happening) > 1" [disabled]="disabled">
 	<ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
 	<ion-label>Delete slot</ion-label>
 </ion-item>
 
-<ion-item tappable *ngIf="slot?.happening?.brief?.type === 'recurring'" (click)="delete()">
+<ion-item tappable (click)="delete($event)" [disabled]="disabled">
 	<ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
-	<ion-label color="danger"><b>Delete recurring</b> ({{numberOfSlots(slot?.happening)}} slots)</ion-label>
+	<ng-container *ngIf="slot?.happening?.brief?.type === 'recurring'">
+		<ion-label color="danger" *ngIf="happeningState !== 'deleting'"><b>Delete recurring</b> ({{numberOfSlots(slot?.happening)}} slots)</ion-label>
+		<ion-label color="danger" *ngIf="happeningState === 'deleting'"><b>Deleting recurring...</b> ({{numberOfSlots(slot?.happening)}} slots)</ion-label>
+	</ng-container>
+	<ng-container *ngIf="slot?.happening?.brief?.type === 'single'">
+		<ion-label color="danger" *ngIf="happeningState !== 'deleting'"><b>Delete 1-timer</b> ({{numberOfSlots(slot?.happening)}} slots)</ion-label>
+		<ion-label color="danger" *ngIf="happeningState === 'deleting'"><b>Deleting 1-timer...</b> ({{numberOfSlots(slot?.happening)}} slots)</ion-label>
+	</ng-container>
+	<ion-spinner slot="end" *ngIf="happeningState === 'deleting'"></ion-spinner>
 </ion-item>
 
-<ion-item tappable *ngIf="slot?.happening?.brief?.type === 'single'" (click)="delete()">
-	<ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
-	<ion-label color="danger"><b>Delete 1-timer</b></ion-label>
-</ion-item>
 

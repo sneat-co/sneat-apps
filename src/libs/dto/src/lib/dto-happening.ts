@@ -10,6 +10,7 @@ export interface ISlotParticipant {
 
 export interface IHappeningBase {
 	readonly type: HappeningType;
+	readonly status: HappeningStatus;
 	readonly kind: HappeningKind;
 	readonly activityType?: ActivityType; // TODO: Is it same as HappeningKind?
 	readonly title: string;
@@ -76,6 +77,8 @@ export function happeningBriefFromDto(id: string, dto: IHappeningDto): IHappenin
 }
 
 export type HappeningType = 'recurring' | 'single';
+
+export type HappeningStatus = 'draft' | 'active' | 'canceled' | 'archived';
 
 export type HappeningKind = 'appointment' | 'activity' | 'task';
 

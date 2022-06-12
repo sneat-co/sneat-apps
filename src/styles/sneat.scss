@@ -76,6 +76,10 @@
 //   }
 // }
 
+.canceled {
+  text-decoration: line-through;
+}
+
 ion-label.deleting-list-item {
 	text-decoration: line-through;
 }

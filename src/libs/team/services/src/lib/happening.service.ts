@@ -9,7 +9,7 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamRequest } from '@sneat/team/models';
-import { map, Observable, throwError } from 'rxjs';
+import { delay, map, Observable, of, throwError } from 'rxjs';
 import { TeamItemBaseService } from './team-item-base.service';
 
 export interface ICreateHappeningRequest {
@@ -29,6 +29,12 @@ export interface IHappeningMemberRequest extends ITeamRequest {
 
 export interface IHappeningSlotRequest extends IHappeningRequest {
 	slot: IHappeningSlot;
+}
+
+export interface ICancelHappeningRequest extends IHappeningRequest {
+	date?: string;
+	slotIDs?: string[];
+	reason?: string;
 }
 
 function processHappeningContext(h: IHappeningContext, teamID?: string): IHappeningContext {
@@ -76,6 +82,10 @@ export class HappeningService {
 			return throwError(() => e);
 		}
 		return this.sneatApiService.post('happenings/create_happening', request);
+	}
+
+	cancelHappening(request: ICancelHappeningRequest): Observable<void> {
+		return this.sneatApiService.post('happenings/cancel_happening', request);
 	}
 
 	deleteHappening(happening: IHappeningContext): Observable<void> {
