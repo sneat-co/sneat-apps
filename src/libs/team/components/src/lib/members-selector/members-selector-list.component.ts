@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext } from '@sneat/team/models';
-import { Observable } from 'rxjs';
+import { delay, first, Observable } from 'rxjs';
 
 @Component({
 	selector: 'sneat-members-selector-list',
@@ -16,11 +16,14 @@ export class MembersSelectorListComponent {
 	@Input() onAdded?: (member: IMemberContext) => Observable<void>;
 	@Input() onRemoved?: (member: IMemberContext) => Observable<void>;
 
+	disabledMemberIDs: string[] = [];
+
 	get useCheckbox(): boolean {
-		const max = this.max;
-		// The `!max && max !== 0` is to properly check for possible null
-		// that sometimes is not get caught by TypeScript
-		return !max && max !== 0 || max > 1;
+		return true;
+		// const max = this.max;
+		// // The `!max && max !== 0` is to properly check for possible null
+		// // that sometimes is not get caught by TypeScript
+		// return !max && max !== 0 || max > 1;
 	}
 
 	constructor(
@@ -35,8 +38,13 @@ export class MembersSelectorListComponent {
 		return !!this.selectedMembers?.some(m => m.id === member.id && m.team?.id === member?.team?.id);
 	}
 
+	isDisabled(memberID: string): boolean {
+		return this.disabledMemberIDs.indexOf(memberID) >= 0;
+	}
+
 	onRadioChanged(event: Event): void {
 		event.stopPropagation();
+		console.log('onRadioChanged()', event);
 		const selectedMembers = this.selectedMembers;
 		this.selectedMembers = [];
 		if (selectedMembers?.length) {
@@ -46,6 +54,7 @@ export class MembersSelectorListComponent {
 	}
 
 	onCheckboxChanged(event: Event): void {
+		console.log('onCheckboxChanged', event);
 		const ce = event as CustomEvent;
 		this.onIonChange(event, ce.detail.checked);
 	}
@@ -71,7 +80,7 @@ export class MembersSelectorListComponent {
 			changed = this.onMemberRemoved(member);
 		}
 		if (changed) {
-			this.selectedMembersChange.emit(this.selectedMembers || [])
+			this.selectedMembersChange.emit(this.selectedMembers || []);
 		}
 	}
 
@@ -90,9 +99,21 @@ export class MembersSelectorListComponent {
 				this.setSelectedMembers(selectedIDs);
 			}
 			if (this.onAdded) {
-				this.onAdded(member).subscribe({
-					error: this.errorLogger.logErrorHandler('Failed in onAdded handler'),
-				});
+				this.disabledMemberIDs.push(member.id);
+				this.onAdded(member)
+					.pipe(
+						first(),
+					)
+					.subscribe({
+						next: () => {
+							this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+						},
+						error: e => {
+							this.errorLogger.logError(e, 'Failed in onAdded handler');
+							this.selectedMembers = this.selectedMembers?.filter(m => m.id !== member.id);
+							this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+						},
+					});
 			}
 			return true;
 		}
@@ -100,6 +121,7 @@ export class MembersSelectorListComponent {
 	}
 
 	private readonly onMemberRemoved = (member: IMemberContext): boolean => {
+		console.log('MembersSelectorListComponent.onMemberRemoved()', member);
 		let selectedIDs = this.getSelectedMemberIDs();
 		if (!selectedIDs.includes(member.id)) {
 			return false;
@@ -107,8 +129,15 @@ export class MembersSelectorListComponent {
 		selectedIDs = selectedIDs.filter(id => id != member.id);
 		this.setSelectedMembers(selectedIDs);
 		if (this.onRemoved) {
+			this.disabledMemberIDs.push(member.id);
 			this.onRemoved(member).subscribe({
-				error: this.errorLogger.logErrorHandler('Failed in onRemoved handler'),
+				next: () => {
+					this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+				},
+				error: e => {
+					this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+					this.errorLogger.logError(e,'Failed in onRemoved handler')
+				},
 			});
 		}
 		return true;
@@ -123,7 +152,7 @@ export class MembersSelectorListComponent {
 				return;
 			}
 			selectedMembers.push(m);
-		})
+		});
 		this.selectedMembers = selectedMembers;
 		this.selectedMembersChange.emit(selectedMembers);
 		return selectedMembers;

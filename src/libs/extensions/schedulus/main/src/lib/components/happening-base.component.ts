@@ -192,14 +192,14 @@ This operation can NOT be undone.`)) {
 		await modal.present();
 	}
 
-	private readonly onMemberAdded = (teamID: string, memberID: string): Observable<void> => {
+	private readonly onMemberAdded = (member: IMemberContext): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
 		if (!this.team) {
 			return NEVER;
 		}
-		const result = this.happeningService.addMember(this.team.id, this.happening, memberID);
+		const result = this.happeningService.addMember(this.team.id, this.happening, member.id);
 		// result
 		// 	.pipe(takeUntil(this.destroyed))
 		// 	.subscribe({
@@ -210,14 +210,14 @@ This operation can NOT be undone.`)) {
 		return result;
 	};
 
-	private readonly onMemberRemoved = (teamID: string, memberID: string): Observable<void> => {
+	private readonly onMemberRemoved = (member: IMemberContext): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
 		if (!this.team) {
 			return NEVER;
 		}
-		return this.happeningService.removeMember(this.team?.id, this.happening, memberID);
+		return this.happeningService.removeMember(this.team?.id, this.happening, member.id);
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {

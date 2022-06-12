@@ -5,7 +5,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { memberContextFromBrief } from '@sneat/team/services';
 import { Observable, Subject } from 'rxjs';
-import { ISelectMembersOptions } from './member-selector.options';
+import { ISelectMembersOptions } from './members-selector.options';
 
 
 @Component({
@@ -18,8 +18,8 @@ export class MembersSelectorModalComponent implements ISelectMembersOptions {
 	@Input() members?: IMemberContext[];
 	@Input() selectedMembers?: IMemberContext[];
 	@Input() max?: number;
-	@Input() onAdded?: (teamID: string, memberID: string) => Observable<void>;
-	@Input() onRemoved?: (teamID: string, memberID: string) => Observable<void>;
+	@Input() onAdded?: (member: IMemberContext) => Observable<void>;
+	@Input() onRemoved?: (member: IMemberContext) => Observable<void>;
 
 
 	constructor(

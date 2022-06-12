@@ -7,7 +7,7 @@
 <!--	<ion-icon name="create-outline" slot="start" color="success"></ion-icon>-->
 <!--	<ion-label>Edit</ion-label>-->
 <!--</ion-item>-->
-<ion-item tappable (click)="assign('member')" [disabled]="disabled">
+<ion-item tappable (click)="assign($event,'member')" [disabled]="disabled">
 	<ion-icon name="person-add-outline" slot="start" color="primary"></ion-icon>
 	<ion-label>Assign to member</ion-label>
 </ion-item>

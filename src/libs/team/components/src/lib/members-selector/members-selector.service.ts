@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ModalOptions } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext } from '@sneat/team/models';
-import { ISelectMembersOptions } from './member-selector.options';
+import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorModalComponent } from './members-selector-modal.component';
 
 @Injectable()

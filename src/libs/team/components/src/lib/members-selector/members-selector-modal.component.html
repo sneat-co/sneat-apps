@@ -1,5 +1,5 @@
 <ion-item-group>
-	<ion-item-divider color="light" *ngIf="mode === 'modal'">
+	<ion-item-divider color="primary" *ngIf="mode === 'modal'">
 		<ion-label>Select members</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="close($event)">
@@ -11,5 +11,7 @@
 		[members]="members"
 		[max]="max"
 		[selectedMembers]="selectedMembers"
+		[onAdded]="onAdded"
+		[onRemoved]="onRemoved"
 	></sneat-members-selector-list>
 </ion-item-group>

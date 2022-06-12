@@ -13,6 +13,7 @@ export * from './team-item-base.component';
 export * from './team-items-base.component';
 export * from './invite-modal/invite-modal.module';
 export * from './invite-modal/invite-modal.component';
+export * from './members-selector/members-selector.options';
 export * from './members-selector/members-selector.service';
 export * from './members-selector/members-selector.module';
 export * from './members-selector/members-selector-list.component';

@@ -3,8 +3,10 @@ import { PopoverController } from '@ionic/angular';
 import { HappeningStatus } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { HappeningUIState, IHappeningContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService, ICancelHappeningRequest } from '@sneat/team/services';
+import { ISelectMembersOptions, MembersSelectorService } from '@sneat/team/components';
+import { HappeningUIState, IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
+import { HappeningService, ICancelHappeningRequest, memberContextFromBrief } from '@sneat/team/services';
+import { NEVER, Observable } from 'rxjs';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -33,12 +35,31 @@ export class SlotContextMenuComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
 		private readonly happeningService: HappeningService,
+		private readonly membersSelectorService: MembersSelectorService,
 	) {
 	}
 
-	assign(to: 'member' | 'contact'): void {
+	assign(event: Event, to: 'member' | 'contact'): void {
 		console.log(`SlotContextMenuComponent.assign(${to})`);
-		this.notImplemented();
+		event.stopPropagation();
+		event.preventDefault();
+		const team = this.team;
+		if (!team) {
+			return;
+		}
+		const members = this.team?.dto?.members?.map(mb => memberContextFromBrief(mb, team)) || [];
+		const selectedMembers = members.filter(m => this.happening?.brief?.memberIDs?.some(id => id === m.id));
+		const options: ISelectMembersOptions = {
+			members,
+			selectedMembers,
+			onAdded: this.onMemberAdded,
+			onRemoved: this.onMemberRemoved,
+		};
+		this.popoverController.dismiss().catch(console.error);
+		this.membersSelectorService.selectMembersInModal(options)
+			.then(selectedMembers => {
+				console.log('selected members:', selectedMembers);
+			});
 	}
 
 	move(): void {
@@ -193,4 +214,35 @@ export class SlotContextMenuComponent {
 		});
 		return n;
 	}
+
+	private readonly onMemberAdded = (member: IMemberContext): Observable<void> => {
+		console.log('SlotContextMenuComponent.onMemberAdded()', member);
+		if (!this.happening) {
+			return NEVER;
+		}
+		if (!this.team) {
+			return NEVER;
+		}
+		const result = this.happeningService.addMember(this.team.id, this.happening, member.id);
+		// result
+		// 	.pipe(takeUntil(this.destroyed))
+		// 	.subscribe({
+		// 		next: () => {
+		// 			this.changeDetectorRef.markForCheck();
+		// 		},
+		// 	});
+		return result;
+	};
+
+	private readonly onMemberRemoved = (member: IMemberContext): Observable<void> => {
+		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
+		if (!this.happening) {
+			return NEVER;
+		}
+		if (!this.team) {
+			return NEVER;
+		}
+		return this.happeningService.removeMember(this.team?.id, this.happening, member.id);
+	};
+
 }
