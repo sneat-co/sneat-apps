@@ -82,6 +82,7 @@ const emptyRecurringsByWeekday = () => wd2.reduce(
 // }
 
 const slotItemFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): ISlotItem => ({
+	// date: rs.start.date,
 	slotID: rs.id,
 	happening: r,
 	title: r.brief?.title || r.id,

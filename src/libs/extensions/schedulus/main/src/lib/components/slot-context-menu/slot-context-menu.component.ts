@@ -82,23 +82,28 @@ export class SlotContextMenuComponent {
 		this.notImplemented();
 	}
 
-	private stopEvent(event: Event): { happening: IHappeningContext; team: ITeamContext } {
+	private stopEvent(event: Event): { slot: ISlotItem, happening: IHappeningContext; team: ITeamContext } {
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
 		if (!this.happening) {
 			throw new Error('!this.happening');
 		}
+		if (!this.slot) {
+			throw new Error('!this.slot');
+		}
 		event.stopPropagation();
 		event.preventDefault();
-		return { team: this.team, happening: this.happening };
+		return { team: this.team, slot: this.slot, happening: this.slot.happening };
 	}
 
 	createCancellationRequest(event: Event): ICancelHappeningRequest {
-		const { team, happening } = this.stopEvent(event);
+		const { slot, team, happening } = this.stopEvent(event);
+		const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
 		return {
 			teamID: team.id,
 			happeningID: happening.id,
+			slotIDs: slotsCount > 1 ? [slot.slotID] : undefined,
 			// date: '2022-06-12',
 		};
 	}
