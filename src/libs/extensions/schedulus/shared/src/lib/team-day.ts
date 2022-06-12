@@ -123,6 +123,7 @@ export class TeamDay {
 					durationMinutes: slot.durationMinutes,
 				};
 				const slotItem: ISlotItem = {
+					slotID: slot.id,
 					title: happening.brief?.title || happening?.dto?.title || 'NO TITLE',
 					timing,
 					repeats: 'once',

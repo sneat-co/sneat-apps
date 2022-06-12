@@ -38,36 +38,36 @@ const emptyRecurringsByWeekday = () => wd2.reduce(
 	{} as RecurringsByWeekday,
 );
 
-export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotItem {
-	if (!dto.title) {
-		throw new Error('!singleHappening.title');
-	}
-	if (!dto.dtStarts) {
-		throw new Error('!singleHappening.dtStarts');
-	}
-	const brief = happeningBriefFromDto(id, dto);
-	const happening: IHappeningContext = { id, brief, dto };
-	// const wd = jsDayToWeekday(date.getDay());
-	// noinspection UnnecessaryLocalVariableJS
-	const slot: ISlotItem = {
-		happening,
-		title: dto.title,
-		repeats: 'once',
-		timing: {
-			start: {
-				time: timeToStr(dto.dtStarts) || '',
-			},
-			end: dto.dtEnds ? {
-				time: timeToStr(dto.dtEnds),
-			} : undefined,
-		},
-		// weekdays: singleHappening.weekdays,
-		participants: dto.participants,
-		// location: singleActivity.location ? singleActivity.location : undefined,
-		levels: dto.levels ? dto.levels : undefined,
-	};
-	return slot;
-}
+// export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotItem {
+// 	if (!dto.title) {
+// 		throw new Error('!singleHappening.title');
+// 	}
+// 	if (!dto.dtStarts) {
+// 		throw new Error('!singleHappening.dtStarts');
+// 	}
+// 	const brief = happeningBriefFromDto(id, dto);
+// 	const happening: IHappeningContext = { id, brief, dto };
+// 	// const wd = jsDayToWeekday(date.getDay());
+// 	// noinspection UnnecessaryLocalVariableJS
+// 	const slot: ISlotItem = {
+// 		happening,
+// 		title: dto.title,
+// 		repeats: 'once',
+// 		timing: {
+// 			start: {
+// 				time: timeToStr(dto.dtStarts) || '',
+// 			},
+// 			end: dto.dtEnds ? {
+// 				time: timeToStr(dto.dtEnds),
+// 			} : undefined,
+// 		},
+// 		// weekdays: singleHappening.weekdays,
+// 		participants: dto.participants,
+// 		// location: singleActivity.location ? singleActivity.location : undefined,
+// 		levels: dto.levels ? dto.levels : undefined,
+// 	};
+// 	return slot;
+// }
 
 // export abstract class ISlotsProvider {
 // 	// public abstract setTeamId(communeId: string): Observable<DtoRegularActivity[]>;
@@ -82,6 +82,7 @@ export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotI
 // }
 
 const slotItemFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): ISlotItem => ({
+	slotID: rs.id,
 	happening: r,
 	title: r.brief?.title || r.id,
 	levels: r.brief?.levels,
@@ -318,6 +319,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 						throw new Error(`!brief.title at index=${i}`);
 					}
 					const slotItem: ISlotItem = {
+						slotID: slot.id,
 						happening: recurring,
 						title: brief.title,
 						repeats: slot.repeats,
