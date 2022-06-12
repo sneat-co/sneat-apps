@@ -35,9 +35,10 @@ export class ScheduleDayCardComponent extends ScheduleDayBaseComponent implement
 		super('ScheduleDayCardComponent', scheduleSateService);
 	}
 
-	@Input() onSlotClicked?: (slot: ISlotItem) => void = () => {
+	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void = () => {
 		throw new Error('onSlotClicked not set');
 	};
+
 
 	ngAfterViewInit(): void {
 		console.log('ngAfterViewInit(), shiftDays=', this.shiftDays);

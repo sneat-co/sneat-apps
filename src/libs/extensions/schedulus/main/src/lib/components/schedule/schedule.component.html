@@ -20,7 +20,7 @@
 <sneat-week-tab [style.display]="tab === 'week' ? 'block': 'none'"
 								[team]="team"
 								[teamDaysProvider]="teamDaysProvider"
-								[onSlotClicked]="onSlotClicked"
+								(slotClicked)="onSlotClicked($event)"
 ></sneat-week-tab>
 
 <sneat-recurrings-tab *ngIf="tab === 'recurrings'"

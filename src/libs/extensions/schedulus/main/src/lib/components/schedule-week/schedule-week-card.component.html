@@ -36,11 +36,13 @@
 													 [team]="team"
 													 [week]="oddWeek"
 													 [teamDaysProvider]="teamDaysProvider"
+													 (slotClicked)="onSlotClicked($event)"
 			></sneat-schedule-week>
 			<sneat-schedule-week class="virtual-slide" [@virtualSlide]="evenSlide?.animationState || 'hide'"
 													 [team]="team"
 													 [week]="evenWeek"
 													 [teamDaysProvider]="teamDaysProvider"
+													 (slotClicked)="onSlotClicked($event)"
 			></sneat-schedule-week>
 		</div>
 	</div>

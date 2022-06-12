@@ -17,7 +17,7 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 	@Input() team?: ITeamContext;
 	@Input() weekday?: Weekday;
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<ISlotItem>();
+	@Output() slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
 
 	public get day(): TeamDay | undefined {
 		return this.weekday?.day;
@@ -44,6 +44,11 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 	}
 
 	// public readonly id = (_: number, v: {id: string}) => v.id;
+
+	onSlotClicked(args: {slot: ISlotItem; event: Event}): void {
+		console.log('ScheduleWeekdayComponent.onSlotClicked', args);
+		this.slotClicked.emit(args);
+	}
 
 	showSlot(slot: ISlotItem): boolean {
 		return isSlotVisible(slot, this.filter || emptyScheduleFilter);

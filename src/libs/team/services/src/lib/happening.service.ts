@@ -88,6 +88,10 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/cancel_happening', request);
 	}
 
+	revokeHappeningCancellation(request: ICancelHappeningRequest): Observable<void> {
+		return this.sneatApiService.post('happenings/revoke_happening_cancellation', request);
+	}
+
 	deleteHappening(happening: IHappeningContext): Observable<void> {
 		console.log('deleteHappening', happening);
 		const request: IHappeningRequest = {

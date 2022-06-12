@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
+import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { getToday, ScheduleStateService } from '../schedule-state.service';
@@ -15,6 +16,7 @@ export class ScheduleWeekCardComponent extends SwipeableBaseComponent implements
 
 	@Input() team?: ITeamContext;
 	@Input() teamDaysProvider?: TeamDaysProvider;
+	@Output() readonly slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
 
 	get oddWeek(): SwipeableWeek {
 		return this.oddSlide as SwipeableWeek;
@@ -46,5 +48,10 @@ export class ScheduleWeekCardComponent extends SwipeableBaseComponent implements
 		next.setDate(current.getDate() + 7);
 		this.oddSlide = swipeableWeek('odd', current, this.teamDaysProvider, this.destroyed.asObservable());
 		this.evenSlide = swipeableWeek('even', next, this.teamDaysProvider, this.destroyed.asObservable());
+	}
+
+	onSlotClicked(args: {slot: ISlotItem; event: Event}): void {
+		console.log('ScheduleWeekCardComponent.onSlotClicked()', args);
+		this.slotClicked.emit(args);
 	}
 }

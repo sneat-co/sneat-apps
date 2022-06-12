@@ -183,12 +183,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// };
 
 
-	readonly onSlotClicked = (slot: ISlotItem): void => {
-		console.log('ScheduleComponent.onSlotClicked()', slot);
+	readonly onSlotClicked = (args: {slot: ISlotItem; event: Event}): void => {
+		console.log('ScheduleComponent.onSlotClicked()', args);
 		if (!this.team) {
 			throw new Error('!team');
 		}
-		const happening: IHappeningContext = slot.happening;
+		const happening: IHappeningContext = args.slot.happening;
 		const page = `happening/${happening.id}`;
 		this.params.teamNavService.navigateForwardToTeamPage(this.team, page, {
 			state: { happening },

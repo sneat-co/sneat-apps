@@ -17,7 +17,7 @@ export class DaySlotItemComponent {
 
 	@Input() team?: ITeamContext;
 
-	@Output() onclick = new EventEmitter<ISlotItem>();
+	@Output() slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
 
 	slotState?: HappeningUIState;
 
@@ -31,7 +31,11 @@ export class DaySlotItemComponent {
 	}
 
 	onSlotClicked(event: Event): void {
-		this.onclick.emit(this.slot);
+		console.log('DaySlotItemComponent.onSlotClicked()');
+		if (!this.slot) {
+			return;
+		}
+		this.slotClicked.emit({slot: this.slot, event});
 	}
 
 

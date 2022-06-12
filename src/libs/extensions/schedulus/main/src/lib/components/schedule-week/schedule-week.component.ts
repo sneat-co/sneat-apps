@@ -26,7 +26,7 @@ export class ScheduleWeekComponent implements OnChanges {
 
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<ISlotItem>();
+	@Output() slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
 
 	weekdays: Weekday[] = createWeekdays();
 
@@ -38,6 +38,11 @@ export class ScheduleWeekComponent implements OnChanges {
 
 	onDateSelected(date: Date): void {
 		this.dateSelected.next(date);
+	}
+
+	onSlotClicked(args: {slot: ISlotItem; event: Event}): void {
+		console.log('ScheduleWeekComponent.onSlotClicked()', args);
+		this.slotClicked.emit(args);
 	}
 
 	private onWeekInputChanged(week: SimpleChange): void {

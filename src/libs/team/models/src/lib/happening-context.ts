@@ -17,8 +17,14 @@ export function newEmptyHappeningContext(team: ITeamContext, type: HappeningType
 		status,
 		title: '',
 	};
-	return {id: '', team, brief, dto: {...brief}};
+	return { id: '', team, brief, dto: { ...brief } };
 }
 
 export type CancelOperationState = 'canceling' | 'canceled' | undefined;
-export type HappeningUIState = DeleteOperationState | CancelOperationState | undefined;
+export type RevokeCancellationOperationState = 'revoking-cancellation' | undefined;
+
+export type HappeningUIState =
+	DeleteOperationState |
+	CancelOperationState |
+	RevokeCancellationOperationState |
+	undefined;

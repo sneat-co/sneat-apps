@@ -21,7 +21,7 @@
 		<sneat-day-slot-item *ngIf="showSlot(slot)"
 												 [team]="team"
 												 [slot]="slot"
-												 (onclick)="slotClicked.emit($event)">
+												 (slotClicked)="onSlotClicked($event)">
 		</sneat-day-slot-item>
 	</ng-container>
 </ng-container>

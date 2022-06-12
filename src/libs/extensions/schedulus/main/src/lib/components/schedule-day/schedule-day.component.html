@@ -14,7 +14,7 @@
 		</ion-item-divider>
 		<sneat-day-slot-item *ngFor="let slot of slots"
 												 [team]="team"
-												 [slot]="slot" (onclick)="slotClicked.emit($event)">
+												 [slot]="slot" (slotClicked)="slotClicked.emit($event)">
 		</sneat-day-slot-item>
 	</ng-template>
 	<ion-item tappable (click)="goNewHappening({type: 'recurring'})">

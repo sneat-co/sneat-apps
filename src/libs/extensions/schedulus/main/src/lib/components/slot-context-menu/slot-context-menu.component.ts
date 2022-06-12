@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { DeleteOperationState } from '@sneat/core';
+import { HappeningStatus } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext, HappeningUIState } from '@sneat/team/models';
+import { HappeningUIState, IHappeningContext, ITeamContext } from '@sneat/team/models';
 import { HappeningService, ICancelHappeningRequest } from '@sneat/team/services';
-import { delay } from 'rxjs';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -20,6 +19,10 @@ export class SlotContextMenuComponent {
 
 	public get happening(): IHappeningContext | undefined {
 		return this.slot?.happening;
+	}
+
+	public get isCancelled(): boolean {
+		return this.happening?.brief?.status === 'canceled';
 	}
 
 	public get disabled(): boolean {
@@ -50,12 +53,9 @@ export class SlotContextMenuComponent {
 
 	delete(event: Event): void {
 		console.log(`SlotContextMenuComponent.delete()`);
-		this.stopEvent(event);
-		if (!this.happening) {
-			return;
-		}
+		const { happening } = this.stopEvent(event);
 		this.happeningState = 'deleting';
-		this.happeningService.deleteHappening(this.happening)
+		this.happeningService.deleteHappening(happening)
 			.subscribe({
 				next: () => {
 					this.happeningState = 'deleted';
@@ -82,32 +82,78 @@ export class SlotContextMenuComponent {
 		this.notImplemented();
 	}
 
-	private stopEvent(event: Event): void {
+	private stopEvent(event: Event): { happening: IHappeningContext; team: ITeamContext } {
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
+		if (!this.happening) {
+			throw new Error('!this.happening');
+		}
 		event.stopPropagation();
 		event.preventDefault();
+		return { team: this.team, happening: this.happening };
 	}
 
-	markCanceled(event: Event): void {
-		console.log(`SlotContextMenuComponent.markCanceled()`);
-		this.stopEvent(event);
-		const team = this.team;
-		if (!team) {
-			return;
-		}
-		const happening = this.happening;
-		if (!happening) {
-			return;
-		}
-		this.happeningState = 'canceling';
-		const request: ICancelHappeningRequest = {
+	createCancellationRequest(event: Event): ICancelHappeningRequest {
+		const { team, happening } = this.stopEvent(event);
+		return {
 			teamID: team.id,
 			happeningID: happening.id,
 			// date: '2022-06-12',
 		};
+	}
+
+	private setHappeningStatus(status: HappeningStatus): void {
+		if (!this.slot) {
+			return;
+		}
+		let happening = this.slot.happening;
+		if (happening.brief) {
+			happening = {
+				...happening,
+				brief: { ...happening.brief, status },
+			};
+		}
+		if (happening.dto) {
+			happening = {
+				...happening,
+				dto: { ...happening.dto, status },
+			};
+		}
+		this.slot = {
+			...this.slot,
+			happening,
+		};
+	}
+
+	revokeCancellation(event: Event): void {
+		console.log(`SlotContextMenuComponent.revokeCancellation()`);
+		this.happeningState = 'canceling';
+		const request = this.createCancellationRequest(event);
+		this.happeningService.revokeHappeningCancellation(request)
+			.subscribe({
+				next: () => {
+					this.happeningState = undefined;
+					this.setHappeningStatus('active');
+					this.dismissPopover();
+				},
+				error: err => {
+					setTimeout(() => {
+						this.happeningState = undefined;
+						this.errorLogger.logError(err, 'Failed to delete happening from context menu');
+					}, 2000);
+				},
+			});
+	}
+
+	markCanceled(event: Event): void {
+		console.log(`SlotContextMenuComponent.markCanceled()`);
+		const request = this.createCancellationRequest(event);
 		this.happeningService.cancelHappening(request)
 			.subscribe({
 				next: () => {
 					this.happeningState = 'canceled';
+					this.setHappeningStatus('canceled');
 					this.dismissPopover();
 				},
 				error: err => {

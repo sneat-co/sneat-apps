@@ -25,8 +25,8 @@ export class ScheduleDayTabComponent implements OnDestroy {
 	@Input() team?: ITeamContext;
 	@Input() teamDaysProvider?: TeamDaysProvider;
 
-	@Input() onSlotClicked?: (slot: ISlotItem) => void = (_: ISlotItem) => {
-		throw new Error('onSlotClicked not set');
+	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void = (args: { slot: ISlotItem; event: Event }) => {
+		console.error('onSlotClicked is not set', args);
 	};
 
 	constructor(

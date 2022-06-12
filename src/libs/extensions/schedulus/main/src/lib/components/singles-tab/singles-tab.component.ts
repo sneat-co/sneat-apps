@@ -22,7 +22,7 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 	public tab: 'upcoming' | 'past' = 'upcoming';
 
 	@Input() team?: ITeamContext;
-	@Input() onSlotClicked?: (slot: ISlotItem) => void;
+	@Input() onSlotClicked?: (args: {slot: ISlotItem; event: Event}) => void;
 	@Input() onDateSelected?: (date: Date) => void;
 
 	private filter?: IScheduleFilter;

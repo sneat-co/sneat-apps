@@ -37,7 +37,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	@Input() team?: ITeamContext;
 	// @Input() showEvents = true;
 	@Input() weekday?: Weekday;
-	@Output() readonly slotClicked = new EventEmitter<ISlotItem>();
+	@Output() readonly slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
 	public allSlots?: ISlotItem[];
 	public slots?: ISlotItem[];
 	public slotsHiddenByFilter?: number;
