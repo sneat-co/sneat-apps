@@ -127,11 +127,23 @@ export class SneatUserService {
 			if (authUser && !userDocSnapshot.exists) {
 				this.initUserRecordFromAuthUser(authUser);
 			}
+			const userRecord: IUserRecord | null = userDocSnapshot.exists
+				? (userDocSnapshot.data() as IUserRecord)
+				: authUser ? { title: authUser.displayName || authUser.email || authUser.uid } : null;
+
+			if (userRecord) {
+				if (userRecord.teams?.length) {
+					userRecord.teams.forEach(team => {
+						if (!team.type) {
+							console.error(`team brief in user.teams has no type`, team)
+						}
+					})
+				}
+			}
+
 			this.userState$.next({
 				...authState,
-				record: userDocSnapshot.exists
-					? (userDocSnapshot.data() as IUserRecord)
-					: authUser ? { title: authUser.displayName || authUser.email || authUser.uid } : null,
+				record: userRecord,
 			});
 		}
 	}

@@ -3,5 +3,8 @@
 					(click)="goTeam($event, team)"
 >
 	<ion-icon [name]="iconName" slot="start"></ion-icon>
-	<ion-label>{{team.brief?.title || team.brief?.type || team.id}}</ion-label>
+	<ion-label class="ion-text-wrap">
+		{{team.brief?.title || team.brief?.type || team.id}}
+		{{team.brief|json}}
+	</ion-label>
 </ion-item>
