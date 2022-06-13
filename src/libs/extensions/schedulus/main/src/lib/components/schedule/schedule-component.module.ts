@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, MembersAsBadgesModule, SneatPipesModule } from '@sneat/components';
 import { MembersSelectorModule, TeamCoreComponentsModule } from '@sneat/team/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
-import { HappeningServiceModule } from '@sneat/team/services';
+import { HappeningServiceModule, ScheduleDayServiceModule } from '@sneat/team/services';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
 import { RecurringsTabComponent } from '../recurrings-tab/recurrings-tab.component';
@@ -39,6 +39,7 @@ import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu
 		TeamCoreComponentsModule,
 		FilterItemModule,
 		HappeningServiceModule,
+		ScheduleDayServiceModule,
 		ReactiveFormsModule,
 		MembersAsBadgesModule,
 		ScheduleNavServiceModule,

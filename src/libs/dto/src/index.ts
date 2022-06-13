@@ -18,6 +18,7 @@ export * from './lib/dto-movie';
 export * from './lib/dto-person';
 export * from './lib/dto-pricing';
 export * from './lib/dto-reminders';
+export * from './lib/dto-schedule-day';
 export * from './lib/dto-service-provider';
 export * from './lib/dto-team';
 export * from './lib/dto-team-brief';

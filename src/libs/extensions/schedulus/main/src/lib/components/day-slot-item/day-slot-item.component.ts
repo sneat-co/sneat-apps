@@ -24,7 +24,7 @@ export class DaySlotItemComponent {
 	slotState?: HappeningUIState;
 
 	get isCanceled(): boolean {
-		return this.slot?.happening?.brief?.status === 'canceled';
+		return !!this.slot?.canceled || this.slot?.happening?.brief?.status === 'canceled';
 	}
 
 	constructor(

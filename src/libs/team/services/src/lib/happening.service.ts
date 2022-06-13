@@ -5,7 +5,7 @@ import {
 	happeningBriefFromDto, HappeningStatus,
 	IHappeningBrief,
 	IHappeningDto,
-	IHappeningSlot, validateHappeningDto,
+	IHappeningSlot, IScheduleDayDto, validateHappeningDto,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamRequest } from '@sneat/team/models';

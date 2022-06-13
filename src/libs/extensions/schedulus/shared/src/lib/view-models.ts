@@ -1,5 +1,5 @@
 import {
-	HappeningType,
+	HappeningType, ICanceled,
 	IHappeningSlotSingleRef,
 	ISlotParticipant,
 	ITiming,
@@ -34,6 +34,7 @@ export interface ISlotItem {
 	location?: SlotLocation;
 	participants?: ISlotParticipant[];
 	levels?: Level[];
+	canceled?: ICanceled;
 }
 
 export type SlotsByWeekday = { [wd: string]: ISlotItem[] };

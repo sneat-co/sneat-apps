@@ -1,9 +1,9 @@
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
-import { ITiming, WeekdayCode2 } from '@sneat/dto';
+import { IScheduleDayDto, ITiming, WeekdayCode2 } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/team/models';
-import { HappeningService } from '@sneat/team/services';
+import { HappeningService, ScheduleDayService } from '@sneat/team/services';
 import { BehaviorSubject, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { getWd2, ISlotItem, RecurringSlots } from './view-models';
@@ -30,16 +30,19 @@ export class TeamDay {
 		tap(slots => console.log(`TeamDay[${this.isoID}].slots$ =>`, slots)),
 	);
 
+	private scheduleDayDto?: IScheduleDayDto | null;
+
 	public get slots(): ISlotItem[] | undefined {
 		return this._slots.value;
 	}
 
 	constructor(
-		private readonly teamID$: Observable<string | undefined>, // intentionally not marking as public here to have public fields in 1 place
+		private readonly teamID$: Observable<string | undefined>,
 		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
 		private readonly errorLogger: IErrorLogger,
 		private readonly happeningService: HappeningService,
+		private readonly scheduleDayService: ScheduleDayService,
 	) {
 		if (!date) {
 			throw new Error('missing required parameter: date');
@@ -54,6 +57,9 @@ export class TeamDay {
 			throw new Error('dateID is missing');
 		}
 		teamID$
+			.pipe(
+				takeUntil(this.destroyed),
+			)
 			.subscribe({
 				next: this.processTeamID,
 			});
@@ -79,6 +85,29 @@ export class TeamDay {
 			this.recurringSlots = undefined;
 		}
 		this.subscribeForSingles();
+		this.subscribeForScheduleDay();
+	};
+
+	private readonly subscribeForScheduleDay = (): void => {
+		if (!this.teamID) {
+			return;
+		}
+		this.scheduleDayService
+			.watchTeamDay(this.teamID, this.dateID)
+			.pipe(
+				// takeUntil(this.destroyed),
+				// takeUntil(this.teamID$),
+			)
+			.subscribe({
+				next: scheduleDay => {
+					const changed = this.scheduleDayDto != scheduleDay.dto || this.scheduleDayDto && !!scheduleDay.dto
+					this.scheduleDayDto = scheduleDay.dto;
+					if (changed) {
+						this.joinRecurringsWithSinglesAndEmit();
+					}
+				},
+				error: this.errorLogger.logErrorHandler('Failed to load scheduleDay record', {show: false, feedback: false}),
+			});
 	};
 
 	private readonly subscribeForSingles = (): void => {
@@ -98,6 +127,7 @@ export class TeamDay {
 				.watchSinglesOnSpecificDay(this.teamID, this.dateID)
 				.pipe(
 					takeUntil(this.destroyed),
+					takeUntil(this.teamID$),
 				)
 				.subscribe({
 					next: this.processSingles,
@@ -157,13 +187,25 @@ export class TeamDay {
 
 	private joinRecurringsWithSinglesAndEmit(): void {
 		const slots: ISlotItem[] = [];
-		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd];
+		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]
+			?.map(wdSlot => {
+				console.log('joinRecurringsWithSinglesAndEmit, wdSlot', this.wd);
+				if (this.scheduleDayDto) {
+					const cancellation = this.scheduleDayDto?.cancellations?.find(c => c.slotIDs?.includes(wdSlot.slotID));
+					if (cancellation?.canceled) {
+						return {...wdSlot, canceled: cancellation.canceled}
+					}
+				}
+				return wdSlot;
+			});
+
 		if (weekdaySlots?.length) {
 			slots.push(...weekdaySlots);
 		}
 		if (this.singles) {
 			slots.push(...this.singles);
 		}
+
 		// console.log(
 		// 	`TeamDay[id=${this.isoID}, wd=${this.wd}].joinRecurringsWithSinglesAndEmit()`,
 		// 	`${weekdaySlots?.length || 0} recurrings:`, weekdaySlots,

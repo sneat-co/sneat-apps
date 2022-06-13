@@ -17,7 +17,7 @@ import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, IHappeningWithUiState, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService } from '@sneat/team/services';
+import { HappeningService, ScheduleDayService } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { isToday } from '../schedule-core';
@@ -60,9 +60,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		filterService: ScheduleFilterService,
 		scheduleStateService: ScheduleStateService,
 		happeningService: HappeningService,
+		scheduleDayService: ScheduleDayService,
 		afs: AngularFirestore,
 	) {
-		this.teamDaysProvider = new TeamDaysProvider(this.errorLogger, happeningService, afs);
+		this.teamDaysProvider = new TeamDaysProvider(this.errorLogger, happeningService, scheduleDayService, afs);
 
 		filterService.filter
 			.pipe(takeUntil(this.destroyed))
