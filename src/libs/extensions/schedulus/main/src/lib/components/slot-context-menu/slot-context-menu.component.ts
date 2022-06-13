@@ -16,6 +16,7 @@ const notImplemented = 'Sorry, not implemented yet';
 })
 export class SlotContextMenuComponent {
 	@Input() team?: ITeamContext;
+	@Input() dateID?: string;
 	@Input() public slot?: ISlotItem;
 	happeningState?: HappeningUIState;
 
@@ -118,15 +119,15 @@ export class SlotContextMenuComponent {
 		return { team: this.team, slot: this.slot, happening: this.slot.happening };
 	}
 
-	createCancellationRequest(event: Event): ICancelHappeningRequest {
+	createCancellationRequest(event: Event, mode: 'single' | 'series'): ICancelHappeningRequest {
 		const { slot, team, happening } = this.stopEvent(event);
 		const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
-		return {
+		const request: ICancelHappeningRequest = {
 			teamID: team.id,
 			happeningID: happening.id,
 			slotIDs: slotsCount > 1 ? [slot.slotID] : undefined,
-			// date: '2022-06-12',
 		};
+		return mode === 'single' ? { ...request, date: this.dateID, slotIDs: [slot.slotID] } : request;
 	}
 
 	private setHappeningStatus(status: HappeningStatus): void {
@@ -152,10 +153,10 @@ export class SlotContextMenuComponent {
 		};
 	}
 
-	revokeCancellation(event: Event): void {
+	revokeCancellation(event: Event, mode: 'single' | 'series'): void {
 		console.log(`SlotContextMenuComponent.revokeCancellation()`);
-		this.happeningState = 'canceling';
-		const request = this.createCancellationRequest(event);
+		this.happeningState = 'revoking-cancellation';
+		const request = this.createCancellationRequest(event, mode);
 		this.happeningService.revokeHappeningCancellation(request)
 			.subscribe({
 				next: () => {
@@ -172,9 +173,10 @@ export class SlotContextMenuComponent {
 			});
 	}
 
-	markCanceled(event: Event): void {
-		console.log(`SlotContextMenuComponent.markCanceled()`);
-		const request = this.createCancellationRequest(event);
+	markCanceled(event: Event, mode: 'single' | 'series'): void {
+		console.log(`SlotContextMenuComponent.markCanceled(mode=${mode})`);
+		this.happeningState = mode == 'single' ? 'cancelling-single' : 'cancelling-series';
+		const request = this.createCancellationRequest(event, mode);
 		this.happeningService.cancelHappening(request)
 			.subscribe({
 				next: () => {

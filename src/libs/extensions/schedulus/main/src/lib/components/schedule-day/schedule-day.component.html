@@ -14,6 +14,7 @@
 		</ion-item-divider>
 		<sneat-day-slot-item *ngFor="let slot of slots"
 												 [team]="team"
+												 [dateID]="weekday?.day?.dateID"
 												 [slot]="slot" (slotClicked)="slotClicked.emit($event)">
 		</sneat-day-slot-item>
 	</ng-template>

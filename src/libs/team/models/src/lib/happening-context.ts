@@ -20,7 +20,7 @@ export function newEmptyHappeningContext(team: ITeamContext, type: HappeningType
 	return { id: '', team, brief, dto: { ...brief } };
 }
 
-export type CancelOperationState = 'canceling' | 'canceled' | undefined;
+export type CancelOperationState = 'cancelling-single' | 'cancelling-series' | 'canceled' | undefined;
 export type RevokeCancellationOperationState = 'revoking-cancellation' | undefined;
 
 export type HappeningUIState =

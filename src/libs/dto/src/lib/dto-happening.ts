@@ -111,6 +111,12 @@ export interface ITiming {
 	readonly durationMinutes?: number;
 }
 
+export interface IHappeningSlotSingleRef {
+	repeats: Repeats;
+	weekday?: WeekdayCode2;
+	week?: number;
+}
+
 export interface IHappeningSlotTiming extends ITiming {
 	readonly repeats: Repeats;
 	readonly weekdays?: WeekdayCode2[];

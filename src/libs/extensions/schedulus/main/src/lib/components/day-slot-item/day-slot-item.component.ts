@@ -12,6 +12,8 @@ export class DaySlotItemComponent {
 
 	@Input() public slot?: ISlotItem;
 
+	@Input() dateID?: string;
+
 	@Input() mode: 'full' | 'brief' = 'full';
 	@Input() color?: 'light';
 
@@ -55,6 +57,7 @@ export class DaySlotItemComponent {
 			componentProps: {
 				team: this.team,
 				slot: this.slot,
+				dateID: this.dateID,
 				// state: stateOutput,
 			},
 			event,

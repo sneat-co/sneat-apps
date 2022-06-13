@@ -1,4 +1,13 @@
-import { HappeningType, ISlotParticipant, ITiming, Level, Repeats, SlotLocation, WeekdayCode2 } from '@sneat/dto';
+import {
+	HappeningType,
+	IHappeningSlotSingleRef,
+	ISlotParticipant,
+	ITiming,
+	Level,
+	Repeats,
+	SlotLocation,
+	WeekdayCode2,
+} from '@sneat/dto';
 import { IHappeningContext } from '@sneat/team/models';
 
 
