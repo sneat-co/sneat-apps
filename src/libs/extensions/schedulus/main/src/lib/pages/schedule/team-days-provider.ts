@@ -74,15 +74,21 @@ const emptyRecurringsByWeekday = () => wd2.reduce(
 // 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 // }
 
-const slotItemFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): ISlotItem => ({
-	// date: rs.start.date,
-	slotID: rs.id,
-	happening: r,
-	title: r.brief?.title || r.id,
-	levels: r.brief?.levels,
-	repeats: rs.repeats,
-	timing: { start: rs.start, end: rs.end },
-});
+const slotItemsFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): ISlotItem[] => {
+	const si = {
+		// date: rs.start.date,
+		slotID: rs.id,
+		happening: r,
+		title: r.brief?.title || r.id,
+		levels: r.brief?.levels,
+		repeats: rs.repeats,
+		timing: { start: rs.start, end: rs.end },
+	};
+	if (rs.weekdays?.length) {
+		return rs.weekdays.map(wd => ({...si, wd}));
+	}
+	return [si];
+};
 
 const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
 	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${team?.id})`;
@@ -96,14 +102,16 @@ const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
 	team.dto.recurringHappenings.forEach(brief => {
 		brief.slots?.forEach(rs => {
 			const happening: IHappeningContext = { id: brief.id, brief };
-			const si: ISlotItem = slotItemFromRecurringSlot(happening, rs);
-			rs.weekdays?.forEach(wd => {
-				let weekday = slots.byWeekday[wd];
-				if (!weekday) {
-					weekday = [];
-					slots.byWeekday[wd] = weekday;
+			const slotItems: ISlotItem[] = slotItemsFromRecurringSlot(happening, rs);
+			slotItems.forEach(si => {
+				if (si.wd) {
+					let weekday = slots.byWeekday[si.wd];
+					if (!weekday) {
+						weekday = [];
+						slots.byWeekday[si.wd] = weekday;
+					}
+					weekday.push(si);
 				}
-				weekday.push(si);
 			});
 		});
 	});
@@ -315,8 +323,12 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 					if (!brief.title) {
 						throw new Error(`!brief.title at index=${i}`);
 					}
+					if (slot.repeats === 'weekly' && !wd) {
+						throw new Error(`slot.repeats === 'weekly' && !wd=${wd}`);
+					}
 					const slotItem: ISlotItem = {
 						slotID: slot.id,
+						wd: wd,
 						happening: recurring,
 						title: brief.title,
 						repeats: slot.repeats,

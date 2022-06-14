@@ -1,11 +1,17 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { HappeningStatus } from '@sneat/dto';
+import { HappeningStatus, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISelectMembersOptions, MembersSelectorService } from '@sneat/team/components';
 import { HappeningUIState, IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService, ICancelHappeningRequest, memberContextFromBrief } from '@sneat/team/services';
+import {
+	HappeningService,
+	ICancelHappeningRequest,
+	IDeleteSlotRequest,
+	ISlotRequest,
+	memberContextFromBrief,
+} from '@sneat/team/services';
 import { NEVER, Observable } from 'rxjs';
 
 const notImplemented = 'Sorry, not implemented yet';
@@ -25,7 +31,7 @@ export class SlotContextMenuComponent {
 	}
 
 	public get isCancelled(): boolean {
-		return this.happening?.brief?.status === 'canceled';
+		return this.happening?.brief?.status === 'canceled' || !!this.slot?.canceled;
 	}
 
 	public get disabled(): boolean {
@@ -75,9 +81,16 @@ export class SlotContextMenuComponent {
 
 	delete(event: Event): void {
 		console.log(`SlotContextMenuComponent.delete()`);
-		const { happening } = this.stopEvent(event);
+		const slot = this.slot;
+		if (!slot) {
+			return;
+		}
+		if (this.slot?.repeats === 'weekly' && !slot.wd) {
+			throw new Error('this.slot?.repeats === "weekly" && !slot.wd');
+		}
+		const request = this.createDeleteSlotRequest(event, slot.wd);
 		this.happeningState = 'deleting';
-		this.happeningService.deleteHappening(happening)
+		this.happeningService.deleteSlots(request)
 			.subscribe({
 				next: () => {
 					this.happeningState = 'deleted';
@@ -119,15 +132,27 @@ export class SlotContextMenuComponent {
 		return { team: this.team, slot: this.slot, happening: this.slot.happening };
 	}
 
-	createCancellationRequest(event: Event, mode: 'single' | 'series'): ICancelHappeningRequest {
+	createSlotRequest(event: Event, mode: 'whole' | 'slot'): ISlotRequest {
 		const { slot, team, happening } = this.stopEvent(event);
-		const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
-		const request: ICancelHappeningRequest = {
+		// const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
+		const request: ISlotRequest = {
 			teamID: team.id,
 			happeningID: happening.id,
-			slotIDs: slotsCount > 1 ? [slot.slotID] : undefined,
+			slotID: mode === 'slot' ? slot.slotID : undefined,
 		};
-		return mode === 'single' ? { ...request, date: this.dateID, slotIDs: [slot.slotID] } : request;
+		return request;
+	}
+
+	createDeleteSlotRequest(event: Event, weekday?: WeekdayCode2): IDeleteSlotRequest {
+		const request: IDeleteSlotRequest = {
+			...this.createSlotRequest(event, 'slot'),
+			weekday,
+		};
+		return request;
+	}
+
+	createCancellationRequest(event: Event, mode: 'whole' | 'slot'): ICancelHappeningRequest {
+		return this.createSlotRequest(event, mode);
 	}
 
 	private setHappeningStatus(status: HappeningStatus): void {
@@ -153,9 +178,13 @@ export class SlotContextMenuComponent {
 		};
 	}
 
-	revokeCancellation(event: Event, mode: 'single' | 'series'): void {
+	revokeCancellation(event: Event): void {
 		console.log(`SlotContextMenuComponent.revokeCancellation()`);
 		this.happeningState = 'revoking-cancellation';
+		if (!this.happening) {
+			return;
+		}
+		const mode: 'whole' | 'slot' = this.happening.brief?.status === 'canceled' ? 'whole' : 'slot';
 		const request = this.createCancellationRequest(event, mode);
 		this.happeningService.revokeHappeningCancellation(request)
 			.subscribe({
@@ -173,9 +202,9 @@ export class SlotContextMenuComponent {
 			});
 	}
 
-	markCanceled(event: Event, mode: 'single' | 'series'): void {
+	markCanceled(event: Event, mode: 'whole' | 'slot'): void {
 		console.log(`SlotContextMenuComponent.markCanceled(mode=${mode})`);
-		this.happeningState = mode == 'single' ? 'cancelling-single' : 'cancelling-series';
+		this.happeningState = mode == 'slot' ? 'cancelling-single' : 'cancelling-series';
 		const request = this.createCancellationRequest(event, mode);
 		this.happeningService.cancelHappening(request)
 			.subscribe({

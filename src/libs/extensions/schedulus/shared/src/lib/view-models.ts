@@ -25,6 +25,7 @@ export interface NewHappeningParams {
 export interface ISlotItem {
 	// id: string; Not sure how to make an ID yet
 	slotID: string;
+	wd?: WeekdayCode2;
 	// date: string;
 	error?: unknown;
 	happening: IHappeningContext;

@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
@@ -5,7 +6,7 @@ import {
 	happeningBriefFromDto, HappeningStatus,
 	IHappeningBrief,
 	IHappeningDto,
-	IHappeningSlot, IScheduleDayDto, validateHappeningDto,
+	IHappeningSlot, IScheduleDayDto, validateHappeningDto, WeekdayCode2,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamRequest } from '@sneat/team/models';
@@ -31,9 +32,21 @@ export interface IHappeningSlotRequest extends IHappeningRequest {
 	slot: IHappeningSlot;
 }
 
-export interface ICancelHappeningRequest extends IHappeningRequest {
+export interface ISlotsRefRequest extends IHappeningRequest {
 	date?: string;
 	slotIDs?: string[];
+}
+
+export interface ISlotRequest extends IHappeningRequest {
+	date?: string;
+	slotID?: string;
+}
+
+export interface IDeleteSlotRequest extends ISlotRequest {
+	weekday?: WeekdayCode2;
+}
+
+export interface ICancelHappeningRequest extends ISlotsRefRequest {
 	reason?: string;
 }
 
@@ -100,6 +113,17 @@ export class HappeningService {
 			happeningType: happening.brief?.type || happening.dto?.type,
 		};
 		return this.sneatApiService.delete('happenings/delete_happening', undefined, request);
+	}
+
+	deleteSlots(request: ISlotRequest): Observable<void> {
+		console.log('deleteSlots', request);
+		// const qp = new HttpParams();
+		// qp.set('team', request.teamID)
+		// qp.set('happening', request.happeningID)
+		// if (request.slotIDs?.length === 1) {
+		// 	qp.set('happening', request.slotIDs[0])
+		// }
+		return this.sneatApiService.delete('happenings/delete_slots', undefined, request);
 	}
 
 	removeMember(teamID: string, happening: IHappeningContext, memberID: string): Observable<void> {
