@@ -23,6 +23,7 @@
 		<ion-text color="medium" *ngIf="isCanceled">&nbsp;&mdash; canceled</ion-text>
 
 		<sneat-members-as-badges *ngIf="mode === 'full'"
+														 [showDelete]="false"
 														 [members]="(slot?.happening?.brief?.memberIDs || [])|selectedMembers:team?.dto?.members"
 		></sneat-members-as-badges>
 

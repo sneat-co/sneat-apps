@@ -20,8 +20,8 @@ import { SneatPipesModule } from '../pipes/sneat-pipes.module';
 	styles: ['.deleting {text-decoration: line-through}'],
 	template: `
 		<ion-chip outline color="medium" *ngFor="let member of members">
-			<ion-label [color]="isDeleting(member.id) ? 'medium' : 'dark'" [class.deleting]="isDeleting(member.id)">{{member|personTitle}}</ion-label>
-			<ion-icon *ngIf="!isDeleting(member.id)" name="close" (click)="delete($event, member)"></ion-icon>
+			<ion-label color="medium" [class.deleting]="isDeleting(member.id)">{{member|personTitle}}</ion-label>
+			<ion-icon *ngIf="showDelete && !isDeleting(member.id)" name="close" (click)="delete($event, member)"></ion-icon>
 			<ion-spinner name="lines-sharp-small" *ngIf="isDeleting(member.id)"></ion-spinner>
 		</ion-chip>
 	`,
@@ -32,6 +32,7 @@ export class MembersAsBadgesComponent {
 
 	@Input() public members?: readonly IMemberContext[];
 	@Input() color: 'primary' | 'light' | 'dark' | 'medium' | 'secondary' | 'tertiary' = 'light';
+	@Input() showDelete = false;
 
 	@Output() readonly deleteMember = new EventEmitter<IMemberContext>();
 
