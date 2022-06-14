@@ -40,15 +40,13 @@ export interface ISlotsRefRequest extends IHappeningRequest {
 export interface ISlotRequest extends IHappeningRequest {
 	date?: string;
 	slotID?: string;
-}
-
-export interface IDeleteSlotRequest extends ISlotRequest {
 	weekday?: WeekdayCode2;
-}
-
-export interface ICancelHappeningRequest extends ISlotsRefRequest {
 	reason?: string;
 }
+
+export type IDeleteSlotRequest = ISlotRequest
+
+export type ICancelHappeningRequest = ISlotRequest
 
 function processHappeningContext(h: IHappeningContext, teamID?: string): IHappeningContext {
 	if (h.dto) {

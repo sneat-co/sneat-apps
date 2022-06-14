@@ -1,5 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { excludeUndefined } from '@sneat/core';
 import { HappeningStatus, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -88,7 +89,7 @@ export class SlotContextMenuComponent {
 		if (this.slot?.repeats === 'weekly' && !slot.wd) {
 			throw new Error('this.slot?.repeats === "weekly" && !slot.wd');
 		}
-		const request = this.createDeleteSlotRequest(event, slot.wd);
+		const request = this.createDeleteSlotRequest(event, 'slot');
 		this.happeningState = 'deleting';
 		this.happeningService.deleteSlots(request)
 			.subscribe({
@@ -135,20 +136,18 @@ export class SlotContextMenuComponent {
 	createSlotRequest(event: Event, mode: 'whole' | 'slot'): ISlotRequest {
 		const { slot, team, happening } = this.stopEvent(event);
 		// const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
-		const request: ISlotRequest = {
+		const request: ISlotRequest = excludeUndefined({
 			teamID: team.id,
 			happeningID: happening.id,
 			slotID: mode === 'slot' ? slot.slotID : undefined,
-		};
+			weekday: mode === 'slot' ? slot.wd : undefined,
+			date: mode === 'slot' && happening.brief?.type === 'recurring' ? this.dateID : undefined,
+		});
 		return request;
 	}
 
-	createDeleteSlotRequest(event: Event, weekday?: WeekdayCode2): IDeleteSlotRequest {
-		const request: IDeleteSlotRequest = {
-			...this.createSlotRequest(event, 'slot'),
-			weekday,
-		};
-		return request;
+	createDeleteSlotRequest(event: Event, mode: 'whole' | 'slot'): IDeleteSlotRequest {
+		return this.createSlotRequest(event, mode);
 	}
 
 	createCancellationRequest(event: Event, mode: 'whole' | 'slot'): ICancelHappeningRequest {
