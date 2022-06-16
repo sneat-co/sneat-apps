@@ -24,7 +24,8 @@
       "matchPackagePrefixes": [
         "@angular/",
         "@angular-devkit/",
-        "@angular-eslint/"
+        "@angular-eslint/",
+        "@angular/cli"
       ],
       "matchUpdateTypes": [
         "minor",
