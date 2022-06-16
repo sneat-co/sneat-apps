@@ -1,3 +1,4 @@
+import { IByUser } from '@sneat/dto';
 import { IMeetingRequest } from '../models';
 import firebase from 'firebase/compat';
 import Timestamp = firebase.firestore.Timestamp;
@@ -33,10 +34,6 @@ export type TimerStatus =
 	| TimerStatusEnum.stopped
 	| TimerStatusEnum.paused;
 
-export interface IByUser {
-	uid: string;
-	title?: string;
-}
 
 export interface ITimerState {
 	status?: TimerStatus;

@@ -1,4 +1,4 @@
-import { IByUser } from '@sneat/meeting';
+import { IByUser } from './by-user';
 import { IHappeningSlot } from './dto-happening';
 
 export interface ICanceled {
