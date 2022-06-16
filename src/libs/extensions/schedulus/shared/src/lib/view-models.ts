@@ -1,5 +1,5 @@
 import {
-	HappeningType, ICanceled,
+	HappeningType, ICanceled, IHappeningAdjustment,
 	IHappeningSlotSingleRef,
 	ISlotParticipant,
 	ITiming,
@@ -25,6 +25,7 @@ export interface NewHappeningParams {
 export interface ISlotItem {
 	// id: string; Not sure how to make an ID yet
 	slotID: string;
+	adjustment?: IHappeningAdjustment;
 	wd?: WeekdayCode2;
 	// date: string;
 	error?: unknown;
@@ -35,7 +36,6 @@ export interface ISlotItem {
 	location?: SlotLocation;
 	participants?: ISlotParticipant[];
 	levels?: Level[];
-	canceled?: ICanceled;
 }
 
 export type SlotsByWeekday = { [wd: string]: ISlotItem[] };

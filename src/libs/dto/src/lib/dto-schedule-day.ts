@@ -1,20 +1,20 @@
 import { IByUser } from '@sneat/meeting';
+import { IHappeningSlot } from './dto-happening';
 
 export interface ICanceled {
 	at: string;
 	by: IByUser;
 }
 
-export interface IRecurringHappeningCancellation {
+export interface IHappeningAdjustment {
 	happeningID: string;
-	slotIDs: string[];
-	canceled: ICanceled;
-	reason?: string;
+	slot: IHappeningSlot;
+	canceled?: ICanceled;
 }
 
 export interface IScheduleDayDto {
 	teamID: string;
 	date: string;
 	happeningIDs?: string[];
-	cancellations: IRecurringHappeningCancellation[];
+	happeningAdjustments: IHappeningAdjustment[];
 }

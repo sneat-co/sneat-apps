@@ -1,6 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { emptyHappeningSlot, IHappeningSlot } from '@sneat/dto';
+import { emptyHappeningSlot, IHappeningAdjustment, IHappeningSlot } from '@sneat/dto';
 import { IHappeningContext } from '@sneat/team/models';
 import { SingleSlotFormComponent } from '../components/single-slot-form/single-slot-form.component';
 
@@ -15,7 +15,7 @@ export class ScheduleModalsService {
 	async editSingleHappeningSlot(
 		event: Event,
 		happening: IHappeningContext,
-		recurring?: {happeningSlot?: IHappeningSlot; dateID: string},
+		recurring?: {happeningSlot?: IHappeningSlot; dateID: string, adjustment?: IHappeningAdjustment},
 	): Promise<void> {
 		event.stopPropagation();
 		event.preventDefault();
@@ -31,6 +31,7 @@ export class ScheduleModalsService {
 				team,
 				happening,
 				happeningSlot,
+				adjustment: recurring?.adjustment,
 				dateID: recurring?.dateID,
 				isModal: true,
 			},

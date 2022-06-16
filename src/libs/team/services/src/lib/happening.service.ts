@@ -32,6 +32,10 @@ export interface IHappeningSlotRequest extends IHappeningRequest {
 	slot: IHappeningSlot;
 }
 
+export interface IHappeningSlotDateRequest extends IHappeningSlotRequest {
+	date?: string;
+}
+
 export interface ISlotsRefRequest extends IHappeningRequest {
 	date?: string;
 	slotIDs?: string[];
@@ -149,6 +153,23 @@ export class HappeningService {
 			slot,
 		};
 		return this.sneatApiService.post('happenings/update_slot', request);
+	}
+
+	adjustSlot(teamID: string, happeningID: string, slot: IHappeningSlot, date: string): Observable<void> {
+		slot = {
+			repeats: 'once',
+			id: slot.id,
+			start: {...slot.start, date},
+			end: slot.end,
+			durationMinutes: slot.durationMinutes,
+		};
+		const request: IHappeningSlotDateRequest = {
+			teamID,
+			happeningID,
+			slot,
+			date,
+		};
+		return this.sneatApiService.post('happenings/adjust_slot', request);
 	}
 
 	// watchByTeam(team: ITeamContext): Observable<IHappeningContext[]> {

@@ -10,7 +10,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { emptyHappeningSlot, IHappeningSlot, ITiming } from '@sneat/dto';
+import { emptyHappeningSlot, IHappeningAdjustment, IHappeningSlot, ITiming } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
 import { HappeningService } from '@sneat/team/services';
@@ -29,8 +29,9 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDest
 	@Input() team?: ITeamContext;
 	@Input() happening?: IHappeningContext;
 	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
+	@Input() adjustment?: IHappeningAdjustment;
 
-	@Input() dateID?: string // For re-scheduling recurring event for a specific day
+	@Input() dateID?: string; // For re-scheduling recurring event for a specific day
 
 	@Input() isModal = false;
 
@@ -82,12 +83,24 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDest
 			this.errorLogger.logError('happening context is not set');
 			return;
 		}
-		this.happeningService.updateSlot(this.team.id, this.happening.id, this.happeningSlot)
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-				next: () => this.modalController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close modal')),
-				error: this.errorLogger.logErrorHandler('Failed to update happening slot'),
-			});
+		switch (this.happening.brief?.type) {
+			case 'single':
+		}
+		if (this.happening?.brief?.type === 'single' || !this.dateID) {
+			this.happeningService.updateSlot(this.team.id, this.happening.id, this.happeningSlot)
+				.pipe(takeUntil(this.destroyed))
+				.subscribe({
+					next: () => this.modalController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close modal')),
+					error: this.errorLogger.logErrorHandler('Failed to update happening slot'),
+				});
+		} else if (this.happening?.brief?.type === 'recurring' && this.dateID) {
+			this.happeningService.adjustSlot(this.team.id, this.happening.id, this.happeningSlot, this.dateID)
+				.pipe(takeUntil(this.destroyed))
+				.subscribe({
+					next: () => this.modalController.dismiss().catch(this.errorLogger.logErrorHandler('failed to close modal')),
+					error: this.errorLogger.logErrorHandler('Failed to adjust happening slot'),
+				});
+		}
 	}
 
 	ngAfterViewInit(): void {

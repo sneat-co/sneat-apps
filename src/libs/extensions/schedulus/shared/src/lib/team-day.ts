@@ -100,13 +100,13 @@ export class TeamDay {
 			)
 			.subscribe({
 				next: scheduleDay => {
-					const changed = this.scheduleDayDto != scheduleDay.dto || this.scheduleDayDto && !!scheduleDay.dto
+					const changed = this.scheduleDayDto != scheduleDay.dto || this.scheduleDayDto && !!scheduleDay.dto;
 					this.scheduleDayDto = scheduleDay.dto;
 					if (changed) {
 						this.joinRecurringsWithSinglesAndEmit();
 					}
 				},
-				error: this.errorLogger.logErrorHandler('Failed to load scheduleDay record', {show: false, feedback: false}),
+				error: this.errorLogger.logErrorHandler('Failed to load scheduleDay record', { show: false, feedback: false }),
 			});
 	};
 
@@ -189,11 +189,13 @@ export class TeamDay {
 		const slots: ISlotItem[] = [];
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]
 			?.map(wdSlot => {
-				console.log('joinRecurringsWithSinglesAndEmit, wdSlot', this.wd);
+				console.log('joinRecurringsWithSinglesAndEmit, wdSlot', this.wd, wdSlot, this.scheduleDayDto);
 				if (this.scheduleDayDto) {
-					const cancellation = this.scheduleDayDto?.cancellations?.find(c => c.slotIDs?.includes(wdSlot.slotID));
-					if (cancellation?.canceled) {
-						return {...wdSlot, canceled: cancellation.canceled}
+					const adjustment = this.scheduleDayDto?.happeningAdjustments?.find(
+						a => a.happeningID === wdSlot.happening.id && a.slot.id === wdSlot.slotID,
+					);
+					if (adjustment) {
+						return { ...wdSlot, adjustment };
 					}
 				}
 				return wdSlot;

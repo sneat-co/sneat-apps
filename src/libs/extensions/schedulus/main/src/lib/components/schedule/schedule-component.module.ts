@@ -28,6 +28,7 @@ import { ScheduleWeekCardComponent } from '../schedule-week/schedule-week-card.c
 import { ScheduleWeekTabComponent } from '../schedule-week/schedule-week-tab.component';
 import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title.component';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
+import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu
 		ScheduleComponent,
 		SlotContextMenuComponent,
 		DaySlotItemComponent,
+		TimingBadgeComponent,
 		ScheduleDayComponent,
 		ScheduleWeekComponent,
 		ScheduleWeekdayComponent,

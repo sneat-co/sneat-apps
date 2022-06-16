@@ -33,7 +33,7 @@ export class SlotContextMenuComponent {
 	}
 
 	public get isCancelled(): boolean {
-		return this.happening?.brief?.status === 'canceled' || !!this.slot?.canceled;
+		return this.happening?.brief?.status === 'canceled' || !!this.slot?.adjustment?.canceled;
 	}
 
 	public get disabled(): boolean {
@@ -86,7 +86,11 @@ export class SlotContextMenuComponent {
 		const slotID = this.slot?.slotID;
 		const slots = happening?.dto?.slots || happening?.brief?.slots;
 		const happeningSlot: IHappeningSlot | undefined = slots?.find(slot => slot.id === slotID);
-		const recurring = happeningSlot && this.dateID ? {happeningSlot, dateID: this.dateID} : undefined;
+		const recurring = happeningSlot && this.dateID ? {
+			happeningSlot,
+			dateID: this.dateID,
+			adjustment: this.slot?.adjustment,
+		} : undefined;
 		this.scheduleModalsService
 			.editSingleHappeningSlot(event, { ...happening, team: this.team }, recurring)
 			.catch(this.errorLogger.logErrorHandler('Failed in editing single happening slot'));

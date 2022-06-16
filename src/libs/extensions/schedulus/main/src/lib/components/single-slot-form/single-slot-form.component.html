@@ -11,7 +11,7 @@
 	<ion-item-divider color="light">When</ion-item-divider>
 	<sneat-start-end-datetime-form
 		mode="single"
-		[timing]="happeningSlot"
+		[timing]="adjustment?.slot || happeningSlot"
 		[date]="this.dateID"
 		(timingChanged)="onTimingChanged($event)"
 	></sneat-start-end-datetime-form>
