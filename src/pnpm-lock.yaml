@@ -53,7 +53,7 @@ specifiers:
   postcss-url: 10.1.3
   prettier: 2.6.2
   rxjs: 7.5.5
-  ts-jest: 28.0.4
+  ts-jest: 28.0.5
   ts-md5: 1.2.11
   ts-node: 10.8.1
   tslib: 2.4.0
@@ -118,7 +118,7 @@ devDependencies:
   postcss-preset-env: 7.7.1_postcss@8.4.14
   postcss-url: 10.1.3_postcss@8.4.14
   prettier: 2.6.2
-  ts-jest: 28.0.4_ighm2axwo4w2kweegjclfnfl74
+  ts-jest: 28.0.5_ighm2axwo4w2kweegjclfnfl74
   ts-node: 10.8.1_pjlhwcktroxhni6x7uirug5lya
   typescript: 4.7.3
 
@@ -8849,7 +8849,7 @@ packages:
       jest: 28.1.1_sxvwizcnvn4mgz6mpodobsoami
       jest-environment-jsdom: 28.1.1
       pretty-format: 28.1.1
-      ts-jest: 28.0.4_htluty3tfpkmghlwv2aa3iamgy
+      ts-jest: 28.0.5_htluty3tfpkmghlwv2aa3iamgy
       typescript: 4.7.3
     optionalDependencies:
       esbuild: 0.14.38
@@ -12445,8 +12445,8 @@ packages:
     resolution: {integrity: sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==}
     dev: false
 
-  /ts-jest/28.0.4_htluty3tfpkmghlwv2aa3iamgy:
-    resolution: {integrity: sha512-S6uRDDdCJBvnZqyGjB4VCnwbQrbgdL8WPeP4jevVSpYsBaeGRQAIS08o3Svav2Ex+oXwLgJ/m7F24TNq62kA1A==}
+  /ts-jest/28.0.5_htluty3tfpkmghlwv2aa3iamgy:
+    resolution: {integrity: sha512-Sx9FyP9pCY7pUzQpy4FgRZf2bhHY3za576HMKJFs+OnQ9jS96Du5vNsDKkyedQkik+sEabbKAnCliv9BEsHZgQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
     peerDependencies:
@@ -12474,11 +12474,11 @@ packages:
       make-error: 1.3.6
       semver: 7.3.7
       typescript: 4.7.3
-      yargs-parser: 20.2.9
+      yargs-parser: 21.0.1
     dev: true
 
-  /ts-jest/28.0.4_ighm2axwo4w2kweegjclfnfl74:
-    resolution: {integrity: sha512-S6uRDDdCJBvnZqyGjB4VCnwbQrbgdL8WPeP4jevVSpYsBaeGRQAIS08o3Svav2Ex+oXwLgJ/m7F24TNq62kA1A==}
+  /ts-jest/28.0.5_ighm2axwo4w2kweegjclfnfl74:
+    resolution: {integrity: sha512-Sx9FyP9pCY7pUzQpy4FgRZf2bhHY3za576HMKJFs+OnQ9jS96Du5vNsDKkyedQkik+sEabbKAnCliv9BEsHZgQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
     peerDependencies:
@@ -12505,7 +12505,7 @@ packages:
       make-error: 1.3.6
       semver: 7.3.7
       typescript: 4.7.3
-      yargs-parser: 20.2.9
+      yargs-parser: 21.0.1
     dev: true
 
   /ts-loader/9.3.0_jy5w4alwxi2du2dgjfsq7k3iza:
@@ -13224,6 +13224,7 @@ packages:
   /yargs-parser/20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
+    dev: false
 
   /yargs-parser/21.0.1:
     resolution: {integrity: sha512-9BK1jFpLzJROCI5TzwZL/TU4gqjK5xiHV/RfWLOahrjAko/e4DJkRDZQXfvqAsiZzzYhgAzbgz6lg48jcm4GLg==}
