@@ -51,7 +51,7 @@ specifiers:
   postcss-import: 14.1.0
   postcss-preset-env: 7.7.1
   postcss-url: 10.1.3
-  prettier: 2.6.2
+  prettier: 2.7.1
   rxjs: 7.5.5
   ts-jest: 28.0.5
   ts-md5: 1.2.11
@@ -74,7 +74,7 @@ dependencies:
   '@ionic-native/splash-screen': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
   '@ionic-native/status-bar': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
   '@ionic/angular': 6.1.10_wvue77xf3t3kidf2ch4tkcf7lm
-  '@nrwl/angular': 14.2.4_ahcry7vbovhr4wtbsloai77wd4
+  '@nrwl/angular': 14.2.4_cncc2eoh34r3h6ph666vkuqrqq
   '@sentry/angular': 7.1.1_l4xohe2qfifji3koabfpxnkjdy
   '@sentry/tracing': 7.1.1
   '@sneat/random': 0.0.4_4xzom54nug4zsagb4nvasqqt2y
@@ -95,12 +95,12 @@ devDependencies:
   '@angular/compiler-cli': 14.0.2_l6ynbejydosp5eycptjrf5m7sy
   '@angular/language-service': 14.0.2
   '@nrwl/cli': 14.2.4
-  '@nrwl/cypress': 14.2.4_a2fgmathdck63r46uvar5qyifq
-  '@nrwl/eslint-plugin-nx': 14.2.4_e6cyybzr3mhac66ljwejspxr6u
+  '@nrwl/cypress': 14.2.4_conqdxhlxoe7yjkiwjev3zqolq
+  '@nrwl/eslint-plugin-nx': 14.2.4_kodf2clzfjb6kke3roz2v2wahe
   '@nrwl/jest': 14.2.4_w24bxlozc2rypkpueaqhbhr5mu
   '@nrwl/linter': 14.2.4_yiwolhcr7li35em6id6ayeppha
   '@nrwl/nx-cloud': 14.1.1
-  '@nrwl/workspace': 14.2.4_qaenaoky4vcakyli2vx7vl4ie4
+  '@nrwl/workspace': 14.2.4_sn24ipycqrgfancb5leibyduti
   '@types/jest': 28.1.1
   '@types/node': 16.11.39
   '@typescript-eslint/eslint-plugin': 5.28.0_7yumg2qjgbp7maccqlfhx2vudu
@@ -117,7 +117,7 @@ devDependencies:
   postcss-import: 14.1.0_postcss@8.4.14
   postcss-preset-env: 7.7.1_postcss@8.4.14
   postcss-url: 10.1.3_postcss@8.4.14
-  prettier: 2.6.2
+  prettier: 2.7.1
   ts-jest: 28.0.5_ighm2axwo4w2kweegjclfnfl74
   ts-node: 10.8.1_pjlhwcktroxhni6x7uirug5lya
   typescript: 4.7.3
@@ -4011,17 +4011,17 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/14.2.4_ahcry7vbovhr4wtbsloai77wd4:
+  /@nrwl/angular/14.2.4_cncc2eoh34r3h6ph666vkuqrqq:
     resolution: {integrity: sha512-idEdkMyywZbhBjkc0S/X3oKd+jz5T076Z2iipOnBAIffaeBnnVVMIvX5G8JB1SoFvVW6xLUvwpXGeB6mlq5emg==}
     requiresBuild: true
     dependencies:
       '@angular-devkit/schematics': 14.0.1_chokidar@3.5.3
-      '@nrwl/cypress': 14.2.4_a2fgmathdck63r46uvar5qyifq
+      '@nrwl/cypress': 14.2.4_conqdxhlxoe7yjkiwjev3zqolq
       '@nrwl/devkit': 14.2.4_nx@14.2.4
       '@nrwl/jest': 14.2.4_w24bxlozc2rypkpueaqhbhr5mu
       '@nrwl/linter': 14.2.4_yiwolhcr7li35em6id6ayeppha
-      '@nrwl/storybook': 14.2.4_hypf3vdyzyf6hirjpketv5hebu
-      '@nrwl/workspace': 14.2.4_qaenaoky4vcakyli2vx7vl4ie4
+      '@nrwl/storybook': 14.2.4_6pqv6k2yy4bshnnwundt32jwpe
+      '@nrwl/workspace': 14.2.4_sn24ipycqrgfancb5leibyduti
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.7.3
       '@schematics/angular': 14.0.1_chokidar@3.5.3
       chalk: 4.1.0
@@ -4067,7 +4067,7 @@ packages:
       - '@swc-node/register'
       - '@swc/core'
 
-  /@nrwl/cypress/14.2.4_a2fgmathdck63r46uvar5qyifq:
+  /@nrwl/cypress/14.2.4_conqdxhlxoe7yjkiwjev3zqolq:
     resolution: {integrity: sha512-yPfZS5L+DAcjj1etGHG8fMcycwN+uu4UuQgLedO9satZNVgnuAwicIuWH8NXpxAV27LwB50avCLovNzdtnme1w==}
     peerDependencies:
       cypress: '>= 3 < 10'
@@ -4080,7 +4080,7 @@ packages:
       '@cypress/webpack-preprocessor': 5.12.0_ez5yny3sowdujybpp2y5v3bwoi
       '@nrwl/devkit': 14.2.4_nx@14.2.4
       '@nrwl/linter': 14.2.4_yiwolhcr7li35em6id6ayeppha
-      '@nrwl/workspace': 14.2.4_qaenaoky4vcakyli2vx7vl4ie4
+      '@nrwl/workspace': 14.2.4_sn24ipycqrgfancb5leibyduti
       babel-loader: 8.2.5_dzrarqmejens5o5lr5bdn3kdtu
       chalk: 4.1.0
       cypress: 9.7.0
@@ -4123,7 +4123,7 @@ packages:
       semver: 7.3.4
       tslib: 2.4.0
 
-  /@nrwl/eslint-plugin-nx/14.2.4_e6cyybzr3mhac66ljwejspxr6u:
+  /@nrwl/eslint-plugin-nx/14.2.4_kodf2clzfjb6kke3roz2v2wahe:
     resolution: {integrity: sha512-jdHYmiBm7heOHvT+UIsv2//JFWHxJ5UxRNZv9cA13o5xB0jcwqG1Hr96zNd7sDSylysV3Lfy6gOMqKQqHGBIRA==}
     peerDependencies:
       '@typescript-eslint/parser': ~5.24.0
@@ -4133,7 +4133,7 @@ packages:
         optional: true
     dependencies:
       '@nrwl/devkit': 14.2.4_nx@14.2.4
-      '@nrwl/workspace': 14.2.4_qaenaoky4vcakyli2vx7vl4ie4
+      '@nrwl/workspace': 14.2.4_sn24ipycqrgfancb5leibyduti
       '@typescript-eslint/experimental-utils': 5.24.0_ud6rd4xtew5bv4yhvkvu24pzm4
       '@typescript-eslint/parser': 5.28.0_ud6rd4xtew5bv4yhvkvu24pzm4
       chalk: 4.1.0
@@ -4219,13 +4219,13 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/storybook/14.2.4_hypf3vdyzyf6hirjpketv5hebu:
+  /@nrwl/storybook/14.2.4_6pqv6k2yy4bshnnwundt32jwpe:
     resolution: {integrity: sha512-Ae3tZYK1F3ckPmfZgAph4g4NRJkADaCkQO6ENHnalw27zEI+PTcKzOz/FNkXfBO3LMBRRlW6vboM4AfBiysaaw==}
     dependencies:
-      '@nrwl/cypress': 14.2.4_a2fgmathdck63r46uvar5qyifq
+      '@nrwl/cypress': 14.2.4_conqdxhlxoe7yjkiwjev3zqolq
       '@nrwl/devkit': 14.2.4_nx@14.2.4
       '@nrwl/linter': 14.2.4_yiwolhcr7li35em6id6ayeppha
-      '@nrwl/workspace': 14.2.4_qaenaoky4vcakyli2vx7vl4ie4
+      '@nrwl/workspace': 14.2.4_sn24ipycqrgfancb5leibyduti
       core-js: 3.22.8
       semver: 7.3.4
       ts-loader: 9.3.0_jy5w4alwxi2du2dgjfsq7k3iza
@@ -4260,7 +4260,7 @@ packages:
       - '@swc-node/register'
       - '@swc/core'
 
-  /@nrwl/workspace/14.2.4_qaenaoky4vcakyli2vx7vl4ie4:
+  /@nrwl/workspace/14.2.4_sn24ipycqrgfancb5leibyduti:
     resolution: {integrity: sha512-R1ZY/r1LTgg/goqRsfHr9RaSywlTv3t4JH+uGmOA7k8oCJDHwWb72HgJiGi1+75PQrld9VcNBbHwAKvWWNjS/A==}
     peerDependencies:
       prettier: ^2.6.2
@@ -4287,7 +4287,7 @@ packages:
       npm-run-path: 4.0.1
       nx: 14.2.4
       open: 8.4.0
-      prettier: 2.6.2
+      prettier: 2.7.1
       rxjs: 6.6.7
       semver: 7.3.4
       tmp: 0.2.1
@@ -11286,8 +11286,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  /prettier/2.6.2:
-    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
+  /prettier/2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
