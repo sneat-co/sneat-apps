@@ -7,16 +7,10 @@ on:
     paths:
       - '.github/workflows/**.yml'
       - 'src/**'
-    paths-ignore:
-      - 'renovate.json'
-      - '**/**.md'
   pull_request:
     paths:
       - '.github/workflows/**.yml'
       - 'src/**'
-    paths-ignore:
-      - 'renovate.json'
-      - '**/**.md'
 
 jobs:
   build:
