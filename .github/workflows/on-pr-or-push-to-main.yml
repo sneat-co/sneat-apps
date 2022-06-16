@@ -1,18 +1,14 @@
 name: On PR or push to main
 
-on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/**.yml'
-      - 'src/**'
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/**.yml'
-      - 'src/**'
+on: [push, pull_request]
+  branches:
+    - main
+  paths:
+    - '.github/workflows/**.yml'
+    - 'src/**'
+  paths-ignore:
+    - 'renovate.json'
+    - '**/**.md'
 jobs:
   build:
     runs-on: ubuntu-latest
