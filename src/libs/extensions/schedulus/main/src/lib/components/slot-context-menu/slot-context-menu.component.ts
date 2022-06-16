@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
-import { HappeningStatus, WeekdayCode2 } from '@sneat/dto';
+import { HappeningStatus, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISelectMembersOptions, MembersSelectorService } from '@sneat/team/components';
@@ -14,6 +14,7 @@ import {
 	memberContextFromBrief,
 } from '@sneat/team/services';
 import { NEVER, Observable } from 'rxjs';
+import { ScheduleModalsService } from '../../services/schedule-modals.service';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -44,6 +45,7 @@ export class SlotContextMenuComponent {
 		private readonly popoverController: PopoverController,
 		private readonly happeningService: HappeningService,
 		private readonly membersSelectorService: MembersSelectorService,
+		private readonly scheduleModalsService: ScheduleModalsService,
 	) {
 	}
 
@@ -75,9 +77,20 @@ export class SlotContextMenuComponent {
 		this.notImplemented();
 	}
 
-	edit(): void {
+	edit(event: Event): void {
 		console.log(`SlotContextMenuComponent.edit()`);
-		this.notImplemented();
+		const happening = this.happening;
+		if (!happening) {
+			return;
+		}
+		const slotID = this.slot?.slotID;
+		const slots = happening?.dto?.slots || happening?.brief?.slots;
+		const happeningSlot: IHappeningSlot | undefined = slots?.find(slot => slot.id === slotID);
+		const recurring = happeningSlot && this.dateID ? {happeningSlot, dateID: this.dateID} : undefined;
+		this.scheduleModalsService
+			.editSingleHappeningSlot(event, { ...happening, team: this.team }, recurring)
+			.catch(this.errorLogger.logErrorHandler('Failed in editing single happening slot'));
+		this.dismissPopover();
 	}
 
 	delete(event: Event): void {

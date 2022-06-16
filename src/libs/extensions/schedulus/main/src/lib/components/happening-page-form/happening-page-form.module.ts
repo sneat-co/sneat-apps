@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { HappeningServiceModule } from '@sneat/team/services';
 import { HappeningMembersFormComponent } from '../happening-members-form/happening-members-form.component';
-import { RecurringCommonModule } from '../recurring-common.module';
+import { HappeningSlotComponentsModule } from '../happening-slot-components.module';
 import { HappeningPageFormComponent } from './happening-page-form.component';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { HappeningPageFormComponent } from './happening-page-form.component';
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		RecurringCommonModule,
+		HappeningSlotComponentsModule,
 		SneatPipesModule,
 		HappeningServiceModule,
 	],

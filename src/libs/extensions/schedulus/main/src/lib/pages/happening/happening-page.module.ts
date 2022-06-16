@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { HappeningServiceModule } from '@sneat/team/services';
 import { HappeningPageFormModule } from '../../components/happening-page-form/happening-page-form.module';
-import { RecurringCommonModule } from '../../components/recurring-common.module';
+import { HappeningSlotComponentsModule } from '../../components/happening-slot-components.module';
 
 import { HappeningPageComponent } from './happening-page.component';
 
@@ -22,7 +22,7 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		RecurringCommonModule,
+		HappeningSlotComponentsModule,
 		RouterModule.forChild(routes),
 		HappeningServiceModule,
 		HappeningPageFormModule,

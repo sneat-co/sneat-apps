@@ -127,7 +127,7 @@ export class TeamDay {
 				.watchSinglesOnSpecificDay(this.teamID, this.dateID)
 				.pipe(
 					takeUntil(this.destroyed),
-					takeUntil(this.teamID$),
+					// takeUntil(this.teamID$),
 				)
 				.subscribe({
 					next: this.processSingles,

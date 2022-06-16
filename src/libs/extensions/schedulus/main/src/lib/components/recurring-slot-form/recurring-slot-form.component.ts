@@ -13,7 +13,15 @@ import {
 } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
-import { HappeningType, IHappeningSlot, ITiming, RepeatsWeek, SlotLocation, WeekdayCode2 } from '@sneat/dto';
+import {
+	emptyTiming,
+	HappeningType,
+	IHappeningSlot,
+	ITiming,
+	RepeatsWeek,
+	SlotLocation,
+	WeekdayCode2,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { IHappeningContext } from '@sneat/team/models';
@@ -33,7 +41,7 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 
 	private readonly destroyed = new Subject<void>();
 
-	private timing?: ITiming;
+	public timing: ITiming = emptyTiming;
 
 	public error?: string;
 

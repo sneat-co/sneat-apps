@@ -20,6 +20,7 @@ import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/mod
 import { memberContextFromBrief, TeamNavService } from '@sneat/team/services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team/services';
+import { ScheduleModalsService } from '../services/schedule-modals.service';
 import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
 
 @Injectable()
@@ -30,6 +31,7 @@ export class HappeningBaseComponentParams {
 		public readonly teamNavService: TeamNavService,
 		public readonly membersSelectorService: MembersSelectorService,
 		public readonly modalController: ModalController,
+		public readonly scheduleModalsService: ScheduleModalsService,
 	) {
 	}
 }
@@ -166,7 +168,7 @@ This operation can NOT be undone.`)) {
 		if (!teamID) {
 			return;
 		}
-		const teamMembers: IMemberContext[] | undefined  = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+		const teamMembers: IMemberContext[] | undefined = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
 
 		this.membersSelectorService.selectMembersInModal({
 			selectedMembers: teamMembers?.filter(m => this.happening?.brief?.memberIDs?.some(id => id === m.id)) || [],
@@ -179,17 +181,11 @@ This operation can NOT be undone.`)) {
 	}
 
 	async editSingleHappeningSlot(event: Event): Promise<void> {
-		const slots = this.happening?.brief?.slots;
-		const modal = await this.happeningBaseComponentParams.modalController.create({
-			component: SingleSlotFormComponent,
-			componentProps: {
-				team: this.team,
-				happening: this.happening,
-				happeningSlot: slots && slots[0] || emptyHappeningSlot,
-				isModal: true,
-			},
-		});
-		await modal.present();
+		if (!this.happening) {
+			return Promise.reject('no happening');
+		}
+		await this.happeningBaseComponentParams.scheduleModalsService
+			.editSingleHappeningSlot(event, this.happening);
 	}
 
 	private readonly onMemberAdded = (member: IMemberContext): Observable<void> => {

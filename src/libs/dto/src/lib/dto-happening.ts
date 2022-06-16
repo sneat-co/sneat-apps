@@ -142,10 +142,15 @@ export interface IHappeningSlot extends IHappeningSlotTiming {
 	readonly groupIds?: string[]; // TODO: What is this?
 }
 
+export const emptyTiming: ITiming = {
+	start: { date: '', time: '' },
+	// durationMinutes: 0,
+}
+
 export const emptyHappeningSlot: IHappeningSlot = {
 	id: '',
 	repeats: 'UNKNOWN',
-	start: { date: '', time: '' },
+	...emptyTiming,
 };
 
 export interface ISingleHappeningDto extends IHappeningDto {

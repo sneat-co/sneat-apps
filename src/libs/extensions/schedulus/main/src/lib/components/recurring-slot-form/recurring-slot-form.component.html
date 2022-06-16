@@ -31,8 +31,9 @@
 
 				<!--		<ion-item-divider color="light">When</ion-item-divider>-->
 				<sneat-start-end-datetime-form #startEndDatetimeForm
-					[happeningType]="happeningType"
-					(slotChanged)="onTimingChanged($event)"
+					[mode]="happeningType"
+					[timing]="timing"
+					(timingChanged)="onTimingChanged($event)"
 				></sneat-start-end-datetime-form>
 
 			</form>

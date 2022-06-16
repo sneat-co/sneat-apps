@@ -34,5 +34,5 @@ import { TimeSelectorComponent } from './start-end-datetime-form/time-selector.c
 		StartEndDatetimeFormComponent,
 	],
 })
-export class RecurringCommonModule {
+export class HappeningSlotComponentsModule {
 }

@@ -1,17 +1,19 @@
 <ion-item-group>
-<!--	<ion-item color="primary" *ngIf="happening" class="sneat-tiny-end-padding">-->
-<!--		<ion-label>{{happening.brief?.title}}</ion-label>-->
-<!--		<ion-buttons slot="end">-->
-<!--			<ion-button (click)="close($event)" title="Close">-->
-<!--				<ion-icon name="close"></ion-icon>-->
-<!--			</ion-button>-->
-<!--		</ion-buttons>-->
-<!--	</ion-item>-->
+	<ion-item color="primary" *ngIf="isModal" class="sneat-tiny-end-padding">
+		<ion-label>{{happening?.brief?.title}}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="close($event)" title="Close">
+				<ion-icon name="close"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+
 	<ion-item-divider color="light">When</ion-item-divider>
 	<sneat-start-end-datetime-form
-		happeningType="single"
-		[happeningSlot]="happeningSlot"
-		(slotChanged)="onTimingChanged($event)"
+		mode="single"
+		[timing]="happeningSlot"
+		[date]="this.dateID"
+		(timingChanged)="onTimingChanged($event)"
 	></sneat-start-end-datetime-form>
 
 	<ion-item-divider color="light">Where</ion-item-divider>

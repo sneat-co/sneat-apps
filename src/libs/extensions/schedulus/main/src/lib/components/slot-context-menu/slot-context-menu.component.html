@@ -1,6 +1,6 @@
 <sneat-day-slot-item [team]="team" [slot]="slot" color="light" mode="brief"></sneat-day-slot-item>
-<ion-item tappable (click)="edit()" [disabled]="disabled">
-	<ion-icon name="move-outline" slot="start" color="tertiary"></ion-icon>
+<ion-item tappable (click)="edit($event)" [disabled]="disabled">
+	<ion-icon slot="start" name="calendar-outline"></ion-icon>
 	<ion-label>Change date or time</ion-label>
 </ion-item>
 <!--<ion-item tappable (click)="edit()" [disabled]="disabled">-->

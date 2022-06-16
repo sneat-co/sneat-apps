@@ -30,6 +30,8 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDest
 	@Input() happening?: IHappeningContext;
 	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
 
+	@Input() dateID?: string // For re-scheduling recurring event for a specific day
+
 	@Input() isModal = false;
 
 	@Output() readonly validChanged = new EventEmitter<boolean>();
@@ -52,10 +54,10 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDest
 			this.errorLogger.logError('timing has no end');
 			return;
 		}
-		if (!timing.durationMinutes) {
-			this.errorLogger.logError('timing has no durationMinutes');
-			return;
-		}
+		// if (!timing.durationMinutes) {
+		// 	this.errorLogger.logError('timing has no durationMinutes');
+		// 	return;
+		// }
 		this.happeningSlot = { ...this.happeningSlot, ...timing };
 		this.emitHappeningSlotChange();
 	}

@@ -7,6 +7,7 @@ import { FilterItemModule, MembersAsBadgesModule, SneatPipesModule } from '@snea
 import { MembersSelectorModule, TeamCoreComponentsModule } from '@sneat/team/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import { HappeningServiceModule, ScheduleDayServiceModule } from '@sneat/team/services';
+import { ScheduleModalsServiceModule } from '../../services/schedule-modals.service';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
 import { RecurringsTabComponent } from '../recurrings-tab/recurrings-tab.component';
@@ -44,6 +45,7 @@ import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu
 		MembersAsBadgesModule,
 		ScheduleNavServiceModule,
 		MembersSelectorModule,
+		ScheduleModalsServiceModule,
 	],
 	exports: [
 		ScheduleComponent,

@@ -10,7 +10,7 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamRequest } from '@sneat/team/models';
-import { delay, map, Observable, of, throwError } from 'rxjs';
+import { delay, map, Observable, of, tap, throwError } from 'rxjs';
 import { TeamItemBaseService } from './team-item-base.service';
 
 export interface ICreateHappeningRequest {
@@ -191,9 +191,14 @@ export class HappeningService {
 		return this.sfs.watchByFilter([
 			{ field: 'teamDates', operator: 'array-contains', value: teamDate },
 			HappeningService.statusFilter(statuses),
-		]).pipe(map(happenings => {
-			return happenings.map(h => processHappeningContext(h, teamID));
-		}));
+		]).pipe(
+			tap(happenings => {
+				console.log('watchSinglesOnSpecificDay() =>', teamID, date, statuses, happenings);
+			}),
+			map(happenings => {
+				return happenings.map(h => processHappeningContext(h, teamID));
+			}),
+		);
 	}
 }
 
