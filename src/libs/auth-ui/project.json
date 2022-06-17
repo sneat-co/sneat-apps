@@ -1,38 +1,38 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/auth-ui/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/auth-ui"],
-      "options": {
-        "project": "libs/auth-ui/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/auth-ui/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/auth-ui/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/auth-ui"],
-      "options": {
-        "jestConfig": "libs/auth-ui/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["libs/auth-ui/**/*.ts", "libs/auth-ui/**/*.html"]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/auth-ui/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/auth-ui"],
+			"options": {
+				"project": "libs/auth-ui/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/auth-ui/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/auth-ui/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/auth-ui"],
+			"options": {
+				"jestConfig": "libs/auth-ui/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/auth-ui/**/*.ts", "libs/auth-ui/**/*.html"]
+			}
+		}
+	},
+	"tags": []
 }

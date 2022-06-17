@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/extensions/assetus/components/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/extensions/assetus/components"],
-      "options": {
-        "project": "libs/extensions/assetus/components/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/extensions/assetus/components/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/extensions/assetus/components/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/extensions/assetus/components"],
-      "options": {
-        "jestConfig": "libs/extensions/assetus/components/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/extensions/assetus/components/**/*.ts",
-          "libs/extensions/assetus/components/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/extensions/assetus/components/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/extensions/assetus/components"],
+			"options": {
+				"project": "libs/extensions/assetus/components/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/extensions/assetus/components"],
+			"options": {
+				"jestConfig": "libs/extensions/assetus/components/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/extensions/assetus/components/**/*.ts",
+					"libs/extensions/assetus/components/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }

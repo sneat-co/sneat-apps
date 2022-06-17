@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/extensions/assetus/pages/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/extensions/assetus/pages"],
-      "options": {
-        "project": "libs/extensions/assetus/pages/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/extensions/assetus/pages/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/extensions/assetus/pages/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/extensions/assetus/pages"],
-      "options": {
-        "jestConfig": "libs/extensions/assetus/pages/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/extensions/assetus/pages/**/*.ts",
-          "libs/extensions/assetus/pages/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/extensions/assetus/pages/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/extensions/assetus/pages"],
+			"options": {
+				"project": "libs/extensions/assetus/pages/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/extensions/assetus/pages/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/extensions/assetus/pages/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/extensions/assetus/pages"],
+			"options": {
+				"jestConfig": "libs/extensions/assetus/pages/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/extensions/assetus/pages/**/*.ts",
+					"libs/extensions/assetus/pages/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }

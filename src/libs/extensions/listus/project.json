@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/extensions/listus/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/extensions/listus"],
-      "options": {
-        "project": "libs/extensions/listus/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/extensions/listus/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/extensions/listus/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/extensions/listus"],
-      "options": {
-        "jestConfig": "libs/extensions/listus/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/extensions/listus/**/*.ts",
-          "libs/extensions/listus/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/extensions/listus/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/extensions/listus"],
+			"options": {
+				"project": "libs/extensions/listus/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/extensions/listus/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/extensions/listus/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/extensions/listus"],
+			"options": {
+				"jestConfig": "libs/extensions/listus/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/extensions/listus/**/*.ts",
+					"libs/extensions/listus/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }

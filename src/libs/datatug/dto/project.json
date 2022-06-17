@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/datatug/dto/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/datatug/dto"],
-      "options": {
-        "project": "libs/datatug/dto/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/datatug/dto/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/datatug/dto/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/datatug/dto"],
-      "options": {
-        "jestConfig": "libs/datatug/dto/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/datatug/dto/**/*.ts",
-          "libs/datatug/dto/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/datatug/dto/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/datatug/dto"],
+			"options": {
+				"project": "libs/datatug/dto/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/datatug/dto/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/datatug/dto/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/datatug/dto"],
+			"options": {
+				"jestConfig": "libs/datatug/dto/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/datatug/dto/**/*.ts",
+					"libs/datatug/dto/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }

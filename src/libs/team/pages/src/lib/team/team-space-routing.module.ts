@@ -7,6 +7,7 @@ import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { docusRoutes } from '@sneat/extensions/docus';
+import { expressRoutes } from '@sneat/extensions/express';
 import { listusRoutes } from '@sneat/extensions/listus';
 import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus';
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
@@ -15,12 +16,13 @@ import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } f
 const routes: Routes = [
 	{
 		path: '',
+		pathMatch: 'full',
 		component: TeamMenuComponent,
 		outlet: 'menu',
 	},
 	{
 		path: '',
-		pathMatch: 'full',
+		// pathMatch: 'full',
 		loadChildren: () => import('./team-page/team-page.module').then(m => m.TeamPageModule),
 	},
 	...memberRoutes, // E.g. "./new-member"
@@ -32,11 +34,16 @@ const routes: Routes = [
 		path: 'member/:memberId',
 		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
 	},
+	{
+		path: 'express',
+		loadChildren: () => import('@sneat/extensions/express').then(m => m.ExpressRoutingModule),
+	},
 	...budgetusRoutes,
 	...docusRoutes,
 	...listusRoutes,
 	...schedulusRoutes,
 	...membersRoutes,
+	// ...expressRoutes,
 	// {
 	// 	path: '',
 	// 	component: SpacePageComponent, // intentionally not lazy loading

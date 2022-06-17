@@ -1,38 +1,38 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/meeting/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/meeting"],
-      "options": {
-        "project": "libs/meeting/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/meeting/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/meeting/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/meeting"],
-      "options": {
-        "jestConfig": "libs/meeting/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["libs/meeting/**/*.ts", "libs/meeting/**/*.html"]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/meeting/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/meeting"],
+			"options": {
+				"project": "libs/meeting/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/meeting/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/meeting/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/meeting"],
+			"options": {
+				"jestConfig": "libs/meeting/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/meeting/**/*.ts", "libs/meeting/**/*.html"]
+			}
+		}
+	},
+	"tags": []
 }

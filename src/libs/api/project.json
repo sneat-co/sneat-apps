@@ -1,38 +1,38 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/api/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/api"],
-      "options": {
-        "project": "libs/api/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/api/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/api/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/api"],
-      "options": {
-        "jestConfig": "libs/api/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["libs/api/**/*.ts", "libs/api/**/*.html"]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/api/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/api"],
+			"options": {
+				"project": "libs/api/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/api/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/api/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/api"],
+			"options": {
+				"jestConfig": "libs/api/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/api/**/*.ts", "libs/api/**/*.html"]
+			}
+		}
+	},
+	"tags": []
 }

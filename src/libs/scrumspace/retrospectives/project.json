@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/scrumspace/retrospectives/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/scrumspace/retrospectives"],
-      "options": {
-        "project": "libs/scrumspace/retrospectives/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/scrumspace/retrospectives"],
-      "options": {
-        "jestConfig": "libs/scrumspace/retrospectives/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/scrumspace/retrospectives/**/*.ts",
-          "libs/scrumspace/retrospectives/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/scrumspace/retrospectives/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/scrumspace/retrospectives"],
+			"options": {
+				"project": "libs/scrumspace/retrospectives/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/scrumspace/retrospectives"],
+			"options": {
+				"jestConfig": "libs/scrumspace/retrospectives/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/scrumspace/retrospectives/**/*.ts",
+					"libs/scrumspace/retrospectives/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }

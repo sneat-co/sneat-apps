@@ -1,0 +1,97 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-title>Freights</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<div class="ion-padding-horizontal">
+		<ion-segment [(ngModel)]="type">
+			<ion-segment-button value="">All</ion-segment-button>
+			<ion-segment-button value="export">Export</ion-segment-button>
+			<ion-segment-button value="import">Import</ion-segment-button>
+			<ion-segment-button value="internal">Internal</ion-segment-button>
+		</ion-segment>
+	</div>
+
+	<ion-card>
+		<ion-item>
+			<ion-label style="font-weight: bold">Filter</ion-label>
+			<ion-input placeholder="search"></ion-input>
+		</ion-item>
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label color="medium" position="stacked">Consignee</ion-label>
+						<ion-select [(ngModel)]="counterparty" interface="popover">
+							<ion-select-option value="">All</ion-select-option>
+							<ion-select-option value="maersk">Maerks</ion-select-option>
+							<ion-select-option value="sealand">SeaLand</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label color="medium" position="stacked">Carrier</ion-label>
+						<ion-select [(ngModel)]="carrier" interface="popover">
+							<ion-select-option value="">All</ion-select-option>
+							<ion-select-option value="maersk">Maerks</ion-select-option>
+							<ion-select-option value="sealand">SeaLand</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label color="medium" position="stacked">Shipper</ion-label>
+						<ion-select [(ngModel)]="shipper" interface="popover">
+							<ion-select-option value="">All</ion-select-option>
+							<ion-select-option value="maersk">Maerks</ion-select-option>
+							<ion-select-option value="sealand">SeaLand</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label color="medium" position="stacked">Country of origin</ion-label>
+						<ion-select [(ngModel)]="countryOrigin" interface="popover">
+							<ion-select-option value="">All</ion-select-option>
+							<ion-select-option value="es">Spain</ion-select-option>
+							<ion-select-option value="ru">Russia</ion-select-option>
+							<ion-select-option value="ua">Ukraine</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label color="medium" position="stacked">Country of destination</ion-label>
+						<ion-select [(ngModel)]="countryOrigin" interface="popover">
+							<ion-select-option value="">All</ion-select-option>
+							<ion-select-option value="es">Spain</ion-select-option>
+							<ion-select-option value="ru">Russia</ion-select-option>
+							<ion-select-option value="ua">Ukraine</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
+		<ion-item-divider color="light">
+			<ion-label color="medium">Status</ion-label>
+		</ion-item-divider>
+		<ion-segment [(ngModel)]="status" color="dark">
+			<ion-segment-button value="active">Active</ion-segment-button>
+			<ion-segment-button value="complete">Complete</ion-segment-button>
+			<ion-segment-button value="canceled">Canceled</ion-segment-button>
+		</ion-segment>
+		<!--		<ion-item-divider color="light">-->
+		<!--			<ion-label>Counterparty</ion-label>-->
+		<!--		</ion-item-divider>-->
+	</ion-card>
+
+	<sneat-freights-list [freights]="freights" style="margin-bottom: 50px;"></sneat-freights-list>
+
+</ion-content>

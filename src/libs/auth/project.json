@@ -1,38 +1,38 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/auth/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/auth"],
-      "options": {
-        "project": "libs/auth/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/auth/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/auth/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/auth"],
-      "options": {
-        "jestConfig": "libs/auth/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["libs/auth/**/*.ts", "libs/auth/**/*.html"]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/auth/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/auth"],
+			"options": {
+				"project": "libs/auth/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/auth/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/auth/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/auth"],
+			"options": {
+				"jestConfig": "libs/auth/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/auth/**/*.ts", "libs/auth/**/*.html"]
+			}
+		}
+	},
+	"tags": []
 }

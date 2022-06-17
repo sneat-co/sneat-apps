@@ -1,28 +1,28 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/sneat-app-e2e/src",
-  "projectType": "application",
-  "targets": {
-    "e2e": {
-      "executor": "@nrwl/cypress:cypress",
-      "options": {
-        "cypressConfig": "apps/sneat-app-e2e/cypress.json",
-        "devServerTarget": "sneat-app:serve:development"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "sneat-app:serve:production"
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/sneat-app-e2e/**/*.{js,ts}"]
-      }
-    }
-  },
-  "tags": [],
-  "implicitDependencies": ["sneat-app"]
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/sneat-app-e2e/src",
+	"projectType": "application",
+	"targets": {
+		"e2e": {
+			"executor": "@nrwl/cypress:cypress",
+			"options": {
+				"cypressConfig": "apps/sneat-app-e2e/cypress.json",
+				"devServerTarget": "sneat-app:serve:development"
+			},
+			"configurations": {
+				"production": {
+					"devServerTarget": "sneat-app:serve:production"
+				}
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/sneat-app-e2e/**/*.{js,ts}"]
+			}
+		}
+	},
+	"tags": [],
+	"implicitDependencies": ["sneat-app"]
 }

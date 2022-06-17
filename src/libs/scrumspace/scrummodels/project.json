@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/scrumspace/scrummodels/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/scrumspace/scrummodels"],
-      "options": {
-        "project": "libs/scrumspace/scrummodels/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/scrumspace/scrummodels/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/scrumspace/scrummodels/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/scrumspace/scrummodels"],
-      "options": {
-        "jestConfig": "libs/scrumspace/scrummodels/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/scrumspace/scrummodels/**/*.ts",
-          "libs/scrumspace/scrummodels/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/scrumspace/scrummodels/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/scrumspace/scrummodels"],
+			"options": {
+				"project": "libs/scrumspace/scrummodels/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/scrumspace/scrummodels/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/scrumspace/scrummodels/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/scrumspace/scrummodels"],
+			"options": {
+				"jestConfig": "libs/scrumspace/scrummodels/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/scrumspace/scrummodels/**/*.ts",
+					"libs/scrumspace/scrummodels/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }

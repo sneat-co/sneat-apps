@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/datatug/models/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/datatug/models"],
-      "options": {
-        "project": "libs/datatug/models/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/datatug/models/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/datatug/models/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/datatug/models"],
-      "options": {
-        "jestConfig": "libs/datatug/models/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/datatug/models/**/*.ts",
-          "libs/datatug/models/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/datatug/models/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/datatug/models"],
+			"options": {
+				"project": "libs/datatug/models/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/datatug/models/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/datatug/models/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/datatug/models"],
+			"options": {
+				"jestConfig": "libs/datatug/models/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/datatug/models/**/*.ts",
+					"libs/datatug/models/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }

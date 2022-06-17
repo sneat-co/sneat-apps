@@ -1,0 +1,133 @@
+<ion-card>
+	<ion-item color="primary" [routerLink]="'/express/freights/abc'">
+		<ion-label>Export #</ion-label>
+		<ion-input readonly value="12345" style="font-weight: bold"></ion-input>
+		<!--			<ion-buttons slot="start">-->
+		<!--				<ion-button>-->
+		<!--					<ion-icon name="document-text-outline"></ion-icon>-->
+		<!--				</ion-button>-->
+		<!--			</ion-buttons>-->
+		<ion-buttons slot="end">
+			<ion-button>
+				<ion-icon name="create-outline" slot="start"></ion-icon>
+				<ion-label>Edit</ion-label>
+			</ion-button>
+			<ion-button>
+				<ion-icon name="print-outline" slot="start"></ion-icon>
+				<ion-label>Print</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+
+
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="6">
+				<ion-item tappable>
+					<ion-label>
+						<ion-text color="medium">Containers</ion-text>
+						2 x <b>20</b>ft, 1 x <b>40</b>ft
+					</ion-label>
+				</ion-item>
+			</ion-col>
+			<ion-col size="3">
+				<ion-item>
+					<ion-label color="medium">Gross (kg)</ion-label>
+					<ion-input value="32760"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="3">
+				<ion-item>
+					<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
+					<ion-input value="53"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size="8">
+				<ion-item color="light">
+					<ion-label color="medium">Buyer</ion-label>
+					<ion-input value="RUSCON LTD"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="4">
+				<ion-item color="light">
+					<ion-label color="medium">Ref #</ion-label>
+					<ion-input readonly [value]="freight?.dto?.buyerRef"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size="8">
+				<ion-item>
+					<ion-label color="medium">Carrier</ion-label>
+					<ion-input [value]="freight?.dto?.carrier?.title" readonly></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="4">
+				<ion-item>
+					<ion-label color="medium">Ref #</ion-label>
+					<ion-input readonly [value]="freight?.dto?.carrierRef"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size="8">
+				<ion-item color="light">
+					<ion-label color="medium">Shipper</ion-label>
+					<ion-input readonly [value]="freight?.dto?.shipper?.title"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="4">
+				<ion-item color="light">
+					<ion-label color="medium">Ref #</ion-label>
+					<ion-input readonly [value]="freight?.dto?.shipperRef"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size="8">
+				<ion-item>
+					<ion-label color="medium">Consignee</ion-label>
+					<ion-input [value]="freight?.dto?.consignee?.title" readonly></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="4">
+				<ion-item>
+					<ion-label color="medium">Ref #</ion-label>
+					<ion-input readonly [value]="freight?.dto?.consigneeRef"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<!--			<ion-row>-->
+		<!--				<ion-col>-->
+		<!--					<ion-item>-->
+		<!--						<ion-label color="medium">Booked on</ion-label>-->
+		<!--						<ion-input type="date" value="2022-06-15"></ion-input>-->
+		<!--					</ion-item>-->
+		<!--				</ion-col>-->
+		<!--				<ion-col>-->
+		<!--					<ion-item>-->
+		<!--						<ion-label color="medium">Dispatch on</ion-label>-->
+		<!--						<ion-input type="date" value="2022-07-02"></ion-input>-->
+		<!--					</ion-item>-->
+		<!--				</ion-col>-->
+		<!--				<ion-col>-->
+		<!--					<ion-item>-->
+		<!--						<ion-label color="medium">Shipping on</ion-label>-->
+		<!--						<ion-input type="date" value="2022-07-03"></ion-input>-->
+		<!--					</ion-item>-->
+		<!--				</ion-col>-->
+		<!--				<ion-col>-->
+		<!--					<ion-item>-->
+		<!--						<ion-label color="medium">ETA</ion-label>-->
+		<!--						<ion-input type="date" value="2022-08-13"></ion-input>-->
+		<!--					</ion-item>-->
+		<!--				</ion-col>-->
+		<!--			</ion-row>-->
+	</ion-grid>
+<!--	<ion-item>-->
+<!--		<ion-label position="stacked" color="medium">Special instructions</ion-label>-->
+<!--		<ion-textarea>Freight collect</ion-textarea>-->
+<!--	</ion-item>-->
+</ion-card>

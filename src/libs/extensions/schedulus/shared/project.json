@@ -1,41 +1,41 @@
 {
-  "projectType": "library",
-  "sourceRoot": "libs/extensions/schedulus/shared/src",
-  "prefix": "sneat",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
-      "outputs": ["dist/libs/extensions/schedulus/shared"],
-      "options": {
-        "project": "libs/extensions/schedulus/shared/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/extensions/schedulus/shared/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/extensions/schedulus/shared/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/extensions/schedulus/shared"],
-      "options": {
-        "jestConfig": "libs/extensions/schedulus/shared/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/extensions/schedulus/shared/**/*.ts",
-          "libs/extensions/schedulus/shared/**/*.html"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"projectType": "library",
+	"sourceRoot": "libs/extensions/schedulus/shared/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:ng-packagr-lite",
+			"outputs": ["dist/libs/extensions/schedulus/shared"],
+			"options": {
+				"project": "libs/extensions/schedulus/shared/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/extensions/schedulus/shared/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/extensions/schedulus/shared/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/extensions/schedulus/shared"],
+			"options": {
+				"jestConfig": "libs/extensions/schedulus/shared/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/extensions/schedulus/shared/**/*.ts",
+					"libs/extensions/schedulus/shared/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
 }
