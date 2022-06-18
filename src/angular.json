@@ -30,6 +30,8 @@
 		"extensions-memberus": "libs/extensions/memberus",
 		"extensions-schedulus-main": "libs/extensions/schedulus/main",
 		"extensions-schedulus-shared": "libs/extensions/schedulus/shared",
+		"freights-app": "apps/freights-app",
+		"freights-app-e2e": "apps/freights-app-e2e",
 		"grid": "libs/grid",
 		"logging": "libs/logging",
 		"meeting": "libs/meeting",
