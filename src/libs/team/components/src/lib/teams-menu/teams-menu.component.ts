@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
-import { IUserTeamBrief, TeamMemberType } from '@sneat/auth-models';
+import { IUserTeamBrief, TeamMemberType, TeamType } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest, ITeamContext, teamContextFromBrief } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
@@ -12,6 +12,9 @@ import { ISneatUserState, SneatUserService } from '@sneat/auth';
 	styleUrls: ['./teams-menu.component.scss'],
 })
 export class TeamsMenuComponent {
+
+	@Input() spacesLabel = 'Spaces';
+	@Input() teamType?: TeamType;
 
 	teams?: ITeamContext[];
 	familyTeams?: ITeamContext[];
@@ -39,14 +42,15 @@ export class TeamsMenuComponent {
 			// roles: [TeamMemberType.creator],
 		};
 		this.closeMenu();
-		this.teamService.createTeam(request).subscribe({
-			next: value => {
-				console.log('Team created:', value);
-				this.navController.navigateForward('/space/family/' + value.id)
-					.catch(this.errorLogger.logErrorHandler('failed to navigate to newly created family team'));
-			},
-			error: this.errorLogger.logErrorHandler('failed to create a new family team'),
-		});
+		this.teamService.createTeam(request)
+			.subscribe({
+				next: value => {
+					console.log('Team created:', value);
+					this.navController.navigateForward('/space/family/' + value.id)
+						.catch(this.errorLogger.logErrorHandler('failed to navigate to newly created family team'));
+				},
+				error: this.errorLogger.logErrorHandler('failed to create a new family team'),
+			});
 		return false;
 	}
 
@@ -61,7 +65,7 @@ export class TeamsMenuComponent {
 			this.familyTeam = undefined;
 			return;
 		}
-		this.teams = user?.record?.teams?.map(teamContextFromBrief) || [];
+		this.teams = user?.record?.teams?.filter(t => !this.teamType || t.type === this.teamType)?.map(teamContextFromBrief) || [];
 		console.log('onUserStateChanged', this.teams);
 		this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
 		this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
