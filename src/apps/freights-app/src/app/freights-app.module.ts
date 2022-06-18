@@ -23,17 +23,11 @@ const appInfo: IAppInfo = {
 
 @NgModule({
 	imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		IonicModule.forRoot(),
-		AngularFireModule.initializeApp(environment.firebaseConfig),
-		RandomModule,
-		SneatApplicationModule,
+		SneatApplicationModule.defaultSneatApplicationImports(environment),
 		SneatAuthServicesModule,
 		AuthMenuItemModule,
 		CommunesUiModule,
 		TeamsMenuComponentModule,
-		HttpClientModule,
 		FreightsAppRoutingModule,
 	],
 	providers: [
