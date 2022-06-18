@@ -34,10 +34,6 @@ const routes: Routes = [
 		path: 'member/:memberId',
 		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
 	},
-	{
-		path: 'express',
-		loadChildren: () => import('@sneat/extensions/express').then(m => m.ExpressRoutingModule),
-	},
 	...budgetusRoutes,
 	...docusRoutes,
 	...listusRoutes,
