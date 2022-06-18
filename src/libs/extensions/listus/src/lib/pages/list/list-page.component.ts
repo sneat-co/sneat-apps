@@ -312,12 +312,12 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public deleteCompleted(): void {
 		console.log('deleteCompleted()');
-		this.deleteItems(this.allListItems?.filter(li => li.brief.isDone))
+		this.deleteItems(this.allListItems?.filter(li => li.brief.isDone));
 	}
 
 	public deleteAll(): void {
 		console.log('deleteAll()');
-		this.deleteItems(this.allListItems)
+		this.deleteItems(this.allListItems);
 	}
 
 	private deleteItems(items?: IListItemWithUiState[]): void {
@@ -329,6 +329,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			deletingItems.push(li);
 			li.state.isDeleting = true;
 		});
+		if (!items.length) {
+			alert('Nothing to delete');
+			return;
+		}
 		const request: IDeleteListItemsRequest = {
 			teamID: this.team.id,
 			listID: this.list.id,
@@ -358,6 +362,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			isDone: false,
 			itemIDs: this.allListItems.filter(li => li.brief.isDone).map(li => li.brief.id),
 		};
+		if (!request.itemIDs.length) {
+			alert('You have no completed items');
+			return;
+		}
 		this.performing = 'reactivating completed';
 		this.listService.setListItemsIsCompleted(request)
 			.pipe(
@@ -366,10 +374,11 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			.subscribe({
 				next: () => {
 					console.log('reactivated all previously completed items');
-				},
-				error: this.errorLogger.logErrorHandler('failed to reactivate all completed items'),
-				complete: () => {
 					this.performing = undefined;
+				},
+				error: err => {
+					this.performing = undefined;
+					this.errorLogger.logError(err, 'failed to reactivate all completed items');
 				},
 			});
 	}

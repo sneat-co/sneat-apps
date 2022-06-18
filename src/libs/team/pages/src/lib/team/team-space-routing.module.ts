@@ -16,7 +16,7 @@ import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } f
 const routes: Routes = [
 	{
 		path: '',
-		pathMatch: 'full',
+		// pathMatch: 'full',
 		component: TeamMenuComponent,
 		outlet: 'menu',
 	},
