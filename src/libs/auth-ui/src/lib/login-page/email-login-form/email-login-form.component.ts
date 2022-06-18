@@ -124,6 +124,7 @@ export class EmailLoginFormComponent {
 	public signIn(): void {
 		this.setSigningWith('email');
 		this.email = this.email.trim();
+		this.saveEmailForReuse();
 		this.afAuth
 			.signInWithEmailAndPassword(this.email, this.password)
 			.then((userCredential) => {
@@ -135,10 +136,13 @@ export class EmailLoginFormComponent {
 			);
 	}
 
+	private saveEmailForReuse(): void {
+		localStorage.setItem('emailForSignIn', this.email);
+	}
 	public sendSignInLink(): void {
 		this.setSigningWith('emailLink');
 		this.email = this.email.trim();
-		localStorage.setItem('emailForSignIn', this.email);
+		this.saveEmailForReuse();
 		this.afAuth
 			.sendSignInLinkToEmail(this.email, {
 				// url: 'https://dailyscrum.app/pwa/sign-in',
