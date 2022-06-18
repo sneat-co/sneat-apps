@@ -5,14 +5,15 @@ import { ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-express-menu',
-	templateUrl: './express-menu.component.html',
-	styleUrls: ['./express-menu.component.scss'],
+	templateUrl: './express-team-menu.component.html',
+	styleUrls: ['./express-team-menu.component.scss'],
 })
-export class ExpressMenuComponent implements OnInit {
+export class ExpressTeamMenuComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
 	public team?: ITeamContext = {
 		id: 'fastline',
+		brief: {id: 'fastline', type: 'company', title: 'FastLine'},
 	};
 
 	public authState?: ISneatAuthState;

@@ -1,93 +1,104 @@
 {
-	"projectType": "application",
-	"sourceRoot": "apps/freights-app/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@angular-devkit/build-angular:browser",
-			"outputs": ["{options.outputPath}"],
-			"options": {
-				"outputPath": "dist/apps/freights-app",
-				"index": "apps/freights-app/src/index.html",
-				"main": "apps/freights-app/src/main.ts",
-				"polyfills": "apps/freights-app/src/polyfills.ts",
-				"tsConfig": "apps/freights-app/tsconfig.app.json",
-				"inlineStyleLanguage": "scss",
-				"assets": [
-					"apps/freights-app/src/favicon.ico",
-					"apps/freights-app/src/assets"
-				],
-				"styles": ["apps/freights-app/src/styles.scss"],
-				"scripts": []
+  "projectType": "application",
+  "sourceRoot": "apps/freights-app/src",
+  "prefix": "sneat",
+  "targets": {
+	"build": {
+	  "executor": "@angular-devkit/build-angular:browser",
+	  "outputs": [
+		"{options.outputPath}"
+	  ],
+	  "options": {
+		"outputPath": "dist/apps/freights-app",
+		"index": "apps/freights-app/src/index.html",
+		"main": "apps/freights-app/src/main.ts",
+		"polyfills": "apps/freights-app/src/polyfills.ts",
+		"tsConfig": "apps/freights-app/tsconfig.app.json",
+		"inlineStyleLanguage": "scss",
+		"assets": [
+		  "apps/freights-app/src/favicon.ico",
+		  "apps/freights-app/src/assets",
+		  {
+			"glob": "**/*.svg",
+			"input": "node_modules/ionicons/dist/ionicons/svg",
+			"output": "./svg"
+		  }
+		],
+		"styles": [
+		  "apps/freights-app/src/styles.scss"
+		],
+		"scripts": []
+	  },
+	  "configurations": {
+		"production": {
+		  "budgets": [
+			{
+			  "type": "initial",
+			  "maximumWarning": "500kb",
+			  "maximumError": "1mb"
 			},
-			"configurations": {
-				"production": {
-					"budgets": [
-						{
-							"type": "initial",
-							"maximumWarning": "500kb",
-							"maximumError": "1mb"
-						},
-						{
-							"type": "anyComponentStyle",
-							"maximumWarning": "2kb",
-							"maximumError": "4kb"
-						}
-					],
-					"fileReplacements": [
-						{
-							"replace": "apps/freights-app/src/environments/environment.ts",
-							"with": "apps/freights-app/src/environments/environment.prod.ts"
-						}
-					],
-					"outputHashing": "all"
-				},
-				"development": {
-					"buildOptimizer": false,
-					"optimization": false,
-					"vendorChunk": true,
-					"extractLicenses": false,
-					"sourceMap": true,
-					"namedChunks": true
-				}
-			},
-			"defaultConfiguration": "production"
-		},
-		"serve": {
-			"executor": "@angular-devkit/build-angular:dev-server",
-			"configurations": {
-				"production": {
-					"browserTarget": "freights-app:build:production"
-				},
-				"development": {
-					"browserTarget": "freights-app:build:development"
-				}
-			},
-			"defaultConfiguration": "development"
-		},
-		"extract-i18n": {
-			"executor": "@angular-devkit/build-angular:extract-i18n",
-			"options": {
-				"browserTarget": "freights-app:build"
+			{
+			  "type": "anyComponentStyle",
+			  "maximumWarning": "2kb",
+			  "maximumError": "4kb"
 			}
-		},
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"options": {
-				"lintFilePatterns": [
-					"apps/freights-app/**/*.ts",
-					"apps/freights-app/**/*.html"
-				]
+		  ],
+		  "fileReplacements": [
+			{
+			  "replace": "apps/freights-app/src/environments/environment.ts",
+			  "with": "apps/freights-app/src/environments/environment.prod.ts"
 			}
+		  ],
+		  "outputHashing": "all"
 		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/apps/freights-app"],
-			"options": {
-				"jestConfig": "apps/freights-app/jest.config.ts",
-				"passWithNoTests": true
-			}
+		"development": {
+		  "buildOptimizer": false,
+		  "optimization": false,
+		  "vendorChunk": true,
+		  "extractLicenses": false,
+		  "sourceMap": true,
+		  "namedChunks": true
 		}
+	  },
+	  "defaultConfiguration": "production"
 	},
-	"tags": []
+	"serve": {
+	  "executor": "@angular-devkit/build-angular:dev-server",
+	  "configurations": {
+		"production": {
+		  "browserTarget": "freights-app:build:production"
+		},
+		"development": {
+		  "browserTarget": "freights-app:build:development"
+		}
+	  },
+	  "defaultConfiguration": "development"
+	},
+	"extract-i18n": {
+	  "executor": "@angular-devkit/build-angular:extract-i18n",
+	  "options": {
+		"browserTarget": "freights-app:build"
+	  }
+	},
+	"lint": {
+	  "executor": "@nrwl/linter:eslint",
+	  "options": {
+		"lintFilePatterns": [
+		  "apps/freights-app/**/*.ts",
+		  "apps/freights-app/**/*.html"
+		]
+	  }
+	},
+	"test": {
+	  "executor": "@nrwl/jest:jest",
+	  "outputs": [
+		"coverage/apps/freights-app"
+	  ],
+	  "options": {
+		"jestConfig": "apps/freights-app/jest.config.ts",
+		"passWithNoTests": true
+	  }
+	}
+  },
+  "tags": []
 }

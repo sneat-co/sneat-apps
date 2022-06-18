@@ -3,6 +3,7 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ExpressMenuComponent } from '../components/express-menu/express-menu.component';
 import { ExpressMenuModule } from '../components/express-menu/express-menu.module';
+import { ExpressTeamMenuComponent } from '../components/express-team-menu/express-team-menu.component';
 
 @Component({ template: 'empty component' })
 export class EmptyComponent {
@@ -11,14 +12,18 @@ export class EmptyComponent {
 export const expressRoutes: Routes = [
 	{
 		path: '',
-		pathMatch: 'full',
-		loadChildren: () => import('../pages/express-main-page/express-main-page.module').then(m => m.ExpressMainPageModule),
+		loadChildren: () => import('../pages/express-team-page/express-team-page.module').then(m => m.ExpressTeamPageModule),
 	},
 	{
 		path: '',
 		outlet: 'menu',
-		// pathMatch: 'full',
-		component: ExpressMenuComponent,
+		// loadChildren: () => import('../components/express-team-menu/express-team-menu.module').then(m => m.ExpressTeamMenuModule),
+		component: ExpressTeamMenuComponent,
+	},
+	{
+		path: 'counterparties',
+		pathMatch: 'full',
+		loadChildren: () => import('../pages/counterparties-page/counterparties-page.module').then(m => m.CounterpartiesPageModule),
 	},
 	{
 		path: 'freights',
