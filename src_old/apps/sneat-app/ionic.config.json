@@ -1,7 +1,0 @@
-{
-	"name": "sneat-app",
-	"integrations": {
-		"capacitor": {}
-	},
-	"type": "angular"
-}
