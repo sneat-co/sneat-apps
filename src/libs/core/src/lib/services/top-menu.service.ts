@@ -11,7 +11,7 @@ export class TopMenuService {
 	public readonly isTopMenuVisible = this.$isTopMenuVisible.asObservable();
 	public readonly isTopMenuHidden = this.$isTopMenuHidden.asObservable();
 
-	public visibilityChanged(event: Event): void {
+	public readonly visibilityChanged = (event: Event): void => {
 		const visible = !!(event as CustomEvent).detail['visible'];
 		console.log('visibilityChanged', visible);
 		this.$isTopMenuVisible.next(visible)
