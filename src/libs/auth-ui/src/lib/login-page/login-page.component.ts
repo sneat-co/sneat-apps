@@ -12,6 +12,7 @@ import {
 	LoginEventsHandler,
 	SneatAuthStateService,
 } from '@sneat/auth';
+import { APP_INFO, IAppInfo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatUserService } from '@sneat/auth';
 import firebase from 'firebase/compat/app';

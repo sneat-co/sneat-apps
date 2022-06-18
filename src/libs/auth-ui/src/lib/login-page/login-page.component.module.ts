@@ -15,7 +15,10 @@ import { LoginPageRoutingModule } from './login-page.routing.module';
 		IonicModule,
 		LoginPageRoutingModule, // TODO: Why we need a 2nd separate module for routing?
 	],
-	declarations: [LoginPageComponent, EmailLoginFormComponent],
+	declarations: [
+		LoginPageComponent,
+		EmailLoginFormComponent,
+	],
 	exports: [LoginPageComponent],
 })
 export class LoginPageComponentModule {

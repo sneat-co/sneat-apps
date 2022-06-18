@@ -78,6 +78,10 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
+		<ion-item *ngIf="sign === 'up' && appInfo.requiredTeamType === 'company'">
+			<ion-label position="stacked">Company name</ion-label>
+			<ion-input #teamTitleInput placeholder="required" required [(ngModel)]="teamTitle"></ion-input>
+		</ion-item>
 	</ion-card-content>
 	<ion-card-content>
 		<ion-button

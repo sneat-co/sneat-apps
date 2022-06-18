@@ -4,6 +4,8 @@ import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { SneatApiService } from '@sneat/api';
 import { IInitUserRecordRequest, UserRecordService } from '@sneat/auth';
+import { createSetFocusToInput } from '@sneat/components';
+import { APP_INFO, IAppInfo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
 import firebase from 'firebase/compat';
@@ -21,6 +23,7 @@ export class EmailLoginFormComponent {
 	public password = '';
 	public firstName = '';
 	public lastName = '';
+	public teamTitle = '';
 
 	signingWith?: EmailFormSigningWith;
 
@@ -28,8 +31,12 @@ export class EmailLoginFormComponent {
 	@Output() readonly loggedIn = new EventEmitter<UserCredential>();
 
 	@ViewChild('emailInput', { static: true }) emailInput?: IonInput;
+	@ViewChild('teamTitleInput', { static: false }) teamTitleInput?: IonInput;
+
+	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
 	constructor(
+		@Inject(APP_INFO) public readonly appInfo: IAppInfo,
 		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly toastController: ToastController,
@@ -55,7 +62,6 @@ export class EmailLoginFormComponent {
 			// this.toaster.showToast('Full name is required');
 			return;
 		}
-		this.setSigningWith('email');
 		// this.signingWith = 'email';
 		this.email = this.email.trim();
 		const email = this.email;
@@ -73,8 +79,17 @@ export class EmailLoginFormComponent {
 			alert('Last name is a required field');
 			return;
 		}
+		this.teamTitle = this.teamTitle.trim();
+		const teamTitle = this.teamTitle;
+		if (this.appInfo.requiredTeamType && !teamTitle) {
+			alert('Company title is a required field');
+			this.setFocusToTeamTitle();
+			return;
+		}
 		localStorage.setItem('emailForSignIn', email);
 		const password = this.randomIdService.newRandomId({ len: 9 });
+
+		this.setSigningWith('email');
 		try {
 			const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
 			this.sendVerificationEmail(userCredential);
@@ -87,17 +102,22 @@ export class EmailLoginFormComponent {
 						email,
 						ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 						name: { first, last },
+						team: this.appInfo.requiredTeamType ? {
+							type: this.appInfo.requiredTeamType,
+							title: teamTitle,
+						} : undefined,
 					};
-					this.userRecordService.initUserRecord(request).subscribe({
-						next: () => this.onLoggedIn(userCredential),
-						error: (err) => {
-							this.analyticsService.logEvent('FailedToSetUserTitle');
-							this.errorLogger.logError(err, 'Failed to set user title', {
-								feedback: false,
-							});
-							this.onLoggedIn(userCredential);
-						},
-					});
+					this.userRecordService.initUserRecord(request)
+						.subscribe({
+							next: () => this.onLoggedIn(userCredential),
+							error: (err) => {
+								this.analyticsService.logEvent('FailedToSetUserTitle');
+								this.errorLogger.logError(err, 'Failed to set user title', {
+									feedback: false,
+								});
+								this.onLoggedIn(userCredential);
+							},
+						});
 				})
 				.catch(
 					this.errorHandler(
@@ -139,6 +159,7 @@ export class EmailLoginFormComponent {
 	private saveEmailForReuse(): void {
 		localStorage.setItem('emailForSignIn', this.email);
 	}
+
 	public sendSignInLink(): void {
 		this.setSigningWith('emailLink');
 		this.email = this.email.trim();
@@ -149,14 +170,14 @@ export class EmailLoginFormComponent {
 				url: document.baseURI + 'sign-in-from-email-link',
 				handleCodeInApp: true,
 			}).then(() => {
-				this.showToast(`Sign-in link has been sent to email: ${this.email}`);
-				this.setSigningWith(undefined);
-			}).catch(
-				this.errorHandler(
-					'Failed to send sign in link to email',
-					'FailedToSendSignInLinkToEmail',
-				),
-			);
+			this.showToast(`Sign-in link has been sent to email: ${this.email}`);
+			this.setSigningWith(undefined);
+		}).catch(
+			this.errorHandler(
+				'Failed to send sign in link to email',
+				'FailedToSendSignInLinkToEmail',
+			),
+		);
 	}
 
 	private showToast(message: string): void {
@@ -167,7 +188,7 @@ export class EmailLoginFormComponent {
 			duration: 3000,
 			color: 'tertiary',
 			icon: 'send-outline',
-			buttons: [{icon: 'close', role: 'cancel'}]
+			buttons: [{ icon: 'close', role: 'cancel' }],
 		}).then(toast => {
 			toast.present().catch(this.errorLogger.logErrorHandler('Failed to present toast about password reset email sent success'));
 		});
@@ -238,8 +259,11 @@ export class EmailLoginFormComponent {
 	}
 
 	private setFocusToEmail(): void {
-		this.emailInput?.setFocus()
-			.catch(err => this.errorLogger.logError(err, 'Failed to set focus to email input'));
+		this.setFocusToInput(this.emailInput);
+	}
+
+	private setFocusToTeamTitle(): void {
+		this.setFocusToInput(this.teamTitleInput);
 	}
 
 }

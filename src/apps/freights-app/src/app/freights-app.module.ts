@@ -16,6 +16,7 @@ initFirebase(environment.firebaseConfig);
 const appInfo: IAppInfo = {
 	appId: 'freights',
 	appTitle: 'freights.express',
+	requiredTeamType: 'company',
 };
 
 console.log('environment:', environment);

@@ -1,6 +1,7 @@
 <ion-list>
-	<ion-item routerLink="/company/{{team?.id}}">{{team?.brief?.title || 'Company'}}</ion-item>
-	<sneat-teams-menu *ngIf="authState?.status === 'authenticated'"></sneat-teams-menu>
+	<ion-item routerLink="/company/{{team?.id}}">
+		<ion-label style="font-weight: bold">{{team?.brief?.title || 'Company'}}</ion-label>
+	</ion-item>
 	<ion-item routerLink="/company/{{team?.id}}/freights">
 		<ion-icon name="boat-outline" slot="start"></ion-icon>
 		<ion-label>Freights</ion-label>

@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { TeamType } from '@sneat/auth-models';
 
 export type SneatApp = 'sneat'
 	| 'aaproject'
@@ -25,6 +26,7 @@ export type SneatApp = 'sneat'
 export interface IAppInfo {
 	readonly appId: SneatApp;
 	readonly appTitle: string;
+	readonly requiredTeamType?: TeamType;
 }
 
 export const APP_INFO = new InjectionToken<IAppInfo>('app');

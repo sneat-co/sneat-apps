@@ -116,7 +116,8 @@ export class SneatUserService {
 		if (
 			changes.type === 'value' ||
 			changes.type === 'added' ||
-			changes.type === 'removed'
+			changes.type === 'removed' ||
+			changes.type === 'modified'
 		) {
 			const userDocSnapshot = changes.payload;
 			if (userDocSnapshot.ref.id !== this.uid) {

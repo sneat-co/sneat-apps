@@ -10,6 +10,7 @@ import { SneatUserService } from '@sneat/auth';
 	templateUrl: 'teams-list.component.html'
 })
 export class TeamsListComponent {
+	@Input() pathPrefix = '/space';
 	@Input() iconName: string = 'people-outline'
 	@Input() teams?: ITeamContext[];
 	@Output() readonly beforeNavigateToTeam = new EventEmitter<ITeamContext>();

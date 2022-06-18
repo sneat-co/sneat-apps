@@ -15,6 +15,7 @@ export class TeamsMenuComponent {
 
 	@Input() spacesLabel = 'Spaces';
 	@Input() teamType?: TeamType;
+	@Input() pathPrefix = 'space';
 
 	teams?: ITeamContext[];
 	familyTeams?: ITeamContext[];
@@ -59,6 +60,7 @@ export class TeamsMenuComponent {
 	}
 
 	private onUserStateChanged = (user: ISneatUserState): void => {
+		console.log('onUserStateChanged', user);
 		if (!user?.record) {
 			this.teams = undefined;
 			this.familyTeams = undefined;
@@ -66,7 +68,6 @@ export class TeamsMenuComponent {
 			return;
 		}
 		this.teams = user?.record?.teams?.filter(t => !this.teamType || t.type === this.teamType)?.map(teamContextFromBrief) || [];
-		console.log('onUserStateChanged', this.teams);
 		this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
 		this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
 		if (this.familyTeam) {
