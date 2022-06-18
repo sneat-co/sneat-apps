@@ -21,10 +21,10 @@ import { SneatAppComponent } from './sneat-app.component';
 if (environment.production) {
 	console.log('SneatAppModule: PRODUCTION mode');
 	init({
-		dsn: "https://2cdec43e82bc42e98821becbfe251778@o355000.ingest.sentry.io/6395241",
+		dsn: 'https://2cdec43e82bc42e98821becbfe251778@o355000.ingest.sentry.io/6395241',
 		integrations: [
 			new BrowserTracing({
-				tracingOrigins: ["localhost", "https://sneat.app"],
+				tracingOrigins: ['localhost', 'https://sneat.app'],
 				routingInstrumentation: instrumentAngularRouting,
 			}),
 		],
@@ -46,43 +46,37 @@ const appInfo: IAppInfo = {
 };
 
 @NgModule({
-    declarations: [
-        SneatAppComponent,
-        SneatAppMenuComponent,
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        IonicModule.forRoot(),
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-        RandomModule,
-        SneatAppRoutingModule,
-        SneatApplicationModule,
-        SneatAuthServicesModule,
-        AuthMenuItemModule,
-        CommunesUiModule,
-        TeamsMenuComponentModule,
-        HttpClientModule,
-    ],
-    providers: [
-        ...coreProviders,
-        {
-            provide: SneatApiBaseUrl,
-            useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatAppApiBaseUrl,
-        },
-        {
-            provide: RANDOM_ID_OPTIONS,
-            useValue: { len: 9 },
-        },
-        {
-            provide: APP_INFO,
-            useValue: appInfo,
-        },
-    ],
-    bootstrap: [SneatAppComponent],
-    exports: [
-        SneatAppMenuComponent,
-    ]
+	declarations: [
+		SneatAppComponent,
+		SneatAppMenuComponent,
+	],
+	imports: [
+		...SneatApplicationModule.defaultSneatApplicationImports(environment),
+		SneatAuthServicesModule,
+		AuthMenuItemModule,
+		CommunesUiModule,
+		TeamsMenuComponentModule,
+		SneatAppRoutingModule,
+	],
+	providers: [
+		...coreProviders,
+		{
+			provide: SneatApiBaseUrl,
+			useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatAppApiBaseUrl,
+		},
+		{
+			provide: RANDOM_ID_OPTIONS,
+			useValue: { len: 9 },
+		},
+		{
+			provide: APP_INFO,
+			useValue: appInfo,
+		},
+	],
+	bootstrap: [SneatAppComponent],
+	exports: [
+		SneatAppMenuComponent,
+	],
 })
 export class SneatAppModule {
 	constructor() {
