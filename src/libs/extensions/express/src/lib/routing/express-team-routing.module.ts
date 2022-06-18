@@ -41,5 +41,5 @@ export const expressRoutes: Routes = [
 		EmptyComponent,
 	],
 })
-export class ExpressRoutingModule {
+export class ExpressTeamRoutingModule {
 }

@@ -1,1 +1,1 @@
-export * from './lib/routing/express-routing.module';
+export * from './lib/routing/express-team-routing.module';
