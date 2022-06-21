@@ -29,6 +29,7 @@
 <ion-content class="cardy">
 
 	<ion-segment [(ngModel)]="role">
+<!--		<ion-segment-button>All</ion-segment-button>-->
 		<ion-segment-button *ngFor="let r of roles" [value]="r.id">
 			<ion-label>{{r.title}}</ion-label>
 		</ion-segment-button>

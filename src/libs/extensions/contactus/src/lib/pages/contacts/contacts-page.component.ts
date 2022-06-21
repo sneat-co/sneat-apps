@@ -182,4 +182,14 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			});
 	};
 
+	// roleSegmentButtonClicked(event: Event): void {
+	// 	console.log('roleSegmentButtonClicked', event);
+	// 	event.stopPropagation();
+	// 	event.preventDefault();
+	// 	const ce = event as CustomEvent;
+	// 	if (ce.detail.value === this.role) {
+	// 		this.role = undefined;
+	// 	}
+	// }
+
 }
