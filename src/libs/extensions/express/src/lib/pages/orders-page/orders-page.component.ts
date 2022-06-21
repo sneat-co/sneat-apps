@@ -20,6 +20,8 @@ export class OrdersPageComponent extends TeamBaseComponent {
 		{
 			id: 'f1',
 			dto: {
+				status: 'active',
+				direction: 'export',
 				buyer: { id: 'rusconltd', title: 'RUSCON LTD', countryID: 'ru' },
 				buyerRef: 'RCN987',
 				carrier: { id: 'c1', title: 'Carrier #1', countryID: 'es' },

@@ -10,6 +10,7 @@
 <ion-content>
 	<ion-card>
 		<ion-item>
+			<ion-icon name="body-outline" slot="start"></ion-icon>
 			<ion-label>Agent</ion-label>
 			<ion-input placeholder="click to select"></ion-input>
 			<ion-buttons slot="end">
@@ -24,6 +25,7 @@
 
 	<ion-card>
 		<ion-item>
+			<ion-icon name="cash-outline" slot="start"></ion-icon>
 			<ion-label>Buyer</ion-label>
 			<ion-input placeholder="click to select"></ion-input>
 			<ion-buttons slot="end">
@@ -39,6 +41,7 @@
 
 	<ion-card>
 		<ion-item>
+			<ion-icon name="boat-outline" slot="start"></ion-icon>
 			<ion-label>Shipper</ion-label>
 			<ion-input placeholder="click to select"></ion-input>
 			<ion-buttons slot="end">
@@ -53,7 +56,8 @@
 
 	<ion-card>
 		<ion-item color="light">
-			<ion-label>Containers</ion-label>
+			<ion-icon name="cube-outline" slot="start" color="medium"></ion-icon>
+			<ion-label color="medium">Containers</ion-label>
 			<ion-buttons slot="end">
 				<ion-button>
 					<ion-icon name="add-outline" slot="start"></ion-icon>
@@ -68,7 +72,7 @@
 
 	<ion-card>
 		<ion-card-content>
-			<ion-button size="large">Create order</ion-button>
+			<ion-button size="large" (click)="createOrder()">Create order</ion-button>
 			<ion-button disabled fill="clear" color="medium">or</ion-button>
 			<ion-button size="large" color="medium" fill="outline">Cancel</ion-button>
 		</ion-card-content>

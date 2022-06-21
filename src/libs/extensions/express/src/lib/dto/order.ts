@@ -1,4 +1,5 @@
 import { INavContext } from '@sneat/core';
+import { ITeamRequest } from '@sneat/team/models';
 
 export interface IFreightAddress {
 	countryID: string;
@@ -20,14 +21,14 @@ export type ContainerType = 'unknown' | '20ft' | '40ft';
 
 export type FreightFlag = 'hazardous' | 'letter_of_credit';
 
-export interface IFreightLoad {
+export interface IFreightOrderLoad {
 	flags?: FreightFlag[];
 	grossWeightKg?: number;
 	pallets?: number;
 	volumeM3?: number;
 }
 
-export interface IFreightContainer extends IFreightLoad {
+export interface IFreightContainer extends IFreightOrderLoad {
 	id: string;
 	type: ContainerType;
 }
@@ -42,7 +43,12 @@ export interface IDocIssued {
 	on?: string;
 }
 
-export interface IFreightDto extends IFreightLoad {
+export interface IFreightOrderBase extends IFreightOrderLoad {
+	status: string;
+	direction: 'import' | 'export' | 'internal';
+}
+
+export interface IFreightOrderDto extends IFreightOrderBase {
 	buyer?: IFreightCounterparty;
 	buyerRef?: string;
 	carrier?: IFreightCounterparty;
@@ -57,4 +63,12 @@ export interface IFreightDto extends IFreightLoad {
 	issued?: IDocIssued;
 }
 
-export type IOrderContext = INavContext<IFreightDto, IFreightDto>;
+export type IOrderContext = INavContext<IFreightOrderDto, IFreightOrderDto>;
+
+export interface ICreateFreightOrderRequest extends ITeamRequest {
+	order: IFreightOrderDto;
+}
+
+export interface ICreateFreightOrderResponse {
+	order: { id: string };
+}
