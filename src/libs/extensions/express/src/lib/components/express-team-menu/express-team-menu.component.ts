@@ -1,30 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivationStart, Router, RouterOutlet } from '@angular/router';
-import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
-import { ITeamContext } from '@sneat/team/models';
+import { ActivatedRoute, ActivationStart, Router, RouterOutlet } from '@angular/router';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 
 @Component({
-	selector: 'sneat-express-menu',
+	selector: 'sneat-express-team-menu',
 	templateUrl: './express-team-menu.component.html',
-	styleUrls: ['./express-team-menu.component.scss'],
 })
-export class ExpressTeamMenuComponent implements OnInit {
+export class ExpressTeamMenuComponent extends TeamBaseComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
-	public team?: ITeamContext = {
-		id: 'fastline',
-		brief: {id: 'fastline', type: 'company', title: 'FastLine'},
-	};
-
-	public authState?: ISneatAuthState;
-
 	constructor(
+		route: ActivatedRoute,
+		teamParams: TeamComponentBaseParams,
 		private readonly router: Router,
-		private readonly authStateService: SneatAuthStateService,
 	) {
-		authStateService.authState.subscribe(authState => {
-			this.authState = authState;
-		});
+		super('ExpressTeamMenuComponent', route, teamParams);
 	}
 
 
@@ -34,4 +24,6 @@ export class ExpressTeamMenuComponent implements OnInit {
 				this.outlet?.deactivate();
 		});
 	}
+
+
 }

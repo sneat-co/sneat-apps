@@ -101,8 +101,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	protected constructor(
-		@Inject(new InjectionToken('className')) // we need this fake token so we can implement Angular interfaces
-		public readonly className: string,
+		// we need this fake token so we can implement Angular interfaces
+		@Inject(new InjectionToken('className')) public readonly className: string,
 		route: ActivatedRoute,
 		readonly teamParams: TeamComponentBaseParams,
 	) {

@@ -16,7 +16,7 @@ export class TeamContextService {
 	// ): Observable<ITeamContext | undefined> {
 	// 	return route.paramMap.pipe(
 	// 		map(params => {
-	// 			const id = params.get('teamId') || undefined;
+	// 			const id = params.get('teamID') || undefined;
 	// 			const teamContext: ITeamContext | undefined = id ? { id } : undefined;
 	// 			return teamContext;
 	// 		}),
@@ -28,7 +28,7 @@ export function trackTeamIdAndTypeFromRouteParameter(route: ActivatedRoute): Obs
 	return route.paramMap.pipe(
 		map(params => {
 			const
-				id = params.get('teamId'),
+				id = params.get('teamID'),
 				type = params.get('teamType') as TeamType;
 			console.log('trackTeamIdAndTypeFromRouteParameter', params, id, type);
 			const teamContext: ITeamContext | undefined = id ? { id: id, type: type || undefined } : undefined;

@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FreightsListModule } from '../../components/freights-list/freights-list.module';
-import { FreightPageComponent } from './freight-page.component';
+import { OrdersPageComponent } from './orders-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: FreightPageComponent,
+		component: OrdersPageComponent,
 	},
 ];
 
@@ -22,8 +22,8 @@ const routes: Routes = [
 		FreightsListModule,
 	],
 	declarations: [
-		FreightPageComponent,
+		OrdersPageComponent,
 	],
 })
-export class FreightPageModule {
+export class OrdersPageModule {
 }

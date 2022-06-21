@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FreightsListModule } from '../../components/freights-list/freights-list.module';
-import { CounterpartiesPageComponent } from './counterparties-page.component';
+import { OrderPageComponent } from './order-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: CounterpartiesPageComponent,
+		component: OrderPageComponent,
 	},
 ];
 
@@ -22,8 +22,8 @@ const routes: Routes = [
 		FreightsListModule,
 	],
 	declarations: [
-		CounterpartiesPageComponent,
+		OrderPageComponent,
 	],
 })
-export class CounterpartiesPageModule {
+export class OrderPageModule {
 }

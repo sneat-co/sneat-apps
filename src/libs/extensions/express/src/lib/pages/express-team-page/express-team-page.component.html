@@ -2,14 +2,16 @@
 	<ion-toolbar color="light">
 		<ion-title>
 			{{team?.brief?.title}}
-			<ion-text color="medium">@ Freights Express App</ion-text>
+			<ion-text color="medium">@ freights.app</ion-text>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
 	<ion-card>
-		<ion-item routerLink="freights">Freights</ion-item>
-		<ion-item>Counterparties</ion-item>
+		<ion-item-divider>
+			<ion-label>Company</ion-label>
+		</ion-item-divider>
+		<sneat-express-team-menu-items [team]="team"></sneat-express-team-menu-items>
 	</ion-card>
 </ion-content>

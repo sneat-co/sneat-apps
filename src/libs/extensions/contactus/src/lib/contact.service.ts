@@ -12,9 +12,8 @@ export class ContactService {
 	) {
 	}
 
-	createContact(request: ICreateContactRequest): Observable<IContactContext> {
-		return this.teamItemService.createTeamItem<IContactBrief, IContactDto>(
-			'contacts/create_contact', TeamCounter.contacts, request);
+	createContact(request: ICreateContactRequest, endpoint = 'contacts/create_contact'): Observable<IContactContext> {
+		return this.teamItemService.createTeamItem(endpoint, TeamCounter.contacts, request);
 	}
 
 	deleteContact(contact: IContactContext): Observable<void> {
@@ -31,6 +30,9 @@ export class ContactService {
 }
 
 @NgModule({
+	imports: [
+
+	],
 	providers: [
 		ContactService,
 		ContactNavService,

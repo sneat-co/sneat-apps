@@ -13,6 +13,11 @@ const routes: Routes = [
 		loadChildren: () => import('../pages/freights-app-home-page.module').then(m => m.FreightsAppHomePageModule),
 	},
 	{
+		path: 'signed-out',
+		redirectTo: 'login',
+		pathMatch: 'full',
+	},
+	{
 		path: '',
 		outlet: 'menu',
 		pathMatch: 'full',
@@ -20,7 +25,7 @@ const routes: Routes = [
 		component: ExpressMenuComponent,
 	},
 	{
-		path: 'company/:teamID',
+		path: 'space/:teamType/:teamID',
 		loadChildren: () => import('@sneat/extensions/express').then(m => m.ExpressTeamRoutingModule),
 	},
 

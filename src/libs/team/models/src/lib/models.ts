@@ -30,14 +30,14 @@ export interface IJoinTeamInfoResponse {
 		from: IInviteFromContact;
 		to: IInviteToContact;
 		message?: string;
-	}
+	};
 	member: IMemberBrief;
 }
 
 export interface IAcceptPersonalInviteRequest extends ITeamRequest {
 	inviteID: string;
 	pin: string; // Do not make number as we can lose leading 0's
-	member?: IMemberBrief
+	member?: IMemberBrief;
 	// fullName?: string;
 	// email?: string;
 }
@@ -53,10 +53,27 @@ export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
 	message?: string;
 }
 
-export interface ICreateContactRequest extends ITeamRequest, IRelatedPerson {
-	// message?: string;
+export interface ICreateContactBaseRequest extends ITeamRequest {
 	assetIDs?: IContact2Asset[];
 }
+
+export interface ICreateContactPersonRequest extends ICreateContactBaseRequest {
+	person?: IRelatedPerson;
+}
+
+export interface ICreateCompanyRequest {
+	title: string;
+	countryID: string;
+	address?: string;
+	roles?: string[]
+}
+
+export interface ICreateContactCompanyRequest extends ICreateContactBaseRequest {
+	company?: ICreateCompanyRequest;
+}
+
+export type ICreateContactRequest = ICreateContactPersonRequest | ICreateContactCompanyRequest;
+
 
 export interface IBy {
 	memberID?: string;
@@ -72,7 +89,7 @@ interface IInvite {
 export interface IInviteFromContact {
 	memberID: string;
 	userID?: string;
-	title?: string
+	title?: string;
 }
 
 export type InviteChannel = 'email' | 'sms' | 'link';

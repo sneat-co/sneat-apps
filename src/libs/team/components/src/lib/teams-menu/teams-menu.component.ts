@@ -15,7 +15,7 @@ export class TeamsMenuComponent {
 
 	@Input() spacesLabel = 'Spaces';
 	@Input() teamType?: TeamType;
-	@Input() pathPrefix = 'space';
+	@Input() pathPrefix = '/space';
 
 	teams?: ITeamContext[];
 	familyTeams?: ITeamContext[];

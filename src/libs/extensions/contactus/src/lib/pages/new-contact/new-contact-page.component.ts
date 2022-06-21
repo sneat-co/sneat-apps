@@ -35,8 +35,8 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
 
 	public readonly personRequires: IPersonRequirements = {
-		ageGroup: {hide: true},
-		relatedAs: {hide: true},
+		ageGroup: { hide: true },
+		relatedAs: { hide: true },
 	};
 
 	public relation?: ContactToMemberRelation;
@@ -186,8 +186,10 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		this.creating = true;
 		let request: ICreateContactRequest = {
 			teamID: this.team.id,
-			...this.relatedPerson,
-			ageGroup: this.relatedPerson.ageGroup || 'unknown',
+			person: {
+				...this.relatedPerson,
+				ageGroup: this.relatedPerson.ageGroup || 'unknown',
+			},
 		};
 
 		const asset = this.asset;
@@ -211,10 +213,10 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		}
 		const roleID = this.contactRole?.id;
 		if (roleID) {
-			if (!request.roles) {
-				request = { ...request, roles: [roleID] };
-			} else if (request.roles.some(r => r === roleID)) {
-				request.roles.push(roleID);
+			if (request.person && !request.person.roles) {
+				request = { ...request, person: { ...request.person, roles: [roleID] } };
+			} else if (request.person && request.person.roles?.some(r => r === roleID)) {
+				request.person.roles.push(roleID);
 			}
 		}
 		this.contactService.createContact(request)

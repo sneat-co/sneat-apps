@@ -29,7 +29,7 @@ const routes: Routes = [
 		loadChildren: () => import('./sneat-app-my-routing.module').then(m => m.SneatAppMyRoutingModule),
 	},
 	{
-		path: 'space/:teamType/:teamId',
+		path: 'space/:teamType/:teamID',
 		loadChildren: () =>
 			import('@sneat/team/pages').then(m => m.TeamSpaceRoutingModule),
 	},

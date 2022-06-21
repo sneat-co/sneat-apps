@@ -1,0 +1,42 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-title>New company</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<sneat-select-from-list title="Role"
+														[disabled]="isCreating"
+														[items]="contactTypes"
+														[(ngModel)]="contactType"
+		></sneat-select-from-list>
+	</ion-card>
+
+	<ion-card>
+		<sneat-country-selector [(country)]="countryID" [disabled]="isCreating"
+		></sneat-country-selector>
+	</ion-card>
+
+	<ng-container *ngIf="countryID">
+		<ion-card>
+			<ion-item-divider color="primary">
+				Company details
+			</ion-item-divider>
+			<ion-item>
+				<ion-label>Name</ion-label>
+				<ion-input required placeholder="required" [(ngModel)]="title" [disabled]="isCreating"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label position="stacked">Address</ion-label>
+				<ion-textarea [(ngModel)]="address" [disabled]="isCreating"></ion-textarea>
+			</ion-item>
+		</ion-card>
+
+		<ion-card>
+			<ion-card-content>
+				<ion-button (click)="create()" [disabled]="isCreating">Create company</ion-button>
+			</ion-card-content>
+		</ion-card>
+	</ng-container>
+</ion-content>

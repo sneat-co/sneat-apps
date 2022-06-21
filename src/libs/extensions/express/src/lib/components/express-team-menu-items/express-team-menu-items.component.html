@@ -1,0 +1,25 @@
+<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/orders">
+	<ion-icon name="documents-outline" slot="start"></ion-icon>
+	<ion-label>Orders</ion-label>
+</ion-item>
+<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/members">
+	<ion-icon name="people-circle-outline" slot="start"></ion-icon>
+	<ion-label>Employees</ion-label>
+</ion-item>
+<ion-item-divider>
+	<!--		<ion-icon name="people-outline" slot="start"></ion-icon>-->
+	<ion-label>Contacts</ion-label>
+</ion-item-divider>
+<ion-item *ngFor="let contactGroup of contactGroups" routerLink="/space/{{team?.type}}/{{team?.id}}/contacts"
+					[queryParams]="{role: contactGroup.type}">
+	<ion-icon [name]="contactGroup.icon" slot="start"></ion-icon>
+	<ion-label>{{contactGroup.title}}</ion-label>
+	<ion-buttons slot="end">
+		<ion-button routerLink="/space/{{team?.type}}/{{team?.id}}/new-company"
+								[queryParams]="{role: contactGroup.type}"
+								(click)="$event.stopPropagation()"
+		>
+			<ion-icon name="add-outline"></ion-icon>
+		</ion-button>
+	</ion-buttons>
+</ion-item>

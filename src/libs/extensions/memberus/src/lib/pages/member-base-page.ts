@@ -62,8 +62,8 @@ export abstract class MemberBasePage extends TeamBaseComponent {
 	private tackMemberId(): void {
 		this.route?.params.subscribe({
 			next: params => {
-				const id = params['memberId'];
-				const teamId = params['teamId'];
+				const id = params['memberID'];
+				const teamId = params['teamID'];
 				console.log('route', id, params);
 				if (id) {
 					let team: ITeamContext | undefined = this.team;

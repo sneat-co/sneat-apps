@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExpressMenuComponent } from '../components/express-menu/express-menu.component';
+import { ContactusRoutingModule } from '@sneat/extensions/contactus';
+import { MemberRoutingModule, membersRoutes } from '@sneat/extensions/memberus';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ExpressMenuModule } from '../components/express-menu/express-menu.module';
 import { ExpressTeamMenuComponent } from '../components/express-team-menu/express-team-menu.component';
 
@@ -21,19 +23,24 @@ export const expressRoutes: Routes = [
 		component: ExpressTeamMenuComponent,
 	},
 	{
-		path: 'counterparties',
+		path: 'orders',
 		pathMatch: 'full',
-		loadChildren: () => import('../pages/counterparties-page/counterparties-page.module').then(m => m.CounterpartiesPageModule),
+		loadChildren: () => import('../pages/orders-page/orders-page.module').then(m => m.OrdersPageModule),
 	},
 	{
-		path: 'freights',
+		path: 'order',
 		pathMatch: 'full',
-		loadChildren: () => import('../pages/freights-page/freights-page.module').then(m => m.FreightsPageModule),
+		redirectTo: 'orders',
 	},
 	{
-		path: 'freights/:freightID',
-		loadChildren: () => import('../pages/freight-page/freight-page.module').then(m => m.FreightPageModule),
+		path: 'order/:freightID',
+		loadChildren: () => import('../pages/order-page/order-page.module').then(m => m.OrderPageModule),
 	},
+	{
+		path: 'new-company',
+		loadChildren: () => import('../pages/new-company/new-express-company-page.module').then(m => m.NewExpressCompanyPageModule),
+	},
+	...membersRoutes,
 ];
 
 @NgModule({
@@ -41,9 +48,13 @@ export const expressRoutes: Routes = [
 		CommonModule,
 		RouterModule.forChild(expressRoutes.map(r => ({ ...r, path: r.path?.replace('express/', '') }))),
 		ExpressMenuModule,
+		ContactusRoutingModule,
 	],
 	declarations: [
 		EmptyComponent,
+	],
+	providers: [
+		TeamComponentBaseParams,
 	],
 })
 export class ExpressTeamRoutingModule {

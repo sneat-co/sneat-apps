@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { IFreightContext } from '../../dto/freight';
 
 @Component({
-	selector: 'sneat-shipping-page',
-	templateUrl: 'counterparties-page.component.html',
+	selector: 'sneat-orders-page',
+	templateUrl: 'orders-page.component.html',
 })
-export class CounterpartiesPageComponent {
+export class OrdersPageComponent {
 	type?: 'export' | 'import' | 'internal' | '';
 	status: 'active' | 'complete' | 'canceled' = 'active';
 	counterparty = '';

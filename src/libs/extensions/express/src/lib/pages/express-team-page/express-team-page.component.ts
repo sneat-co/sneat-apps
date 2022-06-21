@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({
@@ -6,9 +8,11 @@ import { ITeamContext } from '@sneat/team/models';
 	templateUrl: './express-team-page.component.html',
 	styleUrls: ['./express-team-page.component.scss'],
 })
-export class ExpressTeamPageComponent {
-	public team?: ITeamContext = {
-		id: 'fastline',
-		brief: { id: 'fastline', type: 'company', title: 'FastLine' },
-	};
+export class ExpressTeamPageComponent extends TeamBaseComponent {
+	constructor(
+		route: ActivatedRoute,
+		teamParams: TeamComponentBaseParams,
+	) {
+		super('', route, teamParams);
+	}
 }

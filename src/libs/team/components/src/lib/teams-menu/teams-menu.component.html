@@ -17,14 +17,15 @@
 		<ion-icon name="people-outline" slot="start"></ion-icon>
 		<ion-label color="medium">No {{teamType}}</ion-label>
 	</ion-item>
-	<ion-item *ngIf="(!teamType || teamType === 'family') && familyTeams && !familyTeams.length" tappable [disabled]="!teams" (click)="newFamily($event)">
+	<ion-item *ngIf="(!teamType || teamType === 'family') && familyTeams && !familyTeams.length" tappable
+						[disabled]="!teams" (click)="newFamily($event)">
 		<ion-icon name="people-circle-outline" slot="start"></ion-icon>
 		<ion-label>Family
 			<ion-text color="medium"><i>(new)</i></ion-text>
 		</ion-label>
 		<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
 	</ion-item>
-	<sneat-teams-list [teams]="familyTeams"
+	<sneat-teams-list *ngIf="!teamType || teamType === 'family'" [teams]="familyTeams"
 										iconName="people-circle-outline"
 										(beforeNavigateToTeam)="closeMenu()"
 	></sneat-teams-list>

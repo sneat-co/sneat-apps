@@ -116,8 +116,7 @@ export class TeamNavService {
 
 	public navigateToTeam(team: ITeamContext, animationDirection?: 'forward' | 'back'): Promise<boolean> {
 		this.analyticsService.logEvent('navigateToTeam', { team: team.id });
-		const urlPrefix = team.type === 'company' ? 'company' : `space/${team?.type}`;
-		const url = `${urlPrefix}/${team.id}`;
+		const url = `space/${team?.type}/${team.id}`;
 		return new Promise<boolean>((resolve, reject) => {
 			this.navController
 				.navigateRoot( url, {

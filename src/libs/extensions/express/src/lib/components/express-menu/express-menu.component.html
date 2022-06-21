@@ -1,9 +1,7 @@
 <ion-list>
-	<ion-item>Top menu</ion-item>
 	<sneat-teams-menu *ngIf="authState?.status === 'authenticated'"
 										spacesLabel="Companies"
 										teamType="company"
-										pathPrefix="/company"
 	></sneat-teams-menu>
 	<sneat-auth-menu-item></sneat-auth-menu-item>
 </ion-list>
