@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FreightCardComponent } from '../freight-card/freight-card.component';
-import { FreightsListComponent } from './freights-list.component';
+import { OrderCardComponent } from '../order-card/order-card.component';
+import { OrdersListComponent } from './orders-list.component';
 
 
 @NgModule({
@@ -13,14 +13,13 @@ import { FreightsListComponent } from './freights-list.component';
 		RouterModule,
 	],
 	declarations: [
-		FreightsListComponent,
-		FreightCardComponent,
+		OrdersListComponent,
+		OrderCardComponent,
 	],
 	exports: [
-		FreightsListComponent,
-		FreightCardComponent,
+		OrdersListComponent,
+		OrderCardComponent,
 	],
 })
-export class FreightsListModule {
-
+export class OrdersListModule {
 }

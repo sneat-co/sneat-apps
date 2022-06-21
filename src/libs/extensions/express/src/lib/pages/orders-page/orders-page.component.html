@@ -1,9 +1,15 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/"></ion-back-button>
+			<ion-back-button defaultHref="/space/{{team?.type}}/{{team?.id}}"></ion-back-button>
 		</ion-buttons>
 		<ion-title>Orders</ion-title>
+		<ion-buttons slot="end">
+			<ion-button color="primary" routerLink="../new-order">
+				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
@@ -95,6 +101,6 @@
 		<!--		</ion-item-divider>-->
 	</ion-card>
 
-	<sneat-freights-list [freights]="freights" style="margin-bottom: 50px;"></sneat-freights-list>
+	<sneat-freights-list [orders]="freights" style="margin-bottom: 50px;"></sneat-freights-list>
 
 </ion-content>

@@ -40,6 +40,10 @@ export const expressRoutes: Routes = [
 		path: 'new-company',
 		loadChildren: () => import('../pages/new-company/new-express-company-page.module').then(m => m.NewExpressCompanyPageModule),
 	},
+	{
+		path: 'new-order',
+		loadChildren: () => import('../pages/new-order/new-express-order-page.module').then(m => m.NewExpressOrderPageModule),
+	},
 	...membersRoutes,
 ];
 

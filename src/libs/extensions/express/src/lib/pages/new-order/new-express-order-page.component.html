@@ -1,0 +1,76 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="/space/{{team?.type}}/{{team?.id}}/orders"></ion-back-button>
+		</ion-buttons>
+		<ion-title>New order</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<ion-item>
+			<ion-label>Agent</ion-label>
+			<ion-input placeholder="click to select"></ion-input>
+			<ion-buttons slot="end">
+				<ion-button>...</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium">Ref #</ion-label>
+			<ion-input></ion-input>
+		</ion-item>
+	</ion-card>
+
+	<ion-card>
+		<ion-item>
+			<ion-label>Buyer</ion-label>
+			<ion-input placeholder="click to select"></ion-input>
+			<ion-buttons slot="end">
+				<ion-button>...</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium">Ref #</ion-label>
+			<ion-input></ion-input>
+		</ion-item>
+	</ion-card>
+
+
+	<ion-card>
+		<ion-item>
+			<ion-label>Shipper</ion-label>
+			<ion-input placeholder="click to select"></ion-input>
+			<ion-buttons slot="end">
+				<ion-button>...</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium">Ref #</ion-label>
+			<ion-input></ion-input>
+		</ion-item>
+	</ion-card>
+
+	<ion-card>
+		<ion-item color="light">
+			<ion-label>Containers</ion-label>
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="add-outline" slot="start"></ion-icon>
+					<ion-label>Add</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium">No container have been added yet</ion-label>
+		</ion-item>
+	</ion-card>
+
+	<ion-card>
+		<ion-card-content>
+			<ion-button size="large">Create order</ion-button>
+			<ion-button disabled fill="clear" color="medium">or</ion-button>
+			<ion-button size="large" color="medium" fill="outline">Cancel</ion-button>
+		</ion-card-content>
+	</ion-card>
+</ion-content>

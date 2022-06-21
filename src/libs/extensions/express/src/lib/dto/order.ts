@@ -57,4 +57,4 @@ export interface IFreightDto extends IFreightLoad {
 	issued?: IDocIssued;
 }
 
-export type IFreightContext = INavContext<IFreightDto, IFreightDto>;
+export type IOrderContext = INavContext<IFreightDto, IFreightDto>;
