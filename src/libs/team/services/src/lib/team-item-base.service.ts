@@ -20,11 +20,13 @@ export class TeamItemBaseService {
 	}
 
 
-	public watchTeamItems<Brief extends { id: string }, Dto>(team: ITeamContext, path: string): Observable<ITeamItemContext<Brief, Dto>[]> {
+	public watchTeamItems<Brief extends { id: string }, Dto>(team: ITeamContext, path: string, field: 'teamIDs' | 'teamID' = 'teamIDs'): Observable<ITeamItemContext<Brief, Dto>[]> {
 		console.log('watchTeamItems()', team.id);
 		const query = this.afs
 			.collection<Dto>(path,
-				ref => ref.where('teamIDs', 'array-contains', team.id));
+				ref =>
+					field === 'teamIDs' ? ref.where('teamIDs', 'array-contains', team.id) : ref.where('teamID', '==', team.id)
+			);
 		const result = query.get()
 			.pipe(
 				map(changes => {

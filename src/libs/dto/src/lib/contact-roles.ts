@@ -14,4 +14,12 @@ export type ContactRoleVehicle = ContactRoleInsurer | 'mechanic' | 'electrician'
 export type ContactRoleMedRelated = 'GP' | 'med_specialist'
 export type ContactRoleFamilyRelated = ContactRoleFriend;
 export type ContactRoleKidRelated = ContactRoleFriend | 'teacher' | 'babysitter';
-export type ContactRole = ContactRoleFamilyRelated | ContactRoleKidRelated | ContactRoleMedRelated | ContactRoleDwellingRelated | ContactRoleVehicle | 'applicant';
+export type ContactRoleExpress = 'shipper' | 'agent' | 'buyer' | 'carrier';
+export type ContactRole =
+	ContactRoleFamilyRelated |
+	ContactRoleKidRelated |
+	ContactRoleMedRelated |
+	ContactRoleDwellingRelated |
+	ContactRoleVehicle |
+	ContactRoleExpress |
+	'applicant';

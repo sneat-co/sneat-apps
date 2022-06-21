@@ -21,7 +21,7 @@ export class ContactService {
 	}
 
 	watchByTeam(team: ITeamContext): Observable<IContactContext[]> {
-		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, 'team_contacts');
+		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, 'team_contacts', 'teamID');
 	}
 
 	watchById(contactID: string): Observable<IContactContext> {

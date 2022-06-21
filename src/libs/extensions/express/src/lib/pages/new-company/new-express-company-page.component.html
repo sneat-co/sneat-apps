@@ -13,7 +13,7 @@
 		></sneat-select-from-list>
 	</ion-card>
 
-	<ion-card>
+	<ion-card *ngIf="contactType">
 		<sneat-country-selector [(country)]="countryID" [disabled]="isCreating"
 		></sneat-country-selector>
 	</ion-card>

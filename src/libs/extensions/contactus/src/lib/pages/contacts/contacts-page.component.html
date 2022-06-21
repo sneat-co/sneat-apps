@@ -13,17 +13,32 @@
 			}">
 		</sneat-team-page-title>
 		<ion-buttons slot="end">
-			<ion-menu-button menu="mainMenu"></ion-menu-button>
+			<ion-button *ngIf="canAdd"
+									color="primary"
+									size="small"
+									(click)="goNewContact()"
+									[title]="'Add contact'">
+				<ion-icon name="add"></ion-icon>
+				Add
+			</ion-button>
+			<ion-menu-button ></ion-menu-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
+
+	<ion-segment [(ngModel)]="role">
+		<ion-segment-button *ngFor="let r of roles" [value]="r.id">
+			<ion-label>{{r.title}}</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+
 	<ion-card>
 		<sneat-filter-item (changed)="applyFilter($event, role)"></sneat-filter-item>
 
 		<div class="segment" *ngIf="!role">
-			<ion-segment [(ngModel)]="segment">
+			<ion-segment [(ngModel)]="segment" *ngIf="team?.type === 'family'">
 				<ion-segment-button value="groups">
 					<ion-label>By type</ion-label>
 				</ion-segment-button>
@@ -33,7 +48,7 @@
 			</ion-segment>
 		</div>
 
-		<ion-list *ngIf="segment === 'list'">
+		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
 			<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: id">
 				<sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
 														[excludeRole]="role"></sneat-contact-item>
@@ -68,22 +83,12 @@
 
 </ion-content>
 
-<ion-footer>
-	<ion-toolbar color="light">
-		<ion-label *ngIf="contacts">
-			<b>Total</b>: {{ contacts.length }} {{contacts.length === 1 ? 'contact' : 'contacts'}}
-		</ion-label>
-		<ion-label *ngIf="!contacts">Loading...</ion-label>
-		<ion-buttons slot="end">
-			<ion-button *ngIf="canAdd"
-									color="primary"
-									size="small"
-									(click)="goNewContact()"
-									[title]="'Add contact'">
-				<ion-icon name="add"></ion-icon>
-				Add
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
-</ion-footer>
+<!--<ion-footer>-->
+<!--	<ion-toolbar color="light">-->
+<!--		<ion-label *ngIf="contacts">-->
+<!--			<b>Total</b>: {{ contacts.length }} {{contacts.length === 1 ? 'contact' : 'contacts'}}-->
+<!--		</ion-label>-->
+<!--		<ion-label *ngIf="!contacts">Loading...</ion-label>-->
+<!--	</ion-toolbar>-->
+<!--</ion-footer>-->
 

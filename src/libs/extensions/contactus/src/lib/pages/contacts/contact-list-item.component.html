@@ -14,6 +14,8 @@
 																	(click)="goMember(member.id, $event)">{{member.title}}</a>
 			</p>
 		</ng-container>
+
+		{{contact?.brief?.countryID|countryEmoji}}
 	</ion-label>
 
 	<ion-buttons slot="end">

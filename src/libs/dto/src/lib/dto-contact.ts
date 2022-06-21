@@ -8,8 +8,8 @@ export interface IContactBase extends IPersonBase {
 	roles?: string[];
 }
 
-export interface IContactBrief extends IWithIdAndTitle, IContactBase {
-	//
+export interface IContactBrief extends IContactBase {
+	id: string;
 }
 
 

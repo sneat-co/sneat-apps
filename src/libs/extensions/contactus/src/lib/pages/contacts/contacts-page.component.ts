@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ISelectItem } from '@sneat/components';
 import { listItemAnimations } from '@sneat/core';
 import { ContactRole, ITeamDto } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
@@ -22,6 +23,13 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	public filter = '';
 	public role?: ContactRole;
 	private contactsSubscription?: Subscription;
+
+	roles: ISelectItem[] = [
+		{ id: 'agent', title: 'Agents', iconName: 'body-outline' },
+		{ id: 'buyer', title: 'Buyers', iconName: 'cash-outline' },
+		{ id: 'carrier', title: 'Carriers', iconName: 'train-outline' },
+		{ id: 'shipper', title: 'Shippers', iconName: 'boat-outline' },
+	];
 
 	constructor(
 		route: ActivatedRoute,
@@ -49,12 +57,12 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	protected override onTeamDtoChanged() {
 		super.onTeamDtoChanged();
 		const teamDto = this.team?.dto;
-		console.log('ContactsPageComponent.onTeamDtoChanged', teamDto?.contacts)
+		console.log('ContactsPageComponent.onTeamDtoChanged', teamDto?.contacts);
 		if (!teamDto) {
 			return;
 		}
-		if (!this.allContacts?.length) {
-			this.allContacts = teamDto.contacts?.map(brief => ({id: brief.id, brief}));
+		if (teamDto.type === 'family') {
+			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief }));
 			this.applyFilter(this.filter, this.role);
 		}
 	}
@@ -160,19 +168,18 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (!this.team) {
 			return;
 		}
-		// DO NOT QUERY FROM DB FOR NOW
-		// this.contactsSubscription = this.contactsService.watchByTeam(this.team)
-		// 	.pipe(
-		// 		this.takeUntilNeeded(),
-		// 	)
-		// 	.subscribe({
-		// 		next: contacts => {
-		// 			console.log('CommuneContactsPage => contacts loaded', contacts);
-		// 			this.allContacts = contacts;
-		// 			this.applyFilter(this.filter, this.role);
-		// 		},
-		// 		error: this.errorLogger.logErrorHandler('failed to get team contacts'),
-		// 	});
+		this.contactsSubscription = this.contactsService.watchByTeam(this.team)
+			.pipe(
+				this.takeUntilNeeded(),
+			)
+			.subscribe({
+				next: contacts => {
+					console.log('ContactsPageComponent.onTeamIDChanged() => contacts loaded', contacts);
+					this.allContacts = contacts;
+					this.applyFilter(this.filter, this.role);
+				},
+				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
+			});
 	};
 
 }
