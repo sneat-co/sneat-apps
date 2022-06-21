@@ -49,6 +49,14 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		this.teamIDChanged$.subscribe({
 			next: this.onTeamIDChanged,
 		});
+		route.queryParamMap.pipe(
+			this.takeUntilNeeded(),
+		).subscribe({
+			next: q => {
+				this.role = q.get('role') as ContactRole || undefined;
+				this.applyFilter(this.filter, this.role);
+			},
+		});
 		// this.teamDtoChanged$.subscribe({
 		// 	next: this.onTeamDtoChanged,
 		// })
@@ -123,9 +131,17 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (!this.team) {
 			return;
 		}
-		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, 'new-contact')
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
+		let navResult: Promise<boolean>;
+
+		if (this.team.type === 'family') {
+			navResult = this.teamParams.teamNavService
+				.navigateForwardToTeamPage(this.team, 'new-contact');
+		} else {
+			navResult = this.teamParams.teamNavService
+				.navigateForwardToTeamPage(this.team, 'new-company', { queryParams: this.role ? { role: this.role } : undefined });
+		}
+
+		navResult.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
 	};
 
 	goMember(id: string, event: Event): boolean {
@@ -181,6 +197,10 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
 			});
 	};
+
+	onRoleChanged(event: Event): void {
+		this.applyFilter(this.filter, this.role);
+	}
 
 	// roleSegmentButtonClicked(event: Event): void {
 	// 	console.log('roleSegmentButtonClicked', event);
