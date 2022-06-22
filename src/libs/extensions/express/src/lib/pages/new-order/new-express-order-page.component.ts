@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FreightOrdersService } from '@sneat/extensions/express';
+import { FreightOrdersService } from '../../services/freight-orders.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateFreightOrderRequest, IFreightOrderDto } from '../../dto/order';
 
@@ -17,7 +17,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly freightOrdersService: FreightOrdersService
+		private readonly freightOrdersService: FreightOrdersService,
 	) {
 		super('NewExpressOrderPageComponent', route, teamParams);
 		console.log('NewExpressOrderPageComponent');

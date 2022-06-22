@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FreightOrdersServiceModule } from '@sneat/extensions/express';
+import { FreightOrdersServiceModule } from '../../services/freight-orders.service';
 import { NewExpressOrderPageComponent } from './new-express-order-page.component';
 
 @NgModule({
