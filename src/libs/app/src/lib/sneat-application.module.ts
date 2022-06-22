@@ -1,16 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AngularFireModule } from '@angular/fire/compat';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule } from '@ionic/angular';
-import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
-import { RandomModule } from '@sneat/random';
-import { environment } from '../../../../apps/sneat-app/src/environments/environment';
-import { AppComponentService } from './app-component.service';
-import { SneatLoggingModule } from '@sneat/logging';
 import { SneatAnalyticsModule } from '@sneat/analytics';
+import { SneatLoggingModule } from '@sneat/logging';
+import { RandomModule } from '@sneat/random';
+import { AppComponentService } from './app-component.service';
 import { IEnvironmentConfig } from './environment-config';
 
 @NgModule({
