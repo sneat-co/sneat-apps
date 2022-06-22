@@ -7,9 +7,9 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
-import { IUserTeamBrief, TeamType } from '@sneat/auth-models';
-import { ITeamContext, teamContextFromBrief } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/auth';
+import { TeamType } from '@sneat/core';
+import { ITeamContext, teamContextFromBrief } from '@sneat/team/models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
