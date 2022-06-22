@@ -12,3 +12,4 @@ export * from './lib/utils';
 export * from './lib/eq';
 export * from './lib/sneat-extensions';
 export * from './lib/form-field';
+export * from './lib/team-type';

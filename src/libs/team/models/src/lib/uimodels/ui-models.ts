@@ -1,3 +1,4 @@
+import { TeamType } from '@sneat/core';
 import {
 	DtoGroupTerms,
 	DtoTotal,
@@ -9,7 +10,6 @@ import {
 	newTeamCounts,
 	Period,
 	TeamCounts,
-	TeamType,
 } from '@sneat/dto';
 import { IMemberContext, IMemberGroupContext, ITeamContext } from '../team-context';
 

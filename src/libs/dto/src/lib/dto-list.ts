@@ -1,7 +1,8 @@
+import { TeamType } from '@sneat/core';
 import { IWithIdAndTitle } from './dto-brief';
 import { IWithRestrictions, IWithTeamIDs } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
-import { ListStatus, TeamType } from './types';
+import { ListStatus } from './types';
 
 // import { CommuneShortId } from '../commune-ids';
 

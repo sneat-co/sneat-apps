@@ -1,4 +1,4 @@
-import { EnumAsUnionOfKeys } from '@sneat/core';
+import { EnumAsUnionOfKeys, TeamType } from '@sneat/core';
 import { IAvatar } from './avatar';
 
 // Does not contain an ID as it's a key.
@@ -11,17 +11,6 @@ export interface IUserRecord {
 	readonly teams?: IUserTeamBrief[];
 }
 
-export type TeamType =
-	'family'
-	| 'personal'
-	| 'company'
-	| 'team'
-	| 'parish'
-	| 'educator'
-	| 'realtor'
-	| 'sport_club'
-	| 'cohabit'
-	| 'unknown';
 
 export enum TeamMemberType {
 	creator = 'creator',

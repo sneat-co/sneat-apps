@@ -1,10 +1,10 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
-import { IUserTeamBrief, TeamMemberType, TeamType } from '@sneat/auth-models';
+import { ISneatUserState, SneatUserService } from '@sneat/auth';
+import { TeamType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest, ITeamContext, teamContextFromBrief } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { ISneatUserState, SneatUserService } from '@sneat/auth';
 
 @Component({
 	selector: 'sneat-teams-menu',

@@ -1,5 +1,6 @@
+import { TeamType } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { ITeamDto, MemberType, TeamType } from '@sneat/dto';
+import { ITeamDto } from '@sneat/dto';
 
 export interface ICreateTeamRequest {
 	type: TeamType;

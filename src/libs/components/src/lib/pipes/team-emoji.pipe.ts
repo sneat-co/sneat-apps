@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TeamType } from '@sneat/auth-models';
+import { TeamType } from '@sneat/core';
 
 @Pipe({ name: 'teamEmoji' })
 export class TeamEmojiPipe implements PipeTransform {

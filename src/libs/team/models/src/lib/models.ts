@@ -1,4 +1,5 @@
-import { IContact2Asset, IMemberBrief, IRelatedPerson, MemberType, TeamType } from '@sneat/dto';
+import { TeamType } from '@sneat/core';
+import { IContact2Asset, IMemberBrief, IRelatedPerson, MemberType } from '@sneat/dto';
 import { IMemberContext } from './team-context';
 
 

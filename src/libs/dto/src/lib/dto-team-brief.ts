@@ -1,4 +1,4 @@
-import { TeamType } from '@sneat/auth-models';
+import { TeamType } from '@sneat/core';
 import { IWithIdAndTitle } from './dto-brief';
 
 export interface ITeamBase {

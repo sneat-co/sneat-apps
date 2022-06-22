@@ -1,10 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
-import { MemberType, TeamType } from '@sneat/auth-models';
-import { IMemberBrief, isTeamSupportsMemberGroups } from '@sneat/dto';
+import { MemberType } from '@sneat/auth-models';
+import { TeamType } from '@sneat/core';
+import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext } from '@sneat/team/models';
 import { MemberService } from '@sneat/team/services';
-import { MemberPages } from '../constants';
 
 export abstract class MembersBasePage extends TeamBaseComponent {
 

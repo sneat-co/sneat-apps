@@ -1,21 +1,23 @@
-import { INavContext } from '@sneat/core';
+import { INavContext, TeamType } from '@sneat/core';
 import {
 	IAssetBrief,
 	IAssetDto,
 	IContactBrief,
-	IContactDto, IDocumentBrief, IDocumentDto,
-	IHappeningBrief,
-	IHappeningDto,
+	IContactDto,
+	IDocumentBrief,
+	IDocumentDto,
 	IListBrief,
 	IListDto,
 	IMemberBrief,
 	IMemberDto,
 	IMemberGroupBrief,
-	IMemberGroupDto, IPerson, IPersonBrief,
+	IMemberGroupDto,
+	IPerson,
+	IPersonBrief,
 	IShortTeamInfo,
 	ITeamBrief,
-	ITeamDto, ListType,
-	TeamType, UiState,
+	ITeamDto,
+	ListType,
 } from '@sneat/dto';
 import { ITeamItemContext } from './team-item-context';
 

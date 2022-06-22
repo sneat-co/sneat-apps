@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITeamContext } from '@sneat/team/models';
-import { TeamType } from '@sneat/dto';
+import { TeamType } from '@sneat/core';
 
 @Injectable({
 	providedIn: 'root',

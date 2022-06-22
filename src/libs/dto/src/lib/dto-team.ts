@@ -1,3 +1,4 @@
+import { TeamType } from '@sneat/core';
 import { IAssetBrief } from './dto-asset';
 import { TeamCounts } from './dto-commune';
 import { IContactBrief } from './dto-contact';
@@ -7,7 +8,6 @@ import { IMemberBrief } from './dto-member';
 import { ITotalsHolder } from './dto-models';
 import { IMeetingInfo } from './dto-team-meeting';
 import { ITeamMetric } from './dto-team-metric';
-import { TeamType } from './types';
 
 export interface ITeamMeetings {
 	scrum?: IMemberBrief;

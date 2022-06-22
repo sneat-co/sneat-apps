@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { TeamType } from '@sneat/auth-models';
+import { TeamType } from './team-type';
 
 export type SneatApp = 'sneat'
 	| 'aaproject'
