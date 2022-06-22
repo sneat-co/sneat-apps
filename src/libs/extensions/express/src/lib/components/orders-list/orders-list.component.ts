@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IOrderContext } from '../../dto/order';
+import { IExpressOrderContext } from '../../dto/order';
 
 @Component({
 	selector: 'sneat-freights-list',
@@ -8,6 +8,6 @@ import { IOrderContext } from '../../dto/order';
 })
 export class OrdersListComponent {
 
-	@Input() orders?: IOrderContext[];
+	@Input() orders?: IExpressOrderContext[];
 
 }

@@ -48,6 +48,10 @@ export interface IFreightOrderBase extends IFreightOrderLoad {
 	direction: 'import' | 'export' | 'internal';
 }
 
+export interface IFreightOrderBrief extends IFreightOrderBase {
+	id: string;
+}
+
 export interface IFreightOrderDto extends IFreightOrderBase {
 	buyer?: IFreightCounterparty;
 	buyerRef?: string;
@@ -63,7 +67,7 @@ export interface IFreightOrderDto extends IFreightOrderBase {
 	issued?: IDocIssued;
 }
 
-export type IOrderContext = INavContext<IFreightOrderDto, IFreightOrderDto>;
+export type IExpressOrderContext = INavContext<IFreightOrderDto, IFreightOrderDto>;
 
 export interface ICreateFreightOrderRequest extends ITeamRequest {
 	order: IFreightOrderDto;

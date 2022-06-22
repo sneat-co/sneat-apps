@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FreightOrdersService } from '@sneat/extensions/express';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IOrderContext } from '../../dto/order';
+import { IExpressOrderContext } from '../../dto/order';
 
 @Component({
 	selector: 'sneat-orders-page',
@@ -16,28 +17,26 @@ export class OrdersPageComponent extends TeamBaseComponent {
 	countryOrigin = '';
 	countryDestination = '';
 
-	freights: IOrderContext[] = [
-		{
-			id: 'f1',
-			dto: {
-				status: 'active',
-				direction: 'export',
-				buyer: { id: 'rusconltd', title: 'RUSCON LTD', countryID: 'ru' },
-				buyerRef: 'RCN987',
-				carrier: { id: 'c1', title: 'Carrier #1', countryID: 'es' },
-				carrierRef: 'CR1X234',
-				shipper: { id: 'sealand', title: 'SeaLand', countryID: 'es' },
-				shipperRef: 'SL357',
-				consignee: { id: 'fswpl', title: 'FUTURE STONE WORKS PRIVATE LTD', countryID: 'ru' },
-				consigneeRef: 'FSW468',
-			},
-		},
-	];
+	orders?: IExpressOrderContext[];
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
+		private readonly ordersService: FreightOrdersService,
 	) {
 		super('OrdersPageComponent', route, teamParams);
+	}
+
+	protected override onTeamIdChanged() {
+		super.onTeamIdChanged();
+		if (this.team.id) {
+			this.ordersService.watchFreightOrders(this.team.id).subscribe({
+				next: orders => {
+					console.log('express_orders', orders);
+					this.orders = orders;
+				},
+				error: this.errorLogger.logErrorHandler('faield to load express orders'),
+			});
+		}
 	}
 }

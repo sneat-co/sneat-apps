@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IOrderContext } from '../../dto/order';
+import { IExpressOrderContext } from '../../dto/order';
 
 @Component({
 	selector: 'sneat-freight-card',
@@ -7,5 +7,5 @@ import { IOrderContext } from '../../dto/order';
 	styleUrls: ['./order-card.component.scss'],
 })
 export class OrderCardComponent {
-	@Input() freight?: IOrderContext;
+	@Input() freight?: IExpressOrderContext;
 }

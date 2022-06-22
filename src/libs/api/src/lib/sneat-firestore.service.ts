@@ -1,4 +1,4 @@
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { INavContext } from '@sneat/core';
 import firebase from 'firebase/compat';
 import { map, Observable, throwError } from 'rxjs';
@@ -59,17 +59,21 @@ export class SneatFirestoreService<Brief, Dto> {
 			.snapshotChanges()
 			.pipe(
 				map(changes => {
-					return changes.map(doc => {
-						const { id } = doc.payload.doc;
-						const dto: Dto2 = doc.payload.doc.data();
-						const result: INavContext<Brief, Dto2> = {
-							id, dto,
-							brief: this.dto2brief(id, dto),
-						};
-						return result;
-					});
+					return this.snapshotChangesToContext(changes);
 				}),
 			);
+	}
+
+	snapshotChangesToContext<Dto2 extends Dto>(changes: DocumentChangeAction<Dto2>[]) {
+		return changes.map(doc => {
+			const { id } = doc.payload.doc;
+			const dto: Dto2 = doc.payload.doc.data();
+			const result: INavContext<Brief, Dto2> = {
+				id, dto,
+				brief: this.dto2brief(id, dto),
+			};
+			return result;
+		});
 	}
 
 	watchByTeamID<Dto2 extends Dto>(teamID: string, field: 'teamID' | 'teamIDs' = 'teamIDs'): Observable<INavContext<Brief, Dto2>[]> {

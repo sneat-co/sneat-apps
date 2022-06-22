@@ -92,6 +92,7 @@
 			<ion-label color="medium">Status</ion-label>
 		</ion-item-divider>
 		<ion-segment [(ngModel)]="status" color="dark">
+			<ion-segment-button value="draft">Drafts</ion-segment-button>
 			<ion-segment-button value="active">Active</ion-segment-button>
 			<ion-segment-button value="complete">Complete</ion-segment-button>
 			<ion-segment-button value="canceled">Canceled</ion-segment-button>
@@ -101,6 +102,6 @@
 		<!--		</ion-item-divider>-->
 	</ion-card>
 
-	<sneat-freights-list [orders]="freights" style="margin-bottom: 50px;"></sneat-freights-list>
+	<sneat-freights-list [orders]="orders" style="margin-bottom: 50px;"></sneat-freights-list>
 
 </ion-content>
