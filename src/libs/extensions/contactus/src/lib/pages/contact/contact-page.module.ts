@@ -5,7 +5,7 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { ContactServiceModule } from '../../contact.service';
+import { ContactServiceModule } from '../../services';
 
 import {ContactPageComponent} from './contact-page.component';
 

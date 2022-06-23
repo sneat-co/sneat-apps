@@ -4,8 +4,8 @@ import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
 import { ContactService } from '@sneat/extensions/contactus';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ICreateContactCompanyRequest, ICreateContactRequest } from '@sneat/team/models';
-import { first, Subject, takeUntil } from 'rxjs';
+import { ICreateContactCompanyRequest } from '@sneat/team/models';
+import { first, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-new-express-company-page',

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { eq } from '@sneat/core';
 import { IContactContext } from '@sneat/team/models';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
-import { ContactService } from '../../contact.service';
+import { ContactService } from '../../services';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

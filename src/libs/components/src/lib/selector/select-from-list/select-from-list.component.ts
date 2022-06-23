@@ -5,13 +5,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-
-export interface ISelectItem {
-	readonly id: string;
-	readonly title: string;
-	readonly emoji?: string;
-	readonly iconName?: string;
-}
+import { ISelectItem } from '..';
 
 @Component({
 	selector: 'sneat-select-from-list',

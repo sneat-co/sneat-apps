@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService } from '@sneat/api';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { INavContext } from '@sneat/core';
 import { TeamCounter } from '@sneat/dto';
 import { ITeamContext, ITeamItemContext, ITeamRequest } from '@sneat/team/models';

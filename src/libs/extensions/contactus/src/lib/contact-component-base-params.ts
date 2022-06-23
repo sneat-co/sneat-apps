@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ContactService } from './contact.service';
+import { ContactService } from './services';
 
 @Injectable()
 export class ContactComponentBaseParams {

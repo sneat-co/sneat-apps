@@ -45,13 +45,14 @@ export class SneatFirestoreService<Brief, Dto> {
 			return throwError(() => 'requires at least 1 element in filter');
 		}
 		console.log('watchByFilter()', this.collection, filter);
+		const operator = (f: IFilter) => f.field.endsWith('IDs') ? 'array-contains' : f.operator
 		return this.afs
 			.collection<Dto2>(this.collection,
 				ref => {
-					let cond = ref.where(filter[0].field, 'array-contains', filter[0].value);
+					let cond = ref.where(filter[0].field, operator(filter[0]), filter[0].value);
 					for (let i = 1; i < filter.length; i++) {
 						const f = filter[i];
-						cond = cond.where(f.field, f.operator, f.value);
+						cond = cond.where(f.field, operator(f), f.value);
 					}
 					return cond;
 				},

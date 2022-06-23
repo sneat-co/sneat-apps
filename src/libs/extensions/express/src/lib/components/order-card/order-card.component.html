@@ -1,7 +1,7 @@
 <ion-card>
-	<ion-item color="primary" [routerLink]="'./abc'">
+	<ion-item color="light" [routerLink]="'../order/'+order?.id">
 		<ion-label>Export #</ion-label>
-		<ion-input readonly [value]="freight?.id" style="font-weight: bold"></ion-input>
+		<ion-input readonly [value]="order?.id" style="font-weight: bold"></ion-input>
 		<!--			<ion-buttons slot="start">-->
 		<!--				<ion-button>-->
 		<!--					<ion-icon name="document-text-outline"></ion-icon>-->
@@ -21,7 +21,7 @@
 
 
 	<ion-grid class="ion-grid-layout">
-		<ion-row>
+		<ion-row *ngIf="readonly">
 			<ion-col size="6">
 				<ion-item tappable>
 					<ion-label>
@@ -43,62 +43,10 @@
 				</ion-item>
 			</ion-col>
 		</ion-row>
-		<ion-row>
-			<ion-col size="8">
-				<ion-item color="light">
-					<ion-label color="medium">Buyer</ion-label>
-					<ion-input value="RUSCON LTD"></ion-input>
-				</ion-item>
-			</ion-col>
-			<ion-col size="4">
-				<ion-item color="light">
-					<ion-label color="medium">Ref #</ion-label>
-					<ion-input readonly [value]="freight?.dto?.buyerRef"></ion-input>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-		<ion-row>
-			<ion-col size="8">
-				<ion-item>
-					<ion-label color="medium">Carrier</ion-label>
-					<ion-input [value]="freight?.dto?.carrier?.title" readonly></ion-input>
-				</ion-item>
-			</ion-col>
-			<ion-col size="4">
-				<ion-item>
-					<ion-label color="medium">Ref #</ion-label>
-					<ion-input readonly [value]="freight?.dto?.carrierRef"></ion-input>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-		<ion-row>
-			<ion-col size="8">
-				<ion-item color="light">
-					<ion-label color="medium">Shipper</ion-label>
-					<ion-input readonly [value]="freight?.dto?.shipper?.title"></ion-input>
-				</ion-item>
-			</ion-col>
-			<ion-col size="4">
-				<ion-item color="light">
-					<ion-label color="medium">Ref #</ion-label>
-					<ion-input readonly [value]="freight?.dto?.shipperRef"></ion-input>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-		<ion-row>
-			<ion-col size="8">
-				<ion-item>
-					<ion-label color="medium">Consignee</ion-label>
-					<ion-input [value]="freight?.dto?.consignee?.title" readonly></ion-input>
-				</ion-item>
-			</ion-col>
-			<ion-col size="4">
-				<ion-item>
-					<ion-label color="medium">Ref #</ion-label>
-					<ion-input readonly [value]="freight?.dto?.consigneeRef"></ion-input>
-				</ion-item>
-			</ion-col>
-		</ion-row>
+		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="buyer"></sneat-express-order-counterparty>
+		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="carrier"></sneat-express-order-counterparty>
+		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="shipper"></sneat-express-order-counterparty>
+		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="consignee"></sneat-express-order-counterparty>
 		<!--			<ion-row>-->
 		<!--				<ion-col>-->
 		<!--					<ion-item>-->

@@ -1,2 +1,5 @@
-<sneat-freight-card *ngFor="let freight of orders" [freight]="freight">
-</sneat-freight-card>
+<sneat-express-order-card *ngFor="let order of orders"
+													[order]="order"
+													[team]="team"
+													[readonly]="true"
+></sneat-express-order-card>

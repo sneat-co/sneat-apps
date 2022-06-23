@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { OrderFormModule } from '../../components/order-form.module';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';
 import { OrderPageComponent } from './order-page.component';
 
@@ -19,7 +20,7 @@ const routes: Routes = [
 		IonicModule,
 		RouterModule.forChild(routes),
 		FormsModule,
-		OrdersListModule,
+		OrderFormModule,
 	],
 	declarations: [
 		OrderPageComponent,

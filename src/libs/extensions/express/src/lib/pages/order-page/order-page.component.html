@@ -1,39 +1,51 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/express/freights"></ion-back-button>
+			<ion-back-button defaultHref="/space/{{team?.type}}/{{team?.id}}/orders"></ion-back-button>
 		</ion-buttons>
 		<ion-title>Freight</ion-title>
 	</ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-freight-card></sneat-freight-card>
+	<sneat-express-order-card [team]="team"></sneat-express-order-card>
+
+	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="containers">Containers</ion-segment-button>
+		<ion-segment-button value="notes">Notes</ion-segment-button>
+	</ion-segment>
 
 	<ion-card>
-		<ion-card-header>
-			<ion-card-title>Containers</ion-card-title>
-		</ion-card-header>
-		<ion-item>
-			<ion-label slot="start">01.</ion-label>
-			<ion-select value="20ft" slot="start">
-				<ion-select-option value="20ft">20 foot</ion-select-option>
-				<ion-select-option value="40ft">40 foot</ion-select-option>
-			</ion-select>
-			<ion-input placeholder="ref #"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label>02.</ion-label>
-			<ion-select value="20ft">
-				<ion-select-option value="20ft">20 foot</ion-select-option>
-				<ion-select-option value="40ft">40 foot</ion-select-option>
-			</ion-select>
-		</ion-item>
-		<ion-item>
-			<ion-label>03.</ion-label>
-			<ion-select value="40ft">
-				<ion-select-option value="20ft">20 foot</ion-select-option>
-				<ion-select-option value="40ft">40 foot</ion-select-option>
-			</ion-select>
-		</ion-item>
+		<ion-card-content *ngIf="tab === 'notes'">
+			<ion-item>
+				<ion-label position="stacked">Visible only to employees of {{team?.brief?.title}}</ion-label>
+				<ion-textarea placeholder="text"></ion-textarea>
+			</ion-item>
+			<ion-button>Save changes</ion-button>
+		</ion-card-content>
+		<ng-container *ngIf="tab === 'containers'">
+			<ion-item>
+				<ion-label slot="start">01.</ion-label>
+				<ion-select value="20ft" slot="start">
+					<ion-select-option value="20ft">20 foot</ion-select-option>
+					<ion-select-option value="40ft">40 foot</ion-select-option>
+				</ion-select>
+				<ion-input placeholder="ref #"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>02.</ion-label>
+				<ion-select value="20ft">
+					<ion-select-option value="20ft">20 foot</ion-select-option>
+					<ion-select-option value="40ft">40 foot</ion-select-option>
+				</ion-select>
+			</ion-item>
+			<ion-item>
+				<ion-label>03.</ion-label>
+				<ion-select value="40ft">
+					<ion-select-option value="20ft">20 foot</ion-select-option>
+					<ion-select-option value="40ft">40 foot</ion-select-option>
+				</ion-select>
+			</ion-item>
+		</ng-container>
+
 	</ion-card>
 </ion-content>

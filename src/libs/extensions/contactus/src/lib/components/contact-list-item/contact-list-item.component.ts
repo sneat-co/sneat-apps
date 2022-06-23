@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
-import { ContactService } from '../../contact.service';
+import { ContactService } from '../../services';
 
 @Component({
 	selector: 'sneat-contact-item',

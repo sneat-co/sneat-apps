@@ -1,13 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { ContactRole } from '@sneat/dto';
 import { Subject, takeUntil } from 'rxjs';
 import {
-	IContactGroupDto,
+	ContactGroupService,
 	defaultFamilyContactGroups,
+	IContactGroupContext,
 	IContactRoleContext,
-	ContactGroupService, IContactGroupContext,
-} from '../../contact-group.service';
-import { IContactGroupWithContacts } from '../../pages/contacts/ui-types';
+} from '../../services';
 
 
 @Component({

@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PersonFormModule } from '@sneat/components';
 import { ContactRoleFormModule } from '../../components/contact-role-form/contact-role-form.module';
-import { ContactServiceModule } from '../../contact.service';
+import { ContactServiceModule } from '../../services';
 
 import { NewContactPageComponent } from './new-contact-page.component';
 

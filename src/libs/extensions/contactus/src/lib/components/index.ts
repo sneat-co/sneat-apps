@@ -1,2 +1,2 @@
-export * from './shared-with.module';
-export * from './shared-with.component';
+export * from './shared-with/shared-with.module';
+export * from './shared-with/shared-with.component';

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ISelectItem } from '../select-from-list/select-from-list.component';
+import { ISelectItem } from '../selector';
 
 @Component({
 	selector: 'sneat-country-selector',
@@ -13,14 +13,14 @@ export class CountrySelectorComponent {
 	@Output() countryChange = new EventEmitter<string>();
 
 	readonly countries: ISelectItem[] = [
-		{id: 'au', title: 'Australia', emoji: '🇦🇺'},
-		{id: 'ie', title: 'Ireland', emoji: '🇮🇪'},
-		{id: 'nz', title: 'New Zealand', emoji: '🇳🇿'},
-		{id: 'ru', title: 'Russia', emoji: '🇷🇺'},
-		{id: 'es', title: 'Spain', emoji: '🇪🇸'},
-		{id: 'uk', title: 'United Kingdom', emoji: '🇬🇧'},
-		{id: 'ua', title: 'Ukraine', emoji: '🇺🇦'},
-		{id: 'us', title: 'United States Of America', emoji: '🇺🇸'},
+		{ id: 'au', title: 'Australia', emoji: '🇦🇺' },
+		{ id: 'ie', title: 'Ireland', emoji: '🇮🇪' },
+		{ id: 'nz', title: 'New Zealand', emoji: '🇳🇿' },
+		{ id: 'ru', title: 'Russia', emoji: '🇷🇺' },
+		{ id: 'es', title: 'Spain', emoji: '🇪🇸' },
+		{ id: 'uk', title: 'United Kingdom', emoji: '🇬🇧' },
+		{ id: 'ua', title: 'Ukraine', emoji: '🇺🇦' },
+		{ id: 'us', title: 'United States Of America', emoji: '🇺🇸' },
 	];
 
 	onChanged(): void {

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { listItemAnimations } from '@sneat/core';
-import { ContactRole, ITeamDto } from '@sneat/dto';
+import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
-import { ContactService } from '../../contact.service';
+import { ContactService } from '../../services';
 
 @Component({
 	selector: 'sneat-contacts-page',
