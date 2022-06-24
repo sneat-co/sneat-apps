@@ -1,20 +1,19 @@
 <ion-card>
-	<ion-item color="light" [routerLink]="'../order/'+order?.id">
-		<ion-label>Export #</ion-label>
-		<ion-input readonly [value]="order?.id" style="font-weight: bold"></ion-input>
-		<!--			<ion-buttons slot="start">-->
-		<!--				<ion-button>-->
-		<!--					<ion-icon name="document-text-outline"></ion-icon>-->
-		<!--				</ion-button>-->
-		<!--			</ion-buttons>-->
+	<ion-item *ngIf="readonly" color="light" [routerLink]="'../order/'+order?.id" class="sneat-tiny-end-padding">
+		<ion-label color="primary">Export # {{order?.id}}</ion-label>
 		<ion-buttons slot="end">
-			<ion-button>
-				<ion-icon name="create-outline" slot="start"></ion-icon>
-				<ion-label>Edit</ion-label>
+			<ion-button color="medium" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
+				<ion-icon name="clipboard-outline"></ion-icon>
 			</ion-button>
-			<ion-button>
-				<ion-icon name="print-outline" slot="start"></ion-icon>
-				<ion-label>Print</ion-label>
+		</ion-buttons>
+	</ion-item>
+	<ion-item *ngIf="!readonly" color="light" class="sneat-tiny-end-padding">
+		<ion-label>Export #</ion-label>
+		<ion-input readonly [value]="order?.id" style="font-weight: bold"
+							 (click)="$event.stopPropagation(); $event.preventDefault()"></ion-input>
+		<ion-buttons slot="end">
+			<ion-button color="medium" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
+				<ion-icon name="clipboard-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -76,8 +75,8 @@
 		<!--				</ion-col>-->
 		<!--			</ion-row>-->
 	</ion-grid>
-<!--	<ion-item>-->
-<!--		<ion-label position="stacked" color="medium">Special instructions</ion-label>-->
-<!--		<ion-textarea>Freight collect</ion-textarea>-->
-<!--	</ion-item>-->
+	<!--	<ion-item>-->
+	<!--		<ion-label position="stacked" color="medium">Special instructions</ion-label>-->
+	<!--		<ion-textarea>Freight collect</ion-textarea>-->
+	<!--	</ion-item>-->
 </ion-card>

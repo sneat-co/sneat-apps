@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ILogger, TeamType } from '@sneat/core';
-import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
+import { ContactRole, equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
 import {
@@ -42,6 +42,11 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	protected readonly destroyed = new Subject<boolean>();
 	// protected readonly willLeave = new Subject<void>();
 	protected defaultBackPage?: string;
+
+	contactByRole: { [role: string]: IContactContext | undefined } = {};
+
+	refNumber = '';
+	isRefNumberChanged = false;
 
 	public selectedMembers?: readonly IMemberContext[];
 
@@ -92,6 +97,27 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	public get currentUserId() {
 		return this.userService.currentUserId;
+	}
+
+	protected onFilterContactChanged(role: ContactRole, contact: IContactContext): void {
+		this.contactByRole[role] = contact;
+	}
+
+	protected refNumberChanged(event: Event): void {
+		this.isRefNumberChanged = true;
+	}
+
+	protected findByRefNumber(event: Event): void {
+		event.stopPropagation();
+		this.isRefNumberChanged = false;
+	}
+
+	protected clearRefNumber(event: Event): void {
+		event.stopPropagation();
+		this.refNumber = '';
+		setTimeout(() => {
+			this.isRefNumberChanged = false;
+		}, 10);
 	}
 
 	public get defaultBackUrl(): string {

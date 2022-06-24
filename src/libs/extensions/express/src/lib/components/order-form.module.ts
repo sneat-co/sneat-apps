@@ -23,9 +23,10 @@ import { OrderCounterpartyComponent } from './order-counterparty/order-counterpa
 		OrderCounterpartyComponent,
 		OrderCounterpartyInputComponent,
 	],
-	exports: [
-		OrderCardComponent,
-	],
+  exports: [
+    OrderCardComponent,
+    OrderCounterpartyInputComponent,
+  ],
 })
 export class OrderFormModule {
 }

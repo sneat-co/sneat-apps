@@ -6,7 +6,7 @@ import { map, Observable } from 'rxjs';
 import {
 	ICreateFreightOrderRequest,
 	ICreateFreightOrderResponse,
-	IExpressOrderContext, IFreightCounterparty,
+	IExpressOrderContext, IOrderCounterparty,
 	IFreightOrderBrief,
 	IFreightOrderDto,
 	ISetOrderCounterpartyRequest,
@@ -68,7 +68,7 @@ export class FreightOrdersService {
 			);
 	}
 
-	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IFreightCounterparty> {
+	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {
 		return this.sneatApiService.post('express/order/set_order_counterparty', request);
 	}
 }

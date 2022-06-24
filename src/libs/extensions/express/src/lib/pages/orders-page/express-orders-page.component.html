@@ -25,44 +25,75 @@
 	</div>
 
 	<ion-card>
-		<ion-item>
-			<ion-label style="font-weight: bold">Filter</ion-label>
-			<ion-input placeholder="search"></ion-input>
+		<ion-item color="light">
+			<ion-label style="font-weight: bold">Filter
+				<ion-text *ngIf="refNumber" color="medium"> | Ref #</ion-text>
+			</ion-label>
+			<ion-input placeholder="ref #" [(ngModel)]="refNumber" (ionChange)="refNumberChanged($event)"></ion-input>
+			<ion-buttons slot="end" *ngIf="refNumber || isRefNumberChanged">
+				<ion-button *ngIf="isRefNumberChanged"
+										fill="solid"
+										color="primary"
+										(click)="findByRefNumber($event)">
+					Find {{refNumber}}:{{isRefNumberChanged}}
+				</ion-button>
+				<ion-button *ngIf="!isRefNumberChanged" color="danger"
+										title="Clear filter"
+										(click)="clearRefNumber($event)">
+					<ion-icon name="close-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
 		</ion-item>
 		<ion-grid class="ion-grid-layout">
 			<ion-row>
 				<ion-col>
-					<ion-item>
-						<ion-label color="medium" position="stacked">Consignee</ion-label>
-						<ion-select [(ngModel)]="counterparty" interface="popover">
-							<ion-select-option value="">All</ion-select-option>
-							<ion-select-option value="maersk">Maerks</ion-select-option>
-							<ion-select-option value="sealand">SeaLand</ion-select-option>
-						</ion-select>
-					</ion-item>
+					<sneat-contact-input
+						label="Buyer"
+						[team]="team"
+						[contact]="contactByRole['buyer']"
+						(contactChange)="onFilterContactChanged('buyer', $event)"
+					></sneat-contact-input>
 				</ion-col>
 				<ion-col>
-					<ion-item>
-						<ion-label color="medium" position="stacked">Carrier</ion-label>
-						<ion-select [(ngModel)]="carrier" interface="popover">
-							<ion-select-option value="">All</ion-select-option>
-							<ion-select-option value="maersk">Maerks</ion-select-option>
-							<ion-select-option value="sealand">SeaLand</ion-select-option>
-						</ion-select>
-					</ion-item>
-				</ion-col>
-				<ion-col>
-					<ion-item>
-						<ion-label color="medium" position="stacked">Shipper</ion-label>
-						<ion-select [(ngModel)]="shipper" interface="popover">
-							<ion-select-option value="">All</ion-select-option>
-							<ion-select-option value="maersk">Maerks</ion-select-option>
-							<ion-select-option value="sealand">SeaLand</ion-select-option>
-						</ion-select>
-					</ion-item>
+					<sneat-contact-input
+						label="Carrier"
+						[team]="team"
+						[contact]="contactByRole['carrier']"
+						(contactChange)="onFilterContactChanged('carrier', $event)"
+					></sneat-contact-input>
 				</ion-col>
 			</ion-row>
 			<ion-row>
+				<ion-col>
+					<sneat-contact-input
+						label="Consignee"
+						[team]="team"
+						[contact]="contactByRole['consignee']"
+						(contactChange)="onFilterContactChanged('consignee', $event)"
+					></sneat-contact-input>
+				</ion-col>
+				<ion-col>
+					<sneat-contact-input
+						label="Shipper"
+						[team]="team"
+						[contact]="contactByRole['shipper']"
+						(contactChange)="onFilterContactChanged('shipper', $event)"
+					></sneat-contact-input>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<!--					<sneat-country-selector></sneat-country-selector>-->
+					<ion-item>
+						<ion-label color="medium" position="stacked">Country of destination</ion-label>
+						<ion-select [(ngModel)]="countryOrigin" interface="popover">
+							<ion-select-option value="">All</ion-select-option>
+							<ion-select-option value="es">Spain</ion-select-option>
+							<ion-select-option value="ru">Russia</ion-select-option>
+							<ion-select-option value="ua">Ukraine</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label color="medium" position="stacked">Country of origin</ion-label>
@@ -74,33 +105,23 @@
 						</ion-select>
 					</ion-item>
 				</ion-col>
-				<ion-col>
-					<ion-item>
-						<ion-label color="medium" position="stacked">Country of destination</ion-label>
-						<ion-select [(ngModel)]="countryOrigin" interface="popover">
-							<ion-select-option value="">All</ion-select-option>
-							<ion-select-option value="es">Spain</ion-select-option>
-							<ion-select-option value="ru">Russia</ion-select-option>
-							<ion-select-option value="ua">Ukraine</ion-select-option>
-						</ion-select>
-					</ion-item>
-				</ion-col>
 			</ion-row>
 		</ion-grid>
 
-		<ion-item-divider color="light">
-			<ion-label color="medium">Status</ion-label>
-		</ion-item-divider>
-		<ion-segment [(ngModel)]="status" color="dark">
-			<ion-segment-button value="draft">Drafts</ion-segment-button>
-			<ion-segment-button value="active">Active</ion-segment-button>
-			<ion-segment-button value="complete">Complete</ion-segment-button>
-			<ion-segment-button value="canceled">Canceled</ion-segment-button>
-		</ion-segment>
+		<!--		<ion-item-divider color="light">-->
+		<!--			<ion-label color="medium">Status</ion-label>-->
+		<!--		</ion-item-divider>-->
 		<!--		<ion-item-divider color="light">-->
 		<!--			<ion-label>Counterparty</ion-label>-->
 		<!--		</ion-item-divider>-->
 	</ion-card>
+
+	<ion-segment [(ngModel)]="status" color="dark">
+		<ion-segment-button value="draft">Drafts</ion-segment-button>
+		<ion-segment-button value="active">Active</ion-segment-button>
+		<ion-segment-button value="complete">Complete</ion-segment-button>
+		<ion-segment-button value="canceled">Canceled</ion-segment-button>
+	</ion-segment>
 
 	<sneat-express-orders-list [team]="team" [orders]="orders" style="margin-bottom: 50px;"></sneat-express-orders-list>
 

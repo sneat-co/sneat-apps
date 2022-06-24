@@ -10,9 +10,10 @@ export interface IFreightAddress {
 	text: string;
 }
 
-export interface IFreightCounterparty {
+export interface IOrderCounterparty {
 	contactID: string;
 	role: ContactRoleExpress;
+	refNumber?: string;
 	countryID: string;
 	title: string;
 	phone?: string;
@@ -56,16 +57,16 @@ export interface IFreightOrderBrief extends IFreightOrderBase {
 }
 
 export interface IFreightOrderDto extends IFreightOrderBase {
-	counterparties?: IFreightCounterparty[];
-	buyer?: IFreightCounterparty;
+	counterparties?: IOrderCounterparty[];
+	buyer?: IOrderCounterparty;
 	buyerRef?: string;
-	carrier?: IFreightCounterparty;
+	carrier?: IOrderCounterparty;
 	carrierRef?: string;
-	consignee?: IFreightCounterparty;
+	consignee?: IOrderCounterparty;
 	consigneeRef?: string;
-	shipper?: IFreightCounterparty;
+	shipper?: IOrderCounterparty;
 	shipperRef?: string;
-	agent?: IFreightCounterparty;
+	agent?: IOrderCounterparty;
 	agentRef?: string;
 	containers?: IFreightContainer[];
 	declarations?: IFreightDeclaration[];

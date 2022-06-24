@@ -13,4 +13,15 @@ export class OrderCardComponent {
 	@Input() team?: ITeamContext;
 	@Input() order?: IExpressOrderContext;
 	readonly roles: ContactRoleExpress[] = ['buyer', 'consignee', 'agent', 'carrier', 'shipper'];
+
+	protected copyNumberToClipboard(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		const text = this.order?.id;
+		if (text) {
+			navigator.clipboard.writeText(text)
+				.then(() => alert('Order number copied to clipboard: ' + text))
+				.catch(err => alert('Error copying order number to clipboard: ' + err));
+		}
+	}
 }
