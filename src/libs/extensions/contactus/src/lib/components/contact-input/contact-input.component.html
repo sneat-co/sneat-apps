@@ -1,9 +1,10 @@
 <ion-item>
-	<ion-label>{{label || 'Contact'}}</ion-label>
-	<ion-input [readonly]="readonly"></ion-input>
+	<ion-label color="medium">{{label || 'Contact'}}</ion-label>
+	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>
 	<ion-buttons slot="end" *ngIf="!readonly">
 		<ion-button (click)="openContactSelector()">
 			<ion-label>...</ion-label>
 		</ion-button>
 	</ion-buttons>
 </ion-item>
+

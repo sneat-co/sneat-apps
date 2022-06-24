@@ -12,14 +12,19 @@ import { IContactSelectorOptions } from './contact-selector.service';
 	selector: 'sneat-contact-selector',
 	templateUrl: './contact-selector.component.html',
 })
-export class ContactSelectorComponent extends SelectorBaseComponent implements IContactSelectorOptions, AfterViewInit, OnChanges {
+export class ContactSelectorComponent
+	extends SelectorBaseComponent
+	implements IContactSelectorOptions, AfterViewInit, OnChanges {
 
-	@Input() team: ITeamContext = {id: ''};
+	@Input() team: ITeamContext = { id: '' };
 	@Input() role?: ContactRole;
+	@Input() onSelected?: (item: IContactContext[] | null) => void;
 
 	// @Input() public contacts?: IContactContext[];
 
 	private sub?: Subscription;
+
+	private contacts?: IContactContext[];
 
 	protected itemID?: string;
 	public items?: Observable<ISelectItem[]>;
@@ -57,7 +62,7 @@ export class ContactSelectorComponent extends SelectorBaseComponent implements I
 		}
 		this.sub = this.contactService.watchContactsByRole(this.team, { role: this.role })
 			.subscribe(contacts => {
-				// this.contacts = contacts;
+				this.contacts = contacts;
 				this.allItems = contacts.map(c => ({
 					id: c.id,
 					title: c.brief?.title || c.id,
@@ -68,8 +73,12 @@ export class ContactSelectorComponent extends SelectorBaseComponent implements I
 			});
 	}
 
-	protected onSelected(itemID: string): void {
-		console.log('onSelected()', itemID);
-		this.close(undefined)
+	protected onContactSelected(itemID: string): void {
+		console.log('onContactSelected()', itemID);
+		if (this.onSelected) {
+			const contact = this.contacts?.find(c => c.id === itemID);
+			this.onSelected(contact ? [contact] : null);
+		}
+		this.close(undefined);
 	}
 }

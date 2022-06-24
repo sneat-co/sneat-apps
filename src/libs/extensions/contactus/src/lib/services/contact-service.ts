@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IFilter, SneatFirestoreService } from '@sneat/api';
-import { ContactRole, IContactBrief, IContactDto, IMemberBrief, IMemberDto, TeamCounter } from '@sneat/dto';
+import { ContactRole, IContactBrief, IContactDto, TeamCounter } from '@sneat/dto';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
-import { memberBriefFromDto, TeamItemBaseService } from '@sneat/team/services';
+import { TeamItemBaseService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
 
 export const contactBriefFromDto = (id: string, dto: IContactDto): IContactBrief => ({ id, ...dto });
@@ -25,7 +25,7 @@ export class ContactService {
 		return throwError(() => 'not implemented yet');
 	}
 
-	watchByTeam(team: ITeamContext): Observable<IContactContext[]> {
+	watchTeamContacts(team: ITeamContext): Observable<IContactContext[]> {
 		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, 'team_contacts', 'teamID');
 	}
 

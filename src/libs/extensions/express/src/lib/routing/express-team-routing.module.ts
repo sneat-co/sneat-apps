@@ -25,7 +25,7 @@ export const expressRoutes: Routes = [
 	{
 		path: 'orders',
 		pathMatch: 'full',
-		loadChildren: () => import('../pages/orders-page/orders-page.module').then(m => m.OrdersPageModule),
+		loadChildren: () => import('../pages/orders-page/express-orders-page.module').then(m => m.ExpressOrdersPageModule),
 	},
 	{
 		path: 'order',
@@ -33,8 +33,8 @@ export const expressRoutes: Routes = [
 		redirectTo: 'orders',
 	},
 	{
-		path: 'order/:freightID',
-		loadChildren: () => import('../pages/order-page/order-page.module').then(m => m.OrderPageModule),
+		path: 'order/:orderID',
+		loadChildren: () => import('../pages/order-page/express-order-page.module').then(m => m.ExpressOrderPageModule),
 	},
 	{
 		path: 'new-company',

@@ -43,10 +43,12 @@
 				</ion-item>
 			</ion-col>
 		</ion-row>
-		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="buyer"></sneat-express-order-counterparty>
-		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="carrier"></sneat-express-order-counterparty>
-		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="shipper"></sneat-express-order-counterparty>
-		<sneat-express-order-counterparty [team]="team" [readonly]="readonly" counterpartyRole="consignee"></sneat-express-order-counterparty>
+		<sneat-express-order-counterparty *ngFor="let role of roles"
+																			[team]="team"
+																			[order]="order"
+																			[readonly]="readonly"
+																			[counterpartyRole]="role"
+		></sneat-express-order-counterparty>
 		<!--			<ion-row>-->
 		<!--				<ion-col>-->
 		<!--					<ion-item>-->

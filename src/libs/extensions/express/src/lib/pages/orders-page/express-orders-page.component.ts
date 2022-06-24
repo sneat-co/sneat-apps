@@ -5,10 +5,10 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 import { IExpressOrderContext } from '../../dto/order';
 
 @Component({
-	selector: 'sneat-orders-page',
-	templateUrl: 'orders-page.component.html',
+	selector: 'sneat-express-orders-page',
+	templateUrl: 'express-orders-page.component.html',
 })
-export class OrdersPageComponent extends TeamBaseComponent {
+export class ExpressOrdersPageComponent extends TeamBaseComponent {
 	type?: 'export' | 'import' | 'internal' | '';
 	status: 'active' | 'complete' | 'canceled' = 'active';
 	counterparty = '';

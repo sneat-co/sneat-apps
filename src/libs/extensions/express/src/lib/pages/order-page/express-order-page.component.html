@@ -1,13 +1,13 @@
 <ion-header>
-	<ion-toolbar>
+	<ion-toolbar color="light">
 		<ion-buttons slot="start">
 			<ion-back-button defaultHref="/space/{{team?.type}}/{{team?.id}}/orders"></ion-back-button>
 		</ion-buttons>
-		<ion-title>Freight</ion-title>
+		<ion-title>Order</ion-title>
 	</ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-express-order-card [team]="team"></sneat-express-order-card>
+	<sneat-express-order-card [team]="team" [order]="order"></sneat-express-order-card>
 
 	<ion-segment [(ngModel)]="tab">
 		<ion-segment-button value="containers">Containers</ion-segment-button>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { listItemAnimations } from '@sneat/core';
+import { listItemAnimations, setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
@@ -17,6 +17,7 @@ import { ContactService } from '../../services';
 export class ContactsPageComponent extends TeamItemsBaseComponent {
 
 	public allContacts?: IContactContext[];
+	public contactsByRole?: { [role: string]: IContactContext[] };
 	public contacts?: IContactContext[];
 	public groups: IMemberGroupContext[] = [];
 	public segment: 'list' | 'groups' = 'groups';
@@ -25,11 +26,17 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	private contactsSubscription?: Subscription;
 
 	roles: ISelectItem[] = [
+		{ id: '', title: 'All', iconName: 'body-outline' },
 		{ id: 'agent', title: 'Agents', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyers', iconName: 'cash-outline' },
 		{ id: 'carrier', title: 'Carriers', iconName: 'train-outline' },
 		{ id: 'shipper', title: 'Shippers', iconName: 'boat-outline' },
 	];
+
+	public contactsNumber(role: string): number {
+		const roleContacts = (this.contactsByRole && this.contactsByRole[role]) ?? [];
+		return roleContacts?.length ?? 0;
+	}
 
 	constructor(
 		route: ActivatedRoute,
@@ -184,7 +191,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (!this.team) {
 			return;
 		}
-		this.contactsSubscription = this.contactsService.watchByTeam(this.team)
+		this.contactsSubscription = this.contactsService.watchTeamContacts(this.team)
 			.pipe(
 				this.takeUntilNeeded(),
 			)
@@ -192,6 +199,19 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 				next: contacts => {
 					console.log('ContactsPageComponent.onTeamIDChanged() => contacts loaded', contacts);
 					this.allContacts = contacts;
+					const contactsByRole: { [role: string]: IContactContext[] } = {'': []};
+					contacts.forEach(c => {
+						contactsByRole[''].push(c);
+						c.dto?.roles?.forEach(role => {
+							const roleContacts = contactsByRole[role as ContactRole];
+							if (roleContacts) {
+								roleContacts.push(c);
+							} else {
+								contactsByRole[role] = [c];
+							}
+						});
+					});
+					this.contactsByRole = contactsByRole;
 					this.applyFilter(this.filter, this.role);
 				},
 				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
@@ -199,6 +219,9 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	};
 
 	onRoleChanged(event: Event): void {
+		event.stopPropagation();
+		const url = setHrefQueryParam('role', this.role || '')
+		history.replaceState(undefined, document.title, url);
 		this.applyFilter(this.filter, this.role);
 	}
 

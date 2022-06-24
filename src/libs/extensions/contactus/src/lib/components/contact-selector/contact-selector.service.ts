@@ -20,7 +20,7 @@ export class ContactSelectorService extends SelectorBaseService<IContactContext>
 		super(ContactSelectorComponent, errorLogger, modalController);
 	}
 
-	selectSingleContactsInModal(options: IContactSelectorOptions): Promise<IContactContext> {
+	selectSingleContactsInModal(options: IContactSelectorOptions): Promise<IContactContext | null> {
 		return this.selectSingleInModal(options);
 	}
 }

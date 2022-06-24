@@ -7,3 +7,4 @@ export * from './lib/components/contact-input/contact-input.component';
 export { ContactServiceModule } from './lib/services/contact-service.module';
 export { ContactSelectorModule } from './lib/components/contact-selector/contact-selector.module';
 // export { ContactSelectorComponent } from './lib/components/contact-selector/contact-selector.component';
+export * from './lib/dto';

@@ -1,1 +1,7 @@
-<sneat-contact-input [label]="label()" [team]="team" [readonly]="readonly"></sneat-contact-input>
+<sneat-contact-input
+	[label]="label()"
+	[team]="team"
+	[contact]="contact"
+	[readonly]="readonly"
+	(contactChange)="onContactChanged($event)"
+></sneat-contact-input>

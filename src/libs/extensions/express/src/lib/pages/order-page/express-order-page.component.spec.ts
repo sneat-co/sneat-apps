@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrderPageComponent } from './order-page.component';
+import { ExpressOrderPageComponent } from './express-order-page.component';
 
 describe('FreightPageComponent', () => {
-	let component: OrderPageComponent;
-	let fixture: ComponentFixture<OrderPageComponent>;
+	let component: ExpressOrderPageComponent;
+	let fixture: ComponentFixture<ExpressOrderPageComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [OrderPageComponent],
+			declarations: [ExpressOrderPageComponent],
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(OrderPageComponent);
+		fixture = TestBed.createComponent(ExpressOrderPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

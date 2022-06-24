@@ -1,4 +1,6 @@
 import { INavContext } from '@sneat/core';
+import { ContactRoleExpress } from '@sneat/dto';
+import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamRequest } from '@sneat/team/models';
 
 export interface IFreightAddress {
@@ -9,7 +11,8 @@ export interface IFreightAddress {
 }
 
 export interface IFreightCounterparty {
-	id: string;
+	contactID: string;
+	role: ContactRoleExpress;
 	countryID: string;
 	title: string;
 	phone?: string;
@@ -53,6 +56,7 @@ export interface IFreightOrderBrief extends IFreightOrderBase {
 }
 
 export interface IFreightOrderDto extends IFreightOrderBase {
+	counterparties?: IFreightCounterparty[];
 	buyer?: IFreightCounterparty;
 	buyerRef?: string;
 	carrier?: IFreightCounterparty;
@@ -61,6 +65,8 @@ export interface IFreightOrderDto extends IFreightOrderBase {
 	consigneeRef?: string;
 	shipper?: IFreightCounterparty;
 	shipperRef?: string;
+	agent?: IFreightCounterparty;
+	agentRef?: string;
 	containers?: IFreightContainer[];
 	declarations?: IFreightDeclaration[];
 	specialInstructions?: string;
@@ -75,4 +81,13 @@ export interface ICreateFreightOrderRequest extends ITeamRequest {
 
 export interface ICreateFreightOrderResponse {
 	order: { id: string };
+}
+
+export interface IExpressOrderRequest extends ITeamRequest {
+	orderID: string;
+}
+
+export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
+	contactID: string;
+	role: string;
 }

@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FreightOrdersServiceModule } from '../../services/freight-orders.service';
+import { OrderFormModule } from '../../components/order-form.module';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';
-import { OrdersPageComponent } from './orders-page.component';
+import { ExpressOrderPageComponent } from './express-order-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: OrdersPageComponent,
+		component: ExpressOrderPageComponent,
 	},
 ];
 
@@ -20,12 +20,11 @@ const routes: Routes = [
 		IonicModule,
 		RouterModule.forChild(routes),
 		FormsModule,
-		OrdersListModule,
-		FreightOrdersServiceModule,
+		OrderFormModule,
 	],
 	declarations: [
-		OrdersPageComponent,
+		ExpressOrderPageComponent,
 	],
 })
-export class OrdersPageModule {
+export class ExpressOrderPageModule {
 }

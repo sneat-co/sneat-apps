@@ -32,10 +32,13 @@ export class ContactInputComponent {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			team: this.team,
-		}
+		};
 		this.contactSelectorService.selectSingleContactsInModal(selectorOptions)
 			.then(contact => {
 				console.log('ContactInputComponent.openContactSelector() contact:', contact);
+				if (contact) {
+					this.contactChange.emit(contact);
+				}
 			})
 			.catch(this.errorLogger.logErrorHandler('failed to open contact selector'));
 	}
