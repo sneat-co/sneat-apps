@@ -55,6 +55,7 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 				address: this.address.trim(),
 				roles: [this.contactType],
 			}),
+			roles: [this.contactType],
 			teamID: this.team.id,
 		});
 		this.isCreating = true;
