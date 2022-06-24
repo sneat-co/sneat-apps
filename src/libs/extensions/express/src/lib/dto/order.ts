@@ -91,4 +91,5 @@ export interface IExpressOrderRequest extends ITeamRequest {
 export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
 	contactID: string;
 	role: string;
+	refNumber?: string;
 }

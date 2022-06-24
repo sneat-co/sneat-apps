@@ -12,6 +12,8 @@ export class ContactInputComponent {
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
 	@Input() label? = 'Contact';
+	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
+
 
 	@Input() contact?: IContactContext;
 	@Output() contactChange = new EventEmitter<IContactContext>();
@@ -24,7 +26,13 @@ export class ContactInputComponent {
 
 	}
 
-	openContactSelector(): void {
+	get contactLink(): string {
+		return `/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}` || '';
+	}
+
+	openContactSelector(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
 		console.log('ContactInputComponent.openContactSelector()');
 		if (!this.team) {
 			this.errorLogger.logError('ContactInputComponent.openContactSelector(): team is required', undefined);

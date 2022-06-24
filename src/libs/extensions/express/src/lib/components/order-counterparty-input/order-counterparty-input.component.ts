@@ -10,6 +10,7 @@ import { IExpressOrderContext, ISetOrderCounterpartyRequest } from '../../dto';
 	templateUrl: './order-counterparty-input.component.html',
 })
 export class OrderCounterpartyInputComponent {
+	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
 	@Input() order?: IExpressOrderContext;

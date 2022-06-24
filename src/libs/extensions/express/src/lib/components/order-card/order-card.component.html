@@ -1,19 +1,23 @@
 <ion-card>
 	<ion-item *ngIf="readonly" color="light" [routerLink]="'../order/'+order?.id" class="sneat-tiny-end-padding">
-		<ion-label color="primary">Export # {{order?.id}}</ion-label>
+		<ion-label color="primary">
+			Order # {{order?.id}} - {{order?.brief?.direction}}
+		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="medium" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
-				<ion-icon name="clipboard-outline"></ion-icon>
+				<ion-icon name="clipboard-outline" slot="end"></ion-icon>
+				<ion-label>Copy #</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item *ngIf="!readonly" color="light" class="sneat-tiny-end-padding">
-		<ion-label>Export #</ion-label>
-		<ion-input readonly [value]="order?.id" style="font-weight: bold"
-							 (click)="$event.stopPropagation(); $event.preventDefault()"></ion-input>
+	<ion-item *ngIf="!readonly" color="primary" class="sneat-tiny-end-padding">
+		<ion-label>Order # <b>{{order?.id}}</b> - {{order?.brief?.direction}}</ion-label>
+<!--		<ion-input readonly [value]="order?.id" style="font-weight: bold"-->
+<!--							 (click)="$event.stopPropagation(); $event.preventDefault()"></ion-input>-->
 		<ion-buttons slot="end">
-			<ion-button color="medium" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
-				<ion-icon name="clipboard-outline"></ion-icon>
+			<ion-button color="light" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
+				<ion-icon name="clipboard-outline" slot="end"></ion-icon>
+				<ion-label>Copy #</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -47,33 +51,8 @@
 																			[order]="order"
 																			[readonly]="readonly"
 																			[counterpartyRole]="role"
+																			labelPosition="fixed"
 		></sneat-express-order-counterparty>
-		<!--			<ion-row>-->
-		<!--				<ion-col>-->
-		<!--					<ion-item>-->
-		<!--						<ion-label color="medium">Booked on</ion-label>-->
-		<!--						<ion-input type="date" value="2022-06-15"></ion-input>-->
-		<!--					</ion-item>-->
-		<!--				</ion-col>-->
-		<!--				<ion-col>-->
-		<!--					<ion-item>-->
-		<!--						<ion-label color="medium">Dispatch on</ion-label>-->
-		<!--						<ion-input type="date" value="2022-07-02"></ion-input>-->
-		<!--					</ion-item>-->
-		<!--				</ion-col>-->
-		<!--				<ion-col>-->
-		<!--					<ion-item>-->
-		<!--						<ion-label color="medium">Shipping on</ion-label>-->
-		<!--						<ion-input type="date" value="2022-07-03"></ion-input>-->
-		<!--					</ion-item>-->
-		<!--				</ion-col>-->
-		<!--				<ion-col>-->
-		<!--					<ion-item>-->
-		<!--						<ion-label color="medium">ETA</ion-label>-->
-		<!--						<ion-input type="date" value="2022-08-13"></ion-input>-->
-		<!--					</ion-item>-->
-		<!--				</ion-col>-->
-		<!--			</ion-row>-->
 	</ion-grid>
 	<!--	<ion-item>-->
 	<!--		<ion-label position="stacked" color="medium">Special instructions</ion-label>-->
