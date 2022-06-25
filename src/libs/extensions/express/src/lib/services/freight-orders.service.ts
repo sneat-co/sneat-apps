@@ -4,17 +4,19 @@ import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import firebase from 'firebase/compat';
 import { map, Observable } from 'rxjs';
 import {
-	ICreateFreightOrderRequest,
+	IAddContainersRequest,
+	IContainerRequest,
+	ICreateExpressOrderRequest,
 	ICreateFreightOrderResponse,
-	IExpressOrderContext, IOrderCounterparty,
+	IExpressOrderContext,
+	IExpressOrderDto,
 	IFreightOrderBrief,
-	IFreightOrderDto,
+	IOrderCounterparty,
 	ISetOrderCounterpartyRequest,
 } from '../dto/order';
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 
-function briefFromDto(id: string, dto: IFreightOrderDto): IFreightOrderBrief {
+function briefFromDto(id: string, dto: IExpressOrderDto): IFreightOrderBrief {
 	return {
 		id,
 		...dto,
@@ -23,42 +25,41 @@ function briefFromDto(id: string, dto: IFreightOrderDto): IFreightOrderBrief {
 
 @Injectable()
 export class FreightOrdersService {
-	private readonly sfs: SneatFirestoreService<IFreightOrderBrief, IFreightOrderDto>;
+	private readonly sfs: SneatFirestoreService<IFreightOrderBrief, IExpressOrderDto>;
 
 	constructor(
 		private readonly sneatApiService: SneatApiService,
 		// teamItemService: TeamItemBaseService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<IFreightOrderBrief, IFreightOrderDto>(
+		this.sfs = new SneatFirestoreService<IFreightOrderBrief, IExpressOrderDto>(
 			'express_orders', afs, briefFromDto);
 	}
 
-	createOrder(request: ICreateFreightOrderRequest): Observable<ICreateFreightOrderResponse> {
-		request.order.buyer;
+	createOrder(request: ICreateExpressOrderRequest): Observable<ICreateFreightOrderResponse> {
 		return this.sneatApiService.post('express/create_order', request);
 	}
 
 	public watchOrderByID(teamID: string, orderID: string): Observable<IExpressOrderContext> {
 		return this.afs
 			.collection('express_teams').doc(teamID)
-			.collection<IFreightOrderDto>('orders').doc(orderID).snapshotChanges()
+			.collection<IExpressOrderDto>('orders').doc(orderID).snapshotChanges()
 			.pipe(
 				map(docSnapshot => {
-					return this.sfs.docSnapshotToContext(docSnapshot.payload)
+					return this.sfs.docSnapshotToContext(docSnapshot.payload);
 				}),
 			);
 	}
 
 	private ordersCollection(teamID: string) {
-		return
+		return;
 	}
 
 	public watchFreightOrders(teamID: string): Observable<IExpressOrderContext[]> {
 		console.log('watchFreightOrders()', teamID);
 		return this.afs
 			.collection('express_teams').doc(teamID)
-			.collection<IFreightOrderDto>('orders',
+			.collection<IExpressOrderDto>('orders',
 				ref => ref
 					.where('status', '==', 'draft')
 					.orderBy('created.at', 'desc'))
@@ -70,6 +71,14 @@ export class FreightOrdersService {
 
 	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {
 		return this.sneatApiService.post('express/order/set_order_counterparty', request);
+	}
+
+	addContainers(request: IAddContainersRequest): Observable<void> {
+		return this.sneatApiService.post('express/order/add_containers', request);
+	}
+
+	deleteContainer(request: IContainerRequest): Observable<void> {
+		return this.sneatApiService.delete('express/order/delete_container', undefined, request);
 	}
 }
 

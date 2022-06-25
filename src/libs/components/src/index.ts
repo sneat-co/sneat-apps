@@ -36,3 +36,4 @@ export * from './lib/selector/selector-interfaces';
 export * from './lib/selector/selector-options';
 export * from './lib/selector/selector-base.service';
 export * from './lib/selector/basic-selector/basic-selector.component';
+export * from './lib/country-input';

@@ -2,22 +2,23 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SelectFromListModule } from '../selector/select-from-list/select-from-list.module';
-import { CountrySelectorComponent } from './country-selector.component';
+import { CountrySelectorModule } from '../country-selector';
+import { CountryInputComponent } from './country-input.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		SelectFromListModule,
+		CountrySelectorModule,
 	],
 	declarations: [
-		CountrySelectorComponent,
+		CountryInputComponent,
 	],
 	exports: [
-		CountrySelectorComponent,
+		CountryInputComponent,
 	],
 })
-export class CountrySelectorModule {
+export class CountryInputModule {
+
 }

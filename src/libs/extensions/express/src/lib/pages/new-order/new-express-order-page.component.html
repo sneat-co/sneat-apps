@@ -7,6 +7,8 @@
 	</ion-toolbar>
 </ion-header>
 
+<sneat-order-route-card [order]="order" (orderChange)="onOrderChanged($event)"></sneat-order-route-card>
+
 <ion-content>
 	<ion-card>
 		<ion-item>
@@ -38,6 +40,10 @@
 		</ion-item>
 	</ion-card>
 
+<!--	<sneat-order-containers-card-->
+<!--		[team]="team"-->
+<!--		[order]="order"-->
+<!--	></sneat-order-containers-card>-->
 
 	<ion-card>
 		<ion-item>
@@ -54,21 +60,6 @@
 		</ion-item>
 	</ion-card>
 
-	<ion-card>
-		<ion-item color="light">
-			<ion-icon name="cube-outline" slot="start" color="medium"></ion-icon>
-			<ion-label color="medium">Containers</ion-label>
-			<ion-buttons slot="end">
-				<ion-button>
-					<ion-icon name="add-outline" slot="start"></ion-icon>
-					<ion-label>Add</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		<ion-item>
-			<ion-label color="medium">No container have been added yet</ion-label>
-		</ion-item>
-	</ion-card>
 
 	<ion-card>
 		<ion-card-content>

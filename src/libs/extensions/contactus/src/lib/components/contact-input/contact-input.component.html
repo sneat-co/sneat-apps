@@ -1,8 +1,11 @@
 <ion-item tappable class="sneat-tiny-end-padding" (click)="openContactSelector($event)">
-	<ion-label color="medium" [position]="labelPosition" slot="start">{{label || 'Contact'}}</ion-label>
-<!--	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>-->
-	<ion-label color="dark">{{contact?.brief?.title}}</ion-label>
+	<ion-label color="medium" position="fixed">{{labelText}}</ion-label>
+	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>
+	<!--	<ion-label color="dark">{{contact?.brief?.title}}</ion-label>-->
 	<ion-buttons slot="end" *ngIf="!readonly">
+		<ion-button color="medium" (click)="reset($event)" *ngIf="contact && canReset">
+			<ion-icon name="close-outline"></ion-icon>
+		</ion-button>
 		<ion-button (click)="openContactSelector($event)">
 			<ion-label>...</ion-label>
 		</ion-button>

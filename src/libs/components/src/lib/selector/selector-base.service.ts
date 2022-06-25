@@ -1,8 +1,9 @@
 import { ModalController, ModalOptions } from '@ionic/angular';
 import { IErrorLogger } from '@sneat/logging';
+import { ISelectItem } from './selector-interfaces';
 import { ISelectorOptions } from './selector-options';
 
-export class SelectorBaseService<T> {
+export class SelectorBaseService<T = ISelectItem> {
 	constructor(
 		private readonly component: any,
 		private readonly errorLogger: IErrorLogger,

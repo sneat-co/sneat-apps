@@ -1,0 +1,23 @@
+<ion-item-group>
+	<ion-item-divider color="light">
+		<ion-label>Container #{{i + 1}}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="medium" (click)="delete($event)">
+				<ion-label>Delete</ion-label>
+				<ion-icon name="close-outline" slot="end"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-item>
+		<ion-label color="medium">Serial #</ion-label>
+		<ion-input [value]="container?.number" placeholder="optional"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium">Type/size</ion-label>
+		<ion-input readonly [value]="container?.type"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium">Gross weight (kg)</ion-label>
+		<ion-input readonly [value]="container?.grossWeightKg"></ion-input>
+	</ion-item>
+</ion-item-group>

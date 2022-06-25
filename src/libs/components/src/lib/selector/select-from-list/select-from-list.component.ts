@@ -18,7 +18,7 @@ import { ISelectItem } from '..';
 })
 export class SelectFromListComponent implements ControlValueAccessor, OnChanges {
 	@Input() value = '';
-	@Input() title = 'Please choose';
+	@Input() label = 'Please choose';
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
 	@Input() items?: ISelectItem[];

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { ContactSelectorService, IContactSelectorOptions } from '../contact-selector/contact-selector.service';
@@ -9,15 +10,23 @@ import { ContactSelectorService, IContactSelectorOptions } from '../contact-sele
 })
 export class ContactInputComponent {
 
+	@Input() canReset = false;
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
-	@Input() label? = 'Contact';
+	@Input() label?: string;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
+	@Input() role?: ContactRole;
 
 
 	@Input() contact?: IContactContext;
 	@Output() contactChange = new EventEmitter<IContactContext>();
 
+
+	get labelText(): string {
+		return this.label
+			|| this.role && `${this.role[0].toUpperCase()}${this.role.substr(1)}`
+			|| 'Contact';
+	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -30,6 +39,13 @@ export class ContactInputComponent {
 		return `/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}` || '';
 	}
 
+	reset(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		this.contact = undefined;
+		this.contactChange.emit(undefined);
+	}
+
 	openContactSelector(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
@@ -40,6 +56,7 @@ export class ContactInputComponent {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			team: this.team,
+			role: this.role,
 		};
 		this.contactSelectorService.selectSingleContactsInModal(selectorOptions)
 			.then(contact => {

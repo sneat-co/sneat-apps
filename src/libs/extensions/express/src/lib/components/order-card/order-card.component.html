@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-item *ngIf="readonly" color="light" [routerLink]="'../order/'+order?.id" class="sneat-tiny-end-padding">
-		<ion-label color="primary">
+		<ion-label color="primary" style="font-size: larger">
 			Order # {{order?.id}} - {{order?.brief?.direction}}
 		</ion-label>
 		<ion-buttons slot="end">
@@ -46,13 +46,48 @@
 				</ion-item>
 			</ion-col>
 		</ion-row>
-		<sneat-express-order-counterparty *ngFor="let role of roles"
-																			[team]="team"
+
+		<sneat-express-order-counterparty [team]="team"
 																			[order]="order"
 																			[readonly]="readonly"
-																			[counterpartyRole]="role"
+																			counterpartyRole="dispatcher"
 																			labelPosition="fixed"
 		></sneat-express-order-counterparty>
+
+		<ion-item-group>
+			<ion-item-divider color="light">
+				<ion-label color="medium">Destination</ion-label>
+			</ion-item-divider>
+			<sneat-express-order-counterparty [team]="team"
+																				[order]="order"
+																				[readonly]="readonly"
+																				counterpartyRole="buyer"
+																				labelPosition="fixed"
+			></sneat-express-order-counterparty>
+			<sneat-express-order-counterparty [team]="team"
+																				[order]="order"
+																				[readonly]="readonly"
+																				counterpartyRole="consignee"
+																				labelPosition="fixed"
+			></sneat-express-order-counterparty>
+		</ion-item-group>
+		<ion-item-group>
+			<ion-item-divider color="light">
+				<ion-label color="medium">Delivery by</ion-label>
+			</ion-item-divider>
+			<sneat-express-order-counterparty [team]="team"
+																				[order]="order"
+																				[readonly]="readonly"
+																				counterpartyRole="carrier"
+																				labelPosition="fixed"
+			></sneat-express-order-counterparty>
+			<sneat-express-order-counterparty [team]="team"
+																				[order]="order"
+																				[readonly]="readonly"
+																				counterpartyRole="shipper"
+																				labelPosition="fixed"
+			></sneat-express-order-counterparty>
+		</ion-item-group>
 	</ion-grid>
 	<!--	<ion-item>-->
 	<!--		<ion-label position="stacked" color="medium">Special instructions</ion-label>-->

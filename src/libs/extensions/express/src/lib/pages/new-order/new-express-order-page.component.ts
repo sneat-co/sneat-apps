@@ -2,16 +2,23 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FreightOrdersService } from '../../services/freight-orders.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ICreateFreightOrderRequest, IFreightOrderDto } from '../../dto/order';
+import { ICreateExpressOrderRequest, IExpressOrderContext, IExpressOrderDto } from '../../dto/order';
 
 @Component({
 	selector: 'sneat-new-express-order-page',
 	templateUrl: 'new-express-order-page.component.html',
 })
 export class NewExpressOrderPageComponent extends TeamBaseComponent {
-	public order: IFreightOrderDto = {
-		status: 'draft',
-		direction: 'export',
+	public order: IExpressOrderContext = {
+		id: '',
+		dto: {
+			status: 'draft',
+			direction: 'export',
+			route: {
+				origin: { id: 'origin', countryID: '' },
+				destination: { id: 'destination', countryID: '' },
+			},
+		},
 	};
 
 	constructor(
@@ -23,20 +30,29 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		console.log('NewExpressOrderPageComponent');
 	}
 
+	onOrderChanged(order: IExpressOrderContext): void {
+		this.order = order;
+		console.log('onOrderChanged():', order);
+	}
+
 	createOrder(): void {
 		if (!this.team?.id) {
 			throw new Error('no team context');
 			return;
 		}
-		const request: ICreateFreightOrderRequest = {
+		if (!this.order?.dto) {
+			throw new Error('!this.order?.dto');
+			return;
+		}
+		const request: ICreateExpressOrderRequest = {
 			teamID: this.team.id,
-			order: this.order,
+			order: this.order.dto,
 		};
 		this.freightOrdersService.createOrder(request).subscribe({
 			next: response => {
-				console.log('order created:', response)
+				console.log('order created:', response);
 			},
 			error: this.errorLogger.logErrorHandler('failed to create new order'),
-		})
+		});
 	}
 }

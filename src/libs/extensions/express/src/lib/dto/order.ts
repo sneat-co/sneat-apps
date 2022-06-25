@@ -32,9 +32,13 @@ export interface IFreightOrderLoad {
 	volumeM3?: number;
 }
 
-export interface IFreightContainer extends IFreightOrderLoad {
-	id: string;
+export interface IFreightContainerBase extends IFreightOrderLoad {
 	type: ContainerType;
+	number: string;
+}
+
+export interface IFreightContainer extends IFreightContainerBase {
+	id: string;
 }
 
 export interface IFreightDeclaration {
@@ -56,28 +60,39 @@ export interface IFreightOrderBrief extends IFreightOrderBase {
 	id: string;
 }
 
-export interface IFreightOrderDto extends IFreightOrderBase {
+export interface ITransitPoint {
+	id?: 'origin' | 'destination';
+	countryID: string;
+}
+
+export interface IOrderRoute {
+	origin?: ITransitPoint;
+	destination?: ITransitPoint;
+}
+
+export interface IExpressOrderDto extends IFreightOrderBase {
 	counterparties?: IOrderCounterparty[];
-	buyer?: IOrderCounterparty;
-	buyerRef?: string;
-	carrier?: IOrderCounterparty;
-	carrierRef?: string;
-	consignee?: IOrderCounterparty;
-	consigneeRef?: string;
-	shipper?: IOrderCounterparty;
-	shipperRef?: string;
-	agent?: IOrderCounterparty;
-	agentRef?: string;
+	route?: IOrderRoute;
+	// buyer?: IOrderCounterparty;
+	// buyerRef?: string;
+	// carrier?: IOrderCounterparty;
+	// carrierRef?: string;
+	// consignee?: IOrderCounterparty;
+	// consigneeRef?: string;
+	// shipper?: IOrderCounterparty;
+	// shipperRef?: string;
+	// agent?: IOrderCounterparty;
+	// agentRef?: string;
 	containers?: IFreightContainer[];
 	declarations?: IFreightDeclaration[];
 	specialInstructions?: string;
 	issued?: IDocIssued;
 }
 
-export type IExpressOrderContext = INavContext<IFreightOrderDto, IFreightOrderDto>;
+export type IExpressOrderContext = INavContext<IExpressOrderDto, IExpressOrderDto>;
 
-export interface ICreateFreightOrderRequest extends ITeamRequest {
-	order: IFreightOrderDto;
+export interface ICreateExpressOrderRequest extends ITeamRequest {
+	order: IExpressOrderDto;
 }
 
 export interface ICreateFreightOrderResponse {
@@ -92,4 +107,12 @@ export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
 	contactID: string;
 	role: string;
 	refNumber?: string;
+}
+
+export interface IAddContainersRequest extends IExpressOrderRequest {
+	containers: IFreightContainerBase[];
+}
+
+export interface IContainerRequest extends IExpressOrderRequest {
+	containerID: string;
 }

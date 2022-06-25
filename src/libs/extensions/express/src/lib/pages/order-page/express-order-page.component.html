@@ -14,38 +14,20 @@
 		<ion-segment-button value="notes">Notes</ion-segment-button>
 	</ion-segment>
 
-	<ion-card>
-		<ion-card-content *ngIf="tab === 'notes'">
+	<ion-card *ngIf="tab === 'notes'">
+		<ion-card-content>
 			<ion-item>
 				<ion-label position="stacked">Visible only to employees of {{team?.brief?.title}}</ion-label>
 				<ion-textarea placeholder="text"></ion-textarea>
 			</ion-item>
-			<ion-button>Save changes</ion-button>
+			<ion-button (click)="saveNotes($event)">Save notes</ion-button>
 		</ion-card-content>
-		<ng-container *ngIf="tab === 'containers'">
-			<ion-item>
-				<ion-label slot="start">01.</ion-label>
-				<ion-select value="20ft" slot="start">
-					<ion-select-option value="20ft">20 foot</ion-select-option>
-					<ion-select-option value="40ft">40 foot</ion-select-option>
-				</ion-select>
-				<ion-input placeholder="ref #"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-label>02.</ion-label>
-				<ion-select value="20ft">
-					<ion-select-option value="20ft">20 foot</ion-select-option>
-					<ion-select-option value="40ft">40 foot</ion-select-option>
-				</ion-select>
-			</ion-item>
-			<ion-item>
-				<ion-label>03.</ion-label>
-				<ion-select value="40ft">
-					<ion-select-option value="20ft">20 foot</ion-select-option>
-					<ion-select-option value="40ft">40 foot</ion-select-option>
-				</ion-select>
-			</ion-item>
-		</ng-container>
-
 	</ion-card>
+
+	<sneat-order-containers-card
+		*ngIf="tab === 'containers'"
+		[team]="team"
+		[order]="order">
+	</sneat-order-containers-card>
+
 </ion-content>

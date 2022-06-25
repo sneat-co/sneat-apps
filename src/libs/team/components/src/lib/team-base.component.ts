@@ -401,5 +401,10 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		// }
 	};
 
+	protected saveNotes(event: Event): void {
+		event.preventDefault();
+		event.stopPropagation()
+		alert('Saving noes is not implemented yet');
+	}
 }
 

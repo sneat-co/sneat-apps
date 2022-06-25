@@ -41,7 +41,7 @@ export class ContactService {
 			f.push({ field: 'status', value: filter.status, operator: '==' });
 		}
 		if (filter?.role) {
-			f.push({ field: 'role', operator: '==', value: filter.role });
+			f.push({ field: 'roles', operator: 'array-contains', value: filter.role });
 		}
 		return this.sfs.watchByFilter(f);
 	}

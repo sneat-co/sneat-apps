@@ -1,0 +1,32 @@
+<ion-card>
+	<ion-item color="primary">
+		<ion-icon name="cube-outline" slot="start"></ion-icon>
+		<ion-label>Containers</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="openNewContainerForm()">
+				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item-divider *ngIf="containers && !containers.length">
+		<ion-label>No container have been added yet</ion-label>
+	</ion-item-divider>
+	<sneat-order-container-form *ngFor="let container of containers; let i = index"
+															[team]="team"
+															[order]="order"
+															[container]="container"
+															[i]="i"
+	></sneat-order-container-form>
+	<!--	<ion-item>-->
+	<!--		<ion-label>20-foot</ion-label>-->
+	<!--		<ion-input type="number" placeholder="how many"></ion-input>-->
+	<!--	</ion-item>-->
+	<!--	<ion-item>-->
+	<!--		<ion-label>40-foot</ion-label>-->
+	<!--		<ion-input type="number" placeholder="how many"></ion-input>-->
+	<!--	</ion-item>-->
+	<!--	<ion-card-content>-->
+	<!--		<ion-button>Create container records</ion-button>-->
+	<!--	</ion-card-content>-->
+</ion-card>

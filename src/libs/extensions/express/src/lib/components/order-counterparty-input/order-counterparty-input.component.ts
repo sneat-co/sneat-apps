@@ -10,6 +10,7 @@ import { IExpressOrderContext, ISetOrderCounterpartyRequest } from '../../dto';
 	templateUrl: './order-counterparty-input.component.html',
 })
 export class OrderCounterpartyInputComponent {
+	@Input() canReset = false;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
@@ -67,23 +68,23 @@ export class OrderCounterpartyInputComponent {
 				if (!this.order?.brief) {
 					return;
 				}
-				switch (this.counterpartyRole) {
-					case 'buyer':
-						this.order.brief.buyer = counterparty;
-						break;
-					case 'shipper':
-						this.order.brief.shipper = counterparty;
-						break;
-					case 'agent':
-						this.order.brief.agent = counterparty;
-						break;
-					case 'consignee':
-						this.order.brief.consignee = counterparty;
-						break;
-					case 'carrier':
-						this.order.brief.carrier = counterparty;
-						break;
-				}
+				// switch (this.counterpartyRole) {
+				// 	case 'buyer':
+				// 		this.order.brief.buyer = counterparty;
+				// 		break;
+				// 	case 'shipper':
+				// 		this.order.brief.shipper = counterparty;
+				// 		break;
+				// 	case 'agent':
+				// 		this.order.brief.agent = counterparty;
+				// 		break;
+				// 	case 'consignee':
+				// 		this.order.brief.consignee = counterparty;
+				// 		break;
+				// 	case 'carrier':
+				// 		this.order.brief.carrier = counterparty;
+				// 		break;
+				// }
 			},
 			error: this.errorLogger.logErrorHandler(`Failed to set order's counterparty`),
 		});

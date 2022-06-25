@@ -44,76 +44,16 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ion-grid class="ion-grid-layout">
-			<ion-row>
-				<ion-col>
-					<sneat-contact-input
-						label="Buyer"
-						[team]="team"
-						[contact]="contactByRole['buyer']"
-						(contactChange)="onFilterContactChanged('buyer', $event)"
-					></sneat-contact-input>
-				</ion-col>
-				<ion-col>
-					<sneat-contact-input
-						label="Carrier"
-						[team]="team"
-						[contact]="contactByRole['carrier']"
-						(contactChange)="onFilterContactChanged('carrier', $event)"
-					></sneat-contact-input>
-				</ion-col>
-			</ion-row>
-			<ion-row>
-				<ion-col>
-					<sneat-contact-input
-						label="Consignee"
-						[team]="team"
-						[contact]="contactByRole['consignee']"
-						(contactChange)="onFilterContactChanged('consignee', $event)"
-					></sneat-contact-input>
-				</ion-col>
-				<ion-col>
-					<sneat-contact-input
-						label="Shipper"
-						[team]="team"
-						[contact]="contactByRole['shipper']"
-						(contactChange)="onFilterContactChanged('shipper', $event)"
-					></sneat-contact-input>
-				</ion-col>
-			</ion-row>
-			<ion-row>
-				<ion-col>
-					<!--					<sneat-country-selector></sneat-country-selector>-->
-					<ion-item>
-						<ion-label color="medium" position="stacked">Country of destination</ion-label>
-						<ion-select [(ngModel)]="countryOrigin" interface="popover">
-							<ion-select-option value="">All</ion-select-option>
-							<ion-select-option value="es">Spain</ion-select-option>
-							<ion-select-option value="ru">Russia</ion-select-option>
-							<ion-select-option value="ua">Ukraine</ion-select-option>
-						</ion-select>
-					</ion-item>
-				</ion-col>
-				<ion-col>
-					<ion-item>
-						<ion-label color="medium" position="stacked">Country of origin</ion-label>
-						<ion-select [(ngModel)]="countryOrigin" interface="popover">
-							<ion-select-option value="">All</ion-select-option>
-							<ion-select-option value="es">Spain</ion-select-option>
-							<ion-select-option value="ru">Russia</ion-select-option>
-							<ion-select-option value="ua">Ukraine</ion-select-option>
-						</ion-select>
-					</ion-item>
-				</ion-col>
-			</ion-row>
-		</ion-grid>
-
-		<!--		<ion-item-divider color="light">-->
-		<!--			<ion-label color="medium">Status</ion-label>-->
-		<!--		</ion-item-divider>-->
-		<!--		<ion-item-divider color="light">-->
-		<!--			<ion-label>Counterparty</ion-label>-->
-		<!--		</ion-item-divider>-->
+		<sneat-contact-input
+			label="Counterparty"
+			[labelPosition]="'stacked'"
+			[canReset]="true"
+			[team]="team"
+			[contact]="contactByRole['consignee']"
+			(contactChange)="onFilterContactChanged('consignee', $event)"
+		></sneat-contact-input>
+		<sneat-country-input label="Destination country" [(countryID)]="countryDestination"></sneat-country-input>
+		<sneat-country-input label="Origin country" [(countryID)]="countryDestination"></sneat-country-input>
 	</ion-card>
 
 	<ion-segment [(ngModel)]="status" color="dark">

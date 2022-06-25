@@ -1,7 +1,19 @@
-<sneat-select-from-list
-	[title]="label"
-	[items]="allItems"
-	[(ngModel)]="itemID"
-	(ngModelChange)="onContactSelected($event)"
-	radioSlot="end"
-></sneat-select-from-list>
+<ion-content>
+
+	<ion-item color="primary" class="sneat-tiny-end-padding">
+		<ion-label *ngIf="!role">Select contact</ion-label>
+		<ion-label *ngIf="role">Select {{role}}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="close($event)">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<sneat-select-from-list
+		[label]="''"
+		[items]="allItems"
+		[(ngModel)]="itemID"
+		(ngModelChange)="onContactSelected($event)"
+		radioSlot="end"
+	></sneat-select-from-list>
+</ion-content>

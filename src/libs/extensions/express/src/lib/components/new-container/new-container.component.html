@@ -1,0 +1,34 @@
+<ion-content>
+	<ion-item color="primary" class="sneat-tiny-end-padding">
+		<ion-label>New container</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="close($event)">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<sneat-select-from-list
+		[(ngModel)]="containerType"
+		label="Container type/size"
+		[isFilterable]="false"
+		[items]="containerTypes"
+		(ngModelChange)="onContainerTypeChanged()"
+	></sneat-select-from-list>
+	<ng-container *ngIf="containerType">
+		<ion-item>
+			<ion-label color="medium">Container #</ion-label>
+			<ion-input #containerNumberInput type="text" [(ngModel)]="containerNumber"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium">Gross weight (kg)</ion-label>
+			<ion-input type="number" [(ngModel)]="grossWeightKg"></ion-input>
+		</ion-item>
+		<div class="ion-padding">
+			<ion-button size="large" [disabled]="isSubmitting" (click)="addContainer($event)">
+				<ion-label *ngIf="!isSubmitting">Add container</ion-label>
+				<ion-label *ngIf="isSubmitting">Adding container...</ion-label>
+				<ion-spinner name="lines-small" slot="end" *ngIf="isSubmitting"></ion-spinner>
+			</ion-button>
+		</div>
+	</ng-container>
+</ion-content>
