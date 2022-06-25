@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription, takeUntil } from 'rxjs';
 import { FreightOrdersService } from '../../services/freight-orders.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IExpressOrderContext } from '../../dto/order';
+import { IOrdersFilter } from '../../services/orders-filter';
 
 @Component({
 	selector: 'sneat-express-orders-page',
 	templateUrl: 'express-orders-page.component.html',
 })
 export class ExpressOrdersPageComponent extends TeamBaseComponent {
-	type?: 'export' | 'import' | 'internal' | '';
-	status: 'active' | 'complete' | 'canceled' = 'active';
-	counterparty = '';
-	carrier = '';
-	shipper = '';
-	countryOrigin = '';
-	countryDestination = '';
 
 	orders?: IExpressOrderContext[];
+
+	private ordersSubscription?: Subscription;
+	private filter?: IOrdersFilter;
 
 	constructor(
 		route: ActivatedRoute,
@@ -30,13 +28,30 @@ export class ExpressOrdersPageComponent extends TeamBaseComponent {
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
 		if (this.team.id) {
-			this.ordersService.watchFreightOrders(this.team.id).subscribe({
+			this.subscribeForOrders();
+		}
+	}
+
+	protected onFilterChanged(filter: IOrdersFilter) {
+		console.log('onFilterChanged()', filter);
+		this.filter = filter;
+		this.subscribeForOrders();
+	}
+
+	private subscribeForOrders() {
+		this.ordersSubscription?.unsubscribe();
+		this.ordersSubscription = this.ordersService
+			.watchFreightOrders(this.team.id, this.filter)
+			.pipe(
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
 				next: orders => {
 					console.log('express_orders', orders);
 					this.orders = orders;
 				},
 				error: this.errorLogger.logErrorHandler('faield to load express orders'),
 			});
-		}
 	}
+
 }

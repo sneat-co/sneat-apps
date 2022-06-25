@@ -53,7 +53,7 @@ export interface IDocIssued {
 
 export interface IFreightOrderBase extends IFreightOrderLoad {
 	status: string;
-	direction: 'import' | 'export' | 'internal';
+	direction: OrderDirection;
 }
 
 export interface IFreightOrderBrief extends IFreightOrderBase {
@@ -70,6 +70,7 @@ export interface IOrderRoute {
 	destination?: ITransitPoint;
 }
 
+export type OrderDirection = 'import' | 'export' | 'internal';
 export interface IExpressOrderDto extends IFreightOrderBase {
 	counterparties?: IOrderCounterparty[];
 	route?: IOrderRoute;

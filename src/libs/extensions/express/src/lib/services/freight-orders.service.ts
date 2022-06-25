@@ -14,6 +14,7 @@ import {
 	IOrderCounterparty,
 	ISetOrderCounterpartyRequest,
 } from '../dto/order';
+import { IOrdersFilter } from './orders-filter';
 
 
 function briefFromDto(id: string, dto: IExpressOrderDto): IFreightOrderBrief {
@@ -51,22 +52,42 @@ export class FreightOrdersService {
 			);
 	}
 
-	private ordersCollection(teamID: string) {
-		return;
-	}
-
-	public watchFreightOrders(teamID: string): Observable<IExpressOrderContext[]> {
-		console.log('watchFreightOrders()', teamID);
+	public watchFreightOrders(teamID: string, filter?: IOrdersFilter): Observable<IExpressOrderContext[]> {
+		console.log('watchFreightOrders()', teamID, filter);
 		return this.afs
 			.collection('express_teams').doc(teamID)
 			.collection<IExpressOrderDto>('orders',
-				ref => ref
-					.where('status', '==', 'draft')
-					.orderBy('created.at', 'desc'))
-			.snapshotChanges()
+				ref => {
+					let query = ref
+						.where('status', '==', filter?.status || 'active')
+						.orderBy('created.at', 'desc');
+
+					let keysVal = '';
+					if (filter?.countryID) {
+						keysVal = 'country='+filter.countryID;
+					}
+					if (filter?.contactID) {
+						if (keysVal) {
+							keysVal += '&';
+						}
+						let contactID = filter.contactID;
+						if (contactID.includes(':')) {
+							contactID = contactID.split(':')[1];
+						}
+						if (contactID) {
+							keysVal += 'contact='+contactID;
+						}
+					}
+					if (keysVal) {
+						query = query.where('keys', 'array-contains', keysVal);
+					}
+					console.log('watchFreightOrders()', teamID, filter, query);
+					return query;
+				}).snapshotChanges()
 			.pipe(
 				map(changes => this.sfs.snapshotChangesToContext(changes)),
 			);
+		;
 	}
 
 	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {

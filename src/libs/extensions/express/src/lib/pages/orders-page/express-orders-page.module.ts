@@ -8,6 +8,7 @@ import { ContactInputModule } from '@sneat/extensions/contactus';
 import { FreightOrdersServiceModule } from '../../services/freight-orders.service';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';
 import { ExpressOrdersPageComponent } from './express-orders-page.component';
+import { OrdersFilterComponent } from './orders-filter/orders-filter.component';
 
 const routes: Routes = [
 	{
@@ -32,6 +33,7 @@ const routes: Routes = [
 	],
 	declarations: [
 		ExpressOrdersPageComponent,
+		OrdersFilterComponent,
 	],
 })
 export class ExpressOrdersPageModule {

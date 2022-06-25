@@ -43,11 +43,6 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// protected readonly willLeave = new Subject<void>();
 	protected defaultBackPage?: string;
 
-	contactByRole: { [role: string]: IContactContext | undefined } = {};
-
-	refNumber = '';
-	isRefNumberChanged = false;
-
 	public selectedMembers?: readonly IMemberContext[];
 
 	protected readonly logError: (e: any, message?: string, options?: ILogErrorOptions) => void;
@@ -99,26 +94,6 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		return this.userService.currentUserId;
 	}
 
-	protected onFilterContactChanged(role: ContactRole, contact: IContactContext): void {
-		this.contactByRole[role] = contact;
-	}
-
-	protected refNumberChanged(event: Event): void {
-		this.isRefNumberChanged = true;
-	}
-
-	protected findByRefNumber(event: Event): void {
-		event.stopPropagation();
-		this.isRefNumberChanged = false;
-	}
-
-	protected clearRefNumber(event: Event): void {
-		event.stopPropagation();
-		this.refNumber = '';
-		setTimeout(() => {
-			this.isRefNumberChanged = false;
-		}, 10);
-	}
 
 	public get defaultBackUrl(): string {
 		const t = this.teamContext;

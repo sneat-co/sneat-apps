@@ -1,0 +1,49 @@
+<div class="ion-padding-horizontal">
+	<ion-segment [(ngModel)]="direction" (ionChange)="onDirectionChanged($event)">
+		<ion-segment-button value="">All</ion-segment-button>
+		<ion-segment-button value="export">Export</ion-segment-button>
+		<ion-segment-button value="import">Import</ion-segment-button>
+		<ion-segment-button value="internal">Internal</ion-segment-button>
+	</ion-segment>
+</div>
+
+<ion-card>
+	<ion-item color="light" class="sneat-no-end-padding">
+		<ion-label style="font-weight: bold">Filter
+			<ion-text *ngIf="refNumber" color="medium"> | Ref #</ion-text>
+		</ion-label>
+		<ion-input placeholder="ref #" [(ngModel)]="refNumber" (ionChange)="refNumberChanged($event)"></ion-input>
+		<ion-buttons slot="end" *ngIf="refNumber || isRefNumberChanged">
+			<ion-button *ngIf="isRefNumberChanged"
+									fill="solid"
+									color="primary"
+									(click)="findByRefNumber($event)">
+				<ion-label>Find</ion-label>
+			</ion-button>
+			<ion-button *ngIf="refNumber" color="danger"
+									title="Clear filter"
+									(click)="clearRefNumber($event)">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<sneat-contact-input
+		label="Counterparty"
+		[labelPosition]="'stacked'"
+		[canReset]="true"
+		[team]="team"
+		[contact]="contactByRole['consignee']"
+		(contactChange)="onContactChanged('consignee', $event)"
+	></sneat-contact-input>
+	<sneat-country-input label="Country"
+											 [(countryID)]="countryID"
+											 (countryIDChange)="emitFilterChange()"
+	></sneat-country-input>
+</ion-card>
+
+<ion-segment [(ngModel)]="status" color="dark" (ionChange)="emitFilterChange()">
+	<ion-segment-button value="draft">Drafts</ion-segment-button>
+	<ion-segment-button value="active">Active</ion-segment-button>
+	<ion-segment-button value="complete">Complete</ion-segment-button>
+	<ion-segment-button value="canceled">Canceled</ion-segment-button>
+</ion-segment>
