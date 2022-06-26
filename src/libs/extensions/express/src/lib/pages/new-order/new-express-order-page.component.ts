@@ -51,6 +51,8 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		this.freightOrdersService.createOrder(request).subscribe({
 			next: response => {
 				console.log('order created:', response);
+				this.navController.navigateRoot(['..', 'order', response.order.id], { relativeTo: this.route })
+					.catch(this.errorLogger.logErrorHandler('failed to navigate to order'));
 			},
 			error: this.errorLogger.logErrorHandler('failed to create new order'),
 		});
