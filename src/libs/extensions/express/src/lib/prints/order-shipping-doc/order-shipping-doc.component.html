@@ -1,0 +1,117 @@
+<!--<style>-->
+<!--	table {-->
+<!--		border-collapse: collapse;-->
+<!--	}-->
+
+<!--	table, th, td {-->
+<!--		border: 1px solid;-->
+<!--	}-->
+
+<!--	td, th {-->
+<!--		padding: 0.2em;-->
+<!--	}-->
+<!--</style>-->
+<!--<table style="border: 1px solid black">-->
+<!--	<tbody>-->
+<!--	<tr>-->
+<!--		<td style="width: 50%">-->
+<!--			Shipper<pre>FIORANTINE STONE S.A.-->
+<!--PARTIDA LA BUITRERA S/N-->
+<!--03670 MONFORTE DEL CID, ALICANTE-->
+<!--SPAIN</pre>-->
+<!--		</td>-->
+<!--		<td style="padding: 0">-->
+<!--			<table>-->
+<!--				<tr>-->
+<!--					<td>Ref number:<br></td>-->
+<!--					<td>Buyer Ref:<br></td>-->
+<!--					<td>Export Declaration Number:<br></td>-->
+<!--				</tr>-->
+<!--			</table>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td>-->
+<!--			Consignee-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	</tbody>-->
+<!--</table>-->
+
+
+
+<div class="printableArea">
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col>
+				<ion-card>
+					<ion-card-content>
+						Shipper
+						<pre style="margin: 0">FIORANTINE STONE S.A.
+PARTIDA LA BUITRERA S/N
+03670 MONFORTE DEL CID, ALICANTE
+SPAIN</pre>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+			<ion-col>
+				<ion-card>
+					<ion-grid class="ion-grid-layout">
+						<ion-row>
+							<ion-col>
+								<ion-item>
+									<ion-label position="stacked" color="medium">Reference</ion-label>
+									<ion-input value="ABC1233"></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col>
+								<ion-item>
+									<ion-label position="stacked" color="medium">Buyer Reference</ion-label>
+									<ion-input value="ABC1233"></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col>
+								<ion-item>
+									<ion-label position="stacked" color="medium">Export Declaration #</ion-label>
+									<ion-input value="ABC1233"></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-card>
+					<ion-card-content>
+						Consignee<br>
+						<pre style="margin: 0">{{consignee?.title}}
+{{consignee?.address}}</pre>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+			<ion-col>
+				<ion-card>
+					<ion-card-content>
+						Carrier
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-card>
+		<ion-item-divider>
+			<ion-label>Containers</ion-label>
+		</ion-item-divider>
+		<ion-item *ngFor="let container of order?.dto?.containers">
+			<ion-label>{{container.type}} - {{container.number}}</ion-label>
+		</ion-item>
+	</ion-card>
+<!--	<ion-card>-->
+<!--		<ion-card-content>-->
+<!--			{{order?.dto?.counterparties|json}}-->
+<!--		</ion-card-content>-->
+<!--	</ion-card>-->
+</div>

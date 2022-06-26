@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
-import { OrdersListModule } from '../../components/orders-list/orders-list.module';
 import { ExpressOrderPageComponent } from './express-order-page.component';
 
 const routes: Routes = [

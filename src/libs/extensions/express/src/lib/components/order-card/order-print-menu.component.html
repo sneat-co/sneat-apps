@@ -1,0 +1,12 @@
+<ion-item
+	(click)="print($event, 'shipping-doc')"
+>
+	<ion-icon name="boat-outline" slot="start"></ion-icon>
+	<ion-label>
+		<a
+			routerLink="/space/{{team?.type}}/{{team?.id}}/order/{{order?.id}}/print/shipping-doc"
+			fragment="print"
+			target="_blank"
+		>Shipping document</a>
+	</ion-label>
+</ion-item>

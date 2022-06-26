@@ -1,5 +1,5 @@
 <ion-app>
-	<ion-split-pane contentId="main" (ionSplitPaneVisible)="visibilityChanged($event)">
+	<ion-split-pane #ionSplitPane contentId="main" (ionSplitPaneVisible)="visibilityChanged($event)">
 		<!--  the side menu  -->
 		<ion-menu contentId="main" #menu>
 			<ion-header>
