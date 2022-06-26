@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { OrderRouteCardModule } from '@sneat/extensions/express';
 import { OrderContainersModule } from '../../components/order-containers-card';
+import { OrderFormModule } from '../../components/order-form.module';
 import { FreightOrdersServiceModule } from '../../services/freight-orders.service';
 import { NewExpressOrderPageComponent } from './new-express-order-page.component';
 
@@ -20,6 +21,7 @@ import { NewExpressOrderPageComponent } from './new-express-order-page.component
 		FreightOrdersServiceModule,
 		OrderRouteCardModule,
 		OrderContainersModule,
+		OrderFormModule,
 	],
 	declarations: [
 		NewExpressOrderPageComponent,

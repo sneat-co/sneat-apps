@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { FreightOrdersService } from '../../services/freight-orders.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateExpressOrderRequest, IExpressOrderContext, IExpressOrderDto } from '../../dto/order';
@@ -21,6 +22,8 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		},
 	};
 
+	readonly = false;
+
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
@@ -31,8 +34,8 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	}
 
 	onOrderChanged(order: IExpressOrderContext): void {
+		console.log('NewExpressOrderPageComponent.onOrderChanged():', order);
 		this.order = order;
-		console.log('onOrderChanged():', order);
 	}
 
 	createOrder(): void {
@@ -54,5 +57,9 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			},
 			error: this.errorLogger.logErrorHandler('failed to create new order'),
 		});
+	}
+
+	cancel(): void {
+		this.navController.pop().catch(this.errorLogger.logErrorHandler('failed to cancel new order'));
 	}
 }

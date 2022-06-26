@@ -1,9 +1,9 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ContactRoleExpress } from '@sneat/dto';
 import { FreightOrdersService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, ISetOrderCounterpartyRequest } from '../../dto';
+import { IExpressOrderContext, IOrderCounterparty, ISetOrderCounterpartyRequest } from '../../dto';
 
 @Component({
 	selector: 'sneat-express-order-counterparty-input',
@@ -14,8 +14,12 @@ export class OrderCounterpartyInputComponent {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
-	@Input() order?: IExpressOrderContext;
 	@Input() counterpartyRole: ContactRoleExpress | '' = '';
+
+	@Input() order?: IExpressOrderContext;
+	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
+
+	@Output() counterpartyChange = new EventEmitter<IOrderCounterparty>();
 
 	readonly label = () => this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1);
 
@@ -28,9 +32,9 @@ export class OrderCounterpartyInputComponent {
 					// type: 'person',
 					id: c.contactID,
 					title: c.title,
-					name: {full: c.title},
+					name: { full: c.title },
 				},
-			}
+			};
 			return contact;
 		}
 		return undefined;
@@ -44,7 +48,7 @@ export class OrderCounterpartyInputComponent {
 	}
 
 	protected onContactChanged(contact: IContactContext): void {
-		console.log('onContactChanged(), contact:', contact);
+		console.log('onContactChanged(),', this.counterpartyRole, contact);
 		if (!this.team) {
 			console.error('onContactChanged(): !this.team');
 			return;
@@ -53,8 +57,81 @@ export class OrderCounterpartyInputComponent {
 			console.error('onContactChanged(): !this.counterpartyRole');
 			return;
 		}
+		let order = this.order;
+		if (!order) {
+			return;
+		}
+		let orderDto = order?.dto;
+
+		if (!orderDto) {
+			console.error('onContactChanged(): !this.order.dto');
+			return;
+		}
+
 		if (!this.order?.id) {
-			console.error('onContactChanged(): !this.order?.id', this.order);
+			const newCounterparty: IOrderCounterparty = {
+				contactID: contact.id,
+				role: this.counterpartyRole,
+				title: contact?.brief?.title || contact.id,
+				countryID: contact?.brief?.countryID || '--',
+			};
+			const i = orderDto.counterparties?.findIndex(c => c.role === this.counterpartyRole) ?? -1;
+			if (i >= 0) {
+				if (orderDto.counterparties) {
+					orderDto = {
+						...orderDto, counterparties: [
+							...orderDto.counterparties.slice(0, i),
+							newCounterparty,
+							...orderDto.counterparties.slice(i+1),
+						],
+					};
+				}
+			} else {
+				if (orderDto) {
+					orderDto = {
+						...orderDto,
+						counterparties: orderDto.counterparties
+							? [...orderDto.counterparties, newCounterparty]
+							: [newCounterparty],
+					};
+				}
+			}
+			if (!orderDto.route) {
+				orderDto = { ...orderDto, route: {} };
+			}
+			switch (this.counterpartyRole) {
+				case 'consignee':
+				case 'notify':
+					if (orderDto.route) {
+						orderDto = {
+							...orderDto, route: {
+								...orderDto.route,
+								destination: {
+									countryID: newCounterparty.countryID,
+								},
+							},
+						};
+					}
+					break;
+				case 'carrier':
+				case 'shipper':
+					if (orderDto.route) {
+						orderDto = {
+							...orderDto, route: {
+								...orderDto.route,
+								origin: {
+									countryID: newCounterparty.countryID,
+								},
+							},
+						};
+					}
+					break;
+			}
+			if (order) {
+				order = { ...order, dto: orderDto };
+			}
+			this.emitOrder(order);
+			this.counterpartyChange.emit(newCounterparty);
 			return;
 		}
 		const request: ISetOrderCounterpartyRequest = {
@@ -88,5 +165,10 @@ export class OrderCounterpartyInputComponent {
 			},
 			error: this.errorLogger.logErrorHandler(`Failed to set order's counterparty`),
 		});
+	}
+
+	private emitOrder(order: IExpressOrderContext): void {
+		this.order = order;
+		this.orderChange.emit(order);
 	}
 }

@@ -1,24 +1,23 @@
 import { INavContext } from '@sneat/core';
 import { ContactRoleExpress } from '@sneat/dto';
-import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamRequest } from '@sneat/team/models';
 
 export interface IFreightAddress {
-	countryID: string;
-	city?: string;
-	zip?: string;
-	text: string;
+	readonly countryID: string;
+	readonly city?: string;
+	readonly zip?: string;
+	readonly text: string;
 }
 
 export interface IOrderCounterparty {
-	contactID: string;
-	role: ContactRoleExpress;
-	refNumber?: string;
-	countryID: string;
-	title: string;
-	phone?: string;
-	email?: string;
-	address?: string;
+	readonly contactID: string;
+	readonly role: ContactRoleExpress;
+	readonly refNumber?: string;
+	readonly countryID: string;
+	readonly title: string;
+	readonly phone?: string;
+	readonly email?: string;
+	readonly address?: string;
 }
 
 export type ContainerType = 'unknown' | '20ft' | '40ft';
@@ -26,54 +25,54 @@ export type ContainerType = 'unknown' | '20ft' | '40ft';
 export type FreightFlag = 'hazardous' | 'letter_of_credit';
 
 export interface IFreightOrderLoad {
-	flags?: FreightFlag[];
-	grossWeightKg?: number;
-	pallets?: number;
-	volumeM3?: number;
+	readonly flags?: ReadonlyArray<FreightFlag>;
+	readonly grossWeightKg?: number;
+	readonly pallets?: number;
+	readonly volumeM3?: number;
 }
 
 export interface IFreightContainerBase extends IFreightOrderLoad {
-	type: ContainerType;
-	number: string;
+	readonly type: ContainerType;
+	readonly number: string;
 }
 
 export interface IFreightContainer extends IFreightContainerBase {
-	id: string;
+	readonly id: string;
 }
 
 export interface IFreightDeclaration {
-	number: string;
-	type: 'export' | 'import';
+	readonly number: string;
+	readonly type: 'export' | 'import';
 }
 
 export interface IDocIssued {
-	at?: string;
-	on?: string;
+	readonly at?: string;
+	readonly on?: string;
 }
 
 export interface IFreightOrderBase extends IFreightOrderLoad {
-	status: string;
-	direction: OrderDirection;
+	readonly status: string;
+	readonly direction: OrderDirection;
 }
 
 export interface IFreightOrderBrief extends IFreightOrderBase {
-	id: string;
+	readonly id: string;
 }
 
 export interface ITransitPoint {
-	id?: 'origin' | 'destination';
-	countryID: string;
+	readonly id?: 'origin' | 'destination';
+	readonly countryID: string;
 }
 
 export interface IOrderRoute {
-	origin?: ITransitPoint;
-	destination?: ITransitPoint;
+	readonly origin?: ITransitPoint;
+	readonly destination?: ITransitPoint;
 }
 
 export type OrderDirection = 'import' | 'export' | 'internal';
 export interface IExpressOrderDto extends IFreightOrderBase {
-	counterparties?: IOrderCounterparty[];
-	route?: IOrderRoute;
+	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
+	readonly route?: IOrderRoute;
 	// buyer?: IOrderCounterparty;
 	// buyerRef?: string;
 	// carrier?: IOrderCounterparty;
@@ -84,36 +83,36 @@ export interface IExpressOrderDto extends IFreightOrderBase {
 	// shipperRef?: string;
 	// agent?: IOrderCounterparty;
 	// agentRef?: string;
-	containers?: IFreightContainer[];
-	declarations?: IFreightDeclaration[];
-	specialInstructions?: string;
-	issued?: IDocIssued;
+	readonly containers?: ReadonlyArray<IFreightContainer>;
+	readonly declarations?: IFreightDeclaration[];
+	readonly specialInstructions?: string;
+	readonly issued?: IDocIssued;
 }
 
 export type IExpressOrderContext = INavContext<IExpressOrderDto, IExpressOrderDto>;
 
 export interface ICreateExpressOrderRequest extends ITeamRequest {
-	order: IExpressOrderDto;
+	readonly order: IExpressOrderDto;
 }
 
 export interface ICreateFreightOrderResponse {
-	order: { id: string };
+	readonly order: { id: string };
 }
 
 export interface IExpressOrderRequest extends ITeamRequest {
-	orderID: string;
+	readonly orderID: string;
 }
 
 export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
-	contactID: string;
-	role: string;
-	refNumber?: string;
+	readonly contactID: string;
+	readonly role: string;
+	readonly refNumber?: string;
 }
 
 export interface IAddContainersRequest extends IExpressOrderRequest {
-	containers: IFreightContainerBase[];
+	readonly containers: IFreightContainerBase[];
 }
 
 export interface IContainerRequest extends IExpressOrderRequest {
-	containerID: string;
+	readonly containerID: string;
 }

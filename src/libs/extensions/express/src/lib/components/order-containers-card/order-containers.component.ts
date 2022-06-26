@@ -25,7 +25,7 @@ export class OrderContainersComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
-	containers?: IFreightContainer[];
+	containers?: ReadonlyArray<IFreightContainer>;
 
 	constructor(
 		private readonly modalController: ModalController,

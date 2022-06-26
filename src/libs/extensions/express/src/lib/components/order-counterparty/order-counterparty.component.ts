@@ -1,5 +1,4 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IonLabel } from '@ionic/angular';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContactRoleExpress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -12,18 +11,21 @@ import { FreightOrdersService } from '../../services';
 })
 export class OrderCounterpartyComponent implements OnChanges {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
-	@Input() public readonly = false;
+	@Input() readonly = false;
+	@Input() useColumns = true;
 	@Input() team?: ITeamContext;
-	@Input() order?: IExpressOrderContext;
 	@Input() counterpartyRole: ContactRoleExpress | '' = '';
 
-	protected counterparty?: IOrderCounterparty;
+	@Input() order?: IExpressOrderContext;
+	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
 
-	protected refNumber = '';
+	counterparty?: IOrderCounterparty;
 
-	protected isRefNumberChanged = false;
+	refNumber = '';
 
-	protected savingRefNumber = false;
+	isRefNumberChanged = false;
+
+	savingRefNumber = false;
 
 	readonly label = () => this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1);
 
@@ -42,9 +44,37 @@ export class OrderCounterpartyComponent implements OnChanges {
 		}
 	}
 
+	protected onOrderChanged(order: IExpressOrderContext): void {
+		console.log('OrderCounterpartyComponent.onOrderChanged():', order);
+		this.emitOrder(order);
+	}
+
+	private emitOrder(order: IExpressOrderContext): void {
+		this.order = order
+		this.orderChange.emit(order);
+	}
+
 	protected onRefNumberChanged(event: Event): void {
 		console.log('onRefNumberChanged(), event:', event);
 		this.isRefNumberChanged = (this.counterparty?.refNumber || '') !== this.refNumber;
+		if (this.counterparty) {
+			this.counterparty = {
+				...this.counterparty,
+				refNumber: this.refNumber,
+			};
+			if (this.order?.dto) {
+				const i = this.order.dto?.counterparties?.findIndex(c => c.role === this.counterpartyRole);
+				this.order = {
+					...this.order,
+					dto: {
+						...this.order.dto,
+						counterparties: i !== undefined && i >= 0 && this.order.dto?.counterparties
+							? [...this.order.dto.counterparties.slice(0, i), this.counterparty, ...this.order.dto.counterparties.slice(i + 1)]
+							: [...this.order.dto.counterparties || [], this.counterparty],
+					},
+				};
+			}
+		}
 	}
 
 	protected saveRefNumber(event: Event): void {
@@ -86,7 +116,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 			},
 			error: err => {
 				this.savingRefNumber = false;
-				this.errorLogger.logError(err,'Failed to save reference number')
+				this.errorLogger.logError(err, 'Failed to save reference number');
 			},
 		});
 	}
