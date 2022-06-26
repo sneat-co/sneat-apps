@@ -41,11 +41,9 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	createOrder(): void {
 		if (!this.team?.id) {
 			throw new Error('no team context');
-			return;
 		}
 		if (!this.order?.dto) {
 			throw new Error('!this.order?.dto');
-			return;
 		}
 		const request: ICreateExpressOrderRequest = {
 			teamID: this.team.id,
