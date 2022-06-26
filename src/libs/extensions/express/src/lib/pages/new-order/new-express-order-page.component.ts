@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { FreightOrdersService } from '../../services/freight-orders.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ICreateExpressOrderRequest, IExpressOrderContext, IExpressOrderDto } from '../../dto/order';
+import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order';
+import { FreightOrdersService } from '../../services/freight-orders.service';
 
 @Component({
 	selector: 'sneat-new-express-order-page',
