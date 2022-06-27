@@ -6,7 +6,7 @@ import {
 	FreightOrdersService,
 	IAddContainersRequest,
 	IExpressOrderContext,
-} from '@sneat/extensions/express';
+} from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 
