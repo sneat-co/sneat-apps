@@ -33,7 +33,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		if (!this.contact?.id) {
 			return throwError(() => new Error('no contact context'));
 		}
-		return this.contactService.watchById(this.contact?.id);
+		return this.contactService.watchById(this.team.id, this.contact?.id);
 	}
 
 	override setItemContext(item: IContactContext): void {

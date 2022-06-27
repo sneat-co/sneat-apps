@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { ContactServiceModule } from '@sneat/extensions/contactus';
+import { ExpressTeamServiceModule } from '../..';
 import { OrderRouteCardModule } from '../../components/order-route-card/order-route-card.module';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
@@ -22,6 +24,9 @@ import { NewExpressOrderPageComponent } from './new-express-order-page.component
 		OrderRouteCardModule,
 		OrderContainersModule,
 		OrderFormModule,
+		ExpressTeamServiceModule,
+		ContactServiceModule,
+
 	],
 	declarations: [
 		NewExpressOrderPageComponent,

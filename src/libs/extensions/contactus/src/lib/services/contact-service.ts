@@ -29,8 +29,8 @@ export class ContactService {
 		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, 'team_contacts', 'teamID');
 	}
 
-	watchById(contactID: string): Observable<IContactContext> {
-		return throwError(() => 'not implemented');
+	watchById(teamID: string, contactID: string): Observable<IContactContext> {
+		return this.sfs.watchByID(`${teamID}:${contactID}`);
 	}
 
 	watchContactsByRole(team: ITeamContext, filter?: IContactsFilter): Observable<IContactContext[]> {

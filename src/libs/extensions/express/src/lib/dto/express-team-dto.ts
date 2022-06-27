@@ -2,7 +2,7 @@ import { INavContext } from '@sneat/core';
 import { ITeamRequest } from '@sneat/team/models';
 
 export interface IExpressTeamDto {
-	readonly contactID?: string;
+	readonly contactID: string;
 }
 
 export interface IExpressTeamBrief extends IExpressTeamDto {

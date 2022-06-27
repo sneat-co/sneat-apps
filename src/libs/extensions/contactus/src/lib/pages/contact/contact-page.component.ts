@@ -39,7 +39,7 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 			}
 			if (contactId) {
 				this.contactsService
-					.watchById(contactId)
+					.watchById(this.team.id, contactId)
 					.pipe(
 						this.takeUntilNeeded(),
 					)
