@@ -43,7 +43,10 @@ export class LoginPageComponent {
 	public to?: string;
 	public action?: Action; // TODO: document possible values?
 
+	public appTitle = 'Sneat.app';
+
 	constructor(
+		@Inject(APP_INFO) private appInfo: IAppInfo,
 		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		@Inject(LoginEventsHandler) @Optional() private readonly loginEventsHandler: ILoginEventsHandler,
@@ -55,6 +58,7 @@ export class LoginPageComponent {
 		// private readonly toastController: ToastController,
 	) {
 		console.log('LoginPageComponent.constructor()');
+		this.appTitle = appInfo.appTitle;
 		if (location.hash.startsWith('#/')) {
 			this.redirectTo = location.hash.substring(1);
 		}
