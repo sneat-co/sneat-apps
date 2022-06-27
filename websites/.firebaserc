@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "sneat-eu"
+  },
+  "targets": {
+    "sneat-eu": {
+      "hosting": {
+        "sneat-express": [
+          "sneat-express"
+        ]
+      }
+    }
   }
 }

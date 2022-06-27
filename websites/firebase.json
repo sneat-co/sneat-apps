@@ -1,16 +1,34 @@
 {
-  "hosting": {
-    "public": "sneat.app",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/pwa/**",
-        "destination": "/pwa/index.html"
-      }
-    ]
-  }
+  "hosting": [
+    {
+      "target": "sneat-eu",
+      "public": "sneat.app",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/pwa/**",
+          "destination": "/pwa/index.html"
+        }
+      ]
+    },
+    {
+      "target": "sneat-express",
+      "public": "freights.app",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/pwa/**",
+          "destination": "/pwa/index.html"
+        }
+      ]
+    }
+  ]
 }
