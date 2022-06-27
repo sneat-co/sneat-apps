@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { ContactRoleExpress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderCounterparty, ISetOrderCounterpartyRequest } from '../../dto/order';
+import { IExpressOrderContext, IOrderCounterparty, ISetOrderCounterpartyRequest } from '../../dto/order-dto';
 import { FreightOrdersService } from '../../services';
 
 @Component({

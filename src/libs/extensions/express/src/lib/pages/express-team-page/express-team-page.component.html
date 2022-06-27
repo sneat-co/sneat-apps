@@ -2,16 +2,30 @@
 	<ion-toolbar color="light">
 		<ion-title>
 			{{team?.brief?.title}}
-			<ion-text color="medium">@ freights.app</ion-text>
+			<ion-text color="medium">@ Freights.app</ion-text>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-card>
+	<ion-card *ngIf="!expressTeam">
+		<ion-card-content>
+			<ion-spinner name="line-small"></ion-spinner>
+			Loading...
+		</ion-card-content>
+	</ion-card>
+
+	<ion-card *ngIf="expressTeam?.dto?.contactID">
 		<ion-item-divider>
 			<ion-label>Company</ion-label>
 		</ion-item-divider>
-		<sneat-express-team-menu-items [team]="team"></sneat-express-team-menu-items>
+		<sneat-express-team-menu-items  [team]="team"></sneat-express-team-menu-items>
 	</ion-card>
+
+	<ng-container *ngIf="expressTeam && !expressTeam.dto?.contactID">
+		<p class="ion-margin">To start working please setup your company data.</p>
+		<sneat-express-team-settings [team]="team"></sneat-express-team-settings>
+
+	</ng-container>
+
 </ion-content>

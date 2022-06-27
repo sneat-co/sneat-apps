@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order';
+import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order-dto';
 import { FreightOrdersService } from '../../services/freight-orders.service';
 
 @Component({

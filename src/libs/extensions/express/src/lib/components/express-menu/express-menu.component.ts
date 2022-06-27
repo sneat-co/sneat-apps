@@ -11,10 +11,6 @@ import { ITeamContext } from '@sneat/team/models';
 export class ExpressMenuComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
-	public team?: ITeamContext = {
-		id: 'fastline',
-	};
-
 	public authState?: ISneatAuthState;
 
 	constructor(

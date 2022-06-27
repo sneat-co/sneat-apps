@@ -1,8 +1,8 @@
-import { IonInput, IonRadioGroup } from '@ionic/angular';
+import { IonInput, IonRadioGroup, IonTextarea } from '@ionic/angular';
 import { IErrorLogger } from '@sneat/logging';
 
 export function createSetFocusToInput(errorLogger: IErrorLogger) {
-	return (input?: IonInput, delay = 100): void => {
+	return (input?: IonInput | IonTextarea, delay = 100): void => {
 		console.log('setFocusToInput()', input?.name, delay);
 		if (!input) {
 			console.error('can not set focus to undefined input');

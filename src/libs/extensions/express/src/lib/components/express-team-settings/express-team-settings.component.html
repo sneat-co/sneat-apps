@@ -1,0 +1,26 @@
+<ion-card>
+	<form [formGroup]="form">
+		<sneat-country-selector
+			label="Your company country of registration"
+			[country]="countryID.value || ''"
+			(countryChange)="onCountryChanged($event)"
+		></sneat-country-selector>
+		<ion-item *ngIf="countryID">
+			<ion-label placeholder="optional" color="medium">VAT #</ion-label>
+			<ion-input #vatNumberInput [formControl]="vatNumber"></ion-input>
+		</ion-item>
+		<ion-item *ngIf="orderNumberPrefix">
+			<ion-label position="stacked" placeholder="optional" color="medium">Order reference # prefix</ion-label>
+			<ion-input [formControl]="orderNumberPrefix"></ion-input>
+		</ion-item>
+		<ion-item *ngIf="countryID">
+			<ion-label position="stacked">Address</ion-label>
+			<ion-textarea [formControl]="address" placeholder="required"></ion-textarea>
+		</ion-item>
+	</form>
+</ion-card>
+
+<div class="ion-margin">
+	<ion-button *ngIf="countryID" (click)="submit()">Save changes</ion-button>
+</div>
+

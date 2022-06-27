@@ -3,7 +3,7 @@ import { PopoverController } from '@ionic/angular';
 import { ContactRoleExpress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext } from '../../dto/order';
+import { IExpressOrderContext } from '../../dto/order-dto';
 import { OrderPrintMenuComponent } from './order-print-menu.component';
 
 @Component({

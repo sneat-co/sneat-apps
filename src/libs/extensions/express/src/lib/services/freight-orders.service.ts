@@ -1,7 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
-import firebase from 'firebase/compat';
 import { map, Observable } from 'rxjs';
 import {
 	IAddContainersRequest,
@@ -13,7 +12,7 @@ import {
 	IFreightOrderBrief,
 	IOrderCounterparty,
 	ISetOrderCounterpartyRequest,
-} from '../dto/order';
+} from '../dto/order-dto';
 import { IOrdersFilter } from './orders-filter';
 
 

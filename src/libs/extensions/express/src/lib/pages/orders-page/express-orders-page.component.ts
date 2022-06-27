@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription, takeUntil } from 'rxjs';
 import { FreightOrdersService } from '../../services/freight-orders.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IExpressOrderContext } from '../../dto/order';
+import { IExpressOrderContext } from '../../dto/order-dto';
 import { IOrdersFilter } from '../../services/orders-filter';
 
 @Component({
