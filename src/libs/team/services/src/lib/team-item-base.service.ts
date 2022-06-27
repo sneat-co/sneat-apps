@@ -25,18 +25,19 @@ export class TeamItemBaseService {
 		const query = this.afs
 			.collection<Dto>(path,
 				ref =>
-					field === 'teamIDs' ? ref.where('teamIDs', 'array-contains', team.id) : ref.where('teamID', '==', team.id)
+					field === 'teamIDs' ? ref.where('teamIDs', 'array-contains', team.id) : ref.where('teamID', '==', team.id),
 			);
-		const result = query.get()
+		const result = query.snapshotChanges()
 			.pipe(
-				map(changes => {
-					console.log(`team item changes (${path}): `, changes.docs);
-					return changes.docs.map(d => {
-						const dto = d.data();
-						const { id } = d;
+				map(changeActions => {
+					console.log(`team item changeActions (${path}): `, changeActions);
+					return changeActions.map(changeAction => {
+						const doc = changeAction.payload.doc;
+						const dto = doc.data();
+						const { id } = doc;
 						const brief: Brief = { id, ...dto } as unknown as Brief;
-						const asset: ITeamItemContext<Brief, Dto> = { id: d.id, team, dto, brief };
-						return asset;
+						const c: ITeamItemContext<Brief, Dto> = { id: doc.id, team, dto, brief };
+						return c;
 					});
 				}),
 			);
@@ -68,7 +69,7 @@ export class TeamItemBaseService {
 					return item;
 				}),
 				tap(() => {
-					this.teamService.getTeam({id: request.teamID}).subscribe({
+					this.teamService.getTeam({ id: request.teamID }).subscribe({
 						next: team => {
 							if (team.dto) {
 								if (!team.dto?.numberOf) {

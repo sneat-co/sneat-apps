@@ -1,0 +1,32 @@
+<ion-card>
+	<sneat-country-selector
+		[(country)]="countryID"
+		[disabled]="disabled"
+		(countryChange)="onInputChange()"
+	></sneat-country-selector>
+</ion-card>
+
+<ng-container *ngIf="countryID">
+	<ion-card>
+		<ion-item-divider color="primary">
+			Company details
+		</ion-item-divider>
+		<ion-item>
+			<ion-label color="medium">Name</ion-label>
+			<ion-input required placeholder="required"
+								 [(ngModel)]="title"
+								 [disabled]="disabled"
+								 (ionChange)="onInputChange()"
+			></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label position="stacked">Address</ion-label>
+			<ion-textarea
+				[(ngModel)]="address"
+				[disabled]="disabled"
+				(ionChange)="onInputChange()"
+			></ion-textarea>
+		</ion-item>
+	</ion-card>
+
+</ng-container>

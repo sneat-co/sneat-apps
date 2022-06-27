@@ -37,7 +37,7 @@ export interface IPhone {
 }
 
 export interface IPersonBase {
-	readonly name: IName;
+	readonly name?: IName;
 	readonly countryID?: string;
 	readonly title?: string;
 	readonly userID?: string;

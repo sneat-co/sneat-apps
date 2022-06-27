@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CountrySelectorModule, SelectFromListModule } from '@sneat/components';
-import { ContactServiceModule } from '@sneat/extensions/contactus';
+import { ContactServiceModule, LocationFormModule } from '@sneat/extensions/contactus';
 import { NewExpressCompanyPageComponent } from './new-express-company-page.component';
 
 @NgModule({
@@ -12,8 +12,9 @@ import { NewExpressCompanyPageComponent } from './new-express-company-page.compo
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		SelectFromListModule,
 		ContactServiceModule,
+		LocationFormModule,
+		SelectFromListModule,
 		RouterModule.forChild([
 			{
 				path: '',

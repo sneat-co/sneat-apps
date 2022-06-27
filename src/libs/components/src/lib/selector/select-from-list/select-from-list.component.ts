@@ -61,6 +61,12 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges 
 		this.onChange(this.value);
 	}
 
+	onSelectChanged(event: Event): void {
+		console.log('onSelectChanged', event);
+		// this.value = (event as CustomEvent).detail['value'] as string;
+		this.onChange(this.value);
+	}
+
 	onChange = (_: any) => void 0;
 
 	onTouched = () => void 0;

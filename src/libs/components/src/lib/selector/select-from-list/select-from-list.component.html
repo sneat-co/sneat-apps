@@ -1,6 +1,6 @@
 <ion-item *ngIf="value">
 	<ion-label color="medium">{{label}}</ion-label>
-	<ion-select *ngIf="value" interface="popover" [(ngModel)]="value" (ionChange)="onChange($event)">
+	<ion-select *ngIf="value" interface="popover" [(ngModel)]="value" (ionChange)="onSelectChanged($event)">
 		<ion-select-option *ngFor="let item of items" [value]="item.id">
 			{{item.emoji}}
 			{{item.title}}

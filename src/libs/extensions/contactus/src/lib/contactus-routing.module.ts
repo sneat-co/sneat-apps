@@ -11,14 +11,20 @@ export const contactusRoutes: Route[] = [
 	},
 	{
 		path: 'new-contact',
-		loadChildren: () => import('./pages/new-contact/new-contact-page.module')
+		loadChildren: () => import('./pages')
 			.then(m => m.NewContactPageModule),
 		// ...guardRoute,
 	},
 	{
 		path: 'contact/:contactID',
-		loadChildren: () => import('./pages/contact/contact-page.module')
+		loadChildren: () => import('./pages')
 			.then(m => m.ContactPageModule),
+		// ...guardRoute,
+	},
+	{
+		path: 'contact/:contactID/new-location',
+		loadChildren: () => import('./pages')
+			.then(m => m.NewLocationPageModule),
 		// ...guardRoute,
 	},
 	// {

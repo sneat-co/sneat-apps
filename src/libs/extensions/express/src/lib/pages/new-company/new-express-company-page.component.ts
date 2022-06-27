@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
+import { IContactDto } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateContactCompanyRequest } from '@sneat/team/models';
@@ -21,10 +22,9 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 	];
 
 	contactType = '';
-	countryID = '';
-	title = '';
-	address = '';
 	isCreating = false;
+
+	contactDto: IContactDto = {};
 
 	constructor(
 		route: ActivatedRoute,
@@ -44,15 +44,21 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 			});
 	}
 
+	onContactDtoChanged(contactDto: IContactDto): void {
+		console.log('contactDto', contactDto);
+		this.contactDto = contactDto;
+	}
+
 	create(): void {
-		if (!this.title) {
-			alert('title is required field');
+		if (!this.contactDto.title) {
+			alert('Contact title is a required field');
+			return;
 		}
 		const request: ICreateContactCompanyRequest = excludeEmpty({
 			company: excludeEmpty({
-				countryID: this.countryID,
-				title: this.title.trim(),
-				address: this.address.trim(),
+				countryID: this.contactDto.countryID || '--',
+				title: this.contactDto.title?.trim() || '',
+				address: this.contactDto.address?.trim() || undefined,
 				roles: [this.contactType],
 			}),
 			roles: [this.contactType],
@@ -60,8 +66,13 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 		});
 		this.isCreating = true;
 		this.contactService.createContact(request).subscribe({
-			next: value => {
-				this.navController.pop().catch(this.errorLogger.logErrorHandler('Failed to navigate back'));
+			next: contact => {
+				console.log('created contact:', contact);
+				this.navController.pop().catch(() => {
+					this.navController
+						.navigateBack(['contacts'], { relativeTo: this.route })
+						.catch(this.errorLogger.logErrorHandler('failed to navigate back to contacts page'));
+				});
 			},
 			error: err => {
 				this.errorLogger.logError(err, 'Failed to create contact');

@@ -41,7 +41,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private readonly contactsService: ContactService,
+		private readonly contactService: ContactService,
 	) {
 		super('ContactsPageComponent', route, params, '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
@@ -191,7 +191,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (!this.team) {
 			return;
 		}
-		this.contactsSubscription = this.contactsService.watchTeamContacts(this.team)
+		this.contactsSubscription = this.contactService.watchTeamContacts(this.team)
 			.pipe(
 				this.takeUntilNeeded(),
 			)

@@ -1,6 +1,6 @@
 import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
+import { IonInput, NavController } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -51,6 +51,7 @@ export class ExpressTeamSettingsComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly expressTeamService: ExpressTeamService,
+		private readonly navController: NavController,
 	) {
 	}
 

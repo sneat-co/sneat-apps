@@ -18,7 +18,11 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { TeamService } from './team.service';
 
 export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
-export const memberContextFromBrief = (brief: IMemberBrief, team: ITeamContext): IMemberContext => ({ id: brief.id, brief, team });
+export const memberContextFromBrief = (brief: IMemberBrief, team: ITeamContext): IMemberContext => ({
+	id: brief.id,
+	brief,
+	team,
+});
 
 @Injectable({
 	providedIn: 'root',
@@ -51,7 +55,9 @@ export class MemberService {
 
 	public createMember(request: ICreateTeamMemberRequest): Observable<IMemberContext> {
 		console.log(`MemberService.addMember()`, request);
-		request = {...request, name: trimNames(request.name)};
+		if (request.name) {
+			request = { ...request, name: trimNames(request.name) };
+		}
 		const processAddMemberResponse = (
 			response: IAddTeamMemberResponse | IErrorResponse,
 		) => {
@@ -60,7 +66,7 @@ export class MemberService {
 			}
 			const okResponse = response as IAddTeamMemberResponse;
 			if (!okResponse.member) {
-				this.errorLogger.logError('okResponse.member is undefined', undefined, {show: false});
+				this.errorLogger.logError('okResponse.member is undefined', undefined, { show: false });
 			}
 			const member = okResponse.member;
 			return this.teamService.getTeam({ id: request.teamID }).pipe(
@@ -72,7 +78,7 @@ export class MemberService {
 						}
 						if (!members.some(m => m.id === member.id)) {
 							members.push(member.brief);
-							team = {...team, dto: {...team.dto, members}};
+							team = { ...team, dto: { ...team.dto, members } };
 							this.teamService.onTeamUpdated(team);
 						}
 					}
@@ -93,11 +99,11 @@ export class MemberService {
 			let member: IMemberContext;
 			const memberBrief = team?.dto?.members?.find(m => m.id === memberId);
 			if (!memberBrief) {
-				member = {id: memberId, brief: null, dto: null}
+				member = { id: memberId, brief: null, dto: null };
 			} else {
-				member = {id: memberBrief.id, brief: memberBrief};
+				member = { id: memberBrief.id, brief: memberBrief };
 			}
-			return {team, member}
+			return { team, member };
 		};
 		return this.teamService.watchTeam(team)
 			.pipe(
