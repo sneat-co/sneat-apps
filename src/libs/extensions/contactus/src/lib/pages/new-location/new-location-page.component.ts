@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IContactDto } from '@sneat/dto';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactBasePage } from '../contact-base-page';
 
@@ -8,6 +9,9 @@ import { ContactBasePage } from '../contact-base-page';
 	templateUrl: './new-location-page.component.html',
 })
 export class NewLocationPageComponent extends ContactBasePage {
+
+	contactDto: IContactDto = {type: 'location'};
+
 	constructor(
 		route: ActivatedRoute,
 		params: ContactComponentBaseParams,

@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ContactServiceModule } from '@sneat/extensions/contactus';
+import { SneatPipesModule } from '@sneat/components';
+import { ContactServiceModule, LocationFormModule } from '@sneat/extensions/contactus';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactBasePage } from '../contact-base-page';
 import { NewLocationPageComponent } from './new-location-page.component';
@@ -16,8 +17,10 @@ import { NewLocationPageComponent } from './new-location-page.component';
 			{
 				path: '',
 				component: NewLocationPageComponent,
-			}
+			},
 		]),
+		LocationFormModule,
+		SneatPipesModule,
 	],
 	providers: [ContactComponentBaseParams],
 	declarations: [NewLocationPageComponent],

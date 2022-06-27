@@ -9,8 +9,9 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 })
 export class LocationFormComponent {
 
+	@Input() label = 'Location details';
 	@Input() disabled = false;
-	@Input() contactDto: IContactDto = {};
+	@Input() contactDto?: IContactDto;
 
 	@Output() readonly contactDtoChange = new EventEmitter<IContactDto>();
 
@@ -24,6 +25,9 @@ export class LocationFormComponent {
 	}
 
 	onInputChange(): void {
+		if (!this.contactDto) {
+			throw new Error('onInputChange(): !this.contactDto');
+		}
 		this.contactDto = excludeEmpty({
 			...this.contactDto,
 			title: this.title,

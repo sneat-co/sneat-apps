@@ -9,7 +9,7 @@
 <ng-container *ngIf="countryID">
 	<ion-card>
 		<ion-item-divider color="primary">
-			Company details
+			{{label}}
 		</ion-item-divider>
 		<ion-item>
 			<ion-label color="medium">Name</ion-label>
@@ -25,6 +25,7 @@
 				[(ngModel)]="address"
 				[disabled]="disabled"
 				(ionChange)="onInputChange()"
+				[required]="contactDto?.type === 'location'"
 			></ion-textarea>
 		</ion-item>
 	</ion-card>

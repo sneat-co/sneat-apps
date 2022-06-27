@@ -29,7 +29,7 @@ export class OrderCounterpartyInputComponent {
 			const contact: IContactContext = {
 				id: c.contactID,
 				brief: {
-					// type: 'person',
+					type: 'company',
 					id: c.contactID,
 					title: c.title,
 					name: { full: c.title },

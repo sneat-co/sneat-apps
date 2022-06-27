@@ -3,7 +3,10 @@ import { IContact2Asset, IContact2Member } from './dto-contact2';
 import { IPersonRecord } from './dto-models';
 import { IPersonBase } from './dto-person';
 
+export type ContactType = 'person' | 'company' | 'location';
+
 export interface IContactBase extends IPersonBase {
+	type: ContactType;
 	// title: string; // Mandatory title
 	roles?: string[];
 }

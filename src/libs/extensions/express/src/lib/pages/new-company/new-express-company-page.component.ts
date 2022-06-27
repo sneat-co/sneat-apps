@@ -24,7 +24,7 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 	contactType = '';
 	isCreating = false;
 
-	contactDto: IContactDto = {};
+	contactDto: IContactDto = { type: 'company' };
 
 	constructor(
 		route: ActivatedRoute,

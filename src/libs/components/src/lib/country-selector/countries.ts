@@ -6,6 +6,8 @@ export interface ICountry {
 
 export const countries: ICountry[] = [
 	{ id: 'au', title: 'Australia', emoji: '🇦🇺' },
+	{ id: 'ee', title: 'Estonia', emoji: '🇪🇪' },
+	{ id: 'lv', title: 'Latvia', emoji: '🇱🇻' },
 	{ id: 'ie', title: 'Ireland', emoji: '🇮🇪' },
 	{ id: 'nz', title: 'New Zealand', emoji: '🇳🇿' },
 	{ id: 'ru', title: 'Russia', emoji: '🇷🇺' },

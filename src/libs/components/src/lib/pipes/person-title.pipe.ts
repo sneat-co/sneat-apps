@@ -9,6 +9,6 @@ export function personName(name?: IName): string | undefined {
 @Pipe({ name: 'personTitle' })
 export class PersonTitle implements PipeTransform {
 	transform(p?: IPersonContext, shortTitle?: string): string {
-		return shortTitle || personName(p?.brief?.name) || p?.brief?.title || p?.id || 'NO TITLE';
+		return shortTitle || p?.dto?.title || p?.brief?.title || personName(p?.brief?.name) || p?.id || 'NO TITLE';
 	}
 }
