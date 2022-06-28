@@ -50,11 +50,16 @@ export interface IRejectPersonalInviteRequest extends ITeamRequest {
 
 
 export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
-	memberType: MemberType;
+	type: 'person';
+	countryID: string;
+	roles: string[];
+	// memberType: MemberType;
 	message?: string;
 }
 
 export interface ICreateContactBaseRequest extends ITeamRequest {
+	parentContactID?: string;
+	roles?: string[];
 	assetIDs?: IContact2Asset[];
 	memberIDs?: IContact2Member[];
 }
@@ -63,18 +68,31 @@ export interface ICreateContactPersonRequest extends ICreateContactBaseRequest {
 	person?: IRelatedPerson;
 }
 
-export interface ICreateCompanyRequest {
+export interface ICreateContactLocationRequest extends ICreateContactBaseRequest {
+	location?: ICreateLocationRequest;
+}
+
+export interface ICreateLocationBaseRequest {
 	title: string;
 	countryID: string;
+}
+
+export interface ICreateLocationRequest extends ICreateLocationBaseRequest {
+	address: string;
+}
+
+export interface ICreateCompanyRequest extends ICreateLocationBaseRequest {
 	address?: string;
 }
 
 export interface ICreateContactCompanyRequest extends ICreateContactBaseRequest {
-	roles?: string[];
 	company?: ICreateCompanyRequest;
 }
 
-export type ICreateContactRequest = ICreateContactPersonRequest | ICreateContactCompanyRequest;
+export type ICreateContactRequest =
+	ICreateContactPersonRequest |
+	ICreateContactCompanyRequest |
+	ICreateContactLocationRequest;
 
 
 export interface IBy {

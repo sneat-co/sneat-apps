@@ -1,5 +1,5 @@
 <ion-content>
-	<ion-item color="primary" class="sneat-tiny-end-padding">
+	<ion-item color="dark" class="sneat-tiny-end-padding">
 		<ion-label>New container</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="close($event)">
@@ -25,8 +25,9 @@
 		</ion-item>
 		<div class="ion-padding">
 			<ion-button size="large" [disabled]="isSubmitting" (click)="addContainer($event)">
-				<ion-label *ngIf="!isSubmitting">Add container</ion-label>
-				<ion-label *ngIf="isSubmitting">Adding container...</ion-label>
+				<ion-icon name="save-outline" slot="start"></ion-icon>
+				<ion-label *ngIf="!isSubmitting">Create container record</ion-label>
+				<ion-label *ngIf="isSubmitting">Creating container record...</ion-label>
 				<ion-spinner name="lines-small" slot="end" *ngIf="isSubmitting"></ion-spinner>
 			</ion-button>
 		</div>

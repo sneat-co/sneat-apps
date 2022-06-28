@@ -16,6 +16,7 @@ export interface ITeamMeetings {
 
 export interface ITeamDto extends ITotalsHolder, IListGroupsHolder {
 	readonly type: TeamType;
+	readonly countryID: string;
 	readonly title: string;
 	readonly userIDs: string[];
 	readonly memberIds?: string[];

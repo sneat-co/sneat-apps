@@ -1,6 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
-		<ion-back-button slot="start" defaultHref="/space/{{team?.type}}/{{team?.id}}/contact/{{contact?.id}}"></ion-back-button>
+		<ion-back-button slot="start"
+										 defaultHref="/space/{{team?.type}}/{{team?.id}}/contact/{{contact?.id}}"></ion-back-button>
 		<ion-title *ngIf="!contact">New location</ion-title>
 		<ion-title *ngIf="contact">New location @ {{contact|personTitle}}</ion-title>
 	</ion-toolbar>
@@ -10,11 +11,15 @@
 
 	<sneat-location-form
 		[(contactDto)]="contactDto"
+		[disabled]="isCreating"
 	></sneat-location-form>
 
 	<ion-card>
 		<ion-card-content>
-			<ion-button size="large" [disabled]="!contactDto.title || !contactDto.address">
+			<ion-button size="large"
+									[disabled]="isCreating || !contactDto.title || !contactDto.address"
+									(click)="submit()"
+			>
 				<ion-icon name="save-outline" slot="start"></ion-icon>
 				<ion-label>Create location record</ion-label>
 			</ion-button>
