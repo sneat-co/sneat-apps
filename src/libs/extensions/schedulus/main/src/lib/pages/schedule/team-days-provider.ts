@@ -4,7 +4,7 @@ import { dateToIso, INavContext } from '@sneat/core';
 import { IHappeningBrief, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem, RecurringSlots, TeamDay, wd2 } from '@sneat/extensions/schedulus/shared';
 import { IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { IHappeningContext, ITeamContext, ITeamItemContext } from '@sneat/team/models';
 import { HappeningService, ScheduleDayService, TeamItemService } from '@sneat/team/services';
 import {
 	BehaviorSubject,
@@ -101,7 +101,7 @@ const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
 	}
 	team.dto.recurringHappenings.forEach(brief => {
 		brief.slots?.forEach(rs => {
-			const happening: IHappeningContext = { id: brief.id, brief, team: this.team };
+			const happening: IHappeningContext = { id: brief.id, brief, team};
 			const slotItems: ISlotItem[] = slotItemsFromRecurringSlot(happening, rs);
 			slotItems.forEach(si => {
 				if (si.wd) {
@@ -282,7 +282,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 			return;
 		}
 		this._team.dto.recurringHappenings.forEach(brief => {
-			this.processRecurring({ id: brief.id, brief });
+			this.processRecurring({ id: brief.id, brief, team: this._team || {id: ''} });
 		});
 	}
 
@@ -299,7 +299,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		return $recurrings;
 	}
 
-	private processRecurring(recurring: INavContext<IHappeningBrief, IHappeningDto>): void {
+	private processRecurring(recurring: ITeamItemContext<IHappeningBrief, IHappeningDto>): void {
 		if (this.memberId && (!recurring.dto?.participants || !recurring?.dto.participants.find(p => p.type === 'member' && p.id === this.memberId))) {
 			return;
 		}

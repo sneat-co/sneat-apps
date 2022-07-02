@@ -144,7 +144,10 @@ This operation can NOT be undone.`)) {
 		}
 		this.deleting = true;
 
-		const happening: IHappeningContext = this.happening.team ? this.happening : { ...this.happening, team: this.team };
+		const happening: IHappeningContext = this.happening.team ? this.happening : {
+			...this.happening,
+			team: this.team || { id: '' },
+		};
 
 		this.happeningService
 			.deleteHappening(happening)

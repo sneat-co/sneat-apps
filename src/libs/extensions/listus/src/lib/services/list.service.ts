@@ -58,9 +58,9 @@ export class ListService {
 		return `${type}:${shortID}`;
 	}
 
-	public watchList(teamID: string, listType: ListType, listID: string): Observable<IListContext> {
+	public watchList(team: ITeamContext, listType: ListType, listID: string): Observable<IListContext> {
 		const id = this.getFullListID(listType, listID);
-		const doc = this.listDocRef(teamID, id);
+		const doc = this.listDocRef(team.id, id);
 		return doc.snapshotChanges()
 			.pipe(
 				map(snapshot => {
@@ -70,7 +70,7 @@ export class ListService {
 						dto = snapshot.payload.data();
 					}
 					// console.log(`watchListById(id) =>`, snapshot.payload.exists, dto, snapshot);
-					return this.onListSnapshot(listID, listType, dto);
+					return this.onListSnapshot(team, listID, listType, dto);
 				}),
 			);
 	}
@@ -108,20 +108,21 @@ export class ListService {
 			}), { itemIDs: request.itemIDs });
 	}
 
-	public getListById(teamID: string, listType: ListType, listID: string): Observable<IListContext | null> {
+	public getListById(team: ITeamContext, listType: ListType, listID: string): Observable<IListContext | null> {
 		const id = this.getFullListID(listType, listID);
-		return this.listDocRef(teamID, id).get().pipe(
+		return this.listDocRef(team.id, id).get().pipe(
 			map(snapshot => {
 				const { exists } = snapshot;
-				return this.onListSnapshot(listID, listType, exists ? snapshot.data() || null : null);
+				return this.onListSnapshot(team, listID, listType, exists ? snapshot.data() || null : null);
 			}),
 		);
 	}
 
 
-	private readonly onListSnapshot = (id: string, type: ListType, dto: IListDto | null): IListContext => ({
+	private readonly onListSnapshot = (team: ITeamContext, id: string, type: ListType, dto: IListDto | null): IListContext => ({
 		id, dto,
 		brief: dto === null ? null : { ...dto, id, type },
+		team,
 	});
 
 	private listDocRef(teamID: string, listID: string): AngularFirestoreDocument<IListDto> {

@@ -38,12 +38,12 @@ export abstract class HappeningBasePage extends ScheduleBasePage {
 		if (this.happening?.id === id) {
 			return;
 		}
-		this.setHappening({ id }, 'url');
+		this.setHappening({ id, team: this.team }, 'url');
 		this.watchHappeningChanges(id);
 	};
 
 	private watchHappeningChanges(id: string): void {
-		this.params.happeningService.watchHappeningByID(id)
+		this.params.happeningService.watchHappeningByID(this.team, id)
 			.pipe(
 				this.takeUntilNeeded(),
 				takeUntil(this.happeningID$),

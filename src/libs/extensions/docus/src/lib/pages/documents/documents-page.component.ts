@@ -34,7 +34,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 	loadDocuments() {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
-			this.documentService.watchDocumentsByTeam(this.team?.id)
+			this.documentService.watchDocumentsByTeam(this.team)
 				.pipe(
 					this.takeUntilNeeded(),
 				)

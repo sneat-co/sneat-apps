@@ -100,11 +100,11 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 
 	private watchMember = (memberID: string): void => {
 		this.memberChanged.next();
-		this.member = { id: memberID };
+		this.member = { id: memberID, team: this.team };
 		this.membersService.watchMember(this.team, memberID)
 			.subscribe({
-					next: result => {
-						this.member = result.member;
+					next: member => {
+						this.member = member;
 					},
 					error: this.errorLogger.logErrorHandler('failed in watching member'),
 				},
@@ -127,7 +127,7 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 			dto,
 		};
 
-		this.documentService.createDocument(request)
+		this.documentService.createDocument(this.team, request)
 			.subscribe({
 				next: this.onDocCreated,
 				error: (err: any) => {

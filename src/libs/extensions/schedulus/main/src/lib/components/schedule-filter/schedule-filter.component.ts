@@ -81,7 +81,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
-		this.members = this.team?.dto?.members?.map(m => ({id: m.id, brief: m}));
+		this.members = this.team?.dto?.members?.map(m => ({id: m.id, brief: m, team: this.team || {id: ''}}));
 	}
 
 	clearFilter(event?: Event): void {

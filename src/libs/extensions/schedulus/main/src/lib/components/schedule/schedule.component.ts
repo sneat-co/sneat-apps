@@ -11,6 +11,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { SneatApiService } from '@sneat/api';
 import { dateToIso, localDateToIso } from '@sneat/core';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
@@ -62,8 +63,15 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		happeningService: HappeningService,
 		scheduleDayService: ScheduleDayService,
 		afs: AngularFirestore,
+		sneatApiService: SneatApiService,
 	) {
-		this.teamDaysProvider = new TeamDaysProvider(this.errorLogger, happeningService, scheduleDayService, afs);
+		this.teamDaysProvider = new TeamDaysProvider(
+			this.errorLogger,
+			happeningService,
+			scheduleDayService,
+			afs,
+			sneatApiService,
+		);
 
 		filterService.filter
 			.pipe(takeUntil(this.destroyed))
@@ -184,7 +192,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// };
 
 
-	readonly onSlotClicked = (args: {slot: ISlotItem; event: Event}): void => {
+	readonly onSlotClicked = (args: { slot: ISlotItem; event: Event }): void => {
 		console.log('ScheduleComponent.onSlotClicked()', args);
 		if (!this.team) {
 			throw new Error('!team');
@@ -249,7 +257,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.allRecurrings = this.team?.dto?.recurringHappenings?.map(brief => {
 			const { id } = brief;
 			const prev = prevAll?.find(p => p.id === id);
-			const result: IHappeningWithUiState = { id, brief: brief, state: prev?.state || {} };
+			const result: IHappeningWithUiState = {
+				id,
+				brief: brief,
+				state: prev?.state || {},
+				team: this.team || { id: '' },
+			};
 			return result;
 		}) || [];
 		this.recurrings = this.filterRecurrings(this.filter || emptyScheduleFilter);
