@@ -31,7 +31,8 @@ export class ExpressTeamService {
 
 	public watchExpressTeamByID(teamID: string): Observable<IExpressTeamContext> {
 		return this.afs
-			.collection<IExpressTeamDto>('express_teams').doc(teamID)
+			.collection('teams').doc(teamID)
+			.collection<IExpressTeamDto>('modules').doc('express')
 			.snapshotChanges()
 			.pipe(
 				map(docSnapshot => {

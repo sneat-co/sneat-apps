@@ -1,11 +1,11 @@
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatFirestoreService } from '@sneat/api';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
 import { IHappeningBrief, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem, RecurringSlots, TeamDay, wd2 } from '@sneat/extensions/schedulus/shared';
 import { IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService, ScheduleDayService } from '@sneat/team/services';
+import { HappeningService, ScheduleDayService, TeamItemService } from '@sneat/team/services';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,
@@ -85,7 +85,7 @@ const slotItemsFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): I
 		timing: { start: rs.start, end: rs.end },
 	};
 	if (rs.weekdays?.length) {
-		return rs.weekdays.map(wd => ({...si, wd}));
+		return rs.weekdays.map(wd => ({ ...si, wd }));
 	}
 	return [si];
 };
@@ -101,7 +101,7 @@ const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
 	}
 	team.dto.recurringHappenings.forEach(brief => {
 		brief.slots?.forEach(rs => {
-			const happening: IHappeningContext = { id: brief.id, brief };
+			const happening: IHappeningContext = { id: brief.id, brief, team: this.team };
 			const slotItems: ISlotItem[] = slotItemsFromRecurringSlot(happening, rs);
 			slotItems.forEach(si => {
 				if (si.wd) {
@@ -124,7 +124,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	// At the moment tracks schedule of a single team
 	// but probably will track multiple teams at once.
 
-	private readonly sfsRecurrings: SneatFirestoreService<IHappeningBrief, IHappeningDto>;
+	private readonly recurringsTeamItemService: TeamItemService<IHappeningBrief, IHappeningDto>;
 	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};
 	private readonly recurringByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
 	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
@@ -157,18 +157,14 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		private readonly happeningService: HappeningService,
 		private readonly scheduleDayService: ScheduleDayService,
 		afs: AngularFirestore,
+		sneatApiService: SneatApiService,
 		// private readonly regularService: IRegularHappeningService,
 		// private readonly singleService: ISingleHappeningService,
 	) {
 		console.log('TeamDaysProvider.constructor()');
 		// super();
-		this.sfsRecurrings = new SneatFirestoreService<IHappeningBrief, IHappeningDto>(
-			'recurring_happenings', afs, (id: string, dto: IHappeningDto) => {
-				const brief: IHappeningBrief = {
-					id, ...dto,
-				};
-				return brief;
-			},
+		this.recurringsTeamItemService = new TeamItemService<IHappeningBrief, IHappeningDto>(
+			'recurring_happenings', afs, sneatApiService,
 		);
 	}
 
@@ -290,9 +286,9 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		});
 	}
 
-	private watchRecurringsByTeamID(teamID: string): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
+	private watchRecurringsByTeamID(team: ITeamContext): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
 		console.log('TeamDaysProvider.loadRegulars()');
-		const $recurrings = this.sfsRecurrings.watchByTeamID(teamID)
+		const $recurrings = this.recurringsTeamItemService.watchTeamItems(team)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
 				tap(recurrings => {

@@ -87,6 +87,7 @@ export interface IAssetDtoGroupCounts {
 }
 
 export interface IAssetDtoGroup extends IWithTeamIDs, ITitledRecord, ITotalsHolder {
+	id: string;
 	order: number;
 	desc?: string;
 	categoryId?: AssetType;
@@ -94,4 +95,3 @@ export interface IAssetDtoGroup extends IWithTeamIDs, ITitledRecord, ITotalsHold
 }
 
 export type IAssetGroupContext = INavContext<IAssetDtoGroup, IAssetDtoGroup>;
-

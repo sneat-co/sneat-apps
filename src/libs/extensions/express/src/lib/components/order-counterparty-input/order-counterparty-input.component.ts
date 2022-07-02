@@ -24,9 +24,13 @@ export class OrderCounterpartyInputComponent {
 	readonly label = () => this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1);
 
 	get contact(): IContactContext | undefined {
+		if (!this.team) {
+			throw new Error('Team is not set');
+		}
 		const c = this.order?.dto?.counterparties?.find(c => c.role === this.counterpartyRole);
 		if (c) {
 			const contact: IContactContext = {
+				team: this.team,
 				id: c.contactID,
 				brief: {
 					type: 'company',

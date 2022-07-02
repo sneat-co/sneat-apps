@@ -89,7 +89,11 @@ export interface IExpressOrderDto extends IFreightOrderBase {
 	readonly issued?: IDocIssued;
 }
 
-export type IExpressOrderContext = INavContext<IExpressOrderDto, IExpressOrderDto>;
+export interface IExpressOrderBrief extends IFreightOrderBase {
+	id: string;
+}
+
+export type IExpressOrderContext = INavContext<IExpressOrderBrief, IExpressOrderDto>;
 
 export interface ICreateExpressOrderRequest extends ITeamRequest {
 	readonly order: IExpressOrderDto;

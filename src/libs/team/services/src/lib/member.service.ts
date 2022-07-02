@@ -15,20 +15,22 @@ import {
 } from '@sneat/team/models';
 import { Observable } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
+import { TeamItemService } from './team-item.service';
 import { TeamService } from './team.service';
 
-export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
+// export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
 export const memberContextFromBrief = (brief: IMemberBrief, team: ITeamContext): IMemberContext => ({
 	id: brief.id,
 	brief,
 	team,
 });
 
+
 @Injectable({
 	providedIn: 'root',
 })
 export class MemberService {
-	private readonly sfs: SneatFirestoreService<IMemberBrief, IMemberDto>;
+	private readonly teamItemService: TeamItemService<IMemberBrief, IMemberDto>;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -36,7 +38,7 @@ export class MemberService {
 		private readonly teamService: TeamService,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.sfs = new SneatFirestoreService<IMemberBrief, IMemberDto>('team_members', afs, memberBriefFromDto);
+		this.teamItemService = new TeamItemService<IMemberBrief, IMemberDto>('members', afs, sneatApiService);
 	}
 
 	public acceptPersonalInvite(
@@ -94,16 +96,16 @@ export class MemberService {
 	public watchMember(
 		team: ITeamRef,
 		memberId: string,
-	): Observable<{ team: ITeamContext; member: IMemberContext }> {
+	): Observable<IMemberContext> {
 		const findMember = (team: ITeamContext) => {
 			let member: IMemberContext;
 			const memberBrief = team?.dto?.members?.find(m => m.id === memberId);
 			if (!memberBrief) {
-				member = { id: memberId, brief: null, dto: null };
+				member = { team, id: memberId, brief: null, dto: null };
 			} else {
-				member = { id: memberBrief.id, brief: memberBrief };
+				member = { team, id: memberBrief.id, brief: memberBrief };
 			}
-			return { team, member };
+			return member;
 		};
 		return this.teamService.watchTeam(team)
 			.pipe(
@@ -111,8 +113,8 @@ export class MemberService {
 			);
 	}
 
-	watchMembersByTeamID<IMemberDto>(teamID: string): Observable<IMemberContext[]> {
-		console.log('MemberService.watchMembersByTeamID()', teamID);
-		return this.sfs.watchByTeamID(teamID, 'teamID');
+	watchTeamMembers<IMemberDto>(team: ITeamContext, status: 'active' | 'archived' = 'active'): Observable<IMemberContext[]> {
+		console.log('MemberService.watchMembersByTeamID()', team.id);
+		return this.teamItemService.watchTeamItems(team, [{ field: 'status', operator: '==', value: status }]);
 	}
 }

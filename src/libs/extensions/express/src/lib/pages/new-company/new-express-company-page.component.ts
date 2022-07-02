@@ -55,6 +55,7 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 			return;
 		}
 		const request: ICreateContactCompanyRequest = excludeEmpty({
+			type: 'company',
 			company: excludeEmpty({
 				countryID: this.contactDto.countryID || '--',
 				title: this.contactDto.title?.trim() || '',
@@ -65,7 +66,7 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 			teamID: this.team.id,
 		});
 		this.isCreating = true;
-		this.contactService.createContact(request).subscribe({
+		this.contactService.createContact(this.team, request).subscribe({
 			next: contact => {
 				console.log('created contact:', contact);
 				this.navController.pop().catch(() => {

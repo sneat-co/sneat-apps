@@ -1,17 +1,19 @@
-import { HttpParams } from '@angular/common/http';
 import { Inject, Injectable, NgModule } from '@angular/core';
-import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { IFilter, SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import {
-	happeningBriefFromDto, HappeningStatus,
+	HappeningStatus,
 	IHappeningBrief,
 	IHappeningDto,
-	IHappeningSlot, IScheduleDayDto, validateHappeningDto, WeekdayCode2,
+	IHappeningSlot,
+	validateHappeningDto,
+	WeekdayCode2,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamRequest } from '@sneat/team/models';
-import { delay, map, Observable, of, tap, throwError } from 'rxjs';
-import { TeamItemBaseService } from './team-item-base.service';
+import { IHappeningContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
+import { map, Observable, tap, throwError } from 'rxjs';
+import { TeamItemService } from './team-item.service';
 
 export interface ICreateHappeningRequest {
 	teamID: string;
@@ -52,7 +54,7 @@ export type IDeleteSlotRequest = ISlotRequest
 
 export type ICancelHappeningRequest = ISlotRequest
 
-function processHappeningContext(h: IHappeningContext, teamID?: string): IHappeningContext {
+function processHappeningContext(h: IHappeningContext, team: ITeamContext): IHappeningContext {
 	if (h.dto) {
 		try {
 			validateHappeningDto(h.dto);
@@ -60,23 +62,29 @@ function processHappeningContext(h: IHappeningContext, teamID?: string): IHappen
 			console.warn(`Received invalid happening DTO (id=${h.id}: ${e}`);
 		}
 	}
-	if (!h.team && teamID) {
-		h = { ...h, team: { id: teamID } };
+	if (!h.team && team) {
+		h = { ...h, team };
 	}
 	return h;
 }
 
 @Injectable()
 export class HappeningService {
-	private readonly sfs: SneatFirestoreService<IHappeningBrief, IHappeningDto>;
+	private readonly teamItemService: TeamItemService<IHappeningBrief, IHappeningDto>;
+
+	static statusFilter(statuses: HappeningStatus[]): IFilter {
+		const operator = statuses?.length === 1 ? '==' : 'in';
+		const value = statuses.length === 1 ? statuses[0] : statuses;
+		return { field: 'status', operator, value };
+	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly teamItemBaseService: TeamItemBaseService,
+		afs: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.sfs = new SneatFirestoreService<IHappeningBrief, IHappeningDto>(
-			'happenings', teamItemBaseService.afs, happeningBriefFromDto,
+		this.teamItemService = new TeamItemService<IHappeningBrief, IHappeningDto>(
+			'happenings', afs, sneatApiService,
 		);
 	}
 
@@ -159,7 +167,7 @@ export class HappeningService {
 		slot = {
 			repeats: 'once',
 			id: slot.id,
-			start: {...slot.start, date},
+			start: { ...slot.start, date },
 			end: slot.end,
 			durationMinutes: slot.durationMinutes,
 		};
@@ -176,49 +184,41 @@ export class HappeningService {
 	// 	return this.sfs.watchByTeamID(team.id);
 	// }
 
-	watchHappeningByID(id: string): Observable<IHappeningContext> {
-		return this.sfs.watchByID(id).pipe(
-			map(h => processHappeningContext(h)),
+	watchHappeningByID(team: ITeamContext, id: string): Observable<IHappeningContext> {
+		return this.teamItemService.watchTeamItemByID(team, id).pipe(
+			map(h => processHappeningContext(h, team)),
 		);
 	}
 
-	watchUpcomingSingles(teamID: string, statuses: HappeningStatus[] = ['active']): Observable<IHappeningContext[]> {
+	watchUpcomingSingles(team: ITeamContext, statuses: HappeningStatus[] = ['active']): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
-		return this.sfs.watchByFilter([
-			{ field: 'teamIDs', operator: 'array-contains', value: teamID },
+		return this.teamItemService.watchTeamItems(team, [
 			HappeningService.statusFilter(statuses),
 			{ field: 'dateMin', operator: '>=', value: date },
 		]).pipe(map(happenings => {
-			return happenings.map(h => processHappeningContext(h, teamID));
+			return happenings.map(h => processHappeningContext(h, team));
 		}));
 	}
 
-
-	static statusFilter(statuses: HappeningStatus[]): IFilter {
-		const operator = statuses?.length === 1 ? '==' : 'in';
-		const value = statuses.length === 1 ? statuses[0] : statuses;
-		return { field: 'status', operator, value };
-	}
-
-	watchSinglesOnSpecificDay(teamID: string, date: string, statuses: HappeningStatus[] = ['active']): Observable<IHappeningContext[]> {
-		if (!teamID) {
+	watchSinglesOnSpecificDay(
+		team: ITeamContext, date: string, statuses: HappeningStatus[] = ['active'],
+	): Observable<IHappeningContext[]> {
+		if (!team.id) {
 			return throwError(() => 'missing required field "teamID"');
 		}
 		if (!date) {
 			return throwError(() => 'missing required field "date"');
 		}
-		console.log('watchSinglesOnSpecificDay()', teamID, date, statuses);
-		const teamDate = teamID + ':' + date;
-		return this.sfs.watchByFilter([
+		console.log('watchSinglesOnSpecificDay()', team.id, date, statuses);
+		const teamDate = team.id + ':' + date;
+		return this.teamItemService.watchTeamItems(team, [
 			{ field: 'teamDates', operator: 'array-contains', value: teamDate },
 			HappeningService.statusFilter(statuses),
 		]).pipe(
 			tap(happenings => {
-				console.log('watchSinglesOnSpecificDay() =>', teamID, date, statuses, happenings);
+				console.log('watchSinglesOnSpecificDay() =>', team.id, date, statuses, happenings);
 			}),
-			map(happenings => {
-				return happenings.map(h => processHappeningContext(h, teamID));
-			}),
+			map(happenings => happenings.map(h => processHappeningContext(h, team))),
 		);
 	}
 }

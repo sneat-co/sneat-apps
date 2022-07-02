@@ -37,6 +37,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	public readonly personRequires: IPersonRequirements = {
 		ageGroup: { hide: true },
 		relatedAs: { hide: true },
+		roles: { hide: true },
 	};
 
 	public relation?: ContactToMemberRelation;
@@ -140,9 +141,9 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 		const assetId = params.get('asset');
 		if (assetId && this.asset?.id !== assetId) {
-			this.asset = { id: assetId };
+			this.asset = { id: assetId, team: this.team };
 			this.assetService
-				.watchAssetByID(assetId)
+				.watchAssetByID(this.team, assetId)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: asset => {
@@ -153,12 +154,12 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		}
 		const memberId = params.get('member');
 		if (memberId && this.member?.id !== memberId) {
-			this.member = { id: memberId };
+			this.member = { id: memberId, team: this.team };
 			this.membersService
 				.watchMember(this.team, memberId)
 				.pipe(this.takeUntilNeeded())
-				.subscribe(data => {
-					this.member = data?.member || undefined;
+				.subscribe(member => {
+					this.member = member;
 				});
 		}
 	};
@@ -185,9 +186,11 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	submit(): void {
 		this.creating = true;
 		let request: ICreateContactRequest = {
+			type: 'person',
 			teamID: this.team.id,
 			person: {
 				...this.relatedPerson,
+				type: 'person',
 				ageGroup: this.relatedPerson.ageGroup || 'unknown',
 			},
 		};
@@ -219,7 +222,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 				request.person.roles.push(roleID);
 			}
 		}
-		this.contactService.createContact(request)
+		this.contactService.createContact(this.team, request)
 			.subscribe({
 				next: contact => {
 					this.navigateForwardToTeamPage(

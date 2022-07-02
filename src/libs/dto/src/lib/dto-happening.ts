@@ -72,10 +72,6 @@ export function validateRecurringHappeningSlot(slot: IHappeningSlot, index: numb
 	}
 }
 
-export function happeningBriefFromDto(id: string, dto: IHappeningDto): IHappeningBrief {
-	return { id, ...dto };
-}
-
 export type HappeningType = 'recurring' | 'single';
 
 export type HappeningStatus = 'draft' | 'active' | 'canceled' | 'archived';

@@ -1,5 +1,12 @@
-import { AngularFirestore, DocumentChangeAction, DocumentSnapshot } from '@angular/fire/compat/firestore';
+import {
+	Action,
+	AngularFirestore,
+	AngularFirestoreCollection, CollectionReference,
+	DocumentChangeAction,
+	DocumentSnapshot,
+} from '@angular/fire/compat/firestore';
 import { INavContext } from '@sneat/core';
+import { ITeamContext } from '@sneat/team/models';
 import firebase from 'firebase/compat';
 import { map, Observable, throwError } from 'rxjs';
 import WhereFilterOp = firebase.firestore.WhereFilterOp;
@@ -10,59 +17,53 @@ export interface IFilter {
 	value: any;
 }
 
-export class SneatFirestoreService<Brief, Dto> {
+export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 	constructor(
 		private readonly collection: string,
 		private readonly afs: AngularFirestore,
-		private readonly dto2brief: (id: string, dto: Dto) => Brief,
+		private readonly dto2brief: (id: string, dto: Dto) => Brief = (id: string, dto: Dto) => ({
+			...(dto as unknown as Brief),
+			id,
+		}),
 	) {
 	}
 
-	watchByID<Dto2 extends Dto>(id: string): Observable<INavContext<Brief, Dto2>> {
+	watchByID<Dto2 extends Dto>(
+		collection: AngularFirestoreCollection<Dto2>,
+		id: string,
+	): Observable<INavContext<Brief, Dto2>> {
 		console.log(`SneatFirestoreService.watchByID(${this.collection}/${id})`);
-		return this.afs
-			.collection<Dto2>(this.collection)
-			.doc(id)
+		return collection.doc(id)
 			.snapshotChanges()
 			.pipe(
-				map(changes => {
-					console.log(`SneatFirestoreService.watchByID(${this.collection}/${id}) => changes:`, changes);
-					if (!changes.payload.exists) {
-						return { id, dto: null };
-					}
-					const dto: Dto2 = changes.payload.data();
-					const result: INavContext<Brief, Dto2> = {
-						id, dto,
-						brief: this.dto2brief(id, dto),
-					};
-					return result;
-				}),
+				map(changes => docSnapshotToDto(id, this.dto2brief, changes)),
 			);
 	}
 
-	watchByFilter<Dto2 extends Dto>(filter: IFilter[]): Observable<INavContext<Brief, Dto2>[]> {
-		if (!filter || filter.length === 0) {
-			return throwError(() => 'requires at least 1 element in filter');
-		}
+	watchSnapshotsByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[]) {
 		console.log('watchByFilter()', this.collection, filter);
-		const operator = (f: IFilter) => f.field.endsWith('IDs') ? 'array-contains' : f.operator
-		return this.afs
-			.collection<Dto2>(this.collection,
-				ref => {
-					let cond = ref.where(filter[0].field, operator(filter[0]), filter[0].value);
-					for (let i = 1; i < filter.length; i++) {
-						const f = filter[i];
-						cond = cond.where(f.field, operator(f), f.value);
-					}
-					return cond;
-				},
-			)
-			.snapshotChanges()
-			.pipe(
-				map(changes => {
-					return this.snapshotChangesToContext(changes);
-				}),
-			);
+
+		const operator = (f: IFilter) => f.field.endsWith('IDs') ? 'array-contains' : f.operator;
+
+		return this.afs.collection<Dto2>(collectionRef,
+			ref => {
+				let cond = ref.where(filter[0].field, operator(filter[0]), filter[0].value);
+				for (let i = 1; i < filter.length; i++) {
+					const f = filter[i];
+					cond = cond.where(f.field, operator(f), f.value);
+				}
+				return cond;
+			},
+		)
+			.snapshotChanges();
+	}
+
+	watchByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[]): Observable<INavContext<Brief, Dto2>[]> {
+		return this.watchSnapshotsByFilter(collectionRef, filter).pipe(
+			map(changes => {
+				return this.snapshotChangesToContext(changes);
+			}),
+		);
 	}
 
 	snapshotChangesToContext<Dto2 extends Dto>(changes: DocumentChangeAction<Dto2>[]) {
@@ -72,13 +73,13 @@ export class SneatFirestoreService<Brief, Dto> {
 	}
 
 	snapshotChangeToContext<Dto2 extends Dto>(doc: DocumentChangeAction<Dto2>) {
-			const { id } = doc.payload.doc;
-			const dto: Dto2 = doc.payload.doc.data();
-			const result: INavContext<Brief, Dto2> = {
-				id, dto,
-				brief: this.dto2brief(id, dto),
-			};
-			return result;
+		const { id } = doc.payload.doc;
+		const dto: Dto2 = doc.payload.doc.data();
+		const result: INavContext<Brief, Dto2> = {
+			id, dto,
+			brief: this.dto2brief(id, dto),
+		};
+		return result;
 	}
 
 	docSnapshotToContext<Dto2 extends Dto>(doc: DocumentSnapshot<Dto2>): INavContext<Brief, Dto2> {
@@ -90,17 +91,16 @@ export class SneatFirestoreService<Brief, Dto> {
 		};
 		return result;
 	}
+}
 
-	watchByTeamID<Dto2 extends Dto>(teamID: string, field: 'teamID' | 'teamIDs' = 'teamIDs'): Observable<INavContext<Brief, Dto2>[]> {
-		if (!teamID) {
-			throw new Error('!teamID');
-		}
-		if (!field) {
-			throw new Error('!field');
-		}
-		const operator = field === 'teamID' ? '==' : 'array-contains';
-		console.log(`SneatFirestoreService.watchByTeamID(${this.collection}[${field} ${operator} ${teamID})`);
-		const filter: IFilter[] = [{ field, operator, value: teamID }];
-		return this.watchByFilter<Dto2>(filter);
+export function docSnapshotToDto<Brief extends { id: string }, Dto>(
+	id: string,
+	dto2brief: (id: string, dto: Dto) => Brief,
+	changes: Action<DocumentSnapshot<Dto>>,
+): INavContext<Brief, Dto> {
+	if (!changes.payload.exists) {
+		return { id, dto: null };
 	}
+	const dto: Dto = changes.payload.data();
+	return { id, dto, brief: dto2brief(id, dto) };
 }

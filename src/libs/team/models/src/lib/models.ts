@@ -1,5 +1,13 @@
 import { TeamType } from '@sneat/core';
-import { IContact2Asset, IContact2Member, IMemberBrief, IRelatedPerson, MemberType } from '@sneat/dto';
+import {
+	ContactType,
+	IContact2Asset,
+	IContact2Member,
+	IMemberBrief,
+	IRelatedPersonContact,
+	IRelatedPerson,
+	MemberType,
+} from '@sneat/dto';
 import { IMemberContext } from './team-context';
 
 
@@ -58,6 +66,7 @@ export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
 }
 
 export interface ICreateContactBaseRequest extends ITeamRequest {
+	type: ContactType;
 	parentContactID?: string;
 	roles?: string[];
 	assetIDs?: IContact2Asset[];
@@ -65,7 +74,7 @@ export interface ICreateContactBaseRequest extends ITeamRequest {
 }
 
 export interface ICreateContactPersonRequest extends ICreateContactBaseRequest {
-	person?: IRelatedPerson;
+	person?: IRelatedPersonContact;
 }
 
 export interface ICreateContactLocationRequest extends ICreateContactBaseRequest {

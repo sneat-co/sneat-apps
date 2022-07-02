@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContactRoleExpress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
+import { IContactContext } from '@sneat/team/models';
 import { first, NEVER, switchMap, takeUntil } from 'rxjs';
 import { ExpressTeamService, FreightOrdersService, IOrderCounterparty } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -47,40 +48,49 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			.pipe(
 				this.takeUntilNeeded(),
 				takeUntil(this.teamIDChanged$),
-				switchMap(expressTeam => {
-					console.log('expressTeam:', expressTeam);
-					return !expressTeam.dto ? NEVER
-						: this.contactService
-							.watchById(this.team.id, expressTeam.dto.contactID)
-							.pipe(first());
-				}),
 			).subscribe({
-			next: contact => {
-				console.log('contact:', contact);
-				if (!contact.dto) {
-					return;
+			next: expressTeam => {
+				if (expressTeam.dto?.contactID) {
+					this.loadTeamContact(expressTeam.dto.contactID);
 				}
-				const orderCounterparty: IOrderCounterparty = {
-					contactID: contact.id,
-					title: contact.dto.title || contact.id,
-					countryID: contact.dto.countryID || '',
-					address: contact.dto.address,
-					role: contact.dto?.roles?.length ? contact.dto.roles[0] as ContactRoleExpress : 'carrier',
-				};
-				console.log('order: 1', this.order);
-				if (this.order?.dto) {
-					this.order = {
-						...this.order,
-						dto: {
-							...this.order.dto,
-							counterparties: [...this.order.dto.counterparties || [], orderCounterparty],
-						},
-					};
-				}
-				console.log('order: 2', this.order);
 			},
-			error: this.errorLogger.logErrorHandler('failed to load contact'),
+			error: this.errorLogger.logErrorHandler('failed to load express module record'),
 		});
+	}
+
+	private loadTeamContact(contactID: string): void {
+		this.contactService
+			.watchContactById(this.team, contactID)
+			.pipe(first())
+			.subscribe({
+				next: this.processTeamContact,
+				error: this.errorLogger.logErrorHandler('failed to load express team default contact'),
+			})
+	}
+
+	private readonly processTeamContact = (contact: IContactContext): void => {
+		console.log('contact:', contact);
+		if (!contact.dto) {
+			return;
+		}
+		const orderCounterparty: IOrderCounterparty = {
+			contactID: contact.id,
+			title: contact.dto.title || contact.id,
+			countryID: contact.dto.countryID || '',
+			address: contact.dto.address,
+			role: contact.dto?.roles?.length ? contact.dto.roles[0] as ContactRoleExpress : 'carrier',
+		};
+		console.log('order: 1', this.order);
+		if (this.order?.dto) {
+			this.order = {
+				...this.order,
+				dto: {
+					...this.order.dto,
+					counterparties: [...this.order.dto.counterparties || [], orderCounterparty],
+				},
+			};
+		}
+		console.log('order: 2', this.order);
 	}
 
 	onOrderChanged(order: IExpressOrderContext): void {

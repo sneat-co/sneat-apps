@@ -27,7 +27,7 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 		if (!this.asset?.id) {
 			return throwError(() => new Error('no asset context'));
 		}
-		return this.assetService.watchAssetByID(this.asset.id);
+		return this.assetService.watchAssetByID(this.team, this.asset.id);
 	}
 
 	protected override setItemContext(item?: IAssetContext) {

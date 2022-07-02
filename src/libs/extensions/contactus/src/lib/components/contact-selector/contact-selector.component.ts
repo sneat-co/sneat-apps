@@ -27,7 +27,7 @@ export class ContactSelectorComponent
 	private contacts?: IContactContext[];
 
 	protected itemID?: string;
-	public items?: Observable<ISelectItem[]>;
+	public items?: Observable<IContactContext[]>;
 	protected allItems?: ISelectItem[];
 
 	get label(): string {
@@ -60,7 +60,7 @@ export class ContactSelectorComponent
 		if (!this.team) {
 			return;
 		}
-		this.sub = this.contactService.watchContactsByRole(this.team, { role: this.role })
+		this.sub = this.contactService.watchContactsByRole(this.team, { role: this.role, status: 'active' })
 			.subscribe(contacts => {
 				this.contacts = contacts;
 				this.allItems = contacts.map(c => ({

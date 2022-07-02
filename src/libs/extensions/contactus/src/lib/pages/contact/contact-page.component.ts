@@ -39,7 +39,7 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 			}
 			if (contactId) {
 				this.contactsService
-					.watchById(this.team.id, contactId)
+					.watchContactById(this.team, contactId)
 					.pipe(
 						this.takeUntilNeeded(),
 					)
@@ -60,6 +60,6 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 	}
 
 	goMember(id: string): void {
-		this.teamParams.teamNavService.navigateToMember(this.navController, {id});
+		this.teamParams.teamNavService.navigateToMember(this.navController, {id, team: this.team});
 	}
 }

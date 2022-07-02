@@ -32,6 +32,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 		}
 		const request: ICreateContactRequest = {
 			teamID: this.team.id,
+			type: 'location',
 			parentContactID: this.contact?.id,
 			location: {
 				title,
@@ -40,7 +41,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 			},
 		};
 		this.isCreating = true;
-		this.contactService.createContact(request)
+		this.contactService.createContact(this.team, request)
 			.subscribe({
 				next: newContact => {
 					console.log('new location created with ID=' + newContact.id);

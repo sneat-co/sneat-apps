@@ -31,7 +31,7 @@ export class MovieCardComponent implements OnChanges {
 	}
 
 	get userId(): string | undefined {
-		return this.param.teamParams.userService.currentUserId;
+		return this.param.teamParams.userService.currentUserID;
 	}
 
 	public get isWatched(): boolean {

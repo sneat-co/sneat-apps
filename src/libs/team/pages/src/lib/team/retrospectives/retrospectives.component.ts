@@ -45,7 +45,7 @@ export class RetrospectivesComponent {
 	}
 
 	retroCount(itemType: RetroItemType): number {
-		const userID = this.userService.currentUserId;
+		const userID = this.userService.currentUserID;
 		return (
 			(userID
 				? this.team?.dto?.upcomingRetro?.itemsByUserAndType?.[userID]?.[

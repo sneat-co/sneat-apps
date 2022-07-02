@@ -94,7 +94,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 	private watchTeamAssets(): void {
 		if (this.team?.id) {
 			this.assetService
-				.watchAssetsByTeamID(this.team?.id)
+				.watchTeamAssets(this.team?.id)
 				.pipe(
 					takeUntil(this.destroyed),
 				)

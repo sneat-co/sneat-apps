@@ -1,33 +1,34 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatFirestoreService } from '@sneat/api';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { INavContext } from '@sneat/core';
-import { IScheduleDayDto } from '@sneat/dto';
+import { IScheduleDayBrief, IScheduleDayDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext } from '@sneat/team/models';
 import { Observable, shareReplay, tap } from 'rxjs';
+import { TeamItemService } from './team-item.service';
 
 
 @Injectable()
 export class ScheduleDayService {
-	private readonly sfs: SneatFirestoreService<IScheduleDayDto, IScheduleDayDto>;
+	private readonly teamItemService: TeamItemService<IScheduleDayBrief, IScheduleDayDto>;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		afs: AngularFirestore,
+		sneatApiService: SneatApiService,
 	) {
-		this.sfs = new SneatFirestoreService<IScheduleDayDto, IScheduleDayDto>(
-			'schedule_days', afs,
-			(id: string, dto: IScheduleDayDto) => ({ id, ...dto }), // TODO: we do not need this mapping?
+		this.teamItemService = new TeamItemService<IScheduleDayBrief, IScheduleDayDto>(
+			'schedule_days', afs, sneatApiService
 		);
 	}
 
-	public watchTeamDay(teamID: string, dateID: string) {
-		console.log('ScheduleDayService.watchTeamDay()', teamID, dateID);
-		const id = `${teamID}:${dateID}`;
-		return this.sfs
-			.watchByID(id)
+	public watchTeamDay(team: ITeamContext, dateID: string) {
+		console.log('ScheduleDayService.watchTeamDay()', team.id, dateID);
+		return this.teamItemService
+			.watchTeamItemByID(team, dateID)
 			.pipe(
-				tap(scheduleDay => console.log('ScheduleDayService.watchTeamDay() => scheduleDay', id, scheduleDay.dto)),
+				tap(scheduleDay => console.log('ScheduleDayService.watchTeamDay() => scheduleDay', scheduleDay, scheduleDay.dto)),
 			);
 	}
 }

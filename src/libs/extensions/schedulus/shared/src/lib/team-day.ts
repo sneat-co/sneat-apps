@@ -93,7 +93,7 @@ export class TeamDay {
 			return;
 		}
 		this.scheduleDayService
-			.watchTeamDay(this.teamID, this.dateID)
+			.watchTeamDay({id: this.teamID}, this.dateID)
 			.pipe(
 				// takeUntil(this.destroyed),
 				// takeUntil(this.teamID$),
@@ -124,7 +124,7 @@ export class TeamDay {
 			const date = this.dateID;
 			console.log(`TeamDay[${this.isoID}].subscribeForSingles(), teamID=${teamID}, date=${date}`);
 			this.happeningService
-				.watchSinglesOnSpecificDay(this.teamID, this.dateID)
+				.watchSinglesOnSpecificDay({id: this.teamID}, this.dateID)
 				.pipe(
 					takeUntil(this.destroyed),
 					// takeUntil(this.teamID$),

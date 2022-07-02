@@ -25,7 +25,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	public role?: ContactRole;
 	private contactsSubscription?: Subscription;
 
-	roles: ISelectItem[] = [
+	readonly roles: ISelectItem[] = [
 		{ id: '', title: 'All', iconName: 'body-outline' },
 		{ id: 'agent', title: 'Agents', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyers', iconName: 'cash-outline' },
@@ -77,7 +77,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return;
 		}
 		if (teamDto.type === 'family') {
-			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief }));
+			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief, team: this.team }));
 			this.applyFilter(this.filter, this.role);
 		}
 	}

@@ -9,7 +9,7 @@ export interface IExpressTeamBrief extends IExpressTeamDto {
 	readonly id: string;
 }
 
-export type IExpressTeamContext = INavContext<IExpressTeamDto, IExpressTeamDto>;
+export type IExpressTeamContext = INavContext<IExpressTeamBrief, IExpressTeamDto>;
 
 
 export interface ISetExpressTeamSettingsRequest extends ITeamRequest {
