@@ -43,10 +43,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 			parentContactID: this.contact?.id,
 			location: {
 				title,
-				address: {
-					countryID,
-					lines: address.split('\n') || undefined,
-				},
+				address,
 			},
 		};
 		this.isCreating = true;

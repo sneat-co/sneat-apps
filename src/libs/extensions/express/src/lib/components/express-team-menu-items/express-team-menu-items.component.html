@@ -1,26 +1,38 @@
-<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/orders">
+<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/orders" class="sneat-tiny-end-padding">
 	<ion-icon name="documents-outline" slot="start"></ion-icon>
 	<ion-label>Orders</ion-label>
+	<ion-buttons slot="end" class="sneat-hide-if-width-less-240">
+		<ion-button title="New order"
+								color="medium"
+								routerLink="/space/{{team?.type}}/{{team?.id}}/new-order" (click)="$event.stopPropagation()"
+
+		>
+			<ion-icon name="add-outline" slot="start"></ion-icon>
+			<ion-label><span class="sneat-hide-if-width-less-420">New order</span></ion-label>
+		</ion-button>
+	</ion-buttons>
 </ion-item>
-<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/members">
+<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/members" class="sneat-tiny-end-padding">
 	<ion-icon name="people-circle-outline" slot="start"></ion-icon>
 	<ion-label>Employees</ion-label>
 </ion-item>
-<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/contacts">
+<ion-item routerLink="/space/{{team?.type}}/{{team?.id}}/contacts" class="sneat-tiny-end-padding">
 	<!--		<ion-icon name="people-outline" slot="start"></ion-icon>-->
 	<ion-label color="medium">Contacts</ion-label>
-	<ion-buttons slot="end">
+	<ion-buttons slot="end" class="sneat-hide-if-width-less-240">
 		<ion-button routerLink="/space/{{team?.type}}/{{team?.id}}/new-company"
 								(click)="$event.stopPropagation()"
 		>
 			<ion-icon name="add-outline"></ion-icon>
 		</ion-button>
-	</ion-buttons></ion-item>
+	</ion-buttons>
+</ion-item>
 <ion-item *ngFor="let contactGroup of contactGroups" routerLink="/space/{{team?.type}}/{{team?.id}}/contacts"
+					class="sneat-tiny-end-padding"
 					[queryParams]="{role: contactGroup.type}">
 	<ion-icon [name]="contactGroup.icon" slot="start"></ion-icon>
 	<ion-label>{{contactGroup.title}}</ion-label>
-	<ion-buttons slot="end">
+	<ion-buttons slot="end" class="sneat-hide-if-width-less-240">
 		<ion-button routerLink="/space/{{team?.type}}/{{team?.id}}/new-company"
 								[queryParams]="{role: contactGroup.type}"
 								(click)="$event.stopPropagation()"

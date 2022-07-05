@@ -1,5 +1,5 @@
 import { INavContext } from '@sneat/core';
-import { ContactRoleExpress } from '@sneat/dto';
+import { ContactRoleExpress, IAddress } from '@sneat/dto';
 import { ITeamRequest } from '@sneat/team/models';
 
 export interface IFreightAddress {
@@ -17,7 +17,7 @@ export interface IOrderCounterparty {
 	readonly title: string;
 	readonly phone?: string;
 	readonly email?: string;
-	readonly address?: string;
+	readonly address?: IAddress;
 }
 
 export type ContainerType = 'unknown' | '20ft' | '40ft';

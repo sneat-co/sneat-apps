@@ -7,12 +7,15 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-express-order-card [team]="team" [order]="order"></sneat-express-order-card>
+	<sneat-express-order-card [team]="team" [order]="order" [hideDispatchers]="true"></sneat-express-order-card>
 
+	<div class="ion-padding-horizontal">
 	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="dispatchers">Load points</ion-segment-button>
 		<ion-segment-button value="containers">Containers</ion-segment-button>
 		<ion-segment-button value="notes">Notes</ion-segment-button>
 	</ion-segment>
+	</div>
 
 	<ion-card *ngIf="tab === 'notes'">
 		<ion-card-content>
@@ -23,6 +26,13 @@
 			<ion-button (click)="saveNotes($event)">Save notes</ion-button>
 		</ion-card-content>
 	</ion-card>
+
+	<sneat-express-order-counterparties-card
+		*ngIf="tab === 'dispatchers'"
+		[team]="team"
+		[order]="order"
+		[role]="'dispatcher'"
+	></sneat-express-order-counterparties-card>
 
 	<sneat-order-containers-card
 		*ngIf="tab === 'containers'"

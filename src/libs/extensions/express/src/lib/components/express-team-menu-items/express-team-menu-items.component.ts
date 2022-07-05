@@ -15,6 +15,7 @@ export class ExpressTeamMenuItemsComponent {
 		{ type: 'agent', title: 'Agents', icon: 'body-outline' },
 		{ type: 'buyer', title: 'Buyers', icon: 'cash-outline' },
 		{ type: 'carrier', title: 'Carriers', icon: 'train-outline' },
+		{ type: 'dispatcher', title: 'Dispatchers', icon: 'exit-outline' },
 		{ type: 'shipper', title: 'Shippers', icon: 'boat-outline' },
 	];
 

@@ -15,6 +15,7 @@ export class OrderCardComponent {
 	@Input() public readonly = false;
 	@Input() team?: ITeamContext;
 	@Input() order?: IExpressOrderContext;
+	@Input() hideDispatchers = false;
 	readonly roles: ContactRoleExpress[] = ['buyer', 'consignee', 'agent', 'carrier', 'shipper'];
 
 	constructor(

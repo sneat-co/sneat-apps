@@ -68,6 +68,12 @@
 		</ion-row>
 	</ion-grid>
 
+	<sneat-express-order-counterparties-card
+		[team]="team"
+		[order]="order"
+		(orderChange)="onOrderChanged($event)"
+		[readonly]="readonly"
+	></sneat-express-order-counterparties-card>
 
 	<sneat-order-route-card
 		[order]="order"

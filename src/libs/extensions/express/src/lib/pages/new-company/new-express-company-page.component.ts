@@ -54,14 +54,15 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 			alert('Contact title is a required field');
 			return;
 		}
+		if (!this.contactDto.address) {
+			alert('Contact address is a required field');
+			return;
+		}
 		const request: ICreateContactCompanyRequest = excludeEmpty({
 			type: 'company',
 			company: excludeEmpty({
 				title: this.contactDto.title?.trim() || '',
-				address: {
-					countryID: this.contactDto.countryID || '--',
-					lines: this.contactDto.address?.trim()?.split('\n') || undefined,
-				},
+				address: this.contactDto.address,
 				roles: [this.contactType],
 			}),
 			roles: [this.contactType],

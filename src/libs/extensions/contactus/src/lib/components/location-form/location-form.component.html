@@ -23,7 +23,7 @@
 		<ion-item>
 			<ion-label position="stacked">Address</ion-label>
 			<ion-textarea
-				[(ngModel)]="address"
+				[(ngModel)]="addressText"
 				[disabled]="disabled"
 				(ionChange)="onInputChange()"
 				[required]="contactDto?.type === 'location'"

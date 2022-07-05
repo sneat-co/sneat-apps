@@ -21,7 +21,7 @@ export class LocationFormComponent implements OnChanges {
 
 	countryID = '';
 	title = '';
-	address = '';
+	addressText = '';
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -42,7 +42,10 @@ export class LocationFormComponent implements OnChanges {
 		this.contactDto = excludeEmpty({
 			...this.contactDto,
 			title: this.title,
-			address: this.address,
+			address: {
+				countryID: this.countryID,
+				lines: this.addressText.split('\n'),
+			},
 			countryID: this.countryID,
 		});
 		this.contactDtoChange.emit(this.contactDto);
