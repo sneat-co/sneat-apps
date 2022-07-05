@@ -61,7 +61,7 @@ export class FreightOrdersService {
 				ref => {
 					let query = ref
 						.where('status', '==', filter?.status || 'active')
-						.where('userIDs', 'array-contains', 'userID')
+						// .where('userIDs', 'array-contains', 'userID')
 						.orderBy('created.at', 'desc');
 
 					let keysVal = '';

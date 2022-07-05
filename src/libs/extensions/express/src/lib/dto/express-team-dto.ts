@@ -1,4 +1,5 @@
 import { INavContext } from '@sneat/core';
+import { IAddress } from '@sneat/dto';
 import { ITeamRequest } from '@sneat/team/models';
 
 export interface IExpressTeamDto {
@@ -13,8 +14,7 @@ export type IExpressTeamContext = INavContext<IExpressTeamBrief, IExpressTeamDto
 
 
 export interface ISetExpressTeamSettingsRequest extends ITeamRequest {
-	countryID: string;
-	address: string;
+	address: IAddress;
 	vatNumber?: string;
 	orderNumberPrefix?: string;
 }

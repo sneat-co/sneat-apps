@@ -6,7 +6,7 @@ import {
 	IMemberBrief,
 	IRelatedPersonContact,
 	IRelatedPerson,
-	MemberType,
+	MemberType, IAddress,
 } from '@sneat/dto';
 import { IMemberContext } from './team-context';
 
@@ -83,16 +83,11 @@ export interface ICreateContactLocationRequest extends ICreateContactBaseRequest
 
 export interface ICreateLocationBaseRequest {
 	title: string;
-	countryID: string;
+	address: IAddress;
 }
 
-export interface ICreateLocationRequest extends ICreateLocationBaseRequest {
-	address: string;
-}
-
-export interface ICreateCompanyRequest extends ICreateLocationBaseRequest {
-	address?: string;
-}
+export type ICreateLocationRequest = ICreateLocationBaseRequest;
+export type ICreateCompanyRequest = ICreateLocationBaseRequest;
 
 export interface ICreateContactCompanyRequest extends ICreateContactBaseRequest {
 	company?: ICreateCompanyRequest;

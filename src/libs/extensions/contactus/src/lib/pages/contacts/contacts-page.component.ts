@@ -120,7 +120,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			);
 	}
 
-	goContact = (contact?: IContactContext): void => {
+	readonly goContact = (contact?: IContactContext): void => {
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;

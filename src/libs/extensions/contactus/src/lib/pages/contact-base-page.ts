@@ -9,6 +9,7 @@ import { ContactService } from '../services';
 export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
 
 	public contact?: IContactContext;
+	public contactLocations?: IContactContext[];
 
 	protected readonly contactService: ContactService;
 

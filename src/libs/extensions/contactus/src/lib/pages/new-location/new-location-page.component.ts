@@ -13,6 +13,8 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	contactDto: IContactDto = { type: 'location' };
 
+	isCreating = false;
+
 	constructor(
 		route: ActivatedRoute,
 		params: ContactComponentBaseParams,
@@ -22,7 +24,12 @@ export class NewLocationPageComponent extends ContactBasePage {
 		this.defaultBackPage = 'contacts';
 	}
 
-	isCreating = false;
+	protected override onTeamDtoChanged() {
+		super.onTeamDtoChanged();
+		if (this.team?.dto?.countryID && !this.contactDto.countryID) {
+			this.contactDto = { ...this.contactDto, countryID: this.team.dto.countryID };
+		}
+	}
 
 	submit(): void {
 		const { title, countryID, address } = this.contactDto;
@@ -36,8 +43,10 @@ export class NewLocationPageComponent extends ContactBasePage {
 			parentContactID: this.contact?.id,
 			location: {
 				title,
-				countryID,
-				address,
+				address: {
+					countryID,
+					lines: address.split('\n') || undefined,
+				},
 			},
 		};
 		this.isCreating = true;

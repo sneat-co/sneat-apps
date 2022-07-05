@@ -26,4 +26,5 @@ export interface IContactDto extends IContactBase, IPersonRecord {
 	roles?: string[];
 	members?: IContact2Member[]; // TODO: document purpose, use cases, examples of usage
 	assets?: IContact2Asset[];  // TODO: document purpose, use cases, examples of usage
+	relatedContacts?: IContactBrief[];
 }

@@ -56,8 +56,8 @@
 
 		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
 			<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: id">
-				<sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
-														[excludeRole]="role"></sneat-contact-item>
+				<sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
+														[excludeRole]="role"></sneat-contacts-list-item>
 			</ion-item-sliding>
 			<ion-item button (click)="goNewContact()" *ngIf="canAdd">
 				<ion-icon name="add" color="primary"></ion-icon>

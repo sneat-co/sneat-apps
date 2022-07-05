@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { ContactRoleExpress } from '@sneat/dto';
+import { ContactRole, ContactRoleExpress } from '@sneat/dto';
 import { FreightOrdersService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
@@ -14,14 +14,14 @@ export class OrderCounterpartyInputComponent {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
-	@Input() counterpartyRole: ContactRoleExpress | '' = '';
+	@Input() counterpartyRole?: ContactRoleExpress;
 
 	@Input() order?: IExpressOrderContext;
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
 	@Output() counterpartyChange = new EventEmitter<IOrderCounterparty>();
 
-	readonly label = () => this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1);
+	readonly label = () => this.counterpartyRole?.length ? this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1) : 'Counterparty';
 
 	get contact(): IContactContext | undefined {
 		if (!this.team) {

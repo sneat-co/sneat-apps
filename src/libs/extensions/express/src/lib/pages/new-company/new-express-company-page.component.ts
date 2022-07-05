@@ -57,9 +57,11 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 		const request: ICreateContactCompanyRequest = excludeEmpty({
 			type: 'company',
 			company: excludeEmpty({
-				countryID: this.contactDto.countryID || '--',
 				title: this.contactDto.title?.trim() || '',
-				address: this.contactDto.address?.trim() || undefined,
+				address: {
+					countryID: this.contactDto.countryID || '--',
+					lines: this.contactDto.address?.trim()?.split('\n') || undefined,
+				},
 				roles: [this.contactType],
 			}),
 			roles: [this.contactType],

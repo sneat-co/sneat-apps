@@ -2,7 +2,7 @@
 	<sneat-country-selector
 		[(country)]="countryID"
 		[disabled]="disabled"
-		(countryChange)="onInputChange()"
+		(countryChange)="onCountryChanged()"
 	></sneat-country-selector>
 </ion-card>
 
@@ -13,7 +13,8 @@
 		</ion-item-divider>
 		<ion-item>
 			<ion-label color="medium">Name</ion-label>
-			<ion-input required placeholder="required"
+			<ion-input #titleInput
+								 required placeholder="required"
 								 [(ngModel)]="title"
 								 [disabled]="disabled"
 								 (ionChange)="onInputChange()"

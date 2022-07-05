@@ -26,8 +26,8 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 
 	ngOnInit(): void {
 		// super.ngOnInit();
-		this.route.queryParamMap.subscribe(params => {
-			const contactId = params.get('id') || undefined;
+		this.route.paramMap.subscribe(params => {
+			const contactId = params.get('contactID') || undefined;
 			{
 				const contact = window.history.state.contact as IContactContext;
 				if (contact && eq(contact.id, contactId)) {
@@ -50,6 +50,12 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 									return;
 								}
 								this.contact = contact;
+								this.contactLocations = contact?.dto?.relatedContacts?.map(brief => ({
+									id: brief.id,
+									team: contact.team,
+									brief,
+								}));
+								console.log('contact', contact, 'contactLocations', this.contactLocations);
 							},
 							error: this.errorLogger.logErrorHandler('failed to get contact by ID'),
 						},

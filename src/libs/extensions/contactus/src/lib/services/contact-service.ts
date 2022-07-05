@@ -26,12 +26,23 @@ export class ContactService {
 		return throwError(() => 'not implemented yet');
 	}
 
-	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active'): Observable<IContactContext[]> {
-		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, [{
-			field: 'status',
-			value: status,
-			operator: '==',
-		}]);
+	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: IFilter[]): Observable<IContactContext[]> {
+		if (!filter) {
+			filter = [];
+		}
+		filter.push(
+			{
+				field: 'status',
+				value: status,
+				operator: '==',
+			},
+			{
+				field: 'parentContactID',
+				operator: '==',
+				value: '',
+			},
+		);
+		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, filter);
 	}
 
 	watchContactById(team: ITeamContext, contactID: string): Observable<IContactContext> {
@@ -39,6 +50,7 @@ export class ContactService {
 	}
 
 	watchContactsByRole(team: ITeamContext, filter?: IContactsFilter): Observable<IContactContext[]> {
+		console.log('watchContactsByRole, filter:', filter);
 		const f: IFilter[] = [
 			// { field: 'teamID', value: team.id, operator: '==' },
 		];

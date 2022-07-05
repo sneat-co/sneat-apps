@@ -10,7 +10,7 @@
     <ng-container *ngFor="let role of contactGroup.roles; trackBy: id">
         <ng-container *ngIf="role.contacts && role.contacts">
             <ion-item-sliding *ngFor="let contact of role.contacts; trackBy: id" @listItem>
-                <sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contact-item>
+                <sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contacts-list-item>
             </ion-item-sliding>
         </ng-container>
         <ion-item button class="with-buttons" *ngIf="!role.contacts || !role.contacts.length">
@@ -31,6 +31,6 @@
         <ion-label>Other</ion-label>
     </ion-item-divider>
     <ion-item-sliding *ngFor="let contact of contacts; trackBy: id" @listItem>
-        <sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contact-item>
+        <sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contacts-list-item>
     </ion-item-sliding>
 </ion-item-group>

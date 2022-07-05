@@ -72,10 +72,12 @@ export class ExpressTeamSettingsComponent {
 		}
 		const request: ISetExpressTeamSettingsRequest = excludeUndefined({
 			teamID: this.team.id,
-			countryID: this.countryID.value || '',
-			address: this.address.value?.trim() || '',
+			address: {
+				countryID: this.countryID.value || '',
+				lines: this.address.value?.trim().split('\n') || [],
+			},
 			vatNumber: this.vatNumber.value?.trim() || undefined,
-			orderNumberPrefix: this.orderNumberPrefix.value || undefined
+			orderNumberPrefix: this.orderNumberPrefix.value || undefined,
 		});
 		this.isSubmitting = true;
 		this.expressTeamService.setExpressTeamSettings(request).subscribe({

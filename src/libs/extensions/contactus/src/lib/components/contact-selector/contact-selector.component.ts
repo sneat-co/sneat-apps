@@ -45,10 +45,12 @@ export class ContactSelectorComponent
 
 
 	ngAfterViewInit(): void {
+		console.log('ngAfterViewInit()');
 		this.subscribeForData();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('ngOnChanges()', changes);
 		if (changes['role'] || changes['team']) {
 			this.subscribeForData();
 		}
@@ -60,17 +62,19 @@ export class ContactSelectorComponent
 		if (!this.team) {
 			return;
 		}
-		this.sub = this.contactService.watchContactsByRole(this.team, { role: this.role, status: 'active' })
-			.subscribe(contacts => {
-				this.contacts = contacts;
-				this.allItems = contacts.map(c => ({
-					id: c.id,
-					title: c.brief?.title || c.id,
-					iconName: 'people-outline',
-				}));
-				// console.log('contacts', this.contacts);
-				console.log('items', this.allItems);
-			});
+		this.sub = this.contactService.watchContactsByRole(
+			this.team,
+			{ role: this.role, status: 'active' },
+		).subscribe(contacts => {
+			this.contacts = contacts;
+			this.allItems = contacts.map(c => ({
+				id: c.id,
+				title: c.brief?.title || c.id,
+				iconName: 'people-outline',
+			}));
+			// console.log('contacts', this.contacts);
+			console.log('items', this.allItems);
+		});
 	}
 
 	protected onContactSelected(itemID: string): void {
