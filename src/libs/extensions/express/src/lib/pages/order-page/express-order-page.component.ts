@@ -10,7 +10,7 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 	styleUrls: ['./express-order-page.component.scss'],
 })
 export class ExpressOrderPageComponent extends OrderPageBaseComponent {
-	tab: 'dispatchers' | 'containers' | 'notes' = 'dispatchers';
+	tab: 'load_points' | 'containers' | 'notes' = 'load_points';
 
 	constructor(
 		route: ActivatedRoute,

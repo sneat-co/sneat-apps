@@ -26,10 +26,12 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	private contactsSubscription?: Subscription;
 
 	readonly roles: ISelectItem[] = [
-		{ id: '', title: 'All', iconName: 'body-outline' },
+		{ id: '', title: 'All', iconName: 'people-outline' },
 		{ id: 'agent', title: 'Agents', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyers', iconName: 'cash-outline' },
 		{ id: 'carrier', title: 'Carriers', iconName: 'train-outline' },
+		{ id: 'dispatcher', title: 'Dispatchers', iconName: 'business-outline' },
+		{ id: 'truck', title: 'Trucks', iconName: 'bus-outline' },
 		{ id: 'shipper', title: 'Shippers', iconName: 'boat-outline' },
 	];
 

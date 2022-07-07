@@ -70,6 +70,7 @@ export interface IOrderRoute {
 }
 
 export type OrderDirection = 'import' | 'export' | 'internal';
+
 export interface IExpressOrderDto extends IFreightOrderBase {
 	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
 	readonly route?: IOrderRoute;
@@ -96,6 +97,7 @@ export interface IExpressOrderBrief extends IFreightOrderBase {
 export type IExpressOrderContext = INavContext<IExpressOrderBrief, IExpressOrderDto>;
 
 export interface ICreateExpressOrderRequest extends ITeamRequest {
+	readonly numberOfContainers?: { [size: string]: number };
 	readonly order: IExpressOrderDto;
 }
 

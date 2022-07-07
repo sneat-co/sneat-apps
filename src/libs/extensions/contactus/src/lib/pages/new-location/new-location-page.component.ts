@@ -33,7 +33,8 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	submit(): void {
 		const { title, countryID, address } = this.contactDto;
-		if (!title || !countryID || !address) {
+		console.log('submit', title, countryID, address);
+		if (!title || !countryID || !address || !address.lines?.length) {
 			alert('Please populate all required fields');
 			return;
 		}

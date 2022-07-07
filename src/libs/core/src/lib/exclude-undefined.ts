@@ -32,3 +32,20 @@ export function excludeEmpty<T>(obj: T): T {
 			{} as T,
 		);
 }
+
+export function excludeZeroValues<T>(obj: T): T {
+	const o = obj as any;
+	return Object
+		.keys(obj)
+		.reduce(
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			(r: any, k: string) => {
+				const v = o[k];
+				if (v !== undefined && v !== 0) {
+					r[k] = v;
+				}
+				return r;
+			},
+			{} as T,
+		);
+}

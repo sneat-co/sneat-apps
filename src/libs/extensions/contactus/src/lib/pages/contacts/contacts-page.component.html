@@ -31,12 +31,12 @@
 	<ion-segment *ngIf="team?.type === 'company'" [(ngModel)]="role" (ionChange)="onRoleChanged($event)">
 <!--		<ion-segment-button>All</ion-segment-button>-->
 		<ion-segment-button *ngFor="let r of roles" [value]="r.id">
+			<ion-icon [name]="r.iconName" *ngIf="r.iconName"></ion-icon>
 			<ion-label style="font-size: smaller">{{r.title}}
 				<ion-badge color="light">
 					<ion-label color="medium" style="font-size: smaller; font-weight: normal;">{{contactsNumber(r.id)}}</ion-label>
 				</ion-badge>
 			</ion-label>
-
 		</ion-segment-button>
 	</ion-segment>
 

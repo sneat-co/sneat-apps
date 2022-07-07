@@ -17,6 +17,7 @@
 	</ion-card>
 
 	<sneat-location-form
+		*ngIf="!!contactType"
 		[(contactDto)]="contactDto"
 		label="Company details"
 		(contactDtoChange)="onContactDtoChanged($event)"
@@ -25,7 +26,7 @@
 
 	<ion-card>
 		<ion-card-content>
-			<ion-button (click)="create()" [disabled]="isCreating">Create company</ion-button>
+			<ion-button (click)="create()" [disabled]="isCreating || !formIsValid" >Create company</ion-button>
 		</ion-card-content>
 	</ion-card>
 

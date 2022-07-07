@@ -18,12 +18,14 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		dto: {
 			status: 'draft',
 			direction: 'export',
-			route: {
-				origin: { id: 'origin', countryID: '' },
-				destination: { id: 'destination', countryID: '' },
-			},
+			// route: {
+			// 	origin: { id: 'origin', countryID: '' },
+			// 	destination: { id: 'destination', countryID: '' },
+			// },
 		},
 	};
+
+	private numberOfContainers: {[size: string]: number} = {};
 
 	readonly = false;
 
@@ -36,6 +38,11 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	) {
 		super('NewExpressOrderPageComponent', route, teamParams);
 		console.log('NewExpressOrderPageComponent');
+	}
+
+	get formIsValid(): boolean {
+		return !!this.order.dto?.route?.origin?.countryID
+			&& !!this.order.dto?.route?.destination?.countryID;
 	}
 
 	protected override onTeamIdChanged() {
@@ -65,7 +72,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			.subscribe({
 				next: this.processTeamContact,
 				error: this.errorLogger.logErrorHandler('failed to load express team default contact'),
-			})
+			});
 	}
 
 	private readonly processTeamContact = (contact: IContactContext): void => {
@@ -91,11 +98,17 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			};
 		}
 		console.log('order: 2', this.order);
-	}
+	};
 
 	onOrderChanged(order: IExpressOrderContext): void {
 		console.log('NewExpressOrderPageComponent.onOrderChanged():', order);
 		this.order = order;
+	}
+
+
+	onNumberOfContainersChanged(v: {[size: string]: number}): void {
+		console.log('NewExpressOrderPageComponent.onNumberOfContainersChanged():', v);
+		this.numberOfContainers = v;
 	}
 
 	createOrder(): void {
@@ -105,10 +118,35 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		if (!this.order?.dto) {
 			throw new Error('!this.order?.dto');
 		}
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'carrier')) {
+			alert('Carrier is required');
+			return;
+		}
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'buyer')) {
+			alert('Buyer is required');
+			return;
+		}
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'dispatcher')) {
+			alert('At least 1 dispatcher is required');
+			return;
+		}
+		// if (!this.order?.dto?.route?.origin?.countryID) {
+		// 	alert('Origin country is required');
+		// 	return;
+		// }
+		// if (!this.order?.dto?.route?.destination?.countryID) {
+		// 	alert('Destination country is required');
+		// 	return;
+		// }
 		const request: ICreateExpressOrderRequest = {
 			teamID: this.team.id,
-			order: this.order.dto,
+			order: {
+				...this.order.dto,
+				route: Object.keys(this.order?.dto?.route || {}).length ? this.order.dto.route : undefined,
+			},
+			numberOfContainers: Object.keys(this.numberOfContainers).length ? this.numberOfContainers : undefined,
 		};
+
 		this.freightOrdersService.createOrder(request).subscribe({
 			next: response => {
 				console.log('order created:', response);

@@ -62,6 +62,20 @@ export class ContactService {
 		}
 		return this.teamItemService.watchTeamItems(team, f);
 	}
+
+	watchChildContacts(team: ITeamContext, id: string, filter: IContactsFilter = {status: 'active'}): Observable<IContactContext[]> {
+		console.log('watchRelatedContacts, id:', id);
+		const f: IFilter[] = [
+			{ field: 'parentContactID', value: id, operator: '==' },
+		];
+		if (filter.status) {
+			f.push({ field: 'status', value: filter.status, operator: '==' });
+		}
+		if (filter.role) {
+			f.push({ field: 'roles', operator: 'array-contains', value: filter.role });
+		}
+		return this.teamItemService.watchTeamItems(team, f);
+	}
 }
 
 export interface IContactsFilter {
