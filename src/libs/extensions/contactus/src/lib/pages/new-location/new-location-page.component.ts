@@ -13,6 +13,8 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	contactDto: IContactDto = { type: 'location' };
 
+	isCreating = false;
+
 	constructor(
 		route: ActivatedRoute,
 		params: ContactComponentBaseParams,
@@ -22,25 +24,31 @@ export class NewLocationPageComponent extends ContactBasePage {
 		this.defaultBackPage = 'contacts';
 	}
 
-	isCreating = false;
+	protected override onTeamDtoChanged() {
+		super.onTeamDtoChanged();
+		if (this.team?.dto?.countryID && !this.contactDto.countryID) {
+			this.contactDto = { ...this.contactDto, countryID: this.team.dto.countryID };
+		}
+	}
 
 	submit(): void {
 		const { title, countryID, address } = this.contactDto;
-		if (!title || !countryID || !address) {
+		console.log('submit', title, countryID, address);
+		if (!title || !countryID || !address || !address.lines?.length) {
 			alert('Please populate all required fields');
 			return;
 		}
 		const request: ICreateContactRequest = {
 			teamID: this.team.id,
+			type: 'location',
 			parentContactID: this.contact?.id,
 			location: {
 				title,
-				countryID,
 				address,
 			},
 		};
 		this.isCreating = true;
-		this.contactService.createContact(request)
+		this.contactService.createContact(this.team, request)
 			.subscribe({
 				next: newContact => {
 					console.log('new location created with ID=' + newContact.id);

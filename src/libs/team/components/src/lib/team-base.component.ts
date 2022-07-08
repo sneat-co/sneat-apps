@@ -91,7 +91,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	public get currentUserId() {
-		return this.userService.currentUserId;
+		return this.userService.currentUserID;
 	}
 
 

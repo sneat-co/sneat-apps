@@ -25,11 +25,13 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	public role?: ContactRole;
 	private contactsSubscription?: Subscription;
 
-	roles: ISelectItem[] = [
-		{ id: '', title: 'All', iconName: 'body-outline' },
+	readonly roles: ISelectItem[] = [
+		{ id: '', title: 'All', iconName: 'people-outline' },
 		{ id: 'agent', title: 'Agents', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyers', iconName: 'cash-outline' },
 		{ id: 'carrier', title: 'Carriers', iconName: 'train-outline' },
+		{ id: 'dispatcher', title: 'Dispatchers', iconName: 'business-outline' },
+		{ id: 'truck', title: 'Trucks', iconName: 'bus-outline' },
 		{ id: 'shipper', title: 'Shippers', iconName: 'boat-outline' },
 	];
 
@@ -77,7 +79,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return;
 		}
 		if (teamDto.type === 'family') {
-			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief }));
+			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief, team: this.team }));
 			this.applyFilter(this.filter, this.role);
 		}
 	}
@@ -120,7 +122,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			);
 	}
 
-	goContact = (contact?: IContactContext): void => {
+	readonly goContact = (contact?: IContactContext): void => {
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;

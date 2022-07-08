@@ -8,12 +8,12 @@
 		<ion-select-option value="other">OTHER</ion-select-option>
 	</ion-select>
 </ion-item>
-<ion-item *ngIf="isFilterable && !value">
-	<ion-input
-		[(ngModel)]="filter"
-		placeholder="filter"
-	></ion-input>
-</ion-item>
+<!--<ion-item *ngIf="isFilterable && !value">-->
+<!--	<ion-input-->
+<!--		[(ngModel)]="filter"-->
+<!--		placeholder="filter"-->
+<!--	></ion-input>-->
+<!--</ion-item>-->
 <ng-container *ngIf="!value">
 	<ion-item-divider color="light" *ngIf="!isFilterable">
 		<ion-label color="medium">{{label}}</ion-label>
@@ -42,4 +42,13 @@
 <!--			<ion-label>OTHER</ion-label>-->
 <!--		</ion-item>-->
 	</ion-radio-group>
+	<ion-item-divider *ngIf="hiddenCount">
+		<ion-label color="medium">{{hiddenCount}} out of {{items?.length}} items are hidden by filter</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="clearFilter()">
+				<ion-icon name="close-outline" slot="start"></ion-icon>
+				<ion-label>Clear filter</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
 </ng-container>

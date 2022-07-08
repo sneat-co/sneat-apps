@@ -28,15 +28,15 @@
 
 <ion-content class="cardy">
 
-	<ion-segment [(ngModel)]="role" (ionChange)="onRoleChanged($event)">
+	<ion-segment *ngIf="team?.type === 'company'" [(ngModel)]="role" (ionChange)="onRoleChanged($event)">
 <!--		<ion-segment-button>All</ion-segment-button>-->
 		<ion-segment-button *ngFor="let r of roles" [value]="r.id">
+			<ion-icon [name]="r.iconName" *ngIf="r.iconName"></ion-icon>
 			<ion-label style="font-size: smaller">{{r.title}}
 				<ion-badge color="light">
 					<ion-label color="medium" style="font-size: smaller; font-weight: normal;">{{contactsNumber(r.id)}}</ion-label>
 				</ion-badge>
 			</ion-label>
-
 		</ion-segment-button>
 	</ion-segment>
 
@@ -56,8 +56,8 @@
 
 		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
 			<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: id">
-				<sneat-contact-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
-														[excludeRole]="role"></sneat-contact-item>
+				<sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
+														[excludeRole]="role"></sneat-contacts-list-item>
 			</ion-item-sliding>
 			<ion-item button (click)="goNewContact()" *ngIf="canAdd">
 				<ion-icon name="add" color="primary"></ion-icon>

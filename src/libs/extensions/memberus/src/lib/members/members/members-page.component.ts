@@ -124,7 +124,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 			this.members = this.team.dto.members.map(m => memberContextFromBrief(m, this.team));
 			this.processMembers();
 		} else {
-			this.membersService.watchMembersByTeamID(this.team.id)
+			this.membersService.watchTeamMembers(this.team)
 				.pipe(
 					takeUntil(this.teamIDChanged$),
 				)
@@ -150,7 +150,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		}
 
 		if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
-			this.memberGroupService.watchMemberGroupsByTeamID(this.team.id)
+			this.memberGroupService.watchMemberGroupsByTeam(this.team)
 				.subscribe(memberGroups => {
 					if (memberGroups && (!this.memberGroups || memberGroups.length !== this.memberGroups.length)) { // TODO: deep equal
 						this.memberGroups = memberGroups;

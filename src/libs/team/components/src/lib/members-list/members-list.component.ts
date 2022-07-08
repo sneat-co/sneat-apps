@@ -108,7 +108,7 @@ export class MembersListComponent implements OnChanges {
 				},
 			};
 		}
-		this.selfRemove = member.brief?.userID === this.userService.currentUserId;
+		this.selfRemove = member.brief?.userID === this.userService.currentUserID;
 		const teamId = this.team.id;
 		this.teamService.removeTeamMember(this.team, member.id).subscribe({
 			next: (team) => {
@@ -122,8 +122,8 @@ export class MembersListComponent implements OnChanges {
 				}
 				if (
 					!team ||
-					(this.userService.currentUserId &&
-						team?.dto?.userIDs?.indexOf(this.userService.currentUserId) || -1 < 0)
+					(this.userService.currentUserID &&
+						team?.dto?.userIDs?.indexOf(this.userService.currentUserID) || -1 < 0)
 				) {
 					this.navService.navigateToTeams('back');
 				}

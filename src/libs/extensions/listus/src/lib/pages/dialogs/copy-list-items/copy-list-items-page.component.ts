@@ -95,7 +95,7 @@ export class CopyListItemsPageComponent implements OnInit {
 	private loadList(): void {
 		console.log(`CopyListItemsPage.loadList(${this.from?.id})`);
 		if (this.from?.id) {
-			this.listService.getListById('TO_BE_IMPLEMENTED', 'TO_BE_IMPLEMENTED' as ListType, this.from.id)
+			this.listService.getListById({id: 'TO_BE_IMPLEMENTED'}, 'TO_BE_IMPLEMENTED' as ListType, this.from.id)
 				.subscribe({
 					next: list => {
 						console.log('loaded list:', list);

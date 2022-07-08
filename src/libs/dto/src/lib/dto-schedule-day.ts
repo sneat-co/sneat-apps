@@ -12,9 +12,14 @@ export interface IHappeningAdjustment {
 	canceled?: ICanceled;
 }
 
+
 export interface IScheduleDayDto {
 	teamID: string;
 	date: string;
 	happeningIDs?: string[];
 	happeningAdjustments: IHappeningAdjustment[];
+}
+
+export interface IScheduleDayBrief extends IScheduleDayDto {
+	id: string;
 }

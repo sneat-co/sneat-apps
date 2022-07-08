@@ -15,7 +15,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 })
 export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 
-	@Input() team?: ITeamContext;
+	@Input() override team?: ITeamContext;
 
 	vehicleType?: VehicleType;
 	vehicleTypes: ISelectItem[] = [

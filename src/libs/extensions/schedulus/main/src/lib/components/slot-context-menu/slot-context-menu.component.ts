@@ -83,6 +83,9 @@ export class SlotContextMenuComponent {
 		if (!happening) {
 			return;
 		}
+		if (!this.team) {
+			return;
+		}
 		const slotID = this.slot?.slotID;
 		const slots = happening?.dto?.slots || happening?.brief?.slots;
 		const happeningSlot: IHappeningSlot | undefined = slots?.find(slot => slot.id === slotID);

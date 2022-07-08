@@ -128,7 +128,7 @@ export class InvitePersonalPageComponent implements OnInit {
 				);
 		};
 
-		if (this.userService.currentUserId) {
+		if (this.userService.currentUserID) {
 			acceptInvite(undefined);
 		} else {
 			// Move into service?

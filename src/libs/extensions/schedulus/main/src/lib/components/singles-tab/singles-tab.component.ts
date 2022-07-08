@@ -75,7 +75,7 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 			this.singlesSubscription?.unsubscribe();
 		}
 		if (this.team) {
-			this.singlesSubscription = this.happeningService.watchUpcomingSingles(this.team?.id).subscribe({
+			this.singlesSubscription = this.happeningService.watchUpcomingSingles(this.team).subscribe({
 				next: singles => {
 					this.allUpcomingSingles = singles;
 					this.applyFilter();

@@ -56,7 +56,7 @@ export class SneatUserService {
 			});
 	}
 
-	public get currentUserId(): string | undefined {
+	public get currentUserID(): string | undefined {
 		return this.uid;
 	}
 

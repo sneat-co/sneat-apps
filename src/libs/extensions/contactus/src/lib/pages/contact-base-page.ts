@@ -9,6 +9,7 @@ import { ContactService } from '../services';
 export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
 
 	public contact?: IContactContext;
+	public contactLocations?: IContactContext[];
 
 	protected readonly contactService: ContactService;
 
@@ -33,7 +34,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		if (!this.contact?.id) {
 			return throwError(() => new Error('no contact context'));
 		}
-		return this.contactService.watchById(this.team.id, this.contact?.id);
+		return this.contactService.watchContactById(this.team, this.contact?.id);
 	}
 
 	override setItemContext(item: IContactContext): void {
@@ -57,7 +58,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 					const id = params.get('contactID');
 					if (id) {
 						if (this.contact?.id !== id) {
-							this.contact = { id };
+							this.contact = { id, team: this.team };
 						}
 					} else {
 						this.contact = undefined;

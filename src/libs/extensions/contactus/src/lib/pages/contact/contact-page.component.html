@@ -67,10 +67,10 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ion-item-divider>
+		<ion-item-divider *ngIf="contactLocations && !contactLocations.length">
 			<ion-label>No locations have been added yet.</ion-label>
-
 		</ion-item-divider>
+		<sneat-contacts-list [contacts]="contactLocations"></sneat-contacts-list>
 	</ion-card>
 
 </ion-content>

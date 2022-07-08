@@ -10,7 +10,7 @@ import {
 import { ModalController } from '@ionic/angular';
 import { ISelectItem } from '@sneat/components';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IFreightContainer } from '../..';
+import { IExpressOrderContext, IOrderContainer } from '../..';
 import { NewContainerComponent } from '../new-container/new-container.component';
 
 @Component({
@@ -25,7 +25,7 @@ export class OrderContainersComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
-	containers?: ReadonlyArray<IFreightContainer>;
+	containers?: ReadonlyArray<IOrderContainer>;
 
 	constructor(
 		private readonly modalController: ModalController,

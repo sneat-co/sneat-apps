@@ -55,7 +55,8 @@
 	<!--		</ion-item>-->
 	<!--	</ion-list>-->
 
-	<div class="ion-padding" *ngIf="personFormIsReadyToSubmit">
+	<div class="ion-padding" *ngIf="!isContactNotReady">
+<!--		*ngIf="personFormIsReadyToSubmit"-->
 		<ion-button expand="full" [disabled]="creating || isContactNotReady" (click)="submit()">
 			<ion-label>Create contact</ion-label>
 		</ion-button>

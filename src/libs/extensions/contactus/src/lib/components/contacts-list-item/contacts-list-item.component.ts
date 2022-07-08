@@ -2,25 +2,36 @@ import { Component, Inject, Input } from '@angular/core';
 import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
+import { TeamNavService } from '@sneat/team/services';
 import { ContactService } from '../../services';
 
 @Component({
-	selector: 'sneat-contact-item',
-	templateUrl: './contact-list-item.component.html',
-	styleUrls: ['./contact-list-item.component.scss'],
+	selector: 'sneat-contacts-list-item',
+	templateUrl: './contacts-list-item.component.html',
+	styleUrls: ['./contacts-list-item.component.scss'],
 })
-export class ContactListItemComponent {
+export class ContactsListItemComponent {
 
 	@Input() excludeRole?: ContactRole;
 	@Input() contact?: IContactContext;
+	@Input() showAddress = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly teamNavService: TeamNavService,
 		private readonly contactService: ContactService,
 	) {
 	}
 
-	@Input() goContact: (c?: IContactContext) => void = () => void 0;
+	@Input() goContact = (contact?: IContactContext): void => {
+		if (!contact) {
+			this.errorLogger.logError('no contact');
+			return;
+		}
+		this.teamNavService.navigateForwardToTeamPage(contact.team, `contact/${contact.id}`, {
+			state: { contact },
+		}).catch(this.errorLogger.logErrorHandler('failed to navigate to contact page'));
+	};
 
 	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
 

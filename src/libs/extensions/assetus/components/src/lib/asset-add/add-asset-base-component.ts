@@ -5,6 +5,8 @@ import { AssetService } from '../asset-service';
 import { ICreateAssetRequest } from '../asset-service.dto';
 
 export abstract class AddAssetBaseComponent {
+	public team?: ITeamContext;
+
 	public country = 'ie';
 
 	public isSubmitting = false;
@@ -20,7 +22,10 @@ export abstract class AddAssetBaseComponent {
 	}
 
 	protected createAssetAndGoToAssetPage(request: ICreateAssetRequest, team: ITeamContext): void {
-		this.assetService.createAsset(request)
+		if (!this.team) {
+			throw new Error('no team context');
+		}
+		this.assetService.createAsset(this.team, request)
 			.subscribe({
 				next: asset => {
 					if (!asset.brief && asset.dto) {

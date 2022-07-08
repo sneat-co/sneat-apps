@@ -1,14 +1,14 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { FreightOrdersService, IContainerRequest, IExpressOrderContext, IFreightContainer } from '../..';
+import { FreightOrdersService, IContainerRequest, IExpressOrderContext, IOrderContainer } from '../..';
 
 @Component({
 	selector: 'sneat-order-container-form',
 	templateUrl: './container-form.component.html',
 })
 export class ContainerFormComponent {
-	@Input() container?: IFreightContainer;
+	@Input() container?: IOrderContainer;
 	@Input() order?: IExpressOrderContext;
 	@Input() team?: ITeamContext;
 	@Input() i = 0;

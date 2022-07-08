@@ -107,7 +107,7 @@ export class TeamService {
 		}
 		subj = new BehaviorSubject<ITeamContext>(teamContext);
 		this.teams$[id] = subj;
-		if (this.userService.currentUserId) {
+		if (this.userService.currentUserID) {
 			this.subscribeForTeamChanges(subj);
 		} else {
 			this.userService.userState
@@ -189,7 +189,7 @@ export class TeamService {
 		});
 		if (teamRecord?.dto?.members) {
 			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberID);
-			if (member?.userID === this.userService.currentUserId) {
+			if (member?.userID === this.userService.currentUserID) {
 				const teamRequest: ITeamRequest = {
 					teamID: teamRecord.id,
 				};

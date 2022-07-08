@@ -72,10 +72,10 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	public getScrums(teamId: string, limit = 10): Observable<IRecord<IScrumDto>[]> {
-		console.log('getScrums()', teamId, limit, this.userService.currentUserId);
+		console.log('getScrums()', teamId, limit, this.userService.currentUserID);
 		const scrums = this.scrumsCollection(teamId);
 		const query = scrums.ref
-			.where('userIDs', 'array-contains', this.userService.currentUserId)
+			.where('userIDs', 'array-contains', this.userService.currentUserID)
 			.orderBy(FieldPath.documentId(), 'desc')
 			.limit(limit);
 		return from(query.get()).pipe(

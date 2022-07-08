@@ -16,8 +16,8 @@
 	</ion-item>
 	<ion-item *ngIf="!readonly" color="primary" class="sneat-tiny-end-padding">
 		<ion-label>Order # <b>{{order?.id}}</b> - {{order?.brief?.direction}}</ion-label>
-<!--		<ion-input readonly [value]="order?.id" style="font-weight: bold"-->
-<!--							 (click)="$event.stopPropagation(); $event.preventDefault()"></ion-input>-->
+		<!--		<ion-input readonly [value]="order?.id" style="font-weight: bold"-->
+		<!--							 (click)="$event.stopPropagation(); $event.preventDefault()"></ion-input>-->
 		<ion-buttons slot="end">
 			<ion-button color="light" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
 				<ion-icon name="clipboard-outline" slot="end"></ion-icon>
@@ -51,11 +51,13 @@
 			</ion-col>
 		</ion-row>
 
-		<sneat-express-order-counterparty [team]="team"
-																			[order]="order"
-																			[readonly]="readonly"
-																			counterpartyRole="dispatcher"
-																			labelPosition="fixed"
+		<sneat-express-order-counterparty
+			*ngIf="!hideDispatchers"
+			[team]="team"
+			[order]="order"
+			[readonly]="readonly"
+			counterpartyRole="dispatcher"
+			labelPosition="fixed"
 		></sneat-express-order-counterparty>
 
 		<ion-item-group>

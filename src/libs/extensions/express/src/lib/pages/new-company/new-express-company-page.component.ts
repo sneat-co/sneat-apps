@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { IContactDto } from '@sneat/dto';
+import { IContactDto, validateAddress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateContactCompanyRequest } from '@sneat/team/models';
@@ -18,6 +18,7 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
 		{ id: 'carrier', title: 'Carrier', iconName: 'train-outline' },
+		{ id: 'dispatcher', title: 'Dispatcher', iconName: 'business-outline' },
 		{ id: 'shipper', title: 'Shipper', iconName: 'boat-outline' },
 	];
 
@@ -25,6 +26,14 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 	isCreating = false;
 
 	contactDto: IContactDto = { type: 'company' };
+
+	get formIsValid(): boolean {
+		try {
+			return !!this.contactType && !!this.contactDto.title && !!validateAddress(this.contactDto.address);
+		} catch (e) {
+			return false;
+		}
+	}
 
 	constructor(
 		route: ActivatedRoute,
@@ -54,30 +63,37 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 			alert('Contact title is a required field');
 			return;
 		}
-		const request: ICreateContactCompanyRequest = excludeEmpty({
-			company: excludeEmpty({
-				countryID: this.contactDto.countryID || '--',
-				title: this.contactDto.title?.trim() || '',
-				address: this.contactDto.address?.trim() || undefined,
+		try {
+			const address = validateAddress(this.contactDto.address);
+			const request: ICreateContactCompanyRequest = excludeEmpty({
+				type: 'company',
+				company: excludeEmpty({
+					title: this.contactDto.title?.trim() || '',
+					address,
+					roles: [this.contactType],
+				}),
 				roles: [this.contactType],
-			}),
-			roles: [this.contactType],
-			teamID: this.team.id,
-		});
-		this.isCreating = true;
-		this.contactService.createContact(request).subscribe({
-			next: contact => {
-				console.log('created contact:', contact);
-				this.navController.pop().catch(() => {
-					this.navController
-						.navigateBack(['contacts'], { relativeTo: this.route })
-						.catch(this.errorLogger.logErrorHandler('failed to navigate back to contacts page'));
-				});
-			},
-			error: err => {
-				this.errorLogger.logError(err, 'Failed to create contact');
-				this.isCreating = false;
-			},
-		});
+				teamID: this.team.id,
+			});
+			this.isCreating = true;
+			this.contactService.createContact(this.team, request).subscribe({
+				next: contact => {
+					console.log('created contact:', contact);
+					this.navController.pop().catch(() => {
+						this.navController
+							.navigateBack(['contacts'], { relativeTo: this.route })
+							.catch(this.errorLogger.logErrorHandler('failed to navigate back to contacts page'));
+					});
+				},
+				error: err => {
+					this.errorLogger.logError(err, 'Failed to create contact');
+					this.isCreating = false;
+				},
+			});
+		} catch (e) {
+			alert(e);
+			return;
+		}
 	}
+
 }

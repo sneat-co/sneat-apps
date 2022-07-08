@@ -14,7 +14,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() readonly = false;
 	@Input() useColumns = true;
 	@Input() team?: ITeamContext;
-	@Input() counterpartyRole: ContactRoleExpress | '' = '';
+	@Input() counterpartyRole?: ContactRoleExpress;
 
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
@@ -27,7 +27,9 @@ export class OrderCounterpartyComponent implements OnChanges {
 
 	savingRefNumber = false;
 
-	readonly label = () => this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1);
+	readonly label = () => this.counterpartyRole?.length
+		? this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1)
+		: 'Counterparty';
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

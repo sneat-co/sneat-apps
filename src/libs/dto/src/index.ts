@@ -2,6 +2,7 @@ export * from './lib/ui-state';
 export * from './lib/data';
 export * from './lib/contact-roles';
 export * from './lib/dto-app';
+export * from './lib/dto-address';
 export * from './lib/dto-asset';
 export * from './lib/dto-bill';
 export * from './lib/dto-commune';

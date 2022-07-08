@@ -1,10 +1,8 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
-import { memberContextFromBrief } from '@sneat/team/services';
-import { Observable, Subject } from 'rxjs';
+import { IMemberContext } from '@sneat/team/models';
+import { Observable } from 'rxjs';
 import { ISelectMembersOptions } from './members-selector.options';
 
 

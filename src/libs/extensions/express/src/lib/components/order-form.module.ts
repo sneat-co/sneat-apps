@@ -7,8 +7,10 @@ import { ContactInputModule } from '@sneat/extensions/contactus';
 import { FreightOrdersServiceModule } from '../services';
 import { OrderCardComponent } from './order-card/order-card.component';
 import { OrderPrintMenuComponent } from './order-card/order-print-menu.component';
+import { OrderCounterpartiesCardComponent } from './order-counterparties-card/order-counterparties-card.component';
 import { OrderCounterpartyInputComponent } from './order-counterparty-input/order-counterparty-input.component';
 import { OrderCounterpartyComponent } from './order-counterparty/order-counterparty.component';
+import { OrderShippingPointsCardComponent } from './order-shipping-points-card/order-shipping-points-card.component';
 
 @NgModule({
 	imports: [
@@ -24,11 +26,15 @@ import { OrderCounterpartyComponent } from './order-counterparty/order-counterpa
 		OrderPrintMenuComponent,
 		OrderCounterpartyComponent,
 		OrderCounterpartyInputComponent,
+		OrderCounterpartiesCardComponent,
+		OrderShippingPointsCardComponent,
 	],
 	exports: [
 		OrderCardComponent,
 		OrderCounterpartyInputComponent,
 		OrderCounterpartyComponent,
+		OrderCounterpartiesCardComponent,
+		OrderShippingPointsCardComponent,
 	],
 })
 export class OrderFormModule {

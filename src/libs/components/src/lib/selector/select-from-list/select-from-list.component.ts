@@ -32,6 +32,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges 
 	@ViewChild(IonInput, { static: false }) addInput?: IonInput;
 
 	displayItems?: ISelectItem[];
+	hiddenCount = 0;
 
 	public isDisabled = false;
 
@@ -54,6 +55,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges 
 		const f = this.filter.trim().toLowerCase();
 		console.log('applyFilter', f);
 		this.displayItems = f ? this.items?.filter(v => v.title.toLowerCase().includes(f)) : this.items;
+		this.hiddenCount = (this.items?.length||0) - (this.displayItems?.length||0);
 	}
 
 	onRadioChanged(event: Event): void {

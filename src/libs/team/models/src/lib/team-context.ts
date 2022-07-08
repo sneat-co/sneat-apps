@@ -28,8 +28,8 @@ export interface ITeamRef {
 
 export interface ITeamContext extends ITeamRef, INavContext<ITeamBrief, ITeamDto> {
 	// readonly type?: TeamType;
-	readonly assets?: IAssetContext[];
-	readonly contacts?: IContactContext[];
+	readonly assets?: IAssetContext[]; // TODO: this should not be here
+	readonly contacts?: IContactContext[]; // TODO: this should not be here
 };
 
 export const teamContextFromBrief = (brief: ITeamBrief): ITeamContext => ({ id: brief.id, type: brief.type, brief });

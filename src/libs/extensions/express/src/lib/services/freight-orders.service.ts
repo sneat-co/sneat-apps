@@ -42,7 +42,8 @@ export class FreightOrdersService {
 
 	public watchOrderByID(teamID: string, orderID: string): Observable<IExpressOrderContext> {
 		return this.afs
-			.collection('express_teams').doc(teamID)
+			.collection('teams').doc(teamID)
+			.collection('modules').doc('express')
 			.collection<IExpressOrderDto>('orders').doc(orderID).snapshotChanges()
 			.pipe(
 				map(docSnapshot => {
@@ -54,11 +55,13 @@ export class FreightOrdersService {
 	public watchFreightOrders(teamID: string, filter?: IOrdersFilter): Observable<IExpressOrderContext[]> {
 		console.log('watchFreightOrders()', teamID, filter);
 		return this.afs
-			.collection('express_teams').doc(teamID)
+			.collection('teams').doc(teamID)
+			.collection('modules').doc('express')
 			.collection<IExpressOrderDto>('orders',
 				ref => {
 					let query = ref
 						.where('status', '==', filter?.status || 'active')
+						// .where('userIDs', 'array-contains', 'userID')
 						.orderBy('created.at', 'desc');
 
 					let keysVal = '';

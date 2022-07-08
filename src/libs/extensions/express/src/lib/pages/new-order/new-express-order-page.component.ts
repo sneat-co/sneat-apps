@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContactRoleExpress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
+import { IContactContext } from '@sneat/team/models';
 import { first, NEVER, switchMap, takeUntil } from 'rxjs';
 import { ExpressTeamService, FreightOrdersService, IOrderCounterparty } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -17,12 +18,14 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		dto: {
 			status: 'draft',
 			direction: 'export',
-			route: {
-				origin: { id: 'origin', countryID: '' },
-				destination: { id: 'destination', countryID: '' },
-			},
+			// route: {
+			// 	origin: { id: 'origin', countryID: '' },
+			// 	destination: { id: 'destination', countryID: '' },
+			// },
 		},
 	};
+
+	private numberOfContainers: {[size: string]: number} = {};
 
 	readonly = false;
 
@@ -37,6 +40,11 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		console.log('NewExpressOrderPageComponent');
 	}
 
+	get formIsValid(): boolean {
+		return !!this.order.dto?.route?.origin?.countryID
+			&& !!this.order.dto?.route?.destination?.countryID;
+	}
+
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
 		if (!this.team?.id) {
@@ -47,45 +55,60 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			.pipe(
 				this.takeUntilNeeded(),
 				takeUntil(this.teamIDChanged$),
-				switchMap(expressTeam => {
-					console.log('expressTeam:', expressTeam);
-					return !expressTeam.dto ? NEVER
-						: this.contactService
-							.watchById(this.team.id, expressTeam.dto.contactID)
-							.pipe(first());
-				}),
 			).subscribe({
-			next: contact => {
-				console.log('contact:', contact);
-				if (!contact.dto) {
-					return;
+			next: expressTeam => {
+				if (expressTeam.dto?.contactID) {
+					this.loadTeamContact(expressTeam.dto.contactID);
 				}
-				const orderCounterparty: IOrderCounterparty = {
-					contactID: contact.id,
-					title: contact.dto.title || contact.id,
-					countryID: contact.dto.countryID || '',
-					address: contact.dto.address,
-					role: contact.dto?.roles?.length ? contact.dto.roles[0] as ContactRoleExpress : 'carrier',
-				};
-				console.log('order: 1', this.order);
-				if (this.order?.dto) {
-					this.order = {
-						...this.order,
-						dto: {
-							...this.order.dto,
-							counterparties: [...this.order.dto.counterparties || [], orderCounterparty],
-						},
-					};
-				}
-				console.log('order: 2', this.order);
 			},
-			error: this.errorLogger.logErrorHandler('failed to load contact'),
+			error: this.errorLogger.logErrorHandler('failed to load express module record'),
 		});
 	}
+
+	private loadTeamContact(contactID: string): void {
+		this.contactService
+			.watchContactById(this.team, contactID)
+			.pipe(first())
+			.subscribe({
+				next: this.processTeamContact,
+				error: this.errorLogger.logErrorHandler('failed to load express team default contact'),
+			});
+	}
+
+	private readonly processTeamContact = (contact: IContactContext): void => {
+		console.log('contact:', contact);
+		if (!contact.dto) {
+			return;
+		}
+		const orderCounterparty: IOrderCounterparty = {
+			contactID: contact.id,
+			title: contact.dto.title || contact.id,
+			countryID: contact.dto.countryID || '',
+			address: contact.dto.address,
+			role: contact.dto?.roles?.length ? contact.dto.roles[0] as ContactRoleExpress : 'carrier',
+		};
+		console.log('order: 1', this.order);
+		if (this.order?.dto) {
+			this.order = {
+				...this.order,
+				dto: {
+					...this.order.dto,
+					counterparties: [...this.order.dto.counterparties || [], orderCounterparty],
+				},
+			};
+		}
+		console.log('order: 2', this.order);
+	};
 
 	onOrderChanged(order: IExpressOrderContext): void {
 		console.log('NewExpressOrderPageComponent.onOrderChanged():', order);
 		this.order = order;
+	}
+
+
+	onNumberOfContainersChanged(v: {[size: string]: number}): void {
+		console.log('NewExpressOrderPageComponent.onNumberOfContainersChanged():', v);
+		this.numberOfContainers = v;
 	}
 
 	createOrder(): void {
@@ -95,10 +118,35 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		if (!this.order?.dto) {
 			throw new Error('!this.order?.dto');
 		}
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'carrier')) {
+			alert('Carrier is required');
+			return;
+		}
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'buyer')) {
+			alert('Buyer is required');
+			return;
+		}
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'dispatcher')) {
+			alert('At least 1 dispatcher is required');
+			return;
+		}
+		// if (!this.order?.dto?.route?.origin?.countryID) {
+		// 	alert('Origin country is required');
+		// 	return;
+		// }
+		// if (!this.order?.dto?.route?.destination?.countryID) {
+		// 	alert('Destination country is required');
+		// 	return;
+		// }
 		const request: ICreateExpressOrderRequest = {
 			teamID: this.team.id,
-			order: this.order.dto,
+			order: {
+				...this.order.dto,
+				route: Object.keys(this.order?.dto?.route || {}).length ? this.order.dto.route : undefined,
+			},
+			numberOfContainers: Object.keys(this.numberOfContainers).length ? this.numberOfContainers : undefined,
 		};
+
 		this.freightOrdersService.createOrder(request).subscribe({
 			next: response => {
 				console.log('order created:', response);

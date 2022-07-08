@@ -10,73 +10,75 @@
 
 <ion-content>
 
+	<ion-card>
+		<ion-item-divider color="light">
+			<ion-label>Counterparties</ion-label>
+		</ion-item-divider>
 
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="12" size-xl="6">
-				<ion-card>
-					<ion-grid class="ion-grid-layout">
-						<sneat-express-order-counterparty [team]="team"
-																							[order]="order"
-																							(orderChange)="onOrderChanged($event)"
-																							[readonly]="readonly"
-																							[useColumns]="false"
-																							counterpartyRole="carrier"
-																							labelPosition="fixed">
-						</sneat-express-order-counterparty>
-					</ion-grid>
-				</ion-card>
-				<ion-card>
-					<ion-grid class="ion-grid-layout">
-						<sneat-express-order-counterparty [team]="team"
-																							[order]="order"
-																							(orderChange)="onOrderChanged($event)"
-																							[readonly]="readonly"
-																							[useColumns]="false"
-																							counterpartyRole="shipper"
-																							labelPosition="fixed">
-						</sneat-express-order-counterparty>
-					</ion-grid>
-				</ion-card>
-			</ion-col>
-			<ion-col size="12" size-xl="6">
-				<ion-card>
-					<ion-grid class="ion-grid-layout">
-						<sneat-express-order-counterparty [team]="team"
-																							[order]="order"
-																							(orderChange)="onOrderChanged($event)"
-																							[readonly]="readonly"
-																							[useColumns]="false"
-																							counterpartyRole="consignee"
-																							labelPosition="fixed">
-						</sneat-express-order-counterparty>
-					</ion-grid>
-				</ion-card>
-				<ion-card>
-					<ion-grid class="ion-grid-layout">
-						<sneat-express-order-counterparty [team]="team"
-																							[order]="order"
-																							(orderChange)="onOrderChanged($event)"
-																							[readonly]="readonly"
-																							[useColumns]="false"
-																							counterpartyRole="notify"
-																							labelPosition="fixed">
-						</sneat-express-order-counterparty>
-					</ion-grid>
-				</ion-card>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+		<sneat-express-order-counterparty [team]="team"
+																			[order]="order"
+																			(orderChange)="onOrderChanged($event)"
+																			[readonly]="readonly"
+																			[useColumns]="true"
+																			counterpartyRole="buyer"
+																			labelPosition="fixed">
+		</sneat-express-order-counterparty>
+
+		<sneat-express-order-counterparty [team]="team"
+																			[order]="order"
+																			(orderChange)="onOrderChanged($event)"
+																			[readonly]="readonly"
+																			[useColumns]="true"
+																			counterpartyRole="carrier"
+																			labelPosition="fixed">
+		</sneat-express-order-counterparty>
+
+		<sneat-express-order-counterparty [team]="team"
+																			[order]="order"
+																			(orderChange)="onOrderChanged($event)"
+																			[readonly]="readonly"
+																			[useColumns]="true"
+																			counterpartyRole="shipper"
+																			labelPosition="fixed">
+		</sneat-express-order-counterparty>
+
+		<sneat-express-order-counterparty [team]="team"
+																			[order]="order"
+																			(orderChange)="onOrderChanged($event)"
+																			[readonly]="readonly"
+																			[useColumns]="true"
+																			counterpartyRole="notify"
+																			labelPosition="fixed">
+		</sneat-express-order-counterparty>
+	</ion-card>
 
 
-	<sneat-order-route-card
+	<sneat-express-order-counterparties-card
+		plural="Dispatchers"
+		[team]="team"
 		[order]="order"
 		(orderChange)="onOrderChanged($event)"
-	></sneat-order-route-card>
+		[readonly]="readonly"
+	></sneat-express-order-counterparties-card>
+
+	<!--	<sneat-order-route-card-->
+	<!--		[order]="order"-->
+	<!--		(orderChange)="onOrderChanged($event)"-->
+	<!--	></sneat-order-route-card>-->
+
+	<sneat-new-order-containers-form
+		[order]="order"
+		(numberOfContainersChange)="onNumberOfContainersChanged($event)"
+	>
+	</sneat-new-order-containers-form>
 
 	<ion-card>
 		<ion-card-content>
-			<ion-button size="large" (click)="createOrder()">Create order</ion-button>
+			<ion-button size="large"
+									(click)="createOrder()"
+			>
+				<ion-label>Create order</ion-label>
+			</ion-button>
 			<ion-button disabled fill="clear" color="medium">or</ion-button>
 			<ion-button size="large" color="medium" fill="outline" (click)="cancel()">Cancel</ion-button>
 		</ion-card-content>

@@ -7,7 +7,7 @@ export class SelectedMembersPipe implements PipeTransform {
 	transform(selectedIDs: string[], memberBriefs?: IMemberBrief[]): IMemberContext[] {
 		return selectedIDs.map(id => {
 			const brief = memberBriefs?.find(b => b.id === id);
-			return {id, brief}
+			return {id, brief, team: {id: ''}} // TODO: pass team context
 		});
 	}
 }

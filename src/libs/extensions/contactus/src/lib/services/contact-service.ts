@@ -1,41 +1,58 @@
 import { Injectable } from '@angular/core';
-import { IFilter, SneatFirestoreService } from '@sneat/api';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { ContactRole, IContactBrief, IContactDto, TeamCounter } from '@sneat/dto';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
-import { TeamItemBaseService } from '@sneat/team/services';
+import { TeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
-
-export const contactBriefFromDto = (id: string, dto: IContactDto): IContactBrief => ({ id, ...dto });
 
 @Injectable()
 export class ContactService {
-	private readonly sfs: SneatFirestoreService<IContactBrief, IContactDto>;
+
+	private readonly teamItemService: TeamItemService<IContactBrief, IContactDto>;
 
 	constructor(
-		private readonly teamItemService: TeamItemBaseService,
+		afs: AngularFirestore,
+		sneatApiService: SneatApiService,
 	) {
-		this.sfs = new SneatFirestoreService('team_contacts', teamItemService.afs, contactBriefFromDto);
+		this.teamItemService = new TeamItemService<IContactBrief, IContactDto>('contacts', afs, sneatApiService);
 	}
 
-	createContact(request: ICreateContactRequest, endpoint = 'contacts/create_contact'): Observable<IContactContext> {
-		return this.teamItemService.createTeamItem(endpoint, TeamCounter.contacts, request);
+	createContact(team: ITeamContext, request: ICreateContactRequest, endpoint = 'contacts/create_contact'): Observable<IContactContext> {
+		return this.teamItemService.createTeamItem(endpoint, team, request);
 	}
 
 	deleteContact(contact: IContactContext): Observable<void> {
 		return throwError(() => 'not implemented yet');
 	}
 
-	watchTeamContacts(team: ITeamContext): Observable<IContactContext[]> {
-		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, 'team_contacts', 'teamID');
+	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: IFilter[]): Observable<IContactContext[]> {
+		if (!filter) {
+			filter = [];
+		}
+		filter.push(
+			{
+				field: 'status',
+				value: status,
+				operator: '==',
+			},
+			{
+				field: 'parentContactID',
+				operator: '==',
+				value: '',
+			},
+		);
+		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, filter);
 	}
 
-	watchById(teamID: string, contactID: string): Observable<IContactContext> {
-		return this.sfs.watchByID(`${teamID}:${contactID}`);
+	watchContactById(team: ITeamContext, contactID: string): Observable<IContactContext> {
+		return this.teamItemService.watchTeamItemByID(team, contactID);
 	}
 
 	watchContactsByRole(team: ITeamContext, filter?: IContactsFilter): Observable<IContactContext[]> {
+		console.log('watchContactsByRole, filter:', filter);
 		const f: IFilter[] = [
-			{ field: 'teamID', value: team.id, operator: '==' },
+			// { field: 'teamID', value: team.id, operator: '==' },
 		];
 		if (filter?.status) {
 			f.push({ field: 'status', value: filter.status, operator: '==' });
@@ -43,7 +60,21 @@ export class ContactService {
 		if (filter?.role) {
 			f.push({ field: 'roles', operator: 'array-contains', value: filter.role });
 		}
-		return this.sfs.watchByFilter(f);
+		return this.teamItemService.watchTeamItems(team, f);
+	}
+
+	watchChildContacts(team: ITeamContext, id: string, filter: IContactsFilter = {status: 'active'}): Observable<IContactContext[]> {
+		console.log('watchRelatedContacts, id:', id);
+		const f: IFilter[] = [
+			{ field: 'parentContactID', value: id, operator: '==' },
+		];
+		if (filter.status) {
+			f.push({ field: 'status', value: filter.status, operator: '==' });
+		}
+		if (filter.role) {
+			f.push({ field: 'roles', operator: 'array-contains', value: filter.role });
+		}
+		return this.teamItemService.watchTeamItems(team, f);
 	}
 }
 

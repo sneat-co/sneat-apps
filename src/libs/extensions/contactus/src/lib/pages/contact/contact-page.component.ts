@@ -26,8 +26,8 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 
 	ngOnInit(): void {
 		// super.ngOnInit();
-		this.route.queryParamMap.subscribe(params => {
-			const contactId = params.get('id') || undefined;
+		this.route.paramMap.subscribe(params => {
+			const contactId = params.get('contactID') || undefined;
 			{
 				const contact = window.history.state.contact as IContactContext;
 				if (contact && eq(contact.id, contactId)) {
@@ -35,31 +35,67 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 					// if (!eq(this.communeRealId, contact.communeId)) {
 					// 	this.setPageCommuneIds('ContactPage.contactFromHistoryState', { real: contact.communeId });
 					// }
+				} else if (contactId) {
+					this.contact = { id: contactId, team: this.team };
 				}
 			}
-			if (contactId) {
-				this.contactsService
-					.watchById(this.team.id, contactId)
-					.pipe(
-						this.takeUntilNeeded(),
-					)
-					.subscribe(
-						{
-							next: contact => {
-								if (!contact) {
-									return;
-								}
-								this.contact = contact;
-							},
-							error: this.errorLogger.logErrorHandler('failed to get contact by ID'),
-						},
-					);
-			}
+			this.onContactChanged();
 		});
 
 	}
 
+	private watchContact(): void {
+		if (!this.contact?.id) {
+			return;
+		}
+		this.contactsService
+			.watchContactById(this.team, this.contact?.id)
+			.pipe(
+				this.takeUntilNeeded(),
+			)
+			.subscribe(
+				{
+					next: contact => {
+						if (!contact) {
+							return;
+						}
+						this.contact = contact;
+						this.contactLocations = contact?.dto?.relatedContacts
+							?.map(brief => ({
+								id: brief.id,
+								team: contact.team,
+								brief,
+							}));
+						console.log('contact', contact, 'contactLocations', this.contactLocations);
+					},
+					error: this.errorLogger.logErrorHandler('failed to get contact by ID'),
+				},
+			);
+	}
+
+	onContactChanged(): void {
+		this.watchContact();
+		this.watchChildContacts();
+	}
+
+	watchChildContacts(): void {
+		if (!this.contact?.id) {
+			return;
+		}
+		this.contactsService
+			.watchChildContacts(this.team, this.contact?.id)
+			.pipe(
+				this.takeUntilNeeded(),
+			)
+			.subscribe({
+				next: children => {
+					console.log('children', children);
+				},
+				error: this.errorLogger.logErrorHandler('failed to get child contacts'),
+			});
+	}
+
 	goMember(id: string): void {
-		this.teamParams.teamNavService.navigateToMember(this.navController, {id});
+		this.teamParams.teamNavService.navigateToMember(this.navController, { id, team: this.team });
 	}
 }

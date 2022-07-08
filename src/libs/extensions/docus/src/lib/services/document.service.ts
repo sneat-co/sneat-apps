@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SneatFirestoreService } from '@sneat/api';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { IDocumentBrief, IDocumentDto, TeamCounter } from '@sneat/dto';
-import { IDocumentContext, ITeamRequest } from '@sneat/team/models';
-import { TeamItemBaseService } from '@sneat/team/services';
+import { IDocumentContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
+import { TeamItemService } from '@sneat/team/services';
 import { Observable, tap, throwError } from 'rxjs';
 
 export interface ICreateDocumentRequest extends ITeamRequest {
@@ -11,35 +12,28 @@ export interface ICreateDocumentRequest extends ITeamRequest {
 	dto: IDocumentDto;
 }
 
-function documentBriefFromDto(id: string, dto: IDocumentDto): IDocumentBrief {
-	return {
-		id,
-		...dto,
-	};
-}
 
 @Injectable()
 export class DocumentService {
-	private readonly sfs: SneatFirestoreService<IDocumentBrief, IDocumentDto>;
+	private readonly teamItemService: TeamItemService<IDocumentBrief, IDocumentDto>;
 
 	constructor(
-		private readonly teamItemService: TeamItemBaseService,
+		afs: AngularFirestore,
+		sneatApiService: SneatApiService,
 	) {
-		this.sfs = new SneatFirestoreService<IDocumentBrief, IDocumentDto>(
-			'documents', teamItemService.afs, documentBriefFromDto);
+		this.teamItemService = new TeamItemService<IDocumentBrief, IDocumentDto>(
+			'documents', afs, sneatApiService);
 	}
 
-	createDocument(request: ICreateDocumentRequest): Observable<IDocumentContext> {
+	createDocument(team: ITeamContext, request: ICreateDocumentRequest): Observable<IDocumentContext> {
 		const response$ = this.teamItemService.createTeamItem<IDocumentBrief, IDocumentDto>(
-			'documents/create_document', TeamCounter.documents, request);
+			'documents/create_document', team, request);
 		return response$;
 	}
 
-	watchDocumentsByTeamID(teamID: string): Observable<IDocumentContext[]> {
-		console.log('watchDocumentsByTeamID()', teamID);
-		return this.sfs.watchByTeamID(teamID).pipe(
-			tap(docs => console.log('documents loaded:', docs)),
-		);
+	watchDocumentsByTeam(team: ITeamContext): Observable<IDocumentContext[]> {
+		console.log('watchDocumentsByTeamID()', team.id);
+		return this.teamItemService.watchTeamItems(team);
 	}
 
 	deleteDocument(doc: IDocumentContext): Observable<void> {
@@ -53,4 +47,3 @@ export class DocumentService {
 		return this.teamItemService.deleteTeamItem<void>('documents/delete_document', request);
 	}
 }
-
