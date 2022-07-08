@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { ContactServiceModule, LocationFormModule } from '@sneat/extensions/contactus';
+import { ContactServiceModule, LocationFormModule } from '../..';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactBasePage } from '../contact-base-page';
 import { NewLocationPageComponent } from './new-location-page.component';

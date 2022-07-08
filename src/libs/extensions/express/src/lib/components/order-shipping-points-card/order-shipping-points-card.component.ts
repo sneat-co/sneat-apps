@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IExpressOrderContext } from '@sneat/extensions/express';
+import { IExpressOrderContext } from '../..';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({
