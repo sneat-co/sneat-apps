@@ -14,13 +14,13 @@ export class SelectorBaseService<T = ISelectItem> {
 	selectSingleInModal(options: ISelectorOptions<T>): Promise<T | null> {
 		console.log('selectSingleInModal(), options:', options);
 		return new Promise<T | null>((resolve, reject) => {
-			this.selectInModal(options)
+			this.selectMultipleInModal(options)
 				.then(items => resolve(items?.length ? items[0] : null))
 				.catch(reject);
 		});
 	}
 
-	selectInModal(options: ISelectorOptions<T>): Promise<T[] | null> {
+	selectMultipleInModal(options: ISelectorOptions<T>): Promise<T[] | null> {
 		console.log('selectInModal(), options:', options);
 		// if (!options.items) {
 		// 	return Promise.reject(new Error('items is required parameter'))

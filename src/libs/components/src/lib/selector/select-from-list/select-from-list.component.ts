@@ -1,10 +1,11 @@
 import {
-	Component, EventEmitter, forwardRef, Inject, Input, OnChanges, Output, SimpleChanges,
+	Component, EventEmitter, forwardRef, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { NEVER, never, Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from '..';
 
 @Component({
@@ -16,16 +17,19 @@ import { ISelectItem } from '..';
 		multi: true,
 	}],
 })
-export class SelectFromListComponent implements ControlValueAccessor, OnChanges {
+export class SelectFromListComponent implements ControlValueAccessor, OnChanges, OnDestroy {
 	@Input() value = '';
 	@Input() label = 'Please choose';
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
 	@Input() items?: ISelectItem[];
+	@Input() items$: Observable<ISelectItem[]> = NEVER;
 	@Input() radioSlot: 'start' | 'end' = 'start';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
 	// @Input() ngModel?: string;
 	// @Output() readonly ngModelChange = new EventEmitter<string>();
+
+	private destroyed = new Subject<void>();
 
 	@Output() changed = new EventEmitter<string>();
 
@@ -49,13 +53,19 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges 
 		if (changes['items']) {
 			this.applyFilter();
 		}
+		if (changes['items$'] && this.items$) {
+			this.items$?.pipe(takeUntil(this.destroyed)).subscribe(items => {
+				this.items = items;
+				this.applyFilter();
+			});
+		}
 	}
 
 	private applyFilter(): void {
 		const f = this.filter.trim().toLowerCase();
 		console.log('applyFilter', f);
 		this.displayItems = f ? this.items?.filter(v => v.title.toLowerCase().includes(f)) : this.items;
-		this.hiddenCount = (this.items?.length||0) - (this.displayItems?.length||0);
+		this.hiddenCount = (this.items?.length || 0) - (this.displayItems?.length || 0);
 	}
 
 	onRadioChanged(event: Event): void {
@@ -95,5 +105,9 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges 
 
 	clearFilter(): void {
 		this.filter = '';
+	}
+
+	ngOnDestroy(): void {
+		this.destroyed.next();
 	}
 }

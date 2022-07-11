@@ -5,10 +5,10 @@ import { ISelectItem, SelectorBaseComponent } from '..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
-	selector: 'sneat-basic-selector',
-	templateUrl: './basic-selector.component.html',
+	selector: 'sneat-multi-selector',
+	templateUrl: './multi-selector.component.html',
 })
-export class BasicSelectorComponent extends SelectorBaseComponent implements OnChanges, OnDestroy {
+export class MultiSelectorComponent extends SelectorBaseComponent implements OnChanges, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 

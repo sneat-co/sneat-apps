@@ -9,6 +9,7 @@ import { ContactSelectorComponent } from './contact-selector.component';
 export interface IContactSelectorOptions extends ISelectorOptions<IContactContext> {
 	readonly team: ITeamContext;
 	readonly role?: ContactRole;
+	readonly excludeContacts?: IContactContext[];
 }
 
 @Injectable()
@@ -22,5 +23,9 @@ export class ContactSelectorService extends SelectorBaseService<IContactContext>
 
 	selectSingleContactsInModal(options: IContactSelectorOptions): Promise<IContactContext | null> {
 		return this.selectSingleInModal(options);
+	}
+
+	selectMultipleContactsInModal(options: IContactSelectorOptions): Promise<IContactContext[] | null> {
+		return this.selectMultipleInModal(options);
 	}
 }

@@ -39,13 +39,15 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 		console.log('addCounterparty(), event:', event);
 		event.stopPropagation();
 		event.preventDefault();
-		if (!this.team) {
+		const team = this.team;
+		if (!team) {
 			this.errorLogger.logError('ContactInputComponent.openContactSelector(): team is required', undefined);
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
-			team: this.team,
+			team,
 			role: this.role,
+			excludeContacts: this.counterparties?.map(c => ({id: c.contactID, team})),
 		};
 		this.contactSelectorService.selectSingleContactsInModal(selectorOptions)
 			.then(contact => {

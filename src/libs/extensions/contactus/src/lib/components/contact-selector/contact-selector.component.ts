@@ -4,7 +4,7 @@ import { ISelectItem, SelectorBaseComponent } from '@sneat/components';
 import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { ContactService } from '../../services';
 import { IContactSelectorOptions } from './contact-selector.service';
 
@@ -18,6 +18,7 @@ export class ContactSelectorComponent
 
 	@Input() team: ITeamContext = { id: '' };
 	@Input() role?: ContactRole;
+	@Input() excludeContacts?: IContactContext[];
 	@Input() onSelected?: (item: IContactContext[] | null) => void;
 
 	// @Input() public contacts?: IContactContext[];
@@ -27,8 +28,10 @@ export class ContactSelectorComponent
 	private contacts?: IContactContext[];
 
 	protected itemID?: string;
-	public items?: Observable<IContactContext[]>;
-	protected allItems?: ISelectItem[];
+	private readonly items$ = new Subject<IContactContext[]>;
+	public readonly items = this.items$.asObservable();
+
+	protected displayItems?: ISelectItem[];
 
 	get label(): string {
 		const r = this.role;
@@ -67,13 +70,16 @@ export class ContactSelectorComponent
 			{ role: this.role, status: 'active' },
 		).subscribe(contacts => {
 			this.contacts = contacts;
-			this.allItems = contacts.map(c => ({
-				id: c.id,
-				title: c.brief?.title || c.id,
-				iconName: 'people-outline',
-			}));
+			this.displayItems = contacts
+				.filter(c => !this?.excludeContacts?.some(ec => ec.id === c.id))
+				.map(c => ({
+					id: c.id,
+					title: c.brief?.title || c.id,
+					iconName: 'people-outline',
+				}));
+
 			// console.log('contacts', this.contacts);
-			console.log('items', this.allItems);
+			console.log('items', this.displayItems);
 		});
 	}
 
