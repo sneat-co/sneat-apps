@@ -18,3 +18,7 @@
 
 @import 'libs/components/src/sneat-styles.scss';
 
+
+// For some reason this one is not importing from common SCSS file.
+// But maybe it's just OK as we need it only in DataTug for now
+@import '../../../node_modules/tabulator-tables/dist/css/tabulator.min.css';

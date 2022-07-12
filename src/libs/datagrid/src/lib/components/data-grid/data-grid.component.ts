@@ -45,28 +45,28 @@ import { TabulatorColumn, TabulatorOptions } from '../../tabulator/tabulator-opt
  * For more info see http://tabulator.info
  */
 @Component({
-	selector: 'datatug-grid',
+	selector: 'sneat-datagrid',
 	styleUrls: ['./data-grid.component.scss'],
 	template: `
-		<div id="tabulator" #container></div>
+		<div id="tabulator" #tabulatorDiv></div>
 		<p class="ion-margin-start">Rows: {{ data?.length }}</p>
 	`,
 })
 export class DataGridComponent implements AfterViewInit, OnChanges {
-	@Input() layout?: 'fitData' | 'fitColumns';
+	@Input() layout?: 'fitData' | 'fitColumns' = 'fitColumns';
 	@Input() data?: unknown[] = [];
 	@Input() columns?: IGridColumn[] = [];
 	@Input() groupBy?: string;
-	@Input() height?: string | number = '700px';
+	@Input() height?: string;
 	@Input() maxHeight?: string | number;
-	@ViewChild('container', { static: true }) tabulatorDiv?: ElementRef;
+	@ViewChild('tabulatorDiv', { static: true }) tabulatorDiv?: ElementRef;
 
 	@Input() rowClick?: (event: Event, row: unknown) => void;
 
 	// private tab = document.createElement('div');
 	private tabulator: Tabulator;
 
-	private tabulatorOptions: TabulatorOptions = {};
+	private tabulatorOptions?: TabulatorOptions;
 
 	constructor(@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger) {
 		console.log('DataGridComponent.constructor()');
@@ -77,7 +77,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 		try {
 			if (
 				(changes['data'] && this.data && this.columns) ||
-				(changes['columns'] && this.columns)
+				(changes['columns'] && this.columns || changes['rowClick'] && this.rowClick)
 			) {
 				this.drawTable();
 			}
@@ -140,19 +140,38 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 	}
 
 	private createTabulatorGrid(): void {
-		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+		this.setTabulatorOptions();
+		if (!this.tabulator) {
+			this.tabulator = new Tabulator(
+				this.tabulatorDiv?.nativeElement,
+				this.tabulatorOptions,
+			);
+			console.log('tabulatorOptions:', this.tabulatorOptions);
+			this.tabulator.on('rowClick', (event: Event, row: unknown) => console.log('rowClick', event, row));
+			// console.log('rowClick', this.rowClick);
+			// if (this.rowClick) {
+			// 	try {
+			// 		this.tabulator.on('rowClick', this.rowClick);
+			// 	} catch (e) {
+			// 		console.error('Failed to set rowClick event handler', e);
+			// 	}
+			// }
+		}
+	}
+	private setTabulatorOptions(): void {
 		this.tabulatorOptions = {
-			tooltipsHeader: true, // enable header tooltips
-			tooltipGenerationMode: 'hover',
+			// tooltipsHeader: true, // enable header tooltips
+			// tooltipGenerationMode: 'hover',
 			data: this.data,
-			reactiveData: true, // enable data reactivity
+			// selectable: true,
+			// reactiveData: true, // enable data reactivity
 			columns: this.columns?.map((c) => {
 				const col: TabulatorColumn = {
 					// TODO(help-wanted): Use strongly typed Tabulator col def
 					field: c.field,
 					title: c.title || c.field,
-					headerTooltip: () =>
-						`${c.colName || c.title || c.field}: ${c.dbType}`,
+					// headerTooltip: () =>
+					// 	`${c.colName || c.title || c.field}: ${c.dbType}`,
 				};
 				if (c.colName !== 'Id' && c.colName?.endsWith('Id')) {
 					col.formatter = 'link';
@@ -186,10 +205,20 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 				// console.log('col:', col);
 				return col;
 			}),
-			layout: this.layout || 'fitData',
-			height: this.height,
-			maxHeight: this.maxHeight,
+			layout: this.layout || 'fitColumns',
 		};
+		if (this.height) {
+			this.tabulatorOptions = {
+				...this.tabulatorOptions,
+				height: this.height,
+			}
+		}
+		if (this.maxHeight) {
+			this.tabulatorOptions = {
+				...this.tabulatorOptions,
+				maxHeight: this.maxHeight,
+			}
+		}
 		if (this.groupBy) {
 			this.tabulatorOptions = {
 				...this.tabulatorOptions,
@@ -207,15 +236,6 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 					})</span>`;
 				},
 			};
-		}
-		if (this.rowClick) {
-			this.tabulatorOptions.rowClick = this.rowClick;
-		}
-		if (!this.tabulator) {
-			this.tabulator = new Tabulator(
-				this.tabulatorDiv?.nativeElement,
-				this.tabulatorOptions,
-			);
 		}
 	}
 }

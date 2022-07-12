@@ -1,0 +1,38 @@
+{
+	"projectType": "library",
+	"sourceRoot": "libs/datagrid/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:package",
+			"outputs": ["dist/libs/datagrid"],
+			"options": {
+				"project": "libs/datagrid/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/datagrid/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/datagrid/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/datagrid"],
+			"options": {
+				"jestConfig": "libs/datagrid/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/datagrid/**/*.ts", "libs/datagrid/**/*.html"]
+			}
+		}
+	},
+	"tags": []
+}
