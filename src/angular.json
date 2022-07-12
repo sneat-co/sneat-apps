@@ -13,7 +13,6 @@
 		"components": "libs/components",
 		"core": "libs/core",
 		"data": "libs/data",
-		"datagrid": "libs/datagrid",
 		"datatug-core": "libs/datatug/core",
 		"datatug-dto": "libs/datatug/dto",
 		"datatug-models": "libs/datatug/models",
