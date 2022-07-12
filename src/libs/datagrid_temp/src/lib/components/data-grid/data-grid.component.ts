@@ -13,6 +13,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // @ts-ignore
 import { Tabulator } from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
+import { TabulatorColumn, TabulatorOptions } from '../../tabulator/tabulator-options';
 
 // export interface IGridDef {
 // 	columns: IGridColumn[],
@@ -46,24 +47,26 @@ import { IGridColumn } from '@sneat/grid';
 @Component({
 	selector: 'datatug-grid',
 	styleUrls: ['./data-grid.component.scss'],
-	template: ` <div id="tabulator" #container></div>
-		<p class="ion-margin-start">Rows: {{ data?.length }}</p>`,
+	template: `
+		<div id="tabulator" #container></div>
+		<p class="ion-margin-start">Rows: {{ data?.length }}</p>
+	`,
 })
 export class DataGridComponent implements AfterViewInit, OnChanges {
 	@Input() layout?: 'fitData' | 'fitColumns';
-	@Input() data?: any[] = [];
+	@Input() data?: unknown[] = [];
 	@Input() columns?: IGridColumn[] = [];
 	@Input() groupBy?: string;
 	@Input() height?: string | number = '700px';
 	@Input() maxHeight?: string | number;
 	@ViewChild('container', { static: true }) tabulatorDiv?: ElementRef;
 
-	@Input() rowClick?: (event: Event, row: any) => void;
+	@Input() rowClick?: (event: Event, row: unknown) => void;
 
 	// private tab = document.createElement('div');
 	private tabulator: Tabulator;
 
-	private tabulatorOptions: any;
+	private tabulatorOptions: TabulatorOptions = {};
 
 	constructor(@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger) {
 		console.log('DataGridComponent.constructor()');
@@ -124,7 +127,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 				return;
 			}
 			if (this.tabulatorOptions) {
-				this.tabulatorOptions.data = this.data;
+				this.tabulatorOptions = { ...this.tabulatorOptions, data: this.data };
 				this.tabulator.setData(this.data);
 			} else {
 				this.createTabulatorGrid();
@@ -144,7 +147,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			data: this.data,
 			reactiveData: true, // enable data reactivity
 			columns: this.columns?.map((c) => {
-				const col: any = {
+				const col: TabulatorColumn = {
 					// TODO(help-wanted): Use strongly typed Tabulator col def
 					field: c.field,
 					title: c.title || c.field,
@@ -156,7 +159,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 					col.formatterParams = {
 						url: 'test-url',
 					};
-					col.cellClick = (e: Event, cell: any) => {
+					col.cellClick = (e: Event, cell: unknown) => {
 						e.preventDefault();
 						e.stopPropagation();
 						console.log('cellClick', cell);
@@ -188,18 +191,21 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			maxHeight: this.maxHeight,
 		};
 		if (this.groupBy) {
-			this.tabulatorOptions.groupBy = this.groupBy;
-			this.tabulatorOptions.groupHeader = (value: any, count: number) => {
-				// value - the value all members of this group share
-				// count - the number of rows in this group
-				// data - an array of all the row data objects in this group
-				// group - the group component for the group
-				console.log('groupHeader', value);
-				return `${
-					this.groupBy
-				}: ${value} <span class="ion-margin-start">(${count} ${
-					count === 1 ? 'record' : 'records'
-				})</span>`;
+			this.tabulatorOptions = {
+				...this.tabulatorOptions,
+				groupBy: this.groupBy,
+				groupHeader: (value: unknown, count: number) => {
+					// value - the value all members of this group share
+					// count - the number of rows in this group
+					// data - an array of all the row data objects in this group
+					// group - the group component for the group
+					// console.log('groupHeader', value);
+					return `${
+						this.groupBy
+					}: ${value} <span class="ion-margin-start">(${count} ${
+						count === 1 ? 'record' : 'records'
+					})</span>`;
+				},
 			};
 		}
 		if (this.rowClick) {
