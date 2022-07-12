@@ -2,9 +2,16 @@
 	<ion-item-divider color="light">
 		<ion-label>Container #{{i + 1}} - {{container?.type}}</ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="delete($event)">
+			<ion-button color="medium" (click)="delete($event)" *ngIf="!containerFormGroup.dirty">
 				<ion-label>Delete</ion-label>
 				<ion-icon name="close-outline" slot="end"></ion-icon>
+			</ion-button>
+			<ion-button color="medium" *ngIf="containerFormGroup.dirty" (click)="save($event)">
+				<ion-icon slot="start" name="save-outline"></ion-icon>
+				<ion-label>Save</ion-label>
+			</ion-button>
+			<ion-button color="medium" *ngIf="containerFormGroup.dirty" (click)="cancelEditing($event)">
+				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
@@ -13,19 +20,32 @@
 			<ion-col size="12" size-md="4">
 				<ion-item>
 					<ion-label color="medium">Serial #</ion-label>
-					<ion-input [value]="container?.number" placeholder="optional"></ion-input>
+					<ion-input
+						placeholder="optional"
+						[formGroup]="containerFormGroup"
+						[formControl]="number"
+						(keyup.enter)="save($event)"
+					></ion-input>
+					<ion-buttons slot="end">
+						<ion-button color="medium" *ngIf="number.value && !number.dirty">
+							<ion-icon name="copy-outline"></ion-icon>
+						</ion-button>
+						<ion-button color="medium" *ngIf="number.dirty" (click)="save($event)">
+							<ion-icon name="save-outline"></ion-icon>
+						</ion-button>
+					</ion-buttons>
 				</ion-item>
 			</ion-col>
 			<ion-col size="12" size-md="4">
 				<ion-item>
 					<ion-label color="medium">Gross (kg)</ion-label>
-					<ion-input readonly [value]="container?.grossWeightKg"></ion-input>
+					<ion-input readonly [formGroup]="containerFormGroup" [formControl]="grossKg"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="12" size-md="4">
 				<ion-item>
 					<ion-label color="medium">Pallets</ion-label>
-					<ion-input readonly [value]="container?.pallets"></ion-input>
+					<ion-input readonly [formGroup]="containerFormGroup" [formControl]="pallets"></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>

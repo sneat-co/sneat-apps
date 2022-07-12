@@ -1,4 +1,5 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { FreightOrdersService, IContainerRequest, IExpressOrderContext, IOrderContainer } from '../..';
@@ -7,7 +8,7 @@ import { FreightOrdersService, IContainerRequest, IExpressOrderContext, IOrderCo
 	selector: 'sneat-order-container-form',
 	templateUrl: './container-form.component.html',
 })
-export class ContainerFormComponent {
+export class ContainerFormComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
 	@Input() order?: IExpressOrderContext;
 	@Input() team?: ITeamContext;
@@ -15,10 +16,52 @@ export class ContainerFormComponent {
 
 	deleting = false;
 
+	number = new FormControl<string>('');
+	grossKg = new FormControl<number | undefined>({ value: undefined, disabled: true });
+	pallets = new FormControl<number | undefined>({ value: undefined, disabled: true });
+
+	containerFormGroup = new FormGroup({
+		number: this.number,
+		grossKg: this.grossKg,
+		pallets: this.pallets,
+	});
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: FreightOrdersService,
 	) {
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['container']) {
+			this.setFormValues();
+		}
+	}
+
+	setFormValues(): void {
+		this.number.setValue(this.container?.number || '');
+		this.grossKg.setValue(this.container?.grossWeightKg);
+		this.pallets.setValue(this.container?.pallets);
+	}
+
+	cancelEditing(event: Event): void {
+		console.log('cancelEditing()');
+		event.stopPropagation();
+		event.preventDefault();
+		this.setFormValues();
+		setTimeout(() => {
+			this.containerFormGroup.markAsPristine();
+		}, 100);
+	}
+
+	save(event: Event): void {
+		console.log('save()');
+		event.stopPropagation();
+		event.preventDefault();
+		this.containerFormGroup.markAsPending();
+		setTimeout(() => {
+			this.containerFormGroup.markAsPristine();
+		}, 100);
 	}
 
 	delete(event: Event): void {
@@ -50,7 +93,7 @@ export class ContainerFormComponent {
 			error: (err) => {
 				this.errorLogger.logError(err, 'Failed to delete container');
 				this.deleting = false;
-			}
+			},
 		});
 	}
 }

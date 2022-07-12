@@ -13,8 +13,8 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
 	@Input() readonly = false;
-	@Input() plural: string = 'TO BE SET';
-	@Input() singular: string = 'dispatcher';
+	@Input() plural = 'plural TO BE SET';
+	@Input() singular = 'singular TO BE SET';
 	@Input() role: 'dispatcher' = 'dispatcher';
 
 	public counterparties?: IOrderCounterparty[];

@@ -1,7 +1,10 @@
 <ion-card>
 	<ion-item>
 		<ion-icon name="cube-outline" slot="start"></ion-icon>
-		<ion-label>Containers</ion-label>
+		<ion-label>
+			Containers
+			<ion-badge color="light" class="ion-margin-start" *ngIf="order?.dto?.containers?.length">{{order?.dto?.containers?.length}}</ion-badge>
+		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="openNewContainerForm()">
 				<ion-icon name="add-outline" slot="start"></ion-icon>
