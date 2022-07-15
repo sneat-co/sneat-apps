@@ -44,7 +44,7 @@ specifiers:
   firebase: 9.9.0
   ionicons: 6.0.2
   jest: 28.1.3
-  jest-preset-angular: 12.1.0
+  jest-preset-angular: 12.2.0
   ng-packagr: ~14.0.0
   nx: 14.4.2
   postcss: 8.4.14
@@ -112,7 +112,7 @@ devDependencies:
   eslint-config-prettier: 8.5.0_eslint@8.19.0
   eslint-plugin-cypress: 2.12.1_eslint@8.19.0
   jest: 28.1.3_ubxmnmbgr5exfpsqewziqqgsp4
-  jest-preset-angular: 12.1.0_64wll5ay36ffqrjvamjeo6svxi
+  jest-preset-angular: 12.2.0_64wll5ay36ffqrjvamjeo6svxi
   ng-packagr: 14.0.3_d3sou7noqqpsoxcwsjt2cctjca
   nx: 14.4.2
   postcss: 8.4.14
@@ -9400,7 +9400,7 @@ packages:
       chalk: 4.1.2
       diff-sequences: 28.1.1
       jest-get-type: 28.0.2
-      pretty-format: 28.1.1
+      pretty-format: 28.1.3
     dev: true
 
   /jest-diff/28.1.3:
@@ -9608,7 +9608,7 @@ packages:
       chalk: 4.1.2
       jest-diff: 28.1.1
       jest-get-type: 28.0.2
-      pretty-format: 28.1.1
+      pretty-format: 28.1.3
     dev: true
 
   /jest-matcher-utils/28.1.3:
@@ -9688,8 +9688,8 @@ packages:
       jest-resolve: 28.1.3
     dev: true
 
-  /jest-preset-angular/12.1.0_64wll5ay36ffqrjvamjeo6svxi:
-    resolution: {integrity: sha512-zOiUvAMqIYkr8yRRO9x2NwVD8rzx0GtDaWxxox5GdgFQ/EEeIMI2Wqf5gfuX0t3Cnrq+K6cJCr181VMrjPkLPA==}
+  /jest-preset-angular/12.2.0_64wll5ay36ffqrjvamjeo6svxi:
+    resolution: {integrity: sha512-dXnPdcglVcJeXdnxrws3M/gxLlYWaZGU7JS+ffuiCfMzG0AO3EDo/wpsPsxvnjCZiov1uV7g7UD1dHtmOW/sEw==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
       '@angular-devkit/build-angular': '>=0.1102.19 <15.0.0'
@@ -9707,7 +9707,7 @@ packages:
       esbuild-wasm: 0.14.38
       jest: 28.1.3_ubxmnmbgr5exfpsqewziqqgsp4
       jest-environment-jsdom: 28.1.1
-      pretty-format: 28.1.1
+      pretty-format: 28.1.3
       ts-jest: 28.0.6_i5pizmt3w7ji5aan5w3tyujaqe
       typescript: 4.7.4
     optionalDependencies:
