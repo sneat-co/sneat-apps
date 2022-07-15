@@ -12,7 +12,7 @@ import { ExpressTeamService, ISetExpressTeamSettingsRequest } from '../..';
 	templateUrl: './express-team-settings.component.html',
 })
 export class ExpressTeamSettingsComponent {
-	@ViewChild('vatNumberInput', { static: false }) vatNumberInput?: IonInput;
+	@ViewChild('addressInput', { static: false }) addressInput?: IonInput;
 
 	@Input() team?: ITeamContext;
 
@@ -57,12 +57,13 @@ export class ExpressTeamSettingsComponent {
 
 	onCountryChanged(countryID: string): void {
 		this.countryID.setValue(countryID);
-		setTimeout(() => this.setFocusToInput(this.vatNumberInput), 100);
+		setTimeout(() => this.setFocusToInput(this.addressInput), 100);
 	}
 
 
 	submit(): void {
 		if (this.form.invalid) {
+			this.form.markAllAsTouched();
 			alert('Please fill in all required fields.');
 			return;
 		}
