@@ -52,6 +52,10 @@ export class OrdersFilterComponent {
 		}, 10);
 	}
 
+	emitViewModeChange(): void {
+		this.viewModeChange.emit(this.viewMode);
+	}
+
 	emitFilterChange(): void {
 		const filter: IOrdersFilter = {
 			direction: this.direction || undefined,

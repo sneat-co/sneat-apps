@@ -1,5 +1,14 @@
-<sneat-express-order-card *ngFor="let order of orders"
-													[order]="order"
-													[team]="team"
-													[readonly]="true"
-></sneat-express-order-card>
+<ng-container *ngIf="orders?.length; else noOrders">
+	<sneat-express-order-card *ngFor="let order of orders"
+														[order]="order"
+														[team]="team"
+														[readonly]="true"
+	></sneat-express-order-card>
+</ng-container>
+<ng-template #noOrders>
+	<ion-card>
+		<ion-card-content>
+			<p>No orders found for the current filter.</p>
+		</ion-card-content>
+	</ion-card>
+</ng-template>

@@ -7,12 +7,13 @@ import { OrdersListComponent } from './orders-list.component';
 
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule,
-		OrderFormModule,
-	],
+  imports: [
+    CommonModule,
+    IonicModule,
+    RouterModule,
+    OrderFormModule,
+    CommonModule,
+  ],
 	declarations: [
 		OrdersListComponent,
 	],

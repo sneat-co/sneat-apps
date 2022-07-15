@@ -44,21 +44,21 @@
 <ion-grid class="ion-grid-layout">
 	<ion-row>
 		<ion-col size="10">
-			<ion-segment [(ngModel)]="status" color="dark" (ionChange)="emitFilterChange()">
-				<ion-segment-button value="draft">Drafts</ion-segment-button>
+			<ion-segment [(ngModel)]="status" color="dark" (ionChange)="emitFilterChange()" class="ion-margin-horizontal">
+<!--				<ion-segment-button value="draft">Drafts</ion-segment-button>-->
 				<ion-segment-button value="active">Active</ion-segment-button>
 				<ion-segment-button value="complete">Complete</ion-segment-button>
 				<ion-segment-button value="canceled">Canceled</ion-segment-button>
 			</ion-segment>
 		</ion-col>
 		<ion-col size="2">
-			<ion-segment [(ngModel)]="viewMode" color="medium">
-				<ion-segment-button value="grid">
+			<ion-segment [(ngModel)]="viewMode" color="medium" (ionChange)="emitViewModeChange()">
+				<ion-segment-button value="grid" title="Grid view">
 					<ion-label color="medium">
 						<ion-icon name="grid-outline"></ion-icon>
 					</ion-label>
 				</ion-segment-button>
-				<ion-segment-button value="list" color="light">
+				<ion-segment-button value="list" color="light" title="Cards list view">
 					<ion-label color="medium">
 						<ion-icon name="list-outline"></ion-icon>
 					</ion-label>
