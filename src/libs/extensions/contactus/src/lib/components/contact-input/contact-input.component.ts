@@ -58,7 +58,7 @@ export class ContactInputComponent {
 			team: this.team,
 			role: this.role,
 		};
-		this.contactSelectorService.selectSingleContactsInModal(selectorOptions)
+		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {
 				console.log('ContactInputComponent.openContactSelector() contact:', contact);
 				if (contact) {

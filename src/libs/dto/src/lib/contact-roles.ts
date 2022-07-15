@@ -1,5 +1,6 @@
 export type ContactRoleInsurer = 'insurer';
 export type ContactRoleFriend = 'friend';
+export type ContactRoleLocation = 'location';
 export type ContactRoleDwellingRelated =
 	ContactRoleInsurer
 	| 'cleaner'
@@ -21,7 +22,8 @@ export type ContactRoleExpress =
 	'shipper' |
 	'agent' |
 	'buyer' |
-	'carrier';
+	'carrier' |
+	ContactRoleLocation;
 export type ContactRole =
 	ContactRoleFamilyRelated |
 	ContactRoleKidRelated |

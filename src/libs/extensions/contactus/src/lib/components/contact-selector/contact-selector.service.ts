@@ -9,6 +9,8 @@ import { ContactSelectorComponent } from './contact-selector.component';
 export interface IContactSelectorOptions extends ISelectorOptions<IContactContext> {
 	readonly team: ITeamContext;
 	readonly role?: ContactRole;
+	readonly subRole?: ContactRole;
+	readonly subRoleRequired?: boolean;
 	readonly excludeContacts?: IContactContext[];
 }
 
@@ -21,7 +23,7 @@ export class ContactSelectorService extends SelectorBaseService<IContactContext>
 		super(ContactSelectorComponent, errorLogger, modalController);
 	}
 
-	selectSingleContactsInModal(options: IContactSelectorOptions): Promise<IContactContext | null> {
+	selectSingleContactInModal(options: IContactSelectorOptions): Promise<IContactContext | null> {
 		return this.selectSingleInModal(options);
 	}
 

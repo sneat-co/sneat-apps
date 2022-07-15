@@ -16,6 +16,7 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
 	@Input() role: 'dispatcher' = 'dispatcher';
+	@Input() subRole: 'location' = 'location';
 
 	public counterparties?: IOrderCounterparty[];
 
@@ -47,23 +48,24 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 		const selectorOptions: IContactSelectorOptions = {
 			team,
 			role: this.role,
+			subRole: this.subRole,
 			excludeContacts: this.counterparties?.map(c => ({id: c.contactID, team})),
 		};
-		this.contactSelectorService.selectSingleContactsInModal(selectorOptions)
+		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {
-				console.log('ContactInputComponent.openContactSelector() contact:', contact);
+				console.log('OrderCounterpartiesCardComponent.openContactSelector() contact:', contact);
 				if (!this.order?.dto) {
 					return;
 				}
-				if (!contact?.dto) {
+				if (!contact?.brief) {
 					return;
 				}
 				const counterparty: IOrderCounterparty = {
 					contactID: contact.id,
-					title: contact.dto.title || contact.id,
+					title: contact.brief.title || contact.id,
 					role: this.role,
-					address: contact.dto.address,
-					countryID: contact.dto.address?.countryID || '--',
+					address: contact.brief.address,
+					countryID: contact.brief.address?.countryID || '--',
 				};
 				this.order = {
 					...this.order,

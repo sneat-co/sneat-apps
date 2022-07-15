@@ -19,7 +19,7 @@ import {
 	ITeamDto,
 	ListType,
 } from '@sneat/dto';
-import { ITeamItemContext } from './team-item-context';
+import { ITeamItemContext, teamItemContextFromBrief } from './team-item-context';
 
 export interface ITeamRef {
 	readonly id: string;
@@ -40,6 +40,10 @@ export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGro
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IDocumentContext = ITeamItemContext<IDocumentBrief, IDocumentDto>;
 export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
+
+export function contactContextFromBrief(team: ITeamContext, brief: IContactBrief): IContactContext {
+	return teamItemContextFromBrief(team, brief);
+}
 
 export interface IListKey {
 	id: string;

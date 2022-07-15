@@ -12,9 +12,21 @@
 	<sneat-select-from-list
 		[label]="''"
 		[items]="displayItems"
-		[(ngModel)]="itemID"
+		[(ngModel)]="selectedContactID"
 		(ngModelChange)="onContactSelected($event)"
 		[isFilterable]="true"
 		radioSlot="end"
 	></sneat-select-from-list>
+
+	<ng-container *ngIf="selectedContact?.dto?.relatedContacts">
+		<h2 class="ion-margin-horizontal">Select dispatch location</h2>
+		<sneat-select-from-list
+			[label]="''"
+			[items]="subItems"
+			[(ngModel)]="selectedSubContactID"
+			(ngModelChange)="onDispatchLocationSelected($event)"
+			[isFilterable]="true"
+			radioSlot="end"
+		></sneat-select-from-list>
+	</ng-container>
 </ion-content>

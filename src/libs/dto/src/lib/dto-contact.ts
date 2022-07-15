@@ -8,6 +8,7 @@ export type ContactType = 'person' | 'company' | 'location';
 
 export interface IContactBase extends IPersonBase {
 	type: ContactType;
+	address?: IAddress;
 	// title: string; // Mandatory title
 	roles?: string[];
 }
@@ -22,7 +23,6 @@ export interface IContactBrief extends IContactBase {
 
 
 export interface IContactDto extends IContactBase, IPersonRecord {
-	address?: IAddress;
 	roles?: string[];
 	members?: IContact2Member[]; // TODO: document purpose, use cases, examples of usage
 	assets?: IContact2Asset[];  // TODO: document purpose, use cases, examples of usage

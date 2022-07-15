@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ISelectItem, SelectorBaseComponent } from '@sneat/components';
 import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { contactContextFromBrief, IContactContext, ITeamContext } from '@sneat/team/models';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { ContactService } from '../../services';
 import { IContactSelectorOptions } from './contact-selector.service';
@@ -18,8 +18,9 @@ export class ContactSelectorComponent
 
 	@Input() team: ITeamContext = { id: '' };
 	@Input() role?: ContactRole;
+	@Input() subRole?: ContactRole;
 	@Input() excludeContacts?: IContactContext[];
-	@Input() onSelected?: (item: IContactContext[] | null) => void;
+	@Input() onSelected?: (items: IContactContext[] | null) => void;
 
 	// @Input() public contacts?: IContactContext[];
 
@@ -27,11 +28,17 @@ export class ContactSelectorComponent
 
 	private contacts?: IContactContext[];
 
-	protected itemID?: string;
+	protected selectedContact?: IContactContext;
+
+
+	protected selectedContactID?: string;
+	protected selectedSubContactID?: string;
 	private readonly items$ = new Subject<IContactContext[]>;
 	public readonly items = this.items$.asObservable();
 
 	protected displayItems?: ISelectItem[];
+
+	protected subItems?: ISelectItem[];
 
 	get label(): string {
 		const r = this.role;
@@ -83,12 +90,37 @@ export class ContactSelectorComponent
 		});
 	}
 
-	protected onContactSelected(itemID: string): void {
-		console.log('onContactSelected()', itemID);
-		if (this.onSelected) {
-			const contact = this.contacts?.find(c => c.id === itemID);
-			this.onSelected(contact ? [contact] : null);
+	protected onDispatchLocationSelected(contactID: string): void {
+		console.log('onDispatchLocationSelected()', contactID);
+		this.selectedSubContactID = contactID;
+		const subContactBrief = this.selectedContact?.dto?.relatedContacts?.find(c => c.id === contactID);
+		if (subContactBrief) {
+			const subContact: IContactContext = contactContextFromBrief(this.team, subContactBrief);
+			this.emitOnSelected(subContact);
 		}
 		this.close(undefined);
+	}
+	protected onContactSelected(contactID: string): void {
+		console.log('onContactSelected()', contactID);
+		this.selectedContact = this.contacts?.find(c => c.id === contactID);
+		if (!this.subRole && this.selectedContact) {
+			this.emitOnSelected(this.selectedContact);
+			this.close(undefined);
+			return;
+		}
+		const subRole = this.subRole;
+		if (subRole) {
+			this.subItems = this.selectedContact?.dto?.relatedContacts?.filter(c => c.type === subRole).map(c => ({
+				id: c.id,
+				title: ((c.title + ' ') + (c.address?.lines?.join(', ') || '')).trim(),
+			}))
+		}
+	}
+
+	protected emitOnSelected(contact: IContactContext): void {
+		console.log('emitOnSelected()', contact);
+		if (this.onSelected) {
+			this.onSelected(contact ? [contact] : null);
+		}
 	}
 }

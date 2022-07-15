@@ -11,6 +11,7 @@ export interface IFreightAddress {
 
 export interface IOrderCounterparty {
 	readonly contactID: string;
+	readonly parentContactID?: string;
 	readonly role: ContactRoleExpress;
 	readonly refNumber?: string;
 	readonly countryID: string;
