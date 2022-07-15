@@ -45,6 +45,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	public selectedMembers?: readonly IMemberContext[];
 
+	viewMode: 'list' | 'grid' = 'grid';
+
 	protected readonly logError: (e: any, message?: string, options?: ILogErrorOptions) => void;
 	protected readonly logErrorHandler: (
 		message?: string,

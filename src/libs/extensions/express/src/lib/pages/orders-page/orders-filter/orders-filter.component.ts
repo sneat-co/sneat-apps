@@ -20,6 +20,9 @@ export class OrdersFilterComponent {
 	refNumber = '';
 	isRefNumberChanged = false;
 
+	viewMode: 'list' | 'grid' = 'grid';
+	@Output() viewModeChange = new EventEmitter<'list' | 'grid'>();
+
 	protected onDirectionChanged(event: Event): void {
 		this.emitFilterChange();
 	}

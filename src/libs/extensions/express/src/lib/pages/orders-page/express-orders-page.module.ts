@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CountryInputModule, CountrySelectorModule } from '@sneat/components';
 import { ContactInputModule } from '@sneat/extensions/contactus';
+import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
 import { FreightOrdersServiceModule } from '../../services/freight-orders.service';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';
 import { ExpressOrdersPageComponent } from './express-orders-page.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		FormsModule,
 		OrdersListModule,
+		OrdersGridModule,
 		FreightOrdersServiceModule,
 		ContactInputModule,
 		CountrySelectorModule,

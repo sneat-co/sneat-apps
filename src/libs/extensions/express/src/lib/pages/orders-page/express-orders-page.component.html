@@ -15,8 +15,14 @@
 
 <ion-content>
 
-	<sneat-orders-filter [team]="team" (filterChange)="onFilterChanged($event)"></sneat-orders-filter>
+	<sneat-orders-filter [team]="team" (filterChange)="onFilterChanged($event)"
+											 (viewModeChange)="viewMode=$event">
+	></sneat-orders-filter>
 
-	<sneat-express-orders-list [team]="team" [orders]="orders" style="margin-bottom: 50px;"></sneat-express-orders-list>
+	<sneat-express-orders-grid *ngIf="viewMode === 'grid'" [team]="team" [orders]="orders" ></sneat-express-orders-grid>
+	<sneat-express-orders-list *ngIf="viewMode === 'list'" [team]="team" [orders]="orders" ></sneat-express-orders-list>
 
+	<div style="padding: 100px">
+
+	</div>
 </ion-content>

@@ -1,15 +1,3 @@
-<ion-card>
-	<ion-card-content>
-		<sneat-datagrid
-			[data]="rows"
-			[columns]="displayCols"
-			[rowClick]="rowClick"
-			height="200"
-		>
-		</sneat-datagrid>
-	</ion-card-content>
-</ion-card>
-
 <sneat-express-order-card *ngFor="let order of orders"
 													[order]="order"
 													[team]="team"
