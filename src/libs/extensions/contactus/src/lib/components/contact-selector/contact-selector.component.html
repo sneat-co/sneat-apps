@@ -19,7 +19,16 @@
 	></sneat-select-from-list>
 
 	<ng-container *ngIf="selectedContact?.dto?.relatedContacts">
-		<h2 class="ion-margin-horizontal">Select dispatch location</h2>
+		<ion-item>
+			<ion-label>Select dispatch location</ion-label>
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="add-outline" slot="start"></ion-icon>
+					<ion-label>Add</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+<!--		<h2 class="ion-margin-horizontal"></h2>-->
 		<sneat-select-from-list
 			[label]="''"
 			[items]="subItems"

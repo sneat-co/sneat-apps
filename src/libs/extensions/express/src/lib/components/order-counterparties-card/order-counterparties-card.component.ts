@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderCounterparty } from '../..';
+import { FreightOrdersService, IDeleteCounterpartyRequest, IExpressOrderContext, IOrderCounterparty } from '../..';
 
 @Component({
 	selector: 'sneat-express-order-counterparties-card',
@@ -16,13 +16,15 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
 	@Input() role: 'dispatcher' = 'dispatcher';
-	@Input() subRole: 'location' = 'location';
+
+	readonly deleting: IOrderCounterparty[] = [];
 
 	public counterparties?: IOrderCounterparty[];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
+		private readonly ordersService: FreightOrdersService,
 	) {
 	}
 
@@ -48,8 +50,8 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 		const selectorOptions: IContactSelectorOptions = {
 			team,
 			role: this.role,
-			subRole: this.subRole,
-			excludeContacts: this.counterparties?.map(c => ({id: c.contactID, team})),
+			subType: 'location',
+			excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
 		};
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {
@@ -85,6 +87,29 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 
 	private emitOrder(): void {
 		this.orderChange.emit(this.order);
+	}
+
+	remove(counterparty: IOrderCounterparty): void {
+		if (!this.team?.id) {
+			throw new Error('team is required');
+		}
+		if (!this.order?.id) {
+			throw new Error('team is required');
+		}
+		const request: IDeleteCounterpartyRequest = {
+			teamID: this.team.id,
+			orderID: this.order.id,
+			role: counterparty.role,
+			contactID: counterparty.contactID,
+		};
+		this.deleting.push(counterparty);
+		this.ordersService.deleteCounterparty(request)
+			.subscribe({
+				next: () => {
+					console.log('deleted counterparty');
+				},
+				error: this.errorLogger.logErrorHandler('failed to delete counterparty'),
+			});
 	}
 
 }

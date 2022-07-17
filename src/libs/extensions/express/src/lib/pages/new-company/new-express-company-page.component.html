@@ -18,10 +18,11 @@
 
 	<sneat-location-form
 		*ngIf="!!contactType"
+		[team]="team"
 		[(contactDto)]="contactDto"
 		label="Company details"
 		(contactDtoChange)="onContactDtoChanged($event)"
-		[disabled]="isCreating"
+		[hideSubmitButton]="true"
 	></sneat-location-form>
 
 	<ion-card>

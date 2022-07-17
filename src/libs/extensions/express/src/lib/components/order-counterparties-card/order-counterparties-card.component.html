@@ -15,12 +15,10 @@
 	<ion-item *ngFor="let counterparty of counterparties" class="sneat-tiny-end-padding">
 		<ion-label>{{counterparty.title}}</ion-label>
 		<ion-buttons slot="end">
-			<ion-button title="Change">
-				<ion-icon name="create-outline" color="medium"></ion-icon>
-<!--				<ion-icon name="location-outline" color="medium" slot="start"></ion-icon>-->
-<!--				<ion-label color="medium">Set load point</ion-label>-->
-			</ion-button>
-			<ion-button color="medium" title="Remove">
+<!--			<ion-button title="Change">-->
+<!--				<ion-icon name="create-outline" color="medium"></ion-icon>-->
+<!--			</ion-button>-->
+			<ion-button color="medium" title="Remove" (click)="remove(counterparty)">
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>

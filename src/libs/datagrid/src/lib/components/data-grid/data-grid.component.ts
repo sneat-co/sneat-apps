@@ -11,9 +11,12 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { Tabulator } from 'tabulator-tables';
+import { Tabulator, SelectRowModule, InteractionModule } from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
 import { TabulatorColumn, TabulatorOptions } from '../../tabulator/tabulator-options';
+
+Tabulator.registerModule([InteractionModule, SelectRowModule]);
+// console.log('SelectRowModule', );
 
 // export interface IGridDef {
 // 	columns: IGridColumn[],
@@ -142,20 +145,31 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 	private createTabulatorGrid(): void {
 		this.setTabulatorOptions();
 		if (!this.tabulator) {
+			this.tabulatorOptions = { ...this.tabulatorOptions,
+				selectable: 'highlight',
+				// rowClick: function (e, row) {
+				// 	console.log('rowClick1', row);
+				// },
+				// rowSelect: function (row) {
+				// 	console.log('rowSelect', row);
+				// },
+				// rowDeselect: function (row) {
+				// 	console.log('rowDeselect', row);
+				// }
+			};
+			console.log('createTabulatorGrid(): tabulatorOptions:', this.tabulatorOptions);
 			this.tabulator = new Tabulator(
 				this.tabulatorDiv?.nativeElement,
 				this.tabulatorOptions,
 			);
-			console.log('tabulatorOptions:', this.tabulatorOptions);
-			this.tabulator.on('rowClick', (event: Event, row: unknown) => console.log('rowClick', event, row));
-			// console.log('rowClick', this.rowClick);
-			// if (this.rowClick) {
-			// 	try {
-			// 		this.tabulator.on('rowClick', this.rowClick);
-			// 	} catch (e) {
-			// 		console.error('Failed to set rowClick event handler', e);
-			// 	}
-			// }
+			this.tabulator.on('rowClick', (event: Event, row: unknown) => {
+				console.log('rowClick event', event, row)
+				if (this.rowClick) {
+					this.rowClick(event, row);
+				}
+			});
+			this.tabulator.on('rowSelected', (row: unknown) => console.log('rowSelected event', row));
+			this.tabulator.on('rowDeselected', (row: unknown) => console.log('rowDeselected event', row));
 		}
 	}
 	private setTabulatorOptions(): void {

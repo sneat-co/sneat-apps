@@ -1,5 +1,6 @@
 import { INavContext } from '@sneat/core';
 import { ContactRoleExpress, IAddress } from '@sneat/dto';
+import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamRequest } from '@sneat/team/models';
 
 export interface IFreightAddress {
@@ -122,4 +123,8 @@ export interface IAddContainersRequest extends IExpressOrderRequest {
 
 export interface IContainerRequest extends IExpressOrderRequest {
 	readonly containerID: string;
+}
+
+export interface IDeleteCounterpartyRequest extends IExpressOrderRequest, IContactRequest {
+	readonly role: string;
 }

@@ -18,7 +18,7 @@ export class ContactSelectorComponent
 
 	@Input() team: ITeamContext = { id: '' };
 	@Input() role?: ContactRole;
-	@Input() subRole?: ContactRole;
+	@Input() subType?: 'location';
 	@Input() excludeContacts?: IContactContext[];
 	@Input() onSelected?: (items: IContactContext[] | null) => void;
 
@@ -100,17 +100,18 @@ export class ContactSelectorComponent
 		}
 		this.close(undefined);
 	}
+
 	protected onContactSelected(contactID: string): void {
 		console.log('onContactSelected()', contactID);
 		this.selectedContact = this.contacts?.find(c => c.id === contactID);
-		if (!this.subRole && this.selectedContact) {
+		if (!this.subType && this.selectedContact) {
 			this.emitOnSelected(this.selectedContact);
 			this.close(undefined);
 			return;
 		}
-		const subRole = this.subRole;
-		if (subRole) {
-			this.subItems = this.selectedContact?.dto?.relatedContacts?.filter(c => c.type === subRole).map(c => ({
+		const subType = this.subType;
+		if (subType) {
+			this.subItems = this.selectedContact?.dto?.relatedContacts?.filter(c => c.type === subType).map(c => ({
 				id: c.id,
 				title: ((c.title + ' ') + (c.address?.lines?.join(', ') || '')).trim(),
 			}))

@@ -16,7 +16,7 @@ export interface TabulatorOptions {
 	readonly tooltipsHeader?: boolean;
 	readonly tooltipGenerationMode?: 'hover' | 'mouseover';
 	readonly reactiveData?: boolean;
-	readonly selectable?: boolean | 'highlight' | 'row';
+	readonly selectable?: boolean | number | 'highlight';
 	readonly data?: unknown[];
 	readonly layout?: 'fitData' | 'fitColumns';
 	readonly columns?: TabulatorColumn[];
@@ -25,4 +25,6 @@ export interface TabulatorOptions {
 	readonly groupBy?: string;
 	readonly groupHeader?: (value: any, count: number) => string;
 	readonly rowClick?: (event: Event, row: unknown) => void;
+	readonly rowSelect?: (row: unknown) => void;
+	readonly rowDeselect?: (row: unknown) => void;
 }

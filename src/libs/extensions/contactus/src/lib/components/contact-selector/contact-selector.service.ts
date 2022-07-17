@@ -9,7 +9,7 @@ import { ContactSelectorComponent } from './contact-selector.component';
 export interface IContactSelectorOptions extends ISelectorOptions<IContactContext> {
 	readonly team: ITeamContext;
 	readonly role?: ContactRole;
-	readonly subRole?: ContactRole;
+	readonly subType?: ContactRole;
 	readonly subRoleRequired?: boolean;
 	readonly excludeContacts?: IContactContext[];
 }

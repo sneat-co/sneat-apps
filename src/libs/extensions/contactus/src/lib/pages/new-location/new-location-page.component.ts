@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IContactDto } from '@sneat/dto';
-import { ICreateContactRequest } from '@sneat/team/models';
+import { IContactContext, ICreateContactRequest } from '@sneat/team/models';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactBasePage } from '../contact-base-page';
 
@@ -13,7 +13,6 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	contactDto: IContactDto = { type: 'location' };
 
-	isCreating = false;
 
 	constructor(
 		route: ActivatedRoute,
@@ -31,42 +30,12 @@ export class NewLocationPageComponent extends ContactBasePage {
 		}
 	}
 
-	submit(): void {
-		const { title, countryID, address } = this.contactDto;
-		console.log('submit', title, countryID, address);
-		if (!title || !countryID || !address || !address.lines?.length) {
-			alert('Please populate all required fields');
-			return;
+	onContactCreated(contact: IContactContext): void {
+		if (contact.dto) {
+			this.contactDto = contact.dto;
 		}
-		const request: ICreateContactRequest = {
-			teamID: this.team.id,
-			type: 'location',
-			parentContactID: this.contact?.id,
-			location: {
-				title,
-				address,
-			},
-		};
-		this.isCreating = true;
-		this.contactService.createContact(this.team, request)
-			.subscribe({
-				next: newContact => {
-					console.log('new location created with ID=' + newContact.id);
-					// this.navController.pop()
-					// 	.then(() => console.log('popped navigation'))
-					// 	.catch(() => {
-					// 		this.navController
-					// 			.navigateBack(`/space/${this.team.type}/${this.team.id}/contact/${this.contact?.id}`)
-					// 			.catch(this.errorLogger.logErrorHandler('failed navigate to parent contact'));
-					// 	});
-					this.navController
-						.navigateBack(`/space/${this.team.type}/${this.team.id}/contact/${this.contact?.id}`)
-						.catch(this.errorLogger.logErrorHandler('failed navigate to parent contact'));
-				},
-				error: err => {
-					this.errorLogger.logError(err, 'Failed to create new contact');
-					this.isCreating = false;
-				},
-			});
+		this.navController
+			.navigateBack(`/space/${this.team.type}/${this.team.id}/contact/${contact?.id}`)
+			.catch(this.errorLogger.logErrorHandler('failed navigate to parent contact'));
 	}
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext, IOrderCounterparty } from '../../dto/order-dto';
@@ -65,6 +66,11 @@ export class OrdersGridComponent implements OnChanges {
 
 	displayCols = this.allCols;
 
+	constructor(
+		private readonly navController: NavController,
+	) {
+	}
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['orders']) {
 			this.rows = this.orders?.map(o => ({
@@ -79,7 +85,15 @@ export class OrdersGridComponent implements OnChanges {
 		}
 	}
 
-	rowClick = (event: Event, row: unknown) => {
-		console.log('rowClick:', row);
+	readonly rowClick = (event: Event, row: any) => {
+		console.log('OrdersGridComponent.rowClick():', event, row);
+		if (!this.team) {
+			alert('No team context provided!');
+			return;
+		}
+		const data = row.getData();
+		this.navController
+			.navigateForward(['space', this.team.type, this.team.id, 'order', data.id])
+			.catch(console.error);
 	}
 }

@@ -4,7 +4,7 @@ import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { map, Observable } from 'rxjs';
 import {
 	IAddContainersRequest,
-	IContainerRequest,
+	IContainerRequest, IDeleteCounterpartyRequest,
 	ICreateExpressOrderRequest,
 	ICreateFreightOrderResponse,
 	IExpressOrderContext,
@@ -102,6 +102,10 @@ export class FreightOrdersService {
 
 	deleteContainer(request: IContainerRequest): Observable<void> {
 		return this.sneatApiService.delete('express/order/delete_container', undefined, request);
+	}
+
+	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {
+		return this.sneatApiService.delete('express/order/delete_order_counterparty', undefined, request);
 	}
 }
 

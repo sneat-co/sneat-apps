@@ -10,19 +10,11 @@
 <ion-content>
 
 	<sneat-location-form
+		[team]="team"
 		[(contactDto)]="contactDto"
-		[disabled]="isCreating"
+		[parentContact]="contact"
+		(contactCreated)="onContactCreated($event)"
 	></sneat-location-form>
 
-	<ion-card>
-		<ion-card-content>
-			<ion-button size="large"
-									[disabled]="isCreating || !contactDto.title || !contactDto.address"
-									(click)="submit()"
-			>
-				<ion-icon name="save-outline" slot="start"></ion-icon>
-				<ion-label>Create location record</ion-label>
-			</ion-button>
-		</ion-card-content>
-	</ion-card>
+
 </ion-content>
