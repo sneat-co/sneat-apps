@@ -29,7 +29,9 @@ export class ContactSelectorComponent
 	private contacts?: IContactContext[];
 
 	protected selectedContact?: IContactContext;
+	protected newLocationContact?: IContactContext;
 
+	locationTab: 'locations' | 'new-location' = 'locations';
 
 	protected selectedContactID?: string;
 	protected selectedSubContactID?: string;
@@ -113,8 +115,17 @@ export class ContactSelectorComponent
 		if (subType) {
 			this.subItems = this.selectedContact?.dto?.relatedContacts?.filter(c => c.type === subType).map(c => ({
 				id: c.id,
-				title: ((c.title + ' ') + (c.address?.lines?.join(', ') || '')).trim(),
+				title: ((c.title + ' - ') + (c.address?.lines?.join(', ') || '')).trim(),
 			}))
+		}
+		this.newLocationContact = {
+			id: '',
+			team: this.team,
+			dto: {
+				type: 'location',
+				countryID: this.selectedContact?.dto?.countryID,
+				address: this.selectedContact?.dto?.address,
+			},
 		}
 	}
 

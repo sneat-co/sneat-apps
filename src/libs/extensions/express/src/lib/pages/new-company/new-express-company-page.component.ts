@@ -2,10 +2,10 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { IContactDto, validateAddress } from '@sneat/dto';
+import { ContactRole, ContactType, IContactDto, validateAddress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ICreateContactCompanyRequest } from '@sneat/team/models';
+import { IContactContext, ICreateContactCompanyRequest } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 
 @Component({
@@ -22,14 +22,15 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 		{ id: 'shipper', title: 'Shipper', iconName: 'boat-outline' },
 	];
 
-	contactType = '';
+	contactType?: ContactType = undefined;
+	contactRole?: ContactRole = undefined;
 	isCreating = false;
 
-	contactDto: IContactDto = { type: 'company' };
+	contact?: IContactContext;
 
 	get formIsValid(): boolean {
 		try {
-			return !!this.contactType && !!this.contactDto.title && !!validateAddress(this.contactDto.address);
+			return !!this.contactType && !!this.contact?.dto?.title && !!validateAddress(this.contact.dto?.address);
 		} catch (e) {
 			return false;
 		}
@@ -48,31 +49,35 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 			)
 			.subscribe({
 				next: value => {
-					this.contactType = value.get('role') || '';
+					this.contactRole = value.get('role') as ContactRole || undefined;
 				},
 			});
 	}
 
-	onContactDtoChanged(contactDto: IContactDto): void {
-		console.log('contactDto', contactDto);
-		this.contactDto = contactDto;
+	onContactChanged(contact: IContactContext): void {
+		console.log('contact', contact);
+		this.contact = contact;
 	}
 
 	create(): void {
-		if (!this.contactDto.title) {
+		if (!this.contact?.dto?.title) {
 			alert('Contact title is a required field');
 			return;
 		}
+		if (!this.contactRole) {
+			alert('Contact role is a required field');
+			return;
+		}
 		try {
-			const address = validateAddress(this.contactDto.address);
+			const address = validateAddress(this.contact.dto?.address);
 			const request: ICreateContactCompanyRequest = excludeEmpty({
 				type: 'company',
 				company: excludeEmpty({
-					title: this.contactDto.title?.trim() || '',
+					title: this.contact.dto?.title?.trim() || '',
 					address,
-					roles: [this.contactType],
+					roles: [this.contactRole],
 				}),
-				roles: [this.contactType],
+				roles: [this.contactRole],
 				teamID: this.team.id,
 			});
 			this.isCreating = true;

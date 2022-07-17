@@ -11,8 +11,7 @@ import { ContactBasePage } from '../contact-base-page';
 })
 export class NewLocationPageComponent extends ContactBasePage {
 
-	contactDto: IContactDto = { type: 'location' };
-
+	newLocationDto?: IContactDto;
 
 	constructor(
 		route: ActivatedRoute,
@@ -25,14 +24,20 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	protected override onTeamDtoChanged() {
 		super.onTeamDtoChanged();
-		if (this.team?.dto?.countryID && !this.contactDto.countryID) {
-			this.contactDto = { ...this.contactDto, countryID: this.team.dto.countryID };
+		// if (this.team?.dto?.countryID && !this.newLocationDto.countryID) {
+		// 	this.newLocationDto = { ...this.newLocationDto, countryID: this.team.dto.countryID };
+		// }
+	}
+
+	onContactChanged(contact: IContactContext): void {
+		if (contact.dto) {
+			this.newLocationDto = contact.dto;
 		}
 	}
 
 	onContactCreated(contact: IContactContext): void {
 		if (contact.dto) {
-			this.contactDto = contact.dto;
+			this.newLocationDto = contact.dto;
 		}
 		this.navController
 			.navigateBack(`/space/${this.team.type}/${this.team.id}/contact/${contact?.id}`)

@@ -14,7 +14,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item *ngIf="!readonly" color="primary" class="sneat-tiny-end-padding">
+	<ion-item *ngIf="!readonly" color="light" class="sneat-tiny-end-padding">
 		<ion-label>Order # <b>{{order?.id}}</b> - {{order?.brief?.direction}}</ion-label>
 		<!--		<ion-input readonly [value]="order?.id" style="font-weight: bold"-->
 		<!--							 (click)="$event.stopPropagation(); $event.preventDefault()"></ion-input>-->
@@ -26,6 +26,9 @@
 		</ion-buttons>
 	</ion-item>
 
+	<ion-item-divider>
+		<ion-label>Some info here so we do not have merged grey backgrounds.</ion-label>
+	</ion-item-divider>
 
 	<ion-grid class="ion-grid-layout">
 		<ion-row *ngIf="readonly">
@@ -99,4 +102,11 @@
 	<!--		<ion-label position="stacked" color="medium">Special instructions</ion-label>-->
 	<!--		<ion-textarea>Freight collect</ion-textarea>-->
 	<!--	</ion-item>-->
+
+	<sneat-express-order-counterparties-card
+		[team]="team"
+		[order]="order"
+		[role]="'dispatcher'"
+		plural="Dispatchers"
+	></sneat-express-order-counterparties-card>
 </ion-card>

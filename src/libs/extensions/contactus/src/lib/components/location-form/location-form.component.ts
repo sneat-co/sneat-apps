@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { excludeEmpty, excludeUndefined } from '@sneat/core';
-import { IContactDto } from '@sneat/dto';
+import { ContactType, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
@@ -14,12 +14,13 @@ import { ContactService } from '../../services';
 export class LocationFormComponent implements OnChanges {
 
 	@Input() team?: ITeamContext;
+	@Input() contact?: IContactContext;
+	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
-	@Input() contactDto?: IContactDto;
-	@Input() parentContact?: IContactContext;
+	@Input() contactType?: ContactType;
 
-	@Output() readonly contactDtoChange = new EventEmitter<IContactDto>();
+	@Output() readonly contactChange = new EventEmitter<IContactContext>();
 	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
 
 	@ViewChild('titleInput', { static: false }) titleInput?: IonInput;
@@ -48,25 +49,48 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	onInputChange(): void {
-		if (!this.contactDto) {
-			throw new Error('onInputChange(): !this.contactDto');
+		if (!this.contact?.dto) {
+			throw new Error('onInputChange(): !this.contact.dto');
 		}
-		this.contactDto = excludeEmpty({
-			...this.contactDto,
+		if (!this.team) {
+			return;
+		}
+		const lines = this.addressText.split('\n');
+		const contactDto: IContactDto = excludeEmpty({
+			...this.contact.dto,
 			title: this.title,
 			address: {
 				countryID: this.countryID,
-				lines: this.addressText.split('\n'),
+				lines: lines.length == 1 && !lines[0].trim() ? undefined : lines,
 			},
 			countryID: this.countryID,
 		});
-		this.contactDtoChange.emit(this.contactDto);
+		this.contact = {
+			id: this.contact.id,
+			dto: contactDto,
+			team: this.team,
+		};
+		this.contactChange.emit(this.contact);
+	}
+
+	emitContactChange(): void {
+		this.contactChange.emit(this.contact);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['contactDto']) {
-			if (this.contactDto?.countryID && !this.countryID) {
-				this.countryID = this.contactDto.countryID;
+		if (changes['contactType']) {
+			if (!this.contact?.dto && this.contactType && this.team) {
+				this.contact = {
+					id: this.contact?.id || '',
+					team: this.team,
+					dto: {type: this.contactType}
+				}
+				this.emitContactChange();
+			}
+		}
+		if (changes['contact']) {
+			if (this.contact?.dto?.countryID && !this.countryID) {
+				this.countryID = this.contact.dto.countryID;
 				this.setFocusToTitle();
 			}
 		}
@@ -79,7 +103,7 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	submit(): void {
-		if (!this.contactDto) {
+		if (!this.contact?.dto) {
 			return;
 		}
 		if (!this.team) {
@@ -88,7 +112,7 @@ export class LocationFormComponent implements OnChanges {
 		if (!this.parentContact) {
 			return;
 		}
-		const { title, countryID, address } = this.contactDto;
+		const { title, countryID, address } = this.contact?.dto;
 		console.log('submit', title, countryID, address);
 		if (!title || !countryID || !address || !address.lines?.length) {
 			alert('Please populate all required fields');
@@ -108,6 +132,8 @@ export class LocationFormComponent implements OnChanges {
 			.subscribe({
 				next: newContact => {
 					console.log('new location created with ID=' + newContact.id);
+					this.emitContactChange();
+					this.emitContactChange();
 					this.contactCreated.emit(newContact)
 				},
 				error: (err: any) => {

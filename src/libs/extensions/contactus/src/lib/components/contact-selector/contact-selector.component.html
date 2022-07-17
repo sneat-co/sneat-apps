@@ -18,18 +18,25 @@
 		radioSlot="end"
 	></sneat-select-from-list>
 
-	<ng-container *ngIf="selectedContact?.dto?.relatedContacts">
-		<ion-item>
-			<ion-label>Select dispatch location</ion-label>
-			<ion-buttons slot="end">
-				<ion-button>
-					<ion-icon name="add-outline" slot="start"></ion-icon>
-					<ion-label>Add</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
+	<ng-container *ngIf="selectedContact">
+<!--		<ion-item>-->
+<!--			<ion-label>Select dispatch location</ion-label>-->
+<!--			<ion-buttons slot="end">-->
+<!--				<ion-button>-->
+<!--					<ion-icon name="add-outline" slot="start"></ion-icon>-->
+<!--					<ion-label>Add</ion-label>-->
+<!--				</ion-button>-->
+<!--			</ion-buttons>-->
+<!--		</ion-item>-->
+		<ion-segment *ngIf="locationTab" [(ngModel)]="locationTab">
+			<ion-segment-button value="locations">Known locations</ion-segment-button>
+			<ion-segment-button value="new-location">New location</ion-segment-button>
+		</ion-segment>
+		<p class="ion-padding" *ngIf="locationTab === 'locations' && selectedContact && !selectedContact.dto?.relatedContacts?.length">
+			<ion-text color="medium">No locations for selected contact</ion-text>
+		</p>
 <!--		<h2 class="ion-margin-horizontal"></h2>-->
-		<sneat-select-from-list
+		<sneat-select-from-list *ngIf="locationTab === 'locations' && selectedContact?.dto?.relatedContacts?.length"
 			[label]="''"
 			[items]="subItems"
 			[(ngModel)]="selectedSubContactID"
@@ -37,5 +44,12 @@
 			[isFilterable]="true"
 			radioSlot="end"
 		></sneat-select-from-list>
+
+		<sneat-location-form *ngIf="locationTab === 'new-location'"
+												 contactType="location"
+												 [contact]="newLocationContact"
+												 [team]="team"
+												 [parentContact]="selectedContact"
+		></sneat-location-form>
 	</ng-container>
 </ion-content>

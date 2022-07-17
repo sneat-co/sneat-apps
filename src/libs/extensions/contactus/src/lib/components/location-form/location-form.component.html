@@ -8,7 +8,7 @@
 
 <ng-container *ngIf="countryID">
 	<ion-card>
-		<ion-item-divider color="primary">
+		<ion-item-divider color="light">
 			{{label}}
 		</ion-item-divider>
 		<ion-item>
@@ -26,7 +26,7 @@
 				[(ngModel)]="addressText"
 				[disabled]="disabled"
 				(ionChange)="onInputChange()"
-				[required]="contactDto?.type === 'location'"
+				[required]="contact?.dto?.type === 'location'"
 			></ion-textarea>
 		</ion-item>
 	</ion-card>
@@ -34,7 +34,7 @@
 	<ion-card *ngIf="!hideSubmitButton">
 		<ion-card-content>
 			<ion-button size="large"
-									[disabled]="isCreating || !contactDto?.title || !contactDto?.address"
+									[disabled]="isCreating || !contact?.dto?.title || !contact?.dto?.address?.lines?.length"
 									(click)="submit()"
 			>
 				<ion-icon name="save-outline" slot="start"></ion-icon>
