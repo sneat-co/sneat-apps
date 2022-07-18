@@ -12,7 +12,12 @@
 	<ion-label>No {{plural|lowercase}} have been added yet</ion-label>
 </ion-item-divider>
 <ion-item *ngFor="let counterparty of counterparties" class="sneat-tiny-end-padding">
-	<ion-label>{{counterparty.title}}</ion-label>
+	<ion-label>
+		{{counterparty.title}}
+		<ng-container *ngIf="counterparty.parentContactID">
+			@ {{counterparty.parentContactID}}
+		</ng-container>
+	</ion-label>
 	<ion-buttons slot="end">
 		<!--			<ion-button title="Change">-->
 		<!--				<ion-icon name="create-outline" color="medium"></ion-icon>-->

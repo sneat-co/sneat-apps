@@ -39,7 +39,10 @@ export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;
 export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IDocumentContext = ITeamItemContext<IDocumentBrief, IDocumentDto>;
-export type IContactContext = ITeamItemContext<IContactBrief, IContactDto>;
+
+export interface IContactContext extends ITeamItemContext<IContactBrief, IContactDto> {
+	parentContact?: IContactContext;
+}
 
 export function contactContextFromBrief(team: ITeamContext, brief: IContactBrief): IContactContext {
 	return teamItemContextFromBrief(team, brief);

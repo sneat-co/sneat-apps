@@ -117,6 +117,12 @@ export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
 	readonly refNumber?: string;
 }
 
+export interface IAddOrderShippingPointRequest extends IExpressOrderRequest {
+	readonly type: 'pick' | 'drop';
+	readonly locationContactID: string;
+	readonly containerIDs?: ReadonlyArray<string>;
+}
+
 export interface IAddContainersRequest extends IExpressOrderRequest {
 	readonly containers: IOrderContainerBase[];
 }

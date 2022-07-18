@@ -11,7 +11,7 @@ import {
 	IExpressOrderDto,
 	IFreightOrderBrief,
 	IOrderCounterparty,
-	ISetOrderCounterpartyRequest,
+	ISetOrderCounterpartyRequest, IAddOrderShippingPointRequest,
 } from '../dto/order-dto';
 import { IOrdersFilter } from './orders-filter';
 
@@ -94,6 +94,10 @@ export class FreightOrdersService {
 
 	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {
 		return this.sneatApiService.post('express/order/set_order_counterparty', request);
+	}
+
+	addShippingPoint(request: IAddOrderShippingPointRequest): Observable<IExpressOrderDto> {
+		return this.sneatApiService.post('express/order/add_shipping_point', request);
 	}
 
 	addContainers(request: IAddContainersRequest): Observable<void> {

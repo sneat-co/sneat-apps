@@ -18,7 +18,7 @@
 		radioSlot="end"
 	></sneat-select-from-list>
 
-	<ng-container *ngIf="selectedContact">
+	<ng-container *ngIf="selectedContact && subType">
 <!--		<ion-item>-->
 <!--			<ion-label>Select dispatch location</ion-label>-->
 <!--			<ion-buttons slot="end">-->
@@ -50,6 +50,7 @@
 												 [contact]="newLocationContact"
 												 [team]="team"
 												 [parentContact]="selectedContact"
+												 (contactCreated)="onLocationCreated($event)"
 		></sneat-location-form>
 	</ng-container>
 </ion-content>

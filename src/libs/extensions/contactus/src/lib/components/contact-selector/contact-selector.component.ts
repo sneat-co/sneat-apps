@@ -103,6 +103,15 @@ export class ContactSelectorComponent
 		this.close(undefined);
 	}
 
+	protected onLocationCreated(contact: IContactContext): void {
+		contact = {
+			...contact,
+			parentContact: this.selectedContact,
+		};
+		this.emitOnSelected(contact);
+		this.close(undefined);
+	}
+
 	protected onContactSelected(contactID: string): void {
 		console.log('onContactSelected()', contactID);
 		this.selectedContact = this.contacts?.find(c => c.id === contactID);
@@ -116,7 +125,7 @@ export class ContactSelectorComponent
 			this.subItems = this.selectedContact?.dto?.relatedContacts?.filter(c => c.type === subType).map(c => ({
 				id: c.id,
 				title: ((c.title + ' - ') + (c.address?.lines?.join(', ') || '')).trim(),
-			}))
+			}));
 		}
 		this.newLocationContact = {
 			id: '',
@@ -126,7 +135,7 @@ export class ContactSelectorComponent
 				countryID: this.selectedContact?.dto?.countryID,
 				address: this.selectedContact?.dto?.address,
 			},
-		}
+		};
 	}
 
 	protected emitOnSelected(contact: IContactContext): void {

@@ -2,13 +2,23 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { FreightOrdersService, IDeleteCounterpartyRequest, IExpressOrderContext, IOrderCounterparty } from '../..';
+import {
+	FreightOrdersService,
+	IAddOrderShippingPointRequest,
+	IDeleteCounterpartyRequest,
+	IExpressOrderContext,
+	IOrderCounterparty,
+} from '../..';
+
+interface ICounterparty extends IOrderCounterparty {
+	parent?: IOrderCounterparty;
+}
 
 @Component({
 	selector: 'sneat-express-order-counterparties-card',
-	templateUrl: './order-counterparties-card.component.html',
+	templateUrl: './order-counterparties.component.html',
 })
-export class OrderCounterpartiesCardComponent implements OnChanges {
+export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
@@ -19,7 +29,7 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 
 	readonly deleting: IOrderCounterparty[] = [];
 
-	public counterparties?: IOrderCounterparty[];
+	public counterparties?: ICounterparty[];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -35,7 +45,13 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 	}
 
 	private setCounterparties(): void {
-		this.counterparties = this.order?.dto?.counterparties?.filter(counterparty => counterparty.role === this.role);
+		const counterparties = this.order?.dto?.counterparties || [];
+
+		this.counterparties = counterparties.filter(c => c.role === this.role)
+			.map(c => c.parentContactID ? {
+				...c,
+				parent: counterparties.find(cc => cc.contactID === c.parentContactID),
+			} : c);
 	}
 
 	addCounterparty(event: Event): void {
@@ -79,6 +95,20 @@ export class OrderCounterpartiesCardComponent implements OnChanges {
 						],
 					},
 				};
+				const request: IAddOrderShippingPointRequest = {
+					teamID: team.id,
+					orderID: this.order.id,
+					type: 'pick',
+					locationContactID: contact.id,
+				};
+				this.ordersService.addShippingPoint(request).subscribe({
+					next: () => {
+						console.log('added shipping point added to order');
+					},
+					error: e => {
+						this.errorLogger.logError(e, 'Failed to add shipping point to order');
+					},
+				});
 				this.setCounterparties();
 				this.emitOrder();
 			})

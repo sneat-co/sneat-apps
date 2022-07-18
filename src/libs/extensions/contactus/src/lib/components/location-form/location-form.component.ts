@@ -132,7 +132,7 @@ export class LocationFormComponent implements OnChanges {
 			.subscribe({
 				next: newContact => {
 					console.log('new location created with ID=' + newContact.id);
-					this.emitContactChange();
+					this.contact = newContact;
 					this.emitContactChange();
 					this.contactCreated.emit(newContact)
 				},
