@@ -6,8 +6,8 @@ import {
 	FreightOrdersService,
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
-	IExpressOrderContext,
-	IOrderCounterparty,
+	IExpressOrderContext, IOrderCounterparty,
+	IOrderShippingPointCounterparty,
 } from '../..';
 
 interface ICounterparty extends IOrderCounterparty {
@@ -28,7 +28,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() parentRole?: 'dispatcher' = 'dispatcher';
 	@Input() role: 'dispatcher' | 'dispatch-location'  = 'dispatch-location';
 
-	readonly deleting: IOrderCounterparty[] = [];
+	readonly deleting: IOrderShippingPointCounterparty[] = [];
 
 	public counterparties?: ICounterparty[];
 
@@ -79,6 +79,9 @@ export class OrderCounterpartiesComponent implements OnChanges {
 				if (!contact?.brief) {
 					return;
 				}
+				if (!this.order?.dto) {
+					return;
+				}
 				const counterparty: IOrderCounterparty = {
 					contactID: contact.id,
 					title: contact.brief.title || contact.id,
@@ -120,7 +123,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		this.orderChange.emit(this.order);
 	}
 
-	remove(counterparty: IOrderCounterparty): void {
+	remove(counterparty: ICounterparty): void {
 		if (!this.team?.id) {
 			throw new Error('team is required');
 		}

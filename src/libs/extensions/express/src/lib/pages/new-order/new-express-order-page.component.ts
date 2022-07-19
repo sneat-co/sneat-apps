@@ -4,7 +4,7 @@ import { ContactRoleExpress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, NEVER, switchMap, takeUntil } from 'rxjs';
-import { ExpressTeamService, FreightOrdersService, IOrderCounterparty } from '../..';
+import { ExpressTeamService, FreightOrdersService, IOrderCounterparty, IOrderShippingPointCounterparty } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order-dto';
 

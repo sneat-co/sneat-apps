@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { FreightOrdersService, IExpressOrderContext, IOrderCounterparty } from '../..';
+import { FreightOrdersService, IExpressOrderContext, IOrderCounterparty, IOrderShippingPointCounterparty } from '../..';
 import { OrderPageBaseComponent } from '../../pages/order-page-base.component';
 
 @Component({

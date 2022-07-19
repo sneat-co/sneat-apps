@@ -26,16 +26,44 @@ export type ContainerType = 'unknown' | '20ft' | '40ft';
 
 export type FreightFlag = 'hazardous' | 'letter_of_credit';
 
-export interface IOrderLoad {
+export interface IFreightLoad {
 	readonly flags?: ReadonlyArray<FreightFlag>;
 	readonly grossWeightKg?: number;
-	readonly pallets?: number;
-	readonly volumeM3?: number;
+	readonly numberOfPallets?: number;
+	readonly volumeInLitters?: number; // 1m3 = 1000L
 }
 
-export interface IOrderContainerBase extends IOrderLoad {
+export interface IOrderContainerBase extends IFreightLoad {
 	readonly type: ContainerType;
 	readonly number: string;
+}
+
+export type ShippingPointStatus = 'pending' | 'completed';
+
+export interface IShippingPointBase extends IFreightLoad {
+	readonly status: ShippingPointStatus;
+	started?: string;
+	completed?: string;
+	scheduledStartDate?: string;
+	scheduledEndDate?: string;
+}
+
+export interface IOrderShippingPointLocation {
+	readonly contactID: string;
+	readonly countryID: string;
+	readonly title: string;
+}
+
+export interface IOrderShippingPointCounterparty {
+	readonly contactID: string;
+	readonly title: string;
+}
+
+export interface IOrderShippingPoint extends IShippingPointBase {
+	readonly id: string;
+	readonly type: 'pick' | 'drop'; // TODO: consider changing to or adding 'load' & 'unload';
+	readonly location: IOrderShippingPointLocation;
+	readonly counterparty: IOrderShippingPointCounterparty;
 }
 
 export interface IOrderContainer extends IOrderContainerBase {
@@ -52,7 +80,7 @@ export interface IDocIssued {
 	readonly on?: string;
 }
 
-export interface IFreightOrderBase extends IOrderLoad {
+export interface IFreightOrderBase extends IFreightLoad {
 	readonly status: string;
 	readonly direction: OrderDirection;
 }
@@ -86,6 +114,7 @@ export interface IExpressOrderDto extends IFreightOrderBase {
 	// shipperRef?: string;
 	// agent?: IOrderCounterparty;
 	// agentRef?: string;
+	readonly shippingPoints?: ReadonlyArray<IOrderShippingPoint>;
 	readonly containers?: ReadonlyArray<IOrderContainer>;
 	readonly declarations?: IFreightDeclaration[];
 	readonly specialInstructions?: string;
@@ -123,8 +152,12 @@ export interface IAddOrderShippingPointRequest extends IExpressOrderRequest {
 	readonly containerIDs?: ReadonlyArray<string>;
 }
 
+export interface INewContainer extends IOrderContainerBase {
+	readonly shippingPointIDs?: ReadonlyArray<string>;
+}
+
 export interface IAddContainersRequest extends IExpressOrderRequest {
-	readonly containers: IOrderContainerBase[];
+	readonly containers: INewContainer[];
 }
 
 export interface IContainerRequest extends IExpressOrderRequest {

@@ -1,0 +1,15 @@
+<ion-item-group>
+	<ion-item-divider color="light">
+		<ion-label>Shipping points</ion-label>
+	</ion-item-divider>
+	<ion-item-divider *ngIf="!shippingPoints?.length">
+		<ion-label>No shipping points have been added to the order yet.</ion-label>
+	</ion-item-divider>
+	<ion-item *ngFor="let shippingPoint of shippingPoints">
+		<ion-checkbox [value]="shippingPoint.location.contactID" slot="start"
+									[checked]="selectedShippingPointIDs.includes(shippingPoint.id)"
+									(ionChange)="checkboxChanged($event)"
+		></ion-checkbox>
+		<ion-label color="medium">{{shippingPoint.counterparty.title}} @ {{shippingPoint.location.title}}</ion-label>
+	</ion-item>
+</ion-item-group>

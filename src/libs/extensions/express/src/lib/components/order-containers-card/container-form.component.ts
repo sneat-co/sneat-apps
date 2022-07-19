@@ -41,7 +41,7 @@ export class ContainerFormComponent implements OnChanges {
 	setFormValues(): void {
 		this.number.setValue(this.container?.number || '');
 		this.grossKg.setValue(this.container?.grossWeightKg);
-		this.pallets.setValue(this.container?.pallets);
+		this.pallets.setValue(this.container?.numberOfPallets);
 	}
 
 	cancelEditing(event: Event): void {

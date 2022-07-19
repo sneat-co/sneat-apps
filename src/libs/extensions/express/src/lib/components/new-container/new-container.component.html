@@ -1,5 +1,5 @@
 <ion-content>
-	<ion-item color="dark" class="sneat-tiny-end-padding">
+	<ion-item color="primary" class="sneat-tiny-end-padding">
 		<ion-label>New container</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="close($event)">
@@ -19,10 +19,17 @@
 			<ion-label color="medium">Container #</ion-label>
 			<ion-input #containerNumberInput type="text" [(ngModel)]="containerNumber"></ion-input>
 		</ion-item>
+
 		<ion-item>
 			<ion-label color="medium">Gross weight (kg)</ion-label>
 			<ion-input type="number" [(ngModel)]="grossWeightKg"></ion-input>
 		</ion-item>
+
+		<sneat-shipping-points-selector
+			[shippingPoints]="order?.dto?.shippingPoints"
+			[selectedShippingPointIDs]="selectedShippingPointIDs || []"
+		></sneat-shipping-points-selector>
+
 		<div class="ion-padding">
 			<ion-button size="large" [disabled]="isSubmitting" (click)="addContainer($event)">
 				<ion-icon name="save-outline" slot="start"></ion-icon>

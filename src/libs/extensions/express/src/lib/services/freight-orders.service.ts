@@ -10,8 +10,8 @@ import {
 	IExpressOrderContext,
 	IExpressOrderDto,
 	IFreightOrderBrief,
-	IOrderCounterparty,
-	ISetOrderCounterpartyRequest, IAddOrderShippingPointRequest,
+	IOrderShippingPointCounterparty,
+	ISetOrderCounterpartyRequest, IAddOrderShippingPointRequest, IOrderCounterparty,
 } from '../dto/order-dto';
 import { IOrdersFilter } from './orders-filter';
 

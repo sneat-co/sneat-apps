@@ -4,17 +4,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SelectFromListModule } from '@sneat/components';
 import { NewContainerComponent } from '../new-container/new-container.component';
+import {
+	ShippingPointsSelectorModule
+} from '../shipping-points-selector/shipping-points-selector.module';
 import { ContainerFormComponent } from './container-form.component';
 import { OrderContainersComponent } from './order-containers.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    FormsModule,
-    SelectFromListModule,
-    ReactiveFormsModule,
-  ],
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		SelectFromListModule,
+		ReactiveFormsModule,
+		ShippingPointsSelectorModule,
+	],
 	declarations: [
 		ContainerFormComponent,
 		OrderContainersComponent,

@@ -1,4 +1,4 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import {
@@ -14,12 +14,14 @@ import { ITeamContext } from '@sneat/team/models';
 	selector: 'sneat-new-container',
 	templateUrl: './new-container.component.html',
 })
-export class NewContainerComponent {
+export class NewContainerComponent implements AfterViewInit {
 
 	@Input() order?: IExpressOrderContext;
 	@Input() team?: ITeamContext;
 
 	@ViewChild('containerNumberInput', { static: false }) containerNumberInput?: IonInput;
+
+	selectedShippingPointIDs?: ReadonlyArray<string>;
 
 	readonly containerTypes: ISelectItem[] = [
 		{ id: '20ft', title: '20 ft.' },
@@ -38,6 +40,10 @@ export class NewContainerComponent {
 		private readonly modalController: ModalController,
 		private readonly orderService: FreightOrdersService,
 	) {
+	}
+
+	ngAfterViewInit(): void {
+		this.selectedShippingPointIDs = this.order?.dto?.shippingPoints?.map(p => p.id);
 	}
 
 	onContainerTypeChanged(): void {
@@ -71,6 +77,7 @@ export class NewContainerComponent {
 					{
 						type: this.containerType as ContainerType,
 						number: this.containerNumber,
+						shippingPointIDs: this.selectedShippingPointIDs,
 					},
 				],
 			};
@@ -86,4 +93,5 @@ export class NewContainerComponent {
 			return;
 		}
 	}
+
 }

@@ -3,7 +3,12 @@ import { ContactRole, ContactRoleExpress } from '@sneat/dto';
 import { FreightOrdersService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderCounterparty, ISetOrderCounterpartyRequest } from '../../dto';
+import {
+	IExpressOrderContext,
+	IOrderCounterparty,
+	IOrderShippingPointCounterparty,
+	ISetOrderCounterpartyRequest,
+} from '../../dto';
 
 @Component({
 	selector: 'sneat-express-order-counterparty-input',
@@ -19,7 +24,7 @@ export class OrderCounterpartyInputComponent {
 	@Input() order?: IExpressOrderContext;
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
-	@Output() counterpartyChange = new EventEmitter<IOrderCounterparty>();
+	@Output() counterpartyChange = new EventEmitter<IOrderShippingPointCounterparty>();
 
 	readonly label = () => this.counterpartyRole?.length ? this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1) : 'Counterparty';
 

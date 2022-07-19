@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IGridColumn } from '@sneat/grid';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderCounterparty } from '../../dto/order-dto';
+import { IExpressOrderContext, IOrderShippingPointCounterparty } from '../../dto/order-dto';
 
 @Component({
 	selector: 'sneat-express-orders-list',
