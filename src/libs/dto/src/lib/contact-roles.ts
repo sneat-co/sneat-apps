@@ -19,6 +19,7 @@ export type ContactRoleExpress =
 	'consignee' |
 	'notify' |
 	'dispatcher' |
+	'dispatch-location' |
 	'shipper' |
 	'agent' |
 	'buyer' |

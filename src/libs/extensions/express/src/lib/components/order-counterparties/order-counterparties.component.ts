@@ -15,7 +15,7 @@ interface ICounterparty extends IOrderCounterparty {
 }
 
 @Component({
-	selector: 'sneat-express-order-counterparties-card',
+	selector: 'sneat-express-order-counterparties',
 	templateUrl: './order-counterparties.component.html',
 })
 export class OrderCounterpartiesComponent implements OnChanges {
@@ -25,7 +25,8 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() readonly = false;
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
-	@Input() role: 'dispatcher' = 'dispatcher';
+	@Input() parentRole?: 'dispatcher' = 'dispatcher';
+	@Input() role: 'dispatcher' | 'dispatch-location'  = 'dispatch-location';
 
 	readonly deleting: IOrderCounterparty[] = [];
 
@@ -65,7 +66,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			team,
-			role: this.role,
+			role: this.parentRole || this.role,
 			subType: 'location',
 			excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
 		};

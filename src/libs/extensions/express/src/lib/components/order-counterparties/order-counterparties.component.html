@@ -13,10 +13,10 @@
 </ion-item-divider>
 <ion-item *ngFor="let counterparty of counterparties" class="sneat-tiny-end-padding">
 	<ion-label>
-		{{counterparty.title}}
 		<ng-container *ngIf="counterparty.parentContactID">
-			@ {{counterparty.parentContactID}}
+			{{counterparty.parent?.title || counterparty.parentContactID}} @
 		</ng-container>
+		{{counterparty.title}}
 	</ion-label>
 	<ion-buttons slot="end">
 		<!--			<ion-button title="Change">-->
