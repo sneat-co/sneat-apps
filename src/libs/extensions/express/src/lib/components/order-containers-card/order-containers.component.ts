@@ -8,7 +8,6 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ISelectItem } from '@sneat/components';
 import { ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext, IOrderContainer } from '../..';
 import { NewContainerComponent } from '../new-container/new-container.component';
@@ -38,16 +37,16 @@ export class OrderContainersComponent implements OnChanges {
 		}
 	}
 
-	async openNewContainerForm() {
-		const modal = await this.modalController.create({
-			component: NewContainerComponent,
-			componentProps: {
-				order: this.order,
-				team: this.team,
-			}
-		});
-		await modal.present();
-	}
+	// async openNewContainerForm() {
+	// 	const modal = await this.modalController.create({
+	// 		component: NewContainerComponent,
+	// 		componentProps: {
+	// 			order: this.order,
+	// 			team: this.team,
+	// 		}
+	// 	});
+	// 	await modal.present();
+	// }
 
 	deleteContainer(event: Event, id: string) {
 		this.containers = this.containers?.filter(c => c.id !== id) || [];

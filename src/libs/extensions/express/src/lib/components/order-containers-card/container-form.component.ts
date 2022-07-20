@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { FreightOrdersService, IContainerRequest, IExpressOrderContext, IOrderContainer } from '../..';
+import { FreightOrdersService, IContainerRequest, IExpressOrderContext, IOrderContainer, IOrderSegment } from '../..';
 
 @Component({
 	selector: 'sneat-order-container-form',
@@ -13,6 +13,8 @@ export class ContainerFormComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Input() team?: ITeamContext;
 	@Input() i = 0;
+
+	segments?: IOrderSegment[];
 
 	deleting = false;
 
@@ -35,6 +37,10 @@ export class ContainerFormComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['container']) {
 			this.setFormValues();
+		}
+		if (changes['order'] || changes['container']) {
+			const containerID = this.container?.id;
+			this.segments = containerID ? this.order?.dto?.segments?.filter(s => s.containerIDs?.includes(containerID)) || [] : undefined;
 		}
 	}
 

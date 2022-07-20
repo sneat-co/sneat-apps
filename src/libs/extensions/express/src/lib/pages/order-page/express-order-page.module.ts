@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
+import { OrderSegmentsComponent } from '../../components/order-segments/order-segments.component';
 import { ExpressOrderPageComponent } from './express-order-page.component';
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   ],
 	declarations: [
 		ExpressOrderPageComponent,
+		OrderSegmentsComponent,
 	],
 })
 export class ExpressOrderPageModule {

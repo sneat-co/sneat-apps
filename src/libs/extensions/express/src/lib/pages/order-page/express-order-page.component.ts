@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { FreightOrdersService } from '../..';
+import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 @Component({
@@ -10,13 +12,29 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 	styleUrls: ['./express-order-page.component.scss'],
 })
 export class ExpressOrderPageComponent extends OrderPageBaseComponent {
-	tab: 'load_points' | 'containers' | 'notes' = 'containers';
+	tab: 'segments' | 'containers' | 'notes' = 'containers';
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		orderService: FreightOrdersService,
+		private readonly modalController: ModalController,
 	) {
 		super('OrderPageComponent', route, teamParams, orderService);
+	}
+
+	async addContainer(): Promise<void> {
+		const modal = await this.modalController.create({
+			component: NewContainerComponent,
+			componentProps: {
+				order: this.order,
+				team: this.team,
+			}
+		});
+		await modal.present();
+	}
+
+	addSegment(): void {
+		console.log('addSegment');
 	}
 }

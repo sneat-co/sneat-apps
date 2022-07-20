@@ -137,3 +137,8 @@ ion-modal.auto-height {
 ion-popover {
   --min-width: 350px; // 350px is <ion-datetime> width TODO: This sucks!!!
 }
+
+ion-item.ion-item-no-border {
+  --inner-border-width: 0;
+  --border-width: 0;
+}

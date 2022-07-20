@@ -9,35 +9,58 @@
 <ion-content>
 	<sneat-express-order-card [team]="team" [order]="order" [hideDispatchers]="true"></sneat-express-order-card>
 
-<!--	<div class="ion-padding-horizontal">-->
-<!--		<ion-segment [(ngModel)]="tab">-->
-<!--			<ion-segment-button value="load_points">Load points</ion-segment-button>-->
-<!--			<ion-segment-button value="containers">-->
-<!--				<ion-label>-->
-<!--					Containers-->
-<!--					<ion-badge color="light" *ngIf="order?.dto?.containers?.length">{{order?.dto?.containers?.length}}</ion-badge>-->
-<!--				</ion-label>-->
-<!--			</ion-segment-button>-->
-<!--			&lt;!&ndash;		<ion-segment-button value="notes">Notes</ion-segment-button>&ndash;&gt;-->
-<!--		</ion-segment>-->
-<!--	</div>-->
+	<ion-grid class="ion-grid-layout ion-margin-horizontal">
+		<ion-row>
+			<ion-col size="10">
+				<ion-segment [(ngModel)]="tab">
+					<ion-segment-button value="containers">
+						<ion-label>
+							Containers
+							<ion-badge color="light"
+												 *ngIf="order?.dto?.containers?.length">{{order?.dto?.containers?.length}}</ion-badge>
+						</ion-label>
+					</ion-segment-button>
+					<ion-segment-button value="segments">
+						<ion-label>
+							Segments
+							<ion-badge color="light" *ngIf="order?.dto?.segments?.length">{{order?.dto?.segments?.length}}</ion-badge>
+						</ion-label>
+					</ion-segment-button>
+				</ion-segment>
+			</ion-col>
+			<ion-col>
+				<ion-item class="ion-item-no-border">
+					<ion-buttons slot="end">
+						<ion-button fill="clear" *ngIf="tab === 'containers'" title="Add container" (click)="addContainer()">
+							<ion-icon name="add-outline" slot="start"></ion-icon>
+							<ion-label>Add</ion-label>
+						</ion-button>
+						<ion-button fill="clear" *ngIf="tab === 'segments'" title="Add segment" (click)="addSegment()">
+							<ion-icon name="add-outline" slot="start"></ion-icon>
+							<ion-label>Add</ion-label>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
-<!--	<ion-card *ngIf="tab === 'notes'">-->
-<!--		<ion-card-content>-->
-<!--			<ion-item>-->
-<!--				<ion-label position="stacked">Visible only to employees of {{team?.brief?.title}}</ion-label>-->
-<!--				<ion-textarea placeholder="text"></ion-textarea>-->
-<!--			</ion-item>-->
-<!--			<ion-button (click)="saveNotes($event)">Save notes</ion-button>-->
-<!--		</ion-card-content>-->
-<!--	</ion-card>-->
+	<!--	<ion-card *ngIf="tab === 'notes'">-->
+	<!--		<ion-card-content>-->
+	<!--			<ion-item>-->
+	<!--				<ion-label position="stacked">Visible only to employees of {{team?.brief?.title}}</ion-label>-->
+	<!--				<ion-textarea placeholder="text"></ion-textarea>-->
+	<!--			</ion-item>-->
+	<!--			<ion-button (click)="saveNotes($event)">Save notes</ion-button>-->
+	<!--		</ion-card-content>-->
+	<!--	</ion-card>-->
 
-<!--	<sneat-order-shipping-points-card-->
-<!--		*ngIf="tab === 'load_points'"-->
-<!--		[team]="team"-->
-<!--		[order]="order"-->
-<!--	>-->
-<!--	</sneat-order-shipping-points-card>-->
+	<!--	<sneat-order-shipping-points-card-->
+	<!--		*ngIf="tab === 'load_points'"-->
+	<!--		[team]="team"-->
+	<!--		[order]="order"-->
+	<!--	>-->
+	<!--	</sneat-order-shipping-points-card>-->
 
 	<sneat-order-containers-card
 		*ngIf="tab === 'containers'"
@@ -45,4 +68,6 @@
 		[order]="order">
 	</sneat-order-containers-card>
 
+	<sneat-order-segments *ngIf="tab === 'segments'" [team]="team" [order]="order">
+	</sneat-order-segments>
 </ion-content>

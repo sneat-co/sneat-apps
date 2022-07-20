@@ -59,6 +59,24 @@ export interface IOrderShippingPointCounterparty {
 	readonly title: string;
 }
 
+export interface ISegmentDates {
+	readonly start: string;
+	readonly end: string;
+}
+
+export interface ISegmentContactIDs {
+	from: string;
+	to: string;
+	transporter?: string;
+}
+
+export interface IOrderSegment {
+	id: string;
+	dates: ISegmentDates;
+	contactIDs: ISegmentContactIDs;
+	containerIDs: ReadonlyArray<string>;
+}
+
 export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly id: string;
 	readonly type: 'pick' | 'drop'; // TODO: consider changing to or adding 'load' & 'unload';
@@ -116,6 +134,7 @@ export interface IExpressOrderDto extends IFreightOrderBase {
 	// agentRef?: string;
 	readonly shippingPoints?: ReadonlyArray<IOrderShippingPoint>;
 	readonly containers?: ReadonlyArray<IOrderContainer>;
+	readonly segments?: ReadonlyArray<IOrderSegment>;
 	readonly declarations?: IFreightDeclaration[];
 	readonly specialInstructions?: string;
 	readonly issued?: IDocIssued;
