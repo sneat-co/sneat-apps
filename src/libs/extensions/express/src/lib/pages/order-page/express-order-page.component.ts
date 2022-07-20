@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { FreightOrdersService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
+import { NewSegmentComponent } from '../../components/new-segment';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 @Component({
@@ -29,12 +30,19 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 			componentProps: {
 				order: this.order,
 				team: this.team,
-			}
+			},
 		});
 		await modal.present();
 	}
 
-	addSegment(): void {
-		console.log('addSegment');
+	async addSegment(): Promise<void> {
+		const modal = await this.modalController.create({
+			component: NewSegmentComponent,
+			componentProps: {
+				order: this.order,
+				team: this.team,
+			},
+		});
+		await modal.present();
 	}
 }
