@@ -8,6 +8,10 @@ import { RouterModule } from '@angular/router';
 				path: 'shipping-doc',
 				loadChildren: () => import('./order-shipping-doc/order-shipping-doc.module').then(m => m.OrderShippingDocModule),
 			},
+			{
+				path: 'expedition-doc',
+				loadChildren: () => import('./order-expedition-print-doc/order-expedition-print-doc.module').then(m => m.OrderExpeditionPrintDocModule),
+			},
 		]),
 	],
 })

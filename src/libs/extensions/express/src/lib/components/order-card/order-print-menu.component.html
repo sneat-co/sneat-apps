@@ -1,3 +1,7 @@
+<ion-item-divider color="light">
+	<ion-icon name="print-outline" slot="start" color="medium"></ion-icon>
+	<ion-label color="medium">To print</ion-label>
+</ion-item-divider>
 <ion-item
 	(click)="print($event, 'shipping-doc')"
 >
@@ -8,5 +12,17 @@
 			fragment="print"
 			target="_blank"
 		>Shipping document</a>
+	</ion-label>
+</ion-item>
+<ion-item
+	(click)="print($event, 'expedition-doc')"
+>
+	<ion-icon name="car-outline" slot="start"></ion-icon>
+	<ion-label>
+		<a
+			routerLink="/space/{{team?.type}}/{{team?.id}}/order/{{order?.id}}/print/expedition-doc"
+			fragment="print"
+			target="_blank"
+		>Expedition document</a>
 	</ion-label>
 </ion-item>
