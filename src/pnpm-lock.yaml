@@ -37,7 +37,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 5.30.7
   '@typescript-eslint/parser': 5.30.7
   cypress: 9.7.0
-  date-fns: 2.28.0
+  date-fns: 2.29.1
   eslint: 8.20.0
   eslint-config-prettier: 8.5.0
   eslint-plugin-cypress: 2.12.1
@@ -79,7 +79,7 @@ dependencies:
   '@sentry/angular': 7.7.0_7oqfw6lqw5nwxczdkwx3vywpoi
   '@sentry/tracing': 7.7.0
   '@sneat/random': 0.0.4_jgc7rjv6dmfsh4hhmn3evgouju
-  date-fns: 2.28.0
+  date-fns: 2.29.1
   firebase: 9.9.0
   ionicons: 6.0.2
   rxjs: 7.5.5
@@ -7181,8 +7181,8 @@ packages:
       whatwg-url: 11.0.0
     dev: true
 
-  /date-fns/2.28.0:
-    resolution: {integrity: sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==}
+  /date-fns/2.29.1:
+    resolution: {integrity: sha512-dlLD5rKaKxpFdnjrs+5azHDFOPEu4ANy/LTh04A1DTzMM7qoajmKCBc8pkKRFT41CNzw+4gQh79X5C+Jq27HAw==}
     engines: {node: '>=0.11'}
     dev: false
 
