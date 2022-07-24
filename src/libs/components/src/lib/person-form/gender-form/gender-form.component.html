@@ -15,7 +15,7 @@
 		</ion-radio-group>
 	</ion-item-group>
 	<ion-item *ngIf="genderID" @selectIn>
-		<ion-icon [color]="genderID|genderColor" [name]="gender?.icon" *ngIf="gender" slot="start"></ion-icon>
+		<ion-icon [color]="genderID|genderColor" [name]="gender.icon" *ngIf="gender" slot="start"></ion-icon>
 		<ion-label color="medium" position="stacked">Gender</ion-label>
 		<ion-select [(ngModel)]="genderID"
 								[disabled]="disabled"

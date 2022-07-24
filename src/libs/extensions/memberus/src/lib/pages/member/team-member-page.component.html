@@ -1,9 +1,9 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="'space/' + team?.type + '/' + team?.id"></ion-back-button>
+			<ion-back-button [defaultHref]="'space/' + team.type + '/' + team.id"></ion-back-button>
 		</ion-buttons>
-		<ng-container [ngSwitch]="team?.type">
+		<ng-container [ngSwitch]="team.type">
 			<ion-title *ngSwitchCase="'family'">Family member</ion-title>
 			<ion-title *ngSwitchCase="'cohabit'">Housemate</ion-title>
 			<ion-title *ngSwitchCase="'work'">Worker</ion-title>
@@ -16,7 +16,7 @@
 		<ion-buttons slot="end">
 			<ion-button
 				*ngIf="member"
-				[title]="member?.brief?.userID === teamParams.userService.currentUserID ? 'Leave team' : 'Remove team member'"
+				[title]="member.brief?.userID === teamParams.userService.currentUserID ? 'Leave team' : 'Remove team member'"
 				(click)="removeMember()"
 			>
 				<ion-icon name="trash"></ion-icon>

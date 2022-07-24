@@ -17,7 +17,7 @@
 		[@addRemove]="'added'"
 		*ngFor="let member of membersToDisplay; trackBy: id"
 	>
-		<ion-item routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}/member/{{member.id}}"
+		<ion-item routerLink="/space/{{team.type || 'UNKNOWN_TYPE'}}/{{team.id}}/member/{{member.id}}"
 							(click)="goMember(member)" class="sneat-tiny-end-padding">
 			<ion-avatar *ngIf="member?.brief?.avatar as avatar; else memberIcon">
 				<ion-img *ngIf="member.brief?.avatar?.external?.url"

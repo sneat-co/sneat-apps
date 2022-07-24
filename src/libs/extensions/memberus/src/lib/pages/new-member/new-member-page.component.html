@@ -9,7 +9,7 @@
 				<ng-container *ngIf="relatedPerson.ageGroup === 'child'">New child</ng-container>
 				<ng-container *ngIf="relatedPerson.ageGroup === 'adult'">New adult</ng-container>
 			</ng-template>
-			@ {{team?.brief?.title || team?.type }}
+			@ {{team.brief?.title || team.type }}
 		</ion-title>
 		<ng-template #titleNoCommune>New member</ng-template>
 	</ion-toolbar>

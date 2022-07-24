@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-back-button slot="start"
-										 defaultHref="/space/{{team?.type}}/{{team?.id}}/contact/{{contact?.id}}"></ion-back-button>
+										 defaultHref="/space/{{team.type}}/{{team.id}}/contact/{{contact?.id}}"></ion-back-button>
 		<ion-title *ngIf="!contact">New location</ion-title>
 		<ion-title *ngIf="contact">New location @ {{contact|personTitle}}</ion-title>
 	</ion-toolbar>

@@ -3,7 +3,7 @@
 		<ion-label style="font-weight: bold">{{label}}</ion-label>
 	</ion-item-divider>
 	<sneat-country-input *ngIf="transitPoint"
-		[countryID]="transitPoint?.countryID || ''"
+		[countryID]="transitPoint.countryID || ''"
 		(countryIDChange)="onCountryChanged($event)"
 	></sneat-country-input>
 <!--	<ion-item>-->
