@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FreightOrdersService, IExpressOrderContext, IOrderCounterparty } from '@sneat/extensions/express';
+import { FreightOrdersService, IExpressOrderContext, IOrderCounterparty } from '../..';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { OrderPageBaseComponent } from '../pages/order-page-base.component';
 
