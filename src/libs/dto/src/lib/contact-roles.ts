@@ -15,16 +15,18 @@ export type ContactRoleVehicle = ContactRoleInsurer | 'mechanic' | 'electrician'
 export type ContactRoleMedRelated = 'GP' | 'med_specialist'
 export type ContactRoleFamilyRelated = ContactRoleFriend;
 export type ContactRoleKidRelated = ContactRoleFriend | 'teacher' | 'babysitter';
+export type ContactRoleShip = 'ship';
+export type ContactRoleExpressSubContact = ContactRoleShip | ContactRoleLocation;
+export type ContactRoleExpressParentContact = 'shipper' | 'dispatcher';
 export type ContactRoleExpress =
+	ContactRoleExpressParentContact | ContactRoleExpressSubContact |
 	'consignee' |
 	'notify' |
-	'dispatcher' |
 	'dispatch-location' |
-	'shipper' |
 	'agent' |
 	'buyer' |
-	'carrier' |
-	ContactRoleLocation;
+	'courier' |
+	'carrier';
 export type ContactRole =
 	ContactRoleFamilyRelated |
 	ContactRoleKidRelated |

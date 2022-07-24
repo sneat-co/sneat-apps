@@ -26,7 +26,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
 	@Input() parentRole?: 'dispatcher' = 'dispatcher';
-	@Input() role: 'dispatcher' | 'dispatch-location'  = 'dispatch-location';
+	@Input() contactRole: 'location'  = 'location';
 
 	readonly deleting: IOrderShippingPointCounterparty[] = [];
 
@@ -48,7 +48,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	private setCounterparties(): void {
 		const counterparties = this.order?.dto?.counterparties || [];
 
-		this.counterparties = counterparties.filter(c => c.role === this.role)
+		this.counterparties = counterparties.filter(c => c.role === this.contactRole)
 			.map(c => c.parentContactID ? {
 				...c,
 				parent: counterparties.find(cc => cc.contactID === c.parentContactID),
@@ -66,7 +66,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			team,
-			role: this.parentRole || this.role,
+			contactRole: this.parentRole || this.contactRole,
 			subType: 'location',
 			excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
 		};
@@ -85,7 +85,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 				const counterparty: IOrderCounterparty = {
 					contactID: contact.id,
 					title: contact.brief.title || contact.id,
-					role: this.role,
+					role: this.contactRole,
 					address: contact.brief.address,
 					countryID: contact.brief.address?.countryID || '--',
 				};

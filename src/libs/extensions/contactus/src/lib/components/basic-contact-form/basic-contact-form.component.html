@@ -1,0 +1,11 @@
+<ion-item>
+	<ion-label>Name</ion-label>
+	<ion-input [(ngModel)]="title" required [disabled]="isSubmitting"></ion-input>
+</ion-item>
+<div class="ion-padding">
+	<ion-button (click)="createContact($event)" [disabled]="isSubmitting">
+		<ion-label *ngIf="!isSubmitting">Create</ion-label>
+		<ion-label *ngIf="isSubmitting">Creating...</ion-label>
+		<ion-spinner name="lines-small" slot="end" *ngIf="isSubmitting"></ion-spinner>
+	</ion-button>
+</div>

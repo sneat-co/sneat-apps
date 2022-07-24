@@ -19,6 +19,7 @@ import { ISelectItem } from '..';
 })
 export class SelectFromListComponent implements ControlValueAccessor, OnChanges, OnDestroy {
 	@Input() value = '';
+	@Input() filterLabel = 'Find';
 	@Input() label = 'Please choose';
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;

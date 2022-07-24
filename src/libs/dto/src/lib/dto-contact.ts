@@ -4,7 +4,7 @@ import { IContact2Asset, IContact2Member } from './dto-contact2';
 import { IPersonRecord } from './dto-models';
 import { IPersonBase, IRelatedPerson } from './dto-person';
 
-export type ContactType = 'person' | 'company' | 'location';
+export type ContactType = 'person' | 'company' | 'location' | 'vehicle';
 
 export interface IContactBase extends IPersonBase {
 	type: ContactType;

@@ -5,27 +5,29 @@ import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { ContactSelectorService, IContactSelectorOptions } from '../contact-selector/contact-selector.service';
 
 @Component({
-	selector: 'sneat-contact-input',
-	templateUrl: './contact-input.component.html',
+	selector: 'sneat-subcontact-input',
+	templateUrl: './subcontact-input.component.html',
 })
-export class ContactInputComponent {
+export class SubcontactInputComponent {
 
-	@Input() canChangeContact = true;
 	@Input() canReset = false;
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
 	@Input() label?: string;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
-	@Input() contactRole?: ContactRole;
-	@Input() contactType?: ContactType;
+	@Input() role?: ContactRole;
 	@Input() subLabel = 'by';
-	@Input() parentRole?: ContactRole;
-
+	@Input() subType?: ContactType;
 
 	@Input() contact?: IContactContext;
 	@Output() contactChange = new EventEmitter<IContactContext>();
 
-	protected readonly labelText = () => this.label || 'Contact';
+
+	get labelText(): string {
+		return this.label
+			|| this.role && `${this.role[0].toUpperCase()}${this.role.substr(1)}`
+			|| 'Contact';
+	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -49,18 +51,13 @@ export class ContactInputComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		console.log('ContactInputComponent.openContactSelector()');
-		if (!this.canChangeContact || this.readonly) {
-			return;
-		}
 		if (!this.team) {
 			this.errorLogger.logError('ContactInputComponent.openContactSelector(): team is required', undefined);
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			team: this.team,
-			parentRole: this.parentRole,
-			contactRole: this.contactRole,
-			contactType: this.contactType,
+			contactRole: this.role,
 		};
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {

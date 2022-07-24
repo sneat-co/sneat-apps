@@ -1,9 +1,13 @@
 <sneat-contact-input
-	[label]="label()"
+	[label]="label"
 	[labelPosition]="labelPosition"
 	[team]="team"
 	[contact]="contact"
-	[role]="counterpartyRole || undefined"
+	[contactRole]="contactRole"
+	[contactType]="contactType"
+	[parentRole]="parentRole"
 	[readonly]="readonly"
 	(contactChange)="onContactChanged($event)"
+	[canChangeContact]="canChangeContact"
+	[canReset]="canChangeContact"
 ></sneat-contact-input>

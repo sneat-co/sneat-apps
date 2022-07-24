@@ -19,14 +19,17 @@
 		<ion-label color="medium">{{label}}</ion-label>
 	</ion-item-divider>
 	<ion-item *ngIf="isFilterable" class="sneat-tiny-end-padding">
-		<ion-label *ngIf="label">{{label}}</ion-label>
+		<ion-label *ngIf="filterLabel" color="medium">{{filterLabel}}</ion-label>
 		<ion-input [(ngModel)]="filter" placeholder="filter" (ionChange)="onFilterChanged($event)"></ion-input>
 		<ion-buttons slot="end" *ngIf="!!filter">
-			<ion-button (click)="clearFilter()">
+			<ion-button (click)="clearFilter()" title="Clear filter">
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
+	<ion-item-divider *ngIf="items && !items?.length">
+		<ion-label>No items yet.</ion-label>
+	</ion-item-divider>
 	<ion-radio-group [(ngModel)]="value" (ionChange)="onRadioChanged($event)">
 <!--		<ion-item *ngIf="other === 'top'">-->
 <!--			<ion-radio [value]="'other'" slot="start"></ion-radio>-->

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { ContactRole, ContactRoleExpress } from '@sneat/dto';
+import { ContactRole, ContactRoleExpress, ContactType } from '@sneat/dto';
 import { FreightOrdersService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
@@ -19,20 +19,23 @@ export class OrderCounterpartyInputComponent {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
-	@Input() counterpartyRole?: ContactRoleExpress;
+	@Input() contactRole?: ContactRoleExpress;
+	@Input() contactType?: ContactType;
+	@Input() parentRole?: ContactRoleExpress;
+	@Input() canChangeContact = true;
 
 	@Input() order?: IExpressOrderContext;
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
 	@Output() counterpartyChange = new EventEmitter<IOrderShippingPointCounterparty>();
 
-	readonly label = () => this.counterpartyRole?.length ? this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1) : 'Counterparty';
+	@Input() label = 'Counterparty';
 
 	get contact(): IContactContext | undefined {
 		if (!this.team) {
 			throw new Error('Team is not set');
 		}
-		const c = this.order?.dto?.counterparties?.find(c => c.role === this.counterpartyRole);
+		const c = this.order?.dto?.counterparties?.find(c => c.role === this.contactRole);
 		if (c) {
 			const contact: IContactContext = {
 				team: this.team,
@@ -57,12 +60,12 @@ export class OrderCounterpartyInputComponent {
 	}
 
 	protected onContactChanged(contact: IContactContext): void {
-		console.log('onContactChanged(),', this.counterpartyRole, contact);
+		console.log('onContactChanged(),', this.contactRole, contact);
 		if (!this.team) {
 			console.error('onContactChanged(): !this.team');
 			return;
 		}
-		if (!this.counterpartyRole) {
+		if (!this.contactRole) {
 			console.error('onContactChanged(): !this.counterpartyRole');
 			return;
 		}
@@ -80,11 +83,11 @@ export class OrderCounterpartyInputComponent {
 		if (!this.order?.id) {
 			const newCounterparty: IOrderCounterparty = {
 				contactID: contact.id,
-				role: this.counterpartyRole,
+				role: this.contactRole,
 				title: contact?.brief?.title || contact.id,
 				countryID: contact?.brief?.countryID || '--',
 			};
-			const i = orderDto.counterparties?.findIndex(c => c.role === this.counterpartyRole) ?? -1;
+			const i = orderDto.counterparties?.findIndex(c => c.role === this.contactRole) ?? -1;
 			if (i >= 0) {
 				if (orderDto.counterparties) {
 					orderDto = {
@@ -108,7 +111,7 @@ export class OrderCounterpartyInputComponent {
 			if (!orderDto.route) {
 				orderDto = { ...orderDto, route: {} };
 			}
-			switch (this.counterpartyRole) {
+			switch (this.contactRole) {
 				case 'consignee':
 				case 'notify':
 					if (orderDto.route) {
@@ -147,7 +150,7 @@ export class OrderCounterpartyInputComponent {
 			teamID: this.team.id,
 			orderID: this.order.id,
 			contactID: contact.id.substring(contact.id.indexOf(':') + 1),
-			role: this.counterpartyRole,
+			role: this.contactRole,
 		};
 		this.orderService.setOrderCounterparty(request).subscribe({
 			next: counterparty => {

@@ -19,6 +19,8 @@ export * from './lib/selector/select-from-list/select-from-list.component';
 
 export * from './lib/copyright';
 
+export * from './lib/dialog';
+
 export * from './lib/members-as-badges';
 export * from './lib/focus';
 export * from './lib/person-form/person-form.module';

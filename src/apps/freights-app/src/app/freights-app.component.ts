@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { IonSplitPane } from '@ionic/angular';
 import { SneatBaseAppComponent } from '@sneat/app';
 import { TopMenuService } from '@sneat/core';

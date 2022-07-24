@@ -22,19 +22,7 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 		{ id: 'shipper', title: 'Shipper', iconName: 'boat-outline' },
 	];
 
-	contactType?: ContactType = undefined;
-	contactRole?: ContactRole = undefined;
-	isCreating = false;
-
-	contact?: IContactContext;
-
-	get formIsValid(): boolean {
-		try {
-			return !!this.contactType && !!this.contact?.dto?.title && !!validateAddress(this.contact.dto?.address);
-		} catch (e) {
-			return false;
-		}
-	}
+	protected contactRole?: ContactRole;
 
 	constructor(
 		route: ActivatedRoute,
@@ -54,51 +42,11 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 			});
 	}
 
-	onContactChanged(contact: IContactContext): void {
-		console.log('contact', contact);
-		this.contact = contact;
+	onContactCreated(contact: IContactContext): void {
+		this.navController.pop().catch(() => {
+			this.navController
+				.navigateBack(['contacts'], { relativeTo: this.route })
+				.catch(this.errorLogger.logErrorHandler('failed to navigate back to contacts page'));
+		});
 	}
-
-	create(): void {
-		if (!this.contact?.dto?.title) {
-			alert('Contact title is a required field');
-			return;
-		}
-		if (!this.contactRole) {
-			alert('Contact role is a required field');
-			return;
-		}
-		try {
-			const address = validateAddress(this.contact.dto?.address);
-			const request: ICreateContactCompanyRequest = excludeEmpty({
-				type: 'company',
-				company: excludeEmpty({
-					title: this.contact.dto?.title?.trim() || '',
-					address,
-					roles: [this.contactRole],
-				}),
-				roles: [this.contactRole],
-				teamID: this.team.id,
-			});
-			this.isCreating = true;
-			this.contactService.createContact(this.team, request).subscribe({
-				next: contact => {
-					console.log('created contact:', contact);
-					this.navController.pop().catch(() => {
-						this.navController
-							.navigateBack(['contacts'], { relativeTo: this.route })
-							.catch(this.errorLogger.logErrorHandler('failed to navigate back to contacts page'));
-					});
-				},
-				error: err => {
-					this.errorLogger.logError(err, 'Failed to create contact');
-					this.isCreating = false;
-				},
-			});
-		} catch (e) {
-			alert(e);
-			return;
-		}
-	}
-
 }

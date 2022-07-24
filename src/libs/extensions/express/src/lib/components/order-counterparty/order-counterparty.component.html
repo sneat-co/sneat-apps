@@ -1,45 +1,51 @@
-<ion-row>
-	<ion-col [size]="counterparty && useColumns ? 7 : 12">
-		<sneat-express-order-counterparty-input
-			[team]="team"
-			[order]="order"
-			(orderChange)="onOrderChanged($event)"
-			[readonly]="readonly"
-			[counterpartyRole]="counterpartyRole"
-			[labelPosition]="labelPosition"
-		></sneat-express-order-counterparty-input>
-	</ion-col>
-	<ion-col [size]="useColumns ? 5 : 12" *ngIf="counterparty">
-		<ion-item class="sneat-no-end-padding">
-			<ion-label color="medium">Ref #</ion-label>
-			<ion-input [readonly]="readonly"
-								 [(ngModel)]="refNumber"
-								 [disabled]="savingRefNumber"
-								 (ionChange)="onRefNumberChanged($event)"
-								 (keyup.enter)="saveRefNumber($event)"
-			></ion-input>
-			<ion-buttons slot="end" *ngIf="order?.id">
-				<ion-button color="medium" *ngIf="isRefNumberChanged && !savingRefNumber"
-										title="Cancel Reference # changes"
-										(click)="cancelRefNumberChanges($event)">
-					<ion-icon name="close-outline"></ion-icon>
-				</ion-button>
-				<ion-button *ngIf="savingRefNumber" [disabled]="true">
-					<ion-spinner name="lines-small"></ion-spinner>
-				</ion-button>
-				<ion-button *ngIf="isRefNumberChanged"
-										[color]="savingRefNumber ? 'medium' : 'success'"
-										[disabled]="savingRefNumber"
-										title="Save Reference # changes"
-										(click)="saveRefNumber($event)">
-					<ion-icon name="save-outline"></ion-icon>
-				</ion-button>
-				<ion-button *ngIf="refNumber"
-										color="medium" title="Copy reference number to clipboard"
-										(click)="copyRefNumberToClipboard($event)">
-					<ion-icon name="clipboard-outline" slot="start"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	</ion-col>
-</ion-row>
+<ion-grid class="ion-grid-layout">
+	<ion-row>
+		<ion-col [size]="counterparty && useColumns ? 8 : 12">
+			<sneat-express-order-counterparty-input
+				[label]="label"
+				[team]="team"
+				[order]="order"
+				(orderChange)="onOrderChanged($event)"
+				[readonly]="readonly"
+				[contactRole]="counterpartyRole"
+				[contactType]="counterpartyType"
+				[parentRole]="parentRole"
+				[canChangeContact]="canChangeContact"
+				[labelPosition]="labelPosition"
+			></sneat-express-order-counterparty-input>
+		</ion-col>
+		<ion-col [size]="useColumns ? 4 : 12" *ngIf="counterparty">
+			<ion-item class="sneat-no-end-padding">
+				<ion-label color="medium">Ref #</ion-label>
+				<ion-input [readonly]="readonly"
+									 [(ngModel)]="refNumber"
+									 [disabled]="savingRefNumber"
+									 (ionChange)="onRefNumberChanged($event)"
+									 (keyup.enter)="saveRefNumber($event)"
+				></ion-input>
+				<ion-buttons slot="end" *ngIf="order?.id">
+					<ion-button color="medium" *ngIf="isRefNumberChanged && !savingRefNumber"
+											title="Cancel Reference # changes"
+											(click)="cancelRefNumberChanges($event)">
+						<ion-icon name="close-outline"></ion-icon>
+					</ion-button>
+					<ion-button *ngIf="savingRefNumber" [disabled]="true">
+						<ion-spinner name="lines-small"></ion-spinner>
+					</ion-button>
+					<ion-button *ngIf="isRefNumberChanged"
+											[color]="savingRefNumber ? 'medium' : 'success'"
+											[disabled]="savingRefNumber"
+											title="Save Reference # changes"
+											(click)="saveRefNumber($event)">
+						<ion-icon name="save-outline"></ion-icon>
+					</ion-button>
+					<ion-button *ngIf="refNumber"
+											color="medium" title="Copy reference number to clipboard"
+											(click)="copyRefNumberToClipboard($event)">
+						<ion-icon name="clipboard-outline" slot="start"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+</ion-grid>

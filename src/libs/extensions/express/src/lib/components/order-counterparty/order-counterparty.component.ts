@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactRoleExpress } from '@sneat/dto';
+import { ContactRoleExpress, ContactRoleExpressSubContact, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
@@ -19,7 +19,13 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() readonly = false;
 	@Input() useColumns = true;
 	@Input() team?: ITeamContext;
+
+	@Input() label = 'Counterparty';
+
+	@Input() canChangeContact = true;
 	@Input() counterpartyRole?: ContactRoleExpress;
+	@Input() counterpartyType?: ContactType;
+	@Input() parentRole?: ContactRoleExpress;
 
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
@@ -31,10 +37,6 @@ export class OrderCounterpartyComponent implements OnChanges {
 	isRefNumberChanged = false;
 
 	savingRefNumber = false;
-
-	readonly label = () => this.counterpartyRole?.length
-		? this.counterpartyRole[0].toUpperCase() + this.counterpartyRole.slice(1)
-		: 'Counterparty';
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

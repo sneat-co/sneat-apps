@@ -4,25 +4,26 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CountrySelectorModule, SelectFromListModule } from '@sneat/components';
-import { ContactServiceModule, LocationFormModule } from '@sneat/extensions/contactus';
+import { ContactServiceModule, LocationFormModule, NewCompanyFormModule } from '@sneat/extensions/contactus';
 import { NewExpressCompanyPageComponent } from './new-express-company-page.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		ContactServiceModule,
-		LocationFormModule,
-		SelectFromListModule,
-		RouterModule.forChild([
-			{
-				path: '',
-				component: NewExpressCompanyPageComponent,
-			},
-		]),
-		CountrySelectorModule,
-	],
+  imports: [
+    CommonModule,
+    IonicModule,
+    FormsModule,
+    ContactServiceModule,
+    LocationFormModule,
+    SelectFromListModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: NewExpressCompanyPageComponent,
+      },
+    ]),
+    CountrySelectorModule,
+    NewCompanyFormModule,
+  ],
 	declarations: [
 		NewExpressCompanyPageComponent,
 	],

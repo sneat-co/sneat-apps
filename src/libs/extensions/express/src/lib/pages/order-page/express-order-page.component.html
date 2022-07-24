@@ -11,18 +11,18 @@
 
 	<ion-grid class="ion-grid-layout ion-margin-horizontal">
 		<ion-row>
-			<ion-col size="10">
-				<ion-segment [(ngModel)]="tab">
+			<ion-col size="8">
+				<ion-segment [(ngModel)]="tab" class="ion-margin-start">
 					<ion-segment-button value="containers">
 						<ion-label>
-							Containers
+							📦 Containers
 							<ion-badge color="light"
 												 *ngIf="order?.dto?.containers?.length">{{order?.dto?.containers?.length}}</ion-badge>
 						</ion-label>
 					</ion-segment-button>
 					<ion-segment-button value="segments">
 						<ion-label>
-							Segments
+							🛞 Segments
 							<ion-badge color="light" *ngIf="order?.dto?.segments?.length">{{order?.dto?.segments?.length}}</ion-badge>
 						</ion-label>
 					</ion-segment-button>
@@ -31,13 +31,13 @@
 			<ion-col>
 				<ion-item class="ion-item-no-border">
 					<ion-buttons slot="end">
-						<ion-button fill="clear" *ngIf="tab === 'containers'" title="Add container" (click)="addContainer()">
+						<ion-button fill="clear" color="medium" *ngIf="tab === 'containers'" title="Add container" (click)="addContainer()">
 							<ion-icon name="add-outline" slot="start"></ion-icon>
-							<ion-label>Add</ion-label>
+							<ion-label>Add container</ion-label>
 						</ion-button>
-						<ion-button fill="clear" *ngIf="tab === 'segments'" title="Add segment" (click)="addSegment()">
+						<ion-button fill="clear" color="medium" *ngIf="tab === 'segments'" title="Add segment" (click)="addSegment()">
 							<ion-icon name="add-outline" slot="start"></ion-icon>
-							<ion-label>Add</ion-label>
+							<ion-label>Add segment</ion-label>
 						</ion-button>
 					</ion-buttons>
 				</ion-item>

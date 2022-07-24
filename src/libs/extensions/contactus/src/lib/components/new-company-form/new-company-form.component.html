@@ -1,0 +1,23 @@
+<ion-card>
+	<sneat-select-from-list *ngIf="!contactRole || !hideRole" label="Role"
+													[disabled]="isCreating"
+													[items]="contactRoles"
+													[(ngModel)]="contactRole"
+	></sneat-select-from-list>
+</ion-card>
+
+<sneat-location-form
+	*ngIf="!!contactRole"
+	[contactType]="contactType"
+	label="Company details"
+	[team]="team"
+	[contact]="contact"
+	(contactChange)="onContactChanged($event)"
+	[hideSubmitButton]="true"
+></sneat-location-form>
+
+<ion-card>
+	<ion-card-content>
+		<ion-button (click)="create()" [disabled]="isCreating || !formIsValid" >Create company</ion-button>
+	</ion-card-content>
+</ion-card>
