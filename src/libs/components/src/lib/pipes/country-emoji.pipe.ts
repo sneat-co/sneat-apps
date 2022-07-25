@@ -1,20 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IName } from '@sneat/dto';
-import { IPersonContext } from '@sneat/team/models';
+import { countriesByID } from '../country-selector';
 
-const flags: {[id: string]: string} = {
-	'au': '🇦🇺',
-	'es': '🇪🇸',
-	'ie': '🇮🇪',
-	'nz': '🇳🇿',
-	'ru': '🇷🇺',
-	'ua': '🇺🇦',
-	'uk': '🇬🇧',
-	'us': '🇺🇸',
-}
 export function countryEmoji(countryID?: string): string {
 	if (countryID) {
-		return flags[countryID] || countryID;
+		return countriesByID[countryID].emoji || countryID;
 	}
 	return '';
 }
@@ -23,5 +12,12 @@ export function countryEmoji(countryID?: string): string {
 export class CountryEmoji implements PipeTransform {
 	transform(countryID?: string): string {
 		return countryEmoji(countryID);
+	}
+}
+
+@Pipe({ name: 'countryTitle' })
+export class CountryTitle implements PipeTransform {
+	transform(countryID?: string): string {
+		return countryID ? countriesByID[countryID].title || countryID : '';
 	}
 }
