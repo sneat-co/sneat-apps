@@ -1,9 +1,9 @@
 <ion-card>
-	<ion-item>
-		<ion-icon name="train-outline" slot="start"></ion-icon>
-		<ion-label>Transporting segments</ion-label>
-	</ion-item>
+<!--	<ion-item>-->
+<!--		<ion-icon name="train-outline" slot="start"></ion-icon>-->
+<!--		<ion-label>Transporting segments</ion-label>-->
+<!--	</ion-item>-->
 	<ion-item-divider *ngIf="order?.dto && !order?.dto?.segments?.length">
-		No segments have been added yet.
+		<ion-label>No segments have been added yet.</ion-label>
 	</ion-item-divider>
 </ion-card>

@@ -20,6 +20,7 @@ export class ContactInputComponent {
 	@Input() contactType?: ContactType;
 	@Input() subLabel = 'by';
 	@Input() parentRole?: ContactRole;
+	@Input() parentContact?: IContactContext;
 
 
 	@Input() contact?: IContactContext;

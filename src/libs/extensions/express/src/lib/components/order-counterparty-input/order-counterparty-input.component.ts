@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContactRole, ContactRoleExpress, ContactType } from '@sneat/dto';
 import { FreightOrdersService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -14,7 +14,7 @@ import {
 	selector: 'sneat-express-order-counterparty-input',
 	templateUrl: './order-counterparty-input.component.html',
 })
-export class OrderCounterpartyInputComponent {
+export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() canReset = false;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
@@ -31,32 +31,49 @@ export class OrderCounterpartyInputComponent {
 
 	@Input() label = 'Counterparty';
 
-	get contact(): IContactContext | undefined {
-		if (!this.team) {
-			throw new Error('Team is not set');
-		}
-		const c = this.order?.dto?.counterparties?.find(c => c.role === this.contactRole);
-		if (c) {
-			const contact: IContactContext = {
-				team: this.team,
-				id: c.contactID,
-				brief: {
-					type: 'company',
-					id: c.contactID,
-					title: c.title,
-					name: { full: c.title },
-				},
-			};
-			return contact;
-		}
-		return undefined;
-	};
+	contact?: IContactContext;
+	parentContact?: IContactContext;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: FreightOrdersService,
 	) {
 
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['order']) {
+			this.setContacts();
+		}
+	}
+
+	setContacts(): void {
+		const team = this.team;
+		if (!team) {
+			throw new Error('Team is not set');
+		}
+		const contactFromCounterparty = (counterparty: IOrderCounterparty): IContactContext => ({
+			team,
+			id: counterparty.contactID,
+			brief: {
+				type: 'company',
+				id: counterparty.contactID,
+				title: counterparty.title,
+				name: { full: counterparty.title },
+			},
+		});
+		const counterparty = this.order?.dto?.counterparties?.find(c => c.role === this.contactRole);
+		if (counterparty) {
+			this.contact = contactFromCounterparty(counterparty);
+			if (counterparty.parentContactID) {
+				const parentCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === counterparty.parentContactID);
+				if (parentCounterparty) {
+					this.parentContact = contactFromCounterparty(parentCounterparty);
+				}
+			}
+		} else {
+			this.contact = undefined;
+		}
 	}
 
 	protected onContactChanged(contact: IContactContext): void {
@@ -146,7 +163,7 @@ export class OrderCounterpartyInputComponent {
 			this.counterpartyChange.emit(newCounterparty);
 			return;
 		}
-		const request: ISetOrderCounterpartyRequest = {
+		let request: ISetOrderCounterpartyRequest = {
 			teamID: this.team.id,
 			orderID: this.order.id,
 			counterparties: [
@@ -156,6 +173,15 @@ export class OrderCounterpartyInputComponent {
 				},
 			],
 		};
+		if (contact.parentContact && this.parentRole) {
+			request = {
+				...request,
+				counterparties: [...request.counterparties, {
+					contactID: contact.parentContact.id,
+					role: this.parentRole,
+				}],
+			};
+		}
 		this.orderService.setOrderCounterparty(request).subscribe({
 			next: counterparty => {
 				if (!this.order?.brief) {

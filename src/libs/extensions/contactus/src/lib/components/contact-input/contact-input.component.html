@@ -2,7 +2,7 @@
 	<ion-label color="medium" position="fixed">{{labelText()}}</ion-label>
 	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>
 	<ion-label color="medium" *ngIf="parentRole">{{subLabel}}</ion-label>
-	<ion-input value="Maersk" *ngIf="parentRole"></ion-input>
+	<ion-input [value]="parentContact?.brief?.title" *ngIf="parentRole"></ion-input>
 	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">
 		<ion-button (click)="openContactSelector($event)">
 			<ion-label>...</ion-label>
