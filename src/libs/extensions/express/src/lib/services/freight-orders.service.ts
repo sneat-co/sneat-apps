@@ -93,7 +93,7 @@ export class FreightOrdersService {
 	}
 
 	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {
-		return this.sneatApiService.post('express/order/set_order_counterparty', request);
+		return this.sneatApiService.post('express/order/set_order_counterparties', request);
 	}
 
 	addShippingPoint(request: IAddOrderShippingPointRequest): Observable<IExpressOrderDto> {

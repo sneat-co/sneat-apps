@@ -8,13 +8,16 @@
 
 <sneat-location-form
 	*ngIf="!!contactRole"
-	[contactType]="contactType"
+	contactType="company"
 	label="Company details"
 	[team]="team"
 	[contact]="contact"
 	(contactChange)="onContactChanged($event)"
 	[hideSubmitButton]="true"
 ></sneat-location-form>
+
+<!--team: {{team|json}}-->
+<!--contact: {{contact|json}}-->
 
 <ion-card>
 	<ion-card-content>

@@ -159,10 +159,14 @@ export interface IExpressOrderRequest extends ITeamRequest {
 	readonly orderID: string;
 }
 
-export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
+export interface ISetOrderCounterparty {
 	readonly contactID: string;
 	readonly role: string;
 	readonly refNumber?: string;
+}
+
+export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
+	counterparties: ISetOrderCounterparty[];
 }
 
 export interface IAddOrderShippingPointRequest extends IExpressOrderRequest {

@@ -10,7 +10,7 @@
 <ion-content>
 
 	<sneat-new-company-form
-		contactType="company"
+		[team]="team"
 		[contactRoles]="contactTypes"
 		[contactRole]="contactRole"
 		(contactCreated)="onContactCreated($event)"

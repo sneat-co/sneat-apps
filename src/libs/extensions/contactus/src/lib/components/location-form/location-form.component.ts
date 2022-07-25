@@ -50,7 +50,7 @@ export class LocationFormComponent implements OnChanges {
 
 	onInputChange(): void {
 		if (!this.contact?.dto) {
-			throw new Error('onInputChange(): !this.contact.dto');
+			return;
 		}
 		if (!this.team) {
 			return;

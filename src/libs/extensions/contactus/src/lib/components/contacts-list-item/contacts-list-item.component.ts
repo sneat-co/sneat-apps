@@ -35,10 +35,10 @@ export class ContactsListItemComponent {
 
 	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
 
-	removeContact(): void {
+	archiveContact(): void {
 		console.log('ContactListItemComponent.removeContact()');
 		if (this.contact?.id) {
-			this.contactService.deleteContact(this.contact)
+			this.contactService.setContactsStatus('archived', this.contact.team.id, [this.contact])
 				.subscribe({
 					next: () => {
 						console.log('ContactListItemComponent.removeContact() => done');

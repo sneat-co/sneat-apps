@@ -146,17 +146,6 @@ export class ContactSelectorComponent
 		iconName: this.parentIcon,
 	});
 
-	protected onDispatchLocationSelected(contactID: string): void {
-		console.log('onDispatchLocationSelected()', contactID);
-		this.selectedSubContactID = contactID;
-		const subContactBrief = this.selectedContact?.dto?.relatedContacts?.find(c => c.id === contactID);
-		if (subContactBrief) {
-			const subContact: IContactContext = contactContextFromBrief(this.team, subContactBrief);
-			this.emitOnSelected(subContact);
-		}
-		this.close(undefined);
-	}
-
 	protected onLocationCreated(contact: IContactContext): void {
 		contact = {
 			...contact,
@@ -181,8 +170,14 @@ export class ContactSelectorComponent
 		this.parentTab = 'existing';
 		this.selectedParent = contact;
 		this.selectedContactID = contact?.id;
-		this.parentItems?.push();
-		this.contactItems = this.selectedParent?.dto?.relatedContacts?.map(c => ({
+		const relatedContacts = this.selectedParent?.dto?.relatedContacts;
+		this.contacts = relatedContacts?.map(brief => ({
+			id: brief.id,
+			brief,
+			team: this.team,
+			parentContact: this.selectedParent,
+		}));
+		this.contactItems = relatedContacts?.map(c => ({
 			id: c.id,
 			title: c.title || c.id,
 		})) || [];
@@ -191,34 +186,56 @@ export class ContactSelectorComponent
 
 	protected onContactSelected(contactID: string): void {
 		console.log('onContactSelected()', contactID);
+		this.selectedSubContactID = contactID;
 		this.selectedContact = this.contacts?.find(c => c.id === contactID);
-		if (!this.contactType && this.selectedContact) {
-			this.emitOnSelected(this.selectedContact);
-			this.close(undefined);
-			return;
+		if (!this.selectedContact) {
+			console.error('contact not found by ID', contactID, this.contacts);
 		}
-		const contactType = this.contactType;
-		if (contactType) {
-			this.contactItems = this.selectedContact?.dto?.relatedContacts?.filter(c => c.type === contactType).map(c => ({
-				id: c.id,
-				title: ((c.title + ' - ') + (c.address?.lines?.join(', ') || '')).trim(),
-			}));
-		}
-		this.newLocationContact = {
-			id: '',
-			team: this.team,
-			dto: {
-				type: 'location',
-				countryID: this.selectedContact?.dto?.countryID,
-				address: this.selectedContact?.dto?.address,
-			},
-		};
+		this.emitOnSelected(this.selectedContact);
+		// if (this.selectedParent?.dto) {
+		// 	const contactBrief = this.selectedParent.dto.relatedContacts?.find(c => c.id === contactID);
+		// 	if (contactBrief) {
+		// 		const subContact: IContactContext = contactContextFromBrief(this.team, contactBrief);
+		// 		this.emitOnSelected(subContact);
+		// 	}
+		// } else {
+		//
+		// }
+		this.close(undefined);
 	}
 
-	protected emitOnSelected(contact: IContactContext): void {
+	// protected onContactSelected2(contactID: string): void {
+	// 	console.log('onContactSelected()', contactID);
+	// 	this.selectedContact = this.contacts?.find(c => c.id === contactID);
+	// 	if (!this.contactType && this.selectedContact) {
+	// 		this.emitOnSelected(this.selectedContact);
+	// 		this.close(undefined);
+	// 		return;
+	// 	}
+	// 	const contactType = this.contactType;
+	// 	if (contactType) {
+	// 		this.contactItems = this.selectedContact?.dto?.relatedContacts?.filter(c => c.type === contactType).map(c => ({
+	// 			id: c.id,
+	// 			title: ((c.title + ' - ') + (c.address?.lines?.join(', ') || '')).trim(),
+	// 		}));
+	// 	}
+	// 	this.newLocationContact = {
+	// 		id: '',
+	// 		team: this.team,
+	// 		dto: {
+	// 			type: 'location',
+	// 			countryID: this.selectedContact?.dto?.countryID,
+	// 			address: this.selectedContact?.dto?.address,
+	// 		},
+	// 	};
+	// }
+
+	protected emitOnSelected(contact?: IContactContext): void {
 		console.log('emitOnSelected()', contact);
 		if (this.onSelected) {
 			this.onSelected(contact ? [contact] : null);
+		} else {
+			console.warn('instance ContactSelectorComponent has unset `onSelected` input callback.');
 		}
 	}
 }

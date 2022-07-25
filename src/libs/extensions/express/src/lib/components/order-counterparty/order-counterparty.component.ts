@@ -55,11 +55,11 @@ export class OrderCounterpartyComponent implements OnChanges {
 
 	protected onOrderChanged(order: IExpressOrderContext): void {
 		console.log('OrderCounterpartyComponent.onOrderChanged():', order);
-		this.emitOrder(order);
+		this.setAndEmitOrder(order);
 	}
 
-	private emitOrder(order: IExpressOrderContext): void {
-		this.order = order
+	private setAndEmitOrder(order: IExpressOrderContext): void {
+		this.order = order;
 		this.orderChange.emit(order);
 	}
 
@@ -112,9 +112,13 @@ export class OrderCounterpartyComponent implements OnChanges {
 		const request: ISetOrderCounterpartyRequest = {
 			teamID: this.team?.id,
 			orderID: this.order?.id,
-			role: this.counterpartyRole,
-			contactID: this.counterparty?.contactID,
-			refNumber: this.refNumber,
+			counterparties: [
+				{
+					role: this.counterpartyRole,
+					contactID: this.counterparty?.contactID,
+					refNumber: this.refNumber,
+				},
+			],
 		};
 		this.savingRefNumber = true;
 		this.orderService.setOrderCounterparty(request).subscribe({

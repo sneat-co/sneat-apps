@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ISelectItem } from '@sneat/components';
@@ -12,12 +12,11 @@ import { ContactService } from '../../services';
 	selector: 'sneat-new-company-form',
 	templateUrl: './new-company-form.component.html',
 })
-export class NewCompanyFormComponent {
+export class NewCompanyFormComponent implements OnChanges {
 	@Input() contactRoles?: ISelectItem[];
 	@Input() team?: ITeamContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
-	@Input() contactType?: ContactType = undefined;
 
 	@Output() contactCreated = new EventEmitter<IContactContext>();
 
@@ -32,14 +31,24 @@ export class NewCompanyFormComponent {
 	) {
 	}
 
-	get formIsValid(): boolean {
-		try {
-			return !!this.contactType && !!this.contact?.dto?.title && !!validateAddress(this.contact.dto?.address);
-		} catch (e) {
-			return false;
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['team'] && this.team) {
+			if (this.contact) {
+				this.contact = {...this.contact, team: this.team};
+			} else {
+				this.contact = {id: '', team: this.team, dto: {type: 'company'}};
+			}
 		}
 	}
 
+	get formIsValid(): boolean {
+		try {
+			return !!this.contactRole && !!this.contact?.dto?.title && !!validateAddress(this.contact.dto?.address);
+		} catch (e) {
+			// console.error(e);
+			return false;
+		}
+	}
 
 
 	onContactChanged(contact: IContactContext): void {
@@ -48,7 +57,8 @@ export class NewCompanyFormComponent {
 	}
 
 	create(): void {
-		if (!this.team || !this.contactType) {
+		if (!this.team) {
+			alert('Contact team is a required field');
 			return;
 		}
 		if (!this.contact?.dto?.title) {

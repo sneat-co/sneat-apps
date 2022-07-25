@@ -94,7 +94,7 @@ export class OrderCounterpartyInputComponent {
 						...orderDto, counterparties: [
 							...orderDto.counterparties.slice(0, i),
 							newCounterparty,
-							...orderDto.counterparties.slice(i+1),
+							...orderDto.counterparties.slice(i + 1),
 						],
 					};
 				}
@@ -149,8 +149,12 @@ export class OrderCounterpartyInputComponent {
 		const request: ISetOrderCounterpartyRequest = {
 			teamID: this.team.id,
 			orderID: this.order.id,
-			contactID: contact.id.substring(contact.id.indexOf(':') + 1),
-			role: this.contactRole,
+			counterparties: [
+				{
+					contactID: contact.id.substring(contact.id.indexOf(':') + 1),
+					role: this.contactRole,
+				},
+			],
 		};
 		this.orderService.setOrderCounterparty(request).subscribe({
 			next: counterparty => {

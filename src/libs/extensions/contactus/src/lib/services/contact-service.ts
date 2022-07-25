@@ -5,6 +5,7 @@ import { ContactRole, IContactBrief, IContactDto, TeamCounter } from '@sneat/dto
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
+import { IContactRequest } from '../dto';
 
 @Injectable()
 export class ContactService {
@@ -23,7 +24,23 @@ export class ContactService {
 	}
 
 	deleteContact(contact: IContactContext): Observable<void> {
-		return throwError(() => 'not implemented yet');
+		const request: IContactRequest = {
+			teamID: contact.team.id,
+			contactID: contact.id,
+		};
+		return this.teamItemService.deleteTeamItem('contacts/delete_contact', request);
+	}
+
+	setContactsStatus(status: 'archived' | 'active', teamID: string, contacts: IContactContext[]): Observable<void> {
+		if (!contacts?.length) {
+			return throwError(() => 'at least 1 contact is required');
+		}
+		const request = {
+			teamID,
+			status,
+			contactIDs: contacts.map(c => c.id),
+		};
+		return this.teamItemService.sneatApiService.post('contacts/set_contacts_status', request);
 	}
 
 	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: IFilter[]): Observable<IContactContext[]> {
@@ -63,7 +80,7 @@ export class ContactService {
 		return this.teamItemService.watchTeamItems(team, f);
 	}
 
-	watchChildContacts(team: ITeamContext, id: string, filter: IContactsFilter = {status: 'active'}): Observable<IContactContext[]> {
+	watchChildContacts(team: ITeamContext, id: string, filter: IContactsFilter = { status: 'active' }): Observable<IContactContext[]> {
 		console.log('watchRelatedContacts, id:', id);
 		const f: IFilter[] = [
 			{ field: 'parentContactID', value: id, operator: '==' },
