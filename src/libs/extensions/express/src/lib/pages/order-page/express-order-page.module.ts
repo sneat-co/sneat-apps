@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { NewSegmentModule } from '../../components/new-segment';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
 import { OrderSegmentsComponent } from '../../components/order-segments/order-segments.component';
+import { OrderTruckersComponent } from '../../components/order-truckers/order-truckers.component';
 import { ExpressOrderPageComponent } from './express-order-page.component';
 
 const routes: Routes = [
@@ -23,10 +25,12 @@ const routes: Routes = [
     FormsModule,
     OrderFormModule,
     OrderContainersModule,
+		NewSegmentModule,
   ],
 	declarations: [
 		ExpressOrderPageComponent,
 		OrderSegmentsComponent,
+		OrderTruckersComponent,
 	],
 })
 export class ExpressOrderPageModule {

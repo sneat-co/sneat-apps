@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { DialogModule } from '@sneat/components';
 import { ContactInputModule } from '@sneat/extensions/contactus';
 import { NewSegmentComponent } from './new-segment.component';
+import { NewSegmentService } from './new-segment.service';
 
 @NgModule({
 	imports: [
@@ -17,6 +18,9 @@ import { NewSegmentComponent } from './new-segment.component';
 	],
 	exports: [
 		NewSegmentComponent,
+	],
+	providers: [
+		NewSegmentService,
 	]
 })
 export class NewSegmentModule {

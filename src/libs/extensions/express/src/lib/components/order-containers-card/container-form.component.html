@@ -51,15 +51,18 @@
 		</ion-row>
 	</ion-grid>
 	<ion-item-divider>
-		<ion-label color="dark">Transporting segments</ion-label>
+		<ion-label color="medium" style="font-weight: bold">
+			<span>🚛 Trucking segments</span>
+			<span *ngIf="segments && !segments?.length" style="font-weight: normal">&nbsp; - no segments have been added for the container</span>
+		</ion-label>
 		<ion-buttons slot="end">
-			<ion-icon name="add-outline" slot="start"></ion-icon>
-			<ion-button>Add</ion-button>
+			<ion-button title="Add transporting segment" (click)="addSegment()">
+				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-	<ion-item-divider *ngIf="segments && !segments?.length">
-		<ion-label>No segments have been added yet.</ion-label>
-	</ion-item-divider>
+
 	<ion-item *ngFor="let segment of segments">
 		<ion-label>{{segment|json}}</ion-label>
 	</ion-item>

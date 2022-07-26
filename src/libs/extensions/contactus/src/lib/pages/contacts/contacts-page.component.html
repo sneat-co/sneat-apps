@@ -4,7 +4,7 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<sneat-team-page-title
-			[team]="team"
+			[team]="role ? undefined : team"
 			[generalTitle]="pageTitle"
 			[icon]="titleIcon"
 			[titlesByTeamType]="{

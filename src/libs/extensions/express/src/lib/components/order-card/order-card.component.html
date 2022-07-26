@@ -65,7 +65,7 @@
 	</ion-item-group>
 	<ion-item-group>
 		<ion-item-divider color="light">
-			<ion-label color="medium">Delivery by</ion-label>
+			<ion-label color="medium">Agents</ion-label>
 		</ion-item-divider>
 		<sneat-express-order-counterparty label="Carrier"
 																			[team]="team"
@@ -75,6 +75,35 @@
 																			counterpartyRole="carrier"
 																			labelPosition="fixed"
 		></sneat-express-order-counterparty>
+	</ion-item-group>
+	<ion-item-group>
+		<ion-item-divider color="light">
+			<ion-label color="medium">Shipping</ion-label>
+		</ion-item-divider>
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col>
+					<sneat-express-order-counterparty label="🏗️ From port"
+																						[team]="team"
+																						[order]="order"
+																						[readonly]="readonly"
+																						counterpartyRole="port"
+																						counterpartyType="location"
+																						labelPosition="fixed"
+					></sneat-express-order-counterparty>
+				</ion-col>
+				<ion-col>
+					<sneat-express-order-counterparty label="🏗️ To port"
+																						[team]="team"
+																						[order]="order"
+																						[readonly]="readonly"
+																						counterpartyRole="port"
+																						counterpartyType="location"
+																						labelPosition="fixed"
+					></sneat-express-order-counterparty>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 		<sneat-express-order-counterparty label="🚢 Ship"
 																			[team]="team"
 																			[order]="order"
@@ -95,6 +124,7 @@
 		[order]="order"
 		[contactRole]="'location'"
 		[parentRole]="'dispatcher'"
+		emoji="🛒"
 		plural="Dispatchers"
 		singular="dispatcher"
 	></sneat-express-order-counterparties>

@@ -26,7 +26,8 @@ export type ContactRoleExpress =
 	'agent' |
 	'buyer' |
 	'courier' |
-	'carrier';
+	'carrier' |
+	'port';
 export type ContactRole =
 	ContactRoleFamilyRelated |
 	ContactRoleKidRelated |

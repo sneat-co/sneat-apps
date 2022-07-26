@@ -1,7 +1,7 @@
 import { INavContext } from '@sneat/core';
 import { ContactRoleExpress, IAddress } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
-import { ITeamRequest } from '@sneat/team/models';
+import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 
 export interface IFreightAddress {
 	readonly countryID: string;
@@ -144,7 +144,7 @@ export interface IExpressOrderBrief extends IFreightOrderBase {
 	id: string;
 }
 
-export type IExpressOrderContext = INavContext<IExpressOrderBrief, IExpressOrderDto>;
+export type IExpressOrderContext = ITeamItemContext<IExpressOrderBrief, IExpressOrderDto>;
 
 export interface ICreateExpressOrderRequest extends ITeamRequest {
 	readonly numberOfContainers?: { [size: string]: number };

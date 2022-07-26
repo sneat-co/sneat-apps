@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { FreightOrdersService, IContainerRequest, IExpressOrderContext, IOrderContainer, IOrderSegment } from '../..';
+import { NewSegmentService } from '../new-segment/new-segment.service';
 
 @Component({
 	selector: 'sneat-order-container-form',
@@ -31,6 +32,7 @@ export class ContainerFormComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: FreightOrdersService,
+		private readonly newSegmentService: NewSegmentService,
 	) {
 	}
 
@@ -100,6 +102,17 @@ export class ContainerFormComponent implements OnChanges {
 				this.errorLogger.logError(err, 'Failed to delete container');
 				this.deleting = false;
 			},
+		});
+	}
+
+	async addSegment(): Promise<void> {
+		console.log('addSegment()');
+		if (!this.order) {
+			return;
+		}
+		await this.newSegmentService.addSegment({
+			order: this.order,
+			container: this.container,
 		});
 	}
 }

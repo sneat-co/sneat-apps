@@ -15,6 +15,7 @@ import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/orde
 export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	public order: IExpressOrderContext = {
 		id: '',
+		team: this.team,
 		dto: {
 			status: 'draft',
 			direction: 'export',

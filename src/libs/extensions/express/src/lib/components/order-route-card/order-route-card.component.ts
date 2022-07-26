@@ -7,7 +7,7 @@ import { IExpressOrderContext, ITransitPoint } from '../../dto';
 })
 export class OrderRouteCardComponent {
 
-	@Input() order: IExpressOrderContext = { id: '' };
+	@Input() order: IExpressOrderContext = { id: '', team: {id: '',} };
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
 	protected addTransitPoint(event: Event): void {

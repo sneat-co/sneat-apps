@@ -5,6 +5,7 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import { FreightOrdersService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { NewSegmentComponent } from '../../components/new-segment';
+import { NewSegmentService } from '../../components/new-segment/new-segment.service';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 @Component({
@@ -13,12 +14,13 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 	styleUrls: ['./express-order-page.component.scss'],
 })
 export class ExpressOrderPageComponent extends OrderPageBaseComponent {
-	tab: 'segments' | 'containers' | 'notes' = 'containers';
+	tab: 'containers' | 'truckers' | 'segments' | 'notes' = 'containers';
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		orderService: FreightOrdersService,
+		private readonly newSegementService: NewSegmentService,
 		private readonly modalController: ModalController,
 	) {
 		super('OrderPageComponent', route, teamParams, orderService);
@@ -36,13 +38,11 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 	}
 
 	async addSegment(): Promise<void> {
-		const modal = await this.modalController.create({
-			component: NewSegmentComponent,
-			componentProps: {
-				order: this.order,
-				team: this.team,
-			},
+		if (!this.order) {
+			return;
+		}
+		await this.newSegementService.addSegment({
+			order: this.order,
 		});
-		await modal.present();
 	}
 }

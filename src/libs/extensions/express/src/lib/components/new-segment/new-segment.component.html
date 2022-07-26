@@ -1,11 +1,67 @@
-<sneat-dialog title="New segment">
-	<sneat-contact-input
-		label="From"
-		[team]="team"
-		[contact]="contact"
-		role="courier"
-		[readonly]="readonly"
-		(contactChange)="onContactChanged($event)"
-	></sneat-contact-input>
+<sneat-dialog dialogTitle="New segment">
+	<ion-card *ngIf="container">
+		<ion-item>
+			<ion-label>Container: {{container.type}}</ion-label>
+		</ion-item>
+	</ion-card>
 
+	<ion-card>
+<!--		<ion-item-divider color="light">-->
+<!--			<ion-label>Required fields</ion-label>-->
+<!--		</ion-item-divider>-->
+		<sneat-contact-input
+			label="🚛 By"
+			[team]="order?.team"
+			[contact]="contact"
+			role="courier"
+			[readonly]="readonly"
+			(contactChange)="onContactChanged($event)"
+		></sneat-contact-input>
+
+<!--		<ion-grid class="ion-grid-layout">-->
+<!--			<ion-row>-->
+<!--				<ion-col>-->
+<!--				</ion-col>-->
+<!--				<ion-col>-->
+<!--					<ion-item>-->
+<!--						<ion-label>On</ion-label>-->
+<!--						<ion-input type="date"></ion-input>-->
+<!--					</ion-item>-->
+<!--				</ion-col>-->
+<!--			</ion-row>-->
+<!--		</ion-grid>-->
+
+		<sneat-contact-input
+			label="From"
+			[team]="order?.team"
+			[contact]="contact"
+			role="courier"
+			[readonly]="readonly"
+			(contactChange)="onContactChanged($event)"
+		></sneat-contact-input>
+
+		<sneat-contact-input
+			label="To"
+			[team]="order?.team"
+			[contact]="contact"
+			role="courier"
+			[readonly]="readonly"
+			(contactChange)="onContactChanged($event)"
+		></sneat-contact-input>
+	</ion-card>
+
+	<ion-card *ngIf="!container">
+		<ion-item-divider color="light">
+			<ion-label>Containers</ion-label>
+		</ion-item-divider>
+		<ion-item *ngFor="let c of order?.dto?.containers">
+			<ion-checkbox slot="start" [checked]="isContainerSelected(c.id)" (ionChange)="onContainerChecked($event)"></ion-checkbox>
+			<ion-label>Container: {{c.type}} {{c.number}}</ion-label>
+		</ion-item>
+	</ion-card>
+
+	<div class="ion-padding">
+		<ion-button size="large">Add segment</ion-button>
+		<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="modalController.dismiss()">Cancel</ion-button>
+	</div>
 </sneat-dialog>

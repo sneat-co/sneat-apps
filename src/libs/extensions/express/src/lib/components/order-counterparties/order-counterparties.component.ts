@@ -23,6 +23,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
 	@Input() readonly = false;
+	@Input() emoji?: string;
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
 	@Input() parentRole?: 'dispatcher' = 'dispatcher';

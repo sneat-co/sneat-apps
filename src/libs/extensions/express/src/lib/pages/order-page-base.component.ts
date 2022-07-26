@@ -19,7 +19,7 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 			// 	takeUntil(this.destroyed),
 			// )
 			.subscribe(params => {
-				this.order = { id: params.get('orderID') || '' };
+				this.order = { id: params.get('orderID') || '', team: {id: params.get('teamID') || ''} };
 				if (this.team?.id && this.order?.id) {
 					this.orderService
 						.watchOrderByID(this.team.id, this.order.id)

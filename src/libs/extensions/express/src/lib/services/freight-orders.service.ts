@@ -49,12 +49,13 @@ export class FreightOrdersService {
 				map(docSnapshot => {
 					return this.sfs.docSnapshotToContext(docSnapshot.payload);
 				}),
+				map(context => ({...context, team: {id: teamID}})),
 			);
 	}
 
 	public watchFreightOrders(teamID: string, filter?: IOrdersFilter): Observable<IExpressOrderContext[]> {
 		console.log('watchFreightOrders()', teamID, filter);
-		return this.afs
+		const result = this.afs
 			.collection('teams').doc(teamID)
 			.collection('modules').doc('express')
 			.collection<IExpressOrderDto>('orders',
@@ -89,7 +90,8 @@ export class FreightOrdersService {
 			.pipe(
 				map(changes => this.sfs.snapshotChangesToContext(changes)),
 			);
-		;
+
+		return result.pipe(map(orders => orders.map(o => ({...o, team: {id: teamID}}))));
 	}
 
 	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {
