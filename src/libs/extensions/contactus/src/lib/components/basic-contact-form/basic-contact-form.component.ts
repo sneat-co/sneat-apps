@@ -12,6 +12,8 @@ export class BasicContactFormComponent {
 	@Input() parentContact?: IContactContext;
 	@Input() team?: ITeamContext;
 	@Input() contactType?: ContactType;
+
+	// @Input() contactRole?: ContactRole; // use contactRoles to support multiple roles
 	@Input() contactRoles?: ContactRole[];
 
 	@Output() readonly contactChange = new EventEmitter<IContactContext>();
@@ -29,7 +31,12 @@ export class BasicContactFormComponent {
 
 	createContact(event: Event): void {
 		event.stopPropagation();
-		if (!this.team || !this.contactType) {
+		if (!this.team) {
+			console.error('team is required');
+			return;
+		}
+		if (!this.contactType) {
+			console.error('contactType is required');
 			return;
 		}
 		const request: ICreateContactBasicRequest = {

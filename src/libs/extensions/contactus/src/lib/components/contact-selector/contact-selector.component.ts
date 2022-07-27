@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectItem, SelectorBaseComponent } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
@@ -15,7 +15,7 @@ import { IContactSelectorOptions } from './contact-selector.service';
 export class ContactSelectorComponent
 	extends SelectorBaseComponent
 	implements IContactSelectorOptions,
-		AfterViewInit,
+		OnInit,
 		OnChanges,
 		OnDestroy {
 
@@ -78,8 +78,8 @@ export class ContactSelectorComponent
 	}
 
 
-	ngAfterViewInit(): void {
-		console.log('ngAfterViewInit()');
+	ngOnInit(): void {
+		console.log('ngOnInit()');
 		this.subscribeForData();
 	}
 
@@ -165,6 +165,12 @@ export class ContactSelectorComponent
 		this.parentItems?.push(this.getParentItem(contact));
 		this.onParentContactChanged(contact);
 	}
+
+	protected onContactCreated(contact: IContactContext): void {
+		this.selectedContact = contact;
+		this.emitOnSelected(contact);
+	}
+
 
 	private onParentContactChanged(contact?: IContactContext): void {
 		this.parentTab = 'existing';

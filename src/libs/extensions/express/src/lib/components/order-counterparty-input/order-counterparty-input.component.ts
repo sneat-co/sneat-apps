@@ -4,6 +4,7 @@ import { FreightOrdersService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import {
+	CounterpartyRole,
 	IExpressOrderContext,
 	IOrderCounterparty,
 	IOrderShippingPointCounterparty,
@@ -19,6 +20,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
+	@Input() counterpartyRole?: CounterpartyRole;
 	@Input() contactRole?: ContactRoleExpress;
 	@Input() contactType?: ContactType;
 	@Input() parentRole?: ContactRoleExpress;
@@ -62,7 +64,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				name: { full: counterparty.title },
 			},
 		});
-		const counterparty = this.order?.dto?.counterparties?.find(c => c.role === this.contactRole);
+		const counterparty = this.order?.dto?.counterparties?.find(c => c.role === this.counterpartyRole);
 		if (counterparty) {
 			this.contact = contactFromCounterparty(counterparty);
 			if (counterparty.parentContactID) {
@@ -82,7 +84,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			console.error('onContactChanged(): !this.team');
 			return;
 		}
-		if (!this.contactRole) {
+		if (!this.counterpartyRole) {
 			console.error('onContactChanged(): !this.counterpartyRole');
 			return;
 		}
@@ -100,7 +102,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		if (!this.order?.id) {
 			const newCounterparty: IOrderCounterparty = {
 				contactID: contact.id,
-				role: this.contactRole,
+				role: this.counterpartyRole,
 				title: contact?.brief?.title || contact.id,
 				countryID: contact?.brief?.countryID || '--',
 			};
@@ -169,7 +171,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			counterparties: [
 				{
 					contactID: contact.id.substring(contact.id.indexOf(':') + 1),
-					role: this.contactRole,
+					role: this.counterpartyRole,
 				},
 			],
 		};

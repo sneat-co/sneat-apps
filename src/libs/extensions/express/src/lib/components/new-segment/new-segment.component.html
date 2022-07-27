@@ -9,11 +9,21 @@
 <!--		<ion-item-divider color="light">-->
 <!--			<ion-label>Required fields</ion-label>-->
 <!--		</ion-item-divider>-->
+<!--		<sneat-express-order-counterparty-input-->
+<!--			label="🚛 By"-->
+<!--			[team]="order?.team"-->
+<!--			counterpartyRole="trucker"-->
+<!--			contactType="company"-->
+<!--			contactRole="trucker"-->
+<!--			[readonly]="readonly"-->
+<!--		>-->
+<!--		</sneat-express-order-counterparty-input>-->
 		<sneat-contact-input
 			label="🚛 By"
 			[team]="order?.team"
-			[contact]="contact"
-			role="courier"
+			[(contact)]="byContact"
+			contactType="company"
+			contactRole="trucker"
 			[readonly]="readonly"
 			(contactChange)="onContactChanged($event)"
 		></sneat-contact-input>
@@ -31,20 +41,44 @@
 <!--			</ion-row>-->
 <!--		</ion-grid>-->
 
+
+	</ion-card>
+
+	<ion-card>
+		<ion-item-divider color="light">
+			<ion-label slot="start">From</ion-label>
+			<ion-segment [(ngModel)]="from" (ionChange)="onFromChanged()">
+				<ion-segment-button value="port">Port</ion-segment-button>
+				<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
+			</ion-segment>
+		</ion-item-divider>
 		<sneat-contact-input
-			label="From"
+			[label]="from|titlecase"
 			[team]="order?.team"
-			[contact]="contact"
-			role="courier"
+			[contactType]="from === 'port' ? 'company' : 'location'"
+			[contactRole]="from === 'port' ? 'port' : 'location'"
+			[(contact)]="fromContact"
+			[parentRole]="from === 'port' ? undefined : 'dispatcher'"
+			[(contact)]="fromContact"
 			[readonly]="readonly"
 			(contactChange)="onContactChanged($event)"
 		></sneat-contact-input>
+	</ion-card>
 
+	<ion-card>
+		<ion-item-divider color="light">
+			<ion-label slot="start">To</ion-label>
+			<ion-segment [(ngModel)]="to" (ionChange)="onToChanged()">
+				<ion-segment-button value="port">Port</ion-segment-button>
+				<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
+			</ion-segment>
+		</ion-item-divider>
 		<sneat-contact-input
-			label="To"
+			[label]="to|titlecase"
 			[team]="order?.team"
-			[contact]="contact"
-			role="courier"
+			[contactRole]="to"
+			[parentRole]="to === 'dispatcher' ? 'dispatcher' : undefined"
+			[(contact)]="toContact"
 			[readonly]="readonly"
 			(contactChange)="onContactChanged($event)"
 		></sneat-contact-input>

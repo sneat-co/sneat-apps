@@ -53,6 +53,7 @@
 																			[order]="order"
 																			[readonly]="readonly"
 																			counterpartyRole="buyer"
+																			contactRole="buyer"
 																			labelPosition="fixed"
 		></sneat-express-order-counterparty>
 		<sneat-express-order-counterparty label="Consignee"
@@ -60,6 +61,7 @@
 																			[order]="order"
 																			[readonly]="readonly"
 																			counterpartyRole="consignee"
+																			contactRole="consignee"
 																			labelPosition="fixed"
 		></sneat-express-order-counterparty>
 	</ion-item-group>
@@ -73,6 +75,7 @@
 																			[readonly]="readonly"
 																			[canChangeContact]="false"
 																			counterpartyRole="carrier"
+																			contactRole="carrier"
 																			labelPosition="fixed"
 		></sneat-express-order-counterparty>
 	</ion-item-group>
@@ -80,37 +83,32 @@
 		<ion-item-divider color="light">
 			<ion-label color="medium">Shipping</ion-label>
 		</ion-item-divider>
-		<ion-grid class="ion-grid-layout">
-			<ion-row>
-				<ion-col>
-					<sneat-express-order-counterparty label="🏗️ From port"
-																						[team]="team"
-																						[order]="order"
-																						[readonly]="readonly"
-																						counterpartyRole="port"
-																						counterpartyType="location"
-																						labelPosition="fixed"
-					></sneat-express-order-counterparty>
-				</ion-col>
-				<ion-col>
-					<sneat-express-order-counterparty label="🏗️ To port"
-																						[team]="team"
-																						[order]="order"
-																						[readonly]="readonly"
-																						counterpartyRole="port"
-																						counterpartyType="location"
-																						labelPosition="fixed"
-					></sneat-express-order-counterparty>
-				</ion-col>
-			</ion-row>
-		</ion-grid>
+		<sneat-express-order-counterparty label="🏗️ From port"
+																			[team]="team"
+																			[order]="order"
+																			[readonly]="readonly"
+																			counterpartyRole="port_from"
+																			contactRole="port"
+																			contactType="company"
+																			labelPosition="fixed"
+		></sneat-express-order-counterparty>
+		<sneat-express-order-counterparty label="🏗️ To port"
+																			[team]="team"
+																			[order]="order"
+																			[readonly]="readonly"
+																			counterpartyRole="port_to"
+																			contactRole="port"
+																			contactType="company"
+																			labelPosition="fixed"
+		></sneat-express-order-counterparty>
 		<sneat-express-order-counterparty label="🚢 Ship"
 																			[team]="team"
 																			[order]="order"
 																			[readonly]="readonly"
 																			parentRole="shipper"
+																			contactRole="ship"
 																			counterpartyRole="ship"
-																			counterpartyType="vehicle"
+																			contactType="vehicle"
 																			labelPosition="fixed"
 		></sneat-express-order-counterparty>
 	</ion-item-group>

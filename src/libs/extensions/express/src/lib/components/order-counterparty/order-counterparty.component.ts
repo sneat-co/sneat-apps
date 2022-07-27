@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactRoleExpress, ContactRoleExpressSubContact, ContactType } from '@sneat/dto';
+import { ContactRoleExpress, ContactType } from '@sneat/dto';
+import { CounterpartyRole } from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
@@ -23,8 +24,9 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() label = 'Counterparty';
 
 	@Input() canChangeContact = true;
-	@Input() counterpartyRole?: ContactRoleExpress;
-	@Input() counterpartyType?: ContactType;
+	@Input() counterpartyRole?: CounterpartyRole;
+	@Input() contactType?: ContactType;
+	@Input() contactRole?: ContactRoleExpress;
 	@Input() parentRole?: ContactRoleExpress;
 
 	@Input() order?: IExpressOrderContext;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext, IOrderContainer } from '../..';
@@ -7,17 +7,38 @@ import { IExpressOrderContext, IOrderContainer } from '../..';
 	selector: 'sneat-new-segment',
 	templateUrl: './new-segment.component.html',
 })
-export class NewSegmentComponent implements AfterViewInit {
+export class NewSegmentComponent implements OnInit {
 	@Input() order?: IExpressOrderContext;
 	@Input() container?: IOrderContainer;
-	contact?: IContactContext;
+
+	byContact?: IContactContext;
+	fromContact?: IContactContext;
+	toContact?: IContactContext;
+
 	readonly = false;
+
+	from: 'port' | 'dispatcher' = 'port';
+	to: 'port' | 'dispatcher' = 'dispatcher';
 
 	containerIDs: string[] = [];
 
 	constructor(
 		protected readonly modalController: ModalController,
 	) {
+	}
+
+	onFromChanged(): void {
+		if (this.from === 'port' && this.to === 'port') {
+			this.to = 'dispatcher';
+		}
+		this.fromContact = undefined;
+	}
+
+	onToChanged(): void {
+		if (this.to === 'port' && this.from === 'port') {
+			this.from = 'dispatcher';
+		}
+		this.toContact = undefined;
 	}
 
 	isContainerSelected(id: string): boolean {
@@ -35,10 +56,10 @@ export class NewSegmentComponent implements AfterViewInit {
 	}
 
 	onContactChanged(contact: IContactContext): void {
-		this.contact = contact;
+		// this.contact = contact;
 	}
 
-	ngAfterViewInit(): void {
+	ngOnInit(): void {
 		this.containerIDs = this.order?.dto?.containers?.map(c => c.id) || [];
 	}
 }

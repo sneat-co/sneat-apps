@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { excludeEmpty, excludeUndefined } from '@sneat/core';
-import { ContactType, IContactDto } from '@sneat/dto';
+import { ContactRole, ContactType, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
@@ -14,6 +14,7 @@ import { ContactService } from '../../services';
 export class LocationFormComponent implements OnChanges {
 
 	@Input() team?: ITeamContext;
+	@Input() contactRole?: ContactRole;
 	@Input() contact?: IContactContext;
 	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
@@ -103,16 +104,17 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	submit(): void {
-		if (!this.contact?.dto) {
+		const contactDto = this.contact?.dto
+		if (!contactDto) {
 			return;
 		}
 		if (!this.team) {
 			return;
 		}
-		if (!this.parentContact) {
-			return;
-		}
-		const { title, countryID, address } = this.contact?.dto;
+		// if (!this.parentContact) {
+		// 	return;
+		// }
+		const { title, countryID, address } = contactDto;
 		console.log('submit', title, countryID, address);
 		if (!title || !countryID || !address || !address.lines?.length) {
 			alert('Please populate all required fields');
@@ -121,7 +123,7 @@ export class LocationFormComponent implements OnChanges {
 		const request: ICreateContactRequest = {
 			teamID: this.team.id,
 			type: 'location',
-			parentContactID: this.parentContact.id,
+			parentContactID: this.parentContact?.id,
 			location: {
 				title,
 				address,

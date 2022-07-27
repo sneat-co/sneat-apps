@@ -2,6 +2,7 @@ import { INavContext } from '@sneat/core';
 import { ContactRoleExpress, IAddress } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
+import { CounterpartyRole } from './express-team-dto';
 
 export interface IFreightAddress {
 	readonly countryID: string;
@@ -13,7 +14,7 @@ export interface IFreightAddress {
 export interface IOrderCounterparty {
 	readonly contactID: string;
 	readonly parentContactID?: string;
-	readonly role: ContactRoleExpress;
+	readonly role: CounterpartyRole;
 	readonly refNumber?: string;
 	readonly countryID: string;
 	readonly title: string;

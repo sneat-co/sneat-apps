@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DialogModule } from '@sneat/components';
 import { ContactInputModule } from '@sneat/extensions/contactus';
+import { OrderFormModule } from '../order-form.module';
 import { NewSegmentComponent } from './new-segment.component';
 import { NewSegmentService } from './new-segment.service';
 
@@ -12,6 +14,8 @@ import { NewSegmentService } from './new-segment.service';
 		IonicModule,
 		DialogModule,
 		ContactInputModule,
+		FormsModule,
+		OrderFormModule,
 	],
 	declarations: [
 		NewSegmentComponent,

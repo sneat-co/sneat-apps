@@ -19,15 +19,18 @@ export type ContactRoleShip = 'ship';
 export type ContactRoleExpressSubContact = ContactRoleShip | ContactRoleLocation;
 export type ContactRoleExpressParentContact = 'shipper' | 'dispatcher';
 export type ContactRoleExpress =
-	ContactRoleExpressParentContact | ContactRoleExpressSubContact |
-	'consignee' |
-	'notify' |
-	'dispatch-location' |
-	'agent' |
-	'buyer' |
-	'courier' |
-	'carrier' |
-	'port';
+	ContactRoleExpressParentContact
+	| ContactRoleExpressSubContact
+	| 'consignee'
+	| 'notify'
+	| 'dispatch-location'
+	| 'agent'
+	| 'buyer'
+	| 'courier'
+	| 'carrier'
+	| 'port'
+	| 'trucker'
+	;
 export type ContactRole =
 	ContactRoleFamilyRelated |
 	ContactRoleKidRelated |

@@ -74,25 +74,35 @@
 
 
 		<ng-container *ngIf="contactTab === 'new'">
-			<ng-container *ngIf="contactType !== 'location'">
-				<ion-item-divider>
-					<ion-label>{{contactRole|titlecase}}</ion-label>
-				</ion-item-divider>
-				<sneat-basic-contact-form
-					[team]="team"
-					[contactType]="contactType"
-					[contactRoles]="contactRole ? [contactRole] : undefined"
-					[parentContact]="selectedParent"
-				>
-				</sneat-basic-contact-form>
+			<ng-container [ngSwitch]="contactType">
+				<sneat-location-form *ngSwitchCase="'location'"
+														 contactType="location"
+														 [contactRole]="contactRole"
+														 [team]="team"
+														 [parentContact]="selectedContact"
+														 (contactCreated)="onLocationCreated($event)"
+				></sneat-location-form>
+				<sneat-new-company-form *ngSwitchCase="'company'"
+																[team]="team"
+																[contactRoles]="contactRoles"
+																[contactRole]="contactRole"
+																[hideRole]="true"
+																(contactCreated)="onContactCreated($event)">
+					>
+				</sneat-new-company-form>
+				<ng-container *ngSwitchDefault>
+					<ion-item-divider>
+						<ion-label>{{contactRole|titlecase}}</ion-label>
+					</ion-item-divider>
+					<sneat-basic-contact-form
+						[team]="team"
+						[contactType]="contactType"
+						[contactRoles]="contactRole ? [contactRole] : undefined"
+						[parentContact]="selectedParent"
+					>
+					</sneat-basic-contact-form>
+				</ng-container>
 			</ng-container>
-			<sneat-location-form *ngIf="contactType === 'location'"
-													 contactType="location"
-													 [contact]="newLocationContact"
-													 [team]="team"
-													 [parentContact]="selectedContact"
-													 (contactCreated)="onLocationCreated($event)"
-			></sneat-location-form>
 		</ng-container>
 	</ion-card>
 </ion-content>

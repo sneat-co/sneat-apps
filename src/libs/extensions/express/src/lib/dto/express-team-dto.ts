@@ -2,6 +2,18 @@ import { INavContext } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ITeamRequest } from '@sneat/team/models';
 
+export type CounterpartyRole =
+	'buyer' | 'consignee' | 'notify' // TODO: Which one to use/keep?
+	| 'agent'
+	| 'carrier'
+	| 'shipper'
+	| 'ship'
+	| 'location'
+	| 'trucker'
+	| 'port_from'
+	| 'port_to'
+	;
+
 export interface IExpressTeamDto {
 	readonly contactID: string;
 }

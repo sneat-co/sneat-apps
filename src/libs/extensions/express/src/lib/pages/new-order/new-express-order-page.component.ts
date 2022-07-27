@@ -4,7 +4,13 @@ import { ContactRoleExpress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, NEVER, switchMap, takeUntil } from 'rxjs';
-import { ExpressTeamService, FreightOrdersService, IOrderCounterparty, IOrderShippingPointCounterparty } from '../..';
+import {
+	CounterpartyRole,
+	ExpressTeamService,
+	FreightOrdersService,
+	IOrderCounterparty,
+	IOrderShippingPointCounterparty,
+} from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order-dto';
 
@@ -86,7 +92,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			title: contact.dto.title || contact.id,
 			countryID: contact.dto.countryID || '',
 			address: contact.dto.address,
-			role: contact.dto?.roles?.length ? contact.dto.roles[0] as ContactRoleExpress : 'carrier',
+			role: contact.dto?.roles?.length ? contact.dto.roles[0] as CounterpartyRole : 'carrier',
 		};
 		console.log('order: 1', this.order);
 		if (this.order?.dto) {
@@ -127,7 +133,8 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			alert('Buyer is required');
 			return;
 		}
-		if (!this.order?.dto?.counterparties?.some(c => c.role === 'dispatcher')) {
+
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'location')) {
 			alert('At least 1 dispatcher is required');
 			return;
 		}
