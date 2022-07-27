@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IContactDto } from '@sneat/dto';
-import { IContactContext, ICreateContactRequest } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team/models';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactBasePage } from '../contact-base-page';
 
@@ -11,7 +10,7 @@ import { ContactBasePage } from '../contact-base-page';
 })
 export class NewLocationPageComponent extends ContactBasePage {
 
-	newLocationDto?: IContactDto;
+	newLocation: IContactContext = {id: '', dto: {type: 'location'}, team: {id: ''}};
 
 	constructor(
 		route: ActivatedRoute,
@@ -30,17 +29,13 @@ export class NewLocationPageComponent extends ContactBasePage {
 	}
 
 	onContactChanged(contact: IContactContext): void {
-		if (contact.dto) {
-			this.newLocationDto = contact.dto;
-		}
+		this.newLocation = contact;
 	}
 
 	onContactCreated(contact: IContactContext): void {
-		if (contact.dto) {
-			this.newLocationDto = contact.dto;
-		}
+		this.newLocation = contact;
 		this.navController
-			.navigateBack(`/space/${this.team.type}/${this.team.id}/contact/${contact?.id}`)
+			.navigateBack(`/space/${this.team.type}/${this.team.id}/contact/${this.contact?.id}`)
 			.catch(this.errorLogger.logErrorHandler('failed navigate to parent contact'));
 	}
 }

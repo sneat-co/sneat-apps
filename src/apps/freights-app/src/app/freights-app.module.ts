@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { initFirebase, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
@@ -19,10 +20,11 @@ const appInfo: IAppInfo = {
 	requiredTeamType: 'company',
 };
 
-console.log('environment:', environment);
+console.log('freights-app.module: environment:', environment);
 
 @NgModule({
 	imports: [
+		BrowserAnimationsModule,
 		SneatApplicationModule.defaultSneatApplicationImports(environment),
 		SneatAuthServicesModule,
 		AuthMenuItemModule,

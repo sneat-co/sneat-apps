@@ -31,6 +31,8 @@
 		</ion-item>
 	</ion-card>
 
+	contact: {{contact|json}}
+
 	<ion-card *ngIf="!hideSubmitButton">
 		<ion-card-content>
 			<ion-button size="large"
@@ -38,7 +40,9 @@
 									(click)="submit()"
 			>
 				<ion-icon name="save-outline" slot="start"></ion-icon>
-				<ion-label>Create location record</ion-label>
+				<ion-label *ngIf="!isCreating">Create location record</ion-label>
+				<ion-label *ngIf="isCreating">Create location record...</ion-label>
+				<ion-spinner slot="end" name="lines-small" *ngIf="isCreating"></ion-spinner>
 			</ion-button>
 		</ion-card-content>
 	</ion-card>

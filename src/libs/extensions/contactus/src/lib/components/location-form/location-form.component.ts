@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
-import { excludeEmpty, excludeUndefined } from '@sneat/core';
+import { excludeEmpty } from '@sneat/core';
 import { ContactRole, ContactType, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
@@ -19,7 +19,7 @@ export class LocationFormComponent implements OnChanges {
 	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
-	@Input() contactType?: ContactType;
+	@Input() contactType: ContactType = 'location';
 
 	@Output() readonly contactChange = new EventEmitter<IContactContext>();
 	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
@@ -78,6 +78,13 @@ export class LocationFormComponent implements OnChanges {
 		this.contactChange.emit(this.contact);
 	}
 
+	private readonly onContactCreated = (contact: IContactContext): void => {
+		console.log('onContactCreated', contact);
+		this.contact = contact;
+		this.emitContactChange();
+		this.contactCreated.emit(this.contact);
+	}
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactType']) {
 			if (!this.contact?.dto && this.contactType && this.team) {
@@ -89,9 +96,9 @@ export class LocationFormComponent implements OnChanges {
 				this.emitContactChange();
 			}
 		}
-		if (changes['contact']) {
-			if (this.contact?.dto?.countryID && !this.countryID) {
-				this.countryID = this.contact.dto.countryID;
+		if (changes['parentContact']) {
+			if (this.parentContact?.dto?.countryID && !this.countryID) {
+				this.countryID = this.parentContact.dto.countryID;
 				this.setFocusToTitle();
 			}
 		}
@@ -132,12 +139,7 @@ export class LocationFormComponent implements OnChanges {
 		this.isCreating = true;
 		this.contactService.createContact(this.team, request)
 			.subscribe({
-				next: newContact => {
-					console.log('new location created with ID=' + newContact.id);
-					this.contact = newContact;
-					this.emitContactChange();
-					this.contactCreated.emit(newContact)
-				},
+				next: this.onContactCreated,
 				error: (err: any) => {
 					this.errorLogger.logError(err, 'Failed to create new contact');
 					this.isCreating = false;
