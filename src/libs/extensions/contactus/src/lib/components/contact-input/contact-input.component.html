@@ -1,5 +1,10 @@
 <ion-item tappable class="sneat-tiny-end-padding" (click)="openContactSelector($event)">
-	<ion-label color="medium" position="fixed">{{labelText()}}</ion-label>
+	<ion-label color="medium" slot="start" position="fixed">
+		{{labelText()}}
+	</ion-label>
+
+	<span *ngIf="contact?.brief?.countryID">{{(contact?.brief?.countryID||contact?.dto?.countryID)|countryEmoji}}</span>
+
 	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>
 	<ion-label color="medium" *ngIf="parentRole">{{subLabel}}</ion-label>
 	<ion-input [value]="parentContact?.brief?.title" *ngIf="parentRole"></ion-input>

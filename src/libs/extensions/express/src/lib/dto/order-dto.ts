@@ -65,12 +65,6 @@ export interface ISegmentDates {
 	readonly end: string;
 }
 
-export interface ISegmentContactIDs {
-	from: string;
-	to: string;
-	transporter?: string;
-}
-
 export interface IOrderSegment {
 	id: string;
 	dates: ISegmentDates;
@@ -182,6 +176,24 @@ export interface INewContainer extends IOrderContainerBase {
 
 export interface IAddContainersRequest extends IExpressOrderRequest {
 	readonly containers: INewContainer[];
+}
+
+export interface ISegmentEndpoint {
+	readonly contactID: string;
+}
+
+export interface ISegmentContactIDs {
+	readonly from: ISegmentEndpoint;
+	readonly to: ISegmentEndpoint;
+	readonly by?: ISegmentEndpoint;
+}
+
+export interface INewSegmentContainer {
+	readonly id: string;
+}
+
+export interface IAddSegmentsRequest extends ISegmentContactIDs, IExpressOrderRequest {
+	readonly containers: INewSegmentContainer[];
 }
 
 export interface IContainerRequest extends IExpressOrderRequest {

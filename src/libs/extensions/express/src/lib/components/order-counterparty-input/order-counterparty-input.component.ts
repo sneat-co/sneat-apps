@@ -60,6 +60,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			brief: {
 				type: 'company',
 				id: counterparty.contactID,
+				countryID: counterparty.countryID,
 				title: counterparty.title,
 				name: { full: counterparty.title },
 			},

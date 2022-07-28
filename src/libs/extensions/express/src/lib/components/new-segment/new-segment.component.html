@@ -95,7 +95,7 @@
 	</ion-card>
 
 	<div class="ion-padding">
-		<ion-button size="large">Add segment</ion-button>
-		<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="modalController.dismiss()">Cancel</ion-button>
+		<ion-button size="large" (click)="submitAddSegment($event)">Add segment</ion-button>
+		<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="close()">Cancel</ion-button>
 	</div>
 </sneat-dialog>

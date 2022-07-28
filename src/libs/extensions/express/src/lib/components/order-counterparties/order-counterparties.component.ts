@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ContactType } from '@sneat/dto';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -28,6 +29,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() singular = 'singular TO BE SET';
 	@Input() parentRole?: 'dispatcher' = 'dispatcher';
 	@Input() contactRole: 'location'  = 'location';
+	@Input() contactType?: ContactType;
 
 	readonly deleting: IOrderShippingPointCounterparty[] = [];
 
@@ -67,8 +69,9 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			team,
-			contactRole: this.parentRole || this.contactRole,
-			subType: 'location',
+			contactRole: this.contactRole,
+			parentRole: this.parentRole,
+			contactType: this.contactType,
 			excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
 		};
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)

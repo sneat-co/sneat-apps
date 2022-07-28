@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderContainer } from '../..';
+import { FreightOrdersService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
 
 @Component({
 	selector: 'sneat-new-segment',
@@ -23,8 +24,16 @@ export class NewSegmentComponent implements OnInit {
 	containerIDs: string[] = [];
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		protected readonly modalController: ModalController,
+		private readonly orderService: FreightOrdersService,
 	) {
+	}
+
+	protected close(): void {
+		this.modalController
+			.dismiss()
+			.catch(this.errorLogger.logErrorHandler('failed to close NewSegmentComponent'));
 	}
 
 	onFromChanged(): void {
@@ -61,5 +70,38 @@ export class NewSegmentComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.containerIDs = this.order?.dto?.containers?.map(c => c.id) || [];
+	}
+
+	submitAddSegment(event: Event): void {
+		console.log('submitAddSegment', event);
+		if (!this.order?.id) {
+			alert('order is required');
+			return;
+		}
+		if (!this.order.team) {
+			alert('team is required');
+			return;
+		}
+		if (!this.fromContact) {
+			alert('from contact is required');
+			return;
+		}
+		if (!this.toContact) {
+			alert('to contact is required');
+			return;
+		}
+		const request: IAddSegmentsRequest = {
+			orderID: this.order.id,
+			teamID: this.order.team?.id,
+			containers: [],
+			from: {contactID: this.fromContact.id},
+			to: {contactID: this.toContact.id},
+			by: this.byContact?.id ? {contactID: this.byContact.id} : undefined,
+		};
+		this.orderService
+			.addSegments(request)
+			.subscribe({
+				next: (resp) => this.close(),
+			});
 	}
 }

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import { ContactServiceModule } from '../../services';
 import { ContactSelectorModule } from '../contact-selector/contact-selector.module';
 import { ContactInputComponent } from './contact-input.component';
@@ -14,6 +15,7 @@ import { ContactInputComponent } from './contact-input.component';
     ContactServiceModule,
     ContactSelectorModule,
     RouterModule,
+    SneatPipesModule,
   ],
 	declarations: [
 		ContactInputComponent,

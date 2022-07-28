@@ -66,6 +66,8 @@ export class ContactInputComponent {
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {
 				console.log('ContactInputComponent.openContactSelector() contact:', contact);
+				this.contact = contact || undefined;
+				this.parentContact = contact?.parentContact;
 				if (contact) {
 					this.contactChange.emit(contact);
 				}
