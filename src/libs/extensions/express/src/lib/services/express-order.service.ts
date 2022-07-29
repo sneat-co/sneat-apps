@@ -1,6 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { ITeamContext } from '@sneat/team/models';
 import { map, Observable } from 'rxjs';
 import {
 	IAddContainersRequest,
@@ -23,8 +24,17 @@ function briefFromDto(id: string, dto: IExpressOrderDto): IFreightOrderBrief {
 	};
 }
 
+function contextFromDto(team: ITeamContext, id: string, dto: IExpressOrderDto): IExpressOrderContext {
+	return {
+		team,
+		id,
+		brief: briefFromDto(id, dto),
+		dto,
+	};
+}
+
 @Injectable()
-export class FreightOrdersService {
+export class ExpressOrderService {
 	private readonly sfs: SneatFirestoreService<IFreightOrderBrief, IExpressOrderDto>;
 
 	constructor(
@@ -49,7 +59,7 @@ export class FreightOrdersService {
 				map(docSnapshot => {
 					return this.sfs.docSnapshotToContext(docSnapshot.payload);
 				}),
-				map(context => ({...context, team: {id: teamID}})),
+				map(context => ({ ...context, team: { id: teamID } })),
 			);
 	}
 
@@ -67,7 +77,7 @@ export class FreightOrdersService {
 
 					let keysVal = '';
 					if (filter?.countryID) {
-						keysVal = 'country='+filter.countryID;
+						keysVal = 'country=' + filter.countryID;
 					}
 					if (filter?.contactID) {
 						if (keysVal) {
@@ -78,7 +88,7 @@ export class FreightOrdersService {
 							contactID = contactID.split(':')[1];
 						}
 						if (contactID) {
-							keysVal += 'contact='+contactID;
+							keysVal += 'contact=' + contactID;
 						}
 					}
 					if (keysVal) {
@@ -91,15 +101,19 @@ export class FreightOrdersService {
 				map(changes => this.sfs.snapshotChangesToContext(changes)),
 			);
 
-		return result.pipe(map(orders => orders.map(o => ({...o, team: {id: teamID}}))));
+		return result.pipe(map(orders => orders.map(o => ({ ...o, team: { id: teamID } }))));
 	}
 
 	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {
 		return this.sneatApiService.post('express/order/set_order_counterparties', request);
 	}
 
-	addShippingPoint(request: IAddOrderShippingPointRequest): Observable<IExpressOrderDto> {
-		return this.sneatApiService.post('express/order/add_shipping_point', request);
+	addShippingPoint(team: ITeamContext, request: IAddOrderShippingPointRequest): Observable<IExpressOrderContext> {
+		return this.sneatApiService
+			.post<{ order: IExpressOrderDto }>('express/order/add_shipping_point', request)
+			.pipe(
+				map(response => contextFromDto(team, request.orderID, response.order)),
+			);
 	}
 
 	addContainers(request: IAddContainersRequest): Observable<void> {
@@ -122,8 +136,8 @@ export class FreightOrdersService {
 @NgModule({
 	imports: [],
 	providers: [
-		FreightOrdersService,
+		ExpressOrderService,
 	],
 })
-export class FreightOrdersServiceModule {
+export class ExpressOrderServiceModule {
 }

@@ -1,36 +1,40 @@
+<ion-header>
+	<sneat-dialog-header dialogTitle="New container">
+	</sneat-dialog-header>
+</ion-header>
+
 <ion-content>
-	<sneat-dialog title="New container">
-		<sneat-select-from-list
-			[(ngModel)]="containerType"
-			label="Container type/size"
-			[isFilterable]="false"
-			[items]="containerTypes"
-			(ngModelChange)="onContainerTypeChanged()"
-		></sneat-select-from-list>
-		<ng-container *ngIf="containerType">
-			<ion-item>
-				<ion-label color="medium">Container #</ion-label>
-				<ion-input #containerNumberInput type="text" [(ngModel)]="containerNumber"></ion-input>
-			</ion-item>
+	<sneat-select-from-list
+		[(ngModel)]="containerType"
+		label="Container type/size"
+		[isFilterable]="false"
+		[items]="containerTypes"
+		(ngModelChange)="onContainerTypeChanged()"
+	></sneat-select-from-list>
+	<ng-container *ngIf="containerType">
+		<ion-item>
+			<ion-label color="medium">Container #</ion-label>
+			<ion-input #containerNumberInput type="text" [(ngModel)]="containerNumber"></ion-input>
+		</ion-item>
 
-			<ion-item>
-				<ion-label color="medium">Gross weight (kg)</ion-label>
-				<ion-input type="number" [(ngModel)]="grossWeightKg"></ion-input>
-			</ion-item>
+		<ion-item>
+			<ion-label color="medium">Gross weight (kg)</ion-label>
+			<ion-input type="number" [(ngModel)]="grossWeightKg"></ion-input>
+		</ion-item>
 
-			<sneat-shipping-points-selector
-				[shippingPoints]="order?.dto?.shippingPoints"
-				[selectedShippingPointIDs]="selectedShippingPointIDs || []"
-			></sneat-shipping-points-selector>
+		<sneat-shipping-points-selector
+			[shippingPoints]="order?.dto?.shippingPoints"
+			[selectedShippingPointIDs]="selectedShippingPointIDs || []"
+		></sneat-shipping-points-selector>
+	</ng-container>
 
-			<div class="ion-padding">
-				<ion-button size="large" [disabled]="isSubmitting" (click)="addContainer($event)">
-					<ion-icon name="save-outline" slot="start"></ion-icon>
-					<ion-label *ngIf="!isSubmitting">Create container record</ion-label>
-					<ion-label *ngIf="isSubmitting">Creating container record...</ion-label>
-					<ion-spinner name="lines-small" slot="end" *ngIf="isSubmitting"></ion-spinner>
-				</ion-button>
-			</div>
-		</ng-container>
-	</sneat-dialog>
 </ion-content>
+
+<ion-footer class="ion-padding" *ngIf="containerType">
+	<ion-button [disabled]="isSubmitting" (click)="addContainer($event)">
+		<ion-icon name="save-outline" slot="start"></ion-icon>
+		<ion-label *ngIf="!isSubmitting">Create container record</ion-label>
+		<ion-label *ngIf="isSubmitting">Creating container record...</ion-label>
+		<ion-spinner name="lines-small" slot="end" *ngIf="isSubmitting"></ion-spinner>
+	</ion-button>
+</ion-footer>

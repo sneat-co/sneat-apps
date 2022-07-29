@@ -1,4 +1,7 @@
-<sneat-dialog dialogTitle="New segment">
+<ion-header>
+	<sneat-dialog-header dialogTitle="New segment"></sneat-dialog-header>
+</ion-header>
+<ion-content>
 	<ion-card *ngIf="container">
 		<ion-item>
 			<ion-label>Container: {{container.type}}</ion-label>
@@ -63,6 +66,10 @@
 			[readonly]="readonly"
 			(contactChange)="onContactChanged($event)"
 		></sneat-contact-input>
+		<ion-item>
+			<ion-label color="medium">On</ion-label>
+			<ion-input type="date" [(ngModel)]="fromDate"></ion-input>
+		</ion-item>
 	</ion-card>
 
 	<ion-card>
@@ -82,6 +89,10 @@
 			[readonly]="readonly"
 			(contactChange)="onContactChanged($event)"
 		></sneat-contact-input>
+		<ion-item>
+			<ion-label color="medium">On</ion-label>
+			<ion-input type="date" [(ngModel)]="toDate"></ion-input>
+		</ion-item>
 	</ion-card>
 
 	<ion-card *ngIf="!container">
@@ -90,12 +101,13 @@
 		</ion-item-divider>
 		<ion-item *ngFor="let c of order?.dto?.containers">
 			<ion-checkbox slot="start" [checked]="isContainerSelected(c.id)" (ionChange)="onContainerChecked($event)"></ion-checkbox>
-			<ion-label>Container: {{c.type}} {{c.number}}</ion-label>
+			<ion-label>{{c.type|uppercase}} &mdash; <span *ngIf="c.number">#{{c.number}}</span></ion-label>
 		</ion-item>
 	</ion-card>
 
-	<div class="ion-padding">
-		<ion-button size="large" (click)="submitAddSegment($event)">Add segment</ion-button>
-		<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="close()">Cancel</ion-button>
-	</div>
-</sneat-dialog>
+</ion-content>
+
+<ion-footer class="ion-padding">
+	<ion-button (click)="submitAddSegment($event)">Add segment</ion-button>
+	<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="close()">Cancel</ion-button>
+</ion-footer>

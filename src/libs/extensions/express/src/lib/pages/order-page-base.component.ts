@@ -1,17 +1,18 @@
 import { Directive, Inject, Injectable, InjectionToken } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FreightOrdersService, IExpressOrderContext } from '../..';
+import { ExpressOrderService, IExpressOrderContext } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
 export class OrderPageBaseComponent extends TeamBaseComponent {
 	protected order?: IExpressOrderContext;
+	numberOfDispatchers?: number;
 
 	constructor(
 		@Inject(new InjectionToken('className')) className: string,
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly orderService: FreightOrdersService,
+		private readonly orderService: ExpressOrderService,
 	) {
 		super(className, route, teamParams);
 		route.paramMap
@@ -36,6 +37,7 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 
 	private setOrder(order: IExpressOrderContext): void {
 		this.order = order;
+		this.numberOfDispatchers = order?.dto?.counterparties?.filter(c => c.role === 'dispatcher').length;
 		this.onOrderChanged(order);
 	}
 

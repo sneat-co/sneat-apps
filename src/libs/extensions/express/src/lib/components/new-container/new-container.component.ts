@@ -3,7 +3,7 @@ import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import {
 	ContainerType,
-	FreightOrdersService,
+	ExpressOrderService,
 	IAddContainersRequest,
 	IExpressOrderContext,
 } from '../..';
@@ -38,7 +38,7 @@ export class NewContainerComponent implements AfterViewInit {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
-		private readonly orderService: FreightOrdersService,
+		private readonly orderService: ExpressOrderService,
 	) {
 	}
 

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { FreightOrdersService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
+import { ExpressOrderService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
 
 @Component({
 	selector: 'sneat-new-segment',
@@ -21,12 +21,15 @@ export class NewSegmentComponent implements OnInit {
 	from: 'port' | 'dispatcher' = 'port';
 	to: 'port' | 'dispatcher' = 'dispatcher';
 
+	fromDate?: string;
+	toDate?: string;
+
 	containerIDs: string[] = [];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		protected readonly modalController: ModalController,
-		private readonly orderService: FreightOrdersService,
+		private readonly orderService: ExpressOrderService,
 	) {
 	}
 
@@ -102,6 +105,7 @@ export class NewSegmentComponent implements OnInit {
 			.addSegments(request)
 			.subscribe({
 				next: (resp) => this.close(),
+				error: this.errorLogger.logErrorHandler('Failed to add segments'),
 			});
 	}
 }

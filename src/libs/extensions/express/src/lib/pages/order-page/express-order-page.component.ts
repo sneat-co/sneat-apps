@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { FreightOrdersService } from '../..';
+import { ExpressOrderService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { NewSegmentComponent } from '../../components/new-segment';
 import { NewSegmentService } from '../../components/new-segment/new-segment.service';
@@ -14,13 +14,13 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 	styleUrls: ['./express-order-page.component.scss'],
 })
 export class ExpressOrderPageComponent extends OrderPageBaseComponent {
-	tab: 'containers' | 'truckers' | 'segments' | 'notes' = 'containers';
+	tab: 'containers' | 'truckers' | 'dispatchers' | 'segments' | 'notes' = 'containers';
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		orderService: FreightOrdersService,
-		private readonly newSegementService: NewSegmentService,
+		orderService: ExpressOrderService,
+		private readonly newSegmentService: NewSegmentService,
 		private readonly modalController: ModalController,
 	) {
 		super('OrderPageComponent', route, teamParams, orderService);
@@ -41,8 +41,17 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 		if (!this.order) {
 			return;
 		}
-		await this.newSegementService.addSegment({
+		await this.newSegmentService.addSegment({
 			order: this.order,
 		});
+	}
+
+	async addDispatcher(): Promise<void> {
+		if (!this.order) {
+			return;
+		}
+		// await this.newSegmentService.addSegment({
+		// 	order: this.order,
+		// });
 	}
 }

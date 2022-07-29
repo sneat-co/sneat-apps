@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FreightOrdersService, IExpressOrderContext, IOrderCounterparty } from '../..';
+import { ExpressOrderService, IExpressOrderContext, IOrderCounterparty } from '../..';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { OrderPageBaseComponent } from '../pages/order-page-base.component';
 
@@ -14,7 +14,7 @@ export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 		className: string,
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		orderService: FreightOrdersService,
+		orderService: ExpressOrderService,
 	) {
 		super(className, route, teamParams, orderService);
 	}

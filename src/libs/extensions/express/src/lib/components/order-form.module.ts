@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactInputModule } from '@sneat/extensions/contactus';
-import { FreightOrdersServiceModule } from '../services';
+import { ExpressOrderServiceModule } from '../services';
 import { OrderCardComponent } from './order-card/order-card.component';
 import { OrderPrintMenuComponent } from './order-card/order-print-menu.component';
 import { OrderCounterpartiesComponent } from './order-counterparties/order-counterparties.component';
@@ -19,7 +19,7 @@ import { OrderCounterpartyComponent } from './order-counterparty/order-counterpa
 		FormsModule,
 		RouterModule,
 		ContactInputModule,
-		FreightOrdersServiceModule,
+		ExpressOrderServiceModule,
 	],
 	declarations: [
 		OrderCardComponent,

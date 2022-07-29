@@ -11,6 +11,7 @@ export interface IContactSelectorOptions extends ISelectorOptions<IContactContex
 	readonly contactRole?: ContactRole;
 	readonly contactType?: ContactType;
 	readonly parentRole?: ContactRole;
+	readonly parentContact?: IContactContext;
 	readonly subType?: ContactRole;
 	readonly subRoleRequired?: boolean;
 	readonly excludeContacts?: IContactContext[];

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { DispatchersModule } from '@sneat/extensions/express';
 import { NewSegmentModule } from '../../components/new-segment';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
@@ -18,15 +19,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    OrderFormModule,
-    OrderContainersModule,
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule.forChild(routes),
+		FormsModule,
+		OrderFormModule,
+		OrderContainersModule,
 		NewSegmentModule,
-  ],
+		DispatchersModule,
+	],
 	declarations: [
 		ExpressOrderPageComponent,
 		OrderSegmentsComponent,

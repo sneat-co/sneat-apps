@@ -3,10 +3,11 @@
 		{{labelText()}}
 	</ion-label>
 
-	<span *ngIf="contact?.brief?.countryID">{{(contact?.brief?.countryID||contact?.dto?.countryID)|countryEmoji}}</span>
+	<span *ngIf="contact?.brief?.countryID||contact?.dto?.countryID">{{(contact?.brief?.countryID||contact?.dto?.countryID)|countryFlag}}</span>
 
 	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>
 	<ion-label color="medium" *ngIf="parentRole">{{subLabel}}</ion-label>
+	<span style="padding-left: 0.25em" *ngIf="parentContact?.brief?.countryID||parentContact?.dto?.countryID">{{(parentContact?.brief?.countryID||parentContact?.dto?.countryID)|countryFlag}}</span>
 	<ion-input [value]="parentContact?.brief?.title" *ngIf="parentRole"></ion-input>
 	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">
 		<ion-button (click)="openContactSelector($event)">

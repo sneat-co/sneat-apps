@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactRoleExpress, ContactType } from '@sneat/dto';
+import { ExpressOrderContactRole, ContactType } from '@sneat/dto';
 import { CounterpartyRole } from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -9,7 +9,7 @@ import {
 	IOrderShippingPointCounterparty,
 	ISetOrderCounterpartyRequest,
 } from '../../dto/order-dto';
-import { FreightOrdersService } from '../../services';
+import { ExpressOrderService } from '../../services';
 
 @Component({
 	selector: 'sneat-express-order-counterparty',
@@ -26,8 +26,8 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() canChangeContact = true;
 	@Input() counterpartyRole?: CounterpartyRole;
 	@Input() contactType?: ContactType;
-	@Input() contactRole?: ContactRoleExpress;
-	@Input() parentRole?: ContactRoleExpress;
+	@Input() contactRole?: ExpressOrderContactRole;
+	@Input() parentRole?: ExpressOrderContactRole;
 
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
@@ -42,7 +42,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: FreightOrdersService,
+		private readonly orderService: ExpressOrderService,
 	) {
 	}
 

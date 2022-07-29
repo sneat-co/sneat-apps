@@ -9,7 +9,7 @@ import { NewSegmentModule } from '../../components/new-segment/new-segment.modul
 import { OrderRouteCardModule } from '../../components/order-route-card/order-route-card.module';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
-import { FreightOrdersServiceModule } from '../../services/freight-orders.service';
+import { ExpressOrderServiceModule } from '../../services/express-order.service';
 import { NewExpressOrderPageComponent } from './new-express-order-page.component';
 import { NewOrderContainersFormComponent } from './new-order-containers-form.component';
 
@@ -23,7 +23,7 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 				component: NewExpressOrderPageComponent,
 			},
 		]),
-		FreightOrdersServiceModule,
+		ExpressOrderServiceModule,
 		OrderRouteCardModule,
 		OrderContainersModule,
 		OrderFormModule,

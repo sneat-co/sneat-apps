@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactRole, ContactRoleExpress, ContactType } from '@sneat/dto';
-import { FreightOrdersService } from '../../services';
+import { ContactRole, ExpressOrderContactRole, ContactType } from '@sneat/dto';
+import { ExpressOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import {
@@ -21,9 +21,9 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
 	@Input() counterpartyRole?: CounterpartyRole;
-	@Input() contactRole?: ContactRoleExpress;
+	@Input() contactRole?: ExpressOrderContactRole;
 	@Input() contactType?: ContactType;
-	@Input() parentRole?: ContactRoleExpress;
+	@Input() parentRole?: ExpressOrderContactRole;
 	@Input() canChangeContact = true;
 
 	@Input() order?: IExpressOrderContext;
@@ -38,7 +38,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: FreightOrdersService,
+		private readonly orderService: ExpressOrderService,
 	) {
 
 	}

@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactType } from '@sneat/dto';
+import { ContactType, ExpressOrderContactRole } from '@sneat/dto';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
-	FreightOrdersService,
+	CounterpartyRole,
+	ExpressOrderService,
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
 	IExpressOrderContext, IOrderCounterparty,
@@ -28,7 +29,8 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
 	@Input() parentRole?: 'dispatcher' = 'dispatcher';
-	@Input() contactRole: 'location'  = 'location';
+	@Input() contactRole: ExpressOrderContactRole = 'location';
+	@Input() counterpartyRole: CounterpartyRole = 'dispatch-point';
 	@Input() contactType?: ContactType;
 
 	readonly deleting: IOrderShippingPointCounterparty[] = [];
@@ -38,7 +40,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
-		private readonly ordersService: FreightOrdersService,
+		private readonly ordersService: ExpressOrderService,
 	) {
 	}
 
@@ -89,7 +91,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 				const counterparty: IOrderCounterparty = {
 					contactID: contact.id,
 					title: contact.brief.title || contact.id,
-					role: this.contactRole,
+					role: this.counterpartyRole,
 					address: contact.brief.address,
 					countryID: contact.brief.address?.countryID || '--',
 				};
@@ -109,7 +111,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 					type: 'pick',
 					locationContactID: contact.id,
 				};
-				this.ordersService.addShippingPoint(request).subscribe({
+				this.ordersService.addShippingPoint(team, request).subscribe({
 					next: () => {
 						console.log('added shipping point added to order');
 					},

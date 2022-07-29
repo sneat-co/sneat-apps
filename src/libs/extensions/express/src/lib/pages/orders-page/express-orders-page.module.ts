@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { CountryInputModule, CountrySelectorModule } from '@sneat/components';
 import { ContactInputModule } from '@sneat/extensions/contactus';
 import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
-import { FreightOrdersServiceModule } from '../../services/freight-orders.service';
+import { ExpressOrderServiceModule } from '../../services/express-order.service';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';
 import { ExpressOrdersPageComponent } from './express-orders-page.component';
 import { OrdersFilterComponent } from './orders-filter/orders-filter.component';
@@ -26,7 +26,7 @@ const routes: Routes = [
 		FormsModule,
 		OrdersListModule,
 		OrdersGridModule,
-		FreightOrdersServiceModule,
+		ExpressOrderServiceModule,
 		ContactInputModule,
 		CountrySelectorModule,
 		CountryInputModule,

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { DialogComponent } from './dialog.component';
+import { DispatchersComponent } from './dispatchers.component';
 
 @NgModule({
 	imports: [
@@ -9,11 +9,12 @@ import { DialogComponent } from './dialog.component';
 		IonicModule,
 	],
 	declarations: [
-		DialogComponent,
+		DispatchersComponent,
 	],
 	exports: [
-		DialogComponent,
-	],
+		DispatchersComponent,
+	]
 })
-export class DialogModule {
+export class DispatchersModule {
+
 }

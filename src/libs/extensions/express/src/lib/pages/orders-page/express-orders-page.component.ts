@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, takeUntil } from 'rxjs';
-import { FreightOrdersService } from '../../services/freight-orders.service';
+import { ExpressOrderService } from '../../services/express-order.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IExpressOrderContext } from '../../dto/order-dto';
 import { IOrdersFilter } from '../../services/orders-filter';
@@ -20,7 +20,7 @@ export class ExpressOrdersPageComponent extends TeamBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly ordersService: FreightOrdersService,
+		private readonly ordersService: ExpressOrderService,
 	) {
 		super('OrdersPageComponent', route, teamParams);
 	}

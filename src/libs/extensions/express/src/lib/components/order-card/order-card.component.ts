@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ContactRoleExpress } from '@sneat/dto';
+import { ExpressOrderContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext } from '../../dto/order-dto';
@@ -16,7 +16,7 @@ export class OrderCardComponent {
 	@Input() team?: ITeamContext;
 	@Input() order?: IExpressOrderContext;
 	@Input() hideDispatchers = false;
-	readonly roles: ContactRoleExpress[] = ['buyer', 'consignee', 'agent', 'carrier', 'shipper'];
+	readonly roles: ExpressOrderContactRole[] = ['buyer', 'consignee', 'agent', 'carrier', 'shipper'];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

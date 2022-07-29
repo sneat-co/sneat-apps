@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CountryEmoji, CountryTitle } from './country-emoji.pipe';
+import { CountryFlagPipe, CountryTitle } from './country-emoji.pipe';
 import { GenderColorPipe, GenderEmojiPipe, GenderIconNamePipe } from './gender.pipes';
 import { LongMonthNamePipe } from './long-month-name.pipe';
 import { MemberTitle } from './member-title.pipe';
@@ -20,7 +20,7 @@ const pipes: any[] = [
 	GenderEmojiPipe,
 	GenderColorPipe,
 	SelectedMembersPipe,
-	CountryEmoji,
+	CountryFlagPipe,
 	CountryTitle,
 ];
 

@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-	selector: 'sneat-dialog',
-	templateUrl: './dialog.component.html',
+	selector: 'sneat-dialog-header',
+	templateUrl: './dialog-header.component.html',
 })
-export class DialogComponent {
+export class DialogHeaderComponent {
 	@Input() dialogTitle = 'Dialog'; // Do not use just `title` as it conflicts with the HTML attribute.
 
 	constructor(

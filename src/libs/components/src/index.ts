@@ -14,7 +14,7 @@ export * from './lib/selector/select-from-list';
 
 export * from './lib/copyright';
 
-export * from './lib/dialog';
+export * from './lib/dialog-header';
 
 export * from './lib/members-as-badges';
 export * from './lib/focus';

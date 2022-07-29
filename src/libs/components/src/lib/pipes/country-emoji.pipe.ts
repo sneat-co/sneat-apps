@@ -8,8 +8,8 @@ export function countryEmoji(countryID?: string): string {
 	return '';
 }
 
-@Pipe({ name: 'countryEmoji' })
-export class CountryEmoji implements PipeTransform {
+@Pipe({ name: 'countryFlag' })
+export class CountryFlagPipe implements PipeTransform {
 	transform(countryID?: string): string {
 		return countryEmoji(countryID);
 	}

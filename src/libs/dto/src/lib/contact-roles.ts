@@ -18,12 +18,12 @@ export type ContactRoleKidRelated = ContactRoleFriend | 'teacher' | 'babysitter'
 export type ContactRoleShip = 'ship';
 export type ContactRoleExpressSubContact = ContactRoleShip | ContactRoleLocation;
 export type ContactRoleExpressParentContact = 'shipper' | 'dispatcher';
-export type ContactRoleExpress =
+export type ExpressOrderContactRole =
 	ContactRoleExpressParentContact
 	| ContactRoleExpressSubContact
 	| 'consignee'
 	| 'notify'
-	| 'dispatch-location'
+	| 'dispatch-point'
 	| 'agent'
 	| 'buyer'
 	| 'courier'
@@ -37,5 +37,5 @@ export type ContactRole =
 	ContactRoleMedRelated |
 	ContactRoleDwellingRelated |
 	ContactRoleVehicle |
-	ContactRoleExpress |
+	ExpressOrderContactRole |
 	'applicant';

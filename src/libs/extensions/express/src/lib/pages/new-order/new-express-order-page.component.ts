@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContactRoleExpress } from '@sneat/dto';
+import { ExpressOrderContactRole } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, NEVER, switchMap, takeUntil } from 'rxjs';
 import {
 	CounterpartyRole,
 	ExpressTeamService,
-	FreightOrdersService,
+	ExpressOrderService,
 	IOrderCounterparty,
 	IOrderShippingPointCounterparty,
 } from '../..';
@@ -39,7 +39,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly freightOrdersService: FreightOrdersService,
+		private readonly freightOrdersService: ExpressOrderService,
 		private readonly expressTeamService: ExpressTeamService,
 		private readonly contactService: ContactService,
 	) {
@@ -134,7 +134,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			return;
 		}
 
-		if (!this.order?.dto?.counterparties?.some(c => c.role === 'location')) {
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'dispatcher')) {
 			alert('At least 1 dispatcher is required');
 			return;
 		}

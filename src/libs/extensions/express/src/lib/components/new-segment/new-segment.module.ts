@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { DialogModule } from '@sneat/components';
+import { DialogHeaderModule } from '@sneat/components';
 import { ContactInputModule } from '@sneat/extensions/contactus';
 import { OrderFormModule } from '../order-form.module';
 import { NewSegmentComponent } from './new-segment.component';
@@ -12,7 +12,7 @@ import { NewSegmentService } from './new-segment.service';
 	imports: [
 		CommonModule,
 		IonicModule,
-		DialogModule,
+		DialogHeaderModule,
 		ContactInputModule,
 		FormsModule,
 		OrderFormModule,
@@ -28,5 +28,4 @@ import { NewSegmentService } from './new-segment.service';
 	]
 })
 export class NewSegmentModule {
-
 }

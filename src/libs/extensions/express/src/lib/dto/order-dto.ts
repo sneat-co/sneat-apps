@@ -1,5 +1,5 @@
 import { INavContext } from '@sneat/core';
-import { ContactRoleExpress, IAddress } from '@sneat/dto';
+import { ExpressOrderContactRole, IAddress } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { CounterpartyRole } from './express-team-dto';

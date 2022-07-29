@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { DialogModule, SelectFromListModule } from '@sneat/components';
+import { DialogHeaderModule, SelectFromListModule } from '@sneat/components';
 import { NewContainerComponent } from '../new-container/new-container.component';
 import {
 	ShippingPointsSelectorModule
@@ -18,7 +18,7 @@ import { OrderContainersComponent } from './order-containers.component';
     SelectFromListModule,
     ReactiveFormsModule,
     ShippingPointsSelectorModule,
-    DialogModule,
+		DialogHeaderModule,
   ],
 	declarations: [
 		ContainerFormComponent,
