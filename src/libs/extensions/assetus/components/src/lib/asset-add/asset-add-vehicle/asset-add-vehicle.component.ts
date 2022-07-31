@@ -56,8 +56,8 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 
 	readonly id = (i: number, v: { id: string }) => v.id;
 
-	formatDate(value?: string | null): string {
-		return value ? format(parseISO(value), 'dd MMMM yyyy') : '';
+	formatDate(value?: string | string[] | null): string {
+		return value && !Array.isArray(value) ? format(parseISO(value), 'dd MMMM yyyy') : '';
 	}
 
 	makeChanged(event: Event): void {
