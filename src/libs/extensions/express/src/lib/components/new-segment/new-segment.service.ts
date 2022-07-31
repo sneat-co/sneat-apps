@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IExpressOrderContext, IOrderContainer } from '@sneat/extensions/express';
+import { IExpressOrderContext, IOrderContainer } from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NewSegmentComponent } from './new-segment.component';
 

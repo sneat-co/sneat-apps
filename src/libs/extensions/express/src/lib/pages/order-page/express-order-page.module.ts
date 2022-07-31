@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { DispatchersModule } from '@sneat/extensions/express';
+import { DispatchersModule } from '../../components/dispatchers';
 import { NewSegmentModule } from '../../components/new-segment';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
