@@ -15,6 +15,7 @@ export class LocationFormComponent implements OnChanges {
 
 	@Input() team?: ITeamContext;
 	@Input() contactRole?: ContactRole;
+	@Input() countryID = '';
 	@Input() contact?: IContactContext;
 	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
@@ -28,7 +29,6 @@ export class LocationFormComponent implements OnChanges {
 
 	isCreating = false;
 
-	countryID = '';
 	title = '';
 	addressText = '';
 

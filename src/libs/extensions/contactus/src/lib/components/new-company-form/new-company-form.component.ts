@@ -17,6 +17,7 @@ export class NewCompanyFormComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
+	@Input() parentContact?: IContactContext;
 
 	@Output() contactCreated = new EventEmitter<IContactContext>();
 

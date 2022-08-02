@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ISelectItem, SelectorBaseComponent } from '@sneat/components';
+import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief, IContactContext, ITeamContext } from '@sneat/team/models';
@@ -142,7 +142,7 @@ export class ContactSelectorComponent
 
 	private readonly getParentItem = (c: IContactContext): ISelectItem => ({
 		id: c.id,
-		title: c.brief?.title || c.id,
+		title: `${countryFlagEmoji(c.brief?.countryID)} ${c.brief?.title || c.id}`,
 		iconName: this.parentIcon,
 	});
 

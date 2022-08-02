@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { countriesByID } from '../country-selector';
 
-export function countryEmoji(countryID?: string): string {
+export function countryFlagEmoji(countryID?: string): string {
 	if (countryID) {
 		return countriesByID[countryID].emoji || countryID;
 	}
@@ -11,7 +11,7 @@ export function countryEmoji(countryID?: string): string {
 @Pipe({ name: 'countryFlag' })
 export class CountryFlagPipe implements PipeTransform {
 	transform(countryID?: string): string {
-		return countryEmoji(countryID);
+		return countryFlagEmoji(countryID);
 	}
 }
 
