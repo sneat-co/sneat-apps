@@ -15,9 +15,6 @@
 <!--	></ion-input>-->
 <!--</ion-item>-->
 <ng-container *ngIf="!value">
-	<ion-item-divider color="light" *ngIf="!isFilterable">
-		<ion-label color="medium">{{label}}</ion-label>
-	</ion-item-divider>
 	<ion-item *ngIf="isFilterable" class="sneat-tiny-end-padding">
 		<ion-label *ngIf="filterLabel" color="medium">{{filterLabel}}</ion-label>
 		<ion-input [(ngModel)]="filter" placeholder="filter" (ionChange)="onFilterChanged($event)"></ion-input>

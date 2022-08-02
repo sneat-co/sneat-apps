@@ -21,8 +21,8 @@
 
 <div class="ion-padding-horizontal ion-margin-bottom">
 	<ion-button (click)="create()" [disabled]="isCreating || !formIsValid">
-		<ion-label *ngIf="isCreating">Create company</ion-label>
-		<ion-label *ngIf="!isCreating">Creating company...</ion-label>
+		<ion-label *ngIf="!isCreating">Create company</ion-label>
+		<ion-label *ngIf="isCreating">Creating company...</ion-label>
 		<ion-spinner name="lines-small" slot="end" *ngIf="isCreating"></ion-spinner>
 	</ion-button>
 </div>
