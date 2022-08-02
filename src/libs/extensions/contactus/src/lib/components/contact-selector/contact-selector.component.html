@@ -24,11 +24,12 @@
 				<sneat-select-from-list *ngIf="parentTab === 'existing'"
 																[label]="(selectedParent ? parentRole  : '')|titlecase"
 																[items]="parentItems"
-																[(ngModel)]="selectedContactID"
+																[(ngModel)]="parentContactID"
 																(ngModelChange)="onParentContactIDChanged($event)"
 																[isFilterable]="true"
 																radioSlot="end"
 				></sneat-select-from-list>
+
 				<sneat-new-company-form *ngIf="parentTab === 'new'"
 																[team]="team"
 																[contactRoles]="contactRoles"
@@ -79,7 +80,7 @@
 														 contactType="location"
 														 [contactRole]="contactRole"
 														 [team]="team"
-														 [parentContact]="selectedContact"
+														 [parentContact]="selectedParent"
 														 (contactCreated)="onLocationCreated($event)"
 				></sneat-location-form>
 				<sneat-new-company-form *ngSwitchCase="'company'"

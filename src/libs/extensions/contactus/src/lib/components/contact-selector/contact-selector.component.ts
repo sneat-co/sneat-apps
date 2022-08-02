@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { contactContextFromBrief, IContactContext, ITeamContext } from '@sneat/team/models';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { Subject, Subscription } from 'rxjs';
 import { ContactService } from '../../services';
 import { IContactSelectorOptions } from './contact-selector.service';
 
@@ -53,9 +53,8 @@ export class ContactSelectorComponent
 
 	protected selectedParent?: IContactContext;
 	protected selectedContact?: IContactContext;
-	protected newLocationContact?: IContactContext;
 
-	protected selectedContactID?: string;
+	protected parentContactID?: string;
 	protected selectedSubContactID?: string;
 	private readonly items$ = new Subject<IContactContext[]>;
 	public readonly items = this.items$.asObservable();
@@ -116,11 +115,7 @@ export class ContactSelectorComponent
 			this.contacts = contacts;
 			this.contactItems = contacts
 				.filter(c => !this?.excludeContacts?.some(ec => ec.id === c.id))
-				.map(c => ({
-					id: c.id,
-					title: c.brief?.title || c.id,
-					iconName: this.parentIcon,
-				}));
+				.map(this.getChildItem);
 			console.log('contactItems', this.contactItems);
 		});
 	}
@@ -146,11 +141,17 @@ export class ContactSelectorComponent
 		iconName: this.parentIcon,
 	});
 
+	private readonly getChildItem = (c: IContactContext): ISelectItem => ({
+		id: c.id,
+		title: `${countryFlagEmoji(c.brief?.countryID)} ${c.brief?.title || c.id}`,
+		iconName: this.contactIcon,
+	});
+
 	protected onLocationCreated(contact: IContactContext): void {
-		contact = {
-			...contact,
-			parentContact: this.selectedContact,
-		};
+		// contact = {
+		// 	...contact,
+		// 	parentContact: this.selectedParent,
+		// };
 		this.emitOnSelected(contact);
 		this.close(undefined);
 	}
@@ -167,15 +168,20 @@ export class ContactSelectorComponent
 	}
 
 	protected onContactCreated(contact: IContactContext): void {
+		// contact = {
+		// 	...contact,
+		// 	parentContact: this.selectedContact,
+		// };
 		this.selectedContact = contact;
 		this.emitOnSelected(contact);
 	}
 
 
 	private onParentContactChanged(contact?: IContactContext): void {
+		console.log('onParentContactChanged()', contact);
 		this.parentTab = 'existing';
 		this.selectedParent = contact;
-		this.selectedContactID = contact?.id;
+		this.parentContactID = contact?.id;
 		const relatedContacts = this.selectedParent?.dto?.relatedContacts;
 		this.contacts = relatedContacts?.map(brief => ({
 			id: brief.id,
@@ -237,7 +243,7 @@ export class ContactSelectorComponent
 	// }
 
 	protected emitOnSelected(contact?: IContactContext): void {
-		console.log('emitOnSelected()', contact);
+		console.log('ContactSelectorComponent.emitOnSelected()', contact);
 		if (this.onSelected) {
 			this.onSelected(contact ? [contact] : null);
 		} else {

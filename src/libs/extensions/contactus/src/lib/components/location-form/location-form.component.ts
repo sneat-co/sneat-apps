@@ -79,13 +79,18 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	private readonly onContactCreated = (contact: IContactContext): void => {
-		console.log('onContactCreated', contact);
+		contact = {
+			...contact,
+			parentContact: this.parentContact,
+		};
+		console.log('LocationFormComponent.onContactCreated()', contact);
 		this.contact = contact;
 		this.emitContactChange();
 		this.contactCreated.emit(this.contact);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('LocationFormComponent.ngOnChanges()', changes);
 		if (changes['contactType']) {
 			if (!this.contact?.dto && this.contactType && this.team) {
 				this.contact = {

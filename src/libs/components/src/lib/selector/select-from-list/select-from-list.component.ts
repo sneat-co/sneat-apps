@@ -64,7 +64,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 
 	private applyFilter(): void {
 		const f = this.filter.trim().toLowerCase();
-		console.log('applyFilter', f);
+		// console.log('SelectFromListComponent.applyFilter', f);
 		this.displayItems = f ? this.items?.filter(v => v.title.toLowerCase().includes(f)) : this.items;
 		this.hiddenCount = (this.items?.length || 0) - (this.displayItems?.length || 0);
 	}
@@ -75,7 +75,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 	}
 
 	onSelectChanged(event: Event): void {
-		console.log('onSelectChanged', event);
+		console.log('SelectFromListComponent.onSelectChanged()', event);
 		// this.value = (event as CustomEvent).detail['value'] as string;
 		this.onChange(this.value);
 	}
@@ -106,6 +106,11 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 
 	clearFilter(): void {
 		this.filter = '';
+	}
+
+	deselect(): void {
+		this.value = '';
+		this.onChange(this.value);
 	}
 
 	ngOnDestroy(): void {

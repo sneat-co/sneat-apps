@@ -1,4 +1,4 @@
-<ion-item *ngIf="value">
+<ion-item *ngIf="value" class="sneat-no-end-padding">
 	<ion-label color="medium">{{label}}</ion-label>
 	<ion-select *ngIf="value" interface="popover" [(ngModel)]="value" (ionChange)="onSelectChanged($event)">
 		<ion-select-option *ngFor="let item of items" [value]="item.id">
@@ -7,6 +7,11 @@
 		</ion-select-option>
 		<ion-select-option value="other">OTHER</ion-select-option>
 	</ion-select>
+	<ion-buttons slot="end">
+		<ion-button color="medium" title="Deselect" (click)="deselect()">
+			<ion-icon name="close-outline"></ion-icon>
+		</ion-button>
+	</ion-buttons>
 </ion-item>
 <!--<ion-item *ngIf="isFilterable && !value">-->
 <!--	<ion-input-->
