@@ -180,7 +180,7 @@ export interface IAddContainersRequest extends IExpressOrderRequest {
 
 export interface ISegmentEndpoint {
 	readonly contactID: string;
-	readonly counterpartyRole: string;
+	readonly counterpartyRole: CounterpartyRole;
 }
 
 export interface ISegmentContactIDs {

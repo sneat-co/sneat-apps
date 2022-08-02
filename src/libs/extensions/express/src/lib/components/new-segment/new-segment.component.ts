@@ -135,16 +135,16 @@ export class NewSegmentComponent implements OnInit {
 			containers: this.containers.map(c => ({ id: c.id })),
 			from: {
 				contactID: this.fromContact.id,
-				counterpartyRole: this.from === 'port' ? 'port' : 'dispatcher',
+				counterpartyRole: this.from === 'port' ? 'port_from' : 'dispatch-point',
 			},
 			to: {
 				contactID: this.toContact.id,
-				counterpartyRole: this.to === 'port' ? 'port' : 'dispatcher',
+				counterpartyRole: this.to === 'port' ? 'port_to' : 'dispatch-point',
 			},
 			by: this.byContact?.id
 				? {
 					contactID: this.byContact.id,
-					counterpartyRole: 'tracker',
+					counterpartyRole: 'trucker',
 				}
 				: undefined,
 		};
@@ -159,11 +159,14 @@ export class NewSegmentComponent implements OnInit {
 	protected switchFromWithTo(): void {
 		const from = this.from, to = this.to;
 		const fromContact = this.fromContact, toContact = this.toContact;
+		const fromDate = this.fromDate, toDate = this.toDate;
 		this.from = to;
 		this.to = from;
 		setTimeout(() => {
 			this.fromContact = toContact;
 			this.toContact = fromContact;
+			this.fromDate = toDate;
+			this.toDate = fromDate;
 		}, 10);
 	}
 
