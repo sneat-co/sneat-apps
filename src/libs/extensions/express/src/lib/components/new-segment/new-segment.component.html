@@ -47,29 +47,15 @@
 
 	</ion-card>
 
-	<ion-card>
-		<ion-item-divider color="light">
-			<ion-label slot="start">From</ion-label>
-			<ion-segment [(ngModel)]="from" (ionChange)="onFromChanged($event)">
-				<ion-segment-button value="port">Port</ion-segment-button>
-				<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
-			</ion-segment>
-		</ion-item-divider>
-		<sneat-contact-input
-			[label]="from|titlecase"
-			[team]="order?.team"
-			[contactType]="from === 'port' ? 'company' : 'location'"
-			[contactRole]="from === 'port' ? 'port' : 'location'"
-			[contact]="fromContact"
-			[parentRole]="from === 'port' ? undefined : 'dispatcher'"
-			[readonly]="readonly"
-			(contactChange)="onContactChanged('from', $event)"
-		></sneat-contact-input>
-		<ion-item>
-			<ion-label color="medium">On</ion-label>
-			<ion-input type="date" [(ngModel)]="fromDate"></ion-input>
-		</ion-item>
-	</ion-card>
+	<sneat-segment-counterparty
+		[endpointDirection]="'from'"
+		[readonly]="readonly"
+		[order]="order"
+		[contact]="fromContact"
+		[(date)]="fromDate"
+		[(endpointType)]="from"
+		(endpointTypeChange)="onFromChanged($event)"
+	></sneat-segment-counterparty>
 
 	<div style="text-align: center">
 		<ion-button fill="clear" color="medium" (click)="switchFromWithTo()">
@@ -79,28 +65,38 @@
 		</ion-button>
 	</div>
 
-	<ion-card>
-		<ion-item-divider color="light">
-			<ion-label slot="start">To</ion-label>
-			<ion-segment [(ngModel)]="to" (ionChange)="onToChanged()">
-				<ion-segment-button value="port">Port</ion-segment-button>
-				<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
-			</ion-segment>
-		</ion-item-divider>
-		<sneat-contact-input
-			[label]="to|titlecase"
-			[team]="order?.team"
-			[contactRole]="to"
-			[parentRole]="to === 'dispatcher' ? 'dispatcher' : undefined"
-			[(contact)]="toContact"
-			[readonly]="readonly"
-			(contactChange)="onContactChanged('to', $event)"
-		></sneat-contact-input>
-		<ion-item>
-			<ion-label color="medium">On</ion-label>
-			<ion-input type="date" [(ngModel)]="toDate"></ion-input>
-		</ion-item>
-	</ion-card>
+	<sneat-segment-counterparty
+		[endpointDirection]="'to'"
+		[readonly]="readonly"
+		[order]="order"
+		[contact]="toContact"
+		[(date)]="toDate"
+		[(endpointType)]="to"
+		(endpointTypeChange)="onToChanged($event)"
+	></sneat-segment-counterparty>
+
+<!--	<ion-card>-->
+<!--		<ion-item-divider color="light">-->
+<!--			<ion-label slot="start">To</ion-label>-->
+<!--			<ion-segment [(ngModel)]="to" (ionChange)="onToChanged()">-->
+<!--				<ion-segment-button value="port">Port</ion-segment-button>-->
+<!--				<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>-->
+<!--			</ion-segment>-->
+<!--		</ion-item-divider>-->
+<!--		<sneat-contact-input-->
+<!--			[label]="to|titlecase"-->
+<!--			[team]="order?.team"-->
+<!--			[contactRole]="to"-->
+<!--			[parentRole]="to === 'dispatcher' ? 'dispatcher' : undefined"-->
+<!--			[(contact)]="toContact"-->
+<!--			[readonly]="readonly"-->
+<!--			(contactChange)="onContactChanged('to', $event)"-->
+<!--		></sneat-contact-input>-->
+<!--		<ion-item>-->
+<!--			<ion-label color="medium">On</ion-label>-->
+<!--			<ion-input type="date" [(ngModel)]="toDate"></ion-input>-->
+<!--		</ion-item>-->
+<!--	</ion-card>-->
 
 	<ion-card *ngIf="!container">
 		<ion-item-divider color="light">
@@ -118,9 +114,9 @@
 		</ion-item>
 	</ion-card>
 
+	<div class="ion-padding">
+		<ion-button (click)="submitAddSegment($event)">Add segment</ion-button>
+		<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="close()">Cancel</ion-button>
+	</div>
 </ion-content>
 
-<ion-footer class="ion-padding">
-	<ion-button (click)="submitAddSegment($event)">Add segment</ion-button>
-	<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="close()">Cancel</ion-button>
-</ion-footer>

@@ -21,6 +21,7 @@ export class NewSegmentService {
 		const modal = await this.modalController.create({
 			component: NewSegmentComponent,
 			componentProps,
+			cssClass: 'sneat-tall-modal',
 		});
 		await modal.present();
 	}

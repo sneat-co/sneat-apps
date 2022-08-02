@@ -7,6 +7,7 @@ import { ContactInputModule } from '@sneat/extensions/contactus';
 import { OrderFormModule } from '../order-form.module';
 import { NewSegmentComponent } from './new-segment.component';
 import { NewSegmentService } from './new-segment.service';
+import { SegmentCounterpartyComponent } from './segment-counterparty.component';
 
 @NgModule({
 	imports: [
@@ -19,6 +20,7 @@ import { NewSegmentService } from './new-segment.service';
 	],
 	declarations: [
 		NewSegmentComponent,
+		SegmentCounterpartyComponent,
 	],
 	exports: [
 		NewSegmentComponent,

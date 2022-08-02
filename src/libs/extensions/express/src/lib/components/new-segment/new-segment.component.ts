@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
 import { ExpressOrderService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
+import { SegmentEndpointType } from './segment-counterparty.component';
 
 interface IContainer extends IOrderContainer {
 	checked: boolean;
@@ -26,8 +27,8 @@ export class NewSegmentComponent implements OnInit {
 	from: 'port' | 'dispatcher' = 'port';
 	to: 'port' | 'dispatcher' = 'dispatcher';
 
-	fromDate?: string;
-	toDate?: string;
+	fromDate = '';
+	toDate = '';
 
 	containers?: IContainer[];
 
@@ -48,20 +49,16 @@ export class NewSegmentComponent implements OnInit {
 			.catch(this.errorLogger.logErrorHandler('failed to close NewSegmentComponent'));
 	}
 
-	onFromChanged(event: Event): void {
-		console.log('NewSegmentComponent.onFromChanged()', event, this.from);
-		const ce = event as CustomEvent;
-		if (!ce.detail.value) { // A workaround for what looks like a bug in the ion-segment component
-			return;
-		}
+	onFromChanged(endpointType: SegmentEndpointType): void {
+		console.log('NewSegmentComponent.onFromChanged()', endpointType, this.from);
 		if (this.from === 'port' && this.to === 'port') {
 			this.to = 'dispatcher';
 		}
 		this.fromContact = undefined;
 	}
 
-	onToChanged(): void {
-		console.log('NewSegmentComponent.onToChanged()', this.to);
+	onToChanged(endpointType: SegmentEndpointType): void {
+		console.log('NewSegmentComponent.onToChanged()', endpointType, this.to);
 		if (this.to === 'port' && this.from === 'port') {
 			this.from = 'dispatcher';
 		}
