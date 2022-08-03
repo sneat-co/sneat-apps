@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/ui/**/*.ts", "libs/ui/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

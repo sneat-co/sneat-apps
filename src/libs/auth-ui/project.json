@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/auth-ui/**/*.ts", "libs/auth-ui/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/datagrid/**/*.ts", "libs/datagrid/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

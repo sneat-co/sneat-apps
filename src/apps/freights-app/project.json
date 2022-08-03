@@ -93,6 +93,5 @@
 				"passWithNoTests": true
 			}
 		}
-	},
-	"tags": []
+	}
 }

@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/wizard/**/*.ts", "libs/wizard/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

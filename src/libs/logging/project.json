@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/logging/**/*.ts", "libs/logging/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/meeting/**/*.ts", "libs/meeting/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/auth/**/*.ts", "libs/auth/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

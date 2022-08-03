@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/api/**/*.ts", "libs/api/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

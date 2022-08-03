@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/timer/**/*.ts", "libs/timer/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

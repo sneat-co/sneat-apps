@@ -33,6 +33,5 @@
 				"lintFilePatterns": ["libs/grid/**/*.ts", "libs/grid/**/*.html"]
 			}
 		}
-	},
-	"tags": []
+	}
 }
