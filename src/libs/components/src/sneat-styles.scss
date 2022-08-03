@@ -143,3 +143,10 @@ ion-item.ion-item-no-border {
   --border-width: 0;
 }
 
+.canceled {
+  text-decoration: line-through;
+}
+
+.deleting-list-item {
+  text-decoration: line-through;
+}

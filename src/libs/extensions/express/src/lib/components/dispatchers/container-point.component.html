@@ -21,7 +21,8 @@
 
 	<ion-item>
 		<ion-label color="medium">Delivered to by</ion-label>
-		<ion-input readonly="" [value]="truckerTo?.title"></ion-input>
+		<ion-input *ngIf="truckerTo" readonly [value]="truckerTo.title"></ion-input>
+		<ion-input *ngIf="!truckerTo" color="danger" readonly value="not assigned yet"></ion-input>
 
 		<ion-label color="medium">Arrives</ion-label>
 		<ion-input type="date" [(ngModel)]="arrivesOn"></ion-input>
@@ -29,7 +30,7 @@
 
 	<ion-item>
 		<ion-label color="medium">Retrieved from by</ion-label>
-		<ion-input *ngIf="truckerFrom" readonly [value]="truckerFrom?.title"></ion-input>
+		<ion-input *ngIf="truckerFrom" readonly [value]="truckerFrom.title"></ion-input>
 		<ion-input *ngIf="!truckerFrom" color="danger" readonly value="not assigned yet"></ion-input>
 
 		<ion-label color="medium">Leaves On</ion-label>

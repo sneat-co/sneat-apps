@@ -1,7 +1,13 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ExpressOrderService, IAddOrderShippingPointRequest, IExpressOrderContext, IOrderCounterparty } from '../..';
+import {
+	ExpressOrderService,
+	IAddOrderShippingPointRequest,
+	IDeleteCounterpartyRequest,
+	IExpressOrderContext,
+	IOrderCounterparty,
+} from '../..';
 
 @Component({
 	selector: 'sneat-order-dispatcher',
@@ -15,6 +21,8 @@ export class DispatcherComponent implements OnChanges {
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
 	locations?: IOrderCounterparty[];
+
+	deleting = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -96,5 +104,27 @@ export class DispatcherComponent implements OnChanges {
 				});
 			})
 			.catch(this.errorLogger.logErrorHandler('failed to open contact selector'));
+	}
+
+	deleteDispatcher(): void {
+		if (!this.order || !this.counterparty) {
+			return;
+		}
+		const request: IDeleteCounterpartyRequest = {
+			teamID: this.order?.team?.id,
+			orderID: this.order.id,
+			contactID: this.counterparty?.contactID,
+			role: 'dispatcher',
+		}
+		this.deleting = true;
+		this.ordersService.deleteCounterparty(request).subscribe({
+			next: () => {
+				console.log('deleted dispatcher');
+			},
+			error: err => {
+				this.errorLogger.logError(err, 'Failed to delete dispatcher');
+				this.deleting = false;
+			}
+		})
 	}
 }

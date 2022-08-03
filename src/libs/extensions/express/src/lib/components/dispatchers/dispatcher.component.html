@@ -1,6 +1,6 @@
 <ion-card >
 	<ion-item class="sneat-no-end-padding">
-		<ion-label style="font-weight: bold">
+		<ion-label style="font-weight: bold" [class.deleting-list-item]="deleting">
 			{{counterparty?.countryID|countryFlag}}
 			{{counterparty?.title}}
 		</ion-label>
@@ -9,13 +9,20 @@
 				<ion-icon name="add-outline" slot="start"></ion-icon>
 				<ion-label>Add dispatch point</ion-label>
 			</ion-button>
-			<ion-button color="medium" title="Remove dispatcher & all dispatching points">
-				<ion-icon name="close-outline"></ion-icon>
+			<ion-button color="medium"
+									[disabled]="deleting"
+									title="Remove dispatcher & all dispatching points"
+									(click)="deleteDispatcher()">
+				<ion-icon name="close-outline" *ngIf="!deleting"></ion-icon>
+				<ion-label *ngIf="deleting">deleting...</ion-label>
+				<ion-spinner name="lines-small" slot="start" *ngIf="deleting"></ion-spinner>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 	<sneat-dispatch-point *ngFor="let location of locations"
 												[dispatchPoint]="location"
+												[disabled]="deleting"
+												[deleting]="deleting"
 												[order]="order"
 	></sneat-dispatch-point>
 </ion-card>

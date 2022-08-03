@@ -1,7 +1,12 @@
 <ion-card>
 	<ion-item *ngIf="segment" color="light">
-		<ion-label>From: {{from?.title}}</ion-label>
-		<ion-label>To: {{to?.title}}</ion-label>
+
+		<ion-label color="medium">From</ion-label>
+		<ion-input readonly [value]="from?.title"></ion-input>
+
+		<ion-label color="medium">To</ion-label>
+		<ion-input readonly [value]="to?.title"></ion-input>
+
 		<ion-buttons slot="end">
 			<ion-button  color="medium" (click)="assignSegmentsToTransporter()">
 				<ion-label *ngIf="!trucker">Assign</ion-label>

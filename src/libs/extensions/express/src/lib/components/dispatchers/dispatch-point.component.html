@@ -1,12 +1,12 @@
 <ion-card>
 	<ion-item color="light" class="sneat-no-end-padding">
-		<ion-label>
+		<ion-label [class.deleting-list-item]="deleting">
 			<ion-text color="medium">At:</ion-text>
 			{{dispatchPoint?.title}} -
 			<ion-text color="medium">{{shippingPoint?.status}}</ion-text>
 		</ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="medium" title="Remove dispatching point">
+			<ion-button [disabled]="disabled || deleting" color="medium" title="Remove dispatching point" (click)="deletePoint()">
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>

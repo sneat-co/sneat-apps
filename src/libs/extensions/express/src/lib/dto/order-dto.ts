@@ -205,6 +205,10 @@ export interface IContainerRequest extends IExpressOrderRequest {
 	readonly containerID: string;
 }
 
+export interface IOrderShippingPointRequest extends IExpressOrderRequest {
+	readonly shippingPointID: string;
+}
+
 export interface IDeleteCounterpartyRequest extends IExpressOrderRequest, IContactRequest {
 	readonly role: string;
 }

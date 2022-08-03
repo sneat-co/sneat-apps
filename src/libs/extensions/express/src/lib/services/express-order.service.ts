@@ -5,14 +5,19 @@ import { ITeamContext } from '@sneat/team/models';
 import { map, Observable } from 'rxjs';
 import {
 	IAddContainersRequest,
-	IContainerRequest, IDeleteCounterpartyRequest,
+	IContainerRequest,
+	IDeleteCounterpartyRequest,
 	ICreateExpressOrderRequest,
 	ICreateFreightOrderResponse,
 	IExpressOrderContext,
 	IExpressOrderDto,
 	IFreightOrderBrief,
 	IOrderShippingPointCounterparty,
-	ISetOrderCounterpartyRequest, IAddOrderShippingPointRequest, IOrderCounterparty, IAddSegmentsRequest,
+	ISetOrderCounterpartyRequest,
+	IAddOrderShippingPointRequest,
+	IOrderCounterparty,
+	IAddSegmentsRequest,
+	IOrderShippingPointRequest,
 } from '../dto/order-dto';
 import { IOrdersFilter } from './orders-filter';
 
@@ -130,6 +135,10 @@ export class ExpressOrderService {
 
 	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {
 		return this.sneatApiService.delete('express/order/delete_order_counterparty', undefined, request);
+	}
+
+	deleteShippingPoint(request: IOrderShippingPointRequest): Observable<void> {
+		return this.sneatApiService.delete('express/order/delete_shipping_point', undefined, request);
 	}
 }
 
