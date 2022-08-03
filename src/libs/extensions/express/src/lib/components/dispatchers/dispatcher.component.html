@@ -1,6 +1,9 @@
 <ion-card >
 	<ion-item class="sneat-no-end-padding">
-		<ion-label style="font-weight: bold">{{counterparty?.title}}</ion-label>
+		<ion-label style="font-weight: bold">
+			{{counterparty?.countryID|countryFlag}}
+			{{counterparty?.title}}
+		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="medium" (click)="addDispatchPoint($event)">
 				<ion-icon name="add-outline" slot="start"></ion-icon>

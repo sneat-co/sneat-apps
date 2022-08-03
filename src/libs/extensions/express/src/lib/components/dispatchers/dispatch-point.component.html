@@ -1,19 +1,46 @@
-<ion-item-group >
+<ion-card>
 	<ion-item color="light" class="sneat-no-end-padding">
 		<ion-label>
 			<ion-text color="medium">At:</ion-text>
-			{{dispatchPoint?.title}}
+			{{dispatchPoint?.title}} -
+			<ion-text color="medium">{{shippingPoint?.status}}</ion-text>
 		</ion-label>
 		<ion-buttons slot="end">
-			<ion-button title="Remove dispatching point">
+			<ion-button color="medium" title="Remove dispatching point">
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item-divider *ngIf="segments && !segments.length">
-		<ion-label>No container have been assigned to this dispatch point yet.</ion-label>
-	</ion-item-divider>
-	<ion-item *ngFor="let segment of segments">
-		{{segment|json}}
-	</ion-item>
-</ion-item-group>
+	<ion-grid>
+		<ion-row>
+			<ion-col size="4">
+				<ion-item *ngIf="shippingPoint?.location?.address">
+					<ion-label color="medium" position="stacked">
+						Address {{shippingPoint?.location?.address?.countryID|countryFlag}}</ion-label>
+					<ion-textarea [value]="shippingPoint?.location?.address?.lines?.join('\n')"></ion-textarea>
+				</ion-item>
+			</ion-col>
+			<ion-col size="8">
+				<ion-item-divider>
+					<ion-label>Containers</ion-label>
+				</ion-item-divider>
+				<sneat-container-point *ngFor="let container of containers"
+															 [order]="order"
+															 [shippingPoint]="shippingPoint"
+															 [container]="container">
+				</sneat-container-point>
+
+				<ion-item-divider *ngIf="segments && !segments.length">
+					<ion-label>No container have been assigned to this dispatch point yet.</ion-label>
+				</ion-item-divider>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<!--	<ion-item>-->
+	<!--		{{shippingPoint|json}}-->
+	<!--	</ion-item>-->
+
+	<!--	<ion-item *ngFor="let segment of segments">-->
+	<!--		{{segment|json}}-->
+	<!--	</ion-item>-->
+</ion-card>

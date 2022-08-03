@@ -53,6 +53,7 @@ export interface IOrderShippingPointLocation {
 	readonly contactID: string;
 	readonly countryID: string;
 	readonly title: string;
+	readonly address?: IAddress;
 }
 
 export interface IOrderShippingPointCounterparty {

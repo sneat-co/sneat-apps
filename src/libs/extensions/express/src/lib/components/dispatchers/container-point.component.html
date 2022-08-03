@@ -1,0 +1,38 @@
+<ion-card class="ion-no-margin ion-margin-top">
+
+	<ion-item color="light" class="sneat-no-end-padding">
+		<ion-label color="medium">{{container?.type}} #</ion-label>
+		<ion-input readonly [value]="container?.number"></ion-input>
+		<ion-buttons slot="end">
+			<ion-button color="medium" title="Remove container from dispatch point">
+				<ion-icon name="close-outline"></ion-icon>
+<!--				<ion-label>Remove</ion-label>-->
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+
+	<ion-item>
+		<ion-label color="medium">Pallets to pick</ion-label>
+		<ion-input type="number" [(ngModel)]="numberOfPallets"></ion-input>
+
+		<ion-label color="medium">Gross (kg)</ion-label>
+		<ion-input type="number" [(ngModel)]="grossKg"></ion-input>
+	</ion-item>
+
+	<ion-item>
+		<ion-label color="medium">Delivered to by</ion-label>
+		<ion-input readonly="" [value]="truckerTo?.title"></ion-input>
+
+		<ion-label color="medium">Arrives</ion-label>
+		<ion-input type="date" [(ngModel)]="arrivesOn"></ion-input>
+	</ion-item>
+
+	<ion-item>
+		<ion-label color="medium">Retrieved from by</ion-label>
+		<ion-input *ngIf="truckerFrom" readonly [value]="truckerFrom?.title"></ion-input>
+		<ion-input *ngIf="!truckerFrom" color="danger" readonly value="not assigned yet"></ion-input>
+
+		<ion-label color="medium">Leaves On</ion-label>
+		<ion-input type="date" [(ngModel)]="leavesOn"></ion-input>
+	</ion-item>
+</ion-card>
