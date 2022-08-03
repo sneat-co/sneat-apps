@@ -15,8 +15,8 @@ export class DispatchPointComponent implements OnChanges {
 		if (changes['order'] || changes['dispatchPoint']) {
 			const contactID = this.dispatchPoint?.contactID;
 			this.segments = this.order?.dto?.segments?.filter(s =>
-				s.contactIDs?.from?.contactID === contactID
-				|| s.contactIDs?.to?.contactID === contactID
+				s.from?.contactID === contactID
+				|| s.to?.contactID === contactID
 			);
 		}
 	}

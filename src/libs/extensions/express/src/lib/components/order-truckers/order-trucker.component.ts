@@ -14,9 +14,10 @@ export class OrderTruckerComponent implements OnChanges {
 	public segments?: ReadonlyArray<IOrderSegment>;
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('OrderTruckerComponent.ngOnChanges', changes);
 		if (changes['order'] || changes['trucker']) {
 			const contactID = this.trucker?.contactID;
-			this.segments = this.order?.dto?.segments?.filter(s => s.contactIDs.by?.contactID === contactID);
+			this.segments = this.order?.dto?.segments?.filter(s => s.by?.contactID === contactID);
 		}
 	}
 

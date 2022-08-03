@@ -16,7 +16,7 @@ export class OrderTruckersComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
 			this.truckers = this.order?.dto?.counterparties?.filter(c => c.role === 'trucker');
-			this.hasUnassignedSegments = !!this?.order?.dto?.segments?.some(s => !s.contactIDs.by?.contactID);
+			this.hasUnassignedSegments = !!this?.order?.dto?.segments?.some(s => !s.by?.contactID);
 		}
 	}
 }

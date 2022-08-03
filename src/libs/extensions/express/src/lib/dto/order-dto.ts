@@ -65,10 +65,9 @@ export interface ISegmentDates {
 	readonly end: string;
 }
 
-export interface IOrderSegment {
+export interface IOrderSegment extends ISegmentEndpoints {
 	id: string;
 	dates: ISegmentDates;
-	contactIDs: ISegmentEndpoints;
 	containerIDs: ReadonlyArray<string>;
 }
 
