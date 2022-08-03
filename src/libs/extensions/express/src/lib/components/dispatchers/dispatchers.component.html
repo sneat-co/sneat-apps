@@ -1,33 +1,10 @@
 <ion-card *ngIf="dispatchers && !dispatchers.length">
 	<ion-item-divider>No dispatchers have been added yet.</ion-item-divider>
 </ion-card>
-<ion-card *ngFor="let dispatcher of dispatchers">
-	<ion-item class="sneat-no-end-padding">
-		<ion-label style="font-weight: bold">{{dispatcher.title}}</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="addDispatchPoint($event, dispatcher)">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
-				<ion-label>Add dispatch point</ion-label>
-			</ion-button>
-			<ion-button color="medium" title="Remove dispatcher & all dispatching points">
-				<ion-icon name="close-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ion-item-group *ngFor="let location of dispatcher.locations">
-		<ion-item color="light" class="sneat-no-end-padding">
-			<ion-label>
-				<ion-text color="medium">Dispatch from:</ion-text>
-				{{location.title}}
-			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button title="Remove dispatching point">
-					<ion-icon name="close-outline"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		<ion-item-divider>
-			<ion-label>No container have been assigned to this dispatch point yet.</ion-label>
-		</ion-item-divider>
-	</ion-item-group>
-</ion-card>
+<sneat-order-dispatcher *ngFor="let dispatcher of dispatchers"
+												[(order)]="order"
+												[counterparty]="dispatcher"
+												(orderChange)="orderChange.emit($event)"
+												[orderDispatchers]="dispatchers"
+>
+</sneat-order-dispatcher>

@@ -63,7 +63,8 @@
 		</ion-buttons>
 	</ion-item-divider>
 
-	<ion-item *ngFor="let segment of segments">
-		<ion-label>{{segment|json}}</ion-label>
-	</ion-item>
+	<sneat-container-segment *ngFor="let segment of segments"
+													 [order]="order"
+													 [segment]="segment"
+	></sneat-container-segment>
 </ion-item-group>

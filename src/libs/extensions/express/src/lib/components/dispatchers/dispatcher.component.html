@@ -1,0 +1,18 @@
+<ion-card >
+	<ion-item class="sneat-no-end-padding">
+		<ion-label style="font-weight: bold">{{counterparty?.title}}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="medium" (click)="addDispatchPoint($event)">
+				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-label>Add dispatch point</ion-label>
+			</ion-button>
+			<ion-button color="medium" title="Remove dispatcher & all dispatching points">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<sneat-dispatch-point *ngFor="let location of locations"
+												[dispatchPoint]="location"
+												[order]="order"
+	></sneat-dispatch-point>
+</ion-card>

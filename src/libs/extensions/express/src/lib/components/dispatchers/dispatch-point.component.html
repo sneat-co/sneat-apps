@@ -1,0 +1,19 @@
+<ion-item-group >
+	<ion-item color="light" class="sneat-no-end-padding">
+		<ion-label>
+			<ion-text color="medium">At:</ion-text>
+			{{dispatchPoint?.title}}
+		</ion-label>
+		<ion-buttons slot="end">
+			<ion-button title="Remove dispatching point">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item-divider *ngIf="segments && !segments.length">
+		<ion-label>No container have been assigned to this dispatch point yet.</ion-label>
+	</ion-item-divider>
+	<ion-item *ngFor="let segment of segments">
+		{{segment|json}}
+	</ion-item>
+</ion-item-group>

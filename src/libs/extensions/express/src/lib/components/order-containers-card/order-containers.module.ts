@@ -8,6 +8,7 @@ import {
 	ShippingPointsSelectorModule
 } from '../shipping-points-selector/shipping-points-selector.module';
 import { ContainerFormComponent } from './container-form.component';
+import { ContainerSegmentComponent } from './container-segment.component';
 import { OrderContainersComponent } from './order-containers.component';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { OrderContainersComponent } from './order-containers.component';
 		ContainerFormComponent,
 		OrderContainersComponent,
 		NewContainerComponent,
+		ContainerSegmentComponent,
 	],
 	exports: [
 		OrderContainersComponent,
