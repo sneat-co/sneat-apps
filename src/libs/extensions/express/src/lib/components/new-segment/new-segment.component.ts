@@ -1,13 +1,9 @@
-import {  Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
 import { ExpressOrderService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
 import { SegmentEndpointType } from './segment-counterparty.component';
-
-interface IContainer extends IOrderContainer {
-	checked: boolean;
-}
 
 
 @Component({
@@ -19,7 +15,11 @@ export class NewSegmentComponent implements OnInit {
 	@Input() container?: IOrderContainer;
 
 	byContact?: IContactContext;
-	fromContact?: IContactContext = {id: 'suxx', team: {id: 'suxx_team'}, brief: {id: 'suxx', type: 'company', title: 'suxx', roles: ['port']}};
+	fromContact?: IContactContext = {
+		id: 'suxx',
+		team: { id: 'suxx_team' },
+		brief: { id: 'suxx', type: 'company', title: 'suxx', roles: ['port'] },
+	};
 	toContact?: IContactContext;
 
 	readonly = false;
@@ -30,17 +30,13 @@ export class NewSegmentComponent implements OnInit {
 	fromDate = '';
 	toDate = '';
 
-	containers?: IContainer[];
+	selectedContainerIDs: string[] = [];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		protected readonly modalController: ModalController,
 		private readonly orderService: ExpressOrderService,
 	) {
-	}
-
-	hasUncheckedContainers(): boolean {
-		return !!this.containers?.some(c => !c.checked);
 	}
 
 	protected close(): void {
@@ -65,7 +61,7 @@ export class NewSegmentComponent implements OnInit {
 		this.toContact = undefined;
 	}
 
-	onContactChanged(what: 'by'|'from'|'to', contact: IContactContext): void {
+	onContactChanged(what: 'by' | 'from' | 'to', contact: IContactContext): void {
 		console.log('NewSegmentComponent.onContactChanged()', what, contact);
 		switch (what) {
 			case 'from':
@@ -84,7 +80,6 @@ export class NewSegmentComponent implements OnInit {
 		if (!this.order) {
 			return;
 		}
-		this.containers = this.order?.dto?.containers?.map(c => ({...c, checked: false}));
 		// this.containerIDs = this.order?.dto?.containers?.map(c => c.id) || [];
 		const fromPorts = this.order?.dto?.counterparties?.filter(c => c.role === 'port_from');
 		if (fromPorts?.length == 1) {
@@ -122,14 +117,14 @@ export class NewSegmentComponent implements OnInit {
 			alert('to contact is required');
 			return;
 		}
-		if (!this.containers?.some(c => c.checked)) {
+		if (!this.selectedContainerIDs?.length) {
 			alert('containers are required to be selected');
 			return;
 		}
 		const request: IAddSegmentsRequest = {
 			orderID: this.order.id,
 			teamID: this.order.team?.id,
-			containers: this.containers.map(c => ({ id: c.id })),
+			containers: this.selectedContainerIDs.map(id => ({ id })),
 			from: {
 				contactID: this.fromContact.id,
 				counterpartyRole: this.from === 'port' ? 'port_from' : 'dispatch-point',
@@ -148,7 +143,7 @@ export class NewSegmentComponent implements OnInit {
 		this.orderService
 			.addSegments(request)
 			.subscribe({
-				next: (resp) => this.close(),
+				next: () => this.close(),
 				error: this.errorLogger.logErrorHandler('Failed to add segments'),
 			});
 	}
@@ -167,7 +162,4 @@ export class NewSegmentComponent implements OnInit {
 		}, 10);
 	}
 
-	addAllContainer(): void {
-		this.containers = this.containers?.map(c => c.checked ? c : {...c, checked: true});
-	}
 }

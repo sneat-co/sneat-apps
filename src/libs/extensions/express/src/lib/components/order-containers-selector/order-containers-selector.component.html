@@ -1,0 +1,15 @@
+<ion-card>
+	<ion-item-divider color="light">
+		<ion-label>Containers</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="medium" (click)="addAllContainer()" *ngIf="hasUncheckedContainers()">
+				<ion-icon name="bag-add-outline" slot="start"></ion-icon>
+				<ion-label>Add all</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-item *ngFor="let c of containers">
+		<ion-checkbox slot="start" [(ngModel)]="c.checked" (ionChange)="onToggled()"></ion-checkbox>
+		<ion-label>{{c.type|uppercase}} &mdash; <span *ngIf="c.number">#{{c.number}}</span></ion-label>
+	</ion-item>
+</ion-card>
