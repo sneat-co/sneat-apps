@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { ContainerPointComponent } from './container-point.component';
@@ -9,12 +9,13 @@ import { DispatchersComponent } from './dispatchers.component';
 import { DispatcherComponent } from './dispatcher.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		SneatPipesModule,
-		FormsModule,
-	],
+  imports: [
+    CommonModule,
+    IonicModule,
+    SneatPipesModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 	declarations: [
 		DispatchersComponent,
 		DispatcherComponent,

@@ -1,39 +1,102 @@
-<ion-card class="ion-no-margin ion-margin-top">
+<form [formGroup]="containerForm">
+	<ion-card class="ion-no-margin ion-margin-top">
+		<ion-item color="light" class="sneat-no-end-padding">
+			<ion-label color="medium">{{container?.type}} #</ion-label>
+			<ion-input readonly [value]="container?.number"></ion-input>
+			<ion-buttons slot="end">
+				<ng-container *ngIf="containerForm.dirty">
+					<ion-button color="danger"
+											title="Save changes"
+											(click)="saveChanges()"
+					>
+						<ion-icon name="save-outline" slot="start"></ion-icon>
+						<ion-label>Save</ion-label>
+					</ion-button>
+					<ion-button color="medium"
+											title="Cancel changes"
+											(click)="containerForm.reset()"
+					>
+						<ion-icon name="close-circle-outline" slot="start"></ion-icon>
+						<ion-label>Cancel</ion-label>
+					</ion-button>
+				</ng-container>
+				<ion-button *ngIf="!containerForm.dirty" color="medium" title="Remove container from dispatch point">
+					<ion-icon name="close-outline"></ion-icon>
+					<!--				<ion-label>Remove</ion-label>-->
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
 
-	<ion-item color="light" class="sneat-no-end-padding">
-		<ion-label color="medium">{{container?.type}} #</ion-label>
-		<ion-input readonly [value]="container?.number"></ion-input>
-		<ion-buttons slot="end">
-			<ion-button color="medium" title="Remove container from dispatch point">
-				<ion-icon name="close-outline"></ion-icon>
-<!--				<ion-label>Remove</ion-label>-->
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col size="6">
+					<ion-item>
+						<ion-label color="medium">Pallets to pick</ion-label>
+						<ion-input type="number" [formControl]="pallets"></ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col size="6">
+					<ion-item>
+						<ion-label color="medium">Gross (kg)</ion-label>
+						<ion-input type="number" [formControl]="grossKg"></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 
-	<ion-item>
-		<ion-label color="medium">Pallets to pick</ion-label>
-		<ion-input type="number" [(ngModel)]="numberOfPallets"></ion-input>
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col size="6">
+					<ion-item class="sneat-tiny-end-padding">
+						<ion-label color="medium">Delivered to by</ion-label>
+						<ion-input *ngIf="truckerTo" readonly [value]="truckerTo.title"></ion-input>
+						<ion-input *ngIf="!truckerTo" color="danger" readonly value="not assigned yet"></ion-input>
+						<ion-buttons *ngIf="truckerTo && !containerForm.dirty">
+							<ion-button color="medium"
+													title="Exclude delivery of this container by the trucker"
+													(click)="excludeContainerFromSegment()"
+							>
+								<ion-icon name="close-outline"></ion-icon>
+							</ion-button>
+						</ion-buttons>
+					</ion-item>
+				</ion-col>
+				<ion-col size="6">
+					<ion-item>
+						<ion-label color="medium">Arrives on</ion-label>
+						<ion-input type="date" [formControl]="arrivesOn"></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 
-		<ion-label color="medium">Gross (kg)</ion-label>
-		<ion-input type="number" [(ngModel)]="grossKg"></ion-input>
-	</ion-item>
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col size="6">
+					<ion-item class="sneat-tiny-end-padding">
+						<ion-label color="medium">Retrieved from by</ion-label>
+						<ion-input *ngIf="truckerFrom" readonly [value]="truckerFrom.title"></ion-input>
+						<ng-container *ngIf="!truckerFrom">
+							<ion-input color="danger" readonly value="not assigned yet"></ion-input>
+							<ion-buttons>
+								<ion-button color="medium"
+														title="Assign container to the trucker"
+														(click)="assignContainerToSegment()"
+								>
+									<ion-icon name="add-outline"></ion-icon>
+								</ion-button>
+							</ion-buttons>
+						</ng-container>
+					</ion-item>
+				</ion-col>
+				<ion-col size="6">
+					<ion-item>
+						<ion-label color="medium">Leaves On</ion-label>
+						<ion-input type="date" [formControl]="leavesOn"></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 
-	<ion-item>
-		<ion-label color="medium">Delivered to by</ion-label>
-		<ion-input *ngIf="truckerTo" readonly [value]="truckerTo.title"></ion-input>
-		<ion-input *ngIf="!truckerTo" color="danger" readonly value="not assigned yet"></ion-input>
-
-		<ion-label color="medium">Arrives</ion-label>
-		<ion-input type="date" [(ngModel)]="arrivesOn"></ion-input>
-	</ion-item>
-
-	<ion-item>
-		<ion-label color="medium">Retrieved from by</ion-label>
-		<ion-input *ngIf="truckerFrom" readonly [value]="truckerFrom.title"></ion-input>
-		<ion-input *ngIf="!truckerFrom" color="danger" readonly value="not assigned yet"></ion-input>
-
-		<ion-label color="medium">Leaves On</ion-label>
-		<ion-input type="date" [(ngModel)]="leavesOn"></ion-input>
-	</ion-item>
-</ion-card>
+	</ion-card>
+</form>

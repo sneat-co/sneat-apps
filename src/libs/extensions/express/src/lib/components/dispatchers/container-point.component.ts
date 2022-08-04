@@ -1,5 +1,16 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IExpressOrderContext, IOrderContainer, IOrderCounterparty, IOrderSegment, IOrderShippingPoint } from '../..';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { set } from '@angular/fire/database';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ContactSelectorService } from '@sneat/extensions/contactus';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	ExpressOrderService,
+	IExpressOrderContext,
+	IOrderContainer,
+	IOrderCounterparty,
+	IOrderSegment,
+	IOrderShippingPoint, IUpdateShippingPointRequest,
+} from '../..';
 
 @Component({
 	selector: 'sneat-container-point',
@@ -10,16 +21,32 @@ export class ContainerPointComponent implements OnChanges {
 	@Input() shippingPoint?: IOrderShippingPoint;
 	@Input() container?: IOrderContainer;
 
+	saving = false;
+
 	arriveSegment?: IOrderSegment;
 	departSegment?: IOrderSegment;
 
 	truckerTo?: IOrderCounterparty;
 	truckerFrom?: IOrderCounterparty;
 
-	numberOfPallets?: number;
-	grossKg?: number;
-	arrivesOn = '';
-	leavesOn = '';
+	pallets = new FormControl<number | undefined>(undefined);
+	grossKg = new FormControl<number | undefined>(undefined);
+	arrivesOn = new FormControl<string>('');
+	leavesOn = new FormControl<string>('');
+
+	containerForm = new FormGroup({
+		pallets: this.pallets,
+		grossKg: this.grossKg,
+		arrivesOn: this.arrivesOn,
+		leavesOn: this.leavesOn,
+	});
+
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly contactSelectorService: ContactSelectorService,
+		private readonly ordersService: ExpressOrderService,
+	) {
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['container'] || changes['shippingPoint']) {
@@ -40,5 +67,51 @@ export class ContainerPointComponent implements OnChanges {
 			'arriveSegment', this.arriveSegment,
 			'truckerTo', this.truckerTo,
 		);
+	}
+
+	excludeContainerFromSegment(): void {
+		alert('not implemented yet');
+	}
+
+	assignContainerToSegment(): void {
+		alert('not implemented yet');
+	}
+
+	saveChanges(): void {
+		if (!this.order || !this.shippingPoint) {
+			return;
+		}
+		const setNumbers: {[field: string]: number} = {};
+
+		const pallets = this.pallets.value;
+		if (pallets || pallets === 0) {
+			setNumbers['pallets'] = pallets;
+		}
+
+		const grossKg = this.grossKg.value;
+		if (grossKg || grossKg === 0) {
+			setNumbers['grossKg'] = grossKg;
+		}
+
+		const request: IUpdateShippingPointRequest = {
+			teamID: this.order.team.id,
+			orderID: this.order.id,
+			shippingPointID: this.shippingPoint.id,
+			setNumbers: setNumbers,
+		};
+		this.saving = true;
+		try {
+			this.ordersService.updateSegment(request).subscribe({
+				next: () => {
+					this.containerForm.markAsPristine();
+				},
+				error: err => {
+					this.errorLogger.logError(err,'Failed to update segment');
+
+				}
+			})
+		} catch (e) {
+			this.saving = false;
+		}
 	}
 }

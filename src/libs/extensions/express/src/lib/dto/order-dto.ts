@@ -201,6 +201,11 @@ export interface IAddSegmentsRequest extends ISegmentEndpoints, IExpressOrderReq
 	readonly containers: INewSegmentContainer[];
 }
 
+export interface IUpdateShippingPointRequest extends IExpressOrderRequest {
+	readonly shippingPointID: string;
+	readonly setNumbers: {[field: string]: number};
+}
+
 export interface IContainerRequest extends IExpressOrderRequest {
 	readonly containerID: string;
 }
