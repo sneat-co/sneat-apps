@@ -9,57 +9,58 @@
 <ion-content>
 	<sneat-express-order-card [team]="team" [order]="order" [hideDispatchers]="true"></sneat-express-order-card>
 
-	<ion-grid class="ion-grid-layout ion-margin-horizontal">
-		<ion-row>
-			<ion-col size="8">
-				<ion-segment [(ngModel)]="tab" class="ion-margin-start">
-					<ion-segment-button value="containers">
-						<ion-label>
-							📦 Containers
-							<ion-badge color="light"
-												 *ngIf="order?.dto?.containers?.length">
-								<ion-text color="medium">{{order?.dto?.containers?.length}}</ion-text>
-							</ion-badge>
-						</ion-label>
-					</ion-segment-button>
-					<ion-segment-button value="dispatchers">
-						<ion-label>
-							🛒 Dispatchers
-							<ion-badge color="light" *ngIf="numberOfDispatchers">
-								<ion-text color="medium">{{numberOfDispatchers}}</ion-text>
-							</ion-badge>
-						</ion-label>
-					</ion-segment-button>
-					<ion-segment-button value="truckers">
-						<ion-label>
-							🚛 Trucking
-							<!--							<ion-badge color="light" *ngIf="order?.dto?.segments?.length">{{order?.dto?.segments?.length}}</ion-badge>-->
-						</ion-label>
-					</ion-segment-button>
-				</ion-segment>
-			</ion-col>
-			<ion-col>
-				<ion-item class="ion-item-no-border">
-					<ion-buttons slot="end">
-						<ion-button fill="clear" color="medium" *ngIf="tab === 'containers'" title="Add container"
-												(click)="addContainer()">
-							<ion-icon name="add-outline" slot="start"></ion-icon>
-							<ion-label>Add 📦</ion-label>
-						</ion-button>
-						<ion-button fill="clear" color="medium" *ngIf="tab === 'truckers'" title="Add truck" (click)="addSegment()">
-							<ion-icon name="add-outline" slot="start"></ion-icon>
-							<ion-label>Add 🚛</ion-label>
-						</ion-button>
-						<ion-button fill="clear" color="medium" *ngIf="tab === 'dispatchers'" title="Add dispatcher"
-												(click)="addDispatcher()">
-							<ion-icon name="add-outline" slot="start"></ion-icon>
-							<ion-label>Add 🛒</ion-label>
-						</ion-button>
-					</ion-buttons>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="containers">
+			<ion-label>
+				📦 Containers
+				<ion-badge color="light"
+									 *ngIf="order?.dto?.containers?.length">
+					<ion-text color="medium">{{order?.dto?.containers?.length}}</ion-text>
+				</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="dispatchers">
+			<ion-label>
+				🛒 Dispatchers
+				<ion-badge color="light" *ngIf="numberOfDispatchers">
+					<ion-text color="medium">{{numberOfDispatchers}}</ion-text>
+				</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="truckers">
+			<ion-label>
+				🚛 Trucking
+				<!--							<ion-badge color="light" *ngIf="order?.dto?.segments?.length">{{order?.dto?.segments?.length}}</ion-badge>-->
+			</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+
+	<div class="ion-padding-horizontal">
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col size="4" style="text-align: center">
+					<ion-button size="small" fill="clear" color="medium" title="Add container"
+											(click)="addContainer()">
+						<ion-icon name="add-outline" slot="start"></ion-icon>
+						<ion-label>Add container</ion-label>
+					</ion-button>
+				</ion-col>
+				<ion-col size="4" style="text-align: center">
+					<ion-button size="small" fill="clear" color="medium" title="Add dispatcher"
+											(click)="addDispatcher()">
+						<ion-icon name="add-outline" slot="start"></ion-icon>
+						<ion-label>Add dispatch location</ion-label>
+					</ion-button>
+				</ion-col>
+				<ion-col size="4" style="text-align: center">
+					<ion-button size="small" fill="clear" color="medium" title="Add truck" (click)="addSegment()">
+						<ion-icon name="add-outline" slot="start"></ion-icon>
+						<ion-label>Add segment</ion-label>
+					</ion-button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</div>
 
 	<!--	<ion-card *ngIf="tab === 'notes'">-->
 	<!--		<ion-card-content>-->
