@@ -118,7 +118,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 				{
 					role: this.counterpartyRole,
 					contactID: this.counterparty?.contactID,
-					refNumber: this.refNumber,
+					refNumber: this.refNumber || ' ',
 				},
 			],
 		};

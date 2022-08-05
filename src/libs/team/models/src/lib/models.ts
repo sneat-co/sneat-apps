@@ -87,6 +87,7 @@ export interface IBasicContactRequest {
 	status: 'active' | 'draft';
 	type: ContactType;
 	title: string;
+	parentContactID?: string;
 }
 
 export interface ICreateContactBasicRequest extends ICreateContactBaseRequest {

@@ -21,6 +21,7 @@ export class ContactInputComponent {
 	@Input() subLabel = 'by';
 	@Input() parentRole?: ContactRole;
 	@Input() parentContact?: IContactContext;
+	@Input() deleting = false;
 
 
 	@Input() contact?: IContactContext;
@@ -42,7 +43,7 @@ export class ContactInputComponent {
 	reset(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
-		this.contact = undefined;
+		// this.contact = undefined;
 		this.contactChange.emit(undefined);
 	}
 

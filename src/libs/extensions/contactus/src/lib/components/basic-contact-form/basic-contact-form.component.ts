@@ -43,9 +43,9 @@ export class BasicContactFormComponent {
 			teamID: this.team.id,
 			type: this.contactType,
 			// type: this.contactType,
-			parentContactID: this.parentContact?.id,
 			roles: this.contactRoles,
 			basic: {
+				parentContactID: this.parentContact?.id,
 				type: this.contactType,
 				title: this.title,
 				status: 'active',
@@ -57,8 +57,8 @@ export class BasicContactFormComponent {
 			next: this.contactCreated.emit,
 			error: err => {
 				this.isSubmitting = false;
-				this.errorLogger.logError(err, `Failed to create new [${this.contactType}]`)
-			}
+				this.errorLogger.logError(err, `Failed to create new [${this.contactType}]`);
+			},
 		});
 	}
 }

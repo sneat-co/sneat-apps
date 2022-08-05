@@ -1,20 +1,21 @@
-<ion-item tappable class="sneat-tiny-end-padding" (click)="openContactSelector($event)">
+<ion-item tappable class="sneat-tiny-end-padding" (click)="openContactSelector($event)" [class.deleting-list-item]="deleting">
 	<ion-label color="medium" slot="start" position="fixed">
 		{{labelText()}}
 	</ion-label>
 
 	<span *ngIf="contact?.brief?.countryID||contact?.dto?.countryID">{{(contact?.brief?.countryID||contact?.dto?.countryID)|countryFlag}}</span>
 
-	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>
+	<ion-input [readonly]="true" [color]="deleting ? 'medium' : undefined" [value]="contact?.brief?.title"></ion-input>
 	<ion-label color="medium" *ngIf="parentRole">{{subLabel}}</ion-label>
 	<span style="padding-left: 0.25em" *ngIf="parentContact?.brief?.countryID||parentContact?.dto?.countryID">{{(parentContact?.brief?.countryID||parentContact?.dto?.countryID)|countryFlag}}</span>
 	<ion-input [value]="parentContact?.brief?.title" *ngIf="parentRole"></ion-input>
 	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">
-		<ion-button (click)="openContactSelector($event)">
+		<ion-button (click)="openContactSelector($event)" *ngIf="!deleting">
 			<ion-label>...</ion-label>
 		</ion-button>
-		<ion-button color="medium" (click)="reset($event)" *ngIf="contact && canReset">
-			<ion-icon name="close-outline"></ion-icon>
+		<ion-button color="medium" (click)="reset($event)" *ngIf="contact && canReset" [disabled]="deleting">
+			<ion-icon name="close-outline" *ngIf="!deleting"></ion-icon>
+			<ion-spinner name="lines-small" *ngIf="deleting" slot="end"></ion-spinner>
 		</ion-button>
 	</ion-buttons>
 </ion-item>

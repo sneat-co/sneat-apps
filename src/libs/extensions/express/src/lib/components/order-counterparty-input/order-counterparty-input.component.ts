@@ -4,7 +4,7 @@ import { ExpressOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import {
-	CounterpartyRole,
+	CounterpartyRole, IDeleteCounterpartyRequest,
 	IExpressOrderContext,
 	IOrderCounterparty,
 	IOrderShippingPointCounterparty,
@@ -35,6 +35,8 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 	contact?: IContactContext;
 	parentContact?: IContactContext;
+
+	deleting = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -79,7 +81,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		}
 	}
 
-	protected onContactChanged(contact: IContactContext): void {
+	protected onContactChanged(contact?: IContactContext): void {
 		console.log('onContactChanged(),', this.contactRole, contact);
 		if (!this.team) {
 			console.error('onContactChanged(): !this.team');
@@ -97,6 +99,31 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 		if (!orderDto) {
 			console.error('onContactChanged(): !this.order.dto');
+			return;
+		}
+
+		if (!contact) {
+			if (!this.contact) {
+				return;
+			}
+			console.error('Not implemented counterparty removal');
+			const request: IDeleteCounterpartyRequest = {
+				orderID: order.id,
+				teamID: this.team.id,
+				contactID: this.contact.id,
+				role: this.counterpartyRole,
+			};
+			this.deleting = true;
+			this.orderService.deleteCounterparty(request).subscribe({
+				next: () => {
+					this.contact = undefined;
+					this.deleting = false;
+				},
+				error: err => {
+					this.deleting = false;
+					this.errorLogger.logError(err, `Failed to remove counterparty with role=${this.counterpartyRole} from the order`);
+				}
+			})
 			return;
 		}
 
