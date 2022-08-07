@@ -41,9 +41,13 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 		if (!this.order) {
 			return;
 		}
-		await this.newSegmentService.addSegment({
-			order: this.order,
-		});
+		try {
+			await this.newSegmentService.addSegment({
+				order: this.order,
+			});
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to open new segment form');
+		}
 	}
 
 	async addDispatcher(): Promise<void> {

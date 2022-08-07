@@ -17,15 +17,15 @@ export class ContainerSegmentComponent implements OnChanges {
 		if (changes['order'] || changes['segment']) {
 			this.from = this.order?.dto?.counterparties?.find(c =>
 				c.contactID === this.segment?.from?.contactID
-				&& c.role == this.segment?.from?.counterpartyRole
+				&& c.role == this.segment?.from?.role
 			);
 			this.to = this.order?.dto?.counterparties?.find(c =>
 				c.contactID === this.segment?.to?.contactID
-				&& c.role == this.segment?.to?.counterpartyRole
+				&& c.role == this.segment?.to?.role
 			);
 			this.by = this.order?.dto?.counterparties?.find(c =>
 				c.contactID === this.segment?.by?.contactID
-				&& c.role == this.segment?.by?.counterpartyRole
+				&& c.role == this.segment?.by?.role
 			);
 		}
 	}

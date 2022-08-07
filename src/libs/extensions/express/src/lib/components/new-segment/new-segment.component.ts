@@ -127,16 +127,16 @@ export class NewSegmentComponent implements OnInit {
 			containers: this.selectedContainerIDs.map(id => ({ id })),
 			from: {
 				contactID: this.fromContact.id,
-				counterpartyRole: this.from === 'port' ? 'port_from' : 'dispatch-point',
+				role: this.from === 'port' ? 'port_from' : 'dispatch-point',
 			},
 			to: {
 				contactID: this.toContact.id,
-				counterpartyRole: this.to === 'port' ? 'port_to' : 'dispatch-point',
+				role: this.to === 'port' ? 'port_to' : 'dispatch-point',
 			},
 			by: this.byContact?.id
 				? {
 					contactID: this.byContact.id,
-					counterpartyRole: 'trucker',
+					role: 'trucker',
 				}
 				: undefined,
 		};
