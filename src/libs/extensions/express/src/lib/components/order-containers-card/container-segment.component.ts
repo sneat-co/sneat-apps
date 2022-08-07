@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IExpressOrderContext, IOrderCounterparty, IOrderSegment } from '../..';
+import { IExpressOrderContext, IOrderCounterparty, IContainerSegment } from '../..';
 
 @Component({
 	selector: 'sneat-container-segment',
@@ -7,7 +7,7 @@ import { IExpressOrderContext, IOrderCounterparty, IOrderSegment } from '../..';
 })
 export class ContainerSegmentComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
-	@Input() segment?: IOrderSegment;
+	@Input() segment?: IContainerSegment;
 
 	from?: IOrderCounterparty;
 	to?: IOrderCounterparty;

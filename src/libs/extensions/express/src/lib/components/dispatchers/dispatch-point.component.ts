@@ -5,7 +5,7 @@ import {
 	IExpressOrderContext,
 	IOrderContainer,
 	IOrderCounterparty,
-	IOrderSegment,
+	IContainerSegment,
 	IOrderShippingPoint, IOrderShippingPointRequest,
 } from '../..';
 
@@ -19,7 +19,7 @@ export class DispatchPointComponent implements OnChanges {
 	@Input() disabled = false;
 
 	shippingPoint?: IOrderShippingPoint;
-	segments?: ReadonlyArray<IOrderSegment>;
+	segments?: ReadonlyArray<IContainerSegment>;
 	containers?: ReadonlyArray<IOrderContainer>;
 	dispatcher?: IOrderCounterparty;
 

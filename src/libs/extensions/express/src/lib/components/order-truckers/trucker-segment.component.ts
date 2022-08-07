@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IExpressOrderContext, IOrderCounterparty, IOrderSegment } from '../..';
+import { IExpressOrderContext, IOrderCounterparty, IContainerSegment, IOrderSegment } from '../..';
 
 @Component({
 	selector: 'sneat-trucker-segment',
@@ -7,7 +7,7 @@ import { IExpressOrderContext, IOrderCounterparty, IOrderSegment } from '../..';
 })
 export class TruckerSegmentComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
-	@Input() segment?: IOrderSegment;
+	@Input() orderSegment?: IOrderSegment;
 	@Input() trucker?: IOrderCounterparty;
 
 	from?: IOrderCounterparty;
@@ -20,12 +20,12 @@ export class TruckerSegmentComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['segment']) {
 			this.from = this.order?.dto?.counterparties?.find(c =>
-				c.contactID === this.segment?.from?.contactID
-				&& c.role == this.segment?.from?.role
+				c.contactID === this.orderSegment?.from?.contactID
+				&& c.role == this.orderSegment?.from?.role
 			);
 			this.to = this.order?.dto?.counterparties?.find(c =>
-				c.contactID === this.segment?.to?.contactID
-				&& c.role == this.segment?.to?.role
+				c.contactID === this.orderSegment?.to?.contactID
+				&& c.role == this.orderSegment?.to?.role
 			);
 		}
 	}

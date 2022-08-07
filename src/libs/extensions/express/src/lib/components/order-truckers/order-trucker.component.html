@@ -16,7 +16,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item-divider *ngIf="segments && !segments.length">
+	<ion-item-divider *ngIf="orderSegments && !orderSegments.length">
 		<ion-label>
 			<b>Segments</b>
 			<span>&nbsp;&mdash; not added yet.</span>
@@ -29,9 +29,9 @@
 		</ion-buttons>
 	</ion-item-divider>
 
-	<sneat-trucker-segment *ngFor="let segment of segments"
+	<sneat-trucker-segment *ngFor="let orderSegment of orderSegments"
 												 [order]="order"
-												 [segment]="segment"
+												 [orderSegment]="orderSegment"
 												 [trucker]="trucker"
 	>
 	</sneat-trucker-segment>

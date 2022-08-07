@@ -8,7 +8,7 @@ import {
 	IExpressOrderContext,
 	IOrderContainer,
 	IOrderCounterparty,
-	IOrderSegment,
+	IContainerSegment,
 	IOrderShippingPoint, IUpdateShippingPointRequest,
 } from '../..';
 
@@ -23,8 +23,8 @@ export class ContainerPointComponent implements OnChanges {
 
 	saving = false;
 
-	arriveSegment?: IOrderSegment;
-	departSegment?: IOrderSegment;
+	arriveSegment?: IContainerSegment;
+	departSegment?: IContainerSegment;
 
 	truckerTo?: IOrderCounterparty;
 	truckerFrom?: IOrderCounterparty;

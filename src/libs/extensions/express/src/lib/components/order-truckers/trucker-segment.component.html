@@ -1,5 +1,5 @@
 <ion-card>
-	<ion-item *ngIf="segment" color="light">
+	<ion-item *ngIf="orderSegment" color="light">
 
 		<ion-label color="medium">From</ion-label>
 		<ion-input readonly [value]="from?.title"></ion-input>
@@ -8,18 +8,17 @@
 		<ion-input readonly [value]="to?.title"></ion-input>
 
 		<ion-buttons slot="end">
-			<ion-button  color="medium" (click)="assignSegmentsToTransporter()">
+			<ion-button color="medium" (click)="assignSegmentsToTransporter()">
 				<ion-label *ngIf="!trucker">Assign</ion-label>
 				<ion-label *ngIf="trucker">Reassign</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item>
-		<ion-label>Container: {{segment?.containerID}}</ion-label>
-	</ion-item>
-<!--	<sneat-segment-container *ngFor="let containerID of segment?.containerIDs"-->
-<!--													 [order]="order"-->
-<!--													 [containerID]="containerID"-->
-<!--	>-->
-<!--	</sneat-segment-container>-->
+	<ion-item-divider>
+		<ion-label>Containers:</ion-label>
+	</ion-item-divider>
+	<sneat-segment-container [order]="order" *ngFor="let segment of orderSegment?.containerSegments"
+													 [containerID]="segment.containerID"
+	>
+	</sneat-segment-container>
 </ion-card>

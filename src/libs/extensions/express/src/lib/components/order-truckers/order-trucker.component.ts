@@ -6,6 +6,7 @@ import {
 	IExpressOrderContext,
 	IOrderCounterparty,
 	IOrderSegment,
+	getOrderSegments,
 } from '../..';
 import { ITeamContext } from '@sneat/team/models';
 
@@ -18,7 +19,9 @@ export class OrderTruckerComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Input() trucker?: IOrderCounterparty;
 
-	public segments?: ReadonlyArray<IOrderSegment>;
+	// public segments?: ReadonlyArray<IContainerSegment>;
+
+	public orderSegments?: ReadonlyArray<IOrderSegment>;
 
 	deleting = false;
 
@@ -32,7 +35,8 @@ export class OrderTruckerComponent implements OnChanges {
 		console.log('OrderTruckerComponent.ngOnChanges', changes);
 		if (changes['order'] || changes['trucker']) {
 			const contactID = this.trucker?.contactID;
-			this.segments = this.order?.dto?.segments?.filter(s => s.by?.contactID === contactID);
+			this.orderSegments = getOrderSegments(this.order?.dto?.segments?.filter(s => s.by?.contactID === contactID));
+			// console.log('segements:', this.order?.dto?.segments, 'orderSegments:', this.orderSegments);
 		}
 	}
 
@@ -49,7 +53,7 @@ export class OrderTruckerComponent implements OnChanges {
 			orderID: this.order.id,
 			contactID: this.trucker?.contactID,
 			role: 'trucker',
-		}
+		};
 		this.deleting = true;
 		this.ordersService.deleteCounterparty(request).subscribe({
 			next: () => {
@@ -58,8 +62,8 @@ export class OrderTruckerComponent implements OnChanges {
 			error: err => {
 				this.errorLogger.logError(err, 'Failed to delete trucker');
 				this.deleting = false;
-			}
-		})
+			},
+		});
 	}
 
 	replaceTrucker(): void {

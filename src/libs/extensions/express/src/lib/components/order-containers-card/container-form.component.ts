@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { ExpressOrderService, IContainerRequest, IExpressOrderContext, IOrderContainer, IOrderSegment } from '../..';
+import { ExpressOrderService, IContainerRequest, IExpressOrderContext, IOrderContainer, IContainerSegment } from '../..';
 import { NewSegmentService } from '../new-segment/new-segment.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class ContainerFormComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() i = 0;
 
-	segments?: IOrderSegment[];
+	segments?: IContainerSegment[];
 
 	deleting = false;
 

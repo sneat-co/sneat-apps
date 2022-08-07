@@ -66,8 +66,14 @@ export interface ISegmentDates {
 	readonly end: string;
 }
 
-export interface IOrderSegment extends ISegmentKey {
+export interface IContainerSegment extends IContainerSegmentKey {
 	dates: ISegmentDates;
+}
+
+export interface ISegmentLegKey {
+	readonly from: ISegmentEndpoint;
+	readonly to: ISegmentEndpoint;
+	readonly by?: ISegmentCounterparty;
 }
 
 export interface IOrderShippingPoint extends IShippingPointBase {
@@ -112,11 +118,11 @@ export interface IOrderRoute {
 
 export type OrderDirection = 'import' | 'export' | 'internal';
 
-export function getSegmentsByContainerID(segments?: ReadonlyArray<IOrderSegment>, id?: string): IOrderSegment[] | undefined {
+export function getSegmentsByContainerID(segments?: ReadonlyArray<IContainerSegment>, id?: string): IContainerSegment[] | undefined {
 	return segments?.filter(s => s.containerID === id);
 }
 
-export function getSegmentCounterparty(orderDto?: IExpressOrderDto | null, segment?: IOrderSegment): IOrderCounterparty | undefined {
+export function getSegmentCounterparty(orderDto?: IExpressOrderDto | null, segment?: IContainerSegment): IOrderCounterparty | undefined {
 	const contactID = segment?.by?.contactID;
 	return contactID ? orderDto?.counterparties?.find(c => c.contactID === contactID) : undefined;
 }
@@ -136,7 +142,7 @@ export interface IExpressOrderDto extends IFreightOrderBase {
 	// agentRef?: string;
 	readonly shippingPoints?: ReadonlyArray<IOrderShippingPoint>;
 	readonly containers?: ReadonlyArray<IOrderContainer>;
-	readonly segments?: ReadonlyArray<IOrderSegment>;
+	readonly segments?: ReadonlyArray<IContainerSegment>;
 	readonly declarations?: IFreightDeclaration[];
 	readonly specialInstructions?: string;
 	readonly issued?: IDocIssued;
@@ -194,11 +200,42 @@ export interface ISegmentEndpoint extends ISegmentCounterparty {
 	readonly shippingPointID?: string;
 }
 
-export interface ISegmentKey {
-	readonly containerID: string;
+export interface IOrderSegmentKey {
 	readonly from: ISegmentEndpoint;
 	readonly to: ISegmentEndpoint;
 	readonly by?: ISegmentCounterparty;
+}
+
+export interface IOrderSegment extends IOrderSegmentKey {
+	containerSegments: ReadonlyArray<IContainerSegment>;
+}
+
+function groupBy<T, K>(x: ReadonlyArray<T>, f: (v: T) => string): { [id: string]: ReadonlyArray<T> } {
+	const result =  x.reduce((a: { [id: string]: T[] }, b: T) => ((a[f(b)] ||= []).push(b), a), {});
+	console.log('groupBy', x, ' => ', result);
+	return result;
+}
+
+export function getOrderSegments(segments?: ReadonlyArray<IContainerSegment>): IOrderSegment[] {
+	if (!segments) {
+		return [];
+	}
+	const groups = groupBy(segments, s =>
+		`${s.from.role}-${s.from.contactID}-${s.to.role}-${s.to.contactID}-${s.by?.contactID}`);
+	const entries = Object.entries(groups);
+	const result = entries.map(
+		([_, s]) => ({
+			from: s[0].from,
+			to: s[0].to,
+			containerSegments: s,
+		}),
+	);
+	console.log('getOrderSegments()', segments, ' => ', result);
+	return result;
+}
+
+export interface IContainerSegmentKey extends IOrderSegmentKey {
+	readonly containerID: string;
 }
 
 export interface INewSegmentContainer {
