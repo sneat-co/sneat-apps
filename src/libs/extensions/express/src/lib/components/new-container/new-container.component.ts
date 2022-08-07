@@ -68,6 +68,10 @@ export class NewContainerComponent implements AfterViewInit {
 			alert('container type must be selected');
 			return;
 		}
+		if (this.containerNumber?.trim() && this?.order?.dto?.containers?.some(c => c.number === this.containerNumber.trim())) {
+			alert('There is already container with the same number added to the order.');
+			return;
+		}
 		if (this.order.id) {
 			this.isSubmitting = true;
 			const request: IAddContainersRequest = {
