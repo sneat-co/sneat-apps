@@ -1,4 +1,11 @@
-<ion-item>
+<ion-item class="sneat-no-end-padding" [class.deleting-list-item]="deleting">
 	<ion-label color="medium">{{container?.type}} #</ion-label>
 	<ion-input readonly [value]="container?.number"></ion-input>
+	<ion-buttons slot="end">
+		<ion-button color="medium" (click)="delete()"
+								title="Remove container from this route"
+		>
+			<ion-icon name="close-outline"></ion-icon>
+		</ion-button>
+	</ion-buttons>
 </ion-item>

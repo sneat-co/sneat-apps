@@ -262,3 +262,10 @@ export interface IOrderShippingPointRequest extends IExpressOrderRequest {
 export interface IDeleteCounterpartyRequest extends IExpressOrderRequest, IContactRequest {
 	readonly role: string;
 }
+
+export interface IDeleteSegmentsRequest extends IExpressOrderRequest {
+	containerIDs?: string[];
+	from?: ISegmentCounterparty;
+	to?: ISegmentCounterparty;
+	by?: ISegmentCounterparty;
+}

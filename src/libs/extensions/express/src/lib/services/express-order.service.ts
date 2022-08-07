@@ -2,7 +2,7 @@ import { Injectable, NgModule } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { ITeamContext } from '@sneat/team/models';
-import { map, Observable } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import {
 	IAddContainersRequest,
 	IContainerRequest,
@@ -16,7 +16,7 @@ import {
 	IAddOrderShippingPointRequest,
 	IOrderCounterparty,
 	IAddSegmentsRequest,
-	IOrderShippingPointRequest, IUpdateShippingPointRequest,
+	IOrderShippingPointRequest, IUpdateShippingPointRequest, IDeleteSegmentsRequest,
 } from '../dto/order-dto';
 import { IOrdersFilter } from './orders-filter';
 
@@ -138,6 +138,13 @@ export class ExpressOrderService {
 
 	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {
 		return this.sneatApiService.delete('express/order/delete_order_counterparty', undefined, request);
+	}
+
+	deleteSegments(request: IDeleteSegmentsRequest): Observable<void> {
+		if (!request.containerIDs?.length && !request.from && !request.to && !request.by) {
+			return throwError(() => new Error('empty request'));
+		}
+		return this.sneatApiService.delete('express/order/delete_segments', undefined, request);
 	}
 
 	deleteShippingPoint(request: IOrderShippingPointRequest): Observable<void> {
