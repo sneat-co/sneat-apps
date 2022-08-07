@@ -42,7 +42,7 @@ export class ContainerFormComponent implements OnChanges {
 		}
 		if (changes['order'] || changes['container']) {
 			const containerID = this.container?.id;
-			this.segments = containerID ? this.order?.dto?.segments?.filter(s => s.containerIDs?.includes(containerID)) || [] : undefined;
+			this.segments = containerID ? this.order?.dto?.segments?.filter(s => s.containerID === containerID) || [] : undefined;
 		}
 	}
 

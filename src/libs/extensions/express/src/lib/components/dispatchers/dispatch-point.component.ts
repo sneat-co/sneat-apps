@@ -38,9 +38,10 @@ export class DispatchPointComponent implements OnChanges {
 			this.shippingPoint = this.order?.dto?.shippingPoints?.find(sp => sp.location?.contactID === contactID);
 			this.segments = this.order?.dto?.segments?.filter(s =>
 				s.from?.contactID === contactID
-				|| s.to?.contactID === contactID
+				|| s.to?.contactID === contactID,
 			);
-			this.containers = this.order?.dto?.containers?.filter(c => this.segments?.some(s => s.containerIDs.includes(c.id)));
+			this.containers = this.order?.dto?.containers?.filter(c => this.segments?.some(s => s.containerID === c.id));
+
 		}
 	}
 
@@ -62,8 +63,8 @@ export class DispatchPointComponent implements OnChanges {
 				error: err => {
 					this.errorLogger.logError(err, 'Failed to delete shipping point');
 					this.deleting = false;
-				}
-			})
+				},
+			});
 		}
 	}
 }

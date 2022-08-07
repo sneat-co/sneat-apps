@@ -67,9 +67,7 @@ export interface ISegmentDates {
 }
 
 export interface IOrderSegment extends ISegmentKey {
-	id: string;
 	dates: ISegmentDates;
-	containerIDs: ReadonlyArray<string>;
 }
 
 export interface IOrderShippingPoint extends IShippingPointBase {
@@ -113,6 +111,15 @@ export interface IOrderRoute {
 }
 
 export type OrderDirection = 'import' | 'export' | 'internal';
+
+export function getSegmentsByContainerID(segments?: ReadonlyArray<IOrderSegment>, id?: string): IOrderSegment[] | undefined {
+	return segments?.filter(s => s.containerID === id);
+}
+
+export function getSegmentCounterparty(orderDto?: IExpressOrderDto | null, segment?: IOrderSegment): IOrderCounterparty | undefined {
+	const contactID = segment?.by?.contactID;
+	return contactID ? orderDto?.counterparties?.find(c => c.contactID === contactID) : undefined;
+}
 
 export interface IExpressOrderDto extends IFreightOrderBase {
 	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
@@ -188,6 +195,7 @@ export interface ISegmentEndpoint extends ISegmentCounterparty {
 }
 
 export interface ISegmentKey {
+	readonly containerID: string;
 	readonly from: ISegmentEndpoint;
 	readonly to: ISegmentEndpoint;
 	readonly by?: ISegmentCounterparty;
@@ -197,13 +205,16 @@ export interface INewSegmentContainer {
 	readonly id: string;
 }
 
-export interface IAddSegmentsRequest extends ISegmentKey, IExpressOrderRequest {
+export interface IAddSegmentsRequest extends IExpressOrderRequest {
+	readonly from: ISegmentEndpoint;
+	readonly to: ISegmentEndpoint;
+	readonly by?: ISegmentCounterparty;
 	readonly containers: INewSegmentContainer[];
 }
 
 export interface IUpdateShippingPointRequest extends IExpressOrderRequest {
 	readonly shippingPointID: string;
-	readonly setNumbers: {[field: string]: number};
+	readonly setNumbers: { [field: string]: number };
 }
 
 export interface IContainerRequest extends IExpressOrderRequest {

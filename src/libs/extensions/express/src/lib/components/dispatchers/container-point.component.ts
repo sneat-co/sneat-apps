@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ContactSelectorService } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	ExpressOrderService,
+	ExpressOrderService, getSegmentCounterparty, getSegmentsByContainerID,
 	IExpressOrderContext,
 	IOrderContainer,
 	IOrderCounterparty,
@@ -50,16 +50,14 @@ export class ContainerPointComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['container'] || changes['shippingPoint']) {
-			const containerID = this.container?.id || '';
-			this.arriveSegment = this.order?.dto?.segments?.find(
-				s => s.containerIDs.includes(containerID) && s.to?.shippingPointID === this.shippingPoint?.id,
-			);
-			this.departSegment = this.order?.dto?.segments?.find(
-				s => s.containerIDs.includes(containerID) && s.from?.shippingPointID === this.shippingPoint?.id,
-			);
-			this.truckerTo = this.order?.dto?.counterparties?.find(c => c.contactID === this.arriveSegment?.by?.contactID);
-			this.truckerFrom = this.order?.dto?.counterparties?.find(c => c.contactID === this.departSegment?.by?.contactID);
+			const containerSegments = getSegmentsByContainerID(this.order?.dto?.segments, this.container?.id);
+			this.arriveSegment = containerSegments?.find(s => s.to?.shippingPointID === this.shippingPoint?.id);
+			this.departSegment = containerSegments?.find(s => s.from?.shippingPointID === this.shippingPoint?.id);
+
+			this.truckerTo = getSegmentCounterparty(this.order?.dto, this.arriveSegment);
+			this.truckerFrom = getSegmentCounterparty(this.order?.dto, this.departSegment);
 		}
+
 		console.log('ContainerPointComponent.ngOnChanges',
 			'order', this.order,
 			'container', this.container,

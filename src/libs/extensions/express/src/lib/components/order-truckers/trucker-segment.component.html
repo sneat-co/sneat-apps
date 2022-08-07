@@ -14,12 +14,12 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item-divider>
-		<ion-label>Containers</ion-label>
-	</ion-item-divider>
-	<sneat-segment-container *ngFor="let containerID of segment?.containerIDs"
-													 [order]="order"
-													 [containerID]="containerID"
-	>
-	</sneat-segment-container>
+	<ion-item>
+		<ion-label>Container: {{segment?.containerID}}</ion-label>
+	</ion-item>
+<!--	<sneat-segment-container *ngFor="let containerID of segment?.containerIDs"-->
+<!--													 [order]="order"-->
+<!--													 [containerID]="containerID"-->
+<!--	>-->
+<!--	</sneat-segment-container>-->
 </ion-card>
