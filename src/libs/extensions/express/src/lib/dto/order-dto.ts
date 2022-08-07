@@ -211,9 +211,7 @@ export interface IOrderSegment extends IOrderSegmentKey {
 }
 
 function groupBy<T, K>(x: ReadonlyArray<T>, f: (v: T) => string): { [id: string]: ReadonlyArray<T> } {
-	const result =  x.reduce((a: { [id: string]: T[] }, b: T) => ((a[f(b)] ||= []).push(b), a), {});
-	console.log('groupBy', x, ' => ', result);
-	return result;
+	return x.reduce((a: { [id: string]: T[] }, b: T) => ((a[f(b)] ||= []).push(b), a), {});
 }
 
 export function getOrderSegments(segments?: ReadonlyArray<IContainerSegment>): IOrderSegment[] {
@@ -230,7 +228,6 @@ export function getOrderSegments(segments?: ReadonlyArray<IContainerSegment>): I
 			containerSegments: s,
 		}),
 	);
-	console.log('getOrderSegments()', segments, ' => ', result);
 	return result;
 }
 
