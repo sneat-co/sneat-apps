@@ -121,7 +121,7 @@ export class NewSegmentComponent implements OnInit {
 			alert('containers are required to be selected');
 			return;
 		}
-		const request: IAddSegmentsRequest = {
+		let request: IAddSegmentsRequest = {
 			orderID: this.order.id,
 			teamID: this.order.team?.id,
 			containers: this.selectedContainerIDs.map(id => ({ id })),
@@ -140,6 +140,12 @@ export class NewSegmentComponent implements OnInit {
 				}
 				: undefined,
 		};
+		if (this.fromDate) {
+			request = { ...request, departsOn: this.fromDate };
+		}
+		if (this.toDate) {
+			request = { ...request, arrivesOn: this.toDate };
+		}
 		this.orderService
 			.addSegments(request)
 			.subscribe({

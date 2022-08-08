@@ -54,6 +54,13 @@ export class ContainerPointComponent implements OnChanges {
 			this.arriveSegment = containerSegments?.find(s => s.to?.shippingPointID === this.shippingPoint?.id);
 			this.departSegment = containerSegments?.find(s => s.from?.shippingPointID === this.shippingPoint?.id);
 
+			if (this.arriveSegment?.dates?.end) {
+				this.arrivesOn.setValue(this.arriveSegment.dates.end);
+			}
+			if (this.departSegment?.dates?.start) {
+				this.arrivesOn.setValue(this.departSegment.dates.start);
+			}
+
 			this.truckerTo = getSegmentCounterparty(this.order?.dto, this.arriveSegment);
 			this.truckerFrom = getSegmentCounterparty(this.order?.dto, this.departSegment);
 		}

@@ -240,10 +240,12 @@ export interface INewSegmentContainer {
 }
 
 export interface IAddSegmentsRequest extends IExpressOrderRequest {
-	readonly from: ISegmentEndpoint;
-	readonly to: ISegmentEndpoint;
+	readonly from: ISegmentCounterparty;
+	readonly to: ISegmentCounterparty;
 	readonly by?: ISegmentCounterparty;
 	readonly containers: INewSegmentContainer[];
+	readonly departsOn?: string;
+	readonly arrivesOn?: string;
 }
 
 export interface IUpdateShippingPointRequest extends IExpressOrderRequest {

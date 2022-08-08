@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label slot="start">From</ion-label>
+		<ion-label slot="start">{{endpointDirection|titlecase}}</ion-label>
 		<ion-segment [(ngModel)]="endpointType" (ionChange)="onEndpointTypeChanged($event)">
 			<ion-segment-button value="port">Port</ion-segment-button>
 			<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>

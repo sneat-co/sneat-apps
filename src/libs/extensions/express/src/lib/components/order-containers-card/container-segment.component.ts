@@ -66,4 +66,27 @@ export class ContainerSegmentComponent implements OnChanges {
 			},
 		});
 	}
+
+	get segmentDates(): string {
+		const dates = this?.segment?.dates;
+		if (!dates || !dates?.start && !dates.end) {
+			return '';
+		}
+		const { start, end } = dates;
+		const starts = start.split('-').reverse();
+		const ends = end.split('-').reverse();
+		if (start === end) {
+			return starts.join('/');
+		}
+		if (!end) {
+			return ends.join('/');
+		}
+		if (!start) {
+			return ends.join('/');
+		}
+		if (starts[2] === ends[2]) {
+			return `${starts[0]}/${starts[1]}-${ends.join('/')}`;
+		}
+		return `${starts.join('/')}-${ends.join('/')}`;
+	}
 }
