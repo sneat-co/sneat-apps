@@ -1,4 +1,5 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -21,6 +22,14 @@ export class SegmentContainerComponent implements OnChanges {
 
 	deleting = false;
 
+	departureDate = new FormControl<string>('');
+	arrivalDate = new FormControl<string>('');
+
+	form = new FormGroup({
+		departureDate: this.departureDate,
+		arrivalDate: this.arrivalDate,
+	});
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: ExpressOrderService,
@@ -31,6 +40,14 @@ export class SegmentContainerComponent implements OnChanges {
 		if (changes['containerID'] || changes['order']) {
 			this.container = this.order?.dto?.containers?.find(c => c.id === this.segment?.containerID);
 		}
+		if (changes['segment']) {
+			this.setDates();
+		}
+	}
+
+	private setDates(): void {
+		this.departureDate.setValue(this?.segment?.dates?.start || '');
+		this.arrivalDate.setValue(this?.segment?.dates?.end || '');
 	}
 
 	delete(): void {
@@ -56,5 +73,14 @@ export class SegmentContainerComponent implements OnChanges {
 				this.errorLogger.logError(err, 'Failed to delete container segment');
 			},
 		});
+	}
+
+	notImplemented(): void {
+		alert('Not implemented yet');
+	}
+
+	resetChanges(): void {
+		this.form.reset();
+		this.setDates();
 	}
 }
