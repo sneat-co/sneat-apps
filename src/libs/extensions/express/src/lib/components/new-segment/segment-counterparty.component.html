@@ -3,11 +3,12 @@
 		<ion-label slot="start" style="font-weight: bold">{{endpointDirection|titlecase}}</ion-label>
 		<ion-segment [(ngModel)]="endpointType" (ionChange)="onEndpointTypeChanged($event)">
 			<ion-segment-button value="port">Port</ion-segment-button>
-			<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
+			<ion-segment-button value="dispatcher" *ngIf="endpointDirection === 'from'">Dispatcher</ion-segment-button>
+			<ion-segment-button value="dispatcher" *ngIf="endpointDirection === 'to'">Receiver</ion-segment-button>
 		</ion-segment>
 	</ion-item-divider>
 	<sneat-contact-input
-		[label]="(endpointType||'Direction')|titlecase"
+		[label]="endpointType === 'port' ? 'Port' : 'At'"
 		[team]="order?.team"
 		[contactType]="endpointType === 'port' ? 'company' : 'location'"
 		[contactRole]="endpointType === 'port' ? 'port' : 'location'"

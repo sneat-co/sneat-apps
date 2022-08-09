@@ -7,7 +7,7 @@
 
 	<ion-input [readonly]="true" [color]="deleting ? 'medium' : undefined" [value]="contact?.brief?.title"></ion-input>
 	<ion-label color="medium" *ngIf="parentRole">{{subLabel}}</ion-label>
-	<span style="padding-left: 0.25em" *ngIf="parentContact?.brief?.countryID||parentContact?.dto?.countryID">{{(parentContact?.brief?.countryID||parentContact?.dto?.countryID)|countryFlag}}</span>
+	<span style="padding-left: 0.25em" *ngIf="parentRole && (parentContact?.brief?.countryID||parentContact?.dto?.countryID)">{{(parentContact?.brief?.countryID||parentContact?.dto?.countryID)|countryFlag}}</span>
 	<ion-input [value]="parentContact?.brief?.title" *ngIf="parentRole"></ion-input>
 	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">
 		<ion-button (click)="openContactSelector($event)" *ngIf="!deleting">

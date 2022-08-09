@@ -21,9 +21,9 @@ export class NewSegmentFormComponent implements OnInit {
 
 	byContact?: IContactContext;
 	fromContact?: IContactContext = {
-		id: 'suxx',
-		team: { id: 'suxx_team' },
-		brief: { id: 'suxx', type: 'company', title: 'suxx', roles: ['port'] },
+		id: '',
+		team: { id: '' },
+		brief: { id: '', type: 'company', title: '', roles: ['port'] },
 	};
 	toContact?: IContactContext;
 

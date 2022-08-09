@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
@@ -8,7 +8,7 @@ import { ContactSelectorService, IContactSelectorOptions } from '../contact-sele
 	selector: 'sneat-contact-input',
 	templateUrl: './contact-input.component.html',
 })
-export class ContactInputComponent {
+export class ContactInputComponent implements OnChanges {
 
 	@Input() canChangeContact = true;
 	@Input() canReset = false;
@@ -34,6 +34,16 @@ export class ContactInputComponent {
 		private readonly contactSelectorService: ContactSelectorService,
 	) {
 
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		const contactChange = changes['contact'];
+		if (contactChange) {
+			const prevContact = contactChange.previousValue as IContactContext | undefined;
+			if (prevContact &&  prevContact.id !== this.contact?.id && !changes['parentContact']) {
+				this.parentContact = undefined;
+			}
+		}
 	}
 
 	get contactLink(): string {

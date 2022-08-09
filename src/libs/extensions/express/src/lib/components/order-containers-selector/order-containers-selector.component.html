@@ -8,8 +8,8 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-	<ion-item *ngFor="let c of containers">
-		<ion-checkbox slot="start" [(ngModel)]="c.checked" (ionChange)="onToggled()"></ion-checkbox>
-		<ion-label>{{c.type|uppercase}} &mdash; <span *ngIf="c.number">#{{c.number}}</span></ion-label>
-	</ion-item>
+	<sneat-order-container-form *ngFor="let c of containers; trackBy: id"
+															[container]="c"
+	></sneat-order-container-form>
+
 </ion-card>

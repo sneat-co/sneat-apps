@@ -58,33 +58,41 @@
 
 </ion-card>
 
-<sneat-segment-counterparty
-	[endpointDirection]="'from'"
-	[readonly]="readonly"
-	[order]="order"
-	[(contact)]="fromContact"
-	[(date)]="fromDate"
-	[(endpointType)]="from"
-	(endpointTypeChange)="onFromChanged($event)"
-></sneat-segment-counterparty>
-
-<div style="text-align: center">
-	<ion-button fill="clear" color="medium" (click)="switchFromWithTo()">
-		<ion-icon name="arrow-down-outline" slot="start"></ion-icon>
-		<ion-label style="text-transform: none">Switch 'from' & 'to'</ion-label>
-		<ion-icon name="arrow-up-outline" slot="end"></ion-icon>
-	</ion-button>
-</div>
-
-<sneat-segment-counterparty
-	[endpointDirection]="'to'"
-	[readonly]="readonly"
-	[order]="order"
-	[(contact)]="toContact"
-	[(date)]="toDate"
-	[(endpointType)]="to"
-	(endpointTypeChange)="onToChanged($event)"
-></sneat-segment-counterparty>
+<ion-grid class="ion-grid-layout">
+	<ion-row>
+		<ion-col size="12" size-lg="6">
+			<sneat-segment-counterparty
+				[endpointDirection]="'from'"
+				[readonly]="readonly"
+				[order]="order"
+				[(contact)]="fromContact"
+				[(date)]="fromDate"
+				[(endpointType)]="from"
+				(endpointTypeChange)="onFromChanged($event)"
+			></sneat-segment-counterparty>
+		</ion-col>
+<!--		<ion-col size="2">-->
+<!--			<div style="text-align: center">-->
+<!--				<ion-button fill="clear" color="medium" (click)="switchFromWithTo()">-->
+<!--					<ion-icon name="arrow-down-outline" slot="start"></ion-icon>-->
+<!--					<ion-label style="text-transform: none">Switch 'from' & 'to'</ion-label>-->
+<!--					<ion-icon name="arrow-up-outline" slot="end"></ion-icon>-->
+<!--				</ion-button>-->
+<!--			</div>-->
+<!--		</ion-col>-->
+		<ion-col size="12" size-lg="6">
+			<sneat-segment-counterparty
+				[endpointDirection]="'to'"
+				[readonly]="readonly"
+				[order]="order"
+				[(contact)]="toContact"
+				[(date)]="toDate"
+				[(endpointType)]="to"
+				(endpointTypeChange)="onToChanged($event)"
+			></sneat-segment-counterparty>
+		</ion-col>
+	</ion-row>
+</ion-grid>
 
 <sneat-order-containers-selector *ngIf="!container"
 																 [order]="order"

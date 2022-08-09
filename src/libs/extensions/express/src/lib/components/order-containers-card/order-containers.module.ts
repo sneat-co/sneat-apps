@@ -27,9 +27,10 @@ import { OrderContainersComponent } from './order-containers.component';
 		NewContainerComponent,
 		ContainerSegmentComponent,
 	],
-	exports: [
-		OrderContainersComponent,
-	],
+  exports: [
+    OrderContainersComponent,
+    ContainerFormComponent,
+  ],
 })
 export class OrderContainersModule {
 
