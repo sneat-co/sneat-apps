@@ -37,6 +37,10 @@ export const expressRoutes: Routes = [
 		loadChildren: () => import('../pages/order-page/express-order-page.module').then(m => m.ExpressOrderPageModule),
 	},
 	{
+		path: 'order/:orderID/new-segments',
+		loadChildren: () => import('../pages/new-segment/new-segment-page.module').then(m => m.NewSegmentPageModule),
+	},
+	{
 		path: 'order/:orderID/print',
 		loadChildren: () => import('../prints/order-print-routing.module').then(m => m.OrderPrintRoutingModule),
 	},

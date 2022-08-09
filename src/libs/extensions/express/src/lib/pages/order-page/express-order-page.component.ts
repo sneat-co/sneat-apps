@@ -4,8 +4,8 @@ import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ExpressOrderService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
-import { NewSegmentComponent } from '../../components/new-segment';
-import { NewSegmentService } from '../../components/new-segment/new-segment.service';
+import { NewSegmentFormComponent } from '../../components/new-segment';
+import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 @Component({
@@ -41,10 +41,12 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 		if (!this.order) {
 			return;
 		}
+		const props: INewSegmentParams = {
+			order: this.order,
+		};
 		try {
-			await this.newSegmentService.addSegment({
-				order: this.order,
-			});
+			// await this.newSegmentService.openNewSegmentDialog(props);
+			this.newSegmentService.goNewSegmentPage(props).catch(console.error);
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to open new segment form');
 		}

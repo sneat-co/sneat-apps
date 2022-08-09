@@ -12,6 +12,10 @@ import { RouterModule } from '@angular/router';
 				path: 'expedition-doc',
 				loadChildren: () => import('./order-expedition-print-doc/order-expedition-print-doc.module').then(m => m.OrderExpeditionPrintDocModule),
 			},
+			{
+				path: 'trucker-summary',
+				loadChildren: () => import('./order-trucker-summary/order-trucker-summary.module').then(m => m.OrderTruckerSummaryModule),
+			}
 		]),
 	],
 })

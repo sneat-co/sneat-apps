@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { excludeZeroValues } from '@sneat/core';
-import { IExpressOrderContext } from '../..';
+import { IExpressOrderContext } from '../../dto';
 
 @Component({
 	selector: 'sneat-new-order-containers-form',

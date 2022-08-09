@@ -1,0 +1,84 @@
+<ion-card *ngIf="container">
+	<ion-item>
+		<ion-label>Container: {{container.type}}</ion-label>
+	</ion-item>
+</ion-card>
+
+<ion-card>
+	<!--		<ion-item-divider color="light">-->
+	<!--			<ion-label>Required fields</ion-label>-->
+	<!--		</ion-item-divider>-->
+	<!--		<sneat-express-order-counterparty-input-->
+	<!--			label="🚛 By"-->
+	<!--			[team]="order?.team"-->
+	<!--			counterpartyRole="trucker"-->
+	<!--			contactType="company"-->
+	<!--			contactRole="trucker"-->
+	<!--			[readonly]="readonly"-->
+	<!--		>-->
+	<!--		</sneat-express-order-counterparty-input>-->
+	<sneat-contact-input
+		label="🚛 By"
+		[team]="order?.team"
+		[(contact)]="byContact"
+		contactType="company"
+		contactRole="trucker"
+		[readonly]="readonly"
+		(contactChange)="onContactChanged('by', $event)"
+	></sneat-contact-input>
+
+	<!--		<ion-grid class="ion-grid-layout">-->
+	<!--			<ion-row>-->
+	<!--				<ion-col>-->
+	<!--				</ion-col>-->
+	<!--				<ion-col>-->
+	<!--					<ion-item>-->
+	<!--						<ion-label>On</ion-label>-->
+	<!--						<ion-input type="date"></ion-input>-->
+	<!--					</ion-item>-->
+	<!--				</ion-col>-->
+	<!--			</ion-row>-->
+	<!--		</ion-grid>-->
+
+
+</ion-card>
+
+<sneat-segment-counterparty
+	[endpointDirection]="'from'"
+	[readonly]="readonly"
+	[order]="order"
+	[(contact)]="fromContact"
+	[(date)]="fromDate"
+	[(endpointType)]="from"
+	(endpointTypeChange)="onFromChanged($event)"
+></sneat-segment-counterparty>
+
+<div style="text-align: center">
+	<ion-button fill="clear" color="medium" (click)="switchFromWithTo()">
+		<ion-icon name="arrow-down-outline" slot="start"></ion-icon>
+		<ion-label style="text-transform: none">Switch 'from' & 'to'</ion-label>
+		<ion-icon name="arrow-up-outline" slot="end"></ion-icon>
+	</ion-button>
+</div>
+
+<sneat-segment-counterparty
+	[endpointDirection]="'to'"
+	[readonly]="readonly"
+	[order]="order"
+	[(contact)]="toContact"
+	[(date)]="toDate"
+	[(endpointType)]="to"
+	(endpointTypeChange)="onToChanged($event)"
+></sneat-segment-counterparty>
+
+<sneat-order-containers-selector *ngIf="!container"
+																 [order]="order"
+																 [(selectedContainerIDs)]="selectedContainerIDs"
+></sneat-order-containers-selector>
+
+<div class="ion-padding">
+	<ion-button (click)="submitAddSegment($event)">Add segment</ion-button>
+	<ion-button color="medium" fill="clear" class="ion-margin-start" (click)="close()">Cancel</ion-button>
+</div>
+
+

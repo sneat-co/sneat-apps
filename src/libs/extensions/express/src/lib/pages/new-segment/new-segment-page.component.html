@@ -1,0 +1,12 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="/space/{{team.type}}/{{team.id}}/order/{{order?.id}}"></ion-back-button>
+		</ion-buttons>
+		<ion-title>New segment at order # {{order?.id}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<sneat-new-segment-form [order]="order"
+	></sneat-new-segment-form>
+</ion-content>

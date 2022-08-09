@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label slot="start">{{endpointDirection|titlecase}}</ion-label>
+		<ion-label slot="start" style="font-weight: bold">{{endpointDirection|titlecase}}</ion-label>
 		<ion-segment [(ngModel)]="endpointType" (ionChange)="onEndpointTypeChanged($event)">
 			<ion-segment-button value="port">Port</ion-segment-button>
 			<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
@@ -18,6 +18,14 @@
 	></sneat-contact-input>
 	<ion-item>
 		<ion-label color="medium">On</ion-label>
+		<ion-input type="date" [(ngModel)]="date" (ionChange)="onDateChanged()"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium">Ref #</ion-label>
+		<ion-input [(ngModel)]="date" (ionChange)="onDateChanged()"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium">Ref #</ion-label>
 		<ion-input type="date" [(ngModel)]="date" (ionChange)="onDateChanged()"></ion-input>
 	</ion-item>
 </ion-card>

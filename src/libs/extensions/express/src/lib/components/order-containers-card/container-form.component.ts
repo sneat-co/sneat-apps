@@ -110,7 +110,7 @@ export class ContainerFormComponent implements OnChanges {
 		if (!this.order) {
 			return;
 		}
-		await this.newSegmentService.addSegment({
+		await this.newSegmentService.openNewSegmentDialog({
 			order: this.order,
 			container: this.container,
 		});

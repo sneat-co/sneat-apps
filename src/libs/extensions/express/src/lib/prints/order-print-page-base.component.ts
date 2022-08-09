@@ -1,7 +1,9 @@
 import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExpressOrderService, IExpressOrderContext, IOrderCounterparty } from '../..';
 import { TeamComponentBaseParams } from '@sneat/team/components';
+import { IExpressOrderContext, IOrderCounterparty } from '../dto';
+import { ExpressOrderService } from '../services';
+
 import { OrderPageBaseComponent } from '../pages/order-page-base.component';
 
 @Directive() // we need this decorator so we can implement Angular interfaces

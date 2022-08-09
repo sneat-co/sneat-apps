@@ -13,6 +13,7 @@ import { OrderTruckerComponent } from '../../components/order-truckers/order-tru
 import { OrderTruckersComponent } from '../../components/order-truckers/order-truckers.component';
 import { SegmentContainerComponent } from '../../components/order-truckers/segment-container.component';
 import { TruckerSegmentComponent } from '../../components/order-truckers/trucker-segment.component';
+import { OrderPrintServiceModule } from '../../prints/order-print-service.module';
 import { ExpressOrderPageComponent } from './express-order-page.component';
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     DispatchersModule,
     SneatPipesModule,
     ReactiveFormsModule,
+		OrderPrintServiceModule,
   ],
 	declarations: [
 		ExpressOrderPageComponent,

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IContactContext } from '@sneat/team/models';
-import { IExpressOrderContext } from '../..';
+import { IExpressOrderContext } from '../../dto';
 
 export type SegmentEndpointType = 'port' | 'dispatcher';
 

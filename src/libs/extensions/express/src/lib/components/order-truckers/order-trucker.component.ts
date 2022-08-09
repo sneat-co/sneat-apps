@@ -9,6 +9,7 @@ import {
 	getOrderSegments,
 } from '../..';
 import { ITeamContext } from '@sneat/team/models';
+import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-print.service';
 
 @Component({
 	selector: 'sneat-order-trucker',
@@ -28,6 +29,7 @@ export class OrderTruckerComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly ordersService: ExpressOrderService,
+		private readonly orderPrintService: OrderPrintService,
 	) {
 	}
 
@@ -67,5 +69,19 @@ export class OrderTruckerComponent implements OnChanges {
 
 	replaceTrucker(): void {
 		alert('not implemented yet');
+	}
+
+	print(event: Event): void {
+		if (!this.order) {
+			alert('Can not print without order context');
+			return;
+		}
+		const ctx: IOrderPrintedDocContext = {
+			...this.order,
+			params: {
+				truckerID: this?.trucker?.contactID,
+			},
+		}
+		this.orderPrintService.openOrderPrintedDocument(event, 'trucker-summary', ctx)
 	}
 }

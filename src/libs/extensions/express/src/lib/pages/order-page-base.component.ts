@@ -1,7 +1,8 @@
-import { Directive, Inject, Injectable, InjectionToken } from '@angular/core';
+import { Directive, Inject, InjectionToken } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExpressOrderService, IExpressOrderContext } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { IExpressOrderContext } from '../dto';
+import { ExpressOrderService } from '../services';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
 export class OrderPageBaseComponent extends TeamBaseComponent {

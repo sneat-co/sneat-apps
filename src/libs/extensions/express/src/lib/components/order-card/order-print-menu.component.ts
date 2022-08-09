@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext } from '../../';
 
@@ -12,13 +13,15 @@ export class OrderPrintMenuComponent {
 	@Input() order?: IExpressOrderContext;
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
 	) {
 	}
 
 	print(event: Event, path: string): void { // TODO: can we dismiss popover declaratively?
-		console.log('print()', path);
+		// console.log('print()', path);
 		event.stopPropagation();
-		this.popoverController.dismiss();
+		this.popoverController.dismiss()
+			.catch(this.errorLogger.logErrorHandler('Failed to dismiss popover controller'));
 	}
 }

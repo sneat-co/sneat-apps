@@ -2,15 +2,14 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
-import { ExpressOrderService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
 import { SegmentEndpointType } from './segment-counterparty.component';
-
+import { ExpressOrderService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
 
 @Component({
-	selector: 'sneat-new-segment',
-	templateUrl: './new-segment.component.html',
+	selector: 'sneat-new-segment-form',
+	templateUrl: './new-segment-form.component.html',
 })
-export class NewSegmentComponent implements OnInit {
+export class NewSegmentFormComponent implements OnInit {
 	@Input() order?: IExpressOrderContext;
 	@Input() container?: IOrderContainer;
 
