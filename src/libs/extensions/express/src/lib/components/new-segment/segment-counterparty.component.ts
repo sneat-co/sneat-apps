@@ -16,6 +16,7 @@ export class SegmentCounterpartyComponent {
 	@Input() readonly = false;
 
 	@Input() date = '';
+	refNumber = '';
 
 	@Output() endpointTypeChange = new EventEmitter<SegmentEndpointType>();
 	@Output() dateChange = new EventEmitter<string>;

@@ -5,6 +5,7 @@
 				[label]="label"
 				[team]="team"
 				[order]="order"
+				[selectOnly]="selectOnly"
 				(orderChange)="onOrderChanged($event)"
 				[readonly]="readonly"
 				[counterpartyRole]="counterpartyRole"
@@ -24,7 +25,7 @@
 									 (ionChange)="onRefNumberChanged($event)"
 									 (keyup.enter)="saveRefNumber($event)"
 				></ion-input>
-				<ion-buttons slot="end" *ngIf="order?.id">
+				<ion-buttons slot="end" *ngIf="order?.id && !selectOnly">
 					<ion-button color="medium" *ngIf="isRefNumberChanged && !savingRefNumber"
 											title="Cancel Reference # changes"
 											(click)="cancelRefNumberChanges($event)">

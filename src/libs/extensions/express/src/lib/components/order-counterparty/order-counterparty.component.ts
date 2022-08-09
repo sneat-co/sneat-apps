@@ -29,10 +29,12 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() contactRole?: ExpressOrderContactRole;
 	@Input() parentRole?: ExpressOrderContactRole;
 
+	@Input() selectOnly = false;
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
 
 	counterparty?: IOrderCounterparty;
+	@Output() readonly counterpartyChange = new EventEmitter<IOrderCounterparty>();
 
 	refNumber = '';
 

@@ -5,6 +5,9 @@
 </ion-card>
 
 <ion-card>
+	<ion-item-divider color="light">
+		<ion-label>Delivery</ion-label>
+	</ion-item-divider>
 	<!--		<ion-item-divider color="light">-->
 	<!--			<ion-label>Required fields</ion-label>-->
 	<!--		</ion-item-divider>-->
@@ -17,15 +20,27 @@
 	<!--			[readonly]="readonly"-->
 	<!--		>-->
 	<!--		</sneat-express-order-counterparty-input>-->
-	<sneat-contact-input
-		label="🚛 By"
-		[team]="order?.team"
-		[(contact)]="byContact"
-		contactType="company"
-		contactRole="trucker"
-		[readonly]="readonly"
-		(contactChange)="onContactChanged('by', $event)"
-	></sneat-contact-input>
+	<sneat-express-order-counterparty label="🚛 By"
+																		[team]="order?.team"
+																		[selectOnly]="true"
+																		[order]="order"
+																		[readonly]="readonly"
+																		counterpartyRole="trucker"
+																		contactRole="trucker"
+																		contactType="company"
+																		labelPosition="fixed"
+																		(counterpartyChange)="onByCounterpartyChanged($event)"
+	></sneat-express-order-counterparty>
+
+<!--	<sneat-contact-input-->
+<!--		label="🚛 By"-->
+<!--		[team]="order?.team"-->
+<!--		[(contact)]="byContact"-->
+<!--		contactType="company"-->
+<!--		contactRole="trucker"-->
+<!--		[readonly]="readonly"-->
+<!--		(contactChange)="onContactChanged('by', $event)"-->
+<!--	></sneat-contact-input>-->
 
 	<!--		<ion-grid class="ion-grid-layout">-->
 	<!--			<ion-row>-->

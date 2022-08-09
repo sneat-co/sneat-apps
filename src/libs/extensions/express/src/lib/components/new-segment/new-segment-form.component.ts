@@ -3,7 +3,13 @@ import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
 import { SegmentEndpointType } from './segment-counterparty.component';
-import { ExpressOrderService, IAddSegmentsRequest, IExpressOrderContext, IOrderContainer } from '../..';
+import {
+	ExpressOrderService,
+	IAddSegmentsRequest,
+	IExpressOrderContext,
+	IOrderContainer,
+	IOrderCounterparty,
+} from '../..';
 
 @Component({
 	selector: 'sneat-new-segment-form',
@@ -30,6 +36,8 @@ export class NewSegmentFormComponent implements OnInit {
 	toDate = '';
 
 	selectedContainerIDs: string[] = [];
+
+	private byCounterparty?: IOrderCounterparty;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -58,6 +66,12 @@ export class NewSegmentFormComponent implements OnInit {
 			this.from = 'dispatcher';
 		}
 		this.toContact = undefined;
+	}
+
+
+	onByCounterpartyChanged(by: IOrderCounterparty): void {
+		console.log('onByCounterpartyChanged', by);
+		this.byCounterparty = by;
 	}
 
 	onContactChanged(what: 'by' | 'from' | 'to', contact: IContactContext): void {

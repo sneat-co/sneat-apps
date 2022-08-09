@@ -26,6 +26,8 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() parentRole?: ExpressOrderContactRole;
 	@Input() canChangeContact = true;
 
+	@Input() selectOnly = false;
+
 	@Input() order?: IExpressOrderContext;
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
@@ -67,8 +69,10 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				name: { full: counterparty.title },
 			},
 		});
-		const counterparty = this.order?.dto?.counterparties?.find(c => c.role === this.counterpartyRole);
-		if (counterparty) {
+		this.contact = undefined;
+		const counterparties = this.order?.dto?.counterparties?.filter(c => c.role === this.counterpartyRole);
+		if (counterparties && counterparties.length === 1) {
+			const counterparty = counterparties[0];
 			this.contact = contactFromCounterparty(counterparty);
 			if (counterparty.parentContactID) {
 				const parentCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === counterparty.parentContactID);
@@ -76,13 +80,14 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 					this.parentContact = contactFromCounterparty(parentCounterparty);
 				}
 			}
-		} else {
-			this.contact = undefined;
 		}
 	}
 
 	protected onContactChanged(contact?: IContactContext): void {
 		console.log('onContactChanged(),', this.contactRole, contact);
+		if (this.selectOnly) {
+			return;
+		}
 		if (!this.team) {
 			console.error('onContactChanged(): !this.team');
 			return;
