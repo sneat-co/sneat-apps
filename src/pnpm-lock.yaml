@@ -20,7 +20,7 @@ specifiers:
   '@ionic-native/core': 5.36.0
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
-  '@ionic/angular': 6.2.1
+  '@ionic/angular': 6.2.2
   '@nrwl/angular': 14.5.4
   '@nrwl/cli': 14.5.4
   '@nrwl/cypress': 14.5.4
@@ -74,7 +74,7 @@ dependencies:
   '@ionic-native/core': 5.36.0_rxjs@7.5.5
   '@ionic-native/splash-screen': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
   '@ionic-native/status-bar': 5.36.0_fuzag4z3coiuptkrjsua2f2hz4
-  '@ionic/angular': 6.2.1_5rx2r46xxk4noayp7bqfagggre
+  '@ionic/angular': 6.2.2_5rx2r46xxk4noayp7bqfagggre
   '@nrwl/angular': 14.5.4_enkalhfmmhppkiioualc23he3u
   '@sentry/angular': 7.9.0_4coiyulseineoa42gd4lla2x5i
   '@sentry/tracing': 7.9.0
@@ -2678,8 +2678,8 @@ packages:
       rxjs: 7.5.5
     dev: false
 
-  /@ionic/angular/6.2.1_5rx2r46xxk4noayp7bqfagggre:
-    resolution: {integrity: sha512-OkbxUnSU4IuVIueymrPNNk/26L0wdy5fvwrULrr1r9zigVlhbTMg10w05ljyars4Oi3JwN8fUct3SR8RFoj7bA==}
+  /@ionic/angular/6.2.2_5rx2r46xxk4noayp7bqfagggre:
+    resolution: {integrity: sha512-1GeFSgqYHkETNOKfJvZC0tL+8s2wEGS4P5KWOmpdqHE31THHGPZWOfkHrw871/KmFPTDYJSWhGjRYyHJZuZ/Yw==}
     peerDependencies:
       '@angular/core': '>=12.0.0'
       '@angular/forms': '>=12.0.0'
@@ -2690,15 +2690,15 @@ packages:
       '@angular/core': 14.1.2_rxjs@7.5.5+zone.js@0.11.7
       '@angular/forms': 14.1.2_hipdq3j5vsaeqweib2uamedkba
       '@angular/router': 14.1.2_hipdq3j5vsaeqweib2uamedkba
-      '@ionic/core': 6.2.1
+      '@ionic/core': 6.2.2
       jsonc-parser: 3.1.0
       rxjs: 7.5.5
       tslib: 2.4.0
       zone.js: 0.11.7
     dev: false
 
-  /@ionic/core/6.2.1:
-    resolution: {integrity: sha512-bWlE2ZMR7tMyqcBhncc21zZPMZfCEoyGQP2bdu/ft1uov0ozw/wfETygd07C+0DOkbU6x1OYncIvo+1bzK4alA==}
+  /@ionic/core/6.2.2:
+    resolution: {integrity: sha512-neE+JhtQ7Kb4nGoKR3e55edHQot5BZTw+woV9+pbyCXP1jGeyFeWWPYBYYOkm05TSEkHgh0v6NkV9y31k8GTNw==}
     dependencies:
       '@stencil/core': 2.16.1
       ionicons: 6.0.2
@@ -5124,7 +5124,7 @@ packages:
       loader-utils: 2.0.2
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.73.0_esbuild@0.14.49
+      webpack: 5.73.0
 
   /babel-plugin-const-enum/1.2.0_@babel+core@7.18.6:
     resolution: {integrity: sha512-o1m/6iyyFnp9MRsK1dHF3bneqyf3AlM2q3A/YbgQr2pCat6B6XJVDv2TXqzfY2RYUi4mak6WAksSBPlyYGx9dg==}
