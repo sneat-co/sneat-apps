@@ -9,7 +9,7 @@ import {
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
 	IExpressOrderContext, IOrderCounterparty,
-	IOrderShippingPointCounterparty,
+	IOrderCounterpartyRef,
 } from '../..';
 
 interface ICounterparty extends IOrderCounterparty {
@@ -33,7 +33,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() counterpartyRole: CounterpartyRole = 'dispatch-point';
 	@Input() contactType?: ContactType;
 
-	readonly deleting: IOrderShippingPointCounterparty[] = [];
+	readonly deleting: IOrderCounterpartyRef[] = [];
 
 	public counterparties?: ICounterparty[];
 

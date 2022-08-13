@@ -1,5 +1,5 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
 import { SegmentEndpointType } from './segment-counterparty.component';
@@ -18,6 +18,10 @@ import {
 export class NewSegmentFormComponent implements OnInit {
 	@Input() order?: IExpressOrderContext;
 	@Input() container?: IOrderContainer;
+	@Input() isInModal?: boolean;
+
+	@Output() readonly created = new EventEmitter<void>();
+	@Output() readonly canceled = new EventEmitter<void>();
 
 	byContact?: IContactContext;
 	fromContact?: IContactContext = {
@@ -35,22 +39,19 @@ export class NewSegmentFormComponent implements OnInit {
 	fromDate = '';
 	toDate = '';
 
+	fromRefNumber = '';
+	toRefNumber = '';
+	byRefNumber = '';
+
 	selectedContainerIDs: string[] = [];
 
-	private byCounterparty?: IOrderCounterparty;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		protected readonly modalController: ModalController,
 		private readonly orderService: ExpressOrderService,
 	) {
 	}
 
-	protected close(): void {
-		this.modalController
-			.dismiss()
-			.catch(this.errorLogger.logErrorHandler('failed to close NewSegmentComponent'));
-	}
 
 	onFromChanged(endpointType: SegmentEndpointType): void {
 		console.log('NewSegmentComponent.onFromChanged()', endpointType, this.from);
@@ -68,11 +69,6 @@ export class NewSegmentFormComponent implements OnInit {
 		this.toContact = undefined;
 	}
 
-
-	onByCounterpartyChanged(by: IOrderCounterparty): void {
-		console.log('onByCounterpartyChanged', by);
-		this.byCounterparty = by;
-	}
 
 	onContactChanged(what: 'by' | 'from' | 'to', contact: IContactContext): void {
 		console.log('NewSegmentComponent.onContactChanged()', what, contact);
@@ -122,6 +118,9 @@ export class NewSegmentFormComponent implements OnInit {
 			alert('team is required');
 			return;
 		}
+		if (!this.byContact && !confirm('Do you want to add a segment without a carrier?')) {
+			return;
+		}
 		if (!this.fromContact) {
 			alert('from contact is required');
 			return;
@@ -134,51 +133,51 @@ export class NewSegmentFormComponent implements OnInit {
 			alert('containers are required to be selected');
 			return;
 		}
-		let request: IAddSegmentsRequest = {
+		const byCounterparty: IOrderCounterparty | undefined = undefined;
+
+		const request: IAddSegmentsRequest = excludeEmpty({
 			orderID: this.order.id,
 			teamID: this.order.team?.id,
 			containers: this.selectedContainerIDs.map(id => ({ id })),
-			from: {
-				contactID: this.fromContact.id,
-				role: this.from === 'port' ? 'port_from' : 'dispatch-point',
-			},
-			to: {
-				contactID: this.toContact.id,
-				role: this.to === 'port' ? 'port_to' : 'dispatch-point',
-			},
-			by: this.byContact?.id
-				? {
-					contactID: this.byContact.id,
-					role: 'trucker',
-				}
-				: undefined,
-		};
-		if (this.fromDate) {
-			request = { ...request, departsOn: this.fromDate };
-		}
-		if (this.toDate) {
-			request = { ...request, arrivesOn: this.toDate };
-		}
+			from: excludeEmpty({
+				counterparty: {
+					contactID: this.fromContact.id,
+					role: this.from === 'port' ? 'port_from' : 'dispatch-point',
+				},
+				date: this.fromDate,
+				refNumber: this.fromRefNumber,
+			}),
+			to: excludeEmpty({
+				counterparty: {
+					contactID: this.toContact.id,
+					role: this.to === 'port' ? 'port_to' : 'dispatch-point',
+				},
+				date: this.toDate,
+				refNumber: this.toRefNumber,
+			}),
+			by: byCounterparty,
+			byRefNumber: this.byRefNumber,
+		});
 		this.orderService
 			.addSegments(request)
 			.subscribe({
-				next: () => this.close(),
+				next: () => this.created.emit(),
 				error: this.errorLogger.logErrorHandler('Failed to add segments'),
 			});
 	}
 
-	protected switchFromWithTo(): void {
-		const from = this.from, to = this.to;
-		const fromContact = this.fromContact, toContact = this.toContact;
-		const fromDate = this.fromDate, toDate = this.toDate;
-		this.from = to;
-		this.to = from;
-		setTimeout(() => {
-			this.fromContact = toContact;
-			this.toContact = fromContact;
-			this.fromDate = toDate;
-			this.toDate = fromDate;
-		}, 10);
-	}
+	// protected switchFromWithTo(): void {
+	// 	const from = this.from, to = this.to;
+	// 	const fromContact = this.fromContact, toContact = this.toContact;
+	// 	const fromDate = this.fromDate, toDate = this.toDate;
+	// 	this.from = to;
+	// 	this.to = from;
+	// 	setTimeout(() => {
+	// 		this.fromContact = toContact;
+	// 		this.toContact = fromContact;
+	// 		this.fromDate = toDate;
+	// 		this.toDate = fromDate;
+	// 	}, 10);
+	// }
 
 }

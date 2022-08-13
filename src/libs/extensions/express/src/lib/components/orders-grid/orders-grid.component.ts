@@ -2,15 +2,15 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderShippingPointCounterparty } from '../../dto/order-dto';
+import { IExpressOrderContext, IOrderCounterpartyRef } from '../../dto/order-dto';
 
 interface OrderRow {
 	readonly id: string;
 	readonly status?: string;
 	readonly direction?: string;
-	readonly carrier?: IOrderShippingPointCounterparty;
-	readonly buyer?: IOrderShippingPointCounterparty;
-	readonly consignee?: IOrderShippingPointCounterparty;
+	readonly carrier?: IOrderCounterpartyRef;
+	readonly buyer?: IOrderCounterpartyRef;
+	readonly consignee?: IOrderCounterpartyRef;
 	readonly containers?: string;
 }
 

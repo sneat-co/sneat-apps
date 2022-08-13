@@ -7,7 +7,7 @@ import {
 	CounterpartyRole, IDeleteCounterpartyRequest,
 	IExpressOrderContext,
 	IOrderCounterparty,
-	IOrderShippingPointCounterparty,
+	IOrderCounterpartyRef,
 	ISetOrderCounterpartyRequest,
 } from '../../dto';
 
@@ -31,7 +31,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
 
-	@Output() counterpartyChange = new EventEmitter<IOrderShippingPointCounterparty>();
+	@Output() counterpartyChange = new EventEmitter<IOrderCounterpartyRef>();
 
 	@Input() label = 'Counterparty';
 

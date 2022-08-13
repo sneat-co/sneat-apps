@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ExpressOrderService } from '../../services';
+import { ExpressOrderService, OrderNavService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 @Component({
@@ -13,8 +13,12 @@ export class NewSegmentPageComponent extends OrderPageBaseComponent {
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		orderService: ExpressOrderService,
+		private readonly orderNavService: OrderNavService,
 	) {
 		super('NewSegmentPageComponent', route, teamParams, orderService);
 	}
 
+	back(): void {
+		this.navController.pop().catch(this.errorLogger.logErrorHandler('Failed to navigate back'));
+	}
 }

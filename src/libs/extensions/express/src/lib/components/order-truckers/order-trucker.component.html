@@ -3,16 +3,18 @@
 		<ion-label *ngIf="trucker" style="font-weight: bold">{{trucker.countryID|countryFlag}} {{trucker.title}}</ion-label>
 		<ion-label *ngIf="!trucker" color="danger" style="font-weight: bold">Unassigned</ion-label>
 		<ion-buttons slot="end">
-<!--			<ion-button color="medium" (click)="replaceTrucker()">-->
-<!--				<ion-label *ngIf="!trucker">Assign all</ion-label>-->
-<!--				<ion-label *ngIf="trucker">Replace carrier</ion-label>-->
-<!--			</ion-button>-->
+			<!--			<ion-button color="medium" (click)="replaceTrucker()">-->
+			<!--				<ion-label *ngIf="!trucker">Assign all</ion-label>-->
+			<!--				<ion-label *ngIf="trucker">Replace carrier</ion-label>-->
+			<!--			</ion-button>-->
 			<ion-button *ngIf="trucker" color="medium" (click)="print($event)" title="Print trucker instructions">
 				<ion-icon name="print-outline" slot="start"></ion-icon>
 				<ion-label>Print</ion-label>
 			</ion-button>
-			<ion-button color="medium" [disabled]="deleting"
+			<ion-button *ngIf="trucker"
+									color="medium"
 									title="Remove carrier and all related segments"
+									[disabled]="deleting"
 									(click)="deleteTrucker()"
 			>
 				<ion-icon name="close-outline" *ngIf="!deleting"></ion-icon>

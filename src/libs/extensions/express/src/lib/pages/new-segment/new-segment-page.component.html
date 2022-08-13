@@ -7,6 +7,9 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-new-segment-form [order]="order"
+	<sneat-new-segment-form
+		[order]="order"
+		(canceled)="back()"
+		(created)="back()"
 	></sneat-new-segment-form>
 </ion-content>

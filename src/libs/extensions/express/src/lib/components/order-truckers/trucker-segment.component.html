@@ -1,5 +1,5 @@
 <ion-card>
-	<ion-item *ngIf="orderSegment" color="light" class="sneat-no-end-padding">
+	<ion-item *ngIf="orderSegment" color="light" class="sneat-no-end-padding" [class.deleting-list-item]="deleting">
 
 		<ion-label color="medium">From</ion-label>
 		<ion-input readonly [value]="from?.title"></ion-input>
@@ -12,7 +12,7 @@
 				<ion-label *ngIf="!trucker">Assign</ion-label>
 				<ion-label *ngIf="trucker">Reassign</ion-label>
 			</ion-button>
-			<ion-button color="medium">
+			<ion-button color="medium" (click)="deleteTruckerSegments()" title="Delete trucker segments">
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>

@@ -7,22 +7,24 @@ import { ContactInputModule } from '@sneat/extensions/contactus';
 import { OrderNavServiceModule } from '../..';
 import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
 import { OrderFormModule } from '../order-form.module';
+import { ContactWithRefNumModule } from '../contact-with-refnum/contact-with-ref-num.module';
 import { NewSegmentDialogComponent } from './new-segment-dialog.component';
 import { NewSegmentFormComponent } from './new-segment-form.component';
 import { NewSegmentService } from './new-segment.service';
 import { SegmentCounterpartyComponent } from './segment-counterparty.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		DialogHeaderModule,
-		ContactInputModule,
-		FormsModule,
-		OrderFormModule,
-		OrderContainersSelectorModule,
-		OrderNavServiceModule,
-	],
+  imports: [
+    CommonModule,
+    IonicModule,
+    DialogHeaderModule,
+    ContactInputModule,
+    FormsModule,
+    OrderFormModule,
+    OrderContainersSelectorModule,
+    OrderNavServiceModule,
+		ContactWithRefNumModule,
+  ],
 	declarations: [
 		NewSegmentFormComponent,
 		NewSegmentDialogComponent,

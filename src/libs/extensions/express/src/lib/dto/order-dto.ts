@@ -56,7 +56,7 @@ export interface IOrderShippingPointLocation {
 	readonly address?: IAddress;
 }
 
-export interface IOrderShippingPointCounterparty {
+export interface IOrderCounterpartyRef {
 	readonly contactID: string;
 	readonly title: string;
 }
@@ -80,7 +80,7 @@ export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly id: string;
 	readonly type: 'pick' | 'drop'; // TODO: consider changing to or adding 'load' & 'unload';
 	readonly location: IOrderShippingPointLocation;
-	readonly counterparty: IOrderShippingPointCounterparty;
+	readonly counterparty: IOrderCounterpartyRef;
 }
 
 export interface IOrderContainer extends IOrderContainerBase {
@@ -239,13 +239,18 @@ export interface INewSegmentContainer {
 	readonly id: string;
 }
 
+export interface IAddSegmentEndpoint {
+	counterparty: ISegmentCounterparty;
+	refNumber?: string;
+	date?: string;
+}
+
 export interface IAddSegmentsRequest extends IExpressOrderRequest {
-	readonly from: ISegmentCounterparty;
-	readonly to: ISegmentCounterparty;
+	readonly from: IAddSegmentEndpoint;
+	readonly to: IAddSegmentEndpoint;
 	readonly by?: ISegmentCounterparty;
+	readonly byRefNumber?: string;
 	readonly containers: INewSegmentContainer[];
-	readonly departsOn?: string;
-	readonly arrivesOn?: string;
 }
 
 export interface IUpdateShippingPointRequest extends IExpressOrderRequest {

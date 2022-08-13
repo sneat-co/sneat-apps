@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IExpressOrderContext, IOrderContainer } from '../..';
 
 @Component({
@@ -8,4 +10,16 @@ import { IExpressOrderContext, IOrderContainer } from '../..';
 export class NewSegmentDialogComponent {
 	@Input() order?: IExpressOrderContext;
 	@Input() container?: IOrderContainer;
+
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly modalController: ModalController,
+	) {
+	}
+
+	protected close(): void {
+		this.modalController
+			.dismiss()
+			.catch(this.errorLogger.logErrorHandler('failed to close NewSegmentComponent'));
+	}
 }

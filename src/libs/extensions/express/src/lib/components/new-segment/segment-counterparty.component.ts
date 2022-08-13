@@ -11,16 +11,19 @@ export type SegmentEndpointType = 'port' | 'dispatcher';
 export class SegmentCounterpartyComponent {
 	@Input() endpointDirection?: 'from' | 'to';
 	@Input() order?: IExpressOrderContext;
-	@Input() contact?: IContactContext;
 	@Input() endpointType?: SegmentEndpointType;
 	@Input() readonly = false;
 
-	@Input() date = '';
-	refNumber = '';
+	@Input() contact?: IContactContext;
+	@Output() readonly contactChange = new EventEmitter<IContactContext>;
 
-	@Output() endpointTypeChange = new EventEmitter<SegmentEndpointType>();
-	@Output() dateChange = new EventEmitter<string>;
-	@Output() contactChange = new EventEmitter<IContactContext>;
+	@Input() date = '';
+	@Output() readonly dateChange = new EventEmitter<string>;
+
+	@Input() refNumber = '';
+	@Output() readonly refNumberChange = new EventEmitter<string>();
+
+	@Output() readonly endpointTypeChange = new EventEmitter<SegmentEndpointType>();
 
 	onEndpointTypeChanged(event: Event): void {
 		console.log('onEndpointTypeChanged', event);
@@ -37,5 +40,9 @@ export class SegmentCounterpartyComponent {
 
 	onDateChanged(): void {
 		this.dateChange.emit(this.date);
+	}
+
+	onRefNumberChanged(): void {
+		this.refNumberChange.emit(this.refNumber);
 	}
 }

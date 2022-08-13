@@ -9,7 +9,7 @@ import {
 	ExpressTeamService,
 	ExpressOrderService,
 	IOrderCounterparty,
-	IOrderShippingPointCounterparty,
+	IOrderCounterpartyRef,
 } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order-dto';

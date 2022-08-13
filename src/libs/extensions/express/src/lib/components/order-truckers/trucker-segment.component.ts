@@ -1,5 +1,13 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IExpressOrderContext, IOrderCounterparty, IContainerSegment, IOrderSegment } from '../..';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	IExpressOrderContext,
+	IOrderCounterparty,
+	IContainerSegment,
+	IOrderSegment,
+	ExpressOrderService,
+	IDeleteSegmentsRequest,
+} from '../..';
 import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-print.service';
 
 @Component({
@@ -14,8 +22,12 @@ export class TruckerSegmentComponent implements OnChanges {
 	from?: IOrderCounterparty;
 	to?: IOrderCounterparty;
 
+	deleting = false;
+
 	constructor(
+		private readonly orderService: ExpressOrderService,
 		private readonly orderPrintService: OrderPrintService,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 	}
 
@@ -44,5 +56,42 @@ export class TruckerSegmentComponent implements OnChanges {
 			...this.order,
 		};
 		this.orderPrintService.openOrderPrintedDocument(event, 'trucker-summary', ctx);
+	}
+
+	deleteTruckerSegments(): void {
+		console.log('deleteTruckerSegments()');
+		if (!this.order) {
+			throw new Error('order is required');
+		}
+		if (!this.orderSegment) {
+			throw new Error('orderSegment is required');
+		}
+		const request: IDeleteSegmentsRequest = {
+			orderID: this.order.id,
+			teamID: this.order.team.id,
+			from: {
+				contactID: this.orderSegment.from.contactID,
+				role: this.orderSegment.from.role,
+			},
+			to: {
+				contactID: this.orderSegment.to.contactID,
+				role: this.orderSegment.to.role,
+			},
+			by: this.orderSegment.by ? {
+				contactID: this.orderSegment.by.contactID,
+				role: this.orderSegment.by.role,
+			} : undefined,
+		};
+
+		this.deleting = true;
+		this.orderService.deleteSegments(request).subscribe({
+			next: () => {
+				console.log('deleted trucker segments');
+			},
+			error: err => {
+				this.deleting = false;
+				this.errorLogger.logError(err,'Failed to delete trucker segments')
+			},
+		});
 	}
 }
