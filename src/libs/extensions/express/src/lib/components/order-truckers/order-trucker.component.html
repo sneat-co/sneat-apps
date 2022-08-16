@@ -2,6 +2,8 @@
 	<ion-item class="sneat-no-end-padding">
 		<ion-label *ngIf="trucker" style="font-weight: bold">{{trucker.countryID|countryFlag}} {{trucker.title}}</ion-label>
 		<ion-label *ngIf="!trucker" color="danger" style="font-weight: bold">Unassigned</ion-label>
+		<ion-label class="ion-padding-start ion-margin-start" color="medium">Ref #</ion-label>
+		<ion-input [value]="trucker?.refNumber"></ion-input>
 		<ion-buttons slot="end">
 			<!--			<ion-button color="medium" (click)="replaceTrucker()">-->
 			<!--				<ion-label *ngIf="!trucker">Assign all</ion-label>-->
