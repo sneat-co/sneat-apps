@@ -194,6 +194,7 @@ export interface IAddContainersRequest extends IExpressOrderRequest {
 export interface ISegmentCounterparty {
 	readonly contactID: string;
 	readonly role: CounterpartyRole;
+	readonly refNumber?: string;
 }
 
 export interface ISegmentEndpoint extends ISegmentCounterparty {
@@ -239,17 +240,19 @@ export interface INewSegmentContainer {
 	readonly id: string;
 }
 
-export interface IAddSegmentEndpoint {
+export interface IAddSegmentParty {
 	counterparty: ISegmentCounterparty;
 	refNumber?: string;
+}
+
+export interface IAddSegmentEndpoint extends IAddSegmentParty{
 	date?: string;
 }
 
 export interface IAddSegmentsRequest extends IExpressOrderRequest {
 	readonly from: IAddSegmentEndpoint;
 	readonly to: IAddSegmentEndpoint;
-	readonly by?: ISegmentCounterparty;
-	readonly byRefNumber?: string;
+	readonly by?: IAddSegmentParty;
 	readonly containers: INewSegmentContainer[];
 }
 

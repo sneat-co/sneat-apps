@@ -30,7 +30,7 @@ export class NewSegmentService {
 	}
 
 	goNewSegmentPage(params: INewSegmentParams): Promise<boolean> {
-		return this.orderNavService.goOrderPage(params.order,
+		return this.orderNavService.goOrderPage('forward', params.order,
 			{path: 'new-segments'},
 			excludeUndefined({ container: params.container?.id }),
 			params as unknown as {[id: string]: unknown},

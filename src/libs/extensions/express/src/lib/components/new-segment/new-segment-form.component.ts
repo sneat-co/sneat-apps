@@ -4,11 +4,11 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
 import { SegmentEndpointType } from './segment-counterparty.component';
 import {
-	ExpressOrderService,
+	ExpressOrderService, IAddSegmentParty,
 	IAddSegmentsRequest,
 	IExpressOrderContext,
 	IOrderContainer,
-	IOrderCounterparty,
+	IOrderCounterparty, ISegmentCounterparty,
 } from '../..';
 
 @Component({
@@ -52,36 +52,36 @@ export class NewSegmentFormComponent implements OnInit {
 	) {
 	}
 
-
-	onFromChanged(endpointType: SegmentEndpointType): void {
-		console.log('NewSegmentComponent.onFromChanged()', endpointType, this.from);
-		if (this.from === 'port' && this.to === 'port') {
-			this.to = 'dispatcher';
-		}
-		this.fromContact = undefined;
+	onByRefNumberChanged(refNumber: string): void {
+		this.byRefNumber = refNumber;
 	}
 
-	onToChanged(endpointType: SegmentEndpointType): void {
-		console.log('NewSegmentComponent.onToChanged()', endpointType, this.to);
-		if (this.to === 'port' && this.from === 'port') {
-			this.from = 'dispatcher';
-		}
-		this.toContact = undefined;
-	}
-
-
-	onContactChanged(what: 'by' | 'from' | 'to', contact: IContactContext): void {
-		console.log('NewSegmentComponent.onContactChanged()', what, contact);
+	onEndpointTypeChanged(what: 'from' | 'to', endpointType: SegmentEndpointType): void {
+		console.log('NewSegmentComponent.onEndpointTypeChanged()', what, endpointType);
 		switch (what) {
 			case 'from':
-				this.fromContact = contact;
+				if (this.from === 'port' && this.to === 'port') {
+					this.to = 'dispatcher';
+				}
+				this.fromContact = undefined;
 				break;
 			case 'to':
-				this.toContact = contact;
+				if (this.to === 'port' && this.from === 'port') {
+					this.from = 'dispatcher';
+				}
+				this.toContact = undefined;
 				break;
-			case 'by':
-				this.byContact = contact;
+			default:
+				throw new Error(`Unknown endpoint type: ${endpointType}`);
 		}
+	}
+
+	onByContactChanged(contact: IContactContext): void {
+		console.log('NewSegmentComponent.onByContactChanged()',contact);
+		if (this.byContact && this.byRefNumber) {
+			this.byRefNumber = '';
+		}
+		this.byContact = contact;
 	}
 
 	ngOnInit(): void {
@@ -133,7 +133,17 @@ export class NewSegmentFormComponent implements OnInit {
 			alert('containers are required to be selected');
 			return;
 		}
-		const byCounterparty: IOrderCounterparty | undefined = undefined;
+		let by: IAddSegmentParty | undefined = undefined;
+
+		if (this.byContact?.brief) {
+			by = {
+				counterparty: {
+					contactID: this.byContact.id,
+					role: 'trucker',
+				},
+				refNumber: this.byRefNumber,
+			};
+		}
 
 		const request: IAddSegmentsRequest = excludeEmpty({
 			orderID: this.order.id,
@@ -155,8 +165,7 @@ export class NewSegmentFormComponent implements OnInit {
 				date: this.toDate,
 				refNumber: this.toRefNumber,
 			}),
-			by: byCounterparty,
-			byRefNumber: this.byRefNumber,
+			by,
 		});
 		this.orderService
 			.addSegments(request)

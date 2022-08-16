@@ -12,10 +12,10 @@ export class OrderNavService {
 	) {
 	}
 
-	goOrderPage(order: IExpressOrderContext, url: { path: string, fragment?: string }, params?: { [id: string]: unknown }, state?: { [id: string]: unknown }): Promise<boolean> {
+	goOrderPage(direction: 'forward' | 'back', order: IExpressOrderContext, url?: { path: string, fragment?: string }, params?: { [id: string]: unknown }, state?: { [id: string]: unknown }): Promise<boolean> {
 		const { id, team } = order;
 		let u = `/space/${team.type}/${team.id}/order/${id}`;
-		if (url.path) {
+		if (url?.path) {
 			u += '/' + url.path;
 		}
 		if (params) {
@@ -24,11 +24,18 @@ export class OrderNavService {
 				u += `${k}=${encodeURIComponent('' + v)}`;
 			});
 		}
-		if (url.fragment) {
+		if (url?.fragment) {
 			u += '#' + url.fragment;
 		}
 		console.log('OrderNavService.goOrderPage()', u);
-		return this.navController.navigateForward(u, { state });
+		switch (direction) {
+			case 'forward':
+				return this.navController.navigateForward(u, { state });
+			case 'back':
+				return this.navController.navigateBack(u, { state });
+			default:
+				throw new Error(`invalid direction: ${direction}`);
+		}
 	}
 }
 
