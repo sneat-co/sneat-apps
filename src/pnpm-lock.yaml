@@ -55,7 +55,7 @@ specifiers:
   rxjs: 7.5.5
   tabulator-tables: 5.3.1
   ts-jest: 28.0.8
-  ts-md5: 1.2.11
+  ts-md5: 1.3.0
   ts-node: 10.9.1
   tslib: 2.4.0
   typescript: 4.7.4
@@ -84,7 +84,7 @@ dependencies:
   ionicons: 6.0.2
   rxjs: 7.5.5
   tabulator-tables: 5.3.1
-  ts-md5: 1.2.11
+  ts-md5: 1.3.0
   tslib: 2.4.0
   zone.js: 0.11.8
 
@@ -12754,8 +12754,9 @@ packages:
       typescript: 4.7.4
       webpack: 5.73.0
 
-  /ts-md5/1.2.11:
-    resolution: {integrity: sha512-vAwy9rEuRE6a8xa1MavIVkLFyyU0ydk4CLMFA5vOVccmQKLOuGb/BHm3oEN7XHf2FoqS+z0pSvhaad/ombd1Vg==}
+  /ts-md5/1.3.0:
+    resolution: {integrity: sha512-0tvHQRuLBZ1cGDl84PXB4tz3/pSRuajI3yi58OFcOBVRh4D/jd8kjLcxe5Wo/rd0iHhZKkurt0qF3X2aEzW/KA==}
+    engines: {node: '>=10'}
     dev: false
 
   /ts-node/10.9.1_mc5obqbv5iw2qugqrfomepel3m:
