@@ -8,11 +8,14 @@
 					<ion-button color="danger"
 											title="Save changes"
 											(click)="saveChanges()"
+											[disabled]="saving"
 					>
 						<ion-icon name="save-outline" slot="start"></ion-icon>
-						<ion-label>Save</ion-label>
+						<ion-label *ngIf="!saving">Save</ion-label>
+						<ion-label *ngIf="saving">Saving...</ion-label>
+						<ion-spinner slot="end" *ngIf="saving"></ion-spinner>
 					</ion-button>
-					<ion-button color="medium"
+					<ion-button color="medium" *ngIf="!saving"
 											title="Cancel changes"
 											(click)="containerForm.reset()"
 					>
@@ -29,28 +32,12 @@
 
 		<ion-grid class="ion-grid-layout">
 			<ion-row>
-				<ion-col size="6">
-					<ion-item>
-						<ion-label color="medium">Pallets to pick</ion-label>
-						<ion-input type="number" [formControl]="pallets"></ion-input>
-					</ion-item>
-				</ion-col>
-				<ion-col size="6">
-					<ion-item>
-						<ion-label color="medium">Gross (kg)</ion-label>
-						<ion-input type="number" [formControl]="grossKg"></ion-input>
-					</ion-item>
-				</ion-col>
-			</ion-row>
-		</ion-grid>
-
-		<ion-grid class="ion-grid-layout">
-			<ion-row>
-				<ion-col size="6">
+				<ion-col size="8">
 					<ion-item class="sneat-tiny-end-padding">
-						<ion-label color="medium">Delivered to by</ion-label>
+						<ion-label color="medium">Delivery to by</ion-label>
 						<ion-input *ngIf="truckerTo" readonly [value]="truckerTo.title"></ion-input>
-						<ion-input *ngIf="!truckerTo" color="danger" readonly value="not assigned yet"></ion-input>
+						<ion-input *ngIf="!truckerTo" color="medium" readonly value="not assigned yet"
+											 style="font-style: italic"></ion-input>
 						<ion-buttons *ngIf="truckerTo && !containerForm.dirty">
 							<ion-button color="medium"
 													title="Exclude delivery of this container by the trucker"
@@ -61,20 +48,18 @@
 						</ion-buttons>
 					</ion-item>
 				</ion-col>
-				<ion-col size="6">
+				<ion-col size="4">
 					<ion-item>
-						<ion-label color="medium">Arrives on</ion-label>
+						<ion-label color="medium">On</ion-label>
 						<ion-input readonly type="date" [formControl]="arrivesOn"></ion-input>
 					</ion-item>
 				</ion-col>
 			</ion-row>
-		</ion-grid>
 
-		<ion-grid class="ion-grid-layout">
 			<ion-row>
-				<ion-col size="6">
+				<ion-col size="8">
 					<ion-item class="sneat-tiny-end-padding">
-						<ion-label color="medium">Retrieved from by</ion-label>
+						<ion-label color="medium">Retrieval from by</ion-label>
 						<ion-input *ngIf="truckerFrom" readonly [value]="truckerFrom.title"></ion-input>
 						<ng-container *ngIf="!truckerFrom">
 							<ion-input color="danger" readonly value="not assigned yet"></ion-input>
@@ -89,10 +74,23 @@
 						</ng-container>
 					</ion-item>
 				</ion-col>
-				<ion-col size="6">
+				<ion-col size="4">
 					<ion-item>
-						<ion-label color="medium">Leaves On</ion-label>
+						<ion-label color="medium">On</ion-label>
 						<ion-input readonly type="date" [formControl]="leavesOn"></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+
+			<ion-row>
+				<ion-col size="12">
+					<ion-item>
+						<ion-label color="medium"><b>To pick:</b> Pallets</ion-label>
+						<ion-input type="number" [formGroup]="containerForm" [formControl]="numberOfPallets" (keyup.enter)="saveChanges()"></ion-input>
+						<ion-label color="medium">Gross (kg)</ion-label>
+						<ion-input type="number" [formGroup]="containerForm" [formControl]="grossWeightKg" (keyup.enter)="saveChanges()"></ion-input>
+						<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
+						<ion-input type="number" [formGroup]="containerForm" [formControl]="volumeM3" (keyup.enter)="saveChanges()"></ion-input>
 					</ion-item>
 				</ion-col>
 			</ion-row>

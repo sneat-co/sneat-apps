@@ -1,16 +1,28 @@
-<ion-item class="sneat-no-end-padding" [class.deleting-list-item]="deleting">
-	<ion-label color="medium">From</ion-label>
-	<ion-input readonly [value]="from?.title"></ion-input>
-	<ion-label color="medium">To</ion-label>
-	<ion-input readonly [value]="to?.title"></ion-input>
-	<ion-label color="medium">By</ion-label>
-	<ion-input readonly [value]="by?.title"></ion-input>
-	<ion-label color="medium">On</ion-label>
-	<ion-input readonly *ngIf="segmentDates" [value]="segmentDates"></ion-input>
-	<ion-buttons slot="end">
-		<ion-button color="medium" (click)="delete()"
-								title="Remove segment for the container">
-			<ion-icon name="close-outline"></ion-icon>
-		</ion-button>
-	</ion-buttons>
-</ion-item>
+<ion-card [class.deleting-list-item]="deleting">
+	<ion-item class="sneat-no-end-padding" color="light">
+		<ion-label color="medium">From</ion-label>
+		<ion-input readonly [value]="from?.title"></ion-input>
+		<ion-label color="medium">To</ion-label>
+		<ion-input readonly [value]="to?.title"></ion-input>
+		<ion-buttons slot="end">
+			<ion-button color="medium" (click)="delete()"
+									title="Remove segment for the container">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium">By</ion-label>
+		<ion-input readonly [value]="by?.title"></ion-input>
+		<ion-label color="medium">On</ion-label>
+		<ion-input readonly *ngIf="segmentDates" [value]="segmentDates"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium"><b>To pick</b>: Pallets</ion-label>
+		<ion-input [value]="fromPoint?.toPick?.numberOfPallets" readonly></ion-input>
+		<ion-label color="medium">Gross (kg)</ion-label>
+		<ion-input [value]="fromPoint?.toPick?.grossWeightKg" readonly></ion-input>
+		<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
+		<ion-input [value]="fromPoint?.toPick?.volumeM3" readonly></ion-input>
+	</ion-item>
+</ion-card>

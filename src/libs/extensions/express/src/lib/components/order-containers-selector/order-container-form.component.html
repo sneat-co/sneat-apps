@@ -3,7 +3,7 @@
 	<ion-label>{{container.type|uppercase}} &mdash; <b *ngIf="container.number">#{{container.number}}</b></ion-label>
 	<ng-container *ngIf="container.checked">
 		<ion-label color="medium" class="ion-margin-start ion-padding-start">
-			Pallets to pick
+			<b>To pick</b>: Pallets
 		</ion-label>
 		<ion-input type="number" [(ngModel)]="container.pallets"></ion-input>
 
@@ -11,5 +11,10 @@
 			Gross (kg)
 		</ion-label>
 		<ion-input type="number" [(ngModel)]="container.grossKg"></ion-input>
+
+		<ion-label color="medium" class="ion-margin-start ion-padding-start">
+			Volume (m<sup>3</sup>)
+		</ion-label>
+		<ion-input type="number" [(ngModel)]="container.volumeM3"></ion-input>
 	</ng-container>
 </ion-item>

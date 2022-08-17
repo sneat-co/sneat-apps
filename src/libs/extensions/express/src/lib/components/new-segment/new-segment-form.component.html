@@ -85,7 +85,7 @@
 
 <sneat-order-containers-selector *ngIf="!container"
 																 [order]="order"
-																 [(selectedContainerIDs)]="selectedContainerIDs"
+																 (selectedContainersChange)="onSelectedContainersChanged($event)">
 ></sneat-order-containers-selector>
 
 <div class="ion-padding">

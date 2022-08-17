@@ -14,6 +14,7 @@ export class OrderContainersSelectorComponent implements OnChanges {
 
 	@Input() selectedContainerIDs: string[] = [];
 	@Output() readonly selectedContainerIDsChange = new EventEmitter<string[]>();
+	@Output() selectedContainersChange = new EventEmitter<IContainer[]>();
 
 	id = (_: number, c: IContainer) => c.id;
 
@@ -22,9 +23,11 @@ export class OrderContainersSelectorComponent implements OnChanges {
 	}
 
 	onToggled(): void {
-		this.selectedContainerIDs = this.containers?.filter(c => c.checked).map(c => c.id) || [];
+		const selectedContainers = this.containers?.filter(c => c.checked) || [];
+		this.selectedContainerIDs = selectedContainers.map(c => c.id);
 		console.log('OrderContainersSelectorComponent.selectedContainerIDs:', this.selectedContainerIDs);
 		this.selectedContainerIDsChange.emit(this.selectedContainerIDs);
+		this.selectedContainersChange.emit(selectedContainers)
 	}
 
 	addAllContainer(): void {
@@ -42,8 +45,8 @@ export class OrderContainersSelectorComponent implements OnChanges {
 				id: c.id,
 				type: c.type,
 				number: c.number,
-				grossKg: c.grossWeightKg,
-				pallets: c.numberOfPallets,
+				grossWeightKg: c.grossWeightKg,
+				numberOfPallets: c.numberOfPallets,
 				checked: !!this.containers?.find(cc => cc.id === c.id)?.checked,
 			}));
 		}

@@ -9,4 +9,5 @@ export interface IContainer {
 	checked?: boolean;
 	grossKg?: number;
 	pallets?: number;
+	volumeM3?: number;
 }

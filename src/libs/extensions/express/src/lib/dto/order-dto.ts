@@ -31,7 +31,7 @@ export interface IFreightLoad {
 	readonly flags?: ReadonlyArray<FreightFlag>;
 	readonly grossWeightKg?: number;
 	readonly numberOfPallets?: number;
-	readonly volumeInLitters?: number; // 1m3 = 1000L
+	readonly volumeM3?: number; // 1m3 = 1000L
 }
 
 export interface IOrderContainerBase extends IFreightLoad {
@@ -41,12 +41,14 @@ export interface IOrderContainerBase extends IFreightLoad {
 
 export type ShippingPointStatus = 'pending' | 'completed';
 
-export interface IShippingPointBase extends IFreightLoad {
+export interface IShippingPointBase {
 	readonly status: ShippingPointStatus;
 	started?: string;
 	completed?: string;
 	scheduledStartDate?: string;
 	scheduledEndDate?: string;
+	toPick?: IFreightLoad;
+	toDrop?: IFreightLoad;
 }
 
 export interface IOrderShippingPointLocation {
@@ -81,6 +83,11 @@ export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly type: 'pick' | 'drop'; // TODO: consider changing to or adding 'load' & 'unload';
 	readonly location: IOrderShippingPointLocation;
 	readonly counterparty: IOrderCounterpartyRef;
+}
+
+export interface IContainerShippingPoint extends IShippingPointBase {
+	readonly containerID: string;
+	readonly shippingPointID: string;
 }
 
 export interface IOrderContainer extends IOrderContainerBase {
@@ -142,6 +149,7 @@ export interface IExpressOrderDto extends IFreightOrderBase {
 	// agentRef?: string;
 	readonly shippingPoints?: ReadonlyArray<IOrderShippingPoint>;
 	readonly containers?: ReadonlyArray<IOrderContainer>;
+	readonly containerPoints?: ReadonlyArray<IContainerShippingPoint>;
 	readonly segments?: ReadonlyArray<IContainerSegment>;
 	readonly declarations?: IFreightDeclaration[];
 	readonly specialInstructions?: string;
@@ -238,6 +246,8 @@ export interface IContainerSegmentKey extends IOrderSegmentKey {
 
 export interface INewSegmentContainer {
 	readonly id: string;
+	readonly toPick?: IFreightLoad;
+	readonly toDrop?: IFreightLoad;
 }
 
 export interface IAddSegmentParty {
@@ -268,6 +278,12 @@ export interface IContainerRequest extends IExpressOrderRequest {
 export interface IOrderShippingPointRequest extends IExpressOrderRequest {
 	readonly shippingPointID: string;
 }
+
+export interface IUpdateContainerPointRequest extends IOrderShippingPointRequest, IContainerRequest {
+	readonly toPick?: IFreightLoad;
+	readonly toDrop?: IFreightLoad;
+}
+
 
 export interface IDeleteCounterpartyRequest extends IExpressOrderRequest, IContactRequest {
 	readonly role: string;

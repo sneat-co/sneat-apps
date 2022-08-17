@@ -2,6 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, Simp
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
+import { IContainer } from '../order-containers-selector/condainer-interface';
 import { SegmentEndpointType } from './segment-counterparty.component';
 import {
 	ExpressOrderService, IAddSegmentParty,
@@ -43,13 +44,16 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	toRefNumber = '';
 	byRefNumber = '';
 
-	selectedContainerIDs: string[] = [];
-
+	selectedContainers: IContainer[] = [];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: ExpressOrderService,
 	) {
+	}
+
+	onSelectedContainersChanged(selectedContainers: IContainer[]): void {
+		this.selectedContainers = selectedContainers;
 	}
 
 	onByRefNumberChanged(refNumber: string): void {
@@ -77,7 +81,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	}
 
 	onByContactChanged(contact: IContactContext): void {
-		console.log('NewSegmentComponent.onByContactChanged()',contact);
+		console.log('NewSegmentComponent.onByContactChanged()', contact);
 		if (this.byContact && this.byRefNumber) {
 			this.byRefNumber = '';
 		}
@@ -132,7 +136,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			alert('to contact is required');
 			return;
 		}
-		if (!this.selectedContainerIDs?.length) {
+		if (!this.selectedContainers?.length) {
 			alert('containers are required to be selected');
 			return;
 		}
@@ -151,7 +155,14 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 		const request: IAddSegmentsRequest = excludeEmpty({
 			orderID: this.order.id,
 			teamID: this.order.team?.id,
-			containers: this.selectedContainerIDs.map(id => ({ id })),
+			containers: this.selectedContainers.map(c => ({
+				id: c.id,
+				toPick: {
+					numberOfPallets: c.pallets,
+					grossWeightKg: c.grossKg,
+					volumeM3: c.volumeM3,
+				},
+			})),
 			from: excludeEmpty({
 				counterparty: {
 					contactID: this.fromContact.id,

@@ -5,7 +5,7 @@ import {
 	IOrderCounterparty,
 	IContainerSegment,
 	ExpressOrderService,
-	IDeleteSegmentsRequest,
+	IDeleteSegmentsRequest, IContainerShippingPoint,
 } from '../..';
 
 @Component({
@@ -20,6 +20,8 @@ export class ContainerSegmentComponent implements OnChanges {
 	to?: IOrderCounterparty;
 	by?: IOrderCounterparty;
 
+	fromPoint?: IContainerShippingPoint;
+
 	deleting = false;
 
 	constructor(
@@ -33,6 +35,9 @@ export class ContainerSegmentComponent implements OnChanges {
 			this.from = this.order?.dto?.counterparties?.find(c =>
 				c.contactID === this.segment?.from?.contactID
 				&& c.role == this.segment?.from?.role,
+			);
+			this.fromPoint = this.order?.dto?.containerPoints?.find(
+				p => p.containerID == this.segment?.containerID && p.shippingPointID === this.segment?.from?.shippingPointID,
 			);
 			this.to = this.order?.dto?.counterparties?.find(c =>
 				c.contactID === this.segment?.to?.contactID
@@ -70,7 +75,7 @@ export class ContainerSegmentComponent implements OnChanges {
 	get segmentDates(): string {
 		const dates = this?.segment?.dates;
 		if (!dates || !dates?.start && !dates.end) {
-			return '';
+			return 'no dates yet';
 		}
 		const { start, end } = dates;
 		const starts = start.split('-').reverse();

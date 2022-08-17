@@ -20,13 +20,13 @@ export class ContainerFormComponent implements OnChanges {
 	deleting = false;
 
 	number = new FormControl<string>('');
-	grossKg = new FormControl<number | undefined>({ value: undefined, disabled: true });
-	pallets = new FormControl<number | undefined>({ value: undefined, disabled: true });
+	grossWeightKg = new FormControl<number | undefined>({ value: undefined, disabled: true });
+	numberOfPallets = new FormControl<number | undefined>({ value: undefined, disabled: true });
 
 	containerFormGroup = new FormGroup({
 		number: this.number,
-		grossKg: this.grossKg,
-		pallets: this.pallets,
+		grossWeightKg: this.grossWeightKg,
+		numberOfPallets: this.numberOfPallets,
 	});
 
 	constructor(
@@ -48,8 +48,8 @@ export class ContainerFormComponent implements OnChanges {
 
 	setFormValues(): void {
 		this.number.setValue(this.container?.number || '');
-		this.grossKg.setValue(this.container?.grossWeightKg);
-		this.pallets.setValue(this.container?.numberOfPallets);
+		this.grossWeightKg.setValue(this.container?.grossWeightKg);
+		this.numberOfPallets.setValue(this.container?.numberOfPallets);
 	}
 
 	cancelEditing(event: Event): void {

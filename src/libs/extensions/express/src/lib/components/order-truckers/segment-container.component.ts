@@ -4,7 +4,7 @@ import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ExpressOrderService,
-	IContainerSegment,
+	IContainerSegment, IContainerShippingPoint,
 	IDeleteSegmentsRequest,
 	IExpressOrderContext,
 	IOrderContainer,
@@ -19,6 +19,7 @@ export class SegmentContainerComponent implements OnChanges {
 	@Input() segment?: IContainerSegment;
 
 	container?: IOrderContainer;
+	from?: IContainerShippingPoint;
 
 	deleting = false;
 
@@ -38,7 +39,13 @@ export class SegmentContainerComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerID'] || changes['order']) {
-			this.container = this.order?.dto?.containers?.find(c => c.id === this.segment?.containerID);
+			const containerID = this.segment?.containerID;
+			this.container = this.order?.dto?.containers?.find(c => c.id === containerID);
+
+			const fromShippingPointID = this.segment?.from?.shippingPointID
+			this.from = this.order?.dto?.containerPoints?.find(
+				p => p.containerID === containerID && p.shippingPointID === fromShippingPointID
+			);
 		}
 		if (changes['segment']) {
 			this.setDates();
