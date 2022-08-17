@@ -20,6 +20,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() readonly = false;
 	@Input() useColumns = true;
 	@Input() team?: ITeamContext;
+	@Input() refNumLabel = 'Ref #'
 
 	@Input() label = 'Counterparty';
 

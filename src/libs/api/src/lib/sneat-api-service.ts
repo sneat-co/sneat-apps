@@ -44,6 +44,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 
 	// TODO: It's made public because we use it in Login page, might be a bad idea consider making private and rely on afAuth.idToken event
 	setApiAuthToken = (token?: string) => {
+		console.log('setApiAuthToken()', token);
 		this.authToken = token;
 	};
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
@@ -15,7 +15,7 @@ import {
 	selector: 'sneat-new-segment-form',
 	templateUrl: './new-segment-form.component.html',
 })
-export class NewSegmentFormComponent implements OnInit {
+export class NewSegmentFormComponent implements OnInit, OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Input() container?: IOrderContainer;
 	@Input() isInModal?: boolean;
@@ -33,8 +33,8 @@ export class NewSegmentFormComponent implements OnInit {
 
 	readonly = false;
 
-	from: 'port' | 'dispatcher' = 'port';
-	to: 'port' | 'dispatcher' = 'dispatcher';
+	from: 'port' | 'dispatcher' = 'dispatcher';
+	to: 'port' | 'dispatcher' = 'port';
 
 	fromDate = '';
 	toDate = '';
@@ -86,26 +86,29 @@ export class NewSegmentFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		console.log('NewSegmentComponent.ngOnInit()', this.order);
+		this.autoFillPort();
+	}
+
+	private autoFillPort(): void {
 		if (!this.order) {
 			return;
 		}
-		// this.containerIDs = this.order?.dto?.containers?.map(c => c.id) || [];
-		const fromPorts = this.order?.dto?.counterparties?.filter(c => c.role === 'port_from');
-		if (fromPorts?.length == 1) {
-			const fromPort = fromPorts[0];
-			this.fromContact = {
-				id: fromPort.contactID,
+		const toPorts = this.order?.dto?.counterparties?.filter(c => c.role === 'port_from');
+		if (toPorts?.length == 1) {
+			const toPort = toPorts[0];
+			this.toContact = {
+				id: toPort.contactID,
 				team: this.order.team,
 				brief: {
-					id: fromPort.contactID,
+					id: toPort.contactID,
 					type: 'company',
-					countryID: fromPort.countryID,
-					title: fromPort.title,
+					countryID: toPort.countryID,
+					title: toPort.title,
 					roles: ['port'],
 				},
 			};
 		}
-		console.log('fromContact', this.fromContact);
+		console.log('toContact', this.toContact);
 	}
 
 	submitAddSegment(event: Event): void {
@@ -160,7 +163,7 @@ export class NewSegmentFormComponent implements OnInit {
 			to: excludeEmpty({
 				counterparty: {
 					contactID: this.toContact.id,
-					role: this.to === 'port' ? 'port_to' : 'dispatch-point',
+					role: this.to === 'port' ? 'port_from' : 'dispatch-point',
 				},
 				date: this.toDate,
 				refNumber: this.toRefNumber,
@@ -173,6 +176,10 @@ export class NewSegmentFormComponent implements OnInit {
 				next: () => this.created.emit(),
 				error: this.errorLogger.logErrorHandler('Failed to add segments'),
 			});
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		this.autoFillPort();
 	}
 
 	// protected switchFromWithTo(): void {
