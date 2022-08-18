@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { DispatchersModule } from '../../components/dispatchers';
+import { FreightLoadFormModule } from '../../components/freight-load-form/freight-load-form.module';
 import { NewSegmentModule } from '../../components/new-segment';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
@@ -35,7 +36,8 @@ const routes: Routes = [
     DispatchersModule,
     SneatPipesModule,
     ReactiveFormsModule,
-		OrderPrintServiceModule,
+    OrderPrintServiceModule,
+    FreightLoadFormModule,
   ],
 	declarations: [
 		ExpressOrderPageComponent,

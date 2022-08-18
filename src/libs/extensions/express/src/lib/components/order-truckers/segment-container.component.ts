@@ -9,6 +9,7 @@ import {
 	IExpressOrderContext,
 	IOrderContainer,
 } from '../..';
+import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
 
 @Component({
 	selector: 'sneat-segment-container',
@@ -17,6 +18,8 @@ import {
 export class SegmentContainerComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Input() segment?: IContainerSegment;
+
+	readonly freightLoadForm = new FreightLoadForm();
 
 	container?: IOrderContainer;
 	from?: IContainerPoint;
@@ -89,5 +92,9 @@ export class SegmentContainerComponent implements OnChanges {
 	resetChanges(): void {
 		this.form.reset();
 		this.setDates();
+	}
+
+	saveChanges(event: Event): void {
+		this.freightLoadForm.group.reset();
 	}
 }

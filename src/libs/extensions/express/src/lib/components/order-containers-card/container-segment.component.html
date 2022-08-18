@@ -62,12 +62,20 @@
 		<!--		<ion-label color="medium">On</ion-label>-->
 		<!--		<ion-input readonly *ngIf="segmentDates" [value]="segmentDates"></ion-input>-->
 	</ion-item>
-	<ion-item>
-		<ion-label color="medium"><b>To pick</b>: Pallets</ion-label>
-		<ion-input [value]="fromPoint?.toPick?.numberOfPallets" readonly></ion-input>
-		<ion-label color="medium">Gross (kg)</ion-label>
-		<ion-input [value]="fromPoint?.toPick?.grossWeightKg" readonly></ion-input>
-		<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
-		<ion-input [value]="fromPoint?.toPick?.volumeM3" readonly></ion-input>
+	<sneat-freight-load-form operation="pick" [freightLoad]="fromPoint?.toPick"
+													 [form]="freightLoadForm"
+													 (keyUpEnter)="saveChanges($event)"
+	></sneat-freight-load-form>
+	<ion-item *ngIf="form.dirty">
+		<ion-buttons slot="end">
+			<ion-button color="danger" (click)="saveChanges($event)">
+				<ion-icon name="save-outline" slot="start"></ion-icon>
+				<ion-label>Save changes</ion-label>
+			</ion-button>
+			<ion-button (click)="form.reset()" color="medium">
+				<ion-icon name="close-circle-outline" slot="start"></ion-icon>
+				<ion-label>Cancel</ion-label>
+			</ion-button>
+		</ion-buttons>
 	</ion-item>
 </ion-card>

@@ -84,14 +84,10 @@
 
 			<ion-row>
 				<ion-col size="12">
-					<ion-item>
-						<ion-label color="medium"><b>To pick:</b> Pallets</ion-label>
-						<ion-input type="number" [formGroup]="containerForm" [formControl]="numberOfPallets" (keyup.enter)="saveChanges()"></ion-input>
-						<ion-label color="medium">Gross (kg)</ion-label>
-						<ion-input type="number" [formGroup]="containerForm" [formControl]="grossWeightKg" (keyup.enter)="saveChanges()"></ion-input>
-						<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
-						<ion-input type="number" [formGroup]="containerForm" [formControl]="volumeM3" (keyup.enter)="saveChanges()"></ion-input>
-					</ion-item>
+					<sneat-freight-load-form operation="pick" [freightLoad]="containerPoint?.toPick"
+						[form]="freightLoadForm"
+						(keyUpEnter)="saveChanges()"
+					></sneat-freight-load-form>
 				</ion-col>
 			</ion-row>
 		</ion-grid>

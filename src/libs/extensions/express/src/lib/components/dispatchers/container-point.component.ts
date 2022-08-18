@@ -11,6 +11,7 @@ import {
 	IContainerSegment,
 	IOrderShippingPoint, IUpdateShippingPointRequest, IUpdateContainerPointRequest, IFreightLoad, IContainerPoint,
 } from '../..';
+import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
 
 @Component({
 	selector: 'sneat-container-point',
@@ -31,6 +32,8 @@ export class ContainerPointComponent implements OnChanges {
 
 	containerPoint?: IContainerPoint;
 
+	readonly freightLoadForm = new FreightLoadForm();
+
 	numberOfPallets = new FormControl<number | undefined>(undefined);
 	grossWeightKg = new FormControl<number | undefined>(undefined);
 	volumeM3 = new FormControl<number | undefined>(undefined);
@@ -39,9 +42,7 @@ export class ContainerPointComponent implements OnChanges {
 	leavesOn = new FormControl<string>('');
 
 	containerForm = new FormGroup({
-		numberOfPallets: this.numberOfPallets,
-		grossWeightKg: this.grossWeightKg,
-		volumeM3: this.volumeM3,
+		freightLoad: this.freightLoadForm.group,
 		arrivesOn: this.arrivesOn,
 		leavesOn: this.leavesOn,
 	});
@@ -99,6 +100,7 @@ export class ContainerPointComponent implements OnChanges {
 	assignContainerToSegment(): void {
 		alert('not implemented yet');
 	}
+
 
 	saveChanges(): void {
 		if (this.saving || !this.order || !this.shippingPoint || !this.container) {

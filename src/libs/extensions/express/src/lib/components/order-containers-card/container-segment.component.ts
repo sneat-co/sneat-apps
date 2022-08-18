@@ -10,6 +10,7 @@ import {
 	IContainerPoint,
 	IUpdateContainerPointRequest,
 } from '../..';
+import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
 
 @Component({
 	selector: 'sneat-container-segment',
@@ -18,6 +19,8 @@ import {
 export class ContainerSegmentComponent implements OnChanges {
 	@Input() order?: IExpressOrderContext;
 	@Input() segment?: IContainerSegment;
+
+	freightLoadForm = new FreightLoadForm();
 
 	from?: IOrderCounterparty;
 	to?: IOrderCounterparty;
@@ -33,6 +36,11 @@ export class ContainerSegmentComponent implements OnChanges {
 	datesForm = new FormGroup({
 		departDate: this.departDate,
 		arriveDate: this.arriveDate,
+	});
+
+	form = new FormGroup({
+		dates: this.datesForm,
+		freightLoad: this.freightLoadForm.group,
 	});
 
 	deleting = false;
@@ -162,5 +170,9 @@ export class ContainerSegmentComponent implements OnChanges {
 			return `${starts[0]}/${starts[1]}-${ends.join('/')}`;
 		}
 		return `${starts.join('/')}-${ends.join('/')}`;
+	}
+
+	saveChanges(event: Event): void {
+
 	}
 }

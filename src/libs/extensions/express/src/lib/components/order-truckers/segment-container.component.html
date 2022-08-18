@@ -20,12 +20,8 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item>
-		<ion-label color="medium"><b>To pick:</b> Pallets</ion-label>
-		<ion-input readonly type="number" [value]="from?.toPick?.numberOfPallets"></ion-input>
-		<ion-label color="medium">Gross (kg)</ion-label>
-		<ion-input readonly type="number" [value]="from?.toPick?.grossWeightKg"></ion-input>
-		<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
-		<ion-input readonly type="number" [value]="from?.toPick?.volumeM3"></ion-input>
-	</ion-item>
+	<sneat-freight-load-form operation="pick" [freightLoad]="from?.toPick"
+		[form]="freightLoadForm"
+		(keyUpEnter)="saveChanges($event)"
+	></sneat-freight-load-form>
 </ion-card>
