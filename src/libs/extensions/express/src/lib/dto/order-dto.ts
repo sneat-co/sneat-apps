@@ -85,9 +85,11 @@ export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly counterparty: IOrderCounterpartyRef;
 }
 
-export interface IContainerShippingPoint extends IShippingPointBase {
+export interface IContainerPoint extends IShippingPointBase {
 	readonly containerID: string;
 	readonly shippingPointID: string;
+	readonly arrivesDate?: string;
+	readonly departsDate?: string;
 }
 
 export interface IOrderContainer extends IOrderContainerBase {
@@ -149,7 +151,7 @@ export interface IExpressOrderDto extends IFreightOrderBase {
 	// agentRef?: string;
 	readonly shippingPoints?: ReadonlyArray<IOrderShippingPoint>;
 	readonly containers?: ReadonlyArray<IOrderContainer>;
-	readonly containerPoints?: ReadonlyArray<IContainerShippingPoint>;
+	readonly containerPoints?: ReadonlyArray<IContainerPoint>;
 	readonly segments?: ReadonlyArray<IContainerSegment>;
 	readonly declarations?: IFreightDeclaration[];
 	readonly specialInstructions?: string;
@@ -271,6 +273,7 @@ export interface IUpdateShippingPointRequest extends IExpressOrderRequest {
 	readonly setNumbers: { [field: string]: number };
 }
 
+
 export interface IContainerRequest extends IExpressOrderRequest {
 	readonly containerID: string;
 }
@@ -282,7 +285,17 @@ export interface IOrderShippingPointRequest extends IExpressOrderRequest {
 export interface IUpdateContainerPointRequest extends IOrderShippingPointRequest, IContainerRequest {
 	readonly toPick?: IFreightLoad;
 	readonly toDrop?: IFreightLoad;
+	readonly arrivesDate?: string; // Pass empty string to clear date
+	readonly departsDate?: string; // Pass empty string to clear date
 }
+
+// export interface IUpdateSegmentDateRequest extends IContainerRequest {
+// 	readonly date: string;
+// }
+//
+// export interface IUpdateSegmentDatesRequest extends IExpressOrderRequest {
+// 	points: IUpdateSegmentDateRequest[];
+// }
 
 
 export interface IDeleteCounterpartyRequest extends IExpressOrderRequest, IContactRequest {

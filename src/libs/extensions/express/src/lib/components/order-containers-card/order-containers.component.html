@@ -4,7 +4,7 @@
 	</ion-item-divider>
 </ion-card>
 
-<ion-card *ngFor="let container of containers; let i = index">
+<ion-card *ngFor="let container of containers; let i = index; trackBy:id">
 	<sneat-order-container-form
 		[team]="team"
 		[order]="order"
@@ -12,4 +12,3 @@
 		[i]="i"
 	></sneat-order-container-form>
 </ion-card>
-

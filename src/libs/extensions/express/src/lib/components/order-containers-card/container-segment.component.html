@@ -1,21 +1,62 @@
 <ion-card [class.deleting-list-item]="deleting">
-	<ion-item class="sneat-no-end-padding" color="light">
-		<ion-label color="medium">From</ion-label>
-		<ion-input readonly [value]="from?.title"></ion-input>
-		<ion-label color="medium">To</ion-label>
-		<ion-input readonly [value]="to?.title"></ion-input>
-		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="delete()"
-									title="Remove segment for the container">
-				<ion-icon name="close-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col>
+				<ion-item color="light">
+					<ion-label color="medium" position="stacked">From</ion-label>
+					<ion-input readonly [value]="from?.title"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item color="light" class="sneat-no-end-padding">
+					<ion-label color="medium" position="stacked">To</ion-label>
+					<ion-input readonly [value]="to?.title"></ion-input>
+					<ion-buttons slot="end">
+						<ion-button color="medium" (click)="delete()"
+												title="Remove segment for the container">
+							<ion-icon name="close-outline"></ion-icon>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label color="medium" position="stacked">Departs</ion-label>
+					<ion-input type="date"
+										 [formGroup]="datesForm"
+										 [formControl]="departDate"
+										 [color]="departDate.value ? undefined : 'medium'"
+										 (ionChange)="onDepartDateChanged($event)">
+					</ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+					<ion-label color="medium" position="stacked">
+						Arrives
+						<span *ngIf="arriveDate?.disabled">
+							- saving
+							<ion-spinner name="lines-small"></ion-spinner>
+						</span>
+					</ion-label>
+					<ion-input type="date"
+										 [formGroup]="datesForm"
+										 [formControl]="arriveDate"
+										 [color]="arriveDate.value ? undefined : 'medium'"
+										 (ionChange)="onArriveDateChanged($event)"
+					>
+					</ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 	<ion-item>
 		<ion-label color="medium">By</ion-label>
 		<ion-input readonly [value]="by?.title"></ion-input>
-		<ion-label color="medium">On</ion-label>
-		<ion-input readonly *ngIf="segmentDates" [value]="segmentDates"></ion-input>
+		<!--		<ion-label color="medium">On</ion-label>-->
+		<!--		<ion-input readonly *ngIf="segmentDates" [value]="segmentDates"></ion-input>-->
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium"><b>To pick</b>: Pallets</ion-label>

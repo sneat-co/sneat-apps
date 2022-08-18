@@ -16,8 +16,10 @@ import {
 	IAddOrderShippingPointRequest,
 	IOrderCounterparty,
 	IAddSegmentsRequest,
-	IOrderShippingPointRequest, IUpdateShippingPointRequest, IDeleteSegmentsRequest, IUpdateContainerPointRequest,
-} from '../dto/order-dto';
+	IOrderShippingPointRequest,
+	IDeleteSegmentsRequest,
+	IUpdateContainerPointRequest,
+} from '../dto';
 import { IOrdersFilter } from './orders-filter';
 
 
@@ -126,10 +128,6 @@ export class ExpressOrderService {
 
 	addSegments(request: IAddSegmentsRequest): Observable<void> {
 		return this.sneatApiService.post('express/order/add_segments', request);
-	}
-
-	updateSegment(request: IUpdateShippingPointRequest): Observable<void> {
-		return this.sneatApiService.post('express/order/update_segment', request);
 	}
 
 	updateContainerPoint(request: IUpdateContainerPointRequest): Observable<void> {

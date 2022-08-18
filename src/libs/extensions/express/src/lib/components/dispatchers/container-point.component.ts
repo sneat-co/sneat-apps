@@ -9,7 +9,7 @@ import {
 	IOrderContainer,
 	IOrderCounterparty,
 	IContainerSegment,
-	IOrderShippingPoint, IUpdateShippingPointRequest, IUpdateContainerPointRequest, IFreightLoad, IContainerShippingPoint,
+	IOrderShippingPoint, IUpdateShippingPointRequest, IUpdateContainerPointRequest, IFreightLoad, IContainerPoint,
 } from '../..';
 
 @Component({
@@ -29,7 +29,7 @@ export class ContainerPointComponent implements OnChanges {
 	truckerTo?: IOrderCounterparty;
 	truckerFrom?: IOrderCounterparty;
 
-	containerPoint?: IContainerShippingPoint;
+	containerPoint?: IContainerPoint;
 
 	numberOfPallets = new FormControl<number | undefined>(undefined);
 	grossWeightKg = new FormControl<number | undefined>(undefined);

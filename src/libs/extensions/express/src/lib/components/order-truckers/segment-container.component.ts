@@ -4,7 +4,7 @@ import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ExpressOrderService,
-	IContainerSegment, IContainerShippingPoint,
+	IContainerSegment, IContainerPoint,
 	IDeleteSegmentsRequest,
 	IExpressOrderContext,
 	IOrderContainer,
@@ -19,7 +19,7 @@ export class SegmentContainerComponent implements OnChanges {
 	@Input() segment?: IContainerSegment;
 
 	container?: IOrderContainer;
-	from?: IContainerShippingPoint;
+	from?: IContainerPoint;
 
 	deleting = false;
 

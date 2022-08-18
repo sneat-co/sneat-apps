@@ -1,11 +1,14 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IExpressOrderContext,
 	IOrderCounterparty,
 	IContainerSegment,
 	ExpressOrderService,
-	IDeleteSegmentsRequest, IContainerShippingPoint,
+	IDeleteSegmentsRequest,
+	IContainerPoint,
+	IUpdateContainerPointRequest,
 } from '../..';
 
 @Component({
@@ -20,7 +23,15 @@ export class ContainerSegmentComponent implements OnChanges {
 	to?: IOrderCounterparty;
 	by?: IOrderCounterparty;
 
-	fromPoint?: IContainerShippingPoint;
+	fromPoint?: IContainerPoint;
+
+	departDate = new FormControl<string>('');
+	arriveDate = new FormControl<string>('');
+
+	datesForm = new FormGroup({
+		departDate: this.departDate,
+		arriveDate: this.arriveDate,
+	});
 
 	deleting = false;
 
@@ -39,6 +50,14 @@ export class ContainerSegmentComponent implements OnChanges {
 			this.fromPoint = this.order?.dto?.containerPoints?.find(
 				p => p.containerID == this.segment?.containerID && p.shippingPointID === this.segment?.from?.shippingPointID,
 			);
+			if (this.fromPoint) {
+				if (!this.departDate.dirty) {
+					this.departDate.setValue(this.fromPoint?.departsDate || '');
+				}
+				if (!this.arriveDate.dirty) {
+					this.arriveDate.setValue(this.fromPoint?.arrivesDate || '');
+				}
+			}
 			this.to = this.order?.dto?.counterparties?.find(c =>
 				c.contactID === this.segment?.to?.contactID
 				&& c.role == this.segment?.to?.role,
@@ -48,6 +67,48 @@ export class ContainerSegmentComponent implements OnChanges {
 				&& c.role == this.segment?.by?.role,
 			);
 		}
+	}
+
+	onDepartDateChanged($event: Event): void {
+		console.log('onDepartDateChanged', $event);
+		this.saveDates('from', this.departDate);
+	}
+
+	onArriveDateChanged($event: Event): void {
+		console.log('onArriveDateChanged', $event);
+		this.saveDates('to', this.arriveDate);
+	}
+
+	saveDates(endpoint: 'from' | 'to', dateControl: FormControl<string | null>): void {
+		if (!this.order || !this.fromPoint) {
+			return;
+		}
+		let request: IUpdateContainerPointRequest = {
+			teamID: this.order.team.id,
+			orderID: this.order.id,
+			containerID: this.fromPoint.containerID,
+			shippingPointID: this.fromPoint.shippingPointID,
+			departsDate: this.departDate.value || '',
+		};
+		const date = dateControl.value || '';
+		switch (endpoint) {
+			case 'from':
+				request = { ...request, departsDate: date };
+				break;
+			case 'to':
+				request = { ...request, arrivesDate: date };
+				break;
+		}
+		dateControl.disable();
+		this.orderService.updateContainerPoint(request).subscribe({
+			next: () => {
+				dateControl.enable();
+			},
+			error: err => {
+				this.errorLogger.logError(err, 'Failed to update container segment date');
+				dateControl.enable();
+			},
+		});
 	}
 
 	delete(): void {
