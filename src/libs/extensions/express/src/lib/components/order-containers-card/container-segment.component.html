@@ -23,7 +23,12 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label color="medium" position="stacked">Departs</ion-label>
+					<ion-label color="medium" position="stacked">
+						Departs
+						<span *ngIf="saving.includes('departDate')">
+							- saving...
+						</span>
+					</ion-label>
 					<ion-input type="date"
 										 [formGroup]="datesForm"
 										 [formControl]="departDate"
@@ -36,9 +41,8 @@
 				<ion-item>
 					<ion-label color="medium" position="stacked">
 						Arrives
-						<span *ngIf="arriveDate?.disabled">
-							- saving
-							<ion-spinner name="lines-small"></ion-spinner>
+						<span *ngIf="saving.includes('arriveDate')">
+							- saving...
 						</span>
 					</ion-label>
 					<ion-input type="date"

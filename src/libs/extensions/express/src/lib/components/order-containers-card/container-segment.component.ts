@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -28,6 +28,8 @@ export class ContainerSegmentComponent implements OnChanges {
 	departDate = new FormControl<string>('');
 	arriveDate = new FormControl<string>('');
 
+	saving: ReadonlyArray<'departDate'|'arriveDate'> = [];
+
 	datesForm = new FormGroup({
 		departDate: this.departDate,
 		arriveDate: this.arriveDate,
@@ -38,6 +40,7 @@ export class ContainerSegmentComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: ExpressOrderService,
+		private readonly changedDetectorRef: ChangeDetectorRef,
 	) {
 	}
 
@@ -71,15 +74,15 @@ export class ContainerSegmentComponent implements OnChanges {
 
 	onDepartDateChanged($event: Event): void {
 		console.log('onDepartDateChanged', $event);
-		this.saveDates('from', this.departDate);
+		this.saveDates('departDate', this.departDate);
 	}
 
 	onArriveDateChanged($event: Event): void {
 		console.log('onArriveDateChanged', $event);
-		this.saveDates('to', this.arriveDate);
+		this.saveDates('arriveDate', this.arriveDate);
 	}
 
-	saveDates(endpoint: 'from' | 'to', dateControl: FormControl<string | null>): void {
+	saveDates(endpoint: 'departDate' | 'arriveDate', dateControl: FormControl<string | null>): void {
 		if (!this.order || !this.fromPoint) {
 			return;
 		}
@@ -92,21 +95,26 @@ export class ContainerSegmentComponent implements OnChanges {
 		};
 		const date = dateControl.value || '';
 		switch (endpoint) {
-			case 'from':
+			case 'departDate':
 				request = { ...request, departsDate: date };
 				break;
-			case 'to':
+			case 'arriveDate':
 				request = { ...request, arrivesDate: date };
 				break;
 		}
 		dateControl.disable();
+		this.saving = [...this.saving, endpoint];
 		this.orderService.updateContainerPoint(request).subscribe({
 			next: () => {
 				dateControl.enable();
+				this.saving = this.saving.filter(s => s !== endpoint);
+				this.changedDetectorRef.markForCheck();
+				console.log('updated container point with date', endpoint, date, this.saving);
 			},
 			error: err => {
 				this.errorLogger.logError(err, 'Failed to update container segment date');
 				dateControl.enable();
+				this.saving = this.saving.filter(s => s !== endpoint);
 			},
 		});
 	}
