@@ -25,9 +25,6 @@
 				<ion-item>
 					<ion-label color="medium" position="stacked">
 						Departs
-						<span *ngIf="saving.includes('departDate')">
-							- saving...
-						</span>
 					</ion-label>
 					<ion-input type="date"
 										 [formGroup]="datesForm"
@@ -41,13 +38,11 @@
 				<ion-item>
 					<ion-label color="medium" position="stacked">
 						Arrives
-						<span *ngIf="saving.includes('arriveDate')">
-							- saving...
-						</span>
 					</ion-label>
 					<ion-input type="date"
 										 [formGroup]="datesForm"
 										 [formControl]="arriveDate"
+										 [min]="departDate.value"
 										 [color]="arriveDate.value ? undefined : 'medium'"
 										 (ionChange)="onArriveDateChanged($event)"
 					>
@@ -68,11 +63,12 @@
 	></sneat-freight-load-form>
 	<ion-item *ngIf="form.dirty">
 		<ion-buttons slot="end">
-			<ion-button color="danger" (click)="saveChanges($event)">
+			<ion-button [disabled]="saving" color="danger" (click)="saveChanges($event)">
 				<ion-icon name="save-outline" slot="start"></ion-icon>
-				<ion-label>Save changes</ion-label>
+				<ion-label *ngIf="!saving">Save changes</ion-label>
+				<ion-label *ngIf="saving">Saving changes...</ion-label>
 			</ion-button>
-			<ion-button (click)="form.reset()" color="medium">
+			<ion-button *ngIf="!saving" (click)="form.reset()" color="medium">
 				<ion-icon name="close-circle-outline" slot="start"></ion-icon>
 				<ion-label>Cancel</ion-label>
 			</ion-button>

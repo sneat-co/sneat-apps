@@ -31,7 +31,7 @@ export class ContainerSegmentComponent implements OnChanges {
 	departDate = new FormControl<string>('');
 	arriveDate = new FormControl<string>('');
 
-	saving: ReadonlyArray<'departDate'|'arriveDate'> = [];
+	saving = false;
 
 	datesForm = new FormGroup({
 		departDate: this.departDate,
@@ -82,49 +82,16 @@ export class ContainerSegmentComponent implements OnChanges {
 
 	onDepartDateChanged($event: Event): void {
 		console.log('onDepartDateChanged', $event);
-		this.saveDates('departDate', this.departDate);
+		if (this.departDate.value && (!this.arriveDate.value || this.arriveDate.value < this.departDate.value)) {
+			this.arriveDate.setValue(this.departDate.value);
+		}
 	}
 
 	onArriveDateChanged($event: Event): void {
 		console.log('onArriveDateChanged', $event);
-		this.saveDates('arriveDate', this.arriveDate);
-	}
-
-	saveDates(endpoint: 'departDate' | 'arriveDate', dateControl: FormControl<string | null>): void {
-		if (!this.order || !this.fromPoint) {
-			return;
+		if (this.departDate.value && this.arriveDate.value && this.arriveDate.value < this.departDate.value) {
+			this.departDate.setValue(null);
 		}
-		let request: IUpdateContainerPointRequest = {
-			teamID: this.order.team.id,
-			orderID: this.order.id,
-			containerID: this.fromPoint.containerID,
-			shippingPointID: this.fromPoint.shippingPointID,
-			departsDate: this.departDate.value || '',
-		};
-		const date = dateControl.value || '';
-		switch (endpoint) {
-			case 'departDate':
-				request = { ...request, departsDate: date };
-				break;
-			case 'arriveDate':
-				request = { ...request, arrivesDate: date };
-				break;
-		}
-		dateControl.disable();
-		this.saving = [...this.saving, endpoint];
-		this.orderService.updateContainerPoint(request).subscribe({
-			next: () => {
-				dateControl.enable();
-				this.saving = this.saving.filter(s => s !== endpoint);
-				this.changedDetectorRef.markForCheck();
-				console.log('updated container point with date', endpoint, date, this.saving);
-			},
-			error: err => {
-				this.errorLogger.logError(err, 'Failed to update container segment date');
-				dateControl.enable();
-				this.saving = this.saving.filter(s => s !== endpoint);
-			},
-		});
 	}
 
 	delete(): void {
@@ -173,6 +140,30 @@ export class ContainerSegmentComponent implements OnChanges {
 	}
 
 	saveChanges(event: Event): void {
-
+		if (!this.order || !this.fromPoint) {
+			return;
+		}
+		const request: IUpdateContainerPointRequest = {
+			teamID: this.order.team.id,
+			orderID: this.order.id,
+			containerID: this.fromPoint.containerID,
+			shippingPointID: this.fromPoint.shippingPointID,
+			departsDate: this.departDate.value || '',
+			arrivesDate: this.arriveDate.value || '',
+		};
+		this.form.disable();
+		this.orderService.updateContainerPoint(request).subscribe({
+			next: () => {
+				console.log('updateContainerPoint success');
+			},
+			error: err => {
+				this.errorLogger.logError(err, 'Failed to update container segment date');
+			},
+			complete: () => {
+				this.form.enable();
+				this.saving = false;
+				this.changedDetectorRef.markForCheck();
+			},
+		});
 	}
 }
