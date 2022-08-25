@@ -33,6 +33,10 @@ export function excludeEmpty<T>(obj: T): T {
 		);
 }
 
+export function undefinedIfEmpty<T>(obj: T): T | undefined {
+	return Object.keys(obj).length === 0 ? undefined : obj;
+}
+
 export function excludeZeroValues<T>(obj: T): T {
 	const o = obj as any;
 	return Object

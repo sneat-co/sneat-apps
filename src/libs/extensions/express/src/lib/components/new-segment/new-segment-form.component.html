@@ -54,6 +54,7 @@
 				[order]="order"
 				[(contact)]="fromContact"
 				[(date)]="fromDate"
+				(dateChange)="onFromDateChanged($event)"
 				[(refNumber)]="fromRefNumber"
 				[(endpointType)]="from"
 				(endpointTypeChange)="onEndpointTypeChanged('from', $event)"

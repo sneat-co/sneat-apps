@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { excludeEmpty } from '@sneat/core';
+import { excludeEmpty, excludeZeroValues, undefinedIfEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
 import { IContainer } from '../order-containers-selector/condainer-interface';
@@ -58,6 +58,12 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 
 	onByRefNumberChanged(refNumber: string): void {
 		this.byRefNumber = refNumber;
+	}
+
+	onFromDateChanged(date: string): void {
+		if (date && (!this.toDate || this.toDate < date)) {
+			this.toDate = date;
+		}
 	}
 
 	onEndpointTypeChanged(what: 'from' | 'to', endpointType: SegmentEndpointType): void {
@@ -157,11 +163,11 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			teamID: this.order.team?.id,
 			containers: this.selectedContainers.map(c => ({
 				id: c.id,
-				toPick: {
+				toPick: undefinedIfEmpty(excludeZeroValues({
 					numberOfPallets: c.pallets,
 					grossWeightKg: c.grossKg,
 					volumeM3: c.volumeM3,
-				},
+				})),
 			})),
 			from: excludeEmpty({
 				counterparty: {
