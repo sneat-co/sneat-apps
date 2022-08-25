@@ -12,8 +12,8 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import { OrderPrintPageBaseComponent } from '../order-print-page-base.component';
 
 interface IContainerInfo {
+	dispatcher?: IOrderCounterparty;
 	from?: IOrderShippingPoint;
-	counterparty?: IOrderCounterparty;
 	toPick?: IFreightLoad;
 	segment?: IContainerSegment;
 	container?: IOrderContainer;
@@ -68,8 +68,8 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 				const container = order?.dto?.containers?.find(c => c.id === segment.containerID);
 				const toPick = order?.dto?.containerPoints?.find(p => p.containerID === segment.containerID && p.shippingPointID === segment.from.shippingPointID)?.toPick;
 				const from = order?.dto?.shippingPoints?.find(p => p.id === segment.from.shippingPointID);
-				const counterparty = order?.dto?.counterparties?.find(c => c.contactID === segment.from.contactID);
-				const containerInfo: IContainerInfo = {container, from, toPick, segment, counterparty};
+				const dispatcher = order?.dto?.counterparties?.find(c => c.contactID === from?.counterparty?.contactID);
+				const containerInfo: IContainerInfo = {container, from, toPick, segment, dispatcher};
 				return containerInfo;
 			});
 	}

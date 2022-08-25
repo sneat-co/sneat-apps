@@ -6,17 +6,44 @@
 			<ion-text color="medium">{{shippingPoint?.status}}</ion-text>
 		</ion-label>
 		<ion-buttons slot="end">
-			<ion-button [disabled]="disabled || deleting" color="medium" title="Remove dispatching point"
-									(click)="deletePoint()">
+			<ion-button *ngIf="form.dirty">
+				<ion-icon name="save-outline"></ion-icon>
+				<ion-label>Save</ion-label>
+			</ion-button>
+			<ion-button color="medium" *ngIf="form.dirty" (click)="form.reset()">
+				<ion-label>Cancel</ion-label>
+			</ion-button>
+			<ion-button color="medium" title="Remove dispatching point"
+									*ngIf="!form.dirty"
+									[disabled]="disabled || deleting"
+									(click)="deletePoint()"
+			>
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item *ngIf="shippingPoint?.location?.address">
-		<ion-label color="medium" position="stacked">
-			Address {{shippingPoint?.location?.address?.countryID|countryFlag}}</ion-label>
-		<ion-textarea [value]="shippingPoint?.location?.address?.lines?.join('\n')"></ion-textarea>
-	</ion-item>
+
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="5">
+				<ion-item>
+					<ion-label color="medium">
+						Notes
+					</ion-label>
+					<ion-textarea rows="3" auto-grow="true" [formGroup]="form" [formControl]="notes"></ion-textarea>
+				</ion-item>
+			</ion-col>
+			<ion-col size="7">
+				<ion-item *ngIf="shippingPoint?.location?.address">
+					<ion-label color="medium" class="ion-padding-end">
+						Address {{shippingPoint?.location?.address?.countryID|countryFlag}}
+					</ion-label>
+					<ion-textarea rows="3" auto-grow="true" [formGroup]="form" [formControl]="address"></ion-textarea>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
 
 	<ion-item-group class="ion-padding">
 		<ion-item-divider>

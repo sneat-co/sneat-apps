@@ -1,4 +1,5 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ExpressOrderService,
@@ -25,6 +26,14 @@ export class DispatchPointComponent implements OnChanges {
 
 	@Input() deleting = false;
 
+	notes = new FormControl<string>('');
+	address = new FormControl<string>('');
+
+	form = new FormGroup({
+		notes: this.notes,
+		address: this.address,
+	});
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: ExpressOrderService,
@@ -36,6 +45,9 @@ export class DispatchPointComponent implements OnChanges {
 			const contactID = this.dispatchPoint?.contactID;
 			this.dispatcher = this.order?.dto?.counterparties?.find(c => c.contactID === contactID && c.role === 'dispatcher');
 			this.shippingPoint = this.order?.dto?.shippingPoints?.find(sp => sp.location?.contactID === contactID);
+			if (!this.address.dirty) {
+				this.address.setValue(this.shippingPoint?.location?.address?.lines?.join('\n') || '')
+			}
 			this.segments = this.order?.dto?.segments?.filter(s =>
 				s.from?.contactID === contactID
 				|| s.to?.contactID === contactID,
