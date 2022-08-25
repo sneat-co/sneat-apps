@@ -4,11 +4,8 @@
 			{{counterparty?.countryID|countryFlag}}
 			{{counterparty?.title}}
 		</ion-label>
+
 		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="addDispatchPoint($event)">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
-				<ion-label>Add dispatch point</ion-label>
-			</ion-button>
 			<ion-button color="medium"
 									[disabled]="deleting"
 									title="Remove dispatcher & all dispatching points"
@@ -19,6 +16,33 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
+	<ion-item>
+		<ion-label color="medium">
+			Ref
+		</ion-label>
+		<ion-input placeholder="#" [formControl]="refNumber" (keyup.enter)="saveChanges()"></ion-input>
+		<ion-buttons slot="end" *ngIf="form.dirty">
+			<ion-button (click)="saveChanges()">
+				<ion-icon name="save-outline" slot="start"></ion-icon>
+				<ion-label *ngIf="!saving">Save</ion-label>
+				<ion-label *ngIf="saving">Saving...</ion-label>
+				<ion-spinner name="lines-small" color="medium" *ngIf="saving"></ion-spinner>
+			</ion-button>
+			<ion-button (click)="form.reset()" color="medium" *ngIf="!saving">
+				<ion-icon name="close-circle-outline" slot="start"></ion-icon>
+				<ion-label>Cancel</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item-divider>
+		<ion-label>Dispatch points</ion-label>
+		<ion-buttons slot="end">
+			<ion-button color="medium" (click)="addDispatchPoint($event)">
+				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
 	<sneat-dispatch-point *ngFor="let location of locations"
 												[dispatchPoint]="location"
 												[disabled]="deleting"

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -6,7 +7,7 @@ import {
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
 	IExpressOrderContext,
-	IOrderCounterparty,
+	IOrderCounterparty, ISetOrderCounterpartyRequest,
 } from '../..';
 
 @Component({
@@ -24,6 +25,13 @@ export class DispatcherComponent implements OnChanges {
 
 	deleting = false;
 
+	refNumber = new FormControl<string>('');
+	form = new FormGroup({
+		refNumber: this.refNumber,
+	});
+
+	saving = false;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
@@ -33,8 +41,11 @@ export class DispatcherComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['counterparty']) {
-			const contactID = this.counterparty?.contactID
-			this.locations = this.order?.dto?.counterparties?.filter(l => l.parentContactID === contactID)
+			const contactID = this.counterparty?.contactID;
+			this.locations = this.order?.dto?.counterparties?.filter(l => l.parentContactID === contactID);
+			if (changes['counterparty'] && !this.refNumber.dirty) {
+				this.refNumber.setValue(this.counterparty?.refNumber || '');
+			}
 		}
 	}
 
@@ -104,6 +115,37 @@ export class DispatcherComponent implements OnChanges {
 				});
 			})
 			.catch(this.errorLogger.logErrorHandler('failed to open contact selector'));
+	}
+
+	saveChanges(): void {
+		if (!this.order || !this.counterparty?.contactID || !this.counterparty?.role) {
+			return;
+		}
+		const request: ISetOrderCounterpartyRequest = {
+			teamID: this.order.team.id,
+			orderID: this.order.id,
+			counterparties: [
+				{
+					contactID: this.counterparty.contactID,
+					role: this.counterparty.role,
+					refNumber: this.refNumber.value || '',
+				},
+			]
+		};
+		this.saving = true;
+		this.form.disable();
+		this.ordersService.setOrderCounterparty(request).subscribe({
+			next: () => {
+				this.form.markAsPristine();
+			},
+			error: err => {
+				this.errorLogger.logError(err, 'Failed to save dispatcher')
+			},
+			complete: () => {
+				this.saving = false;
+				this.form.disable();
+			}
+		});
 	}
 
 	deleteDispatcher(): void {
