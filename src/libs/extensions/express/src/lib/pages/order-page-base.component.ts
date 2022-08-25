@@ -1,7 +1,14 @@
 import { Directive, Inject, InjectionToken } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IExpressOrderContext } from '../dto';
+import {
+	IContainerPoint,
+	IContainerSegment,
+	IExpressOrderContext,
+	IFreightLoad,
+	IOrderContainer,
+	IOrderShippingPoint,
+} from '../dto';
 import { ExpressOrderService } from '../services';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
@@ -21,7 +28,7 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 			// 	takeUntil(this.destroyed),
 			// )
 			.subscribe(params => {
-				this.order = { id: params.get('orderID') || '', team: {id: params.get('teamID') || ''} };
+				this.order = { id: params.get('orderID') || '', team: { id: params.get('teamID') || '' } };
 				if (this.team?.id && this.order?.id) {
 					this.orderService
 						.watchOrderByID(this.team.id, this.order.id)

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IExpressOrderContext,
@@ -8,7 +9,7 @@ import {
 	ExpressOrderService,
 	IDeleteSegmentsRequest,
 	IContainerPoint,
-	IUpdateContainerPointRequest,
+	IUpdateContainerPointRequest, IFreightLoad,
 } from '../..';
 import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
 
@@ -139,27 +140,39 @@ export class ContainerSegmentComponent implements OnChanges {
 		return `${starts.join('/')}-${ends.join('/')}`;
 	}
 
+	onFreightLoadChanged(freightLoad?: IFreightLoad): void {
+		if (this.fromPoint) {
+			this.fromPoint = excludeUndefined({
+				...this.fromPoint,
+				toPick: freightLoad,
+			});
+		}
+	}
+
 	saveChanges(event: Event): void {
 		if (!this.order || !this.fromPoint) {
 			return;
 		}
-		const request: IUpdateContainerPointRequest = {
+		const request: IUpdateContainerPointRequest = excludeUndefined({
 			teamID: this.order.team.id,
 			orderID: this.order.id,
 			containerID: this.fromPoint.containerID,
 			shippingPointID: this.fromPoint.shippingPointID,
 			departsDate: this.departDate.value || '',
 			arrivesDate: this.arriveDate.value || '',
-		};
+			toPick: this.fromPoint?.toPick,
+		});
 		this.form.disable();
 		this.orderService.updateContainerPoint(request).subscribe({
 			next: () => {
 				console.log('updateContainerPoint success');
+				this.form.markAsPristine();
 			},
 			error: err => {
 				this.errorLogger.logError(err, 'Failed to update container segment date');
 			},
 			complete: () => {
+				console.log('updateContainerPoint complete');
 				this.form.enable();
 				this.saving = false;
 				this.changedDetectorRef.markForCheck();

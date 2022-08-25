@@ -13,7 +13,7 @@
 			<ion-col>
 				<ion-card>
 					<ion-card-content>
-						<h1 style="color: black">{{selfCounterparty?.title||team.brief?.title||team.id}}</h1>
+						<h1 style="color: black">{{selfCounterparty?.title || team.brief?.title || team.id}}</h1>
 					</ion-card-content>
 				</ion-card>
 
@@ -67,9 +67,51 @@
 		<ion-item-divider>
 			<ion-label>Containers</ion-label>
 		</ion-item-divider>
-		<ion-item *ngFor="let container of order?.dto?.containers">
-			<ion-label>{{container.type}} - {{container.number}}</ion-label>
-		</ion-item>
+		<style>
+			table.print-grid {
+					width: 100%;
+					border: 1px;
+					margin: 5px;
+			}
+			table.print-grid th {
+					text-align: left;
+					padding: 0.5em;
+					border-bottom: 1px solid lightgray;
+			}
+			table.print-grid td {
+					padding: 0.5em;
+					border-bottom: 1px dashed lightgray;
+			}
+		</style>
+		<table class="print-grid">
+			<thead>
+			<th>#</th>
+			<th>Container</th>
+			<th>Fabrica</th>
+			<th>Pallets</th>
+			<th>Peso</th>
+			<th>Ref</th>
+			<th>Nota</th>
+			<th>Address</th>
+			</thead>
+			<tbody>
+			<tr *ngFor="let point of points; index as i">
+				<td>{{i}}</td>
+				<td>{{point.container?.type}} - {{point.container?.number}}</td>
+				<td>{{point.from?.counterparty?.title}}</td>
+				<td>{{point.toPick?.numberOfPallets}}</td>
+				<td>{{point.toPick?.grossWeightKg}}</td>
+				<td>{{point?.counterparty?.refNumber}}</td>
+				<td>to be implemented</td>
+				<td>
+					<pre style="margin: 0">{{point.from?.location?.address?.lines?.join('\n')}}</pre>
+					<p *ngIf="point.from?.location?.address?.zipCode">
+						{{point.from?.location?.address?.zipCode}}
+					</p>
+				</td>
+			</tr>
+			</tbody>
+		</table>
 	</ion-card>
 	<!--	<ion-card>-->
 	<!--		<ion-card-content>-->

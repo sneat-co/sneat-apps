@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { excludeEmpty, undefinedIfEmpty } from '@sneat/core';
 import { IFreightLoad } from '../../dto';
 
 export class FreightLoadForm {
@@ -23,13 +24,16 @@ export class FreightLoadFormComponent implements OnChanges {
 
 	label = 'TO BE SET';
 
-	@Input() operation?: 'pick'|'drop';
+	@Input() operation?: 'pick' | 'drop';
 
 	@Input() form = new FreightLoadForm();
 
 	@Input() freightLoad?: IFreightLoad;
 
+	@Output() readonly freightLoadChange = new EventEmitter<IFreightLoad | undefined>();
+
 	@Output() readonly keyUpEnter = new EventEmitter<Event>();
+
 	// @Output() readonly dirtyChange = new EventEmitter<boolean>();
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -56,6 +60,11 @@ export class FreightLoadFormComponent implements OnChanges {
 	}
 
 	onChanged(): void {
-		// this.dirtyChange.emit(this.form.dirty);
+		this.freightLoad = undefinedIfEmpty({
+			numberOfPallets: this.form.numberOfPallets.value === null ? undefined : this.form.numberOfPallets.value,
+			grossWeightKg: this.form.grossWeightKg.value === null ? undefined : this.form.grossWeightKg.value,
+			volumeM3: this.form.volumeM3.value === null ? undefined : this.form.volumeM3.value,
+		});
+		this.freightLoadChange.emit(this.freightLoad);
 	}
 }
