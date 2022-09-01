@@ -35,8 +35,9 @@
 			</ion-col>
 			<ion-col size="7">
 				<ion-item *ngIf="shippingPoint?.location?.address">
-					<ion-label color="medium" class="ion-padding-end">
-						Address {{shippingPoint?.location?.address?.countryID|countryFlag}}
+					<ion-label color="medium">
+						Address
+						<span class="ion-margin-start" *ngIf="shippingPoint?.location?.address?.countryID">{{shippingPoint?.location?.address?.countryID|countryFlag}}</span>
 					</ion-label>
 					<ion-textarea rows="3" auto-grow="true" [formGroup]="form" [formControl]="address"></ion-textarea>
 				</ion-item>
