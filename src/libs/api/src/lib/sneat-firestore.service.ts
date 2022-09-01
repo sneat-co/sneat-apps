@@ -6,9 +6,8 @@ import {
 	DocumentSnapshot,
 } from '@angular/fire/compat/firestore';
 import { INavContext } from '@sneat/core';
-import { ITeamContext } from '@sneat/team/models';
 import firebase from 'firebase/compat';
-import { map, Observable, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import WhereFilterOp = firebase.firestore.WhereFilterOp;
 
 export interface IFilter {
@@ -45,7 +44,8 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 
 		const operator = (f: IFilter) => f.field.endsWith('IDs') ? 'array-contains' : f.operator;
 
-		return this.afs.collection<Dto2>(collectionRef,
+		const query = this.afs.collection<Dto2>(
+			collectionRef as CollectionReference, // TODO: Ask StackOverflow: what is proper way instead of dumb forced cast?
 			ref => {
 				let cond = ref.where(filter[0].field, operator(filter[0]), filter[0].value);
 				for (let i = 1; i < filter.length; i++) {
@@ -55,7 +55,8 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 				return cond;
 			},
 		)
-			.snapshotChanges();
+			;
+		return query.snapshotChanges();
 	}
 
 	watchByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[]): Observable<INavContext<Brief, Dto2>[]> {

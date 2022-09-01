@@ -1,29 +1,31 @@
-// tslint:disable-next-line:no-any
-export function excludeUndefined<T>(obj: T): T {
-	const o = obj as any;
+export function excludeUndefined<T>(o: T): T {
+	if (!o) {
+		return o;
+	}
 	return Object
-		.keys(obj)
+		.keys(o)
 		.reduce(
 			(r: any, k) => {
 				// tslint:disable-next-line:no-any
-				const v = o[k];
+				const v = (o as any)[k];
 				if (v !== undefined) {
 					r[k] = v;
 				}
 				return r;
 			},
-			// tslint:disable-next-line:no-object-literal-type-assertion
 			{} as T,
 		);
 }
 
-export function excludeEmpty<T>(obj: T): T {
-	const o = obj as any;
+export function excludeEmpty<T>(o: T): T {
+	if (!o) {
+		return o;
+	}
 	return Object
-		.keys(obj)
+		.keys(o)
 		.reduce(
 			(r: any, k) => {
-				const v = o[k];
+				const v = (o as any)[k];
 				if (v !== undefined && v !== '') {
 					r[k] = v;
 				}
@@ -33,18 +35,23 @@ export function excludeEmpty<T>(obj: T): T {
 		);
 }
 
-export function undefinedIfEmpty<T>(obj: T): T | undefined {
-	return Object.keys(obj).length === 0 ? undefined : obj;
+export function undefinedIfEmpty<T>(o: T): T | undefined {
+	if (!o) {
+		return o;
+	}
+	return Object.keys(o as any).length === 0 ? undefined : o;
 }
 
-export function excludeZeroValues<T>(obj: T): T {
-	const o = obj as any;
+export function excludeZeroValues<T>(o: T): T {
+	if (!o) {
+		return o;
+	}
 	return Object
-		.keys(obj)
+		.keys(o)
 		.reduce(
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(r: any, k: string) => {
-				const v = o[k];
+				const v = (o as any)[k];
 				if (v !== undefined && v !== 0) {
 					r[k] = v;
 				}
