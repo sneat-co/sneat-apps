@@ -53,7 +53,7 @@ specifiers:
   postcss-url: 10.1.3
   prettier: 2.7.1
   rxjs: 7.5.5
-  tabulator-tables: 5.3.2
+  tabulator-tables: 5.3.3
   ts-jest: 28.0.8
   ts-md5: 1.3.1
   ts-node: 10.9.1
@@ -83,7 +83,7 @@ dependencies:
   firebase: 9.9.4
   ionicons: 6.0.3
   rxjs: 7.5.5
-  tabulator-tables: 5.3.2
+  tabulator-tables: 5.3.3
   ts-md5: 1.3.1
   tslib: 2.4.0
   zone.js: 0.11.8
@@ -4929,7 +4929,7 @@ packages:
       loader-utils: 2.0.2
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.74.0
+      webpack: 5.74.0_esbuild@0.15.5
 
   /babel-plugin-const-enum/1.2.0_@babel+core@7.18.10:
     resolution: {integrity: sha512-o1m/6iyyFnp9MRsK1dHF3bneqyf3AlM2q3A/YbgQr2pCat6B6XJVDv2TXqzfY2RYUi4mak6WAksSBPlyYGx9dg==}
@@ -12044,8 +12044,8 @@ packages:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
     dev: true
 
-  /tabulator-tables/5.3.2:
-    resolution: {integrity: sha512-gF2z76lSkkGET+WjJsAXeECnxvrvGzEF3eKWNB076j7f40qOuohDuwn90FfuyOGNMpEyJpGsyqCwsuSeXhUtMQ==}
+  /tabulator-tables/5.3.3:
+    resolution: {integrity: sha512-XS4c6j+XnjGU/n1m93E+Ak92aE1Z/YwycPVhaNnVil94Sey6y1YjcQcDwThI8IAZfRse/CF865c0YCCe/DifCQ==}
     dev: false
 
   /tapable/2.2.1:
