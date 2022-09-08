@@ -45,7 +45,7 @@ specifiers:
   ionicons: 6.0.3
   jest: 29.0.2
   jest-preset-angular: 12.2.2
-  ng-packagr: 14.2.0
+  ng-packagr: 14.2.1
   nx: 14.6.5
   postcss: 8.4.16
   postcss-import: 15.0.0
@@ -89,7 +89,7 @@ dependencies:
   zone.js: 0.11.8
 
 devDependencies:
-  '@angular-devkit/build-angular': 14.2.1_itkmvlco6lzts5nnxaz6xxxnoi
+  '@angular-devkit/build-angular': 14.2.1_kkousk3swxfsgfzqhk2vg6hofy
   '@angular-eslint/eslint-plugin': 14.0.3_yqf6kl63nyoq5megxukfnom5rm
   '@angular-eslint/eslint-plugin-template': 14.0.3_yqf6kl63nyoq5megxukfnom5rm
   '@angular-eslint/template-parser': 14.0.3_yqf6kl63nyoq5megxukfnom5rm
@@ -113,7 +113,7 @@ devDependencies:
   eslint-plugin-cypress: 2.12.1_eslint@8.23.0
   jest: 29.0.2_hmlqgonttxlk2sdyntkgpf244q
   jest-preset-angular: 12.2.2_syigifiqx4i5q4pnqq55ckiwya
-  ng-packagr: 14.2.0_joawv6sz6ol26uw73dl24gp474
+  ng-packagr: 14.2.1_joawv6sz6ol26uw73dl24gp474
   nx: 14.6.5
   postcss: 8.4.16
   postcss-import: 15.0.0_postcss@8.4.16
@@ -147,7 +147,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/14.2.1_itkmvlco6lzts5nnxaz6xxxnoi:
+  /@angular-devkit/build-angular/14.2.1_kkousk3swxfsgfzqhk2vg6hofy:
     resolution: {integrity: sha512-6FeIe2nsNH/fslZmTfbo+RCjLk3HuCQa5rb/SFf3w0mwzWCrhV0/SqnQ4+YYgkKrohmTX+q5JmJPwWnkqgdIgQ==}
     engines: {node: ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -209,7 +209,7 @@ packages:
       loader-utils: 3.2.0
       mini-css-extract-plugin: 2.6.1_webpack@5.74.0
       minimatch: 5.1.0
-      ng-packagr: 14.2.0_joawv6sz6ol26uw73dl24gp474
+      ng-packagr: 14.2.1_joawv6sz6ol26uw73dl24gp474
       open: 8.4.0
       ora: 5.4.1
       parse5-html-rewriting-stream: 6.0.1
@@ -5171,32 +5171,6 @@ packages:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
 
-  /cacache/16.1.1:
-    resolution: {integrity: sha512-VDKN+LHyCQXaaYZ7rA/qtkURU+/yYhviUdvqEv2LT6QPZU8jpyzEkEVAcKlKLt5dJ5BRp11ym8lo3NKLluEPLg==}
-    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
-    dependencies:
-      '@npmcli/fs': 2.1.0
-      '@npmcli/move-file': 2.0.0
-      chownr: 2.0.0
-      fs-minipass: 2.1.0
-      glob: 8.0.3
-      infer-owner: 1.0.4
-      lru-cache: 7.10.1
-      minipass: 3.1.6
-      minipass-collect: 1.0.2
-      minipass-flush: 1.0.5
-      minipass-pipeline: 1.2.4
-      mkdirp: 1.0.4
-      p-map: 4.0.0
-      promise-inflight: 1.0.1
-      rimraf: 3.0.2
-      ssri: 9.0.1
-      tar: 6.1.11
-      unique-filename: 1.1.1
-    transitivePeerDependencies:
-      - bluebird
-    dev: true
-
   /cacache/16.1.2:
     resolution: {integrity: sha512-Xx+xPlfCZIUHagysjjOAje9nRo8pRDczQCcXb4J2O0BLtH+xeVue6ba4y1kfJfQMAnM2mkcoMIAyOctlaRGWYA==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
@@ -8346,7 +8320,7 @@ packages:
       jest: ^28.0.0
       typescript: '>=4.3'
     dependencies:
-      '@angular-devkit/build-angular': 14.2.1_itkmvlco6lzts5nnxaz6xxxnoi
+      '@angular-devkit/build-angular': 14.2.1_kkousk3swxfsgfzqhk2vg6hofy
       '@angular/compiler-cli': 14.2.1_gc7v3cij2wspvzijur37h336xm
       '@angular/core': 14.2.1_rxjs@7.5.5+zone.js@0.11.8
       '@angular/platform-browser-dynamic': 14.2.1_rckh2xyz42xz63btwlazezeg5y
@@ -9445,8 +9419,8 @@ packages:
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  /ng-packagr/14.2.0_joawv6sz6ol26uw73dl24gp474:
-    resolution: {integrity: sha512-Nb+2/L37CFcWmCz91USwNd87mdTfTXDb4MBl87Dkj2H53KfrAltX2psa+gTRbjE5USCX8bQeu4nRzf/Bp6Vivg==}
+  /ng-packagr/14.2.1_joawv6sz6ol26uw73dl24gp474:
+    resolution: {integrity: sha512-o2t/a+DdhUEbXXPbR70LZcU4WcSf7wnddCiQcc3k0HrTQjxWspv0qFUdba3+0ft0dVetaywa6lc+98g/SZEKcQ==}
     engines: {node: ^14.15.0 || >=16.10.0}
     hasBin: true
     peerDependencies:
@@ -9460,7 +9434,7 @@ packages:
       ajv: 8.11.0
       ansi-colors: 4.1.3
       browserslist: 4.21.3
-      cacache: 16.1.1
+      cacache: 16.1.2
       chokidar: 3.5.3
       commander: 9.3.0
       dependency-graph: 0.11.0
@@ -9477,7 +9451,7 @@ packages:
       rollup: 2.75.6
       rollup-plugin-sourcemaps: 0.6.3_4jqoxpbkbdyjazx4awg3scwgmm
       rxjs: 7.5.6
-      sass: 1.53.0
+      sass: 1.54.4
       stylus: 0.59.0
       tslib: 2.4.0
       typescript: 4.8.2
@@ -11440,16 +11414,6 @@ packages:
       neo-async: 2.6.2
       sass: 1.54.4
       webpack: 5.74.0_esbuild@0.15.5
-    dev: true
-
-  /sass/1.53.0:
-    resolution: {integrity: sha512-zb/oMirbKhUgRQ0/GFz8TSAwRq2IlR29vOUJZOx0l8sV+CkHUfHa4u5nqrG+1VceZp7Jfj59SVW9ogdhTvJDcQ==}
-    engines: {node: '>=12.0.0'}
-    hasBin: true
-    dependencies:
-      chokidar: 3.5.3
-      immutable: 4.1.0
-      source-map-js: 1.0.2
     dev: true
 
   /sass/1.54.4:
