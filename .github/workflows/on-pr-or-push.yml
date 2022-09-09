@@ -52,7 +52,7 @@ jobs:
         working-directory: ./src
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
+        uses: nrwl/nx-set-shas@v3
 
       - name: nx affected
         run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }}
