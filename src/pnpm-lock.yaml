@@ -32,7 +32,7 @@ specifiers:
   '@sentry/angular': 7.12.1
   '@sentry/tracing': 7.12.1
   '@sneat/random': 0.0.4
-  '@types/jest': 29.0.1
+  '@types/jest': 29.0.2
   '@types/node': 16.11.58
   '@typescript-eslint/eslint-plugin': 5.37.0
   '@typescript-eslint/parser': 5.37.0
@@ -103,7 +103,7 @@ devDependencies:
   '@nrwl/linter': 14.7.5_poolzxngqhdquu5okk7z3xabxq
   '@nrwl/nx-cloud': 14.6.2
   '@nrwl/workspace': 14.7.5_hx7aglswfhm5s7e7zc4goek6se
-  '@types/jest': 29.0.1
+  '@types/jest': 29.0.2
   '@types/node': 16.11.58
   '@typescript-eslint/eslint-plugin': 5.37.0_22c5fnooleyfkzrkkgdmel5kmi
   '@typescript-eslint/parser': 5.37.0_irgkl5vooow2ydyo6aokmferha
@@ -4068,8 +4068,8 @@ packages:
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
 
-  /@types/jest/29.0.1:
-    resolution: {integrity: sha512-CAZrjLRZs4xEdIrfrdV74xK1Vo/BKQZwUcjJv3gp6gMeV3BsVxMnXTcgtYOKyphT4DPPo7jxVEVhuwJTQn3oPQ==}
+  /@types/jest/29.0.2:
+    resolution: {integrity: sha512-TaklkwSEtvwJpleiKBHgEBySIQlcZ08gYP/s5wdtdLnjz9uxjnDd7U+Y0JWACebkqBc+jtbol2PEtEW0wQV2zQ==}
     dependencies:
       expect: 29.0.3
       pretty-format: 29.0.3
