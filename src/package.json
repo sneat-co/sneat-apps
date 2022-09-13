@@ -29,7 +29,7 @@
     "@sentry/angular": "7.12.1",
     "@sentry/tracing": "7.12.1",
     "@sneat/random": "0.0.4",
-    "date-fns": "2.29.2",
+    "date-fns": "2.29.3",
     "firebase": "9.9.4",
     "ionicons": "6.0.3",
     "rxjs": "7.5.6",
