@@ -3,9 +3,9 @@
 		<ion-label color="medium">{{container?.type}} #</ion-label>
 		<ion-input readonly [value]="container?.number"></ion-input>
 		<ion-label color="medium" class="ion-padding-start">Departs</ion-label>
-		<ion-input type="date" [formControl]="departureDate" [disabled]="!segment" class="ion-margin-end"></ion-input>
+		<ion-input type="date" [formControl]="departureDate" class="ion-margin-end"></ion-input>
 		<ion-label color="medium" class="ion-padding-start">Arrives</ion-label>
-		<ion-input type="date" [formControl]="arrivalDate" [disabled]="!segment"></ion-input>
+		<ion-input type="date" [formControl]="arrivalDate"></ion-input>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="form.dirty" color="danger" title="Save changes" (click)="notImplemented()">
 				<ion-icon name="save-outline"></ion-icon>

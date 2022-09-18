@@ -26,7 +26,7 @@ export class SegmentContainerComponent implements OnChanges {
 
 	deleting = false;
 
-	departureDate = new FormControl<string>('');
+	departureDate = new FormControl<string>('' );
 	arrivalDate = new FormControl<string>('');
 
 	form = new FormGroup({
@@ -38,6 +38,7 @@ export class SegmentContainerComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: ExpressOrderService,
 	) {
+		this.form.disable();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -56,8 +57,15 @@ export class SegmentContainerComponent implements OnChanges {
 	}
 
 	private setDates(): void {
-		this.departureDate.setValue(this?.segment?.dates?.start || '');
-		this.arrivalDate.setValue(this?.segment?.dates?.end || '');
+		if (this.segment) {
+			this.departureDate.setValue(this.segment.dates?.start || '');
+			this.arrivalDate.setValue(this.segment.dates?.end || '');
+			if (!this.form.enabled) {
+				this.form.enable();
+			}
+		} else {
+			this.form.disable();
+		}
 	}
 
 	delete(): void {
