@@ -53,31 +53,35 @@ export class ContainerSegmentComponent implements OnChanges {
 	) {
 	}
 
+	private setForm(): void {
+		this.from = this.order?.dto?.counterparties?.find(c =>
+			c.contactID === this.segment?.from?.contactID
+			&& c.role == this.segment?.from?.role,
+		);
+		this.fromPoint = this.order?.dto?.containerPoints?.find(
+			p => p.containerID == this.segment?.containerID && p.shippingPointID === this.segment?.from?.shippingPointID,
+		);
+		if (this.fromPoint) {
+			if (!this.departDate.dirty) {
+				this.departDate.setValue(this.fromPoint?.departsDate || '');
+			}
+			if (!this.arriveDate.dirty) {
+				this.arriveDate.setValue(this.fromPoint?.arrivesDate || '');
+			}
+		}
+		this.to = this.order?.dto?.counterparties?.find(c =>
+			c.contactID === this.segment?.to?.contactID
+			&& c.role == this.segment?.to?.role,
+		);
+		this.by = this.order?.dto?.counterparties?.find(c =>
+			c.contactID === this.segment?.by?.contactID
+			&& c.role == this.segment?.by?.role,
+		);
+	}
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['segment']) {
-			this.from = this.order?.dto?.counterparties?.find(c =>
-				c.contactID === this.segment?.from?.contactID
-				&& c.role == this.segment?.from?.role,
-			);
-			this.fromPoint = this.order?.dto?.containerPoints?.find(
-				p => p.containerID == this.segment?.containerID && p.shippingPointID === this.segment?.from?.shippingPointID,
-			);
-			if (this.fromPoint) {
-				if (!this.departDate.dirty) {
-					this.departDate.setValue(this.fromPoint?.departsDate || '');
-				}
-				if (!this.arriveDate.dirty) {
-					this.arriveDate.setValue(this.fromPoint?.arrivesDate || '');
-				}
-			}
-			this.to = this.order?.dto?.counterparties?.find(c =>
-				c.contactID === this.segment?.to?.contactID
-				&& c.role == this.segment?.to?.role,
-			);
-			this.by = this.order?.dto?.counterparties?.find(c =>
-				c.contactID === this.segment?.by?.contactID
-				&& c.role == this.segment?.by?.role,
-			);
+			this.setForm();
 		}
 	}
 
@@ -147,6 +151,12 @@ export class ContainerSegmentComponent implements OnChanges {
 				toPick: freightLoad,
 			});
 		}
+	}
+
+	cancelChanges(event: Event): void {
+		event.preventDefault();
+		this.form.reset();
+		this.setForm();
 	}
 
 	saveChanges(event: Event): void {

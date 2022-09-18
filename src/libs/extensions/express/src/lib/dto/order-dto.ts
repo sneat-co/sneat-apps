@@ -32,6 +32,7 @@ export interface IFreightLoad {
 	readonly grossWeightKg?: number;
 	readonly numberOfPallets?: number;
 	readonly volumeM3?: number; // 1m3 = 1000L
+	readonly note?: string;
 }
 
 export interface IOrderContainerBase extends IFreightLoad {
@@ -257,7 +258,7 @@ export interface IAddSegmentParty {
 	refNumber?: string;
 }
 
-export interface IAddSegmentEndpoint extends IAddSegmentParty{
+export interface IAddSegmentEndpoint extends IAddSegmentParty {
 	date?: string;
 }
 

@@ -7,11 +7,13 @@ export class FreightLoadForm {
 	numberOfPallets = new FormControl<number>(0);
 	grossWeightKg = new FormControl<number>(0);
 	volumeM3 = new FormControl<number>(0);
+	note = new FormControl<string>('');
 
 	group = new FormGroup({
 		numberOfPallets: this.numberOfPallets,
 		grossWeightKg: this.grossWeightKg,
 		volumeM3: this.volumeM3,
+		note: this.note,
 	});
 }
 
@@ -50,12 +52,16 @@ export class FreightLoadFormComponent implements OnChanges {
 			}
 		}
 		if (changes['freightLoad']) {
+			const freightLoad = this.freightLoad;
 			if (!this.form.numberOfPallets.dirty)
-				this.form.numberOfPallets.setValue(this.freightLoad?.numberOfPallets || null);
+				this.form.numberOfPallets.setValue(freightLoad?.numberOfPallets || null);
 			if (!this.form.grossWeightKg.dirty)
-				this.form.grossWeightKg.setValue(this.freightLoad?.grossWeightKg || null);
+				this.form.grossWeightKg.setValue(freightLoad?.grossWeightKg || null);
 			if (!this.form.volumeM3.dirty)
-				this.form.volumeM3.setValue(this.freightLoad?.volumeM3 || null);
+				this.form.volumeM3.setValue(freightLoad?.volumeM3 || null);
+			if (!this.form.note.dirty) {
+				this.form.note.setValue(freightLoad?.note || null);
+			}
 		}
 	}
 
@@ -64,6 +70,7 @@ export class FreightLoadFormComponent implements OnChanges {
 			numberOfPallets: this.form.numberOfPallets.value === null ? undefined : this.form.numberOfPallets.value,
 			grossWeightKg: this.form.grossWeightKg.value === null ? undefined : this.form.grossWeightKg.value,
 			volumeM3: this.form.volumeM3.value === null ? undefined : this.form.volumeM3.value,
+			note: this.form.note.value || undefined,
 		});
 		this.freightLoadChange.emit(this.freightLoad);
 	}
