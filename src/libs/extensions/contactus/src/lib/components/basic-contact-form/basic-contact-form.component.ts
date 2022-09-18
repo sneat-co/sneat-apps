@@ -57,9 +57,9 @@ export class BasicContactFormComponent {
 		this.contactService
 			.createContact(this.team, request)
 			.subscribe({
-				next: () => {
+				next: contact => {
 					this.isCreated = true;
-					this.contactCreated.emit();
+					this.contactCreated.emit(contact);
 				},
 				error: err => {
 					this.isSubmitting = false;

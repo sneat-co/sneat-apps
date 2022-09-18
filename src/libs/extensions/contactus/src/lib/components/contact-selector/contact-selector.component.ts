@@ -172,10 +172,17 @@ export class ContactSelectorComponent
 		// 	...contact,
 		// 	parentContact: this.selectedContact,
 		// };
+		// this.selectedSubContactID = contact?.id
 		this.selectedContact = contact;
 		this.emitOnSelected(contact);
 	}
 
+	protected onSubContactCreated(contact: IContactContext): void {
+		console.log('onSubContactCreated()', contact);
+		this.selectedSubContactID = contact.id
+		this.selectedContact = contact;
+		this.emitOnSelected(contact);
+	}
 
 	private onParentContactChanged(contact?: IContactContext): void {
 		console.log('onParentContactChanged()', contact);
