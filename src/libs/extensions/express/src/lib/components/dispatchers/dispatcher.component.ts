@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { excludeEmpty, excludeUndefined } from '@sneat/core';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -7,7 +8,7 @@ import {
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
 	IExpressOrderContext,
-	IOrderCounterparty, ISetOrderCounterpartyRequest,
+	IOrderCounterparty, ISetOrderCounterpartiesRequest,
 } from '../..';
 
 @Component({
@@ -26,8 +27,11 @@ export class DispatcherComponent implements OnChanges {
 	deleting = false;
 
 	refNumber = new FormControl<string>('');
+	specialInstructions = new FormControl<string>('');
+
 	form = new FormGroup({
 		refNumber: this.refNumber,
+		specInstructions: this.specialInstructions,
 	});
 
 	saving = false;
@@ -39,13 +43,23 @@ export class DispatcherComponent implements OnChanges {
 	) {
 	}
 
+	cancelChanges(): void {
+		this.form.reset();
+		this.setOrder(true);
+	}
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['counterparty']) {
-			const contactID = this.counterparty?.contactID;
-			this.locations = this.order?.dto?.counterparties?.filter(l => l.parentContactID === contactID);
-			if (changes['counterparty'] && !this.refNumber.dirty) {
-				this.refNumber.setValue(this.counterparty?.refNumber || '');
-			}
+			this.setOrder(!!changes['counterparty']);
+		}
+	}
+
+	private setOrder(counterpartyChanged: boolean): void {
+		const contactID = this.counterparty?.contactID;
+		this.locations = this.order?.dto?.counterparties?.filter(l => l.parentContactID === contactID);
+		if (counterpartyChanged && !this.refNumber.dirty) {
+			this.refNumber.setValue(this.counterparty?.refNumber || '');
+			this.specialInstructions.setValue(this.counterparty?.specialInstructions || '');
 		}
 	}
 
@@ -121,20 +135,21 @@ export class DispatcherComponent implements OnChanges {
 		if (!this.order || !this.counterparty?.contactID || !this.counterparty?.role) {
 			return;
 		}
-		const request: ISetOrderCounterpartyRequest = {
+		const request: ISetOrderCounterpartiesRequest = {
 			teamID: this.order.team.id,
 			orderID: this.order.id,
 			counterparties: [
-				{
+				excludeUndefined({
 					contactID: this.counterparty.contactID,
 					role: this.counterparty.role,
-					refNumber: this.refNumber.value || '',
-				},
-			]
+					refNumber: this.refNumber.value || undefined,
+					specialInstructions: this.specialInstructions.value || undefined,
+				}),
+			],
 		};
 		this.saving = true;
 		this.form.disable();
-		this.ordersService.setOrderCounterparty(request).subscribe({
+		this.ordersService.setOrderCounterparties(request).subscribe({
 			next: () => {
 				this.form.markAsPristine();
 			},

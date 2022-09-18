@@ -7,7 +7,7 @@ import {
 	IExpressOrderContext,
 	IOrderCounterparty,
 	IOrderCounterpartyRef,
-	ISetOrderCounterpartyRequest,
+	ISetOrderCounterpartiesRequest,
 } from '../../dto/order-dto';
 import { ExpressOrderService } from '../../services';
 
@@ -114,7 +114,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 			this.errorLogger.logError('saveRefNumber(): !this.counterparty.contactID');
 			return;
 		}
-		const request: ISetOrderCounterpartyRequest = {
+		const request: ISetOrderCounterpartiesRequest = {
 			teamID: this.team?.id,
 			orderID: this.order?.id,
 			counterparties: [
@@ -126,7 +126,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 			],
 		};
 		this.savingRefNumber = true;
-		this.orderService.setOrderCounterparty(request).subscribe({
+		this.orderService.setOrderCounterparties(request).subscribe({
 			next: counterparty => {
 				this.counterparty = counterparty;
 				this.savingRefNumber = false;

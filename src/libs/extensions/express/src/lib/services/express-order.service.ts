@@ -12,7 +12,7 @@ import {
 	IExpressOrderContext,
 	IExpressOrderDto,
 	IFreightOrderBrief,
-	ISetOrderCounterpartyRequest,
+	ISetOrderCounterpartiesRequest,
 	IAddOrderShippingPointRequest,
 	IOrderCounterparty,
 	IAddSegmentsRequest,
@@ -97,10 +97,16 @@ export class ExpressOrderService {
 							keysVal += 'contact=' + contactID;
 						}
 					}
+					if (filter?.refNumber) {
+						if (keysVal) {
+							keysVal += '&';
+						}
+						keysVal += 'refNumber=' + filter.refNumber;
+					}
 					if (keysVal) {
 						query = query.where('keys', 'array-contains', keysVal);
 					}
-					console.log('watchFreightOrders()', teamID, filter, query);
+					console.log('watchFreightOrders():', teamID, filter, query);
 					return query;
 				}).snapshotChanges()
 			.pipe(
@@ -110,7 +116,7 @@ export class ExpressOrderService {
 		return result.pipe(map(orders => orders.map(o => ({ ...o, team: { id: teamID } }))));
 	}
 
-	setOrderCounterparty(request: ISetOrderCounterpartyRequest): Observable<IOrderCounterparty> {
+	setOrderCounterparties(request: ISetOrderCounterpartiesRequest): Observable<IOrderCounterparty> {
 		return this.sneatApiService.post('express/order/set_order_counterparties', request);
 	}
 

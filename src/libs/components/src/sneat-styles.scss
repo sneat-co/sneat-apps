@@ -76,6 +76,16 @@ ion-buttons.sneat-no-horizontal-margins ion-button {
   margin-right: 0;
 }
 
+.sneat-no-bottom-margin {
+  margin-bottom: 0;
+  --margin-bottom: 0;
+}
+
+.sneat-no-bottom-padding {
+  padding-bottom: 0;
+  --padding-bottom: 0;
+}
+
 ion-item.sneat-no-bottom-border {
   --border-width: 0;
   --inner-border-width: 0;

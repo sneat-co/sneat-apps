@@ -56,17 +56,18 @@ export class ContainerPointComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['container'] || changes['shippingPoint']) {
-			this.containerPoint = this.order?.dto?.containerPoints?.find(cp => cp.containerID === this.container?.id);
-			if (this.containerPoint) {
-				if (!this.numberOfPallets.dirty && this?.containerPoint?.toPick?.numberOfPallets) {
-					this.numberOfPallets.setValue(this.containerPoint.toPick.numberOfPallets);
-				}
-				if (!this.grossWeightKg.dirty && this?.containerPoint?.toPick?.grossWeightKg) {
-					this.grossWeightKg.setValue(this.containerPoint.toPick.grossWeightKg);
-				}
-				if (!this.volumeM3.dirty && this?.containerPoint?.toPick?.volumeM3) {
-					this.volumeM3.setValue(this.containerPoint.toPick.volumeM3);
-				}
+			const containerID = this.container?.id;
+			const shippingPointID = this.shippingPoint?.id;
+			this.containerPoint = this.order?.dto?.containerPoints?.find(
+				cp => cp.containerID === containerID && cp.shippingPointID === shippingPointID);
+			if (!this.numberOfPallets.dirty) {
+				this.numberOfPallets.setValue(this.containerPoint?.toPick?.numberOfPallets || undefined);
+			}
+			if (!this.grossWeightKg.dirty) {
+				this.grossWeightKg.setValue(this.containerPoint?.toPick?.grossWeightKg || undefined);
+			}
+			if (!this.volumeM3.dirty) {
+				this.volumeM3.setValue(this.containerPoint?.toPick?.volumeM3 || undefined);
 			}
 
 			const containerSegments = getSegmentsByContainerID(this.order?.dto?.segments, this.container?.id);
@@ -141,5 +142,9 @@ export class ContainerPointComponent implements OnChanges {
 		} catch (e) {
 			this.saving = false;
 		}
+	}
+
+	onFreightLoadChange(freightLoad?: IFreightLoad): void {
+		console.log('ContainerPointComponent.onFreightLoadChange', freightLoad);
 	}
 }

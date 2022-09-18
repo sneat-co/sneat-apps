@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { excludeEmpty } from '@sneat/core';
 import { Subscription, takeUntil } from 'rxjs';
 import { ExpressOrderService } from '../../services/express-order.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -41,7 +42,7 @@ export class ExpressOrdersPageComponent extends TeamBaseComponent {
 	private subscribeForOrders() {
 		this.ordersSubscription?.unsubscribe();
 		this.ordersSubscription = this.ordersService
-			.watchFreightOrders(this.team.id, this.filter)
+			.watchFreightOrders(this.team.id, excludeEmpty(this.filter))
 			.pipe(
 				takeUntil(this.destroyed),
 			)

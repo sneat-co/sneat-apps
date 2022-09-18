@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { excludeEmpty } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { IOrdersFilter, OrderDirection } from '../../..';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
@@ -35,12 +36,12 @@ export class OrdersFilterComponent {
 
 	protected refNumberChanged(event: Event): void {
 		this.isRefNumberChanged = true;
-		this.emitFilterChange();
 	}
 
 	protected findByRefNumber(event: Event): void {
 		event.stopPropagation();
 		this.isRefNumberChanged = false;
+		this.emitFilterChange();
 	}
 
 	protected clearRefNumber(event: Event): void {
@@ -57,12 +58,13 @@ export class OrdersFilterComponent {
 	}
 
 	emitFilterChange(): void {
-		const filter: IOrdersFilter = {
+		const filter: IOrdersFilter = excludeEmpty({
 			direction: this.direction || undefined,
 			status: this.status,
 			countryID: this.countryID,
 			contactID: this.counterpartyID,
-		};
+			refNumber: this.refNumber,
+		});
 		this.filterChange.emit(filter);
 	}
 }

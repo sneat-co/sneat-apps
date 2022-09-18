@@ -1,7 +1,7 @@
 <form [formGroup]="containerForm">
 	<ion-card class="ion-no-margin ion-margin-top">
 		<ion-item color="light" class="sneat-no-end-padding">
-			<ion-label color="medium">{{container?.type}} #</ion-label>
+			<ion-label color="medium"><b>{{container?.type}}</b> container #</ion-label>
 			<ion-input readonly [value]="container?.number"></ion-input>
 			<ion-buttons slot="end">
 				<ng-container *ngIf="containerForm.dirty">
@@ -84,7 +84,10 @@
 
 			<ion-row>
 				<ion-col size="12">
-					<sneat-freight-load-form operation="pick" [freightLoad]="containerPoint?.toPick"
+					<sneat-freight-load-form
+						operation="pick"
+						[freightLoad]="containerPoint?.toPick"
+						(freightLoadChange)="onFreightLoadChange()"
 						[form]="freightLoadForm"
 						(keyUpEnter)="saveChanges()"
 					></sneat-freight-load-form>

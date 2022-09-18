@@ -8,13 +8,17 @@ import { NewSegmentFormComponent } from '../../components/new-segment';
 import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
+type OrderDetailsTab = 'containers' | 'truckers' | 'dispatchers' | 'segments' | 'notes';
+
 @Component({
 	selector: 'sneat-order-page',
 	templateUrl: './express-order-page.component.html',
 	styleUrls: ['./express-order-page.component.scss'],
 })
 export class ExpressOrderPageComponent extends OrderPageBaseComponent {
-	tab: 'containers' | 'truckers' | 'dispatchers' | 'segments' | 'notes' = 'containers';
+
+
+	tab: OrderDetailsTab = 'containers';
 
 	constructor(
 		route: ActivatedRoute,
@@ -24,6 +28,21 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 		private readonly modalController: ModalController,
 	) {
 		super('OrderPageComponent', route, teamParams, orderService);
+		route.queryParamMap.subscribe(params => {
+			this.tab = params.get('tab') as OrderDetailsTab || this.tab;
+		});
+	}
+
+	onTabChanged(event: Event): void {
+		let { href } = location;
+		if (href.indexOf('?') < 0) {
+			href += '?tab=';
+		}
+		href = href.replace(
+			/tab=\w*/,
+			`tab=${this.tab}`,
+		);
+		history.replaceState(history.state, document.title, href);
 	}
 
 	async addContainer(): Promise<void> {

@@ -40,20 +40,20 @@
 						<ion-row>
 							<ion-col>
 								<ion-item>
-									<ion-label position="stacked" color="medium">Reference</ion-label>
-									<ion-input value="ABC1233"></ion-input>
+									<ion-label position="stacked" color="medium">Order #</ion-label>
+									<ion-input [value]="order?.id" readonly="true"></ion-input>
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium">Buyer Reference</ion-label>
-									<ion-input value="ABC1233"></ion-input>
+									<ion-input [value]="buyerCounterparty?.refNumber ?? '-'" readonly="true"></ion-input>
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium">Export Declaration #</ion-label>
-									<ion-input value="ABC1233"></ion-input>
+									<ion-input readonly="true" value="to be implemented"></ion-input>
 								</ion-item>
 							</ion-col>
 						</ion-row>

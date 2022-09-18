@@ -8,7 +8,7 @@ import {
 	IExpressOrderContext,
 	IOrderCounterparty,
 	IOrderCounterpartyRef,
-	ISetOrderCounterpartyRequest,
+	ISetOrderCounterpartiesRequest,
 } from '../../dto';
 
 @Component({
@@ -198,7 +198,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			this.counterpartyChange.emit(newCounterparty);
 			return;
 		}
-		let request: ISetOrderCounterpartyRequest = {
+		let request: ISetOrderCounterpartiesRequest = {
 			teamID: this.team.id,
 			orderID: this.order.id,
 			counterparties: [
@@ -217,7 +217,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				}],
 			};
 		}
-		this.orderService.setOrderCounterparty(request).subscribe({
+		this.orderService.setOrderCounterparties(request).subscribe({
 			next: counterparty => {
 				if (!this.order?.brief) {
 					return;

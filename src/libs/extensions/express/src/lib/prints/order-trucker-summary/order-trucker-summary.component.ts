@@ -27,10 +27,13 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 
 	truckerID?: string;
 	truckerCounterparty?: IOrderCounterparty;
+	buyerCounterparty?: IOrderCounterparty;
 	selfCounterparty?: IOrderCounterparty;
 	ship?: IOrderCounterparty;
 	shipperCounterparty?: IOrderCounterparty;
 	points?: ReadonlyArray<IContainerInfo>;
+
+	buyerRefNumber?: string;
 
 	constructor(
 		route: ActivatedRoute,
@@ -60,6 +63,8 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 		if (this.truckerID) {
 			this.setTrucker();
 		}
+
+		this.buyerCounterparty = counterparties?.find(c => c.role === 'buyer');
 		this.selfCounterparty = counterparties?.find(c => c.contactID === this.team?.id);
 		this.ship = counterparties?.find(c => c.role === 'ship');
 		this.shipperCounterparty = counterparties?.find(c => c.role === 'shipper');

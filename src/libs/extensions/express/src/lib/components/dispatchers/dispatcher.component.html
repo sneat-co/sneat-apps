@@ -1,4 +1,4 @@
-<ion-card >
+<ion-card>
 	<ion-item class="sneat-no-end-padding">
 		<ion-label style="font-weight: bold" [class.deleting-list-item]="deleting">
 			{{counterparty?.countryID|countryFlag}}
@@ -6,7 +6,8 @@
 		</ion-label>
 
 		<ion-buttons slot="end">
-			<ion-button color="medium"
+			<ion-button *ngIf="!form.dirty"
+									color="medium"
 									[disabled]="deleting"
 									title="Remove dispatcher & all dispatching points"
 									(click)="deleteDispatcher()">
@@ -14,28 +15,40 @@
 				<ion-label *ngIf="deleting">deleting...</ion-label>
 				<ion-spinner name="lines-small" slot="start" *ngIf="deleting"></ion-spinner>
 			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ion-item>
-		<ion-label color="medium">
-			Ref
-		</ion-label>
-		<ion-input placeholder="#" [formControl]="refNumber" (keyup.enter)="saveChanges()"></ion-input>
-		<ion-buttons slot="end" *ngIf="form.dirty">
-			<ion-button (click)="saveChanges()">
+			<ion-button *ngIf="form.dirty" (click)="saveChanges()">
 				<ion-icon name="save-outline" slot="start"></ion-icon>
-				<ion-label *ngIf="!saving">Save</ion-label>
+				<ion-label *ngIf="!saving">Save changes</ion-label>
 				<ion-label *ngIf="saving">Saving...</ion-label>
 				<ion-spinner name="lines-small" color="medium" *ngIf="saving"></ion-spinner>
 			</ion-button>
-			<ion-button (click)="form.reset()" color="medium" *ngIf="!saving">
+			<ion-button *ngIf="form.dirty && !saving" (click)="cancelChanges()" color="medium">
 				<ion-icon name="close-circle-outline" slot="start"></ion-icon>
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>
+
 	</ion-item>
+
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="4">
+				<ion-item>
+					<ion-label color="medium">Ref</ion-label>
+					<ion-input placeholder="#" [formControl]="refNumber" (keyup.enter)="saveChanges()"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="8">
+				<ion-item>
+					<ion-label color="medium">Special instructions</ion-label>
+					<ion-textarea rows="1" autoGrow="true" [formControl]="specialInstructions" (keyup.enter)="saveChanges()"></ion-textarea>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+
 	<ion-item-divider>
-		<ion-label>Dispatch points</ion-label>
+		<ion-label style="font-weight: bold">Dispatch points</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="medium" (click)="addDispatchPoint($event)">
 				<ion-icon name="add-outline" slot="start"></ion-icon>

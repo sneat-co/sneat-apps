@@ -16,6 +16,7 @@ export interface IOrderCounterparty {
 	readonly parentContactID?: string;
 	readonly role: CounterpartyRole;
 	readonly refNumber?: string;
+	readonly specialInstructions?: string;
 	readonly countryID: string;
 	readonly title: string;
 	readonly phone?: string;
@@ -182,9 +183,10 @@ export interface ISetOrderCounterparty {
 	readonly contactID: string;
 	readonly role: string;
 	readonly refNumber?: string;
+	readonly specialInstructions?: string;
 }
 
-export interface ISetOrderCounterpartyRequest extends IExpressOrderRequest {
+export interface ISetOrderCounterpartiesRequest extends IExpressOrderRequest {
 	counterparties: ISetOrderCounterparty[];
 }
 

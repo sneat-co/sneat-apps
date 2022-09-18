@@ -82,7 +82,6 @@ export class SchedulePageComponent extends TeamBaseComponent {
 			`tab=${this.tab}`,
 		);
 		history.replaceState(history.state, document.title, href);
-
 	}
 
 	onDateChanged(date: string): void {

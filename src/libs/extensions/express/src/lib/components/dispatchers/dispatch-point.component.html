@@ -37,7 +37,8 @@
 				<ion-item *ngIf="shippingPoint?.location?.address">
 					<ion-label color="medium">
 						Address
-						<span class="ion-margin-start" *ngIf="shippingPoint?.location?.address?.countryID">{{shippingPoint?.location?.address?.countryID|countryFlag}}</span>
+						<span class="ion-margin-start"
+									*ngIf="shippingPoint?.location?.address?.countryID">{{shippingPoint?.location?.address?.countryID|countryFlag}}</span>
 					</ion-label>
 					<ion-textarea rows="3" auto-grow="true" [formGroup]="form" [formControl]="address"></ion-textarea>
 				</ion-item>
@@ -45,11 +46,12 @@
 		</ion-row>
 	</ion-grid>
 
+	<ion-item class="sneat-no-bottom-margin sneat-no-bottom-padding" lines="none">
+		<ion-label color="medium" class="sneat-no-bottom-margin"><b>Containers</b></ion-label>
+		<!-- TODO: bottom padding/margin is not working as expected -->
+	</ion-item>
 
-	<ion-item-group class="ion-padding">
-		<ion-item-divider>
-			<ion-label>Containers</ion-label>
-		</ion-item-divider>
+	<ion-item-group style="padding: 0 0.7em 0.5em">
 		<sneat-container-point *ngFor="let container of containers"
 													 [order]="order"
 													 [shippingPoint]="shippingPoint"

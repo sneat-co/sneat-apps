@@ -48,12 +48,12 @@ export class DispatchPointComponent implements OnChanges {
 			if (!this.address.dirty) {
 				this.address.setValue(this.shippingPoint?.location?.address?.lines?.join('\n') || '')
 			}
+			const shippingPointID = this.shippingPoint?.id;
 			this.segments = this.order?.dto?.segments?.filter(s =>
-				s.from?.contactID === contactID
-				|| s.to?.contactID === contactID,
+				s.from.shippingPointID === shippingPointID || s.to.shippingPointID === shippingPointID,
 			);
 			this.containers = this.order?.dto?.containers?.filter(c => this.segments?.some(s => s.containerID === c.id));
-
+			console.log('DispatchPointComponent.ngOnChanges();', shippingPointID, this.segments, this.containers);
 		}
 	}
 
