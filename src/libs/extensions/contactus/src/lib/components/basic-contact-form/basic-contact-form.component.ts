@@ -20,6 +20,7 @@ export class BasicContactFormComponent {
 	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
 
 	isSubmitting = false;
+	isCreated = false;
 
 	title = '';
 
@@ -53,12 +54,17 @@ export class BasicContactFormComponent {
 		};
 		this.isSubmitting = true;
 
-		this.contactService.createContact(this.team, request).subscribe({
-			next: this.contactCreated.emit,
-			error: err => {
-				this.isSubmitting = false;
-				this.errorLogger.logError(err, `Failed to create new [${this.contactType}]`);
-			},
-		});
+		this.contactService
+			.createContact(this.team, request)
+			.subscribe({
+				next: () => {
+					this.isCreated = true;
+					this.contactCreated.emit();
+				},
+				error: err => {
+					this.isSubmitting = false;
+					this.errorLogger.logError(err, `Failed to create new [${this.contactType}]`);
+				},
+			});
 	}
 }
