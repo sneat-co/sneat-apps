@@ -18,6 +18,9 @@
 			<ion-content>
 				<ion-router-outlet name="menu" [animated]="false"></ion-router-outlet>
 			</ion-content>
+			<ion-footer>
+				Version: {{getGitHash()}}
+			</ion-footer>
 		</ion-menu>
 		<ion-router-outlet id="main"></ion-router-outlet>
 	</ion-split-pane>

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { IonSplitPane } from '@ionic/angular';
 import { SneatBaseAppComponent } from '@sneat/app';
 import { TopMenuService } from '@sneat/core';
+import { gitHash } from '../../../../git-version';
 
 @Component({
 	selector: 'sneat-root',
@@ -12,6 +13,9 @@ export class FreightsAppComponent extends SneatBaseAppComponent implements After
 
 	@ViewChild('ionSplitPane') ionSplitPane!: IonSplitPane;
 
+	getGitHash(): string {
+		return gitHash;
+	}
 	constructor(
 		topMenuService: TopMenuService,
 	) {
