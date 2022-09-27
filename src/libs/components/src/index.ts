@@ -1,3 +1,5 @@
+export * from './lib/app-version/app-version.component';
+
 export * from './lib/pipes';
 //
 export * from './lib/virtual-slider/virtual-slider';
