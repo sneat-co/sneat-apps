@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemModule } from '@sneat/auth';
-import { AppVersionComponent } from '@sneat/components';
+import { AppVersionModule } from '@sneat/components';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { ExpressMenuComponent } from './express-menu.component';
 
@@ -15,6 +15,9 @@ import { ExpressMenuComponent } from './express-menu.component';
 		RouterModule,
 		AuthMenuItemModule,
 		TeamsMenuComponentModule,
+		AppVersionModule,
+		AppVersionModule,
+		AppVersionModule,
 	],
 	declarations: [
 		ExpressMenuComponent,

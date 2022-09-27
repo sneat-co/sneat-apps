@@ -1,4 +1,4 @@
-export * from './lib/app-version/app-version.component';
+export * from './lib/app-version';
 
 export * from './lib/pipes';
 //
