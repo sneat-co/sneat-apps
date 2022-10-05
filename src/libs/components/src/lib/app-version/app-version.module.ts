@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { AppVersionComponent } from '@sneat/components';
+import { AppVersionComponent } from './app-version.component';
 
 @NgModule({
 	imports: [
