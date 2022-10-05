@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { IonSplitPane } from '@ionic/angular';
 import { SneatBaseAppComponent } from '@sneat/app';
 import { TopMenuService } from '@sneat/core';
-import { gitHash } from '../../../../libs/components/src/lib/app-version/git-version';
+import { gitHash } from '@sneat/components';
 
 @Component({
 	selector: 'sneat-root',

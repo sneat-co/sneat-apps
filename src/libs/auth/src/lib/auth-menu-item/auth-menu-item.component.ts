@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { ISneatAuthState, SneatAuthStateService } from '../sneat-auth-state-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MenuController, NavController } from '@ionic/angular';
-import {gitHash} from '../../../../components/src/lib/app-version/git-version';
+import { gitHash } from '@sneat/components';
 
 @Component({
 	selector: 'sneat-auth-menu-item',
