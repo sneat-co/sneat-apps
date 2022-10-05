@@ -3,7 +3,7 @@ Set-Location -Path $PSScriptRoot/../src
 node ./grab-git-info.js
 pnpm run nx build freights-app --source-map=true --base-href=/pwa/
 printf "Build exited with code $LASTEXITCODE - $?"
-if ($?) {
+If (-Not $?) {
     return $LASTEXITCODE
 }
 rm -rf $PSScriptRoot/../websites/freights.app/pwa
