@@ -21,7 +21,7 @@ export class ErrorLoggerService implements IErrorLogger {
 		message?: string,
 		options?: ILogErrorOptions,
 	): { error: any; message?: string } | any => {
-		console.error(`${message || 'Error'}:`, e, options);
+		console.error(`ErrorLoggerService.logError: ${message || 'Error'}:`, e, options);
 		if (e === true || e === false) {
 			try {
 				throw new Error(`got boolean value as an error: ${e}: ${message}`);

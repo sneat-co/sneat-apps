@@ -5,12 +5,15 @@ import { initFirebase, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunesUiModule } from '@sneat/communes/ui';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
+import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { environment } from '../environments/environment';
 import { FreightsAppRoutingModule } from './freights-app-routing.module';
 
 import { FreightsAppComponent } from './freights-app.component';
+
+initSentry();
 
 initFirebase(environment.firebaseConfig);
 

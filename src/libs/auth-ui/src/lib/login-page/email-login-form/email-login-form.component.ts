@@ -10,6 +10,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
 import firebase from 'firebase/compat';
 import UserCredential = firebase.auth.UserCredential;
+import FirebaseError = firebase.FirebaseError;
 
 export type EmailFormSigningWith = 'email' | 'emailLink' | 'resetPassword';
 
@@ -24,6 +25,7 @@ export class EmailLoginFormComponent {
 	public firstName = '';
 	public lastName = '';
 	public teamTitle = '';
+	public wrongPassword = false;
 
 	signingWith?: EmailFormSigningWith;
 
@@ -144,12 +146,12 @@ export class EmailLoginFormComponent {
 	public signIn(): void {
 		this.setSigningWith('email');
 		this.email = this.email.trim();
+		this.wrongPassword = false;
 		this.saveEmailForReuse();
 		this.afAuth
 			.signInWithEmailAndPassword(this.email, this.password)
 			.then((userCredential) => {
-				// TODO: add analytics event
-				this.onLoggedIn(userCredential);
+				this.onLoggedIn(userCredential); // TODO: add analytics event
 			})
 			.catch(
 				this.errorHandler('Failed to sign in with email & password', 'email'),
@@ -238,11 +240,16 @@ export class EmailLoginFormComponent {
 		eventName?: string,
 		eventParams?: { [key: string]: string },
 	): void {
+		this.setSigningWith(undefined);
 		if (eventName) {
 			this.analyticsService.logEvent(eventName, eventParams);
 		}
+		if ((err as FirebaseError).code === 'auth/wrong-password') {
+			console.log(err.message);
+			this.wrongPassword = true;
+			return;
+		}
 		this.errorLogger.logError(err, m, { report: !err.code });
-		this.setSigningWith(undefined);
 	}
 
 	private setSigningWith(signingWith?: EmailFormSigningWith): void {
