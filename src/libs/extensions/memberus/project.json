@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/extensions/memberus"],
+			"outputs": ["{workspaceRoot}/dist/libs/extensions/memberus"],
 			"options": {
 				"project": "libs/extensions/memberus/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/extensions/memberus"],
+			"outputs": ["{workspaceRoot}/coverage/libs/extensions/memberus"],
 			"options": {
 				"jestConfig": "libs/extensions/memberus/jest.config.ts",
 				"passWithNoTests": true

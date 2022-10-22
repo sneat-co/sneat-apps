@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/extensions/contactus"],
+			"outputs": ["{workspaceRoot}/dist/libs/extensions/contactus"],
 			"options": {
 				"project": "libs/extensions/contactus/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/extensions/contactus"],
+			"outputs": ["{workspaceRoot}/coverage/libs/extensions/contactus"],
 			"options": {
 				"jestConfig": "libs/extensions/contactus/jest.config.ts",
 				"passWithNoTests": true

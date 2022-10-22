@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/extensions/listus"],
+			"outputs": ["{workspaceRoot}/dist/libs/extensions/listus"],
 			"options": {
 				"project": "libs/extensions/listus/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/extensions/listus"],
+			"outputs": ["{workspaceRoot}/coverage/libs/extensions/listus"],
 			"options": {
 				"jestConfig": "libs/extensions/listus/jest.config.ts",
 				"passWithNoTests": true

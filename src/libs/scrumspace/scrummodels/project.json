@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/scrumspace/scrummodels"],
+			"outputs": ["{workspaceRoot}/dist/libs/scrumspace/scrummodels"],
 			"options": {
 				"project": "libs/scrumspace/scrummodels/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/scrumspace/scrummodels"],
+			"outputs": ["{workspaceRoot}/coverage/libs/scrumspace/scrummodels"],
 			"options": {
 				"jestConfig": "libs/scrumspace/scrummodels/jest.config.ts",
 				"passWithNoTests": true

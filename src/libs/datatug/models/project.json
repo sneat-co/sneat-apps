@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/datatug/models"],
+			"outputs": ["{workspaceRoot}/dist/libs/datatug/models"],
 			"options": {
 				"project": "libs/datatug/models/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/datatug/models"],
+			"outputs": ["{workspaceRoot}/coverage/libs/datatug/models"],
 			"options": {
 				"jestConfig": "libs/datatug/models/jest.config.ts",
 				"passWithNoTests": true

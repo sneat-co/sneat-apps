@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/animations"],
+			"outputs": ["{workspaceRoot}/dist/libs/animations"],
 			"options": {
 				"project": "libs/animations/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/animations"],
+			"outputs": ["{workspaceRoot}/coverage/libs/animations"],
 			"options": {
 				"jestConfig": "libs/animations/jest.config.ts",
 				"passWithNoTests": true

@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/dto"],
+			"outputs": ["{workspaceRoot}/dist/libs/dto"],
 			"options": {
 				"project": "libs/dto/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/dto"],
+			"outputs": ["{workspaceRoot}/coverage/libs/dto"],
 			"options": {
 				"jestConfig": "libs/dto/jest.config.ts",
 				"passWithNoTests": true

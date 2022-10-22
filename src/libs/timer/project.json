@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/timer"],
+			"outputs": ["{workspaceRoot}/dist/libs/timer"],
 			"options": {
 				"project": "libs/timer/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/timer"],
+			"outputs": ["{workspaceRoot}/coverage/libs/timer"],
 			"options": {
 				"jestConfig": "libs/timer/jest.config.ts",
 				"passWithNoTests": true

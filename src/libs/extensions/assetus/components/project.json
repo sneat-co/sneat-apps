@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/extensions/assetus/components"],
+			"outputs": ["{workspaceRoot}/dist/libs/extensions/assetus/components"],
 			"options": {
 				"project": "libs/extensions/assetus/components/ng-package.json"
 			},
@@ -21,7 +21,9 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/extensions/assetus/components"],
+			"outputs": [
+				"{workspaceRoot}/coverage/libs/extensions/assetus/components"
+			],
 			"options": {
 				"jestConfig": "libs/extensions/assetus/components/jest.config.ts",
 				"passWithNoTests": true

@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/datetime"],
+			"outputs": ["{workspaceRoot}/dist/libs/datetime"],
 			"options": {
 				"project": "libs/datetime/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/datetime"],
+			"outputs": ["{workspaceRoot}/coverage/libs/datetime"],
 			"options": {
 				"jestConfig": "libs/datetime/jest.config.ts",
 				"passWithNoTests": true

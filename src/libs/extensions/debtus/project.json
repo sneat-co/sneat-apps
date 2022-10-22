@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/extensions/debtus"],
+			"outputs": ["{workspaceRoot}/dist/libs/extensions/debtus"],
 			"options": {
 				"project": "libs/extensions/debtus/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/extensions/debtus"],
+			"outputs": ["{workspaceRoot}/coverage/libs/extensions/debtus"],
 			"options": {
 				"jestConfig": "libs/extensions/debtus/jest.config.ts",
 				"passWithNoTests": true

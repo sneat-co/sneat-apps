@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:package",
-			"outputs": ["dist/libs/datagrid"],
+			"outputs": ["{workspaceRoot}/dist/libs/datagrid"],
 			"options": {
 				"project": "libs/datagrid/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/datagrid"],
+			"outputs": ["{workspaceRoot}/coverage/libs/datagrid"],
 			"options": {
 				"jestConfig": "libs/datagrid/jest.config.ts",
 				"passWithNoTests": true

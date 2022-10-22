@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/logging"],
+			"outputs": ["{workspaceRoot}/dist/libs/logging"],
 			"options": {
 				"project": "libs/logging/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/logging"],
+			"outputs": ["{workspaceRoot}/coverage/libs/logging"],
 			"options": {
 				"jestConfig": "libs/logging/jest.config.ts",
 				"passWithNoTests": true

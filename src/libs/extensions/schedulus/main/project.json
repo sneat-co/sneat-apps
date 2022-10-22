@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/extensions/schedulus/main"],
+			"outputs": ["{workspaceRoot}/dist/libs/extensions/schedulus/main"],
 			"options": {
 				"project": "libs/extensions/schedulus/main/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/extensions/schedulus/main"],
+			"outputs": ["{workspaceRoot}/coverage/libs/extensions/schedulus/main"],
 			"options": {
 				"jestConfig": "libs/extensions/schedulus/main/jest.config.ts",
 				"passWithNoTests": true

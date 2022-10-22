@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/datatug/dto"],
+			"outputs": ["{workspaceRoot}/dist/libs/datatug/dto"],
 			"options": {
 				"project": "libs/datatug/dto/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/datatug/dto"],
+			"outputs": ["{workspaceRoot}/coverage/libs/datatug/dto"],
 			"options": {
 				"jestConfig": "libs/datatug/dto/jest.config.ts",
 				"passWithNoTests": true

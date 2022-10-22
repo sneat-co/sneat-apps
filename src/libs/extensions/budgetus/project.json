@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/extensions/budgetus"],
+			"outputs": ["{workspaceRoot}/dist/libs/extensions/budgetus"],
 			"options": {
 				"project": "libs/extensions/budgetus/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/extensions/budgetus"],
+			"outputs": ["{workspaceRoot}/coverage/libs/extensions/budgetus"],
 			"options": {
 				"jestConfig": "libs/extensions/budgetus/jest.config.ts",
 				"passWithNoTests": true

@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/grid"],
+			"outputs": ["{workspaceRoot}/dist/libs/grid"],
 			"options": {
 				"project": "libs/grid/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/grid"],
+			"outputs": ["{workspaceRoot}/coverage/libs/grid"],
 			"options": {
 				"jestConfig": "libs/grid/jest.config.ts",
 				"passWithNoTests": true

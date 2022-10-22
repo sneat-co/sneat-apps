@@ -87,7 +87,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/apps/sneat-app"],
+			"outputs": ["{workspaceRoot}/coverage/apps/sneat-app"],
 			"options": {
 				"jestConfig": "apps/sneat-app/jest.config.ts",
 				"passWithNoTests": true

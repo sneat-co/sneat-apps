@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/auth"],
+			"outputs": ["{workspaceRoot}/dist/libs/auth"],
 			"options": {
 				"project": "libs/auth/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/auth"],
+			"outputs": ["{workspaceRoot}/coverage/libs/auth"],
 			"options": {
 				"jestConfig": "libs/auth/jest.config.ts",
 				"passWithNoTests": true

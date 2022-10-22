@@ -5,7 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/angular:ng-packagr-lite",
-			"outputs": ["dist/libs/scrumspace/retrospectives"],
+			"outputs": ["{workspaceRoot}/dist/libs/scrumspace/retrospectives"],
 			"options": {
 				"project": "libs/scrumspace/retrospectives/ng-package.json"
 			},
@@ -21,7 +21,7 @@
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/libs/scrumspace/retrospectives"],
+			"outputs": ["{workspaceRoot}/coverage/libs/scrumspace/retrospectives"],
 			"options": {
 				"jestConfig": "libs/scrumspace/retrospectives/jest.config.ts",
 				"passWithNoTests": true
