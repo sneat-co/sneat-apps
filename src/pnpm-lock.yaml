@@ -27,7 +27,7 @@ specifiers:
   '@nrwl/eslint-plugin-nx': 15.0.7
   '@nrwl/jest': 15.0.7
   '@nrwl/linter': 15.0.7
-  '@nrwl/nx-cloud': 15.0.1
+  '@nrwl/nx-cloud': 15.0.2
   '@nrwl/workspace': 15.0.7
   '@sentry/angular': 7.17.4
   '@sentry/tracing': 7.17.4
@@ -102,7 +102,7 @@ devDependencies:
   '@nrwl/eslint-plugin-nx': 15.0.7_ht2knyvdsyed46ztnqxknaxb2a
   '@nrwl/jest': 15.0.7_yl2crnxptznf5d2vlczkhwuxru
   '@nrwl/linter': 15.0.7_gr25vxjwfs4u7usohqiphc5z2y
-  '@nrwl/nx-cloud': 15.0.1
+  '@nrwl/nx-cloud': 15.0.2
   '@nrwl/workspace': 15.0.7_6dmvfzr57j3hqjmpqjclyrtyye
   '@types/jest': 29.2.1
   '@types/node': 18.11.9
@@ -3480,8 +3480,8 @@ packages:
       - ts-node
       - typescript
 
-  /@nrwl/nx-cloud/15.0.1:
-    resolution: {integrity: sha512-EvUxiXF/t8czg6ORWRZ3bTPfUHH45Z3VMubmnBEWmcB3IOXQu25Du7KmUCEAqjqb1spuWrsWRzSxkIrpz8Xl9g==}
+  /@nrwl/nx-cloud/15.0.2:
+    resolution: {integrity: sha512-DaTASuXmGyQHMxJuK6y3f7fs+Q0qQCfYDIDVGK9muNwN/QItLeWdRNltLQxbrBeS112kQTu2FPsr0DmRD60+0A==}
     hasBin: true
     dependencies:
       axios: 0.21.4
