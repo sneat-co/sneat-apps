@@ -29,8 +29,8 @@ specifiers:
   '@nrwl/linter': 15.2.1
   '@nrwl/nx-cloud': 15.0.2
   '@nrwl/workspace': 15.2.1
-  '@sentry/angular': 7.20.1
-  '@sentry/tracing': 7.20.1
+  '@sentry/angular': 7.21.0
+  '@sentry/tracing': 7.21.0
   '@sneat/random': 0.0.4
   '@types/jest': 29.2.3
   '@types/node': 18.11.9
@@ -77,8 +77,8 @@ dependencies:
   '@ionic-native/status-bar': 5.36.0_ddxsntqzdmueblqiw4ytfutb3i
   '@ionic/angular': 6.3.8_nt67xjgqkyg4urwtllx63wtg2e
   '@nrwl/angular': 15.2.1_2sjxdrffxoq76j3p3hptbsqnh4
-  '@sentry/angular': 7.20.1_45jjiksulgertcaayzinufu2cu
-  '@sentry/tracing': 7.20.1
+  '@sentry/angular': 7.21.0_45jjiksulgertcaayzinufu2cu
+  '@sentry/tracing': 7.21.0
   '@sneat/random': 0.0.4_yt6vhfaqrvibeodb6jj2rnj7lm
   date-fns: 2.29.3
   firebase: 9.14.0
@@ -3788,8 +3788,8 @@ packages:
       - chokidar
     dev: false
 
-  /@sentry/angular/7.20.1_45jjiksulgertcaayzinufu2cu:
-    resolution: {integrity: sha512-yJ+E/kL2+dyeZkj9bSuPvYkoBS5Vi76ZZVc1j/YKE/NxYZ+3T542bLAvb1RBLWNmQbzpvXsgbsDXo+SB1ozBlQ==}
+  /@sentry/angular/7.21.0_45jjiksulgertcaayzinufu2cu:
+    resolution: {integrity: sha512-Znnb3KbtLgYkJx5tm6sF+BQBDNIMmUJUWKckTelGWGEw15N9Z4rJrrDW7TsYp1F9vHXFSOh3SUcbkAf4SXykaA==}
     engines: {node: '>=8'}
     peerDependencies:
       '@angular/common': 10.x || 11.x || 12.x || 13.x || 14.x || 15.x
@@ -3800,52 +3800,52 @@ packages:
       '@angular/common': 14.2.12_mfaua6ist3zuq7ixvpkrdcptfy
       '@angular/core': 14.2.12_rxjs@7.5.7+zone.js@0.12.0
       '@angular/router': 14.2.12_z2kexjtwwhydf5pzw2zqeskyey
-      '@sentry/browser': 7.20.1
-      '@sentry/types': 7.20.1
-      '@sentry/utils': 7.20.1
+      '@sentry/browser': 7.21.0
+      '@sentry/types': 7.21.0
+      '@sentry/utils': 7.21.0
       rxjs: 7.5.7
       tslib: 2.4.1
     dev: false
 
-  /@sentry/browser/7.20.1:
-    resolution: {integrity: sha512-SE6mI4LkMzjEi5KB02Py24e2bKYZc/HZI/ZlTn36BuUQX/KYhzzKwzXucOJ5Qws9Ar9CViyKJDb07LxVQLYCGw==}
+  /@sentry/browser/7.21.0:
+    resolution: {integrity: sha512-ZSI83tkBLmnqGSM8A9qsFOlzu0HjNTpe2QnQwlrnCxokNZIU4zFOGLujXSxKx1rpb8+TRMOyDG979kGNWFzbww==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.20.1
-      '@sentry/types': 7.20.1
-      '@sentry/utils': 7.20.1
+      '@sentry/core': 7.21.0
+      '@sentry/types': 7.21.0
+      '@sentry/utils': 7.21.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/core/7.20.1:
-    resolution: {integrity: sha512-Sc7vtNgO4QcE683qrR+b+KFQkkhvQv7gizN46QQPOWeqLDrai7x0+NspTFDLJyvdDuDh2rjoLfRwNsgbwe7Erw==}
+  /@sentry/core/7.21.0:
+    resolution: {integrity: sha512-5ZHwfHPm4svny7iXsNmlnRg0q1jw/N5/ugzAku+g98R769RCv2aSBaK9BIYlJmJ1SWwR7nQuR/GOCOdv5mA8jw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.20.1
-      '@sentry/utils': 7.20.1
+      '@sentry/types': 7.21.0
+      '@sentry/utils': 7.21.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/tracing/7.20.1:
-    resolution: {integrity: sha512-LAiQcJMcOFkUwkGvqLghcVOtVVglHBQ2r7kRo75kqI0OTn/xMPRyPBGo94G+9zAKm+w7dGF5AUqq/4VUm7DJ+g==}
+  /@sentry/tracing/7.21.0:
+    resolution: {integrity: sha512-wTnXBV1e23Ou7aPFJCoX4VlrfsiYWDmGTLwx0ObI5y3BDSzV696BFICYpeqTk8lS5J5PQII12WRWfRbmyUwIAg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.20.1
-      '@sentry/types': 7.20.1
-      '@sentry/utils': 7.20.1
+      '@sentry/core': 7.21.0
+      '@sentry/types': 7.21.0
+      '@sentry/utils': 7.21.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/types/7.20.1:
-    resolution: {integrity: sha512-bI4t5IXGLIQYH5MegKRl4x2LDSlPVbQJ5eE6NJCMrCm8PcFUo3WgkwP6toG9ThQwpTx/DhUo1sVNKrr0oW4cpA==}
+  /@sentry/types/7.21.0:
+    resolution: {integrity: sha512-DqQi0HLp17x0++zCjI9jVST0cuszsQtrVIMQRQXpy8J/ay3IGxwFoX1qMrwFP2tmVQDsy8YKIz50J5e6caXwSw==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils/7.20.1:
-    resolution: {integrity: sha512-wToW0710OijQLUZnbbOx1pxwJ4mXUZ5ZFl4/x7ubNftkOz5NwJ+F3ylRqHXpZJaR9pUfR5CNdInTFZn05h/KeQ==}
+  /@sentry/utils/7.21.0:
+    resolution: {integrity: sha512-Dn9zsPOfz1kbBua8KSYUPrka31Lh+am9BVJWnzqzGbALthf134oUTbp2vcwpMyEW7NxX+4Qd+36BvTzapfRINQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.20.1
+      '@sentry/types': 7.21.0
       tslib: 1.14.1
     dev: false
 
