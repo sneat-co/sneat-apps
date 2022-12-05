@@ -36,7 +36,7 @@ specifiers:
   '@types/node': 18.11.11
   '@typescript-eslint/eslint-plugin': 5.45.1
   '@typescript-eslint/parser': 5.45.1
-  cypress: 10.11.0
+  cypress: 11.2.0
   date-fns: 2.29.3
   eslint: 8.29.0
   eslint-config-prettier: 8.5.0
@@ -76,7 +76,7 @@ dependencies:
   '@ionic-native/splash-screen': 5.36.0_7vyb3ob35wc72piwff6xgzyrue
   '@ionic-native/status-bar': 5.36.0_7vyb3ob35wc72piwff6xgzyrue
   '@ionic/angular': 6.3.9_xz2w3fid4ayjlhbzjw6qtxwjt4
-  '@nrwl/angular': 15.2.4_ere5t3xcztloo7e6tbvs75xb2i
+  '@nrwl/angular': 15.2.4_awxv6mpnthko44r62qicbmmv7y
   '@sentry/angular': 7.23.0_4wlqbblscff4joqf5hsi5rjqtm
   '@sentry/tracing': 7.23.0
   '@sneat/random': 0.0.4_yt6vhfaqrvibeodb6jj2rnj7lm
@@ -98,7 +98,7 @@ devDependencies:
   '@angular/compiler-cli': 14.2.12_xny3jupsupef4qvbeynwkkewkm
   '@angular/language-service': 14.2.12
   '@nrwl/cli': 15.2.4
-  '@nrwl/cypress': 15.2.4_wacscvjg6cbsxna3tgwfq6olpe
+  '@nrwl/cypress': 15.2.4_uauy2nvqyzezmlp5iwj64p5tqy
   '@nrwl/eslint-plugin-nx': 15.2.4_ub2a6n6gygr5czk6e4iim6gnre
   '@nrwl/jest': 15.2.4_rshv6djswz4rw2w5yu3menrzs4
   '@nrwl/linter': 15.2.4_7ermp26ckgtulfg22vo5uctlxu
@@ -108,7 +108,7 @@ devDependencies:
   '@types/node': 18.11.11
   '@typescript-eslint/eslint-plugin': 5.45.1_2tyua2wbsvimqn6kmg6kmqfdsm
   '@typescript-eslint/parser': 5.45.1_6rep66rojmwsn4bfraotajskeu
-  cypress: 10.11.0
+  cypress: 11.2.0
   eslint: 8.29.0
   eslint-config-prettier: 8.5.0_eslint@8.29.0
   eslint-plugin-cypress: 2.12.1_eslint@8.29.0
@@ -3253,16 +3253,16 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/15.2.4_ere5t3xcztloo7e6tbvs75xb2i:
+  /@nrwl/angular/15.2.4_awxv6mpnthko44r62qicbmmv7y:
     resolution: {integrity: sha512-MXggZKc8GFAp2kd8gy/PD1PR/0JQcdrqKZciisoQOW7jkxold7a31VSiLM1eScJ34JwmTpaNyGJg9qdiL81VUA==}
     requiresBuild: true
     dependencies:
       '@angular-devkit/schematics': 15.0.0_chokidar@3.5.3
-      '@nrwl/cypress': 15.2.4_wacscvjg6cbsxna3tgwfq6olpe
+      '@nrwl/cypress': 15.2.4_uauy2nvqyzezmlp5iwj64p5tqy
       '@nrwl/devkit': 15.2.4_nx@15.2.4+typescript@4.8.4
       '@nrwl/jest': 15.2.4_rshv6djswz4rw2w5yu3menrzs4
       '@nrwl/linter': 15.2.4_7ermp26ckgtulfg22vo5uctlxu
-      '@nrwl/storybook': 15.2.4_wacscvjg6cbsxna3tgwfq6olpe
+      '@nrwl/storybook': 15.2.4_uauy2nvqyzezmlp5iwj64p5tqy
       '@nrwl/webpack': 15.2.4_y7mcxynn2safj6y73ic4v4w6ne
       '@nrwl/workspace': 15.2.4_c7zefibuqluistjdnb7a2vnu3y
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.8.4
@@ -3317,7 +3317,7 @@ packages:
       - '@swc/core'
       - debug
 
-  /@nrwl/cypress/15.2.4_wacscvjg6cbsxna3tgwfq6olpe:
+  /@nrwl/cypress/15.2.4_uauy2nvqyzezmlp5iwj64p5tqy:
     resolution: {integrity: sha512-zVMI42KVm1Av3pfx+N3Yhsf9uQK6GxA6wV899CyT4wLAVSNZ6/zKIXlGsGUCEmv8/zNVoLv1QYH07MwIrfAkOg==}
     peerDependencies:
       cypress: '>= 3 < 12'
@@ -3334,7 +3334,7 @@ packages:
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.8.4
       babel-loader: 8.2.5_l4u46df3bcxf7ub6mjdxolhdci
       chalk: 4.1.0
-      cypress: 10.11.0
+      cypress: 11.2.0
       dotenv: 10.0.0
       fork-ts-checker-webpack-plugin: 7.2.13_qw7fmzhoapcndkteb5rsc33stq
       semver: 7.3.4
@@ -3499,10 +3499,10 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/storybook/15.2.4_wacscvjg6cbsxna3tgwfq6olpe:
+  /@nrwl/storybook/15.2.4_uauy2nvqyzezmlp5iwj64p5tqy:
     resolution: {integrity: sha512-qIIMrBejf6BmKPx+a1m3SJD++gNlPdVqtjIQFxPlphjr8R1sufV49Iw7HwFwmDak801E3e37OxV6aUCb6w+cKw==}
     dependencies:
-      '@nrwl/cypress': 15.2.4_wacscvjg6cbsxna3tgwfq6olpe
+      '@nrwl/cypress': 15.2.4_uauy2nvqyzezmlp5iwj64p5tqy
       '@nrwl/devkit': 15.2.4_nx@15.2.4+typescript@4.8.4
       '@nrwl/linter': 15.2.4_7ermp26ckgtulfg22vo5uctlxu
       '@nrwl/workspace': 15.2.4_c7zefibuqluistjdnb7a2vnu3y
@@ -5840,8 +5840,8 @@ packages:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
     dev: true
 
-  /cypress/10.11.0:
-    resolution: {integrity: sha512-lsaE7dprw5DoXM00skni6W5ElVVLGAdRUUdZjX2dYsGjbY/QnpzWZ95Zom1mkGg0hAaO/QVTZoFVS7Jgr/GUPA==}
+  /cypress/11.2.0:
+    resolution: {integrity: sha512-u61UGwtu7lpsNWLUma/FKNOsrjcI6wleNmda/TyKHe0dOBcVjbCPlp1N6uwFZ0doXev7f/91YDpU9bqDCFeBLA==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     requiresBuild: true
