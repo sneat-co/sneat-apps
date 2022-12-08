@@ -30,7 +30,7 @@
     "@sentry/tracing": "7.24.2",
     "@sneat/random": "0.0.4",
     "date-fns": "2.29.3",
-    "firebase": "9.14.0",
+    "firebase": "9.15.0",
     "ionicons": "6.0.4",
     "rxjs": "7.6.0",
     "tabulator-tables": "5.4.3",
