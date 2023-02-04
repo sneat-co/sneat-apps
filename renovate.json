@@ -72,6 +72,13 @@
     },
     {
       "matchPackagePrefixes": [
+        "eslint"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackagePrefixes": [
         "@ionic/"
       ],
       "matchUpdateTypes": [
