@@ -36,7 +36,7 @@ specifiers:
   '@types/node': 18.11.18
   '@typescript-eslint/eslint-plugin': 5.47.0
   '@typescript-eslint/parser': 5.47.0
-  cypress: 10.11.0
+  cypress: 12.5.1
   date-fns: 2.29.3
   eslint: 8.31.0
   eslint-config-prettier: 8.5.0
@@ -76,7 +76,7 @@ dependencies:
   '@ionic-native/splash-screen': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic-native/status-bar': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic/angular': 6.4.2_7sxlkxu6wax2ezopj455qpyuj4
-  '@nrwl/angular': 15.6.3_ianzvqb7cu6xcjnlxlqr4a6wyq
+  '@nrwl/angular': 15.6.3_6hemj7utmobd7oxjijgpvwiffu
   '@sentry/angular': 7.30.0_eu6h67l7vrxfv2glklfvc5n2ry
   '@sentry/tracing': 7.30.0
   '@sneat/random': 0.0.4_nvc44fk6dswp4jvaa2jkkaklxy
@@ -98,7 +98,7 @@ devDependencies:
   '@angular/compiler-cli': 15.1.3_djwha4ey423drvrwficyupdnl4
   '@angular/language-service': 15.1.3
   '@nrwl/cli': 15.6.3
-  '@nrwl/cypress': 15.6.3_ceawsnxbadyjb4dad5726irx4y
+  '@nrwl/cypress': 15.6.3_y4ih6cp4ll54gewnnnoii7dcsm
   '@nrwl/eslint-plugin-nx': 15.6.3_ztup2abiobyjdemkordgquino4
   '@nrwl/jest': 15.6.3_gwtgxwzkojfv2mhkcqit7ston4
   '@nrwl/linter': 15.6.3_otypb3u6rsg65jt4gbqvp37koa
@@ -108,7 +108,7 @@ devDependencies:
   '@types/node': 18.11.18
   '@typescript-eslint/eslint-plugin': 5.47.0_ol6yfs32odb6vlqb7gfmkevovu
   '@typescript-eslint/parser': 5.47.0_hxm4ti6flr4ebpn5txq2vx72t4
-  cypress: 10.11.0
+  cypress: 12.5.1
   eslint: 8.31.0
   eslint-config-prettier: 8.5.0_eslint@8.31.0
   eslint-plugin-cypress: 2.12.1_eslint@8.31.0
@@ -3530,7 +3530,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/15.6.3_ianzvqb7cu6xcjnlxlqr4a6wyq:
+  /@nrwl/angular/15.6.3_6hemj7utmobd7oxjijgpvwiffu:
     resolution: {integrity: sha512-IHOwDe1T3E35BblBYaUAmQr6iti/HDEnIcHeSCbBcomrDPsMR1RSE1COSDv14dQI90nmU4Jx1eUWiEkoY0FVJA==}
     requiresBuild: true
     peerDependencies:
@@ -3541,7 +3541,7 @@ packages:
         optional: true
     dependencies:
       '@angular-devkit/schematics': 15.1.1_chokidar@3.5.3
-      '@nrwl/cypress': 15.6.3_ceawsnxbadyjb4dad5726irx4y
+      '@nrwl/cypress': 15.6.3_y4ih6cp4ll54gewnnnoii7dcsm
       '@nrwl/devkit': 15.6.3_nx@15.6.3+typescript@4.8.4
       '@nrwl/jest': 15.6.3_gwtgxwzkojfv2mhkcqit7ston4
       '@nrwl/linter': 15.6.3_otypb3u6rsg65jt4gbqvp37koa
@@ -3600,7 +3600,7 @@ packages:
       - '@swc/core'
       - debug
 
-  /@nrwl/cypress/15.6.3_ceawsnxbadyjb4dad5726irx4y:
+  /@nrwl/cypress/15.6.3_y4ih6cp4ll54gewnnnoii7dcsm:
     resolution: {integrity: sha512-ZPQ60KTkEgCQaIhaoPICiACfufuE8klwkBSl3bbTL5d6QEYlpTb2M1IeHEYZP1aEKXJlC9Kb6al9lB87peNVkQ==}
     peerDependencies:
       cypress: '>= 3 < 13'
@@ -3612,7 +3612,7 @@ packages:
       '@nrwl/linter': 15.6.3_otypb3u6rsg65jt4gbqvp37koa
       '@nrwl/workspace': 15.6.3_l33hktplt5jp4dk6nksrmrogki
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.8.4
-      cypress: 10.11.0
+      cypress: 12.5.1
       dotenv: 10.0.0
       semver: 7.3.4
     transitivePeerDependencies:
@@ -6105,9 +6105,9 @@ packages:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
     dev: true
 
-  /cypress/10.11.0:
-    resolution: {integrity: sha512-lsaE7dprw5DoXM00skni6W5ElVVLGAdRUUdZjX2dYsGjbY/QnpzWZ95Zom1mkGg0hAaO/QVTZoFVS7Jgr/GUPA==}
-    engines: {node: '>=12.0.0'}
+  /cypress/12.5.1:
+    resolution: {integrity: sha512-ZmCmJ3lsyeOpBfh410m5+AO2CO1AxAzFBt7k6/uVbNcrNZje1vdiwYTpj2ksPKg9mjr9lR6V8tmlDNMvr4H/YQ==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -6148,7 +6148,7 @@ packages:
       pretty-bytes: 5.6.0
       proxy-from-env: 1.0.0
       request-progress: 3.0.0
-      semver: 7.3.7
+      semver: 7.3.8
       supports-color: 8.1.1
       tmp: 0.2.1
       untildify: 4.0.0
@@ -12555,7 +12555,7 @@ packages:
     engines: {node: '>= 0.8'}
 
   /verror/1.10.0:
-    resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
+    resolution: {integrity: sha1-OhBcoXBTr1XW4nDB+CiGguGNpAA=}
     engines: {'0': node >=0.6.0}
     dependencies:
       assert-plus: 1.0.0
