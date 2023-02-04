@@ -6,16 +6,10 @@
     {
       "extends": "monorepo:nrwl",
       "groupName": "nrwl monorepo",
-      "matchUpdateTypes": [
-        "major"
-      ]
-    },
-    {
-      "extends": "monorepo:nrwl",
-      "groupName": "nrwl monorepo",
-      "automerge": true,
+      "automerge": false,
       "automergeType": "pr",
       "matchUpdateTypes": [
+        "major",
         "minor",
         "patch"
       ]
@@ -23,9 +17,7 @@
     {
       "matchPackagePrefixes": [
         "@angular/",
-        "@angular-devkit/",
-        "@angular-eslint/",
-        "@angular/cli"
+        "@angular-"
       ],
       "matchUpdateTypes": [
         "minor",
@@ -37,12 +29,12 @@
     {
       "matchPackagePrefixes": [
         "@angular/",
-        "@angular-devkit/",
-        "@angular-eslint/"
+        "@angular-"
       ],
       "matchUpdateTypes": [
         "major"
-      ]
+      ],
+      "automerge": false
     },
     {
       "matchPackagePrefixes": [
@@ -83,19 +75,20 @@
         "@ionic/"
       ],
       "matchUpdateTypes": [
-        "minor",
-        "patch"
+        "major"
       ],
-      "automerge": true,
-      "automergeType": "pr"
+      "automerge": false
     },
     {
       "matchPackagePrefixes": [
         "@ionic/"
       ],
       "matchUpdateTypes": [
-        "major"
-      ]
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
     },
     {
       "matchPackagePrefixes": [
