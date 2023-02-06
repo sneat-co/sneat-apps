@@ -10,11 +10,11 @@
 </ng-template>
 <ng-container *ngIf="allRecurrings; else loading">
 	<ion-item *ngIf="!!numberOfHidden" class="ion-margin sneat-no-end-padding">
-		<ion-label color="medium" *ngIf="numberOfHidden === 1">{{numberOfHidden}} out of {{allRecurrings?.length}}
+		<ion-label color="medium" *ngIf="numberOfHidden === 1">{{numberOfHidden}} out of {{allRecurrings.length}}
 			happenings
 			is hidden by filter.
 		</ion-label>
-		<ion-label color="medium" *ngIf="numberOfHidden > 1">{{numberOfHidden}} out of {{allRecurrings?.length}} happenings
+		<ion-label color="medium" *ngIf="numberOfHidden > 1">{{numberOfHidden}} out of {{allRecurrings.length}} happenings
 			are hidden by filter.
 		</ion-label>
 		<ion-buttons slot="end">

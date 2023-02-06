@@ -5,7 +5,7 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title *ngIf="member else communeHeaderTitle">
-			📅 {{member?.brief?.title}}
+			📅 {{member.brief?.title}}
 		</ion-title>
 		<ng-template #communeHeaderTitle>
 			<sneat-team-page-title

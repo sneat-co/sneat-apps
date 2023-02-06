@@ -70,7 +70,11 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	}
 
 	private createHappeningContext(type: HappeningType): void {
-		this.happening = newEmptyHappeningContext(this.team, type, 'appointment', 'active');
+		const team = this.team;
+		if (!team) {
+			throw new Error('!team');
+		}
+		this.happening = newEmptyHappeningContext(team, type, 'appointment', 'active');
 	}
 
 

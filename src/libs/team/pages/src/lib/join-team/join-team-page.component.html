@@ -8,21 +8,21 @@
 <ion-content>
 	<ion-card *ngIf="inviteInfo" color="warning">
 		<ion-card-content *ngIf="userOwnInvite; else notUserOwnInvite">
-			<p>You've invited <b>{{inviteInfo?.invite?.to?.title}}</b> to join
-				<b>{{inviteInfo?.team?.title || inviteInfo?.team?.type}}</b></p>
+			<p>You've invited <b>{{inviteInfo.invite.to.title}}</b> to join
+				<b>{{inviteInfo.team.title || inviteInfo.team.type}}</b></p>
 		</ion-card-content>
 		<ng-template #notUserOwnInvite>
 			<ion-card-content>
 				<p *ngIf="inviteInfo?.invite?.to?.title">
-					Hello <b>{{inviteInfo?.invite?.to?.title}}</b>,
+					Hello <b>{{inviteInfo.invite.to.title}}</b>,
 				</p>
-				<p *ngIf="inviteInfo?.team?.title">
-					You've been invited by <b>{{inviteInfo?.invite?.from?.title}}</b> to join team {{inviteInfo?.team?.title}}
+				<p *ngIf="inviteInfo.team.title; else noTeamTitle">
+					You've been invited by <b>{{inviteInfo.invite.from.title}}</b> to join team {{inviteInfo.team.title}}
 				</p>
-				<p *ngIf="!inviteInfo?.team?.title">
-					You've been invited by <b>{{inviteInfo?.invite?.from?.title}}</b> to join {{inviteInfo?.team?.type}}
+				<ng-template #noTeamTitle>
+					You've been invited by <b>{{inviteInfo.invite.from.title}}</b> to join {{inviteInfo.team.type}}
 					space @ <a href="https://sneat.app" target="_blank">Sneat.app</a>
-				</p>
+				</ng-template>
 			</ion-card-content>
 		</ng-template>
 	</ion-card>

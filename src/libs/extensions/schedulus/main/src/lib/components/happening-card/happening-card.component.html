@@ -2,7 +2,7 @@
 	<ion-item color="light" class="sneat-no-end-padding" button (click)="goHappening($event)">
 		<ion-label>
 			<ng-container *ngIf="date">
-				<b>{{wd|wdToWeekday}}</b>, {{date?.getDate()}} {{date?.getMonth()|longMonthName}}
+				<b>{{wd|wdToWeekday}}</b>, {{date.getDate()}} {{date.getMonth()|longMonthName}}
 				&mdash;
 			</ng-container>
 

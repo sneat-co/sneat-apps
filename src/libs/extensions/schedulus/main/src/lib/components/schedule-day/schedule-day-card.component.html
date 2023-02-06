@@ -19,10 +19,10 @@
 		<ion-label>
 			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-					<h1 class="virtual-slide sneat-smaller-if-width-less-638" [@virtualSlide]="oddDay?.animationState">
+					<h1 class="virtual-slide sneat-smaller-if-width-less-638" [@virtualSlide]="oddDay.animationState">
 						<sneat-schedule-day-title [day]="oddDay"></sneat-schedule-day-title>
 					</h1>
-					<h1 class="virtual-slide" [@virtualSlide]="evenDay?.animationState || 'hide'">
+					<h1 class="virtual-slide" [@virtualSlide]="evenDay.animationState || 'hide'">
 						<sneat-schedule-day-title [day]="evenDay"></sneat-schedule-day-title>
 					</h1>
 				</div>
@@ -30,7 +30,7 @@
 		</ion-label>
 
 		<ion-buttons slot="end" class="sneat-hide-if-width-less-638">
-			<ion-button title="Add recurring" (click)="goNewHappening({type: 'recurring', wd: activeDay?.weekday?.id})">
+			<ion-button title="Add recurring" (click)="goNewHappening({type: 'recurring', wd: activeDay.weekday.id})">
 				<ion-icon name="duplicate-outline"></ion-icon>
 			</ion-button>
 			<ion-button title="Add one-timer" (click)="goNewHappening({type: 'single', date: activeDay.activeDateID})">
@@ -42,14 +42,14 @@
 	<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
 		<div class="virtual-slider-inner" [@virtualSlider]="animationState">
 			<div class="virtual-slide" [@virtualSlide]="oddSlide?.animationState">
-				<sneat-schedule-day [weekday]="oddDay?.weekday"
+				<sneat-schedule-day [weekday]="oddDay.weekday"
 														[team]="team"
 														(slotClicked)="onSlotClicked && onSlotClicked($event)"
 				></sneat-schedule-day>
 				<div class="virtual-slide-overflow-fixer"></div>
 			</div>
 			<div class="virtual-slide" [@virtualSlide]="evenSlide?.animationState">
-				<sneat-schedule-day [weekday]="evenDay?.weekday"
+				<sneat-schedule-day [weekday]="evenDay.weekday"
 														[team]="team"
 														(slotClicked)="onSlotClicked && onSlotClicked($event)"
 				></sneat-schedule-day>

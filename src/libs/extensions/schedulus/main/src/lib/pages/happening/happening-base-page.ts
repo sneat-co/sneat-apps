@@ -38,12 +38,20 @@ export abstract class HappeningBasePage extends ScheduleBasePage {
 		if (this.happening?.id === id) {
 			return;
 		}
-		this.setHappening({ id, team: this.team }, 'url');
+		const team = this.team;
+		if (!team) {
+			throw new Error('Team is not defined');
+		}
+		this.setHappening({ id, team }, 'url');
 		this.watchHappeningChanges(id);
 	};
 
 	private watchHappeningChanges(id: string): void {
-		this.params.happeningService.watchHappeningByID(this.team, id)
+		const team = this.team;
+		if (!team) {
+			throw new Error('Team is not defined');
+		}
+		this.params.happeningService.watchHappeningByID(team, id)
 			.pipe(
 				this.takeUntilNeeded(),
 				takeUntil(this.happeningID$),

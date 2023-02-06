@@ -4,7 +4,7 @@
 			<ion-menu-button></ion-menu-button>
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="happening else titleNoActivity">{{happening?.brief?.title}}</ion-title>
+		<ion-title *ngIf="happening else titleNoActivity">{{happening.brief?.title}}</ion-title>
 		<ng-template #titleNoActivity>
 			<ion-title>Recurring</ion-title>
 		</ng-template>

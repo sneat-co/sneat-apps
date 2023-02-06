@@ -13,7 +13,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="team else titleNoCommune">📜 Lists @ {{team?.brief?.title}}</ion-title>
+		<ion-title *ngIf="team else titleNoCommune">📜 Lists @ {{team.brief?.title}}</ion-title>
 		<ng-template #titleNoCommune>
 			<ion-title>📜 Lists</ion-title>
 		</ng-template>
