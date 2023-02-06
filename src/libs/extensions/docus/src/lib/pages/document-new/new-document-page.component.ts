@@ -32,7 +32,7 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 
 	private readonly memberChanged = new Subject<void>();
 
-	public members?: IMemberContext[]
+	public members?: IMemberContext[];
 
 	constructor(
 		route: ActivatedRoute,
@@ -75,7 +75,7 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 	protected override onTeamDtoChanged() {
 		super.onTeamDtoChanged();
 		const team = this.team;
-		this.members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team))
+		this.members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
 	}
 
 	private trackUrlMemberID(): void {
@@ -100,8 +100,12 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 
 	private watchMember = (memberID: string): void => {
 		this.memberChanged.next();
-		this.member = { id: memberID, team: this.team };
-		this.membersService.watchMember(this.team, memberID)
+		const team = this.team;
+		if (!team) {
+			return;
+		}
+		this.member = { id: memberID, team };
+		this.membersService.watchMember(team, memberID)
 			.subscribe({
 					next: member => {
 						this.member = member;
@@ -137,8 +141,12 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 	}
 
 	private onDocCreated = (doc: IDocumentContext): void => {
+		const team = this.team;
+		if (!team) {
+			return;
+		}
 		this.teamNavService
-			.navigateForwardToTeamPage(this.team, 'document/' + doc.id)
+			.navigateForwardToTeamPage(team, 'document/' + doc.id)
 			.catch(this.errorLogger.logErrorHandler('Failed to navigate to document page'));
 	};
 }

@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TeamBaseComponent, teamPageUrl } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({
@@ -19,8 +20,5 @@ export class ExpressTeamMenuItemsComponent {
 		{ type: 'shipper', title: 'Shippers', icon: 'boat-outline' },
 	];
 
-	constructor() {
-	}
-
-
+	readonly teamPageUrl = (page: string) => teamPageUrl(this.team, page);
 }

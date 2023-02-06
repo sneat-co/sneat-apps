@@ -36,7 +36,11 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 					// 	this.setPageCommuneIds('ContactPage.contactFromHistoryState', { real: contact.communeId });
 					// }
 				} else if (contactId) {
-					this.contact = { id: contactId, team: this.team };
+					const team = this.team;
+					if (!team) {
+						return;
+					}
+					this.contact = { id: contactId, team };
 				}
 			}
 			this.onContactChanged();
@@ -48,8 +52,12 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 		if (!this.contact?.id) {
 			return;
 		}
+		const team = this.team;
+		if (!team) {
+			return;
+		}
 		this.contactsService
-			.watchContactById(this.team, this.contact?.id)
+			.watchContactById(team, this.contact?.id)
 			.pipe(
 				this.takeUntilNeeded(),
 			)
@@ -82,8 +90,12 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 		if (!this.contact?.id) {
 			return;
 		}
+		const team = this.team;
+		if (!team) {
+			return;
+		}
 		this.contactsService
-			.watchChildContacts(this.team, this.contact?.id)
+			.watchChildContacts(team, this.contact?.id)
 			.pipe(
 				this.takeUntilNeeded(),
 			)
@@ -96,6 +108,10 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 	}
 
 	goMember(id: string): void {
-		this.teamParams.teamNavService.navigateToMember(this.navController, { id, team: this.team });
+		const team = this.team;
+		if (!team) {
+			throw new Error('Can not navigate to member without team context');
+		}
+		this.teamParams.teamNavService.navigateToMember(this.navController, { id, team });
 	}
 }

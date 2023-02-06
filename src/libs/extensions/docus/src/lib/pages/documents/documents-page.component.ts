@@ -67,9 +67,12 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 			queryParams['member'] = member.id;
 		}
 		const state = member ? { member } : undefined;
-		this.teamNav.navigateForwardToTeamPage(this.team, 'new-document', {
-			state: { docType: type },
-		}).catch(this.errorLogger.logErrorHandler('Failed to navigate to new doc page'));
+		const team = this.team;
+		if (team) {
+			this.teamNav.navigateForwardToTeamPage(team, 'new-document', {
+				state: { docType: type },
+			}).catch(this.errorLogger.logErrorHandler('Failed to navigate to new doc page'));
+		}
 	};
 
 	applyFilter(filter: string) {

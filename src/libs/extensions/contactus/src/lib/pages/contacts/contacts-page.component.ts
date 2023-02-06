@@ -73,13 +73,14 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 
 	protected override onTeamDtoChanged() {
 		super.onTeamDtoChanged();
-		const teamDto = this.team?.dto;
+		const team = this.team;
+		const teamDto = team?.dto;
 		console.log('ContactsPageComponent.onTeamDtoChanged', teamDto?.contacts);
 		if (!teamDto) {
 			return;
 		}
 		if (teamDto.type === 'family') {
-			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief, team: this.team }));
+			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief, team }));
 			this.applyFilter(this.filter, this.role);
 		}
 	}

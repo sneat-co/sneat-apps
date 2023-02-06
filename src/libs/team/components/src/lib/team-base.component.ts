@@ -80,8 +80,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			distinctUntilChanged(),
 		);
 
-	public get team(): ITeamContext { // TODO: Document why we do not allow undefined
-		return this.teamContext || EMPTY_TEAM_CONTEXT;
+	public get team(): ITeamContext | undefined { // TODO: Document why we do not allow undefined
+		return this.teamContext;
 	}
 
 	public get preloader() {
@@ -383,5 +383,13 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		event.stopPropagation()
 		alert('Saving noes is not implemented yet');
 	}
+
+	protected teamPageUrl(page: string): string | undefined {
+		return teamPageUrl(this.teamContext, page);
+	}
+}
+
+export const teamPageUrl = (team?: ITeamContext, page?: string): string | undefined => {
+	return team?.id ? page ? `/space/${team.type}/${team.id}/${page}` : `/space/${team.type}/${team.id}` : undefined
 }
 

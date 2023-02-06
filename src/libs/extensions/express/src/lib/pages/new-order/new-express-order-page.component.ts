@@ -21,7 +21,7 @@ import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/orde
 export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	public order: IExpressOrderContext = {
 		id: '',
-		team: this.team,
+		team: this.team || {id: '', type: 'company'},
 		dto: {
 			status: 'draft',
 			direction: 'export',
@@ -73,8 +73,12 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	}
 
 	private loadTeamContact(contactID: string): void {
+		const team = this.team;
+		if (!team) {
+			throw new Error('No team context');
+		}
 		this.contactService
-			.watchContactById(this.team, contactID)
+			.watchContactById(team, contactID)
 			.pipe(first())
 			.subscribe({
 				next: this.processTeamContact,

@@ -139,11 +139,16 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 				});
 		}
 
+		const team = this.team;
+		if (!team) {
+			throw new Error('Team is not defined');
+		}
+
 		const assetId = params.get('asset');
 		if (assetId && this.asset?.id !== assetId) {
-			this.asset = { id: assetId, team: this.team };
+			this.asset = { id: assetId, team };
 			this.assetService
-				.watchAssetByID(this.team, assetId)
+				.watchAssetByID(team, assetId)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: asset => {
@@ -154,9 +159,9 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		}
 		const memberId = params.get('member');
 		if (memberId && this.member?.id !== memberId) {
-			this.member = { id: memberId, team: this.team };
+			this.member = { id: memberId, team };
 			this.membersService
-				.watchMember(this.team, memberId)
+				.watchMember(team, memberId)
 				.pipe(this.takeUntilNeeded())
 				.subscribe(member => {
 					this.member = member;
@@ -184,10 +189,14 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	}
 
 	submit(): void {
+		const team = this.team;
+		if (!team) {
+			throw new Error('Team is not defined');
+		}
 		this.creating = true;
 		let request: ICreateContactRequest = {
 			type: 'person',
-			teamID: this.team.id,
+			teamID: team.id,
 			person: {
 				...this.relatedPerson,
 				type: 'person',
@@ -222,7 +231,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 				request.person.roles.push(roleID);
 			}
 		}
-		this.contactService.createContact(this.team, request)
+		this.contactService.createContact(team, request)
 			.subscribe({
 				next: contact => {
 					this.navigateForwardToTeamPage(

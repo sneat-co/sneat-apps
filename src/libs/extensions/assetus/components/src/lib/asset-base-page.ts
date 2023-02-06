@@ -2,7 +2,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IAssetBrief, IAssetDto } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
-import { Observable, throwError } from 'rxjs';
+import { NEVER, never, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 
 export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDto> {
@@ -27,7 +27,11 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 		if (!this.asset?.id) {
 			return throwError(() => new Error('no asset context'));
 		}
-		return this.assetService.watchAssetByID(this.team, this.asset.id);
+		const team = this.team;
+		if (!team) {
+			return NEVER;
+		}
+		return this.assetService.watchAssetByID(team, this.asset.id);
 	}
 
 	protected override setItemContext(item?: IAssetContext) {

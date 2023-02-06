@@ -1,6 +1,6 @@
 <ion-list>
-	<ion-item routerLink="/space/{{team.type}}/{{team.id}}">
-		<ion-label style="font-weight: bold">{{team.brief?.title || 'Company'}}</ion-label>
+	<ion-item [routerLink]="teamPageUrl('')">
+		<ion-label style="font-weight: bold">{{team?.brief?.title || 'Company'}}</ion-label>
 	</ion-item>
 	<sneat-express-team-menu-items [team]="team"></sneat-express-team-menu-items>
 	<sneat-auth-menu-item></sneat-auth-menu-item>

@@ -10,7 +10,7 @@ import { ContactBasePage } from '../contact-base-page';
 })
 export class NewLocationPageComponent extends ContactBasePage {
 
-	newLocation: IContactContext = {id: '', dto: {type: 'location'}, team: {id: ''}};
+	newLocation: IContactContext = { id: '', dto: { type: 'location' }, team: { id: '' } };
 
 	constructor(
 		route: ActivatedRoute,
@@ -34,8 +34,15 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	onContactCreated(contact: IContactContext): void {
 		this.newLocation = contact;
-		this.navController
-			.navigateBack(`/space/${this.team.type}/${this.team.id}/contact/${this.contact?.id}`)
-			.catch(this.errorLogger.logErrorHandler('failed navigate to parent contact'));
+		const team = this.team;
+		if (!team) {
+			throw new Error('Team is not defined');
+		}
+		const url = this.teamPageUrl(`contact/${this.contact?.id}`);
+		if (url) {
+			this.navController
+				.navigateBack(url)
+				.catch(this.errorLogger.logErrorHandler('failed navigate to parent contact'));
+		}
 	}
 }

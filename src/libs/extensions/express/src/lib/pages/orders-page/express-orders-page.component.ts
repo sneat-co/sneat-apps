@@ -28,7 +28,7 @@ export class ExpressOrdersPageComponent extends TeamBaseComponent {
 
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
-		if (this.team.id) {
+		if (this.team?.id) {
 			this.subscribeForOrders();
 		}
 	}
@@ -41,8 +41,12 @@ export class ExpressOrdersPageComponent extends TeamBaseComponent {
 
 	private subscribeForOrders() {
 		this.ordersSubscription?.unsubscribe();
+		const teamId = this.team?.id;
+		if (!teamId) {
+			throw new Error('Team ID is not defined');
+		}
 		this.ordersSubscription = this.ordersService
-			.watchFreightOrders(this.team.id, excludeEmpty(this.filter))
+			.watchFreightOrders(teamId, excludeEmpty(this.filter))
 			.pipe(
 				takeUntil(this.destroyed),
 			)

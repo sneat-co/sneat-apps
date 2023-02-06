@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/space/{{team.type}}/{{team.id}}/order/{{order?.id}}"></ion-back-button>
+			<ion-back-button [defaultHref]="teamPageUrl('order/{{order?.id}}') || '..'"></ion-back-button>
 		</ion-buttons>
 		<ion-title>New segment at order # {{order?.id}}</ion-title>
 	</ion-toolbar>

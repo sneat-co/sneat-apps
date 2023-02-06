@@ -19,7 +19,7 @@ export class MembersListComponent implements OnChanges {
 
 	private selfRemove?: boolean;
 	private _members?: readonly IMemberContext[];
-	@Input() public team: ITeamContext = { id: '' };
+	@Input() public team?: ITeamContext;
 	@Input() public members?: readonly IMemberContext[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
@@ -77,7 +77,7 @@ export class MembersListComponent implements OnChanges {
 				this._members = this.members;
 			} else if (changes['team'] && !this.members) {
 				const team = this.team;
-				this._members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+				this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
 			}
 			this.membersToDisplay = this.filterMembers(this._members);
 		}
@@ -87,8 +87,11 @@ export class MembersListComponent implements OnChanges {
 		console.log('MembersListComponent.goSchedule()');
 		event.stopPropagation();
 		event.preventDefault();
-		this.scheduleNavService.goSchedule(this.team, { member: member.id })
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to member\'s schedule page'));
+		const team = this.team;
+		if (team) {
+			this.scheduleNavService.goSchedule(team, { member: member.id })
+				.catch(this.errorLogger.logErrorHandler('failed to navigate to member\'s schedule page'));
+		}
 	}
 
 	public removeMember(event: Event, member: IMemberContext) {

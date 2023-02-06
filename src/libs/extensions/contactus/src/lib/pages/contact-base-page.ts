@@ -34,7 +34,11 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		if (!this.contact?.id) {
 			return throwError(() => new Error('no contact context'));
 		}
-		return this.contactService.watchContactById(this.team, this.contact?.id);
+		const team = this.team;
+		if (!team) {
+			return throwError(() => new Error('no team context'));
+		}
+		return this.contactService.watchContactById(team, this.contact?.id);
 	}
 
 	override setItemContext(item: IContactContext): void {
@@ -58,7 +62,11 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 					const id = params.get('contactID');
 					if (id) {
 						if (this.contact?.id !== id) {
-							this.contact = { id, team: this.team };
+							const team = this.team;
+							if (!team) {
+								throw new Error('No team context');
+							}
+							this.contact = { id, team };
 						}
 					} else {
 						this.contact = undefined;

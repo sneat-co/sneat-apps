@@ -24,8 +24,9 @@ export class ExpressTeamPageComponent extends TeamBaseComponent {
 
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
-		if (this.team?.id) {
-			this.expressTeamService.watchExpressTeamByID(this.team.id)
+		const team = this.team;
+		if (team?.id) {
+			this.expressTeamService.watchExpressTeamByID(team.id)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: expressTeam => {
@@ -35,10 +36,9 @@ export class ExpressTeamPageComponent extends TeamBaseComponent {
 						this.errorLogger.logError(err, 'failed to load express team', {
 							show: !('' + err).includes('Missing or insufficient permissions'), // TODO: fix & handle properly
 						});
-						this.expressTeam = { id: this.team.id };
+						this.expressTeam = { id: team.id };
 					},
 				});
-
 		}
 	}
 }
