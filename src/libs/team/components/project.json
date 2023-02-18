@@ -1,4 +1,6 @@
 {
+	"name": "team-components",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/team/components/src",
 	"prefix": "sneat",

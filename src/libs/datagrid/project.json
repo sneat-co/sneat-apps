@@ -1,4 +1,6 @@
 {
+	"name": "datagrid",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/datagrid/src",
 	"prefix": "sneat",

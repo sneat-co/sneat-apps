@@ -1,4 +1,6 @@
 {
+	"name": "analytics",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/analytics/src",
 	"prefix": "sneat",

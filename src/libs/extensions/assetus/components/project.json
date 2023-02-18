@@ -1,4 +1,6 @@
 {
+	"name": "extensions-assetus-components",
+	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/extensions/assetus/components/src",
 	"prefix": "sneat",

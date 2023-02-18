@@ -1,4 +1,6 @@
 {
+	"name": "data",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/data/src",
 	"prefix": "sneat",

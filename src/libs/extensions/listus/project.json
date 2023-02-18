@@ -1,4 +1,6 @@
 {
+	"name": "extensions-listus",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/extensions/listus/src",
 	"prefix": "sneat",

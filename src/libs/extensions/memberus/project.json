@@ -1,4 +1,6 @@
 {
+	"name": "extensions-memberus",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/extensions/memberus/src",
 	"prefix": "sneat",

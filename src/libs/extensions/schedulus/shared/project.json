@@ -1,4 +1,6 @@
 {
+	"name": "extensions-schedulus-shared",
+	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/extensions/schedulus/shared/src",
 	"prefix": "sneat",

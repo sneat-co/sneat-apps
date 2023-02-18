@@ -1,4 +1,6 @@
 {
+	"name": "ext-shared",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/ext-shared/src",
 	"prefix": "sneat",

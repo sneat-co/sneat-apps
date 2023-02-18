@@ -1,4 +1,6 @@
 {
+	"name": "scrumspace-retrospectives",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/scrumspace/retrospectives/src",
 	"prefix": "sneat",
