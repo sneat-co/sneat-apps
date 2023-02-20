@@ -27,6 +27,7 @@ export * from './lib/dto-team-meeting';
 export * from './lib/dto-team-metric';
 export * from './lib/dto-term';
 export * from './lib/dto-user';
+export * from './lib/dto-with-modified';
 export * from './lib/by-user';
 export * from './lib/types';
 

@@ -45,6 +45,7 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 
 	private setOrder(order: IExpressOrderContext): void {
 		this.order = order;
+		console.log('setOrder', order);
 		this.numberOfDispatchers = order?.dto?.counterparties?.filter(c => c.role === 'dispatcher').length;
 		this.onOrderChanged(order);
 	}

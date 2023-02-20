@@ -15,9 +15,38 @@
 		</ion-buttons>
 	</ion-item>
 
-	<ion-item-divider>
-		<ion-label>Some info here so we do not have merged grey backgrounds.</ion-label>
-	</ion-item-divider>
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="6">
+				<ion-item>
+					<ion-label color="medium">Created</ion-label>
+<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
+					<ion-input [value]="(order?.dto?.created?.at?.seconds||0)*1000 | date:'dd MMM yyyy'" readonly="readonly"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="6">
+				<ion-item>
+					<ion-label color="medium">Status</ion-label>
+					<!--		<ion-input [value]="order?.dto?.status" readonly="readonly"></ion-input>-->
+					<ion-select interface="popover" [value]="order?.dto?.status">
+						<ion-select-option value="active">Active</ion-select-option>
+						<ion-select-option value="completed">Completed</ion-select-option>
+						<ion-select-option value="canceled">Canceled</ion-select-option>
+					</ion-select>
+					<!--		<ion-buttons slot="end" >-->
+					<!--			<ion-button color="medium">-->
+					<!--				<ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>-->
+					<!--				<ion-label>Mark completed</ion-label>-->
+					<!--			</ion-button>-->
+					<!--			<ion-button color="medium">-->
+					<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
+					<!--				<ion-label>Cancel</ion-label>-->
+					<!--			</ion-button>-->
+					<!--		</ion-buttons>-->
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
 	<ion-grid class="ion-grid-layout" *ngIf="readonly">
 		<ion-row>

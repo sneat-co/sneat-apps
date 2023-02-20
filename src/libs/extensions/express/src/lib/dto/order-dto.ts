@@ -1,5 +1,5 @@
 import { INavContext } from '@sneat/core';
-import { ExpressOrderContactRole, IAddress } from '@sneat/dto';
+import { ExpressOrderContactRole, IAddress, IWithModified } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { CounterpartyRole } from './express-team-dto';
@@ -138,7 +138,7 @@ export function getSegmentCounterparty(orderDto?: IExpressOrderDto | null, segme
 	return contactID ? orderDto?.counterparties?.find(c => c.contactID === contactID) : undefined;
 }
 
-export interface IExpressOrderDto extends IFreightOrderBase {
+export interface IExpressOrderDto extends IFreightOrderBase, IWithModified {
 	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
 	readonly route?: IOrderRoute;
 	// buyer?: IOrderCounterparty;
