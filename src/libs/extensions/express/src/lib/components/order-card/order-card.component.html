@@ -20,15 +20,17 @@
 			<ion-col size="6">
 				<ion-item>
 					<ion-label color="medium">Created</ion-label>
-<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
-					<ion-input [value]="(order?.dto?.created?.at?.seconds||0)*1000 | date:'dd MMM yyyy'" readonly="readonly"></ion-input>
+					<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
+					<ion-input [value]="(order?.dto?.created?.at?.seconds||0)*1000 | date:'dd MMM yyyy'"
+										 readonly="readonly"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="6">
 				<ion-item>
 					<ion-label color="medium">Status</ion-label>
 					<!--		<ion-input [value]="order?.dto?.status" readonly="readonly"></ion-input>-->
-					<ion-select interface="popover" [value]="order?.dto?.status">
+					<ion-select [disabled]="!team || !order?.id" interface="popover"
+											[value]="order?.dto?.status" (ionChange)="onUserChangedStatus($event)">
 						<ion-select-option value="active">Active</ion-select-option>
 						<ion-select-option value="completed">Completed</ion-select-option>
 						<ion-select-option value="canceled">Canceled</ion-select-option>
@@ -143,14 +145,14 @@
 		></sneat-express-order-counterparty>
 	</ion-item-group>
 
-<!--	<sneat-express-order-counterparties-->
-<!--		[team]="team"-->
-<!--		[order]="order"-->
-<!--		[contactRole]="'location'"-->
-<!--		contactType="location"-->
-<!--		parentRole="dispatcher"-->
-<!--		emoji="🛒"-->
-<!--		plural="Dispatchers"-->
-<!--		singular="dispatcher"-->
-<!--	></sneat-express-order-counterparties>-->
+	<!--	<sneat-express-order-counterparties-->
+	<!--		[team]="team"-->
+	<!--		[order]="order"-->
+	<!--		[contactRole]="'location'"-->
+	<!--		contactType="location"-->
+	<!--		parentRole="dispatcher"-->
+	<!--		emoji="🛒"-->
+	<!--		plural="Dispatchers"-->
+	<!--		singular="dispatcher"-->
+	<!--	></sneat-express-order-counterparties>-->
 </ion-card>

@@ -49,8 +49,8 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	};
 
 	public post<T>(endpoint: string, body: any): Observable<T> {
-		console.log('post()', endpoint);
 		const url = this.baseUrl + endpoint;
+		console.log('post()', endpoint, url, body);
 		return (
 			this.errorIfNotAuthenticated() ||
 			this.httpClient.post<T>(url, body, {

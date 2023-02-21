@@ -4,6 +4,7 @@ import { ExpressOrderContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext } from '../../dto/order-dto';
+import { ExpressOrderService } from '../../services';
 import { OrderPrintMenuComponent } from './order-print-menu.component';
 
 @Component({
@@ -21,6 +22,7 @@ export class OrderCardComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
+		private readonly orderService: ExpressOrderService,
 	) {
 	}
 
@@ -46,5 +48,24 @@ export class OrderCardComponent {
 			},
 		});
 		await popover.present(event as MouseEvent);
+	}
+
+	protected onUserChangedStatus(event: Event): void {
+		// event.stopPropagation();
+		// event.preventDefault();
+		console.log('onUserChangedStatus', event);
+		const ce = event as CustomEvent;
+		const status = ce.detail.value as string;
+		const team = this.team;
+		if (!team) {
+			throw new Error('No team context');
+		}
+		const order = this.order;
+		if (!order?.id) {
+			throw new Error('No team context');
+		}
+		this.orderService.setOrderStatus({ teamID: team.id, orderID: order.id, status }).subscribe({
+			error: this.errorLogger.logErrorHandler('Failed to set order status'),
+		});
 	}
 }

@@ -116,6 +116,10 @@ export class ExpressOrderService {
 		return result.pipe(map(orders => orders.map(o => ({ ...o, team: { id: teamID } }))));
 	}
 
+	setOrderStatus(request: { teamID: string, orderID: string, status: string }): Observable<void> {
+		return this.sneatApiService.post('express/order/set_order_status', request);
+	}
+
 	setOrderCounterparties(request: ISetOrderCounterpartiesRequest): Observable<IOrderCounterparty> {
 		return this.sneatApiService.post('express/order/set_order_counterparties', request);
 	}
