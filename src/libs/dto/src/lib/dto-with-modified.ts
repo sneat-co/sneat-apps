@@ -1,4 +1,3 @@
-import { IByUser } from '@sneat/dto';
 
 export interface IModified {
 	readonly at: {seconds: number; nanoseconds: number}
