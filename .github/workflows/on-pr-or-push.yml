@@ -13,7 +13,8 @@ on:
       - 'src/**'
 
 jobs:
-  lint:
+
+  Lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -55,10 +56,10 @@ jobs:
         uses: nrwl/nx-set-shas@v3
 
       - name: nx lint affected
-        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }}
+        run: pnpm run nx run-may --all --target=lint
         working-directory: ./src
 
-  build:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
