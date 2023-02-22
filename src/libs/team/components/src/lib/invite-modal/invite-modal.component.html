@@ -10,7 +10,7 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content>
-	<ion-segment [(ngModel)]="tab" (ionChange)="onTabChanged($event)">
+	<ion-segment [(ngModel)]="tab" (ionChange)="onTabChanged()">
 		<ion-segment-button value="email">By Email</ion-segment-button>
 		<ion-segment-button value="sms">By SMS</ion-segment-button>
 		<ion-segment-button value="link">Get link</ion-segment-button>

@@ -276,14 +276,14 @@ export class ScrumPageComponent extends TeamBaseComponent
 		if (team.metrics) {
 			this.teamMetrics = team.metrics
 				.filter((m) => m.mode === 'team')
-				.map((m) => {
+				.map(() => {
 					// const m3 = this.teamMetrics?.find((m2) => m2.id === m.id);
 					// return { ...m, value: m3?.value } as IMetric;
           throw new Error('not implemented')
 				});
 			this.personalMetrics = team.metrics
 				.filter((m) => m.mode === 'personal')
-				.map((m) => {
+				.map(() => {
 					// const m3 = this.personalMetrics?.find((m2) => m2.id === m.id);
 					// return { ...m, value: m3?.value } as IMetric;
           throw new Error('not implemented')

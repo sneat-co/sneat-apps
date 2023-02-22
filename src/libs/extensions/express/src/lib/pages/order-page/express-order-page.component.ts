@@ -4,7 +4,6 @@ import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ExpressOrderService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
-import { NewSegmentFormComponent } from '../../components/new-segment';
 import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
@@ -34,6 +33,7 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 	}
 
 	onTabChanged(event: Event): void {
+		console.log('onTabChanged', event);
 		let { href } = location;
 		if (href.indexOf('?') < 0) {
 			href += '?tab=';

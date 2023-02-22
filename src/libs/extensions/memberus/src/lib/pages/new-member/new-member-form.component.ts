@@ -7,7 +7,7 @@ import { RoutingState } from '@sneat/core';
 import {
 	emptyRelatedPerson,
 	IPersonRequirements,
-	IRelatedPerson, isPersonNotReady, isPersonReady,
+	IRelatedPerson,
 	isRelatedPersonNotReady, isRelatedPersonReady,
 	MemberType,
 } from '@sneat/dto';

@@ -1,8 +1,8 @@
 //tslint:disable:no-unsafe-any
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {IAssetDto, IVehicle} from 'sneat-shared/models/dto/dto-asset';
-import {IRealEstate} from 'sneat-shared/models/dto/dto-models';
-import {IBusinessLogic} from 'sneat-shared/services/interfaces';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IAssetDto, IVehicle } from 'sneat-shared/models/dto/dto-asset';
+import { IRealEstate } from 'sneat-shared/models/dto/dto-models';
+import { IBusinessLogic } from 'sneat-shared/services/interfaces';
 
 interface AssetDate {
 	name: string;
@@ -11,7 +11,7 @@ interface AssetDate {
 }
 
 @Component({
-	selector: 'app-asset-dates',
+	selector: 'sneat-asset-dates',
 	templateUrl: './asset-dates.component.html',
 })
 export class AssetDatesComponent {
@@ -22,20 +22,22 @@ export class AssetDatesComponent {
 		console.log('AssetDatesComponent => asset:', v);
 		this.assetDto = v;
 		switch (v.categoryId) {
-			case 'vehicles':
+			case 'vehicles': {
 				const vehicle = v as IVehicle;
 				this.items = [
-					{name: 'nctExpires', title: 'NCT expires', value: vehicle.nctExpires},
-					{name: 'taxExpires', title: 'Tax expires', value: vehicle.taxExpires},
-					{name: 'nextServiceDue', title: 'Next service due', value: vehicle.nextServiceDue},
+					{ name: 'nctExpires', title: 'NCT expires', value: vehicle.nctExpires },
+					{ name: 'taxExpires', title: 'Tax expires', value: vehicle.taxExpires },
+					{ name: 'nextServiceDue', title: 'Next service due', value: vehicle.nextServiceDue },
 				];
 				break;
-			case 'real_estate':
+			}
+			case 'real_estate': {
 				const property = v as IRealEstate;
 				this.items = [
-					{name: 'leaseExpires', title: 'Lease expires', value: property.leaseExpires},
+					{ name: 'leaseExpires', title: 'Lease expires', value: property.leaseExpires },
 				];
 				break;
+			}
 			default:
 				this.items = [];
 				break;
@@ -59,7 +61,7 @@ export class AssetDatesComponent {
 	onChange(name: string, $event: CustomEvent): void {
 		console.log(`AssetDatesComponent.onChange ${name}: `, $event);
 		const value = $event.detail.value;
-		this.changed.emit({name, value});
+		this.changed.emit({ name, value });
 		let title: string;
 		switch (name) {
 			case 'nctExpires':

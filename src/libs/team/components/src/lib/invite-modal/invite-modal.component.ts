@@ -186,7 +186,7 @@ export class InviteModalComponent {
 		await toast.present();
 	}
 
-	onTabChanged(event: Event): void {
+	onTabChanged(): void {
 		if (this.tab === 'link' && !this.link && !this.creatingInvite) {
 			this.generateLink();
 		}

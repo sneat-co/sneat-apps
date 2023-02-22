@@ -22,19 +22,34 @@ export class MembersSelectorService {
 			throw new Error('members is required parameter to select members');
 		}
 
+		// TODO: This smells, most likely can be simplified
 		const result = new Promise<IMemberContext[]>((resolve, reject) => {
 			const modalOptions: ModalOptions = {
 				component: MembersSelectorModalComponent,
 				componentProps: {
 					...options,
 					mode: 'modal',
+					onAdded: (member: IMemberContext) => {
+						resolve([member]);
+					},
 				},
 				keyboardClose: true,
-			}
+			};
 			this.modalController.create(modalOptions)
 				.then(
-					modal => modal.present().catch(this.errorLogger.logErrorHandler('Failed to present modal'))
-				).catch(this.errorLogger.logErrorHandler('Failed to create modal'));
+					modal => {
+						modal.present().catch(
+							err => {
+								this.errorLogger.logError(err, 'Failed to present modal');
+								reject(err);
+							},
+						);
+					},
+				).catch(
+				err => {
+					this.errorLogger.logError(err, 'Failed to create modal');
+					reject(err);
+				});
 		});
 
 		return result;

@@ -12,7 +12,7 @@ const monthNames = [
 ];
 
 @Component({
-	selector: 'app-month',
+	selector: 'sneat-month',
 	templateUrl: './month-page.component.html',
 	styleUrls: ['./month.page.scss'],
 })

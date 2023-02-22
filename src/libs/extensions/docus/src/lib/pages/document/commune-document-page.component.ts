@@ -7,7 +7,7 @@ import {eq, IAssetService} from 'sneat-shared/services/interfaces';
 import {CommuneBasePageParams} from 'sneat-shared/services/params';
 
 @Component({
-	selector: 'app-commune-document',
+	selector: 'sneat-commune-document',
 	templateUrl: './commune-document-page.component.html',
 	providers: [CommuneBasePageParams],
 })

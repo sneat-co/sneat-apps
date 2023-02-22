@@ -5,7 +5,7 @@ import { IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-day-tasks',
 	templateUrl: './day-tasks.component.html',
 })
-export class DayTasksComponent implements OnInit {
+export class DayTasksComponent {
 
 	constructor(
 		private readonly errorLogger: IErrorLogger,
@@ -13,7 +13,7 @@ export class DayTasksComponent implements OnInit {
 	) {
 	}
 
-	ngOnInit(): void {
+	// ngOnInit(): void {
 		// this.slotsProvider.preloadEvents(undefined, new Date())
 		// 	.subscribe(
 		// 		slots => {
@@ -21,5 +21,5 @@ export class DayTasksComponent implements OnInit {
 		// 		},
 		// 		this.errorLogger.logError,
 		// 	);
-	}
+	// }
 }

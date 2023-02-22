@@ -1,5 +1,5 @@
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
 import { IHappeningBrief, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem, RecurringSlots, TeamDay, wd2 } from '@sneat/extensions/schedulus/shared';
@@ -170,7 +170,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 
 	public destroy(): void {
 		this.destroyed.next();
-		Object.entries(this.days).forEach(([wd, dsp]) => {
+		Object.entries(this.days).forEach(([, dsp]) => {
 			dsp.destroy();
 		});
 	}
@@ -273,7 +273,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	}
 
 	public loadForWeek(d: Date): void {
-		//
+		console.log('TeamDaysProvider.loadForWeek()', d);
 
 	}
 
@@ -312,7 +312,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		if (recurring.brief?.slots) {
 			recurring.brief.slots.forEach(slot => {
 				slot.weekdays?.forEach((wd, i) => {
-					const { brief, dto } = recurring;
+					const { brief } = recurring;
 					if (!brief) {
 						throw new Error('recurring context has no brief');
 					}
@@ -396,6 +396,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	}
 
 	private loadEvents(...dates: Date[]): Observable<{ dateKey: string; events: ISlotItem[] }> {
+		console.log('loadEvents()', dates);
 		return EMPTY;
 		// const dateISOs = dates.map(localDateToIso);
 		//

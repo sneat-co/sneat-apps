@@ -102,7 +102,7 @@ export class SegmentContainerComponent implements OnChanges {
 		this.setDates();
 	}
 
-	saveChanges(event: Event): void {
+	saveChanges(): void {
 		this.freightLoadForm.group.reset();
 	}
 }

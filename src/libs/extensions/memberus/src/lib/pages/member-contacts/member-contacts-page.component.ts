@@ -5,13 +5,13 @@ import {IAssetService, IMemberService} from 'sneat-shared/services/interfaces';
 import {NgModulePreloaderService} from 'sneat-shared/services/ng-module-preloader.service';
 
 @Component({
-	selector: 'app-member-contacts',
+	selector: 'sneat-member-contacts',
 	templateUrl: './member-contacts-page.component.html',
 	providers: [CommuneBasePageParams],
 })
 export class MemberContactsPageComponent extends MemberBasePage {
 
-	public segment: 'friends' | 'other' = 'friends';
+	public override segment: 'friends' | 'other' = 'friends';
 
 	constructor(
 		params: CommuneBasePageParams,

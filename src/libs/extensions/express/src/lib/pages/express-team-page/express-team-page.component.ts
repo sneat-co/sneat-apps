@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ITeamContext } from '@sneat/team/models';
-import { takeUntil } from 'rxjs';
 import { IExpressTeamContext } from '../../dto/express-team-dto';
 import { ExpressTeamService } from '../../services/express-team.service';
 

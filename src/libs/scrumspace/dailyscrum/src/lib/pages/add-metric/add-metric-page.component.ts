@@ -6,11 +6,11 @@ import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-	selector: 'app-add-metric',
-	templateUrl: './add-metric.page.html',
-	styleUrls: ['./add-metric.page.scss'],
+	selector: 'sneat-add-metric',
+	templateUrl: './add-metric-page.component.html',
+	styleUrls: ['./add-metric-page.component.scss'],
 })
-export class AddMetricPage {
+export class AddMetricPageComponent {
 	public team: ITeam;
 	public teamId: string;
 

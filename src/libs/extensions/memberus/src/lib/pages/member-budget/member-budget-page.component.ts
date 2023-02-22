@@ -5,7 +5,7 @@ import {IAssetService, IMemberService} from 'sneat-shared/services/interfaces';
 import {CommuneBasePageParams} from 'sneat-shared/services/params';
 
 @Component({
-	selector: 'app-member-budget',
+	selector: 'sneat-member-budget',
 	templateUrl: './member-budget-page.component.html',
 	providers: [CommuneBasePageParams],
 })

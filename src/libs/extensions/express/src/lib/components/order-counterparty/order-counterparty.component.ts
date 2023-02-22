@@ -6,7 +6,6 @@ import { ITeamContext } from '@sneat/team/models';
 import {
 	IExpressOrderContext,
 	IOrderCounterparty,
-	IOrderCounterpartyRef,
 	ISetOrderCounterpartiesRequest,
 } from '../../dto/order-dto';
 import { ExpressOrderService } from '../../services';

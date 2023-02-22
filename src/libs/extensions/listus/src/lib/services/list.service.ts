@@ -13,7 +13,6 @@ import {
 	IListItemsCommandParams,
 	IReorderListItemsRequest,
 	ISetListItemsIsComplete,
-	ReorderListItemsWorker,
 } from './interfaces';
 
 @Injectable()

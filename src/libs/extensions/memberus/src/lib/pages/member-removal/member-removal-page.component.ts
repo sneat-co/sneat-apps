@@ -5,7 +5,7 @@ import {IAssetService, IMemberService} from 'sneat-shared/services/interfaces';
 import {NgModulePreloaderService} from 'sneat-shared/services/ng-module-preloader.service';
 
 @Component({
-	selector: 'app-member-removal',
+	selector: 'sneat-member-removal',
 	templateUrl: './member-removal-page.component.html',
 	providers: [CommuneBasePageParams],
 })

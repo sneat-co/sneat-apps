@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { getWeekdayDate } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-schedule-card-header',

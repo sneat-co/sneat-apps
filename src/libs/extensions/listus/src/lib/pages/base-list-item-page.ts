@@ -47,8 +47,9 @@ export abstract class BaseListItemPage extends BaseListPage implements OnInit {
 		}
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
+	// NO_tslint:disable-next-line:prefer-function-over-method
 	protected onQueryParamsChanged(queryParams: ParamMap): void {
+		console.log('BaseListItemPage.onQueryParamsChanged', queryParams)
 	}
 
 	// tslint:disable-next-line:prefer-function-over-method

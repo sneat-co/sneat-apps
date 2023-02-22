@@ -7,7 +7,7 @@ import {IAssetService} from 'sneat-shared/services/interfaces';
 import {IContact2Asset} from 'sneat-shared/models/dto/dto-contact';
 
 @Component({
-	selector: 'app-real-estate',
+	selector: 'sneat-real-estate',
 	templateUrl: './real-estate-page.component.html',
 	providers: [CommuneBasePageParams],
 })

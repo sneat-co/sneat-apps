@@ -3,7 +3,7 @@ import { IRecordsetColumn } from '@sneat/datatug/dto';
 import { IForeignKey } from '@sneat/datatug/models';
 
 @Component({
-	selector: 'datatug-cell-popover',
+	selector: 'sneat-datatug-cell-popover',
 	templateUrl: './cell-popover.component.html',
 	styleUrls: ['./cell-popover.component.scss'],
 })

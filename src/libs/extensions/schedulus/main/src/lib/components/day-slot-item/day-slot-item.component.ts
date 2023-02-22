@@ -41,7 +41,7 @@ export class DaySlotItemComponent {
 	}
 
 
-	async showContextMenu(event: MouseEvent | TouchEvent | PointerEvent | CustomEvent<any> | undefined): Promise<void> {
+	async showContextMenu(event: MouseEvent | TouchEvent | PointerEvent | CustomEvent<unknown> | undefined): Promise<void> {
 		// const stateOutput = new EventEmitter<SlotContextState>();
 		//
 		// stateOutput.subscribe({

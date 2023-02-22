@@ -1,4 +1,3 @@
-import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { IScheduleFilter } from './schedule-filter/schedule-filter';
 
@@ -14,7 +13,7 @@ export function hasMember(item: { memberIDs?: string[] } | undefined, memberIDs?
 
 export function isSlotVisible(slot: ISlotItem, filter: IScheduleFilter): boolean {
 	const { happening } = slot;
-	const { memberIDs, weekdays, repeats } = filter;
+	const { memberIDs, repeats } = filter;
 	if (happening?.brief && !hasMember(happening?.brief, memberIDs)) {
 		return false;
 	}

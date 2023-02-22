@@ -4,7 +4,7 @@
 	</ion-label>
 	<ion-select interface="popover"
 							[(ngModel)]="countryID"
-							(ionChange)="onCountryChanged($event)"
+							(ionChange)="onCountryChanged()"
 	>
 		<ion-select-option value="">All</ion-select-option>
 		<ion-select-option [value]="c.id" *ngFor="let c of countries">{{c.title}} {{c.emoji}}</ion-select-option>

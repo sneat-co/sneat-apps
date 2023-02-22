@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PipeTransform, Type } from '@angular/core';
 import { CountryFlagPipe, CountryTitle } from './country-emoji.pipe';
 import { GenderColorPipe, GenderEmojiPipe, GenderIconNamePipe } from './gender.pipes';
 import { LongMonthNamePipe } from './long-month-name.pipe';
@@ -9,7 +9,7 @@ import { ShortMonthNamePipe } from './short-month-name.pipe';
 import { TeamEmojiPipe } from './team-emoji.pipe';
 import { WdToWeekdayPipe } from './wd-to-weekday.pipe';
 
-const pipes: any[] = [
+const pipes: Type<PipeTransform>[] = [
 	TeamEmojiPipe,
 	WdToWeekdayPipe,
 	LongMonthNamePipe,

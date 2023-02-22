@@ -43,7 +43,7 @@ export class NewFamilyWizardComponent {
 		return !!this.relationship && !!this.numberOfKids && !!this.dwelling;
 	}
 
-	onFormChanged(event: Event): void {
+	onFormChanged(): void {
 		this.ready.emit(this.isReady);
 	}
 

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
+import { AuthMenuItemModule } from '@sneat/auth';
 import { TeamMenuComponent } from './team-menu.component';
 
 const exports = [TeamMenuComponent];

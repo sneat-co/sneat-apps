@@ -1,5 +1,4 @@
-import { INavContext } from '@sneat/core';
-import { ExpressOrderContactRole, IAddress, IWithModified } from '@sneat/dto';
+import { IAddress, IWithModified } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { CounterpartyRole } from './express-team-dto';
@@ -224,7 +223,7 @@ export interface IOrderSegment extends IOrderSegmentKey {
 	containerSegments: ReadonlyArray<IContainerSegment>;
 }
 
-function groupBy<T, K>(x: ReadonlyArray<T>, f: (v: T) => string): { [id: string]: ReadonlyArray<T> } {
+function groupBy<T>(x: ReadonlyArray<T>, f: (v: T) => string): { [id: string]: ReadonlyArray<T> } {
 	return x.reduce((a: { [id: string]: T[] }, b: T) => ((a[f(b)] ||= []).push(b), a), {});
 }
 
@@ -236,7 +235,7 @@ export function getOrderSegments(segments?: ReadonlyArray<IContainerSegment>): I
 		`${s.from.role}-${s.from.contactID}-${s.to.role}-${s.to.contactID}-${s.by?.contactID}`);
 	const entries = Object.entries(groups);
 	const result = entries.map(
-		([_, s]) => ({
+		([, s]) => ({
 			from: s[0].from,
 			to: s[0].to,
 			containerSegments: s,

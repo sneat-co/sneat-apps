@@ -14,7 +14,7 @@
 					<ion-select interface="popover"
 											[disabled]="true"
 											[(ngModel)]="email.type"
-											(ionChange)="typeChanged($event, i)"
+											(ionChange)="typeChanged($event)"
 					>
 						<ion-select-option *ngFor="let t of types"
 															 [value]="t.id"

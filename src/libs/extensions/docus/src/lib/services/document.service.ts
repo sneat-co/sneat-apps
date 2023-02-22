@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { IDocumentBrief, IDocumentDto, TeamCounter } from '@sneat/dto';
+import { SneatApiService } from '@sneat/api';
+import { IDocumentBrief, IDocumentDto } from '@sneat/dto';
 import { IDocumentContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
-import { Observable, tap, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 export interface ICreateDocumentRequest extends ITeamRequest {
 	memberID?: string;

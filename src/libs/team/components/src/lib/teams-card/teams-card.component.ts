@@ -221,7 +221,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		const user = userState.record;
 		if (user) {
 			this.teams = Object.entries(user?.teams ? user.teams : {}).map(
-				([id, team]) => ({ id, ...(team as any) }),
+				([id, team]) => ({ ...team, id}),
 			);
 			this.teams.sort((a, b) => (a.title > b.title ? 1 : -1));
 			this.showAdd = !this.teams?.length;

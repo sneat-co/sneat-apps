@@ -4,9 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { JoinTeamPageComponent } from './join-team-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../environments/environment';
-import { TeamService } from '../../../../services/src/lib/team.service';
-import { UserService } from '../../services/user-service';
+// import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('JoinTeamPage', () => {
@@ -21,9 +19,9 @@ describe('JoinTeamPage', () => {
 					IonicModule.forRoot(),
 					RouterTestingModule,
 					HttpClientTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
+					// AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
-				providers: [TeamService, UserService],
+				// providers: [TeamService, UserService],
 			}).compileComponents();
 
 			fixture = TestBed.createComponent(JoinTeamPageComponent);

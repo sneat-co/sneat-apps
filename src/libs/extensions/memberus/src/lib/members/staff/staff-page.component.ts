@@ -7,7 +7,7 @@ import {MemberType} from 'sneat-shared/models/types';
 import {IRecord, RxRecordKey} from 'rxstore';
 
 @Component({
-	selector: 'app-staff',
+	selector: 'sneat-staff',
 	templateUrl: './staff-page.component.html',
 	providers: [CommuneBasePageParams],
 })

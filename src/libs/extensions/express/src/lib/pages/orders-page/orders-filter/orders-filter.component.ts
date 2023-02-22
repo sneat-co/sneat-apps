@@ -24,7 +24,7 @@ export class OrdersFilterComponent {
 	viewMode: 'list' | 'grid' = 'grid';
 	@Output() viewModeChange = new EventEmitter<'list' | 'grid'>();
 
-	protected onDirectionChanged(event: Event): void {
+	protected onDirectionChanged(): void {
 		this.emitFilterChange();
 	}
 
@@ -34,7 +34,7 @@ export class OrdersFilterComponent {
 		this.emitFilterChange();
 	}
 
-	protected refNumberChanged(event: Event): void {
+	protected refNumberChanged(): void {
 		this.isRefNumberChanged = true;
 	}
 

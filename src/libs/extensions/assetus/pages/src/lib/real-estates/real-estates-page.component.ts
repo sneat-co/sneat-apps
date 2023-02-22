@@ -5,7 +5,7 @@ import {IAssetService} from 'sneat-shared/services/interfaces';
 import {CommuneBasePageParams} from 'sneat-shared/services/params';
 
 @Component({
-	selector: 'app-real-estates',
+	selector: 'sneat-real-estates',
 	templateUrl: './real-estates-page.component.html',
 	providers: [CommuneBasePageParams],
 })

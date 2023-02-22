@@ -42,7 +42,7 @@ export class EmailsFormComponent implements OnChanges {
 		}
 	}
 
-	typeChanged(event: Event, i: number): void {
+	typeChanged(event: Event): void {
 		event.stopPropagation();
 		this.setEmailsOnInputChanged();
 	}

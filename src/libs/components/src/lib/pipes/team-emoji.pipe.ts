@@ -3,7 +3,6 @@ import { TeamType } from '@sneat/core';
 
 @Pipe({ name: 'teamEmoji' })
 export class TeamEmojiPipe implements PipeTransform {
-	// tslint:disable-next-line:prefer-function-over-method
 	transform(communeType: TeamType): string | undefined {
 		switch (communeType) {
 			case 'family':

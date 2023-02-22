@@ -3,7 +3,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IExpressOrderContext,
 	IOrderCounterparty,
-	IContainerSegment,
 	IOrderSegment,
 	ExpressOrderService,
 	IDeleteSegmentsRequest,

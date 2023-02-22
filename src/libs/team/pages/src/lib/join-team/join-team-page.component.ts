@@ -223,6 +223,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 				this.inviteService.acceptInviteByAuthenticatedUser(inviteInfo)
 					.subscribe({
 						next: (dto) => {
+							console.log('joined team', dto);
 							const team: ITeamContext = { id: teamID, brief: inviteInfo.team };
 							// this.team = newTeam;
 							this.navService
@@ -239,6 +240,7 @@ export class JoinTeamPageComponent implements OnDestroy {
 				this.inviteService.acceptInviteByUnauthenticatedUser(inviteInfo)
 					.subscribe({
 						next: (dto) => {
+							console.log('joined team', dto);
 							const team: ITeamContext = { id: teamID, brief: inviteInfo.team };
 							// this.team = newTeam;
 							this.navService

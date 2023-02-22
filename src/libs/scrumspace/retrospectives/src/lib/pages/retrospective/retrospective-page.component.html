@@ -18,14 +18,14 @@
 		[retrospective]="retrospective"
 	></app-retro-timer>
 
-	<app-retro-feedback-stage
+	<sneat-retro-feedback-stage
 		[team]="team"
 		[retrospective]="retrospective"
 		*ngIf="showPersonalFeedback()"
-	></app-retro-feedback-stage>
-	<app-retro-review-stage
+	></sneat-retro-feedback-stage>
+	<sneat-retro-review-stage
 		[team]="team"
 		[retrospective]="retrospective"
 		*ngIf="retrospective?.dto?.stage === 'review'"
-	></app-retro-review-stage>
+	></sneat-retro-review-stage>
 </ion-content>

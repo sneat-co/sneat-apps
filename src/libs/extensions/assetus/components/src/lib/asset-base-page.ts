@@ -2,7 +2,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IAssetBrief, IAssetDto } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
-import { NEVER, never, Observable, throwError } from 'rxjs';
+import { NEVER, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 
 export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDto> {
@@ -21,6 +21,7 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 
 	protected onRouteParamsChanged(params: ParamMap, itemID?: string, teamID?: string): void {
 		// Nothing to do
+		console.log('onRouteParamsChanged', params, itemID, teamID);
 	}
 
 	protected override watchItemChanges(): Observable<IAssetContext> {

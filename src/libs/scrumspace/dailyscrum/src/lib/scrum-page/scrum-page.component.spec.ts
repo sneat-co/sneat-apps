@@ -4,7 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { ScrumPageComponent } from './scrum-page.component';
 // import { TeamService } from '../../services/team.service';
 // import { UserService } from '../../services/user-service';
-import { AngularFireModule } from '@angular/fire/compat';
 // import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';

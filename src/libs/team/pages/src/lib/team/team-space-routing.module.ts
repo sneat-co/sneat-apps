@@ -7,7 +7,6 @@ import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { docusRoutes } from '@sneat/extensions/docus';
-import { expressRoutes } from '@sneat/extensions/express';
 import { listusRoutes } from '@sneat/extensions/listus';
 import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus';
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';

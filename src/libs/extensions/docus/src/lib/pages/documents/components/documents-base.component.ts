@@ -10,11 +10,12 @@ import { DocumentService } from '../../../services/document.service';
 @Directive()
 export abstract class DocumentsBaseComponent {
 
-	@Input() allDocuments?: IDocumentContext[];
-
 	static metadata = {
 		inputs: ['allDocuments'],
 	};
+
+	@Input() allDocuments?: IDocumentContext[];
+
 
 	protected constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

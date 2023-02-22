@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivationStart, Router, RouterOutlet } from '@angular/router';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
-import { ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-express-menu',

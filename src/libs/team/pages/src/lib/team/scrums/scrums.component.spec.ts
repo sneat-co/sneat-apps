@@ -4,7 +4,6 @@ import { SneatUserService } from '@sneat/auth';
 
 import { ScrumsComponent } from './scrums.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AngularFireModule } from '@angular/fire/compat';
 // import { environment } from '../../../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 

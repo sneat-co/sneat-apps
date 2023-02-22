@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { excludeEmpty, excludeUndefined } from '@sneat/core';
+import { excludeUndefined } from '@sneat/core';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {

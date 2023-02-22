@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExpressOrderContactRole } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
-import { first, NEVER, switchMap, takeUntil } from 'rxjs';
+import { first, takeUntil } from 'rxjs';
 import {
 	CounterpartyRole,
 	ExpressTeamService,
 	ExpressOrderService,
 	IOrderCounterparty,
-	IOrderCounterpartyRef,
 } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order-dto';

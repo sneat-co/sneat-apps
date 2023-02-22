@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
-import { IHappeningDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { Observable } from 'rxjs';
 
 
 @Injectable()

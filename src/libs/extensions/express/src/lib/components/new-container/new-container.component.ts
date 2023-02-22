@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import {

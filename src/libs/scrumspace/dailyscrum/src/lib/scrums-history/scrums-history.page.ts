@@ -63,6 +63,7 @@ export class ScrumsHistoryPageComponent {
 	}
 
 	goScrum(scrum: IRecord<IScrumDto>): void {
+		console.log('goScrum', scrum);
 		// this.navService.navigateToScrum(scrum.id, this.team, scrum);
     throw new Error('not implemented')
 	}

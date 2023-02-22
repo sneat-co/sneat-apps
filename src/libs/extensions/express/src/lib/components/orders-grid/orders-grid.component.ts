@@ -85,13 +85,13 @@ export class OrdersGridComponent implements OnChanges {
 		}
 	}
 
-	readonly rowClick = (event: Event, row: any) => {
+	readonly rowClick = (event: Event, row: unknown) => {
 		console.log('OrdersGridComponent.rowClick():', event, row);
 		if (!this.team) {
 			alert('No team context provided!');
 			return;
 		}
-		const data = row.getData();
+		const data = (row as any).getData();
 		this.navController
 			.navigateForward(['space', this.team.type, this.team.id, 'order', data.id])
 			.catch(console.error);

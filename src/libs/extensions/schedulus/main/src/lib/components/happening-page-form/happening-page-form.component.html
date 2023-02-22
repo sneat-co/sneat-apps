@@ -1,4 +1,4 @@
-<form [formGroup]="happeningForm" (ngSubmit)="submit($event)">
+<form [formGroup]="happeningForm" (ngSubmit)="submit()">
 	<ion-card>
 		<ion-item>
 			<ion-label position="stacked">Title</ion-label>
@@ -94,7 +94,7 @@
 			<div class="ion-padding" *ngIf="!happening?.id">
 				<ion-button [disabled]="isCreating"
 										[color]="formIsValid() ? 'primary' : 'medium'" size="large"
-										(click)="submit($event)"
+										(click)="submit()"
 				>
 					<ion-label *ngIf="isToDo">Add task</ion-label>
 					<ion-label *ngIf="!isToDo">Create {{happeningType}} happening</ion-label>

@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IExpressOrderContext, IOrderContainer, OrderNavService } from '../..';
 

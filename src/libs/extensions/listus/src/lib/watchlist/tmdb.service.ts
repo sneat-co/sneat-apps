@@ -46,7 +46,7 @@ export class TmdbService extends ITmdbService {
 			.pipe(
 				mergeMap(
 					// tslint:disable-next-line:no-any
-					(value: any) => this.transformMovie(value.results as IMovie[])
+					(value: unknown) => this.transformMovie((value as any).results as IMovie[])
 				),
 				mergeMap((value => this.addGenresToMovies(value))));
 	}
@@ -78,9 +78,9 @@ export class TmdbService extends ITmdbService {
 		return this.httpClient.get(url)
 			.pipe(
 				// tslint:disable-next-line:no-any arrow-return-shorthand
-				map((response: any) => {
+				map((response: unknown) => {
 					// console.log('loadActors', movieId, response);
-					return response.cast as Actor[];
+					return (response as any).cast as Actor[];
 				})
 			);
 	}
@@ -91,7 +91,7 @@ export class TmdbService extends ITmdbService {
 		return this.httpClient.get(url)
 			.pipe(
 				// tslint:disable-next-line:no-any
-				map((response: any) => response.genres as Genre[])
+				map((response: unknown) => (response as any).genres as Genre[])
 			);
 	}
 
@@ -165,7 +165,7 @@ export class TmdbService extends ITmdbService {
 	}
 
 	// tslint:disable-next-line:no-any
-	addActorsToMovie(movie: any): Observable<IMovie> {
+	addActorsToMovie(movie: {id: number}): Observable<IMovie> {
 		// console.log('addActorsToMovie', movie.id);
 		return this.loadActors(movie.id)
 			.pipe(
@@ -177,8 +177,8 @@ export class TmdbService extends ITmdbService {
 	}
 
 	// tslint:disable-next-line:prefer-function-over-method no-any
-	addingActors(actors: Actor[], movie: any): void {
-		movie.actors = actors;
+	addingActors(actors: Actor[], movie: unknown): void {
+		(movie as any).actors = actors;
 		// console.log('addingActors', movie.id, actors);
 	}
 }

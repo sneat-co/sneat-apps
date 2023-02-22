@@ -1,7 +1,6 @@
 import {
 	hideVirtualSlide,
 	showVirtualSlide,
-	VirtualSlideAnimationsStates,
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { dateToIso } from '@sneat/core';

@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
-import {
-	ExpressMenuComponent
-} from '../../../../libs/extensions/express/src/lib/components/express-menu/express-menu.component';
-// import { SneatAppMyRoutingModule } from './sneat-app-my-routing.module';
+import { ExpressMenuComponent } from '@sneat/extensions/express';
 
 const routes: Routes = [
 	{

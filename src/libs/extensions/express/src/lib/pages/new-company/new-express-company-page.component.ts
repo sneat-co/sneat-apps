@@ -1,11 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { excludeEmpty } from '@sneat/core';
-import { ContactRole, ContactType, IContactDto, validateAddress } from '@sneat/dto';
+import { ContactRole } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IContactContext, ICreateContactCompanyRequest } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 
 @Component({
@@ -43,6 +42,7 @@ export class NewExpressCompanyPageComponent extends TeamBaseComponent implements
 	}
 
 	onContactCreated(contact: IContactContext): void {
+		console.log('NewExpressCompanyPageComponent.onContactCreated()', contact);
 		this.navController.pop().catch(() => {
 			this.navController
 				.navigateBack(['contacts'], { relativeTo: this.route })

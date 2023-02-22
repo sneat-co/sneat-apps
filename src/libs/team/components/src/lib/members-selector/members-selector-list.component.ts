@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext } from '@sneat/team/models';
-import { delay, first, Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
 
 @Component({
 	selector: 'sneat-members-selector-list',

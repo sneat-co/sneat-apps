@@ -123,7 +123,7 @@ export class ListusDbService extends IListusService {
 		if (changed) {
 			itemsToDelete.forEach(itemToDelete =>
 				// tslint:disable-next-line:no-non-null-assertion
-				listDto.items!.splice(listDto.items!.indexOf(itemToDelete), 1));
+				listDto.items?.splice(listDto.items.indexOf(itemToDelete), 1));
 		}
 		changed = ListusDbService.updateListICommuneDto(listDto, communeDto) || changed;
 		return {dto: listDto, changed};
@@ -289,7 +289,7 @@ export class ListusDbService extends IListusService {
 					})
 					.pipe(
 						// tslint:disable-next-line:ban-ts-ignore
-						// @ts-ignore
+						// NO_@ts-ignore
 						mapTo(listItemResult),
 					);
 			},

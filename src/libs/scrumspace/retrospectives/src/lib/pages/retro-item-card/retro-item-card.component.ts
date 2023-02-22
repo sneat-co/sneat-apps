@@ -3,7 +3,7 @@ import { IRetroItem } from '../../../models/interfaces';
 import { ITreeNode } from '@angular-dnd/tree';
 
 @Component({
-	selector: 'app-retro-item-card',
+	selector: 'sneat-retro-item-card',
 	templateUrl: './retro-item-card.component.html',
 	styleUrls: ['./retro-item-card.component.scss'],
 })

@@ -3,7 +3,7 @@ import { IExpressOrderContext } from '../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 export interface IOrderPrintedDocContext extends IExpressOrderContext {
-	params?: any;
+	params?: unknown;
 }
 
 @Injectable()
@@ -17,7 +17,7 @@ export class OrderPrintService {
 		console.log('openOrderPrintedDocument()', docID, orderDocContext);
 		const { id, team} = orderDocContext;
 		let url = `/space/${team.type}/${team.id}/order/${id}/print/${docID}?`;
-		Object.entries(orderDocContext.params).forEach(([k, v]) => {
+		Object.entries(orderDocContext.params as any).forEach(([k, v]) => {
 			url += `${k}=${encodeURIComponent(''+v)}`
 		});
 		window.open(url+'#print')

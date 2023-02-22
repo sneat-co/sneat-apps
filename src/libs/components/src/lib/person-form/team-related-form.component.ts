@@ -1,4 +1,4 @@
-import { Component, Injectable, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({template: ''})
@@ -19,6 +19,6 @@ export abstract class TeamRelatedFormComponent implements OnChanges {
 	}
 
 	protected onTeamTypeChanged(team?: ITeamContext): void {
-		//
+		console.log('TeamRelatedFormComponent.onTeamTypeChanged()', team);
 	}
 }

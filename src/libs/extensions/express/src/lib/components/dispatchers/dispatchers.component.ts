@@ -19,6 +19,7 @@ export class DispatchersComponent implements OnChanges {
 
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('DispatchersComponent.ngOnChanges', changes);
 		if (this.order?.dto) {
 			this.dispatchers = this.order.dto.counterparties
 				?.filter(c => c.role === 'dispatcher') || [];

@@ -187,7 +187,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 		return dto;
 	}
 
-	submit(event: Event): void {
+	submit(): void {
 		if (this.happening?.id) {
 			// Update happening
 		} else {
@@ -238,7 +238,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 								.catch(this.logErrorHandler('failed to team schedule after creating a happening'));
 						}
 					},
-					error: (err: any) => {
+					error: (err: unknown) => {
 						this.isCreating = false;
 						this.logError(err, 'failed to create new happening');
 					},

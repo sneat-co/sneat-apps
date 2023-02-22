@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { isoStringsToDate } from '@sneat/core';
-import { emptyHappeningSlot, WeekdayCode2 } from '@sneat/dto';
+import { WeekdayCode2 } from '@sneat/dto';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MembersSelectorService } from '@sneat/team/components';
@@ -21,7 +21,6 @@ import { memberContextFromBrief, TeamNavService } from '@sneat/team/services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team/services';
 import { ScheduleModalsService } from '../services/schedule-modals.service';
-import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
 
 @Injectable()
 export class HappeningBaseComponentParams {

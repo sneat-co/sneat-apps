@@ -48,6 +48,7 @@ export class MultiSelectorComponent extends SelectorBaseComponent implements OnC
 	}
 
 	private applyFilter(): void {
+		throw new Error('Not implemented');
 	}
 
 }

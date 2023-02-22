@@ -51,6 +51,7 @@ export class TeamMemberPageComponent extends MemberBasePage implements AfterView
 
 	changeRelationship(event: Event): void {
 		const relatedAs = (event as CustomEvent).detail.value as MemberRelationship;
+		console.log('changeRelationship', relatedAs);
 		// TODO: move below to some service
 		if (!this.currentUserId) {
 			throw new Error('!this.currentUserId');

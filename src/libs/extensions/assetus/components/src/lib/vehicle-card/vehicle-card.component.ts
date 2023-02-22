@@ -24,7 +24,7 @@ export class VehicleCardComponent {
 	yearBuildNumber?: number;
 	yearBuildVal?: string;
 	// tslint:disable-next-line:no-any
-	@Output() changed = new EventEmitter<{ field: string; value: any }>();
+	@Output() changed = new EventEmitter<{ field: string; value: unknown }>();
 
 	@Input() set make(v: string) {
 		this.makeVal = v;

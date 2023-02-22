@@ -4,7 +4,7 @@ import {Period} from 'sneat-shared/models/types';
 import {Asset} from 'sneat-shared/models/ui/ui-asset';
 
 @Component({
-	selector: 'app-asset-card',
+	selector: 'sneat-asset-card',
 	templateUrl: './asset-card.component.html',
 })
 export class AssetCardComponent implements OnInit {

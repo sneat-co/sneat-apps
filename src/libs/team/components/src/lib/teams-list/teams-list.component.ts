@@ -11,7 +11,7 @@ import { SneatUserService } from '@sneat/auth';
 })
 export class TeamsListComponent {
 	@Input() pathPrefix = '/space';
-	@Input() iconName: string = 'people-outline'
+	@Input() iconName = 'people-outline'
 	@Input() teams?: ITeamContext[];
 	@Output() readonly beforeNavigateToTeam = new EventEmitter<ITeamContext>();
 

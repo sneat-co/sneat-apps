@@ -5,7 +5,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { NEVER, never, Observable, Subject, takeUntil } from 'rxjs';
+import { NEVER, Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from '..';
 
 @Component({
@@ -80,15 +80,15 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 		this.onChange(this.value);
 	}
 
-	onChange = (_: any) => void 0;
+	onChange = (v: unknown) => console.log('SelectFromListComponent.onChange()', v);
 
-	onTouched = () => void 0;
+	onTouched: () => void = () => void 0;
 
-	registerOnChange(fn: any): void {
+	registerOnChange(fn: (v: unknown) => void): void {
 		this.onChange = fn;
 	}
 
-	registerOnTouched(fn: any): void {
+	registerOnTouched(fn: () => void): void {
 		this.onTouched = fn;
 	}
 
@@ -96,11 +96,11 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 		this.isDisabled = isDisabled;
 	}
 
-	writeValue(obj: any): void {
+	writeValue(obj: unknown): void {
 		this.value = obj as string;
 	}
 
-	onFilterChanged(event: Event): void {
+	onFilterChanged(): void {
 		this.applyFilter();
 	}
 

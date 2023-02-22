@@ -59,9 +59,10 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 		// 	default:
 		// 		break;
 		// }
-		this.assetService.createAsset(request)
+		this.assetService.createAsset(this.team, request)
 			.subscribe({
 				next: dto => {
+					console.log('AssetAddDwellingPageComponent.submitDwellingForm(): created asset', dto);
 					// this.navigateForward('asset', { id: dto.id }, { assetDto: request }, {
 					// 	excludeCommuneId: true,
 					// 	replaceUrl: true,

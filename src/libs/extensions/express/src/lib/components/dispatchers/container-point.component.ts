@@ -1,5 +1,4 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { set } from '@angular/fire/database';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ContactSelectorService } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -9,7 +8,7 @@ import {
 	IOrderContainer,
 	IOrderCounterparty,
 	IContainerSegment,
-	IOrderShippingPoint, IUpdateShippingPointRequest, IUpdateContainerPointRequest, IFreightLoad, IContainerPoint,
+	IOrderShippingPoint, IUpdateContainerPointRequest, IFreightLoad, IContainerPoint,
 } from '../..';
 import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
 

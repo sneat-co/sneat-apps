@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TeamBaseComponent, teamPageUrl } from '@sneat/team/components';
+import { teamPageUrl } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({

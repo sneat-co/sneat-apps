@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
-import { excludeEmpty, undefinedIfEmpty } from '@sneat/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { undefinedIfEmpty } from '@sneat/core';
 import { IFreightLoad } from '../../dto';
 
 export class FreightLoadForm {

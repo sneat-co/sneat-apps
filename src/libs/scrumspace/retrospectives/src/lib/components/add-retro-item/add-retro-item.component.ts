@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { RetroItemType } from '@sneat/scrumspace/retrospectives';
 
 @Component({
-	selector: 'app-add-retro-item',
+	selector: 'sneat-add-retro-item',
 	templateUrl: './add-retro-item.component.html',
 	styleUrls: ['./add-retro-item.component.scss'],
 })

@@ -22,6 +22,7 @@ export class MovieService extends CommuneItemBaseService<typeof MovieKind, IMovi
 
 	// tslint:disable-next-line:prefer-function-over-method
 	addCommuneItem(dto: IMovieDto, tx?: IRxReadwriteTransaction<ListusAppSchema>): Observable<IMovieDto> {
+		console.log('MovieService.addCommuneItem()', dto, tx);
 		throw new Error('Not implemented');
 	}
 

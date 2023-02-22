@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AddMetricPage } from './add-metric.page';
+import { AddMetricPageComponent } from './add-metric-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: AddMetricPage,
+		component: AddMetricPageComponent,
 	},
 ];
 

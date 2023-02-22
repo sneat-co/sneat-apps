@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContainerType, IExpressOrderContext, IOrderContainer } from '../..';
+import { IExpressOrderContext } from '../..';
 import { IContainer } from './condainer-interface';
 
 

@@ -83,7 +83,7 @@ export class AssetsListComponent implements OnChanges {
 			if (a.brief && b.brief && a.brief.title < b.brief?.title) return -1;
 			return 0;
 		});
-		console.log('AssetsListComponent.ngOnChanges =>', this.assetType, this.team, 'allAssets:', this.allAssets, 'filtered assets:', this.assets);
+		console.log('AssetsListComponent.ngOnChanges =>', changes, this.assetType, this.team, 'allAssets:', this.allAssets, 'filtered assets:', this.assets);
 	}
 
 	public goAsset(asset: IAssetContext): void {
@@ -106,7 +106,7 @@ export class AssetsListComponent implements OnChanges {
 			this.errorLogger.logError('can not navigate to asset page without team context');
 			return;
 		}
-		this.teamNavService.navigateForwardToTeamPage(this.team, `asset/` + asset.id, {
+		this.teamNavService.navigateForwardToTeamPage(this.team, `${path}/${asset.id}`, {
 			state: { asset },
 		}).catch(this.errorLogger.logErrorHandler('failed to navigate to asset page'));
 	}

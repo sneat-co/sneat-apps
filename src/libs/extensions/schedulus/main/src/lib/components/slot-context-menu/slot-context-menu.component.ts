@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
-import { HappeningStatus, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
+import { HappeningStatus, IHappeningSlot } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISelectMembersOptions, MembersSelectorService } from '@sneat/team/components';

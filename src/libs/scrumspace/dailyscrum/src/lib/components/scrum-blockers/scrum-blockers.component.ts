@@ -1,14 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-	selector: 'app-scrum-blockers',
+	selector: 'sneat-scrum-blockers',
 	templateUrl: './scrum-blockers.component.html',
 	styleUrls: ['./scrum-blockers.component.scss'],
 })
-export class ScrumBlockersComponent implements OnInit {
-	constructor() {
-	}
-
-	ngOnInit() {
-	}
+export class ScrumBlockersComponent {
 }

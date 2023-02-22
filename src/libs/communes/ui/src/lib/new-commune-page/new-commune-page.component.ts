@@ -23,7 +23,7 @@ export class NewCommunePageComponent {
 	@ViewChild('nameInput') nameInput?: IonInput;
 
 
-	public onTypeChanged(event: Event): void {
+	public onTypeChanged(): void {
 		setTimeout(() => {
 			this.nameInput?.setFocus().then(() => console.log('set focus to name'));
 		}, 100);

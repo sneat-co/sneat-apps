@@ -7,7 +7,7 @@ import {MemberType} from 'sneat-shared/models/types';
 import {ICommuneMemberInfo} from '../../../../models/dto/dto-commune';
 
 @Component({
-	selector: 'app-pupils',
+	selector: 'sneat-pupils',
 	templateUrl: './pupils-page.component.html',
 	providers: [CommuneBasePageParams],
 })

@@ -9,7 +9,6 @@ import {
 	IAddSegmentsRequest,
 	IExpressOrderContext,
 	IOrderContainer,
-	IOrderCounterparty, ISegmentCounterparty,
 } from '../..';
 
 @Component({
@@ -196,6 +195,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('NewSegmentComponent.ngOnChanges()', changes);
 		this.autoFillPort();
 	}
 

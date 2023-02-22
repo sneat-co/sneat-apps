@@ -1,15 +1,15 @@
 //tslint:disable:no-unsafe-any
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Period} from 'sneat-shared/models/types';
+import { Period } from '@sneat/dto';
 
 @Component({
-	selector: 'app-period-segment',
+	selector: 'sneat-period-segment',
 	templateUrl: './period-segment.component.html',
 })
 export class PeriodSegmentComponent {
 
 	@Input()
-	public period: Period;
+	public period?: Period;
 
 	@Output() changed = new EventEmitter<Period>();
 

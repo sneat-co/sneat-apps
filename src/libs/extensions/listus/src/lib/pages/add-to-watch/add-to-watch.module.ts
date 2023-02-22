@@ -5,14 +5,14 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
 
-import {AddToWatchPage} from './add-to-watch.page';
+import {AddToWatchPageComponent} from './add-to-watch-page.component';
 import {TmdbService} from '../../watchlist/tmdb.service';
 import {MovieCardComponentModule} from '../../movie-card/movie-card.component.module';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: AddToWatchPage
+		component: AddToWatchPageComponent
 	}
 ];
 
@@ -25,7 +25,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes)
 	],
 	providers: [TmdbService],
-	declarations: [AddToWatchPage]
+	declarations: [AddToWatchPageComponent]
 })
 export class AddToWatchPageModule {
 }

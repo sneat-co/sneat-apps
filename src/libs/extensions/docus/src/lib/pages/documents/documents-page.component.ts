@@ -66,7 +66,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		if (member) {
 			queryParams['member'] = member.id;
 		}
-		const state = member ? { member } : undefined;
+		// const state = member ? { member } : undefined;
 		const team = this.team;
 		if (team) {
 			this.teamNav.navigateForwardToTeamPage(team, 'new-document', {

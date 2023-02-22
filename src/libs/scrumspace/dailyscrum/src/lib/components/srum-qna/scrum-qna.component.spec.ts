@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SrumQnaComponent } from './srum-qna.component';
+import { ScrumQnaComponent } from './scrum-qna.component';
 
 describe('SrumQnaComponent', () => {
-	let component: SrumQnaComponent;
-	let fixture: ComponentFixture<SrumQnaComponent>;
+	let component: ScrumQnaComponent;
+	let fixture: ComponentFixture<ScrumQnaComponent>;
 
 	beforeEach(
 		waitForAsync(() => {
 			TestBed.configureTestingModule({
-				declarations: [SrumQnaComponent],
+				declarations: [ScrumQnaComponent],
 				imports: [IonicModule.forRoot()],
 			}).compileComponents();
 
-			fixture = TestBed.createComponent(SrumQnaComponent);
+			fixture = TestBed.createComponent(ScrumQnaComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
 		}),

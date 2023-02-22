@@ -21,9 +21,9 @@ export class RetroTreePageComponent extends TeamBaseComponent {
 	public meetingId: string;
 	public retrospective: IRetrospective;
 
-	public treeSpec: any /*IDndTreeSpec<IRetroItem>*/ = {
-		itemId: (item) => item.ID,
-		getChildItems: (item) => item.children,
+	public treeSpec: unknown /*IDndTreeSpec<IRetroItem>*/ = {
+		itemId: (item: unknown) => (item as any).ID,
+		getChildItems: (item: unknown) => (item as any).children,
 		autoExpand: () => true /*node => {
 			const result = node.data.id !== 'doing';
 			// console.log('autoExpand', node.data.id, result);

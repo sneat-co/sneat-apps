@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { ITeamContext } from '@sneat/team/models';

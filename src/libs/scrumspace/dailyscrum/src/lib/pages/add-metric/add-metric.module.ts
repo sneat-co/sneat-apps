@@ -6,11 +6,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddMetricPageRoutingModule } from './add-metric-routing.module';
 
-import { AddMetricPage } from './add-metric.page';
+import { AddMetricPageComponent } from './add-metric-page.component';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, IonicModule, AddMetricPageRoutingModule],
-	declarations: [AddMetricPage],
+	declarations: [AddMetricPageComponent],
 })
 export class AddMetricPageModule {
 }

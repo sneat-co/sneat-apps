@@ -9,13 +9,13 @@ import {ListusDbService} from '../../services/listus-db.service';
 import {BaseListPage} from '../base-list-page';
 
 @Component({
-	selector: 'sneat-add-to-watch',
-	templateUrl: './add-to-watch.page.html',
+	selector: 'sneat-add-to-watch-page',
+	templateUrl: './add-to-watch-page.component.html',
 	providers: [CommuneBasePageParams],
 })
 
 // tslint:disable-next-line:component-class-suffix
-export class AddToWatchPage extends BaseListPage implements CommuneBasePage {
+export class AddToWatchPageComponent extends BaseListPage implements CommuneBasePage {
 
 	listItems?: IListItemInfo[];
 	searchText = '';
@@ -51,7 +51,7 @@ export class AddToWatchPage extends BaseListPage implements CommuneBasePage {
 		console.log('yes');
 		const result = this.ts.searchMovies(this.searchText);
 		// tslint:disable-next-line:no-any
-		result.subscribe((movies: any) => {
+		result.subscribe((movies) => {
 			// tslint:disable-next-line:no-any
 			movies.forEach((movie: { idTmdb: any; id: any }) => {
 				movie.idTmdb = movie.id;

@@ -160,6 +160,7 @@ export class ContainerSegmentComponent implements OnChanges {
 	}
 
 	saveChanges(event: Event): void {
+		console.log('saveChanges', event);
 		if (!this.order || !this.fromPoint) {
 			return;
 		}

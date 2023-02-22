@@ -12,7 +12,7 @@ import {
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput, ModalController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate, isValidaTimeString, isValidDateString } from '@sneat/core';
-import { emptyHappeningSlot, emptyTiming, HappeningType, IDateTime, IHappeningSlot, ITiming } from '@sneat/dto';
+import { emptyTiming, HappeningType, ITiming } from '@sneat/dto';
 import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 

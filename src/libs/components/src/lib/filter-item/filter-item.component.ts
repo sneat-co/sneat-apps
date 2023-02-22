@@ -9,7 +9,7 @@ export class FilterItemComponent {
 	@Input() public filter = '';
 
 	@Output() changed = new EventEmitter<string>();
-	@Output() blur = new EventEmitter<Event>();
+	@Output() readonly blured = new EventEmitter<Event>();
 
 	clearFilter(): void {
 		console.log('clearFilter()');

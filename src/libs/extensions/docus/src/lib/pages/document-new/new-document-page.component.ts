@@ -134,7 +134,7 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 		this.documentService.createDocument(this.team, request)
 			.subscribe({
 				next: this.onDocCreated,
-				error: (err: any) => {
+				error: (err: unknown) => {
 					this.errorLogger.logError(err, 'Failed to create new document');
 				},
 			});

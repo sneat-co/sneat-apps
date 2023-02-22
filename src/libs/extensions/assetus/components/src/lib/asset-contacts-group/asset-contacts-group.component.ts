@@ -3,7 +3,7 @@ import {ContactType} from 'sneat-shared/models/types';
 import {IContact2Asset} from 'sneat-shared/models/dto/dto-contact';
 
 @Component({
-	selector: 'app-asset-contacts-group',
+	selector: 'sneat-asset-contacts-group',
 	templateUrl: './asset-contacts-group.component.html',
 })
 export class AssetContactsGroupComponent {

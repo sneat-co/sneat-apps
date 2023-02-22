@@ -5,7 +5,8 @@ import { ISelectorOptions } from './selector-options';
 
 export class SelectorBaseService<T = ISelectItem> {
 	constructor(
-		private readonly component: any,
+		// eslint-disable-next-line
+		private readonly component: Function | HTMLElement | string | null,
 		private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 	) {
@@ -32,7 +33,10 @@ export class SelectorBaseService<T = ISelectItem> {
 				options = {
 					...options,
 					onSelected: (items: T[] | null): void => {
-						this.modalController.dismiss(items).catch(this.errorLogger.logErrorHandler('Failed to dismiss modal'));
+						this.modalController.dismiss(items).catch(err => {
+							this.errorLogger.logError(err,'Failed to dismiss modal');
+							reject(err);
+						});
 						resolve(items);
 					},
 				};

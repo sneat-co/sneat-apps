@@ -5,7 +5,7 @@ export interface TabulatorColumn {
 	formatterParams?: unknown;
 	cellClick?: (e: Event, cell: unknown) => void;
 	headerTooltip?: () => string;
-	tooltip?: (cell: any) => string;
+	tooltip?: (cell: unknown) => string;
 	hozAlign?: 'left' | 'right';
 	widthShrink?: number;
 	widthGrow?: number;
@@ -23,7 +23,7 @@ export interface TabulatorOptions {
 	readonly height?: string | number;
 	readonly maxHeight?: string | number;
 	readonly groupBy?: string;
-	readonly groupHeader?: (value: any, count: number) => string;
+	readonly groupHeader?: (value: unknown, count: number) => string;
 	readonly rowClick?: (event: Event, row: unknown) => void;
 	readonly rowSelect?: (row: unknown) => void;
 	readonly rowDeselect?: (row: unknown) => void;

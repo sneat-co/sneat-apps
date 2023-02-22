@@ -48,12 +48,8 @@ const slideRight = group([
 export const virtualSliderAnimations: AnimationTriggerMetadata[] = [
 	trigger('virtualSlide', [
 		transition('void => *', animate(0)),
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
-		state(showVirtualSlide, style({opacity: options.activeOpacity})),
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
-		state(hideVirtualSlide, style({opacity: options.hiddenOpacity})),
+		state(showVirtualSlide, style({opacity: options.activeOpacity || 0})),
+		state(hideVirtualSlide, style({opacity: options.hiddenOpacity || 0})),
 		transition('* => *', animate(options.timing)),
 	]),
 	trigger('virtualSlider', [

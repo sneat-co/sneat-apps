@@ -8,7 +8,7 @@ import { ScrumPageRoutingModule } from './scrum-page/scrum-page-routing.module';
 import { ScrumPageComponent } from './scrum-page/scrum-page.component';
 import { ScrumCardComponent } from './components/scrum-card/scrum-card.component';
 import { ScrumTasksComponent } from './components/scrum-tasks/scrum-tasks.component';
-import { SrumQnaComponent } from './components/srum-qna/srum-qna.component';
+import { ScrumQnaComponent } from './components/srum-qna/scrum-qna.component';
 import { ScrumBlockersComponent } from './components/scrum-blockers/scrum-blockers.component';
 import { MetricsComponent } from './components/metrics/metrics.component';
 import { ScrumTaskComponent } from './components/scrum-task/scrum-task.component';
@@ -28,7 +28,7 @@ import { ScrumTaskComponent } from './components/scrum-task/scrum-task.component
 		ScrumCardComponent,
 		ScrumTasksComponent,
 		ScrumTaskComponent,
-		SrumQnaComponent,
+		ScrumQnaComponent,
 		ScrumBlockersComponent,
 		MetricsComponent,
 	],

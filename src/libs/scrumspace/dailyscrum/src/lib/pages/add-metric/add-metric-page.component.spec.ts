@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AddMetricPage } from './add-metric.page';
+import { AddMetricPageComponent } from './add-metric-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TeamService } from '../../services/team.service';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -10,13 +10,13 @@ import { UserService } from '../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AddMetricPage', () => {
-	let component: AddMetricPage;
-	let fixture: ComponentFixture<AddMetricPage>;
+	let component: AddMetricPageComponent;
+	let fixture: ComponentFixture<AddMetricPageComponent>;
 
 	beforeEach(
 		waitForAsync(() => {
 			TestBed.configureTestingModule({
-				declarations: [AddMetricPage],
+				declarations: [AddMetricPageComponent],
 				imports: [
 					IonicModule.forRoot(),
 					RouterTestingModule,
@@ -26,7 +26,7 @@ describe('AddMetricPage', () => {
 				providers: [TeamService, UserService],
 			}).compileComponents();
 
-			fixture = TestBed.createComponent(AddMetricPage);
+			fixture = TestBed.createComponent(AddMetricPageComponent);
 			component = fixture.componentInstance;
 			fixture.detectChanges();
 		}),

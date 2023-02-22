@@ -63,7 +63,8 @@ export class ListsPageComponent extends TeamBaseComponent {
 	}
 
 	reorder(event: Event, listGroup: IListGroup): void {
-		this.errorLogger.logError('reoder is not implemented yet');
+		console.log('reorder', event, listGroup);
+		this.errorLogger.logError('reorder is not implemented yet', );
 		// let dtoListGroup: IListGroup | undefined;
 		// let reordered = false;
 		// if (!this.team) {

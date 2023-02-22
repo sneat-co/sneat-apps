@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IAssetBrief, IAssetDto, TeamCounter } from '@sneat/dto';
+import { IAssetBrief, IAssetDto } from '@sneat/dto';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactType, ExpressOrderContactRole } from '@sneat/dto';
+import { ContactRole, ContactType, ExpressOrderContactRole } from '@sneat/dto';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -28,7 +28,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() emoji?: string;
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
-	@Input() parentRole?: 'dispatcher' = 'dispatcher';
+	@Input() parentRole?: 'dispatcher' | 'what else?' = 'dispatcher';
 	@Input() contactRole: ExpressOrderContactRole = 'location';
 	@Input() counterpartyRole: CounterpartyRole = 'dispatch-point';
 	@Input() contactType?: ContactType;
@@ -71,8 +71,8 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			team,
-			contactRole: this.contactRole,
-			parentRole: this.parentRole,
+			contactRole: this.contactRole as ContactRole,
+			parentRole: this.parentRole as ContactRole,
 			contactType: this.contactType,
 			excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
 		};

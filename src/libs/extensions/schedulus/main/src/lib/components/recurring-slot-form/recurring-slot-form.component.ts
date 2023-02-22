@@ -88,7 +88,7 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 		protected readonly modalCtrl: ModalController,
 	) {
 		super(true);
-		const now = new Date();
+		// const now = new Date();
 		const preselectedWd = window.history.state.wd as string;
 		if (preselectedWd) {
 			this.weekdaysForm.controls[preselectedWd].setValue(true);
@@ -293,25 +293,25 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnCh
 	}
 }
 
-function ionTimeToMinutes(v: string): number {
-	if (v.indexOf('T') >= 0) {
-		v = v.split('T')[1];
-	}
-	const [hours, minutes] = v.split(':')
-		.map(i => +i);
-	// tslint:disable-next-line:no-magic-numbers
-	return hours * 60 + minutes;
-}
+// function ionTimeToMinutes(v: string): number {
+// 	if (v.indexOf('T') >= 0) {
+// 		v = v.split('T')[1];
+// 	}
+// 	const [hours, minutes] = v.split(':')
+// 		.map(i => +i);
+// 	// tslint:disable-next-line:no-magic-numbers
+// 	return hours * 60 + minutes;
+// }
 
-function minutesToIonTime(v: number): string {
-	// tslint:disable-next-line:no-magic-numbers
-	const minutes = v % 60;
-	// tslint:disable-next-line:no-magic-numbers
-	const hh = ((v - minutes) / 60).toString()
-		// tslint:disable-next-line:no-magic-numbers
-		.padStart(2, '0');
-	const mm = minutes.toString()
-		// tslint:disable-next-line:no-magic-numbers
-		.padStart(2, '0');
-	return `${hh}:${mm}`;
-}
+// function minutesToIonTime(v: number): string {
+// 	// tslint:disable-next-line:no-magic-numbers
+// 	const minutes = v % 60;
+// 	// tslint:disable-next-line:no-magic-numbers
+// 	const hh = ((v - minutes) / 60).toString()
+// 		// tslint:disable-next-line:no-magic-numbers
+// 		.padStart(2, '0');
+// 	const mm = minutes.toString()
+// 		// tslint:disable-next-line:no-magic-numbers
+// 		.padStart(2, '0');
+// 	return `${hh}:${mm}`;
+// }

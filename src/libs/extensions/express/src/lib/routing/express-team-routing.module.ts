@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
-import { MemberRoutingModule, membersRoutes } from '@sneat/extensions/memberus';
+import { membersRoutes } from '@sneat/extensions/memberus';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ExpressMenuModule } from '../components/express-menu/express-menu.module';
 import { ExpressTeamMenuComponent } from '../components/express-team-menu/express-team-menu.component';

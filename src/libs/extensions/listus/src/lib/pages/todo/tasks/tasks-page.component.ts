@@ -4,7 +4,7 @@ import {CommuneBasePage} from 'sneat-shared/pages/commune-base-page';
 import {CommuneTopPage} from '../../../../../pages/constants';
 
 @Component({
-	selector: 'app-to-do',
+	selector: 'sneat-to-do',
 	templateUrl: './tasks-page.component.html',
 	providers: [CommuneBasePageParams],
 })

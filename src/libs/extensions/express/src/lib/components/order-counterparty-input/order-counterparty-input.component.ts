@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactRole, ExpressOrderContactRole, ContactType } from '@sneat/dto';
+import { ExpressOrderContactRole, ContactType } from '@sneat/dto';
 import { ExpressOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
@@ -219,6 +219,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		}
 		this.orderService.setOrderCounterparties(request).subscribe({
 			next: counterparty => {
+				console.log('onContactChanged(): setOrderCounterparties() =>', counterparty);
 				if (!this.order?.brief) {
 					return;
 				}

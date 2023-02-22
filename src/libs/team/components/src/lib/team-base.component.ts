@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ILogger, TeamType } from '@sneat/core';
-import { ContactRole, equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
+import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
-import { IContactContext, IMemberContext, ITeamContext } from '@sneat/team/models';
+import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
 import {
@@ -19,8 +19,6 @@ import {
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
-
-const EMPTY_TEAM_CONTEXT = { id: '' };
 
 @Injectable() // we need this decorator so we can implement Angular interfaces
 export abstract class TeamBaseComponent implements OnDestroy {
@@ -51,12 +49,12 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	protected readonly logErrorHandler: (
 		message?: string,
 		options?: ILogErrorOptions,
-	) => (error: any) => void;
+	) => (error: unknown) => void;
 
 	public readonly teamIDChanged$ = this.teamIDChanged.asObservable().pipe(
 		takeUntil(this.destroyed),
 		distinctUntilChanged(),
-		tap(id => console.log('teamIDChanged$ => ')),
+		tap(id => console.log('teamIDChanged$ => ' + id)),
 	);
 
 	public readonly teamTypeChanged$: Observable<TeamType | undefined> =
@@ -150,7 +148,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	}
 
 	protected unsubscribe(reason?: string): void {
-		// console.log(`unsubscribe(reason: ${reason})`);
+		console.log(`unsubscribe(reason: ${reason})`);
 		this.subs.unsubscribe();
 	}
 

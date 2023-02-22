@@ -9,7 +9,7 @@ import {IRecord} from 'rxstore';
 import {CommuneTopPage} from '../../../../../pages/constants';
 
 @Component({
-	selector: 'app-select-service-provider',
+	selector: 'sneat-select-service-provider',
 	templateUrl: './select-service-provider-page.component.html',
 	providers: [CommuneBasePageParams],
 })

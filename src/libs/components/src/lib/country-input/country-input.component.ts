@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { of } from 'rxjs';
-import { countries, ICountry } from '../country-selector/countries';
-import { ISelectorOptions } from '../selector';
+import { countries } from '../country-selector/countries';
 
 
 @Component({
@@ -21,7 +19,7 @@ export class CountryInputComponent {
 	// ) {
 	// }
 
-	public onCountryChanged(event: Event): void {
+	public onCountryChanged(): void {
 		console.log('CountryInputComponent.onCountryChanged()', this.countryID);
 		this.countryIDChange.emit(this.countryID);
 	}
@@ -33,12 +31,12 @@ export class CountryInputComponent {
 		this.countryIDChange.emit('');
 	}
 
-	protected openCountrySelector(event: Event): void {
-		const options: ISelectorOptions<ICountry> = {
-			items: of(countries),
-		};
-		// this.countrySelectorService
-		// 	.selectSingleInModal(options)
-		// 	.then();
-	}
+	// protected openCountrySelector(): void {
+	// 	// const options: ISelectorOptions<ICountry> = {
+	// 	// 	items: of(countries),
+	// 	// };
+	// 	// this.countrySelectorService
+	// 	// 	.selectSingleInModal(options)
+	// 	// 	.then();
+	// }
 }

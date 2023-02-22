@@ -22,7 +22,7 @@
 			<ion-list-header>
 				<ion-label>Choose commune type</ion-label>
 			</ion-list-header>
-			<ion-radio-group [(ngModel)]="code" (ionChange)="onTypeChanged($event)">
+			<ion-radio-group [(ngModel)]="code" (ionChange)="onTypeChanged()">
 				<ion-item *ngFor="let type of types">
 					<ion-label>{{type.emoji}} {{type.title}}</ion-label>
 					<ion-radio slot="start" [value]="type.code"></ion-radio>

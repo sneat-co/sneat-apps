@@ -10,7 +10,6 @@ import {
 import { ModalController } from '@ionic/angular';
 import { ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext, IOrderContainer } from '../..';
-import { NewContainerComponent } from '../new-container/new-container.component';
 
 @Component({
 	selector: 'sneat-order-containers-card',

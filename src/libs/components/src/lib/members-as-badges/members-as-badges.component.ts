@@ -5,12 +5,9 @@ import {
 	EventEmitter,
 	Input,
 	NgModule,
-	OnChanges,
 	Output,
-	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IMemberBrief } from '@sneat/dto';
 import { IMemberContext } from '@sneat/team/models';
 import { SneatPipesModule } from '../pipes/sneat-pipes.module';
 
