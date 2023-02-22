@@ -13,6 +13,51 @@ on:
       - 'src/**'
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - run: git rev-parse HEAD
+      - run: git rev-parse HEAD~1
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - name: Cache PNPM store directory
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - run: pnpm install
+        working-directory: ./src
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+
+      - name: nx lint affected
+        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }}
+        working-directory: ./src
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -54,11 +99,6 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
 
-      - name: nx affected
+      - name: nx build affected
         run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }}
         working-directory: ./src
-
-
-#      - name: NX build
-#        run: pnpm run nx build datatug
-#        working-directory: ./src
