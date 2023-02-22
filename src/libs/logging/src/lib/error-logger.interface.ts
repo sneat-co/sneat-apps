@@ -8,12 +8,12 @@ export interface ILogErrorOptions {
 }
 
 export interface IErrorLogger {
-	logError(e: any, message?: string, options?: ILogErrorOptions): void; // TODO: document why we need to return this: { error: any; message?: string; } | any;
+	logError(e: unknown, message?: string, options?: ILogErrorOptions): void;
 
 	logErrorHandler(
 		message?: string,
 		options?: ILogErrorOptions,
-	): (error: any) => void;
+	): (error: unknown) => void;
 }
 
 export const ErrorLogger = new InjectionToken<IErrorLogger>('IErrorLogger');
