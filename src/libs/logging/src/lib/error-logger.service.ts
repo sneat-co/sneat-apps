@@ -13,17 +13,18 @@ export class ErrorLoggerService implements IErrorLogger {
 	}
 
 	public readonly logErrorHandler =
-		(message?: string, options?: ILogErrorOptions) => (e: any) =>
+		(message?: string, options?: ILogErrorOptions) => (e: unknown) =>
 			this.logError(e, message, options);
 
 	public readonly logError = (
-		e: any,
+		e: unknown,
 		message?: string,
 		options?: ILogErrorOptions,
-	): { error: any; message?: string } | any => {
+	): void => {
 		console.error(`ErrorLoggerService.logError: ${message || 'Error'}:`, e, options);
 		if (e === true || e === false) {
 			try {
+				// noinspection ExceptionCaughtLocallyJS
 				throw new Error(`got boolean value as an error: ${e}: ${message}`);
 			} catch (ex) {
 				console.error('Argument exception at logError():', ex, options);
@@ -45,14 +46,16 @@ export class ErrorLoggerService implements IErrorLogger {
 			}
 		}
 		if (options?.show === undefined || options.show) {
-			if (e.message) {
-				message = (message && `${message}: ${e.message}`) || e.message;
+			if ((e as { message?: string }).message) {
+				message =
+					(message && `${message}: ${(e as { message?: string }).message}`)
+					|| (e as { message?: string }).message;
 			} else if (!message) {
-				message = e.toString();
+				message = (e as any).toString();
 			}
 			this.showError(message as string, options?.showDuration);
 		}
-		return message ? { error: e, message } : e;
+		return; // return message ? { error: e, message } : e;
 	};
 
 	public showError(message: string, duration?: number): void {
