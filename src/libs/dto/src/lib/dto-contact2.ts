@@ -1,4 +1,3 @@
-import { ContactRole } from './contact-roles';
 import { ContactToAssetRelation, ContactToMemberRelation} from './types';
 import { IWithIdAndTitle } from './dto-brief';
 

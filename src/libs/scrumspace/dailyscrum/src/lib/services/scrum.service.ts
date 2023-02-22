@@ -191,11 +191,11 @@ export class ScrumService extends BaseMeetingService {
 			return scrum;
 		}).pipe(
 			tap(() => {
-				const eventParams = { teamId, id: taskId };
+				const eventParams: { [id: string]: string } = { teamId, id: taskId };
 				if (member.id) {
-					(eventParams as any).memberId = member.id;
+					eventParams['memberId'] = member.id;
 				} else if (member.userID) {
-					(eventParams as any).memberUid = member.userID;
+					eventParams['memberUid'] = member.userID;
 				}
 				this.analyticsService.logEvent('taskCompletionChanged', eventParams);
 			}),

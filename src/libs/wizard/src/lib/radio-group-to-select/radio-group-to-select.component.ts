@@ -23,7 +23,7 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
 
 	@Input() selectOptions?: SelectOption[];
 
-	private onChange: (v: any) => void = () => void (0);
+	private onChange: (v: object | undefined) => void = () => void (0);
 	public onTouched: () => void = () => void (0);
 
 	public onValChanged(event: Event): void {
@@ -31,9 +31,9 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
 		this.onChange(e.detail.value);
 	}
 
-	registerOnChange(fn: (v: any) => void): void {
+	registerOnChange(fn: (v: unknown) => void): void {
 		console.log('registerOnChange', fn);
-		this.onChange = (v: any) => {
+		this.onChange = (v: unknown) => {
 			console.log('changed', v, this.value);
 			fn(v);
 		};
@@ -44,19 +44,19 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
 	}
 
 	//get accessor
-	get value(): any {
+	get value(): object | undefined {
 		return this.v;
 	};
 
 	//set accessor including call the onchange callback
-	set value(v: any) {
+	set value(v: object | undefined) {
 		if (v !== this.v) {
 			this.v = v;
 			this.onChange(v);
 		}
 	}
 
-	writeValue(obj: any): void {
+	writeValue(obj: object | undefined): void {
 		this.value = obj;
 	}
 

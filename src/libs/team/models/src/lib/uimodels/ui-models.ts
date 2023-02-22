@@ -3,7 +3,6 @@ import {
 	DtoGroupTerms,
 	DtoTotal,
 	DtoTotals,
-	IAssetDtoGroup,
 	IAssetDtoGroupCounts, IAssetGroupContext, IMemberGroupBrief,
 	IMemberGroupDto,
 	IMemberGroupDtoCounts,

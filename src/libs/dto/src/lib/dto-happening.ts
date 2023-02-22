@@ -87,6 +87,7 @@ interface IFortnightly {
 	title: string;
 }
 
+/*
 // tslint:disable-next-line:no-magic-numbers
 type MonthlyDay = -5 | -4 | -3 | -2 | -1
 // tslint:disable-next-line:no-magic-numbers
@@ -95,6 +96,7 @@ type MonthlyDay = -5 | -4 | -3 | -2 | -1
 	| 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19
 // tslint:disable-next-line:no-magic-numbers
 	| 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28;
+*/
 
 export interface IDateTime {
 	readonly date?: string;

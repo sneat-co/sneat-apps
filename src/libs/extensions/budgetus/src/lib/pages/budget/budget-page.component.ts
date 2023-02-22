@@ -1,7 +1,7 @@
 //tslint:disable:no-unsafe-any
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ITotalsHolder, Period } from '@sneat/dto';
+import { Period } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { AssetGroup, Member, Totals } from '@sneat/team/models';
 

@@ -51,7 +51,7 @@ export class ErrorLoggerService implements IErrorLogger {
 					(message && `${message}: ${(e as { message?: string }).message}`)
 					|| (e as { message?: string }).message;
 			} else if (!message) {
-				message = (e as any).toString();
+				message = (e as object).toString();
 			}
 			this.showError(message as string, options?.showDuration);
 		}

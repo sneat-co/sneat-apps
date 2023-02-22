@@ -29,7 +29,8 @@ export class MultiSelectorService {
 							this.errorLogger.logError('Failed to present modal');
 						}),
 				).catch(err => {
-				this.errorLogger.logError('Failed to create modal')
+				this.errorLogger.logError(err, 'Failed to create modal');
+				reject(err);
 			});
 		});
 

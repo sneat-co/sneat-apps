@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
 import { ContactRole, ContactType, validateAddress } from '@sneat/dto';
@@ -73,7 +72,7 @@ export class NewCompanyFormComponent implements OnChanges {
 		try {
 			const address = validateAddress(this.contact.dto?.address);
 			const request: ICreateContactCompanyRequest = excludeEmpty({
-				type: 'company',
+				type: 'company' as ContactType,
 				company: excludeEmpty({
 					title: this.contact.dto?.title?.trim() || '',
 					address,

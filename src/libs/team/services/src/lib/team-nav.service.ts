@@ -119,7 +119,7 @@ export class TeamNavService {
 		const url = `space/${team?.type}/${team.id}`;
 		return new Promise<boolean>((resolve, reject) => {
 			this.navController
-				.navigateRoot( url, {
+				.navigateRoot(url, {
 					state: { team },
 					animationDirection,
 				})
@@ -226,7 +226,7 @@ export class TeamNavService {
 		navController: NavController,
 		url: string,
 		navOptions: NavigationOptions,
-		analyticsEvent: { name: string; params?: any },
+		analyticsEvent: { name: string; params?: { [id: string]: unknown } },
 	): void {
 		console.log('navForward()', url, analyticsEvent.name, analyticsEvent.params);
 		navController = navController || this.navController;
@@ -243,7 +243,7 @@ export class TeamNavService {
 		team: ITeamContext,
 		url: string,
 		eventName: string,
-		params?: any,
+		params?: { [id: string]: unknown },
 	): void => {
 		params = { ...(params || {}), team: team.id };
 		this.navForward(

@@ -1,5 +1,4 @@
 import { IAddress } from './dto-address';
-import { IWithIdAndTitle } from './dto-brief';
 import { IContact2Asset, IContact2Member } from './dto-contact2';
 import { IPersonRecord } from './dto-models';
 import { IPersonBase, IRelatedPerson } from './dto-person';

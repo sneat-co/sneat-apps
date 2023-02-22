@@ -1,11 +1,10 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { INavContext } from '@sneat/core';
+import { SneatApiService } from '@sneat/api';
 import { IScheduleDayBrief, IScheduleDayDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { TeamItemService } from './team-item.service';
 
 
@@ -19,7 +18,7 @@ export class ScheduleDayService {
 		sneatApiService: SneatApiService,
 	) {
 		this.teamItemService = new TeamItemService<IScheduleDayBrief, IScheduleDayDto>(
-			'schedule_days', afs, sneatApiService
+			'schedule_days', afs, sneatApiService,
 		);
 	}
 

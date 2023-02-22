@@ -4,7 +4,7 @@ import { ITeamMemberInfo } from './dto-commune';
 import { IContact2Member } from './dto-contact2';
 import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
 import { DtoGroupTerms } from './dto-term';
-import { AgeGroup, MembersVisibility, MemberType } from './types';
+import { MembersVisibility, MemberType } from './types';
 
 export const MemberRoleContributor = 'contributor';
 export const MemberRoleSpectator = 'spectator';
@@ -94,12 +94,13 @@ export interface IMemberDto extends IMemberBase {
 // 	});
 // }
 
-export function memberDtoFromMemberInfo(memberInfo: ITeamMemberInfo, communeId: string, title: string): IMemberDto {
+export function memberDtoFromMemberInfo(memberInfo: ITeamMemberInfo, teamId: string, title: string): IMemberDto {
+	const memberType: MemberType = 'member';
 	return excludeUndefined({
 		...memberInfo,
-		communeId,
+		teamId,
 		title,
-		type: 'member',
+		type: memberType,
 	});
 }
 

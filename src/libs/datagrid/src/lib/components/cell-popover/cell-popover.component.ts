@@ -9,7 +9,7 @@ import { IForeignKey } from '@sneat/datatug/models';
 })
 export class CellPopoverComponent {
 	@Input() column?: IRecordsetColumn;
-	@Input() value: any;
+	@Input() value: unknown;
 	@Input() fk?: IForeignKey;
 
 	public tab: 'rec' | 'cols' | 'refs' = 'rec';

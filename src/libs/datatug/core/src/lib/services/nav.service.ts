@@ -152,7 +152,7 @@ export class NavService {
 		navController: NavController,
 		url: string,
 		navOptions: NavigationOptions,
-		event: { name: string; params?: any },
+		event: { name: string; params?: { [key: string]: unknown } },
 	): void {
 		console.log('navForward()', event.name, event.params);
 		navController = navController || this.navController;

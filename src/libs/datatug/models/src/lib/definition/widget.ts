@@ -1,5 +1,5 @@
 export interface IObjectPropertyMatcher {
-	matches(path: string, o: any): boolean;
+	matches(path: string, o: unknown): boolean;
 }
 
 export interface IWidgetRef {

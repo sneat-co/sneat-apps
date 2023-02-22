@@ -13,7 +13,7 @@ import WhereFilterOp = firebase.firestore.WhereFilterOp;
 export interface IFilter {
 	field: string;
 	operator: WhereFilterOp;
-	value: any;
+	value: unknown;
 }
 
 export class SneatFirestoreService<Brief extends { id: string }, Dto> {

@@ -6,7 +6,7 @@ import {
 	IMemberBrief,
 	IRelatedPersonContact,
 	IRelatedPerson,
-	MemberType, IAddress, ContactRole,
+	IAddress,
 } from '@sneat/dto';
 import { IMemberContext } from './team-context';
 

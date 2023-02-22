@@ -62,6 +62,6 @@ export abstract class WeekdaysFormBase {
 		return Object
 			.entries(this.weekdayById)
 			.filter(([, c]) => c.value)
-			.map(([wd, c]) => wd as WeekdayCode2);
+			.map(([wd, ]) => wd as WeekdayCode2);
 	}
 }

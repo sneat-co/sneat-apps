@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { IErrorResponse } from '@sneat/core';
 import { IMemberBrief, IMemberDto, trimNames } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -9,7 +9,6 @@ import {
 	IAddTeamMemberResponse,
 	ICreateTeamMemberRequest,
 	IMemberContext,
-	IRejectPersonalInviteRequest,
 	ITeamContext,
 	ITeamRef,
 } from '@sneat/team/models';
@@ -63,7 +62,7 @@ export class MemberService {
 		const processAddMemberResponse = (
 			response: IAddTeamMemberResponse | IErrorResponse,
 		) => {
-			if ((response as { error?: any }).error) {
+			if ((response as { error?: unknown }).error) {
 				throw (response as IErrorResponse).error;
 			}
 			const okResponse = response as IAddTeamMemberResponse;
@@ -113,7 +112,7 @@ export class MemberService {
 			);
 	}
 
-	watchTeamMembers<IMemberDto>(team: ITeamContext, status: 'active' | 'archived' = 'active'): Observable<IMemberContext[]> {
+	watchTeamMembers(team: ITeamContext, status: 'active' | 'archived' = 'active'): Observable<IMemberContext[]> {
 		console.log('MemberService.watchMembersByTeamID()', team.id);
 		return this.teamItemService.watchTeamItems(team, [{ field: 'status', operator: '==', value: status }]);
 	}

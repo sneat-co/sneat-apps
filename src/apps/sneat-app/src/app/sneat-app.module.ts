@@ -1,9 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire/compat';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IonicModule } from '@ionic/angular';
 import { init, instrumentAngularRouting } from '@sentry/angular';
 import { BrowserTracing } from '@sentry/tracing';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
@@ -11,7 +6,7 @@ import { initFirebase, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunesUiModule } from '@sneat/communes/ui';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
-import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
+import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { environment } from '../environments/environment';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';

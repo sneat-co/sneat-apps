@@ -102,7 +102,7 @@ export function isRelatedPersonReady(p: IPerson, requires: IPersonRequirements):
 export const emptyRelatedPerson = emptyPersonBase;
 
 export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
-	const v2 = { ...excludeUndefined(v) } as any;
+	const v2 = { ...excludeUndefined(v) };
 	delete v2['relationship'];
-	return v2;
+	return v2 as IPerson;
 }

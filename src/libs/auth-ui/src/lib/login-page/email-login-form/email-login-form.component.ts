@@ -231,12 +231,12 @@ export class EmailLoginFormComponent {
 		m: string,
 		eventName?: string,
 		eventParams?: { [key: string]: string },
-	): (err: any) => void {
+	): (err: unknown) => void {
 		return err => this.handleError(err, m, eventName, eventParams);
 	}
 
 	private handleError(
-		err: any, m: string,
+		err: unknown, m: string,
 		eventName?: string,
 		eventParams?: { [key: string]: string },
 	): void {
@@ -245,11 +245,11 @@ export class EmailLoginFormComponent {
 			this.analyticsService.logEvent(eventName, eventParams);
 		}
 		if ((err as FirebaseError).code === 'auth/wrong-password') {
-			console.log(err.message);
+			console.log(err);
 			this.wrongPassword = true;
 			return;
 		}
-		this.errorLogger.logError(err, m, { report: !err.code });
+		this.errorLogger.logError(err, m, { report: !(err as any).code });
 	}
 
 	private setSigningWith(signingWith?: EmailFormSigningWith): void {

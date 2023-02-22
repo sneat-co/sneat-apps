@@ -15,7 +15,7 @@ export class FireAnalyticsService implements IAnalyticsService {
 
 	public logEvent(
 		eventName: string,
-		eventParams?: { [key: string]: any },
+		eventParams?: { [key: string]: unknown },
 		options?: IAnalyticsCallOptions,
 	): void {
 		this.angularFireAnalytics

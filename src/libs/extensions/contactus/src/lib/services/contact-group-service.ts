@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { INavContext } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
-import { NEVER, never, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 
 export type IContactGroupContext = INavContext<IContactGroupBrief, IContactGroupDto>
@@ -47,7 +47,7 @@ const
 		finder: 'babysitters.express',
 	},
 	contactTypeFriendOfKid: IContactRoleBrief = { id: 'friend', title: 'Friends', emoji: '🚸' },
-	contactTypeGP: IContactRoleBrief = { id: 'gp', title: 'Family doctor', emoji: '👩‍⚕️', finder: 'gpconnect.app' },
+	// contactTypeGP: IContactRoleBrief = { id: 'gp', title: 'Family doctor', emoji: '👩‍⚕️', finder: 'gpconnect.app' },
 	contactTypePlumber: IContactRoleBrief = { id: 'plumber', title: 'Plumber', emoji: '🚽', finder: 'plumbers.express' },
 	contactTypeElectrician: IContactRoleBrief = {
 		id: 'electrician',

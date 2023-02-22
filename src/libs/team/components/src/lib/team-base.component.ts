@@ -45,7 +45,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	viewMode: 'list' | 'grid' = 'grid';
 
-	protected readonly logError: (e: any, message?: string, options?: ILogErrorOptions) => void;
+	protected readonly logError: (e: unknown, message?: string, options?: ILogErrorOptions) => void;
 	protected readonly logErrorHandler: (
 		message?: string,
 		options?: ILogErrorOptions,

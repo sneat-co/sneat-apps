@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { SneatApiService } from '@sneat/api';
 import { IMemberGroupBrief, IMemberGroupDto } from '@sneat/dto';
 import { IMemberGroupContext, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from './team-item.service';
@@ -21,7 +21,7 @@ export class MemberGroupService {
 			'team_member_groups', afs, sneatApiService);
 	}
 
-	watchMemberGroupsByTeam<IMemberGroupDto>(team: ITeamContext, status: 'active' | 'archived' = 'active'): Observable<IMemberGroupContext[]> {
+	watchMemberGroupsByTeam(team: ITeamContext, status: 'active' | 'archived' = 'active'): Observable<IMemberGroupContext[]> {
 		// console.log('watchMemberGroupsByTeamID()', teamID);
 		return this.teamItemService.watchTeamItems(team, [{ field: 'status', operator: '==', value: status }]);
 	}

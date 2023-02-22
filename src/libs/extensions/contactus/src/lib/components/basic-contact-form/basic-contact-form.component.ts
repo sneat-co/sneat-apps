@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ICreateContactBasicRequest, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ICreateContactBasicRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
 
 @Component({

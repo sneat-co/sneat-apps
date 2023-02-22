@@ -45,8 +45,7 @@ export class TmdbService extends ITmdbService {
 		return this.httpClient.get(url)
 			.pipe(
 				mergeMap(
-					// tslint:disable-next-line:no-any
-					(value: unknown) => this.transformMovie((value as any).results as IMovie[])
+					(value: unknown) => this.transformMovie((value as {results: IMovie[]}).results)
 				),
 				mergeMap((value => this.addGenresToMovies(value))));
 	}
@@ -80,7 +79,7 @@ export class TmdbService extends ITmdbService {
 				// tslint:disable-next-line:no-any arrow-return-shorthand
 				map((response: unknown) => {
 					// console.log('loadActors', movieId, response);
-					return (response as any).cast as Actor[];
+					return (response as {cast: Actor[]}).cast;
 				})
 			);
 	}
@@ -90,8 +89,7 @@ export class TmdbService extends ITmdbService {
 		// console.log(this.httpClient.get(url));
 		return this.httpClient.get(url)
 			.pipe(
-				// tslint:disable-next-line:no-any
-				map((response: unknown) => (response as any).genres as Genre[])
+				map((response: unknown) => (response as {genres: Genre[]}).genres)
 			);
 	}
 
@@ -164,7 +162,6 @@ export class TmdbService extends ITmdbService {
 		return genreIds;
 	}
 
-	// tslint:disable-next-line:no-any
 	addActorsToMovie(movie: {id: number}): Observable<IMovie> {
 		// console.log('addActorsToMovie', movie.id);
 		return this.loadActors(movie.id)
@@ -176,9 +173,8 @@ export class TmdbService extends ITmdbService {
 				}));
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method no-any
-	addingActors(actors: Actor[], movie: unknown): void {
-		(movie as any).actors = actors;
+	addingActors(actors: Actor[], movie: IMovie): void {
+		movie.actors = actors;
 		// console.log('addingActors', movie.id, actors);
 	}
 }

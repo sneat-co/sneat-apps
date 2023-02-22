@@ -91,7 +91,7 @@ export class OrdersGridComponent implements OnChanges {
 			alert('No team context provided!');
 			return;
 		}
-		const data = (row as any).getData();
+		const data = (row as {getData: () => {id: string}}).getData();
 		this.navController
 			.navigateForward(['space', this.team.type, this.team.id, 'order', data.id])
 			.catch(console.error);

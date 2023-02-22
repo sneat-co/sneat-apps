@@ -145,7 +145,7 @@ export class LocationFormComponent implements OnChanges {
 		this.contactService.createContact(this.team, request)
 			.subscribe({
 				next: this.onContactCreated,
-				error: (err: any) => {
+				error: (err: unknown) => {
 					this.errorLogger.logError(err, 'Failed to create new contact');
 					this.isCreating = false;
 				},

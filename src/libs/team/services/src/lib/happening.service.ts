@@ -88,7 +88,7 @@ export class HappeningService {
 		);
 	}
 
-	createHappening(request: ICreateHappeningRequest): Observable<any> {
+	createHappening(request: ICreateHappeningRequest): Observable<unknown> {
 		const title = request.dto.title.trim();
 		if (title !== request.dto.title) {
 			request = {

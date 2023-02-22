@@ -28,6 +28,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 
 	protected override onRouteParamsChanged(params: ParamMap, itemID?: string, teamID?: string) {
 		// Nothing to do here
+		console.log('ContactBasePage.onRouteParamsChanged()', params, itemID, teamID);
 	}
 
 	protected override watchItemChanges(): Observable<IContactContext> {

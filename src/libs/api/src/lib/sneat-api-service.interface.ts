@@ -19,7 +19,7 @@ export interface IHttpRequestOptions {
 	withCredentials?: boolean;
 }
 
-const SneatApiService = new InjectionToken('ISneatApiService');
+// const SneatApiService = new InjectionToken('ISneatApiService');
 
 export interface ISneatApiResponse<T> {
 	// TODO: Either use or delete

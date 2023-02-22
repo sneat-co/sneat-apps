@@ -47,5 +47,6 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 
 	protected onOrderChanged(order: IExpressOrderContext): void {
 		// override this method to handle order changes
+		console.log('onOrderChanged', order);
 	}
 }

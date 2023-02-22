@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { ContactRole, IContactBrief, IContactDto, TeamCounter } from '@sneat/dto';
+import { IFilter, SneatApiService } from '@sneat/api';
+import { ContactRole, IContactBrief, IContactDto } from '@sneat/dto';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';

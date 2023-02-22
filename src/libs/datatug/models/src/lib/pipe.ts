@@ -1,7 +1,7 @@
 export interface ITugPipeOutput {
-	output?: any;
+	output?: { [id: string]: unknown };
 }
 
 export interface ITugPipe {
-	process(input: any): ITugPipeOutput;
+	process(input: { [id: string]: unknown }): ITugPipeOutput;
 }

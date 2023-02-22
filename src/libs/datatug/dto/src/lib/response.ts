@@ -17,7 +17,7 @@ export interface ICommandResponse {
 export interface ICommandResponseItem {
 	type: 'recordset' | 'recordsets' | 'string' | 'integer' | 'object';
 	elapsed?: number;
-	value?: any;
+	value?: unknown;
 }
 
 export interface ICommandHttpResponse extends ICommandResponseItem {

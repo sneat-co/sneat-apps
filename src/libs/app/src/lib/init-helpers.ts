@@ -8,12 +8,12 @@ function firebaseProjectId(useEmulators: boolean, projectId: string): string {
 	return useEmulators ? 'demo-' + projectId : projectId;
 }
 
-function firebaseDatabaseURL(useEmulators: boolean, projectId: string): string | undefined{
-	// noinspection SpellCheckingInspection
-	return useEmulators
-		? undefined :
-		`https://${projectId}.firebaseio.com`;
-}
+// function firebaseDatabaseURL(useEmulators: boolean, projectId: string): string | undefined{
+// 	// noinspection SpellCheckingInspection
+// 	return useEmulators
+// 		? undefined :
+// 		`https://${projectId}.firebaseio.com`;
+// }
 
 interface IFirebaseAppSpecificConfig {
 	nickname: string;

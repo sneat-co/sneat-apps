@@ -1,6 +1,5 @@
 import {
-	HappeningType, ICanceled, IHappeningAdjustment,
-	IHappeningSlotSingleRef,
+	HappeningType, IHappeningAdjustment,
 	ISlotParticipant,
 	ITiming,
 	Level,

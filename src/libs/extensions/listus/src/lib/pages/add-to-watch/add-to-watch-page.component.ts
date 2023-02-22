@@ -53,7 +53,7 @@ export class AddToWatchPageComponent extends BaseListPage implements CommuneBase
 		// tslint:disable-next-line:no-any
 		result.subscribe((movies) => {
 			// tslint:disable-next-line:no-any
-			movies.forEach((movie: { idTmdb: any; id: any }) => {
+			movies.forEach((movie) => {
 				movie.idTmdb = movie.id;
 				delete movie.id;
 				console.log('add-to-watch-page: film', movie);
@@ -96,10 +96,7 @@ export class AddToWatchPageComponent extends BaseListPage implements CommuneBase
 					// }
 					this.listItems = result.listDto.items;
 				},
-				// tslint:disable-next-line:no-any
-				error: (err: any) => {
-					this.errorLogger.logError(err, 'Failed to add item to list');
-				},
+				error: this.errorLogger.logErrorHandler( 'Failed to add item to list'),
 			});
 	}
 

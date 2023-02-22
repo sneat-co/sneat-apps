@@ -43,8 +43,7 @@ export class NgModulePreloaderService {
 		 'terms': './pages/commune/term/terms/terms.module#TermsPageModule',
 		 'tasks': './pages/commune/todo/tasks/tasks-page.module#TasksPageModule',
 	 */
-	// tslint:disable-next-line:no-any
-	private readonly configs: { [id: string]: { path: string; type: Type<any> } } = {}; // Use addPreloadConfigs
+	private readonly configs: { [id: string]: { path: string; type: Type<unknown> } } = {}; // Use addPreloadConfigs
 
 	private warned = false;
 
@@ -58,8 +57,7 @@ export class NgModulePreloaderService {
 	// ) {
 	// }
 
-	// tslint:disable-next-line:no-any
-	public addPreloadConfigs(...configs: { id: string; path: string; type: Type<any>; module?: string }[]): void {
+	public addPreloadConfigs(...configs: { id: string; path: string; type: Type<unknown>; module?: string }[]): void {
 		configs.forEach(config => {
 			this.configs[config.id] = { path: config.path, type: config.type };
 		});

@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthStatus, ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { Component, OnDestroy } from '@angular/core';
+import { AuthStatus, SneatAuthStateService } from '@sneat/auth';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

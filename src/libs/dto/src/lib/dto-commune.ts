@@ -24,9 +24,9 @@ export const enum TeamCounter {
 	upcomings = 'upcomings',
 }
 
-type TeamCounters = {
-	[P in EnumAsUnionOfKeys<typeof TeamCounter>]: number;
-};
+// type TeamCounters = {
+// 	[P in EnumAsUnionOfKeys<typeof TeamCounter>]: number;
+// };
 
 export interface TeamCounts {
 	[TeamCounter.activities]?: number;

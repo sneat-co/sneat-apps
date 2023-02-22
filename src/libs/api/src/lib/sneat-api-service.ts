@@ -48,7 +48,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		this.authToken = token;
 	};
 
-	public post<T>(endpoint: string, body: any): Observable<T> {
+	public post<T>(endpoint: string, body: unknown): Observable<T> {
 		const url = this.baseUrl + endpoint;
 		console.log('post()', endpoint, url, body);
 		return (
@@ -59,7 +59,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		);
 	}
 
-	public put<T>(endpoint: string, body: any): Observable<T> {
+	public put<T>(endpoint: string, body: unknown): Observable<T> {
 		return (
 			this.errorIfNotAuthenticated() ||
 			this.httpClient.put<T>(this.baseUrl + endpoint, body, {
@@ -89,7 +89,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 
 	public postAsAnonymous<T>(
 		endpoint: string,
-		body: any,
+		body: unknown,
 	): Observable<T> {
 		return this.httpClient.post<T>(this.baseUrl + endpoint, body, {
 			headers: this.headers(),
@@ -97,7 +97,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	}
 
 
-	public delete<T>(endpoint: string, params?: HttpParams, body?: any): Observable<T> {
+	public delete<T>(endpoint: string, params?: HttpParams, body?: unknown): Observable<T> {
 		console.log('delete()', endpoint, params);
 		const url = this.baseUrl + endpoint;
 		return (

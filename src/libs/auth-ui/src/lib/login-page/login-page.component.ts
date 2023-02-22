@@ -19,11 +19,11 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { Subject, takeUntil } from 'rxjs';
 import { EmailFormSigningWith } from './email-login-form/email-login-form.component';
-import AuthProvider = firebase.auth.AuthProvider;
-import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
-import GithubAuthProvider = firebase.auth.GithubAuthProvider;
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-import OAuthProvider = firebase.auth.OAuthProvider;
+// import AuthProvider = firebase.auth.AuthProvider;
+// import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+// import GithubAuthProvider = firebase.auth.GithubAuthProvider;
+// import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+// import OAuthProvider = firebase.auth.OAuthProvider;
 import UserCredential = firebase.auth.UserCredential;
 
 
@@ -144,19 +144,19 @@ export class LoginPageComponent {
 		m: string,
 		eventName?: string,
 		eventParams?: { [key: string]: string },
-	): (err: any) => void {
+	): (err: unknown) => void {
 		return err => this.handleError(err, m, eventName, eventParams);
 	}
 
 	private handleError(
-		err: any, m: string,
+		err: unknown, m: string,
 		eventName?: string,
 		eventParams?: { [key: string]: string },
 	): void {
 		if (eventName) {
 			this.analyticsService.logEvent(eventName, eventParams);
 		}
-		this.errorLogger.logError(err, m, { report: !err.code });
+		this.errorLogger.logError(err, m, { report: !(err as any).code });
 		this.signingWith = undefined;
 	}
 }

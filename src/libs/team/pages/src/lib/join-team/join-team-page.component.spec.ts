@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { JoinTeamPageComponent } from './join-team-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AngularFireModule } from '@angular/fire/compat';
 // import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 

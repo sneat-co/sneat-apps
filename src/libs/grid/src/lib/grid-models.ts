@@ -9,7 +9,7 @@ export interface IGridColumn {
 	colName?: string;
 	dbType: string;
 	title: string;
-	tooltip?: (cell: any) => string;
+	tooltip?: (cell: unknown) => string;
 	formatter?: any;
 	hozAlign?: 'left' | 'right';
 	widthShrink?: number;
@@ -17,9 +17,9 @@ export interface IGridColumn {
 	width?: number | string;
 }
 
-export const getTabulatorCols = (cols: IGridColumn[]): any[] =>
+export const getTabulatorCols = (cols: IGridColumn[]): unknown[] =>
 	cols.map((c) => {
-		const v = { ...c } as any;
+		const v = { ...c } as {dbType?: unknown};
 		delete v.dbType;
 		return v;
 	});

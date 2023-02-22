@@ -121,6 +121,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// }
 
 	public onIsDoneFilterChanged(event: Event): void {
+		console.log('onIsDoneFilterChanged()', event);
 		this.applyFilter();
 	}
 

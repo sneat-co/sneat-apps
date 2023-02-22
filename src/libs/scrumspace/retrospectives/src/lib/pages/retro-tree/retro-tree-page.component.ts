@@ -22,15 +22,15 @@ export class RetroTreePageComponent extends TeamBaseComponent {
 	public retrospective: IRetrospective;
 
 	public treeSpec: unknown /*IDndTreeSpec<IRetroItem>*/ = {
-		itemId: (item: unknown) => (item as any).ID,
-		getChildItems: (item: unknown) => (item as any).children,
+		itemId: (item: unknown) => (item as { ID: string }).ID,
+		getChildItems: (item: unknown) => (item as { children: unknown[] }).children,
 		autoExpand: () => true /*node => {
 			const result = node.data.id !== 'doing';
 			// console.log('autoExpand', node.data.id, result);
 			return result;
 		},*/,
 		maxDepth: 2,
-		childrenCount: (item) => item?.children.length || 0,
+		childrenCount: (item: { children?: unknown[] }) => item?.children?.length || 0,
 		childrenSize: undefined, //(node) => node.level >= 1 ? ChildrenSizeMode.fixed : ChildrenSizeMode.flexible,
 	};
 
@@ -144,8 +144,9 @@ export class RetroTreePageComponent extends TeamBaseComponent {
 		});
 	}
 
-	public itemMoved(item: any /*IDraggedTreeItem<IRetroItem>*/): void {
-		console.log(`itemMoved: ${item.node.id}`, item.dropTo);
+	public itemMoved(item: unknown /*IDraggedTreeItem<IRetroItem>*/): void {
+		const itm = item as { node: { id: string }, dropTo: unknown };
+		console.log(`itemMoved: ${itm.node?.id}`, itm.dropTo);
 	}
 
 	public isAllowedToAddItems(): boolean {

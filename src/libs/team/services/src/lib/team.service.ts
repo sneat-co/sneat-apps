@@ -8,11 +8,11 @@ import { IRecord } from '@sneat/data';
 import { IMemberBrief, ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IAcceptPersonalInviteRequest,
 	ICreateTeamRequest,
-	ICreateTeamResponse, IInviteFromContact, IInviteToContact, IJoinTeamInfoResponse,
+	ICreateTeamResponse, IJoinTeamInfoResponse,
 	ITeamContext,
-	ITeamMemberRequest, ITeamRef,
+	ITeamMemberRequest,
+	ITeamRef,
 	ITeamRequest,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth';
