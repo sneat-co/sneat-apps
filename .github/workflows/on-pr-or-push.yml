@@ -56,7 +56,7 @@ jobs:
         uses: nrwl/nx-set-shas@v3
 
       - name: nx lint affected
-        run: pnpm run nx run-may --all --target=lint
+        run: pnpm run nx run-many --all --target=lint
         working-directory: ./src
 
   Build:
