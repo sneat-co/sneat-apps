@@ -10,7 +10,7 @@ export interface IGridColumn {
 	dbType: string;
 	title: string;
 	tooltip?: (cell: unknown) => string;
-	formatter?: unknown;
+	formatter?: 'link' | 'progress' | 'html' | 'text' | 'number' | 'money' | 'image' | 'tickCross';
 	hozAlign?: 'left' | 'right';
 	widthShrink?: number;
 	widthGrow?: number;
