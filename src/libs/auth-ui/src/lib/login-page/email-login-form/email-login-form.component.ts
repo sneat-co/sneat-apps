@@ -249,7 +249,7 @@ export class EmailLoginFormComponent {
 			this.wrongPassword = true;
 			return;
 		}
-		this.errorLogger.logError(err, m, { report: !(err as any).code });
+		this.errorLogger.logError(err, m, { report: !(err as {code: unknown}).code });
 	}
 
 	private setSigningWith(signingWith?: EmailFormSigningWith): void {

@@ -3,16 +3,16 @@ import { InjectionToken } from '@angular/core';
 
 export interface ILogger {
 	// tslint:disable-next-line:no-any
-	debug(...v: any[]): void;
+	debug(...v: unknown[]): void;
 
 	// tslint:disable-next-line:no-any
-	info(...v: any[]): void;
+	info(...v: unknown[]): void;
 
 	// tslint:disable-next-line:no-any
-	warn(...v: any[]): void;
+	warn(...v: unknown[]): void;
 
 	// tslint:disable-next-line:no-any
-	error(...v: any[]): void;
+	error(...v: unknown[]): void;
 }
 
 export interface ILoggerFactory {
@@ -23,6 +23,9 @@ export const LOGGER_FACTORY = new InjectionToken<ILoggerFactory>('loggerFactory'
 
 export const loggerFactory: ILoggerFactory = {
 	getLogger(name: string): ILogger {
+		if (!name) {
+			throw new Error('Logger name is required');
+		}
 		return {
 			// tslint:disable-next-line:no-unbound-method
 			debug: console.log,

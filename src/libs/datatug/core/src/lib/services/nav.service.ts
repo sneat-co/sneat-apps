@@ -169,7 +169,7 @@ export class NavService {
 		team: IRecord<ITeamDto>,
 		url: string,
 		eventName: string,
-		params?: any,
+		params?: { [key: string]: unknown },
 	): void => {
 		params = { ...(params || {}), team: team.id };
 		this.navForward(

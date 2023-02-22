@@ -1,4 +1,3 @@
-import { EnumAsUnionOfKeys } from '@sneat/core';
 import { IListGroupsHolder } from './dto-list';
 import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';

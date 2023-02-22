@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { InjectionToken } from '@angular/core';
 
 export interface IHttpRequestOptions {
 	headers?:
