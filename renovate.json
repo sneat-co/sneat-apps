@@ -22,9 +22,11 @@
       ]
     },
     {
-      "matchPackagePrefixes": [
-        "@angular/",
-        "@angular-"
+      "groupName": "angular automerge",
+      "extends": [
+        "monorepo:angular",
+        "monorepo:angular-cli",
+        "monorepo:angular-eslint"
       ],
       "matchUpdateTypes": [
         "minor",
@@ -34,9 +36,11 @@
       "automergeType": "pr"
     },
     {
-      "matchPackagePrefixes": [
-        "@angular/",
-        "@angular-"
+      "groupName": "angular major",
+      "extends": [
+        "monorepo:angular",
+        "monorepo:angular-cli",
+        "monorepo:angular-eslint"
       ],
       "matchUpdateTypes": [
         "major"
@@ -44,12 +48,9 @@
       "automerge": false
     },
     {
-      "matchPackagePrefixes": [
-        "@ionic-native/"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
+      "groupName": "ionic native",
+      "extends": [
+        "monorepo:ionic-native"
       ],
       "automerge": true,
       "automergeType": "pr"
