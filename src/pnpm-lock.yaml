@@ -29,7 +29,7 @@ specifiers:
   '@nrwl/eslint-plugin-nx': 15.7.2
   '@nrwl/jest': 15.7.2
   '@nrwl/linter': 15.7.2
-  '@nrwl/nx-cloud': 15.1.0
+  '@nrwl/nx-cloud': 15.1.1
   '@nrwl/workspace': 15.7.2
   '@schematics/angular': 15.2.0
   '@sentry/angular': 7.38.0
@@ -107,7 +107,7 @@ devDependencies:
   '@nrwl/eslint-plugin-nx': 15.7.2_essaje37vwgri32s6emya7j3qm
   '@nrwl/jest': 15.7.2_hmwky4k6ogoy5tmzsqvebiw32a
   '@nrwl/linter': 15.7.2_yxin7m6awakvpkhura4zrapcyu
-  '@nrwl/nx-cloud': 15.1.0
+  '@nrwl/nx-cloud': 15.1.1
   '@nrwl/workspace': 15.7.2_ztlnmuobvwn63gpuifwwrjpt4i
   '@schematics/angular': 15.2.0
   '@types/jest': 29.4.0
@@ -3591,8 +3591,8 @@ packages:
       - nx
       - typescript
 
-  /@nrwl/nx-cloud/15.1.0:
-    resolution: {integrity: sha512-QcMlPZ+DBzTWcoWSziyrENYhBLfE5MSns3M5qJB8EClg9/vomepA+NLOLWB+/O0sfdeBGFKlvFyrjf+CnVaB2A==}
+  /@nrwl/nx-cloud/15.1.1:
+    resolution: {integrity: sha512-aIVb87PQpAjwdEaFksQ3rYgFq9MDaBG2KvYZcj/k+z2uWeWH84ha/opO37aCFLf5VXNiyJZGRb/+7vW7BFpNOw==}
     hasBin: true
     dependencies:
       axios: 0.21.4
