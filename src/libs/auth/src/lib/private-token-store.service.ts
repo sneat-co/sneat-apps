@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-const tokenKey = (domain: string, projectId: string) =>
-	`private/tokens/${domain}/${projectId}`;
+const tokenKey = (domain: string, projectId: string) => `private/tokens/${domain}/${projectId}`;
 
 export const canceledByUser = 'canceled by user';
 
