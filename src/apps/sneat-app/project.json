@@ -12,7 +12,7 @@
 				"outputPath": "dist/apps/sneat-app",
 				"index": "apps/sneat-app/src/index.html",
 				"main": "apps/sneat-app/src/main.ts",
-				"polyfills": "apps/sneat-app/src/polyfills.ts",
+				"polyfills": ["zone.js"],
 				"tsConfig": "apps/sneat-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [

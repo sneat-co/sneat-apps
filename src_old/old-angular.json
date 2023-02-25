@@ -417,7 +417,7 @@
 						"outputPath": "dist/apps/datatug",
 						"index": "apps/datatug/src/index.html",
 						"main": "apps/datatug/src/main.ts",
-						"polyfills": "apps/datatug/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/datatug/tsconfig.app.json",
 						"aot": true,
 						"assets": [
@@ -506,7 +506,7 @@
 						"main": "apps/datatug/src/test.ts",
 						"tsConfig": "apps/datatug/tsconfig.spec.json",
 						"karmaConfig": "apps/datatug/karma.conf.js",
-						"polyfills": "apps/datatug/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"styles": [],
 						"scripts": [],
 						"assets": []
@@ -1817,7 +1817,7 @@
 						"outputPath": "dist/apps/debtus",
 						"index": "apps/debtus/src/index.html",
 						"main": "apps/debtus/src/main.ts",
-						"polyfills": "apps/debtus/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/debtus/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
@@ -2077,7 +2077,7 @@
 						"outputPath": "dist/apps/emptyapp",
 						"index": "apps/emptyapp/src/index.html",
 						"main": "apps/emptyapp/src/main.ts",
-						"polyfills": "apps/emptyapp/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/emptyapp/tsconfig.app.json",
 						"aot": true,
 						"assets": [
@@ -2192,7 +2192,7 @@
 						"outputPath": "dist/apps/emptyionicapp",
 						"index": "apps/emptyionicapp/src/index.html",
 						"main": "apps/emptyionicapp/src/main.ts",
-						"polyfills": "apps/emptyionicapp/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/emptyionicapp/tsconfig.app.json",
 						"aot": true,
 						"assets": [
@@ -2275,7 +2275,7 @@
 						"main": "apps/emptyionicapp/src/test.ts",
 						"tsConfig": "apps/emptyionicapp/tsconfig.spec.json",
 						"karmaConfig": "apps/emptyionicapp/karma.conf.js",
-						"polyfills": "apps/emptyionicapp/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"styles": [],
 						"scripts": [],
 						"assets": []
@@ -2867,7 +2867,7 @@
 						"outputPath": "dist/apps/family",
 						"index": "apps/family/src/index.html",
 						"main": "apps/family/src/main.ts",
-						"polyfills": "apps/family/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/family/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
@@ -3126,7 +3126,7 @@
 						"outputPath": "dist/apps/issuenumberone",
 						"index": "apps/issuenumberone/src/index.html",
 						"main": "apps/issuenumberone/src/main.ts",
-						"polyfills": "apps/issuenumberone/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/issuenumberone/tsconfig.app.json",
 						"aot": true,
 						"assets": [
@@ -3209,7 +3209,7 @@
 						"main": "apps/issuenumberone/src/test.ts",
 						"tsConfig": "apps/issuenumberone/tsconfig.spec.json",
 						"karmaConfig": "apps/issuenumberone/karma.conf.js",
-						"polyfills": "apps/issuenumberone/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"styles": [],
 						"scripts": [],
 						"assets": []
@@ -3421,7 +3421,7 @@
 						"outputPath": "dist/apps/scrumspace",
 						"index": "apps/scrumspace/src/index.html",
 						"main": "apps/scrumspace/src/main.ts",
-						"polyfills": "apps/scrumspace/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/scrumspace/tsconfig.app.json",
 						"aot": true,
 						"assets": [
@@ -3504,7 +3504,7 @@
 						"main": "apps/scrumspace/src/test.ts",
 						"tsConfig": "apps/scrumspace/tsconfig.spec.json",
 						"karmaConfig": "apps/scrumspace/karma.conf.js",
-						"polyfills": "apps/scrumspace/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"styles": [],
 						"scripts": [],
 						"assets": []
@@ -3741,7 +3741,7 @@
 						"outputPath": "dist/apps/sneat-app",
 						"index": "apps/sneat-app/src/index.html",
 						"main": "apps/sneat-app/src/main.ts",
-						"polyfills": "apps/sneat-app/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/sneat-app/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
@@ -3960,7 +3960,7 @@
 						"outputPath": "dist/apps/sneat-team",
 						"index": "apps/sneat-team/src/index.html",
 						"main": "apps/sneat-team/src/main.ts",
-						"polyfills": "apps/sneat-team/src/polyfills.ts",
+						"polyfills": ["zone.js"],
 						"tsConfig": "apps/sneat-team/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [

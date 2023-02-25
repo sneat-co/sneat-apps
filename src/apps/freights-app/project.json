@@ -12,7 +12,7 @@
 				"outputPath": "dist/apps/freights-app",
 				"index": "apps/freights-app/src/index.html",
 				"main": "apps/freights-app/src/main.ts",
-				"polyfills": "apps/freights-app/src/polyfills.ts",
+				"polyfills": ["zone.js"],
 				"tsConfig": "apps/freights-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
