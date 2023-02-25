@@ -24,4 +24,5 @@ export interface IEnvironmentConfig {
 	firebaseConfig: IFirebaseConfig;
 }
 
-export const EnvConfigToken = new InjectionToken('envConfig');
+export const FirebaseConfigToken = new InjectionToken<IFirebaseConfig>('firebaseConfig');
+export const EnvConfigToken = new InjectionToken<IEnvironmentConfig>('envConfig');
