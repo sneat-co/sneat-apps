@@ -1,14 +1,8 @@
 // (C) https://datatug.app
 
-import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { DatatugAppModule } from './app/datatug-app.module';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-	enableProdMode();
-}
 
 platformBrowserDynamic()
 	.bootstrapModule(DatatugAppModule)
