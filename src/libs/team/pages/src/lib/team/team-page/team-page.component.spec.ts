@@ -5,8 +5,6 @@ import { SneatUserService } from '@sneat/auth';
 import { TeamPageComponent } from './team-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { environment } from '../../../environments/environment';
 import { TeamService } from '@sneat/team/services';
 
 describe('TeamPage', () => {

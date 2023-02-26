@@ -8,8 +8,9 @@ import {
 	Firestore as AngularFirestore,
 	query,
 	where,
+	onSnapshot,
 } from '@angular/fire/firestore';
-import { onSnapshot, QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
+import { QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
 import { WhereFilterOp } from '@firebase/firestore-types';
 import { INavContext } from '@sneat/core';
 import { from, map, Observable, Subject } from 'rxjs';
@@ -30,6 +31,9 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 			id,
 		}),
 	) {
+		if (!dto2brief) {
+			throw new Error('dto2brief is required, collection: ' + collection);
+		}
 	}
 
 	watchByID<Dto2 extends Dto>(
@@ -55,9 +59,9 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 	}
 
 	watchSnapshotsByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[], orderBy?: QueryOrderByConstraint[]): Observable<QuerySnapshot<Dto2>> {
-		console.log('watchSnapshotsByFilter()', this.collection, filter);
 		const operator = (f: IFilter) => f.field.endsWith('IDs') ? 'array-contains' : f.operator;
 		const q = query(collectionRef, ...filter.map(f => where(f.field, operator(f), f.value)), ...(orderBy || []));
+		console.log('watchSnapshotsByFilter()', collectionRef.path, 'filter', filter, 'query', q);
 		const subj = new Subject<QuerySnapshot<Dto2>>();
 		onSnapshot<Dto2>(q, subj);
 		return subj;
@@ -66,7 +70,8 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 	watchByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[], orderBy?: QueryOrderByConstraint[]): Observable<INavContext<Brief, Dto2>[]> {
 		return this.watchSnapshotsByFilter(collectionRef, filter, orderBy).pipe(
 			map(querySnapshot => {
-				return querySnapshot.docs.map(this.docSnapshotToContext);
+				console.log('watchByFilter() => querySnapshot: ', querySnapshot, querySnapshot.docs);
+				return querySnapshot.docs.map(this.docSnapshotToContext.bind(this));
 			}),
 		);
 	}

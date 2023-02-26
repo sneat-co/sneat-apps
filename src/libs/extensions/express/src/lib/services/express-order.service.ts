@@ -63,12 +63,12 @@ export class ExpressOrderService {
 		return this.sneatApiService.post('express/create_order', request);
 	}
 
-	private collection<Dto>(teamID: string, collectionName: string): CollectionReference<Dto> {
-		return expressTeamModuleSubCollection<Dto>(this.afs, teamID, collectionName);
+	private ordersCollection<Dto>(teamID: string): CollectionReference<Dto> {
+		return expressTeamModuleSubCollection<Dto>(this.afs, teamID, 'orders');
 	}
 
 	public watchOrderByID(teamID: string, orderID: string): Observable<IExpressOrderContext> {
-		const ordersCollection = this.collection<IExpressOrderDto>(teamID, 'orders');
+		const ordersCollection = this.ordersCollection<IExpressOrderDto>(teamID);
 		return this.sfs.watchByID(ordersCollection, orderID).pipe(
 			map(context => ({ ...context, team: { id: teamID } })),
 		);
@@ -76,7 +76,7 @@ export class ExpressOrderService {
 
 	public watchFreightOrders(teamID: string, filter?: IOrdersFilter): Observable<IExpressOrderContext[]> {
 		console.log('watchFreightOrders()', teamID, filter);
-		const ordersCollection = this.collection<IExpressOrderDto>(teamID, 'orders');
+		const ordersCollection = this.ordersCollection<IExpressOrderDto>(teamID);
 
 		const qFilter: IFilter[] = [{ field: 'status', operator: '==', value: filter?.status || 'active' }];
 
@@ -106,7 +106,9 @@ export class ExpressOrderService {
 			qFilter.push({ field: 'keys', operator: 'array-contains', value: keysVal });
 		}
 
-		const result = this.sfs.watchByFilter(ordersCollection, qFilter, [orderBy('createdAt', 'desc')]).pipe(
+		const result = this.sfs.watchByFilter(ordersCollection, qFilter,
+			// [orderBy('created.at', 'desc')],
+		).pipe(
 			map(orders => orders.map(order => ({ ...order, team: { id: teamID } }))),
 		);
 		return result;
