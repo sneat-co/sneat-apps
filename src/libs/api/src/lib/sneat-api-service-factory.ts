@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ISneatApiService } from './sneat-api-service.interface';
 import { HttpClient } from '@angular/common/http';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { parseStoreRef, storeRefToId } from '@sneat/core';
 import { SneatApiService } from './sneat-api-service';
 
@@ -34,8 +34,6 @@ export const getStoreUrl = (storeId: string): string => {
 
 @Injectable({ providedIn: 'root' })
 export class SneatApiServiceFactory {
-	private firebaseIdToken?: string;
-
 	private services: { [id: string]: ISneatApiService } = {};
 
 	constructor(
@@ -43,10 +41,6 @@ export class SneatApiServiceFactory {
 		readonly afAuth: AngularFireAuth,
 	) {
 		console.log('SneatApiServiceFactory.constructor()');
-		afAuth.idToken.subscribe((idToken) => {
-			this.firebaseIdToken = idToken || undefined;
-			this.services = {};
-		});
 	}
 
 	getSneatApiService(storeId: string): ISneatApiService {

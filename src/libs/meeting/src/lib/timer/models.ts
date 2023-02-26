@@ -1,7 +1,6 @@
 import { IByUser } from '@sneat/dto';
 import { IMeetingRequest } from '../models';
-import firebase from 'firebase/compat';
-import Timestamp = firebase.firestore.Timestamp;
+import { Timestamp } from '@firebase/firestore-types';
 
 // eslint-disable-next-line no-shadow
 export enum TimerOperationEnum {

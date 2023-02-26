@@ -10,7 +10,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso, localDateToIso } from '@sneat/core';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';

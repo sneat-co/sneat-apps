@@ -1,13 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import {
-	Action,
-	AngularFirestore,
-	AngularFirestoreCollection,
+	// Action,
+	Firestore as AngularFirestore,
+	CollectionReference,
 	DocumentSnapshot,
-} from '@angular/fire/compat/firestore';
+	collection,
+	doc,
+	onSnapshot,
+} from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { initialSneatAuthState, ISneatAuthState, ISneatAuthUser, SneatAuthStateService } from '../sneat-auth-state-service';
+import {
+	initialSneatAuthState,
+	ISneatAuthState,
+	ISneatAuthUser,
+	SneatAuthStateService,
+} from '../sneat-auth-state-service';
 import { IUserRecord } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { BehaviorSubject, ReplaySubject, Subscription } from 'rxjs';
@@ -22,7 +30,7 @@ const UsersCollection = 'users';
 @Injectable({ providedIn: 'root' }) // TODO: lazy loading
 export class SneatUserService {
 	public userDocSubscription?: Subscription;
-	private userCollection: AngularFirestoreCollection<IUserRecord>;
+	private userCollection: CollectionReference<IUserRecord>;
 
 	private uid?: string;
 	private $userTitle?: string;
@@ -46,7 +54,7 @@ export class SneatUserService {
 	) {
 
 		console.log('SneatUserService.constructor()');
-		this.userCollection = db.collection<IUserRecord>(UsersCollection);
+		this.userCollection = collection(db, UsersCollection) as CollectionReference<IUserRecord>;
 		sneatAuthStateService.authState
 			.subscribe({
 				next: this.onAuthStateChanged,
@@ -90,10 +98,12 @@ export class SneatUserService {
 		this.userState$.next({
 			...authState,
 		});
-		const userDocRef = this.userCollection.doc(uid);
+		const userDocRef = doc(this.userCollection, uid);
 		console.log('SneatUserService: Loading user record...');
-		this.userDocSubscription = userDocRef.snapshotChanges().subscribe({
-			next: (userDocSnapshot) => this.userDocChanged(userDocSnapshot, authState),
+		onSnapshot(userDocRef, {
+			next: (userDocSnapshot) => {
+				this.userDocChanged(userDocSnapshot, authState)
+			},
 			error: this.errorLogger.logErrorHandler('SneatUserService failed to get user record'),
 		});
 	}
@@ -109,44 +119,36 @@ export class SneatUserService {
 	};
 
 	private userDocChanged(
-		changes: Action<DocumentSnapshot<IUserRecord>>,
+		userDocSnapshot: DocumentSnapshot<IUserRecord>,
 		authState: ISneatAuthState,
 	): void {
-		console.log('SneatUserService => userDocChanged:', changes, authState);
-		if (
-			changes.type === 'value' ||
-			changes.type === 'added' ||
-			changes.type === 'removed' ||
-			changes.type === 'modified'
-		) {
-			const userDocSnapshot = changes.payload;
-			if (userDocSnapshot.ref.id !== this.uid) {
-				return; // Should always be equal as we unsubscribe if uid changes
-			}
-			// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
-			const authUser = authState.user;
-			if (authUser && !userDocSnapshot.exists) {
-				this.initUserRecordFromAuthUser(authUser);
-			}
-			const userRecord: IUserRecord | null = userDocSnapshot.exists
-				? (userDocSnapshot.data() as IUserRecord)
-				: authUser ? { title: authUser.displayName || authUser.email || authUser.uid } : null;
-
-			if (userRecord) {
-				if (userRecord.teams?.length) {
-					userRecord.teams.forEach(team => {
-						if (!team.type) {
-							console.error(`team brief in user.teams has no type`, team)
-						}
-					})
-				}
-			}
-
-			this.userState$.next({
-				...authState,
-				record: userRecord,
-			});
+		console.log('SneatUserService => userDocSnapshot:', userDocSnapshot, authState);
+		if (userDocSnapshot.ref.id !== this.uid) {
+			return; // Should always be equal as we unsubscribe if uid changes
 		}
+		// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
+		const authUser = authState.user;
+		if (authUser && !userDocSnapshot.exists) {
+			this.initUserRecordFromAuthUser(authUser);
+		}
+		const userRecord: IUserRecord | null = userDocSnapshot.exists()
+			? (userDocSnapshot.data() as IUserRecord)
+			: authUser ? { title: authUser.displayName || authUser.email || authUser.uid } : null;
+
+		if (userRecord) {
+			if (userRecord.teams?.length) {
+				userRecord.teams.forEach(team => {
+					if (!team.type) {
+						console.error(`team brief in user.teams has no type`, team);
+					}
+				});
+			}
+		}
+
+		this.userState$.next({
+			...authState,
+			record: userRecord,
+		});
 	}
 
 
@@ -157,7 +159,7 @@ export class SneatUserService {
 			authProvider: authUser?.providerId,
 		};
 		if (authUser?.displayName) {
-			request = {...request, name: {full: authUser.displayName}}
+			request = { ...request, name: { full: authUser.displayName } };
 		}
 		this.userRecordService.initUserRecord(request)
 			.subscribe({
@@ -168,6 +170,7 @@ export class SneatUserService {
 			});
 
 	}
+
 	private onUserSignedOut(): void {
 		this.uid = undefined;
 		if (this.userDocSubscription) {

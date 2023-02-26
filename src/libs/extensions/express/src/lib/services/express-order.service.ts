@@ -1,8 +1,14 @@
 import { Injectable, NgModule } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import {
+	Firestore as AngularFirestore,
+	CollectionReference,
+	collection,
+	doc,
+	onSnapshot, orderBy,
+} from '@angular/fire/firestore';
+import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { ITeamContext } from '@sneat/team/models';
-import { map, Observable, throwError } from 'rxjs';
+import { map, Observable, Subject, throwError } from 'rxjs';
 import {
 	IAddContainersRequest,
 	IContainerRequest,
@@ -20,6 +26,7 @@ import {
 	IDeleteSegmentsRequest,
 	IUpdateContainerPointRequest,
 } from '../dto';
+import { expressTeamModuleSubCollection } from './express-team.service';
 import { IOrdersFilter } from './orders-filter';
 
 
@@ -56,64 +63,53 @@ export class ExpressOrderService {
 		return this.sneatApiService.post('express/create_order', request);
 	}
 
+	private collection<Dto>(teamID: string, collectionName: string): CollectionReference<Dto> {
+		return expressTeamModuleSubCollection<Dto>(this.afs, teamID, collectionName);
+	}
+
 	public watchOrderByID(teamID: string, orderID: string): Observable<IExpressOrderContext> {
-		return this.afs
-			.collection('teams').doc(teamID)
-			.collection('modules').doc('express')
-			.collection<IExpressOrderDto>('orders').doc(orderID).snapshotChanges()
-			.pipe(
-				map(docSnapshot => {
-					return this.sfs.docSnapshotToContext(docSnapshot.payload);
-				}),
-				map(context => ({ ...context, team: { id: teamID } })),
-			);
+		const ordersCollection = this.collection<IExpressOrderDto>(teamID, 'orders');
+		return this.sfs.watchByID(ordersCollection, orderID).pipe(
+			map(context => ({ ...context, team: { id: teamID } })),
+		);
 	}
 
 	public watchFreightOrders(teamID: string, filter?: IOrdersFilter): Observable<IExpressOrderContext[]> {
 		console.log('watchFreightOrders()', teamID, filter);
-		const result = this.afs
-			.collection('teams').doc(teamID)
-			.collection('modules').doc('express')
-			.collection<IExpressOrderDto>('orders',
-				ref => {
-					let query = ref
-						.where('status', '==', filter?.status || 'active')
-						// .where('userIDs', 'array-contains', 'userID')
-						.orderBy('created.at', 'desc');
+		const ordersCollection = this.collection<IExpressOrderDto>(teamID, 'orders');
 
-					let keysVal = '';
-					if (filter?.countryID) {
-						keysVal = 'country=' + filter.countryID;
-					}
-					if (filter?.contactID) {
-						if (keysVal) {
-							keysVal += '&';
-						}
-						let contactID = filter.contactID;
-						if (contactID.includes(':')) {
-							contactID = contactID.split(':')[1];
-						}
-						if (contactID) {
-							keysVal += 'contact=' + contactID;
-						}
-					}
-					if (filter?.refNumber) {
-						if (keysVal) {
-							keysVal += '&';
-						}
-						keysVal += 'refNumber=' + filter.refNumber;
-					}
-					if (keysVal) {
-						query = query.where('keys', 'array-contains', keysVal);
-					}
-					console.log('watchFreightOrders():', teamID, filter, query);
-					return query;
-				}).snapshotChanges()
-			.pipe(
-				map(changes => this.sfs.snapshotChangesToContext(changes)),
-			);
+		const qFilter: IFilter[] = [{ field: 'status', operator: '==', value: filter?.status || 'active' }];
 
-		return result.pipe(map(orders => orders.map(o => ({ ...o, team: { id: teamID } }))));
+		let keysVal = '';
+		if (filter?.countryID) {
+			keysVal = 'country=' + filter.countryID;
+		}
+		if (filter?.contactID) {
+			if (keysVal) {
+				keysVal += '&';
+			}
+			let contactID = filter.contactID;
+			if (contactID.includes(':')) {
+				contactID = contactID.split(':')[1];
+			}
+			if (contactID) {
+				keysVal += 'contact=' + contactID;
+			}
+		}
+		if (filter?.refNumber) {
+			if (keysVal) {
+				keysVal += '&';
+			}
+			keysVal += 'refNumber=' + filter.refNumber;
+		}
+		if (keysVal) {
+			qFilter.push({ field: 'keys', operator: 'array-contains', value: keysVal });
+		}
+
+		const result = this.sfs.watchByFilter(ordersCollection, qFilter, [orderBy('createdAt', 'desc')]).pipe(
+			map(orders => orders.map(order => ({ ...order, team: { id: teamID } }))),
+		);
+		return result;
 	}
 
 	setOrderStatus(request: { teamID: string, orderID: string, status: string }): Observable<void> {

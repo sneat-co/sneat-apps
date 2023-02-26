@@ -1,12 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
+import { FieldPath } from '@firebase/firestore-types';
 import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import {
-	AngularFirestore,
-	AngularFirestoreCollection,
-	AngularFirestoreDocument,
+	Firestore as AngularFirestore,
+	CollectionReference,
 	DocumentReference,
-} from '@angular/fire/compat/firestore';
+	collection,
+	doc,
+} from '@angular/fire/firestore';
 import { filter, map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { BaseMeetingService } from '@sneat/meeting';
@@ -26,8 +28,6 @@ import {
 } from '@sneat/scrumspace/scrummodels';
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/auth';
-import firebase from 'firebase/compat/app';
-import FieldPath = firebase.firestore.FieldPath;
 
 const getOrCreateMemberStatus = (
 	scrum: IScrumDto,
@@ -74,37 +74,39 @@ export class ScrumService extends BaseMeetingService {
 	public getScrums(teamId: string, limit = 10): Observable<IRecord<IScrumDto>[]> {
 		console.log('getScrums()', teamId, limit, this.userService.currentUserID);
 		const scrums = this.scrumsCollection(teamId);
-		const query = scrums.ref
-			.where('userIDs', 'array-contains', this.userService.currentUserID)
-			.orderBy(FieldPath.documentId(), 'desc')
-			.limit(limit);
-		return from(query.get()).pipe(
-			map((result) => {
-				console.log('result', result);
-				// TODO: Remove `@ts-ignore`
-				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-				// @ts-ignore
-				return result.docs.map((d) => {
-					console.log('d', d);
-					return {
-						id: d.id,
-						dto: d.data() as IScrumDto,
-					};
-				});
-			}),
-		);
+		throw new Error('Not implemented');
+		// const query = scrums.ref
+		// 	.where('userIDs', 'array-contains', this.userService.currentUserID)
+		// 	.orderBy(FieldPath.documentId(), 'desc')
+		// 	.limit(limit);
+		// return from(query.get()).pipe(
+		// 	map((result) => {
+		// 		console.log('result', result);
+		// 		// TODO: Remove `@ts-ignore`
+		// 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// 		// @ts-ignore
+		// 		return result.docs.map((d) => {
+		// 			console.log('d', d);
+		// 			return {
+		// 				id: d.id,
+		// 				dto: d.data() as IScrumDto,
+		// 			};
+		// 		});
+		// 	}),
+		// );
 	}
 
 	public watchScrum(teamId: string, scrumId: string): Observable<IScrumDto> {
 		console.log(`watchScrum(${teamId}, ${scrumId})`);
 		const scrumDoc = this.getScrumDoc(teamId, scrumId);
-		return scrumDoc.snapshotChanges().pipe(
-			tap((changes) => {
-				console.log('scrum changes:', changes);
-			}),
-			filter((changes) => changes.type === 'value'),
-			map((changes) => changes.payload.data() as IScrumDto),
-		);
+		throw new Error('Not implemented');
+		// return scrumDoc.snapshotChanges().pipe(
+		// 	tap((changes) => {
+		// 		console.log('scrum changes:', changes);
+		// 	}),
+		// 	filter((changes) => changes.type === 'value'),
+		// 	map((changes) => changes.payload.data() as IScrumDto),
+		// );
 	}
 
 	public deleteTask(
@@ -237,19 +239,21 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	private getScrumRef(teamId: string, scrumId: string): DocumentReference {
-		return this.getScrumDoc(teamId, scrumId).ref;
+		return this.getScrumDoc(teamId, scrumId);
 	}
 
-	private scrumsCollection(teamId: string): AngularFirestoreCollection<IScrumDto> {
-		const teamDoc = this.db.collection('teams').doc<ITeamDto>(teamId);
-		return teamDoc.collection<IScrumDto>('scrums');
+	private scrumsCollection(teamId: string): CollectionReference<IScrumDto> {
+		const teamsCollection = collection(this.db, 'teams');
+		const teamDoc = doc(teamsCollection, teamId);
+		return collection(teamDoc, 'scrums') as CollectionReference<IScrumDto>;
 	}
 
 	private getScrumDoc(
 		teamId: string,
 		scrumId: string,
-	): AngularFirestoreDocument<IScrumDto> {
-		return this.scrumsCollection(teamId).doc(scrumId);
+	): DocumentReference<IScrumDto> {
+		const scrumsCollection = this.scrumsCollection(teamId);
+		return doc(scrumsCollection, scrumId);
 	}
 
 	private updateStatus(
@@ -261,17 +265,18 @@ export class ScrumService extends BaseMeetingService {
 		// eslint-disable-next-line no-shadow
 		worker: (scrum: IScrumDto, status: IStatus) => IScrumDto,
 	): Observable<IScrumDto> {
-		let scrum: IScrumDto;
-		return from(
-			this.db.firestore.runTransaction((transaction) => {
-				const scrumRef = this.getScrumRef(teamId, scrumId);
-				return transaction.get(scrumRef).then((scrumDoc) => {
-					scrum = scrumDoc.data() as IScrumDto;
-					const status = getOrCreateMemberStatus(scrum, member);
-					scrum = worker(scrum, status);
-					return transaction.update(scrumRef, { statuses: scrum.statuses });
-				});
-			}),
-		).pipe(map(() => scrum));
+		throw new Error('not implemented yet');
+		// let scrum: IScrumDto;
+		// return from(
+		// 	this.db.firestore.runTransaction((transaction) => {
+		// 		const scrumRef = this.getScrumRef(teamId, scrumId);
+		// 		return transaction.get(scrumRef).then((scrumDoc) => {
+		// 			scrum = scrumDoc.data() as IScrumDto;
+		// 			const status = getOrCreateMemberStatus(scrum, member);
+		// 			scrum = worker(scrum, status);
+		// 			return transaction.update(scrumRef, { statuses: scrum.statuses });
+		// 		});
+		// 	}),
+		// ).pipe(map(() => scrum));
 	}
 }

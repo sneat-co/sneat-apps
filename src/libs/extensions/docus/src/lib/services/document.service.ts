@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IDocumentBrief, IDocumentDto } from '@sneat/dto';
 import { IDocumentContext, ITeamContext, ITeamRequest } from '@sneat/team/models';

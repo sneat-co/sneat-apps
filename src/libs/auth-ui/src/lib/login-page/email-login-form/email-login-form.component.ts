@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+// import { getApp } from '@angular/fire/app';
+// import { getAuth } from '@angular/fire/auth';
+import { Auth as AngularFireAuth, sendPasswordResetEmail, sendSignInLinkToEmail } from '@angular/fire/auth';
 import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { SneatApiService } from '@sneat/api';
@@ -8,11 +10,11 @@ import { createSetFocusToInput } from '@sneat/components';
 import { APP_INFO, IAppInfo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
-import firebase from 'firebase/compat';
-import UserCredential = firebase.auth.UserCredential;
-import FirebaseError = firebase.FirebaseError;
+import { UserCredential, sendEmailVerification } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 export type EmailFormSigningWith = 'email' | 'emailLink' | 'resetPassword';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 @Component({
 	selector: 'sneat-email-login-form',
@@ -93,7 +95,8 @@ export class EmailLoginFormComponent {
 
 		this.setSigningWith('email');
 		try {
-			const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+			// const auth = getAuth(getApp());
+			const userCredential = await createUserWithEmailAndPassword(this.afAuth, email, password);
 			this.sendVerificationEmail(userCredential);
 			userCredential.user
 				?.getIdToken()
@@ -148,8 +151,8 @@ export class EmailLoginFormComponent {
 		this.email = this.email.trim();
 		this.wrongPassword = false;
 		this.saveEmailForReuse();
-		this.afAuth
-			.signInWithEmailAndPassword(this.email, this.password)
+		// const auth = getAuth(getApp());
+		signInWithEmailAndPassword(this.afAuth, this.email, this.password)
 			.then((userCredential) => {
 				this.onLoggedIn(userCredential); // TODO: add analytics event
 			})
@@ -166,12 +169,11 @@ export class EmailLoginFormComponent {
 		this.setSigningWith('emailLink');
 		this.email = this.email.trim();
 		this.saveEmailForReuse();
-		this.afAuth
-			.sendSignInLinkToEmail(this.email, {
-				// url: 'https://dailyscrum.app/pwa/sign-in',
-				url: document.baseURI + 'sign-in-from-email-link',
-				handleCodeInApp: true,
-			}).then(() => {
+		sendSignInLinkToEmail(this.afAuth, this.email, {
+			// url: 'https://dailyscrum.app/pwa/sign-in',
+			url: document.baseURI + 'sign-in-from-email-link',
+			handleCodeInApp: true,
+		}).then(() => {
 			this.showToast(`Sign-in link has been sent to email: ${this.email}`);
 			this.setSigningWith(undefined);
 		}).catch(
@@ -199,8 +201,7 @@ export class EmailLoginFormComponent {
 
 	public resetPassword(): void {
 		this.setSigningWith('resetPassword');
-		this.afAuth
-			.sendPasswordResetEmail(this.email)
+		sendPasswordResetEmail(this.afAuth, this.email)
 			.then(() => {
 				this.setSigningWith(undefined);
 				this.showToast(`Password reset link has been sent to email: ${this.email}`);
@@ -216,7 +217,7 @@ export class EmailLoginFormComponent {
 	private sendVerificationEmail(userCredential: UserCredential): void {
 		setTimeout(async () => {
 			try {
-				await userCredential.user?.sendEmailVerification();
+				await sendEmailVerification(userCredential.user);
 			} catch (e) {
 				this.handleError(e, 'Failed to send verification email');
 			}
@@ -249,7 +250,7 @@ export class EmailLoginFormComponent {
 			this.wrongPassword = true;
 			return;
 		}
-		this.errorLogger.logError(err, m, { report: !(err as {code: unknown}).code });
+		this.errorLogger.logError(err, m, { report: !(err as { code: unknown }).code });
 	}
 
 	private setSigningWith(signingWith?: EmailFormSigningWith): void {

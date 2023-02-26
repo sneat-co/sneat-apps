@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth as AngularFireAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth';
 import {
 	IAcceptPersonalInviteRequest,
@@ -133,8 +133,7 @@ export class InvitePersonalPageComponent implements OnInit {
 		} else {
 			// Move into service?
 			const password = this.randomIdService.newRandomId();
-			this.afAuth
-				.createUserWithEmailAndPassword(this.email, password)
+			createUserWithEmailAndPassword(this.afAuth, this.email, password)
 				.then((userCredential) => {
 					if (!userCredential?.user) {
 						return;

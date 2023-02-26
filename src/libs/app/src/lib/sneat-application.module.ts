@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire/compat';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule } from '@ionic/angular';
@@ -29,7 +28,6 @@ export class SneatApplicationModule {
 			BrowserAnimationsModule,
 			HttpClientModule, // TODO: Move to specific modules
 			IonicModule.forRoot(),
-			AngularFireModule.initializeApp(environmentConfig.firebaseConfig),
 			RandomModule,
 			SneatApplicationModule,
 		];

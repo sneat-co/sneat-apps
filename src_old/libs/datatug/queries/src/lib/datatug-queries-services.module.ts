@@ -8,7 +8,7 @@ import {
 	StoreApiService,
 } from '@sneat/datatug/services/repo';
 import { QueryContextSqlService } from './query-context-sql.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IonicModule } from '@ionic/angular';
 import { QueryEditorStateService } from './query-editor-state-service';
 import { QueriesUiService } from './queries-ui.service';

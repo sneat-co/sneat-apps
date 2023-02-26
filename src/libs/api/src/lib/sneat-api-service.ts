@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { map, Observable, Subject, takeUntil, throwError } from 'rxjs';
+import { Auth as AngularFireAuth, onIdTokenChanged } from '@angular/fire/auth';
+import { Observable, Subject, throwError } from 'rxjs';
 import { ISneatApiService } from './sneat-api-service.interface';
 
 const userIsNotAuthenticatedNoFirebaseToken =
@@ -19,7 +19,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 
 	constructor(
 		private readonly httpClient: HttpClient,
-		afAuth: AngularFireAuth, // TODO: Get rid of hard dependency on AngularFireAuth and instead have some token provider
+		afAuth: AngularFireAuth, // TODO: Get rid of hard dependency on AngularFireAuth and instead have some token provider using SneatApiAuthTokenProvider injection token
 		@Inject(SneatApiBaseUrl) private readonly baseUrl?: string,
 		// @Inject(SneatApiAuthTokenProvider) private authTokenProvider: Observable<string | undefined>,
 	) {
@@ -27,14 +27,14 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		if (!baseUrl) {
 			this.baseUrl = DefaultSneatAppApiBaseUrl;
 		}
-		afAuth.idToken
-			.pipe(
-				takeUntil(this.destroyed),
-				map(token => token || undefined),
-			)
-			.subscribe({
-				next: this.setApiAuthToken,
-			});
+		onIdTokenChanged(afAuth, {
+			next: (user) => {
+				user?.getIdToken().then(this.setApiAuthToken).catch(err => console.error('getIdToken() error:', err));
+			}, error: (error) => {
+				console.error('onIdTokenChanged() error:', error);
+			},
+			complete: () => void 0,
+		});
 	}
 
 	ngOnDestroy() {

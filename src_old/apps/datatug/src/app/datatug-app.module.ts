@@ -12,8 +12,8 @@ import { CommonModule } from '@angular/common';
 import { WormholeModule } from '@sneat/wormhole';
 import { HelloWorldPageComponent } from './hello-world-page.component';
 import { HttpClientModule } from '@angular/common/http';
-// import {USE_EMULATOR as USE_FIRESTORE_EMULATOR} from '@angular/fire/compat/firestore';
-// import {USE_EMULATOR as USE_FIREBASE_AUTH_EMULATOR} from '@angular/fire/compat/auth';
+// import {USE_EMULATOR as USE_FIRESTORE_EMULATOR} from '@angular/fire/firestore';
+// import {USE_EMULATOR as USE_FIREBASE_AUTH_EMULATOR} from '@angular/fire/auth';
 // Issue: https://github.com/angular/angularfire/issues/2656
 // Bug: https://github.com/firebase/firebase-js-sdk/issues/4110
 // Workaround: https://stackoverflow.com/questions/65025005/angularfireauth-emulator-login-is-lost-on-page-reload

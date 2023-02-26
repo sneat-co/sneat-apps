@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { MembersComponent } from './members.component';
 import { RouterTestingModule } from '@angular/router/testing';
-// import { AngularFireModule } from '@angular/fire/compat';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 // import { TeamService } from "@sneat/team/services";
 

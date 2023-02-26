@@ -1,6 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+	Firestore as AngularFirestore,
+} from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IAssetBrief, IAssetDto } from '@sneat/dto';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';

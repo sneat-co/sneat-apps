@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
+import { Timestamp } from '@firebase/firestore-types';
 
 import { takeUntil } from 'rxjs/operators';
 import { interval, Observable, ReplaySubject, Subject, Subscription, throwError } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
-import firebase from 'firebase/compat/app';
 import {
 	IMeetingTimerRequest,
 	IMemberTimerRequest,
@@ -14,7 +14,6 @@ import {
 	TimerOperationEnum,
 	TimerStatusEnum,
 } from './models';
-import Timestamp = firebase.firestore.Timestamp;
 
 export interface IMeetingTimerService {
 	readonly meetingType: string;

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { IonicModule } from '@ionic/angular';
 import { SignInFromEmailLinkPageComponent } from './sign-in-from-email-link-page.component';
 import { SignInFromEmailLinkPageRoutingModule } from './sign-in-from-email-link-page.routing';
@@ -10,7 +9,6 @@ import { SignInFromEmailLinkPageRoutingModule } from './sign-in-from-email-link-
 		CommonModule,
 		IonicModule,
 		SignInFromEmailLinkPageRoutingModule,
-		AngularFireAuthModule,
 	],
 	declarations: [
 		SignInFromEmailLinkPageComponent,
