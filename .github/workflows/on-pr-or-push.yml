@@ -12,6 +12,9 @@ on:
       - '.github/workflows/**.yml'
       - 'src/**'
 
+env:
+  BAZEL_TARGET: 1
+
 jobs:
 
   pnpm-install-and-cache:
