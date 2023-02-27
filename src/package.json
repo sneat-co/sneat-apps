@@ -58,7 +58,7 @@
     "@nrwl/workspace": "15.7.2",
     "@schematics/angular": "15.2.0",
     "@types/jest": "29.4.0",
-    "@types/node": "18.14.1",
+    "@types/node": "18.14.2",
     "@typescript-eslint/eslint-plugin": "5.53.0",
     "@typescript-eslint/parser": "5.53.0",
     "cypress": "12.7.0",
