@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IRetroItem, IRetrospective, RetroItemType } from '@sneat/scrumspace/scrummodels';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
+import { Firestore as AngularFirestore, collection, doc } from '@angular/fire/firestore';
 import { BaseMeetingService, IMeetingRequest } from '@sneat/meeting';
 import { SneatApiService } from '@sneat/api';
 import { IRecord } from '@sneat/data';
@@ -84,18 +84,19 @@ export class RetrospectiveService extends BaseMeetingService {
 		meetingId: string,
 	): Observable<IRetrospective> {
 		console.log(`watchRetro(${teamId}, ${meetingId})`);
-		const retroDoc = this.db
-			.collection('teams')
-			.doc(teamId)
-			.collection('retrospectives')
-			.doc(meetingId);
-		return retroDoc.snapshotChanges().pipe(
-			tap((changes) => {
-				console.log('retrospective changes:', changes);
-			}),
-			filter((changes) => changes.type === 'value'),
-			map((changes) => changes.payload.data() as IRetrospective),
-		);
+		// const teamsCollection = collection(this.db, 'teams');
+		// const teamDoc = doc(teamsCollection, teamId);
+		// const retroCollection = collection(teamDoc, 'retrospectives');
+		// const retroDoc = doc(retroCollection, meetingId);
+		// const retroDoc;
+		throw new Error('Not implemented');
+		// return retroDoc.snapshotChanges().pipe(
+		// 	tap((changes) => {
+		// 		console.log('retrospective changes:', changes);
+		// 	}),
+		// 	filter((changes) => changes.type === 'value'),
+		// 	map((changes) => changes.payload.data() as IRetrospective),
+		// );
 	}
 
 	public voteItem(request: IVoteRetroItemRequest): Observable<void> {
