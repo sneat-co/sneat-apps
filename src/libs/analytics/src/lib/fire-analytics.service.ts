@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
 import { IAnalyticsCallOptions, IAnalyticsService } from './analytics.interface';
-import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { Analytics as AngularFireAnalytics, logEvent } from '@angular/fire/analytics';
 
 const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 
@@ -9,7 +9,7 @@ const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 export class FireAnalyticsService implements IAnalyticsService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly angularFireAnalytics: AngularFireAnalytics,
+		@Optional() private readonly angularFireAnalytics?: AngularFireAnalytics,
 	) {
 	}
 
@@ -18,27 +18,16 @@ export class FireAnalyticsService implements IAnalyticsService {
 		eventParams?: { [key: string]: unknown },
 		options?: IAnalyticsCallOptions,
 	): void {
-		this.angularFireAnalytics
-			.logEvent(eventName, eventParams, options)
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'Failed to log analytics event',
-					logErrOptions,
-				),
-			);
+		if (this.angularFireAnalytics) {
+			logEvent(this.angularFireAnalytics, eventName, eventParams, options);
+		}
 	}
 
 	public setCurrentScreen(
 		screenName: string,
 		options?: IAnalyticsCallOptions,
 	): void {
-		this.angularFireAnalytics
-			.setCurrentScreen(screenName, options)
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'Failed to set analytics screen name',
-					logErrOptions,
-				),
-			);
+		// setCurrentScreen
+		// logEvent(this.angularFireAnalytics, 'screen_view', {'screenName': screenName}, options);
 	}
 }

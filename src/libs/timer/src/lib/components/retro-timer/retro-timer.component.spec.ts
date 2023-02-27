@@ -3,8 +3,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { RetroTimerComponent } from './retro-timer.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../environments/environment';
 
 describe('RetroTimerComponent', () => {
 	let component: RetroTimerComponent;
@@ -17,7 +15,6 @@ describe('RetroTimerComponent', () => {
 				imports: [
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
 			}).compileComponents();
 

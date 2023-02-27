@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth as AngularFireAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from '@sneat/auth';
 import { excludeEmpty } from '@sneat/core';
@@ -85,7 +85,7 @@ export class InviteService {
 			return throwError(() => 'No value in inviteInfo.invite.to.address');
 		}
 		const password = this.randomService.newRandomId({ len: 12 });
-		const credentialPromise = this.afAuth.createUserWithEmailAndPassword(email, password);
+		const credentialPromise = createUserWithEmailAndPassword(this.afAuth, email, password);
 		const credentialObserver = from(credentialPromise);
 		return credentialObserver.pipe(
 			switchMap((userCredential) => {

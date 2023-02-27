@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { IProjectRef } from '@sneat/datatug/core';
 import { IProjItemBrief, IProjItemsFolder } from '@sneat/datatug/models';
 import { StoreApiService } from './store-api.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 
 const notImplemented = 'not implemented';
 

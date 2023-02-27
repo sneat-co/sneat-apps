@@ -4,8 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { InviteLinksComponent } from './invite-links.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SneatUserService } from '@sneat/auth';
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('InviteLinksComponent', () => {

@@ -1,8 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { SneatApiService } from '@sneat/api';
-import { IListDto, ListType } from '@sneat/dto';
+import { Firestore as AngularFirestore, DocumentReference, collection, doc } from '@angular/fire/firestore';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { IListBrief, IListDto, ListType } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,12 +18,15 @@ import {
 @Injectable()
 export class ListService {
 
+	private readonly sfs: SneatFirestoreService<IListBrief, IListDto>;
+
 	constructor(
 		private readonly db: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 		// private readonly teamItemService: TeamItemBaseService,
 		// private readonly teamService: TeamService,
 	) {
+		this.sfs = new SneatFirestoreService<IListBrief, IListDto>('teams', db, (id, dto) => ({ ...dto, id }));
 	}
 
 	public createList(request: ICreateListRequest): Observable<IListContext> {
@@ -60,18 +63,9 @@ export class ListService {
 	public watchList(team: ITeamContext, listType: ListType, listID: string): Observable<IListContext> {
 		const id = this.getFullListID(listType, listID);
 		const doc = this.listDocRef(team.id, id);
-		return doc.snapshotChanges()
-			.pipe(
-				map(snapshot => {
-					console.log(`watchListById(${id}) => snapshot:`, snapshot);
-					let dto: IListDto | null = null;
-					if (snapshot.payload.exists) {
-						dto = snapshot.payload.data();
-					}
-					// console.log(`watchListById(id) =>`, snapshot.payload.exists, dto, snapshot);
-					return this.onListSnapshot(team, listID, listType, dto);
-				}),
-			);
+		return this.sfs.watchByDocRef(doc).pipe(
+			map(listContext => this.onListSnapshot(team, listID, listType, listContext.dto)),
+		);
 	}
 
 
@@ -107,25 +101,26 @@ export class ListService {
 			}), { itemIDs: request.itemIDs });
 	}
 
-	public getListById(team: ITeamContext, listType: ListType, listID: string): Observable<IListContext | null> {
+	public getListById(team: ITeamContext, listType: ListType, listID: string): Observable<IListContext> {
 		const id = this.getFullListID(listType, listID);
-		return this.listDocRef(team.id, id).get().pipe(
-			map(snapshot => {
-				const { exists } = snapshot;
-				return this.onListSnapshot(team, listID, listType, exists ? snapshot.data() || null : null);
+		const listDocRef = this.listDocRef(team.id, id);
+		return this.sfs.getByDocRef(listDocRef).pipe(
+			map(listContext => {
+				return this.onListSnapshot(team, listID, listType, listContext.dto);
 			}),
 		);
 	}
 
 
-	private readonly onListSnapshot = (team: ITeamContext, id: string, type: ListType, dto: IListDto | null): IListContext => ({
+	private readonly onListSnapshot = (team: ITeamContext, id: string, type: ListType, dto?: IListDto | null): IListContext => ({
 		id, dto,
-		brief: dto === null ? null : { ...dto, id, type },
+		brief: !dto ? null : { ...dto, id, type },
 		team,
 	});
 
-	private listDocRef(teamID: string, listID: string): AngularFirestoreDocument<IListDto> {
-		return this.db.collection('teams').doc(teamID).collection('lists').doc(listID);
+	private listDocRef(teamID: string, listID: string): DocumentReference<IListDto> {
+		const listsCollection = collection(this.db, 'teams', teamID, 'lists');
+		return doc(listsCollection, listID) as DocumentReference<IListDto>;
 	}
 }
 

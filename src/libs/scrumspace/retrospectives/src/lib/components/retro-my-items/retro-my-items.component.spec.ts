@@ -4,8 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { RetroMyItemsComponent } from './retro-my-items.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../environments/environment';
 
 describe('RetroMyItemsComponent', () => {
 	let component: RetroMyItemsComponent;
@@ -19,7 +17,6 @@ describe('RetroMyItemsComponent', () => {
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
 					RouterTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
 			}).compileComponents();
 

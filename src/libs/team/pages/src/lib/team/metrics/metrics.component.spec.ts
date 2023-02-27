@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { MetricsComponent } from './metrics.component';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../../environments/environment';
 import { UserService } from '../../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,7 +19,6 @@ describe('MetricsComponent', () => {
 					IonicModule.forRoot(),
 					HttpClientTestingModule,
 					RouterTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
 				providers: [TeamService, UserService],
 			}).compileComponents();

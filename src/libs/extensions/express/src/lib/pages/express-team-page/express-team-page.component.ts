@@ -17,7 +17,7 @@ export class ExpressTeamPageComponent extends TeamBaseComponent {
 		teamParams: TeamComponentBaseParams,
 		private readonly expressTeamService: ExpressTeamService,
 	) {
-		super('', route, teamParams);
+		super('ExpressTeamPageComponent', route, teamParams);
 	}
 
 	protected override onTeamIdChanged() {

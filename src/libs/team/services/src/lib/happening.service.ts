@@ -1,5 +1,7 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+	Firestore as AngularFirestore,
+} from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import {

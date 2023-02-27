@@ -1,14 +1,19 @@
 import {
-	Action,
-	AngularFirestore,
-	AngularFirestoreCollection, CollectionReference,
-	DocumentChangeAction,
+	doc,
+	docSnapshots,
+	getDoc,
+	CollectionReference,
+	DocumentReference,
 	DocumentSnapshot,
-} from '@angular/fire/compat/firestore';
+	Firestore as AngularFirestore,
+	query,
+	where,
+	onSnapshot,
+} from '@angular/fire/firestore';
+import { QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
+import { WhereFilterOp } from '@firebase/firestore-types';
 import { INavContext } from '@sneat/core';
-import firebase from 'firebase/compat';
-import { map, Observable } from 'rxjs';
-import WhereFilterOp = firebase.firestore.WhereFilterOp;
+import { from, map, Observable, Subject } from 'rxjs';
 
 export interface IFilter {
 	field: string;
@@ -17,6 +22,7 @@ export interface IFilter {
 }
 
 export class SneatFirestoreService<Brief extends { id: string }, Dto> {
+
 	constructor(
 		private readonly collection: string,
 		private readonly afs: AngularFirestore,
@@ -25,83 +31,75 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 			id,
 		}),
 	) {
+		if (!dto2brief) {
+			throw new Error('dto2brief is required, collection: ' + collection);
+		}
 	}
 
 	watchByID<Dto2 extends Dto>(
-		collection: AngularFirestoreCollection<Dto2>,
+		collection: CollectionReference<Dto2>,
 		id: string,
 	): Observable<INavContext<Brief, Dto2>> {
-		console.log(`SneatFirestoreService.watchByID(${this.collection}/${id})`);
-		return collection.doc(id)
-			.snapshotChanges()
-			.pipe(
-				map(changes => docSnapshotToDto(id, this.dto2brief, changes)),
-			);
+		return this.watchByDocRef(doc<Dto2>(collection, id));
 	}
 
-	watchSnapshotsByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[]) {
-		console.log('watchByFilter()', this.collection, filter);
+	watchByDocRef<Dto2 extends Dto>(docRef: DocumentReference<Dto2>): Observable<INavContext<Brief, Dto2>> {
+		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
+		const snapshots = docSnapshots<Dto2>(docRef);
+		return snapshots.pipe(
+			map(changes => docSnapshotToDto<Brief, Dto2>(docRef.id, this.dto2brief, changes)),
+		);
+	}
 
+	getByDocRef<Dto2 extends Dto>(docRef: DocumentReference<Dto2>): Observable<INavContext<Brief, Dto2>> {
+		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
+		return from(getDoc<Dto2>(docRef)).pipe(
+			map(changes => docSnapshotToDto<Brief, Dto2>(docRef.id, this.dto2brief, changes)),
+		);
+	}
+
+	watchSnapshotsByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[], orderBy?: QueryOrderByConstraint[]): Observable<QuerySnapshot<Dto2>> {
 		const operator = (f: IFilter) => f.field.endsWith('IDs') ? 'array-contains' : f.operator;
-
-		const query = this.afs.collection<Dto2>(
-			collectionRef as CollectionReference, // TODO: Ask StackOverflow: what is proper way instead of dumb forced cast?
-			ref => {
-				let cond = ref.where(filter[0].field, operator(filter[0]), filter[0].value);
-				for (let i = 1; i < filter.length; i++) {
-					const f = filter[i];
-					cond = cond.where(f.field, operator(f), f.value);
-				}
-				return cond;
-			},
-		)
-			;
-		return query.snapshotChanges();
+		const q = query(collectionRef, ...filter.map(f => where(f.field, operator(f), f.value)), ...(orderBy || []));
+		console.log('watchSnapshotsByFilter()', collectionRef.path, 'filter', filter, 'query', q);
+		const subj = new Subject<QuerySnapshot<Dto2>>();
+		onSnapshot<Dto2>(q, subj);
+		return subj;
 	}
 
-	watchByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[]): Observable<INavContext<Brief, Dto2>[]> {
-		return this.watchSnapshotsByFilter(collectionRef, filter).pipe(
-			map(changes => {
-				return this.snapshotChangesToContext(changes);
+	watchByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[], orderBy?: QueryOrderByConstraint[]): Observable<INavContext<Brief, Dto2>[]> {
+		return this.watchSnapshotsByFilter(collectionRef, filter, orderBy).pipe(
+			map(querySnapshot => {
+				console.log('watchByFilter() => querySnapshot: ', querySnapshot, querySnapshot.docs);
+				return querySnapshot.docs.map(this.docSnapshotToContext.bind(this));
 			}),
 		);
 	}
 
-	snapshotChangesToContext<Dto2 extends Dto>(changes: DocumentChangeAction<Dto2>[]) {
-		return changes.map(doc => {
-			return this.snapshotChangeToContext(doc);
+	docSnapshotsToContext<Dto2 extends Dto>(docSnapshots: DocumentSnapshot<Dto2>[]): INavContext<Brief, Dto2>[] {
+		return docSnapshots.map(doc => {
+			return this.docSnapshotToContext(doc);
 		});
-	}
-
-	snapshotChangeToContext<Dto2 extends Dto>(doc: DocumentChangeAction<Dto2>) {
-		const { id } = doc.payload.doc;
-		const dto: Dto2 = doc.payload.doc.data();
-		const result: INavContext<Brief, Dto2> = {
-			id, dto,
-			brief: this.dto2brief(id, dto),
-		};
-		return result;
 	}
 
 	docSnapshotToContext<Dto2 extends Dto>(doc: DocumentSnapshot<Dto2>): INavContext<Brief, Dto2> {
 		const { id } = doc;
 		const dto: Dto2 | undefined = doc.data();
-		const result: INavContext<Brief, Dto2> = {
+		return {
 			id, dto,
 			brief: dto && this.dto2brief(id, dto),
 		};
-		return result;
 	}
 }
 
 export function docSnapshotToDto<Brief extends { id: string }, Dto>(
 	id: string,
 	dto2brief: (id: string, dto: Dto) => Brief,
-	changes: Action<DocumentSnapshot<Dto>>,
+	docSnapshot: DocumentSnapshot<Dto>,
 ): INavContext<Brief, Dto> {
-	if (!changes.payload.exists) {
+	if (!docSnapshot.exists) {
 		return { id, dto: null };
 	}
-	const dto: Dto = changes.payload.data();
-	return { id, dto, brief: dto2brief(id, dto) };
+	const dto: Dto | undefined = docSnapshot.data();
+	return { id, dto, brief: dto ? dto2brief(id, dto) : undefined };
 }

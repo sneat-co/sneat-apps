@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { IRecord } from '@sneat/data';
 import { NavService } from '@sneat/datatug/core';
 import { ITeamDto } from '@sneat/dto';
@@ -41,24 +41,25 @@ export class ScrumsHistoryPageComponent {
 			}
 		}
 		if (this.team?.id) {
-			this.afAuth.idToken.subscribe((token) => {
-				if (token) {
-					console.log('token', token);
-					setTimeout(() => {
-            if (!this.team) {
-              throw new Error('!this.team');
-            }
-						this.scrumService.getScrums(this.team.id).subscribe({
-							next: (scrums) => {
-								console.log('scrums', scrums);
-								this.scrums = scrums;
-							},
-							error: (err) =>
-								this.errorLogger.logError(err, 'Failed to load scrums'),
-						});
-					}, 1000);
-				}
-			});
+			throw new Error('not implemented');
+			// this.afAuth.idToken.subscribe((token) => {
+			// 	if (token) {
+			// 		console.log('token', token);
+			// 		setTimeout(() => {
+      //       if (!this.team) {
+      //         throw new Error('!this.team');
+      //       }
+			// 			this.scrumService.getScrums(this.team.id).subscribe({
+			// 				next: (scrums) => {
+			// 					console.log('scrums', scrums);
+			// 					this.scrums = scrums;
+			// 				},
+			// 				error: (err) =>
+			// 					this.errorLogger.logError(err, 'Failed to load scrums'),
+			// 			});
+			// 		}, 1000);
+			// 	}
+			// });
 		}
 	}
 

@@ -4,8 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { MemberPageComponent } from './member.page';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../services/user-service';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TeamService } from '@sneat/team/services';
 
@@ -21,7 +19,6 @@ describe('MemberPage', () => {
 					IonicModule.forRoot(),
 					RouterTestingModule,
 					HttpClientTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
 				providers: [UserService, TeamService],
 			}).compileComponents();

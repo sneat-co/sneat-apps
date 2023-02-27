@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { init, instrumentAngularRouting } from '@sentry/angular';
 import { BrowserTracing } from '@sentry/tracing';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
-import { initFirebase, SneatApplicationModule } from '@sneat/app';
+import { ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunesUiModule } from '@sneat/communes/ui';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
@@ -33,8 +33,6 @@ if (environment.production) {
 	console.log('SneatAppModule: NOT PRODUCTION mode');
 }
 
-initFirebase(environment.firebaseConfig);
-
 const appInfo: IAppInfo = {
 	appId: 'sneat',
 	appTitle: 'sneat.app',
@@ -47,6 +45,7 @@ const appInfo: IAppInfo = {
 	],
 	imports: [
 		...SneatApplicationModule.defaultSneatApplicationImports(environment),
+		ImportFirebaseModules(environment.firebaseConfig),
 		SneatAuthServicesModule,
 		AuthMenuItemModule,
 		CommunesUiModule,

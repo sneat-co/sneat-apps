@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
-import { initFirebase, SneatApplicationModule } from '@sneat/app';
+import { ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
 import { CommunesUiModule } from '@sneat/communes/ui';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
@@ -15,7 +15,7 @@ import { FreightsAppComponent } from './freights-app.component';
 
 initSentry();
 
-initFirebase(environment.firebaseConfig);
+// initFirebase(environment.firebaseConfig);
 
 const appInfo: IAppInfo = {
 	appId: 'freights',
@@ -25,8 +25,13 @@ const appInfo: IAppInfo = {
 
 console.log('freights-app.module: environment:', environment);
 
+const firebaseModules = ImportFirebaseModules(environment.firebaseConfig);
+
+console.log('firebaseModules', firebaseModules);
+
 @NgModule({
 	imports: [
+		...firebaseModules,
 		BrowserAnimationsModule,
 		SneatApplicationModule.defaultSneatApplicationImports(environment),
 		SneatAuthServicesModule,

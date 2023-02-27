@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import { Component, Inject, Optional } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
@@ -15,16 +15,9 @@ import {
 import { APP_INFO, IAppInfo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatUserService } from '@sneat/auth';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
 import { Subject, takeUntil } from 'rxjs';
 import { EmailFormSigningWith } from './email-login-form/email-login-form.component';
-// import AuthProvider = firebase.auth.AuthProvider;
-// import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
-// import GithubAuthProvider = firebase.auth.GithubAuthProvider;
-// import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-// import OAuthProvider = firebase.auth.OAuthProvider;
-import UserCredential = firebase.auth.UserCredential;
+import { UserCredential } from 'firebase/auth';
 
 
 type Action = 'join' | 'refuse'; // TODO: inject provider for action descriptions/messages.

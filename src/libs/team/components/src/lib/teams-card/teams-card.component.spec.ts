@@ -3,8 +3,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { TeamsCardComponent } from './teams-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../../environments/environment';
 import { UserService } from '../../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TeamService } from '@sneat/team/services';
@@ -21,7 +19,6 @@ describe('TeamsCardComponent', () => {
 					IonicModule.forRoot(),
 					RouterTestingModule,
 					HttpClientTestingModule,
-					AngularFireModule.initializeApp(environment.firebaseConfig),
 				],
 				providers: [TeamService, UserService],
 			}).compileComponents();

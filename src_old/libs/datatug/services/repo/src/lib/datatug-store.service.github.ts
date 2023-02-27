@@ -26,10 +26,10 @@ export class DatatugStoreGithubService implements IDatatugStoreService {
 
 		let connectTo: Observable<urlAndHeaders> = of({ url });
 		// if (storeId.startsWith(GITLAB_REPO_PREFIX)) {
-		// 	//url = 'https://gitlab.dell.com/A_Trakhimenok/dsa-datatug/-/raw/master/datatug/datatug-project.json';
+		// 	//url = 'https://gitlab.COMPANY.com/A_Trakhimenok/dsa-datatug/-/raw/master/datatug/datatug-project.json';
 		// 	connectTo = this.privateTokenStoreService.getPrivateToken(storeId, projectId).pipe(map(accessToken => (
 		// 		{
-		// 			url: `https://gitlab.dell.com/api/v4/projects/${projectId}/repository/files/datatug%2Fdatatug-project.json/raw?ref=master`,
+		// 			url: `https://gitlab.COMPANY.com/api/v4/projects/${projectId}/repository/files/datatug%2Fdatatug-project.json/raw?ref=master`,
 		// 			headers: {"PRIVATE-TOKEN": accessToken}
 		// 		})));
 		// }

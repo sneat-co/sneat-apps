@@ -1,5 +1,11 @@
 import { Injectable, NgModule } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+	Firestore as AngularFirestore,
+	CollectionReference,
+	DocumentReference,
+	collection,
+	doc,
+} from '@angular/fire/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { map, Observable } from 'rxjs';
 import {
@@ -30,21 +36,25 @@ export class ExpressTeamService {
 	}
 
 	public watchExpressTeamByID(teamID: string): Observable<IExpressTeamContext> {
-		return this.afs
-			.collection('teams').doc(teamID)
-			.collection<IExpressTeamDto>('modules').doc('express')
-			.snapshotChanges()
-			.pipe(
-				map(docSnapshot => {
-					return this.sfs.docSnapshotToContext(docSnapshot.payload);
-				}),
-			);
+		return this.sfs.watchByDocRef(expressTeamDocRef(this.afs, teamID));
 	}
 
 	setExpressTeamSettings(request: ISetExpressTeamSettingsRequest): Observable<void> {
 		return this.sneatApiService.post('express/set_express_team_settings', request);
 	}
 
+}
+
+function expressTeamDocRef(afs: AngularFirestore, teamID: string): DocumentReference<IExpressTeamDto> {
+	const teamsCollection = collection(afs, 'teams');
+	const teamRef = doc(teamsCollection, teamID);
+	const modulesCollection = collection(teamRef, 'modules') as CollectionReference<IExpressTeamDto>;
+	return doc<IExpressTeamDto>(modulesCollection, 'express');
+}
+
+export function expressTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamID: string, collectionName: string): CollectionReference<Dto> {
+	const moduleRef = expressTeamDocRef(afs, teamID);
+	return collection(moduleRef, collectionName) as CollectionReference<Dto>;
 }
 
 @NgModule({

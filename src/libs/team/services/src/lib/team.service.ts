@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { SneatApiService } from '@sneat/api';
+import { Firestore as AngularFirestore, collection, CollectionReference } from '@angular/fire/firestore';
+import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
@@ -30,6 +30,8 @@ export class TeamService {
 	private teams$: { [id: string]: BehaviorSubject<ITeamContext> } = {};
 	private subscriptions: Subscription[] = [];
 
+	private readonly sfs: SneatFirestoreService<ITeamBrief, ITeamDto>;
+
 	constructor(
 		readonly sneatAuthStateService: SneatAuthStateService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -38,6 +40,7 @@ export class TeamService {
 		private readonly sneatApiService: SneatApiService,
 	) {
 		console.log('TeamService.constructor()');
+		this.sfs = new SneatFirestoreService<ITeamBrief, ITeamDto>('teams', db, (id, dto) => ({ id, ...dto }));
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === 'notAuthenticated') {
 				this.unsubscribe('signed out');
@@ -300,31 +303,16 @@ export class TeamService {
 		const t = subj.value;
 		console.log(`TeamService.subscribeForTeamChanges(${t.id})`);
 		const { id } = t;
-		const o: Observable<ITeamContext> = this.db
-			.collection('teams')
-			.doc<ITeamDto>(id)
-			.snapshotChanges()
+		const teamsCollection = collection(this.db, 'teams') as CollectionReference<ITeamDto>;
+		const o: Observable<ITeamContext> = this.sfs.watchByID(teamsCollection, id)
 			.pipe(
-				tap((team) => {
-					console.log('TeamService.subscribeForTeamChanges() => New team snapshot from Firestore:', team, team.payload.data());
-				}),
-				filter((documentSnapshot) =>
-					documentSnapshot.type === 'value' ||
-					documentSnapshot.type === 'added' ||
-					documentSnapshot.type === 'modified',
-				),
-				map((documentSnapshot) => documentSnapshot.payload),
-				map((teamDoc) =>
-					teamDoc.exists ? (teamDoc.data() as ITeamDto) : null,
-				),
-				map((dto: ITeamDto | null) => {
-					let team: ITeamContext = { id, brief: t.brief, dto: dto || undefined };
+				map((team) => {
 					const prevTeam = this.teams$[id].value;
 					console.log('prevTeam', prevTeam);
-					if (prevTeam.assets) {
-						team = { ...team, assets: prevTeam.assets };
-						console.log('Reusing assets from prev context');
-					}
+					// if (prevTeam.assets) {
+					// 	team = { ...team, assets: prevTeam.assets};
+					// 	console.log('Reusing assets from prev context');
+					// }
 					return team;
 				}),
 				tap((team) => {
@@ -332,6 +320,7 @@ export class TeamService {
 					// subj.next(team);
 				}),
 			);
+
 		this.subscriptions.push(o.subscribe({
 			next: value => subj.next(value),
 			error: this.errorLogger.logErrorHandler('failed to watch team with id=' + id),

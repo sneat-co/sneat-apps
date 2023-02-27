@@ -1,4 +1,4 @@
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
 import { IHappeningBrief, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';

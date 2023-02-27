@@ -26,9 +26,9 @@ export class TableService {
 		const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService
 			.getPrivateToken(r.repository, r.project)
 			.pipe(
-				map((accessToken) => ({
-					url: `https://gitlab.dell.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
-					headers: { 'PRIVATE-TOKEN': 'QPgjyFaJwq29x9h7pVxu' },
+				map((accessToken: string) => ({
+					url: `https://gitlabCOMPANY.com/api/v4/projects/${r.project}/repository/files/${path}/raw?ref=master`,
+					headers: { 'PRIVATE-TOKEN': accessToken },
 				})),
 			);
 
