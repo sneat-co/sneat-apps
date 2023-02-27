@@ -13,7 +13,7 @@ on:
       - 'src/**'
 
 env:
-  BAZEL_TARGET: 1
+  BAZEL_TARGET: 1 # https://stackoverflow.com/a/73429959/1975086
 
 jobs:
 
