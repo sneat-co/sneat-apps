@@ -107,7 +107,7 @@ export class ExpressOrderService {
 		}
 
 		const result = this.sfs.watchByFilter(ordersCollection, qFilter,
-			// [orderBy('created.at', 'desc')],
+			[orderBy('createdAt', 'desc')],
 		).pipe(
 			map(orders => orders.map(order => ({ ...order, team: { id: teamID } }))),
 		);
