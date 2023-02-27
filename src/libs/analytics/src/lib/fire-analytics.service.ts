@@ -3,7 +3,7 @@ import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
 import { IAnalyticsCallOptions, IAnalyticsService } from './analytics.interface';
 import { Analytics as AngularFireAnalytics, logEvent } from '@angular/fire/analytics';
 
-const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
+// const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 
 @Injectable()
 export class FireAnalyticsService implements IAnalyticsService {
@@ -27,6 +27,7 @@ export class FireAnalyticsService implements IAnalyticsService {
 		screenName: string,
 		options?: IAnalyticsCallOptions,
 	): void {
+		console.log(screenName, options);
 		// setCurrentScreen
 		// logEvent(this.angularFireAnalytics, 'screen_view', {'screenName': screenName}, options);
 	}

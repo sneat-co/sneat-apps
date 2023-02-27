@@ -1,8 +1,8 @@
 import {
 	ActivatedRouteSnapshot,
-	CanActivate,
-	CanActivateChild,
-	CanLoad,
+	// CanActivate,
+	// CanActivateChild,
+	// CanLoad,
 	Route,
 	Router,
 	RouterStateSnapshot,
@@ -32,7 +32,7 @@ export const redirectToLoginIfNotSignedIn: AuthPipe = map((user) => {
 });
 
 @Injectable()
-export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
+export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*/ {
 	constructor(
 		private readonly router: Router,
 		private readonly auth: AngularFireAuth,
@@ -48,7 +48,7 @@ export class SneatAuthGuard implements CanLoad, CanActivate, CanActivateChild {
 		| boolean
 		| UrlTree {
 		{
-			// console.log('SneatAuthGuard.canLoad', route, segments);
+			console.log('SneatAuthGuard.canLoad', route, segments);
 			// const authPipeFactory =
 			// 	(route.data && route.data['authCanLoadGuardPipe'] as AuthCanLoadPipeGenerator) ||
 			// 	(() => redirectToLoginIfNotSignedIn);
