@@ -4,10 +4,8 @@ import {
 	doc,
 	collection,
 	CollectionReference,
-	DocumentReference,
 } from '@angular/fire/firestore';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { ITeamDto } from '@sneat/dto';
 import { ITeamContext, ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

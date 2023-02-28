@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAnalyticsCallOptions, IAnalyticsService } from './analytics.interface';
 import { Analytics as AngularFireAnalytics, logEvent } from '@angular/fire/analytics';
 

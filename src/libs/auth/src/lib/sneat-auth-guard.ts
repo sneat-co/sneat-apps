@@ -9,9 +9,9 @@ import {
 	UrlSegment,
 	UrlTree,
 } from '@angular/router';
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Auth as AngularFireAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth as AngularFireAuth/*, onAuthStateChanged*/ } from '@angular/fire/auth';
 import { map, take } from 'rxjs/operators';
 import { AuthPipe } from '@angular/fire/auth-guard';
 
