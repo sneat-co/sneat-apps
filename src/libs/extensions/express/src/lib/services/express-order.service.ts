@@ -115,6 +115,15 @@ export class ExpressOrderService {
 	}
 
 	setOrderStatus(request: { teamID: string, orderID: string, status: string }): Observable<void> {
+		if (!request.teamID) {
+			return throwError(() =>'teamID is required parameter');
+		}
+		if (!request.orderID) {
+			return throwError(() =>'orderID is required parameter');
+		}
+		if (!request.status) {
+			return throwError(() =>'status is required parameter');
+		}
 		return this.sneatApiService.post('express/order/set_order_status', request);
 	}
 

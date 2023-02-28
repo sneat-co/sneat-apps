@@ -27,7 +27,7 @@ export class ContactInputComponent implements OnChanges {
 	@Input() contact?: IContactContext;
 	@Output() contactChange = new EventEmitter<IContactContext>();
 
-	protected readonly labelText = () => this.label || 'Contact';
+	protected readonly labelText = () => this.label || this.contactRole && (this.contactRole[0].toUpperCase() + this.contactRole.substr(1)) || 'Contact';
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

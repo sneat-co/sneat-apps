@@ -56,6 +56,9 @@ export class OrderCardComponent {
 		console.log('onUserChangedOrderStatus', event);
 		const ce = event as CustomEvent;
 		const status = ce.detail.value as string;
+		if (!status) {
+			return;
+		}
 		const team = this.team;
 		if (!team) {
 			throw new Error('No team context');

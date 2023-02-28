@@ -33,7 +33,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 	@Output() counterpartyChange = new EventEmitter<IOrderCounterpartyRef>();
 
-	@Input() label = 'Counterparty';
+	@Input() label?: string = undefined;
 
 	contact?: IContactContext;
 	parentContact?: IContactContext;

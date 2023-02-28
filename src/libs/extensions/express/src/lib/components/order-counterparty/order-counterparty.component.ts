@@ -21,7 +21,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() refNumLabel = 'Ref #'
 
-	@Input() label = 'Counterparty';
+	@Input() label?: string = undefined;
 
 	@Input() canChangeContact = true;
 	@Input() counterpartyRole?: CounterpartyRole;

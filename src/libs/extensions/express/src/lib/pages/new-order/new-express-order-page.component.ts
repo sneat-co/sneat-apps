@@ -138,10 +138,10 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			return;
 		}
 
-		if (!this.order?.dto?.counterparties?.some(c => c.role === 'dispatcher')) {
-			alert('At least 1 dispatcher is required');
-			return;
-		}
+		// if (!this.order?.dto?.counterparties?.some(c => c.role === 'dispatcher')) {
+		// 	alert('At least 1 dispatcher is required');
+		// 	return;
+		// }
 		// if (!this.order?.dto?.route?.origin?.countryID) {
 		// 	alert('Origin country is required');
 		// 	return;
