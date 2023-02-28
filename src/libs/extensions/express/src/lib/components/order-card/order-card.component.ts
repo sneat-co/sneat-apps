@@ -62,7 +62,7 @@ export class OrderCardComponent {
 		}
 		const order = this.order;
 		if (!order?.id) {
-			throw new Error('No team context');
+			throw new Error('No order context');
 		}
 		if (this.order?.dto?.status === status) {
 			return;
