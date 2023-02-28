@@ -23,12 +23,15 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		dto: {
 			status: 'draft',
 			direction: 'export',
-			created: {at: {seconds: 0, nanoseconds: 0}, by: ''},
-			updated: {at: {seconds: 0, nanoseconds: 0}, by: ''},
+			createdAt: {seconds: 0, nanoseconds: 0},
+			createdBy: '',
+			updatedAt: {seconds: 0, nanoseconds: 0},
+			updatedBy: '',
 			// route: {
 			// 	origin: { id: 'origin', countryID: '' },
 			// 	destination: { id: 'destination', countryID: '' },
 			// },
+
 		},
 	};
 

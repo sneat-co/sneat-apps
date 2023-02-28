@@ -21,7 +21,7 @@
 				<ion-item>
 					<ion-label color="medium">Created</ion-label>
 					<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
-					<ion-input [value]="(order?.dto?.created?.at?.seconds||0)*1000 | date:'dd MMM yyyy'"
+					<ion-input [value]="(order?.dto?.createdAt?.seconds||0)*1000 | date:'dd MMM yyyy'"
 										 readonly="readonly"></ion-input>
 				</ion-item>
 			</ion-col>

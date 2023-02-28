@@ -14,6 +14,7 @@
 		[contactRole]="endpointType === 'port' ? 'port' : 'location'"
 		[contact]="contact"
 		[parentRole]="endpointType === 'port' ? undefined : 'dispatcher'"
+		[parentContact]="contact?.parentContact"
 		[readonly]="readonly"
 		(contactChange)="onContactChanged($event)"
 	></sneat-contact-input>

@@ -1,11 +1,20 @@
 
-export interface IModified {
-	readonly at: {seconds: number; nanoseconds: number}
-	readonly by: string;
+type timestamp = {seconds: number; nanoseconds: number};
+
+export interface IWithCreated {
+	readonly createdAt: timestamp;
+	readonly createdBy: string;
 }
 
-export interface IWithModified {
-	created: IModified;
-	updated: IModified;
-	delete?: IModified;
+export interface IWithUpdated {
+	readonly updatedAt: timestamp;
+	readonly updatedBy: string;
+}
+
+export interface IWithDeleted {
+	readonly deletedAt?: timestamp;
+	readonly deletedBy?: string;
+}
+
+export interface IWithModified extends IWithCreated, IWithUpdated, IWithDeleted {
 }
