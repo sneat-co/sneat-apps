@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ExpressMenuModule } from '@sneat/extensions/express';
 import { FreightsAppHomePageComponent } from './freights-app-home-page.component';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { ExpressMenuModule } from '@sneat/extensions/express'; // TODO: HELP WANTED: find how to fix it
 
 const routes: Routes = [
 	{
@@ -13,12 +14,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    ExpressMenuModule,
-  ],
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule.forChild(routes),
+		ExpressMenuModule,
+	],
 	declarations: [FreightsAppHomePageComponent],
 })
 export class FreightsAppHomePageModule {
