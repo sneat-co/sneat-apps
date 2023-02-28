@@ -45,10 +45,7 @@ export class ContactService {
 	}
 
 	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: IFilter[]): Observable<IContactContext[]> {
-		if (!filter) {
-			filter = [];
-		}
-		filter.push(
+		filter = [
 			{
 				field: 'status',
 				value: status,
@@ -59,7 +56,8 @@ export class ContactService {
 				operator: '==',
 				value: '',
 			},
-		);
+			...(filter || []),
+		];
 		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, filter);
 	}
 

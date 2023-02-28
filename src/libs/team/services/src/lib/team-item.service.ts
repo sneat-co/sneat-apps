@@ -4,10 +4,12 @@ import {
 	doc,
 	collection,
 	CollectionReference,
+	DocumentReference,
 } from '@angular/fire/firestore';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { ITeamDto } from '@sneat/dto';
 import { ITeamContext, ITeamItemContext, ITeamRequest } from '@sneat/team/models';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 type ICreateTeamItemResponse<Brief extends { id: string }, Dto> = ITeamItemContext<Brief, Dto>;
@@ -32,9 +34,7 @@ export class TeamItemService<Brief extends { id: string }, Dto> {
 	// }
 
 	public watchTeamItemByID<Dto2 extends Dto>(team: ITeamContext, id: string): Observable<ITeamItemContext<Brief, Dto2>> {
-		const teamRef = doc(this.teamsCollection, team.id);
-		// const firestore = getFirestore(this.afs.app);
-		const collectionRef = collection(teamRef, this.collectionName);
+		const collectionRef = collection(this.teamRef(team.id), this.collectionName);
 		// const collection = this.teamsCollection.doc(team.id).collection<Dto2>(this.collectionName);
 		const result = this.sfs.watchByID<Dto2>(collectionRef as CollectionReference<Dto2>, id)
 			.pipe(
@@ -43,16 +43,14 @@ export class TeamItemService<Brief extends { id: string }, Dto> {
 		return result;
 	}
 
+	private readonly teamRef = (id: string) => doc(this.teamsCollection, id);
+
 	public watchTeamItems<Brief2 extends Brief, Dto2 extends Dto>(
 		team: ITeamContext,
 		filter?: IFilter[],
 	): Observable<ITeamItemContext<Brief2, Dto2>[]> {
 		console.log('watchTeamItems()', team.id, this.collectionName);
-		const teamsCollection = collection(this.teamsCollection, team.id);
-		const teamRef = doc(teamsCollection, team.id);
-
-		const collectionRef = collection(teamRef, this.collectionName);
-		// const query = filter ? this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter) : collection.snapshotChanges();
+		const collectionRef = collection(this.teamRef(team.id), this.collectionName);
 		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter||[]);
 		return querySnapshots.pipe(
 				map(querySnapshot => {

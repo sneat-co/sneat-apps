@@ -218,7 +218,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			)
 			.subscribe({
 				next: this.onTeamContextChanged,
-				error: this.errorLogger.logErrorHandler('failed on getting team record'),
+				error: this.errorLogger.logErrorHandler('failed to get team record'),
 			});
 	}
 
@@ -378,7 +378,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	protected saveNotes(event: Event): void {
 		event.preventDefault();
-		event.stopPropagation()
+		event.stopPropagation();
 		alert('Saving noes is not implemented yet');
 	}
 
@@ -388,6 +388,6 @@ export abstract class TeamBaseComponent implements OnDestroy {
 }
 
 export const teamPageUrl = (team?: ITeamContext, page?: string): string | undefined => {
-	return team?.id ? page ? `/space/${team.type}/${team.id}/${page}` : `/space/${team.type}/${team.id}` : undefined
-}
+	return team?.id ? page ? `/space/${team.type}/${team.id}/${page}` : `/space/${team.type}/${team.id}` : undefined;
+};
 

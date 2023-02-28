@@ -123,7 +123,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			);
 	}
 
-	readonly goContact = (contact?: IContactContext): void => {
+	protected readonly goContact = (contact?: IContactContext): void => {
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;
@@ -137,7 +137,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		}).catch(this.errorLogger.logErrorHandler('failed to navigate to contact page'));
 	};
 
-	goNewContact = (): void => {
+	protected readonly goNewContact = (): void => {
 		if (!this.team) {
 			return;
 		}
@@ -154,7 +154,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		navResult.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
 	};
 
-	goMember(id: string, event: Event): boolean {
+	protected goMember(id: string, event: Event): boolean {
 		event.stopPropagation();
 		if (!this.team) {
 			return false;
@@ -169,7 +169,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		return false;
 	}
 
-	goGroup(group: IMemberGroupContext): void {
+	protected goGroup(group: IMemberGroupContext): void {
 		if (!this.team) {
 			return;
 		}
@@ -182,7 +182,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
 	}
 
-	id(i: number, record: { id: string }): string {
+	protected id(i: number, record: { id: string }): string {
 		return record.id;
 	}
 
@@ -199,31 +199,33 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 				this.takeUntilNeeded(),
 			)
 			.subscribe({
-				next: contacts => {
-					console.log('ContactsPageComponent.onTeamIDChanged() => contacts loaded', contacts);
-					this.allContacts = contacts;
-					const contactsByRole: { [role: string]: IContactContext[] } = {'': []};
-					contacts.forEach(c => {
-						contactsByRole[''].push(c);
-						c.dto?.roles?.forEach(role => {
-							const roleContacts = contactsByRole[role as ContactRole];
-							if (roleContacts) {
-								roleContacts.push(c);
-							} else {
-								contactsByRole[role] = [c];
-							}
-						});
-					});
-					this.contactsByRole = contactsByRole;
-					this.applyFilter(this.filter, this.role);
-				},
-				error: this.errorLogger.logErrorHandler('failed to get team contacts'),
+				next: this.setTeamContacts,
+				error: this.errorLogger.logErrorHandler('failed to subscribe for team contacts'),
 			});
 	};
 
-	onRoleChanged(event: Event): void {
+	private readonly setTeamContacts = (contacts: IContactContext[]): void => {
+		console.log('ContactsPageComponent.setTeamContacts()', contacts);
+		this.allContacts = contacts;
+		const contactsByRole: { [role: string]: IContactContext[] } = { '': [] };
+		contacts.forEach(c => {
+			contactsByRole[''].push(c);
+			c.dto?.roles?.forEach(role => {
+				const roleContacts = contactsByRole[role as ContactRole];
+				if (roleContacts) {
+					roleContacts.push(c);
+				} else {
+					contactsByRole[role] = [c];
+				}
+			});
+		});
+		this.contactsByRole = contactsByRole;
+		this.applyFilter(this.filter, this.role);
+	};
+
+	protected onRoleChanged(event: Event): void {
 		event.stopPropagation();
-		const url = setHrefQueryParam('role', this.role || '')
+		const url = setHrefQueryParam('role', this.role || '');
 		history.replaceState(undefined, document.title, url);
 		this.applyFilter(this.filter, this.role);
 	}
