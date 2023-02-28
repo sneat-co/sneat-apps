@@ -18,6 +18,13 @@ import { ExpressMenuComponent } from './express-menu.component';
 		AppVersionModule,
 		AppVersionModule,
 		AppVersionModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				outlet: 'menu',
+				component: ExpressMenuComponent,
+			},
+		]),
 	],
 	declarations: [
 		ExpressMenuComponent,

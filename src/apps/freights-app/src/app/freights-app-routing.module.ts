@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
-import { ExpressMenuComponent } from '@sneat/extensions/express';
 
 const routes: Routes = [
 	{
@@ -18,8 +17,7 @@ const routes: Routes = [
 		path: '',
 		outlet: 'menu',
 		pathMatch: 'full',
-		// loadChildren: () => import('@sneat/extensions/express').then(m => m.ExpressTeamMenuModule),
-		component: ExpressMenuComponent,
+		loadChildren: () => import('@sneat/extensions/express').then(m => m.ExpressMenuModule),
 	},
 	{
 		path: 'space/:teamType/:teamID',
