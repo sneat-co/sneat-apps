@@ -30,7 +30,7 @@
 					<ion-label color="medium">Status</ion-label>
 					<!--		<ion-input [value]="order?.dto?.status" readonly="readonly"></ion-input>-->
 					<ion-select [disabled]="!team || !order?.id" interface="popover"
-											[value]="order?.dto?.status" (ionChange)="onUserChangedStatus($event)">
+											[value]="order?.dto?.status" (ionChange)="onUserChangedOrderStatus($event)">
 						<ion-select-option value="active">Active</ion-select-option>
 						<ion-select-option value="completed">Completed</ion-select-option>
 						<ion-select-option value="canceled">Canceled</ion-select-option>

@@ -50,10 +50,10 @@ export class OrderCardComponent {
 		await popover.present(event as MouseEvent);
 	}
 
-	protected onUserChangedStatus(event: Event): void {
+	protected onUserChangedOrderStatus(event: Event): void {
 		// event.stopPropagation();
 		// event.preventDefault();
-		console.log('onUserChangedStatus', event);
+		console.log('onUserChangedOrderStatus', event);
 		const ce = event as CustomEvent;
 		const status = ce.detail.value as string;
 		const team = this.team;
