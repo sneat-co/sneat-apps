@@ -64,6 +64,9 @@ export class OrderCardComponent {
 		if (!order?.id) {
 			throw new Error('No team context');
 		}
+		if (this.order?.dto?.status === status) {
+			return;
+		}
 		this.orderService.setOrderStatus({ teamID: team.id, orderID: order.id, status }).subscribe({
 			error: this.errorLogger.logErrorHandler('Failed to set order status'),
 		});
