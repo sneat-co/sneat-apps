@@ -8,7 +8,8 @@ import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
-import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus'; // TODO: HELP WANTED: find how to fix it
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
 

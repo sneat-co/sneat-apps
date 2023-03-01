@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { RoutesToCommuneModule } from '@sneat/communes/ui';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { RoutesToCommuneModule } from '@sneat/communes/ui'; // TODO: HELP WANTED: find how to fix it
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
 
