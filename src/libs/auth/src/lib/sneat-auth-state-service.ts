@@ -1,5 +1,3 @@
-// import { getApp } from '@angular/fire/app';
-// import { getAuth } from '@angular/fire/auth';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { BehaviorSubject, from, Observable, share, throwError } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
