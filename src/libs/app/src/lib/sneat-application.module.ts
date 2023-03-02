@@ -21,6 +21,7 @@ import { IEnvironmentConfig } from './environment-config';
 	],
 })
 export class SneatApplicationModule {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	static defaultSneatApplicationImports(environmentConfig: IEnvironmentConfig) {
 		// console.log('defaultSneatApplicationImports()', environmentConfig);
 		return [

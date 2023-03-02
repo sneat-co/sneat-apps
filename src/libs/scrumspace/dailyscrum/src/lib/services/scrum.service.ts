@@ -8,7 +8,7 @@ import {
 	collection,
 	doc,
 } from '@angular/fire/firestore';
-import { filter, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { BaseMeetingService } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
@@ -28,27 +28,27 @@ import {
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/auth';
 
-const getOrCreateMemberStatus = (
-	scrum: IScrumDto,
-	member: IMemberBrief,
-): IStatus => {
-	const mid = member.id;
-	const statusOfMember = (item: IStatus) => mid && item.member.id === mid;
-	let status = scrum.statuses.find(statusOfMember);
-	if (!status) {
-		status = {
-			member: member as IScrumStatusMember,
-			byType: {
-				done: [],
-				risk: [],
-				todo: [],
-				qna: [],
-			},
-		};
-		scrum.statuses.push(status);
-	}
-	return status;
-};
+// const getOrCreateMemberStatus = (
+// 	scrum: IScrumDto,
+// 	member: IMemberBrief,
+// ): IStatus => {
+// 	const mid = member.id;
+// 	const statusOfMember = (item: IStatus) => mid && item.member.id === mid;
+// 	let status = scrum.statuses.find(statusOfMember);
+// 	if (!status) {
+// 		status = {
+// 			member: member as IScrumStatusMember,
+// 			byType: {
+// 				done: [],
+// 				risk: [],
+// 				todo: [],
+// 				qna: [],
+// 			},
+// 		};
+// 		scrum.statuses.push(status);
+// 	}
+// 	return status;
+// };
 
 export interface ITaskWithUiStatus extends ITask {
 	uiStatus?: 'adding' | 'deleting';
@@ -72,8 +72,8 @@ export class ScrumService extends BaseMeetingService {
 
 	public getScrums(teamId: string, limit = 10): Observable<IRecord<IScrumDto>[]> {
 		console.log('getScrums()', teamId, limit, this.userService.currentUserID);
-		const scrums = this.scrumsCollection(teamId);
 		throw new Error('Not implemented');
+		// const scrums = this.scrumsCollection(teamId);
 		// const query = scrums.ref
 		// 	.where('userIDs', 'array-contains', this.userService.currentUserID)
 		// 	.orderBy(FieldPath.documentId(), 'desc')
@@ -97,8 +97,8 @@ export class ScrumService extends BaseMeetingService {
 
 	public watchScrum(teamId: string, scrumId: string): Observable<IScrumDto> {
 		console.log(`watchScrum(${teamId}, ${scrumId})`);
-		const scrumDoc = this.getScrumDoc(teamId, scrumId);
 		throw new Error('Not implemented');
+		// const scrumDoc = this.getScrumDoc(teamId, scrumId);
 		// return scrumDoc.snapshotChanges().pipe(
 		// 	tap((changes) => {
 		// 		console.log('scrum changes:', changes);
@@ -264,6 +264,7 @@ export class ScrumService extends BaseMeetingService {
 		// eslint-disable-next-line no-shadow
 		worker: (scrum: IScrumDto, status: IStatus) => IScrumDto,
 	): Observable<IScrumDto> {
+		console.log('updateStatus', teamId, scrumId, member, worker);
 		throw new Error('not implemented yet');
 		// let scrum: IScrumDto;
 		// return from(

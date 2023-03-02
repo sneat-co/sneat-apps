@@ -7,7 +7,7 @@ import {
 	doc,
 } from '@angular/fire/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
 	IExpressTeamBrief,
 	IExpressTeamContext,
