@@ -16,7 +16,7 @@ import {
 	signInWithPopup,
 } from '@angular/fire/auth';
 
-// TODO: fix & remove this eslint hint
+// TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { newRandomId } from '@sneat/random';
 
