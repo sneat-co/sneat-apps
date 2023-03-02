@@ -149,7 +149,7 @@ export class LoginPageComponent {
 		if (eventName) {
 			this.analyticsService.logEvent(eventName, eventParams);
 		}
-		this.errorLogger.logError(err, m, { report: !(err as any).code });
+		this.errorLogger.logError(err, m, { report: !(err as {code: unknown}).code });
 		this.signingWith = undefined;
 	}
 }

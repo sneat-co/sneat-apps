@@ -12,7 +12,7 @@ import {
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Auth as AngularFireAuth/*, onAuthStateChanged*/ } from '@angular/fire/auth';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AuthPipe } from '@angular/fire/auth-guard';
 
 type AuthCanLoadPipeGenerator = (

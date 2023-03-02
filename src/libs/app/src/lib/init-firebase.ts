@@ -4,7 +4,6 @@ import { IFirebaseConfig } from './environment-config';
 import { provideFirebaseApp, initializeApp, FirebaseApp } from '@angular/fire/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 
 
 export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {

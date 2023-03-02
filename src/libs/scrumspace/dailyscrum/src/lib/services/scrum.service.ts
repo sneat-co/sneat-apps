@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { FieldPath } from '@firebase/firestore-types';
 import { IMemberBrief, ITeamDto } from '@sneat/dto';
-import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
 	Firestore as AngularFirestore,
 	CollectionReference,

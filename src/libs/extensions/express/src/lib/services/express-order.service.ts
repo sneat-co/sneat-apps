@@ -2,13 +2,11 @@ import { Injectable, NgModule } from '@angular/core';
 import {
 	Firestore as AngularFirestore,
 	CollectionReference,
-	collection,
-	doc,
-	onSnapshot, orderBy,
+	orderBy,
 } from '@angular/fire/firestore';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { ITeamContext } from '@sneat/team/models';
-import { map, Observable, Subject, throwError } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import {
 	IAddContainersRequest,
 	IContainerRequest,
