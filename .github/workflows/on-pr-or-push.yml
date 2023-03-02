@@ -83,7 +83,7 @@ jobs:
         id: pnpm-cache
         run: |
           echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-#         echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      #         echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
 
       - name: Cache PNPM store directory
         uses: actions/cache@v3
@@ -105,5 +105,6 @@ jobs:
         working-directory: ./src
 
       - name: nx build affected
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }}
+        # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=1
         working-directory: ./src
