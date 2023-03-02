@@ -19,7 +19,7 @@ import {
 	IAddCommentRequest,
 	IAddTaskRequest,
 	IReorderTaskRequest,
-	IScrumDto, IScrumStatusMember,
+	IScrumDto,
 	IStatus,
 	ITask,
 	IThumbUpRequest,
