@@ -106,5 +106,5 @@ jobs:
 
       - name: nx build affected
         # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }}
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=1 --maxParallel=1
         working-directory: ./src
