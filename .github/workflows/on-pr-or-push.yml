@@ -13,7 +13,7 @@ on:
       - 'src/**'
 
 env:
-  BAZEL_TARGET: 1 # https://stackoverflow.com/a/73429959/1975086
+  BAZEL_TARGET: "1" # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
 
 jobs:
 
@@ -106,5 +106,5 @@ jobs:
 
       - name: nx build affected
         # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=1
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }}
         working-directory: ./src
