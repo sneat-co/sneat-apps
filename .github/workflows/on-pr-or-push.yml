@@ -12,9 +12,6 @@ on:
       - '.github/workflows/**.yml'
       - 'src/**'
 
-env:
-  BAZEL_TARGET: "1" # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
-
 jobs:
 
   pnpm-install-and-cache:
@@ -105,6 +102,9 @@ jobs:
         working-directory: ./src
 
       - name: nx build affected
+        env:
+          # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
+          BAZEL_TARGET: "1"
         # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=1 --maxParallel=1
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }}
         working-directory: ./src
