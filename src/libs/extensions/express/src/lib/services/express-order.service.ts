@@ -79,7 +79,12 @@ export class ExpressOrderService {
 		}
 		const ordersCollection = this.ordersCollection<IExpressOrderDto>(teamID);
 
-		const qFilter: IFilter[] = [{ field: 'status', operator: '==', value: filter?.status || 'active' }];
+		const qFilter: IFilter[] = [
+			{ field: 'status', operator: '==', value: filter?.status || 'active' }
+		];
+		if (filter?.direction) {
+			qFilter.push({ field: 'direction', operator: '==', value: filter.direction });
+		}
 
 		let keysVal = '';
 		if (filter?.countryID) {
