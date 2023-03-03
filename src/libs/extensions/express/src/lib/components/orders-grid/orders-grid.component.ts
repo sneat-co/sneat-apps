@@ -72,6 +72,7 @@ export class OrdersGridComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('OrdersGridComponent.ngOnChanges():', changes);
 		if (changes['orders']) {
 			this.rows = this.orders?.map(o => ({
 				id: o.id,

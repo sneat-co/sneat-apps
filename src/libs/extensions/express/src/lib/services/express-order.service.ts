@@ -72,8 +72,11 @@ export class ExpressOrderService {
 		);
 	}
 
-	public watchFreightOrders(teamID: string, filter?: IOrdersFilter): Observable<IExpressOrderContext[]> {
+	public watchFreightOrders(teamID: string, filter: IOrdersFilter): Observable<IExpressOrderContext[]> {
 		console.log('watchFreightOrders()', teamID, filter);
+		if (!filter) {
+			return throwError(() => 'filter is required parameter');
+		}
 		const ordersCollection = this.ordersCollection<IExpressOrderDto>(teamID);
 
 		const qFilter: IFilter[] = [{ field: 'status', operator: '==', value: filter?.status || 'active' }];
@@ -114,13 +117,13 @@ export class ExpressOrderService {
 
 	setOrderStatus(request: { teamID: string, orderID: string, status: string }): Observable<void> {
 		if (!request.teamID) {
-			return throwError(() =>'teamID is required parameter');
+			return throwError(() => 'teamID is required parameter');
 		}
 		if (!request.orderID) {
-			return throwError(() =>'orderID is required parameter');
+			return throwError(() => 'orderID is required parameter');
 		}
 		if (!request.status) {
-			return throwError(() =>'status is required parameter');
+			return throwError(() => 'status is required parameter');
 		}
 		return this.sneatApiService.post('express/order/set_order_status', request);
 	}

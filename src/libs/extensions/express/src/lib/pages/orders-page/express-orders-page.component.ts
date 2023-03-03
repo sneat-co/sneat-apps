@@ -1,27 +1,31 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { excludeEmpty } from '@sneat/core';
-import { Subscription, takeUntil } from 'rxjs';
-import { ExpressOrderService } from '../../services/express-order.service';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { Subscription, takeUntil } from 'rxjs';
 import { IExpressOrderContext } from '../../dto/order-dto';
+import { ExpressOrderService } from '../../services/express-order.service';
 import { IOrdersFilter } from '../../services/orders-filter';
+
+const defaultFilter: IOrdersFilter = { status: 'active' };
 
 @Component({
 	selector: 'sneat-express-orders-page',
 	templateUrl: 'express-orders-page.component.html',
+	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpressOrdersPageComponent extends TeamBaseComponent {
 
 	orders?: IExpressOrderContext[];
 
 	private ordersSubscription?: Subscription;
-	private filter?: IOrdersFilter;
+	private filter: IOrdersFilter = defaultFilter;
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		private readonly ordersService: ExpressOrderService,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
 		super('OrdersPageComponent', route, teamParams);
 	}
@@ -40,23 +44,28 @@ export class ExpressOrdersPageComponent extends TeamBaseComponent {
 	}
 
 	private subscribeForOrders() {
-		this.ordersSubscription?.unsubscribe();
-		const teamId = this.team?.id;
-		if (!teamId) {
-			throw new Error('Team ID is not defined');
+		try {
+			this.ordersSubscription?.unsubscribe();
+			this.orders = undefined;
+			const teamId = this.team?.id;
+			if (!teamId) {
+				throw new Error('Team ID is not defined');
+			}
+			this.ordersSubscription = this.ordersService
+				.watchFreightOrders(teamId, excludeEmpty(this.filter))
+				.pipe(
+					takeUntil(this.destroyed),
+				)
+				.subscribe({
+					next: orders => {
+						console.log('ExpressOrdersPageComponent.subscribeForOrders() => orders:', orders);
+						this.orders = orders;
+						this.changeDetectorRef.detectChanges();
+					},
+					error: this.errorLogger.logErrorHandler('failed to load express orders'),
+				});
+		} catch (e) {
+			this.errorLogger.logError(e, 'failed to subscribeForOrders for orders');
 		}
-		this.ordersSubscription = this.ordersService
-			.watchFreightOrders(teamId, excludeEmpty(this.filter))
-			.pipe(
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: orders => {
-					console.log('express_orders', orders);
-					this.orders = orders;
-				},
-				error: this.errorLogger.logErrorHandler('faield to load express orders'),
-			});
 	}
-
 }

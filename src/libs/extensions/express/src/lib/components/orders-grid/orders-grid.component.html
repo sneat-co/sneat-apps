@@ -1,9 +1,10 @@
 <ion-card style="padding: 0.5em">
-		<sneat-datagrid
-			[data]="rows"
-			[columns]="displayCols"
-			[rowClick]="rowClick"
-			height="200"
-		>
-		</sneat-datagrid>
+	<ion-card-content *ngIf="!orders">Loading...</ion-card-content>
+	<sneat-datagrid
+		[data]="rows"
+		[columns]="displayCols"
+		[rowClick]="rowClick"
+		height="200"
+	>
+	</sneat-datagrid>
 </ion-card>
