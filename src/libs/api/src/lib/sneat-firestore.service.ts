@@ -1,6 +1,5 @@
 import {
 	doc,
-	docSnapshots,
 	getDoc,
 	CollectionReference,
 	DocumentReference,
@@ -13,7 +12,7 @@ import {
 import { QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
 import { WhereFilterOp } from '@firebase/firestore-types';
 import { INavContext } from '@sneat/core';
-import { from, map, Observable, Subject } from 'rxjs';
+import { from, map, Observable, Subject, tap } from 'rxjs';
 
 export interface IFilter {
 	field: string;
@@ -44,9 +43,13 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 	}
 
 	watchByDocRef<Dto2 extends Dto>(docRef: DocumentReference<Dto2>): Observable<INavContext<Brief, Dto2>> {
-		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
-		const snapshots = docSnapshots<Dto2>(docRef);
-		return snapshots.pipe(
+		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`, docRef);
+		const subj = new Subject<DocumentSnapshot<Dto2>>();
+		// const snapshots = docSnapshots<Dto2>(docRef);
+		onSnapshot<Dto2>(docRef, snapshot => subj.next(snapshot), err => subj.error(err), () => subj.complete());
+		// const snapshots = from(getDoc<Dto2>(docRef));
+		return subj.asObservable().pipe(
+			tap(snapshot => console.log('SneatFirestoreService.watchByDocRef: snapshot:', snapshot)),
 			map(changes => docSnapshotToDto<Brief, Dto2>(docRef.id, this.dto2brief, changes)),
 		);
 	}
