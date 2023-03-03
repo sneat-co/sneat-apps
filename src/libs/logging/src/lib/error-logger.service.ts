@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import * as Sentry from '@sentry/angular';
-import { location } from 'ionicons/icons';
 import { IErrorLogger, ILogErrorOptions } from './error-logger.interface';
 
 const defaultErrorToastDuration = 7000;

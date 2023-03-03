@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
+// TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { ExpressMenuComponent } from '@sneat/extensions/express';
 
 const routes: Routes = [
