@@ -323,7 +323,7 @@ export class TeamService {
 
 		this.subscriptions.push(o.subscribe({
 			next: v => subj.next(v), // Do not use as "next: subj.next" because it will be called with wrong "this" context
-			error: this.errorLogger.logErrorHandler('failed to watch team with id=' + id),
+			error: this.errorLogger.logErrorHandler(`Failed to watch team with ID="${id}"`),
 		}));
 	}
 
