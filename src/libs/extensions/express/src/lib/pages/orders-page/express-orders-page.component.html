@@ -19,10 +19,6 @@
 											 (viewModeChange)="viewMode=$event">
 	></sneat-orders-filter>
 
-	<p>
-		Orders count: {{orders?.length}}
-	</p>
-
 	<sneat-express-orders-grid *ngIf="viewMode === 'grid'" [team]="team" [orders]="orders" ></sneat-express-orders-grid>
 	<sneat-express-orders-list *ngIf="viewMode === 'list'" [team]="team" [orders]="orders" ></sneat-express-orders-list>
 

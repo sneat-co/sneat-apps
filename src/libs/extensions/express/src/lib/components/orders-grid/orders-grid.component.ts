@@ -31,12 +31,13 @@ export class OrdersGridComponent implements OnChanges {
 			field: 'id',
 			dbType: 'string',
 			title: '#',
+			hozAlign: 'right',
 		},
-		{
-			field: 'status',
-			dbType: 'string',
-			title: 'Status',
-		},
+		// {
+		// 	field: 'status',
+		// 	dbType: 'string',
+		// 	title: 'Status',
+		// },
 		{
 			field: 'direction',
 			dbType: 'string',
@@ -61,6 +62,7 @@ export class OrdersGridComponent implements OnChanges {
 			field: 'containers',
 			dbType: 'string',
 			title: 'Containers',
+			hozAlign: 'right',
 		},
 	];
 
