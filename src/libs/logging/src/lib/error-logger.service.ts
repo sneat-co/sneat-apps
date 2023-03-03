@@ -22,7 +22,7 @@ export class ErrorLoggerService implements IErrorLogger {
 		message?: string,
 		options?: ILogErrorOptions,
 	): void => {
-		console.error(`ErrorLoggerService.logError: ${message || 'Error'}:`, e, options);
+		console.error(`ErrorLoggerService.logError: ${message || 'Error'}:`, e, '; Logging options:', options);
 		if (e === true || e === false) {
 			try {
 				// noinspection ExceptionCaughtLocallyJS
