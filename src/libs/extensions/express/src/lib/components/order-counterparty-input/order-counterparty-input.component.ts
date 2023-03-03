@@ -48,12 +48,16 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);
 		if (changes['order']) {
 			this.setContacts();
 		}
 	}
 
-	setContacts(): void {
+	private setContacts(): void {
+		if (!this.order) {
+			return;
+		}
 		const team = this.team;
 		if (!team) {
 			throw new Error('Team is not set');
@@ -127,8 +131,8 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				error: err => {
 					this.deleting = false;
 					this.errorLogger.logError(err, `Failed to remove counterparty with role=${this.counterpartyRole} from the order`);
-				}
-			})
+				},
+			});
 			return;
 		}
 

@@ -141,6 +141,11 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 			return;
 		}
 
+		if (!Object.keys(this.numberOfContainers).length) {
+			console.error('No containers', this.numberOfContainers);
+			return;
+		}
+
 		// if (!this.order?.dto?.counterparties?.some(c => c.role === 'dispatcher')) {
 		// 	alert('At least 1 dispatcher is required');
 		// 	return;

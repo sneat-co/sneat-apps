@@ -16,12 +16,13 @@ export class NewOrderContainersFormComponent {
 	size40ft = 0;
 
 	onSizeChanged(): void {
-		console.log('onSizeChanged(), size8ft:', this.size8ft, 'size9ft:', this.size9ft, 'size20ft:', this.size20ft, 'size40ft:', this.size40ft);
-		this.numberOfContainersChange.emit(excludeZeroValues({
+		const numberOfContainers = excludeZeroValues({
 			'8ft': this.size8ft,
 			'9ft': this.size9ft,
 			'20ft': this.size20ft,
 			'40ft': this.size40ft,
-		}));
+		});
+		console.log('NewOrderContainersFormComponent.onSizeChanged(), size8ft:', this.size8ft, 'size9ft:', this.size9ft, 'size20ft:', this.size20ft, 'size40ft:', this.size40ft, 'numberOfContainers:', numberOfContainers);
+		this.numberOfContainersChange.emit(numberOfContainers);
 	}
 }

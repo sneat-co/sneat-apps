@@ -7,25 +7,25 @@
 			<ion-col size="3">
 				<ion-item>
 					<ion-label color="medium">8ft</ion-label>
-					<ion-input type="number" [(ngModel)]="size8ft" (click)="onSizeChanged()"></ion-input>
+					<ion-input type="number" min="0" max="9" [(ngModel)]="size8ft" (click)="onSizeChanged()"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="3">
 				<ion-item>
 					<ion-label color="medium">9ft</ion-label>
-					<ion-input type="number" [(ngModel)]="size9ft" (click)="onSizeChanged()"></ion-input>
+					<ion-input type="number" min="0" max="9" [(ngModel)]="size9ft" (click)="onSizeChanged()"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="3">
 				<ion-item>
 					<ion-label color="medium">20ft</ion-label>
-					<ion-input type="number" [(ngModel)]="size20ft" (click)="onSizeChanged()"></ion-input>
+					<ion-input type="number" min="0" max="9" [(ngModel)]="size20ft" (click)="onSizeChanged()"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="3">
 				<ion-item>
 					<ion-label color="medium">40ft</ion-label>
-					<ion-input type="number" [(ngModel)]="size40ft" (click)="onSizeChanged()"></ion-input>
+					<ion-input type="number" min="0" max="9" [(ngModel)]="size40ft" (click)="onSizeChanged()"></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
