@@ -24,8 +24,12 @@ export class NewContainerComponent implements AfterViewInit {
 	selectedShippingPointIDs?: ReadonlyArray<string>;
 
 	readonly containerTypes: ISelectItem[] = [
+		{ id: '8ft', title: '8 ft.' },
+		{ id: '10ft', title: '10 ft.' },
 		{ id: '20ft', title: '20 ft.' },
+		{ id: '20ftHighCube', title: '20 ft. High Cube' },
 		{ id: '40ft', title: '40 ft.' },
+		{ id: '40ftHighCube', title: '40 ft. High Cube' },
 	];
 
 	containerType?: string;
