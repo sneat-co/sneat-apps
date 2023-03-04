@@ -8,13 +8,14 @@ import {
 	IExpressOrderContext,
 	IOrderContainer,
 	IContainerSegment,
-	IFreightLoad,
+	IFreightLoad, IContainerPoint,
 } from '../..';
 import { NewSegmentService } from '../new-segment/new-segment.service';
 
 @Component({
 	selector: 'sneat-order-container-form',
 	templateUrl: './container-form.component.html',
+	// changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ContainerFormComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
@@ -22,17 +23,20 @@ export class ContainerFormComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() i = 0;
 
-	segments?: IContainerSegment[];
+	protected tab: 'points' | 'segments' = 'points';
 
-	deleting = false;
+	protected containerSegments?: IContainerSegment[];
+	protected containerPoints?: IContainerPoint[];
 
-	number = new FormControl<string>('');
+	protected deleting = false;
 
-	containerFormGroup = new FormGroup({
+	protected number = new FormControl<string>('');
+
+	protected containerFormGroup = new FormGroup({
 		number: this.number,
 	});
 
-	segmentID(_: number, segment: IContainerSegment): string {
+	protected segmentID(_: number, segment: IContainerSegment): string {
 		return segment.containerID + '-' + segment.from.shippingPointID + '-' + segment.to.shippingPointID;
 	}
 
@@ -49,17 +53,25 @@ export class ContainerFormComponent implements OnChanges {
 		}
 		if (changes['order'] || changes['container']) {
 			const containerID = this.container?.id;
-			this.segments = containerID ? this.order?.dto?.segments?.filter(s => s.containerID === containerID) || [] : undefined;
-			const containerPoints = this.order?.dto?.containerPoints?.filter(cp => cp.containerID === containerID && this.segments?.some(s => s.from.shippingPointID === cp.shippingPointID));
-			if (containerPoints?.length && this.container) {
+			this.containerSegments = containerID ? this.order?.dto?.segments?.filter(s => s.containerID === containerID) : undefined;
+			this.containerPoints = containerID ? this.order?.dto?.containerPoints?.filter(cp => cp.containerID === containerID && this.containerSegments?.some(s => s.from.shippingPointID === cp.shippingPointID)) : undefined;
+			if (containerID) {
+				if (!this.containerPoints) {
+					this.containerPoints = [];
+				}
+				if (!this.containerSegments) {
+					this.containerSegments = [];
+				}
+			}
+			if (this.containerPoints?.length && this.container) {
 				this.container = {
 					...this.container,
-					...containerPoints.reduce((total, cp) => ({
+					...this.containerPoints.reduce((total, cp) => ({
 						numberOfPallets: (total.numberOfPallets || 0) + (cp.toPick?.numberOfPallets || 0),
 						grossWeightKg: (total.grossWeightKg || 0) + (cp.toPick?.grossWeightKg || 0),
 						volumeM3: (total.volumeM3 || 0) + (cp.toPick?.volumeM3 || 0),
 					}), {} as IFreightLoad),
-				}
+				};
 			}
 		}
 	}
@@ -121,8 +133,17 @@ export class ContainerFormComponent implements OnChanges {
 		});
 	}
 
-	async addSegment(): Promise<void> {
-		console.log('addSegment()');
+	addPoints(event: Event): void {
+		console.log('addPoints()');
+		event.stopPropagation();
+		event.preventDefault();
+		alert('not implemented yet');
+	}
+
+	async addSegment(event: Event): Promise<void> {
+		console.log('addSegment()', event);
+		event.stopPropagation();
+		event.preventDefault();
 		if (!this.order) {
 			return;
 		}

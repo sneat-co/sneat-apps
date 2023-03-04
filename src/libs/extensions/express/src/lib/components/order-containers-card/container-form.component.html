@@ -56,22 +56,47 @@
 				</ion-item>
 			</ion-col>
 		</ion-row>
+		<ion-row>
+			<ion-col size="12" size-md="9">
+				<ion-segment [(ngModel)]="tab" color="medium">
+					<ion-segment-button value="points">🛒 Points</ion-segment-button>
+					<ion-segment-button value="segments">🚛 Segments</ion-segment-button>
+				</ion-segment>
+			</ion-col>
+			<ion-col size="12" size-md="3">
+				<ion-item>
+					<ion-label></ion-label>
+					<ion-buttons slot="end">
+						<ion-button *ngIf="tab === 'points'" (click)="addPoints($event)">
+							<ion-icon name="add-outline" slot="start"></ion-icon>
+							<ion-label (click)="addPoints($event)" title="Add shipping points">Add </ion-label>
+						</ion-button>
+						<ion-button *ngIf="tab === 'segments'" (click)="addSegment($event)">
+							<ion-icon name="add-outline" slot="start"></ion-icon>
+							<ion-label title="Add shipping segments">Add</ion-label>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-col>
+		</ion-row>
 	</ion-grid>
-	<ion-item-divider>
-		<ion-label color="medium" style="font-weight: bold">
-			<span>🚛 Trucking segments</span>
-			<span *ngIf="segments && !segments?.length" style="font-weight: normal">&nbsp; - no segments have been added for the container</span>
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button title="Add transporting segment" (click)="addSegment()">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
-				<ion-label>Add</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
+	<ng-container *ngIf="tab === 'points'">
+		<ion-item-divider *ngIf="containerPoints && !containerPoints?.length">
+			<ion-label color="medium" >
+				No shipping points have been added for the container yet.
+			</ion-label>
+		</ion-item-divider>
+	</ng-container>
+	<ng-container *ngIf="tab === 'segments'">
+		<ion-item-divider *ngIf="containerSegments && !containerSegments?.length">
+			<ion-label color="medium">
+				No  shipping segments have been added for the container yet.
+			</ion-label>
+		</ion-item-divider>
 
-	<sneat-container-segment *ngFor="let segment of segments; trackBy:segmentID"
-													 [order]="order"
-													 [segment]="segment"
-	></sneat-container-segment>
+		<sneat-container-segment *ngFor="let segment of containerSegments; trackBy:segmentID"
+														 [order]="order"
+														 [segment]="segment"
+		></sneat-container-segment>
+	</ng-container>
 </ion-item-group>
