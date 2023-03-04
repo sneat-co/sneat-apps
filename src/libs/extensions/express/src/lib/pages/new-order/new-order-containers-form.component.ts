@@ -10,19 +10,19 @@ export class NewOrderContainersFormComponent {
 	@Input() order?: IExpressOrderContext;
 	@Output() readonly numberOfContainersChange = new EventEmitter<{ [size: string]: number }>();
 
-	size8ft = 0;
-	size9ft = 0;
 	size20ft = 0;
+	size20ftHighCube = 0;
 	size40ft = 0;
+	size40ftHighCube = 0;
 
 	onSizeChanged(): void {
 		const numberOfContainers = excludeZeroValues({
-			'8ft': this.size8ft,
-			'9ft': this.size9ft,
 			'20ft': this.size20ft,
-			'40ft': this.size40ft,
+			'20ftHighCube': this.size20ftHighCube,
+			'40ft': this.size40ftHighCube,
+			'40ftHighCube': this.size40ftHighCube,
 		});
-		console.log('NewOrderContainersFormComponent.onSizeChanged(), size8ft:', this.size8ft, 'size9ft:', this.size9ft, 'size20ft:', this.size20ft, 'size40ft:', this.size40ft, 'numberOfContainers:', numberOfContainers);
+		console.log('NewOrderContainersFormComponent.onSizeChanged(): numberOfContainers:', numberOfContainers);
 		this.numberOfContainersChange.emit(numberOfContainers);
 	}
 }

@@ -58,13 +58,15 @@
 	</ion-card>
 
 
-	<sneat-express-order-counterparties
-		plural="Dispatchers"
-		[team]="team"
-		[order]="order"
-		(orderChange)="onOrderChanged($event)"
-		[readonly]="readonly"
-	></sneat-express-order-counterparties>
+	<ion-card>
+		<sneat-express-order-counterparties
+			plural="Dispatchers"
+			[team]="team"
+			[order]="order"
+			(orderChange)="onOrderChanged($event)"
+			[readonly]="readonly"
+		></sneat-express-order-counterparties>
+	</ion-card>
 
 	<!--	<sneat-order-route-card-->
 	<!--		[order]="order"-->
