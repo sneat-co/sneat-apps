@@ -24,9 +24,10 @@ import { DispatcherComponent } from './dispatcher.component';
 		DispatchPointComponent,
 		ContainerPointComponent,
 	],
-	exports: [
-		DispatchersComponent,
-	]
+  exports: [
+    DispatchersComponent,
+    ContainerPointComponent,
+  ],
 })
 export class DispatchersModule {
 

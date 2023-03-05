@@ -6,33 +6,36 @@ import { DialogHeaderModule, SelectFromListModule } from '@sneat/components';
 import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
 import { NewContainerComponent } from '../new-container/new-container.component';
 import {
-	ShippingPointsSelectorModule
+	ShippingPointsSelectorModule,
 } from '../shipping-points-selector/shipping-points-selector.module';
 import { ContainerFormComponent } from './container-form.component';
+import { OrderContainerPointComponent } from './order-container-point.component';
 import { ContainerSegmentComponent } from './container-segment.component';
 import { OrderContainersComponent } from './order-containers.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    FormsModule,
-    SelectFromListModule,
-    ReactiveFormsModule,
-    ShippingPointsSelectorModule,
-    DialogHeaderModule,
-    FreightLoadFormModule,
-  ],
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		SelectFromListModule,
+		ReactiveFormsModule,
+		ShippingPointsSelectorModule,
+		DialogHeaderModule,
+		FreightLoadFormModule,
+	],
 	declarations: [
 		ContainerFormComponent,
 		OrderContainersComponent,
 		NewContainerComponent,
 		ContainerSegmentComponent,
+		OrderContainerPointComponent,
 	],
-  exports: [
-    OrderContainersComponent,
-    ContainerFormComponent,
-  ],
+	exports: [
+		OrderContainersComponent,
+		ContainerFormComponent,
+		OrderContainerPointComponent,
+	],
 })
 export class OrderContainersModule {
 

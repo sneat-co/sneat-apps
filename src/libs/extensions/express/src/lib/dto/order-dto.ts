@@ -280,6 +280,11 @@ export interface IContainerRequest extends IExpressOrderRequest {
 	readonly containerID: string;
 }
 
+export interface IContainerPointsRequest extends IExpressOrderRequest {
+	containerID: string;
+	shippingPointIDs: string[];
+}
+
 export interface IOrderShippingPointRequest extends IExpressOrderRequest {
 	readonly shippingPointID: string;
 }

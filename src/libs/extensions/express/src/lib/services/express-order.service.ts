@@ -22,7 +22,7 @@ import {
 	IAddSegmentsRequest,
 	IOrderShippingPointRequest,
 	IDeleteSegmentsRequest,
-	IUpdateContainerPointRequest,
+	IUpdateContainerPointRequest, IContainerPointsRequest,
 } from '../dto';
 import { expressTeamModuleSubCollection } from './express-team.service';
 import { IOrdersFilter } from './orders-filter';
@@ -159,6 +159,10 @@ export class ExpressOrderService {
 
 	deleteContainer(request: IContainerRequest): Observable<void> {
 		return this.sneatApiService.delete('express/order/delete_container', undefined, request);
+	}
+
+	deleteContainerPoints(request: IContainerPointsRequest): Observable<void> {
+		return this.sneatApiService.delete('express/order/delete_container_points', undefined, request);
 	}
 
 	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {

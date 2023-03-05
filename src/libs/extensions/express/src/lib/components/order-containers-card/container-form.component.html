@@ -69,7 +69,7 @@
 					<ion-buttons slot="end">
 						<ion-button *ngIf="tab === 'points'" (click)="addPoints($event)">
 							<ion-icon name="add-outline" slot="start"></ion-icon>
-							<ion-label (click)="addPoints($event)" title="Add shipping points">Add </ion-label>
+							<ion-label (click)="addPoints($event)" title="Add shipping points">Add</ion-label>
 						</ion-button>
 						<ion-button *ngIf="tab === 'segments'" (click)="addSegment($event)">
 							<ion-icon name="add-outline" slot="start"></ion-icon>
@@ -82,15 +82,20 @@
 	</ion-grid>
 	<ng-container *ngIf="tab === 'points'">
 		<ion-item-divider *ngIf="containerPoints && !containerPoints?.length">
-			<ion-label color="medium" >
+			<ion-label color="medium">
 				No shipping points have been added for the container yet.
 			</ion-label>
 		</ion-item-divider>
+		<sneat-order-container-point *ngFor="let containerPoint of containerPoints"
+													 [team]="this.team"
+													 [order]="order"
+													 [containerPoint]="containerPoint"
+		></sneat-order-container-point>
 	</ng-container>
 	<ng-container *ngIf="tab === 'segments'">
 		<ion-item-divider *ngIf="containerSegments && !containerSegments?.length">
 			<ion-label color="medium">
-				No  shipping segments have been added for the container yet.
+				No shipping segments have been added for the container yet.
 			</ion-label>
 		</ion-item-divider>
 
