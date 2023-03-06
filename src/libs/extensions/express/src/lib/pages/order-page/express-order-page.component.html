@@ -80,10 +80,9 @@
 	<!--	</sneat-order-shipping-points-card>-->
 
 	<ng-container [ngSwitch]="tab">
-		<sneat-order-containers-card
-			*ngSwitchCase="'containers'"
-			[team]="team"
-			[order]="order">
+		<sneat-order-containers-card *ngSwitchCase="'containers'"
+																 [team]="team"
+																 [order]="order">
 		</sneat-order-containers-card>
 
 		<sneat-order-segments *ngSwitchCase="'segments'"
