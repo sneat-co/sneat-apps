@@ -5,7 +5,7 @@ import { ITeamContext } from '@sneat/team/models';
 import { ILogistOrderContext } from '../../';
 
 @Component({
-	selector: 'sneat-express-order-print-menu',
+	selector: 'sneat-logist-order-print-menu',
 	templateUrl: './order-print-menu.component.html',
 })
 export class OrderPrintMenuComponent {

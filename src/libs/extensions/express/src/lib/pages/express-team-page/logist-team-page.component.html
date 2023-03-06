@@ -19,12 +19,12 @@
 		<ion-item-divider>
 			<ion-label>Company</ion-label>
 		</ion-item-divider>
-		<sneat-express-team-menu-items  [team]="team"></sneat-express-team-menu-items>
+		<sneat-logist-team-menu-items  [team]="team"></sneat-logist-team-menu-items>
 	</ion-card>
 
 	<ng-container *ngIf="expressTeam && !expressTeam.dto?.contactID">
 		<p class="ion-margin">To start working please setup your company data.</p>
-		<sneat-express-team-settings [team]="team"></sneat-express-team-settings>
+		<sneat-logist-team-settings [team]="team"></sneat-logist-team-settings>
 
 	</ng-container>
 

@@ -11,7 +11,7 @@ import {
 import { LogistOrderService } from '../../services';
 
 @Component({
-	selector: 'sneat-express-order-counterparty',
+	selector: 'sneat-logist-order-counterparty',
 	templateUrl: './order-counterparty.component.html',
 })
 export class OrderCounterpartyComponent implements OnChanges {

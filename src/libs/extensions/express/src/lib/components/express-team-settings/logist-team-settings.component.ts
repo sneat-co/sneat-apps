@@ -8,7 +8,7 @@ import { ITeamContext } from '@sneat/team/models';
 import { LogistTeamService, ISetLogistTeamSettingsRequest } from '../..';
 
 @Component({
-	selector: 'sneat-express-team-settings',
+	selector: 'sneat-logist-team-settings',
 	templateUrl: './logist-team-settings.component.html',
 })
 export class LogistTeamSettingsComponent {

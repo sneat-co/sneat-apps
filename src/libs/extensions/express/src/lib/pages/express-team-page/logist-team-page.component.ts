@@ -5,7 +5,7 @@ import { ILogistTeamContext } from '../../dto/express-team-dto';
 import { LogistTeamService } from '../../services/logist-team.service';
 
 @Component({
-	selector: 'sneat-express-main-page',
+	selector: 'sneat-logist-main-page',
 	templateUrl: './logist-team-page.component.html',
 	styleUrls: ['./logist-team-page.component.scss'],
 })

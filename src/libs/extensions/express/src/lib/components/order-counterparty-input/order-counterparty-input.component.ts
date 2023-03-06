@@ -12,7 +12,7 @@ import {
 } from '../../dto';
 
 @Component({
-	selector: 'sneat-express-order-counterparty-input',
+	selector: 'sneat-logist-order-counterparty-input',
 	templateUrl: './order-counterparty-input.component.html',
 })
 export class OrderCounterpartyInputComponent implements OnChanges {

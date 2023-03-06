@@ -1,7 +1,7 @@
 <ion-grid class="ion-grid-layout">
 	<ion-row>
 		<ion-col [size]="counterparty && useColumns ? 8 : 12">
-			<sneat-express-order-counterparty-input
+			<sneat-logist-order-counterparty-input
 				[label]="label"
 				[team]="team"
 				[order]="order"
@@ -14,7 +14,7 @@
 				[parentRole]="parentRole"
 				[canChangeContact]="canChangeContact"
 				[labelPosition]="labelPosition"
-			></sneat-express-order-counterparty-input>
+			></sneat-logist-order-counterparty-input>
 		</ion-col>
 		<ion-col [size]="useColumns ? 4 : 12" *ngIf="counterparty">
 			<ion-item class="sneat-no-end-padding">

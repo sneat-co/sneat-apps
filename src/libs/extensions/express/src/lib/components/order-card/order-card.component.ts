@@ -8,7 +8,7 @@ import { LogistOrderService } from '../../services';
 import { OrderPrintMenuComponent } from './order-print-menu.component';
 
 @Component({
-	selector: 'sneat-express-order-card',
+	selector: 'sneat-logist-order-card',
 	templateUrl: './order-card.component.html',
 	styleUrls: ['./order-card.component.scss'],
 })

@@ -3,7 +3,7 @@ import { ActivationStart, Router, RouterOutlet } from '@angular/router';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
 
 @Component({
-	selector: 'sneat-express-menu',
+	selector: 'sneat-logist-menu',
 	templateUrl: './logist-menu.component.html',
 	styleUrls: ['./logist-menu.component.scss'],
 })

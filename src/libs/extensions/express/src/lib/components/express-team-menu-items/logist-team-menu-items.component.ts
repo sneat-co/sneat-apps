@@ -4,7 +4,7 @@ import { teamPageUrl } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({
-	selector: 'sneat-express-team-menu-items',
+	selector: 'sneat-logist-team-menu-items',
 	templateUrl: './logist-team-menu-items.component.html',
 })
 export class LogistTeamMenuItemsComponent {

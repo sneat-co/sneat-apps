@@ -1,9 +1,9 @@
 <ng-container *ngIf="orders?.length; else noOrders">
-	<sneat-express-order-card *ngFor="let order of orders"
+	<sneat-logist-order-card *ngFor="let order of orders"
 														[order]="order"
 														[team]="team"
 														[readonly]="true"
-	></sneat-express-order-card>
+	></sneat-logist-order-card>
 </ng-container>
 <ng-template #noOrders>
 	<ion-card>

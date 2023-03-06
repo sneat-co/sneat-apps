@@ -3,7 +3,7 @@ import { ActivatedRoute, ActivationStart, Router, RouterOutlet } from '@angular/
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 
 @Component({
-	selector: 'sneat-express-team-menu',
+	selector: 'sneat-logist-team-menu',
 	templateUrl: './logist-team-menu.component.html',
 })
 export class LogistTeamMenuComponent extends TeamBaseComponent implements OnInit {

@@ -3,7 +3,7 @@ import { ITeamContext } from '@sneat/team/models';
 import { ILogistOrderContext } from '../../dto/order-dto';
 
 @Component({
-	selector: 'sneat-express-orders-list',
+	selector: 'sneat-logist-orders-list',
 	templateUrl: './orders-list.component.html',
 	styleUrls: ['./orders-list.component.scss'],
 })

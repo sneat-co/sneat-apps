@@ -10,7 +10,7 @@ import { IOrdersFilter } from '../../services/orders-filter';
 const defaultFilter: IOrdersFilter = { status: 'active' };
 
 @Component({
-	selector: 'sneat-express-orders-page',
+	selector: 'sneat-logist-orders-page',
 	templateUrl: 'logist-orders-page.component.html',
 	// changeDetection: ChangeDetectionStrategy.OnPush,
 })

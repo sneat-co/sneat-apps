@@ -17,7 +17,7 @@ interface ICounterparty extends IOrderCounterparty {
 }
 
 @Component({
-	selector: 'sneat-express-order-counterparties',
+	selector: 'sneat-logist-order-counterparties',
 	templateUrl: './order-counterparties.component.html',
 })
 export class OrderCounterpartiesComponent implements OnChanges {

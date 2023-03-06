@@ -16,7 +16,7 @@ interface OrderRow {
 }
 
 @Component({
-	selector: 'sneat-express-orders-grid',
+	selector: 'sneat-logist-orders-grid',
 	templateUrl: './orders-grid.component.html',
 	styleUrls: ['./orders-grid.component.scss'],
 })

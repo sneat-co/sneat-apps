@@ -15,7 +15,7 @@
 			<ion-label>Counterparties</ion-label>
 		</ion-item-divider>
 
-		<sneat-express-order-counterparty [team]="team"
+		<sneat-logist-order-counterparty [team]="team"
 																			[order]="order"
 																			(orderChange)="onOrderChanged($event)"
 																			[readonly]="readonly"
@@ -23,9 +23,9 @@
 																			counterpartyRole="buyer"
 																			contactRole="buyer"
 																			labelPosition="fixed">
-		</sneat-express-order-counterparty>
+		</sneat-logist-order-counterparty>
 
-		<sneat-express-order-counterparty [team]="team"
+		<sneat-logist-order-counterparty [team]="team"
 																			[order]="order"
 																			(orderChange)="onOrderChanged($event)"
 																			[readonly]="readonly"
@@ -33,9 +33,9 @@
 																			counterpartyRole="carrier"
 																			contactRole="carrier"
 																			labelPosition="fixed">
-		</sneat-express-order-counterparty>
+		</sneat-logist-order-counterparty>
 
-		<sneat-express-order-counterparty [team]="team"
+		<sneat-logist-order-counterparty [team]="team"
 																			[order]="order"
 																			(orderChange)="onOrderChanged($event)"
 																			[readonly]="readonly"
@@ -43,9 +43,9 @@
 																			counterpartyRole="shipper"
 																			contactRole="shipper"
 																			labelPosition="fixed">
-		</sneat-express-order-counterparty>
+		</sneat-logist-order-counterparty>
 
-		<sneat-express-order-counterparty [team]="team"
+		<sneat-logist-order-counterparty [team]="team"
 																			[order]="order"
 																			(orderChange)="onOrderChanged($event)"
 																			[readonly]="readonly"
@@ -54,18 +54,18 @@
 																			label="Notify party"
 																			contactRole="buyer"
 																			labelPosition="fixed">
-		</sneat-express-order-counterparty>
+		</sneat-logist-order-counterparty>
 	</ion-card>
 
 
 	<ion-card>
-		<sneat-express-order-counterparties
+		<sneat-logist-order-counterparties
 			plural="Dispatchers"
 			[team]="team"
 			[order]="order"
 			(orderChange)="onOrderChanged($event)"
 			[readonly]="readonly"
-		></sneat-express-order-counterparties>
+		></sneat-logist-order-counterparties>
 	</ion-card>
 
 	<!--	<sneat-order-route-card-->
