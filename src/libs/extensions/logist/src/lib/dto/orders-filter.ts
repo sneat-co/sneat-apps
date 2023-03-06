@@ -1,4 +1,4 @@
-import { OrderDirection } from '../index';
+export type OrderDirection = 'import' | 'export' | 'internal';
 
 export interface IOrdersFilter {
 	status?: string;

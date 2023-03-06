@@ -2,6 +2,7 @@ import { IAddress, IWithModified } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { CounterpartyRole } from './logist-team-dto';
+import { OrderDirection } from './orders-filter';
 
 export interface IFreightAddress {
 	readonly countryID: string;
@@ -126,7 +127,6 @@ export interface IOrderRoute {
 	readonly destination?: ITransitPoint;
 }
 
-export type OrderDirection = 'import' | 'export' | 'internal';
 
 export function getSegmentsByContainerID(segments?: ReadonlyArray<IContainerSegment>, id?: string): IContainerSegment[] | undefined {
 	return segments?.filter(s => s.containerID === id);

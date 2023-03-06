@@ -25,7 +25,7 @@ import {
 	IUpdateContainerPointRequest, IContainerPointsRequest,
 } from '../dto';
 import { logistTeamModuleSubCollection } from './logist-team.service';
-import { IOrdersFilter } from './orders-filter';
+import { IOrdersFilter } from '../dto/orders-filter';
 
 
 function briefFromDto(id: string, dto: ILogistOrderDto): IFreightOrderBrief {

@@ -1,10 +1,9 @@
 /* eslint-disable */
 export default {
-	displayName: 'extensions-express',
+	displayName: 'extensions-logist',
 	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-	globals: {},
-	coverageDirectory: '../../../coverage/libs/extensions/express',
+	coverageDirectory: '../../../coverage/libs/extensions/logist',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
 			'jest-preset-angular',

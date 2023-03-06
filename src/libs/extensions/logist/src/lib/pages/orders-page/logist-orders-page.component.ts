@@ -5,7 +5,7 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 import { Subscription, takeUntil } from 'rxjs';
 import { ILogistOrderContext } from '../../dto/order-dto';
 import { LogistOrderService } from '../../services/logist-order.service';
-import { IOrdersFilter } from '../../services/orders-filter';
+import { IOrdersFilter } from '../../dto/orders-filter';
 
 const defaultFilter: IOrdersFilter = { status: 'active' };
 

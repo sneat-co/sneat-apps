@@ -2,13 +2,13 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	LogistOrderService,
-	ILogistOrderContext,
-	IOrderContainer,
-	IOrderCounterparty,
 	IContainerSegment,
-	IOrderShippingPoint, IOrderShippingPointRequest,
-} from '../..';
+	ILogistOrderContext, IOrderContainer,
+	IOrderCounterparty,
+	IOrderShippingPoint,
+	IOrderShippingPointRequest,
+} from '../../dto';
+import { LogistOrderService } from '../../services';
 
 @Component({
 	selector: 'sneat-dispatch-point',

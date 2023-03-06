@@ -3,13 +3,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ContactSelectorService } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	LogistOrderService, getSegmentCounterparty, getSegmentsByContainerID,
-	ILogistOrderContext,
-	IOrderContainer,
-	IOrderCounterparty,
+	getSegmentCounterparty,
+	getSegmentsByContainerID, IContainerPoint,
 	IContainerSegment,
-	IOrderShippingPoint, IUpdateContainerPointRequest, IFreightLoad, IContainerPoint,
-} from '../..';
+	IFreightLoad, ILogistOrderContext, IOrderContainer,
+	IOrderCounterparty, IOrderShippingPoint, IUpdateContainerPointRequest,
+} from '../../dto';
+import { LogistOrderService } from '../../services';
 import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
 
 @Component({

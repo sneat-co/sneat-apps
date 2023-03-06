@@ -4,12 +4,12 @@ import { excludeUndefined } from '@sneat/core';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	LogistOrderService,
-	IAddOrderShippingPointRequest,
-	IDeleteCounterpartyRequest,
+	IAddOrderShippingPointRequest, IDeleteCounterpartyRequest,
 	ILogistOrderContext,
-	IOrderCounterparty, ISetOrderCounterpartiesRequest,
-} from '../..';
+	IOrderCounterparty,
+	ISetOrderCounterpartiesRequest,
+} from '../../dto';
+import { LogistOrderService } from '../../services';
 
 @Component({
 	selector: 'sneat-order-dispatcher',
