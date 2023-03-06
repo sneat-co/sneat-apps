@@ -14,7 +14,7 @@ import { OrderPrintPageBaseComponent } from '../order-print-page-base.component'
 interface IContainerInfo {
 	dispatcher?: IOrderCounterparty;
 	from?: IOrderShippingPoint;
-	toPick?: IFreightLoad;
+	toLoad?: IFreightLoad;
 	segment?: IContainerSegment;
 	container?: IOrderContainer;
 }
@@ -71,10 +71,10 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 		this.points = order.dto?.segments?.filter(s => s.byContactID === this.truckerID)
 			.map(segment => {
 				const container = order?.dto?.containers?.find(c => c.id === segment.containerID);
-				const toPick = order?.dto?.containerPoints?.find(p => p.containerID === segment.containerID && p.shippingPointID === segment.from.shippingPointID)?.toPick;
+				const toPick = order?.dto?.containerPoints?.find(p => p.containerID === segment.containerID && p.shippingPointID === segment.from.shippingPointID)?.toLoad;
 				const from = order?.dto?.shippingPoints?.find(p => p.id === segment.from.shippingPointID);
 				const dispatcher = order?.dto?.counterparties?.find(c => c.contactID === from?.counterparty?.contactID);
-				const containerInfo: IContainerInfo = {container, from, toPick, segment, dispatcher};
+				const containerInfo: IContainerInfo = { container, from, toLoad: toPick, segment, dispatcher };
 				return containerInfo;
 			});
 	}

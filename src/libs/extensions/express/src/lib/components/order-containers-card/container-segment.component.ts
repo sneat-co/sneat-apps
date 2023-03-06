@@ -148,7 +148,7 @@ export class ContainerSegmentComponent implements OnChanges {
 		if (this.fromPoint) {
 			this.fromPoint = excludeUndefined({
 				...this.fromPoint,
-				toPick: freightLoad,
+				toLoad: freightLoad,
 			});
 		}
 	}
@@ -171,7 +171,7 @@ export class ContainerSegmentComponent implements OnChanges {
 			shippingPointID: this.fromPoint.shippingPointID,
 			departsDate: this.departDate.value || '',
 			arrivesDate: this.arriveDate.value || '',
-			toPick: this.fromPoint?.toPick,
+			toLoad: this.fromPoint?.toLoad,
 		});
 		this.form.disable();
 		this.orderService.updateContainerPoint(request).subscribe({

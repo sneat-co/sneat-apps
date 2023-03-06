@@ -99,10 +99,10 @@
 				<td>{{i}}</td>
 				<td>{{point.container?.type}} - {{point.container?.number}}</td>
 				<td>{{point.from?.counterparty?.title}}</td>
-				<td>{{point.toPick?.numberOfPallets}}</td>
-				<td>{{point.toPick?.grossWeightKg}}</td>
+				<td>{{point.toLoad?.numberOfPallets}}</td>
+				<td>{{point.toLoad?.grossWeightKg}}</td>
 				<td>{{point?.dispatcher?.refNumber}}</td>
-				<td>{{point?.toPick?.note}}</td>
+				<td>{{point?.toLoad?.note}}</td>
 				<td>
 					<pre style="margin: 0">{{point.from?.location?.address?.lines?.join('\n')}}</pre>
 					<p *ngIf="point.from?.location?.address?.zipCode">

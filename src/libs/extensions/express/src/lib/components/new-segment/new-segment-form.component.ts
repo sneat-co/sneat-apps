@@ -162,7 +162,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			teamID: this.order.team?.id,
 			containers: this.selectedContainers.map(c => ({
 				id: c.id,
-				toPick: undefinedIfEmpty(excludeZeroValues({
+				toLoad: undefinedIfEmpty(excludeZeroValues({
 					numberOfPallets: c.pallets,
 					grossWeightKg: c.grossKg,
 					volumeM3: c.volumeM3,

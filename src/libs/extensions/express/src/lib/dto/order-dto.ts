@@ -48,8 +48,8 @@ export interface IShippingPointBase {
 	completed?: string;
 	scheduledStartDate?: string;
 	scheduledEndDate?: string;
-	toPick?: IFreightLoad;
-	toDrop?: IFreightLoad;
+	toLoad?: IFreightLoad;
+	toUnload?: IFreightLoad;
 }
 
 export interface IOrderShippingPointLocation {
@@ -250,8 +250,8 @@ export interface IContainerSegmentKey extends IOrderSegmentKey {
 
 export interface INewSegmentContainer {
 	readonly id: string;
-	readonly toPick?: IFreightLoad;
-	readonly toDrop?: IFreightLoad;
+	readonly toLoad?: IFreightLoad;
+	readonly toUnload?: IFreightLoad;
 }
 
 export interface IAddSegmentParty {
@@ -290,8 +290,8 @@ export interface IOrderShippingPointRequest extends IExpressOrderRequest {
 }
 
 export interface IUpdateContainerPointRequest extends IOrderShippingPointRequest, IContainerRequest {
-	readonly toPick?: IFreightLoad;
-	readonly toDrop?: IFreightLoad;
+	readonly toLoad?: IFreightLoad;
+	readonly toUnload?: IFreightLoad;
 	readonly arrivesDate?: string; // Pass empty string to clear date
 	readonly departsDate?: string; // Pass empty string to clear date
 }

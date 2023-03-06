@@ -1,0 +1,10 @@
+<ion-card style="padding: 0.5em">
+	<ion-card-content *ngIf="!containers">Loading...</ion-card-content>
+	<sneat-datagrid
+		[data]="containers"
+		[columns]="allCols"
+		[rowClick]="rowClick"
+		height="200"
+	>
+	</sneat-datagrid>
+</ion-card>

@@ -60,13 +60,13 @@ export class ContainerPointComponent implements OnChanges {
 			this.containerPoint = this.order?.dto?.containerPoints?.find(
 				cp => cp.containerID === containerID && cp.shippingPointID === shippingPointID);
 			if (!this.numberOfPallets.dirty) {
-				this.numberOfPallets.setValue(this.containerPoint?.toPick?.numberOfPallets || undefined);
+				this.numberOfPallets.setValue(this.containerPoint?.toLoad?.numberOfPallets || undefined);
 			}
 			if (!this.grossWeightKg.dirty) {
-				this.grossWeightKg.setValue(this.containerPoint?.toPick?.grossWeightKg || undefined);
+				this.grossWeightKg.setValue(this.containerPoint?.toLoad?.grossWeightKg || undefined);
 			}
 			if (!this.volumeM3.dirty) {
-				this.volumeM3.setValue(this.containerPoint?.toPick?.volumeM3 || undefined);
+				this.volumeM3.setValue(this.containerPoint?.toLoad?.volumeM3 || undefined);
 			}
 
 			const containerSegments = getSegmentsByContainerID(this.order?.dto?.segments, this.container?.id);
@@ -123,7 +123,7 @@ export class ContainerPointComponent implements OnChanges {
 			orderID: this.order.id,
 			shippingPointID: this.shippingPoint.id,
 			containerID: this.container?.id,
-			toPick,
+			toLoad: toPick,
 		};
 		this.saving = true;
 		this.containerForm.disable()

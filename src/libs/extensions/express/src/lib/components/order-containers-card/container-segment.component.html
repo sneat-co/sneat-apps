@@ -58,7 +58,7 @@
 		<!--		<ion-input readonly *ngIf="segmentDates" [value]="segmentDates"></ion-input>-->
 	</ion-item>
 	<sneat-freight-load-form operation="pick"
-													 [freightLoad]="fromPoint?.toPick"
+													 [freightLoad]="fromPoint?.toLoad"
 													 (freightLoadChange)="onFreightLoadChanged($event)"
 													 [form]="freightLoadForm"
 													 (keyUpEnter)="saveChanges($event)"

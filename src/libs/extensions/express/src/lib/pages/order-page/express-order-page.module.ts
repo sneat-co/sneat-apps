@@ -25,20 +25,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    OrderFormModule,
-    OrderContainersModule,
-    NewSegmentModule,
-    DispatchersModule,
-    SneatPipesModule,
-    ReactiveFormsModule,
-    OrderPrintServiceModule,
-    FreightLoadFormModule,
-  ],
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule.forChild(routes),
+		FormsModule,
+		OrderFormModule,
+		OrderContainersModule,
+		NewSegmentModule,
+		DispatchersModule,
+		SneatPipesModule,
+		ReactiveFormsModule,
+		OrderPrintServiceModule,
+		FreightLoadFormModule,
+	],
 	declarations: [
 		ExpressOrderPageComponent,
 		OrderSegmentsComponent,

@@ -4,6 +4,8 @@
 	</ion-item-divider>
 </ion-card>
 
+<sneat-order-containers-grid [order]="order"></sneat-order-containers-grid>
+
 <ion-card *ngFor="let container of containers; let i = index; trackBy:id">
 	<sneat-order-container-form
 		[team]="team"

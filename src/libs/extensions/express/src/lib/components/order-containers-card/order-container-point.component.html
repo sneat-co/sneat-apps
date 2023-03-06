@@ -31,19 +31,19 @@
 		<ion-col>
 			<ion-item>
 				<ion-label color="medium">Pallets</ion-label>
-				<ion-input type="number" [value]="containerPoint?.toPick?.numberOfPallets"></ion-input>
+				<ion-input type="number" [value]="containerPoint?.toLoad?.numberOfPallets"></ion-input>
 			</ion-item>
 		</ion-col>
 		<ion-col>
 			<ion-item>
 				<ion-label color="medium">Weight <sup>kg</sup></ion-label>
-				<ion-input type="number" [value]="containerPoint?.toPick?.grossWeightKg"></ion-input>
+				<ion-input type="number" [value]="containerPoint?.toLoad?.grossWeightKg"></ion-input>
 			</ion-item>
 		</ion-col>
 		<ion-col>
 			<ion-item>
 				<ion-label color="medium">Volume <sup>m3</sup></ion-label>
-				<ion-input type="number" [value]="containerPoint?.toPick?.volumeM3"></ion-input>
+				<ion-input type="number" [value]="containerPoint?.toLoad?.volumeM3"></ion-input>
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="delete($event)">
 						<ion-icon name="close-outline"></ion-icon>

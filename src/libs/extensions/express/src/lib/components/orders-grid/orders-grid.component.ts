@@ -91,7 +91,7 @@ export class OrdersGridComponent implements OnChanges {
 		}
 	}
 
-	readonly rowClick = (event: Event, row: unknown) => {
+	protected readonly rowClick = (event: Event, row: unknown) => {
 		console.log('OrdersGridComponent.rowClick():', event, row);
 		if (!this.team) {
 			alert('No team context provided!');

@@ -67,9 +67,9 @@ export class ContainerFormComponent implements OnChanges {
 				this.container = {
 					...this.container,
 					...this.containerPoints.reduce((total, cp) => ({
-						numberOfPallets: (total.numberOfPallets || 0) + (cp.toPick?.numberOfPallets || 0),
-						grossWeightKg: (total.grossWeightKg || 0) + (cp.toPick?.grossWeightKg || 0),
-						volumeM3: (total.volumeM3 || 0) + (cp.toPick?.volumeM3 || 0),
+						numberOfPallets: (total.numberOfPallets || 0) + (cp.toLoad?.numberOfPallets || 0),
+						grossWeightKg: (total.grossWeightKg || 0) + (cp.toLoad?.grossWeightKg || 0),
+						volumeM3: (total.volumeM3 || 0) + (cp.toLoad?.volumeM3 || 0),
 					}), {} as IFreightLoad),
 				};
 			}
