@@ -1,4 +1,4 @@
-import { Component, Inject, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, NgZone, OnChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
