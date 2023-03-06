@@ -8,7 +8,7 @@ import { NewContainerComponent } from '../../components/new-container/new-contai
 import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
-type OrderDetailsTab = 'containers' | 'truckers' | 'dispatchers' | 'segments' | 'notes';
+type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'notes';
 
 @Component({
 	selector: 'sneat-order-page',

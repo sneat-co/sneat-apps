@@ -19,7 +19,7 @@
 				</ion-badge>
 			</ion-label>
 		</ion-segment-button>
-		<ion-segment-button value="dispatchers">
+		<ion-segment-button value="points">
 			<ion-label>
 				🛒 Points
 				<ion-badge color="light" *ngIf="numberOfDispatchers">
@@ -79,25 +79,27 @@
 	<!--	>-->
 	<!--	</sneat-order-shipping-points-card>-->
 
-	<sneat-order-containers-card
-		*ngIf="tab === 'containers'"
-		[team]="team"
-		[order]="order">
-	</sneat-order-containers-card>
+	<ng-container [ngSwitch]="tab">
+		<sneat-order-containers-card
+			*ngSwitchCase="'containers'"
+			[team]="team"
+			[order]="order">
+		</sneat-order-containers-card>
 
-	<sneat-order-segments *ngIf="tab === 'segments'"
-												[team]="team"
-												[order]="order">
-	</sneat-order-segments>
+		<sneat-order-segments *ngSwitchCase="'segments'"
+													[team]="team"
+													[order]="order">
+		</sneat-order-segments>
 
-	<sneat-order-truckers *ngIf="tab === 'truckers'"
-												[team]="team"
-												[order]="order"
-	></sneat-order-truckers>
+		<sneat-order-truckers *ngSwitchCase="'truckers'"
+													[team]="team"
+													[order]="order"
+		></sneat-order-truckers>
 
-	<sneat-dispatchers *ngIf="tab === 'dispatchers'"
-										 [order]="order"
-	></sneat-dispatchers>
+		<sneat-dispatchers *ngSwitchCase="'points'"
+											 [order]="order"
+		></sneat-dispatchers>
+	</ng-container>
 
 	<div style="min-height: 100px">
 	</div>
