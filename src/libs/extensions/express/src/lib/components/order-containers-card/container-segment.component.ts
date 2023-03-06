@@ -74,8 +74,8 @@ export class ContainerSegmentComponent implements OnChanges {
 			&& c.role == this.segment?.to?.role,
 		);
 		this.by = this.order?.dto?.counterparties?.find(c =>
-			c.contactID === this.segment?.by?.contactID
-			&& c.role == this.segment?.by?.role,
+			c.contactID === this.segment?.byContactID
+			&& c.role == 'trucker',
 		);
 	}
 

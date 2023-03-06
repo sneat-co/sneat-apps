@@ -15,7 +15,7 @@ export class NewOrderContainersFormComponent {
 	size40ft = 0;
 	size40ftHighCube = 0;
 
-	onSizeChanged(): void {
+	protected onSizeChanged(): void {
 		const numberOfContainers = excludeZeroValues({
 			'20ft': this.size20ft,
 			'20ftHighCube': this.size20ftHighCube,

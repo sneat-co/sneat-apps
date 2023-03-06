@@ -68,7 +68,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 		this.selfCounterparty = counterparties?.find(c => c.contactID === this.team?.id);
 		this.ship = counterparties?.find(c => c.role === 'ship');
 		this.shipperCounterparty = counterparties?.find(c => c.role === 'shipper');
-		this.points = order.dto?.segments?.filter(s => s.by?.contactID === this.truckerID)
+		this.points = order.dto?.segments?.filter(s => s.byContactID === this.truckerID)
 			.map(segment => {
 				const container = order?.dto?.containers?.find(c => c.id === segment.containerID);
 				const toPick = order?.dto?.containerPoints?.find(p => p.containerID === segment.containerID && p.shippingPointID === segment.from.shippingPointID)?.toPick;

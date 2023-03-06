@@ -19,13 +19,13 @@ import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/orde
 export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	public order: IExpressOrderContext = {
 		id: '',
-		team: this.team || {id: '', type: 'company'},
+		team: this.team || { id: '', type: 'company' },
 		dto: {
 			status: 'draft',
 			direction: 'export',
-			createdAt: {seconds: 0, nanoseconds: 0},
+			createdAt: { seconds: 0, nanoseconds: 0 },
 			createdBy: '',
-			updatedAt: {seconds: 0, nanoseconds: 0},
+			updatedAt: { seconds: 0, nanoseconds: 0 },
 			updatedBy: '',
 			// route: {
 			// 	origin: { id: 'origin', countryID: '' },
@@ -35,7 +35,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		},
 	};
 
-	private numberOfContainers: {[size: string]: number} = {};
+	private numberOfContainers: { [size: string]: number } = {};
 
 	readonly = false;
 
@@ -120,7 +120,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	}
 
 
-	onNumberOfContainersChanged(v: {[size: string]: number}): void {
+	onNumberOfContainersChanged(v: { [size: string]: number }): void {
 		console.log('NewExpressOrderPageComponent.onNumberOfContainersChanged():', v);
 		this.numberOfContainers = v;
 	}
@@ -143,6 +143,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 
 		if (!Object.keys(this.numberOfContainers).length) {
 			console.error('No containers', this.numberOfContainers);
+			alert('No containers');
 			return;
 		}
 

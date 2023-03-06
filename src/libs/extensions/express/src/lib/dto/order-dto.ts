@@ -133,7 +133,7 @@ export function getSegmentsByContainerID(segments?: ReadonlyArray<IContainerSegm
 }
 
 export function getSegmentCounterparty(orderDto?: IExpressOrderDto | null, segment?: IContainerSegment): IOrderCounterparty | undefined {
-	const contactID = segment?.by?.contactID;
+	const contactID = segment?.byContactID;
 	return contactID ? orderDto?.counterparties?.find(c => c.contactID === contactID) : undefined;
 }
 
@@ -216,7 +216,7 @@ export interface ISegmentEndpoint extends ISegmentCounterparty {
 export interface IOrderSegmentKey {
 	readonly from: ISegmentEndpoint;
 	readonly to: ISegmentEndpoint;
-	readonly by?: ISegmentCounterparty;
+	readonly byContactID?: string;
 }
 
 export interface IOrderSegment extends IOrderSegmentKey {
@@ -232,7 +232,7 @@ export function getOrderSegments(segments?: ReadonlyArray<IContainerSegment>): I
 		return [];
 	}
 	const groups = groupBy(segments, s =>
-		`${s.from.role}-${s.from.contactID}-${s.to.role}-${s.to.contactID}-${s.by?.contactID}`);
+		`${s.from.role}-${s.from.contactID}-${s.to.role}-${s.to.contactID}-${s.byContactID}`);
 	const entries = Object.entries(groups);
 	const result = entries.map(
 		([, s]) => ({
@@ -311,7 +311,7 @@ export interface IDeleteCounterpartyRequest extends IExpressOrderRequest, IConta
 
 export interface IDeleteSegmentsRequest extends IExpressOrderRequest {
 	containerIDs?: string[];
-	from?: ISegmentCounterparty;
-	to?: ISegmentCounterparty;
-	by?: ISegmentCounterparty;
+	fromShippingPointID?: string;
+	toShippingPointID?: string;
+	byContactID?: string;
 }

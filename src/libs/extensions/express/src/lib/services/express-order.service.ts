@@ -170,7 +170,7 @@ export class ExpressOrderService {
 	}
 
 	deleteSegments(request: IDeleteSegmentsRequest): Observable<void> {
-		if (!request.containerIDs?.length && !request.from && !request.to && !request.by) {
+		if (!request.containerIDs?.length && !request.fromShippingPointID && !request.toShippingPointID && !request.byContactID) {
 			return throwError(() => new Error('empty request'));
 		}
 		return this.sneatApiService.delete('express/order/delete_segments', undefined, request);

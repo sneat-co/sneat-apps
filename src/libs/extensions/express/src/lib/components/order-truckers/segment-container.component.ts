@@ -83,7 +83,7 @@ export class SegmentContainerComponent implements OnChanges {
 			containerIDs: [containerID],
 			from: this.segment?.from,
 			to: this.segment?.to,
-			by: this.segment?.by,
+			by: this.segment?.byContactID,
 		});
 		this.orderService.deleteSegments(request).subscribe({
 			error: err => {
