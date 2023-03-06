@@ -48,7 +48,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);
+		// console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);
 		if (changes['order']) {
 			this.setContacts();
 		}

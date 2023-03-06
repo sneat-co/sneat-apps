@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
+import { first } from 'rxjs';
 import { ExpressOrderService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
@@ -26,23 +27,32 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 		private readonly newSegmentService: NewSegmentService,
 		private readonly modalController: ModalController,
 	) {
-		super('OrderPageComponent', route, teamParams, orderService);
-		route.queryParamMap.subscribe(params => {
-			this.tab = params.get('tab') as OrderDetailsTab || this.tab;
-		});
+		super('ExpressOrderPageComponent', route, teamParams, orderService);
+		try {
+			route.queryParamMap.pipe(first()).subscribe(params => {
+				this.tab = params.get('tab') as OrderDetailsTab || this.tab;
+			});
+		} catch (e) {
+			this.errorLogger.logError(e);
+		}
 	}
 
 	onTabChanged(event: Event): void {
-		console.log('onTabChanged', event);
-		let { href } = location;
-		if (href.indexOf('?') < 0) {
-			href += '?tab=';
+		try {
+			console.log('onTabChanged', event);
+			// this.changeDetector?.markForCheck();
+			let { href } = location;
+			if (href.indexOf('?') < 0) {
+				href += '?tab=';
+			}
+			href = href.replace(
+				/tab=\w*/,
+				`tab=${this.tab}`,
+			);
+			history.replaceState(history.state, document.title, href);
+		} catch (e) {
+			this.errorLogger.logError(e, 'failed to handle tab change');
 		}
-		href = href.replace(
-			/tab=\w*/,
-			`tab=${this.tab}`,
-		);
-		history.replaceState(history.state, document.title, href);
 	}
 
 	async addContainer(): Promise<void> {

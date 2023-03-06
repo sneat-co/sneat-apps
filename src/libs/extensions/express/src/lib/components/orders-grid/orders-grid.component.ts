@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { IExpressOrderContext, IOrderCounterpartyRef } from '../../dto/order-dto';
 
@@ -69,7 +70,9 @@ export class OrdersGridComponent implements OnChanges {
 	displayCols = this.allCols;
 
 	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
+		private readonly zone: NgZone,
 	) {
 	}
 
@@ -94,9 +97,16 @@ export class OrdersGridComponent implements OnChanges {
 			alert('No team context provided!');
 			return;
 		}
-		const data = (row as {getData: () => {id: string}}).getData();
-		this.navController
-			.navigateForward(['space', this.team.type, this.team.id, 'order', data.id])
-			.catch(console.error);
-	}
+		const data = (row as { getData: () => { id: string } }).getData();
+		const team = this.team;
+		if (!team) {
+			alert('No team context provided!');
+			return;
+		}
+		this.zone.run(() => this.navController
+			.navigateForward(['space', team.type, team.id, 'order', data.id])
+			.catch(this.errorLogger.logErrorHandler('Failed to navigate to order details page')))
+			.then(() => void 0)
+		;
+	};
 }
