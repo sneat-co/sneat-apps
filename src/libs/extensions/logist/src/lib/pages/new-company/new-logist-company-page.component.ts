@@ -28,7 +28,7 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 		private readonly contactService: ContactService,
 		teamParams: TeamComponentBaseParams,
 	) {
-		super('NewExpressCompanyPageComponent', route, teamParams);
+		super('NewLogistCompanyPageComponent', route, teamParams);
 		route.queryParamMap
 			.pipe(
 				first(),
@@ -42,7 +42,7 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 	}
 
 	onContactCreated(contact: IContactContext): void {
-		console.log('NewExpressCompanyPageComponent.onContactCreated()', contact);
+		console.log('NewLogistCompanyPageComponent.onContactCreated()', contact);
 		this.navController.pop().catch(() => {
 			this.navController
 				.navigateBack(['contacts'], { relativeTo: this.route })

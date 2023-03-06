@@ -300,7 +300,7 @@ export interface IUpdateContainerPointRequest extends IOrderShippingPointRequest
 // 	readonly date: string;
 // }
 //
-// export interface IUpdateSegmentDatesRequest extends IExpressOrderRequest {
+// export interface IUpdateSegmentDatesRequest extends ILogistOrderRequest {
 // 	points: IUpdateSegmentDateRequest[];
 // }
 

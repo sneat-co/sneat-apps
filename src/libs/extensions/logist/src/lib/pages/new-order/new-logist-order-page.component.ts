@@ -46,8 +46,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		private readonly logistTeamService: LogistTeamService,
 		private readonly contactService: ContactService,
 	) {
-		super('NewExpressOrderPageComponent', route, teamParams);
-		console.log('NewExpressOrderPageComponent');
+		super('NewLogistOrderPageComponent', route, teamParams);
 	}
 
 	get formIsValid(): boolean {
@@ -66,9 +65,9 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 				this.takeUntilNeeded(),
 				takeUntil(this.teamIDChanged$),
 			).subscribe({
-			next: expressTeam => {
-				if (expressTeam.dto?.contactID) {
-					this.loadTeamContact(expressTeam.dto.contactID);
+			next: logistTeam => {
+				if (logistTeam.dto?.contactID) {
+					this.loadTeamContact(logistTeam.dto.contactID);
 				}
 			},
 			error: this.errorLogger.logErrorHandler('failed to load logist module record'),
@@ -115,13 +114,13 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 	};
 
 	onOrderChanged(order: ILogistOrderContext): void {
-		console.log('NewExpressOrderPageComponent.onOrderChanged():', order);
+		console.log('NewLogistOrderPageComponent.onOrderChanged():', order);
 		this.order = order;
 	}
 
 
 	onNumberOfContainersChanged(v: { [size: string]: number }): void {
-		console.log('NewExpressOrderPageComponent.onNumberOfContainersChanged():', v);
+		console.log('NewLogistOrderPageComponent.onNumberOfContainersChanged():', v);
 		this.numberOfContainers = v;
 	}
 

@@ -27,8 +27,8 @@ export class LogistTeamPageComponent extends TeamBaseComponent {
 			this.logistTeamService.watchLogistTeamByID(team.id)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
-					next: expressTeam => {
-						this.logistTeam = expressTeam;
+					next: logistTeam => {
+						this.logistTeam = logistTeam;
 					},
 					error: err => {
 						this.errorLogger.logError(err, 'failed to load logist team', {

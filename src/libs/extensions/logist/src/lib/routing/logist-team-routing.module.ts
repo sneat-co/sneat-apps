@@ -19,7 +19,7 @@ export const logistRoutes: Routes = [
 	{
 		path: '',
 		outlet: 'menu',
-		// loadChildren: () => import('../components/logist-team-menu/logist-team-menu.module').then(m => m.ExpressTeamMenuModule),
+		// loadChildren: () => import('../components/logist-team-menu/logist-team-menu.module').then(m => m.LogistTeamMenuModule),
 		component: LogistTeamMenuComponent,
 	},
 	{

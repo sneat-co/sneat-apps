@@ -40,7 +40,7 @@ export class OrderContainersSelectorComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		const orderChange = changes['order'];
 		if (orderChange) {
-			// const previousOrder = orderChange.previousValue as IExpressOrderContext | undefined;
+			// const previousOrder = orderChange.previousValue as ILogistOrderContext | undefined;
 			this.containers = this.order?.dto?.containers?.map(c => ({
 				id: c.id,
 				type: c.type,
