@@ -40,7 +40,7 @@ export class LogistTeamService {
 	}
 
 	setLogistTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/set_express_team_settings', request);
+		return this.sneatApiService.post('logist/set_logist_team_settings', request);
 	}
 
 }
