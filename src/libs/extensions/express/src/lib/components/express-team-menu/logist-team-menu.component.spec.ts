@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogistTeamMenuComponent } from './logist-team-menu.component';
 
-describe('ExpressMenuComponent', () => {
+describe('LogistMenuComponent', () => {
 	let component: LogistTeamMenuComponent;
 	let fixture: ComponentFixture<LogistTeamMenuComponent>;
 

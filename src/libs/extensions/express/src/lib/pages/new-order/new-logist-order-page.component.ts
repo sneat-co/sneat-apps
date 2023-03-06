@@ -13,7 +13,7 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 import { ICreateLogistOrderRequest, ILogistOrderContext } from '../../dto/order-dto';
 
 @Component({
-	selector: 'sneat-new-express-order-page',
+	selector: 'sneat-new-logist-order-page',
 	templateUrl: 'new-logist-order-page.component.html',
 })
 export class NewLogistOrderPageComponent extends TeamBaseComponent {
@@ -43,7 +43,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		private readonly freightOrdersService: LogistOrderService,
-		private readonly expressTeamService: LogistTeamService,
+		private readonly logistTeamService: LogistTeamService,
 		private readonly contactService: ContactService,
 	) {
 		super('NewExpressOrderPageComponent', route, teamParams);
@@ -60,8 +60,8 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		if (!this.team?.id) {
 			return;
 		}
-		this.expressTeamService
-			.watchExpressTeamByID(this.team.id)
+		this.logistTeamService
+			.watchLogistTeamByID(this.team.id)
 			.pipe(
 				this.takeUntilNeeded(),
 				takeUntil(this.teamIDChanged$),

@@ -1,6 +1,6 @@
 import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonInput, NavController } from '@ionic/angular';
+import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -50,8 +50,8 @@ export class LogistTeamSettingsComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly expressTeamService: LogistTeamService,
-		private readonly navController: NavController,
+		private readonly logistTeamService: LogistTeamService,
+		// private readonly navController: NavController,
 	) {
 	}
 
@@ -81,7 +81,7 @@ export class LogistTeamSettingsComponent {
 			orderNumberPrefix: this.orderNumberPrefix.value || undefined,
 		});
 		this.isSubmitting = true;
-		this.expressTeamService.setExpressTeamSettings(request).subscribe({
+		this.logistTeamService.setLogistTeamSettings(request).subscribe({
 			next: () => {
 				console.log('success');
 			},

@@ -35,25 +35,25 @@ export class LogistTeamService {
 			'express_team', afs, briefFromDto);
 	}
 
-	public watchExpressTeamByID(teamID: string): Observable<ILogistTeamContext> {
-		return this.sfs.watchByDocRef(expressTeamDocRef(this.afs, teamID));
+	public watchLogistTeamByID(teamID: string): Observable<ILogistTeamContext> {
+		return this.sfs.watchByDocRef(logistTeamDocRef(this.afs, teamID));
 	}
 
-	setExpressTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
+	setLogistTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
 		return this.sneatApiService.post('express/set_express_team_settings', request);
 	}
 
 }
 
-function expressTeamDocRef(afs: AngularFirestore, teamID: string): DocumentReference<ILogistTeamDto> {
+function logistTeamDocRef(afs: AngularFirestore, teamID: string): DocumentReference<ILogistTeamDto> {
 	const teamsCollection = collection(afs, 'teams');
 	const teamRef = doc(teamsCollection, teamID);
 	const modulesCollection = collection(teamRef, 'modules') as CollectionReference<ILogistTeamDto>;
-	return doc<ILogistTeamDto>(modulesCollection, 'express');
+	return doc<ILogistTeamDto>(modulesCollection, 'logist');
 }
 
-export function expressTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamID: string, collectionName: string): CollectionReference<Dto> {
-	const moduleRef = expressTeamDocRef(afs, teamID);
+export function logistTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamID: string, collectionName: string): CollectionReference<Dto> {
+	const moduleRef = logistTeamDocRef(afs, teamID);
 	return collection(moduleRef, collectionName) as CollectionReference<Dto>;
 }
 

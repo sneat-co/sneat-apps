@@ -8,21 +8,21 @@
 </ion-header>
 
 <ion-content>
-	<ion-card *ngIf="!expressTeam">
+	<ion-card *ngIf="!logistTeam">
 		<ion-card-content>
 			<ion-spinner name="line-small"></ion-spinner>
 			Loading...
 		</ion-card-content>
 	</ion-card>
 
-	<ion-card *ngIf="expressTeam?.dto?.contactID">
+	<ion-card *ngIf="logistTeam?.dto?.contactID">
 		<ion-item-divider>
 			<ion-label>Company</ion-label>
 		</ion-item-divider>
 		<sneat-logist-team-menu-items  [team]="team"></sneat-logist-team-menu-items>
 	</ion-card>
 
-	<ng-container *ngIf="expressTeam && !expressTeam.dto?.contactID">
+	<ng-container *ngIf="logistTeam && !logistTeam.dto?.contactID">
 		<p class="ion-margin">To start working please setup your company data.</p>
 		<sneat-logist-team-settings [team]="team"></sneat-logist-team-settings>
 

@@ -8,7 +8,7 @@ import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 
 @Component({
-	selector: 'sneat-new-express-company-page',
+	selector: 'sneat-new-logist-company-page',
 	templateUrl: 'new-logist-company-page.component.html',
 })
 export class NewLogistCompanyPageComponent extends TeamBaseComponent implements OnDestroy {

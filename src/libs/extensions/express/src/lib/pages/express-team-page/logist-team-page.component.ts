@@ -10,12 +10,12 @@ import { LogistTeamService } from '../../services/logist-team.service';
 	styleUrls: ['./logist-team-page.component.scss'],
 })
 export class LogistTeamPageComponent extends TeamBaseComponent {
-	expressTeam?: ILogistTeamContext;
+	logistTeam?: ILogistTeamContext;
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly expressTeamService: LogistTeamService,
+		private readonly logistTeamService: LogistTeamService,
 	) {
 		super('LogistTeamPageComponent', route, teamParams);
 	}
@@ -24,17 +24,17 @@ export class LogistTeamPageComponent extends TeamBaseComponent {
 		super.onTeamIdChanged();
 		const team = this.team;
 		if (team?.id) {
-			this.expressTeamService.watchExpressTeamByID(team.id)
+			this.logistTeamService.watchLogistTeamByID(team.id)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: expressTeam => {
-						this.expressTeam = expressTeam;
+						this.logistTeam = expressTeam;
 					},
 					error: err => {
 						this.errorLogger.logError(err, 'failed to load express team', {
 							show: !('' + err).includes('Missing or insufficient permissions'), // TODO: fix & handle properly
 						});
-						this.expressTeam = { id: team.id };
+						this.logistTeam = { id: team.id };
 					},
 				});
 		}

@@ -24,7 +24,7 @@ import {
 	IDeleteSegmentsRequest,
 	IUpdateContainerPointRequest, IContainerPointsRequest,
 } from '../dto';
-import { expressTeamModuleSubCollection } from './logist-team.service';
+import { logistTeamModuleSubCollection } from './logist-team.service';
 import { IOrdersFilter } from './orders-filter';
 
 
@@ -62,7 +62,7 @@ export class LogistOrderService {
 	}
 
 	private ordersCollection<Dto>(teamID: string): CollectionReference<Dto> {
-		return expressTeamModuleSubCollection<Dto>(this.afs, teamID, 'orders');
+		return logistTeamModuleSubCollection<Dto>(this.afs, teamID, 'orders');
 	}
 
 	public watchOrderByID(teamID: string, orderID: string): Observable<ILogistOrderContext> {

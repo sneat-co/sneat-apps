@@ -11,7 +11,7 @@ import { LogistTeamMenuComponent } from '../components/express-team-menu/logist-
 export class EmptyComponent {
 }
 
-export const expressRoutes: Routes = [
+export const logistRoutes: Routes = [
 	{
 		path: '',
 		loadChildren: () => import('../pages/express-team-page/logist-team-page.module').then(m => m.LogistTeamPageModule),
@@ -58,7 +58,7 @@ export const expressRoutes: Routes = [
 @NgModule({
 	imports: [
 		CommonModule,
-		RouterModule.forChild(expressRoutes.map(r => ({ ...r, path: r.path?.replace('express/', '') }))),
+		RouterModule.forChild(logistRoutes.map(r => ({ ...r, path: r.path?.replace('express/', '') }))),
 		LogistMenuModule,
 		ContactusRoutingModule,
 	],
