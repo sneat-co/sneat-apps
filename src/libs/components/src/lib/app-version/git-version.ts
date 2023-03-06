@@ -1,11 +1,11 @@
-export const gitHash = '21fd7f14'; /*
+export const gitHash = '16fc6b71'; /*
 {
   "dirty": true,
-  "raw": "21fd7f14-dirty",
-  "hash": "21fd7f14",
+  "raw": "16fc6b71-dirty",
+  "hash": "16fc6b71",
   "distance": null,
   "tag": null,
   "semver": null,
-  "suffix": "21fd7f14-dirty",
+  "suffix": "16fc6b71-dirty",
   "semverString": null
 } */
