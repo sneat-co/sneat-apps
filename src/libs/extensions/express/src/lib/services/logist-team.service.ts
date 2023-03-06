@@ -13,7 +13,7 @@ import {
 	ILogistTeamContext,
 	ILogistTeamDto,
 	ISetLogistTeamSettingsRequest,
-} from '../dto/express-team-dto';
+} from '../dto/logist-team-dto';
 
 
 function briefFromDto(id: string, dto: ILogistTeamDto): ILogistTeamBrief {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ILogistTeamContext } from '../../dto/express-team-dto';
+import { ILogistTeamContext } from '../../dto/logist-team-dto';
 import { LogistTeamService } from '../../services/logist-team.service';
 
 @Component({

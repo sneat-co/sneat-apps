@@ -1,2 +1,2 @@
 export * from './order-dto';
-export * from './express-team-dto';
+export * from './logist-team-dto';

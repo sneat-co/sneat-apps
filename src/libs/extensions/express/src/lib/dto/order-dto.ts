@@ -1,7 +1,7 @@
 import { IAddress, IWithModified } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
-import { CounterpartyRole } from './express-team-dto';
+import { CounterpartyRole } from './logist-team-dto';
 
 export interface IFreightAddress {
 	readonly countryID: string;
