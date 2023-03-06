@@ -1,7 +1,7 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { FreightsAppModule } from './app/freights-app.module';
+import { LogistAppModule } from './app/logist-app.module';
 
 platformBrowserDynamic()
-	.bootstrapModule(FreightsAppModule)
+	.bootstrapModule(LogistAppModule)
 	.catch((err) => console.error(err));

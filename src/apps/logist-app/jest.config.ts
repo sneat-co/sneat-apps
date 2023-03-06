@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-	displayName: 'freights-app',
+	displayName: 'logist-app',
 	preset: '../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {},
-	coverageDirectory: '../../coverage/apps/freights-app',
+	coverageDirectory: '../../coverage/apps/logist-app',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
 			'jest-preset-angular',

@@ -1,30 +1,30 @@
 {
-	"name": "freights-app",
+	"name": "logist-app",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "application",
-	"sourceRoot": "apps/freights-app/src",
+	"sourceRoot": "apps/logist-app/src",
 	"prefix": "sneat",
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:browser",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/apps/freights-app",
-				"index": "apps/freights-app/src/index.html",
-				"main": "apps/freights-app/src/main.ts",
+				"outputPath": "dist/apps/logist-app",
+				"index": "apps/logist-app/src/index.html",
+				"main": "apps/logist-app/src/main.ts",
 				"polyfills": ["zone.js"],
-				"tsConfig": "apps/freights-app/tsconfig.app.json",
+				"tsConfig": "apps/logist-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
-					"apps/freights-app/src/favicon.ico",
-					"apps/freights-app/src/assets",
+					"apps/logist-app/src/favicon.ico",
+					"apps/logist-app/src/assets",
 					{
 						"glob": "**/*.svg",
 						"input": "node_modules/ionicons/dist/ionicons/svg",
 						"output": "./svg"
 					}
 				],
-				"styles": ["apps/freights-app/src/styles.scss"],
+				"styles": ["apps/logist-app/src/styles.scss"],
 				"scripts": []
 			},
 			"configurations": {
@@ -43,8 +43,8 @@
 					],
 					"fileReplacements": [
 						{
-							"replace": "apps/freights-app/src/environments/environment.ts",
-							"with": "apps/freights-app/src/environments/environment.prod.ts"
+							"replace": "apps/logist-app/src/environments/environment.ts",
+							"with": "apps/logist-app/src/environments/environment.prod.ts"
 						}
 					],
 					"outputHashing": "all"
@@ -64,10 +64,10 @@
 			"executor": "@angular-devkit/build-angular:dev-server",
 			"configurations": {
 				"production": {
-					"browserTarget": "freights-app:build:production"
+					"browserTarget": "logist-app:build:production"
 				},
 				"development": {
-					"browserTarget": "freights-app:build:development"
+					"browserTarget": "logist-app:build:development"
 				}
 			},
 			"defaultConfiguration": "development"
@@ -75,23 +75,23 @@
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"browserTarget": "freights-app:build"
+				"browserTarget": "logist-app:build"
 			}
 		},
 		"lint": {
 			"executor": "@nrwl/linter:eslint",
 			"options": {
 				"lintFilePatterns": [
-					"apps/freights-app/**/*.ts",
-					"apps/freights-app/**/*.html"
+					"apps/logist-app/**/*.ts",
+					"apps/logist-app/**/*.html"
 				]
 			}
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/apps/freights-app"],
+			"outputs": ["{workspaceRoot}/coverage/apps/logist-app"],
 			"options": {
-				"jestConfig": "apps/freights-app/jest.config.ts",
+				"jestConfig": "apps/logist-app/jest.config.ts",
 				"passWithNoTests": true
 			}
 		}

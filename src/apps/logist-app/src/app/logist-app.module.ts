@@ -9,21 +9,21 @@ import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { environment } from '../environments/environment';
-import { FreightsAppRoutingModule } from './freights-app-routing.module';
+import { LogistAppRoutingModule } from './logist-app-routing.module';
 
-import { FreightsAppComponent } from './freights-app.component';
+import { LogistAppComponent } from './logist-app.component';
 
 initSentry();
 
 // initFirebase(environment.firebaseConfig);
 
 const appInfo: IAppInfo = {
-	appId: 'freights',
+	appId: 'logist',
 	appTitle: 'Freights.app',
 	requiredTeamType: 'company',
 };
 
-console.log('freights-app.module: environment:', environment);
+console.log('logist-app.module: environment:', environment);
 
 const firebaseModules = ImportFirebaseModules(environment.firebaseConfig);
 
@@ -38,7 +38,7 @@ console.log('firebaseModules', firebaseModules);
 		AuthMenuItemModule,
 		CommunesUiModule,
 		TeamsMenuComponentModule,
-		FreightsAppRoutingModule,
+		LogistAppRoutingModule,
 	],
 	providers: [
 		...coreProviders,
@@ -56,9 +56,9 @@ console.log('firebaseModules', firebaseModules);
 		},
 	],
 	declarations: [
-		FreightsAppComponent,
+		LogistAppComponent,
 	],
-	bootstrap: [FreightsAppComponent],
+	bootstrap: [LogistAppComponent],
 })
-export class FreightsAppModule {
+export class LogistAppModule {
 }

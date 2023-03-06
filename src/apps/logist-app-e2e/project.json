@@ -1,18 +1,18 @@
 {
-	"name": "freights-app-e2e",
+	"name": "logist-app-e2e",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "apps/freights-app-e2e/src",
+	"sourceRoot": "apps/logist-app-e2e/src",
 	"projectType": "application",
 	"targets": {
 		"e2e": {
 			"executor": "@nrwl/cypress:cypress",
 			"options": {
-				"cypressConfig": "apps/freights-app-e2e/cypress.json",
-				"devServerTarget": "freights-app:serve:development"
+				"cypressConfig": "apps/logist-app-e2e/cypress.json",
+				"devServerTarget": "logist-app:serve:development"
 			},
 			"configurations": {
 				"production": {
-					"devServerTarget": "freights-app:serve:production"
+					"devServerTarget": "logist-app:serve:production"
 				}
 			}
 		},
@@ -20,9 +20,9 @@
 			"executor": "@nrwl/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["apps/freights-app-e2e/**/*.{js,ts}"]
+				"lintFilePatterns": ["apps/logist-app-e2e/**/*.{js,ts}"]
 			}
 		}
 	},
-	"implicitDependencies": ["freights-app"]
+	"implicitDependencies": ["logist-app"]
 }

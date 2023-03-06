@@ -9,7 +9,7 @@ const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		loadChildren: () => import('../pages/freights-app-home-page.module').then(m => m.FreightsAppHomePageModule),
+		loadChildren: () => import('../pages/logist-app-home-page.module').then(m => m.LogistAppHomePageModule),
 	},
 	{
 		path: 'signed-out',
@@ -40,5 +40,5 @@ const routes: Routes = [
 		RouterModule,
 	],
 })
-export class FreightsAppRoutingModule {
+export class LogistAppRoutingModule {
 }

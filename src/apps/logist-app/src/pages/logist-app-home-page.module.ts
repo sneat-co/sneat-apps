@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FreightsAppHomePageComponent } from './freights-app-home-page.component';
+import { LogistAppHomePageComponent } from './logist-app-home-page.component';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { LogistMenuModule } from '@sneat/extensions/express'; // TODO: HELP WANTED: find how to fix it
 
 const routes: Routes = [
 	{
 		path: '',
-		component: FreightsAppHomePageComponent,
+		component: LogistAppHomePageComponent,
 	},
 ];
 
@@ -20,8 +20,8 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		LogistMenuModule,
 	],
-	declarations: [FreightsAppHomePageComponent],
+	declarations: [LogistAppHomePageComponent],
 })
-export class FreightsAppHomePageModule {
+export class LogistAppHomePageModule {
 
 }

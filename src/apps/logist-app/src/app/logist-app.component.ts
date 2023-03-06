@@ -6,10 +6,10 @@ import { gitHash } from '@sneat/components';
 
 @Component({
 	selector: 'sneat-root',
-	templateUrl: './freights-app.component.html',
-	styleUrls: ['./freights-app.component.scss'],
+	templateUrl: './logist-app.component.html',
+	styleUrls: ['./logist-app.component.scss'],
 })
-export class FreightsAppComponent extends SneatBaseAppComponent implements AfterViewInit {
+export class LogistAppComponent extends SneatBaseAppComponent implements AfterViewInit {
 
 	@ViewChild('ionSplitPane') ionSplitPane!: IonSplitPane;
 
