@@ -14,7 +14,7 @@ export class LogistTeamMenuComponent extends TeamBaseComponent implements OnInit
 		teamParams: TeamComponentBaseParams,
 		private readonly router: Router,
 	) {
-		super('ExpressTeamMenuComponent', route, teamParams);
+		super('LogistTeamMenuComponent', route, teamParams);
 	}
 
 

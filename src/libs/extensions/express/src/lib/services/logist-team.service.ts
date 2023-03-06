@@ -32,7 +32,7 @@ export class LogistTeamService {
 		private readonly afs: AngularFirestore,
 	) {
 		this.sfs = new SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>(
-			'express_team', afs, briefFromDto);
+			'logist_team', afs, briefFromDto);
 	}
 
 	public watchLogistTeamByID(teamID: string): Observable<ILogistTeamContext> {
@@ -40,7 +40,7 @@ export class LogistTeamService {
 	}
 
 	setLogistTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
-		return this.sneatApiService.post('express/set_express_team_settings', request);
+		return this.sneatApiService.post('logist/set_express_team_settings', request);
 	}
 
 }

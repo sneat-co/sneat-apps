@@ -58,7 +58,7 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 				)
 				.subscribe({
 					next: orders => {
-						console.log('ExpressOrdersPageComponent.subscribeForOrders() => orders:', orders);
+						console.log('LogistOrdersPageComponent.subscribeForOrders() => orders:', orders);
 						this.orders = orders;
 						this.changeDetectorRef.detectChanges();
 					},

@@ -27,7 +27,7 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent {
 		private readonly newSegmentService: NewSegmentService,
 		private readonly modalController: ModalController,
 	) {
-		super('ExpressOrderPageComponent', route, teamParams, orderService);
+		super('LogistOrderPageComponent', route, teamParams, orderService);
 		try {
 			route.queryParamMap.pipe(first()).subscribe(params => {
 				this.tab = params.get('tab') as OrderDetailsTab || this.tab;

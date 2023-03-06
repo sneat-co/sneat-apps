@@ -54,11 +54,11 @@ export class LogistOrderService {
 		private readonly afs: AngularFirestore,
 	) {
 		this.sfs = new SneatFirestoreService<IFreightOrderBrief, ILogistOrderDto>(
-			'express_orders', afs, briefFromDto);
+			'logist_orders', afs, briefFromDto);
 	}
 
 	createOrder(request: ICreateLogistOrderRequest): Observable<ICreateFreightOrderResponse> {
-		return this.sneatApiService.post('express/create_order', request);
+		return this.sneatApiService.post('logist/create_order', request);
 	}
 
 	private ordersCollection<Dto>(teamID: string): CollectionReference<Dto> {
@@ -130,54 +130,54 @@ export class LogistOrderService {
 		if (!request.status) {
 			return throwError(() => 'status is required parameter');
 		}
-		return this.sneatApiService.post('express/order/set_order_status', request);
+		return this.sneatApiService.post('logist/order/set_order_status', request);
 	}
 
 	setOrderCounterparties(request: ISetOrderCounterpartiesRequest): Observable<IOrderCounterparty> {
-		return this.sneatApiService.post('express/order/set_order_counterparties', request);
+		return this.sneatApiService.post('logist/order/set_order_counterparties', request);
 	}
 
 	addShippingPoint(team: ITeamContext, request: IAddOrderShippingPointRequest): Observable<ILogistOrderContext> {
 		return this.sneatApiService
-			.post<{ order: ILogistOrderDto }>('express/order/add_shipping_point', request)
+			.post<{ order: ILogistOrderDto }>('logist/order/add_shipping_point', request)
 			.pipe(
 				map(response => contextFromDto(team, request.orderID, response.order)),
 			);
 	}
 
 	addContainers(request: IAddContainersRequest): Observable<void> {
-		return this.sneatApiService.post('express/order/add_containers', request);
+		return this.sneatApiService.post('logist/order/add_containers', request);
 	}
 
 	addSegments(request: IAddSegmentsRequest): Observable<void> {
-		return this.sneatApiService.post('express/order/add_segments', request);
+		return this.sneatApiService.post('logist/order/add_segments', request);
 	}
 
 	updateContainerPoint(request: IUpdateContainerPointRequest): Observable<void> {
-		return this.sneatApiService.post('express/order/update_container_point', request);
+		return this.sneatApiService.post('logist/order/update_container_point', request);
 	}
 
 	deleteContainer(request: IContainerRequest): Observable<void> {
-		return this.sneatApiService.delete('express/order/delete_container', undefined, request);
+		return this.sneatApiService.delete('logist/order/delete_container', undefined, request);
 	}
 
 	deleteContainerPoints(request: IContainerPointsRequest): Observable<void> {
-		return this.sneatApiService.delete('express/order/delete_container_points', undefined, request);
+		return this.sneatApiService.delete('logist/order/delete_container_points', undefined, request);
 	}
 
 	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {
-		return this.sneatApiService.delete('express/order/delete_order_counterparty', undefined, request);
+		return this.sneatApiService.delete('logist/order/delete_order_counterparty', undefined, request);
 	}
 
 	deleteSegments(request: IDeleteSegmentsRequest): Observable<void> {
 		if (!request.containerIDs?.length && !request.fromShippingPointID && !request.toShippingPointID && !request.byContactID) {
 			return throwError(() => new Error('empty request'));
 		}
-		return this.sneatApiService.delete('express/order/delete_segments', undefined, request);
+		return this.sneatApiService.delete('logist/order/delete_segments', undefined, request);
 	}
 
 	deleteShippingPoint(request: IOrderShippingPointRequest): Observable<void> {
-		return this.sneatApiService.delete('express/order/delete_shipping_point', undefined, request);
+		return this.sneatApiService.delete('logist/order/delete_shipping_point', undefined, request);
 	}
 }
 

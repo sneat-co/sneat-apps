@@ -58,7 +58,7 @@ export const logistRoutes: Routes = [
 @NgModule({
 	imports: [
 		CommonModule,
-		RouterModule.forChild(logistRoutes.map(r => ({ ...r, path: r.path?.replace('express/', '') }))),
+		RouterModule.forChild(logistRoutes.map(r => ({ ...r, path: r.path?.replace('logist/', '') }))),
 		LogistMenuModule,
 		ContactusRoutingModule,
 	],
