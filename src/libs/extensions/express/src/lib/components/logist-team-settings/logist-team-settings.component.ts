@@ -86,7 +86,7 @@ export class LogistTeamSettingsComponent {
 				console.log('success');
 			},
 			error: err => {
-				this.errorLogger.logError(err, 'Failed to set express team settings.');
+				this.errorLogger.logError(err, 'Failed to set logist team settings.');
 				this.isSubmitting = false;
 			},
 		});

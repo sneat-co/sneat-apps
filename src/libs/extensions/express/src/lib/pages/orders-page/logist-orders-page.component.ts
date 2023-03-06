@@ -62,7 +62,7 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 						this.orders = orders;
 						this.changeDetectorRef.detectChanges();
 					},
-					error: this.errorLogger.logErrorHandler('failed to load express orders'),
+					error: this.errorLogger.logErrorHandler('failed to load logist orders'),
 				});
 		} catch (e) {
 			this.errorLogger.logError(e, 'failed to subscribeForOrders for orders');

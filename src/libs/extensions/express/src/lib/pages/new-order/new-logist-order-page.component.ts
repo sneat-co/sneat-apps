@@ -71,7 +71,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 					this.loadTeamContact(expressTeam.dto.contactID);
 				}
 			},
-			error: this.errorLogger.logErrorHandler('failed to load express module record'),
+			error: this.errorLogger.logErrorHandler('failed to load logist module record'),
 		});
 	}
 
@@ -85,7 +85,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			.pipe(first())
 			.subscribe({
 				next: this.processTeamContact,
-				error: this.errorLogger.logErrorHandler('failed to load express team default contact'),
+				error: this.errorLogger.logErrorHandler('failed to load logist team default contact'),
 			});
 	}
 

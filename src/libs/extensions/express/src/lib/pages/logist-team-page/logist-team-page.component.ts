@@ -31,7 +31,7 @@ export class LogistTeamPageComponent extends TeamBaseComponent {
 						this.logistTeam = expressTeam;
 					},
 					error: err => {
-						this.errorLogger.logError(err, 'failed to load express team', {
+						this.errorLogger.logError(err, 'failed to load logist team', {
 							show: !('' + err).includes('Missing or insufficient permissions'), // TODO: fix & handle properly
 						});
 						this.logistTeam = { id: team.id };
