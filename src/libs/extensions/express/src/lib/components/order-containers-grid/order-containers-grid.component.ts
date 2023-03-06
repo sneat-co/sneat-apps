@@ -64,7 +64,7 @@ export class OrderContainersGridComponent implements OnChanges {
 	) {
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
+	ngOnChanges(/*changes: SimpleChanges*/): void {
 		const containers = this.order?.dto?.containers;
 		this.containers = containers ? [...containers] : undefined;
 	}
