@@ -106,7 +106,11 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 
 	ngAfterViewInit(): void {
 		if (this.tabulator) {
-			this.tabulator.redraw();
+			try {
+				this.tabulator.redraw();
+			} catch (e) {
+				this.errorLogger.logError(e, 'Failed to redraw tabulator', { show: false, report: false });
+			}
 		}
 	}
 
@@ -145,7 +149,8 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 	private createTabulatorGrid(): void {
 		this.setTabulatorOptions();
 		if (!this.tabulator) {
-			this.tabulatorOptions = { ...this.tabulatorOptions,
+			this.tabulatorOptions = {
+				...this.tabulatorOptions,
 				selectable: 'highlight',
 				// rowClick: function (e, row) {
 				// 	console.log('rowClick1', row);
@@ -163,7 +168,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 				this.tabulatorOptions,
 			);
 			this.tabulator.on('rowClick', (event: Event, row: unknown) => {
-				console.log('rowClick event', event, row)
+				console.log('rowClick event', event, row);
 				if (this.rowClick) {
 					this.rowClick(event, row);
 				}
@@ -172,6 +177,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			this.tabulator.on('rowDeselected', (row: unknown) => console.log('rowDeselected event', row));
 		}
 	}
+
 	private setTabulatorOptions(): void {
 		this.tabulatorOptions = {
 			// tooltipsHeader: true, // enable header tooltips
@@ -225,13 +231,13 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			this.tabulatorOptions = {
 				...this.tabulatorOptions,
 				height: this.height,
-			}
+			};
 		}
 		if (this.maxHeight) {
 			this.tabulatorOptions = {
 				...this.tabulatorOptions,
 				maxHeight: this.maxHeight,
-			}
+			};
 		}
 		if (this.groupBy) {
 			this.tabulatorOptions = {

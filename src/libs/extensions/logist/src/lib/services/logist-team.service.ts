@@ -48,8 +48,8 @@ export class LogistTeamService {
 function logistTeamDocRef(afs: AngularFirestore, teamID: string): DocumentReference<ILogistTeamDto> {
 	const teamsCollection = collection(afs, 'teams');
 	const teamRef = doc(teamsCollection, teamID);
-	const modulesCollection = collection(teamRef, 'modules') as CollectionReference<ILogistTeamDto>;
-	return doc<ILogistTeamDto>(modulesCollection, 'logist');
+	const modulesCollection = collection(teamRef, 'modules');
+	return doc<ILogistTeamDto>(modulesCollection as CollectionReference<ILogistTeamDto>, 'logist');
 }
 
 export function logistTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamID: string, collectionName: string): CollectionReference<Dto> {
