@@ -77,13 +77,13 @@ export class SegmentContainerComponent implements OnChanges {
 			return;
 		}
 		this.deleting = true;
-		const request: IDeleteSegmentsRequest = excludeUndefined({
+		const request: IDeleteSegmentsRequest = excludeUndefined<IDeleteSegmentsRequest>({
 			teamID: this.order.team.id,
 			orderID: this.order.id,
 			containerIDs: [containerID],
-			from: this.segment?.from,
-			to: this.segment?.to,
-			by: this.segment?.byContactID,
+			fromShippingPointID: this.segment?.from.shippingPointID,
+			toShippingPointID: this.segment?.to.shippingPointID,
+			byContactID: this.segment?.byContactID,
 		});
 		this.orderService.deleteSegments(request).subscribe({
 			error: err => {
