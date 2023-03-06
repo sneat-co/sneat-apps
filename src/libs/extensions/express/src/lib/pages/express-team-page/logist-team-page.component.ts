@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IExpressTeamContext } from '../../dto/express-team-dto';
-import { ExpressTeamService } from '../../services/express-team.service';
+import { ILogistTeamContext } from '../../dto/express-team-dto';
+import { LogistTeamService } from '../../services/logist-team.service';
 
 @Component({
 	selector: 'sneat-express-main-page',
-	templateUrl: './express-team-page.component.html',
-	styleUrls: ['./express-team-page.component.scss'],
+	templateUrl: './logist-team-page.component.html',
+	styleUrls: ['./logist-team-page.component.scss'],
 })
-export class ExpressTeamPageComponent extends TeamBaseComponent {
-	expressTeam?: IExpressTeamContext;
+export class LogistTeamPageComponent extends TeamBaseComponent {
+	expressTeam?: ILogistTeamContext;
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly expressTeamService: ExpressTeamService,
+		private readonly expressTeamService: LogistTeamService,
 	) {
-		super('ExpressTeamPageComponent', route, teamParams);
+		super('LogistTeamPageComponent', route, teamParams);
 	}
 
 	protected override onTeamIdChanged() {

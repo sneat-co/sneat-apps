@@ -1,10 +1,10 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderCounterparty,
 	IOrderSegment,
-	ExpressOrderService,
+	LogistOrderService,
 	IDeleteSegmentsRequest,
 } from '../..';
 import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-print.service';
@@ -14,7 +14,7 @@ import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-p
 	templateUrl: './trucker-segment.component.html',
 })
 export class TruckerSegmentComponent implements OnChanges {
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() orderSegment?: IOrderSegment;
 	@Input() trucker?: IOrderCounterparty;
 
@@ -24,7 +24,7 @@ export class TruckerSegmentComponent implements OnChanges {
 	deleting = false;
 
 	constructor(
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 		private readonly orderPrintService: OrderPrintService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {

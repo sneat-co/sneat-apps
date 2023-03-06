@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext } from '../../dto/order-dto';
+import { ILogistOrderContext } from '../../dto/order-dto';
 
 @Component({
 	selector: 'sneat-express-orders-list',
@@ -10,5 +10,5 @@ import { IExpressOrderContext } from '../../dto/order-dto';
 export class OrdersListComponent {
 
 	@Input() team?: ITeamContext;
-	@Input() orders?: IExpressOrderContext[];
+	@Input() orders?: ILogistOrderContext[];
 }

@@ -5,9 +5,9 @@ import { ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-express-team-menu-items',
-	templateUrl: './express-team-menu-items.component.html',
+	templateUrl: './logist-team-menu-items.component.html',
 })
-export class ExpressTeamMenuItemsComponent {
+export class LogistTeamMenuItemsComponent {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
 	@Input() public team?: ITeamContext;

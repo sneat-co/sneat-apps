@@ -132,12 +132,12 @@ export function getSegmentsByContainerID(segments?: ReadonlyArray<IContainerSegm
 	return segments?.filter(s => s.containerID === id);
 }
 
-export function getSegmentCounterparty(orderDto?: IExpressOrderDto | null, segment?: IContainerSegment): IOrderCounterparty | undefined {
+export function getSegmentCounterparty(orderDto?: ILogistOrderDto | null, segment?: IContainerSegment): IOrderCounterparty | undefined {
 	const contactID = segment?.byContactID;
 	return contactID ? orderDto?.counterparties?.find(c => c.contactID === contactID) : undefined;
 }
 
-export interface IExpressOrderDto extends IFreightOrderBase, IWithModified {
+export interface ILogistOrderDto extends IFreightOrderBase, IWithModified {
 	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
 	readonly route?: IOrderRoute;
 	// buyer?: IOrderCounterparty;
@@ -159,22 +159,22 @@ export interface IExpressOrderDto extends IFreightOrderBase, IWithModified {
 	readonly issued?: IDocIssued;
 }
 
-export interface IExpressOrderBrief extends IFreightOrderBase {
+export interface ILogistOrderBrief extends IFreightOrderBase {
 	id: string;
 }
 
-export type IExpressOrderContext = ITeamItemContext<IExpressOrderBrief, IExpressOrderDto>;
+export type ILogistOrderContext = ITeamItemContext<ILogistOrderBrief, ILogistOrderDto>;
 
-export interface ICreateExpressOrderRequest extends ITeamRequest {
+export interface ICreateLogistOrderRequest extends ITeamRequest {
 	readonly numberOfContainers?: { [size: string]: number };
-	readonly order: IExpressOrderDto;
+	readonly order: ILogistOrderDto;
 }
 
 export interface ICreateFreightOrderResponse {
 	readonly order: { id: string };
 }
 
-export interface IExpressOrderRequest extends ITeamRequest {
+export interface ILogistOrderRequest extends ITeamRequest {
 	readonly orderID: string;
 }
 
@@ -185,11 +185,11 @@ export interface ISetOrderCounterparty {
 	readonly specialInstructions?: string;
 }
 
-export interface ISetOrderCounterpartiesRequest extends IExpressOrderRequest {
+export interface ISetOrderCounterpartiesRequest extends ILogistOrderRequest {
 	counterparties: ISetOrderCounterparty[];
 }
 
-export interface IAddOrderShippingPointRequest extends IExpressOrderRequest {
+export interface IAddOrderShippingPointRequest extends ILogistOrderRequest {
 	readonly type: 'pick' | 'drop';
 	readonly locationContactID: string;
 	readonly containerIDs?: ReadonlyArray<string>;
@@ -199,7 +199,7 @@ export interface INewContainer extends IOrderContainerBase {
 	readonly shippingPointIDs?: ReadonlyArray<string>;
 }
 
-export interface IAddContainersRequest extends IExpressOrderRequest {
+export interface IAddContainersRequest extends ILogistOrderRequest {
 	readonly containers: INewContainer[];
 }
 
@@ -263,29 +263,29 @@ export interface IAddSegmentEndpoint extends IAddSegmentParty {
 	date?: string;
 }
 
-export interface IAddSegmentsRequest extends IExpressOrderRequest {
+export interface IAddSegmentsRequest extends ILogistOrderRequest {
 	readonly from: IAddSegmentEndpoint;
 	readonly to: IAddSegmentEndpoint;
 	readonly by?: IAddSegmentParty;
 	readonly containers: INewSegmentContainer[];
 }
 
-export interface IUpdateShippingPointRequest extends IExpressOrderRequest {
+export interface IUpdateShippingPointRequest extends ILogistOrderRequest {
 	readonly shippingPointID: string;
 	readonly setNumbers: { [field: string]: number };
 }
 
 
-export interface IContainerRequest extends IExpressOrderRequest {
+export interface IContainerRequest extends ILogistOrderRequest {
 	readonly containerID: string;
 }
 
-export interface IContainerPointsRequest extends IExpressOrderRequest {
+export interface IContainerPointsRequest extends ILogistOrderRequest {
 	containerID: string;
 	shippingPointIDs: string[];
 }
 
-export interface IOrderShippingPointRequest extends IExpressOrderRequest {
+export interface IOrderShippingPointRequest extends ILogistOrderRequest {
 	readonly shippingPointID: string;
 }
 
@@ -305,11 +305,11 @@ export interface IUpdateContainerPointRequest extends IOrderShippingPointRequest
 // }
 
 
-export interface IDeleteCounterpartyRequest extends IExpressOrderRequest, IContactRequest {
+export interface IDeleteCounterpartyRequest extends ILogistOrderRequest, IContactRequest {
 	readonly role: string;
 }
 
-export interface IDeleteSegmentsRequest extends IExpressOrderRequest {
+export interface IDeleteSegmentsRequest extends ILogistOrderRequest {
 	containerIDs?: string[];
 	fromShippingPointID?: string;
 	toShippingPointID?: string;

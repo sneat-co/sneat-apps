@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactServiceModule } from '@sneat/extensions/contactus';
-import { ExpressOrderServiceModule } from '../..';
+import { LogistOrderServiceModule } from '../..';
 import { OrderTruckerSummaryComponent } from './order-trucker-summary.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		IonicModule,
-		ExpressOrderServiceModule,
+		LogistOrderServiceModule,
 		ContactServiceModule,
 		RouterModule.forChild([
 			{

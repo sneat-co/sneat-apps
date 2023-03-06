@@ -1,10 +1,10 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ExpressOrderContactRole } from '@sneat/dto';
+import { LogistOrderContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext } from '../../dto/order-dto';
-import { ExpressOrderService } from '../../services';
+import { ILogistOrderContext } from '../../dto/order-dto';
+import { LogistOrderService } from '../../services';
 import { OrderPrintMenuComponent } from './order-print-menu.component';
 
 @Component({
@@ -15,14 +15,14 @@ import { OrderPrintMenuComponent } from './order-print-menu.component';
 export class OrderCardComponent {
 	@Input() public readonly = false;
 	@Input() team?: ITeamContext;
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() hideDispatchers = false;
-	readonly roles: ExpressOrderContactRole[] = ['buyer', 'consignee', 'agent', 'carrier', 'shipper'];
+	readonly roles: LogistOrderContactRole[] = ['buyer', 'consignee', 'agent', 'carrier', 'shipper'];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 	) {
 	}
 

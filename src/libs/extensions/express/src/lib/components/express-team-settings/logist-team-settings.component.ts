@@ -5,13 +5,13 @@ import { createSetFocusToInput } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { ExpressTeamService, ISetExpressTeamSettingsRequest } from '../..';
+import { LogistTeamService, ISetLogistTeamSettingsRequest } from '../..';
 
 @Component({
 	selector: 'sneat-express-team-settings',
-	templateUrl: './express-team-settings.component.html',
+	templateUrl: './logist-team-settings.component.html',
 })
-export class ExpressTeamSettingsComponent {
+export class LogistTeamSettingsComponent {
 	@ViewChild('addressInput', { static: false }) addressInput?: IonInput;
 
 	@Input() team?: ITeamContext;
@@ -50,7 +50,7 @@ export class ExpressTeamSettingsComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly expressTeamService: ExpressTeamService,
+		private readonly expressTeamService: LogistTeamService,
 		private readonly navController: NavController,
 	) {
 	}
@@ -71,7 +71,7 @@ export class ExpressTeamSettingsComponent {
 			this.errorLogger.logError('No team context provided.');
 			return;
 		}
-		const request: ISetExpressTeamSettingsRequest = excludeUndefined({
+		const request: ISetLogistTeamSettingsRequest = excludeUndefined({
 			teamID: this.team.id,
 			address: {
 				countryID: this.countryID.value || '',

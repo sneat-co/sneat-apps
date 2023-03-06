@@ -4,8 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemModule } from '@sneat/auth';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
-import { ExpressTeamMenuItemsModule } from '../express-team-menu-items/express-team-menu-items.module';
-import { ExpressTeamMenuComponent } from './express-team-menu.component';
+import { LogistTeamMenuItemsComponent } from './logist-team-menu-items.component';
 
 
 @NgModule({
@@ -15,15 +14,14 @@ import { ExpressTeamMenuComponent } from './express-team-menu.component';
 		RouterModule,
 		AuthMenuItemModule,
 		TeamsMenuComponentModule,
-		ExpressTeamMenuItemsModule,
 	],
 	declarations: [
-		ExpressTeamMenuComponent,
+		LogistTeamMenuItemsComponent,
 	],
 	exports: [
-		ExpressTeamMenuComponent,
+		LogistTeamMenuItemsComponent,
 	],
 })
-export class ExpressTeamMenuModule {
+export class LogistTeamMenuItemsModule {
 
 }

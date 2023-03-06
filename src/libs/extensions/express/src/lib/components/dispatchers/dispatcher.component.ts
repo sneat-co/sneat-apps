@@ -4,10 +4,10 @@ import { excludeUndefined } from '@sneat/core';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	ExpressOrderService,
+	LogistOrderService,
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderCounterparty, ISetOrderCounterpartiesRequest,
 } from '../..';
 
@@ -16,11 +16,11 @@ import {
 	templateUrl: './dispatcher.component.html',
 })
 export class DispatcherComponent implements OnChanges {
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() counterparty?: IOrderCounterparty;
 	@Input() orderDispatchers?: ReadonlyArray<IOrderCounterparty>;
 
-	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
+	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
 	locations?: IOrderCounterparty[];
 
@@ -39,7 +39,7 @@ export class DispatcherComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
-		private readonly ordersService: ExpressOrderService,
+		private readonly ordersService: LogistOrderService,
 	) {
 	}
 

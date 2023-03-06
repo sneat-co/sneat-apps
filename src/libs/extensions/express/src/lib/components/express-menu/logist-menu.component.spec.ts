@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExpressMenuComponent } from './express-menu.component';
+import { LogistMenuComponent } from './logist-menu.component';
 
 describe('ExpressMenuComponent', () => {
-	let component: ExpressMenuComponent;
-	let fixture: ComponentFixture<ExpressMenuComponent>;
+	let component: LogistMenuComponent;
+	let fixture: ComponentFixture<LogistMenuComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ExpressMenuComponent],
+			declarations: [LogistMenuComponent],
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(ExpressMenuComponent);
+		fixture = TestBed.createComponent(LogistMenuComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

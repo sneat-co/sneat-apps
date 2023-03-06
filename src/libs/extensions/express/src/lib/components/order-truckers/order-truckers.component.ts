@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IExpressOrderContext, IOrderCounterparty } from '../..';
+import { ILogistOrderContext, IOrderCounterparty } from '../..';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({
@@ -8,7 +8,7 @@ import { ITeamContext } from '@sneat/team/models';
 })
 export class OrderTruckersComponent implements OnChanges {
 	@Input() team?: ITeamContext;
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 
 	public truckers?: ReadonlyArray<IOrderCounterparty>;
 	hasUnassignedSegments = false;

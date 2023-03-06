@@ -4,9 +4,9 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 
 @Component({
 	selector: 'sneat-express-team-menu',
-	templateUrl: './express-team-menu.component.html',
+	templateUrl: './logist-team-menu.component.html',
 })
-export class ExpressTeamMenuComponent extends TeamBaseComponent implements OnInit {
+export class LogistTeamMenuComponent extends TeamBaseComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
 	constructor(

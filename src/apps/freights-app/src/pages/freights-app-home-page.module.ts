@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FreightsAppHomePageComponent } from './freights-app-home-page.component';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ExpressMenuModule } from '@sneat/extensions/express'; // TODO: HELP WANTED: find how to fix it
+import { LogistMenuModule } from '@sneat/extensions/express'; // TODO: HELP WANTED: find how to fix it
 
 const routes: Routes = [
 	{
@@ -18,7 +18,7 @@ const routes: Routes = [
 		CommonModule,
 		IonicModule,
 		RouterModule.forChild(routes),
-		ExpressMenuModule,
+		LogistMenuModule,
 	],
 	declarations: [FreightsAppHomePageComponent],
 })

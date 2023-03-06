@@ -1,8 +1,8 @@
 import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IExpressOrderContext, IOrderCounterparty } from '../dto';
-import { ExpressOrderService } from '../services';
+import { ILogistOrderContext, IOrderCounterparty } from '../dto';
+import { LogistOrderService } from '../services';
 
 import { OrderPageBaseComponent } from '../pages/order-page-base.component';
 
@@ -16,12 +16,12 @@ export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 		className: string,
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		orderService: ExpressOrderService,
+		orderService: LogistOrderService,
 	) {
 		super(className, route, teamParams, orderService);
 	}
 
-	protected override onOrderChanged(order: IExpressOrderContext): void {
+	protected override onOrderChanged(order: ILogistOrderContext): void {
 		super.onOrderChanged(order);
 		console.log('OrderShippingDocComponent.onOrderChanged()', order);
 		this.consignee = order.dto?.counterparties?.find(c => c.role === 'consignee');

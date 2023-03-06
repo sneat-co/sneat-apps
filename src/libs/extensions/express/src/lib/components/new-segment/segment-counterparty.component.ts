@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IContactContext } from '@sneat/team/models';
-import { IExpressOrderContext } from '../../dto';
+import { ILogistOrderContext } from '../../dto';
 
 export type SegmentEndpointType = 'port' | 'dispatcher';
 
@@ -10,7 +10,7 @@ export type SegmentEndpointType = 'port' | 'dispatcher';
 })
 export class SegmentCounterpartyComponent {
 	@Input() endpointDirection?: 'from' | 'to';
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() endpointType?: SegmentEndpointType;
 	@Input() readonly = false;
 

@@ -2,7 +2,7 @@ import { Component, Inject, Input, NgZone, OnChanges, SimpleChanges } from '@ang
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IExpressOrderContext, IOrderContainer } from '../../dto';
+import { ILogistOrderContext, IOrderContainer } from '../../dto';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { IExpressOrderContext, IOrderContainer } from '../../dto';
 export class OrderContainersGridComponent implements OnChanges {
 	protected containers?: IOrderContainer[];
 
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 
 	allCols: IGridColumn[] = [
 		{

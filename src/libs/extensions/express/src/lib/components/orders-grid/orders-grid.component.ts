@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderCounterpartyRef } from '../../dto/order-dto';
+import { ILogistOrderContext, IOrderCounterpartyRef } from '../../dto/order-dto';
 
 interface OrderRow {
 	readonly id: string;
@@ -23,7 +23,7 @@ interface OrderRow {
 export class OrdersGridComponent implements OnChanges {
 
 	@Input() team?: ITeamContext;
-	@Input() orders?: IExpressOrderContext[];
+	@Input() orders?: ILogistOrderContext[];
 
 	rows?: OrderRow[];
 

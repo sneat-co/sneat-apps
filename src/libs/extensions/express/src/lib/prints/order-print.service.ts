@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { IExpressOrderContext } from '../dto';
+import { ILogistOrderContext } from '../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
-export interface IOrderPrintedDocContext extends IExpressOrderContext {
+export interface IOrderPrintedDocContext extends ILogistOrderContext {
 	params?: unknown;
 }
 

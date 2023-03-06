@@ -3,9 +3,9 @@ import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import {
 	ContainerType,
-	ExpressOrderService,
+	LogistOrderService,
 	IAddContainersRequest,
-	IExpressOrderContext,
+	ILogistOrderContext,
 } from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -16,7 +16,7 @@ import { ITeamContext } from '@sneat/team/models';
 })
 export class NewContainerComponent implements AfterViewInit {
 
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() team?: ITeamContext;
 
 	@ViewChild('containerNumberInput', { static: false }) containerNumberInput?: IonInput;
@@ -42,7 +42,7 @@ export class NewContainerComponent implements AfterViewInit {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 	) {
 	}
 

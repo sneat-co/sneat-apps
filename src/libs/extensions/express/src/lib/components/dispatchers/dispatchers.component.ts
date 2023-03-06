@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IExpressOrderContext, IOrderCounterparty } from '../../dto';
+import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 
 
 @Component({
@@ -7,8 +7,8 @@ import { IExpressOrderContext, IOrderCounterparty } from '../../dto';
 	templateUrl: './dispatchers.component.html',
 })
 export class DispatchersComponent implements OnChanges {
-	@Input() order?: IExpressOrderContext;
-	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
+	@Input() order?: ILogistOrderContext;
+	@Output() readonly orderChange = new EventEmitter<ILogistOrderContext>();
 
 	protected dispatchers?: ReadonlyArray<IOrderCounterparty>;
 

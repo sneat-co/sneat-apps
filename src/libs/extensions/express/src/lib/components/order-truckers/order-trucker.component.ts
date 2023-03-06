@@ -1,9 +1,9 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	ExpressOrderService,
+	LogistOrderService,
 	IDeleteCounterpartyRequest,
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderCounterparty,
 	IOrderSegment,
 	getOrderSegments,
@@ -17,7 +17,7 @@ import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-p
 })
 export class OrderTruckerComponent implements OnChanges {
 	@Input() team?: ITeamContext;
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() trucker?: IOrderCounterparty;
 
 	// public segments?: ReadonlyArray<IContainerSegment>;
@@ -28,7 +28,7 @@ export class OrderTruckerComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly ordersService: ExpressOrderService,
+		private readonly ordersService: LogistOrderService,
 		private readonly orderPrintService: OrderPrintService,
 	) {
 	}

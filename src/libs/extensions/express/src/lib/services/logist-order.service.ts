@@ -11,10 +11,10 @@ import {
 	IAddContainersRequest,
 	IContainerRequest,
 	IDeleteCounterpartyRequest,
-	ICreateExpressOrderRequest,
+	ICreateLogistOrderRequest,
 	ICreateFreightOrderResponse,
-	IExpressOrderContext,
-	IExpressOrderDto,
+	ILogistOrderContext,
+	ILogistOrderDto,
 	IFreightOrderBrief,
 	ISetOrderCounterpartiesRequest,
 	IAddOrderShippingPointRequest,
@@ -24,18 +24,18 @@ import {
 	IDeleteSegmentsRequest,
 	IUpdateContainerPointRequest, IContainerPointsRequest,
 } from '../dto';
-import { expressTeamModuleSubCollection } from './express-team.service';
+import { expressTeamModuleSubCollection } from './logist-team.service';
 import { IOrdersFilter } from './orders-filter';
 
 
-function briefFromDto(id: string, dto: IExpressOrderDto): IFreightOrderBrief {
+function briefFromDto(id: string, dto: ILogistOrderDto): IFreightOrderBrief {
 	return {
 		id,
 		...dto,
 	};
 }
 
-function contextFromDto(team: ITeamContext, id: string, dto: IExpressOrderDto): IExpressOrderContext {
+function contextFromDto(team: ITeamContext, id: string, dto: ILogistOrderDto): ILogistOrderContext {
 	return {
 		team,
 		id,
@@ -45,19 +45,19 @@ function contextFromDto(team: ITeamContext, id: string, dto: IExpressOrderDto): 
 }
 
 @Injectable()
-export class ExpressOrderService {
-	private readonly sfs: SneatFirestoreService<IFreightOrderBrief, IExpressOrderDto>;
+export class LogistOrderService {
+	private readonly sfs: SneatFirestoreService<IFreightOrderBrief, ILogistOrderDto>;
 
 	constructor(
 		private readonly sneatApiService: SneatApiService,
 		// teamItemService: TeamItemBaseService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<IFreightOrderBrief, IExpressOrderDto>(
+		this.sfs = new SneatFirestoreService<IFreightOrderBrief, ILogistOrderDto>(
 			'express_orders', afs, briefFromDto);
 	}
 
-	createOrder(request: ICreateExpressOrderRequest): Observable<ICreateFreightOrderResponse> {
+	createOrder(request: ICreateLogistOrderRequest): Observable<ICreateFreightOrderResponse> {
 		return this.sneatApiService.post('express/create_order', request);
 	}
 
@@ -65,19 +65,19 @@ export class ExpressOrderService {
 		return expressTeamModuleSubCollection<Dto>(this.afs, teamID, 'orders');
 	}
 
-	public watchOrderByID(teamID: string, orderID: string): Observable<IExpressOrderContext> {
-		const ordersCollection = this.ordersCollection<IExpressOrderDto>(teamID);
+	public watchOrderByID(teamID: string, orderID: string): Observable<ILogistOrderContext> {
+		const ordersCollection = this.ordersCollection<ILogistOrderDto>(teamID);
 		return this.sfs.watchByID(ordersCollection, orderID).pipe(
 			map(context => ({ ...context, team: { id: teamID } })),
 		);
 	}
 
-	public watchFreightOrders(teamID: string, filter: IOrdersFilter): Observable<IExpressOrderContext[]> {
+	public watchFreightOrders(teamID: string, filter: IOrdersFilter): Observable<ILogistOrderContext[]> {
 		console.log('watchFreightOrders()', teamID, filter);
 		if (!filter) {
 			return throwError(() => 'filter is required parameter');
 		}
-		const ordersCollection = this.ordersCollection<IExpressOrderDto>(teamID);
+		const ordersCollection = this.ordersCollection<ILogistOrderDto>(teamID);
 
 		const qFilter: IFilter[] = [
 			{ field: 'status', operator: '==', value: filter?.status || 'active' }
@@ -137,9 +137,9 @@ export class ExpressOrderService {
 		return this.sneatApiService.post('express/order/set_order_counterparties', request);
 	}
 
-	addShippingPoint(team: ITeamContext, request: IAddOrderShippingPointRequest): Observable<IExpressOrderContext> {
+	addShippingPoint(team: ITeamContext, request: IAddOrderShippingPointRequest): Observable<ILogistOrderContext> {
 		return this.sneatApiService
-			.post<{ order: IExpressOrderDto }>('express/order/add_shipping_point', request)
+			.post<{ order: ILogistOrderDto }>('express/order/add_shipping_point', request)
 			.pipe(
 				map(response => contextFromDto(team, request.orderID, response.order)),
 			);
@@ -184,8 +184,8 @@ export class ExpressOrderService {
 @NgModule({
 	imports: [],
 	providers: [
-		ExpressOrderService,
+		LogistOrderService,
 	],
 })
-export class ExpressOrderServiceModule {
+export class LogistOrderServiceModule {
 }

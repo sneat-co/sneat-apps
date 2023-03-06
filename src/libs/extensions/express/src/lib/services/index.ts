@@ -1,4 +1,4 @@
-export  * from './express-order.service';
+export  * from './logist-order.service';
 export * from  './orders-filter';
-export * from './express-team.service';
+export * from './logist-team.service';
 export * from './order-nav.service';

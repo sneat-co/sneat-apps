@@ -3,9 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
-	ExpressOrderService,
+	LogistOrderService,
 	IContainerRequest,
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderContainer,
 	IContainerSegment,
 	IFreightLoad, IContainerPoint,
@@ -19,7 +19,7 @@ import { NewSegmentService } from '../new-segment/new-segment.service';
 })
 export class ContainerFormComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() team?: ITeamContext;
 	@Input() i = 0;
 
@@ -42,7 +42,7 @@ export class ContainerFormComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 		private readonly newSegmentService: NewSegmentService,
 	) {
 	}

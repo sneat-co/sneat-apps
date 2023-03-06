@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ITeamContext } from '@sneat/team/models';
-import { IExpressOrderContext, IOrderContainer } from '../..';
+import { ILogistOrderContext, IOrderContainer } from '../..';
 
 @Component({
 	selector: 'sneat-order-containers-card',
@@ -20,8 +20,8 @@ export class OrderContainersComponent implements OnChanges {
 
 	@Input() team?: ITeamContext;
 
-	@Input() order?: IExpressOrderContext;
-	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
+	@Input() order?: ILogistOrderContext;
+	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
 	containers?: ReadonlyArray<IOrderContainer>;
 

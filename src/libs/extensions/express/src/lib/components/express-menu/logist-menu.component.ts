@@ -4,10 +4,10 @@ import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
 
 @Component({
 	selector: 'sneat-express-menu',
-	templateUrl: './express-menu.component.html',
-	styleUrls: ['./express-menu.component.scss'],
+	templateUrl: './logist-menu.component.html',
+	styleUrls: ['./logist-menu.component.scss'],
 })
-export class ExpressMenuComponent implements OnInit {
+export class LogistMenuComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
 	public authState?: ISneatAuthState;

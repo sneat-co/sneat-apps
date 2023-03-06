@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CountrySelectorModule, SelectFromListModule } from '@sneat/components';
 import { ContactServiceModule, LocationFormModule, NewCompanyFormModule } from '@sneat/extensions/contactus';
-import { NewExpressCompanyPageComponent } from './new-express-company-page.component';
+import { NewLogistCompanyPageComponent } from './new-logist-company-page.component';
 
 @NgModule({
   imports: [
@@ -18,15 +18,15 @@ import { NewExpressCompanyPageComponent } from './new-express-company-page.compo
     RouterModule.forChild([
       {
         path: '',
-        component: NewExpressCompanyPageComponent,
+        component: NewLogistCompanyPageComponent,
       },
     ]),
     CountrySelectorModule,
     NewCompanyFormModule,
   ],
 	declarations: [
-		NewExpressCompanyPageComponent,
+		NewLogistCompanyPageComponent,
 	],
 })
-export class NewExpressCompanyPageModule {
+export class NewLogistCompanyPageModule {
 }

@@ -9,14 +9,14 @@ import {
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { Observable } from 'rxjs';
 import {
-	IExpressTeamBrief,
-	IExpressTeamContext,
-	IExpressTeamDto,
-	ISetExpressTeamSettingsRequest,
+	ILogistTeamBrief,
+	ILogistTeamContext,
+	ILogistTeamDto,
+	ISetLogistTeamSettingsRequest,
 } from '../dto/express-team-dto';
 
 
-function briefFromDto(id: string, dto: IExpressTeamDto): IExpressTeamBrief {
+function briefFromDto(id: string, dto: ILogistTeamDto): ILogistTeamBrief {
 	return {
 		id,
 		...dto,
@@ -24,32 +24,32 @@ function briefFromDto(id: string, dto: IExpressTeamDto): IExpressTeamBrief {
 }
 
 @Injectable()
-export class ExpressTeamService {
-	private readonly sfs: SneatFirestoreService<IExpressTeamBrief, IExpressTeamDto>;
+export class LogistTeamService {
+	private readonly sfs: SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>;
 
 	constructor(
 		private readonly sneatApiService: SneatApiService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<IExpressTeamBrief, IExpressTeamDto>(
+		this.sfs = new SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>(
 			'express_team', afs, briefFromDto);
 	}
 
-	public watchExpressTeamByID(teamID: string): Observable<IExpressTeamContext> {
+	public watchExpressTeamByID(teamID: string): Observable<ILogistTeamContext> {
 		return this.sfs.watchByDocRef(expressTeamDocRef(this.afs, teamID));
 	}
 
-	setExpressTeamSettings(request: ISetExpressTeamSettingsRequest): Observable<void> {
+	setExpressTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
 		return this.sneatApiService.post('express/set_express_team_settings', request);
 	}
 
 }
 
-function expressTeamDocRef(afs: AngularFirestore, teamID: string): DocumentReference<IExpressTeamDto> {
+function expressTeamDocRef(afs: AngularFirestore, teamID: string): DocumentReference<ILogistTeamDto> {
 	const teamsCollection = collection(afs, 'teams');
 	const teamRef = doc(teamsCollection, teamID);
-	const modulesCollection = collection(teamRef, 'modules') as CollectionReference<IExpressTeamDto>;
-	return doc<IExpressTeamDto>(modulesCollection, 'express');
+	const modulesCollection = collection(teamRef, 'modules') as CollectionReference<ILogistTeamDto>;
+	return doc<ILogistTeamDto>(modulesCollection, 'express');
 }
 
 export function expressTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamID: string, collectionName: string): CollectionReference<Dto> {
@@ -60,8 +60,8 @@ export function expressTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamI
 @NgModule({
 	imports: [],
 	providers: [
-		ExpressTeamService,
+		LogistTeamService,
 	],
 })
-export class ExpressTeamServiceModule {
+export class LogistTeamServiceModule {
 }

@@ -1,6 +1,6 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { IExpressOrderContext } from '../dto';
+import { ILogistOrderContext } from '../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 
@@ -12,7 +12,7 @@ export class OrderNavService {
 	) {
 	}
 
-	goOrderPage(direction: 'forward' | 'back', order: IExpressOrderContext, url?: { path: string, fragment?: string }, params?: { [id: string]: unknown }, state?: { [id: string]: unknown }): Promise<boolean> {
+	goOrderPage(direction: 'forward' | 'back', order: ILogistOrderContext, url?: { path: string, fragment?: string }, params?: { [id: string]: unknown }, state?: { [id: string]: unknown }): Promise<boolean> {
 		const { id, team } = order;
 		let u = `/space/${team.type}/${team.id}/order/${id}`;
 		if (url?.path) {

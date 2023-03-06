@@ -1,8 +1,8 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IContainerPoint, IExpressOrderContext, IOrderShippingPoint } from '../../dto';
-import { ExpressOrderService } from '../../services';
+import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint } from '../../dto';
+import { LogistOrderService } from '../../services';
 
 @Component({
 	selector: 'sneat-order-container-point',
@@ -11,7 +11,7 @@ import { ExpressOrderService } from '../../services';
 export class OrderContainerPointComponent implements OnChanges {
 	@Input() containerPoint?: IContainerPoint;
 	@Input() shippingPoints?: readonly IOrderShippingPoint[];
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() team?: ITeamContext;
 
 	shippingPoint?: IOrderShippingPoint;
@@ -20,7 +20,7 @@ export class OrderContainerPointComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 	) {
 	}
 

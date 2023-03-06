@@ -3,20 +3,20 @@ import { ActivatedRoute } from '@angular/router';
 import { excludeEmpty } from '@sneat/core';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { Subscription, takeUntil } from 'rxjs';
-import { IExpressOrderContext } from '../../dto/order-dto';
-import { ExpressOrderService } from '../../services/express-order.service';
+import { ILogistOrderContext } from '../../dto/order-dto';
+import { LogistOrderService } from '../../services/logist-order.service';
 import { IOrdersFilter } from '../../services/orders-filter';
 
 const defaultFilter: IOrdersFilter = { status: 'active' };
 
 @Component({
 	selector: 'sneat-express-orders-page',
-	templateUrl: 'express-orders-page.component.html',
+	templateUrl: 'logist-orders-page.component.html',
 	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExpressOrdersPageComponent extends TeamBaseComponent {
+export class LogistOrdersPageComponent extends TeamBaseComponent {
 
-	orders?: IExpressOrderContext[];
+	orders?: ILogistOrderContext[];
 
 	private ordersSubscription?: Subscription;
 	private filter: IOrdersFilter = defaultFilter;
@@ -24,7 +24,7 @@ export class ExpressOrdersPageComponent extends TeamBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly ordersService: ExpressOrderService,
+		private readonly ordersService: LogistOrderService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
 		super('OrdersPageComponent', route, teamParams);

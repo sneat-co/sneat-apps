@@ -15,12 +15,12 @@ import { OrderTruckersComponent } from '../../components/order-truckers/order-tr
 import { SegmentContainerComponent } from '../../components/order-truckers/segment-container.component';
 import { TruckerSegmentComponent } from '../../components/order-truckers/trucker-segment.component';
 import { OrderPrintServiceModule } from '../../prints/order-print-service.module';
-import { ExpressOrderPageComponent } from './express-order-page.component';
+import { LogistOrderPageComponent } from './logist-order-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ExpressOrderPageComponent,
+		component: LogistOrderPageComponent,
 	},
 ];
 
@@ -40,7 +40,7 @@ const routes: Routes = [
 		FreightLoadFormModule,
 	],
 	declarations: [
-		ExpressOrderPageComponent,
+		LogistOrderPageComponent,
 		OrderSegmentsComponent,
 		OrderTruckersComponent,
 		OrderTruckerComponent,
@@ -48,5 +48,5 @@ const routes: Routes = [
 		SegmentContainerComponent,
 	],
 })
-export class ExpressOrderPageModule {
+export class LogistOrderPageModule {
 }

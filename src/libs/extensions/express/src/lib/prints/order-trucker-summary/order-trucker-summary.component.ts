@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContactService } from '@sneat/extensions/contactus';
 import {
-	ExpressOrderService, IContainerSegment,
-	IExpressOrderContext,
+	LogistOrderService, IContainerSegment,
+	ILogistOrderContext,
 	IFreightLoad, IOrderContainer,
 	IOrderCounterparty,
 	IOrderShippingPoint,
@@ -38,7 +38,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		orderService: ExpressOrderService,
+		orderService: LogistOrderService,
 		private readonly contactService: ContactService,
 	) {
 		super('OrderTruckerSummaryComponent', route, teamParams, orderService);
@@ -57,7 +57,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 		this.truckerCounterparty = this?.order?.dto?.counterparties?.find(c => c.role === 'trucker' && c.contactID === this.truckerID);
 	}
 
-	protected override onOrderChanged(order: IExpressOrderContext) {
+	protected override onOrderChanged(order: ILogistOrderContext) {
 		super.onOrderChanged(order);
 		const counterparties = this.order?.dto?.counterparties;
 		if (this.truckerID) {

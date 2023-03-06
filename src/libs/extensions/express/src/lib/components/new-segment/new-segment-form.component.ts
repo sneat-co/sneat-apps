@@ -5,9 +5,9 @@ import { IContactContext } from '@sneat/team/models';
 import { IContainer } from '../order-containers-selector/condainer-interface';
 import { SegmentEndpointType } from './segment-counterparty.component';
 import {
-	ExpressOrderService, IAddSegmentParty,
+	LogistOrderService, IAddSegmentParty,
 	IAddSegmentsRequest,
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderContainer,
 } from '../..';
 
@@ -16,7 +16,7 @@ import {
 	templateUrl: './new-segment-form.component.html',
 })
 export class NewSegmentFormComponent implements OnInit, OnChanges {
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
 	@Input() isInModal?: boolean;
 
@@ -47,7 +47,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 	) {
 	}
 

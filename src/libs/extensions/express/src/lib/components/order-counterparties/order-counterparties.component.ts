@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContactRole, ContactType, ExpressOrderContactRole } from '@sneat/dto';
+import { ContactRole, ContactType, LogistOrderContactRole } from '@sneat/dto';
 import { ContactSelectorService, IContactSelectorOptions } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
 	CounterpartyRole,
-	ExpressOrderService,
+	LogistOrderService,
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
-	IExpressOrderContext, IOrderCounterparty,
+	ILogistOrderContext, IOrderCounterparty,
 	IOrderCounterpartyRef,
 } from '../..';
 
@@ -22,14 +22,14 @@ interface ICounterparty extends IOrderCounterparty {
 })
 export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() team?: ITeamContext;
-	@Input() order?: IExpressOrderContext;
-	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
+	@Input() order?: ILogistOrderContext;
+	@Output() readonly orderChange = new EventEmitter<ILogistOrderContext>();
 	@Input() readonly = false;
 	@Input() emoji?: string;
 	@Input() plural = 'plural TO BE SET';
 	@Input() singular = 'singular TO BE SET';
 	@Input() parentRole?: 'dispatcher' | 'what else?' = 'dispatcher';
-	@Input() contactRole: ExpressOrderContactRole = 'location';
+	@Input() contactRole: LogistOrderContactRole = 'location';
 	@Input() counterpartyRole: CounterpartyRole = 'dispatch-point';
 	@Input() contactType?: ContactType;
 
@@ -40,7 +40,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
-		private readonly ordersService: ExpressOrderService,
+		private readonly ordersService: LogistOrderService,
 	) {
 	}
 

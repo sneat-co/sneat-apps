@@ -5,19 +5,19 @@ import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import {
 	CounterpartyRole,
-	ExpressTeamService,
-	ExpressOrderService,
+	LogistTeamService,
+	LogistOrderService,
 	IOrderCounterparty,
 } from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ICreateExpressOrderRequest, IExpressOrderContext } from '../../dto/order-dto';
+import { ICreateLogistOrderRequest, ILogistOrderContext } from '../../dto/order-dto';
 
 @Component({
 	selector: 'sneat-new-express-order-page',
-	templateUrl: 'new-express-order-page.component.html',
+	templateUrl: 'new-logist-order-page.component.html',
 })
-export class NewExpressOrderPageComponent extends TeamBaseComponent {
-	public order: IExpressOrderContext = {
+export class NewLogistOrderPageComponent extends TeamBaseComponent {
+	public order: ILogistOrderContext = {
 		id: '',
 		team: this.team || { id: '', type: 'company' },
 		dto: {
@@ -42,8 +42,8 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly freightOrdersService: ExpressOrderService,
-		private readonly expressTeamService: ExpressTeamService,
+		private readonly freightOrdersService: LogistOrderService,
+		private readonly expressTeamService: LogistTeamService,
 		private readonly contactService: ContactService,
 	) {
 		super('NewExpressOrderPageComponent', route, teamParams);
@@ -114,7 +114,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		console.log('order: 2', this.order);
 	};
 
-	onOrderChanged(order: IExpressOrderContext): void {
+	onOrderChanged(order: ILogistOrderContext): void {
 		console.log('NewExpressOrderPageComponent.onOrderChanged():', order);
 		this.order = order;
 	}
@@ -159,7 +159,7 @@ export class NewExpressOrderPageComponent extends TeamBaseComponent {
 		// 	alert('Destination country is required');
 		// 	return;
 		// }
-		const request: ICreateExpressOrderRequest = {
+		const request: ICreateLogistOrderRequest = {
 			teamID: this.team.id,
 			order: {
 				...this.order.dto,

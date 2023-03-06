@@ -15,18 +15,18 @@ export type CounterpartyRole =
 	| 'port_to'
 	;
 
-export interface IExpressTeamDto {
+export interface ILogistTeamDto {
 	readonly contactID: string;
 }
 
-export interface IExpressTeamBrief extends IExpressTeamDto {
+export interface ILogistTeamBrief extends ILogistTeamDto {
 	readonly id: string;
 }
 
-export type IExpressTeamContext = INavContext<IExpressTeamBrief, IExpressTeamDto>;
+export type ILogistTeamContext = INavContext<ILogistTeamBrief, ILogistTeamDto>;
 
 
-export interface ISetExpressTeamSettingsRequest extends ITeamRequest {
+export interface ISetLogistTeamSettingsRequest extends ITeamRequest {
 	address: IAddress;
 	vatNumber?: string;
 	orderNumberPrefix?: string;

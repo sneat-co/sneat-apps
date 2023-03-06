@@ -1,2 +1,2 @@
-export * from './express-team-menu.module';
-export * from './express-team-menu.component';
+export * from './logist-team-menu.module';
+export * from './logist-team-menu.component';

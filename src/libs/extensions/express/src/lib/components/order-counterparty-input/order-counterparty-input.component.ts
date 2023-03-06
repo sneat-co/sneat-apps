@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ExpressOrderContactRole, ContactType } from '@sneat/dto';
-import { ExpressOrderService } from '../../services';
+import { LogistOrderContactRole, ContactType } from '@sneat/dto';
+import { LogistOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import {
 	CounterpartyRole, IDeleteCounterpartyRequest,
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderCounterparty,
 	IOrderCounterpartyRef,
 	ISetOrderCounterpartiesRequest,
@@ -21,15 +21,15 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
 	@Input() counterpartyRole?: CounterpartyRole;
-	@Input() contactRole?: ExpressOrderContactRole;
+	@Input() contactRole?: LogistOrderContactRole;
 	@Input() contactType?: ContactType;
-	@Input() parentRole?: ExpressOrderContactRole;
+	@Input() parentRole?: LogistOrderContactRole;
 	@Input() canChangeContact = true;
 
 	@Input() selectOnly = false;
 
-	@Input() order?: IExpressOrderContext;
-	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
+	@Input() order?: ILogistOrderContext;
+	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
 	@Output() counterpartyChange = new EventEmitter<IOrderCounterpartyRef>();
 
@@ -42,7 +42,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 	) {
 
 	}
@@ -249,7 +249,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		});
 	}
 
-	private emitOrder(order: IExpressOrderContext): void {
+	private emitOrder(order: ILogistOrderContext): void {
 		this.order = order;
 		this.orderChange.emit(order);
 	}

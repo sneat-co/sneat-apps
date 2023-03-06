@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { first } from 'rxjs';
-import { ExpressOrderService } from '../..';
+import { LogistOrderService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
 import { OrderPageBaseComponent } from '../order-page-base.component';
@@ -12,10 +12,10 @@ type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'note
 
 @Component({
 	selector: 'sneat-order-page',
-	templateUrl: './express-order-page.component.html',
-	styleUrls: ['./express-order-page.component.scss'],
+	templateUrl: './logist-order-page.component.html',
+	styleUrls: ['./logist-order-page.component.scss'],
 })
-export class ExpressOrderPageComponent extends OrderPageBaseComponent {
+export class LogistOrderPageComponent extends OrderPageBaseComponent {
 
 
 	tab: OrderDetailsTab = 'containers';
@@ -23,7 +23,7 @@ export class ExpressOrderPageComponent extends OrderPageBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		orderService: ExpressOrderService,
+		orderService: LogistOrderService,
 		private readonly newSegmentService: NewSegmentService,
 		private readonly modalController: ModalController,
 	) {

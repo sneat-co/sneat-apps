@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { IContactContext } from '@sneat/team/models';
-import { IExpressOrderContext } from '../../dto';
+import { ILogistOrderContext } from '../../dto';
 
 @Component({
 	selector: 'sneat-contact-with-ref-num',
@@ -10,7 +10,7 @@ import { IExpressOrderContext } from '../../dto';
 export class ContactWithRefNumComponent {
 	@Input() readonly = false;
 	@Input() contactColSize = 8;
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() contactType?: ContactType;
 	@Input() contactRole?: ContactRole;
 

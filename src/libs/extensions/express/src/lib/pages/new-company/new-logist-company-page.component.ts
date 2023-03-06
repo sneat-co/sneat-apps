@@ -9,9 +9,9 @@ import { first, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-new-express-company-page',
-	templateUrl: 'new-express-company-page.component.html',
+	templateUrl: 'new-logist-company-page.component.html',
 })
-export class NewExpressCompanyPageComponent extends TeamBaseComponent implements OnDestroy {
+export class NewLogistCompanyPageComponent extends TeamBaseComponent implements OnDestroy {
 
 	readonly contactTypes: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },

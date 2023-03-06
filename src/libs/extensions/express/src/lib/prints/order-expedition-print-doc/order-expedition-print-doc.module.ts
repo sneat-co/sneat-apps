@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ExpressOrderServiceModule } from '../..';
+import { LogistOrderServiceModule } from '../..';
 import { OrderExpeditionPrintDocComponent } from './order-expedition-print-doc.component';
 
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
 		CommonModule,
 		IonicModule,
 		RouterModule.forChild(routes),
-		ExpressOrderServiceModule,
+		LogistOrderServiceModule,
 	],
 	declarations: [
 		OrderExpeditionPrintDocComponent,

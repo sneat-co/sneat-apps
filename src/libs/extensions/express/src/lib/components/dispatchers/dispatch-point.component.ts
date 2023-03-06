@@ -2,8 +2,8 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	ExpressOrderService,
-	IExpressOrderContext,
+	LogistOrderService,
+	ILogistOrderContext,
 	IOrderContainer,
 	IOrderCounterparty,
 	IContainerSegment,
@@ -16,7 +16,7 @@ import {
 })
 export class DispatchPointComponent implements OnChanges {
 	@Input() dispatchPoint?: IOrderCounterparty;
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() disabled = false;
 
 	shippingPoint?: IOrderShippingPoint;
@@ -36,7 +36,7 @@ export class DispatchPointComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 	) {
 	}
 

@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { membersRoutes } from '@sneat/extensions/memberus';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ExpressMenuModule } from '../components/express-menu/express-menu.module';
-import { ExpressTeamMenuComponent } from '../components/express-team-menu/express-team-menu.component';
+import { LogistMenuModule } from '../components/express-menu/logist-menu.module';
+import { LogistTeamMenuComponent } from '../components/express-team-menu/logist-team-menu.component';
 
 @Component({ template: 'empty component' })
 export class EmptyComponent {
@@ -14,18 +14,18 @@ export class EmptyComponent {
 export const expressRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('../pages/express-team-page/express-team-page.module').then(m => m.ExpressTeamPageModule),
+		loadChildren: () => import('../pages/express-team-page/logist-team-page.module').then(m => m.LogistTeamPageModule),
 	},
 	{
 		path: '',
 		outlet: 'menu',
 		// loadChildren: () => import('../components/express-team-menu/express-team-menu.module').then(m => m.ExpressTeamMenuModule),
-		component: ExpressTeamMenuComponent,
+		component: LogistTeamMenuComponent,
 	},
 	{
 		path: 'orders',
 		pathMatch: 'full',
-		loadChildren: () => import('../pages/orders-page/express-orders-page.module').then(m => m.ExpressOrdersPageModule),
+		loadChildren: () => import('../pages/orders-page/logist-orders-page.module').then(m => m.LogistOrdersPageModule),
 	},
 	{
 		path: 'order',
@@ -34,7 +34,7 @@ export const expressRoutes: Routes = [
 	},
 	{
 		path: 'order/:orderID',
-		loadChildren: () => import('../pages/order-page/express-order-page.module').then(m => m.ExpressOrderPageModule),
+		loadChildren: () => import('../pages/order-page/logist-order-page.module').then(m => m.LogistOrderPageModule),
 	},
 	{
 		path: 'order/:orderID/new-segments',
@@ -46,11 +46,11 @@ export const expressRoutes: Routes = [
 	},
 	{
 		path: 'new-company',
-		loadChildren: () => import('../pages/new-company/new-express-company-page.module').then(m => m.NewExpressCompanyPageModule),
+		loadChildren: () => import('../pages/new-company/new-logist-company-page.module').then(m => m.NewLogistCompanyPageModule),
 	},
 	{
 		path: 'new-order',
-		loadChildren: () => import('../pages/new-order/new-express-order-page.module').then(m => m.NewExpressOrderPageModule),
+		loadChildren: () => import('../pages/new-order/new-logist-order-page.module').then(m => m.NewLogistOrderPageModule),
 	},
 	...membersRoutes,
 ];
@@ -59,7 +59,7 @@ export const expressRoutes: Routes = [
 	imports: [
 		CommonModule,
 		RouterModule.forChild(expressRoutes.map(r => ({ ...r, path: r.path?.replace('express/', '') }))),
-		ExpressMenuModule,
+		LogistMenuModule,
 		ContactusRoutingModule,
 	],
 	declarations: [
@@ -69,5 +69,5 @@ export const expressRoutes: Routes = [
 		TeamComponentBaseParams,
 	],
 })
-export class ExpressTeamRoutingModule {
+export class LogistTeamRoutingModule {
 }

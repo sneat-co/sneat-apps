@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IExpressOrderContext } from '../..';
+import { ILogistOrderContext } from '../..';
 import { IContainer } from './condainer-interface';
 
 
@@ -8,7 +8,7 @@ import { IContainer } from './condainer-interface';
 	templateUrl: './order-containers-selector.component.html',
 })
 export class OrderContainersSelectorComponent implements OnChanges {
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 
 	containers?: IContainer[];
 

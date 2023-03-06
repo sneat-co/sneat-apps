@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExpressTeamPageComponent } from './express-team-page.component';
+import { LogistTeamPageComponent } from './logist-team-page.component';
 
 describe('ExpressMainPageComponent', () => {
-	let component: ExpressTeamPageComponent;
-	let fixture: ComponentFixture<ExpressTeamPageComponent>;
+	let component: LogistTeamPageComponent;
+	let fixture: ComponentFixture<LogistTeamPageComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ExpressTeamPageComponent],
+			declarations: [LogistTeamPageComponent],
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(ExpressTeamPageComponent);
+		fixture = TestBed.createComponent(LogistTeamPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

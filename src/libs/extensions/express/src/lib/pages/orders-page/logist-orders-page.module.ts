@@ -6,15 +6,15 @@ import { IonicModule } from '@ionic/angular';
 import { CountryInputModule, CountrySelectorModule } from '@sneat/components';
 import { ContactInputModule } from '@sneat/extensions/contactus';
 import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
-import { ExpressOrderServiceModule } from '../../services/express-order.service';
+import { LogistOrderServiceModule } from '../../services/logist-order.service';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';
-import { ExpressOrdersPageComponent } from './express-orders-page.component';
+import { LogistOrdersPageComponent } from './logist-orders-page.component';
 import { OrdersFilterComponent } from './orders-filter/orders-filter.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ExpressOrdersPageComponent,
+		component: LogistOrdersPageComponent,
 	},
 ];
 
@@ -26,7 +26,7 @@ const routes: Routes = [
 		FormsModule,
 		OrdersListModule,
 		OrdersGridModule,
-		ExpressOrderServiceModule,
+		LogistOrderServiceModule,
 		ContactInputModule,
 		CountrySelectorModule,
 		CountryInputModule,
@@ -34,9 +34,9 @@ const routes: Routes = [
 		CountryInputModule,
 	],
 	declarations: [
-		ExpressOrdersPageComponent,
+		LogistOrdersPageComponent,
 		OrdersFilterComponent,
 	],
 })
-export class ExpressOrdersPageModule {
+export class LogistOrdersPageModule {
 }

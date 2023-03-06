@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ExpressOrderContactRole, ContactType } from '@sneat/dto';
+import { LogistOrderContactRole, ContactType } from '@sneat/dto';
 import { CounterpartyRole } from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderCounterparty,
 	ISetOrderCounterpartiesRequest,
 } from '../../dto/order-dto';
-import { ExpressOrderService } from '../../services';
+import { LogistOrderService } from '../../services';
 
 @Component({
 	selector: 'sneat-express-order-counterparty',
@@ -26,12 +26,12 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() canChangeContact = true;
 	@Input() counterpartyRole?: CounterpartyRole;
 	@Input() contactType?: ContactType;
-	@Input() contactRole?: ExpressOrderContactRole;
-	@Input() parentRole?: ExpressOrderContactRole;
+	@Input() contactRole?: LogistOrderContactRole;
+	@Input() parentRole?: LogistOrderContactRole;
 
 	@Input() selectOnly = false;
-	@Input() order?: IExpressOrderContext;
-	@Output() readonly orderChange = new EventEmitter<IExpressOrderContext>();
+	@Input() order?: ILogistOrderContext;
+	@Output() readonly orderChange = new EventEmitter<ILogistOrderContext>();
 
 	counterparty?: IOrderCounterparty;
 	@Output() readonly counterpartyChange = new EventEmitter<IOrderCounterparty>();
@@ -44,7 +44,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 	) {
 	}
 
@@ -57,12 +57,12 @@ export class OrderCounterpartyComponent implements OnChanges {
 		}
 	}
 
-	protected onOrderChanged(order: IExpressOrderContext): void {
+	protected onOrderChanged(order: ILogistOrderContext): void {
 		console.log('OrderCounterpartyComponent.onOrderChanged():', order);
 		this.setAndEmitOrder(order);
 	}
 
-	private setAndEmitOrder(order: IExpressOrderContext): void {
+	private setAndEmitOrder(order: ILogistOrderContext): void {
 		this.order = order;
 		this.orderChange.emit(order);
 	}

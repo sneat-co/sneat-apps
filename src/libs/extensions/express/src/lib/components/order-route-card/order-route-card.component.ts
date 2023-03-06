@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IExpressOrderContext, ITransitPoint } from '../../dto';
+import { ILogistOrderContext, ITransitPoint } from '../../dto';
 
 @Component({
 	selector: 'sneat-order-route-card',
@@ -7,8 +7,8 @@ import { IExpressOrderContext, ITransitPoint } from '../../dto';
 })
 export class OrderRouteCardComponent {
 
-	@Input() order: IExpressOrderContext = { id: '', team: {id: '',} };
-	@Output() orderChange = new EventEmitter<IExpressOrderContext>();
+	@Input() order: ILogistOrderContext = { id: '', team: {id: '',} };
+	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
 	protected addTransitPoint(event: Event): void {
 		event.stopPropagation();

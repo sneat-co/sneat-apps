@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { excludeZeroValues } from '@sneat/core';
-import { IExpressOrderContext } from '../../dto';
+import { ILogistOrderContext } from '../../dto';
 
 @Component({
 	selector: 'sneat-new-order-containers-form',
 	templateUrl: './new-order-containers-form.component.html',
 })
 export class NewOrderContainersFormComponent {
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Output() readonly numberOfContainersChange = new EventEmitter<{ [size: string]: number }>();
 
 	size20ft = 0;

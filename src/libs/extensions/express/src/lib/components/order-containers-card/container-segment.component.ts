@@ -3,10 +3,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IExpressOrderContext,
+	ILogistOrderContext,
 	IOrderCounterparty,
 	IContainerSegment,
-	ExpressOrderService,
+	LogistOrderService,
 	IDeleteSegmentsRequest,
 	IContainerPoint,
 	IUpdateContainerPointRequest, IFreightLoad,
@@ -18,7 +18,7 @@ import { FreightLoadForm } from '../freight-load-form/freight-load-form.componen
 	templateUrl: './container-segment.component.html',
 })
 export class ContainerSegmentComponent implements OnChanges {
-	@Input() order?: IExpressOrderContext;
+	@Input() order?: ILogistOrderContext;
 	@Input() segment?: IContainerSegment;
 
 	freightLoadForm = new FreightLoadForm();
@@ -48,7 +48,7 @@ export class ContainerSegmentComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: ExpressOrderService,
+		private readonly orderService: LogistOrderService,
 		private readonly changedDetectorRef: ChangeDetectorRef,
 	) {
 	}

@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactServiceModule } from '@sneat/extensions/contactus';
-import { ExpressTeamServiceModule } from '../..';
+import { LogistTeamServiceModule } from '../..';
 import { NewSegmentModule } from '../../components/new-segment/new-segment.module';
 import { OrderRouteCardModule } from '../../components/order-route-card/order-route-card.module';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
-import { ExpressOrderServiceModule } from '../../services/express-order.service';
-import { NewExpressOrderPageComponent } from './new-express-order-page.component';
+import { LogistOrderServiceModule } from '../../services/logist-order.service';
+import { NewLogistOrderPageComponent } from './new-logist-order-page.component';
 import { NewOrderContainersFormComponent } from './new-order-containers-form.component';
 
 @NgModule({
@@ -20,23 +20,23 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 		RouterModule.forChild([
 			{
 				path: '',
-				component: NewExpressOrderPageComponent,
+				component: NewLogistOrderPageComponent,
 			},
 		]),
-		ExpressOrderServiceModule,
+		LogistOrderServiceModule,
 		OrderRouteCardModule,
 		OrderContainersModule,
 		OrderFormModule,
-		ExpressTeamServiceModule,
+		LogistTeamServiceModule,
 		ContactServiceModule,
 		FormsModule,
 		NewSegmentModule,
 	],
 	declarations: [
-		NewExpressOrderPageComponent,
+		NewLogistOrderPageComponent,
 		NewOrderContainersFormComponent,
 	],
 })
-export class NewExpressOrderPageModule {
+export class NewLogistOrderPageModule {
 
 }
