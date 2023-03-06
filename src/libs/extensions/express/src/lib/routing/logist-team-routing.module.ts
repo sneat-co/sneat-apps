@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { membersRoutes } from '@sneat/extensions/memberus';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { LogistMenuModule } from '../components/express-menu/logist-menu.module';
-import { LogistTeamMenuComponent } from '../components/express-team-menu/logist-team-menu.component';
+import { LogistMenuModule } from '../components/logist-menu/logist-menu.module';
+import { LogistTeamMenuComponent } from '../components/logist-team-menu/logist-team-menu.component';
 
 @Component({ template: 'empty component' })
 export class EmptyComponent {
@@ -14,12 +14,12 @@ export class EmptyComponent {
 export const logistRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('../pages/express-team-page/logist-team-page.module').then(m => m.LogistTeamPageModule),
+		loadChildren: () => import('../pages/logist-team-page/logist-team-page.module').then(m => m.LogistTeamPageModule),
 	},
 	{
 		path: '',
 		outlet: 'menu',
-		// loadChildren: () => import('../components/express-team-menu/express-team-menu.module').then(m => m.ExpressTeamMenuModule),
+		// loadChildren: () => import('../components/logist-team-menu/logist-team-menu.module').then(m => m.ExpressTeamMenuModule),
 		component: LogistTeamMenuComponent,
 	},
 	{

@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemModule } from '@sneat/auth';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
-import { LogistTeamMenuItemsModule } from '../express-team-menu-items/logist-team-menu-items.module';
+import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team-menu-items.module';
 import { LogistTeamMenuComponent } from './logist-team-menu.component';
 
 
