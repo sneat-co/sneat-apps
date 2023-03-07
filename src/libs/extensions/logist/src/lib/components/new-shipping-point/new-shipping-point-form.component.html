@@ -1,0 +1,18 @@
+<sneat-contact-input
+	[label]="'At'"
+	[team]="order?.team"
+	[contactType]="'location'"
+	[contactRole]="'location'"
+	[contact]="contact"
+	parentRole="dispatcher"
+	[parentContact]="contact?.parentContact"
+	(contactChange)="onContactChanged($event)"
+></sneat-contact-input>
+
+<sneat-order-containers-selector *ngIf="contact"
+	[order]="order"
+></sneat-order-containers-selector>
+
+<div class="ion-padding" *ngIf="contact">
+	<ion-button>Add shipping point</ion-button>
+</div>

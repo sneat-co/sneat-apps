@@ -9,6 +9,7 @@ import { ContactWithRefNumModule } from '../contact-with-refnum/contact-with-ref
 import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
 import { OrderFormModule } from '../order-form.module';
 import { NewShippingPointDialogComponent } from './new-shipping-point-dialog.component';
+import { NewShippingPointFormComponent } from './new-shipping-point-form.component';
 import { NewShippingPointService } from './new-shipping-point.service';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NewShippingPointService } from './new-shipping-point.service';
 	],
 	declarations: [
 		NewShippingPointDialogComponent,
+		NewShippingPointFormComponent,
 	],
 	providers: [
 		NewShippingPointService,
