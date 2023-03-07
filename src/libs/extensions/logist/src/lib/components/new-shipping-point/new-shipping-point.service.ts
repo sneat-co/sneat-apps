@@ -18,12 +18,13 @@ export class NewShippingPointService {
 	) {
 	}
 
-	async openNewShippingPointDialog(componentProps: INewShippingPointParams): Promise<void> {
+	async openNewShippingPointDialog(componentProps: INewShippingPointParams): Promise<HTMLIonModalElement> {
 		const modal = await this.modalController.create({
 			component: NewShippingPointDialogComponent,
 			componentProps,
 			cssClass: 'sneat-tall-modal',
 		});
 		await modal.present();
+		return modal;
 	}
 }

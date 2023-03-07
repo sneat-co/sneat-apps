@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
@@ -19,10 +19,12 @@ type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'note
 	templateUrl: './logist-order-page.component.html',
 	styleUrls: ['./logist-order-page.component.scss'],
 })
-export class LogistOrderPageComponent extends OrderPageBaseComponent {
+export class LogistOrderPageComponent extends OrderPageBaseComponent implements OnDestroy {
 
 
 	tab: OrderDetailsTab = 'containers';
+
+	private modal?: HTMLIonModalElement;
 
 	constructor(
 		route: ActivatedRoute,
@@ -86,16 +88,25 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent {
 		}
 	}
 
-	async addDispatcher(): Promise<void> {
+	addShippingPoint(): void {
 		if (!this.order) {
 			return;
 		}
 		const props: INewShippingPointParams = {
 			order: this.order,
 		};
-		this.newShippingPointService.openNewShippingPointDialog(props).catch(this.errorLogger.logErrorHandler('Failed to open new shipping point form'));
-		// await this.newSegmentService.addSegment({
-		// 	order: this.order,
-		// });
+		this.newShippingPointService.openNewShippingPointDialog(props)
+			.then(modal => {
+				this.modal = modal;
+				modal.onDidDismiss().then(() => {
+					this.modal = undefined;
+				});
+			})
+			.catch(this.errorLogger.logErrorHandler('Failed to open new shipping point form'));
+	}
+
+	override ngOnDestroy() {
+		this.modal?.dismiss().catch(this.errorLogger.logErrorHandler('Failed to dispose modal'));
+		super.ngOnDestroy();
 	}
 }
