@@ -6,6 +6,10 @@ import { first } from 'rxjs';
 import { LogistOrderService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
+import {
+	INewShippingPointParams,
+	NewShippingPointService,
+} from '../../components/new-shipping-point/new-shipping-point.service';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'notes';
@@ -25,6 +29,7 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent {
 		teamParams: TeamComponentBaseParams,
 		orderService: LogistOrderService,
 		private readonly newSegmentService: NewSegmentService,
+		private readonly newShippingPointService: NewShippingPointService,
 		private readonly modalController: ModalController,
 	) {
 		super('LogistOrderPageComponent', route, teamParams, orderService);
@@ -85,6 +90,10 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent {
 		if (!this.order) {
 			return;
 		}
+		const props: INewShippingPointParams = {
+			order: this.order,
+		};
+		this.newShippingPointService.openNewShippingPointDialog(props).catch(this.errorLogger.logErrorHandler('Failed to open new shipping point form'));
 		// await this.newSegmentService.addSegment({
 		// 	order: this.order,
 		// });

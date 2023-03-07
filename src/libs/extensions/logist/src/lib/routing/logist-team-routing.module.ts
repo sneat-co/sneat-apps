@@ -41,6 +41,10 @@ export const logistRoutes: Routes = [
 		loadChildren: () => import('../pages/new-segment/new-segment-page.module').then(m => m.NewSegmentPageModule),
 	},
 	{
+		path: 'order/:orderID/new-shipping-point',
+		loadChildren: () => import('../pages/new-shipping-point/new-shipping-point-page.module').then(m => m.NewShippingPointPageModule),
+	},
+	{
 		path: 'order/:orderID/print',
 		loadChildren: () => import('../prints/order-print-routing.module').then(m => m.OrderPrintRoutingModule),
 	},
