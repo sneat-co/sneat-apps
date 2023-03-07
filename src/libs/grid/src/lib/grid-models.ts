@@ -12,6 +12,7 @@ export interface IGridColumn {
 	tooltip?: (cell: unknown) => string;
 	formatter?: 'link' | 'progress' | 'html' | 'text' | 'number' | 'money' | 'image' | 'tickCross';
 	hozAlign?: 'left' | 'right';
+	headerHozAlign?: 'left' | 'right';
 	widthShrink?: number;
 	widthGrow?: number;
 	width?: number | string;

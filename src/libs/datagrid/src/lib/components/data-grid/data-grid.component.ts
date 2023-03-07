@@ -1,21 +1,35 @@
 import {
 	AfterViewInit,
 	Component,
-	ElementRef,
+	ElementRef, EventEmitter,
 	Inject,
 	Input,
-	OnChanges,
+	OnChanges, Output,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { Tabulator, SelectRowModule, InteractionModule } from 'tabulator-tables';
+import { Tabulator, SelectRowModule, InteractionModule, Module } from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
 import { TabulatorColumn, TabulatorOptions } from '../../tabulator/tabulator-options';
 
-Tabulator.registerModule([InteractionModule, SelectRowModule]);
+class AdvertModule extends Module {
+	public static moduleName = 'advert';
+
+	constructor(table: unknown) {
+		super(table);
+		console.log('AdvertModule.constructor()');
+	}
+
+	initialize() {
+		console.log('AdvertModule.initialize()');
+	}
+}
+
+Tabulator.registerModule([InteractionModule, SelectRowModule, AdvertModule]);
+
 // console.log('SelectRowModule', );
 
 // export interface IGridDef {
@@ -66,10 +80,15 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 
 	@Input() rowClick?: (event: Event, row: unknown) => void;
 
+	@Output() readonly rowSelected = new EventEmitter<{ row: unknown, event?: Event }>();
+
 	// private tab = document.createElement('div');
 	private tabulator: Tabulator;
 
+	@Input() public selectable?: boolean | number | 'highlight';
+
 	private tabulatorOptions?: TabulatorOptions;
+	private clickEvent?: Event;
 
 	constructor(@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger) {
 		console.log('DataGridComponent.constructor()');
@@ -135,7 +154,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			}
 			if (this.tabulatorOptions) {
 				this.tabulatorOptions = { ...this.tabulatorOptions, data: this.data };
-				this.tabulator.setData(this.data);
+				this.tabulator?.setData(this.data);
 			} else {
 				this.createTabulatorGrid();
 			}
@@ -151,7 +170,6 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 		if (!this.tabulator) {
 			this.tabulatorOptions = {
 				...this.tabulatorOptions,
-				selectable: 'highlight',
 				// rowClick: function (e, row) {
 				// 	console.log('rowClick1', row);
 				// },
@@ -169,11 +187,12 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			);
 			this.tabulator.on('rowClick', (event: Event, row: unknown) => {
 				console.log('rowClick event', event, row);
+				this.clickEvent = event;
 				if (this.rowClick) {
 					this.rowClick(event, row);
 				}
 			});
-			this.tabulator.on('rowSelected', (row: unknown) => console.log('rowSelected event', row));
+			this.tabulator.on('rowSelected', (row: unknown) => this.rowSelected.emit({ row, event: this.clickEvent }));
 			this.tabulator.on('rowDeselected', (row: unknown) => console.log('rowDeselected event', row));
 		}
 	}
@@ -182,8 +201,8 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 		this.tabulatorOptions = {
 			// tooltipsHeader: true, // enable header tooltips
 			// tooltipGenerationMode: 'hover',
+			selectable: this.selectable,
 			data: this.data,
-			// selectable: true,
 			// reactiveData: true, // enable data reactivity
 			columns: this.columns?.map((c) => {
 				const col: TabulatorColumn = {
@@ -212,6 +231,9 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 				}
 				if (c.hozAlign) {
 					col.hozAlign = c.hozAlign;
+				}
+				if (c.headerHozAlign) {
+					col.headerHozAlign = c.headerHozAlign;
 				}
 				if (c.widthGrow) {
 					col.widthGrow = c.widthGrow;

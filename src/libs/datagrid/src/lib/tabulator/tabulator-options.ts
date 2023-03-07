@@ -7,6 +7,7 @@ export interface TabulatorColumn {
 	headerTooltip?: () => string;
 	tooltip?: (cell: unknown) => string;
 	hozAlign?: 'left' | 'right';
+	headerHozAlign?: 'left' | 'right';
 	widthShrink?: number;
 	widthGrow?: number;
 	width?: number | string;

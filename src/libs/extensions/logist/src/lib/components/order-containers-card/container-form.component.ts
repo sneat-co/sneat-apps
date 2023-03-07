@@ -21,7 +21,7 @@ export class ContainerFormComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
 	@Input() order?: ILogistOrderContext;
 	@Input() team?: ITeamContext;
-	@Input() i = 0;
+	@Input() i?: number;
 
 	protected tab: 'points' | 'segments' = 'points';
 

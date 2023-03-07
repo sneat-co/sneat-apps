@@ -23,9 +23,12 @@ export class OrderContainersComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;
 	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
+	protected selectedContainer?: IOrderContainer;
+
 	containers?: ReadonlyArray<IOrderContainer>;
 
 	readonly id = (_: number, container: IOrderContainer) => container.id;
+
 
 	constructor(
 		private readonly modalController: ModalController,
@@ -53,4 +56,12 @@ export class OrderContainersComponent implements OnChanges {
 		this.containers = this.containers?.filter(c => c.id !== id) || [];
 	}
 
+	onContainerSelected(container: IOrderContainer) {
+		console.log('OrderContainersComponent.onContainerSelected():', container);
+		this.selectedContainer = container;
+	}
+
+	indexOfContainer(container: IOrderContainer): number | undefined {
+		return this.containers?.findIndex(c => c.id === container.id);
+	}
 }

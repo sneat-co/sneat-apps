@@ -1,6 +1,6 @@
 <ion-item-group>
 	<ion-item-divider color="medium">
-		<ion-label>Container #{{i + 1}} - <b>{{container?.type}}</b></ion-label>
+		<ion-label *ngIf="i || i === 0">Container #{{i + 1}} - <b>{{container?.type}}</b></ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="delete($event)" *ngIf="!containerFormGroup.dirty">
 				<ion-label>Delete</ion-label>
