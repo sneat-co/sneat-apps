@@ -63,7 +63,7 @@ export class DispatcherComponent implements OnChanges {
 		}
 	}
 
-	addDispatchPoint(event: Event): void {
+	addShippingPoint(event: Event): void {
 		console.log('addDispatchPoint(), event:', event);
 		event.stopPropagation();
 		event.preventDefault();
