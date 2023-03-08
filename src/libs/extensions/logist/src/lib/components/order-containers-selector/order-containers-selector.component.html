@@ -2,7 +2,7 @@
 	<ion-item-divider color="light">
 		<ion-label>Containers</ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="addAllContainer()" *ngIf="hasUncheckedContainers()">
+			<ion-button color="medium" (click)="addAllContainer()" *ngIf="hasUncheckedContainers()" [disabled]="disabled">
 				<ion-icon name="bag-add-outline" slot="start"></ion-icon>
 				<ion-label>Add all</ion-label>
 			</ion-button>

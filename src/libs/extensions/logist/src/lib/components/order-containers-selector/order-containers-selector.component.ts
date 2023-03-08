@@ -9,6 +9,7 @@ import { IContainer } from './condainer-interface';
 })
 export class OrderContainersSelectorComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;
+	@Input() disabled?: boolean;
 
 	containers?: IContainer[];
 

@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILogistOrderContext } from '../../dto';
 
 @Component({
@@ -7,4 +9,14 @@ import { ILogistOrderContext } from '../../dto';
 })
 export class NewShippingPointDialogComponent {
 	@Input() order?: ILogistOrderContext;
+
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		protected readonly modalController: ModalController,
+	) {
+	}
+
+	protected onOrderCreated(order: ILogistOrderContext): void {
+		this.modalController.dismiss(order).catch(this.errorLogger.logErrorHandler('Failed to dismiss modal'));
+	}
 }

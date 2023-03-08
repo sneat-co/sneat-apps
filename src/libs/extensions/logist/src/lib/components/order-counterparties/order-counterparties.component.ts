@@ -108,7 +108,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 				const request: IAddOrderShippingPointRequest = {
 					teamID: team.id,
 					orderID: this.order.id,
-					type: 'pick',
+					tasks: ['load'],
 					locationContactID: contact.id,
 				};
 				this.ordersService.addShippingPoint(team, request).subscribe({

@@ -1,3 +1,12 @@
+<ion-item>
+	<ion-checkbox [(ngModel)]="load" slot="start"></ion-checkbox>
+	<ion-label>Load</ion-label>
+</ion-item>
+<ion-item>
+	<ion-checkbox [(ngModel)]="unload" slot="start"></ion-checkbox>
+	<ion-label>Unload</ion-label>
+</ion-item>
+
 <sneat-contact-input
 	[label]="'At'"
 	[team]="order?.team"
@@ -9,10 +18,16 @@
 	(contactChange)="onContactChanged($event)"
 ></sneat-contact-input>
 
+
 <sneat-order-containers-selector *ngIf="contact"
-	[order]="order"
+																 [disabled]="creating"
+																 [order]="order"
+																 (selectedContainerIDsChange)="onSelectedContainerIDsChanged($event)"
 ></sneat-order-containers-selector>
 
 <div class="ion-padding" *ngIf="contact">
-	<ion-button>Add shipping point</ion-button>
+	<ion-button [disabled]="creating"
+							(click)="addShippingPoint()">
+		Add shipping point
+	</ion-button>
 </div>

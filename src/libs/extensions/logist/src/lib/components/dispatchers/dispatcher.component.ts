@@ -114,7 +114,7 @@ export class DispatcherComponent implements OnChanges {
 				const request: IAddOrderShippingPointRequest = {
 					teamID: team.id,
 					orderID: this.order.id,
-					type: 'pick',
+					tasks: ['load'],
 					locationContactID: contact.id,
 				};
 				this.ordersService.addShippingPoint(team, request).subscribe({
@@ -154,12 +154,12 @@ export class DispatcherComponent implements OnChanges {
 				this.form.markAsPristine();
 			},
 			error: err => {
-				this.errorLogger.logError(err, 'Failed to save dispatcher')
+				this.errorLogger.logError(err, 'Failed to save dispatcher');
 			},
 			complete: () => {
 				this.saving = false;
 				this.form.disable();
-			}
+			},
 		});
 	}
 
@@ -172,7 +172,7 @@ export class DispatcherComponent implements OnChanges {
 			orderID: this.order.id,
 			contactID: this.counterparty?.contactID,
 			role: 'dispatcher',
-		}
+		};
 		this.deleting = true;
 		this.ordersService.deleteCounterparty(request).subscribe({
 			next: () => {
@@ -181,7 +181,7 @@ export class DispatcherComponent implements OnChanges {
 			error: err => {
 				this.errorLogger.logError(err, 'Failed to delete dispatcher');
 				this.deleting = false;
-			}
-		})
+			},
+		});
 	}
 }

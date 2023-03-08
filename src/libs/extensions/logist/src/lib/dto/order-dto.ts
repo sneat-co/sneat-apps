@@ -190,7 +190,7 @@ export interface ISetOrderCounterpartiesRequest extends ILogistOrderRequest {
 }
 
 export interface IAddOrderShippingPointRequest extends ILogistOrderRequest {
-	readonly type: 'pick' | 'drop';
+	readonly tasks: ('load' | 'unload')[];
 	readonly locationContactID: string;
 	readonly containerIDs?: ReadonlyArray<string>;
 }

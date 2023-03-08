@@ -10,6 +10,7 @@ import { ContactSelectorService, IContactSelectorOptions } from '../contact-sele
 })
 export class ContactInputComponent implements OnChanges {
 
+	@Input() disabled?: boolean;
 	@Input() canChangeContact = true;
 	@Input() canReset = false;
 	@Input() readonly = false;
