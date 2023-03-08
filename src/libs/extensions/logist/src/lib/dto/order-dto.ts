@@ -80,9 +80,11 @@ export interface ISegmentLegKey {
 	readonly by?: ISegmentCounterparty;
 }
 
+export type ShippingPointTask = 'load' | 'unload' | 'pick' | 'drop';
+
 export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly id: string;
-	readonly type: 'pick' | 'drop'; // TODO: consider changing to or adding 'load' & 'unload';
+	readonly tasks: ShippingPointTask[];
 	readonly location: IOrderShippingPointLocation;
 	readonly counterparty: IOrderCounterpartyRef;
 }

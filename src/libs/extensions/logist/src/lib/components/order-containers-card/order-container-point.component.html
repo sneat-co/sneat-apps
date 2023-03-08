@@ -3,47 +3,84 @@
 <!--</ion-item>-->
 <ion-grid class="ion-grid-layout">
 	<ion-row>
-<!--		<ion-col>-->
-<!--			<ion-select [value]="containerPoint?.status" interface="popover">-->
-<!--				<ion-select-option value="draft">Draft</ion-select-option>-->
-<!--				<ion-select-option value="pending">Pending</ion-select-option>-->
-<!--				<ion-select-option value="loaded">Loaded</ion-select-option>-->
-<!--				<ion-select-option value="departed">Departed</ion-select-option>-->
-<!--			</ion-select>-->
-<!--		</ion-col>-->
+		<!--		<ion-col>-->
+		<!--			<ion-select [value]="containerPoint?.status" interface="popover">-->
+		<!--				<ion-select-option value="draft">Draft</ion-select-option>-->
+		<!--				<ion-select-option value="pending">Pending</ion-select-option>-->
+		<!--				<ion-select-option value="loaded">Loaded</ion-select-option>-->
+		<!--				<ion-select-option value="departed">Departed</ion-select-option>-->
+		<!--			</ion-select>-->
+		<!--		</ion-col>-->
 		<ion-col>
-			<ion-item>
-				<ion-label color="medium">{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</ion-label>
+			<ion-item color="light">
+				<ion-label>{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</ion-label>
 			</ion-item>
 		</ion-col>
 		<ion-col>
-			<ion-item>
+			<ion-item color="light">
 				<ion-label color="medium">Arrives</ion-label>
 				<ion-input type="date"></ion-input>
 			</ion-item>
 		</ion-col>
 		<ion-col>
-			<ion-item>
+			<ion-item color="light">
 				<ion-label color="medium">Departs</ion-label>
 				<ion-input type="date" [value]="containerPoint?.departsDate"></ion-input>
 			</ion-item>
 		</ion-col>
-		<ion-col>
+	</ion-row>
+	<ion-row *ngIf="does('load')">
+		<ion-col size="2">
+			<ion-item>
+				<ion-label>To load</ion-label>
+			</ion-item>
+		</ion-col>
+		<ion-col size="3">
 			<ion-item>
 				<ion-label color="medium">Pallets</ion-label>
 				<ion-input type="number" [value]="containerPoint?.toLoad?.numberOfPallets"></ion-input>
 			</ion-item>
 		</ion-col>
-		<ion-col>
+		<ion-col size="3">
 			<ion-item>
 				<ion-label color="medium">Weight <sup>kg</sup></ion-label>
 				<ion-input type="number" [value]="containerPoint?.toLoad?.grossWeightKg"></ion-input>
 			</ion-item>
 		</ion-col>
-		<ion-col>
+		<ion-col size="4">
 			<ion-item>
 				<ion-label color="medium">Volume <sup>m3</sup></ion-label>
 				<ion-input type="number" [value]="containerPoint?.toLoad?.volumeM3"></ion-input>
+				<ion-buttons slot="end">
+					<ion-button color="medium" (click)="delete($event)">
+						<ion-icon name="close-outline"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+	<ion-row *ngIf="does('unload')">
+		<ion-col size="2">
+			<ion-item>
+				<ion-label>Unload</ion-label>
+			</ion-item>
+		</ion-col>
+		<ion-col size="3">
+			<ion-item>
+				<ion-label color="medium">Pallets</ion-label>
+				<ion-input type="number" [value]="containerPoint?.toUnload?.numberOfPallets"></ion-input>
+			</ion-item>
+		</ion-col>
+		<ion-col size="3">
+			<ion-item>
+				<ion-label color="medium">Weight <sup>kg</sup></ion-label>
+				<ion-input type="number" [value]="containerPoint?.toUnload?.grossWeightKg"></ion-input>
+			</ion-item>
+		</ion-col>
+		<ion-col size="4">
+			<ion-item>
+				<ion-label color="medium">Volume <sup>m3</sup></ion-label>
+				<ion-input type="number" [value]="containerPoint?.toUnload?.volumeM3"></ion-input>
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="delete($event)">
 						<ion-icon name="close-outline"></ion-icon>

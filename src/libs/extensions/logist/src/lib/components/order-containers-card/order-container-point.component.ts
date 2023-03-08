@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint } from '../../dto';
+import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint, ShippingPointTask } from '../../dto';
 import { LogistOrderService } from '../../services';
 
 @Component({
@@ -22,6 +22,10 @@ export class OrderContainerPointComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
 	) {
+	}
+
+	does(task: ShippingPointTask): boolean {
+		return !!this.shippingPoint?.tasks?.includes(task);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

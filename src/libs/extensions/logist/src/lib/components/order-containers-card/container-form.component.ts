@@ -54,7 +54,7 @@ export class ContainerFormComponent implements OnChanges {
 		if (changes['order'] || changes['container']) {
 			const containerID = this.container?.id;
 			this.containerSegments = containerID ? this.order?.dto?.segments?.filter(s => s.containerID === containerID) : undefined;
-			this.containerPoints = containerID ? this.order?.dto?.containerPoints?.filter(cp => cp.containerID === containerID && this.containerSegments?.some(s => s.from.shippingPointID === cp.shippingPointID)) : undefined;
+			this.containerPoints = containerID ? this.order?.dto?.containerPoints?.filter(cp => cp.containerID === containerID) : undefined;
 			if (containerID) {
 				if (!this.containerPoints) {
 					this.containerPoints = [];
