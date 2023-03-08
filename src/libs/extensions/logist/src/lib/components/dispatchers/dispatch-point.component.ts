@@ -2,6 +2,7 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IContainerPoint,
 	IContainerSegment,
 	ILogistOrderContext, IOrderContainer,
 	IOrderCounterparty,
@@ -21,6 +22,7 @@ export class DispatchPointComponent implements OnChanges {
 
 	shippingPoint?: IOrderShippingPoint;
 	segments?: ReadonlyArray<IContainerSegment>;
+	containerPoints?: ReadonlyArray<IContainerPoint>;
 	containers?: ReadonlyArray<IOrderContainer>;
 	dispatcher?: IOrderCounterparty;
 
@@ -42,17 +44,19 @@ export class DispatchPointComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['dispatchPoint']) {
+			const orderDto = this.order?.dto;
 			const contactID = this.dispatchPoint?.contactID;
-			this.dispatcher = this.order?.dto?.counterparties?.find(c => c.contactID === contactID && c.role === 'dispatcher');
-			this.shippingPoint = this.order?.dto?.shippingPoints?.find(sp => sp.location?.contactID === contactID);
+			this.dispatcher = orderDto?.counterparties?.find(c => c.contactID === contactID && c.role === 'dispatcher');
+			this.shippingPoint = orderDto?.shippingPoints?.find(sp => sp.location?.contactID === contactID);
 			if (!this.address.dirty) {
 				this.address.setValue(this.shippingPoint?.location?.address?.lines?.join('\n') || '')
 			}
 			const shippingPointID = this.shippingPoint?.id;
+			this.containerPoints = orderDto?.containerPoints?.filter(cp => cp.shippingPointID === shippingPointID);
 			this.segments = this.order?.dto?.segments?.filter(s =>
 				s.from.shippingPointID === shippingPointID || s.to.shippingPointID === shippingPointID,
 			);
-			this.containers = this.order?.dto?.containers?.filter(c => this.segments?.some(s => s.containerID === c.id));
+			this.containers = this.order?.dto?.containers?.filter(c => this.segments?.some(s => s.containerID === c.id) || this.containerPoints?.some(cp => cp.containerID === c.id));
 			console.log('DispatchPointComponent.ngOnChanges();', shippingPointID, this.segments, this.containers);
 		}
 	}
