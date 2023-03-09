@@ -10,6 +10,6 @@
 	<ion-input type="number" [formGroup]="form.group" [formControl]="form.volumeM3" (ionChange)="onChanged()" (keyup.enter)="keyUpEnter.emit($event)"></ion-input>
 </ion-item>
 <ion-item>
-	<ion-label color="medium">Notes<br><small>(specific to carrier)</small></ion-label>
+	<ion-label color="medium" position="floating">Notes <small>(specific to carrier)</small></ion-label>
 	<ion-textarea (ionChange)="onChanged()" [formGroup]="form.group" [formControl]="form.note"></ion-textarea>
 </ion-item>

@@ -17,6 +17,7 @@ export class OrderCardComponent {
 	@Input() team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() hideDispatchers = false;
+	@Input() showHeader = true;
 	readonly roles: LogistOrderContactRole[] = ['buyer', 'consignee', 'agent', 'carrier', 'shipper'];
 
 	constructor(

@@ -1,5 +1,5 @@
 <ion-card>
-	<ion-item color="light" [routerLink]="'../order/'+order?.id" class="sneat-tiny-end-padding">
+	<ion-item *ngIf="showHeader" color="light" [routerLink]="'../order/'+order?.id" class="sneat-tiny-end-padding">
 		<ion-label [color]="readonly ? 'primary' : undefined">
 			Order # {{order?.id}} - {{order?.brief?.direction}}
 		</ion-label>

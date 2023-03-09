@@ -1,0 +1,21 @@
+<ion-item-divider *ngIf="containerSegments && !containerSegments?.length">
+	<ion-label color="medium">
+		No shipping segments have been added for the container yet.
+	</ion-label>
+</ion-item-divider>
+
+<div class="ion-padding" *ngIf="containerSegments?.length">
+	<sneat-datagrid
+		[selectable]="1"
+		[data]="routeRows"
+		[columns]="allCols"
+		height="150"
+		(rowSelected)="rowSelected($event.row)"
+	>
+	</sneat-datagrid>
+</div>
+
+<sneat-container-segment *ngIf="selectedSegment"
+												 [order]="order"
+												 [segment]="selectedSegment"
+></sneat-container-segment>

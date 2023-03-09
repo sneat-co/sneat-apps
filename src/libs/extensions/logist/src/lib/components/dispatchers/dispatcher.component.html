@@ -1,15 +1,16 @@
 <ion-card>
-	<ion-item class="sneat-no-end-padding">
-		<ion-label style="font-weight: bold" [class.deleting-list-item]="deleting">
+	<ion-item color="light" class="sneat-no-end-padding">
+		<ion-label style="font-weight: bold" [class.deleting-list-item]="deleting" slot="start">
 			{{counterparty?.countryID|countryFlag}}
 			{{counterparty?.title}}
 		</ion-label>
-
+		<ion-label color="medium">Ref</ion-label>
+		<ion-input placeholder="#" [formControl]="refNumber" (keyup.enter)="saveChanges()"></ion-input>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="!form.dirty"
 									color="medium"
 									[disabled]="deleting"
-									title="Remove dispatcher & all dispatching points"
+									title="Remove from the order counterparty & related container points"
 									(click)="deleteDispatcher()">
 				<ion-icon name="close-outline" *ngIf="!deleting"></ion-icon>
 				<ion-label *ngIf="deleting">deleting...</ion-label>
@@ -26,36 +27,25 @@
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>
-
 	</ion-item>
 
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="4">
-				<ion-item>
-					<ion-label color="medium">Ref</ion-label>
-					<ion-input placeholder="#" [formControl]="refNumber" (keyup.enter)="saveChanges()"></ion-input>
-				</ion-item>
-			</ion-col>
-			<ion-col size="8">
-				<ion-item>
-					<ion-label color="medium">Special instructions</ion-label>
-					<ion-textarea rows="1" autoGrow="true" [formControl]="specialInstructions" (keyup.enter)="saveChanges()"></ion-textarea>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	<ion-item>
+		<ion-label color="medium" position="floating">Special instructions</ion-label>
+		<ion-textarea rows="2" autoGrow="true" [formControl]="specialInstructions"
+									(keyup.enter)="saveChanges()"></ion-textarea>
+	</ion-item>
 
-
-	<ion-item-divider>
-		<ion-label style="font-weight: bold">Load/unload points</ion-label>
+	<ion-item lines="none">
+		<ion-label color="medium"><b>Load/unload points</b></ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="addShippingPoint($event)">
+			<ion-button color="medium">
 				<ion-icon name="add-outline" slot="start"></ion-icon>
 				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>
-	</ion-item-divider>
+	</ion-item>
+
+
 	<sneat-dispatch-point *ngFor="let location of locations"
 												[dispatchPoint]="location"
 												[disabled]="deleting"

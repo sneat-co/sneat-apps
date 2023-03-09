@@ -18,7 +18,7 @@ export class OrderContainersGridComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;
 	@Output() readonly containerSelected = new EventEmitter<IOrderContainer>();
 
-	allCols: IGridColumn[] = [
+	readonly allCols: IGridColumn[] = [
 		{
 			field: 'i',
 			dbType: 'number',

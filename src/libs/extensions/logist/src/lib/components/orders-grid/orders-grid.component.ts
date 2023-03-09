@@ -74,7 +74,16 @@ export class OrdersGridComponent implements OnChanges {
 		{
 			field: 'shippingPoints',
 			dbType: 'string',
-			title: 'Load points',
+			title: 'Points',
+			hozAlign: 'right',
+			headerHozAlign: 'right',
+			width: 100,
+			widthShrink: 1,
+		},
+		{
+			field: 'segments',
+			dbType: 'string',
+			title: 'Segments',
 			hozAlign: 'right',
 			headerHozAlign: 'right',
 			width: 100,
@@ -103,6 +112,7 @@ export class OrdersGridComponent implements OnChanges {
 				consignee: o.dto?.counterparties?.find(c => c.role === 'consignee'),
 				containers: o.dto?.containers?.length?.toString(),
 				shippingPoints: o.dto?.shippingPoints?.length?.toString(),
+				segments: o.dto?.segments?.length?.toString(),
 			}));
 		}
 	}

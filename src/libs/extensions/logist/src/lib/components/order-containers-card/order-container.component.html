@@ -60,7 +60,7 @@
 			<ion-col size="12" size-md="9">
 				<ion-segment [(ngModel)]="tab" color="medium">
 					<ion-segment-button value="points">🛒 Points</ion-segment-button>
-					<ion-segment-button value="segments">🚛 Segments</ion-segment-button>
+					<ion-segment-button value="route">🚛 Route</ion-segment-button>
 				</ion-segment>
 			</ion-col>
 			<ion-col size="12" size-md="3">
@@ -71,7 +71,7 @@
 							<ion-icon name="add-outline" slot="start"></ion-icon>
 							<ion-label (click)="addPoints($event)" title="Add shipping points">Add</ion-label>
 						</ion-button>
-						<ion-button *ngIf="tab === 'segments'" (click)="addSegment($event)">
+						<ion-button *ngIf="tab === 'route'" (click)="addSegment($event)">
 							<ion-icon name="add-outline" slot="start"></ion-icon>
 							<ion-label title="Add shipping segments">Add</ion-label>
 						</ion-button>
@@ -92,16 +92,6 @@
 													 [containerPoint]="containerPoint"
 		></sneat-order-container-point>
 	</ng-container>
-	<ng-container *ngIf="tab === 'segments'">
-		<ion-item-divider *ngIf="containerSegments && !containerSegments?.length">
-			<ion-label color="medium">
-				No shipping segments have been added for the container yet.
-			</ion-label>
-		</ion-item-divider>
 
-		<sneat-container-segment *ngFor="let segment of containerSegments; trackBy:segmentID"
-														 [order]="order"
-														 [segment]="segment"
-		></sneat-container-segment>
-	</ng-container>
+	<sneat-container-segments *ngIf="tab === 'route'" [order]="order" [container]="container"></sneat-container-segments>
 </ion-item-group>

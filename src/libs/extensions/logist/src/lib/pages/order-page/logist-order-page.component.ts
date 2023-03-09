@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { first } from 'rxjs';
 import { LogistOrderService } from '../..';
@@ -10,6 +10,7 @@ import {
 	INewShippingPointParams,
 	NewShippingPointService,
 } from '../../components/new-shipping-point/new-shipping-point.service';
+import { OrderPrintMenuComponent } from '../../components/order-card/order-print-menu.component';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'notes';
@@ -33,6 +34,7 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		private readonly newSegmentService: NewSegmentService,
 		private readonly newShippingPointService: NewShippingPointService,
 		private readonly modalController: ModalController,
+		private readonly popoverController: PopoverController,
 	) {
 		super('LogistOrderPageComponent', route, teamParams, orderService);
 		try {
@@ -43,6 +45,31 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 			this.errorLogger.logError(e);
 		}
 	}
+
+	protected copyNumberToClipboard(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		const text = this.order?.id;
+		if (text) {
+			navigator.clipboard.writeText(text)
+				.then(() => alert('Order number copied to clipboard: ' + text))
+				.catch(err => alert('Error copying order number to clipboard: ' + err));
+		}
+	}
+
+	protected async showPrintMenu(event: Event): Promise<void> {
+		event.stopPropagation();
+		event.preventDefault();
+		const popover = await this.popoverController.create({
+			component: OrderPrintMenuComponent,
+			componentProps: {
+				team: this.team,
+				order: this.order,
+			},
+		});
+		await popover.present(event as MouseEvent);
+	}
+
 
 	onTabChanged(event: Event): void {
 		try {

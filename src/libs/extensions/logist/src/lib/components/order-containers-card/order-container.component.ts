@@ -13,17 +13,17 @@ import {
 import { NewSegmentService } from '../new-segment/new-segment.service';
 
 @Component({
-	selector: 'sneat-order-container-form',
-	templateUrl: './container-form.component.html',
+	selector: 'sneat-order-container',
+	templateUrl: './order-container.component.html',
 	// changeDetection: ChangeDetectionStrategy.Default,
 })
-export class ContainerFormComponent implements OnChanges {
+export class OrderContainerComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
 	@Input() order?: ILogistOrderContext;
 	@Input() team?: ITeamContext;
 	@Input() i?: number;
 
-	protected tab: 'points' | 'segments' = 'points';
+	protected tab: 'points' | 'route' = 'points';
 
 	protected containerSegments?: IContainerSegment[];
 	protected containerPoints?: IContainerPoint[];
@@ -35,10 +35,6 @@ export class ContainerFormComponent implements OnChanges {
 	protected containerFormGroup = new FormGroup({
 		number: this.number,
 	});
-
-	protected segmentID(_: number, segment: IContainerSegment): string {
-		return segment.containerID + '-' + segment.from.shippingPointID + '-' + segment.to.shippingPointID;
-	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -54,6 +50,7 @@ export class ContainerFormComponent implements OnChanges {
 		if (changes['order'] || changes['container']) {
 			const containerID = this.container?.id;
 			this.containerSegments = containerID ? this.order?.dto?.segments?.filter(s => s.containerID === containerID) : undefined;
+			console.log('containerID', containerID, 'containerSegments', this.containerSegments);
 			this.containerPoints = containerID ? this.order?.dto?.containerPoints?.filter(cp => cp.containerID === containerID) : undefined;
 			if (containerID) {
 				if (!this.containerPoints) {
