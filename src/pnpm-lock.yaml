@@ -31,7 +31,7 @@ specifiers:
   '@nrwl/jest': 15.8.5
   '@nrwl/js': 15.8.5
   '@nrwl/linter': 15.8.5
-  '@nrwl/nx-cloud': 15.1.1
+  '@nrwl/nx-cloud': 15.2.0
   '@nrwl/workspace': 15.8.5
   '@schematics/angular': 15.2.2
   '@sentry/angular': 7.42.0
@@ -112,7 +112,7 @@ devDependencies:
   '@nrwl/jest': 15.8.5_2ifh4dnc6m4tqcsfuywmc7cubu
   '@nrwl/js': 15.8.5_jwmqcc2ceygiecgbznnteos3iu
   '@nrwl/linter': 15.8.5_jwmqcc2ceygiecgbznnteos3iu
-  '@nrwl/nx-cloud': 15.1.1
+  '@nrwl/nx-cloud': 15.2.0
   '@nrwl/workspace': 15.8.5_64jebu3ilvs7epq3v3pc7ikc4m
   '@schematics/angular': 15.2.2
   '@types/jest': 29.4.0
@@ -3757,8 +3757,8 @@ packages:
       - supports-color
       - typescript
 
-  /@nrwl/nx-cloud/15.1.1:
-    resolution: {integrity: sha512-aIVb87PQpAjwdEaFksQ3rYgFq9MDaBG2KvYZcj/k+z2uWeWH84ha/opO37aCFLf5VXNiyJZGRb/+7vW7BFpNOw==}
+  /@nrwl/nx-cloud/15.2.0:
+    resolution: {integrity: sha512-Wzg4mX9Rb5pzP0yrVJzVTnHaqz59Glv740QTDux2QFErHU6nT+nvfoTCQ1B6a2lhkHxJodx+PoDy9UYRUz0IlQ==}
     hasBin: true
     dependencies:
       axios: 0.21.4
