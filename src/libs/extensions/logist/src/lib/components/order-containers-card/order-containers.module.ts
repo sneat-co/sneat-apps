@@ -10,6 +10,7 @@ import { OrderContainersGridModule } from '../order-containers-grid/order-contai
 import {
 	ShippingPointsSelectorModule,
 } from '../shipping-points-selector/shipping-points-selector.module';
+import { ContainerPointLoadFormComponent } from './container-point-load-form.component';
 import { ContainerSegmentsComponent } from './container-segments.component';
 import { OrderContainerComponent } from './order-container.component';
 import { OrderContainerPointComponent } from './order-container-point.component';
@@ -36,11 +37,10 @@ import { OrderContainersComponent } from './order-containers.component';
 		ContainerSegmentComponent,
 		OrderContainerPointComponent,
 		ContainerSegmentsComponent,
+		ContainerPointLoadFormComponent,
 	],
 	exports: [
 		OrderContainersComponent,
-		OrderContainerComponent,
-		OrderContainerPointComponent,
 	],
 })
 export class OrderContainersModule {

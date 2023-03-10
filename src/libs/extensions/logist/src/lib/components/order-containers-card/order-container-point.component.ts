@@ -9,12 +9,12 @@ import { LogistOrderService } from '../../services';
 	templateUrl: './order-container-point.component.html',
 })
 export class OrderContainerPointComponent implements OnChanges {
-	@Input() containerPoint?: IContainerPoint;
-	@Input() shippingPoints?: readonly IOrderShippingPoint[];
-	@Input() order?: ILogistOrderContext;
 	@Input() team?: ITeamContext;
+	@Input() order?: ILogistOrderContext;
+	// @Input() shippingPoint?: IOrderShippingPoint;
+	@Input() containerPoint?: IContainerPoint;
 
-	shippingPoint?: IOrderShippingPoint;
+	protected shippingPoint?: IOrderShippingPoint;
 
 	deleting = false;
 
@@ -22,10 +22,6 @@ export class OrderContainerPointComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
 	) {
-	}
-
-	does(task: ShippingPointTask): boolean {
-		return !!this.shippingPoint?.tasks?.includes(task);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
