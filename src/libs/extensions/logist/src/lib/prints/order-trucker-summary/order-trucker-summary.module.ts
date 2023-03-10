@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactServiceModule } from '@sneat/extensions/contactus';
-import { LogistOrderServiceModule } from '../..';
+import { LogistOrderServiceModule } from '../../services';
 import { OrderTruckerSummaryComponent } from './order-trucker-summary.component';
 
 @NgModule({

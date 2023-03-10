@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ITeamContext } from '@sneat/team/models';
-import { ILogistOrderContext, IOrderContainer } from '../..';
+import { ILogistOrderContext, IOrderContainer } from '../../dto';
 
 @Component({
 	selector: 'sneat-order-containers-card',

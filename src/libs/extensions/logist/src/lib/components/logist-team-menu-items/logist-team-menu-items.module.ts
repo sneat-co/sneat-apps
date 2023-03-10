@@ -23,5 +23,4 @@ import { LogistTeamMenuItemsComponent } from './logist-team-menu-items.component
 	],
 })
 export class LogistTeamMenuItemsModule {
-
 }

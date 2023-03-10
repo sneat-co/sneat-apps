@@ -3,14 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
-import {
-	CounterpartyRole,
-	LogistTeamService,
-	LogistOrderService,
-	IOrderCounterparty,
-} from '../..';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { CounterpartyRole, IOrderCounterparty } from '../../dto';
 import { ICreateLogistOrderRequest, ILogistOrderContext } from '../../dto/order-dto';
+import { LogistOrderService, LogistTeamService } from '../../services';
 
 @Component({
 	selector: 'sneat-new-logist-order-page',

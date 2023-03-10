@@ -5,12 +5,12 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
 	CounterpartyRole,
-	LogistOrderService,
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
-	ILogistOrderContext, IOrderCounterparty,
-	IOrderCounterpartyRef,
-} from '../..';
+	ILogistOrderContext,
+	IOrderCounterparty, IOrderCounterpartyRef,
+} from '../../dto';
+import { LogistOrderService } from '../../services';
 
 interface ICounterparty extends IOrderCounterparty {
 	parent?: IOrderCounterparty;

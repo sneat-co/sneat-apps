@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { first } from 'rxjs';
-import { LogistOrderService } from '../..';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { INewSegmentParams, NewSegmentService } from '../../components/new-segment/new-segment.service';
 import {
@@ -11,6 +10,7 @@ import {
 	NewShippingPointService,
 } from '../../components/new-shipping-point/new-shipping-point.service';
 import { OrderPrintMenuComponent } from '../../components/order-card/order-print-menu.component';
+import { LogistOrderService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'notes';

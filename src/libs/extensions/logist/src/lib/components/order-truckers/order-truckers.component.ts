@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ILogistOrderContext, IOrderCounterparty } from '../..';
 import { ITeamContext } from '@sneat/team/models';
+import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 
 @Component({
 	selector: 'sneat-order-truckers',

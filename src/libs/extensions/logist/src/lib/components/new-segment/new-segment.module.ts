@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DialogHeaderModule } from '@sneat/components';
 import { ContactInputModule } from '@sneat/extensions/contactus';
-import { OrderNavServiceModule } from '../..';
+import { OrderNavServiceModule } from '../../services';
 import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
 import { OrderFormModule } from '../order-form.module';
 import { ContactWithRefNumModule } from '../contact-with-refnum/contact-with-ref-num.module';

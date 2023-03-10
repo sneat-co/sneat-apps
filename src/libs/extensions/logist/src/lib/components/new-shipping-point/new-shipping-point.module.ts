@@ -7,7 +7,6 @@ import { ContactInputModule } from '@sneat/extensions/contactus';
 import { OrderNavServiceModule } from '../../services';
 import { ContactWithRefNumModule } from '../contact-with-refnum/contact-with-ref-num.module';
 import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
-import { OrderFormModule } from '../order-form.module';
 import { NewShippingPointDialogComponent } from './new-shipping-point-dialog.component';
 import { NewShippingPointFormComponent } from './new-shipping-point-form.component';
 import { NewShippingPointService } from './new-shipping-point.service';
@@ -19,7 +18,7 @@ import { NewShippingPointService } from './new-shipping-point.service';
 		DialogHeaderModule,
 		ContactInputModule,
 		FormsModule,
-		OrderFormModule,
+		// OrderFormModule,
 		OrderContainersSelectorModule,
 		OrderNavServiceModule,
 		ContactWithRefNumModule,
@@ -33,5 +32,4 @@ import { NewShippingPointService } from './new-shipping-point.service';
 	]
 })
 export class NewShippingPointModule {
-
 }

@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContactService } from '@sneat/extensions/contactus';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
-	LogistOrderService, IContainerSegment,
-	ILogistOrderContext,
-	IFreightLoad, IOrderContainer,
+	IContainerSegment,
+	IFreightLoad,
+	ILogistOrderContext, IOrderContainer,
 	IOrderCounterparty,
 	IOrderShippingPoint,
-} from '../..';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+} from '../../dto';
+import { LogistOrderService } from '../../services';
 import { OrderPrintPageBaseComponent } from '../order-print-page-base.component';
 
 interface IContainerInfo {

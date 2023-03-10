@@ -1,7 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ILogistOrderContext, IOrderContainer, OrderNavService } from '../..';
+import { ILogistOrderContext, IOrderContainer } from '../../dto';
+import { OrderNavService } from '../../services';
 
 @Component({
 	selector: 'sneat-new-segment-dialog',

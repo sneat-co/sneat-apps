@@ -3,12 +3,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	LogistOrderService,
-	IContainerSegment, IContainerPoint,
+	IContainerPoint,
+	IContainerSegment,
 	IDeleteSegmentsRequest,
 	ILogistOrderContext,
 	IOrderContainer,
-} from '../..';
+} from '../../dto';
+import { LogistOrderService } from '../../services';
 import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
 
 @Component({

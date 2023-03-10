@@ -1,15 +1,15 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext } from '@sneat/team/models';
 import {
-	LogistOrderService,
+	getOrderSegments,
 	IDeleteCounterpartyRequest,
 	ILogistOrderContext,
 	IOrderCounterparty,
 	IOrderSegment,
-	getOrderSegments,
-} from '../..';
-import { ITeamContext } from '@sneat/team/models';
+} from '../../dto';
 import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-print.service';
+import { LogistOrderService } from '../../services';
 
 @Component({
 	selector: 'sneat-order-trucker',

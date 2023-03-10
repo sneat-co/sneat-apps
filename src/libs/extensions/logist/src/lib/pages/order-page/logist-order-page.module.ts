@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { NewShippingPointModule } from '@sneat/extensions/logist';
+import { NewShippingPointModule } from '../../components/new-shipping-point/new-shipping-point.module';
 import { DispatchersModule } from '../../components/dispatchers';
 import { FreightLoadFormModule } from '../../components/freight-load-form/freight-load-form.module';
 import { NewSegmentModule } from '../../components/new-segment';

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ILogistOrderContext } from '../..';
+import { ILogistOrderContext } from '../../dto/order-dto';
 import { IContainer } from './condainer-interface';
 
 

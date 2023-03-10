@@ -2,14 +2,10 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, Simp
 import { excludeEmpty, excludeZeroValues, undefinedIfEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
+import { IAddSegmentParty, IAddSegmentsRequest, ILogistOrderContext, IOrderContainer } from '../../dto';
+import { LogistOrderService } from '../../services';
 import { IContainer } from '../order-containers-selector/condainer-interface';
 import { SegmentEndpointType } from './segment-counterparty.component';
-import {
-	LogistOrderService, IAddSegmentParty,
-	IAddSegmentsRequest,
-	ILogistOrderContext,
-	IOrderContainer,
-} from '../..';
 
 @Component({
 	selector: 'sneat-new-segment-form',

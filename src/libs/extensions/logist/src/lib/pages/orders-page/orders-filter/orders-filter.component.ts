@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
-import { IOrdersFilter, OrderDirection } from '../../..';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { IOrdersFilter, OrderDirection } from '../../../dto';
 
 @Component({
 	selector: 'sneat-orders-filter',

@@ -5,7 +5,8 @@ import { createSetFocusToInput } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { LogistTeamService, ISetLogistTeamSettingsRequest } from '../..';
+import { ISetLogistTeamSettingsRequest } from '../../dto';
+import { LogistTeamService } from '../../services';
 
 @Component({
 	selector: 'sneat-logist-team-settings',

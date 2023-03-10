@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { LogistOrderService,  } from '../..';
+import { LogistOrderService } from '../../services';
 import { OrderPrintPageBaseComponent } from '../order-print-page-base.component';
 
 @Component({

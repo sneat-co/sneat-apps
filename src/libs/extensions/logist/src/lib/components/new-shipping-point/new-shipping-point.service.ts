@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ILogistOrderContext, IOrderContainer, OrderNavService } from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ILogistOrderContext, IOrderContainer } from '../../dto';
+import { OrderNavService } from '../../services';
 import { NewShippingPointDialogComponent } from './new-shipping-point-dialog.component';
 
 export interface INewShippingPointParams {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IOrderShippingPoint } from '../..';
+import { IOrderShippingPoint } from '../../dto';
 
 @Component({
 	selector: 'sneat-shipping-points-selector',

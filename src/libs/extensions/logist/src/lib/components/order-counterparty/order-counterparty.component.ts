@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { LogistOrderContactRole, ContactType } from '@sneat/dto';
-import { CounterpartyRole } from '../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
+import { CounterpartyRole } from '../../dto';
 import {
 	ILogistOrderContext,
 	IOrderCounterparty,

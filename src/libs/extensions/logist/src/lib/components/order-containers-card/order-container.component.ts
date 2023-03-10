@@ -3,13 +3,14 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
-	LogistOrderService,
+	IContainerPoint,
 	IContainerRequest,
+	IContainerSegment,
+	IFreightLoad,
 	ILogistOrderContext,
 	IOrderContainer,
-	IContainerSegment,
-	IFreightLoad, IContainerPoint,
-} from '../..';
+} from '../../dto';
+import { LogistOrderService } from '../../services';
 import { NewSegmentService } from '../new-segment/new-segment.service';
 
 @Component({
