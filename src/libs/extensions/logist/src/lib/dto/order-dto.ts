@@ -36,6 +36,12 @@ export interface IFreightLoad {
 	readonly note?: string;
 }
 
+export interface IFreightPoint {
+	readonly tasks: ShippingPointTask[];
+	readonly toLoad?: IFreightLoad;
+	readonly toUnload?: IFreightLoad;
+}
+
 export interface IOrderContainerBase extends IFreightLoad {
 	readonly type: ContainerType;
 	readonly number: string;
@@ -43,14 +49,12 @@ export interface IOrderContainerBase extends IFreightLoad {
 
 export type ShippingPointStatus = 'pending' | 'completed';
 
-export interface IShippingPointBase {
+export interface IShippingPointBase extends IFreightPoint {
 	readonly status: ShippingPointStatus;
 	started?: string;
 	completed?: string;
 	scheduledStartDate?: string;
 	scheduledEndDate?: string;
-	toLoad?: IFreightLoad;
-	toUnload?: IFreightLoad;
 }
 
 export interface IOrderShippingPointLocation {
@@ -84,7 +88,6 @@ export type ShippingPointTask = 'load' | 'unload' | 'pick' | 'drop';
 
 export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly id: string;
-	readonly tasks: ShippingPointTask[];
 	readonly location: IOrderShippingPointLocation;
 	readonly counterparty: IOrderCounterpartyRef;
 }
