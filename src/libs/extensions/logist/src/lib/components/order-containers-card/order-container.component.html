@@ -1,7 +1,17 @@
 <ion-item-group>
 	<ion-item-divider color="medium">
-		<ion-label *ngIf="i || i === 0">Container #{{i + 1}} - <b>{{container?.type}}</b></ion-label>
+		<ion-label *ngIf="i || i === 0">Container #{{i + 1}} - <b>{{container?.type}}</b>, Serial #</ion-label>
+		<ion-input
+			placeholder="optional"
+			style="font-weight: bold"
+			[formGroup]="containerFormGroup"
+			[formControl]="number"
+			(keyup.enter)="save($event)"
+		></ion-input>
 		<ion-buttons slot="end">
+			<ion-button color="medium" *ngIf="number.value && !number.dirty">
+				<ion-icon name="copy-outline"></ion-icon>
+			</ion-button>
 			<ion-button (click)="delete($event)" *ngIf="!containerFormGroup.dirty">
 				<ion-label>Delete</ion-label>
 				<ion-icon name="close-outline" slot="end"></ion-icon>
@@ -17,44 +27,29 @@
 	</ion-item-divider>
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
-			<ion-col size="12" size-xl="3" size-sm="6">
-				<ion-item class="sneat-no-end-padding">
-					<ion-label color="medium">Serial #</ion-label>
-					<ion-input
-						placeholder="optional"
-						style="font-weight: bold"
-						[formGroup]="containerFormGroup"
-						[formControl]="number"
-						(keyup.enter)="save($event)"
-					></ion-input>
-					<ion-buttons slot="end">
-						<ion-button color="medium" *ngIf="number.value && !number.dirty">
-							<ion-icon name="copy-outline"></ion-icon>
-						</ion-button>
-						<ion-button color="medium" *ngIf="number.dirty" (click)="save($event)">
-							<ion-icon name="save-outline"></ion-icon>
-						</ion-button>
-					</ion-buttons>
+			<ion-col size="12" size-sm="4">
+				<ion-item>
+					<ion-label color="medium"><b>Total Load</b></ion-label>
 				</ion-item>
 			</ion-col>
-			<ion-col size="12" size-xl="3" size-sm="6">
+			<ion-col size="12" size-sm="4">
 				<ion-item>
 					<ion-label>Pallets</ion-label>
-					<ion-input readonly disabled [value]="container?.numberOfPallets"></ion-input>
+					<ion-input readonly disabled [value]="container?.totalLoad?.numberOfPallets"></ion-input>
 				</ion-item>
 			</ion-col>
-			<ion-col size="12" size-xl="3" size-sm="6">
+			<ion-col size="12" size-sm="4">
 				<ion-item>
 					<ion-label>Gross (kg)</ion-label>
-					<ion-input readonly disabled [value]="container?.grossWeightKg"></ion-input>
+					<ion-input readonly disabled [value]="container?.totalLoad?.grossWeightKg"></ion-input>
 				</ion-item>
 			</ion-col>
-			<ion-col size="12" size-xl="3" size-sm="6">
-				<ion-item>
-					<ion-label>Volume (m<sup>3</sup>)</ion-label>
-					<ion-input readonly disabled [value]="container?.volumeM3"></ion-input>
-				</ion-item>
-			</ion-col>
+<!--			<ion-col size="12" size-xl="3" size-sm="3">-->
+<!--				<ion-item>-->
+<!--					<ion-label>Volume (m<sup>3</sup>)</ion-label>-->
+<!--					<ion-input readonly disabled [value]="container?.totalLoad?.volumeM3"></ion-input>-->
+<!--				</ion-item>-->
+<!--			</ion-col>-->
 		</ion-row>
 		<ion-row>
 			<ion-col size="12" size-md="9">

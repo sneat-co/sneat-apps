@@ -46,8 +46,8 @@ export class OrderContainersSelectorComponent implements OnChanges {
 				id: c.id,
 				type: c.type,
 				number: c.number,
-				grossWeightKg: c.grossWeightKg,
-				numberOfPallets: c.numberOfPallets,
+				grossWeightKg: c.totalLoad?.grossWeightKg,
+				numberOfPallets: c.totalLoad?.numberOfPallets,
 				checked: !!this.containers?.find(cc => cc.id === c.id)?.checked,
 			}));
 		}

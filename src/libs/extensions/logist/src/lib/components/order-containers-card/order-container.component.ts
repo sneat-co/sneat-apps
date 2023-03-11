@@ -65,10 +65,17 @@ export class OrderContainerComponent implements OnChanges {
 				this.container = {
 					...this.container,
 					...this.containerPoints.reduce((total, cp) => ({
-						numberOfPallets: (total.numberOfPallets || 0) + (cp.toLoad?.numberOfPallets || 0),
-						grossWeightKg: (total.grossWeightKg || 0) + (cp.toLoad?.grossWeightKg || 0),
-						volumeM3: (total.volumeM3 || 0) + (cp.toLoad?.volumeM3 || 0),
-					}), {} as IFreightLoad),
+						totalLoad: {
+							numberOfPallets: (total.totalLoad.numberOfPallets || 0) + (cp.toLoad?.numberOfPallets || 0),
+							grossWeightKg: (total.totalLoad.grossWeightKg || 0) + (cp.toLoad?.grossWeightKg || 0),
+							volumeM3: (total.totalLoad.volumeM3 || 0) + (cp.toLoad?.volumeM3 || 0),
+						},
+						totalUnload: {
+							numberOfPallets: (total.totalUnload.numberOfPallets || 0) + (cp.toUnload?.numberOfPallets || 0),
+							grossWeightKg: (total.totalUnload.grossWeightKg || 0) + (cp.toUnload?.grossWeightKg || 0),
+							volumeM3: (total.totalUnload.volumeM3 || 0) + (cp.toUnload?.volumeM3 || 0),
+						},
+					}), { totalLoad: {} as IFreightLoad, totalUnload: {} as IFreightLoad }),
 				};
 			}
 		}

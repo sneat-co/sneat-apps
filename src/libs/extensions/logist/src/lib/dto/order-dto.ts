@@ -42,7 +42,7 @@ export interface IFreightPoint {
 	readonly toUnload?: IFreightLoad;
 }
 
-export interface IOrderContainerBase extends IFreightLoad {
+export interface IOrderContainerBase {
 	readonly type: ContainerType;
 	readonly number: string;
 }
@@ -101,6 +101,8 @@ export interface IContainerPoint extends IShippingPointBase {
 
 export interface IOrderContainer extends IOrderContainerBase {
 	readonly id: string;
+	readonly totalLoad?: IFreightLoad; // this is calculated on clint side
+	readonly totalUnload?: IFreightLoad; // this is calculated on clint side
 }
 
 export interface IFreightDeclaration {
