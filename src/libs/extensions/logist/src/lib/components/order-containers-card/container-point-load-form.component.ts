@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges }
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	FreightPointField,
-	IContainerPoint,
+	IContainerPoint, IFreightLoad,
 	ILogistOrderContext,
 	IOrderShippingPoint, ISetContainerPointNumberRequest,
 	ISetContainerPointTaskRequest,
@@ -20,6 +20,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	@Input() shippingPoint?: IOrderShippingPoint;
 	@Input() containerPoint?: IContainerPoint;
 
+	protected freightLoad?: IFreightLoad;
 	protected checked?: boolean;
 
 	readonly label = () => this.task ? this.task[0].toUpperCase() + this.task.slice(1) : '';
@@ -88,6 +89,14 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		this.checked = this.does(this.task);
+		switch (this.task) {
+			case 'load':
+				this.freightLoad = this.containerPoint?.toLoad;
+				break;
+			case 'unload':
+				this.freightLoad = this.containerPoint?.toUnload;
+				break;
+		}
 	}
 
 	onNumberChanged(name: FreightPointField, event: Event): void {

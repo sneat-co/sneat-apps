@@ -22,7 +22,7 @@
 		<ion-item>
 			<ion-label color="medium">Pallets</ion-label>
 			<ion-input type="number" min="0" style="text-align: right"
-								 [value]="containerPoint?.toLoad?.numberOfPallets"
+								 [value]="freightLoad?.numberOfPallets"
 								 (ionChange)="onNumberChanged('numberOfPallets', $event)"
 			></ion-input>
 		</ion-item>
@@ -30,7 +30,7 @@
 	<ion-col size="2" *ngIf="does(task)">
 		<ion-item>
 			<ion-label color="medium">KG</ion-label>
-			<ion-input type="number" min="0" style="text-align: right" [value]="containerPoint?.toLoad?.grossWeightKg"
+			<ion-input type="number" min="0" style="text-align: right" [value]="freightLoad?.grossWeightKg"
 								 (ionChange)="onNumberChanged('grossWeightKg', $event)"
 			></ion-input>
 		</ion-item>
@@ -38,7 +38,7 @@
 	<ion-col size="2" *ngIf="does(task)">
 		<ion-item>
 			<ion-label color="medium">M<sup>3</sup></ion-label>
-			<ion-input type="number" min="0" style="text-align: right" [value]="containerPoint?.toLoad?.volumeM3"
+			<ion-input type="number" min="0" style="text-align: right" [value]="freightLoad?.volumeM3"
 								 (ionChange)="onNumberChanged('volumeM3', $event)"
 			></ion-input>
 		</ion-item>
