@@ -1,15 +1,18 @@
 <ion-row>
 	<ion-col size="4">
 		<ion-item>
-			<ion-label color="medium" *ngIf="task === 'load'">Departs</ion-label>
-			<ion-label color="medium" *ngIf="task === 'unload'">Arrives</ion-label>
+			<ion-icon color="medium" slot="start" [name]="task === 'load' ? 'exit-outline' : 'enter-outline'"></ion-icon>
+
+			<ion-label color="medium">
+				<span *ngIf="task === 'load'">Departs</span>
+				<span *ngIf="task === 'unload'">Arrives</span>
+			</ion-label>
 			<ion-input type="date"></ion-input>
 		</ion-item>
 	</ion-col>
 	<ion-col size="2">
 		<ion-item>
-			<ion-checkbox slot="start" [value]="task"
-										[checked]="does(task)"
+			<ion-checkbox slot="start" [(ngModel)]="checked"
 										(ionChange)="onTaskChecked($event)"
 			></ion-checkbox>
 			<ion-label>{{label()}}</ion-label>
@@ -18,19 +21,26 @@
 	<ion-col size="2" *ngIf="does(task)">
 		<ion-item>
 			<ion-label color="medium">Pallets</ion-label>
-			<ion-input type="number" min="0" style="text-align: right" [value]="containerPoint?.toLoad?.numberOfPallets"></ion-input>
+			<ion-input type="number" min="0" style="text-align: right"
+								 [value]="containerPoint?.toLoad?.numberOfPallets"
+								 (ionChange)="onNumberChanged('numberOfPallets', $event)"
+			></ion-input>
 		</ion-item>
 	</ion-col>
 	<ion-col size="2" *ngIf="does(task)">
 		<ion-item>
 			<ion-label color="medium">KG</ion-label>
-			<ion-input type="number" min="0" style="text-align: right" [value]="containerPoint?.toLoad?.grossWeightKg"></ion-input>
+			<ion-input type="number" min="0" style="text-align: right" [value]="containerPoint?.toLoad?.grossWeightKg"
+								 (ionChange)="onNumberChanged('grossWeightKg', $event)"
+			></ion-input>
 		</ion-item>
 	</ion-col>
 	<ion-col size="2" *ngIf="does(task)">
 		<ion-item>
 			<ion-label color="medium">M<sup>3</sup></ion-label>
-			<ion-input type="number" min="0" style="text-align: right" [value]="containerPoint?.toLoad?.volumeM3"></ion-input>
+			<ion-input type="number" min="0" style="text-align: right" [value]="containerPoint?.toLoad?.volumeM3"
+								 (ionChange)="onNumberChanged('volumeM3', $event)"
+			></ion-input>
 		</ion-item>
 	</ion-col>
 </ion-row>

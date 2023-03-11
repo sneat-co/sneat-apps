@@ -290,6 +290,24 @@ export interface IContainerPointsRequest extends ILogistOrderRequest {
 	shippingPointIDs: string[];
 }
 
+export interface IContainerPointRequest extends ILogistOrderRequest {
+	containerID: string;
+	shippingPointID: string;
+}
+
+export interface ISetContainerPointTaskRequest extends IContainerPointRequest {
+	readonly task: ShippingPointTask;
+	readonly value: boolean;
+}
+
+export type FreightPointField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3';
+
+export interface ISetContainerPointNumberRequest extends IContainerPointRequest {
+	readonly task: ShippingPointTask;
+	readonly name: FreightPointField;
+	readonly value: number;
+}
+
 export interface IOrderShippingPointRequest extends ILogistOrderRequest {
 	readonly shippingPointID: string;
 }

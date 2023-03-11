@@ -22,7 +22,7 @@ import {
 	IAddSegmentsRequest,
 	IOrderShippingPointRequest,
 	IDeleteSegmentsRequest,
-	IUpdateContainerPointRequest, IContainerPointsRequest,
+	IUpdateContainerPointRequest, IContainerPointsRequest, ISetContainerPointTaskRequest, ISetContainerPointNumberRequest,
 } from '../dto';
 import { logistTeamModuleSubCollection } from './logist-team.service';
 import { IOrdersFilter } from '../dto/orders-filter';
@@ -163,6 +163,14 @@ export class LogistOrderService {
 
 	deleteContainerPoints(request: IContainerPointsRequest): Observable<void> {
 		return this.sneatApiService.delete('logist/order/delete_container_points', undefined, request);
+	}
+
+	setContainerPointTask(request: ISetContainerPointTaskRequest): Observable<void> {
+		return this.sneatApiService.post('logist/order/set_container_point_task', request);
+	}
+
+	setContainerPointNumber(request: ISetContainerPointNumberRequest): Observable<void> {
+		return this.sneatApiService.post('logist/order/set_container_point_number', request);
 	}
 
 	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {
