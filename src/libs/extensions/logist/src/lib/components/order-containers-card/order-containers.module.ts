@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { DialogHeaderModule, SelectFromListModule } from '@sneat/components';
 import { DatagridModule } from '@sneat/datagrid';
 import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
+import { LogistSelectorsModule } from '../logist-selectors.module';
 import { NewContainerComponent } from '../new-container/new-container.component';
 import { OrderContainersGridModule } from '../order-containers-grid/order-containers-grid.module';
 import {
@@ -29,6 +30,7 @@ import { OrderContainersComponent } from './order-containers.component';
 		DialogHeaderModule,
 		FreightLoadFormModule,
 		OrderContainersGridModule,
+		LogistSelectorsModule,
 	],
 	declarations: [
 		OrderContainerComponent,

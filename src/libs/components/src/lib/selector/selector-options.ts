@@ -7,5 +7,4 @@ export interface ISelectorOptions<T> {
 	readonly onSelected?: (item: T[] | null) => void;
 	readonly onAdded?: (item: T) => Observable<void>;
 	readonly onRemoved?: (item: T) => Observable<void>;
-
 }

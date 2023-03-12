@@ -49,7 +49,7 @@ export class DispatchPointComponent implements OnChanges {
 			this.dispatcher = orderDto?.counterparties?.find(c => c.contactID === contactID && c.role === 'dispatcher');
 			this.shippingPoint = orderDto?.shippingPoints?.find(sp => sp.location?.contactID === contactID);
 			if (!this.address.dirty) {
-				this.address.setValue(this.shippingPoint?.location?.address?.lines?.join('\n') || '')
+				this.address.setValue(this.shippingPoint?.location?.address?.lines?.join('\n') || '');
 			}
 			const shippingPointID = this.shippingPoint?.id;
 			this.containerPoints = orderDto?.containerPoints?.filter(cp => cp.shippingPointID === shippingPointID);
@@ -59,6 +59,10 @@ export class DispatchPointComponent implements OnChanges {
 			this.containers = this.order?.dto?.containers?.filter(c => this.segments?.some(s => s.containerID === c.id) || this.containerPoints?.some(cp => cp.containerID === c.id));
 			console.log('DispatchPointComponent.ngOnChanges();', shippingPointID, this.segments, this.containers);
 		}
+	}
+
+	assignContainers(event: Event): void {
+		event.stopPropagation();
 	}
 
 	deletePoint(): void {

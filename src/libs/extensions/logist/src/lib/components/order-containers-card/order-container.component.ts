@@ -12,6 +12,7 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { NewSegmentService } from '../new-segment/new-segment.service';
+import { ShippingPointsSelectorService } from '../shipping-points-selector/shipping-points-selector.service';
 
 @Component({
 	selector: 'sneat-order-container',
@@ -41,6 +42,7 @@ export class OrderContainerComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
 		private readonly newSegmentService: NewSegmentService,
+		private readonly shippingPointsSelectorService: ShippingPointsSelectorService,
 	) {
 	}
 
@@ -142,7 +144,9 @@ export class OrderContainerComponent implements OnChanges {
 		console.log('addPoints()');
 		event.stopPropagation();
 		event.preventDefault();
-		alert('not implemented yet');
+		this.shippingPointsSelectorService.selectShippingPointsInModal(this.order)
+			.then(points => console.log('points', points))
+			.catch(this.errorLogger.logErrorHandler('Failed to select shipping points'));
 	}
 
 	async addSegment(event: Event): Promise<void> {
