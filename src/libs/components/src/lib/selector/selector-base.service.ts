@@ -34,7 +34,7 @@ export class SelectorBaseService<T = ISelectItem> {
 					...options,
 					onSelected: (items: T[] | null): void => {
 						this.modalController.dismiss(items).catch(err => {
-							this.errorLogger.logError(err,'Failed to dismiss modal');
+							this.errorLogger.logError(err, 'Failed to dismiss modal');
 							reject(err);
 						});
 						resolve(items);
@@ -44,7 +44,8 @@ export class SelectorBaseService<T = ISelectItem> {
 			const modalOptions: ModalOptions = {
 				component: this.component,
 				componentProps: {
-					...options,
+					// ...options,
+					...options.componentProps,
 					mode: 'modal',
 				},
 				keyboardClose: true,

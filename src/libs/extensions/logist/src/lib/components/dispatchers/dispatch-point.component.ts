@@ -10,6 +10,7 @@ import {
 	IOrderShippingPointRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { OrderContainersSelectorService } from '../order-containers-selector/order-containers-selector.service';
 
 @Component({
 	selector: 'sneat-dispatch-point',
@@ -39,6 +40,7 @@ export class DispatchPointComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
+		private readonly containersSelectorService: OrderContainersSelectorService,
 	) {
 	}
 
@@ -63,6 +65,9 @@ export class DispatchPointComponent implements OnChanges {
 
 	assignContainers(event: Event): void {
 		event.stopPropagation();
+		this.containersSelectorService.selectOrderContainersInModal(this.order).then(containers => {
+			console.log('assignContainers() => selected container: ', containers);
+		});
 	}
 
 	deletePoint(): void {

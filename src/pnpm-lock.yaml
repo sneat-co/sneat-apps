@@ -24,6 +24,7 @@ specifiers:
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
   '@ionic/angular': 6.6.1
+  '@ionic/core': ^6.6.1
   '@nrwl/angular': 15.8.6
   '@nrwl/cli': 15.8.6
   '@nrwl/cypress': 15.8.6
@@ -83,6 +84,7 @@ dependencies:
   '@ionic-native/splash-screen': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic-native/status-bar': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic/angular': 6.6.1_xht346wdjnwimna6bxqzimjaye
+  '@ionic/core': 6.6.1
   '@nrwl/angular': 15.8.6_tuv24rnsnqciga5gj7fko3746e
   '@sentry/angular': 7.42.0_qv64jwwsycqi3tebfv3zzc74s4
   '@sentry/tracing': 7.42.0
