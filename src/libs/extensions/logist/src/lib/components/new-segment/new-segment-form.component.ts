@@ -158,11 +158,6 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			teamID: this.order.team?.id,
 			containers: this.selectedContainers.map(c => ({
 				id: c.id,
-				toLoad: undefinedIfEmpty(excludeZeroValues({
-					numberOfPallets: c.pallets,
-					grossWeightKg: c.grossKg,
-					volumeM3: c.volumeM3,
-				})),
 			})),
 			from: excludeEmpty({
 				counterparty: {

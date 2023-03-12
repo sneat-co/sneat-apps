@@ -100,19 +100,12 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		await modal.present();
 	}
 
-	async addSegment(): Promise<void> {
-		if (!this.order) {
+	protected addSegment(): void {
+		const order = this.order;
+		if (!order) {
 			return;
 		}
-		const props: INewSegmentParams = {
-			order: this.order,
-		};
-		try {
-			// await this.newSegmentService.openNewSegmentDialog(props);
-			this.newSegmentService.goNewSegmentPage(props).catch(console.error);
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to open new segment form');
-		}
+		this.newSegmentService.goNewSegmentPage({ order }).catch(this.errorLogger.logErrorHandler('Failed to navigate to new segment page'));
 	}
 
 	addShippingPoint(): void {

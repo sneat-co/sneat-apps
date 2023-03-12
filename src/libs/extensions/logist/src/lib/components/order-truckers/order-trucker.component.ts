@@ -10,6 +10,7 @@ import {
 } from '../../dto';
 import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-print.service';
 import { LogistOrderService } from '../../services';
+import { NewSegmentService } from '../new-segment/new-segment.service';
 
 @Component({
 	selector: 'sneat-order-trucker',
@@ -30,6 +31,7 @@ export class OrderTruckerComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly ordersService: LogistOrderService,
 		private readonly orderPrintService: OrderPrintService,
+		private readonly newSegmentService: NewSegmentService,
 	) {
 	}
 
@@ -41,8 +43,12 @@ export class OrderTruckerComponent implements OnChanges {
 		}
 	}
 
-	addSegment(): void {
-		alert('not implemented yet');
+	protected addSegment(): void {
+		const order = this.order;
+		if (!order) {
+			return;
+		}
+		this.newSegmentService.goNewSegmentPage({ order }).catch(this.errorLogger.logErrorHandler('Failed to navigate to new segment page'));
 	}
 
 	deleteTrucker(): void {
@@ -81,7 +87,7 @@ export class OrderTruckerComponent implements OnChanges {
 			params: {
 				truckerID: this?.trucker?.contactID,
 			},
-		}
-		this.orderPrintService.openOrderPrintedDocument(event, 'trucker-summary', ctx)
+		};
+		this.orderPrintService.openOrderPrintedDocument(event, 'trucker-summary', ctx);
 	}
 }

@@ -1,41 +1,4 @@
 <ion-item>
 	<ion-checkbox slot="start" [(ngModel)]="container.checked" (ionChange)="toggled.emit(this.container)"></ion-checkbox>
 	<ion-label>{{container.type|uppercase}} &mdash; <b *ngIf="container.number">#{{container.number}}</b></ion-label>
-	<ng-container *ngIf="container.checked">
-		<ion-label color="medium" class="ion-margin-start ion-padding-start">
-			<b>To load</b>: Pallets
-		</ion-label>
-		<ion-input type="number" [(ngModel)]="container.pallets"></ion-input>
-
-		<ion-label color="medium" class="ion-margin-start ion-padding-start">
-			Gross (kg)
-		</ion-label>
-		<ion-input type="number" [(ngModel)]="container.grossKg"></ion-input>
-
-		<ion-label color="medium" class="ion-margin-start ion-padding-start">
-			Volume (m<sup>3</sup>)
-		</ion-label>
-		<ion-input type="number" [(ngModel)]="container.volumeM3"></ion-input>
-	</ng-container>
-</ion-item>
-<ion-item>
-	<ion-checkbox slot="start" [(ngModel)]="container.checked" (ionChange)="toggled.emit(this.container)"></ion-checkbox>
-	<ion-label>{{container.type|uppercase}} &mdash; <b *ngIf="container.number">#{{container.number}}</b></ion-label>
-		<ion-checkbox slot="start"></ion-checkbox>
-		<ion-label color="medium" class="ion-margin-start ion-padding-start">
-			<b>To unload</b>: Pallets
-		</ion-label>
-		<ion-input type="number" [(ngModel)]="container.pallets"></ion-input>
-
-	<ng-container *ngIf="container.checked">
-		<ion-label color="medium" class="ion-margin-start ion-padding-start">
-			Gross (kg)
-		</ion-label>
-		<ion-input type="number" [(ngModel)]="container.grossKg"></ion-input>
-
-		<ion-label color="medium" class="ion-margin-start ion-padding-start">
-			Volume (m<sup>3</sup>)
-		</ion-label>
-		<ion-input type="number" [(ngModel)]="container.volumeM3"></ion-input>
-	</ng-container>
 </ion-item>

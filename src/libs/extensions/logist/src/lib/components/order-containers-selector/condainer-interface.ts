@@ -7,7 +7,4 @@ export interface IContainer {
 	readonly number?: string;
 	//
 	checked?: boolean;
-	grossKg?: number;
-	pallets?: number;
-	volumeM3?: number;
 }
