@@ -10,6 +10,6 @@
 	</ion-item-divider>
 	<sneat-order-container-form *ngFor="let c of containers; trackBy: id"
 															[container]="c"
-															(toggled)="onToggled()"
+															(toggled)="onToggled($event)"
 	></sneat-order-container-form>
 </ion-card>

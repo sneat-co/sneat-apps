@@ -23,7 +23,9 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 		return !!this.containers?.some(c => !c.checked);
 	}
 
-	onToggled(): void {
+	onToggled(container: IContainer): void {
+		console.log('OrderContainersSelectorComponent.onToggled():', container);
+		this.containers = this.containers?.map(c => c.id === container.id ? container : c);
 		const selectedContainers = this.containers?.filter(c => c.checked) || [];
 		this.selectedContainerIDs = selectedContainers.map(c => c.id);
 		console.log('OrderContainersSelectorComponent.selectedContainerIDs:', this.selectedContainerIDs);

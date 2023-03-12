@@ -5,6 +5,7 @@ export interface IContainer {
 	readonly id: string;
 	readonly type: ContainerType;
 	readonly number?: string;
+	readonly tasks?: readonly string[];
 	//
 	checked?: boolean;
 }
