@@ -3,8 +3,9 @@ import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { ContainerType, IAddContainersRequest, ILogistOrderContext } from '../../dto';
+import { ContainerType, IAddContainersRequest, ILogistOrderContext, INewContainerPoint } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { TasksByID } from '../shipping-points-selector';
 
 @Component({
 	selector: 'sneat-new-container',
@@ -17,7 +18,7 @@ export class NewContainerComponent implements AfterViewInit {
 
 	@ViewChild('containerNumberInput', { static: false }) containerNumberInput?: IonInput;
 
-	selectedShippingPointIDs?: ReadonlyArray<string>;
+	private tasksByShippingPoint?: TasksByID;
 
 	readonly containerTypes: ISelectItem[] = [
 		{ id: '8ft', title: '8 ft.' },
@@ -30,7 +31,6 @@ export class NewContainerComponent implements AfterViewInit {
 
 	containerType?: string;
 	containerNumber = '';
-	grossWeightKg?: number;
 	isSubmitting = false;
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
@@ -43,7 +43,6 @@ export class NewContainerComponent implements AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
-		this.selectedShippingPointIDs = this.order?.dto?.shippingPoints?.map(p => p.id);
 	}
 
 	onContainerTypeChanged(): void {
@@ -54,6 +53,10 @@ export class NewContainerComponent implements AfterViewInit {
 		event.stopPropagation();
 		event.preventDefault();
 		this.modalController.dismiss().catch(console.error);
+	}
+
+	onTasksByShippingPointChanged(tasksByShippingPoint: TasksByID): void {
+		this.tasksByShippingPoint = tasksByShippingPoint;
 	}
 
 	addContainer(event: Event): void {
@@ -73,6 +76,15 @@ export class NewContainerComponent implements AfterViewInit {
 			return;
 		}
 		if (this.order.id) {
+			const getPoints: () => INewContainerPoint[] =  () => {
+				return Object
+					.entries(this.tasksByShippingPoint || {})
+					.filter(([, tasks]) => tasks?.length)
+					.map(([shippingPointID, tasks]) => {
+						const point: INewContainerPoint = { shippingPointID, tasks: tasks || [] };
+						return point;
+					});
+			};
 			this.isSubmitting = true;
 			const request: IAddContainersRequest = {
 				orderID: this.order.id,
@@ -81,7 +93,7 @@ export class NewContainerComponent implements AfterViewInit {
 					{
 						type: this.containerType as ContainerType,
 						number: this.containerNumber,
-						shippingPointIDs: this.selectedShippingPointIDs,
+						points: getPoints(),
 					},
 				],
 			};

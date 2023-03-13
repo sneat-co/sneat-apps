@@ -17,14 +17,9 @@
 			<ion-input #containerNumberInput type="text" [(ngModel)]="containerNumber"></ion-input>
 		</ion-item>
 
-		<ion-item>
-			<ion-label color="medium">Gross weight (kg)</ion-label>
-			<ion-input type="number" [(ngModel)]="grossWeightKg"></ion-input>
-		</ion-item>
-
 		<sneat-shipping-points-selector
 			[shippingPoints]="order?.dto?.shippingPoints"
-			[selectedShippingPointIDs]="selectedShippingPointIDs || []"
+			(tasksByShippingPointChange)="onTasksByShippingPointChanged($event)"
 		></sneat-shipping-points-selector>
 	</ng-container>
 

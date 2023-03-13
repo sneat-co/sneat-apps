@@ -35,7 +35,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 
 	does(task?: ShippingPointTask): boolean {
 		const v = !!task && !!this.containerPoint?.tasks?.includes(task);
-		console.log('does', task, v);
+		// console.log('does', task, v);
 		return v;
 	}
 

@@ -2,7 +2,9 @@ import { Component, EventEmitter, Inject, Input, NgZone, OnChanges, Output } fro
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ILogistOrderContext, IOrderContainer } from '../../dto';
+import { RowComponent, RowContextMenuSignature } from 'tabulator-tables';
+import { IContainerRequest, ILogistOrderContext, IOrderContainer } from '../../dto';
+import { LogistOrderService } from '../../services';
 
 interface IOrderContainerWithIndex extends IOrderContainer {
 	i: number;
@@ -17,6 +19,42 @@ export class OrderContainersGridComponent implements OnChanges {
 
 	@Input() order?: ILogistOrderContext;
 	@Output() readonly containerSelected = new EventEmitter<IOrderContainer>();
+
+	protected readonly rowContextMenu: RowContextMenuSignature = [
+		{
+			label: 'Select',
+			action: (e: Event, row: RowComponent) => {
+				row.select();
+				const data = row.getData() as IOrderContainerWithIndex;
+				this.containerSelected.emit(this.order?.dto?.containers?.find(c => c.id === data.id));
+			},
+		},
+		{
+			separator: true,
+		},
+		{
+			label: '🗑️ Delete',
+			action: (e: Event, row: RowComponent) => {
+				row.select();
+				const data = row.getData() as IOrderContainerWithIndex;
+				console.log('Delete row', data);
+				const
+					orderID = this.order?.id,
+					teamID = this.order?.team?.id;
+				if (!orderID || !teamID) {
+					return;
+				}
+				const request: IContainerRequest = {
+					orderID,
+					teamID,
+					containerID: data.id,
+				};
+				this.orderService.deleteContainer(request).subscribe({
+					error: this.errorLogger.logErrorHandler('Failed to delete container'),
+				});
+			},
+		},
+	];
 
 	readonly allCols: IGridColumn[] = [
 		{
@@ -88,8 +126,7 @@ export class OrderContainersGridComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navController: NavController,
-		private readonly zone: NgZone,
+		private readonly orderService: LogistOrderService,
 	) {
 	}
 

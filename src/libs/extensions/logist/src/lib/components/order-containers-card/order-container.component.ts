@@ -144,7 +144,12 @@ export class OrderContainerComponent implements OnChanges {
 		console.log('addPoints()');
 		event.stopPropagation();
 		event.preventDefault();
-		this.shippingPointsSelectorService.selectShippingPointsInModal(this.order)
+		const order = this.order;
+		const container = this.container;
+		if (!order || !container) {
+			return;
+		}
+		this.shippingPointsSelectorService.selectShippingPointsInModal(order, container)
 			.then(points => console.log('points', points))
 			.catch(this.errorLogger.logErrorHandler('Failed to select shipping points'));
 	}

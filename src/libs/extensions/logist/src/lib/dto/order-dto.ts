@@ -92,6 +92,11 @@ export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly counterparty: IOrderCounterpartyRef;
 }
 
+// @Obsolete('Use IOrderShippingPoint instead')
+export interface IShippingPoint extends IShippingPointBase {
+	readonly id: string;
+}
+
 export interface IContainerPoint extends IShippingPointBase {
 	readonly containerID: string;
 	readonly shippingPointID: string;
@@ -206,8 +211,13 @@ export interface IAddOrderShippingPointRequest extends ILogistOrderRequest {
 	readonly containerIDs?: ReadonlyArray<string>;
 }
 
+export interface INewContainerPoint {
+	readonly shippingPointID: string;
+	readonly tasks: readonly ShippingPointTask[];
+}
+
 export interface INewContainer extends IOrderContainerBase {
-	readonly shippingPointIDs?: ReadonlyArray<string>;
+	readonly points: readonly INewContainerPoint[];
 }
 
 export interface IAddContainersRequest extends ILogistOrderRequest {

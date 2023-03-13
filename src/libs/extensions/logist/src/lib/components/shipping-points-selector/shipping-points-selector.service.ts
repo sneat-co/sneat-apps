@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ILogistOrderContext, IOrderShippingPoint } from '../../dto';
-import { ShippingPointsSelectorComponent } from './shipping-points-selector.component';
+import { ILogistOrderContext, IOrderContainer, IOrderShippingPoint } from '../../dto';
+import { ShippingPintsSelectorDialogComponent } from './shipping-pints-selector-dialog.component';
 
 @Injectable()
 export class ShippingPointsSelectorService extends SelectorBaseService<IOrderShippingPoint> {
@@ -11,12 +11,13 @@ export class ShippingPointsSelectorService extends SelectorBaseService<IOrderShi
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
 	) {
-		super(ShippingPointsSelectorComponent, errorLogger, modalController);
+		super(ShippingPintsSelectorDialogComponent, errorLogger, modalController);
 	}
 
-	public selectShippingPointsInModal(order?: ILogistOrderContext): Promise<IOrderShippingPoint[] | null> {
+	public selectShippingPointsInModal(order: ILogistOrderContext, container: IOrderContainer): Promise<IOrderShippingPoint[] | null> {
 		const options: ISelectorOptions<IOrderShippingPoint> = {
-			selectedItems: [...(order?.dto?.shippingPoints || [])],
+			// selectedItems: [...(order.dto?.shippingPoints || [])],
+			componentProps: { order, container },
 		};
 		return this.selectMultipleInModal(options);
 	}

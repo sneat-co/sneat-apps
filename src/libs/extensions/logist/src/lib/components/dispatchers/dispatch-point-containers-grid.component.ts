@@ -17,7 +17,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 	@Input() counterparty?: IOrderCounterparty;
 	@Input() shippingPoint?: IOrderShippingPoint;
 
-	protected containerPoints?: IDispatchPointContainerRow[];
+	protected containerPoints: IDispatchPointContainerRow[] = [];
 
 	protected readonly allCols: IGridColumn[] = [
 		{
@@ -106,7 +106,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 			const row: IDispatchPointContainerRow = { i: i + 1, containerID: cp.containerID, number: container?.number };
 			return row;
 		};
-		this.containerPoints = containerPoints?.map(containerPointToRow);
+		this.containerPoints = containerPoints?.map(containerPointToRow) || [];
 		console.log('shippingPointID', shippingPointID, 'containerPoints', containerPoints, 'order', this.order?.dto);
 	}
 }

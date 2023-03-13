@@ -5,11 +5,31 @@
 	<ion-item-divider *ngIf="!shippingPoints?.length">
 		<ion-label>No shipping points have been added to the order yet.</ion-label>
 	</ion-item-divider>
-	<ion-item *ngFor="let shippingPoint of shippingPoints">
-		<ion-checkbox [value]="shippingPoint.location.contactID" slot="start"
-									[checked]="selectedShippingPointIDs.includes(shippingPoint.id)"
-									(ionChange)="checkboxChanged($event)"
-		></ion-checkbox>
-		<ion-label color="medium">{{shippingPoint.counterparty.title}} @ {{shippingPoint.location.title}}</ion-label>
-	</ion-item>
+	<ion-grid class="ion-grid-layout">
+		<ion-row *ngFor="let shippingPoint of shippingPoints">
+			<ion-col size="6">
+				<ion-item>
+					<ion-label color="medium">{{shippingPoint.counterparty.title}} @ {{shippingPoint.location.title}}</ion-label>
+				</ion-item>
+			</ion-col>
+			<ion-col size="3">
+				<ion-item lines="none">
+					<ion-checkbox [value]="shippingPoint.location.contactID" slot="start"
+												[checked]="tasksByShippingPoint[shippingPoint.id]?.includes('load')"
+												(ionChange)="checkboxChanged($event, shippingPoint.id, 'load')"
+					></ion-checkbox>
+					<ion-label>Load</ion-label>
+				</ion-item>
+			</ion-col>
+			<ion-col size="3">
+				<ion-item lines="none">
+					<ion-checkbox [value]="shippingPoint.location.contactID" slot="start"
+												[checked]="tasksByShippingPoint[shippingPoint.id]?.includes('unload')"
+												(ionChange)="checkboxChanged($event, shippingPoint.id, 'unload')"
+					></ion-checkbox>
+					<ion-label>Unload</ion-label>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-item-group>

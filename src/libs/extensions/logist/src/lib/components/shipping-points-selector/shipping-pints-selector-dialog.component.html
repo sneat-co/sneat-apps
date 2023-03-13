@@ -1,0 +1,13 @@
+<ion-header>
+	<sneat-dialog-header [dialogTitle]="title"></sneat-dialog-header>
+</ion-header>
+<ion-content>
+
+	<sneat-shipping-points-selector [shippingPoints]="order?.dto?.shippingPoints"></sneat-shipping-points-selector>
+
+	<div class="ion-padding">
+		<ion-button (click)="submit()">
+			<ion-label>Add selected points</ion-label>
+		</ion-button>
+	</div>
+</ion-content>

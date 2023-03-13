@@ -11,14 +11,21 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { Tabulator, SelectRowModule, InteractionModule, Module } from 'tabulator-tables';
+import {
+	Tabulator,
+	SelectRowModule,
+	MenuModule,
+	InteractionModule,
+	Module,
+	RowContextMenuSignature,
+} from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
 import { TabulatorColumn, TabulatorOptions } from '../../tabulator/tabulator-options';
 
 class AdvertModule extends Module {
-	public static moduleName = 'advert';
+	public static override moduleName = 'advert';
 
-	constructor(table: unknown) {
+	constructor(table: Tabulator) {
 		super(table);
 		console.log('AdvertModule.constructor()');
 	}
@@ -28,7 +35,7 @@ class AdvertModule extends Module {
 	}
 }
 
-Tabulator.registerModule([InteractionModule, SelectRowModule, AdvertModule]);
+Tabulator.registerModule([InteractionModule, SelectRowModule, AdvertModule, MenuModule]);
 
 // console.log('SelectRowModule', );
 
@@ -76,6 +83,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 	@Input() groupBy?: string;
 	@Input() height?: string;
 	@Input() maxHeight?: string | number;
+	@Input() rowContextMenu?: RowContextMenuSignature;
 	@ViewChild('tabulatorDiv', { static: true }) tabulatorDiv?: ElementRef;
 
 	@Input() rowClick?: (event: Event, row: unknown) => void;
@@ -83,7 +91,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 	@Output() readonly rowSelected = new EventEmitter<{ row: unknown, event?: Event }>();
 
 	// private tab = document.createElement('div');
-	private tabulator: Tabulator;
+	private tabulator?: Tabulator;
 
 	@Input() public selectable?: boolean | number | 'highlight';
 
@@ -201,6 +209,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 		this.tabulatorOptions = {
 			// tooltipsHeader: true, // enable header tooltips
 			// tooltipGenerationMode: 'hover',
+			rowContextMenu: this.rowContextMenu,
 			selectable: this.selectable,
 			data: this.data,
 			// reactiveData: true, // enable data reactivity
@@ -208,7 +217,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 				const col: TabulatorColumn = {
 					// TODO(help-wanted): Use strongly typed Tabulator col def
 					field: c.field,
-					title: c.title || c.field,
+					title: c.title || c.field || c.title,
 					// headerTooltip: () =>
 					// 	`${c.colName || c.title || c.field}: ${c.dbType}`,
 				};
