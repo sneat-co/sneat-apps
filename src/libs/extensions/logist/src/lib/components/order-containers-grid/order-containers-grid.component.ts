@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Inject, Input, NgZone, OnChanges, Output } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RowComponent, RowContextMenuSignature } from 'tabulator-tables';
