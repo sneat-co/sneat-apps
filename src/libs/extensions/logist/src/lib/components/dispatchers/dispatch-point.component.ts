@@ -1,7 +1,9 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { error } from 'ng-packagr/lib/utils/log';
 import {
+	IAddContainerPointsRequest,
 	IContainerPoint,
 	IContainerSegment,
 	ILogistOrderContext, IOrderContainer,
@@ -67,6 +69,31 @@ export class DispatchPointComponent implements OnChanges {
 		event.stopPropagation();
 		this.containersSelectorService.selectOrderContainersInModal(this.order).then(containers => {
 			console.log('assignContainers() => selected container: ', containers);
+			const order = this.order;
+			if (!order?.team?.id) {
+				return;
+			}
+			const shippingPointID = this.shippingPoint?.id;
+			if (!shippingPointID) {
+				return;
+			}
+			if (!containers?.length) {
+				return;
+			}
+			const request: IAddContainerPointsRequest = {
+				teamID: order.team.id,
+				orderID: order.id,
+				containerPoints: containers?.map(c => ({
+					containerID: c.id,
+					shippingPointID,
+					tasks: c.tasks || [],
+					status: 'pending',
+				})),
+			};
+			this.orderService.addContainerPoints(request)
+				.subscribe({
+					error: this.errorLogger.logErrorHandler('Failed to add container points'),
+				});
 		});
 	}
 

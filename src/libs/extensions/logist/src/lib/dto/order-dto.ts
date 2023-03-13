@@ -37,7 +37,7 @@ export interface IFreightLoad {
 }
 
 export interface IFreightPoint {
-	readonly tasks: ShippingPointTask[];
+	readonly tasks: readonly ShippingPointTask[];
 	readonly toLoad?: IFreightLoad;
 	readonly toUnload?: IFreightLoad;
 }
@@ -194,6 +194,10 @@ export interface ISetOrderCounterparty {
 
 export interface ISetOrderCounterpartiesRequest extends ILogistOrderRequest {
 	counterparties: ISetOrderCounterparty[];
+}
+
+export interface IAddContainerPointsRequest extends ILogistOrderRequest {
+	containerPoints: IContainerPoint[];
 }
 
 export interface IAddOrderShippingPointRequest extends ILogistOrderRequest {

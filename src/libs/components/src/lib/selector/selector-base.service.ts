@@ -46,6 +46,7 @@ export class SelectorBaseService<T = ISelectItem> {
 				componentProps: {
 					// ...options,
 					...options.componentProps,
+					onSelected: options.onSelected,
 					mode: 'modal',
 				},
 				keyboardClose: true,

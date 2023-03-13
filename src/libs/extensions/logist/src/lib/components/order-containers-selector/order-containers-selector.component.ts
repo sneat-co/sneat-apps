@@ -33,13 +33,6 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 		this.selectedContainersChange.emit(selectedContainers);
 	}
 
-	addAllContainer(): void {
-		this.containers = this.containers?.map(c => c.checked ? c : {
-			...c,
-			checked: true,
-		});
-	}
-
 	ngOnInit(): void { // Needed for modal dialog as ngOnChanges is not called for the first change
 		this.setContainers();
 	}

@@ -1,15 +1,9 @@
-<ion-card>
-	<ion-item-divider color="light">
-		<ion-label>Containers</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="addAllContainer()" *ngIf="hasUncheckedContainers()" [disabled]="disabled">
-				<ion-icon name="bag-add-outline" slot="start"></ion-icon>
-				<ion-label>Add all</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
+<!--<ion-card>-->
+<!--	<ion-item-divider color="light">-->
+<!--		<ion-label>Containers</ion-label>-->
+<!--	</ion-item-divider>-->
 	<sneat-order-container-form *ngFor="let c of containers; trackBy: id"
 															[container]="c"
 															(toggled)="onToggled($event)"
 	></sneat-order-container-form>
-</ion-card>
+<!--</ion-card>-->

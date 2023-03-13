@@ -22,7 +22,11 @@ import {
 	IAddSegmentsRequest,
 	IOrderShippingPointRequest,
 	IDeleteSegmentsRequest,
-	IUpdateContainerPointRequest, IContainerPointsRequest, ISetContainerPointTaskRequest, ISetContainerPointNumberRequest,
+	IUpdateContainerPointRequest,
+	IContainerPointsRequest,
+	ISetContainerPointTaskRequest,
+	ISetContainerPointNumberRequest,
+	IAddContainerPointsRequest,
 } from '../dto';
 import { logistTeamModuleSubCollection } from './logist-team.service';
 import { IOrdersFilter } from '../dto/orders-filter';
@@ -80,7 +84,7 @@ export class LogistOrderService {
 		const ordersCollection = this.ordersCollection<ILogistOrderDto>(teamID);
 
 		const qFilter: IFilter[] = [
-			{ field: 'status', operator: '==', value: filter?.status || 'active' }
+			{ field: 'status', operator: '==', value: filter?.status || 'active' },
 		];
 		if (filter?.direction) {
 			qFilter.push({ field: 'direction', operator: '==', value: filter.direction });
@@ -135,6 +139,10 @@ export class LogistOrderService {
 
 	setOrderCounterparties(request: ISetOrderCounterpartiesRequest): Observable<IOrderCounterparty> {
 		return this.sneatApiService.post('logist/order/set_order_counterparties', request);
+	}
+
+	addContainerPoints(request: IAddContainerPointsRequest): Observable<void> {
+		return this.sneatApiService.post('logist/order/add_container_points', request);
 	}
 
 	addShippingPoint(team: ITeamContext, request: IAddOrderShippingPointRequest): Observable<ILogistOrderContext> {
