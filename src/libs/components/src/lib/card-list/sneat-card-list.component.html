@@ -47,7 +47,7 @@
 		<ion-list>
 			<ion-item
 				tappable
-				*ngFor="let item of items"
+				*ngFor="let item of items; trackBy: id"
 				(click)="itemClick && click($event, item)"
 				[routerLink]="getRouterLink && getRouterLink(item)"
 			>

@@ -24,6 +24,8 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 	private readonly destroyed = new Subject<void>();
 	private subscriptions: Subscription[] = [];
 
+	protected readonly id = (_: number, o: { id: string }) => o.id;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navService: TeamNavService,

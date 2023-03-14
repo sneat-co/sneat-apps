@@ -93,7 +93,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		}
 	}
 
-	public readonly id = (i: number, v: { id: string }): string => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	override onTeamDtoChanged(): void {
 		super.onTeamDtoChanged();

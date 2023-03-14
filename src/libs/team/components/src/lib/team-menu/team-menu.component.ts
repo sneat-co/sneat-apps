@@ -16,6 +16,8 @@ export class TeamMenuComponent extends TeamBaseComponent {
 
 	public teams?: IUserTeamBrief[];
 
+	protected readonly id = (_: number, o: { id: string }) => o.id;
+
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,

@@ -80,8 +80,8 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	public deleting = false;
 
-	readonly id = (i: number, v: { id: string }): string => v.id;
-	readonly index = (i: number): number => i;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly index = (i: number): number => i;
 
 	get errorLogger() {
 		return this.happeningBaseComponentParams.errorLogger;

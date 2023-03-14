@@ -20,7 +20,7 @@
 		</ion-item>
 	</ion-list>
 	<ion-list *ngIf="teams">
-		<ion-item-sliding *ngFor="let team of teams">
+		<ion-item-sliding *ngFor="let team of teams; trackBy: id">
 			<ion-item tappable detail (click)="goTeam(team)">
 				<ion-label>{{ team.title }}</ion-label>
 				<ion-buttons slot="end">

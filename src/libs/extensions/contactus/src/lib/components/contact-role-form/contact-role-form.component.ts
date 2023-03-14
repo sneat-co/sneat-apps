@@ -28,7 +28,7 @@ export class ContactRoleFormComponent implements OnChanges, OnDestroy {
 
 	groups?: IContactGroupContext[];
 
-	readonly id = (_: number, v: { id: string }) => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	constructor(
 		private readonly contactGroupService: ContactGroupService,

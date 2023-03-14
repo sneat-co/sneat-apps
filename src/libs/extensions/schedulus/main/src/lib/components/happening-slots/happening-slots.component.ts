@@ -27,7 +27,7 @@ export class HappeningSlotsComponent {
 	isShowingAddSlot = false;
 	public addSlotParams?: AddSlotParams;
 
-	readonly id = (i: number, record: { id: string }): string => record.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

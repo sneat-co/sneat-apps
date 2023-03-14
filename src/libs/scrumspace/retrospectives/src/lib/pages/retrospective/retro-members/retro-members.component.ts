@@ -34,7 +34,7 @@ export class RetroMembersComponent implements OnChanges {
 	) {
 	}
 
-	public id = (_: number, member: IMeetingMember) => member.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('ngOnChanges', this.team, this.retrospective);

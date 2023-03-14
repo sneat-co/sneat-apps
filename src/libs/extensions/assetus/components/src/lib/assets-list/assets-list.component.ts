@@ -57,7 +57,7 @@ export class AssetsListComponent implements OnChanges {
 	) {
 	}
 
-	public id = (_: number, asset: IAssetContext) => asset.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const { allAssets, assetType, filter } = this;

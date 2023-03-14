@@ -56,7 +56,7 @@ export class DocumentsByTypeComponent extends DocumentsBaseComponent implements 
 		this.goNewDoc.emit(docType.id);
 	}
 
-	readonly id = (i: number, v: { id: string }) => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('DocumentsListComponent.ngOnChanges', changes, this.allDocuments && [...this.allDocuments]);

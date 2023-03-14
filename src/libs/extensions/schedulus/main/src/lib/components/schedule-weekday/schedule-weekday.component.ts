@@ -43,7 +43,7 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 		this.destroyed.complete();
 	}
 
-	// public readonly id = (_: number, v: {id: string}) => v.id;
+	// protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	onSlotClicked(args: {slot: ISlotItem; event: Event}): void {
 		console.log('ScheduleWeekdayComponent.onSlotClicked', args);

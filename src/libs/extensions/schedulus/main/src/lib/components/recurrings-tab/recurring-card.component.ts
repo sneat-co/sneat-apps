@@ -22,8 +22,8 @@ export class RecurringCardComponent implements OnDestroy {
 		//
 	}
 
-	readonly id = (i: number, v: { id: string }): string => v.id;
-	readonly index = (i: number): number => i;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly index = (i: number): number => i;
 
 	ngOnDestroy(): void {
 		this.destroyed.next();

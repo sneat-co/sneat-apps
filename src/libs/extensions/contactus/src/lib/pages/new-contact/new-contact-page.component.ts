@@ -75,7 +75,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	}
 
 	public personFormIsReadyToSubmit = false;
-	public readonly id = (i: number, v: { id: string }): string => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	constructor(
 		params: TeamComponentBaseParams,

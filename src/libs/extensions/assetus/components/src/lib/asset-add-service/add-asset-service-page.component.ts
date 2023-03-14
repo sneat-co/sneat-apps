@@ -25,7 +25,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 		console.log('selectProvider() => id:', serviceProvider.id);
 	}
 
-	readonly id = (o: number, v: { id: string }) => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
 		super.onCommuneIdsChanged(communeIds);

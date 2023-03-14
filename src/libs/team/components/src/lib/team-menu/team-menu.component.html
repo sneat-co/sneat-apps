@@ -8,7 +8,7 @@
 								(ionChange)="onTeamSelected($event)"
 								style="font-weight: bold"
 		>
-			<ion-select-option *ngFor="let team of teams" [value]="team.id">
+			<ion-select-option *ngFor="let team of teams; trackBy id" [value]="team.id">
 				{{team.title || team.id}}
 			</ion-select-option>
 		</ion-select>

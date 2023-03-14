@@ -31,7 +31,7 @@ export class HappeningMembersFormComponent {
 		return members.map(m => memberContextFromBrief(m, team));
 	}
 
-	public readonly id = (i: number, v: { id: string }) => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	public isMemberChecked(member: IMemberContext): boolean {
 		const { id } = member;

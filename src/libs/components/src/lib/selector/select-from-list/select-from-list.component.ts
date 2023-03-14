@@ -43,7 +43,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 
 	public filter = '';
 
-	readonly id = (_: number, v: { id: string }) => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

@@ -17,7 +17,7 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 	@Output() readonly selectedContainerIDsChange = new EventEmitter<string[]>();
 	@Output() selectedContainersChange = new EventEmitter<IContainer[]>();
 
-	id = (_: number, c: IContainer) => c.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	hasUncheckedContainers(): boolean {
 		return !!this.containers?.some(c => !c.checked);

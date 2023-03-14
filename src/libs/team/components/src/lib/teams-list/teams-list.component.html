@@ -1,4 +1,4 @@
-<ion-item *ngFor="let team of teams"
+<ion-item *ngFor="let team of teams; trackBy: id"
 					routerLink="{{pathPrefix}}/{{team.type}}/{{team.id}}"
 					(click)="goTeam($event, team)"
 >

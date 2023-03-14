@@ -40,7 +40,7 @@ export class MembersListComponent implements OnChanges {
 		//
 	}
 
-	public id = (_: number, m: { id: string }) => m.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	public genderIcon(m: IMemberContext) {
 		switch (m.brief?.gender) {

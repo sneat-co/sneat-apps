@@ -24,5 +24,5 @@ export class RecurringsTabComponent {
 		this.resetFilter = filterService.resetFilterHandler;
 	}
 
-	readonly id = (i: number, v: { id: string }): string => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 }

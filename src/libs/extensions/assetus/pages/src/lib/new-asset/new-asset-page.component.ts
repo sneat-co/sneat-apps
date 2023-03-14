@@ -33,7 +33,7 @@ export class NewAssetPageComponent extends TeamBaseComponent {
 		// this.categories = assetCategoryService.allAssetCategories();
 	}
 
-	readonly id = (i: number, item: { id: string }) => item.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	public selectCategory(category: IAssetType): void {
 		this.category = category;

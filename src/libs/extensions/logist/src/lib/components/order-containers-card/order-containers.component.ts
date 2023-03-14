@@ -27,8 +27,7 @@ export class OrderContainersComponent implements OnChanges {
 
 	containers?: ReadonlyArray<IOrderContainer>;
 
-	readonly id = (_: number, container: IOrderContainer) => container.id;
-
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	constructor(
 		private readonly modalController: ModalController,

@@ -34,7 +34,7 @@ export class ContactsByTypeComponent implements OnChanges {
 		}
 	}
 
-	readonly id = (i: number, item: { id: string }) => item.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	// hideRole(role: string): void {
 	// 	if (!this.commune.id) {

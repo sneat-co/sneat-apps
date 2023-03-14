@@ -33,7 +33,7 @@ export class MembersAsBadgesComponent {
 
 	@Output() readonly deleteMember = new EventEmitter<IMemberContext>();
 
-	readonly id = (_: number, m: { id: string }) => m.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	public isDeleting(id: string): boolean {
 		return this.deletingMemberIDs.includes(id);

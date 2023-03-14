@@ -209,7 +209,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.setDay('onDateSelected', date);
 	};
 
-	readonly id = (i: number, v: { id: string }): string => v.id;
+	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	readonly index = (i: number): number => i;
 

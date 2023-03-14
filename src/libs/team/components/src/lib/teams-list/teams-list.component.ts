@@ -15,6 +15,8 @@ export class TeamsListComponent {
 	@Input() teams?: ITeamContext[];
 	@Output() readonly beforeNavigateToTeam = new EventEmitter<ITeamContext>();
 
+	protected readonly id = (_: number, o: { id: string }) => o.id;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		readonly userService: SneatUserService,

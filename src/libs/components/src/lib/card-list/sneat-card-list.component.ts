@@ -38,6 +38,8 @@ export class SneatCardListComponent {
 	public name = '';
 	public isAdding?: boolean;
 
+	protected readonly id = (_: number, o: { id: string }) => o.id;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
