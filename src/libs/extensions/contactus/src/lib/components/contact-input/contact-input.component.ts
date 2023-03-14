@@ -70,10 +70,12 @@ export class ContactInputComponent implements OnChanges {
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
-			team: this.team,
-			parentRole: this.parentRole,
-			contactRole: this.contactRole,
-			contactType: this.contactType,
+			componentProps: {
+				team: this.team,
+				parentRole: this.parentRole,
+				contactRole: this.contactRole,
+				contactType: this.contactType,
+			},
 		};
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {

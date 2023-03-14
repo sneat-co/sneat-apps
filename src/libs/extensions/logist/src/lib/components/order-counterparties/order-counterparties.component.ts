@@ -70,11 +70,13 @@ export class OrderCounterpartiesComponent implements OnChanges {
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
-			team,
-			contactRole: this.contactRole as ContactRole,
-			parentRole: this.parentRole as ContactRole,
-			contactType: this.contactType,
-			excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
+			componentProps: {
+				team,
+				contactRole: this.contactRole as ContactRole,
+				parentRole: this.parentRole as ContactRole,
+				contactType: this.contactType,
+				excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
+			},
 		};
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {

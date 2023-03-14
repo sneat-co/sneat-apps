@@ -56,8 +56,10 @@ export class SubcontactInputComponent {
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
-			team: this.team,
-			contactRole: this.role,
+			componentProps: {
+				team: this.team,
+				contactRole: this.role,
+			},
 		};
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {

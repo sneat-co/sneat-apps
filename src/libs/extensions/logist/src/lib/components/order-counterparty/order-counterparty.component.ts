@@ -25,7 +25,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 
 	@Input() canChangeContact = true;
 	@Input() counterpartyRole?: CounterpartyRole;
-	@Input() contactType?: ContactType;
+	@Input() contactType?: ContactType = 'company';
 	@Input() contactRole?: LogistOrderContactRole;
 	@Input() parentRole?: LogistOrderContactRole;
 

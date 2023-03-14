@@ -78,19 +78,21 @@ export class DispatcherComponent implements OnChanges {
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
-			team,
-			contactRole: 'dispatch-point',
-			contactType: 'location',
-			parentRole: 'dispatcher',
-			parentContact: {
-				id: dispatcher.contactID, team, brief: {
-					id: dispatcher.contactID,
-					type: 'company',
-					title: dispatcher.title,
-					countryID: dispatcher.countryID,
+			componentProps: {
+				team,
+				contactRole: 'dispatch-point',
+				contactType: 'location',
+				parentRole: 'dispatcher',
+				parentContact: {
+					id: dispatcher.contactID, team, brief: {
+						id: dispatcher.contactID,
+						type: 'company',
+						title: dispatcher.title,
+						countryID: dispatcher.countryID,
+					},
 				},
+				excludeContacts: this.orderDispatchers?.map(c => ({ id: c.contactID, team })),
 			},
-			excludeContacts: this.orderDispatchers?.map(c => ({ id: c.contactID, team })),
 		};
 		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
 			.then(contact => {

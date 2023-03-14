@@ -8,6 +8,17 @@ import { Subject, Subscription } from 'rxjs';
 import { ContactService } from '../../services';
 import { IContactSelectorOptions } from './contact-selector.service';
 
+export interface IContactSelectorProps {
+	readonly team: ITeamContext;
+	readonly contactRole?: ContactRole;
+	readonly contactType?: ContactType;
+	readonly parentRole?: ContactRole;
+	readonly parentContact?: IContactContext;
+	readonly subType?: ContactRole;
+	readonly subRoleRequired?: boolean;
+	readonly excludeContacts?: readonly IContactContext[];
+}
+
 @Component({
 	selector: 'sneat-contact-selector',
 	templateUrl: './contact-selector.component.html',

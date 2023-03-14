@@ -1,20 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
-import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { ContactSelectorComponent } from './contact-selector.component';
+import { IContactContext } from '@sneat/team/models';
+import { ContactSelectorComponent, IContactSelectorProps } from './contact-selector.component';
+
 
 export interface IContactSelectorOptions extends ISelectorOptions<IContactContext> {
-	readonly team: ITeamContext;
-	readonly contactRole?: ContactRole;
-	readonly contactType?: ContactType;
-	readonly parentRole?: ContactRole;
-	readonly parentContact?: IContactContext;
-	readonly subType?: ContactRole;
-	readonly subRoleRequired?: boolean;
-	readonly excludeContacts?: IContactContext[];
+	readonly componentProps?: IContactSelectorProps;
 }
 
 @Injectable()
