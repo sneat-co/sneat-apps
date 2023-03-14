@@ -321,7 +321,7 @@ export type FreightPointField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3'
 export interface ISetContainerPointNumberRequest extends IContainerPointRequest {
 	readonly task: ShippingPointTask;
 	readonly name: FreightPointField;
-	readonly value: number;
+	readonly value?: number;
 }
 
 export interface IOrderShippingPointRequest extends ILogistOrderRequest {

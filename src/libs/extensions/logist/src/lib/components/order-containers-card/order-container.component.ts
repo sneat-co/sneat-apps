@@ -38,6 +38,10 @@ export class OrderContainerComponent implements OnChanges {
 		number: this.number,
 	});
 
+	protected containerPointKey(_: number, containerPoint: IContainerPoint): string {
+		return `${containerPoint.containerID}-${containerPoint.shippingPointID}`;
+	}
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,

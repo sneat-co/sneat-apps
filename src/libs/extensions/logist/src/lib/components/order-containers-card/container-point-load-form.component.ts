@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, Observable, Subject } from 'rxjs';
 import {
 	FreightPointField,
 	IContainerPoint, IFreightLoad,
@@ -9,6 +10,13 @@ import {
 	ShippingPointTask,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
+
+function debounce<T>(o: Subject<T>): Observable<T> {
+	return o.asObservable().pipe(
+		distinctUntilChanged(),
+		debounceTime(1000),
+	);
+}
 
 @Component({
 	selector: 'sneat-container-point-load-form',
@@ -23,6 +31,12 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	protected freightLoad?: IFreightLoad;
 	protected checked?: boolean;
 
+	private readonly $weight = new BehaviorSubject<number | undefined>(undefined);
+	private readonly weight$ = debounce(this.$weight);
+
+	private readonly $pallets = new BehaviorSubject<number | undefined>(undefined);
+	private readonly pallets$ = debounce(this.$pallets);
+
 	readonly label = () => this.task ? this.task[0].toUpperCase() + this.task.slice(1) : '';
 
 	constructor(
@@ -31,6 +45,12 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		private readonly changeDetector: ChangeDetectorRef,
 	) {
 		console.log('ContainerPointLoadFormComponent.constructor()');
+		this.weight$.subscribe({
+			next: value => this.onDebounced('grossWeightKg', value),
+		});
+		this.pallets$.subscribe({
+			next: value => this.onDebounced('numberOfPallets', value),
+		});
 	}
 
 	does(task?: ShippingPointTask): boolean {
@@ -97,9 +117,50 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 				this.freightLoad = this.containerPoint?.toUnload;
 				break;
 		}
+		this.$weight.next(this.freightLoad?.grossWeightKg);
+		this.$pallets.next(this.freightLoad?.numberOfPallets);
+		console.log('ContainerPointLoadFormComponent.ngOnChanges()', this.task, this.freightLoad);
 	}
 
-	onNumberChanged(name: FreightPointField, event: Event): void {
+	protected onBlur(name: FreightPointField, event: Event): void {
+		// console.log('ContainerPointLoadFormComponent.onBlur()', name, event);
+		// switch (name) {
+		// 	case 'grossWeightKg':
+		// 		this.onDebounced(name, this.$weight.value);
+		// 		break;
+		// 	case 'numberOfPallets':
+		// 		this.onDebounced(name, this.$pallets.value);
+		// 		break;
+		// }
+	}
+
+	protected onNumberChanged(name: FreightPointField, event: Event): void {
+		console.log('ContainerPointLoadFormComponent.onNumberChanged()', name, event);
+		const ce = event as CustomEvent;
+		const value = +ce.detail.value;
+		switch (name) {
+			case 'grossWeightKg':
+				this.$weight.next(value);
+				break;
+			case 'numberOfPallets':
+				this.$pallets.next(value);
+				break;
+		}
+	}
+
+	private onDebounced(name: FreightPointField, value?: number): void {
+		switch (name) {
+			case 'grossWeightKg':
+				if (value === this.freightLoad?.grossWeightKg) {
+					return;
+				}
+				break;
+			case 'numberOfPallets':
+				if (value === this.freightLoad?.numberOfPallets) {
+					return;
+				}
+				break;
+		}
 		const
 			task = this.task,
 			shippingPointID = this.shippingPoint?.id,
@@ -110,7 +171,8 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		if (!task || !containerID || !shippingPointID || !orderID || !teamID || !this.containerPoint) {
 			return;
 		}
-		const ce = event as CustomEvent;
+		console.log('ContainerPointLoadFormComponent.onDebounced()', name, value);
+		this.freightLoad = { ...this.freightLoad, [name]: value };
 		const request: ISetContainerPointNumberRequest = {
 			teamID,
 			orderID,
@@ -118,9 +180,8 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 			containerID,
 			task,
 			name,
-			value: +ce.detail.value,
+			value,
 		};
-		// TODO: should be debounced and/or onBlur event should be used
 		this.orderService.setContainerPointNumber(request).subscribe({
 			next: () => console.log('setContainerPointNumber() success'),
 		});

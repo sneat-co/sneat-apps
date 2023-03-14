@@ -24,6 +24,7 @@
 			<ion-input type="number" min="0" style="text-align: right"
 								 [value]="freightLoad?.numberOfPallets"
 								 (ionChange)="onNumberChanged('numberOfPallets', $event)"
+								 (ionBlur)="onBlur('numberOfPallets', $event)"
 			></ion-input>
 		</ion-item>
 	</ion-col>
@@ -32,15 +33,16 @@
 			<ion-label color="medium">Weight<sup>(kg)</sup></ion-label>
 			<ion-input type="number" min="0" style="text-align: right" [value]="freightLoad?.grossWeightKg"
 								 (ionChange)="onNumberChanged('grossWeightKg', $event)"
+								 (ionBlur)="onBlur('grossWeightKg', $event)"
 			></ion-input>
 		</ion-item>
 	</ion-col>
-<!--	<ion-col size="2" *ngIf="does(task)">-->
-<!--		<ion-item lines="none">-->
-<!--			<ion-label color="medium">M<sup>3</sup></ion-label>-->
-<!--			<ion-input type="number" min="0" style="text-align: right" [value]="freightLoad?.volumeM3"-->
-<!--								 (ionChange)="onNumberChanged('volumeM3', $event)"-->
-<!--			></ion-input>-->
-<!--		</ion-item>-->
-<!--	</ion-col>-->
+	<!--	<ion-col size="2" *ngIf="does(task)">-->
+	<!--		<ion-item lines="none">-->
+	<!--			<ion-label color="medium">M<sup>3</sup></ion-label>-->
+	<!--			<ion-input type="number" min="0" style="text-align: right" [value]="freightLoad?.volumeM3"-->
+	<!--								 (ionChange)="onNumberChanged('volumeM3', $event)"-->
+	<!--			></ion-input>-->
+	<!--		</ion-item>-->
+	<!--	</ion-col>-->
 </ion-row>

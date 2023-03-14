@@ -81,7 +81,7 @@
 				No shipping points have been added for the container yet.
 			</ion-label>
 		</ion-item-divider>
-		<sneat-order-container-point *ngFor="let containerPoint of containerPoints"
+		<sneat-order-container-point *ngFor="let containerPoint of containerPoints; trackBy: containerPointKey"
 													 [team]="this.team"
 													 [order]="order"
 													 [containerPoint]="containerPoint"
