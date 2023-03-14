@@ -12,8 +12,9 @@ export class DispatchersComponent implements OnChanges {
 
 	protected dispatchers?: ReadonlyArray<IOrderCounterparty>;
 
-	constructor(
-	) {
+	protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) => `${c.contactID}&${c.role}`;
+
+	constructor() {
 		console.log('DispatchersComponent.constructor()');
 	}
 

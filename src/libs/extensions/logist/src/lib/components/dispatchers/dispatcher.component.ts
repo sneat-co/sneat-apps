@@ -36,6 +36,8 @@ export class DispatcherComponent implements OnChanges {
 
 	saving = false;
 
+	protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) => `${c.contactID}&${c.role}`;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,

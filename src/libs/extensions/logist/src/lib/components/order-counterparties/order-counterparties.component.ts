@@ -37,6 +37,8 @@ export class OrderCounterpartiesComponent implements OnChanges {
 
 	public counterparties?: ICounterparty[];
 
+	protected readonly index = (i: number) => i;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,

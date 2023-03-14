@@ -1,7 +1,7 @@
 <ion-card *ngIf="dispatchers && !dispatchers.length">
 	<ion-item-divider>No dispatchers have been added yet.</ion-item-divider>
 </ion-card>
-<sneat-order-dispatcher *ngFor="let dispatcher of dispatchers"
+<sneat-order-dispatcher *ngFor="let dispatcher of dispatchers; trackBy: counterpartyKey"
 												[(order)]="order"
 												[counterparty]="dispatcher"
 												(orderChange)="orderChange.emit($event)"

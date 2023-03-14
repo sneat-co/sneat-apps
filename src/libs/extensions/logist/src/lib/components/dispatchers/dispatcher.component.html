@@ -46,7 +46,7 @@
 	</ion-item>
 
 
-	<sneat-dispatch-point *ngFor="let location of locations"
+	<sneat-dispatch-point *ngFor="let location of locations; trackBy: counterpartyKey"
 												[dispatchPoint]="location"
 												[disabled]="deleting"
 												[deleting]="deleting"

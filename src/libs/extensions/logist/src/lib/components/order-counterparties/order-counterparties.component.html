@@ -11,7 +11,7 @@
 <ion-item-divider *ngIf="counterparties && !counterparties.length">
 	<ion-label>No {{plural|lowercase}} have been added yet</ion-label>
 </ion-item-divider>
-<ion-item *ngFor="let counterparty of counterparties" class="sneat-tiny-end-padding">
+<ion-item *ngFor="let counterparty of counterparties; trackBy: index" class="sneat-tiny-end-padding">
 	<ion-label>
 		<ng-container *ngIf="counterparty.parentContactID">
 			{{counterparty.parent?.title || counterparty.parentContactID}} @
