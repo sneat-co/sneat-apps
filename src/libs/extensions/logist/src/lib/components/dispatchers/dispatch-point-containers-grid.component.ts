@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { IGridColumn } from '@sneat/grid';
 import { IContainerPoint, ILogistOrderContext, IOrderCounterparty, IOrderShippingPoint } from '../../dto';
 
