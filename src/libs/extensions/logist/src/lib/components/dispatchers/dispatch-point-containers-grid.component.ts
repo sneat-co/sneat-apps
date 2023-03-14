@@ -95,7 +95,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 		},
 	];
 
-	ngOnChanges(changes: SimpleChanges): void {
+	ngOnChanges(/*changes: SimpleChanges*/): void {
 		const shippingPointID = this.shippingPoint?.id;
 
 		const containerPoints = shippingPointID

@@ -1,4 +1,4 @@
-import { Inject, Injectable, Input } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

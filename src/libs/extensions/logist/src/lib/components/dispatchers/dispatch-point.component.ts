@@ -1,7 +1,6 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { error } from 'ng-packagr/lib/utils/log';
 import {
 	IAddContainerPointsRequest,
 	IContainerPoint,

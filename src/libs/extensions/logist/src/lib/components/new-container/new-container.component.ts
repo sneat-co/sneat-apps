@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, Input, ViewChild } from '@angular/core';
+import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -11,7 +11,7 @@ import { TasksByID } from '../shipping-points-selector';
 	selector: 'sneat-new-container',
 	templateUrl: './new-container.component.html',
 })
-export class NewContainerComponent implements AfterViewInit {
+export class NewContainerComponent {
 
 	@Input() order?: ILogistOrderContext;
 	@Input() team?: ITeamContext;
@@ -40,9 +40,6 @@ export class NewContainerComponent implements AfterViewInit {
 		private readonly modalController: ModalController,
 		private readonly orderService: LogistOrderService,
 	) {
-	}
-
-	ngAfterViewInit(): void {
 	}
 
 	onContainerTypeChanged(): void {

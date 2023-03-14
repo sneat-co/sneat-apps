@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint, ShippingPointTask } from '../../dto';
+import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint } from '../../dto';
 import { LogistOrderService } from '../../services';
 
 @Component({

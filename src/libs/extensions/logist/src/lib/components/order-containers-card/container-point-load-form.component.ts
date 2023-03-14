@@ -87,7 +87,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		console.log('onTaskChecked()', task, checked, this.containerPoint.tasks);
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
+	ngOnChanges(/*changes: SimpleChanges*/): void {
 		this.checked = this.does(this.task);
 		switch (this.task) {
 			case 'load':

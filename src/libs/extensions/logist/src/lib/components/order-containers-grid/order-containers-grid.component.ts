@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, NgZone, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output } from '@angular/core';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RowComponent, RowContextMenuSignature } from 'tabulator-tables';

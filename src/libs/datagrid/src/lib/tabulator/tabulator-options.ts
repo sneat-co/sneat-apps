@@ -1,4 +1,4 @@
-import { ColumnDefinition, Options, RowComponent } from 'tabulator-tables';
+import { ColumnDefinition, Options } from 'tabulator-tables';
 
 export type TabulatorColumn = ColumnDefinition;
 

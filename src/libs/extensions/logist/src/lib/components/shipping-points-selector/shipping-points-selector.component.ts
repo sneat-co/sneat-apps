@@ -16,7 +16,7 @@ export class ShippingPointsSelectorComponent {
 	checkboxChanged(event: Event, shippingPointID: string, task: ShippingPointTask): void {
 		const ce = event as CustomEvent;
 		console.log('checkboxChanged', ce);
-		let tasks = this.tasksByShippingPoint[shippingPointID] || [];
+		const tasks = this.tasksByShippingPoint[shippingPointID] || [];
 		const checked = !!ce.detail.checked;
 		if (checked) {
 			if (!tasks.includes(task)) {
