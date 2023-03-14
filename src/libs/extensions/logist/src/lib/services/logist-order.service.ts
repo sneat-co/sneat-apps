@@ -25,8 +25,8 @@ import {
 	IUpdateContainerPointRequest,
 	IContainerPointsRequest,
 	ISetContainerPointTaskRequest,
-	ISetContainerPointNumberRequest,
-	IAddContainerPointsRequest,
+	ISetContainerPointFreightFieldsRequest,
+	IAddContainerPointsRequest, ISetContainerPointDatesRequest,
 } from '../dto';
 import { logistTeamModuleSubCollection } from './logist-team.service';
 import { IOrdersFilter } from '../dto/orders-filter';
@@ -177,8 +177,12 @@ export class LogistOrderService {
 		return this.sneatApiService.post('logist/order/set_container_point_task', request);
 	}
 
-	setContainerPointNumber(request: ISetContainerPointNumberRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/set_container_point_number', request);
+	setContainerPointFreightFields(request: ISetContainerPointFreightFieldsRequest): Observable<void> {
+		return this.sneatApiService.post('logist/order/set_container_point_freight_fields', request);
+	}
+
+	setContainerPointDates(request: ISetContainerPointDatesRequest): Observable<void> {
+		return this.sneatApiService.post('logist/order/set_container_point_dates', request);
 	}
 
 	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {

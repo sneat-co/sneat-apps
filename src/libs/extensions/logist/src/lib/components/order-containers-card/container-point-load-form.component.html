@@ -7,7 +7,7 @@
 				<span *ngIf="task === 'load'">Departs</span>
 				<span *ngIf="task === 'unload'">Arrives</span>
 			</ion-label>
-			<ion-input type="date"></ion-input>
+			<ion-input type="date" [ngModel]="unchangedDate" (ionChange)="onInputChanged(dateFieldName, $event)"></ion-input>
 		</ion-item>
 	</ion-col>
 	<ion-col size="3">
@@ -23,7 +23,7 @@
 			<ion-label color="medium">Pallets</ion-label>
 			<ion-input type="number" min="0" style="text-align: right"
 								 [value]="freightLoad?.numberOfPallets"
-								 (ionChange)="onNumberChanged('numberOfPallets', $event)"
+								 (ionChange)="onInputChanged('numberOfPallets', $event)"
 								 (ionBlur)="onBlur('numberOfPallets', $event)"
 			></ion-input>
 		</ion-item>
@@ -32,7 +32,7 @@
 		<ion-item lines="none">
 			<ion-label color="medium">Weight<sup>(kg)</sup></ion-label>
 			<ion-input type="number" min="0" style="text-align: right" [value]="freightLoad?.grossWeightKg"
-								 (ionChange)="onNumberChanged('grossWeightKg', $event)"
+								 (ionChange)="onInputChanged('grossWeightKg', $event)"
 								 (ionBlur)="onBlur('grossWeightKg', $event)"
 			></ion-input>
 		</ion-item>

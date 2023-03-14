@@ -1,12 +1,13 @@
-import { ChangeDetectorRef, Component, Inject, Input, OnChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, Observable, Subject } from 'rxjs';
 import {
-	FreightPointField,
+	FreightPointField, FreightPointIntField,
 	IContainerPoint, IFreightLoad,
 	ILogistOrderContext,
-	IOrderShippingPoint, ISetContainerPointNumberRequest,
-	ISetContainerPointTaskRequest,
+	IOrderShippingPoint, ISetContainerPointDatesRequest, ISetContainerPointFreightFieldsRequest,
+	ISetContainerPointTaskRequest, ShippingPointDateField,
 	ShippingPointTask,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
@@ -31,11 +32,17 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	protected freightLoad?: IFreightLoad;
 	protected checked?: boolean;
 
+	private readonly $date = new BehaviorSubject<string | undefined>(undefined);
+	private readonly date$ = debounce(this.$date);
+
 	private readonly $weight = new BehaviorSubject<number | undefined>(undefined);
 	private readonly weight$ = debounce(this.$weight);
 
 	private readonly $pallets = new BehaviorSubject<number | undefined>(undefined);
 	private readonly pallets$ = debounce(this.$pallets);
+
+	protected dateFieldName: ShippingPointDateField = undefined as unknown as ShippingPointDateField;
+	protected unchangedDate?: string;
 
 	readonly label = () => this.task ? this.task[0].toUpperCase() + this.task.slice(1) : '';
 
@@ -45,12 +52,9 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		private readonly changeDetector: ChangeDetectorRef,
 	) {
 		console.log('ContainerPointLoadFormComponent.constructor()');
-		this.weight$.subscribe({
-			next: value => this.onDebounced('grossWeightKg', value),
-		});
-		this.pallets$.subscribe({
-			next: value => this.onDebounced('numberOfPallets', value),
-		});
+		this.date$.subscribe(this.onDateDebounced);
+		this.weight$.subscribe(v => this.onNumberDebounced('grossWeightKg', v));
+		this.pallets$.subscribe(v => this.onNumberDebounced('numberOfPallets', v));
 	}
 
 	does(task?: ShippingPointTask): boolean {
@@ -107,8 +111,12 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		console.log('onTaskChecked()', task, checked, this.containerPoint.tasks);
 	}
 
-	ngOnChanges(/*changes: SimpleChanges*/): void {
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['task']) {
+			this.dateFieldName = this.task === 'load' ? 'departsDate' : 'arrivesDate';
+		}
 		this.checked = this.does(this.task);
+		this.unchangedDate = this.containerPoint?.[this.dateFieldName];
 		switch (this.task) {
 			case 'load':
 				this.freightLoad = this.containerPoint?.toLoad;
@@ -134,33 +142,50 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		// }
 	}
 
-	protected onNumberChanged(name: FreightPointField, event: Event): void {
+	protected onInputChanged(name: FreightPointField, event: Event): void {
 		console.log('ContainerPointLoadFormComponent.onNumberChanged()', name, event);
 		const ce = event as CustomEvent;
-		const value = +ce.detail.value;
 		switch (name) {
 			case 'grossWeightKg':
-				this.$weight.next(value);
+				this.$weight.next(+ce.detail.value);
 				break;
 			case 'numberOfPallets':
-				this.$pallets.next(value);
+				this.$pallets.next(+ce.detail.value);
+				break;
+			case 'arrivesDate':
+			case 'departsDate':
+				this.$date.next(ce.detail.value as string);
 				break;
 		}
 	}
 
-	private onDebounced(name: FreightPointField, value?: number): void {
+	private onNumberDebounced(name: FreightPointIntField, number?: number): void {
 		switch (name) {
 			case 'grossWeightKg':
-				if (value === this.freightLoad?.grossWeightKg) {
+				if (number === this.freightLoad?.grossWeightKg) {
 					return;
 				}
+				this.setNumberField(name, number);
 				break;
 			case 'numberOfPallets':
-				if (value === this.freightLoad?.numberOfPallets) {
+				if (number === this.freightLoad?.numberOfPallets) {
 					return;
 				}
+				this.setNumberField(name, number);
 				break;
 		}
+	}
+
+	private readonly onDateDebounced = (date?: string): void => {
+		if (date === this.unchangedDate) {
+			return;
+		}
+		this.setDateField(date);
+	};
+
+	private setDateField(date?: string): void {
+		const name = this.dateFieldName;
+		console.log('ContainerPointLoadFormComponent.setDateField()', name, date);
 		const
 			task = this.task,
 			shippingPointID = this.shippingPoint?.id,
@@ -171,19 +196,45 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		if (!task || !containerID || !shippingPointID || !orderID || !teamID || !this.containerPoint) {
 			return;
 		}
-		console.log('ContainerPointLoadFormComponent.onDebounced()', name, value);
-		this.freightLoad = { ...this.freightLoad, [name]: value };
-		const request: ISetContainerPointNumberRequest = {
+		this.containerPoint = { ...this.containerPoint, [name]: date };
+		const request: ISetContainerPointDatesRequest = {
 			teamID,
 			orderID,
 			shippingPointID,
 			containerID,
 			task,
-			name,
-			value,
+			dates: { [name]: date },
 		};
-		this.orderService.setContainerPointNumber(request).subscribe({
+		this.orderService.setContainerPointDates(request).subscribe({
+			next: () => console.log('setContainerPointDate() success'),
+			error: this.errorLogger.logErrorHandler(`Failed to set container point date field ${name}`),
+		});
+	}
+
+	private setNumberField(name: FreightPointIntField, number?: number): void {
+		console.log('ContainerPointLoadFormComponent.setNumberField()', name, number);
+		const
+			task = this.task,
+			shippingPointID = this.shippingPoint?.id,
+			containerID = this.containerPoint?.containerID,
+			orderID = this.order?.id,
+			teamID = this.order?.team?.id;
+
+		if (!task || !containerID || !shippingPointID || !orderID || !teamID || !this.containerPoint) {
+			return;
+		}
+		this.freightLoad = { ...this.freightLoad, [name]: number };
+		const request: ISetContainerPointFreightFieldsRequest = {
+			teamID,
+			orderID,
+			shippingPointID,
+			containerID,
+			task,
+			integers: { [name]: number },
+		};
+		this.orderService.setContainerPointFreightFields(excludeEmpty(request)).subscribe({
 			next: () => console.log('setContainerPointNumber() success'),
+			error: this.errorLogger.logErrorHandler(`Failed to set container point freight field ${name}`),
 		});
 	}
 }
