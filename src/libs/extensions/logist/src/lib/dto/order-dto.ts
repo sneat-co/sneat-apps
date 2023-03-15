@@ -272,6 +272,7 @@ export interface IContainerSegmentKey extends IOrderSegmentKey {
 
 export interface INewSegmentContainer {
 	readonly id: string;
+	readonly tasks: readonly ShippingPointTask[];
 	readonly toLoad?: IFreightLoad;
 	readonly toUnload?: IFreightLoad;
 }

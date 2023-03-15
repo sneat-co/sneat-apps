@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { first } from 'rxjs';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
@@ -35,6 +35,7 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		private readonly newShippingPointService: NewShippingPointService,
 		private readonly modalController: ModalController,
 		private readonly popoverController: PopoverController,
+		private readonly toastController: ToastController,
 	) {
 		super('LogistOrderPageComponent', route, teamParams, orderService);
 		try {
@@ -52,7 +53,12 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		const text = this.order?.id;
 		if (text) {
 			navigator.clipboard.writeText(text)
-				.then(() => alert('Order number copied to clipboard: ' + text))
+				.then(() => {
+					this.toastController.create({
+						message: 'Order number copied to clipboard: ' + text,
+						duration: 1500,
+					}).then(toast => toast.present());
+				})
 				.catch(err => alert('Error copying order number to clipboard: ' + err));
 		}
 	}

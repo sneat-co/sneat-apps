@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { LogistOrderContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -24,6 +24,7 @@ export class OrderCardComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
 		private readonly orderService: LogistOrderService,
+		private readonly toastController: ToastController,
 	) {
 	}
 
@@ -33,7 +34,12 @@ export class OrderCardComponent {
 		const text = this.order?.id;
 		if (text) {
 			navigator.clipboard.writeText(text)
-				.then(() => alert('Order number copied to clipboard: ' + text))
+				.then(() => {
+					this.toastController.create({
+						message: 'Order number copied to clipboard: ' + text,
+						duration: 1500,
+					}).then(toast => toast.present());
+				})
 				.catch(err => alert('Error copying order number to clipboard: ' + err));
 		}
 	}

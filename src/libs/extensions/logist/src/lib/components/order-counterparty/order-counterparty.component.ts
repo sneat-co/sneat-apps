@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { LogistOrderContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -19,7 +20,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() readonly = false;
 	@Input() useColumns = true;
 	@Input() team?: ITeamContext;
-	@Input() refNumLabel = 'Ref #'
+	@Input() refNumLabel = 'Ref #';
 
 	@Input() label?: string = undefined;
 
@@ -45,6 +46,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
+		private readonly toastController: ToastController,
 	) {
 	}
 
@@ -151,7 +153,12 @@ export class OrderCounterpartyComponent implements OnChanges {
 		const text = this.refNumber;
 		if (text) {
 			navigator.clipboard.writeText(text)
-				.then(() => alert('Order number copied to clipboard: ' + text))
+				.then(() => {
+					this.toastController.create({
+						message: 'Reference number copied to clipboard: ' + text,
+						duration: 1500,
+					}).then(toast => toast.present());
+				})
 				.catch(err => alert('Error copying order number to clipboard: ' + err));
 		}
 	}

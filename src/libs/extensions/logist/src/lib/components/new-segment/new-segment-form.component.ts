@@ -158,6 +158,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			teamID: this.order.team?.id,
 			containers: this.selectedContainers.map(c => ({
 				id: c.id,
+				tasks: c.tasks || [],
 			})),
 			from: excludeEmpty({
 				counterparty: {
