@@ -1,5 +1,5 @@
 <ion-card>
-	<ion-item color="light" class="sneat-no-end-padding">
+	<ion-item-divider color="light" class="sneat-no-end-padding">
 		<ion-label [class.deleting-list-item]="deleting">
 			<ion-text color="medium">At:</ion-text>
 			{{dispatchPoint?.title}} -
@@ -7,7 +7,7 @@
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="form.dirty" (click)="savePoint($event)">
-				<ion-icon name="save-outline"></ion-icon>
+				<ion-icon name="save-outline" slot="start"></ion-icon>
 				<ion-label>Save</ion-label>
 			</ion-button>
 			<ion-button color="medium" *ngIf="form.dirty" (click)="form.reset()">
@@ -18,10 +18,11 @@
 									[disabled]="disabled || deleting"
 									(click)="deletePoint()"
 			>
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="trash-outline" slot="end"></ion-icon>
+				<ion-label>Delete</ion-label>
 			</ion-button>
 		</ion-buttons>
-	</ion-item>
+	</ion-item-divider>
 
 	<ion-grid class="ion-grid-layout">
 		<ion-row>

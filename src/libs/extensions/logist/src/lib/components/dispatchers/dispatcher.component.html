@@ -1,5 +1,5 @@
 <ion-card>
-	<ion-item color="light" class="sneat-no-end-padding">
+	<ion-item-divider color="light" class="sneat-no-end-padding">
 		<ion-label style="font-weight: bold" [class.deleting-list-item]="deleting" slot="start">
 			{{counterparty?.countryID|countryFlag}}
 			{{counterparty?.title}}
@@ -12,8 +12,9 @@
 									[disabled]="deleting"
 									title="Remove from the order counterparty & related container points"
 									(click)="deleteDispatcher()">
-				<ion-icon name="close-outline" *ngIf="!deleting"></ion-icon>
+				<ion-icon name="trash-outline" slot="end" *ngIf="!deleting"></ion-icon>
 				<ion-label *ngIf="deleting">deleting...</ion-label>
+				<ion-label *ngIf="!deleting">Delete</ion-label>
 				<ion-spinner name="lines-small" slot="start" *ngIf="deleting"></ion-spinner>
 			</ion-button>
 			<ion-button *ngIf="form.dirty" (click)="saveChanges()">
@@ -27,7 +28,7 @@
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>
-	</ion-item>
+	</ion-item-divider>
 
 <!--	<ion-item>-->
 <!--		<ion-label color="medium" position="floating">Special instructions</ion-label>-->
