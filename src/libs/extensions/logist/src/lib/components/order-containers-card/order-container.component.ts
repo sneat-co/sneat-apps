@@ -12,6 +12,7 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { NewSegmentService } from '../new-segment/new-segment.service';
+import { INewShippingPointParams, NewShippingPointService } from '../new-shipping-point/new-shipping-point.service';
 import { ShippingPointsSelectorService } from '../shipping-points-selector/shipping-points-selector.service';
 
 @Component({
@@ -47,6 +48,7 @@ export class OrderContainerComponent implements OnChanges {
 		private readonly orderService: LogistOrderService,
 		private readonly newSegmentService: NewSegmentService,
 		private readonly shippingPointsSelectorService: ShippingPointsSelectorService,
+		private readonly newShippingPointService: NewShippingPointService,
 	) {
 	}
 
@@ -153,9 +155,24 @@ export class OrderContainerComponent implements OnChanges {
 		if (!order || !container) {
 			return;
 		}
-		this.shippingPointsSelectorService.selectShippingPointsInModal(order, container)
-			.then(points => console.log('points', points))
-			.catch(this.errorLogger.logErrorHandler('Failed to select shipping points'));
+		if (order.dto?.shippingPoints?.length === 0) {
+			this.shippingPointsSelectorService.selectShippingPointsInModal(order, container)
+				.then(points => console.log('points', points))
+				.catch(this.errorLogger.logErrorHandler('Failed to select shipping points'));
+		} else {
+			const props: INewShippingPointParams = {
+				order: order,
+				container: this.container,
+			};
+			this.newShippingPointService.openNewShippingPointDialog(props)
+				.then(modal => {
+					// this.modal = modal;
+					// modal.onDidDismiss().then(() => {
+					// 	this.modal = undefined;
+					// });
+				})
+				.catch(this.errorLogger.logErrorHandler('Failed to open new shipping point form'));
+		}
 	}
 
 	async addSegment(event: Event): Promise<void> {

@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ILogistOrderContext } from '../../dto';
+import { ILogistOrderContext, IOrderContainer } from '../../dto';
 
 @Component({
 	selector: 'sneat-new-shipping-point',
@@ -9,6 +9,7 @@ import { ILogistOrderContext } from '../../dto';
 })
 export class NewShippingPointDialogComponent {
 	@Input() order?: ILogistOrderContext;
+	@Input() container?: IOrderContainer;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

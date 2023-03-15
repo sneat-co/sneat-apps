@@ -291,9 +291,9 @@ export interface IAddSegmentsRequest extends ILogistOrderRequest {
 	readonly containers: INewSegmentContainer[];
 }
 
-export interface IUpdateShippingPointRequest extends ILogistOrderRequest {
-	readonly shippingPointID: string;
-	readonly setNumbers: { [field: string]: number };
+export interface IUpdateShippingPointRequest extends IOrderShippingPointRequest {
+	readonly setNumbers?: { [field: string]: number };
+	readonly setStrings?: { [key in ShippingPointStringField]: (string | undefined) };
 }
 
 
@@ -317,6 +317,7 @@ export interface ISetContainerPointTaskRequest extends IContainerPointRequest {
 }
 
 export type ShippingPointDateField = 'arrivesDate' | 'departsDate';
+export type ShippingPointStringField = 'notes';
 export type FreightPointIntField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3';
 export type FreightPointField = FreightPointIntField | ShippingPointDateField;
 

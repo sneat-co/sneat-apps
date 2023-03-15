@@ -26,7 +26,7 @@ import {
 	IContainerPointsRequest,
 	ISetContainerPointTaskRequest,
 	ISetContainerPointFreightFieldsRequest,
-	IAddContainerPointsRequest, ISetContainerPointDatesRequest,
+	IAddContainerPointsRequest, ISetContainerPointDatesRequest, IUpdateShippingPointRequest,
 } from '../dto';
 import { logistTeamModuleSubCollection } from './logist-team.service';
 import { IOrdersFilter } from '../dto/orders-filter';
@@ -151,6 +151,10 @@ export class LogistOrderService {
 			.pipe(
 				map(response => contextFromDto(team, request.orderID, response.order)),
 			);
+	}
+
+	updateShippingPoint(request: IUpdateShippingPointRequest): Observable<void> {
+		return this.sneatApiService.post('logist/order/update_shipping_point', request);
 	}
 
 	addContainers(request: IAddContainersRequest): Observable<void> {

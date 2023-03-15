@@ -8,7 +8,7 @@ import {
 	ILogistOrderContext, IOrderContainer,
 	IOrderCounterparty,
 	IOrderShippingPoint,
-	IOrderShippingPointRequest,
+	IOrderShippingPointRequest, IUpdateShippingPointRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { OrderContainersSelectorService } from '../order-containers-selector/order-containers-selector.service';
@@ -93,6 +93,25 @@ export class DispatchPointComponent implements OnChanges {
 				.subscribe({
 					error: this.errorLogger.logErrorHandler('Failed to add container points'),
 				});
+		});
+	}
+
+	savePoint(event: Event): void {
+		event.stopPropagation();
+		const
+			order = this.order,
+			shippingPoint = this.shippingPoint;
+		if (!order || !shippingPoint) {
+			return;
+		}
+		const request: IUpdateShippingPointRequest = {
+			teamID: order.team.id,
+			orderID: order.id,
+			shippingPointID: shippingPoint.id,
+			setStrings: { notes: this.notes.value?.trim() || '' },
+		};
+		this.orderService.updateShippingPoint(request).subscribe({
+			error: this.errorLogger.logErrorHandler('Failed to update shipping point'),
 		});
 	}
 

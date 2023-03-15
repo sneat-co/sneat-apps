@@ -6,7 +6,7 @@
 			<ion-text color="medium">{{shippingPoint?.status}}</ion-text>
 		</ion-label>
 		<ion-buttons slot="end">
-			<ion-button *ngIf="form.dirty">
+			<ion-button *ngIf="form.dirty" (click)="savePoint($event)">
 				<ion-icon name="save-outline"></ion-icon>
 				<ion-label>Save</ion-label>
 			</ion-button>

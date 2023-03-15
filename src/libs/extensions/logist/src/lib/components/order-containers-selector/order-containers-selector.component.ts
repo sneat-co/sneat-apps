@@ -9,6 +9,7 @@ import { IContainer } from './condainer-interface';
 })
 export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 	@Input() order?: ILogistOrderContext;
+	@Input() container?: IContainer;
 	@Input() disabled?: boolean;
 
 	containers?: IContainer[];
@@ -47,6 +48,10 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 	}
 
 	private setContainers(): void {
+		if (this.container) {
+			this.containers = [this.container];
+			return;
+		}
 		this.containers = this.order?.dto?.containers?.map(c => ({
 			id: c.id,
 			type: c.type,

@@ -22,6 +22,7 @@
 <sneat-order-containers-selector *ngIf="contact"
 																 [disabled]="creating"
 																 [order]="order"
+																 [container]="container"
 																 (selectedContainerIDsChange)="onSelectedContainerIDsChanged($event)"
 ></sneat-order-containers-selector>
 

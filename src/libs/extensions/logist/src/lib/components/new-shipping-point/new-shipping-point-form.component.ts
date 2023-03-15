@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
-import { IAddOrderShippingPointRequest, ILogistOrderContext } from '../../dto';
+import { IAddOrderShippingPointRequest, ILogistOrderContext, IOrderContainer } from '../../dto';
 import { LogistOrderService } from '../../services';
 
 @Component({
@@ -11,6 +11,7 @@ import { LogistOrderService } from '../../services';
 export class NewShippingPointFormComponent {
 
 	@Input() order?: ILogistOrderContext;
+	@Input() container?: IOrderContainer;
 	@Output() readonly orderCreated = new EventEmitter<ILogistOrderContext>();
 	contact?: IContactContext;
 
