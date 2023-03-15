@@ -27,11 +27,11 @@ export class DispatcherComponent implements OnChanges {
 	deleting = false;
 
 	refNumber = new FormControl<string>('');
-	specialInstructions = new FormControl<string>('');
+	// specialInstructions = new FormControl<string>('');
 
 	form = new FormGroup({
 		refNumber: this.refNumber,
-		specInstructions: this.specialInstructions,
+		// specInstructions: this.specialInstructions,
 	});
 
 	saving = false;
@@ -61,7 +61,7 @@ export class DispatcherComponent implements OnChanges {
 		this.locations = this.order?.dto?.counterparties?.filter(l => l.parentContactID === contactID);
 		if (counterpartyChanged && !this.refNumber.dirty) {
 			this.refNumber.setValue(this.counterparty?.refNumber || '');
-			this.specialInstructions.setValue(this.counterparty?.specialInstructions || '');
+			// this.specialInstructions.setValue(this.counterparty?.specialInstructions || '');
 		}
 	}
 
@@ -147,7 +147,7 @@ export class DispatcherComponent implements OnChanges {
 					contactID: this.counterparty.contactID,
 					role: this.counterparty.role,
 					refNumber: this.refNumber.value || undefined,
-					specialInstructions: this.specialInstructions.value || undefined,
+					// specialInstructions: this.specialInstructions.value || undefined,
 				}),
 			],
 		};

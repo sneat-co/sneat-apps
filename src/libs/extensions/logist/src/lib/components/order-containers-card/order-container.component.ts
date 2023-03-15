@@ -155,7 +155,7 @@ export class OrderContainerComponent implements OnChanges {
 		if (!order || !container) {
 			return;
 		}
-		if (order.dto?.shippingPoints?.length === 0) {
+		if (order.dto?.shippingPoints?.length) {
 			this.shippingPointsSelectorService.selectShippingPointsInModal(order, container)
 				.then(points => console.log('points', points))
 				.catch(this.errorLogger.logErrorHandler('Failed to select shipping points'));

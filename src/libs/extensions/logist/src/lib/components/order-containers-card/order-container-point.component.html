@@ -12,30 +12,53 @@
 		<!--			</ion-select>-->
 		<!--		</ion-col>-->
 		<ion-col>
-			<ion-item color="light">
+			<ion-item-divider color="light">
 				<ion-label><b>{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</b></ion-label>
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="delete($event)">
-						<ion-icon name="close-outline"></ion-icon>
+						<ion-icon name="trash-outline" slot="end"></ion-icon>
+						<ion-label>Delete</ion-label>
 					</ion-button>
 				</ion-buttons>
-			</ion-item>
+			</ion-item-divider>
 		</ion-col>
-<!--		<ion-col>-->
-<!--			<ion-item color="light">-->
-<!--				<ion-label color="medium">Arrives</ion-label>-->
-<!--				<ion-input type="date"></ion-input>-->
-<!--			</ion-item>-->
-<!--		</ion-col>-->
-<!--		<ion-col>-->
-<!--			<ion-item color="light">-->
-<!--				<ion-label color="medium">Departs</ion-label>-->
-<!--				<ion-input type="date" [value]="containerPoint?.departsDate"></ion-input>-->
-<!--			</ion-item>-->
-<!--		</ion-col>-->
+		<!--		<ion-col>-->
+		<!--			<ion-item color="light">-->
+		<!--				<ion-label color="medium">Arrives</ion-label>-->
+		<!--				<ion-input type="date"></ion-input>-->
+		<!--			</ion-item>-->
+		<!--		</ion-col>-->
+		<!--		<ion-col>-->
+		<!--			<ion-item color="light">-->
+		<!--				<ion-label color="medium">Departs</ion-label>-->
+		<!--				<ion-input type="date" [value]="containerPoint?.departsDate"></ion-input>-->
+		<!--			</ion-item>-->
+		<!--		</ion-col>-->
 	</ion-row>
-	<sneat-container-point-load-form [order]="order" [task]="'unload'" [shippingPoint]="shippingPoint" [containerPoint]="containerPoint"
+	<sneat-container-point-load-form [order]="order" [task]="'unload'" [shippingPoint]="shippingPoint"
+																	 [containerPoint]="containerPoint"
 	></sneat-container-point-load-form>
-	<sneat-container-point-load-form [order]="order" [task]="'load'" [shippingPoint]="shippingPoint" [containerPoint]="containerPoint"
+	<sneat-container-point-load-form [order]="order" [task]="'load'" [shippingPoint]="shippingPoint"
+																	 [containerPoint]="containerPoint"
 	></sneat-container-point-load-form>
+	<ion-item-divider>
+		<ion-label>Special instructions</ion-label>
+		<ion-buttons slot="end" *ngIf="specialInstructions.dirty">
+			<ion-button *ngIf="!saving" (click)="cancelChanges()" [disabled]="saving">
+				<ion-icon name="close-outline" slot="start"></ion-icon>
+				<ion-label>Cancel</ion-label>
+			</ion-button>
+			<ion-button color="primary" fill="solid" (click)="saveSpecialInstructions()" [disabled]="saving">
+				<ion-icon *ngIf="!saving" slot="start" name="save-outline"></ion-icon>
+				<ion-spinner *ngIf="saving" slot="start" name="lines-small"></ion-spinner>
+				<ion-label *ngIf="!saving">Save</ion-label>
+				<ion-label *ngIf="saving">Saving...</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ion-item>
+		<ion-textarea [autoGrow]="true" [formControl]="specialInstructions"
+									(ionChange)="onSpecialInstructionsChanged()"
+		></ion-textarea>
+	</ion-item>
 </ion-grid>

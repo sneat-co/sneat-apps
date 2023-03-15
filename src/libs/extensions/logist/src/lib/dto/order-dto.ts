@@ -102,6 +102,7 @@ export interface IContainerPoint extends IShippingPointBase {
 	readonly shippingPointID: string;
 	readonly arrivesDate?: string;
 	readonly departsDate?: string;
+	readonly specialInstructions?: string;
 }
 
 export interface IOrderContainer extends IOrderContainerBase {
@@ -321,6 +322,8 @@ export type ShippingPointStringField = 'notes';
 export type FreightPointIntField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3';
 export type FreightPointField = FreightPointIntField | ShippingPointDateField;
 
+export type ContainerPointStringField = 'specialInstructions';
+
 export interface ISetContainerPointFreightFieldsRequest extends IContainerPointRequest {
 	readonly task: ShippingPointTask;
 	readonly integers: Partial<{ [key in FreightPointIntField]: (number | undefined) }>;
@@ -329,6 +332,10 @@ export interface ISetContainerPointFreightFieldsRequest extends IContainerPointR
 export interface ISetContainerPointDatesRequest extends IContainerPointRequest {
 	readonly task: ShippingPointTask;
 	readonly dates: Partial<{ [key in ShippingPointDateField]: (string | undefined) }>;
+}
+
+export interface ISetContainerPointFieldsRequest extends IContainerPointRequest {
+	readonly setStrings: Partial<{ [key in ContainerPointStringField]: string }>;
 }
 
 export interface IOrderShippingPointRequest extends ILogistOrderRequest {

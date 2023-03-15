@@ -4,8 +4,26 @@
 	</ion-item-divider>
 </ion-card>
 
-<sneat-order-containers-grid [order]="order"
-														 (containerSelected)="onContainerSelected($event)"></sneat-order-containers-grid>
+<ion-grid class="ion-grid-layout">
+	<ion-row>
+		<ion-col [size]="selectedContainer ? 3 : 12">
+			<sneat-order-containers-grid [order]="order"
+																	 (containerSelected)="onContainerSelected($event)"
+			></sneat-order-containers-grid>
+		</ion-col>
+		<ion-col *ngIf="selectedContainer" size="9">
+			<ion-card>
+				<sneat-order-container
+					[team]="team"
+					[order]="order"
+					[container]="selectedContainer"
+					[i]="indexOfContainer(selectedContainer)"
+				></sneat-order-container>
+			</ion-card>
+		</ion-col>
+	</ion-row>
+</ion-grid>
+
 
 <!--<ion-card *ngFor="let container of containers; let i = index; trackBy:id">-->
 <!--	<sneat-order-container-form-->
@@ -15,12 +33,3 @@
 <!--		[i]="i"-->
 <!--	></sneat-order-container-form>-->
 <!--</ion-card>-->
-
-<ion-card *ngIf="selectedContainer">
-	<sneat-order-container
-		[team]="team"
-		[order]="order"
-		[container]="selectedContainer"
-		[i]="indexOfContainer(selectedContainer)"
-	></sneat-order-container>
-</ion-card>

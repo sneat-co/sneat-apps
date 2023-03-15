@@ -62,14 +62,14 @@ export class OrderContainersGridComponent implements OnChanges {
 			title: '#',
 			hozAlign: 'right',
 			headerHozAlign: 'right',
-			width: 50,
+			width: 20,
 			widthShrink: 2,
 		},
 		{
 			field: 'type',
 			dbType: 'string',
 			title: 'Size',
-			width: 100,
+			width: 60,
 			widthShrink: 2,
 		},
 		{
@@ -77,6 +77,7 @@ export class OrderContainersGridComponent implements OnChanges {
 			dbType: 'string',
 			title: 'Serial number',
 		},
+		/*
 		{
 			field: 'loadPointsCount',
 			dbType: 'number',
@@ -119,6 +120,7 @@ export class OrderContainersGridComponent implements OnChanges {
 			hozAlign: 'right',
 			headerHozAlign: 'right',
 		},
+		 */
 	];
 
 	protected selectedContainer?: IOrderContainer;

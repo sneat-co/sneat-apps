@@ -1,7 +1,8 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint } from '../../dto';
+import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint, ISetContainerPointFieldsRequest } from '../../dto';
 import { LogistOrderService } from '../../services';
 
 @Component({
@@ -16,17 +17,65 @@ export class OrderContainerPointComponent implements OnChanges {
 
 	protected shippingPoint?: IOrderShippingPoint;
 
-	deleting = false;
+	protected readonly specialInstructions = new FormControl<string>('');
+
+	protected deleting = false;
+	protected saving = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
+		private readonly changeDetector: ChangeDetectorRef,
 	) {
+	}
+
+	cancelChanges(): void {
+		this.specialInstructions.setValue(this.containerPoint?.specialInstructions || '');
+		this.specialInstructions.markAsPristine();
+	}
+
+	onSpecialInstructionsChanged(): void {
+		if (this.specialInstructions.value === (this.containerPoint?.specialInstructions || '')) {
+			this.specialInstructions.markAsPristine();
+		}
+	}
+
+	saveSpecialInstructions(): void {
+		const teamID = this.team?.id,
+			orderID = this.order?.id,
+			containerID = this.containerPoint?.containerID,
+			shippingPointID = this.containerPoint?.shippingPointID;
+		if (!teamID || !orderID || !containerID || !shippingPointID) {
+			return;
+		}
+		const request: ISetContainerPointFieldsRequest = {
+			teamID, orderID, containerID, shippingPointID,
+			setStrings: { specialInstructions: this.specialInstructions.value || '' },
+		};
+		this.saving = true;
+		const complete = () => {
+			this.saving = false;
+			this.changeDetector.markForCheck();
+		};
+		this.orderService.setContainerPointFields(request).subscribe({
+			next: () => {
+				this.specialInstructions.markAsPristine();
+				complete();
+			},
+			error: err => {
+				this.errorLogger.logError(err, 'Failed to save special instructions');
+				complete();
+			},
+			// complete, // TODO: does not work for some reason - needs to be fixed
+		});
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerPoint'] || changes['order']) {
 			this.shippingPoint = this.containerPoint?.shippingPointID ? this.order?.dto?.shippingPoints?.find(sp => sp.id === this.containerPoint?.shippingPointID) : undefined;
+			if (this.containerPoint && !this.specialInstructions.dirty) {
+				this.specialInstructions.setValue(this.containerPoint.specialInstructions || '');
+			}
 		}
 	}
 

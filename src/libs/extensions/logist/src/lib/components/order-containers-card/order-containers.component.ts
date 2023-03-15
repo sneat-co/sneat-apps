@@ -37,6 +37,17 @@ export class OrderContainersComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
 			this.containers = this.order?.dto?.containers || [];
+			if (this.containers?.length) {
+				const selectedContainer = this.selectedContainer;
+				if (selectedContainer) {
+					this.selectedContainer = this.containers?.find(c => c.id === selectedContainer.id);
+				}
+				if (!selectedContainer) {
+					this.selectedContainer = this.containers?.[0];
+				}
+			} else {
+				this.selectedContainer = undefined;
+			}
 		}
 	}
 
@@ -50,10 +61,6 @@ export class OrderContainersComponent implements OnChanges {
 	// 	});
 	// 	await modal.present();
 	// }
-
-	deleteContainer(event: Event, id: string) {
-		this.containers = this.containers?.filter(c => c.id !== id) || [];
-	}
 
 	onContainerSelected(container: IOrderContainer) {
 		console.log('OrderContainersComponent.onContainerSelected():', container);
