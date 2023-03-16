@@ -163,7 +163,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			from: excludeEmpty({
 				counterparty: {
 					contactID: this.fromContact.id,
-					role: this.from === 'port' ? 'port_from' : 'dispatch-point',
+					role: this.from === 'port' ? 'port_from' : 'dispatch_point',
 				},
 				date: this.fromDate,
 				refNumber: this.fromRefNumber,
@@ -171,7 +171,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			to: excludeEmpty({
 				counterparty: {
 					contactID: this.toContact.id,
-					role: this.to === 'port' ? 'port_from' : 'dispatch-point',
+					role: this.to === 'port' ? 'port_from' : 'dispatch_point',
 				},
 				date: this.toDate,
 				refNumber: this.toRefNumber,

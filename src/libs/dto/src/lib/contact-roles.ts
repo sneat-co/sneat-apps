@@ -23,7 +23,7 @@ export type LogistOrderContactRole =
 	| ContactRoleLogistSubContact
 	| 'consignee'
 	| 'notify'
-	| 'dispatch-point'
+	| 'dispatch_point'
 	| 'agent'
 	| 'buyer'
 	| 'courier'

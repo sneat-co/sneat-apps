@@ -30,7 +30,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	@Input() singular = 'singular TO BE SET';
 	@Input() parentRole?: 'dispatcher' | 'what else?' = 'dispatcher';
 	@Input() contactRole: LogistOrderContactRole = 'location';
-	@Input() counterpartyRole: CounterpartyRole = 'dispatch-point';
+	@Input() counterpartyRole: CounterpartyRole = 'dispatch_point';
 	@Input() contactType?: ContactType;
 
 	readonly deleting: IOrderCounterpartyRef[] = [];
