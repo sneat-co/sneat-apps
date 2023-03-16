@@ -23,7 +23,7 @@ specifiers:
   '@ionic-native/core': 5.36.0
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
-  '@ionic/angular': 6.6.1
+  '@ionic/angular': 6.6.2
   '@ionic/core': 6.6.1
   '@nrwl/angular': 15.8.6
   '@nrwl/cli': 15.8.6
@@ -84,7 +84,7 @@ dependencies:
   '@ionic-native/core': 5.36.0_rxjs@7.8.0
   '@ionic-native/splash-screen': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic-native/status-bar': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
-  '@ionic/angular': 6.6.1_xht346wdjnwimna6bxqzimjaye
+  '@ionic/angular': 6.6.2_xht346wdjnwimna6bxqzimjaye
   '@ionic/core': 6.6.1
   '@nrwl/angular': 15.8.6_db6loyrphgtkvgvs3e3enpt3pu
   '@sentry/angular': 7.43.0_qv64jwwsycqi3tebfv3zzc74s4
@@ -2856,8 +2856,8 @@ packages:
       rxjs: 7.8.0
     dev: false
 
-  /@ionic/angular/6.6.1_xht346wdjnwimna6bxqzimjaye:
-    resolution: {integrity: sha512-I/YFjlNk261zABxGAijVMCJcglNhu+yEwrWw3NulgtTQQioyRQjLrDoRbowNikI1SBs62EZ8t9V04pkTzwfQNw==}
+  /@ionic/angular/6.6.2_xht346wdjnwimna6bxqzimjaye:
+    resolution: {integrity: sha512-u3Q+2v66wlpN+5klpvTschYafAfL+XSLpcA7aX7pDAxcladQlU3JmOuXeV6TS9kk63kuOXON+t+jTTnMtXn+sQ==}
     peerDependencies:
       '@angular/core': '>=12.0.0'
       '@angular/forms': '>=12.0.0'
@@ -2868,7 +2868,7 @@ packages:
       '@angular/core': 15.2.2_rxjs@7.8.0+zone.js@0.13.0
       '@angular/forms': 15.2.2_l5mfipeoizzgchs5c5d4qx66yu
       '@angular/router': 15.2.2_l5mfipeoizzgchs5c5d4qx66yu
-      '@ionic/core': 6.6.1
+      '@ionic/core': 6.6.2
       ionicons: 6.1.3
       jsonc-parser: 3.2.0
       rxjs: 7.8.0
@@ -2878,6 +2878,14 @@ packages:
 
   /@ionic/core/6.6.1:
     resolution: {integrity: sha512-+LMBk7kUX55rvYQ35AiAXPNzbNm3zNx9ginvuCzByguMjl+N63lpdPzIEfeRURkmq7NByD1VqpodMj5c6Oq2KQ==}
+    dependencies:
+      '@stencil/core': 2.18.1
+      ionicons: 6.1.3
+      tslib: 2.5.0
+    dev: false
+
+  /@ionic/core/6.6.2:
+    resolution: {integrity: sha512-C3XblxE4OcGs+QWy2meWqNGB8sDZV8w0nUVwLy3AmWovi0CA0xPs2UthUSicUxpCism33pzQp6DiDVsq+G5VTQ==}
     dependencies:
       '@stencil/core': 2.18.1
       ionicons: 6.1.3
