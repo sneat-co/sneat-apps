@@ -43,7 +43,7 @@ specifiers:
   '@types/tabulator-tables': ^5.4.5
   '@typescript-eslint/eslint-plugin': 5.55.0
   '@typescript-eslint/parser': 5.55.0
-  cypress: 12.8.0
+  cypress: 12.8.1
   date-fns: 2.29.3
   eslint: 8.36.0
   eslint-config-prettier: 8.7.0
@@ -86,7 +86,7 @@ dependencies:
   '@ionic-native/status-bar': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic/angular': 6.6.1_xht346wdjnwimna6bxqzimjaye
   '@ionic/core': 6.6.1
-  '@nrwl/angular': 15.8.6_mxarcirufv42ykiotjryf4pze4
+  '@nrwl/angular': 15.8.6_db6loyrphgtkvgvs3e3enpt3pu
   '@sentry/angular': 7.43.0_qv64jwwsycqi3tebfv3zzc74s4
   '@sentry/tracing': 7.43.0
   '@sneat/random': 0.0.4_c2ln2vosm7z73mbpbbmrtihdki
@@ -111,7 +111,7 @@ devDependencies:
   '@angular/compiler-cli': 15.2.2_melnpt72bdyyrlmw2gkt7zh2xe
   '@angular/language-service': 15.2.2
   '@nrwl/cli': 15.8.6
-  '@nrwl/cypress': 15.8.6_r75qbxupxrkt3r7vdcv6pzbawm
+  '@nrwl/cypress': 15.8.6_a5auutp2gpqqoyali5qhvklsby
   '@nrwl/eslint-plugin-nx': 15.8.6_6tfscvifnl2fslgkqeaezzuorq
   '@nrwl/jest': 15.8.6_grww2uo6pzez3ssyjga3ev3k24
   '@nrwl/js': 15.8.6_dodmag2wbpuzh4gkosq5dfhf6u
@@ -123,7 +123,7 @@ devDependencies:
   '@types/node': 18.15.3
   '@typescript-eslint/eslint-plugin': 5.55.0_342y7v4tc7ytrrysmit6jo4wri
   '@typescript-eslint/parser': 5.55.0_vgl77cfdswitgr47lm5swmv43m
-  cypress: 12.8.0
+  cypress: 12.8.1
   eslint: 8.36.0
   eslint-config-prettier: 8.7.0_eslint@8.36.0
   eslint-plugin-cypress: 2.12.1_eslint@8.36.0
@@ -3464,7 +3464,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/15.8.6_mxarcirufv42ykiotjryf4pze4:
+  /@nrwl/angular/15.8.6_db6loyrphgtkvgvs3e3enpt3pu:
     resolution: {integrity: sha512-qZttlL1wDotQgsowgOija/PGnmQeGJYhtN5mv2uVZ5E1O+PpmRe+vBIRKPpAbm0OsWFxns7rWB2QhYGExb5NEQ==}
     peerDependencies:
       '@angular-devkit/build-angular': '>= 14.0.0 < 16.0.0'
@@ -3480,7 +3480,7 @@ packages:
       '@angular-devkit/build-angular': 15.2.3_47l2ffidnodj4txisgm4gym4p4
       '@angular-devkit/core': 15.2.3
       '@angular-devkit/schematics': 15.2.3
-      '@nrwl/cypress': 15.8.6_r75qbxupxrkt3r7vdcv6pzbawm
+      '@nrwl/cypress': 15.8.6_a5auutp2gpqqoyali5qhvklsby
       '@nrwl/devkit': 15.8.6_nx@15.8.6+typescript@4.9.5
       '@nrwl/jest': 15.8.6_dtfcqcadsdicapyaj6wtffsd5y
       '@nrwl/js': 15.8.6_nx@15.8.6+typescript@4.9.5
@@ -3541,7 +3541,7 @@ packages:
       - '@swc/core'
       - debug
 
-  /@nrwl/cypress/15.8.6_r75qbxupxrkt3r7vdcv6pzbawm:
+  /@nrwl/cypress/15.8.6_a5auutp2gpqqoyali5qhvklsby:
     resolution: {integrity: sha512-VnIQOChL+T4BJxLitsjsU2ziVMLrhlLyHpsd4Cz1+jCDajrcywUZkDNuwwGJ58RL9tERBgO0iVmIbWPNcue2dA==}
     peerDependencies:
       cypress: '>= 3 < 13'
@@ -3554,7 +3554,7 @@ packages:
       '@nrwl/linter': 15.8.6_dodmag2wbpuzh4gkosq5dfhf6u
       '@nrwl/workspace': 15.8.6_cxk2izsnbljdhebs7ezdbimyva
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.9.5
-      cypress: 12.8.0
+      cypress: 12.8.1
       dotenv: 10.0.0
       semver: 7.3.4
     transitivePeerDependencies:
@@ -6107,8 +6107,8 @@ packages:
   /cuint/0.2.2:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
 
-  /cypress/12.8.0:
-    resolution: {integrity: sha512-+zblUeRIesOwpZ/E0HT0YE19STwbZy/ySJZIW6BHxX/eVX258gs4t9hP3sE4Opw9y0RfhJeoE8oa1wF/WhIb0A==}
+  /cypress/12.8.1:
+    resolution: {integrity: sha512-lIFbKdaSYAOarNLHNFa2aPZu6YSF+8UY4VRXMxJrFUnk6RvfG0AWsZ7/qle/aIz30TNUD4aOihz2ZgS4vuQVSA==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
