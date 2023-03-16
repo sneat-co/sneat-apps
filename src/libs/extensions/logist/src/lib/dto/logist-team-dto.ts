@@ -14,7 +14,9 @@ export type CounterpartyRole =
 	| 'receive_point'
 	| 'trucker'
 	| 'port_from'
+	| 'port_from_location'
 	| 'port_to'
+	| 'port_to_location'
 	;
 
 export interface ILogistTeamDto {
