@@ -1,46 +1,59 @@
-<!--<ion-item>-->
-<!--	<ion-label>{{containerPoint|json}}</ion-label>-->
-<!--</ion-item>-->
+<ion-item-divider color="light">
+	<ion-label><b>{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</b></ion-label>
+	<ion-buttons slot="end">
+		<ion-button color="medium" (click)="delete($event)">
+			<ion-icon name="trash-outline" slot="end"></ion-icon>
+			<ion-label>Delete</ion-label>
+		</ion-button>
+	</ion-buttons>
+</ion-item-divider>
+
+<ion-item-group>
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="4">
+				<ion-item>
+					<ion-icon color="medium" slot="start" name="enter-outline"></ion-icon>
+					<ion-label color="medium">Arrives</ion-label>
+					<ion-input type="date"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="8">
+				<sneat-logist-order-counterparty-input [team]="team" [order]="order"
+																							 contactRole="trucker"></sneat-logist-order-counterparty-input>
+			</ion-col>
+			<ion-col size="4">
+				<ion-item>
+					<ion-icon color="medium" slot="start" name="exit-outline"></ion-icon>
+					<ion-label color="medium">Departs</ion-label>
+					<ion-input type="date"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size="8">
+				<sneat-logist-order-counterparty-input [team]="team" [order]="order"
+																							 contactRole="trucker"></sneat-logist-order-counterparty-input>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-item-group>
+
 <ion-grid class="ion-grid-layout">
 	<ion-row>
-		<!--		<ion-col>-->
-		<!--			<ion-select [value]="containerPoint?.status" interface="popover">-->
-		<!--				<ion-select-option value="draft">Draft</ion-select-option>-->
-		<!--				<ion-select-option value="pending">Pending</ion-select-option>-->
-		<!--				<ion-select-option value="loaded">Loaded</ion-select-option>-->
-		<!--				<ion-select-option value="departed">Departed</ion-select-option>-->
-		<!--			</ion-select>-->
-		<!--		</ion-col>-->
-		<ion-col>
-			<ion-item-divider color="light">
-				<ion-label><b>{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</b></ion-label>
-				<ion-buttons slot="end">
-					<ion-button color="medium" (click)="delete($event)">
-						<ion-icon name="trash-outline" slot="end"></ion-icon>
-						<ion-label>Delete</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item-divider>
+		<ion-col size-lg="6">
+			<sneat-container-point-load-form [order]="order" [task]="'load'" [shippingPoint]="shippingPoint"
+																			 [containerPoint]="containerPoint"
+			></sneat-container-point-load-form>
 		</ion-col>
-		<!--		<ion-col>-->
-		<!--			<ion-item color="light">-->
-		<!--				<ion-label color="medium">Arrives</ion-label>-->
-		<!--				<ion-input type="date"></ion-input>-->
-		<!--			</ion-item>-->
-		<!--		</ion-col>-->
-		<!--		<ion-col>-->
-		<!--			<ion-item color="light">-->
-		<!--				<ion-label color="medium">Departs</ion-label>-->
-		<!--				<ion-input type="date" [value]="containerPoint?.departsDate"></ion-input>-->
-		<!--			</ion-item>-->
-		<!--		</ion-col>-->
+		<ion-col size-lg="6">
+			<sneat-container-point-load-form [order]="order" [task]="'unload'" [shippingPoint]="shippingPoint"
+																			 [containerPoint]="containerPoint"
+			></sneat-container-point-load-form>
+		</ion-col>
 	</ion-row>
-	<sneat-container-point-load-form [order]="order" [task]="'unload'" [shippingPoint]="shippingPoint"
-																	 [containerPoint]="containerPoint"
-	></sneat-container-point-load-form>
-	<sneat-container-point-load-form [order]="order" [task]="'load'" [shippingPoint]="shippingPoint"
-																	 [containerPoint]="containerPoint"
-	></sneat-container-point-load-form>
+</ion-grid>
+
+
+<ion-item-group> <!-- Special instructions -->
 	<ion-item-divider>
 		<ion-label>Special instructions</ion-label>
 		<ion-buttons slot="end" *ngIf="specialInstructions.dirty">
@@ -61,4 +74,5 @@
 									(ionChange)="onSpecialInstructionsChanged()"
 		></ion-textarea>
 	</ion-item>
-</ion-grid>
+</ion-item-group> <!-- End of Special instructions -->
+

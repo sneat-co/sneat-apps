@@ -8,6 +8,7 @@ import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.mo
 import { LogistSelectorsModule } from '../logist-selectors.module';
 import { NewContainerComponent } from '../new-container/new-container.component';
 import { OrderContainersGridModule } from '../order-containers-grid/order-containers-grid.module';
+import { OrderFormModule } from '../order-form.module';
 import {
 	ShippingPointsSelectorModule,
 } from '../shipping-points-selector/shipping-points-selector.module';
@@ -19,19 +20,20 @@ import { ContainerSegmentComponent } from './container-segment.component';
 import { OrderContainersComponent } from './order-containers.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		SelectFromListModule,
-		ReactiveFormsModule,
-		DatagridModule,
-		ShippingPointsSelectorModule,
-		DialogHeaderModule,
-		FreightLoadFormModule,
-		OrderContainersGridModule,
-		LogistSelectorsModule,
-	],
+  imports: [
+    CommonModule,
+    IonicModule,
+    FormsModule,
+    SelectFromListModule,
+    ReactiveFormsModule,
+    DatagridModule,
+    ShippingPointsSelectorModule,
+    DialogHeaderModule,
+    FreightLoadFormModule,
+    OrderContainersGridModule,
+    LogistSelectorsModule,
+    OrderFormModule,
+  ],
 	declarations: [
 		OrderContainerComponent,
 		OrderContainersComponent,
