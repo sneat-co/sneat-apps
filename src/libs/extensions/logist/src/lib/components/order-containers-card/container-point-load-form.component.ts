@@ -6,7 +6,7 @@ import {
 	FreightPointField, FreightPointIntField,
 	IContainerPoint, IFreightLoad,
 	ILogistOrderContext,
-	IOrderShippingPoint, ISetContainerEndpointDateRequest, ISetContainerPointFreightFieldsRequest,
+	IOrderShippingPoint, ISetContainerEndpointFieldsRequest, ISetContainerPointFreightFieldsRequest,
 	ISetContainerPointTaskRequest, EndpointDateField,
 	ShippingPointTask,
 } from '../../dto';

@@ -7,7 +7,7 @@ import {
 	IContainerEndpoint,
 	IContainerPoint,
 	ILogistOrderContext,
-	ISetContainerEndpointDateRequest,
+	ISetContainerEndpointFieldsRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 
@@ -71,6 +71,7 @@ export class ContainerEndpointComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerPoint'] || changes['endpointSide']) {
 			this.endpoint = this.endpointSide ? this.containerPoint?.[this.endpointSide] : undefined;
+			console.log('ContainerEndpointComponent.ngOnChanges()', this.endpointSide, changes, this.endpoint);
 			this.unchangedDate = this.endpoint?.scheduledDate;
 			this.$date.next(this.unchangedDate);
 		}
@@ -88,7 +89,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			return;
 		}
 		this.containerPoint = { ...this.containerPoint, [endpointSide]: this.endpoint };
-		const request: ISetContainerEndpointDateRequest = {
+		const request: ISetContainerEndpointFieldsRequest = {
 			teamID,
 			orderID,
 			shippingPointID,
@@ -96,7 +97,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			side: endpointSide,
 			dates: { scheduledDate: date },
 		};
-		this.orderService.setContainerEndpointDates(request).subscribe({
+		this.orderService.setContainerEndpointFields(request).subscribe({
 			next: () => console.log('setContainerEndpointDates() success'),
 			error: this.errorLogger.logErrorHandler(`Failed to set container point date field ${name}`),
 		});

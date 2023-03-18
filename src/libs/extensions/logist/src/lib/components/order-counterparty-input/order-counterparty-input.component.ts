@@ -25,6 +25,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() contactType?: ContactType;
 	@Input() parentRole?: LogistOrderContactRole;
 	@Input() canChangeContact = true;
+	@Input() contactID?: string;
 
 	@Input() selectOnly = false;
 
@@ -49,7 +50,13 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);
-		if (changes['order']) {
+		if (
+			changes['order'] ||
+			changes['contactID'] ||
+			changes['counterpartyRole'] ||
+			changes['contactRole'] ||
+			changes['parentRole']
+		) {
 			this.setContacts();
 		}
 	}
@@ -74,7 +81,9 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			},
 		});
 		this.contact = undefined;
-		const counterparties = this.order?.dto?.counterparties?.filter(c => c.role === this.counterpartyRole);
+		const counterparties = this.contactID
+			? this.order?.dto?.counterparties?.filter(c => c.contactID === this.contactID && c.role === this.counterpartyRole)
+			: this.order?.dto?.counterparties?.filter(c => c.role === this.counterpartyRole);
 		if (counterparties && counterparties.length === 1) {
 			const counterparty = counterparties[0];
 			this.contact = contactFromCounterparty(counterparty);

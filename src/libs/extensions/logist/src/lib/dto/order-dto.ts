@@ -338,9 +338,10 @@ export interface ISetContainerPointFreightFieldsRequest extends IContainerPointR
 	readonly integers: Partial<{ [key in FreightPointIntField]: (number | undefined) }>;
 }
 
-export interface ISetContainerEndpointDateRequest extends IContainerPointRequest {
+export interface ISetContainerEndpointFieldsRequest extends IContainerPointRequest {
 	readonly side: EndpointSide;
 	readonly dates: Partial<{ [key in EndpointDateField]: (string | undefined) }>;
+	readonly byContactID?: string;
 }
 
 export interface ISetContainerPointFieldsRequest extends IContainerPointRequest {
