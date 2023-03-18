@@ -1,12 +1,12 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, Observable, Subject } from 'rxjs';
 import {
 	EndpointSide,
 	IContainerEndpoint,
 	IContainerPoint,
-	ILogistOrderContext,
+	ILogistOrderContext, IOrderCounterpartyRef,
 	ISetContainerEndpointFieldsRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
@@ -30,6 +30,7 @@ export class ContainerEndpointComponent implements OnChanges {
 	@Input() endpointSide?: EndpointSide;
 
 	protected endpoint?: IContainerEndpoint;
+	protected byContact?: IContactContext;
 
 	protected unchangedDate?: string;
 
@@ -62,6 +63,30 @@ export class ContainerEndpointComponent implements OnChanges {
 		}
 	}
 
+	// protected onByChanged(counterpartyRef: IOrderCounterpartyRef): void {
+	// 	const request = this.createSetContainerEndpointFieldsRequest();
+	// 	if (!request) {
+	// 		return;
+	// 	}
+	// 	this.orderService.setContainerEndpointFields({
+	// 		...request,
+	// 		byContactID: counterpartyRef?.contactID || '',
+	// 	});
+	// }
+
+	protected onByContactChanged(contact?: IContactContext): void {
+		const request = this.createSetContainerEndpointFieldsRequest();
+		if (!request) {
+			return;
+		}
+		this.orderService.setContainerEndpointFields({
+			...request,
+			byContactID: contact?.id || '',
+		}).subscribe({
+			error: this.errorLogger.logErrorHandler(`Failed to set byContactID field for container endpoint ` + this.endpointSide),
+		});
+	}
+
 	protected onDateChanged(event: Event): void {
 		console.log('ContainerEndpointComponent.onDateChanged()', event);
 		const ce = event as CustomEvent;
@@ -74,10 +99,23 @@ export class ContainerEndpointComponent implements OnChanges {
 			console.log('ContainerEndpointComponent.ngOnChanges()', this.endpointSide, changes, this.endpoint);
 			this.unchangedDate = this.endpoint?.scheduledDate;
 			this.$date.next(this.unchangedDate);
+			const byCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === this.endpoint?.byContactID);
+			if (this.team) {
+				this.byContact = byCounterparty && {
+					id: byCounterparty?.contactID,
+					brief: {
+						id: byCounterparty.contactID,
+						type: 'company',
+						title: byCounterparty.title,
+						countryID: byCounterparty.countryID,
+					},
+					team: this.team,
+				};
+			}
 		}
 	}
 
-	private setDateField(date?: string): void {
+	private createSetContainerEndpointFieldsRequest(): ISetContainerEndpointFieldsRequest | undefined {
 		const
 			endpointSide = this.endpointSide,
 			shippingPointID = this.shippingPointID,
@@ -88,16 +126,26 @@ export class ContainerEndpointComponent implements OnChanges {
 		if (!endpointSide || !containerID || !shippingPointID || !orderID || !teamID || !this.containerPoint) {
 			return;
 		}
-		this.containerPoint = { ...this.containerPoint, [endpointSide]: this.endpoint };
 		const request: ISetContainerEndpointFieldsRequest = {
 			teamID,
 			orderID,
 			shippingPointID,
 			containerID,
 			side: endpointSide,
-			dates: { scheduledDate: date },
 		};
-		this.orderService.setContainerEndpointFields(request).subscribe({
+		return request;
+	}
+
+	private setDateField(date?: string): void {
+		const request = this.createSetContainerEndpointFieldsRequest();
+		if (!request) {
+			return;
+		}
+
+		this.orderService.setContainerEndpointFields({
+			...request,
+			dates: { scheduledDate: date },
+		}).subscribe({
 			next: () => console.log('setContainerEndpointDates() success'),
 			error: this.errorLogger.logErrorHandler(`Failed to set container point date field ${name}`),
 		});

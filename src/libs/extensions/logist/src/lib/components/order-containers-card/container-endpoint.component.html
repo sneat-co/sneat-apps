@@ -8,13 +8,23 @@
 			</ion-item>
 		</ion-col>
 		<ion-col size="7">
-			<sneat-logist-order-counterparty-input
-				label="By" contactRole="trucker" contactType="company"
+			<sneat-contact-input
+				label="By" contactRole="trucker"
 				[canReset]="true"
-				[team]="order?.team"
-				[order]="order"
-				[contactID]="endpoint?.byContactID"
-			></sneat-logist-order-counterparty-input>
+				[team]="team"
+				[contact]="byContact"
+				(contactChange)="onByContactChanged($event)"
+			>
+			</sneat-contact-input>
+			<!--			<sneat-logist-order-counterparty-input-->
+			<!--				label="By" contactRole="trucker" contactType="company"-->
+			<!--				[canReset]="true"-->
+			<!--				[team]="order?.team"-->
+			<!--				[order]="order"-->
+			<!--				[contactID]="endpoint?.byContactID"-->
+			<!--				[counterpartyRole]="'trucker'"-->
+			<!--				(counterpartyChange)="onByChanged($event)"-->
+			<!--			></sneat-logist-order-counterparty-input>-->
 		</ion-col>
 	</ion-row>
 </ion-grid>
