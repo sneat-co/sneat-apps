@@ -1,8 +1,10 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, Observable, Subject } from 'rxjs';
 import {
+	EndpointDateField,
 	EndpointSide,
 	IContainerEndpoint,
 	IContainerPoint,
@@ -32,36 +34,37 @@ export class ContainerEndpointComponent implements OnChanges {
 	protected endpoint?: IContainerEndpoint;
 	protected byContact?: IContactContext;
 
-	protected unchangedDate?: string;
+	protected readonly scheduledDate = new FormControl<string>('');
+	protected readonly actualDate = new FormControl<string>('');
 
-	private readonly $date = new BehaviorSubject<string | undefined>(undefined);
-	private readonly date$ = debounce(this.$date);
+	protected readonly datesForm = new FormGroup({
+		scheduledDate: this.scheduledDate,
+		actualDate: this.actualDate,
+	});
 
+	protected label = 'Endpoint Side';
+
+	private readonly $scheduledDate = new BehaviorSubject<string>('');
+	private readonly scheduledDate$ = debounce(this.$scheduledDate);
+
+	private readonly $actualDate = new BehaviorSubject<string>('');
+	private readonly actualDate$ = debounce(this.$actualDate);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
+		private readonly changedDetectorRef: ChangeDetectorRef,
 	) {
-		this.date$.subscribe(this.onDateDebounced);
+		this.scheduledDate$.subscribe(date => this.onDateDebounced('scheduledDate', date));
+		this.actualDate$.subscribe(date => this.onDateDebounced('actualDate', date));
 	}
 
-	private readonly onDateDebounced = (date?: string): void => {
-		if (date === this.unchangedDate) {
+	private readonly onDateDebounced = (field: EndpointDateField, date: string): void => {
+		if (date === this.endpoint?.[field]) {
 			return;
 		}
-		this.setDateField(date);
+		this.setDateField(field, date || '');
 	};
-
-	get label(): string {
-		switch (this.endpointSide) {
-			case 'arrival':
-				return 'Arrives';
-			case 'departure':
-				return 'Departs';
-			default:
-				return this.endpointSide || 'Endpoint Side';
-		}
-	}
 
 	// protected onByChanged(counterpartyRef: IOrderCounterpartyRef): void {
 	// 	const request = this.createSetContainerEndpointFieldsRequest();
@@ -87,18 +90,35 @@ export class ContainerEndpointComponent implements OnChanges {
 		});
 	}
 
-	protected onDateChanged(event: Event): void {
-		console.log('ContainerEndpointComponent.onDateChanged()', event);
-		const ce = event as CustomEvent;
-		this.$date.next(ce.detail.value as string);
+	protected onDateChanged(field: EndpointDateField, event: Event): void {
+		console.log('ContainerEndpointComponent.onDateChanged()', this.endpointSide, field, event);
+		switch (field) {
+			case 'scheduledDate':
+				this.$scheduledDate.next(this.scheduledDate.value || '');
+				break;
+			case 'actualDate':
+				this.$actualDate.next(this.actualDate.value || '');
+				break;
+		}
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerPoint'] || changes['endpointSide']) {
+			switch (this.endpointSide) {
+				case 'arrival':
+					this.label = 'Arrives';
+					break;
+				case 'departure':
+					this.label = 'Departs';
+					break;
+				default:
+					this.label = 'Endpoint Side';
+					break;
+			}
 			this.endpoint = this.endpointSide ? this.containerPoint?.[this.endpointSide] : undefined;
 			console.log('ContainerEndpointComponent.ngOnChanges()', this.endpointSide, changes, this.endpoint);
-			this.unchangedDate = this.endpoint?.scheduledDate;
-			this.$date.next(this.unchangedDate);
+			this.scheduledDate.setValue(this.endpoint?.scheduledDate || '');
+			this.actualDate.setValue(this.endpoint?.actualDate || '');
 			const byCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === this.endpoint?.byContactID);
 			if (this.team) {
 				this.byContact = byCounterparty && {
@@ -136,18 +156,27 @@ export class ContainerEndpointComponent implements OnChanges {
 		return request;
 	}
 
-	private setDateField(date?: string): void {
+	private setDateField(field: EndpointDateField, date: string): void {
+		if (date === (this.endpoint?.scheduledDate || '')) {
+			return;
+		}
+		console.log('setDateField()', field, date);
 		const request = this.createSetContainerEndpointFieldsRequest();
 		if (!request) {
 			return;
 		}
-
 		this.orderService.setContainerEndpointFields({
 			...request,
-			dates: { scheduledDate: date },
+			dates: { [field]: date },
 		}).subscribe({
-			next: () => console.log('setContainerEndpointDates() success'),
-			error: this.errorLogger.logErrorHandler(`Failed to set container point date field ${name}`),
+			next: () => {
+				console.log('setContainerEndpointDates() success');
+			},
+			error: err => {
+				this.errorLogger.logError(err, `Failed to set container point ${field} date to ${date}`);
+				this.scheduledDate.reset();
+				this.changedDetectorRef.detectChanges();
+			},
 		});
 	}
 

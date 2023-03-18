@@ -1,10 +1,12 @@
+endpoint: {{endpoint|json}}
 <ion-grid class="ion-grid-layout">
 	<ion-row>
 		<ion-col size="5">
 			<ion-item>
 				<!--				<ion-icon color="medium" slot="start" name="enter-outline"></ion-icon>-->
 				<ion-label color="medium">{{label}}:</ion-label>
-				<ion-input type="date" [value]="endpoint?.scheduledDate" (ionChange)="onDateChanged($event)"></ion-input>
+				<ion-input type="date" [formControl]="scheduledDate"
+									 (ionChange)="onDateChanged('scheduledDate', $event)"></ion-input>
 			</ion-item>
 		</ion-col>
 		<ion-col size="7">
