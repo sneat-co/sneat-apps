@@ -27,7 +27,7 @@ import {
 	ISetContainerPointTaskRequest,
 	ISetContainerPointFreightFieldsRequest,
 	IAddContainerPointsRequest,
-	ISetContainerPointDatesRequest,
+	ISetContainerEndpointDateRequest,
 	IUpdateShippingPointRequest,
 	ISetContainerPointFieldsRequest,
 } from '../dto';
@@ -188,8 +188,8 @@ export class LogistOrderService {
 		return this.sneatApiService.post('logist/order/set_container_point_freight_fields', request);
 	}
 
-	setContainerPointDates(request: ISetContainerPointDatesRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/set_container_point_dates', request);
+	setContainerEndpointDates(request: ISetContainerEndpointDateRequest): Observable<void> {
+		return this.sneatApiService.post('logist/order/set_container_endpoint_dates', request);
 	}
 
 	setContainerPointFields(request: ISetContainerPointFieldsRequest): Observable<void> {

@@ -84,6 +84,8 @@ export interface ISegmentLegKey {
 	readonly by?: ISegmentCounterparty;
 }
 
+export type EndpointSide = 'arrival' | 'departure';
+
 export type ShippingPointTask = 'load' | 'unload' | 'pick' | 'drop';
 
 export interface IOrderShippingPoint extends IShippingPointBase {
@@ -97,11 +99,17 @@ export interface IShippingPoint extends IShippingPointBase {
 	readonly id: string;
 }
 
+export interface IContainerEndpoint {
+	readonly byContactID?: string;
+	readonly scheduledDate?: string;
+	readonly actualDate?: string;
+}
+
 export interface IContainerPoint extends IShippingPointBase {
 	readonly containerID: string;
 	readonly shippingPointID: string;
-	readonly arrivesDate?: string;
-	readonly departsDate?: string;
+	readonly arrival?: IContainerEndpoint;
+	readonly departure?: IContainerEndpoint;
 	readonly specialInstructions?: string;
 }
 
@@ -318,10 +326,10 @@ export interface ISetContainerPointTaskRequest extends IContainerPointRequest {
 	readonly value: boolean;
 }
 
-export type ShippingPointDateField = 'arrivesDate' | 'departsDate';
+export type EndpointDateField = 'scheduledDate' | 'actualDate';
 export type ShippingPointStringField = 'notes';
 export type FreightPointIntField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3';
-export type FreightPointField = FreightPointIntField | ShippingPointDateField;
+export type FreightPointField = FreightPointIntField | EndpointDateField;
 
 export type ContainerPointStringField = 'specialInstructions';
 
@@ -330,9 +338,9 @@ export interface ISetContainerPointFreightFieldsRequest extends IContainerPointR
 	readonly integers: Partial<{ [key in FreightPointIntField]: (number | undefined) }>;
 }
 
-export interface ISetContainerPointDatesRequest extends IContainerPointRequest {
-	readonly task: ShippingPointTask;
-	readonly dates: Partial<{ [key in ShippingPointDateField]: (string | undefined) }>;
+export interface ISetContainerEndpointDateRequest extends IContainerPointRequest {
+	readonly side: EndpointSide;
+	readonly dates: Partial<{ [key in EndpointDateField]: (string | undefined) }>;
 }
 
 export interface ISetContainerPointFieldsRequest extends IContainerPointRequest {

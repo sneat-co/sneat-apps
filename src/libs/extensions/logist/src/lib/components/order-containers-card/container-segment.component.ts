@@ -63,10 +63,10 @@ export class ContainerSegmentComponent implements OnChanges {
 		);
 		if (this.fromPoint) {
 			if (!this.departDate.dirty) {
-				this.departDate.setValue(this.fromPoint?.departsDate || '');
+				this.departDate.setValue(this.fromPoint?.departure?.scheduledDate || '');
 			}
 			if (!this.arriveDate.dirty) {
-				this.arriveDate.setValue(this.fromPoint?.arrivesDate || '');
+				this.arriveDate.setValue(this.fromPoint?.arrival?.scheduledDate || '');
 			}
 		}
 		this.to = this.order?.dto?.counterparties?.find(c =>
