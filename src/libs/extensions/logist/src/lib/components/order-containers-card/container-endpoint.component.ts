@@ -37,7 +37,7 @@ export class ContainerEndpointComponent implements OnChanges {
 	protected byContact?: IContactContext;
 
 	protected readonly scheduledDate = new FormControl<string>('');
-	protected readonly actualDate = new FormControl<string>('');
+	// protected readonly actualDate = new FormControl<string>('');
 
 	protected labelScheduled = 'Scheduled';
 	protected labelActual = 'Actual';
@@ -45,8 +45,8 @@ export class ContainerEndpointComponent implements OnChanges {
 	private readonly $scheduledDate = new Subject<string>();
 	private readonly scheduledDate$ = debounce('scheduledDate', this.$scheduledDate);
 
-	private readonly $actualDate = new Subject<string>();
-	private readonly actualDate$ = debounce('actualDate', this.$actualDate);
+	// private readonly $actualDate = new Subject<string>();
+	// private readonly actualDate$ = debounce('actualDate', this.$actualDate);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -54,7 +54,7 @@ export class ContainerEndpointComponent implements OnChanges {
 		private readonly changedDetectorRef: ChangeDetectorRef,
 	) {
 		this.scheduledDate$.subscribe(date => this.setDateField('scheduledDate', date));
-		this.actualDate$.subscribe(date => this.setDateField('actualDate', date));
+		// this.actualDate$.subscribe(date => this.setDateField('actualDate', date));
 	}
 
 	// protected onByChanged(counterpartyRef: IOrderCounterpartyRef): void {
@@ -102,7 +102,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			this.endpoint = this.endpointSide ? this.containerPoint?.[this.endpointSide] : undefined;
 			console.log('ContainerEndpointComponent.ngOnChanges()', this.endpointSide, this.endpoint);
 			this.scheduledDate.setValue(this.endpoint?.scheduledDate || '');
-			this.actualDate.setValue(this.endpoint?.actualDate || '');
+			// this.actualDate.setValue(this.endpoint?.actualDate || '');
 			const byCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === this.endpoint?.byContactID);
 			if (this.team) {
 				this.byContact = byCounterparty && {
