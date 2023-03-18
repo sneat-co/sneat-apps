@@ -3,9 +3,9 @@
 		<ion-col size="5">
 			<ion-item>
 				<!--				<ion-icon color="medium" slot="start" name="enter-outline"></ion-icon>-->
-				<ion-label color="medium">{{label}}:</ion-label>
+				<ion-label color="medium">{{labelScheduled}}:</ion-label>
 				<ion-input type="date" [formControl]="scheduledDate"
-									 (ionChange)="onDateChanged('scheduledDate', $event)"></ion-input>
+									 (ionChange)="onScheduledDateChanged($event)"></ion-input>
 			</ion-item>
 		</ion-col>
 		<ion-col size="7">
