@@ -53,7 +53,7 @@ specifiers:
   ionicons: 7.0.0
   jest: 29.5.0
   jest-environment-jsdom: ^29.4.1
-  jest-preset-angular: 13.0.0
+  jest-preset-angular: 13.0.1
   ng-packagr: ~15.2.2
   nx: 15.8.7
   postcss: 8.4.21
@@ -130,7 +130,7 @@ devDependencies:
   git-describe: 4.1.1
   jest: 29.5.0_757mb262zsxkcnuknwfdsckmku
   jest-environment-jsdom: 29.4.3
-  jest-preset-angular: 13.0.0_3yhpxhjzqza323i7ptv6njn36u
+  jest-preset-angular: 13.0.1_3yhpxhjzqza323i7ptv6njn36u
   ng-packagr: 15.2.2_r2xjnps4oc3ldhwezt4nqsrgn4
   nx: 15.8.7
   postcss: 8.4.21
@@ -6530,12 +6530,6 @@ packages:
   /es-module-lexer/0.9.3:
     resolution: {integrity: sha512-1HQ2M2sPtxwnvOvT1ZClHyQDiggdNjURWpY2we6aMKCQiUVxTmVs2UYPLIrD84sS+kMdUwfBSylbJPwNnBrnHQ==}
 
-  /esbuild-wasm/0.17.6:
-    resolution: {integrity: sha512-9Ldow2+kulEnGtOTbngHyiFIneIi+g7pJOz8cZQhW1KWKqsu9nCYDba2JlwsH/PJtAGNSTCrKBmaKYf8rJYvgQ==}
-    engines: {node: '>=12'}
-    hasBin: true
-    dev: true
-
   /esbuild-wasm/0.17.8:
     resolution: {integrity: sha512-zCmpxv95E0FuCmvdw1K836UHnj4EdiQnFfjTby35y3LAjRPtXMj3sbHDRHjbD8Mqg5lTwq3knacr/1qIFU51CQ==}
     engines: {node: '>=12'}
@@ -8459,8 +8453,8 @@ packages:
       jest-resolve: 29.5.0
     dev: true
 
-  /jest-preset-angular/13.0.0_3yhpxhjzqza323i7ptv6njn36u:
-    resolution: {integrity: sha512-FNaWL41PgW3yvleB423pf1Z7xqaDaFMJxi2TwUek9J1p3SHT1Se+A2jeOI27XcC16zj87blUuffh/Smse2Grpg==}
+  /jest-preset-angular/13.0.1_3yhpxhjzqza323i7ptv6njn36u:
+    resolution: {integrity: sha512-kghzQHkD60oXXDoBM1lzbamleDMehTZKVLg2/BKXXRMuY0Or8iMvW0vUUzkdvax5ltssjPdnHUvuz8/KOnGjUg==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
       '@angular-devkit/build-angular': '>=13.0.0 <16.0.0'
@@ -8475,11 +8469,11 @@ packages:
       '@angular/core': 15.2.3_rxjs@7.8.0+zone.js@0.13.0
       '@angular/platform-browser-dynamic': 15.2.3_xc5aokpgbzzr5kbhwybuup7z5i
       bs-logger: 0.2.6
-      esbuild-wasm: 0.17.6
+      esbuild-wasm: 0.17.8
       jest: 29.5.0_757mb262zsxkcnuknwfdsckmku
       jest-environment-jsdom: 29.4.3
-      jest-util: 29.4.3
-      pretty-format: 29.4.3
+      jest-util: 29.5.0
+      pretty-format: 29.5.0
       ts-jest: 29.0.5_aniuzlzpsha6zy6zl6tlhaxni4
       typescript: 4.9.5
     optionalDependencies:
@@ -10938,15 +10932,6 @@ packages:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 18.1.0
-
-  /pretty-format/29.4.3:
-    resolution: {integrity: sha512-cvpcHTc42lcsvOOAzd3XuNWTcvk1Jmnzqeu+WsOuiPmxUJTnkbAcFNsRKvEpBEUFVUgy/GTZLulZDcDEi+CIlA==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@jest/schemas': 29.4.3
-      ansi-styles: 5.2.0
-      react-is: 18.1.0
-    dev: true
 
   /pretty-format/29.5.0:
     resolution: {integrity: sha512-V2mGkI31qdttvTFX7Mt4efOqHXqJWMu4/r66Xh3Z3BwZaPfPJgp6/gbwoujRpPUtfEF6AUUWx3Jim3GCw5g/Qw==}
