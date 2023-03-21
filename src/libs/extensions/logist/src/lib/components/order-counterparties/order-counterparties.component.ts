@@ -13,7 +13,7 @@ import {
 import { LogistOrderService } from '../../services';
 
 interface ICounterparty extends IOrderCounterparty {
-	parent?: IOrderCounterparty;
+	parentCounterparty?: IOrderCounterparty;
 }
 
 @Component({
@@ -56,9 +56,9 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		const counterparties = this.order?.dto?.counterparties || [];
 
 		this.counterparties = counterparties.filter(c => c.role === this.contactRole)
-			.map(c => c.parentContactID ? {
+			.map(c => c.parent ? {
 				...c,
-				parent: counterparties.find(cc => cc.contactID === c.parentContactID),
+				parent: counterparties.find(cc => cc.contactID === c.parent?.contactID),
 			} : c);
 	}
 

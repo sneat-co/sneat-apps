@@ -58,7 +58,7 @@ export class DispatcherComponent implements OnChanges {
 
 	private setOrder(counterpartyChanged: boolean): void {
 		const contactID = this.counterparty?.contactID;
-		this.locations = this.order?.dto?.counterparties?.filter(l => l.parentContactID === contactID);
+		this.locations = this.order?.dto?.counterparties?.filter(l => l.parent?.contactID === contactID);
 		if (counterpartyChanged && !this.refNumber.dirty) {
 			this.refNumber.setValue(this.counterparty?.refNumber || '');
 			// this.specialInstructions.setValue(this.counterparty?.specialInstructions || '');

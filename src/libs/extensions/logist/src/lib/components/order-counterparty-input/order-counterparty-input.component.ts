@@ -87,8 +87,8 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		if (counterparties && counterparties.length === 1) {
 			const counterparty = counterparties[0];
 			this.contact = contactFromCounterparty(counterparty);
-			if (counterparty.parentContactID) {
-				const parentCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === counterparty.parentContactID);
+			if (counterparty.parent) {
+				const parentCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === counterparty.parent?.contactID);
 				if (parentCounterparty) {
 					this.parentContact = contactFromCounterparty(parentCounterparty);
 				}

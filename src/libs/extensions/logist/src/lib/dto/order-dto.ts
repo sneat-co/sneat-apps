@@ -1,4 +1,4 @@
-import { IAddress, IWithModified } from '@sneat/dto';
+import { ContactType, IAddress, IWithModified } from '@sneat/dto';
 import { IContactRequest } from '@sneat/extensions/contactus';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { CounterpartyRole } from './logist-team-dto';
@@ -11,17 +11,29 @@ export interface IFreightAddress {
 	readonly text: string;
 }
 
+export interface IOrderContact {
+	readonly id: string;
+	readonly parentID?: string;
+	readonly type: ContactType;
+	readonly title: string;
+	readonly countryID: string;
+	readonly address: IAddress;
+}
+
+export interface ICounterpartyParent {
+	readonly contactID: string;
+	readonly role: CounterpartyRole;
+}
+
 export interface IOrderCounterparty {
 	readonly contactID: string;
-	readonly parentContactID?: string;
 	readonly role: CounterpartyRole;
+	readonly parent?: ICounterpartyParent;
 	readonly refNumber?: string;
 	// readonly specialInstructions?: string;
 	readonly countryID: string;
 	readonly title: string;
-	readonly phone?: string;
-	readonly email?: string;
-	readonly address?: IAddress;
+	readonly address?: IAddress; // TODO: to be deleted as moved to IOrderContact
 }
 
 export type ContainerType = 'unknown' | '20ft' | '40ft';
@@ -160,6 +172,7 @@ export function getSegmentCounterparty(orderDto?: ILogistOrderDto | null, segmen
 }
 
 export interface ILogistOrderDto extends IFreightOrderBase, IWithModified {
+	readonly contacts?: ReadonlyArray<IOrderContact>;
 	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
 	readonly route?: IOrderRoute;
 	// buyer?: IOrderCounterparty;

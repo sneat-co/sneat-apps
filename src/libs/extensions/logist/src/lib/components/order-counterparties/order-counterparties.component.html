@@ -13,8 +13,8 @@
 </ion-item-divider>
 <ion-item *ngFor="let counterparty of counterparties; trackBy: index" class="sneat-tiny-end-padding">
 	<ion-label>
-		<ng-container *ngIf="counterparty.parentContactID">
-			{{counterparty.parent?.title || counterparty.parentContactID}} @
+		<ng-container *ngIf="counterparty.parent">
+			{{counterparty.parentCounterparty?.title || counterparty.parent.contactID}} @
 		</ng-container>
 		{{counterparty.title}}
 	</ion-label>
