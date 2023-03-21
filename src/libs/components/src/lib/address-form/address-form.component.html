@@ -1,0 +1,30 @@
+<ion-card>
+	<ion-item-divider color="light">
+		<ion-label color="medium">{{title}}</ion-label>
+		<ion-buttons slot="end" *ngIf="form.dirty">
+			<ion-button color="primary" fill="solid" [disabled]="saving" (click)="saveChanges()" *ngIf="countryCode.value">
+				<ion-spinner slot="start" color="light" name="lines-small" *ngIf="saving"></ion-spinner>
+				<ion-icon slot="start" name="save-outline" *ngIf="!saving"></ion-icon>
+				<ion-label *ngIf="!saving">Save changes</ion-label>
+				<ion-label *ngIf="saving">Saving...</ion-label>
+			</ion-button>
+			<ion-button (click)="cancelChanges()" *ngIf="!saving">
+				<ion-label>Cancel</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+
+	<sneat-country-selector [country]="countryCode.value || undefined" [disabled]="saving"
+													(countryChange)="onCountryChanged($event)"></sneat-country-selector>
+
+	<ng-container *ngIf="countryCode.value">
+		<ion-item>
+			<ion-label color="medium">Zip code</ion-label>
+			<ion-input type="text" maxlength="10" [formControl]="zipCode" [disabled]="saving"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-textarea [formControl]="lines" auto-grow="true" [disabled]="saving"></ion-textarea>
+		</ion-item>
+	</ng-container>
+</ion-card>

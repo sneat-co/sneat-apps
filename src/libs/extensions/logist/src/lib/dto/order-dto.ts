@@ -16,7 +16,7 @@ export interface IOrderCounterparty {
 	readonly parentContactID?: string;
 	readonly role: CounterpartyRole;
 	readonly refNumber?: string;
-	readonly specialInstructions?: string;
+	// readonly specialInstructions?: string;
 	readonly countryID: string;
 	readonly title: string;
 	readonly phone?: string;
@@ -44,17 +44,19 @@ export interface IFreightPoint {
 
 export interface IOrderContainerBase {
 	readonly type: ContainerType;
-	readonly number: string;
+	readonly number?: string;
+	readonly instructions?: string;
 }
 
 export type ShippingPointStatus = 'pending' | 'completed';
 
 export interface IShippingPointBase extends IFreightPoint {
 	readonly status: ShippingPointStatus;
-	started?: string;
-	completed?: string;
-	scheduledStartDate?: string;
-	scheduledEndDate?: string;
+	readonly started?: string;
+	readonly completed?: string;
+	readonly scheduledStartDate?: string; // Date of the 1st container to arrive
+	readonly scheduledEndDate?: string; // Date of the last container to depart
+	readonly notes?: string;
 }
 
 export interface IOrderShippingPointLocation {
@@ -110,7 +112,6 @@ export interface IContainerPoint extends IShippingPointBase {
 	readonly shippingPointID: string;
 	readonly arrival?: IContainerEndpoint;
 	readonly departure?: IContainerEndpoint;
-	readonly specialInstructions?: string;
 }
 
 export interface IOrderContainer extends IOrderContainerBase {
@@ -176,7 +177,7 @@ export interface ILogistOrderDto extends IFreightOrderBase, IWithModified {
 	readonly containerPoints?: ReadonlyArray<IContainerPoint>;
 	readonly segments?: ReadonlyArray<IContainerSegment>;
 	readonly declarations?: IFreightDeclaration[];
-	readonly specialInstructions?: string;
+	// readonly specialInstructions?: string;
 	readonly issued?: IDocIssued;
 }
 
@@ -203,7 +204,7 @@ export interface ISetOrderCounterparty {
 	readonly contactID: string;
 	readonly role: string;
 	readonly refNumber?: string;
-	readonly specialInstructions?: string;
+	// readonly specialInstructions?: string;
 }
 
 export interface ISetOrderCounterpartiesRequest extends ILogistOrderRequest {
@@ -331,7 +332,8 @@ export type ShippingPointStringField = 'notes';
 export type FreightPointIntField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3';
 export type FreightPointField = FreightPointIntField | EndpointDateField;
 
-export type ContainerPointStringField = 'specialInstructions';
+export type ContainerStringField = 'number' | 'instructions';
+export type ContainerPointStringField = 'notes';
 
 export interface ISetContainerPointFreightFieldsRequest extends IContainerPointRequest {
 	readonly task: ShippingPointTask;
@@ -342,6 +344,10 @@ export interface ISetContainerEndpointFieldsRequest extends IContainerPointReque
 	readonly side: EndpointSide;
 	readonly dates?: Partial<{ [key in EndpointDateField]: (string | undefined) }>;
 	readonly byContactID?: string;
+}
+
+export interface ISetContainerFieldsRequest extends IContainerRequest {
+	readonly setStrings: Partial<{ [key in ContainerStringField]: string }>;
 }
 
 export interface ISetContainerPointFieldsRequest extends IContainerPointRequest {

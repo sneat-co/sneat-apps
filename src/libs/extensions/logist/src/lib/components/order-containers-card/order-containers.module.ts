@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { DialogHeaderModule, SelectFromListModule } from '@sneat/components';
 import { DatagridModule } from '@sneat/datagrid';
@@ -36,6 +37,7 @@ import { OrderContainersComponent } from './order-containers.component';
     LogistSelectorsModule,
     OrderFormModule,
 		ContactInputModule,
+		RouterModule,
   ],
 	declarations: [
 		OrderContainerComponent,

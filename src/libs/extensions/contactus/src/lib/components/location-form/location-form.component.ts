@@ -56,13 +56,14 @@ export class LocationFormComponent implements OnChanges {
 		if (!this.team) {
 			return;
 		}
-		const lines = this.addressText.split('\n');
+		const lines = this.addressText.split('\n').map(line => line.trim()).filter(line => !!line).join('\n');
+
 		const contactDto: IContactDto = excludeEmpty({
 			...this.contact.dto,
 			title: this.title,
 			address: {
 				countryID: this.countryID,
-				lines: lines.length == 1 && !lines[0].trim() ? undefined : lines,
+				lines: lines,
 			},
 			countryID: this.countryID,
 		});
@@ -87,7 +88,7 @@ export class LocationFormComponent implements OnChanges {
 		this.contact = contact;
 		this.emitContactChange();
 		this.contactCreated.emit(this.contact);
-	}
+	};
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('LocationFormComponent.ngOnChanges()', changes);
@@ -96,8 +97,8 @@ export class LocationFormComponent implements OnChanges {
 				this.contact = {
 					id: this.contact?.id || '',
 					team: this.team,
-					dto: {type: this.contactType}
-				}
+					dto: { type: this.contactType },
+				};
 				this.emitContactChange();
 			}
 		}
@@ -116,7 +117,7 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	submit(): void {
-		const contactDto = this.contact?.dto
+		const contactDto = this.contact?.dto;
 		if (!contactDto) {
 			return;
 		}

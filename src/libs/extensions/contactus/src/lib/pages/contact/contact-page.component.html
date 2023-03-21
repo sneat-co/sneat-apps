@@ -16,6 +16,9 @@
 <ion-content>
 
 	<ion-card>
+		<ion-item-divider color="light">
+			<ion-label>Contacts</ion-label>
+		</ion-item-divider>
 		<ion-item *ngIf="contact?.dto?.members?.length">
 			<ion-badge color="light" style="cursor: pointer" *ngFor="let m of contact?.dto?.members" (click)="goMember(m.id)">
 				{{m.relation}} of {{m.title}}
@@ -47,6 +50,11 @@
 		</ion-item>
 	</ion-card>
 
+	<sneat-address-form
+		[address]="contact?.dto?.address"
+		(save)="saveAddress($event)"
+	></sneat-address-form>
+
 	<ion-card *ngIf="team?.type === 'family'">
 		<ion-item color="light">
 			<ion-label>Related members</ion-label>
@@ -58,7 +66,7 @@
 	</ion-card>
 
 	<ion-card>
-		<ion-item color="light">
+		<ion-item-divider color="light">
 			<ion-label>Locations</ion-label>
 			<ion-buttons slot="end">
 				<ion-button color="medium" routerLink="new-location">
@@ -66,7 +74,7 @@
 					<ion-label>New</ion-label>
 				</ion-button>
 			</ion-buttons>
-		</ion-item>
+		</ion-item-divider>
 		<ion-item-divider *ngIf="contactLocations && !contactLocations.length">
 			<ion-label>No locations have been added yet.</ion-label>
 		</ion-item-divider>

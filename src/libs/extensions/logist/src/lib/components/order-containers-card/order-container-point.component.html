@@ -20,15 +20,15 @@
 																 [containerPoint]="containerPoint"
 ></sneat-container-point-load-form>
 
-<ion-item-group> <!-- Special instructions -->
+<ion-item-group> <!-- Notes -->
 	<ion-item-divider>
-		<ion-label>Special instructions</ion-label>
-		<ion-buttons slot="end" *ngIf="specialInstructions.dirty">
+		<ion-label>Notes</ion-label>
+		<ion-buttons slot="end" *ngIf="notes.dirty">
 			<ion-button *ngIf="!saving" (click)="cancelChanges()" [disabled]="saving">
 				<ion-icon name="close-outline" slot="start"></ion-icon>
 				<ion-label>Cancel</ion-label>
 			</ion-button>
-			<ion-button color="primary" fill="solid" (click)="saveSpecialInstructions()" [disabled]="saving">
+			<ion-button color="primary" fill="solid" (click)="saveNotes()" [disabled]="saving">
 				<ion-icon *ngIf="!saving" slot="start" name="save-outline"></ion-icon>
 				<ion-spinner *ngIf="saving" slot="start" name="lines-small"></ion-spinner>
 				<ion-label *ngIf="!saving">Save</ion-label>
@@ -37,7 +37,7 @@
 		</ion-buttons>
 	</ion-item-divider>
 	<ion-item>
-		<ion-textarea [autoGrow]="true" [formControl]="specialInstructions"
+		<ion-textarea [autoGrow]="true" [formControl]="notes"
 									(ionChange)="onSpecialInstructionsChanged()"
 		></ion-textarea>
 	</ion-item>

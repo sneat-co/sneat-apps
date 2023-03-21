@@ -1,0 +1,64 @@
+<ion-content>
+	<h1 class="ion-padding">LEEDLINE OU</h1>
+	<ion-card>
+		<ion-card-header>
+			Container {{container?.type}} #<b>{{container?.number}}</b>
+		</ion-card-header>
+	</ion-card>
+
+	<style>
+		table.printable-table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+			border: 1px solid #000;
+		}
+		table.printable-table th {
+			border: 1px solid #000;
+			padding: 5px;
+			background-color: #ccc;
+		}
+		table.printable-table td {
+			border: 1px solid #000;
+			padding: 5px;
+		}
+		.number {
+			text-align: right;
+		}
+	</style>
+	<ion-card>
+		<table class="printable-table">
+			<thead>
+			<tr>
+				<th>Puntos de recogida</th>
+				<th>Fabrica</th>
+				<th>Pallets</th>
+				<th>Peso (kg)</th>
+				<th>Ref#</th>
+				<th>Notas</th>
+				<th>Address</th>
+			</tr>
+			</thead>
+			<tr *ngFor="let point of points; let i = index">
+				<td class="number">{{i + 1}}</td>
+				<td>{{point.counterparty?.title}}</td>
+				<td class="number">{{point.containerPoint.toLoad?.numberOfPallets}}</td>
+				<td class="number">{{point.containerPoint.toLoad?.grossWeightKg}}</td>
+				<td></td>
+				<td>{{point.containerPoint.notes}}</td>
+				<td>{{point.location|json}}</td>
+			</tr>
+		</table>
+
+	</ion-card>
+
+	<ion-card>
+		<ion-card-content>
+				<ion-label position="stacked">
+					<b>Instrucciones especiales:</b>
+				</ion-label>
+				<ion-textarea readonly="true" [value]="container?.instructions" auto-grow="true" color="dark"></ion-textarea>
+		</ion-card-content>
+
+	</ion-card>
+</ion-content>

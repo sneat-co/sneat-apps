@@ -30,7 +30,7 @@
 						<p>
 							Shipper: {{shipperCounterparty?.title}}
 						</p>
-						<pre style="margin: 0">{{selfCounterparty?.address?.lines?.join('\n')}}</pre>
+						<pre style="margin: 0">{{selfCounterparty?.address?.lines}}</pre>
 					</ion-card-content>
 				</ion-card>
 			</ion-col>
@@ -68,20 +68,22 @@
 			<ion-label>Containers</ion-label>
 		</ion-item-divider>
 		<style>
-			table.print-grid {
-					width: 100%;
-					border: 1px;
-					margin: 5px;
-			}
-			table.print-grid th {
-					text-align: left;
-					padding: 0.5em;
-					border-bottom: 1px solid lightgray;
-			}
-			table.print-grid td {
-					padding: 0.5em;
-					border-bottom: 1px dashed lightgray;
-			}
+		table.print-grid {
+			width: 100%;
+			border: 1px;
+			margin: 5px;
+		}
+
+		table.print-grid th {
+			text-align: left;
+			padding: 0.5em;
+			border-bottom: 1px solid lightgray;
+		}
+
+		table.print-grid td {
+			padding: 0.5em;
+			border-bottom: 1px dashed lightgray;
+		}
 		</style>
 		<table class="print-grid">
 			<thead>
@@ -104,7 +106,7 @@
 				<td>{{point?.dispatcher?.refNumber}}</td>
 				<td>{{point?.toLoad?.note}}</td>
 				<td>
-					<pre style="margin: 0">{{point.from?.location?.address?.lines?.join('\n')}}</pre>
+					<pre style="margin: 0">{{point.from?.location?.address?.lines}}</pre>
 					<p *ngIf="point.from?.location?.address?.zipCode">
 						{{point.from?.location?.address?.zipCode}}
 					</p>

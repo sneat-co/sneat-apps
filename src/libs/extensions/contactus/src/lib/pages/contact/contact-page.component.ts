@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ISaveEvent } from '@sneat/components';
 import { eq } from '@sneat/core';
+import { IAddress } from '@sneat/dto';
 import { IContactContext } from '@sneat/team/models';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactService } from '../../services';
@@ -113,5 +115,24 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 			throw new Error('Can not navigate to member without team context');
 		}
 		this.teamParams.teamNavService.navigateToMember(this.navController, { id, team });
+	}
+
+	protected saveAddress(save: ISaveEvent<IAddress>): void {
+		console.log('ContactPageComponent.saveAddress()', save);
+		const
+			teamID = this.team?.id,
+			contactID = this.contact?.id,
+			address = save.object;
+
+		if (!teamID || !contactID || !address) {
+			save.error('Can not save address without team and contact context');
+			return;
+		}
+
+		this.contactService.setContactAddress({ teamID, contactID, address }).subscribe({
+			next: () => save.success(),
+			error: save.error,
+		});
+
 	}
 }

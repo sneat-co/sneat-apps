@@ -1,5 +1,5 @@
 <ion-item-group>
-	<ion-item-divider color="medium">
+	<ion-item-divider color="primary">
 		<ion-label *ngIf="i || i === 0">Container #{{i + 1}} - <b>{{container?.type}}</b>, Serial #</ion-label>
 		<ion-input
 			placeholder="optional"
@@ -9,8 +9,14 @@
 			(keyup.enter)="save($event)"
 		></ion-input>
 		<ion-buttons slot="end">
-			<ion-button color="medium" *ngIf="number.value && !number.dirty">
-				<ion-icon name="copy-outline"></ion-icon>
+			<ion-button *ngIf="!saving && !deleting"
+									(click)="print($event)"
+									routerLink="/space/{{team?.type}}/{{team?.id}}/order/{{order?.id}}/print/container-doc"
+									fragment="print"
+									target="_blank"
+			>
+				<ion-icon name="print-outline" slot="start"></ion-icon>
+				<ion-label>Print</ion-label>
 			</ion-button>
 			<ion-button (click)="delete($event)" *ngIf="!containerFormGroup.dirty">
 				<ion-label>Delete</ion-label>
@@ -18,9 +24,10 @@
 			</ion-button>
 			<ion-button *ngIf="containerFormGroup.dirty" (click)="save($event)">
 				<ion-icon slot="start" name="save-outline"></ion-icon>
-				<ion-label>Save</ion-label>
+				<ion-label *ngIf="!saving">Save</ion-label>
+				<ion-label *ngIf="saving">Saving...</ion-label>
 			</ion-button>
-			<ion-button *ngIf="containerFormGroup.dirty" (click)="cancelEditing($event)">
+			<ion-button *ngIf="!saving && containerFormGroup.dirty" (click)="cancelEditing($event)">
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -44,12 +51,12 @@
 					<ion-input readonly disabled [value]="container?.totalLoad?.grossWeightKg"></ion-input>
 				</ion-item>
 			</ion-col>
-<!--			<ion-col size="12" size-xl="3" size-sm="3">-->
-<!--				<ion-item>-->
-<!--					<ion-label>Volume (m<sup>3</sup>)</ion-label>-->
-<!--					<ion-input readonly disabled [value]="container?.totalLoad?.volumeM3"></ion-input>-->
-<!--				</ion-item>-->
-<!--			</ion-col>-->
+			<!--			<ion-col size="12" size-xl="3" size-sm="3">-->
+			<!--				<ion-item>-->
+			<!--					<ion-label>Volume (m<sup>3</sup>)</ion-label>-->
+			<!--					<ion-input readonly disabled [value]="container?.totalLoad?.volumeM3"></ion-input>-->
+			<!--				</ion-item>-->
+			<!--			</ion-col>-->
 		</ion-row>
 		<ion-row>
 			<ion-col size="12" size-md="9">
@@ -59,6 +66,9 @@
 					</ion-segment-button>
 					<ion-segment-button value="route">
 						<ion-label>🚛 Route</ion-label>
+					</ion-segment-button>
+					<ion-segment-button value="notes">
+						<ion-label>📝 Notes</ion-label>
 					</ion-segment-button>
 				</ion-segment>
 			</ion-col>
@@ -79,6 +89,10 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+	<ion-item *ngIf="tab === 'notes'">
+		<ion-label position="floating" color="medium">Special instructions</ion-label>
+		<ion-textarea auto-grow="true" [formControl]="instructions"></ion-textarea>
+	</ion-item>
 	<ng-container *ngIf="tab === 'points'">
 		<ion-item-divider *ngIf="containerPoints && !containerPoints?.length">
 			<ion-label color="medium">
@@ -86,9 +100,9 @@
 			</ion-label>
 		</ion-item-divider>
 		<sneat-order-container-point *ngFor="let containerPoint of containerPoints; trackBy: containerPointKey"
-													 [team]="this.team"
-													 [order]="order"
-													 [containerPoint]="containerPoint"
+																 [team]="this.team"
+																 [order]="order"
+																 [containerPoint]="containerPoint"
 		></sneat-order-container-point>
 	</ng-container>
 

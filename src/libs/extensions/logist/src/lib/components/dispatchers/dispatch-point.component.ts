@@ -52,7 +52,7 @@ export class DispatchPointComponent implements OnChanges {
 			this.dispatcher = orderDto?.counterparties?.find(c => c.contactID === contactID && c.role === 'dispatcher');
 			this.shippingPoint = orderDto?.shippingPoints?.find(sp => sp.location?.contactID === contactID);
 			if (!this.address.dirty) {
-				this.address.setValue(this.shippingPoint?.location?.address?.lines?.join('\n') || '');
+				this.address.setValue(this.shippingPoint?.location?.address?.lines || '');
 			}
 			const shippingPointID = this.shippingPoint?.id;
 			this.containerPoints = orderDto?.containerPoints?.filter(cp => cp.shippingPointID === shippingPointID);

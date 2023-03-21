@@ -76,4 +76,5 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 				error: this.logErrorHandler(),
 			});
 	}
+
 }

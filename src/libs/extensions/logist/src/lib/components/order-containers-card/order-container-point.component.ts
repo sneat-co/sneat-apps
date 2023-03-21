@@ -17,7 +17,7 @@ export class OrderContainerPointComponent implements OnChanges {
 
 	protected shippingPoint?: IOrderShippingPoint;
 
-	protected readonly specialInstructions = new FormControl<string>('');
+	protected readonly notes = new FormControl<string>('');
 
 	protected deleting = false;
 	protected saving = false;
@@ -30,17 +30,17 @@ export class OrderContainerPointComponent implements OnChanges {
 	}
 
 	cancelChanges(): void {
-		this.specialInstructions.setValue(this.containerPoint?.specialInstructions || '');
-		this.specialInstructions.markAsPristine();
+		this.notes.setValue(this.containerPoint?.notes || '');
+		this.notes.markAsPristine();
 	}
 
 	onSpecialInstructionsChanged(): void {
-		if (this.specialInstructions.value === (this.containerPoint?.specialInstructions || '')) {
-			this.specialInstructions.markAsPristine();
+		if (this.notes.value === (this.containerPoint?.notes || '')) {
+			this.notes.markAsPristine();
 		}
 	}
 
-	saveSpecialInstructions(): void {
+	saveNotes(): void {
 		const teamID = this.team?.id,
 			orderID = this.order?.id,
 			containerID = this.containerPoint?.containerID,
@@ -50,7 +50,7 @@ export class OrderContainerPointComponent implements OnChanges {
 		}
 		const request: ISetContainerPointFieldsRequest = {
 			teamID, orderID, containerID, shippingPointID,
-			setStrings: { specialInstructions: this.specialInstructions.value || '' },
+			setStrings: { notes: this.notes.value || '' },
 		};
 		this.saving = true;
 		const complete = () => {
@@ -59,7 +59,7 @@ export class OrderContainerPointComponent implements OnChanges {
 		};
 		this.orderService.setContainerPointFields(request).subscribe({
 			next: () => {
-				this.specialInstructions.markAsPristine();
+				this.notes.markAsPristine();
 				complete();
 			},
 			error: err => {
@@ -73,8 +73,8 @@ export class OrderContainerPointComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerPoint'] || changes['order']) {
 			this.shippingPoint = this.containerPoint?.shippingPointID ? this.order?.dto?.shippingPoints?.find(sp => sp.id === this.containerPoint?.shippingPointID) : undefined;
-			if (this.containerPoint && !this.specialInstructions.dirty) {
-				this.specialInstructions.setValue(this.containerPoint.specialInstructions || '');
+			if (this.containerPoint && !this.notes.dirty) {
+				this.notes.setValue(this.containerPoint.notes || '');
 			}
 		}
 	}

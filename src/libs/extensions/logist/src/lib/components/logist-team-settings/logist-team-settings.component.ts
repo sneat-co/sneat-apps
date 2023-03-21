@@ -76,7 +76,7 @@ export class LogistTeamSettingsComponent {
 			teamID: this.team.id,
 			address: {
 				countryID: this.countryID.value || '',
-				lines: this.address.value?.trim().split('\n') || [],
+				lines: this.address.value?.trim(),
 			},
 			vatNumber: this.vatNumber.value?.trim() || undefined,
 			orderNumberPrefix: this.orderNumberPrefix.value || undefined,

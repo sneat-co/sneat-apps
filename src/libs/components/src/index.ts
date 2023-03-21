@@ -36,3 +36,5 @@ export * from './lib/selector/selector-options';
 export * from './lib/selector/selector-base.service';
 export * from './lib/selector/multi-selector';
 export * from './lib/country-input';
+export * from './lib/address-form';
+export * from './lib/save-event';

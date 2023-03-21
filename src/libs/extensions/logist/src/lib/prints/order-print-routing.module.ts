@@ -5,6 +5,10 @@ import { RouterModule } from '@angular/router';
 	imports: [
 		RouterModule.forChild([
 			{
+				path: 'container-doc',
+				loadChildren: () => import('./container-doc/container-print-doc.module').then(m => m.ContainerPrintDocModule),
+			},
+			{
 				path: 'shipping-doc',
 				loadChildren: () => import('./order-shipping-doc/order-shipping-doc.module').then(m => m.OrderShippingDocModule),
 			},
@@ -15,7 +19,7 @@ import { RouterModule } from '@angular/router';
 			{
 				path: 'trucker-summary',
 				loadChildren: () => import('./order-trucker-summary/order-trucker-summary.module').then(m => m.OrderTruckerSummaryModule),
-			}
+			},
 		]),
 	],
 })

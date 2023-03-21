@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -8,7 +8,7 @@ import {
 	IContainerSegment,
 	IFreightLoad,
 	ILogistOrderContext,
-	IOrderContainer,
+	IOrderContainer, ISetContainerFieldsRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { NewSegmentService } from '../new-segment/new-segment.service';
@@ -26,17 +26,20 @@ export class OrderContainerComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() i?: number;
 
-	protected tab: 'points' | 'route' = 'points';
+	protected tab: 'points' | 'route' | 'notes' = 'points';
 
 	protected containerSegments?: IContainerSegment[];
 	protected containerPoints?: IContainerPoint[];
 
 	protected deleting = false;
+	protected saving = false;
 
-	protected number = new FormControl<string>('');
+	protected readonly number = new FormControl<string>('');
+	protected readonly instructions = new FormControl<string>('');
 
-	protected containerFormGroup = new FormGroup({
+	protected readonly containerFormGroup = new FormGroup({
 		number: this.number,
+		instructions: this.instructions,
 	});
 
 	protected containerPointKey(_: number, containerPoint: IContainerPoint): string {
@@ -45,6 +48,7 @@ export class OrderContainerComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly changeDetector: ChangeDetectorRef,
 		private readonly orderService: LogistOrderService,
 		private readonly newSegmentService: NewSegmentService,
 		private readonly shippingPointsSelectorService: ShippingPointsSelectorService,
@@ -91,6 +95,7 @@ export class OrderContainerComponent implements OnChanges {
 
 	setFormValues(): void {
 		this.number.setValue(this.container?.number || '');
+		this.instructions.setValue(this.container?.instructions || '');
 	}
 
 	cancelEditing(event: Event): void {
@@ -103,14 +108,48 @@ export class OrderContainerComponent implements OnChanges {
 		}, 100);
 	}
 
+	print(event: Event): boolean {
+		console.log('print()');
+		event.stopPropagation();
+		event.preventDefault();
+		return false;
+	}
+
 	save(event: Event): void {
 		console.log('save()');
 		event.stopPropagation();
 		event.preventDefault();
+		this.saving = true;
 		this.containerFormGroup.markAsPending();
-		setTimeout(() => {
-			this.containerFormGroup.markAsPristine();
-		}, 100);
+		const
+			teamID = this.team?.id,
+			orderID = this.order?.id,
+			containerID = this.container?.id;
+		if (!teamID || !orderID || !containerID) {
+			return;
+		}
+		const request: ISetContainerFieldsRequest = {
+			teamID, orderID, containerID,
+			setStrings: {},
+		};
+		if (this.number.dirty) {
+			request.setStrings['number'] = this.number.value || '';
+		}
+		if (this.instructions.dirty) {
+			request.setStrings['instructions'] = this.instructions.value || '';
+		}
+
+		this.orderService.setContainerFields(request).subscribe({
+			next: () => {
+				this.saving = false;
+				this.containerFormGroup.markAsPristine();
+				this.changeDetector.detectChanges();
+			},
+			error: err => {
+				this.saving = false;
+				this.errorLogger.logError(err, 'Failed to save changes to container record.');
+			},
+		});
 	}
 
 	delete(event: Event): void {
