@@ -228,10 +228,15 @@ export interface IAddContainerPointsRequest extends ILogistOrderRequest {
 	containerPoints: IContainerPoint[];
 }
 
+export interface IAddContainerPoint {
+	readonly id: string;
+	readonly tasks: ReadonlyArray<ShippingPointTask>;
+}
+
 export interface IAddOrderShippingPointRequest extends ILogistOrderRequest {
-	readonly tasks: ('load' | 'unload')[];
+	readonly tasks?: ReadonlyArray<ShippingPointTask>;
 	readonly locationContactID: string;
-	readonly containerIDs?: ReadonlyArray<string>;
+	readonly containers?: ReadonlyArray<IAddContainerPoint>;
 }
 
 export interface INewContainerPoint {

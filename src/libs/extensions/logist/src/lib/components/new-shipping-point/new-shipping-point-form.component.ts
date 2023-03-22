@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
-import { IAddOrderShippingPointRequest, ILogistOrderContext, IOrderContainer } from '../../dto';
+import { IAddOrderShippingPointRequest, ILogistOrderContext, IOrderContainer, ShippingPointTask } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { IContainer } from '../order-containers-selector/condainer-interface';
 
 @Component({
 	selector: 'sneat-new-shipping-point-form',
@@ -15,7 +17,8 @@ export class NewShippingPointFormComponent {
 	@Output() readonly orderCreated = new EventEmitter<ILogistOrderContext>();
 	contact?: IContactContext;
 
-	containerIDs?: string[];
+	// containerIDs?: string[];
+	protected selectedContainers?: IContainer[];
 
 	protected creating = false;
 
@@ -32,8 +35,8 @@ export class NewShippingPointFormComponent {
 		this.contact = contact;
 	}
 
-	protected onSelectedContainerIDsChanged(containerIDs: string[]): void {
-		this.containerIDs = containerIDs;
+	protected onSelectedContainersChanged(selectedContainers: IContainer[]): void {
+		this.selectedContainers = selectedContainers;
 	}
 
 	addShippingPoint(): void {
@@ -51,20 +54,24 @@ export class NewShippingPointFormComponent {
 			return;
 		}
 		this.creating = true;
-		const tasks: ('load' | 'unload')[] = [];
+		const tasks: ShippingPointTask[] = [];
 		if (this.load) {
 			tasks.push('load');
 		}
 		if (this.unload) {
 			tasks.push('unload');
 		}
-		const request: IAddOrderShippingPointRequest = {
+		const containers = this.selectedContainers?.map(sc => ({ id: sc.id, tasks: sc.tasks || [] })) || [];
+		if (!containers.length) {
+			return;
+		}
+		const request: IAddOrderShippingPointRequest = excludeUndefined({
+			tasks: this.selectedContainers?.length ? undefined : tasks,
 			teamID: order.team.id,
 			orderID: order.id,
-			containerIDs: this.containerIDs,
 			locationContactID: contact.id,
-			tasks,
-		};
+			containers,
+		});
 		this.orderService.addShippingPoint(order.team, request)
 			.subscribe({
 				next: (order) => {

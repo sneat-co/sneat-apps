@@ -1,12 +1,28 @@
-<ion-item-divider color="light">
-	<ion-label><b>{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</b></ion-label>
-	<ion-buttons slot="end">
-		<ion-button color="medium" (click)="delete($event)">
-			<ion-icon name="trash-outline" slot="end"></ion-icon>
-			<ion-label>Delete</ion-label>
-		</ion-button>
-	</ion-buttons>
-</ion-item-divider>
+<ion-grid class="ion-grid-layout">
+	<ion-row>
+		<ion-col size="6">
+			<ion-item-divider color="light">
+				<ion-label style="font-weight: bold">{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</ion-label>
+				<!--		<ion-buttons slot="end">-->
+				<!--			<ion-button color="medium" (click)="delete($event)">-->
+				<!--				<ion-icon name="trash-outline" slot="end"></ion-icon>-->
+				<!--				<ion-label>Delete</ion-label>-->
+				<!--			</ion-button>-->
+				<!--		</ion-buttons>-->
+			</ion-item-divider>
+		</ion-col>
+		<ion-col size="3">
+			<ion-item-divider color="light">
+				<ion-label color="medium">Scheduled <b> <!-- workaround --></b></ion-label>
+			</ion-item-divider>
+		</ion-col>
+		<ion-col size="3">
+			<ion-item-divider color="light">
+				<ion-label color="medium">Actual <b> <!-- workaround --></b></ion-label>
+			</ion-item-divider>
+		</ion-col>
+	</ion-row>
+</ion-grid>
 
 <sneat-container-endpoint endpointSide="arrival" [team]="team" [order]="order" [shippingPointID]="shippingPoint?.id"
 													[containerPoint]="containerPoint"></sneat-container-endpoint>
