@@ -3,12 +3,6 @@
 		<ion-col size="6">
 			<ion-item-divider color="light">
 				<ion-label style="font-weight: bold">{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</ion-label>
-				<!--		<ion-buttons slot="end">-->
-				<!--			<ion-button color="medium" (click)="delete($event)">-->
-				<!--				<ion-icon name="trash-outline" slot="end"></ion-icon>-->
-				<!--				<ion-label>Delete</ion-label>-->
-				<!--			</ion-button>-->
-				<!--		</ion-buttons>-->
 			</ion-item-divider>
 		</ion-col>
 		<ion-col size="3">
@@ -19,6 +13,12 @@
 		<ion-col size="3">
 			<ion-item-divider color="light">
 				<ion-label color="medium">Actual <b> <!-- workaround --></b></ion-label>
+				<ion-buttons slot="end">
+					<ion-button color="medium" (click)="delete($event)" title="Delete">
+						<ion-icon name="trash-outline" slot="end"></ion-icon>
+<!--						<ion-label>Delete</ion-label>-->
+					</ion-button>
+				</ion-buttons>
 			</ion-item-divider>
 		</ion-col>
 	</ion-row>
