@@ -1,14 +1,3 @@
-<ng-container *ngIf="!selectedContainers?.length">
-	<ion-item>
-		<ion-checkbox [(ngModel)]="load" slot="start"></ion-checkbox>
-		<ion-label>Load</ion-label>
-	</ion-item>
-	<ion-item>
-		<ion-checkbox [(ngModel)]="unload" slot="start"></ion-checkbox>
-		<ion-label>Unload</ion-label>
-	</ion-item>
-</ng-container>
-
 <sneat-contact-input
 	[label]="'At'"
 	[team]="order?.team"
@@ -20,6 +9,20 @@
 	(contactChange)="onContactChanged($event)"
 ></sneat-contact-input>
 
+<p class="ion-margin" *ngIf="!contact">
+	<ion-text color="medium">Please select location above.</ion-text>
+</p>
+
+<ng-container *ngIf="contact && !selectedContainers?.length">
+	<ion-item>
+		<ion-checkbox [(ngModel)]="load" slot="start"></ion-checkbox>
+		<ion-label>Load</ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-checkbox [(ngModel)]="unload" slot="start"></ion-checkbox>
+		<ion-label>Unload</ion-label>
+	</ion-item>
+</ng-container>
 
 <sneat-order-containers-selector *ngIf="contact"
 																 [disabled]="creating"

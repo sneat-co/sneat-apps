@@ -53,7 +53,6 @@ export class NewShippingPointFormComponent {
 			this.errorLogger.logError('Contact is not selected');
 			return;
 		}
-		this.creating = true;
 		const tasks: ShippingPointTask[] = [];
 		if (this.load) {
 			tasks.push('load');
@@ -72,6 +71,7 @@ export class NewShippingPointFormComponent {
 			locationContactID: contact.id,
 			containers,
 		});
+		this.creating = true;
 		this.orderService.addShippingPoint(order.team, request)
 			.subscribe({
 				next: (order) => {
