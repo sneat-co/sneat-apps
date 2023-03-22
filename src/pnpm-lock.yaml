@@ -24,7 +24,7 @@ specifiers:
   '@ionic-native/splash-screen': 5.36.0
   '@ionic-native/status-bar': 5.36.0
   '@ionic/angular': 6.6.3
-  '@ionic/core': 6.6.2
+  '@ionic/core': 6.6.3
   '@nrwl/angular': 15.8.7
   '@nrwl/cli': 15.8.7
   '@nrwl/cypress': 15.8.7
@@ -85,7 +85,7 @@ dependencies:
   '@ionic-native/splash-screen': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic-native/status-bar': 5.36.0_tpzq2ez3zszdz4ylau25pld2wq
   '@ionic/angular': 6.6.3_2z2f2tqygu7cnasqr7g4umw5ca
-  '@ionic/core': 6.6.2
+  '@ionic/core': 6.6.3
   '@nrwl/angular': 15.8.7_byhezabvy2jr55xuvzjouzvpuq
   '@sentry/angular': 7.44.2_owfadxokp2nehg2zaxj6j73ksm
   '@sentry/tracing': 7.44.2
@@ -2874,14 +2874,6 @@ packages:
       rxjs: 7.8.0
       tslib: 2.5.0
       zone.js: 0.13.0
-    dev: false
-
-  /@ionic/core/6.6.2:
-    resolution: {integrity: sha512-C3XblxE4OcGs+QWy2meWqNGB8sDZV8w0nUVwLy3AmWovi0CA0xPs2UthUSicUxpCism33pzQp6DiDVsq+G5VTQ==}
-    dependencies:
-      '@stencil/core': 2.18.1
-      ionicons: 6.1.3
-      tslib: 2.5.0
     dev: false
 
   /@ionic/core/6.6.3:
