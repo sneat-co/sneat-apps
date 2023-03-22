@@ -204,7 +204,7 @@ export class OrderContainerComponent implements OnChanges {
 				container: this.container,
 			};
 			this.newShippingPointService.openNewShippingPointDialog(props)
-				.then(modal => {
+				.then((/*modal*/) => {
 					// this.modal = modal;
 					// modal.onDidDismiss().then(() => {
 					// 	this.modal = undefined;

@@ -72,7 +72,7 @@ export class AddressFormComponent implements OnChanges {
 			this.saving = false;
 			this.form.markAsPristine();
 		};
-		const error = (e: any): void => {
+		const error = (e: unknown): void => {
 			this.saving = false;
 			this.errorLogger.logError(e, 'Failed to save address');
 		};

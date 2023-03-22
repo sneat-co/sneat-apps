@@ -22,7 +22,6 @@
 			<ion-input type="number" min="0"
 								 [value]="freightLoad?.numberOfPallets"
 								 (ionChange)="onInputChanged('numberOfPallets', $event)"
-								 (ionBlur)="onBlur('numberOfPallets', $event)"
 			></ion-input>
 		</ion-item>
 	</ion-col>
@@ -32,7 +31,6 @@
 			<ion-input type="number" min="0"
 								 [value]="freightLoad?.grossWeightKg"
 								 (ionChange)="onInputChanged('grossWeightKg', $event)"
-								 (ionBlur)="onBlur('grossWeightKg', $event)"
 			></ion-input>
 		</ion-item>
 	</ion-col>

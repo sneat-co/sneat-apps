@@ -6,7 +6,7 @@ import {
 	FreightPointField, FreightPointIntField,
 	IContainerPoint, IFreightLoad,
 	ILogistOrderContext,
-	IOrderShippingPoint, ISetContainerEndpointFieldsRequest, ISetContainerPointFreightFieldsRequest,
+	IOrderShippingPoint, ISetContainerPointFreightFieldsRequest,
 	ISetContainerPointTaskRequest, EndpointDateField,
 	ShippingPointTask,
 } from '../../dto';
@@ -110,30 +110,20 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		this.checked = this.does(this.task);
-		switch (this.task) {
-			case 'load':
-				this.freightLoad = this.containerPoint?.toLoad;
-				break;
-			case 'unload':
-				this.freightLoad = this.containerPoint?.toUnload;
-				break;
+		if (changes['task']) {
+			this.checked = this.does(this.task);
+			switch (this.task) {
+				case 'load':
+					this.freightLoad = this.containerPoint?.toLoad;
+					break;
+				case 'unload':
+					this.freightLoad = this.containerPoint?.toUnload;
+					break;
+			}
+			this.$weight.next(this.freightLoad?.grossWeightKg);
+			this.$pallets.next(this.freightLoad?.numberOfPallets);
 		}
-		this.$weight.next(this.freightLoad?.grossWeightKg);
-		this.$pallets.next(this.freightLoad?.numberOfPallets);
-		console.log('ContainerPointLoadFormComponent.ngOnChanges()', this.task, this.freightLoad);
-	}
-
-	protected onBlur(name: FreightPointField, event: Event): void {
-		// console.log('ContainerPointLoadFormComponent.onBlur()', name, event);
-		// switch (name) {
-		// 	case 'grossWeightKg':
-		// 		this.onDebounced(name, this.$weight.value);
-		// 		break;
-		// 	case 'numberOfPallets':
-		// 		this.onDebounced(name, this.$pallets.value);
-		// 		break;
-		// }
+		// console.log('ContainerPointLoadFormComponent.ngOnChanges()', this.task, this.freightLoad);
 	}
 
 	protected onInputChanged(name: FreightPointField, event: Event): void {
