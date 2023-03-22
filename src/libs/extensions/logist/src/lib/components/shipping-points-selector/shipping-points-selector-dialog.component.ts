@@ -42,7 +42,7 @@ export class ShippingPointsSelectorDialogComponent {
 			teamID: order.team.id,
 			orderID: order.id,
 			containerPoints: Object.entries(tasksByID)
-				.filter(([_, selected]) => selected?.tasks.length)
+				.filter(([, selected]) => selected?.tasks.length)
 				.map(([shippingPointID, selected]) => {
 					return {
 						containerID,
