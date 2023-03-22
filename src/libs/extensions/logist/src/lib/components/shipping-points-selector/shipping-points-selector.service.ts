@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILogistOrderContext, IOrderContainer, IOrderShippingPoint } from '../../dto';
-import { ShippingPintsSelectorDialogComponent } from './shipping-pints-selector-dialog.component';
+import { ShippingPointsSelectorDialogComponent } from './shipping-points-selector-dialog.component';
 
 @Injectable()
 export class ShippingPointsSelectorService extends SelectorBaseService<IOrderShippingPoint> {
@@ -11,7 +11,7 @@ export class ShippingPointsSelectorService extends SelectorBaseService<IOrderShi
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
 	) {
-		super(ShippingPintsSelectorDialogComponent, errorLogger, modalController);
+		super(ShippingPointsSelectorDialogComponent, errorLogger, modalController);
 	}
 
 	public selectShippingPointsInModal(order: ILogistOrderContext, container: IOrderContainer): Promise<IOrderShippingPoint[] | null> {

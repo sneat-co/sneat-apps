@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DialogHeaderModule } from '@sneat/components';
-import { ShippingPintsSelectorDialogComponent } from './shipping-pints-selector-dialog.component';
+import { LogistOrderServiceModule } from '../../services';
+import { NewShippingPointModule } from '../new-shipping-point';
+import { ShippingPointsSelectorDialogComponent } from './shipping-points-selector-dialog.component';
 import { ShippingPointsSelectorComponent } from './shipping-points-selector.component';
 
 @NgModule({
@@ -13,13 +15,15 @@ import { ShippingPointsSelectorComponent } from './shipping-points-selector.comp
 		ReactiveFormsModule,
 		IonicModule,
 		DialogHeaderModule,
+		NewShippingPointModule,
+		LogistOrderServiceModule,
 	],
 	declarations: [
-		ShippingPintsSelectorDialogComponent,
+		ShippingPointsSelectorDialogComponent,
 		ShippingPointsSelectorComponent,
 	],
 	exports: [
-		ShippingPintsSelectorDialogComponent,
+		ShippingPointsSelectorDialogComponent,
 		ShippingPointsSelectorComponent,
 	],
 })

@@ -40,8 +40,7 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('OrderContainersSelectorComponent.ngOnChanges():', changes);
-		const orderChange = changes['order'];
-		if (orderChange) {
+		if (changes['order'] || changes['container']) {
 			// const previousOrder = orderChange.previousValue as ILogistOrderContext | undefined;
 			this.setContainers();
 		}

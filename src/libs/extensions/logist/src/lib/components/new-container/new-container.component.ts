@@ -76,9 +76,9 @@ export class NewContainerComponent {
 			const getPoints: () => INewContainerPoint[] =  () => {
 				return Object
 					.entries(this.tasksByShippingPoint || {})
-					.filter(([, tasks]) => tasks?.length)
-					.map(([shippingPointID, tasks]) => {
-						const point: INewContainerPoint = { shippingPointID, tasks: tasks || [] };
+					.filter(([, selected]) => selected?.tasks?.length)
+					.map(([shippingPointID, selected]) => {
+						const point: INewContainerPoint = { shippingPointID, tasks: selected?.tasks || [] };
 						return point;
 					});
 			};

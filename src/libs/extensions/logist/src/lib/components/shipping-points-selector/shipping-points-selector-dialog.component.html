@@ -1,0 +1,16 @@
+<ion-header>
+	<sneat-dialog-header [dialogTitle]="title"></sneat-dialog-header>
+</ion-header>
+<ion-content>
+
+	<sneat-shipping-points-selector [order]="order" [container]="container"
+																	(tasksByShippingPointChange)="onTasksByShippingPointIDChanged($event)"
+	></sneat-shipping-points-selector>
+
+	<div class="ion-padding">
+		<ion-button (click)="submit()" [disabled]="!tasksByID || submitting">
+			<ion-label *ngIf="!submitting">Add selected points</ion-label>
+			<ion-label *ngIf="submitting">Adding selected points...</ion-label>
+		</ion-button>
+	</div>
+</ion-content>

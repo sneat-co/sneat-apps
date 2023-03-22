@@ -13,7 +13,7 @@
 	<ion-text color="medium">Please select location above.</ion-text>
 </p>
 
-<ng-container *ngIf="contact && !selectedContainers?.length">
+<ng-container *ngIf="contact && !order?.dto?.containers?.length">
 	<ion-item>
 		<ion-checkbox [(ngModel)]="load" slot="start"></ion-checkbox>
 		<ion-label>Load</ion-label>
@@ -24,7 +24,7 @@
 	</ion-item>
 </ng-container>
 
-<sneat-order-containers-selector *ngIf="contact"
+<sneat-order-containers-selector *ngIf="contact && order?.dto?.containers?.length"
 																 [disabled]="creating"
 																 [order]="order"
 																 [container]="container"
