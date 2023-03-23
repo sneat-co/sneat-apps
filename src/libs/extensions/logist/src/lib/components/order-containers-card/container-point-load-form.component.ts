@@ -44,7 +44,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	protected readonly label = () => this.task ? this.task[0].toUpperCase() + this.task.slice(1) : '';
 
 	protected readonly onWeightChanged = (event: Event): void => this.$weight.next(+(event as CustomEvent).detail.value);
-	protected readonly onPalletsChanged = (event: Event): void => this.$weight.next(+(event as CustomEvent).detail.value);
+	protected readonly onPalletsChanged = (event: Event): void => this.$pallets.next(+(event as CustomEvent).detail.value);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

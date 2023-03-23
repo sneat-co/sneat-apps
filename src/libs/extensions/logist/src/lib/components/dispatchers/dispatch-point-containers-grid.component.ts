@@ -92,7 +92,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 					return `${task} ${load.grossWeightKg}kg`;
 				}
 				return task;
-			}).join(', ');
+			}).join('; ');
 			return  {
 				i: i + 1,
 				type: container?.type,
