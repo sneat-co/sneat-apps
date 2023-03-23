@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IAddress } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IContainerPoint, ILogistOrderContext, IOrderContainer, IOrderCounterparty, IShippingPoint } from '../../dto';
+import {
+	IContainerPoint,
+	ILogistOrderContext,
+	IOrderContainer,
+	IOrderCounterparty,
+	IOrderShippingPoint,
+} from '../../dto';
 import { LogistOrderService } from '../../services';
 import { OrderPrintPageBaseComponent } from '../order-print-page-base.component';
 
 interface IPoint {
 	containerPoint: IContainerPoint;
-	shippingPoint?: IShippingPoint;
+	shippingPoint?: IOrderShippingPoint;
+	address?: IAddress;
 	location?: IOrderCounterparty;
 	counterparty?: IOrderCounterparty;
 }
@@ -21,6 +29,8 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 
 	protected container?: IOrderContainer;
 	protected points?: IPoint[];
+	protected firstArrivalScheduledDate?: string;
+	protected by?: IOrderCounterparty;
 
 	constructor(
 		route: ActivatedRoute,
@@ -53,9 +63,21 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 						shippingPoint,
 						counterparty,
 						location,
+						address: shippingPoint?.location?.address,
 					};
 					return point;
 				});
+
+			const byContactID = this.points?.find(p => !!p.containerPoint.arrival?.byContactID)?.containerPoint.arrival?.byContactID;
+			this.by = this.order?.dto?.counterparties?.find(c => c.contactID === byContactID);
+			this.points = this.points?.sort((a, b) => {
+				const d1 = a.containerPoint.arrival?.scheduledDate || '',
+					d2 = a.containerPoint.arrival?.scheduledDate || '';
+				return d1 == d2 ? 0 : d1 > d2 ? 1 : -1;
+			});
+			this.firstArrivalScheduledDate = this.points?.length
+				? this.points[0].containerPoint.arrival?.scheduledDate
+				: undefined;
 		}
 	}
 }

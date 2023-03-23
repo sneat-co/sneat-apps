@@ -108,11 +108,6 @@ export interface IOrderShippingPoint extends IShippingPointBase {
 	readonly counterparty: IOrderCounterpartyRef;
 }
 
-// @Obsolete('Use IOrderShippingPoint instead')
-export interface IShippingPoint extends IShippingPointBase {
-	readonly id: string;
-}
-
 export interface IContainerEndpoint {
 	readonly byContactID?: string;
 	readonly scheduledDate?: string;
@@ -124,6 +119,7 @@ export interface IContainerPoint extends IShippingPointBase {
 	readonly shippingPointID: string;
 	readonly arrival?: IContainerEndpoint;
 	readonly departure?: IContainerEndpoint;
+	readonly refNumber?: string;
 }
 
 export interface IOrderContainer extends IOrderContainerBase {
@@ -351,7 +347,7 @@ export type FreightPointIntField = 'numberOfPallets' | 'grossWeightKg' | 'volume
 export type FreightPointField = FreightPointIntField | EndpointDateField;
 
 export type ContainerStringField = 'number' | 'instructions';
-export type ContainerPointStringField = 'notes';
+export type ContainerPointStringField = 'notes' | 'refNumber';
 
 export interface ISetContainerPointFreightFieldsRequest extends IContainerPointRequest {
 	readonly task: ShippingPointTask;

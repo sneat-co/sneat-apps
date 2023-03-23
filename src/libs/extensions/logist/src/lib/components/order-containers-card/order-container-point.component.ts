@@ -1,8 +1,14 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormControlName } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { IContainerPoint, ILogistOrderContext, IOrderShippingPoint, ISetContainerPointFieldsRequest } from '../../dto';
+import {
+	ContainerPointStringField,
+	IContainerPoint,
+	ILogistOrderContext,
+	IOrderShippingPoint,
+	ISetContainerPointFieldsRequest,
+} from '../../dto';
 import { LogistOrderService } from '../../services';
 
 @Component({
@@ -18,6 +24,7 @@ export class OrderContainerPointComponent implements OnChanges {
 	protected shippingPoint?: IOrderShippingPoint;
 
 	protected readonly notes = new FormControl<string>('');
+	protected readonly refNumber = new FormControl<string>('');
 
 	protected deleting = false;
 	protected saving = false;
@@ -29,7 +36,12 @@ export class OrderContainerPointComponent implements OnChanges {
 	) {
 	}
 
-	cancelChanges(): void {
+	cancelRefNumberChanges(): void {
+		this.refNumber.setValue(this.containerPoint?.refNumber || '');
+		this.refNumber.markAsPristine();
+	}
+
+	cancelNotesChanges(): void {
 		this.notes.setValue(this.containerPoint?.notes || '');
 		this.notes.markAsPristine();
 	}
@@ -40,7 +52,17 @@ export class OrderContainerPointComponent implements OnChanges {
 		}
 	}
 
-	saveNotes(): void {
+	saveRefNumber(event?: Event): void {
+		this.saveField('refNumber', this.refNumber, event);
+	}
+
+	saveNotes(event?: Event): void {
+		this.saveField('notes', this.notes, event);
+	}
+
+	saveField(name: ContainerPointStringField, formControl: FormControl<string | null>, event?: Event): void {
+		event?.preventDefault();
+		event?.stopPropagation();
 		const teamID = this.team?.id,
 			orderID = this.order?.id,
 			containerID = this.containerPoint?.containerID,
@@ -50,7 +72,7 @@ export class OrderContainerPointComponent implements OnChanges {
 		}
 		const request: ISetContainerPointFieldsRequest = {
 			teamID, orderID, containerID, shippingPointID,
-			setStrings: { notes: this.notes.value || '' },
+			setStrings: { [name]: formControl.value?.trim() || '' },
 		};
 		this.saving = true;
 		const complete = () => {
@@ -63,7 +85,7 @@ export class OrderContainerPointComponent implements OnChanges {
 				complete();
 			},
 			error: err => {
-				this.errorLogger.logError(err, 'Failed to save special instructions');
+				this.errorLogger.logError(err, `Failed to save [${name}]`);
 				complete();
 			},
 			// complete, // TODO: does not work for some reason - needs to be fixed
@@ -73,8 +95,13 @@ export class OrderContainerPointComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerPoint'] || changes['order']) {
 			this.shippingPoint = this.containerPoint?.shippingPointID ? this.order?.dto?.shippingPoints?.find(sp => sp.id === this.containerPoint?.shippingPointID) : undefined;
-			if (this.containerPoint && !this.notes.dirty) {
-				this.notes.setValue(this.containerPoint.notes || '');
+			if (this.containerPoint) {
+				if (!this.notes.dirty) {
+					this.notes.setValue(this.containerPoint.notes || '');
+				}
+				if (!this.refNumber.dirty) {
+					this.refNumber.setValue(this.containerPoint.refNumber || '');
+				}
 			}
 		}
 	}

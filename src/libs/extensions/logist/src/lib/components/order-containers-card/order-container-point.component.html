@@ -2,7 +2,8 @@
 	<ion-row>
 		<ion-col size="6">
 			<ion-item-divider color="light">
-				<ion-label style="font-weight: bold">{{shippingPoint?.counterparty?.title}} @ {{shippingPoint?.location?.title}}</ion-label>
+				<ion-label style="font-weight: bold">{{shippingPoint?.counterparty?.title}}
+					@ {{shippingPoint?.location?.title}}</ion-label>
 			</ion-item-divider>
 		</ion-col>
 		<ion-col size="3">
@@ -16,13 +17,35 @@
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="delete($event)" title="Delete">
 						<ion-icon name="trash-outline" slot="end"></ion-icon>
-<!--						<ion-label>Delete</ion-label>-->
+						<!--						<ion-label>Delete</ion-label>-->
 					</ion-button>
 				</ion-buttons>
 			</ion-item-divider>
 		</ion-col>
 	</ion-row>
 </ion-grid>
+
+<ion-item>
+	<ion-label color="medium">Ref #</ion-label>
+	<ion-input type="text" maxlength="50"
+						 [formControl]="refNumber"
+						 [disabled]="saving"
+						 (keyup.enter)="saveRefNumber($event)"
+						 (keyup.escape)="cancelRefNumberChanges()"
+	></ion-input>
+	<ion-buttons slot="end" *ngIf="refNumber.dirty">
+		<ion-button *ngIf="!saving" (click)="cancelRefNumberChanges()" [disabled]="saving">
+			<ion-icon name="close-outline" slot="start"></ion-icon>
+			<ion-label>Cancel</ion-label>
+		</ion-button>
+		<ion-button color="primary" fill="solid" (click)="saveRefNumber($event)" [disabled]="saving">
+			<ion-icon *ngIf="!saving" slot="start" name="save-outline"></ion-icon>
+			<ion-spinner *ngIf="saving" slot="start" name="lines-small"></ion-spinner>
+			<ion-label *ngIf="!saving">Save</ion-label>
+			<ion-label *ngIf="saving">Saving...</ion-label>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
 
 <sneat-container-endpoint endpointSide="arrival" [team]="team" [order]="order" [shippingPointID]="shippingPoint?.id"
 													[containerPoint]="containerPoint"></sneat-container-endpoint>
@@ -40,11 +63,11 @@
 	<ion-item-divider>
 		<ion-label>Notes</ion-label>
 		<ion-buttons slot="end" *ngIf="notes.dirty">
-			<ion-button *ngIf="!saving" (click)="cancelChanges()" [disabled]="saving">
+			<ion-button *ngIf="!saving" (click)="cancelNotesChanges()" [disabled]="saving">
 				<ion-icon name="close-outline" slot="start"></ion-icon>
 				<ion-label>Cancel</ion-label>
 			</ion-button>
-			<ion-button color="primary" fill="solid" (click)="saveNotes()" [disabled]="saving">
+			<ion-button color="primary" fill="solid" (click)="saveNotes($event)" [disabled]="saving">
 				<ion-icon *ngIf="!saving" slot="start" name="save-outline"></ion-icon>
 				<ion-spinner *ngIf="saving" slot="start" name="lines-small"></ion-spinner>
 				<ion-label *ngIf="!saving">Save</ion-label>
@@ -55,6 +78,8 @@
 	<ion-item>
 		<ion-textarea [autoGrow]="true" [formControl]="notes"
 									(ionChange)="onSpecialInstructionsChanged()"
+									(keyup.enter)="saveNotes($event)"
+									(keyup.escape)="cancelNotesChanges()"
 		></ion-textarea>
 	</ion-item>
 </ion-item-group> <!-- End of Special instructions -->
