@@ -1,11 +1,23 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { IGridColumn } from '@sneat/grid';
-import { IContainerPoint, ILogistOrderContext, IOrderCounterparty, IOrderShippingPoint } from '../../dto';
+import {
+	ContainerType,
+	IContainerPoint,
+	ILogistOrderContext,
+	IOrderCounterparty,
+	IOrderShippingPoint,
+} from '../../dto';
 
 interface IDispatchPointContainerRow {
 	readonly i: number;
 	readonly containerID: string;
+	readonly type?: ContainerType;
+	readonly arrivalScheduledDate?: string;
+	readonly departureScheduledDate?: string;
 	readonly number?: string;
+	readonly tasks?: string;
+	readonly loadNumberOfPallets?: number;
+	readonly loadGrossWeightKg?: number;
 }
 
 @Component({
@@ -40,58 +52,25 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 			field: 'number',
 			dbType: 'string',
 			title: 'Serial number',
+			width: 150,
+			widthShrink: 2,
 		},
 		{
-			field: 'arrivalDate',
+			field: 'tasks',
 			dbType: 'string',
-			title: 'Arrives',
+			title: 'Tasks',
 		},
 		{
-			field: 'departureDate',
+			field: 'arrivalScheduledDate',
 			dbType: 'string',
-			title: 'Departs',
-		},
-		// {
-		// 	field: 'unloadNumberOfPallets',
-		// 	dbType: 'number',
-		// 	title: 'Unload: Pallets',
-		// 	hozAlign: 'right',
-		// 	headerHozAlign: 'right',
-		// },
-		// {
-		// 	field: 'unloadGrossWeightKg',
-		// 	dbType: 'number',
-		// 	title: 'Unload: Gross (kg)',
-		// 	hozAlign: 'right',
-		// 	headerHozAlign: 'right',
-		// },
-		// {
-		// 	field: 'unloadVolumeM3',
-		// 	dbType: 'number',
-		// 	title: 'Unload: Volume (m3)',
-		// 	hozAlign: 'right',
-		// 	headerHozAlign: 'right',
-		// },
-		{
-			field: 'loadNumberOfPallets',
-			dbType: 'number',
-			title: 'Load: Pallets',
-			hozAlign: 'right',
-			headerHozAlign: 'right',
+			title: 'Arrives (scheduled)',
+			width: 150,
 		},
 		{
-			field: 'loadGrossWeightKg',
-			dbType: 'number',
-			title: 'Load: Gross (kg)',
-			hozAlign: 'right',
-			headerHozAlign: 'right',
-		},
-		{
-			field: 'loadVolumeM3',
-			dbType: 'number',
-			title: 'Load: Volume (m3)',
-			hozAlign: 'right',
-			headerHozAlign: 'right',
+			field: 'departureScheduleDate',
+			dbType: 'string',
+			title: 'Departs (scheduled)',
+			width: 150,
 		},
 	];
 
@@ -103,10 +82,30 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 			: [];
 		const containerPointToRow = (cp: IContainerPoint, i: number): IDispatchPointContainerRow => {
 			const container = this.order?.dto?.containers?.find(c => c.id === cp.containerID);
-			const row: IDispatchPointContainerRow = { i: i + 1, containerID: cp.containerID, number: container?.number };
-			return row;
+			const tasks = cp.tasks.map(task => {
+				const load = task === 'load' ? cp.toLoad : task === 'unload' ? cp.toUnload : undefined;
+				if (load?.numberOfPallets && load.grossWeightKg) {
+					return `${task} ${load.numberOfPallets} pallets, ${load.grossWeightKg}kg`;
+				} else if (load?.numberOfPallets) {
+					return `${task} ${load.numberOfPallets} pallets`;
+				} else if (load?.grossWeightKg) {
+					return `${task} ${load.grossWeightKg}kg`;
+				}
+				return task;
+			}).join(', ');
+			return  {
+				i: i + 1,
+				type: container?.type,
+				containerID: cp.containerID,
+				number: container?.number,
+				tasks ,
+				arrivalScheduledDate: cp.arrival?.scheduledDate,
+				departureScheduledDate: cp.departure?.scheduledDate,
+				loadNumberOfPallets: cp.toLoad?.numberOfPallets,
+				loadGrossWeightKg: cp.toLoad?.grossWeightKg,
+			};
 		};
 		this.containerPoints = containerPoints?.map(containerPointToRow) || [];
-		console.log('shippingPointID', shippingPointID, 'containerPoints', containerPoints, 'order', this.order?.dto);
+		console.log('DispatchPointContainersGridComponent.ngOnChanges(): shippingPointID', shippingPointID, 'containerPoints', containerPoints, 'this.containerPoints:', this.containerPoints, 'order', this.order?.dto);
 	}
 }

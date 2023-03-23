@@ -41,9 +41,10 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	private readonly $pallets = new BehaviorSubject<number | undefined>(undefined);
 	private readonly pallets$ = debounce(this.$pallets);
 
-	protected dateFieldName: EndpointDateField = undefined as unknown as EndpointDateField;
+	protected readonly label = () => this.task ? this.task[0].toUpperCase() + this.task.slice(1) : '';
 
-	readonly label = () => this.task ? this.task[0].toUpperCase() + this.task.slice(1) : '';
+	protected readonly onWeightChanged = (event: Event): void => this.$weight.next(+(event as CustomEvent).detail.value);
+	protected readonly onPalletsChanged = (event: Event): void => this.$weight.next(+(event as CustomEvent).detail.value);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -55,13 +56,13 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		this.pallets$.subscribe(v => this.onNumberDebounced('numberOfPallets', v));
 	}
 
-	does(task?: ShippingPointTask): boolean {
+	protected does(task?: ShippingPointTask): boolean {
 		const v = !!task && !!this.containerPoint?.tasks?.includes(task);
 		// console.log('does', task, v);
 		return v;
 	}
 
-	onTaskChecked(event: Event): boolean | void {
+	protected onTaskChecked(event: Event): boolean | void {
 
 		const checked = !!(event as CustomEvent).detail.checked;
 
@@ -124,19 +125,6 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 			this.$pallets.next(this.freightLoad?.numberOfPallets);
 		}
 		// console.log('ContainerPointLoadFormComponent.ngOnChanges()', this.task, this.freightLoad);
-	}
-
-	protected onInputChanged(name: FreightPointField, event: Event): void {
-		console.log('ContainerPointLoadFormComponent.onInputChanged()', name, event);
-		const ce = event as CustomEvent;
-		switch (name) {
-			case 'grossWeightKg':
-				this.$weight.next(+ce.detail.value);
-				break;
-			case 'numberOfPallets':
-				this.$pallets.next(+ce.detail.value);
-				break;
-		}
 	}
 
 	private onNumberDebounced(name: FreightPointIntField, number?: number): void {
