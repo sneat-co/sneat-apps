@@ -5,8 +5,8 @@
   "targets": {
     "sneat-eu": {
       "hosting": {
-        "sneat-express": [
-          "sneat-express"
+        "logistus": [
+          "logistus"
         ]
       }
     }
