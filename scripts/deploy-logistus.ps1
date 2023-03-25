@@ -8,8 +8,8 @@ If (-Not $?) {
     return $LASTEXITCODE
 }
 rm -rf $PSScriptRoot/../websites/freights.app/pwa
-copy-item $PSScriptRoot/../src/dist/apps/logist-app $PSScriptRoot/../websites/freights.app/pwa -force -recurse
+copy-item $PSScriptRoot/../src/dist/apps/logist-app $PSScriptRoot/../websites/logistus.app/pwa -force -recurse
 Set-Location -Path $PSScriptRoot/..
 Set-Location -Path $PSScriptRoot/../websites
-firebase deploy --only hosting:sneat-express
+firebase deploy --only hosting:logistus
 Set-Location -Path $location

@@ -16,8 +16,8 @@
       ]
     },
     {
-      "target": "sneat-express",
-      "public": "freights.app",
+      "target": "logistus",
+      "public": "logistus.app",
       "ignore": [
         "firebase.json",
         "**/.*",
