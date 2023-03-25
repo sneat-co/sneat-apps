@@ -19,7 +19,7 @@ initSentry();
 
 const appInfo: IAppInfo = {
 	appId: 'logist',
-	appTitle: 'Freights.app',
+	appTitle: 'Logistus.app',
 	requiredTeamType: 'company',
 };
 
