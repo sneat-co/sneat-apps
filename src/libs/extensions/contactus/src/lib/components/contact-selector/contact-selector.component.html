@@ -1,50 +1,45 @@
+<ion-item color="primary" class="sneat-tiny-end-padding">
+	<ion-label *ngIf="!contactRole">Contact selector</ion-label>
+	<ion-label *ngIf="contactRole">{{contactRole|titlecase}} selector</ion-label>
+	<ion-buttons slot="end">
+		<ion-button (click)="close($event)">
+			<ion-icon name="close-outline"></ion-icon>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
+
 <ion-content>
-
-	<ion-item color="primary" class="sneat-tiny-end-padding">
-		<ion-label *ngIf="!contactRole">Contact selector</ion-label>
-		<ion-label *ngIf="contactRole">{{contactRole|titlecase}} selector</ion-label>
-		<ion-buttons slot="end">
-			<ion-button (click)="close($event)">
-				<ion-icon name="close-outline"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-
-
 	<ng-container *ngIf="parentRole">
-		<ng-container>
-			<ion-card-header *ngIf="!selectedParent">
-				<ion-card-subtitle>Step 1 of 2: Select {{parentRole}}</ion-card-subtitle>
-			</ion-card-header>
-			<ion-card>
-				<ion-segment *ngIf="!selectedParent" [(ngModel)]="parentTab" class="ion-padding-horizontal">
-					<ion-segment-button value="existing">Existing</ion-segment-button>
-					<ion-segment-button value="new">New</ion-segment-button>
-				</ion-segment>
-				<sneat-select-from-list *ngIf="parentTab === 'existing'"
-																[label]="(selectedParent ? parentRole  : '')|titlecase"
-																[items]="parentItems"
-																[(ngModel)]="parentContactID"
-																(ngModelChange)="onParentContactIDChanged($event)"
-																[isFilterable]="true"
-																radioSlot="end"
-				></sneat-select-from-list>
+		<ion-card-header *ngIf="!selectedParent">
+			<ion-card-subtitle>Step 1 of 2: Select {{parentRole}}</ion-card-subtitle>
+		</ion-card-header>
+		<ion-card>
+			<ion-segment *ngIf="!selectedParent" [(ngModel)]="parentTab" class="ion-padding-horizontal">
+				<ion-segment-button value="existing">Existing</ion-segment-button>
+				<ion-segment-button value="new">New</ion-segment-button>
+			</ion-segment>
+			<sneat-select-from-list *ngIf="parentTab === 'existing'"
+															[label]="(selectedParent ? parentRole  : '')|titlecase"
+															[items]="parentItems"
+															[(ngModel)]="parentContactID"
+															(ngModelChange)="onParentContactIDChanged($event)"
+															[isFilterable]="true"
+															radioSlot="end"
+			></sneat-select-from-list>
 
-				<sneat-new-company-form *ngIf="parentTab === 'new'"
-																[team]="team"
-																[contactRoles]="contactRoles"
-																[contactRole]="parentRole"
-																[hideRole]="true"
-																(contactCreated)="onParentContactCreated($event)">
-					>
-				</sneat-new-company-form>
-			</ion-card>
-			<ion-card-header *ngIf="selectedParent">
-				<ion-card-subtitle>Step 2 of 2: Select {{contactRole}}</ion-card-subtitle>
-			</ion-card-header>
-		</ng-container>
+			<sneat-new-company-form *ngIf="parentTab === 'new'"
+															[team]="team"
+															[contactRoles]="contactRoles"
+															[contactRole]="parentRole"
+															[hideRole]="true"
+															(contactCreated)="onParentContactCreated($event)">
+				>
+			</sneat-new-company-form>
+		</ion-card>
+		<ion-card-header *ngIf="selectedParent">
+			<ion-card-subtitle>Step 2 of 2: Select {{contactRole}}</ion-card-subtitle>
+		</ion-card-header>
 	</ng-container>
-
 
 	<ion-card *ngIf="!parentRole || selectedParent">
 		<!--		<ion-item>-->

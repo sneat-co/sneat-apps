@@ -1,28 +1,79 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	OnInit,
+	Output,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IonInput } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { createSetFocusToInput } from '../focus';
 import { ISaveEvent } from '../save-event';
+
+export interface IAddressFormControls {
+	countryID: FormControl<string | null>;
+	zip: FormControl<string | null>;
+	state: FormControl<string | null>;
+	city: FormControl<string | null>;
+	lines: FormControl<string | null>;
+}
+
+export type AddressForm = FormGroup<IAddressFormControls>;
+
+export interface AddressRequiredFields {
+	zip?: boolean;
+	state?: boolean;
+	city?: boolean;
+	lines?: boolean;
+};
 
 @Component({
 	selector: 'sneat-address-form',
 	templateUrl: './address-form.component.html',
 })
-export class AddressFormComponent implements OnChanges {
+export class AddressFormComponent implements OnChanges, OnInit {
+	@Input() mode?: 'new' | 'edit';
 	@Input() title = 'Address';
 	@Input() address?: IAddress;
+	@Input() requiredFields?: AddressRequiredFields;
 	@Output() readonly save = new EventEmitter<ISaveEvent<IAddress>>();
+	@Output() readonly addressChange = new EventEmitter<IAddress>();
+	@Output() readonly formCreated = new EventEmitter<AddressForm>(); // TODO: there is should be a better way of doing this
+
+	@ViewChild('zipInput', { static: false }) zipInput?: IonInput;
+
+	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
 	protected saving = false;
 
-	protected readonly countryCode = new FormControl('', [Validators.required]);
-	protected readonly zipCode = new FormControl('', [Validators.pattern('[0-9 A-Z]{2,10}')]);
-	protected readonly lines = new FormControl('', [Validators.required]);
+	protected readonly countryID = new FormControl('', [Validators.required]);
+	protected readonly zip = new FormControl('', [Validators.pattern('[0-9 A-Z]{2,10}')]);
+	readonly state = new FormControl<string>('', {
+		validators: [
+			Validators.minLength(2),
+			Validators.maxLength(20)],
+	});
+	readonly city = new FormControl<string>('', {
+		validators: [
+			Validators.minLength(2),
+			Validators.maxLength(20)],
+	});
+	protected readonly lines = new FormControl('', [
+		Validators.maxLength(200),
+	]);
 
-	protected readonly form = new FormGroup({
-		countryCode: this.countryCode,
-		zipCode: this.zipCode,
+	public readonly form: AddressForm = new FormGroup({
+		countryID: this.countryID,
+		zip: this.zip,
+		state: this.state,
+		city: this.city,
 		lines: this.lines,
 	});
 
@@ -31,24 +82,49 @@ export class AddressFormComponent implements OnChanges {
 	) {
 	}
 
-	onCountryChanged(countryCode: string): void {
-		this.countryCode.setValue(countryCode);
-		this.countryCode.markAsDirty();
-		if (!countryCode || countryCode === '--' || this.address?.countryID && this.address.countryID != countryCode) {
-			this.zipCode.setValue('');
+	ngOnInit(): void {
+		this.formCreated.emit(this.form);
+	}
+
+	onCountryChanged(countryID: string): void {
+		this.countryID.setValue(countryID);
+		this.countryID.markAsDirty();
+		if (!countryID || countryID === '--' || this.address?.countryID && this.address.countryID != countryID) {
+			this.zip.setValue('');
 			this.lines.setValue('');
 		}
+		const address: IAddress = {
+			countryID: countryID,
+			zipCode: this.zip.value || undefined,
+			state: this.state.value || undefined,
+		};
+		this.addressChange.emit(address);
+		setTimeout(() => this.setFocusToInput(this.zipInput), 100);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['address']) {
-			if (!this.countryCode.dirty) {
-				this.countryCode.setValue(this.address?.countryID || '');
-				this.countryCode.markAsPristine();
+		if (changes['requiredFields'] && this.requiredFields) {
+			if (this.requiredFields?.zip) {
+				this.zip.setValidators([Validators.required]);
 			}
-			if (!this.zipCode.dirty) {
-				this.zipCode.setValue(this.address?.zipCode || '');
-				this.zipCode.markAsPristine();
+			if (this.requiredFields?.lines) {
+				this.lines.setValidators([Validators.required]);
+			}
+			if (this.requiredFields?.state) {
+				this.state.setValidators([Validators.required]);
+			}
+			if (this.requiredFields?.city) {
+				this.city.setValidators([Validators.required]);
+			}
+		}
+		if (changes['address']) {
+			if (!this.countryID.dirty) {
+				this.countryID.setValue(this.address?.countryID || '');
+				this.countryID.markAsPristine();
+			}
+			if (!this.zip.dirty) {
+				this.zip.setValue(this.address?.zipCode || '');
+				this.zip.markAsPristine();
 			}
 			if (!this.lines.dirty) {
 				this.lines.setValue(this.address?.lines || '');
@@ -59,13 +135,14 @@ export class AddressFormComponent implements OnChanges {
 
 	protected cancelChanges(): void {
 		console.log('AddressFormComponent.cancelChanges()');
-		this.countryCode.setValue(this.address?.countryID || '');
-		this.countryCode.markAsPristine();
-		this.zipCode.setValue(this.address?.zipCode || '');
-		this.zipCode.markAsPristine();
+		this.countryID.setValue(this.address?.countryID || '');
+		this.countryID.markAsPristine();
+		this.zip.setValue(this.address?.zipCode || '');
+		this.zip.markAsPristine();
 		this.lines.setValue(this.address?.lines || '');
 		this.lines.markAsPristine();
 	}
+
 	protected saveChanges(): void {
 		console.log('AddressFormComponent.saveChanges()');
 		const success = (): void => {
@@ -77,11 +154,11 @@ export class AddressFormComponent implements OnChanges {
 			this.errorLogger.logError(e, 'Failed to save address');
 		};
 		this.saving = true;
-		const countryID = this.countryCode.value;
+		const countryID = this.countryID.value;
 		if (this.form.dirty && countryID) {
 			const object: IAddress = excludeUndefined({
 				countryID,
-				zipCode: this.zipCode.value || undefined,
+				zipCode: this.zip.value || undefined,
 				lines: this.lines.value || undefined,
 			});
 			this.save.emit({ object, success, error });

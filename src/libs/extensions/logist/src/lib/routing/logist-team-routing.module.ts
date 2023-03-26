@@ -14,7 +14,12 @@ export class EmptyComponent {
 export const logistRoutes: Routes = [
 	{
 		path: '',
+		pathMatch: 'full',
 		loadChildren: () => import('../pages/logist-team-page/logist-team-page.module').then(m => m.LogistTeamPageModule),
+	},
+	{
+		path: 'settings',
+		loadChildren: () => import('../pages/logist-team-settings-page/logist-team-settings-page.module').then(m => m.LogistTeamSettingsPageModule),
 	},
 	{
 		path: '',

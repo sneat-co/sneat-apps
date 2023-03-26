@@ -49,7 +49,7 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 		onSnapshot<Dto2>(docRef, snapshot => subj.next(snapshot), err => subj.error(err), () => subj.complete());
 		// const snapshots = from(getDoc<Dto2>(docRef));
 		return subj.asObservable().pipe(
-			tap(snapshot => console.log('SneatFirestoreService.watchByDocRef: snapshot:', snapshot)),
+			tap(snapshot => console.log(`SneatFirestoreService.watchByDocRef(${docRef.path}): snapshot:`, snapshot)),
 			map(changes => docSnapshotToDto<Brief, Dto2>(docRef.id, this.dto2brief, changes)),
 		);
 	}

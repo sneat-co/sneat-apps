@@ -19,8 +19,28 @@ export type CounterpartyRole =
 	| 'port_to_location'
 	;
 
+export type LogistTeamRole =
+	'custom_agent' |
+	'freight_agent' |
+	'freight_broker' |
+	'shipping_line' |
+	'trucker' |
+	'sender' |
+	'warehouse_operator';
+
+export const LogistTeamRoles: Record<LogistTeamRole, string> = {
+	'custom_agent': 'Custom agent',
+	'freight_agent': 'Freight agent',
+	'freight_broker': 'Freight broker',
+	'shipping_line': 'Shipping line',
+	'trucker': 'Trucking company',
+	'sender': 'Sender (e.g. seller/factory)',
+	'warehouse_operator': 'Warehouse operator',
+};
+
 export interface ILogistTeamDto {
 	readonly contactID: string;
+	readonly orderNumberPrefix?: string;
 }
 
 export interface ILogistTeamBrief extends ILogistTeamDto {

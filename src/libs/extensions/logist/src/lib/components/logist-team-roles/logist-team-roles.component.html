@@ -1,0 +1,9 @@
+<ion-card>
+	<ion-item-divider color="light">
+		<ion-label>Roles</ion-label>
+	</ion-item-divider>
+	<ion-item *ngFor="let role of roles">
+		<ion-checkbox [value]="role.id"  slot="start"></ion-checkbox>
+		<ion-label>{{role.title}}</ion-label>
+	</ion-item>
+</ion-card>

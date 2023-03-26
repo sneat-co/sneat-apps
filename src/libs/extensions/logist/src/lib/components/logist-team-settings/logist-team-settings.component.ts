@@ -1,28 +1,37 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
-import { createSetFocusToInput } from '@sneat/components';
+import { AddressForm, AddressFormComponent, IAddressFormControls } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
+import { IAddress } from '@sneat/dto';
+import { ContactService } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { ISetLogistTeamSettingsRequest } from '../../dto';
+import { Subject, takeUntil } from 'rxjs';
+import { ILogistTeamContext, ISetLogistTeamSettingsRequest } from '../../dto';
 import { LogistTeamService } from '../../services';
+
+
+interface ILogistTeamSettingsFormControls extends IAddressFormControls {
+	vatNumber: FormControl<string | null>;
+	orderNumberPrefix: FormControl<string | null>;
+}
+
+type LogistTeamSettingsForm = FormGroup<ILogistTeamSettingsFormControls>;
 
 @Component({
 	selector: 'sneat-logist-team-settings',
 	templateUrl: './logist-team-settings.component.html',
 })
-export class LogistTeamSettingsComponent {
-	@ViewChild('addressInput', { static: false }) addressInput?: IonInput;
-
+export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterViewInit {
 	@Input() team?: ITeamContext;
+	@Input() logistTeam?: ILogistTeamContext;
 
-	readonly countryID = new FormControl<string>('', {
-		validators: [
-			Validators.required,
-			Validators.minLength(2),
-			Validators.maxLength(2)],
-	});
+	@ViewChild(AddressFormComponent) addressFormComponent?: AddressFormComponent;
+
+	private readonly destroyed = new Subject<void>();
+	private addressForm?: AddressForm;
+	protected address?: IAddress;
+
 	readonly vatNumber = new FormControl<string>('', {
 		validators: [
 			Validators.minLength(5),
@@ -32,52 +41,68 @@ export class LogistTeamSettingsComponent {
 		validators: [
 			Validators.maxLength(5)],
 	});
-	readonly address = new FormControl<string>('', {
-		validators: [
-			Validators.required,
-			Validators.minLength(10),
-			Validators.maxLength(1024)],
-	});
+
 	form = new FormGroup({
-		countryID: this.countryID,
-		address: this.address,
 		vatNumber: this.vatNumber,
 		orderNumberPrefix: this.orderNumberPrefix,
-	});
-
-	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
+	}) as unknown as LogistTeamSettingsForm; // TODO: get rid of unknown
 
 	isSubmitting = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly logistTeamService: LogistTeamService,
+		private readonly contactService: ContactService,
 		// private readonly navController: NavController,
 	) {
 	}
 
-	onCountryChanged(countryID: string): void {
-		this.countryID.setValue(countryID);
-		setTimeout(() => this.setFocusToInput(this.addressInput), 100);
+	ngAfterViewInit(): void {
+		const c = this.addressFormComponent;
+		if (c) {
+			Object.entries(c.form.controls).forEach(([key, control]) => {
+				const k = key as keyof ILogistTeamSettingsFormControls;
+				this.form.addControl(k, c.form.controls.countryID);
+			});
+		}
+
+		console.log('LogistTeamSettingsComponent.ngAfterViewInit():', c, this.form.controls);
+	}
+
+	ngOnDestroy(): void {
+		this.destroyed.next();
+	}
+
+	protected onAddressFormChanged(addressForm: AddressForm): void {
+		this.addressForm = addressForm;
+	}
+
+	protected onAddressChanged(address: IAddress): void {
+		this.address = address;
 	}
 
 
 	submit(): void {
+		this.form.markAllAsTouched();
 		if (this.form.invalid) {
-			this.form.markAllAsTouched();
 			alert('Please fill in all required fields.');
+			return;
+		}
+		if (this.addressFormComponent?.form?.invalid) {
+			alert('Please make sure address form data are correct.');
 			return;
 		}
 		if (!this.team) {
 			this.errorLogger.logError('No team context provided.');
 			return;
 		}
+		const address = this.address;
+		if (!address) {
+			return;
+		}
 		const request: ISetLogistTeamSettingsRequest = excludeUndefined({
 			teamID: this.team.id,
-			address: {
-				countryID: this.countryID.value || '',
-				lines: this.address.value?.trim(),
-			},
+			address,
 			vatNumber: this.vatNumber.value?.trim() || undefined,
 			orderNumberPrefix: this.orderNumberPrefix.value || undefined,
 		});
@@ -91,5 +116,30 @@ export class LogistTeamSettingsComponent {
 				this.isSubmitting = false;
 			},
 		});
+	}
+
+
+	ngOnChanges(changes: SimpleChanges): void {
+		console.log('LogistTeamSettingsComponent.ngOnChanges()', this.logistTeam);
+		if (changes['logistTeam']) {
+			if (!this.orderNumberPrefix.dirty) {
+				this.orderNumberPrefix.setValue(this.logistTeam?.dto?.orderNumberPrefix || '');
+			}
+			const contactID = this.logistTeam?.dto?.contactID;
+			if (!contactID) {
+				return;
+			}
+			const team = this.team;
+			if (!team) {
+				return;
+			}
+			this.contactService
+				.watchContactById(team, contactID)
+				.pipe(
+					takeUntil(this.destroyed),
+				).subscribe(contact => {
+				this.address = contact?.dto?.address || this.address;
+			});
+		}
 	}
 }

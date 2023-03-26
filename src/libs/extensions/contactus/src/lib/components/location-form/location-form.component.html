@@ -1,14 +1,14 @@
 <ion-card>
 <!--	parentContact: {{parentContact|json}}-->
 
-	<sneat-country-selector
-		[(country)]="countryID"
-		[disabled]="disabled"
-		(countryChange)="onCountryChanged()"
-	></sneat-country-selector>
+<!--	<sneat-country-selector-->
+<!--		[(country)]="countryID"-->
+<!--		[disabled]="disabled"-->
+<!--		(countryChange)="onCountryChanged()"-->
+<!--	></sneat-country-selector>-->
 </ion-card>
 
-<ng-container *ngIf="countryID">
+<ng-container>
 	<ion-card>
 		<ion-item-divider color="light">
 			{{label}}
@@ -22,18 +22,25 @@
 								 (ionChange)="onInputChange()"
 			></ion-input>
 		</ion-item>
-		<ion-item>
-			<ion-label position="stacked">Address</ion-label>
-			<ion-textarea
-				[(ngModel)]="addressText"
-				[disabled]="disabled"
-				(ionChange)="onInputChange()"
-				[required]="contact?.dto?.type === 'location'"
-			></ion-textarea>
-		</ion-item>
+
+
+<!--		<ion-item>-->
+<!--			<ion-label position="stacked">Address</ion-label>-->
+<!--			<ion-textarea-->
+<!--				[(ngModel)]="addressText"-->
+<!--				[disabled]="disabled"-->
+<!--				(ionChange)="onInputChange()"-->
+<!--				[required]="contact?.dto?.type === 'location'"-->
+<!--			></ion-textarea>-->
+<!--		</ion-item>-->
 	</ion-card>
 
-<!--	contact: {{contact|json}}-->
+	<sneat-address-form
+		[address]="contact?.dto?.address"
+	></sneat-address-form>
+	<!--		(save)="saveAddress($event)"-->
+
+	<!--	contact: {{contact|json}}-->
 
 	<ion-card *ngIf="!hideSubmitButton">
 		<ion-card-content>

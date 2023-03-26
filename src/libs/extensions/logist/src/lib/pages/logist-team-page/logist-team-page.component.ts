@@ -28,6 +28,7 @@ export class LogistTeamPageComponent extends TeamBaseComponent {
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: logistTeam => {
+						console.log('logistTeam:', logistTeam);
 						this.logistTeam = logistTeam;
 					},
 					error: err => {

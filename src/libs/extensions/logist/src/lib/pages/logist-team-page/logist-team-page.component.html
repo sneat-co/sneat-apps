@@ -18,13 +18,22 @@
 	<ion-card *ngIf="logistTeam?.dto?.contactID">
 		<ion-item-divider>
 			<ion-label>Company</ion-label>
+			<ion-buttons slot="end">
+				<ion-button title="Settings" routerLink="settings">
+					<ion-icon name="settings-outline" slot="start"></ion-icon>
+					<ion-label>Settings</ion-label>
+				</ion-button>
+			</ion-buttons>
 		</ion-item-divider>
-		<sneat-logist-team-menu-items  [team]="team"></sneat-logist-team-menu-items>
+		<sneat-logist-team-menu-items [team]="team"></sneat-logist-team-menu-items>
 	</ion-card>
 
 	<ng-container *ngIf="logistTeam && !logistTeam.dto?.contactID">
 		<p class="ion-margin">To start working please setup your company data.</p>
-		<sneat-logist-team-settings [team]="team"></sneat-logist-team-settings>
+		<sneat-logist-team-settings
+			[team]="team"
+			[logistTeam]="logistTeam"
+		></sneat-logist-team-settings>
 
 	</ng-container>
 
