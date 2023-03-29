@@ -163,8 +163,8 @@ devDependencies:
     specifier: 8.8.0
     version: 8.8.0(eslint@8.37.0)
   eslint-plugin-cypress:
-    specifier: 2.13.1
-    version: 2.13.1(eslint@8.37.0)
+    specifier: 2.13.2
+    version: 2.13.2(eslint@8.37.0)
   git-describe:
     specifier: 4.1.1
     version: 4.1.1
@@ -6686,8 +6686,8 @@ packages:
       eslint: 8.37.0
     dev: true
 
-  /eslint-plugin-cypress@2.13.1(eslint@8.37.0):
-    resolution: {integrity: sha512-THjc7IT3S9H4KwmRhzAhMGQaEqy78/7W75He/gBhJEH0vIuAY16vOI4YSliDo/ZY+Wm6DtvMHR+8uVvICcI3Lw==}
+  /eslint-plugin-cypress@2.13.2(eslint@8.37.0):
+    resolution: {integrity: sha512-LlwjnBTzuKuC0A4H0RxVjs0YeAWK+CD1iM9Dp8un3lzT713ePQxfpPstCD+9HSAss8emuE3b2hCNUST+NrUwKw==}
     peerDependencies:
       eslint: '>= 3.2.1'
     dependencies:
