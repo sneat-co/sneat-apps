@@ -133,8 +133,8 @@ devDependencies:
     specifier: 15.8.9
     version: 15.8.9(eslint@8.37.0)(nx@15.8.9)(prettier@2.8.7)(typescript@4.9.5)
   '@nrwl/nx-cloud':
-    specifier: 15.3.2
-    version: 15.3.2
+    specifier: 15.3.3
+    version: 15.3.3
   '@nrwl/workspace':
     specifier: 15.8.9
     version: 15.8.9(eslint@8.37.0)(prettier@2.8.7)(typescript@4.9.5)
@@ -3856,8 +3856,8 @@ packages:
       - supports-color
       - typescript
 
-  /@nrwl/nx-cloud@15.3.2:
-    resolution: {integrity: sha512-fga4duqcrkyT3djQpyRp8god3trb18hb+Tv0CYRrCcdNDHhzb6LOrxnenrFsjPjt38hyCdyu/ZYmHI/lQXyhAw==}
+  /@nrwl/nx-cloud@15.3.3:
+    resolution: {integrity: sha512-zU+0YwN2M+G8Z9RjcsIbya6jgTB1SBGhqCXOb/CdwLnCHylAP0T6f9vaQibZE1BhI6doM+betqY0FvPazTjd8g==}
     hasBin: true
     dependencies:
       axios: 0.21.4
