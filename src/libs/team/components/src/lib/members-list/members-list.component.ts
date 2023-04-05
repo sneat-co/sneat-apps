@@ -165,7 +165,7 @@ export class MembersListComponent implements OnChanges {
 		event.preventDefault();
 		const modal = await this.modalController.create({
 			component: InviteModalComponent,
-			swipeToClose: true,
+			// swipeToClose: true,
 			presentingElement: this.routerOutlet.nativeEl,
 			componentProps: {
 				team: this.team,
