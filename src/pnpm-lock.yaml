@@ -51,7 +51,7 @@ dependencies:
     version: 7.0.2
   '@nrwl/angular':
     specifier: 15.9.2
-    version: 15.9.2(@angular-devkit/build-angular@15.2.6)(@angular-devkit/core@15.2.6)(@angular-devkit/schematics@15.2.6)(@babel/core@7.21.4)(@schematics/angular@15.2.6)(@types/node@18.15.11)(cypress@12.9.0)(eslint@8.38.0)(nx@15.9.2)(rxjs@7.8.0)(typescript@4.9.5)
+    version: 15.9.2(@angular-devkit/build-angular@15.2.6)(@angular-devkit/core@15.2.6)(@angular-devkit/schematics@15.2.6)(@babel/core@7.21.4)(@schematics/angular@15.2.6)(@types/node@18.15.11)(cypress@12.10.0)(eslint@8.38.0)(nx@15.9.2)(rxjs@7.8.0)(typescript@4.9.5)
   '@sentry/angular':
     specifier: 7.48.0
     version: 7.48.0(@angular/common@15.2.7)(@angular/core@15.2.7)(@angular/router@15.2.7)(rxjs@7.8.0)
@@ -122,7 +122,7 @@ devDependencies:
     version: 15.9.2
   '@nrwl/cypress':
     specifier: 15.9.2
-    version: 15.9.2(cypress@12.9.0)(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5)
+    version: 15.9.2(cypress@12.10.0)(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5)
   '@nrwl/eslint-plugin-nx':
     specifier: 15.9.2
     version: 15.9.2(@typescript-eslint/parser@5.58.0)(eslint-config-prettier@8.8.0)(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5)
@@ -157,8 +157,8 @@ devDependencies:
     specifier: 5.58.0
     version: 5.58.0(eslint@8.38.0)(typescript@4.9.5)
   cypress:
-    specifier: 12.9.0
-    version: 12.9.0
+    specifier: 12.10.0
+    version: 12.10.0
   eslint:
     specifier: 8.38.0
     version: 8.38.0
@@ -4596,7 +4596,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular@15.9.2(@angular-devkit/build-angular@15.2.6)(@angular-devkit/core@15.2.6)(@angular-devkit/schematics@15.2.6)(@babel/core@7.21.4)(@schematics/angular@15.2.6)(@types/node@18.15.11)(cypress@12.9.0)(eslint@8.38.0)(nx@15.9.2)(rxjs@7.8.0)(typescript@4.9.5):
+  /@nrwl/angular@15.9.2(@angular-devkit/build-angular@15.2.6)(@angular-devkit/core@15.2.6)(@angular-devkit/schematics@15.2.6)(@babel/core@7.21.4)(@schematics/angular@15.2.6)(@types/node@18.15.11)(cypress@12.10.0)(eslint@8.38.0)(nx@15.9.2)(rxjs@7.8.0)(typescript@4.9.5):
     resolution: {integrity: sha512-/94rDk3UAcWjfz/XbNGi+2R76dytq2hQEu8yVzFNjn03YlZLfNFgEpXphpkx6eQq7KEHJ2vkr/JrXrkCeHfl4Q==}
     peerDependencies:
       '@angular-devkit/build-angular': '>= 14.0.0 < 16.0.0'
@@ -4612,7 +4612,7 @@ packages:
       '@angular-devkit/build-angular': 15.2.6(@angular/compiler-cli@15.2.7)(ng-packagr@15.2.2)(typescript@4.9.5)
       '@angular-devkit/core': 15.2.6(chokidar@3.5.3)
       '@angular-devkit/schematics': 15.2.6
-      '@nrwl/cypress': 15.9.2(cypress@12.9.0)(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5)
+      '@nrwl/cypress': 15.9.2(cypress@12.10.0)(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5)
       '@nrwl/devkit': 15.9.2(nx@15.9.2)
       '@nrwl/jest': 15.9.2(@types/node@18.15.11)(nx@15.9.2)(ts-node@10.9.1)(typescript@4.9.5)
       '@nrwl/js': 15.9.2(nx@15.9.2)(typescript@4.9.5)
@@ -4673,7 +4673,7 @@ packages:
       - '@swc/core'
       - debug
 
-  /@nrwl/cypress@15.9.2(cypress@12.9.0)(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5):
+  /@nrwl/cypress@15.9.2(cypress@12.10.0)(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5):
     resolution: {integrity: sha512-spgcq2G6cBN0D6fcSmgeQ1gbbDZu2oyorJoCe/yQBbMD2X9YTwjeVK07vzmJDwWybVv1P2zdaYZms1DSYMQyaQ==}
     peerDependencies:
       cypress: '>= 3 < 13'
@@ -4686,7 +4686,7 @@ packages:
       '@nrwl/linter': 15.9.2(eslint@8.38.0)(nx@15.9.2)(typescript@4.9.5)
       '@nrwl/workspace': 15.9.2
       '@phenomnomnominal/tsquery': 4.1.1(typescript@4.9.5)
-      cypress: 12.9.0
+      cypress: 12.10.0
       detect-port: 1.5.1
       dotenv: 10.0.0
       semver: 7.3.4
@@ -6886,8 +6886,8 @@ packages:
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
-  /commander@5.1.0:
-    resolution: {integrity: sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==}
+  /commander@6.2.1:
+    resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
     engines: {node: '>= 6'}
 
   /commander@7.2.0:
@@ -7274,8 +7274,8 @@ packages:
   /cuint@0.2.2:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
 
-  /cypress@12.9.0:
-    resolution: {integrity: sha512-Ofe09LbHKgSqX89Iy1xen2WvpgbvNxDzsWx3mgU1mfILouELeXYGwIib3ItCwoRrRifoQwcBFmY54Vs0zw7QCg==}
+  /cypress@12.10.0:
+    resolution: {integrity: sha512-Y0wPc221xKKW1/4iAFCphkrG2jNR4MjOne3iGn4mcuCaE7Y5EtXL83N8BzRsAht7GYfWVjJ/UeTqEdDKHz39HQ==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
@@ -7294,7 +7294,7 @@ packages:
       check-more-types: 2.24.0
       cli-cursor: 3.1.0
       cli-table3: 0.6.3
-      commander: 5.1.0
+      commander: 6.2.1
       common-tags: 1.8.2
       dayjs: 1.11.7
       debug: 4.3.4(supports-color@8.1.1)
@@ -13734,7 +13734,7 @@ packages:
     engines: {node: '>= 0.8'}
 
   /verror@1.10.0:
-    resolution: {integrity: sha1-OhBcoXBTr1XW4nDB+CiGguGNpAA=}
+    resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
     engines: {'0': node >=0.6.0}
     dependencies:
       assert-plus: 1.0.0
