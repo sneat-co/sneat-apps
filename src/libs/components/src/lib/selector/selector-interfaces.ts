@@ -4,3 +4,8 @@ export interface ISelectItem {
 	readonly emoji?: string;
 	readonly iconName?: string;
 }
+
+export interface ISelectItemEvent {
+	item: ISelectItem;
+	event: Event;
+}

@@ -8,3 +8,8 @@ export interface IContactRequest extends ITeamRequest {
 export interface ISetContactAddressRequest extends IContactRequest {
 	address: IAddress;
 }
+
+export interface ISetContactRoleRequest extends IContactRequest {
+	role: string;
+	value: boolean;
+}

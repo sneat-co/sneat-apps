@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { AddressFormModule, SneatPipesModule } from '@sneat/components';
+import { AddressFormModule, ContactRolesInputModule, SneatPipesModule } from '@sneat/components';
 import { ContactsListModule } from '../../components/contacts-list/contacts-list.module';
 import { ContactServiceModule } from '../../services';
 
@@ -18,16 +18,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		ContactServiceModule,
-		SneatPipesModule,
-		ContactsListModule,
-		AddressFormModule,
-	],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    ContactServiceModule,
+    SneatPipesModule,
+    ContactsListModule,
+    AddressFormModule,
+    ContactRolesInputModule,
+  ],
 	declarations: [
 		ContactPageComponent,
 	],

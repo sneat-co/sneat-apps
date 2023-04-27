@@ -1,0 +1,10 @@
+<!--<ion-list>-->
+<!--	<ion-item *ngFor="let role of roles; trackBy: id">-->
+<!--		<ion-checkbox [disabled]="processingRoleIDs.includes(role.id)" slot="start" [value]="role.id" [checked]="contact?.brief?.roles?.includes(role.id)" (ionChange)="onRoleChanged($event, role)"></ion-checkbox>-->
+<!--		<ion-label>{{role.title}}</ion-label>-->
+<!--	</ion-item>-->
+<!--</ion-list>-->
+
+<sneat-multi-selector title="Roles" [allItems]="roles" [selectedIDs]="contact?.brief?.roles"></sneat-multi-selector>
+
+<div style="height: 100px"></div>

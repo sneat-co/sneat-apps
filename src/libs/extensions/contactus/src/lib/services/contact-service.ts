@@ -6,7 +6,7 @@ import { ContactRole, IContactBrief, IContactDto, IContactsBrief } from '@sneat/
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { map, Observable, throwError } from 'rxjs';
-import { IContactRequest, ISetContactAddressRequest } from '../dto';
+import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from '../dto';
 
 @Injectable()
 export class ContactService {
@@ -35,6 +35,10 @@ export class ContactService {
 	}
 
 	public setContactAddress(request: ISetContactAddressRequest): Observable<void> {
+		return this.teamItemService.sneatApiService.post('contacts/set_contact_address', request);
+	}
+
+	public setContactRole(request: ISetContactRoleRequest): Observable<void> {
 		return this.teamItemService.sneatApiService.post('contacts/set_contact_address', request);
 	}
 

@@ -116,7 +116,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		return role !== 'tenant' && role !== 'landlord';
 	}
 
-	applyFilter(filter: string, role?: string): void {
+	applyFilter(filter: string, role?: ContactRole): void {
 		console.log('ContactsPageComponent.applyFilter()', filter, role, this.allContacts);
 		filter = filter && filter.toLowerCase();
 		this.filter = filter;

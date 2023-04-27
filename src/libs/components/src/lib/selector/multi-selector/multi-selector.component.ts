@@ -1,23 +1,24 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
-import { ISelectItem, SelectorBaseComponent } from '..';
+import { ISelectItem, ISelectItemEvent, SelectorBaseComponent } from '..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-multi-selector',
 	templateUrl: './multi-selector.component.html',
 })
-export class MultiSelectorComponent extends SelectorBaseComponent implements OnChanges, OnDestroy {
+export class MultiSelectorComponent extends SelectorBaseComponent implements OnChanges {
 
-	private readonly destroyed = new Subject<void>();
+	@Input() title = 'Select';
 
-	@Input() public items?: Observable<ISelectItem[]>;
+	@Input() canRemove = false;
+	@Input() public allItems?: ISelectItem[];
+	@Input() public selectedIDs?: string[];
 
-	protected allItems?: ISelectItem[];
-	protected selectedItem?: ISelectItem;
+	@Output() readonly removeItems = new EventEmitter<ISelectItemEvent[]>();
+	@Output() readonly addItems = new EventEmitter<ISelectItemEvent[]>();
 
-	private subscription?: Subscription;
+	protected selectedItems?: ISelectItem[];
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -26,29 +27,15 @@ export class MultiSelectorComponent extends SelectorBaseComponent implements OnC
 		super(errorLogger, modalController);
 	}
 
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
-	}
-
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['items']) {
-			this.subscription?.unsubscribe();
-			this.subscription = this.items
-				?.pipe(
-					takeUntil(this.destroyed),
-				)
-				.subscribe({
-					next: items => {
-						this.allItems = items;
-						this.applyFilter();
-					},
-				});
+		if (changes['allItems']) {
+			this.selectedItems = this.allItems?.filter(item => this.selectedIDs?.includes(item.id));
 		}
 	}
 
-	private applyFilter(): void {
-		throw new Error('Not implemented');
+	protected removeItem(event: Event, item: ISelectItem): void {
+		event.stopPropagation();
+		this.selectedItems = this.selectedItems?.filter(i => i.id !== item.id);
+		this.removeItems.emit([{ event, item }]);
 	}
-
 }

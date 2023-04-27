@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ISelectItem } from '@sneat/components';
 import { ContactRole } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
@@ -27,8 +28,12 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 		route: ActivatedRoute,
 		private readonly contactService: ContactService,
 		teamParams: TeamComponentBaseParams,
+		@Inject(CONTACT_ROLES_BY_TYPE) public readonly contactRolesByType: Record<string, IContactRole[]>,
 	) {
+
 		super('NewLogistCompanyPageComponent', route, teamParams);
+		const roles   = contactRolesByType['company'];
+		this.contactTypes = roles;
 		route.queryParamMap
 			.pipe(
 				first(),
