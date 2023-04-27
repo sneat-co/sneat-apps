@@ -1,6 +1,9 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label color="medium">{{title}}</ion-label>
+		<ion-label color="medium">
+			{{title}}
+			<span *ngIf="!countryID.value">&mdash; please select country</span>
+		</ion-label>
 		<ion-buttons slot="end" *ngIf="mode === 'edit' && form.dirty">
 			<ion-button color="primary" fill="solid" [disabled]="saving" (click)="saveChanges()" *ngIf="countryID.value">
 				<ion-spinner slot="start" color="light" name="lines-small" *ngIf="saving"></ion-spinner>
@@ -25,17 +28,17 @@
 
 		<ion-item>
 			<ion-label color="medium">State</ion-label>
-			<ion-input type="text" maxlength="20" [formControl]="state"></ion-input>
+			<ion-input type="text" maxlength="20" [formControl]="state" (ionChange)="onStateChanged()"></ion-input>
 		</ion-item>
 
 		<ion-item>
 			<ion-label color="medium">City</ion-label>
-			<ion-input type="text" maxlength="85" [formControl]="city"></ion-input>
+			<ion-input type="text" maxlength="85" [formControl]="city" (ionChange)="onCityChanged()"></ion-input>
 		</ion-item>
 
 		<ion-item>
 			<ion-label color="medium">Address</ion-label>
-			<ion-textarea [formControl]="lines" auto-grow="true" [disabled]="saving"></ion-textarea>
+			<ion-textarea [formControl]="lines" auto-grow="true" [disabled]="saving" (ionChange)="onLinesChanged()"></ion-textarea>
 		</ion-item>
 	</ng-container>
 </ion-card>

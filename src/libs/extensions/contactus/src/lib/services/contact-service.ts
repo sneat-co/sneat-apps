@@ -2,22 +2,24 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 // import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
-import { ContactRole, IContactBrief, IContactDto } from '@sneat/dto';
+import { ContactRole, IContactBrief, IContactDto, IContactsBrief } from '@sneat/dto';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
-import { Observable, throwError } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import { IContactRequest, ISetContactAddressRequest } from '../dto';
 
 @Injectable()
 export class ContactService {
 
 	private readonly teamItemService: TeamItemService<IContactBrief, IContactDto>;
+	private readonly briefService: TeamItemService<{id: string}, IContactsBrief>;
 
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
 		this.teamItemService = new TeamItemService<IContactBrief, IContactDto>('contacts', afs, sneatApiService);
+		this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
 	}
 
 	createContact(team: ITeamContext, request: ICreateContactRequest, endpoint = 'contacts/create_contact'): Observable<IContactContext> {
@@ -46,6 +48,12 @@ export class ContactService {
 			contactIDs: contacts.map(c => c.id),
 		};
 		return this.teamItemService.sneatApiService.post('contacts/set_contacts_status', request);
+	}
+
+	watchContactBriefs(team: ITeamContext): Observable<IContactBrief[]> {
+		return this.briefService.watchTeamItemByID(team, 'contacts')
+			.pipe(map(item => item.dto?.contacts || []),
+			);
 	}
 
 	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: IFilter[]): Observable<IContactContext[]> {

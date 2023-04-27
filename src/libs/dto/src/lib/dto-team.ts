@@ -22,7 +22,7 @@ export interface ITeamDto extends ITotalsHolder, IListGroupsHolder {
 	readonly memberIds?: string[];
 	readonly members?: IMemberBrief[];
 	readonly assets?: IAssetBrief[];
-	readonly contacts?: IContactBrief[];
+	// readonly contacts?: IContactBrief[];
 	readonly numberOf?: TeamCounts;
 	readonly recurringHappenings: IHappeningBrief[];
 

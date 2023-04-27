@@ -11,7 +11,7 @@ export const countriesByID: { [id: string]: ICountry } = {
 	'LT': { id: 'LT', title: 'Lithuania', emoji: '🇱🇹' },
 	'IE': { id: 'IE', title: 'Ireland', emoji: '🇮🇪' },
 	'NZ': { id: 'NZ', title: 'New Zealand', emoji: '🇳🇿' },
-	'RU': { id: 'RI', title: 'Russia', emoji: '🇷🇺' },
+	'RU': { id: 'RU', title: 'Russia', emoji: '🇷🇺' },
 	'ES': { id: 'ES', title: 'Spain', emoji: '🇪🇸' },
 	'UK': { id: 'UK', title: 'United Kingdom', emoji: '🇬🇧' },
 	'UA': { id: 'UA', title: 'Ukraine', emoji: '🇺🇦' },

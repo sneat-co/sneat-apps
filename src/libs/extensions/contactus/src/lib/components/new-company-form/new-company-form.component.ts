@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
@@ -20,9 +21,16 @@ export class NewCompanyFormComponent implements OnChanges {
 
 	@Output() contactCreated = new EventEmitter<IContactContext>();
 
+	protected readonly Object = Object;
+
 	isCreating = false;
 
 	contact?: IContactContext;
+
+	readonly form = new FormGroup({
+		role: new FormControl<ContactRole | undefined>(undefined, Validators.required),
+		title: new FormControl<string>('', Validators.required),
+	});
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -34,10 +42,13 @@ export class NewCompanyFormComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
 			if (this.contact) {
-				this.contact = {...this.contact, team: this.team};
+				this.contact = { ...this.contact, team: this.team };
 			} else {
-				this.contact = {id: '', team: this.team, dto: {type: 'company'}};
+				this.contact = { id: '', team: this.team, dto: { type: 'company' } };
 			}
+		}
+		if (changes['contactRole']) {
+			this.form.patchValue({ role: this.contactRole });
 		}
 	}
 
@@ -50,13 +61,13 @@ export class NewCompanyFormComponent implements OnChanges {
 		}
 	}
 
-
 	onContactChanged(contact: IContactContext): void {
-		console.log('contact', contact);
+		console.log('onContactChanged()', contact);
 		this.contact = contact;
 	}
 
 	create(): void {
+		console.log('create()', this.contactRole, this.contact);
 		if (!this.team) {
 			alert('Contact team is a required field');
 			return;

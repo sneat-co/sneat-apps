@@ -55,9 +55,9 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (this.allContacts) {
 			this.applyFilter('', this.role);
 		}
-		this.teamIDChanged$.subscribe({
-			next: this.onTeamIDChanged,
-		});
+		// this.teamIDChanged$.subscribe({
+		// 	next: this.onTeamIDChangedWorker,
+		// });
 		route.queryParamMap.pipe(
 			this.takeUntilNeeded(),
 		).subscribe({
@@ -71,18 +71,23 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		// })
 	}
 
-	protected override onTeamDtoChanged() {
-		super.onTeamDtoChanged();
-		const team = this.team;
-		const teamDto = team?.dto;
-		console.log('ContactsPageComponent.onTeamDtoChanged', teamDto?.contacts);
-		if (!teamDto) {
+	protected override onTeamIdChanged() {
+		super.onTeamIdChanged();
+		this.contactsSubscription?.unsubscribe();
+		if (this.contactsSubscription) {
+			this.contactsSubscription.unsubscribe();
+		}
+		if (!this.team) {
 			return;
 		}
-		if (teamDto.type === 'family') {
-			this.allContacts = teamDto.contacts?.map(brief => ({ id: brief.id, brief, team }));
-			this.applyFilter(this.filter, this.role);
-		}
+
+		this.contactService.watchContactBriefs(this.team).subscribe({
+			next: contactBriefs => {
+				const contacts = contactBriefs.map(brief => ({ id: brief.id, brief, team: this.team || { id: '' } }));
+				this.setTeamContacts(contacts || [])
+				this.applyFilter(this.filter, this.role);
+			},
+		});
 	}
 
 	get pageTitle(): string {
@@ -119,7 +124,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			? this.allContacts
 			: this.allContacts?.filter(c =>
 				(!filter || c.brief?.title?.toLowerCase().includes(filter))
-				&& (!role || c.dto?.roles && c?.dto.roles.includes(role)),
+				&& (!role || c.brief?.roles && c?.brief.roles.includes(role)),
 			);
 	}
 
@@ -186,31 +191,13 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		return record.id;
 	}
 
-	private readonly onTeamIDChanged = (): void => {
-		console.log(`CommuneContactsPage.onTeamIDChanged()`);
-		if (this.contactsSubscription) {
-			this.contactsSubscription.unsubscribe();
-		}
-		if (!this.team) {
-			return;
-		}
-		this.contactsSubscription = this.contactService.watchTeamContacts(this.team)
-			.pipe(
-				this.takeUntilNeeded(),
-			)
-			.subscribe({
-				next: this.setTeamContacts,
-				error: this.errorLogger.logErrorHandler('failed to subscribe for team contacts'),
-			});
-	};
-
 	private readonly setTeamContacts = (contacts: IContactContext[]): void => {
 		console.log('ContactsPageComponent.setTeamContacts()', contacts);
 		this.allContacts = contacts;
 		const contactsByRole: { [role: string]: IContactContext[] } = { '': [] };
 		contacts.forEach(c => {
 			contactsByRole[''].push(c);
-			c.dto?.roles?.forEach(role => {
+			c.brief?.roles?.forEach(role => {
 				const roleContacts = contactsByRole[role as ContactRole];
 				if (roleContacts) {
 					roleContacts.push(c);

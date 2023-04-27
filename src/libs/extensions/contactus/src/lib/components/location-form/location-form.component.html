@@ -14,12 +14,11 @@
 			{{label}}
 		</ion-item-divider>
 		<ion-item>
-			<ion-label color="medium">Name</ion-label>
+			<ion-label color="medium">Title</ion-label>
 			<ion-input #titleInput
-								 required placeholder="required"
-								 [(ngModel)]="title"
-								 [disabled]="disabled"
-								 (ionChange)="onInputChange()"
+								 placeholder="required"
+								 [formControl]="title"
+								 (ionChange)="onTitleChanged()"
 			></ion-input>
 		</ion-item>
 
@@ -35,8 +34,9 @@
 <!--		</ion-item>-->
 	</ion-card>
 
-	<sneat-address-form
+	<sneat-address-form *ngIf="title.value"
 		[address]="contact?.dto?.address"
+		(addressChange)="onAddressChanged($event)"
 	></sneat-address-form>
 	<!--		(save)="saveAddress($event)"-->
 
@@ -45,7 +45,7 @@
 	<ion-card *ngIf="!hideSubmitButton">
 		<ion-card-content>
 			<ion-button size="large"
-									[disabled]="isCreating || !contact?.dto?.title || !contact?.dto?.address?.lines?.length"
+									[disabled]="isCreating"
 									(click)="submit()"
 			>
 				<ion-icon name="save-outline" slot="start"></ion-icon>

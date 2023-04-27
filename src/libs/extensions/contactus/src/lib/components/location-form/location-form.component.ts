@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { ContactRole, ContactType, IContactDto } from '@sneat/dto';
+import { ContactRole, ContactType, IAddress, IContactBrief, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
@@ -29,7 +30,12 @@ export class LocationFormComponent implements OnChanges {
 
 	isCreating = false;
 
-	title = '';
+	protected readonly title = new FormControl<string>('', Validators.required);
+
+	protected readonly form = new FormGroup({
+		title: this.title,
+	});
+
 	addressText = '';
 
 	get disabled(): boolean {
@@ -44,33 +50,43 @@ export class LocationFormComponent implements OnChanges {
 
 	private readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
-	onCountryChanged(): void {
-		this.onInputChange();
-		this.setFocusToTitle();
-	}
-
-	onInputChange(): void {
-		if (!this.contact?.dto) {
+	onAddressChanged(address: IAddress): void {
+		console.log('onAddressChanged()', address);
+		if (!this.contact) {
 			return;
 		}
+		this.contact = {
+			...this.contact,
+			dto: {
+				...this.contact?.dto,
+				type: this.contactType,
+				address,
+			},
+		};
+		this.contactChange.emit(this.contact);
+	}
+
+	onTitleChanged(): void {
+		console.log('onTitleChanged()', this.title.value);
 		if (!this.team) {
 			return;
 		}
-		const lines = this.addressText.split('\n').map(line => line.trim()).filter(line => !!line).join('\n');
-
-		const contactDto: IContactDto = excludeEmpty({
-			...this.contact.dto,
-			title: this.title,
-			address: {
-				countryID: this.countryID,
-				lines: lines,
-			},
-			countryID: this.countryID,
-		});
+		if (!this.contact) {
+			const title = this.title.value || '';
+			this.contact = {
+				id: '',
+				team: this.team,
+				brief: {id: '', type: this.contactType, title},
+				dto: {type: this.contactType, title},
+			}
+		}
+		const title = this.title.value || '';
+		const brief = (this.contact.brief || {}) as IContactBrief;
+		const dto = (this.contact.dto || {}) as IContactDto;
 		this.contact = {
-			id: this.contact.id,
-			dto: contactDto,
-			team: this.team,
+			...this.contact,
+			brief: { ...brief, title },
+			dto: { ...dto, title },
 		};
 		this.contactChange.emit(this.contact);
 	}
@@ -97,6 +113,7 @@ export class LocationFormComponent implements OnChanges {
 				this.contact = {
 					id: this.contact?.id || '',
 					team: this.team,
+					brief: { id: '', type: this.contactType },
 					dto: { type: this.contactType },
 				};
 				this.emitContactChange();
@@ -117,8 +134,9 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	submit(): void {
-		const contactDto = this.contact?.dto;
-		if (!contactDto) {
+		const contactBrief = this.contact?.brief;
+		if (!contactBrief) {
+			alert('contact brief is not defined');
 			return;
 		}
 		if (!this.team) {
@@ -127,10 +145,27 @@ export class LocationFormComponent implements OnChanges {
 		// if (!this.parentContact) {
 		// 	return;
 		// }
-		const { title, countryID, address } = contactDto;
-		console.log('submit', title, countryID, address);
-		if (!title || !countryID || !address || !address.lines?.length) {
-			alert('Please populate all required fields');
+		const { title } = contactBrief;
+		const {address} = this.contact?.dto || {type: this.contactType};
+		console.log('submit', title, address);
+		if (!title) {
+			alert('title is required');
+			return;
+		}
+		if (!address) {
+			alert('address is required');
+			return;
+		}
+		if (!address.countryID) {
+			alert('country is required');
+			return;
+		}
+		if (!address.city) {
+			alert('city is required');
+			return;
+		}
+		if (!address.lines) {
+			alert('address lines are required');
 			return;
 		}
 		const request: ICreateContactRequest = {

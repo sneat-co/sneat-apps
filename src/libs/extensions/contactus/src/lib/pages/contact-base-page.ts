@@ -51,7 +51,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 	}
 
 	protected override briefs(): IContactBrief[] | undefined {
-		return this?.team?.dto?.contacts;
+		throw new Error('Method not implemented yet.');
 	}
 
 

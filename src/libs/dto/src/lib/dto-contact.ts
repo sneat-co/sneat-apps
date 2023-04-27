@@ -27,3 +27,7 @@ export interface IContactDto extends IContactBase, IPersonRecord {
 	assets?: IContact2Asset[];  // TODO: document purpose, use cases, examples of usage
 	relatedContacts?: IContactBrief[];
 }
+
+export interface IContactsBrief {
+	contacts?: IContactBrief[];
+}

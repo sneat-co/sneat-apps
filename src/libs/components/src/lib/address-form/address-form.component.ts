@@ -32,7 +32,7 @@ export interface AddressRequiredFields {
 	state?: boolean;
 	city?: boolean;
 	lines?: boolean;
-};
+}
 
 @Component({
 	selector: 'sneat-address-form',
@@ -100,6 +100,21 @@ export class AddressFormComponent implements OnChanges, OnInit {
 		};
 		this.addressChange.emit(address);
 		setTimeout(() => this.setFocusToInput(this.zipInput), 100);
+	}
+
+	onStateChanged(): void {
+		this.address = {...this.address || {countryID: ''}, state: this.state.value || ''};
+		this.addressChange.emit(this.address);
+	}
+
+	onCityChanged(): void {
+		this.address = {...this.address || {countryID: ''}, city: this.city.value || ''};
+		this.addressChange.emit(this.address);
+	}
+
+	onLinesChanged(): void {
+		this.address = {...this.address || {countryID: ''}, lines: this.lines.value || ''};
+		this.addressChange.emit(this.address);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
