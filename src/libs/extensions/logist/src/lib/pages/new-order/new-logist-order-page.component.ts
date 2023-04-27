@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { excludeEmpty, excludeUndefined } from '@sneat/core';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
@@ -154,14 +155,14 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		// 	alert('Destination country is required');
 		// 	return;
 		// }
-		const request: ICreateLogistOrderRequest = {
+		const request: ICreateLogistOrderRequest = excludeUndefined({
 			teamID: this.team.id,
 			order: {
 				...this.order.dto,
-				route: Object.keys(this.order?.dto?.route || {}).length ? this.order.dto.route : undefined,
+				route: undefined, //TODO: decide what to do //Object.keys(this.order?.dto?.route || {}).length ? this.order.dto.route : undefined,
 			},
 			numberOfContainers: Object.keys(this.numberOfContainers).length ? this.numberOfContainers : undefined,
-		};
+		});
 
 		this.freightOrdersService.createOrder(request).subscribe({
 			next: response => {

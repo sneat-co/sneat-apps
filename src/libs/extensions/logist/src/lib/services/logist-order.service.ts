@@ -149,6 +149,12 @@ export class LogistOrderService {
 	}
 
 	addShippingPoint(team: ITeamContext, request: IAddOrderShippingPointRequest): Observable<ILogistOrderContext> {
+		if (!request) {
+			return throwError(() => 'request is required parameter');
+		}
+		if (!request.orderID) {
+			return throwError(() => 'orderID is required parameter');
+		}
 		return this.sneatApiService
 			.post<{ order: ILogistOrderDto }>('logist/order/add_shipping_point', request)
 			.pipe(
