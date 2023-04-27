@@ -23,7 +23,7 @@
 	<ng-container *ngIf="countryID.value">
 		<ion-item>
 			<ion-label color="medium">Zip code</ion-label>
-			<ion-input type="text" #zipInput maxlength="10" [formControl]="zip" [disabled]="saving"></ion-input>
+			<ion-input type="text" #zipInput maxlength="10" [formControl]="zip" [disabled]="saving" (ionChange)="onZipChanged()"></ion-input>
 		</ion-item>
 
 		<ion-item>

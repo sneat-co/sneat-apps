@@ -93,27 +93,40 @@ export class AddressFormComponent implements OnChanges, OnInit {
 			this.zip.setValue('');
 			this.lines.setValue('');
 		}
-		const address: IAddress = {
+		this.address = {
 			countryID: countryID,
 			zipCode: this.zip.value || undefined,
 			state: this.state.value || undefined,
-		};
-		this.addressChange.emit(address);
+		}
+		this.addressChange.emit(this.address);
 		setTimeout(() => this.setFocusToInput(this.zipInput), 100);
 	}
 
+	get mustAddress(): IAddress {
+		return this.address || {countryID: ''};
+	}
+
+	onZipChanged(): void {
+		const address = this.mustAddress;
+		this.address = {...this.mustAddress, zipCode: this.zip.value || ''};
+		console.log('AddressFormComponent.onZipChanged()', this.zip.value, address, this.address);
+		this.addressChange.emit(this.address);
+	}
+
 	onStateChanged(): void {
-		this.address = {...this.address || {countryID: ''}, state: this.state.value || ''};
+		const address = this.mustAddress;
+		this.address = {...address, state: this.state.value || ''};
+		console.log('AddressFormComponent.onStateChanged()', this.state.value, address, this.address);
 		this.addressChange.emit(this.address);
 	}
 
 	onCityChanged(): void {
-		this.address = {...this.address || {countryID: ''}, city: this.city.value || ''};
+		this.address = {...this.mustAddress, city: this.city.value || ''};
 		this.addressChange.emit(this.address);
 	}
 
 	onLinesChanged(): void {
-		this.address = {...this.address || {countryID: ''}, lines: this.lines.value || ''};
+		this.address = {...this.mustAddress, lines: this.lines.value || ''};
 		this.addressChange.emit(this.address);
 	}
 
