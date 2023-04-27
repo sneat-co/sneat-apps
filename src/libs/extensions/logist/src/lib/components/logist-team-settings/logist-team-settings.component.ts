@@ -32,6 +32,8 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 	private addressForm?: AddressForm;
 	protected address?: IAddress;
 
+	protected roles: string[] = [];
+
 	readonly vatNumber = new FormControl<string>('', {
 		validators: [
 			Validators.minLength(5),
@@ -101,6 +103,7 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 			return;
 		}
 		const request: ISetLogistTeamSettingsRequest = excludeUndefined({
+			roles: this.roles,
 			teamID: this.team.id,
 			address,
 			vatNumber: this.vatNumber.value?.trim() || undefined,

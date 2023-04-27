@@ -18,7 +18,7 @@
 		</ion-item>
 	</ion-card>
 
-	<sneat-logist-team-roles *ngIf="address?.countryID"></sneat-logist-team-roles>
+	<sneat-logist-team-roles *ngIf="address?.countryID" [selectedRoles]="roles" (selectedRolesChange)="roles = $event"></sneat-logist-team-roles>
 </form>
 
 <div class="ion-margin">

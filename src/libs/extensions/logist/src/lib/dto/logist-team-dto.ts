@@ -51,6 +51,7 @@ export type ILogistTeamContext = INavContext<ILogistTeamBrief, ILogistTeamDto>;
 
 
 export interface ISetLogistTeamSettingsRequest extends ITeamRequest {
+	roles: string[];
 	address: IAddress;
 	vatNumber?: string;
 	orderNumberPrefix?: string;
