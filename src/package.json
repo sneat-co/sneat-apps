@@ -40,7 +40,7 @@
 		"date-fns": "2.29.3",
 		"firebase": "9.20.0",
 		"ionicons": "7.1.0",
-		"rxjs": "7.8.0",
+		"rxjs": "7.8.1",
 		"tabulator-tables": "5.4.4",
 		"ts-md5": "1.3.1",
 		"tslib": "2.5.0",
