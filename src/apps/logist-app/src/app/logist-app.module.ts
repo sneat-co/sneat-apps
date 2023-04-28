@@ -31,13 +31,13 @@ console.log('firebaseModules', firebaseModules);
 
 const contactRolesByType: ContactRolesByType = {
 	'company': [
-		{ id: 'agent', title: 'Agent', iconName: 'body-outline', canBeRoles: ['shipper'] },
-		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline', canBeRoles: ['consignee', 'notify_party'] },
+		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
+		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
 		{ id: 'carrier', title: 'Carrier', iconName: 'train-outline' },
-		{ id: 'consignee', title: 'Consignee' },
-		{ id: 'dispatcher', title: 'Dispatcher' },
-		{ id: 'notify_party', title: 'Notify Party' },
-		{ id: 'port', title: 'Port', canBeRoles: ['port_from', 'port_to'] },
+		{ id: 'consignee', title: 'Consignee', canBeImpersonatedByRoles: ['buyer'] },
+		{ id: 'dispatcher', title: 'Dispatcher', canBeImpersonatedByRoles: ['agent'] },
+		{ id: 'notify_party', title: 'Notify Party', canBeImpersonatedByRoles: ['agent'] },
+		{ id: 'port', title: 'Port' },
 		{ id: 'trucker', title: 'Trucker' },
 		{ id: 'shipper', title: 'Shipper' },
 		{ id: 'shipping_line', title: 'Shipping Line' },

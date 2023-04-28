@@ -5,8 +5,9 @@ export interface IContactRole {
 	id: ContactRole;
 	title: string;
 	iconName?: string;
-	canBeRoles?: string[];
-	childForRoles?: string[];
+	// canBeRoles?: ContactRole[];
+	canBeImpersonatedByRoles?: ContactRole[];
+	childForRoles?: ContactRole[];
 }
 
 export interface IContactType {

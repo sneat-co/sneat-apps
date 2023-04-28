@@ -1,12 +1,13 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
-import { ModalController } from "@ionic/angular";
-import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from "@sneat/components";
-import { ContactRole, ContactType, IContactBrief } from "@sneat/dto";
-import { ErrorLogger, IErrorLogger } from "@sneat/logging";
-import { IContactContext, ITeamContext } from "@sneat/team/models";
-import { Subject, Subscription } from "rxjs";
-import { ContactService } from "../../services";
-import { IContactSelectorOptions } from "./contact-selector.service";
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
+import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from '@sneat/components';
+import { ContactRole, ContactType, IContactBrief } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { Subject, Subscription } from 'rxjs';
+import { ContactService } from '../../services';
+import { IContactSelectorOptions } from './contact-selector.service';
 
 export interface IContactSelectorProps {
 	readonly team: ITeamContext;
@@ -21,8 +22,8 @@ export interface IContactSelectorProps {
 }
 
 @Component({
-	selector: "sneat-contact-selector",
-	templateUrl: "./contact-selector.component.html"
+	selector: 'sneat-contact-selector',
+	templateUrl: './contact-selector.component.html',
 })
 export class ContactSelectorComponent
 	extends SelectorBaseComponent
@@ -34,12 +35,12 @@ export class ContactSelectorComponent
 	private readonly destroyed = new Subject<void>();
 	private readonly parentChanged = new Subject<void>();
 
-	parentTab: "existing" | "new" = "existing";
-	contactTab: "existing" | "new" = "existing";
+	parentTab: 'existing' | 'new' = 'existing';
+	contactTab: 'existing' | 'new' = 'existing';
 
-	@Input() parentIcon = "business-outline";
-	@Input() contactIcon = "business-outline";
-	@Input() team: ITeamContext = { id: "" };
+	@Input() parentIcon = 'business-outline';
+	@Input() contactIcon = 'business-outline';
+	@Input() team: ITeamContext = { id: '' };
 	@Input() contactRole?: ContactRole;
 	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
@@ -49,11 +50,11 @@ export class ContactSelectorComponent
 	@Input() onSelected?: (items: IContactContext[] | null) => void;
 
 	readonly contactRoles: ISelectItem[] = [
-		{ id: "agent", title: "Agent", iconName: "body-outline" },
-		{ id: "buyer", title: "Buyer", iconName: "cash-outline" },
-		{ id: "carrier", title: "Carrier", iconName: "train-outline" },
-		{ id: "dispatcher", title: "Dispatcher", iconName: "business-outline" },
-		{ id: "shipper", title: "Shipper", iconName: "boat-outline" }
+		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
+		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
+		{ id: 'carrier', title: 'Carrier', iconName: 'train-outline' },
+		{ id: 'dispatcher', title: 'Dispatcher', iconName: 'business-outline' },
+		{ id: 'shipper', title: 'Shipper', iconName: 'boat-outline' },
 	];
 
 
@@ -80,27 +81,28 @@ export class ContactSelectorComponent
 
 	get label(): string {
 		const r = this.contactRole;
-		return r ? r[0].toUpperCase() + r.substr(1) : "Contact";
+		return r ? r[0].toUpperCase() + r.substr(1) : 'Contact';
 	}
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
-		private readonly contactService: ContactService
+		@Inject(CONTACT_ROLES_BY_TYPE) private readonly contactRolesByType: ContactRolesByType,
+		private readonly contactService: ContactService,
 	) {
 		super(errorLogger, modalController);
 	}
 
 
 	ngOnInit(): void {
-		console.log("ngOnInit()");
-		this.subscribeForData("ngOnInit");
+		console.log('ngOnInit()');
+		this.subscribeForData('ngOnInit');
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log("ContactSelectorComponent.ngOnChanges()", changes);
-		if (changes["team"]) {
-			this.subscribeForData("ngOnChanges");
+		console.log('ContactSelectorComponent.ngOnChanges()', changes);
+		if (changes['team']) {
+			this.subscribeForData('ngOnChanges');
 		}
 	}
 
@@ -109,7 +111,7 @@ export class ContactSelectorComponent
 		this.destroyed.complete();
 	}
 
-	subscribeForData(calledFrom: "ngOnInit" | "ngOnChanges"): void {
+	subscribeForData(calledFrom: 'ngOnInit' | 'ngOnChanges'): void {
 		console.log(`ContactSelectorComponent.subscribeForData(calledFrom=${calledFrom})`);
 		this.contactBriefsSub?.unsubscribe();
 		if (!this.team) {
@@ -127,10 +129,21 @@ export class ContactSelectorComponent
 	}
 
 	private setContacts(): void {
-		const filterByTypeRoleAndParentID = (t?: ContactType, r?: ContactRole, parentID?: string) => (c: IContactBrief) =>
-			(!t || c.type === t) &&
-			(!r || c.roles?.includes(r)) &&
-			(!parentID || c.parentID === parentID);
+		const filterByTypeRoleAndParentID = (t?: ContactType, r?: ContactRole, parentID?: string) => (c: IContactBrief) => {
+			const roleIDs: ContactRole[] = [];
+			if (r) {
+				roleIDs.push(r);
+				if (t && r) {
+					const role = this.contactRolesByType[t].find(role => role.id === r);
+					if (role?.canBeImpersonatedByRoles?.length) {
+						roleIDs.push(...role.canBeImpersonatedByRoles);
+					}
+				}
+			}
+			return (!t || c.type === t) &&
+				(!r || roleIDs.some(roleID => c.roles?.includes(roleID))) &&
+				(!parentID || c.parentID === parentID);
+		};
 		const allContactBriefs = this.allContactBriefs;
 		this.parentContacts = this.parentType || this.parentRole ? allContactBriefs?.filter(filterByTypeRoleAndParentID(this.parentType, this.parentRole)) || [] : undefined;
 		this.contacts = allContactBriefs?.filter(filterByTypeRoleAndParentID(this.contactType, this.contactRole, this.parentContactID));
@@ -141,13 +154,13 @@ export class ContactSelectorComponent
 
 		if (this.parentType || this.parentRole) {
 			if (!this.parentContactID && this.parentContacts && !this.parentContacts.length) {
-				this.parentTab = "new";
+				this.parentTab = 'new';
 			}
 		}
 		if (this.contacts && !this.contacts.length) {
-			this.contactTab = "new";
+			this.contactTab = 'new';
 		}
-		console.log("setContacts", this.allContactBriefs, this.contactRole, this.contactType, this.contacts, this.parentType, this.parentRole, this.parentContactID, this.parentContacts);
+		console.log('setContacts', this.allContactBriefs, this.contactRole, this.contactType, this.contacts, this.parentType, this.parentRole, this.parentContactID, this.parentContacts);
 	}
 
 
@@ -155,13 +168,13 @@ export class ContactSelectorComponent
 		id: c.id,
 		emoji: countryFlagEmoji(c.brief?.countryID),
 		title: `${c.brief?.title || c.id}`,
-		iconName: this.parentIcon
+		iconName: this.parentIcon,
 	});
 
 	private readonly getChildItem = (c: IContactBrief): ISelectItem => ({
 		id: c.id,
 		title: `${countryFlagEmoji(c.countryID)} ${c.title || c.id}`,
-		iconName: this.contactIcon
+		iconName: this.contactIcon,
 	});
 
 	protected onLocationCreated(contact: IContactContext): void {
@@ -174,7 +187,7 @@ export class ContactSelectorComponent
 	}
 
 	protected onParentContactIDChanged(contactID: string): void {
-		console.log("onParentContactSelected()", contactID);
+		console.log('onParentContactSelected()', contactID);
 		const parentContact = this.parentContacts?.find(c => c.id === contactID);
 		this.onParentContactChanged(parentContact);
 	}
@@ -195,15 +208,15 @@ export class ContactSelectorComponent
 	}
 
 	protected onSubContactCreated(contact: IContactContext): void {
-		console.log("onSubContactCreated()", contact);
+		console.log('onSubContactCreated()', contact);
 		this.selectedSubContactID = contact.id;
 		this.selectedContact = contact.brief || undefined;
 		this.emitOnSelected(contact);
 	}
 
 	private onParentContactChanged(contact?: IContactBrief): void {
-		console.log("onParentContactChanged()", contact);
-		this.parentTab = "existing";
+		console.log('onParentContactChanged()', contact);
+		this.parentTab = 'existing';
 		this.selectedParent = contact || undefined;
 		this.parentContactID = contact?.id;
 		this.setContacts();
@@ -211,11 +224,11 @@ export class ContactSelectorComponent
 	}
 
 	protected onContactSelected(contactID: string): void {
-		console.log("onContactSelected()", contactID);
+		console.log('onContactSelected()', contactID);
 		this.selectedSubContactID = contactID;
 		this.selectedContact = this.contacts?.find(c => c.id === contactID);
 		if (!this.selectedContact) {
-			console.error("contact not found by ID", contactID, this.contacts);
+			console.error('contact not found by ID', contactID, this.contacts);
 		}
 		const contact = this.selectedContact;
 		this.emitOnSelected(contact ? { id: contact.id, brief: contact, team: this.team } : undefined);
@@ -258,11 +271,11 @@ export class ContactSelectorComponent
 	// }
 
 	protected emitOnSelected(contact?: IContactContext): void {
-		console.log("ContactSelectorComponent.emitOnSelected()", contact);
+		console.log('ContactSelectorComponent.emitOnSelected()', contact);
 		if (this.onSelected) {
 			this.onSelected(contact ? [contact] : null);
 		} else {
-			console.warn("instance ContactSelectorComponent has unset `onSelected` input callback.");
+			console.warn('instance ContactSelectorComponent has unset `onSelected` input callback.');
 		}
 	}
 }
