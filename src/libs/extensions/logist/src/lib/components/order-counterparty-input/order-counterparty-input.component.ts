@@ -27,7 +27,8 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() contactRole?: LogistOrderContactRole;
 	@Input() contactType?: ContactType;
 
-	// We do not need parent contact type as for now it's always 'company' in logist order
+
+	@Input() parentType: ContactType = 'company';
 	@Input() parentRole?: LogistOrderContactRole;
 
 	@Input() canChangeContact = true;

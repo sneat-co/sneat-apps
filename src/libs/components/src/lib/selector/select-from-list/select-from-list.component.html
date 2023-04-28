@@ -22,7 +22,7 @@
 <ng-container *ngIf="!value">
 	<ion-item *ngIf="isFilterable" class="sneat-tiny-end-padding">
 		<ion-label *ngIf="filterLabel" color="medium">{{filterLabel}}</ion-label>
-		<ion-input [(ngModel)]="filter" placeholder="filter" (ionChange)="onFilterChanged()"></ion-input>
+		<ion-input [(ngModel)]="filter" placeholder="filter" (ionInput)="onFilterChanged()"></ion-input>
 		<ion-buttons slot="end" *ngIf="!!filter">
 			<ion-button (click)="clearFilter()" title="Clear filter">
 				<ion-icon name="close-outline"></ion-icon>

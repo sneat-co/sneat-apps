@@ -36,12 +36,12 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 
 	@ViewChild(IonInput, { static: false }) addInput?: IonInput;
 
-	displayItems?: ISelectItem[];
-	hiddenCount = 0;
+	protected displayItems?: ISelectItem[];
+	protected hiddenCount = 0;
 
-	public isDisabled = false;
+	protected isDisabled = false;
 
-	public filter = '';
+	protected filter = '';
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -64,7 +64,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 
 	private applyFilter(): void {
 		const f = this.filter.trim().toLowerCase();
-		// console.log('SelectFromListComponent.applyFilter', f);
+		console.log('SelectFromListComponent.applyFilter', f);
 		this.displayItems = f ? this.items?.filter(v => v.title.toLowerCase().includes(f)) : this.items;
 		this.hiddenCount = (this.items?.length || 0) - (this.displayItems?.length || 0);
 	}
@@ -101,11 +101,13 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 	}
 
 	onFilterChanged(): void {
+		console.log('SelectFromListComponent.onFilterChanged()', this.filter);
 		this.applyFilter();
 	}
 
 	clearFilter(): void {
 		this.filter = '';
+		this.applyFilter();
 	}
 
 	deselect(): void {

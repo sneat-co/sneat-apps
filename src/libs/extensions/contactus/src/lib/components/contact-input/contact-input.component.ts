@@ -20,6 +20,7 @@ export class ContactInputComponent implements OnChanges {
 	@Input() contactRole?: ContactRole;
 	@Input() contactType?: ContactType;
 	@Input() subLabel = 'by';
+	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
 	@Input() parentContact?: IContactContext;
 	@Input() deleting = false;
@@ -72,6 +73,7 @@ export class ContactInputComponent implements OnChanges {
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
 				team: this.team,
+				parentType: this.parentType,
 				parentRole: this.parentRole,
 				contactRole: this.contactRole,
 				contactType: this.contactType,

@@ -12,6 +12,7 @@ export interface IContactSelectorProps {
 	readonly team: ITeamContext;
 	readonly contactRole?: ContactRole;
 	readonly contactType?: ContactType;
+	readonly parentType?: ContactType;
 	readonly parentRole?: ContactRole;
 	readonly parentContact?: IContactContext;
 	readonly subType?: ContactRole;
@@ -130,12 +131,22 @@ export class ContactSelectorComponent
 			(!t || c.type === t) &&
 			(!r || c.roles?.includes(r)) &&
 			(!parentID || c.parentID === parentID);
-		this.parentContacts = this.parentType ? this.allContactBriefs?.filter(filterByTypeRoleAndParentID(this.parentType, this.parentRole, this.parentContactID)) : undefined;
-		this.contacts = this.allContactBriefs?.filter(filterByTypeRoleAndParentID(this.contactType, this.contactRole));
+		const allContactBriefs = this.allContactBriefs;
+		this.parentContacts = this.parentType || this.parentRole ? allContactBriefs?.filter(filterByTypeRoleAndParentID(this.parentType, this.parentRole)) || [] : undefined;
+		this.contacts = allContactBriefs?.filter(filterByTypeRoleAndParentID(this.contactType, this.contactRole, this.parentContactID));
 
 		const removeExcluded = (ids?: string[]) => (c: IContactBrief) => !ids?.includes(c.id);
 		this.contactItems = this.contacts?.filter(removeExcluded(this.excludeContactIDs)).map(this.getChildItem);
 		this.parentItems = this.parentContacts?.filter(removeExcluded(this.excludeParentIDs)).map(this.getChildItem);
+
+		if (this.parentType || this.parentRole) {
+			if (!this.parentContactID && this.parentContacts && !this.parentContacts.length) {
+				this.parentTab = "new";
+			}
+		}
+		if (this.contacts && !this.contacts.length) {
+			this.contactTab = "new";
+		}
 		console.log("setContacts", this.allContactBriefs, this.contactRole, this.contactType, this.contacts, this.parentType, this.parentRole, this.parentContactID, this.parentContacts);
 	}
 
