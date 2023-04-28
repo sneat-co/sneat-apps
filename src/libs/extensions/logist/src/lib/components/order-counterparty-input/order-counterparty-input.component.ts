@@ -16,14 +16,20 @@ import {
 	templateUrl: './order-counterparty-input.component.html',
 })
 export class OrderCounterpartyInputComponent implements OnChanges {
+	@Input() label?: string = undefined;
 	@Input() canReset = false;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() team?: ITeamContext;
+
 	@Input() counterpartyRole?: CounterpartyRole;
+
 	@Input() contactRole?: LogistOrderContactRole;
 	@Input() contactType?: ContactType;
+
+	// We do not need parent contact type as for now it's always 'company' in logist order
 	@Input() parentRole?: LogistOrderContactRole;
+
 	@Input() canChangeContact = true;
 	@Input() contactID?: string;
 
@@ -34,12 +40,11 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 	@Output() counterpartyChange = new EventEmitter<IOrderCounterpartyRef>();
 
-	@Input() label?: string = undefined;
 
-	contact?: IContactContext;
-	parentContact?: IContactContext;
+	protected contact?: IContactContext;
+	protected parentContact?: IContactContext;
 
-	deleting = false;
+	protected deleting = false;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

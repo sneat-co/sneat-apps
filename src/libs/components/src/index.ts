@@ -38,5 +38,3 @@ export * from './lib/selector/multi-selector';
 export * from './lib/country-input';
 export * from './lib/address-form';
 export * from './lib/save-event';
-export * from './lib/contact-roles-input/contact-roles-input.component';
-export * from './lib/contact-roles-input/contact-roles-input.module';

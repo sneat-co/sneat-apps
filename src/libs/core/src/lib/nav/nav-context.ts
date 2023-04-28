@@ -4,6 +4,6 @@ export type DeleteOperationState = 'deleting' | 'deleted' | undefined;
 
 export interface INavContext<Brief extends {id: string}, Dto> {
 	readonly id: string;
-	readonly brief?: Brief | null;
+	readonly brief?: Brief;
 	readonly dto?: Dto | null;
 }

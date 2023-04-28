@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from '@sneat/components';
-import { ContactRole, ContactType } from '@sneat/dto';
+import { ContactRole, ContactType, IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription } from 'rxjs';
@@ -40,10 +40,11 @@ export class ContactSelectorComponent
 	@Input() contactIcon = 'business-outline';
 	@Input() team: ITeamContext = { id: '' };
 	@Input() contactRole?: ContactRole;
+	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
 	@Input() contactType?: ContactType;
-	@Input() excludeContacts?: IContactContext[];
-	@Input() excludeParents?: IContactContext[];
+	@Input() excludeContactIDs?: string[];
+	@Input() excludeParentIDs?: string[];
 	@Input() onSelected?: (items: IContactContext[] | null) => void;
 
 	readonly contactRoles: ISelectItem[] = [
@@ -57,13 +58,15 @@ export class ContactSelectorComponent
 
 	// @Input() public contacts?: IContactContext[];
 
-	private parentsSub?: Subscription;
+	private contactBriefsSub?: Subscription;
 
-	private parentContacts?: IContactContext[];
-	private contacts?: IContactContext[];
+	private allContactBriefs?: IContactBrief[];
+	//
+	protected parentContacts?: IContactBrief[];
+	protected contacts?: IContactBrief[];
 
-	protected selectedParent?: IContactContext;
-	protected selectedContact?: IContactContext;
+	protected selectedParent?: IContactBrief;
+	protected selectedContact?: IContactBrief;
 
 	protected parentContactID?: string;
 	protected selectedSubContactID?: string;
@@ -107,54 +110,45 @@ export class ContactSelectorComponent
 
 	subscribeForData(): void {
 		console.log('ContactSelectorComponent.subscribeForData()');
-		this.parentsSub?.unsubscribe();
+		this.contactBriefsSub?.unsubscribe();
 		if (!this.team) {
 			return;
 		}
-		if (this.parentRole) {
-			this.watchParents();
-		} else {
-			this.watchContacts();
-		}
+		this.watchContactBriefs();
 	}
 
-	private watchContacts(): void {
-		this.parentsSub = this.contactService.watchContactsByRole(
-			this.team,
-			{ role: this.contactRole, status: 'active' },
-		).subscribe(contacts => {
-			this.contacts = contacts;
-			this.contactItems = contacts
-				.filter(c => !this?.excludeContacts?.some(ec => ec.id === c.id))
-				.map(this.getChildItem);
-			console.log('contactItems', this.contactItems);
-		});
+	private watchContactBriefs(): void {
+		this.contactBriefsSub = this.contactService.watchContactBriefs(this.team)
+			.subscribe(contactBriefs => {
+				this.allContactBriefs = contactBriefs;
+				this.setContacts();
+			});
 	}
 
-	private watchParents(): void {
-		this.parentsSub = this.contactService.watchContactsByRole(
-			this.team,
-			{ role: this.parentRole, status: 'active' },
-		).subscribe(contacts => {
-			this.parentContacts = contacts;
-			this.parentItems = contacts
-				.filter(c => !this?.excludeParents?.some(ec => ec.id === c.id))
-				.map(this.getParentItem);
+	private setContacts(): void {
+		const filterByTypeRoleAndParentID = (t?: ContactType, r?: ContactRole, parentID?: string) => (c: IContactBrief) =>
+			(!t || c.type === t) &&
+			(!r || c.roles?.includes(r)) &&
+			(!parentID || c.parentID === parentID);
+		this.parentContacts = this.allContactBriefs?.filter(filterByTypeRoleAndParentID(this.parentType, this.parentRole, this.parentContactID));
+		this.contacts = this.allContactBriefs?.filter(filterByTypeRoleAndParentID(this.parentType, this.parentRole));
 
-			// console.log('contacts', this.contacts);
-			console.log('items', this.parentItems);
-		});
+		const removeExcluded = (ids?: string[]) => (c: IContactBrief) => !ids?.includes(c.id);
+		this.contactItems = this.contacts?.filter(removeExcluded(this.excludeContactIDs)).map(this.getChildItem);
+		this.parentItems = this.parentContacts?.filter(removeExcluded(this.excludeParentIDs)).map(this.getChildItem);
 	}
+
 
 	private readonly getParentItem = (c: IContactContext): ISelectItem => ({
 		id: c.id,
-		title: `${countryFlagEmoji(c.brief?.countryID)} ${c.brief?.title || c.id}`,
+		emoji: countryFlagEmoji(c.brief?.countryID),
+		title: `${c.brief?.title || c.id}`,
 		iconName: this.parentIcon,
 	});
 
-	private readonly getChildItem = (c: IContactContext): ISelectItem => ({
+	private readonly getChildItem = (c: IContactBrief): ISelectItem => ({
 		id: c.id,
-		title: `${countryFlagEmoji(c.brief?.countryID)} ${c.brief?.title || c.id}`,
+		title: `${countryFlagEmoji(c.countryID)} ${c.title || c.id}`,
 		iconName: this.contactIcon,
 	});
 
@@ -175,7 +169,7 @@ export class ContactSelectorComponent
 
 	protected onParentContactCreated(contact: IContactContext): void {
 		this.parentItems?.push(this.getParentItem(contact));
-		this.onParentContactChanged(contact);
+		this.onParentContactChanged(contact.brief || undefined);
 	}
 
 	protected onContactCreated(contact: IContactContext): void {
@@ -184,33 +178,23 @@ export class ContactSelectorComponent
 		// 	parentContact: this.selectedContact,
 		// };
 		// this.selectedSubContactID = contact?.id
-		this.selectedContact = contact;
+		this.selectedContact = contact.brief || undefined;
 		this.emitOnSelected(contact);
 	}
 
 	protected onSubContactCreated(contact: IContactContext): void {
 		console.log('onSubContactCreated()', contact);
-		this.selectedSubContactID = contact.id
-		this.selectedContact = contact;
+		this.selectedSubContactID = contact.id;
+		this.selectedContact = contact.brief || undefined;
 		this.emitOnSelected(contact);
 	}
 
-	private onParentContactChanged(contact?: IContactContext): void {
+	private onParentContactChanged(contact?: IContactBrief): void {
 		console.log('onParentContactChanged()', contact);
 		this.parentTab = 'existing';
-		this.selectedParent = contact;
+		this.selectedParent = contact || undefined;
 		this.parentContactID = contact?.id;
-		const relatedContacts = this.selectedParent?.dto?.relatedContacts;
-		this.contacts = relatedContacts?.map(brief => ({
-			id: brief.id,
-			brief,
-			team: this.team,
-			parentContact: this.selectedParent,
-		}));
-		this.contactItems = relatedContacts?.map(c => ({
-			id: c.id,
-			title: c.title || c.id,
-		})) || [];
+		this.setContacts();
 		this.parentChanged.next();
 	}
 
@@ -221,7 +205,8 @@ export class ContactSelectorComponent
 		if (!this.selectedContact) {
 			console.error('contact not found by ID', contactID, this.contacts);
 		}
-		this.emitOnSelected(this.selectedContact);
+		const contact = this.selectedContact;
+		this.emitOnSelected(contact ? { id: contact.id, brief: contact, team: this.team } : undefined);
 		// if (this.selectedParent?.dto) {
 		// 	const contactBrief = this.selectedParent.dto.relatedContacts?.find(c => c.id === contactID);
 		// 	if (contactBrief) {

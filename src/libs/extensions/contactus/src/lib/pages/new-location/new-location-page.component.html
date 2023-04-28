@@ -11,7 +11,7 @@
 
 	<sneat-location-form
 		[team]="team"
-		[parentContact]="contact"
+		[parentContact]="contact?.brief"
 		[contact]="newLocation"
 		(contactChange)="onContactChanged($event)"
 		(contactCreated)="onContactCreated($event)"

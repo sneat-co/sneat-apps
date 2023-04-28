@@ -19,6 +19,8 @@ export interface IRelatedPersonContact extends IRelatedPerson {
 
 export interface IContactBrief extends IContactBase {
 	id: string;
+	title: string;
+	parentID?: string;
 }
 
 

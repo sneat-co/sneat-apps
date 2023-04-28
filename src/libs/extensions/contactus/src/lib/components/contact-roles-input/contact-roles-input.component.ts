@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ContactRole, ContactType } from '@sneat/dto';
-import { ContactService, ISetContactRoleRequest } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { ISetContactRoleRequest } from '../../dto';
+import { ContactService } from '../../services';
 
 @Component({
 	selector: 'sneat-contact-roles-input',

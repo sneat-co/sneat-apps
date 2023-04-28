@@ -100,7 +100,7 @@ export class MemberService {
 			let member: IMemberContext;
 			const memberBrief = team?.dto?.members?.find(m => m.id === memberId);
 			if (!memberBrief) {
-				member = { team, id: memberId, brief: null, dto: null };
+				member = { team, id: memberId, brief: undefined, dto: null };
 			} else {
 				member = { team, id: memberBrief.id, brief: memberBrief };
 			}

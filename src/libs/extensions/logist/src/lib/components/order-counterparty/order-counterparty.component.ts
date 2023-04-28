@@ -28,6 +28,8 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() counterpartyRole?: CounterpartyRole;
 	@Input() contactType?: ContactType = 'company';
 	@Input() contactRole?: LogistOrderContactRole;
+
+	// We do not need parent contact type as for now it's always 'company' in logist order
 	@Input() parentRole?: LogistOrderContactRole;
 
 	@Input() selectOnly = false;

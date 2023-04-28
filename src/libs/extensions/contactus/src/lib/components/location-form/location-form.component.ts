@@ -18,7 +18,7 @@ export class LocationFormComponent implements OnChanges {
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
 	@Input() contact?: IContactContext;
-	@Input() parentContact?: IContactContext;
+	@Input() parentContact?: IContactBrief;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
 	@Input() contactType: ContactType = 'location';
@@ -96,9 +96,12 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	private readonly onContactCreated = (contact: IContactContext): void => {
+		if (!this.team) {
+			return;
+		}
 		contact = {
 			...contact,
-			parentContact: this.parentContact,
+			parentContact: this.parentContact ? {id: this.parentContact.id, brief: this.parentContact, team: this.team} : undefined,
 		};
 		console.log('LocationFormComponent.onContactCreated()', contact);
 		this.contact = contact;
@@ -113,15 +116,15 @@ export class LocationFormComponent implements OnChanges {
 				this.contact = {
 					id: this.contact?.id || '',
 					team: this.team,
-					brief: { id: '', type: this.contactType },
+					brief: { id: '', type: this.contactType, title: '' },
 					dto: { type: this.contactType },
 				};
 				this.emitContactChange();
 			}
 		}
 		if (changes['parentContact']) {
-			if (this.parentContact?.dto?.countryID && !this.countryID) {
-				this.countryID = this.parentContact.dto.countryID;
+			if (this.parentContact?.countryID && !this.countryID) {
+				this.countryID = this.parentContact.countryID;
 				this.setFocusToTitle();
 			}
 		}

@@ -2,12 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
-import { AddressFormModule, ContactRolesInputModule, SneatPipesModule } from '@sneat/components';
-import { ContactsListModule } from '../../components/contacts-list/contacts-list.module';
+import { AddressFormModule, SneatPipesModule } from '@sneat/components';
+import { ContactsListModule, ContactRolesInputModule } from '../../components';
 import { ContactServiceModule } from '../../services';
-
 import { ContactPageComponent } from './contact-page.component';
 
 const routes: Routes = [
@@ -18,17 +16,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    ContactServiceModule,
-    SneatPipesModule,
-    ContactsListModule,
-    AddressFormModule,
-    ContactRolesInputModule,
-  ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		RouterModule.forChild(routes),
+		ContactServiceModule,
+		SneatPipesModule,
+		ContactsListModule,
+		AddressFormModule,
+		ContactRolesInputModule,
+	],
 	declarations: [
 		ContactPageComponent,
 	],

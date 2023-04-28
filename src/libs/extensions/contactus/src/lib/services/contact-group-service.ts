@@ -111,7 +111,7 @@ export class ContactGroupService {
 	getContactGroupByID(id: string): Observable<IContactGroupContext> {
 		const cg = defaultFamilyContactGroups.find(cg => cg.id === id);
 		if (!cg) {
-			return of({ id, dto: null, brief: null });
+			return of({ id, dto: null, brief: undefined });
 		}
 		const contactGroup: IContactGroupContext = {
 			id: cg.id, brief: cg, dto: cg,
