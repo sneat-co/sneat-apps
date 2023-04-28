@@ -27,6 +27,4 @@ export class OrderAgentsComponent implements OnChanges {
 		event.preventDefault();
 		alert('Not implemented yet');
 	}
-
-	protected readonly add = add;
 }
