@@ -12,7 +12,7 @@
 	<ion-list>
 		<ion-radio-group name="mode" [(ngModel)]="mode">
 			<ion-item>
-				<ion-radio name="mode" value="personal" slot="start"></ion-radio>
+				<ion-radio slot="start" name="mode" value="personal"></ion-radio>
 				<ion-label>
 					<b *ngIf="mode === 'personal'">Personal</b>
 					<!-- TODO: should be a better way to set style -->

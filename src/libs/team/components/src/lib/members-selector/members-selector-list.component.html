@@ -7,7 +7,7 @@
 	<ion-item *ngFor="let member of members; trackBy: fulLMemberID">
 		<ion-icon name="person-outline" slot="start"></ion-icon>
 		<ion-label>{{member|personTitle}}</ion-label>
-		<ion-radio *ngIf="max === 1" [value]="member.id" [disabled]="isDisabled(member.id)"></ion-radio>
+		<ion-radio  slot="end" *ngIf="max === 1" [value]="member.id" [disabled]="isDisabled(member.id)"></ion-radio>
 	</ion-item>
 </ion-radio-group>
 <ion-item-group *ngIf="members && (max !== 1)">

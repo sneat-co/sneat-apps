@@ -12,7 +12,7 @@
 	<ion-label color="medium" *ngIf="parentRole">{{subLabel}}</ion-label>
 	<span style="padding-left: 0.25em"
 				*ngIf="parentRole && (parentContact?.brief?.countryID||parentContact?.dto?.countryID)">{{(parentContact?.brief?.countryID || parentContact?.dto?.countryID)|countryFlag}}</span>
-	<ion-input [disabled]="disabled" [value]="parentContact?.brief?.title" *ngIf="parentRole"></ion-input>
+	<ion-input label="TEST" [disabled]="disabled" [value]="parentContact?.brief?.title" *ngIf="parentRole"></ion-input>
 	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">
 		<ion-button *ngIf="!deleting" (click)="openContactSelector($event)" [disabled]="disabled">
 			<ion-label>...</ion-label>
