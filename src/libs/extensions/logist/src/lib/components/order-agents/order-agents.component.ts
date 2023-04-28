@@ -1,8 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ContactRole } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { add } from 'ionicons/icons';
-import { CounterpartyRole, ILogistOrderContext, IOrderCounterparty } from '../../dto';
+import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 
 @Component({
 	selector: 'sneat-order-agents',
