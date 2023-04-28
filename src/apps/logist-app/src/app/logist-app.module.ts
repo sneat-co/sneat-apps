@@ -31,12 +31,13 @@ console.log('firebaseModules', firebaseModules);
 
 const contactRolesByType: ContactRolesByType = {
 	'company': [
-		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
+		{ id: 'dispatch_agent', title: 'Dispatch Agent', iconName: 'body-outline' },
+		{ id: 'receive_agent', title: 'Receive Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
 		{ id: 'carrier', title: 'Carrier', iconName: 'train-outline' },
 		{ id: 'consignee', title: 'Consignee', canBeImpersonatedByRoles: ['buyer'] },
-		{ id: 'dispatcher', title: 'Dispatcher', canBeImpersonatedByRoles: ['agent'] },
-		{ id: 'notify_party', title: 'Notify Party', canBeImpersonatedByRoles: ['agent'] },
+		{ id: 'dispatcher', title: 'Dispatcher', canBeImpersonatedByRoles: ['dispatch_agent'] },
+		{ id: 'notify_party', title: 'Notify Party', canBeImpersonatedByRoles: ['receive_agent'] },
 		{ id: 'port', title: 'Port' },
 		{ id: 'trucker', title: 'Trucker' },
 		{ id: 'shipper', title: 'Shipper' },
@@ -47,7 +48,7 @@ const contactRolesByType: ContactRolesByType = {
 		{
 			id: 'employee',
 			title: 'Driver',
-			childForRoles: ['agent', 'buyer', 'carrier', 'consignee', 'dispatcher', 'notify_party', 'trucker', 'shipper', 'shipping_line'],
+			childForRoles: ['dispatch_agent', 'receive_agent', 'buyer', 'carrier', 'consignee', 'dispatcher', 'notify_party', 'trucker', 'shipper', 'shipping_line'],
 		},
 	],
 	'location': [

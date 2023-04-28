@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactInputModule } from '@sneat/extensions/contactus';
 import { LogistOrderServiceModule } from '../services';
+import { OrderAgentsComponent } from './order-agents/order-agents.component';
 import { OrderCardComponent } from './order-card/order-card.component';
 import { OrderPrintMenuComponent } from './order-card/order-print-menu.component';
 import { OrderCounterpartiesComponent } from './order-counterparties/order-counterparties.component';
@@ -27,6 +28,7 @@ import { OrderCounterpartyComponent } from './order-counterparty/order-counterpa
 		OrderCounterpartyComponent,
 		OrderCounterpartyInputComponent,
 		OrderCounterpartiesComponent,
+		OrderAgentsComponent,
 		// OrderShippingPointsCardComponent,
 	],
 	exports: [

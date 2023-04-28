@@ -1,4 +1,14 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all"
+	"singleQuote": true,
+	"trailingComma": "all",
+	"overrides": [
+		{
+			"files": [
+				"**/*.html"
+			],
+			"options": {
+				"singleQuote": false
+			}
+		}
+	]
 }

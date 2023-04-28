@@ -3,13 +3,16 @@ import { IAddress } from '@sneat/dto';
 import { ITeamRequest } from '@sneat/team/models';
 
 export type CounterpartyRole =
-	'buyer' | 'consignee' | 'notify' // TODO: Which one to use/keep?
-	| 'agent'
-	| 'carrier'
+	'buyer'
+	| 'consignee'
+	| 'notify_party'
+	| 'dispatch_agent'
+	| 'receive_agent'
+	| 'carrier' // TODO: remove confusing 'carrier' role?
 	| 'shipper'
 	| 'ship'
 	| 'dispatcher'
-	| 'receiver'
+	// | 'receiver'
 	| 'dispatch_point'
 	| 'receive_point'
 	| 'trucker'

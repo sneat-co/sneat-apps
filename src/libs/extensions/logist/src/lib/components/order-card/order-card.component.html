@@ -101,24 +101,9 @@
 																		 [team]="team"
 																		 [order]="order"
 																		 [readonly]="readonly"
-																		 counterpartyRole="notify"
+																		 counterpartyRole="notify_party"
 																		 contactType="company"
 																		 contactRole="notify_party"
-																		 labelPosition="fixed"
-		></sneat-logist-order-counterparty>
-	</ion-item-group>
-	<ion-item-group>
-		<ion-item-divider color="light">
-			<ion-label color="medium">Agents</ion-label>
-		</ion-item-divider>
-		<sneat-logist-order-counterparty label="Carrier"
-																		 [team]="team"
-																		 [order]="order"
-																		 [readonly]="readonly"
-																		 [canChangeContact]="false"
-																		 counterpartyRole="carrier"
-																		 contactType="company"
-																		 contactRole="carrier"
 																		 labelPosition="fixed"
 		></sneat-logist-order-counterparty>
 	</ion-item-group>
@@ -157,6 +142,7 @@
 																		 refNumLabel="Voyage"
 		></sneat-logist-order-counterparty>
 	</ion-item-group>
+	<sneat-order-agents [team]="team" [order]="order"></sneat-order-agents>
 
 	<!--	<sneat-logist-order-counterparties-->
 	<!--		[team]="team"-->

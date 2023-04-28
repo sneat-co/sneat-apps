@@ -184,7 +184,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			}
 			switch (this.contactRole) {
 				case 'consignee':
-				case 'notify':
+				case 'notify_party':
 					if (orderDto.route) {
 						orderDto = {
 							...orderDto, route: {
