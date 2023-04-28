@@ -4,7 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { RetroItemType } from '@sneat/scrumspace/retrospectives';
+// import { RetroItemType } from '@sneat/scrumspace/retrospectives';
 
 @Component({
 	selector: 'sneat-add-retro-item',
@@ -12,11 +12,11 @@ import { RetroItemType } from '@sneat/scrumspace/retrospectives';
 	styleUrls: ['./add-retro-item.component.scss'],
 })
 export class AddRetroItemComponent implements OnDestroy {
-	@Input() retroItemType: RetroItemType;
-	@Input() teamId: string;
-	@Input() meetingId: string;
+	// @Input() retroItemType: RetroItemType;
+	@Input() teamId?: string;
+	@Input() meetingId?: string;
 	public titleControl = new FormControl('', [Validators.required]);
-	public isAdding: boolean;
+	public isAdding = false;
 	private destroyed = new Subject<boolean>();
 
 	constructor(
@@ -32,6 +32,11 @@ export class AddRetroItemComponent implements OnDestroy {
 	}
 
 	public add(event?: Event): void {
+		const teamID = this.teamId, meeting = this.meetingId;
+		if (teamID || meetingID) {
+			alert('no team or meeting id');
+			return;
+		}
 		console.log('add()');
 		event?.stopPropagation();
 		event?.preventDefault();
@@ -42,8 +47,8 @@ export class AddRetroItemComponent implements OnDestroy {
 		}
 		const title = this.titleControl.value as string;
 		const request: IAddRetroItemRequest = {
-			teamID: this.teamId,
-			meeting: this.meetingId,
+			teamID,
+			meeting: meetingID,
 			type: this.retroItemType,
 			title,
 		};

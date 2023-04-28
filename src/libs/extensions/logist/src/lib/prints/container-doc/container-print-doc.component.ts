@@ -72,7 +72,7 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 			this.by = this.order?.dto?.counterparties?.find(c => c.contactID === byContactID);
 			this.points = this.points?.sort((a, b) => {
 				const d1 = a.containerPoint.arrival?.scheduledDate || '',
-					d2 = a.containerPoint.arrival?.scheduledDate || '';
+					d2 = b.containerPoint.arrival?.scheduledDate || '';
 				return d1 == d2 ? 0 : d1 > d2 ? 1 : -1;
 			});
 			this.firstArrivalScheduledDate = this.points?.length

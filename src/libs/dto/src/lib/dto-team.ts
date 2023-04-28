@@ -1,7 +1,6 @@
 import { TeamType } from '@sneat/core';
 import { IAssetBrief } from './dto-asset';
 import { TeamCounts } from './dto-commune';
-import { IContactBrief } from './dto-contact';
 import { IHappeningBrief } from './dto-happening';
 import { IListGroupsHolder } from './dto-list';
 import { IMemberBrief } from './dto-member';

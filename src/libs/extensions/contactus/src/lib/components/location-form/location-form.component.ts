@@ -2,7 +2,6 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
-import { excludeEmpty } from '@sneat/core';
 import { ContactRole, ContactType, IAddress, IContactBrief, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { excludeEmpty, excludeUndefined } from '@sneat/core';
+import { excludeUndefined } from '@sneat/core';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';

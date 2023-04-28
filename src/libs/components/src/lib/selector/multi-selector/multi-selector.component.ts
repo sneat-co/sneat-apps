@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectItem, ISelectItemEvent, SelectorBaseComponent } from '..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

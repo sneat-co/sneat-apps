@@ -62,7 +62,7 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 	ngAfterViewInit(): void {
 		const c = this.addressFormComponent;
 		if (c) {
-			Object.entries(c.form.controls).forEach(([key, control]) => {
+			Object.entries(c.form.controls).forEach(([key/*, control*/]) => {
 				const k = key as keyof ILogistTeamSettingsFormControls;
 				this.form.addControl(k, c.form.controls.countryID);
 			});
