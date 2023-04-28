@@ -3,10 +3,10 @@
 To generate a new library use `nx` command:
 
 ```shell
-nx generate @nrwl/angular:library <mylibrary> --buildable
+nx generate @nx/angular:library <mylibrary> --buildable
 
 # or with PNPM alias
-pnx generate @nrwl/angular:library <mylibrary> --buildable
+pnx generate @nx/angular:library <mylibrary> --buildable
 ```
 
 ## List of sneat libraries with brief description
@@ -18,4 +18,4 @@ pnx generate @nrwl/angular:library <mylibrary> --buildable
 - [@sneat/auth](auth) - provides authentication services (no UI components)
 - [@sneat/auth-models](auth-models) - provides authentication models that are user by auth services & UI components.
 - [@sneat/auth-ui](auth-ui) - provides authentication UI components
-- [@sneat/core](core) - 
+- [@sneat/core](core) -

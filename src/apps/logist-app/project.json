@@ -79,7 +79,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nrwl/linter:eslint",
+			"executor": "@nx/linter:eslint",
 			"options": {
 				"lintFilePatterns": [
 					"apps/logist-app/**/*.ts",
@@ -88,7 +88,7 @@
 			}
 		},
 		"test": {
-			"executor": "@nrwl/jest:jest",
+			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/apps/logist-app"],
 			"options": {
 				"jestConfig": "apps/logist-app/jest.config.ts",

@@ -6,7 +6,7 @@
 	"prefix": "sneat",
 	"targets": {
 		"build": {
-			"executor": "@nrwl/angular:package",
+			"executor": "@nx/angular:package",
 			"outputs": ["{workspaceRoot}/dist/libs/datagrid"],
 			"options": {
 				"project": "libs/datagrid/ng-package.json"
@@ -22,7 +22,7 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nrwl/jest:jest",
+			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/datagrid"],
 			"options": {
 				"jestConfig": "libs/datagrid/jest.config.ts",
@@ -30,7 +30,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nrwl/linter:eslint",
+			"executor": "@nx/linter:eslint",
 			"options": {
 				"lintFilePatterns": ["libs/datagrid/**/*.ts", "libs/datagrid/**/*.html"]
 			}

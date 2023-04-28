@@ -8,10 +8,14 @@ import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus'; // TODO: HELP WANTED: find how to fix it
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
-import { TeamComponentBaseParams, TeamMenuComponent, TeamMenuComponentModule } from '@sneat/team/components';
+import {
+	TeamComponentBaseParams,
+	TeamMenuComponent,
+	TeamMenuComponentModule,
+} from '@sneat/team/components';
 
 const routes: Routes = [
 	{
@@ -23,16 +27,19 @@ const routes: Routes = [
 	{
 		path: '',
 		// pathMatch: 'full',
-		loadChildren: () => import('./team-page/team-page.module').then(m => m.TeamPageModule),
+		loadChildren: () =>
+			import('./team-page/team-page.module').then((m) => m.TeamPageModule),
 	},
 	...memberRoutes, // E.g. "./new-member"
 	{
 		path: 'member/:memberId',
-		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
+		loadChildren: () =>
+			import('@sneat/extensions/memberus').then((m) => m.MemberRoutingModule),
 	},
 	{
 		path: 'member/:memberId',
-		loadChildren: () => import('@sneat/extensions/memberus').then(m => m.MemberRoutingModule),
+		loadChildren: () =>
+			import('@sneat/extensions/memberus').then((m) => m.MemberRoutingModule),
 	},
 	...budgetusRoutes,
 	...docusRoutes,
@@ -66,9 +73,6 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 	declarations: [],
-	providers: [
-		TeamComponentBaseParams,
-	],
+	providers: [TeamComponentBaseParams],
 })
-export class TeamSpaceRoutingModule {
-}
+export class TeamSpaceRoutingModule {}

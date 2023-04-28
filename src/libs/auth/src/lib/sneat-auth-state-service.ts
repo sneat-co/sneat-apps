@@ -17,7 +17,7 @@ import {
 } from '@angular/fire/auth';
 
 // TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { newRandomId } from '@sneat/random';
 
 export enum AuthStatuses {
@@ -56,7 +56,9 @@ export class SneatAuthStateService {
 		.asObservable()
 		.pipe(distinctUntilChanged());
 
-	private readonly authUser$ = new BehaviorSubject<ISneatAuthUser | null | undefined>(undefined);
+	private readonly authUser$ = new BehaviorSubject<
+		ISneatAuthUser | null | undefined
+	>(undefined);
 	public readonly authUser = this.authUser$.asObservable();
 
 	private readonly authState$ = new BehaviorSubject<ISneatAuthState>(
@@ -71,7 +73,8 @@ export class SneatAuthStateService {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
+		@Inject(AnalyticsService)
+		private readonly analyticsService: IAnalyticsService,
 		private readonly fbAuth: Auth,
 	) {
 		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
@@ -81,7 +84,7 @@ export class SneatAuthStateService {
 					? AuthStatuses.authenticated
 					: AuthStatuses.notAuthenticated;
 				const current = this.authState$.value || {};
-				fbUser?.getIdToken().then(token => {
+				fbUser?.getIdToken().then((token) => {
 					this.authState$.next({
 						...current,
 						status,
@@ -97,7 +100,10 @@ export class SneatAuthStateService {
 		this.fbAuth.onAuthStateChanged({
 			complete: () => void 0,
 			next: (fbUser) => {
-				console.log(`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`, fbUser);
+				console.log(
+					`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`,
+					fbUser,
+				);
 				const user: ISneatAuthUser | null = fbUser && {
 					isAnonymous: fbUser.isAnonymous,
 					emailVerified: fbUser.emailVerified,
@@ -106,7 +112,10 @@ export class SneatAuthStateService {
 					displayName: fbUser.displayName,
 					phoneNumber: fbUser.phoneNumber,
 					photoURL: fbUser.photoURL,
-					providerId: fbUser.providerData?.length === 1 && fbUser.providerData[0] ? fbUser.providerData[0].providerId : fbUser.providerId,
+					providerId:
+						fbUser.providerData?.length === 1 && fbUser.providerData[0]
+							? fbUser.providerData[0].providerId
+							: fbUser.providerId,
 				};
 				const status = user
 					? AuthStatuses.authenticated
@@ -129,7 +138,9 @@ export class SneatAuthStateService {
 		return from(signInWithEmailLink(this.fbAuth, email));
 	}
 
-	public signInWith(authProviderName: AuthProviderName): Observable<UserCredential> {
+	public signInWith(
+		authProviderName: AuthProviderName,
+	): Observable<UserCredential> {
 		const eventParams = { provider: authProviderName };
 		let authProvider: AuthProvider;
 		switch (authProviderName) {
@@ -149,19 +160,24 @@ export class SneatAuthStateService {
 				(authProvider as GithubAuthProvider).addScope('user:email');
 				break;
 			default: {
-				const e = new Error('Unknown or unsupported auth provider: ' + authProviderName);
+				const e = new Error(
+					'Unknown or unsupported auth provider: ' + authProviderName,
+				);
 				this.errorLogger.logError(e, 'Coding error');
 				return throwError(() => e);
 			}
 		}
 		this.analyticsService.logEvent('loginWith', eventParams);
-		const result = from(signInWithPopup(this.fbAuth, authProvider))
-			.pipe(share());
+		const result = from(signInWithPopup(this.fbAuth, authProvider)).pipe(
+			share(),
+		);
 		result.subscribe({
 			next: () => {
 				this.analyticsService.logEvent('signInWithPopup', eventParams);
 			},
-			error: this.errorLogger.logErrorHandler(`Failed to sign-in with ${authProviderName}`),
+			error: this.errorLogger.logErrorHandler(
+				`Failed to sign-in with ${authProviderName}`,
+			),
 		});
 		return result;
 	}

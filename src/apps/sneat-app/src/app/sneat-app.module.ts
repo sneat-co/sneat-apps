@@ -4,7 +4,7 @@ import { BrowserTracing } from '@sentry/tracing';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
 import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { CommunesUiModule } from '@sneat/communes/ui'; // TODO: HELP WANTED: find how to fix it
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
@@ -40,10 +40,7 @@ const appInfo: IAppInfo = {
 };
 
 @NgModule({
-	declarations: [
-		SneatAppComponent,
-		SneatAppMenuComponent,
-	],
+	declarations: [SneatAppComponent, SneatAppMenuComponent],
 	imports: [
 		...SneatApplicationModule.defaultSneatApplicationImports(environment),
 		ImportFirebaseModules(environment.firebaseConfig),
@@ -57,7 +54,9 @@ const appInfo: IAppInfo = {
 		...coreProviders,
 		{
 			provide: SneatApiBaseUrl,
-			useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatAppApiBaseUrl,
+			useValue: environment.useEmulators
+				? 'http://localhost:4300/v0/'
+				: DefaultSneatAppApiBaseUrl,
 		},
 		{
 			provide: RANDOM_ID_OPTIONS,
@@ -69,9 +68,7 @@ const appInfo: IAppInfo = {
 		},
 	],
 	bootstrap: [SneatAppComponent],
-	exports: [
-		SneatAppMenuComponent,
-	],
+	exports: [SneatAppMenuComponent],
 })
 export class SneatAppModule {
 	constructor() {

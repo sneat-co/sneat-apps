@@ -6,7 +6,7 @@
 	"prefix": "sneat",
 	"targets": {
 		"build": {
-			"executor": "@nrwl/angular:ng-packagr-lite",
+			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/components"],
 			"options": {
 				"project": "libs/components/ng-package.json"
@@ -22,7 +22,7 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nrwl/jest:jest",
+			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/components"],
 			"options": {
 				"jestConfig": "libs/components/jest.config.ts",
@@ -30,7 +30,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nrwl/linter:eslint",
+			"executor": "@nx/linter:eslint",
 			"options": {
 				"lintFilePatterns": [
 					"libs/components/**/*.ts",

@@ -769,10 +769,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 							Add UI library
 						</summary>
 						<pre><span># Generate UI lib</span>
-nx g @nrwl/angular:lib ui
+nx g @nx/angular:lib ui
 
 <span># Add a component</span>
-nx g @nrwl/angular:component button --project ui</pre>
+nx g @nx/angular:component button --project ui</pre>
 					</details>
 					<details>
 						<summary>
@@ -843,9 +843,7 @@ nx affected:e2e</pre>
 	encapsulation: ViewEncapsulation.None,
 })
 export class NxWelcomeComponent implements OnInit {
-	constructor() {
-	}
+	constructor() {}
 
-	ngOnInit(): void {
-	}
+	ngOnInit(): void {}
 }

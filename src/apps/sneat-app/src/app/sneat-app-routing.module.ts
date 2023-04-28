@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { RoutesToCommuneModule } from '@sneat/communes/ui'; // TODO: HELP WANTED: find how to fix it
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
@@ -22,20 +22,26 @@ const routes: Routes = [
 		path: '',
 		pathMatch: 'full',
 		loadChildren: () =>
-			import('./pages/sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
+			import(
+				'./pages/sneat-app-home-page/sneat-app-home-page.component.module'
+			).then((m) => m.SneatAppHomePageComponentModule),
 	},
 	{
 		path: 'my',
-		loadChildren: () => import('./sneat-app-my-routing.module').then(m => m.SneatAppMyRoutingModule),
+		loadChildren: () =>
+			import('./sneat-app-my-routing.module').then(
+				(m) => m.SneatAppMyRoutingModule,
+			),
 	},
 	{
 		path: 'space/:teamType/:teamID',
 		loadChildren: () =>
-			import('@sneat/team/pages').then(m => m.TeamSpaceRoutingModule),
+			import('@sneat/team/pages').then((m) => m.TeamSpaceRoutingModule),
 	},
 	{
 		path: 'join/:teamType',
-		loadChildren: () => import('@sneat/team/pages').then(m => m.JoinTeamPageModule),
+		loadChildren: () =>
+			import('@sneat/team/pages').then((m) => m.JoinTeamPageModule),
 	},
 	// {
 	// 	path: 'invite-to/:teamType',
@@ -44,7 +50,7 @@ const routes: Routes = [
 	{
 		path: 'communes',
 		loadChildren: () =>
-			import('@sneat/communes/ui').then(m => m.CommunesRoutingModule),
+			import('@sneat/communes/ui').then((m) => m.CommunesRoutingModule),
 	},
 	{
 		path: 'signed-out',
@@ -58,7 +64,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'new-family',
-		loadChildren: () => import('@sneat/communes/ui').then(m => m.NewCommunePageModule),
+		loadChildren: () =>
+			import('@sneat/communes/ui').then((m) => m.NewCommunePageModule),
 	},
 ];
 
@@ -70,5 +77,4 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 })
-export class SneatAppRoutingModule {
-}
+export class SneatAppRoutingModule {}

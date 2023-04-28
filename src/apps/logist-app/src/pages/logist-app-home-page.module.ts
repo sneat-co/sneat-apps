@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { LogistAppHomePageComponent } from './logist-app-home-page.component';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { LogistMenuModule } from '@sneat/extensions/logist'; // TODO: HELP WANTED: find how to fix it
 
 const routes: Routes = [
@@ -22,6 +22,4 @@ const routes: Routes = [
 	],
 	declarations: [LogistAppHomePageComponent],
 })
-export class LogistAppHomePageModule {
-
-}
+export class LogistAppHomePageModule {}
