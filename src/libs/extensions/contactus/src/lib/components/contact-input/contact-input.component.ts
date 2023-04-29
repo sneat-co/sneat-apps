@@ -31,6 +31,14 @@ export class ContactInputComponent implements OnChanges {
 
 	protected readonly labelText = () => this.label || this.contactRole && (this.contactRole[0].toUpperCase() + this.contactRole.substr(1)) || 'Contact';
 
+	protected get showFlag(): boolean {
+		return !!this.contact?.brief?.countryID || !!this.contact?.dto?.countryID;
+	}
+
+	protected get showParentFlag(): boolean {
+		return (!!this.parentRole || !!this.parentType) && !!(this.parentContact?.brief?.countryID || this.parentContact?.dto?.countryID);
+	}
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
