@@ -103,9 +103,10 @@ export class OrderContainerComponent implements OnChanges {
 		event.stopPropagation();
 		event.preventDefault();
 		this.setFormValues();
-		setTimeout(() => {
-			this.containerFormGroup.markAsPristine();
-		}, 100);
+		this.containerFormGroup.markAsPristine();
+		// setTimeout(() => {
+		// 	this.containerFormGroup.markAsPristine();
+		// }, 100);
 	}
 
 	print(event: Event): boolean {

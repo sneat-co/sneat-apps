@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, Observable, Subject } from 'rxjs';
@@ -16,8 +17,8 @@ import { LogistOrderService } from '../../services';
 
 function debounce<T>(o: Subject<T>): Observable<T> {
 	return o.asObservable().pipe(
-		distinctUntilChanged(),
 		debounceTime(1000),
+		distinctUntilChanged(),
 	);
 }
 
@@ -34,19 +35,25 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	protected freightLoad?: IFreightLoad;
 	protected checked?: boolean;
 
-	private readonly $date = new BehaviorSubject<string | undefined>(undefined);
-	private readonly date$ = debounce(this.$date);
+	protected saving: FreightPointIntField[] = [];
 
-	private readonly $weight = new BehaviorSubject<number | undefined>(undefined);
-	private readonly weight$ = debounce(this.$weight);
+	protected readonly pallets = new FormControl<number | undefined>(undefined);
+	protected readonly weight = new FormControl<number | undefined>(undefined);
 
 	private readonly $pallets = new BehaviorSubject<number | undefined>(undefined);
 	private readonly pallets$ = debounce(this.$pallets);
 
+	private readonly $weight = new BehaviorSubject<number | undefined>(undefined);
+	private readonly weight$ = debounce(this.$weight);
+
 	protected readonly label = () => this.task ? this.task[0].toUpperCase() + this.task.slice(1) : '';
 
-	protected readonly onWeightChanged = (event: Event): void => this.$weight.next(+(event as CustomEvent).detail.value);
-	protected readonly onPalletsChanged = (event: Event): void => this.$pallets.next(+(event as CustomEvent).detail.value);
+	protected readonly onPalletsInput = (event: Event): void => this.$pallets.next(+(event as CustomEvent).detail.value);
+	protected readonly onWeightInput = (event: Event): void => this.$weight.next(+(event as CustomEvent).detail.value);
+
+	// Does not work well with up/down arrows in ionChange event
+	// protected readonly onPalletsChange = (event: Event): void => this.onNumberDebounced('numberOfPallets', this.pallets.value || undefined);
+	// protected readonly onWeightChange = (event: Event): void => this.onNumberDebounced('grossWeightKg', this.weight.value || undefined);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -123,6 +130,8 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 					this.freightLoad = this.containerPoint?.toUnload;
 					break;
 			}
+			this.pallets.setValue(this.freightLoad?.numberOfPallets);
+			this.weight.setValue(this.freightLoad?.grossWeightKg);
 			this.$weight.next(this.freightLoad?.grossWeightKg);
 			this.$pallets.next(this.freightLoad?.numberOfPallets);
 		}
@@ -146,6 +155,10 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		}
 	}
 
+	protected isSaving(name: FreightPointIntField): boolean { // TODO: use Signals?
+		return this.saving.includes(name);
+	}
+
 	private setNumberField(name: FreightPointIntField, number?: number): void {
 		console.log('ContainerPointLoadFormComponent.setNumberField()', name, number);
 		const
@@ -167,9 +180,47 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 			task,
 			integers: { [name]: number },
 		};
+		this.saving.push(name);
+		const started = Date.now();
+		const complete = () => {
+			const finished = Date.now();
+			const duration = finished - started;
+			const remove = () => {
+				const i = this.saving.indexOf(name);
+				if (i >= 0) {
+					this.saving.splice(i, 1);
+				}
+				this.changeDetector.detectChanges();
+			};
+			if (duration > 500) {
+				remove();
+			} else {
+				setTimeout(remove, 500);
+			}
+		};
 		this.orderService.setContainerPointFreightFields(excludeEmpty(request)).subscribe({
-			next: () => console.log('setContainerPointNumber() success'),
-			error: this.errorLogger.logErrorHandler(`Failed to set container point freight field ${name}`),
+			next: () => {
+				console.log('setContainerPointNumber() success for ', name, number);
+				complete();
+				switch (name) {
+					case 'grossWeightKg':
+						if (this.weight.value === number) {
+							this.weight.markAsPristine();
+						}
+						break;
+					case 'numberOfPallets':
+						if (this.pallets.value === number) {
+							this.pallets.markAsPristine();
+						}
+						break;
+					default:
+						throw new Error(`Unknown field ${name}`);
+				}
+			},
+			error: err => {
+				complete();
+				this.errorLogger.logError(err, `Failed to set container point freight field ${name}`);
+			},
 		});
 	}
 }

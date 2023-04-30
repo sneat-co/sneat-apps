@@ -21,6 +21,8 @@ export class OrderContainerPointComponent implements OnChanges {
 	// @Input() shippingPoint?: IOrderShippingPoint;
 	@Input() containerPoint?: IContainerPoint;
 
+	protected dateTimeTab: 'scheduled' | 'actual' = 'scheduled';
+
 	protected shippingPoint?: IOrderShippingPoint;
 
 	protected readonly notes = new FormControl<string>('');
@@ -34,6 +36,10 @@ export class OrderContainerPointComponent implements OnChanges {
 		private readonly orderService: LogistOrderService,
 		private readonly changeDetector: ChangeDetectorRef,
 	) {
+	}
+
+	get showNotes(): boolean {
+		return this.dateTimeTab as string === 'notes'
 	}
 
 	cancelRefNumberChanges(): void {

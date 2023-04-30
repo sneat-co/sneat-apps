@@ -43,6 +43,25 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 		});
 	}
 
+	protected showArrivalLabel(cp: IContainerPoint): boolean {
+		return this.showDeparture(cp);
+	}
+
+	protected showArrival(cp: IContainerPoint): boolean {
+		const { scheduledDate, scheduledTime } = cp.arrival || {};
+		return !!scheduledTime || !!scheduledDate;
+	}
+
+	protected showDeparture(cp: IContainerPoint): boolean {
+		const { scheduledDate, scheduledTime } = cp.departure || {};
+		return !!scheduledTime || (!!scheduledDate && scheduledDate !== cp.arrival?.scheduledDate);
+	}
+
+	protected showDepartureDate(cp: IContainerPoint): boolean {
+		const { scheduledDate } = cp.departure || {};
+		return !!scheduledDate && scheduledDate !== cp.arrival?.scheduledDate;
+	}
+
 	override onOrderChanged(order: ILogistOrderContext): void {
 		if (this.containerID) {
 			this.container = order.dto?.containers?.find(c => c.id === this.containerID);

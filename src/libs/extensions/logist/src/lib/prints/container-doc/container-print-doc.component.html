@@ -53,9 +53,10 @@
 			<tr>
 				<th>Puntos<br>de<br>recogida</th>
 				<th>Fabrica</th>
+				<th>Ref#</th>
+				<th>Scheduled</th>
 				<th>Pallets</th>
 				<th>Peso (kg)</th>
-				<th>Ref#</th>
 				<th>Notas</th>
 				<th>Address</th>
 			</tr>
@@ -63,9 +64,33 @@
 			<tr *ngFor="let point of points; let i = index">
 				<td class="number">{{i + 1}}</td>
 				<td>{{point.counterparty?.title}}</td>
+				<td>{{point.containerPoint.refNumber}}</td>
+				<td>
+					<style>
+						table.no-borders td {
+							border: none;
+							padding: 0;
+						}
+					</style>
+					<table class="no-borders" style="width: 100%">
+						<tr *ngIf="point.containerPoint.arrival?.scheduledDate || point.containerPoint.arrival?.scheduledTime">
+							<td *ngIf="showArrivalLabel(point.containerPoint)">Arrival</td>
+							<td style="text-align: right">
+								{{point.containerPoint.arrival?.scheduledDate}}
+								<span *ngIf="point.containerPoint.arrival?.scheduledTime">@ {{point.containerPoint.arrival?.scheduledTime}}</span>
+							</td>
+						</tr>
+						<tr *ngIf="showDeparture(point.containerPoint)">
+							<td>Departure</td>
+							<td style="text-align: right">
+								<span *ngIf="showDepartureDate(point.containerPoint)">{{point.containerPoint.departure?.scheduledDate}}</span>
+								<span *ngIf="point.containerPoint.departure?.scheduledTime">@ {{point.containerPoint.departure?.scheduledTime}}</span>
+							</td>
+						</tr>
+					</table>
+				</td>
 				<td class="number">{{point.containerPoint.toLoad?.numberOfPallets}}</td>
 				<td class="number">{{point.containerPoint.toLoad?.grossWeightKg}}</td>
-				<td>{{point.containerPoint.refNumber}}</td>
 				<td>{{point.containerPoint.notes}}</td>
 				<td>
 					{{point.address?.lines}}

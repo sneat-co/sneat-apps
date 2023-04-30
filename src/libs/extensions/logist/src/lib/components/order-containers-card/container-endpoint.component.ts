@@ -5,7 +5,7 @@ import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { debounceTime, distinctUntilChanged, Observable, Subject, tap } from 'rxjs';
 import {
 	EndpointDateField,
-	EndpointSide,
+	EndpointSide, EndpointTimeField,
 	IContainerEndpoint,
 	IContainerPoint,
 	ILogistOrderContext,
@@ -32,12 +32,15 @@ export class ContainerEndpointComponent implements OnChanges {
 	@Input() containerPoint?: IContainerPoint;
 	@Input() shippingPointID?: string;
 	@Input() endpointSide?: EndpointSide;
+	@Input() dateTimeTab: 'scheduled' | 'actual' = 'scheduled';
 
 	protected endpoint?: IContainerEndpoint;
 	protected byContact?: IContactContext;
 
 	protected readonly scheduledDate = new FormControl<string>('');
+	protected readonly scheduledTime = new FormControl<string>('');
 	protected readonly actualDate = new FormControl<string>('');
+	protected readonly actualTime = new FormControl<string>('');
 
 	protected labelScheduled = 'Scheduled';
 	protected labelActual = 'Actual';
@@ -45,8 +48,14 @@ export class ContainerEndpointComponent implements OnChanges {
 	private readonly $scheduledDate = new Subject<string>();
 	private readonly scheduledDate$ = debounce('scheduledDate', this.$scheduledDate);
 
+	private readonly $scheduledTime = new Subject<string>();
+	private readonly scheduledTime$ = debounce('scheduledTime', this.$scheduledTime);
+
 	private readonly $actualDate = new Subject<string>();
-	private readonly actualDate$ = debounce('actualDate', this.$actualDate);
+	private readonly actualDate$ = debounce('actualTime', this.$actualDate);
+
+	private readonly $actualTime = new Subject<string>();
+	private readonly actualTime$ = debounce('actualTime', this.$actualTime);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -54,7 +63,9 @@ export class ContainerEndpointComponent implements OnChanges {
 		private readonly changedDetectorRef: ChangeDetectorRef,
 	) {
 		this.scheduledDate$.subscribe(date => this.setDateField('scheduledDate', date));
-		// this.actualDate$.subscribe(date => this.setDateField('actualDate', date));
+		this.scheduledTime$.subscribe(date => this.setTimeField('scheduledTime', date));
+		this.actualDate$.subscribe(date => this.setDateField('actualDate', date));
+		this.actualTime$.subscribe(date => this.setTimeField('actualTime', date));
 	}
 
 	// protected onByChanged(counterpartyRef: IOrderCounterpartyRef): void {
@@ -86,9 +97,19 @@ export class ContainerEndpointComponent implements OnChanges {
 		this.$scheduledDate.next(this.scheduledDate.value || '');
 	}
 
+	protected onScheduledTimeChanged(event: Event): void {
+		console.log('ContainerEndpointComponent.onScheduledTimeChanged()', event);
+		this.$scheduledTime.next(this.scheduledTime.value || '');
+	}
+
 	protected onActualDateChanged(event: Event): void {
 		console.log('ContainerEndpointComponent.onActualDateChanged()', event);
 		this.$actualDate.next(this.actualDate.value || '');
+	}
+
+	protected onActualTimeChanged(event: Event): void {
+		console.log('ContainerEndpointComponent.onActualTimeChanged()', event);
+		this.$actualTime.next(this.actualTime.value || '');
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -106,7 +127,12 @@ export class ContainerEndpointComponent implements OnChanges {
 			}
 			this.endpoint = this.endpointSide ? this.containerPoint?.[this.endpointSide] : undefined;
 			console.log('ContainerEndpointComponent.ngOnChanges()', this.endpointSide, this.endpoint);
+
 			this.scheduledDate.setValue(this.endpoint?.scheduledDate || '');
+			this.scheduledTime.setValue(this.endpoint?.scheduledTime || '');
+			this.actualDate.setValue(this.endpoint?.actualDate || '');
+			this.actualTime.setValue(this.endpoint?.actualTime || '');
+
 			// this.actualDate.setValue(this.endpoint?.actualDate || '');
 			const byCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === this.endpoint?.byContactID);
 			if (this.team) {
@@ -124,7 +150,7 @@ export class ContainerEndpointComponent implements OnChanges {
 		}
 	}
 
-	private createSetContainerEndpointFieldsRequest(): ISetContainerEndpointFieldsRequest | undefined {
+	private createSetContainerEndpointFieldsRequest(): ISetContainerEndpointFieldsRequest {
 		const
 			endpointSide = this.endpointSide,
 			shippingPointID = this.shippingPointID,
@@ -133,7 +159,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			teamID = this.order?.team?.id;
 
 		if (!endpointSide || !containerID || !shippingPointID || !orderID || !teamID || !this.containerPoint) {
-			return;
+			throw new Error(`ContainerEndpointComponent.createSetContainerEndpointFieldsRequest(): invalid parameters: endpointSide=${endpointSide}, containerID=${containerID}, shippingPointID=${shippingPointID}, orderID=${orderID}, teamID=${teamID}`);
 		}
 		const request: ISetContainerEndpointFieldsRequest = {
 			teamID,
@@ -145,28 +171,36 @@ export class ContainerEndpointComponent implements OnChanges {
 		return request;
 	}
 
-	private readonly setDateField = (field: EndpointDateField, date: string): void => {
-		if (date === (this.endpoint?.[field] || '')) {
+	private readonly setTimeField = (field: EndpointTimeField, value: string): void => {
+		if (value === (this.endpoint?.[field])) {
 			return;
 		}
-		console.log(`ContainerEndpointComponent.setDateField(${field}, ${date})`, `endpoint.${field}`, this.endpoint?.[field]);
+		console.log(`ContainerEndpointComponent.setDateField(${field}, ${value})`, `endpoint.${field}`, this.endpoint?.[field]);
 		const request = this.createSetContainerEndpointFieldsRequest();
-		if (!request) {
+		this.setContainerEndpointFields({...request, times: { [field]: value }})
+
+	}
+
+	private readonly setDateField = (field: EndpointDateField, value: string): void => {
+		if (value === (this.endpoint?.[field])) {
 			return;
 		}
-		this.orderService.setContainerEndpointFields({
-			...request,
-			dates: { [field]: date },
-		}).subscribe({
+		console.log(`ContainerEndpointComponent.setDateField(${field}, ${value})`, `endpoint.${field}`, this.endpoint?.[field]);
+		const request = this.createSetContainerEndpointFieldsRequest();
+		this.setContainerEndpointFields({...request, dates: { [field]: value }})
+	};
+
+	private setContainerEndpointFields(request: ISetContainerEndpointFieldsRequest): void {
+		this.orderService.setContainerEndpointFields(request).subscribe({
 			next: () => {
 				console.log('ContainerEndpointComponent.setContainerEndpointFields() success');
 			},
 			error: err => {
-				this.errorLogger.logError(err, `Failed to set container point ${field} date to ${date}`);
+				this.errorLogger.logError(err, `Failed to set container point fields: ${request}`);
 				this.scheduledDate.reset();
 				this.changedDetectorRef.detectChanges();
 			},
 		});
-	};
+	}
 
 }

@@ -111,7 +111,9 @@ export interface IOrderShippingPoint extends IShippingPointBase {
 export interface IContainerEndpoint {
 	readonly byContactID?: string;
 	readonly scheduledDate?: string;
+	readonly scheduledTime?: string;
 	readonly actualDate?: string;
+	readonly actualTime?: string;
 }
 
 export interface IContainerPoint extends IShippingPointBase {
@@ -342,6 +344,7 @@ export interface ISetContainerPointTaskRequest extends IContainerPointRequest {
 }
 
 export type EndpointDateField = 'scheduledDate' | 'actualDate';
+export type EndpointTimeField = 'scheduledTime' | 'actualTime';
 export type ShippingPointStringField = 'notes';
 export type FreightPointIntField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3';
 export type FreightPointField = FreightPointIntField | EndpointDateField;
@@ -357,6 +360,7 @@ export interface ISetContainerPointFreightFieldsRequest extends IContainerPointR
 export interface ISetContainerEndpointFieldsRequest extends IContainerPointRequest {
 	readonly side: EndpointSide;
 	readonly dates?: Partial<{ [key in EndpointDateField]: (string | undefined) }>;
+	readonly times?: Partial<{ [key in EndpointTimeField]: (string | undefined) }>;
 	readonly byContactID?: string;
 }
 

@@ -1,15 +1,8 @@
 <ion-item-group>
-	<ion-item-divider color="primary">
-		<ion-label *ngIf="i || i === 0">Container #{{i + 1}} - <b>{{container?.type}}</b>, Serial #</ion-label>
-		<ion-input
-			placeholder="optional"
-			style="font-weight: bold"
-			[formGroup]="containerFormGroup"
-			[formControl]="number"
-			(keyup.enter)="save($event)"
-		></ion-input>
+	<ion-item-divider color="medium">
+		<ion-label *ngIf="i || i === 0">Container #{{i + 1}} - <b>{{container?.type}}</b></ion-label>
 		<ion-buttons slot="end">
-			<ion-button *ngIf="!saving && !deleting"
+			<ion-button *ngIf="!saving && !deleting && !containerFormGroup.dirty"
 									(click)="print($event)"
 									routerLink="/space/{{team?.type}}/{{team?.id}}/order/{{order?.id}}/print/container-doc"
 									fragment="print"
@@ -22,7 +15,7 @@
 				<ion-label>Delete</ion-label>
 				<ion-icon name="trash-outline" slot="end"></ion-icon>
 			</ion-button>
-			<ion-button *ngIf="containerFormGroup.dirty" (click)="save($event)">
+			<ion-button *ngIf="containerFormGroup.dirty" (click)="save($event)" color="warning" fill="solid">
 				<ion-icon slot="start" name="save-outline"></ion-icon>
 				<ion-label *ngIf="!saving">Save</ion-label>
 				<ion-label *ngIf="saving">Saving...</ion-label>
@@ -36,20 +29,22 @@
 		<ion-row>
 			<ion-col size="12" size-sm="4">
 				<ion-item>
-					<ion-input readonly disabled></ion-input>
-					<ion-label color="medium" slot="end"><b>Total load:</b></ion-label>
+					<ion-input label="Serial#" class="sneat-label-color-medium" placeholder="N/A"
+						style="font-weight: bold"
+						[formGroup]="containerFormGroup"
+						[formControl]="number"
+						(keyup.enter)="save($event)"
+					></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="12" size-sm="4">
 				<ion-item>
-					<ion-label>Pallets</ion-label>
-					<ion-input readonly disabled [value]="container?.totalLoad?.numberOfPallets"></ion-input>
+					<ion-input class="sneat-label-color-medium" label="Pallets" readonly disabled [value]="container?.totalLoad?.numberOfPallets"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="12" size-sm="4">
 				<ion-item>
-					<ion-label>Gross (kg)</ion-label>
-					<ion-input readonly disabled [value]="container?.totalLoad?.grossWeightKg"></ion-input>
+					<ion-input class="sneat-label-color-medium" label="Gross (kg)" readonly disabled [value]="container?.totalLoad?.grossWeightKg"></ion-input>
 				</ion-item>
 			</ion-col>
 			<!--			<ion-col size="12" size-xl="3" size-sm="3">-->
