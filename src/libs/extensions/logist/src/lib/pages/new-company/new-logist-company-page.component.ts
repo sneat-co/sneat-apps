@@ -17,7 +17,7 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 	readonly contactTypes: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
-		{ id: 'carrier', title: 'Carrier', iconName: 'train-outline' },
+		{ id: 'freight_agent', title: 'Freight Agent', iconName: 'train-outline' },
 		{ id: 'dispatcher', title: 'Dispatcher', iconName: 'business-outline' },
 		{ id: 'shipper', title: 'Shipper', iconName: 'boat-outline' },
 	];
@@ -32,7 +32,7 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 	) {
 
 		super('NewLogistCompanyPageComponent', route, teamParams);
-		const roles   = contactRolesByType['company'];
+		const roles = contactRolesByType['company'];
 		this.contactTypes = roles;
 		route.queryParamMap
 			.pipe(

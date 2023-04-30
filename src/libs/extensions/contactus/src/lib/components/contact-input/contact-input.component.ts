@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { countryFlagEmoji } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
@@ -44,6 +45,23 @@ export class ContactInputComponent implements OnChanges {
 		private readonly contactSelectorService: ContactSelectorService,
 	) {
 
+	}
+
+	protected parentTitle(): string {
+		return this.getTitle(this.showParentFlag, this.parentContact);
+	}
+
+	protected contactTitle(): string {
+		return this.getTitle(this.showFlag, this.contact);
+	}
+
+	private getTitle(showFlag: boolean, contact?: IContactContext, ): string {
+		if (!contact) {
+			return '';
+		}
+		const title = contact?.brief?.title || '';
+		const flag = showFlag ? countryFlagEmoji(contact?.brief?.countryID || contact?.dto?.countryID) + ' ' : '';
+		return flag + title;
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

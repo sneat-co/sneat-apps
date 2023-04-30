@@ -107,7 +107,7 @@ export class OrdersGridComponent implements OnChanges {
 				id: o.id,
 				status: o.brief?.status,
 				direction: o.brief?.direction,
-				carrier: o.dto?.counterparties?.find(c => c.role === 'carrier'),
+				carrier: o.dto?.counterparties?.find(c => c.role === 'freight_agent'),
 				buyer: o.dto?.counterparties?.find(c => c.role === 'buyer'),
 				consignee: o.dto?.counterparties?.find(c => c.role === 'consignee'),
 				containers: o.dto?.containers?.length?.toString(),

@@ -10,7 +10,7 @@ import { OrderPageBaseComponent } from '../pages/order-page-base.component';
 export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 
 	protected consignee?: IOrderCounterparty;
-	protected carrier?: IOrderCounterparty;
+	protected freight_agent?: IOrderCounterparty;
 
 	constructor(
 		className: string,
@@ -25,6 +25,6 @@ export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 		super.onOrderChanged(order);
 		console.log('OrderShippingDocComponent.onOrderChanged()', order);
 		this.consignee = order.dto?.counterparties?.find(c => c.role === 'consignee');
-		this.carrier = order.dto?.counterparties?.find(c => c.role === 'carrier');
+		this.freight_agent = order.dto?.counterparties?.find(c => c.role === 'freight_agent');
 	}
 }

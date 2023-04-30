@@ -83,6 +83,7 @@ export class NewCompanyFormComponent implements OnChanges {
 		try {
 			const address = validateAddress(this.contact.dto?.address);
 			const request: ICreateContactCompanyRequest = excludeEmpty({
+				status: 'active',
 				type: 'company' as ContactType,
 				company: excludeEmpty({
 					title: this.contact.dto?.title?.trim() || '',

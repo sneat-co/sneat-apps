@@ -195,6 +195,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		}
 		this.creating = true;
 		let request: ICreateContactRequest = {
+			status: 'active',
 			type: 'person',
 			teamID: team.id,
 			person: {

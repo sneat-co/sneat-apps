@@ -6,9 +6,9 @@ export type CounterpartyRole =
 	'buyer'
 	| 'consignee'
 	| 'notify_party'
+	| 'freight_agent'
 	| 'dispatch_agent'
 	| 'receive_agent'
-	| 'carrier' // TODO: remove confusing 'carrier' role?
 	| 'shipper'
 	| 'ship'
 	| 'dispatcher'

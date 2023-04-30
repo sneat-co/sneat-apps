@@ -32,6 +32,8 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 	protected firstArrivalScheduledDate?: string;
 	protected by?: IOrderCounterparty;
 
+	protected total? = {numberOfPallets: 0, grossWeightKg: 0};
+
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
@@ -86,6 +88,12 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 					};
 					return point;
 				});
+			this.total = this.points?.reduce((acc, p) => {
+				acc.grossWeightKg += p.containerPoint.toLoad?.grossWeightKg || 0;
+				acc.numberOfPallets += p.containerPoint.toLoad?.numberOfPallets || 0;
+				return acc;
+			}, { numberOfPallets: 0, grossWeightKg: 0 }) || undefined;
+
 
 			const byContactID = this.points?.find(p => !!p.containerPoint.arrival?.byContactID)?.containerPoint.arrival?.byContactID;
 			this.by = this.order?.dto?.counterparties?.find(c => c.contactID === byContactID);

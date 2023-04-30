@@ -2,21 +2,21 @@
 					[class.deleting-list-item]="deleting"
 >
 
-	<span *ngIf="showFlag"> <!-- TODO: Move into input label -->
-		{{(contact?.brief?.countryID || contact?.dto?.countryID)|countryFlag}}
-	</span>
+<!--	<span *ngIf="showFlag"> &lt;!&ndash; TODO: Move into input label &ndash;&gt;-->
+<!--		{{()|countryFlag}}-->
+<!--	</span>-->
 	<ion-input [label]="labelText()" labelPlacement="fixed" [disabled]="disabled" [readonly]="true"
 						 [color]="deleting ? 'medium' : undefined"
-						 [value]="contact?.brief?.title"
+						 [value]="contactTitle()"
 	></ion-input>
 
-	<span style="padding-left: 0.25em" *ngIf="showParentFlag"> <!-- TODO: Move into input label -->
-		{{(parentContact?.brief?.countryID || parentContact?.dto?.countryID)|countryFlag}}
-	</span>
+<!--	<span style="padding-left: 0.25em" *ngIf="showParentFlag"> &lt;!&ndash; TODO: Move into input label &ndash;&gt;-->
+<!--		{{(parentContact?.brief?.countryID || parentContact?.dto?.countryID)|countryFlag}}-->
+<!--	</span>-->
 	<ion-input *ngIf="parentRole"
 						 [label]="subLabel"
 						 [disabled]="disabled"
-						 [value]="parentContact?.brief?.title"
+						 [value]="parentTitle()"
 	></ion-input>
 
 	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">

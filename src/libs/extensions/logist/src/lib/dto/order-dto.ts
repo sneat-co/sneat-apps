@@ -16,7 +16,7 @@ export interface IOrderContact {
 	readonly parentID?: string;
 	readonly type: ContactType;
 	readonly title: string;
-	readonly countryID: string;
+	// readonly countryID: string;
 	// readonly address: IAddress;
 }
 

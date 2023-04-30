@@ -66,7 +66,9 @@ export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
 }
 
 export interface ICreateContactBaseRequest extends ITeamRequest {
+	status: 'active' | 'draft';
 	type: ContactType;
+	// countryID: string;
 	parentContactID?: string;
 	roles?: string[];
 	assetIDs?: IContact2Asset[];
@@ -84,10 +86,11 @@ export interface ICreateContactLocationRequest extends ICreateContactBaseRequest
 }
 
 export interface IBasicContactRequest {
-	status: 'active' | 'draft';
-	type: ContactType;
+	// type: ContactType;
+	// relationship?: string;
+	// message?: string;
 	title: string;
-	parentContactID?: string;
+	// parentContactID?: string;
 }
 
 export interface ICreateContactBasicRequest extends ICreateContactBaseRequest {

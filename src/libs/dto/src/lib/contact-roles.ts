@@ -32,7 +32,7 @@ export type LogistOrderContactRole =
 	| 'receive_agent'
 	| 'buyer'
 	| 'courier'
-	| 'carrier'
+	| 'freight_agent'
 	| 'notify_party'
 	| 'port'
 	| 'port_from'

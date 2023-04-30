@@ -95,7 +95,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			title: contact.dto.title || contact.id,
 			countryID: contact.dto.countryID || '',
 			address: contact.dto.address,
-			role: contact.dto?.roles?.length ? contact.dto.roles[0] as CounterpartyRole : 'carrier',
+			role: contact.dto?.roles?.length ? contact.dto.roles[0] as CounterpartyRole : 'freight_agent',
 		};
 		console.log('order: 1', this.order);
 		if (this.order?.dto) {
@@ -128,7 +128,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		if (!this.order?.dto) {
 			throw new Error('!this.order?.dto');
 		}
-		if (!this.order?.dto?.counterparties?.some(c => c.role === 'carrier')) {
+		if (!this.order?.dto?.counterparties?.some(c => c.role === 'freight_agent')) {
 			alert('Carrier is required');
 			return;
 		}

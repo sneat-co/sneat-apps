@@ -51,7 +51,7 @@
 		<table class="printable-table">
 			<thead>
 			<tr>
-				<th>Puntos<br>de<br>recogida</th>
+				<th style="width: 1%">Puntos de recogida</th>
 				<th>Fabrica</th>
 				<th>Ref#</th>
 				<th>Scheduled</th>
@@ -102,6 +102,13 @@
 					</ng-container>
 				</td>
 			</tr>
+			<tfoot>
+			<tr *ngIf="total">
+				<td colspan="4" style="text-align: right; color: grey; font-weight: bold;">Total:</td>
+				<td style="text-align: right; font-weight: bold;">{{total.numberOfPallets}}</td>
+				<td style="text-align: right; font-weight: bold;">{{total.grossWeightKg}}</td>
+			</tr>
+			</tfoot>
 		</table>
 
 	</ion-card>

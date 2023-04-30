@@ -52,7 +52,7 @@ export class ContactSelectorComponent
 	readonly contactRoles: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
-		{ id: 'carrier', title: 'Carrier', iconName: 'train-outline' },
+		{ id: 'freight_agent', title: 'Freight Agent', iconName: 'train-outline' },
 		{ id: 'dispatcher', title: 'Dispatcher', iconName: 'business-outline' },
 		{ id: 'shipper', title: 'Shipper', iconName: 'boat-outline' },
 	];

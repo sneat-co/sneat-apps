@@ -27,12 +27,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 
 	readonly roles: ISelectItem[] = [
 		{ id: '', title: 'All', iconName: 'people-outline' },
-		{ id: 'agent', title: 'Agents', iconName: 'body-outline' },
+		{ id: 'freight_agent', title: 'Agents', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyers', iconName: 'cash-outline' },
-		{ id: 'carrier', title: 'Carriers', iconName: 'train-outline' },
 		{ id: 'dispatcher', title: 'Dispatchers', iconName: 'business-outline' },
 		{ id: 'trucker', title: 'Truckers', iconName: 'bus-outline' },
-		{ id: 'shipper', title: 'Shippers', iconName: 'boat-outline' },
+		{ id: 'shipping_line', title: 'Shipping lines', iconName: 'boat-outline' },
 	];
 
 	public contactsNumber(role: string): number {

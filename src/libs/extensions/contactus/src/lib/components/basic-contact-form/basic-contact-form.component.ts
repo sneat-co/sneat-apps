@@ -45,11 +45,10 @@ export class BasicContactFormComponent {
 			type: this.contactType,
 			// type: this.contactType,
 			roles: this.contactRoles,
+			parentContactID: this.parentContact?.id,
+			status: 'active',
 			basic: {
-				parentContactID: this.parentContact?.id,
-				type: this.contactType,
 				title: this.title,
-				status: 'active',
 			},
 		};
 		this.isSubmitting = true;

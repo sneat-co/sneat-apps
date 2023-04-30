@@ -196,7 +196,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 						};
 					}
 					break;
-				case 'carrier':
+				case 'freight_agent':
 				case 'shipper':
 					if (orderDto.route) {
 						orderDto = {
@@ -242,23 +242,6 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				if (!this.order?.brief) {
 					return;
 				}
-				// switch (this.counterpartyRole) {
-				// 	case 'buyer':
-				// 		this.order.brief.buyer = counterparty;
-				// 		break;
-				// 	case 'shipper':
-				// 		this.order.brief.shipper = counterparty;
-				// 		break;
-				// 	case 'agent':
-				// 		this.order.brief.agent = counterparty;
-				// 		break;
-				// 	case 'consignee':
-				// 		this.order.brief.consignee = counterparty;
-				// 		break;
-				// 	case 'carrier':
-				// 		this.order.brief.carrier = counterparty;
-				// 		break;
-				// }
 			},
 			error: this.errorLogger.logErrorHandler(`Failed to set order's counterparty`),
 		});

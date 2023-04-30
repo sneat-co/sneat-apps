@@ -171,6 +171,7 @@ export class LocationFormComponent implements OnChanges {
 			return;
 		}
 		const request: ICreateContactRequest = {
+			status: 'active',
 			teamID: this.team.id,
 			type: 'location',
 			parentContactID: this.parentContact?.id,

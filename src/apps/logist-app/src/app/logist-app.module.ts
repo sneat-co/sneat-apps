@@ -34,7 +34,7 @@ const contactRolesByType: ContactRolesByType = {
 		{ id: 'dispatch_agent', title: 'Dispatch Agent', iconName: 'body-outline' },
 		{ id: 'receive_agent', title: 'Receive Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
-		{ id: 'carrier', title: 'Carrier', iconName: 'train-outline' },
+		{ id: 'freight_agent', title: 'Freight Agent', iconName: 'train-outline' },
 		{ id: 'consignee', title: 'Consignee', canBeImpersonatedByRoles: ['buyer'] },
 		{ id: 'dispatcher', title: 'Dispatcher', canBeImpersonatedByRoles: ['dispatch_agent'] },
 		{ id: 'notify_party', title: 'Notify Party', canBeImpersonatedByRoles: ['receive_agent'] },
@@ -48,7 +48,7 @@ const contactRolesByType: ContactRolesByType = {
 		{
 			id: 'employee',
 			title: 'Driver',
-			childForRoles: ['dispatch_agent', 'receive_agent', 'buyer', 'carrier', 'consignee', 'dispatcher', 'notify_party', 'trucker', 'shipper', 'shipping_line'],
+			childForRoles: ['dispatch_agent', 'receive_agent', 'buyer', 'freight_agent', 'consignee', 'dispatcher', 'notify_party', 'trucker', 'shipper', 'shipping_line'],
 		},
 	],
 	'location': [

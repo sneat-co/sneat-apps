@@ -15,9 +15,7 @@ export class OrderAgentsComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
-			this.counterparties = this.order?.dto?.counterparties?.filter(c => c.role === 'dispatch_agent' || c.role === 'receive_agent'
-				|| c.role === 'carrier' // TODO: remove obsolete 'carrier' role
-			);
+			this.counterparties = this.order?.dto?.counterparties?.filter(c => c.role === 'freight_agent');
 		}
 	}
 
