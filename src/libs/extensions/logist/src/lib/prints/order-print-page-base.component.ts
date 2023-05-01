@@ -1,16 +1,13 @@
 import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ILogistOrderContext, IOrderCounterparty } from '../dto';
+import { CounterpartyRole, IOrderCounterparty } from '../dto';
 import { LogistOrderService } from '../services';
 
 import { OrderPageBaseComponent } from '../pages/order-page-base.component';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
 export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
-
-	protected consignee?: IOrderCounterparty;
-	protected freight_agent?: IOrderCounterparty;
 
 	constructor(
 		className: string,
@@ -21,10 +18,7 @@ export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 		super(className, route, teamParams, orderService);
 	}
 
-	protected override onOrderChanged(order: ILogistOrderContext): void {
-		super.onOrderChanged(order);
-		console.log('OrderShippingDocComponent.onOrderChanged()', order);
-		this.consignee = order.dto?.counterparties?.find(c => c.role === 'consignee');
-		this.freight_agent = order.dto?.counterparties?.find(c => c.role === 'freight_agent');
+	protected counterpartyByRole(role: CounterpartyRole): IOrderCounterparty | undefined {
+		return this.order?.dto?.counterparties?.find(c => c.role === role);
 	}
 }

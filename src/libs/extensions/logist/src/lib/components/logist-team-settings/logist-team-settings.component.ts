@@ -5,6 +5,7 @@ import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { TeamBaseComponent } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { ILogistTeamContext, ISetLogistTeamSettingsRequest } from '../../dto';
@@ -30,7 +31,7 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 
 	private readonly destroyed = new Subject<void>();
 	private addressForm?: AddressForm;
-	protected address?: IAddress;
+	protected address?: IAddress | null; // undefined means loading, null means no address
 
 	protected roles: string[] = [];
 
@@ -123,13 +124,16 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log('LogistTeamSettingsComponent.ngOnChanges()', this.logistTeam);
+		console.log('LogistTeamSettingsComponent.ngOnChanges()', changes);
 		if (changes['logistTeam']) {
 			if (!this.orderNumberPrefix.dirty) {
 				this.orderNumberPrefix.setValue(this.logistTeam?.dto?.orderNumberPrefix || '');
 			}
 			const contactID = this.logistTeam?.dto?.contactID;
 			if (!contactID) {
+				if (this.logistTeam?.dto == null) {
+					this.address = null;
+				}
 				return;
 			}
 			const team = this.team;
@@ -140,9 +144,12 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 				.watchContactById(team, contactID)
 				.pipe(
 					takeUntil(this.destroyed),
-				).subscribe(contact => {
-				this.address = contact?.dto?.address || this.address;
-			});
+				)
+				.subscribe(contact => {
+					this.address = contact?.dto?.address || this.address;
+					this.roles = contact?.dto?.roles || [];
+					console.log('LogistTeamSettingsComponent.ngOnChanges(): roles:', this.roles);
+				});
 		}
 	}
 }

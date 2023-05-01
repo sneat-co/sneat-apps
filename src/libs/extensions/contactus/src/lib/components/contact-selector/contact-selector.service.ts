@@ -10,6 +10,11 @@ export interface IContactSelectorOptions extends ISelectorOptions<IContactContex
 	readonly componentProps?: IContactSelectorProps;
 }
 
+export interface ISelectedContact {
+	readonly contact: IContactContext;
+	readonly role: string;
+}
+
 @Injectable()
 export class ContactSelectorService extends SelectorBaseService<IContactContext> {
 	constructor(

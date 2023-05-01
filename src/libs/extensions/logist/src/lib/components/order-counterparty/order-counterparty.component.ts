@@ -132,7 +132,8 @@ export class OrderCounterpartyComponent implements OnChanges {
 		this.savingRefNumber = true;
 		this.orderService.setOrderCounterparties(request).subscribe({
 			next: counterparty => {
-				this.counterparty = counterparty;
+				// console.log("saveRefNumber(): counterparty:", counterparty);
+				// this.counterparty = counterparty;
 				this.savingRefNumber = false;
 				this.isRefNumberChanged = false;
 			},

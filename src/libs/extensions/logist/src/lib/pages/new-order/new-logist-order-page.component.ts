@@ -4,8 +4,9 @@ import { excludeUndefined } from '@sneat/core';
 import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
+import { ISelectItem } from '@sneat/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { CounterpartyRole, IOrderCounterparty } from '../../dto';
+import { CounterpartyRole, IOrderCounterparty, OrderDirection } from '../../dto';
 import { ICreateLogistOrderRequest, ILogistOrderContext } from '../../dto/order-dto';
 import { LogistOrderService, LogistTeamService } from '../../services';
 
@@ -31,6 +32,14 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 
 		},
 	};
+
+	protected direction?: OrderDirection;
+
+	protected readonly directions: ISelectItem[] = [
+		{ id: 'export', title: 'Export' },
+		{ id: 'import', title: 'Import' },
+		{ id: 'internal', title: 'Internal' },
+	];
 
 	private numberOfContainers: { [size: string]: number } = {};
 
@@ -87,27 +96,31 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 
 	private readonly processTeamContact = (contact: IContactContext): void => {
 		console.log('contact:', contact);
-		if (!contact.dto) {
+		const contactDto = contact.dto;
+		if (!contactDto) {
 			return;
 		}
-		const orderCounterparty: IOrderCounterparty = {
-			contactID: contact.id,
-			title: contact.dto.title || contact.id,
-			countryID: contact.dto.countryID || '',
-			address: contact.dto.address,
-			role: contact.dto?.roles?.length ? contact.dto.roles[0] as CounterpartyRole : 'freight_agent',
-		};
-		console.log('order: 1', this.order);
-		if (this.order?.dto) {
+		const orderDto = this.order.dto;
+		if (!orderDto) {
+			return;
+		}
+
+		contact.dto.roles?.forEach(role => {
+			const orderCounterparty: IOrderCounterparty = {
+				contactID: contact.id,
+				title: contactDto.title || contact.id,
+				countryID: contactDto.countryID || '',
+				address: contactDto.address,
+				role: role as CounterpartyRole,
+			};
 			this.order = {
 				...this.order,
 				dto: {
-					...this.order.dto,
-					counterparties: [...this.order.dto.counterparties || [], orderCounterparty],
+					...orderDto,
+					counterparties: [...orderDto.counterparties || [], orderCounterparty],
 				},
 			};
-		}
-		console.log('order: 2', this.order);
+		});
 	};
 
 	onOrderChanged(order: ILogistOrderContext): void {
@@ -127,10 +140,6 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		}
 		if (!this.order?.dto) {
 			throw new Error('!this.order?.dto');
-		}
-		if (!this.order?.dto?.counterparties?.some(c => c.role === 'freight_agent')) {
-			alert('Carrier is required');
-			return;
 		}
 		if (!this.order?.dto?.counterparties?.some(c => c.role === 'buyer')) {
 			alert('Buyer is required');
@@ -155,10 +164,15 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		// 	alert('Destination country is required');
 		// 	return;
 		// }
+		if (!this.direction) {
+			alert('Direction is required');
+			return;
+		}
 		const request: ICreateLogistOrderRequest = excludeUndefined({
 			teamID: this.team.id,
 			order: {
 				...this.order.dto,
+				direction: this.direction,
 				route: undefined, //TODO: decide what to do //Object.keys(this.order?.dto?.route || {}).length ? this.order.dto.route : undefined,
 			},
 			numberOfContainers: Object.keys(this.numberOfContainers).length ? this.numberOfContainers : undefined,
@@ -176,5 +190,23 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 
 	cancel(): void {
 		this.navController.pop().catch(this.errorLogger.logErrorHandler('failed to cancel new order'));
+	}
+
+	protected onCounterpartiesAdded(counterparties: IOrderCounterparty[]): void {
+		console.log('NewLogistOrderPageComponent.onCounterpartiesAdded():', counterparties);
+		const orderDto = this.order.dto;
+		if (!orderDto) {
+			return;
+		}
+		const orderCounterparties = orderDto.counterparties || [];
+		counterparties = counterparties.filter(c => !orderCounterparties?.some(oc => oc.contactID === c.contactID && oc.role === c.role));
+		this.order = {
+			...this.order,
+			dto: {
+				...orderDto,
+				counterparties: [...orderCounterparties, ...counterparties],
+			},
+		};
+		console.log('NewLogistOrderPageComponent.onCounterpartiesAdded() =>', this.order);
 	}
 }

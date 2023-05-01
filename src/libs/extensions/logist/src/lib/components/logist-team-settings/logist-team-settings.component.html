@@ -1,6 +1,14 @@
-<form [formGroup]="form">
+<ion-card *ngIf="address === undefined">
+	<ion-card-content>
+		<ion-spinner></ion-spinner> Loading contact for
+		logistTeam: {{logistTeam?.dto|json}} (address: {{address|json}}...
+	</ion-card-content>
+</ion-card>
+
+<form [formGroup]="form" *ngIf="address !== undefined">
 
 	<sneat-address-form
+		[address]="address || undefined"
 		[requiredFields]="{city: true}"
 		(formCreated)="onAddressFormChanged($event)"
 		(addressChange)="onAddressChanged($event)"

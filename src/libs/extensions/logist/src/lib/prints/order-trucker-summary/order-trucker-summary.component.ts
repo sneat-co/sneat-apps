@@ -31,7 +31,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	buyerCounterparty?: IOrderCounterparty;
 	selfCounterparty?: IOrderCounterparty;
 	ship?: IOrderCounterparty;
-	shipperCounterparty?: IOrderCounterparty;
+	shippingLine?: IOrderCounterparty;
 	points?: ReadonlyArray<IContainerInfo>;
 
 	buyerRefNumber?: string;
@@ -68,7 +68,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 		this.buyerCounterparty = counterparties?.find(c => c.role === 'buyer');
 		this.selfCounterparty = counterparties?.find(c => c.contactID === this.team?.id);
 		this.ship = counterparties?.find(c => c.role === 'ship');
-		this.shipperCounterparty = counterparties?.find(c => c.role === 'shipper');
+		this.shippingLine = counterparties?.find(c => c.role === 'shipping_line');
 		this.points = order.dto?.segments?.filter(s => s.byContactID === this.truckerID)
 			.map(segment => {
 				const container = order?.dto?.containers?.find(c => c.id === segment.containerID);

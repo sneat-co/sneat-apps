@@ -6,10 +6,10 @@ export type CounterpartyRole =
 	'buyer'
 	| 'consignee'
 	| 'notify_party'
-	| 'freight_agent'
+	// | 'freight_agent'
 	| 'dispatch_agent'
 	| 'receive_agent'
-	| 'shipper'
+	| 'shipping_line'
 	| 'ship'
 	| 'dispatcher'
 	// | 'receiver'
@@ -24,7 +24,8 @@ export type CounterpartyRole =
 
 export type LogistTeamRole =
 	'custom_agent' |
-	'freight_agent' |
+	'dispatch_agent' |
+	'receive_agent' |
 	'freight_broker' |
 	'shipping_line' |
 	'trucker' |
@@ -33,7 +34,8 @@ export type LogistTeamRole =
 
 export const LogistTeamRoles: Record<LogistTeamRole, string> = {
 	'custom_agent': 'Custom agent',
-	'freight_agent': 'Freight agent',
+	'dispatch_agent': 'Dispatch freight agent',
+	'receive_agent': 'Receive freight agent',
 	'freight_broker': 'Freight broker',
 	'shipping_line': 'Shipping line',
 	'trucker': 'Trucking company',

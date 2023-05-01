@@ -30,11 +30,7 @@
 
 	<ng-container *ngIf="logistTeam && !logistTeam.dto?.contactID">
 		<p class="ion-margin">To start working please setup your company data.</p>
-		<sneat-logist-team-settings
-			[team]="team"
-			[logistTeam]="logistTeam"
-		></sneat-logist-team-settings>
-
+		<sneat-logist-team-settings [team]="team" [logistTeam]="logistTeam"></sneat-logist-team-settings>
 	</ng-container>
 
 </ion-content>

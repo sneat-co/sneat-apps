@@ -132,7 +132,7 @@ export interface IOrderContainer extends IOrderContainerBase {
 
 export interface IFreightDeclaration {
 	readonly number: string;
-	readonly type: 'export' | 'import';
+	readonly type: OrderDirection;
 }
 
 export interface IDocIssued {

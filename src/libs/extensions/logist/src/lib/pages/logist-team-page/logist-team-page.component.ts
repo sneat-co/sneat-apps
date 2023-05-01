@@ -1,43 +1,21 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { ILogistTeamContext } from '../../dto/logist-team-dto';
+import { TeamComponentBaseParams } from '@sneat/team/components';
 import { LogistTeamService } from '../../services/logist-team.service';
+import { LogistTeamBaseComponent } from '../logist-team-base.component';
 
 @Component({
 	selector: 'sneat-logist-main-page',
 	templateUrl: './logist-team-page.component.html',
 	styleUrls: ['./logist-team-page.component.scss'],
 })
-export class LogistTeamPageComponent extends TeamBaseComponent {
-	logistTeam?: ILogistTeamContext;
+export class LogistTeamPageComponent extends LogistTeamBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		private readonly logistTeamService: LogistTeamService,
+		logistTeamService: LogistTeamService,
 	) {
-		super('LogistTeamPageComponent', route, teamParams);
-	}
-
-	protected override onTeamIdChanged() {
-		super.onTeamIdChanged();
-		const team = this.team;
-		if (team?.id) {
-			this.logistTeamService.watchLogistTeamByID(team.id)
-				.pipe(this.takeUntilNeeded())
-				.subscribe({
-					next: logistTeam => {
-						console.log('logistTeam:', logistTeam);
-						this.logistTeam = logistTeam;
-					},
-					error: err => {
-						this.errorLogger.logError(err, 'failed to load logist team', {
-							show: !('' + err).includes('Missing or insufficient permissions'), // TODO: fix & handle properly
-						});
-						this.logistTeam = { id: team.id };
-					},
-				});
-		}
+		super('LogistTeamPageComponent', route, teamParams, logistTeamService);
 	}
 }

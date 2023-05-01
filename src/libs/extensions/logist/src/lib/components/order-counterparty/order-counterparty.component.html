@@ -22,7 +22,7 @@
 									 [readonly]="readonly"
 									 [(ngModel)]="refNumber"
 									 [disabled]="savingRefNumber"
-									 (ionChange)="onRefNumberChanged($event)"
+									 (ionInput)="onRefNumberChanged($event)"
 									 (keyup.enter)="saveRefNumber($event)"
 				></ion-input>
 				<ion-buttons slot="end" *ngIf="order?.id && !selectOnly">
