@@ -58,9 +58,9 @@ export class OrdersGridComponent implements OnChanges {
 			title: 'Buyer',
 		},
 		{
-			field: 'carrier.title',
+			field: 'receive_agent.title',
 			dbType: 'string',
-			title: 'Carrier(s)',
+			title: `Buyer's agent`,
 		},
 		{
 			field: 'containers',
