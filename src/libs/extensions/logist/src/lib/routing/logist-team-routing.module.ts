@@ -3,6 +3,7 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { membersRoutes } from '@sneat/extensions/memberus';
+import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { LogistMenuModule } from '../components/logist-menu/logist-menu.module';
 import { LogistTeamMenuComponent } from '../components/logist-team-menu/logist-team-menu.component';
@@ -62,6 +63,7 @@ export const logistRoutes: Routes = [
 		loadChildren: () => import('../pages/new-order/new-logist-order-page.module').then(m => m.NewLogistOrderPageModule),
 	},
 	...membersRoutes,
+	...schedulusRoutes,
 ];
 
 @NgModule({

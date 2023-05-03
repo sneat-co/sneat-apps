@@ -5,16 +5,16 @@ import { SwipeableDay } from '../swipeable-ui';
 
 export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
 
-	get oddDay(): SwipeableDay {
-		return this.oddSlide as SwipeableDay;
+	get oddDay(): SwipeableDay | undefined {
+		return this.oddSlide as SwipeableDay || undefined;
 	}
 
-	get evenDay(): SwipeableDay {
-		return this.evenSlide as SwipeableDay;
+	get evenDay(): SwipeableDay | undefined {
+		return this.evenSlide as SwipeableDay || undefined;
 	}
 
-	get activeDay(): SwipeableDay {
-		return this.activeSlide as SwipeableDay;
+	get activeDay(): SwipeableDay | undefined {
+		return this.activeSlide as SwipeableDay || undefined;
 	}
 
 	protected constructor(
@@ -25,7 +25,7 @@ export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
 	}
 
 	override onDateChanged(changed: IDateChanged): void {
-		const changedToLog = {...changed, date: dateToIso(changed.date)}
+		const changedToLog = { ...changed, date: dateToIso(changed.date) };
 		console.log(`ScheduleDayBaseComponent.onDateChanged(), shiftDays=${this.shiftDays}, changed:`, changedToLog);
 		if (this.shiftDays) {
 			const d = changed.date;
