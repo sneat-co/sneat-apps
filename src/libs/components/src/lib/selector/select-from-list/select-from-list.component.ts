@@ -69,7 +69,14 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 		this.hiddenCount = (this.items?.length || 0) - (this.displayItems?.length || 0);
 	}
 
-	onRadioChanged(event: Event): void {
+
+	protected select(item: ISelectItem): void {
+		console.log('SelectFromListComponent.select()', item);
+		this.value = item.id;
+		this.onChange(this.value);
+	}
+
+	protected onRadioChanged(event: Event): void {
 		this.value = (event as CustomEvent).detail['value'] as string;
 		this.onChange(this.value);
 	}

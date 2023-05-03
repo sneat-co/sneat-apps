@@ -65,7 +65,7 @@ export class LogistOrderService {
 	}
 
 	createOrder(request: ICreateLogistOrderRequest): Observable<ICreateFreightOrderResponse> {
-		return this.sneatApiService.post('logist/create_order', request);
+		return this.sneatApiService.post('logistus/create_order', request);
 	}
 
 	private ordersCollection<Dto>(teamID: string): CollectionReference<Dto> {
@@ -137,15 +137,15 @@ export class LogistOrderService {
 		if (!request.status) {
 			return throwError(() => 'status is required parameter');
 		}
-		return this.sneatApiService.post('logist/order/set_order_status', request);
+		return this.sneatApiService.post('logistus/order/set_order_status', request);
 	}
 
 	setOrderCounterparties(request: ISetOrderCounterpartiesRequest): Observable<IOrderCounterparty> {
-		return this.sneatApiService.post('logist/order/set_order_counterparties', request);
+		return this.sneatApiService.post('logistus/order/set_order_counterparties', request);
 	}
 
 	addContainerPoints(request: IAddContainerPointsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/add_container_points', request);
+		return this.sneatApiService.post('logistus/order/add_container_points', request);
 	}
 
 	addShippingPoint(team: ITeamContext, request: IAddOrderShippingPointRequest): Observable<ILogistOrderContext> {
@@ -156,69 +156,69 @@ export class LogistOrderService {
 			return throwError(() => 'orderID is required parameter');
 		}
 		return this.sneatApiService
-			.post<{ order: ILogistOrderDto }>('logist/order/add_shipping_point', request)
+			.post<{ order: ILogistOrderDto }>('logistus/order/add_shipping_point', request)
 			.pipe(
 				map(response => contextFromDto(team, request.orderID, response.order)),
 			);
 	}
 
 	updateShippingPoint(request: IUpdateShippingPointRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/update_shipping_point', request);
+		return this.sneatApiService.post('logistus/order/update_shipping_point', request);
 	}
 
 	addContainers(request: IAddContainersRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/add_containers', request);
+		return this.sneatApiService.post('logistus/order/add_containers', request);
 	}
 
 	addSegments(request: IAddSegmentsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/add_segments', request);
+		return this.sneatApiService.post('logistus/order/add_segments', request);
 	}
 
 	updateContainerPoint(request: IUpdateContainerPointRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/update_container_point', request);
+		return this.sneatApiService.post('logistus/order/update_container_point', request);
 	}
 
 	deleteContainer(request: IContainerRequest): Observable<void> {
-		return this.sneatApiService.delete('logist/order/delete_container', undefined, request);
+		return this.sneatApiService.delete('logistus/order/delete_container', undefined, request);
 	}
 
 	deleteContainerPoints(request: IContainerPointsRequest): Observable<void> {
-		return this.sneatApiService.delete('logist/order/delete_container_points', undefined, request);
+		return this.sneatApiService.delete('logistus/order/delete_container_points', undefined, request);
 	}
 
 	setContainerPointTask(request: ISetContainerPointTaskRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/set_container_point_task', request);
+		return this.sneatApiService.post('logistus/order/set_container_point_task', request);
 	}
 
 	setContainerPointFreightFields(request: ISetContainerPointFreightFieldsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/set_container_point_freight_fields', request);
+		return this.sneatApiService.post('logistus/order/set_container_point_freight_fields', request);
 	}
 
 	setContainerEndpointFields(request: ISetContainerEndpointFieldsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/set_container_endpoint_fields', request);
+		return this.sneatApiService.post('logistus/order/set_container_endpoint_fields', request);
 	}
 
 	setContainerFields(request: ISetContainerFieldsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/set_container_fields', request);
+		return this.sneatApiService.post('logistus/order/set_container_fields', request);
 	}
 
 	setContainerPointFields(request: ISetContainerPointFieldsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/order/set_container_point_fields', request);
+		return this.sneatApiService.post('logistus/order/set_container_point_fields', request);
 	}
 
 	deleteCounterparty(request: IDeleteCounterpartyRequest): Observable<void> {
-		return this.sneatApiService.delete('logist/order/delete_order_counterparty', undefined, request);
+		return this.sneatApiService.delete('logistus/order/delete_order_counterparty', undefined, request);
 	}
 
 	deleteSegments(request: IDeleteSegmentsRequest): Observable<void> {
 		if (!request.containerIDs?.length && !request.fromShippingPointID && !request.toShippingPointID && !request.byContactID) {
 			return throwError(() => new Error('empty request'));
 		}
-		return this.sneatApiService.delete('logist/order/delete_segments', undefined, request);
+		return this.sneatApiService.delete('logistus/order/delete_segments', undefined, request);
 	}
 
 	deleteShippingPoint(request: IOrderShippingPointRequest): Observable<void> {
-		return this.sneatApiService.delete('logist/order/delete_shipping_point', undefined, request);
+		return this.sneatApiService.delete('logistus/order/delete_shipping_point', undefined, request);
 	}
 }
 

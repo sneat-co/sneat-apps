@@ -37,9 +37,9 @@
 <!--			<ion-radio slot="start" [value]="'other'"></ion-radio>-->
 <!--			<ion-label>OTHER</ion-label>-->
 <!--		</ion-item>-->
-		<ion-item *ngFor="let item of displayItems; trackBy: id">
+		<ion-item *ngFor="let item of displayItems; trackBy: id" button (click)="select(item)">
 			<ion-icon slot="start" *ngIf="item.iconName" [name]="item.iconName"></ion-icon>
-			<ion-radio [slot]="radioSlot" [value]="item.id"></ion-radio>
+<!--			<ion-radio [slot]="radioSlot" [value]="item.id"></ion-radio>-->
 			<ion-label>{{item.emoji}} {{item.title}}</ion-label>
 		</ion-item>
 <!--		<ion-item *ngIf="other === 'bottom'">-->

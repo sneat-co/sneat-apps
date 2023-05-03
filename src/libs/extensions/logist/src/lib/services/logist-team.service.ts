@@ -40,7 +40,7 @@ export class LogistTeamService {
 	}
 
 	setLogistTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
-		return this.sneatApiService.post('logist/set_logist_team_settings', request);
+		return this.sneatApiService.post('logistus/set_logist_team_settings?ts='+ new Date().toISOString(), request);
 	}
 
 }
@@ -49,7 +49,7 @@ function logistTeamDocRef(afs: AngularFirestore, teamID: string): DocumentRefere
 	const teamsCollection = collection(afs, 'teams');
 	const teamRef = doc(teamsCollection, teamID);
 	const modulesCollection = collection(teamRef, 'modules');
-	return doc<ILogistTeamDto>(modulesCollection as CollectionReference<ILogistTeamDto>, 'logist');
+	return doc<ILogistTeamDto>(modulesCollection as CollectionReference<ILogistTeamDto>, 'logistus');
 }
 
 export function logistTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamID: string, collectionName: string): CollectionReference<Dto> {
