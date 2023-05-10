@@ -1,6 +1,6 @@
 {
 	"name": "scrumspace",
 	"devDependencies": {
-		"@capacitor/cli": "5.0.2"
+		"@capacitor/cli": "5.0.3"
 	}
 }
