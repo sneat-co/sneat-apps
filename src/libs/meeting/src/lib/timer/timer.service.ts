@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Timestamp } from '@firebase/firestore-types';
+// import { Timestamp } from '@firebase/firestore-types';
 
 import { takeUntil } from 'rxjs/operators';
 import { interval, Observable, ReplaySubject, Subject, Subscription, throwError } from 'rxjs';
@@ -60,66 +60,67 @@ export class Timer {
 			{ ...timerState },
 			{ ...this.state },
 		);
-		if (!timerState) {
-			this.state = {};
-			this.tick.next(this.state);
-			return this.state;
-		}
-		timerState = timerState || {};
-		try {
-			const prevState = this.state;
-			const prevAt =
-				prevState && typeof prevState.at === 'string'
-					? Timestamp.fromDate(new Date(prevState.at))
-					: (prevState?.at as Timestamp);
-			const { elapsedSeconds } = timerState;
-			const at =
-				typeof timerState.at === 'string'
-					? Timestamp.fromDate(new Date(timerState.at))
-					: timerState.at;
-			if (at?.nanoseconds && prevAt?.nanoseconds !== at.nanoseconds) {
-				this.state = {
-					...timerState,
-					isToggling: this.state?.isToggling,
-					status: this.state?.isToggling
-						? this.state?.status
-						: timerState.status,
-					elapsedSeconds:
-						timerState.status === TimerStatusEnum.active
-							? (elapsedSeconds || 0) +
-							(new Date().getTime() / 1000 - at.seconds)
-							: timerState?.elapsedSeconds,
-				};
-			}
-			if (isNaN(this.state?.elapsedSeconds as number)) {
-				console.log('this.state.elapsedSeconds is NaN');
-			}
-			switch (this.state?.status) {
-				case undefined:
-				case TimerStatusEnum.active:
-					if (prevState?.status !== TimerStatusEnum.active) {
-						this.startTicking();
-					} else {
-						this.emitTick();
-					}
-					break;
-				case TimerStatusEnum.stopped:
-					if (prevState?.status !== TimerStatusEnum.stopped) {
-						this.stopTicking();
-					} else {
-						this.emitTick();
-					}
-					break;
-				default:
-					this.emitTick();
-			}
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to update timer state', {
-				feedback: false,
-				show: false,
-			});
-		}
-		return this.state || {};
+		throw new Error('Not implemented - temporary disabled');
+		// if (!timerState) {
+		// 	this.state = {};
+		// 	this.tick.next(this.state);
+		// 	return this.state;
+		// }
+		// timerState = timerState || {};
+		// try {
+		// 	const prevState = this.state;
+		// 	const prevAt =
+		// 		prevState && typeof prevState.at === 'string'
+		// 			? Timestamp.fromDate(new Date(prevState.at))
+		// 			: (prevState?.at as Timestamp);
+		// 	const { elapsedSeconds } = timerState;
+		// 	const at =
+		// 		typeof timerState.at === 'string'
+		// 			? Timestamp.fromDate(new Date(timerState.at))
+		// 			: timerState.at;
+		// 	if (at?.nanoseconds && prevAt?.nanoseconds !== at.nanoseconds) {
+		// 		this.state = {
+		// 			...timerState,
+		// 			isToggling: this.state?.isToggling,
+		// 			status: this.state?.isToggling
+		// 				? this.state?.status
+		// 				: timerState.status,
+		// 			elapsedSeconds:
+		// 				timerState.status === TimerStatusEnum.active
+		// 					? (elapsedSeconds || 0) +
+		// 					(new Date().getTime() / 1000 - at.seconds)
+		// 					: timerState?.elapsedSeconds,
+		// 		};
+		// 	}
+		// 	if (isNaN(this.state?.elapsedSeconds as number)) {
+		// 		console.log('this.state.elapsedSeconds is NaN');
+		// 	}
+		// 	switch (this.state?.status) {
+		// 		case undefined:
+		// 		case TimerStatusEnum.active:
+		// 			if (prevState?.status !== TimerStatusEnum.active) {
+		// 				this.startTicking();
+		// 			} else {
+		// 				this.emitTick();
+		// 			}
+		// 			break;
+		// 		case TimerStatusEnum.stopped:
+		// 			if (prevState?.status !== TimerStatusEnum.stopped) {
+		// 				this.stopTicking();
+		// 			} else {
+		// 				this.emitTick();
+		// 			}
+		// 			break;
+		// 		default:
+		// 			this.emitTick();
+		// 	}
+		// } catch (e) {
+		// 	this.errorLogger.logError(e, 'Failed to update timer state', {
+		// 		feedback: false,
+		// 		show: false,
+		// 	});
+		// }
+		// return this.state || {};
 	}
 
 	public startTimer(member?: string): Observable<never> {
