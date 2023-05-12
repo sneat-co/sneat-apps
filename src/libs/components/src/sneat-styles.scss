@@ -25,6 +25,7 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 @import './sneat-grid-layout';
+@import "theme/variables.scss";
 
 //noinspection CssUnknownTarget
 @import "libs/components/src/lib/virtual-slider/virtual-slider.scss";
@@ -186,8 +187,8 @@ ion-item.ion-item-no-border {
 }
 
 .sneat-label-color-medium .label-text {
-	color: #92949c;
-	//color: var(--ion-color-medium);
+	//color: #92949c;
+	color: var(--ion-color-medium);
 }
 
 .ion-input.sneat-input-padding-top  {
