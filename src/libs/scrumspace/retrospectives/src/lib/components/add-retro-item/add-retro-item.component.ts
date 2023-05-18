@@ -32,24 +32,25 @@ export class AddRetroItemComponent implements OnDestroy {
 	}
 
 	public add(event?: Event): void {
-		const teamID = this.teamId, meeting = this.meetingId;
-		if (teamID || meetingID) {
-			alert('no team or meeting id');
-			return;
-		}
 		console.log('add()');
 		event?.stopPropagation();
 		event?.preventDefault();
+
 
 		this.titleControl.setValue((this.titleControl.value as string).trim());
 		if (!this.titleControl.valid) {
 			return;
 		}
 		const title = this.titleControl.value as string;
+		const teamID = this.teamId || '', meetingID = this.meetingId || '';
+		if (teamID || meetingID) {
+			alert('no team or meeting id');
+			return;
+		}
 		const request: IAddRetroItemRequest = {
 			teamID,
 			meeting: meetingID,
-			type: this.retroItemType,
+			type: 'this.retroItemType',
 			title,
 		};
 		this.isAdding = true;
