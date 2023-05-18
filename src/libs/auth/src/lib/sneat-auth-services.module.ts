@@ -12,7 +12,7 @@ import { SneatAuthGuard } from './sneat-auth-guard';
 		SneatAuthGuard,
 	],
 })
-export class SneatAuthServicesModule {
+export class SneatAuthServicesModule { // TODO: Why is constructor called multiple times? Document or fix it.
 	constructor() {
 		console.log('SneatAuthServicesModule.constructor()');
 	}

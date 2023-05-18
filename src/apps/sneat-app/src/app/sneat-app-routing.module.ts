@@ -24,7 +24,15 @@ const routes: Routes = [
 		loadChildren: () =>
 			import(
 				'./pages/sneat-app-home-page/sneat-app-home-page.component.module'
-			).then((m) => m.SneatAppHomePageComponentModule),
+				).then((m) => m.SneatAppHomePageComponentModule),
+	},
+	{
+		path: 'telegram-menu',
+		pathMatch: 'full',
+		loadChildren: () =>
+			import(
+				'./pages/telegram-menu/telegram-menu-page.module'
+				).then((m) => m.TelegramMenuPageModule),
 	},
 	{
 		path: 'my',
@@ -77,4 +85,5 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 })
-export class SneatAppRoutingModule {}
+export class SneatAppRoutingModule {
+}
