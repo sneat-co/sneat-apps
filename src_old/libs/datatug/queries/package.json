@@ -6,6 +6,6 @@
 		"@angular/core": "^13.2.0 || ^14.0.0 || ^15.0.0"
 	},
 	"dependencies": {
-		"tslib": "2.5.0"
+		"tslib": "2.5.1"
 	}
 }
