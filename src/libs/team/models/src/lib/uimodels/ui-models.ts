@@ -201,7 +201,7 @@ export class Totals {
 		return this.per(period, true, true) < 0;
 	}
 
-	per(period: Period, incomes: boolean = true, expense: boolean = true): number {
+	per(period: Period, incomes = true, expense = true): number {
 		if (incomes && expense) {
 			return this.incomes.per(period) - this.expenses.per(period);
 		}

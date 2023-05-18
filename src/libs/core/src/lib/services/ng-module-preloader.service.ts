@@ -67,7 +67,7 @@ export class NgModulePreloaderService {
 		this.preloaded.push(path);
 	}
 
-	public preload(paths: string[], ms: number = 1000): void {
+	public preload(paths: string[], ms = 1000): void {
 		if (!this.warned) {
 			this.warned = true;
 			console.warn(`Preloading is disabled until migrated to Ivy (delay=${ms}ms)`);

@@ -34,7 +34,7 @@ import {ISneatReadwriteTx, SneatAppSchema} from '../../../models/db-schemas-by-a
 import {IListusReadwriteTx, IListusStoreProvider, ListusKind} from '../../../models/db-schemas-by-app/listus-app-schema';
 import {IMovieService} from '../watchlist/interfaces';
 
-function getKinds(commune: Commune, item?: IListItemDto, affectsCommune: boolean = true): ListusKind[] {
+function getKinds(commune: Commune, item?: IListItemDto, affectsCommune = true): ListusKind[] {
 	const kinds: ListusKind[] = affectsCommune ? [ListKind, CommuneKind] : [ListKind];
 	if (item && item.id) {
 		kinds.push(ListItemKind);

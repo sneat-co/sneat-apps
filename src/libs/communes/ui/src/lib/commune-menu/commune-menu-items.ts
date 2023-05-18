@@ -3,7 +3,7 @@ import { CommuneTopPage } from '../constants';
 import { NgModulePreloaderService } from '@sneat/core';
 import { Commune } from '../models/ui/ui-models';
 
-export function getMenuItems(commune: Commune, showExperimental: boolean, preloader: NgModulePreloaderService, preloaderDelay: number = 0)
+export function getMenuItems(commune: Commune, showExperimental: boolean, preloader: NgModulePreloaderService, preloaderDelay = 0)
 	: CommuneMenuItem[] {
 	const type = commune.type;
 	// showExperimental = showExperimental || type === 'realtor';

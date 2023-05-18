@@ -5,7 +5,6 @@ import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ContactService } from '@sneat/extensions/contactus';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamBaseComponent } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { ILogistTeamContext, ISetLogistTeamSettingsRequest } from '../../dto';

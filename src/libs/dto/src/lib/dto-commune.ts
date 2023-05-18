@@ -46,7 +46,7 @@ export interface TeamCounts {
 }
 
 export function incrementNumberOf<NumberOf, Dto extends { numberOf?: NumberOf }>(
-	dto: Dto, init: () => NumberOf, counter: keyof NumberOf, v: number = 1): Dto {
+	dto: Dto, init: () => NumberOf, counter: keyof NumberOf, v = 1): Dto {
 	const current: number = (dto.numberOf && dto.numberOf[counter] || 0) as unknown as number;
 	return {
 		...dto,
