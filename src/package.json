@@ -5,7 +5,7 @@
   "scripts": {
     "nx": "nx",
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main --first-only --create-ivy-entry-points",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2022 browser module main --first-only --create-ivy-entry-points",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test"
