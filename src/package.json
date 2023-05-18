@@ -5,7 +5,7 @@
   "scripts": {
     "nx": "nx",
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main --first-only --create-ivy-entry-points",
+    "postinstall_legacy": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main --first-only --create-ivy-entry-points",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test"
@@ -69,7 +69,7 @@
     "jest": "29.5.0",
     "jest-environment-jsdom": "^29.4.1",
     "jest-preset-angular": "13.1.1",
-    "ng-packagr": "~15.2.2",
+    "ng-packagr": "~16.0.1",
     "nx": "16.2.1",
     "postcss": "8.4.23",
     "postcss-import": "15.1.0",
