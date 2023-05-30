@@ -38,112 +38,117 @@
 		(loggedIn)="onLoggedIn($event)"
 	></sneat-email-login-form>
 
-<!--	<ion-card>-->
-<!--		<ion-item-divider color="light">-->
-<!--			<ion-label color="medium" style="text-align: center; width: 100%">-->
-<!--				Quick login-->
-<!--			</ion-label>-->
-<!--		</ion-item-divider>-->
-<!--		<ion-grid class="ion-grid-layout">-->
-<!--			<ion-row>-->
-<!--				<ion-col>-->
-<!--					<ion-list lines="none">-->
-<!--						<ion-item-->
-<!--							(click)="loginWith('Google')"-->
-<!--							tappable-->
-<!--							[disabled]="!!signingWith"-->
-<!--						>-->
-<!--							<ion-icon-->
-<!--								color="danger"-->
-<!--								name="logo-google"-->
-<!--								slot="start"-->
-<!--								*ngIf="signingWith !== 'Google'"-->
-<!--							>-->
-<!--							</ion-icon>-->
-<!--							<ion-spinner-->
-<!--								slot="start"-->
-<!--								name="lines-small"-->
-<!--								*ngIf="signingWith === 'Google'"-->
-<!--							>-->
-<!--							</ion-spinner>-->
-<!--							<ion-label color="danger"> Login with Google</ion-label>-->
-<!--						</ion-item>-->
-<!--						<ion-item *ngIf="false"-->
-<!--							(click)="loginWith('Facebook')"-->
-<!--							tappable-->
-<!--							[disabled]="!!signingWith"-->
-<!--						>-->
-<!--							<ion-icon-->
-<!--								slot="start"-->
-<!--								color="primary"-->
-<!--								name="logo-facebook"-->
-<!--								*ngIf="signingWith !== 'Facebook'"-->
-<!--							>-->
-<!--							</ion-icon>-->
-<!--							<ion-spinner-->
-<!--								slot="start"-->
-<!--								color="primary"-->
-<!--								name="lines-small"-->
-<!--								*ngIf="signingWith === 'Facebook'"-->
-<!--							>-->
-<!--							</ion-spinner>-->
-<!--							<ion-label color="primary">Login with Facebook</ion-label>-->
-<!--						</ion-item>-->
-<!--					</ion-list>-->
-<!--				</ion-col>-->
-<!--				<ion-col>-->
-<!--					<ion-list lines="none">-->
-<!--						<ion-item-->
-<!--							(click)="loginWith('Microsoft')"-->
-<!--							tappable-->
-<!--							[disabled]="!!signingWith"-->
-<!--						>-->
-<!--							<ion-icon-->
-<!--								slot="start"-->
-<!--								color="secondary"-->
-<!--								name="logo-windows"-->
-<!--								*ngIf="signingWith !== 'Microsoft'"-->
-<!--							>-->
-<!--							</ion-icon>-->
-<!--							<ion-spinner-->
-<!--								slot="start"-->
-<!--								color="secondary"-->
-<!--								name="lines-small"-->
-<!--								*ngIf="signingWith === 'Microsoft'"-->
-<!--							>-->
-<!--							</ion-spinner>-->
-<!--							<ion-label color="secondary">Login with Microsoft</ion-label>-->
-<!--						</ion-item>-->
-<!--						<ion-item *ngIf="false"-->
-<!--							(click)="loginWith('GitHub')"-->
-<!--							tappable-->
-<!--							[disabled]="!!signingWith"-->
-<!--						>-->
-<!--							<ion-icon-->
-<!--								slot="start"-->
-<!--								color="tertiary"-->
-<!--								name="logo-github"-->
-<!--								*ngIf="signingWith !== 'GitHub'"-->
-<!--							>-->
-<!--							</ion-icon>-->
-<!--							<ion-spinner-->
-<!--								slot="start"-->
-<!--								color="tertiary"-->
-<!--								name="lines-small"-->
-<!--								*ngIf="signingWith === 'GitHub'"-->
-<!--							>-->
-<!--							</ion-spinner>-->
-<!--							<ion-label color="tertiary">Login with GitHub</ion-label>-->
-<!--						</ion-item>-->
-<!--					</ion-list>-->
-<!--				</ion-col>-->
-<!--			</ion-row>-->
-<!--		</ion-grid>-->
-<!--	</ion-card>-->
+	<ion-card>
+		<ion-item-divider color="light">
+			<ion-label color="medium" style="text-align: center; width: 100%">
+				Quick login
+			</ion-label>
+		</ion-item-divider>
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col>
+					<sneat-login-with-telegram telegramLogin="SneatBot"></sneat-login-with-telegram>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-list lines="none">
+						<ion-item
+							(click)="loginWith('Google')"
+							tappable
+							[disabled]="!!signingWith"
+						>
+							<ion-icon
+								color="danger"
+								name="logo-google"
+								slot="start"
+								*ngIf="signingWith !== 'Google'"
+							>
+							</ion-icon>
+							<ion-spinner
+								slot="start"
+								name="lines-small"
+								*ngIf="signingWith === 'Google'"
+							>
+							</ion-spinner>
+							<ion-label color="danger"> Login with Google</ion-label>
+						</ion-item>
+						<ion-item *ngIf="false"
+											(click)="loginWith('Facebook')"
+											tappable
+											[disabled]="!!signingWith"
+						>
+							<ion-icon
+								slot="start"
+								color="primary"
+								name="logo-facebook"
+								*ngIf="signingWith !== 'Facebook'"
+							>
+							</ion-icon>
+							<ion-spinner
+								slot="start"
+								color="primary"
+								name="lines-small"
+								*ngIf="signingWith === 'Facebook'"
+							>
+							</ion-spinner>
+							<ion-label color="primary">Login with Facebook</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+				<ion-col>
+					<ion-list lines="none">
+						<ion-item
+							(click)="loginWith('Microsoft')"
+							tappable
+							[disabled]="!!signingWith"
+						>
+							<ion-icon
+								slot="start"
+								color="secondary"
+								name="logo-windows"
+								*ngIf="signingWith !== 'Microsoft'"
+							>
+							</ion-icon>
+							<ion-spinner
+								slot="start"
+								color="secondary"
+								name="lines-small"
+								*ngIf="signingWith === 'Microsoft'"
+							>
+							</ion-spinner>
+							<ion-label color="secondary">Login with Microsoft</ion-label>
+						</ion-item>
+						<ion-item *ngIf="false"
+											(click)="loginWith('GitHub')"
+											tappable
+											[disabled]="!!signingWith"
+						>
+							<ion-icon
+								slot="start"
+								color="tertiary"
+								name="logo-github"
+								*ngIf="signingWith !== 'GitHub'"
+							>
+							</ion-icon>
+							<ion-spinner
+								slot="start"
+								color="tertiary"
+								name="lines-small"
+								*ngIf="signingWith === 'GitHub'"
+							>
+							</ion-spinner>
+							<ion-label color="tertiary">Login with GitHub</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-card>
 
-	<!--	<div style="text-align: center">-->
-	<!--		<ion-text color="medium" style="font-size: smaller">or</ion-text>-->
-	<!--	</div>-->
+	<div style="text-align: center">
+		<ion-text color="medium" style="font-size: smaller">or</ion-text>
+	</div>
 
 	<p style="text-align: center; font-size: smaller">
 		<ion-text color="medium">

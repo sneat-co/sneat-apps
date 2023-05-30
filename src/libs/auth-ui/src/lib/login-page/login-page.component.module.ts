@@ -7,6 +7,7 @@ import { EmailLoginFormComponent } from './email-login-form/email-login-form.com
 
 import { LoginPageComponent } from './login-page.component';
 import { LoginPageRoutingModule } from './login-page.routing.module';
+import { LoginWithTelegramComponent } from './login-with-telegram.component';
 
 @NgModule({
 	imports: [
@@ -18,6 +19,7 @@ import { LoginPageRoutingModule } from './login-page.routing.module';
 	declarations: [
 		LoginPageComponent,
 		EmailLoginFormComponent,
+		LoginWithTelegramComponent,
 	],
 	exports: [LoginPageComponent],
 })
