@@ -51,8 +51,8 @@ dependencies:
     specifier: 7.0.10
     version: 7.0.10(@angular/core@16.0.3)(@angular/forms@16.0.3)(@angular/router@16.0.3)(rxjs@7.8.0)(zone.js@0.13.0)
   '@ionic/core':
-    specifier: 7.0.4
-    version: 7.0.4
+    specifier: 7.0.10
+    version: 7.0.10
   '@nx/angular':
     specifier: 16.2.2
     version: 16.2.2(@angular-devkit/build-angular@16.0.3)(@angular-devkit/core@16.0.3)(@angular-devkit/schematics@16.0.3)(@schematics/angular@16.0.3)(@types/node@18.16.16)(cypress@12.13.0)(eslint@8.41.0)(nx@16.2.2)(rxjs@7.8.0)(typescript@4.9.5)
@@ -3148,14 +3148,6 @@ packages:
       tslib: 2.5.2
     dev: false
 
-  /@ionic/core@7.0.4:
-    resolution: {integrity: sha512-tS1RfWn+L3jVpU833d7QQs1FQO1MlbDQL6sMaYBOYcE1nNZuDTd++zcOS264eklNnZu6z7PJmd04dj3DnQjsmA==}
-    dependencies:
-      '@stencil/core': 3.2.1
-      ionicons: 7.1.2
-      tslib: 2.5.2
-    dev: false
-
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
@@ -4343,12 +4335,6 @@ packages:
   /@stencil/core@2.22.3:
     resolution: {integrity: sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==}
     engines: {node: '>=12.10.0', npm: '>=6.0.0'}
-    hasBin: true
-    dev: false
-
-  /@stencil/core@3.2.1:
-    resolution: {integrity: sha512-Ybm4NteQBScLq3H0JML/uqo4nWjNpZw1HAAURtR5LlRm7ptzNKO5S8EnHp3m05/uyTzeh9yLpUFHY7bxGNdYLg==}
-    engines: {node: '>=14.10.0', npm: '>=6.0.0'}
     hasBin: true
     dev: false
 
