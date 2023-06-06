@@ -5,7 +5,6 @@ import { Input } from '@angular/core';
 @Component({
 	selector: 'sneat-login-with-telegram',
 	template: `
-		Telegram button:
 		<script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="SneatBot" data-size="large"
 						data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
 	`,
