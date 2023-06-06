@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "github>sneat-co/sneat-renovate-nx"
+  ]
+}
