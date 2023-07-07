@@ -36,8 +36,8 @@ dependencies:
     specifier: 16.1.4
     version: 16.1.4(@angular/common@16.1.4)(@angular/core@16.1.4)(@angular/platform-browser@16.1.4)(rxjs@7.8.1)
   '@firebase/firestore-types':
-    specifier: ^2.5.1
-    version: 2.5.1(@firebase/app-types@0.9.0)(@firebase/util@1.9.3)
+    specifier: ^3.0.0
+    version: 3.0.0(@firebase/app-types@0.9.0)(@firebase/util@1.9.3)
   '@ionic-native/core':
     specifier: 5.36.0
     version: 5.36.0(rxjs@7.8.1)
@@ -2771,6 +2771,16 @@ packages:
 
   /@firebase/firestore-types@2.5.1(@firebase/app-types@0.9.0)(@firebase/util@1.9.3):
     resolution: {integrity: sha512-xG0CA6EMfYo8YeUxC8FeDzf6W3FX1cLlcAGBYV6Cku12sZRI81oWcu61RSKM66K6kUENP+78Qm8mvroBcm1whw==}
+    peerDependencies:
+      '@firebase/app-types': 0.x
+      '@firebase/util': 1.x
+    dependencies:
+      '@firebase/app-types': 0.9.0
+      '@firebase/util': 1.9.3
+    dev: false
+
+  /@firebase/firestore-types@3.0.0(@firebase/app-types@0.9.0)(@firebase/util@1.9.3):
+    resolution: {integrity: sha512-Meg4cIezHo9zLamw0ymFYBD4SMjLb+ZXIbuN7T7ddXN6MGoICmOTq3/ltdCGoDCS2u+H1XJs2u/cYp75jsX9Qw==}
     peerDependencies:
       '@firebase/app-types': 0.x
       '@firebase/util': 1.x
