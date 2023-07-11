@@ -20,7 +20,7 @@
 			<ion-label>Contacts</ion-label>
 		</ion-item-divider>
 		<ion-item *ngIf="contact?.dto?.members?.length">
-			<ion-badge color="light" style="cursor: pointer" *ngFor="let m of contact?.dto?.members" (click)="goMember(m.id)">
+			<ion-badge color="light" style="cursor: pointer" *ngFor="let m of contact?.dto?.members!" (click)="goMember(m.id)">
 				{{m.relation}} of {{m.title}}
 			</ion-badge>
 		</ion-item>

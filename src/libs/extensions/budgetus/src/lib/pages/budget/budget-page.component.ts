@@ -104,7 +104,7 @@ export class BudgetPageComponent extends TeamBaseComponent {
 		this.teamParams.teamNavService.navigateForwardToTeamPage(this.team, 'new-liability');
 	}
 
-	readonly trackById = (i: number, item: { id: string }) => item.id;
+	readonly trackById = (i: number, item: { id: string } | undefined) => item?.id;
 
 	// private subscribeForAssetGroups(): void {
 	// 	console.log('subscribeForAssetGroups', communeId);

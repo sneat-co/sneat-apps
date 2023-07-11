@@ -382,12 +382,12 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		alert('Saving noes is not implemented yet');
 	}
 
-	protected teamPageUrl(page: string): string | undefined {
+	protected teamPageUrl(page: string): string | undefined | null {
 		return teamPageUrl(this.teamContext, page);
 	}
 }
 
-export const teamPageUrl = (team?: ITeamContext, page?: string): string | undefined => {
+export const teamPageUrl = (team?: ITeamContext, page?: string): string | undefined | null => {
 	return team?.id ? page ? `/space/${team.type}/${team.id}/${page}` : `/space/${team.type}/${team.id}` : undefined;
 };
 

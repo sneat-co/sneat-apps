@@ -135,4 +135,6 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 		});
 
 	}
+
+  protected readonly length = length;
 }
