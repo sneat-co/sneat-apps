@@ -20,7 +20,11 @@
 			<ion-label>Contacts</ion-label>
 		</ion-item-divider>
 		<ion-item *ngIf="contact?.dto?.members?.length">
-			<ion-badge color="light" style="cursor: pointer" *ngFor="let m of contact?.dto?.members!" (click)="goMember(m.id)">
+			<!-- TODO:  contact?.dto?.members! is a workaround for what seems to be an IDE bug -->
+			<ion-badge *ngFor="let m of contact?.dto?.members!"
+								 color="light" style="cursor: pointer"
+								 (click)="goMember(m.id)"
+			>
 				{{m.relation}} of {{m.title}}
 			</ion-badge>
 		</ion-item>
@@ -81,5 +85,5 @@
 		<sneat-contacts-list [contacts]="contactLocations"></sneat-contacts-list>
 	</ion-card>
 
-		<sneat-contact-roles-input [team]="team" [contact]="contact"></sneat-contact-roles-input>
+	<sneat-contact-roles-input [team]="team" [contact]="contact"></sneat-contact-roles-input>
 </ion-content>
