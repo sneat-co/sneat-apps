@@ -69,8 +69,8 @@ export class PersonFormWizardComponent {
 	private readonly formOrder: readonly WizardItem[] = [
 		'name',
 		'gender',
-		'ageGroup',
 		'relatedAs',
+		'ageGroup',
 		'roles',
 		'emails',
 		'phones',

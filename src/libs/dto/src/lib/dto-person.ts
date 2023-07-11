@@ -53,9 +53,9 @@ export interface IPersonBrief extends IPersonBase {
 }
 
 export interface IPerson extends IPersonBase {
-	readonly email?: string;
+	readonly email?: string; // TODO: Document how email is different from emails
 	readonly emails?: IEmail[];
-	readonly phone?: string;
+	readonly phone?: string; // TODO: Document how phone is different from phones
 	readonly phones?: IPhone[];
 	readonly website?: string;
 	readonly dob?: string;  // Date of birth

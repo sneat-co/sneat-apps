@@ -56,9 +56,11 @@ export interface IRejectPersonalInviteRequest extends ITeamRequest {
 	pin: string;
 }
 
+export type TeamMemberStatus = 'active' | 'archived';
 
 export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
 	type: 'person';
+	status: TeamMemberStatus;
 	countryID: string;
 	roles: string[];
 	// memberType: MemberType;

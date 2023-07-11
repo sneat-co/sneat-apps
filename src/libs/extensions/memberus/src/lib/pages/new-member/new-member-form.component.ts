@@ -116,6 +116,7 @@ export class NewMemberFormComponent implements OnChanges {
 
 		const request: ICreateTeamMemberRequest = {
 			...this.relatedPerson,
+			status: 'active',
 			type: 'person',
 			countryID: team.dto?.countryID || '--',
 			roles: ['contributor'],
