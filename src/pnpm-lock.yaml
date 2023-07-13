@@ -57,11 +57,11 @@ dependencies:
     specifier: 16.5.1
     version: 16.5.1(@angular-devkit/build-angular@16.1.4)(@angular-devkit/core@16.1.4)(@angular-devkit/schematics@16.1.4)(@schematics/angular@16.1.4)(@types/node@18.16.19)(cypress@12.17.1)(eslint@8.44.0)(nx@16.5.1)(rxjs@7.8.1)(typescript@4.9.5)
   '@sentry/angular':
-    specifier: 7.58.0
-    version: 7.58.0(@angular/common@16.1.4)(@angular/core@16.1.4)(@angular/router@16.1.4)(rxjs@7.8.1)
+    specifier: 7.58.1
+    version: 7.58.1(@angular/common@16.1.4)(@angular/core@16.1.4)(@angular/router@16.1.4)(rxjs@7.8.1)
   '@sentry/tracing':
-    specifier: 7.58.0
-    version: 7.58.0
+    specifier: 7.58.1
+    version: 7.58.1
   '@sneat/random':
     specifier: 0.0.4
     version: 0.0.4(@angular/common@16.1.4)(@angular/core@16.1.4)
@@ -5083,18 +5083,18 @@ packages:
     transitivePeerDependencies:
       - chokidar
 
-  /@sentry-internal/tracing@7.58.0:
-    resolution: {integrity: sha512-7V/vkFFYCmSq25er3Y0wukkTM940Wvk9qjh7kWcCCeesKFHNGBCP7HVZhsymjPIJGGJTvRWc9MgBzRGe/c16Xg==}
+  /@sentry-internal/tracing@7.58.1:
+    resolution: {integrity: sha512-kOWKqyjYdDgvO6CacXneE9UrFQHT3BXF1UpCAlnHchW/TqRFmg89sJAEUjEPGzN7y6IaX1G4j2dBPDE0OFQi3w==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.58.0
-      '@sentry/types': 7.58.0
-      '@sentry/utils': 7.58.0
+      '@sentry/core': 7.58.1
+      '@sentry/types': 7.58.1
+      '@sentry/utils': 7.58.1
       tslib: 2.6.0
     dev: false
 
-  /@sentry/angular@7.58.0(@angular/common@16.1.4)(@angular/core@16.1.4)(@angular/router@16.1.4)(rxjs@7.8.1):
-    resolution: {integrity: sha512-c454xpLCHWdVQ+hfKGNmwM9EJrM5wkNIaOAp8olFEqHD88cSK4hv0K+jF+j71ZE4uzZlbY5w85cj5TUsBkzghQ==}
+  /@sentry/angular@7.58.1(@angular/common@16.1.4)(@angular/core@16.1.4)(@angular/router@16.1.4)(rxjs@7.8.1):
+    resolution: {integrity: sha512-zVJX5XXyPsJkJIRZFE4NZW+Q4Kjhso0Z0YVxFzNzWsbM3MW57Gw8fUvPDdmSGGol0jeE5NcscuT7MNnf2+fd/w==}
     engines: {node: '>=8'}
     peerDependencies:
       '@angular/common': '>= 10.x <= 15.x'
@@ -5105,60 +5105,60 @@ packages:
       '@angular/common': 16.1.4(@angular/core@16.1.4)(rxjs@7.8.1)
       '@angular/core': 16.1.4(rxjs@7.8.1)(zone.js@0.13.1)
       '@angular/router': 16.1.4(@angular/common@16.1.4)(@angular/core@16.1.4)(@angular/platform-browser@16.1.4)(rxjs@7.8.1)
-      '@sentry/browser': 7.58.0
-      '@sentry/types': 7.58.0
-      '@sentry/utils': 7.58.0
+      '@sentry/browser': 7.58.1
+      '@sentry/types': 7.58.1
+      '@sentry/utils': 7.58.1
       rxjs: 7.8.1
       tslib: 2.6.0
     dev: false
 
-  /@sentry/browser@7.58.0:
-    resolution: {integrity: sha512-v+PaTuK4LOJ1/uAxNQHUMRLWdlIOdiKlZAgoZojixdFKajHAeguzok93d0u2SZJaGDaLmkJYSiGAPBs1d1jHhA==}
+  /@sentry/browser@7.58.1:
+    resolution: {integrity: sha512-7+6Z/T7m0A/2/ImMCakpMOaWTPxmENzTdaojhkyVQKuYUZr7mCe4nco0jsongwY634zSUziuVsibi0jxMMTdBA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.58.0
-      '@sentry/core': 7.58.0
-      '@sentry/replay': 7.58.0
-      '@sentry/types': 7.58.0
-      '@sentry/utils': 7.58.0
+      '@sentry-internal/tracing': 7.58.1
+      '@sentry/core': 7.58.1
+      '@sentry/replay': 7.58.1
+      '@sentry/types': 7.58.1
+      '@sentry/utils': 7.58.1
       tslib: 2.6.0
     dev: false
 
-  /@sentry/core@7.58.0:
-    resolution: {integrity: sha512-tdz+HOh9blnfJ4ZSfsaVaSh/i7pD2QfmC0///fWlNm+IvD+SAgYFP6M3PIsJMsaN5heZ9XMNY4wnxvd+vvJwPQ==}
+  /@sentry/core@7.58.1:
+    resolution: {integrity: sha512-hpeB5fZ5T6Jg1CBqz486jHgWuJ5R/HD0wyYX+S3LDDsHCJo6V3TxNuoxYDlTTerRRfZdTwr9GYJXskehpU26IA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.58.0
-      '@sentry/utils': 7.58.0
+      '@sentry/types': 7.58.1
+      '@sentry/utils': 7.58.1
       tslib: 2.6.0
     dev: false
 
-  /@sentry/replay@7.58.0:
-    resolution: {integrity: sha512-gzanY+Y+48ErQxFWl2t031awz/4fR6v0Pkvu7mZWl8ZraLiVRqk2T7aPyxcL2I7yFwFElJ6mZw7buce+R+IaTA==}
+  /@sentry/replay@7.58.1:
+    resolution: {integrity: sha512-KKlpIxGrH1deTr/R3BErX8y16MnOzEylBVVn2I31BglLoZETFS9JAle6JNOgGxS5apFjwdQmD+69vX/mlVhMow==}
     engines: {node: '>=12'}
     dependencies:
-      '@sentry/core': 7.58.0
-      '@sentry/types': 7.58.0
-      '@sentry/utils': 7.58.0
+      '@sentry/core': 7.58.1
+      '@sentry/types': 7.58.1
+      '@sentry/utils': 7.58.1
     dev: false
 
-  /@sentry/tracing@7.58.0:
-    resolution: {integrity: sha512-xCK8Ngx3Q9ZzXWzmIHO4BKZK0hWCCSNEGHzKYXmbTps8D969fafkbNPecINF8w/lR0vm3vTGi8sQXYEwrhJnRA==}
+  /@sentry/tracing@7.58.1:
+    resolution: {integrity: sha512-j869DWe/nyI7/FQwqGGzwWPQy/x8Ows7ijYCvr66Kos6HLiyiEPfeNL+gmenk3itytsyU+gsxQZl/HZnairPWg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.58.0
+      '@sentry-internal/tracing': 7.58.1
     dev: false
 
-  /@sentry/types@7.58.0:
-    resolution: {integrity: sha512-uy8rww5R0WSxr9kB1R1BXWomkKXosK+jOFslbIda4CfTiAMEINi7rXkqTzPJKCIRLHFvKXDFUIkMCHNMkgYjwA==}
+  /@sentry/types@7.58.1:
+    resolution: {integrity: sha512-OnKG+yrilPBeVNQK3biF0u/4IDjwH+boJU1XzJOnYdMRO8uzTWxvaRqpt0C8sVE9VAetRi2eutkzOgCXZISRrw==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.58.0:
-    resolution: {integrity: sha512-EAknRDovGBnIVvGLJVxPbB1gUY/VCUoVov26Fk1BYLtUmWlzt+JYHsBJptHw15onu+M0em7z7Iax4wKoiNhhzA==}
+  /@sentry/utils@7.58.1:
+    resolution: {integrity: sha512-iC9xZJBHp4+MDrZjKwcmMUhI5sTmpUcttwmsJL9HA6ACW+L1XX2eGSDky5pSlhhVFR7q7jJnQ7YUlMQ/jcd8eQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.58.0
+      '@sentry/types': 7.58.1
       tslib: 2.6.0
     dev: false
 
@@ -6457,7 +6457,7 @@ packages:
       '@babel/plugin-proposal-object-rest-spread': 7.20.7(@babel/core@7.22.5)
       '@babel/plugin-syntax-class-properties': 7.12.13(@babel/core@7.22.5)
       '@babel/plugin-syntax-flow': 7.22.5(@babel/core@7.22.5)
-      '@babel/plugin-syntax-jsx': 7.21.4(@babel/core@7.22.5)
+      '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.22.5)
       '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.22.5)
       '@babel/plugin-transform-arrow-functions': 7.22.5(@babel/core@7.22.5)
       '@babel/plugin-transform-block-scoped-functions': 7.22.5(@babel/core@7.22.5)
