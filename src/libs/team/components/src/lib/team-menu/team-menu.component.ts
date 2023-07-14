@@ -1,16 +1,29 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { ISneatUserState } from '@sneat/auth';
+import { AuthMenuItemModule, ISneatUserState } from '@sneat/auth';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
 import { TeamComponentBaseParams } from '../team-component-base-params';
 
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+
 @Component({
+	standalone: true,
 	selector: 'sneat-team-menu',
 	templateUrl: './team-menu.component.html',
 	styleUrls: ['./team-menu.component.scss'],
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		RouterModule,
+		AuthMenuItemModule,
+	],
 })
 export class TeamMenuComponent extends TeamBaseComponent {
 

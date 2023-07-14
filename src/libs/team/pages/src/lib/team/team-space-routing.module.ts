@@ -14,7 +14,6 @@ import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import {
 	TeamComponentBaseParams,
 	TeamMenuComponent,
-	TeamMenuComponentModule,
 } from '@sneat/team/components';
 
 const routes: Routes = [
@@ -67,7 +66,6 @@ const routes: Routes = [
 		CommonModule,
 		IonicModule,
 		SneatAuthServicesModule,
-		TeamMenuComponentModule,
 		AssetusRoutingModule,
 		ContactusRoutingModule,
 	],

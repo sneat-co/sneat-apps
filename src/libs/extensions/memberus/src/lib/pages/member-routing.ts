@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatAuthServicesModule } from '@sneat/auth';
-import { TeamMenuComponentModule } from '@sneat/team/components';
 // import { guardRoute } from '../../../utils/guard-route';
 
 export const memberRoutes: Route[] = [
@@ -75,7 +74,6 @@ const routes: Route[] = [
 		CommonModule,
 		IonicModule,
 		SneatAuthServicesModule,
-		TeamMenuComponentModule,
 	],
 	exports: [RouterModule],
 	declarations: [],
