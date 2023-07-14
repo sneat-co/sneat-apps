@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject } from '@angular/core';
 import { Input } from '@angular/core';
 
 @Component({
@@ -40,7 +40,7 @@ export class LoginWithTelegramComponent implements AfterViewInit { // TODO: Arti
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-window.onTelegramAuth = (user: any) => {
+window.onTelegramAuth = (user: {first_name: string; last_name: string; id: string; username?: string}) => {
 	console.log('onTelegramAuth', user);
 	alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
 };
