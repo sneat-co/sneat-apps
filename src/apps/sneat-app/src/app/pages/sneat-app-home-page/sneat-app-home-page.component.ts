@@ -3,6 +3,8 @@ import { AuthStatus, SneatAuthStateService } from '@sneat/auth';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
+	// Do not make it standalone component,
+	// as it requires few other components specific just to this page
 	selector: 'sneat-sneat-app-home-page',
 	templateUrl: './sneat-app-home-page.component.html',
 	styleUrls: ['./sneat-app-home-page.component.scss'],
