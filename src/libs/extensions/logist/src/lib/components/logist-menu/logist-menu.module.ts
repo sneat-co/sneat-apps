@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemModule } from '@sneat/auth';
-import { AppVersionModule } from '@sneat/components';
+import { AppVersionComponent } from '@sneat/components';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { LogistMenuComponent } from './logist-menu.component';
 
@@ -15,9 +15,7 @@ import { LogistMenuComponent } from './logist-menu.component';
 		RouterModule,
 		AuthMenuItemModule,
 		TeamsMenuComponentModule,
-		AppVersionModule,
-		AppVersionModule,
-		AppVersionModule,
+		AppVersionComponent,
 	],
 	declarations: [
 		LogistMenuComponent,

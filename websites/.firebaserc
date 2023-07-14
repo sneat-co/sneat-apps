@@ -7,6 +7,9 @@
       "hosting": {
         "logistus": [
           "logistus"
+        ],
+        "sneat-eu": [
+          "sneat-eu"
         ]
       }
     }
