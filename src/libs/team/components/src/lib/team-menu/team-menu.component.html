@@ -1,8 +1,7 @@
 <ion-list>
 	<ion-item>
 		<!--		<ion-icon name="home-outline" slot="start" color="primary" tappable routerLink="/space/{{team.type}}/{{team.id}}" routerDirection="root"></ion-icon>-->
-		<ion-label>Space</ion-label>
-		<ion-select *ngIf="teams"
+		<ion-select label="Space" *ngIf="teams"
 								[value]="team?.id"
 								interface="popover"
 								(ionChange)="onTeamSelected($event)"
