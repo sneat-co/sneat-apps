@@ -1,3 +1,4 @@
+import { Injector } from '@angular/core';
 import { connectAuthEmulator, provideAuth } from '@angular/fire/auth';
 import { connectFirestoreEmulator } from '@angular/fire/firestore';
 import { IFirebaseConfig } from './environment-config';
@@ -5,14 +6,14 @@ import { provideFirebaseApp, initializeApp, FirebaseApp } from '@angular/fire/ap
 import { getAuth } from 'firebase/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
-
 export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 	// console.log('ImportFirebaseModules');
 	return [
 		provideFirebaseApp(() => initFirebase(firebaseConfig)),
-		provideFirestore(() => {
+		provideFirestore(injector => {
 			console.log('AngularFire: provideFirestore');
-			const firestore = getFirestore();
+			const fbApp = injector.get(FirebaseApp);
+			const firestore = getFirestore(fbApp);
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.firestorePort) {
 				const host = 'localhost';
@@ -21,9 +22,10 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 			}
 			return firestore;
 		}),
-		provideAuth(() => {
+		provideAuth(injector => {
 			console.log('AngularFire: provideAuth');
-			const auth = getAuth();
+			const fbApp = injector.get(FirebaseApp);
+			const auth = getAuth(fbApp);
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.authPort) {
 				connectAuthEmulator(auth, 'http://localhost:' + emulator.authPort);
@@ -38,10 +40,7 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 }
 
 export function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {
-	console.log('initFirebase', firebaseConfig);
-	const firebaseApp = initializeApp(firebaseConfig);
-	if (firebaseConfig.useEmulators && firebaseConfig.emulator) {
-		console.log('using firebase emulators', firebaseConfig);
-	}
-	return firebaseApp;
+	console.log('initFirebase()' + (firebaseConfig.useEmulators && firebaseConfig.emulator ? ' - using firebase emulators' : ''), firebaseConfig);
+	return initializeApp(firebaseConfig);
+	;
 }
