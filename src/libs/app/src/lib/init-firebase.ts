@@ -1,4 +1,3 @@
-import { Injector } from '@angular/core';
 import { connectAuthEmulator, provideAuth } from '@angular/fire/auth';
 import { connectFirestoreEmulator } from '@angular/fire/firestore';
 import { IFirebaseConfig } from './environment-config';
