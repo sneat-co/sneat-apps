@@ -7,7 +7,6 @@ import { gitHash } from '@sneat/components';
 @Component({
 	selector: 'sneat-root',
 	templateUrl: './logist-app.component.html',
-	styleUrls: ['./logist-app.component.scss'],
 })
 export class LogistAppComponent extends SneatBaseAppComponent implements AfterViewInit {
 

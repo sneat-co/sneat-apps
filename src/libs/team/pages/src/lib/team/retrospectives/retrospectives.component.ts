@@ -10,7 +10,6 @@ import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 @Component({
 	selector: 'sneat-team-retrospectives',
 	templateUrl: './retrospectives.component.html',
-	styleUrls: ['./retrospectives.component.scss'],
 })
 export class RetrospectivesComponent {
 	@Input() public team?: IRecord<ITeamDto>;

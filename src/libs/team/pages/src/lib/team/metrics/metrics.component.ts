@@ -8,7 +8,6 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 @Component({
 	selector: 'sneat-team-metrics',
 	templateUrl: './metrics.component.html',
-	styleUrls: ['./metrics.component.scss'],
 })
 export class MetricsComponent {
 	@Input() public team?: IRecord<ITeamDto>;

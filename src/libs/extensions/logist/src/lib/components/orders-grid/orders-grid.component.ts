@@ -18,7 +18,6 @@ interface OrderRow {
 @Component({
 	selector: 'sneat-logist-orders-grid',
 	templateUrl: './orders-grid.component.html',
-	styleUrls: ['./orders-grid.component.scss'],
 })
 export class OrdersGridComponent implements OnChanges {
 

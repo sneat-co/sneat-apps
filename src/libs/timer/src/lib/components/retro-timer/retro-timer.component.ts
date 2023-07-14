@@ -11,7 +11,6 @@ import { secondsToStr } from '@sneat/datetime';
 @Component({
   selector: 'sneat-retro-timer',
   templateUrl: './retro-timer.component.html',
-  styleUrls: ['./retro-timer.component.scss'],
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
   @Input() public team?: IRecord<ITeamDto>;

@@ -23,7 +23,6 @@ interface IRecordsetInfo {
 @Component({
 	selector: 'datatug-env-db',
 	templateUrl: './env-db-page.component.html',
-	styleUrls: ['./env-db-page.component.scss'],
 })
 export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 	@ViewChild('grid', { static: false }) gridElRef: ElementRef;

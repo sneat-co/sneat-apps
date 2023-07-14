@@ -4,7 +4,6 @@ import { IMetric } from '../../interfaces';
 @Component({
 	selector: 'sneat-metrics',
 	templateUrl: './metrics.component.html',
-	styleUrls: ['./metrics.component.scss'],
 })
 export class MetricsComponent {
 	@Input() public metrics?: IMetric[];

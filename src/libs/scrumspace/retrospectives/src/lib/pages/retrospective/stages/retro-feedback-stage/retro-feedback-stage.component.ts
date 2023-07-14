@@ -4,7 +4,6 @@ import { IRecord, IRetrospective, ITeam } from '../../../../../models/interfaces
 @Component({
 	selector: 'sneat-retro-feedback-stage',
 	templateUrl: './retro-feedback-stage.component.html',
-	styleUrls: ['./retro-feedback-stage.component.scss'],
 })
 export class RetroFeedbackStageComponent {
 	@Input() team: IRecord<ITeam>;

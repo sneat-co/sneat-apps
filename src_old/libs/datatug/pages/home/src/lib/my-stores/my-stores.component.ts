@@ -19,7 +19,6 @@ import { parseStoreRef } from '@sneat/core';
 @Component({
 	selector: 'datatug-my-stores',
 	templateUrl: './my-stores.component.html',
-	styleUrls: ['./my-stores.component.scss'],
 })
 export class MyStoresComponent implements OnInit, OnDestroy {
 	public authStatus: AuthStatus;

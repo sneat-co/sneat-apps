@@ -6,7 +6,6 @@ import { DataType, IEntityFieldDef } from '@sneat/datatug/models';
 @Component({
 	selector: 'datatug-entity-field-dialog',
 	templateUrl: './entity-field-dialog.component.html',
-	styleUrls: ['./entity-field-dialog.component.scss'],
 })
 export class EntityFieldDialogComponent {
 	public fieldId = '';

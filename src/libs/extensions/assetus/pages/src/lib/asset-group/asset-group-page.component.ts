@@ -12,7 +12,6 @@ import {IRecord, RxRecordKey} from 'rxstore';
 @Component({
 	selector: 'sneat-asset-group',
 	templateUrl: './asset-group-page.component.html',
-	styleUrls: ['./asset-group-page.component.scss'],
 	providers: [CommuneBasePageParams],
 })
 export class AssetGroupPageComponent extends CommuneBasePage implements OnInit {

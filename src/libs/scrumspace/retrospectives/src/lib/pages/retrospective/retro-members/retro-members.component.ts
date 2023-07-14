@@ -17,7 +17,6 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 @Component({
 	selector: 'sneat-retro-members',
 	templateUrl: './retro-members.component.html',
-	styleUrls: ['./retro-members.component.scss'],
 })
 export class RetroMembersComponent implements OnChanges {
 	@Input() team: IRecord<ITeamDto>;

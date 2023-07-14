@@ -11,7 +11,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'datatug-parameter-lookup',
 	templateUrl: './parameter-lookup.component.html',
-	styleUrls: ['./parameter-lookup.component.scss'],
 })
 export class ParameterLookupComponent implements OnInit {
 	@Input() parameter?: IParameterDef;

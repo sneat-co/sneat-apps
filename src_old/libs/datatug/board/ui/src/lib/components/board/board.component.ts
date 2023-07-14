@@ -7,7 +7,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'datatug-board',
 	templateUrl: './board.component.html',
-	styleUrls: ['./board.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardComponent {

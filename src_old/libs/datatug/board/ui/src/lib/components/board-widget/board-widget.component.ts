@@ -4,7 +4,6 @@ import { IBoardContext, ISqlWidgetSettings, ITabsWidgetSettings, QueryType, Widg
 @Component({
 	selector: 'datatug-board-widget',
 	templateUrl: './board-widget.component.html',
-	styleUrls: ['./board-widget.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardWidgetComponent {

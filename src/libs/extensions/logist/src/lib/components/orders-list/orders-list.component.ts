@@ -5,7 +5,6 @@ import { ILogistOrderContext } from '../../dto/order-dto';
 @Component({
 	selector: 'sneat-logist-orders-list',
 	templateUrl: './orders-list.component.html',
-	styleUrls: ['./orders-list.component.scss'],
 })
 export class OrdersListComponent {
 

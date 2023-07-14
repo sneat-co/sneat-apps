@@ -18,7 +18,6 @@ type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'note
 @Component({
 	selector: 'sneat-order-page',
 	templateUrl: './logist-order-page.component.html',
-	styleUrls: ['./logist-order-page.component.scss'],
 })
 export class LogistOrderPageComponent extends OrderPageBaseComponent implements OnDestroy {
 

@@ -5,7 +5,6 @@ import { IForeignKey } from '@sneat/datatug/models';
 @Component({
 	selector: 'sneat-datatug-cell-popover',
 	templateUrl: './cell-popover.component.html',
-	styleUrls: ['./cell-popover.component.scss'],
 })
 export class CellPopoverComponent {
 	@Input() column?: IRecordsetColumn;

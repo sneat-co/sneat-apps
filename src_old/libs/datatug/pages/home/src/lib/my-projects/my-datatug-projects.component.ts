@@ -17,7 +17,6 @@ import { IProjectContext } from '@sneat/datatug/nav';
 @Component({
 	selector: 'datatug-my-projects',
 	templateUrl: './my-datatug-projects.component.html',
-	styleUrls: ['./my-datatug-projects.component.scss'],
 })
 export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	@Input() title: string;

@@ -8,7 +8,6 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 @Component({
 	selector: 'sneat-team-members',
 	templateUrl: './members.component.html',
-	styleUrls: ['./members.component.scss'],
 })
 export class MembersComponent implements OnChanges {
 	@Input() public team?: IRecord<ITeamDto>;

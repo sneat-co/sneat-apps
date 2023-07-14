@@ -4,7 +4,6 @@ import { IScrumDto } from '@sneat/scrumspace/scrummodels';
 @Component({
 	selector: 'sneat-timer-meeting-button',
 	templateUrl: './timer-meeting-button.component.html',
-	styleUrls: ['./timer-meeting-button.component.scss'],
 })
 export class TimerMeetingButtonComponent {
 	@Input() public scrumId?: string;

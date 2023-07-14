@@ -4,7 +4,6 @@ import { IParameter, IParameterDef, IParamWithDefAndValue, ParameterValue } from
 @Component({
 	selector: 'datatug-input-parameters',
 	templateUrl: './input-parameters.component.html',
-	styleUrls: ['./input-parameters.component.scss'],
 })
 export class InputParametersComponent implements OnChanges {
 	@Input()

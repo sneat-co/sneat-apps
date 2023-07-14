@@ -7,7 +7,6 @@ import { LogistTeamBaseComponent } from '../logist-team-base.component';
 @Component({
 	selector: 'sneat-logist-main-page',
 	templateUrl: './logist-team-page.component.html',
-	styleUrls: ['./logist-team-page.component.scss'],
 })
 export class LogistTeamPageComponent extends LogistTeamBaseComponent {
 

@@ -5,7 +5,6 @@ import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
 @Component({
 	selector: 'sneat-logist-menu',
 	templateUrl: './logist-menu.component.html',
-	styleUrls: ['./logist-menu.component.scss'],
 })
 export class LogistMenuComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;

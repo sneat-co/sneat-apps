@@ -70,7 +70,6 @@ Tabulator.registerModule([InteractionModule, SelectRowModule, AdvertModule, Menu
  */
 @Component({
 	selector: 'sneat-datagrid',
-	styleUrls: ['./data-grid.component.scss'],
 	template: `
 		<div id="tabulator" #tabulatorDiv></div>
 		<p class="ion-margin-start">Rows: {{ data?.length }}</p>

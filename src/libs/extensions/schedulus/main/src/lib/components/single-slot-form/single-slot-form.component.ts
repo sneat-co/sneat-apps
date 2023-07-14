@@ -19,7 +19,6 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-single-slot-form',
 	templateUrl: './single-slot-form.component.html',
-	styleUrls: ['./single-slot-form.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDestroy {

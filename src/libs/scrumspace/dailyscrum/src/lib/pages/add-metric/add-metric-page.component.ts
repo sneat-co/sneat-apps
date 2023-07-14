@@ -8,7 +8,6 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
 	selector: 'sneat-add-metric',
 	templateUrl: './add-metric-page.component.html',
-	styleUrls: ['./add-metric-page.component.scss'],
 })
 export class AddMetricPageComponent {
 	public team: ITeam;
