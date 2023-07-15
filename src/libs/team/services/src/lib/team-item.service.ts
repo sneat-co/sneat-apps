@@ -5,6 +5,7 @@ import {
 	collection,
 	CollectionReference,
 } from '@angular/fire/firestore';
+import { QuerySnapshot } from '@firebase/firestore-types';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { ITeamContext, ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { Observable } from 'rxjs';
@@ -14,6 +15,7 @@ type ICreateTeamItemResponse<Brief extends { id: string }, Dto> = ITeamItemConte
 
 export class TeamItemService<Brief extends { id: string }, Dto> {
 	private readonly teamsCollection;
+	private readonly modulesCollection;
 	protected readonly sfs: SneatFirestoreService<Brief, Dto>;
 
 	constructor(
@@ -21,6 +23,7 @@ export class TeamItemService<Brief extends { id: string }, Dto> {
 		public readonly afs: AngularFirestore,
 		public readonly sneatApiService: SneatApiService,
 	) {
+		this.modulesCollection = collection(this.afs, 'modules');
 		this.teamsCollection = collection(this.afs, 'teams');
 		this.sfs = new SneatFirestoreService<Brief, Dto>(collectionName, afs);
 	}
@@ -43,25 +46,46 @@ export class TeamItemService<Brief extends { id: string }, Dto> {
 
 	private readonly teamRef = (id: string) => doc(this.teamsCollection, id);
 
+	public watchModuleTeamItems<Brief2 extends Brief, Dto2 extends Dto>(
+		moduleID: string,
+		team: ITeamContext,
+		filter?: IFilter[],
+	): Observable<ITeamItemContext<Brief2, Dto2>[]> {
+		console.log('watchModuleTeamItems()', team.id, this.collectionName);
+		if (!filter) {
+			filter = [];
+		}
+		filter.push({ field: 'teamIDs', operator: 'in', value: team.id });
+		const moduleDocRef = doc(this.modulesCollection, moduleID);
+		const collectionRef = collection(moduleDocRef, this.collectionName);
+		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter || []);
+		return querySnapshots.pipe(
+			map(querySnapshot => this.mapQueryToTeamItemContext(team, querySnapshot as unknown as QuerySnapshot<Dto2>)),
+		);
+	}
+
+	private readonly mapQueryToTeamItemContext = <Brief2 extends Brief, Dto2 extends Dto>(team: ITeamContext, querySnapshot: QuerySnapshot<Dto2>) => {
+		console.log(`team item changeActions (${this.collectionName}): `, querySnapshot);
+		return querySnapshot.docs.map(docSnapshot => {
+			const dto = docSnapshot.data();
+			const { id } = docSnapshot;
+			const brief: Brief2 = { id, ...dto } as unknown as Brief2;
+			const c: ITeamItemContext<Brief2, Dto2> = { id, team, dto, brief };
+			return c;
+		});
+	};
+
+
 	public watchTeamItems<Brief2 extends Brief, Dto2 extends Dto>(
 		team: ITeamContext,
 		filter?: IFilter[],
 	): Observable<ITeamItemContext<Brief2, Dto2>[]> {
 		console.log('watchTeamItems()', team.id, this.collectionName);
 		const collectionRef = collection(this.teamRef(team.id), this.collectionName);
-		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter||[]);
+		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter || []);
 		return querySnapshots.pipe(
-				map(querySnapshot => {
-					console.log(`team item changeActions (${this.collectionName}): `, querySnapshot);
-					return querySnapshot.docs.map(docSnapshot => {
-						const dto = docSnapshot.data();
-						const { id } = docSnapshot;
-						const brief: Brief2 = { id, ...dto } as unknown as Brief2;
-						const c: ITeamItemContext<Brief2, Dto2> = { id, team, dto, brief };
-						return c;
-					});
-				}),
-			);
+			map(querySnapshot => this.mapQueryToTeamItemContext(team, querySnapshot as unknown as QuerySnapshot<Dto2>)),
+		);
 	}
 
 

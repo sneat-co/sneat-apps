@@ -10,8 +10,7 @@ const assetusRoutes: Route[] = [
 	},
 	{
 		path: 'assets',
-		loadChildren: () => import('./assets/assets-page.module')
-			.then(m => m.AssetsPageModule),
+		loadComponent: () => import('./assets/assets-page.component').then(m => m.AssetsPageComponent),
 		// ...guardRoute,
 	},
 	{

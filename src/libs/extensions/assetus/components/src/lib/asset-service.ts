@@ -46,6 +46,6 @@ export class AssetService {
 
 	watchTeamAssets<Brief extends IAssetBrief, Dto extends IAssetDto>(team: ITeamContext): Observable<IAssetContext<Dto>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);
-		return this.teamItemService.watchTeamItems<Brief, Dto>(team);
+		return this.teamItemService.watchModuleTeamItems<Brief, Dto>('assetus', team);
 	}
 }

@@ -1,17 +1,27 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { IAssetType } from '@sneat/dto';
-import { AssetService } from '@sneat/extensions/assetus/components';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { AssetService, AssetsListComponentModule } from '@sneat/extensions/assetus/components';
+import { TeamComponentBaseParams, TeamCoreComponentsModule } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 
 @Component({
+	standalone: true,
 	selector: 'sneat-assets-page',
 	templateUrl: './assets-page.component.html',
 	providers: [TeamComponentBaseParams],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		AssetsListComponentModule,
+		TeamCoreComponentsModule,
+	],
 })
 export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewInit*/ {
 
