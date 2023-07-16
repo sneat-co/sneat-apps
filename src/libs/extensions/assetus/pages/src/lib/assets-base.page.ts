@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { AssetType } from '@sneat/dto';
+import { AssetCategory } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
@@ -17,7 +17,7 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 		super(className, route, params);
 	}
 
-	public goNew(assetType?: AssetType): void {
+	public goNew(assetType?: AssetCategory): void {
 		const team = this.team;
 		if (!team) {
 			this.errorLogger.logError('no team context');

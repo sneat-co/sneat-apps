@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { AssetType } from '@sneat/dto';
+import { AssetCategory } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
@@ -44,7 +44,7 @@ export class AssetsListComponent implements OnChanges {
 
 	@Input() allAssets?: IAssetContext[];
 	@Input() team?: ITeamContext;
-	@Input() assetType?: AssetType;
+	@Input() assetType?: AssetCategory;
 	@Input() filter = '';
 
 	public deletingIDs: string[] = [];
@@ -75,7 +75,7 @@ export class AssetsListComponent implements OnChanges {
 			this.assets = [...allAssets];
 		} else {
 			this.assets = allAssets
-				?.filter(asset => (!assetType || asset?.brief?.type === assetType) &&
+				?.filter(asset => (!assetType || asset?.brief?.category === assetType) &&
 					(!filter || (asset?.brief?.title?.toLowerCase().indexOf(f) || -1) >= 0));
 		}
 		this.assets = this.assets?.sort((a, b) => {
@@ -90,23 +90,23 @@ export class AssetsListComponent implements OnChanges {
 		if (!asset) {
 			return;
 		}
-		let path: string;
-		switch (asset?.brief?.type) {
-			case 'vehicle':
-				path = 'vehicle';
-				break;
-			case 'real_estate':
-				path = this.team?.type === 'realtor' ? 'real-estate' : 'property';
-				break;
-			default:
-				path = 'asset';
-				break;
-		}
+		// let path: string;
+		// switch (asset?.brief?.type) {
+		// 	// case 'vehicle':
+		// 	// 	path = 'vehicle';
+		// 	// 	break;
+		// 	// case 'real_estate':
+		// 	// 	path = this.team?.type === 'realtor' ? 'real-estate' : 'property';
+		// 	// 	break;
+		// 	default:
+		// 		path = 'asset';
+		// 		break;
+		// }
 		if (!this.team) {
 			this.errorLogger.logError('can not navigate to asset page without team context');
 			return;
 		}
-		this.teamNavService.navigateForwardToTeamPage(this.team, `${path}/${asset.id}`, {
+		this.teamNavService.navigateForwardToTeamPage(this.team, `asset/${asset.id}`, {
 			state: { asset },
 		}).catch(this.errorLogger.logErrorHandler('failed to navigate to asset page'));
 	}

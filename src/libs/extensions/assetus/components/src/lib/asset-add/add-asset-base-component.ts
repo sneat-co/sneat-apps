@@ -29,7 +29,7 @@ export abstract class AddAssetBaseComponent {
 			.subscribe({
 				next: asset => {
 					if (!asset.brief && asset.dto) {
-						asset = { ...asset, brief: { ...asset.dto, type: asset.dto.type, id: asset.id } };
+						asset = { ...asset, brief: { ...asset.dto, category: asset.dto.category, id: asset.id } };
 					}
 					this.teamParams.teamNavService.navigateForwardToTeamPage(team, 'asset/' + asset.id,
 						{ replaceUrl: true, state: { asset, team } })

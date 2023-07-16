@@ -1,6 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AssetType } from '@sneat/dto';
+import { AssetCategory } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 
@@ -13,7 +13,7 @@ import { IAssetContext, ITeamContext } from '@sneat/team/models';
 export class AssetListItemComponent {
 
 	@Input() team?: ITeamContext;
-	@Input() assetType?: AssetType;
+	@Input() assetType?: AssetCategory;
 	@Input() asset?: IAssetContext;
 
 	constructor(

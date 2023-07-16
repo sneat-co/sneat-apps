@@ -1,7 +1,7 @@
 import { TeamType } from '@sneat/core';
 import { ContactRole } from './contact-roles';
 
-export {MemberType} from '@sneat/auth-models';
+export { MemberType } from '@sneat/auth-models';
 export type MembersVisibility = 'private' | 'protected' | 'public';
 export type WeekdayCode2 = 'mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su';
 export type RepeatsWeek = 'week-1st' | 'week-2nd' | 'week-3d' | 'week-4th' | 'week-last';
@@ -51,16 +51,32 @@ export type LiabilityServiceType =
 	| VehicleServiceType
 	;
 export type ServiceCategory = 'service' | 'tax';
-export type AssetType =
+export type AssetCategory =
 	'undefined'
 	| 'real_estate'
 	| 'vehicle'
 	| 'document'
 	| 'debt'
 	| 'misc';
+
+export type AssetVehicleType =
+	'aircraft' |
+	'bicycle' |
+	'boat' |
+	'bus' |
+	'car' |
+	'helicopter' |
+	'motorcycle' |
+	'truck' |
+	'van'
+	;
+export type AssetRealEstateType = 'house' | 'apartment' | 'land';
+
+export type AssetType = AssetVehicleType | AssetRealEstateType;
+
 export type Period = 'day' | 'week' | 'month' | 'quarter' | 'year';
-export type VehicleType = 'car' | 'motorcycle' | 'boat';
 export type FuelType = 'petrol' | 'diesel' | 'battery' | 'hydrogen';
+
 export type CommuneItemCounter =
 	'activities'
 	| 'assets'
@@ -75,5 +91,14 @@ export type CommuneItemCounter =
 	| 'todos'
 	| 'upcomings';
 
-export type ContactToMemberRelation = 'undefined' | 'parent' | 'mother' | 'father' | 'sibling' | 'childminder' | 'friend' | 'child';
+export type ContactToMemberRelation =
+	'undefined'
+	| 'parent'
+	| 'mother'
+	| 'father'
+	| 'sibling'
+	| 'childminder'
+	| 'friend'
+	| 'child';
+
 export type ContactToAssetRelation = ContactRole;

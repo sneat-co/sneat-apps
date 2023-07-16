@@ -4,9 +4,9 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title
-			*ngIf="asset?.brief && asset?.brief?.type !== 'vehicle' else titleNoAsset">{{asset?.brief?.title}}</ion-title>
+			*ngIf="asset?.brief && asset?.brief?.category !== 'vehicle' else titleNoAsset">{{asset?.brief?.title}}</ion-title>
 		<ng-template #titleNoAsset>
-			<ng-container [ngSwitch]="asset?.dto?.type">
+			<ng-container [ngSwitch]="asset?.dto?.category">
 				<ion-title *ngSwitchCase="'vehicle'">Vehicle</ion-title>
 				<ion-title *ngSwitchCase="'real_estate'">Property</ion-title>
 				<ion-title *ngSwitchDefault>Asset</ion-title>
@@ -30,7 +30,7 @@
 	<!--	<app-real-estate-location [asset]="asset"-->
 	<!--														*ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
 
-	<sneat-vehicle-card *ngIf="asset?.brief?.type === 'vehicle'" [asset]="asset">></sneat-vehicle-card>
+	<sneat-vehicle-card *ngIf="asset?.brief?.category === 'vehicle'" [asset]="asset">></sneat-vehicle-card>
 
 	<!--		<sneat-asset-dates *ngIf="asset" [asset]="asset.dto"></sneat-asset-dates>-->
 
@@ -57,7 +57,7 @@
 				<!--					<ion-label>Insurer</ion-label>-->
 				<!--				</ion-item>-->
 				<!--			</ng-container>-->
-				<ng-container *ngIf="asset?.brief && asset?.brief?.type === 'real_estate'">
+				<ng-container *ngIf="asset?.brief && asset?.brief?.category === 'real_estate'">
 					<ion-item detail tappable>
 						<ion-label>Gardener</ion-label>
 					</ion-item>
@@ -134,7 +134,7 @@
 
 	</ion-card>
 
-	<ion-card *ngIf="asset?.brief?.type === 'vehicle'">
+	<ion-card *ngIf="asset?.brief?.category === 'vehicle'">
 		<ion-item color="light">
 			<ion-label>Special offers</ion-label>
 		</ion-item>

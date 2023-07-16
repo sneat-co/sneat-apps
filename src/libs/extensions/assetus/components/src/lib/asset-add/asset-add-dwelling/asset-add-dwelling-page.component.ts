@@ -45,7 +45,7 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 
 		const request: ICreateAssetRequest = {
 			teamID: this.team?.id,
-			type: 'real_estate',
+			category: 'real_estate',
 			title: this.titleForm.controls['title'].value,
 			// address: this.form.controls['address'].value,
 		};

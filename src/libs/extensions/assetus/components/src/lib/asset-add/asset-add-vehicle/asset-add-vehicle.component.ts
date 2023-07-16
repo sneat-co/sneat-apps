@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ISelectItem } from '@sneat/components';
-import { carMakes, IMake, IModel, IVehicle, VehicleType } from '@sneat/dto';
+import { AssetVehicleType, carMakes, IMake, IModel, IVehicle } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
@@ -17,7 +17,7 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 
 	@Input() override team?: ITeamContext;
 
-	vehicleType?: VehicleType;
+	vehicleType?: AssetVehicleType;
 	vehicleTypes: ISelectItem[] = [
 		{ id: 'car', title: 'Car', iconName: 'car-outline' },
 		{ id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline' },
@@ -64,7 +64,7 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 		console.log('makeChanged', event, this.make);
 		const make = carMakes[this.make];
 		if (!make) {
-			console.log('make not found by id: ' + this.make)
+			console.log('make not found by id: ' + this.make);
 			this.models = [];
 			return;
 		}
@@ -95,37 +95,36 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 		}
 		this.isSubmitting = true;
 		const title = `${this.make} ${this.model} ${this.engine}`;
-		const vehicle: IVehicle = {
-			make: this.make,
-			model: this.model,
-		};
 		const request: ICreateAssetRequest = {
-			type: 'vehicle',
+			category: 'vehicle',
 			teamID: this.team?.id,
-			subType: this.vehicleType,
+			type: this.vehicleType,
 			countryID: this.countryIso2,
 			title,
 			regNumber: this.regNumber,
-			vehicle,
+			make: this.make,
+			model: this.model,
 		};
 		if (this.yearOfBuild) {
 			request.yearOfBuild = new Date(this.yearOfBuild).getFullYear();
 		}
-		if (this.vin) {
-			vehicle.vin = this.vin;
-		}
-		if (this.countryIso2) {
-			request.countryID = this.countryIso2;
-		}
-		if (this.taxExpires) {
-			vehicle.taxExpires = this.taxExpires;
-		}
-		if (this.nctExpires) {
-			vehicle.nctExpires = this.nctExpires;
-		}
-		if (this.nextServiceDue) {
-			vehicle.nextServiceDue = this.nextServiceDue;
-		}
+
+		// if (this.vin) {
+		// 	vehicle.vin = this.vin;
+		// }
+		// if (this.countryIso2) {
+		// 	request.countryID = this.countryIso2;
+		// }
+		// if (this.taxExpires) {
+		// 	vehicle.taxExpires = this.taxExpires;
+		// }
+		// if (this.nctExpires) {
+		// 	vehicle.nctExpires = this.nctExpires;
+		// }
+		// if (this.nextServiceDue) {
+		// 	vehicle.nextServiceDue = this.nextServiceDue;
+		// }
+
 		// tslint:disable-next-line:no-this-assignment
 		// const { engine } = this;
 		// if (engine) {

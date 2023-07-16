@@ -1,7 +1,14 @@
 import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
-import { AssetType, CountryId, FuelType, LiabilityServiceType, VehicleType } from './types';
+import {
+	AssetCategory,
+	AssetType,
+	AssetVehicleType,
+	CountryId,
+	FuelType,
+	LiabilityServiceType,
+} from './types';
 
 export interface AssetLiabilityInfo {
 	id: string;
@@ -13,15 +20,17 @@ export interface AssetLiabilityInfo {
 }
 
 export interface ISubAssetInfo extends ITitledRecord {
-	type: AssetType;
+	type: AssetCategory;
 	countryId?: CountryId;
 	subType: string;
 	expires?: string; // ISO date string 'YYYY-MM-DD'
 }
 
 export interface IAssetBase extends ITitled {
-	type: AssetType;
-	subType?: string; // E.g. subcategory - for example for documents could be: passport, visa, etc.
+	category: AssetCategory;
+	type: AssetType; // E.g. subcategory - for example for documents could be: passport, visa, etc.
+	make?: string;
+	model?: string;
 	regNumber?: string;
 }
 
@@ -41,7 +50,7 @@ export interface IAssetMain extends IAssetBase {
 
 export interface IAssetDto extends IAssetMain, IDemoRecord, ITotalsHolder {
 	teamID?: string;
-	parentCategoryID?: AssetType;
+	parentCategoryID?: AssetCategory;
 	sameAssetID?: string; // A link to realtor's or tenant's asset ID
 	groupId?: string; // TODO: document what it is
 	subAssets?: ISubAssetInfo[];
@@ -57,13 +66,11 @@ export interface IDwelling {
 }
 
 export interface IVehicle {
-	make: string;
-	model: string;
 	engine?: string;
 	engineCC?: number;
 	fuelType?: FuelType;
 	vin?: string;
-	vehicleType?: VehicleType;
+	vehicleType?: AssetVehicleType;
 	number?: string;
 	nctExpires?: string;     // ISO date string 'YYYY-MM-DD'
 	nctExpiresTaskId?: string;
@@ -74,7 +81,7 @@ export interface IVehicle {
 }
 
 export interface IAssetType extends ITitledRecord {
-	id: AssetType;
+	id: AssetCategory;
 	iconName?: string;
 	order?: number;
 	desc?: string;
@@ -90,7 +97,7 @@ export interface IAssetDtoGroup extends IWithTeamIDs, ITitledRecord, ITotalsHold
 	id: string;
 	order: number;
 	desc?: string;
-	categoryId?: AssetType;
+	categoryId?: AssetCategory;
 	numberOf?: IAssetDtoGroupCounts;
 }
 
