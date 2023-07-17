@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ISelectItem } from '@sneat/components';
-import { AssetVehicleType, carMakes, IMake, IModel, IVehicle } from '@sneat/dto';
+import { AssetVehicleType, carMakes, IMake, IModel } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
