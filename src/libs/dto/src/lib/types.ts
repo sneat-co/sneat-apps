@@ -75,7 +75,10 @@ export type AssetRealEstateType = 'house' | 'apartment' | 'land';
 export type AssetType = AssetVehicleType | AssetRealEstateType;
 
 export type Period = 'day' | 'week' | 'month' | 'quarter' | 'year';
-export type FuelType = 'petrol' | 'diesel' | 'battery' | 'hydrogen';
+
+export type EngineType = 'combustion' | 'electric';
+
+export type FuelType = '' | 'petrol' | 'diesel' | 'li-ion' | 'li-po' | 'hydrogen';
 
 export type CommuneItemCounter =
 	'activities'

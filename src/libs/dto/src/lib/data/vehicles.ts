@@ -1,15 +1,18 @@
-import { FuelType } from '../types';
+import { EngineType, FuelType } from '../types';
 
 export interface Engine {
-	fuel: FuelType;
 	title: string;
-	cc?: number;
+	engineType?: EngineType;
+	engineFuel: FuelType;
+	engineCC?: number;
+	engineKW?: number;
+	engineNM?: number;
 }
 
 export const engines: Engine[] = [
-	{title: 'Petrol 1L', cc: 999, fuel: 'petrol'},
-	{title: 'Petrol 1.6L', cc: 1599, fuel: 'petrol'},
-	{title: 'Diesel 2L', cc: 1999, fuel: 'diesel'},
+	{ title: 'Petrol 1L', engineCC: 999, engineFuel: 'petrol' },
+	{ title: 'Petrol 1.6L', engineCC: 1599, engineFuel: 'petrol' },
+	{ title: 'Diesel 2L', engineCC: 1999, engineFuel: 'diesel' },
 ];
 
 export interface IMake {

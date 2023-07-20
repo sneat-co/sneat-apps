@@ -18,7 +18,7 @@ import {
 } from '../sneat-auth-state-service';
 import { IUserRecord } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { BehaviorSubject, ReplaySubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { IInitUserRecordRequest, UserRecordService } from './user-record.service';
 
 export interface ISneatUserState extends ISneatAuthState {
@@ -72,6 +72,9 @@ export class SneatUserService {
 		return this.$userTitle;
 	}
 
+	public setUserCountry(countryID: string): Observable<void> {
+		return this.sneatApiService.post('users/set_user_country', { countryID });
+	}
 
 	public onUserSignedIn(authState: ISneatAuthState): void {
 		console.log('onUserSignedIn()', authState);
@@ -102,7 +105,7 @@ export class SneatUserService {
 		console.log('SneatUserService: Loading user record...');
 		onSnapshot(userDocRef, {
 			next: (userDocSnapshot) => {
-				this.userDocChanged(userDocSnapshot, authState)
+				this.userDocChanged(userDocSnapshot, authState);
 			},
 			error: this.errorLogger.logErrorHandler('SneatUserService failed to get user record'),
 		});

@@ -1,6 +1,7 @@
 <sneat-select-from-list
+	[value]="country || ''"
 	[isFilterable]="true"
-	filterLabel="Country"
+	[filterLabel]="label"
 	[label]="label"
 	[items]="countries"
 	[(ngModel)]="country"

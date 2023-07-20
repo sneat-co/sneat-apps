@@ -8,7 +8,7 @@ import { IAssetBrief, IAssetDto } from '@sneat/dto';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
-import { ICreateAssetRequest } from './asset-service.dto';
+import { ICreateAssetRequestBase } from './asset-service.dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -34,7 +34,7 @@ export class AssetService {
 			.delete<void>('assets/delete_asset', request);
 	}
 
-	public createAsset(team: ITeamContext, request: ICreateAssetRequest): Observable<IAssetContext> {
+	public createAsset(team: ITeamContext, request: ICreateAssetRequestBase): Observable<IAssetContext> {
 		console.log(`AssetService.createAsset()`, request);
 		return this.teamItemService.createTeamItem<IAssetBrief, IAssetDto>(
 			'assets/create_asset', team, request);

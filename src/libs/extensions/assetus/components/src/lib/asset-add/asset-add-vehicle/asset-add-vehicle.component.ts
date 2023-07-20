@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ISelectItem } from '@sneat/components';
-import { AssetVehicleType, carMakes, IMake, IModel } from '@sneat/dto';
+import { AssetVehicleType, IVehicleAssetContext } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../asset-service';
-import { ICreateAssetRequest } from '../../asset-service.dto';
+import { ICreateVehicleAssetRequest } from '../../asset-service.dto';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
@@ -13,7 +13,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	templateUrl: './asset-add-vehicle.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class AssetAddVehicleComponent extends AddAssetBaseComponent {
+export class AssetAddVehicleComponent extends AddAssetBaseComponent implements OnChanges {
 
 	@Input() override team?: ITeamContext;
 
@@ -25,59 +25,54 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 		{ id: 'boat', title: 'Boat', iconName: 'boat-outline' },
 	];
 
+	public asset?: IVehicleAssetContext;
+
 	public countryIso2 = 'IE';
 	public regNumber = '';
 	public vin = '';
 	public yearOfBuild = '';
-	public makes: IMake[] = [{ id: 'audi', title: 'Audi' }, { id: 'bmw', title: 'BMW' }];
-	public make = '';
-	public model = '';
+	// public make = '';
+	// public model = '';
 	public engine = '';
-	public models: IModel[] = [{ id: 'A4', title: 'A4' }, { id: 'A6', title: 'A6' }];
 	public engines?: string[];
 
 	public nctExpires = '';       // ISO date string 'YYYY-MM-DD'
 	public taxExpires = '';      // ISO date string 'YYYY-MM-DD'
 	public nextServiceDue = '';  // ISO date string 'YYYY-MM-DD'
 
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['team'] && this.team) {
+			const a: IVehicleAssetContext = this.asset
+				?? { id: '', team: this.team ?? { id: '' }, dto: { category: 'vehicle', type: this.vehicleType, title: '' } };
+			this.asset = { ...a, team: this.team };
+		}
+	}
+
 	constructor(
 		teamParams: TeamComponentBaseParams,
 		assetService: AssetService,
 	) {
 		super(teamParams, assetService);
-		this.makes = Object.keys(carMakes).map(id => ({ id, title: id }));
 	}
 
 
 	onVehicleTypeChanged(): void {
-		this.make = '';
-		this.model = '';
+		if (this.asset?.dto) {
+			this.asset = {
+				...this.asset, dto: {
+					...this.asset.dto,
+					type: this.vehicleType,
+					make: '',
+					model: '',
+				},
+			};
+		}
 	}
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	formatDate(value?: string | string[] | null): string {
 		return value && !Array.isArray(value) ? format(parseISO(value), 'dd MMMM yyyy') : '';
-	}
-
-	makeChanged(event: Event): void {
-		console.log('makeChanged', event, this.make);
-		const make = carMakes[this.make];
-		if (!make) {
-			console.log('make not found by id: ' + this.make);
-			this.models = [];
-			return;
-		}
-		this.models = make.models.map(v => ({ id: v.model, title: v.model }));
-	}
-
-	modelChanged(): void {
-		const make = carMakes[this.make];
-		const model = make.models.find(v => v.model === this.model);
-		if (!model) {
-			throw new Error('model not found');
-		}
-		this.engines = model.engines.map(e => e.title);
 	}
 
 	submitVehicleForm(): void {
@@ -87,23 +82,14 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent {
 		if (!this.vehicleType) {
 			throw 'no vehicleType';
 		}
-		if (!this.make) {
-			throw 'no make';
-		}
-		if (!this.model) {
-			throw 'no model';
-		}
 		this.isSubmitting = true;
-		const title = `${this.make} ${this.model} ${this.engine}`;
-		const request: ICreateAssetRequest = {
+		const request: ICreateVehicleAssetRequest = {
 			category: 'vehicle',
 			teamID: this.team?.id,
 			type: this.vehicleType,
 			countryID: this.countryIso2,
-			title,
+			title: '',
 			regNumber: this.regNumber,
-			make: this.make,
-			model: this.model,
 		};
 		if (this.yearOfBuild) {
 			request.yearOfBuild = new Date(this.yearOfBuild).getFullYear();

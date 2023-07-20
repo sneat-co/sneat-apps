@@ -1,11 +1,12 @@
 import { INavContext } from '@sneat/core';
+import { ITeamItemContext } from '@sneat/team/models';
 import { IContact2Asset } from './dto-contact2';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
 import {
 	AssetCategory,
 	AssetType,
 	AssetVehicleType,
-	CountryId,
+	CountryId, EngineType,
 	FuelType,
 	LiabilityServiceType,
 } from './types';
@@ -28,7 +29,7 @@ export interface ISubAssetInfo extends ITitledRecord {
 
 export interface IAssetBase extends ITitled {
 	category: AssetCategory;
-	type: AssetType; // E.g. subcategory - for example for documents could be: passport, visa, etc.
+	type?: AssetType; // E.g. subcategory - for example for documents could be: passport, visa, etc.
 	make?: string;
 	model?: string;
 	regNumber?: string;
@@ -65,12 +66,18 @@ export interface IDwelling {
 	rent?: 'landlord' | 'tenant';
 }
 
-export interface IVehicle {
-	engine?: string;
+
+export interface IEngine {
+	engineType?: EngineType;
+	engineFuel?: FuelType;
 	engineCC?: number;
-	fuelType?: FuelType;
+	engineKW?: number;
+	engineNM?: number;
+	engineSerialNumber?: string;
+}
+
+export interface IVehicleData extends IEngine {
 	vin?: string;
-	vehicleType?: AssetVehicleType;
 	number?: string;
 	nctExpires?: string;     // ISO date string 'YYYY-MM-DD'
 	nctExpiresTaskId?: string;
@@ -79,6 +86,12 @@ export interface IVehicle {
 	nextServiceDue?: string; // ISO date string 'YYYY-MM-DD'
 	nextServiceDueTaskId?: string;
 }
+
+export interface IVehicleAssetDto extends IAssetDto, IVehicleData {
+	//
+}
+
+export type IVehicleAssetContext<Dto extends IVehicleAssetDto = IVehicleAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 
 export interface IAssetType extends ITitledRecord {
 	id: AssetCategory;

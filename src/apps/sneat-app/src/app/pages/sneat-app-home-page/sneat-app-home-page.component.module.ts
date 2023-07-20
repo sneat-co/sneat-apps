@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { UserCountryComponent } from '@sneat/components';
 import { TeamsListModule } from '@sneat/team/components';
 import { ForEducatorsComponent } from './for-educators.component';
 import { ForFamiliesComponent } from './for-families.component';
@@ -20,13 +21,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		TeamsListModule,
-	],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    TeamsListModule,
+    UserCountryComponent,
+  ],
 	declarations: [
 		SneatAppHomePageComponent,
 		ForTeamTypeCardComponent,

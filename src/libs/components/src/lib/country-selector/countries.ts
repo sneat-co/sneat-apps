@@ -18,4 +18,6 @@ export const countriesByID: { [id: string]: ICountry } = {
 	'US': { id: 'US', title: 'United States Of America', emoji: '🇺🇸' },
 };
 
+export const unknownCountry: ICountry = { id: '--', title: 'Unknown', emoji: '🏳️' };
+
 export const countries: ICountry[] = Object.values(countriesByID);

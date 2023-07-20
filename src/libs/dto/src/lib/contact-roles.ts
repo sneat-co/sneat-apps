@@ -1,10 +1,12 @@
-export type ContactRoleEmployee = 'employee';
-export type ContactRoleInsurer = 'insurer';
-export type ContactRoleFriend = 'friend';
-export type ContactRoleDriver = 'driver';
-export type ContactRoleLocation = 'location';
+export const ContactRoleEmployee = 'employee';
+export const ContactRoleInsurer = 'insurer';
+export const ContactRoleFriend = 'friend';
+// export type ContactRoleFriend = 'friend';
+export const ContactRoleParentOfFriend = 'parent_of_friend';
+export const ContactRoleDriver = 'driver';
+export const ContactRoleLocation = 'location';
 export type ContactRoleDwellingRelated =
-	ContactRoleInsurer
+	typeof ContactRoleInsurer
 	| 'cleaner'
 	| 'gardener'
 	| 'plumber'
@@ -13,13 +15,13 @@ export type ContactRoleDwellingRelated =
 	| 'landlord'
 	| 'tenant'
 	| 'realtor';
-export type ContactRoleVehicle = ContactRoleInsurer | 'mechanic' | 'electrician' | 'handyman' | ContactRoleDriver;
+export type ContactRoleVehicle = typeof ContactRoleInsurer | 'mechanic' | 'electrician' | 'handyman' | typeof ContactRoleDriver;
 export type ContactRoleMedRelated = 'GP' | 'med_specialist'
-export type ContactRoleFamilyRelated = ContactRoleFriend;
-export type ContactRoleWorkRelated = ContactRoleEmployee | 'client' | 'supplier';
-export type ContactRoleKidRelated = ContactRoleFriend | 'teacher' | 'babysitter';
-export type ContactRoleShip = 'ship';
-export type ContactRoleLogistSubContact = ContactRoleShip | ContactRoleLocation;
+export type ContactRoleFamilyRelated = typeof ContactRoleFriend;
+export type ContactRoleWorkRelated = typeof ContactRoleEmployee | 'client' | 'supplier';
+export type ContactRoleKidRelated = typeof ContactRoleFriend | typeof ContactRoleParentOfFriend | 'teacher' | 'babysitter';
+export const ContactRoleShip = 'ship';
+export type ContactRoleLogistSubContact = typeof ContactRoleShip | typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
 
 export type LogistOrderContactRole =

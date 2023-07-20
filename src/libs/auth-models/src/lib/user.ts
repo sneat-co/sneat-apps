@@ -5,6 +5,7 @@ import { IAvatar } from './avatar';
 // Use IRecord<IUserRecord> to keep record paired with ID
 export interface IUserRecord {
 	readonly title: string;
+	readonly countryID?: string;
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly avatar?: IAvatar;

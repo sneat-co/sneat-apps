@@ -27,6 +27,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 	@Input() items$: Observable<ISelectItem[]> = NEVER;
 	@Input() radioSlot: 'start' | 'end' = 'start';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
+	@Input() canAdd = false;
 	// @Input() ngModel?: string;
 	// @Output() readonly ngModelChange = new EventEmitter<string>();
 
@@ -81,13 +82,13 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 		this.onChange(this.value);
 	}
 
-	onSelectChanged(event: Event): void {
+	protected onSelectChanged(event: Event): void {
 		console.log('SelectFromListComponent.onSelectChanged()', event);
 		// this.value = (event as CustomEvent).detail['value'] as string;
 		this.onChange(this.value);
 	}
 
-	onChange = (v: unknown) => console.log('SelectFromListComponent.onChange()', v);
+	protected onChange = (v: unknown) => console.log('SelectFromListComponent.onChange()', v);
 
 	onTouched: () => void = () => void 0;
 
@@ -107,18 +108,24 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 		this.value = obj as string;
 	}
 
-	onFilterChanged(): void {
+	protected onFilterChanged(): void {
 		console.log('SelectFromListComponent.onFilterChanged()', this.filter);
 		this.applyFilter();
 	}
 
-	clearFilter(): void {
+	protected clearFilter(): void {
 		this.filter = '';
 		this.applyFilter();
 	}
 
-	deselect(): void {
+	protected deselect(): void {
 		this.value = '';
+		this.onChange(this.value);
+	}
+
+	protected onAdd(event: Event): void {
+		event.preventDefault();
+		this.value = this.filter;
 		this.onChange(this.value);
 	}
 

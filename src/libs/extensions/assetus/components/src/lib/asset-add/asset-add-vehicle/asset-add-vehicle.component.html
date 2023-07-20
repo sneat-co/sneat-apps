@@ -1,45 +1,14 @@
-<h1 class="ion-padding">New vehicle</h1>
+<h1 class="ion-padding" *ngIf="!vehicleType">New vehicle</h1>
+<h1 class="ion-padding" *ngIf="vehicleType">New {{vehicleType}}</h1>
 
-<ion-card>
+<ion-card *ngIf="!vehicleType">
 	<sneat-select-from-list [(ngModel)]="vehicleType" (ngModelChange)="onVehicleTypeChanged()" [isFilterable]="false" title="Type" [items]="vehicleTypes"></sneat-select-from-list>
-	<sneat-select-from-list *ngIf="vehicleType" [(ngModel)]="make" (ngModelChange)="makeChanged($event)" [isFilterable]="true" title="Make" [items]="makes"></sneat-select-from-list>
-	<sneat-select-from-list *ngIf="make" [(ngModel)]="model" (ngModelChange)="modelChanged()" [isFilterable]="true" title="Model" [items]="models"></sneat-select-from-list>
 </ion-card>
 
-<ion-card *ngIf="model">
-	<ion-list>
-		<sneat-country-selector [country]="country" label="Country of registration"></sneat-country-selector>
-		<ion-item>
-			<ion-label style="font-weight: bold">Registration #</ion-label>
-			<ion-input [(ngModel)]="regNumber" style="text-transform: uppercase;" placeholder="###-CO-#####"></ion-input>
-			<!--            <ion-button fill="outline">Validate</ion-button>-->
-		</ion-item>
-		<!--        <ion-item>-->
-		<!--            <ion-label title="Vehicle Identification Number">-->
-		<!--                VIN-->
-		<!--                &lt;!&ndash;<sup style="color: #aaa;">optional</sup>&ndash;&gt;-->
-		<!--            </ion-label>-->
-		<!--            <ion-input [(ngModel)]="vin" style="text-transform: uppercase;"></ion-input>-->
-		<!--        </ion-item>-->
-		<ion-item>
-			<ion-label>VIN</ion-label>
-			<ion-input type="text" [(ngModel)]="vin"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label>Year produced</ion-label>
-			<ion-input type="text" [(ngModel)]="yearOfBuild"></ion-input>
-		</ion-item>
-		<!--	<ion-item>-->
-		<!--		<ion-label>Engine</ion-label>-->
-		<!--		<ion-select [(ngModel)]="engine" [disabled]="!model" interface="popover">-->
-		<!--			<ion-select-option *ngFor="let v of engines; trackBy: id">{{v}}</ion-select-option>-->
-		<!--			<ion-select-option value="-">Other</ion-select-option>-->
-		<!--		</ion-select>-->
-		<!--	</ion-item>-->
-	</ion-list>
-</ion-card>
 
-<ion-card *ngIf="model">
+<sneat-vehicle-card *ngIf="vehicleType" [team]="team" [(asset)]="asset"></sneat-vehicle-card>
+
+<ion-card *ngIf="asset?.dto?.model">
 	<ion-item>
 		<ion-label position="stacked">Taxed till</ion-label>
 		<!-- Datetime in popover with input -->
@@ -70,7 +39,7 @@
 
 </ion-card>
 
-<ion-button [color]="model ? 'primary' : 'light'" size="large" class="ion-margin" expand="full" [disabled]="!team || isSubmitting" (click)="submitVehicleForm()">
+<ion-button [color]="asset?.dto?.model ? 'primary' : 'light'" size="large" class="ion-margin" expand="full" [disabled]="!team || isSubmitting" (click)="submitVehicleForm()">
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
 	<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>
 </ion-button>

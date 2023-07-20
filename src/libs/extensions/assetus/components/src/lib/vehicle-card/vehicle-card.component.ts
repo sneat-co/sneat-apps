@@ -1,7 +1,7 @@
 //tslint:disable:no-unsafe-any
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { carMakes, IVehicle } from '@sneat/dto';
-import { IAssetContext } from '@sneat/team/models';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AssetVehicleType, carMakes, IVehicleAssetContext } from '@sneat/dto';
+import { IAssetContext, ITeamContext } from '@sneat/team/models';
 
 // import {carMakes} from 'sneat-shared/models/data/vehicles';
 
@@ -9,10 +9,15 @@ import { IAssetContext } from '@sneat/team/models';
 	selector: 'sneat-vehicle-card',
 	templateUrl: './vehicle-card.component.html',
 })
-export class VehicleCardComponent {
+export class VehicleCardComponent implements OnChanges {
 
-	@Input() asset?: IAssetContext;
-	@Input() vehicle?: IVehicle;
+	@Input() team?: ITeamContext;
+	@Input() asset?: IVehicleAssetContext;
+	@Output() assetChange = new EventEmitter<IAssetContext>();
+
+	get vehicleType(): AssetVehicleType | undefined {
+		return this.asset?.dto?.type as AssetVehicleType;
+	}
 
 	regNumber = '';
 	makeVal?: string;
@@ -23,8 +28,6 @@ export class VehicleCardComponent {
 	engine = '';
 	yearBuildNumber?: number;
 	yearBuildVal?: string;
-	// tslint:disable-next-line:no-any
-	@Output() changed = new EventEmitter<{ field: string; value: unknown }>();
 
 	@Input() set make(v: string) {
 		this.makeVal = v;
@@ -41,6 +44,14 @@ export class VehicleCardComponent {
 		this.yearBuildVal = v.toString();
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['team'] && this.team?.dto?.countryID && this.asset?.dto && !this.asset.dto.countryID) {
+			this.asset = { ...this.asset, dto: {...this.asset.dto, countryID: this.team.dto.countryID} };
+			this.assetChange.emit(this.asset);
+		}
+	}
+
+
 	// tslint:disable-next-line:prefer-function-over-method
 	editRegNumber(): void {
 		alert('Editing registration number is not implemented yet');
@@ -54,21 +65,26 @@ export class VehicleCardComponent {
 		alert('Editing make&model is not implemented yet');
 	}
 
-	makeChanged(): void {
-		this.changed.emit({ field: 'make', value: this.makeVal });
+	countryChanged(value: string): void {
+		if (this.asset?.dto) {
+			this.asset = { ...this.asset, dto: { ...this.asset.dto, countryID: value } };
+			this.assetChange.emit(this.asset);
+		}
+	}
+
+	makeChanged(value: string): void {
+		this.makeVal = value;
+		if (this.asset?.dto) {
+			this.asset = { ...this.asset, dto: { ...this.asset.dto, make: value } };
+			this.assetChange.emit(this.asset);
+		}
 		this.populateModels();
 	}
 
-	modelChanged(): void {
-		this.changed.emit({ field: 'model', value: this.makeVal });
-	}
-
-	yearChanged(): void {
-		if (this.yearBuildVal) {
-			this.yearBuildNumber = new Date(this.yearBuildVal).getFullYear();
-			this.changed.emit({ field: 'yearBuild', value: this.yearBuildVal });
-		} else {
-			this.yearBuildNumber = undefined;
+	modelChanged(value: string): void {
+		if (this.asset?.dto) {
+			this.asset = { ...this.asset, dto: { ...this.asset.dto, model: value } };
+			this.assetChange.emit(this.asset);
 		}
 	}
 

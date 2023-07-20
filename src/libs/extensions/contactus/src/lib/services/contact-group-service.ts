@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { INavContext } from '@sneat/core';
-import { ContactRole } from '@sneat/dto';
+import { ContactRole, ContactRoleParentOfFriend } from '@sneat/dto';
 import { Observable, of } from 'rxjs';
 
 
@@ -46,7 +46,8 @@ const
 		emoji: '👧',
 		finder: 'babysitters.express',
 	},
-	contactTypeFriendOfKid: IContactRoleBrief = { id: 'friend', title: 'Friends', emoji: '🚸' },
+	contactTypeFriendOfKid: IContactRoleBrief = { id: 'friend', title: 'Friend', emoji: '🚸' },
+	contactTypeParentOfFriend: IContactRoleBrief = { id: ContactRoleParentOfFriend, title: 'Parent of a friend', emoji: '🚸' },
 	// contactTypeGP: IContactRoleBrief = { id: 'gp', title: 'Family doctor', emoji: '👩‍⚕️', finder: 'gpconnect.app' },
 	contactTypePlumber: IContactRoleBrief = { id: 'plumber', title: 'Plumber', emoji: '🚽', finder: 'plumbers.express' },
 	contactTypeElectrician: IContactRoleBrief = {
@@ -75,6 +76,7 @@ export const defaultFamilyContactGroups: IContactGroup[] = [
 			contactTypeTeacher,
 			contactTypeBabysitter,
 			contactTypeFriendOfKid,
+			contactTypeParentOfFriend,
 		],
 	},
 	{

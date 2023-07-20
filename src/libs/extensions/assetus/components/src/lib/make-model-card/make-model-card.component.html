@@ -1,0 +1,26 @@
+<ion-card>
+	<ion-item *ngIf="make && !isKnownMake()">
+		<ion-input label="Make" [(ngModel)]="make" placeholder="Make"></ion-input>
+	</ion-item>
+	<sneat-select-from-list *ngIf="!make || isKnownMake()"
+													label="Make"
+													filterLabel="Make"
+													[(ngModel)]="make"
+													(ngModelChange)="onMakeChanged($event)"
+													[isFilterable]="true"
+													[items]="makes"
+													[canAdd]="true"
+	></sneat-select-from-list>
+	<ion-item *ngIf="make && !isKnownModel()">
+		<ion-input label="Model" [(ngModel)]="model" placeholder="Make"></ion-input>
+	</ion-item>
+	<sneat-select-from-list *ngIf="make && !model || isKnownModel()"
+													[(ngModel)]="model"
+													label="Model"
+													filterLabel="Model"
+													(ngModelChange)="onModelChanged($event)"
+													[isFilterable]="true"
+													[items]="models"
+													[canAdd]="true"
+	></sneat-select-from-list>
+</ion-card>

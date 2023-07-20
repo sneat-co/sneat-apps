@@ -1,7 +1,7 @@
 <ion-item *ngIf="value" class="sneat-no-end-padding">
 	<ion-label color="medium">{{label}}</ion-label>
 	<ion-select *ngIf="value" interface="popover" [(ngModel)]="value" (ionChange)="onSelectChanged($event)">
-		<ion-select-option *ngFor="let item of items" [value]="item.id">
+		<ion-select-option *ngFor="let item of items || []" [value]="item.id">
 			{{item.emoji}}
 			{{item.title}}
 		</ion-select-option>
@@ -21,9 +21,18 @@
 <!--</ion-item>-->
 <ng-container *ngIf="!value">
 	<ion-item *ngIf="isFilterable" class="sneat-tiny-end-padding">
-		<ion-label *ngIf="filterLabel" color="medium">{{filterLabel}}</ion-label>
-		<ion-input [(ngModel)]="filter" placeholder="filter" (ionInput)="onFilterChanged()"></ion-input>
+		<!--		<ion-label *ngIf="filterLabel" color="medium">{{filterLabel}}</ion-label>-->
+		<ion-input color="medium" [(ngModel)]="filter" [label]="filterLabel" placeholder="filter"
+							 (ionInput)="onFilterChanged()"></ion-input>
 		<ion-buttons slot="end" *ngIf="!!filter">
+			<ion-button *ngIf="canAdd && hiddenCount"
+									title="Use this"
+									color="primary"
+									(click)="onAdd($event)"
+			>
+				<ion-icon name="add-outline"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
 			<ion-button (click)="clearFilter()" title="Clear filter">
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
@@ -33,19 +42,19 @@
 		<ion-label>No items yet.</ion-label>
 	</ion-item-divider>
 	<ion-radio-group [(ngModel)]="value" (ionChange)="onRadioChanged($event)">
-<!--		<ion-item *ngIf="other === 'top'">-->
-<!--			<ion-radio slot="start" [value]="'other'"></ion-radio>-->
-<!--			<ion-label>OTHER</ion-label>-->
-<!--		</ion-item>-->
-		<ion-item *ngFor="let item of displayItems; trackBy: id" button (click)="select(item)">
+		<!--		<ion-item *ngIf="other === 'top'">-->
+		<!--			<ion-radio slot="start" [value]="'other'"></ion-radio>-->
+		<!--			<ion-label>OTHER</ion-label>-->
+		<!--		</ion-item>-->
+		<ion-item *ngFor="let item of displayItems || []; trackBy: id" button (click)="select(item)">
 			<ion-icon slot="start" *ngIf="item.iconName" [name]="item.iconName"></ion-icon>
-<!--			<ion-radio [slot]="radioSlot" [value]="item.id"></ion-radio>-->
+			<!--			<ion-radio [slot]="radioSlot" [value]="item.id"></ion-radio>-->
 			<ion-label>{{item.emoji}} {{item.title}}</ion-label>
 		</ion-item>
-<!--		<ion-item *ngIf="other === 'bottom'">-->
-<!--			<ion-radio slot="start" [value]="'other'"></ion-radio>-->
-<!--			<ion-label>OTHER</ion-label>-->
-<!--		</ion-item>-->
+		<!--		<ion-item *ngIf="other === 'bottom'">-->
+		<!--			<ion-radio slot="start" [value]="'other'"></ion-radio>-->
+		<!--			<ion-label>OTHER</ion-label>-->
+		<!--		</ion-item>-->
 	</ion-radio-group>
 	<ion-item-divider *ngIf="hiddenCount">
 		<ion-label color="medium">{{hiddenCount}} out of {{items?.length}} items are hidden by filter</ion-label>
