@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { ISneatAuthState, SneatAuthStateService } from '../sneat-auth-state-service';
+import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { gitHash } from '../app-version/git-version';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MenuController, NavController } from '@ionic/angular';
-import { gitHash } from '@sneat/components';
 
 @Component({
 	selector: 'sneat-auth-menu-item',
@@ -10,7 +10,7 @@ import { gitHash } from '@sneat/components';
 })
 export class AuthMenuItemComponent {
 
-	protected readonly gitHash = gitHash;
+	protected readonly gitHash2 = gitHash;
 
 	public authState?: ISneatAuthState;
 

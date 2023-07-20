@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SneatAuthServicesModule } from '../sneat-auth-services.module';
+import { SneatAuthServicesModule } from '@sneat/auth';
 import { AuthMenuItemComponent } from './auth-menu-item.component';
 
 @NgModule({

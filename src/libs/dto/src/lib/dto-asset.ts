@@ -1,5 +1,4 @@
 import { INavContext } from '@sneat/core';
-import { ITeamItemContext } from '@sneat/team/models';
 import { IContact2Asset } from './dto-contact2';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
 import {

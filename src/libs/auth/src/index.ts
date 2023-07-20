@@ -1,5 +1,3 @@
-export * from './lib/auth-menu-item/auth-menu-item.component';
-export * from './lib/auth-menu-item/auth-menu-item.module';
 export * from './lib/login-required-component/login-required.component';
 export * from './lib/login-required-component/login-required-component.module';
 export * from './lib/login-required-service.service';

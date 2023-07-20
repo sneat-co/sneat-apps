@@ -3,10 +3,10 @@ import { init, instrumentAngularRouting } from '@sentry/angular';
 import { BrowserTracing } from '@sentry/tracing';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
-import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
+import { SneatAuthServicesModule } from '@sneat/auth';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { CommunesUiModule } from '@sneat/communes/ui';
-import { AppVersionComponent } from '@sneat/components';
+import { AppVersionComponent, AuthMenuItemModule } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
