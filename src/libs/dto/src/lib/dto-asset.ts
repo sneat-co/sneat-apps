@@ -5,7 +5,6 @@ import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from
 import {
 	AssetCategory,
 	AssetType,
-	AssetVehicleType,
 	CountryId, EngineType,
 	FuelType,
 	LiabilityServiceType,
@@ -90,8 +89,6 @@ export interface IVehicleData extends IEngine {
 export interface IVehicleAssetDto extends IAssetDto, IVehicleData {
 	//
 }
-
-export type IVehicleAssetContext<Dto extends IVehicleAssetDto = IVehicleAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 
 export interface IAssetType extends ITitledRecord {
 	id: AssetCategory;

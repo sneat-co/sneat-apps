@@ -16,7 +16,7 @@ import {
 	IPersonBrief,
 	IShortTeamInfo,
 	ITeamBrief,
-	ITeamDto,
+	ITeamDto, IVehicleAssetDto,
 	ListType,
 } from '@sneat/dto';
 import { ITeamItemContext, teamItemContextFromBrief } from './team-item-context';
@@ -38,6 +38,7 @@ export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
 export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;
 export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
 export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
+export type IVehicleAssetContext<Dto extends IVehicleAssetDto = IVehicleAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IDocumentContext = ITeamItemContext<IDocumentBrief, IDocumentDto>;
 
 export interface IContactContext extends ITeamItemContext<IContactBrief, IContactDto> {

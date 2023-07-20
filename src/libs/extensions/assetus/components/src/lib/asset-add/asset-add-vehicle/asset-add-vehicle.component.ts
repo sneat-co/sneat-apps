@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ISelectItem } from '@sneat/components';
-import { AssetVehicleType, IVehicleAssetContext } from '@sneat/dto';
+import { AssetVehicleType } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../asset-service';
 import { ICreateVehicleAssetRequest } from '../../asset-service.dto';
