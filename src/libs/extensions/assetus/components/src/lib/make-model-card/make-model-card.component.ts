@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SelectFromListComponent, SelectFromListModule } from '@sneat/components';
-import { AssetVehicleType, carMakes, IMake, IModel } from '@sneat/dto';
+import { AssetType, carMakes, IMake, IModel } from '@sneat/dto';
 
 @Component({
 	standalone: true,
@@ -17,7 +17,7 @@ import { AssetVehicleType, carMakes, IMake, IModel } from '@sneat/dto';
 	],
 })
 export class MakeModelCardComponent {
-	@Input() vehicleType?: AssetVehicleType;
+	@Input() assetType?: AssetType;
 	@Input() make?: string;
 	@Input() model?: string;
 
@@ -42,7 +42,7 @@ export class MakeModelCardComponent {
 		console.log('makeChanged', event, this.make);
 		const make = this.make ? carMakes[this.make] : undefined;
 		if (make) {
-			this.models = make.models.map(v => ({ id: v.model, title: v.model }));
+			this.models = make.models.map(v => ({ id: v.id, title: v.id }));
 		} else {
 			console.log('make not found by id: ' + this.make);
 			this.models = [];

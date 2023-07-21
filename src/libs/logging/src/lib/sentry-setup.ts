@@ -1,5 +1,5 @@
 import { Provider, ErrorHandler, APP_INITIALIZER } from '@angular/core';
-import { createErrorHandler, TraceService, init } from '@sentry/angular';
+import { createErrorHandler, TraceService, init } from '@sentry/angular-ivy';
 import { Router } from '@angular/router';
 
 export function initSentry(): void {
@@ -8,6 +8,7 @@ export function initSentry(): void {
 		dsn: 'https://2cdec43e82bc42e98821becbfe251778@o355000.ingest.sentry.io/6395241',
 	});
 }
+
 export const sneatSentryProviders: Provider[] = [
 	{
 		provide: ErrorHandler,

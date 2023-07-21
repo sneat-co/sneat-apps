@@ -15,10 +15,6 @@ export class VehicleCardComponent implements OnChanges {
 	@Input() asset?: IVehicleAssetContext;
 	@Output() assetChange = new EventEmitter<IAssetContext>();
 
-	get vehicleType(): AssetVehicleType | undefined {
-		return this.asset?.dto?.type as AssetVehicleType;
-	}
-
 	regNumber = '';
 	makeVal?: string;
 	modelVal?: string | undefined;
@@ -57,14 +53,6 @@ export class VehicleCardComponent implements OnChanges {
 		alert('Editing registration number is not implemented yet');
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
-	editMakeModel(event?: Event): void {
-		if (event) {
-			event.stopPropagation();
-		}
-		alert('Editing make&model is not implemented yet');
-	}
-
 	countryChanged(value: string): void {
 		if (this.asset?.dto) {
 			this.asset = { ...this.asset, dto: { ...this.asset.dto, countryID: value } };
@@ -95,7 +83,7 @@ export class VehicleCardComponent implements OnChanges {
 			return;
 		}
 		const make = carMakes[this.makeVal];
-		this.models = make.models.map(v => v.model);
+		this.models = make.models.map(v => v.id);
 		if (this.modelVal && this.models.indexOf(this.modelVal) <= 0) {
 			this.modelVal = undefined;
 		}

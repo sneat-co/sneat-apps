@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
-import { IAssetType } from '@sneat/dto';
+import { IAssetCategory } from '@sneat/dto';
 import { AssetService, AssetsListComponentModule } from '@sneat/extensions/assetus/components';
 import { TeamComponentBaseParams, TeamCoreComponentsModule } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
@@ -27,7 +27,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 
 	public vehicles?: IAssetContext[];
 
-	assetTypes: IAssetType[] = [
+	assetTypes: IAssetCategory[] = [
 		{ id: 'vehicle', title: 'Vehicles', iconName: 'car-outline' },
 		{ id: 'real_estate', title: 'Real estates', iconName: 'home-outline' },
 	];

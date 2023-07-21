@@ -31,7 +31,9 @@ export const redirectToLoginIfNotSignedIn: AuthPipe = map((user) => {
 	return url;
 });
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*/ {
 	constructor(
 		private readonly router: Router,

@@ -5,7 +5,9 @@ const tokenKey = (domain: string, projectId: string) => `private/tokens/${domain
 
 export const canceledByUser = 'canceled by user';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class PrivateTokenStoreService {
 	public getPrivateToken(
 		domain: string,

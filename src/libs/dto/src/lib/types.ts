@@ -108,19 +108,19 @@ export type ContactToAssetRelation = ContactRole;
 
 export const
 	AssetPossessionUndisclosed = 'undisclosed',
-	AssetPossessionOwned = 'owned',
-	AssetPossessionRented = 'rented',
-	AssetPossessionLeased = 'leased';
+	AssetPossessionOwning = 'owning',
+	AssetPossessionRenting = 'renting',
+	AssetPossessionLeasing = 'leasing';
 
 export type AssetPossession =
 	| typeof AssetPossessionUndisclosed
-	| typeof AssetPossessionOwned
-	| typeof AssetPossessionRented
-	| typeof AssetPossessionLeased;
+	| typeof AssetPossessionOwning
+	| typeof AssetPossessionRenting
+	| typeof AssetPossessionLeasing;
 
 export const AssetPossessions: AssetPossession[] = [
-	AssetPossessionOwned,
-	AssetPossessionRented,
-	AssetPossessionLeased,
+	AssetPossessionOwning,
+	AssetPossessionRenting,
+	AssetPossessionLeasing,
 	AssetPossessionUndisclosed,
 ];

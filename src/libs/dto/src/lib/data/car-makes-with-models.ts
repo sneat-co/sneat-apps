@@ -1,94 +1,98 @@
 import { Engine, engines } from './vehicles';
 
+export interface IModel {
+	id: string;
+	yearMin?: number;
+	yearMax?: string;
+	engines: Engine[];
+}
+
+export interface IMake {
+	yearMin?: number;
+	yearMax?: string;
+	models: IModel[];
+}
+
 export const carMakes: {
-	[make: string]: {
-		yearMin?: number;
-		yearMax?: string;
-		models: {
-			model: string;
-			yearMin?: number;
-			yearMax?: string;
-			engines: Engine[];
-		}[];
-	};
+	[make: string]: IMake;
 } = {
 	Audi: {
 		models: [
-			{ model: 'A1', engines },
-			{ model: 'A2', engines },
-			{ model: 'A3', engines },
-			{ model: 'A4', engines },
-			{ model: 'A5', engines },
-			{ model: 'A6', engines },
-			{ model: 'A7', engines },
-			{ model: 'A8', engines },
-			{ model: 'S4', engines },
-			{ model: 'S6', engines },
-			{ model: 'S8', engines },
-			{ model: 'Q3', engines },
-			{ model: 'Q5', engines },
-			{ model: 'Q7', engines },
+			{ id: 'A1', engines },
+			{ id: 'A2', engines },
+			{ id: 'A3', engines },
+			{ id: 'A4', engines },
+			{ id: 'A5', engines },
+			{ id: 'A6', engines },
+			{ id: 'A7', engines },
+			{ id: 'A8', engines },
+			{ id: 'S4', engines },
+			{ id: 'S6', engines },
+			{ id: 'S8', engines },
+			{ id: 'Q3', engines },
+			{ id: 'Q5', engines },
+			{ id: 'Q7', engines },
 		],
 	},
 	BMW: {
 		models: [
-			{ model: '1 Series', engines },
-			{ model: '2 Series', engines },
-			{ model: '3 Series Saloon', engines },
-			{ model: '3 Series Touring', engines },
-			{ model: '3 Series Gran Tourismo', engines },
-			{ model: '4 Series', engines },
-			{ model: '5 Series', engines },
-			{ model: '6 Series', engines },
-			{ model: '7 Series', engines },
-			{ model: '8 Series', engines },
-			{ model: 'i3', engines },
-			{ model: 'i8 Coupe', engines },
-			{ model: 'i8 Roadster', engines },
-			{ model: 'X1', engines },
-			{ model: 'X2', engines },
-			{ model: 'X3', engines },
-			{ model: 'X4', engines },
-			{ model: 'X5', engines },
-			{ model: 'X6', engines },
-			{ model: 'X7', engines },
-			{ model: 'z3', engines },
-			{ model: 'z4', engines },
-			{ model: 'z5', engines },
+			{ id: '1 Series', engines },
+			{ id: '2 Series', engines },
+			{ id: '3 Series Saloon', engines },
+			{ id: '3 Series Touring', engines },
+			{ id: '3 Series Gran Tourismo', engines },
+			{ id: '4 Series', engines },
+			{ id: '5 Series', engines },
+			{ id: '6 Series', engines },
+			{ id: '7 Series', engines },
+			{ id: '8 Series', engines },
+			{ id: 'i3', engines },
+			{ id: 'i8 Coupe', engines },
+			{ id: 'i8 Roadster', engines },
+			{ id: 'X1', engines },
+			{ id: 'X2', engines },
+			{ id: 'X3', engines },
+			{ id: 'X4', engines },
+			{ id: 'X5', engines },
+			{ id: 'X6', engines },
+			{ id: 'X7', engines },
+			{ id: 'z3', engines },
+			{ id: 'z4', engines },
+			{ id: 'z5', engines },
 		],
 	},
 	Toyota: {
 		models: [
-			{ model: 'Avensis', engines },
-			{ model: 'Auris', engines },
-			{ model: 'Aygo', engines },
-			{ model: 'GR', engines },
-			{ model: 'GT86', engines },
-			{ model: 'C-HR', engines },
-			{ model: 'Camry', engines },
-			{ model: 'Corolla', engines },
-			{ model: 'Hilux', engines },
-			{ model: 'Prius', engines },
-			{ model: 'Prius+', engines },
-			{ model: 'Proace', engines },
-			{ model: 'Proace Verso', engines },
-			{ model: 'RAV4', engines },
-			{ model: 'Yaris', engines },
+			{ id: 'Avensis', engines },
+			{ id: 'Auris', engines },
+			{ id: 'Aygo', engines },
+			{ id: 'GR', engines },
+			{ id: 'GT86', engines },
+			{ id: 'C-HR', engines },
+			{ id: 'Camry', engines },
+			{ id: 'Corolla', engines },
+			{ id: 'Hilux', engines },
+			{ id: 'Prius', engines },
+			{ id: 'Prius+', engines },
+			{ id: 'Proace', engines },
+			{ id: 'Proace Verso', engines },
+			{ id: 'RAV4', engines },
+			{ id: 'Yaris', engines },
 		],
 	},
 	Tesla: {
 		yearMin: 2001,
 		models: [
-			{ model: 'Model 3', yearMin: 2017, engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
-			{ model: 'Model S', engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
-			{ model: 'Model X', engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
+			{ id: 'Model 3', yearMin: 2017, engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
+			{ id: 'Model S', engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
+			{ id: 'Model X', engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
 		],
 	},
 	Hyundai: {
 		yearMin: 1900,
 		models: [
-			{ model: 'Kona', engines: [] },
-			{ model: 'Tuscan', engines: [] },
+			{ id: 'Kona', engines: [] },
+			{ id: 'Tuscan', engines: [] },
 		],
 	},
 };

@@ -30,7 +30,9 @@
 		}
 
 		let tgParam = getQueryParam('telegram');
-		console.log('Telegram parameter: ', tgParam);
+		if (tgParam) {
+			console.log('Telegram parameter: ', tgParam);
+		}
 		if (tgParam === 'menu') {
 			const head = document.getElementsByTagName('head')[0];
 			const script = document.createElement('script');

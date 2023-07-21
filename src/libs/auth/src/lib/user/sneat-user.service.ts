@@ -112,7 +112,7 @@ export class SneatUserService {
 	}
 
 	private onAuthStateChanged = (authState: ISneatAuthState): void => {
-		console.log('SneatUserService => authState changed:', authState);
+		// console.log('SneatUserService => authState changed:', authState);
 		if (authState.user) {
 			this.onUserSignedIn(authState);
 		} else {

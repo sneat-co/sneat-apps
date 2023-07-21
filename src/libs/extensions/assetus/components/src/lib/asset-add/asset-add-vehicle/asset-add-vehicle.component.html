@@ -2,7 +2,8 @@
 <h1 class="ion-padding" *ngIf="vehicleType">New {{vehicleType}}</h1>
 
 <ion-card *ngIf="!vehicleType">
-	<sneat-select-from-list [(ngModel)]="vehicleType" (ngModelChange)="onVehicleTypeChanged()" [isFilterable]="false" title="Type" [items]="vehicleTypes"></sneat-select-from-list>
+	<sneat-select-from-list [(ngModel)]="vehicleType" (ngModelChange)="onVehicleTypeChanged()" [isFilterable]="false"
+													title="Type" [items]="vehicleTypes"></sneat-select-from-list>
 </ion-card>
 
 
@@ -10,9 +11,8 @@
 
 <ion-card *ngIf="asset?.dto?.model">
 	<ion-item>
-		<ion-label position="stacked">Taxed till</ion-label>
 		<!-- Datetime in popover with input -->
-		<ion-input [value]="taxExpires"></ion-input>
+		<ion-input label="Taxed till" [value]="taxExpires"></ion-input>
 		<ion-buttons slot="end">
 			<ion-button fill="clear" id="open-date-input-2">
 				<ion-icon icon="calendar"></ion-icon>
@@ -39,7 +39,17 @@
 
 </ion-card>
 
-<ion-button [color]="asset?.dto?.model ? 'primary' : 'light'" size="large" class="ion-margin" expand="full" [disabled]="!team || isSubmitting" (click)="submitVehicleForm()">
+
+<ion-button *ngIf="asset?.dto?.model || asset?.dto?.regNumber"
+						[color]="asset?.dto?.model ? 'primary' : 'light'"
+						size="large"
+						class="ion-margin"
+						expand="full"
+						[disabled]="!team || isSubmitting"
+						(click)="submitVehicleForm()"
+>
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
 	<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>
 </ion-button>
+
+<div style="height: 300px"></div> <!--TODO: workaround for calendar overlap -->

@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { init, instrumentAngularRouting } from '@sentry/angular';
-import { BrowserTracing } from '@sentry/tracing';
+import { BrowserTracing } from '@sentry/browser';
+import { init, instrumentAngularRouting } from '@sentry/angular-ivy';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
-import { SneatAuthServicesModule } from '@sneat/auth';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { CommunesUiModule } from '@sneat/communes/ui';
 import { AppVersionComponent, AuthMenuItemModule } from '@sneat/components';
@@ -21,7 +20,9 @@ if (environment.production) {
 		dsn: 'https://2cdec43e82bc42e98821becbfe251778@o355000.ingest.sentry.io/6395241',
 		integrations: [
 			new BrowserTracing({
-				tracingOrigins: ['localhost', 'https://sneat.app'],
+				// shouldCreateSpanForRequest(url: string): boolean {
+				// 	return url.startsWith('https://sneat.app');
+				// },
 				routingInstrumentation: instrumentAngularRouting,
 			}),
 		],
@@ -46,7 +47,7 @@ const appInfo: IAppInfo = {
 		...SneatApplicationModule.defaultSneatApplicationImports(environment),
 		ImportFirebaseModules(environment.firebaseConfig),
 		AppVersionComponent,
-		SneatAuthServicesModule,
+		// SneatAuthServicesModule,
 		AuthMenuItemModule,
 		CommunesUiModule,
 		TeamsMenuComponentModule,

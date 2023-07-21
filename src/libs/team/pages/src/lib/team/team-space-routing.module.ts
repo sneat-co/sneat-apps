@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SneatAuthServicesModule } from '@sneat/auth';
 import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { ContactusRoutingModule } from '@sneat/extensions/contactus';
@@ -65,7 +64,6 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		CommonModule,
 		IonicModule,
-		SneatAuthServicesModule,
 		AssetusRoutingModule,
 		ContactusRoutingModule,
 	],

@@ -16,16 +16,16 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 export class AssetAddVehicleComponent extends AddAssetBaseComponent implements OnChanges {
 
 	@Input() override team?: ITeamContext;
+	@Input() public asset?: IVehicleAssetContext;
 
 	vehicleType?: AssetVehicleType;
 	vehicleTypes: ISelectItem[] = [
 		{ id: 'car', title: 'Car', iconName: 'car-outline' },
 		{ id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline' },
-		{ id: 'bicycle', title: 'Bicycle', iconName: 'bicycle-outline' },
+		// { id: 'bicycle', title: 'Bicycle', iconName: 'bicycle-outline' }, this is a sport asset
 		{ id: 'boat', title: 'Boat', iconName: 'boat-outline' },
 	];
 
-	public asset?: IVehicleAssetContext;
 
 	public countryIso2 = 'IE';
 	public regNumber = '';

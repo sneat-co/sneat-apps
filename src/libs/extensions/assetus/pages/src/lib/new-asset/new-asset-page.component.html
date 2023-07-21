@@ -17,16 +17,14 @@
 
 <ion-content class="cardy">
 	<ion-card *ngIf="!category">
-		<ion-card-header>
-			<ion-card-title>Select asset kind</ion-card-title>
-		</ion-card-header>
+		<ion-item color="light" lines="full">
+			<ion-label>Select asset kind</ion-label>
+		</ion-item>
 		<ion-list *ngIf="!category">
-			<ion-item button *ngFor="let category of categories; trackBy: id" (click)="selectCategory(category)">
-				<ion-radio slot="start"></ion-radio>
-				<ion-label>
-					<h2>{{category.title}}</h2>
-					<p *ngIf="category.desc">{{category.desc}}</p>
-				</ion-label>
+			<ion-item [lines]="last ? 'none' : 'full'" button *ngFor="let c of categories || []; trackBy: id; let last = last" (click)="selectCategory(c)">
+				<ion-radio slot="start" labelPlacement="end">
+					{{c.title}}
+				</ion-radio>
 			</ion-item>
 		</ion-list>
 	</ion-card>

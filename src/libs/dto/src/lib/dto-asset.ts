@@ -90,7 +90,7 @@ export interface IVehicleAssetDto extends IAssetDto, IVehicleData {
 	//
 }
 
-export interface IAssetType extends ITitledRecord {
+export interface IAssetCategory extends ITitledRecord {
 	id: AssetCategory;
 	iconName?: string;
 	order?: number;

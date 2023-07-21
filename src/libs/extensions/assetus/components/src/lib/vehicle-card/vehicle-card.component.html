@@ -7,39 +7,23 @@
 		<ion-item>
 			<ion-input label="Registration #" [(ngModel)]="regNumber" placeholder="###-CO-#####"></ion-input>
 			<!--            <ion-button fill="outline">Validate</ion-button>-->
+			<ion-buttons slot="end">
+				<ion-button [disabled]="!asset?.dto?.regNumber" color="primary">Look up</ion-button>
+			</ion-buttons>
 		</ion-item>
-		<!--        <ion-item>-->
-		<!--            <ion-label title="Vehicle Identification Number">-->
-		<!--                VIN-->
-		<!--                &lt;!&ndash;<sup style="color: #aaa;">optional</sup>&ndash;&gt;-->
-		<!--            </ion-label>-->
-		<!--            <ion-input [(ngModel)]="vin" style="text-transform: uppercase;"></ion-input>-->
-		<!--        </ion-item>-->
-		<ion-item>
-			<ion-input label="VIN" type="text" [ngModel]="asset?.dto?.vin"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-input label="Year produced" type="text" [ngModel]="asset?.dto?.yearOfBuild"></ion-input>
-		</ion-item>
-		<!--	<ion-item>-->
-		<!--		<ion-label>Engine</ion-label>-->
-		<!--		<ion-select [(ngModel)]="engine" [disabled]="!model" interface="popover">-->
-		<!--			<ion-select-option *ngFor="let v of engines; trackBy: id">{{v}}</ion-select-option>-->
-		<!--			<ion-select-option value="-">Other</ion-select-option>-->
-		<!--		</ion-select>-->
-		<!--	</ion-item>-->
 	</ion-list>
 </ion-card>
 
-<sneat-asset-possession-card [(asset)]="asset"></sneat-asset-possession-card>
-
 <sneat-make-model-card *ngIf="asset?.dto?.type && asset?.dto?.countryID"
-											 [vehicleType]="vehicleType"
+											 [assetType]="asset?.dto?.type"
 											 [make]="asset?.dto?.make"
 											 [model]="asset?.dto?.model"
 											 (makeChange)="makeChanged($event)"
 											 (modelChange)="modelChanged($event)"
 ></sneat-make-model-card>
+
+<sneat-asset-possession-card *ngIf="asset?.dto?.model" [(asset)]="asset"></sneat-asset-possession-card>
+
 
 <ion-card *ngIf="asset?.dto?.model">
 
@@ -55,35 +39,6 @@
 		<ion-label>Reg #</ion-label>
 		<ion-input *ngIf="regNumber" [(ngModel)]="regNumber" style="font-weight: bold;" readonly></ion-input>
 	</ion-item>
-	<ion-item tappable (click)="editMakeModel()" class="with-buttons">
-		<ion-label *ngIf="!asset?.brief?.make" color="danger">Make & model</ion-label>
-		<ion-label *ngIf="asset?.brief?.make && !asset?.brief?.model" color="danger">{{makeVal}} - set model</ion-label>
-		<ion-label *ngIf="asset?.brief?.make && asset?.brief?.make">{{asset?.brief?.make}}
-			- {{asset?.brief?.model}}</ion-label>
-		<ion-buttons slot="end" *ngIf="!asset?.brief?.make || !asset?.brief?.make">
-			<ion-button color="medium" (click)="editMakeModel($event)">
-				<ion-icon name="create"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<!--	<ion-item *ngIf="yearBuildNumber && engine">-->
-	<!--		<ion-label>{{yearBuildNumber}} - {{engine}}</ion-label>-->
-	<!--	</ion-item>-->
-	<!--	<ion-item *ngIf="!yearBuildNumber || !engine">-->
-	<!--		<ion-label>Year</ion-label>-->
-	<!--		<ion-datetime pickerFormat="YYYY" displayFormat="YYYY"-->
-	<!--									[(ngModel)]="yearBuildVal"-->
-	<!--									(ionChange)="yearChanged()"></ion-datetime>-->
-	<!--	</ion-item>-->
-
-
-	<ion-item *ngIf="!engine">
-		<ion-label>Engine</ion-label>
-		<ion-input *ngIf="engine" [value]="engine" readonly></ion-input>
-		<ion-select *ngIf="!engine" [(ngModel)]="engine" interface="popover">
-			<ion-select-option>1.6L petrol</ion-select-option>
-		</ion-select>
-	</ion-item>
 </ion-card>
 
 <ion-card *ngIf="asset?.dto?.model">
@@ -94,3 +49,4 @@
 
 	</sneat-vehicle-engine>
 </ion-card>
+

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ErrorLogger } from './error-logger.interface';
+import { ErrorLogger } from './interfaces';
 import { ErrorLoggerService } from './error-logger.service';
 
 @NgModule({
