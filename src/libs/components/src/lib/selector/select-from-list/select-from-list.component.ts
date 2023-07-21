@@ -3,7 +3,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
+import { IonInput, IonSelect } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NEVER, Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from '..';
@@ -25,7 +25,7 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 	@Input() isLoading?: boolean;
 	@Input() items?: ISelectItem[];
 	@Input() items$: Observable<ISelectItem[]> = NEVER;
-	@Input() radioSlot: 'start' | 'end' = 'start';
+	@Input() radioSlot?: 'start' | 'end';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
 	@Input() canAdd = false;
 	// @Input() ngModel?: string;
@@ -36,6 +36,8 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 	@Output() changed = new EventEmitter<string>();
 
 	@ViewChild(IonInput, { static: false }) addInput?: IonInput;
+	@ViewChild('filterInput', { static: false }) filterInput?: IonInput;
+	@ViewChild('selectInput', { static: false }) selectInput?: IonSelect;
 
 	protected displayItems?: ISelectItem[];
 	protected hiddenCount = 0;
@@ -49,6 +51,14 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
+	}
+
+	public focus(): void {
+		console.log('SelectFromListComponent.focus()');
+		setTimeout(() => {
+			console.log('SelectFromListComponent.focus(), filterInput:', this.filterInput);
+			this.filterInput?.setFocus().catch(this.errorLogger.logErrorHandler('Failed to set focus to filter input'));
+		}, 100);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -88,7 +98,11 @@ export class SelectFromListComponent implements ControlValueAccessor, OnChanges,
 		this.onChange(this.value);
 	}
 
-	protected onChange = (v: unknown) => console.log('SelectFromListComponent.onChange()', v);
+	protected onChange = (v: unknown) => {
+		console.log('SelectFromListComponent.onChange()', v);
+		this.value = v as string;
+		this.changed.emit(this.value);
+	};
 
 	onTouched: () => void = () => void 0;
 

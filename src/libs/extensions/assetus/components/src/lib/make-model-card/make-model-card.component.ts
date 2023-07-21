@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SelectFromListModule } from '@sneat/components';
+import { SelectFromListComponent, SelectFromListModule } from '@sneat/components';
 import { AssetVehicleType, carMakes, IMake, IModel } from '@sneat/dto';
 
 @Component({
@@ -24,6 +24,7 @@ export class MakeModelCardComponent {
 	@Output() makeChange = new EventEmitter<string>();
 	@Output() modelChange = new EventEmitter<string>();
 
+	@ViewChild('modelSelector', { static: false }) modelSelector?: SelectFromListComponent;
 
 	public makes: IMake[] = Object.keys(carMakes).map(id => ({ id, title: id }));
 	public models: IModel[] = [{ id: 'A4', title: 'A4' }, { id: 'A6', title: 'A6' }];
@@ -51,6 +52,7 @@ export class MakeModelCardComponent {
 			this.model = '';
 		}
 		this.onModelChanged(event);
+		this.modelSelector?.focus();
 	}
 
 	protected onModelChanged(event: Event): void {

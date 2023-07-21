@@ -5,8 +5,7 @@
 														(countryChange)="countryChanged($event)"
 		></sneat-country-selector>
 		<ion-item>
-			<ion-label style="font-weight: bold">Registration #</ion-label>
-			<ion-input [(ngModel)]="regNumber" style="text-transform: uppercase;" placeholder="###-CO-#####"></ion-input>
+			<ion-input label="Registration #" [(ngModel)]="regNumber" placeholder="###-CO-#####"></ion-input>
 			<!--            <ion-button fill="outline">Validate</ion-button>-->
 		</ion-item>
 		<!--        <ion-item>-->
@@ -17,12 +16,10 @@
 		<!--            <ion-input [(ngModel)]="vin" style="text-transform: uppercase;"></ion-input>-->
 		<!--        </ion-item>-->
 		<ion-item>
-			<ion-label>VIN</ion-label>
-			<ion-input type="text" [ngModel]="asset?.dto?.vin"></ion-input>
+			<ion-input label="VIN" type="text" [ngModel]="asset?.dto?.vin"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label>Year produced</ion-label>
-			<ion-input type="text" [ngModel]="asset?.dto?.yearOfBuild"></ion-input>
+			<ion-input label="Year produced" type="text" [ngModel]="asset?.dto?.yearOfBuild"></ion-input>
 		</ion-item>
 		<!--	<ion-item>-->
 		<!--		<ion-label>Engine</ion-label>-->
@@ -33,6 +30,8 @@
 		<!--	</ion-item>-->
 	</ion-list>
 </ion-card>
+
+<sneat-asset-possession-card [(asset)]="asset"></sneat-asset-possession-card>
 
 <sneat-make-model-card *ngIf="asset?.dto?.type && asset?.dto?.countryID"
 											 [vehicleType]="vehicleType"
