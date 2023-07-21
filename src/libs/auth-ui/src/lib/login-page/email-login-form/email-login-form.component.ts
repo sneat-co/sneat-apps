@@ -14,7 +14,7 @@ import { UserCredential, sendEmailVerification } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
 export type EmailFormSigningWith = 'email' | 'emailLink' | 'resetPassword';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, Auth } from 'firebase/auth';
 
 @Component({
 	selector: 'sneat-email-login-form',
@@ -61,6 +61,9 @@ export class EmailLoginFormComponent {
 		return i > 0 && i < email.length - 1;
 	}
 
+	public getFirebaseAuth(): Auth {
+		return this.afAuth as unknown as Auth; // TODO: pending https://github.com/angular/angularfire/pull/3402
+	}
 	public async signUp(): Promise<void> {
 		if (!this.firstName) {
 			// this.toaster.showToast('Full name is required');
@@ -96,7 +99,8 @@ export class EmailLoginFormComponent {
 		this.setSigningWith('email');
 		try {
 			// const auth = getAuth(getApp());
-			const userCredential = await createUserWithEmailAndPassword(this.afAuth, email, password);
+			const auth = this.getFirebaseAuth();
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 			this.sendVerificationEmail(userCredential);
 			userCredential.user
 				?.getIdToken()
@@ -152,7 +156,8 @@ export class EmailLoginFormComponent {
 		this.wrongPassword = false;
 		this.saveEmailForReuse();
 		// const auth = getAuth(getApp());
-		signInWithEmailAndPassword(this.afAuth, this.email, this.password)
+		const auth = this.getFirebaseAuth();
+		signInWithEmailAndPassword(auth, this.email, this.password)
 			.then((userCredential) => {
 				this.onLoggedIn(userCredential); // TODO: add analytics event
 			})
