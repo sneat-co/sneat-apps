@@ -5,7 +5,7 @@
 		</ion-card-title>
 	</ion-card-header>
 	<ion-card-content>
-		<ion-button [disabled]="saving" color="success" class="ion-padding-end" (click)="setCountry(ipCountryID)">
+		<ion-button [disabled]="saving" color="primary" class="ion-padding-end" (click)="setCountry(ipCountryID)">
 			<ion-icon name="checkmark-outline" slot="start"></ion-icon>
 			<ion-label style="text-transform: none"><b>Yes, my primary residence is in {{ipCountry.title}} {{ipCountry.emoji}}</b></ion-label>
 		</ion-button>
