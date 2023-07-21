@@ -105,3 +105,16 @@ export type ContactToMemberRelation =
 	| 'child';
 
 export type ContactToAssetRelation = ContactRole;
+
+export const
+	AssetPossessionUndisclosed = 'undisclosed',
+	AssetPossessionOwned = 'owned',
+	AssetPossessionRented = 'rented',
+	AssetPossessionLeased = 'leased';
+
+export type AssetPossession =
+	undefined
+	| typeof AssetPossessionUndisclosed
+	| typeof AssetPossessionOwned
+	| typeof AssetPossessionRented
+	| typeof AssetPossessionLeased;
