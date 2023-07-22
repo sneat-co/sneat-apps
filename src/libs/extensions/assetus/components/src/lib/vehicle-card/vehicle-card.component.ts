@@ -1,6 +1,6 @@
 //tslint:disable:no-unsafe-any
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AssetVehicleType, carMakes } from '@sneat/dto';
+import { carMakes } from '@sneat/dto';
 import { IAssetContext, ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
 
 // import {carMakes} from 'sneat-shared/models/data/vehicles';

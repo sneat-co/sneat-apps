@@ -5,7 +5,7 @@ import { IContact2Member } from '@sneat/dto';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
-import { memberContextFromBrief, TeamNavService, TeamService } from '@sneat/team/services';
+import { TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
 import { InviteModalComponent } from '../invite-modal/invite-modal.component';
 
