@@ -53,7 +53,7 @@
 				<ion-item-divider color="light">
 					<ion-label>{{group.emoji}}&nbsp;&nbsp;{{group.plural}}</ion-label>
 					<ion-buttons slot="end">
-						<ion-button *ngIf="group.addLabel" [title]="group.addLabel" (click)="goNew(group.id)">
+						<ion-button *ngIf="group.addLabel" [title]="group.addLabel" (click)="goNewMemberPage(group)">
 							<ion-icon name="add" slot="start"></ion-icon>
 							<ion-label>Add</ion-label>
 						</ion-button>

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { TeamMemberType } from '@sneat/auth-models';
 import {
 	IContact2Member,
@@ -43,8 +43,18 @@ interface MembersGroup {
 export class MembersPageComponent extends MembersBasePage implements AfterViewInit {
 	private prevMembersCount?: number;
 	public contactsByMember: { [id: string]: IContact2Member[] } = {};
-	public readonly adults: MembersGroup = { id: MemberGroupTypeAdults, emoji: '🧓', plural: 'Adults', addLabel: 'Add adult' };
-	public readonly children: MembersGroup = { id: MemberGroupTypeKids, emoji: '🚸', plural: 'Children', addLabel: 'Add child' };
+	public readonly adults: MembersGroup = {
+		id: MemberGroupTypeAdults,
+		emoji: '🧓',
+		plural: 'Adults',
+		addLabel: 'Add adult',
+	};
+	public readonly children: MembersGroup = {
+		id: MemberGroupTypeKids,
+		emoji: '🚸',
+		plural: 'Children',
+		addLabel: 'Add child',
+	};
 	public readonly pets: MembersGroup = { id: MemberGroupTypePets, emoji: '🐕', plural: 'Pets', addLabel: 'Add pet' };
 	public readonly other: MembersGroup = { id: MemberGroupTypePets, emoji: '👻', plural: 'Other', addLabel: '' };
 	public memberGroups?: IMemberGroupContext[];
@@ -86,11 +96,16 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 			.catch(this.logErrorHandler('failed to navigate to members group page'));
 	}
 
-	public goNew(memberGroupID?: string): void {
+	protected goNewMemberPage(group?: MembersGroup): void {
+		const queryParams: Params | undefined = group ? { group: group.id } : undefined;
+		this.navigateForwardToTeamPage('new-member', { queryParams, state: { group } })
+			.catch(this.logErrorHandler('failed to navigate to new member page with age parameter'));
+	}
+
+	public goNew(): void {
 		switch (this.segment) {
 			case 'all':
-				this.navigateForwardToTeamPage('new-member', { queryParams: { ageGroup: memberGroupID } })
-					.catch(this.logErrorHandler('failed to navigate to new member page with age parameter'));
+				this.goNewMemberPage();
 				break;
 			case 'groups':
 				this.navigateForwardToTeamPage('new-group')
@@ -198,7 +213,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 				m.brief.groupIDs.forEach(groupID => {
 					let group = this.predefinedMemberGroups.find(g => g.id === groupID);
 					if (!group) {
-						group = {id: groupID, plural: groupID+'s', members: [], emoji: '', addLabel: 'Add member'};
+						group = { id: groupID, plural: groupID + 's', members: [], emoji: '', addLabel: 'Add member' };
 					}
 					if (!group.members) {
 						group.members = [m];
@@ -214,15 +229,15 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 					// 	this.membersByGroupId[groupID] = [m];
 					// }
 				});
-			// } else if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
-			// 	if (this.noGroupMembers) {
-			// 		this.noGroupMembers.push(m);
-			// 	}
+				// } else if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
+				// 	if (this.noGroupMembers) {
+				// 		this.noGroupMembers.push(m);
+				// 	}
 			}
 			if (!addedToGroup) {
 				this.other.members?.push(m);
 			}
 		});
-		this.predefinedMemberGroups = this.predefinedMemberGroups.map(g => ({...g, members: g.members || []}));
+		this.predefinedMemberGroups = this.predefinedMemberGroups.map(g => ({ ...g, members: g.members || [] }));
 	}
 }
