@@ -194,7 +194,6 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 			if (!this.team) {
 				throw new Error('!this.team');
 			}
-			console.log('member:', m);
 			if (m.brief?.groupIDs?.length) {
 				m.brief.groupIDs.forEach(groupID => {
 					let group = this.predefinedMemberGroups.find(g => g.id === groupID);
