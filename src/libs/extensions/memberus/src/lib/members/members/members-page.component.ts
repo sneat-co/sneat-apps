@@ -1,14 +1,22 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AgeGroup, IContact2Member, isTeamSupportsMemberGroups, MemberType } from '@sneat/dto';
+import { TeamMemberType } from '@sneat/auth-models';
+import {
+	IContact2Member,
+	isTeamSupportsMemberGroups,
+	MemberGroupTypeAdults,
+	MemberGroupTypeKids, MemberGroupTypePets,
+	MemberType,
+} from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, IMemberGroupContext } from '@sneat/team/models';
 import { memberContextFromBrief, MemberGroupService, MemberService } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../members-base-page';
 
-interface AgeGroupWithMembers {
-	readonly id: AgeGroup;
+interface MembersGroup {
+	readonly id: string;
+	readonly emoji: string;
 	readonly plural: string;
 	readonly addLabel: string;
 	members?: IMemberContext[];
@@ -35,20 +43,21 @@ interface AgeGroupWithMembers {
 export class MembersPageComponent extends MembersBasePage implements AfterViewInit {
 	private prevMembersCount?: number;
 	public contactsByMember: { [id: string]: IContact2Member[] } = {};
-	public readonly adults: AgeGroupWithMembers = {id: 'adult', plural: 'Adults', addLabel: 'Add adult'};
-	public readonly children: AgeGroupWithMembers = {id: 'child', plural: 'Children', addLabel: 'Add child'};
-	public readonly unknownAge: AgeGroupWithMembers = {id: 'unknown', plural: 'Other', addLabel: ''};
+	public readonly adults: MembersGroup = { id: MemberGroupTypeAdults, emoji: '🧓', plural: 'Adults', addLabel: 'Add adult' };
+	public readonly children: MembersGroup = { id: MemberGroupTypeKids, emoji: '🚸', plural: 'Children', addLabel: 'Add child' };
+	public readonly pets: MembersGroup = { id: MemberGroupTypePets, emoji: '🐕', plural: 'Pets', addLabel: 'Add pet' };
+	public readonly other: MembersGroup = { id: MemberGroupTypePets, emoji: '👻', plural: 'Other', addLabel: '' };
 	public memberGroups?: IMemberGroupContext[];
 	public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
 	public listMode: 'list' | 'cards' = 'list';
-	public membersByGroupId: { [id: string]: IMemberContext[] } = {};
-	public noGroupMembers?: IMemberContext[];
+	// public membersByGroupId: { [id: string]: IMemberContext[] } = {};
 
-	public readonly memberByAgeGroup: readonly AgeGroupWithMembers[] = [
+	protected predefinedMemberGroups: readonly MembersGroup[] = [
 		this.adults,
 		this.children,
-		this.unknownAge,
+		this.pets,
+		this.other,
 	];
 
 	readonly memberType: MemberType = 'member';
@@ -77,10 +86,10 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 			.catch(this.logErrorHandler('failed to navigate to members group page'));
 	}
 
-	public goNew(ageGroup?: AgeGroup): void {
+	public goNew(memberGroupID?: string): void {
 		switch (this.segment) {
 			case 'all':
-				this.navigateForwardToTeamPage('new-member', { queryParams: { ageGroup } })
+				this.navigateForwardToTeamPage('new-member', { queryParams: { ageGroup: memberGroupID } })
 					.catch(this.logErrorHandler('failed to navigate to new member page with age parameter'));
 				break;
 			case 'groups':
@@ -118,7 +127,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
-		this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
+		// this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
 
 		const team = this.team;
 
@@ -165,35 +174,56 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		console.log('MembersPageComponent.processMembers()', this.members);
 		this.adults.members = [];
 		this.children.members = [];
-		this.unknownAge.members = [];
+		this.other.members = [];
+		let addedToGroup = false;
 		this.members?.forEach(m => {
 			switch (m.brief?.ageGroup) {
 				case 'adult':
 					this.adults.members?.push(m);
+					addedToGroup = true;
 					break;
 				case 'child':
 					this.children.members?.push(m);
+					addedToGroup = true;
 					break;
-				default:
-					this.unknownAge.members?.push(m);
-					break;
+			}
+			if (m.dto?.type === TeamMemberType.pet) {
+				addedToGroup = true;
+				this.pets.members?.push(m);
 			}
 			if (!this.team) {
 				throw new Error('!this.team');
 			}
-			if (m.dto?.groupIDs?.length) {
-				m.dto.groupIDs.forEach(groupID => {
-					if (this.membersByGroupId[groupID]) {
-						this.membersByGroupId[groupID].push(m);
-					} else {
-						this.membersByGroupId[groupID] = [m];
+			console.log('member:', m);
+			if (m.brief?.groupIDs?.length) {
+				m.brief.groupIDs.forEach(groupID => {
+					let group = this.predefinedMemberGroups.find(g => g.id === groupID);
+					if (!group) {
+						group = {id: groupID, plural: groupID+'s', members: [], emoji: '', addLabel: 'Add member'};
 					}
+					if (!group.members) {
+						group.members = [m];
+					} else {
+						if (!group.members.find(m2 => m2.id === m.id)) {
+							group.members.push(m);
+						}
+					}
+					addedToGroup = true;
+					// if (this.membersByGroupId[groupID]) {
+					// 	this.membersByGroupId[groupID].push(m);
+					// } else {
+					// 	this.membersByGroupId[groupID] = [m];
+					// }
 				});
-			} else if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
-				if (this.noGroupMembers) {
-					this.noGroupMembers.push(m);
-				}
+			// } else if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
+			// 	if (this.noGroupMembers) {
+			// 		this.noGroupMembers.push(m);
+			// 	}
+			}
+			if (!addedToGroup) {
+				this.other.members?.push(m);
 			}
 		});
+		this.predefinedMemberGroups = this.predefinedMemberGroups.map(g => ({...g, members: g.members || []}));
 	}
 }

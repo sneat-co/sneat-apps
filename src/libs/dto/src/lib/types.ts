@@ -9,8 +9,31 @@ export type Repeats = 'UNKNOWN' | 'once' | 'weekly' | RepeatsWeek | 'fortnightly
 export type ActivityType = 'appointment' | 'school' | 'lesson' | 'todo'; // TODO: Is it same as HappeningKind?
 export type EventType = 'workshop' | 'fixture' | 'appointment';
 export type SettlementType = 'rural' | 'urban';
-export type AgeGroup = 'adult' | 'child' | 'undisclosed' | 'unknown';
-export type Gender = 'male' | 'female' | 'undisclosed' | 'other' | 'unknown';
+export type AgeGroupID = 'adult' | 'child' | 'pet' | 'undisclosed' | 'unknown';
+
+
+export const MemberGroupTypeAdults = 'adults';
+export const MemberGroupTypeKids = 'kids';
+export const MemberGroupTypePets = 'pets';
+
+export type MemberGroupType =
+	| typeof MemberGroupTypeAdults
+	| typeof MemberGroupTypeKids
+	| typeof MemberGroupTypePets;
+
+export const GenderUndisclosed = 'undisclosed';
+export const GenderUnknown = 'unknown';
+export const GenderMale = 'male';
+export const GenderFemale = 'female';
+export const GenderOther = 'other';
+
+export type Gender =
+	| typeof GenderUndisclosed
+	| typeof GenderUnknown
+	| typeof GenderMale
+	| typeof GenderFemale
+	| typeof GenderOther;
+
 export type Restriction = 'adults_only' | 'personal' | string;
 
 export type SneatRecordStatus = 'active' | 'archived' | 'deleted';

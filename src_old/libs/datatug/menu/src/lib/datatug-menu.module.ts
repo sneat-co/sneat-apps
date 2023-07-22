@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatAnalyticsModule } from '@sneat/analytics';
-import { AuthMenuItemModule, SneatAuthServicesModule } from '@sneat/auth';
+import { AuthMenuItemModule } from '@sneat/auth';
 import { DatatugComponentsProjectModule } from '@sneat/datatug/components/project';
 import { DatatugCoreModule } from '@sneat/datatug/core';
 import { NewProjectFormModule } from '@sneat/datatug/project';
@@ -30,7 +30,6 @@ import { MenuStoreSelectorComponent } from './menu-store-selector.component';
 		//
 		WormholeModule,
 		SneatAnalyticsModule,
-		SneatAuthServicesModule,
 		AuthMenuItemModule,
 		//
 		DatatugCoreModule,

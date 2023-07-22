@@ -16,19 +16,12 @@ export interface IUserRecord {
 export enum TeamMemberType {
 	creator = 'creator',
 	member = 'member',
-	child = 'child',
 	pet = 'pet',
 	pupil = 'pupil',
 	staff = 'staff',
 }
 
 export type MemberType = EnumAsUnionOfKeys<typeof TeamMemberType>;
-
-export const memberTypePlurals: { [id: string]: string } = {
-	'member': 'members',
-	'child': 'children',
-	'pet': 'pets',
-};
 
 export interface IUserTeamBrief {
 	readonly id: string;

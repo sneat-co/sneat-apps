@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { formNexInAnimation } from '@sneat/animations';
 import {
-	AgeGroup,
+	AgeGroupID,
 	FamilyMemberRelation,
 	ITitledRecord,
 	MemberRelationshipOther,
@@ -28,7 +28,7 @@ export class RelationshipFormComponent extends TeamRelatedFormComponent implemen
 	@Input() disabled = false;
 	@Input() team?: ITeamContext;
 	@Input() relationship?: string;
-	@Input() ageGroup?: AgeGroup;
+	@Input() ageGroup?: AgeGroupID;
 	@Output() readonly relationshipChange = new EventEmitter<string>();
 
 	public readonly label = 'Related to me as';

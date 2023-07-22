@@ -1,6 +1,10 @@
 import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
-import { AgeGroup, Gender } from './types';
+import { ContactRole } from './contact-roles';
+import { IAddress } from './dto-address';
+import { IContact2Asset, IContact2Member } from './dto-contact2';
+import { IPersonRecord } from './dto-models';
+import { AgeGroupID, Gender, MemberType } from './types';
 
 export interface IName {
 	readonly first?: string;
@@ -36,23 +40,38 @@ export interface IPhone {
 	readonly number: string;
 }
 
+export const
+	ContactTypePerson = 'person',
+	ContactTypeCompany = 'company',
+	ContactTypeLocation = 'location',
+	ContactTypeAnimal = 'animal';
 
-export interface IPersonBase {
+export type ContactType = MemberType
+	| typeof ContactTypePerson
+	| typeof ContactTypeCompany
+	| typeof ContactTypeLocation
+	| typeof ContactTypeAnimal;
+
+export interface IContactBase {
+	readonly type: ContactType;
 	readonly name?: IName;
 	readonly countryID?: string;
 	readonly title?: string;
 	readonly userID?: string;
 	readonly gender?: Gender;
-	readonly ageGroup?: AgeGroup;
+	readonly ageGroup?: AgeGroupID;
+	readonly address?: IAddress;
+	readonly roles?: readonly string[];
+	// title: string; // Mandatory title
 }
 
-export const emptyPersonBase: IPersonBase = { name: {} };
+export const emptyPersonBase: IContactBase = { type: '' as ContactType, name: {} };
 
-export interface IPersonBrief extends IPersonBase {
+export interface IPersonBrief extends IContactBase {
 	readonly id: string;
 }
 
-export interface IPerson extends IPersonBase {
+export interface IPerson extends IContactBase {
 	readonly email?: string; // TODO: Document how email is different from emails
 	readonly emails?: IEmail[];
 	readonly phone?: string; // TODO: Document how phone is different from phones
@@ -63,7 +82,7 @@ export interface IPerson extends IPersonBase {
 
 export interface IRelatedPerson extends IPerson {
 	readonly relationship?: string; // relative to current user
-	readonly roles?: string[]; // Either member roles or contact roles
+	// readonly roles?: string[]; // Either member roles or contact roles
 }
 
 // // Default value: 'optional'
@@ -90,7 +109,6 @@ export function isPersonReady(p: IPerson, requires: IPersonRequirements): boolea
 	return !isPersonNotReady(p, requires);
 }
 
-
 export function isRelatedPersonNotReady(p: IRelatedPerson, requires: IPersonRequirements): boolean {
 	return isPersonNotReady(p, requires) || !!requires.relatedAs?.required && !p.relationship;
 }
@@ -105,4 +123,25 @@ export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
 	const v2 = { ...excludeUndefined(v) };
 	delete v2['relationship'];
 	return v2 as IPerson;
+}
+
+export interface IRelatedPersonContact extends IRelatedPerson {
+	type: 'person';
+}
+
+export interface IContactBrief extends IContactBase {
+	id: string;
+	title: string;
+	parentID?: string;
+}
+
+export interface IContactDto extends IContactBase, IPersonRecord {
+	readonly roles?: ContactRole[];
+	readonly members?: IContact2Member[]; // TODO: document purpose, use cases, examples of usage
+	readonly assets?: IContact2Asset[];  // TODO: document purpose, use cases, examples of usage
+	readonly relatedContacts?: IContactBrief[];
+}
+
+export interface IContactsBrief {
+	contacts?: IContactBrief[];
 }

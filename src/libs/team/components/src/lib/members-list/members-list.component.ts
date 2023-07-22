@@ -75,9 +75,9 @@ export class MembersListComponent implements OnChanges {
 		if (changes['team'] || changes['members'] || changes['role']) {
 			if (changes['members']) {
 				this._members = this.members;
-			} else if (changes['team'] && !this.members) {
-				const team = this.team;
-				this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+			// } else if (changes['team'] && !this.members) {
+			// 	const team = this.team;
+			// 	this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
 			}
 			this.membersToDisplay = this.filterMembers(this._members);
 		}

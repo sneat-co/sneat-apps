@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { formNexInAnimation } from '@sneat/animations';
-import { AgeGroup } from '@sneat/dto';
+import { AgeGroupID } from '@sneat/dto';
 
 @Component({
 	selector: 'sneat-age-group-form',
@@ -11,8 +11,8 @@ import { AgeGroup } from '@sneat/dto';
 })
 export class AgeGroupFormComponent {
 	@Input() disabled = false;
-	@Input() ageGroup?: AgeGroup;
-	@Output() readonly ageGroupChange = new EventEmitter<AgeGroup|undefined>();
+	@Input() ageGroup?: AgeGroupID;
+	@Output() readonly ageGroupChange = new EventEmitter<AgeGroupID|undefined>();
 
 	onAgeGroupChanged(event: Event): void {
 		event.stopPropagation();

@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { Gender } from '@sneat/dto';
+import { Gender, GenderFemale, GenderMale, GenderOther, GenderUndisclosed, GenderUnknown } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 const animationTimings = '150ms';
@@ -8,11 +8,11 @@ const animationTimings = '150ms';
 type GenderOption = { id: Gender; title: string; icon: string; emoji?: string };
 
 const gendersOptions: GenderOption[] = [
-	{ id: 'male', title: 'Male', icon: 'man-outline', emoji: '👨' },
-	{ id: 'female', title: 'Female', icon: 'woman-outline', emoji: '👩' },
-	{ id: 'other', title: 'Other', icon: 'person-outline' },
-	{ id: 'unknown', title: 'Unknown', icon: 'person-circle-outline' },
-	{ id: 'undisclosed', title: 'Undisclosed', icon: 'person' },
+	{ id: GenderMale, title: 'Male', icon: 'man-outline', emoji: '👨' },
+	{ id: GenderFemale, title: 'Female', icon: 'woman-outline', emoji: '👩' },
+	{ id: GenderOther, title: 'Other', icon: 'person-outline' },
+	{ id: GenderUnknown, title: 'Unknown', icon: 'person-circle-outline' },
+	{ id: GenderUndisclosed, title: 'Undisclosed', icon: 'person' },
 ];
 
 @Component({
@@ -64,7 +64,6 @@ export class GenderFormComponent {
 	// 		console.log('el', el, 'inputs', inputs);
 	// 	}, 1000);
 	// }
-
 
 
 	onGenderChanged(): void {

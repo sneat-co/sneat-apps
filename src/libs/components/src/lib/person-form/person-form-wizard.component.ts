@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { formNexInAnimation } from '@sneat/animations';
 import { IFormField } from '@sneat/core';
 import {
-	AgeGroup,
+	AgeGroupID,
 	emptyRelatedPerson,
 	Gender,
 	IEmail,
@@ -111,7 +111,7 @@ export class PersonFormWizardComponent {
 	}
 
 
-	onAgeGroupChanged(ageGroup?: AgeGroup): void {
+	onAgeGroupChanged(ageGroup?: AgeGroupID): void {
 		this.setRelatedPerson(
 			{ ...this.relatedPerson, ageGroup },
 			{ name: 'ageGroup', hasValue: !!ageGroup },
