@@ -229,7 +229,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 			if (request.person && !request.person.roles) {
 				request = { ...request, person: { ...request.person, roles: [roleID] } };
 			} else if (request.person && request.person.roles?.some(r => r === roleID)) {
-				request.person.roles.push(roleID);
+				request.person = { ...request.person, roles: [...request.person.roles, roleID] };
 			}
 		}
 		this.contactService.createContact(team, request)

@@ -7,7 +7,6 @@ export * from './lib/dto-asset';
 export * from './lib/dto-bill';
 export * from './lib/dto-commune';
 export * from './lib/dto-constants';
-export * from './lib/dto-contact';
 export * from './lib/dto-contact2';
 export * from './lib/dto-document';
 export * from './lib/dto-happening';

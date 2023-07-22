@@ -62,10 +62,10 @@ export interface IMemberGroupDto extends IMemberGroupBase {
 }
 
 export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder {
+	readonly type: MemberType;
 	readonly title?: string;
 	readonly groupIDs?: readonly string[];
 	readonly userID?: string; // User ID
-	readonly type?: MemberType;
 	readonly roles?: readonly MemberRole[];
 	readonly avatar?: IAvatar;
 }

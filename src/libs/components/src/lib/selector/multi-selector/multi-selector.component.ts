@@ -13,12 +13,13 @@ export class MultiSelectorComponent extends SelectorBaseComponent implements OnC
 
 	@Input() canRemove = false;
 	@Input() public allItems?: ISelectItem[];
-	@Input() public selectedIDs?: string[];
+	@Input() public selectedIDs?: readonly string[];
 
 	@Output() readonly removeItems = new EventEmitter<ISelectItemEvent[]>();
 	@Output() readonly addItems = new EventEmitter<ISelectItemEvent[]>();
 
 	protected selectedItems?: ISelectItem[];
+
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
