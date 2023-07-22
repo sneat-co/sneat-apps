@@ -48,25 +48,28 @@
 	<!--	</ion-list>-->
 
 	<ng-container *ngIf="segment === 'all' && teamType === 'family'">
-		<ion-card *ngFor="let group of predefinedMemberGroups; trackBy: id">
-			<ion-item-divider color="light">
-				<ion-label>{{group.emoji}}&nbsp;&nbsp;{{group.plural}}</ion-label>
-				<ion-buttons slot="end">
-					<ion-button *ngIf="group.addLabel" [title]="group.addLabel" (click)="goNew(group.id)">
-						<ion-icon name="add" slot="start"></ion-icon>
-						<ion-label>Add</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item-divider>
-			<ion-item *ngIf="!group.members">
-				<ion-spinner name="lines-small" color="medium"></ion-spinner>
-				<ion-label color="medium">Loading...</ion-label>
-			</ion-item>
-			<sneat-members-list [team]="team"
-													[members]="group.members"
-													[contactsByMember]="contactsByMember"
-			></sneat-members-list>
-		</ion-card>
+		<ng-container *ngFor="let group of predefinedMemberGroups; trackBy: id">
+			<ion-card *ngIf="group.addLabel || group.members?.length">
+				<ion-item-divider color="light">
+					<ion-label>{{group.emoji}}&nbsp;&nbsp;{{group.plural}}</ion-label>
+					<ion-buttons slot="end">
+						<ion-button *ngIf="group.addLabel" [title]="group.addLabel" (click)="goNew(group.id)">
+							<ion-icon name="add" slot="start"></ion-icon>
+							<ion-label>Add</ion-label>
+						</ion-button>
+					</ion-buttons>
+				</ion-item-divider>
+				<ion-item *ngIf="!group.members">
+					<ion-spinner name="lines-small" color="medium"></ion-spinner>
+					<ion-label color="medium">Loading...</ion-label>
+				</ion-item>
+				<sneat-members-list [team]="team"
+														[members]="group.members"
+														[contactsByMember]="contactsByMember"
+				></sneat-members-list>
+			</ion-card>
+
+		</ng-container>
 
 	</ng-container>
 
