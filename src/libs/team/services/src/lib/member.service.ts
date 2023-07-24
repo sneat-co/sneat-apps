@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IErrorResponse } from '@sneat/core';
-import { IMemberBrief, IMemberDto, trimNames } from '@sneat/dto';
+import { IMemberBrief, IMemberDto, RoleTeamMember, trimNames } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
@@ -114,6 +114,9 @@ export class MemberService {
 
 	watchTeamMembers(team: ITeamContext, status: 'active' | 'archived' = 'active'): Observable<IMemberContext[]> {
 		console.log('MemberService.watchMembersByTeamID()', team.id);
-		return this.teamItemService.watchTeamItems(team, [{ field: 'status', operator: '==', value: status }]);
+		return this.teamItemService.watchTeamItems(team, [
+			{ field: 'status', operator: '==', value: status },
+			{ field: 'roles', operator: '==', value: RoleTeamMember },
+		]);
 	}
 }

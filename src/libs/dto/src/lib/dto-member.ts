@@ -6,6 +6,7 @@ import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from '
 import { DtoGroupTerms } from './dto-term';
 import { MembersVisibility, MemberType } from './types';
 
+export const RoleTeamMember = 'team_member';
 export const MemberRoleContributor = 'contributor';
 export const MemberRoleSpectator = 'spectator';
 export const MemberRoleParish = 'pastor';
