@@ -1,4 +1,4 @@
-name: On PR or push to main
+name: Build
 
 on:
   push:
