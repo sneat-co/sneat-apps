@@ -38,4 +38,4 @@ ___
 # Setting up development environment
 
 If you want to contribute to this open source project you can
-read instructions on how to set up local dev environment in [README-DEV-SETUP.md](README-DEV-SETUP.md).
+read instructions on how to set up local dev environment in [README-DEV-SETUP.md](docs/README-DEV-SETUP.md).
