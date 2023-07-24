@@ -7,12 +7,12 @@ ___
 
 ## Apps for family & personal life
 
-- [Sneat.app](https://sneat.app) - a "super" neat family app that saves you time & money.
+- [**Sneat.app**](https://sneat.app) - a "super" neat family app that saves you time & money.
     - Members
     - Schedule / calendar
     - Contacts
-    - Assets management (details, log book, renewal reminders, etc.)
-    - Budgeting (integrated with assets management)
+    - Assets management (_details, log book, renewal reminders, etc._)
+    - Budgeting (_integrated with assets management_)
     - Lists: ToDo, ToBuy, ToWatch, etc.
     - etc.
 
