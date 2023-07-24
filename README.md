@@ -1,6 +1,9 @@
 # [github.com/sneat-co/sneat-apps](https://github.com/sneat-co/sneat-apps)
 
 A suit of open source apps that help in work & personal life.
+___
+[![Build](https://github.com/sneat-co/sneat-apps/actions/workflows/build.yml/badge.svg)](https://github.com/sneat-co/sneat-apps/actions/workflows/build.yml)
+___
 
 ## Apps for family & personal life
 
