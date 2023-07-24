@@ -3,15 +3,15 @@
 A suit of open source apps that help in work & personal life.
 
 ## Apps for family & personal life
- - [Sneat.app](https://sneat.app) - a "super" neat family app that saves you time & money.
-   - Members
-   - Schedule / calendar
-   - Contacts
-   - Assets management (details, log book, renewal reminders, etc.)
-   - Budgeting (integrated with assets management)
-   - Lists: ToDo, ToBuy, ToWatch, etc.
-   - etc.
 
+- [Sneat.app](https://sneat.app) - a "super" neat family app that saves you time & money.
+    - Members
+    - Schedule / calendar
+    - Contacts
+    - Assets management (details, log book, renewal reminders, etc.)
+    - Budgeting (integrated with assets management)
+    - Lists: ToDo, ToBuy, ToWatch, etc.
+    - etc.
 
 [//]: # (## Apps for work)
 
@@ -24,18 +24,15 @@ A suit of open source apps that help in work & personal life.
 [//]: # (    - [IssueNumber.One]&#40;src/apps/issuenumberone&#41; - facilitates continuous **focused** feedback & improvements)
 
 ## Tech stack
-- [TypeScript](https://www.typescriptlang.org/) - typed JavaScript at Any Scale
+
 - [Angular](https://angular.io/) - the modern web developer's platform
-- [Ionic Framework](https://ionicframework.com/) - an open source mobile UI toolkit for building high quality, cross-platform native and web app experiences.
-- [Capacitor](https://capacitorjs.com/) - a cross-platform native runtime for web apps.
+- [Capacitor](https://capacitorjs.com/) - a cross-platform native runtime for web/hybrid apps.
+- [Ionic Framework](https://ionicframework.com/) - an open source mobile UI toolkit for building high quality,
+- [TypeScript](https://www.typescriptlang.org/) - typed JavaScript at any scale
+  cross-platform native and web app experiences.
 - [nx](https://nx.dev/) by [Nrwl](https://nrwl.io/) - extensible dev tools for monorepos
 
 # Setting up development environment
 
-If you want to contribute to this open source project you can 
-read instructions on how to set up local dev environment in [README-DEV-SETUP.md](README-DEV-SETUP.md). 
-
-## Concepts
-- `Team`
-  - `Squad`
-  - `Commune`
+If you want to contribute to this open source project you can
+read instructions on how to set up local dev environment in [README-DEV-SETUP.md](README-DEV-SETUP.md).
