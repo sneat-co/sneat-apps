@@ -11,7 +11,7 @@ export enum ProjectItem {
 	environment = 'environment',
 	entity = 'entity',
 	Board = 'board',
-	query = 'board',
+	query = 'query',
 	variable = 'variable',
 }
 
