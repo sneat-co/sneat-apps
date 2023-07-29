@@ -98,7 +98,7 @@
 						></ion-icon>
 						<ion-label color="primary" style="font-weight: bold">Members</ion-label>
 						<ion-buttons slot="end">
-							<ion-button routerLink="new-member">
+							<ion-button routerLink="new-member" (click)="$event.stopPropagation()">
 								<ion-icon name="add-outline"></ion-icon>
 							</ion-button>
 						</ion-buttons>

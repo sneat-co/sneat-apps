@@ -20,4 +20,6 @@ export class TeamPageComponent extends TeamBaseComponent implements OnDestroy {
 	) {
 		super('TeamPageComponent', route, params);
 	}
+
+	protected readonly eval = eval;
 }

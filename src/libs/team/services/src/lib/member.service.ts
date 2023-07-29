@@ -37,7 +37,7 @@ export class MemberService {
 		private readonly teamService: TeamService,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IMemberBrief, IMemberDto>('members', afs, sneatApiService);
+		this.teamItemService = new TeamItemService<IMemberBrief, IMemberDto>('contacts', afs, sneatApiService);
 	}
 
 	public acceptPersonalInvite(

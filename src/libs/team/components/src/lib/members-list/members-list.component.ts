@@ -5,7 +5,7 @@ import { IContact2Member } from '@sneat/dto';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { memberContextFromBrief, TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
 import { InviteModalComponent } from '../invite-modal/invite-modal.component';
 
@@ -73,11 +73,15 @@ export class MembersListComponent implements OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('MembersListComponent.ngOnChanges()', changes);
 		if (changes['team'] || changes['members'] || changes['role']) {
+			if (this.team?.dto?.members && !this.members) {
+				const team = this.team;
+				this._members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+			}
 			if (changes['members']) {
 				this._members = this.members;
-			// } else if (changes['team'] && !this.members) {
-			// 	const team = this.team;
-			// 	this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+				// } else if (changes['team'] && !this.members) {
+				// 	const team = this.team;
+				// 	this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
 			}
 			this.membersToDisplay = this.filterMembers(this._members);
 		}

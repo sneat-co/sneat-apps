@@ -83,7 +83,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		this.contactService.watchContactBriefs(this.team).subscribe({
 			next: contactBriefs => {
 				const contacts = contactBriefs.map(brief => ({ id: brief.id, brief, team: this.team || { id: '' } }));
-				this.setTeamContacts(contacts || [])
+				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
 			},
 		});
@@ -227,3 +227,4 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	// }
 
 }
+
