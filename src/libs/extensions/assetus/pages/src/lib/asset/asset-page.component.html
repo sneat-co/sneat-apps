@@ -30,7 +30,9 @@
 	<!--	<app-real-estate-location [asset]="asset"-->
 	<!--														*ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
 
-	<sneat-vehicle-card *ngIf="asset?.brief?.category === 'vehicle'" [asset]="asset">></sneat-vehicle-card>
+	<sneat-vehicle-card *ngIf="asset?.brief?.category === 'vehicle'"
+											[vehicleAsset]="vehicleAsset"
+	></sneat-vehicle-card>
 
 	<!--		<sneat-asset-dates *ngIf="asset" [asset]="asset.dto"></sneat-asset-dates>-->
 

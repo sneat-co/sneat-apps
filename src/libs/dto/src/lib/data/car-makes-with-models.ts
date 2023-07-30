@@ -1,3 +1,4 @@
+import { FuelTypes } from '../types';
 import { Engine, engines } from './vehicles';
 
 export interface IModel {
@@ -83,9 +84,9 @@ export const carMakes: {
 	Tesla: {
 		yearMin: 2001,
 		models: [
-			{ id: 'Model 3', yearMin: 2017, engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
-			{ id: 'Model S', engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
-			{ id: 'Model X', engines: [{ title: '90KW', engineFuel: 'li-ion' }] },
+			{ id: 'Model 3', yearMin: 2017, engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }] },
+			{ id: 'Model S', engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }] },
+			{ id: 'Model X', engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }] },
 		],
 	},
 	Hyundai: {

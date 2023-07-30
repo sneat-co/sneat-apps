@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-list>
-		<sneat-country-selector [country]="asset?.dto?.countryID"
+		<sneat-country-selector [country]="vehicleAsset?.dto?.countryID"
 														label="Country of registration"
 														(countryChange)="countryChanged($event)"
 		></sneat-country-selector>
@@ -8,26 +8,28 @@
 			<ion-input label="Registration #" [(ngModel)]="regNumber" placeholder="###-CO-#####"></ion-input>
 			<!--            <ion-button fill="outline">Validate</ion-button>-->
 			<ion-buttons slot="end">
-				<ion-button [disabled]="!asset?.dto?.regNumber" color="primary">Look up</ion-button>
+				<ion-button [disabled]="!vehicleAsset?.dto?.regNumber" color="primary">Look up</ion-button>
 			</ion-buttons>
 		</ion-item>
 	</ion-list>
 </ion-card>
 
-<sneat-make-model-card *ngIf="asset?.dto?.type && asset?.dto?.countryID"
-											 [assetType]="asset?.dto?.type"
-											 [make]="asset?.dto?.make"
-											 [model]="asset?.dto?.model"
+<sneat-make-model-card *ngIf="vehicleAsset?.dto?.type && vehicleAsset?.dto?.countryID"
+											 [assetType]="vehicleAsset?.dto?.type"
+											 [make]="vehicleAsset?.dto?.make"
+											 [model]="vehicleAsset?.dto?.model"
 											 (makeChange)="makeChanged($event)"
 											 (modelChange)="modelChanged($event)"
 ></sneat-make-model-card>
 
-<sneat-asset-possession-card *ngIf="asset?.dto?.model" [(asset)]="asset"></sneat-asset-possession-card>
+<sneat-asset-possession-card *ngIf="vehicleAsset?.dto?.model"
+														 [asset]="vehicleAsset"
+														 (assetChange)="onAssetChanged($event)"
+></sneat-asset-possession-card>
 
+<ion-card *ngIf="vehicleAsset?.dto?.model">
 
-<ion-card *ngIf="asset?.dto?.model">
-
-	<ion-item *ngIf="!asset?.brief?.regNumber" class="with-buttons" tappable (click)="editRegNumber()">
+	<ion-item *ngIf="!vehicleAsset?.brief?.regNumber" class="with-buttons" tappable (click)="editRegNumber()">
 		<ion-label color="danger">Reg #</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="medium" (click)="editRegNumber()">
@@ -41,12 +43,11 @@
 	</ion-item>
 </ion-card>
 
-<ion-card *ngIf="asset?.dto?.model">
+<ion-card *ngIf="vehicleAsset?.dto?.model">
 	<ion-item-divider>
 		<ion-label>Engine</ion-label>
 	</ion-item-divider>
-	<sneat-vehicle-engine>
-
+	<sneat-vehicle-engine [vehicleAsset]="vehicleAsset" (vehicleAssetChange)="onAssetChanged($event)">
 	</sneat-vehicle-engine>
 </ion-card>
 

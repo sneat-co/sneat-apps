@@ -36,8 +36,9 @@ export class AssetService {
 
 	public createAsset(team: ITeamContext, request: ICreateAssetRequestBase): Observable<IAssetContext> {
 		console.log(`AssetService.createAsset()`, request);
+		request.isRequest = true;
 		return this.teamItemService.createTeamItem<IAssetBrief, IAssetDto>(
-			'assets/create_asset', team, request);
+			'assets/create_asset?assetCategory='+request.category, team, request);
 	}
 
 	watchAssetByID(team: ITeamContext, id: string): Observable<IAssetContext> {

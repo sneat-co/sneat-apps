@@ -1,7 +1,13 @@
 <sneat-select-from-list label="Engine type"
-												[items]="[{id: 'combustion', title: 'Combustion'}, {id: 'electric', title: 'Electric'}]">
-</sneat-select-from-list>
+												[items]="engineTypes"
+												(changed)="onEngineTypeChanged($event)"
+></sneat-select-from-list>
 
-<sneat-select-from-list label="Fuel" [items]="[{id: 'petrol', title: 'Petrol'}, {id: 'diesel', title: 'Diesel'}]">
-</sneat-select-from-list>
-
+<ion-item-group *ngIf="vehicleAsset?.dto?.fuelType">
+	<ion-item>
+		<ion-input label="Size CC"></ion-input>
+	</ion-item>
+	<ion-item *ngIf="vehicleAsset?.dto?.engineType === 'phev'">
+		<ion-input label="Battery kWh" type="number"></ion-input>
+	</ion-item>
+</ion-item-group>

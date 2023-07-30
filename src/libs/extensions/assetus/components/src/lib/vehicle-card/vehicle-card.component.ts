@@ -12,8 +12,8 @@ import { IAssetContext, ITeamContext, IVehicleAssetContext } from '@sneat/team/m
 export class VehicleCardComponent implements OnChanges {
 
 	@Input() team?: ITeamContext;
-	@Input() asset?: IVehicleAssetContext;
-	@Output() assetChange = new EventEmitter<IAssetContext>();
+	@Input() vehicleAsset?: IVehicleAssetContext;
+	@Output() readonly vehicleAssetChange = new EventEmitter<IVehicleAssetContext>();
 
 	regNumber = '';
 	makeVal?: string;
@@ -41,9 +41,9 @@ export class VehicleCardComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.team?.dto?.countryID && this.asset?.dto && !this.asset.dto.countryID) {
-			this.asset = { ...this.asset, dto: {...this.asset.dto, countryID: this.team.dto.countryID} };
-			this.assetChange.emit(this.asset);
+		if (changes['team'] && this.team?.dto?.countryID && this.vehicleAsset?.dto && !this.vehicleAsset.dto.countryID) {
+			this.vehicleAsset = { ...this.vehicleAsset, dto: { ...this.vehicleAsset.dto, countryID: this.team.dto.countryID } };
+			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}
 	}
 
@@ -54,25 +54,31 @@ export class VehicleCardComponent implements OnChanges {
 	}
 
 	countryChanged(value: string): void {
-		if (this.asset?.dto) {
-			this.asset = { ...this.asset, dto: { ...this.asset.dto, countryID: value } };
-			this.assetChange.emit(this.asset);
+		if (this.vehicleAsset?.dto) {
+			this.vehicleAsset = { ...this.vehicleAsset, dto: { ...this.vehicleAsset.dto, countryID: value } };
+			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}
 	}
 
 	makeChanged(value: string): void {
 		this.makeVal = value;
-		if (this.asset?.dto) {
-			this.asset = { ...this.asset, dto: { ...this.asset.dto, make: value } };
-			this.assetChange.emit(this.asset);
+		if (this.vehicleAsset?.dto) {
+			this.vehicleAsset = { ...this.vehicleAsset, dto: { ...this.vehicleAsset.dto, make: value } };
+			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}
 		this.populateModels();
 	}
 
+	protected onAssetChanged(asset: IAssetContext): void {
+		console.log('onVehicleAssetChanged', asset, this.vehicleAsset);
+		this.vehicleAsset = asset as IVehicleAssetContext;
+		this.vehicleAssetChange.emit(this.vehicleAsset);
+	}
+
 	modelChanged(value: string): void {
-		if (this.asset?.dto) {
-			this.asset = { ...this.asset, dto: { ...this.asset.dto, model: value } };
-			this.assetChange.emit(this.asset);
+		if (this.vehicleAsset?.dto) {
+			this.vehicleAsset = { ...this.vehicleAsset, dto: { ...this.vehicleAsset.dto, model: value } };
+			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}
 	}
 

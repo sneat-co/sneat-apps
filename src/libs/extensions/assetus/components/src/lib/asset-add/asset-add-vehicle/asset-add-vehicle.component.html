@@ -7,9 +7,13 @@
 </ion-card>
 
 
-<sneat-vehicle-card *ngIf="vehicleType" [team]="team" [(asset)]="asset"></sneat-vehicle-card>
+<sneat-vehicle-card *ngIf="vehicleType"
+										[team]="team"
+										[(vehicleAsset)]="vehicleAsset"
+										(vehicleAssetChange)="onAssetChanged($event)"
+></sneat-vehicle-card>
 
-<ion-card *ngIf="asset?.dto?.model">
+<ion-card *ngIf="vehicleAsset?.dto?.model">
 	<ion-item>
 		<!-- Datetime in popover with input -->
 		<ion-input label="Taxed till" [value]="taxExpires"></ion-input>
@@ -40,8 +44,8 @@
 </ion-card>
 
 
-<ion-button *ngIf="asset?.dto?.model || asset?.dto?.regNumber"
-						[color]="asset?.dto?.model ? 'primary' : 'light'"
+<ion-button *ngIf="vehicleAsset?.dto?.model || vehicleAsset?.dto?.regNumber"
+						[color]="vehicleAsset?.dto?.model ? 'primary' : 'light'"
 						size="large"
 						class="ion-margin"
 						expand="full"

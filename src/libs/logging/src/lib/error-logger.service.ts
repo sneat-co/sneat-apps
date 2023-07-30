@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { captureException, showReportDialog } from '@sentry/angular-ivy';
@@ -57,17 +58,27 @@ export class ErrorLoggerService implements IErrorLogger {
 			} else if (!message) {
 				message = (e as object).toString();
 			}
-			this.showError(message as string, options?.showDuration);
+			if (message) {
+				console.log('e:', e instanceof HttpErrorResponse);
+				this.showError({
+					clientMessage: message,
+					serverMessage: (e as any).error?.error?.message,
+				}, options?.showDuration);
+			}
 		}
 		return; // return message ? { error: e, message } : e;
 	};
 
-	public showError(message: string, duration?: number): void {
-		if (!message) {
+	public showError(details: { clientMessage: string; serverMessage?: string }, duration?: number): void {
+		if (!details.clientMessage) {
 			throw new Error('showError() have not received a message to display');
 		}
 		if (duration && duration < 0) {
 			throw new Error('showError received negative duration');
+		}
+		let message = details.clientMessage;
+		if (details.serverMessage) {
+			message += `.\n\nServer returned error message: ${details.serverMessage}`;
 		}
 		this.toastController
 			.create({

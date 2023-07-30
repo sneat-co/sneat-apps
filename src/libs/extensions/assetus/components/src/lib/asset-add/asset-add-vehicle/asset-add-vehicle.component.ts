@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ISelectItem } from '@sneat/components';
-import { AssetVehicleType } from '@sneat/dto';
+import { AssetPossession, AssetVehicleType, EngineTypes, FuelTypes } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
@@ -16,7 +16,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 export class AssetAddVehicleComponent extends AddAssetBaseComponent implements OnChanges {
 
 	@Input() override team?: ITeamContext;
-	@Input() public asset?: IVehicleAssetContext;
+	@Input() public vehicleAsset?: IVehicleAssetContext;
 
 	vehicleType?: AssetVehicleType;
 	vehicleTypes: ISelectItem[] = [
@@ -42,9 +42,24 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IVehicleAssetContext = this.asset
-				?? { id: '', team: this.team ?? { id: '' }, dto: { category: 'vehicle', type: this.vehicleType, title: '' } };
-			this.asset = { ...a, team: this.team };
+			const a: IVehicleAssetContext = this.vehicleAsset
+				?? {
+					id: '',
+					team: this.team ?? { id: '' },
+					dto: {
+						status: 'draft',
+						category: 'vehicle',
+						teamID: this.team?.id,
+						type: this.vehicleType,
+						title: '',
+						make: '',
+						model: '',
+						fuelType: FuelTypes.unknown,
+						engineType: EngineTypes.unknown,
+						possession: undefined as unknown as AssetPossession,
+					},
+				};
+			this.vehicleAsset = { ...a, team: this.team };
 		}
 	}
 
@@ -56,11 +71,15 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	}
 
 
+	protected onAssetChanged(asset: IVehicleAssetContext): void {
+		console.log('onAssetChanged', asset, this.vehicleAsset);
+	}
+
 	onVehicleTypeChanged(): void {
-		if (this.asset?.dto) {
-			this.asset = {
-				...this.asset, dto: {
-					...this.asset.dto,
+		if (this.vehicleAsset?.dto) {
+			this.vehicleAsset = {
+				...this.vehicleAsset, dto: {
+					...this.vehicleAsset.dto,
 					type: this.vehicleType,
 					make: '',
 					model: '',
@@ -76,20 +95,31 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	}
 
 	submitVehicleForm(): void {
+		console.log('submitVehicleForm', this.vehicleAsset);
 		if (!this.team) {
 			throw 'no team context';
 		}
 		if (!this.vehicleType) {
 			throw 'no vehicleType';
 		}
+		const assetDto = this.vehicleAsset?.dto;
+		if (!assetDto) {
+			throw new Error('no asset');
+		}
 		this.isSubmitting = true;
 		const request: ICreateVehicleAssetRequest = {
-			category: 'vehicle',
+			...assetDto,
+			status: 'active',
 			teamID: this.team?.id,
-			type: this.vehicleType,
-			countryID: this.countryIso2,
-			title: '',
-			regNumber: this.regNumber,
+			category: 'vehicle',
+			// teamID: this.team?.id,
+			// type: this.vehicleType,
+			// countryID: this.countryIso2,
+			// title: '',
+			// regNumber: this.regNumber,
+			// possession: AssetPossessionUndisclosed,
+			// make: this.asset?.dto?.make,
+			// model: '',
 		};
 		if (this.yearOfBuild) {
 			request.yearOfBuild = new Date(this.yearOfBuild).getFullYear();

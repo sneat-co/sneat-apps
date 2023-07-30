@@ -2,7 +2,7 @@ import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
 import {
-	AssetCategory, AssetPossession,
+	AssetCategory, AssetPossession, AssetStatus,
 	AssetType,
 	CountryId, EngineType,
 	FuelType,
@@ -26,12 +26,14 @@ export interface ISubAssetInfo extends ITitledRecord {
 }
 
 export interface IAssetBase extends ITitled {
+	isRequest?: boolean;
+	status: AssetStatus;
 	category: AssetCategory;
 	type?: AssetType; // E.g. subcategory - for example for documents could be: passport, visa, etc.
-	make?: string;
-	model?: string;
+	make: string;
+	model: string;
 	regNumber?: string;
-	possession?: AssetPossession;
+	possession: AssetPossession;
 }
 
 export interface IAssetBrief extends IAssetBase {
@@ -87,7 +89,8 @@ export interface IVehicleData extends IEngine {
 }
 
 export interface IVehicleAssetDto extends IAssetDto, IVehicleData {
-	//
+	engineType: EngineType;
+	fuelType: FuelType;
 }
 
 export interface IAssetCategory extends ITitledRecord {
