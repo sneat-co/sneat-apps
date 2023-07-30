@@ -1,6 +1,7 @@
 import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
+import { IWithModified } from './dto-with-modified';
 import {
 	AssetCategory, AssetPossession, AssetStatus,
 	AssetType,
@@ -40,7 +41,7 @@ export interface IAssetBrief extends IAssetBase {
 	id: string;
 }
 
-export interface IAssetMain extends IAssetBase {
+export interface IAssetMainData extends IAssetBase {
 	parentAssetID?: string;
 	desc?: string;
 	countryID?: CountryId;
@@ -50,7 +51,7 @@ export interface IAssetMain extends IAssetBase {
 	regNumber?: string;
 }
 
-export interface IAssetDto extends IAssetMain, IDemoRecord, ITotalsHolder {
+export interface IAssetDbData extends IAssetMainData, IDemoRecord, ITotalsHolder, IWithModified {
 	teamID?: string;
 	parentCategoryID?: AssetCategory;
 	sameAssetID?: string; // A link to realtor's or tenant's asset ID
@@ -69,8 +70,8 @@ export interface IDwelling {
 
 
 export interface IEngine {
-	engineType?: EngineType;
-	engineFuel?: FuelType;
+	engineType: EngineType;
+	engineFuel: FuelType;
 	engineCC?: number;
 	engineKW?: number;
 	engineNM?: number;
@@ -88,9 +89,7 @@ export interface IVehicleData extends IEngine {
 	nextServiceDueTaskId?: string;
 }
 
-export interface IVehicleAssetDto extends IAssetDto, IVehicleData {
-	engineType: EngineType;
-	fuelType: FuelType;
+export interface IVehicleAssetDto extends IAssetDbData, IVehicleData {
 }
 
 export interface IAssetCategory extends ITitledRecord {

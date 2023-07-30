@@ -2,7 +2,7 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { AssetService } from '../asset-service';
-import { ICreateAssetRequestBase } from '../asset-service.dto';
+import { ICreateAssetRequest } from '../asset-service.dto';
 
 export abstract class AddAssetBaseComponent {
 	public team?: ITeamContext;
@@ -21,7 +21,7 @@ export abstract class AddAssetBaseComponent {
 	) {
 	}
 
-	protected createAssetAndGoToAssetPage(request: ICreateAssetRequestBase, team: ITeamContext): void {
+	protected createAssetAndGoToAssetPage(request: ICreateAssetRequest, team: ITeamContext): void {
 		if (!this.team) {
 			throw new Error('no team context');
 		}

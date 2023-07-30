@@ -1,0 +1,31 @@
+<ion-item *ngIf="assets && !assets?.length" disabled>No items created yet</ion-item>
+<ion-item *ngIf="!assets" disabled>
+	<ion-spinner slot="start" name="lines-small"></ion-spinner>
+	<ion-label>Loading...</ion-label>
+</ion-item>
+<div *ngIf="assets?.length" class="last-child-no-border">
+	<ion-item *ngFor="let asset of assets; trackBy: id"
+						tappable
+						(click)="goAsset(asset)"
+						[class]="{deleting: deletingIDs.indexOf(asset.id) >= 0}"
+	>
+		<ion-label *ngIf="asset.brief?.title">
+			{{asset.brief?.title}}
+		</ion-label>
+		<ion-label *ngIf="!asset.brief?.title">
+			{{asset?.brief?.make}} {{asset?.brief?.model}} {{asset.dto?.yearOfBuild}}
+		</ion-label>
+		<ion-badge *ngIf="asset?.dto?.yearOfBuild && ! asset?.brief?.regNumber" color="light"
+							 style="font-weight: normal">{{asset?.dto?.yearOfBuild}}</ion-badge>
+		<ion-badge *ngIf="asset?.brief?.regNumber" color="light"
+							 style="font-weight: normal">{{asset?.brief?.regNumber}}</ion-badge>
+		<ion-buttons slot="end">
+			<!--				<ion-button (click)="add2Asset($event)">-->
+			<!--					<ion-icon name="add"></ion-icon>-->
+			<!--				</ion-button>-->
+			<ion-button (click)="delete(asset)" [disabled]="deletingIDs.indexOf(asset.id) >= 0">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+</div>

@@ -42,18 +42,18 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 			title: { required: true },
 		},
 	},
-	'rent_lease': {
-		id: 'rent_lease',
-		title: 'Rent lease',
-		emoji: '🏘️️️',
-		fields: {},
-	},
-	'insurance_policy': {
-		id: 'insurance_policy',
-		title: 'Insurance policy',
-		emoji: '💸️️',
-		fields: {},
-	},
+	// 'rent_lease': {
+	// 	id: 'rent_lease',
+	// 	title: 'Rent lease',
+	// 	emoji: '🏘️️️',
+	// 	fields: {},
+	// },
+	// 'insurance_policy': {
+	// 	id: 'insurance_policy',
+	// 	title: 'Insurance policy',
+	// 	emoji: '💸️️',
+	// 	fields: {},
+	// },
 	'passport': {
 		id: 'passport',
 		title: 'Passport',

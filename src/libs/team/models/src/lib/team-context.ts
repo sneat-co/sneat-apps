@@ -1,7 +1,7 @@
 import { INavContext, TeamType } from '@sneat/core';
 import {
 	IAssetBrief,
-	IAssetDto,
+	IAssetDbData,
 	IContactBrief,
 	IContactDto,
 	IDocumentBrief,
@@ -37,7 +37,7 @@ export const teamContextFromBrief = (brief: ITeamBrief): ITeamContext => ({ id: 
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
 export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;
 export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
-export type IAssetContext<Dto extends IAssetDto = IAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
+export type IAssetContext<Dto extends IAssetDbData = IAssetDbData> = ITeamItemContext<IAssetBrief, Dto>;
 export type IVehicleAssetContext<Dto extends IVehicleAssetDto = IVehicleAssetDto> = ITeamItemContext<IAssetBrief, Dto>;
 export type IDocumentContext = ITeamItemContext<IDocumentBrief, IDocumentDto>;
 

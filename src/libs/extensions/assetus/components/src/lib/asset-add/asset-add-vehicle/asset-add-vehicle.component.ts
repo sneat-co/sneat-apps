@@ -1,11 +1,11 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ISelectItem } from '@sneat/components';
-import { AssetPossession, AssetVehicleType, EngineTypes, FuelTypes } from '@sneat/dto';
+import { AssetPossession, AssetVehicleType, EngineTypes, FuelTypes, timestamp } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../asset-service';
-import { ICreateVehicleAssetRequest } from '../../asset-service.dto';
+import { ICreateAssetRequest } from '../../asset-service.dto';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
@@ -54,9 +54,13 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 						title: '',
 						make: '',
 						model: '',
-						fuelType: FuelTypes.unknown,
+						engineFuel: FuelTypes.unknown,
 						engineType: EngineTypes.unknown,
 						possession: undefined as unknown as AssetPossession,
+						createdAt: new Date().toISOString() as unknown as timestamp,
+						createdBy: '-',
+						updatedAt: new Date().toISOString() as unknown as timestamp,
+						updatedBy: '-',
 					},
 				};
 			this.vehicleAsset = { ...a, team: this.team };
@@ -107,22 +111,16 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
-		const request: ICreateVehicleAssetRequest = {
-			...assetDto,
-			status: 'active',
+		let request: ICreateAssetRequest = {
+			asset: {
+				...assetDto,
+				status: 'active',
+				category: 'vehicle',
+			},
 			teamID: this.team?.id,
-			category: 'vehicle',
-			// teamID: this.team?.id,
-			// type: this.vehicleType,
-			// countryID: this.countryIso2,
-			// title: '',
-			// regNumber: this.regNumber,
-			// possession: AssetPossessionUndisclosed,
-			// make: this.asset?.dto?.make,
-			// model: '',
 		};
 		if (this.yearOfBuild) {
-			request.yearOfBuild = new Date(this.yearOfBuild).getFullYear();
+			request = { ...request, asset: { ...request.asset, yearOfBuild: +this.yearOfBuild } };
 		}
 
 		// if (this.vin) {

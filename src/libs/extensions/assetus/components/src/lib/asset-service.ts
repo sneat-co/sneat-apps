@@ -4,23 +4,23 @@ import {
 	Firestore as AngularFirestore,
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IAssetBrief, IAssetDto } from '@sneat/dto';
+import { IAssetBrief, IAssetDbData } from '@sneat/dto';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
-import { ICreateAssetRequestBase } from './asset-service.dto';
+import { ICreateAssetRequest } from './asset-service.dto';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AssetService {
-	private readonly teamItemService: TeamItemService<IAssetBrief, IAssetDto>;
+	private readonly teamItemService: TeamItemService<IAssetBrief, IAssetDbData>;
 
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IAssetBrief, IAssetDto>(
+		this.teamItemService = new TeamItemService<IAssetBrief, IAssetDbData>(
 			'assets', afs, sneatApiService,
 		);
 	}
@@ -34,18 +34,18 @@ export class AssetService {
 			.delete<void>('assets/delete_asset', request);
 	}
 
-	public createAsset(team: ITeamContext, request: ICreateAssetRequestBase): Observable<IAssetContext> {
+	public createAsset(team: ITeamContext, request: ICreateAssetRequest): Observable<IAssetContext> {
 		console.log(`AssetService.createAsset()`, request);
-		request.isRequest = true;
-		return this.teamItemService.createTeamItem<IAssetBrief, IAssetDto>(
-			'assets/create_asset?assetCategory='+request.category, team, request);
+		request = { ...request, asset: { ...request.asset, isRequest: true } };
+		return this.teamItemService.createTeamItem<IAssetBrief, IAssetDbData>(
+			'assets/create_asset?assetCategory=' + request.asset.category, team, request);
 	}
 
 	watchAssetByID(team: ITeamContext, id: string): Observable<IAssetContext> {
 		return this.teamItemService.watchTeamItemByID(team, id);
 	}
 
-	watchTeamAssets<Brief extends IAssetBrief, Dto extends IAssetDto>(team: ITeamContext): Observable<IAssetContext<Dto>[]> {
+	watchTeamAssets<Brief extends IAssetBrief, Dto extends IAssetDbData>(team: ITeamContext): Observable<IAssetContext<Dto>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);
 		return this.teamItemService.watchModuleTeamItems<Brief, Dto>('assetus', team);
 	}

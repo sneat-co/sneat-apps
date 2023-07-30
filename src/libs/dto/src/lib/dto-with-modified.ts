@@ -1,5 +1,5 @@
 
-type timestamp = {seconds: number; nanoseconds: number};
+export type timestamp = {seconds: number; nanoseconds: number};
 
 export interface IWithCreated {
 	readonly createdAt: timestamp;

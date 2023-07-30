@@ -14,40 +14,24 @@
 	</ion-list>
 </ion-card>
 
-<sneat-make-model-card *ngIf="vehicleAsset?.dto?.type && vehicleAsset?.dto?.countryID"
-											 [assetType]="vehicleAsset?.dto?.type"
-											 [make]="vehicleAsset?.dto?.make"
-											 [model]="vehicleAsset?.dto?.model"
-											 (makeChange)="makeChanged($event)"
-											 (modelChange)="modelChanged($event)"
-></sneat-make-model-card>
+<ion-card>
+	<sneat-make-model-card *ngIf="vehicleAsset?.dto?.type && vehicleAsset?.dto?.countryID"
+												 [assetType]="vehicleAsset?.dto?.type"
+												 [make]="vehicleAsset?.dto?.make"
+												 [model]="vehicleAsset?.dto?.model"
+												 (makeChange)="makeChanged($event)"
+												 (modelChange)="modelChanged($event)"
+	></sneat-make-model-card>
+	<ng-container *ngIf="vehicleAsset?.dto?.model">
+		<ion-item-divider>
+			<ion-label>Engine</ion-label>
+		</ion-item-divider>
+		<sneat-vehicle-engine [vehicleAsset]="vehicleAsset" (vehicleAssetChange)="onAssetChanged($event)">
+		</sneat-vehicle-engine>
+	</ng-container>
+</ion-card>
 
 <sneat-asset-possession-card *ngIf="vehicleAsset?.dto?.model"
 														 [asset]="vehicleAsset"
 														 (assetChange)="onAssetChanged($event)"
 ></sneat-asset-possession-card>
-
-<ion-card *ngIf="vehicleAsset?.dto?.model">
-
-	<ion-item *ngIf="!vehicleAsset?.brief?.regNumber" class="with-buttons" tappable (click)="editRegNumber()">
-		<ion-label color="danger">Reg #</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="editRegNumber()">
-				<ion-icon name="create"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ion-item *ngIf="regNumber" class="with-buttons">
-		<ion-label>Reg #</ion-label>
-		<ion-input *ngIf="regNumber" [(ngModel)]="regNumber" style="font-weight: bold;" readonly></ion-input>
-	</ion-item>
-</ion-card>
-
-<ion-card *ngIf="vehicleAsset?.dto?.model">
-	<ion-item-divider>
-		<ion-label>Engine</ion-label>
-	</ion-item-divider>
-	<sneat-vehicle-engine [vehicleAsset]="vehicleAsset" (vehicleAssetChange)="onAssetChanged($event)">
-	</sneat-vehicle-engine>
-</ion-card>
-

@@ -1,6 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ISelectItem } from '@sneat/components';
-import { EngineType, EngineTypes, FuelType, FuelTypes } from '@sneat/dto';
+import {
+	EngineType,
+	EngineTypeCombustion,
+	EngineTypeElectric,
+	EngineTypeHybrid,
+	EngineTypePHEV,
+	EngineTypes,
+	FuelType,
+	FuelTypes,
+} from '@sneat/dto';
 import { IVehicleAssetContext } from '@sneat/team/models';
 
 
@@ -12,6 +21,16 @@ import { IVehicleAssetContext } from '@sneat/team/models';
 export class VehicleEngineComponent {
 	@Input() public vehicleAsset?: IVehicleAssetContext;
 	@Output() public readonly vehicleAssetChange = new EventEmitter<IVehicleAssetContext>();
+
+	protected get hasBattery(): boolean {
+		const et = this.vehicleAsset?.dto?.engineType;
+		return et === EngineTypeElectric || et === EngineTypePHEV || et === EngineTypeHybrid;
+	}
+
+	protected get hasCombustion(): boolean {
+		const et = this.vehicleAsset?.dto?.engineType;
+		return et === EngineTypeCombustion || et === EngineTypePHEV || et === EngineTypeHybrid;
+	}
 
 	readonly engineTypes: ISelectItem[] = [
 		{ id: FuelTypes.petrol, title: 'Petrol', emoji: '🔥' },
@@ -29,45 +48,45 @@ export class VehicleEngineComponent {
 
 	protected onEngineTypeChanged(v: string): void {
 		let engineType: EngineType = EngineTypes.unknown;
-		let fuelType: FuelType = FuelTypes.unknown;
+		let engineFuel: FuelType = FuelTypes.unknown;
 		if (this.vehicleAsset?.dto) {
 			switch (v) {
 				case FuelTypes.diesel:
 					engineType = EngineTypes.combustion;
-					fuelType = FuelTypes.diesel;
+					engineFuel = FuelTypes.diesel;
 					break;
 				case FuelTypes.petrol:
 					engineType = EngineTypes.combustion;
-					fuelType = FuelTypes.petrol;
+					engineFuel = FuelTypes.petrol;
 					break;
 				case 'phev_diesel':
 					engineType = EngineTypes.phev;
-					fuelType = FuelTypes.diesel;
+					engineFuel = FuelTypes.diesel;
 					break;
 				case 'phev_petrol':
 					engineType = EngineTypes.phev;
-					fuelType = FuelTypes.petrol;
+					engineFuel = FuelTypes.petrol;
 					break;
 				case 'hybrid_diesel':
 					engineType = EngineTypes.hybrid;
-					fuelType = FuelTypes.diesel;
+					engineFuel = FuelTypes.diesel;
 					break;
 				case 'hybrid_petrol':
 					engineType = EngineTypes.hybrid;
-					fuelType = FuelTypes.petrol;
+					engineFuel = FuelTypes.petrol;
 					break;
 				case EngineTypes.steam:
 					engineType = EngineTypes.steam;
-					fuelType = FuelTypes.unknown;
+					engineFuel = FuelTypes.unknown;
 					break;
 				case 'other':
 					engineType = EngineTypes.other;
-					fuelType = FuelTypes.other;
+					engineFuel = FuelTypes.other;
 					break;
 			}
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: { ...this.vehicleAsset.dto, engineType, fuelType },
+				dto: { ...this.vehicleAsset.dto, engineType, engineFuel },
 			};
 			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}

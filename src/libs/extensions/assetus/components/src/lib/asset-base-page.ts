@@ -1,11 +1,11 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IAssetBrief, IAssetDto } from '@sneat/dto';
+import { IAssetBrief, IAssetDbData } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IAssetContext, IVehicleAssetContext } from '@sneat/team/models';
 import { NEVER, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 
-export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDto> {
+export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDbData> {
 
 	protected asset?: IAssetContext;
 

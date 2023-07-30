@@ -5,7 +5,7 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
 import { AssetService } from '../../asset-service';
-import { ICreateAssetRequestBase } from '../../asset-service.dto';
+import { ICreateAssetRequest } from '../../asset-service.dto';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
@@ -43,7 +43,7 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 			throw new Error('can not create asset without team context');
 		}
 
-		const request: ICreateAssetRequestBase = {
+		const request: ICreateAssetRequest = {
 			teamID: this.team?.id,
 			category: 'real_estate',
 			title: this.titleForm.controls['title'].value,
