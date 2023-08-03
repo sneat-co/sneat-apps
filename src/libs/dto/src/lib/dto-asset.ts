@@ -1,5 +1,6 @@
 import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2';
+import { IDocData } from './dto-document';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
 import { IWithModified } from './dto-with-modified';
 import {
@@ -26,7 +27,7 @@ export interface ISubAssetInfo extends ITitledRecord {
 	expires?: string; // ISO date string 'YYYY-MM-DD'
 }
 
-export interface IAssetBase extends ITitled {
+export interface IAssetBrief extends ITitled {
 	isRequest?: boolean;
 	status: AssetStatus;
 	category: AssetCategory;
@@ -37,11 +38,8 @@ export interface IAssetBase extends ITitled {
 	possession: AssetPossession;
 }
 
-export interface IAssetBrief extends IAssetBase {
-	id: string;
-}
 
-export interface IAssetMainData extends IAssetBase {
+export interface IAssetMainData extends IAssetBrief {
 	parentAssetID?: string;
 	desc?: string;
 	countryID?: CountryId;
@@ -90,6 +88,16 @@ export interface IVehicleData extends IEngine {
 }
 
 export interface IVehicleAssetDto extends IAssetDbData, IVehicleData {
+}
+
+export interface IVehicleMainData extends IAssetMainData, IVehicleData {
+}
+
+export interface IDocumentAssetDto extends IAssetDbData, IDocData {
+}
+
+export interface IDocumentMainData extends IAssetMainData, IDocData {
+
 }
 
 export interface IAssetCategory extends ITitledRecord {

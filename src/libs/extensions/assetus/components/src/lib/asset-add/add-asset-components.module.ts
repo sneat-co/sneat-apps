@@ -6,10 +6,9 @@ import { IonicModule } from '@ionic/angular';
 import { CountrySelectorModule, SelectFromListModule } from '@sneat/components';
 import { MakeModelCardComponent } from '../make-model-card/make-model-card.component';
 import { VehicleCardComponentModule } from '../vehicle-card/vehicle-card-component.module';
+import { AssetAddDocumentComponent } from './asset-add-document/asset-add-document.component';
 
 import { AssetAddVehicleComponent } from './asset-add-vehicle/asset-add-vehicle.component';
-
-const exports = [AssetAddVehicleComponent];
 
 @NgModule({
 	imports: [
@@ -21,8 +20,14 @@ const exports = [AssetAddVehicleComponent];
 		VehicleCardComponentModule,
 		MakeModelCardComponent,
 	],
-	declarations: [...exports],
-	exports,
+	declarations: [
+		AssetAddDocumentComponent,
+		AssetAddVehicleComponent,
+	],
+	exports: [
+		AssetAddDocumentComponent,
+		AssetAddVehicleComponent,
+	],
 })
 export class AddAssetComponentsModule {
 }

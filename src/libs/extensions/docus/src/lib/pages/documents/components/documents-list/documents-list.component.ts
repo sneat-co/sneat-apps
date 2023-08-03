@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { DocumentService } from '../../../../services/document.service';
+import { IDocumentAssetDto } from '@sneat/dto';
+import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IDocumentContext } from '@sneat/team/models';
+import { IAssetContext } from '@sneat/team/models';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({
@@ -12,20 +13,20 @@ import { DocumentsBaseComponent } from '../documents-base.component';
 })
 export class DocumentsListComponent extends DocumentsBaseComponent implements OnChanges {
 
-	filteredDocs?: IDocumentContext[];
+	protected filteredDocs?: IAssetContext<IDocumentAssetDto>[];
 
-	@Input() filter = '';
-	@Output() goDoc = new EventEmitter<IDocumentContext>();
+	@Input() public filter = '';
+	@Output() public readonly goDoc = new EventEmitter<IAssetContext<IDocumentAssetDto>>();
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		documentService: DocumentService,
+		assetService: AssetService,
 		toastCtrl: ToastController,
 	) {
-		super(errorLogger, documentService, toastCtrl);
+		super(errorLogger, assetService, toastCtrl);
 	}
 
-	readonly trackById = (i: number, record: { id: string }) => record.id;
+	protected readonly trackById = (i: number, record: { id: string }) => record.id;
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('DocumentsListComponent.ngOnChanges', changes, [...this.allDocuments], ''+this.filter);

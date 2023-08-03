@@ -1,6 +1,6 @@
 import { IWithAssetIDs, IWithMemberIDs, IWithTag } from './dto-models';
 
-export type SneatDocType =
+export type AssetDocumentType =
 	'unspecified' |
 	'other' |
 	'passport' |
@@ -28,7 +28,7 @@ export interface IDocTypeStandardFields {
 }
 
 export interface DocTypeDef {
-	id: SneatDocType;
+	id: AssetDocumentType;
 	title: string;
 	emoji?: string;
 	fields?: IDocTypeStandardFields;
@@ -101,7 +101,7 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 };
 
 export interface IDocumentBase {
-	type: SneatDocType;
+	type: AssetDocumentType;
 	title: string;
 	countryID?: string;
 	issuedOn?: string; // ISO date string 'YYYY-MM-DD'

@@ -3,13 +3,13 @@
 	<ion-label>
 		{{contact|personTitle}}
 		<ng-container *ngIf="contact?.brief?.roles?.length">
-			<ng-container *ngFor="let role of contact?.brief?.roles">
+			<ng-container *ngFor="let role of contact?.brief?.roles || []">
 				<ion-badge *ngIf="!excludeRole || role !== excludeRole" color="light" class="light">{{role}}</ion-badge>
 			</ng-container>
 		</ng-container>
 
 		<ng-container *ngIf="contact?.dto?.members && contact?.dto?.members?.length">
-			<p *ngFor="let member of contact?.dto?.members; trackBy: id">
+			<p *ngFor="let member of contact?.dto?.members || []; trackBy: id">
 				{{member.relation}} of <a [href]="member.id"
 																	(click)="goMember(member.id, $event)">{{member.title}}</a>
 			</p>
@@ -39,8 +39,8 @@
 			<ion-icon name="call"></ion-icon>
 		</ion-button>
 	</ion-buttons>
-
 </ion-item>
+
 <ion-item *ngIf="showAddress && contact?.dto?.address">
 	<ion-label>Address</ion-label>
 	<ion-textarea readonly [value]="contact?.dto?.address"></ion-textarea>

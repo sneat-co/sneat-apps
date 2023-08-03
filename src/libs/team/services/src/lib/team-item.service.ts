@@ -11,9 +11,9 @@ import { ITeamContext, ITeamItemContext, ITeamRequest } from '@sneat/team/models
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-type ICreateTeamItemResponse<Brief extends { id: string }, Dto> = ITeamItemContext<Brief, Dto>;
+type ICreateTeamItemResponse<Brief, Dto extends Brief> = ITeamItemContext<Brief, Dto>;
 
-export class TeamItemService<Brief extends { id: string }, Dto> {
+export class TeamItemService<Brief, Dto extends Brief> {
 	private readonly teamsCollection;
 	private readonly modulesCollection;
 	protected readonly sfs: SneatFirestoreService<Brief, Dto>;
@@ -93,7 +93,7 @@ export class TeamItemService<Brief extends { id: string }, Dto> {
 		return this.sneatApiService.delete<Response>(endpoint, undefined, request);
 	}
 
-	public createTeamItem<Brief extends { id: string }, Dto>(
+	public createTeamItem<Brief, Dto extends Brief>(
 		endpoint: string,
 		team: ITeamContext,
 		request: ITeamRequest,

@@ -1,4 +1,6 @@
 export * from './lib/asset-service';
+export * from './lib/asset-add/add-asset-base-component';
+export * from './lib/asset-service.dto';
 export * from './lib/asset-base-page';
 export * from './lib/asset-component-base-params';
 export * from './lib/assets-list/assets-list.component';

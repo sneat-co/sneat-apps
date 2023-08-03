@@ -4,30 +4,28 @@ import { ISelectItem } from '@sneat/components';
 import {
 	AssetPossession,
 	AssetVehicleType,
-	EngineTypes,
-	FuelTypes, IVehicleAssetDto,
-	IVehicleMainData,
+	IDocumentAssetDto, IDocumentMainData,
 	timestamp,
 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
+import { IDocumentAssetContext, ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../asset-service';
 import { ICreateAssetRequest } from '../../asset-service.dto';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
-	selector: 'sneat-asset-add-vehicle',
-	templateUrl: './asset-add-vehicle.component.html',
+	selector: 'sneat-asset-add-document',
+	templateUrl: './asset-add-document.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class AssetAddVehicleComponent extends AddAssetBaseComponent implements OnChanges {
+export class AssetAddDocumentComponent extends AddAssetBaseComponent implements OnChanges {
 
 	@Input() public override team?: ITeamContext;
-	@Input() public vehicleAsset?: IVehicleAssetContext;
+	@Input() public documentAsset?: IDocumentAssetContext;
 
-	protected vehicleType?: AssetVehicleType;
-	protected readonly vehicleTypes: ISelectItem[] = [
+	documentType?: AssetVehicleType;
+	documentTypes: ISelectItem[] = [
 		{ id: 'car', title: 'Car', iconName: 'car-outline' },
 		{ id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline' },
 		// { id: 'bicycle', title: 'Bicycle', iconName: 'bicycle-outline' }, this is a sport asset
@@ -50,7 +48,7 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IVehicleAssetContext = this.vehicleAsset
+			const a: IDocumentAssetContext = this.documentAsset
 				?? {
 					id: '',
 					team: this.team ?? { id: '' },
@@ -58,12 +56,10 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 						status: 'draft',
 						category: 'vehicle',
 						teamID: this.team?.id,
-						type: this.vehicleType,
+						type: this.documentType,
 						title: '',
 						make: '',
 						model: '',
-						engineFuel: FuelTypes.unknown,
-						engineType: EngineTypes.unknown,
 						possession: undefined as unknown as AssetPossession,
 						createdAt: new Date().toISOString() as unknown as timestamp,
 						createdBy: '-',
@@ -71,7 +67,7 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 						updatedBy: '-',
 					},
 				};
-			this.vehicleAsset = { ...a, team: this.team };
+			this.documentAsset = { ...a, team: this.team };
 		}
 	}
 
@@ -85,15 +81,15 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	}
 
 	protected onAssetChanged(asset: IVehicleAssetContext): void {
-		console.log('onAssetChanged', asset, this.vehicleAsset);
+		console.log('onAssetChanged', asset, this.documentAsset);
 	}
 
 	onVehicleTypeChanged(): void {
-		if (this.vehicleAsset?.dto) {
-			this.vehicleAsset = {
-				...this.vehicleAsset, dto: {
-					...this.vehicleAsset.dto,
-					type: this.vehicleType,
+		if (this.documentAsset?.dto) {
+			this.documentAsset = {
+				...this.documentAsset, dto: {
+					...this.documentAsset.dto,
+					type: this.documentType,
 					make: '',
 					model: '',
 				},
@@ -108,19 +104,19 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	}
 
 	submitVehicleForm(): void {
-		console.log('submitVehicleForm', this.vehicleAsset);
+		console.log('submitVehicleForm', this.documentAsset);
 		if (!this.team) {
 			throw 'no team context';
 		}
-		if (!this.vehicleType) {
+		if (!this.documentType) {
 			throw 'no vehicleType';
 		}
-		const assetDto = this.vehicleAsset?.dto;
+		const assetDto = this.documentAsset?.dto;
 		if (!assetDto) {
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
-		let request: ICreateAssetRequest<IVehicleMainData> = {
+		let request: ICreateAssetRequest<IDocumentMainData> = {
 			asset: {
 				...assetDto,
 				status: 'active',
@@ -166,6 +162,6 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage<IVehicleMainData, IVehicleAssetDto>(request, this.team);
+		this.createAssetAndGoToAssetPage<IDocumentMainData, IDocumentAssetDto>(request, this.team);
 	}
 }

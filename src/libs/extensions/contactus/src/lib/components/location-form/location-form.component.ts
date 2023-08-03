@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
-import { ContactRole, ContactType, IAddress, IContactBrief, IContactDto } from '@sneat/dto';
+import { ContactRole, ContactType, IAddress, IContactContext, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
@@ -17,7 +17,7 @@ export class LocationFormComponent implements OnChanges {
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
 	@Input() contact?: IContactContext;
-	@Input() parentContact?: IContactBrief;
+	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
 	@Input() contactType: ContactType = 'location';
@@ -80,7 +80,7 @@ export class LocationFormComponent implements OnChanges {
 			}
 		}
 		const title = this.title.value || '';
-		const brief = (this.contact.brief || {}) as IContactBrief;
+		const brief = (this.contact.brief || {}) as IContactContext;
 		const dto = (this.contact.dto || {}) as IContactDto;
 		this.contact = {
 			...this.contact,

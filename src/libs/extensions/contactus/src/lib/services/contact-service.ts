@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 // import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
-import { ContactRole, IContactBrief, IContactDto, IContactsBrief } from '@sneat/dto';
+import { ContactRole, IContactContext, IContactDto, IContactsBrief } from '@sneat/dto';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { map, Observable, throwError } from 'rxjs';
@@ -11,14 +11,14 @@ import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } fr
 @Injectable()
 export class ContactService {
 
-	private readonly teamItemService: TeamItemService<IContactBrief, IContactDto>;
+	private readonly teamItemService: TeamItemService<IContactContext, IContactDto>;
 	private readonly briefService: TeamItemService<{id: string}, IContactsBrief>;
 
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IContactBrief, IContactDto>('contacts', afs, sneatApiService);
+		this.teamItemService = new TeamItemService<IContactContext, IContactDto>('contacts', afs, sneatApiService);
 		this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
 	}
 
@@ -54,7 +54,7 @@ export class ContactService {
 		return this.teamItemService.sneatApiService.post('contacts/set_contacts_status', request);
 	}
 
-	watchContactBriefs(team: ITeamContext): Observable<IContactBrief[]> {
+	watchContactBriefs(team: ITeamContext): Observable<IContactContext[]> {
 		return this.briefService.watchTeamItemByID(team, 'contacts')
 			.pipe(map(item => item.dto?.contacts || []),
 			);
@@ -74,7 +74,7 @@ export class ContactService {
 			},
 			...(filter || []),
 		];
-		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, filter);
+		return this.teamItemService.watchTeamItems<IContactContext, IContactDto>(team, filter);
 	}
 
 	watchContactById(team: ITeamContext, contactID: string): Observable<IContactContext> {

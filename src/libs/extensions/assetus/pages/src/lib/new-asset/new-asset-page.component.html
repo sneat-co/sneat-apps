@@ -31,5 +31,6 @@
 
 	<ng-container [ngSwitch]="category?.id">
 		<sneat-asset-add-vehicle *ngSwitchCase="'vehicle'" [team]="team"></sneat-asset-add-vehicle>
+		<sneat-asset-add-document *ngSwitchCase="'document'" [team]="team"></sneat-asset-add-document>
 	</ng-container>
 </ion-content>

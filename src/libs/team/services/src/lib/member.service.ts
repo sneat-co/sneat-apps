@@ -6,7 +6,7 @@ import { IMemberBrief, IMemberDto, RoleTeamMember, trimNames } from '@sneat/dto'
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
-	IAddTeamMemberResponse,
+	IAddTeamMemberResponse, IBriefWithID,
 	ICreateTeamMemberRequest,
 	IMemberContext,
 	ITeamContext,
@@ -18,9 +18,8 @@ import { TeamItemService } from './team-item.service';
 import { TeamService } from './team.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
-export const memberContextFromBrief = (brief: IMemberBrief, team: ITeamContext): IMemberContext => ({
-	id: brief.id,
-	brief,
+export const memberContextFromBrief = (member: IBriefWithID<IMemberBrief>, team: ITeamContext): IMemberContext => ({
+	...member,
 	team,
 });
 

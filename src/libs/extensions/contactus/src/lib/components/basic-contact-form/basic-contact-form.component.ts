@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { ContactRole, ContactType, IContactBrief } from '@sneat/dto';
+import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactBasicRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
@@ -9,7 +9,7 @@ import { ContactService } from '../../services';
 	templateUrl: './basic-contact-form.component.html',
 })
 export class BasicContactFormComponent {
-	@Input() parentContact?: IContactBrief;
+	@Input() parentContact?: IContactContext;
 	@Input() team?: ITeamContext;
 	@Input() contactType?: ContactType;
 

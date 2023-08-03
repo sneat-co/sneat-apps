@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { ContactRole, ContactType, IContactBrief, validateAddress } from '@sneat/dto';
+import { ContactRole, ContactType, IContactContext, validateAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
@@ -17,7 +17,7 @@ export class NewCompanyFormComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
-	@Input() parentContact?: IContactBrief;
+	@Input() parentContact?: IContactContext;
 
 	@Output() contactCreated = new EventEmitter<IContactContext>();
 

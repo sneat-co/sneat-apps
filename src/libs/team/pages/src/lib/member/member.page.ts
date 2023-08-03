@@ -99,7 +99,7 @@ export class MemberPageComponent implements OnDestroy {
 		this.changing = 'role';
 		const { detail } = event as CustomEvent;
 		this.teamService
-			.changeMemberRole(this.team, this.memberId, detail.value)
+			.changeContactRole(this.team, this.memberId, detail.value)
 			.subscribe({
 				next: () => {
 					this.changing = undefined;

@@ -1,9 +1,9 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {AssetAddVehicleComponent} from './asset-add-vehicle.component';
+import { AssetAddVehicleComponent } from './asset-add-vehicle.component';
 
-describe('AssetAddVehiclePage', () => {
+describe('AssetAddVehicleComponent', () => {
 	let component: AssetAddVehicleComponent;
 	let fixture: ComponentFixture<AssetAddVehicleComponent>;
 

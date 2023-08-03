@@ -3,6 +3,7 @@ import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { ITeamMemberInfo } from './dto-commune';
 import { IContact2Member } from './dto-contact2';
 import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
+import { IContactBrief } from './dto-person';
 import { DtoGroupTerms } from './dto-term';
 import { MembersVisibility, MemberType } from './types';
 
@@ -71,9 +72,7 @@ export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder
 	readonly avatar?: IAvatar;
 }
 
-export interface IMemberBrief extends IMemberBase {
-	id: string;
-	shortTitle?: string;
+export interface IMemberBrief extends IContactBrief {
 }
 
 export interface IMemberDto extends IMemberBase {

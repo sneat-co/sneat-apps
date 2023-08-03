@@ -20,7 +20,7 @@ export interface IFilter {
 	value: unknown;
 }
 
-export class SneatFirestoreService<Brief extends { id: string }, Dto> {
+export class SneatFirestoreService<Brief, Dto extends Brief> {
 
 	constructor(
 		private readonly collection: string,
@@ -95,7 +95,7 @@ export class SneatFirestoreService<Brief extends { id: string }, Dto> {
 	}
 }
 
-export function docSnapshotToDto<Brief extends { id: string }, Dto>(
+export function docSnapshotToDto<Brief, Dto>(
 	id: string,
 	dto2brief: (id: string, dto: Dto) => Brief,
 	docSnapshot: DocumentSnapshot<Dto>,

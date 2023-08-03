@@ -1,123 +1,108 @@
-<ion-header>
-	<ion-toolbar color="light" class="with-back-button">
-		<ion-buttons slot="start">
-			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl"></ion-back-button>
-		</ion-buttons>
-		<ion-title *ngIf="team else titleNoTeam">
-			New document @ {{team.brief?.title || team.brief?.type|titlecase}}
-		</ion-title>
-		<ng-template #titleNoTeam>
-			<ion-title>New document</ion-title>
-		</ng-template>
-	</ion-toolbar>
-</ion-header>
+<p class="ion-margin" *ngIf="!docType"><ion-text color="medium">Step 1 of 4</ion-text></p>
 
-<ion-content>
-	<p class="ion-margin" *ngIf="!docType"><ion-text color="medium">Step 1 of 4</ion-text></p>
+<ion-card>
+
+	<sneat-select-from-list
+		[(ngModel)]="docType"
+		(ngModelChange)="onDocTypeChange($event)"
+		[isFilterable]="false"
+		title="Document Type"
+		[items]="docTypes"
+		radioSlot="end"
+	></sneat-select-from-list>
+
+	<ion-item *ngIf="docType === 'other'">
+		<ion-label>Title</ion-label>
+		<ion-input [(ngModel)]="docTitle"></ion-input>
+	</ion-item>
+</ion-card>
+
+<ng-container *ngIf="docType && docType !== 'unspecified'">
+	<p class="ion-margin" *ngIf="!country"><ion-text color="medium">Step 2 of 4</ion-text></p>
 	<ion-card>
-
-		<sneat-select-from-list
-			[(ngModel)]="docType"
-			(ngModelChange)="onDocTypeChange($event)"
-			[isFilterable]="false"
-			title="Document Type"
-			[items]="docTypes"
-			radioSlot="end"
-		></sneat-select-from-list>
-
-		<ion-item *ngIf="docType === 'other'">
-			<ion-label>Title</ion-label>
-			<ion-input [(ngModel)]="docTitle"></ion-input>
-		</ion-item>
+		<sneat-country-selector [(country)]="country"></sneat-country-selector>
 	</ion-card>
 
-	<ng-container *ngIf="docType && docType !== 'unspecified'">
-		<p class="ion-margin" *ngIf="!country"><ion-text color="medium">Step 2 of 4</ion-text></p>
+	<ng-container *ngIf="country">
+		<p *ngIf="isMissingRequiredParams">This page is missing a required parameter.</p>
+
+		<p class="ion-margin" *ngIf="!selectedMembers"><ion-text color="medium">Step 3 of 4</ion-text></p>
 		<ion-card>
-			<sneat-country-selector [(country)]="country"></sneat-country-selector>
+			<sneat-members-selector-input
+				[members]="members"
+				[max]="docFields.members?.max"
+				[(selectedMembers)]="selectedMembers"
+			></sneat-members-selector-input>
 		</ion-card>
 
-		<ng-container *ngIf="country">
-			<p *ngIf="isMissingRequiredParams">This page is missing a required parameter.</p>
-
-			<p class="ion-margin" *ngIf="!selectedMembers"><ion-text color="medium">Step 3 of 4</ion-text></p>
-			<ion-card>
-				<sneat-members-selector-input
-					[members]="members"
-					[max]="docFields.members?.max"
-					[(selectedMembers)]="selectedMembers"
-				></sneat-members-selector-input>
-			</ion-card>
-
-			<ng-container *ngIf="selectedMembers">
-				<ng-container *ngIf="!isMissingRequiredParams">
-					<p class="ion-margin"><ion-text color="medium">Step 4 of 4</ion-text></p>
-					<ion-card>
-						<ion-item-divider [color]="docNumber ? 'light' : 'primary'">
-							<ion-label>Required fields</ion-label>
-						</ion-item-divider>
-						<ion-item>
-							<ion-label>Number</ion-label>
-							<ion-input [(ngModel)]="docNumber"></ion-input>
-						</ion-item>
-						<ion-item>
-							<ion-label color="medium">Issued by</ion-label>
-							<ion-input></ion-input>
-						</ion-item>
-						<ion-grid class="ion-grid-layout">
-							<ion-row>
-								<ion-col>
-									<ion-item>
-										<ion-label color="medium">Issued on</ion-label>
-										<ion-input type="date"></ion-input>
-									</ion-item>
-								</ion-col>
-								<ion-col>
-									<ion-item>
-										<ion-label color="medium">Valid till</ion-label>
-										<ion-input type="date"></ion-input>
-									</ion-item>
-								</ion-col>
-							</ion-row>
-						</ion-grid>
-					</ion-card>
-				</ng-container>
-
-				<ion-card *ngIf="docType === 'driving_license'">
-					<ion-item-divider color="light">
-						<ion-label>Categories</ion-label>
+		<ng-container *ngIf="selectedMembers">
+			<ng-container *ngIf="!isMissingRequiredParams">
+				<p class="ion-margin"><ion-text color="medium">Step 4 of 4</ion-text></p>
+				<ion-card>
+					<ion-item-divider [color]="docNumber ? 'light' : 'primary'">
+						<ion-label>Required fields</ion-label>
 					</ion-item-divider>
 					<ion-item>
-						<ion-label>Category A</ion-label>
-						<ion-checkbox value="A"></ion-checkbox>
+						<ion-label>Number</ion-label>
+						<ion-input [(ngModel)]="docNumber"></ion-input>
 					</ion-item>
 					<ion-item>
-						<ion-label>Category B</ion-label>
-						<ion-checkbox value="B"></ion-checkbox>
+						<ion-label color="medium">Issued by</ion-label>
+						<ion-input></ion-input>
 					</ion-item>
-					<ion-item>
-						<ion-label>Category C</ion-label>
-						<ion-checkbox value="C"></ion-checkbox>
-					</ion-item>
-					<ion-item>
-						<ion-label>Category D</ion-label>
-						<ion-checkbox value="D"></ion-checkbox>
-					</ion-item>
-					<ion-item>
-						<ion-label>Category E</ion-label>
-						<ion-checkbox value="E"></ion-checkbox>
-					</ion-item>
-				</ion-card>
-
-				<ion-card>
-					<ion-card-content>
-						<ion-button [disabled]="!isFormValid" (click)="submit()">
-							Create
-						</ion-button>
-						<ion-button color="light" routerDirection="back" routerLink="../documents">Cancel</ion-button>
-					</ion-card-content>
+					<ion-grid class="ion-grid-layout">
+						<ion-row>
+							<ion-col>
+								<ion-item>
+									<ion-label color="medium">Issued on</ion-label>
+									<ion-input type="date"></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col>
+								<ion-item>
+									<ion-label color="medium">Valid till</ion-label>
+									<ion-input type="date"></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
 				</ion-card>
 			</ng-container>
+
+			<ion-card *ngIf="docType === 'driving_license'">
+				<ion-item-divider color="light">
+					<ion-label>Categories</ion-label>
+				</ion-item-divider>
+				<ion-item>
+					<ion-label>Category A</ion-label>
+					<ion-checkbox value="A"></ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-label>Category B</ion-label>
+					<ion-checkbox value="B"></ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-label>Category C</ion-label>
+					<ion-checkbox value="C"></ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-label>Category D</ion-label>
+					<ion-checkbox value="D"></ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-label>Category E</ion-label>
+					<ion-checkbox value="E"></ion-checkbox>
+				</ion-item>
+			</ion-card>
+
+			<ion-card>
+				<ion-card-content>
+					<ion-button [disabled]="!isFormValid" (click)="submit()">
+						Create
+					</ion-button>
+					<ion-button color="light" routerDirection="back" routerLink="../documents">Cancel</ion-button>
+				</ion-card-content>
+			</ion-card>
 		</ng-container>
 	</ng-container>
-</ion-content>
+</ng-container>

@@ -6,7 +6,7 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 
 // type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
 
-export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> extends TeamBaseComponent {
+export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends TeamBaseComponent {
 
 	protected constructor(
 		className: string,

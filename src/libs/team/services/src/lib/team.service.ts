@@ -5,9 +5,10 @@ import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
-import { IMemberBrief, ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
+import {  ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IContactusTeamContext,
 	ICreateTeamRequest,
 	ICreateTeamResponse, IJoinTeamInfoResponse,
 	ITeamContext,
@@ -124,33 +125,34 @@ export class TeamService {
 		return subj.asObservable();
 	}
 
-	public changeMemberRole(
-		team: ITeamContext,
-		memberId: string,
+	public changeContactRole(
+		team: ITeamRef,
+		contactusTeam: IContactusTeamContext,
+		contactID: string,
 		role: MemberRole,
 	): Observable<ITeamContext> {
-		let member = team?.dto?.members?.find((m: IMemberBrief) => m.id === memberId);
-		if (!member) {
+		let contactBrief = contactusTeam?.dto?.contacts[contactID];
+		if (!contactBrief) {
 			return throwError(() => 'member not found by ID in team record');
 		}
 		return this.sneatApiService
 			.post(`members/change_member_role`, {
-				team: team.id,
-				member: memberId,
+				teamID: team.id,
+				contactID,
 				role,
 			})
 			.pipe(
 				map(() => {
-					if (!member) {
+					if (!contactBrief) {
 						throw new Error('member is no longer available');
 					}
-					member = { ...member, roles: [role] };
+					contactBrief = { ...contactBrief, roles: [role] };
 					return team;
 				}),
 			);
 	}
 
-	public removeTeamMember(
+	public removeTeamMember( // TODO: move to members service?
 		teamRecord: ITeamContext,
 		memberID: string,
 	): Observable<ITeamContext> {
@@ -173,7 +175,7 @@ export class TeamService {
 					...team,
 					dto: {
 						...team.dto,
-						members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberID),
+						// TODO: members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberID),
 					},
 				};
 			}
@@ -191,7 +193,7 @@ export class TeamService {
 			return team;
 		});
 		if (teamRecord?.dto?.members) {
-			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberID);
+			const member = teamRecord.dto.members.find((/*_: IMemberBrief*/) => false /*TODO: m.id === memberID*/);
 			if (member?.userID === this.userService.currentUserID) {
 				const teamRequest: ITeamRequest = {
 					teamID: teamRecord.id,
@@ -200,7 +202,7 @@ export class TeamService {
 					.post<ITeamDto>('members/leave_team', teamRequest)
 					.pipe(
 						map(teamDto => {
-							const teamContext: ITeamContext = { id, type: teamDto.type, brief: { id, ...teamDto }, dto: teamDto };
+							const teamContext: ITeamContext = { id, type: teamDto.type, brief: teamDto, dto: teamDto };
 							return teamContext;
 						}),
 						switchMap(processRemoveTeamMemberResponse),

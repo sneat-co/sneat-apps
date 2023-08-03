@@ -1,11 +1,11 @@
 import { Directive, Inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
+import { IDocumentAssetDto } from '@sneat/dto';
+import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IDocumentContext } from '@sneat/team/models';
+import { IAssetContext } from '@sneat/team/models';
 import { ignoreElements } from 'rxjs/operators';
-import { DocumentService } from '../../../services/document.service';
-
 
 @Directive()
 export abstract class DocumentsBaseComponent {
@@ -14,27 +14,27 @@ export abstract class DocumentsBaseComponent {
 		inputs: ['allDocuments'],
 	};
 
-	@Input() allDocuments?: IDocumentContext[];
+	@Input() allDocuments?: IAssetContext<IDocumentAssetDto>[];
 
 
 	protected constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		protected readonly documentService: DocumentService,
+		protected readonly asset: AssetService,
 		protected readonly toastCtrl: ToastController,
 	) {
 	}
 
-	deleteDocument(doc: IDocumentContext, slidingItem: IonItemSliding): void {
-		this.documentService.deleteDocument(doc)
+	deleteDocument(asset: IAssetContext, slidingItem: IonItemSliding): void {
+		this.asset.deleteAsset(asset)
 			.pipe(ignoreElements())
 			.subscribe({
 				complete: async () => {
 					const toast = await this.toastCtrl.create({
-						message: `Document deleted: ${doc.id}`,
+						message: `Document deleted: ${asset.id}`,
 					});
 					await toast.present();
 					await slidingItem.close();
-					this.allDocuments = this.allDocuments?.filter(d => !eq(d.id, doc.id));
+					this.allDocuments = this.allDocuments?.filter(d => !eq(d.id, asset.id));
 					this.onDocsChanged();
 				},
 				error: err => {

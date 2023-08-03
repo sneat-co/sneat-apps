@@ -7,3 +7,4 @@ export * from './team-context.service';
 export * from './invite.service';
 export * from './happening.service';
 export * from './schedule-day.service';
+export * from './team-module.service';

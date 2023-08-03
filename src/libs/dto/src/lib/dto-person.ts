@@ -1,3 +1,4 @@
+import { IAvatar } from '@sneat/auth-models';
 import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from './contact-roles';
@@ -54,15 +55,15 @@ export type ContactType = MemberType
 
 export interface IContactBase {
 	readonly type: ContactType;
+	readonly title?: string;
 	readonly name?: IName;
 	readonly countryID?: string;
-	readonly title?: string;
 	readonly userID?: string;
 	readonly gender?: Gender;
 	readonly ageGroup?: AgeGroupID;
 	readonly address?: IAddress;
 	readonly roles?: readonly string[];
-	// title: string; // Mandatory title
+	readonly avatar?: IAvatar;
 }
 
 export const emptyPersonBase: IContactBase = { type: '' as ContactType, name: {} };
@@ -130,8 +131,6 @@ export interface IRelatedPersonContact extends IRelatedPerson {
 }
 
 export interface IContactBrief extends IContactBase {
-	id: string;
-	title: string;
 	parentID?: string;
 }
 
