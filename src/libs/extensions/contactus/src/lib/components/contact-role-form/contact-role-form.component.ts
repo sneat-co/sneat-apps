@@ -5,7 +5,7 @@ import {
 	defaultFamilyContactGroups,
 	IContactGroupContext,
 	IContactRoleContext,
-} from '../../services';
+} from '../../../../../../team/contacts/services/src/lib';
 
 
 @Component({

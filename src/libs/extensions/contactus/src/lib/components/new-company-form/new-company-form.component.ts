@@ -6,7 +6,7 @@ import { excludeEmpty } from '@sneat/core';
 import { ContactRole, ContactType, IContactContext, validateAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
-import { ContactService } from '../../services';
+import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 
 @Component({
 	selector: 'sneat-new-company-form',

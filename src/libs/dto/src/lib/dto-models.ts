@@ -1,4 +1,4 @@
-import { IPerson } from './dto-person';
+import { IPerson } from './dto-contact';
 import { Restriction } from './types';
 
 // import {IPersonSize} from '../ui/dto-sizechart';

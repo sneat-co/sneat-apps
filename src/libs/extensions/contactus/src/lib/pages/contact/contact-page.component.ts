@@ -5,7 +5,7 @@ import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { IContactContext } from '@sneat/team/models';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
-import { ContactService } from '../../services';
+import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, SneatPipesModule } from '@sneat/components';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ContactsListModule } from '../../components/contacts-list/contacts-list.module';
-import { ContactServiceModule } from '../../services';
+import { ContactServiceModule } from '../../../../../../team/contacts/services/src/lib';
 import { ContactsByTypeComponent } from '../../components/contacts-by-type/contacts-by-type.component';
 
 import { ContactsPageComponent } from './contacts-page.component';

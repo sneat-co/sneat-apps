@@ -1,7 +1,7 @@
 import { IListGroupsHolder } from './dto-list';
 import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
-import { IPerson } from './dto-person';
+import { IPerson } from './dto-contact';
 import { ITeamDto } from './dto-team';
 import { CommuneType, CountryId } from './types';
 

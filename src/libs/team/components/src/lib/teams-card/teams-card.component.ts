@@ -3,11 +3,12 @@ import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/team/contacts/services';
 import { ICreateTeamRequest } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { ISneatUserState, SneatUserService } from '@sneat/auth';
 import { Subject, Subscription } from 'rxjs';
-import { mergeMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'sneat-teams-card',
@@ -31,6 +32,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		private readonly navService: TeamNavService,
 		private readonly userService: SneatUserService,
 		private readonly teamService: TeamService,
+		private readonly contactService: ContactService,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
 		private readonly toastController: ToastController,
@@ -114,7 +116,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 				const userTeam: IUserTeamBrief = {
 					id: team.id,
 					title: team?.dto?.title || team.id,
-					roles: ["creator"],
+					roles: ['creator'],
 					// memberType: request.memberType,
 					type: team?.dto?.type || 'unknown',
 				};
@@ -158,29 +160,17 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		if (!confirm(`Are you sure you want to leave team ${teamInfo.title}?`)) {
 			return;
 		}
-		this.teamService
-			.getTeam({ id: teamInfo.id, type: teamInfo.type })
-			.pipe(
-				mergeMap(team => {
-					const { currentUserID } = this.userService;
-					const userMember = team?.dto?.members?.find((m) => m.userID === currentUserID);
-					if (!userMember) {
-						return [team];
-					}
-					return this.teamService.removeTeamMember(
-						team,
-						userMember.id,
-					);
-				}),
-			)
-			.subscribe({
-				next: (response) => console.log('left team:', response),
-				error: (err) =>
-					this.errorLogger.logError(
-						err,
-						`Failed to leave a team: ${teamInfo.title}`,
-					),
-			});
+		return this.teamService.removeTeamMember(
+			teamInfo,
+			this.userService.currentUserID,
+		).subscribe({
+			next: (response: unknown) => console.log('left team:', response),
+			error: (err: unknown) =>
+				this.errorLogger.logError(
+					err,
+					`Failed to leave a team: ${teamInfo.title}`,
+				),
+		});
 	}
 
 	private watchUserRecord(): void {
@@ -223,7 +213,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		const user = userState.record;
 		if (user) {
 			this.teams = Object.entries(user?.teams ? user.teams : {}).map(
-				([id, team]) => ({ ...team, id}),
+				([id, team]) => ({ ...team, id }),
 			);
 			this.teams.sort((a, b) => (a.title > b.title ? 1 : -1));
 			this.showAdd = !this.teams?.length;

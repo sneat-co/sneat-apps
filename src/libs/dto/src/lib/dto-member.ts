@@ -1,9 +1,9 @@
 import { IAvatar } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { ITeamMemberInfo } from './dto-commune';
-import { IContact2Member } from './dto-contact2';
+import { IContact2Member } from './dto-contact2item';
 import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
-import { IContactBrief } from './dto-person';
+import { IContactBrief } from './dto-contact';
 import { DtoGroupTerms } from './dto-term';
 import { MembersVisibility, MemberType } from './types';
 

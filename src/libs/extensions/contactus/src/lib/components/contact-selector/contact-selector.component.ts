@@ -7,7 +7,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { ContactusTeamService } from '@sneat/team/services';
 import { Subject, Subscription } from 'rxjs';
-import { ContactService } from '../../services';
+import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 import { IContactSelectorOptions } from './contact-selector.service';
 
 export interface IContactSelectorProps {

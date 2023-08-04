@@ -3,7 +3,7 @@ import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from './contact-roles';
 import { IAddress } from './dto-address';
-import { IContact2Asset, IContact2Member } from './dto-contact2';
+import { IContact2Asset, IContact2Member } from './dto-contact2item';
 import { IPersonRecord } from './dto-models';
 import { AgeGroupID, Gender, MemberType } from './types';
 

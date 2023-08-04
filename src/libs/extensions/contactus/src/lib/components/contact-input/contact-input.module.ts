@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { ContactServiceModule } from '../../services';
+import { ContactServiceModule } from '../../../../../../team/contacts/services/src/lib';
 import { ContactSelectorModule } from '../contact-selector/contact-selector.module';
 import { ContactInputComponent } from './contact-input.component';
 

@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
-import { InviteModalModule } from '../invite-modal/invite-modal.module';
+import { InviteModalModule } from '../../../../../../team/components/src/lib/invite-modal/invite-modal.module';
 import { MembersListComponent } from './members-list.component';
 
 @NgModule({

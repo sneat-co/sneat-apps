@@ -1,6 +1,5 @@
 import { INavContext } from '@sneat/core';
-import { IContactusTeamDto } from '@sneat/team/models';
-import { IContact2Asset } from './dto-contact2';
+import { IContact2Asset } from './dto-contact2item';
 import { IDocData } from './dto-document';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
 import { IWithModified } from './dto-with-modified';

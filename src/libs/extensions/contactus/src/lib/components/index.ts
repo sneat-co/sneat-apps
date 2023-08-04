@@ -6,3 +6,5 @@ export * from './location-form';
 export * from './new-company-form';
 export * from './contact-roles-input';
 export * from './contacts-list';
+export * from './members-list';
+export * from './members-selector';

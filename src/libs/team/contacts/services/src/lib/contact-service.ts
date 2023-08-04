@@ -14,7 +14,7 @@ import { TeamItemService } from '@sneat/team/services';
 import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, switchMap, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from '../dto';
+import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from './dto';
 
 @Injectable()
 export class ContactService {

@@ -11,7 +11,6 @@ export interface IHappeningWithUiState extends IHappeningContext {
 
 export function newEmptyHappeningContext(team: ITeamContext, type: HappeningType, kind: HappeningKind, status: HappeningStatus): IHappeningContext {
 	const brief: IHappeningBrief = {
-		id: '',
 		type,
 		kind,
 		status,

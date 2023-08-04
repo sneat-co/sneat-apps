@@ -3,8 +3,8 @@ import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { ISetContactRoleRequest } from '../../dto';
-import { ContactService } from '../../services';
+import { ISetContactRoleRequest } from '../../../../../../team/contacts/services/src/lib/dto';
+import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 
 @Component({
 	selector: 'sneat-contact-roles-input',

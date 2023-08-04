@@ -66,9 +66,14 @@ export class TeamsMenuComponent {
 			this.familyTeam = undefined;
 			return;
 		}
-		this.teams = user?.record?.teams?.filter(t => !this.teamType || t.type === this.teamType)?.map(teamContextFromBrief) || [];
+
+		this.teams = user?.record?.teams
+			?.filter(t => !this.teamType || t.type === this.teamType)
+			?.map(t => teamContextFromBrief(t.id, t)) || [];
+
 		this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
 		this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
+
 		if (this.familyTeam) {
 			this.teams = this.teams.filter(t => t.type !== 'family');
 		}

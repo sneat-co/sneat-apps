@@ -4,7 +4,7 @@ import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IContactContext } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
 import { ContactComponentBaseParams } from '../contact-component-base-params';
-import { ContactService } from '../services';
+import { ContactService } from '../../../../../team/contacts/services/src/lib';
 
 export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
 

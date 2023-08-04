@@ -5,7 +5,7 @@ import { createSetFocusToInput } from '@sneat/components';
 import { ContactRole, ContactType, IAddress, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
-import { ContactService } from '../../services';
+import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 
 @Component({
 	selector: 'sneat-location-form',

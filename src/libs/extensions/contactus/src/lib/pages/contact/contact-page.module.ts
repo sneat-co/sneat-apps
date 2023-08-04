@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AddressFormModule, SneatPipesModule } from '@sneat/components';
 import { ContactsListModule, ContactRolesInputModule } from '../../components';
-import { ContactServiceModule } from '../../services';
+import { ContactServiceModule } from '../../../../../../team/contacts/services/src/lib';
 import { ContactPageComponent } from './contact-page.component';
 
 const routes: Routes = [
