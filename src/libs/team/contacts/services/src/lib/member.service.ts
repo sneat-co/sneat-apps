@@ -16,6 +16,7 @@ import {
 } from '@sneat/team/models';
 import { Observable } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
+import { ContactusTeamService } from './contactus-team.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
 export const memberContextFromBrief = (member: IBriefAndID<IMemberBrief>, team: ITeamContext): IMemberContext => ({
