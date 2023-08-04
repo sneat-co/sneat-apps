@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
+import { SneatUserService } from '@sneat/auth';
 import { ContactRole, IContactBrief, IContactDto, ITeamDto, MemberRole } from '@sneat/dto';
 import {
 	IContactContext,
@@ -26,6 +27,7 @@ export class ContactService {
 		afs: AngularFirestore,
 		protected sneatApiService: SneatApiService,
 		protected contactusTeamService: ContactusTeamService,
+		private readonly userService: SneatUserService,
 	) {
 		this.teamItemService = new TeamItemService<IContactBrief, IContactDto>('contacts', afs, sneatApiService);
 		// this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
@@ -209,7 +211,6 @@ export class ContactService {
 				ensureTeamRecordExists,
 			);
 	}
-
 }
 
 export interface IContactsFilter {

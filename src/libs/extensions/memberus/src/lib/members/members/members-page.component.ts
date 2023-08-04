@@ -10,7 +10,7 @@ import {
 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, IMemberGroupContext, zipMapBriefsWithIDs } from '@sneat/team/models';
-import { memberContextFromBrief, MemberGroupService, MemberService } from '@sneat/team/services';
+import { MemberGroupService, MemberService } from '@sneat/extensions/contactus';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../members-base-page';
 
