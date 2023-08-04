@@ -1,25 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-// import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
-import { ContactRole, IContactContext, IContactDto, IContactsBrief } from '@sneat/dto';
-import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
-import { map, Observable, throwError } from 'rxjs';
+import { ContactRole, IContactBrief, IContactDto, ITeamDto, MemberRole } from '@sneat/dto';
+import {
+	IContactContext,
+	IContactusTeamContext,
+	ICreateContactRequest,
+	ITeamContext, ITeamMemberRequest,
+	ITeamRef, ITeamRequest,
+} from '@sneat/team/models';
+import { ContactusTeamService, TeamItemService } from '@sneat/team/services';
+import { map, Observable, switchMap, throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from '../dto';
 
 @Injectable()
 export class ContactService {
 
-	private readonly teamItemService: TeamItemService<IContactContext, IContactDto>;
-	private readonly briefService: TeamItemService<{id: string}, IContactsBrief>;
+	protected readonly teamItemService: TeamItemService<IContactBrief, IContactDto>;
+
+	// private readonly briefService: TeamItemService<{id: string}, IContactsBrief>;
 
 	constructor(
 		afs: AngularFirestore,
-		sneatApiService: SneatApiService,
+		protected sneatApiService: SneatApiService,
+		protected contactusTeamService: ContactusTeamService,
 	) {
-		this.teamItemService = new TeamItemService<IContactContext, IContactDto>('contacts', afs, sneatApiService);
-		this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
+		this.teamItemService = new TeamItemService<IContactBrief, IContactDto>('contacts', afs, sneatApiService);
+		// this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
 	}
 
 	createContact(team: ITeamContext, request: ICreateContactRequest, endpoint = 'contacts/create_contact'): Observable<IContactContext> {
@@ -54,11 +62,6 @@ export class ContactService {
 		return this.teamItemService.sneatApiService.post('contacts/set_contacts_status', request);
 	}
 
-	watchContactBriefs(team: ITeamContext): Observable<IContactContext[]> {
-		return this.briefService.watchTeamItemByID(team, 'contacts')
-			.pipe(map(item => item.dto?.contacts || []),
-			);
-	}
 
 	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: IFilter[]): Observable<IContactContext[]> {
 		filter = [
@@ -74,7 +77,7 @@ export class ContactService {
 			},
 			...(filter || []),
 		];
-		return this.teamItemService.watchTeamItems<IContactContext, IContactDto>(team, filter);
+		return this.teamItemService.watchTeamItems<IContactBrief, IContactDto>(team, filter);
 	}
 
 	watchContactById(team: ITeamContext, contactID: string): Observable<IContactContext> {
@@ -108,6 +111,104 @@ export class ContactService {
 		}
 		return this.teamItemService.watchTeamItems(team, f);
 	}
+
+	public changeContactRole(
+		team: ITeamRef,
+		contactusTeam: IContactusTeamContext,
+		contactID: string,
+		role: MemberRole,
+	): Observable<ITeamContext> {
+		let contactBrief = contactusTeam?.dto?.contacts[contactID];
+		if (!contactBrief) {
+			return throwError(() => 'member not found by ID in team record');
+		}
+		return this.sneatApiService
+			.post(`members/change_member_role`, {
+				teamID: team.id,
+				contactID,
+				role,
+			})
+			.pipe(
+				map(() => {
+					if (!contactBrief) {
+						throw new Error('member is no longer available');
+					}
+					contactBrief = { ...contactBrief, roles: [role] };
+					return team;
+				}),
+			);
+	}
+
+	public removeTeamMember( // TODO: move to members service?
+		contactusTeam: IContactusTeamContext,
+		memberID: string,
+	): Observable<ITeamContext> {
+		console.log(
+			`removeTeamMember(teamID: ${contactusTeam?.id}, memberID=${memberID})`,
+		);
+		if (!contactusTeam) {
+			return throwError(() => 'teamRecord parameters is required');
+		}
+		const id = contactusTeam.id;
+		if (!id) {
+			return throwError(() => 'teamRecord.id parameters is required');
+		}
+		if (!memberID) {
+			return throwError(() => 'memberId is required parameter');
+		}
+		const updateTeam = (team: ITeamContext) => {
+			if (team?.dto) {
+				team = {
+					...team,
+					dto: {
+						...team.dto,
+						// TODO: members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberID),
+					},
+				};
+			}
+			this.onTeamUpdated(team);
+		};
+		const processRemoveTeamMemberResponse = (team: ITeamRef): Observable<ITeamContext> =>
+			this.getTeam(team).pipe(
+				tap(updateTeam),
+				// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
+			);
+		const ensureTeamRecordExists = map((team: ITeamContext) => {
+			if (!team?.dto) {
+				throw new Error('team record is expected to exist');
+			}
+			return team;
+		});
+		if (contactusTeam?.dto?.contacts) {
+			const member = contactusTeam.dto.contacts[memberID];
+			if (member?.userID === this.userService.currentUserID) {
+				const teamRequest: ITeamRequest = {
+					teamID: contactusTeam.id,
+				};
+				this.sneatApiService
+					.post<ITeamDto>('members/leave_team', teamRequest)
+					.pipe(
+						map(teamDto => {
+							const teamContext: ITeamContext = { id, type: teamDto.type, brief: teamDto, dto: teamDto };
+							return teamContext;
+						}),
+						switchMap(processRemoveTeamMemberResponse),
+						ensureTeamRecordExists,
+					);
+			}
+		}
+		const request: ITeamMemberRequest = {
+			teamID: contactusTeam.id,
+			memberID: memberID,
+		};
+		return this.sneatApiService
+			.post('members/remove_member', request)
+			.pipe(
+				switchMap(() => processRemoveTeamMemberResponse(contactusTeam)),
+				ensureTeamRecordExists,
+			);
+	}
+
 }
 
 export interface IContactsFilter {

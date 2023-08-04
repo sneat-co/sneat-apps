@@ -8,6 +8,7 @@ import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IBriefAndID } from '@sneat/team/models';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
@@ -83,7 +84,7 @@ export class NavService {
 	public navigateToMember(
 		navController: NavController,
 		team: IRecord<ITeamDto>,
-		memberInfo: IMemberBrief,
+		memberInfo: IBriefAndID<IMemberBrief>,
 	): void {
 		console.log(
 			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`,

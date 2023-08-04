@@ -5,19 +5,16 @@ import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
-import {  ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
+import { ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IContactusTeamContext,
 	ICreateTeamRequest,
 	ICreateTeamResponse, IJoinTeamInfoResponse,
 	ITeamContext,
-	ITeamMemberRequest,
 	ITeamRef,
-	ITeamRequest,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth';
-import { BehaviorSubject, Observable, Subscription, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
 const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({ ...v, type: v.type });
@@ -125,102 +122,6 @@ export class TeamService {
 		return subj.asObservable();
 	}
 
-	public changeContactRole(
-		team: ITeamRef,
-		contactusTeam: IContactusTeamContext,
-		contactID: string,
-		role: MemberRole,
-	): Observable<ITeamContext> {
-		let contactBrief = contactusTeam?.dto?.contacts[contactID];
-		if (!contactBrief) {
-			return throwError(() => 'member not found by ID in team record');
-		}
-		return this.sneatApiService
-			.post(`members/change_member_role`, {
-				teamID: team.id,
-				contactID,
-				role,
-			})
-			.pipe(
-				map(() => {
-					if (!contactBrief) {
-						throw new Error('member is no longer available');
-					}
-					contactBrief = { ...contactBrief, roles: [role] };
-					return team;
-				}),
-			);
-	}
-
-	public removeTeamMember( // TODO: move to members service?
-		teamRecord: ITeamContext,
-		memberID: string,
-	): Observable<ITeamContext> {
-		console.log(
-			`removeTeamMember(teamID: ${teamRecord?.id}, memberID=${memberID})`,
-		);
-		if (!teamRecord) {
-			return throwError(() => 'teamRecord parameters is required');
-		}
-		const id = teamRecord.id;
-		if (!id) {
-			return throwError(() => 'teamRecord.id parameters is required');
-		}
-		if (!memberID) {
-			return throwError(() => 'memberId is required parameter');
-		}
-		const updateTeam = (team: ITeamContext) => {
-			if (team?.dto) {
-				team = {
-					...team,
-					dto: {
-						...team.dto,
-						// TODO: members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberID),
-					},
-				};
-			}
-			this.onTeamUpdated(team);
-		};
-		const processRemoveTeamMemberResponse = (team: ITeamRef): Observable<ITeamContext> =>
-			this.getTeam(team).pipe(
-				tap(updateTeam),
-				// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
-			);
-		const ensureTeamRecordExists = map((team: ITeamContext) => {
-			if (!team?.dto) {
-				throw new Error('team record is expected to exist');
-			}
-			return team;
-		});
-		if (teamRecord?.dto?.members) {
-			const member = teamRecord.dto.members.find((/*_: IMemberBrief*/) => false /*TODO: m.id === memberID*/);
-			if (member?.userID === this.userService.currentUserID) {
-				const teamRequest: ITeamRequest = {
-					teamID: teamRecord.id,
-				};
-				this.sneatApiService
-					.post<ITeamDto>('members/leave_team', teamRequest)
-					.pipe(
-						map(teamDto => {
-							const teamContext: ITeamContext = { id, type: teamDto.type, brief: teamDto, dto: teamDto };
-							return teamContext;
-						}),
-						switchMap(processRemoveTeamMemberResponse),
-						ensureTeamRecordExists,
-					);
-			}
-		}
-		const request: ITeamMemberRequest = {
-			teamID: teamRecord.id,
-			memberID: memberID,
-		};
-		return this.sneatApiService
-			.post('members/remove_member', request)
-			.pipe(
-				switchMap(() => processRemoveTeamMemberResponse(teamRecord)),
-				ensureTeamRecordExists,
-			);
-	}
 
 	public onTeamUpdated(team: ITeamContext): void {
 		console.log(
@@ -297,7 +198,6 @@ export class TeamService {
 			brief: teamBriefFromUserTeamInfo(userTeamInfo),
 		};
 		this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(team);
-
 		this.subscribeForTeamChanges(subj);
 	};
 

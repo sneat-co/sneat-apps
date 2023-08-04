@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChange
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
-import { ContactRole, ContactType, IAddress, IContactContext, IContactDto } from '@sneat/dto';
+import { ContactRole, ContactType, IAddress, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 import { ContactService } from '../../services';
@@ -75,7 +75,7 @@ export class LocationFormComponent implements OnChanges {
 			this.contact = {
 				id: '',
 				team: this.team,
-				brief: {id: '', type: this.contactType, title},
+				brief: {type: this.contactType, title},
 				dto: {type: this.contactType, title},
 			}
 		}

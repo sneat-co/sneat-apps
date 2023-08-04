@@ -16,7 +16,7 @@ import {
 	IContactusTeamContext,
 	IMemberContext,
 	ITeamContext,
-	zipBriefsWithIDs,
+	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { memberContextFromBrief, MemberService, TeamNavService } from '@sneat/team/services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
@@ -91,7 +91,7 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 			const team = this.team;
 			if (team) {
 				const contactusTeam = this.contactusTeam;
-				this.members = zipBriefsWithIDs(contactusTeam?.dto?.contacts)
+				this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
 					.map(contact => memberContextFromBrief(contact, team));
 			}
 		}

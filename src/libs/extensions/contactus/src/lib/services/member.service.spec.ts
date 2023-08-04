@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MemberService } from './member.service';
-import { TeamService } from './team.service';
+import { TeamService } from '../../../../../team/services/src/lib/team.service';
 import { UserService } from './user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 

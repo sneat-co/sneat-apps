@@ -1,4 +1,5 @@
 import { INavContext } from '@sneat/core';
+import { IContactusTeamDto } from '@sneat/team/models';
 import { IContact2Asset } from './dto-contact2';
 import { IDocData } from './dto-document';
 import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
@@ -38,6 +39,12 @@ export interface IAssetBrief extends ITitled {
 	possession: AssetPossession;
 }
 
+export interface IAssetusTeamDto extends ITitled {
+	assets?: { [id: string]: IAssetBrief };
+}
+
+export interface IAssetusTeamContext extends INavContext<IAssetusTeamDto, IAssetusTeamDto> {
+}
 
 export interface IAssetMainData extends IAssetBrief {
 	parentAssetID?: string;

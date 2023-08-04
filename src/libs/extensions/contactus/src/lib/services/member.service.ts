@@ -2,11 +2,13 @@ import { Inject, Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IErrorResponse } from '@sneat/core';
-import { IMemberBrief, IMemberDto, RoleTeamMember, trimNames } from '@sneat/dto';
+import { IMemberBrief, RoleTeamMember, trimNames } from '@sneat/dto';
+import { TeamService } from '@sneat/team/services';
+import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
-	IAddTeamMemberResponse, IBriefWithID,
+	IAddTeamMemberResponse, IBriefAndID,
 	ICreateTeamMemberRequest,
 	IMemberContext,
 	ITeamContext,
@@ -14,11 +16,9 @@ import {
 } from '@sneat/team/models';
 import { Observable } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
-import { TeamItemService } from './team-item.service';
-import { TeamService } from './team.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
-export const memberContextFromBrief = (member: IBriefWithID<IMemberBrief>, team: ITeamContext): IMemberContext => ({
+export const memberContextFromBrief = (member: IBriefAndID<IMemberBrief>, team: ITeamContext): IMemberContext => ({
 	...member,
 	team,
 });
@@ -27,16 +27,16 @@ export const memberContextFromBrief = (member: IBriefWithID<IMemberBrief>, team:
 @Injectable({
 	providedIn: 'root',
 })
-export class MemberService {
-	private readonly teamItemService: TeamItemService<IMemberBrief, IMemberDto>;
+export class MemberService extends ContactService {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		afs: AngularFirestore,
+		contactusTeamService: ContactusTeamService,
+		sneatApiService: SneatApiService,
 		private readonly teamService: TeamService,
-		private readonly sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IMemberBrief, IMemberDto>('contacts', afs, sneatApiService);
+		super(afs, sneatApiService, contactusTeamService);
 	}
 
 	public acceptPersonalInvite(
@@ -116,6 +116,6 @@ export class MemberService {
 		return this.teamItemService.watchTeamItems(team, [
 			{ field: 'status', operator: '==', value: status },
 			{ field: 'roles', operator: '==', value: RoleTeamMember },
-		]);
+		]).pipe(map(items => items as IMemberContext[]));
 	}
 }

@@ -62,14 +62,14 @@ export interface IContactBase {
 	readonly gender?: Gender;
 	readonly ageGroup?: AgeGroupID;
 	readonly address?: IAddress;
-	readonly roles?: readonly string[];
 	readonly avatar?: IAvatar;
+	readonly roles?: readonly string[];
+	readonly groupIDs?: readonly string[];
 }
 
 export const emptyPersonBase: IContactBase = { type: '' as ContactType, name: {} };
 
 export interface IPersonBrief extends IContactBase {
-	readonly id: string;
 }
 
 export interface IPerson extends IContactBase {

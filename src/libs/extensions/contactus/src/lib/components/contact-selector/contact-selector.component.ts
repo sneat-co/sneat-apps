@@ -5,6 +5,7 @@ import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from '@sneat/com
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { ContactusTeamService } from '@sneat/team/services';
 import { Subject, Subscription } from 'rxjs';
 import { ContactService } from '../../services';
 import { IContactSelectorOptions } from './contact-selector.service';
@@ -89,6 +90,7 @@ export class ContactSelectorComponent
 		modalController: ModalController,
 		@Inject(CONTACT_ROLES_BY_TYPE) private readonly contactRolesByType: ContactRolesByType,
 		private readonly contactService: ContactService,
+		private readonly contactusTeamService: ContactusTeamService,
 	) {
 		super(errorLogger, modalController);
 	}
@@ -121,7 +123,7 @@ export class ContactSelectorComponent
 	}
 
 	private watchContactBriefs(): void {
-		this.contactBriefsSub = this.contactService.watchContactBriefs(this.team)
+		this.contactBriefsSub = this.contactusTeamService.watchContactBriefs(this.team)
 			.subscribe(contactBriefs => {
 				this.allContacts = contactBriefs;
 				this.setContacts();

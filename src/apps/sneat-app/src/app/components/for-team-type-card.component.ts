@@ -53,7 +53,7 @@ export class ForTeamTypeCardComponent implements OnChanges, OnDestroy {
 				next: user => {
 					this.teams = user.record?.teams
 						?.filter(t => this.teamTypes?.some(tt => tt === t.type))
-						.map(teamContextFromBrief);
+						.map(t => teamContextFromBrief(t.id, t));
 					console.log('ForTeamTypeCardComponent =>', this.teamTypes, user.record?.teams, this.teams);
 					this.changeDetectorRef.markForCheck();
 				},
@@ -64,5 +64,4 @@ export class ForTeamTypeCardComponent implements OnChanges, OnDestroy {
 		this.destroyed.next();
 		this.destroyed.complete();
 	}
-
 }

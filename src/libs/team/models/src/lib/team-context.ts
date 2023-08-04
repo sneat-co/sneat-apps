@@ -24,12 +24,12 @@ export interface ITeamRef {
 	readonly type?: TeamType;
 }
 
-export interface IBriefWithID<Brief> {
+export interface IBriefAndID<Brief> {
 	readonly id: string;
 	readonly brief: Brief;
 }
 
-export function zipBriefsWithIDs<Brief>(briefs?: { [id: string]: Brief }): IBriefWithID<Brief>[] {
+export function zipMapBriefsWithIDs<Brief>(briefs?: Readonly<{ [id: string]: Brief }>): readonly IBriefAndID<Brief>[] {
 	return briefs ? Object.keys(briefs).map(id => ({ id, brief: briefs[id] })) : [];
 }
 

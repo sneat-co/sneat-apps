@@ -3,7 +3,7 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IMemberGroupBrief, IMemberGroupDto } from '@sneat/dto';
 import { IMemberGroupContext, ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from './team-item.service';
+import { TeamItemService } from '../../../../../team/services/src/lib/team-item.service';
 import { Observable } from 'rxjs';
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PopoverController, PopoverOptions } from '@ionic/angular';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext, HappeningUIState } from '@sneat/team/models';
+import { ITeamContext, HappeningUIState, IContactusTeamContext } from '@sneat/team/models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 
 @Component({
@@ -17,7 +17,8 @@ export class DaySlotItemComponent {
 	@Input() mode: 'full' | 'brief' = 'full';
 	@Input() color?: 'light';
 
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
+	@Input() contactusTeam?: IContactusTeamContext;
 
 	@Output() slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
 
@@ -37,7 +38,7 @@ export class DaySlotItemComponent {
 		if (!this.slot) {
 			return;
 		}
-		this.slotClicked.emit({slot: this.slot, event});
+		this.slotClicked.emit({ slot: this.slot, event });
 	}
 
 

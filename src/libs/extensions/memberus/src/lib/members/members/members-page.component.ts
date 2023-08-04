@@ -9,7 +9,7 @@ import {
 	MemberType,
 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IMemberContext, IMemberGroupContext } from '@sneat/team/models';
+import { IMemberContext, IMemberGroupContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { memberContextFromBrief, MemberGroupService, MemberService } from '@sneat/team/services';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../members-base-page';
@@ -137,20 +137,21 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 	}
 
 	private loadData(source: string): void {
-		console.log(`MembersPageComponent.loadData(source=${source})`, this.team?.dto?.members);
+		console.log(`MembersPageComponent.loadData(source=${source})`, this.contactusTeam?.dto?.contacts);
 		// this.unsubscribe();
-		if (!this.team) {
+		const team = this.team;
+		if (!team) {
 			throw new Error('!this.team');
 		}
 		// this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
 
-		const team = this.team;
+		const contactusTeam = this.contactusTeam;
 
-		if (team?.dto?.members) {
-			this.members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+		if (contactusTeam?.dto?.contacts) {
+			this.members = zipMapBriefsWithIDs(contactusTeam.dto.contacts).map(m => ({ ...m, team }));
 			this.processMembers();
 		} else {
-			this.membersService.watchTeamMembers(this.team)
+			this.membersService.watchTeamMembers(team)
 				.pipe(
 					takeUntil(this.teamIDChanged$),
 				)
@@ -175,8 +176,8 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 				});
 		}
 
-		if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
-			this.memberGroupService.watchMemberGroupsByTeam(this.team)
+		if (team.type && isTeamSupportsMemberGroups(team.type)) {
+			this.memberGroupService.watchMemberGroupsByTeam(team)
 				.subscribe(memberGroups => {
 					if (memberGroups && (!this.memberGroups || memberGroups.length !== this.memberGroups.length)) { // TODO: deep equal
 						this.memberGroups = memberGroups;
