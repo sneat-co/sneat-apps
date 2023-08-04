@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IContactContext, IContactusTeamDto, ITeamContext, ITeamItemContext } from '@sneat/team/models';
+import { ITeamContext, ITeamItemContext } from '@sneat/team/models';
 import { TeamItemService } from './team-item.service';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 export abstract class TeamModuleService<Brief, Dto extends Brief> extends TeamItemService<Brief, Dto> {
 	protected constructor(

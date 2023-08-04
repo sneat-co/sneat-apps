@@ -1,6 +1,4 @@
 export * from './team-nav.service';
-export * from '../../../../extensions/contactus/src/lib/services/member.service';
-export * from '../../../../extensions/contactus/src/lib/services/member-group.service';
 export * from './team.service';
 export * from './team-item.service';
 export * from './team-context.service';

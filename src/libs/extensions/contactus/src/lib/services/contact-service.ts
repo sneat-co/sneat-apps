@@ -9,7 +9,8 @@ import {
 	ITeamContext, ITeamMemberRequest,
 	ITeamRef, ITeamRequest,
 } from '@sneat/team/models';
-import { ContactusTeamService, TeamItemService } from '@sneat/team/services';
+import { TeamItemService } from '@sneat/team/services';
+import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, switchMap, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from '../dto';
