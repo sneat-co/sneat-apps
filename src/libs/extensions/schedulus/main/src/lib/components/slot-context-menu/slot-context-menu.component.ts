@@ -4,14 +4,13 @@ import { excludeUndefined } from '@sneat/core';
 import { HappeningStatus, IHappeningSlot } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISelectMembersOptions, MembersSelectorService } from '@sneat/team/components';
+import { ISelectMembersOptions, memberContextFromBrief, MembersSelectorService } from '@sneat/extensions/contactus';
 import { HappeningUIState, IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
 import {
 	HappeningService,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
 	ISlotRequest,
-	memberContextFromBrief,
 } from '@sneat/team/services';
 import { NEVER, Observable } from 'rxjs';
 import { ScheduleModalsService } from '../../services/schedule-modals.service';

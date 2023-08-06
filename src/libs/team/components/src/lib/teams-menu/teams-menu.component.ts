@@ -3,7 +3,7 @@ import { MenuController, NavController } from '@ionic/angular';
 import { ISneatUserState, SneatUserService } from '@sneat/auth';
 import { TeamType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ICreateTeamRequest, ITeamContext, teamContextFromBrief } from '@sneat/team/models';
+import { ICreateTeamRequest, ITeamContext, teamContextFromBrief, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
 @Component({
@@ -67,15 +67,13 @@ export class TeamsMenuComponent {
 			return;
 		}
 
-		this.teams = user?.record?.teams
-			?.filter(t => !this.teamType || t.type === this.teamType)
-			?.map(t => teamContextFromBrief(t.id, t)) || [];
+		this.teams = user?.record?.teams ? zipMapBriefsWithIDs(user?.record?.teams).filter(t => !this.teamType || t.brief.type === this.teamType).map(t => teamContextFromBrief(t.id, t.brief)) : [];
 
-		this.familyTeams = this.teams.filter(t => t.type === 'family') || [];
+		this.familyTeams = this.teams?.filter(t => t.type === 'family') || [];
 		this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
 
 		if (this.familyTeam) {
-			this.teams = this.teams.filter(t => t.type !== 'family');
+			this.teams = this.teams?.filter(t => t.type !== 'family');
 		}
 	};
 

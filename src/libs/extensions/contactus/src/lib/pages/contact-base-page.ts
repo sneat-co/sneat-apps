@@ -1,10 +1,10 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IContactBrief, IContactDto } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
+import { ContactService } from '@sneat/team/contacts/services';
 import { IContactContext } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
 import { ContactComponentBaseParams } from '../contact-component-base-params';
-import { ContactService } from '../../../../../team/contacts/services/src/lib';
 
 export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
 
@@ -50,7 +50,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		return this.contact;
 	}
 
-	protected override briefs(): {[id: string]: IContactBrief} | undefined {
+	protected override briefs(): { [id: string]: IContactBrief } | undefined {
 		throw new Error('Method not implemented yet.');
 	}
 

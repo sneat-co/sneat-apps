@@ -9,7 +9,7 @@ import {
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonNotReady, isRelatedPersonReady,
-	MemberType,
+	TeamMemberType,
 } from '@sneat/dto';
 import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
@@ -53,7 +53,7 @@ export class NewMemberFormComponent implements OnChanges {
 
 	public readonly setFocusToInput = createSetFocusToInput(this.params.errorLogger);
 
-	public readonly memberType = new FormControl<MemberType>('member', [
+	public readonly memberType = new FormControl<TeamMemberType>('member', [
 		Validators.required,
 	]);
 

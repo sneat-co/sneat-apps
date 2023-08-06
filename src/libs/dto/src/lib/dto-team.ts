@@ -18,7 +18,6 @@ export interface ITeamDto extends ITotalsHolder, IListGroupsHolder {
 	readonly countryID: string;
 	readonly title: string;
 	readonly userIDs: string[];
-	readonly memberIds?: string[];
 	// readonly members?: IMemberBrief[];
 	// readonly assets?: IAssetBrief[];
 	// readonly contacts?: IContactBrief[];

@@ -3,9 +3,9 @@ import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from './contact-roles';
 import { IAddress } from './dto-address';
-import { IContact2Asset, IContact2Member } from './dto-contact2item';
+import { IContact2Asset } from './dto-contact2item';
 import { IPersonRecord } from './dto-models';
-import { AgeGroupID, Gender, MemberType } from './types';
+import { AgeGroupID, Gender, TeamMemberType } from './types';
 
 export interface IName {
 	readonly first?: string;
@@ -47,7 +47,7 @@ export const
 	ContactTypeLocation = 'location',
 	ContactTypeAnimal = 'animal';
 
-export type ContactType = MemberType
+export type ContactType = TeamMemberType
 	| typeof ContactTypePerson
 	| typeof ContactTypeCompany
 	| typeof ContactTypeLocation
@@ -136,9 +136,8 @@ export interface IContactBrief extends IContactBase {
 
 export interface IContactDto extends IContactBase, IPersonRecord {
 	readonly roles?: ContactRole[];
-	readonly members?: IContact2Member[]; // TODO: document purpose, use cases, examples of usage
 	readonly assets?: IContact2Asset[];  // TODO: document purpose, use cases, examples of usage
-	readonly relatedContacts?: IContactBrief[];
+	readonly relatedContacts?: { [id: string]: IContactBrief };
 }
 
 export interface IContactsBrief {

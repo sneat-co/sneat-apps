@@ -5,8 +5,8 @@ import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
 import { ContactRole, ContactType, IContactContext, validateAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
-import { ContactService } from '../../../../../../team/contacts/services/src/lib';
+import { ContactService } from '@sneat/team/contacts/services';
+import { ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-new-company-form',
@@ -34,8 +34,8 @@ export class NewCompanyFormComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Inject(ContactService) private readonly contactService: ContactService,
-		@Inject(ActivatedRoute) private readonly route: ActivatedRoute,
+		private readonly contactService: ContactService,
+		private readonly route: ActivatedRoute,
 	) {
 	}
 
@@ -99,7 +99,7 @@ export class NewCompanyFormComponent implements OnChanges {
 					console.log('created contact:', contact);
 					this.contactCreated.emit(contact);
 				},
-				error: err => {
+				error: (err: unknown) => {
 					this.errorLogger.logError(err, 'Failed to create contact');
 					this.isCreating = false;
 				},

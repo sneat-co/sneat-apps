@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { memberContextFromBrief } from '@sneat/team/contacts/services';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
-import { memberContextFromBrief } from '../../../../../../team/contacts/services/src/lib';
 import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorService } from './members-selector.service';
 

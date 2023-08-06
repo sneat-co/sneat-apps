@@ -1,9 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { eq, listItemAnimations } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
+import { ContactNavService, defaultFamilyContactGroups } from '@sneat/team/contacts/services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { defaultFamilyContactGroups } from '../../../../../../team/contacts/services/src/lib';
-import { ContactNavService } from '../../../../../../team/contacts/services/src/lib';
 import { IContactGroupWithContacts, IContactRoleWithContacts } from '../../pages/contacts/ui-types';
 
 

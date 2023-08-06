@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/animations';
-import { IContact2Member } from '@sneat/dto';
-import { memberContextFromBrief } from '@sneat/extensions/contactus';
+import { IContact2ContactInRequest } from '@sneat/dto';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { InviteModalComponent } from '@sneat/team/components';
+import { memberContextFromBrief } from '@sneat/team/contacts/services';
 import { IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
@@ -16,6 +16,7 @@ import { SneatUserService } from '@sneat/auth';
 	styleUrls: ['./members-list.component.scss'],
 	animations: listAddRemoveAnimation,
 })
+// Deprecated: TODO migrated to Contacts list?
 export class MembersListComponent implements OnChanges {
 
 	private selfRemove?: boolean;
@@ -24,7 +25,7 @@ export class MembersListComponent implements OnChanges {
 	@Input() public members?: readonly IMemberContext[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
-	@Input() public contactsByMember: { [id: string]: IContact2Member[] } = {};
+	@Input() public contactsByMember: { [id: string]: IContact2ContactInRequest[] } = {};
 	// Holds filtered entries, use `allMembers` to pass input
 	public membersToDisplay?: readonly IMemberContext[];
 
@@ -136,7 +137,7 @@ export class MembersListComponent implements OnChanges {
 					this.navService.navigateToTeams('back');
 				}
 			},
-			error: (err) => {
+			error: (err: unknown) => {
 				this.selfRemove = undefined;
 				this.errorLogger.logError(err, 'Failed to remove member from team');
 				if (

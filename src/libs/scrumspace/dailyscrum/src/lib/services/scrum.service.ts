@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { IMemberBrief, ITeamDto } from '@sneat/dto';
+import { IBriefAndID } from '@sneat/team/models';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
 	Firestore as AngularFirestore,
@@ -111,7 +112,7 @@ export class ScrumService extends BaseMeetingService {
 	public deleteTask(
 		team: string,
 		scrumId: string,
-		member: IMemberBrief,
+		member: IBriefAndID<IMemberBrief>,
 		type: TaskType,
 		id: string,
 	): Observable<void> {
@@ -161,7 +162,7 @@ export class ScrumService extends BaseMeetingService {
 	public setTaskCompletion(
 		teamId: string,
 		scrumId: string,
-		member: IMemberBrief,
+		member: IBriefAndID<IMemberBrief>,
 		taskId: string,
 		isCompleted: boolean,
 	): Observable<IStatus> {
@@ -195,8 +196,8 @@ export class ScrumService extends BaseMeetingService {
 				const eventParams: { [id: string]: string } = { teamId, id: taskId };
 				if (member.id) {
 					eventParams['memberId'] = member.id;
-				} else if (member.userID) {
-					eventParams['memberUid'] = member.userID;
+				} else if (member.brief.userID) {
+					eventParams['memberUid'] = member.brief.userID;
 				}
 				this.analyticsService.logEvent('taskCompletionChanged', eventParams);
 			}),
@@ -207,7 +208,7 @@ export class ScrumService extends BaseMeetingService {
 	public addTask(
 		team: IRecord<ITeamDto>,
 		scrumId: string,
-		member: IMemberBrief,
+		member: IBriefAndID<IMemberBrief>,
 		type: TaskType,
 		title: string,
 	): Observable<ITaskWithUiStatus> {
@@ -258,7 +259,7 @@ export class ScrumService extends BaseMeetingService {
 	private updateStatus(
 		teamId: string,
 		scrumId: string,
-		member: IMemberBrief,
+		member: IBriefAndID<IMemberBrief>,
 		// TODO: Invalid eslint-disable-next-line no-shadow - lambda definition should not cause shadowing.
 		// https://github.com/sneat-team/sneat-team-pwa/issues/381
 		// eslint-disable-next-line no-shadow

@@ -3,9 +3,9 @@ import {
 	DtoGroupTerms,
 	DtoTotal,
 	DtoTotals,
-	IAssetDtoGroupCounts, IAssetGroupContext, IMemberGroupBrief,
-	IMemberGroupDto,
-	IMemberGroupDtoCounts,
+	IAssetDtoGroupCounts, IAssetGroupContext, IContactGroupBrief,
+	IContactGroupDto,
+	IContactGroupDtoCounts,
 	newTeamCounts,
 	Period,
 	TeamCounts,
@@ -338,8 +338,8 @@ export class Commune implements ITeamContext {
 
 export class MemberGroup {
 	public readonly id: string;
-	public readonly dto?: IMemberGroupDto | null;
-	public readonly brief?: IMemberGroupBrief | null;
+	public readonly dto?: IContactGroupDto | null;
+	public readonly brief?: IContactGroupBrief | null;
 
 	constructor(
 		memberGroup: IMemberGroupContext,
@@ -350,7 +350,7 @@ export class MemberGroup {
 
 	}
 
-	public get numberOf(): IMemberGroupDtoCounts {
+	public get numberOf(): IContactGroupDtoCounts {
 		const n = this.dto?.numberOf || {};
 		if (!n.members) {
 			n.members = 0;

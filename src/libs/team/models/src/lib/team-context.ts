@@ -8,8 +8,8 @@ import {
 	IListDto,
 	IMemberBrief,
 	IMemberDto,
-	IMemberGroupBrief,
-	IMemberGroupDto,
+	IContactGroupBrief,
+	IContactGroupDto,
 	IPerson,
 	IPersonBrief,
 	IShortTeamInfo,
@@ -50,7 +50,7 @@ export const teamContextFromBrief = (id: string, brief: ITeamBrief): ITeamContex
 
 export type IMemberContext = ITeamItemContext<IMemberBrief, IMemberDto>;
 export type IPersonContext = ITeamItemContext<IPersonBrief, IPerson>;
-export type IMemberGroupContext = ITeamItemContext<IMemberGroupBrief, IMemberGroupDto>;
+export type IMemberGroupContext = ITeamItemContext<IContactGroupBrief, IContactGroupDto>;
 
 export type IAssetContext<Dto extends IAssetDbData = IAssetDbData> = ITeamItemContext<IAssetBrief, Dto>;
 export type IVehicleAssetContext = IAssetContext<IVehicleAssetDto>;

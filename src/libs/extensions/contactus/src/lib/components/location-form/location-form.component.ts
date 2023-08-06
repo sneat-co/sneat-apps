@@ -4,8 +4,8 @@ import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { ContactRole, ContactType, IAddress, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/team/contacts/services';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
-import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 
 @Component({
 	selector: 'sneat-location-form',

@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { MemberType } from '@sneat/auth-models';
+import { TeamMemberType } from '@sneat/auth-models';
 import { TeamType } from '@sneat/core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
@@ -12,7 +12,7 @@ export abstract class MembersBasePage extends TeamBaseComponent {
 
 	// protected currentUserDto: IDtoUser;
 
-	abstract get memberType(): MemberType;
+	abstract get memberType(): TeamMemberType;
 
 	// protected setCurrentUser(dto: IDtoUser) {
 	//     this.currentUserDto = dto;

@@ -20,11 +20,12 @@ export class ContactusTeamService extends TeamModuleService<IContactusTeamDto, I
 		const result = o.pipe(
 			map(contactusTeam => {
 				const contacts = contactusTeam?.dto?.contacts;
-				const cc: IContactContext[] = contacts ? Object.keys(contacts).map(id => ({ id, brief: contacts[id], team})) : [];
+				const cc: IContactContext[] = contacts
+					? Object.keys(contacts).map(id => ({ id, brief: contacts[id], team }))
+					: [];
 				return cc;
 			}),
 		);
 		return result;
 	}
-
 }

@@ -39,14 +39,14 @@ export class MembersSelectorService {
 				.then(
 					modal => {
 						modal.present().catch(
-							err => {
+							(err: unknown) => {
 								this.errorLogger.logError(err, 'Failed to present modal');
 								reject(err);
 							},
 						);
 					},
 				).catch(
-				err => {
+				(err: unknown) => {
 					this.errorLogger.logError(err, 'Failed to create modal');
 					reject(err);
 				});

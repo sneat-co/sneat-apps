@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
 	defaultFamilyContactGroups,
 	IContactGroupContext,
 	IContactRoleContext,
-} from '../../../../../../team/contacts/services/src/lib';
-
+} from '@sneat/team/contacts/services';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-contact-role-form',

@@ -12,8 +12,7 @@ import {
 } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { ContactusTeamService } from './contactus-team.service';
-import { map, Observable, switchMap, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, Observable, throwError } from 'rxjs';
 import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from './dto';
 
 @Injectable()
@@ -143,73 +142,21 @@ export class ContactService {
 	}
 
 	public removeTeamMember( // TODO: move to members service?
-		contactusTeam: IContactusTeamContext,
-		memberID: string,
+		teamID: string,
+		contactID: string,
 	): Observable<ITeamContext> {
 		console.log(
-			`removeTeamMember(teamID: ${contactusTeam?.id}, memberID=${memberID})`,
+			`removeTeamMember(teamID: teamID=${teamID}, memberID=${contactID})`,
 		);
-		if (!contactusTeam) {
-			return throwError(() => 'teamRecord parameters is required');
+		if (!teamID) {
+			return throwError(() => 'teamID parameters is required');
 		}
-		const id = contactusTeam.id;
-		if (!id) {
-			return throwError(() => 'teamRecord.id parameters is required');
+		if (!contactID) {
+			return throwError(() => 'contactID is required parameter');
 		}
-		if (!memberID) {
-			return throwError(() => 'memberId is required parameter');
-		}
-		const updateTeam = (team: ITeamContext) => {
-			if (team?.dto) {
-				team = {
-					...team,
-					dto: {
-						...team.dto,
-						// TODO: members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberID),
-					},
-				};
-			}
-			this.onTeamUpdated(team);
-		};
-		const processRemoveTeamMemberResponse = (team: ITeamRef): Observable<ITeamContext> =>
-			this.getTeam(team).pipe(
-				tap(updateTeam),
-				// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
-			);
-		const ensureTeamRecordExists = map((team: ITeamContext) => {
-			if (!team?.dto) {
-				throw new Error('team record is expected to exist');
-			}
-			return team;
-		});
-		if (contactusTeam?.dto?.contacts) {
-			const member = contactusTeam.dto.contacts[memberID];
-			if (member?.userID === this.userService.currentUserID) {
-				const teamRequest: ITeamRequest = {
-					teamID: contactusTeam.id,
-				};
-				this.sneatApiService
-					.post<ITeamDto>('members/leave_team', teamRequest)
-					.pipe(
-						map(teamDto => {
-							const teamContext: ITeamContext = { id, type: teamDto.type, brief: teamDto, dto: teamDto };
-							return teamContext;
-						}),
-						switchMap(processRemoveTeamMemberResponse),
-						ensureTeamRecordExists,
-					);
-			}
-		}
-		const request: ITeamMemberRequest = {
-			teamID: contactusTeam.id,
-			memberID: memberID,
-		};
+		const request: IContactRequest = { teamID, contactID};
 		return this.sneatApiService
-			.post('members/remove_member', request)
-			.pipe(
-				switchMap(() => processRemoveTeamMemberResponse(contactusTeam)),
-				ensureTeamRecordExists,
-			);
+			.post('members/remove_member', request);
 	}
 }
 

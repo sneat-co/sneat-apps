@@ -1,9 +1,9 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/team/contacts/services';
 import { IContactContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
-import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 
 @Component({
 	selector: 'sneat-contacts-list-item',

@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { AuthMenuItemModule } from '@sneat/components';
+import { IBriefAndID, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
 import { TeamComponentBaseParams } from '../team-component-base-params';
@@ -28,7 +29,7 @@ import { IonicModule } from '@ionic/angular';
 })
 export class TeamMenuComponent extends TeamBaseComponent {
 
-	public teams?: IUserTeamBrief[];
+	public teams?: readonly IBriefAndID<IUserTeamBrief>[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -114,7 +115,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	private trackUserState = (userState: ISneatUserState): void => {
 		// console.log('TeamMenuComponent.trackUserState =>', userState);
 		if (userState?.record) {
-			this.teams = userState.record.teams || [];
+			this.teams = zipMapBriefsWithIDs(userState.record.teams) || [];
 		} else {
 			this.teams = undefined;
 		}

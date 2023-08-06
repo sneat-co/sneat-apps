@@ -2,9 +2,8 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService, ISetContactRoleRequest } from '@sneat/team/contacts/services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { ISetContactRoleRequest } from '../../../../../../team/contacts/services/src/lib/dto';
-import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 
 @Component({
 	selector: 'sneat-contact-roles-input',
@@ -52,7 +51,7 @@ export class ContactRolesInputComponent implements OnChanges {
 		this.processingRoleIDs.push(role.id);
 		const complete = () => this.processingRoleIDs = this.processingRoleIDs.filter(id => id !== role.id);
 		this.contactService.setContactRole(request).subscribe({
-			error: err => {
+			error: (err: unknown) => {
 				console.log('setContactRole error', err);
 				this.errorLogger.logError(err, 'failed to set contact role');
 				complete();

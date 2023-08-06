@@ -6,7 +6,6 @@ import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
-import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 
 @Component({
 	selector: 'sneat-contacts-page',
@@ -42,7 +41,8 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private readonly contactService: ContactService,
+		// private readonly contactService: ContactService,
+		private readonly contactusTeamService: ContactusTeamService,
 	) {
 		super('ContactsPageComponent', route, params, '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
@@ -80,9 +80,9 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return;
 		}
 
-		this.contactService.watchContactBriefs(this.team).subscribe({
+		this.contactusTeamService.watchContactBriefs(this.team).subscribe({
 			next: contactBriefs => {
-				const contacts = contactBriefs.map(brief => ({ id: brief.id, brief, team: this.team || { id: '' } }));
+				const contacts: IContactContext[] = contactBriefs.map(brief => ({ id: brief.id, brief, team: this.team || { id: '', type: 'unknown' } }));
 				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
 			},

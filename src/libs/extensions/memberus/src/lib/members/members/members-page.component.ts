@@ -1,12 +1,12 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { TeamMemberType } from '@sneat/auth-models';
+import { TeamMemberTypeEnum } from '@sneat/auth-models';
 import {
-	IContact2Member,
+	IContact2ContactInRequest,
 	isTeamSupportsMemberGroups,
 	MemberGroupTypeAdults,
 	MemberGroupTypeKids, MemberGroupTypePets,
-	MemberType,
+	TeamMemberType,
 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IMemberContext, IMemberGroupContext, zipMapBriefsWithIDs } from '@sneat/team/models';
@@ -42,7 +42,7 @@ interface MembersGroup {
 })
 export class MembersPageComponent extends MembersBasePage implements AfterViewInit {
 	private prevMembersCount?: number;
-	public contactsByMember: { [id: string]: IContact2Member[] } = {};
+	public contactsByMember: { [id: string]: IContact2ContactInRequest[] } = {};
 	public readonly adults: MembersGroup = {
 		id: MemberGroupTypeAdults,
 		emoji: '🧓',
@@ -70,7 +70,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		this.other,
 	];
 
-	readonly memberType: MemberType = 'member';
+	readonly memberType: TeamMemberType = 'member';
 
 	constructor(
 		route: ActivatedRoute,
@@ -203,7 +203,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 					addedToGroup = true;
 					break;
 			}
-			if (m.dto?.type === TeamMemberType.pet) {
+			if (m.dto?.type === TeamMemberTypeEnum.pet) {
 				addedToGroup = true;
 				this.pets.members?.push(m);
 			}

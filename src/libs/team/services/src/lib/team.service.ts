@@ -8,10 +8,11 @@ import { IRecord } from '@sneat/data';
 import { ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IBriefAndID,
 	ICreateTeamRequest,
 	ICreateTeamResponse, IJoinTeamInfoResponse,
 	ITeamContext,
-	ITeamRef,
+	ITeamRef, zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth';
 import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
@@ -19,11 +20,20 @@ import { filter, first, map, tap } from 'rxjs/operators';
 
 const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({ ...v, type: v.type });
 
+// export class CachedDataService<Brief, Dto extends Brief> {
+// 	constructor(
+// 		private readonly db: AngularFirestore,
+// 	) {
+// 	}
+//
+// 	// watchRecord()
+// }
+
 @Injectable({ providedIn: 'root' })
 export class TeamService {
 	private userID?: string;
 
-	private currentUserTeams?: IUserTeamBrief[];
+	private currentUserTeams?: { [id: string]: IUserTeamBrief };
 
 	private teams$: { [id: string]: BehaviorSubject<ITeamContext> } = {};
 	private subscriptions: Subscription[] = [];
@@ -71,9 +81,7 @@ export class TeamService {
 		}
 		this.currentUserTeams = user?.teams;
 
-		if (user?.teams) {
-			user.teams?.forEach(this.subscribeForUserTeamChanges);
-		}
+		zipMapBriefsWithIDs(user.teams).forEach(this.subscribeForUserTeamChanges);
 	};
 
 	public createTeam(request: ICreateTeamRequest): Observable<IRecord<ITeamDto>> {
@@ -101,7 +109,7 @@ export class TeamService {
 		}
 		let teamContext: ITeamContext = ref;
 		if (this.currentUserTeams) {
-			const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
+			const userTeamInfo = this.currentUserTeams[id];
 			if (userTeamInfo) {
 				teamContext = { id, type: userTeamInfo.type, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
 			}
@@ -179,14 +187,13 @@ export class TeamService {
 		);
 	}
 
-	private readonly subscribeForUserTeamChanges = (userTeamInfo: IUserTeamBrief): void => {
+	private readonly subscribeForUserTeamChanges = (userTeamInfo: IBriefAndID<IUserTeamBrief>): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
-		const { id } = userTeamInfo;
-		let subj = this.teams$[id];
+		let subj = this.teams$[userTeamInfo.id];
 		if (subj) {
 			let team = subj.value;
 			if (!team.type) {
-				team = { ...team, type: userTeamInfo.type, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
+				team = { ...team, type: userTeamInfo.brief?.type, brief: teamBriefFromUserTeamInfo(userTeamInfo.brief) };
 				subj.next(team);
 			}
 			return;
@@ -194,10 +201,10 @@ export class TeamService {
 
 		const team: ITeamContext = {
 			id: userTeamInfo.id,
-			type: userTeamInfo.type,
-			brief: teamBriefFromUserTeamInfo(userTeamInfo),
+			type: userTeamInfo.brief.type,
+			brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
 		};
-		this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(team);
+		this.teams$[userTeamInfo.id] = subj = new BehaviorSubject<ITeamContext>(team);
 		this.subscribeForTeamChanges(subj);
 	};
 

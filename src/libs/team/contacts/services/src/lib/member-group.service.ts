@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IMemberGroupBrief, IMemberGroupDto } from '@sneat/dto';
+import { IContactGroupBrief, IContactGroupDto } from '@sneat/dto';
 import { IMemberGroupContext, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable } from 'rxjs';
@@ -11,13 +11,13 @@ import { Observable } from 'rxjs';
 })
 export class MemberGroupService {
 
-	private readonly teamItemService: TeamItemService<IMemberGroupBrief, IMemberGroupDto>;
+	private readonly teamItemService: TeamItemService<IContactGroupBrief, IContactGroupDto>;
 
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IMemberGroupBrief, IMemberGroupDto>(
+		this.teamItemService = new TeamItemService<IContactGroupBrief, IContactGroupDto>(
 			'team_member_groups', afs, sneatApiService);
 	}
 

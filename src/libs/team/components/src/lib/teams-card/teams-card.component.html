@@ -22,7 +22,7 @@
 	<ion-list *ngIf="teams">
 		<ion-item-sliding *ngFor="let team of teams; trackBy: id">
 			<ion-item tappable detail (click)="goTeam(team)">
-				<ion-label>{{ team.title }}</ion-label>
+				<ion-label>{{ team.brief.title }}</ion-label>
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="leaveTeam(team, $event)">
 						<ion-icon name="close"></ion-icon>

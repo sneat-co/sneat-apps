@@ -11,14 +11,15 @@ import {
 } from '@sneat/dto';
 import { AddAssetBaseComponent, AssetService, ICreateAssetRequest } from '@sneat/extensions/assetus/components';
 import { TeamComponentBaseParams } from '@sneat/team/components';
+import { ContactService, memberContextFromBrief } from '@sneat/team/contacts/services';
 import {
-	IAssetContext,
+	IAssetContext, IContactContext,
 	IContactusTeamContext,
 	IMemberContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
-import { memberContextFromBrief, MemberService, TeamNavService } from '@sneat/team/services';
+import { TeamNavService } from '@sneat/team/services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -33,7 +34,7 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
-	public member?: IMemberContext;
+	public contact?: IContactContext;
 
 	public isMissingRequiredParams = false;
 
@@ -52,7 +53,7 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		assetService: AssetService,
-		private readonly membersService: MemberService,
+		private readonly contactService: ContactService,
 		private readonly teamNavService: TeamNavService,
 	) {
 		super('NewDocumentPageComponent', route, params, assetService);
@@ -100,10 +101,10 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 	private trackUrlMemberID(): void {
 		this.route.queryParams.pipe(
 			takeUntil(this.destroyed),
-			map(qp => qp['member'] as string),
+			map(qp => qp['contact'] as string),
 			distinctUntilChanged(),
 		).subscribe({
-			next: this.watchMember,
+			next: this.watchContact,
 		});
 	}
 
@@ -117,17 +118,17 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 		});
 	}
 
-	private watchMember = (memberID: string): void => {
+	private watchContact = (contactID: string): void => {
 		this.memberChanged.next();
 		const team = this.team;
 		if (!team) {
 			return;
 		}
-		this.member = { id: memberID, team };
-		this.membersService.watchMember(team, memberID)
+		this.contact = { id: contactID, team };
+		this.contactService.watchContactById(team, contactID)
 			.subscribe({
 					next: member => {
-						this.member = member;
+						this.contact = member;
 					},
 					error: this.errorLogger.logErrorHandler('failed in watching member'),
 				},
@@ -142,11 +143,11 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 			title: this.docTitle,
 			type: this.docType,
 			number: this.docNumber,
-			memberIDs: this.member?.id ? [this.member.id] : undefined,
+			memberIDs: this.contact?.id ? [this.contact.id] : undefined,
 		};
 		const request: ICreateAssetRequest<IDocumentMainData> = {
 			teamID: this.team.id,
-			memberID: this?.member?.id,
+			memberID: this?.contact?.id,
 			dto,
 		} as unknown as ICreateAssetRequest<IDocumentMainData>;
 

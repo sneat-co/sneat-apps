@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ISaveEvent } from '@sneat/components';
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
-import { IContactContext } from '@sneat/team/models';
+import { ContactService } from '@sneat/team/contacts/services';
+import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
-import { ContactService } from '../../../../../../team/contacts/services/src/lib';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -70,11 +70,11 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 							return;
 						}
 						this.contact = contact;
-						this.contactLocations = contact?.dto?.relatedContacts
-							?.map(brief => ({
-								id: brief.id,
+						this.contactLocations = zipMapBriefsWithIDs(contact?.dto?.relatedContacts)
+							?.map(c => ({
+								id: c.id,
+								brief: c.brief,
 								team: contact.team,
-								brief,
 							}));
 						console.log('contact', contact, 'contactLocations', this.contactLocations);
 					},
