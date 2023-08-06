@@ -4,6 +4,7 @@ import { ISelectItem } from '@sneat/components';
 import { listItemAnimations, setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
+import { ContactusTeamService } from '@sneat/team/contacts/services';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
 
@@ -82,7 +83,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 
 		this.contactusTeamService.watchContactBriefs(this.team).subscribe({
 			next: contactBriefs => {
-				const contacts: IContactContext[] = contactBriefs.map(brief => ({ id: brief.id, brief, team: this.team || { id: '', type: 'unknown' } }));
+				const contacts: IContactContext[] = contactBriefs.map(brief => ({
+					id: brief.id,
+					brief,
+					team: this.team || { id: '', type: 'unknown' },
+				}));
 				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
 			},

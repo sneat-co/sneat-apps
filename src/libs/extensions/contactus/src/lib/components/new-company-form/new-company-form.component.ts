@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { ContactRole, ContactType, IContactContext, validateAddress } from '@sneat/dto';
+import { ContactRole, ContactType, validateAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/team/contacts/services';
-import { ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-new-company-form',

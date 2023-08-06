@@ -75,16 +75,17 @@ export class MembersListComponent implements OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('MembersListComponent.ngOnChanges()', changes);
 		if (changes['team'] || changes['members'] || changes['role']) {
-			if (this.team?.dto?.members && !this.members) {
-				const team = this.team;
-				this._members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
-			}
-			if (changes['members']) {
-				this._members = this.members;
-				// } else if (changes['team'] && !this.members) {
-				// 	const team = this.team;
-				// 	this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
-			}
+			throw new Error('temporary disabled');
+			// if (this.team?.dto?.members && !this.members) {
+			// 	const team = this.team;
+			// 	this._members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+			// }
+			// if (changes['members']) {
+			// 	this._members = this.members;
+			// 	// } else if (changes['team'] && !this.members) {
+			// 	// 	const team = this.team;
+			// 	// 	this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+			// }
 			this.membersToDisplay = this.filterMembers(this._members);
 		}
 	}
