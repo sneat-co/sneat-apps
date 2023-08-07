@@ -8,12 +8,10 @@
 			</ng-container>
 		</ng-container>
 
-		<ng-container *ngIf="contact?.dto?.members && contact?.dto?.members?.length">
-			<p *ngFor="let member of contact?.dto?.members || []; trackBy: id">
-				{{member.relation}} of <a [href]="member.id"
-																	(click)="goMember(member.id, $event)">{{member.title}}</a>
-			</p>
-		</ng-container>
+		<p *ngFor="let member of relatedContacts; trackBy: id">
+			{{member.brief.relatedAs}} of <a [href]="member.id"
+																(click)="goMember(member.id, $event)">{{member.brief.title}}</a>
+		</p>
 
 		<span *ngIf="contact?.brief?.countryID" style="margin: 0 1em"
 					title="{{contact?.brief?.countryID|countryTitle}}"

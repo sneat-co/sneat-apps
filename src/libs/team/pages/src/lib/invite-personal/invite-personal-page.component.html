@@ -81,7 +81,7 @@
 			<ion-label>Team members</ion-label>
 		</ion-item-divider>
 		<ion-item *ngFor="let member of members">
-			<ion-label>{{member.title}}</ion-label>
+			<ion-label>{{member.brief?.title}}</ion-label>
 		</ion-item>
 	</ion-list>
 </ion-content>

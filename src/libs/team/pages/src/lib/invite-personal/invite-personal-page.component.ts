@@ -1,19 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { IMemberBrief } from '@sneat/dto';
+import { IContactBrief, IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import { Auth as AngularFireAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth';
+import { MemberService } from '@sneat/team/contacts/services';
 import {
-	IAcceptPersonalInviteRequest,
+	IAcceptPersonalInviteRequest, IBriefAndID,
 	IPersonalInvite,
-	IRejectPersonalInviteRequest,
+	IRejectPersonalInviteRequest, zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
-import { InviteService, MemberService } from '@sneat/team/services';
+import { InviteService } from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-invite-personal-page',
@@ -31,7 +32,7 @@ export class InvitePersonalPageComponent implements OnInit {
 	public rejecting = false;
 
 	public invite?: IPersonalInvite;
-	public members?: IMemberBrief[];
+	public members?: IBriefAndID<IContactBrief>[];
 
 	private inviteId = '';
 	private teamId = '';
@@ -63,7 +64,7 @@ export class InvitePersonalPageComponent implements OnInit {
 				this.errorLogger.logError('teamId is not set');
 			}
 			this.sneatApiService
-				.getAsAnonymous<{ invite?: IPersonalInvite; members?: IMemberBrief[] }>(
+				.getAsAnonymous<{ invite?: IPersonalInvite; members?: {[id: string]: IMemberBrief} }>(
 					'invites/personal',
 					new HttpParams({
 						fromObject: { invite: inviteId, team: teamId },
@@ -73,7 +74,7 @@ export class InvitePersonalPageComponent implements OnInit {
 					next: (response) => {
 						console.log('invite record:', response);
 						this.invite = response.invite;
-						this.members = response.members?.filter(
+						this.members = zipMapBriefsWithIDs(response.members)?.filter(
 							(m) => m.id !== response.invite?.memberID,
 						);
 						if (response.invite) {

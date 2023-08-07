@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IMemberContext } from '@sneat/team/models';
+import { IContactContext, IMemberContext } from '@sneat/team/models';
 import { first, Observable } from 'rxjs';
 
 @Component({
@@ -9,12 +9,12 @@ import { first, Observable } from 'rxjs';
 })
 export class MembersSelectorListComponent {
 	// Intentionally removed @Input() team: ITeamContext = { id: '' };
-	@Input() public members?: readonly IMemberContext[];
-	@Input() selectedMembers?: readonly IMemberContext[];
-	@Output() readonly selectedMembersChange = new EventEmitter<readonly IMemberContext[]>();
+	@Input() public members?: readonly IContactContext[];
+	@Input() selectedMembers?: readonly IContactContext[];
+	@Output() readonly selectedMembersChange = new EventEmitter<readonly IContactContext[]>();
 	@Input() max?: number;
-	@Input() onAdded?: (member: IMemberContext) => Observable<void>;
-	@Input() onRemoved?: (member: IMemberContext) => Observable<void>;
+	@Input() onAdded?: (member: IContactContext) => Observable<void>;
+	@Input() onRemoved?: (member: IContactContext) => Observable<void>;
 
 	disabledMemberIDs: string[] = [];
 
@@ -32,9 +32,9 @@ export class MembersSelectorListComponent {
 		console.log('MembersSelectorComponent.constructor()');
 	}
 
-	readonly fulLMemberID = (_: number, m: IMemberContext) => `${m.team?.id}:${m.id}`;
+	readonly fullMemberID = (_: number, m: IContactContext) => `${m.team?.id}:${m.id}`;
 
-	isSelected(member: IMemberContext): boolean {
+	isSelected(member: IContactContext): boolean {
 		return !!this.selectedMembers?.some(m => m.id === member.id && m.team?.id === member?.team?.id);
 	}
 
@@ -88,7 +88,7 @@ export class MembersSelectorListComponent {
 		return this.selectedMembers?.map(m => m.id) || [];
 	}
 
-	private onMemberAdded(member: IMemberContext): boolean {
+	private onMemberAdded(member: IContactContext): boolean {
 		console.log('MembersSelectorListComponent.onMemberAdded()', member);
 		const selectedIDs = this.getSelectedMemberIDs();
 		if (!selectedIDs.includes(member.id)) {
@@ -120,7 +120,7 @@ export class MembersSelectorListComponent {
 		return false;
 	}
 
-	private readonly onMemberRemoved = (member: IMemberContext): boolean => {
+	private readonly onMemberRemoved = (member: IContactContext): boolean => {
 		console.log('MembersSelectorListComponent.onMemberRemoved()', member);
 		let selectedIDs = this.getSelectedMemberIDs();
 		if (!selectedIDs.includes(member.id)) {
@@ -136,15 +136,15 @@ export class MembersSelectorListComponent {
 				},
 				error: e => {
 					this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
-					this.errorLogger.logError(e,'Failed in onRemoved handler')
+					this.errorLogger.logError(e, 'Failed in onRemoved handler');
 				},
 			});
 		}
 		return true;
 	};
 
-	private setSelectedMembers(selectedIDs: string[]): readonly IMemberContext[] {
-		const selectedMembers: IMemberContext[] = [];
+	private setSelectedMembers(selectedIDs: string[]): readonly IContactContext[] {
+		const selectedMembers: IContactContext[] = [];
 		selectedIDs.forEach(id => {
 			const m = this.members?.find(m => m.id === id);
 			if (!m) {

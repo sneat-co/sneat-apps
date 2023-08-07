@@ -11,29 +11,29 @@
 	<ion-progress-bar *ngIf="!team" type="indeterminate"></ion-progress-bar>
 	<form>
 		<ion-item>
-			<ion-avatar slot="start" *ngIf="memberBrief?.avatar">
+			<ion-avatar slot="start" *ngIf="member?.brief?.avatar">
 				<ion-img
 					title="avatar"
-					*ngIf="memberBrief?.avatar?.gravatar"
-					src="//www.gravatar.com/avatar/{{ memberBrief?.avatar?.gravatar }}"
+					*ngIf="member?.brief?.avatar?.gravatar"
+					src="//www.gravatar.com/avatar/{{ member?.brief?.avatar?.gravatar }}"
 				></ion-img>
 				<ion-img
 					title="avatar"
-					*ngIf="memberBrief?.avatar?.external"
-					[src]="memberBrief?.avatar?.external?.url"
+					*ngIf="member?.brief?.avatar?.external"
+					[src]="member?.brief?.avatar?.external?.url"
 				></ion-img>
 			</ion-avatar>
-			<ion-avatar slot="start" *ngIf="memberBrief && !memberBrief.avatar">
+			<ion-avatar slot="start" *ngIf="!!member?.brief && !member?.brief?.avatar">
 				<ion-img
 					title="avatar"
-					src="//www.gravatar.com/avatar/{{ memberBrief.id }}.gravatar"
+					src="//www.gravatar.com/avatar/{{ member?.id }}.gravatar"
 				></ion-img>
 			</ion-avatar>
 			<ion-label position="stacked">Name</ion-label>
 			<ion-input
 				readonly
-				*ngIf="memberBrief"
-				[value]="memberBrief.title"
+				*ngIf="member?.brief"
+				[value]="member?.brief?.title"
 			></ion-input>
 		</ion-item>
 		<ion-item>

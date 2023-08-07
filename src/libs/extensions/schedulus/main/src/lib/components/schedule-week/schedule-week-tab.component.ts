@@ -8,11 +8,11 @@ import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 	templateUrl: 'schedule-week-tab.component.html',
 })
 export class ScheduleWeekTabComponent {
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
-	@Output() readonly slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
+	@Output() readonly slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
 
-	onSlotClicked(args: {slot: ISlotItem; event: Event}): void {
+	onSlotClicked(args: { slot: ISlotItem; event: Event }): void {
 		console.log('ScheduleWeekTabComponent.onSlotClicked()', args);
 		this.slotClicked.emit(args);
 	};

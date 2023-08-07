@@ -31,16 +31,17 @@ export class RetrospectivesComponent {
 			);
 			return;
 		}
-		const activeRetroId = this.team?.dto?.active?.retrospective?.id;
-		try {
-			this.navService.navigateToRetrospective(
-				this.navController,
-				this.team,
-				activeRetroId || 'upcoming',
-			);
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to navigate to retrospective page');
-		}
+		throw new Error('Not implemented');
+		// const activeRetroId = this.team?.dto?.active?.retrospective?.id;
+		// try {
+		// 	this.navService.navigateToRetrospective(
+		// 		this.navController,
+		// 		this.team,
+		// 		activeRetroId || 'upcoming',
+		// 	);
+		// } catch (e) {
+		// 	this.errorLogger.logError(e, 'Failed to navigate to retrospective page');
+		// }
 	}
 
 	retroCount(itemType: RetroItemType): number {

@@ -1,9 +1,10 @@
 import { Component, Inject, Input, Pipe, PipeTransform } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
-import { getMemberTitle } from '@sneat/components';
+import { getContactTitle } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IContactContext,
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
 	IMemberContext,
@@ -27,7 +28,7 @@ export class EncodeSmsText implements PipeTransform {
 })
 export class InviteModalComponent {
 	@Input() team?: ITeamContext;
-	@Input() member?: IMemberContext;
+	@Input() member?: IContactContext;
 
 	tab: InviteChannel = 'email';
 	link?: string;
@@ -66,7 +67,7 @@ export class InviteModalComponent {
 		if (!this.member) {
 			throw new Error('!this.member');
 		}
-		const receiver = getMemberTitle(this.member);
+		const receiver = getContactTitle(this.member);
 		let m = `Hi ${receiver}, please join our family @ Sneat.app - https://sneat.app/pwa/join/family?id=${invite.id}#pin=${invite.pin}`;
 		if (this.message.value) {
 			m += '\n\n' + this.message.value;
@@ -139,7 +140,11 @@ export class InviteModalComponent {
 
 	}
 
-	createInvite(to: { channel: InviteChannel; address?: string, send?: boolean }): Observable<ICreatePersonalInviteResponse> {
+	createInvite(to: {
+		channel: InviteChannel;
+		address?: string,
+		send?: boolean
+	}): Observable<ICreatePersonalInviteResponse> {
 		if (!this.team) {
 			return throwError(() => 'can not create invite without team context');
 		}

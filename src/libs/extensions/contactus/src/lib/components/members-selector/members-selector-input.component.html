@@ -21,7 +21,7 @@
 			<ion-icon name="person-outline" color="medium" slot="start"></ion-icon>
 			<ion-label color="medium">Member</ion-label>
 			<ion-select [value]="selectedMemberID" interface="popover">
-				<ion-select-option [value]="m.id" *ngFor="let m of members">{{m|memberTitle}}</ion-select-option>
+				<ion-select-option [value]="m.id" *ngFor="let m of members || []">{{m|contactTitle}}</ion-select-option>
 			</ion-select>
 		</ion-item>
 		<ion-item *ngIf="selectedMembers && (max !== 1 || !selectedMembers.length) ">

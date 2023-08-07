@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/animations';
-import { IContact2ContactInRequest } from '@sneat/dto';
+import { IContact2ContactInRequest, IContactBrief } from '@sneat/dto';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { InviteModalComponent } from '@sneat/team/components';
-import { memberContextFromBrief } from '@sneat/team/contacts/services';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import { ContactService } from '@sneat/team/contacts/services';
+import { IBriefAndID, IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
 
@@ -20,20 +20,23 @@ import { SneatUserService } from '@sneat/auth';
 export class MembersListComponent implements OnChanges {
 
 	private selfRemove?: boolean;
-	private _members?: readonly IMemberContext[];
+	private _members?: readonly IContactContext[];
 	@Input() public team?: ITeamContext;
-	@Input() public members?: readonly IMemberContext[];
+	@Input() public members?: readonly IContactContext[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
-	@Input() public contactsByMember: { [id: string]: IContact2ContactInRequest[] } = {};
+	@Input() public contactsByMember: { [id: string]: readonly IBriefAndID<IContactBrief>[] } = {};
 	// Holds filtered entries, use `allMembers` to pass input
-	public membersToDisplay?: readonly IMemberContext[];
+	public membersToDisplay?: readonly IContactContext[];
+
+	protected contactusTeam?: IContactusTeamDtoWithID;
 
 	constructor(
 		private readonly navService: TeamNavService,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		private readonly teamService: TeamService,
+		private readonly contactService: ContactService,
 		private readonly scheduleNavService: ScheduleNavService,
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
@@ -44,7 +47,7 @@ export class MembersListComponent implements OnChanges {
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	public genderIcon(m: IMemberContext) {
+	public genderIcon(m: IContactContext) {
 		switch (m.brief?.gender) {
 			case 'male':
 				return 'man-outline';
@@ -54,7 +57,7 @@ export class MembersListComponent implements OnChanges {
 		return 'person-outline';
 	}
 
-	public goMember(member?: IMemberContext): boolean {
+	public goMember(member?: IContactContext): boolean {
 		console.log('TeamPage.goMember()', member);
 		if (!this.team) {
 			this.errorLogger.logError(
@@ -90,39 +93,28 @@ export class MembersListComponent implements OnChanges {
 		}
 	}
 
-	public goSchedule(event: Event, member: IMemberContext) {
+	public goSchedule(event: Event, contact: IContactContext) {
 		console.log('MembersListComponent.goSchedule()');
 		event.stopPropagation();
 		event.preventDefault();
 		const team = this.team;
 		if (team) {
-			this.scheduleNavService.goSchedule(team, { member: member.id })
+			this.scheduleNavService.goSchedule(team, { member: contact.id })
 				.catch(this.errorLogger.logErrorHandler('failed to navigate to member\'s schedule page'));
 		}
 	}
 
-	public removeMember(event: Event, member: IMemberContext) {
+	public removeMember(event: Event, member: IContactContext) {
 		// event.preventDefault();
 		event.stopPropagation();
 		if (!this.team) {
 			return;
 		}
-		const members = this.team?.dto?.members;
-		const memberIndex = members?.findIndex((m) => m.id === member.id);
-		if (members && this.team?.dto?.members) {
-			this.team = {
-				...this.team,
-				dto: {
-					...this.team.dto,
-					members: members.filter((m) => m.id !== member.id),
-				},
-			};
-		}
 		this.selfRemove = member.brief?.userID === this.userService.currentUserID;
-		const teamId = this.team.id;
-		this.teamService.removeTeamMember(this.team, member.id).subscribe({
+		const teamID = this.team.id;
+		this.contactService.removeTeamMember(teamID, member.id).subscribe({
 			next: (team) => {
-				if (teamId !== this.team?.id) {
+				if (teamID !== this.team?.id) {
 					return;
 				}
 				this.team = team;
@@ -141,15 +133,6 @@ export class MembersListComponent implements OnChanges {
 			error: (err: unknown) => {
 				this.selfRemove = undefined;
 				this.errorLogger.logError(err, 'Failed to remove member from team');
-				if (
-					members &&
-					((!members.find((m) => m.id === member.id) && memberIndex) ||
-						memberIndex === 0)
-				) {
-					if (member.brief) {
-						members.splice(memberIndex, 0, member.brief);
-					}
-				}
 			},
 		});
 	}
@@ -158,7 +141,7 @@ export class MembersListComponent implements OnChanges {
 	// 	this.navService.navigateToAddMember(this.navController, this.team);
 	// }
 
-	private readonly filterMembers = (members?: readonly IMemberContext[]) => {
+	private readonly filterMembers = (members?: readonly IContactContext[]): readonly IContactContext[] | undefined => {
 		return !this.role
 			? members
 			: members?.filter((m) =>
@@ -166,7 +149,7 @@ export class MembersListComponent implements OnChanges {
 			);
 	};
 
-	async showInviteModal(event: Event, member: IMemberContext): Promise<void> {
+	async showInviteModal(event: Event, member: IContactContext): Promise<void> {
 		console.log('showInviteModal()', event, member);
 		event.stopPropagation();
 		event.preventDefault();

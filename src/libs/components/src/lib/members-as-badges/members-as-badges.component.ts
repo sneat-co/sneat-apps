@@ -8,7 +8,7 @@ import {
 	Output,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IMemberContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team/models';
 import { SneatPipesModule } from '../pipes/sneat-pipes.module';
 
 @Component({
@@ -27,11 +27,11 @@ export class MembersAsBadgesComponent {
 
 	private readonly deletingMemberIDs: string[] = [];
 
-	@Input() public members?: readonly IMemberContext[];
+	@Input() public members?: readonly IContactContext[];
 	@Input() color: 'primary' | 'light' | 'dark' | 'medium' | 'secondary' | 'tertiary' = 'light';
 	@Input() showDelete = false;
 
-	@Output() readonly deleteMember = new EventEmitter<IMemberContext>();
+	@Output() readonly deleteMember = new EventEmitter<IContactContext>();
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -39,7 +39,7 @@ export class MembersAsBadgesComponent {
 		return this.deletingMemberIDs.includes(id);
 	}
 
-	delete(event: Event, member: IMemberContext): void {
+	delete(event: Event, member: IContactContext): void {
 		event.stopPropagation();
 		this.deletingMemberIDs.push(member.id);
 		this.deleteMember.emit(member);

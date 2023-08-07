@@ -15,7 +15,7 @@ import {
 	IShortTeamInfo,
 	ITeamBrief,
 	ITeamDto, IVehicleAssetDto,
-	ListType,
+	ListType, IHappeningBrief,
 } from '@sneat/dto';
 import { ITeamItemContext } from './team-item-context';
 
@@ -29,8 +29,18 @@ export interface IBriefAndID<Brief> {
 	readonly brief: Brief;
 }
 
+export interface IDtoAndID<Dto> {
+	readonly id: string;
+	readonly dto?: Dto;
+}
+
+
 export function zipMapBriefsWithIDs<Brief>(briefs?: Readonly<{ [id: string]: Brief }>): readonly IBriefAndID<Brief>[] {
 	return briefs ? Object.keys(briefs).map(id => ({ id, brief: briefs[id] })) : [];
+}
+
+export function zipMapDTOsWithIDs<DTO>(o?: Readonly<{ [id: string]: DTO }>): readonly IBriefAndID<DTO>[] {
+	return o ? Object.keys(o).map(id => ({ id, brief: o[id] })) : [];
 }
 
 export interface ITeamContext extends ITeamRef, INavContext<ITeamBrief, ITeamDto> {
@@ -43,8 +53,16 @@ export interface IContactusTeamDto {
 	contacts: Readonly<{ [id: string]: IContactBrief }>;
 }
 
-export interface IContactusTeamContext extends INavContext<IContactusTeamDto, IContactusTeamDto> {
+export interface IContactusTeamDtoWithID extends IDtoAndID<IContactusTeamDto> {
 }
+
+export interface ISchedulusTeamDto {
+	recurringHappenings?: { [id: string]: IHappeningBrief };
+}
+
+export interface ISchedulusTeamDtoWithID extends IDtoAndID<ISchedulusTeamDto> {
+}
+
 
 export const teamContextFromBrief = (id: string, brief: ITeamBrief): ITeamContext => ({ id, type: brief.type, brief });
 

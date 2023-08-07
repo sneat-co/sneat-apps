@@ -11,11 +11,10 @@ import {
 } from '@sneat/dto';
 import { AddAssetBaseComponent, AssetService, ICreateAssetRequest } from '@sneat/extensions/assetus/components';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ContactService, memberContextFromBrief } from '@sneat/team/contacts/services';
+import { ContactService, contactContextFromBrief } from '@sneat/team/contacts/services';
 import {
 	IAssetContext, IContactContext,
-	IContactusTeamContext,
-	IMemberContext,
+	IContactusTeamDtoWithID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
@@ -30,7 +29,7 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 export class NewDocumentPageComponent extends AddAssetBaseComponent implements OnChanges {
 
 	@Input() public override team?: ITeamContext;
-	@Input() public override contactusTeam?: IContactusTeamContext;
+	@Input() public override contactusTeam?: IContactusTeamDtoWithID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
@@ -47,7 +46,9 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 
 	private readonly memberChanged = new Subject<void>();
 
-	public members?: IMemberContext[];
+	public members?: readonly IContactContext[];
+
+	public selectedMembers?: readonly IContactContext[];
 
 	constructor(
 		route: ActivatedRoute,
@@ -93,7 +94,7 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 			if (team) {
 				const contactusTeam = this.contactusTeam;
 				this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
-					.map(contact => memberContextFromBrief(contact, team));
+					.map(contact => contactContextFromBrief(contact, team));
 			}
 		}
 	}

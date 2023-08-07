@@ -15,7 +15,7 @@
 <ng-template #list>
 	<ion-item-sliding
 		[@addRemove]="'added'"
-		*ngFor="let member of membersToDisplay; trackBy: id"
+		*ngFor="let member of membersToDisplay || []; trackBy: id"
 	>
 		<ion-item routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}/member/{{member.id}}"
 							(click)="goMember(member)" class="sneat-tiny-end-padding">
@@ -33,10 +33,10 @@
 				<ion-icon slot="start" [name]="genderIcon(member)" class="sneat-hide-if-width-less-240"></ion-icon>
 			</ng-template>
 			<ion-label>
-				{{ member|memberTitle }}
+				{{ member|contactTitle }}
 				<ng-container *ngIf="role === null">
 					<ion-badge
-						*ngFor="let role of member.brief?.roles"
+						*ngFor="let role of member.brief?.roles || []"
 						class="ion-margin-start sneat-team-member-role"
 						[color]="role === 'contributor' ? 'primary' : 'medium'"
 					>
@@ -56,7 +56,7 @@
 				<ion-button (click)="goSchedule($event, member)">
 					<ion-icon name="calendar-outline"></ion-icon>
 				</ion-button>
-				<ion-button color="danger" *ngIf="!member.brief?.userID && member.brief?.email">
+				<ion-button color="danger" *ngIf="!member.brief?.userID && member.brief?.invitesCount">
 					Resend invite
 				</ion-button>
 			</ion-buttons>

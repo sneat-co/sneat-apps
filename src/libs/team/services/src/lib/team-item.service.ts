@@ -78,7 +78,7 @@ export class TeamItemService<Brief, Dto extends Brief> {
 
 	public watchTeamItems<Brief2 extends Brief, Dto2 extends Dto>(
 		team: ITeamContext,
-		filter?: IFilter[],
+		filter?: readonly IFilter[],
 	): Observable<ITeamItemContext<Brief2, Dto2>[]> {
 		console.log('watchTeamItems()', team.id, this.collectionName);
 		const collectionRef = collection(this.teamRef(team.id), this.collectionName);

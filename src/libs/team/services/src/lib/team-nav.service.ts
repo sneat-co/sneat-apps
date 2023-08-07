@@ -7,7 +7,7 @@ import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, IContactusTeamDtoWithID, IMemberContext, ITeamContext, ITeamRef } from '@sneat/team/models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
@@ -91,7 +91,7 @@ export class TeamNavService {
 
 	public navigateToMember(
 		navController: NavController,
-		memberContext: IMemberContext,
+		memberContext: IContactContext,
 	): void {
 		console.log(
 			`navigateToMember(team.id=${memberContext?.team?.id}, memberInfo.id=${memberContext?.id})`,
@@ -151,7 +151,7 @@ export class TeamNavService {
 
 	public navigateToAddMember = (
 		navController: NavController,
-		team: ITeamContext,
+		team: IContactusTeamDtoWithID,
 	): void =>
 		this.navToTeamPage(
 			navController,
@@ -240,7 +240,7 @@ export class TeamNavService {
 
 	private navToTeamPage = (
 		navController: NavController,
-		team: ITeamContext,
+		team: ITeamRef,
 		url: string,
 		eventName: string,
 		params?: { [id: string]: unknown },

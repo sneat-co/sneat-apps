@@ -1,17 +1,14 @@
 import { TeamType } from '@sneat/core';
-import { IAssetBrief } from './dto-asset';
 import { TeamCounts } from './dto-commune';
 import { IHappeningBrief } from './dto-happening';
 import { IListGroupsHolder } from './dto-list';
-import { IMemberBrief } from './dto-member';
 import { ITotalsHolder } from './dto-models';
-import { IMeetingInfo } from './dto-team-meeting';
 import { ITeamMetric } from './dto-team-metric';
 
-export interface ITeamMeetings {
-	scrum?: IMemberBrief;
-	retrospective?: IMeetingInfo;
-}
+// export interface ITeamMeetings {
+// 	scrum?: IMemberBrief;
+// 	retrospective?: IMeetingInfo;
+// }
 
 export interface ITeamDto extends ITotalsHolder, IListGroupsHolder {
 	readonly type: TeamType;
@@ -22,11 +19,11 @@ export interface ITeamDto extends ITotalsHolder, IListGroupsHolder {
 	// readonly assets?: IAssetBrief[];
 	// readonly contacts?: IContactBrief[];
 	readonly numberOf?: TeamCounts;
-	readonly recurringHappenings: IHappeningBrief[];
+	readonly recurringHappenings?: { [id: string]: IHappeningBrief }; // TODO: Move to ISchedulusTeamDto
 
 	metrics: ITeamMetric[];
-	active?: ITeamMeetings;
-	last?: ITeamMeetings;
+	// active?: ITeamMeetings;
+	// last?: ITeamMeetings;
 	upcomingRetro?: {
 		itemsByUserAndType?: { [user: string]: { [itemType: string]: number } };
 	};

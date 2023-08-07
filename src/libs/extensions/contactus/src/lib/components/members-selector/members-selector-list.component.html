@@ -4,14 +4,14 @@
 </ion-item>
 <ion-radio-group *ngIf="members && max === 1"
 								 (ionChange)="onRadioChanged($event)">
-	<ion-item *ngFor="let member of members; trackBy: fulLMemberID">
+	<ion-item *ngFor="let member of members; trackBy: fullMemberID">
 		<ion-icon name="person-outline" slot="start"></ion-icon>
 		<ion-label>{{member|personTitle}}</ion-label>
 		<ion-radio  slot="end" *ngIf="max === 1" [value]="member.id" [disabled]="isDisabled(member.id)"></ion-radio>
 	</ion-item>
 </ion-radio-group>
 <ion-item-group *ngIf="members && (max !== 1)">
-	<ion-item *ngFor="let member of members; trackBy: fulLMemberID">
+	<ion-item *ngFor="let member of members; trackBy: fullMemberID">
 		<ion-icon name="person-outline" slot="start"></ion-icon>
 		<ion-spinner *ngIf="isDisabled(member.id)"></ion-spinner>
 		<ion-checkbox *ngIf="useCheckbox"

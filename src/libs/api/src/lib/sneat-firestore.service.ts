@@ -61,7 +61,11 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 		);
 	}
 
-	watchSnapshotsByFilter<Dto2 extends Dto>(collectionRef: CollectionReference<Dto2>, filter: IFilter[], orderBy?: QueryOrderByConstraint[]): Observable<QuerySnapshot<Dto2>> {
+	watchSnapshotsByFilter<Dto2 extends Dto>(
+		collectionRef: CollectionReference<Dto2>,
+		filter: readonly IFilter[],
+		orderBy?: readonly QueryOrderByConstraint[],
+	): Observable<QuerySnapshot<Dto2>> {
 		const operator = (f: IFilter) => f.field.endsWith('IDs') ? 'array-contains' : f.operator;
 		const q = query(collectionRef, ...filter.map(f => where(f.field, operator(f), f.value)), ...(orderBy || []));
 		console.log('watchSnapshotsByFilter()', collectionRef.path, 'filter', filter, 'query', q);

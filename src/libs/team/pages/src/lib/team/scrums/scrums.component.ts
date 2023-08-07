@@ -3,7 +3,6 @@ import { NavController } from '@ionic/angular';
 import { ITeamDto } from '@sneat/dto';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
@@ -35,42 +34,43 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
 			try {
-				if (this.team && this.teamId !== this.team.id) {
-					this.todayScrum = undefined;
-					this.prevScrumId = undefined;
-				}
-				const team = this.team?.dto;
-				if (team?.last?.scrum?.id) {
-					const today = getToday();
-					const todayId = getMeetingIdFromDate(today);
-					if (team.last?.scrum?.id === todayId && this.team?.id) {
-						this.scrumService
-							.watchScrum(this.team.id, todayId)
-							.pipe(takeUntil(this.destroyed))
-							.subscribe({
-								next: (scrum) => {
-									this.todayScrum = scrum;
-									this.prevScrumId =
-										scrum && scrum.scrumIds && scrum.scrumIds.prev;
-								},
-								error: (err) =>
-									this.errorLogger.logError(
-										err,
-										`failed to load scrum by id=${todayId}`,
-										{ feedback: false, show: false, report: true },
-									),
-							});
-					} else {
-						this.prevScrumId = team.last.scrum.id;
-					}
-				}
+				throw new Error('not implemented due to refactoring');
+				// if (this.team && this.teamId !== this.team.id) {
+				// 	this.todayScrum = undefined;
+				// 	this.prevScrumId = undefined;
+				// }
+				// const team = this.team?.dto;
+				// if (team?.last?.scrum?.id) {
+				// 	const today = getToday();
+				// 	const todayId = getMeetingIdFromDate(today);
+				// 	if (team.last?.scrum?.id === todayId && this.team?.id) {
+				// 		this.scrumService
+				// 			.watchScrum(this.team.id, todayId)
+				// 			.pipe(takeUntil(this.destroyed))
+				// 			.subscribe({
+				// 				next: (scrum) => {
+				// 					this.todayScrum = scrum;
+				// 					this.prevScrumId =
+				// 						scrum && scrum.scrumIds && scrum.scrumIds.prev;
+				// 				},
+				// 				error: (err) =>
+				// 					this.errorLogger.logError(
+				// 						err,
+				// 						`failed to load scrum by id=${todayId}`,
+				// 						{ feedback: false, show: false, report: true },
+				// 					),
+				// 			});
+				// 	} else {
+				// 		this.prevScrumId = team.last.scrum.id;
+				// 	}
+				// }
 			} catch (e) {
 				this.errorLogger.logError(e, 'Failed to process team changes');
 			}
 		}
 	}
 
-	public goScrum(
+	protected goScrum(
 		date?: 'today' | string,
 		tab?: 'team' | 'my',
 		event?: Event,
@@ -98,7 +98,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 		}
 	}
 
-	public goScrums(event?: Event): void {
+	protected goScrums(event?: Event): void {
 		if (event) {
 			event.preventDefault();
 			event.stopPropagation();

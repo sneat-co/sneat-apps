@@ -1,7 +1,13 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { memberContextFromBrief } from '@sneat/team/contacts/services';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import {
+	IContactContext,
+	IContactusTeamDtoWithID,
+	IMemberContext,
+	ITeamContext,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorService } from './members-selector.service';
 
@@ -11,15 +17,17 @@ import { MembersSelectorService } from './members-selector.service';
 })
 export class MembersSelectorInputComponent {
 
+	protected contactusTeam?: IContactusTeamDtoWithID;
+
 	@Input() team?: ITeamContext;
-	@Input() members?: IMemberContext[];
+	@Input() members?: readonly IContactContext[];
 
 	@Input() max?: number;
 
-	@Input() selectedMembers?: readonly IMemberContext[];
-	@Output() readonly selectedMembersChange = new EventEmitter<readonly IMemberContext[]>();
+	@Input() selectedMembers?: readonly IContactContext[];
+	@Output() readonly selectedMembersChange = new EventEmitter<readonly IContactContext[]>();
 
-	@Output() readonly removeMember = new EventEmitter<IMemberContext>();
+	@Output() readonly removeMember = new EventEmitter<IContactContext>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -35,12 +43,14 @@ export class MembersSelectorInputComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		const team = this.team;
-		if (!team) {
+		const contactusTeam = this.contactusTeam;
+		if (!contactusTeam || !team) {
 			return;
 		}
 		const options: ISelectMembersOptions = {
 			selectedMembers: this.selectedMembers,
-			members: team.dto?.members?.map(m => memberContextFromBrief(m, team)),
+			members: zipMapBriefsWithIDs(contactusTeam.dto?.contacts)
+				?.map(m => contactContextFromBrief(m, team)),
 			max: this.max,
 		};
 		this.membersSelectorService
@@ -53,11 +63,11 @@ export class MembersSelectorInputComponent {
 			.catch(this.errorLogger.logErrorHandler('Failed to select members in modal'));
 	}
 
-	onRemoveMember(member: IMemberContext): void {
+	onRemoveMember(member: IContactContext): void {
 		this.removeMember.emit(member);
 	}
 
-	onSelectedMembersChanged(members: readonly IMemberContext[]): void {
+	onSelectedMembersChanged(members: readonly IContactContext[]): void {
 		console.log('onSelectedMembersChanged()', members);
 		this.selectedMembersChange.emit(members);
 	}

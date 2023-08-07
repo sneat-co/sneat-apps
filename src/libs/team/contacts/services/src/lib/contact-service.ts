@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth';
-import { ContactRole, IContactBrief, IContactDto, ITeamDto, MemberRole } from '@sneat/dto';
+import { ContactRole, IContactBrief, IContactDto, MemberRole } from '@sneat/dto';
 import {
 	IContactContext,
-	IContactusTeamContext,
+	IContactusTeamDtoWithID,
 	ICreateContactRequest,
-	ITeamContext, ITeamMemberRequest,
-	ITeamRef, ITeamRequest,
+	ITeamContext,
+	ITeamRef,
 } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { ContactusTeamService } from './contactus-team.service';
@@ -65,7 +65,12 @@ export class ContactService {
 	}
 
 
-	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: IFilter[]): Observable<IContactContext[]> {
+	watchContactsWithRole(team: ITeamContext, role: string, status: 'active' | 'archived' = 'active', filter?: readonly IFilter[]): Observable<IContactContext[]> {
+		filter = [...(filter || []), { field: 'roles', operator: 'in', value: role }];
+		return this.watchTeamContacts(team, status, filter);
+	}
+
+	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: readonly IFilter[]): Observable<IContactContext[]> {
 		filter = [
 			{
 				field: 'status',
@@ -115,28 +120,19 @@ export class ContactService {
 	}
 
 	public changeContactRole(
-		team: ITeamRef,
-		contactusTeam: IContactusTeamContext,
+		teamID: string,
 		contactID: string,
 		role: MemberRole,
-	): Observable<ITeamContext> {
-		let contactBrief = contactusTeam?.dto?.contacts[contactID];
-		if (!contactBrief) {
-			return throwError(() => 'member not found by ID in team record');
-		}
+	): Observable<void> {
 		return this.sneatApiService
 			.post(`members/change_member_role`, {
-				teamID: team.id,
+				teamID,
 				contactID,
 				role,
 			})
 			.pipe(
 				map(() => {
-					if (!contactBrief) {
-						throw new Error('member is no longer available');
-					}
-					contactBrief = { ...contactBrief, roles: [role] };
-					return team;
+					return;
 				}),
 			);
 	}
@@ -154,7 +150,7 @@ export class ContactService {
 		if (!contactID) {
 			return throwError(() => 'contactID is required parameter');
 		}
-		const request: IContactRequest = { teamID, contactID};
+		const request: IContactRequest = { teamID, contactID };
 		return this.sneatApiService
 			.post('members/remove_member', request);
 	}

@@ -4,8 +4,15 @@ import { excludeUndefined } from '@sneat/core';
 import { HappeningStatus, IHappeningSlot } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISelectMembersOptions, memberContextFromBrief, MembersSelectorService } from '@sneat/extensions/contactus';
-import { HappeningUIState, IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
+import { ISelectMembersOptions, MembersSelectorService } from '@sneat/extensions/contactus';
+import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import {
+	HappeningUIState,
+	IContactContext,
+	IContactusTeamDtoWithID,
+	IHappeningContext,
+	ITeamContext, zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 import {
 	HappeningService,
 	ICancelHappeningRequest,
@@ -22,10 +29,13 @@ const notImplemented = 'Sorry, not implemented yet';
 	templateUrl: 'slot-context-menu.component.html',
 })
 export class SlotContextMenuComponent {
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
+	@Input() contactusTeam?: IContactusTeamDtoWithID;
+
 	@Input() dateID?: string;
 	@Input() public slot?: ISlotItem;
 	happeningState?: HappeningUIState;
+
 
 	public get happening(): IHappeningContext | undefined {
 		return this.slot?.happening;
@@ -56,7 +66,7 @@ export class SlotContextMenuComponent {
 		if (!team) {
 			return;
 		}
-		const members = this.team?.dto?.members?.map(mb => memberContextFromBrief(mb, team)) || [];
+		const members = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map(mb => contactContextFromBrief(mb, team)) || [];
 		const selectedMembers = members.filter(m => this.happening?.brief?.memberIDs?.some(id => id === m.id));
 		const options: ISelectMembersOptions = {
 			members,
@@ -264,7 +274,7 @@ export class SlotContextMenuComponent {
 		return n;
 	}
 
-	private readonly onMemberAdded = (member: IMemberContext): Observable<void> => {
+	private readonly onMemberAdded = (member: IContactContext): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberAdded()', member);
 		if (!this.happening) {
 			return NEVER;
@@ -283,7 +293,7 @@ export class SlotContextMenuComponent {
 		return result;
 	};
 
-	private readonly onMemberRemoved = (member: IMemberContext): Observable<void> => {
+	private readonly onMemberRemoved = (member: IContactContext): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
 		if (!this.happening) {
 			return NEVER;

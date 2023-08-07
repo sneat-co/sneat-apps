@@ -117,6 +117,11 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 		this.teamParams.teamNavService.navigateToMember(this.navController, { id, team });
 	}
 
+	protected addRelatedContact(event: Event): void {
+		event.stopPropagation();
+		alert('Not implemented yet');
+	}
+
 	protected saveAddress(save: ISaveEvent<IAddress>): void {
 		console.log('ContactPageComponent.saveAddress()', save);
 		const
@@ -136,5 +141,5 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 
 	}
 
-  protected readonly length = length;
+	protected readonly length = length;
 }

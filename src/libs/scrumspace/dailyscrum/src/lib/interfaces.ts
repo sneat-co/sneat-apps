@@ -1,4 +1,4 @@
-import { ITeamMetric } from '@sneat/team/models';
+import { ITeamMetric } from '@sneat/dto';
 
 export interface IMetric extends ITeamMetric {
 	value: number;

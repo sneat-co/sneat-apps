@@ -25,7 +25,7 @@ export class ContactRoleFormComponent implements OnChanges, OnDestroy {
 	@Output() readonly contactRoleIDChange = new EventEmitter<string | undefined>();
 	@Output() readonly contactRoleChange = new EventEmitter<IContactRoleContext | undefined>();
 
-	groups?: IContactGroupContext[];
+	protected groups?: readonly IContactGroupContext[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 

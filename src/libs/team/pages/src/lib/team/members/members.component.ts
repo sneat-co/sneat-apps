@@ -1,8 +1,9 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
-import { ITeamDto, MemberRole, MemberRoleContributor, MemberRoleSpectator } from '@sneat/dto';
+import { MemberRole, MemberRoleContributor, MemberRoleSpectator } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IContactusTeamDto, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 
 @Component({
@@ -10,7 +11,7 @@ import { TeamNavService, TeamService } from '@sneat/team/services';
 	templateUrl: './members.component.html',
 })
 export class MembersComponent implements OnChanges {
-	@Input() public team?: IRecord<ITeamDto>;
+	@Input() public contactusTeam?: IRecord<IContactusTeamDto>;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
 	public contributorsCount?: number;
@@ -29,16 +30,17 @@ export class MembersComponent implements OnChanges {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		if (!this.team) {
+		if (!this.contactusTeam) {
 			throw 'no team';
 		}
-		this.navService.navigateToAddMember(this.navController, this.team);
+		this.navService.navigateToAddMember(this.navController, this.contactusTeam);
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team']) {
+		if (changes['contactusTeam']) {
+			const contactusTeam = this.contactusTeam;
 			try {
-				this.setMembersCount(this.team?.dto);
+				this.setMembersCount(contactusTeam?.dto);
 			} catch (e) {
 				this.errorLogger.logError(e, 'Failed to process team changes');
 			}
@@ -49,10 +51,10 @@ export class MembersComponent implements OnChanges {
 		// this.unsubscribe('onSelfRemoved');
 	}
 
-	private setMembersCount(team?: ITeamDto): void {
+	private setMembersCount(team?: IContactusTeamDto): void {
 		if (team) {
 			const count = (role: MemberRole): number =>
-				team.members?.filter(m => m.roles?.indexOf(role) || -1 >= 0)?.length || 0;
+				zipMapBriefsWithIDs(team.contacts)?.filter(m => m.brief.roles?.indexOf(role) || -1 >= 0)?.length || 0;
 			this.contributorsCount = count(MemberRoleContributor);
 			this.spectatorsCount = count(MemberRoleSpectator);
 		} else {

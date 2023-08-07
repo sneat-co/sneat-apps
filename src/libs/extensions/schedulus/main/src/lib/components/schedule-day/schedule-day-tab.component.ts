@@ -22,10 +22,13 @@ export class ScheduleDayTabComponent implements OnDestroy {
 		return this.date && dateToIso(this.date);
 	}
 
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
 
-	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void = (args: { slot: ISlotItem; event: Event }) => {
+	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void = (args: {
+		slot: ISlotItem;
+		event: Event
+	}) => {
 		console.error('onSlotClicked is not set', args);
 	};
 

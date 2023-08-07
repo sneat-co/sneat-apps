@@ -34,10 +34,10 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	private filter = emptyScheduleFilter;
 	// @Input() filter?: IScheduleFilter;
 	// @Input() showRegulars = true;
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
 	// @Input() showEvents = true;
 	@Input() weekday?: Weekday;
-	@Output() readonly slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
+	@Output() readonly slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
 	public allSlots?: ISlotItem[];
 	public slots?: ISlotItem[];
 	public slotsHiddenByFilter?: number;
@@ -54,6 +54,8 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 			},
 		});
 	}
+
+	protected readonly slotID = (_: number, o: ISlotItem) => o.slotID;
 
 	resetFilter(event: Event): void {
 		event.stopPropagation();

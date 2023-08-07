@@ -18,7 +18,7 @@ import { ScheduleDayBaseComponent } from './schedule-day-base.component';
 })
 export class ScheduleDayCardComponent extends ScheduleDayBaseComponent implements AfterViewInit {
 
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' }
 	@Input() teamDaysProvider?: TeamDaysProvider;
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 

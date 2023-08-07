@@ -2,7 +2,7 @@ import { NgModule, PipeTransform, Type } from '@angular/core';
 import { CountryFlagPipe, CountryTitle } from './country-emoji.pipe';
 import { GenderColorPipe, GenderEmojiPipe, GenderIconNamePipe } from './gender.pipes';
 import { LongMonthNamePipe } from './long-month-name.pipe';
-import { MemberTitle } from './member-title.pipe';
+import { ContactTitlePipe } from './member-title.pipe';
 import { PersonTitle } from './person-title.pipe';
 import { SelectedMembersPipe } from './selected-members.pipe';
 import { ShortMonthNamePipe } from './short-month-name.pipe';
@@ -14,7 +14,7 @@ const pipes: Type<PipeTransform>[] = [
 	WdToWeekdayPipe,
 	LongMonthNamePipe,
 	ShortMonthNamePipe,
-	MemberTitle,
+	ContactTitlePipe,
 	PersonTitle,
 	GenderIconNamePipe,
 	GenderEmojiPipe,

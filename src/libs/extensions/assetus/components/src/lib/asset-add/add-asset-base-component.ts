@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IAssetDbData, IAssetMainData } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IContactusTeamContext, ITeamContext } from '@sneat/team/models';
+import { IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { Subject } from 'rxjs';
 import { AssetService } from '../asset-service';
 import { ICreateAssetRequest } from '../asset-service.dto';
@@ -15,7 +15,7 @@ import { ICreateAssetRequest } from '../asset-service.dto';
 export abstract class AddAssetBaseComponent /*extends TeamBaseComponent*/ implements OnDestroy {
 
 	public team?: ITeamContext; // intentionally public as will be overridden as @Input() in child components
-	public contactusTeam?: IContactusTeamContext;
+	public contactusTeam?: IContactusTeamDtoWithID;
 	public country?: string;
 
 	protected readonly destroyed = new Subject<void>();

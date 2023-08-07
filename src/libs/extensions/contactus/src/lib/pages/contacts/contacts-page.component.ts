@@ -82,12 +82,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		}
 
 		this.contactusTeamService.watchContactBriefs(this.team).subscribe({
-			next: contactBriefs => {
-				const contacts: IContactContext[] = contactBriefs.map(brief => ({
-					id: brief.id,
-					brief,
-					team: this.team || { id: '', type: 'unknown' },
-				}));
+			next: contacts => {
 				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
 			},

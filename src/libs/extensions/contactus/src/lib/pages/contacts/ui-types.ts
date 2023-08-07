@@ -7,5 +7,6 @@ export interface IContactRoleWithContacts extends IContactRoleBrief {
 }
 
 export interface IContactGroupWithContacts extends IContactGroupBrief {
+	id: string;
 	roles: IContactRoleWithContacts[];
 }

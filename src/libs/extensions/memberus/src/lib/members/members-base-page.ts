@@ -3,12 +3,12 @@ import { TeamMemberType } from '@sneat/auth-models';
 import { TeamType } from '@sneat/core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IMemberContext } from '@sneat/team/models';
-import { MemberService } from '@sneat/extensions/contactus';
+import { MemberService } from '@sneat/team/contacts/services';
+import { IContactContext } from '@sneat/team/models';
 
 export abstract class MembersBasePage extends TeamBaseComponent {
 
-	public members?: readonly IMemberContext[];
+	public members?: readonly IContactContext[];
 
 	// protected currentUserDto: IDtoUser;
 

@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IMemberContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team/models';
 import { Observable } from 'rxjs';
 import { ISelectMembersOptions } from './members-selector.options';
 
@@ -13,11 +13,11 @@ import { ISelectMembersOptions } from './members-selector.options';
 export class MembersSelectorModalComponent implements ISelectMembersOptions {
 
 	@Input() mode: 'modal' | 'in-page' = 'in-page';
-	@Input() members?: IMemberContext[];
-	@Input() selectedMembers?: IMemberContext[];
+	@Input() members?: IContactContext[];
+	@Input() selectedMembers?: IContactContext[];
 	@Input() max?: number;
-	@Input() onAdded?: (member: IMemberContext) => Observable<void>;
-	@Input() onRemoved?: (member: IMemberContext) => Observable<void>;
+	@Input() onAdded?: (member: IContactContext) => Observable<void>;
+	@Input() onRemoved?: (member: IContactContext) => Observable<void>;
 
 
 	constructor(

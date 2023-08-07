@@ -26,7 +26,7 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 
 	protected abstract get item(): INavContext<Brief, Dto> | undefined;
 
-	protected abstract briefs(): { [id: string]: Brief } | undefined;
+	protected abstract briefs(): Readonly<{ [id: string]: Brief }> | undefined;
 
 	private itemSubscription?: Subscription;
 

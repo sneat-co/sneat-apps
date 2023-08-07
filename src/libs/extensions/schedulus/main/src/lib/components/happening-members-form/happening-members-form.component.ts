@@ -1,7 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ISlotParticipant } from '@sneat/dto';
-import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { memberContextFromBrief } from '@sneat/team/services';
+import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import {
+	IContactContext,
+	IContactusTeamDtoWithID,
+	IHappeningContext,
+	ITeamContext,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-happening-members-form',
@@ -9,7 +15,8 @@ import { memberContextFromBrief } from '@sneat/team/services';
 })
 export class HappeningMembersFormComponent {
 
-	@Input() team?: ITeamContext;
+	@Input() team?: ITeamContext; // TODO: Can we get rid of this?
+	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() happening?: IHappeningContext;
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
@@ -19,26 +26,26 @@ export class HappeningMembersFormComponent {
 	public contacts: number[] = [];
 	public participantsTab: 'members' | 'others' = 'members';
 
-	public get members(): IMemberContext[] | undefined {
-		const team = this.team;
-		if (!team) {
+	public get members(): readonly IContactContext[] | undefined {
+		const
+			contactusTeam = this.contactusTeam,
+			team = this.team;
+
+		if (!team || !contactusTeam) {
 			return;
 		}
-		const members = team.dto?.members;
-		if (!members) {
-			return undefined;
-		}
-		return members.map(m => memberContextFromBrief(m, team));
+		return zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
+			.map(m => contactContextFromBrief(m, team));
 	}
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	public isMemberChecked(member: IMemberContext): boolean {
+	public isMemberChecked(member: IContactContext): boolean {
 		const { id } = member;
 		return this.checkedMemberIDs.some(v => v === id);
 	}
 
-	public isMemberCheckChanged(member: IMemberContext, event: Event): void {
+	public isMemberCheckChanged(member: IContactContext, event: Event): void {
 		const ce = event as CustomEvent;
 		console.log('isMemberCheckChanged()', ce);
 		const checked = ce.detail.value === 'on';

@@ -56,6 +56,7 @@ export type ContactType = TeamMemberType
 export interface IContactBase {
 	readonly type: ContactType;
 	readonly title?: string;
+	readonly shortTitle?: string;
 	readonly name?: IName;
 	readonly countryID?: string;
 	readonly userID?: string;
@@ -65,6 +66,9 @@ export interface IContactBase {
 	readonly avatar?: IAvatar;
 	readonly roles?: readonly string[];
 	readonly groupIDs?: readonly string[];
+	readonly relatedAs?: string;
+	readonly invitesCount?: string;
+	readonly dob?: string;  // Date of birth
 }
 
 export const emptyPersonBase: IContactBase = { type: '' as ContactType, name: {} };
@@ -78,7 +82,6 @@ export interface IPerson extends IContactBase {
 	readonly phone?: string; // TODO: Document how phone is different from phones
 	readonly phones?: IPhone[];
 	readonly website?: string;
-	readonly dob?: string;  // Date of birth
 }
 
 export interface IRelatedPerson extends IPerson {

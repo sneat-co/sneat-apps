@@ -138,7 +138,7 @@
 													[checked]="memberIDs.includes(member.id)"
 													(ionChange)="onMemberChanged($event)"
 						></ion-checkbox>
-						<ion-label>{{member|memberTitle}}</ion-label>
+						<ion-label>{{member|contactTitle}}</ion-label>
 					</ion-item>
 					<!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
 					<!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
@@ -154,7 +154,7 @@
 							<ion-select-option value="">* Anyone</ion-select-option>
 							<ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
 							<ion-select-option *ngFor="let member of members" [value]="member.id">
-								{{member|memberTitle}}
+								{{member|contactTitle}}
 							</ion-select-option>
 						</ion-select>
 					</ion-item>
@@ -166,7 +166,7 @@
 		<ion-label>
 			<ng-container *ngIf="selectedMembers.length === 1">Member:</ng-container>
 			<ng-container *ngIf="selectedMembers.length > 1">Members:</ng-container>
-			<ion-badge style="margin: 0 0.5em" color="light" *ngFor="let member of selectedMembers">{{member|memberTitle}}</ion-badge>
+			<ion-badge style="margin: 0 0.5em" color="light" *ngFor="let member of selectedMembers">{{member|contactTitle}}</ion-badge>
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button title="Clear members filter"

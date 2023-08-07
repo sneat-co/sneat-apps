@@ -4,7 +4,13 @@ import { dateToIso, INavContext } from '@sneat/core';
 import { IHappeningBrief, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem, RecurringSlots, TeamDay, wd2 } from '@sneat/extensions/schedulus/shared';
 import { IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext, ITeamItemContext } from '@sneat/team/models';
+import {
+	IHappeningContext,
+	ISchedulusTeamDtoWithID,
+	ITeamContext,
+	ITeamItemContext,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 import { HappeningService, ScheduleDayService, TeamItemService } from '@sneat/team/services';
 import {
 	BehaviorSubject,
@@ -90,18 +96,18 @@ const slotItemsFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): I
 	return [si];
 };
 
-const groupRecurringSlotsByWeekday = (team?: ITeamContext): RecurringSlots => {
-	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${team?.id})`;
+const groupRecurringSlotsByWeekday = (schedulusTeam?: ISchedulusTeamDtoWithID): RecurringSlots => {
+	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${schedulusTeam?.id})`;
 	const slots: RecurringSlots = {
 		byWeekday: {},
 	};
-	if (!team?.dto?.recurringHappenings) {
-		console.log(logPrefix + ', no slots for team:', team);
+	if (!schedulusTeam?.dto?.recurringHappenings) {
+		console.log(logPrefix + ', no slots for team:', schedulusTeam);
 		return slots;
 	}
-	team.dto.recurringHappenings.forEach(brief => {
-		brief.slots?.forEach(rs => {
-			const happening: IHappeningContext = { id: brief.id, brief, team};
+	zipMapBriefsWithIDs(schedulusTeam.dto.recurringHappenings).forEach(rh => {
+		rh.brief.slots?.forEach(rs => {
+			const happening: IHappeningContext = { id: rh.id, brief: rh.brief, team: schedulusTeam };
 			const slotItems: ISlotItem[] = slotItemsFromRecurringSlot(happening, rs);
 			slotItems.forEach(si => {
 				if (si.wd) {
@@ -127,14 +133,17 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	private readonly recurringsTeamItemService: TeamItemService<IHappeningBrief, IHappeningDto>;
 	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};
 	private readonly recurringByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
+
 	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
+	private readonly schedulusTeam$ = new BehaviorSubject<ISchedulusTeamDtoWithID | undefined>(undefined);
+
 	private readonly teamID$ = this.team$.asObservable().pipe(
 		map(team => team?.id),
 		distinctUntilChanged(),
 	);
 	private readonly days: { [d: string]: TeamDay } = {};
 	private readonly destroyed = new Subject<void>();
-	private readonly recurrings$: Observable<RecurringSlots> = this.team$.pipe(
+	private readonly recurrings$: Observable<RecurringSlots> = this.schedulusTeam$.pipe(
 		// TODO: Instead of providing all slots we can provide observables of slots for a specific day
 		// That would minimize number of handlers to be called on watching components
 		// Tough it's a micro optimization that does not seems to worth the effort now.
@@ -147,6 +156,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	private memberId?: string;
 
 	private _team?: ITeamContext;
+	private _schedulusTeam?: ISchedulusTeamDtoWithID;
 
 	public get team(): ITeamContext | undefined {
 		return this._team;
@@ -281,8 +291,8 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		if (!this._team?.dto?.recurringHappenings) {
 			return;
 		}
-		this._team.dto.recurringHappenings.forEach(brief => {
-			this.processRecurring({ id: brief.id, brief, team: this._team || {id: ''} });
+		zipMapBriefsWithIDs(this._schedulusTeam?.dto?.recurringHappenings).forEach(rh => {
+			this.processRecurring({ id: rh.id, brief: rh.brief, team: this._team || { id: '' } });
 		});
 	}
 

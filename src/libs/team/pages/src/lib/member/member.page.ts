@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamService } from '@sneat/team/services';
+import { ContactService } from '@sneat/team/contacts/services';
+import { IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/auth';
+import { TeamService } from '@sneat/team/services';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,13 +15,16 @@ import { Subscription } from 'rxjs';
 })
 // TODO: delete - replaced with TeamMemberPageComponent @memberus
 export class MemberPageComponent implements OnDestroy {
-	public team?: ITeamContext;
+
+	protected team?: ITeamContext;
+	protected contactusTeam?: IContactusTeamDtoWithID;
 
 	public userID?: string;
-	public memberBrief?: IMemberBrief;
+
+
+	public member?: IContactContext;
 	public changing?: 'role';
 
-	private memberId?: string;
 	private teamSubscription?: Subscription;
 
 	constructor(
@@ -30,33 +33,22 @@ export class MemberPageComponent implements OnDestroy {
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		private readonly teamService: TeamService,
+		private readonly contactService: ContactService,
 	) {
 		console.log('MemberPage.constructor()');
 		try {
-			this.memberBrief = window.history.state.memberInfo as IMemberBrief;
-			if (!this.memberId) {
-				this.memberId = this?.memberBrief?.id;
-			}
-			if (this.memberId) {
-				if (
-					this.memberBrief &&
-					this.memberId &&
-					this.memberBrief.id !== this.memberId
-				) {
-					this.errorLogger.logError('this.memberInfo.id !== this.memberId');
-					return;
-				}
+			this.member = window.history.state.memberInfo as IContactContext;
+			if (this.member?.id) {
 				this.onMemberIdChanged();
 			}
-			route.queryParamMap.subscribe(
-				(params) => {
-					this.processUrlParams(params);
+			route.queryParamMap.subscribe({
+					next: params => this.processUrlParams(params),
+					error: (err: unknown) =>
+						this.errorLogger.logError(
+							err,
+							'MemberPage.constructor() => failed to retrieve query parameters',
+						),
 				},
-				(err) =>
-					this.errorLogger.logError(
-						err,
-						'MemberPage.constructor() => failed to retrieve query parameters',
-					),
 			);
 			this.userService.userChanged.subscribe({
 				next: (userID) => {
@@ -74,7 +66,7 @@ export class MemberPageComponent implements OnDestroy {
 	}
 
 	public get defaultBackUrl(): string {
-		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
+		return this.contactusTeam?.id ? `team?id=${this.contactusTeam.id}` : 'teams';
 	}
 
 
@@ -86,11 +78,12 @@ export class MemberPageComponent implements OnDestroy {
 
 	public changeRole(event: Event): void {
 		console.log('changeRole():', event);
-		if (!this.team) {
+		if (!this.contactusTeam?.id) {
 			this.errorLogger.logError('Can not change role without team context');
 			return;
 		}
-		if (!this.memberId) {
+		const memberID = this.member?.id;
+		if (!memberID) {
 			this.errorLogger.logError(
 				'Can not change role without knowing member ID',
 			);
@@ -98,8 +91,8 @@ export class MemberPageComponent implements OnDestroy {
 		}
 		this.changing = 'role';
 		const { detail } = event as CustomEvent;
-		this.teamService
-			.changeContactRole(this.team, this.memberId, detail.value)
+		this.contactService
+			.changeContactRole(this.contactusTeam.id, memberID, detail.value)
 			.subscribe({
 				next: () => {
 					this.changing = undefined;
@@ -120,13 +113,12 @@ export class MemberPageComponent implements OnDestroy {
 		console.log('processUrlParams', id);
 		if (ids.length === 2) {
 			const [teamId, memberId] = ids;
-			if (teamId && teamId !== this.team?.id) {
-				this.team = { id: teamId };
+			if (teamId && teamId !== this.contactusTeam?.id) {
+				this.contactusTeam = { id: teamId };
 				this.onTeamIdChanged();
 			}
-			if (memberId !== this.memberId) {
-				this.memberId = memberId;
-				this.memberId = memberId;
+			if (memberId !== this.member?.id) {
+				this.member = { id: memberId, team: { id: teamId } };
 				this.onMemberIdChanged();
 			}
 		}
@@ -136,22 +128,22 @@ export class MemberPageComponent implements OnDestroy {
 		if (this.teamSubscription) {
 			this.teamSubscription.unsubscribe();
 		}
-		this.memberId = undefined;
-		const teamId = this.team?.id;
-		if (this.team && teamId) {
-			this.teamSubscription = this.teamService.watchTeam(this.team).subscribe({
+		this.member = undefined;
+		const team = this.team;
+		if (team) {
+			this.teamSubscription = this.teamService.watchTeam(team).subscribe({
 				next: team => {
 					console.log('MemberPage: teamService.watchTeam =>', team);
 
-					if (this.team?.id !== teamId) {
+					if (this.team?.id !== team.id) {
 						return;
 					}
 					this.team = team;
-					if (this.memberId) {
+					if (this.member?.id) {
 						this.onMemberIdChanged();
 					}
 				},
-				error: (err) =>
+				error: (err: unknown) =>
 					this.errorLogger.logError(
 						err,
 						'MemberPage.onTeamIdChanged() => Failed to get team',
@@ -161,11 +153,8 @@ export class MemberPageComponent implements OnDestroy {
 	}
 
 	private onMemberIdChanged(): void {
-		if (this.team) {
-			const memberId = this.memberId;
-			this.memberBrief = this.team?.dto?.members?.find(
-				m => m.id === memberId,
-			);
+		if (this.contactusTeam && this.member?.id && !this.member?.dto) {
+			this.member = { ...this.member, brief: this.contactusTeam?.dto?.contacts[this.member.id] };
 		}
 	}
 }

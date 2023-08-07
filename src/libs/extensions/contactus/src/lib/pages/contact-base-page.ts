@@ -1,8 +1,8 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IContactBrief, IContactDto } from '@sneat/dto';
+import { IContactBrief, IContactDto, IContactsBrief } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { ContactService } from '@sneat/team/contacts/services';
-import { IContactContext } from '@sneat/team/models';
+import { IBriefAndID, IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
 import { ContactComponentBaseParams } from '../contact-component-base-params';
 
@@ -10,8 +10,6 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 
 	public contact?: IContactContext;
 	public contactLocations?: IContactContext[];
-
-	protected readonly contactService: ContactService;
 
 	protected constructor(
 		className: string,
@@ -21,7 +19,6 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		// protected assetService: IAssetService,
 	) {
 		super(className, route, params.teamParams, 'contacts', 'contact');
-		this.contactService = params.contactService;
 		this.defaultBackPage = 'contacts';
 		this.tackContactId();
 	}
@@ -40,6 +37,10 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 			return throwError(() => new Error('no team context'));
 		}
 		return this.contactService.watchContactById(team, this.contact?.id);
+	}
+
+	protected get relatedContacts(): readonly IBriefAndID<IContactBrief>[] {
+		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
 	}
 
 	override setItemContext(item: IContactContext): void {

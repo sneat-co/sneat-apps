@@ -1,8 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
-import { ContactRole } from '@sneat/dto';
+import { ContactRole, IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/team/contacts/services';
-import { IContactContext } from '@sneat/team/models';
+import { IBriefAndID, IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 
 @Component({
@@ -15,6 +15,10 @@ export class ContactsListItemComponent {
 	@Input() excludeRole?: ContactRole;
 	@Input() contact?: IContactContext;
 	@Input() showAddress = false;
+
+	protected get relatedContacts(): readonly IBriefAndID<IContactBrief>[] {
+		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
+	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

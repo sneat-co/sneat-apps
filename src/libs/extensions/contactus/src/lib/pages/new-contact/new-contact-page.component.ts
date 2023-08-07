@@ -13,10 +13,9 @@ import {
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IAssetContext, IContactContext, ICreateContactRequest, IMemberContext } from '@sneat/team/models';
+import { IAssetContext, IContactContext, ICreateContactRequest } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import {
-	ContactService,
 	ContactGroupService,
 	ContactRoleService,
 	IContactGroupContext,
@@ -79,7 +78,6 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		params: TeamComponentBaseParams,
 		route: ActivatedRoute,
 		private readonly assetService: AssetService,
-		private readonly contactService: ContactService,
 		private readonly contactGroupService: ContactGroupService,
 		private readonly contactRoleService: ContactRoleService,
 		// private readonly businessLogic: IBusinessLogic,

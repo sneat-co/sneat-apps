@@ -3,7 +3,13 @@ import { FormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
 import { WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import {
+	IContactContext,
+	IContactusTeamDtoWithID,
+	IMemberContext,
+	ITeamContext,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 import { IScheduleFilter } from './schedule-filter';
@@ -17,17 +23,18 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	public expanded = false;
 	public accordionValue?: string;
 	private resetting = false;
+	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	readonly text = new FormControl<string>('');
 	weekdays: WeekdayCode2[] = [];
 	memberIDs: string[] = [];
-	selectedMembers: IMemberContext[] = []
+	selectedMembers: IContactContext[] = [];
 	repeats: string[] = [];
 	memberID = '';
 
-	members?: IMemberContext[];
+	members?: IContactContext[];
 
 	readonly repeatWeekly = new FormControl<boolean>(false);
 	readonly repeatMonthly = new FormControl<boolean>(false);
@@ -83,7 +90,10 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('ScheduleFilterComponent.ngOnChanges()', changes);
 		// TODO: call base class method?
-		this.members = this.team?.dto?.members?.map(m => ({id: m.id, brief: m, team: this.team || {id: ''}}));
+		this.members = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map(m => ({
+			...m,
+			team: this.team || { id: '' },
+		}));
 	}
 
 	clearFilter(event?: Event): void {
@@ -168,7 +178,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 		console.log('ScheduleFilterComponent.onMemberChanged()', event);
 		event.stopPropagation();
 		const cs = event as CustomEvent;
-		const {checked, value} = cs.detail;
+		const { checked, value } = cs.detail;
 		if (checked === undefined) {
 			// a dropdown
 			this.memberIDs = this.memberID ? [this.memberID] : [];
@@ -182,8 +192,8 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	}
 
 	private setSelectedMembers(): void {
-		this.selectedMembers = this.memberIDs.map(mID => this.members?.find(m => m.id == mID) as IMemberContext);
+		const members = this.members || [];
+		this.selectedMembers = this.memberIDs.map(mID => members.find(m => m.id == mID) as IContactContext);
 	}
-
 
 }

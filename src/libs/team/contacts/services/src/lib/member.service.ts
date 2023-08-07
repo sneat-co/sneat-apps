@@ -3,13 +3,13 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth';
 import { IErrorResponse } from '@sneat/core';
-import { IMemberBrief, RoleTeamMember, trimNames } from '@sneat/dto';
+import { IContactBrief, IMemberBrief, RoleTeamMember, trimNames } from '@sneat/dto';
 import { TeamService } from '@sneat/team/services';
 import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
-	IAddTeamMemberResponse, IBriefAndID,
+	IAddTeamMemberResponse, IBriefAndID, IContactContext,
 	ICreateTeamMemberRequest,
 	IMemberContext,
 	ITeamContext,
@@ -20,8 +20,8 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { ContactusTeamService } from './contactus-team.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
-export const memberContextFromBrief = (member: IBriefAndID<IMemberBrief>, team: ITeamContext): IMemberContext => ({
-	...member,
+export const contactContextFromBrief = (contact: IBriefAndID<IContactBrief>, team: ITeamContext): IContactContext => ({
+	...contact,
 	team,
 });
 

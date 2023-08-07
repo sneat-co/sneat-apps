@@ -19,7 +19,7 @@
 					<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)"
 												(ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
 					<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
-					<ion-label>{{member|memberTitle}}</ion-label>
+					<ion-label>{{member|contactTitle}}</ion-label>
 					<!--						<ion-select interface="popover">-->
 					<!--							<ion-select-option value="busy">Busy</ion-select-option>-->
 					<!--							<ion-select-option value="out_of_house">Out of house</ion-select-option>-->

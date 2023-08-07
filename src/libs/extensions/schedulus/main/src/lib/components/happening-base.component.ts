@@ -13,11 +13,17 @@ import {
 import { ModalController } from '@ionic/angular';
 import { isoStringsToDate } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
+import { MembersSelectorService } from '@sneat/extensions/contactus';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { MembersSelectorService } from '@sneat/team/components';
-import { IHappeningContext, IMemberContext, ITeamContext } from '@sneat/team/models';
-import { memberContextFromBrief, TeamNavService } from '@sneat/team/services';
+import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import {
+	IContactContext,
+	IContactusTeamDtoWithID,
+	IHappeningContext,
+	ITeamContext, zipMapBriefsWithIDs,
+} from '@sneat/team/models';
+import { TeamNavService } from '@sneat/team/services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team/services';
 import { ScheduleModalsService } from '../services/schedule-modals.service';
@@ -61,7 +67,8 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	protected readonly destroyed = new EventEmitter<void>();
 
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
+	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() happening?: IHappeningContext;
 
 	@Output() readonly deleted = new EventEmitter<string>();
@@ -170,7 +177,8 @@ This operation can NOT be undone.`)) {
 		if (!teamID) {
 			return;
 		}
-		const teamMembers: IMemberContext[] | undefined = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+		const teamMembers: IContactContext[] | undefined = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)
+			?.map(m => contactContextFromBrief(m, team));
 
 		this.membersSelectorService.selectMembersInModal({
 			selectedMembers: teamMembers?.filter(m => this.happening?.brief?.memberIDs?.some(id => id === m.id)) || [],
@@ -190,7 +198,7 @@ This operation can NOT be undone.`)) {
 			.editSingleHappeningSlot(event, this.happening);
 	}
 
-	private readonly onMemberAdded = (member: IMemberContext): Observable<void> => {
+	private readonly onMemberAdded = (member: IContactContext): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
@@ -208,7 +216,7 @@ This operation can NOT be undone.`)) {
 		return result;
 	};
 
-	private readonly onMemberRemoved = (member: IMemberContext): Observable<void> => {
+	private readonly onMemberRemoved = (member: IContactContext): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
@@ -222,7 +230,7 @@ This operation can NOT be undone.`)) {
 		console.log('HappeningCardComponent.ngOnChanges()', this.happening?.id, changes);
 	}
 
-	removeMember(member: IMemberContext): void {
+	removeMember(member: IContactContext): void {
 		console.log('removeMember', member);
 		if (!this.happening) {
 			return;
