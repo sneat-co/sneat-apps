@@ -7,7 +7,7 @@ import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
-import { IContactContext, IContactusTeamDtoWithID, IMemberContext, ITeamContext, ITeamRef } from '@sneat/team/models';
+import { IContactContext, IContactusTeamDtoWithID, ITeamContext, ITeamRef } from '@sneat/team/models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
