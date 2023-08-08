@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { excludeUndefined } from '@sneat/core';
-import { ContactService } from '@sneat/extensions/contactus';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem } from '@sneat/components';
@@ -50,7 +49,6 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		teamParams: TeamComponentBaseParams,
 		private readonly freightOrdersService: LogistOrderService,
 		private readonly logistTeamService: LogistTeamService,
-		private readonly contactService: ContactService,
 	) {
 		super('NewLogistOrderPageComponent', route, teamParams);
 	}
