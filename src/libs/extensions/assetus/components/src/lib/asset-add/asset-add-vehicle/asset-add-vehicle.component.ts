@@ -1,6 +1,14 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { AssetPossession, AssetVehicleType, EngineTypes, FuelTypes, timestamp } from '@sneat/dto';
+import {
+	AssetPossession,
+	AssetVehicleType,
+	EngineTypes,
+	FuelTypes, IVehicleAssetDto,
+	IVehicleMainData,
+	timestamp,
+} from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
@@ -15,11 +23,11 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 })
 export class AssetAddVehicleComponent extends AddAssetBaseComponent implements OnChanges {
 
-	@Input() override team?: ITeamContext;
+	@Input() public override team?: ITeamContext;
 	@Input() public vehicleAsset?: IVehicleAssetContext;
 
-	vehicleType?: AssetVehicleType;
-	vehicleTypes: ISelectItem[] = [
+	protected vehicleType?: AssetVehicleType;
+	protected readonly vehicleTypes: ISelectItem[] = [
 		{ id: 'car', title: 'Car', iconName: 'car-outline' },
 		{ id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline' },
 		// { id: 'bicycle', title: 'Bicycle', iconName: 'bicycle-outline' }, this is a sport asset
@@ -68,12 +76,13 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	}
 
 	constructor(
+		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		assetService: AssetService,
 	) {
-		super(teamParams, assetService);
+		// super('AssetAddVehicleComponent', route, teamParams, assetService);
+		super('AssetAddVehicleComponent', route, teamParams, assetService);
 	}
-
 
 	protected onAssetChanged(asset: IVehicleAssetContext): void {
 		console.log('onAssetChanged', asset, this.vehicleAsset);
@@ -111,7 +120,7 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
-		let request: ICreateAssetRequest = {
+		let request: ICreateAssetRequest<IVehicleMainData> = {
 			asset: {
 				...assetDto,
 				status: 'active',
@@ -157,6 +166,6 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage(request, this.team);
+		this.createAssetAndGoToAssetPage<IVehicleMainData, IVehicleAssetDto>(request, this.team);
 	}
 }

@@ -105,7 +105,7 @@ export class TeamMemberPageComponent extends MemberBasePage implements AfterView
 		if (
 			!confirm(
 				`Are you sure you want to remove ${
-					this.member?.brief?.title || this.member?.brief?.id
+					this.member?.brief?.title || this.member?.id
 				} from ${this.team?.brief?.title}?`,
 			)
 		) {
@@ -123,7 +123,7 @@ export class TeamMemberPageComponent extends MemberBasePage implements AfterView
 			);
 			return;
 		}
-		this.teamService.removeTeamMember(this.team, this.member?.id).subscribe({
+		this.contactService.removeTeamMember(this.team.id, this.member?.id).subscribe({
 			next: () => {
 				this.navController
 					.pop()

@@ -1,7 +1,7 @@
 //tslint:disable:no-unsafe-any
 import { ActivatedRoute } from '@angular/router';
 import { TeamBaseComponent } from '@sneat/team/components';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { MemberPages } from '../constants';
 import { MemberComponentBaseParams } from '../member-component-base-params';
 // import { MemberPages } from 'sneat-shared/extensions/memberus/constants';
@@ -14,9 +14,9 @@ import { MemberComponentBaseParams } from '../member-component-base-params';
 export abstract class MemberBasePage extends TeamBaseComponent {
 	public segment: 'friends' | 'other' | 'summary' = 'summary';
 	// override defaultBackUrl = CommuneTopPage.members;
-	public isDeleted?: boolean;
+	// public isDeleted?: boolean;
 	// protected currentUserDto: IUserDto | undefined;
-	private memberContext?: IMemberContext;
+	private memberContext?: IContactContext;
 
 	protected constructor(
 		className: string,
@@ -31,7 +31,7 @@ export abstract class MemberBasePage extends TeamBaseComponent {
 		this.tackMemberId();
 	}
 
-	public get member(): IMemberContext | undefined {
+	public get member(): IContactContext | undefined {
 		return this.memberContext;
 	}
 
@@ -82,8 +82,8 @@ export abstract class MemberBasePage extends TeamBaseComponent {
 	}
 
 	private getBriefIfMissing(): void {
-		if (this.team?.dto?.members && this.memberContext?.id && !this.memberContext?.brief) {
-			const memberBrief = this.team?.dto?.members?.find(m => m.id === this.memberContext?.id);
+		if (this.contactusTeam?.dto?.contacts && this.memberContext?.id && !this.memberContext?.brief) {
+			const memberBrief = this.contactusTeam.dto.contacts[this.memberContext.id];
 			if (memberBrief) {
 				this.memberContext = {
 					...this.memberContext,
@@ -166,6 +166,6 @@ export abstract class MemberBasePage extends TeamBaseComponent {
 	// }
 
 	private tryToGetMemberFromHistoryState(): void {
-		this.memberContext = window.history.state.member as IMemberContext;
+		this.memberContext = window.history.state.member as IContactContext;
 	}
 }

@@ -17,7 +17,13 @@ import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IHappeningContext, IHappeningWithUiState, IMemberContext, ITeamContext } from '@sneat/team/models';
+import {
+	IHappeningContext,
+	IHappeningWithUiState,
+	IMemberContext,
+	ITeamContext,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 import { HappeningService, ScheduleDayService } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
@@ -42,7 +48,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// prevWeekdays: SlotsGroup[];
 	public readonly teamDaysProvider: TeamDaysProvider;
 	@ViewChild('scheduleFilterComponent') scheduleFilterComponent?: ScheduleFilterComponent;
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
 	@Input() member?: IMemberContext;
 	@Input() public tab: ScheduleTab = 'day';
 	@Input() public dateID = '';
@@ -254,12 +260,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private populateRecurrings(): void {
 		console.log('populateRecurrings()');
 		const prevAll = this.allRecurrings;
-		this.allRecurrings = this.team?.dto?.recurringHappenings?.map(brief => {
-			const { id } = brief;
+		this.allRecurrings = zipMapBriefsWithIDs(this.team?.dto?.recurringHappenings)?.map(rh => {
+			const { id } = rh;
 			const prev = prevAll?.find(p => p.id === id);
 			const result: IHappeningWithUiState = {
 				id,
-				brief: brief,
+				brief: rh.brief,
 				state: prev?.state || {},
 				team: this.team || { id: '' },
 			};

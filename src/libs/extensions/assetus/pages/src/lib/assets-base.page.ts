@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { AssetCategory } from '@sneat/dto';
+import { AssetCategory, IAssetusTeamContext } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
@@ -7,6 +7,8 @@ import { IAssetContext } from '@sneat/team/models';
 export abstract class AssetsBasePage extends TeamBaseComponent {
 
 	public assets?: IAssetContext[];
+
+	protected assetusTeam?: IAssetusTeamContext;
 
 	protected constructor(
 		className: string,
@@ -23,7 +25,9 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 			this.errorLogger.logError('no team context');
 			return;
 		}
-		this.teamParams.teamNavService.navigateForwardToTeamPage(team, 'new-asset', { state: { assetType } });
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(team, 'new-asset', { state: { assetType } })
+			.catch(this.errorLogger.logErrorHandler('Failed to navigate to new asset page'));
 	}
 
 	override onTeamDtoChanged(): void {
@@ -32,8 +36,9 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 			this.assets = undefined;
 			return;
 		}
-		if (!this.assets && this.team?.assets) {
-			this.assets = this.team?.assets;
+		if (!this.assets && this.assetusTeam?.dto) {
+			throw new Error('not implemented');
+			// this.assets = this.assetusTeam?.dto?.assets;
 		}
 	}
 

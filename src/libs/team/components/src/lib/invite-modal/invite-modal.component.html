@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="primary">
 		<ion-title *ngIf="!member">Invite member to join</ion-title>
-		<ion-title *ngIf="member">Invite {{member|memberTitle}} to join</ion-title>
+		<ion-title *ngIf="member">Invite {{member|contactTitle}} to join</ion-title>
 		<ion-buttons slot="end">
 			<ion-button role="close" (click)="close()">
 				<ion-icon name="close-outline"></ion-icon>

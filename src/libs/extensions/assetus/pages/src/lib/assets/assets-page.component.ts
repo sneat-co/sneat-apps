@@ -50,7 +50,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		super('AssetsPageComponent', route, params, assetService);
 		this.teamIDChanged$.subscribe({
 			next: () => this.watchTeamAssets(),
-		})
+		});
 	}
 
 	// ngAfterViewInit(): void {
@@ -104,7 +104,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 	private watchTeamAssets(): void {
 		if (this.team?.id) {
 			this.assetService
-				.watchTeamAssets(this.team)
+				.watchTeamAssets(this.team, 'document')
 				.pipe(
 					takeUntil(this.destroyed),
 				)

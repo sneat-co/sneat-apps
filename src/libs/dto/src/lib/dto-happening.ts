@@ -22,7 +22,6 @@ export interface IHappeningBase {
 }
 
 export interface IHappeningBrief extends IHappeningBase {
-	readonly id: string;
 }
 
 export interface IWithDates {
@@ -32,7 +31,7 @@ export interface IWithTeamDates extends IWithTeamIDs, IWithDates {
 	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 }
 
-export interface IHappeningDto extends IHappeningBase, IWithTeamDates {
+export interface IHappeningDto extends IHappeningBrief, IWithTeamDates {
 	readonly note?: string;
 	readonly participants?: ISlotParticipant[]; // TODO: We probably do not really need it here.
 }

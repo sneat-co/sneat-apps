@@ -38,7 +38,7 @@ export class ListService {
 							throw new Error('response does not have either brief or dto');
 						}
 						const title = list.dto.title || list.id;
-						list = { ...list, brief: { ...list.dto, id: list.id, title } };
+						list = { ...list, brief: { ...list.dto, title } };
 					}
 					return list;
 				}),
@@ -113,8 +113,9 @@ export class ListService {
 
 
 	private readonly onListSnapshot = (team: ITeamContext, id: string, type: ListType, dto?: IListDto | null): IListContext => ({
-		id, dto,
-		brief: !dto ? null : { ...dto, id, type },
+		id,
+		dto,
+		brief: dto,
 		team,
 	});
 

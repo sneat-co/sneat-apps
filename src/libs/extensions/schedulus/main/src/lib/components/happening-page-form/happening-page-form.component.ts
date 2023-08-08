@@ -16,7 +16,7 @@ import { RoutingState } from '@sneat/core';
 import { HappeningType, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IHappeningContext, ITeamContext } from '@sneat/team/models';
+import { IContactusTeamDtoWithID, IHappeningContext, ITeamContext } from '@sneat/team/models';
 import { HappeningService } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
@@ -36,6 +36,7 @@ export class HappeningPageFormComponent implements OnChanges, AfterViewInit, OnD
 	isCreating = false;
 
 	@Input() public team?: ITeamContext;
+	@Input() public contactusTeam?: IContactusTeamDtoWithID;
 	@Input() public happening?: IHappeningContext;
 	@Input() public wd?: WeekdayCode2;
 

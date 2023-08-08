@@ -26,13 +26,13 @@
 				*ngIf="happening?.id || happening?.brief?.slots?.length"
 				[happening]="happening"
 			></sneat-happening-slots>
-<!--			<sneat-single-slot-form-->
-<!--				[happening]="happening"-->
-<!--				[style.display]="happeningType === 'single' ? 'block' : 'none'"-->
-<!--				(happeningSlotChange)="onSingleSlotChanged($event)"-->
-<!--			>-->
-<!--				&lt;!&ndash; hide with [style.display] to preserve input values if tab switched back and forth &ndash;&gt;-->
-<!--			</sneat-single-slot-form>-->
+			<!--			<sneat-single-slot-form-->
+			<!--				[happening]="happening"-->
+			<!--				[style.display]="happeningType === 'single' ? 'block' : 'none'"-->
+			<!--				(happeningSlotChange)="onSingleSlotChanged($event)"-->
+			<!--			>-->
+			<!--				&lt;!&ndash; hide with [style.display] to preserve input values if tab switched back and forth &ndash;&gt;-->
+			<!--			</sneat-single-slot-form>-->
 		</ion-item-group>
 
 	</ion-card>
@@ -60,6 +60,7 @@
 
 		<sneat-happening-members-form
 			[team]="team"
+			[contactusTeam]="contactusTeam"
 			[happening]="happening"
 			(happeningChange)="onHappeningChanged($event)"
 		></sneat-happening-members-form>

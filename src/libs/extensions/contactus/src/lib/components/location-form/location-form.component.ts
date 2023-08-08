@@ -4,8 +4,8 @@ import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { ContactRole, ContactType, IAddress, IContactBrief, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/team/contacts/services';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
-import { ContactService } from '../../services';
 
 @Component({
 	selector: 'sneat-location-form',
@@ -17,7 +17,7 @@ export class LocationFormComponent implements OnChanges {
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
 	@Input() contact?: IContactContext;
-	@Input() parentContact?: IContactBrief;
+	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
 	@Input() contactType: ContactType = 'location';
@@ -75,12 +75,12 @@ export class LocationFormComponent implements OnChanges {
 			this.contact = {
 				id: '',
 				team: this.team,
-				brief: {id: '', type: this.contactType, title},
-				dto: {type: this.contactType, title},
-			}
+				brief: { type: this.contactType, title },
+				dto: { type: this.contactType, title },
+			};
 		}
 		const title = this.title.value || '';
-		const brief = (this.contact.brief || {}) as IContactBrief;
+		const brief: IContactBrief = (this.contact.brief || {}) as IContactBrief;
 		const dto = (this.contact.dto || {}) as IContactDto;
 		this.contact = {
 			...this.contact,
@@ -98,10 +98,7 @@ export class LocationFormComponent implements OnChanges {
 		if (!this.team) {
 			return;
 		}
-		contact = {
-			...contact,
-			parentContact: this.parentContact ? {id: this.parentContact.id, brief: this.parentContact, team: this.team} : undefined,
-		};
+		contact = { ...contact, parentContact: this.parentContact };
 		console.log('LocationFormComponent.onContactCreated()', contact);
 		this.contact = contact;
 		this.emitContactChange();
@@ -115,15 +112,15 @@ export class LocationFormComponent implements OnChanges {
 				this.contact = {
 					id: this.contact?.id || '',
 					team: this.team,
-					brief: { id: '', type: this.contactType, title: '' },
+					brief: { type: this.contactType, title: '' },
 					dto: { type: this.contactType },
 				};
 				this.emitContactChange();
 			}
 		}
 		if (changes['parentContact']) {
-			if (this.parentContact?.countryID && !this.countryID) {
-				this.countryID = this.parentContact.countryID;
+			if (this.parentContact?.brief?.countryID && !this.countryID) {
+				this.countryID = this.parentContact.brief?.countryID || '';
 				this.setFocusToTitle();
 			}
 		}
@@ -148,7 +145,7 @@ export class LocationFormComponent implements OnChanges {
 		// 	return;
 		// }
 		const { title } = contactBrief;
-		const {address} = this.contact?.dto || {type: this.contactType};
+		const { address } = this.contact?.dto || { type: this.contactType };
 		console.log('submit', title, address);
 		if (!title) {
 			alert('title is required');

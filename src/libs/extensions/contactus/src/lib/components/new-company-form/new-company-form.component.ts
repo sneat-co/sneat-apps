@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { ContactRole, ContactType, IContactBrief, validateAddress } from '@sneat/dto';
+import { ContactRole, ContactType, validateAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/team/contacts/services';
 import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
-import { ContactService } from '../../services';
 
 @Component({
 	selector: 'sneat-new-company-form',
@@ -17,7 +17,7 @@ export class NewCompanyFormComponent implements OnChanges {
 	@Input() team?: ITeamContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
-	@Input() parentContact?: IContactBrief;
+	@Input() parentContact?: IContactContext;
 
 	@Output() contactCreated = new EventEmitter<IContactContext>();
 
@@ -34,8 +34,8 @@ export class NewCompanyFormComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Inject(ContactService) private readonly contactService: ContactService,
-		@Inject(ActivatedRoute) private readonly route: ActivatedRoute,
+		private readonly contactService: ContactService,
+		private readonly route: ActivatedRoute,
 	) {
 	}
 
@@ -99,7 +99,7 @@ export class NewCompanyFormComponent implements OnChanges {
 					console.log('created contact:', contact);
 					this.contactCreated.emit(contact);
 				},
-				error: err => {
+				error: (err: unknown) => {
 					this.errorLogger.logError(err, 'Failed to create contact');
 					this.isCreating = false;
 				},

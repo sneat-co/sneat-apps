@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Inject, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { eq, listItemAnimations } from '@sneat/core';
-import { standardDocTypesByID } from '@sneat/dto';
+import { IDocumentAssetDto, standardDocTypesByID } from '@sneat/dto';
+import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IDocumentContext } from '@sneat/team/models';
-import { DocumentService } from '../../../../services/document.service';
+import { IAssetContext } from '@sneat/team/models';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 interface IDocumentType {
 	id: string;
 	title: string;
 	emoji?: string;
-	documents?: IDocumentContext[];
+	documents?: IAssetContext<IDocumentAssetDto>[];
 	expanded?: boolean;
 }
 
@@ -24,18 +24,18 @@ interface IDocumentType {
 })
 export class DocumentsByTypeComponent extends DocumentsBaseComponent implements OnChanges {
 
-	docTypes: IDocumentType[] = Object.values(standardDocTypesByID).map(v => ({...v}));
+	docTypes: IDocumentType[] = Object.values(standardDocTypesByID).map(v => ({ ...v }));
 
 	@Output() goNewDoc = new EventEmitter<string>();
 	@Output() goDocType = new EventEmitter<string>();
-	@Output() goDoc = new EventEmitter<IDocumentContext>();
+	@Output() goDoc = new EventEmitter<IAssetContext<IDocumentAssetDto>>();
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		documentService: DocumentService,
+		assetService: AssetService,
 		toastCtrl: ToastController,
 	) {
-		super(errorLogger, documentService, toastCtrl);
+		super(errorLogger, assetService, toastCtrl);
 	}
 
 	selectDocType(docType: IDocumentType): void {
@@ -75,7 +75,7 @@ export class DocumentsByTypeComponent extends DocumentsBaseComponent implements 
 					docType.documents = [];
 				}
 				docType.documents.push(d);
-			} else  {
+			} else {
 				if (!other.documents) {
 					other.documents = [];
 				}

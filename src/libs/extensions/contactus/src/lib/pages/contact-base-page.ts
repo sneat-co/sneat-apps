@@ -1,17 +1,14 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IContactBrief, IContactDto } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
-import { IContactContext } from '@sneat/team/models';
+import { IBriefAndID, IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
 import { ContactComponentBaseParams } from '../contact-component-base-params';
-import { ContactService } from '../services';
 
 export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
 
 	public contact?: IContactContext;
 	public contactLocations?: IContactContext[];
-
-	protected readonly contactService: ContactService;
 
 	protected constructor(
 		className: string,
@@ -21,7 +18,6 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		// protected assetService: IAssetService,
 	) {
 		super(className, route, params.teamParams, 'contacts', 'contact');
-		this.contactService = params.contactService;
 		this.defaultBackPage = 'contacts';
 		this.tackContactId();
 	}
@@ -42,6 +38,10 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		return this.contactService.watchContactById(team, this.contact?.id);
 	}
 
+	protected get relatedContacts(): readonly IBriefAndID<IContactBrief>[] {
+		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
+	}
+
 	override setItemContext(item: IContactContext): void {
 		this.contact = item;
 	}
@@ -50,7 +50,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		return this.contact;
 	}
 
-	protected override briefs(): IContactBrief[] | undefined {
+	protected override briefs(): { [id: string]: IContactBrief } | undefined {
 		throw new Error('Method not implemented yet.');
 	}
 

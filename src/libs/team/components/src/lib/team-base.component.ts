@@ -5,7 +5,8 @@ import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ILogger, TeamType } from '@sneat/core';
 import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
-import { IMemberContext, ITeamContext } from '@sneat/team/models';
+import { ContactService } from '@sneat/team/contacts/services';
+import { IContactusTeamDtoWithID, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
 import {
@@ -28,12 +29,16 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	private readonly teamBriefChanged = new Subject<ITeamBrief | undefined | null>();
 	private readonly teamDtoChanged = new Subject<ITeamDto | undefined | null>();
 	private teamContext?: ITeamContext;
+
+	protected contactusTeam?: IContactusTeamDtoWithID;
+
 	protected route: ActivatedRoute;
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
 	protected readonly userService: SneatUserService;
 	// protected readonly communeService: ICommuneService;
 	protected readonly teamService: TeamService;
+	protected readonly contactService: ContactService;
 	// protected readonly authStateService: IAuthStateService;
 	protected readonly logger: ILogger;
 	protected readonly subs = new Subscription();
@@ -78,8 +83,8 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			distinctUntilChanged(),
 		);
 
-	public get team(): ITeamContext | undefined { // TODO: Document why we do not allow undefined
-		return this.teamContext;
+	public get team(): ITeamContext { // TODO: Document why we do not allow undefined
+		return this.teamContext || { id: '' } as ITeamContext;
 	}
 
 	public get preloader() {
@@ -113,6 +118,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 			this.navController = teamParams.navController;
 			this.teamService = teamParams.teamService;
+			this.contactService = teamParams.contactService;
 			this.userService = teamParams.userService;
 			this.logger = teamParams.loggerFactory.getLogger(this.className);
 			this.logError = teamParams.errorLogger.logError;
@@ -355,7 +361,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		const dtoChanged = team.dto !== this.teamContext?.dto;
 		console.log(`${this.logClassName}.onTeamContextChanged() => dtoChanged=${dtoChanged}, team:`, team);
 		if (!team.brief && team.dto) {
-			team = { ...team, brief: { id: team.id, ...team.dto } };
+			team = { ...team, brief: team.dto };
 		}
 		if (!team.type) {
 			if (team.brief?.type) {
@@ -382,12 +388,12 @@ export abstract class TeamBaseComponent implements OnDestroy {
 		alert('Saving noes is not implemented yet');
 	}
 
-	protected teamPageUrl(page: string): string | undefined | null {
-		return teamPageUrl(this.teamContext, page);
+	protected teamPageUrl(page: string): string {
+		return teamPageUrl(this.teamContext, page) || '';
 	}
 }
 
-export const teamPageUrl = (team?: ITeamContext, page?: string): string | undefined | null => {
+export const teamPageUrl = (team?: ITeamContext, page?: string): string | undefined => {
 	return team?.id ? page ? `/space/${team.type}/${team.id}/${page}` : `/space/${team.type}/${team.id}` : undefined;
 };
 

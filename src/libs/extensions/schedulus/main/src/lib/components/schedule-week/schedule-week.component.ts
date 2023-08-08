@@ -19,14 +19,14 @@ export interface Weekday { // This is used to
 })
 export class ScheduleWeekComponent implements OnChanges {
 
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
 	@Input() week?: Week;
 	@Input() filter?: IScheduleFilter;
 	@Input() teamDaysProvider?: TeamDaysProvider;
 
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
+	@Output() slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
 
 	weekdays: Weekday[] = createWeekdays();
 
@@ -40,7 +40,7 @@ export class ScheduleWeekComponent implements OnChanges {
 		this.dateSelected.next(date);
 	}
 
-	onSlotClicked(args: {slot: ISlotItem; event: Event}): void {
+	onSlotClicked(args: { slot: ISlotItem; event: Event }): void {
 		console.log('ScheduleWeekComponent.onSlotClicked()', args);
 		this.slotClicked.emit(args);
 	}
@@ -65,7 +65,7 @@ export class ScheduleWeekComponent implements OnChanges {
 			let date = new Date(currentWeek.startDate);
 			date = new Date(date.setDate(startDate + i));
 			// console.log('ScheduleWeekComponent.onWeekInputChanged() => i=', i, '; startDate:', currentWeek.startDate, '; date:', date);
-			this.weekdays[i] = {...this.weekdays[i], day: teamDaysProvider.getTeamDay(date)};
+			this.weekdays[i] = { ...this.weekdays[i], day: teamDaysProvider.getTeamDay(date) };
 		}
 	}
 }

@@ -1,10 +1,10 @@
 import { IAvatar } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { ITeamMemberInfo } from './dto-commune';
-import { IContact2Member } from './dto-contact2';
 import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
+import { IContactBrief } from './dto-contact';
 import { DtoGroupTerms } from './dto-term';
-import { MembersVisibility, MemberType } from './types';
+import { MembersVisibility, TeamMemberType } from './types';
 
 export const RoleTeamMember = 'team_member';
 export const MemberRoleContributor = 'contributor';
@@ -45,41 +45,38 @@ export type MemberRelationship =
 	| typeof MemberRelationshipOther
 	| typeof MemberRelationshipUndisclosed;
 
-export interface IMemberGroupBase {
+export interface IContactGroupBrief {
 	title: string;
 }
 
-export interface IMemberGroupBrief extends IMemberGroupBase {
-	id: string;
-}
-
-export interface IMemberGroupDto extends IMemberGroupBase {
-	teamID: string;
+export interface IContactGroupDto extends IContactGroupBrief {
+	// teamID: string; This is part of a key
 	desc?: string;
 	timetable?: string;
 	membersVisibility: MembersVisibility;
-	numberOf?: IMemberGroupDtoCounts;
+	numberOf?: IContactGroupDtoCounts;
 	terms?: DtoGroupTerms;
 }
 
 export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder {
-	readonly type: MemberType;
+	readonly type: TeamMemberType;
 	readonly title?: string;
-	readonly groupIDs?: readonly string[];
 	readonly userID?: string; // User ID
 	readonly roles?: readonly MemberRole[];
 	readonly avatar?: IAvatar;
 }
 
-export interface IMemberBrief extends IMemberBase {
-	id: string;
-	shortTitle?: string;
+export interface IMemberBrief extends IContactBrief {
 }
 
 export interface IMemberDto extends IMemberBase {
 	position?: string;
-	groups?: IMemberGroupBrief[];
-	contacts?: IContact2Member[];
+	groups?: IContactGroupBrief[];
+}
+
+export interface IWithContactGroups {
+	groupIDs?: readonly string[];
+	groups: { [id: string]: IContactGroupBrief };
 }
 
 
@@ -96,7 +93,7 @@ export interface IMemberDto extends IMemberBase {
 // }
 
 export function memberDtoFromMemberInfo(memberInfo: ITeamMemberInfo, teamId: string, title: string): IMemberDto {
-	const memberType: MemberType = 'member';
+	const memberType: TeamMemberType = 'member';
 	return excludeUndefined({
 		...memberInfo,
 		teamId,
@@ -105,10 +102,11 @@ export function memberDtoFromMemberInfo(memberInfo: ITeamMemberInfo, teamId: str
 	});
 }
 
-export interface IMemberGroupDtoCounts {
+export interface IContactGroupDtoCounts {
 	members?: number;
 }
 
+// Deprecated
 export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 	members: number;
 }

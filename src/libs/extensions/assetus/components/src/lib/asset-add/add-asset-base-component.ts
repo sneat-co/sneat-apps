@@ -1,13 +1,24 @@
+import { Component, Inject, InjectionToken, OnDestroy } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { IAssetDbData, IAssetMainData } from '@sneat/dto';
+import { IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ITeamContext } from '@sneat/team/models';
+import { IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
+import { Subject } from 'rxjs';
 import { AssetService } from '../asset-service';
 import { ICreateAssetRequest } from '../asset-service.dto';
 
-export abstract class AddAssetBaseComponent {
-	public team?: ITeamContext;
+// import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 
-	public country = 'ie';
+@Component({ template: '' })
+export abstract class AddAssetBaseComponent /*extends TeamBaseComponent*/ implements OnDestroy {
+
+	public team?: ITeamContext; // intentionally public as will be overridden as @Input() in child components
+	public contactusTeam?: IContactusTeamDtoWithID;
+	public country?: string;
+
+	protected readonly destroyed = new Subject<void>();
 
 	public isSubmitting = false;
 
@@ -16,21 +27,29 @@ export abstract class AddAssetBaseComponent {
 	});
 
 	protected constructor(
-		protected readonly teamParams: TeamComponentBaseParams,
+		@Inject(new InjectionToken('className')) protected readonly className: string,
+		protected readonly route: ActivatedRoute,
+		protected teamParams: TeamComponentBaseParams,
 		protected readonly assetService: AssetService,
 	) {
+		// super(className, route, teamParams);
 	}
 
-	protected createAssetAndGoToAssetPage(request: ICreateAssetRequest, team: ITeamContext): void {
+	ngOnDestroy(): void {
+		this.destroyed.next();
+	}
+
+	protected get errorLogger(): IErrorLogger {
+		return this.teamParams.errorLogger;
+	}
+
+	protected createAssetAndGoToAssetPage<A extends IAssetMainData, D extends IAssetDbData>(request: ICreateAssetRequest<A>, team: ITeamContext): void {
 		if (!this.team) {
 			throw new Error('no team context');
 		}
-		this.assetService.createAsset(this.team, request)
+		this.assetService.createAsset<A, D>(this.team, request)
 			.subscribe({
 				next: asset => {
-					if (!asset.brief && asset.dto) {
-						asset = { ...asset, brief: { ...asset.dto, category: asset.dto.category, id: asset.id } };
-					}
 					this.teamParams.teamNavService.navigateForwardToTeamPage(team, 'asset/' + asset.id,
 						{ replaceUrl: true, state: { asset, team } })
 						.catch(this.teamParams.errorLogger.logErrorHandler(`failed to navigate to team page`));

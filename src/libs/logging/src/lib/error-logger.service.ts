@@ -60,10 +60,12 @@ export class ErrorLoggerService implements IErrorLogger {
 			}
 			if (message) {
 				console.log('e:', e instanceof HttpErrorResponse);
-				this.showError({
-					clientMessage: message,
-					serverMessage: (e as any).error?.error?.message,
-				}, options?.showDuration);
+				if (e instanceof HttpErrorResponse) {
+					this.showError({
+						clientMessage: message,
+						serverMessage: e.error?.error?.message,
+					}, options?.showDuration);
+				}
 			}
 		}
 		return; // return message ? { error: e, message } : e;

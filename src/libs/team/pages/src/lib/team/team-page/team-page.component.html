@@ -4,8 +4,8 @@
 			<ion-menu-button></ion-menu-button>
 <!--			<ion-back-button defaultHref="/"></ion-back-button>-->
 		</ion-buttons>
-		<ion-title *ngIf="team?.dto || team?.type">
-			{{ team?.dto?.title || team?.type === 'family' ? 'Family' : team?.id }}
+		<ion-title *ngIf="team.dto || team.type">
+			{{ team.dto?.title || team.type === 'family' ? 'Family' : team.id }}
 		</ion-title>
 		<ion-title *ngIf="!team">
 			Space: loading...
@@ -52,7 +52,7 @@
 					<ion-item routerLink="./assets" detail>
 						<ion-icon name="car-sport-outline" slot="start"></ion-icon>
 						<ion-label>Assets</ion-label>
-						<ion-badge slot="end" color="light" class="badge-count" *ngIf="team?.dto?.numberOf?.assets">{{team?.dto?.numberOf?.assets}}</ion-badge>
+						<ion-badge slot="end" color="light" class="badge-count" *ngIf="team.dto?.numberOf?.assets">{{team.dto?.numberOf?.assets}}</ion-badge>
 					</ion-item>
 					<ion-item routerLink="./contacts" detail>
 						<ion-icon name="people-outline" slot="start"></ion-icon>
@@ -90,7 +90,7 @@
 			</ion-col>
 		</ion-row>
 		<ion-row>
-			<ion-col *ngIf="team?.type === 'family' || team?.type === 'team'">
+			<ion-col *ngIf="team.type === 'family' || team.type === 'team'">
 				<ion-card>
 					<ion-item routerLink="./members" class="sneat-tiny-end-padding">
 						<ion-icon name="people-circle-outline" slot="start" color="primary"
@@ -138,7 +138,7 @@
 <!--	<sneat-card-list-->
 <!--		itemIcon="people-circle-outline"-->
 <!--		[isFilterable]="true" title="Members"-->
-<!--		[isLoading]="!team?.dto"-->
-<!--		[items]="team?.dto?.members"-->
+<!--		[isLoading]="!team.dto"-->
+<!--		[items]="team.dto?.members"-->
 <!--	></sneat-card-list>-->
 </ion-content>

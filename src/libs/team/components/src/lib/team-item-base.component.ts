@@ -6,7 +6,7 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 
 // type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
 
-export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> extends TeamBaseComponent {
+export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends TeamBaseComponent {
 
 	protected constructor(
 		className: string,
@@ -26,7 +26,7 @@ export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> e
 
 	protected abstract get item(): INavContext<Brief, Dto> | undefined;
 
-	protected abstract briefs(): Brief[] | undefined;
+	protected abstract briefs(): Readonly<{ [id: string]: Brief }> | undefined;
 
 	private itemSubscription?: Subscription;
 
@@ -57,7 +57,7 @@ export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> e
 									next: item => {
 										this.setItemContext(item);
 									},
-									error: err => this.logError(err, 'failed to get item by ID')
+									error: err => this.logError(err, 'failed to get item by ID'),
 								});
 						}
 					} else {
@@ -73,7 +73,7 @@ export abstract class TeamItemBaseComponent<Brief extends { id: string }, Dto> e
 		if (this.item?.brief) {
 			const briefs = this.briefs();
 			if (briefs) {
-				const brief = briefs.find(b => b.id === id);
+				const brief = briefs[id];
 				if (brief) {
 					const item = this.item;
 					this.setItemContext({ ...item, brief });

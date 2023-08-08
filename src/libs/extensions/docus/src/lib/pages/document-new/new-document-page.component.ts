@@ -1,51 +1,67 @@
 //tslint:disable:no-unsafe-any
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { IDocTypeStandardFields, IDocumentDto, SneatDocType, standardDocTypesByID } from '@sneat/dto';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IDocumentContext, IMemberContext } from '@sneat/team/models';
-import { memberContextFromBrief, MemberService, TeamNavService } from '@sneat/team/services';
+import {
+	IDocTypeStandardFields,
+	IDocumentAssetDto,
+	IDocumentDto, IDocumentMainData,
+	AssetDocumentType,
+	standardDocTypesByID,
+} from '@sneat/dto';
+import { AddAssetBaseComponent, AssetService, ICreateAssetRequest } from '@sneat/extensions/assetus/components';
+import { TeamComponentBaseParams } from '@sneat/team/components';
+import { ContactService, contactContextFromBrief } from '@sneat/team/contacts/services';
+import {
+	IAssetContext, IContactContext,
+	IContactusTeamDtoWithID,
+	ITeamContext,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
+import { TeamNavService } from '@sneat/team/services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
-import { DocumentService, ICreateDocumentRequest } from '../../services/document.service';
 
 @Component({
 	selector: 'sneat-new-document',
 	templateUrl: './new-document-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewDocumentPageComponent extends TeamBaseComponent {
+export class NewDocumentPageComponent extends AddAssetBaseComponent implements OnChanges {
+
+	@Input() public override team?: ITeamContext;
+	@Input() public override contactusTeam?: IContactusTeamDtoWithID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
-	public member?: IMemberContext;
+	public contact?: IContactContext;
 
 	public isMissingRequiredParams = false;
 
 	public readonly docTypes: ISelectItem[] = Object.values(standardDocTypesByID);
 
-	public country = '';
 	public docTitle = '';
-	public docType: SneatDocType = 'unspecified';
+	public docType: AssetDocumentType = 'unspecified';
 	public docFields: IDocTypeStandardFields = {};
 	public docNumber = '';
 
 	private readonly memberChanged = new Subject<void>();
 
-	public members?: IMemberContext[];
+	public members?: readonly IContactContext[];
+
+	public selectedMembers?: readonly IContactContext[];
 
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private readonly membersService: MemberService,
-		private readonly documentService: DocumentService,
+		assetService: AssetService,
+		private readonly contactService: ContactService,
 		private readonly teamNavService: TeamNavService,
 	) {
-		super('documents', route, params);
+		super('NewDocumentPageComponent', route, params, assetService);
 		this.trackUrl();
 	}
 
-	onDocTypeChange(docType: SneatDocType): void {
+	onDocTypeChange(docType: AssetDocumentType): void {
 		this.docFields = standardDocTypesByID[docType].fields || {};
 	}
 
@@ -72,19 +88,24 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 		return true;
 	}
 
-	protected override onTeamDtoChanged() {
-		super.onTeamDtoChanged();
-		const team = this.team;
-		this.members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['contactusTeam']) {
+			const team = this.team;
+			if (team) {
+				const contactusTeam = this.contactusTeam;
+				this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
+					.map(contact => contactContextFromBrief(contact, team));
+			}
+		}
 	}
 
 	private trackUrlMemberID(): void {
 		this.route.queryParams.pipe(
 			takeUntil(this.destroyed),
-			map(qp => qp['member'] as string),
+			map(qp => qp['contact'] as string),
 			distinctUntilChanged(),
 		).subscribe({
-			next: this.watchMember,
+			next: this.watchContact,
 		});
 	}
 
@@ -94,21 +115,21 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 			map(qp => qp['type'] as string),
 			distinctUntilChanged(),
 		).subscribe(docType => {
-			this.docType = docType as SneatDocType;
+			this.docType = docType as AssetDocumentType;
 		});
 	}
 
-	private watchMember = (memberID: string): void => {
+	private watchContact = (contactID: string): void => {
 		this.memberChanged.next();
 		const team = this.team;
 		if (!team) {
 			return;
 		}
-		this.member = { id: memberID, team };
-		this.membersService.watchMember(team, memberID)
+		this.contact = { id: contactID, team };
+		this.contactService.watchContactById(team, contactID)
 			.subscribe({
 					next: member => {
-						this.member = member;
+						this.contact = member;
 					},
 					error: this.errorLogger.logErrorHandler('failed in watching member'),
 				},
@@ -123,15 +144,16 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 			title: this.docTitle,
 			type: this.docType,
 			number: this.docNumber,
-			memberIDs: this.member?.id ? [this.member.id] : undefined,
+			memberIDs: this.contact?.id ? [this.contact.id] : undefined,
 		};
-		const request: ICreateDocumentRequest = {
+		const request: ICreateAssetRequest<IDocumentMainData> = {
 			teamID: this.team.id,
-			memberID: this?.member?.id,
+			memberID: this?.contact?.id,
 			dto,
-		};
+		} as unknown as ICreateAssetRequest<IDocumentMainData>;
 
-		this.documentService.createDocument(this.team, request)
+
+		this.assetService.createAsset<IDocumentMainData, IDocumentAssetDto>(this.team, request)
 			.subscribe({
 				next: this.onDocCreated,
 				error: (err: unknown) => {
@@ -140,7 +162,7 @@ export class NewDocumentPageComponent extends TeamBaseComponent {
 			});
 	}
 
-	private onDocCreated = (doc: IDocumentContext): void => {
+	private onDocCreated = (doc: IAssetContext<IDocumentAssetDto>): void => {
 		const team = this.team;
 		if (!team) {
 			return;

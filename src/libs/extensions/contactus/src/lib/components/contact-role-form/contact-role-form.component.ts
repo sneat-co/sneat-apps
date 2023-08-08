@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
 	defaultFamilyContactGroups,
 	IContactGroupContext,
 	IContactRoleContext,
-} from '../../services';
-
+} from '@sneat/team/contacts/services';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-contact-role-form',
@@ -26,7 +25,7 @@ export class ContactRoleFormComponent implements OnChanges, OnDestroy {
 	@Output() readonly contactRoleIDChange = new EventEmitter<string | undefined>();
 	@Output() readonly contactRoleChange = new EventEmitter<IContactRoleContext | undefined>();
 
-	groups?: IContactGroupContext[];
+	protected groups?: readonly IContactGroupContext[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 

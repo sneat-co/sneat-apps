@@ -43,13 +43,13 @@ export abstract class BaseListPage extends TeamItemBaseComponent<IListBrief, ILi
 		return this.list;
 	}
 
-	protected override briefs(): IListBrief[] | undefined {
+	protected override briefs(): Readonly<{ [id: string]: IListBrief }> | undefined {
+		throw new Error('not implemented due to refactoring');
 		// const briefs: IListBrief[] = [];
 		// this.team?.dto?.listGroups?.forEach(lg => {
 		// 	lg.lists?.forEach(l => briefs.push({id: l.id}));
 		// });
 		// return briefs;
-		return undefined;
 	}
 
 	public get listService() {
@@ -120,7 +120,7 @@ export abstract class BaseListPage extends TeamItemBaseComponent<IListBrief, ILi
 			throw new Error('no team context');
 		}
 		const team = { id: teamID };
-		this.setList({ id, brief: { id, type: type as ListType, title }, team });
+		this.setList({ id, brief: { type: type as ListType, title }, team });
 
 		if (!this.list?.brief?.type) {
 			throw new Error('unknown list type');

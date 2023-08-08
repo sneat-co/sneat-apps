@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import {
 	Firestore as AngularFirestore,
 } from '@angular/fire/firestore';
-import { SneatApiService } from '@sneat/api';
-import { IAssetBrief, IAssetDbData } from '@sneat/dto';
+import { IFilter, SneatApiService } from '@sneat/api';
+import { AssetCategory, IAssetBrief, IAssetDbData, IAssetMainData } from '@sneat/dto';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
@@ -34,19 +34,29 @@ export class AssetService {
 			.delete<void>('assets/delete_asset', request);
 	}
 
-	public createAsset(team: ITeamContext, request: ICreateAssetRequest): Observable<IAssetContext> {
+	public createAsset<A extends IAssetMainData, D extends IAssetDbData>(team: ITeamContext, request: ICreateAssetRequest<A>): Observable<IAssetContext<D>> {
 		console.log(`AssetService.createAsset()`, request);
 		request = { ...request, asset: { ...request.asset, isRequest: true } };
-		return this.teamItemService.createTeamItem<IAssetBrief, IAssetDbData>(
+		const result = this.teamItemService.createTeamItem<IAssetBrief, D>(
 			'assets/create_asset?assetCategory=' + request.asset.category, team, request);
+		return result;
 	}
+
 
 	watchAssetByID(team: ITeamContext, id: string): Observable<IAssetContext> {
 		return this.teamItemService.watchTeamItemByID(team, id);
 	}
 
-	watchTeamAssets<Brief extends IAssetBrief, Dto extends IAssetDbData>(team: ITeamContext): Observable<IAssetContext<Dto>[]> {
+	watchTeamAssets<Brief extends IAssetBrief, Dto extends IAssetDbData>(
+		team: ITeamContext,
+		category?: AssetCategory,
+	): Observable<IAssetContext<Dto>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);
-		return this.teamItemService.watchModuleTeamItems<Brief, Dto>('assetus', team);
+		const filter: IFilter[] | undefined = category ? [{
+			field: 'category',
+			operator: '==',
+			value: category,
+		}] : undefined;
+		return this.teamItemService.watchModuleTeamItems<Brief, Dto>('assetus', team, filter);
 	}
 }

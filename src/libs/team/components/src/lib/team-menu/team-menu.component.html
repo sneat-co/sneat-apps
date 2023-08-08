@@ -2,19 +2,19 @@
 	<ion-item>
 		<!--		<ion-icon name="home-outline" slot="start" color="primary" tappable routerLink="/space/{{team.type}}/{{team.id}}" routerDirection="root"></ion-icon>-->
 		<ion-select label="Space" *ngIf="teams"
-								[value]="team?.id"
+								[value]="team.id"
 								interface="popover"
 								(ionChange)="onTeamSelected($event)"
 								style="font-weight: bold"
 		>
 			<ion-select-option *ngFor="let team of teams; trackBy id" [value]="team.id">
-				{{team.title || team.id}}
+				{{team.brief.title || team.id}}
 			</ion-select-option>
 		</ion-select>
 	</ion-item>
 	<ion-item tappable
 						[routerLink]="teamPageUrl('overview')"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('overview')"
 						(click)="goOverview()"
 	>
@@ -23,18 +23,18 @@
 	</ion-item>
 	<ion-item [routerLink]="teamPageUrl('assets')"
 						routerDirection="root"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('assets')"
 						(click)="goTeamPage($event, 'assets')"
 	>
 		<ion-icon name="car-sport-outline" slot="start"></ion-icon>
 		<ion-label>Assets</ion-label>
 		<ion-badge style="font-weight: normal; color: gray" color="light"
-							 *ngIf="team?.dto?.numberOf?.assets">{{team?.dto?.numberOf?.assets}}</ion-badge>
+							 *ngIf="team.dto?.numberOf?.assets">{{team.dto?.numberOf?.assets}}</ion-badge>
 	</ion-item>
 	<ion-item [routerLink]="teamPageUrl('budget')"
 						routerDirection="root"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('budget')"
 						(click)="goTeamPage($event, 'budget')"
 	>
@@ -43,7 +43,7 @@
 	</ion-item>
 	<ion-item [routerLink]="teamPageUrl('contacts')"
 						routerDirection="root"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('contacts')"
 						(click)="goTeamPage($event, 'contacts')"
 	>
@@ -52,7 +52,7 @@
 	</ion-item>
 	<ion-item [routerLink]="teamPageUrl('documents')"
 						routerDirection="root"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('documents')"
 						(click)="goTeamPage($event, 'documents')"
 	>
@@ -61,7 +61,7 @@
 	</ion-item>
 	<ion-item [routerLink]="teamPageUrl('lists')"
 						routerDirection="root"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('lists')"
 						(click)="goTeamPage($event, 'lists')"
 	>
@@ -79,7 +79,7 @@
 	</ion-item>
 	<ion-item [routerLink]="teamPageUrl('members')"
 						routerDirection="root"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('members')"
 						(click)="closeMenu()"
 	>
@@ -88,7 +88,7 @@
 	</ion-item>
 	<ion-item [routerLink]="teamPageUrl('schedule')"
 						routerDirection="root"
-						[disabled]="!team?.id"
+						[disabled]="!team.id"
 						[class.currentPage]="isCurrentPage('schedule')"
 						(click)="closeMenu()"
 	>

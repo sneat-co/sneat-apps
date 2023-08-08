@@ -9,9 +9,9 @@ import {
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonNotReady, isRelatedPersonReady,
-	MemberType,
+	TeamMemberType,
 } from '@sneat/dto';
-import { ICreateTeamMemberRequest, ITeamContext } from '@sneat/team/models';
+import { IContactusTeamDtoWithID, ICreateTeamMemberRequest, ITeamContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 
 
@@ -40,6 +40,8 @@ export class NewMemberFormComponent implements OnChanges {
 
 	@Input() team?: ITeamContext;
 
+	protected contactusTeam?: IContactusTeamDtoWithID;
+
 	@Input() relatedPerson: IRelatedPerson = emptyRelatedPerson;
 	@Output() readonly relatedPersonChange = new EventEmitter<IRelatedPerson>();
 
@@ -49,11 +51,11 @@ export class NewMemberFormComponent implements OnChanges {
 
 	public get isPersonFormReady(): boolean {
 		return isRelatedPersonNotReady(this.relatedPerson, this.personRequirements);
-	};
+	}
 
 	public readonly setFocusToInput = createSetFocusToInput(this.params.errorLogger);
 
-	public readonly memberType = new FormControl<MemberType>('member', [
+	public readonly memberType = new FormControl<TeamMemberType>('member', [
 		Validators.required,
 	]);
 
@@ -108,7 +110,7 @@ export class NewMemberFormComponent implements OnChanges {
 			throw new Error('Gender is a required field');
 		}
 		const displayName = personName(this.relatedPerson.name);
-		const duplicateMember = this.team?.dto?.members?.find(m => personName(m.name) === displayName);
+		const duplicateMember = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.find(m => personName(m.brief.name) === displayName);
 		if (duplicateMember) {
 			alert('There is already a member with same name: ' + displayName);
 			return;

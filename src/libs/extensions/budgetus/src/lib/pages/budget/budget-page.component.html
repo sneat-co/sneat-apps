@@ -3,12 +3,10 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="team?.brief else titleNoCommune">
-			⚖️ Budget @ {{team?.brief?.title}}
+		<ion-title>
+			⚖️ Budget
+			<ng-container *ngIf="team.brief?.title">@ {{team.brief?.title}}</ng-container>
 		</ion-title>
-		<ng-template #titleNoCommune>
-			<ion-title>⚖️ Budget</ion-title>
-		</ng-template>
 		<ion-buttons slot="end">
 			<ion-button [disabled]="!team" (click)="goNew()"
 									title="Add liability">
@@ -103,7 +101,7 @@
 					</ion-item>
 				</ng-container>
 			</ng-container>
-			<ng-container *ngFor="let assetGroup of assetGroups; trackBy: trackById">
+			<ng-container *ngFor="let assetGroup of assetGroups || []; trackBy: trackById">
 				<ion-item *ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"
 									tappable
 									routerDirection="forward"

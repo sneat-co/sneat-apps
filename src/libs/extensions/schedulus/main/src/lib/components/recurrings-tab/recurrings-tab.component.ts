@@ -11,7 +11,7 @@ import { ScheduleFilterService } from '../schedule-filter.service';
 export class RecurringsTabComponent {
 	@Input() recurrings?: IHappeningWithUiState[];
 	@Input() allRecurrings?: IHappeningWithUiState[];
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = { id: '' };
 	public readonly resetFilter: (event: Event) => void;
 
 	public get numberOfHidden(): number {

@@ -4,9 +4,9 @@ import { ISelectItem } from '@sneat/components';
 import { listItemAnimations, setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
+import { ContactusTeamService } from '@sneat/team/contacts/services';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
-import { ContactService } from '../../services';
 
 @Component({
 	selector: 'sneat-contacts-page',
@@ -42,7 +42,8 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private readonly contactService: ContactService,
+		// private readonly contactService: ContactService,
+		private readonly contactusTeamService: ContactusTeamService,
 	) {
 		super('ContactsPageComponent', route, params, '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
@@ -80,9 +81,8 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return;
 		}
 
-		this.contactService.watchContactBriefs(this.team).subscribe({
-			next: contactBriefs => {
-				const contacts = contactBriefs.map(brief => ({ id: brief.id, brief, team: this.team || { id: '' } }));
+		this.contactusTeamService.watchContactBriefs(this.team).subscribe({
+			next: contacts => {
 				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
 			},

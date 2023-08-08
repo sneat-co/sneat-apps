@@ -5,27 +5,35 @@ import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
-import { IMemberBrief, ITeamBrief, ITeamDto, ITeamMetric, MemberRole } from '@sneat/dto';
+import { ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IBriefAndID,
 	ICreateTeamRequest,
 	ICreateTeamResponse, IJoinTeamInfoResponse,
 	ITeamContext,
-	ITeamMemberRequest,
-	ITeamRef,
-	ITeamRequest,
+	ITeamRef, zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth';
-import { BehaviorSubject, Observable, Subscription, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
 const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({ ...v, type: v.type });
+
+// export class CachedDataService<Brief, Dto extends Brief> {
+// 	constructor(
+// 		private readonly db: AngularFirestore,
+// 	) {
+// 	}
+//
+// 	// watchRecord()
+// }
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
 	private userID?: string;
 
-	private currentUserTeams?: IUserTeamBrief[];
+	private currentUserTeams?: { [id: string]: IUserTeamBrief };
 
 	private teams$: { [id: string]: BehaviorSubject<ITeamContext> } = {};
 	private subscriptions: Subscription[] = [];
@@ -73,9 +81,7 @@ export class TeamService {
 		}
 		this.currentUserTeams = user?.teams;
 
-		if (user?.teams) {
-			user.teams?.forEach(this.subscribeForUserTeamChanges);
-		}
+		zipMapBriefsWithIDs(user.teams).forEach(this.subscribeForUserTeamChanges);
 	};
 
 	public createTeam(request: ICreateTeamRequest): Observable<IRecord<ITeamDto>> {
@@ -103,7 +109,7 @@ export class TeamService {
 		}
 		let teamContext: ITeamContext = ref;
 		if (this.currentUserTeams) {
-			const userTeamInfo = this.currentUserTeams.find(t => t.id === id);
+			const userTeamInfo = this.currentUserTeams[id];
 			if (userTeamInfo) {
 				teamContext = { id, type: userTeamInfo.type, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
 			}
@@ -124,101 +130,6 @@ export class TeamService {
 		return subj.asObservable();
 	}
 
-	public changeMemberRole(
-		team: ITeamContext,
-		memberId: string,
-		role: MemberRole,
-	): Observable<ITeamContext> {
-		let member = team?.dto?.members?.find((m: IMemberBrief) => m.id === memberId);
-		if (!member) {
-			return throwError(() => 'member not found by ID in team record');
-		}
-		return this.sneatApiService
-			.post(`members/change_member_role`, {
-				team: team.id,
-				member: memberId,
-				role,
-			})
-			.pipe(
-				map(() => {
-					if (!member) {
-						throw new Error('member is no longer available');
-					}
-					member = { ...member, roles: [role] };
-					return team;
-				}),
-			);
-	}
-
-	public removeTeamMember(
-		teamRecord: ITeamContext,
-		memberID: string,
-	): Observable<ITeamContext> {
-		console.log(
-			`removeTeamMember(teamID: ${teamRecord?.id}, memberID=${memberID})`,
-		);
-		if (!teamRecord) {
-			return throwError(() => 'teamRecord parameters is required');
-		}
-		const id = teamRecord.id;
-		if (!id) {
-			return throwError(() => 'teamRecord.id parameters is required');
-		}
-		if (!memberID) {
-			return throwError(() => 'memberId is required parameter');
-		}
-		const updateTeam = (team: ITeamContext) => {
-			if (team?.dto) {
-				team = {
-					...team,
-					dto: {
-						...team.dto,
-						members: team.dto.members?.filter((m: IMemberBrief) => m.id !== memberID),
-					},
-				};
-			}
-			this.onTeamUpdated(team);
-		};
-		const processRemoveTeamMemberResponse = (team: ITeamRef): Observable<ITeamContext> =>
-			this.getTeam(team).pipe(
-				tap(updateTeam),
-				// map(team => team.members.find(m => m.uid === this.userService.currentUserId) ? team : null),
-			);
-		const ensureTeamRecordExists = map((team: ITeamContext) => {
-			if (!team?.dto) {
-				throw new Error('team record is expected to exist');
-			}
-			return team;
-		});
-		if (teamRecord?.dto?.members) {
-			const member = teamRecord.dto.members.find((m: IMemberBrief) => m.id === memberID);
-			if (member?.userID === this.userService.currentUserID) {
-				const teamRequest: ITeamRequest = {
-					teamID: teamRecord.id,
-				};
-				this.sneatApiService
-					.post<ITeamDto>('members/leave_team', teamRequest)
-					.pipe(
-						map(teamDto => {
-							const teamContext: ITeamContext = { id, type: teamDto.type, brief: { id, ...teamDto }, dto: teamDto };
-							return teamContext;
-						}),
-						switchMap(processRemoveTeamMemberResponse),
-						ensureTeamRecordExists,
-					);
-			}
-		}
-		const request: ITeamMemberRequest = {
-			teamID: teamRecord.id,
-			memberID: memberID,
-		};
-		return this.sneatApiService
-			.post('members/remove_member', request)
-			.pipe(
-				switchMap(() => processRemoveTeamMemberResponse(teamRecord)),
-				ensureTeamRecordExists,
-			);
-	}
 
 	public onTeamUpdated(team: ITeamContext): void {
 		console.log(
@@ -276,14 +187,13 @@ export class TeamService {
 		);
 	}
 
-	private readonly subscribeForUserTeamChanges = (userTeamInfo: IUserTeamBrief): void => {
+	private readonly subscribeForUserTeamChanges = (userTeamInfo: IBriefAndID<IUserTeamBrief>): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
-		const { id } = userTeamInfo;
-		let subj = this.teams$[id];
+		let subj = this.teams$[userTeamInfo.id];
 		if (subj) {
 			let team = subj.value;
 			if (!team.type) {
-				team = { ...team, type: userTeamInfo.type, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
+				team = { ...team, type: userTeamInfo.brief?.type, brief: teamBriefFromUserTeamInfo(userTeamInfo.brief) };
 				subj.next(team);
 			}
 			return;
@@ -291,11 +201,10 @@ export class TeamService {
 
 		const team: ITeamContext = {
 			id: userTeamInfo.id,
-			type: userTeamInfo.type,
-			brief: teamBriefFromUserTeamInfo(userTeamInfo),
+			type: userTeamInfo.brief.type,
+			brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
 		};
-		this.teams$[id] = subj = new BehaviorSubject<ITeamContext>(team);
-
+		this.teams$[userTeamInfo.id] = subj = new BehaviorSubject<ITeamContext>(team);
 		this.subscribeForTeamChanges(subj);
 	};
 

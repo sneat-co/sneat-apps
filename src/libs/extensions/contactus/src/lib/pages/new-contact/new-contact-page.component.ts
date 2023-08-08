@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IonInput } from '@ionic/angular';
 import {
 	ContactToAssetRelation,
-	ContactToMemberRelation,
+	ContactToContactRelation,
 	emptyPersonBase,
 	Gender,
 	IContact2Asset,
@@ -13,8 +13,7 @@ import {
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IAssetContext, ICreateContactRequest, IMemberContext } from '@sneat/team/models';
-import { MemberService } from '@sneat/team/services';
+import { IAssetContext, IContactContext, ICreateContactRequest } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
@@ -22,8 +21,7 @@ import {
 	IContactGroupContext,
 	IContactRoleBrief,
 	IContactRoleContext,
-} from '../../services';
-import { ContactService } from '../../services';
+} from '@sneat/team/contacts/services';
 
 @Component({
 	selector: 'sneat-new-contact-page',
@@ -40,7 +38,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		roles: { hide: true },
 	};
 
-	public relation?: ContactToMemberRelation;
+	public relation?: ContactToContactRelation;
 	public name = '';
 	public gender?: Gender;
 	public email = '';
@@ -58,8 +56,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 	relatedPerson: IRelatedPerson = emptyPersonBase;
 
-
-	public member?: IMemberContext;
+	public contact?: IContactContext;
 
 	public asset?: IAssetContext;
 
@@ -81,15 +78,13 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		params: TeamComponentBaseParams,
 		route: ActivatedRoute,
 		private readonly assetService: AssetService,
-		private readonly contactService: ContactService,
-		private readonly membersService: MemberService,
 		private readonly contactGroupService: ContactGroupService,
 		private readonly contactRoleService: ContactRoleService,
 		// private readonly businessLogic: IBusinessLogic,
 	) {
 		super('NewContactPageComponent', route, params);
 		this.defaultBackPage = 'contacts';
-		this.member = window.history.state.member as IMemberContext;
+		this.contact = window.history.state.contact as IContactContext;
 		this.asset = window.history.state.asset as IAssetContext;
 	}
 
@@ -106,7 +101,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	private readonly onUrlParamsChanged = (params: ParamMap): void => {
 		const relation = params.get('relation');
 		if (relation) {
-			this.relation = relation as ContactToMemberRelation; // TODO: verify
+			this.relation = relation as ContactToContactRelation; // TODO: verify
 		}
 		const contactGroupID = params.get('group');
 		if (contactGroupID && !this.contactGroup) {
@@ -158,13 +153,13 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 				});
 		}
 		const memberId = params.get('member');
-		if (memberId && this.member?.id !== memberId) {
-			this.member = { id: memberId, team };
-			this.membersService
-				.watchMember(team, memberId)
+		if (memberId && this.contact?.id !== memberId) {
+			this.contact = { id: memberId, team };
+			this.contactService
+				.watchContactById(team, memberId)
 				.pipe(this.takeUntilNeeded())
 				.subscribe(member => {
-					this.member = member;
+					this.contact = member;
 				});
 		}
 	};
@@ -222,7 +217,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 				title: asset.brief.title,
 				relation: this.assetRelation,
 			};
-			request.assetIDs = [contact2Asset];
+			request.relatedToAssets = [contact2Asset];
 		}
 		const roleID = this.contactRole?.id;
 		if (roleID) {
@@ -240,7 +235,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 						{ state: { contact } },
 					).catch(this.logErrorHandler('failed to navigate to contact page'));
 				},
-				error: err => {
+				error: (err: unknown) => {
 					this.creating = false;
 					this.errorLogger.logError(err, 'Failed to create new contact');
 				},

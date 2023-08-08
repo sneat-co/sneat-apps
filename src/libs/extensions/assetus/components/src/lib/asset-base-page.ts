@@ -1,5 +1,5 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IAssetBrief, IAssetDbData } from '@sneat/dto';
+import { IAssetBrief, IAssetDbData, IAssetusTeamContext } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IAssetContext, IVehicleAssetContext } from '@sneat/team/models';
 import { NEVER, Observable, throwError } from 'rxjs';
@@ -7,10 +7,12 @@ import { AssetComponentBaseParams } from './asset-component-base-params';
 
 export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDbData> {
 
+	protected assetusTeam?: IAssetusTeamContext;
+
 	protected asset?: IAssetContext;
 
 	protected get vehicleAsset(): IVehicleAssetContext {
-		return this.asset as IVehicleAssetContext
+		return this.asset as IVehicleAssetContext;
 	}
 
 	protected readonly assetService = this.params.assetService;
@@ -48,8 +50,7 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 		return this.asset;
 	}
 
-	protected override briefs(): IAssetBrief[] | undefined {
-		return this.team?.dto?.assets;
+	protected override briefs(): { [id: string]: IAssetBrief } | undefined {
+		return this.assetusTeam?.dto?.assets;
 	}
-
 }

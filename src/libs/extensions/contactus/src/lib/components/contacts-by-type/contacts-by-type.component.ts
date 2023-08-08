@@ -1,9 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { eq, listItemAnimations } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
+import { ContactNavService, defaultFamilyContactGroups } from '@sneat/team/contacts/services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { defaultFamilyContactGroups } from '../../services';
-import { ContactNavService } from '../../services';
 import { IContactGroupWithContacts, IContactRoleWithContacts } from '../../pages/contacts/ui-types';
 
 
@@ -14,8 +13,9 @@ import { IContactGroupWithContacts, IContactRoleWithContacts } from '../../pages
 })
 export class ContactsByTypeComponent implements OnChanges {
 
-	public otherContacts?: IContactContext[];
-	public contactGroups: IContactGroupWithContacts[] = [];
+	protected otherContacts?: IContactContext[];
+	protected contactGroups: IContactGroupWithContacts[] = [];
+
 	//
 	@Input() filter = '';
 	@Input() team?: ITeamContext;
@@ -72,7 +72,7 @@ export class ContactsByTypeComponent implements OnChanges {
 			.forEach(group => {
 
 				const rolesWithContacts: IContactRoleWithContacts[] = [];
-				group.roles.forEach(role => {
+				group.dto?.roles.forEach(role => {
 					const roleWithContacts: IContactRoleWithContacts = {
 						...role,
 						contacts: contacts.filter(c => c.brief?.roles?.includes(role.id)),
@@ -97,7 +97,12 @@ export class ContactsByTypeComponent implements OnChanges {
 					}
 				});
 
-				const groupWithContacts: IContactGroupWithContacts = { ...group, roles: rolesWithContacts };
+				const groupWithContacts: IContactGroupWithContacts = {
+					...group.dto,
+					id: group.id,
+					title: group.dto?.title || group.brief?.title || '',
+					roles: rolesWithContacts,
+				};
 
 				if (groupWithContacts.roles.length) {
 					this.contactGroups?.push(groupWithContacts);

@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ISaveEvent } from '@sneat/components';
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
-import { IContactContext } from '@sneat/team/models';
+import { ContactService } from '@sneat/team/contacts/services';
+import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
-import { ContactService } from '../../services';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -70,11 +70,11 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 							return;
 						}
 						this.contact = contact;
-						this.contactLocations = contact?.dto?.relatedContacts
-							?.map(brief => ({
-								id: brief.id,
+						this.contactLocations = zipMapBriefsWithIDs(contact?.dto?.relatedContacts)
+							?.map(c => ({
+								id: c.id,
+								brief: c.brief,
 								team: contact.team,
-								brief,
 							}));
 						console.log('contact', contact, 'contactLocations', this.contactLocations);
 					},
@@ -117,6 +117,11 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 		this.teamParams.teamNavService.navigateToMember(this.navController, { id, team });
 	}
 
+	protected addRelatedContact(event: Event): void {
+		event.stopPropagation();
+		alert('Not implemented yet');
+	}
+
 	protected saveAddress(save: ISaveEvent<IAddress>): void {
 		console.log('ContactPageComponent.saveAddress()', save);
 		const
@@ -136,5 +141,5 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 
 	}
 
-  protected readonly length = length;
+	protected readonly length = length;
 }

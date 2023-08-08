@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IDocumentAssetDto } from '@sneat/dto';
+import { AssetService } from '@sneat/extensions/assetus/components';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IDocumentContext, IMemberContext } from '@sneat/team/models';
-import { DocumentService } from '../../services/document.service';
+import { IAssetContext, IMemberContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-documents-page',
@@ -13,17 +14,17 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
-	public documents: IDocumentContext[];
-	public rootDocs?: IDocumentContext[];
+	public documents: IAssetContext<IDocumentAssetDto>[];
+	public rootDocs?: IAssetContext<IDocumentAssetDto>[];
 	filter = '';
 
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private documentService: DocumentService,
+		private assetService: AssetService,
 	) {
 		super('DocumentsPageComponent', route, params);
-		this.documents = window.history.state.documents as IDocumentContext[];
+		this.documents = window.history.state.documents as IAssetContext<IDocumentAssetDto>[];
 	}
 
 	protected override onTeamIdChanged() {
@@ -34,7 +35,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 	loadDocuments() {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
-			this.documentService.watchDocumentsByTeam(this.team)
+			this.assetService.watchTeamAssets(this.team)
 				.pipe(
 					this.takeUntilNeeded(),
 				)
@@ -50,7 +51,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		console.log(`goType(${type})`);
 	}
 
-	public goDoc(doc: IDocumentContext) {
+	public goDoc(doc: IAssetContext<IDocumentAssetDto>) {
 		if (!this.team) {
 			this.errorLogger.logError('not able to navigate to document without team context');
 			return;

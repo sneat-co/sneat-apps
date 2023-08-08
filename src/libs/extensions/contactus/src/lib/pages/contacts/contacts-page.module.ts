@@ -5,9 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, SneatPipesModule } from '@sneat/components';
-import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ContactsListModule } from '../../components/contacts-list/contacts-list.module';
-import { ContactServiceModule } from '../../services';
+import { ContactServiceModule } from '@sneat/team/contacts/services';
+import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ContactsByTypeComponent } from '../../components/contacts-by-type/contacts-by-type.component';
 
 import { ContactsPageComponent } from './contacts-page.component';

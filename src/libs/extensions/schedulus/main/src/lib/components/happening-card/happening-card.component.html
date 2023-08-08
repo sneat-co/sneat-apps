@@ -11,7 +11,7 @@
 			</ion-text>
 			<p *ngIf="happening?.dto?.participants?.length">
 				<ion-badge color="medium" style="margin-right: 0.5em"
-									 *ngFor="let participant of happening?.dto?.participants; trackBy: id">
+									 *ngFor="let participant of happening?.dto?.participants || []; trackBy: id">
 					{{participant.title}}
 				</ion-badge>
 			</p>
@@ -22,12 +22,12 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-item *ngFor="let slot of (happening?.dto?.slots || happening?.brief?.slots); trackBy: index">
+	<ion-item *ngFor="let slot of (happening?.dto?.slots || happening?.brief?.slots || []); trackBy: index">
 		<ion-badge color="light" slot="start">{{slot.start.time}}</ion-badge>
 		<ion-label text-wrap>
 			<p>
 				<ion-badge color="light" style="margin-right: 4px;"
-									 *ngFor="let wd of slot.weekdays">{{wd|wdToWeekday}}</ion-badge>
+									 *ngFor="let wd of slot.weekdays || []">{{wd|wdToWeekday}}</ion-badge>
 			</p>
 			<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
 				@ {{slot.location.title || slot.location.address}},
@@ -46,7 +46,7 @@
 	<ion-item>
 		<ion-label color="medium">
 			<sneat-members-as-badges *ngIf="happening?.brief?.memberIDs?.length"
-															 [members]="(happening?.dto?.memberIDs || happening?.brief?.memberIDs || [])|selectedMembers:team?.dto?.members"
+															 [members]="(happening?.dto?.memberIDs || happening?.brief?.memberIDs || [])|selectedMembers:team:contactusTeam?.dto?.contacts"
 															 (deleteMember)="removeMember($event)"
 			></sneat-members-as-badges>
 			<ng-container *ngIf="!happening?.brief?.memberIDs">

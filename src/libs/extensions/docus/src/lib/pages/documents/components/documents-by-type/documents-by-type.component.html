@@ -22,7 +22,7 @@
 
 		</ion-item>
 		<ng-container *ngIf="docType.expanded">
-			<ion-item-sliding #slidingItem *ngFor="let doc of docType.documents; trackBy: id">
+			<ion-item-sliding #slidingItem *ngFor="let doc of docType.documents || []; trackBy: id">
 				<ion-item button (click)="goDoc.emit(doc)">
 					<ion-badge color="light" *ngIf="doc.dto?.countryID" slot="start">{{doc.dto?.countryID}}</ion-badge>
 					<ion-badge *ngIf="!doc.dto?.countryID" slot="start" style="opacity: 0;">--</ion-badge>

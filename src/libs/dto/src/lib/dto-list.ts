@@ -1,6 +1,5 @@
 import { TeamType } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { IWithIdAndTitle } from './dto-brief';
 import { IWithRestrictions, IWithTeamIDs } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
 import { ListStatus } from './types';
@@ -122,9 +121,10 @@ export interface IListInfo extends IWithRestrictions {
 	itemsCount?: number;
 }
 
-export interface IListBrief extends IListBase, IWithIdAndTitle {
+export interface IListBrief extends IListBase {
 	emoji?: string;
 }
+
 
 export function isListInfoMatchesListDto(i: IListInfo, l: IRecord<IListDto>): boolean {
 	return !!i.id && i.id === l.id

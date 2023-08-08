@@ -19,14 +19,16 @@
 		<ion-item-divider color="light">
 			<ion-label>Contacts</ion-label>
 		</ion-item-divider>
-		<ion-item *ngIf="contact?.dto?.members?.length">
-			<!-- TODO:  contact?.dto?.members! is a workaround for what seems to be an IDE bug -->
-			<ion-badge *ngFor="let m of contact?.dto?.members!"
+		<ion-item *ngIf="contact?.dto?.relatedContacts">
+			<ion-badge *ngFor="let m of relatedContacts"
 								 color="light" style="cursor: pointer"
 								 (click)="goMember(m.id)"
 			>
-				{{m.relation}} of {{m.title}}
+				{{m.brief.relatedAs}} of {{m.brief.title}}
 			</ion-badge>
+			<ion-buttons slot="end">
+				<ion-button (click)="addRelatedContact($event)">Add</ion-button>
+			</ion-buttons>
 		</ion-item>
 		<ion-item>
 			<ion-label *ngIf="contact?.dto?.email"><b>Email</b></ion-label>

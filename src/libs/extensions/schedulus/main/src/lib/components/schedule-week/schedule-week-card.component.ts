@@ -14,7 +14,7 @@ import { SwipeableWeek, swipeableWeek } from '../swipeable-ui';
 })
 export class ScheduleWeekCardComponent extends SwipeableBaseComponent implements AfterViewInit {
 
-	@Input() team?: ITeamContext;
+	@Input() team: ITeamContext = {id: ''};
 	@Input() teamDaysProvider?: TeamDaysProvider;
 	@Output() readonly slotClicked = new EventEmitter<{slot: ISlotItem; event: Event}>();
 

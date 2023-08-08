@@ -9,11 +9,12 @@ export interface IUserRecord {
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly avatar?: IAvatar;
-	readonly teams?: IUserTeamBrief[];
+	readonly teamIDs?: readonly string[];
+	readonly teams?: { [id: string]: IUserTeamBrief };
 }
 
 
-export enum TeamMemberType {
+export enum TeamMemberTypeEnum {
 	creator = 'creator',
 	member = 'member',
 	pet = 'pet',
@@ -21,13 +22,10 @@ export enum TeamMemberType {
 	staff = 'staff',
 }
 
-export type MemberType = EnumAsUnionOfKeys<typeof TeamMemberType>;
+export type TeamMemberType = EnumAsUnionOfKeys<typeof TeamMemberTypeEnum>;
 
 export interface IUserTeamBrief {
-	readonly id: string;
-	readonly type: TeamType;
-	// readonly memberType: MemberType; -- replaced with roles
-	readonly roles: string[];
 	readonly title: string;
-	// retroItems?: { [type: string]: IRetroItem[] };
+	readonly type: TeamType;
+	readonly roles: string[];
 }

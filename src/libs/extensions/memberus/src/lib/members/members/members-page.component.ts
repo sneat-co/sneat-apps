@@ -1,16 +1,21 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { TeamMemberType } from '@sneat/auth-models';
+import { TeamMemberTypeEnum } from '@sneat/auth-models';
 import {
-	IContact2Member,
+	IContactBrief,
 	isTeamSupportsMemberGroups,
 	MemberGroupTypeAdults,
 	MemberGroupTypeKids, MemberGroupTypePets,
-	MemberType,
+	TeamMemberType,
 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IMemberContext, IMemberGroupContext } from '@sneat/team/models';
-import { memberContextFromBrief, MemberGroupService, MemberService } from '@sneat/team/services';
+import { MemberGroupService, MemberService } from '@sneat/team/contacts/services';
+import {
+	IBriefAndID,
+	IContactContext,
+	IMemberGroupContext,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../members-base-page';
 
@@ -19,7 +24,7 @@ interface MembersGroup {
 	readonly emoji: string;
 	readonly plural: string;
 	readonly addLabel: string;
-	members?: IMemberContext[];
+	readonly members?: readonly IContactContext[];
 }
 
 @Component({
@@ -42,35 +47,35 @@ interface MembersGroup {
 })
 export class MembersPageComponent extends MembersBasePage implements AfterViewInit {
 	private prevMembersCount?: number;
-	public contactsByMember: { [id: string]: IContact2Member[] } = {};
-	public readonly adults: MembersGroup = {
+	public contactsByMember: { [id: string]: readonly IBriefAndID<IContactBrief>[] } = {};
+	public adults: MembersGroup = {
 		id: MemberGroupTypeAdults,
 		emoji: '🧓',
 		plural: 'Adults',
 		addLabel: 'Add adult',
 	};
-	public readonly children: MembersGroup = {
+	public children: MembersGroup = {
 		id: MemberGroupTypeKids,
 		emoji: '🚸',
 		plural: 'Children',
 		addLabel: 'Add child',
 	};
-	public readonly pets: MembersGroup = { id: MemberGroupTypePets, emoji: '🐕', plural: 'Pets', addLabel: 'Add pet' };
-	public readonly other: MembersGroup = { id: MemberGroupTypePets, emoji: '👻', plural: 'Other', addLabel: '' };
-	public memberGroups?: IMemberGroupContext[];
+	public pets: MembersGroup = { id: MemberGroupTypePets, emoji: '🐕', plural: 'Pets', addLabel: 'Add pet' };
+	public other: MembersGroup = { id: MemberGroupTypePets, emoji: '👻', plural: 'Other', addLabel: '' };
+	public memberGroups?: readonly IMemberGroupContext[];
 	public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
 	public listMode: 'list' | 'cards' = 'list';
 	// public membersByGroupId: { [id: string]: IMemberContext[] } = {};
 
-	protected predefinedMemberGroups: readonly MembersGroup[] = [
+	protected predefinedMemberGroups: MembersGroup[] = [
 		this.adults,
 		this.children,
 		this.pets,
 		this.other,
 	];
 
-	readonly memberType: MemberType = 'member';
+	readonly memberType: TeamMemberType = 'member';
 
 	constructor(
 		route: ActivatedRoute,
@@ -137,20 +142,21 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 	}
 
 	private loadData(source: string): void {
-		console.log(`MembersPageComponent.loadData(source=${source})`, this.team?.dto?.members);
+		console.log(`MembersPageComponent.loadData(source=${source})`, this.contactusTeam?.dto?.contacts);
 		// this.unsubscribe();
-		if (!this.team) {
+		const team = this.team;
+		if (!team) {
 			throw new Error('!this.team');
 		}
 		// this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
 
-		const team = this.team;
+		const contactusTeam = this.contactusTeam;
 
-		if (team?.dto?.members) {
-			this.members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
+		if (contactusTeam?.dto?.contacts) {
+			this.members = zipMapBriefsWithIDs(contactusTeam.dto.contacts).map(m => ({ ...m, team }));
 			this.processMembers();
 		} else {
-			this.membersService.watchTeamMembers(this.team)
+			this.contactService.watchContactsWithRole(team, 'team_member') // TODO: use constant
 				.pipe(
 					takeUntil(this.teamIDChanged$),
 				)
@@ -160,8 +166,8 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 						if (members?.length) { // TODO: deep equal
 							members.forEach(m => {
 								if (m.id) {
-									if (m.dto?.contacts?.length) {
-										this.contactsByMember[m.id] = m.dto.contacts;
+									if (m.dto?.relatedContacts) {
+										this.contactsByMember[m.id] = zipMapBriefsWithIDs(m.dto.relatedContacts);
 									} else if (this.contactsByMember[m.id]) {
 										// tslint:disable-next-line:no-dynamic-delete
 										delete this.contactsByMember[m.id];
@@ -175,53 +181,60 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 				});
 		}
 
-		if (this.team.brief && isTeamSupportsMemberGroups(this.team.brief.type)) {
-			this.memberGroupService.watchMemberGroupsByTeam(this.team)
-				.subscribe(memberGroups => {
-					if (memberGroups && (!this.memberGroups || memberGroups.length !== this.memberGroups.length)) { // TODO: deep equal
-						this.memberGroups = memberGroups;
-					}
-				});
+		if (team.type && isTeamSupportsMemberGroups(team.type)) {
+			throw new Error('not implemented yet due to refactoring');
+			// this.contactService.watchContactsByRole(team)
+			// 	.subscribe(memberGroups => {
+			// 		if (memberGroups && (!this.memberGroups || memberGroups.length !== this.memberGroups.length)) { // TODO: deep equal
+			// 			this.memberGroups = memberGroups;
+			// 		}
+			// 	});
 		}
 	}
 
 	private processMembers(): void {
 		console.log('MembersPageComponent.processMembers()', this.members);
-		this.adults.members = [];
-		this.children.members = [];
-		this.other.members = [];
+		const adults: IContactContext[] = [];
+		const children: IContactContext[] = [];
+		const pets: IContactContext[] = [];
+		const other: IContactContext[] = [];
+		// this.adults = {...this.adults, members: []};
+		// this.children = {...this.children, members = []};
+		// this.other = {...this.other, members = []};
 		let addedToGroup = false;
 		this.members?.forEach(m => {
 			switch (m.brief?.ageGroup) {
 				case 'adult':
-					this.adults.members?.push(m);
+					adults?.push(m);
 					addedToGroup = true;
 					break;
 				case 'child':
-					this.children.members?.push(m);
+					children?.push(m);
 					addedToGroup = true;
 					break;
 			}
-			if (m.dto?.type === TeamMemberType.pet) {
+			if (m.dto?.type === TeamMemberTypeEnum.pet) {
 				addedToGroup = true;
-				this.pets.members?.push(m);
+				pets.push(m);
 			}
 			if (!this.team) {
 				throw new Error('!this.team');
 			}
 			if (m.brief?.groupIDs?.length) {
 				m.brief.groupIDs.forEach(groupID => {
-					let group = this.predefinedMemberGroups.find(g => g.id === groupID);
-					if (!group) {
+					const groupIndex = this.predefinedMemberGroups.findIndex(g => g.id === groupID);
+					let group: MembersGroup;
+					if (groupIndex < 0) {
 						group = { id: groupID, plural: groupID + 's', members: [], emoji: '', addLabel: 'Add member' };
+					} else {
+						group = this.predefinedMemberGroups[groupIndex];
 					}
 					if (!group.members) {
-						group.members = [m];
-					} else {
-						if (!group.members.find(m2 => m2.id === m.id)) {
-							group.members.push(m);
-						}
+						group = { ...group, members: [m] };
+					} else if (!group.members.find(m2 => m2.id === m.id)) {
+							group = { ...group, members: [...group.members, m] };
 					}
+					this.predefinedMemberGroups[groupIndex] = group;
 					addedToGroup = true;
 					// if (this.membersByGroupId[groupID]) {
 					// 	this.membersByGroupId[groupID].push(m);
@@ -235,9 +248,13 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 				// 	}
 			}
 			if (!addedToGroup) {
-				this.other.members?.push(m);
+				other.push(m);
 			}
 		});
+		this.adults = { ...this.adults, members: adults };
+		this.children = { ...this.children, members: children };
+		this.pets = { ...this.pets, members: pets };
+		this.other = { ...this.other, members: other };
 		this.predefinedMemberGroups = this.predefinedMemberGroups.map(g => ({ ...g, members: g.members || [] }));
 	}
 }
