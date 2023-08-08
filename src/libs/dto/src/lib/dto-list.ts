@@ -1,6 +1,5 @@
 import { TeamType } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { IWithIdAndTitle } from './dto-brief';
 import { IWithRestrictions, IWithTeamIDs } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
 import { ListStatus } from './types';

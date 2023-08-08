@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, IMemberContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team/models';
 import { first, Observable } from 'rxjs';
 
 @Component({

@@ -6,7 +6,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IContactContext,
 	IContactusTeamDtoWithID,
-	IMemberContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';

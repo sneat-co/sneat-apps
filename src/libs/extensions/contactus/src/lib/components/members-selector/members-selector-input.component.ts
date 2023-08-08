@@ -4,7 +4,6 @@ import { contactContextFromBrief } from '@sneat/team/contacts/services';
 import {
 	IContactContext,
 	IContactusTeamDtoWithID,
-	IMemberContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';

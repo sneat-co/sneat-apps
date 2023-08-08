@@ -5,10 +5,8 @@ import { SneatUserService } from '@sneat/auth';
 import { ContactRole, IContactBrief, IContactDto, MemberRole } from '@sneat/dto';
 import {
 	IContactContext,
-	IContactusTeamDtoWithID,
 	ICreateContactRequest,
 	ITeamContext,
-	ITeamRef,
 } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { ContactusTeamService } from './contactus-team.service';

@@ -1,5 +1,4 @@
 import { TeamType } from '@sneat/core';
-import { ContactRole } from './contact-roles';
 
 export { TeamMemberType } from '@sneat/auth-models';
 export type MembersVisibility = 'private' | 'protected' | 'public';

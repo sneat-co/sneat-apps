@@ -7,7 +7,6 @@ import {
 	IContactContext,
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
-	IMemberContext,
 	InviteChannel,
 	ITeamContext,
 } from '@sneat/team/models';

@@ -2,8 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth';
-import { IErrorResponse } from '@sneat/core';
-import { IContactBrief, IMemberBrief, RoleTeamMember, trimNames } from '@sneat/dto';
+import { IContactBrief, IMemberBrief, trimNames } from '@sneat/dto';
 import { TeamService } from '@sneat/team/services';
 import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -11,12 +10,9 @@ import {
 	IAcceptPersonalInviteRequest,
 	IAddTeamMemberResponse, IBriefAndID, IContactContext,
 	ICreateTeamMemberRequest,
-	IMemberContext,
 	ITeamContext,
-	ITeamRef,
 } from '@sneat/team/models';
 import { Observable } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
 import { ContactusTeamService } from './contactus-team.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
