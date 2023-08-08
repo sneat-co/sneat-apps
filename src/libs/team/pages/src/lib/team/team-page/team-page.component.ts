@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TopMenuService } from '@sneat/core';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
