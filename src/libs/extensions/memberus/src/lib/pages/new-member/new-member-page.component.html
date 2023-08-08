@@ -9,7 +9,7 @@
 				<ng-container *ngIf="relatedPerson.ageGroup === 'child'">New child</ng-container>
 				<ng-container *ngIf="relatedPerson.ageGroup === 'adult'">New adult</ng-container>
 			</ng-template>
-			@ {{team?.brief?.title || team?.type }}
+			@ {{team.brief?.title || team.type }}
 		</ion-title>
 		<ng-template #titleNoCommune>New member</ng-template>
 	</ion-toolbar>
@@ -17,9 +17,9 @@
 
 <ion-content class="cardy">
 
-	<ion-segment [(ngModel)]="tab" *ngIf="team?.id && team?.type !== 'family'">
+	<ion-segment [(ngModel)]="tab" *ngIf="team.id && team.type !== 'family'">
 		<ion-segment-button value="mass">
-			Mass invite [{{team?.id}} - {{team?.type}}]
+			Mass invite [{{team.id}} - {{team.type}}]
 		</ion-segment-button>
 		<ion-segment-button value="personal">Personal invite</ion-segment-button>
 	</ion-segment>

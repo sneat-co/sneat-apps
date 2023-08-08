@@ -26,8 +26,8 @@
 				<ion-label>All</ion-label>
 			</ion-segment-button>
 			<ion-segment-button value="groups">
-				<ion-label *ngIf="team?.brief?.type !== 'cohabit'">By group</ion-label>
-				<ion-label *ngIf="team?.brief?.type === 'cohabit'">By room</ion-label>
+				<ion-label *ngIf="team.brief?.type !== 'cohabit'">By group</ion-label>
+				<ion-label *ngIf="team.brief?.type === 'cohabit'">By room</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 	</div>
@@ -131,20 +131,20 @@
 
 <ion-footer>
 	<ion-toolbar color="light">
-		<ion-label *ngIf="team?.dto && segment === 'all'">
+		<ion-label *ngIf="team.dto && segment === 'all'">
 			<b>Total</b>:
-			{{ team?.dto?.numberOf?.members || 0}}
-			{{ team?.dto?.numberOf?.memberGroups === 1 ? 'member' : 'members' }}
+			{{ team.dto.numberOf?.members ?? 0 }}
+			{{ team.dto.numberOf?.members === 1 ? 'member' : 'members' }}
 		</ion-label>
-		<ion-label *ngIf="team?.dto && segment === 'groups'">
+		<ion-label *ngIf="team.dto && segment === 'groups'">
 			<b>Total</b>:
-			{{ team?.dto?.numberOf?.memberGroups || 0}}
-			{{ team?.dto?.numberOf?.memberGroups === 1 ? 'group' : 'groups' }}
+			{{ team.dto.numberOf?.memberGroups || 0}}
+			{{ team.dto.numberOf?.memberGroups === 1 ? 'group' : 'groups' }}
 		</ion-label>
-		<ion-label *ngIf="!team?.dto">Loading...</ion-label>
+		<ion-label *ngIf="!team.dto">Loading...</ion-label>
 		<ion-buttons slot="end">
 			<ion-button size="small" color="primary"
-									[disabled]="!team?.brief"
+									[disabled]="!team.brief"
 									(click)="goNew()"
 									[title]="segment === 'groups' ? 'Add new group' : 'Add new member'"
 			>

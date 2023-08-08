@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { SneatUserService } from '@sneat/auth';
 import { TeamType } from '@sneat/core';
-import { ITeamContext, teamContextFromBrief } from '@sneat/team/models';
+import { ITeamContext, teamContextFromBrief, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
@@ -51,9 +51,9 @@ export class ForTeamTypeCardComponent implements OnChanges, OnDestroy {
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: user => {
-					this.teams = user.record?.teams
-						?.filter(t => this.teamTypes?.some(tt => tt === t.type))
-						.map(t => teamContextFromBrief(t.id, t));
+					this.teams = zipMapBriefsWithIDs(user.record?.teams)
+						?.filter(t => this.teamTypes?.some(tt => tt === t.brief.type))
+						.map(t => teamContextFromBrief(t.id, t.brief));
 					console.log('ForTeamTypeCardComponent =>', this.teamTypes, user.record?.teams, this.teams);
 					this.changeDetectorRef.markForCheck();
 				},

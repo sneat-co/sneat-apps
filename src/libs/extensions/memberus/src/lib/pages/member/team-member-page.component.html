@@ -1,9 +1,9 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="teamPageUrl('')"></ion-back-button>
+			<ion-back-button [defaultHref]="teamPageUrl('members')"></ion-back-button>
 		</ion-buttons>
-		<ng-container [ngSwitch]="team?.type">
+		<ng-container [ngSwitch]="team.type">
 			<ion-title *ngSwitchCase="'family'">Family member</ion-title>
 			<ion-title *ngSwitchCase="'cohabit'">Housemate</ion-title>
 			<ion-title *ngSwitchCase="'work'">Worker</ion-title>
