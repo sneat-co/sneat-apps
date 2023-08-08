@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { ContactServiceModule } from '@sneat/team/contacts/services';
 import { LocationFormModule } from '../../components';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactBasePage } from '../contact-base-page';
@@ -13,7 +12,6 @@ import { NewLocationPageComponent } from './new-location-page.component';
 	imports: [
 		CommonModule,
 		IonicModule,
-		ContactServiceModule,
 		RouterModule.forChild([
 			{
 				path: '',

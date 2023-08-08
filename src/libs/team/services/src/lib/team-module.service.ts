@@ -1,6 +1,6 @@
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { ITeamContext, ITeamItemContext } from '@sneat/team/models';
+import { IDtoAndID, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from './team-item.service';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export abstract class TeamModuleService<Brief, Dto extends Brief> extends TeamIt
 		super('modules', afs, sneatApiService);
 	}
 
-	watchTeamModuleRecord(team: ITeamContext): Observable<ITeamItemContext<Brief, Dto>> {
-		return this.watchTeamItemByID(team, this.moduleID);
+	watchTeamModuleRecord(team: ITeamContext): Observable<IDtoAndID<Dto>> {
+		return this.watchTeamItemByID<Dto>(team, this.moduleID);
 	}
 }

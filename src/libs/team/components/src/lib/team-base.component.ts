@@ -59,7 +59,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	public readonly teamIDChanged$ = this.teamIDChanged.asObservable().pipe(
 		takeUntil(this.destroyed),
 		distinctUntilChanged(),
-		tap(id => console.log('teamIDChanged$ => ' + id)),
+		tap(id => console.log(this.className + '=> teamIDChanged$: ' + id)),
 	);
 
 	public readonly teamTypeChanged$: Observable<TeamType | undefined> =
@@ -228,6 +228,24 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			});
 	}
 
+	private subscribeForContactusTeamChanges(team: ITeamContext): void {
+		this.teamParams.contactusTeamService.watchTeamModuleRecord(team)
+			.pipe(
+				takeUntil(this.teamIDChanged$),
+				this.takeUntilNeeded(),
+			)
+			.subscribe({
+				next: o => this.onContactusTeamChanged(o),
+				error: this.errorLogger.logErrorHandler('failed to get team record'),
+			})
+		;
+	}
+
+	protected onContactusTeamChanged(contactusTeam: IContactusTeamDtoWithID): void {
+		console.log(`${this.logClassName}.onContactusTeamChanged()`, contactusTeam);
+		this.contactusTeam = contactusTeam;
+	}
+
 	private getTeamContextFromRouteState(): void {
 		const team = history.state?.team as ITeamContext;
 		if (!team?.id) {
@@ -288,6 +306,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 			this.onTeamIdChanged();
 			if (teamContext) {
 				setTimeout(() => this.subscribeForTeamChanges(teamContext), 1);
+				setTimeout(() => this.subscribeForContactusTeamChanges(teamContext), 1);
 			}
 		}
 		if (teamTypeChanged && teamContext?.type) {

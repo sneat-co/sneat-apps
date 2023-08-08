@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SelectFromListModule } from '@sneat/components';
-import { ContactServiceModule } from '@sneat/extensions/contactus';
 import { NewSegmentModule } from '../../components/new-segment/new-segment.module';
 import { OrderRouteCardModule } from '../../components/order-route-card/order-route-card.module';
 import { OrderContainersModule } from '../../components/order-containers-card';
@@ -29,7 +28,6 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 		OrderContainersModule,
 		OrderFormModule,
 		LogistTeamServiceModule,
-		ContactServiceModule,
 		FormsModule,
 		NewSegmentModule,
 		SelectFromListModule,

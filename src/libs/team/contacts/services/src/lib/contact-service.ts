@@ -13,7 +13,7 @@ import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, throwError } from 'rxjs';
 import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from './dto';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ContactService {
 
 	protected readonly teamItemService: TeamItemService<IContactBrief, IContactDto>;

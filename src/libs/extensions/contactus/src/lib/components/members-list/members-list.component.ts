@@ -20,7 +20,6 @@ import { SneatUserService } from '@sneat/auth';
 export class MembersListComponent implements OnChanges {
 
 	private selfRemove?: boolean;
-	private _members?: readonly IContactContext[];
 	@Input() public team?: ITeamContext;
 	@Input() public members?: readonly IContactContext[];
 	@Input() public role?: string;
@@ -77,19 +76,10 @@ export class MembersListComponent implements OnChanges {
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('MembersListComponent.ngOnChanges()', changes);
-		if (changes['team'] || changes['members'] || changes['role']) {
-			throw new Error('temporary disabled');
-			// if (this.team?.dto?.members && !this.members) {
-			// 	const team = this.team;
-			// 	this._members = this.team?.dto?.members?.map(m => memberContextFromBrief(m, team));
-			// }
-			// if (changes['members']) {
-			// 	this._members = this.members;
-			// 	// } else if (changes['team'] && !this.members) {
-			// 	// 	const team = this.team;
-			// 	// 	this._members = team?.dto?.members?.map(m => memberContextFromBrief(m, team));
-			// }
-			this.membersToDisplay = this.filterMembers(this._members);
+		if (changes['members'] || changes['role']) {
+			console.log('MembersListComponent.ngOnChanges(): members or role changed:', this.role, this.members);
+			this.membersToDisplay = this.filterMembers(this.members);
+			console.log('MembersListComponent.ngOnChanges(): membersToDisplay:', this.membersToDisplay);
 		}
 	}
 

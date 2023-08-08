@@ -8,7 +8,7 @@ import {
 import { QuerySnapshot } from '@firebase/firestore-types';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { ITeamContext, ITeamItemContext, ITeamRequest } from '@sneat/team/models';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 type ICreateTeamItemResponse<Brief, Dto extends Brief> = ITeamItemContext<Brief, Dto>;
@@ -35,11 +35,13 @@ export class TeamItemService<Brief, Dto extends Brief> {
 	// }
 
 	public watchTeamItemByID<Dto2 extends Dto>(team: ITeamContext, id: string): Observable<ITeamItemContext<Brief, Dto2>> {
+		console.log('watchTeamItemByID()', team.id, this.collectionName, id);
 		const collectionRef = collection(this.teamRef(team.id), this.collectionName);
 		// const collection = this.teamsCollection.doc(team.id).collection<Dto2>(this.collectionName);
 		const result = this.sfs.watchByID<Dto2>(collectionRef as CollectionReference<Dto2>, id)
 			.pipe(
 				map(o => ({ team, ...o })),
+				tap(o => console.log('watchTeamItemByID()', team.id, this.collectionName, id, ' =>', o)),
 			);
 		return result;
 	}

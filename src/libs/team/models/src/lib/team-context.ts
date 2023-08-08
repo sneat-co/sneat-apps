@@ -31,7 +31,7 @@ export interface IBriefAndID<Brief> {
 
 export interface IDtoAndID<Dto> {
 	readonly id: string;
-	readonly dto?: Dto;
+	readonly dto?: Dto | null;
 }
 
 
