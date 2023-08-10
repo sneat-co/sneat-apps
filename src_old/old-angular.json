@@ -2560,48 +2560,6 @@
 			},
 			"tags": []
 		},
-		"extensions-contactus": {
-			"projectType": "library",
-			"root": "libs/extensions/contactus",
-			"sourceRoot": "libs/extensions/contactus/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/extensions/contactus"],
-					"options": {
-						"project": "libs/extensions/contactus/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/extensions/contactus/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/extensions/contactus/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/extensions/contactus"],
-					"options": {
-						"jestConfig": "libs/extensions/contactus/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/extensions/contactus/src/**/*.ts",
-							"libs/extensions/contactus/src/**/*.html"
-						]
-					}
-				}
-			},
-			"tags": []
-		},
 		"extensions-debtus": {
 			"projectType": "library",
 			"root": "libs/extensions/debtus",

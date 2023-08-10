@@ -1,12 +1,11 @@
 {
-  "name": "@sneat/contactus-shared",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^16.2.0",
-    "@angular/core": "^16.2.0"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "sideEffects": false
+	"name": "contactus-shared",
+	"version": "0.0.1",
+	"peerDependencies": {
+		"@angular/common": "^14.0.0 || ^15.0.0 || ^16.0.0",
+		"@angular/core": "^14.0.0 || ^15.0.0 || ^16.0.0"
+	},
+	"dependencies": {
+		"tslib": "2.6.1"
+	}
 }
