@@ -1,42 +1,42 @@
-<ion-header>
-    <ion-toolbar color="primary" class="with-back-button with-end-buttons">
-        <ion-buttons slot="start">
-            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
-        </ion-buttons>
-        <ion-title *ngIf="commune else titleNoCommune">
-            🎓 Pupils @ {{commune.title}}
-        </ion-title>
-        <ng-template #titleNoCommune>
-            <ion-title>🎓 Pupils</ion-title>
-        </ng-template>
-        <ion-buttons slot="end">
-            <ion-menu-button menu="mainMenu"></ion-menu-button>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-header>
+<!--<ion-header>-->
+<!--    <ion-toolbar color="primary" class="with-back-button with-end-buttons">-->
+<!--        <ion-buttons slot="start">-->
+<!--            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>-->
+<!--        </ion-buttons>-->
+<!--        <ion-title *ngIf="commune else titleNoCommune">-->
+<!--            🎓 Pupils @ {{commune.title}}-->
+<!--        </ion-title>-->
+<!--        <ng-template #titleNoCommune>-->
+<!--            <ion-title>🎓 Pupils</ion-title>-->
+<!--        </ng-template>-->
+<!--        <ion-buttons slot="end">-->
+<!--            <ion-menu-button menu="mainMenu"></ion-menu-button>-->
+<!--        </ion-buttons>-->
+<!--    </ion-toolbar>-->
+<!--</ion-header>-->
 
-<ion-content>
-    <sneat-filter-item (changed)="applyFilter($event)"></sneat-filter-item>
-    <div class="segment">
-        <ion-segment [(ngModel)]="segment">
-            <ion-segment-button value="active">
-                <ion-label>Active</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="archive">
-                <ion-label>Archive</ion-label>
-            </ion-segment-button>
-        </ion-segment>
-    </div>
-    <ng-container *ngIf="segment === 'active'">
-        <sneat-members-list *ngIf="members" [members]="filteredMembers || members" [goMember]="goMember"
-                          [goContact]="goContact"></sneat-members-list>
-        <!--<ion-list *ngIf="members">-->
-            <!--<ion-item *ngFor="let member of members; trackBy: trackById" button (click)="goMember(member)">-->
-                <!--<ion-label>{{member.title}}</ion-label>-->
-            <!--</ion-item>-->
-        <!--</ion-list>-->
-    </ng-container>
-    <ng-container *ngIf="segment === 'archive'">
-        <p padding>Not implemented yet.</p>
-    </ng-container>
-</ion-content>
+<!--<ion-content>-->
+<!--    <sneat-filter-item (changed)="applyFilter($event)"></sneat-filter-item>-->
+<!--    <div class="segment">-->
+<!--        <ion-segment [(ngModel)]="segment">-->
+<!--            <ion-segment-button value="active">-->
+<!--                <ion-label>Active</ion-label>-->
+<!--            </ion-segment-button>-->
+<!--            <ion-segment-button value="archive">-->
+<!--                <ion-label>Archive</ion-label>-->
+<!--            </ion-segment-button>-->
+<!--        </ion-segment>-->
+<!--    </div>-->
+<!--    <ng-container *ngIf="segment === 'active'">-->
+<!--        <sneat-members-list *ngIf="members" [members]="filteredMembers || members" [goMember]="goMember"-->
+<!--                          [goContact]="goContact"></sneat-members-list>-->
+<!--        &lt;!&ndash;<ion-list *ngIf="members">&ndash;&gt;-->
+<!--            &lt;!&ndash;<ion-item *ngFor="let member of members; trackBy: trackById" button (click)="goMember(member)">&ndash;&gt;-->
+<!--                &lt;!&ndash;<ion-label>{{member.title}}</ion-label>&ndash;&gt;-->
+<!--            &lt;!&ndash;</ion-item>&ndash;&gt;-->
+<!--        &lt;!&ndash;</ion-list>&ndash;&gt;-->
+<!--    </ng-container>-->
+<!--    <ng-container *ngIf="segment === 'archive'">-->
+<!--        <p padding>Not implemented yet.</p>-->
+<!--    </ng-container>-->
+<!--</ion-content>-->
