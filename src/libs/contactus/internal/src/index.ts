@@ -1,1 +1,1 @@
-export * from './lib/contactus-internal.module';
+export * from './lib';

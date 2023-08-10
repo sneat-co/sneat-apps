@@ -1,1 +1,1 @@
-export * from './lib/contactus-shared.module';
+export * from './lib';

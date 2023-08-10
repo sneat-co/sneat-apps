@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ContactusRoutingModule, membersRoutes } from '@sneat/extensions/contactus';
+import { ContactusRoutingModule, membersRoutes } from '@sneat/contactus/shared';
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { LogistMenuModule } from '../components/logist-menu/logist-menu.module';

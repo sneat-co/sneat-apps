@@ -89,8 +89,8 @@
       "@sneat/extensions/budgetus": [
         "libs/extensions/budgetus/src/index.ts"
       ],
-      "@sneat/extensions/contactus": [
-        "libs/extensions/contactus/src/index.ts"
+      "@sneat/contactus/shared": [
+        "libs/contactus/shared/src/index.ts"
       ],
       "@sneat/extensions/debtus": [
         "libs/extensions/debtus/src/index.ts"

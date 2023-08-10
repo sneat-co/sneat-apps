@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { SharedWithModule } from '@sneat/extensions/contactus';
+import { SharedWithModule } from '@sneat/contactus/shared';
 import { ListusCoreServicesModule } from '../../services/listus-core-services.module';
 import { MovieCardComponentModule } from '../../movie-card/movie-card.component.module';
 import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-items.module';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContactService } from '@sneat/extensions/contactus';
+import { ContactService } from '@sneat/contactus/shared';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
 	IContainerSegment,

@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ContactSelectorService } from '@sneat/extensions/contactus';
+import { ContactSelectorService } from '@sneat/contactus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	getSegmentCounterparty,

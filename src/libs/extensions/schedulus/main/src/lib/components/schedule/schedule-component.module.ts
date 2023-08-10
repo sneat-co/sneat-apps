@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, MembersAsBadgesModule, SneatPipesModule } from '@sneat/components';
-import { MembersSelectorModule } from '@sneat/extensions/contactus';
+import { MembersSelectorModule } from '@sneat/contactus/shared';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import { HappeningServiceModule, ScheduleDayServiceModule } from '@sneat/team/services';

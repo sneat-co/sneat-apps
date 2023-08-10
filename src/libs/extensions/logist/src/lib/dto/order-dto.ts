@@ -1,5 +1,5 @@
 import { ContactType, IAddress, IWithModified } from '@sneat/dto';
-import { IContactRequest } from '@sneat/extensions/contactus';
+import { IContactRequest } from '@sneat/contactus/shared';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { CounterpartyRole } from './logist-team-dto';
 import { OrderDirection } from './orders-filter';
