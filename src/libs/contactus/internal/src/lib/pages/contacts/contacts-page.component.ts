@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { listItemAnimations } from '@sneat/animations';
+import { listItemAnimations } from '@sneat/core';
 import { ISelectItem } from '@sneat/components';
 import { setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';

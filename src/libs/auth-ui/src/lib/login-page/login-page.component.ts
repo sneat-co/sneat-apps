@@ -3,7 +3,7 @@ import { Component, Inject, Optional } from '@angular/core';
 import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import {
 	AuthProviderName,
 	AuthStatuses,

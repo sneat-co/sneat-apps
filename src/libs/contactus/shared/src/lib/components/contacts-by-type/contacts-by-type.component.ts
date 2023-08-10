@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { listItemAnimations } from '@sneat/animations';
+import { listItemAnimations } from '@sneat/core';
 import { ContactsListModule, IContactGroupWithContacts, IContactRoleWithContacts } from '../..';
 import { eq } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';

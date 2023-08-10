@@ -20,12 +20,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sneat/analytics": [
-        "libs/analytics/src/index.ts"
-      ],
-      "@sneat/animations": [
-        "libs/animations/src/index.ts"
-      ],
       "@sneat/api": [
         "libs/api/src/index.ts"
       ],

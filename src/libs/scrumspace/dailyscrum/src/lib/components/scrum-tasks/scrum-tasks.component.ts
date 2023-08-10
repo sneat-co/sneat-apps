@@ -1,6 +1,6 @@
 import { Component, Inject, Input, NgZone, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
-import { listAddRemoveAnimation } from '@sneat/animations';
+import { listAddRemoveAnimation } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

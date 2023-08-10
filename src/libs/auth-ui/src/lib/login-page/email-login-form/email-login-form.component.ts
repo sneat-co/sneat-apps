@@ -3,7 +3,7 @@ import { Component, EventEmitter, Inject, Output, ViewChild } from '@angular/cor
 // import { getAuth } from '@angular/fire/auth';
 import { Auth as AngularFireAuth, sendPasswordResetEmail, sendSignInLinkToEmail } from '@angular/fire/auth';
 import { IonInput, ToastController } from '@ionic/angular';
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { SneatApiService } from '@sneat/api';
 import { IInitUserRecordRequest, UserRecordService } from '@sneat/auth';
 import { createSetFocusToInput } from '@sneat/components';

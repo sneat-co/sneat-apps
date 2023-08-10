@@ -1,4 +1,4 @@
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { BehaviorSubject, from, Observable, share, throwError } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

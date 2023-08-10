@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule } from '@ionic/angular';
-import { SneatAnalyticsModule } from '@sneat/analytics';
+import { SneatAnalyticsModule } from '@sneat/core';
 import { SneatLoggingModule } from '@sneat/logging';
 import { RandomModule } from '@sneat/random';
 import { AppComponentService } from './app-component.service';

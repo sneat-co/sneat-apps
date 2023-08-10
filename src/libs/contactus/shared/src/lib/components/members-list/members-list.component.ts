@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
-import { listAddRemoveAnimation } from '@sneat/animations';
+import { listAddRemoveAnimation } from '@sneat/core';
 import { IContactBrief } from '@sneat/dto';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

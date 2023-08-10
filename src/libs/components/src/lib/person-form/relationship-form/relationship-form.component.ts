@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { formNexInAnimation } from '@sneat/animations';
+import { formNexInAnimation } from '@sneat/core';
 import {
 	AgeGroupID,
 	FamilyMemberRelation,

@@ -2,7 +2,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

@@ -15,7 +15,7 @@ import { BaseMeetingService } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import {
 	IAddCommentRequest,
 	IAddTaskRequest,

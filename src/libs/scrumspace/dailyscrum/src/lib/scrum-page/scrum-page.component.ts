@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
+import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
 import { ITeamMemberInfo, MemberRoleSpectator } from '@sneat/dto';

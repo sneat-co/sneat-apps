@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput, IonRadio } from '@ionic/angular';
-import { formNexInAnimation } from '@sneat/animations';
+import { formNexInAnimation } from '@sneat/core';
 import { createSetFocusToInput, PersonFormWizardComponent, personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import {
