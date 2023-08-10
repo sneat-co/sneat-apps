@@ -3,7 +3,7 @@ import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/analytics';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/team/contacts/services';
+import { ContactService } from '@sneat/contactus-services';
 import { IBriefAndID, ICreateTeamRequest, ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { ISneatUserState, SneatUserService } from '@sneat/auth';

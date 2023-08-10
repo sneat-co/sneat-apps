@@ -4,7 +4,7 @@ import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
 import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService, ContactusTeamService } from '@sneat/team/contacts/services';
+import { ContactService, ContactusTeamService } from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription } from 'rxjs';
 import { IContactSelectorOptions } from './contact-selector.service';

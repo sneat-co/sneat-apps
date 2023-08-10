@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/team/contacts/services';
+import { ContactService } from '@sneat/contactus-services';
 import { IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { SneatUserService } from '@sneat/auth';
 import { TeamService } from '@sneat/team/services';

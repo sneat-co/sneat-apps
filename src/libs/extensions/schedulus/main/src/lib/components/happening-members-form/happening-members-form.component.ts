@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ISlotParticipant } from '@sneat/dto';
-import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
 	IContactusTeamDtoWithID,

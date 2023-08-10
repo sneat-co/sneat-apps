@@ -5,7 +5,7 @@ import { HappeningStatus, IHappeningSlot } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISelectMembersOptions, MembersSelectorService } from '@sneat/contactus-shared';
-import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	HappeningUIState,
 	IContactContext,

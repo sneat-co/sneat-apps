@@ -5,7 +5,7 @@ import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { ILogger, TeamType } from '@sneat/core';
 import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
-import { ContactService } from '@sneat/team/contacts/services';
+import { ContactService } from '@sneat/contactus-services';
 import { IContactusTeamDtoWithID, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';

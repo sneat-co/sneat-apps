@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ContactRole, IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/team/contacts/services';
+import { ContactService } from '@sneat/contactus-services';
 import { IBriefAndID, IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 

@@ -11,7 +11,7 @@ import {
 } from '@sneat/dto';
 import { AddAssetBaseComponent, AssetService, ICreateAssetRequest } from '@sneat/extensions/assetus/components';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ContactService, contactContextFromBrief } from '@sneat/team/contacts/services';
+import { ContactService, contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IAssetContext, IContactContext,
 	IContactusTeamDtoWithID,

@@ -3,7 +3,7 @@ import { TeamMemberType } from '@sneat/auth-models';
 import { TeamType } from '@sneat/core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { MemberService } from '@sneat/team/contacts/services';
+import { MemberService } from '@sneat/contactus-services';
 import { IContactContext } from '@sneat/team/models';
 
 export abstract class MembersBasePage extends TeamBaseComponent {

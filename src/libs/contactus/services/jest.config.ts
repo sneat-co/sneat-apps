@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'team-contacts-services',
-  preset: '../../../../jest.preset.js',
+  displayName: 'contactus-services',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../../coverage/libs/team/contacts/services',
+  coverageDirectory: '../../../coverage/libs/contactus/services',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

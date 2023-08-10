@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { APP_INFO, IAppInfo, ILoggerFactory, LOGGER_FACTORY, NgModulePreloaderService } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService, ContactusTeamService } from '@sneat/team/contacts/services';
+import { ContactService, ContactusTeamService } from '@sneat/contactus-services';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth';
 

@@ -4,7 +4,7 @@ import {
 	defaultFamilyContactGroups,
 	IContactGroupContext,
 	IContactRoleContext,
-} from '@sneat/team/contacts/services';
+} from '@sneat/contactus-services';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

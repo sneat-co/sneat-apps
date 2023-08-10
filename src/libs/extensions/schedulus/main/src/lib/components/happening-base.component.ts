@@ -16,7 +16,7 @@ import { WeekdayCode2 } from '@sneat/dto';
 import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
 	IContactusTeamDtoWithID,

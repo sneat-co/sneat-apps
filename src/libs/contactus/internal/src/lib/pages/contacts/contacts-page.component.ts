@@ -4,7 +4,7 @@ import { ISelectItem } from '@sneat/components';
 import { listItemAnimations, setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
-import { ContactusTeamService } from '@sneat/team/contacts/services';
+import { ContactusTeamService } from '@sneat/contactus-services';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
 

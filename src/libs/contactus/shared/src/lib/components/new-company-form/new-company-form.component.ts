@@ -5,7 +5,7 @@ import { ISelectItem } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
 import { ContactRole, ContactType, validateAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/team/contacts/services';
+import { ContactService } from '@sneat/contactus-services';
 import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
 
 @Component({

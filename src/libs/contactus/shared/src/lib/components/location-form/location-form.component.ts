@@ -4,7 +4,7 @@ import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { ContactRole, ContactType, IAddress, IContactBrief, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/team/contacts/services';
+import { ContactService } from '@sneat/contactus-services';
 import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
 
 @Component({

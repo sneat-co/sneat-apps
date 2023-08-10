@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { contactContextFromBrief } from '@sneat/team/contacts/services';
+import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
 	IContactusTeamDtoWithID,

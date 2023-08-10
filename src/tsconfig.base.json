@@ -50,6 +50,9 @@
       "@sneat/contactus-internal": [
         "libs/contactus/internal/src/index.ts"
       ],
+      "@sneat/contactus-services": [
+        "libs/contactus/services/src/index.ts"
+      ],
       "@sneat/contactus-shared": [
         "libs/contactus/shared/src/index.ts"
       ],
@@ -89,9 +92,6 @@
       "@sneat/extensions/budgetus": [
         "libs/extensions/budgetus/src/index.ts"
       ],
-      "@sneat/contactus-shared": [
-        "libs/contactus/shared/src/index.ts"
-      ],
       "@sneat/extensions/debtus": [
         "libs/extensions/debtus/src/index.ts"
       ],
@@ -130,9 +130,6 @@
       ],
       "@sneat/team/components": [
         "libs/team/components/src/index.ts"
-      ],
-      "@sneat/team/contacts/services": [
-        "libs/team/contacts/services/src/index.ts"
       ],
       "@sneat/team/models": [
         "libs/team/models/src/index.ts"

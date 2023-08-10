@@ -9,7 +9,7 @@ import {
 	TeamMemberType,
 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { MemberGroupService, MemberService } from '@sneat/team/contacts/services';
+import { MemberGroupService, MemberService } from '@sneat/contactus-services';
 import {
 	IBriefAndID,
 	IContactContext,

@@ -6,7 +6,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import { Auth as AngularFireAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth';
-import { MemberService } from '@sneat/team/contacts/services';
+import { MemberService } from '@sneat/contactus-services';
 import {
 	IAcceptPersonalInviteRequest, IBriefAndID,
 	IPersonalInvite,

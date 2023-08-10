@@ -1,7 +1,7 @@
 {
-  "name": "team-contacts-services",
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/team/contacts/services/src",
+  "name": "contactus-services",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/contactus/services/src",
   "prefix": "sneat",
   "tags": [],
   "projectType": "library",
@@ -12,14 +12,14 @@
         "{workspaceRoot}/dist/{projectRoot}"
       ],
       "options": {
-        "project": "libs/team/contacts/services/ng-package.json"
+        "project": "libs/contactus/services/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/team/contacts/services/tsconfig.lib.prod.json"
+          "tsConfig": "libs/contactus/services/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "libs/team/contacts/services/tsconfig.lib.json"
+          "tsConfig": "libs/contactus/services/tsconfig.lib.json"
         }
       },
       "defaultConfiguration": "production"
@@ -30,7 +30,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "libs/team/contacts/services/jest.config.ts",
+        "jestConfig": "libs/contactus/services/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -47,8 +47,9 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "libs/team/contacts/services/**/*.ts",
-          "libs/team/contacts/services/**/*.html"
+          "libs/contactus/services/**/*.ts",
+          "libs/contactus/services/**/*.html",
+          "libs/contactus/services/package.json"
         ]
       }
     }

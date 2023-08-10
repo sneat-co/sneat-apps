@@ -21,7 +21,7 @@ import {
 	IContactGroupContext,
 	IContactRoleBrief,
 	IContactRoleContext,
-} from '@sneat/team/contacts/services';
+} from '@sneat/contactus-services';
 
 @Component({
 	selector: 'sneat-new-contact-page',
