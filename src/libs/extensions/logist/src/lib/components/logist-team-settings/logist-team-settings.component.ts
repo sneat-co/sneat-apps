@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddressForm, AddressFormComponent, IAddressFormControls } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
-import { ContactService } from '@sneat/contactus/shared';
+import { ContactService } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';

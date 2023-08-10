@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { MembersListModule } from '@sneat/contactus/shared';
+import { MembersListModule } from '@sneat/contactus-shared';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { MembersPageComponent } from './members-page.component';
 

@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { FilterItemModule, SneatPipesModule } from '@sneat/components';
-import { ContactsByTypeComponent, ContactsListModule } from '@sneat/contactus/shared';
+import { ContactsByTypeComponent, ContactsListModule } from '@sneat/contactus-shared';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 
 import { ContactsPageComponent } from './contacts-page.component';

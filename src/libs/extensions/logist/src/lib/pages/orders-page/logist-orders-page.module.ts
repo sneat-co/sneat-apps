@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CountryInputModule, CountrySelectorModule } from '@sneat/components';
-import { ContactInputModule } from '@sneat/contactus/shared';
+import { ContactInputModule } from '@sneat/contactus-shared';
 import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
 import { LogistOrderServiceModule } from '../../services/logist-order.service';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';

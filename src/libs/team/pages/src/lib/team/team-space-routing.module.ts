@@ -28,7 +28,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'contacts',
-		loadChildren: () => import('@sneat/contactus/internal').then((m) => m.ContactusRoutingModule),
+		loadChildren: () => import('@sneat/contactus-internal').then((m) => m.ContactusRoutingModule),
 	},
 	...budgetusRoutes,
 	...docusRoutes,

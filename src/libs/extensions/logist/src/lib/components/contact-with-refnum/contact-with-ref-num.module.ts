@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ContactInputModule } from '@sneat/contactus/shared';
+import { ContactInputModule } from '@sneat/contactus-shared';
 import { ContactWithRefNumComponent } from './contact-with-ref-num.component';
 
 @NgModule({

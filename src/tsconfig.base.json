@@ -47,10 +47,10 @@
       "@sneat/components": [
         "libs/components/src/index.ts"
       ],
-      "@sneat/contactus/internal": [
+      "@sneat/contactus-internal": [
         "libs/contactus/internal/src/index.ts"
       ],
-      "@sneat/contactus/shared": [
+      "@sneat/contactus-shared": [
         "libs/contactus/shared/src/index.ts"
       ],
       "@sneat/core": [
@@ -89,7 +89,7 @@
       "@sneat/extensions/budgetus": [
         "libs/extensions/budgetus/src/index.ts"
       ],
-      "@sneat/contactus/shared": [
+      "@sneat/contactus-shared": [
         "libs/contactus/shared/src/index.ts"
       ],
       "@sneat/extensions/debtus": [

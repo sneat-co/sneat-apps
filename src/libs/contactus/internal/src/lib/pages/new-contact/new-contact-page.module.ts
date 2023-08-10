@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { PersonFormModule } from '@sneat/components';
-import { ContactRoleFormModule } from '@sneat/contactus/shared';
+import { ContactRoleFormModule } from '@sneat/contactus-shared';
 
 import { NewContactPageComponent } from './new-contact-page.component';
 

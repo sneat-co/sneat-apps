@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ContactInputModule } from '@sneat/contactus/shared';
+import { ContactInputModule } from '@sneat/contactus-shared';
 import { LogistOrderServiceModule } from '../services';
 import { AgentRoleMenuComponent, OrderAgentsComponent } from './order-agents/order-agents.component';
 import { OrderCardComponent } from './order-card/order-card.component';

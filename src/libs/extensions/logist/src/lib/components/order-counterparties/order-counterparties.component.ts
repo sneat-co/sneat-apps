@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContactRole, ContactType, LogistOrderContactRole } from '@sneat/dto';
-import { ContactSelectorService, IContactSelectorOptions } from '@sneat/contactus/shared';
+import { ContactSelectorService, IContactSelectorOptions } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {

@@ -1,5 +1,5 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ContactComponentBaseParams } from '@sneat/contactus/shared';
+import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import { IContactBrief, IContactDto } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IBriefAndID, IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';

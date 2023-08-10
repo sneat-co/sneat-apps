@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CountrySelectorModule, SelectFromListModule, SneatPipesModule } from '@sneat/components';
-import { MembersSelectorModule } from '@sneat/contactus/shared';
+import { MembersSelectorModule } from '@sneat/contactus-shared';
 
 import { NewDocumentPageComponent } from './new-document-page.component';
 

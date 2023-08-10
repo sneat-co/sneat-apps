@@ -13,7 +13,7 @@ import {
 import { ModalController } from '@ionic/angular';
 import { isoStringsToDate } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
-import { MembersSelectorService } from '@sneat/contactus/shared';
+import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/team/contacts/services';

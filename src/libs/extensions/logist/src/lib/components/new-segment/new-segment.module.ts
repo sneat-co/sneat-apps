@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DialogHeaderModule } from '@sneat/components';
-import { ContactInputModule } from '@sneat/contactus/shared';
+import { ContactInputModule } from '@sneat/contactus-shared';
 import { OrderNavServiceModule } from '../../services';
 import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
 import { OrderFormModule } from '../order-form.module';

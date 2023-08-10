@@ -1,5 +1,5 @@
 {
-  "name": "@sneat/contactus/shared",
+  "name": "@sneat/contactus-shared",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^16.2.0",

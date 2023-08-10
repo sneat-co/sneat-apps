@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISaveEvent } from '@sneat/components';
-import { ContactComponentBaseParams } from '@sneat/contactus/shared';
+import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ContactService } from '@sneat/team/contacts/services';

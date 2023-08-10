@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContactComponentBaseParams } from '@sneat/contactus/shared';
+import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import { IContactContext } from '@sneat/team/models';
 import { ContactBasePage } from '../contact-base-page';
 
