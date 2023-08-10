@@ -1,0 +1,57 @@
+{
+  "name": "contactus-internal",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/contactus/internal/src",
+  "prefix": "sneat",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
+      "options": {
+        "project": "libs/contactus/internal/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/contactus/internal/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/contactus/internal/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "libs/contactus/internal/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/contactus/internal/**/*.ts",
+          "libs/contactus/internal/**/*.html",
+          "libs/contactus/internal/package.json"
+        ]
+      }
+    }
+  }
+}

@@ -47,6 +47,12 @@
       "@sneat/components": [
         "libs/components/src/index.ts"
       ],
+      "@sneat/contactus/internal": [
+        "libs/contactus/internal/src/index.ts"
+      ],
+      "@sneat/contactus/shared": [
+        "libs/contactus/shared/src/index.ts"
+      ],
       "@sneat/core": [
         "libs/core/src/index.ts"
       ],
