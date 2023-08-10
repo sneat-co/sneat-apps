@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatAnalyticsModule } from '@sneat/core';
-import { AuthMenuItemModule } from '@sneat/auth';
+import { AuthMenuItemModule } from '@sneat/auth-core';
 import { DatatugComponentsProjectModule } from '@sneat/datatug/components/project';
 import { DatatugCoreModule } from '@sneat/datatug/core';
 import { NewProjectFormModule } from '@sneat/datatug/project';

@@ -9,7 +9,7 @@ import { DatatugNavService, StoreTracker } from '@sneat/datatug/services/nav';
 import { ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { NewProjectService } from '@sneat/datatug/project';
 import { DatatugUserService } from '@sneat/datatug/services/base';
-import { AuthStatus } from '@sneat/auth';
+import { AuthStatus } from '@sneat/auth-core';
 import { IDatatugStoreContext, IProjectContext } from '@sneat/datatug/nav';
 import { parseStoreRef } from '@sneat/core';
 

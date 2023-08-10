@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { getStoreUrl, SneatApiServiceFactory } from '@sneat/api';
 import { IProjectRef, isValidProjectRef, projectRefToString } from '@sneat/datatug/core';
 import { IProjectFull, IProjectSummary } from '@sneat/datatug/models';
-import { PrivateTokenStoreService } from '@sneat/auth';
+import { PrivateTokenStoreService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { GITLAB_REPO_PREFIX, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB } from '@sneat/core';
 import { DatatugStoreServiceFactory } from '@sneat/datatug/services/repo';

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IForeignKey, IPrimaryKey, IReferencedBy, ISqlQueryTarget, ITableFull } from '@sneat/datatug/models';
 import { map, mergeMap } from 'rxjs/operators';
-import { PrivateTokenStoreService } from '@sneat/auth';
+import { PrivateTokenStoreService } from '@sneat/auth-core';
 
 @Injectable()
 export class TableService {

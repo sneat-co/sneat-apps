@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DatatugNavContextService, DatatugNavService } from '@sneat/datatug/services/nav';
 import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug/nav';
 import { DatatugUserService, IDatatugUserState } from '@sneat/datatug/services/base';
-import { AuthStatus, AuthStatuses, ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { AuthStatus, AuthStatuses, ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 
 @Component({
 	selector: 'datatug-menu',

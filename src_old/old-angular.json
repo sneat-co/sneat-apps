@@ -106,36 +106,36 @@
 		},
 		"auth-models": {
 			"projectType": "library",
-			"root": "libs/auth-models",
-			"sourceRoot": "libs/auth-models/src",
+			"root": "libs/auth/models",
+			"sourceRoot": "libs/auth/models/src",
 			"prefix": "sneat",
 			"architect": {
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
 						"lintFilePatterns": [
-							"libs/auth-models/src/**/*.ts",
-							"libs/auth-models/src/**/*.html"
+							"libs/auth/models/src/**/*.ts",
+							"libs/auth/models/src/**/*.html"
 						]
 					}
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/auth-models"],
+					"outputs": ["coverage/libs/auth/models"],
 					"options": {
-						"jestConfig": "libs/auth-models/jest.config.js",
+						"jestConfig": "libs/auth/models/jest.config.js",
 						"passWithNoTests": true
 					}
 				},
 				"build": {
 					"builder": "@nrwl/angular:ng-packagr-lite",
 					"options": {
-						"tsConfig": "libs/auth-models/tsconfig.lib.json",
-						"project": "libs/auth-models/ng-package.json"
+						"tsConfig": "libs/auth/models/tsconfig.lib.json",
+						"project": "libs/auth/models/ng-package.json"
 					},
 					"configurations": {
 						"": {
-							"tsConfig": "libs/auth-models/tsconfig.lib.prod.json"
+							"tsConfig": "libs/auth/models/tsconfig.lib.prod.json"
 						}
 					}
 				}
@@ -143,31 +143,31 @@
 		},
 		"auth-ui": {
 			"projectType": "library",
-			"root": "libs/auth-ui",
-			"sourceRoot": "libs/auth-ui/src",
+			"root": "libs/auth/ui",
+			"sourceRoot": "libs/auth/ui/src",
 			"prefix": "sneat",
 			"architect": {
 				"build": {
 					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/auth-ui"],
+					"outputs": ["dist/libs/auth/ui"],
 					"options": {
-						"project": "libs/auth-ui/ng-package.json"
+						"project": "libs/auth/ui/ng-package.json"
 					},
 					"configurations": {
 						"production": {
-							"tsConfig": "libs/auth-ui/tsconfig.lib.prod.json"
+							"tsConfig": "libs/auth/ui/tsconfig.lib.prod.json"
 						},
 						"development": {
-							"tsConfig": "libs/auth-ui/tsconfig.lib.json"
+							"tsConfig": "libs/auth/ui/tsconfig.lib.json"
 						}
 					},
 					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/auth-ui"],
+					"outputs": ["coverage/libs/auth/ui"],
 					"options": {
-						"jestConfig": "libs/auth-ui/jest.config.js",
+						"jestConfig": "libs/auth/ui/jest.config.js",
 						"passWithNoTests": true
 					}
 				},
@@ -175,8 +175,8 @@
 					"builder": "@nrwl/linter:eslint",
 					"options": {
 						"lintFilePatterns": [
-							"libs/auth-ui/src/**/*.ts",
-							"libs/auth-ui/src/**/*.html"
+							"libs/auth/ui/src/**/*.ts",
+							"libs/auth/ui/src/**/*.html"
 						]
 					}
 				}
