@@ -80,9 +80,6 @@
       "@sneat/dto": [
         "libs/dto/src/index.ts"
       ],
-      "@sneat/ext-shared": [
-        "libs/ext-shared/src/index.ts"
-      ],
       "@sneat/extensions/assetus/components": [
         "libs/extensions/assetus/components/src/index.ts"
       ],
