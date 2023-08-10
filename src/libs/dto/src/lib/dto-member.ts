@@ -1,4 +1,4 @@
-import { IAvatar } from '@sneat/auth/models';
+import { IAvatar } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { ITeamMemberInfo } from './dto-commune';
 import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';

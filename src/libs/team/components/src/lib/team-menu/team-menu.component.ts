@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
-import { IUserTeamBrief } from '@sneat/auth/models';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { AuthMenuItemModule } from '@sneat/components';
 import { IBriefAndID, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs/operators';

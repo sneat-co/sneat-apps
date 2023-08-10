@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
-import { IUserTeamBrief } from '@sneat/auth/models';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { IBriefAndID, ICreateTeamRequest, ITeamContext } from '@sneat/team/models';

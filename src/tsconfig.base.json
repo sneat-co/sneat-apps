@@ -29,7 +29,7 @@
 			"@sneat/auth-core": [
 				"libs/auth/core/src/index.ts"
 			],
-			"@sneat/auth/models": [
+			"@sneat/auth-models": [
 				"libs/auth/models/src/index.ts"
 			],
 			"@sneat/auth-ui": [

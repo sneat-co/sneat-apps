@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IAvatar } from '@sneat/auth/models';
+import { IAvatar } from '@sneat/auth-models';
 
 @Component({
 	selector: 'sneat-avatar',

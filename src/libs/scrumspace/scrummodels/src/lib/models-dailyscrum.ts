@@ -1,4 +1,4 @@
-import { IAvatar } from '@sneat/auth/models';
+import { IAvatar } from '@sneat/auth-models';
 import { Modified } from '@sneat/data';
 import { MemberRole } from '@sneat/dto';
 import { IMeeting } from '@sneat/meeting';

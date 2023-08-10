@@ -1,4 +1,4 @@
-import { IUserRecord } from '@sneat/auth/models';
+import { IUserRecord } from '@sneat/auth-models';
 import { ProjectAccess } from './definition';
 import { IStoreRef, STORE_ID_GITHUB_COM, STORE_TYPE_GITHUB, StoreType } from '@sneat/core';
 import { IProjectRef } from '@sneat/datatug/core';

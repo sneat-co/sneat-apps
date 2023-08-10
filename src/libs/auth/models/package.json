@@ -1,5 +1,5 @@
 {
-  "name": "@sneat/auth/models",
+  "name": "@sneat/auth-models",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^14.0.0 || ^15.0.0 || ^16.0.0",
