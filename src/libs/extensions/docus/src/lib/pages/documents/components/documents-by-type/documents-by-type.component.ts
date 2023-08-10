@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { eq, listItemAnimations } from '@sneat/core';
+import { listItemAnimations } from '@sneat/animations';
+import { eq } from '@sneat/core';
 import { IDocumentAssetDto, standardDocTypesByID } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

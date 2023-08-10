@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { listItemAnimations } from '@sneat/animations';
 import { ContactsListModule, IContactGroupWithContacts, IContactRoleWithContacts } from '../..';
-import { eq, listItemAnimations } from '@sneat/core';
+import { eq } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { ContactNavService, defaultFamilyContactGroups } from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';

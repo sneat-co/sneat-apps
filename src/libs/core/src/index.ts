@@ -1,5 +1,4 @@
 export * from './lib/app.service';
-export * from './lib/animations';
 export * from './lib/core-models';
 export * from './lib/nav';
 export * from './lib/store';

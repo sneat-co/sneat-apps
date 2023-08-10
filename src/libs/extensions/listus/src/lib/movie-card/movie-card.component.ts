@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { listItemAnimations } from '@sneat/core';
+import { listItemAnimations } from '@sneat/animations';
 import { IMovie, IMovieDto } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { ListusComponentBaseParams } from '../listus-component-base-params';

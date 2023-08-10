@@ -1,7 +1,7 @@
 //tslint:disable:no-unsafe-any
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonItemSliding } from '@ionic/angular';
-import { listItemAnimations } from '@sneat/core';
+import { listItemAnimations } from '@sneat/animations';
 import { IListItemBrief } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';

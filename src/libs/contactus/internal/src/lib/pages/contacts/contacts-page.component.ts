@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { listItemAnimations } from '@sneat/animations';
 import { ISelectItem } from '@sneat/components';
-import { listItemAnimations, setHrefQueryParam } from '@sneat/core';
+import { setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
 import { ContactusTeamService } from '@sneat/contactus-services';
