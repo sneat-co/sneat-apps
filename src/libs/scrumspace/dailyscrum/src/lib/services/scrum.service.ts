@@ -27,7 +27,7 @@ import {
 	TaskType,
 } from '@sneat/scrumspace/scrummodels';
 import { RandomIdService } from '@sneat/random';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 
 // const getOrCreateMemberStatus = (
 // 	scrum: IScrumDto,

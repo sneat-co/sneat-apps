@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 
 @Component({
 	selector: 'sneat-app-menu',

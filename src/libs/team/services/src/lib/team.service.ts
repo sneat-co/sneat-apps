@@ -2,8 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Firestore as AngularFirestore, collection, CollectionReference } from '@angular/fire/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
-import { IUserTeamBrief } from '@sneat/auth-models';
+import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
+import { IUserTeamBrief } from '@sneat/auth/models';
 import { IRecord } from '@sneat/data';
 import { ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -14,7 +14,7 @@ import {
 	ITeamContext,
 	ITeamRef, zipMapBriefsWithIDs,
 } from '@sneat/team/models';
-import { ISneatUserState, SneatUserService } from '@sneat/auth';
+import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 

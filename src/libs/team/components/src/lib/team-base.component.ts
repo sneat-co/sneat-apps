@@ -8,7 +8,7 @@ import { ILogErrorOptions } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { IContactusTeamDtoWithID, IMemberContext, ITeamContext } from '@sneat/team/models';
 import { TeamService, trackTeamIdAndTypeFromRouteParameter } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 import {
 	distinctUntilChanged,
 	MonoTypeOperatorFunction,

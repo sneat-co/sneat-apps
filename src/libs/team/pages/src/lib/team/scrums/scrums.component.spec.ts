@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 
 import { ScrumsComponent } from './scrums.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

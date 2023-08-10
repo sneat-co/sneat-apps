@@ -1,0 +1,46 @@
+{
+	"name": "auth-core",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"projectType": "library",
+	"sourceRoot": "libs/auth/core/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@nx/angular:ng-packagr-lite",
+			"outputs": [
+				"{workspaceRoot}/dist/libs/auth/core"
+			],
+			"options": {
+				"project": "libs/auth/core/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/auth/core/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/auth/core/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": [
+				"{workspaceRoot}/coverage/libs/auth/core"
+			],
+			"options": {
+				"jestConfig": "libs/auth/core/jest.config.ts",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/auth/core/**/*.ts",
+					"libs/auth/core/**/*.html"
+				]
+			}
+		}
+	}
+}

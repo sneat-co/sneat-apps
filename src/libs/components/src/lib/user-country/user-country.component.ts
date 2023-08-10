@@ -2,7 +2,7 @@ import { NgIf } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ISneatUserState, SneatUserService } from '@sneat/auth';
+import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { map, race } from 'rxjs';
 import { countries, ICountry } from '../country-selector';

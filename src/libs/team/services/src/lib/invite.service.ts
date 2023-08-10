@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Auth as AngularFireAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatApiService } from '@sneat/api';
-import { SneatAuthStateService } from '@sneat/auth';
+import { SneatAuthStateService } from '@sneat/auth-core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';

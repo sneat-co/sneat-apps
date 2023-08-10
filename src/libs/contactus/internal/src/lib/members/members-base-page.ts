@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { TeamMemberType } from '@sneat/auth-models';
+import { TeamMemberType } from '@sneat/auth/models';
 import { TeamType } from '@sneat/core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';

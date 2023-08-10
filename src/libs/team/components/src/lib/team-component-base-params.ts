@@ -4,7 +4,7 @@ import { APP_INFO, IAppInfo, ILoggerFactory, LOGGER_FACTORY, NgModulePreloaderSe
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService, ContactusTeamService } from '@sneat/contactus-services';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 
 @Injectable()
 export class TeamComponentBaseParams { // TODO: verify it should be declared in providers attribute for each page or can be just on app level?

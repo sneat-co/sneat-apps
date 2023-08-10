@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactusTeamDtoWithID } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 import { Subscription } from 'rxjs';
 
 export const stringHash = (s: string): number => {

@@ -1,6 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
-import { ISneatUserState, SneatUserService } from '@sneat/auth';
+import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { TeamType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest, ITeamContext, teamContextFromBrief, zipMapBriefsWithIDs } from '@sneat/team/models';

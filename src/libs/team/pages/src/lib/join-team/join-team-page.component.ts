@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth';
+import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
 import { IPersonFormWizardFields } from '@sneat/components';
 import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 import { IRecord } from '@sneat/data';
 import { IUserDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

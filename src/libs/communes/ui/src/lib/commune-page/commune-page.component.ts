@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginRequiredServiceService } from '@sneat/auth';
+import { LoginRequiredServiceService } from '@sneat/auth-core';
 
 @Component({
 	selector: 'sneat-commune-page',

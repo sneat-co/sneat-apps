@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivationStart, Router, RouterOutlet } from '@angular/router';
-import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 
 @Component({
 	selector: 'sneat-logist-menu',

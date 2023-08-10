@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth';
+import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 import { gitHash } from '../app-version/git-version';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { MenuController, NavController } from '@ionic/angular';

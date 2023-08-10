@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { TeamMemberTypeEnum } from '@sneat/auth-models';
+import { TeamMemberTypeEnum } from '@sneat/auth/models';
 import {
 	IContactBrief,
 	isTeamSupportsMemberGroups,

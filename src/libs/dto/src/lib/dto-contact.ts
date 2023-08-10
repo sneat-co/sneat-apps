@@ -1,4 +1,4 @@
-import { IAvatar } from '@sneat/auth-models';
+import { IAvatar } from '@sneat/auth/models';
 import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from './contact-roles';

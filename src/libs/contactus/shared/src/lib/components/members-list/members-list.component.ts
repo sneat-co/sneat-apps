@@ -8,7 +8,7 @@ import { InviteModalComponent } from '@sneat/team/components';
 import { ContactService } from '@sneat/contactus-services';
 import { IBriefAndID, IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 
 @Component({
 	selector: 'sneat-members-list',

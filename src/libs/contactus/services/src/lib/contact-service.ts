@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 import { ContactRole, IContactBrief, IContactDto, MemberRole } from '@sneat/dto';
 import {
 	IContactContext,

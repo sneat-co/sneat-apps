@@ -1,6 +1,6 @@
 import { TeamType } from '@sneat/core';
 
-export { TeamMemberType } from '@sneat/auth-models';
+export { TeamMemberType } from '@sneat/auth/models';
 export type MembersVisibility = 'private' | 'protected' | 'public';
 export type WeekdayCode2 = 'mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su';
 export type RepeatsWeek = 'week-1st' | 'week-2nd' | 'week-3d' | 'week-4th' | 'week-last';

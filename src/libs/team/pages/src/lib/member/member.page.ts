@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
-import { SneatUserService } from '@sneat/auth';
+import { SneatUserService } from '@sneat/auth-core';
 import { TeamService } from '@sneat/team/services';
 import { Subscription } from 'rxjs';
 
