@@ -2728,48 +2728,6 @@
 			},
 			"tags": []
 		},
-		"extensions-memberus": {
-			"projectType": "library",
-			"root": "libs/extensions/memberus",
-			"sourceRoot": "libs/extensions/memberus/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/extensions/memberus"],
-					"options": {
-						"project": "libs/extensions/memberus/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/extensions/memberus/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/extensions/memberus/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/extensions/memberus"],
-					"options": {
-						"jestConfig": "libs/extensions/memberus/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/extensions/memberus/src/**/*.ts",
-							"libs/extensions/memberus/src/**/*.html"
-						]
-					}
-				}
-			},
-			"tags": []
-		},
 		"extensions-schedulus-main": {
 			"projectType": "library",
 			"root": "libs/extensions/schedulus/main",
