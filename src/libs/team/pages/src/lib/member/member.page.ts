@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
 	templateUrl: './member.page.html',
 	styleUrls: ['./member.page.scss'],
 })
-// TODO: delete - replaced with TeamMemberPageComponent @memberus
 export class MemberPageComponent implements OnDestroy {
 
 	protected team?: ITeamContext;

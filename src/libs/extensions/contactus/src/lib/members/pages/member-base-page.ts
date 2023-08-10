@@ -4,7 +4,6 @@ import { TeamBaseComponent } from '@sneat/team/components';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { MemberPages } from '../constants';
 import { MemberComponentBaseParams } from '../member-component-base-params';
-// import { MemberPages } from 'sneat-shared/extensions/memberus/constants';
 // import { IMemberDto } from 'sneat-shared/models/dto/dto-member';
 // import { IUserDto } from 'sneat-shared/models/dto/dto-user';
 // import { eq } from 'sneat-shared/services/interfaces';

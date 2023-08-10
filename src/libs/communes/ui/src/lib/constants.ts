@@ -1,5 +1,4 @@
 // import {ListPages} from '../extensions/listus/constants';
-// import {MemberPages} from '../extensions/memberus/constants';
 
 import { EnumAsUnionOfKeys } from '@sneat/core';
 

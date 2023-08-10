@@ -98,9 +98,6 @@
       "@sneat/extensions/logist": [
         "libs/extensions/logist/src/index.ts"
       ],
-      "@sneat/extensions/memberus": [
-        "libs/extensions/memberus/src/index.ts"
-      ],
       "@sneat/extensions/schedulus/main": [
         "libs/extensions/schedulus/main/src/index.ts"
       ],

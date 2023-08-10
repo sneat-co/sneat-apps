@@ -9,6 +9,5 @@
 - [libs](libs)
   - [extensions](libs/extensions)
     - [assetus](libs/extensions/assetus)
-    - [memberus](libs/extensions/memberus)
     - ...
   - ...

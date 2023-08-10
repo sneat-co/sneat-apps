@@ -4,11 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
-import { ContactusRoutingModule } from '@sneat/extensions/contactus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { memberRoutes, membersRoutes } from '@sneat/extensions/memberus'; // TODO: HELP WANTED: find how to fix it
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import {
 	TeamComponentBaseParams,
@@ -28,22 +26,14 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./team-page/team-page.module').then((m) => m.TeamPageModule),
 	},
-	...memberRoutes, // E.g. "./new-member"
 	{
-		path: 'member/:memberId',
-		loadChildren: () =>
-			import('@sneat/extensions/memberus').then((m) => m.MemberRoutingModule),
-	},
-	{
-		path: 'member/:memberId',
-		loadChildren: () =>
-			import('@sneat/extensions/memberus').then((m) => m.MemberRoutingModule),
+		path: 'contacts',
+		loadChildren: () => import('@sneat/extensions/contactus').then((m) => m.ContactusRoutingModule),
 	},
 	...budgetusRoutes,
 	...docusRoutes,
 	...listusRoutes,
 	...schedulusRoutes,
-	...membersRoutes,
 	// ...expressRoutes,
 	// {
 	// 	path: '',
@@ -65,7 +55,6 @@ const routes: Routes = [
 		CommonModule,
 		IonicModule,
 		AssetusRoutingModule,
-		ContactusRoutingModule,
 	],
 	exports: [RouterModule],
 	declarations: [],
