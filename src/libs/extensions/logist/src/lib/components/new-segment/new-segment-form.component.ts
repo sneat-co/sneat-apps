@@ -23,7 +23,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	fromContact?: IContactContext = {
 		id: '',
 		team: { id: '' },
-		brief: { id: '', type: 'company', title: '', roles: ['port'] },
+		brief: { type: 'company', title: '', roles: ['port'] },
 	};
 	toContact?: IContactContext;
 
@@ -105,7 +105,6 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 				id: toPort.contactID,
 				team: this.order.team,
 				brief: {
-					id: toPort.contactID,
 					type: 'company',
 					countryID: toPort.countryID,
 					title: toPort.title,

@@ -36,10 +36,7 @@ import { IOrdersFilter } from '../dto/orders-filter';
 
 
 function briefFromDto(id: string, dto: ILogistOrderDto): IFreightOrderBrief {
-	return {
-		id,
-		...dto,
-	};
+	return dto;
 }
 
 function contextFromDto(team: ITeamContext, id: string, dto: ILogistOrderDto): ILogistOrderContext {

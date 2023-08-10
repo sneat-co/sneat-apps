@@ -16,6 +16,6 @@ export interface IContactType {
 	icon?: string;
 }
 
-export type ContactRolesByType = Record<ContactType, IContactRole[]>;
+export type ContactRolesByType = Partial<Record<ContactType, IContactRole[]>>;
 
 export const CONTACT_ROLES_BY_TYPE = new InjectionToken<ContactRolesByType>('CONTACT_ROLES_BY_TYPE');

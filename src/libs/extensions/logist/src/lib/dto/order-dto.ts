@@ -1,5 +1,5 @@
+import { IContactRequest } from '@sneat/contactus-services';
 import { ContactType, IAddress, IWithModified } from '@sneat/dto';
-import { IContactRequest } from '@sneat/contactus-shared';
 import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
 import { CounterpartyRole } from './logist-team-dto';
 import { OrderDirection } from './orders-filter';
@@ -140,13 +140,9 @@ export interface IDocIssued {
 	readonly on?: string;
 }
 
-export interface IFreightOrderBase extends IFreightLoad {
+export interface IFreightOrderBrief extends IFreightLoad {
 	readonly status: string;
 	readonly direction: OrderDirection;
-}
-
-export interface IFreightOrderBrief extends IFreightOrderBase {
-	readonly id: string;
 }
 
 export interface ITransitPoint {
@@ -169,7 +165,7 @@ export function getSegmentCounterparty(orderDto?: ILogistOrderDto | null, segmen
 	return contactID ? orderDto?.counterparties?.find(c => c.contactID === contactID) : undefined;
 }
 
-export interface ILogistOrderDto extends IFreightOrderBase, IWithModified {
+export interface ILogistOrderDto extends IFreightOrderBrief, IWithModified {
 	readonly contacts?: ReadonlyArray<IOrderContact>;
 	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
 	readonly route?: IOrderRoute;
@@ -192,8 +188,7 @@ export interface ILogistOrderDto extends IFreightOrderBase, IWithModified {
 	readonly issued?: IDocIssued;
 }
 
-export interface ILogistOrderBrief extends IFreightOrderBase {
-	id: string;
+export interface ILogistOrderBrief extends IFreightOrderBrief { // TODO: Why?
 }
 
 export type ILogistOrderContext = ITeamItemContext<ILogistOrderBrief, ILogistOrderDto>;

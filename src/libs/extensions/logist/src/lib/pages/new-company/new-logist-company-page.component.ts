@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ISelectItem } from '@sneat/components';
 import { ContactRole } from '@sneat/dto';
-import { ContactService } from '@sneat/contactus-shared';
 import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
@@ -26,7 +25,6 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 
 	constructor(
 		route: ActivatedRoute,
-		private readonly contactService: ContactService,
 		teamParams: TeamComponentBaseParams,
 		@Inject(CONTACT_ROLES_BY_TYPE) public readonly contactRolesByType: Record<string, IContactRole[]>,
 	) {

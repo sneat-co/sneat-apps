@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContactService } from '@sneat/contactus-shared';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
 	IContainerSegment,
@@ -40,7 +39,6 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
 		orderService: LogistOrderService,
-		private readonly contactService: ContactService,
 	) {
 		super('OrderTruckerSummaryComponent', route, teamParams, orderService);
 		route.queryParams?.subscribe({

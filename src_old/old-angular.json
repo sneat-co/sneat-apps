@@ -1,85 +1,6 @@
 {
 	"version": 1,
 	"projects": {
-		"analytics": {
-			"projectType": "library",
-			"root": "libs/analytics",
-			"sourceRoot": "libs/analytics/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:package",
-					"options": {
-						"tsConfig": "libs/analytics/tsconfig.lib.json",
-						"project": "libs/analytics/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/analytics/tsconfig.lib.prod.json"
-						}
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/analytics/src/**/*.ts",
-							"libs/analytics/src/**/*.html"
-						]
-					}
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/analytics"],
-					"options": {
-						"jestConfig": "libs/analytics/jest.config.js",
-						"passWithNoTests": true
-					}
-				}
-			},
-			"tags": ["scope:public", "type:util", "target:all"]
-		},
-		"animations": {
-			"projectType": "library",
-			"root": "libs/animations",
-			"sourceRoot": "libs/animations/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/animations"],
-					"options": {
-						"project": "libs/animations/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/animations/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/animations/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/animations"],
-					"options": {
-						"jestConfig": "libs/animations/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/animations/src/**/*.ts",
-							"libs/animations/src/**/*.html"
-						]
-					}
-				}
-			}
-		},
 		"api": {
 			"projectType": "library",
 			"root": "libs/api",
@@ -2391,48 +2312,6 @@
 				}
 			},
 			"implicitDependencies": ["emptyionicapp"]
-		},
-		"ext-shared": {
-			"projectType": "library",
-			"root": "libs/ext-shared",
-			"sourceRoot": "libs/ext-shared/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/ext-shared"],
-					"options": {
-						"project": "libs/ext-shared/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/ext-shared/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/ext-shared/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/ext-shared"],
-					"options": {
-						"jestConfig": "libs/ext-shared/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/ext-shared/src/**/*.ts",
-							"libs/ext-shared/src/**/*.html"
-						]
-					}
-				}
-			},
-			"tags": []
 		},
 		"extensions-assetus-components": {
 			"projectType": "library",

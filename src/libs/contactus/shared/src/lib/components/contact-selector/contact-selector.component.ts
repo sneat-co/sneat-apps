@@ -135,7 +135,7 @@ export class ContactSelectorComponent
 			if (r) {
 				roleIDs.push(r);
 				if (t && r) {
-					const role = this.contactRolesByType[t].find(role => role.id === r);
+					const role = this.contactRolesByType[t]?.find(role => role.id === r);
 					if (role?.canBeImpersonatedByRoles?.length) {
 						roleIDs.push(...role.canBeImpersonatedByRoles);
 					}

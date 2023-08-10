@@ -139,7 +139,6 @@ export class ContainerEndpointComponent implements OnChanges {
 				this.byContact = byCounterparty && {
 					id: byCounterparty?.contactID,
 					brief: {
-						id: byCounterparty.contactID,
 						type: 'company',
 						title: byCounterparty.title,
 						countryID: byCounterparty.countryID,

@@ -45,13 +45,15 @@ export const
 	ContactTypePerson = 'person',
 	ContactTypeCompany = 'company',
 	ContactTypeLocation = 'location',
-	ContactTypeAnimal = 'animal';
+	ContactTypeAnimal = 'animal',
+	ContactTypeVehicle = 'vehicle';
 
 export type ContactType = TeamMemberType
 	| typeof ContactTypePerson
 	| typeof ContactTypeCompany
 	| typeof ContactTypeLocation
-	| typeof ContactTypeAnimal;
+	| typeof ContactTypeAnimal
+	| typeof ContactTypeVehicle;
 
 export interface IContactBase {
 	readonly type: ContactType;

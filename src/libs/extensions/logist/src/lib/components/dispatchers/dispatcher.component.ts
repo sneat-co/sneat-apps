@@ -86,8 +86,9 @@ export class DispatcherComponent implements OnChanges {
 				contactType: 'location',
 				parentRole: 'dispatcher',
 				parentContact: {
-					id: dispatcher.contactID, team, brief: {
-						id: dispatcher.contactID,
+					id: dispatcher.contactID,
+					team,
+					brief: {
 						type: 'company',
 						title: dispatcher.title,
 						countryID: dispatcher.countryID,

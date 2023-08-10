@@ -17,10 +17,7 @@ import {
 
 
 function briefFromDto(id: string, dto: ILogistTeamDto): ILogistTeamBrief {
-	return {
-		id,
-		...dto,
-	};
+	return dto;
 }
 
 @Injectable()
@@ -40,7 +37,7 @@ export class LogistTeamService {
 	}
 
 	setLogistTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
-		return this.sneatApiService.post('logistus/set_logist_team_settings?ts='+ new Date().toISOString(), request);
+		return this.sneatApiService.post('logistus/set_logist_team_settings?ts=' + new Date().toISOString(), request);
 	}
 
 }

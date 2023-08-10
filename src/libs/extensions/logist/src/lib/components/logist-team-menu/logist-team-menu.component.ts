@@ -1,10 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ActivationStart, Router, RouterOutlet } from '@angular/router';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { ActivatedRoute, ActivationStart, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { AuthMenuItemModule } from '@sneat/components';
+import { TeamBaseComponent, TeamComponentBaseParams, TeamsMenuComponentModule } from '@sneat/team/components';
+import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team-menu-items.module';
 
 @Component({
+	standalone: true,
 	selector: 'sneat-logist-team-menu',
 	templateUrl: './logist-team-menu.component.html',
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule,
+		AuthMenuItemModule,
+		TeamsMenuComponentModule,
+		LogistTeamMenuItemsModule,
+	],
 })
 export class LogistTeamMenuComponent extends TeamBaseComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;

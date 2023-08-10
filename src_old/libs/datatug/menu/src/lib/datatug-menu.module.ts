@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SneatAnalyticsModule } from '@sneat/analytics';
+import { SneatAnalyticsModule } from '@sneat/core';
 import { AuthMenuItemModule } from '@sneat/auth';
 import { DatatugComponentsProjectModule } from '@sneat/datatug/components/project';
 import { DatatugCoreModule } from '@sneat/datatug/core';

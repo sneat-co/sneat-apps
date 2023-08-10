@@ -43,14 +43,14 @@ export const LogistTeamRoles: Record<LogistTeamRole, string> = {
 	'warehouse_operator': 'Warehouse operator',
 };
 
-export interface ILogistTeamDto {
+export interface ILogistTeamBrief {
 	readonly contactID: string;
 	readonly orderNumberPrefix?: string;
 }
 
-export interface ILogistTeamBrief extends ILogistTeamDto {
-	readonly id: string;
+export interface ILogistTeamDto extends ILogistTeamBrief {
 }
+
 
 export type ILogistTeamContext = INavContext<ILogistTeamBrief, ILogistTeamDto>;
 

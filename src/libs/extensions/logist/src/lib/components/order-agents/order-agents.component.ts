@@ -100,12 +100,12 @@ export class AgentRoleMenuComponent {
 				const counterparty: IOrderCounterparty = {
 					role,
 					contactID: contact.id,
-					title: contactBrief.title,
+					title: contactBrief.title || contact?.id,
 					address: contactBrief.address,
 					countryID: contactBrief.countryID || '--',
 				};
 				if (!this.selected) {
-					throw new Error('OrderAgentsComponent.openContactSelector(): selected callback is required')
+					throw new Error('OrderAgentsComponent.openContactSelector(): selected callback is required');
 				}
 				this.selected(counterparty);
 			})

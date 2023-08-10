@@ -27,7 +27,7 @@ const routes: Routes = [
 			import('./team-page/team-page.module').then((m) => m.TeamPageModule),
 	},
 	{
-		path: 'contacts',
+		path: '',
 		loadChildren: () => import('@sneat/contactus-internal').then((m) => m.ContactusRoutingModule),
 	},
 	...budgetusRoutes,
