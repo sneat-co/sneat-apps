@@ -6,7 +6,6 @@ import { HappeningService } from '@sneat/team/services';
 import { Subject, Subscription } from 'rxjs';
 import { ScheduleFilterService } from '../schedule-filter.service';
 import { IScheduleFilter, isMatchingScheduleFilter } from '../schedule-filter/schedule-filter';
-import { Weekday } from '../schedule-week/schedule-week.component';
 
 @Component({
 	selector: 'sneat-singles-tab',
