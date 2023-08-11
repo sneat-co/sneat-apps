@@ -44,18 +44,22 @@
 		<sneat-filter-item (changed)="applyFilter($event, role)"></sneat-filter-item>
 
 		<div class="segment" *ngIf="!role">
+
 			<ion-segment [(ngModel)]="segment" *ngIf="team?.type === 'family'">
+
 				<ion-segment-button value="groups">
 					<ion-label>By type</ion-label>
 				</ion-segment-button>
+
 				<ion-segment-button value="list">
 					<ion-label>List</ion-label>
 				</ion-segment-button>
+
 			</ion-segment>
 		</div>
 
 		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
-			<ion-item-sliding @listItem *ngFor="let contact of contacts; trackBy: id">
+			<ion-item-sliding @listItem *ngFor="let contact of contacts || []; trackBy: id">
 				<sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
 														[excludeRole]="role"></sneat-contacts-list-item>
 			</ion-item-sliding>

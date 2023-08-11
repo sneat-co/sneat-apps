@@ -7,6 +7,16 @@ export const membersRoutes: Route[] = [
 			.then(m => m.MembersPageModule),
 		// ...guardRoute,
 	},
+	{
+		path: 'new-member',
+		loadChildren: () => import('./pages/new-member/new-member-page.module')
+			.then(m => m.NewMemberPageModule),
+		// ...guardRoute,
+	},
+	{
+		path: 'member',
+		loadChildren: () => import('./pages/member-routing').then(m => m.MemberRoutingModule),
+	},
 
 	// {
 	// 	path: 'pupils',

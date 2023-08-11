@@ -15,14 +15,24 @@ export type ContactRoleDwellingRelated =
 	| 'landlord'
 	| 'tenant'
 	| 'realtor';
-export type ContactRoleVehicle = typeof ContactRoleInsurer | 'mechanic' | 'electrician' | 'handyman' | typeof ContactRoleDriver;
+export type ContactRoleVehicle =
+	typeof ContactRoleInsurer
+	| 'mechanic'
+	| 'electrician'
+	| 'handyman'
+	| typeof ContactRoleDriver;
 export type ContactRoleMedRelated = 'GP' | 'med_specialist'
 export type ContactRoleFamilyRelated = typeof ContactRoleFriend;
 export type ContactRoleWorkRelated = typeof ContactRoleEmployee | 'client' | 'supplier';
-export type ContactRoleKidRelated = typeof ContactRoleFriend | typeof ContactRoleParentOfFriend | 'teacher' | 'babysitter';
+export type ContactRoleKidRelated =
+	typeof ContactRoleFriend
+	| typeof ContactRoleParentOfFriend
+	| 'teacher'
+	| 'babysitter';
 export const ContactRoleShip = 'ship';
 export type ContactRoleLogistSubContact = typeof ContactRoleShip | typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
+import { RoleTeamMember } from './dto-member';
 
 export type LogistOrderContactRole =
 	ContactRoleLogistParentContact
@@ -47,6 +57,7 @@ export type LogistOrderContactRole =
 	| 'warehouse'
 	;
 export type ContactRole =
+	typeof RoleTeamMember |
 	ContactRoleFamilyRelated |
 	ContactRoleWorkRelated |
 	ContactRoleKidRelated |

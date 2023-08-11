@@ -15,9 +15,14 @@ export class ContactsListItemComponent {
 	@Input() excludeRole?: ContactRole;
 	@Input() contact?: IContactContext;
 	@Input() showAddress = false;
+	@Input() hideRoles: string[] = ['--', 'creator', 'contributor', 'owner', 'team_member'];
 
 	protected get relatedContacts(): readonly IBriefAndID<IContactBrief>[] {
 		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
+	}
+
+	hideRole(role: string): boolean {
+		return this.hideRoles.indexOf(role) >= 0 || role == this.excludeRole;
 	}
 
 	constructor(

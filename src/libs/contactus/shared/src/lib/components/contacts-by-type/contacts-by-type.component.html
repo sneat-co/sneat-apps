@@ -30,7 +30,7 @@
     <ion-item-divider color="light">
         <ion-label>Other</ion-label>
     </ion-item-divider>
-    <ion-item-sliding *ngFor="let contact of contacts; trackBy: id" @listItem>
+    <ion-item-sliding *ngFor="let contact of contacts || []; trackBy: id" @listItem>
         <sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contacts-list-item>
     </ion-item-sliding>
 </ion-item-group>

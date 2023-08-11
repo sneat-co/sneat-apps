@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+import { memberRoutes, membersRoutes } from './members';
 // import {guardRoute} from '../../utils/guard-route';
 
 export const contactusRoutes: Route[] = [
@@ -49,7 +50,11 @@ export const contactusRoutes: Route[] = [
 
 @NgModule({
 	imports: [
-		RouterModule.forChild(contactusRoutes),
+		RouterModule.forChild([
+			...contactusRoutes,
+			...memberRoutes,
+			...membersRoutes,
+		]),
 	],
 })
 export class ContactusRoutingModule {

@@ -6,10 +6,8 @@ import { IonicModule } from '@ionic/angular';
 
 export const memberRoutes: Route[] = [
 	{
-		path: 'new-member',
-		loadChildren: () => import('./new-member/new-member-page.module')
-			.then(m => m.NewMemberPageModule),
-		// ...guardRoute,
+		path: 'member',
+		loadChildren: () => import('./member/team-member-page.module').then(m => m.TeamMemberPageModule),
 	},
 	// {
 	// 	path: 'remove-member',
@@ -21,7 +19,7 @@ export const memberRoutes: Route[] = [
 
 const routes: Route[] = [
 	{
-		path: '',
+		path: ':memberID',
 		pathMatch: 'full',
 		loadChildren: () => import('./member/team-member-page.module')
 			.then(m => m.TeamMemberPageModule),

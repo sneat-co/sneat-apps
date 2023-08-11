@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { INavContext } from '@sneat/core';
-import { ContactRole, ContactRoleParentOfFriend } from '@sneat/dto';
+import { ContactRole, ContactRoleParentOfFriend, RoleTeamMember } from '@sneat/dto';
 import { IDtoAndID, ITeamContext } from '@sneat/team/models';
 import { TeamItemService } from '@sneat/team/services';
 import { Observable, of } from 'rxjs';
@@ -33,6 +33,7 @@ export interface IContactGroupDto extends IContactGroupBrief {
 }
 
 const
+	contactTypeFamilyMember: IContactRoleBrief = { id: 'team_member', title: 'Family member', emoji: '👪' },
 	contactTypeTeacher: IContactRoleBrief = { id: 'teacher', title: 'Teacher', emoji: '👩‍🏫' },
 	contactTypeBabysitter: IContactRoleBrief = {
 		id: 'babysitter',
@@ -69,6 +70,15 @@ const
 	contactTypeMechanic: IContactRoleBrief = { id: 'mechanic', title: 'Mechanic', emoji: '👨‍🔧' };
 
 export const defaultFamilyContactGroupDTOs: readonly IDtoAndID<IContactGroupDto>[] = [
+	{
+		id: RoleTeamMember,
+		dto: {
+			title: 'Family members',
+			roles: [
+				contactTypeFamilyMember,
+			],
+		},
+	},
 	{
 		id: 'kid',
 		dto: {
