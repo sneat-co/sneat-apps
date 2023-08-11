@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { ContactsListModule, IContactGroupWithContacts, IContactRoleWithContacts } from '../..';
 import { eq } from '@sneat/core';
-import { ContactRole, RoleTeamMember } from '@sneat/dto';
+import { ContactRole } from '@sneat/dto';
 import { ContactNavService, defaultFamilyContactGroups } from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 
