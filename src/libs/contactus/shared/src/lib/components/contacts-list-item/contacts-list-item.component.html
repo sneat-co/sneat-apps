@@ -8,7 +8,7 @@
 			</ng-container>
 		</ng-container>
 
-		<p *ngFor="let member of relatedContacts; trackBy: id">
+		<p *ngFor="let member of relatedContacts; trackBy: contactID">
 			{{member.brief.relatedAs}} of <a [href]="member.id"
 																			 (click)="goMember(member.id, $event)">{{member.brief.title}}</a>
 		</p>

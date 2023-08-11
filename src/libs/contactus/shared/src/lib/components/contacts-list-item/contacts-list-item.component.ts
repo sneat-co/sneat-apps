@@ -44,6 +44,8 @@ export class ContactsListItemComponent {
 
 	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
 
+	protected readonly contactID = (_: number, record: IBriefAndID<IContactBrief>) => record.id;
+
 	archiveContact(): void {
 		console.log('ContactListItemComponent.removeContact()');
 		if (this.contact?.id) {
@@ -55,9 +57,5 @@ export class ContactsListItemComponent {
 					error: this.errorLogger.logError,
 				});
 		}
-	}
-
-	id(i: number, record: { id: string }): string {
-		return record.id;
 	}
 }
