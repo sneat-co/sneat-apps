@@ -86,10 +86,6 @@ export class ContactsByTypeComponent implements OnChanges {
 						...role,
 						contacts: contacts.filter(c => c.brief?.roles?.includes(role.id)),
 					};
-					if (true || role.id === RoleTeamMember && contacts) {
-						console.log('setContactGroups(), group:', group,
-							'roleWithContacts:', roleWithContacts, 'contacts:', contacts);
-					}
 					if (filter && role.title.toLowerCase().includes(filter)) {
 						rolesWithContacts.push(roleWithContacts); // Show all contacts in role that filtered by title
 						return;
