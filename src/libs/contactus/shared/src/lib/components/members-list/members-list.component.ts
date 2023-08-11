@@ -7,7 +7,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { InviteModalComponent } from '@sneat/team/components';
 import { ContactService } from '@sneat/contactus-services';
 import { IBriefAndID, IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { TeamNavService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth-core';
 
 @Component({
@@ -34,7 +34,6 @@ export class MembersListComponent implements OnChanges {
 		private readonly navService: TeamNavService,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
-		private readonly teamService: TeamService,
 		private readonly contactService: ContactService,
 		private readonly scheduleNavService: ScheduleNavService,
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
