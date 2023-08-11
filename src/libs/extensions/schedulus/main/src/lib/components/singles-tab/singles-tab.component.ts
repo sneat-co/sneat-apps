@@ -27,8 +27,8 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 
 	private filter?: IScheduleFilter;
 
-	readonly trackByDate = (i: number, item: Weekday): number | undefined => item.day?.date.getTime();
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	// readonly trackByDate = (i: number, item: Weekday): number | undefined => item.day?.date.getTime();
+	protected readonly happeningID = (_: number, h: IHappeningContext) => h.id;
 
 	get numberOfHidden(): number {
 		return (this.allUpcomingSingles?.length || 0) - (this.upcomingSingles?.length || 0);

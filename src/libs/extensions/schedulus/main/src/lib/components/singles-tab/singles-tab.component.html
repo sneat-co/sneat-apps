@@ -11,7 +11,7 @@
 </ion-card>
 
 <ng-container *ngIf="tab === 'upcoming'">
-	<sneat-happening-card *ngFor="let happening of upcomingSingles || []; trackBy: id"
+	<sneat-happening-card *ngFor="let happening of upcomingSingles || []; trackBy: happeningID"
 												[team]="team"
 												[happening]="happening"
 												(deleted)="onHappeningRemoved($event)"
