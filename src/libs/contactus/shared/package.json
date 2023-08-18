@@ -6,7 +6,7 @@
 		"@angular/core": "^14.0.0 || ^15.0.0 || ^16.0.0"
 	},
 	"dependencies": {
-		"tslib": "2.6.1"
+		"tslib": "2.6.2"
 	},
 	"sideEffects": false
 }
