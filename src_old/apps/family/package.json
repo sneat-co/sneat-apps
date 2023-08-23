@@ -1,6 +1,6 @@
 {
 	"name": "family",
 	"devDependencies": {
-		"@capacitor/cli": "5.2.3"
+		"@capacitor/cli": "5.3.0"
 	}
 }
