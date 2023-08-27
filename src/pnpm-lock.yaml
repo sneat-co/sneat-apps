@@ -81,8 +81,8 @@ dependencies:
     specifier: 7.8.1
     version: 7.8.1
   tabulator-tables:
-    specifier: 5.5.1
-    version: 5.5.1
+    specifier: 5.5.2
+    version: 5.5.2
   ts-md5:
     specifier: 1.3.1
     version: 1.3.1
@@ -13977,8 +13977,8 @@ packages:
   /symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  /tabulator-tables@5.5.1:
-    resolution: {integrity: sha512-YxWVXbWVgUOMhU/g2xnf7y4Vrk1grYpDftQigbY/yAOKMEfgCRYzNaNEpMZbaimWdCt7KdpIp+lpp+HM5DY5sQ==}
+  /tabulator-tables@5.5.2:
+    resolution: {integrity: sha512-GlzUPXeH9Rw1iPXcl3uBLJk6Sz51xdwscZ5RrsKxDQDQ+t2g31hGq/0xjaj6ea62wHgl8vzVsHuwap0jKzsUNg==}
     dev: false
 
   /tapable@2.2.1:
