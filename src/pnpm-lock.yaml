@@ -51,8 +51,8 @@ dependencies:
     specifier: 7.3.3
     version: 7.3.3(@angular/core@16.2.5)(@angular/forms@16.2.5)(@angular/router@16.2.5)(rxjs@7.8.1)(zone.js@0.13.3)
   '@ionic/core':
-    specifier: 7.3.4
-    version: 7.3.4
+    specifier: 7.4.0
+    version: 7.4.0
   '@nx/angular':
     specifier: 16.8.1
     version: 16.8.1(@angular-devkit/build-angular@16.2.1)(@angular-devkit/core@16.2.1)(@angular-devkit/schematics@16.2.1)(@schematics/angular@16.2.1)(@swc-node/register@1.6.6)(@swc/core@1.3.74)(@types/node@18.17.15)(cypress@13.1.0)(eslint@8.49.0)(nx@16.8.1)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.1.6)
@@ -4551,8 +4551,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@ionic/core@7.3.4:
-    resolution: {integrity: sha512-FNj6+N+q9nsnqY5QvcdIAqKiAHnpt0/DQZJw0/d//I378z0jm7CsNZoZ+Qrsq5XWXsBLzruLBes0M8dnY4qscw==}
+  /@ionic/core@7.4.0:
+    resolution: {integrity: sha512-Kuu04UljgmKz2Umcm77QCP+4O1rV67EEUtK/Kx0eIp+h+eoSkJJK4/p3EpkvrlKRDOfv4xlUnqKw7+yqhBg36w==}
     dependencies:
       '@stencil/core': 4.2.1
       ionicons: 7.1.0
