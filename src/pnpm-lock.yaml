@@ -48,8 +48,8 @@ dependencies:
     specifier: 5.36.0
     version: 5.36.0(@ionic-native/core@5.36.0)(rxjs@7.8.1)
   '@ionic/angular':
-    specifier: 7.3.3
-    version: 7.3.3(@angular/core@16.2.5)(@angular/forms@16.2.5)(@angular/router@16.2.5)(rxjs@7.8.1)(zone.js@0.13.3)
+    specifier: 7.4.0
+    version: 7.4.0(@angular/core@16.2.5)(@angular/forms@16.2.5)(@angular/router@16.2.5)(rxjs@7.8.1)(zone.js@0.13.3)
   '@ionic/core':
     specifier: 7.4.0
     version: 7.4.0
@@ -4523,8 +4523,8 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@ionic/angular@7.3.3(@angular/core@16.2.5)(@angular/forms@16.2.5)(@angular/router@16.2.5)(rxjs@7.8.1)(zone.js@0.13.3):
-    resolution: {integrity: sha512-7EwzGWDTILNAZUo3L6mzW6ub5GgvONNFKM9NdMXZtHPVBODYpf77qpEveGSQ+EBUVPUDha1NocbPRLCKqBqBAA==}
+  /@ionic/angular@7.4.0(@angular/core@16.2.5)(@angular/forms@16.2.5)(@angular/router@16.2.5)(rxjs@7.8.1)(zone.js@0.13.3):
+    resolution: {integrity: sha512-pPoarySJ4UcJZVk/e0TZgh+ibQN8hno1HHtIkzs2la6aJ/TQlqawth/AUkL+zXn8m5YsVRZS/JooLkqvN0EJ1w==}
     peerDependencies:
       '@angular/core': '>=14.0.0'
       '@angular/forms': '>=14.0.0'
@@ -4535,20 +4535,12 @@ packages:
       '@angular/core': 16.2.5(rxjs@7.8.1)(zone.js@0.13.3)
       '@angular/forms': 16.2.5(@angular/common@16.2.5)(@angular/core@16.2.5)(@angular/platform-browser@16.2.5)(rxjs@7.8.1)
       '@angular/router': 16.2.5(@angular/common@16.2.5)(@angular/core@16.2.5)(@angular/platform-browser@16.2.5)(rxjs@7.8.1)
-      '@ionic/core': 7.3.3
+      '@ionic/core': 7.4.0
       ionicons: 7.1.2
       jsonc-parser: 3.2.0
       rxjs: 7.8.1
       tslib: 2.6.2
       zone.js: 0.13.3
-    dev: false
-
-  /@ionic/core@7.3.3:
-    resolution: {integrity: sha512-v/Zdx5otxRjfGrm9gJKmuLkEBcOk1aUUBYbgZ4xHNQiRCZzuuy3P55CFoUUZnBIJofiUh08whNndNuEkC8TOvg==}
-    dependencies:
-      '@stencil/core': 4.1.0
-      ionicons: 7.1.0
-      tslib: 2.6.2
     dev: false
 
   /@ionic/core@7.4.0:
@@ -5965,12 +5957,6 @@ packages:
   /@stencil/core@2.22.3:
     resolution: {integrity: sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==}
     engines: {node: '>=12.10.0', npm: '>=6.0.0'}
-    hasBin: true
-    dev: false
-
-  /@stencil/core@4.1.0:
-    resolution: {integrity: sha512-yIpL+CX02fy5zvFXwXcHZjjEILRm3aiONbucpfLIWPS7zcBAuucdROssartEa+D7E1JRko97ydxn1Ntdu4GoWg==}
-    engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
     dev: false
 
