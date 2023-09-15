@@ -1,6 +1,6 @@
 {
 	"name": "emptyionicapp",
 	"devDependencies": {
-		"@capacitor/cli": "5.3.0"
+		"@capacitor/cli": "5.4.0"
 	}
 }
