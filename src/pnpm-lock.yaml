@@ -170,8 +170,8 @@ devDependencies:
     specifier: 9.0.0
     version: 9.0.0(eslint@8.49.0)
   eslint-plugin-cypress:
-    specifier: 2.14.0
-    version: 2.14.0(eslint@8.49.0)
+    specifier: 2.15.1
+    version: 2.15.1(eslint@8.49.0)
   eslint-plugin-json:
     specifier: ^3.1.0
     version: 3.1.0
@@ -8531,8 +8531,8 @@ packages:
       eslint: 8.49.0
     dev: true
 
-  /eslint-plugin-cypress@2.14.0(eslint@8.49.0):
-    resolution: {integrity: sha512-eW6tv7iIg7xujleAJX4Ujm649Bf5jweqa4ObPEIuueYRyLZt7qXGWhCY/n4bfeFW/j6nQZwbIBHKZt6EKcL/cg==}
+  /eslint-plugin-cypress@2.15.1(eslint@8.49.0):
+    resolution: {integrity: sha512-eLHLWP5Q+I4j2AWepYq0PgFEei9/s5LvjuSqWrxurkg1YZ8ltxdvMNmdSf0drnsNo57CTgYY/NIHHLRSWejR7w==}
     peerDependencies:
       eslint: '>= 3.2.1'
     dependencies:
