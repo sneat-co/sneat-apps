@@ -185,8 +185,8 @@ devDependencies:
     specifier: ^29.4.1
     version: 29.5.0
   jest-preset-angular:
-    specifier: 13.1.1
-    version: 13.1.1(@angular-devkit/build-angular@16.2.2)(@angular/compiler-cli@16.2.5)(@angular/core@16.2.5)(@angular/platform-browser-dynamic@16.2.5)(@babel/core@7.22.10)(jest@29.7.0)(typescript@5.1.6)
+    specifier: 13.1.2
+    version: 13.1.2(@angular-devkit/build-angular@16.2.2)(@angular/compiler-cli@16.2.5)(@angular/core@16.2.5)(@angular/platform-browser-dynamic@16.2.5)(@babel/core@7.22.10)(jest@29.7.0)(typescript@5.1.6)
   ng-packagr:
     specifier: ~16.2.0
     version: 16.2.0(@angular/compiler-cli@16.2.5)(tslib@2.6.2)(typescript@5.1.6)
@@ -4827,13 +4827,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@jest/schemas@29.6.0:
-    resolution: {integrity: sha512-rxLjXyJBTL4LQeJW3aKo0M/+GkCOXsO+8i9Iu7eDb6KwtP65ayoDsitrdPBtujxQ88k4wI2FNYfa6TOGwSn6cQ==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@sinclair/typebox': 0.27.8
-    dev: true
-
   /@jest/schemas@29.6.3:
     resolution: {integrity: sha512-mo5j5X+jIZmJQveBKeS/clAueipV7KgiX1vMgCxam1RNYiqE1w62n0/tJJnHtjW8ZHcQco5gY85jA3mi0L+nSA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -8426,12 +8419,6 @@ packages:
   /es-module-lexer@1.2.1:
     resolution: {integrity: sha512-9978wrXM50Y4rTMmW5kXIC09ZdXQZqkE4mxhwkd8VbzsGkXGPgV4zWuqQJgCEzYngdo2dYDa0l8xhX4fkSwJSg==}
 
-  /esbuild-wasm@0.17.18:
-    resolution: {integrity: sha512-h4m5zVa+KaDuRFIbH9dokMwovvkIjTQJS7/Ry+0Z1paVuS9aIkso2vdA2GmwH9GSvGX6w71WveJ3PfkoLuWaRw==}
-    engines: {node: '>=12'}
-    hasBin: true
-    dev: true
-
   /esbuild-wasm@0.18.17:
     resolution: {integrity: sha512-9OHGcuRzy+I8ziF9FzjfKLWAPbvi0e/metACVg9k6bK+SI4FFxeV6PcZsz8RIVaMD4YNehw+qj6UMR3+qj/EuQ==}
     engines: {node: '>=12'}
@@ -10315,8 +10302,8 @@ packages:
     dependencies:
       jest-resolve: 29.7.0
 
-  /jest-preset-angular@13.1.1(@angular-devkit/build-angular@16.2.2)(@angular/compiler-cli@16.2.5)(@angular/core@16.2.5)(@angular/platform-browser-dynamic@16.2.5)(@babel/core@7.22.10)(jest@29.7.0)(typescript@5.1.6):
-    resolution: {integrity: sha512-X8i7icKt9U5uhj7YKqdEZm7ZZPvNFRxfBnU+9SALdIkHYJhwtlJ5/MUk9wo4f3lX2smOkIl9LPJUu1APO+11Jg==}
+  /jest-preset-angular@13.1.2(@angular-devkit/build-angular@16.2.2)(@angular/compiler-cli@16.2.5)(@angular/core@16.2.5)(@angular/platform-browser-dynamic@16.2.5)(@babel/core@7.22.10)(jest@29.7.0)(typescript@5.1.6):
+    resolution: {integrity: sha512-kuzuIch/YYTMaMnuGDaiZEu++Bjc5WskOAmMwqWO0Grpcd0SulqTOV70Gz6Q/ZOQuMye+LS4KPyIVfqnJr2e3g==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
       '@angular-devkit/build-angular': '>=13.0.0 <17.0.0'
@@ -10331,11 +10318,11 @@ packages:
       '@angular/core': 16.2.5(rxjs@7.8.1)(zone.js@0.14.0)
       '@angular/platform-browser-dynamic': 16.2.5(@angular/common@16.2.5)(@angular/compiler@16.2.5)(@angular/core@16.2.5)(@angular/platform-browser@16.2.5)
       bs-logger: 0.2.6
-      esbuild-wasm: 0.17.18
+      esbuild-wasm: 0.19.0
       jest: 29.7.0(@types/node@18.17.17)(ts-node@10.9.1)
       jest-environment-jsdom: 29.5.0
-      jest-util: 29.5.0
-      pretty-format: 29.5.0
+      jest-util: 29.7.0
+      pretty-format: 29.7.0
       ts-jest: 29.1.1(@babel/core@7.22.10)(esbuild@0.19.0)(jest@29.7.0)(typescript@5.1.6)
       typescript: 5.1.6
     optionalDependencies:
@@ -12818,15 +12805,6 @@ packages:
   /pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
     engines: {node: '>=6'}
-
-  /pretty-format@29.5.0:
-    resolution: {integrity: sha512-V2mGkI31qdttvTFX7Mt4efOqHXqJWMu4/r66Xh3Z3BwZaPfPJgp6/gbwoujRpPUtfEF6AUUWx3Jim3GCw5g/Qw==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@jest/schemas': 29.6.0
-      ansi-styles: 5.2.0
-      react-is: 18.2.0
-    dev: true
 
   /pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
