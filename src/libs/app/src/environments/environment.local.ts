@@ -6,7 +6,7 @@ import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-import 'zone.js/dist/zone-error';
+// import 'zone.js/dist/zone-error';
 
 const useEmulators = true;
 
