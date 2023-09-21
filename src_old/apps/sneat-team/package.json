@@ -1,6 +1,6 @@
 {
 	"name": "sneat-team",
 	"devDependencies": {
-		"@capacitor/cli": "5.4.0"
+		"@capacitor/cli": "5.4.1"
 	}
 }
