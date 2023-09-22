@@ -57,7 +57,7 @@ export class TeamItemService<Brief, Dto extends Brief> {
 		if (!filter) {
 			filter = [];
 		}
-		filter.push({ field: 'teamIDs', operator: 'in', value: team.id });
+		filter.push({ field: 'teamIDs', operator: '==', value: team.id });
 		const moduleDocRef = doc(this.modulesCollection, moduleID);
 		const collectionRef = collection(moduleDocRef, this.collectionName);
 		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter || []);

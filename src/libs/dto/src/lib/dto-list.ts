@@ -1,7 +1,9 @@
 import { TeamType } from '@sneat/core';
 import { IRecord } from '@sneat/data';
+import { ITeamRequest } from '@sneat/team/models';
 import { IWithRestrictions, IWithTeamIDs } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
+import { IWithCreated } from './dto-with-modified';
 import { ListStatus } from './types';
 
 // import { CommuneShortId } from '../commune-ids';
@@ -18,7 +20,10 @@ export interface IListItemCommon extends IListCommon {
 	category?: string;
 }
 
-export interface IListItemBrief extends IListItemCommon {
+export interface IListItemBase extends IListItemCommon {
+
+}
+export interface IListItemBrief extends IListItemBase {
 	id: string;
 	readonly created?: string; // UTC datetime
 	readonly emoji?: string;
@@ -34,7 +39,7 @@ export interface ListCounts {  // TODO: Use some enumerator as IDB library does.
 export type ListType = 'to-buy' | 'to-watch' | 'to-cook' | 'to-do' | 'other' | 'recipes' | 'rsvp';
 
 // IListCommon is a common base class for a List & ListItem
-export interface IListCommon {
+export interface IListCommon { // Do not extend from IWithCreated as it is not applicable for ICreateListItemRequest
 	title: string;
 	img?: string;
 	emoji?: string;
@@ -47,8 +52,7 @@ export interface IListBase extends IListCommon, IWithTeamIDs {
 	status?: ListStatus;
 }
 
-export interface IListDto extends IListBase, IWithRestrictions {
-	dtCreated?: number;
+export interface IListDto extends IListBase, IWithRestrictions, IWithCreated {
 	dtClosed?: number;
 	note?: string; // Is used for example for recipe text
 	numberOf?: ListCounts;
@@ -121,7 +125,7 @@ export interface IListInfo extends IWithRestrictions {
 	itemsCount?: number;
 }
 
-export interface IListBrief extends IListBase {
+export interface IListBrief extends IListBase, IWithCreated {
 	emoji?: string;
 }
 

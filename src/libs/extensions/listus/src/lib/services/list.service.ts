@@ -7,6 +7,7 @@ import { IListContext, ITeamContext } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
+	ICreateListItemsRequest,
 	ICreateListRequest,
 	IDeleteListItemsRequest,
 	IListItemResult,
@@ -61,6 +62,7 @@ export class ListService {
 	}
 
 	public watchList(team: ITeamContext, listType: ListType, listID: string): Observable<IListContext> {
+		console.log('watchList', team, listType, listID);
 		const id = this.getFullListID(listType, listID);
 		const doc = this.listDocRef(team.id, id);
 		return this.sfs.watchByDocRef(doc).pipe(
@@ -76,7 +78,7 @@ export class ListService {
 		if (!listType) {
 			return throwError(() => 'list is of unknown type');
 		}
-		const request = {
+		const request: ICreateListItemsRequest = {
 			teamID: params.team.id,
 			listID: params.list.id,
 			listType,
@@ -120,7 +122,7 @@ export class ListService {
 	});
 
 	private listDocRef(teamID: string, listID: string): DocumentReference<IListDto> {
-		const listsCollection = collection(this.db, 'teams', teamID, 'lists');
+		const listsCollection = collection(this.db, 'teams', teamID, 'modules', 'listus', 'lists');
 		return doc(listsCollection, listID) as DocumentReference<IListDto>;
 	}
 }

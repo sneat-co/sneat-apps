@@ -64,7 +64,7 @@ export class ContactService {
 
 
 	watchContactsWithRole(team: ITeamContext, role: string, status: 'active' | 'archived' = 'active', filter?: readonly IFilter[]): Observable<IContactContext[]> {
-		filter = [...(filter || []), { field: 'roles', operator: 'in', value: role }];
+		filter = [...(filter || []), { field: 'roles', operator: '==', value: role }];
 		return this.watchTeamContacts(team, status, filter);
 	}
 

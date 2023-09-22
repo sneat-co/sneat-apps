@@ -1,23 +1,21 @@
 //tslint:disable:no-unsafe-any
-import { OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IListItemBrief } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IListContext } from '@sneat/team/models';
-import { ListService } from '../services/list.service';
+import { ListusComponentBaseParams } from '../listus-component-base-params';
 import { BaseListPage } from './base-list-page';
 
-export abstract class BaseListItemPage extends BaseListPage implements OnInit {
+export abstract class BaseListItemPage extends BaseListPage {
 	protected itemId?: string;
 	protected listItemInfo?: IListItemBrief;
 
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
-		listService: ListService,
+		params: ListusComponentBaseParams,
+		// listService: ListService,
 	) {
-		super(className, route, params, listService);
+		super(className, route, params);
 		try {
 			this.listItemInfo = window.history.state.listItemInfo as IListItemBrief;
 			if (this.listItemInfo) {
@@ -32,7 +30,7 @@ export abstract class BaseListItemPage extends BaseListPage implements OnInit {
 				this.onQueryParamsChanged(queryParams);
 			});
 		} catch (e) {
-			params.errorLogger.logError(e, 'failed in BaseListItemPage.constructor()');
+			params.teamParams.errorLogger.logError(e, 'failed in BaseListItemPage.constructor()');
 		}
 	}
 
