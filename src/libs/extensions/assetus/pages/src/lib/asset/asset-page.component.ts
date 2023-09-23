@@ -1,7 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { LiabilityServiceType } from '@sneat/dto';
-import { AssetBasePage, AssetComponentBaseParams } from '@sneat/extensions/assetus/components';
+import {
+	AssetBasePage,
+	AssetComponentBaseParams,
+	ModuleAssetRealEstate,
+	VehicleCardComponentModule,
+} from '@sneat/extensions/assetus/components';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;
@@ -12,6 +20,15 @@ interface LiabilityServiceBrief {
 	selector: 'sneat-asset-page',
 	templateUrl: './asset-page.component.html',
 	providers: [AssetComponentBaseParams],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		ModuleAssetRealEstate,
+		VehicleCardComponentModule,
+		IonicModule,
+	],
 })
 export class AssetPageComponent extends AssetBasePage {
 

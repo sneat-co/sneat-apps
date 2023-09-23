@@ -1,8 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import { Gender, MemberRelationship } from '@sneat/dto';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 import { MemberBasePage } from '../member-base-page';
+import { MemberAppsMenuComponent } from './components/member-apps-menu.component';
 
 @Component({
 	selector: 'sneat-team-member-page',
@@ -10,6 +15,14 @@ import { MemberBasePage } from '../member-base-page';
 	providers: [
 		MemberComponentBaseParams,
 	],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		SneatPipesModule,
+		MemberAppsMenuComponent,
+	]
 })
 export class TeamMemberPageComponent extends MemberBasePage implements AfterViewInit {
 

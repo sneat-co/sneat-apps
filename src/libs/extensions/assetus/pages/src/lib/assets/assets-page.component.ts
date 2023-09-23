@@ -11,10 +11,10 @@ import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 
 @Component({
-	standalone: true,
 	selector: 'sneat-assets-page',
 	templateUrl: './assets-page.component.html',
 	providers: [TeamComponentBaseParams],
+	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,
