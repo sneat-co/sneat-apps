@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IRetroItem, IRetrospective, RetroItemType } from '@sneat/scrumspace/scrummodels';
 import { Observable } from 'rxjs';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { BaseMeetingService, IMeetingRequest } from '@sneat/meeting';
 import { SneatApiService } from '@sneat/api';
 import { IRecord } from '@sneat/data';
@@ -39,7 +38,6 @@ export interface IAddRetroItemResponse {
 export class RetrospectiveService extends BaseMeetingService {
 	constructor(
 		sneatApiService: SneatApiService,
-		private readonly db: AngularFirestore,
 	) {
 		super('retrospective', sneatApiService);
 	}

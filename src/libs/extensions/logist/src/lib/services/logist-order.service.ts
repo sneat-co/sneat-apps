@@ -57,8 +57,7 @@ export class LogistOrderService {
 		// teamItemService: TeamItemBaseService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<IFreightOrderBrief, ILogistOrderDto>(
-			'logist_orders', afs, briefFromDto);
+		this.sfs = new SneatFirestoreService<IFreightOrderBrief, ILogistOrderDto>(briefFromDto);
 	}
 
 	createOrder(request: ICreateLogistOrderRequest): Observable<ICreateFreightOrderResponse> {

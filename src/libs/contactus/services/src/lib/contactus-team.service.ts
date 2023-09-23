@@ -10,9 +10,9 @@ export class ContactusTeamService extends TeamModuleService<IContactusTeamDto, I
 
 	public constructor(
 		afs: AngularFirestore,
-		sneatApiService: SneatApiService,
+		// sneatApiService: SneatApiService,
 	) {
-		super(afs, sneatApiService, 'contactus');
+		super('contactus', afs);
 	}
 
 	watchContactBriefs(team: ITeamContext): Observable<IContactContext[]> {

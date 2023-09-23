@@ -28,8 +28,7 @@ export class LogistTeamService {
 		private readonly sneatApiService: SneatApiService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>(
-			'logist_team', afs, briefFromDto);
+		this.sfs = new SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>(briefFromDto);
 	}
 
 	public watchLogistTeamByID(teamID: string): Observable<ILogistTeamContext> {

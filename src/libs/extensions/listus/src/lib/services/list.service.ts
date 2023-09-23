@@ -22,12 +22,12 @@ export class ListService {
 	private readonly sfs: SneatFirestoreService<IListBrief, IListDto>;
 
 	constructor(
-		private readonly db: AngularFirestore,
+		private readonly afs: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 		// private readonly teamItemService: TeamItemBaseService,
 		// private readonly teamService: TeamService,
 	) {
-		this.sfs = new SneatFirestoreService<IListBrief, IListDto>('teams', db, (id, dto) => ({ ...dto, id }));
+		this.sfs = new SneatFirestoreService<IListBrief, IListDto>((id, dto) => ({ ...dto, id }));
 	}
 
 	public createList(request: ICreateListRequest): Observable<IListContext> {
@@ -122,7 +122,7 @@ export class ListService {
 	});
 
 	private listDocRef(teamID: string, listID: string): DocumentReference<IListDto> {
-		const listsCollection = collection(this.db, 'teams', teamID, 'modules', 'listus', 'lists');
+		const listsCollection = collection(this.afs, 'teams', teamID, 'modules', 'listus', 'lists');
 		return doc(listsCollection, listID) as DocumentReference<IListDto>;
 	}
 }

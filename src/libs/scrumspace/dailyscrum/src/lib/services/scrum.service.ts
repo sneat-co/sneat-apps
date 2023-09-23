@@ -64,7 +64,7 @@ export class ScrumService extends BaseMeetingService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly randomIdService: RandomIdService,
 		private readonly userService: SneatUserService,
-		private readonly db: AngularFirestore,
+		private readonly afs: AngularFirestore,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
 	) {
@@ -243,7 +243,7 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	private scrumsCollection(teamId: string): CollectionReference<IScrumDto> {
-		const teamsCollection = collection(this.db, 'teams');
+		const teamsCollection = collection(this.afs, 'teams');
 		const teamDoc = doc(teamsCollection, teamId);
 		return collection(teamDoc, 'scrums') as CollectionReference<IScrumDto>;
 	}

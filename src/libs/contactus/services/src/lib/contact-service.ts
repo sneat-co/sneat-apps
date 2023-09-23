@@ -26,7 +26,7 @@ export class ContactService {
 		protected contactusTeamService: ContactusTeamService,
 		private readonly userService: SneatUserService,
 	) {
-		this.teamItemService = new TeamItemService<IContactBrief, IContactDto>('contacts', afs, sneatApiService);
+		this.teamItemService = new TeamItemService('contactus', 'contacts', afs, sneatApiService);
 		// this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
 	}
 

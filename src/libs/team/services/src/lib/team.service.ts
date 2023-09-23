@@ -43,12 +43,12 @@ export class TeamService {
 	constructor(
 		readonly sneatAuthStateService: SneatAuthStateService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly db: AngularFirestore,
+		private readonly afs: AngularFirestore,
 		private readonly userService: SneatUserService,
 		private readonly sneatApiService: SneatApiService,
 	) {
 		console.log('TeamService.constructor()');
-		this.sfs = new SneatFirestoreService<ITeamBrief, ITeamDto>('teams', db, (id, dto) => ({ id, ...dto }));
+		this.sfs = new SneatFirestoreService<ITeamBrief, ITeamDto>((id, dto) => ({ id, ...dto }));
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === 'notAuthenticated') {
 				this.unsubscribe('signed out');
@@ -212,7 +212,7 @@ export class TeamService {
 		const t = subj.value;
 		console.log(`TeamService.subscribeForTeamChanges(${t.id})`);
 		const { id } = t;
-		const teamsCollection = collection(this.db, 'teams') as CollectionReference<ITeamDto>;
+		const teamsCollection = collection(this.afs, 'teams') as CollectionReference<ITeamDto>;
 		const o: Observable<ITeamContext> = this.sfs.watchByID(teamsCollection, id)
 			.pipe(
 				map((team) => {

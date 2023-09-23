@@ -14,18 +14,17 @@ import { map } from 'rxjs/operators';
 type ICreateTeamItemResponse<Brief, Dto extends Brief> = ITeamItemContext<Brief, Dto>;
 
 export class TeamItemService<Brief, Dto extends Brief> {
-	private readonly teamsCollection;
-	private readonly modulesCollection;
+	protected readonly teamsCollection;
 	protected readonly sfs: SneatFirestoreService<Brief, Dto>;
 
 	constructor(
+		public readonly moduleID: string,
 		public readonly collectionName: string,
 		public readonly afs: AngularFirestore,
 		public readonly sneatApiService: SneatApiService,
 	) {
-		this.modulesCollection = collection(this.afs, 'modules');
 		this.teamsCollection = collection(this.afs, 'teams');
-		this.sfs = new SneatFirestoreService<Brief, Dto>(collectionName, afs);
+		this.sfs = new SneatFirestoreService<Brief, Dto>();
 	}
 
 	protected readonly dto2brief = (id: string, dto: Dto) => ({ id, ...dto });
@@ -34,11 +33,14 @@ export class TeamItemService<Brief, Dto extends Brief> {
 	// 	return this.afs.collection('teams');
 	// }
 
+	private collectionRef<Dto2 extends Dto>(teamID: string) {
+		return collection(this.teamsCollection, teamID, 'modules', this.moduleID, this.collectionName) as CollectionReference<Dto2>;
+	}
+
 	public watchTeamItemByID<Dto2 extends Dto>(team: ITeamContext, id: string): Observable<ITeamItemContext<Brief, Dto2>> {
 		console.log('watchTeamItemByID()', team.id, this.collectionName, id);
-		const collectionRef = collection(this.teamRef(team.id), this.collectionName);
-		// const collection = this.teamsCollection.doc(team.id).collection<Dto2>(this.collectionName);
-		const result = this.sfs.watchByID<Dto2>(collectionRef as CollectionReference<Dto2>, id)
+		const collectionRef= this.collectionRef<Dto2>(team.id);
+		const result = this.sfs.watchByID(collectionRef, id)
 			.pipe(
 				map(o => ({ team, ...o })),
 				tap(o => console.log('watchTeamItemByID()', team.id, this.collectionName, id, ' =>', o)),
@@ -58,8 +60,8 @@ export class TeamItemService<Brief, Dto extends Brief> {
 			filter = [];
 		}
 		filter.push({ field: 'teamIDs', operator: '==', value: team.id });
-		const moduleDocRef = doc(this.modulesCollection, moduleID);
-		const collectionRef = collection(moduleDocRef, this.collectionName);
+		const collectionRef
+			= collection(this.teamsCollection, team.id, 'modules', moduleID, this.collectionName);
 		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter || []);
 		return querySnapshots.pipe(
 			map(querySnapshot => this.mapQueryToTeamItemContext(team, querySnapshot as unknown as QuerySnapshot<Dto2>)),

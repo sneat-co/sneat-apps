@@ -46,7 +46,7 @@ export class SneatUserService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly httpClient: HttpClient,
-		private readonly db: AngularFirestore,
+		private readonly afs: AngularFirestore,
 		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly sneatApiService: SneatApiService,
 		private readonly userRecordService: UserRecordService,
@@ -54,7 +54,7 @@ export class SneatUserService {
 	) {
 
 		console.log('SneatUserService.constructor()');
-		this.userCollection = collection(db, UsersCollection) as CollectionReference<IUserRecord>;
+		this.userCollection = collection(afs, UsersCollection) as CollectionReference<IUserRecord>;
 		sneatAuthStateService.authState
 			.subscribe({
 				next: this.onAuthStateChanged,

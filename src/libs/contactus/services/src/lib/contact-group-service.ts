@@ -139,8 +139,7 @@ export class ContactGroupService {
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IContactGroupBrief, IContactGroupDto>(
-			'contact_groups', afs, sneatApiService);
+		this.teamItemService = new TeamItemService('contactus', 'contact_groups', afs, sneatApiService);
 	}
 
 	getContactGroups(): Observable<readonly IContactGroupContext[]> {

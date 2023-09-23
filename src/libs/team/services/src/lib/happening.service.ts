@@ -85,9 +85,7 @@ export class HappeningService {
 		afs: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IHappeningBrief, IHappeningDto>(
-			'happenings', afs, sneatApiService,
-		);
+		this.teamItemService = new TeamItemService('schedulus','happenings', afs, sneatApiService);
 	}
 
 	createHappening(request: ICreateHappeningRequest): Observable<unknown> {

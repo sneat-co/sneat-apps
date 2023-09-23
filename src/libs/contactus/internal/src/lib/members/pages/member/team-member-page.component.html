@@ -75,21 +75,16 @@
 							<ion-label *ngIf="member?.brief?.gender === 'female' && relatedAs === 'spouse'">My wife</ion-label>
 						</ion-item-divider>
 						<ion-item>
-							<ion-label [color]="member?.brief && !member?.brief?.dob ? 'danger' : 'medium'">Date of birth</ion-label>
-							<ion-input [readonly]="true" type="date" placeholder="missing"></ion-input>
+							<ion-input label="Date of birth" [readonly]="true" type="date" placeholder="missing"></ion-input>
 						</ion-item>
 						<ion-item>
-							<ion-label>Related to me as</ion-label>
-							<ion-select placeholder="not specified yet" interface="popover" [value]="relatedAs">
+							<ion-select label="Related to me as" placeholder="not specified yet" interface="popover" [value]="relatedAs">
 								<ion-select-option value="undisclosed">Undisclosed</ion-select-option>
 							</ion-select>
 						</ion-item>
 						<ng-container *ngIf="member?.dto && (!member?.dto?.gender || !relatedAs)">
 							<ion-item *ngIf="team?.type === 'family' && relatedAs && member?.dto?.userID !== currentUserId">
-								<ion-label>
-									Relationship to me
-								</ion-label>
-								<ion-select [value]="relatedAs" interface="popover" (ionChange)="changeRelationship($event)">
+								<ion-select label="Relationship to me" [value]="relatedAs" interface="popover" (ionChange)="changeRelationship($event)">
 									<ion-select-option value="spouse">spouse</ion-select-option>
 									<ion-select-option value="child">child</ion-select-option>
 									<ion-select-option value="parent">parent</ion-select-option>

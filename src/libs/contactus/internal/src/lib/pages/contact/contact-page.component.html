@@ -31,25 +31,19 @@
 			</ion-buttons>
 		</ion-item>
 		<ion-item>
-			<ion-label *ngIf="contact?.dto?.email"><b>Email</b></ion-label>
-			<ion-label *ngIf="!contact?.dto?.email">Email</ion-label>
-			<ion-input readonly type="email" placeholder="no email" [value]="contact?.dto?.email"></ion-input>
+			<ion-input label="Email" readonly type="email" placeholder="no email" [value]="contact?.dto?.email"></ion-input>
 			<ion-button fill="clear">
 				<ion-icon [name]="contact?.dto?.email ? 'create' : 'add'"></ion-icon>
 			</ion-button>
 		</ion-item>
 		<ion-item>
-			<ion-label *ngIf="contact?.dto?.phone"><b>Phone</b></ion-label>
-			<ion-label *ngIf="!contact?.dto?.phone">Phone</ion-label>
-			<ion-input readonly type="phone" placeholder="no phone" [value]="contact?.dto?.phone"></ion-input>
+			<ion-input label="Phone" readonly type="phone" placeholder="no phone" [value]="contact?.dto?.phone"></ion-input>
 			<ion-button fill="clear">
 				<ion-icon [name]="contact?.dto?.phone ? 'create' : 'add'"></ion-icon>
 			</ion-button>
 		</ion-item>
 		<ion-item>
-			<ion-label *ngIf="contact?.dto?.website"><b>Website</b></ion-label>
-			<ion-label *ngIf="!contact?.dto?.website">Website</ion-label>
-			<ion-input readonly type="url" placeholder="no website" [value]="contact?.dto?.website"></ion-input>
+			<ion-input label="Website" readonly type="url" placeholder="no website" [value]="contact?.dto?.website"></ion-input>
 			<ion-button fill="clear">
 				<ion-icon [name]="contact?.dto?.website ? 'create' : 'add'"></ion-icon>
 			</ion-button>

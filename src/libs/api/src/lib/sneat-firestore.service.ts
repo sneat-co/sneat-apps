@@ -23,15 +23,14 @@ export interface IFilter {
 export class SneatFirestoreService<Brief, Dto extends Brief> {
 
 	constructor(
-		private readonly collection: string,
-		private readonly afs: AngularFirestore,
+		// private readonly afs: AngularFirestore,
 		private readonly dto2brief: (id: string, dto: Dto) => Brief = (id: string, dto: Dto) => ({
 			...(dto as unknown as Brief),
 			id,
 		}),
 	) {
 		if (!dto2brief) {
-			throw new Error('dto2brief is required, collection: ' + collection);
+			throw new Error('dto2brief is required');
 		}
 	}
 

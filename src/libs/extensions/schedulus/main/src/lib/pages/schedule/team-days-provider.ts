@@ -173,9 +173,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	) {
 		console.log('TeamDaysProvider.constructor()');
 		// super();
-		this.recurringsTeamItemService = new TeamItemService<IHappeningBrief, IHappeningDto>(
-			'recurring_happenings', afs, sneatApiService,
-		);
+		this.recurringsTeamItemService = new TeamItemService('schedulus', 'recurring_happenings', afs, sneatApiService);
 	}
 
 	public destroy(): void {

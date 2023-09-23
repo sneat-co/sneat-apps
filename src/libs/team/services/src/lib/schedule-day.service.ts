@@ -17,9 +17,7 @@ export class ScheduleDayService {
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IScheduleDayBrief, IScheduleDayDto>(
-			'schedule_days', afs, sneatApiService,
-		);
+		this.teamItemService = new TeamItemService('schedulus', 'schedule_days', afs, sneatApiService);
 	}
 
 	public watchTeamDay(team: ITeamContext, dateID: string) {

@@ -20,9 +20,7 @@ export class AssetService {
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService<IAssetBrief, IAssetDbData>(
-			'assets', afs, sneatApiService,
-		);
+		this.teamItemService = new TeamItemService('assetus', 'assets', afs, sneatApiService);
 	}
 
 	public deleteAsset(asset: IAssetContext): Observable<void> {
