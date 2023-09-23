@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Params, RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { TeamMemberTypeEnum } from '@sneat/auth-models';
+import { MembersListModule } from '@sneat/contactus-shared';
 import {
 	IContactBrief,
 	isTeamSupportsMemberGroups,
@@ -8,7 +12,7 @@ import {
 	MemberGroupTypeKids, MemberGroupTypePets,
 	TeamMemberType,
 } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams, TeamCoreComponentsModule } from '@sneat/team/components';
 import { MemberGroupService, MemberService } from '@sneat/contactus-services';
 import {
 	IBriefAndID,
@@ -28,6 +32,15 @@ interface MembersGroup {
 }
 
 @Component({
+	standalone: true,
+	imports: [
+		IonicModule,
+		CommonModule,
+		FormsModule,
+		// RouterModule.forChild([{ path: '', component: MembersPageComponent }]),
+		TeamCoreComponentsModule,
+		MembersListModule,
+	],
 	selector: 'sneat-members-page',
 	templateUrl: 'members-page.component.html',
 	styleUrls: ['members-page.component.scss'],
