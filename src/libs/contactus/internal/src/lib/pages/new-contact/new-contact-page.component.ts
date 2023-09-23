@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IonInput } from '@ionic/angular';
+import { IonicModule, IonInput } from '@ionic/angular';
+import { PersonFormModule } from '@sneat/components';
+import { ContactRoleFormModule } from '@sneat/contactus-shared';
 import {
 	ContactToAssetRelation,
 	ContactToContactRelation,
@@ -27,6 +31,14 @@ import {
 	selector: 'sneat-new-contact-page',
 	templateUrl: './new-contact-page.component.html',
 	providers: [TeamComponentBaseParams],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		ContactRoleFormModule,
+		PersonFormModule,
+	],
 })
 export class NewContactPageComponent extends TeamBaseComponent implements OnInit {
 

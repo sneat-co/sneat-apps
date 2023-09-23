@@ -33,4 +33,5 @@ const routes: Routes = [
 	],
 })
 export class NewMemberPageModule {
+	// Can't simply make standalone as it includes NewMemberFormComponent
 }

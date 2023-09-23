@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
-import { IPersonFormWizardFields } from '@sneat/components';
+import { IPersonFormWizardFields, PersonFormModule } from '@sneat/components';
 import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IJoinTeamInfoResponse, IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team/models';
@@ -17,8 +20,16 @@ export const getPinFromUrl: () => string = () => {
 @Component({
 	selector: 'sneat-join-team',
 	templateUrl: './join-team-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		PersonFormModule,
+	],
 })
 export class JoinTeamPageComponent implements OnDestroy {
+
 	private readonly destroyed = new Subject<void>();
 	private readonly id?: string;
 	public inviteInfo?: IJoinTeamInfoResponse;

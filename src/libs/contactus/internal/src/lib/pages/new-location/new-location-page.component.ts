@@ -1,12 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContactComponentBaseParams } from '@sneat/contactus-shared';
+import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
+import { ContactComponentBaseParams, LocationFormModule } from '@sneat/contactus-shared';
 import { IContactContext } from '@sneat/team/models';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
 	selector: 'sneat-new-location-page',
 	templateUrl: './new-location-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		LocationFormModule,
+		SneatPipesModule,
+	],
 })
 export class NewLocationPageComponent extends ContactBasePage {
 

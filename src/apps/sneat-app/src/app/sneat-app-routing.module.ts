@@ -48,8 +48,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'join/:teamType',
-		loadChildren: () =>
-			import('@sneat/team/pages').then((m) => m.JoinTeamPageModule),
+		loadComponent: () =>
+			import('@sneat/team/pages').then((m) => m.JoinTeamPageComponent),
 	},
 	// {
 	// 	path: 'invite-to/:teamType',

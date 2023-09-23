@@ -6,26 +6,26 @@ import { memberRoutes, membersRoutes } from './members';
 export const contactusRoutes: Route[] = [
 	{
 		path: 'contacts',
-		loadChildren: () => import('./pages/contacts/contacts-page.module')
-			.then(m => m.ContactsPageModule),
+		loadComponent: () => import('./pages/contacts/contacts-page.component')
+			.then(m => m.ContactsPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'new-contact',
-		loadChildren: () => import('./pages')
-			.then(m => m.NewContactPageModule),
+		loadComponent: () => import('./pages')
+			.then(m => m.NewContactPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'contact/:contactID',
-		loadChildren: () => import('./pages')
-			.then(m => m.ContactPageModule),
+		loadComponent: () => import('./pages')
+			.then(m => m.ContactPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'contact/:contactID/new-location',
-		loadChildren: () => import('./pages')
-			.then(m => m.NewLocationPageModule),
+		loadComponent: () => import('./pages')
+			.then(m => m.NewLocationPageComponent),
 		// ...guardRoute,
 	},
 	// {

@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
@@ -9,6 +11,8 @@ import { TeamService } from '@sneat/team/services';
 import { Subscription } from 'rxjs';
 
 @Component({
+	standalone: true,
+	imports: [CommonModule, FormsModule, IonicModule],
 	selector: 'sneat-member',
 	templateUrl: './member.page.html',
 	styleUrls: ['./member.page.scss'],

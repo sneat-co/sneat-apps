@@ -1,10 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { ContactsByTypeComponent, ContactsListModule } from '@sneat/contactus-shared';
 import { listItemAnimations } from '@sneat/core';
-import { ISelectItem } from '@sneat/components';
+import { FilterItemModule, ISelectItem, SneatPipesModule } from '@sneat/components';
 import { setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
-import { TeamComponentBaseParams, TeamItemsBaseComponent } from '@sneat/team/components';
+import { TeamComponentBaseParams, TeamCoreComponentsModule, TeamItemsBaseComponent } from '@sneat/team/components';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
@@ -14,6 +18,17 @@ import { Subscription } from 'rxjs';
 	templateUrl: './contacts-page.component.html',
 	providers: [TeamComponentBaseParams],
 	animations: [listItemAnimations],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		TeamCoreComponentsModule,
+		FilterItemModule,
+		SneatPipesModule,
+		ContactsListModule,
+		ContactsByTypeComponent,
+	],
 })
 export class ContactsPageComponent extends TeamItemsBaseComponent {
 

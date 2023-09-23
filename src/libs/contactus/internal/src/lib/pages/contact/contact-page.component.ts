@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ISaveEvent } from '@sneat/components';
-import { ContactComponentBaseParams } from '@sneat/contactus-shared';
+import { IonicModule } from '@ionic/angular';
+import { AddressFormModule, ISaveEvent, SneatPipesModule } from '@sneat/components';
+import { ContactComponentBaseParams, ContactRolesInputModule, ContactsListModule } from '@sneat/contactus-shared';
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ContactService } from '@sneat/contactus-services';
@@ -12,6 +15,16 @@ import { ContactBasePage } from '../contact-base-page';
 	selector: 'sneat-contact-page',
 	templateUrl: './contact-page.component.html',
 	providers: [ContactComponentBaseParams],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		SneatPipesModule,
+		ContactsListModule,
+		AddressFormModule,
+		ContactRolesInputModule,
+	],
 })
 export class ContactPageComponent extends ContactBasePage implements OnInit {
 
