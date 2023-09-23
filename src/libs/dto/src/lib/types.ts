@@ -14,11 +14,13 @@ export type AgeGroupID = 'adult' | 'child' | 'pet' | 'undisclosed' | 'unknown';
 export const MemberGroupTypeAdults = 'adults';
 export const MemberGroupTypeKids = 'kids';
 export const MemberGroupTypePets = 'pets';
+export const MemberGroupTypeOther = 'other';
 
 export type MemberGroupType =
 	| typeof MemberGroupTypeAdults
 	| typeof MemberGroupTypeKids
-	| typeof MemberGroupTypePets;
+	| typeof MemberGroupTypePets
+	| typeof MemberGroupTypeOther;
 
 export const GenderUndisclosed = 'undisclosed';
 export const GenderUnknown = 'unknown';

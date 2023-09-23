@@ -1,30 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Params, RouterModule } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TeamMemberTypeEnum } from '@sneat/auth-models';
+import { MemberGroupService, MemberService } from '@sneat/contactus-services';
 import { MembersListModule } from '@sneat/contactus-shared';
 import {
 	IContactBrief,
 	isTeamSupportsMemberGroups,
+	MemberGroupType,
 	MemberGroupTypeAdults,
-	MemberGroupTypeKids, MemberGroupTypePets,
+	MemberGroupTypeKids,
+	MemberGroupTypeOther,
+	MemberGroupTypePets,
 	TeamMemberType,
 } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamCoreComponentsModule } from '@sneat/team/components';
-import { MemberGroupService, MemberService } from '@sneat/contactus-services';
-import {
-	IBriefAndID,
-	IContactContext,
-	IMemberGroupContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+import { IBriefAndID, IContactContext, IMemberGroupContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../../members-base-page';
 
 interface MembersGroup {
-	readonly id: string;
+	readonly id: MemberGroupType;
 	readonly emoji: string;
 	readonly plural: string;
 	readonly addLabel: string;
@@ -74,7 +72,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		addLabel: 'Add child',
 	};
 	public pets: MembersGroup = { id: MemberGroupTypePets, emoji: '🐕', plural: 'Pets', addLabel: 'Add pet' };
-	public other: MembersGroup = { id: MemberGroupTypePets, emoji: '👻', plural: 'Other', addLabel: '' };
+	public other: MembersGroup = { id: MemberGroupTypeOther, emoji: '👻', plural: 'Other', addLabel: '' };
 	public memberGroups?: readonly IMemberGroupContext[];
 	public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
@@ -238,7 +236,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 					const groupIndex = this.predefinedMemberGroups.findIndex(g => g.id === groupID);
 					let group: MembersGroup;
 					if (groupIndex < 0) {
-						group = { id: groupID, plural: groupID + 's', members: [], emoji: '', addLabel: 'Add member' };
+						group = { id: groupID as MemberGroupType, plural: groupID + 's', members: [], emoji: '', addLabel: 'Add member' };
 					} else {
 						group = this.predefinedMemberGroups[groupIndex];
 					}
@@ -268,6 +266,11 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		this.children = { ...this.children, members: children };
 		this.pets = { ...this.pets, members: pets };
 		this.other = { ...this.other, members: other };
-		this.predefinedMemberGroups = this.predefinedMemberGroups.map(g => ({ ...g, members: g.members || [] }));
+		this.predefinedMemberGroups = [
+			this.adults,
+			this.children,
+			this.pets,
+			this.other,
+		].map(g => ({ ...g, members: g.members || [] }));
 	}
 }
