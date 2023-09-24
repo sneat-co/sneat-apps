@@ -14,8 +14,8 @@
 <ion-content>
 	<ion-card>
 		<ion-item>
-			<ion-label *ngIf="filter" color="medium">Filter</ion-label>
 			<ion-input
+				label="Filter"
 				[(ngModel)]="filter"
 				(ionChange)="filterRows()"
 				placeholder="Filter"

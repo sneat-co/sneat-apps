@@ -1,6 +1,5 @@
 <ion-item class="with-buttons">
-    <ion-label><span style="filter: grayscale(50%) opacity(50%)">🔎</span></ion-label>
-    <ion-input placeholder="Filter" [(ngModel)]="filter" (ionChange)="onChanged()" ></ion-input>
+    <ion-input label="🔎" placeholder="Filter" [(ngModel)]="filter" (ionChange)="onChanged()" ></ion-input>
     <ion-buttons slot="end" *ngIf="filter">
         <ion-button color="medium" (click)="clearFilter()">
             <ion-icon name="close"></ion-icon>

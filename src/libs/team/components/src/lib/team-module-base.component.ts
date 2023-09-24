@@ -29,10 +29,14 @@ export class TeamModuleBaseComponent<Brief, Dto extends Brief> extends TeamBaseC
 				next: o => {
 					console.log('teamModuleDto loaded', o.dto);
 					this.teamModuleDto$.next(o.dto);
+					this.onTeamModuleDtoChanged(o.dto || null);
 				},
 				error: err => {
 					console.error('Failed to load team module record', err);
 				},
 			});
+	}
+	protected onTeamModuleDtoChanged(dto: Dto | null) {
+		console.log(`${this.className}.onTeamModuleDtoChanged()`, dto);
 	}
 }

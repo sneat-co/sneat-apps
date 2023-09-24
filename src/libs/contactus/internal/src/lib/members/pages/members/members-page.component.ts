@@ -103,16 +103,12 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
     private readonly memberGroupService: MemberGroupService,
   ) {
     super('MembersPageComponent', route, params, contactusTeamService, memberService);
-
-    this.teamModuleDto$
-      .pipe(
-        takeUntil(this.destroyed),
-      )
-      .subscribe({
-        next: this.processContactusTeamDto,
-      });
   }
 
+  override onTeamModuleDtoChanged(dto: IContactusTeamDto | null): void {
+    super.onTeamModuleDtoChanged(dto);
+    this.processContactusTeamDto(dto);
+  }
 
   ngAfterViewInit(): void {
     this.preloader.preload([
