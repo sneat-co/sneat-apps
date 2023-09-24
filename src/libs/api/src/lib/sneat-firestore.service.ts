@@ -4,7 +4,6 @@ import {
 	CollectionReference,
 	DocumentReference,
 	DocumentSnapshot,
-	Firestore as AngularFirestore,
 	query,
 	where,
 	onSnapshot,

@@ -1,12 +1,9 @@
 import { TeamType } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { ITeamRequest } from '@sneat/team/models';
 import { IWithRestrictions, IWithTeamIDs } from './dto-models';
 import { IUserCommuneInfo } from './dto-user';
 import { IWithCreated } from './dto-with-modified';
 import { ListStatus } from './types';
-
-// import { CommuneShortId } from '../commune-ids';
 
 export interface IQuantity {
 	value: number;
