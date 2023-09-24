@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { SneatApiService } from '@sneat/api';
 import { IContactContext, IContactusTeamDto, ITeamContext } from '@sneat/team/models';
 import { TeamModuleService } from '@sneat/team/services';
 import { map, Observable } from 'rxjs';

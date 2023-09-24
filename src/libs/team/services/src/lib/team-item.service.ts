@@ -1,4 +1,3 @@
-// import { collection } from '@angular/fire/firestore';
 import {
 	Firestore as AngularFirestore,
 	doc,

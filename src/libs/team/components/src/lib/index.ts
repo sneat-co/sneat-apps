@@ -13,3 +13,4 @@ export * from './invite-modal/invite-modal.module';
 export * from './invite-modal/invite-modal.component';
 export * from './teams-list';
 export * from './teams-card';
+export * from './team-module-base.component';

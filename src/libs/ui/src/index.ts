@@ -1,1 +1,1 @@
-export * from './lib/components/sneat-base.component';
+export * from './lib/components';
