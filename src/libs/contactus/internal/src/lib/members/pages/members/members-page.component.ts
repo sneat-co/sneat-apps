@@ -140,7 +140,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 		if (!this.team) {
 			throw new Error('!this.commune');
 		}
-		console.log(`MembersPageComponent.onCommuneChanged() => members: oldCount=${this.prevMembersCount}, newCount=${this.team.dto?.numberOf?.members}`);
+		console.log(`MembersPageComponent.onTeamDtoChanged() => members: oldCount=${this.prevMembersCount}, newCount=${this.team.dto?.numberOf?.members}`);
 		if (this.team?.dto?.numberOf?.members) {
 			this.loadingStubs = Array(this.team?.dto?.numberOf?.members)
 				.fill(1);

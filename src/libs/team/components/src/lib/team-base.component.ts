@@ -248,9 +248,11 @@ export abstract class TeamBaseComponent implements OnDestroy {
 
 	private getTeamContextFromRouteState(): void {
 		const team = history.state?.team as ITeamContext;
+		console.log(`${this.logClassName}.getTeamContextFromRouteState()`, team);
 		if (!team?.id) {
 			return;
 		}
+		// TODO: document why not to set team context immediately
 		setTimeout(() => this.setNewTeamContext(team), 1);
 	}
 
@@ -287,7 +289,7 @@ export abstract class TeamBaseComponent implements OnDestroy {
 	// }
 
 	private setNewTeamContext(teamContext?: ITeamContext): void {
-		// console.log(`${this.logClassName}.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
+		console.log(`${this.logClassName}.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`, teamContext);
 		if (!teamContext?.type && this.teamContext?.type) {
 			throw new Error('!teamContext?.type && this.teamContext?.type');
 		}
