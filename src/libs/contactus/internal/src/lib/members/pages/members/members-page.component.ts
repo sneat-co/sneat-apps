@@ -104,9 +104,13 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
   ) {
     super('MembersPageComponent', route, params, contactusTeamService, memberService);
 
-    this.teamModuleDto$.subscribe({
-      next: this.processContactusTeamDto,
-    });
+    this.teamModuleDto$
+      .pipe(
+        takeUntil(this.destroyed),
+      )
+      .subscribe({
+        next: this.processContactusTeamDto,
+      });
   }
 
 
@@ -218,7 +222,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
     const team = this.team;
     this.members = zipMapBriefsWithIDs(dto?.contacts).map(m => ({ ...m, team }));
     this.processMembers();
-  }
+  };
 
   private processMembers(): void {
     console.log('MembersPageComponent.processMembers()', this.members);
