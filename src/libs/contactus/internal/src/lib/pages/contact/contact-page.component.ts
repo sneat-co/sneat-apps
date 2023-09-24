@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { AddressFormModule, ISaveEvent, SneatPipesModule } from '@sneat/components';
+import { AddressFormComponent, ISaveEvent, SneatPipesModule } from '@sneat/components';
 import { ContactComponentBaseParams, ContactRolesInputModule, ContactsListModule } from '@sneat/contactus-shared';
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
@@ -22,7 +22,7 @@ import { ContactBasePage } from '../contact-base-page';
 		IonicModule,
 		SneatPipesModule,
 		ContactsListModule,
-		AddressFormModule,
+		AddressFormComponent,
 		ContactRolesInputModule,
 	],
 })

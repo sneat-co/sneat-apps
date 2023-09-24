@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -9,7 +9,7 @@ import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IJoinTeamInfoResponse, IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team/models';
 import { InviteService, TeamNavService, TeamService } from '@sneat/team/services';
-import { Subject } from 'rxjs';
+import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
 
 export const getPinFromUrl: () => string = () => {
@@ -28,9 +28,8 @@ export const getPinFromUrl: () => string = () => {
 		PersonFormModule,
 	],
 })
-export class JoinTeamPageComponent implements OnDestroy {
+export class JoinTeamPageComponent extends SneatBaseComponent {
 
-	private readonly destroyed = new Subject<void>();
 	private readonly id?: string;
 	public inviteInfo?: IJoinTeamInfoResponse;
 	public relatedPerson: IRelatedPerson = emptyRelatedPerson;
@@ -53,14 +52,14 @@ export class JoinTeamPageComponent implements OnDestroy {
 	public authStatus: AuthStatus = AuthStatuses.authenticating;
 
 	constructor(
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		protected readonly route: ActivatedRoute,
 		private readonly navService: TeamNavService,
 		private readonly teamService: TeamService,
 		private readonly inviteService: InviteService,
 		private readonly authStateService: SneatAuthStateService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
-		console.log('JoinTeamPage.constructor()');
+		super('JoinTeamPageComponent', errorLogger);
 		this.getActionFromLocationHash();
 		this.id = this.route.snapshot.queryParamMap.get('id') || undefined;
 		try {
@@ -138,11 +137,6 @@ export class JoinTeamPageComponent implements OnDestroy {
 		} else {
 			console.warn('Unknown action:', m[1]);
 		}
-	}
-
-	public ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
 	}
 
 	public join(): void {

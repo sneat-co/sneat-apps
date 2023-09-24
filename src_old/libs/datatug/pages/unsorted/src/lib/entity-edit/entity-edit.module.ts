@@ -8,7 +8,7 @@ import { EntityEditPageRoutingModule } from './entity-edit-routing.module';
 
 import { EntityEditPageComponent } from './entity-edit-page.component';
 import { EntityFieldDialogComponent } from './entity-field-dialog/entity-field-dialog.component';
-import { SneatErrorCardModule } from '@sneat/components';
+import { SneatErrorCardComponent } from '@sneat/components';
 
 @NgModule({
 	imports: [
@@ -16,7 +16,7 @@ import { SneatErrorCardModule } from '@sneat/components';
 		FormsModule,
 		IonicModule,
 		EntityEditPageRoutingModule,
-		SneatErrorCardModule,
+		SneatErrorCardComponent,
 	],
 	declarations: [EntityEditPageComponent, EntityFieldDialogComponent],
 })

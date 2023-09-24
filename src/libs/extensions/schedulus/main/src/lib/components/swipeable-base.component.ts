@@ -4,15 +4,15 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
-import { Subject } from 'rxjs';
+import { IErrorLogger } from '@sneat/logging';
+import { SneatBaseComponent } from '@sneat/ui';
 import { animationState, areSameDates, isToday } from './schedule-core';
 import { addDays, getToday, IDateChanged, ScheduleStateService } from './schedule-state.service';
 import { Parity, Swipeable } from './swipeable-ui';
 
 
 // @Injectable()
-export abstract class SwipeableBaseComponent {
-	protected readonly destroyed = new Subject<void>();
+export abstract class SwipeableBaseComponent extends SneatBaseComponent  {
 	public shiftDays = 0;
 
 	public parity: Parity = 'odd';
@@ -33,10 +33,12 @@ export abstract class SwipeableBaseComponent {
 	}
 
 	protected constructor(
-		protected readonly className: string,
+		className: string,
+		errorLogger: IErrorLogger,
 		protected readonly scheduleSateService: ScheduleStateService,
 		private readonly stepDays: number,
 	) {
+		super(className, errorLogger);
 		// this.animationState = this.parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
 		scheduleSateService.dateChanged.subscribe({
 			next: value => this.onDateChanged(value),
@@ -50,11 +52,6 @@ export abstract class SwipeableBaseComponent {
 	public isDefaultDate(): boolean {
 		const defaultDate = addDays(new Date(), this.shiftDays);
 		return areSameDates(this.date, defaultDate);
-	}
-
-	onDestroy(): void { // TODO: Make sure called by every child
-		this.destroyed.next();
-		this.destroyed.complete();
 	}
 
 	swipeLeft(): void {

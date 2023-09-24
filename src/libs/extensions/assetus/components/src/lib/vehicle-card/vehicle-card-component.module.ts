@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { CountrySelectorModule, SelectFromListModule } from '@sneat/components';
+import { CountrySelectorComponent, SelectFromListModule } from '@sneat/components';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 import { MakeModelCardComponent } from '../make-model-card/make-model-card.component';
 import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.component';
@@ -15,7 +15,7 @@ import { VehicleCardComponent } from './vehicle-card.component';
     IonicModule,
     FormsModule,
     SelectFromListModule,
-    CountrySelectorModule,
+    CountrySelectorComponent,
     MakeModelCardComponent,
     AssetPossessionCardComponent,
   ],

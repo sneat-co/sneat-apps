@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { CountryInputModule } from '@sneat/components';
+import { CountryInputComponent } from '@sneat/components';
 import { OrderRouteCardComponent } from './order-route-card.component';
 import { TransitPointItemComponent } from './transit-point-item.component';
 
@@ -11,7 +11,7 @@ import { TransitPointItemComponent } from './transit-point-item.component';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		CountryInputModule,
+		CountryInputComponent,
 	],
 	declarations: [
 		OrderRouteCardComponent,

@@ -5,7 +5,7 @@ import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { CommunesUiModule } from '@sneat/communes/ui';
-import { AppVersionComponent, AuthMenuItemModule } from '@sneat/components';
+import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
@@ -48,7 +48,7 @@ const appInfo: IAppInfo = {
 		ImportFirebaseModules(environment.firebaseConfig),
 		AppVersionComponent,
 		// SneatAuthServicesModule,
-		AuthMenuItemModule,
+		AuthMenuItemComponent,
 		CommunesUiModule,
 		TeamsMenuComponentModule,
 		SneatAppRoutingModule,

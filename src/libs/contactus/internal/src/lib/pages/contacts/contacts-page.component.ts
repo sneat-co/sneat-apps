@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactsByTypeComponent, ContactsListModule } from '@sneat/contactus-shared';
 import { listItemAnimations } from '@sneat/core';
-import { FilterItemModule, ISelectItem, SneatPipesModule } from '@sneat/components';
+import { FilterItemComponent, ISelectItem, SneatPipesModule } from '@sneat/components';
 import { setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { TeamComponentBaseParams, TeamCoreComponentsModule, TeamItemsBaseComponent } from '@sneat/team/components';
@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
 		FormsModule,
 		IonicModule,
 		TeamCoreComponentsModule,
-		FilterItemModule,
+		FilterItemComponent,
 		SneatPipesModule,
 		ContactsListModule,
 		ContactsByTypeComponent,

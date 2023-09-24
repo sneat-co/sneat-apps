@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { AppVersionComponent, AuthMenuItemModule } from '@sneat/components';
+import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { LogistMenuComponent } from './logist-menu.component';
 
@@ -12,7 +12,7 @@ import { LogistMenuComponent } from './logist-menu.component';
 		CommonModule,
 		IonicModule,
 		RouterModule,
-		AuthMenuItemModule,
+		AuthMenuItemComponent,
 		TeamsMenuComponentModule,
 		AppVersionComponent,
 	],

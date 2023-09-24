@@ -5,7 +5,7 @@ import { Subject, Subscription } from 'rxjs';
 @Injectable()
 export abstract class SneatBaseComponent implements OnDestroy {
 
-  protected readonly destroyed = new Subject<boolean>();
+  protected readonly destroyed = new Subject<void>();
   protected readonly subs = new Subscription();
 
   protected constructor(
@@ -15,9 +15,8 @@ export abstract class SneatBaseComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    console.log(`${this.className}.ngOnDestroy()`);
     this.unsubscribe(`${this.className}.ngOnDestroy()`);
-    this.destroyed.next(true);
+    this.destroyed.next();
     this.destroyed.complete();
   }
 

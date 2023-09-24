@@ -1,4 +1,5 @@
 import { dateToIso } from '@sneat/core';
+import { IErrorLogger } from '@sneat/logging';
 import { IDateChanged, ScheduleStateService } from '../schedule-state.service';
 import { SwipeableBaseComponent } from '../swipeable-base.component';
 import { SwipeableDay } from '../swipeable-ui';
@@ -19,9 +20,10 @@ export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
 
 	protected constructor(
 		className: string,
+		errorLogger: IErrorLogger,
 		scheduleSateService: ScheduleStateService,
 	) {
-		super(className, scheduleSateService, 1);
+		super(className, errorLogger, scheduleSateService, 1);
 	}
 
 	override onDateChanged(changed: IDateChanged): void {

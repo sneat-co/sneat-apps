@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
@@ -28,11 +29,12 @@ export class ScheduleDayCardComponent extends ScheduleDayBaseComponent implement
 	};
 
 	constructor(
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		scheduleSateService: ScheduleStateService,
 		private readonly scheduleNavService: ScheduleNavService,
 		// private readonly teamDaysProvider: TeamDaysProvider,
 	) {
-		super('ScheduleDayCardComponent', scheduleSateService);
+		super('ScheduleDayCardComponent', errorLogger, scheduleSateService);
 	}
 
 	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void = () => {

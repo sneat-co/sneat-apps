@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType, ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
 import { CommunesUiModule } from '@sneat/communes/ui';
-import { AuthMenuItemModule } from '@sneat/components';
+import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
@@ -67,7 +67,7 @@ const contactRolesByType: ContactRolesByType = {
 		BrowserAnimationsModule,
 		SneatApplicationModule.defaultSneatApplicationImports(environment),
 		// SneatAuthServicesModule,
-		AuthMenuItemModule,
+		AuthMenuItemComponent,
 		CommunesUiModule,
 		TeamsMenuComponentModule,
 		LogistAppRoutingModule,

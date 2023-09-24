@@ -6,7 +6,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 
 import {AssetAddDwellingPageComponent} from './asset-add-dwelling-page.component';
-import {CountrySelectorModule} from 'sneat-shared/components/country-selector/country-selector.module';
+import {CountrySelectorComponent} from 'sneat-shared/components/country-selector/country-selector.module';
 
 const routes: Routes = [
 	{
@@ -22,7 +22,7 @@ const routes: Routes = [
 		ReactiveFormsModule,
 		IonicModule,
 		RouterModule.forChild(routes),
-		CountrySelectorModule,
+		CountrySelectorComponent,
 	],
 	declarations: [AssetAddDwellingPageComponent]
 })

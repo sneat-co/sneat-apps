@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
-import { AuthMenuItemModule } from '@sneat/components';
+import { AuthMenuItemComponent } from '@sneat/components';
 import { IBriefAndID, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
@@ -24,7 +24,7 @@ import { IonicModule } from '@ionic/angular';
 		IonicModule,
 		FormsModule,
 		RouterModule,
-		AuthMenuItemModule,
+		AuthMenuItemComponent,
 	],
 })
 export class TeamMenuComponent extends TeamBaseComponent {

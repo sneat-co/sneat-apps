@@ -15,7 +15,7 @@ import { SneatCardListModule } from '@sneat/components';
 		FormsModule,
 		IonicModule,
 		DataboardsPageRoutingModule,
-		SneatCardListModule,
+		SneatCardListComponent,
 	],
 	declarations: [BoardsPageComponent],
 })

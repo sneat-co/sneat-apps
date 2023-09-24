@@ -1,10 +1,21 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { ISelectItem } from '../selector';
+import { SelectFromListModule } from '../selector/select-from-list';
 import { countries, unknownCountry } from './countries';
 
 @Component({
 	selector: 'sneat-country-selector',
 	templateUrl: './country-selector.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		SelectFromListModule,
+	],
 })
 export class CountrySelectorComponent implements OnChanges {
 

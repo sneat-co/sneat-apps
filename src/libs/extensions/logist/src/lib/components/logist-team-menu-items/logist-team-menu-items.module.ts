@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { AuthMenuItemModule } from '@sneat/components';
+import { AuthMenuItemComponent } from '@sneat/components';
 import { TeamsMenuComponentModule } from '@sneat/team/components';
 import { LogistTeamMenuItemsComponent } from './logist-team-menu-items.component';
 
@@ -12,7 +12,7 @@ import { LogistTeamMenuItemsComponent } from './logist-team-menu-items.component
 		CommonModule,
 		IonicModule,
 		RouterModule,
-		AuthMenuItemModule,
+		AuthMenuItemComponent,
 		TeamsMenuComponentModule,
 	],
 	declarations: [

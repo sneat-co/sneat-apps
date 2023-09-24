@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { DialogHeaderModule } from '@sneat/components';
+import { DialogHeaderComponent } from '@sneat/components';
 import { LogistOrderServiceModule } from '../../services';
 import { NewShippingPointModule } from '../new-shipping-point';
 import { ShippingPointsSelectorDialogComponent } from './shipping-points-selector-dialog.component';
@@ -14,7 +14,7 @@ import { ShippingPointsSelectorComponent } from './shipping-points-selector.comp
 		FormsModule,
 		ReactiveFormsModule,
 		IonicModule,
-		DialogHeaderModule,
+		DialogHeaderComponent,
 		NewShippingPointModule,
 		LogistOrderServiceModule,
 	],

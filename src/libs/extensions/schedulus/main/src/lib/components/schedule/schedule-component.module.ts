@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FilterItemModule, MembersAsBadgesModule, SneatPipesModule } from '@sneat/components';
+import { FilterItemComponent, MembersAsBadgesComponent, SneatPipesModule } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
@@ -40,11 +40,11 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		RouterModule,
 		SneatPipesModule,
 		TeamCoreComponentsModule,
-		FilterItemModule,
+		FilterItemComponent,
 		HappeningServiceModule,
 		ScheduleDayServiceModule,
 		ReactiveFormsModule,
-		MembersAsBadgesModule,
+		MembersAsBadgesComponent,
 		ScheduleNavServiceModule,
 		MembersSelectorModule,
 		ScheduleModalsServiceModule,

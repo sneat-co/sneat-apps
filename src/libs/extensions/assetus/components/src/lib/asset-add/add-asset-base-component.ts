@@ -1,24 +1,19 @@
-import { Component, Inject, InjectionToken, OnDestroy } from '@angular/core';
+import { Component, Inject, InjectionToken } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IAssetDbData, IAssetMainData } from '@sneat/dto';
-import { IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
-import { Subject } from 'rxjs';
+import { SneatBaseComponent } from '@sneat/ui';
 import { AssetService } from '../asset-service';
 import { ICreateAssetRequest } from '../asset-service.dto';
 
-// import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-
 @Component({ template: '' })
-export abstract class AddAssetBaseComponent /*extends TeamBaseComponent*/ implements OnDestroy {
+export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 
 	public team?: ITeamContext; // intentionally public as will be overridden as @Input() in child components
 	public contactusTeam?: IContactusTeamDtoWithID;
 	public country?: string;
-
-	protected readonly destroyed = new Subject<void>();
 
 	public isSubmitting = false;
 
@@ -27,20 +22,12 @@ export abstract class AddAssetBaseComponent /*extends TeamBaseComponent*/ implem
 	});
 
 	protected constructor(
-		@Inject(new InjectionToken('className')) protected readonly className: string,
+		@Inject(new InjectionToken('className')) className: string,
 		protected readonly route: ActivatedRoute,
 		protected teamParams: TeamComponentBaseParams,
 		protected readonly assetService: AssetService,
 	) {
-		// super(className, route, teamParams);
-	}
-
-	ngOnDestroy(): void {
-		this.destroyed.next();
-	}
-
-	protected get errorLogger(): IErrorLogger {
-		return this.teamParams.errorLogger;
+		super(className, teamParams.errorLogger);
 	}
 
 	protected createAssetAndGoToAssetPage<A extends IAssetMainData, D extends IAssetDbData>(request: ICreateAssetRequest<A>, team: ITeamContext): void {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { DialogHeaderModule } from '@sneat/components';
+import { DialogHeaderComponent } from '@sneat/components';
 import { ContactInputModule } from '@sneat/contactus-shared';
 import { OrderNavServiceModule } from '../../services';
 import { ContactWithRefNumModule } from '../contact-with-refnum/contact-with-ref-num.module';
@@ -15,7 +15,7 @@ import { NewShippingPointService } from './new-shipping-point.service';
 	imports: [
 		CommonModule,
 		IonicModule,
-		DialogHeaderModule,
+		DialogHeaderComponent,
 		ContactInputModule,
 		FormsModule,
 		// OrderFormModule,

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -9,11 +10,12 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { IonicModule, IonInput } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { CountrySelectorComponent } from '../country-selector';
 import { createSetFocusToInput } from '../focus';
 import { ISaveEvent } from '../save-event';
 
@@ -38,6 +40,14 @@ export interface AddressRequiredFields {
 	selector: 'sneat-address-form',
 	templateUrl: './address-form.component.html',
 	// changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [
+		ReactiveFormsModule,
+		FormsModule,
+		CommonModule,
+		IonicModule,
+		CountrySelectorComponent,
+	],
 })
 export class AddressFormComponent implements OnChanges, OnInit {
 	@Input() mode?: 'new' | 'edit';

@@ -1,12 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 import { gitHash } from '../app-version/git-version';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { MenuController, NavController } from '@ionic/angular';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
 
 @Component({
 	selector: 'sneat-auth-menu-item',
 	templateUrl: './auth-menu-item.component.html',
+	standalone: true,
+	imports: [
+		IonicModule,
+		CommonModule,
+		RouterModule,
+	],
 })
 export class AuthMenuItemComponent {
 

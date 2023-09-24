@@ -3,7 +3,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { AddressFormModule, CountryInputModule, CountrySelectorModule } from '@sneat/components';
+import {
+	AddressFormComponent,
+	CountryInputComponent,
+	CountrySelectorComponent,
+} from '@sneat/components';
 import { LogistTeamMenuItemsModule } from '../../components/logist-team-menu-items/logist-team-menu-items.module';
 import { LogistTeamSettingsModule } from '../../components/logist-team-settings/logist-team-settings.module';
 import { LogistTeamServiceModule } from '../../services/logist-team.service';
@@ -22,11 +26,11 @@ const routes: Routes = [
 		IonicModule,
 		RouterModule.forChild(routes),
 		LogistTeamMenuItemsModule,
-		CountryInputModule,
+		CountryInputComponent,
 		LogistTeamServiceModule,
-		CountrySelectorModule,
+		CountrySelectorComponent,
 		ReactiveFormsModule,
-		AddressFormModule,
+		AddressFormComponent,
 		LogistTeamSettingsModule,
 	],
 	declarations: [

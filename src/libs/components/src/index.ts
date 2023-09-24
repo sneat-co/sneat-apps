@@ -20,7 +20,6 @@ export * from './lib/person-form/age-group/age-group-form.component';
 export * from './lib/person-form/relationship-form/relationship-form.component';
 export * from './lib/person-form/roles-form/roles-form.component';
 export * from './lib/auth-menu-item/auth-menu-item.component';
-export * from './lib/auth-menu-item/auth-menu-item.module';
 export * from './lib/selector/selector-base.component';
 export * from './lib/selector/selector-interfaces';
 export * from './lib/selector/selector-options';

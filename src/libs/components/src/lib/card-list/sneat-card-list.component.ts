@@ -1,5 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { IonInput } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule, IonInput } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
 import { IOptionallyTitled, IProjItemBrief } from '@sneat/datatug/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -13,6 +16,13 @@ export interface ICardTab {
 @Component({
 	selector: 'sneat-card-list',
 	templateUrl: './sneat-card-list.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		RouterModule,
+	],
 })
 export class SneatCardListComponent {
 	@Input() title?: string;
