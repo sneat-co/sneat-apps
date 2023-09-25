@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService, ISetContactRoleRequest } from '@sneat/contactus-services';
+import { ContactService, ISetContactRolesRequest, IUpdateContactRequest } from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 
 @Component({
@@ -42,15 +42,15 @@ export class ContactRolesInputComponent implements OnChanges {
 			alert('team or contact is not set');
 			return;
 		}
-		const request: ISetContactRoleRequest = {
+		const checked = (event.target as HTMLInputElement).checked;
+		const request: IUpdateContactRequest = {
 			contactID: this.contact.id,
 			teamID: this.team?.id,
-			role: role.id,
-			value: (event.target as HTMLInputElement).checked,
-		}
+			roles: { add: checked ? [role.id] : undefined, remove: checked ? undefined : [role.id] },
+		};
 		this.processingRoleIDs.push(role.id);
 		const complete = () => this.processingRoleIDs = this.processingRoleIDs.filter(id => id !== role.id);
-		this.contactService.setContactRole(request).subscribe({
+		this.contactService.updateContact(request).subscribe({
 			error: (err: unknown) => {
 				console.log('setContactRole error', err);
 				this.errorLogger.logError(err, 'failed to set contact role');
@@ -59,6 +59,6 @@ export class ContactRolesInputComponent implements OnChanges {
 				event.preventDefault();
 			},
 			complete,
-		})
+		});
 	}
 }

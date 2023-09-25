@@ -5,7 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TeamMemberTypeEnum } from '@sneat/auth-models';
 import { ContactusTeamService, MemberGroupService, MemberService } from '@sneat/contactus-services';
-import { MembersListModule } from '@sneat/contactus-shared';
+import { MembersListComponent } from '@sneat/contactus-shared';
 import {
   IContactBrief,
   isTeamSupportsMemberGroups,
@@ -43,7 +43,7 @@ interface MembersGroup {
     FormsModule,
     // RouterModule.forChild([{ path: '', component: MembersPageComponent }]),
     TeamCoreComponentsModule,
-    MembersListModule,
+    MembersListComponent,
   ],
   selector: 'sneat-members-page',
   templateUrl: 'members-page.component.html',

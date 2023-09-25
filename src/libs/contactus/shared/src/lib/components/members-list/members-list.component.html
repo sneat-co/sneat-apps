@@ -15,7 +15,7 @@
 <ng-template #list>
 	<ion-item-sliding
 		[@addRemove]="'added'"
-		*ngFor="let member of membersToDisplay || []; trackBy: id"
+		*ngFor="let member of membersToDisplay; trackBy: id"
 	>
 		<ion-item routerLink="/space/{{team?.type || 'UNKNOWN_TYPE'}}/{{team?.id}}/member/{{member.id}}"
 							(click)="goMember(member)" class="sneat-tiny-end-padding">
@@ -44,11 +44,21 @@
 					</ion-badge>
 				</ng-container>
 			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button *ngIf="!member.brief?.userID && member.brief?.ageGroup !== 'child'"
-										(click)="showInviteModal($event, member)"
-										title="Invite"
-										color="danger"
+			<ion-buttons slot="end" *ngIf="showAgeOptions(member)">
+				<ion-button (click)="setAgeGroup($event, member, 'adult')">
+					<ion-icon slot="start" name="radio-button-off-outline"></ion-icon>
+					<ion-label>Adult</ion-label>
+				</ion-button>
+				<ion-button (click)="setAgeGroup($event, member, 'child')">
+					<ion-icon slot="start" name="radio-button-off-outline"></ion-icon>
+					<ion-label>Child</ion-label>
+				</ion-button>
+			</ion-buttons>
+			<ion-buttons slot="end" *ngIf="!showAgeOptions(member)">
+				<ion-button
+					title="Invite"
+					color="danger"
+					(click)="showInviteModal($event, member)"
 				>
 					<ion-icon name="ticket-outline" class="sneat-hide-if-width-greater-320"></ion-icon>
 					<span class="sneat-hide-if-width-less-320" style="margin-left: 0.5em;">Invite</span>

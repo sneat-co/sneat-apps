@@ -1,15 +1,18 @@
-import { IAddress } from '@sneat/dto';
+import { AgeGroupID, IAddress } from '@sneat/dto';
 import { ITeamRequest } from '@sneat/team/models';
 
 export interface IContactRequest extends ITeamRequest {
-	contactID: string;
+	readonly contactID: string;
 }
 
-export interface ISetContactAddressRequest extends IContactRequest {
-	address: IAddress;
+export interface IUpdateContactRequest extends IContactRequest {
+	readonly address?: IAddress;
+	readonly ageGroup?: AgeGroupID;
+	readonly roles?: ISetContactRolesRequest;
 }
 
-export interface ISetContactRoleRequest extends IContactRequest {
-	role: string;
-	value: boolean;
+export interface ISetContactRolesRequest {
+	readonly add?: readonly string[];
+	readonly remove?: readonly string[];
 }
+

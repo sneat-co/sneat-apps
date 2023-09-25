@@ -11,7 +11,7 @@ import {
 import { TeamItemService } from '@sneat/team/services';
 import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, throwError } from 'rxjs';
-import { IContactRequest, ISetContactAddressRequest, ISetContactRoleRequest } from './dto';
+import { IContactRequest, IUpdateContactRequest, ISetContactRolesRequest } from './dto';
 
 @Injectable({ providedIn: 'root' })
 export class ContactService {
@@ -42,12 +42,8 @@ export class ContactService {
 		return this.teamItemService.deleteTeamItem('contacts/delete_contact', request);
 	}
 
-	public setContactAddress(request: ISetContactAddressRequest): Observable<void> {
-		return this.teamItemService.sneatApiService.post('contacts/set_contact_address', request);
-	}
-
-	public setContactRole(request: ISetContactRoleRequest): Observable<void> {
-		return this.teamItemService.sneatApiService.post('contacts/set_contact_address', request);
+	public updateContact(request: IUpdateContactRequest): Observable<void> {
+		return this.teamItemService.sneatApiService.post('contacts/update_contact', request);
 	}
 
 	setContactsStatus(status: 'archived' | 'active', teamID: string, contacts: IContactContext[]): Observable<void> {

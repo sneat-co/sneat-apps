@@ -1,11 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule, IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import { listAddRemoveAnimation } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
-import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
+import { AgeGroupID, IContactBrief } from '@sneat/dto';
+import { ScheduleNavService, ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { InviteModalComponent } from '@sneat/team/components';
-import { ContactService } from '@sneat/contactus-services';
+import { InviteModalComponent, InviteModalModule } from '@sneat/team/components';
+import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services';
 import { IBriefAndID, IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth-core';
@@ -15,6 +19,16 @@ import { SneatUserService } from '@sneat/auth-core';
 	templateUrl: './members-list.component.html',
 	styleUrls: ['./members-list.component.scss'],
 	animations: listAddRemoveAnimation,
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		ScheduleNavServiceModule,
+		SneatPipesModule,
+		InviteModalModule,
+		RouterModule,
+	],
 })
 // Deprecated: TODO migrated to Contacts list?
 export class MembersListComponent implements OnChanges {
@@ -43,7 +57,29 @@ export class MembersListComponent implements OnChanges {
 		//
 	}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly id = (_: number, o: IContactContext) => o.id;
+
+	protected showAgeOptions(member: IContactContext): boolean {
+		return this.team?.dto?.type === 'family' && (!member.brief?.ageGroup || member.brief?.ageGroup === 'unknown');
+	}
+
+	protected setAgeGroup(event: Event, member: IContactContext, ageGroup: AgeGroupID): void {
+		console.log('MembersListComponent.setAgeGroup()', member, ageGroup);
+		event.preventDefault();
+		event.stopPropagation();
+		const teamID = this.team?.id;
+		if (!teamID) {
+			return;
+		}
+		const request: IUpdateContactRequest = {
+			teamID, contactID: member.id,
+			ageGroup,
+		};
+		this.contactService.updateContact(request).subscribe({
+			next: () => console.log('age group updated'),
+			error: this.errorLogger.logErrorHandler('failed to update contact with age group'),
+		});
+	}
 
 	public genderIcon(m: IContactContext) {
 		switch (m.brief?.gender) {

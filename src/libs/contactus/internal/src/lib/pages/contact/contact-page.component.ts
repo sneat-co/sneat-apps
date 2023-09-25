@@ -7,7 +7,7 @@ import { AddressFormComponent, ISaveEvent, SneatPipesModule } from '@sneat/compo
 import { ContactComponentBaseParams, ContactRolesInputModule, ContactsListModule } from '@sneat/contactus-shared';
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
-import { ContactService } from '@sneat/contactus-services';
+import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services';
 import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { ContactBasePage } from '../contact-base-page';
 
@@ -147,7 +147,8 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 			return;
 		}
 
-		this.contactService.setContactAddress({ teamID, contactID, address }).subscribe({
+		const request: IUpdateContactRequest = { teamID, contactID, address };
+		this.contactService.updateContact(request).subscribe({
 			next: () => save.success(),
 			error: save.error,
 		});
