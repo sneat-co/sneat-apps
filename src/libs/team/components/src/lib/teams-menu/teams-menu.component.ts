@@ -1,14 +1,30 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
+import { UserRequiredFieldsService } from '@sneat/auth-ui';
 import { TeamType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest, ITeamContext, teamContextFromBrief, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
+import { TeamsListModule } from '../teams-list';
 
 @Component({
 	selector: 'sneat-teams-menu',
 	templateUrl: './teams-menu.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		RouterModule,
+		TeamsListModule,
+	],
+	providers: [
+		UserRequiredFieldsService,
+	],
 })
 export class TeamsMenuComponent {
 
@@ -27,6 +43,7 @@ export class TeamsMenuComponent {
 		private readonly teamNavService: TeamNavService,
 		private readonly navController: NavController,
 		private readonly menuController: MenuController,
+		private readonly userRequiredFieldsService: UserRequiredFieldsService,
 	) {
 		userService.userState.subscribe({
 			next: this.onUserStateChanged,
@@ -36,6 +53,16 @@ export class TeamsMenuComponent {
 
 	public newFamily(event: Event): boolean {
 		event.stopPropagation();
+		event.preventDefault();
+
+		this.userRequiredFieldsService
+			.open()
+			.catch(this.errorLogger.logErrorHandler('Failed to open user required fields modal'));
+
+		if (event) {
+			return false;
+		}
+
 		console.log('newFamily');
 		const request: ICreateTeamRequest = {
 			type: 'family',

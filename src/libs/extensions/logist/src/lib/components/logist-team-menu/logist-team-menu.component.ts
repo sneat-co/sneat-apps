@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivationStart, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemComponent } from '@sneat/components';
-import { TeamBaseComponent, TeamComponentBaseParams, TeamsMenuComponentModule } from '@sneat/team/components';
+import { TeamBaseComponent, TeamComponentBaseParams, TeamsMenuComponent } from '@sneat/team/components';
 import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team-menu-items.module';
 
 @Component({
@@ -15,7 +15,7 @@ import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team
 		IonicModule,
 		RouterModule,
 		AuthMenuItemComponent,
-		TeamsMenuComponentModule,
+		TeamsMenuComponent,
 		LogistTeamMenuItemsModule,
 	],
 })

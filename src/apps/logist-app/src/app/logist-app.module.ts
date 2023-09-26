@@ -7,7 +7,7 @@ import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
-import { TeamsMenuComponentModule } from '@sneat/team/components';
+import { TeamsMenuComponent } from '@sneat/team/components';
 import { environment } from '../environments/environment';
 import { LogistAppRoutingModule } from './logist-app-routing.module';
 
@@ -69,7 +69,7 @@ const contactRolesByType: ContactRolesByType = {
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
 		CommunesUiModule,
-		TeamsMenuComponentModule,
+		TeamsMenuComponent,
 		LogistAppRoutingModule,
 	],
 	providers: [

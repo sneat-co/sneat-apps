@@ -55,7 +55,7 @@
 				</ion-button>
 			</ion-buttons>
 			<ion-buttons slot="end" *ngIf="!showAgeOptions(member)">
-				<ion-button
+				<ion-button *ngIf="member.brief?.type !== 'pet' && !member.brief?.userID"
 					title="Invite"
 					color="danger"
 					(click)="showInviteModal($event, member)"

@@ -125,13 +125,13 @@ export class SneatUserService {
 		userDocSnapshot: DocumentSnapshot<IUserRecord>,
 		authState: ISneatAuthState,
 	): void {
-		console.log('SneatUserService => userDocSnapshot:', userDocSnapshot, authState);
+		console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists(), 'authState:', authState);
 		if (userDocSnapshot.ref.id !== this.uid) {
 			return; // Should always be equal as we unsubscribe if uid changes
 		}
 		// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
 		const authUser = authState.user;
-		if (authUser && !userDocSnapshot.exists) {
+		if (authUser && !userDocSnapshot.exists()) {
 			this.initUserRecordFromAuthUser(authUser);
 		}
 		const userRecord: IUserRecord | null = userDocSnapshot.exists()
