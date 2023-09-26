@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService, ISetContactRolesRequest, IUpdateContactRequest } from '@sneat/contactus-services';
+import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 
 @Component({
