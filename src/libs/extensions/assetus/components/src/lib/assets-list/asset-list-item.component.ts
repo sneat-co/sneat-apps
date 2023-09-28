@@ -12,7 +12,7 @@ import { IAssetContext, ITeamContext } from '@sneat/team/models';
 })
 export class AssetListItemComponent {
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() assetType?: AssetCategory;
 	@Input() asset?: IAssetContext;
 

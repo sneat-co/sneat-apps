@@ -8,7 +8,7 @@ import { ITeamContext } from '@sneat/team/models';
 export class TeamPageTitleComponent {
 	@Input() icon?: string;
 	@Input() generalTitle?: string;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() titlesByTeamType?: { [type: string]: string };
 
 	public get typeTitle(): string {

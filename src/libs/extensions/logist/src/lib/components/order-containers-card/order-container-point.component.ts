@@ -16,7 +16,7 @@ import { LogistOrderService } from '../../services';
 	templateUrl: './order-container-point.component.html',
 })
 export class OrderContainerPointComponent implements OnChanges {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 	// @Input() shippingPoint?: IOrderShippingPoint;
 	@Input() containerPoint?: IContainerPoint;

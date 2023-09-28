@@ -10,7 +10,7 @@ import { IContactContext, ICreateContactBasicRequest, ITeamContext } from '@snea
 })
 export class BasicContactFormComponent {
 	@Input() parentContact?: IContactContext;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactType?: ContactType;
 
 	// @Input() contactRole?: ContactRole; // use contactRoles to support multiple roles

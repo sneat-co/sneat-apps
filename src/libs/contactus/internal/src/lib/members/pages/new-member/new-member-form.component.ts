@@ -38,7 +38,7 @@ export class NewMemberFormComponent implements OnChanges {
 
 	canSubmit = false;
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	protected contactusTeam?: IContactusTeamDtoWithID;
 

@@ -11,7 +11,7 @@ import { IAssetContext, ITeamContext, IVehicleAssetContext } from '@sneat/team/m
 })
 export class VehicleCardComponent implements OnChanges {
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() vehicleAsset?: IVehicleAssetContext;
 	@Output() readonly vehicleAssetChange = new EventEmitter<IVehicleAssetContext>();
 

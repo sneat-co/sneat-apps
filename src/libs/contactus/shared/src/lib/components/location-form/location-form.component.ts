@@ -13,7 +13,7 @@ import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/tea
 })
 export class LocationFormComponent implements OnChanges {
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
 	@Input() contact?: IContactContext;

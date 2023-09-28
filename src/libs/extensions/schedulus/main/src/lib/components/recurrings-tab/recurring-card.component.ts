@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs';
 export class RecurringCardComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
 	@Input() recurring?: IHappeningWithUiState;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	constructor(
 		private readonly happeningService: HappeningService,

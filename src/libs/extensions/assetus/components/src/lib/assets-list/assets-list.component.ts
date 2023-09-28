@@ -14,7 +14,7 @@ export class AssetsListComponent implements OnChanges {
 	assets?: IAssetContext[];
 
 	@Input() allAssets?: IAssetContext[];
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() assetType?: AssetCategory;
 	@Input() filter = '';
 

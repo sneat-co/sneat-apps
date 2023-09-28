@@ -44,8 +44,9 @@ export interface IPersonFormWizardFields extends INamesFormFields {
 })
 export class PersonFormWizardComponent {
 
+	@Input({ required: true }) team?: ITeamContext;
+
 	@Input() requires: IPersonRequirements = {};
-	@Input() team?: ITeamContext;
 	@Input() disabled = false;
 	@Input() hideRelationship = false;
 

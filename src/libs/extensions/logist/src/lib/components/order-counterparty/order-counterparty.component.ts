@@ -19,7 +19,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() labelPosition?: "fixed" | "stacked" | "floating";
 	@Input() readonly = false;
 	@Input() useColumns = true;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() refNumLabel = "Ref #";
 
 	@Input() label?: string = undefined;

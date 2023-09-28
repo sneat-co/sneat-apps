@@ -18,7 +18,7 @@ import { ILogistOrderContext, IOrderContainer } from '../../dto';
 })
 export class OrderContainersComponent implements OnChanges {
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	@Input() order?: ILogistOrderContext;
 	@Output() orderChange = new EventEmitter<ILogistOrderContext>();

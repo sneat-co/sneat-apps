@@ -7,7 +7,7 @@ import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 	templateUrl: './order-truckers.component.html',
 })
 export class OrderTruckersComponent implements OnChanges {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 
 	public truckers?: ReadonlyArray<IOrderCounterparty>;

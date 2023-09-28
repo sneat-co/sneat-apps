@@ -21,7 +21,7 @@ interface OrderRow {
 })
 export class OrdersGridComponent implements OnChanges {
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() orders?: ILogistOrderContext[];
 
 	rows?: OrderRow[];

@@ -20,7 +20,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() canReset = false;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	@Input() counterpartyRole?: CounterpartyRole;
 

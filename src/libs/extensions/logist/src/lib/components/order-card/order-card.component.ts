@@ -13,7 +13,7 @@ import { OrderPrintMenuComponent } from './order-print-menu.component';
 })
 export class OrderCardComponent {
 	@Input() public readonly = false;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() hideDispatchers = false;
 	@Input() showHeader = true;

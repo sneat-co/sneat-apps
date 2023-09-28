@@ -10,7 +10,7 @@ import { IContactContext, ITeamContext } from '@sneat/team/models';
 	templateUrl: './contact-roles-input.component.html',
 })
 export class ContactRolesInputComponent implements OnChanges {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() contact?: IContactContext;
 	// @Output() readonly rolesChange = new EventEmitter<ContactRole[]>();
 

@@ -36,7 +36,7 @@ export class NewListItemComponent {
 
   @Input() isDone = false;
   @Input() disabled = false;
-  @Input() team?: ITeamContext;
+  @Input({ required: true }) team?: ITeamContext;
   @Input() list?: IListContext;
 
   @ViewChild('newItemInput', { static: false }) newItemInput?: IonInput;

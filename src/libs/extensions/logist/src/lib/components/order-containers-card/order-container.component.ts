@@ -23,7 +23,7 @@ import { ShippingPointsSelectorService } from '../shipping-points-selector/shipp
 export class OrderContainerComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
 	@Input() order?: ILogistOrderContext;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() i?: number;
 
 	protected tab: 'points' | 'route' | 'notes' = 'points';

@@ -15,7 +15,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 })
 export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	form = new UntypedFormGroup({
 		address: new FormControl<string>(''),

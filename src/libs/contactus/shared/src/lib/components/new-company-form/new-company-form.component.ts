@@ -14,7 +14,7 @@ import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sn
 })
 export class NewCompanyFormComponent implements OnChanges {
 	@Input() contactRoles?: ISelectItem[];
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
 	@Input() parentContact?: IContactContext;

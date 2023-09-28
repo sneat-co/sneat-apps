@@ -31,6 +31,7 @@
 	<!--														*ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
 
 	<sneat-vehicle-card *ngIf="asset?.brief?.category === 'vehicle'"
+											[team]="team"
 											[vehicleAsset]="vehicleAsset"
 	></sneat-vehicle-card>
 

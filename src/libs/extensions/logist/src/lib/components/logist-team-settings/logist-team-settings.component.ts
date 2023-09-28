@@ -23,7 +23,7 @@ type LogistTeamSettingsForm = FormGroup<ILogistTeamSettingsFormControls>;
 	templateUrl: './logist-team-settings.component.html',
 })
 export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterViewInit {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() logistTeam?: ILogistTeamContext;
 
 	@ViewChild(AddressFormComponent) addressFormComponent?: AddressFormComponent;

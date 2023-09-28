@@ -27,7 +27,7 @@ function debounce<T>(field: string, o: Subject<T>): Observable<T> {
 	templateUrl: './container-endpoint.component.html',
 })
 export class ContainerEndpointComponent implements OnChanges {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() containerPoint?: IContainerPoint;
 	@Input() shippingPointID?: string;

@@ -12,7 +12,7 @@ export class SubcontactInputComponent {
 
 	@Input() canReset = false;
 	@Input() readonly = false;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() label?: string;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() role?: ContactRole;

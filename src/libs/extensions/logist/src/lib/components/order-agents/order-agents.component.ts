@@ -11,7 +11,7 @@ import { CounterpartyRole, ILogistOrderContext, IOrderCounterparty } from '../..
 })
 export class OrderAgentsComponent implements OnChanges {
 	@Input() public readonly = false;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 
 	@Output() added = new EventEmitter<IOrderCounterparty[]>();
@@ -66,7 +66,7 @@ export class OrderAgentsComponent implements OnChanges {
 	`,
 })
 export class AgentRoleMenuComponent {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() selected?: (counterparty: IOrderCounterparty) => void;
 

@@ -18,7 +18,7 @@ export class MembersSelectorInputComponent {
 
 	protected contactusTeam?: IContactusTeamDtoWithID;
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() members?: readonly IContactContext[];
 
 	@Input() max?: number;

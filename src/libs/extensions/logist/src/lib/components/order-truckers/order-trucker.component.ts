@@ -17,7 +17,7 @@ import { NewSegmentService } from '../new-segment/new-segment.service';
 	templateUrl: './order-trucker.component.html',
 })
 export class OrderTruckerComponent implements OnChanges {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() trucker?: IOrderCounterparty;
 

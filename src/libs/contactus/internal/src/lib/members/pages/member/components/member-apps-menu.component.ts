@@ -14,7 +14,7 @@ import { ITeamContext } from '@sneat/team/models';
 	],
 })
 export class MemberAppsMenuComponent {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	public readonly extensions = defaultFamilyMemberExtensions;
 

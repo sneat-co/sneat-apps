@@ -25,7 +25,7 @@ export class SingleSlotFormComponent implements AfterViewInit, OnChanges, OnDest
 
 	private readonly destroyed = new Subject<void>();
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() happening?: IHappeningContext;
 	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
 	@Input() adjustment?: IHappeningAdjustment;

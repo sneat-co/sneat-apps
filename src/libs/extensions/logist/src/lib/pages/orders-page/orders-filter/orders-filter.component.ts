@@ -9,7 +9,7 @@ import { IOrdersFilter, OrderDirection } from '../../../dto';
 	templateUrl: 'orders-filter.component.html',
 })
 export class OrdersFilterComponent {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	@Output() readonly filterChange = new EventEmitter<IOrdersFilter>();
 

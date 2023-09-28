@@ -15,7 +15,7 @@ import {
 })
 export class HappeningMembersFormComponent {
 
-	@Input() team?: ITeamContext; // TODO: Can we get rid of this?
+	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
 	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() happening?: IHappeningContext;
 

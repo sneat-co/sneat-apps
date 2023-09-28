@@ -9,7 +9,7 @@ import { ILogistOrderContext } from '../../dto';
 	templateUrl: './order-print-menu.component.html',
 })
 export class OrderPrintMenuComponent {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 
 	constructor(

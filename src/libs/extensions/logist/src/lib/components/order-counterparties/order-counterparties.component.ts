@@ -21,7 +21,7 @@ interface ICounterparty extends IOrderCounterparty {
 	templateUrl: './order-counterparties.component.html',
 })
 export class OrderCounterpartiesComponent implements OnChanges {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 	@Output() readonly orderChange = new EventEmitter<ILogistOrderContext>();
 	@Input() readonly = false;

@@ -3,7 +3,7 @@ import { countryFlagEmoji } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { ContactSelectorService, IContactSelectorOptions } from '../contact-selector/contact-selector.service';
+import { ContactSelectorService, IContactSelectorOptions } from '../contact-selector';
 
 @Component({
 	selector: 'sneat-contact-input',
@@ -11,11 +11,11 @@ import { ContactSelectorService, IContactSelectorOptions } from '../contact-sele
 })
 export class ContactInputComponent implements OnChanges {
 
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() disabled?: boolean;
 	@Input() canChangeContact = true;
 	@Input() canReset = false;
 	@Input() readonly = false;
-	@Input() team?: ITeamContext;
 	@Input() label?: string;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() contactRole?: ContactRole;
@@ -25,10 +25,9 @@ export class ContactInputComponent implements OnChanges {
 	@Input() parentRole?: ContactRole;
 	@Input() parentContact?: IContactContext;
 	@Input() deleting = false;
-
-
 	@Input() contact?: IContactContext;
-	@Output() contactChange = new EventEmitter<IContactContext>();
+
+	@Output() readonly contactChange = new EventEmitter<IContactContext>();
 
 	protected readonly labelText = () => this.label || this.contactRole && (this.contactRole[0].toUpperCase() + this.contactRole.substr(1)) || 'Contact';
 
@@ -55,7 +54,7 @@ export class ContactInputComponent implements OnChanges {
 		return this.getTitle(this.showFlag, this.contact);
 	}
 
-	private getTitle(showFlag: boolean, contact?: IContactContext, ): string {
+	private getTitle(showFlag: boolean, contact?: IContactContext): string {
 		if (!contact) {
 			return '';
 		}
@@ -68,7 +67,7 @@ export class ContactInputComponent implements OnChanges {
 		const contactChange = changes['contact'];
 		if (contactChange) {
 			const prevContact = contactChange.previousValue as IContactContext | undefined;
-			if (prevContact &&  prevContact.id !== this.contact?.id && !changes['parentContact']) {
+			if (prevContact && prevContact.id !== this.contact?.id && !changes['parentContact']) {
 				this.parentContact = undefined;
 			}
 		}

@@ -26,7 +26,7 @@ export class EncodeSmsText implements PipeTransform {
 	templateUrl: 'invite-modal.component.html',
 })
 export class InviteModalComponent {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() member?: IContactContext;
 
 	tab: InviteChannel = 'email';

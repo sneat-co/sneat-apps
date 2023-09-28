@@ -27,7 +27,7 @@ export class ContactsByTypeComponent implements OnChanges {
 
 	//
 	@Input() filter = '';
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() contacts?: IContactContext[];
 	@Input() goContact: (contact?: IContactContext) => void = () => void 0;
 	@Input() goMember: (id: string, event: Event) => boolean = () => false;

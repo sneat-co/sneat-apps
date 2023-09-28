@@ -26,7 +26,7 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
 export class RelationshipFormComponent extends TeamRelatedFormComponent implements OnChanges {
 	@Input() isActive = false;
 	@Input() disabled = false;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() relationship?: string;
 	@Input() ageGroup?: AgeGroupID;
 	@Output() readonly relationshipChange = new EventEmitter<string>();

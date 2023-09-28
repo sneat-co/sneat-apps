@@ -29,6 +29,7 @@
 		<p class="ion-margin" *ngIf="!selectedMembers"><ion-text color="medium">Step 3 of 4</ion-text></p>
 		<ion-card>
 			<sneat-members-selector-input
+				[team]="team"
 				[members]="members"
 				[max]="docFields.members?.max"
 				[(selectedMembers)]="selectedMembers"

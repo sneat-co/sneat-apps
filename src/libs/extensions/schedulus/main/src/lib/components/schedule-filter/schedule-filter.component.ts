@@ -23,7 +23,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase implements OnChang
 	public accordionValue?: string;
 	private resetting = false;
 	@Input() contactusTeam?: IContactusTeamDtoWithID;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	readonly text = new FormControl<string>('');

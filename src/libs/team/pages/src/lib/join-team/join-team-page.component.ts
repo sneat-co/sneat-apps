@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -29,6 +29,8 @@ export const getPinFromUrl: () => string = () => {
 	],
 })
 export class JoinTeamPageComponent extends SneatBaseComponent {
+
+	@Input({ required: true }) team?: ITeamContext;
 
 	private readonly id?: string;
 	public inviteInfo?: IJoinTeamInfoResponse;

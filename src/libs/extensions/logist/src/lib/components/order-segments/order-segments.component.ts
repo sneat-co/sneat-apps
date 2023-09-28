@@ -7,6 +7,6 @@ import { ILogistOrderContext } from '../../dto';
 	templateUrl: './order-segments.component.html',
 })
 export class OrderSegmentsComponent {
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 }

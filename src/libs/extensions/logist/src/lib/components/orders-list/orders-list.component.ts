@@ -8,6 +8,6 @@ import { ILogistOrderContext } from '../../dto/order-dto';
 })
 export class OrdersListComponent {
 
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 	@Input() orders?: ILogistOrderContext[];
 }

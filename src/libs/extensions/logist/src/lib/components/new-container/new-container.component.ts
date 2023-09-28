@@ -14,7 +14,7 @@ import { TasksByID } from '../shipping-points-selector';
 export class NewContainerComponent {
 
 	@Input() order?: ILogistOrderContext;
-	@Input() team?: ITeamContext;
+	@Input({ required: true }) team?: ITeamContext;
 
 	@ViewChild('containerNumberInput', { static: false }) containerNumberInput?: IonInput;
 
