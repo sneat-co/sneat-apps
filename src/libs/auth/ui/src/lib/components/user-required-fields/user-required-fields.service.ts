@@ -19,7 +19,7 @@ export class UserRequiredFieldsService {
 			modal.onDidDismiss().then(value => {
 				console.log('UserRequiredFieldsService.open(): modal dismissed:', value);
 				resolve(!!value);
-			});
+			}).catch(reject);
 		});
 	}
 }
