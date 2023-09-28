@@ -10,10 +10,16 @@ export class UserRequiredFieldsService {
 	) {
 	}
 
-	public async open(): Promise<void> {
+	public async open(): Promise<boolean> {
 		const modal = await this.modalController.create({
 			component: UserRequiredFieldsModalComponent,
 		});
 		await modal.present();
+		return new Promise((resolve, reject) => {
+			modal.onDidDismiss().then(value => {
+				console.log('UserRequiredFieldsService.open(): modal dismissed:', value);
+				resolve(!!value);
+			});
+		});
 	}
 }

@@ -9,6 +9,7 @@ import { TeamType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ICreateTeamRequest, ITeamContext, teamContextFromBrief, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
+import { first } from 'rxjs';
 import { TeamsListModule } from '../teams-list';
 
 @Component({
@@ -55,20 +56,34 @@ export class TeamsMenuComponent {
 		event.stopPropagation();
 		event.preventDefault();
 
-		this.userRequiredFieldsService
-			.open()
-			.catch(this.errorLogger.logErrorHandler('Failed to open user required fields modal'));
-
-		if (event) {
-			return false;
-		}
-
-		console.log('newFamily');
 		const request: ICreateTeamRequest = {
 			type: 'family',
 			// roles: [TeamMemberType.creator],
 		};
+
+		this.userService.userState.pipe(
+			first(),
+		).subscribe({
+			next: userState => {
+				if (userState.record) {
+					this.createTeam(request);
+				} else {
+					this.userRequiredFieldsService
+						.open()
+						.then(modalResult => {
+							if (modalResult) {
+								this.createTeam(request);
+							}
+						})
+						.catch(this.errorLogger.logErrorHandler('Failed to open user required fields modal'));
+				}
+			},
+		});
 		this.closeMenu();
+		return false;
+	}
+
+	private createTeam(request: ICreateTeamRequest): void {
 		this.teamService.createTeam(request)
 			.subscribe({
 				next: value => {
@@ -78,8 +93,8 @@ export class TeamsMenuComponent {
 				},
 				error: this.errorLogger.logErrorHandler('failed to create a new family team'),
 			});
-		return false;
 	}
+
 
 	public newTeam(): void {
 		alert('Creation of a new team is not implemented yet');

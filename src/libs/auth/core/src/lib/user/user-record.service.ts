@@ -29,7 +29,7 @@ export class UserRecordService {
 }
 
 export interface IInitUserRecordRequest {
-	readonly authProvider: string;
+	readonly authProvider?: string;
 	readonly gender?: Gender;
 	readonly ageGroup?: AgeGroupID;
 	readonly name?: IName;

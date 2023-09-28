@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { IInitUserRecordRequest, UserRecordService } from '@sneat/auth-core';
+import { IInitUserRecordRequest, ISneatUserState, SneatUserService, UserRecordService } from '@sneat/auth-core';
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { AgeGroupID, Gender } from '@sneat/dto';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
+import { SneatBaseComponent } from '@sneat/ui';
+import { takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-user-required-fields-form',
@@ -19,7 +22,7 @@ import { ITeamContext } from '@sneat/team/models';
 		SelectFromListModule,
 	],
 })
-export class UserRequiredFieldsModalComponent {
+export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 
 	@Input({ required: true }) team: ITeamContext = { id: '' };
 
@@ -49,10 +52,22 @@ export class UserRequiredFieldsModalComponent {
 
 	protected submitting = false;
 
+	protected userState?: ISneatUserState;
+
 	constructor(
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 		private readonly userRecordService: UserRecordService,
+		private readonly sneatUserService: SneatUserService,
 	) {
+		super('UserRequiredFieldsModalComponent', errorLogger);
+		this.sneatUserService.userState
+			.pipe(
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
+				next: userState => this.userState = userState,
+			});
 	}
 
 	protected save(): void {
@@ -75,19 +90,18 @@ export class UserRequiredFieldsModalComponent {
 			},
 			gender,
 			ageGroup,
-			authProvider: 'firebase',
 		};
 		this.userRecordService.initUserRecord(request).subscribe({
 			next: () => this.modalController.dismiss(true).catch(console.error),
 			error: err => {
-				console.error('Failed to init user record:', err);
+				this.errorLogger.logError('Failed to init user record:', err);
+				alert('Failed to init user record');
 				this.submitting = false;
 			},
 		});
-		this.modalController.dismiss().catch(console.error);
 	}
 
 	protected close(): void {
-		this.modalController.dismiss().catch(console.error);
+		this.modalController.dismiss(false).catch(this.errorLogger.logErrorHandler('Failed to close modal'));
 	}
 }
