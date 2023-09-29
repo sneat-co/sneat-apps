@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { ContactSelectorService, IContactSelectorOptions } from '../contact-selector/contact-selector.service';
+import { ContactSelectorService, IContactSelectorOptions } from '../contact-selector';
 
 @Component({
 	selector: 'sneat-subcontact-input',
