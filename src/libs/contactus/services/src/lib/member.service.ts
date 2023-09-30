@@ -2,13 +2,13 @@ import { Inject, Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
-import { IContactBrief, IMemberBrief, trimNames } from '@sneat/dto';
+import { IBriefAndID, IContactBrief, IMemberBrief, trimNames } from "@sneat/dto";
 import { TeamService } from '@sneat/team/services';
 import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAcceptPersonalInviteRequest,
-	IAddTeamMemberResponse, IBriefAndID, IContactContext,
+	IAddTeamMemberResponse, IContactContext,
 	ICreateTeamMemberRequest,
 	ITeamContext,
 } from '@sneat/team/models';

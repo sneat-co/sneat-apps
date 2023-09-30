@@ -5,12 +5,12 @@ import { RouterModule } from '@angular/router';
 import { IonicModule, IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { listAddRemoveAnimation } from '@sneat/core';
-import { AgeGroupID, IContactBrief } from '@sneat/dto';
+import { AgeGroupID, IBriefAndID, IContactBrief } from "@sneat/dto";
 import { ScheduleNavService, ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { InviteModalComponent, InviteModalModule } from '@sneat/team/components';
 import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services';
-import { IBriefAndID, IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
+import { IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth-core';
 

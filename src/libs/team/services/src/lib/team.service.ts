@@ -5,10 +5,9 @@ import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
-import { ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
+import { IBriefAndID, ITeamBrief, ITeamDto, ITeamMetric } from "@sneat/dto";
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IBriefAndID,
 	ICreateTeamRequest,
 	ICreateTeamResponse, IJoinTeamInfoResponse,
 	ITeamContext,

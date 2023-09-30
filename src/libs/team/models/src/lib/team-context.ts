@@ -1,4 +1,4 @@
-import { INavContext, TeamType } from '@sneat/core';
+import { INavContext, TeamType } from "@sneat/core";
 import {
 	IAssetBrief,
 	IAssetDbData, IContactBrief,
@@ -15,24 +15,15 @@ import {
 	IShortTeamInfo,
 	ITeamBrief,
 	ITeamDto, IVehicleAssetDto,
-	ListType, IHappeningBrief,
-} from '@sneat/dto';
-import { ITeamItemContext } from './team-item-context';
+	ListType, IHappeningBrief, IBriefAndID, IDtoAndID
+} from "@sneat/dto";
+import { ITeamItemContext } from "./team-item-context";
 
 export interface ITeamRef {
 	readonly id: string;
 	readonly type?: TeamType;
 }
 
-export interface IBriefAndID<Brief> {
-	readonly id: string;
-	readonly brief: Brief;
-}
-
-export interface IDtoAndID<Dto> {
-	readonly id: string;
-	readonly dto?: Dto | null;
-}
 
 
 export function zipMapBriefsWithIDs<Brief>(briefs?: Readonly<{ [id: string]: Brief }>): readonly IBriefAndID<Brief>[] {
@@ -89,7 +80,7 @@ export interface IListContext extends ITeamItemContext<IListBrief, IListDto> {
 
 export function createShortCommuneInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {
-		throw new Error('!team.type');
+		throw new Error("!team.type");
 	}
 	return { id: team.id, title: team.brief?.title, type: team.type };
 }

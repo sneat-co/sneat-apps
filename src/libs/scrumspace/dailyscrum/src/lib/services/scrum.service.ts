@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { IMemberBrief, ITeamDto } from '@sneat/dto';
-import { IBriefAndID } from '@sneat/team/models';
+import { IBriefAndID, IMemberBrief, ITeamDto } from "@sneat/dto";
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
 	Firestore as AngularFirestore,

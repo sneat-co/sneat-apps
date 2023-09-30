@@ -1,12 +1,13 @@
 import { collection, CollectionReference, Firestore as AngularFirestore } from "@angular/fire/firestore";
 import { SneatApiService } from "@sneat/api";
-import { IContactBrief } from "@sneat/dto";
-import { IDtoAndID, ITeamContext, ITeamItemContext } from "@sneat/team/models";
-import firebase from "firebase/compat";
+import { IDtoAndID } from "@sneat/dto";
+import { ITeamContext, ITeamItemContext } from "@sneat/team/models";
 import { map } from "rxjs/operators";
 import { TeamItemService } from "./team-item.service";
 import { Observable, tap } from "rxjs";
-import Item = firebase.analytics.Item;
+
+// import firebase from "firebase/compat";
+// import Item = firebase.analytics.Item;
 
 export abstract class TeamModuleService<Brief, Dto extends Brief> extends TeamItemService<Brief, Dto> {
 

@@ -4,7 +4,8 @@ import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
-import { IBriefAndID, zipMapBriefsWithIDs } from '@sneat/team/models';
+import { IBriefAndID } from "@sneat/dto";
+import {  zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
 import { TeamComponentBaseParams } from '../team-component-base-params';
@@ -120,4 +121,5 @@ export class TeamMenuComponent extends TeamBaseComponent {
 			this.teams = undefined;
 		}
 	};
+
 }

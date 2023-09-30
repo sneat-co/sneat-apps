@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { IContactBrief, IMemberBrief } from '@sneat/dto';
+import { IBriefAndID, IContactBrief, IMemberBrief } from "@sneat/dto";
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import { Auth as AngularFireAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth-core';
 import { MemberService } from '@sneat/contactus-services';
 import {
-	IAcceptPersonalInviteRequest, IBriefAndID,
+	IAcceptPersonalInviteRequest,
 	IPersonalInvite,
 	IRejectPersonalInviteRequest, zipMapBriefsWithIDs,
 } from '@sneat/team/models';

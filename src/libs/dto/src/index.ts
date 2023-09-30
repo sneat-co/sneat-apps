@@ -1,4 +1,5 @@
 export * from './lib/ui-state';
+export * from './lib/interfaces';
 export * from './lib/data';
 export * from './lib/contact-roles';
 export * from './lib/dto-app';

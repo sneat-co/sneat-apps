@@ -7,18 +7,18 @@ import { TeamMemberTypeEnum } from '@sneat/auth-models';
 import { ContactusTeamService, MemberGroupService, MemberService } from '@sneat/contactus-services';
 import { MembersListComponent } from '@sneat/contactus-shared';
 import {
-  IContactBrief,
-  isTeamSupportsMemberGroups,
-  MemberGroupType,
-  MemberGroupTypeAdults,
-  MemberGroupTypeKids,
-  MemberGroupTypeOther,
-  MemberGroupTypePets,
-  TeamMemberType,
-} from '@sneat/dto';
+	IBriefAndID,
+	IContactBrief,
+	isTeamSupportsMemberGroups,
+	MemberGroupType,
+	MemberGroupTypeAdults,
+	MemberGroupTypeKids,
+	MemberGroupTypeOther,
+	MemberGroupTypePets,
+	TeamMemberType
+} from "@sneat/dto";
 import { TeamComponentBaseParams, TeamCoreComponentsModule } from '@sneat/team/components';
 import {
-  IBriefAndID,
   IContactContext,
   IContactusTeamDto,
   IMemberGroupContext,
