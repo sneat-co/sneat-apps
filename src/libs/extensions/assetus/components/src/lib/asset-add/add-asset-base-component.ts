@@ -1,11 +1,11 @@
 import { Component, Inject, InjectionToken } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IAssetDbData, IAssetMainData } from '@sneat/dto';
+import { IAssetDtoBase, IAssetMainData } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { SneatBaseComponent } from '@sneat/ui';
-import { AssetService } from '../asset-service';
+import { AssetService } from '../services/asset-service';
 import { ICreateAssetRequest } from '../asset-service.dto';
 
 @Component({ template: '' })
@@ -30,7 +30,7 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 		super(className, teamParams.errorLogger);
 	}
 
-	protected createAssetAndGoToAssetPage<A extends IAssetMainData, D extends IAssetDbData>(request: ICreateAssetRequest<A>, team: ITeamContext): void {
+	protected createAssetAndGoToAssetPage<A extends IAssetMainData, D extends IAssetDtoBase>(request: ICreateAssetRequest<A>, team: ITeamContext): void {
 		if (!this.team) {
 			throw new Error('no team context');
 		}

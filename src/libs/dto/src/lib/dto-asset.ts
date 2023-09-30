@@ -31,6 +31,7 @@ export interface IAssetBrief extends ITitled {
 	isRequest?: boolean;
 	status: AssetStatus;
 	category: AssetCategory;
+	countryID?: CountryId;
 	type?: AssetType; // E.g. subcategory - for example for documents could be: passport, visa, etc.
 	make: string;
 	model: string;
@@ -48,14 +49,13 @@ export interface IAssetusTeamContext extends INavContext<IAssetusTeamDto, IAsset
 export interface IAssetMainData extends IAssetBrief {
 	parentAssetID?: string;
 	desc?: string;
-	countryID?: CountryId;
 	yearOfBuild?: number; // TODO: consider using only `dateOfBuild`
 	dateOfBuild?: string; // ISO date string 'YYYY-MM-DD'
 	memberIDs?: string[];
 	regNumber?: string;
 }
 
-export interface IAssetDbData extends IAssetMainData, IDemoRecord, ITotalsHolder, IWithModified {
+export interface IAssetDtoBase extends IAssetMainData, IDemoRecord, ITotalsHolder, IWithModified {
 	teamID?: string;
 	parentCategoryID?: AssetCategory;
 	sameAssetID?: string; // A link to realtor's or tenant's asset ID
@@ -93,13 +93,13 @@ export interface IVehicleData extends IEngine {
 	nextServiceDueTaskId?: string;
 }
 
-export interface IVehicleAssetDto extends IAssetDbData, IVehicleData {
+export interface IVehicleAssetDto extends IAssetDtoBase, IVehicleData {
 }
 
 export interface IVehicleMainData extends IAssetMainData, IVehicleData {
 }
 
-export interface IDocumentAssetDto extends IAssetDbData, IDocData {
+export interface IDocumentAssetDto extends IAssetDtoBase, IDocData {
 }
 
 export interface IDocumentMainData extends IAssetMainData, IDocData {

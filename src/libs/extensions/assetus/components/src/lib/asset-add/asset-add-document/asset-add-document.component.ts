@@ -10,7 +10,7 @@ import {
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IDocumentAssetContext, ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
-import { AssetService } from '../../asset-service';
+import { AssetService } from '../../services/asset-service';
 import { ICreateAssetRequest } from '../../asset-service.dto';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 

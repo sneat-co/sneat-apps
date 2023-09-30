@@ -1,11 +1,12 @@
 <ion-card>
 	<ion-list>
-		<sneat-country-selector [country]="vehicleAsset?.dto?.countryID"
+		<sneat-country-selector [countryID]="vehicleAsset?.brief?.countryID"
+														[readonly]="!!vehicleAsset?.brief?.countryID"
 														label="Country of registration"
-														(countryChange)="countryChanged($event)"
+														(countryIDChange)="countryChanged($event)"
 		></sneat-country-selector>
 		<ion-item>
-			<ion-input label="Registration #" [(ngModel)]="regNumber" placeholder="###-CO-#####"></ion-input>
+			<ion-input label="Registration #" [formControl]="regNumber" placeholder="###-CO-#####"></ion-input>
 			<!--            <ion-button fill="outline">Validate</ion-button>-->
 			<ion-buttons slot="end">
 				<ion-button [disabled]="!vehicleAsset?.dto?.regNumber" color="primary">Look up</ion-button>

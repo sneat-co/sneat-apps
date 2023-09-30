@@ -20,7 +20,7 @@
 <ng-container *ngIf="docType && docType !== 'unspecified'">
 	<p class="ion-margin" *ngIf="!country"><ion-text color="medium">Step 2 of 4</ion-text></p>
 	<ion-card>
-		<sneat-country-selector [(country)]="country"></sneat-country-selector>
+		<sneat-country-selector [(countryID)]="country"></sneat-country-selector>
 	</ion-card>
 
 	<ng-container *ngIf="country">

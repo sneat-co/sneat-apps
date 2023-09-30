@@ -9,7 +9,7 @@ import { Observable, tap } from "rxjs";
 // import firebase from "firebase/compat";
 // import Item = firebase.analytics.Item;
 
-export abstract class TeamModuleService<Brief, Dto extends Brief> extends TeamItemService<Brief, Dto> {
+export abstract class TeamModuleService<Dto> extends TeamItemService<Dto, Dto> {
 
 	// protected readonly sfs: SneatFirestoreService<Brief, Dto>;
 

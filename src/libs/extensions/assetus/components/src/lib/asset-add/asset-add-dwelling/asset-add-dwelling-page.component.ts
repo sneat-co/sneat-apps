@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { ITeamContext } from '@sneat/team/models';
-import { AssetService } from '../../asset-service';
+import { AssetService } from '../../services/asset-service';
 import { ICreateAssetRequest } from '../../asset-service.dto';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 

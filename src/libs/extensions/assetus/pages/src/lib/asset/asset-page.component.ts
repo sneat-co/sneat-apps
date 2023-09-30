@@ -7,9 +7,8 @@ import { LiabilityServiceType } from '@sneat/dto';
 import {
 	AssetBasePage,
 	AssetComponentBaseParams,
-	ModuleAssetRealEstate,
-	VehicleCardComponentModule,
-} from '@sneat/extensions/assetus/components';
+	ModuleAssetRealEstate, VehicleCardComponent,
+} from "@sneat/extensions/assetus/components";
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;
@@ -26,7 +25,7 @@ interface LiabilityServiceBrief {
 		FormsModule,
 		IonicModule,
 		ModuleAssetRealEstate,
-		VehicleCardComponentModule,
+		VehicleCardComponent,
 		IonicModule,
 	],
 })

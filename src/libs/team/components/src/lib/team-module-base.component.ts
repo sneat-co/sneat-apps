@@ -13,7 +13,7 @@ export class TeamModuleBaseComponent<Brief, Dto extends Brief> extends TeamBaseC
 		className: string,
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		protected teamModuleService: TeamModuleService<Brief, Dto>,
+		protected teamModuleService: TeamModuleService<Dto>,
 	) {
 		super(className, route, teamParams);
 	}

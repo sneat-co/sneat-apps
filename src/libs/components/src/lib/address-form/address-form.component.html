@@ -17,8 +17,8 @@
 		</ion-buttons>
 	</ion-item-divider>
 
-	<sneat-country-selector [country]="countryID.value || undefined" [disabled]="saving"
-													(countryChange)="onCountryChanged($event)"></sneat-country-selector>
+	<sneat-country-selector [countryID]="countryID.value || undefined" [disabled]="saving"
+													(countryIDChange)="onCountryChanged($event)"></sneat-country-selector>
 
 	<ng-container *ngIf="countryID.value">
 		<ion-item>

@@ -3,7 +3,7 @@ import { AssetCategory } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
-import { AssetService } from '../asset-service';
+import { AssetService } from '../services/asset-service';
 
 @Component({
 	selector: 'sneat-assets-list',

@@ -1,11 +1,11 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IAssetBrief, IAssetDbData, IAssetusTeamContext } from '@sneat/dto';
+import { IAssetBrief, IAssetDtoBase, IAssetusTeamContext } from '@sneat/dto';
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IAssetContext, IVehicleAssetContext } from '@sneat/team/models';
 import { NEVER, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 
-export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDbData> {
+export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDtoBase> {
 
 	protected assetusTeam?: IAssetusTeamContext;
 
@@ -23,7 +23,7 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 		public readonly params: AssetComponentBaseParams,
 		parentPagePath = 'assets',
 	) {
-		super(className, route, params.teamParams, parentPagePath, 'asset');
+		super(className, route, params.teamParams, parentPagePath, 'asset', params.assetService);
 	}
 
 	protected onRouteParamsChanged(params: ParamMap, itemID?: string, teamID?: string): void {
@@ -43,11 +43,9 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 	}
 
 	protected override setItemContext(item?: IAssetContext) {
+		console.log('AssetBasePage/setItemContext', item)
+		super.setItemContext(item)
 		this.asset = item;
-	}
-
-	protected override get item(): IAssetContext | undefined {
-		return this.asset;
 	}
 
 	protected override briefs(): { [id: string]: IAssetBrief } | undefined {

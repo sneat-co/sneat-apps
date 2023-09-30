@@ -4,12 +4,13 @@ import { IContactBrief, IContactDto } from "@sneat/dto";
 import { IContactusTeamDto, ITeamContext } from "@sneat/team/models";
 import { TeamModuleService } from "@sneat/team/services";
 
-@Injectable({ providedIn: "root" })
-export class ContactusTeamService extends TeamModuleService<IContactusTeamDto, IContactusTeamDto> {
+@Injectable({ providedIn: "root" }) // TODO: Do not provide in root
+export class ContactusTeamService extends TeamModuleService<IContactusTeamDto> {
 
 	public constructor(afs: AngularFirestore) {
 		super("contactus", afs);
 	}
 
-	readonly watchContactBriefs = (team: ITeamContext) => this.watchBriefs<IContactBrief, IContactDto>(team, dto => dto?.contacts || {});
+	readonly watchContactBriefs = (team: ITeamContext) =>
+		this.watchBriefs<IContactBrief, IContactDto>(team, dto => dto?.contacts || {});
 }

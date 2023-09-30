@@ -24,7 +24,8 @@
 
 	<ion-card>
 		<ion-item>
-			<ion-label>{{asset?.brief?.title || asset?.dto?.title || asset?.id}}</ion-label>
+			<ion-label *ngIf="asset?.brief?.title">{{asset?.brief?.title}}</ion-label>
+			<ion-label *ngIf="!asset?.brief?.title"><b>ID</b>: {{asset?.id}}</ion-label>
 		</ion-item>
 	</ion-card>
 	<!--	<app-real-estate-location [asset]="asset"-->

@@ -1,12 +1,15 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { INavContext, TeamItem } from '@sneat/core';
-import { Observable, Subscription } from 'rxjs';
-import { TeamBaseComponent } from './team-base.component';
-import { TeamComponentBaseParams } from './team-component-base-params';
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { INavContext, TeamItem } from "@sneat/core";
+import { TeamItemService } from "@sneat/team/services";
+import { Observable, Subscription } from "rxjs";
+import { TeamBaseComponent } from "./team-base.component";
+import { TeamComponentBaseParams } from "./team-component-base-params";
 
 // type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
 
 export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends TeamBaseComponent {
+
+	protected item?: INavContext<Brief, Dto>;
 
 	protected constructor(
 		className: string,
@@ -14,6 +17,7 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 		teamParams: TeamComponentBaseParams,
 		defaultBackPage: string,
 		private readonly itemName: TeamItem,
+		private readonly teamItemService: TeamItemService<Brief, Dto>
 	) {
 		super(className, route, teamParams);
 		this.defaultBackPage = defaultBackPage;
@@ -21,10 +25,9 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 		this.trackUrlParams();
 	}
 
-
-	protected abstract setItemContext(item?: INavContext<Brief, Dto>): void;
-
-	protected abstract get item(): INavContext<Brief, Dto> | undefined;
+	protected setItemContext(item?: INavContext<Brief, Dto>): void {
+		this.item = item;
+	}
 
 	protected abstract briefs(): Readonly<{ [id: string]: Brief }> | undefined;
 
@@ -39,8 +42,8 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: params => {
-					const itemID = params.get(this.itemName + 'ID') || undefined;
-					const teamID = params.get('teamID') || this.team?.id;
+					const itemID = params.get(this.itemName + "ID") || undefined;
+					const teamID = params.get("teamID") || this.team?.id;
 					this.onRouteParamsChanged(params, itemID, teamID);
 					if (itemID) {
 						const item = this.item;
@@ -57,7 +60,7 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 									next: item => {
 										this.setItemContext(item);
 									},
-									error: err => this.logError(err, 'failed to get item by ID'),
+									error: err => this.logError(err, "failed to get item by ID")
 								});
 						}
 					} else {
@@ -65,7 +68,7 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 					}
 
 				},
-				error: err => this.logError(err, 'failed to get paramMap'),
+				error: err => this.logError(err, "failed to get paramMap")
 			});
 	}
 

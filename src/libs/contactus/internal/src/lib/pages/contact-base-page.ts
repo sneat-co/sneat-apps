@@ -1,6 +1,7 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import { IBriefAndID, IContactBrief, IContactDto } from "@sneat/dto";
+import { AssetService } from "@sneat/extensions/assetus/components";
 import { TeamItemBaseComponent } from '@sneat/team/components';
 import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { Observable, throwError } from 'rxjs';
@@ -15,9 +16,8 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		route: ActivatedRoute,
 		params: ContactComponentBaseParams,
 		// protected preloader: NgModulePreloaderService,
-		// protected assetService: IAssetService,
 	) {
-		super(className, route, params.teamParams, 'contacts', 'contact');
+		super(className, route, params.teamParams, 'contacts', 'contact', params.contactService);
 		this.defaultBackPage = 'contacts';
 		this.tackContactId();
 	}
@@ -43,11 +43,8 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 	}
 
 	override setItemContext(item: IContactContext): void {
+		super.setItemContext(item)
 		this.contact = item;
-	}
-
-	override get item(): IContactContext | undefined {
-		return this.contact;
 	}
 
 	protected override briefs(): { [id: string]: IContactBrief } | undefined {

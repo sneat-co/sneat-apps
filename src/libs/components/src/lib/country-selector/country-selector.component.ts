@@ -1,45 +1,46 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ISelectItem } from '../selector';
-import { SelectFromListModule } from '../selector/select-from-list';
-import { countries, unknownCountry } from './countries';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { IonicModule } from "@ionic/angular";
+import { ISelectItem } from "../selector";
+import { SelectFromListModule } from "../selector/select-from-list";
+import { countries, unknownCountry } from "./countries";
 
 @Component({
-	selector: 'sneat-country-selector',
-	templateUrl: './country-selector.component.html',
+	selector: "sneat-country-selector",
+	templateUrl: "./country-selector.component.html",
 	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		SelectFromListModule,
-	],
+		SelectFromListModule
+	]
 })
 export class CountrySelectorComponent implements OnChanges {
 
+	@Input({ required: true }) countryID?: string;
+
+	@Input() readonly = false;
 	@Input() disabled = false;
-	@Input() label = 'Country';
-	@Input() country?: string;
+	@Input() label = "Country";
 	@Input() canBeUnknown = false;
 
-	@Output() countryChange = new EventEmitter<string>();
-
+	@Output() readonly countryIDChange = new EventEmitter<string>();
 
 	protected countries: ISelectItem[] = countries;
 
 	onChanged(): void {
-		console.log('CountrySelectorComponent.onChanged()', this.country);
-		this.countryChange.emit(this.country);
+		console.log("CountrySelectorComponent.onChanged()", this.countryID);
+		this.countryIDChange.emit(this.countryID);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['canBeUnknown']) {
+		if (changes["canBeUnknown"]) {
 			this.countries = this.canBeUnknown ? [...countries, unknownCountry] : countries;
 		}
-		if (changes['country'] && this.country === '--' && !this.canBeUnknown) {
-			this.country = undefined;
+		if (changes["country"] && this.countryID === "--" && !this.canBeUnknown) {
+			this.countryID = undefined;
 		}
 	}
 

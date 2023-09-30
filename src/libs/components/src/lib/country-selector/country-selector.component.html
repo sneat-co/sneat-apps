@@ -1,11 +1,11 @@
 <sneat-select-from-list
-	[value]="country || ''"
+	[value]="countryID || ''"
 	[isFilterable]="true"
 	[filterLabel]="label"
 	[label]="label"
 	[items]="countries"
-	[(ngModel)]="country"
+	[(ngModel)]="countryID"
 	(ngModelChange)="onChanged()"
-	[disabled]="disabled"
+	[readonly]="readonly"
 	radioSlot="end"
 ></sneat-select-from-list>

@@ -39,12 +39,11 @@ export class TeamItemService<Brief, Dto extends Brief> {
 	public watchTeamItemByID<Dto2 extends Dto>(team: ITeamContext, id: string): Observable<ITeamItemContext<Brief, Dto2>> {
 		console.log('watchTeamItemByID()', team.id, this.collectionName, id);
 		const collectionRef= this.collectionRef<Dto2>(team.id);
-		const result = this.sfs.watchByID(collectionRef, id)
+		return  this.sfs.watchByID(collectionRef, id)
 			.pipe(
 				map(o => ({ team, ...o })),
 				tap(o => console.log('watchTeamItemByID()', team.id, this.collectionName, id, ' =>', o)),
 			);
-		return result;
 	}
 
 	private readonly teamRef = (id: string) => doc(this.teamsCollection, id);
