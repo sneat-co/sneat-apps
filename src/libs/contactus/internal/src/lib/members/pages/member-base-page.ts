@@ -1,7 +1,7 @@
 import { ActivatedRoute } from "@angular/router";
 import { IContactContext, ITeamContext } from "@sneat/team/models";
 import { ContactBasePage } from "../../pages/contact-base-page";
-import { MemberPages } from "./constants";
+import { MemberPages } from "../../../../../shared/src/lib/constants";
 import { MemberComponentBaseParams } from "../member-component-base-params";
 // import { IMemberDto } from 'sneat-shared/models/dto/dto-member';
 // import { IUserDto } from 'sneat-shared/models/dto/dto-user';
@@ -43,17 +43,6 @@ export abstract class MemberBasePage extends ContactBasePage {
 		// 	{ member: this.memberContext, relation },
 		// 	{ memberDto: this.memberDto });
 	};
-
-	protected goMemberPage(page: MemberPages): void {
-		if (!this.memberContext) {
-			throw new Error("this.memberContext");
-		}
-		this.navController.navigateForward([page], {
-			queryParams: { id: this.memberContext.id },
-			state: { member: this.memberContext, team: this.memberContext.team },
-		})
-			.catch(this.teamParams.errorLogger.logError);
-	}
 
 	// protected setCurrentUser(dto?: IUserDto): void {
 	// 	this.currentUserDto = dto;

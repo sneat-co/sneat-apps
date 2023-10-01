@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { AddressFormComponent, ISaveEvent, SneatPipesModule } from '@sneat/components';
 import {
 	ContactComponentBaseParams,
-	ContactContactsComponent,
+	ContactContactsComponent, ContactDetailsComponent,
 	ContactRolesInputModule,
 	ContactsListModule,
 } from "@sneat/contactus-shared";
@@ -31,6 +31,7 @@ import { ContactBasePage } from '../contact-base-page';
 		AddressFormComponent,
 		ContactRolesInputModule,
 		ContactContactsComponent,
+		ContactDetailsComponent,
 
 	],
 })
@@ -91,13 +92,6 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 							return;
 						}
 						this.contact = contact;
-						this.contactLocations = zipMapBriefsWithIDs(contact?.dto?.relatedContacts)
-							?.map(c => ({
-								id: c.id,
-								brief: c.brief,
-								team: contact.team,
-							}))?.filter(c => c.brief?.type === 'location');
-						console.log('contact', contact, 'contactLocations', this.contactLocations);
 					},
 					error: this.errorLogger.logErrorHandler('failed to get contact by ID'),
 				},
@@ -128,19 +122,6 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 				},
 				error: this.errorLogger.logErrorHandler('failed to get child contacts'),
 			});
-	}
-
-	goMember(id: string): void {
-		const team = this.team;
-		if (!team) {
-			throw new Error('Can not navigate to member without team context');
-		}
-		this.teamParams.teamNavService.navigateToMember(this.navController, { id, team });
-	}
-
-	protected addRelatedContact(event: Event): void {
-		event.stopPropagation();
-		alert('Not implemented yet');
 	}
 
 	protected saveAddress(save: ISaveEvent<IAddress>): void {

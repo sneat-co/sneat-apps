@@ -8,7 +8,6 @@ import { Observable, throwError } from "rxjs";
 export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
 
 	public contact?: IContactContext;
-	public contactLocations?: IContactContext[];
 
 	protected constructor(
 		className: string,
@@ -37,10 +36,6 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		return this.contactService.watchContactById(team, this.contact?.id);
 	}
 
-	protected get relatedContacts(): readonly IBriefAndID<IContactBrief>[] {
-		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
-	}
-
 	override setItemContext(item: IContactContext): void {
 		super.setItemContext(item);
 		this.contact = item;
@@ -49,7 +44,7 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 	protected override briefs(): { [id: string]: IContactBrief } | undefined {
 		return this.contactusTeam?.dto?.contacts;
 	}
-	
+
 	private tackContactId(): void {
 		this.route.paramMap
 			.pipe(this.takeUntilNeeded())

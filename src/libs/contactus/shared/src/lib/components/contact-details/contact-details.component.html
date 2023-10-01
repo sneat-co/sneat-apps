@@ -1,0 +1,149 @@
+<ion-grid>
+	<ion-row>
+		<ion-col>
+			<ion-card>
+				<ion-item class="sneat-no-end-padding">
+					<ion-label style="font-weight: bold">
+						<ng-container *ngIf="contact?.brief?.gender">
+							<ng-container [ngSwitch]="contact?.brief?.gender">
+								<span *ngSwitchCase="'male'" class="ion-margin-end">🧑</span>
+								<span *ngSwitchCase="'female'" class="ion-margin-end">👩</span>
+								<ion-icon name="person" *ngSwitchDefault></ion-icon>
+							</ng-container>
+							{{(contact|contactTitle) || contact?.brief?.shortTitle || (contact?.dto?.userID === currentUserId ? 'Me' : '(no title)')}}
+						</ng-container>
+					</ion-label>
+					<ion-buttons slot="end">
+						<ion-button color="medium" title="Edit member" (click)="goMemberPage('edit-member')">
+							<ion-icon name="create"></ion-icon>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+				<ion-item-divider mode="md" *ngIf="contact?.brief?.gender && relatedAs">
+					<ion-label *ngIf="contact?.brief?.gender === 'male' && relatedAs === 'child'">My son</ion-label>
+					<ion-label *ngIf="contact?.brief?.gender === 'female' && relatedAs === 'child'">My daughter</ion-label>
+					<ion-label *ngIf="contact?.brief?.gender === 'male' && relatedAs === 'spouse'">My husband</ion-label>
+					<ion-label *ngIf="contact?.brief?.gender === 'female' && relatedAs === 'spouse'">My wife</ion-label>
+				</ion-item-divider>
+				<ion-item>
+					<ion-input label="Date of birth" [readonly]="true" type="date" placeholder="missing"></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-select label="Related to me as" placeholder="not specified yet" interface="popover" [value]="relatedAs">
+						<ion-select-option value="undisclosed">Undisclosed</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ng-container *ngIf="contact?.dto && (!contact?.dto?.gender || !relatedAs)">
+					<ion-item *ngIf="team?.type === 'family' && relatedAs && contact?.dto?.userID !== currentUserId">
+						<ion-select label="Relationship to me" [value]="relatedAs" interface="popover"
+												(ionChange)="changeRelationship($event)">
+							<ion-select-option value="spouse">spouse</ion-select-option>
+							<ion-select-option value="child">child</ion-select-option>
+							<ion-select-option value="parent">parent</ion-select-option>
+							<ion-select-option value="other">other</ion-select-option>
+						</ion-select>
+					</ion-item>
+
+					<ion-item-group
+						*ngIf="team?.type === 'family' && !relatedAs && contact?.dto?.userID !== currentUserId">
+						<ion-item-divider>
+							<ion-label>Relationship to me</ion-label>
+						</ion-item-divider>
+						<ion-radio-group [(ngModel)]="relatedAs" (ionChange)="changeRelationship($event)">
+							<ion-item>
+								<ion-label>Spouse</ion-label>
+								<ion-radio slot="start" value="spouse"></ion-radio>
+							</ion-item>
+							<ion-item>
+								<ion-label>Child</ion-label>
+								<ion-radio slot="start" value="child"></ion-radio>
+							</ion-item>
+							<ion-item>
+								<ion-label>Parent</ion-label>
+								<ion-radio slot="start" value="child"></ion-radio>
+							</ion-item>
+							<ion-item>
+								<ion-label>Other</ion-label>
+								<ion-radio slot="start" value="other"></ion-radio>
+							</ion-item>
+						</ion-radio-group>
+					</ion-item-group>
+
+					<ion-item-group *ngIf="!contact?.dto?.gender">
+						<ion-item-divider>
+							<ion-label>Gender</ion-label>
+						</ion-item-divider>
+						<ion-radio-group [value]="contact?.dto?.gender" (ionChange)="changeGender($event)">
+							<ion-item>
+								<ion-label>Male</ion-label>
+								<ion-radio slot="start" value="male" [disabled]="!contact?.dto"></ion-radio>
+							</ion-item>
+							<ion-item>
+								<ion-label>Female</ion-label>
+								<ion-radio slot="start" value="female" [disabled]="!contact?.dto"></ion-radio>
+							</ion-item>
+						</ion-radio-group>
+					</ion-item-group>
+				</ng-container>
+			</ion-card>
+		</ion-col>
+		<ion-col>
+			<ion-card>
+				<ion-list>
+					<sneat-contact-modules-menu [team]="team" [contact]="contact"></sneat-contact-modules-menu>
+				</ion-list>
+			</ion-card>
+		</ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col>
+			<ion-card>
+				<ion-item mode="md" button class="with-buttons" (click)="goMemberPage('member-schedule')">
+					<ion-label>📅 Schedule</ion-label>
+					<ion-buttons slot="end">
+						<ion-button color="medium" title="Add activity">
+							<ion-icon name="add"></ion-icon>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-card>
+		</ion-col>
+	</ion-row>
+</ion-grid>
+
+<sneat-contact-contacts [contact]="contact"></sneat-contact-contacts>
+
+<ion-card>
+	<ion-item color="light">
+		<ion-label>Related contacts</ion-label>
+	</ion-item>
+	<ion-item *ngIf="!relatedContacts?.length">
+		<ion-label color="medium">No related contacts</ion-label>
+	</ion-item>
+	<ion-item *ngIf="contact?.dto?.relatedContacts">
+		<ion-badge *ngFor="let m of relatedContacts"
+							 color="light" style="cursor: pointer"
+							 (click)="goMember(m.id)"
+		>
+			{{m.brief.relatedAs}} of {{m.brief.title}}
+		</ion-badge>
+		<ion-buttons slot="end">
+			<ion-button (click)="addRelatedContact($event)">Add</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-card>
+
+<ion-card *ngIf="team?.type === 'family'">
+	<ion-item color="light">
+		<ion-label>Related members</ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium" style="font-style: italic">No specific member has been associated with this contact
+		</ion-label>
+	</ion-item>
+</ion-card>
+
+<sneat-contact-locations [team]="team" [contact]="contact"></sneat-contact-locations>
+
+
+<sneat-contact-roles-input [team]="team" [contact]="contact"></sneat-contact-roles-input>

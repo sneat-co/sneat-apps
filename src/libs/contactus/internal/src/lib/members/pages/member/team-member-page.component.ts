@@ -4,11 +4,10 @@ import { FormsModule } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
 import { SneatPipesModule } from "@sneat/components";
-import { ContactComponentBaseParams } from "@sneat/contactus-shared";
-import { Gender, MemberRelationship } from "@sneat/dto";
+import { ContactComponentBaseParams, ContactDetailsComponent } from "@sneat/contactus-shared";
+import {  MemberRelationship } from "@sneat/dto";
 import { MemberComponentBaseParams } from "../../member-component-base-params";
 import { MemberBasePage } from "../member-base-page";
-import { MemberAppsMenuComponent } from "./components/member-apps-menu.component";
 
 @Component({
 	selector: "sneat-team-member-page",
@@ -23,7 +22,7 @@ import { MemberAppsMenuComponent } from "./components/member-apps-menu.component
 		FormsModule,
 		IonicModule,
 		SneatPipesModule,
-		MemberAppsMenuComponent,
+		ContactDetailsComponent,
 	],
 })
 export class TeamMemberPageComponent extends MemberBasePage implements AfterViewInit {
@@ -48,51 +47,7 @@ export class TeamMemberPageComponent extends MemberBasePage implements AfterView
 		]);
 	}
 
-	changeGender(event: Event): void {
-		// tslint:disable-next-line:no-any
-		const gender = (event as CustomEvent).detail.value as Gender;
-		this.logger.debug(`CommuneMemberPageComponent.changeGender(${gender})`);
 
-		// this.startCommuneReadwriteTx([CommuneKind, MemberKind], (tx, communeDto) =>
-		// 	this.membersService.changeMemberPrimaryField(tx, this.memberId, { name: 'gender', value: gender }, communeDto))
-		// 	.subscribe({
-		// 		next: memberDto => {
-		// 			this.setMemberInfo(newCommuneMemberInfo(memberDto));
-		// 			this.setMemberDto(memberDto);
-		// 		},
-		// 		error: this.params.errorLogger.logErrorHandler('Failed to set member gender'),
-		// 	});
-	}
-
-	changeRelationship(event: Event): void {
-		const relatedAs = (event as CustomEvent).detail.value as MemberRelationship;
-		console.log("changeRelationship", relatedAs);
-		// TODO: move below to some service
-		if (!this.currentUserId) {
-			throw new Error("!this.currentUserId");
-		}
-		// this.userService.updateRecord(undefined, this.currentUserId, dto => {
-		// 	const communeId = this.communeRealId;
-		// 	const userCommuneInfo = dto.communes && dto.communes.find(commune => eq(commune.id, communeId));
-		// 	if (!userCommuneInfo) {
-		// 		alert('You are not a member of this commune');
-		// 		return { dto, changed: false };
-		// 	}
-		// 	if (!userCommuneInfo.members) {
-		// 		userCommuneInfo.members = {};
-		// 	}
-		// 	if (userCommuneInfo.members[this.memberId]) {
-		// 		userCommuneInfo.members[this.memberId].relatedAs = relatedAs;
-		// 	} else {
-		// 		userCommuneInfo.members[this.memberId] = { relatedAs };
-		// 	}
-		// 	return { dto, changed: true };
-		// })
-		// 	.subscribe(user => {
-		// 		this.relatedAs = relatedAs;
-		// 		this.currentUserDto = user;
-		// 	});
-	}
 
 	// protected setMemberId(memberId: string): void {
 	// 	super.setMemberId(memberId);

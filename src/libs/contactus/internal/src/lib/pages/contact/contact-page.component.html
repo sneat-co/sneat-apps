@@ -14,54 +14,5 @@
 </ion-header>
 
 <ion-content>
-
-	<sneat-contact-contacts [contact]="contact"></sneat-contact-contacts>
-
-	<ion-card>
-		<ion-item color="light">
-			<ion-label>Related contacts</ion-label>
-		</ion-item>
-		<ion-item *ngIf="!relatedContacts?.length">
-			<ion-label color="medium">No related contacts</ion-label>
-		</ion-item>
-		<ion-item *ngIf="contact?.dto?.relatedContacts">
-			<ion-badge *ngFor="let m of relatedContacts"
-								 color="light" style="cursor: pointer"
-								 (click)="goMember(m.id)"
-			>
-				{{m.brief.relatedAs}} of {{m.brief.title}}
-			</ion-badge>
-			<ion-buttons slot="end">
-				<ion-button (click)="addRelatedContact($event)">Add</ion-button>
-			</ion-buttons>
-		</ion-item>
-	</ion-card>
-
-	<ion-card *ngIf="team?.type === 'family'">
-		<ion-item color="light">
-			<ion-label>Related members</ion-label>
-		</ion-item>
-		<ion-item>
-			<ion-label color="medium" style="font-style: italic">No specific member has been associated with this contact
-			</ion-label>
-		</ion-item>
-	</ion-card>
-
-	<ion-card>
-		<ion-item-divider color="light">
-			<ion-label>Locations</ion-label>
-			<ion-buttons slot="end">
-				<ion-button color="medium" routerLink="new-location">
-					<ion-icon name="add-outline" slot="start"></ion-icon>
-					<ion-label>New</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item-divider>
-		<ion-item-divider *ngIf="contactLocations && !contactLocations.length">
-			<ion-label>No locations have been added yet.</ion-label>
-		</ion-item-divider>
-		<sneat-contacts-list [contacts]="contactLocations"></sneat-contacts-list>
-	</ion-card>
-
-	<sneat-contact-roles-input [team]="team" [contact]="contact"></sneat-contact-roles-input>
+	<sneat-contact-details [contact]="contact" [team]="team"></sneat-contact-details>
 </ion-content>
