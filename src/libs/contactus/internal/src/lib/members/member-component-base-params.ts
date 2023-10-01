@@ -1,19 +1,15 @@
-import { Injectable } from '@angular/core';
-import { TeamComponentBaseParams } from '@sneat/team/components';
-import { MemberService } from '@sneat/contactus-services';
+import { Injectable } from "@angular/core";
+import { ContactComponentBaseParams } from "@sneat/contactus-shared";
+import { TeamComponentBaseParams } from "@sneat/team/components";
+import { MemberService } from "@sneat/contactus-services";
 
 @Injectable()
-export class MemberComponentBaseParams {
-
-	public readonly errorLogger = this.teamParams.errorLogger;
-	public readonly navController = this.teamParams.navController;
-	public readonly userService = this.teamParams.userService;
-	public readonly teamNavService = this.teamParams.teamNavService;
+export class MemberComponentBaseParams extends ContactComponentBaseParams {
 
 	constructor(
-		public readonly teamParams: TeamComponentBaseParams,
+		public readonly contactParams: ContactComponentBaseParams,
 		public readonly memberService: MemberService,
 	) {
+		super(contactParams.teamParams, contactParams.contactService);
 	}
-
 }

@@ -46,7 +46,7 @@ export class TeamService {
 		private readonly userService: SneatUserService,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		console.log('TeamService.constructor()');
+		// console.log('TeamService.constructor()');
 		this.sfs = new SneatFirestoreService<ITeamBrief, ITeamDto>((id, dto) => ({ id, ...dto }));
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === 'notAuthenticated') {

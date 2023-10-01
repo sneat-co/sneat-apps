@@ -1,18 +1,18 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
-import { Params } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
-import { AnalyticsService, IAnalyticsService } from '@sneat/core';
-import { IRecord } from '@sneat/data';
-import { ITeamDto } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
-import { IContactContext, IContactusTeamDtoWithID, ITeamContext, ITeamRef } from '@sneat/team/models';
+import { Inject, Injectable, NgZone } from "@angular/core";
+import { Params } from "@angular/router";
+import { NavController } from "@ionic/angular";
+import { NavigationOptions } from "@ionic/angular/providers/nav-controller";
+import { AnalyticsService, IAnalyticsService } from "@sneat/core";
+import { IRecord } from "@sneat/data";
+import { ITeamDto } from "@sneat/dto";
+import { ErrorLogger, IErrorLogger } from "@sneat/logging";
+import { IRetrospective, IScrumDto } from "@sneat/scrumspace/scrummodels";
+import { IContactContext, IContactusTeamDtoWithID, ITeamContext, ITeamRef } from "@sneat/team/models";
 
-export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
+export type ScrumPageTab = "team" | "my" | "risks" | "qna";
 
 @Injectable({
-	providedIn: 'root',
+	providedIn: "root",
 })
 export class TeamNavService {
 	constructor(
@@ -24,13 +24,13 @@ export class TeamNavService {
 	) {
 	}
 
-	public navigateToTeams(animationDirection?: 'forward' | 'back'): void {
-		console.log('navigateToTeams()');
-		this.analyticsService.logEvent('navigateToTeams');
+	public navigateToTeams(animationDirection?: "forward" | "back"): void {
+		console.log("navigateToTeams()");
+		this.analyticsService.logEvent("navigateToTeams");
 		this.navController
-			.navigateRoot('teams', { animationDirection })
+			.navigateRoot("teams", { animationDirection })
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to teams page'),
+				this.errorLogger.logError(err, "Failed to navigate to teams page"),
 			);
 	}
 
@@ -39,27 +39,27 @@ export class TeamNavService {
 		queryParams?: Params;
 		// fragment?: string;
 	}): void {
-		console.log('navigateToLogin()', options?.queryParams);
+		console.log("navigateToLogin()", options?.queryParams);
 
 		// Do not log `returnTo` as it might holds sensitive info
-		this.analyticsService.logEvent('navigateToLogin');
+		this.analyticsService.logEvent("navigateToLogin");
 
 		const navOptions: NavigationOptions = {
 			queryParams: options?.queryParams,
-			animationDirection: 'back',
+			animationDirection: "back",
 		};
 		if (options?.returnTo) {
 			navOptions.fragment = options.returnTo;
 		}
 		this.navController
-			.navigateRoot('login', navOptions)
+			.navigateRoot("login", navOptions)
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to login page'),
+				this.errorLogger.logError(err, "Failed to navigate to login page"),
 			);
 	}
 
 	public navigateToScrum(
-		date: 'today' | 'yesterday' | string,
+		date: "today" | "yesterday" | string,
 		team: IRecord<ITeamDto>,
 		scrum?: IRecord<IScrumDto>,
 		tab?: ScrumPageTab,
@@ -68,24 +68,24 @@ export class TeamNavService {
 			`navigateToScrum(date=${date}, team=${team?.id}, tab=${tab}), scrum:`,
 			scrum?.dto,
 		);
-		this.analyticsService.logEvent('navigateToScrum', { date, team: team.id });
+		this.analyticsService.logEvent("navigateToScrum", { date, team: team.id });
 		this.navController
-			.navigateForward('scrum', {
+			.navigateForward("scrum", {
 				queryParams: { date, team: team.id },
 				state: { team, scrum },
 				fragment: tab && `tab=` + tab,
 			})
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to scrum page'),
+				this.errorLogger.logError(err, "Failed to navigate to scrum page"),
 			);
 	}
 
 	public navigateToUserProfile(): void {
-		this.analyticsService.logEvent('navigateToUserProfile');
+		this.analyticsService.logEvent("navigateToUserProfile");
 		this.navController
-			.navigateRoot('user-profile')
+			.navigateRoot("user-profile")
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to naviage to user profile'),
+				this.errorLogger.logError(err, "Failed to naviage to user profile"),
 			);
 	}
 
@@ -99,7 +99,7 @@ export class TeamNavService {
 		const id = `${memberContext?.team?.id}:${memberContext?.id}`;
 		const { team } = memberContext;
 		if (!team) {
-			this.errorLogger.logError('not able to navigate to member without team context');
+			this.errorLogger.logError("not able to navigate to member without team context");
 			return;
 		}
 		this.navForward(
@@ -107,15 +107,15 @@ export class TeamNavService {
 			`space/${team.type}/${memberContext.team?.id}/member/${memberContext.id}`,
 			{
 				state: {
-					member: memberContext,
+					contact: memberContext,
 				},
 			},
-			{ name: '', params: { id, team: team.id, member: memberContext.id } },
+			{ name: "", params: { id, team: team.id, member: memberContext.id } },
 		);
 	}
 
-	public navigateToTeam(team: ITeamContext, animationDirection?: 'forward' | 'back'): Promise<boolean> {
-		this.analyticsService.logEvent('navigateToTeam', { team: team.id });
+	public navigateToTeam(team: ITeamContext, animationDirection?: "forward" | "back"): Promise<boolean> {
+		this.analyticsService.logEvent("navigateToTeam", { team: team.id });
 		const url = `space/${team?.type}/${team.id}`;
 		return new Promise<boolean>((resolve, reject) => {
 			this.navController
@@ -125,7 +125,7 @@ export class TeamNavService {
 				})
 				.then(resolve)
 				.catch(err => {
-						this.errorLogger.logError(err, 'Failed to navigate to team overview page with URL: ' + url);
+						this.errorLogger.logError(err, "Failed to navigate to team overview page with URL: " + url);
 						reject(err);
 					},
 				);
@@ -136,7 +136,7 @@ export class TeamNavService {
 		navController: NavController,
 		team: IRecord<ITeamDto>,
 	): void =>
-		this.navToTeamPage(navController, team, 'scrums', 'navigateToScrums');
+		this.navToTeamPage(navController, team, "scrums", "navigateToScrums");
 
 	public navigateToAddMetric = (
 		navController: NavController,
@@ -145,8 +145,8 @@ export class TeamNavService {
 		this.navToTeamPage(
 			navController,
 			team,
-			'add-metric',
-			'navigateToAddMetric',
+			"add-metric",
+			"navigateToAddMetric",
 		);
 
 	public navigateToAddMember = (
@@ -156,25 +156,25 @@ export class TeamNavService {
 		this.navToTeamPage(
 			navController,
 			team,
-			'add-member',
-			'navigateToAddMember',
+			"add-member",
+			"navigateToAddMember",
 		);
 
 	public navigateToRetrospective = (
 		navController: NavController,
 		team: IRecord<ITeamDto>,
-		id: string | 'upcoming',
+		id: string | "upcoming",
 	): void =>
 		this.navToTeamPage(
 			navController,
 			team,
-			'retrospective',
-			'navigateToRetrospective',
+			"retrospective",
+			"navigateToRetrospective",
 			{ id },
 		);
 
 	public navigateToRetroTree(
-		date: 'today' | 'yesterday' | string,
+		date: "today" | "yesterday" | string,
 		team?: IRecord<ITeamDto>,
 		retrospective?: IRecord<IRetrospective>,
 	): void {
@@ -185,31 +185,31 @@ export class TeamNavService {
 		if (!team) {
 			return;
 		}
-		this.analyticsService.logEvent('navigateToRetroReview', {
+		this.analyticsService.logEvent("navigateToRetroReview", {
 			date,
 			team: team.id,
 		});
 		this.navController
-			.navigateForward('retro-tree', {
+			.navigateForward("retro-tree", {
 				queryParams: { date, team: team.id },
 				state: { team, retrospective },
 			})
 			.catch((err) =>
 				this.errorLogger.logError(
 					err,
-					'Failed to navigate to retro review page',
+					"Failed to navigate to retro review page",
 				),
 			);
 	}
 
 
 	public navigateBackToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
-		navOptions.animationDirection = 'back';
+		navOptions.animationDirection = "back";
 		return this.navigateToTeamPage(team, page, navOptions);
 	}
 
 	public navigateForwardToTeamPage(team: ITeamContext, page: string, navOptions: NavigationOptions = {}): Promise<boolean> {
-		navOptions.animationDirection = 'forward';
+		navOptions.animationDirection = "forward";
 		return this.navigateToTeamPage(team, page, navOptions);
 	}
 
@@ -217,7 +217,7 @@ export class TeamNavService {
 		const url = `space/${team?.type}/${team?.id}/${page}`;
 		const state = navOptions.state || {};
 		navOptions = { ...navOptions, state: { team, ...state } };
-		console.log('navigateToTeamPage()', url, navOptions);
+		console.log("navigateToTeamPage()", url, navOptions);
 		return this.navController
 			.navigateForward(url, navOptions);
 	}
@@ -228,13 +228,13 @@ export class TeamNavService {
 		navOptions: NavigationOptions,
 		analyticsEvent: { name: string; params?: { [id: string]: unknown } },
 	): void {
-		console.log('navForward()', url, analyticsEvent.name, analyticsEvent.params);
+		console.log("navForward()", url, analyticsEvent.name, analyticsEvent.params);
 		navController = navController || this.navController;
 		// this.analyticsService.logEvent(analyticsEvent.name, analyticsEvent.params);
 		navController
 			.navigateForward(url, navOptions)
 			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to: ' + url),
+				this.errorLogger.logError(err, "Failed to navigate to: " + url),
 			);
 	}
 

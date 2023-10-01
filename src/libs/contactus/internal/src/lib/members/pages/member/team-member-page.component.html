@@ -4,7 +4,13 @@
 			<ion-back-button [defaultHref]="teamPageUrl('members')"></ion-back-button>
 		</ion-buttons>
 		<ng-container [ngSwitch]="team.type">
-			<ion-title *ngSwitchCase="'family'">Family member</ion-title>
+			<ion-title *ngSwitchCase="'family'">
+				<ng-container *ngIf="contact else titleNoContact">Family member: {{contact|personTitle}}</ng-container>
+				<ng-template #titleNoContact>
+					<ng-container>Family member</ng-container>
+				</ng-template>
+
+			</ion-title>
 			<ion-title *ngSwitchCase="'cohabit'">Housemate</ion-title>
 			<ion-title *ngSwitchCase="'work'">Worker</ion-title>
 			<ion-title *ngSwitchDefault>Member : {{defaultBackUrl}}</ion-title>
@@ -63,7 +69,7 @@
 								</ng-container>
 							</ion-label>
 							<ion-buttons slot="end">
-								<ion-button color="medium" title="Edit member" (click)="go('edit-member')">
+								<ion-button color="medium" title="Edit member" (click)="goMemberPage('edit-member')">
 									<ion-icon name="create"></ion-icon>
 								</ion-button>
 							</ion-buttons>
@@ -146,7 +152,7 @@
 		<ion-row>
 			<ion-col>
 				<ion-card>
-					<ion-item mode="md" button class="with-buttons" (click)="go('member-schedule')">
+					<ion-item mode="md" button class="with-buttons" (click)="goMemberPage('member-schedule')">
 						<ion-label>📅 Schedule</ion-label>
 						<ion-buttons slot="end">
 							<ion-button color="medium" title="Add activity">

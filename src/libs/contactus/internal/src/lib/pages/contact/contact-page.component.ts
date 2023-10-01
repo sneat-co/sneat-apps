@@ -1,10 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from "@angular/router";
 import { IonicModule } from '@ionic/angular';
 import { AddressFormComponent, ISaveEvent, SneatPipesModule } from '@sneat/components';
-import { ContactComponentBaseParams, ContactRolesInputModule, ContactsListModule } from '@sneat/contactus-shared';
+import {
+	ContactComponentBaseParams,
+	ContactContactsComponent,
+	ContactRolesInputModule,
+	ContactsListModule,
+} from "@sneat/contactus-shared";
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services';
@@ -19,11 +24,14 @@ import { ContactBasePage } from '../contact-base-page';
 	imports: [
 		CommonModule,
 		FormsModule,
+		RouterModule,
 		IonicModule,
 		SneatPipesModule,
 		ContactsListModule,
 		AddressFormComponent,
 		ContactRolesInputModule,
+		ContactContactsComponent,
+
 	],
 })
 export class ContactPageComponent extends ContactBasePage implements OnInit {
@@ -88,7 +96,7 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 								id: c.id,
 								brief: c.brief,
 								team: contact.team,
-							}));
+							}))?.filter(c => c.brief?.type === 'location');
 						console.log('contact', contact, 'contactLocations', this.contactLocations);
 					},
 					error: this.errorLogger.logErrorHandler('failed to get contact by ID'),

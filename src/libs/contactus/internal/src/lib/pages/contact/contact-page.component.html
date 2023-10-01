@@ -15,10 +15,15 @@
 
 <ion-content>
 
+	<sneat-contact-contacts [contact]="contact"></sneat-contact-contacts>
+
 	<ion-card>
-		<ion-item-divider color="light">
-			<ion-label>Contacts</ion-label>
-		</ion-item-divider>
+		<ion-item color="light">
+			<ion-label>Related contacts</ion-label>
+		</ion-item>
+		<ion-item *ngIf="!relatedContacts?.length">
+			<ion-label color="medium">No related contacts</ion-label>
+		</ion-item>
 		<ion-item *ngIf="contact?.dto?.relatedContacts">
 			<ion-badge *ngFor="let m of relatedContacts"
 								 color="light" style="cursor: pointer"
@@ -30,30 +35,7 @@
 				<ion-button (click)="addRelatedContact($event)">Add</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ion-item>
-			<ion-input label="Email" readonly type="email" placeholder="no email" [value]="contact?.dto?.email"></ion-input>
-			<ion-button fill="clear">
-				<ion-icon [name]="contact?.dto?.email ? 'create' : 'add'"></ion-icon>
-			</ion-button>
-		</ion-item>
-		<ion-item>
-			<ion-input label="Phone" readonly type="phone" placeholder="no phone" [value]="contact?.dto?.phone"></ion-input>
-			<ion-button fill="clear">
-				<ion-icon [name]="contact?.dto?.phone ? 'create' : 'add'"></ion-icon>
-			</ion-button>
-		</ion-item>
-		<ion-item>
-			<ion-input label="Website" readonly type="url" placeholder="no website" [value]="contact?.dto?.website"></ion-input>
-			<ion-button fill="clear">
-				<ion-icon [name]="contact?.dto?.website ? 'create' : 'add'"></ion-icon>
-			</ion-button>
-		</ion-item>
 	</ion-card>
-
-	<sneat-address-form
-		[address]="contact?.dto?.address"
-		(save)="saveAddress($event)"
-	></sneat-address-form>
 
 	<ion-card *ngIf="team?.type === 'family'">
 		<ion-item color="light">

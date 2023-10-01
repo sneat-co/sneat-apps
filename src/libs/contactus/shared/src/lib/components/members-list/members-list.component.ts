@@ -30,7 +30,7 @@ import { SneatUserService } from '@sneat/auth-core';
 		RouterModule,
 	],
 })
-// Deprecated: TODO migrated to Contacts list?
+// TODO: Is it deprecated and should we migrated to Contacts list?
 export class MembersListComponent implements OnChanges {
 
 	private selfRemove?: boolean;
