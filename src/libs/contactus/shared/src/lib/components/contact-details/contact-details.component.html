@@ -111,7 +111,7 @@
 	</ion-row>
 </ion-grid>
 
-<sneat-contact-contacts [contact]="contact"></sneat-contact-contacts>
+<sneat-contact-contacts *ngIf="hideForContactTypes(['pet'])" [contact]="contact"></sneat-contact-contacts>
 
 <ion-card>
 	<ion-item color="light">
@@ -143,7 +143,7 @@
 	</ion-item>
 </ion-card>
 
-<sneat-contact-locations [team]="team" [contact]="contact"></sneat-contact-locations>
+<sneat-contact-locations *ngIf="hideForContactTypes(['pet'])" [team]="team" [contact]="contact"></sneat-contact-locations>
 
 
-<sneat-contact-roles-input [team]="team" [contact]="contact"></sneat-contact-roles-input>
+<sneat-contact-roles-input *ngIf="hideForContactTypes(['pet'])" [team]="team" [contact]="contact"></sneat-contact-roles-input>

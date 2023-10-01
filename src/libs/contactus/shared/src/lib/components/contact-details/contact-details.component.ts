@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
 import { SneatPipesModule } from "@sneat/components";
-import { Gender, IBriefAndID, IContactBrief, MemberRelationship } from "@sneat/dto";
+import { ContactType, Gender, IBriefAndID, IContactBrief, MemberRelationship } from "@sneat/dto";
 import { IContactContext, ITeamContext, zipMapBriefsWithIDs } from "@sneat/team/models";
 import { MemberPages } from "../../constants";
 import { ContactComponentBaseParams } from "../../contact-component-base-params";
@@ -41,13 +41,18 @@ export class ContactDetailsComponent {
 
 	protected relatedAs?: MemberRelationship;
 
+
 	constructor(
 		private readonly params: ContactComponentBaseParams,
 	) {
 
 	}
 
-	public get currentUserId() {
+	protected hideForContactTypes(contactTypes: ContactType[]): boolean {
+		return !!this.contact?.brief?.type && !contactTypes.includes(this.contact.brief.type);
+	}
+
+	protected get currentUserId() {
 		return this.params.userService.currentUserID;
 	}
 
