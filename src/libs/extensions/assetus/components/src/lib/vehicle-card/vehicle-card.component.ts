@@ -3,10 +3,11 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
-import { CountrySelectorComponent, SelectFromListModule } from "@sneat/components";
+import { CountrySelectorComponent } from "@sneat/components";
 import { carMakes } from "@sneat/dto";
 import { IAssetContext, ITeamContext, IVehicleAssetContext } from "@sneat/team/models";
 import { AssetPossessionCardComponent } from "../asset-possesion-card/asset-possession-card.component";
+import { AssetRegNumberInputComponent } from "../asset-reg-number-input/asset-reg-number-input.component";
 import { MakeModelCardComponent } from "../make-model-card/make-model-card.component";
 import { VehicleEngineComponent } from "../vehicle-engine/vehicle-engine.component";
 
@@ -26,6 +27,7 @@ import { VehicleEngineComponent } from "../vehicle-engine/vehicle-engine.compone
 		MakeModelCardComponent,
 		AssetPossessionCardComponent,
 		VehicleEngineComponent,
+		AssetRegNumberInputComponent
 	]
 })
 export class VehicleCardComponent implements OnChanges {

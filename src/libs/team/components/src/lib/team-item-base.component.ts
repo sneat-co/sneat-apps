@@ -1,7 +1,7 @@
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { INavContext, TeamItem } from "@sneat/core";
 import { TeamItemService } from "@sneat/team/services";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, tap } from "rxjs";
 import { TeamBaseComponent } from "./team-base.component";
 import { TeamComponentBaseParams } from "./team-component-base-params";
 
@@ -21,11 +21,15 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 	) {
 		super(className, route, teamParams);
 		this.defaultBackPage = defaultBackPage;
-		this.setItemContext(window.history.state[itemName] as INavContext<Brief, Dto>);
+		const item = window.history.state[itemName] as INavContext<Brief, Dto>;
+		if (item) {
+			this.setItemContext(item);
+		}
 		this.trackUrlParams();
 	}
 
 	protected setItemContext(item?: INavContext<Brief, Dto>): void {
+		console.log("TeamItemBaseComponent/setItemContext", item);
 		this.item = item;
 	}
 
@@ -47,15 +51,16 @@ export abstract class TeamItemBaseComponent<Brief, Dto extends Brief> extends Te
 					this.onRouteParamsChanged(params, itemID, teamID);
 					if (itemID) {
 						const item = this.item;
-						if (item?.id !== itemID) {
+						if (item?.id !== itemID || !this.itemSubscription) {
 							this.setItemContext({ ...item, id: itemID });
 							this.setBriefFromTeam(itemID);
-							if (this.itemSubscription) {
-								this.itemSubscription.unsubscribe();
-							}
+							this.itemSubscription?.unsubscribe();
 							this.onRouteParamsChanged(params, itemID, teamID);
 							this.itemSubscription = this.watchItemChanges()
-								.pipe(this.takeUntilNeeded())
+								.pipe(
+									this.takeUntilNeeded(),
+									tap(item => console.log("watchItemChanges", item))
+								)
 								.subscribe({
 									next: item => {
 										this.setItemContext(item);

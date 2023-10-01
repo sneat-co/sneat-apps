@@ -5,13 +5,7 @@
 														label="Country of registration"
 														(countryIDChange)="countryChanged($event)"
 		></sneat-country-selector>
-		<ion-item>
-			<ion-input label="Registration #" [formControl]="regNumber" placeholder="###-CO-#####"></ion-input>
-			<!--            <ion-button fill="outline">Validate</ion-button>-->
-			<ion-buttons slot="end">
-				<ion-button [disabled]="!vehicleAsset?.dto?.regNumber" color="primary">Look up</ion-button>
-			</ion-buttons>
-		</ion-item>
+		<sneat-asset-reg-number [team]="team" [asset]="vehicleAsset"></sneat-asset-reg-number>
 	</ion-list>
 </ion-card>
 

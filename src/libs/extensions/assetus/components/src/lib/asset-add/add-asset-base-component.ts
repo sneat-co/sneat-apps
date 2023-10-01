@@ -6,7 +6,7 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { AssetService } from '../services/asset-service';
-import { ICreateAssetRequest } from '../asset-service.dto';
+import { ICreateAssetRequest } from '../services/asset-service.dto';
 
 @Component({ template: '' })
 export abstract class AddAssetBaseComponent extends SneatBaseComponent {

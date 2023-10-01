@@ -21,8 +21,8 @@ export class ContactRolesInputComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Inject(CONTACT_ROLES_BY_TYPE) private readonly contactRolesByType: Record<ContactType, IContactRole[]>,
 		private readonly contactService: ContactService,
+		@Inject(CONTACT_ROLES_BY_TYPE) private readonly contactRolesByType?: Record<ContactType, IContactRole[]>,
 	) {
 	}
 

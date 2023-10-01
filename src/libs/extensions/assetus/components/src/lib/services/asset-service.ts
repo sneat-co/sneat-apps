@@ -8,7 +8,7 @@ import { AssetCategory, IAssetBrief, IAssetDtoBase, IAssetMainData } from "@snea
 import { IAssetContext, ITeamContext } from "@sneat/team/models";
 import { TeamItemService } from "@sneat/team/services";
 import { Observable, throwError } from "rxjs";
-import { ICreateAssetRequest } from "../asset-service.dto";
+import { ICreateAssetRequest, IUpdateAssetRequest } from "./asset-service.dto";
 
 @Injectable({
 	providedIn: "root"
@@ -27,6 +27,10 @@ export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
 		}
 		const request = new HttpParams({ fromObject: { id: asset.id, team: asset.team.id } });
 		return this.sneatApiService.delete<void>("assets/delete_asset", request);
+	}
+
+	public updateAsset(request: IUpdateAssetRequest): Observable<void> {
+		return this.sneatApiService.post("assets/update_asset", request);
 	}
 
 	public createAsset<A extends IAssetMainData, D extends IAssetDtoBase>(team: ITeamContext, request: ICreateAssetRequest<A>): Observable<IAssetContext<D>> {
