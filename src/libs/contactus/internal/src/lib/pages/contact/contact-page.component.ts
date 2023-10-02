@@ -13,7 +13,7 @@ import {
 import { eq } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services';
-import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team/models';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

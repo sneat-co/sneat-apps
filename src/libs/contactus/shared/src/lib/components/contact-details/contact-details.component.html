@@ -25,9 +25,8 @@
 					<ion-label *ngIf="contact?.brief?.gender === 'male' && relatedAs === 'spouse'">My husband</ion-label>
 					<ion-label *ngIf="contact?.brief?.gender === 'female' && relatedAs === 'spouse'">My wife</ion-label>
 				</ion-item-divider>
-				<ion-item>
-					<ion-input label="Date of birth" [readonly]="true" type="date" placeholder="missing"></ion-input>
-				</ion-item>
+
+				<sneat-contact-dob [contact]="contact"></sneat-contact-dob>
 				<ion-item>
 					<ion-select label="Related to me as" placeholder="not specified yet" interface="popover" [value]="relatedAs">
 						<ion-select-option value="undisclosed">Undisclosed</ion-select-option>

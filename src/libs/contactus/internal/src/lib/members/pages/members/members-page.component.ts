@@ -25,7 +25,6 @@ import {
 	zipMapBriefsWithIDs,
 } from "@sneat/team/models";
 import { takeUntil } from "rxjs";
-import { MemberComponentBaseParams } from "../../member-component-base-params";
 import { MembersBasePage } from "../../members-base-page";
 
 interface MembersGroup {

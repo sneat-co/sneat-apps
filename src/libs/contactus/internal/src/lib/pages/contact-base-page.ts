@@ -1,8 +1,8 @@
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { ContactComponentBaseParams } from "@sneat/contactus-shared";
-import { IBriefAndID, IContactBrief, IContactDto } from "@sneat/dto";
+import { IContactBrief, IContactDto } from "@sneat/dto";
 import { TeamItemBaseComponent } from "@sneat/team/components";
-import { IContactContext, zipMapBriefsWithIDs } from "@sneat/team/models";
+import { IContactContext } from "@sneat/team/models";
 import { Observable, throwError } from "rxjs";
 
 export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
