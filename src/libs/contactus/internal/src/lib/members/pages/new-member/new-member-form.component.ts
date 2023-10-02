@@ -1,28 +1,42 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { IonInput, IonRadio } from '@ionic/angular';
-import { formNexInAnimation } from '@sneat/core';
-import { createSetFocusToInput, PersonFormWizardComponent, personName } from '@sneat/components';
-import { RoutingState } from '@sneat/core';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from "@angular/core";
+import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from "@angular/forms";
+import { IonicModule, IonInput, IonRadio } from "@ionic/angular";
+import { formNexInAnimation } from "@sneat/core";
+import { createSetFocusToInput, PersonFormModule, PersonFormWizardComponent, personName } from "@sneat/components";
+import { RoutingState } from "@sneat/core";
 import {
 	emptyRelatedPerson,
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonNotReady, isRelatedPersonReady,
 	TeamMemberType,
-} from '@sneat/dto';
-import { IContactusTeamDtoWithID, ICreateTeamMemberRequest, ITeamContext, zipMapBriefsWithIDs } from '@sneat/team/models';
-import { MemberComponentBaseParams } from '../../member-component-base-params';
+} from "@sneat/dto";
+import {
+	IContactusTeamDtoWithID,
+	ICreateTeamMemberRequest,
+	ITeamContext,
+	zipMapBriefsWithIDs,
+} from "@sneat/team/models";
+import { MemberComponentBaseParams } from "../../member-component-base-params";
 
 
 @Component({
-	selector: 'sneat-new-member-form',
-	templateUrl: 'new-member-form.component.html',
+	selector: "sneat-new-member-form",
+	templateUrl: "new-member-form.component.html",
 	animations: [
 		formNexInAnimation,
 	],
 	providers: [
 		MemberComponentBaseParams,
+	],
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		ReactiveFormsModule,
+		PersonFormModule,
 	],
 })
 export class NewMemberFormComponent implements OnChanges {
@@ -46,8 +60,8 @@ export class NewMemberFormComponent implements OnChanges {
 	@Output() readonly relatedPersonChange = new EventEmitter<IRelatedPerson>();
 
 	@ViewChild(PersonFormWizardComponent, { static: false }) personFormComponent?: PersonFormWizardComponent;
-	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
-	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
+	@ViewChild("emailInput", { static: false }) emailInput?: IonInput;
+	@ViewChild("genderFirstInput", { static: false }) genderFirstInput?: IonRadio;
 
 	public get isPersonFormReady(): boolean {
 		return isRelatedPersonNotReady(this.relatedPerson, this.personRequirements);
@@ -55,7 +69,7 @@ export class NewMemberFormComponent implements OnChanges {
 
 	public readonly setFocusToInput = createSetFocusToInput(this.params.errorLogger);
 
-	public readonly memberType = new FormControl<TeamMemberType>('member', [
+	public readonly memberType = new FormControl<TeamMemberType>("member", [
 		Validators.required,
 	]);
 
@@ -75,12 +89,12 @@ export class NewMemberFormComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team']) {
+		if (changes["team"]) {
 			this.personRequirements = { // TODO: Should we move it inside person form wizard?
 				...this.personRequirements,
-				ageGroup: this.team?.type === 'family' ? { required: true } : { hide: true },
-				roles: this.team?.type === 'family' ? { hide: true } : { required: true },
-				relatedAs: this.team?.type === 'family' ? { required: true } : { hide: true },
+				ageGroup: this.team?.type === "family" ? { required: true } : { hide: true },
+				roles: this.team?.type === "family" ? { hide: true } : { required: true },
+				relatedAs: this.team?.type === "family" ? { required: true } : { hide: true },
 			};
 		}
 	}
@@ -96,32 +110,32 @@ export class NewMemberFormComponent implements OnChanges {
 		// 	return;
 		// }
 		if (!this.personFormComponent) {
-			throw ('!this.personFormComponent');
+			throw ("!this.personFormComponent");
 		}
 		const team = this.team;
 		if (!team) {
-			this.params.errorLogger.logError('not able to add new member without team context');
+			this.params.errorLogger.logError("not able to add new member without team context");
 			return;
 		}
 		if (!this.relatedPerson.ageGroup) {
-			throw new Error('Age group is a required field');
+			throw new Error("Age group is a required field");
 		}
 		if (!this.relatedPerson.gender) {
-			throw new Error('Gender is a required field');
+			throw new Error("Gender is a required field");
 		}
 		const displayName = personName(this.relatedPerson.name);
 		const duplicateMember = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.find(m => personName(m.brief.name) === displayName);
 		if (duplicateMember) {
-			alert('There is already a member with same name: ' + displayName);
+			alert("There is already a member with same name: " + displayName);
 			return;
 		}
 
 		const request: ICreateTeamMemberRequest = {
 			...this.relatedPerson,
-			status: 'active',
-			type: 'person',
-			countryID: team.dto?.countryID || '--',
-			roles: ['contributor'],
+			status: "active",
+			type: "person",
+			countryID: team.dto?.countryID || "--",
+			roles: ["contributor"],
 			teamID: team.id,
 		};
 
@@ -129,17 +143,17 @@ export class NewMemberFormComponent implements OnChanges {
 		this.addMemberForm.disable();
 		this.params.memberService.createMember(request).subscribe({
 			next: member => {
-				console.log('member created:', member);
+				console.log("member created:", member);
 				if (this.hasNavHistory) {
 					this.params.navController.pop()
-						.catch(this.params.errorLogger.logErrorHandler('failed to navigate to prev page'));
+						.catch(this.params.errorLogger.logErrorHandler("failed to navigate to prev page"));
 				} else {
-					this.params.teamNavService.navigateBackToTeamPage(team, 'members')
-						.catch(this.params.errorLogger.logErrorHandler('failed to navigate back to members page'));
+					this.params.teamNavService.navigateBackToTeamPage(team, "members")
+						.catch(this.params.errorLogger.logErrorHandler("failed to navigate back to members page"));
 				}
 			},
 			error: err => {
-				this.params.errorLogger.logError(err, 'Failed to create a new member');
+				this.params.errorLogger.logError(err, "Failed to create a new member");
 				this.addMemberForm.enable();
 			},
 		});
@@ -177,7 +191,7 @@ export class NewMemberFormComponent implements OnChanges {
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	onRelatedPersonChanged(relatedPerson: IRelatedPerson): void {
-		console.log('NewMemberFormComponent.onRelatedPersonChanged()', relatedPerson);
+		console.log("NewMemberFormComponent.onRelatedPersonChanged()", relatedPerson);
 		this.relatedPerson = relatedPerson;
 		this.relatedPersonChange.emit(relatedPerson);
 		this.canSubmit = isRelatedPersonReady(relatedPerson, this.personRequirements);

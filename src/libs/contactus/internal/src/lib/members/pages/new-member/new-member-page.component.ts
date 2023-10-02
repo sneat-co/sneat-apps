@@ -1,15 +1,30 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 import { ActivatedRoute } from '@angular/router';
-import { IonInput } from '@ionic/angular';
+import { IonicModule, IonInput } from "@ionic/angular";
+import { ContactComponentBaseParams } from "@sneat/contactus-shared";
 import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamBaseComponent, TeamComponentBaseParams, TeamComponentsModule } from "@sneat/team/components";
 import { filter, first, takeUntil } from 'rxjs';
+import { NewMemberFormComponent } from "./new-member-form.component";
 
 
 @Component({
 	selector: 'sneat-new-member-page',
 	templateUrl: './new-member-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [
+		TeamComponentBaseParams,
+		ContactComponentBaseParams,
+	],
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		NewMemberFormComponent,
+		TeamComponentsModule,
+	],
 })
 export class NewMemberPageComponent extends TeamBaseComponent {
 

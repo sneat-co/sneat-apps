@@ -9,8 +9,7 @@ export const membersRoutes: Route[] = [
 	},
 	{
 		path: "new-member",
-		loadChildren: () => import("./pages/new-member/new-member-page.module")
-			.then(m => m.NewMemberPageModule),
+		loadComponent: () => import("./pages/new-member").then(m => m.NewMemberPageComponent),
 		// ...guardRoute,
 	},
 	{
