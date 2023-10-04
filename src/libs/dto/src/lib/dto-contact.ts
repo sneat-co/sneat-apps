@@ -1,6 +1,7 @@
 import { IAvatar } from '@sneat/auth-models';
 import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
+import { MemberContactType } from '@sneat/team/models';
 import { ContactRole } from './contact-roles';
 import { IAddress } from './dto-address';
 import { IContact2Asset } from './dto-contact2item';
@@ -17,7 +18,9 @@ export interface IName {
 }
 
 export function isNameEmpty(n?: IName): boolean {
-	return !n || !n.full && !n.first && !n.last && !n.middle;
+	// noinspection UnnecessaryLocalVariableJS
+	const result = !n || !n.full?.trim() && !n.first?.trim() && !n.last?.trim() && !n.middle?.trim() && !n.nick?.trim();
+	return result;
 }
 
 export function trimNames(n: IName): IName {
@@ -94,6 +97,10 @@ export interface IRelatedPerson extends IPerson {
 	// readonly roles?: string[]; // Either member roles or contact roles
 }
 
+export interface IMemberPerson extends IRelatedPerson {
+	type: MemberContactType;
+}
+
 // // Default value: 'optional'
 export type RequirementOption = 'required' | 'optional' | 'excluded';
 
@@ -108,10 +115,12 @@ export interface IPersonRequirements {
 }
 
 export function isPersonNotReady(p: IPerson, requires: IPersonRequirements): boolean {
-	return isNameEmpty(p.name) ||
+	const nameIsEmpty = isNameEmpty(p.name);
+	const isMissingRequiredFields =
 		!!requires.lastName?.required && !p.name?.last ||
 		!!requires.ageGroup?.required && !p.ageGroup ||
 		!!requires.gender?.required && !p.gender;
+	return nameIsEmpty || isMissingRequiredFields;
 }
 
 export function isPersonReady(p: IPerson, requires: IPersonRequirements): boolean {
@@ -119,14 +128,14 @@ export function isPersonReady(p: IPerson, requires: IPersonRequirements): boolea
 }
 
 export function isRelatedPersonNotReady(p: IRelatedPerson, requires: IPersonRequirements): boolean {
-	return isPersonNotReady(p, requires) || p.ageGroup != 'pet' && !!requires.relatedAs?.required && !p.relationship;
+	return isPersonNotReady(p, requires) || p.type !== 'animal' && !!requires.relatedAs?.required && !p.relationship;
 }
 
 export function isRelatedPersonReady(p: IPerson, requires: IPersonRequirements): boolean {
 	return !isRelatedPersonNotReady(p, requires);
 }
 
-export const emptyRelatedPerson = emptyPersonBase;
+export const emptyMemberPerson = emptyPersonBase as IMemberPerson;
 
 export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
 	const v2 = { ...excludeUndefined(v) };

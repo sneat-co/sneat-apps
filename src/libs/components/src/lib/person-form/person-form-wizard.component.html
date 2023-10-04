@@ -17,8 +17,6 @@
                    (genderChange)="onGenderChanged($event)"
 ></sneat-gender-form>
 
-wizardStep: {{wizardStep}}
-
 <sneat-names-form *ngIf="show.name"
                   [name]="relatedPerson.name"
                   [isActive]="wizardStep === 'name'"

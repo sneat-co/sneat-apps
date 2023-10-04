@@ -1,13 +1,13 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule, IonInput } from "@ionic/angular";
-import { ContactComponentBaseParams } from "@sneat/contactus-shared";
-import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
-import { TeamBaseComponent, TeamComponentBaseParams, TeamComponentsModule } from "@sneat/team/components";
+import { IonicModule, IonInput } from '@ionic/angular';
+import { ContactComponentBaseParams } from '@sneat/contactus-shared';
+import { emptyMemberPerson, IMemberPerson, IRelatedPerson } from '@sneat/dto';
+import { TeamBaseComponent, TeamComponentBaseParams, TeamComponentsModule } from '@sneat/team/components';
 import { filter, first, takeUntil } from 'rxjs';
-import { NewMemberFormComponent } from "./new-member-form.component";
+import { NewMemberFormComponent } from './new-member-form.component';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class NewMemberPageComponent extends TeamBaseComponent {
 
 	public tab: 'personal' | 'mass' = 'mass';
 
-	relatedPerson: IRelatedPerson = emptyRelatedPerson;
+	member: IMemberPerson = emptyMemberPerson;
 
 	constructor(
 		route: ActivatedRoute,
@@ -44,11 +44,11 @@ export class NewMemberPageComponent extends TeamBaseComponent {
 			const ageGroup = params['ageGroup'];
 			console.log('ageGroup', ageGroup);
 			if (ageGroup) {
-				this.relatedPerson = { ...this.relatedPerson, ageGroup: ageGroup };
+				this.member = { ...this.member, ageGroup: ageGroup };
 			}
 			const roles = params['roles'] || '';
 			if (roles) {
-				this.relatedPerson = { ...this.relatedPerson, roles: roles.split(',') };
+				this.member = { ...this.member, roles: roles.split(',') };
 			}
 		});
 
@@ -58,20 +58,20 @@ export class NewMemberPageComponent extends TeamBaseComponent {
 		console.log('NewMemberPageComponent.trackFirstTeamTypeChanged()');
 		try {
 			this.teamTypeChanged$
-				.pipe(
-					takeUntil(this.destroyed),
-					filter(v => !!v),
-					first(),
-				)
-				.subscribe({
-					next: teamType => {
-						console.log('NewMemberPageComponent: teamTypeChanged$ =>', teamType);
-						if (teamType === 'family' && this.tab === 'mass') {
-							this.tab = 'personal';
-						}
-					},
-					error: this.logErrorHandler('failed to process team type changes'),
-				});
+			.pipe(
+				takeUntil(this.destroyed),
+				filter(v => !!v),
+				first(),
+			)
+			.subscribe({
+				next: teamType => {
+					console.log('NewMemberPageComponent: teamTypeChanged$ =>', teamType);
+					if (teamType === 'family' && this.tab === 'mass') {
+						this.tab = 'personal';
+					}
+				},
+				error: this.logErrorHandler('failed to process team type changes'),
+			});
 		} catch (e) {
 			this.logError(e, 'failed to subscribe for first team type change');
 		}

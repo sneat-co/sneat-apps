@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
 import { IPersonFormWizardFields, PersonFormModule } from '@sneat/components';
-import { emptyRelatedPerson, IRelatedPerson } from '@sneat/dto';
+import { emptyMemberPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IJoinTeamInfoResponse, IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team/models';
 import { InviteService, TeamNavService, TeamService } from '@sneat/team/services';
@@ -34,7 +34,7 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 
 	private readonly id?: string;
 	public inviteInfo?: IJoinTeamInfoResponse;
-	public relatedPerson: IRelatedPerson = emptyRelatedPerson;
+	public relatedPerson: IRelatedPerson = emptyMemberPerson;
 	public pin?: string;
 	public userID?: string;
 

@@ -14,6 +14,7 @@ export class AgeGroupFormComponent {
 
 	@Input() disabled = false;
 	@Input() ageGroup?: AgeGroupID;
+	@Input() contactType?: string[];
 	@Output() readonly ageGroupChange = new EventEmitter<AgeGroupID | undefined>();
 
 	onAgeGroupChanged(event: Event): void {
