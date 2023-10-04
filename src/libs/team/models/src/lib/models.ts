@@ -5,7 +5,9 @@ import {
 	IMemberBrief,
 	IRelatedPersonContact,
 	IRelatedPerson,
-	IAddress, IContact2ContactInRequest, ContactTypePerson, ContactTypeAnimal,
+	IAddress,
+	IContact2ContactInRequest,
+	MemberContactType,
 } from '@sneat/dto';
 import { IMemberContext } from './team-context';
 
@@ -56,8 +58,6 @@ export interface IRejectPersonalInviteRequest extends ITeamRequest {
 }
 
 export type TeamMemberStatus = 'active' | 'archived';
-
-export type MemberContactType = typeof ContactTypePerson | typeof ContactTypeAnimal;
 
 export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
 	type: MemberContactType;

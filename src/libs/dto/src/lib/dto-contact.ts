@@ -1,7 +1,6 @@
 import { IAvatar } from '@sneat/auth-models';
 import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
-import { MemberContactType } from '@sneat/team/models';
 import { ContactRole } from './contact-roles';
 import { IAddress } from './dto-address';
 import { IContact2Asset } from './dto-contact2item';
@@ -59,6 +58,8 @@ export type ContactType = TeamMemberType
 	| typeof ContactTypeLocation
 	| typeof ContactTypeAnimal
 	| typeof ContactTypeVehicle;
+
+export type MemberContactType = typeof ContactTypePerson | typeof ContactTypeAnimal;
 
 export interface IContactBase {
 	readonly type: ContactType;

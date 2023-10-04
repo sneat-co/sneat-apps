@@ -10,9 +10,9 @@ import {
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
-	isNameEmpty, PetKind,
+	isNameEmpty, MemberContactType, PetKind,
 } from '@sneat/dto';
-import { ITeamContext, MemberContactType } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team/models';
 import { GenderFormComponent } from './gender-form/gender-form.component';
 import { INamesFormFields, NamesFormComponent } from './names-form/names-form.component';
 
