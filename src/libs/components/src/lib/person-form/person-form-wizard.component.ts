@@ -19,8 +19,8 @@ import { INamesFormFields, NamesFormComponent } from './names-form/names-form.co
 
 interface personWizardState { // wizard state
   readonly ageGroup?: boolean;
-  readonly name?: boolean;
   readonly petKind?: PetKind;
+  readonly name?: boolean;
   readonly nameNext?: boolean;
   readonly gender?: boolean;
   readonly roles?: boolean;
@@ -33,17 +33,17 @@ interface personWizardState { // wizard state
 type WizardStepID = keyof personWizardState;
 
 interface WizardStepCondition {
-  ageGroupIDs: AgeGroupID[];
+  readonly ageGroupIDs: AgeGroupID[];
 }
 
 interface WizardStepFilter {
-  hideFor?: WizardStepCondition;
-  showFor?: WizardStepCondition;
+  readonly hideFor?: WizardStepCondition;
+  readonly showFor?: WizardStepCondition;
 }
 
-interface WizardStep {
-  id: WizardStepID;
-  filter?: WizardStepFilter;
+interface WizardStepDef {
+  readonly id: WizardStepID;
+  readonly filter?: WizardStepFilter;
 }
 
 
@@ -82,7 +82,7 @@ export class PersonFormWizardComponent {
 
   public show: personWizardState = { ageGroup: true };
 
-  public wizardStep: WizardStepID = 'name';
+  public wizardStep: WizardStepID = 'ageGroup';
 
   tab?: 'emails' | 'phones' = 'emails';
 
@@ -90,23 +90,17 @@ export class PersonFormWizardComponent {
   @ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
 
 
-  private readonly formOrder: readonly WizardStep[] = [
+  private readonly formOrder: readonly WizardStepDef[] = [
 	 { id: 'ageGroup' },
 	 { id: 'petKind', filter: { showFor: { ageGroupIDs: ['pet'] } } },
-	 { id: 'name' },
 	 { id: 'gender' },
+	 { id: 'name' },
 	 { id: 'relatedAs', filter: { hideFor: { ageGroupIDs: ['pet'] } } },
 	 { id: 'roles', filter: { hideFor: { ageGroupIDs: ['pet'] } } },
 	 { id: 'emails', filter: { hideFor: { ageGroupIDs: ['pet'] } } },
 	 { id: 'phones', filter: { hideFor: { ageGroupIDs: ['pet'] } } },
 	 { id: 'submitButton' },
   ];
-
-  private showRestOfTheForm(): boolean {
-	 const p = this.relatedPerson;
-	 return !!p.ageGroup && (this.hideRelationship || !!p.relationship);
-  }
-
 
   private setRelatedPerson(relatedPerson: IRelatedPerson, changedProp: { name: WizardStepID; hasValue: boolean }): void {
 	 this.relatedPerson = relatedPerson;
@@ -116,7 +110,7 @@ export class PersonFormWizardComponent {
 	 }
   }
 
-  onNameChanged(name: IName): void {
+  protected onNameChanged(name: IName): void {
 	 console.log('PersonFormComponent.onNameChanged()', name);
 	 if (!this.show.nameNext && !isNameEmpty(name)) {
 		this.show = { ...this.show, nameNext: true };
@@ -127,26 +121,23 @@ export class PersonFormWizardComponent {
 	 );
   }
 
-  onPetKindChanged(petKind?: PetKind): void {
+  protected onPetKindChanged(petKind?: PetKind): void {
+	 console.log('onPetKindChanged()', petKind);
 	 this.setRelatedPerson(
 		{ ...this.relatedPerson, petKind },
 		{ name: 'petKind', hasValue: !!petKind },
 	 );
-	 if (petKind) {
-		this.openNext('petKind');
-	 }
   }
 
-  onGenderChanged(gender?: Gender): void {
+  protected onGenderChanged(gender?: Gender): void {
 	 this.setRelatedPerson(
 		{ ...this.relatedPerson, gender },
 		{ name: 'gender', hasValue: !!gender },
 	 );
-	 this.openNext('gender');
   }
 
 
-  onAgeGroupChanged(ageGroup?: AgeGroupID): void {
+  protected onAgeGroupChanged(ageGroup?: AgeGroupID): void {
 	 if (ageGroup === 'pet') {
 		this.fields = {
 		  ...this.fields,
@@ -170,21 +161,21 @@ export class PersonFormWizardComponent {
 	 );
   }
 
-  onEmailsChanged(emails: IEmail[]): void {
+  protected onEmailsChanged(emails: IEmail[]): void {
 	 this.setRelatedPerson(
 		{ ...this.relatedPerson, emails },
 		{ name: 'emails', hasValue: !!emails?.length },
 	 );
   }
 
-  onPhoneChanged(phones: IPhone[]): void {
+  protected onPhoneChanged(phones: IPhone[]): void {
 	 this.setRelatedPerson(
 		{ ...this.relatedPerson, phones },
 		{ name: 'phones', hasValue: !!phones?.length },
 	 );
   }
 
-  onRelationshipChanged(relationship: string): void {
+  protected onRelationshipChanged(relationship: string): void {
 	 console.log('onRelationshipChanged()', relationship);
 	 this.setRelatedPerson(
 		{ ...this.relatedPerson, relationship },
@@ -206,7 +197,7 @@ export class PersonFormWizardComponent {
 	 }
   }
 
-  public nextFromName(event: Event): void {
+  protected nextFromName(event: Event): void {
 	 event.stopPropagation();
 
 	 if (!this.namesFormComponent) {
@@ -218,38 +209,58 @@ export class PersonFormWizardComponent {
 
 	 this.namesFormComponent.namesForm.markAllAsTouched();
 	 if (!this.namesFormComponent.namesForm.valid) {
-		alert('Problem with names: ' + JSON.stringify(this.namesFormComponent?.namesForm.errors));
+		const errors = this.namesFormComponent?.namesForm.errors;
+		if (errors) {
+		  alert('Problem with names:\n' + Object.entries(errors).map(err => `\t${err[0]}: ${err[1]}`).join('\n'));
+		}
 		return;
 	 }
 	 this.openNext('name');
 	 this.show = { ...this.show, nameNext: false };
   }
 
-  public openNext(changedPropName: keyof personWizardState): void {
+  private skipStep(step: WizardStepDef): boolean {
+	 if (!step.filter || !step.filter.hideFor && !step.filter.showFor) {
+		return false;
+	 }
+	 if (this.relatedPerson.ageGroup) {
+		if (step.filter.hideFor?.ageGroupIDs?.includes(this.relatedPerson.ageGroup)) {
+		  return true;
+		}
+		if (step.filter.showFor?.ageGroupIDs && !step.filter.showFor.ageGroupIDs?.includes(this.relatedPerson.ageGroup)) {
+		  return true;
+		}
+	 }
+	 return false;
+  }
+
+  public openNext(currentStepID: keyof personWizardState): void {
 	 for (; ;) {
-		console.log('openNext()', changedPropName);
-		const i = this.formOrder.findIndex(step => step.id === changedPropName);
+		console.log('openNext()', currentStepID);
+		const i = this.formOrder.findIndex(step => step.id === currentStepID);
 		if (i < 0) {
-		  console.log(`openNext have not found ${changedPropName} in this.formOrder=${this.formOrder.join(',')}`);
+		  console.log(`openNext have not found ${currentStepID} in this.formOrder=${this.formOrder.join(',')}`);
 		  return;
 		}
 		if (i === this.formOrder.length - 1) {  // last element
 		  console.log('openNext reached last element');
 		  return;
 		}
-		const nextName = this.formOrder[i + 1].id;
-		changedPropName = nextName;
-		if (!this.requires[nextName as keyof IPersonRequirements]?.hide) {
-		  if (!this.show[nextName]) {
-			 this.show = { ...this.show, [nextName]: true };
-			 this.wizardStep = nextName;
-			 if (this.hasValue(nextName)) {
-				continue;
-			 }
-		  }
-
-		  break; // <---------- Exit point
+		const nextStep = this.formOrder[i + 1];
+		if (this.skipStep(nextStep)) {
+		  currentStepID = nextStep.id;
+		  continue;
 		}
+
+		if (!this.show[nextStep.id]) {
+		  this.show = { ...this.show, [nextStep.id]: true };
+		  this.wizardStep = nextStep.id;
+		  if (this.stepHasValue(nextStep.id)) {
+			 currentStepID = nextStep.id;
+			 continue;
+		  }
+		}
+		break; // <---------- Exit point
 	 }
 	 if (this.show.submitButton) {
 		this.isReadyToSubmit = true;
@@ -257,16 +268,19 @@ export class PersonFormWizardComponent {
 	 }
   }
 
-  private hasValue(name: WizardStepID): boolean | undefined {
+  private stepHasValue(name: WizardStepID): boolean | undefined {
+	 const p = this.relatedPerson;
 	 switch (name) {
+		case 'name':
+		  return !!p.name && Object.values(p.name).some(v => !!v);
 		case 'ageGroup':
-		  return !!this.relatedPerson.ageGroup;
+		  return !!p.ageGroup;
 		case 'gender':
-		  return !!this.relatedPerson.gender;
+		  return !!p.gender;
 		case 'relatedAs':
-		  return !!this.relatedPerson.relationship;
+		  return !!p.relationship;
 		case 'roles':
-		  return !!this.relatedPerson.roles?.length;
+		  return !!p.roles?.length;
 	 }
 	 return undefined;
   }

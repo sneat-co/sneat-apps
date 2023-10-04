@@ -6,11 +6,18 @@
   (ageGroupChange)="onAgeGroupChanged($event)"
 ></sneat-age-group-form>
 
-<sneat-pet-kind *ngIf="relatedPerson.ageGroup === 'pet'"
+<sneat-pet-kind *ngIf="show.petKind"
                 [petKind]="relatedPerson.petKind"
                 (petKindChange)="onPetKindChanged($event)"
 ></sneat-pet-kind>
 
+<sneat-gender-form *ngIf="show.gender"
+                   [disabled]="disabled"
+                   [genderID]="relatedPerson.gender"
+                   (genderChange)="onGenderChanged($event)"
+></sneat-gender-form>
+
+wizardStep: {{wizardStep}}
 
 <sneat-names-form *ngIf="show.name"
                   [name]="relatedPerson.name"
@@ -21,13 +28,6 @@
                   [disabled]="disabled"
                   (next)="nextFromName($event)"
 ></sneat-names-form>
-
-
-<sneat-gender-form *ngIf="show.gender"
-                   [disabled]="disabled"
-                   [genderID]="relatedPerson.gender"
-                   (genderChange)="onGenderChanged($event)"
-></sneat-gender-form>
 
 <sneat-relationship-form *ngIf="!requires.relatedAs?.hide && show.relatedAs"
                          [isActive]="wizardStep === 'relatedAs'"

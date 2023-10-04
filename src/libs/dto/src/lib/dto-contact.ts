@@ -119,7 +119,7 @@ export function isPersonReady(p: IPerson, requires: IPersonRequirements): boolea
 }
 
 export function isRelatedPersonNotReady(p: IRelatedPerson, requires: IPersonRequirements): boolean {
-	return isPersonNotReady(p, requires) || !!requires.relatedAs?.required && !p.relationship;
+	return isPersonNotReady(p, requires) || p.ageGroup != 'pet' && !!requires.relatedAs?.required && !p.relationship;
 }
 
 export function isRelatedPersonReady(p: IPerson, requires: IPersonRequirements): boolean {
