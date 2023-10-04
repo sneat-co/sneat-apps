@@ -30,4 +30,4 @@ export * from './lib/dto-user';
 export * from './lib/dto-with-modified';
 export * from './lib/by-user';
 export * from './lib/types';
-
+export * from './lib/pet-kind';

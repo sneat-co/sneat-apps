@@ -5,12 +5,14 @@ import { ContactRole } from './contact-roles';
 import { IAddress } from './dto-address';
 import { IContact2Asset } from './dto-contact2item';
 import { IPersonRecord } from './dto-models';
+import { PetKind } from './pet-kind';
 import { AgeGroupID, Gender, TeamMemberType } from './types';
 
 export interface IName {
 	readonly first?: string;
 	readonly last?: string;
 	readonly middle?: string;
+	readonly nick?: string;
 	readonly full?: string;
 }
 
@@ -64,6 +66,7 @@ export interface IContactBase {
 	readonly userID?: string;
 	readonly gender?: Gender;
 	readonly ageGroup?: AgeGroupID;
+	readonly petKind?: PetKind;
 	readonly address?: IAddress;
 	readonly avatar?: IAvatar;
 	readonly roles?: readonly string[];

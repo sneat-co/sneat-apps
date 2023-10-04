@@ -11,6 +11,8 @@ export type SettlementType = 'rural' | 'urban';
 export type AgeGroupID = 'adult' | 'child' | 'pet' | 'undisclosed' | 'unknown';
 
 
+
+
 export const MemberGroupTypeAdults = 'adults';
 export const MemberGroupTypeKids = 'kids';
 export const MemberGroupTypePets = 'pets';

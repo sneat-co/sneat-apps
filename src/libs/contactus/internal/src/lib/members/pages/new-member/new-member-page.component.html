@@ -8,6 +8,7 @@
 			<ng-template #hasAgeGroup>
 				<ng-container *ngIf="relatedPerson.ageGroup === 'child'">New child</ng-container>
 				<ng-container *ngIf="relatedPerson.ageGroup === 'adult'">New adult</ng-container>
+				<ng-container *ngIf="relatedPerson.ageGroup === 'pet'">New pet</ng-container>
 			</ng-template>
 			@ {{team.brief?.title || team.type }}
 		</ion-title>
