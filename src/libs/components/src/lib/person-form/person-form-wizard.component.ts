@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { excludeUndefined, formNexInAnimation } from '@sneat/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { excludeUndefined, formNexInAnimation, TeamType } from '@sneat/core';
 import { IFormField } from '@sneat/core';
 import {
 	AgeGroupID,
@@ -18,6 +18,7 @@ import { INamesFormFields, NamesFormComponent } from './names-form/names-form.co
 
 
 interface personWizardState { // wizard state
+	readonly memberType?: boolean;
 	readonly ageGroup?: boolean;
 	readonly petKind?: PetKind;
 	readonly name?: boolean;
@@ -25,8 +26,7 @@ interface personWizardState { // wizard state
 	readonly gender?: boolean;
 	readonly roles?: boolean;
 	readonly relatedAs?: boolean;
-	readonly phones?: boolean;
-	readonly emails?: boolean;
+	readonly communicationChannels?: boolean;
 	readonly submitButton?: boolean;
 }
 
@@ -34,6 +34,7 @@ type WizardStepID = keyof personWizardState;
 
 interface WizardStepCondition {
 	readonly contactTypes: MemberContactType[];
+	readonly teamTypes?: TeamType[];
 }
 
 interface WizardStepFilter {
@@ -58,7 +59,7 @@ export interface IPersonFormWizardFields extends INamesFormFields {
 		formNexInAnimation,
 	],
 })
-export class PersonFormWizardComponent {
+export class PersonFormWizardComponent implements OnChanges {
 
 	@Input({ required: true }) team?: ITeamContext;
 
@@ -80,9 +81,9 @@ export class PersonFormWizardComponent {
 	public isReadyToSubmit = false;
 	@Output() readonly isReadyToSubmitChange = new EventEmitter<boolean>();
 
-	public show: personWizardState = { ageGroup: true };
+	public show: personWizardState = {};
 
-	public wizardStep: WizardStepID = 'ageGroup';
+	public wizardStep: WizardStepID = 'memberType';
 
 	tab?: 'emails' | 'phones' = 'emails';
 
@@ -91,16 +92,33 @@ export class PersonFormWizardComponent {
 
 
 	private readonly formOrder: readonly WizardStepDef[] = [
+		{ id: 'memberType' },
 		{ id: 'ageGroup' },
 		{ id: 'petKind', filter: { showFor: { contactTypes: ['animal'] } } },
 		{ id: 'gender' },
 		{ id: 'name' },
 		{ id: 'relatedAs', filter: { hideFor: { contactTypes: ['animal'] } } },
-		{ id: 'roles', filter: { hideFor: { contactTypes: ['animal'] } } },
-		{ id: 'emails', filter: { hideFor: { contactTypes: ['animal'] } } },
-		{ id: 'phones', filter: { hideFor: { contactTypes: ['animal'] } } },
+		{ id: 'roles', filter: { hideFor: { contactTypes: ['animal'], teamTypes: ['family'] } } },
+		{ id: 'communicationChannels', filter: { hideFor: { contactTypes: ['animal'] } } },
 		{ id: 'submitButton' },
 	];
+
+	ngOnChanges(changes: SimpleChanges): void {
+		console.log('PersonFormComponent.ngOnChanges()', changes);
+		if (changes['relatedPerson']) {
+			if (this.wizardStep === 'memberType') {
+				if (this.relatedPerson.type) {
+					this.onMemberTypeChanged();
+					this.setRelatedPerson(this.relatedPerson, { name: 'memberType', hasValue: true });
+				}
+				if (this.relatedPerson.ageGroup || this.relatedPerson.type === 'animal') {
+					this.show = { ...this.show, ageGroup: false };
+					this.setRelatedPerson(this.relatedPerson, { name: 'ageGroup', hasValue: true });
+				}
+			}
+		}
+	}
+
 
 	private setRelatedPerson(relatedPerson: IRelatedPerson, changedProp: {
 		name: WizardStepID;
@@ -139,24 +157,40 @@ export class PersonFormWizardComponent {
 		);
 	}
 
+	private onMemberTypeChanged(): void {
+		switch (this.relatedPerson.type) {
+			case 'animal':
+				this.fields = {
+					...this.fields,
+					nickName: { hide: false, required: true },
+					firstName: { hide: true },
+					lastName: { hide: true },
+					middleName: { hide: true },
+				};
+				break;
+			case 'person':
+				this.fields = {
+					...this.fields,
+					nickName: { hide: true, required: false },
+					firstName: { hide: false },
+					lastName: { hide: false },
+					middleName: { hide: false },
+				};
+				break;
+		}
+	}
+
 	protected onAgeGroupChanged(ageGroup?: AgeGroupID): void {
 		console.log('onAgeGroupChanged()', ageGroup);
+		if (ageGroup) {
+			this.show = { ...this.show, ageGroup: false };
+		}
 		if (ageGroup === 'pet') {
-			this.fields = {
-				...this.fields,
-				nickName: { hide: false, required: true },
-				firstName: { hide: true },
-				lastName: { hide: true },
-				middleName: { hide: true },
-			};
-		} else {
-			this.fields = {
-				...this.fields,
-				nickName: { hide: true, required: false },
-				firstName: { hide: false },
-				lastName: { hide: false },
-				middleName: { hide: false },
-			};
+			this.relatedPerson = { ...this.relatedPerson, type: 'animal' };
+			this.onMemberTypeChanged();
+		} else if (this.relatedPerson.type !== 'person') {
+			this.relatedPerson = { ...this.relatedPerson, type: 'person' };
+			this.onMemberTypeChanged();
 		}
 		const relatedPerson: IRelatedPerson = excludeUndefined({
 			...this.relatedPerson,
@@ -172,14 +206,14 @@ export class PersonFormWizardComponent {
 	protected onEmailsChanged(emails: IEmail[]): void {
 		this.setRelatedPerson(
 			{ ...this.relatedPerson, emails },
-			{ name: 'emails', hasValue: !!emails?.length },
+			{ name: 'communicationChannels', hasValue: !!emails?.length || !!this.relatedPerson.phones?.length },
 		);
 	}
 
 	protected onPhoneChanged(phones: IPhone[]): void {
 		this.setRelatedPerson(
 			{ ...this.relatedPerson, phones },
-			{ name: 'phones', hasValue: !!phones?.length },
+			{ name: 'communicationChannels', hasValue: !!phones?.length || !!this.relatedPerson.emails?.length },
 		);
 	}
 
@@ -239,6 +273,15 @@ export class PersonFormWizardComponent {
 				return true;
 			}
 		}
+		if (this.team?.type) {
+			if (step.filter.hideFor?.teamTypes?.includes(this.team.type)) {
+				return true;
+			}
+			if (step.filter.showFor?.teamTypes?.length && !step.filter.showFor.teamTypes.includes(this.team.type)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 

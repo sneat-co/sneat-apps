@@ -34,6 +34,13 @@ export class NewMemberPageComponent extends TeamBaseComponent {
 
 	member: IMemberPerson = emptyMemberPerson;
 
+	public override get defaultBackUrl(): string {
+		const t = this.team;
+		const url = t ? `/space/${t.type}/${t.id}/members` : '';
+		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
+	}
+
+
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
@@ -52,6 +59,9 @@ export class NewMemberPageComponent extends TeamBaseComponent {
 					break;
 				case 'pets':
 					this.member = { ...this.member, type: 'animal' };
+					break;
+				default:
+					this.member = { ...this.member, type: 'person' };
 					break;
 			}
 			const roles = params['roles'] || '';

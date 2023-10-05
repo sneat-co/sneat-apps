@@ -1,5 +1,9 @@
+<!--<hr>-->
+<!--wizardStep: {{wizardStep}}-->
+<!--<hr>-->
+
 <sneat-age-group-form
-  *ngIf="!requires.ageGroup?.hide && show.ageGroup || relatedPerson.ageGroup && relatedPerson.ageGroup !== 'pet'"
+  *ngIf="show.ageGroup"
   [teamType]="team?.type"
   [disabled]="disabled"
   [ageGroup]="relatedPerson.ageGroup"
@@ -42,7 +46,7 @@
                   [team]="team"
 ></sneat-roles-form>
 
-<ng-container *ngIf="wizardStep === 'emails' || wizardStep === 'phones'">
+<ng-container *ngIf="show.communicationChannels">
   <ion-segment [(ngModel)]="tab">
     <ion-segment-button value="emails">Emails</ion-segment-button>
     <ion-segment-button value="phones">Phones</ion-segment-button>

@@ -5,9 +5,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 const animationTimings = '150ms';
 
-type GenderOption = { id: Gender; title: string; icon: string; emoji?: string };
+type GenderOption = {
+	id: Gender;
+	title: string;
+	icon: string;
+	emoji?: string
+};
 
-const gendersOptions: GenderOption[] = [
+const gendersOptions: readonly GenderOption[] = [
 	{ id: GenderMale, title: 'Male', icon: 'man-outline', emoji: '👨' },
 	{ id: GenderFemale, title: 'Female', icon: 'woman-outline', emoji: '👩' },
 	{ id: GenderOther, title: 'Other', icon: 'person-outline' },
@@ -38,7 +43,7 @@ const gendersOptions: GenderOption[] = [
 })
 export class GenderFormComponent {
 
-	readonly genders = gendersOptions;
+	protected readonly genders = gendersOptions;
 
 	@Input() disabled = false;
 	@Input() genderID?: Gender;
@@ -46,7 +51,7 @@ export class GenderFormComponent {
 
 	// @ViewChild(IonRadioGroup, { static: true }) radioGroup?: IonRadioGroup;
 
-	gender?: GenderOption;
+	protected gender?: GenderOption; // we need it to show icon when gender selected
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -54,17 +59,10 @@ export class GenderFormComponent {
 	) {
 	}
 
-	// ngAfterViewInit(): void {
-	// 	const el = this.elemRef.nativeElement as Element;
-	// 	setTimeout(() => {
-	// 		const inputs = el.querySelectorAll('input');
-	// 		if (inputs.length > 0) {
-	// 			inputs[0].focus();
-	// 		}
-	// 		console.log('el', el, 'inputs', inputs);
-	// 	}, 1000);
-	// }
-
+	protected skip(): void {
+		this.genderID = 'undisclosed';
+		this.onGenderChanged();
+	}
 
 	onGenderChanged(): void {
 		this.gender = this.genders.find(gender => gender.id === this.genderID);

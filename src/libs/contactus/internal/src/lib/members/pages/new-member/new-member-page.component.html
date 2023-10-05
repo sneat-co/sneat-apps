@@ -4,11 +4,17 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title *ngIf="team?.brief || team?.type else titleNoCommune">
-			<ng-container *ngIf="!member.ageGroup; else hasAgeGroup">New member</ng-container>
-			<ng-template #hasAgeGroup>
-				<ng-container *ngIf="member.ageGroup === 'child'">New child</ng-container>
-				<ng-container *ngIf="member.ageGroup === 'adult'">New adult</ng-container>
-				<ng-container *ngIf="member.ageGroup === 'pet'">New pet</ng-container>
+			<ng-container *ngIf="member.type === 'animal'; else ageGroupTitle">
+				New pet
+			</ng-container>
+			<ng-template #ageGroupTitle>
+				<ng-container *ngIf="!member.ageGroup; else hasAgeGroup">
+					New member
+				</ng-container>
+				<ng-template #hasAgeGroup>
+					<ng-container *ngIf="member.ageGroup === 'child'">New child</ng-container>
+					<ng-container *ngIf="member.ageGroup === 'adult'">New adult</ng-container>
+				</ng-template>
 			</ng-template>
 			@ {{team.brief?.title || team.type }}
 		</ion-title>

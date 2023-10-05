@@ -28,7 +28,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
   private readonly teamTypeChanged = new Subject<TeamType | undefined>();
   private readonly teamBriefChanged = new Subject<ITeamBrief | undefined | null>();
   private readonly teamDtoChanged = new Subject<ITeamDto | undefined | null>();
-  private teamContext?: ITeamContext;
+  private teamContext?: ITeamContext; // TODO: check - is it duplication of team?
 
   protected contactusTeam?: IContactusTeamDtoWithID;
 

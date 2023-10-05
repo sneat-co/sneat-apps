@@ -49,6 +49,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	@Output() readonly keyupEnter = new EventEmitter<Event>();
 	@Output() readonly namesChanged = new EventEmitter<IName>();
+
 	@Output() readonly next = new EventEmitter<Event>();
 
 	private initialNameChange = true;

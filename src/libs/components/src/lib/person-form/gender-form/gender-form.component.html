@@ -2,6 +2,13 @@
 	<ion-item-group *ngIf="!genderID" @radioOut>
 		<ion-item-divider [color]="!genderID ? 'primary' : 'medium'">
 			<ion-label><b>Gender</b></ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="light" (click)="skip()">
+					<ion-label>Skip</ion-label>
+					<ion-icon name="close-circle-outline" slot="end"></ion-icon>
+				</ion-button>
+
+			</ion-buttons>
 		</ion-item-divider>
 		<ion-radio-group [(ngModel)]="genderID" [disabled]="disabled" (ionChange)="onGenderChanged()">
 			<ion-item *ngFor="let gender of genders">
