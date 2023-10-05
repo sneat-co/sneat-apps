@@ -92,7 +92,7 @@ export class PersonFormWizardComponent {
 
 	private readonly formOrder: readonly WizardStepDef[] = [
 		{ id: 'ageGroup' },
-		{ id: 'petKind', filter: { showFor: { contactTypes: ['person'] } } },
+		{ id: 'petKind', filter: { showFor: { contactTypes: ['animal'] } } },
 		{ id: 'gender' },
 		{ id: 'name' },
 		{ id: 'relatedAs', filter: { hideFor: { contactTypes: ['animal'] } } },
@@ -139,8 +139,8 @@ export class PersonFormWizardComponent {
 		);
 	}
 
-
 	protected onAgeGroupChanged(ageGroup?: AgeGroupID): void {
+		console.log('onAgeGroupChanged()', ageGroup);
 		if (ageGroup === 'pet') {
 			this.fields = {
 				...this.fields,
@@ -158,14 +158,15 @@ export class PersonFormWizardComponent {
 				middleName: { hide: false },
 			};
 		}
-		this.setRelatedPerson(
-			excludeUndefined({
-				...this.relatedPerson,
-				ageGroup: ageGroup === 'pet' ? undefined : ageGroup,
-				type: ageGroup === 'pet' ? 'animal' : 'person',
-			}),
-			{ name: 'ageGroup', hasValue: !!ageGroup },
-		);
+		const relatedPerson: IRelatedPerson = excludeUndefined({
+			...this.relatedPerson,
+			ageGroup: ageGroup === 'pet' ? undefined : ageGroup,
+			type: ageGroup === 'pet' ? 'animal' : 'person',
+		});
+		this.setRelatedPerson(relatedPerson, {
+			name: 'ageGroup',
+			hasValue: !!ageGroup || this.relatedPerson.type === 'animal',
+		});
 	}
 
 	protected onEmailsChanged(emails: IEmail[]): void {
@@ -230,11 +231,11 @@ export class PersonFormWizardComponent {
 		if (!step.filter || !step.filter.hideFor && !step.filter.showFor) {
 			return false;
 		}
-		if (this.relatedPerson.ageGroup) {
+		if (this.relatedPerson.type) {
 			if (step.filter.hideFor?.contactTypes?.includes(this.relatedPerson.type as MemberContactType)) {
 				return true;
 			}
-			if (step.filter.showFor?.contactTypes && !step.filter.showFor.contactTypes?.includes(this.relatedPerson.type as MemberContactType)) {
+			if (step.filter.showFor?.contactTypes?.length && !step.filter.showFor.contactTypes.includes(this.relatedPerson.type as MemberContactType)) {
 				return true;
 			}
 		}

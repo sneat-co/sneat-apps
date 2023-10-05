@@ -41,10 +41,18 @@ export class NewMemberPageComponent extends TeamBaseComponent {
 		super('NewMemberPageComponent', route, params);
 		this.trackFirstTeamTypeChanged();
 		route.queryParams.subscribe(params => {
-			const ageGroup = params['ageGroup'];
-			console.log('ageGroup', ageGroup);
-			if (ageGroup) {
-				this.member = { ...this.member, ageGroup: ageGroup };
+			const group = params['group'];
+			console.log('group', group);
+			switch (group) {
+				case 'adults':
+					this.member = { ...this.member, type: 'person', ageGroup: 'adult' };
+					break;
+				case 'kids':
+					this.member = { ...this.member, type: 'person', ageGroup: 'child' };
+					break;
+				case 'pets':
+					this.member = { ...this.member, type: 'animal' };
+					break;
 			}
 			const roles = params['roles'] || '';
 			if (roles) {

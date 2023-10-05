@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule, IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { listAddRemoveAnimation } from '@sneat/core';
-import { AgeGroupID, IBriefAndID, IContactBrief } from "@sneat/dto";
+import { AgeGroupID, IBriefAndID, IContactBrief } from '@sneat/dto';
 import { ScheduleNavService, ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { InviteModalComponent, InviteModalModule } from '@sneat/team/components';
@@ -13,11 +13,11 @@ import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services
 import { IContactContext, IContactusTeamDtoWithID, ITeamContext } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth-core';
+import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
 
 @Component({
 	selector: 'sneat-members-list',
 	templateUrl: './members-list.component.html',
-	styleUrls: ['./members-list.component.scss'],
 	animations: listAddRemoveAnimation,
 	standalone: true,
 	imports: [
@@ -28,6 +28,7 @@ import { SneatUserService } from '@sneat/auth-core';
 		SneatPipesModule,
 		InviteModalModule,
 		RouterModule,
+		ContactRoleBadgesComponent,
 	],
 })
 // TODO: Is it deprecated and should we migrated to Contacts list?
@@ -38,7 +39,12 @@ export class MembersListComponent implements OnChanges {
 	@Input() public members?: readonly IContactContext[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
-	@Input() public contactsByMember: { [id: string]: readonly IBriefAndID<IContactBrief>[] } = {};
+	@Input() public contactsByMember: {
+		[id: string]: readonly IBriefAndID<IContactBrief>[]
+	} = {};
+
+	@Input() public hideRoles: readonly string[] = [];
+
 	// Holds filtered entries, use `allMembers` to pass input
 	public membersToDisplay?: readonly IContactContext[];
 
@@ -59,8 +65,13 @@ export class MembersListComponent implements OnChanges {
 
 	protected readonly id = (_: number, o: IContactContext) => o.id;
 
-	protected showAgeOptions(member: IContactContext): boolean {
-		return this.team?.dto?.type === 'family' && (!member.brief?.ageGroup || member.brief?.ageGroup === 'unknown');
+	protected isAgeOptionsVisible(member: IContactContext): boolean {
+		const teamDto = this.team?.dto;
+		return teamDto?.type === 'family' && member.brief?.type === 'person' && (!member.brief?.ageGroup || member.brief?.ageGroup === 'unknown');
+	}
+
+	protected isInviteButtonVisible(member: IContactContext): boolean {
+		return member.brief?.type === 'person' && !member.brief?.userID;
 	}
 
 	protected setAgeGroup(event: Event, member: IContactContext, ageGroup: AgeGroupID): void {
@@ -125,7 +136,7 @@ export class MembersListComponent implements OnChanges {
 		const team = this.team;
 		if (team) {
 			this.scheduleNavService.goSchedule(team, { member: contact.id })
-				.catch(this.errorLogger.logErrorHandler('failed to navigate to member\'s schedule page'));
+			.catch(this.errorLogger.logErrorHandler('failed to navigate to member\'s schedule page'));
 		}
 	}
 

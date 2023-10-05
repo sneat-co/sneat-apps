@@ -3,7 +3,7 @@ import { IName } from '@sneat/dto';
 import { IPersonContext } from '@sneat/team/models';
 
 export function personName(name?: IName): string | undefined {
-	return name && (name.full || name.first || name.last || name.middle);
+	return name && (name.full || name.nick || name.first || name.last || name.middle);
 }
 
 @Pipe({ name: 'personTitle' })

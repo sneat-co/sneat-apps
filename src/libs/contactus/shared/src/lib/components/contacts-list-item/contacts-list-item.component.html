@@ -41,7 +41,7 @@
 
 <ion-item *ngIf="showAddress && contact?.dto?.address">
 	<ion-label>Address</ion-label>
-	<ion-textarea readonly [value]="contact?.dto?.address"></ion-textarea>
+	<ion-textarea readonly="readonly" [value]="contact?.dto?.address"></ion-textarea>
 </ion-item>
 <ion-item-options slot="end">
 	<ion-item-option color="warning" (click)="archiveContact()">Archive</ion-item-option>

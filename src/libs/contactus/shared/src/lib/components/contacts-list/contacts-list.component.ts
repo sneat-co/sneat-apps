@@ -8,5 +8,5 @@ import { IContactContext } from '@sneat/team/models';
 export class ContactsListComponent {
 	@Input() contacts?: IContactContext[] = [];
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly id = (_: number, o: IContactContext) => o.id;
 }

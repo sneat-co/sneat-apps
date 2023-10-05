@@ -29,6 +29,7 @@ import { MembersBasePage } from '../../members-base-page';
 
 interface MembersGroup {
 	readonly id: MemberGroupType;
+	readonly role: string;
 	readonly emoji: string;
 	readonly plural: string;
 	readonly addLabel: string;
@@ -53,21 +54,25 @@ interface MembersGroup {
 })
 export class MembersPageComponent extends MembersBasePage implements AfterViewInit {
 	private prevMembersCount?: number;
-	public contactsByMember: { [id: string]: readonly IBriefAndID<IContactBrief>[] } = {};
+	public contactsByMember: {
+		[id: string]: readonly IBriefAndID<IContactBrief>[]
+	} = {};
 	public adults: MembersGroup = {
 		id: MemberGroupTypeAdults,
 		emoji: '🧓',
+		role: 'adult',
 		plural: 'Adults',
 		addLabel: 'Add adult',
 	};
 	public children: MembersGroup = {
 		id: MemberGroupTypeKids,
 		emoji: '🚸',
+		role: 'child',
 		plural: 'Children',
 		addLabel: 'Add child',
 	};
-	public pets: MembersGroup = { id: MemberGroupTypePets, emoji: '🐕', plural: 'Pets', addLabel: 'Add pet' };
-	public other: MembersGroup = { id: MemberGroupTypeOther, emoji: '👻', plural: 'Other', addLabel: '' };
+	public pets: MembersGroup = { id: MemberGroupTypePets, emoji: '🐕', plural: 'Pets', addLabel: 'Add pet', role: 'animal' };
+	public other: MembersGroup = { id: MemberGroupTypeOther, emoji: '👻', plural: 'Other', addLabel: '', role: 'other' };
 	public memberGroups?: readonly IMemberGroupContext[];
 	public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
@@ -249,6 +254,7 @@ export class MembersPageComponent extends MembersBasePage implements AfterViewIn
 					if (groupIndex < 0) {
 						group = {
 							id: groupID as MemberGroupType,
+							role: groupID,
 							plural: groupID + 's',
 							members: [],
 							emoji: '',
