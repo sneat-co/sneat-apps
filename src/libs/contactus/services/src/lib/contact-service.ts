@@ -26,11 +26,11 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 		// this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
 	}
 
-	createContact(team: ITeamContext, request: ICreateContactRequest, endpoint = "contacts/create_contact"): Observable<IContactContext> {
+	public createContact(team: ITeamContext, request: ICreateContactRequest, endpoint = "contacts/create_contact"): Observable<IContactContext> {
 		return this.createTeamItem(endpoint, team, request);
 	}
 
-	deleteContact(contact: IContactContext): Observable<void> {
+	public deleteContact(contact: IContactContext): Observable<void> {
 		const request: IContactRequest = {
 			teamID: contact.team.id,
 			contactID: contact.id
@@ -42,7 +42,7 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 		return this.sneatApiService.post("contacts/update_contact", request);
 	}
 
-	setContactsStatus(status: "archived" | "active", teamID: string, contacts: IContactContext[]): Observable<void> {
+	public setContactsStatus(status: "archived" | "active", teamID: string, contacts: IContactContext[]): Observable<void> {
 		if (!contacts?.length) {
 			return throwError(() => "at least 1 contact is required");
 		}

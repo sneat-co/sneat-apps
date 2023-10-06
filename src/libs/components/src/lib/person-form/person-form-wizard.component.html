@@ -21,16 +21,6 @@
                    (genderChange)="onGenderChanged($event)"
 ></sneat-gender-form>
 
-<sneat-names-form *ngIf="show.name"
-                  [name]="relatedPerson.name"
-                  [isActive]="wizardStep === 'name'"
-                  [showNextButton]="true"
-                  [fields]="fields"
-                  (namesChanged)="onNameChanged($event)"
-                  [disabled]="disabled"
-                  (next)="nextFromName($event)"
-></sneat-names-form>
-
 <sneat-relationship-form *ngIf="!requires.relatedAs?.hide && show.relatedAs"
                          [isActive]="wizardStep === 'relatedAs'"
                          [disabled]="disabled"
@@ -39,6 +29,16 @@
                          [relationship]="relatedPerson.relationship"
                          (relationshipChange)="onRelationshipChanged($event)"
 ></sneat-relationship-form>
+
+<sneat-names-form *ngIf="show.name"
+                  [name]="relatedPerson.name"
+                  [isActive]="wizardStep === 'name'"
+                  [showNextButton]="false"
+                  [fields]="fields"
+                  (namesChanged)="onNameChanged($event)"
+                  [disabled]="disabled"
+                  (next)="nextFromName($event)"
+></sneat-names-form>
 
 <sneat-roles-form *ngIf="!requires.roles?.hide && show.roles"
                   [isActive]="wizardStep === 'roles'"

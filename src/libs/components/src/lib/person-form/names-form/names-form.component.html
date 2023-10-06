@@ -4,8 +4,8 @@
     <ion-label *ngIf="!isActive">Names</ion-label>
   </ion-item-divider>
   <ion-item *ngIf="!fields?.nickName?.hide">
-    <ion-label color="medium">Nick name</ion-label>
     <ion-input #nickNameInput
+               label="Nick name"
                name="nick_name"
                [formControl]="nickName"
                (keyup.enter)="nameKeyupEnter($event)"
@@ -13,8 +13,8 @@
     ></ion-input>
   </ion-item>
   <ion-item *ngIf="!fields?.firstName?.hide">
-    <ion-label color="medium">First name</ion-label>
     <ion-input #firstNameInput
+               label="First name"
                name="first_name"
                [formControl]="firstName"
                (keyup.enter)="nameKeyupEnter($event)"
@@ -22,8 +22,8 @@
     ></ion-input>
   </ion-item>
   <ion-item *ngIf="!fields?.lastName?.hide">
-    <ion-label color="medium">Last name</ion-label>
     <ion-input #lastNameInput
+               label="Last name"
                name="last_name"
                [formControl]="lastName"
                (keyup.enter)="nameKeyupEnter($event)"
@@ -31,8 +31,8 @@
     ></ion-input>
   </ion-item>
   <ion-item *ngIf="!fields?.middleName?.hide">
-    <ion-label color="medium">Middle name</ion-label>
     <ion-input #middleNameInput
+               label="Middle name"
                name="medium_name"
                [formControl]="middleName"
                (keyup.enter)="nameKeyupEnter($event)"
@@ -40,8 +40,8 @@
     ></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label color="medium" position="floating">Full name</ion-label>
     <ion-input #fullNameInput
+               label="Full name"
                name="full_name"
                [formControl]="fullName"
                (keyup.enter)="nameKeyupEnter($event)"

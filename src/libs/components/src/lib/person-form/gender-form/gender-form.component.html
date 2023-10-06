@@ -16,17 +16,18 @@
 									[name]="gender.id|genderIconName"
 									[color]="gender.id|genderColor"
 									slot="start"></ion-icon>
-				<ion-label [color]="gender.id|genderColor">{{gender.title}}</ion-label>
-				<ion-radio slot="end" [value]="gender.id" [disabled]="disabled"></ion-radio>
+<!--				<ion-label [color]="gender.id|genderColor">{{gender.title}}</ion-label>-->
+				<ion-radio slot="start" [value]="gender.id" [disabled]="disabled" labelPlacement="end" >{{gender.title}}</ion-radio>
 			</ion-item>
 		</ion-radio-group>
 	</ion-item-group>
 	<ion-item *ngIf="genderID" @selectIn>
 		<ion-icon [color]="genderID|genderColor" [name]="gender.icon" *ngIf="gender" slot="start"></ion-icon>
-		<ion-label color="medium" position="stacked">Gender</ion-label>
 		<ion-select [(ngModel)]="genderID"
 								[disabled]="disabled"
 								interface="popover"
+								label="Gender"
+								labelPlacement="stacked"
 								(ionChange)="onGenderChanged()"
 		>
 			<ion-select-option *ngFor="let g of genders" [value]="g.id">

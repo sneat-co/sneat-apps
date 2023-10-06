@@ -155,7 +155,12 @@ export interface IContactBrief extends IContactBase {
 export interface IContactDto extends IContactBase, IPersonRecord {
 	readonly roles?: ContactRole[];
 	readonly assets?: IContact2Asset[];  // TODO: document purpose, use cases, examples of usage
-	readonly relatedContacts?: { [id: string]: IContactBrief };
+	readonly relatedContacts?: {
+		[id: string]: IContactBrief
+	};
+	readonly relatedAsByContactID?: {
+		[contactID: string]: string
+	};
 }
 
 export interface IContactsBrief {

@@ -54,7 +54,7 @@ export interface IPersonFormWizardFields extends INamesFormFields {
 
 @Component({
 	selector: 'sneat-person-form-wizard',
-	templateUrl: 'person-form-wizard.component.html',
+	templateUrl: './person-form-wizard.component.html',
 	animations: [
 		formNexInAnimation,
 	],
@@ -96,8 +96,8 @@ export class PersonFormWizardComponent implements OnChanges {
 		{ id: 'ageGroup' },
 		{ id: 'petKind', filter: { showFor: { contactTypes: ['animal'] } } },
 		{ id: 'gender' },
-		{ id: 'name' },
 		{ id: 'relatedAs', filter: { hideFor: { contactTypes: ['animal'] } } },
+		{ id: 'name' },
 		{ id: 'roles', filter: { hideFor: { contactTypes: ['animal'], teamTypes: ['family'] } } },
 		{ id: 'communicationChannels', filter: { hideFor: { contactTypes: ['animal'] } } },
 		{ id: 'submitButton' },

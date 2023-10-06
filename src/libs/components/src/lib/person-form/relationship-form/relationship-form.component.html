@@ -5,15 +5,13 @@
 		</ion-item-divider>
 		<ion-radio-group [(ngModel)]="relationship" (ionChange)="onRelationshipChanged($event)">
 			<ion-item *ngFor="let rel of relationships || []">
-				<ion-label>{{rel.title}}</ion-label>
-				<ion-radio slot="start" [value]="rel.id" [disabled]="disabled"></ion-radio>
+				<ion-radio [value]="rel.id" [disabled]="disabled" labelPlacement="end" slot="start">{{rel.title}}</ion-radio>
 			</ion-item>
 		</ion-radio-group>
 	</ion-item-group>
 	<ion-item *ngIf="relationship">
 		<ion-icon name="people-outline" slot="start"></ion-icon>
-		<ion-label color="medium" position="stacked">{{label}}</ion-label>
-		<ion-select [(ngModel)]="relationship" interface="popover" [disabled]="disabled" (ionChange)="onRelationshipChanged($event)">
+		<ion-select [(ngModel)]="relationship" interface="popover" [disabled]="disabled" (ionChange)="onRelationshipChanged($event)" [label]="label">
 			<ion-select-option *ngFor="let rel of relationships || []" [value]="rel.id">{{rel.title}}</ion-select-option>
 		</ion-select>
 	</ion-item>

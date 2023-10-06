@@ -22,17 +22,20 @@ export type MemberRole =
 
 export enum FamilyMemberRelation {
 	child = 'child',
-	parent = 'parent',
-	grandparent = 'grandparent',
-	sibling = 'sibling',
 	cousin = 'cousin',
-	spouse = 'spouse',
+	grandparent = 'grandparent',
+	grandparentInLaw = 'grandparent_in_law',
+	parent = 'parent',
+	parentInLaw = 'parent_in_law',
 	partner = 'partner',
+	sibling = 'sibling',
+	spouse = 'spouse',
 }
 
 
 export function relationshipTitle(id: string): string {
-	return id ? id[0].toUpperCase() + id.substr(1) : '';
+	// TODO: Needs fix to replace all _ with space
+	return id ? id[0].toUpperCase() + id.substring(1).replace(/_+/g, ' ') : '';
 }
 
 export type FamilyMemberRelations = EnumAsUnionOfKeys<typeof FamilyMemberRelation>;
@@ -76,7 +79,9 @@ export interface IMemberDto extends IMemberBase {
 
 export interface IWithContactGroups {
 	groupIDs?: readonly string[];
-	groups: { [id: string]: IContactGroupBrief };
+	groups: {
+		[id: string]: IContactGroupBrief
+	};
 }
 
 

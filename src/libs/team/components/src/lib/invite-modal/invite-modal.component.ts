@@ -33,7 +33,8 @@ export class InviteModalComponent {
 	link?: string;
 	error?: string;
 
-	creatingInvite = false;
+	protected creatingInvite = false;
+
 
 	readonly email = new FormControl<string>('', [Validators.required, Validators.email]);
 	readonly phone = new FormControl<string>('', Validators.required);
@@ -62,7 +63,10 @@ export class InviteModalComponent {
 		await this.modalController.dismiss();
 	}
 
-	getInviteText(invite: { id: string; pin?: string }): string {
+	getInviteText(invite: {
+		id: string;
+		pin?: string
+	}): string {
 		if (!this.member) {
 			throw new Error('!this.member');
 		}
@@ -76,20 +80,44 @@ export class InviteModalComponent {
 
 	private composeInvite(channel: InviteChannel, protocol: 'sms' | 'mailto', address: string): void {
 		this.creatingInvite = true;
+		switch (protocol) {
+			case 'sms':
+				this.smsForm.disable();
+				break;
+			case 'mailto':
+				this.emailForm.disable();
+				break;
+		}
 		this.createInvite({ channel, address })
-			.subscribe({
-				next: response => {
-					const m = this.getInviteText(response.invite);
-					const body = encodeURIComponent(m);
-					const url = protocol + `:${address}?subject=You+are+invited+to+join+${this.team?.type}&body=${body}`;
-					this.creatingInvite = false;
-					window.open(url);
-				},
-				error: err => {
-					this.creatingInvite = false;
-					this.errorLogger.logError(err, 'failed to create an invite for SMS channel');
-				},
-			});
+		.subscribe({
+			next: response => {
+				const m = this.getInviteText(response.invite);
+				const body = encodeURIComponent(m);
+				const url = protocol + `:${address}?subject=You+are+invited+to+join+${this.team?.type}&body=${body}`;
+				this.creatingInvite = false;
+				switch (protocol) {
+					case 'sms':
+						this.smsForm.enable();
+						break;
+					case 'mailto':
+						this.emailForm.enable();
+						break;
+				}
+				window.open(url);
+			},
+			error: err => {
+				this.creatingInvite = false;
+				switch (protocol) {
+					case 'sms':
+						this.smsForm.enable();
+						break;
+					case 'mailto':
+						this.emailForm.enable();
+						break;
+				}
+				this.errorLogger.logError(err, 'failed to create an invite for SMS channel');
+			},
+		});
 	}
 
 	composeEmail(): void {
@@ -191,7 +219,7 @@ export class InviteModalComponent {
 	}
 
 	onTabChanged(): void {
-		if (this.tab === 'link' && !this.link && !this.creatingInvite) {
+		if (this.tab === 'link' && !this.link) {
 			this.generateLink();
 		}
 	}
@@ -203,7 +231,6 @@ export class InviteModalComponent {
 		if (!this.member) {
 			return;
 		}
-		this.creatingInvite = true;
 		const request: ICreatePersonalInviteRequest = {
 			teamID: this.team.id,
 			to: {
@@ -219,7 +246,6 @@ export class InviteModalComponent {
 				const host = location.host.startsWith('localhost:') ? location.host : 'sneat.app/pwa';
 				const protocol = location.host.startsWith('localhost:') ? 'http' : 'https';
 				this.link = `${protocol}://${host}/join/${this.team?.brief?.type}?id=${id}#pin=${pin}`;
-				this.creatingInvite = false;
 			},
 			error: this.errorLogger.logErrorHandler('failed to generate an invite link'),
 		});

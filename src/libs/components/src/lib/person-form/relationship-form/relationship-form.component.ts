@@ -1,11 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/core';
 import {
 	AgeGroupID,
 	FamilyMemberRelation,
 	ITitledRecord,
 	MemberRelationshipOther,
-	MemberRelationshipUndisclosed, relationshipTitle,
+	MemberRelationshipUndisclosed,
+	relationshipTitle,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
@@ -22,18 +26,24 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
 	animations: [
 		formNexInAnimation,
 	],
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+	]
 })
 export class RelationshipFormComponent extends TeamRelatedFormComponent implements OnChanges {
 	@Input() isActive = false;
 	@Input() disabled = false;
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() relationship?: string;
-	@Input() ageGroup?: AgeGroupID;
+	@Input({ required: true }) ageGroup?: AgeGroupID;
+	@Input({ required: true }) relationship?: string;
 	@Output() readonly relationshipChange = new EventEmitter<string>();
 
-	public readonly label = 'Related to me as';
+	protected readonly label = 'Related to me as';
 
-	public relationships?: ITitledRecord[];
+	protected relationships?: ITitledRecord[];
 
 	override ngOnChanges(changes: SimpleChanges): void {
 		if (changes['ageGroup']) {
@@ -65,7 +75,9 @@ export class RelationshipFormComponent extends TeamRelatedFormComponent implemen
 							FamilyMemberRelation.sibling,
 							FamilyMemberRelation.cousin,
 							FamilyMemberRelation.parent,
+							FamilyMemberRelation.parentInLaw,
 							FamilyMemberRelation.grandparent,
+							FamilyMemberRelation.grandparentInLaw,
 						] as FamilyMemberRelation[],
 				);
 				break;
