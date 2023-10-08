@@ -1,0 +1,39 @@
+<ion-card>
+	<ion-item-divider *ngIf="!hideHeader" [color]="isActiveInWizard ? 'primary' : 'light'">
+		<ion-label>
+			<ion-icon name="at" class="ion-margin-end"></ion-icon>
+			Emails
+		</ion-label>
+	</ion-item-divider>
+	<ion-grid class="ion-grid-layout">
+
+		<ion-row *ngFor="let email of emailInputs; let i = index">
+
+			<ion-col size="auto">
+				<ion-item>
+					<ion-select interface="popover"
+											[disabled]="true"
+											[(ngModel)]="email.type"
+											(ionChange)="typeChanged($event)"
+					>
+						<ion-select-option *ngFor="let t of types"
+															 [value]="t.id"
+															 [disabled]="disabled"
+						>{{t.title}}</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-input type="email" email="true" placeholder="email"
+										 [(ngModel)]="email.address"
+										 [disabled]="disabled"
+										 (ionBlur)="addressChanged($event)"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+	</ion-grid>
+</ion-card>
