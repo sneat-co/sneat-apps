@@ -4,13 +4,14 @@
 	</ion-item-divider>
 </ion-card>
 
-<sneat-order-trucker *ngFor="let trucker of truckers"
+<sneat-order-trucker *ngFor="let trucker of truckers || []"
+										 [team]="team"
 										 [trucker]="trucker"
 										 [order]="order"
->
-</sneat-order-trucker>
+></sneat-order-trucker>
 
 <sneat-order-trucker *ngIf="hasUnassignedSegments"
-	[trucker]="undefined"
-	[order]="order"
+										 [team]="team"
+										 [trucker]="undefined"
+										 [order]="order"
 ></sneat-order-trucker>

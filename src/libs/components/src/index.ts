@@ -20,4 +20,3 @@ export * from './lib/country-input';
 export * from './lib/address-form';
 export * from './lib/save-event';
 export * from './lib/user-country/user-country.component';
-export * from './lib/person-form';

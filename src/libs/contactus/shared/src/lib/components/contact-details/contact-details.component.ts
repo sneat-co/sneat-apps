@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { PersonFormModule, RelationshipFormComponent, SneatPipesModule } from '@sneat/components';
+import { SneatPipesModule } from '@sneat/components';
 import { ContactType, Gender, IBriefAndID, IContactBrief } from '@sneat/dto';
 import { IContactContext, ITeamContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { MemberPages } from '../../constants';
@@ -15,6 +15,7 @@ import { ContactModulesMenuComponent } from '../contact-modules-menu';
 import { ContactRelatedAsComponent } from '../contact-related-as';
 import { ContactRolesInputModule } from '../contact-roles-input';
 import { ContactsListModule } from '../contacts-list';
+import { PersonFormWizardComponent, RelationshipFormComponent } from '../person-form';
 
 @Component({
 	selector: 'sneat-contact-details',
@@ -33,7 +34,7 @@ import { ContactsListModule } from '../contacts-list';
 		ContactsListModule,
 		RouterLink,
 		ContactLocationsComponent,
-		PersonFormModule,
+		PersonFormWizardComponent,
 		RelationshipFormComponent,
 	],
 })
