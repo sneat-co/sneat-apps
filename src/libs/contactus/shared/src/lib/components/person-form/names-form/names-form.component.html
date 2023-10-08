@@ -1,0 +1,61 @@
+<ion-card [formGroup]="namesForm">
+  <ion-item-divider [color]="isActive ? 'primary' : 'light'">
+    <ion-label *ngIf="isActive"><b>Names</b></ion-label>
+    <ion-label *ngIf="!isActive">Names</ion-label>
+  </ion-item-divider>
+  <ion-item *ngIf="!fields?.nickName?.hide">
+    <ion-input #nickNameInput
+               label="Nick name"
+               name="nick_name"
+               [formControl]="nickName"
+               (keyup.enter)="nameKeyupEnter($event)"
+               (ionChange)="onNameChanged($event)"
+    ></ion-input>
+  </ion-item>
+  <ion-item *ngIf="!fields?.firstName?.hide">
+    <ion-input #firstNameInput
+               label="First name"
+               name="first_name"
+               [formControl]="firstName"
+               (keyup.enter)="nameKeyupEnter($event)"
+               (ionChange)="onNameChanged($event)"
+    ></ion-input>
+  </ion-item>
+  <ion-item *ngIf="!fields?.lastName?.hide">
+    <ion-input #lastNameInput
+               label="Last name"
+               name="last_name"
+               [formControl]="lastName"
+               (keyup.enter)="nameKeyupEnter($event)"
+               (ionChange)="onNameChanged($event)"
+    ></ion-input>
+  </ion-item>
+  <ion-item *ngIf="!fields?.middleName?.hide">
+    <ion-input #middleNameInput
+               label="Middle name"
+               name="medium_name"
+               [formControl]="middleName"
+               (keyup.enter)="nameKeyupEnter($event)"
+               (ionChange)="onNameChanged($event)"
+    ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input #fullNameInput
+               label="Full name"
+               name="full_name"
+               [formControl]="fullName"
+               (keyup.enter)="nameKeyupEnter($event)"
+               (ionChange)="onFullNameChanged($event)"
+    ></ion-input>
+  </ion-item>
+</ion-card>
+
+<ion-button *ngIf="showNextButton && isActive"
+            class="ion-margin"
+            size="medium"
+            [color]="canGoNext ? 'primary' : 'medium'"
+            (click)="onNext($event)"
+>
+  <ion-label>Next</ion-label>
+  <ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+</ion-button>
