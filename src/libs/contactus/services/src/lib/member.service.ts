@@ -58,6 +58,6 @@ export class MemberService extends ContactService {
 			request = { ...request, name: trimNames(request.name) };
 		}
 		return this.sneatApiService
-			.post<IAddTeamMemberResponse>('members/create_member', request);
+			.post<IAddTeamMemberResponse>('contactus/create_member', request);
 	}
 }
