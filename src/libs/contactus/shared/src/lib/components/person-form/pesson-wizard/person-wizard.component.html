@@ -26,7 +26,7 @@
                          [disabled]="disabled"
                          [team]="team"
                          [ageGroup]="relatedPerson.ageGroup"
-                         [relationship]="relatedPerson.relationship"
+                         [relationship]="relatedPerson.relatedTo?.relatedAs"
                          (relationshipChange)="onRelationshipChanged($event)"
 ></sneat-relationship-form>
 

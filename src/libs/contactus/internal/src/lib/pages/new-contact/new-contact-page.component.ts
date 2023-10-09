@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
-import { ContactRoleFormModule, PersonFormWizardComponent } from '@sneat/contactus-shared';
+import { ContactRoleFormModule, PersonWizardComponent } from '@sneat/contactus-shared';
 import {
 	ContactToAssetRelation,
 	ContactToContactRelation,
@@ -36,7 +36,7 @@ import {
 		FormsModule,
 		IonicModule,
 		ContactRoleFormModule,
-		PersonFormWizardComponent,
+		PersonWizardComponent,
 	],
 })
 export class NewContactPageComponent extends TeamBaseComponent implements OnInit {

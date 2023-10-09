@@ -7,4 +7,4 @@ export * from './phones-form';
 export * from './relationship-form';
 export * from './team-related-form.component';
 export * from './roles-form';
-export * from './person-form-wizard.component';
+export * from './pesson-wizard';

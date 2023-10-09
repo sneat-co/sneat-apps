@@ -61,6 +61,11 @@ export type ContactType = TeamMemberType
 
 export type MemberContactType = typeof ContactTypePerson | typeof ContactTypeAnimal;
 
+export interface IRelatedToContact {
+	readonly contactID?: string;
+	readonly relatedAs: string;
+}
+
 export interface IContactBase {
 	readonly type: ContactType;
 	readonly title?: string;
@@ -94,7 +99,7 @@ export interface IPerson extends IContactBase {
 }
 
 export interface IRelatedPerson extends IPerson {
-	readonly relationship?: string; // relative to current user
+	readonly relatedTo?: IRelatedToContact; // relative to current user
 	// readonly roles?: string[]; // Either member roles or contact roles
 }
 
@@ -129,7 +134,7 @@ export function isPersonReady(p: IPerson, requires: IPersonRequirements): boolea
 }
 
 export function isRelatedPersonNotReady(p: IRelatedPerson, requires: IPersonRequirements): boolean {
-	return isPersonNotReady(p, requires) || p.type !== 'animal' && !!requires.relatedAs?.required && !p.relationship;
+	return isPersonNotReady(p, requires) || p.type !== 'animal' && !!requires.relatedAs?.required && !p.relatedTo?.relatedAs;
 }
 
 export function isRelatedPersonReady(p: IPerson, requires: IPersonRequirements): boolean {
@@ -140,7 +145,7 @@ export const emptyMemberPerson = emptyPersonBase as IMemberPerson;
 
 export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
 	const v2 = { ...excludeUndefined(v) };
-	delete v2['relationship'];
+	delete v2['relatedTo'];
 	return v2 as IPerson;
 }
 

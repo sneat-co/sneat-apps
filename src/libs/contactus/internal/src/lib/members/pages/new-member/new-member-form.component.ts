@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonicModule, IonInput, IonRadio } from '@ionic/angular';
-import { PersonFormWizardComponent } from '@sneat/contactus-shared';
+import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
 import { createSetFocusToInput, personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
@@ -37,7 +37,7 @@ import { MemberComponentBaseParams } from '../../member-component-base-params';
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		PersonFormWizardComponent,
+		PersonWizardComponent,
 	],
 })
 export class NewMemberFormComponent implements OnChanges {
@@ -59,7 +59,7 @@ export class NewMemberFormComponent implements OnChanges {
 	@Input() member: IMemberPerson = emptyMemberPerson;
 	@Output() readonly memberChange = new EventEmitter<IMemberPerson>();
 
-	@ViewChild(PersonFormWizardComponent, { static: false }) personFormComponent?: PersonFormWizardComponent;
+	@ViewChild(PersonWizardComponent, { static: false }) personFormComponent?: PersonWizardComponent;
 	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
 	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 

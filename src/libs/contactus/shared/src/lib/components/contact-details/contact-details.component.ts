@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
+import { IUpdateContactRequest } from '@sneat/contactus-services';
 import { ContactType, Gender, IBriefAndID, IContactBrief } from '@sneat/dto';
 import { IContactContext, ITeamContext, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { MemberPages } from '../../constants';
@@ -15,7 +16,7 @@ import { ContactModulesMenuComponent } from '../contact-modules-menu';
 import { ContactRelatedAsComponent } from '../contact-related-as';
 import { ContactRolesInputModule } from '../contact-roles-input';
 import { ContactsListModule } from '../contacts-list';
-import { PersonFormWizardComponent, RelationshipFormComponent } from '../person-form';
+import { PersonWizardComponent, RelationshipFormComponent } from '../person-form';
 
 @Component({
 	selector: 'sneat-contact-details',
@@ -34,7 +35,7 @@ import { PersonFormWizardComponent, RelationshipFormComponent } from '../person-
 		ContactsListModule,
 		RouterLink,
 		ContactLocationsComponent,
-		PersonFormWizardComponent,
+		PersonWizardComponent,
 		RelationshipFormComponent,
 	],
 })
@@ -94,6 +95,25 @@ export class ContactDetailsComponent {
 
 	protected onRelatedAsChanged(relatedAs: string): void {
 		console.log('onRelatedAsChanged()', relatedAs);
+		const request: IUpdateContactRequest = {
+			...this.newUpdateContactRequest(),
+			relatedTo: { relatedAs },
+		};
+		this.params.contactService.updateContact(request).subscribe({
+			next: () => {
+				console.log('onRelatedAsChanged() - contact updated');
+			},
+			error: this.params.errorLogger.logErrorHandler('Failed to update contact'),
+		});
+	}
+
+	private newUpdateContactRequest(): IUpdateContactRequest {
+		const contactID = this.contact?.id;
+		const teamID = this.team?.id;
+		if (!contactID || !teamID) {
+			throw new Error('ContactDetailsComponent.newUpdateContactRequest() - contactID or teamID is not set');
+		}
+		return { teamID, contactID };
 	}
 
 	changeGender(event: Event): void {

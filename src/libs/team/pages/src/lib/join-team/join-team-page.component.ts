@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
-import { IPersonFormWizardFields, PersonFormWizardComponent } from '@sneat/contactus-shared';
+import { IPersonFormWizardFields, PersonWizardComponent } from '@sneat/contactus-shared';
 import { emptyMemberPerson, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IJoinTeamInfoResponse, IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team/models';
@@ -25,7 +25,7 @@ export const getPinFromUrl: () => string = () => {
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		PersonFormWizardComponent,
+		PersonWizardComponent,
 	],
 })
 export class JoinTeamPageComponent extends SneatBaseComponent {

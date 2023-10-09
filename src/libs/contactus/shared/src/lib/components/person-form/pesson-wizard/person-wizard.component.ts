@@ -16,14 +16,14 @@ import {
 	isNameEmpty, MemberContactType, PetKind,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
-import { AgeGroupFormComponent } from './age-group';
-import { EmailsFormComponent } from './emails-form';
-import { GenderFormComponent } from './gender-form/gender-form.component';
-import { INamesFormFields, NamesFormComponent } from './names-form/names-form.component';
-import { PetKindInputComponent } from './pet-kind';
-import { PhonesFormComponent } from './phones-form';
-import { RelationshipFormComponent } from './relationship-form';
-import { RolesFormComponent } from './roles-form';
+import { AgeGroupFormComponent } from '../age-group';
+import { EmailsFormComponent } from '../emails-form';
+import { GenderFormComponent } from '../gender-form';
+import { INamesFormFields, NamesFormComponent } from '../names-form';
+import { PetKindInputComponent } from '../pet-kind';
+import { PhonesFormComponent } from '../phones-form';
+import { RelationshipFormComponent } from '../relationship-form';
+import { RolesFormComponent } from '../roles-form';
 
 
 interface personWizardState { // wizard state
@@ -63,7 +63,7 @@ export interface IPersonFormWizardFields extends INamesFormFields {
 
 @Component({
 	selector: 'sneat-person-form-wizard',
-	templateUrl: './person-form-wizard.component.html',
+	templateUrl: './person-wizard.component.html',
 	animations: [
 		formNexInAnimation,
 	],
@@ -82,7 +82,7 @@ export interface IPersonFormWizardFields extends INamesFormFields {
 		EmailsFormComponent,
 	],
 })
-export class PersonFormWizardComponent implements OnChanges {
+export class PersonWizardComponent implements OnChanges {
 
 	@Input({ required: true }) team?: ITeamContext;
 
@@ -240,14 +240,14 @@ export class PersonFormWizardComponent implements OnChanges {
 		);
 	}
 
-	protected onRelationshipChanged(relationship: string): void {
-		console.log('onRelationshipChanged()', relationship);
+	protected onRelationshipChanged(relatedAs: string): void {
+		console.log('onRelationshipChanged()', relatedAs);
 		this.setRelatedPerson(
-			{ ...this.relatedPerson, relationship },
-			{ name: 'relatedAs', hasValue: !!relationship },
+			{ ...this.relatedPerson, relatedTo: { relatedAs: relatedAs } },
+			{ name: 'relatedAs', hasValue: !!relatedAs },
 		);
 		if (!this.relatedPerson.ageGroup) {
-			const relationship = this.relatedPerson.relationship;
+			const relationship = this.relatedPerson.relatedTo?.relatedAs;
 			if (relationship === 'parent' || relationship === 'spouse' || relationship === 'partner' || relationship === 'grandparent') {
 				this.setRelatedPerson(
 					{ ...this.relatedPerson, ageGroup: 'adult' },
@@ -352,7 +352,7 @@ export class PersonFormWizardComponent implements OnChanges {
 			case 'gender':
 				return !!p.gender;
 			case 'relatedAs':
-				return !!p.relationship;
+				return !!p.relatedTo?.relatedAs;
 			case 'roles':
 				return !!p.roles?.length;
 		}
