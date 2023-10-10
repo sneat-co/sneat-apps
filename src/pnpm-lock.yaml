@@ -75,8 +75,8 @@ dependencies:
     specifier: 10.4.0
     version: 10.4.0
   ionicons:
-    specifier: 7.1.2
-    version: 7.1.2
+    specifier: 7.2.0
+    version: 7.2.0
   rxjs:
     specifier: 7.8.1
     version: 7.8.1
@@ -4518,7 +4518,7 @@ packages:
       '@angular/forms': 16.2.8(@angular/common@16.2.8)(@angular/core@16.2.8)(@angular/platform-browser@16.2.8)(rxjs@7.8.1)
       '@angular/router': 16.2.8(@angular/common@16.2.8)(@angular/core@16.2.8)(@angular/platform-browser@16.2.8)(rxjs@7.8.1)
       '@ionic/core': 7.4.3
-      ionicons: 7.1.2
+      ionicons: 7.2.0
       jsonc-parser: 3.2.0
       rxjs: 7.8.1
       tslib: 2.6.2
@@ -9548,10 +9548,10 @@ packages:
       '@stencil/core': 2.22.3
     dev: false
 
-  /ionicons@7.1.2:
-    resolution: {integrity: sha512-zZ4njAqSP39H8RRvZhJvkHsv7cBjYE/VfInH218Osf2UVxJITSOutTTd25MW+tAXKN5fheYzclUXUsF55JHUDg==}
+  /ionicons@7.2.0:
+    resolution: {integrity: sha512-gmG6A50iem/wR10K+rJeiYlBu8SjG1lxZ6brPYEI2WYjEw8s6T+bj///C6yjRIDtj+qIgqrQmQAgNvNdgyG7ng==}
     dependencies:
-      '@stencil/core': 2.22.3
+      '@stencil/core': 4.4.0
     dev: false
 
   /ip@2.0.0:
