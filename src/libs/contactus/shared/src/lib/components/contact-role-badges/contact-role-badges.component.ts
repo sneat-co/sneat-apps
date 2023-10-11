@@ -11,12 +11,12 @@ import { IonicModule } from '@ionic/angular';
        }
 	`],
 	template: `
-     <ion-badge *ngFor="let role of displayRoles"
-                class="ion-margin-start sneat-team-member-role"
-                [color]="role === 'contributor' ? 'primary' : 'medium'"
-     >
-       {{ role }}
-     </ion-badge>
+		<ion-badge *ngFor="let role of displayRoles"
+					  class="ion-margin-start sneat-team-member-role"
+					  [color]="role === 'contributor' ? 'primary' : 'medium'"
+		>
+			{{ role }}
+		</ion-badge>
 	`,
 	standalone: true,
 	imports: [
@@ -26,7 +26,7 @@ import { IonicModule } from '@ionic/angular';
 })
 export class ContactRoleBadgesComponent implements OnChanges {
 
-	private readonly alwaysHide: readonly string[] = ['--', 'creator', 'contributor', 'owner', 'team_member'];
+	private readonly alwaysHide: readonly string[] = ['--', 'creator', 'contributor', 'owner'];
 
 	@Input({ required: true }) roles?: readonly string[];
 	@Input() hideRoles: readonly string[] = this.alwaysHide;
@@ -36,7 +36,7 @@ export class ContactRoleBadgesComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['hideRoles']) {
-			this.hiddenRoles = [...this.hideRoles, ...this.alwaysHide];
+			this.hiddenRoles = [...new Set([...this.hideRoles, ...this.alwaysHide])];
 		}
 		if (changes['roles'] || changes['hideRoles']) {
 			this.displayRoles = this.roles?.filter(r => !this.hiddenRoles.includes(r)) || [];
