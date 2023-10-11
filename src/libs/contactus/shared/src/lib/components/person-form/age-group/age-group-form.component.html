@@ -1,7 +1,9 @@
 <ion-card @formNextIn *ngIf="!ageGroup">
 	<ion-item-divider color="primary">
-		<ion-label *ngIf="teamType === 'family'"><b>Adult/child or pet?</b></ion-label>
-		<ion-label *ngIf="teamType !== 'family'"><b>Adult or child?</b></ion-label>
+		<ion-label *ngIf="hidePetOption && hideCompanyOption"><b>Adult or child?</b></ion-label>
+		<ion-label *ngIf="!hidePetOption && hideCompanyOption"><b>Adult/child or pet?</b></ion-label>
+		<ion-label *ngIf="hidePetOption && !hideCompanyOption"><b>Adult/child or company?</b></ion-label>
+		<ion-label *ngIf="!hidePetOption && !hideCompanyOption"><b>Adult/child/pet or company?</b></ion-label>
 	</ion-item-divider>
 	<ion-radio-group [(ngModel)]="ageGroup" (ionChange)="onAgeGroupChanged($event)">
 		<ion-item>
@@ -12,9 +14,17 @@
 			<ion-label>Child</ion-label>
 			<ion-radio slot="start" value="child" [disabled]="disabled"></ion-radio>
 		</ion-item>
-		<ion-item *ngIf="teamType === 'family'">
+		<ion-item *ngIf="!hideUndisclosedOption">
+			<ion-label>Person (undisclosed age)</ion-label>
+			<ion-radio slot="start" value="company" [disabled]="true"></ion-radio>
+		</ion-item>
+		<ion-item *ngIf="!hidePetOption">
 			<ion-label>Pet</ion-label>
 			<ion-radio slot="start" value="pet" [disabled]="disabled"></ion-radio>
+		</ion-item>
+		<ion-item *ngIf="!hideCompanyOption">
+			<ion-label>Company (not implemented yet)</ion-label>
+			<ion-radio slot="start" value="company" [disabled]="true"></ion-radio>
 		</ion-item>
 	</ion-radio-group>
 </ion-card>

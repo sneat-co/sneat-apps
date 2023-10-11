@@ -6,7 +6,7 @@ import { IContactBrief } from './dto-contact';
 import { DtoGroupTerms } from './dto-term';
 import { MembersVisibility, TeamMemberType } from './types';
 
-export const RoleTeamMember = 'team_member';
+export const RoleTeamMember = 'member';
 export const MemberRoleContributor = 'contributor';
 export const MemberRoleSpectator = 'spectator';
 export const MemberRoleParish = 'pastor';

@@ -7,7 +7,7 @@ import {
 	IRelatedPerson,
 	IAddress,
 	IContact2ContactInRequest,
-	MemberContactType,
+	MemberContactType, ICreatePeronRequest,
 } from '@sneat/dto';
 import { IMemberContext } from './team-context';
 
@@ -80,7 +80,7 @@ export interface ICreateContactBaseRequest extends ITeamRequest {
 
 export interface ICreateContactPersonRequest extends ICreateContactBaseRequest {
 	type: 'person';
-	person?: IRelatedPersonContact;
+	person?: ICreatePeronRequest;
 }
 
 export interface ICreateContactLocationRequest extends ICreateContactBaseRequest {

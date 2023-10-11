@@ -7,7 +7,7 @@ import { ContactRoleFormModule, PersonWizardComponent } from '@sneat/contactus-s
 import {
 	ContactToAssetRelation,
 	ContactToContactRelation,
-	emptyPersonBase,
+	emptyContactBase,
 	Gender,
 	IContact2Asset,
 	IPersonRequirements,
@@ -65,7 +65,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	// 	{ id: 'gp', title: 'GP - Family Doctor' },
 	// ];
 
-	relatedPerson: IRelatedPerson = emptyPersonBase;
+	relatedPerson: IRelatedPerson = emptyContactBase;
 
 	public contact?: IContactContext;
 
@@ -206,6 +206,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 			teamID: team.id,
 			person: {
 				...this.relatedPerson,
+				status: 'active',
 				type: 'person',
 				ageGroup: this.relatedPerson.ageGroup || 'unknown',
 			},

@@ -23,6 +23,9 @@ export class AgeGroupFormComponent {
 	@Input({ required: true }) ageGroup?: AgeGroupID;
 	@Output() readonly ageGroupChange = new EventEmitter<AgeGroupID | undefined>();
 	@Input() disabled = false;
+	@Input() hidePetOption = false;
+	@Input() hideCompanyOption = false;
+	@Input() hideUndisclosedOption = false;
 
 	onAgeGroupChanged(event: Event): void {
 		event.stopPropagation();

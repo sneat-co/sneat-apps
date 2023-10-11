@@ -2,22 +2,29 @@
 <!--wizardStep: {{wizardStep}}-->
 <!--<hr>-->
 
+Person wizard<br>
+fields: {{fields | json}}<br>
+nameFields: {{nameFields | json}}<br>
+show: {{show | json}};<br>
+newPerson: {{newPerson | json}}<br>
+
 <sneat-age-group-form
   *ngIf="show.ageGroup"
   [teamType]="team?.type"
+  [hidePetOption]="hidePetOption"
   [disabled]="disabled"
-  [ageGroup]="relatedPerson.ageGroup"
+  [ageGroup]="newPerson.ageGroup"
   (ageGroupChange)="onAgeGroupChanged($event)"
 ></sneat-age-group-form>
 
 <sneat-pet-kind *ngIf="show.petKind"
-                [petKind]="relatedPerson.petKind"
+                [petKind]="newPerson.petKind"
                 (petKindChange)="onPetKindChanged($event)"
 ></sneat-pet-kind>
 
 <sneat-gender-form *ngIf="show.gender"
                    [disabled]="disabled"
-                   [genderID]="relatedPerson.gender"
+                   [genderID]="newPerson.gender"
                    (genderChange)="onGenderChanged($event)"
 ></sneat-gender-form>
 
@@ -25,16 +32,16 @@
                          [isActive]="wizardStep === 'relatedAs'"
                          [disabled]="disabled"
                          [team]="team"
-                         [ageGroup]="relatedPerson.ageGroup"
-                         [relationship]="relatedPerson.relatedTo?.relatedAs"
+                         [ageGroup]="newPerson.ageGroup"
+                         [relationship]="newPerson.relatedTo?.relatedAs"
                          (relationshipChange)="onRelationshipChanged($event)"
 ></sneat-relationship-form>
 
 <sneat-names-form *ngIf="show.name"
-                  [name]="relatedPerson.name"
+                  [name]="newPerson.name"
                   [isActive]="wizardStep === 'name'"
                   [showNextButton]="false"
-                  [fields]="fields"
+                  [fields]="nameFields"
                   (namesChanged)="onNameChanged($event)"
                   [disabled]="disabled"
                   (next)="nextFromName($event)"
@@ -53,14 +60,14 @@
   </ion-segment>
   <sneat-emails-form *ngIf="tab === 'emails' && !requires.email?.hide"
                      [hideHeader]="true"
-                     [emails]="relatedPerson.emails"
+                     [emails]="newPerson.emails"
                      (emailsChange)="onEmailsChanged($event)"
   ></sneat-emails-form>
 
 
   <sneat-phones-form *ngIf="tab === 'phones'  && !requires.phone?.hide"
                      [hideHeader]="true"
-                     [phones]="relatedPerson.phones"
+                     [phones]="newPerson.phones"
                      (phonesChange)="onPhoneChanged($event)"
   ></sneat-phones-form>
 </ng-container>

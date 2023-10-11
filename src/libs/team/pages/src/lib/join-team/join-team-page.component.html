@@ -1,126 +1,127 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-title *ngIf="inviteInfo?.team?.type !== 'family'">Join team @ Sneat.app</ion-title>
-		<ion-title *ngIf="inviteInfo?.team?.type === 'family'">Join family @ Sneat.app</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-title *ngIf="inviteInfo?.team?.type !== 'family'">Join team @ Sneat.app</ion-title>
+    <ion-title *ngIf="inviteInfo?.team?.type === 'family'">Join family @ Sneat.app</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-card *ngIf="inviteInfo" color="warning">
-		<ion-card-content *ngIf="userOwnInvite; else notUserOwnInvite">
-			<p>You've invited <b>{{inviteInfo.invite.to.title}}</b> to join
-				<b>{{inviteInfo.team.title || inviteInfo.team.type}}</b></p>
-		</ion-card-content>
-		<ng-template #notUserOwnInvite>
-			<ion-card-content>
-				<p *ngIf="inviteInfo?.invite?.to?.title">
-					Hello <b>{{inviteInfo.invite.to.title}}</b>,
-				</p>
-				<p *ngIf="inviteInfo.team.title; else noTeamTitle">
-					You've been invited by <b>{{inviteInfo.invite.from.title}}</b> to join team {{inviteInfo.team.title}}
-				</p>
-				<ng-template #noTeamTitle>
-					You've been invited by <b>{{inviteInfo.invite.from.title}}</b> to join {{inviteInfo.team.type}}
-					space @ <a href="https://sneat.app" target="_blank">Sneat.app</a>
-				</ng-template>
-			</ion-card-content>
-		</ng-template>
-	</ion-card>
-	<p *ngIf="!inviteInfo?.team">
-		<ion-spinner name="lines-small" color="medium"></ion-spinner>
-		Loading...
-	</p>
+  <ion-card *ngIf="inviteInfo" color="warning">
+    <ion-card-content *ngIf="userOwnInvite; else notUserOwnInvite">
+      <p>You've invited <b>{{inviteInfo.invite.to.title}}</b> to join
+        <b>{{inviteInfo.team.title || inviteInfo.team.type}}</b></p>
+    </ion-card-content>
+    <ng-template #notUserOwnInvite>
+      <ion-card-content>
+        <p *ngIf="inviteInfo?.invite?.to?.title">
+          Hello <b>{{inviteInfo.invite.to.title}}</b>,
+        </p>
+        <p *ngIf="inviteInfo.team.title; else noTeamTitle">
+          You've been invited by <b>{{inviteInfo.invite.from.title}}</b> to join team {{inviteInfo.team.title}}
+        </p>
+        <ng-template #noTeamTitle>
+          You've been invited by <b>{{inviteInfo.invite.from.title}}</b> to join {{inviteInfo.team.type}}
+          space @ <a href="https://sneat.app" target="_blank">Sneat.app</a>
+        </ng-template>
+      </ion-card-content>
+    </ng-template>
+  </ion-card>
+  <p *ngIf="!inviteInfo?.team">
+    <ion-spinner name="lines-small" color="medium"></ion-spinner>
+    Loading...
+  </p>
 
-	<ion-card *ngIf="inviteInfo?.invite?.to?.channel === 'email'">
-		<ion-item-divider color="light">
-			<ion-icon name="mail-outline" slot="start"></ion-icon>
-			<ion-label>My email</ion-label>
-		</ion-item-divider>
-		<ion-item>
-			<ion-label color="medium">Address</ion-label>
-			<ion-input readonly="true" color="medium" type="email" [value]="inviteInfo?.invite?.to?.address"></ion-input>
-		</ion-item>
-	</ion-card>
+  <ion-card *ngIf="inviteInfo?.invite?.to?.channel === 'email'">
+    <ion-item-divider color="light">
+      <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <ion-label>My email</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label color="medium">Address</ion-label>
+      <ion-input readonly="true" color="medium" type="email" [value]="inviteInfo?.invite?.to?.address"></ion-input>
+    </ion-item>
+  </ion-card>
 
-	<ion-card>
-		<ion-card-header>
-			<ion-card-title>Why to join?</ion-card-title>
-		</ion-card-header>
-		<ion-card-content>
-			<p>Sneat.app helps families to organize their life neatly. With it you can have shared:</p>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Why to join?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Sneat.app helps families to organize their life neatly. With it you can have shared:</p>
 
-			<ul>
-				<li>Schedule/timetable</li>
-				<li>Contacts</li>
-				<li>To-buy/to-do/to-watch lists</li>
-				<li>Repository of documents</li>
-				<li>Catalog of assets</li>
-				<li>Simple budgeting</li>
-				<li>And more...</li>
-			</ul>
-		</ion-card-content>
-	</ion-card>
+      <ul>
+        <li>Schedule/timetable</li>
+        <li>Contacts</li>
+        <li>To-buy/to-do/to-watch lists</li>
+        <li>Repository of documents</li>
+        <li>Catalog of assets</li>
+        <li>Simple budgeting</li>
+        <li>And more...</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
 
-	<sneat-person-form-wizard #personFormWizardComponent
-														[team]="team"
-		[(relatedPerson)]="relatedPerson"
-		[fields]="wizardFields"
-		[disabled]="userOwnInvite"
-	></sneat-person-form-wizard>
-
-
-	<!--	<ion-card>-->
-	<!--		<ion-card-content>-->
-	<!--			relatedPerson: {{relatedPerson|json}}-->
-	<!--		</ion-card-content>-->
-	<!--	</ion-card>-->
-
-	<ion-card *ngIf="!userOwnInvite && personFormWizardComponent.isReadyToSubmit">
-		<ion-card-content>
-			<!--			authStatus: {{authStatus}}-->
-			<ion-button color="primary" size="large"
-									[disabled]="status !== 'reviewing' || userOwnInvite"
-									(click)="join()"
-			>
-				<ion-icon name="enter-outline" slot="end"></ion-icon>
-				<ng-container *ngIf="status !== 'joining'">Join {{inviteInfo?.team?.type || 'team'}}</ng-container>
-				<ng-container *ngIf="status === 'joining'">
-					Joining {{inviteInfo?.team?.type || 'team'}}...
-					<ion-spinner name="lines-small"></ion-spinner>
-				</ng-container>
-			</ion-button>
-			<ion-button fill="clear" disabled="true" color="medium" class="ion-margin-start">or</ion-button>
-			<ion-button
-				*ngIf="inviteInfo?.team"
-				[disabled]="status !== 'reviewing' || userOwnInvite"
-				fill="clear"
-				color="secondary"
-				(click)="refuse()"
-				style="text-transform: none"
-			>
-				Refuse to join
-				<ion-spinner name="lines-small" *ngIf="status === 'refusing'"></ion-spinner>
-			</ion-button>
-			<p class="ion-padding-top" *ngIf="authStatus === 'notAuthenticated'">
-				You would need to sign-in to join the {{inviteInfo?.team?.type || 'team'}}.
-			</p>
-
-			<p class="ion-padding-top" *ngIf="userOwnInvite">
-				You can not use your own invite to join the team.
-			</p>
-
-		</ion-card-content>
-	</ion-card>
-
-	<ion-card *ngIf="userOwnInvite">
-		<ion-card-content>
-			<p>You can not use your own invite to join but the peron you've invite can fill the form above and join.</p>
-		</ion-card-content>
-	</ion-card>
+  <sneat-person-form-wizard #personFormWizardComponent
+                            [team]="team"
+                            [(newPerson)]="newPerson"
+                            [nameFields]="nameFields"
+                            [fields]="wizardFields"
+                            [disabled]="userOwnInvite"
+  ></sneat-person-form-wizard>
 
 
-	<!--	<ion-list *ngIf="team?.dto?.members?.length">-->
-	<!--		<ion-item-divider>Members</ion-item-divider>-->
-	<!--		<ion-item *ngFor="let member of team?.dto?.members">{{member.title}}</ion-item>-->
-	<!--	</ion-list>-->
+  <!--	<ion-card>-->
+  <!--		<ion-card-content>-->
+  <!--			relatedPerson: {{relatedPerson|json}}-->
+  <!--		</ion-card-content>-->
+  <!--	</ion-card>-->
+
+  <ion-card *ngIf="!userOwnInvite && personFormWizardComponent.isReadyToSubmit">
+    <ion-card-content>
+      <!--			authStatus: {{authStatus}}-->
+      <ion-button color="primary" size="large"
+                  [disabled]="status !== 'reviewing' || userOwnInvite"
+                  (click)="join()"
+      >
+        <ion-icon name="enter-outline" slot="end"></ion-icon>
+        <ng-container *ngIf="status !== 'joining'">Join {{inviteInfo?.team?.type || 'team'}}</ng-container>
+        <ng-container *ngIf="status === 'joining'">
+          Joining {{inviteInfo?.team?.type || 'team'}}...
+          <ion-spinner name="lines-small"></ion-spinner>
+        </ng-container>
+      </ion-button>
+      <ion-button fill="clear" disabled="true" color="medium" class="ion-margin-start">or</ion-button>
+      <ion-button
+        *ngIf="inviteInfo?.team"
+        [disabled]="status !== 'reviewing' || userOwnInvite"
+        fill="clear"
+        color="secondary"
+        (click)="refuse()"
+        style="text-transform: none"
+      >
+        Refuse to join
+        <ion-spinner name="lines-small" *ngIf="status === 'refusing'"></ion-spinner>
+      </ion-button>
+      <p class="ion-padding-top" *ngIf="authStatus === 'notAuthenticated'">
+        You would need to sign-in to join the {{inviteInfo?.team?.type || 'team'}}.
+      </p>
+
+      <p class="ion-padding-top" *ngIf="userOwnInvite">
+        You can not use your own invite to join the team.
+      </p>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="userOwnInvite">
+    <ion-card-content>
+      <p>You can not use your own invite to join but the peron you've invite can fill the form above and join.</p>
+    </ion-card-content>
+  </ion-card>
+
+
+  <!--	<ion-list *ngIf="team?.dto?.members?.length">-->
+  <!--		<ion-item-divider>Members</ion-item-divider>-->
+  <!--		<ion-item *ngFor="let member of team?.dto?.members">{{member.title}}</ion-item>-->
+  <!--	</ion-list>-->
 </ion-content>
