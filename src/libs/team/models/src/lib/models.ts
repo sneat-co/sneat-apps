@@ -3,7 +3,6 @@ import {
 	ContactType,
 	IContact2Asset,
 	IMemberBrief,
-	IRelatedPersonContact,
 	IRelatedPerson,
 	IAddress,
 	IContact2ContactInRequest,

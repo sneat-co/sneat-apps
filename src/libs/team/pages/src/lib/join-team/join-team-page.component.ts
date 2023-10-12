@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
 import { INamesFormFields, IPersonFormWizardFields, PersonWizardComponent } from '@sneat/contactus-shared';
-import { emptyContactBase, emptyMemberPerson, IRelatedPerson } from '@sneat/dto';
+import { emptyContactBase, IRelatedPerson } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IJoinTeamInfoResponse, IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team/models';
 import { InviteService, TeamNavService, TeamService } from '@sneat/team/services';
