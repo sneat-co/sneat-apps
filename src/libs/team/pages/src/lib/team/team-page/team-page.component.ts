@@ -29,7 +29,7 @@ export class TeamPageComponent extends TeamBaseComponent implements OnDestroy {
   protected override onContactusTeamChanged(contactusTeam: IContactusTeamDtoWithID) {
     console.log('TeamPage.onContactusTeamChanged()', contactusTeam);
     super.onContactusTeamChanged(contactusTeam);
-    this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts).map(c => ({ ...c, team: this.team }));
+    this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts).filter(c => c.brief?.roles?.includes('member')).map(c => ({ ...c, team: this.team }));
     console.log('TeamPage.onContactusTeamChanged() => this.members', this.members);
     this.cd.markForCheck();
   }

@@ -29,7 +29,7 @@
         <sneat-contact-dob [contact]="contact"></sneat-contact-dob>
       </ion-card>
 
-      <sneat-relationship-form *ngIf="contact?.brief?.userID !== currentUserID"
+      <sneat-relationship-form *ngIf="contact?.brief?.roles?.includes('member') && contact?.brief?.userID !== currentUserID"
         [team]="team"
         [(relationship)]="relatedAs"
         [ageGroup]="contact?.brief?.ageGroup"
