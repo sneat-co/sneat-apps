@@ -1,59 +1,63 @@
 <ion-item-divider color="light">
-	<ion-label>When</ion-label>
-	<ion-buttons slot="end">
-		<ion-button title="Add slot" (click)="showAddSlot()"
-								[color]="slots?.length ? 'primary' : 'danger'"
-		>
-			<ion-icon name="add-outline" slot="start"></ion-icon>
-			<ion-label>Add slot</ion-label>
-		</ion-button>
-	</ion-buttons>
+  <ion-label>When</ion-label>
+  <ion-buttons slot="end">
+    <ion-button title="Add slot" (click)="showAddSlot()"
+                [color]="slots?.length ? 'primary' : 'danger'"
+    >
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      <ion-label>Add slot</ion-label>
+    </ion-button>
+  </ion-buttons>
 </ion-item-divider>
 <ion-item *ngIf="slots && !slots?.length">
-	<ion-label><i>No slots have been added yet.</i></ion-label>
+  <ion-label><i>No slots have been added yet.</i></ion-label>
 </ion-item>
-<ion-item button *ngFor="let slot of slots; trackBy: id" class="with-buttons" (click)="selectSlot(slot)">
-	<ion-buttons slot="start">
-		<div style="text-align: center">
-			<ion-badge style="display: block" color="light">{{slot.start.time}}</ion-badge>
-			<ion-text *ngIf="slot.durationMinutes" color="medium"
-								style="display: block; font-size: small; margin-top: 0.75em">{{slot.durationMinutes}} mins
-			</ion-text>
-		</div>
-	</ion-buttons>
+<ion-item button="button" *ngFor="let slot of slots || []; trackBy: id" class="with-buttons" (click)="selectSlot(slot)">
+  <ion-buttons slot="start">
+    <div style="text-align: center">
+      <ion-badge style="display: block" color="light">{{slot.start.time}}</ion-badge>
+      <ion-text *ngIf="slot.durationMinutes" color="medium"
+                style="display: block; font-size: small; margin-top: 0.75em">{{slot.durationMinutes}} mins
+      </ion-text>
+    </div>
+  </ion-buttons>
 
-	<ion-label text-wrap>
-		<p>
-			<ion-badge color="light" style="margin-right: 4px;"
-								 *ngFor="let wd of slot.weekdays">{{wd|wdToWeekday}}</ion-badge>
-		</p>
-		<p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
-			@ {{slot.location.title || slot.location.address}},
-			ends at {{slot.end?.time}}</p>
-		<ng-template #noLocation>
-			<p *ngIf="slot.end">Ends at {{slot.end.time}}</p>
-		</ng-template>
-	</ion-label>
-	<ion-buttons slot="end">
-		<ion-button (click)="removeSlot(slot)" color="medium">
-			<ion-icon name="close"></ion-icon>
-		</ion-button>
-	</ion-buttons>
+  <ion-label text-wrap>
+    <p>
+      {{slot|json}}
+    </p>
+    <p>
+      <ion-badge *ngFor="let wd of slot.weekdays || []"
+                 color="light" style="margin-right: 4px;"
+      >{{wd|wdToWeekday}}</ion-badge>
+    </p>
+    <p *ngIf="slot.location && (slot.location.title || slot.location.address) else noLocation">
+      @ {{slot.location.title || slot.location.address}},
+      ends at {{slot.end?.time}}</p>
+    <ng-template #noLocation>
+      <p *ngIf="slot.end">Ends at {{slot.end.time}}</p>
+    </ng-template>
+  </ion-label>
+  <ion-buttons slot="end">
+    <ion-button (click)="removeSlot(slot)" color="medium">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
 </ion-item>
 <ion-modal class="auto-height"
-					 [isOpen]="isShowingAddSlot"
-					 (ionModalDidDismiss)="onAddSlotModalDismissed($event)"
+           [isOpen]="isShowingAddSlot"
+           (ionModalDidDismiss)="onAddSlotModalDismissed($event)"
 >
-	<ng-template>
-		<div class="modal-wrapper">
-			<sneat-recurring-slot-form
-				class="modal-content"
-				[wd]="addSlotParams?.wd"
-				[(happening)]="happening"
-				[isToDo]="false"
-				(slotAdded)="onSlotAdded($event)"
-				(happeningChange)="onHappeningChanged($event)"
-			></sneat-recurring-slot-form>
-		</div>
-	</ng-template>
+  <ng-template>
+    <div class="modal-wrapper">
+      <sneat-recurring-slot-form
+        class="modal-content"
+        [wd]="addSlotParams?.wd"
+        [(happening)]="happening"
+        [isToDo]="false"
+        (slotAdded)="onSlotAdded($event)"
+        (happeningChange)="onHappeningChanged($event)"
+      ></sneat-recurring-slot-form>
+    </div>
+  </ng-template>
 </ion-modal>

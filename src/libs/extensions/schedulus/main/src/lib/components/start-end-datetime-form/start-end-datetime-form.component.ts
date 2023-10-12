@@ -138,16 +138,17 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
    }
 
-   setStartTime(value: string): void {
+   protected setStartTime(value: string): void {
       if (!isValidaTimeString(value)) {
          this.errorLogger.logError(new Error('not valid time string:' + value), 'Invalid start time');
          return;
       }
       this.modalController.dismiss().catch(console.error);
       this.startTime.setValue(value);
+      this.emitTimingChanged('setStartTime');
    }
 
-   addToStart(v: { days?: number; hours?: number }): void {
+   protected addToStart(v: { days?: number; hours?: number }): void {
       const startDate = this.startDate.value || '';
       const startTime = this.startTime.value || '';
 
@@ -164,6 +165,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
             this.startDate.setValue(dateToIso(d));
          }
          this.startTime.setValue(dateToTimeOnlyStr(d));
+         this.emitTimingChanged('addToStart');
       } catch (e) {
          throw new Error(`failed to add ${JSON.stringify(v)} to ${d} [${this.startDate.value} ${this.startTime.value}]: ${e}`);
       }
@@ -180,7 +182,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
    // 	}
    // }
 
-   setStartDate(event: Event, code: 'today' | 'tomorrow'): void {
+   protected setStartDate(event: Event, code: 'today' | 'tomorrow'): void {
       console.log('setStartDate()', event);
       const today = new Date();
       let date: Date;
@@ -211,12 +213,12 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       // this.emitSlotChanged('ngAfterViewInit');
    }
 
-   emitTimingChanged(from: string): void {
+   private emitTimingChanged(from: string): void {
       console.log(`StartEndDatetimeFormComponent.emitSlotChanged(from=${from})`, this.timing);
       this.timingChanged.emit(this.timing);
    }
 
-   onStartTimeBlur(event: Event): void {
+   protected onStartTimeBlur(event: Event): void {
       console.log('StartEndDatetimeFormComponent.onStartTimeBlur()', event);
       const startTime = this.startTime.value as string || '';
       if (startTime.match(/^\d{2}$/)) {
@@ -224,7 +226,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       }
    }
 
-   onStartDateChanged(event: Event): void {
+   protected onStartDateChanged(event: Event): void {
       console.log('StartEndDatetimeFormComponent.onStartDateChanged()', event);
       const slot = this.timing;
       this.timing = { ...slot, start: { ...(slot.start || {}), date: this.startDate.value || '' } };
@@ -237,7 +239,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       }
    }
 
-   onStartTimeChanged(event: Event): void {
+   protected onStartTimeChanged(event: Event): void {
       console.log('StartEndDatetimeFormComponent.onStartTimeChanged()', event);
       const slot = this.timing;
       this.timing = { ...slot, start: { ...(slot.start || {}), time: this.startTime.value || '' } };
@@ -246,7 +248,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       }
    }
 
-   onDurationChanged(event: Event): void {
+   protected onDurationChanged(event: Event): void {
       console.log('StartEndDatetimeFormComponent.onDurationChanged()', event);
       if (isValidaTimeString(this.startTime.value as string)) {
          this.setEndTime();
@@ -255,7 +257,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       }
    }
 
-   setEndTime(): void {
+   private setEndTime(): void {
       console.log('setEndTime()');
       const startTime = this.startTime.value as string;
       const startHour = Number(startTime.substring(0, 2));
@@ -277,7 +279,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       this.endTime.setValue(value);
    }
 
-   onEndTimeChanged(event: Event): void {
+   protected onEndTimeChanged(event: Event): void {
       event.stopPropagation();
       const slot = this.timing;
       this.timing = { ...slot, end: { ...(slot.end || {}), time: this.endTime.value || '' } };
@@ -288,7 +290,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
    }
 
 
-   setDuration(): void {
+   private setDuration(): void {
       const startTime = this.startTime.value as string;
       const endTime = this.endTime.value as string;
 
