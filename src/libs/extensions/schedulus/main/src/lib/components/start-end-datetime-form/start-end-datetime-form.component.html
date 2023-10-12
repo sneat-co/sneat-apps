@@ -3,8 +3,7 @@
 	<ion-input type="date" [formControl]="startDate"
 						 (ionChange)="onStartDateChanged($event)"></ion-input>
 	<ion-buttons slot="end" *ngIf="!startDate?.value" class="ion-no-margin ion-no-padding">
-		<ion-button value="today" color="medium"
-
+		<ion-button color="medium"
 								(click)="setStartDate($event, 'today')" title="Today"
 		>
 			<ion-icon name="today-outline"></ion-icon>
@@ -67,14 +66,13 @@
 </ion-item>
 
 <ion-item class="sneat-no-end-padding">
-	<ion-label color="medium">At</ion-label>
-	<ion-input type="time" #startTimeInput
+	<ion-input type="time" label="At" #startTimeInput
 						 [formControl]="startTime"
 						 (ionBlur)="onStartTimeBlur($event)"
 						 (ionChange)="onStartTimeChanged($event)"
 	></ion-input>
 	<ng-container *ngIf="startTime.touched && !startTime.valid">
-		<ion-label color="danger" slot="end" *ngIf="startTime.errors && startTime.errors['required']">
+		<ion-label color="danger" slot="end" *ngIf="!!startTime.errors">
 			Required field
 		</ion-label>
 	</ng-container>
@@ -114,9 +112,8 @@
 	<ion-row>
 		<ion-col size="12" size-md="6">
 			<ion-item>
-				<ion-label color="medium">Takes</ion-label>
 				<ion-input
-
+					label="Takes"
 					[formControl]="duration"
 					(ionChange)="onDurationChanged($event)"
 					type="number" style="text-align: right"></ion-input>
@@ -130,8 +127,7 @@
 		</ion-col>
 		<ion-col size="12" size-md="6">
 			<ion-item>
-				<ion-label color="medium">Ends at</ion-label>
-				<ion-input type="time"
+				<ion-input type="time" label="Ends at"
 									 [formControl]="endTime"
 									 (ionChange)="onEndTimeChanged($event)"
 									 placeholder="HH:MM"></ion-input>
@@ -139,4 +135,6 @@
 	</ion-row>
 </ion-grid>
 
+<!--Form Errors: {{form.errors|json}};-->
 
+<!--isValid={{isValid}}; start={{startTime.value}}; end={{endTime.value}}-->

@@ -1,107 +1,122 @@
 <form [formGroup]="happeningForm" (ngSubmit)="submit()">
-	<ion-card>
-		<ion-item>
-			<ion-label position="stacked">Title</ion-label>
-			<ion-input #titleInput
-								 [formControl]="happeningTitle"
-								 (keyup.enter)="onTitleEnter()"
-								 placeholder="required field"
-								 style="font-weight: bold" type="text"
-			></ion-input>
-		</ion-item>
-	</ion-card>
+  <ion-card>
+    <ion-item>
+      <ion-input #titleInput
+                 label="Title"
+                 [formControl]="happeningTitle"
+                 (keyup.enter)="onTitleEnter()"
+                 placeholder="required field"
+                 style="font-weight: bold" type="text"
+      ></ion-input>
+    </ion-item>
+  </ion-card>
 
-	<ion-card>
-		<ion-item-group>
-			<sneat-recurring-slot-form
-				*ngIf="!happening?.brief?.slots?.length"
-				mode="in-form"
-				[wd]="wd"
-				[(happening)]="happening"
-				(happeningChange)="onHappeningChanged($event)"
-				(slotAdded)="onSlotAdded($event)"
-			></sneat-recurring-slot-form>
-			<sneat-happening-slots
-				#happeningSlotsComponent
-				*ngIf="happening?.id || happening?.brief?.slots?.length"
-				[happening]="happening"
-			></sneat-happening-slots>
-			<!--			<sneat-single-slot-form-->
-			<!--				[happening]="happening"-->
-			<!--				[style.display]="happeningType === 'single' ? 'block' : 'none'"-->
-			<!--				(happeningSlotChange)="onSingleSlotChanged($event)"-->
-			<!--			>-->
-			<!--				&lt;!&ndash; hide with [style.display] to preserve input values if tab switched back and forth &ndash;&gt;-->
-			<!--			</sneat-single-slot-form>-->
-		</ion-item-group>
+  <ng-container *ngIf="happeningTitle.value">
 
-	</ion-card>
+    <ion-segment class="ion-padding-horizontal"
+                 [formControl]="happeningType"
+                 (ionChange)="onHappeningTypeChanged($event)"
+    >
+      <ion-segment-button value="recurring">Recurring</ion-segment-button>
+      <ion-segment-button value="single">One-timer</ion-segment-button>
+      <!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
+      <!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
+    </ion-segment>
 
-	<ng-container *ngIf="happening?.id || happening?.brief?.slots">
-		<ion-card>
-			<ion-item-divider color="light">
-				<ion-label>Pricing</ion-label>
-			</ion-item-divider>
-			<ion-item>
-				<ng-container *ngIf="isToDo">
-					<ion-label>Cost</ion-label>
-				</ng-container>
-				<ng-container *ngIf="!isToDo">
-					<ion-label *ngIf="happeningType === 'recurring'">Price per visit</ion-label>
-					<ion-label *ngIf="happeningType === 'single'">Price</ion-label>
-				</ng-container>
-				<ion-input type="number" style="text-align: right"></ion-input>
-				<ion-select value="EUR">
-					<ion-select-option value="EUR">EUR</ion-select-option>
-					<ion-select-option value="USD">USD</ion-select-option>
-				</ion-select>
-			</ion-item>
-		</ion-card>
 
-		<sneat-happening-members-form
-			[team]="team"
-			[contactusTeam]="contactusTeam"
-			[happening]="happening"
-			(happeningChange)="onHappeningChanged($event)"
-		></sneat-happening-members-form>
+    <ion-card>
+      <ion-item-group>
+        <sneat-recurring-slot-form
+          *ngIf="!happening?.brief?.slots?.length"
+          mode="in-form"
+          [wd]="wd"
+          [(happening)]="happening"
+          (happeningChange)="onHappeningChanged($event)"
+          (slotAdded)="onSlotAdded($event)"
+        ></sneat-recurring-slot-form>
+        <sneat-happening-slots
+          #happeningSlotsComponent
+          *ngIf="happening?.id || happening?.brief?.slots?.length"
+          [happening]="happening"
+        ></sneat-happening-slots>
+        <!--			<sneat-single-slot-form-->
+        <!--				[happening]="happening"-->
+        <!--				[style.display]="happeningType === 'single' ? 'block' : 'none'"-->
+        <!--				(happeningSlotChange)="onSingleSlotChanged($event)"-->
+        <!--			>-->
+        <!--				&lt;!&ndash; hide with [style.display] to preserve input values if tab switched back and forth &ndash;&gt;-->
+        <!--			</sneat-single-slot-form>-->
+      </ion-item-group>
 
-		<ion-card>
-			<ng-container *ngIf="!formIsValid()">
-				<ion-item>
-					<ion-label color="danger">
-						<ul>
-							<li *ngIf="happeningForm.touched && happeningForm.controls['title'].errors">
-								<ng-container *ngIf="isToDo">Task title is required.</ng-container>
-								<ng-container *ngIf="!isToDo">Please enter a required "Title" field at top of the page.</ng-container>
-							</li>
-							<li *ngIf="happeningType === 'recurring' &&  !slots?.length">
-								<p>At least 1 slot should be specified for a recurring happening.</p>
-								<ion-button>Add slot</ion-button>
-							</li>
-						</ul>
-					</ion-label>
-				</ion-item>
-			</ng-container>
-			<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
-			<!--{{ weekdaysForm.errors['required'] }}-->
-			<!--</ion-item>-->
+    </ion-card>
 
-			<div class="ion-padding" *ngIf="happening?.id">
-				<ion-button size="large">
-					<ion-label>Save changes</ion-label>
-				</ion-button>
-			</div>
+    <ng-container *ngIf="happening?.id || happening?.brief?.slots">
+      <ion-card>
+        <ion-item-divider color="light">
+          <ion-label>Pricing</ion-label>
+        </ion-item-divider>
+        <ion-item>
+          <ng-container *ngIf="isToDo">
+            <ion-label>Cost</ion-label>
+          </ng-container>
+          <ng-container *ngIf="!isToDo">
+            <ion-label *ngIf="happeningType.value === 'recurring'">Price per visit</ion-label>
+            <ion-label *ngIf="happeningType.value === 'single'">Price</ion-label>
+          </ng-container>
+          <ion-input type="number" style="text-align: right"></ion-input>
+          <ion-select value="EUR">
+            <ion-select-option value="EUR">EUR</ion-select-option>
+            <ion-select-option value="USD">USD</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card>
 
-			<div class="ion-padding" *ngIf="!happening?.id">
-				<ion-button [disabled]="isCreating"
-										[color]="formIsValid() ? 'primary' : 'medium'" size="large"
-										(click)="submit()"
-				>
-					<ion-label *ngIf="isToDo">Add task</ion-label>
-					<ion-label *ngIf="!isToDo">Create {{happeningType}} happening</ion-label>
-					<ion-spinner *ngIf="isCreating" slot="end" class="ion-margin-horizontal"></ion-spinner>
-				</ion-button>
-			</div>
-		</ion-card>
-	</ng-container>
+      <sneat-happening-members-form
+        [team]="team"
+        [contactusTeam]="contactusTeam"
+        [happening]="happening"
+        (happeningChange)="onHappeningChanged($event)"
+      ></sneat-happening-members-form>
+
+      <ion-card>
+        <ng-container *ngIf="!formIsValid()">
+          <ion-item>
+            <ion-label color="danger">
+              <ul>
+                <li *ngIf="happeningForm.touched && happeningForm.controls['title'].errors">
+                  <ng-container *ngIf="isToDo">Task title is required.</ng-container>
+                  <ng-container *ngIf="!isToDo">Please enter a required "Title" field at top of the page.</ng-container>
+                </li>
+                <li *ngIf="happeningType.value === 'recurring' &&  !slots?.length">
+                  <p>At least 1 slot should be specified for a recurring happening.</p>
+                  <ion-button>Add slot</ion-button>
+                </li>
+              </ul>
+            </ion-label>
+          </ion-item>
+        </ng-container>
+        <!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
+        <!--{{ weekdaysForm.errors['required'] }}-->
+        <!--</ion-item>-->
+
+        <div class="ion-padding" *ngIf="happening?.id">
+          <ion-button size="large">
+            <ion-label>Save changes</ion-label>
+          </ion-button>
+        </div>
+
+        <div class="ion-padding" *ngIf="!happening?.id">
+          <ion-button [disabled]="isCreating"
+                      [color]="formIsValid() ? 'primary' : 'medium'" size="large"
+                      (click)="submit()"
+          >
+            <ion-label *ngIf="isToDo">Add task</ion-label>
+            <ion-label *ngIf="!isToDo">Create {{happeningType.value}} happening</ion-label>
+            <ion-spinner *ngIf="isCreating" slot="end" class="ion-margin-horizontal"></ion-spinner>
+          </ion-button>
+        </div>
+      </ion-card>
+    </ng-container>
+
+  </ng-container>
 </form>

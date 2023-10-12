@@ -91,7 +91,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	public get isValid(): boolean {
 		this.form.markAllAsTouched();
-		return isValidaTimeString(this.startTime.value || '') && isValidaTimeString(this.endTime.value || '');
+		return isValidaTimeString(this.startTime.value || '') && (!this.endTime.value || isValidaTimeString(this.endTime.value));
 	}
 
 	constructor(
