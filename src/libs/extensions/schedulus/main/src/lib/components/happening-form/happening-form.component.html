@@ -57,15 +57,8 @@
           <ion-label>Pricing</ion-label>
         </ion-item-divider>
         <ion-item>
-          <ng-container *ngIf="isToDo">
-            <ion-label>Cost</ion-label>
-          </ng-container>
-          <ng-container *ngIf="!isToDo">
-            <ion-label *ngIf="happeningType.value === 'recurring'">Price per visit</ion-label>
-            <ion-label *ngIf="happeningType.value === 'single'">Price</ion-label>
-          </ng-container>
-          <ion-input type="number" style="text-align: right"></ion-input>
-          <ion-select value="EUR">
+          <ion-input type="number" [label]="priceLabel" style="text-align: right"></ion-input>
+          <ion-select value="EUR" disabled="disabled">
             <ion-select-option value="EUR">EUR</ion-select-option>
             <ion-select-option value="USD">USD</ion-select-option>
           </ion-select>

@@ -73,6 +73,10 @@ export class HappeningFormComponent extends SneatBaseComponent implements OnChan
    private readonly logError = this.errorLogger.logError;
    private readonly hasNavHistory: boolean;
 
+   protected get priceLabel(): string {
+      return this.happening?.brief?.type === 'recurring' ? 'Price per visit' : 'Price';
+   }
+
    public isToDo = false;
 
    constructor(
