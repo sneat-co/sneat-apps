@@ -1,7 +1,7 @@
-<ion-item>
-	<ion-label color="medium">Apps</ion-label>
-</ion-item>
-<ion-item *ngFor="let ext of extensions" class="with-buttons" tappable (click)="goExt(ext)">
+<!--<ion-item>-->
+<!--	<ion-label color="medium">Apps</ion-label>-->
+<!--</ion-item>-->
+<ion-item [lines]="last ? 'none' : undefined" *ngFor="let ext of extensions; let last = last" class="with-buttons" tappable (click)="goExt(ext)">
 	<ion-label>
 		<span class="ion-margin-end">{{ext.emoji}}</span>
 		{{ext.title}}

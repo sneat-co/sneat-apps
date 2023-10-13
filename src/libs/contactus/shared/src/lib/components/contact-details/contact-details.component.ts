@@ -16,28 +16,29 @@ import { ContactModulesMenuComponent } from '../contact-modules-menu';
 import { ContactRelatedAsComponent } from '../contact-related-as';
 import { ContactRolesInputModule } from '../contact-roles-input';
 import { ContactsListModule } from '../contacts-list';
-import { PersonWizardComponent, RelationshipFormComponent } from '../person-form';
+import { GenderFormComponent, PersonWizardComponent, RelationshipFormComponent } from '../person-form';
 
 @Component({
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		SneatPipesModule,
-		ContactDobComponent,
-		ContactRelatedAsComponent,
-		ContactModulesMenuComponent,
-		ContactContactsComponent,
-		ContactRolesInputModule,
-		ContactsListModule,
-		RouterLink,
-		ContactLocationsComponent,
-		PersonWizardComponent,
-		RelationshipFormComponent,
-	],
+   imports: [
+      CommonModule,
+      IonicModule,
+      FormsModule,
+      SneatPipesModule,
+      ContactDobComponent,
+      ContactRelatedAsComponent,
+      ContactModulesMenuComponent,
+      ContactContactsComponent,
+      ContactRolesInputModule,
+      ContactsListModule,
+      RouterLink,
+      ContactLocationsComponent,
+      PersonWizardComponent,
+      RelationshipFormComponent,
+      GenderFormComponent,
+   ],
 })
 export class ContactDetailsComponent {
 	@Input({ required: true }) public team?: ITeamContext;
@@ -45,7 +46,7 @@ export class ContactDetailsComponent {
 
 	protected relatedAs?: string;
 
-	protected tab: 'communicationChannels' | 'roles' | 'relatedContacts' | 'locations' = 'communicationChannels';
+	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' = 'peers';
 
 	constructor(
 		private readonly params: ContactComponentBaseParams,

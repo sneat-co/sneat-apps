@@ -8,7 +8,10 @@
 			<ion-title>Contact</ion-title>
 		</ng-template>
 		<ion-buttons slot="end">
-			<ion-menu-button menu="mainMenu"></ion-menu-button>
+			<ion-button title="Delete contact" color="medium" (click)="deleteContact()">
+				<ion-icon name="trash" slot="start"></ion-icon>
+			</ion-button>
+			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>

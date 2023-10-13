@@ -11,11 +11,11 @@ const assetsExtension: ISneatExtension = {
 	emoji: '🏡',
 };
 
-const contactsExtension: ISneatExtension = {
-	id: 'contacts',
-	title: 'Contacts',
-	emoji: '📇'
-}
+// const contactsExtension: ISneatExtension = {
+// 	id: 'contacts',
+// 	title: 'Contacts',
+// 	emoji: '📇'
+// }
 
 const documentsExtension: ISneatExtension = {
 	id: 'documents',
@@ -29,16 +29,22 @@ const sizesExtension: ISneatExtension = {
 	emoji: '📏'
 }
 
+const calendarExtension: ISneatExtension = {
+	id: 'schedulus',
+	title: 'Calendar',
+	emoji: '🗓️'
+}
+
 export const defaultFamilyExtension: ISneatExtension[] = [
 	assetsExtension,
-	contactsExtension,
+	calendarExtension,
 	documentsExtension,
 	sizesExtension,
 ];
 
 export const defaultFamilyMemberExtensions: ISneatExtension[] = [
 	assetsExtension,
-	contactsExtension,
+	calendarExtension,
 	documentsExtension,
 	sizesExtension,
 ];

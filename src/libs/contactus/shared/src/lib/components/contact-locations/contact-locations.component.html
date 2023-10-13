@@ -8,8 +8,8 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-	<ion-item-divider *ngIf="contactLocations && !contactLocations.length">
-		<ion-label>No locations have been added yet.</ion-label>
-	</ion-item-divider>
+	<ion-item lines="none" *ngIf="contactLocations && !contactLocations.length">
+		<ion-label color="medium">No locations have been added yet</ion-label>
+	</ion-item>
 	<sneat-contacts-list [contacts]="contactLocations"></sneat-contacts-list>
 </ion-card>

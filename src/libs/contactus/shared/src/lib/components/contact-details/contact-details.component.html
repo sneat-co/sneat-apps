@@ -27,9 +27,12 @@
         </ion-item-divider>
 
         <sneat-contact-dob [contact]="contact"></sneat-contact-dob>
-      </ion-card>
 
-      <sneat-relationship-form *ngIf="contact?.brief?.roles?.includes('member') && contact?.brief?.userID !== currentUserID"
+      </ion-card>
+      <sneat-gender-form [genderID]="contact?.brief?.gender"></sneat-gender-form>
+
+      <sneat-relationship-form
+        *ngIf="contact?.brief?.roles?.includes('member') && contact?.brief?.userID !== currentUserID"
         [team]="team"
         [(relationship)]="relatedAs"
         [ageGroup]="contact?.brief?.ageGroup"
@@ -48,11 +51,11 @@
 </ion-grid>
 
 <ion-segment class="ion-margin-horizontal" color="primary" [(ngModel)]="tab">
-  <ion-segment-button value="communicationChannels" *ngIf="hideForContactTypes(['pet'])">
-    Email/phone
+  <ion-segment-button value="peers">
+    Peers
   </ion-segment-button>
-  <ion-segment-button value="relatedContacts">
-    Contacts
+  <ion-segment-button value="communicationChannels" *ngIf="hideForContactTypes(['pet'])">
+    Email/Phone
   </ion-segment-button>
   <ion-segment-button value="roles" *ngIf="hideForContactTypes(['pet'])">
     Roles
@@ -64,7 +67,7 @@
 
 <sneat-contact-contacts *ngIf="tab === 'communicationChannels'" [contact]="contact"></sneat-contact-contacts>
 
-<ion-card *ngIf="tab === 'relatedContacts'">
+<ion-card *ngIf="tab === 'peers'">
   <ion-item color="light">
     <ion-label>Related contacts</ion-label>
   </ion-item>
@@ -84,9 +87,9 @@
   </ion-item>
 </ion-card>
 
-<sneat-contact-locations *ngIf="tab === 'roles'" [team]="team"
+<sneat-contact-locations *ngIf="tab === 'locations'" [team]="team"
                          [contact]="contact"></sneat-contact-locations>
 
 
-<sneat-contact-roles-input *ngIf="tab === 'locations'" [team]="team"
+<sneat-contact-roles-input *ngIf="tab === 'roles'" [team]="team"
                            [contact]="contact"></sneat-contact-roles-input>

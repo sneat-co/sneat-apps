@@ -244,7 +244,7 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 				next: contact => {
 					this.navigateForwardToTeamPage(
 						`contact/${contact.id}`,
-						{ state: { contact } },
+						{ replaceUrl: true, state: { contact } },
 					).catch(this.logErrorHandler('failed to navigate to contact page'));
 				},
 				error: (err: unknown) => {
