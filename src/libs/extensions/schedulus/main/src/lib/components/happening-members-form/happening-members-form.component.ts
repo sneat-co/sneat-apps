@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import { ISlotParticipant } from '@sneat/dto';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
@@ -12,6 +15,12 @@ import {
 @Component({
 	selector: 'sneat-happening-members-form',
 	templateUrl: 'happening-members-form.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		SneatPipesModule,
+	]
 })
 export class HappeningMembersFormComponent {
 

@@ -6,7 +6,7 @@ import { HappeningType, WeekdayCode2 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IHappeningContext, Member, newEmptyHappeningContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
-import { HappeningPageFormComponent } from '../../components/happening-page-form/happening-page-form.component';
+import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { ScheduleBasePage } from '../schedule-base-page';
 
 @Component({
@@ -16,7 +16,7 @@ import { ScheduleBasePage } from '../schedule-base-page';
 })
 export class NewHappeningPageComponent extends ScheduleBasePage {
 
-	@ViewChild('happeningPageFormComponent') happeningPageFormComponent?: HappeningPageFormComponent;
+	@ViewChild('happeningPageFormComponent') happeningPageFormComponent?: HappeningFormComponent;
 
 	public isToDo: boolean;
 	public wd?: WeekdayCode2;

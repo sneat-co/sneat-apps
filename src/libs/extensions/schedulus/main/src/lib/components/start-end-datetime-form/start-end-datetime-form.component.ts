@@ -21,13 +21,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
    templateUrl: 'start-end-datetime-form.component.html',
 })
 export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
-   @ViewChild('startTimeInput') startTimeInput?: IonInput;
 
-   @Input() mode?: HappeningType;
-   @Input() timing: ITiming = emptyTiming;
-   @Input() date?: string;
+   @Input({ required: true }) mode?: HappeningType;
+   @Input({ required: true }) timing: ITiming = emptyTiming;
+   @Input({ required: true }) date?: string;
 
    @Output() readonly timingChanged = new EventEmitter<ITiming>();
+
+   @ViewChild('startTimeInput') startTimeInput?: IonInput;
 
    public tab: 'duration' | 'end' = 'duration';
    public durationUnits: 'minutes' | 'hours' = 'minutes';
@@ -164,7 +165,9 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
          if (this.startDate.value) { // For recurring events startDate is not set
             this.startDate.setValue(dateToIso(d));
          }
-         this.startTime.setValue(dateToTimeOnlyStr(d));
+         if (this.startTime.value) {
+            this.startTime.setValue(dateToTimeOnlyStr(d));
+         }
          this.emitTimingChanged('addToStart');
       } catch (e) {
          throw new Error(`failed to add ${JSON.stringify(v)} to ${d} [${this.startDate.value} ${this.startTime.value}]: ${e}`);
@@ -214,20 +217,20 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
    }
 
    private emitTimingChanged(from: string): void {
-      console.log(`StartEndDatetimeFormComponent.emitSlotChanged(from=${from})`, this.timing);
+      if (!from) console.log(`StartEndDatetimeFormComponent.emitSlotChanged(from=${from})`, this.timing);
       this.timingChanged.emit(this.timing);
    }
 
-   protected onStartTimeBlur(event: Event): void {
-      console.log('StartEndDatetimeFormComponent.onStartTimeBlur()', event);
+   protected onStartTimeBlur(): void {
+      // console.log('StartEndDatetimeFormComponent.onStartTimeBlur()');
       const startTime = this.startTime.value as string || '';
       if (startTime.match(/^\d{2}$/)) {
          this.startTime.setValue(startTime + ':00');
       }
    }
 
-   protected onStartDateChanged(event: Event): void {
-      console.log('StartEndDatetimeFormComponent.onStartDateChanged()', event);
+   protected onStartDateChanged(): void {
+      // console.log('StartEndDatetimeFormComponent.onStartDateChanged()');
       const slot = this.timing;
       this.timing = { ...slot, start: { ...(slot.start || {}), date: this.startDate.value || '' } };
       if (
@@ -239,8 +242,8 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       }
    }
 
-   protected onStartTimeChanged(event: Event): void {
-      console.log('StartEndDatetimeFormComponent.onStartTimeChanged()', event);
+   protected onStartTimeChanged(): void {
+      // console.log('StartEndDatetimeFormComponent.onStartTimeChanged()');
       const slot = this.timing;
       this.timing = { ...slot, start: { ...(slot.start || {}), time: this.startTime.value || '' } };
       if (isValidaTimeString(this.startTime.value as string)) {
@@ -248,8 +251,8 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       }
    }
 
-   protected onDurationChanged(event: Event): void {
-      console.log('StartEndDatetimeFormComponent.onDurationChanged()', event);
+   protected onDurationChanged(): void {
+      // console.log('StartEndDatetimeFormComponent.onDurationChanged()');
       if (isValidaTimeString(this.startTime.value as string)) {
          this.setEndTime();
       } else {
@@ -279,8 +282,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       this.endTime.setValue(value);
    }
 
-   protected onEndTimeChanged(event: Event): void {
-      event.stopPropagation();
+   protected onEndTimeChanged(): void {
       const slot = this.timing;
       this.timing = { ...slot, end: { ...(slot.end || {}), time: this.endTime.value || '' } };
       if (isValidaTimeString(this.startTime.value as string)) {

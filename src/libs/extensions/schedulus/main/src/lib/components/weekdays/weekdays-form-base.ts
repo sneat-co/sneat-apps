@@ -1,5 +1,7 @@
 import { AbstractControl, FormControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { WeekdayCode2 } from '@sneat/dto';
+import { IErrorLogger } from '@sneat/logging';
+import { SneatBaseComponent } from '@sneat/ui';
 
 const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
 	const formGroup = control as UntypedFormGroup;
@@ -11,7 +13,7 @@ const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationError
 	return { required: 'Please select at least 1 weekday.' };
 };
 
-export abstract class WeekdaysFormBase {
+export abstract class WeekdaysFormBase extends  SneatBaseComponent {
 	readonly weekdayMo = new FormControl<boolean>(false);
 	readonly weekdayTu = new FormControl<boolean>(false);
 	readonly weekdayWe = new FormControl<boolean>(false);
@@ -43,7 +45,8 @@ export abstract class WeekdaysFormBase {
 		weekdayRequired,
 	);
 
-	protected constructor(isWeekdayRequired: boolean) {
+	protected constructor(className: string, isWeekdayRequired: boolean, errorLogger: IErrorLogger) {
+		super(className, errorLogger);
 		this.weekdaysForm = new UntypedFormGroup(
 			{
 				mo: this.weekdayMo,

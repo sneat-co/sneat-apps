@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
    AfterViewInit,
    Component,
@@ -9,23 +10,37 @@ import {
    SimpleChanges,
    ViewChild,
 } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
+import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
+import { IonicModule, IonInput } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import { HappeningType, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { IContactusTeamDtoWithID, IHappeningContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService } from '@sneat/team/services';
+import { HappeningService, HappeningServiceModule } from '@sneat/team/services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
+import { HappeningMembersFormComponent } from '../happening-members-form/happening-members-form.component';
+import { HappeningSlotComponentsModule } from '../happening-slot-components.module';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
 @Component({
    selector: 'sneat-happening-page-form',
-   templateUrl: 'happening-page-form.component.html',
+   templateUrl: 'happening-form.component.html',
+   standalone: true,
+   imports: [
+      CommonModule,
+      IonicModule,
+      FormsModule,
+      ReactiveFormsModule,
+      HappeningSlotComponentsModule,
+      SneatPipesModule,
+      HappeningServiceModule,
+      HappeningMembersFormComponent,
+   ],
 })
-export class HappeningPageFormComponent extends SneatBaseComponent implements OnChanges, AfterViewInit {
+export class HappeningFormComponent extends SneatBaseComponent implements OnChanges, AfterViewInit {
 
    date = '';
 
@@ -80,6 +95,7 @@ export class HappeningPageFormComponent extends SneatBaseComponent implements On
    }
 
    ngAfterViewInit(): void {
+      this.setFocusToInput(this.titleInput);
       if (this.happeningType.value === 'recurring' && !this.slots?.length) {
          if (this.happeningSlotsComponent) {
             this.happeningSlotsComponent?.showAddSlot({ wd: this.wd });
@@ -90,26 +106,33 @@ export class HappeningPageFormComponent extends SneatBaseComponent implements On
    }
 
    onHappeningTypeChanged(event: Event): void {
+      console.log('onHappeningTypeChanged()', event);
       const happeningType = (event as CustomEvent).detail.value as HappeningType;
-      const setSlots = (slots?: IHappeningSlot[]) => {
-         if (slots && this.happening?.brief) {
-            this.happening = {
-               ...this.happening,
-               brief: {
-                  ...this.happening.brief,
-                  slots,
-               },
-            };
-         }
-      };
-      switch (happeningType) {
-         case 'single':
-            setSlots(this.happening?.brief?.slots);
-            break;
-         case 'recurring':
-            setSlots(this.happening?.brief?.slots);
-            break;
+      if (this.happening?.brief) {
+         this.happening = { ...this.happening, brief: { ...this.happening?.brief, type: happeningType } };
       }
+
+      // const setSlots = (slots?: IHappeningSlot[]) => {
+      //    if (slots && this.happening?.brief) {
+      //       this.happening = {
+      //          ...this.happening,
+      //          brief: {
+      //             ...this.happening.brief,
+      //             slots,
+      //          },
+      //       };
+      //    }
+      // };
+      //
+      // switch (happeningType) {
+      //    case 'single':
+      //       setSlots(this.happening?.brief?.slots);
+      //       break;
+      //    case 'recurring':
+      //       setSlots(this.happening?.brief?.slots);
+      //       break;
+      // }
+
       this.happeningChange.emit(this.happening);
    }
 

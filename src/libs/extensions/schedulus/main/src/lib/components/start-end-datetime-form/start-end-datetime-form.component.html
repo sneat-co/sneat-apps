@@ -1,7 +1,6 @@
 <ion-item *ngIf="!hideStartDate" class="sneat-no-end-padding">
-	<ion-label color="medium">On</ion-label>
-	<ion-input type="date" [formControl]="startDate"
-						 (ionChange)="onStartDateChanged($event)"></ion-input>
+	<ion-input label="On" type="date" [formControl]="startDate"
+						 (ionChange)="onStartDateChanged()"></ion-input>
 	<ion-buttons slot="end" *ngIf="!startDate?.value" class="ion-no-margin ion-no-padding">
 		<ion-button color="medium"
 								(click)="setStartDate($event, 'today')" title="Today"
@@ -68,8 +67,8 @@
 <ion-item class="sneat-no-end-padding">
 	<ion-input type="time" label="Starts" #startTimeInput
 						 [formControl]="startTime"
-						 (ionBlur)="onStartTimeBlur($event)"
-						 (ionChange)="onStartTimeChanged($event)"
+						 (ionBlur)="onStartTimeBlur()"
+						 (ionChange)="onStartTimeChanged()"
 	></ion-input>
 	<ng-container *ngIf="startTime.touched && !startTime.valid">
 		<ion-label color="danger" slot="end" *ngIf="!!startTime.errors">
@@ -115,7 +114,7 @@
 				<ion-input
 					label="Takes"
 					[formControl]="duration"
-					(ionChange)="onDurationChanged($event)"
+					(ionChange)="onDurationChanged()"
 					type="number" style="text-align: right"></ion-input>
 				<ion-select slot="end" interface="popover"
 										[(ngModel)]="durationUnits"
@@ -129,7 +128,7 @@
 			<ion-item>
 				<ion-input type="time" label="Ends at"
 									 [formControl]="endTime"
-									 (ionChange)="onEndTimeChanged($event)"
+									 (ionChange)="onEndTimeChanged()"
 									 placeholder="HH:MM"></ion-input>
 			</ion-item>		</ion-col>
 	</ion-row>

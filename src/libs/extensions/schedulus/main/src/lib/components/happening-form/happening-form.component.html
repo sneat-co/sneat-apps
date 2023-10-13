@@ -1,43 +1,44 @@
 <form [formGroup]="happeningForm" (ngSubmit)="submit()">
+
+  <ion-segment class="ion-padding-horizontal"
+               [formControl]="happeningType"
+               (ionChange)="onHappeningTypeChanged($event)"
+  >
+    <ion-segment-button value="recurring">Recurring</ion-segment-button>
+    <ion-segment-button value="single">One-timer</ion-segment-button>
+    <!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
+    <!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
+  </ion-segment>
+
   <ion-card>
     <ion-item>
       <ion-input #titleInput
-                 label="Title"
                  [formControl]="happeningTitle"
                  (keyup.enter)="onTitleEnter()"
-                 placeholder="required field"
-                 style="font-weight: bold" type="text"
+                 placeholder="Title"
+                 type="text"
       ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!happeningTitle.value">
+      <ion-label color="medium">
+        Enter above the name of the event.
+      </ion-label>
     </ion-item>
   </ion-card>
 
   <ng-container *ngIf="happeningTitle.value">
 
-    <ion-segment class="ion-padding-horizontal"
-                 [formControl]="happeningType"
-                 (ionChange)="onHappeningTypeChanged($event)"
-    >
-      <ion-segment-button value="recurring">Recurring</ion-segment-button>
-      <ion-segment-button value="single">One-timer</ion-segment-button>
-      <!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
-      <!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
-    </ion-segment>
-
-
     <ion-card>
       <ion-item-group>
-        <sneat-recurring-slot-form
-          *ngIf="!happening?.brief?.slots?.length"
-          mode="in-form"
-          [wd]="wd"
-          [(happening)]="happening"
-          (happeningChange)="onHappeningChanged($event)"
-          (slotAdded)="onSlotAdded($event)"
+        <sneat-recurring-slot-form *ngIf="!happening?.brief?.slots?.length"
+                                   mode="in-form"
+                                   [wd]="wd"
+                                   [(happening)]="happening"
+                                   (happeningChange)="onHappeningChanged($event)"
+                                   (slotAdded)="onSlotAdded($event)"
         ></sneat-recurring-slot-form>
-        <sneat-happening-slots
-          #happeningSlotsComponent
-          *ngIf="happening?.id || happening?.brief?.slots?.length"
-          [happening]="happening"
+        <sneat-happening-slots #happeningSlotsComponent *ngIf="happening?.id || happening?.brief?.slots?.length"
+                               [happening]="happening"
         ></sneat-happening-slots>
         <!--			<sneat-single-slot-form-->
         <!--				[happening]="happening"-->

@@ -1,4 +1,5 @@
 import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
+import { createSetFocusToInput } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject, Subscription } from 'rxjs';
 
@@ -13,6 +14,8 @@ export abstract class SneatBaseComponent implements OnDestroy {
     @Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
   ) {
   }
+
+  protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
   public ngOnDestroy(): void {
     this.unsubscribe(`${this.className}.ngOnDestroy()`);
