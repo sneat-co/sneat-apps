@@ -35,6 +35,9 @@ type Happens = 'once' | 'weekly' | RepeatsWeek | 'fortnightly';
 })
 export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnDestroy {
 
+   @Input() mode: 'modal' | 'in-form' = 'modal';
+   @Input() happening?: IHappeningContext;
+
    @ViewChild('startEndDatetimeForm') startEndDatetimeForm?: StartEndDatetimeFormComponent;
 
    public timing: ITiming = emptyTiming;
@@ -42,9 +45,6 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnDe
    public error?: string;
 
    public tab: 'when' | 'where' = 'when';
-
-   @Input() mode: 'modal' | 'in-form' = 'modal';
-   @Input() happening?: IHappeningContext;
 
    get happeningType(): HappeningType | undefined {
       return this.happening?.brief?.type;
@@ -65,6 +65,7 @@ export class RecurringSlotFormComponent extends WeekdaysFormBase implements OnDe
    // maxDate = '' + (new Date().getFullYear() + 5);
 
    repeats = new FormControl<Happens>('weekly', Validators.required);
+
    slotForm = new UntypedFormGroup({
       locationTitle: new FormControl<string>(''),
       locationAddress: new FormControl<string>(''),

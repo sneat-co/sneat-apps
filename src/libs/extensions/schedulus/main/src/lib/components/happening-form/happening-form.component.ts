@@ -26,7 +26,7 @@ import { HappeningSlotComponentsModule } from '../happening-slot-components.modu
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
 @Component({
-   selector: 'sneat-happening-page-form',
+   selector: 'sneat-happening-form',
    templateUrl: 'happening-form.component.html',
    standalone: true,
    imports: [
@@ -46,12 +46,12 @@ export class HappeningFormComponent extends SneatBaseComponent implements OnChan
 
    isCreating = false;
 
-   @Input() public team?: ITeamContext;
+   @Input({ required: true }) public team?: ITeamContext;
+   @Input({ required: true }) public happening?: IHappeningContext;
+   @Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
    @Input() public contactusTeam?: IContactusTeamDtoWithID;
-   @Input() public happening?: IHappeningContext;
    @Input() public wd?: WeekdayCode2;
 
-   @Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
    @ViewChild('titleInput', { static: true }) titleInput?: IonInput;
    @ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: HappeningSlotsComponent;

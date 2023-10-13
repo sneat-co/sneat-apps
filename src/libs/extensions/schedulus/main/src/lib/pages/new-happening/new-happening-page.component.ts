@@ -1,10 +1,8 @@
-//tslint:disable:no-unbound-method
-//tslint:disable:no-unsafe-any
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HappeningType, WeekdayCode2 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IHappeningContext, Member, newEmptyHappeningContext } from '@sneat/team/models';
+import { IHappeningContext, newEmptyHappeningContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { ScheduleBasePage } from '../schedule-base-page';
@@ -20,18 +18,13 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 
 	public isToDo: boolean;
 	public wd?: WeekdayCode2;
-	public happeningType: HappeningType = 'recurring';
 	public happening?: IHappeningContext;
 	public date = '';
 
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		// private readonly memberService: IMemberService,
-		// private readonly regularHappeningService: IRegularHappeningService,
-		// private readonly singleHappeningService: ISingleHappeningService,
 	) {
-		// window.location.pathname.indexOf('/new-task') >= 0 ? 'tasks' : 'schedule'
 		super('NewHappeningPageComponent', route, params);
 		this.isToDo = location.pathname.indexOf('/new-task') >= 0;
 		this.date = history.state.date as string || '';
@@ -54,7 +47,6 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 						console.warn('unknown happening type passed in URL: type=' + type);
 						return;
 					}
-					this.happeningType = type;
 					if (this.team && !this.happening) {
 						this.createHappeningContext(type);
 					}
@@ -86,16 +78,17 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	//     }));
 	// }
 
-	onHappeningChanged(happening: IHappeningContext): void {
-		const happeningType = happening.brief?.type || 'recurring';
+	protected onHappeningChanged(happening: IHappeningContext): void {
+		const happeningType = happening.brief?.type;
+		const typeChange = happeningType && happeningType !== this.happening?.brief?.type;
 		this.happening = happening;
-		if (happeningType !== this.happeningType) {
+		if (typeChange) {
 			this.onHappeningTypeChanged(happeningType);
 		}
 	}
 
-	onHappeningTypeChanged(happeningType: HappeningType): void {
-		console.log('onHappeningTypeChanged()');
+	private onHappeningTypeChanged(happeningType: HappeningType): void {
+		console.log('onHappeningTypeChanged()', happeningType);
 		let { href } = location;
 		if (href.indexOf('?') < 0) {
 			href += '?type=';
@@ -106,24 +99,5 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 		);
 		history.replaceState(history.state, document.title, href);
 	}
-
-
-	// tslint:disable-next-line:prefer-function-over-method
-	onMemberSelectChanged(m: Member, event: Event): void {
-		const { detail } = (event as CustomEvent);
-		m.isChecked = detail.checked;
-	}
-
-
-	// onEventTimesChanged(times: { from: Date; to: Date }): void {
-	// 	console.log('NewHappeningPage.onEventTimesChanged() =>', times);
-	// 	this.eventStarts = times.from;
-	// 	this.eventEnds = times.to;
-	// }
-
-	// public addNewMember(): void {
-	// 	alert('Not implemented yet. Please add from members page for now.');
-	// }
-
 
 }

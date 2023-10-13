@@ -2,15 +2,15 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 const morningHours: string[] = [
-	'00', '01', '02', '03', '04', '05', '06', '07',
+	'00', '01', '02', '03', '04', '05', '06', '07', '08',
 ];
 
 const dayHours: string[] = [
-	'08', '09', '10', '11', '12', '13', '14', '15',
+	'09', '10', '11', '12', '13', '14', '15', '16', '17'
 ];
 
 const eveningHours: string[] = [
-	'16', '17', '18', '19', '20', '21', '22', '23',
+	'16', '17', '18', '19', '20', '21', '22', '23', '00'
 ];
 
 @Component({

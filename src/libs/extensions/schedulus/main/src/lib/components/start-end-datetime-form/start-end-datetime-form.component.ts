@@ -146,16 +146,18 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       }
       this.modalController.dismiss().catch(console.error);
       this.startTime.setValue(value);
+      this.timing = { ...this.timing, start: { ...this.timing.start, time: value } };
+      this.setEndTime();
       this.emitTimingChanged('setStartTime');
    }
 
    protected addToStart(v: { days?: number; hours?: number }): void {
-      const startDate = this.startDate.value || '';
-      const startTime = this.startTime.value || '';
-
-      const d = isoStringsToDate(startDate || '', startTime);
-
+      console.log('addToStart()', v, this.startDate.value, this.startTime.value);
+      let d: Date | undefined = undefined;
       try {
+         let startDate = this.startDate.value || '';
+         let startTime = this.startTime.value || '';
+         d = isoStringsToDate(startDate || '2000-01-01', startTime);
          if (v.days) {
             d.setDate(d.getDate() + v.days);
          }
@@ -163,11 +165,16 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
             d.setTime(d.getTime() + v.hours * 60 * 60 * 1000);
          }
          if (this.startDate.value) { // For recurring events startDate is not set
-            this.startDate.setValue(dateToIso(d));
+            startDate = dateToIso(d);
+            this.timing = { ...this.timing, start: { ...this.timing.start, date: startDate } };
+            this.startDate.setValue(startDate);
          }
          if (this.startTime.value) {
-            this.startTime.setValue(dateToTimeOnlyStr(d));
+            startTime = dateToTimeOnlyStr(d);
+            this.timing = { ...this.timing, start: { ...this.timing.start, time: startTime } };
+            this.startTime.setValue(startTime);
          }
+         this.setEndTime();
          this.emitTimingChanged('addToStart');
       } catch (e) {
          throw new Error(`failed to add ${JSON.stringify(v)} to ${d} [${this.startDate.value} ${this.startTime.value}]: ${e}`);
@@ -265,8 +272,11 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
       const startTime = this.startTime.value as string;
       const startHour = Number(startTime.substring(0, 2));
       const startMin = Number(startTime.substring(3, 5));
-      console.log(startTime, startHour, startMin);
+
+
       const duration = Number(this.duration.value);
+      console.log('starts:', startHour, startMin, 'duration:', duration);
+
       const durationHours = ~~(duration / 60);
       const durationMin = duration % 60;
 
@@ -277,9 +287,10 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
       const endHour = toStr(startHour + durationHours);
       const endMin = toStr(startMin + durationMin);
-      const value = `${endHour}:${endMin}`;
-      console.log('StartEndDatetimeFormComponent.setEndTime()', endHour, endMin, value);
-      this.endTime.setValue(value);
+      const endTime = `${endHour}:${endMin}`;
+      this.timing = { ...this.timing, end: { time: endTime } };
+      console.log('StartEndDatetimeFormComponent.setEndTime() => endTime:', endTime);
+      this.endTime.setValue(endTime);
    }
 
    protected onEndTimeChanged(): void {

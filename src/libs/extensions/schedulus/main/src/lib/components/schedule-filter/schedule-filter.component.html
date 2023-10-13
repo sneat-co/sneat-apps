@@ -11,7 +11,7 @@
           [formControl]="text"
           (ionChange)="emitChanged()"
           (click)="$event.stopPropagation()"
-          [placeholder]="expanded ? 'text       | click △ to collapse ☞' : 'text       | click ▽ to expand ☞'"
+          placeholder="text to search"
         ></ion-input>
         <ion-buttons slot="end" *ngIf="hasFilter">
           <ion-button (click)="clearFilter($event)" title="Clear filter">
