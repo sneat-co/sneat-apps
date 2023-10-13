@@ -77,33 +77,35 @@
     <ion-grid class="grid-layout">
       <ion-row>
         <ion-col size="6">
-          <ion-item>
+          <ion-item lines="none">
             <ion-checkbox slot="start" value="mo" [formControl]="weekdayMo" labelPlacement="end">Monday</ion-checkbox>
           </ion-item>
-          <ion-item>
+          <ion-item lines="none">
             <ion-checkbox slot="start" value="tu" [formControl]="weekdayTu" labelPlacement="end">Tuesday</ion-checkbox>
           </ion-item>
-          <ion-item>
+          <ion-item lines="none">
             <ion-checkbox slot="start" value="we" [formControl]="weekdayWe" labelPlacement="end">Wednesday
             </ion-checkbox>
           </ion-item>
-          <ion-item>
+          <ion-item lines="none">
             <ion-checkbox slot="start" value="th" [formControl]="weekdayTh" labelPlacement="end">Thursday</ion-checkbox>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
+          <ion-item lines="none">
             <ion-checkbox slot="start" value="fr" [formControl]="weekdayFr" labelPlacement="end">Friday</ion-checkbox>
           </ion-item>
-          <ion-item>
+          <ion-item lines="none">
             <ion-checkbox slot="start" value="sa" [formControl]="weekdaySa" labelPlacement="end">Saturday</ion-checkbox>
           </ion-item>
-          <ion-item>
+          <ion-item lines="none">
             <ion-checkbox slot="start" value="su" [formControl]="weekdaySu" labelPlacement="end">Sunday</ion-checkbox>
           </ion-item>
-          <ion-button style="margin: 1em 1em 0 3em;" color="primary" (click)="addSlot()" expand="full">
-            <ion-label>Add slot</ion-label>
-          </ion-button>
+          <ion-item lines="none">
+            <ion-button style="width: 100%" color="primary" (click)="addSlot()" size="medium">
+              <ion-label>Add slot</ion-label>
+            </ion-button>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>

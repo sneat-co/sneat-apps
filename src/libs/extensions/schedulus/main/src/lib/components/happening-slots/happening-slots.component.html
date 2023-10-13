@@ -24,9 +24,6 @@
 
   <ion-label text-wrap>
     <p>
-      {{slot|json}}
-    </p>
-    <p>
       <ion-badge *ngFor="let wd of slot.weekdays || []"
                  color="light" style="margin-right: 4px;"
       >{{wd|wdToWeekday}}</ion-badge>
