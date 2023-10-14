@@ -1,0 +1,14 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+    "err": {
+      "name": "pnpm",
+      "message": "No package.json (or package.yaml, or package.json5) was found in \"/Users/alexandertrakhimenok/projects/sneat/sneat-apps/scripts\".",
+      "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+      "stack": "pnpm: No package.json (or package.yaml, or package.json5) was found in \"/Users/alexandertrakhimenok/projects/sneat/sneat-apps/scripts\".\n    at readProjectManifest (/Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:20808:13)\n    at async Object.readProjectManifestOnly (/Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:20812:28)\n    at async readProjectManifestOnly (/Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:43834:24)\n    at async Object.handler (/Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:178118:24)\n    at async /Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:182687:21\n    at async run (/Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:182661:34)\n    at async runPnpm (/Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:182879:5)\n    at async /Users/alexandertrakhimenok/Library/pnpm/global/5/.pnpm/pnpm@7.1.6/node_modules/pnpm/dist/pnpm.cjs:182871:7"
+    }
+  }
+}

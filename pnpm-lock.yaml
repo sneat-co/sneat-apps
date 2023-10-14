@@ -179,7 +179,7 @@ devDependencies:
     specifier: 4.1.1
     version: 4.1.1
   husky:
-    specifier: '>=7'
+    specifier: 8.0.3
     version: 8.0.3
   jest:
     specifier: 29.7.0
