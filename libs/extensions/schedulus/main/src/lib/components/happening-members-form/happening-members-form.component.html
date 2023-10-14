@@ -21,12 +21,8 @@
 						*ngIf="!isToDo"
 						[checked]="isMemberChecked(member)"
 						(ionChange)="isMemberCheckChanged(member, $event)"
-					></ion-checkbox>
-					<ion-radio
-						slot="start"
-						*ngIf="isToDo"
-						[value]="member.id"
-					></ion-radio>
+					/>
+					<ion-radio slot="start" *ngIf="isToDo" [value]="member.id" />
 					<ion-label>{{ member | contactTitle }}</ion-label>
 					<!--						<ion-select interface="popover">-->
 					<!--							<ion-select-option value="busy">Busy</ion-select-option>-->
@@ -48,7 +44,7 @@
 			<ion-label>Teachers & Contacts</ion-label>
 			<ion-buttons slot="end">
 				<ion-button (click)="addContact()" title="Add contact">
-					<ion-icon name="add"></ion-icon>
+					<ion-icon name="add" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item-divider>

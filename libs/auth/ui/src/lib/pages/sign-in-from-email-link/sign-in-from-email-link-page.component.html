@@ -10,14 +10,14 @@
 			sign-in.
 		</p>
 		<ion-item>
-			<ion-icon name="mail-outline" slot="start"></ion-icon>
+			<ion-icon name="mail-outline" slot="start" />
 			<ion-input
 				label="Email"
 				[required]="true"
 				[readonly]="isSigning"
 				[value]="email"
 				[disabled]="emailFromStorage || isSigning"
-			></ion-input>
+			/>
 		</ion-item>
 
 		<ion-button [disabled]="isSigning" (click)="signIn()">

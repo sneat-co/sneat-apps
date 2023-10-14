@@ -1,9 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button
-				[defaultHref]="teamPageUrl('contacts') || '..'"
-			></ion-back-button>
+			<ion-back-button [defaultHref]="teamPageUrl('contacts') || '..'" />
 		</ion-buttons>
 		<ion-title>New company</ion-title>
 	</ion-toolbar>
@@ -15,5 +13,5 @@
 		[contactRoles]="contactTypes"
 		[contactRole]="contactRole"
 		(contactCreated)="onContactCreated($event)"
-	></sneat-new-company-form>
+	/>
 </ion-content>

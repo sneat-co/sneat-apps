@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button
 				[defaultHref]="teamPageUrl('order/{{order?.id}}') || '..'"
-			></ion-back-button>
+			/>
 		</ion-buttons>
 		<ion-title>New segment at order # {{ order?.id }}</ion-title>
 	</ion-toolbar>
@@ -13,5 +13,5 @@
 		[order]="order"
 		(canceled)="back()"
 		(created)="back()"
-	></sneat-new-segment-form>
+	/>
 </ion-content>

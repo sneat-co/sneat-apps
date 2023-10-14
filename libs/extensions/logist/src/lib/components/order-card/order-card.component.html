@@ -14,11 +14,11 @@
 				title="Copy to clipboard"
 				(click)="copyNumberToClipboard($event)"
 			>
-				<ion-icon name="clipboard-outline" slot="start"></ion-icon>
+				<ion-icon name="clipboard-outline" slot="start" />
 				<ion-label>Copy #</ion-label>
 			</ion-button>
 			<ion-button color="medium" (click)="showPrintMenu($event)">
-				<ion-icon name="print-outline" slot="start"></ion-icon>
+				<ion-icon name="print-outline" slot="start" />
 				<ion-label>Print</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -32,11 +32,10 @@
 					<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
 					<ion-input
 						[value]="
-							(order?.dto?.createdAt?.seconds || 0) * 1000
-								| date : 'dd MMM yyyy'
+							(order?.dto?.createdAt?.seconds || 0) * 1000 | date: 'dd MMM yyyy'
 						"
 						readonly="readonly"
-					></ion-input>
+					/>
 				</ion-item>
 			</ion-col>
 			<ion-col size="6">
@@ -81,13 +80,13 @@
 			<ion-col size="3">
 				<ion-item>
 					<ion-label color="medium">Gross (kg)</ion-label>
-					<ion-input value="32760"></ion-input>
+					<ion-input value="32760" />
 				</ion-item>
 			</ion-col>
 			<ion-col size="3">
 				<ion-item>
 					<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
-					<ion-input value="53"></ion-input>
+					<ion-input value="53" />
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -106,7 +105,7 @@
 			contactType="company"
 			contactRole="buyer"
 			labelPosition="fixed"
-		></sneat-logist-order-counterparty>
+		/>
 		<sneat-logist-order-counterparty
 			label="Consignee"
 			[team]="team"
@@ -116,7 +115,7 @@
 			contactType="company"
 			contactRole="consignee"
 			labelPosition="fixed"
-		></sneat-logist-order-counterparty>
+		/>
 		<sneat-logist-order-counterparty
 			label="Notify party"
 			[team]="team"
@@ -126,7 +125,7 @@
 			contactType="company"
 			contactRole="notify_party"
 			labelPosition="fixed"
-		></sneat-logist-order-counterparty>
+		/>
 	</ion-item-group>
 	<ion-item-group>
 		<ion-item-divider color="light">
@@ -141,7 +140,7 @@
 			contactRole="port"
 			contactType="company"
 			labelPosition="fixed"
-		></sneat-logist-order-counterparty>
+		/>
 		<sneat-logist-order-counterparty
 			label="🏗️ To port"
 			[team]="team"
@@ -151,7 +150,7 @@
 			contactRole="port"
 			contactType="company"
 			labelPosition="fixed"
-		></sneat-logist-order-counterparty>
+		/>
 		<sneat-logist-order-counterparty
 			label="🚢 Ship"
 			[team]="team"
@@ -164,9 +163,9 @@
 			contactType="vehicle"
 			labelPosition="fixed"
 			refNumLabel="Voyage"
-		></sneat-logist-order-counterparty>
+		/>
 	</ion-item-group>
-	<sneat-order-agents [team]="team" [order]="order"></sneat-order-agents>
+	<sneat-order-agents [team]="team" [order]="order" />
 
 	<!--	<sneat-logist-order-counterparties-->
 	<!--		[team]="team"-->

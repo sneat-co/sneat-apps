@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ng-container *ngIf="!isToDo">
 			<ion-title *ngIf="team; else titleNoCommune">
@@ -25,5 +25,5 @@
 		[happening]="happening"
 		(happeningChange)="onHappeningChanged($event)"
 		[wd]="wd"
-	></sneat-happening-form>
+	/>
 </ion-content>

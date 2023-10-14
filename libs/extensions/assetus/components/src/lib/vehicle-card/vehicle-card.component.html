@@ -5,11 +5,8 @@
 			[readonly]="!!vehicleAsset?.brief?.countryID"
 			label="Country of registration"
 			(countryIDChange)="countryChanged($event)"
-		></sneat-country-selector>
-		<sneat-asset-reg-number
-			[team]="team"
-			[asset]="vehicleAsset"
-		></sneat-asset-reg-number>
+		/>
+		<sneat-asset-reg-number [team]="team" [asset]="vehicleAsset" />
 	</ion-list>
 </ion-card>
 
@@ -21,7 +18,7 @@
 		[model]="vehicleAsset?.dto?.model"
 		(makeChange)="makeChanged($event)"
 		(modelChange)="modelChanged($event)"
-	></sneat-make-model-card>
+	/>
 	<ng-container *ngIf="vehicleAsset?.dto?.model">
 		<ion-item-divider>
 			<ion-label>Engine</ion-label>
@@ -29,8 +26,7 @@
 		<sneat-vehicle-engine
 			[vehicleAsset]="vehicleAsset"
 			(vehicleAssetChange)="onAssetChanged($event)"
-		>
-		</sneat-vehicle-engine>
+		/>
 	</ng-container>
 </ion-card>
 
@@ -38,4 +34,4 @@
 	*ngIf="vehicleAsset?.dto?.model"
 	[asset]="vehicleAsset"
 	(assetChange)="onAssetChanged($event)"
-></sneat-asset-possession-card>
+/>

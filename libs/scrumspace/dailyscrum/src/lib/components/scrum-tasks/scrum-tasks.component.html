@@ -8,7 +8,7 @@
 		[name]="showAddInput ? 'chevron-down-outline' : 'chevron-forward-outline'"
 		color="medium"
 		style="margin-right: 0.25em"
-	></ion-icon>
+	/>
 	<ion-label tappable color="tertiary" [ngSwitch]="taskType">
 		<ng-container *ngSwitchCase="'done'">What was done?</ng-container>
 		<ng-container *ngSwitchCase="'todo'">What is planned to do?</ng-container>
@@ -18,7 +18,7 @@
 	</ion-label>
 	<ion-buttons slot="end" *ngIf="cardMode === 'by-person' && !showAddInput">
 		<ion-button [title]="newTaskPlaceholder" (click)="addTask($event)">
-			<ion-icon name="add"></ion-icon>
+			<ion-icon name="add" />
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
@@ -30,7 +30,7 @@
 		<ion-label color="medium">Planned before</ion-label>
 		<ion-buttons slot="end">
 			<ion-button disabled *ngIf="!tasks">
-				<ion-spinner name="lines-small"></ion-spinner>
+				<ion-spinner name="lines-small" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -47,7 +47,7 @@
 			(click)="showTaskPopover($event, task)"
 		>
 			<ion-reorder slot="start">
-				<ion-icon name="swap-vertical-outline" color="medium"></ion-icon>
+				<ion-icon name="swap-vertical-outline" color="medium" />
 			</ion-reorder>
 			<ion-label
 				[color]="
@@ -67,7 +67,7 @@
 					title="Comments"
 				>
 					{{ task.comments?.length }}
-					<ion-icon name="reader-outline"></ion-icon>
+					<ion-icon name="reader-outline" />
 				</ion-button>
 				<ion-button
 					[color]="
@@ -80,10 +80,10 @@
 					<ng-container *ngIf="task.thumbUps?.length">{{
 						task.thumbUps.length
 					}}</ng-container>
-					<ion-icon name="thumbs-up-outline"></ion-icon>
+					<ion-icon name="thumbs-up-outline" />
 				</ion-button>
 				<ion-button color="medium" (click)="deleteTask($event, task.id)">
-					<ion-icon name="close"></ion-icon>
+					<ion-icon name="close" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
@@ -101,7 +101,7 @@
 	>
 </ion-item>
 <ion-item *ngIf="!member">
-	<ion-spinner name="lines-small" slot="start" color="medium"></ion-spinner>
+	<ion-spinner name="lines-small" slot="start" color="medium" />
 	<ion-label color="medium">Loading...</ion-label>
 </ion-item>
 <ion-item *ngIf="(member && cardMode !== 'by-person') || showAddInput">
@@ -110,10 +110,10 @@
 		[(ngModel)]="newTaskTitle"
 		(keyup.enter)="addTask($event)"
 		(ionBlur)="taskBlur($event)"
-	></ion-input>
+	/>
 	<ion-buttons slot="end">
 		<ion-button disabled *ngIf="!tasks">
-			<ion-spinner name="lines-small"></ion-spinner>
+			<ion-spinner name="lines-small" />
 		</ion-button>
 		<ion-button
 			*ngIf="tasks"

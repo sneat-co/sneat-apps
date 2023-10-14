@@ -28,20 +28,13 @@
 		[parentContact]="contact?.parentContact"
 		[readonly]="readonly"
 		(contactChange)="onContactChanged($event)"
-	></sneat-contact-input>
+	/>
 	<ion-item>
 		<ion-label color="medium">On</ion-label>
-		<ion-input
-			type="date"
-			[(ngModel)]="date"
-			(ionChange)="onDateChanged()"
-		></ion-input>
+		<ion-input type="date" [(ngModel)]="date" (ionChange)="onDateChanged()" />
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium">Ref #</ion-label>
-		<ion-input
-			[(ngModel)]="refNumber"
-			(ionInput)="onRefNumberChanged()"
-		></ion-input>
+		<ion-input [(ngModel)]="refNumber" (ionInput)="onRefNumberChanged()" />
 	</ion-item>
 </ion-card>

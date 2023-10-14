@@ -5,20 +5,20 @@
 		</ion-label>
 		<ion-buttons slot="end" (click)="startAddingTeam()">
 			<ion-button color="primary" *ngIf="!showAdd">
-				<ion-icon name="add" slot="start"></ion-icon>
+				<ion-icon name="add" slot="start" />
 				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 	<ion-list *ngIf="!teams">
 		<ion-item>
-			<ion-spinner name="" slot="start" color="medium"></ion-spinner>
+			<ion-spinner name="" slot="start" color="medium" />
 			<ion-buttons slot="start">
 				<ion-button disabled="disabled" style="text-transform: none"
 					>{{ loadingState }}...</ion-button
 				>
 			</ion-buttons>
-			<ion-skeleton-text animated></ion-skeleton-text>
+			<ion-skeleton-text animated />
 		</ion-item>
 	</ion-list>
 	<ion-list *ngIf="teams">
@@ -27,7 +27,7 @@
 				<ion-label>{{ team.brief.title }}</ion-label>
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="leaveTeam(team, $event)">
-						<ion-icon name="close"></ion-icon>
+						<ion-icon name="close" />
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
@@ -50,7 +50,7 @@
 			[(ngModel)]="teamName"
 			(keyup.escape)="showAdd = false"
 			placeholder="New team name"
-		></ion-input>
+		/>
 		<ion-buttons slot="end">
 			<ion-button color="primary" fill="solid" (click)="addTeam()">
 				<ion-label>Create</ion-label>
@@ -61,8 +61,8 @@
 				*ngIf="!!teams?.length"
 				title="Cancel"
 			>
-				<ion-spinner *ngIf="adding"></ion-spinner>
-				<ion-icon *ngIf="!adding" name="close"></ion-icon>
+				<ion-spinner *ngIf="adding" />
+				<ion-icon *ngIf="!adding" name="close" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>

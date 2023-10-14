@@ -6,7 +6,7 @@
 		>
 		<ion-buttons slot="end">
 			<ion-button role="close" (click)="close()">
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -26,14 +26,14 @@
 				labelPlacement="stacked"
 				[required]="true"
 				[formControl]="email"
-			></ion-input>
+			/>
 			<ion-input
 				*ngIf="tab === 'sms'"
 				label="Invite link"
 				labelPlacement="stacked"
 				placeholder="phone #"
 				[formControl]="phone"
-			></ion-input>
+			/>
 			<ion-input
 				*ngIf="tab === 'link'"
 				label="Invite link"
@@ -41,10 +41,10 @@
 				readonly="readonly"
 				[value]="link ?? 'Generating...'"
 				[color]="link ? 'primary' : 'medium'"
-			></ion-input>
+			/>
 			<ion-buttons *ngIf="tab === 'link' && link" slot="end">
 				<ion-button color="medium" (click)="copyLinkToClipboard()">
-					<ion-icon name="copy-outline"></ion-icon>
+					<ion-icon name="copy-outline" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
@@ -54,7 +54,7 @@
 				maxlength="100"
 				label="Message"
 				labelPlacement="stacked"
-			></ion-textarea>
+			/>
 		</ion-item>
 		<ion-card-content *ngIf="tab === 'email'">
 			<p>
@@ -67,7 +67,7 @@
 				&nbsp;
 			</p>
 			<ion-button (click)="sendInvite()" [disabled]="!email.valid">
-				<ion-icon name="mail-outline" slot="start"></ion-icon>
+				<ion-icon name="mail-outline" slot="start" />
 				<ion-label>Send invite</ion-label>
 			</ion-button>
 			<ion-button
@@ -82,7 +82,7 @@
 				fill="outline"
 				[disabled]="!email.valid"
 			>
-				<ion-icon name="mail-outline" slot="start"></ion-icon>
+				<ion-icon name="mail-outline" slot="start" />
 				<ion-label>Compose email</ion-label>
 			</ion-button>
 		</ion-card-content>
@@ -92,7 +92,7 @@
 				fill="outline"
 				(click)="composeSMS()"
 			>
-				<ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+				<ion-icon name="phone-portrait-outline" slot="start" />
 				<ion-label>Compose SMS</ion-label>
 				<ion-spinner
 					name="lines-small"
@@ -100,7 +100,7 @@
 					class="ion-margin-start"
 					slot="end"
 					*ngIf="creatingInvite"
-				></ion-spinner>
+				/>
 			</ion-button>
 			<p>
 				<ion-text color="medium"
@@ -121,7 +121,7 @@
 				(click)="copyLinkWithInviteTextToClipboard()"
 				[disabled]="creatingInvite || !link"
 			>
-				<ion-icon slot="start" name="copy-outline"></ion-icon>
+				<ion-icon slot="start" name="copy-outline" />
 				<ion-label style="text-transform: none"
 					>Copy invite text with a link</ion-label
 				>

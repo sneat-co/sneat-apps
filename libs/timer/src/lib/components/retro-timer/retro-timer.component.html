@@ -7,13 +7,13 @@
 				<ion-item>
 					<ion-buttons slot="start">
 						<ion-button color="primary" (click)="startRetro()" fill="solid">
-							<ion-icon name="play-outline" slot="start"></ion-icon>
+							<ion-icon name="play-outline" slot="start" />
 							<ion-label>Start</ion-label>
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
 			</ion-col>
-			<ion-col size="1" class="ion-no-margin ion-no-padding"></ion-col>
+			<ion-col size="1" class="ion-no-margin ion-no-padding" />
 			<ion-col size="12" size-md="4" class="ion-no-margin ion-no-padding">
 				<ion-item>
 					<ion-label color="medium">Feedback</ion-label>
@@ -55,7 +55,7 @@
 						retrospective?.dto?.timer?.status !== 'stopped'
 					"
 				>
-					<ion-icon name="pause-circle-outline" slot="start"></ion-icon>
+					<ion-icon name="pause-circle-outline" slot="start" />
 					<ion-label>Pause</ion-label>
 				</ion-button>
 				<ion-button
@@ -68,7 +68,7 @@
 						retrospective?.dto?.timer?.status === 'stopped'
 					"
 				>
-					<ion-icon name="play-outline" slot="start"></ion-icon>
+					<ion-icon name="play-outline" slot="start" />
 					<ion-label>Resume</ion-label>
 				</ion-button>
 			</ion-buttons>

@@ -1,7 +1,7 @@
 <ion-item id="pick-date">
 	<ion-buttons slot="start">
 		<ion-button title="Previous day" (click)="swipe(-1, $event)">
-			<ion-icon name="chevron-back-sharp" slot="start"></ion-icon>
+			<ion-icon name="chevron-back-sharp" slot="start" />
 			<ion-label
 				><span class="sneat-hide-if-width-less-638">Previous</span></ion-label
 			>
@@ -13,7 +13,7 @@
 	<!--	<ion-label style="text-align: center" color="medium">Swipe to change day</ion-label>-->
 	<ion-buttons slot="end">
 		<ion-button title="Next day" (click)="swipe(1, $event)">
-			<ion-icon name="chevron-forward-sharp" slot="end"></ion-icon>
+			<ion-icon name="chevron-forward-sharp" slot="end" />
 			<ion-label
 				><span class="sneat-hide-if-width-less-638">Next</span></ion-label
 			>
@@ -40,7 +40,7 @@
 			[value]="dateAsIsoString"
 			presentation="date"
 			(ionChange)="onPickerDateChanged($event)"
-		></ion-datetime>
+		/>
 
 		<!--			<ion-list>-->
 		<!--			<ion-item-divider>-->
@@ -61,7 +61,7 @@
 	[team]="team"
 	[teamDaysProvider]="teamDaysProvider"
 	[onSlotClicked]="onSlotClicked"
-></sneat-schedule-day-card>
+/>
 
 <!--<div class="ion-text-center ion-margin">-->
 <!--	<ion-text color="medium">&larr; Swipe to change day &rarr;</ion-text>-->
@@ -73,4 +73,4 @@
 	[team]="team"
 	[teamDaysProvider]="teamDaysProvider"
 	[onSlotClicked]="onSlotClicked"
-></sneat-schedule-day-card>
+/>

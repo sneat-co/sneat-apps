@@ -11,7 +11,7 @@
 			[formControl]="nickName"
 			(keyup.enter)="nameKeyupEnter($event)"
 			(ionChange)="onNameChanged($event)"
-		></ion-input>
+		/>
 	</ion-item>
 	<ion-item *ngIf="!fields?.firstName?.hide">
 		<ion-input
@@ -21,7 +21,7 @@
 			[formControl]="firstName"
 			(keyup.enter)="nameKeyupEnter($event)"
 			(ionChange)="onNameChanged($event)"
-		></ion-input>
+		/>
 	</ion-item>
 	<ion-item *ngIf="!fields?.lastName?.hide">
 		<ion-input
@@ -31,7 +31,7 @@
 			[formControl]="lastName"
 			(keyup.enter)="nameKeyupEnter($event)"
 			(ionChange)="onNameChanged($event)"
-		></ion-input>
+		/>
 	</ion-item>
 	<ion-item *ngIf="!fields?.middleName?.hide">
 		<ion-input
@@ -41,7 +41,7 @@
 			[formControl]="middleName"
 			(keyup.enter)="nameKeyupEnter($event)"
 			(ionChange)="onNameChanged($event)"
-		></ion-input>
+		/>
 	</ion-item>
 	<ion-item>
 		<ion-input
@@ -51,7 +51,7 @@
 			[formControl]="fullName"
 			(keyup.enter)="nameKeyupEnter($event)"
 			(ionChange)="onFullNameChanged($event)"
-		></ion-input>
+		/>
 	</ion-item>
 </ion-card>
 
@@ -63,5 +63,5 @@
 	(click)="onNext($event)"
 >
 	<ion-label>Next</ion-label>
-	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+	<ion-icon name="arrow-forward-circle-outline" slot="end" />
 </ion-button>

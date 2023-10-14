@@ -2,7 +2,7 @@
 	<ion-toolbar>
 		<ion-title>Movie</ion-title>
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/"></ion-back-button>
+			<ion-back-button defaultHref="/" />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -16,8 +16,8 @@
 				(click)="toggleIsWatched()"
 				color="dark"
 			>
-				<ion-icon *ngIf="!isWatched" name="square-outline"></ion-icon>
-				<ion-icon *ngIf="isWatched" name="checkbox-outline"></ion-icon>
+				<ion-icon *ngIf="!isWatched" name="square-outline" />
+				<ion-icon *ngIf="isWatched" name="checkbox-outline" />
 				<span style="margin-left: 0.5em; text-transform: none">Is watched</span>
 			</ion-button>
 		</ion-buttons>

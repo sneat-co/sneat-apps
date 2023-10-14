@@ -9,7 +9,7 @@
 		<ion-label class="ion-padding-start ion-margin-start" color="medium"
 			>Ref #</ion-label
 		>
-		<ion-input [value]="trucker?.refNumber"></ion-input>
+		<ion-input [value]="trucker?.refNumber" />
 		<ion-buttons slot="end">
 			<!--			<ion-button color="medium" (click)="replaceTrucker()">-->
 			<!--				<ion-label *ngIf="!trucker">Assign all</ion-label>-->
@@ -21,7 +21,7 @@
 				(click)="print($event)"
 				title="Print trucker instructions"
 			>
-				<ion-icon name="print-outline" slot="start"></ion-icon>
+				<ion-icon name="print-outline" slot="start" />
 				<ion-label>Print</ion-label>
 			</ion-button>
 			<ion-button
@@ -31,8 +31,8 @@
 				[disabled]="deleting"
 				(click)="deleteTrucker()"
 			>
-				<ion-icon name="close-outline" *ngIf="!deleting"></ion-icon>
-				<ion-spinner name="lines-small" *ngIf="deleting"></ion-spinner>
+				<ion-icon name="close-outline" *ngIf="!deleting" />
+				<ion-spinner name="lines-small" *ngIf="deleting" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -43,7 +43,7 @@
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="addSegment()">
-				<ion-icon name="add" slot="start"></ion-icon>
+				<ion-icon name="add" slot="start" />
 				<ion-label>Add segment</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -54,6 +54,5 @@
 		[order]="order"
 		[orderSegment]="orderSegment"
 		[trucker]="trucker"
-	>
-	</sneat-trucker-segment>
+	/>
 </ion-card>

@@ -2,7 +2,7 @@
 	<ion-card>
 		<ion-card-content>
 			<ion-item class="ion-item-no-border">
-				<ion-spinner slot="start" color="medium"></ion-spinner>
+				<ion-spinner slot="start" color="medium" />
 				<ion-label color="medium">Loading...</ion-label>
 			</ion-item>
 		</ion-card-content>
@@ -20,11 +20,7 @@
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button fill="clear" (click)="resetFilter($event)">
-				<ion-icon
-					slot="start"
-					name="close-circle-outline"
-					color="medium"
-				></ion-icon>
+				<ion-icon slot="start" name="close-circle-outline" color="medium" />
 				<ion-label color="medium">Reset filter</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -41,11 +37,7 @@
 				routerLink="../new-happening"
 				[queryParams]="{ type: 'recurring' }"
 			>
-				<ion-icon
-					name="duplicate-outline"
-					color="medium"
-					slot="start"
-				></ion-icon>
+				<ion-icon name="duplicate-outline" color="medium" slot="start" />
 				<ion-label>Add 1st recurring</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -56,6 +48,6 @@
 			*ngFor="let recurring of recurrings || []; trackBy: id"
 			[happening]="recurring"
 			[team]="team"
-		></sneat-happening-card>
+		/>
 	</ng-template>
 </ng-container>

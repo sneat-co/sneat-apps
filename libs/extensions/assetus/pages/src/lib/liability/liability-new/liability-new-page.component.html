@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="primary" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="commune; else titleNoCommune"
 			>New liability @ {{ commune.title }}</ion-title
@@ -26,7 +26,7 @@
 
 	<ion-item>
 		<ion-label>Title</ion-label>
-		<ion-input></ion-input>
+		<ion-input />
 	</ion-item>
 	<ion-item>
 		<ion-label> Period </ion-label>
@@ -38,7 +38,7 @@
 	</ion-item>
 	<ion-item>
 		<ion-label>Amount</ion-label>
-		<ion-input type="number"></ion-input>
+		<ion-input type="number" />
 	</ion-item>
 
 	<div class="ion-padding">
@@ -58,11 +58,11 @@
 		<ion-list>
 			<ion-item>
 				<ion-label>Member #1</ion-label>
-				<ion-checkbox></ion-checkbox>
+				<ion-checkbox />
 			</ion-item>
 			<ion-item>
 				<ion-label>Member #2</ion-label>
-				<ion-checkbox></ion-checkbox>
+				<ion-checkbox />
 			</ion-item>
 		</ion-list>
 		<p>

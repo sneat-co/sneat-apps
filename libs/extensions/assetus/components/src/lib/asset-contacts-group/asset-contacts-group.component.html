@@ -7,7 +7,7 @@
 				[title]="addTitle"
 				(click)="goNewContact.emit(this.contactRelation)"
 			>
-				<ion-icon name="add"></ion-icon>
+				<ion-icon name="add" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
@@ -16,7 +16,7 @@
 		button
 		(click)="goNewContact.emit(this.contactRelation)"
 	>
-		<ion-icon name="add" color="primary"></ion-icon>
+		<ion-icon name="add" color="primary" />
 		<ion-label color="primary">{{ addTitle }}</ion-label>
 	</ion-item>
 	<ng-container *ngIf="contacts">

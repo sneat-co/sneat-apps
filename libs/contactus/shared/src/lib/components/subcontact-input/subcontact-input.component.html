@@ -4,7 +4,7 @@
 	(click)="openContactSelector($event)"
 >
 	<ion-label color="medium" position="fixed">{{ labelText }}</ion-label>
-	<ion-input [readonly]="true" [value]="contact?.brief?.title"></ion-input>
+	<ion-input [readonly]="true" [value]="contact?.brief?.title" />
 	<!--	<ion-label color="dark">{{contact?.brief?.title}}</ion-label>-->
 	<ion-buttons slot="end" *ngIf="!readonly">
 		<ion-button (click)="openContactSelector($event)">
@@ -15,7 +15,7 @@
 			(click)="reset($event)"
 			*ngIf="contact && canReset"
 		>
-			<ion-icon name="close-outline"></ion-icon>
+			<ion-icon name="close-outline" />
 		</ion-button>
 	</ion-buttons>
 </ion-item>

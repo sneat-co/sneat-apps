@@ -4,7 +4,7 @@
 			<ion-icon
 				color="medium"
 				[name]="docType.expanded ? 'arrow-dropdown' : 'arrow-dropright'"
-			></ion-icon>
+			/>
 
 			<ion-label color="medium" [ngClass]="{ expanded: docType.expanded }">
 				<span style="padding-right: 0.5em">{{ docType.emoji }}</span>
@@ -19,7 +19,7 @@
 			>
 			<ion-buttons slot="end">
 				<ion-button color="medium" (click)="newDoc(docType, $event)">
-					<ion-icon name="add"></ion-icon>
+					<ion-icon name="add" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
@@ -46,7 +46,7 @@
 						color="danger"
 						(click)="deleteDocument(doc, slidingItem)"
 					>
-						<ion-icon name="trash"></ion-icon>
+						<ion-icon name="trash" />
 						Remove
 					</ion-item-option>
 				</ion-item-options>

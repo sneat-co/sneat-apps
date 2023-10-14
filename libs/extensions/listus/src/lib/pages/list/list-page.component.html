@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="list?.brief; else noTitle">
 			<ng-container *ngIf="list?.brief?.emoji"
@@ -32,7 +32,7 @@
 		</ng-template>
 		<ion-buttons slot="end">
 			<ion-button (click)="newItem()">
-				<ion-icon name="add"></ion-icon>
+				<ion-icon name="add" />
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -127,7 +127,7 @@
 						[list]="list"
 						(itemClicked)="goListItem($event)"
 						(listChanged)="setList($event)"
-					></sneat-list-item>
+					/>
 				</ion-reorder>
 			</ion-reorder-group>
 		</ion-list>
@@ -145,8 +145,7 @@
 				[isDone]="doneFilter === 'completed'"
 				[disabled]="isPersisting"
 				#newListItem
-			>
-			</sneat-new-list-item>
+			/>
 		</ng-container>
 	</ion-card>
 
@@ -180,7 +179,7 @@
 	<sneat-shared-with
 		*ngIf="segment === 'settings'"
 		title="This list is shared with"
-	></sneat-shared-with>
+	/>
 
 	<ng-container *ngIf="segment === 'list' && listItems">
 		<div class="ion-padding" style="text-align: center">
@@ -226,11 +225,11 @@
 							*ngIf="performing !== 'reactivating completed'"
 							name="refresh-outline"
 							slot="start"
-						></ion-icon>
+						/>
 						<ion-spinner
 							*ngIf="performing === 'reactivating completed'"
 							slot="start"
-						></ion-spinner>
+						/>
 						<ion-label>Reactivate completed</ion-label>
 					</ion-button>
 				</ion-col>
@@ -245,11 +244,11 @@
 							*ngIf="performing !== 'deleting completed'"
 							name="trash-outline"
 							slot="start"
-						></ion-icon>
+						/>
 						<ion-spinner
 							*ngIf="performing === 'deleting completed'"
 							slot="start"
-						></ion-spinner>
+						/>
 						<ion-label>Delete completed</ion-label>
 					</ion-button>
 				</ion-col>
@@ -264,11 +263,8 @@
 							*ngIf="performing !== 'clear list'"
 							name="trash-bin-outline"
 							slot="start"
-						></ion-icon>
-						<ion-spinner
-							*ngIf="performing === 'clear list'"
-							slot="start"
-						></ion-spinner>
+						/>
+						<ion-spinner *ngIf="performing === 'clear list'" slot="start" />
 						<ion-label>Clear list</ion-label>
 					</ion-button>
 				</ion-col>
@@ -288,16 +284,7 @@
 		[ngSwitch]="list?.brief?.type"
 		style="padding-top: 0.5em; padding-bottom: 0.5em"
 	>
-		<ng-container *ngSwitchCase="'watch'">
-			<!--			<sneat-movie-card *ngFor="let listItem of filteredListItems; trackBy: itemId"-->
-			<!--												[movie]="listItem"-->
-			<!--												[showWatchedMovies]="!isHideWatched"-->
-			<!--												[team]="team"-->
-			<!--												[list]="list"-->
-			<!--												(goMovie)="goMoviePage($event)"-->
-			<!--												(listChanged)="setList($event)"-->
-			<!--			></sneat-movie-card>-->
-		</ng-container>
+		<ng-container *ngSwitchCase="'watch'" />
 		<ng-container *ngSwitchDefault>
 			<ion-card
 				*ngFor="let item of listItems; trackBy: itemId"
@@ -329,12 +316,12 @@
 							slot="start"
 							*ngIf="!isHideWatched"
 							name="square-outline"
-						></ion-icon>
+						/>
 						<ion-icon
 							slot="start"
 							*ngIf="isHideWatched"
 							name="checkbox-outline"
-						></ion-icon>
+						/>
 						<ion-text>Hide watched</ion-text>
 					</ion-item>
 				</ion-col>

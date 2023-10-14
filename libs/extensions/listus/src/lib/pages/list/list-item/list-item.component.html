@@ -13,7 +13,7 @@
 			slot="start"
 			[value]="listItem.isDone"
 			(ionChange)="onIsDoneCheckboxChanged($event)"
-		></ion-checkbox>
+		/>
 		<ion-label
 			[class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)"
 			class="ion-text-wrap"
@@ -43,11 +43,11 @@
 				(click)="deleteFromList(listItem)"
 				color="medium"
 			>
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 		<!--		<ion-reorder slot="end"></ion-reorder>-->
-		<ion-spinner color="medium" *ngIf="isSpinning()"></ion-spinner>
+		<ion-spinner color="medium" *ngIf="isSpinning()" />
 	</ion-item>
 	<ion-item-options
 		side="start"
@@ -59,7 +59,7 @@
 			color="success"
 			(click)="setIsDone(listItemWithUiState, true, ionSliding)"
 		>
-			<ion-icon class="with-label" name="checkmark"></ion-icon>
+			<ion-icon class="with-label" name="checkmark" />
 			Done
 		</ion-item-option>
 		<ion-item-option
@@ -81,7 +81,7 @@
 			color="danger"
 			(click)="deleteFromList(listItem, ionSliding)"
 		>
-			<ion-icon name="trash" class="with-label"></ion-icon>
+			<ion-icon name="trash" class="with-label" />
 			Remove
 		</ion-item-option>
 	</ion-item-options>

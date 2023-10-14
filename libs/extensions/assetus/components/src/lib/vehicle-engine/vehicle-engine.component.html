@@ -3,13 +3,13 @@
 	label="Engine type"
 	[items]="engineTypes"
 	(changed)="onEngineTypeChanged($event)"
-></sneat-select-from-list>
+/>
 
 <ion-item-group *ngIf="vehicleAsset?.dto?.engineFuel">
 	<ion-item *ngIf="hasCombustion">
-		<ion-input label="Size CC"></ion-input>
+		<ion-input label="Size CC" />
 	</ion-item>
 	<ion-item *ngIf="hasBattery">
-		<ion-input label="Battery kWh" type="number"></ion-input>
+		<ion-input label="Battery kWh" type="number" />
 	</ion-item>
 </ion-item-group>

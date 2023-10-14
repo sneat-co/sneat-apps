@@ -17,8 +17,8 @@
 					color="light"
 					name="lines-small"
 					*ngIf="saving"
-				></ion-spinner>
-				<ion-icon slot="start" name="save-outline" *ngIf="!saving"></ion-icon>
+				/>
+				<ion-icon slot="start" name="save-outline" *ngIf="!saving" />
 				<ion-label *ngIf="!saving">Save changes</ion-label>
 				<ion-label *ngIf="saving">Saving...</ion-label>
 			</ion-button>
@@ -32,7 +32,7 @@
 		[countryID]="countryID.value || undefined"
 		[disabled]="saving"
 		(countryIDChange)="onCountryChanged($event)"
-	></sneat-country-selector>
+	/>
 
 	<ng-container *ngIf="countryID.value">
 		<ion-item>
@@ -44,7 +44,7 @@
 				[formControl]="zip"
 				[disabled]="saving"
 				(ionChange)="onZipChanged()"
-			></ion-input>
+			/>
 		</ion-item>
 
 		<ion-item>
@@ -54,7 +54,7 @@
 				maxlength="20"
 				[formControl]="state"
 				(ionChange)="onStateChanged()"
-			></ion-input>
+			/>
 		</ion-item>
 
 		<ion-item>
@@ -64,7 +64,7 @@
 				maxlength="85"
 				[formControl]="city"
 				(ionChange)="onCityChanged()"
-			></ion-input>
+			/>
 		</ion-item>
 
 		<ion-item>
@@ -74,7 +74,7 @@
 				auto-grow="true"
 				[disabled]="saving"
 				(ionChange)="onLinesChanged()"
-			></ion-textarea>
+			/>
 		</ion-item>
 	</ng-container>
 </ion-card>

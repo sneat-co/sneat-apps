@@ -3,7 +3,7 @@
 		<ion-title>About me</ion-title>
 		<ion-buttons slot="end">
 			<ion-button role="close" (click)="close()">
-				<ion-icon name="close"></ion-icon>
+				<ion-icon name="close" />
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -18,8 +18,7 @@
 				required
 				max="20"
 				[formControl]="firstName"
-			>
-			</ion-input>
+			/>
 		</ion-item>
 		<ion-item>
 			<ion-input
@@ -29,8 +28,7 @@
 				required
 				max="20"
 				[formControl]="lastName"
-			>
-			</ion-input>
+			/>
 		</ion-item>
 		<ion-item-divider *ngIf="!gender.value">
 			<ion-label>Gender</ion-label>
@@ -39,8 +37,7 @@
 			label="Gender"
 			[items]="genders"
 			[formControl]="gender"
-		>
-		</sneat-select-from-list>
+		/>
 
 		<ng-container *ngIf="gender.value || ageGroup.value">
 			<ion-item-divider *ngIf="!ageGroup.value">
@@ -50,8 +47,7 @@
 				label="Age group"
 				[items]="ageGroups"
 				[formControl]="ageGroup"
-			>
-			</sneat-select-from-list>
+			/>
 		</ng-container>
 	</form>
 </ion-content>

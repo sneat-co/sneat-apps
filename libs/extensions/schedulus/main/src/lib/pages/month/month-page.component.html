@@ -10,14 +10,14 @@
 				[disabled]="current === 'Previous'"
 				(click)="changeCurrent('earlier')"
 			>
-				<ion-icon name="arrow-dropleft"></ion-icon>
+				<ion-icon name="arrow-dropleft" />
 			</ion-button>
 			<ion-button
 				title="Later"
 				[disabled]="current === 'Next'"
 				(click)="changeCurrent('later')"
 			>
-				<ion-icon name="arrow-dropright"></ion-icon>
+				<ion-icon name="arrow-dropright" />
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -81,7 +81,7 @@
 				>
 					<ion-label>
 						<h2>
-							<ion-icon name="arrow-dropright"></ion-icon>
+							<ion-icon name="arrow-dropright" />
 							{{ asset.dto.title }}
 							<span
 								*ngIf="segment === 'expense' && asset.totals.expenses.count > 1"
@@ -128,7 +128,7 @@
 				<ion-item-group *ngIf="asset.dto.id === expandedAssetId">
 					<ion-item-divider tappable (click)="collapse()">
 						<ion-label style="font-weight: bold; color: black">
-							<ion-icon name="arrow-dropdown"></ion-icon>
+							<ion-icon name="arrow-dropdown" />
 							{{ asset.dto.title }} (per week:
 							{{
 								segment === "balance"
@@ -180,7 +180,7 @@
 					</ng-container>
 					<ion-item tappable style="padding-left: 20px">
 						<ion-label color="primary">
-							<ion-icon name="add"></ion-icon>
+							<ion-icon name="add" />
 							Add expense
 						</ion-label>
 					</ion-item>

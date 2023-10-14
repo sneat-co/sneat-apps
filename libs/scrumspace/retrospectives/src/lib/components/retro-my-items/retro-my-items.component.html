@@ -1,10 +1,10 @@
 <ion-list>
 	<ion-item *ngFor="let item of items || []; trackBy: trackById">
 		<ion-label>{{ item.title }}</ion-label>
-		<ion-spinner name="lines-small" *ngIf="!item.ID"></ion-spinner>
+		<ion-spinner name="lines-small" *ngIf="!item.ID" />
 		<ion-buttons slot="end" *ngIf="item.ID">
 			<ion-button title="Delete" (click)="delete(item)">
-				<ion-icon name="close" color="medium"></ion-icon>
+				<ion-icon name="close" color="medium" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -15,8 +15,7 @@
 				[formControl]="titleControl"
 				placeholder="Type your feedback here"
 				(keyup.enter)="add()"
-			>
-			</ion-input>
+			/>
 			<ion-buttons slot="end">
 				<ion-button
 					(click)="add()"

@@ -46,14 +46,13 @@
 						"
 						[min]="metric.min"
 						[max]="metric.max"
-					>
-					</ion-range>
+					/>
 				</ng-container>
 				<ng-container
 					*ngIf="metric.min === undefined || metric.max === undefined"
 				>
 					<ion-label>{{ metric.title }}</ion-label>
-					<ion-input type="number" [(ngModel)]="metric.value"></ion-input>
+					<ion-input type="number" [(ngModel)]="metric.value" />
 				</ng-container>
 			</ion-item>
 			<ion-item *ngSwitchCase="'bool'">
@@ -64,8 +63,7 @@
 					"
 					[(ngModel)]="metric.value"
 					*ngIf="metric.type === 'bool'"
-				>
-				</ion-toggle>
+				/>
 				<ion-label>
 					{{ metric.title }}:
 					<ion-text [color]="metric.bool.true.color" *ngIf="metric.value">{{

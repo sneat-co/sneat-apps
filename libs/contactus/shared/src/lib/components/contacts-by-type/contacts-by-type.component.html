@@ -6,7 +6,7 @@
 		<ion-label>{{ contactGroup.title }}</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="addContact($event, contactGroup.id)">
-				<ion-icon name="add"></ion-icon>
+				<ion-icon name="add" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
@@ -20,7 +20,7 @@
 					[contact]="contact"
 					[goContact]="goContact"
 					[goMember]="goMember"
-				></sneat-contacts-list-item>
+				/>
 			</ion-item-sliding>
 		</ng-container>
 		<ion-item
@@ -63,6 +63,6 @@
 			[contact]="contact"
 			[goContact]="goContact"
 			[goMember]="goMember"
-		></sneat-contacts-list-item>
+		/>
 	</ion-item-sliding>
 </ion-item-group>

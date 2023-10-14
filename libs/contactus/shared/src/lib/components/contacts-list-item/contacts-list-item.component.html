@@ -1,8 +1,5 @@
 <ion-item (click)="goContact(contact)" tappable class="with-buttons">
-	<ion-icon
-		slot="start"
-		[name]="contact?.brief?.gender | genderIconName"
-	></ion-icon>
+	<ion-icon slot="start" [name]="contact?.brief?.gender | genderIconName" />
 	<ion-label>
 		{{ contact | personTitle }}
 		<ng-container *ngIf="contact?.brief?.roles?.length">
@@ -44,21 +41,18 @@
 			[title]="contact?.dto?.phone"
 			(click)="$event.stopPropagation()"
 		>
-			<ion-icon name="call"></ion-icon>
+			<ion-icon name="call" />
 		</ion-button>
 		<ion-button *ngIf="!contact?.dto?.email" color="light">@</ion-button>
 		<ion-button *ngIf="!contact?.dto?.phone" color="light">
-			<ion-icon name="call"></ion-icon>
+			<ion-icon name="call" />
 		</ion-button>
 	</ion-buttons>
 </ion-item>
 
 <ion-item *ngIf="showAddress && contact?.dto?.address">
 	<ion-label>Address</ion-label>
-	<ion-textarea
-		readonly="readonly"
-		[value]="contact?.dto?.address"
-	></ion-textarea>
+	<ion-textarea readonly="readonly" [value]="contact?.dto?.address" />
 </ion-item>
 <ion-item-options slot="end">
 	<ion-item-option color="warning" (click)="archiveContact()"

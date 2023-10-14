@@ -1,6 +1,6 @@
 <ion-card *ngIf="address === undefined">
 	<ion-card-content>
-		<ion-spinner></ion-spinner> Loading contact for logistTeam:
+		<ion-spinner /> Loading contact for logistTeam:
 		{{ logistTeam?.dto | json }} (address: {{ address | json }}...
 	</ion-card-content>
 </ion-card>
@@ -11,20 +11,16 @@
 		[requiredFields]="{ city: true }"
 		(formCreated)="onAddressFormChanged($event)"
 		(addressChange)="onAddressChanged($event)"
-	>
-	</sneat-address-form>
+	/>
 
 	<ion-card *ngIf="address?.countryID">
 		<ion-item>
 			<ion-label color="medium">VAT #</ion-label>
-			<ion-input [formControl]="vatNumber" placeholder="optional"></ion-input>
+			<ion-input [formControl]="vatNumber" placeholder="optional" />
 		</ion-item>
 		<ion-item>
 			<ion-label color="medium">Order # prefix</ion-label>
-			<ion-input
-				[formControl]="orderNumberPrefix"
-				placeholder="optional"
-			></ion-input>
+			<ion-input [formControl]="orderNumberPrefix" placeholder="optional" />
 		</ion-item>
 	</ion-card>
 
@@ -32,7 +28,7 @@
 		*ngIf="address?.countryID"
 		[selectedRoles]="roles"
 		(selectedRolesChange)="roles = $event"
-	></sneat-logist-team-roles>
+	/>
 </form>
 
 <div class="ion-margin">

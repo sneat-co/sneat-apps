@@ -18,14 +18,14 @@
 					[disabled]="saving"
 					(keyup.enter)="saveRefNumber($event)"
 					(keyup.escape)="cancelRefNumberChanges()"
-				></ion-input>
+				/>
 				<ion-buttons slot="end" *ngIf="refNumber.dirty">
 					<ion-button
 						*ngIf="!saving"
 						(click)="cancelRefNumberChanges()"
 						[disabled]="saving"
 					>
-						<ion-icon name="close-outline" slot="start"></ion-icon>
+						<ion-icon name="close-outline" slot="start" />
 						<ion-label>Cancel</ion-label>
 					</ion-button>
 					<ion-button
@@ -34,16 +34,8 @@
 						(click)="saveRefNumber($event)"
 						[disabled]="saving"
 					>
-						<ion-icon
-							*ngIf="!saving"
-							slot="start"
-							name="save-outline"
-						></ion-icon>
-						<ion-spinner
-							*ngIf="saving"
-							slot="start"
-							name="lines-small"
-						></ion-spinner>
+						<ion-icon *ngIf="!saving" slot="start" name="save-outline" />
+						<ion-spinner *ngIf="saving" slot="start" name="lines-small" />
 						<ion-label *ngIf="!saving">Save</ion-label>
 						<ion-label *ngIf="saving">Saving...</ion-label>
 					</ion-button>
@@ -69,7 +61,7 @@
 			<ion-item color="light">
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="delete($event)" title="Delete">
-						<ion-icon name="trash-outline" slot="end"></ion-icon>
+						<ion-icon name="trash-outline" slot="end" />
 						<!--						<ion-label>Delete</ion-label>-->
 					</ion-button>
 				</ion-buttons>
@@ -86,7 +78,7 @@
 		[shippingPointID]="shippingPoint?.id"
 		[dateTimeTab]="dateTimeTab"
 		[containerPoint]="containerPoint"
-	></sneat-container-endpoint>
+	/>
 	<sneat-container-endpoint
 		endpointSide="departure"
 		[team]="team"
@@ -94,20 +86,20 @@
 		[shippingPointID]="shippingPoint?.id"
 		[dateTimeTab]="dateTimeTab"
 		[containerPoint]="containerPoint"
-	></sneat-container-endpoint>
+	/>
 
 	<sneat-container-point-load-form
 		[order]="order"
 		[task]="'load'"
 		[shippingPoint]="shippingPoint"
 		[containerPoint]="containerPoint"
-	></sneat-container-point-load-form>
+	/>
 	<sneat-container-point-load-form
 		[order]="order"
 		[task]="'unload'"
 		[shippingPoint]="shippingPoint"
 		[containerPoint]="containerPoint"
-	></sneat-container-point-load-form>
+	/>
 </ng-container>
 
 <ion-item-group *ngIf="showNotes">
@@ -120,7 +112,7 @@
 				(click)="cancelNotesChanges()"
 				[disabled]="saving"
 			>
-				<ion-icon name="close-outline" slot="start"></ion-icon>
+				<ion-icon name="close-outline" slot="start" />
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 			<ion-button
@@ -129,12 +121,8 @@
 				(click)="saveNotes($event)"
 				[disabled]="saving"
 			>
-				<ion-icon *ngIf="!saving" slot="start" name="save-outline"></ion-icon>
-				<ion-spinner
-					*ngIf="saving"
-					slot="start"
-					name="lines-small"
-				></ion-spinner>
+				<ion-icon *ngIf="!saving" slot="start" name="save-outline" />
+				<ion-spinner *ngIf="saving" slot="start" name="lines-small" />
 				<ion-label *ngIf="!saving">Save</ion-label>
 				<ion-label *ngIf="saving">Saving...</ion-label>
 			</ion-button>
@@ -149,7 +137,7 @@
 			(ionChange)="onSpecialInstructionsChanged()"
 			(keyup.enter)="saveNotes($event)"
 			(keyup.escape)="cancelNotesChanges()"
-		></ion-textarea>
+		/>
 	</ion-item>
 </ion-item-group>
 <!-- End of Special instructions -->

@@ -1,9 +1,7 @@
 <ion-list>
 	<!--	<ion-item>sneat-app-menu.component.html</ion-item>-->
-	<sneat-teams-menu
-		*ngIf="authState?.status === 'authenticated'"
-	></sneat-teams-menu>
+	<sneat-teams-menu *ngIf="authState?.status === 'authenticated'" />
 	<!--	<sneat-commune-menu></sneat-commune-menu>-->
-	<sneat-auth-menu-item></sneat-auth-menu-item>
-	<sneat-app-version></sneat-app-version>
+	<sneat-auth-menu-item />
+	<sneat-app-version />
 </ion-list>

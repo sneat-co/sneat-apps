@@ -1,11 +1,11 @@
 <ion-header>
-	<sneat-dialog-header [dialogTitle]="title"></sneat-dialog-header>
+	<sneat-dialog-header [dialogTitle]="title" />
 </ion-header>
 <ion-content>
 	<sneat-order-containers-selector
 		[order]="order"
 		(selectedContainersChange)="onSelectedContainersChanged($event)"
-	></sneat-order-containers-selector>
+	/>
 	<div class="ion-padding">
 		<ion-button (click)="submit()">
 			<ion-label>Add selected containers</ion-label>

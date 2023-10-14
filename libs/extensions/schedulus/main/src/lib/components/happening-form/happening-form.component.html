@@ -18,7 +18,7 @@
 				(keyup.enter)="onTitleEnter()"
 				placeholder="Title"
 				type="text"
-			></ion-input>
+			/>
 		</ion-item>
 		<ion-item *ngIf="!happeningTitle.value">
 			<ion-label color="medium"> Enter above the name of the event. </ion-label>
@@ -35,12 +35,12 @@
 					[(happening)]="happening"
 					(happeningChange)="onHappeningChanged($event)"
 					(slotAdded)="onSlotAdded($event)"
-				></sneat-recurring-slot-form>
+				/>
 				<sneat-happening-slots
 					#happeningSlotsComponent
 					*ngIf="happening?.id || happening?.brief?.slots?.length"
 					[happening]="happening"
-				></sneat-happening-slots>
+				/>
 				<!--			<sneat-single-slot-form-->
 				<!--				[happening]="happening"-->
 				<!--				[style.display]="happeningType === 'single' ? 'block' : 'none'"-->
@@ -61,7 +61,7 @@
 						type="number"
 						[label]="priceLabel"
 						style="text-align: right"
-					></ion-input>
+					/>
 					<ion-select value="EUR" disabled="disabled">
 						<ion-select-option value="EUR">EUR</ion-select-option>
 						<ion-select-option value="USD">USD</ion-select-option>
@@ -74,7 +74,7 @@
 				[contactusTeam]="contactusTeam"
 				[happening]="happening"
 				(happeningChange)="onHappeningChanged($event)"
-			></sneat-happening-members-form>
+			/>
 
 			<ion-card>
 				<ng-container *ngIf="!formIsValid()">
@@ -133,7 +133,7 @@
 							*ngIf="isCreating"
 							slot="end"
 							class="ion-margin-horizontal"
-						></ion-spinner>
+						/>
 					</ion-button>
 				</div>
 			</ion-card>

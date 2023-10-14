@@ -7,7 +7,7 @@
 				(click)="clear()"
 				*ngIf="selectedMembers?.length"
 			>
-				<ion-icon name="close"></ion-icon>
+				<ion-icon name="close" />
 			</ion-button>
 			<ion-button *ngIf="!selectedMembers" (click)="clear()">
 				<ion-label>Skip</ion-label>
@@ -20,10 +20,10 @@
 		[max]="max"
 		[(selectedMembers)]="selectedMembers"
 		(selectedMembersChange)="onSelectedMembersChanged($event)"
-	></sneat-members-selector-list>
+	/>
 	<ng-container *ngIf="selectedMembers">
 		<ion-item *ngIf="max === 1 && (selectedMembers?.length || 0) === 1">
-			<ion-icon name="person-outline" color="medium" slot="start"></ion-icon>
+			<ion-icon name="person-outline" color="medium" slot="start" />
 			<ion-label color="medium">Member</ion-label>
 			<ion-select [value]="selectedMemberID" interface="popover">
 				<ion-select-option [value]="m.id" *ngFor="let m of members || []">{{
@@ -40,7 +40,7 @@
 					*ngIf="selectedMembers?.length"
 					[members]="selectedMembers"
 					(deleteMember)="onRemoveMember($event)"
-				></sneat-members-as-badges>
+				/>
 				<ng-container *ngIf="!selectedMembers">Loading...</ng-container>
 				<ng-container *ngIf="selectedMembers && !selectedMembers.length">
 					Nobody assigned
@@ -48,7 +48,7 @@
 			</ion-label>
 			<ion-buttons slot="end">
 				<ion-button color="tertiary" (click)="selectMembers($event)">
-					<ion-icon name="person-add-outline" slot="start"></ion-icon>
+					<ion-icon name="person-add-outline" slot="start" />
 					<ion-label>Add</ion-label>
 				</ion-button>
 			</ion-buttons>

@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title>
 			⚖️ Budget
@@ -11,7 +11,7 @@
 		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button [disabled]="!team" (click)="goNew()" title="Add liability">
-				<ion-icon name="add"></ion-icon>
+				<ion-icon name="add" />
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>

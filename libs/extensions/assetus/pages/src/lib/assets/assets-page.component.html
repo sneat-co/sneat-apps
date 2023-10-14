@@ -2,7 +2,7 @@
 	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
 			<!--			<ion-menu-button></ion-menu-button>-->
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<sneat-team-page-title
 			[team]="team"
@@ -12,8 +12,7 @@
 				personal: 'Personal assets',
 				family: 'Family assets'
 			}"
-		>
-		</sneat-team-page-title>
+		/>
 		<ion-buttons slot="end">
 			<ion-button
 				color="primary"
@@ -21,7 +20,7 @@
 				(click)="goNew()"
 				title="Add asset"
 			>
-				<ion-icon name="add"></ion-icon>
+				<ion-icon name="add" />
 				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -51,11 +50,7 @@
 	<ion-card *ngFor="let assetType of assetTypes">
 		<ion-item-group>
 			<ion-item-divider color="light">
-				<ion-icon
-					[name]="assetType.iconName"
-					slot="start"
-					color="medium"
-				></ion-icon>
+				<ion-icon [name]="assetType.iconName" slot="start" color="medium" />
 				<ion-label>{{ assetType.title }}</ion-label>
 				<ion-buttons slot="end">
 					<ion-button
@@ -63,7 +58,7 @@
 						title="Add vehicle"
 						(click)="goNew(assetType.id)"
 					>
-						<ion-icon name="add"></ion-icon>
+						<ion-icon name="add" />
 						<ion-label>Add</ion-label>
 					</ion-button>
 				</ion-buttons>
@@ -72,7 +67,7 @@
 				[assetType]="assetType.id"
 				[team]="team"
 				[allAssets]="assets"
-			></sneat-assets-list>
+			/>
 		</ion-item-group>
 	</ion-card>
 	<ion-card>

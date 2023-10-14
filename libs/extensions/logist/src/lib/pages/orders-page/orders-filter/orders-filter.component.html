@@ -17,7 +17,7 @@
 			placeholder="ref #"
 			[(ngModel)]="refNumber"
 			(ionChange)="refNumberChanged()"
-		></ion-input>
+		/>
 		<ion-buttons slot="end" *ngIf="refNumber || isRefNumberChanged">
 			<ion-button
 				*ngIf="isRefNumberChanged"
@@ -33,7 +33,7 @@
 				title="Clear filter"
 				(click)="clearRefNumber($event)"
 			>
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -44,12 +44,12 @@
 		[team]="team"
 		[contact]="contactByRole['consignee']"
 		(contactChange)="onContactChanged('consignee', $event)"
-	></sneat-contact-input>
+	/>
 	<sneat-country-input
 		label="Country"
 		[(countryID)]="countryID"
 		(countryIDChange)="emitFilterChange()"
-	></sneat-country-input>
+	/>
 </ion-card>
 
 <ion-grid class="ion-grid-layout">
@@ -75,12 +75,12 @@
 			>
 				<ion-segment-button value="grid" title="Grid view">
 					<ion-label color="medium">
-						<ion-icon name="grid-outline"></ion-icon>
+						<ion-icon name="grid-outline" />
 					</ion-label>
 				</ion-segment-button>
 				<ion-segment-button value="list" color="light" title="Cards list view">
 					<ion-label color="medium">
-						<ion-icon name="list-outline"></ion-icon>
+						<ion-icon name="list-outline" />
 					</ion-label>
 				</ion-segment-button>
 			</ion-segment>

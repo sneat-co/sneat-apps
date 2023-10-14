@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title>
 			{{ title }}
@@ -13,19 +13,16 @@
 </ion-header>
 
 <ion-content>
-	<app-retro-timer
-		[team]="team"
-		[retrospective]="retrospective"
-	></app-retro-timer>
+	<app-retro-timer [team]="team" [retrospective]="retrospective" />
 
 	<sneat-retro-feedback-stage
 		[team]="team"
 		[retrospective]="retrospective"
 		*ngIf="showPersonalFeedback()"
-	></sneat-retro-feedback-stage>
+	/>
 	<sneat-retro-review-stage
 		[team]="team"
 		[retrospective]="retrospective"
 		*ngIf="retrospective?.dto?.stage === 'review'"
-	></sneat-retro-review-stage>
+	/>
 </ion-content>

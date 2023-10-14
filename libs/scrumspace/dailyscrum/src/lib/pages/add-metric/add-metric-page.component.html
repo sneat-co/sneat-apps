@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-back-button slot="start" defaultHref="/teams"></ion-back-button>
+		<ion-back-button slot="start" defaultHref="/teams" />
 		<ion-title>
 			Add metric
 			<ng-container *ngIf="team">@ {{ team.title }}</ng-container>
@@ -12,7 +12,7 @@
 	<ion-list>
 		<ion-radio-group name="mode" [(ngModel)]="mode">
 			<ion-item>
-				<ion-radio slot="start" name="mode" value="personal"></ion-radio>
+				<ion-radio slot="start" name="mode" value="personal" />
 				<ion-label>
 					<b *ngIf="mode === 'personal'">Personal</b>
 					<!-- TODO: should be a better way to set style -->
@@ -21,7 +21,7 @@
 				</ion-label>
 			</ion-item>
 			<ion-item>
-				<ion-radio name="mode" value="team" slot="start"></ion-radio>
+				<ion-radio name="mode" value="team" slot="start" />
 				<ion-label>
 					<b *ngIf="mode === 'team'">Team</b>
 					<!-- TODO: should be a better way to set style -->
@@ -32,7 +32,7 @@
 		</ion-radio-group>
 		<ion-item>
 			<ion-label color="medium">Title</ion-label>
-			<ion-input [(ngModel)]="title"></ion-input>
+			<ion-input [(ngModel)]="title" />
 		</ion-item>
 		<ion-item>
 			<ion-segment [(ngModel)]="type">
@@ -45,7 +45,7 @@
 				<ion-col size="6">
 					<ion-item>
 						<ion-label color="medium"><b>TRUE</b> label / color</ion-label>
-						<ion-input [(ngModel)]="trueLabel" [color]="trueColor"></ion-input>
+						<ion-input [(ngModel)]="trueLabel" [color]="trueColor" />
 						<ion-select [(ngModel)]="trueColor" interface="popover">
 							<ion-select-option value="primary">Primary</ion-select-option>
 							<ion-select-option value="secondary">Secondary</ion-select-option>
@@ -59,10 +59,7 @@
 				<ion-col size="6">
 					<ion-item>
 						<ion-label color="medium"><b>FALSE</b> label / color</ion-label>
-						<ion-input
-							[(ngModel)]="falseLabel"
-							[color]="falseColor"
-						></ion-input>
+						<ion-input [(ngModel)]="falseLabel" [color]="falseColor" />
 						<ion-select [(ngModel)]="falseColor" interface="popover">
 							<ion-select-option value="primary">Primary</ion-select-option>
 							<ion-select-option value="secondary">Secondary</ion-select-option>
@@ -78,15 +75,15 @@
 		<ng-container *ngIf="type === 'int'">
 			<ion-item>
 				<ion-label>Min</ion-label>
-				<ion-input type="number" [(ngModel)]="min"></ion-input>
+				<ion-input type="number" [(ngModel)]="min" />
 			</ion-item>
 			<ion-item>
 				<ion-label>Max</ion-label>
-				<ion-input type="number" [(ngModel)]="max"></ion-input>
+				<ion-input type="number" [(ngModel)]="max" />
 			</ion-item>
 		</ng-container>
 		<ion-item>
-			<ion-toggle slot="start"></ion-toggle>
+			<ion-toggle slot="start" />
 			<ion-label>Is required to fill</ion-label>
 			<ion-button size="medium" slot="end" (click)="submit()"
 				>Create metric</ion-button

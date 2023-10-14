@@ -2,7 +2,7 @@
 	>No items created yet</ion-item
 >
 <ion-item *ngIf="!assets" disabled>
-	<ion-spinner slot="start" name="lines-small"></ion-spinner>
+	<ion-spinner slot="start" name="lines-small" />
 	<ion-label>Loading...</ion-label>
 </ion-item>
 <div *ngIf="assets?.length" class="last-child-no-border">
@@ -39,7 +39,7 @@
 				(click)="delete(asset)"
 				[disabled]="deletingIDs.indexOf(asset.id) >= 0"
 			>
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>

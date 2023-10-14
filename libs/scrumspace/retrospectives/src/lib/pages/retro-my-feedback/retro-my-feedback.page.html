@@ -1,15 +1,12 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-back-button
-			slot="start"
-			defaultHref="team?id={{teamId}}"
-		></ion-back-button>
+		<ion-back-button slot="start" defaultHref="team?id={{teamId}}" />
 		<ion-title>Retrospective</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<app-retro-timer></app-retro-timer>
+	<app-retro-timer />
 
 	<ion-card *ngFor="let question of questions; trackBy: trackById">
 		<ion-card-header>
@@ -25,7 +22,7 @@
 	<div class="ion-padding">
 		<ion-button size="large" (click)="goRetroReview()">
 			<ion-label>I am ready for review</ion-label>
-			<ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+			<ion-icon name="chevron-forward-outline" slot="end" />
 		</ion-button>
 	</div>
 
@@ -35,7 +32,7 @@
 				<ion-label>Other participants</ion-label>
 			</ion-item-divider>
 			<ion-item>
-				<ion-icon slot="start" name="create-outline"></ion-icon>
+				<ion-icon slot="start" name="create-outline" />
 				<ion-label>John</ion-label>
 				<ion-buttons slot="end">
 					<ion-button>
@@ -53,11 +50,7 @@
 				</ion-buttons>
 			</ion-item>
 			<ion-item>
-				<ion-icon
-					slot="start"
-					color="success"
-					name="checkmark-done-outline"
-				></ion-icon>
+				<ion-icon slot="start" color="success" name="checkmark-done-outline" />
 				<ion-label>Jack</ion-label>
 				<ion-buttons slot="end">
 					<ion-button>

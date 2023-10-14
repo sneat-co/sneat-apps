@@ -9,7 +9,7 @@
 	selectLabel="Relationship status"
 	[selectOptions]="relationshipOptions"
 	(ngModelChange)="onFormChanged()"
-></sneat-radio-group-to-select>
+/>
 <sneat-radio-group-to-select
 	*ngIf="!!relationship"
 	[(ngModel)]="numberOfKids"
@@ -17,7 +17,7 @@
 	label="Number of kids in household"
 	[selectOptions]="rangeOptions0to7"
 	(ngModelChange)="onFormChanged()"
-></sneat-radio-group-to-select>
+/>
 <sneat-radio-group-to-select
 	*ngIf="!!numberOfKids"
 	[(ngModel)]="dwelling"
@@ -25,4 +25,4 @@
 	selectLabel="Dwelling"
 	[selectOptions]="dwellingOptions"
 	(ngModelChange)="onFormChanged()"
-></sneat-radio-group-to-select>
+/>

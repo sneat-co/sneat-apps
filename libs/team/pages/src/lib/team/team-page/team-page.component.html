@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-menu-button></ion-menu-button>
+			<ion-menu-button />
 			<!--			<ion-back-button defaultHref="/"></ion-back-button>-->
 		</ion-buttons>
 		<ion-title *ngIf="team.dto || team.type">
@@ -10,7 +10,7 @@
 		<ion-title *ngIf="!team"> Space: loading... </ion-title>
 		<ion-buttons slot="end">
 			<ion-button>
-				<ion-icon name="settings" slot="start"></ion-icon>
+				<ion-icon name="settings" slot="start" />
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -43,12 +43,12 @@
 						<ion-label style="font-weight: bold">Apps</ion-label>
 						<ion-buttons slot="end">
 							<ion-button>
-								<ion-icon name="settings" color="medium"></ion-icon>
+								<ion-icon name="settings" color="medium" />
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
 					<ion-item routerLink="./assets" detail>
-						<ion-icon name="car-sport-outline" slot="start"></ion-icon>
+						<ion-icon name="car-sport-outline" slot="start" />
 						<ion-label>Assets</ion-label>
 						<ion-badge
 							slot="end"
@@ -59,15 +59,15 @@
 						>
 					</ion-item>
 					<ion-item routerLink="./contacts" detail>
-						<ion-icon name="people-outline" slot="start"></ion-icon>
+						<ion-icon name="people-outline" slot="start" />
 						<ion-label>Contacts</ion-label>
 					</ion-item>
 					<ion-item routerLink="./documents" detail>
-						<ion-icon name="documents-outline" slot="start"></ion-icon>
+						<ion-icon name="documents-outline" slot="start" />
 						<ion-label>Documents</ion-label>
 					</ion-item>
 					<ion-item routerLink="./lists">
-						<ion-icon name="cart-outline" slot="start"></ion-icon>
+						<ion-icon name="cart-outline" slot="start" />
 						<ion-label>Lists</ion-label>
 						<ion-buttons slot="end">
 							<ion-button
@@ -86,7 +86,7 @@
 						</ion-buttons>
 					</ion-item>
 					<ion-item routerLink="./schedule" detail="">
-						<ion-icon name="calendar-outline" slot="start"></ion-icon>
+						<ion-icon name="calendar-outline" slot="start" />
 						<ion-label>Schedule</ion-label>
 						<!--						<ion-buttons slot="end">-->
 						<!--							<ion-button>-->
@@ -113,7 +113,7 @@
 							slot="start"
 							color="primary"
 							class="sneat-hide-if-width-less-240"
-						></ion-icon>
+						/>
 						<ion-label color="primary" style="font-weight: bold"
 							>Members</ion-label
 						>
@@ -122,15 +122,12 @@
 								routerLink="new-member"
 								(click)="$event.stopPropagation()"
 							>
-								<ion-icon name="add-outline"></ion-icon>
+								<ion-icon name="add-outline" />
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
 
-					<sneat-members-list
-						[team]="team"
-						[members]="members"
-					></sneat-members-list>
+					<sneat-members-list [team]="team" [members]="members" />
 				</ion-card>
 			</ion-col>
 			<!--			<ion-col>-->

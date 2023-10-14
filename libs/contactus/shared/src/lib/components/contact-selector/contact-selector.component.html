@@ -5,7 +5,7 @@
 	>
 	<ion-buttons slot="end">
 		<ion-button (click)="close($event)">
-			<ion-icon name="close-outline"></ion-icon>
+			<ion-icon name="close-outline" />
 		</ion-button>
 	</ion-buttons>
 </ion-item>
@@ -34,7 +34,7 @@
 				(ngModelChange)="onParentContactIDChanged($event)"
 				[isFilterable]="true"
 				radioSlot="end"
-			></sneat-select-from-list>
+			/>
 
 			<sneat-new-company-form
 				*ngIf="parentTab === 'new'"
@@ -87,7 +87,7 @@
 			(ngModelChange)="onContactSelected($event)"
 			[isFilterable]="true"
 			radioSlot="end"
-		></sneat-select-from-list>
+		/>
 
 		<ng-container *ngIf="contactTab === 'new'">
 			<sneat-location-form
@@ -97,7 +97,7 @@
 				[team]="team"
 				[parentContact]="selectedParent"
 				(contactCreated)="onLocationCreated($event)"
-			></sneat-location-form>
+			/>
 			<ng-template #notLocation>
 				<ng-container [ngSwitch]="contactType">
 					<sneat-new-company-form
@@ -121,8 +121,7 @@
 							[contactRoles]="contactRole ? [contactRole] : undefined"
 							[parentContact]="selectedParent"
 							(contactCreated)="onSubContactCreated($event)"
-						>
-						</sneat-basic-contact-form>
+						/>
 					</ng-container>
 				</ng-container>
 			</ng-template>

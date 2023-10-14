@@ -10,11 +10,11 @@
 		title="Document Type"
 		[items]="docTypes"
 		radioSlot="end"
-	></sneat-select-from-list>
+	/>
 
 	<ion-item *ngIf="docType === 'other'">
 		<ion-label>Title</ion-label>
-		<ion-input [(ngModel)]="docTitle"></ion-input>
+		<ion-input [(ngModel)]="docTitle" />
 	</ion-item>
 </ion-card>
 
@@ -23,7 +23,7 @@
 		<ion-text color="medium">Step 2 of 4</ion-text>
 	</p>
 	<ion-card>
-		<sneat-country-selector [(countryID)]="country"></sneat-country-selector>
+		<sneat-country-selector [(countryID)]="country" />
 	</ion-card>
 
 	<ng-container *ngIf="country">
@@ -40,7 +40,7 @@
 				[members]="members"
 				[max]="docFields.members?.max"
 				[(selectedMembers)]="selectedMembers"
-			></sneat-members-selector-input>
+			/>
 		</ion-card>
 
 		<ng-container *ngIf="selectedMembers">
@@ -54,24 +54,24 @@
 					</ion-item-divider>
 					<ion-item>
 						<ion-label>Number</ion-label>
-						<ion-input [(ngModel)]="docNumber"></ion-input>
+						<ion-input [(ngModel)]="docNumber" />
 					</ion-item>
 					<ion-item>
 						<ion-label color="medium">Issued by</ion-label>
-						<ion-input></ion-input>
+						<ion-input />
 					</ion-item>
 					<ion-grid class="ion-grid-layout">
 						<ion-row>
 							<ion-col>
 								<ion-item>
 									<ion-label color="medium">Issued on</ion-label>
-									<ion-input type="date"></ion-input>
+									<ion-input type="date" />
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
 									<ion-label color="medium">Valid till</ion-label>
-									<ion-input type="date"></ion-input>
+									<ion-input type="date" />
 								</ion-item>
 							</ion-col>
 						</ion-row>
@@ -85,23 +85,23 @@
 				</ion-item-divider>
 				<ion-item>
 					<ion-label>Category A</ion-label>
-					<ion-checkbox value="A"></ion-checkbox>
+					<ion-checkbox value="A" />
 				</ion-item>
 				<ion-item>
 					<ion-label>Category B</ion-label>
-					<ion-checkbox value="B"></ion-checkbox>
+					<ion-checkbox value="B" />
 				</ion-item>
 				<ion-item>
 					<ion-label>Category C</ion-label>
-					<ion-checkbox value="C"></ion-checkbox>
+					<ion-checkbox value="C" />
 				</ion-item>
 				<ion-item>
 					<ion-label>Category D</ion-label>
-					<ion-checkbox value="D"></ion-checkbox>
+					<ion-checkbox value="D" />
 				</ion-item>
 				<ion-item>
 					<ion-label>Category E</ion-label>
-					<ion-checkbox value="E"></ion-checkbox>
+					<ion-checkbox value="E" />
 				</ion-item>
 			</ion-card>
 

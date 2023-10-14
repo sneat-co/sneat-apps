@@ -6,10 +6,10 @@
 		[class.deleting-list-item]="deleting"
 	>
 		<ion-label color="medium">From</ion-label>
-		<ion-input readonly [value]="from?.title"></ion-input>
+		<ion-input readonly [value]="from?.title" />
 
 		<ion-label color="medium">To</ion-label>
-		<ion-input readonly [value]="to?.title"></ion-input>
+		<ion-input readonly [value]="to?.title" />
 
 		<ion-buttons slot="end">
 			<ion-button color="medium" (click)="assignSegmentsToTransporter()">
@@ -21,7 +21,7 @@
 				(click)="deleteTruckerSegments()"
 				title="Delete trucker segments"
 			>
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -39,6 +39,5 @@
 		*ngFor="let segment of orderSegment?.containerSegments"
 		[order]="order"
 		[segment]="segment"
-	>
-	</sneat-segment-container>
+	/>
 </ion-card>

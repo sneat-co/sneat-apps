@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="asset">{{ asset.dto.title }}</ion-title>
 		<ion-title *ngIf="!asset">Property</ion-title>
@@ -12,7 +12,7 @@
 	<app-real-estate-location
 		*ngIf="asset && asset.dto.categoryId === 'real_estate'"
 		[asset]="asset"
-	></app-real-estate-location>
+	/>
 
 	<ion-item-group>
 		<ion-item-divider color="light">
@@ -28,10 +28,10 @@
 		[contacts]="landlords"
 		contactRelation="landlord"
 		(goNewContact)="goNewContact($event)"
-	></sneat-asset-contacts-group>
+	/>
 	<sneat-asset-contacts-group
 		[contacts]="tenants"
 		contactRelation="tenant"
 		(goNewContact)="goNewContact($event)"
-	></sneat-asset-contacts-group>
+	/>
 </ion-content>

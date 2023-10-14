@@ -36,13 +36,13 @@
 		</ng-template>
 	</ion-card>
 	<p *ngIf="!inviteInfo?.team">
-		<ion-spinner name="lines-small" color="medium"></ion-spinner>
+		<ion-spinner name="lines-small" color="medium" />
 		Loading...
 	</p>
 
 	<ion-card *ngIf="inviteInfo?.invite?.to?.channel === 'email'">
 		<ion-item-divider color="light">
-			<ion-icon name="mail-outline" slot="start"></ion-icon>
+			<ion-icon name="mail-outline" slot="start" />
 			<ion-label>My email</ion-label>
 		</ion-item-divider>
 		<ion-item>
@@ -52,7 +52,7 @@
 				color="medium"
 				type="email"
 				[value]="inviteInfo?.invite?.to?.address"
-			></ion-input>
+			/>
 		</ion-item>
 	</ion-card>
 
@@ -85,7 +85,7 @@
 		[nameFields]="nameFields"
 		[fields]="wizardFields"
 		[disabled]="userOwnInvite"
-	></sneat-person-form-wizard>
+	/>
 
 	<!--	<ion-card>-->
 	<!--		<ion-card-content>-->
@@ -102,13 +102,13 @@
 				[disabled]="status !== 'reviewing' || userOwnInvite"
 				(click)="join()"
 			>
-				<ion-icon name="enter-outline" slot="end"></ion-icon>
+				<ion-icon name="enter-outline" slot="end" />
 				<ng-container *ngIf="status !== 'joining'"
 					>Join {{ inviteInfo?.team?.type || "team" }}</ng-container
 				>
 				<ng-container *ngIf="status === 'joining'">
 					Joining {{ inviteInfo?.team?.type || "team" }}...
-					<ion-spinner name="lines-small"></ion-spinner>
+					<ion-spinner name="lines-small" />
 				</ng-container>
 			</ion-button>
 			<ion-button
@@ -127,10 +127,7 @@
 				style="text-transform: none"
 			>
 				Refuse to join
-				<ion-spinner
-					name="lines-small"
-					*ngIf="status === 'refusing'"
-				></ion-spinner>
+				<ion-spinner name="lines-small" *ngIf="status === 'refusing'" />
 			</ion-button>
 			<p class="ion-padding-top" *ngIf="authStatus === 'notAuthenticated'">
 				You would need to sign-in to join the

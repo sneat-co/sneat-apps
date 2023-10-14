@@ -1,8 +1,8 @@
 <ion-item *ngIf="!team?.dto">
 	<ion-avatar slot="start" style="opacity: 0.3">
-		<ion-img title="avatar" src="//www.gravatar.com/avatar/gravatar"></ion-img>
+		<ion-img title="avatar" src="//www.gravatar.com/avatar/gravatar" />
 	</ion-avatar>
-	<ion-skeleton-text style="width: 50%" animated="animated"></ion-skeleton-text>
+	<ion-skeleton-text style="width: 50%" animated="animated" />
 </ion-item>
 
 <ion-item *ngIf="membersToDisplay && !membersToDisplay.length; else list">
@@ -26,7 +26,7 @@
 					*ngIf="member.brief?.avatar?.external?.url"
 					title="avatar"
 					[src]="member.brief?.avatar?.external?.url"
-				></ion-img>
+				/>
 				<ion-img
 					*ngIf="
 						member.brief?.avatar?.gravatar &&
@@ -34,14 +34,14 @@
 					"
 					title="avatar"
 					src="//www.gravatar.com/avatar/{{ member.brief?.avatar?.gravatar }}"
-				></ion-img>
+				/>
 			</ion-avatar>
 			<ng-template #memberIcon>
 				<ion-icon
 					slot="start"
 					[name]="genderIcon(member)"
 					class="sneat-hide-if-width-less-240"
-				></ion-icon>
+				/>
 			</ng-template>
 			<ion-label>
 				{{ member | contactTitle }}
@@ -50,16 +50,16 @@
 					<sneat-contact-role-badges
 						[roles]="member.brief?.roles"
 						[hideRoles]="hideRoles"
-					></sneat-contact-role-badges>
+					/>
 				</ng-container>
 			</ion-label>
 			<ion-buttons slot="end" *ngIf="isAgeOptionsVisible(member)">
 				<ion-button (click)="setAgeGroup($event, member, 'adult')">
-					<ion-icon slot="start" name="radio-button-off-outline"></ion-icon>
+					<ion-icon slot="start" name="radio-button-off-outline" />
 					<ion-label>Adult</ion-label>
 				</ion-button>
 				<ion-button (click)="setAgeGroup($event, member, 'child')">
-					<ion-icon slot="start" name="radio-button-off-outline"></ion-icon>
+					<ion-icon slot="start" name="radio-button-off-outline" />
 					<ion-label>Child</ion-label>
 				</ion-button>
 			</ion-buttons>
@@ -73,13 +73,13 @@
 					<ion-icon
 						name="ticket-outline"
 						class="sneat-hide-if-width-greater-320"
-					></ion-icon>
+					/>
 					<span class="sneat-hide-if-width-less-320" style="margin-left: 0.5em"
 						>Invite</span
 					>
 				</ion-button>
 				<ion-button (click)="goSchedule($event, member)">
-					<ion-icon name="calendar-outline"></ion-icon>
+					<ion-icon name="calendar-outline" />
 				</ion-button>
 				<ion-button
 					color="danger"

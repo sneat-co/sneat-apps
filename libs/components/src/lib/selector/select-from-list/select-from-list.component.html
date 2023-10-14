@@ -16,7 +16,7 @@
 	</ion-select>
 	<ion-buttons slot="end" class="ion-no-margin" *ngIf="!readonly">
 		<ion-button color="medium" title="Deselect" (click)="deselect()">
-			<ion-icon name="close-outline"></ion-icon>
+			<ion-icon name="close-outline" />
 		</ion-button>
 	</ion-buttons>
 </ion-item>
@@ -36,7 +36,7 @@
 			[(ngModel)]="filter"
 			[label]="filterLabel"
 			(ionInput)="onFilterChanged()"
-		></ion-input>
+		/>
 		<ion-buttons slot="end" *ngIf="!!filter">
 			<ion-button
 				*ngIf="canAdd && hiddenCount"
@@ -44,11 +44,11 @@
 				color="primary"
 				(click)="onAdd($event)"
 			>
-				<ion-icon name="add-outline"></ion-icon>
+				<ion-icon name="add-outline" />
 				<ion-label>Add</ion-label>
 			</ion-button>
 			<ion-button (click)="clearFilter()" title="Clear filter">
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -66,7 +66,7 @@
 				*ngIf="item.iconName"
 				[name]="item.iconName"
 				[color]="item.labelColor || 'medium'"
-			></ion-icon>
+			/>
 			<ion-label *ngIf="!radioSlot" [color]="item.labelColor"
 				>{{ item.emoji }} {{ item.title }}</ion-label
 			>
@@ -99,7 +99,7 @@
 		>
 		<ion-buttons slot="end">
 			<ion-button (click)="clearFilter()">
-				<ion-icon name="close-outline" slot="start"></ion-icon>
+				<ion-icon name="close-outline" slot="start" />
 				<ion-label>Clear filter</ion-label>
 			</ion-button>
 		</ion-buttons>

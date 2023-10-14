@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="communes"></ion-back-button>
+			<ion-back-button defaultHref="communes" />
 		</ion-buttons>
 		<ion-title>New commune</ion-title>
 	</ion-toolbar>
@@ -11,7 +11,7 @@
 	<ion-list>
 		<ion-item *ngIf="!!code">
 			<ion-label>Commune type</ion-label>
-			<ion-icon slot="start" name="home"></ion-icon>
+			<ion-icon slot="start" name="home" />
 			<ion-select [(ngModel)]="code" interface="popover">
 				<ion-select-option *ngFor="let type of types" [value]="type.code"
 					>{{ type.emoji }} {{ type.title }}</ion-select-option
@@ -25,21 +25,19 @@
 			<ion-radio-group [(ngModel)]="code" (ionChange)="onTypeChanged()">
 				<ion-item *ngFor="let type of types">
 					<ion-label>{{ type.emoji }} {{ type.title }}</ion-label>
-					<ion-radio slot="start" [value]="type.code"></ion-radio>
+					<ion-radio slot="start" [value]="type.code" />
 				</ion-item>
 			</ion-radio-group>
 		</ng-container>
 		<ion-item *ngIf="!!code && code !== 'family'">
 			<ion-label>Commune name</ion-label>
-			<ion-input #nameInput [(ngModel)]="name"></ion-input>
+			<ion-input #nameInput [(ngModel)]="name" />
 		</ion-item>
 	</ion-list>
 
 	<ion-card *ngIf="code === 'family'">
 		<ion-card-content>
-			<sneat-new-family-wizard
-				(ready)="onFormReadyChanged($event)"
-			></sneat-new-family-wizard>
+			<sneat-new-family-wizard (ready)="onFormReadyChanged($event)" />
 		</ion-card-content>
 	</ion-card>
 

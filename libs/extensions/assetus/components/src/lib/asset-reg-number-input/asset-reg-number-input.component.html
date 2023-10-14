@@ -4,14 +4,14 @@
 		[formControl]="regNumber"
 		[placeholder]="placeholder"
 		(keyup.enter)="submit()"
-	></ion-input>
+	/>
 	<ion-buttons slot="end" *ngIf="showSave">
 		<ion-button
 			[color]="isSaving ? 'primary' : undefined"
 			[disabled]="isSaving"
 			(click)="submit()"
 		>
-			<ion-icon name="save" slot="start"></ion-icon>
+			<ion-icon name="save" slot="start" />
 			<ion-label *ngIf="!isSaving">Save</ion-label>
 			<ion-label *ngIf="isSaving">Saving...</ion-label>
 		</ion-button>

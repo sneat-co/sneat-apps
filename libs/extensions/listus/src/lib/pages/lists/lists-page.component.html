@@ -10,7 +10,7 @@
 			>
 		</ion-title>
 		<ion-buttons slot="start">
-			<ion-menu-button menu="mainMenu"></ion-menu-button>
+			<ion-menu-button menu="mainMenu" />
 		</ion-buttons>
 	</ion-toolbar>
 	<ion-toolbar
@@ -19,10 +19,7 @@
 		class="with-back-button with-end-buttons"
 	>
 		<ion-buttons slot="start">
-			<ion-back-button
-				[text]="null"
-				[defaultHref]="defaultBackUrl"
-			></ion-back-button>
+			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="team; else titleNoCommune"
 			>📜 Lists @ {{ team.brief?.title }}</ion-title
@@ -31,7 +28,7 @@
 			<ion-title>📜 Lists</ion-title>
 		</ng-template>
 		<ion-buttons slot="end">
-			<ion-menu-button menu="mainMenu"></ion-menu-button>
+			<ion-menu-button menu="mainMenu" />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -68,11 +65,11 @@
 						style="margin-left: 0.5em"
 						color="medium"
 						[name]="isCollapsed(listGroup) ? 'arrow-dropdown' : 'arrow-dropup'"
-					></ion-icon>
+					/>
 				</ion-label>
 				<ion-buttons slot="end">
 					<ion-button color="medium" (click)="addTo($event, listGroup.type)">
-						<ion-icon name="add"></ion-icon>
+						<ion-icon name="add" />
 					</ion-button>
 					<!--<ion-button>-->
 					<!--<ion-icon name="git-compare"></ion-icon>-->
@@ -117,7 +114,7 @@
 						<ion-badge slot="end" color="light" *ngIf="list.itemsCount">{{
 							list.itemsCount
 						}}</ion-badge>
-						<ion-reorder slot="end"></ion-reorder>
+						<ion-reorder slot="end" />
 					</ion-item>
 					<ion-item-options slot="end">
 						<ion-item-option
@@ -125,7 +122,7 @@
 							expandable="true"
 							(click)="remove(listGroup, list, ionItemSliding)"
 						>
-							<ion-icon name="trash" class="with-label"></ion-icon>
+							<ion-icon name="trash" class="with-label" />
 							Remove
 						</ion-item-option>
 					</ion-item-options>
@@ -138,7 +135,7 @@
 						<ion-item>
 							<ion-buttons slot="start" style="margin: 0">
 								<ion-button (click)="cancelListCreation()" color="medium">
-									<ion-icon name="close"></ion-icon>
+									<ion-icon name="close" />
 								</ion-button>
 							</ion-buttons>
 							<ion-input
@@ -146,7 +143,7 @@
 								name="title"
 								placeholder="List name"
 								[(ngModel)]="listTitle"
-							></ion-input>
+							/>
 							<ion-button
 								fill="outline"
 								size="small"

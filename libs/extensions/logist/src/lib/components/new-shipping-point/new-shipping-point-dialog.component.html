@@ -1,10 +1,10 @@
 <ion-header>
-	<sneat-dialog-header dialogTitle="New shipping point"></sneat-dialog-header>
+	<sneat-dialog-header dialogTitle="New shipping point" />
 </ion-header>
 <ion-content>
 	<sneat-new-shipping-point-form
 		[order]="order"
 		[container]="container"
 		(orderCreated)="onOrderCreated($event)"
-	></sneat-new-shipping-point-form>
+	/>
 </ion-content>

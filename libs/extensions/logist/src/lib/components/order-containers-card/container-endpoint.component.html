@@ -8,7 +8,7 @@
 				[team]="team"
 				[contact]="byContact"
 				(contactChange)="onByContactChanged($event)"
-			></sneat-contact-input>
+			/>
 			<!--			<sneat-logist-order-counterparty-input-->
 			<!--				label="By" contactRole="trucker" contactType="company"-->
 			<!--				[canReset]="true"-->
@@ -25,24 +25,24 @@
 					type="date"
 					[formControl]="scheduledDate"
 					(ionChange)="onScheduledDateChanged($event)"
-				></ion-input>
+				/>
 				<ion-input
 					type="time"
 					[formControl]="scheduledTime"
 					(ionChange)="onScheduledTimeChanged($event)"
-				></ion-input>
+				/>
 			</ion-item>
 			<ion-item *ngIf="dateTimeTab === 'actual'">
 				<ion-input
 					type="date"
 					[formControl]="actualDate"
 					(ionChange)="onActualDateChanged($event)"
-				></ion-input>
+				/>
 				<ion-input
 					type="time"
 					[formControl]="actualTime"
 					(ionChange)="onActualTimeChanged($event)"
-				></ion-input>
+				/>
 			</ion-item>
 		</ion-col>
 	</ion-row>

@@ -4,7 +4,7 @@
 		type="date"
 		[formControl]="startDate"
 		(ionChange)="onStartDateChanged()"
-	></ion-input>
+	/>
 	<ion-buttons
 		slot="end"
 		*ngIf="!startDate?.value"
@@ -15,7 +15,7 @@
 			(click)="setStartDate($event, 'today')"
 			title="Today"
 		>
-			<ion-icon name="today-outline"></ion-icon>
+			<ion-icon name="today-outline" />
 		</ion-button>
 		<ion-button
 			value="tomorrow"
@@ -32,15 +32,15 @@
 	>
 		<ion-button id="quick-pick-start-date" color="medium">
 			<!--			<ion-label>Pick</ion-label>-->
-			<ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+			<ion-icon name="chevron-down-outline" slot="end" />
 		</ion-button>
 		<ion-button color="medium" (click)="addToStart({ days: -1 })">
-			<ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+			<ion-icon name="chevron-back-outline" slot="start" />
 			<ion-label>-1d</ion-label>
 		</ion-button>
 		<ion-button color="medium" (click)="addToStart({ days: +1 })">
 			<ion-label>+1d</ion-label>
-			<ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+			<ion-icon name="chevron-forward-outline" slot="end" />
 		</ion-button>
 		<ion-popover trigger="quick-pick-start-date" dismissOnSelect="true">
 			<ng-template>
@@ -87,7 +87,7 @@
 		[formControl]="startTime"
 		(ionBlur)="onStartTimeBlur()"
 		(ionChange)="onStartTimeChanged()"
-	></ion-input>
+	/>
 	<ng-container *ngIf="startTime.touched && !startTime.valid">
 		<ion-label color="danger" slot="end" *ngIf="!!startTime.errors">
 			Required field
@@ -96,13 +96,11 @@
 	<ion-buttons slot="end" class="ion-no-margin ion-no-padding">
 		<ion-button id="quick-pick-start-time" color="medium">
 			<!--			<ion-label>Pick</ion-label>-->
-			<ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+			<ion-icon name="chevron-down-outline" slot="end" />
 		</ion-button>
 		<ion-modal trigger="quick-pick-start-time">
 			<ng-template>
-				<sneat-time-selector
-					(selected)="setStartTime($event)"
-				></sneat-time-selector>
+				<sneat-time-selector (selected)="setStartTime($event)" />
 			</ng-template>
 		</ion-modal>
 		<ion-button
@@ -110,7 +108,7 @@
 			color="medium"
 			(click)="addToStart({ hours: -1 })"
 		>
-			<ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+			<ion-icon name="chevron-back-outline" slot="start" />
 			<ion-label>-1h</ion-label>
 		</ion-button>
 		<ion-button
@@ -119,7 +117,7 @@
 			(click)="addToStart({ hours: +1 })"
 		>
 			<ion-label>+1h</ion-label>
-			<ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+			<ion-icon name="chevron-forward-outline" slot="end" />
 		</ion-button>
 	</ion-buttons>
 </ion-item>
@@ -141,7 +139,7 @@
 					(ionChange)="onDurationChanged()"
 					type="number"
 					style="text-align: right"
-				></ion-input>
+				/>
 				<ion-select slot="end" interface="popover" [(ngModel)]="durationUnits">
 					<ion-select-option value="minutes">minutes</ion-select-option>
 					<ion-select-option value="hours">hours</ion-select-option>
@@ -156,7 +154,7 @@
 					[formControl]="endTime"
 					(ionChange)="onEndTimeChanged()"
 					placeholder="HH:MM"
-				></ion-input>
+				/>
 			</ion-item>
 		</ion-col>
 	</ion-row>

@@ -7,7 +7,7 @@
 	parentRole="dispatcher"
 	[parentContact]="contact?.parentContact"
 	(contactChange)="onContactChanged($event)"
-></sneat-contact-input>
+/>
 
 <p class="ion-margin" *ngIf="!contact">
 	<ion-text color="medium">Please select location above.</ion-text>
@@ -15,11 +15,11 @@
 
 <ng-container *ngIf="contact && !order?.dto?.containers?.length">
 	<ion-item>
-		<ion-checkbox [(ngModel)]="load" slot="start"></ion-checkbox>
+		<ion-checkbox [(ngModel)]="load" slot="start" />
 		<ion-label>Load</ion-label>
 	</ion-item>
 	<ion-item>
-		<ion-checkbox [(ngModel)]="unload" slot="start"></ion-checkbox>
+		<ion-checkbox [(ngModel)]="unload" slot="start" />
 		<ion-label>Unload</ion-label>
 	</ion-item>
 </ng-container>
@@ -30,7 +30,7 @@
 	[order]="order"
 	[container]="container"
 	(selectedContainersChange)="onSelectedContainersChanged($event)"
-></sneat-order-containers-selector>
+/>
 
 <div class="ion-padding" *ngIf="contact">
 	<ion-button [disabled]="creating" (click)="addShippingPoint()">

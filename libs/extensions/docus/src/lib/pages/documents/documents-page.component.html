@@ -1,10 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
-			<ion-back-button
-				[text]="null"
-				[defaultHref]="defaultBackUrl"
-			></ion-back-button>
+			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<sneat-team-page-title
 			[team]="team"
@@ -14,15 +11,14 @@
 				personal: 'Personal documents',
 				family: 'Family documents'
 			}"
-		>
-		</sneat-team-page-title>
+		/>
 		<ion-buttons slot="end">
 			<ion-button
 				title="New document"
 				routerLink="../new-document"
 				color="primary"
 			>
-				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-icon name="add-outline" slot="start" />
 				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -43,13 +39,12 @@
 		</div>
 
 		<ng-container *ngIf="segment === 'list'">
-			<sneat-filter-item (changed)="applyFilter($event)"></sneat-filter-item>
+			<sneat-filter-item (changed)="applyFilter($event)" />
 			<sneat-documents-list
 				[allDocuments]="documents"
 				[filter]="filter"
 				(goDoc)="goDoc($event)"
-			>
-			</sneat-documents-list>
+			/>
 		</ng-container>
 
 		<sneat-documents-by-type
@@ -58,7 +53,7 @@
 			(goDocType)="goType($event)"
 			(goNewDoc)="goNewDoc($event)"
 			(goDoc)="goDoc($event)"
-		></sneat-documents-by-type>
+		/>
 	</ion-card>
 </ion-content>
 
@@ -76,7 +71,7 @@
 				(click)="goNewDoc()"
 				[title]="'Add document'"
 			>
-				<ion-icon name="add"></ion-icon>
+				<ion-icon name="add" />
 				Add
 			</ion-button>
 		</ion-buttons>

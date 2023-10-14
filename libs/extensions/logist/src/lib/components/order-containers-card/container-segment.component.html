@@ -4,20 +4,20 @@
 			<ion-col>
 				<ion-item color="light">
 					<ion-label color="medium" position="stacked">From</ion-label>
-					<ion-input readonly [value]="from?.title"></ion-input>
+					<ion-input readonly [value]="from?.title" />
 				</ion-item>
 			</ion-col>
 			<ion-col>
 				<ion-item color="light" class="sneat-no-end-padding">
 					<ion-label color="medium" position="stacked">To</ion-label>
-					<ion-input readonly [value]="to?.title"></ion-input>
+					<ion-input readonly [value]="to?.title" />
 					<ion-buttons slot="end">
 						<ion-button
 							color="medium"
 							(click)="delete()"
 							title="Remove segment for the container"
 						>
-							<ion-icon name="close-outline"></ion-icon>
+							<ion-icon name="close-outline" />
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
@@ -33,8 +33,7 @@
 						[formControl]="departDate"
 						[color]="departDate.value ? undefined : 'medium'"
 						(ionChange)="onDepartDateChanged($event)"
-					>
-					</ion-input>
+					/>
 				</ion-item>
 			</ion-col>
 			<ion-col>
@@ -47,15 +46,14 @@
 						[min]="departDate.value"
 						[color]="arriveDate.value ? undefined : 'medium'"
 						(ionChange)="onArriveDateChanged($event)"
-					>
-					</ion-input>
+					/>
 				</ion-item>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
 	<ion-item>
 		<ion-label color="medium">By</ion-label>
-		<ion-input readonly [value]="by?.title"></ion-input>
+		<ion-input readonly [value]="by?.title" />
 		<!--		<ion-label color="medium">On</ion-label>-->
 		<!--		<ion-input readonly *ngIf="segmentDates" [value]="segmentDates"></ion-input>-->
 	</ion-item>
@@ -65,7 +63,7 @@
 		(freightLoadChange)="onFreightLoadChanged($event)"
 		[form]="freightLoadForm"
 		(keyUpEnter)="saveChanges($event)"
-	></sneat-freight-load-form>
+	/>
 	<ion-item *ngIf="form.dirty">
 		<ion-buttons slot="end">
 			<ion-button
@@ -73,7 +71,7 @@
 				color="danger"
 				(click)="saveChanges($event)"
 			>
-				<ion-icon name="save-outline" slot="start"></ion-icon>
+				<ion-icon name="save-outline" slot="start" />
 				<ion-label *ngIf="!saving">Save changes</ion-label>
 				<ion-label *ngIf="saving">Saving changes...</ion-label>
 			</ion-button>
@@ -82,7 +80,7 @@
 				(click)="cancelChanges($event)"
 				color="medium"
 			>
-				<ion-icon name="close-circle-outline" slot="start"></ion-icon>
+				<ion-icon name="close-circle-outline" slot="start" />
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>

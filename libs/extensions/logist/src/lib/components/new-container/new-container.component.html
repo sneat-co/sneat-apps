@@ -1,5 +1,5 @@
 <ion-header>
-	<sneat-dialog-header dialogTitle="New container"> </sneat-dialog-header>
+	<sneat-dialog-header dialogTitle="New container" />
 </ion-header>
 
 <ion-content>
@@ -9,7 +9,7 @@
 		[isFilterable]="false"
 		[items]="containerTypes"
 		(ngModelChange)="onContainerTypeChanged()"
-	></sneat-select-from-list>
+	/>
 	<ng-container *ngIf="containerType">
 		<ion-item>
 			<ion-label color="medium">Container #</ion-label>
@@ -17,25 +17,21 @@
 				#containerNumberInput
 				type="text"
 				[(ngModel)]="containerNumber"
-			></ion-input>
+			/>
 		</ion-item>
 
 		<sneat-shipping-points-selector
 			[order]="order"
 			(tasksByShippingPointChange)="onTasksByShippingPointChanged($event)"
-		></sneat-shipping-points-selector>
+		/>
 	</ng-container>
 </ion-content>
 
 <ion-footer class="ion-padding" *ngIf="containerType">
 	<ion-button [disabled]="isSubmitting" (click)="addContainer($event)">
-		<ion-icon name="save-outline" slot="start"></ion-icon>
+		<ion-icon name="save-outline" slot="start" />
 		<ion-label *ngIf="!isSubmitting">Create container record</ion-label>
 		<ion-label *ngIf="isSubmitting">Creating container record...</ion-label>
-		<ion-spinner
-			name="lines-small"
-			slot="end"
-			*ngIf="isSubmitting"
-		></ion-spinner>
+		<ion-spinner name="lines-small" slot="end" *ngIf="isSubmitting" />
 	</ion-button>
 </ion-footer>

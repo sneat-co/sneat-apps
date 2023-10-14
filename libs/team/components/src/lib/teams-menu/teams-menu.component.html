@@ -7,14 +7,14 @@
 	<!--	</ion-buttons>-->
 </ion-item>
 <ion-item *ngIf="!teams" [disabled]="true">
-	<ion-icon name="person" slot="start"></ion-icon>
+	<ion-icon name="person" slot="start" />
 	<ion-label>Family</ion-label>
-	<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
+	<ion-spinner slot="end" *ngIf="!teams" />
 </ion-item>
 
 <ng-container *ngIf="teams">
 	<ion-item *ngIf="teamType && teams && !teams.length">
-		<ion-icon name="people-outline" slot="start"></ion-icon>
+		<ion-icon name="people-outline" slot="start" />
 		<ion-label *ngIf="teamType === 'company'">No companies</ion-label>
 		<ion-label color="medium" *ngIf="teamType !== 'company'"
 			>No {{ teamType }}</ion-label
@@ -31,22 +31,22 @@
 		[disabled]="!teams"
 		(click)="newFamily($event)"
 	>
-		<ion-icon name="people-circle-outline" slot="start"></ion-icon>
+		<ion-icon name="people-circle-outline" slot="start" />
 		<ion-label
 			>Family
 			<ion-text color="medium"><i>(new)</i></ion-text>
 		</ion-label>
-		<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
+		<ion-spinner slot="end" *ngIf="!teams" />
 	</ion-item>
 	<sneat-teams-list
 		*ngIf="!teamType || teamType === 'family'"
 		[teams]="familyTeams"
 		iconName="people-circle-outline"
 		(beforeNavigateToTeam)="closeMenu()"
-	></sneat-teams-list>
+	/>
 	<sneat-teams-list
 		[teams]="teams"
 		[pathPrefix]="pathPrefix"
 		(beforeNavigateToTeam)="closeMenu()"
-	></sneat-teams-list>
+	/>
 </ng-container>

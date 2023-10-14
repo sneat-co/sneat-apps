@@ -9,7 +9,7 @@
 			(timerState?.isToggling && timerState?.activeMemberId === memberId) ||
 			!timerState
 		"
-	></ion-spinner>
+	/>
 	<ng-container
 		*ngIf="
 			timerState &&
@@ -22,7 +22,7 @@
 			slot="start"
 			name="play-outline"
 			*ngIf="!timerState?.isToggling"
-		></ion-icon>
+		/>
 		<ion-label *ngIf="!totalElapsed">Start</ion-label>
 	</ng-container>
 	<ion-icon
@@ -32,7 +32,7 @@
 			timerState?.status === 'active' &&
 			timerState?.activeMemberId === memberId
 		"
-	></ion-icon>
+	/>
 	<ion-label
 		style="text-transform: none"
 		*ngIf="timerState?.status === 'active' || totalElapsed"

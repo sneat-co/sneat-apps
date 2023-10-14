@@ -20,7 +20,7 @@
 			(ionChange)="onContactRoleIDChanged($event)"
 		>
 			<ion-item *ngFor="let r of contactGroup?.dto?.roles || []; trackBy: id">
-				<ion-radio slot="start" [value]="r.id"></ion-radio>
+				<ion-radio slot="start" [value]="r.id" />
 				<ion-label>{{ r.emoji }} {{ r.title || r.id | titlecase }}</ion-label>
 			</ion-item>
 		</ion-radio-group>

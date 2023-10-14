@@ -8,7 +8,7 @@
 		[formControl]="form.numberOfPallets"
 		(ionChange)="onChanged()"
 		(keyup.enter)="keyUpEnter.emit($event)"
-	></ion-input>
+	/>
 
 	<ion-label color="medium">Gross (kg)</ion-label>
 	<ion-input
@@ -17,7 +17,7 @@
 		[formControl]="form.grossWeightKg"
 		(ionChange)="onChanged()"
 		(keyup.enter)="keyUpEnter.emit($event)"
-	></ion-input>
+	/>
 
 	<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
 	<ion-input
@@ -26,7 +26,7 @@
 		[formControl]="form.volumeM3"
 		(ionChange)="onChanged()"
 		(keyup.enter)="keyUpEnter.emit($event)"
-	></ion-input>
+	/>
 </ion-item>
 <ion-item>
 	<ion-label color="medium" position="floating"
@@ -36,5 +36,5 @@
 		(ionChange)="onChanged()"
 		[formGroup]="form.group"
 		[formControl]="form.note"
-	></ion-textarea>
+	/>
 </ion-item>

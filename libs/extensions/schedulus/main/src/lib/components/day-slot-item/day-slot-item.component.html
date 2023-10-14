@@ -18,10 +18,8 @@
 				: 'today-outline'
 		"
 		slot="start"
-	></ion-icon>
-	<sneat-timing-badge
-		[timing]="slot?.adjustment?.slot || slot?.timing"
-	></sneat-timing-badge>
+	/>
+	<sneat-timing-badge [timing]="slot?.adjustment?.slot || slot?.timing" />
 	<ion-label class="ion-text-wrap">
 		<span
 			style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
@@ -38,9 +36,9 @@
 			[showDelete]="false"
 			[members]="
 				slot?.happening?.brief?.memberIDs || []
-					| selectedMembers : team : contactusTeam?.dto?.contacts
+					| selectedMembers: team : contactusTeam?.dto?.contacts
 			"
-		></sneat-members-as-badges>
+		/>
 
 		<p
 			*ngIf="

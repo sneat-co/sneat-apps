@@ -10,7 +10,7 @@
 			<sneat-order-containers-grid
 				[order]="order"
 				(containerSelected)="onContainerSelected($event)"
-			></sneat-order-containers-grid>
+			/>
 		</ion-col>
 		<ion-col *ngIf="selectedContainer" size="9">
 			<ion-card>
@@ -19,7 +19,7 @@
 					[order]="order"
 					[container]="selectedContainer"
 					[i]="indexOfContainer(selectedContainer)"
-				></sneat-order-container>
+				/>
 			</ion-card>
 		</ion-col>
 	</ion-row>

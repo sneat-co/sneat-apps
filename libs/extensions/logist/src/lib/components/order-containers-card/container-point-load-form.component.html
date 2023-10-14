@@ -5,7 +5,7 @@
 				slot="start"
 				[(ngModel)]="checked"
 				(ionChange)="onTaskChecked($event)"
-			></ion-checkbox>
+			/>
 			<ion-label [color]="checked ? 'dark' : 'medium'">{{ label() }}</ion-label>
 		</ion-item>
 	</ion-col>
@@ -22,11 +22,8 @@
 				[color]="pallets.dirty ? 'danger' : undefined"
 				[formControl]="pallets"
 				(ionInput)="onPalletsInput($event)"
-			></ion-input>
-			<ion-spinner
-				name="lines-small"
-				*ngIf="isSaving('numberOfPallets')"
-			></ion-spinner>
+			/>
+			<ion-spinner name="lines-small" *ngIf="isSaving('numberOfPallets')" />
 		</ion-item>
 	</ion-col>
 	<ion-col size="4" *ngIf="does(task)">
@@ -42,11 +39,8 @@
 				[color]="weight.dirty ? 'danger' : undefined"
 				[formControl]="weight"
 				(ionInput)="onWeightInput($event)"
-			></ion-input>
-			<ion-spinner
-				name="lines-small"
-				*ngIf="isSaving('grossWeightKg')"
-			></ion-spinner>
+			/>
+			<ion-spinner name="lines-small" *ngIf="isSaving('grossWeightKg')" />
 		</ion-item>
 	</ion-col>
 </ion-row>

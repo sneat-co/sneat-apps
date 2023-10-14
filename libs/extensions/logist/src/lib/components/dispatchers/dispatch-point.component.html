@@ -7,7 +7,7 @@
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="form.dirty" (click)="savePoint($event)">
-				<ion-icon name="save-outline" slot="start"></ion-icon>
+				<ion-icon name="save-outline" slot="start" />
 				<ion-label>Save</ion-label>
 			</ion-button>
 			<ion-button color="medium" *ngIf="form.dirty" (click)="form.reset()">
@@ -20,7 +20,7 @@
 				[disabled]="disabled || deleting"
 				(click)="deletePoint()"
 			>
-				<ion-icon name="trash-outline" slot="end"></ion-icon>
+				<ion-icon name="trash-outline" slot="end" />
 				<ion-label>Delete</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -47,7 +47,7 @@
 						auto-grow="true"
 						[formGroup]="form"
 						[formControl]="address"
-					></ion-textarea>
+					/>
 				</ion-item>
 			</ion-col>
 			<ion-col size="6">
@@ -58,7 +58,7 @@
 						auto-grow="true"
 						[formGroup]="form"
 						[formControl]="notes"
-					></ion-textarea>
+					/>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -71,7 +71,7 @@
 		<!-- TODO: bottom padding/margin is not working as expected -->
 		<ion-buttons slot="end">
 			<ion-button color="medium" (click)="assignContainers($event)">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-icon name="add-outline" slot="start" />
 				<ion-label>Assign containers</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -82,7 +82,7 @@
 			[order]="order"
 			[counterparty]="dispatcher"
 			[shippingPoint]="shippingPoint"
-		></sneat-dispatch-point-containers-grid>
+		/>
 	</div>
 
 	<!--	<ion-item-group style="padding: 0 0.7em 0.5em">-->
@@ -102,7 +102,7 @@
 			<ion-col size="3">
 				<div class="ion-padding-end"></div>
 			</ion-col>
-			<ion-col size="9"> </ion-col>
+			<ion-col size="9" />
 		</ion-row>
 	</ion-grid>
 	<!--	<ion-item>-->

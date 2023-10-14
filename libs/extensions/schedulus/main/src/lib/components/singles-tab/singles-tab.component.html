@@ -5,7 +5,7 @@
 
 <ion-card *ngIf="!upcomingSingles">
 	<ion-card-content>
-		<ion-spinner name="lines" class="ion-margin-end"></ion-spinner>
+		<ion-spinner name="lines" class="ion-margin-end" />
 		<ion-text color="medium">Loading 1-timers...</ion-text>
 	</ion-card-content>
 </ion-card>
@@ -16,8 +16,7 @@
 		[team]="team"
 		[happening]="happening"
 		(deleted)="onHappeningRemoved($event)"
-	>
-	</sneat-happening-card>
+	/>
 
 	<div class="ion-margin-top" *ngIf="!!numberOfHidden">
 		<span class="ion-margin" *ngIf="numberOfHidden === 1">

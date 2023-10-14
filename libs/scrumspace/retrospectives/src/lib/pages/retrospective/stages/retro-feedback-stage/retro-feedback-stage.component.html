@@ -3,14 +3,11 @@
 	tabAutoSelect="true"
 	noExpandCollapse="true"
 	[isEditable]="!iAmReady"
-></sneat-my-retro-items>
+/>
 
 <ion-item *ngIf="retrospective?.data?.stage === 'feedback'">
-	<ion-checkbox [(ngModel)]="iAmReady" slot="start"></ion-checkbox>
+	<ion-checkbox [(ngModel)]="iAmReady" slot="start" />
 	<ion-label>I've done with my feedback &amp; ready for review</ion-label>
 </ion-item>
 
-<app-retro-members
-	[team]="team"
-	[retrospective]="retrospective"
-></app-retro-members>
+<app-retro-members [team]="team" [retrospective]="retrospective" />

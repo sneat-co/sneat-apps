@@ -1,9 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button
-				[defaultHref]="teamPageUrl('orders') || '..'"
-			></ion-back-button>
+			<ion-back-button [defaultHref]="teamPageUrl('orders') || '..'" />
 		</ion-buttons>
 		<ion-title
 			>Order # {{ order?.id }} - {{ order?.brief?.direction }}</ion-title
@@ -14,11 +12,11 @@
 				title="Copy to clipboard"
 				(click)="copyNumberToClipboard($event)"
 			>
-				<ion-icon name="clipboard-outline" slot="start"></ion-icon>
+				<ion-icon name="clipboard-outline" slot="start" />
 				<ion-label>Copy #</ion-label>
 			</ion-button>
 			<ion-button color="medium" (click)="showPrintMenu($event)">
-				<ion-icon name="print-outline" slot="start"></ion-icon>
+				<ion-icon name="print-outline" slot="start" />
 				<ion-label>Print</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -30,7 +28,7 @@
 		[order]="order"
 		[hideDispatchers]="true"
 		[showHeader]="false"
-	></sneat-logist-order-card>
+	/>
 
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
@@ -80,7 +78,7 @@
 					class="ion-margin-end"
 					(click)="addContainer()"
 				>
-					<ion-icon name="add" slot="start"></ion-icon>
+					<ion-icon name="add" slot="start" />
 					<ion-label>Add container</ion-label>
 				</ion-button>
 				<ion-button
@@ -91,7 +89,7 @@
 					class="ion-margin-end"
 					(click)="addShippingPoint()"
 				>
-					<ion-icon name="add" slot="start"></ion-icon>
+					<ion-icon name="add" slot="start" />
 					<ion-label>Add point</ion-label>
 				</ion-button>
 				<ion-button
@@ -102,7 +100,7 @@
 					class="ion-margin-end"
 					(click)="addSegment()"
 				>
-					<ion-icon name="add" slot="start"></ion-icon>
+					<ion-icon name="add" slot="start" />
 					<ion-label>Add segment</ion-label>
 				</ion-button>
 			</ion-col>
@@ -114,26 +112,21 @@
 			*ngSwitchCase="'containers'"
 			[team]="team"
 			[order]="order"
-		>
-		</sneat-order-containers-card>
+		/>
 
 		<sneat-order-segments
 			*ngSwitchCase="'segments'"
 			[team]="team"
 			[order]="order"
-		>
-		</sneat-order-segments>
+		/>
 
 		<sneat-order-truckers
 			*ngSwitchCase="'truckers'"
 			[team]="team"
 			[order]="order"
-		></sneat-order-truckers>
+		/>
 
-		<sneat-dispatchers
-			*ngSwitchCase="'points'"
-			[order]="order"
-		></sneat-dispatchers>
+		<sneat-dispatchers *ngSwitchCase="'points'" [order]="order" />
 	</ng-container>
 
 	<div style="min-height: 100px"></div>

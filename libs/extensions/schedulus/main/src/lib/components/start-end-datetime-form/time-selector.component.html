@@ -1,9 +1,7 @@
 <ion-item color="primary" class="sneat-tiny-end-padding">
 	<ion-label>Start time</ion-label>
 	<ion-buttons slot="end">
-		<ion-button (click)="close()"
-			><ion-icon name="close"></ion-icon
-		></ion-button>
+		<ion-button (click)="close()"><ion-icon name="close" /></ion-button>
 	</ion-buttons>
 </ion-item>
 <ion-segment [(ngModel)]="tab" (ionChange)="onTabChanged($event)">

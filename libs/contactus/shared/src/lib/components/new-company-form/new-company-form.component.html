@@ -5,7 +5,7 @@
 		[disabled]="isCreating"
 		[items]="contactRoles"
 		[(ngModel)]="contactRole"
-	></sneat-select-from-list>
+	/>
 </ion-card>
 
 <sneat-location-form
@@ -17,7 +17,7 @@
 	[contact]="contact"
 	(contactChange)="onContactChanged($event)"
 	[hideSubmitButton]="true"
-></sneat-location-form>
+/>
 
 <!--team: {{team|json}}-->
 <!--contact: {{contact|json}}-->
@@ -29,7 +29,7 @@
 	>
 		<ion-label *ngIf="!isCreating">Create company</ion-label>
 		<ion-label *ngIf="isCreating">Creating company...</ion-label>
-		<ion-spinner name="lines-small" slot="end" *ngIf="isCreating"></ion-spinner>
+		<ion-spinner name="lines-small" slot="end" *ngIf="isCreating" />
 	</ion-button>
 </div>
 

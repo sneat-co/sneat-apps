@@ -30,7 +30,7 @@
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="delete($event)">
-				<ion-icon name="close-outline"></ion-icon>
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -69,7 +69,7 @@
 				(click)="editSingleHappeningSlot($event)"
 				[disabled]="deleting"
 			>
-				<ion-icon slot="start" name="calendar-outline"></ion-icon>
+				<ion-icon slot="start" name="calendar-outline" />
 				<ion-label>Change</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -80,17 +80,17 @@
 				*ngIf="happening?.brief?.memberIDs?.length"
 				[members]="
 					happening?.dto?.memberIDs || happening?.brief?.memberIDs || []
-						| selectedMembers : team : contactusTeam?.dto?.contacts
+						| selectedMembers: team : contactusTeam?.dto?.contacts
 				"
 				(deleteMember)="removeMember($event)"
-			></sneat-members-as-badges>
+			/>
 			<ng-container *ngIf="!happening?.brief?.memberIDs">
 				Nobody assigned
 			</ng-container>
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="tertiary" (click)="selectMembers($event)">
-				<ion-icon name="person-add-outline" slot="start"></ion-icon>
+				<ion-icon name="person-add-outline" slot="start" />
 				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>

@@ -12,7 +12,7 @@
 		</ion-list-header>
 		<ion-item *ngFor="let o of selectOptions">
 			<ion-label>{{ o.title || o.value }}</ion-label>
-			<ion-radio [slot]="slot" [value]="o.value"></ion-radio>
+			<ion-radio [slot]="slot" [value]="o.value" />
 		</ion-item>
 	</ion-radio-group>
 	<ng-template #useSelect>

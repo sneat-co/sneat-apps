@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="document; else titleNoDocument">{{
 			document.type | titlecase
@@ -19,10 +19,7 @@
 		</ion-item-divider>
 		<ion-item class="with-buttons">
 			<ion-label color="medium">Title</ion-label>
-			<ion-input
-				[(ngModel)]="document.title"
-				[readonly]="mode === 'view'"
-			></ion-input>
+			<ion-input [(ngModel)]="document.title" [readonly]="mode === 'view'" />
 		</ion-item>
 		<ion-item *ngIf="parentAsset">
 			<ion-label>For: {{ parentAsset.title }}</ion-label>
@@ -40,10 +37,10 @@
 				#docNumber
 				[(ngModel)]="document.number"
 				[readonly]="mode === 'view'"
-			></ion-input>
+			/>
 			<ion-buttons slot="end" *ngIf="mode === 'view'">
 				<ion-button color="medium">
-					<ion-icon name="copy"></ion-icon>
+					<ion-icon name="copy" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
@@ -53,7 +50,7 @@
 				#docExpires
 				[(ngModel)]="document.expires"
 				[readonly]="mode === 'view'"
-			></ion-datetime>
+			/>
 		</ion-item>
 		<ion-item>
 			<ion-label *ngIf="document.type !== 'rent_lease'">Issued on</ion-label>
@@ -62,7 +59,7 @@
 				#docIssued
 				[(ngModel)]="document.issued"
 				[readonly]="mode === 'view'"
-			></ion-datetime>
+			/>
 		</ion-item>
 		<ion-item *ngIf="document.type !== 'rent_lease'">
 			<ion-label>Issued by</ion-label>
@@ -70,7 +67,7 @@
 				#docIssuedBy
 				[(ngModel)]="document.issuedBy"
 				[readonly]="mode === 'view'"
-			></ion-input>
+			/>
 		</ion-item>
 	</ion-list>
 
@@ -130,7 +127,7 @@
 				<ion-label>Visas</ion-label>
 				<ion-buttons slot="end">
 					<ion-button color="medium" title="Add visa">
-						<ion-icon name="add"></ion-icon>
+						<ion-icon name="add" />
 					</ion-button>
 				</ion-buttons>
 			</ion-item-divider>

@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title
 			*ngIf="
@@ -17,11 +17,7 @@
 				<ion-title *ngSwitchDefault>Asset</ion-title>
 			</ng-container>
 		</ng-template>
-		<ion-buttons slot="end">
-			<!--            <ion-button>-->
-			<!--                <ion-icon name="more"></ion-icon>-->
-			<!--            </ion-button>-->
-		</ion-buttons>
+		<ion-buttons slot="end" />
 	</ion-toolbar>
 </ion-header>
 
@@ -43,7 +39,7 @@
 		*ngIf="asset?.brief?.category === 'vehicle'"
 		[team]="team"
 		[vehicleAsset]="vehicleAsset"
-	></sneat-vehicle-card>
+	/>
 
 	<!--		<sneat-asset-dates *ngIf="asset" [asset]="asset.dto"></sneat-asset-dates>-->
 
@@ -83,7 +79,7 @@
 				</ng-container>
 				<ion-item tappable (click)="addContact()">
 					<ion-label color="medium">
-						<ion-icon name="add"></ion-icon>
+						<ion-icon name="add" />
 						Add contact
 					</ion-label>
 				</ion-item>
@@ -121,7 +117,7 @@
 				<!--			<ion-badge color="light">${{asset?.dto?.totals.expenses.per(scope)}}</ion-badge>-->
 				<ion-buttons>
 					<ion-button color="medium">
-						<ion-icon name="add"></ion-icon>
+						<ion-icon name="add" />
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
@@ -130,7 +126,7 @@
 				<!--			<ion-badge color="light">${{asset?.dto?.totals.incomes.per(scope)}}</ion-badge>-->
 				<ion-buttons>
 					<ion-button color="medium">
-						<ion-icon name="add"></ion-icon>
+						<ion-icon name="add" />
 					</ion-button>
 				</ion-buttons>
 			</ion-item>

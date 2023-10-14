@@ -2,7 +2,7 @@
 	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
 			<!--			<ion-menu-button></ion-menu-button>-->
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="member; else communeHeaderTitle">
 			📅 {{ member.brief?.title }}
@@ -16,8 +16,7 @@
 					family: 'Family schedule',
 					personal: 'Personal schedule'
 				}"
-			>
-			</sneat-team-page-title>
+			/>
 		</ng-template>
 		<ion-buttons slot="end" class="sneat-hide-if-width-less-638">
 			<ion-button
@@ -26,7 +25,7 @@
 				(click)="goNew('recurring')"
 				style="text-transform: none"
 			>
-				<ion-icon name="duplicate-outline" slot="start"></ion-icon>
+				<ion-icon name="duplicate-outline" slot="start" />
 				<ion-label class="sneat-hide-if-width-less-766"
 					>Add recurring</ion-label
 				>
@@ -37,7 +36,7 @@
 				(click)="goNew('single')"
 				style="text-transform: none"
 			>
-				<ion-icon name="add-circle-outline" slot="start"></ion-icon>
+				<ion-icon name="add-circle-outline" slot="start" />
 				<ion-label class="sneat-hide-if-width-less-766">Add 1-timer</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -50,7 +49,7 @@
 		[tab]="tab"
 		(tabChanged)="onTabChanged($event)"
 		(dateChanged)="onDateChanged($event)"
-	></sneat-schedule>
+	/>
 </ion-content>
 
 <!--<ion-footer>-->

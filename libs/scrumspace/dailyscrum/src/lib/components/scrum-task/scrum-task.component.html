@@ -7,7 +7,7 @@
 				(click)="modalController.dismiss()"
 				title="Close"
 			>
-				<ion-icon name="close"></ion-icon>
+				<ion-icon name="close" />
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -31,7 +31,7 @@
 					#commentInput
 					placeholder="You comment"
 					(keyup.enter)="addComment()"
-				></ion-input>
+				/>
 				<ion-buttons slot="end">
 					<ion-button color="primary" (click)="addComment()">Add</ion-button>
 				</ion-buttons>
@@ -45,7 +45,7 @@
 					slot="end"
 					[fill]="task.thumbUps ? 'solid' : 'outline'"
 				>
-					<ion-icon name="thumbs-up-outline"></ion-icon>
+					<ion-icon name="thumbs-up-outline" />
 				</ion-button>
 			</ion-item>
 		</ng-container>

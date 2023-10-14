@@ -10,7 +10,7 @@
 <ion-content>
 	<ion-card *ngIf="!logistTeam">
 		<ion-card-content>
-			<ion-spinner name="line-small"></ion-spinner>
+			<ion-spinner name="line-small" />
 			Loading...
 		</ion-card-content>
 	</ion-card>
@@ -20,19 +20,16 @@
 			<ion-label>Company</ion-label>
 			<ion-buttons slot="end">
 				<ion-button title="Settings" routerLink="settings">
-					<ion-icon name="settings-outline" slot="start"></ion-icon>
+					<ion-icon name="settings-outline" slot="start" />
 					<ion-label>Settings</ion-label>
 				</ion-button>
 			</ion-buttons>
 		</ion-item-divider>
-		<sneat-logist-team-menu-items [team]="team"></sneat-logist-team-menu-items>
+		<sneat-logist-team-menu-items [team]="team" />
 	</ion-card>
 
 	<ng-container *ngIf="logistTeam && !logistTeam.dto?.contactID">
 		<p class="ion-margin">To start working please setup your company data.</p>
-		<sneat-logist-team-settings
-			[team]="team"
-			[logistTeam]="logistTeam"
-		></sneat-logist-team-settings>
+		<sneat-logist-team-settings [team]="team" [logistTeam]="logistTeam" />
 	</ng-container>
 </ion-content>

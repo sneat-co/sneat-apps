@@ -8,16 +8,16 @@
 		[isFilterable]="false"
 		title="Type"
 		[items]="documentTypes"
-	></sneat-select-from-list>
+	/>
 </ion-card>
 
 <ion-card *ngIf="documentAsset?.dto?.model">
 	<ion-item>
 		<!-- Datetime in popover with input -->
-		<ion-input label="Taxed till" [value]="taxExpires"></ion-input>
+		<ion-input label="Taxed till" [value]="taxExpires" />
 		<ion-buttons slot="end">
 			<ion-button fill="clear" id="open-date-input-2">
-				<ion-icon icon="calendar"></ion-icon>
+				<ion-icon icon="calendar" />
 			</ion-button>
 		</ion-buttons>
 		<ion-popover trigger="open-date-input-2" show-backdrop="false">
@@ -26,7 +26,7 @@
 					#popoverDatetime2
 					presentation="date"
 					(ionChange)="taxExpires = formatDate(popoverDatetime2.value)"
-				></ion-datetime>
+				/>
 			</ng-template>
 		</ion-popover>
 	</ion-item>

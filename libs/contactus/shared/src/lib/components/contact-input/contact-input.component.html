@@ -14,7 +14,7 @@
 		[readonly]="true"
 		[color]="deleting ? 'medium' : undefined"
 		[value]="contactTitle()"
-	></ion-input>
+	/>
 
 	<!--	<span style="padding-left: 0.25em" *ngIf="showParentFlag"> &lt;!&ndash; TODO: Move into input label &ndash;&gt;-->
 	<!--		{{(parentContact?.brief?.countryID || parentContact?.dto?.countryID)|countryFlag}}-->
@@ -24,7 +24,7 @@
 		[label]="subLabel"
 		[disabled]="disabled"
 		[value]="parentTitle()"
-	></ion-input>
+	/>
 
 	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">
 		<ion-button
@@ -41,8 +41,8 @@
 			*ngIf="contact && canReset"
 			[disabled]="disabled || deleting"
 		>
-			<ion-icon name="close-outline" *ngIf="!deleting"></ion-icon>
-			<ion-spinner name="lines-small" *ngIf="deleting" slot="end"></ion-spinner>
+			<ion-icon name="close-outline" *ngIf="!deleting" />
+			<ion-spinner name="lines-small" *ngIf="deleting" slot="end" />
 		</ion-button>
 	</ion-buttons>
 </ion-item>

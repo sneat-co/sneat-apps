@@ -5,7 +5,7 @@
 			<ng-container *ngIf="team?.data">@ {{ team.data.title }}</ng-container>
 		</ion-title>
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -35,12 +35,12 @@
 									!timerState.isToggling &&
 									(!timerState.status || timerState.status === 'stopped')))
 						"
-					></ion-icon>
+					/>
 					<ion-icon
 						slot="start"
 						name="pause-outline"
 						*ngIf="!timerState?.isToggling && timerState?.status === 'active'"
-					></ion-icon>
+					/>
 					<ion-label
 						*ngIf="
 							timerState?.status === 'active' || timerState?.elapsedSeconds
@@ -63,7 +63,7 @@
 						color="light"
 						name="lines-small"
 						*ngIf="!scrum || timerState?.isToggling"
-					></ion-spinner>
+					/>
 					<ion-label *ngIf="!scrum">Timer</ion-label>
 				</ion-button>
 				<!--				<ion-button *ngIf="timerState === 'active'" color="primary">-->
@@ -71,7 +71,7 @@
 				<!--					<ion-label>Stop</ion-label>-->
 				<!--				</ion-button>-->
 			</ion-buttons>
-			<ion-label></ion-label>
+			<ion-label />
 			<ion-buttons slot="end">
 				<ion-button disabled>{{ scrumDate?.toDateString() }}</ion-button>
 				<ion-button
@@ -80,7 +80,7 @@
 					(click)="changeDate('prev')"
 					[disabled]="!prevScrumID"
 				>
-					<ion-icon name="chevron-back-outline"></ion-icon>
+					<ion-icon name="chevron-back-outline" />
 				</ion-button>
 				<ion-button
 					*ngIf="isToday"
@@ -88,7 +88,7 @@
 					(click)="goScrumsList()"
 					title="History"
 				>
-					<ion-icon name="list-outline"></ion-icon>
+					<ion-icon name="list-outline" />
 				</ion-button>
 				<ion-button
 					*ngIf="!isToday"
@@ -97,7 +97,7 @@
 					title="Go to today's scrum"
 					[disabled]="isToday"
 				>
-					<ion-icon name="today"></ion-icon>
+					<ion-icon name="today" />
 				</ion-button>
 				<ion-button
 					color="primary"
@@ -105,7 +105,7 @@
 					(click)="changeDate(nextScrumID ? 'next' : 'today')"
 					[disabled]="isToday"
 				>
-					<ion-icon name="chevron-forward-outline"></ion-icon>
+					<ion-icon name="chevron-forward-outline" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
@@ -147,19 +147,16 @@
 				[taskType]="taskType"
 				[tasks]="(memberStatus?.byType && memberStatus?.byType[taskType]) || []"
 				[hideTitle]="false"
-			></app-scrum-tasks>
+			/>
 
 			<ion-card>
 				<ion-item-divider>
 					<ion-label>Personal metrics</ion-label>
 				</ion-item-divider>
-				<app-metrics [metrics]="personalMetrics"></app-metrics>
+				<app-metrics [metrics]="personalMetrics" />
 			</ion-card>
 
-			<sneat-my-retro-items
-				[teamId]="team?.id"
-				tabAutoSelect="true"
-			></sneat-my-retro-items>
+			<sneat-my-retro-items [teamId]="team?.id" tabAutoSelect="true" />
 		</ng-container>
 
 		<ng-container *ngSwitchCase="'team'">
@@ -169,16 +166,16 @@
 						slot="start"
 						name="thermometer-outline"
 						*ngIf="teamMetrics"
-					></ion-icon>
+					/>
 					<ion-spinner
 						slot="start"
 						name="lines-small"
 						color="medium"
 						*ngIf="!teamMetrics"
-					></ion-spinner>
+					/>
 					<ion-label> Shared metrics </ion-label>
 				</ion-item-divider>
-				<app-metrics *ngIf="teamMetrics" [metrics]="teamMetrics"></app-metrics>
+				<app-metrics *ngIf="teamMetrics" [metrics]="teamMetrics" />
 			</ion-card>
 
 			<ng-container *ngIf="!displayStatuses">
@@ -189,7 +186,7 @@
 							name="lines-small"
 							color="medium"
 							*ngIf="!teamMetrics"
-						></ion-spinner>
+						/>
 						<ion-label> Team members </ion-label>
 					</ion-item-divider>
 				</ion-card>
@@ -209,7 +206,7 @@
 						[status]="status"
 						[currentMemberId]="userMemberId"
 						[timer]="timer"
-					></app-scrum-card>
+					/>
 					<ng-container *ngIf="status.member.id === expandedMemberId">
 						<ion-item-divider>Personal metrics</ion-item-divider>
 						<ng-container *ngIf="personalMetrics">
@@ -259,8 +256,7 @@
 											"
 											[(ngModel)]="metric.value"
 											*ngIf="metric.type === 'bool'"
-										>
-										</ion-toggle>
+										/>
 									</ng-container>
 								</ion-item>
 							</ng-container>
@@ -297,7 +293,7 @@
 						fill="solid"
 						(click)="navService.navigateToAddMember(navController, team)"
 					>
-						<ion-icon name="add" slot="start"></ion-icon>
+						<ion-icon name="add" slot="start" />
 						<ion-label>Add member(s)</ion-label>
 					</ion-button>
 				</ion-card-content>
@@ -333,7 +329,7 @@
 							taskType="risk"
 							[tasks]="status.byType?.risk"
 							[hideTitle]="true"
-						></app-scrum-tasks>
+						/>
 					</ng-container>
 				</ng-container>
 			</ng-container>
@@ -364,7 +360,7 @@
 							taskType="qna"
 							[tasks]="status.byType?.qna"
 							[hideTitle]="true"
-						></app-scrum-tasks>
+						/>
 					</ng-container>
 				</ng-container>
 			</ng-container>
@@ -377,9 +373,9 @@
 		<ion-reorder-group disabled="false">
 			<ion-item>
 				<ion-reorder slot="start">
-					<ion-icon name="swap-vertical-outline"></ion-icon>
+					<ion-icon name="swap-vertical-outline" />
 				</ion-reorder>
-				<ion-label> </ion-label>
+				<ion-label />
 			</ion-item>
 		</ion-reorder-group>
 	</ion-list>

@@ -3,7 +3,7 @@
 	routerLink="{{ pathPrefix }}/{{ team.type }}/{{ team.id }}"
 	(click)="goTeam($event, team)"
 >
-	<ion-icon [name]="iconName" slot="start"></ion-icon>
+	<ion-icon [name]="iconName" slot="start" />
 	<ion-label class="ion-text-wrap">
 		{{ team.brief?.title || team.brief?.type || team.id }}
 	</ion-label>

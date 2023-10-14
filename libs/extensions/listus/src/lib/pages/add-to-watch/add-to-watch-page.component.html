@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title>New thing to watch</ion-title>
 	</ion-toolbar>
@@ -14,7 +14,7 @@
 			placeholder="Type to search or add custom"
 			[(ngModel)]="searchText"
 			(ionChange)="find()"
-		></ion-input>
+		/>
 		<ion-buttons slot="end">
 			<ion-button>Add</ion-button>
 		</ion-buttons>
@@ -27,7 +27,7 @@
 			[showWatchedMovies]="showWatched"
 			(addToWatchlist)="addListItem($event)"
 			*ngFor="let movie of movies"
-		></sneat-movie-card>
+		/>
 		<!--        <ion-item-sliding *ngFor="let movie of movies">-->
 		<!--            <ion-item>-->
 		<!--                <ion-label>{{movie.title}}</ion-label>-->
@@ -41,7 +41,7 @@
 <ion-footer>
 	<ion-toolbar>
 		<ion-item>
-			<ion-checkbox (click)="clickShowWatchedMovies()"></ion-checkbox>
+			<ion-checkbox (click)="clickShowWatchedMovies()" />
 			<ion-text>Hide watched</ion-text>
 		</ion-item>
 	</ion-toolbar>

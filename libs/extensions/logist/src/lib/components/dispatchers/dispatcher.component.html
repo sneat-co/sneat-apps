@@ -13,7 +13,7 @@
 			placeholder="#"
 			[formControl]="refNumber"
 			(keyup.enter)="saveChanges()"
-		></ion-input>
+		/>
 		<ion-buttons slot="end">
 			<ion-button
 				*ngIf="!form.dirty"
@@ -22,31 +22,23 @@
 				title="Remove from the order counterparty & related container points"
 				(click)="deleteDispatcher()"
 			>
-				<ion-icon name="trash-outline" slot="end" *ngIf="!deleting"></ion-icon>
+				<ion-icon name="trash-outline" slot="end" *ngIf="!deleting" />
 				<ion-label *ngIf="deleting">deleting...</ion-label>
 				<ion-label *ngIf="!deleting">Delete</ion-label>
-				<ion-spinner
-					name="lines-small"
-					slot="start"
-					*ngIf="deleting"
-				></ion-spinner>
+				<ion-spinner name="lines-small" slot="start" *ngIf="deleting" />
 			</ion-button>
 			<ion-button *ngIf="form.dirty" (click)="saveChanges()">
-				<ion-icon name="save-outline" slot="start"></ion-icon>
+				<ion-icon name="save-outline" slot="start" />
 				<ion-label *ngIf="!saving">Save changes</ion-label>
 				<ion-label *ngIf="saving">Saving...</ion-label>
-				<ion-spinner
-					name="lines-small"
-					color="medium"
-					*ngIf="saving"
-				></ion-spinner>
+				<ion-spinner name="lines-small" color="medium" *ngIf="saving" />
 			</ion-button>
 			<ion-button
 				*ngIf="form.dirty && !saving"
 				(click)="cancelChanges()"
 				color="medium"
 			>
-				<ion-icon name="close-circle-outline" slot="start"></ion-icon>
+				<ion-icon name="close-circle-outline" slot="start" />
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -62,7 +54,7 @@
 		<ion-label color="medium"><b>Shipping points</b></ion-label>
 		<ion-buttons slot="end" (click)="addShippingPoint($event)">
 			<ion-button color="medium">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-icon name="add-outline" slot="start" />
 				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -74,5 +66,5 @@
 		[disabled]="deleting"
 		[deleting]="deleting"
 		[order]="order"
-	></sneat-dispatch-point>
+	/>
 </ion-card>

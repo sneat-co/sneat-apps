@@ -11,12 +11,11 @@
 		[columns]="allCols"
 		height="150"
 		(rowSelected)="rowSelected($event.row)"
-	>
-	</sneat-datagrid>
+	/>
 </div>
 
 <sneat-container-segment
 	*ngIf="selectedSegment"
 	[order]="order"
 	[segment]="selectedSegment"
-></sneat-container-segment>
+/>

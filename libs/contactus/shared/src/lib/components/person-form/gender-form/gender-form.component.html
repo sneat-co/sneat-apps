@@ -5,7 +5,7 @@
 			<ion-buttons slot="end">
 				<ion-button color="light" (click)="skip()">
 					<ion-label>Skip</ion-label>
-					<ion-icon name="close-circle-outline" slot="end"></ion-icon>
+					<ion-icon name="close-circle-outline" slot="end" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item-divider>
@@ -20,7 +20,7 @@
 					[name]="gender.id | genderIconName"
 					[color]="gender.id | genderColor"
 					slot="start"
-				></ion-icon>
+				/>
 				<!--				<ion-label [color]="gender.id|genderColor">{{gender.title}}</ion-label>-->
 				<ion-radio
 					slot="start"
@@ -38,7 +38,7 @@
 			[name]="gender.icon"
 			*ngIf="gender"
 			slot="start"
-		></ion-icon>
+		/>
 		<ion-select
 			[(ngModel)]="genderID"
 			[disabled]="disabled"

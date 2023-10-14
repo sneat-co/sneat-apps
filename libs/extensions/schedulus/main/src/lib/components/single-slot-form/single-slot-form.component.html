@@ -3,7 +3,7 @@
 		<ion-label>{{ happening?.brief?.title }}</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="close($event)" title="Close">
-				<ion-icon name="close"></ion-icon>
+				<ion-icon name="close" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -14,12 +14,12 @@
 		[timing]="adjustment?.slot || happeningSlot"
 		[date]="this.dateID"
 		(timingChanged)="onTimingChanged($event)"
-	></sneat-start-end-datetime-form>
+	/>
 
 	<ion-item-divider color="light">Where</ion-item-divider>
 	<ion-item>
 		<ion-label position="floating">Address</ion-label>
-		<ion-textarea></ion-textarea>
+		<ion-textarea />
 	</ion-item>
 	<div class="ion-padding" *ngIf="isModal">
 		<ion-button color="primary" size="large" (click)="save($event)"

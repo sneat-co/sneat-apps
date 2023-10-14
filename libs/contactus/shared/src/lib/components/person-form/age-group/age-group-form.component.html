@@ -19,29 +19,29 @@
 	>
 		<ion-item>
 			<ion-label>Adult</ion-label>
-			<ion-radio slot="start" value="adult" [disabled]="disabled"></ion-radio>
+			<ion-radio slot="start" value="adult" [disabled]="disabled" />
 		</ion-item>
 		<ion-item>
 			<ion-label>Child</ion-label>
-			<ion-radio slot="start" value="child" [disabled]="disabled"></ion-radio>
+			<ion-radio slot="start" value="child" [disabled]="disabled" />
 		</ion-item>
 		<ion-item *ngIf="!hideUndisclosedOption">
 			<ion-label>Person (undisclosed age)</ion-label>
-			<ion-radio slot="start" value="company" [disabled]="true"></ion-radio>
+			<ion-radio slot="start" value="company" [disabled]="true" />
 		</ion-item>
 		<ion-item *ngIf="!hidePetOption">
 			<ion-label>Pet</ion-label>
-			<ion-radio slot="start" value="pet" [disabled]="disabled"></ion-radio>
+			<ion-radio slot="start" value="pet" [disabled]="disabled" />
 		</ion-item>
 		<ion-item *ngIf="!hideCompanyOption">
 			<ion-label>Company (not implemented yet)</ion-label>
-			<ion-radio slot="start" value="company" [disabled]="true"></ion-radio>
+			<ion-radio slot="start" value="company" [disabled]="true" />
 		</ion-item>
 	</ion-radio-group>
 </ion-card>
 <ion-card *ngIf="ageGroup">
 	<ion-item>
-		<ion-icon name="text-outline" slot="start" color="medium"></ion-icon>
+		<ion-icon name="text-outline" slot="start" color="medium" />
 		<ion-label color="medium" position="stacked">Age group</ion-label>
 		<ion-select
 			[disabled]="disabled"

@@ -1,12 +1,4 @@
-<ion-card>
-	<!--	parentContact: {{parentContact|json}}-->
-
-	<!--	<sneat-country-selector-->
-	<!--		[(country)]="countryID"-->
-	<!--		[disabled]="disabled"-->
-	<!--		(countryChange)="onCountryChanged()"-->
-	<!--	></sneat-country-selector>-->
-</ion-card>
+<ion-card />
 
 <ng-container>
 	<ion-card>
@@ -20,7 +12,7 @@
 				placeholder="required"
 				[formControl]="title"
 				(ionChange)="onTitleChanged()"
-			></ion-input>
+			/>
 		</ion-item>
 
 		<!--		<ion-item>-->
@@ -38,7 +30,7 @@
 		*ngIf="title.value"
 		[address]="contact?.dto?.address"
 		(addressChange)="onAddressChanged($event)"
-	></sneat-address-form>
+	/>
 	<!--		(save)="saveAddress($event)"-->
 
 	<!--	contact: {{contact|json}}-->
@@ -46,14 +38,10 @@
 	<ion-card *ngIf="!hideSubmitButton">
 		<ion-card-content>
 			<ion-button size="large" [disabled]="isCreating" (click)="submit()">
-				<ion-icon name="save-outline" slot="start"></ion-icon>
+				<ion-icon name="save-outline" slot="start" />
 				<ion-label *ngIf="!isCreating">Create location record</ion-label>
 				<ion-label *ngIf="isCreating">Create location record...</ion-label>
-				<ion-spinner
-					slot="end"
-					name="lines-small"
-					*ngIf="isCreating"
-				></ion-spinner>
+				<ion-spinner slot="end" name="lines-small" *ngIf="isCreating" />
 			</ion-button>
 		</ion-card-content>
 	</ion-card>

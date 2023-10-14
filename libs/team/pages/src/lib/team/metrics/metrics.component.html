@@ -4,7 +4,7 @@
 			<ion-label color="dark"><b>Metrics</b></ion-label>
 			<ion-buttons slot="end">
 				<ion-button (click)="goAddMetric()" color="primary">
-					<ion-icon name="add" slot="start"></ion-icon>
+					<ion-icon name="add" slot="start" />
 					<ion-label>Add metric</ion-label>
 				</ion-button>
 			</ion-buttons>
@@ -33,20 +33,20 @@
 					name="lines-small"
 					color="medium"
 					*ngIf="isDeletingMetric(metric); else metricIcon"
-				></ion-spinner>
+				/>
 				<ng-template #metricIcon>
 					<ion-icon
 						*ngIf="metric.mode === 'personal'"
 						slot="start"
 						name="person-outline"
 						title="Personal"
-					></ion-icon>
+					/>
 					<ion-icon
 						*ngIf="metric.mode === 'team'"
 						slot="start"
 						name="people-outline"
 						title="Team"
-					></ion-icon>
+					/>
 				</ng-template>
 				<ion-label>
 					{{ metric.title }}
@@ -68,7 +68,7 @@
 						(click)="deleteMetric(metric)"
 						[disabled]="isDeletingMetric(metric)"
 					>
-						<ion-icon name="close"></ion-icon>
+						<ion-icon name="close" />
 					</ion-button>
 				</ion-buttons>
 			</ion-item>

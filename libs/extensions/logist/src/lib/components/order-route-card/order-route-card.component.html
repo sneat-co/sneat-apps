@@ -3,7 +3,7 @@
 		<ion-label>Route</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="medium" (click)="addTransitPoint($event)">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-icon name="add-outline" slot="start" />
 				<ion-label>Add transit point</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -24,7 +24,7 @@
 					label="To"
 					[transitPoint]="order.dto?.route?.destination"
 					(transitPointChange)="onTransitPointChanged($event)"
-				></sneat-transit-point-item>
+				/>
 			</ion-col>
 		</ion-row>
 	</ion-grid>

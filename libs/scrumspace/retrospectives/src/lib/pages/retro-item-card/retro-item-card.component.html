@@ -21,7 +21,7 @@
 							? 'chevron-down-circle-outline'
 							: 'chevron-forward-circle-outline'
 					"
-				></ion-icon>
+				/>
 			</ion-button>
 		</ion-buttons>
 		<ion-label>
@@ -65,14 +65,14 @@
 				<ion-label *ngIf="item?.likedUserIDs?.length">{{
 					item.likedUserIDs.length
 				}}</ion-label>
-				<ion-icon name="thumbs-up-outline"></ion-icon>
+				<ion-icon name="thumbs-up-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 	<angular-dnd-tree-list
 		*ngIf="treeNode.children?.length && treeNode.isExpanded"
 		[parentNode]="treeNode"
-	></angular-dnd-tree-list>
+	/>
 </ion-card>
 <!--<ion-item *ngIf="treeNode.level == 2" tappable [color]="treeNode.isDragging || isHovered ? 'medium' : item?.children?.length && 'light'"-->
 <!--			 [class.expandable]="isExpandable" (click)="toggle()">-->

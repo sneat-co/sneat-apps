@@ -4,7 +4,7 @@
 			<ion-label color="medium"
 				><b>{{ container?.type }}</b> container #</ion-label
 			>
-			<ion-input readonly [value]="container?.number"></ion-input>
+			<ion-input readonly [value]="container?.number" />
 			<ion-buttons slot="end">
 				<ng-container *ngIf="containerForm.dirty">
 					<ion-button
@@ -13,10 +13,10 @@
 						(click)="saveChanges()"
 						[disabled]="saving"
 					>
-						<ion-icon name="save-outline" slot="start"></ion-icon>
+						<ion-icon name="save-outline" slot="start" />
 						<ion-label *ngIf="!saving">Save</ion-label>
 						<ion-label *ngIf="saving">Saving...</ion-label>
-						<ion-spinner slot="end" *ngIf="saving"></ion-spinner>
+						<ion-spinner slot="end" *ngIf="saving" />
 					</ion-button>
 					<ion-button
 						color="medium"
@@ -24,7 +24,7 @@
 						title="Cancel changes"
 						(click)="containerForm.reset()"
 					>
-						<ion-icon name="close-circle-outline" slot="start"></ion-icon>
+						<ion-icon name="close-circle-outline" slot="start" />
 						<ion-label>Cancel</ion-label>
 					</ion-button>
 				</ng-container>
@@ -33,7 +33,7 @@
 					color="medium"
 					title="Remove container from dispatch point"
 				>
-					<ion-icon name="close-outline"></ion-icon>
+					<ion-icon name="close-outline" />
 					<!--				<ion-label>Remove</ion-label>-->
 				</ion-button>
 			</ion-buttons>
@@ -44,25 +44,21 @@
 				<ion-col size="8">
 					<ion-item class="sneat-tiny-end-padding">
 						<ion-label color="medium">Delivery to by</ion-label>
-						<ion-input
-							*ngIf="truckerTo"
-							readonly
-							[value]="truckerTo.title"
-						></ion-input>
+						<ion-input *ngIf="truckerTo" readonly [value]="truckerTo.title" />
 						<ion-input
 							*ngIf="!truckerTo"
 							color="medium"
 							readonly
 							value="not assigned yet"
 							style="font-style: italic"
-						></ion-input>
+						/>
 						<ion-buttons *ngIf="truckerTo && !containerForm.dirty">
 							<ion-button
 								color="medium"
 								title="Exclude delivery of this container by the trucker"
 								(click)="excludeContainerFromSegment()"
 							>
-								<ion-icon name="close-outline"></ion-icon>
+								<ion-icon name="close-outline" />
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
@@ -70,11 +66,7 @@
 				<ion-col size="4">
 					<ion-item>
 						<ion-label color="medium">On</ion-label>
-						<ion-input
-							readonly
-							type="date"
-							[formControl]="arrivesOn"
-						></ion-input>
+						<ion-input readonly type="date" [formControl]="arrivesOn" />
 					</ion-item>
 				</ion-col>
 			</ion-row>
@@ -87,20 +79,16 @@
 							*ngIf="truckerFrom"
 							readonly
 							[value]="truckerFrom.title"
-						></ion-input>
+						/>
 						<ng-container *ngIf="!truckerFrom">
-							<ion-input
-								color="danger"
-								readonly
-								value="not assigned yet"
-							></ion-input>
+							<ion-input color="danger" readonly value="not assigned yet" />
 							<ion-buttons>
 								<ion-button
 									color="medium"
 									title="Assign container to the trucker"
 									(click)="assignContainerToSegment()"
 								>
-									<ion-icon name="add-outline"></ion-icon>
+									<ion-icon name="add-outline" />
 								</ion-button>
 							</ion-buttons>
 						</ng-container>
@@ -109,11 +97,7 @@
 				<ion-col size="4">
 					<ion-item>
 						<ion-label color="medium">On</ion-label>
-						<ion-input
-							readonly
-							type="date"
-							[formControl]="leavesOn"
-						></ion-input>
+						<ion-input readonly type="date" [formControl]="leavesOn" />
 					</ion-item>
 				</ion-col>
 			</ion-row>
@@ -126,7 +110,7 @@
 						(freightLoadChange)="onFreightLoadChange()"
 						[form]="freightLoadForm"
 						(keyUpEnter)="saveChanges()"
-					></sneat-freight-load-form>
+					/>
 				</ion-col>
 			</ion-row>
 		</ion-grid>

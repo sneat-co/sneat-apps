@@ -1,6 +1,6 @@
 <ion-item>
 	<ion-label color="medium">Name</ion-label>
-	<ion-input [(ngModel)]="title" required [disabled]="isSubmitting"></ion-input>
+	<ion-input [(ngModel)]="title" required [disabled]="isSubmitting" />
 </ion-item>
 <div class="ion-padding">
 	<ion-button
@@ -14,7 +14,7 @@
 			name="lines-small"
 			slot="end"
 			*ngIf="isSubmitting && !isCreated"
-		></ion-spinner>
+		/>
 	</ion-button>
 	<p *ngIf="isCreated">Created...</p>
 </div>

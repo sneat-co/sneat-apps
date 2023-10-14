@@ -4,7 +4,7 @@
 		[color]="isActiveInWizard ? 'primary' : 'light'"
 	>
 		<ion-label>
-			<ion-icon name="at" class="ion-margin-end"></ion-icon>
+			<ion-icon name="at" class="ion-margin-end" />
 			Emails
 		</ion-label>
 	</ion-item-divider>
@@ -37,7 +37,7 @@
 						[(ngModel)]="email.address"
 						[disabled]="disabled"
 						(ionBlur)="addressChanged($event)"
-					></ion-input>
+					/>
 				</ion-item>
 			</ion-col>
 		</ion-row>

@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="primary" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title>Add {{ serviceType }}</ion-title>
 	</ion-toolbar>
@@ -21,13 +21,10 @@
 		</ion-item>
 		<ion-item tappable (click)="other()">
 			<ion-label color="medium" *ngIf="!isOtherSelected">
-				<ion-icon name="add"></ion-icon>
+				<ion-icon name="add" />
 				Other provider
 			</ion-label>
-			<ion-input
-				*ngIf="isOtherSelected"
-				placeholder="Other provider name"
-			></ion-input>
+			<ion-input *ngIf="isOtherSelected" placeholder="Other provider name" />
 		</ion-item>
 	</ion-item-group>
 </ion-content>

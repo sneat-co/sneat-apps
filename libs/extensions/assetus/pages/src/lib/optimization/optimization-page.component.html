@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="commune; else titleNoCommune">
 			{{ commune.title }}: Savings
@@ -24,7 +24,7 @@
 		</ion-card-content>
 		<ion-card-content>
 			<ion-button color="danger">
-				<ion-icon name="arrow-dropdown" style="margin-right: 10px"></ion-icon>
+				<ion-icon name="arrow-dropdown" style="margin-right: 10px" />
 				Learn more
 			</ion-button>
 			<!--<ion-button>Get a better quote</ion-button>-->

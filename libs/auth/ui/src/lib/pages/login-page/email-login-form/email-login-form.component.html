@@ -14,7 +14,7 @@
 	<ion-card-content class="ion-no-padding">
 		<ion-item>
 			<ion-label>
-				<ion-icon name="mail-outline"></ion-icon>
+				<ion-icon name="mail-outline" />
 			</ion-label>
 			<ion-input
 				[disabled]="!!signingWith"
@@ -26,12 +26,11 @@
 				required
 				placeholder="my@work-or-personal.email"
 				(keyup.enter)="keyupEnter()"
-			>
-			</ion-input>
+			/>
 		</ion-item>
 		<ion-item *ngIf="sign === 'up'">
 			<ion-label>
-				<ion-icon name="person-add-outline"></ion-icon>
+				<ion-icon name="person-add-outline" />
 			</ion-label>
 			<ion-input
 				name="first_name"
@@ -41,7 +40,7 @@
 				required
 				(keyup.enter)="keyupEnter()"
 				[disabled]="!!signingWith"
-			></ion-input>
+			/>
 			<ion-input
 				name="last_name"
 				placeholder="Last name"
@@ -50,11 +49,11 @@
 				required
 				(keyup.enter)="keyupEnter()"
 				[disabled]="!!signingWith"
-			></ion-input>
+			/>
 		</ion-item>
 		<ion-item *ngIf="sign === 'in'">
 			<ion-label>
-				<ion-icon name="key-outline"></ion-icon>
+				<ion-icon name="key-outline" />
 			</ion-label>
 			<ion-input
 				[(ngModel)]="password"
@@ -63,8 +62,7 @@
 				required
 				(keyup.enter)="keyupEnter()"
 				[disabled]="!!signingWith"
-			>
-			</ion-input>
+			/>
 			<ion-buttons slot="end">
 				<ion-button
 					*ngIf="sign === 'in'"
@@ -87,7 +85,7 @@
 				placeholder="required"
 				required
 				[(ngModel)]="teamTitle"
-			></ion-input>
+			/>
 		</ion-item>
 	</ion-card-content>
 	<ion-card-content>
@@ -96,7 +94,7 @@
 			[disabled]="!!signingWith || !validEmail || (!firstName && !lastName)"
 			(click)="signUp()"
 		>
-			<ion-icon name="enter-outline" slot="start"></ion-icon>
+			<ion-icon name="enter-outline" slot="start" />
 			<ion-label *ngIf="signingWith !== 'email'">Sign up</ion-label>
 			<ion-label *ngIf="signingWith === 'email'">Signing up...</ion-label>
 			<ion-spinner
@@ -104,14 +102,14 @@
 				*ngIf="signingWith === 'email'"
 				slot="end"
 				name="lines-small"
-			></ion-spinner>
+			/>
 		</ion-button>
 		<ng-container *ngIf="sign === 'in'">
 			<ion-button
 				[disabled]="!!signingWith || !validEmail || !password"
 				(click)="signIn()"
 			>
-				<ion-icon name="enter-outline" slot="start"></ion-icon>
+				<ion-icon name="enter-outline" slot="start" />
 				<ion-label *ngIf="signingWith !== 'email'">Sign in</ion-label>
 				<ion-label *ngIf="signingWith === 'email'">Signing in...</ion-label>
 				<ion-spinner
@@ -119,7 +117,7 @@
 					*ngIf="signingWith === 'email'"
 					slot="end"
 					name="lines-small"
-				></ion-spinner>
+				/>
 			</ion-button>
 			<ion-button disabled="disabled" fill="clear" color="medium">
 				or
@@ -131,7 +129,7 @@
 				fill="outline"
 				color="tertiary"
 			>
-				<ion-icon name="mail-outline" slot="start"></ion-icon>
+				<ion-icon name="mail-outline" slot="start" />
 				<ion-label>Get sign-in link</ion-label>
 			</ion-button>
 		</ng-container>

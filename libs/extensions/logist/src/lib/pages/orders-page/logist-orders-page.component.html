@@ -1,14 +1,12 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button
-				[defaultHref]="teamPageUrl('') || './'"
-			></ion-back-button>
+			<ion-back-button [defaultHref]="teamPageUrl('') || './'" />
 		</ion-buttons>
 		<ion-title>Orders</ion-title>
 		<ion-buttons slot="end">
 			<ion-button color="primary" routerLink="../new-order">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-icon name="add-outline" slot="start" />
 				<ion-label>New</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -28,12 +26,12 @@
 		*ngIf="viewMode === 'grid'"
 		[team]="team"
 		[orders]="orders"
-	></sneat-logist-orders-grid>
+	/>
 	<sneat-logist-orders-list
 		*ngIf="viewMode === 'list'"
 		[team]="team"
 		[orders]="orders"
-	></sneat-logist-orders-list>
+	/>
 
 	<div style="min-height: 100px"></div>
 </ion-content>

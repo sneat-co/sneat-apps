@@ -1,12 +1,12 @@
 <ion-header>
-	<sneat-dialog-header [dialogTitle]="title"></sneat-dialog-header>
+	<sneat-dialog-header [dialogTitle]="title" />
 </ion-header>
 <ion-content>
 	<sneat-shipping-points-selector
 		[order]="order"
 		[container]="container"
 		(tasksByShippingPointChange)="onTasksByShippingPointIDChanged($event)"
-	></sneat-shipping-points-selector>
+	/>
 
 	<div class="ion-padding">
 		<ion-button (click)="submit()" [disabled]="!tasksByID || submitting">

@@ -3,7 +3,7 @@
 		<ion-label>Shipping points</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="addShippingPoint()">
-				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-icon name="add-outline" slot="start" />
 				<ion-label>Add</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -40,7 +40,7 @@
 								!tasksByShippingPoint[shippingPoint.id]?.dirty &&
 								tasksByShippingPoint[shippingPoint.id]?.tasks?.includes('load')
 							"
-						></ion-checkbox>
+						/>
 						<ion-label>Load</ion-label>
 					</ion-item>
 				</ion-col>
@@ -61,7 +61,7 @@
 									'unload'
 								)
 							"
-						></ion-checkbox>
+						/>
 						<ion-label>Unload</ion-label>
 					</ion-item>
 				</ion-col>

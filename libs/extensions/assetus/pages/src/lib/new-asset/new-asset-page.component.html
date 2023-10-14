@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<sneat-team-page-title
 			[team]="team"
@@ -11,8 +11,7 @@
 				personal: 'New personal asset',
 				family: 'New family asset'
 			}"
-		>
-		</sneat-team-page-title>
+		/>
 	</ion-toolbar>
 </ion-header>
 
@@ -36,13 +35,7 @@
 	</ion-card>
 
 	<ng-container [ngSwitch]="category?.id">
-		<sneat-asset-add-vehicle
-			*ngSwitchCase="'vehicle'"
-			[team]="team"
-		></sneat-asset-add-vehicle>
-		<sneat-asset-add-document
-			*ngSwitchCase="'document'"
-			[team]="team"
-		></sneat-asset-add-document>
+		<sneat-asset-add-vehicle *ngSwitchCase="'vehicle'" [team]="team" />
+		<sneat-asset-add-document *ngSwitchCase="'document'" [team]="team" />
 	</ng-container>
 </ion-content>

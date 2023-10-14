@@ -16,13 +16,13 @@
 		name="lines-small"
 		*ngIf="day?.loadingEvents"
 		slot="end"
-	></ion-spinner>
+	/>
 	<ion-buttons slot="end">
 		<ion-button title="Add recurring" (click)="goNewHappening('recurring')">
-			<ion-icon name="duplicate-outline"></ion-icon>
+			<ion-icon name="duplicate-outline" />
 		</ion-button>
 		<ion-button title="Add one-timer" (click)="goNewHappening('single')">
-			<ion-icon name="add-circle-outline"></ion-icon>
+			<ion-icon name="add-circle-outline" />
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
@@ -34,8 +34,7 @@
 			[dateID]="day?.dateID"
 			[slot]="slot"
 			(slotClicked)="onSlotClicked($event)"
-		>
-		</sneat-day-slot-item>
+		/>
 	</ng-container>
 </ng-container>
 <ng-template #noSlots>
