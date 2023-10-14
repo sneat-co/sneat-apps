@@ -1,8 +1,13 @@
 <ion-item class="with-buttons">
-    <ion-input label="🔎" placeholder="Filter" [(ngModel)]="filter" (ionChange)="onChanged()" ></ion-input>
-    <ion-buttons slot="end" *ngIf="filter">
-        <ion-button color="medium" (click)="clearFilter()">
-            <ion-icon name="close"></ion-icon>
-        </ion-button>
-    </ion-buttons>
+	<ion-input
+		label="🔎"
+		placeholder="Filter"
+		[(ngModel)]="filter"
+		(ionChange)="onChanged()"
+	></ion-input>
+	<ion-buttons slot="end" *ngIf="filter">
+		<ion-button color="medium" (click)="clearFilter()">
+			<ion-icon name="close"></ion-icon>
+		</ion-button>
+	</ion-buttons>
 </ion-item>

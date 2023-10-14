@@ -1,51 +1,74 @@
 <ion-card>
 	<ion-item class="sneat-small-end-padding sneat-small-start-padding">
-		<ion-buttons slot="start" class="sneat-tiny-end-margin sneat-no-horizontal-margins">
-			<ion-button [disabled]="isDefaultDate()"
-									[color]="isDefaultDate() ? 'medium' : 'primary'"
-									[title]="'Jump to current week'"
-									(click)="setToday()">
+		<ion-buttons
+			slot="start"
+			class="sneat-tiny-end-margin sneat-no-horizontal-margins"
+		>
+			<ion-button
+				[disabled]="isDefaultDate()"
+				[color]="isDefaultDate() ? 'medium' : 'primary'"
+				[title]="'Jump to current week'"
+				(click)="setToday()"
+			>
 				<ion-icon name="today-outline"></ion-icon>
 			</ion-button>
-			<ion-button title="Previous day"
-									(click)="swipePrev()">
+			<ion-button title="Previous day" (click)="swipePrev()">
 				<ion-icon name="chevron-back-sharp"></ion-icon>
 			</ion-button>
-			<ion-button title="Next day"
-									(click)="swipeNext()">
+			<ion-button title="Next day" (click)="swipeNext()">
 				<ion-icon name="chevron-forward-sharp"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 		<ion-label>
-			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
+			<div
+				class="virtual-slider-outer"
+				(swipeleft)="swipeLeft()"
+				(swiperight)="swipeRight()"
+			>
 				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-					<h1 class="virtual-slide" [@virtualSlide]="oddSlide?.animationState || 'show'">
-						<sneat-schedule-week-title [week]="oddWeek"></sneat-schedule-week-title>
+					<h1
+						class="virtual-slide"
+						[@virtualSlide]="oddSlide?.animationState || 'show'"
+					>
+						<sneat-schedule-week-title
+							[week]="oddWeek"
+						></sneat-schedule-week-title>
 					</h1>
-					<h1 class="virtual-slide" [@virtualSlide]="evenSlide?.animationState || 'hide'">
-						<sneat-schedule-week-title [week]="oddWeek"></sneat-schedule-week-title>
+					<h1
+						class="virtual-slide"
+						[@virtualSlide]="evenSlide?.animationState || 'hide'"
+					>
+						<sneat-schedule-week-title
+							[week]="oddWeek"
+						></sneat-schedule-week-title>
 					</h1>
 				</div>
 			</div>
 		</ion-label>
 	</ion-item>
 
-	<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
+	<div
+		class="virtual-slider-outer"
+		(swipeleft)="swipeLeft()"
+		(swiperight)="swipeRight()"
+	>
 		<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-			<sneat-schedule-week class="virtual-slide" [@virtualSlide]="oddSlide?.animationState || 'show'"
-													 [team]="team"
-													 [week]="oddWeek"
-													 [teamDaysProvider]="teamDaysProvider"
-													 (slotClicked)="onSlotClicked($event)"
+			<sneat-schedule-week
+				class="virtual-slide"
+				[@virtualSlide]="oddSlide?.animationState || 'show'"
+				[team]="team"
+				[week]="oddWeek"
+				[teamDaysProvider]="teamDaysProvider"
+				(slotClicked)="onSlotClicked($event)"
 			></sneat-schedule-week>
-			<sneat-schedule-week class="virtual-slide" [@virtualSlide]="evenSlide?.animationState || 'hide'"
-													 [team]="team"
-													 [week]="evenWeek"
-													 [teamDaysProvider]="teamDaysProvider"
-													 (slotClicked)="onSlotClicked($event)"
+			<sneat-schedule-week
+				class="virtual-slide"
+				[@virtualSlide]="evenSlide?.animationState || 'hide'"
+				[team]="team"
+				[week]="evenWeek"
+				[teamDaysProvider]="teamDaysProvider"
+				(slotClicked)="onSlotClicked($event)"
 			></sneat-schedule-week>
 		</div>
 	</div>
 </ion-card>
-
-

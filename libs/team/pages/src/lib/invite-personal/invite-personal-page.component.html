@@ -7,9 +7,9 @@
 <ion-content>
 	<div class="ion-padding">
 		<p *ngIf="invite">
-			You've been invited by <b>{{invite.from.title}}</b>
+			You've been invited by <b>{{ invite.from.title }}</b>
 			<br />
-			to join team: <b>{{invite.team.title}}</b>
+			to join team: <b>{{ invite.team.title }}</b>
 		</p>
 		<p>Please verify your details before joining.</p>
 	</div>
@@ -81,7 +81,7 @@
 			<ion-label>Team members</ion-label>
 		</ion-item-divider>
 		<ion-item *ngFor="let member of members">
-			<ion-label>{{member.brief.title}}</ion-label>
+			<ion-label>{{ member.brief.title }}</ion-label>
 		</ion-item>
 	</ion-list>
 </ion-content>

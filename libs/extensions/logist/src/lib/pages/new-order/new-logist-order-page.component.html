@@ -1,17 +1,21 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="teamPageUrl('orders') || '..'"></ion-back-button>
+			<ion-back-button
+				[defaultHref]="teamPageUrl('orders') || '..'"
+			></ion-back-button>
 		</ion-buttons>
 		<ion-title>New order</ion-title>
 	</ion-toolbar>
 </ion-header>
 
-
 <ion-content>
-
 	<ion-card>
-		<sneat-select-from-list label="Order type" [(ngModel)]="direction" [items]="directions"></sneat-select-from-list>
+		<sneat-select-from-list
+			label="Order type"
+			[(ngModel)]="direction"
+			[items]="directions"
+		></sneat-select-from-list>
 	</ion-card>
 
 	<ion-card *ngIf="direction">
@@ -19,50 +23,61 @@
 			<ion-label>Counterparties</ion-label>
 		</ion-item-divider>
 
-		<sneat-logist-order-counterparty [team]="team"
-																		 [order]="order"
-																		 (orderChange)="onOrderChanged($event)"
-																		 [readonly]="readonly"
-																		 [useColumns]="true"
-																		 counterpartyRole="buyer"
-																		 contactRole="buyer"
-																		 labelPosition="fixed">
+		<sneat-logist-order-counterparty
+			[team]="team"
+			[order]="order"
+			(orderChange)="onOrderChanged($event)"
+			[readonly]="readonly"
+			[useColumns]="true"
+			counterpartyRole="buyer"
+			contactRole="buyer"
+			labelPosition="fixed"
+		>
 		</sneat-logist-order-counterparty>
 
-		<sneat-logist-order-counterparty [team]="team"
-																		 [order]="order"
-																		 (orderChange)="onOrderChanged($event)"
-																		 [readonly]="readonly"
-																		 [useColumns]="true"
-																		 label="Shipping line"
-																		 counterpartyRole="shipping_line"
-																		 contactRole="shipping_line"
-																		 labelPosition="fixed">
+		<sneat-logist-order-counterparty
+			[team]="team"
+			[order]="order"
+			(orderChange)="onOrderChanged($event)"
+			[readonly]="readonly"
+			[useColumns]="true"
+			label="Shipping line"
+			counterpartyRole="shipping_line"
+			contactRole="shipping_line"
+			labelPosition="fixed"
+		>
 		</sneat-logist-order-counterparty>
 
-		<sneat-logist-order-counterparty [team]="team"
-																		 [order]="order"
-																		 (orderChange)="onOrderChanged($event)"
-																		 [readonly]="readonly"
-																		 [useColumns]="true"
-																		 counterpartyRole="notify_party"
-																		 label="Notify party"
-																		 contactRole="notify_party"
-																		 labelPosition="fixed">
+		<sneat-logist-order-counterparty
+			[team]="team"
+			[order]="order"
+			(orderChange)="onOrderChanged($event)"
+			[readonly]="readonly"
+			[useColumns]="true"
+			counterpartyRole="notify_party"
+			label="Notify party"
+			contactRole="notify_party"
+			labelPosition="fixed"
+		>
 		</sneat-logist-order-counterparty>
-		<sneat-logist-order-counterparty [team]="team"
-																		 [order]="order"
-																		 (orderChange)="onOrderChanged($event)"
-																		 [readonly]="readonly"
-																		 [useColumns]="true"
-																		 counterpartyRole="consignee"
-																		 label="Consignee"
-																		 contactRole="consignee"
-																		 labelPosition="fixed">
+		<sneat-logist-order-counterparty
+			[team]="team"
+			[order]="order"
+			(orderChange)="onOrderChanged($event)"
+			[readonly]="readonly"
+			[useColumns]="true"
+			counterpartyRole="consignee"
+			label="Consignee"
+			contactRole="consignee"
+			labelPosition="fixed"
+		>
 		</sneat-logist-order-counterparty>
-		<sneat-order-agents [team]="team" [order]="order" (added)="onCounterpartiesAdded($event)"></sneat-order-agents>
+		<sneat-order-agents
+			[team]="team"
+			[order]="order"
+			(added)="onCounterpartiesAdded($event)"
+		></sneat-order-agents>
 	</ion-card>
-
 
 	<!--	<ion-card>-->
 	<!--		<sneat-logist-order-counterparties-->
@@ -79,23 +94,22 @@
 	<!--		(orderChange)="onOrderChanged($event)"-->
 	<!--	></sneat-order-route-card>-->
 
-	<sneat-new-order-containers-form *ngIf="direction"
-																	 [order]="order"
-																	 (numberOfContainersChange)="onNumberOfContainersChanged($event)"
+	<sneat-new-order-containers-form
+		*ngIf="direction"
+		[order]="order"
+		(numberOfContainersChange)="onNumberOfContainersChanged($event)"
 	>
 	</sneat-new-order-containers-form>
 
 	<ion-card *ngIf="direction">
 		<ion-card-content>
-			<ion-button size="large"
-									(click)="createOrder()"
-			>
+			<ion-button size="large" (click)="createOrder()">
 				<ion-label>Create order</ion-label>
 			</ion-button>
 			<ion-button disabled fill="clear" color="medium">or</ion-button>
-			<ion-button size="large" color="medium" fill="outline" (click)="cancel()">Cancel</ion-button>
+			<ion-button size="large" color="medium" fill="outline" (click)="cancel()"
+				>Cancel</ion-button
+			>
 		</ion-card-content>
 	</ion-card>
-
-
 </ion-content>

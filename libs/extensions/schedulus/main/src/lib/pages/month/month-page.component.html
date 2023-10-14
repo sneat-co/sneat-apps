@@ -2,13 +2,21 @@
 	<ion-toolbar color="light">
 		<ion-title>
 			<!--{{current}} {{period}} &mdash; -->
-			{{periodTitle()}}
+			{{ periodTitle() }}
 		</ion-title>
 		<ion-buttons slot="end">
-			<ion-button title="Earlier" [disabled]="current === 'Previous'" (click)="changeCurrent('earlier')">
+			<ion-button
+				title="Earlier"
+				[disabled]="current === 'Previous'"
+				(click)="changeCurrent('earlier')"
+			>
 				<ion-icon name="arrow-dropleft"></ion-icon>
 			</ion-button>
-			<ion-button title="Later" [disabled]="current === 'Next'" (click)="changeCurrent('later')">
+			<ion-button
+				title="Later"
+				[disabled]="current === 'Next'"
+				(click)="changeCurrent('later')"
+			>
 				<ion-icon name="arrow-dropright"></ion-icon>
 			</ion-button>
 		</ion-buttons>
@@ -16,7 +24,6 @@
 </ion-header>
 
 <ion-content>
-
 	<!-- Default Segment -->
 	<div class="segment">
 		<ion-segment [value]="segment" (ionChange)="segmentChanged($event)">
@@ -36,66 +43,138 @@
 		<ion-item-divider class="total">
 			<ion-label>Total</ion-label>
 			<div slot="end" *ngIf="segment === 'expense'" style="color: darkred">
-				-${{balance.toLocaleString()}}</div>
+				-${{ balance.toLocaleString() }}
+			</div>
 			<div slot="end" *ngIf="segment === 'income'" style="color: darkgreen">
-				${{balance.toLocaleString()}}</div>
-			<div slot="end" *ngIf="segment === 'balance' && balance < 0" style="color: darkred">
-				-${{(-1 * balance).toLocaleString()}}</div>
-			<div slot="end" *ngIf="segment === 'balance' && balance > 0" style="color: darkgreen">
-				${{balance.toLocaleString()}}</div>
-			<div slot="end" *ngIf="segment === 'balance' && !balance" style="">$0</div>
+				${{ balance.toLocaleString() }}
+			</div>
+			<div
+				slot="end"
+				*ngIf="segment === 'balance' && balance < 0"
+				style="color: darkred"
+			>
+				-${{ (-1 * balance).toLocaleString() }}
+			</div>
+			<div
+				slot="end"
+				*ngIf="segment === 'balance' && balance > 0"
+				style="color: darkgreen"
+			>
+				${{ balance.toLocaleString() }}
+			</div>
+			<div slot="end" *ngIf="segment === 'balance' && !balance" style="">
+				$0
+			</div>
 		</ion-item-divider>
 		<ng-container *ngFor="let asset of assets; trackBy: trackById">
 			<ng-container
-				*ngIf="(segment === 'expense' && asset.totals.expenses.count > 0) || (segment === 'income' && asset.totals.incomes.count > 0) || segment === 'balance'">
-				<ion-item *ngIf="asset.dto.id !== expandedAssetId" tappable (click)="expand(asset.dto.id)">
+				*ngIf="
+					(segment === 'expense' && asset.totals.expenses.count > 0) ||
+					(segment === 'income' && asset.totals.incomes.count > 0) ||
+					segment === 'balance'
+				"
+			>
+				<ion-item
+					*ngIf="asset.dto.id !== expandedAssetId"
+					tappable
+					(click)="expand(asset.dto.id)"
+				>
 					<ion-label>
 						<h2>
 							<ion-icon name="arrow-dropright"></ion-icon>
-							{{asset.dto.title}}
-							<span *ngIf="segment === 'expense' && asset.totals.expenses.count > 1"
-									style="color: lightgray; font-style: italic; font-weight: normal;">
-								({{asset.totals.expenses.count}} items)
+							{{ asset.dto.title }}
+							<span
+								*ngIf="segment === 'expense' && asset.totals.expenses.count > 1"
+								style="
+									color: lightgray;
+									font-style: italic;
+									font-weight: normal;
+								"
+							>
+								({{ asset.totals.expenses.count }} items)
 							</span>
-							<span *ngIf="segment === 'income' && asset.totals.incomes.count > 1"
-									style="color: lightgray; font-style: italic; font-weight: normal;">
-								({{asset.totals.incomes.count}} items)
+							<span
+								*ngIf="segment === 'income' && asset.totals.incomes.count > 1"
+								style="
+									color: lightgray;
+									font-style: italic;
+									font-weight: normal;
+								"
+							>
+								({{ asset.totals.incomes.count }} items)
 							</span>
 						</h2>
 						<!--<p style="padding-left: 20px" *ngIf="asset.totals.expenses.count === 1">Liability title</p>-->
 					</ion-label>
-					<div slot="end" style="margin-right: 10px;">
-                        <span *ngIf="segment === 'balance' && asset.totals.per('month') < 0"
-										style="color: darkred">-${{(-1 * asset.totals.per('month')).toLocaleString()}}</span>
-						<span *ngIf="segment === 'balance' && asset.totals.per('month') > 0"
-								style="color: darkgreen">${{asset.totals.per('month').toLocaleString()}}</span>
-						<span *ngIf="segment === 'expense'"
-								style="color: darkred">-${{asset.totals.expenses.perMonth().toLocaleString()}}</span>
-						<span *ngIf="segment === 'income'"
-								style="color: darkgreen">${{asset.totals.incomes.perMonth().toLocaleString()}}</span>
+					<div slot="end" style="margin-right: 10px">
+						<span
+							*ngIf="segment === 'balance' && asset.totals.per('month') < 0"
+							style="color: darkred"
+							>-${{ (-1 * asset.totals.per("month")).toLocaleString() }}</span
+						>
+						<span
+							*ngIf="segment === 'balance' && asset.totals.per('month') > 0"
+							style="color: darkgreen"
+							>${{ asset.totals.per("month").toLocaleString() }}</span
+						>
+						<span *ngIf="segment === 'expense'" style="color: darkred"
+							>-${{ asset.totals.expenses.perMonth().toLocaleString() }}</span
+						>
+						<span *ngIf="segment === 'income'" style="color: darkgreen"
+							>${{ asset.totals.incomes.perMonth().toLocaleString() }}</span
+						>
 					</div>
 				</ion-item>
 				<ion-item-group *ngIf="asset.dto.id === expandedAssetId">
 					<ion-item-divider tappable (click)="collapse()">
 						<ion-label style="font-weight: bold; color: black">
 							<ion-icon name="arrow-dropdown"></ion-icon>
-							{{asset.dto.title}} (per
-							week: {{segment === 'balance' ? asset.totals.per('month') : (segment === 'expense' ? asset.totals.expenses : asset.totals.incomes).dto.week}}
+							{{ asset.dto.title }} (per week:
+							{{
+								segment === "balance"
+									? asset.totals.per("month")
+									: (segment === "expense"
+											? asset.totals.expenses
+											: asset.totals.incomes
+									  ).dto.week
+							}}
 							)
-							<span style="color: lightgray; font-style: italic; font-weight: normal;">
-								({{asset.totals.expenses.count}} items)
+							<span
+								style="
+									color: lightgray;
+									font-style: italic;
+									font-weight: normal;
+								"
+							>
+								({{ asset.totals.expenses.count }} items)
 							</span>
 						</ion-label>
-						<div slot="end" style="margin-right: 10px;">
-							${{segment === 'balance' ? asset.totals.per('month') : (segment === 'expense' ? asset.totals.expenses : asset.totals.incomes).perMonth().toLocaleString()}}
+						<div slot="end" style="margin-right: 10px">
+							${{
+								segment === "balance"
+									? asset.totals.per("month")
+									: (segment === "expense"
+											? asset.totals.expenses
+											: asset.totals.incomes
+									  )
+											.perMonth()
+											.toLocaleString()
+							}}
 						</div>
 					</ion-item-divider>
-					<ng-container *ngFor="let liability of expandedAssetLiabilities; trackBy: trackById">
-						<ion-item *ngIf="segment === 'balance' || liability.direction === segment"
-									 style="padding-left: 20px">
-							<ion-label>{{liability.title}}</ion-label>
-							<div slot="end" style="margin-right: 10px;">
-								${{liability.amount.toLocaleString()}}/{{liability.period}}
+					<ng-container
+						*ngFor="
+							let liability of expandedAssetLiabilities;
+							trackBy: trackById
+						"
+					>
+						<ion-item
+							*ngIf="segment === 'balance' || liability.direction === segment"
+							style="padding-left: 20px"
+						>
+							<ion-label>{{ liability.title }}</ion-label>
+							<div slot="end" style="margin-right: 10px">
+								${{ liability.amount.toLocaleString() }}/{{ liability.period }}
 							</div>
 						</ion-item>
 					</ng-container>

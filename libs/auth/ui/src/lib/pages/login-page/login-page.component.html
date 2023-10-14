@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-title>Login @ {{appTitle}}</ion-title>
+		<ion-title>Login @ {{ appTitle }}</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -28,7 +28,7 @@
 		<ion-text color="medium">
 			This app is free to use &
 			<a target="_blank" href="https://github.com/sneat-team/dailyscrum-pwa"
-			>open source</a
+				>open source</a
 			>.
 		</ion-text>
 	</p>
@@ -48,7 +48,9 @@
 			<ion-row>
 				<ion-col>
 					<div class="ion-padding" style="text-align: center">
-						<sneat-login-with-telegram telegramLogin="SneatBot"></sneat-login-with-telegram>
+						<sneat-login-with-telegram
+							telegramLogin="SneatBot"
+						></sneat-login-with-telegram>
 					</div>
 				</ion-col>
 			</ion-row>
@@ -75,10 +77,11 @@
 							</ion-spinner>
 							<ion-label color="danger"> Login with Google</ion-label>
 						</ion-item>
-						<ion-item *ngIf="false"
-											(click)="loginWith('Facebook')"
-											tappable
-											[disabled]="!!signingWith"
+						<ion-item
+							*ngIf="false"
+							(click)="loginWith('Facebook')"
+							tappable
+							[disabled]="!!signingWith"
 						>
 							<ion-icon
 								slot="start"
@@ -121,10 +124,11 @@
 							</ion-spinner>
 							<ion-label color="secondary">Login with Microsoft</ion-label>
 						</ion-item>
-						<ion-item *ngIf="false"
-											(click)="loginWith('GitHub')"
-											tappable
-											[disabled]="!!signingWith"
+						<ion-item
+							*ngIf="false"
+							(click)="loginWith('GitHub')"
+							tappable
+							[disabled]="!!signingWith"
 						>
 							<ion-icon
 								slot="start"
@@ -156,9 +160,8 @@
 		<ion-text color="medium">
 			If any issues get
 			<a href="mailto:help@sneat.app?subject=Problem+with+login+at+Sneat.app"
-			>help@sneat.app</a>
+				>help@sneat.app</a
+			>
 		</ion-text>
 	</p>
-
-
 </ion-content>

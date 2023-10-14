@@ -1,70 +1,72 @@
 <ion-content>
 	<h1 class="ion-padding-horizontal" style="float: right">LEEDLINE OU</h1>
 
-	<h2 class="ion-padding-horizontal">
-		EXPE: ELL0{{order?.id}}
-	</h2>
+	<h2 class="ion-padding-horizontal">EXPE: ELL0{{ order?.id }}</h2>
 
 	<ion-card style="clear: right">
 		<ion-item-divider color="light">
-			Container&nbsp;{{container?.type?.toUpperCase()}}
+			Container&nbsp;{{ container?.type?.toUpperCase() }}
 			#&nbsp;
-			<b *ngIf="container?.number?.trim(); else noNumber">{{container?.number}}</b>
+			<b *ngIf="container?.number?.trim(); else noNumber">{{
+				container?.number
+			}}</b>
 			<ng-template #noNumber><b>no number</b></ng-template>
 		</ion-item-divider>
 		<ion-item>
-			<ion-label color="medium">FECHA Y HORA DE CARGA:
-				<ion-text color="dark">{{firstArrivalScheduledDate}}</ion-text>
+			<ion-label color="medium"
+				>FECHA Y HORA DE CARGA:
+				<ion-text color="dark">{{ firstArrivalScheduledDate }}</ion-text>
 			</ion-label>
 		</ion-item>
 		<ion-item>
-			<ion-label color="medium">Transportista:
-				<ion-text color="dark">{{by?.title}}</ion-text>
+			<ion-label color="medium"
+				>Transportista:
+				<ion-text color="dark">{{ by?.title }}</ion-text>
 			</ion-label>
 		</ion-item>
 	</ion-card>
 
 	<style>
-	  table.printable-table {
-		  width: 100%;
-		  border-collapse: collapse;
-		  border-spacing: 0;
-		  border: 1px solid #000;
-	  }
+		table.printable-table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+			border: 1px solid #000;
+		}
 
-	  table.printable-table th {
-		  border: 1px solid #000;
-		  padding: 5px;
-		  background-color: #ccc;
-	  }
+		table.printable-table th {
+			border: 1px solid #000;
+			padding: 5px;
+			background-color: #ccc;
+		}
 
-	  table.printable-table td {
-		  border: 1px solid #000;
-		  padding: 5px;
-	  }
+		table.printable-table td {
+			border: 1px solid #000;
+			padding: 5px;
+		}
 
-	  .number {
-		  text-align: right;
-	  }
+		.number {
+			text-align: right;
+		}
 	</style>
 	<ion-card>
 		<table class="printable-table">
 			<thead>
-			<tr>
-				<th style="width: 1%">Puntos de recogida</th>
-				<th>Fabrica</th>
-				<th>Ref#</th>
-				<th>Scheduled</th>
-				<th>Pallets</th>
-				<th>Peso (kg)</th>
-				<th>Notas</th>
-				<th>Address</th>
-			</tr>
+				<tr>
+					<th style="width: 1%">Puntos de recogida</th>
+					<th>Fabrica</th>
+					<th>Ref#</th>
+					<th>Scheduled</th>
+					<th>Pallets</th>
+					<th>Peso (kg)</th>
+					<th>Notas</th>
+					<th>Address</th>
+				</tr>
 			</thead>
 			<tr *ngFor="let point of points; let i = index">
-				<td class="number">{{i + 1}}</td>
-				<td>{{point.counterparty?.title}}</td>
-				<td>{{point.containerPoint.refNumber}}</td>
+				<td class="number">{{ i + 1 }}</td>
+				<td>{{ point.counterparty?.title }}</td>
+				<td>{{ point.containerPoint.refNumber }}</td>
 				<td>
 					<style>
 						table.no-borders td {
@@ -73,44 +75,65 @@
 						}
 					</style>
 					<table class="no-borders" style="width: 100%">
-						<tr *ngIf="point.containerPoint.arrival?.scheduledDate || point.containerPoint.arrival?.scheduledTime">
+						<tr
+							*ngIf="
+								point.containerPoint.arrival?.scheduledDate ||
+								point.containerPoint.arrival?.scheduledTime
+							"
+						>
 							<td *ngIf="showArrivalLabel(point.containerPoint)">Arrival</td>
 							<td style="text-align: right">
-								{{point.containerPoint.arrival?.scheduledDate}}
-								<span *ngIf="point.containerPoint.arrival?.scheduledTime">@ {{point.containerPoint.arrival?.scheduledTime}}</span>
+								{{ point.containerPoint.arrival?.scheduledDate }}
+								<span *ngIf="point.containerPoint.arrival?.scheduledTime"
+									>@ {{ point.containerPoint.arrival?.scheduledTime }}</span
+								>
 							</td>
 						</tr>
 						<tr *ngIf="showDeparture(point.containerPoint)">
 							<td>Departure</td>
 							<td style="text-align: right">
-								<span *ngIf="showDepartureDate(point.containerPoint)">{{point.containerPoint.departure?.scheduledDate}}</span>
-								<span *ngIf="point.containerPoint.departure?.scheduledTime">@ {{point.containerPoint.departure?.scheduledTime}}</span>
+								<span *ngIf="showDepartureDate(point.containerPoint)">{{
+									point.containerPoint.departure?.scheduledDate
+								}}</span>
+								<span *ngIf="point.containerPoint.departure?.scheduledTime"
+									>@ {{ point.containerPoint.departure?.scheduledTime }}</span
+								>
 							</td>
 						</tr>
 					</table>
 				</td>
-				<td class="number">{{point.containerPoint.toLoad?.numberOfPallets}}</td>
-				<td class="number">{{point.containerPoint.toLoad?.grossWeightKg}}</td>
-				<td>{{point.containerPoint.notes}}</td>
+				<td class="number">
+					{{ point.containerPoint.toLoad?.numberOfPallets }}
+				</td>
+				<td class="number">{{ point.containerPoint.toLoad?.grossWeightKg }}</td>
+				<td>{{ point.containerPoint.notes }}</td>
 				<td>
-					{{point.address?.lines}}
+					{{ point.address?.lines }}
 					<ng-container *ngIf="point.address?.city || point.address?.state">
-						<br>
-						{{point.address?.city}}
+						<br />
+						{{ point.address?.city }}
 						<span *ngIf="point.address?.city && point.address?.state">, </span>
-						{{point.address?.state}}
+						{{ point.address?.state }}
 					</ng-container>
 				</td>
 			</tr>
 			<tfoot>
-			<tr *ngIf="total">
-				<td colspan="4" style="text-align: right; color: grey; font-weight: bold;">Total:</td>
-				<td style="text-align: right; font-weight: bold;">{{total.numberOfPallets}}</td>
-				<td style="text-align: right; font-weight: bold;">{{total.grossWeightKg}}</td>
-			</tr>
+				<tr *ngIf="total">
+					<td
+						colspan="4"
+						style="text-align: right; color: grey; font-weight: bold"
+					>
+						Total:
+					</td>
+					<td style="text-align: right; font-weight: bold">
+						{{ total.numberOfPallets }}
+					</td>
+					<td style="text-align: right; font-weight: bold">
+						{{ total.grossWeightKg }}
+					</td>
+				</tr>
 			</tfoot>
 		</table>
-
 	</ion-card>
 
 	<ion-card>
@@ -118,8 +141,12 @@
 			<ion-label position="stacked">
 				<b>Instrucciones especiales:</b>
 			</ion-label>
-			<ion-textarea readonly="true" [value]="container?.instructions" auto-grow="true" color="dark"></ion-textarea>
+			<ion-textarea
+				readonly="true"
+				[value]="container?.instructions"
+				auto-grow="true"
+				color="dark"
+			></ion-textarea>
 		</ion-card-content>
-
 	</ion-card>
 </ion-content>

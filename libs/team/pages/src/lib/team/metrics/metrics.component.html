@@ -20,7 +20,7 @@
 					<a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
 					and/or
 					<a href="add-metric?team={{ team?.id }}" (click)="goAddMetric($event)"
-					>add your own</a
+						>add your own</a
 					>.
 				</p>
 			</ion-label>
@@ -54,11 +54,11 @@
 						<i style="padding-left: 1em" *ngIf="metric?.type === 'bool'">
 							<ion-text [color]="metricColor(metric.bool?.true)">{{
 								metricLabel(metric.bool?.true)
-								}}</ion-text>
+							}}</ion-text>
 							/
 							<ion-text [color]="metricColor(metric.bool?.false)">{{
 								metricLabel(metric.bool?.false)
-								}}</ion-text>
+							}}</ion-text>
 						</i>
 					</ng-container>
 				</ion-label>

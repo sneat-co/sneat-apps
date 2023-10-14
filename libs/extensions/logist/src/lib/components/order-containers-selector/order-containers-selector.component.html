@@ -2,8 +2,9 @@
 <!--	<ion-item-divider color="light">-->
 <!--		<ion-label>Containers</ion-label>-->
 <!--	</ion-item-divider>-->
-	<sneat-order-container-form *ngFor="let c of containers; trackBy: id"
-															[container]="c"
-															(toggled)="onToggled($event)"
-	></sneat-order-container-form>
+<sneat-order-container-form
+	*ngFor="let c of containers; trackBy: id"
+	[container]="c"
+	(toggled)="onToggled($event)"
+></sneat-order-container-form>
 <!--</ion-card>-->

@@ -3,7 +3,9 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="commune else titleNoCommune">Add dwelling @ {{commune.title}}</ion-title>
+		<ion-title *ngIf="commune; else titleNoCommune"
+			>Add dwelling @ {{ commune.title }}</ion-title
+		>
 		<ng-template #titleNoCommune>
 			<ion-title>Add dwelling</ion-title>
 		</ng-template>
@@ -49,7 +51,11 @@
 			</ion-item>
 		</ion-radio-group>
 		<div class="ion-padding">
-			<ion-button expand="full" [disabled]="isSubmitting" (click)="submitDwellingForm()">
+			<ion-button
+				expand="full"
+				[disabled]="isSubmitting"
+				(click)="submitDwellingForm()"
+			>
 				<ng-container *ngIf="!isSubmitting">Add dwelling</ng-container>
 				<ng-container *ngIf="isSubmitting">Adding dwelling...</ng-container>
 			</ion-button>

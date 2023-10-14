@@ -1,4 +1,5 @@
-<sneat-datagrid *ngIf="containerPoints?.length"
+<sneat-datagrid
+	*ngIf="containerPoints?.length"
 	[selectable]="1"
 	[data]="containerPoints"
 	[columns]="allCols"
@@ -6,4 +7,6 @@
 >
 </sneat-datagrid>
 
-<p *ngIf="!containerPoints?.length">No containers have been assigned to this point yet.</p>
+<p *ngIf="!containerPoints?.length">
+	No containers have been assigned to this point yet.
+</p>

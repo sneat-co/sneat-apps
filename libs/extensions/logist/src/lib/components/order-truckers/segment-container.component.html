@@ -1,19 +1,36 @@
 <ion-item class="sneat-no-end-padding" [class.deleting-list-item]="deleting">
-	<ion-label color="medium">{{container?.type}} #</ion-label>
+	<ion-label color="medium">{{ container?.type }} #</ion-label>
 	<ion-input readonly [value]="container?.number"></ion-input>
 	<ion-label color="medium" class="ion-padding-start">Departs</ion-label>
-	<ion-input type="date" [formControl]="departureDate" class="ion-margin-end"></ion-input>
+	<ion-input
+		type="date"
+		[formControl]="departureDate"
+		class="ion-margin-end"
+	></ion-input>
 	<ion-label color="medium" class="ion-padding-start">Arrives</ion-label>
 	<ion-input type="date" [formControl]="arrivalDate"></ion-input>
 	<ion-buttons slot="end">
-		<ion-button *ngIf="form.dirty" color="danger" title="Save changes" (click)="notImplemented()">
+		<ion-button
+			*ngIf="form.dirty"
+			color="danger"
+			title="Save changes"
+			(click)="notImplemented()"
+		>
 			<ion-icon name="save-outline"></ion-icon>
 		</ion-button>
-		<ion-button *ngIf="form.dirty" color="medium" title="Reset changes" (click)="resetChanges()">
+		<ion-button
+			*ngIf="form.dirty"
+			color="medium"
+			title="Reset changes"
+			(click)="resetChanges()"
+		>
 			<ion-icon name="stop-outline"></ion-icon>
 		</ion-button>
-		<ion-button *ngIf="!form.dirty" color="medium" (click)="delete()"
-								title="Remove container from this route"
+		<ion-button
+			*ngIf="!form.dirty"
+			color="medium"
+			(click)="delete()"
+			title="Remove container from this route"
 		>
 			<ion-icon name="close-outline"></ion-icon>
 		</ion-button>
@@ -23,4 +40,3 @@
 <!--		[form]="freightLoadForm"-->
 <!--		(keyUpEnter)="saveChanges()"-->
 <!--	></sneat-freight-load-form>-->
-

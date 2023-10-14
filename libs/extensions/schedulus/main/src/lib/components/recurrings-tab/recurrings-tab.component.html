@@ -10,37 +10,52 @@
 </ng-template>
 <ng-container *ngIf="allRecurrings; else loading">
 	<ion-item *ngIf="!!numberOfHidden" class="ion-margin sneat-no-end-padding">
-		<ion-label color="medium" *ngIf="numberOfHidden === 1">{{numberOfHidden}} out of {{allRecurrings.length}}
-			happenings
-			is hidden by filter.
+		<ion-label color="medium" *ngIf="numberOfHidden === 1"
+			>{{ numberOfHidden }} out of {{ allRecurrings.length }}
+			happenings is hidden by filter.
 		</ion-label>
-		<ion-label color="medium" *ngIf="numberOfHidden > 1">{{numberOfHidden}} out of {{allRecurrings.length}} happenings
-			are hidden by filter.
+		<ion-label color="medium" *ngIf="numberOfHidden > 1"
+			>{{ numberOfHidden }} out of {{ allRecurrings.length }} happenings are
+			hidden by filter.
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button fill="clear" (click)="resetFilter($event)">
-				<ion-icon slot="start" name="close-circle-outline" color="medium"></ion-icon>
+				<ion-icon
+					slot="start"
+					name="close-circle-outline"
+					color="medium"
+				></ion-icon>
 				<ion-label color="medium">Reset filter</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 
 	<ion-item *ngIf="allRecurrings && !allRecurrings.length; else list">
-		<ion-label class="ion-text-wrap" color="danger">No recurring activities have been added yet.</ion-label>
+		<ion-label class="ion-text-wrap" color="danger"
+			>No recurring activities have been added yet.</ion-label
+		>
 		<ion-buttons slot="end">
-			<ion-button color="primary" style="text-transform: none"
-									routerLink="../new-happening" [queryParams]="{type: 'recurring'}"
+			<ion-button
+				color="primary"
+				style="text-transform: none"
+				routerLink="../new-happening"
+				[queryParams]="{ type: 'recurring' }"
 			>
-				<ion-icon name="duplicate-outline" color="medium" slot="start"></ion-icon>
+				<ion-icon
+					name="duplicate-outline"
+					color="medium"
+					slot="start"
+				></ion-icon>
 				<ion-label>Add 1st recurring</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 
 	<ng-template #list>
-		<sneat-happening-card *ngFor="let recurring of recurrings || []; trackBy: id"
-													[happening]="recurring"
-													[team]="team"
+		<sneat-happening-card
+			*ngFor="let recurring of recurrings || []; trackBy: id"
+			[happening]="recurring"
+			[team]="team"
 		></sneat-happening-card>
 	</ng-template>
 </ng-container>

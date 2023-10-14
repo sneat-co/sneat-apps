@@ -3,7 +3,12 @@
 		<ion-label>Roles</ion-label>
 	</ion-item-divider>
 	<ion-item *ngFor="let role of roles">
-		<ion-checkbox [value]="role.id" [checked]="selectedRoles.includes(role.id)"  slot="start" (ionChange)="onRoleChanged($event)"></ion-checkbox>
-		<ion-label>{{role.title}}</ion-label>
+		<ion-checkbox
+			[value]="role.id"
+			[checked]="selectedRoles.includes(role.id)"
+			slot="start"
+			(ionChange)="onRoleChanged($event)"
+		></ion-checkbox>
+		<ion-label>{{ role.title }}</ion-label>
 	</ion-item>
 </ion-card>

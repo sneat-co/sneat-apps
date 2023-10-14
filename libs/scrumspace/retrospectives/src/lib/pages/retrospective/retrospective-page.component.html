@@ -4,9 +4,9 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title>
-			{{title}}
+			{{ title }}
 			<ng-container *ngIf="team">
-				@ {{team.data?.title || team.id}}
+				@ {{ team.data?.title || team.id }}
 			</ng-container>
 		</ion-title>
 	</ion-toolbar>

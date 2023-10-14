@@ -6,11 +6,18 @@
 <ion-content>
 	<ion-card>
 		<p *ngIf="!emailFromStorage">
-			Welcome to our app! For your safety please re-type your email address to sign-in.
+			Welcome to our app! For your safety please re-type your email address to
+			sign-in.
 		</p>
 		<ion-item>
 			<ion-icon name="mail-outline" slot="start"></ion-icon>
-			<ion-input label="Email" [required]="true" [readonly]="isSigning" [value]="email" [disabled]="emailFromStorage || isSigning"></ion-input>
+			<ion-input
+				label="Email"
+				[required]="true"
+				[readonly]="isSigning"
+				[value]="email"
+				[disabled]="emailFromStorage || isSigning"
+			></ion-input>
 		</ion-item>
 
 		<ion-button [disabled]="isSigning" (click)="signIn()">

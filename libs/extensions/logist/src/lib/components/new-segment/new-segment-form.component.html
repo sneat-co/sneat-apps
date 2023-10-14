@@ -1,6 +1,6 @@
 <ion-card *ngIf="container">
 	<ion-item>
-		<ion-label>Container: {{container.type}}</ion-label>
+		<ion-label>Container: {{ container.type }}</ion-label>
 	</ion-item>
 </ion-card>
 
@@ -16,7 +16,8 @@
 		[contact]="byContact"
 		[refNumber]="byRefNumber"
 		(contactChange)="onByContactChanged($event)"
-		(refNumberChange)="onByRefNumberChanged($event)">
+		(refNumberChange)="onByRefNumberChanged($event)"
+	>
 	</sneat-contact-with-ref-num>
 
 	<!--	<sneat-contact-input-->
@@ -41,8 +42,6 @@
 	<!--				</ion-col>-->
 	<!--			</ion-row>-->
 	<!--		</ion-grid>-->
-
-
 </ion-card>
 
 <ion-grid class="ion-grid-layout">
@@ -84,15 +83,22 @@
 	</ion-row>
 </ion-grid>
 
-<sneat-order-containers-selector *ngIf="!container"
-																 [order]="order"
-																 (selectedContainersChange)="onSelectedContainersChanged($event)">
-></sneat-order-containers-selector>
+<sneat-order-containers-selector
+	*ngIf="!container"
+	[order]="order"
+	(selectedContainersChange)="onSelectedContainersChanged($event)"
+>
+	></sneat-order-containers-selector
+>
 
 <div class="ion-padding">
 	<ion-button (click)="submitAddSegment($event)">Add segment</ion-button>
-	<ion-button *ngIf="isInModal" color="medium" fill="clear" class="ion-margin-start" (click)="canceled.emit()">Cancel
+	<ion-button
+		*ngIf="isInModal"
+		color="medium"
+		fill="clear"
+		class="ion-margin-start"
+		(click)="canceled.emit()"
+		>Cancel
 	</ion-button>
 </div>
-
-

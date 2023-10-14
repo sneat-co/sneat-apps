@@ -1,32 +1,41 @@
 <ion-card>
 	<ion-list>
-		<sneat-country-selector [countryID]="vehicleAsset?.brief?.countryID"
-														[readonly]="!!vehicleAsset?.brief?.countryID"
-														label="Country of registration"
-														(countryIDChange)="countryChanged($event)"
+		<sneat-country-selector
+			[countryID]="vehicleAsset?.brief?.countryID"
+			[readonly]="!!vehicleAsset?.brief?.countryID"
+			label="Country of registration"
+			(countryIDChange)="countryChanged($event)"
 		></sneat-country-selector>
-		<sneat-asset-reg-number [team]="team" [asset]="vehicleAsset"></sneat-asset-reg-number>
+		<sneat-asset-reg-number
+			[team]="team"
+			[asset]="vehicleAsset"
+		></sneat-asset-reg-number>
 	</ion-list>
 </ion-card>
 
 <ion-card>
-	<sneat-make-model-card *ngIf="vehicleAsset?.dto?.type && vehicleAsset?.dto?.countryID"
-												 [assetType]="vehicleAsset?.dto?.type"
-												 [make]="vehicleAsset?.dto?.make"
-												 [model]="vehicleAsset?.dto?.model"
-												 (makeChange)="makeChanged($event)"
-												 (modelChange)="modelChanged($event)"
+	<sneat-make-model-card
+		*ngIf="vehicleAsset?.dto?.type && vehicleAsset?.dto?.countryID"
+		[assetType]="vehicleAsset?.dto?.type"
+		[make]="vehicleAsset?.dto?.make"
+		[model]="vehicleAsset?.dto?.model"
+		(makeChange)="makeChanged($event)"
+		(modelChange)="modelChanged($event)"
 	></sneat-make-model-card>
 	<ng-container *ngIf="vehicleAsset?.dto?.model">
 		<ion-item-divider>
 			<ion-label>Engine</ion-label>
 		</ion-item-divider>
-		<sneat-vehicle-engine [vehicleAsset]="vehicleAsset" (vehicleAssetChange)="onAssetChanged($event)">
+		<sneat-vehicle-engine
+			[vehicleAsset]="vehicleAsset"
+			(vehicleAssetChange)="onAssetChanged($event)"
+		>
 		</sneat-vehicle-engine>
 	</ng-container>
 </ion-card>
 
-<sneat-asset-possession-card *ngIf="vehicleAsset?.dto?.model"
-														 [asset]="vehicleAsset"
-														 (assetChange)="onAssetChanged($event)"
+<sneat-asset-possession-card
+	*ngIf="vehicleAsset?.dto?.model"
+	[asset]="vehicleAsset"
+	(assetChange)="onAssetChanged($event)"
 ></sneat-asset-possession-card>

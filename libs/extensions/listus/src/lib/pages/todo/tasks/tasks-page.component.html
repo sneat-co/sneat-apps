@@ -5,7 +5,7 @@
 		</ion-buttons>
 		<ion-title>
 			ToDo
-			<ng-container *ngIf="commune">@ {{commune.title}}</ng-container>
+			<ng-container *ngIf="commune">@ {{ commune.title }}</ng-container>
 		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button title="Add ToDo" (click)="goNew()">
@@ -16,7 +16,6 @@
 </ion-header>
 
 <ion-content>
-
 	<ion-segment>
 		<ion-segment-button>
 			<ion-label>
@@ -45,7 +44,10 @@
 				<ion-label>
 					<h2>Peugeot 307sw</h2>
 					<p>
-						It's time to <a href="https://www.google.ie/search?q=change+oil" target="_blank">change oil</a>.
+						It's time to
+						<a href="https://www.google.ie/search?q=change+oil" target="_blank"
+							>change oil</a
+						>.
 					</p>
 				</ion-label>
 				<ion-button color="medium" fill="outline">€20-€40</ion-button>

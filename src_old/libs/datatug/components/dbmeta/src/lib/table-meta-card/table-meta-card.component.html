@@ -8,7 +8,7 @@
 		<ion-label><b>Table</b></ion-label>
 		<ion-select [value]="meta?.name">
 			<ion-select-option [value]="meta?.name">{{
-				meta?.name || 'Loading...'
+				meta?.name || "Loading..."
 			}}</ion-select-option>
 		</ion-select>
 	</ion-item>
@@ -76,7 +76,7 @@
 		<ion-item>
 			<ion-label *ngIf="meta?.primaryKey">
 				Primary key: {{ meta.primaryKey.name }} ({{
-					meta.primaryKey.columns?.join(', ')
+					meta.primaryKey.columns?.join(", ")
 				}})
 			</ion-label>
 		</ion-item>
@@ -98,7 +98,7 @@
 						<h3>
 							<ion-text color="medium">{{ fk.name }}</ion-text>
 						</h3>
-						{{ fk.columns?.join(', ') }} => <b>{{ fk.refTable?.name }}</b>
+						{{ fk.columns?.join(", ") }} => <b>{{ fk.refTable?.name }}</b>
 					</ion-label>
 					<ion-buttons slot="end">
 						<ion-button>JOIN</ion-button>
@@ -115,7 +115,7 @@
 					<ion-label>
 						<h3>{{ referencedBy.schema }}.{{ referencedBy.name }}</h3>
 						<ion-text color="medium" [title]="referencedBy.foreignKeys[0].name">
-							({{ referencedBy.foreignKeys[0].columns.join(', ') }})
+							({{ referencedBy.foreignKeys[0].columns.join(", ") }})
 						</ion-text>
 					</ion-label>
 					<ion-buttons slot="end">

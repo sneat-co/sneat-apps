@@ -9,18 +9,25 @@
 
 <ion-content>
 	<ion-item>
-		<ion-input debounce="1000" placeholder="Type to search or add custom" [(ngModel)]="searchText"
-					  (ionChange)="find()"></ion-input>
+		<ion-input
+			debounce="1000"
+			placeholder="Type to search or add custom"
+			[(ngModel)]="searchText"
+			(ionChange)="find()"
+		></ion-input>
 		<ion-buttons slot="end">
 			<ion-button>Add</ion-button>
 		</ion-buttons>
 	</ion-item>
 
 	<ion-list *ngIf="movies">
-		<sneat-movie-card (goMovie)="goMoviePage($event)"
-								[movie]="movie" [showWatchedMovies]="showWatched"
-								(addToWatchlist)="addListItem($event)"
-								*ngFor="let movie of movies"></sneat-movie-card>
+		<sneat-movie-card
+			(goMovie)="goMoviePage($event)"
+			[movie]="movie"
+			[showWatchedMovies]="showWatched"
+			(addToWatchlist)="addListItem($event)"
+			*ngFor="let movie of movies"
+		></sneat-movie-card>
 		<!--        <ion-item-sliding *ngFor="let movie of movies">-->
 		<!--            <ion-item>-->
 		<!--                <ion-label>{{movie.title}}</ion-label>-->

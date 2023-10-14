@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="team?.brief || team?.type else titleNoCommune">
+		<ion-title *ngIf="team?.brief || team?.type; else titleNoCommune">
 			<ng-container *ngIf="member.type === 'animal'; else ageGroupTitle">
 				New pet
 			</ng-container>
@@ -12,30 +12,33 @@
 					New member
 				</ng-container>
 				<ng-template #hasAgeGroup>
-					<ng-container *ngIf="member.ageGroup === 'child'">New child</ng-container>
-					<ng-container *ngIf="member.ageGroup === 'adult'">New adult</ng-container>
+					<ng-container *ngIf="member.ageGroup === 'child'"
+						>New child</ng-container
+					>
+					<ng-container *ngIf="member.ageGroup === 'adult'"
+						>New adult</ng-container
+					>
 				</ng-template>
 			</ng-template>
-			@ {{team.brief?.title || team.type }}
+			@ {{ team.brief?.title || team.type }}
 		</ion-title>
 		<ng-template #titleNoCommune>New member</ng-template>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-
 	<ion-segment [(ngModel)]="tab" *ngIf="team.id && team.type !== 'family'">
 		<ion-segment-button value="mass">
-			Mass invite [{{team.id}} - {{team.type}}]
+			Mass invite [{{ team.id }} - {{ team.type }}]
 		</ion-segment-button>
 		<ion-segment-button value="personal">Personal invite</ion-segment-button>
 	</ion-segment>
 
-	<sneat-new-member-form *ngIf="tab === 'personal'"
-												 [team]="team"
-												 [(member)]="member"
+	<sneat-new-member-form
+		*ngIf="tab === 'personal'"
+		[team]="team"
+		[(member)]="member"
 	></sneat-new-member-form>
-
 
 	<ion-card *ngIf="tab === 'mass'">
 		<ion-card-content>
@@ -43,13 +46,11 @@
 
 			<p>
 				<b>Or</b> you can send
-				<a href="" (click)="tab = 'personal'; $event.preventDefault();"
-				>personal invite</a
+				<a href="" (click)="tab = 'personal'; $event.preventDefault()"
+					>personal invite</a
 				>
 				by email.
 			</p>
 		</ion-card-content>
 	</ion-card>
-
 </ion-content>
-

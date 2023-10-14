@@ -1,6 +1,6 @@
 <ion-item-group>
 	<ion-item color="primary" *ngIf="isModal" class="sneat-tiny-end-padding">
-		<ion-label>{{happening?.brief?.title}}</ion-label>
+		<ion-label>{{ happening?.brief?.title }}</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="close($event)" title="Close">
 				<ion-icon name="close"></ion-icon>
@@ -22,7 +22,15 @@
 		<ion-textarea></ion-textarea>
 	</ion-item>
 	<div class="ion-padding" *ngIf="isModal">
-		<ion-button color="primary" size="large" (click)="save($event)">Save changes</ion-button>
-		<ion-button color="danger" fill="clear" class="ion-margin-horizontal" (click)="close($event)">Cancel</ion-button>
+		<ion-button color="primary" size="large" (click)="save($event)"
+			>Save changes</ion-button
+		>
+		<ion-button
+			color="danger"
+			fill="clear"
+			class="ion-margin-horizontal"
+			(click)="close($event)"
+			>Cancel</ion-button
+		>
 	</div>
 </ion-item-group>

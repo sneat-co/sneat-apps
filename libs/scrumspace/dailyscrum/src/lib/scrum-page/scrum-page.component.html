@@ -2,7 +2,7 @@
 	<ion-toolbar>
 		<ion-title
 			>Scrum
-			<ng-container *ngIf="team?.data">@ {{team.data.title}}</ng-container>
+			<ng-container *ngIf="team?.data">@ {{ team.data.title }}</ng-container>
 		</ion-title>
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
@@ -19,14 +19,22 @@
 					size="medium"
 					fill="solid"
 					color="primary"
-					[title]="timerState?.status === 'active' ? 'Stop timer' : 'Start time'"
+					[title]="
+						timerState?.status === 'active' ? 'Stop timer' : 'Start time'
+					"
 					(click)="toggleScrumTimer()"
 					[disabled]="!scrum || timerState?.isToggling"
 				>
 					<ion-icon
 						slot="start"
 						name="play-outline"
-						*ngIf="scrum && (!timerState || timerState && !timerState.isToggling && (!timerState.status || timerState.status === 'stopped'))"
+						*ngIf="
+							scrum &&
+							(!timerState ||
+								(timerState &&
+									!timerState.isToggling &&
+									(!timerState.status || timerState.status === 'stopped')))
+						"
 					></ion-icon>
 					<ion-icon
 						slot="start"
@@ -34,12 +42,19 @@
 						*ngIf="!timerState?.isToggling && timerState?.status === 'active'"
 					></ion-icon>
 					<ion-label
-						*ngIf="timerState?.status === 'active' || timerState?.elapsedSeconds"
+						*ngIf="
+							timerState?.status === 'active' || timerState?.elapsedSeconds
+						"
 					>
-						Elapsed: {{totalElapsed}}
+						Elapsed: {{ totalElapsed }}
 					</ion-label>
 					<ion-label
-						*ngIf="scrum && (!timerState || timerState?.status !== 'active' && !timerState?.elapsedSeconds)"
+						*ngIf="
+							scrum &&
+							(!timerState ||
+								(timerState?.status !== 'active' &&
+									!timerState?.elapsedSeconds))
+						"
 					>
 						Start timer
 					</ion-label>
@@ -58,12 +73,12 @@
 			</ion-buttons>
 			<ion-label></ion-label>
 			<ion-buttons slot="end">
-				<ion-button disabled>{{scrumDate?.toDateString()}}</ion-button>
+				<ion-button disabled>{{ scrumDate?.toDateString() }}</ion-button>
 				<ion-button
 					color="primary"
 					[title]="prevScrumTitle"
 					(click)="changeDate('prev')"
-					[disabled]="!(prevScrumID)"
+					[disabled]="!prevScrumID"
 				>
 					<ion-icon name="chevron-back-outline"></ion-icon>
 				</ion-button>
@@ -106,17 +121,17 @@
 		<ion-segment-button value="risks">
 			<ion-label color="danger">
 				Risks
-				<ion-badge color="danger" *ngIf="scrum?.risksCount"
-					>{{scrum?.risksCount}}</ion-badge
-				>
+				<ion-badge color="danger" *ngIf="scrum?.risksCount">{{
+					scrum?.risksCount
+				}}</ion-badge>
 			</ion-label>
 		</ion-segment-button>
 		<ion-segment-button value="qna">
 			<ion-label>
 				Q&A
-				<ion-badge color="primary" *ngIf="scrum?.questionsCount"
-					>{{scrum?.questionsCount}}</ion-badge
-				>
+				<ion-badge color="primary" *ngIf="scrum?.questionsCount">{{
+					scrum?.questionsCount
+				}}</ion-badge>
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>
@@ -130,7 +145,7 @@
 				[scrumId]="scrumID"
 				[member]="memberStatus?.member"
 				[taskType]="taskType"
-				[tasks]="memberStatus?.byType && memberStatus?.byType[taskType] || []"
+				[tasks]="(memberStatus?.byType && memberStatus?.byType[taskType]) || []"
 				[hideTitle]="false"
 			></app-scrum-tasks>
 
@@ -204,34 +219,44 @@
 										<ion-range
 											#range
 											[(ngModel)]="metric.value"
-											[color]="range.value < 80 ? 'danger' : 'primary' "
+											[color]="range.value < 80 ? 'danger' : 'primary'"
 											pin="true"
 											snaps="true"
 											ticks="true"
-											*ngIf="metric.type === 'int' && metric.min !== undefined && metric.max !== undefined"
+											*ngIf="
+												metric.type === 'int' &&
+												metric.min !== undefined &&
+												metric.max !== undefined
+											"
 											[min]="metric.min"
 											[max]="metric.max"
 										>
-											<ion-label>{{metric.title}}: {{range.value}}</ion-label>
+											<ion-label
+												>{{ metric.title }}: {{ range.value }}</ion-label
+											>
 										</ion-range>
 									</ng-container>
 									<ng-container *ngSwitchCase="'bool'">
 										<ion-label>
-											{{metric.title}}:
+											{{ metric.title }}:
 											<ion-text
 												[color]="metric.bool.true.color"
 												*ngIf="metric.value"
-												>{{metric.bool.true.label}}</ion-text
+												>{{ metric.bool.true.label }}</ion-text
 											>
 											<ion-text
 												[color]="metric.bool.false.color"
 												*ngIf="!metric.value"
-												>{{metric.bool.false.label}}</ion-text
+												>{{ metric.bool.false.label }}</ion-text
 											>
 										</ion-label>
 										<ion-toggle
 											slot="start"
-											[color]="metric.value ? metric.bool.true.color : metric.bool.false.color"
+											[color]="
+												metric.value
+													? metric.bool.true.color
+													: metric.bool.false.color
+											"
 											[(ngModel)]="metric.value"
 											*ngIf="metric.type === 'bool'"
 										>
@@ -258,7 +283,7 @@
 							There is 1 follower for your scrums.
 						</ng-container>
 						<ng-container *ngSwitchDefault>
-							There is {{spectators.length}} followers for your scrums.
+							There is {{ spectators.length }} followers for your scrums.
 						</ng-container>
 					</ion-label>
 				</ion-item>
@@ -296,9 +321,9 @@
 				>
 					<ng-container *ngIf="status.byType?.risk?.length">
 						<ion-item-divider>
-							<ion-label style="font-weight: bold" color="dark"
-								>{{status.member.title}}</ion-label
-							>
+							<ion-label style="font-weight: bold" color="dark">{{
+								status.member.title
+							}}</ion-label>
 						</ion-item-divider>
 						<app-scrum-tasks
 							[currentMemberId]="userMemberId"
@@ -327,9 +352,9 @@
 				>
 					<ng-container *ngIf="status.byType?.qna?.length">
 						<ion-item-divider>
-							<ion-label style="font-weight: bold" color="dark"
-								>{{status.member.title}}</ion-label
-							>
+							<ion-label style="font-weight: bold" color="dark">{{
+								status.member.title
+							}}</ion-label>
 						</ion-item-divider>
 						<app-scrum-tasks
 							[currentMemberId]="userMemberId"

@@ -1,4 +1,5 @@
-<sneat-select-from-list *ngIf="!vehicleAsset?.dto?.engineType"
+<sneat-select-from-list
+	*ngIf="!vehicleAsset?.dto?.engineType"
 	label="Engine type"
 	[items]="engineTypes"
 	(changed)="onEngineTypeChanged($event)"

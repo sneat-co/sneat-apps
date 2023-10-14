@@ -3,19 +3,27 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="list?.brief else noTitle">
-			<ng-container *ngIf="list?.brief?.emoji"><span style="margin-right: 0.3em">{{list?.brief?.emoji}}</span>
+		<ion-title *ngIf="list?.brief; else noTitle">
+			<ng-container *ngIf="list?.brief?.emoji"
+				><span style="margin-right: 0.3em">{{ list?.brief?.emoji }}</span>
 			</ng-container>
 			<ng-container [ngSwitch]="list?.brief?.type">
 				<ng-container *ngSwitchCase="'to-buy'">
 					<ng-container *ngIf="!list?.brief?.emoji">🛒</ng-container>
-					{{list?.brief?.title}} to buy
+					{{ list?.brief?.title }} to buy
 				</ng-container>
-				<ng-container *ngSwitchCase="'to-cook'">{{list?.brief?.title}} to cook</ng-container>
-				<ng-container *ngSwitchCase="'recipes'">{{list?.brief?.title}}</ng-container>
-				<ng-container *ngSwitchCase="'to-watch'">To watch: {{list?.brief?.title}}</ng-container>
+				<ng-container *ngSwitchCase="'to-cook'"
+					>{{ list?.brief?.title }} to cook</ng-container
+				>
+				<ng-container *ngSwitchCase="'recipes'">{{
+					list?.brief?.title
+				}}</ng-container>
+				<ng-container *ngSwitchCase="'to-watch'"
+					>To watch: {{ list?.brief?.title }}</ng-container
+				>
 				<ng-container *ngSwitchDefault>
-					<span *ngIf="listGroupTitle">{{listGroupTitle}}: </span> {{list?.brief?.title}}
+					<span *ngIf="listGroupTitle">{{ listGroupTitle }}: </span>
+					{{ list?.brief?.title }}
 				</ng-container>
 			</ng-container>
 		</ion-title>
@@ -30,16 +38,25 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content class="cardy">
-	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img">
+	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img" />
 
-<!--	<div class="ion-padding-top ion-padding-horizontal">-->
-<!--	</div>-->
+	<!--	<div class="ion-padding-top ion-padding-horizontal">-->
+	<!--	</div>-->
 
 	<ion-card>
-		<ion-segment [(ngModel)]="doneFilter" (ionChange)="onIsDoneFilterChanged($event)">
-			<ion-segment-button value="all" style="text-transform: none">All</ion-segment-button>
-			<ion-segment-button value="active" style="text-transform: none">Active</ion-segment-button>
-			<ion-segment-button value="completed" style="text-transform: none">Completed</ion-segment-button>
+		<ion-segment
+			[(ngModel)]="doneFilter"
+			(ionChange)="onIsDoneFilterChanged($event)"
+		>
+			<ion-segment-button value="all" style="text-transform: none"
+				>All</ion-segment-button
+			>
+			<ion-segment-button value="active" style="text-transform: none"
+				>Active</ion-segment-button
+			>
+			<ion-segment-button value="completed" style="text-transform: none"
+				>Completed</ion-segment-button
+			>
 		</ion-segment>
 		<!--		<div class="segment" [ngSwitch]="list?.brief?.type">-->
 		<!--			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">-->
@@ -65,10 +82,20 @@
 		<!--			</ion-segment>-->
 		<!--		</div>-->
 
-
-		<ion-item color="light" class="ion-item-no-border" *ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1">
-			<ion-label slot="end" color="medium" style="font-size: smaller">List mode:</ion-label>
-			<ion-select slot="end" interface="popover" [(ngModel)]="listMode" style="font-size: smaller">
+		<ion-item
+			color="light"
+			class="ion-item-no-border"
+			*ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1"
+		>
+			<ion-label slot="end" color="medium" style="font-size: smaller"
+				>List mode:</ion-label
+			>
+			<ion-select
+				slot="end"
+				interface="popover"
+				[(ngModel)]="listMode"
+				style="font-size: smaller"
+			>
 				<ion-select-option value="reorder">Reorder</ion-select-option>
 				<ion-select-option value="swipe">Swipe</ion-select-option>
 			</ion-select>
@@ -83,9 +110,11 @@
 		<!--		</ng-container>-->
 
 		<ion-list>
-
-			<ion-reorder-group (ionItemReorder)="reorder($event)"
-												 [disabled]="isReordering || listMode !== 'reorder' || doneFilter !== 'all'"
+			<ion-reorder-group
+				(ionItemReorder)="reorder($event)"
+				[disabled]="
+					isReordering || listMode !== 'reorder' || doneFilter !== 'all'
+				"
 			>
 				<ion-reorder *ngFor="let item of listItems; trackBy: itemId">
 					<sneat-list-item
@@ -103,35 +132,55 @@
 			</ion-reorder-group>
 		</ion-list>
 
-		<ng-container *ngIf="segment !== 'settings' && listType !== 'to-watch' && listType !== 'recipes'">
-			<sneat-new-list-item [team]="team" [list]="list" [isDone]="doneFilter === 'completed'" [disabled]="isPersisting"
-													 #newListItem>
+		<ng-container
+			*ngIf="
+				segment !== 'settings' &&
+				listType !== 'to-watch' &&
+				listType !== 'recipes'
+			"
+		>
+			<sneat-new-list-item
+				[team]="team"
+				[list]="list"
+				[isDone]="doneFilter === 'completed'"
+				[disabled]="isPersisting"
+				#newListItem
+			>
 			</sneat-new-list-item>
 		</ng-container>
 	</ion-card>
-
 
 	<ng-container [ngSwitch]="segment">
 		<div *ngSwitchCase="'discover'">
 			<div class="ion-padding" *ngIf="listType === 'to-watch'">
 				<h1>Discover good movies</h1>
-				<p>We give you recommendations based on what you added previously to this watchlist and your rating to the
-					watched movies.</p>
+				<p>
+					We give you recommendations based on what you added previously to this
+					watchlist and your rating to the watched movies.
+				</p>
 				<p>The more movies you rate the better recommendations we can give.</p>
-				<p>Recommendations in your personal watchlist and in kids watchlist would be different so it's safe to use
-					with your family.</p>
+				<p>
+					Recommendations in your personal watchlist and in kids watchlist would
+					be different so it's safe to use with your family.
+				</p>
 				<ion-button expand="full">Got it, show recommendations</ion-button>
 			</div>
 			<div class="ion-padding" *ngIf="listType === 'recipes'">
 				<h1>Discover great recipes</h1>
-				<p>We give you recommendations based on your rating to previous recipes in this list.</p>
+				<p>
+					We give you recommendations based on your rating to previous recipes
+					in this list.
+				</p>
 				<p>The more recipes you rate the better recommendations we can give.</p>
 				<ion-button expand="full">Got it, show recommendations</ion-button>
 			</div>
 		</div>
 	</ng-container>
 
-	<sneat-shared-with *ngIf="segment === 'settings'" title="This list is shared with"></sneat-shared-with>
+	<sneat-shared-with
+		*ngIf="segment === 'settings'"
+		title="This list is shared with"
+	></sneat-shared-with>
 
 	<ng-container *ngIf="segment === 'list' && listItems">
 		<div class="ion-padding" style="text-align: center">
@@ -140,38 +189,86 @@
 					<span class="hint-sentence"> Swipe left to remove item.</span>
 					<span class="hint-sentence">Swipe right to mark as completed.</span>
 					<span class="hint-sentence" *ngIf="(allListItems?.length || 0) > 1">
-						Switch to <a href="#edit-mode:reorder" (click)="setEditMode($event, 'reorder')">reorder mode</a> to sort.
+						Switch to
+						<a
+							href="#edit-mode:reorder"
+							(click)="setEditMode($event, 'reorder')"
+							>reorder mode</a
+						>
+						to sort.
 					</span>
 				</ng-container>
 				<ng-container *ngIf="listMode === 'reorder'">
 					<span class="hint-sentence">Drag & drop to reorder.</span>
-					<span class="hint-sentence">Switch to <a href="#edit-mode:swipe" fill="clear"
-																									 (click)="setEditMode($event, 'swipe')">swipe mode</a> to edit.</span>
+					<span class="hint-sentence"
+						>Switch to
+						<a
+							href="#edit-mode:swipe"
+							fill="clear"
+							(click)="setEditMode($event, 'swipe')"
+							>swipe mode</a
+						>
+						to edit.</span
+					>
 				</ng-container>
 			</ion-text>
 		</div>
 		<ion-grid>
 			<ion-row>
 				<ion-col>
-					<ion-button [disabled]="performing" color="light" expand="full"
-											(click)="reactivateCompleted()"
+					<ion-button
+						[disabled]="performing"
+						color="light"
+						expand="full"
+						(click)="reactivateCompleted()"
 					>
-						<ion-icon *ngIf="performing !== 'reactivating completed'" name="refresh-outline" slot="start"></ion-icon>
-						<ion-spinner *ngIf="performing === 'reactivating completed'" slot="start"></ion-spinner>
+						<ion-icon
+							*ngIf="performing !== 'reactivating completed'"
+							name="refresh-outline"
+							slot="start"
+						></ion-icon>
+						<ion-spinner
+							*ngIf="performing === 'reactivating completed'"
+							slot="start"
+						></ion-spinner>
 						<ion-label>Reactivate completed</ion-label>
 					</ion-button>
 				</ion-col>
 				<ion-col *ngIf="doneFilter !== 'active'">
-					<ion-button [disabled]="performing" color="warning" expand="full" (click)="deleteCompleted()">
-						<ion-icon *ngIf="performing !== 'deleting completed'" name="trash-outline" slot="start"></ion-icon>
-						<ion-spinner *ngIf="performing === 'deleting completed'" slot="start"></ion-spinner>
+					<ion-button
+						[disabled]="performing"
+						color="warning"
+						expand="full"
+						(click)="deleteCompleted()"
+					>
+						<ion-icon
+							*ngIf="performing !== 'deleting completed'"
+							name="trash-outline"
+							slot="start"
+						></ion-icon>
+						<ion-spinner
+							*ngIf="performing === 'deleting completed'"
+							slot="start"
+						></ion-spinner>
 						<ion-label>Delete completed</ion-label>
 					</ion-button>
 				</ion-col>
 				<ion-col *ngIf="doneFilter === 'all'">
-					<ion-button [disabled]="performing" color="danger" expand="full" (click)="deleteAll()">
-						<ion-icon *ngIf="performing !== 'clear list'" name="trash-bin-outline" slot="start"></ion-icon>
-						<ion-spinner *ngIf="performing === 'clear list'" slot="start"></ion-spinner>
+					<ion-button
+						[disabled]="performing"
+						color="danger"
+						expand="full"
+						(click)="deleteAll()"
+					>
+						<ion-icon
+							*ngIf="performing !== 'clear list'"
+							name="trash-bin-outline"
+							slot="start"
+						></ion-icon>
+						<ion-spinner
+							*ngIf="performing === 'clear list'"
+							slot="start"
+						></ion-spinner>
 						<ion-label>Clear list</ion-label>
 					</ion-button>
 				</ion-col>
@@ -186,8 +283,11 @@
 			</ion-button>
 		</div>
 	</ng-container>
-	<div *ngIf="segment === 'cards' && list?.dto?.items" [ngSwitch]="list?.brief?.type"
-			 style="padding-top: 0.5em; padding-bottom: 0.5em">
+	<div
+		*ngIf="segment === 'cards' && list?.dto?.items"
+		[ngSwitch]="list?.brief?.type"
+		style="padding-top: 0.5em; padding-bottom: 0.5em"
+	>
 		<ng-container *ngSwitchCase="'watch'">
 			<!--			<sneat-movie-card *ngFor="let listItem of filteredListItems; trackBy: itemId"-->
 			<!--												[movie]="listItem"-->
@@ -199,34 +299,51 @@
 			<!--			></sneat-movie-card>-->
 		</ng-container>
 		<ng-container *ngSwitchDefault>
-			<ion-card *ngFor="let item of listItems; trackBy: itemId"
-								button
-								(click)="goListItem(item.brief)"
+			<ion-card
+				*ngFor="let item of listItems; trackBy: itemId"
+				button
+				(click)="goListItem(item.brief)"
 			>
-
-				<img alt="Item image" *ngIf="item.brief.img" [src]="item.brief.img">
+				<img alt="Item image" *ngIf="item.brief.img" [src]="item.brief.img" />
 				<ion-card-content>
-					<h2>{{item.brief.title}}</h2>
+					<h2>{{ item.brief.title }}</h2>
 					Short description here
 				</ion-card-content>
 			</ion-card>
 		</ng-container>
 	</div>
 </ion-content>
-<ion-footer *ngIf="(segment === 'list' || segment === 'cards') && list?.brief?.type === 'to-watch'">
+<ion-footer
+	*ngIf="
+		(segment === 'list' || segment === 'cards') &&
+		list?.brief?.type === 'to-watch'
+	"
+>
 	<ion-toolbar>
 		<ion-grid class="grid-layout">
 			<ion-row>
 				<ion-col size="6">
 					<ion-item (click)="clickShowWatchedMovies()">
 						<!--						<ion-checkbox slot="start" (click)="clickShowWatchedMovies()"></ion-checkbox>-->
-						<ion-icon slot="start" *ngIf="!isHideWatched" name="square-outline"></ion-icon>
-						<ion-icon slot="start" *ngIf="isHideWatched" name="checkbox-outline"></ion-icon>
+						<ion-icon
+							slot="start"
+							*ngIf="!isHideWatched"
+							name="square-outline"
+						></ion-icon>
+						<ion-icon
+							slot="start"
+							*ngIf="isHideWatched"
+							name="checkbox-outline"
+						></ion-icon>
 						<ion-text>Hide watched</ion-text>
 					</ion-item>
 				</ion-col>
 				<ion-col size="6">
-					<ion-button expand="full" fill="clear" (click)="removeIsWatchedFromWatchlist()">
+					<ion-button
+						expand="full"
+						fill="clear"
+						(click)="removeIsWatchedFromWatchlist()"
+					>
 						Delete watched
 					</ion-button>
 				</ion-col>

@@ -1,36 +1,68 @@
-<ion-item-group *ngFor="let contactGroup of contactGroups; trackBy: id" @listItem>
-    <ion-item-divider color="light">
-        <ion-label>{{contactGroup.title}}</ion-label>
-        <ion-buttons slot="end">
-            <ion-button (click)="addContact($event, contactGroup.id)">
-                <ion-icon name="add"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-item-divider>
-    <ng-container *ngFor="let role of contactGroup.roles; trackBy: id">
-        <ng-container *ngIf="role.contacts && role.contacts">
-            <ion-item-sliding *ngFor="let contact of role.contacts; trackBy: id" @listItem>
-                <sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contacts-list-item>
-            </ion-item-sliding>
-        </ng-container>
-        <ion-item button class="with-buttons" *ngIf="!role.contacts || !role.contacts.length">
-            <ion-label color="medium">{{role.emoji}} {{role.title}}</ion-label>
-            <ion-buttons slot="end">
-					<ion-button target="_blank" [href]="'https:' + role.finder" color="medium" *ngIf="role.finder" [title]="'Find at https://' + role.finder">Find</ion-button>
-                <ion-button color="medium" (click)="addContact($event, contactGroup.id, role.id)">Add</ion-button>
-<!--                <ion-button color="medium" (click)="hideRole(role.id)">-->
-<!--                    <ion-icon name="close"></ion-icon>-->
-<!--                </ion-button>-->
-            </ion-buttons>
-        </ion-item>
-    </ng-container>
+<ion-item-group
+	*ngFor="let contactGroup of contactGroups; trackBy: id"
+	@listItem
+>
+	<ion-item-divider color="light">
+		<ion-label>{{ contactGroup.title }}</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="addContact($event, contactGroup.id)">
+				<ion-icon name="add"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	<ng-container *ngFor="let role of contactGroup.roles; trackBy: id">
+		<ng-container *ngIf="role.contacts && role.contacts">
+			<ion-item-sliding
+				*ngFor="let contact of role.contacts; trackBy: id"
+				@listItem
+			>
+				<sneat-contacts-list-item
+					[contact]="contact"
+					[goContact]="goContact"
+					[goMember]="goMember"
+				></sneat-contacts-list-item>
+			</ion-item-sliding>
+		</ng-container>
+		<ion-item
+			button
+			class="with-buttons"
+			*ngIf="!role.contacts || !role.contacts.length"
+		>
+			<ion-label color="medium">{{ role.emoji }} {{ role.title }}</ion-label>
+			<ion-buttons slot="end">
+				<ion-button
+					target="_blank"
+					[href]="'https:' + role.finder"
+					color="medium"
+					*ngIf="role.finder"
+					[title]="'Find at https://' + role.finder"
+					>Find</ion-button
+				>
+				<ion-button
+					color="medium"
+					(click)="addContact($event, contactGroup.id, role.id)"
+					>Add</ion-button
+				>
+				<!--                <ion-button color="medium" (click)="hideRole(role.id)">-->
+				<!--                    <ion-icon name="close"></ion-icon>-->
+				<!--                </ion-button>-->
+			</ion-buttons>
+		</ion-item>
+	</ng-container>
 </ion-item-group>
 
 <ion-item-group *ngIf="otherContacts && otherContacts.length" @listItem>
-    <ion-item-divider color="light">
-        <ion-label>Other</ion-label>
-    </ion-item-divider>
-    <ion-item-sliding *ngFor="let contact of contacts || []; trackBy: id" @listItem>
-        <sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"></sneat-contacts-list-item>
-    </ion-item-sliding>
+	<ion-item-divider color="light">
+		<ion-label>Other</ion-label>
+	</ion-item-divider>
+	<ion-item-sliding
+		*ngFor="let contact of contacts || []; trackBy: id"
+		@listItem
+	>
+		<sneat-contacts-list-item
+			[contact]="contact"
+			[goContact]="goContact"
+			[goMember]="goMember"
+		></sneat-contacts-list-item>
+	</ion-item-sliding>
 </ion-item-group>

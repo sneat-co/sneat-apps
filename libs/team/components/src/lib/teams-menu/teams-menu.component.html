@@ -1,5 +1,5 @@
 <ion-item>
-	<ion-label color="medium">{{spacesLabel || 'Spaces'}}</ion-label>
+	<ion-label color="medium">{{ spacesLabel || "Spaces" }}</ion-label>
 	<!--	<ion-buttons slot="end">-->
 	<!--		<ion-button (click)="newTeam()">-->
 	<!--			<ion-icon name="add-outline" color="medium"></ion-icon>-->
@@ -16,25 +16,37 @@
 	<ion-item *ngIf="teamType && teams && !teams.length">
 		<ion-icon name="people-outline" slot="start"></ion-icon>
 		<ion-label *ngIf="teamType === 'company'">No companies</ion-label>
-		<ion-label color="medium" *ngIf="teamType !== 'company'">No {{teamType}}</ion-label>
-<!--		<ion-buttons>-->
-<!--			<ion-button routerLink="new-company">New company</ion-button>-->
-<!--		</ion-buttons>-->
+		<ion-label color="medium" *ngIf="teamType !== 'company'"
+			>No {{ teamType }}</ion-label
+		>
+		<!--		<ion-buttons>-->
+		<!--			<ion-button routerLink="new-company">New company</ion-button>-->
+		<!--		</ion-buttons>-->
 	</ion-item>
-	<ion-item *ngIf="(!teamType || teamType === 'family') && familyTeams && !familyTeams.length" tappable
-						[disabled]="!teams" (click)="newFamily($event)">
+	<ion-item
+		*ngIf="
+			(!teamType || teamType === 'family') && familyTeams && !familyTeams.length
+		"
+		tappable
+		[disabled]="!teams"
+		(click)="newFamily($event)"
+	>
 		<ion-icon name="people-circle-outline" slot="start"></ion-icon>
-		<ion-label>Family
+		<ion-label
+			>Family
 			<ion-text color="medium"><i>(new)</i></ion-text>
 		</ion-label>
 		<ion-spinner slot="end" *ngIf="!teams"></ion-spinner>
 	</ion-item>
-	<sneat-teams-list *ngIf="!teamType || teamType === 'family'" [teams]="familyTeams"
-										iconName="people-circle-outline"
-										(beforeNavigateToTeam)="closeMenu()"
+	<sneat-teams-list
+		*ngIf="!teamType || teamType === 'family'"
+		[teams]="familyTeams"
+		iconName="people-circle-outline"
+		(beforeNavigateToTeam)="closeMenu()"
 	></sneat-teams-list>
-	<sneat-teams-list [teams]="teams"
-										[pathPrefix]="pathPrefix"
-										(beforeNavigateToTeam)="closeMenu()"
+	<sneat-teams-list
+		[teams]="teams"
+		[pathPrefix]="pathPrefix"
+		(beforeNavigateToTeam)="closeMenu()"
 	></sneat-teams-list>
 </ng-container>

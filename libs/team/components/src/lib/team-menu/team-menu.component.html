@@ -1,96 +1,114 @@
 <ion-list>
 	<ion-item>
 		<!--		<ion-icon name="home-outline" slot="start" color="primary" tappable routerLink="/space/{{team.type}}/{{team.id}}" routerDirection="root"></ion-icon>-->
-		<ion-select label="Space" *ngIf="teams"
-								[value]="team.id"
-								interface="popover"
-								(ionChange)="onTeamSelected($event)"
-								style="font-weight: bold"
+		<ion-select
+			label="Space"
+			*ngIf="teams"
+			[value]="team.id"
+			interface="popover"
+			(ionChange)="onTeamSelected($event)"
+			style="font-weight: bold"
 		>
-			<ion-select-option *ngFor="let team of teams; trackBy id" [value]="team.id">
-				{{team.brief.title || team.id}}
+			<ion-select-option
+				*ngFor="let team of teams; trackBy: id"
+				[value]="team.id"
+			>
+				{{ team.brief.title || team.id }}
 			</ion-select-option>
 		</ion-select>
 	</ion-item>
-	<ion-item tappable
-						[routerLink]="teamPageUrl('overview')"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('overview')"
-						(click)="goOverview()"
+	<ion-item
+		tappable
+		[routerLink]="teamPageUrl('overview')"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('overview')"
+		(click)="goOverview()"
 	>
 		<ion-icon name="home-outline" slot="start"></ion-icon>
 		<ion-label>Overview</ion-label>
 	</ion-item>
-	<ion-item [routerLink]="teamPageUrl('assets')"
-						routerDirection="root"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('assets')"
-						(click)="goTeamPage($event, 'assets')"
+	<ion-item
+		[routerLink]="teamPageUrl('assets')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('assets')"
+		(click)="goTeamPage($event, 'assets')"
 	>
 		<ion-icon name="car-sport-outline" slot="start"></ion-icon>
 		<ion-label>Assets</ion-label>
-		<ion-badge style="font-weight: normal; color: gray" color="light"
-							 *ngIf="team.dto?.numberOf?.assets">{{team.dto?.numberOf?.assets}}</ion-badge>
+		<ion-badge
+			style="font-weight: normal; color: gray"
+			color="light"
+			*ngIf="team.dto?.numberOf?.assets"
+			>{{ team.dto?.numberOf?.assets }}</ion-badge
+		>
 	</ion-item>
-	<ion-item [routerLink]="teamPageUrl('budget')"
-						routerDirection="root"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('budget')"
-						(click)="goTeamPage($event, 'budget')"
+	<ion-item
+		[routerLink]="teamPageUrl('budget')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('budget')"
+		(click)="goTeamPage($event, 'budget')"
 	>
 		<ion-icon name="cash-outline" slot="start"></ion-icon>
 		<ion-label>Budget</ion-label>
 	</ion-item>
-	<ion-item [routerLink]="teamPageUrl('contacts')"
-						routerDirection="root"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('contacts')"
-						(click)="goTeamPage($event, 'contacts')"
+	<ion-item
+		[routerLink]="teamPageUrl('contacts')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('contacts')"
+		(click)="goTeamPage($event, 'contacts')"
 	>
 		<ion-icon name="people-outline" slot="start"></ion-icon>
 		<ion-label>Contacts</ion-label>
 	</ion-item>
-	<ion-item [routerLink]="teamPageUrl('documents')"
-						routerDirection="root"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('documents')"
-						(click)="goTeamPage($event, 'documents')"
+	<ion-item
+		[routerLink]="teamPageUrl('documents')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('documents')"
+		(click)="goTeamPage($event, 'documents')"
 	>
 		<ion-icon name="documents-outline" slot="start"></ion-icon>
 		<ion-label>Documents</ion-label>
 	</ion-item>
-	<ion-item [routerLink]="teamPageUrl('lists')"
-						routerDirection="root"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('lists')"
-						(click)="goTeamPage($event, 'lists')"
+	<ion-item
+		[routerLink]="teamPageUrl('lists')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('lists')"
+		(click)="goTeamPage($event, 'lists')"
 	>
 		<ion-icon name="list-outline" slot="start"></ion-icon>
 		<ion-label>Lists</ion-label>
 		<ion-buttons slot="end">
-			<ion-button routerDirection="root"
-									[routerLink]="teamPageUrl('list/to-buy/groceries')"
-									(click)="goTeamPage($event, 'list/to-buy/groceries')"
+			<ion-button
+				routerDirection="root"
+				[routerLink]="teamPageUrl('list/to-buy/groceries')"
+				(click)="goTeamPage($event, 'list/to-buy/groceries')"
 			>
 				<ion-label>🛒</ion-label>
 			</ion-button>
 			<!--			<ion-button routerLink="./list/towatch">🍿</ion-button>-->
 		</ion-buttons>
 	</ion-item>
-	<ion-item [routerLink]="teamPageUrl('members')"
-						routerDirection="root"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('members')"
-						(click)="closeMenu()"
+	<ion-item
+		[routerLink]="teamPageUrl('members')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('members')"
+		(click)="closeMenu()"
 	>
 		<ion-icon name="people-circle-outline" slot="start"></ion-icon>
 		<ion-label>Members</ion-label>
 	</ion-item>
-	<ion-item [routerLink]="teamPageUrl('schedule')"
-						routerDirection="root"
-						[disabled]="!team.id"
-						[class.currentPage]="isCurrentPage('schedule')"
-						(click)="closeMenu()"
+	<ion-item
+		[routerLink]="teamPageUrl('schedule')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('schedule')"
+		(click)="closeMenu()"
 	>
 		<ion-icon name="calendar-outline" slot="start"></ion-icon>
 		<ion-label>Schedule</ion-label>

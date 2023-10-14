@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<title>Sneat.app</title>
+	<head>
+		<meta charset="utf-8" />
+		<title>Sneat.app</title>
 
-	<base href="/" />
+		<base href="/" />
 
-	<meta name="color-scheme" content="light dark" />
-	<meta
-		name="viewport"
-		content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-	/>
-	<meta name="format-detection" content="telephone=no" />
-	<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="color-scheme" content="light dark" />
+		<meta
+			name="viewport"
+			content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+		/>
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
 
-	<link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+		<link rel="icon" type="image/png" href="assets/icon/favicon.png" />
 
-	<!-- add to homescreen for ios -->
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<!-- add to homescreen for ios -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-	<script>
-		function getQueryParam(name) {
-			const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-				results = regex.exec(window.location.href);
-			if (!results) return null;
-			if (!results[2]) return '';
-			return decodeURIComponent(results[2].replace(/\+/g, ' '));
-		}
+		<script>
+			function getQueryParam(name) {
+				const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					results = regex.exec(window.location.href);
+				if (!results) return null;
+				if (!results[2]) return "";
+				return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
 
-		let tgParam = getQueryParam('telegram');
-		if (tgParam) {
-			console.log('Telegram parameter: ', tgParam);
-		}
-		if (tgParam === 'menu') {
-			const head = document.getElementsByTagName('head')[0];
-			const script = document.createElement('script');
-			script.type = 'text/javascript';
-			script.src = 'https://telegram.org/js/telegram-web-app.js'; // replace with your script file path
-			script.async = true;
-			script.onload = function() {
-				// noinspection JSUnresolvedReference
-				console.log('Telegram script loaded.', window.Telegram.WebApp.initDataUnsafe);
-				// noinspection JSUnresolvedReference
-				window.Telegram.WebApp.ready();
-				// noinspection JSUnresolvedReference
-				alert(window.Telegram.WebApp.initData);
-				// alert('Hello '  + window.Telegram.WebApp.initDataUnsafe.user.first_name);
-			};
-			head.appendChild(script);
-		}
-	</script>
+			let tgParam = getQueryParam("telegram");
+			if (tgParam) {
+				console.log("Telegram parameter: ", tgParam);
+			}
+			if (tgParam === "menu") {
+				const head = document.getElementsByTagName("head")[0];
+				const script = document.createElement("script");
+				script.type = "text/javascript";
+				script.src = "https://telegram.org/js/telegram-web-app.js"; // replace with your script file path
+				script.async = true;
+				script.onload = function () {
+					// noinspection JSUnresolvedReference
+					console.log(
+						"Telegram script loaded.",
+						window.Telegram.WebApp.initDataUnsafe,
+					);
+					// noinspection JSUnresolvedReference
+					window.Telegram.WebApp.ready();
+					// noinspection JSUnresolvedReference
+					alert(window.Telegram.WebApp.initData);
+					// alert('Hello '  + window.Telegram.WebApp.initDataUnsafe.user.first_name);
+				};
+				head.appendChild(script);
+			}
+		</script>
+	</head>
 
-</head>
-
-<body>
-<sneat-app-root></sneat-app-root>
-</body>
+	<body>
+		<sneat-app-root></sneat-app-root>
+	</body>
 </html>

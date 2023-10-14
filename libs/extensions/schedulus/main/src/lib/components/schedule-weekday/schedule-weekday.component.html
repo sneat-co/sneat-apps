@@ -1,12 +1,22 @@
 <ion-item-divider color="light">
 	<ion-label slot="start" (click)="onDateSelected()" tappable>
-		<ng-container *ngIf="day?.slots && day?.slots?.length"><b>{{weekday?.longTitle}}</b></ng-container>
-		<ng-container *ngIf="!day?.slots || !day?.slots?.length">{{weekday?.longTitle}}</ng-container>
+		<ng-container *ngIf="day?.slots && day?.slots?.length"
+			><b>{{ weekday?.longTitle }}</b></ng-container
+		>
+		<ng-container *ngIf="!day?.slots || !day?.slots?.length">{{
+			weekday?.longTitle
+		}}</ng-container>
 		<ng-container *ngIf="day?.date"
-		>, {{day?.date?.getDate()}} {{day?.date?.getMonth()|shortMonthName}}</ng-container>
+			>, {{ day?.date?.getDate() }}
+			{{ day?.date?.getMonth() | shortMonthName }}</ng-container
+		>
 	</ion-label>
-	<ion-spinner style="opacity: 0.2" name="lines-small" *ngIf="day?.loadingEvents"
-							 slot="end"></ion-spinner>
+	<ion-spinner
+		style="opacity: 0.2"
+		name="lines-small"
+		*ngIf="day?.loadingEvents"
+		slot="end"
+	></ion-spinner>
 	<ion-buttons slot="end">
 		<ion-button title="Add recurring" (click)="goNewHappening('recurring')">
 			<ion-icon name="duplicate-outline"></ion-icon>
@@ -18,16 +28,20 @@
 </ion-item-divider>
 <ng-container *ngIf="day?.slots && day?.slots?.length; else noSlots">
 	<ng-container *ngFor="let slot of day?.slots">
-		<sneat-day-slot-item *ngIf="showSlot(slot)"
-												 [team]="team"
-												 [dateID]="day?.dateID"
-												 [slot]="slot"
-												 (slotClicked)="onSlotClicked($event)">
+		<sneat-day-slot-item
+			*ngIf="showSlot(slot)"
+			[team]="team"
+			[dateID]="day?.dateID"
+			[slot]="slot"
+			(slotClicked)="onSlotClicked($event)"
+		>
 		</sneat-day-slot-item>
 	</ng-container>
 </ng-container>
 <ng-template #noSlots>
 	<ion-item>
-		<ion-label color="medium" style="font-style: italic">Nothing scheduled yet for {{weekday?.longTitle}}.</ion-label>
+		<ion-label color="medium" style="font-style: italic"
+			>Nothing scheduled yet for {{ weekday?.longTitle }}.</ion-label
+		>
 	</ion-item>
 </ng-template>

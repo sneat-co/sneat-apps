@@ -1,6 +1,14 @@
-<ion-badge color="light" slot="start" class="sneat-small-end-margin"
-					 style="font-weight: normal; background-color: white;">
-	From {{timing?.start?.time}}
-	<div style="font-size: small; color: #777; text-align: center" *ngIf="timing?.end">
-		<small>ends</small> {{timing?.end?.time}}</div>
+<ion-badge
+	color="light"
+	slot="start"
+	class="sneat-small-end-margin"
+	style="font-weight: normal; background-color: white"
+>
+	From {{ timing?.start?.time }}
+	<div
+		style="font-size: small; color: #777; text-align: center"
+		*ngIf="timing?.end"
+	>
+		<small>ends</small> {{ timing?.end?.time }}
+	</div>
 </ion-badge>

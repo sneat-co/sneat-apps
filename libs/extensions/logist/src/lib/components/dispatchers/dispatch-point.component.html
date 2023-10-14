@@ -2,8 +2,8 @@
 	<ion-item-divider color="light" class="sneat-no-end-padding">
 		<ion-label [class.deleting-list-item]="deleting">
 			<ion-text color="medium">At:</ion-text>
-			{{dispatchPoint?.title}} -
-			<ion-text color="medium">{{shippingPoint?.status}}</ion-text>
+			{{ dispatchPoint?.title }} -
+			<ion-text color="medium">{{ shippingPoint?.status }}</ion-text>
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="form.dirty" (click)="savePoint($event)">
@@ -13,10 +13,12 @@
 			<ion-button color="medium" *ngIf="form.dirty" (click)="form.reset()">
 				<ion-label>Cancel</ion-label>
 			</ion-button>
-			<ion-button color="medium" title="Remove dispatching point"
-									*ngIf="!form.dirty"
-									[disabled]="disabled || deleting"
-									(click)="deletePoint()"
+			<ion-button
+				color="medium"
+				title="Remove dispatching point"
+				*ngIf="!form.dirty"
+				[disabled]="disabled || deleting"
+				(click)="deletePoint()"
 			>
 				<ion-icon name="trash-outline" slot="end"></ion-icon>
 				<ion-label>Delete</ion-label>
@@ -30,26 +32,42 @@
 				<ion-item *ngIf="shippingPoint?.location?.address">
 					<ion-label color="medium">
 						Address
-						<span class="ion-margin-start"
-									*ngIf="shippingPoint?.location?.address?.countryID">{{shippingPoint?.location?.address?.countryID|countryFlag}}</span>
+						<span
+							class="ion-margin-start"
+							*ngIf="shippingPoint?.location?.address?.countryID"
+							>{{
+								shippingPoint?.location?.address?.countryID | countryFlag
+							}}</span
+						>
 					</ion-label>
-					<ion-textarea [readonly]="true" [disabled]="true" rows="3" auto-grow="true" [formGroup]="form"
-												[formControl]="address"></ion-textarea>
+					<ion-textarea
+						[readonly]="true"
+						[disabled]="true"
+						rows="3"
+						auto-grow="true"
+						[formGroup]="form"
+						[formControl]="address"
+					></ion-textarea>
 				</ion-item>
 			</ion-col>
 			<ion-col size="6">
 				<ion-item>
-					<ion-label color="medium">
-						Notes
-					</ion-label>
-					<ion-textarea rows="3" auto-grow="true" [formGroup]="form" [formControl]="notes"></ion-textarea>
+					<ion-label color="medium"> Notes </ion-label>
+					<ion-textarea
+						rows="3"
+						auto-grow="true"
+						[formGroup]="form"
+						[formControl]="notes"
+					></ion-textarea>
 				</ion-item>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
 
 	<ion-item class="sneat-no-bottom-margin sneat-no-bottom-padding" lines="none">
-		<ion-label color="medium" class="sneat-no-bottom-margin"><b>Containers</b></ion-label>
+		<ion-label color="medium" class="sneat-no-bottom-margin"
+			><b>Containers</b></ion-label
+		>
 		<!-- TODO: bottom padding/margin is not working as expected -->
 		<ion-buttons slot="end">
 			<ion-button color="medium" (click)="assignContainers($event)">
@@ -82,11 +100,9 @@
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
 			<ion-col size="3">
-				<div class="ion-padding-end">
-				</div>
+				<div class="ion-padding-end"></div>
 			</ion-col>
-			<ion-col size="9">
-			</ion-col>
+			<ion-col size="9"> </ion-col>
 		</ion-row>
 	</ion-grid>
 	<!--	<ion-item>-->

@@ -90,7 +90,7 @@
 					color="medium"
 					style="font-weight: normal; font-size: x-small"
 					title="Is not implemented yet"
-				>PROTOTYPE
+					>PROTOTYPE
 				</ion-badge>
 			</ion-label>
 		</ion-segment-button>
@@ -125,9 +125,8 @@
 						color="danger"
 						slot="end"
 						(click)="showQueryBuilder = true"
-					>Show prototype
-					</ion-button
-					>
+						>Show prototype
+					</ion-button>
 				</p>
 			</ion-card-content>
 		</ion-card>
@@ -160,7 +159,7 @@
 						<ion-item>
 							<ion-checkbox slot="start" checked="true"></ion-checkbox>
 							<ion-label
-							><b>ft</b> -
+								><b>ft</b> -
 								<ion-text color="medium">FistTable</ion-text>
 							</ion-label>
 						</ion-item>
@@ -271,9 +270,10 @@
 							<ng-container *ngIf="env.recordsets; let envRecordsets">
 								<ion-badge
 									color="light"
-									*ngIf="envRecordsets.length === 1 &&
-									!!envRecordsets[0].result?.rows?.length
-								"
+									*ngIf="
+										envRecordsets.length === 1 &&
+										!!envRecordsets[0].result?.rows?.length
+									"
 								>
 									{{ envRecordsets[0].result?.rows?.length }}
 								</ion-badge>
@@ -304,9 +304,8 @@
 				<ion-item>
 					<ion-label
 						[color]="activeEnv && !activeEnv.dbServerId ? 'danger' : 'medium'"
-					>@ Server
-					</ion-label
-					>
+						>@ Server
+					</ion-label>
 					<ion-input
 						*ngIf="activeEnv && !activeEnv.summary"
 						readonly
@@ -344,9 +343,8 @@
 				<ion-item>
 					<ion-label
 						[color]="activeEnv && !activeEnv.catalogId ? 'danger' : 'medium'"
-					>DB
-					</ion-label
-					>
+						>DB
+					</ion-label>
 					<ion-input
 						*ngIf="activeEnv && !activeEnv.summary"
 						readonly

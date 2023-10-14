@@ -5,8 +5,11 @@
 		</ion-buttons>
 		<ion-title>🏡 Properties</ion-title>
 		<ion-buttons slot="end">
-			<ion-button [disabled]="!communeRealId" (click)="goNew()"
-							title="Add property">
+			<ion-button
+				[disabled]="!communeRealId"
+				(click)="goNew()"
+				title="Add property"
+			>
 				<ion-icon name="add"></ion-icon>
 			</ion-button>
 		</ion-buttons>
@@ -15,14 +18,27 @@
 
 <ion-content>
 	<ion-item>
-		<ion-input [(ngModel)]="filter" name="filter" placeholder="Filter"
-					  (ionChange)="filterChanged($event)"></ion-input>
+		<ion-input
+			[(ngModel)]="filter"
+			name="filter"
+			placeholder="Filter"
+			(ionChange)="filterChanged($event)"
+		></ion-input>
 		<ion-buttons slot="end">
-			<ion-button fill="clear" color="medium" *ngIf="filter" (click)="clearFilter()">
+			<ion-button
+				fill="clear"
+				color="medium"
+				*ngIf="filter"
+				(click)="clearFilter()"
+			>
 				<ion-icon name="close"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 
-	<assets-list [assets]="assets" [commune]="commune" [filter]="filter && filter.toLowerCase()"></assets-list>
+	<assets-list
+		[assets]="assets"
+		[commune]="commune"
+		[filter]="filter && filter.toLowerCase()"
+	></assets-list>
 </ion-content>

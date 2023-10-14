@@ -10,43 +10,54 @@
 			[titlesByTeamType]="{
 				personal: 'Personal contacts',
 				family: 'Family contacts'
-			}">
+			}"
+		>
 		</sneat-team-page-title>
 		<ion-buttons slot="end">
-			<ion-button *ngIf="canAdd"
-									color="primary"
-									size="small"
-									(click)="goNewContact()"
-									[title]="'Add contact'">
+			<ion-button
+				*ngIf="canAdd"
+				color="primary"
+				size="small"
+				(click)="goNewContact()"
+				[title]="'Add contact'"
+			>
 				<ion-icon name="add"></ion-icon>
 				Add
 			</ion-button>
-			<ion-menu-button ></ion-menu-button>
+			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-
-	<ion-segment *ngIf="team?.type === 'company'" [(ngModel)]="role" (ionChange)="onRoleChanged($event)">
-<!--		<ion-segment-button>All</ion-segment-button>-->
+	<ion-segment
+		*ngIf="team?.type === 'company'"
+		[(ngModel)]="role"
+		(ionChange)="onRoleChanged($event)"
+	>
+		<!--		<ion-segment-button>All</ion-segment-button>-->
 		<ion-segment-button *ngFor="let r of roles" [value]="r.id">
 			<ion-icon [name]="r.iconName" *ngIf="r.iconName"></ion-icon>
-			<ion-label style="font-size: smaller">{{r.title}}
+			<ion-label style="font-size: smaller"
+				>{{ r.title }}
 				<ion-badge color="light">
-					<ion-label color="medium" style="font-size: smaller; font-weight: normal;">{{contactsNumber(r.id)}}</ion-label>
+					<ion-label
+						color="medium"
+						style="font-size: smaller; font-weight: normal"
+						>{{ contactsNumber(r.id) }}</ion-label
+					>
 				</ion-badge>
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>
 
 	<ion-card>
-		<sneat-filter-item (changed)="applyFilter($event, role)"></sneat-filter-item>
+		<sneat-filter-item
+			(changed)="applyFilter($event, role)"
+		></sneat-filter-item>
 
 		<div class="segment" *ngIf="!role">
-
 			<ion-segment [(ngModel)]="segment" *ngIf="team?.type === 'family'">
-
 				<ion-segment-button value="groups">
 					<ion-label>By type</ion-label>
 				</ion-segment-button>
@@ -54,14 +65,20 @@
 				<ion-segment-button value="list">
 					<ion-label>List</ion-label>
 				</ion-segment-button>
-
 			</ion-segment>
 		</div>
 
 		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
-			<ion-item-sliding @listItem *ngFor="let contact of contacts || []; trackBy: id">
-				<sneat-contacts-list-item [contact]="contact" [goContact]="goContact" [goMember]="goMember"
-														[excludeRole]="role"></sneat-contacts-list-item>
+			<ion-item-sliding
+				@listItem
+				*ngFor="let contact of contacts || []; trackBy: id"
+			>
+				<sneat-contacts-list-item
+					[contact]="contact"
+					[goContact]="goContact"
+					[goMember]="goMember"
+					[excludeRole]="role"
+				></sneat-contacts-list-item>
 			</ion-item-sliding>
 			<ion-item button (click)="goNewContact()" *ngIf="canAdd">
 				<ion-icon name="add" color="primary"></ion-icon>
@@ -71,26 +88,30 @@
 
 		<ion-list *ngIf="segment === 'groups'">
 			<ng-container *ngIf="team?.type === 'family'">
-				<sneat-contacts-family [contacts]="allContacts"
-															 [team]="team"
-															 [filter]="filter"
-															 [goContact]="goContact"
-															 [goMember]="goMember"
+				<sneat-contacts-family
+					[contacts]="allContacts"
+					[team]="team"
+					[filter]="filter"
+					[goContact]="goContact"
+					[goMember]="goMember"
 				></sneat-contacts-family>
 			</ng-container>
 			<ng-container *ngIf="groups">
-				<ion-item *ngFor="let group of groups; trackBy: id" (click)="goGroup(group)" tappable>
+				<ion-item
+					*ngFor="let group of groups; trackBy: id"
+					(click)="goGroup(group)"
+					tappable
+				>
 					<ion-label>
-						{{group.brief?.title}}
+						{{ group.brief?.title }}
 					</ion-label>
 					<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
-						{{group.dto?.numberOf?.members}}
+						{{ group.dto?.numberOf?.members }}
 					</ion-badge>
 				</ion-item>
 			</ng-container>
 		</ion-list>
 	</ion-card>
-
 </ion-content>
 
 <!--<ion-footer>-->
@@ -101,4 +122,3 @@
 <!--		<ion-label *ngIf="!contacts">Loading...</ion-label>-->
 <!--	</ion-toolbar>-->
 <!--</ion-footer>-->
-

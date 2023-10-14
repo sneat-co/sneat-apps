@@ -1,34 +1,33 @@
 <ion-header>
-    <ion-toolbar color="light">
-        <ion-buttons slot="start">
-            <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
-        </ion-buttons>
-        <ion-title *ngIf="commune else titleNoCommune">
-            {{commune.title}}: Savings
-        </ion-title>
-        <ng-template #titleNoCommune>
-            <ion-title>Savings</ion-title>
-        </ng-template>
-    </ion-toolbar>
+	<ion-toolbar color="light">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ion-title *ngIf="commune; else titleNoCommune">
+			{{ commune.title }}: Savings
+		</ion-title>
+		<ng-template #titleNoCommune>
+			<ion-title>Savings</ion-title>
+		</ng-template>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>Car insurance for Peugeot 307sw</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <p>
-                You probably can <b>save €200-€300 per year</b> on your car insurance.
-            </p>
-        </ion-card-content>
-        <ion-card-content>
-            <ion-button color="danger">
-                <ion-icon name="arrow-dropdown" style="margin-right: 10px"></ion-icon>
-                Learn more
-            </ion-button>
-            <!--<ion-button>Get a better quote</ion-button>-->
-        </ion-card-content>
-    </ion-card>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Car insurance for Peugeot 307sw</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			<p>
+				You probably can <b>save €200-€300 per year</b> on your car insurance.
+			</p>
+		</ion-card-content>
+		<ion-card-content>
+			<ion-button color="danger">
+				<ion-icon name="arrow-dropdown" style="margin-right: 10px"></ion-icon>
+				Learn more
+			</ion-button>
+			<!--<ion-button>Get a better quote</ion-button>-->
+		</ion-card-content>
+	</ion-card>
 </ion-content>

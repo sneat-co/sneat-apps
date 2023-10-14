@@ -41,7 +41,9 @@
 						pin="false"
 						snaps="true"
 						ticks="true"
-						*ngIf="metric && metric.min !== undefined && metric.max !== undefined"
+						*ngIf="
+							metric && metric.min !== undefined && metric.max !== undefined
+						"
 						[min]="metric.min"
 						[max]="metric.max"
 					>

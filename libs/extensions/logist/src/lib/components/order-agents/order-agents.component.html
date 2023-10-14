@@ -8,15 +8,16 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-	<sneat-logist-order-counterparty *ngFor="let counterparty of counterparties"
-																	 [label]="counterparty.role | titlecase"
-																	 [team]="team"
-																	 [order]="order"
-																	 [readonly]="readonly"
-																	 [canChangeContact]="false"
-																	 [counterpartyRole]="counterparty.role"
-																	 contactType="company"
-																	 [contactRole]="counterparty.role"
-																	 labelPosition="fixed"
+	<sneat-logist-order-counterparty
+		*ngFor="let counterparty of counterparties"
+		[label]="counterparty.role | titlecase"
+		[team]="team"
+		[order]="order"
+		[readonly]="readonly"
+		[canChangeContact]="false"
+		[counterpartyRole]="counterparty.role"
+		contactType="company"
+		[contactRole]="counterparty.role"
+		labelPosition="fixed"
 	></sneat-logist-order-counterparty>
 </ion-item-group>

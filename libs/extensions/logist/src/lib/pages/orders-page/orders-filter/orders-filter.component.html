@@ -9,20 +9,30 @@
 
 <ion-card>
 	<ion-item color="light" class="sneat-no-end-padding">
-		<ion-label style="font-weight: bold">Filter
+		<ion-label style="font-weight: bold"
+			>Filter
 			<ion-text *ngIf="refNumber" color="medium"> | Ref #</ion-text>
 		</ion-label>
-		<ion-input placeholder="ref #" [(ngModel)]="refNumber" (ionChange)="refNumberChanged()"></ion-input>
+		<ion-input
+			placeholder="ref #"
+			[(ngModel)]="refNumber"
+			(ionChange)="refNumberChanged()"
+		></ion-input>
 		<ion-buttons slot="end" *ngIf="refNumber || isRefNumberChanged">
-			<ion-button *ngIf="isRefNumberChanged"
-									fill="solid"
-									color="primary"
-									(click)="findByRefNumber($event)">
+			<ion-button
+				*ngIf="isRefNumberChanged"
+				fill="solid"
+				color="primary"
+				(click)="findByRefNumber($event)"
+			>
 				<ion-label>Find</ion-label>
 			</ion-button>
-			<ion-button *ngIf="refNumber" color="danger"
-									title="Clear filter"
-									(click)="clearRefNumber($event)">
+			<ion-button
+				*ngIf="refNumber"
+				color="danger"
+				title="Clear filter"
+				(click)="clearRefNumber($event)"
+			>
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>
@@ -35,24 +45,34 @@
 		[contact]="contactByRole['consignee']"
 		(contactChange)="onContactChanged('consignee', $event)"
 	></sneat-contact-input>
-	<sneat-country-input label="Country"
-											 [(countryID)]="countryID"
-											 (countryIDChange)="emitFilterChange()"
+	<sneat-country-input
+		label="Country"
+		[(countryID)]="countryID"
+		(countryIDChange)="emitFilterChange()"
 	></sneat-country-input>
 </ion-card>
 
 <ion-grid class="ion-grid-layout">
 	<ion-row>
 		<ion-col size="10">
-			<ion-segment [(ngModel)]="status" color="dark" (ionChange)="emitFilterChange()" class="ion-margin-horizontal">
-<!--				<ion-segment-button value="draft">Drafts</ion-segment-button>-->
+			<ion-segment
+				[(ngModel)]="status"
+				color="dark"
+				(ionChange)="emitFilterChange()"
+				class="ion-margin-horizontal"
+			>
+				<!--				<ion-segment-button value="draft">Drafts</ion-segment-button>-->
 				<ion-segment-button value="active">Active</ion-segment-button>
 				<ion-segment-button value="completed">Completed</ion-segment-button>
 				<ion-segment-button value="canceled">Canceled</ion-segment-button>
 			</ion-segment>
 		</ion-col>
 		<ion-col size="2">
-			<ion-segment [(ngModel)]="viewMode" color="medium" (ionChange)="emitViewModeChange()">
+			<ion-segment
+				[(ngModel)]="viewMode"
+				color="medium"
+				(ionChange)="emitViewModeChange()"
+			>
 				<ion-segment-button value="grid" title="Grid view">
 					<ion-label color="medium">
 						<ion-icon name="grid-outline"></ion-icon>
@@ -67,4 +87,3 @@
 		</ion-col>
 	</ion-row>
 </ion-grid>
-

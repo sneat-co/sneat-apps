@@ -1,4 +1,9 @@
-<sneat-day-slot-item [team]="team" [slot]="slot" color="light" mode="brief"></sneat-day-slot-item>
+<sneat-day-slot-item
+	[team]="team"
+	[slot]="slot"
+	color="light"
+	mode="brief"
+></sneat-day-slot-item>
 <ion-item tappable (click)="edit($event)" [disabled]="disabled">
 	<ion-icon slot="start" name="calendar-outline"></ion-icon>
 	<ion-label>Change date or time</ion-label>
@@ -7,7 +12,7 @@
 <!--	<ion-icon name="create-outline" slot="start" color="success"></ion-icon>-->
 <!--	<ion-label>Edit</ion-label>-->
 <!--</ion-item>-->
-<ion-item tappable (click)="assign($event,'member')" [disabled]="disabled">
+<ion-item tappable (click)="assign($event, 'member')" [disabled]="disabled">
 	<ion-icon name="person-add-outline" slot="start" color="primary"></ion-icon>
 	<ion-label>Assign to member</ion-label>
 </ion-item>
@@ -25,57 +30,91 @@
 <!--	<ion-label color="medium">Archive</ion-label>-->
 <!--</ion-item>-->
 
-<ion-item *ngIf="!isCancelled" tappable (click)="markCanceled($event, 'slot')" [disabled]="disabled">
+<ion-item
+	*ngIf="!isCancelled"
+	tappable
+	(click)="markCanceled($event, 'slot')"
+	[disabled]="disabled"
+>
 	<ion-icon name="close-circle-outline" slot="start" color="warning"></ion-icon>
-	<ion-label *ngIf="happeningState !== 'cancelling-single'">Cancel 1 on {{dateID}}
-		at {{slot?.timing?.start?.time}}</ion-label>
-	<ion-label *ngIf="happeningState === 'cancelling-single'">Marking as canceled...</ion-label>
-	<ion-spinner slot="end" *ngIf="happeningState === 'cancelling-single'"></ion-spinner>
+	<ion-label *ngIf="happeningState !== 'cancelling-single'"
+		>Cancel 1 on {{ dateID }} at {{ slot?.timing?.start?.time }}</ion-label
+	>
+	<ion-label *ngIf="happeningState === 'cancelling-single'"
+		>Marking as canceled...</ion-label
+	>
+	<ion-spinner
+		slot="end"
+		*ngIf="happeningState === 'cancelling-single'"
+	></ion-spinner>
 </ion-item>
 
-<ion-item *ngIf="!isCancelled" tappable (click)="markCanceled($event, 'whole')" [disabled]="disabled">
+<ion-item
+	*ngIf="!isCancelled"
+	tappable
+	(click)="markCanceled($event, 'whole')"
+	[disabled]="disabled"
+>
 	<ion-icon name="close-circle-outline" slot="start" color="warning"></ion-icon>
-	<ion-label *ngIf="happeningState !== 'cancelling-series'">Cancel series at {{slot?.timing?.start?.time}}</ion-label>
-	<ion-label *ngIf="happeningState === 'cancelling-series'">Marking as canceled...</ion-label>
-	<ion-spinner slot="end" *ngIf="happeningState === 'cancelling-series'"></ion-spinner>
+	<ion-label *ngIf="happeningState !== 'cancelling-series'"
+		>Cancel series at {{ slot?.timing?.start?.time }}</ion-label
+	>
+	<ion-label *ngIf="happeningState === 'cancelling-series'"
+		>Marking as canceled...</ion-label
+	>
+	<ion-spinner
+		slot="end"
+		*ngIf="happeningState === 'cancelling-series'"
+	></ion-spinner>
 </ion-item>
 
-<ion-item *ngIf="isCancelled" tappable (click)="revokeCancellation($event)" [disabled]="disabled">
+<ion-item
+	*ngIf="isCancelled"
+	tappable
+	(click)="revokeCancellation($event)"
+	[disabled]="disabled"
+>
 	<ion-icon name="close-circle-outline" slot="start" color="warning"></ion-icon>
-	<ion-label *ngIf="happeningState !== 'revoking-cancellation'">Activate
-		<ion-text color="medium" style="font-size: smaller; font-style: italic">(revoke cancellation)</ion-text>
+	<ion-label *ngIf="happeningState !== 'revoking-cancellation'"
+		>Activate
+		<ion-text color="medium" style="font-size: smaller; font-style: italic"
+			>(revoke cancellation)</ion-text
+		>
 	</ion-label>
-	<ion-label *ngIf="happeningState === 'revoking-cancellation'">Activating
-		<ion-text color="medium" style="font-size: smaller; font-style: italic">(revoking cancellation)</ion-text>
+	<ion-label *ngIf="happeningState === 'revoking-cancellation'"
+		>Activating
+		<ion-text color="medium" style="font-size: smaller; font-style: italic"
+			>(revoking cancellation)</ion-text
+		>
 		...
 	</ion-label>
-	<ion-spinner slot="end" *ngIf="happeningState === 'revoking-cancellation'"></ion-spinner>
+	<ion-spinner
+		slot="end"
+		*ngIf="happeningState === 'revoking-cancellation'"
+	></ion-spinner>
 </ion-item>
-
 
 <ion-item tappable (click)="delete($event)" [disabled]="disabled">
 	<ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
 	<ng-container *ngIf="slot?.happening?.brief?.type === 'recurring'">
 		<ion-label color="danger" *ngIf="happeningState !== 'deleting'">
 			<b>Delete recurring slot</b>
-<!--			({{numberOfSlots(slot?.happening)}} slots)-->
+			<!--			({{numberOfSlots(slot?.happening)}} slots)-->
 		</ion-label>
 		<ion-label color="danger" *ngIf="happeningState === 'deleting'">
 			<b>Deleting recurring...</b>
-<!--			({{numberOfSlots(slot?.happening)}} slots)-->
+			<!--			({{numberOfSlots(slot?.happening)}} slots)-->
 		</ion-label>
 	</ng-container>
 	<ng-container *ngIf="slot?.happening?.brief?.type === 'single'">
 		<ion-label color="danger" *ngIf="happeningState !== 'deleting'">
 			<b>Delete 1-timer slot</b>
-<!--			({{numberOfSlots(slot?.happening)}} slots)-->
+			<!--			({{numberOfSlots(slot?.happening)}} slots)-->
 		</ion-label>
 		<ion-label color="danger" *ngIf="happeningState === 'deleting'">
 			<b>Deleting 1-timer...</b>
-<!--			({{numberOfSlots(slot?.happening)}} slots)-->
+			<!--			({{numberOfSlots(slot?.happening)}} slots)-->
 		</ion-label>
 	</ng-container>
 	<ion-spinner slot="end" *ngIf="happeningState === 'deleting'"></ion-spinner>
 </ion-item>
-
-

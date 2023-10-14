@@ -1,11 +1,19 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="teamPageUrl('orders') || '..'"></ion-back-button>
+			<ion-back-button
+				[defaultHref]="teamPageUrl('orders') || '..'"
+			></ion-back-button>
 		</ion-buttons>
-		<ion-title>Order # {{order?.id}} - {{order?.brief?.direction}}</ion-title>
+		<ion-title
+			>Order # {{ order?.id }} - {{ order?.brief?.direction }}</ion-title
+		>
 		<ion-buttons slot="end">
-			<ion-button color="medium" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
+			<ion-button
+				color="medium"
+				title="Copy to clipboard"
+				(click)="copyNumberToClipboard($event)"
+			>
 				<ion-icon name="clipboard-outline" slot="start"></ion-icon>
 				<ion-label>Copy #</ion-label>
 			</ion-button>
@@ -17,18 +25,28 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-logist-order-card [team]="team" [order]="order" [hideDispatchers]="true" [showHeader]="false"></sneat-logist-order-card>
+	<sneat-logist-order-card
+		[team]="team"
+		[order]="order"
+		[hideDispatchers]="true"
+		[showHeader]="false"
+	></sneat-logist-order-card>
 
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
 			<ion-col size="10">
-				<ion-segment [(ngModel)]="tab" class="ion-padding-horizontal" (ionChange)="onTabChanged($event)">
+				<ion-segment
+					[(ngModel)]="tab"
+					class="ion-padding-horizontal"
+					(ionChange)="onTabChanged($event)"
+				>
 					<ion-segment-button value="containers">
 						<ion-label>
 							📦 Containers
-							<ion-badge color="light"
-												 *ngIf="order?.dto?.containers?.length">
-								<ion-text color="medium">{{order?.dto?.containers?.length}}</ion-text>
+							<ion-badge color="light" *ngIf="order?.dto?.containers?.length">
+								<ion-text color="medium">{{
+									order?.dto?.containers?.length
+								}}</ion-text>
 							</ion-badge>
 						</ion-label>
 					</ion-segment-button>
@@ -36,7 +54,7 @@
 						<ion-label>
 							🛒 Points
 							<ion-badge color="light" *ngIf="numberOfDispatchers">
-								<ion-text color="medium">{{numberOfDispatchers}}</ion-text>
+								<ion-text color="medium">{{ numberOfDispatchers }}</ion-text>
 							</ion-badge>
 						</ion-label>
 					</ion-segment-button>
@@ -48,16 +66,42 @@
 					</ion-segment-button>
 				</ion-segment>
 			</ion-col>
-			<ion-col size="2" class="ion-align-self-center" style="text-align: right" [ngSwitch]="tab">
-				<ion-button *ngSwitchCase="'containers'" fill="outline" size="small" color="medium" class="ion-margin-end" (click)="addContainer()">
+			<ion-col
+				size="2"
+				class="ion-align-self-center"
+				style="text-align: right"
+				[ngSwitch]="tab"
+			>
+				<ion-button
+					*ngSwitchCase="'containers'"
+					fill="outline"
+					size="small"
+					color="medium"
+					class="ion-margin-end"
+					(click)="addContainer()"
+				>
 					<ion-icon name="add" slot="start"></ion-icon>
 					<ion-label>Add container</ion-label>
 				</ion-button>
-				<ion-button *ngSwitchCase="'points'" fill="outline" size="small" color="medium" class="ion-margin-end" (click)="addShippingPoint()">
+				<ion-button
+					*ngSwitchCase="'points'"
+					fill="outline"
+					size="small"
+					color="medium"
+					class="ion-margin-end"
+					(click)="addShippingPoint()"
+				>
 					<ion-icon name="add" slot="start"></ion-icon>
 					<ion-label>Add point</ion-label>
 				</ion-button>
-				<ion-button *ngSwitchCase="'truckers'" fill="outline" size="small" color="medium" class="ion-margin-end" (click)="addSegment()">
+				<ion-button
+					*ngSwitchCase="'truckers'"
+					fill="outline"
+					size="small"
+					color="medium"
+					class="ion-margin-end"
+					(click)="addSegment()"
+				>
 					<ion-icon name="add" slot="start"></ion-icon>
 					<ion-label>Add segment</ion-label>
 				</ion-button>
@@ -66,26 +110,31 @@
 	</ion-grid>
 
 	<ng-container [ngSwitch]="tab">
-		<sneat-order-containers-card *ngSwitchCase="'containers'"
-																 [team]="team"
-																 [order]="order">
+		<sneat-order-containers-card
+			*ngSwitchCase="'containers'"
+			[team]="team"
+			[order]="order"
+		>
 		</sneat-order-containers-card>
 
-		<sneat-order-segments *ngSwitchCase="'segments'"
-													[team]="team"
-													[order]="order">
+		<sneat-order-segments
+			*ngSwitchCase="'segments'"
+			[team]="team"
+			[order]="order"
+		>
 		</sneat-order-segments>
 
-		<sneat-order-truckers *ngSwitchCase="'truckers'"
-													[team]="team"
-													[order]="order"
+		<sneat-order-truckers
+			*ngSwitchCase="'truckers'"
+			[team]="team"
+			[order]="order"
 		></sneat-order-truckers>
 
-		<sneat-dispatchers *ngSwitchCase="'points'"
-											 [order]="order"
+		<sneat-dispatchers
+			*ngSwitchCase="'points'"
+			[order]="order"
 		></sneat-dispatchers>
 	</ng-container>
 
-	<div style="min-height: 100px">
-	</div>
+	<div style="min-height: 100px"></div>
 </ion-content>

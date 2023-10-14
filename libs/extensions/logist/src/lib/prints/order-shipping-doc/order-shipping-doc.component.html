@@ -38,8 +38,6 @@
 <!--	</tbody>-->
 <!--</table>-->
 
-
-
 <div class="printableArea">
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
@@ -47,10 +45,12 @@
 				<ion-card>
 					<ion-card-content>
 						Shipper
-						<pre style="margin: 0">FIORANTINE STONE S.A.
+						<pre style="margin: 0">
+FIORANTINE STONE S.A.
 PARTIDA LA BUITRERA S/N
 03670 MONFORTE DEL CID, ALICANTE
-SPAIN</pre>
+SPAIN</pre
+						>
 					</ion-card-content>
 				</ion-card>
 			</ion-col>
@@ -60,19 +60,25 @@ SPAIN</pre>
 						<ion-row>
 							<ion-col>
 								<ion-item>
-									<ion-label position="stacked" color="medium">Reference</ion-label>
+									<ion-label position="stacked" color="medium"
+										>Reference</ion-label
+									>
 									<ion-input value="ABC1233"></ion-input>
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
-									<ion-label position="stacked" color="medium">Buyer Reference</ion-label>
+									<ion-label position="stacked" color="medium"
+										>Buyer Reference</ion-label
+									>
 									<ion-input value="ABC1233"></ion-input>
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
-									<ion-label position="stacked" color="medium">Export Declaration #</ion-label>
+									<ion-label position="stacked" color="medium"
+										>Export Declaration #</ion-label
+									>
 									<ion-input value="ABC1233"></ion-input>
 								</ion-item>
 							</ion-col>
@@ -85,17 +91,17 @@ SPAIN</pre>
 			<ion-col>
 				<ion-card>
 					<ion-card-content>
-						Consignee<br>
-						<pre style="margin: 0">{{counterpartyByRole('consignee')?.title}}
-{{counterpartyByRole('consignee')?.address}}</pre>
+						Consignee<br />
+						<pre style="margin: 0"
+							>{{ counterpartyByRole("consignee")?.title }}
+{{ counterpartyByRole("consignee")?.address }}</pre
+						>
 					</ion-card-content>
 				</ion-card>
 			</ion-col>
 			<ion-col>
 				<ion-card>
-					<ion-card-content>
-						Carrier
-					</ion-card-content>
+					<ion-card-content> Carrier </ion-card-content>
 				</ion-card>
 			</ion-col>
 		</ion-row>
@@ -106,12 +112,12 @@ SPAIN</pre>
 			<ion-label>Containers</ion-label>
 		</ion-item-divider>
 		<ion-item *ngFor="let container of order?.dto?.containers">
-			<ion-label>{{container.type}} - {{container.number}}</ion-label>
+			<ion-label>{{ container.type }} - {{ container.number }}</ion-label>
 		</ion-item>
 	</ion-card>
-<!--	<ion-card>-->
-<!--		<ion-card-content>-->
-<!--			{{order?.dto?.counterparties|json}}-->
-<!--		</ion-card-content>-->
-<!--	</ion-card>-->
+	<!--	<ion-card>-->
+	<!--		<ion-card-content>-->
+	<!--			{{order?.dto?.counterparties|json}}-->
+	<!--		</ion-card-content>-->
+	<!--	</ion-card>-->
 </div>

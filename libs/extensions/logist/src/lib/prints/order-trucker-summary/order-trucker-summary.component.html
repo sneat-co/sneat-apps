@@ -1,36 +1,35 @@
 <div class="printableArea">
-
-
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
 			<ion-col class="ion-padding">
 				<ion-card>
 					<ion-card-content style="color: black">
-						EXPE: <b>ELL{{order?.id}}</b>
+						EXPE: <b>ELL{{ order?.id }}</b>
 					</ion-card-content>
 				</ion-card>
 			</ion-col>
 			<ion-col>
 				<ion-card>
 					<ion-card-content>
-						<h1 style="color: black">{{selfCounterparty?.title || team.brief?.title || team.id}}</h1>
+						<h1 style="color: black">
+							{{ selfCounterparty?.title || team.brief?.title || team.id }}
+						</h1>
 					</ion-card-content>
 				</ion-card>
-
 			</ion-col>
 		</ion-row>
 		<ion-row>
 			<ion-col>
 				<ion-card>
 					<ion-card-content>
-						<p>Transportista: <b>{{truckerCounterparty?.title}}</b></p>
 						<p>
-							Ship: <b>{{ship?.title}}</b>
+							Transportista: <b>{{ truckerCounterparty?.title }}</b>
 						</p>
 						<p>
-							Shipper: {{shippingLine?.title}}
+							Ship: <b>{{ ship?.title }}</b>
 						</p>
-						<pre style="margin: 0">{{selfCounterparty?.address?.lines}}</pre>
+						<p>Shipper: {{ shippingLine?.title }}</p>
+						<pre style="margin: 0">{{ selfCounterparty?.address?.lines }}</pre>
 					</ion-card-content>
 				</ion-card>
 			</ion-col>
@@ -40,20 +39,32 @@
 						<ion-row>
 							<ion-col>
 								<ion-item>
-									<ion-label position="stacked" color="medium">Order #</ion-label>
+									<ion-label position="stacked" color="medium"
+										>Order #</ion-label
+									>
 									<ion-input [value]="order?.id" readonly="true"></ion-input>
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
-									<ion-label position="stacked" color="medium">Buyer Reference</ion-label>
-									<ion-input [value]="buyerCounterparty?.refNumber ?? '-'" readonly="true"></ion-input>
+									<ion-label position="stacked" color="medium"
+										>Buyer Reference</ion-label
+									>
+									<ion-input
+										[value]="buyerCounterparty?.refNumber ?? '-'"
+										readonly="true"
+									></ion-input>
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
-									<ion-label position="stacked" color="medium">Export Declaration #</ion-label>
-									<ion-input readonly="true" value="to be implemented"></ion-input>
+									<ion-label position="stacked" color="medium"
+										>Export Declaration #</ion-label
+									>
+									<ion-input
+										readonly="true"
+										value="to be implemented"
+									></ion-input>
 								</ion-item>
 							</ion-col>
 						</ion-row>
@@ -68,50 +79,52 @@
 			<ion-label>Containers</ion-label>
 		</ion-item-divider>
 		<style>
-		table.print-grid {
-			width: 100%;
-			border: 1px;
-			margin: 5px;
-		}
+			table.print-grid {
+				width: 100%;
+				border: 1px;
+				margin: 5px;
+			}
 
-		table.print-grid th {
-			text-align: left;
-			padding: 0.5em;
-			border-bottom: 1px solid lightgray;
-		}
+			table.print-grid th {
+				text-align: left;
+				padding: 0.5em;
+				border-bottom: 1px solid lightgray;
+			}
 
-		table.print-grid td {
-			padding: 0.5em;
-			border-bottom: 1px dashed lightgray;
-		}
+			table.print-grid td {
+				padding: 0.5em;
+				border-bottom: 1px dashed lightgray;
+			}
 		</style>
 		<table class="print-grid">
 			<thead>
-			<th>#</th>
-			<th>Container</th>
-			<th>Fabrica</th>
-			<th>Pallets</th>
-			<th>Peso</th>
-			<th>Ref</th>
-			<th>Nota</th>
-			<th>Address</th>
+				<th>#</th>
+				<th>Container</th>
+				<th>Fabrica</th>
+				<th>Pallets</th>
+				<th>Peso</th>
+				<th>Ref</th>
+				<th>Nota</th>
+				<th>Address</th>
 			</thead>
 			<tbody>
-			<tr *ngFor="let point of points || []; index as i">
-				<td>{{i}}</td>
-				<td>{{point.container?.type}} - {{point.container?.number}}</td>
-				<td>{{point.from?.counterparty?.title}}</td>
-				<td>{{point.toLoad?.numberOfPallets}}</td>
-				<td>{{point.toLoad?.grossWeightKg}}</td>
-				<td>{{point?.dispatcher?.refNumber}}</td>
-				<td>{{point?.toLoad?.note}}</td>
-				<td>
-					<pre style="margin: 0">{{point.from?.location?.address?.lines}}</pre>
-					<p *ngIf="point.from?.location?.address?.zipCode">
-						{{point.from?.location?.address?.zipCode}}
-					</p>
-				</td>
-			</tr>
+				<tr *ngFor="let point of points || []; index as i">
+					<td>{{ i }}</td>
+					<td>{{ point.container?.type }} - {{ point.container?.number }}</td>
+					<td>{{ point.from?.counterparty?.title }}</td>
+					<td>{{ point.toLoad?.numberOfPallets }}</td>
+					<td>{{ point.toLoad?.grossWeightKg }}</td>
+					<td>{{ point?.dispatcher?.refNumber }}</td>
+					<td>{{ point?.toLoad?.note }}</td>
+					<td>
+						<pre style="margin: 0">{{
+							point.from?.location?.address?.lines
+						}}</pre>
+						<p *ngIf="point.from?.location?.address?.zipCode">
+							{{ point.from?.location?.address?.zipCode }}
+						</p>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</ion-card>

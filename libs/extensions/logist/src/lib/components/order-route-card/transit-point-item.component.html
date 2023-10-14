@@ -1,13 +1,14 @@
 <ion-item-group>
 	<ion-item-divider>
-		<ion-label style="font-weight: bold">{{label}}</ion-label>
+		<ion-label style="font-weight: bold">{{ label }}</ion-label>
 	</ion-item-divider>
-	<sneat-country-input *ngIf="transitPoint"
+	<sneat-country-input
+		*ngIf="transitPoint"
 		[countryID]="transitPoint.countryID || ''"
 		(countryIDChange)="onCountryChanged($event)"
 	></sneat-country-input>
-<!--	<ion-item>-->
-<!--		<ion-label position="stacked">Address</ion-label>-->
-<!--		<ion-textarea></ion-textarea>-->
-<!--	</ion-item>-->
+	<!--	<ion-item>-->
+	<!--		<ion-label position="stacked">Address</ion-label>-->
+	<!--		<ion-textarea></ion-textarea>-->
+	<!--	</ion-item>-->
 </ion-item-group>

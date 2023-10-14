@@ -1,12 +1,10 @@
-<form
-	[formGroup]="addMemberForm"
-	(ngSubmit)="submit()"
->
-	<sneat-person-form-wizard [team]="team"
-														[disabled]="disabled"
-														[newPerson]="member"
-														[requires]="personRequirements"
-														(newPersonChange)="onRelatedPersonChanged($event)"
+<form [formGroup]="addMemberForm" (ngSubmit)="submit()">
+	<sneat-person-form-wizard
+		[team]="team"
+		[disabled]="disabled"
+		[newPerson]="member"
+		[requires]="personRequirements"
+		(newPersonChange)="onRelatedPersonChanged($event)"
 	></sneat-person-form-wizard>
 
 	<ion-card *ngIf="addMemberForm.errors">
@@ -14,14 +12,15 @@
 			<ion-card-title>Errors</ion-card-title>
 		</ion-card-header>
 		<ion-card-content>
-			{{addMemberForm.errors|json}}
+			{{ addMemberForm.errors | json }}
 		</ion-card-content>
 	</ion-card>
 
 	<div class="ion-padding" *ngIf="canSubmit">
-		<ion-button size="large"
-								(click)="submit()"
-								[disabled]="!team || addMemberForm.disabled || !addMemberForm.valid"
+		<ion-button
+			size="large"
+			(click)="submit()"
+			[disabled]="!team || addMemberForm.disabled || !addMemberForm.valid"
 		>
 			<ion-spinner
 				name="lines-small"
@@ -32,10 +31,9 @@
 		</ion-button>
 	</div>
 
-<!--	canSubmit: {{canSubmit}}-->
+	<!--	canSubmit: {{canSubmit}}-->
 
-<!--	Member: {{member|json}}-->
-<!--	<hr>-->
-<!--	personRequirements: {{personRequirements|json}}-->
+	<!--	Member: {{member|json}}-->
+	<!--	<hr>-->
+	<!--	personRequirements: {{personRequirements|json}}-->
 </form>
-

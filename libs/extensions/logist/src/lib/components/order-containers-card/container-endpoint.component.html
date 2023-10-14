@@ -1,12 +1,13 @@
 <ion-grid class="ion-grid-layout">
 	<ion-row>
 		<ion-col size="6">
-			<sneat-contact-input contactRole="trucker"
-													 [label]="endpointSide === 'arrival' ? 'Arrives by' : 'Departs by'"
-													 [canReset]="true"
-													 [team]="team"
-													 [contact]="byContact"
-													 (contactChange)="onByContactChanged($event)"
+			<sneat-contact-input
+				contactRole="trucker"
+				[label]="endpointSide === 'arrival' ? 'Arrives by' : 'Departs by'"
+				[canReset]="true"
+				[team]="team"
+				[contact]="byContact"
+				(contactChange)="onByContactChanged($event)"
 			></sneat-contact-input>
 			<!--			<sneat-logist-order-counterparty-input-->
 			<!--				label="By" contactRole="trucker" contactType="company"-->
@@ -18,18 +19,30 @@
 			<!--				(counterpartyChange)="onByChanged($event)"-->
 			<!--			></sneat-logist-order-counterparty-input>-->
 		</ion-col>
-		<ion-col size="6" >
+		<ion-col size="6">
 			<ion-item *ngIf="dateTimeTab === 'scheduled'">
-				<ion-input type="date" [formControl]="scheduledDate"
-									 (ionChange)="onScheduledDateChanged($event)"></ion-input>
-				<ion-input type="time" [formControl]="scheduledTime"
-									 (ionChange)="onScheduledTimeChanged($event)"></ion-input>
+				<ion-input
+					type="date"
+					[formControl]="scheduledDate"
+					(ionChange)="onScheduledDateChanged($event)"
+				></ion-input>
+				<ion-input
+					type="time"
+					[formControl]="scheduledTime"
+					(ionChange)="onScheduledTimeChanged($event)"
+				></ion-input>
 			</ion-item>
 			<ion-item *ngIf="dateTimeTab === 'actual'">
-				<ion-input type="date" [formControl]="actualDate"
-									 (ionChange)="onActualDateChanged($event)"></ion-input>
-				<ion-input type="time" [formControl]="actualTime"
-									 (ionChange)="onActualTimeChanged($event)"></ion-input>
+				<ion-input
+					type="date"
+					[formControl]="actualDate"
+					(ionChange)="onActualDateChanged($event)"
+				></ion-input>
+				<ion-input
+					type="time"
+					[formControl]="actualTime"
+					(ionChange)="onActualTimeChanged($event)"
+				></ion-input>
 			</ion-item>
 		</ion-col>
 	</ion-row>

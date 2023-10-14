@@ -4,7 +4,9 @@
 </ion-card-header>
 <h3 class="ion-margin">
 	References:
-	<a *ngIf="fk?.refTable" routerLink="{{ fk?.refTable?.schema }}.{{ fk?.refTable?.name }}"
+	<a
+		*ngIf="fk?.refTable"
+		routerLink="{{ fk?.refTable?.schema }}.{{ fk?.refTable?.name }}"
 		>{{ fk?.refTable?.schema }}.{{ fk?.refTable?.name }}</a
 	>
 </h3>

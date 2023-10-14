@@ -1,28 +1,29 @@
 <ion-header>
-  <ion-toolbar color="light" class="with-back-button">
-    <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
-    </ion-buttons>
-    <ng-container *ngIf="!isToDo">
-      <ion-title *ngIf="team else titleNoCommune">
-        New happening @ {{team.brief?.title}}
-      </ion-title>
-      <ng-template #titleNoCommune>New activity</ng-template>
-    </ng-container>
-    <ng-container *ngIf="isToDo">
-      <ion-title *ngIf="team else titleNoCommune">
-        New task @ {{team.brief?.title}}
-      </ion-title>
-      <ng-template #titleNoCommune>New task</ng-template>
-    </ng-container>
-  </ion-toolbar>
+	<ion-toolbar color="light" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+		</ion-buttons>
+		<ng-container *ngIf="!isToDo">
+			<ion-title *ngIf="team; else titleNoCommune">
+				New happening @ {{ team.brief?.title }}
+			</ion-title>
+			<ng-template #titleNoCommune>New activity</ng-template>
+		</ng-container>
+		<ng-container *ngIf="isToDo">
+			<ion-title *ngIf="team; else titleNoCommune">
+				New task @ {{ team.brief?.title }}
+			</ion-title>
+			<ng-template #titleNoCommune>New task</ng-template>
+		</ng-container>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-  <sneat-happening-form #happeningPageFormComponent
-                        [team]="team"
-                        [happening]="happening"
-                        (happeningChange)="onHappeningChanged($event)"
-                        [wd]="wd"
-  ></sneat-happening-form>
+	<sneat-happening-form
+		#happeningPageFormComponent
+		[team]="team"
+		[happening]="happening"
+		(happeningChange)="onHappeningChanged($event)"
+		[wd]="wd"
+	></sneat-happening-form>
 </ion-content>

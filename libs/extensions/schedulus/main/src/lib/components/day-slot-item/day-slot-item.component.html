@@ -1,40 +1,75 @@
 <style>
-  .canceled {
-	text-decoration: line-through;
-	color: grey;
-  }
+	.canceled {
+		text-decoration: line-through;
+		color: grey;
+	}
 </style>
-<ion-item button (click)="onSlotClicked($event)" class="sneat-tiny-end-padding" [color]="color">
-	<ion-icon class="sneat-tiny-end-margin"
-						[name]="slot?.happening?.brief?.type === 'recurring' ? 'calendar-outline' : 'today-outline'"
-						slot="start"></ion-icon>
-	<sneat-timing-badge [timing]="slot?.adjustment?.slot || slot?.timing"></sneat-timing-badge>
+<ion-item
+	button
+	(click)="onSlotClicked($event)"
+	class="sneat-tiny-end-padding"
+	[color]="color"
+>
+	<ion-icon
+		class="sneat-tiny-end-margin"
+		[name]="
+			slot?.happening?.brief?.type === 'recurring'
+				? 'calendar-outline'
+				: 'today-outline'
+		"
+		slot="start"
+	></ion-icon>
+	<sneat-timing-badge
+		[timing]="slot?.adjustment?.slot || slot?.timing"
+	></sneat-timing-badge>
 	<ion-label class="ion-text-wrap">
-		<span style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
-					[class.canceled]="isCanceled"
+		<span
+			style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
+			[class.canceled]="isCanceled"
 		>
-			{{slot?.title}}
+			{{ slot?.title }}
 		</span>
-		<ion-text color="medium" *ngIf="isCanceled">&nbsp;&mdash; canceled</ion-text>
+		<ion-text color="medium" *ngIf="isCanceled"
+			>&nbsp;&mdash; canceled</ion-text
+		>
 
-		<sneat-members-as-badges *ngIf="mode === 'full'"
-														 [showDelete]="false"
-														 [members]="(slot?.happening?.brief?.memberIDs || [])|selectedMembers:team:contactusTeam?.dto?.contacts"
+		<sneat-members-as-badges
+			*ngIf="mode === 'full'"
+			[showDelete]="false"
+			[members]="
+				slot?.happening?.brief?.memberIDs || []
+					| selectedMembers : team : contactusTeam?.dto?.contacts
+			"
 		></sneat-members-as-badges>
 
-		<p *ngIf="mode === 'full' && (slot?.location?.title || slot?.location?.address)">
-			{{slot?.location?.title || slot?.location?.address}}
+		<p
+			*ngIf="
+				mode === 'full' && (slot?.location?.title || slot?.location?.address)
+			"
+		>
+			{{ slot?.location?.title || slot?.location?.address }}
 		</p>
-		<p *ngIf="mode === 'full' && (slot?.participants?.length || slot?.levels?.length)">
+		<p
+			*ngIf="
+				mode === 'full' && (slot?.participants?.length || slot?.levels?.length)
+			"
+		>
 			<ng-container *ngIf="slot?.participants?.length">
-				<ion-badge color="light" style="margin-right: 0.5em"
-									 *ngFor="let participant of slot?.participants || []">
-					👩‍🏫 {{participant.title}}
+				<ion-badge
+					color="light"
+					style="margin-right: 0.5em"
+					*ngFor="let participant of slot?.participants || []"
+				>
+					👩‍🏫 {{ participant.title }}
 				</ion-badge>
 			</ng-container>
 			<ng-container *ngIf="slot?.levels?.length">
-				<ion-badge color="light" style="margin-right: 0.5em" *ngFor="let level of slot?.levels || []">
-					🎚️ {{level[0].toUpperCase() + level.substring(1)}}
+				<ion-badge
+					color="light"
+					style="margin-right: 0.5em"
+					*ngFor="let level of slot?.levels || []"
+				>
+					🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
 				</ion-badge>
 			</ng-container>
 		</p>

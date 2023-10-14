@@ -1,6 +1,8 @@
 <ion-item color="primary" class="sneat-tiny-end-padding">
 	<ion-label *ngIf="!contactRole">Contact selector</ion-label>
-	<ion-label *ngIf="contactRole">{{contactRole|titlecase}} selector</ion-label>
+	<ion-label *ngIf="contactRole"
+		>{{ contactRole | titlecase }} selector</ion-label
+	>
 	<ion-buttons slot="end">
 		<ion-button (click)="close($event)">
 			<ion-icon name="close-outline"></ion-icon>
@@ -11,33 +13,44 @@
 <ion-content>
 	<ng-container *ngIf="parentRole">
 		<ion-card-header *ngIf="!selectedParent">
-			<ion-card-subtitle>Step 1 of 2: Select {{parentRole}}</ion-card-subtitle>
+			<ion-card-subtitle
+				>Step 1 of 2: Select {{ parentRole }}</ion-card-subtitle
+			>
 		</ion-card-header>
 		<ion-card>
-			<ion-segment *ngIf="!selectedParent" [(ngModel)]="parentTab" class="ion-padding-horizontal">
+			<ion-segment
+				*ngIf="!selectedParent"
+				[(ngModel)]="parentTab"
+				class="ion-padding-horizontal"
+			>
 				<ion-segment-button value="existing">Existing</ion-segment-button>
 				<ion-segment-button value="new">New</ion-segment-button>
 			</ion-segment>
-			<sneat-select-from-list *ngIf="parentTab === 'existing'"
-															[label]="(selectedParent ? parentRole  : '')|titlecase"
-															[items]="parentItems"
-															[(ngModel)]="parentContactID"
-															(ngModelChange)="onParentContactIDChanged($event)"
-															[isFilterable]="true"
-															radioSlot="end"
+			<sneat-select-from-list
+				*ngIf="parentTab === 'existing'"
+				[label]="(selectedParent ? parentRole : '') | titlecase"
+				[items]="parentItems"
+				[(ngModel)]="parentContactID"
+				(ngModelChange)="onParentContactIDChanged($event)"
+				[isFilterable]="true"
+				radioSlot="end"
 			></sneat-select-from-list>
 
-			<sneat-new-company-form *ngIf="parentTab === 'new'"
-															[team]="team"
-															[contactRoles]="contactRoles"
-															[contactRole]="parentRole"
-															[hideRole]="true"
-															(contactCreated)="onParentContactCreated($event)">
+			<sneat-new-company-form
+				*ngIf="parentTab === 'new'"
+				[team]="team"
+				[contactRoles]="contactRoles"
+				[contactRole]="parentRole"
+				[hideRole]="true"
+				(contactCreated)="onParentContactCreated($event)"
+			>
 				>
 			</sneat-new-company-form>
 		</ion-card>
 		<ion-card-header *ngIf="selectedParent">
-			<ion-card-subtitle>Step 2 of 2: Select {{contactRole}}</ion-card-subtitle>
+			<ion-card-subtitle
+				>Step 2 of 2: Select {{ contactRole }}</ion-card-subtitle
+			>
 		</ion-card-header>
 	</ng-container>
 
@@ -55,42 +68,52 @@
 			<ion-segment-button value="existing">Existing</ion-segment-button>
 			<ion-segment-button value="new">New</ion-segment-button>
 		</ion-segment>
-		<p class="ion-padding"
-			 *ngIf="contactTab === 'existing' && selectedParent && contacts && !contacts.length">
+		<p
+			class="ion-padding"
+			*ngIf="
+				contactTab === 'existing' &&
+				selectedParent &&
+				contacts &&
+				!contacts.length
+			"
+		>
 			<ion-text color="medium">No locations for selected contact</ion-text>
 		</p>
-		<sneat-select-from-list *ngIf="contactTab === 'existing'"
-														[label]="''"
-														[items]="contactItems"
-														[(ngModel)]="selectedSubContactID"
-														(ngModelChange)="onContactSelected($event)"
-														[isFilterable]="true"
-														radioSlot="end"
+		<sneat-select-from-list
+			*ngIf="contactTab === 'existing'"
+			[label]="''"
+			[items]="contactItems"
+			[(ngModel)]="selectedSubContactID"
+			(ngModelChange)="onContactSelected($event)"
+			[isFilterable]="true"
+			radioSlot="end"
 		></sneat-select-from-list>
 
-
 		<ng-container *ngIf="contactTab === 'new'">
-			<sneat-location-form *ngIf="contactType === 'location'; else notLocation"
-													 contactType="location"
-													 [contactRole]="contactRole"
-													 [team]="team"
-													 [parentContact]="selectedParent"
-													 (contactCreated)="onLocationCreated($event)"
+			<sneat-location-form
+				*ngIf="contactType === 'location'; else notLocation"
+				contactType="location"
+				[contactRole]="contactRole"
+				[team]="team"
+				[parentContact]="selectedParent"
+				(contactCreated)="onLocationCreated($event)"
 			></sneat-location-form>
 			<ng-template #notLocation>
 				<ng-container [ngSwitch]="contactType">
-					<sneat-new-company-form *ngSwitchCase="'company'"
-																	[team]="team"
-																	[contactRoles]="contactRoles"
-																	[contactRole]="contactRole"
-																	[hideRole]="true"
-																	[parentContact]="selectedParent"
-																	(contactCreated)="onContactCreated($event)">
+					<sneat-new-company-form
+						*ngSwitchCase="'company'"
+						[team]="team"
+						[contactRoles]="contactRoles"
+						[contactRole]="contactRole"
+						[hideRole]="true"
+						[parentContact]="selectedParent"
+						(contactCreated)="onContactCreated($event)"
+					>
 						>
 					</sneat-new-company-form>
 					<ng-container *ngSwitchDefault>
 						<ion-item-divider>
-							<ion-label>{{contactRole|titlecase}}</ion-label>
+							<ion-label>{{ contactRole | titlecase }}</ion-label>
 						</ion-item-divider>
 						<sneat-basic-contact-form
 							[team]="team"

@@ -2,7 +2,9 @@
 	<ion-buttons slot="start">
 		<ion-button title="Previous day" (click)="swipe(-1, $event)">
 			<ion-icon name="chevron-back-sharp" slot="start"></ion-icon>
-			<ion-label><span class="sneat-hide-if-width-less-638">Previous</span></ion-label>
+			<ion-label
+				><span class="sneat-hide-if-width-less-638">Previous</span></ion-label
+			>
 		</ion-button>
 	</ion-buttons>
 	<ion-label style="text-align: center; width: 100%" tappable color="secondary">
@@ -12,7 +14,9 @@
 	<ion-buttons slot="end">
 		<ion-button title="Next day" (click)="swipe(1, $event)">
 			<ion-icon name="chevron-forward-sharp" slot="end"></ion-icon>
-			<ion-label><span class="sneat-hide-if-width-less-638">Next</span></ion-label>
+			<ion-label
+				><span class="sneat-hide-if-width-less-638">Next</span></ion-label
+			>
 		</ion-button>
 	</ion-buttons>
 </ion-item>
@@ -20,26 +24,35 @@
 <ion-popover trigger="pick-date" alignment="center">
 	<ng-template>
 		<ion-item>
-			<ion-button fill="clear" color="primary" (click)="goToday()">Today</ion-button>
-			<ion-button fill="clear" color="tertiary" (click)="goTomorrow()" slot="end">Tomorrow</ion-button>
+			<ion-button fill="clear" color="primary" (click)="goToday()"
+				>Today</ion-button
+			>
+			<ion-button
+				fill="clear"
+				color="tertiary"
+				(click)="goTomorrow()"
+				slot="end"
+				>Tomorrow</ion-button
+			>
 		</ion-item>
-		<ion-datetime class="sneat-date-picker"
-				[value]="dateAsIsoString"
-				presentation="date"
-				(ionChange)="onPickerDateChanged($event)"
-			></ion-datetime>
+		<ion-datetime
+			class="sneat-date-picker"
+			[value]="dateAsIsoString"
+			presentation="date"
+			(ionChange)="onPickerDateChanged($event)"
+		></ion-datetime>
 
-<!--			<ion-list>-->
-<!--			<ion-item-divider>-->
-<!--				<ion-label>Quick links</ion-label>-->
-<!--			</ion-item-divider>-->
-<!--			<ion-item tappable (click)="goToday()">-->
-<!--				<ion-label>Today</ion-label>-->
-<!--			</ion-item>-->
-<!--			<ion-item tappable (click)="goTomorrow()">-->
-<!--				<ion-label>Tomorrow</ion-label>-->
-<!--			</ion-item>-->
-<!--			</ion-list>-->
+		<!--			<ion-list>-->
+		<!--			<ion-item-divider>-->
+		<!--				<ion-label>Quick links</ion-label>-->
+		<!--			</ion-item-divider>-->
+		<!--			<ion-item tappable (click)="goToday()">-->
+		<!--				<ion-label>Today</ion-label>-->
+		<!--			</ion-item>-->
+		<!--			<ion-item tappable (click)="goTomorrow()">-->
+		<!--				<ion-label>Tomorrow</ion-label>-->
+		<!--			</ion-item>-->
+		<!--			</ion-list>-->
 	</ng-template>
 </ion-popover>
 
@@ -53,7 +66,6 @@
 <!--<div class="ion-text-center ion-margin">-->
 <!--	<ion-text color="medium">&larr; Swipe to change day &rarr;</ion-text>-->
 <!--</div>-->
-
 
 <!--Tomorrow -->
 <sneat-schedule-day-card

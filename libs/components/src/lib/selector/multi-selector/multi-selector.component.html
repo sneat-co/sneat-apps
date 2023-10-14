@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label color="medium">{{title}}</ion-label>
+		<ion-label color="medium">{{ title }}</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="medium">
 				<ion-icon name="add-outline"></ion-icon>
@@ -11,8 +11,12 @@
 
 	<ion-list>
 		<ion-item *ngFor="let item of selectedItems">
-			<ion-label>{{item.title}}</ion-label>
-			<ion-buttons slot="end" (click)="removeItem($event, item)" *ngIf="canRemove">
+			<ion-label>{{ item.title }}</ion-label>
+			<ion-buttons
+				slot="end"
+				(click)="removeItem($event, item)"
+				*ngIf="canRemove"
+			>
 				<ion-button title="Remove">
 					<ion-icon name="close-outline"></ion-icon>
 				</ion-button>

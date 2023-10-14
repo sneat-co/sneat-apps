@@ -10,7 +10,8 @@
 			[titlesByTeamType]="{
 				personal: 'New personal asset',
 				family: 'New family asset'
-			}">
+			}"
+		>
 		</sneat-team-page-title>
 	</ion-toolbar>
 </ion-header>
@@ -21,16 +22,27 @@
 			<ion-label>Select asset kind</ion-label>
 		</ion-item>
 		<ion-list *ngIf="!category">
-			<ion-item [lines]="last ? 'none' : 'full'" button *ngFor="let c of categories || []; trackBy: id; let last = last" (click)="selectCategory(c)">
+			<ion-item
+				[lines]="last ? 'none' : 'full'"
+				button
+				*ngFor="let c of categories || []; trackBy: id; let last = last"
+				(click)="selectCategory(c)"
+			>
 				<ion-radio slot="start" labelPlacement="end">
-					{{c.title}}
+					{{ c.title }}
 				</ion-radio>
 			</ion-item>
 		</ion-list>
 	</ion-card>
 
 	<ng-container [ngSwitch]="category?.id">
-		<sneat-asset-add-vehicle *ngSwitchCase="'vehicle'" [team]="team"></sneat-asset-add-vehicle>
-		<sneat-asset-add-document *ngSwitchCase="'document'" [team]="team"></sneat-asset-add-document>
+		<sneat-asset-add-vehicle
+			*ngSwitchCase="'vehicle'"
+			[team]="team"
+		></sneat-asset-add-vehicle>
+		<sneat-asset-add-document
+			*ngSwitchCase="'document'"
+			[team]="team"
+		></sneat-asset-add-document>
 	</ng-container>
 </ion-content>

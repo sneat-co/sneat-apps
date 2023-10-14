@@ -27,21 +27,21 @@
 				<h3>{{ status.member.title }}</h3>
 				<ion-buttons class="counters">
 					<ion-button color="danger" disabled *ngIf="count('risk')">
-						<ion-badge color="danger">{{ count('risk') }}</ion-badge>
+						<ion-badge color="danger">{{ count("risk") }}</ion-badge>
 						<!-- TODO(i18n): pluralise -->
 						<ng-container *ngIf="count('risk') === 1">risk</ng-container>
 						<ng-container *ngIf="count('risk') !== 1">risks</ng-container>
 					</ion-button>
 					<ion-button color="success" disabled *ngIf="count('done')">
-						<ion-badge color="success">{{ count('done') }}</ion-badge>
+						<ion-badge color="success">{{ count("done") }}</ion-badge>
 						done
 					</ion-button>
 					<ion-button color="dark" disabled *ngIf="count('todo')">
-						<ion-badge color="dark">{{ count('todo') }}</ion-badge>
+						<ion-badge color="dark">{{ count("todo") }}</ion-badge>
 						plans
 					</ion-button>
 					<ion-button color="primary" disabled *ngIf="count('qna')">
-						<ion-badge>{{ count('qna') }}</ion-badge>
+						<ion-badge>{{ count("qna") }}</ion-badge>
 						<ng-container *ngIf="count('qna') === 1">question</ng-container>
 						<ng-container *ngIf="count('qna') !== 1">questions</ng-container>
 					</ion-button>

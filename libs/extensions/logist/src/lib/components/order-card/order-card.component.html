@@ -1,10 +1,19 @@
 <ion-card>
-	<ion-item *ngIf="showHeader" color="light" [routerLink]="'../order/'+order?.id" class="sneat-tiny-end-padding">
+	<ion-item
+		*ngIf="showHeader"
+		color="light"
+		[routerLink]="'../order/' + order?.id"
+		class="sneat-tiny-end-padding"
+	>
 		<ion-label [color]="readonly ? 'primary' : undefined">
-			Order # {{order?.id}} - {{order?.brief?.direction}}
+			Order # {{ order?.id }} - {{ order?.brief?.direction }}
 		</ion-label>
 		<ion-buttons slot="end">
-			<ion-button color="medium" title="Copy to clipboard" (click)="copyNumberToClipboard($event)">
+			<ion-button
+				color="medium"
+				title="Copy to clipboard"
+				(click)="copyNumberToClipboard($event)"
+			>
 				<ion-icon name="clipboard-outline" slot="start"></ion-icon>
 				<ion-label>Copy #</ion-label>
 			</ion-button>
@@ -21,16 +30,25 @@
 				<ion-item>
 					<ion-label color="medium">Created</ion-label>
 					<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
-					<ion-input [value]="(order?.dto?.createdAt?.seconds||0)*1000 | date:'dd MMM yyyy'"
-										 readonly="readonly"></ion-input>
+					<ion-input
+						[value]="
+							(order?.dto?.createdAt?.seconds || 0) * 1000
+								| date : 'dd MMM yyyy'
+						"
+						readonly="readonly"
+					></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col size="6">
 				<ion-item>
 					<ion-label color="medium">Status</ion-label>
 					<!--		<ion-input [value]="order?.dto?.status" readonly="readonly"></ion-input>-->
-					<ion-select [disabled]="!team || !order?.id" interface="popover"
-											[value]="order?.dto?.status" (ionChange)="onUserChangedOrderStatus($event)">
+					<ion-select
+						[disabled]="!team || !order?.id"
+						interface="popover"
+						[value]="order?.dto?.status"
+						(ionChange)="onUserChangedOrderStatus($event)"
+					>
 						<ion-select-option value="active">Active</ion-select-option>
 						<ion-select-option value="completed">Completed</ion-select-option>
 						<ion-select-option value="canceled">Canceled</ion-select-option>
@@ -79,67 +97,73 @@
 		<ion-item-divider color="light">
 			<ion-label color="medium">Destination</ion-label>
 		</ion-item-divider>
-		<sneat-logist-order-counterparty label="Buyer"
-																		 [team]="team"
-																		 [order]="order"
-																		 [readonly]="readonly"
-																		 counterpartyRole="buyer"
-																		 contactType="company"
-																		 contactRole="buyer"
-																		 labelPosition="fixed"
+		<sneat-logist-order-counterparty
+			label="Buyer"
+			[team]="team"
+			[order]="order"
+			[readonly]="readonly"
+			counterpartyRole="buyer"
+			contactType="company"
+			contactRole="buyer"
+			labelPosition="fixed"
 		></sneat-logist-order-counterparty>
-		<sneat-logist-order-counterparty label="Consignee"
-																		 [team]="team"
-																		 [order]="order"
-																		 [readonly]="readonly"
-																		 counterpartyRole="consignee"
-																		 contactType="company"
-																		 contactRole="consignee"
-																		 labelPosition="fixed"
+		<sneat-logist-order-counterparty
+			label="Consignee"
+			[team]="team"
+			[order]="order"
+			[readonly]="readonly"
+			counterpartyRole="consignee"
+			contactType="company"
+			contactRole="consignee"
+			labelPosition="fixed"
 		></sneat-logist-order-counterparty>
-		<sneat-logist-order-counterparty label="Notify party"
-																		 [team]="team"
-																		 [order]="order"
-																		 [readonly]="readonly"
-																		 counterpartyRole="notify_party"
-																		 contactType="company"
-																		 contactRole="notify_party"
-																		 labelPosition="fixed"
+		<sneat-logist-order-counterparty
+			label="Notify party"
+			[team]="team"
+			[order]="order"
+			[readonly]="readonly"
+			counterpartyRole="notify_party"
+			contactType="company"
+			contactRole="notify_party"
+			labelPosition="fixed"
 		></sneat-logist-order-counterparty>
 	</ion-item-group>
 	<ion-item-group>
 		<ion-item-divider color="light">
 			<ion-label color="medium">Shipping</ion-label>
 		</ion-item-divider>
-		<sneat-logist-order-counterparty label="🏗️ From port"
-																		 [team]="team"
-																		 [order]="order"
-																		 [readonly]="readonly"
-																		 counterpartyRole="port_from"
-																		 contactRole="port"
-																		 contactType="company"
-																		 labelPosition="fixed"
+		<sneat-logist-order-counterparty
+			label="🏗️ From port"
+			[team]="team"
+			[order]="order"
+			[readonly]="readonly"
+			counterpartyRole="port_from"
+			contactRole="port"
+			contactType="company"
+			labelPosition="fixed"
 		></sneat-logist-order-counterparty>
-		<sneat-logist-order-counterparty label="🏗️ To port"
-																		 [team]="team"
-																		 [order]="order"
-																		 [readonly]="readonly"
-																		 counterpartyRole="port_to"
-																		 contactRole="port"
-																		 contactType="company"
-																		 labelPosition="fixed"
+		<sneat-logist-order-counterparty
+			label="🏗️ To port"
+			[team]="team"
+			[order]="order"
+			[readonly]="readonly"
+			counterpartyRole="port_to"
+			contactRole="port"
+			contactType="company"
+			labelPosition="fixed"
 		></sneat-logist-order-counterparty>
-		<sneat-logist-order-counterparty label="🚢 Ship"
-																		 [team]="team"
-																		 [order]="order"
-																		 [readonly]="readonly"
-																		 parentType="company"
-																		 parentRole="shipping_line"
-																		 contactRole="ship"
-																		 counterpartyRole="ship"
-																		 contactType="vehicle"
-																		 labelPosition="fixed"
-																		 refNumLabel="Voyage"
+		<sneat-logist-order-counterparty
+			label="🚢 Ship"
+			[team]="team"
+			[order]="order"
+			[readonly]="readonly"
+			parentType="company"
+			parentRole="shipping_line"
+			contactRole="ship"
+			counterpartyRole="ship"
+			contactType="vehicle"
+			labelPosition="fixed"
+			refNumLabel="Voyage"
 		></sneat-logist-order-counterparty>
 	</ion-item-group>
 	<sneat-order-agents [team]="team" [order]="order"></sneat-order-agents>

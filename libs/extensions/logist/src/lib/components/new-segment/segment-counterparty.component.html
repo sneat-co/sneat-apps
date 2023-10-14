@@ -1,10 +1,21 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label slot="start" style="font-weight: bold">{{endpointDirection|titlecase}}</ion-label>
-		<ion-segment [(ngModel)]="endpointType" (ionChange)="onEndpointTypeChanged($event)">
+		<ion-label slot="start" style="font-weight: bold">{{
+			endpointDirection | titlecase
+		}}</ion-label>
+		<ion-segment
+			[(ngModel)]="endpointType"
+			(ionChange)="onEndpointTypeChanged($event)"
+		>
 			<ion-segment-button value="port">Port</ion-segment-button>
-			<ion-segment-button value="dispatcher" *ngIf="endpointDirection === 'from'">Dispatcher</ion-segment-button>
-			<ion-segment-button value="dispatcher" *ngIf="endpointDirection === 'to'">Receiver</ion-segment-button>
+			<ion-segment-button
+				value="dispatcher"
+				*ngIf="endpointDirection === 'from'"
+				>Dispatcher</ion-segment-button
+			>
+			<ion-segment-button value="dispatcher" *ngIf="endpointDirection === 'to'"
+				>Receiver</ion-segment-button
+			>
 		</ion-segment>
 	</ion-item-divider>
 	<sneat-contact-input
@@ -20,10 +31,17 @@
 	></sneat-contact-input>
 	<ion-item>
 		<ion-label color="medium">On</ion-label>
-		<ion-input type="date" [(ngModel)]="date" (ionChange)="onDateChanged()"></ion-input>
+		<ion-input
+			type="date"
+			[(ngModel)]="date"
+			(ionChange)="onDateChanged()"
+		></ion-input>
 	</ion-item>
 	<ion-item>
 		<ion-label color="medium">Ref #</ion-label>
-		<ion-input [(ngModel)]="refNumber" (ionInput)="onRefNumberChanged()"></ion-input>
+		<ion-input
+			[(ngModel)]="refNumber"
+			(ionInput)="onRefNumberChanged()"
+		></ion-input>
 	</ion-item>
 </ion-card>

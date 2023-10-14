@@ -7,9 +7,9 @@
 		<ion-title>
 			Retrospective
 			<ng-container *ngIf="team"
-				>@ {{team?.data?.title || team?.id}}</ng-container
+				>@ {{ team?.data?.title || team?.id }}</ng-container
 			>
-			: {{meetingId}}
+			: {{ meetingId }}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -17,13 +17,15 @@
 <ion-content>
 	<ion-row>
 		<ion-col size="12" size-lg="3" *ngFor="let category of categories">
-			<h2 class="ion-padding">{{category.title}}</h2>
+			<h2 class="ion-padding">{{ category.title }}</h2>
 			<angular-dnd-tree
 				[treeId]="positive.ID"
 				[rootItem]="category"
-<!--				[spec]="treeSpec"-->
-				(moved)="itemMoved($event)"
+				<!--
+				[spec]="treeSpec"
+				--
 			>
+				(moved)="itemMoved($event)" >
 				<ng-template angularDndTreeItem let-node>
 					<sneat-retro-item-card [treeNode]="node"></sneat-retro-item-card>
 				</ng-template>

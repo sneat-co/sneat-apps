@@ -1,36 +1,53 @@
-<ion-segment class="ion-padding-horizontal" [(ngModel)]="tab" (ionChange)="segmentChanged($event)">
-	<ion-segment-button value="day"><span class="smaller">Day</span></ion-segment-button>
-	<ion-segment-button value="week"><span class="smaller">Week</span></ion-segment-button>
-	<ion-segment-button value="recurrings"><span class="smaller">Recurring</span></ion-segment-button>
-	<ion-segment-button value="singles"><span class="smaller">1-timers</span></ion-segment-button>
+<ion-segment
+	class="ion-padding-horizontal"
+	[(ngModel)]="tab"
+	(ionChange)="segmentChanged($event)"
+>
+	<ion-segment-button value="day"
+		><span class="smaller">Day</span></ion-segment-button
+	>
+	<ion-segment-button value="week"
+		><span class="smaller">Week</span></ion-segment-button
+	>
+	<ion-segment-button value="recurrings"
+		><span class="smaller">Recurring</span></ion-segment-button
+	>
+	<ion-segment-button value="singles"
+		><span class="smaller">1-timers</span></ion-segment-button
+	>
 </ion-segment>
 
-<sneat-schedule-filter #scheduleFilterComponent
-											 [team]="team"
-											 [showWeekdays]="tab === 'recurrings'"
-											 [showRepeats]="tab === 'recurrings'"
+<sneat-schedule-filter
+	#scheduleFilterComponent
+	[team]="team"
+	[showWeekdays]="tab === 'recurrings'"
+	[showRepeats]="tab === 'recurrings'"
 ></sneat-schedule-filter>
 
-<sneat-day-tab [style.display]="tab === 'day' ? 'block': 'none'"
-							 [team]="team"
-							 [teamDaysProvider]="teamDaysProvider"
-							 [onSlotClicked]="onSlotClicked"
+<sneat-day-tab
+	[style.display]="tab === 'day' ? 'block' : 'none'"
+	[team]="team"
+	[teamDaysProvider]="teamDaysProvider"
+	[onSlotClicked]="onSlotClicked"
 ></sneat-day-tab>
 
-<sneat-week-tab [style.display]="tab === 'week' ? 'block': 'none'"
-								[team]="team"
-								[teamDaysProvider]="teamDaysProvider"
-								(slotClicked)="onSlotClicked($event)"
+<sneat-week-tab
+	[style.display]="tab === 'week' ? 'block' : 'none'"
+	[team]="team"
+	[teamDaysProvider]="teamDaysProvider"
+	(slotClicked)="onSlotClicked($event)"
 ></sneat-week-tab>
 
-<sneat-recurrings-tab *ngIf="tab === 'recurrings'"
-											[team]="team"
-											[recurrings]="recurrings"
-											[allRecurrings]="allRecurrings"
+<sneat-recurrings-tab
+	*ngIf="tab === 'recurrings'"
+	[team]="team"
+	[recurrings]="recurrings"
+	[allRecurrings]="allRecurrings"
 ></sneat-recurrings-tab>
 
-<sneat-singles-tab *ngIf="tab === 'singles'"
-									 [team]="team"
-									 [onSlotClicked]="onSlotClicked"
-									 [onDateSelected]="onDateSelected"
+<sneat-singles-tab
+	*ngIf="tab === 'singles'"
+	[team]="team"
+	[onSlotClicked]="onSlotClicked"
+	[onDateSelected]="onDateSelected"
 ></sneat-singles-tab>

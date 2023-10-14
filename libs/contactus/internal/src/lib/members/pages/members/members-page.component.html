@@ -47,12 +47,18 @@
 	<!--	</ion-list>-->
 
 	<ng-container *ngIf="segment === 'all' && teamType === 'family'">
-		<ng-container *ngFor="let group of predefinedMemberGroups; trackBy: memberGroupID">
+		<ng-container
+			*ngFor="let group of predefinedMemberGroups; trackBy: memberGroupID"
+		>
 			<ion-card *ngIf="group.addLabel || group.members?.length">
 				<ion-item-divider color="light">
-					<ion-label>{{group.emoji}}&nbsp;&nbsp;{{group.plural}}</ion-label>
+					<ion-label>{{ group.emoji }}&nbsp;&nbsp;{{ group.plural }}</ion-label>
 					<ion-buttons slot="end">
-						<ion-button *ngIf="group.addLabel" [title]="group.addLabel" (click)="goNewMemberPage(group)">
+						<ion-button
+							*ngIf="group.addLabel"
+							[title]="group.addLabel"
+							(click)="goNewMemberPage(group)"
+						>
 							<ion-icon name="add" slot="start"></ion-icon>
 							<ion-label>Add</ion-label>
 						</ion-button>
@@ -62,10 +68,11 @@
 					<ion-spinner name="lines-small" color="medium"></ion-spinner>
 					<ion-label color="medium">Loading...</ion-label>
 				</ion-item>
-				<sneat-members-list [team]="team"
-														[members]="group.members"
-														[contactsByMember]="contactsByMember"
-														[hideRoles]="[group.role, 'member']"
+				<sneat-members-list
+					[team]="team"
+					[members]="group.members"
+					[contactsByMember]="contactsByMember"
+					[hideRoles]="[group.role, 'member']"
 				></sneat-members-list>
 			</ion-card>
 		</ng-container>
@@ -74,14 +81,16 @@
 	<ng-container *ngIf="segment === 'groups'">
 		<ng-container *ngIf="teamType === 'cohabit'">
 			<ng-container *ngIf="memberGroups">
-				<ion-item-group *ngFor="let group of memberGroups; trackBy: memberGroupContextID">
+				<ion-item-group
+					*ngFor="let group of memberGroups; trackBy: memberGroupContextID"
+				>
 					<ion-item-divider>
 						<ion-icon name="people" style="margin-right: 0.5em"></ion-icon>
 						<ion-label>
-							{{group.brief?.title}}
+							{{ group.brief?.title }}
 						</ion-label>
 						<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
-							{{group.dto?.numberOf?.members}} members
+							{{ group.dto?.numberOf?.members }} members
 						</ion-badge>
 					</ion-item-divider>
 					<!--					<ng-container *ngIf="membersByGroupId[group.id]">-->
@@ -100,14 +109,16 @@
 		</ng-container>
 		<ng-container *ngIf="teamType !== 'cohabit'">
 			<ng-container *ngIf="memberGroups">
-				<ion-item-group *ngFor="let group of memberGroups; trackBy: memberGroupContextID">
+				<ion-item-group
+					*ngFor="let group of memberGroups; trackBy: memberGroupContextID"
+				>
 					<ion-item button="button" (click)="goGroup(group)">
 						<ion-icon name="people" style="margin-right: 0.5em"></ion-icon>
 						<ion-label>
-							{{group.brief?.title}}
+							{{ group.brief?.title }}
 						</ion-label>
 						<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
-							{{group?.dto?.numberOf?.members}} members
+							{{ group?.dto?.numberOf?.members }} members
 						</ion-badge>
 					</ion-item>
 				</ion-item-group>
@@ -132,19 +143,21 @@
 		<ion-label *ngIf="team.dto && segment === 'all'">
 			<b>Total</b>:
 			{{ team.dto.numberOf?.members ?? 0 }}
-			{{ team.dto.numberOf?.members === 1 ? 'member' : 'members' }}
+			{{ team.dto.numberOf?.members === 1 ? "member" : "members" }}
 		</ion-label>
 		<ion-label *ngIf="team.dto && segment === 'groups'">
 			<b>Total</b>:
-			{{ team.dto.numberOf?.memberGroups || 0}}
-			{{ team.dto.numberOf?.memberGroups === 1 ? 'group' : 'groups' }}
+			{{ team.dto.numberOf?.memberGroups || 0 }}
+			{{ team.dto.numberOf?.memberGroups === 1 ? "group" : "groups" }}
 		</ion-label>
 		<ion-label *ngIf="!team.dto">Loading...</ion-label>
 		<ion-buttons slot="end">
-			<ion-button size="small" color="primary"
-									[disabled]="!team.brief"
-									(click)="goNew()"
-									[title]="segment === 'groups' ? 'Add new group' : 'Add new member'"
+			<ion-button
+				size="small"
+				color="primary"
+				[disabled]="!team.brief"
+				(click)="goNew()"
+				[title]="segment === 'groups' ? 'Add new group' : 'Add new member'"
 			>
 				<ion-icon name="add"></ion-icon>
 				<ion-label>Add</ion-label>

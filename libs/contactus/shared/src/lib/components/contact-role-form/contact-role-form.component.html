@@ -3,19 +3,25 @@
 		<ion-item-divider color="primary">
 			<ion-label>Please select contact type</ion-label>
 		</ion-item-divider>
-		<ion-segment [(ngModel)]="contactGroupID" (ionChange)="onContactGroupIDChanged($event)">
-			<ion-segment-button *ngFor="let g of groups || []; trackBy: id"
-													[value]="g.id"
+		<ion-segment
+			[(ngModel)]="contactGroupID"
+			(ionChange)="onContactGroupIDChanged($event)"
+		>
+			<ion-segment-button
+				*ngFor="let g of groups || []; trackBy: id"
+				[value]="g.id"
 			>
-				<ion-label>{{g.brief?.emoji}} {{g.brief?.title || g.id}}</ion-label>
+				<ion-label>{{ g.brief?.emoji }} {{ g.brief?.title || g.id }}</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 
-
-		<ion-radio-group [(ngModel)]="contactRoleID" (ionChange)="onContactRoleIDChanged($event)">
+		<ion-radio-group
+			[(ngModel)]="contactRoleID"
+			(ionChange)="onContactRoleIDChanged($event)"
+		>
 			<ion-item *ngFor="let r of contactGroup?.dto?.roles || []; trackBy: id">
 				<ion-radio slot="start" [value]="r.id"></ion-radio>
-				<ion-label>{{r.emoji}} {{r.title || r.id|titlecase}}</ion-label>
+				<ion-label>{{ r.emoji }} {{ r.title || r.id | titlecase }}</ion-label>
 			</ion-item>
 		</ion-radio-group>
 	</ng-container>
@@ -23,18 +29,30 @@
 	<ng-container *ngIf="contactRoleID">
 		<ion-item>
 			<ion-label position="stacked">Contact group</ion-label>
-			<ion-select interface="popover" [(ngModel)]="contactGroupID" (ionChange)="onContactGroupIDChanged($event)">
-				<ion-select-option *ngFor="let g of groups || []; trackBy: id"
-													 [value]="g.id"
-				>{{g.brief?.title || g.id}}</ion-select-option>
+			<ion-select
+				interface="popover"
+				[(ngModel)]="contactGroupID"
+				(ionChange)="onContactGroupIDChanged($event)"
+			>
+				<ion-select-option
+					*ngFor="let g of groups || []; trackBy: id"
+					[value]="g.id"
+					>{{ g.brief?.title || g.id }}</ion-select-option
+				>
 			</ion-select>
 		</ion-item>
 		<ion-item>
 			<ion-label position="stacked">Contact type/role</ion-label>
-			<ion-select interface="popover" [(ngModel)]="contactRoleID" (ionChange)="onContactRoleIDChanged($event)">
-				<ion-select-option *ngFor="let r of contactGroup?.dto?.roles || []; trackBy: id"
-													 [value]="r.id"
-				>{{r.emoji}} {{r.title || r.id}}</ion-select-option>
+			<ion-select
+				interface="popover"
+				[(ngModel)]="contactRoleID"
+				(ionChange)="onContactRoleIDChanged($event)"
+			>
+				<ion-select-option
+					*ngFor="let r of contactGroup?.dto?.roles || []; trackBy: id"
+					[value]="r.id"
+					>{{ r.emoji }} {{ r.title || r.id }}</ion-select-option
+				>
 			</ion-select>
 		</ion-item>
 	</ng-container>

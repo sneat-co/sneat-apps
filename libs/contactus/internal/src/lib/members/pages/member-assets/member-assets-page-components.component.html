@@ -1,15 +1,15 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="memberId ? '/member?id='+memberId : '/communes'"></ion-back-button>
+			<ion-back-button
+				[defaultHref]="memberId ? '/member?id=' + memberId : '/communes'"
+			></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="memberInfo else titleNoCommune">
-			Assets of {{memberInfo.title}}
+		<ion-title *ngIf="memberInfo; else titleNoCommune">
+			Assets of {{ memberInfo.title }}
 		</ion-title>
 		<ng-template #titleNoCommune>Assets of a member</ng-template>
 	</ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
-</ion-content>
+<ion-content padding> </ion-content>

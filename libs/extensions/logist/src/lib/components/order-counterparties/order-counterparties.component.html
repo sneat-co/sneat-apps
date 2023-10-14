@@ -1,7 +1,11 @@
 <ion-item-divider class="sneat-tiny-end-padding" color="light">
-	<ion-label color="medium">{{emoji}} {{plural|titlecase}}</ion-label>
+	<ion-label color="medium">{{ emoji }} {{ plural | titlecase }}</ion-label>
 	<ion-buttons slot="end">
-		<ion-button title="Add {{singular}}" [disabled]="readonly" (click)="addCounterparty($event)">
+		<ion-button
+			title="Add {{ singular }}"
+			[disabled]="readonly"
+			(click)="addCounterparty($event)"
+		>
 			<!--				<ion-icon name="add-outline" color="medium"></ion-icon>-->
 			<ion-icon name="add-outline" color="medium" slot="start"></ion-icon>
 			<ion-label color="medium">Add</ion-label>
@@ -9,14 +13,20 @@
 	</ion-buttons>
 </ion-item-divider>
 <ion-item-divider *ngIf="counterparties && !counterparties.length">
-	<ion-label>No {{plural|lowercase}} have been added yet</ion-label>
+	<ion-label>No {{ plural | lowercase }} have been added yet</ion-label>
 </ion-item-divider>
-<ion-item *ngFor="let counterparty of counterparties; trackBy: index" class="sneat-tiny-end-padding">
+<ion-item
+	*ngFor="let counterparty of counterparties; trackBy: index"
+	class="sneat-tiny-end-padding"
+>
 	<ion-label>
 		<ng-container *ngIf="counterparty.parent">
-			{{counterparty.parentCounterparty?.title || counterparty.parent.contactID}} @
+			{{
+				counterparty.parentCounterparty?.title || counterparty.parent.contactID
+			}}
+			@
 		</ng-container>
-		{{counterparty.title}}
+		{{ counterparty.title }}
 	</ion-label>
 	<ion-buttons slot="end">
 		<!--			<ion-button title="Change">-->
@@ -27,4 +37,3 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
-

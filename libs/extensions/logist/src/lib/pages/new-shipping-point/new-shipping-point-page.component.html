@@ -1,11 +1,11 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="teamPageUrl('order/{{order?.id}}') || '..'"></ion-back-button>
+			<ion-back-button
+				[defaultHref]="teamPageUrl('order/{{order?.id}}') || '..'"
+			></ion-back-button>
 		</ion-buttons>
-		<ion-title>New shipping point for order # {{order?.id}}</ion-title>
+		<ion-title>New shipping point for order # {{ order?.id }}</ion-title>
 	</ion-toolbar>
 </ion-header>
-<ion-content>
-
-</ion-content>
+<ion-content> </ion-content>

@@ -1,24 +1,27 @@
 <ion-item *ngIf="make && !isKnownMake()">
 	<ion-input label="Make" [(ngModel)]="make" placeholder="Make"></ion-input>
 </ion-item>
-<sneat-select-from-list *ngIf="!make || isKnownMake()"
-												label="Make"
-												filterLabel="Choose Make"
-												[(ngModel)]="make"
-												(ngModelChange)="onMakeChanged($event)"
-												[isFilterable]="true"
-												[items]="makes"
-												[canAdd]="true"
+<sneat-select-from-list
+	*ngIf="!make || isKnownMake()"
+	label="Make"
+	filterLabel="Choose Make"
+	[(ngModel)]="make"
+	(ngModelChange)="onMakeChanged($event)"
+	[isFilterable]="true"
+	[items]="makes"
+	[canAdd]="true"
 ></sneat-select-from-list>
 <ion-item *ngIf="make && model && !isKnownModel()">
 	<ion-input label="Model" [(ngModel)]="model" placeholder="Model"></ion-input>
 </ion-item>
-<sneat-select-from-list #modelSelector *ngIf="make && (!model || isKnownModel())"
-												[(ngModel)]="model"
-												label="Model"
-												filterLabel="Choose Model"
-												(ngModelChange)="onModelChanged($event)"
-												[isFilterable]="true"
-												[items]="models"
-												[canAdd]="true"
+<sneat-select-from-list
+	#modelSelector
+	*ngIf="make && (!model || isKnownModel())"
+	[(ngModel)]="model"
+	label="Model"
+	filterLabel="Choose Model"
+	(ngModelChange)="onModelChanged($event)"
+	[isFilterable]="true"
+	[items]="models"
+	[canAdd]="true"
 ></sneat-select-from-list>

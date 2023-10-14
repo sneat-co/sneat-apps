@@ -4,7 +4,12 @@
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<ion-title
-			*ngIf="asset?.brief && asset?.brief?.category !== 'vehicle' else titleNoAsset">{{asset?.brief?.title}}</ion-title>
+			*ngIf="
+				asset?.brief && asset?.brief?.category !== 'vehicle';
+				else titleNoAsset
+			"
+			>{{ asset?.brief?.title }}</ion-title
+		>
 		<ng-template #titleNoAsset>
 			<ng-container [ngSwitch]="asset?.dto?.category">
 				<ion-title *ngSwitchCase="'vehicle'">Vehicle</ion-title>
@@ -21,30 +26,35 @@
 </ion-header>
 
 <ion-content>
-
 	<ion-card>
 		<ion-item>
-			<ion-label *ngIf="asset?.brief?.title">{{asset?.brief?.title}}</ion-label>
-			<ion-label *ngIf="!asset?.brief?.title"><b>ID</b>: {{asset?.id}}</ion-label>
+			<ion-label *ngIf="asset?.brief?.title">{{
+				asset?.brief?.title
+			}}</ion-label>
+			<ion-label *ngIf="!asset?.brief?.title"
+				><b>ID</b>: {{ asset?.id }}</ion-label
+			>
 		</ion-item>
 	</ion-card>
 	<!--	<app-real-estate-location [asset]="asset"-->
 	<!--														*ngIf="asset && asset.dto.categoryId === 'real_estate'"></app-real-estate-location>-->
 
-	<sneat-vehicle-card *ngIf="asset?.brief?.category === 'vehicle'"
-											[team]="team"
-											[vehicleAsset]="vehicleAsset"
+	<sneat-vehicle-card
+		*ngIf="asset?.brief?.category === 'vehicle'"
+		[team]="team"
+		[vehicleAsset]="vehicleAsset"
 	></sneat-vehicle-card>
 
 	<!--		<sneat-asset-dates *ngIf="asset" [asset]="asset.dto"></sneat-asset-dates>-->
-
 
 	<ion-card>
 		<ion-item-divider color="light">
 			<ion-segment [(ngModel)]="segment">
 				<ion-segment-button value="contacts">Contacts</ion-segment-button>
 				<ion-segment-button value="services">
-					<ion-label [color]="segment === 'services' ? '' : 'danger'">Services</ion-label>
+					<ion-label [color]="segment === 'services' ? '' : 'danger'"
+						>Services</ion-label
+					>
 				</ion-segment-button>
 				<ion-segment-button value="costs">Costs</ion-segment-button>
 			</ion-segment>
@@ -61,7 +71,9 @@
 				<!--					<ion-label>Insurer</ion-label>-->
 				<!--				</ion-item>-->
 				<!--			</ng-container>-->
-				<ng-container *ngIf="asset?.brief && asset?.brief?.category === 'real_estate'">
+				<ng-container
+					*ngIf="asset?.brief && asset?.brief?.category === 'real_estate'"
+				>
 					<ion-item detail tappable>
 						<ion-label>Gardener</ion-label>
 					</ion-item>
@@ -86,7 +98,6 @@
 			<!--									  liabilityType="tax" [asset]="asset.dto" (onAddService)="addService($event.type)"-->
 			<!--									  addTitle="Add tax"></app-asset-liabilities>-->
 		</ng-container>
-
 	</ion-card>
 
 	<ion-card>
@@ -97,14 +108,14 @@
 			</ion-select>
 		</ion-item>
 		<ion-item-group>
-<!--			<ion-segment [value]="scope" (ionChange)="scopeChanged($event)">-->
-<!--				<ion-segment-button value="year">-->
-<!--					<ion-label>Yearly</ion-label>-->
-<!--				</ion-segment-button>-->
-<!--				<ion-segment-button value="month">-->
-<!--					<ion-label>Monthly</ion-label>-->
-<!--				</ion-segment-button>-->
-<!--			</ion-segment>-->
+			<!--			<ion-segment [value]="scope" (ionChange)="scopeChanged($event)">-->
+			<!--				<ion-segment-button value="year">-->
+			<!--					<ion-label>Yearly</ion-label>-->
+			<!--				</ion-segment-button>-->
+			<!--				<ion-segment-button value="month">-->
+			<!--					<ion-label>Monthly</ion-label>-->
+			<!--				</ion-segment-button>-->
+			<!--			</ion-segment>-->
 			<ion-item class="with-buttons">
 				<ion-label color="danger">Expenses</ion-label>
 				<!--			<ion-badge color="light">${{asset?.dto?.totals.expenses.per(scope)}}</ion-badge>-->
@@ -135,7 +146,6 @@
 			<!--			</ion-buttons>-->
 			<!--		</ion-item>-->
 		</ion-item-group>
-
 	</ion-card>
 
 	<ion-card *ngIf="asset?.brief?.category === 'vehicle'">
@@ -145,18 +155,23 @@
 		<ion-item>
 			<ion-label class="ion-text-wrap">
 				<p style="margin-bottom: 1em">
-					There is 4 companies ready to provide a quote
-					for insurance on your "{{asset?.brief?.title}}"
-					in City, Country
+					There is 4 companies ready to provide a quote for insurance on your
+					"{{ asset?.brief?.title }}" in City, Country
 					<b style="white-space: nowrap">starting from just $345/year</b>.
 				</p>
-				<p>As you already have a lot of fields filled with data it would take only a minute to get the best quote.</p>
+				<p>
+					As you already have a lot of fields filled with data it would take
+					only a minute to get the best quote.
+				</p>
 			</ion-label>
 			<ion-button slot="end" color="danger">Get quote</ion-button>
 		</ion-item>
 		<ion-item>
 			<ion-label>
-				<p>You car is less then 7 years old and is eligible for extended warranty.</p>
+				<p>
+					You car is less then 7 years old and is eligible for extended
+					warranty.
+				</p>
 			</ion-label>
 			<ion-button slot="end" color="primary">Get quote</ion-button>
 		</ion-item>

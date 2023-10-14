@@ -24,16 +24,16 @@
 	</ion-item>
 </ng-container>
 
-<sneat-order-containers-selector *ngIf="contact && order?.dto?.containers?.length"
-																 [disabled]="creating"
-																 [order]="order"
-																 [container]="container"
-																 (selectedContainersChange)="onSelectedContainersChanged($event)"
+<sneat-order-containers-selector
+	*ngIf="contact && order?.dto?.containers?.length"
+	[disabled]="creating"
+	[order]="order"
+	[container]="container"
+	(selectedContainersChange)="onSelectedContainersChanged($event)"
 ></sneat-order-containers-selector>
 
 <div class="ion-padding" *ngIf="contact">
-	<ion-button [disabled]="creating"
-							(click)="addShippingPoint()">
+	<ion-button [disabled]="creating" (click)="addShippingPoint()">
 		Add shipping point
 	</ion-button>
 </div>

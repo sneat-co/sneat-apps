@@ -1,15 +1,40 @@
 <ion-item>
-
-	<ion-label color="medium"><b>{{label}}:</b> Pallets</ion-label>
-	<ion-input type="number" [formGroup]="form.group" [formControl]="form.numberOfPallets" (ionChange)="onChanged()" (keyup.enter)="keyUpEnter.emit($event)"></ion-input>
+	<ion-label color="medium"
+		><b>{{ label }}:</b> Pallets</ion-label
+	>
+	<ion-input
+		type="number"
+		[formGroup]="form.group"
+		[formControl]="form.numberOfPallets"
+		(ionChange)="onChanged()"
+		(keyup.enter)="keyUpEnter.emit($event)"
+	></ion-input>
 
 	<ion-label color="medium">Gross (kg)</ion-label>
-	<ion-input type="number" [formGroup]="form.group" [formControl]="form.grossWeightKg" (ionChange)="onChanged()" (keyup.enter)="keyUpEnter.emit($event)"></ion-input>
+	<ion-input
+		type="number"
+		[formGroup]="form.group"
+		[formControl]="form.grossWeightKg"
+		(ionChange)="onChanged()"
+		(keyup.enter)="keyUpEnter.emit($event)"
+	></ion-input>
 
 	<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
-	<ion-input type="number" [formGroup]="form.group" [formControl]="form.volumeM3" (ionChange)="onChanged()" (keyup.enter)="keyUpEnter.emit($event)"></ion-input>
+	<ion-input
+		type="number"
+		[formGroup]="form.group"
+		[formControl]="form.volumeM3"
+		(ionChange)="onChanged()"
+		(keyup.enter)="keyUpEnter.emit($event)"
+	></ion-input>
 </ion-item>
 <ion-item>
-	<ion-label color="medium" position="floating">Notes <small>(specific to carrier)</small></ion-label>
-	<ion-textarea (ionChange)="onChanged()" [formGroup]="form.group" [formControl]="form.note"></ion-textarea>
+	<ion-label color="medium" position="floating"
+		>Notes <small>(specific to carrier)</small></ion-label
+	>
+	<ion-textarea
+		(ionChange)="onChanged()"
+		[formGroup]="form.group"
+		[formControl]="form.note"
+	></ion-textarea>
 </ion-item>

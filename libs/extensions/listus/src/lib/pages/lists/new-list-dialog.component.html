@@ -1,12 +1,16 @@
 <ion-header>
 	<ion-toolbar color="light">
-		<ion-title>{{title}} &mdash; New list</ion-title>
+		<ion-title>{{ title }} &mdash; New list</ion-title>
 	</ion-toolbar>
 </ion-header>
 <ion-content>
 	<ion-list>
 		<ion-item>
-			<ion-input #listNameInput [(ngModel)]="listName" placeholder="List name"></ion-input>
+			<ion-input
+				#listNameInput
+				[(ngModel)]="listName"
+				placeholder="List name"
+			></ion-input>
 		</ion-item>
 		<ion-radio-group [(ngModel)]="visibility">
 			<ion-item button>
@@ -25,14 +29,15 @@
 		<ion-grid class="grid-layout">
 			<ion-row>
 				<ion-col size="7">
-					<ion-button [disabled]="!listName || !listName.trim()" (click)="createList()">
+					<ion-button
+						[disabled]="!listName || !listName.trim()"
+						(click)="createList()"
+					>
 						Create list
 					</ion-button>
 				</ion-col>
 				<ion-col size="5">
-					<ion-button color="light" (click)="cancel()">
-						Cancel
-					</ion-button>
+					<ion-button color="light" (click)="cancel()"> Cancel </ion-button>
 				</ion-col>
 			</ion-row>
 		</ion-grid>

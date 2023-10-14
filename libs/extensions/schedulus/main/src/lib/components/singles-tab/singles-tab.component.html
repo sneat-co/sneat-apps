@@ -11,29 +11,29 @@
 </ion-card>
 
 <ng-container *ngIf="tab === 'upcoming'">
-	<sneat-happening-card *ngFor="let happening of upcomingSingles || []; trackBy: happeningID"
-												[team]="team"
-												[happening]="happening"
-												(deleted)="onHappeningRemoved($event)"
+	<sneat-happening-card
+		*ngFor="let happening of upcomingSingles || []; trackBy: happeningID"
+		[team]="team"
+		[happening]="happening"
+		(deleted)="onHappeningRemoved($event)"
 	>
 	</sneat-happening-card>
 
 	<div class="ion-margin-top" *ngIf="!!numberOfHidden">
-
 		<span class="ion-margin" *ngIf="numberOfHidden === 1">
-			1 out of {{allUpcomingSingles?.length || 0}} happenings is hidden by filter.
+			1 out of {{ allUpcomingSingles?.length || 0 }} happenings is hidden by
+			filter.
 		</span>
 
 		<span class="ion-margin" *ngIf="numberOfHidden > 1">
-			{{numberOfHidden}} out of {{allUpcomingSingles?.length || 0}} happenings are hidden by filter.
+			{{ numberOfHidden }} out of
+			{{ allUpcomingSingles?.length || 0 }} happenings are hidden by filter.
 		</span>
 
 		<ion-button color="medium" fill="outline" (click)="clearFilter()">
 			<ion-label>Clear filter</ion-label>
 		</ion-button>
-
 	</div>
-
 </ng-container>
 
 <ion-card *ngIf="tab === 'past'">

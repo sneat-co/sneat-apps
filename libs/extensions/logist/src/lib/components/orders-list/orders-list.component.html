@@ -1,8 +1,9 @@
 <ng-container *ngIf="orders?.length; else noOrders">
-	<sneat-logist-order-card *ngFor="let order of orders"
-														[order]="order"
-														[team]="team"
-														[readonly]="true"
+	<sneat-logist-order-card
+		*ngFor="let order of orders"
+		[order]="order"
+		[team]="team"
+		[readonly]="true"
 	></sneat-logist-order-card>
 </ng-container>
 <ng-template #noOrders>

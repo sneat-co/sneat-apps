@@ -1,33 +1,52 @@
 <ion-row>
 	<ion-col size="4">
 		<ion-item lines="none">
-			<ion-checkbox slot="start" [(ngModel)]="checked"
-										(ionChange)="onTaskChecked($event)"
+			<ion-checkbox
+				slot="start"
+				[(ngModel)]="checked"
+				(ionChange)="onTaskChecked($event)"
 			></ion-checkbox>
-			<ion-label [color]="checked ? 'dark' : 'medium'">{{label()}}</ion-label>
+			<ion-label [color]="checked ? 'dark' : 'medium'">{{ label() }}</ion-label>
 		</ion-item>
 	</ion-col>
 	<ion-col size="4" *ngIf="does(task)">
 		<ion-item>
-			<ion-label [color]="palletsInput.value ? 'medium' : 'danger'">Pallets</ion-label>
-			<ion-input #palletsInput type="number" min="0" [disabled]="isSaving('numberOfPallets')"
-								 [color]="pallets.dirty ? 'danger' : undefined"
-								 [formControl]="pallets"
-								 (ionInput)="onPalletsInput($event)"
+			<ion-label [color]="palletsInput.value ? 'medium' : 'danger'"
+				>Pallets</ion-label
+			>
+			<ion-input
+				#palletsInput
+				type="number"
+				min="0"
+				[disabled]="isSaving('numberOfPallets')"
+				[color]="pallets.dirty ? 'danger' : undefined"
+				[formControl]="pallets"
+				(ionInput)="onPalletsInput($event)"
 			></ion-input>
-			<ion-spinner name="lines-small" *ngIf="isSaving('numberOfPallets')"></ion-spinner>
+			<ion-spinner
+				name="lines-small"
+				*ngIf="isSaving('numberOfPallets')"
+			></ion-spinner>
 		</ion-item>
 	</ion-col>
 	<ion-col size="4" *ngIf="does(task)">
 		<ion-item>
-			<ion-label [color]="weightInput.value ? 'medium' : 'danger'">Weight<sup>(kg)</sup></ion-label>
-			<ion-input #weightInput type="number" min="0"
-								 [disabled]="isSaving('grossWeightKg')"
-								 [color]="weight.dirty ? 'danger' : undefined"
-								 [formControl]="weight"
-								 (ionInput)="onWeightInput($event)"
+			<ion-label [color]="weightInput.value ? 'medium' : 'danger'"
+				>Weight<sup>(kg)</sup></ion-label
+			>
+			<ion-input
+				#weightInput
+				type="number"
+				min="0"
+				[disabled]="isSaving('grossWeightKg')"
+				[color]="weight.dirty ? 'danger' : undefined"
+				[formControl]="weight"
+				(ionInput)="onWeightInput($event)"
 			></ion-input>
-			<ion-spinner name="lines-small" *ngIf="isSaving('grossWeightKg')"></ion-spinner>
+			<ion-spinner
+				name="lines-small"
+				*ngIf="isSaving('grossWeightKg')"
+			></ion-spinner>
 		</ion-item>
 	</ion-col>
 </ion-row>

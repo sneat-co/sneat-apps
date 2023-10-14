@@ -4,7 +4,7 @@
 		<ion-segment-button value="others">Others</ion-segment-button>
 	</ion-segment>
 	<ion-item-group *ngIf="participantsTab === 'members'">
-		<ion-radio-group *ngIf="members?.length else noMembers">
+		<ion-radio-group *ngIf="members?.length; else noMembers">
 			<ng-container *ngIf="members?.length">
 				<ion-item-divider color="light">
 					<ion-label *ngIf="isToDo">Assign to</ion-label>
@@ -16,10 +16,18 @@
 					<!--							</ion-buttons>-->
 				</ion-item-divider>
 				<ion-item *ngFor="let member of members; trackBy: id">
-					<ion-checkbox slot="start" *ngIf="!isToDo" [checked]="isMemberChecked(member)"
-												(ionChange)="isMemberCheckChanged(member, $event)"></ion-checkbox>
-					<ion-radio slot="start" *ngIf="isToDo" [value]="member.id"></ion-radio>
-					<ion-label>{{member|contactTitle}}</ion-label>
+					<ion-checkbox
+						slot="start"
+						*ngIf="!isToDo"
+						[checked]="isMemberChecked(member)"
+						(ionChange)="isMemberCheckChanged(member, $event)"
+					></ion-checkbox>
+					<ion-radio
+						slot="start"
+						*ngIf="isToDo"
+						[value]="member.id"
+					></ion-radio>
+					<ion-label>{{ member | contactTitle }}</ion-label>
 					<!--						<ion-select interface="popover">-->
 					<!--							<ion-select-option value="busy">Busy</ion-select-option>-->
 					<!--							<ion-select-option value="out_of_house">Out of house</ion-select-option>-->
@@ -45,7 +53,8 @@
 			</ion-buttons>
 		</ion-item-divider>
 		<p class="ion-padding" *ngIf="!contacts.length">
-			You can specify who teaches a lesson or a babysitter brings your kids to the class.
+			You can specify who teaches a lesson or a babysitter brings your kids to
+			the class.
 		</p>
 		<ng-container *ngIf="contacts.length">
 			<ion-item>

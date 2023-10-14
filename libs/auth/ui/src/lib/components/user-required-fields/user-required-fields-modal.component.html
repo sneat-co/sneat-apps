@@ -11,27 +11,48 @@
 <ion-content>
 	<form (ngSubmit)="save()" [formGroup]="form">
 		<ion-item>
-			<ion-input label="First name" name="first_name" type="text" required max="20" [formControl]="firstName">
+			<ion-input
+				label="First name"
+				name="first_name"
+				type="text"
+				required
+				max="20"
+				[formControl]="firstName"
+			>
 			</ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-input label="Last name" name="last_name" type="text" required max="20" [formControl]="lastName">
+			<ion-input
+				label="Last name"
+				name="last_name"
+				type="text"
+				required
+				max="20"
+				[formControl]="lastName"
+			>
 			</ion-input>
 		</ion-item>
 		<ion-item-divider *ngIf="!gender.value">
 			<ion-label>Gender</ion-label>
 		</ion-item-divider>
-		<sneat-select-from-list label="Gender" [items]="genders" [formControl]="gender">
+		<sneat-select-from-list
+			label="Gender"
+			[items]="genders"
+			[formControl]="gender"
+		>
 		</sneat-select-from-list>
 
 		<ng-container *ngIf="gender.value || ageGroup.value">
 			<ion-item-divider *ngIf="!ageGroup.value">
 				<ion-label>Age group</ion-label>
 			</ion-item-divider>
-			<sneat-select-from-list label="Age group" [items]="ageGroups" [formControl]="ageGroup">
+			<sneat-select-from-list
+				label="Age group"
+				[items]="ageGroups"
+				[formControl]="ageGroup"
+			>
 			</sneat-select-from-list>
 		</ng-container>
-
 	</form>
 </ion-content>
 <ion-footer>

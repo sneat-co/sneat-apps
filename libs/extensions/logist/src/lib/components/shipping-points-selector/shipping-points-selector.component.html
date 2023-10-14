@@ -1,44 +1,66 @@
 <ion-item-group>
-		<ion-item-divider color="light">
-			<ion-label>Shipping points</ion-label>
-			<ion-buttons slot="end">
-				<ion-button (click)="addShippingPoint()">
-					<ion-icon name="add-outline" slot="start"></ion-icon>
-					<ion-label>Add</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item-divider>
+	<ion-item-divider color="light">
+		<ion-label>Shipping points</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="addShippingPoint()">
+				<ion-icon name="add-outline" slot="start"></ion-icon>
+				<ion-label>Add</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
 
 	<!--	<sneat-new-shipping-point-form [order]="order" *ngIf="tab === 'new'"></sneat-new-shipping-point-form>-->
 
 	<ng-container>
 		<ion-item-divider *ngIf="!shippingPoints?.length">
-			<ion-label>No shipping points have been added to the order yet.</ion-label>
+			<ion-label
+				>No shipping points have been added to the order yet.</ion-label
+			>
 		</ion-item-divider>
 		<ion-grid class="ion-grid-layout">
 			<ion-row *ngFor="let shippingPoint of shippingPoints">
 				<ion-col size="6">
 					<ion-item>
-						<ion-label color="medium">{{shippingPoint.counterparty.title}}
-							@ {{shippingPoint.location.title}}</ion-label>
+						<ion-label color="medium"
+							>{{ shippingPoint.counterparty.title }} @
+							{{ shippingPoint.location.title }}</ion-label
+						>
 					</ion-item>
 				</ion-col>
 				<ion-col size="3">
 					<ion-item lines="none">
-						<ion-checkbox [value]="shippingPoint.location.contactID" slot="start"
-													[checked]="tasksByShippingPoint[shippingPoint.id]?.tasks?.includes('load')"
-													(ionChange)="checkboxChanged($event, shippingPoint.id, 'load')"
-													[disabled]="!tasksByShippingPoint[shippingPoint.id]?.dirty && tasksByShippingPoint[shippingPoint.id]?.tasks?.includes('load')"
+						<ion-checkbox
+							[value]="shippingPoint.location.contactID"
+							slot="start"
+							[checked]="
+								tasksByShippingPoint[shippingPoint.id]?.tasks?.includes('load')
+							"
+							(ionChange)="checkboxChanged($event, shippingPoint.id, 'load')"
+							[disabled]="
+								!tasksByShippingPoint[shippingPoint.id]?.dirty &&
+								tasksByShippingPoint[shippingPoint.id]?.tasks?.includes('load')
+							"
 						></ion-checkbox>
 						<ion-label>Load</ion-label>
 					</ion-item>
 				</ion-col>
 				<ion-col size="3">
 					<ion-item lines="none">
-						<ion-checkbox [value]="shippingPoint.location.contactID" slot="start"
-													[checked]="tasksByShippingPoint[shippingPoint.id]?.tasks?.includes('unload')"
-													(ionChange)="checkboxChanged($event, shippingPoint.id, 'unload')"
-													[disabled]="!tasksByShippingPoint[shippingPoint.id]?.dirty && tasksByShippingPoint[shippingPoint.id]?.tasks?.includes('unload')"
+						<ion-checkbox
+							[value]="shippingPoint.location.contactID"
+							slot="start"
+							[checked]="
+								tasksByShippingPoint[shippingPoint.id]?.tasks?.includes(
+									'unload'
+								)
+							"
+							(ionChange)="checkboxChanged($event, shippingPoint.id, 'unload')"
+							[disabled]="
+								!tasksByShippingPoint[shippingPoint.id]?.dirty &&
+								tasksByShippingPoint[shippingPoint.id]?.tasks?.includes(
+									'unload'
+								)
+							"
 						></ion-checkbox>
 						<ion-label>Unload</ion-label>
 					</ion-item>

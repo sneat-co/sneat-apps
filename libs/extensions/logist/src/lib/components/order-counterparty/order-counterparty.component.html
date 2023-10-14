@@ -18,32 +18,42 @@
 		</ion-col>
 		<ion-col [size]="useColumns ? 4 : 12" *ngIf="counterparty">
 			<ion-item class="sneat-no-end-padding">
-				<ion-input [label]="refNumLabel" class="sneat-label-color-medium"
-									 [readonly]="readonly"
-									 [(ngModel)]="refNumber"
-									 [disabled]="savingRefNumber"
-									 (ionInput)="onRefNumberChanged($event)"
-									 (keyup.enter)="saveRefNumber($event)"
+				<ion-input
+					[label]="refNumLabel"
+					class="sneat-label-color-medium"
+					[readonly]="readonly"
+					[(ngModel)]="refNumber"
+					[disabled]="savingRefNumber"
+					(ionInput)="onRefNumberChanged($event)"
+					(keyup.enter)="saveRefNumber($event)"
 				></ion-input>
 				<ion-buttons slot="end" *ngIf="order?.id && !selectOnly">
-					<ion-button color="medium" *ngIf="isRefNumberChanged && !savingRefNumber"
-											title="Cancel Reference # changes"
-											(click)="cancelRefNumberChanges($event)">
+					<ion-button
+						color="medium"
+						*ngIf="isRefNumberChanged && !savingRefNumber"
+						title="Cancel Reference # changes"
+						(click)="cancelRefNumberChanges($event)"
+					>
 						<ion-icon name="close-outline"></ion-icon>
 					</ion-button>
 					<ion-button *ngIf="savingRefNumber" [disabled]="true">
 						<ion-spinner name="lines-small"></ion-spinner>
 					</ion-button>
-					<ion-button *ngIf="isRefNumberChanged"
-											[color]="savingRefNumber ? 'medium' : 'success'"
-											[disabled]="savingRefNumber"
-											title="Save Reference # changes"
-											(click)="saveRefNumber($event)">
+					<ion-button
+						*ngIf="isRefNumberChanged"
+						[color]="savingRefNumber ? 'medium' : 'success'"
+						[disabled]="savingRefNumber"
+						title="Save Reference # changes"
+						(click)="saveRefNumber($event)"
+					>
 						<ion-icon name="save-outline"></ion-icon>
 					</ion-button>
-					<ion-button *ngIf="refNumber"
-											color="medium" title="Copy reference number to clipboard"
-											(click)="copyRefNumberToClipboard($event)">
+					<ion-button
+						*ngIf="refNumber"
+						color="medium"
+						title="Copy reference number to clipboard"
+						(click)="copyRefNumberToClipboard($event)"
+					>
 						<ion-icon name="clipboard-outline" slot="start"></ion-icon>
 					</ion-button>
 				</ion-buttons>

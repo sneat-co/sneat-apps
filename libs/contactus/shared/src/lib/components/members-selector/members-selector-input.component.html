@@ -2,7 +2,11 @@
 	<ion-item-divider [color]="selectedMembers ? 'light' : 'primary'">
 		<b>Belongs to</b>&nbsp;<i>- please choose</i>
 		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="clear()" *ngIf="selectedMembers?.length">
+			<ion-button
+				color="medium"
+				(click)="clear()"
+				*ngIf="selectedMembers?.length"
+			>
 				<ion-icon name="close"></ion-icon>
 			</ion-button>
 			<ion-button *ngIf="!selectedMembers" (click)="clear()">
@@ -10,28 +14,32 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-		<sneat-members-selector-list *ngIf="!selectedMembers"
-															 [members]="members"
-															 [max]="max"
-															 [(selectedMembers)]="selectedMembers"
-															 (selectedMembersChange)="onSelectedMembersChanged($event)"
+	<sneat-members-selector-list
+		*ngIf="!selectedMembers"
+		[members]="members"
+		[max]="max"
+		[(selectedMembers)]="selectedMembers"
+		(selectedMembersChange)="onSelectedMembersChanged($event)"
 	></sneat-members-selector-list>
 	<ng-container *ngIf="selectedMembers">
 		<ion-item *ngIf="max === 1 && (selectedMembers?.length || 0) === 1">
 			<ion-icon name="person-outline" color="medium" slot="start"></ion-icon>
 			<ion-label color="medium">Member</ion-label>
 			<ion-select [value]="selectedMemberID" interface="popover">
-				<ion-select-option [value]="m.id" *ngFor="let m of members || []">{{m|contactTitle}}</ion-select-option>
+				<ion-select-option [value]="m.id" *ngFor="let m of members || []">{{
+					m | contactTitle
+				}}</ion-select-option>
 			</ion-select>
 		</ion-item>
-		<ion-item *ngIf="selectedMembers && (max !== 1 || !selectedMembers.length) ">
+		<ion-item *ngIf="selectedMembers && (max !== 1 || !selectedMembers.length)">
 			<ion-label color="medium" *ngIf="!selectedMembers?.length">
 				No members selected
 			</ion-label>
 			<ion-label color="medium" *ngIf="selectedMembers?.length">
-				<sneat-members-as-badges *ngIf="selectedMembers?.length"
-																 [members]="selectedMembers"
-																 (deleteMember)="onRemoveMember($event)"
+				<sneat-members-as-badges
+					*ngIf="selectedMembers?.length"
+					[members]="selectedMembers"
+					(deleteMember)="onRemoveMember($event)"
 				></sneat-members-as-badges>
 				<ng-container *ngIf="!selectedMembers">Loading...</ng-container>
 				<ng-container *ngIf="selectedMembers && !selectedMembers.length">

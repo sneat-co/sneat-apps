@@ -1,57 +1,90 @@
 <ion-card>
 	<ion-item class="sneat-small-end-padding sneat-small-start-padding">
-		<ion-buttons slot="start" class="sneat-hide-if-width-less-638 sneat-tiny-end-margin sneat-no-horizontal-margins">
-			<ion-button [disabled]="isDefaultDate()"
-									[color]="isDefaultDate() ? 'medium' : 'primary'"
-									[title]="shiftDays === 0 ? 'Jump to today' : 'Jump to tomorrow'"
-									(click)="setToday()">
+		<ion-buttons
+			slot="start"
+			class="sneat-hide-if-width-less-638 sneat-tiny-end-margin sneat-no-horizontal-margins"
+		>
+			<ion-button
+				[disabled]="isDefaultDate()"
+				[color]="isDefaultDate() ? 'medium' : 'primary'"
+				[title]="shiftDays === 0 ? 'Jump to today' : 'Jump to tomorrow'"
+				(click)="setToday()"
+			>
 				<ion-icon name="today-outline"></ion-icon>
 			</ion-button>
-<!--			<ion-button title="Previous day"-->
-<!--									(click)="swipePrev()">-->
-<!--				<ion-icon name="chevron-back-sharp"></ion-icon>-->
-<!--			</ion-button>-->
-<!--			<ion-button title="Next day"-->
-<!--									(click)="swipeNext()">-->
-<!--				<ion-icon name="chevron-forward-sharp"></ion-icon>-->
-<!--			</ion-button>-->
+			<!--			<ion-button title="Previous day"-->
+			<!--									(click)="swipePrev()">-->
+			<!--				<ion-icon name="chevron-back-sharp"></ion-icon>-->
+			<!--			</ion-button>-->
+			<!--			<ion-button title="Next day"-->
+			<!--									(click)="swipeNext()">-->
+			<!--				<ion-icon name="chevron-forward-sharp"></ion-icon>-->
+			<!--			</ion-button>-->
 		</ion-buttons>
 		<ion-label>
-			<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
+			<div
+				class="virtual-slider-outer"
+				(swipeleft)="swipeLeft()"
+				(swiperight)="swipeRight()"
+			>
 				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-					<h1 class="virtual-slide sneat-smaller-if-width-less-638" [@virtualSlide]="oddDay?.animationState">
+					<h1
+						class="virtual-slide sneat-smaller-if-width-less-638"
+						[@virtualSlide]="oddDay?.animationState"
+					>
 						<sneat-schedule-day-title [day]="oddDay"></sneat-schedule-day-title>
 					</h1>
-					<h1 class="virtual-slide" [@virtualSlide]="evenDay?.animationState || 'hide'">
-						<sneat-schedule-day-title [day]="evenDay"></sneat-schedule-day-title>
+					<h1
+						class="virtual-slide"
+						[@virtualSlide]="evenDay?.animationState || 'hide'"
+					>
+						<sneat-schedule-day-title
+							[day]="evenDay"
+						></sneat-schedule-day-title>
 					</h1>
 				</div>
 			</div>
 		</ion-label>
 
 		<ion-buttons slot="end" class="sneat-hide-if-width-less-638">
-			<ion-button title="Add recurring" (click)="goNewHappening({type: 'recurring', wd: activeDay?.weekday?.id})">
+			<ion-button
+				title="Add recurring"
+				(click)="
+					goNewHappening({ type: 'recurring', wd: activeDay?.weekday?.id })
+				"
+			>
 				<ion-icon name="duplicate-outline"></ion-icon>
 			</ion-button>
-			<ion-button title="Add one-timer" (click)="goNewHappening({type: 'single', date: activeDay?.activeDateID})">
+			<ion-button
+				title="Add one-timer"
+				(click)="
+					goNewHappening({ type: 'single', date: activeDay?.activeDateID })
+				"
+			>
 				<ion-icon name="add-circle-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 
-	<div class="virtual-slider-outer" (swipeleft)="swipeLeft()" (swiperight)="swipeRight()">
+	<div
+		class="virtual-slider-outer"
+		(swipeleft)="swipeLeft()"
+		(swiperight)="swipeRight()"
+	>
 		<div class="virtual-slider-inner" [@virtualSlider]="animationState">
 			<div class="virtual-slide" [@virtualSlide]="oddSlide?.animationState">
-				<sneat-schedule-day [weekday]="oddDay?.weekday"
-														[team]="team"
-														(slotClicked)="onSlotClicked && onSlotClicked($event)"
+				<sneat-schedule-day
+					[weekday]="oddDay?.weekday"
+					[team]="team"
+					(slotClicked)="onSlotClicked && onSlotClicked($event)"
 				></sneat-schedule-day>
 				<div class="virtual-slide-overflow-fixer"></div>
 			</div>
 			<div class="virtual-slide" [@virtualSlide]="evenSlide?.animationState">
-				<sneat-schedule-day [weekday]="evenDay?.weekday"
-														[team]="team"
-														(slotClicked)="onSlotClicked && onSlotClicked($event)"
+				<sneat-schedule-day
+					[weekday]="evenDay?.weekday"
+					[team]="team"
+					(slotClicked)="onSlotClicked && onSlotClicked($event)"
 				></sneat-schedule-day>
 				<div class="virtual-slide-overflow-fixer"></div>
 			</div>

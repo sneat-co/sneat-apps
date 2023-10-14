@@ -1,14 +1,17 @@
 <ion-header>
 	<ion-toolbar color="light">
-		<ion-back-button slot="start"
-										 [defaultHref]="teamPageUrl('contact/{{contact?.id}}')"></ion-back-button>
+		<ion-back-button
+			slot="start"
+			[defaultHref]="teamPageUrl('contact/{{contact?.id}}')"
+		></ion-back-button>
 		<ion-title *ngIf="!contact">New location</ion-title>
-		<ion-title *ngIf="contact">New location @ {{contact|personTitle}}</ion-title>
+		<ion-title *ngIf="contact"
+			>New location @ {{ contact | personTitle }}</ion-title
+		>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-
 	<sneat-location-form
 		[team]="team"
 		[parentContact]="contact || undefined"
@@ -16,6 +19,4 @@
 		(contactChange)="onContactChanged($event)"
 		(contactCreated)="onContactCreated($event)"
 	></sneat-location-form>
-
-
 </ion-content>

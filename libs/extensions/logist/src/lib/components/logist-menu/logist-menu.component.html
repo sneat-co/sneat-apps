@@ -1,7 +1,8 @@
 <ion-list>
-	<sneat-teams-menu *ngIf="authState?.status === 'authenticated'"
-										spacesLabel="Companies"
-										teamType="company"
+	<sneat-teams-menu
+		*ngIf="authState?.status === 'authenticated'"
+		spacesLabel="Companies"
+		teamType="company"
 	></sneat-teams-menu>
 	<sneat-auth-menu-item></sneat-auth-menu-item>
 	<sneat-app-version></sneat-app-version>

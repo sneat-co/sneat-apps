@@ -2,9 +2,10 @@
 	<sneat-dialog-header [dialogTitle]="title"></sneat-dialog-header>
 </ion-header>
 <ion-content>
-
-	<sneat-shipping-points-selector [order]="order" [container]="container"
-																	(tasksByShippingPointChange)="onTasksByShippingPointIDChanged($event)"
+	<sneat-shipping-points-selector
+		[order]="order"
+		[container]="container"
+		(tasksByShippingPointChange)="onTasksByShippingPointIDChanged($event)"
 	></sneat-shipping-points-selector>
 
 	<div class="ion-padding">

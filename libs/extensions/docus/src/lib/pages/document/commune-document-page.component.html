@@ -3,7 +3,9 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf="document else titleNoDocument">{{document.type|titlecase}}</ion-title>
+		<ion-title *ngIf="document; else titleNoDocument">{{
+			document.type | titlecase
+		}}</ion-title>
 		<ng-template #titleNoDocument>
 			<ion-title>Document</ion-title>
 		</ng-template>
@@ -13,14 +15,17 @@
 <ion-content>
 	<ion-list *ngIf="document">
 		<ion-item-divider *ngIf="document.countryId">
-			<ion-label>Country: {{document.countryId}}</ion-label>
+			<ion-label>Country: {{ document.countryId }}</ion-label>
 		</ion-item-divider>
 		<ion-item class="with-buttons">
 			<ion-label color="medium">Title</ion-label>
-			<ion-input [(ngModel)]="document.title" [readonly]="mode === 'view'"></ion-input>
+			<ion-input
+				[(ngModel)]="document.title"
+				[readonly]="mode === 'view'"
+			></ion-input>
 		</ion-item>
 		<ion-item *ngIf="parentAsset">
-			<ion-label>For: {{parentAsset.title}}</ion-label>
+			<ion-label>For: {{ parentAsset.title }}</ion-label>
 		</ion-item>
 		<ion-item class="with-buttons" *ngIf="document.type !== 'rent_lease'">
 			<ng-container [ngSwitch]="document.type">
@@ -28,10 +33,14 @@
 					<ion-label>Policy #</ion-label>
 				</ng-container>
 				<ng-container *ngSwitchDefault>
-					<ion-label>Number {{document.type}}</ion-label>
+					<ion-label>Number {{ document.type }}</ion-label>
 				</ng-container>
 			</ng-container>
-			<ion-input #docNumber [(ngModel)]="document.number" [readonly]="mode === 'view'"></ion-input>
+			<ion-input
+				#docNumber
+				[(ngModel)]="document.number"
+				[readonly]="mode === 'view'"
+			></ion-input>
 			<ion-buttons slot="end" *ngIf="mode === 'view'">
 				<ion-button color="medium">
 					<ion-icon name="copy"></ion-icon>
@@ -40,16 +49,28 @@
 		</ion-item>
 		<ion-item *ngIf="document.type !== 'marriage_certificate'">
 			<ion-label>Expires on</ion-label>
-			<ion-datetime #docExpires [(ngModel)]="document.expires" [readonly]="mode === 'view'"></ion-datetime>
+			<ion-datetime
+				#docExpires
+				[(ngModel)]="document.expires"
+				[readonly]="mode === 'view'"
+			></ion-datetime>
 		</ion-item>
 		<ion-item>
 			<ion-label *ngIf="document.type !== 'rent_lease'">Issued on</ion-label>
 			<ion-label *ngIf="document.type === 'rent_lease'">Start date</ion-label>
-			<ion-datetime #docIssued [(ngModel)]="document.issued" [readonly]="mode === 'view'"></ion-datetime>
+			<ion-datetime
+				#docIssued
+				[(ngModel)]="document.issued"
+				[readonly]="mode === 'view'"
+			></ion-datetime>
 		</ion-item>
 		<ion-item *ngIf="document.type !== 'rent_lease'">
 			<ion-label>Issued by</ion-label>
-			<ion-input #docIssuedBy [(ngModel)]="document.issuedBy" [readonly]="mode === 'view'"></ion-input>
+			<ion-input
+				#docIssuedBy
+				[(ngModel)]="document.issuedBy"
+				[readonly]="mode === 'view'"
+			></ion-input>
 		</ion-item>
 	</ion-list>
 
@@ -65,23 +86,26 @@
 				<ion-button color="medium" expand="full">Delete</ion-button>
 			</ion-col>
 			<ion-col size="8" *ngIf="mode === 'edit'">
-				<ion-button color="primary" expand="full" (click)="saveChanges()">Save changes</ion-button>
+				<ion-button color="primary" expand="full" (click)="saveChanges()"
+					>Save changes</ion-button
+				>
 			</ion-col>
 			<ion-col size="4" *ngIf="mode === 'edit'">
-				<ion-button color="light" expand="full" (click)="cancelEditing()">Cancel</ion-button>
+				<ion-button color="light" expand="full" (click)="cancelEditing()"
+					>Cancel</ion-button
+				>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
 
 	<ng-container *ngIf="mode === 'view' && document">
-
 		<ion-item-group *ngIf="document.membersInfo">
 			<ion-item-divider color="light" [ngSwitch]="document.type">
 				<ion-label *ngSwitchCase="'passport'">Owner</ion-label>
 				<ion-label *ngSwitchDefault>Members</ion-label>
 			</ion-item-divider>
 			<ion-item *ngFor="let member of document.membersInfo">
-				<ion-label>{{member.title}}</ion-label>
+				<ion-label>{{ member.title }}</ion-label>
 			</ion-item>
 		</ion-item-group>
 
@@ -90,9 +114,14 @@
 				<ion-label>Contacts</ion-label>
 			</ion-item-divider>
 			<ion-item *ngFor="let contact of document.contacts">
-				<ion-label>{{contact.title}}</ion-label>
-				<ion-badge slot="end" color="light" *ngIf="contact.relation"
-							  style="font-weight: normal">{{contact.relation}}</ion-badge>
+				<ion-label>{{ contact.title }}</ion-label>
+				<ion-badge
+					slot="end"
+					color="light"
+					*ngIf="contact.relation"
+					style="font-weight: normal"
+					>{{ contact.relation }}</ion-badge
+				>
 			</ion-item>
 		</ion-item-group>
 
@@ -107,10 +136,18 @@
 			</ion-item-divider>
 			<ion-item *ngFor="let subAsset of document.subAssets">
 				<ion-label>
-					<ion-badge color="light" *ngIf="subAsset.countryId">{{subAsset.countryId}}</ion-badge>
-					{{subAsset.title}}</ion-label>
-				<ion-badge color="light" *ngIf="subAsset.expires" style="font-weight: normal">
-					Exp: {{subAsset.expires}}</ion-badge>
+					<ion-badge color="light" *ngIf="subAsset.countryId">{{
+						subAsset.countryId
+					}}</ion-badge>
+					{{ subAsset.title }}</ion-label
+				>
+				<ion-badge
+					color="light"
+					*ngIf="subAsset.expires"
+					style="font-weight: normal"
+				>
+					Exp: {{ subAsset.expires }}</ion-badge
+				>
 			</ion-item>
 		</ion-item-group>
 	</ng-container>

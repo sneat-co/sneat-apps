@@ -1,7 +1,8 @@
-<p class="ion-margin" *ngIf="!docType"><ion-text color="medium">Step 1 of 4</ion-text></p>
+<p class="ion-margin" *ngIf="!docType">
+	<ion-text color="medium">Step 1 of 4</ion-text>
+</p>
 
 <ion-card>
-
 	<sneat-select-from-list
 		[(ngModel)]="docType"
 		(ngModelChange)="onDocTypeChange($event)"
@@ -18,15 +19,21 @@
 </ion-card>
 
 <ng-container *ngIf="docType && docType !== 'unspecified'">
-	<p class="ion-margin" *ngIf="!country"><ion-text color="medium">Step 2 of 4</ion-text></p>
+	<p class="ion-margin" *ngIf="!country">
+		<ion-text color="medium">Step 2 of 4</ion-text>
+	</p>
 	<ion-card>
 		<sneat-country-selector [(countryID)]="country"></sneat-country-selector>
 	</ion-card>
 
 	<ng-container *ngIf="country">
-		<p *ngIf="isMissingRequiredParams">This page is missing a required parameter.</p>
+		<p *ngIf="isMissingRequiredParams">
+			This page is missing a required parameter.
+		</p>
 
-		<p class="ion-margin" *ngIf="!selectedMembers"><ion-text color="medium">Step 3 of 4</ion-text></p>
+		<p class="ion-margin" *ngIf="!selectedMembers">
+			<ion-text color="medium">Step 3 of 4</ion-text>
+		</p>
 		<ion-card>
 			<sneat-members-selector-input
 				[team]="team"
@@ -38,7 +45,9 @@
 
 		<ng-container *ngIf="selectedMembers">
 			<ng-container *ngIf="!isMissingRequiredParams">
-				<p class="ion-margin"><ion-text color="medium">Step 4 of 4</ion-text></p>
+				<p class="ion-margin">
+					<ion-text color="medium">Step 4 of 4</ion-text>
+				</p>
 				<ion-card>
 					<ion-item-divider [color]="docNumber ? 'light' : 'primary'">
 						<ion-label>Required fields</ion-label>
@@ -101,7 +110,12 @@
 					<ion-button [disabled]="!isFormValid" (click)="submit()">
 						Create
 					</ion-button>
-					<ion-button color="light" routerDirection="back" routerLink="../documents">Cancel</ion-button>
+					<ion-button
+						color="light"
+						routerDirection="back"
+						routerLink="../documents"
+						>Cancel</ion-button
+					>
 				</ion-card-content>
 			</ion-card>
 		</ng-container>

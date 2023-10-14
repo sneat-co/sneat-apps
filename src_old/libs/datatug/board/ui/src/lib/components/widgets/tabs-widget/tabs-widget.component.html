@@ -7,7 +7,7 @@
 	</ion-segment-button>
 </ion-segment>
 <ng-container *ngFor="let tab of tabsWidgetSettings?.tabs">
-	<div *ngIf="tab.title === selectedTab && level || level === 0">
+	<div *ngIf="(tab.title === selectedTab && level) || level === 0">
 		<datatug-board-widget
 			[level]="level + 1"
 			[widgetDef]="tab.widget"

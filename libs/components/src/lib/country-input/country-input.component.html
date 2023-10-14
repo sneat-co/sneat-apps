@@ -1,13 +1,16 @@
 <ion-item class="sneat-tiny-end-padding">
 	<ion-label color="medium">
-		{{label}}
+		{{ label }}
 	</ion-label>
-	<ion-select interface="popover"
-							[(ngModel)]="countryID"
-							(ionChange)="onCountryChanged()"
+	<ion-select
+		interface="popover"
+		[(ngModel)]="countryID"
+		(ionChange)="onCountryChanged()"
 	>
 		<ion-select-option value="">All</ion-select-option>
-		<ion-select-option [value]="c.id" *ngFor="let c of countries">{{c.title}} {{c.emoji}}</ion-select-option>
+		<ion-select-option [value]="c.id" *ngFor="let c of countries"
+			>{{ c.title }} {{ c.emoji }}</ion-select-option
+		>
 	</ion-select>
 	<ion-buttons slot="end" *ngIf="countryID && canReset">
 		<ion-button color="medium" (click)="reset($event)">
@@ -15,14 +18,14 @@
 		</ion-button>
 	</ion-buttons>
 	<!-- disable for now as select is showing incorrectyl and lookup us not linked-->
-<!--	<ion-buttons slot="end" class="ion-no-margin ion-no-padding">-->
-<!--		<ion-button *ngIf="canReset && countryID"-->
-<!--								color="medium"-->
-<!--								(click)="reset($event)" [disabled]="!canReset || !countryID">-->
-<!--			<ion-icon name="close-outline"></ion-icon>-->
-<!--		</ion-button>-->
-<!--		<ion-button (click)="openCountrySelector($event)">-->
-<!--			<ion-label>...</ion-label>-->
-<!--		</ion-button>-->
-<!--	</ion-buttons>-->
+	<!--	<ion-buttons slot="end" class="ion-no-margin ion-no-padding">-->
+	<!--		<ion-button *ngIf="canReset && countryID"-->
+	<!--								color="medium"-->
+	<!--								(click)="reset($event)" [disabled]="!canReset || !countryID">-->
+	<!--			<ion-icon name="close-outline"></ion-icon>-->
+	<!--		</ion-button>-->
+	<!--		<ion-button (click)="openCountrySelector($event)">-->
+	<!--			<ion-label>...</ion-label>-->
+	<!--		</ion-button>-->
+	<!--	</ion-buttons>-->
 </ion-item>

@@ -1,12 +1,15 @@
 <h1 class="ion-padding" *ngIf="!documentType">New vehicle</h1>
-<h1 class="ion-padding" *ngIf="documentType">New {{documentType}}</h1>
+<h1 class="ion-padding" *ngIf="documentType">New {{ documentType }}</h1>
 
 <ion-card *ngIf="!documentType">
-	<sneat-select-from-list [(ngModel)]="documentType" (ngModelChange)="onVehicleTypeChanged()" [isFilterable]="false"
-													title="Type" [items]="documentTypes"></sneat-select-from-list>
+	<sneat-select-from-list
+		[(ngModel)]="documentType"
+		(ngModelChange)="onVehicleTypeChanged()"
+		[isFilterable]="false"
+		title="Type"
+		[items]="documentTypes"
+	></sneat-select-from-list>
 </ion-card>
-
-
 
 <ion-card *ngIf="documentAsset?.dto?.model">
 	<ion-item>
@@ -35,20 +38,20 @@
 	<!--			<ion-label>Service due</ion-label>-->
 	<!--			<ion-datetime max="2021" [(ngModel)]="nextServiceDue"></ion-datetime>-->
 	<!--		</ion-item>-->
-
 </ion-card>
 
-
-<ion-button *ngIf="documentAsset?.dto?.model || documentAsset?.dto?.regNumber"
-						[color]="documentAsset?.dto?.model ? 'primary' : 'light'"
-						size="large"
-						class="ion-margin"
-						expand="full"
-						[disabled]="!team || isSubmitting"
-						(click)="submitVehicleForm()"
+<ion-button
+	*ngIf="documentAsset?.dto?.model || documentAsset?.dto?.regNumber"
+	[color]="documentAsset?.dto?.model ? 'primary' : 'light'"
+	size="large"
+	class="ion-margin"
+	expand="full"
+	[disabled]="!team || isSubmitting"
+	(click)="submitVehicleForm()"
 >
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
 	<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>
 </ion-button>
 
-<div style="height: 300px"></div> <!--TODO: workaround for calendar overlap -->
+<div style="height: 300px"></div>
+<!--TODO: workaround for calendar overlap -->

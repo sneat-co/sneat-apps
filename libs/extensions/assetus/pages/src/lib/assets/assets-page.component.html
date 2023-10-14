@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
-<!--			<ion-menu-button></ion-menu-button>-->
+			<!--			<ion-menu-button></ion-menu-button>-->
 			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
 		<sneat-team-page-title
@@ -11,11 +11,16 @@
 			[titlesByTeamType]="{
 				personal: 'Personal assets',
 				family: 'Family assets'
-			}">
+			}"
+		>
 		</sneat-team-page-title>
 		<ion-buttons slot="end">
-			<ion-button color="primary" [disabled]="!team" (click)="goNew()"
-									title="Add asset">
+			<ion-button
+				color="primary"
+				[disabled]="!team"
+				(click)="goNew()"
+				title="Add asset"
+			>
 				<ion-icon name="add"></ion-icon>
 				<ion-label>Add</ion-label>
 			</ion-button>
@@ -46,21 +51,35 @@
 	<ion-card *ngFor="let assetType of assetTypes">
 		<ion-item-group>
 			<ion-item-divider color="light">
-				<ion-icon [name]="assetType.iconName" slot="start" color="medium"></ion-icon>
-				<ion-label>{{assetType.title}}</ion-label>
+				<ion-icon
+					[name]="assetType.iconName"
+					slot="start"
+					color="medium"
+				></ion-icon>
+				<ion-label>{{ assetType.title }}</ion-label>
 				<ion-buttons slot="end">
-					<ion-button color="primary" title="Add vehicle" (click)="goNew(assetType.id)">
+					<ion-button
+						color="primary"
+						title="Add vehicle"
+						(click)="goNew(assetType.id)"
+					>
 						<ion-icon name="add"></ion-icon>
 						<ion-label>Add</ion-label>
 					</ion-button>
 				</ion-buttons>
 			</ion-item-divider>
-			<sneat-assets-list [assetType]="assetType.id" [team]="team" [allAssets]="assets"></sneat-assets-list>
+			<sneat-assets-list
+				[assetType]="assetType.id"
+				[team]="team"
+				[allAssets]="assets"
+			></sneat-assets-list>
 		</ion-item-group>
 	</ion-card>
 	<ion-card>
 		<ion-card-content>
-			<ion-button expand="full" routerLink="../new-asset">Add new asset</ion-button>
+			<ion-button expand="full" routerLink="../new-asset"
+				>Add new asset</ion-button
+			>
 		</ion-card-content>
 	</ion-card>
 </ion-content>

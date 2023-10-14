@@ -1,5 +1,4 @@
-<div class="ion-padding-horizontal">
-</div>
+<div class="ion-padding-horizontal"></div>
 <ion-card>
 	<ion-item-divider color="light" class="ion-no-padding">
 		<ion-segment [(ngModel)]="sign" (ionChange)="signChanged()">
@@ -83,19 +82,29 @@
 		</ion-item>
 		<ion-item *ngIf="sign === 'up' && appInfo.requiredTeamType === 'company'">
 			<ion-label position="stacked">Company name</ion-label>
-			<ion-input #teamTitleInput placeholder="required" required [(ngModel)]="teamTitle"></ion-input>
+			<ion-input
+				#teamTitleInput
+				placeholder="required"
+				required
+				[(ngModel)]="teamTitle"
+			></ion-input>
 		</ion-item>
 	</ion-card-content>
 	<ion-card-content>
 		<ion-button
 			*ngIf="sign === 'up'"
-			[disabled]="!!signingWith || !validEmail || !firstName && !lastName"
+			[disabled]="!!signingWith || !validEmail || (!firstName && !lastName)"
 			(click)="signUp()"
 		>
 			<ion-icon name="enter-outline" slot="start"></ion-icon>
 			<ion-label *ngIf="signingWith !== 'email'">Sign up</ion-label>
 			<ion-label *ngIf="signingWith === 'email'">Signing up...</ion-label>
-			<ion-spinner class="ion-margin-start" *ngIf="signingWith === 'email'" slot="end" name="lines-small"></ion-spinner>
+			<ion-spinner
+				class="ion-margin-start"
+				*ngIf="signingWith === 'email'"
+				slot="end"
+				name="lines-small"
+			></ion-spinner>
 		</ion-button>
 		<ng-container *ngIf="sign === 'in'">
 			<ion-button
@@ -105,8 +114,12 @@
 				<ion-icon name="enter-outline" slot="start"></ion-icon>
 				<ion-label *ngIf="signingWith !== 'email'">Sign in</ion-label>
 				<ion-label *ngIf="signingWith === 'email'">Signing in...</ion-label>
-				<ion-spinner class="ion-margin-start" *ngIf="signingWith === 'email'" slot="end"
-										 name="lines-small"></ion-spinner>
+				<ion-spinner
+					class="ion-margin-start"
+					*ngIf="signingWith === 'email'"
+					slot="end"
+					name="lines-small"
+				></ion-spinner>
 			</ion-button>
 			<ion-button disabled="disabled" fill="clear" color="medium">
 				or
@@ -121,8 +134,6 @@
 				<ion-icon name="mail-outline" slot="start"></ion-icon>
 				<ion-label>Get sign-in link</ion-label>
 			</ion-button>
-
-
 		</ng-container>
 	</ion-card-content>
 </ion-card>

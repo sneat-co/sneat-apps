@@ -7,9 +7,13 @@
 	</ion-item>
 	<ion-item-group *ngIf="roles">
 		<ion-item *ngFor="let role of roles">
-			<ion-label>{{role.title}}</ion-label>
-			<ion-checkbox [disabled]="disabled" [(ngModel)]="role.checked"
-										(ionChange)="roleChecked($event)">{{role.title}}</ion-checkbox>
+			<ion-label>{{ role.title }}</ion-label>
+			<ion-checkbox
+				[disabled]="disabled"
+				[(ngModel)]="role.checked"
+				(ionChange)="roleChecked($event)"
+				>{{ role.title }}</ion-checkbox
+			>
 		</ion-item>
 	</ion-item-group>
 </ion-card>

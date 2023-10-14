@@ -2,13 +2,16 @@
 	<ion-icon name="documents-outline" slot="start"></ion-icon>
 	<ion-label>Orders</ion-label>
 	<ion-buttons slot="end" class="sneat-hide-if-width-less-240">
-		<ion-button title="New order"
-								color="medium"
-								[routerLink]="teamPageUrl('new-order')" (click)="$event.stopPropagation()"
-
+		<ion-button
+			title="New order"
+			color="medium"
+			[routerLink]="teamPageUrl('new-order')"
+			(click)="$event.stopPropagation()"
 		>
 			<ion-icon name="add-outline" slot="start"></ion-icon>
-			<ion-label><span class="sneat-hide-if-width-less-420">New</span></ion-label>
+			<ion-label
+				><span class="sneat-hide-if-width-less-420">New</span></ion-label
+			>
 		</ion-button>
 	</ion-buttons>
 </ion-item>
@@ -24,8 +27,9 @@
 	<ion-icon name="people-outline" slot="start"></ion-icon>
 	<ion-label>Contacts</ion-label>
 	<ion-buttons slot="end" class="sneat-hide-if-width-less-240">
-		<ion-button routerLink="/space/{{team?.type}}/{{team?.id}}/new-company"
-								(click)="$event.stopPropagation()"
+		<ion-button
+			routerLink="/space/{{ team?.type }}/{{ team?.id }}/new-company"
+			(click)="$event.stopPropagation()"
 		>
 			<ion-icon name="add-outline"></ion-icon>
 		</ion-button>

@@ -6,10 +6,16 @@
 	<!--            <ion-select-option value="last-viewed">Last viewed</ion-select-option>-->
 	<!--        </ion-select>-->
 	<!--    </ion-item>-->
-	<ion-item-sliding #slidingItem *ngFor="let document of filteredDocs; trackBy: trackById">
+	<ion-item-sliding
+		#slidingItem
+		*ngFor="let document of filteredDocs; trackBy: trackById"
+	>
 		<ion-item tappable (click)="goDoc.emit(document)">
 			<ion-label>
-				<h2>{{document?.brief?.type}} {{document.brief?.title || document.dto?.number}}</h2>
+				<h2>
+					{{ document?.brief?.type }}
+					{{ document.brief?.title || document.dto?.number }}
+				</h2>
 				<p>Expires in 25 days on 23/11/2022</p>
 			</ion-label>
 		</ion-item>
@@ -17,7 +23,10 @@
 		<!--            <ion-item-option color="primary" (click)="archiveDocument(doc)">Archive</ion-item-option>-->
 		<!--        </ion-item-options>-->
 		<ion-item-options side="end">
-			<ion-item-option color="danger" (click)="deleteDocument(document, slidingItem)">
+			<ion-item-option
+				color="danger"
+				(click)="deleteDocument(document, slidingItem)"
+			>
 				<ion-icon name="trash"></ion-icon>
 				Remove
 			</ion-item-option>

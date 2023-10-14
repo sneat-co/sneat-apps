@@ -1,8 +1,10 @@
 <ion-card>
-	<sneat-select-from-list *ngIf="!contactRole || !hideRole" label="Role"
-													[disabled]="isCreating"
-													[items]="contactRoles"
-													[(ngModel)]="contactRole"
+	<sneat-select-from-list
+		*ngIf="!contactRole || !hideRole"
+		label="Role"
+		[disabled]="isCreating"
+		[items]="contactRoles"
+		[(ngModel)]="contactRole"
 	></sneat-select-from-list>
 </ion-card>
 
@@ -21,8 +23,9 @@
 <!--contact: {{contact|json}}-->
 
 <div class="ion-padding-horizontal ion-margin-bottom">
-	<ion-button (click)="create()"
-							[disabled]="isCreating || false && !formIsValid"
+	<ion-button
+		(click)="create()"
+		[disabled]="isCreating || (false && !formIsValid)"
 	>
 		<ion-label *ngIf="!isCreating">Create company</ion-label>
 		<ion-label *ngIf="isCreating">Creating company...</ion-label>
@@ -34,9 +37,9 @@
 	<ion-card-header>
 		<ion-card-title color="danger">Errors</ion-card-title>
 	</ion-card-header>
-		<ion-list>
-			<ion-item *ngFor="let err of Object.values(form.errors)">
-				<ion-label>{{err|json}}</ion-label>
-			</ion-item>
-		</ion-list>
+	<ion-list>
+		<ion-item *ngFor="let err of Object.values(form.errors)">
+			<ion-label>{{ err | json }}</ion-label>
+		</ion-item>
+	</ion-list>
 </ion-card>

@@ -5,11 +5,12 @@
 		</ion-buttons>
 		<ion-title>
 			⚖️ Budget
-			<ng-container *ngIf="team.brief?.title">@ {{team.brief?.title}}</ng-container>
+			<ng-container *ngIf="team.brief?.title"
+				>@ {{ team.brief?.title }}</ng-container
+			>
 		</ion-title>
 		<ion-buttons slot="end">
-			<ion-button [disabled]="!team" (click)="goNew()"
-									title="Add liability">
+			<ion-button [disabled]="!team" (click)="goNew()" title="Add liability">
 				<ion-icon name="add"></ion-icon>
 			</ion-button>
 		</ion-buttons>
@@ -19,31 +20,34 @@
 <ion-content class="cardy">
 	<ion-card>
 		<div class="segment">
-			<ion-segment [value]="liabilitiesMode" (ionChange)="liabilitiesModeChanged($event)">
+			<ion-segment
+				[value]="liabilitiesMode"
+				(ionChange)="liabilitiesModeChanged($event)"
+			>
 				<ion-segment-button value="incomes">
 					<ion-label>
 						<b>Income</b>
-						<br>
-						<small>${{totals?.incomes?.perMonth()}}</small>
+						<br />
+						<small>${{ totals?.incomes?.perMonth() }}</small>
 					</ion-label>
 				</ion-segment-button>
 				<ion-segment-button value="expenses">
 					<ion-label>
 						<b>Expenses</b>
-						<br>
-						<small>${{totals?.expenses?.perMonth()}}</small>
+						<br />
+						<small>${{ totals?.expenses?.perMonth() }}</small>
 					</ion-label>
 				</ion-segment-button>
 				<ion-segment-button value="balance">
 					<ion-label>
 						<b>Balance</b>
-						<br>
+						<br />
 						<small *ngIf="(totals?.balance('month') || 0) === 0">$0</small>
 						<small *ngIf="(totals?.balance('month') || 0) > 0">
-							+${{totals?.balance('month')}}
+							+${{ totals?.balance("month") }}
 						</small>
 						<small *ngIf="(totals?.balance('month') || 0) < 0">
-							-${{totals?.balance('month')}}
+							-${{ totals?.balance("month") }}
 						</small>
 					</ion-label>
 				</ion-segment-button>
@@ -58,13 +62,17 @@
 		<!--</ion-grid>-->
 		<ion-list>
 			<ion-item *ngIf="total">
-				<ion-label style="font-weight: bold;">
+				<ion-label style="font-weight: bold">
 					Total
 					<!--<ng-container *ngIf="showIncomes() && showExpenses()">Total balance</ng-container>-->
 					<!--<ng-container *ngIf="showIncomes() && !showExpenses()">Total incomes</ng-container>-->
 					<!--<ng-container *ngIf="!showIncomes() && showExpenses()">Total expenses</ng-container>-->
 				</ion-label>
-				<ion-select value="monthly" interface="popover" style="font-size: smaller; color: gray;">
+				<ion-select
+					value="monthly"
+					interface="popover"
+					style="font-size: smaller; color: gray"
+				>
 					<ion-select-option>daily</ion-select-option>
 					<ion-select-option>weekly</ion-select-option>
 					<ion-select-option>monthly</ion-select-option>
@@ -72,8 +80,12 @@
 					<ion-select-option>yearly</ion-select-option>
 				</ion-select>
 				<div slot="end" style="text-align: right">
-					<b class="positive" *ngIf="total > 0">${{total.toLocaleString()}}</b>
-					<b class="negative" *ngIf="total < 0">-${{(-total).toLocaleString()}}</b>
+					<b class="positive" *ngIf="total > 0"
+						>${{ total.toLocaleString() }}</b
+					>
+					<b class="negative" *ngIf="total < 0"
+						>-${{ (-total).toLocaleString() }}</b
+					>
 					<!--<small style="border-top: 1px solid lightgray; display: block; font-style: italic; color: lightgray">-->
 					<!--per {{period}}-->
 					<!--</small>-->
@@ -81,53 +93,111 @@
 			</ion-item>
 			<ng-container *ngIf="members">
 				<ng-container *ngFor="let member of members; trackBy: trackById">
-					<ion-item *ngIf="member.totals.per(period, showIncomes(), showExpenses())">
-						<ion-label>{{member.emoji}} {{member.title}}</ion-label>
-						<div slot="end" style="text-align: right;">
-                    <span class="positive"
-													*ngIf="liabilitiesMode === 'incomes' && memberBalance(member)">${{memberBalance(member).toLocaleString()}}</span>
-							<span class="negative"
-										*ngIf="liabilitiesMode === 'expenses' && memberBalance(member)">${{memberBalance(member).toLocaleString()}}</span>
+					<ion-item
+						*ngIf="member.totals.per(period, showIncomes(), showExpenses())"
+					>
+						<ion-label>{{ member.emoji }} {{ member.title }}</ion-label>
+						<div slot="end" style="text-align: right">
 							<span
-								*ngIf="liabilitiesMode === 'balance' && memberBalance(member) === 0"
-							>${{memberBalance(member).toLocaleString()}}</span>
-							<span class="positive"
-										*ngIf="liabilitiesMode === 'balance' && memberBalance(member) > 0"
-							>${{memberBalance(member).toLocaleString()}}</span>
-							<span class="negative"
-										*ngIf="liabilitiesMode === 'balance' && memberBalance(member) < 0"
-							>-${{memberBalance(member).toLocaleString()}}</span>
+								class="positive"
+								*ngIf="liabilitiesMode === 'incomes' && memberBalance(member)"
+								>${{ memberBalance(member).toLocaleString() }}</span
+							>
+							<span
+								class="negative"
+								*ngIf="liabilitiesMode === 'expenses' && memberBalance(member)"
+								>${{ memberBalance(member).toLocaleString() }}</span
+							>
+							<span
+								*ngIf="
+									liabilitiesMode === 'balance' && memberBalance(member) === 0
+								"
+								>${{ memberBalance(member).toLocaleString() }}</span
+							>
+							<span
+								class="positive"
+								*ngIf="
+									liabilitiesMode === 'balance' && memberBalance(member) > 0
+								"
+								>${{ memberBalance(member).toLocaleString() }}</span
+							>
+							<span
+								class="negative"
+								*ngIf="
+									liabilitiesMode === 'balance' && memberBalance(member) < 0
+								"
+								>-${{ memberBalance(member).toLocaleString() }}</span
+							>
 						</div>
 					</ion-item>
 				</ng-container>
 			</ng-container>
-			<ng-container *ngFor="let assetGroup of assetGroups || []; trackBy: trackById">
-				<ion-item *ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"
-									tappable
-									routerDirection="forward"
-									(click)="goAssetGroup(assetGroup)">
+			<ng-container
+				*ngFor="let assetGroup of assetGroups || []; trackBy: trackById"
+			>
+				<ion-item
+					*ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"
+					tappable
+					routerDirection="forward"
+					(click)="goAssetGroup(assetGroup)"
+				>
 					<ion-label>
-						<h2>{{assetGroup.context.brief?.title}}</h2>
-						<small *ngIf="assetGroup.context.dto?.desc">{{assetGroup.context.dto?.desc}}</small>
-						<ion-badge *ngIf="!assetGroup.numberOf.assets"
-											 color="light">no assets
+						<h2>{{ assetGroup.context.brief?.title }}</h2>
+						<small *ngIf="assetGroup.context.dto?.desc">{{
+							assetGroup.context.dto?.desc
+						}}</small>
+						<ion-badge *ngIf="!assetGroup.numberOf.assets" color="light"
+							>no assets
 						</ion-badge>
 						<ion-badge *ngIf="assetGroup.numberOf.assets" color="light">
-							{{assetGroup?.context?.dto?.numberOf?.assets}}
-							<ng-container *ngIf="assetGroup.numberOf.assets === 1">asset</ng-container>
-							<ng-container *ngIf="assetGroup.numberOf.assets > 1">assets</ng-container>
+							{{ assetGroup?.context?.dto?.numberOf?.assets }}
+							<ng-container *ngIf="assetGroup.numberOf.assets === 1"
+								>asset</ng-container
+							>
+							<ng-container *ngIf="assetGroup.numberOf.assets > 1"
+								>assets</ng-container
+							>
 						</ion-badge>
 					</ion-label>
-					<div slot="end" style="text-align: right;"
-							 *ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())">
-                <span class="positive"
-											*ngIf="assetGroup.totals.per(period, this.showIncomes(), showExpenses()) > 0">
-                    ${{assetGroup.totals.per(period, showIncomes(), showExpenses()).toLocaleString()}}
-                </span>
-						<span class="negative"
-									*ngIf="assetGroup.totals.per(period, this.showIncomes(), showExpenses()) < 0">
-                    -${{(-assetGroup.totals.per(period, showIncomes(), showExpenses())).toLocaleString()}}
-                </span>
+					<div
+						slot="end"
+						style="text-align: right"
+						*ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"
+					>
+						<span
+							class="positive"
+							*ngIf="
+								assetGroup.totals.per(
+									period,
+									this.showIncomes(),
+									showExpenses()
+								) > 0
+							"
+						>
+							${{
+								assetGroup.totals
+									.per(period, showIncomes(), showExpenses())
+									.toLocaleString()
+							}}
+						</span>
+						<span
+							class="negative"
+							*ngIf="
+								assetGroup.totals.per(
+									period,
+									this.showIncomes(),
+									showExpenses()
+								) < 0
+							"
+						>
+							-${{
+								(-assetGroup.totals.per(
+									period,
+									showIncomes(),
+									showExpenses()
+								)).toLocaleString()
+							}}
+						</span>
 						<!--<small style="border-top: 1px solid lightgray; display: block; font-style: italic; color: lightgray">-->
 						<!--per {{period}}-->
 						<!--</small>-->

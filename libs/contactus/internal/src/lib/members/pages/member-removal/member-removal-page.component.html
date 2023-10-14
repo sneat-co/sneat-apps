@@ -9,7 +9,11 @@
 
 <ion-content>
 	<div class="ion-padding">
-		<p>Are you sure you want to completely remove all records about <b>{{memberInfo && memberInfo.title}}</b>?</p>
+		<p>
+			Are you sure you want to completely remove all records about
+			<b>{{ memberInfo && memberInfo.title }}</b
+			>?
+		</p>
 
 		<h2>Below records will be removed</h2>
 	</div>
@@ -22,7 +26,12 @@
 	<ion-grid>
 		<ion-row>
 			<ion-col>
-				<ion-button size="large" color="danger" expand="full" (click)="removeMember()">
+				<ion-button
+					size="large"
+					color="danger"
+					expand="full"
+					(click)="removeMember()"
+				>
 					Yes, remove now
 				</ion-button>
 			</ion-col>
@@ -34,7 +43,12 @@
 		</ion-row>
 		<ion-row>
 			<ion-col>
-				<ion-button size="large" color="light" expand="full" (click)="cancelMemberRemoval()">
+				<ion-button
+					size="large"
+					color="light"
+					expand="full"
+					(click)="cancelMemberRemoval()"
+				>
 					Cancel
 				</ion-button>
 			</ion-col>

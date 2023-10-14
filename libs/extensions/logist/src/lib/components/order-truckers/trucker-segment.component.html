@@ -1,6 +1,10 @@
 <ion-card>
-	<ion-item *ngIf="orderSegment" color="light" class="sneat-no-end-padding" [class.deleting-list-item]="deleting">
-
+	<ion-item
+		*ngIf="orderSegment"
+		color="light"
+		class="sneat-no-end-padding"
+		[class.deleting-list-item]="deleting"
+	>
 		<ion-label color="medium">From</ion-label>
 		<ion-input readonly [value]="from?.title"></ion-input>
 
@@ -12,24 +16,29 @@
 				<ion-label *ngIf="!trucker">Assign</ion-label>
 				<ion-label *ngIf="trucker">Reassign</ion-label>
 			</ion-button>
-			<ion-button color="medium" (click)="deleteTruckerSegments()" title="Delete trucker segments">
+			<ion-button
+				color="medium"
+				(click)="deleteTruckerSegments()"
+				title="Delete trucker segments"
+			>
 				<ion-icon name="close-outline"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 
 	<!--	<ion-item-divider>-->
-<!--		<ion-label>Containers:</ion-label>-->
-<!--&lt;!&ndash;		<ion-buttons slot="end">&ndash;&gt;-->
-<!--&lt;!&ndash;			<ion-button title="Print" color="medium" (click)="print($event)">&ndash;&gt;-->
-<!--&lt;!&ndash;				<ion-icon name="print-outline" slot="start"></ion-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;				<ion-label>Print</ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;			</ion-button>&ndash;&gt;-->
-<!--&lt;!&ndash;		</ion-buttons>&ndash;&gt;-->
-<!--	</ion-item-divider>-->
-	<sneat-segment-container *ngFor="let segment of orderSegment?.containerSegments"
-													 [order]="order"
-													 [segment]="segment"
+	<!--		<ion-label>Containers:</ion-label>-->
+	<!--&lt;!&ndash;		<ion-buttons slot="end">&ndash;&gt;-->
+	<!--&lt;!&ndash;			<ion-button title="Print" color="medium" (click)="print($event)">&ndash;&gt;-->
+	<!--&lt;!&ndash;				<ion-icon name="print-outline" slot="start"></ion-icon>&ndash;&gt;-->
+	<!--&lt;!&ndash;				<ion-label>Print</ion-label>&ndash;&gt;-->
+	<!--&lt;!&ndash;			</ion-button>&ndash;&gt;-->
+	<!--&lt;!&ndash;		</ion-buttons>&ndash;&gt;-->
+	<!--	</ion-item-divider>-->
+	<sneat-segment-container
+		*ngFor="let segment of orderSegment?.containerSegments"
+		[order]="order"
+		[segment]="segment"
 	>
 	</sneat-segment-container>
 </ion-card>
