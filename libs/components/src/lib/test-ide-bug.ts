@@ -17,7 +17,7 @@ export class TestComponent {
 	standalone: true,
 	selector: 'sneat-consumer',
 	imports: [TestComponent],
-	template: ` <sneat-test [item]="myItem('test')"></sneat-test>`,
+	template: ` <sneat-test [item]="myItem('test')" />`,
 })
 export class ConsumerComponent {
 	protected myItem(id: string): IItem | undefined {

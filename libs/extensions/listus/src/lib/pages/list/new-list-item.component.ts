@@ -20,7 +20,7 @@ import { IListItemWithUiState } from './list-item-with-ui-state';
 	template: `
 		<form (ngSubmit)="add()">
 			<ion-item>
-				<ion-icon name="bag-add-outline" slot="start" color="medium"></ion-icon>
+				<ion-icon name="bag-add-outline" slot="start" color="medium" />
 				<!--suppress AngularUndefinedBinding -->
 				<ion-input
 					[disabled]="disabled"
@@ -30,7 +30,7 @@ import { IListItemWithUiState } from './list-item-with-ui-state';
 					name="title"
 					placeholder="New item"
 					(ionFocus)="focused()"
-				></ion-input>
+				/>
 				<ion-button
 					[color]="isFocused && title.trim() ? 'primary' : 'medium'"
 					[disabled]="disabled"

@@ -25,11 +25,8 @@ import { SneatPipesModule } from '../pipes/sneat-pipes.module';
 				*ngIf="showDelete && !isDeleting(member.id)"
 				name="close"
 				(click)="delete($event, member)"
-			></ion-icon>
-			<ion-spinner
-				name="lines-sharp-small"
-				*ngIf="isDeleting(member.id)"
-			></ion-spinner>
+			/>
+			<ion-spinner name="lines-sharp-small" *ngIf="isDeleting(member.id)" />
 		</ion-chip>
 	`,
 })
