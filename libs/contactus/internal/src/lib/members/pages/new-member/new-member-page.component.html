@@ -1,25 +1,23 @@
 <ion-header>
-	<ion-toolbar color='light' class='with-back-button'>
-		<ion-buttons slot='start'>
-			<ion-back-button [defaultHref]='defaultBackUrl'></ion-back-button>
+	<ion-toolbar color="light" class="with-back-button">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
 		</ion-buttons>
-		<ion-title *ngIf='team?.brief || team?.type; else titleNoCommune'>
+		<ion-title *ngIf="team?.brief || team?.type; else titleNoCommune">
 			<ng-container *ngIf="member.type === 'animal'; else ageGroupTitle">
 				New pet
 			</ng-container>
 			<ng-template #ageGroupTitle>
-				<ng-container *ngIf='!member.ageGroup; else hasAgeGroup'>
+				<ng-container *ngIf="!member.ageGroup; else hasAgeGroup">
 					New member
 				</ng-container>
 				<ng-template #hasAgeGroup>
 					<ng-container *ngIf="member.ageGroup === 'child'"
-					>New child
-					</ng-container
-					>
+						>New child
+					</ng-container>
 					<ng-container *ngIf="member.ageGroup === 'adult'"
-					>New adult
-					</ng-container
-					>
+						>New adult
+					</ng-container>
 				</ng-template>
 			</ng-template>
 			@ {{ team.brief?.title || team.type }}
@@ -28,28 +26,28 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content class='cardy'>
-	<ion-segment [(ngModel)]='tab' *ngIf="team.id && team.type !== 'family'">
-		<ion-segment-button value='mass'>
+<ion-content class="cardy">
+	<ion-segment [(ngModel)]="tab" *ngIf="team.id && team.type !== 'family'">
+		<ion-segment-button value="mass">
 			Mass invite [{{ team.id }} - {{ team.type }}]
 		</ion-segment-button>
-		<ion-segment-button value='personal'>Personal invite</ion-segment-button>
+		<ion-segment-button value="personal">Personal invite</ion-segment-button>
 	</ion-segment>
 
 	<sneat-new-member-form
 		*ngIf="tab === 'personal'"
-		[team]='team'
-		[(member)]='member'
+		[team]="team"
+		[(member)]="member"
 	></sneat-new-member-form>
 
 	<ion-card *ngIf="tab === 'mass'">
 		<ion-card-content>
-			<sneat-invite-links [contactusTeam]='contactusTeam'></sneat-invite-links>
+			<sneat-invite-links [contactusTeam]="contactusTeam"></sneat-invite-links>
 
 			<p>
 				<b>Or</b> you can send
-				<a href='' (click)="tab = 'personal'; $event.preventDefault()"
-				>personal invite</a
+				<a href="" (click)="tab = 'personal'; $event.preventDefault()"
+					>personal invite</a
 				>
 				by email.
 			</p>
