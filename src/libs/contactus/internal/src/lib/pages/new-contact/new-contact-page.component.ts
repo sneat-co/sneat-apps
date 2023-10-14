@@ -104,9 +104,8 @@ export class NewContactPageComponent
 		route: ActivatedRoute,
 		private readonly assetService: AssetService,
 		private readonly contactGroupService: ContactGroupService,
-		private readonly contactRoleService: ContactRoleService,
-	) // private readonly businessLogic: IBusinessLogic,
-	{
+		private readonly contactRoleService: ContactRoleService, // private readonly businessLogic: IBusinessLogic,
+	) {
 		super('NewContactPageComponent', route, params);
 		this.defaultBackPage = 'contacts';
 		this.contact = window.history.state.contact as IContactContext;
