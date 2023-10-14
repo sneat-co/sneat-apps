@@ -8,7 +8,6 @@ import { OrderPageBaseComponent } from '../pages/order-page-base.component';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
 export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
-
 	constructor(
 		className: string,
 		route: ActivatedRoute,
@@ -18,7 +17,9 @@ export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 		super(className, route, teamParams, orderService);
 	}
 
-	protected counterpartyByRole(role: CounterpartyRole): IOrderCounterparty | undefined {
-		return this.order?.dto?.counterparties?.find(c => c.role === role);
+	protected counterpartyByRole(
+		role: CounterpartyRole,
+	): IOrderCounterparty | undefined {
+		return this.order?.dto?.counterparties?.find((c) => c.role === role);
 	}
 }

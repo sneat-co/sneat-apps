@@ -4,15 +4,14 @@ import { RouterModule } from '@angular/router';
 // import { SneatAuthGuard } from './sneat-auth-guard';
 
 @NgModule({
-	imports: [
-		RouterModule,
-	],
+	imports: [RouterModule],
 	providers: [
 		// PrivateTokenStoreService,
 		// SneatAuthGuard,
 	],
 })
-export class SneatAuthServicesModule { // TODO: Why is constructor called multiple times? Document or fix it.
+export class SneatAuthServicesModule {
+	// TODO: Why is constructor called multiple times? Document or fix it.
 	constructor() {
 		console.log('SneatAuthServicesModule.constructor()');
 	}

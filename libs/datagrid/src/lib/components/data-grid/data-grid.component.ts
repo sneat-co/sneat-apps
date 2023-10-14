@@ -1,10 +1,12 @@
 import {
 	AfterViewInit,
 	Component,
-	ElementRef, EventEmitter,
+	ElementRef,
+	EventEmitter,
 	Inject,
 	Input,
-	OnChanges, Output,
+	OnChanges,
+	Output,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
@@ -20,7 +22,10 @@ import {
 	RowContextMenuSignature,
 } from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
-import { TabulatorColumn, TabulatorOptions } from '../../tabulator/tabulator-options';
+import {
+	TabulatorColumn,
+	TabulatorOptions,
+} from '../../tabulator/tabulator-options';
 
 class AdvertModule extends Module {
 	public static override moduleName = 'advert';
@@ -35,7 +40,12 @@ class AdvertModule extends Module {
 	}
 }
 
-Tabulator.registerModule([InteractionModule, SelectRowModule, AdvertModule, MenuModule]);
+Tabulator.registerModule([
+	InteractionModule,
+	SelectRowModule,
+	AdvertModule,
+	MenuModule,
+]);
 
 // console.log('SelectRowModule', );
 
@@ -87,7 +97,10 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 
 	@Input() rowClick?: (event: Event, row: unknown) => void;
 
-	@Output() readonly rowSelected = new EventEmitter<{ row: unknown, event?: Event }>();
+	@Output() readonly rowSelected = new EventEmitter<{
+		row: unknown;
+		event?: Event;
+	}>();
 
 	// private tab = document.createElement('div');
 	private tabulator?: Tabulator;
@@ -106,7 +119,8 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 		try {
 			if (
 				(changes['data'] && this.data && this.columns) ||
-				(changes['columns'] && this.columns || changes['rowClick'] && this.rowClick)
+				(changes['columns'] && this.columns) ||
+				(changes['rowClick'] && this.rowClick)
 			) {
 				this.drawTable();
 			}
@@ -135,7 +149,10 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			try {
 				this.tabulator.redraw();
 			} catch (e) {
-				this.errorLogger.logError(e, 'Failed to redraw tabulator', { show: false, report: false });
+				this.errorLogger.logError(e, 'Failed to redraw tabulator', {
+					show: false,
+					report: false,
+				});
 			}
 		}
 	}
@@ -187,7 +204,10 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 				// 	console.log('rowDeselect', row);
 				// }
 			};
-			console.log('createTabulatorGrid(): tabulatorOptions:', this.tabulatorOptions);
+			console.log(
+				'createTabulatorGrid(): tabulatorOptions:',
+				this.tabulatorOptions,
+			);
 			this.tabulator = new Tabulator(
 				this.tabulatorDiv?.nativeElement,
 				this.tabulatorOptions,
@@ -199,8 +219,12 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 					this.rowClick(event, row);
 				}
 			});
-			this.tabulator.on('rowSelected', (row: unknown) => this.rowSelected.emit({ row, event: this.clickEvent }));
-			this.tabulator.on('rowDeselected', (row: unknown) => console.log('rowDeselected event', row));
+			this.tabulator.on('rowSelected', (row: unknown) =>
+				this.rowSelected.emit({ row, event: this.clickEvent }),
+			);
+			this.tabulator.on('rowDeselected', (row: unknown) =>
+				console.log('rowDeselected event', row),
+			);
 		}
 	}
 

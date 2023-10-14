@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
 export class QueryParamsService {
 	constructor(
 		private readonly location: Location, // @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	public setQueryParameter(
 		name: string,

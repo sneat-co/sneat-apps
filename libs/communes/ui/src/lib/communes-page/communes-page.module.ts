@@ -11,14 +11,8 @@ const routes: Routes = [
 	},
 ];
 
-
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-	],
+	imports: [CommonModule, IonicModule, RouterModule.forChild(routes)],
 	declarations: [CommunesPageComponent],
 })
-export class CommunesPageModule {
-}
+export class CommunesPageModule {}

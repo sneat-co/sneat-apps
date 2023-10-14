@@ -6,21 +6,15 @@ import { SneatPipesModule } from '@sneat/components';
 import { ContactSelectorModule } from '../contact-selector/contact-selector.module';
 import { ContactInputComponent } from './contact-input.component';
 
-
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    ContactSelectorModule,
-    RouterModule,
-    SneatPipesModule,
-  ],
-	declarations: [
-		ContactInputComponent,
+	imports: [
+		CommonModule,
+		IonicModule,
+		ContactSelectorModule,
+		RouterModule,
+		SneatPipesModule,
 	],
-	exports: [
-		ContactInputComponent,
-	],
+	declarations: [ContactInputComponent],
+	exports: [ContactInputComponent],
 })
-export class ContactInputModule {
-}
+export class ContactInputModule {}

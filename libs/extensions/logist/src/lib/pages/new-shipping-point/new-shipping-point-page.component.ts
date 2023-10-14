@@ -17,5 +17,4 @@ export class NewShippingPointPageComponent extends OrderPageBaseComponent {
 	) {
 		super('NewShippingPointPageComponent', route, teamParams, orderService);
 	}
-
 }

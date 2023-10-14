@@ -1,10 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
 import { ILogistTeamContext } from '../dto';
 import { LogistTeamService } from '../services';
 
 export class LogistTeamBaseComponent extends TeamBaseComponent {
-
 	protected logistTeam?: ILogistTeamContext;
 
 	constructor(
@@ -20,14 +22,15 @@ export class LogistTeamBaseComponent extends TeamBaseComponent {
 		super.onTeamIdChanged();
 		const team = this.team;
 		if (team?.id) {
-			this.logistTeamService.watchLogistTeamByID(team.id)
+			this.logistTeamService
+				.watchLogistTeamByID(team.id)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
-					next: logistTeam => {
+					next: (logistTeam) => {
 						console.log('logistTeam:', logistTeam);
 						this.logistTeam = logistTeam;
 					},
-					error: err => {
+					error: (err) => {
 						this.errorLogger.logError(err, 'failed to load logist team', {
 							show: !('' + err).includes('Missing or insufficient permissions'), // TODO: fix & handle properly
 						});
@@ -36,5 +39,4 @@ export class LogistTeamBaseComponent extends TeamBaseComponent {
 				});
 		}
 	}
-
 }

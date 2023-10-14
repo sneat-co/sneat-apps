@@ -91,8 +91,8 @@ export class NewContactPageComponent
 	get title(): string {
 		return this.contactRole?.brief
 			? `${
-				this.contactRole.brief.emoji
-			} New ${this.contactRole.brief.title.toLowerCase()}`
+					this.contactRole.brief.emoji
+			  } New ${this.contactRole.brief.title.toLowerCase()}`
 			: 'New contact';
 	}
 
@@ -118,8 +118,8 @@ export class NewContactPageComponent
 
 	ngOnInit(): void {
 		this.route.queryParamMap
-		.pipe(takeUntil(this.destroyed))
-		.subscribe(this.onUrlParamsChanged);
+			.pipe(takeUntil(this.destroyed))
+			.subscribe(this.onUrlParamsChanged);
 	}
 
 	private readonly onUrlParamsChanged = (params: ParamMap): void => {
@@ -130,27 +130,27 @@ export class NewContactPageComponent
 		const contactGroupID = params.get('group');
 		if (contactGroupID && !this.contactGroup) {
 			this.contactGroupService
-			.getContactGroupByID(contactGroupID)
-			.pipe(first(), takeUntil(this.destroyed))
-			.subscribe({
-				next: (contactGroup) => {
-					this.contactGroup = contactGroup;
-				},
-				error: this.logErrorHandler('Failed to get contact group by ID'),
-			});
+				.getContactGroupByID(contactGroupID)
+				.pipe(first(), takeUntil(this.destroyed))
+				.subscribe({
+					next: (contactGroup) => {
+						this.contactGroup = contactGroup;
+					},
+					error: this.logErrorHandler('Failed to get contact group by ID'),
+				});
 		}
 		const contactRole = params.get('role');
 
 		if (contactRole && !this.contactRole) {
 			this.contactRoleService
-			.getContactRoleByID(contactRole)
-			.pipe(first(), this.takeUntilNeeded())
-			.subscribe({
-				next: (contactRole) => {
-					this.contactRole = contactRole;
-				},
-				error: this.logErrorHandler('Failed to get contact role by ID'),
-			});
+				.getContactRoleByID(contactRole)
+				.pipe(first(), this.takeUntilNeeded())
+				.subscribe({
+					next: (contactRole) => {
+						this.contactRole = contactRole;
+					},
+					error: this.logErrorHandler('Failed to get contact role by ID'),
+				});
 		}
 
 		const team = this.team;
@@ -162,24 +162,24 @@ export class NewContactPageComponent
 		if (assetId && this.asset?.id !== assetId) {
 			this.asset = { id: assetId, team };
 			this.assetService
-			.watchAssetByID(team, assetId)
-			.pipe(this.takeUntilNeeded())
-			.subscribe({
-				next: (asset) => {
-					this.asset = asset;
-				},
-				error: this.logErrorHandler('failed to get asset by ID'),
-			});
+				.watchAssetByID(team, assetId)
+				.pipe(this.takeUntilNeeded())
+				.subscribe({
+					next: (asset) => {
+						this.asset = asset;
+					},
+					error: this.logErrorHandler('failed to get asset by ID'),
+				});
 		}
 		const memberId = params.get('member');
 		if (memberId && this.contact?.id !== memberId) {
 			this.contact = { id: memberId, team };
 			this.contactService
-			.watchContactById(team, memberId)
-			.pipe(this.takeUntilNeeded())
-			.subscribe((member) => {
-				this.contact = member;
-			});
+				.watchContactById(team, memberId)
+				.pipe(this.takeUntilNeeded())
+				.subscribe((member) => {
+					this.contact = member;
+				});
 		}
 	};
 

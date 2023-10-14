@@ -4,14 +4,12 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { SneatAppComponent } from './sneat-app.component';
 
 describe('AppComponent', () => {
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [SneatAppComponent],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
-		}),
-	);
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [SneatAppComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
+	}));
 
 	it('should create the app', () => {
 		const fixture = TestBed.createComponent(SneatAppComponent);

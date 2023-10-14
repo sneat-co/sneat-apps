@@ -12,7 +12,6 @@ export interface AddSlotParams {
 	templateUrl: './happening-slots.component.html',
 })
 export class HappeningSlotsComponent {
-
 	@Input() happening?: IHappeningContext;
 
 	@Output() addSlotDismissed = new EventEmitter<void>();
@@ -30,10 +29,8 @@ export class HappeningSlotsComponent {
 	protected readonly id = (_: number, o: IHappeningSlot) => o.id;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		// private readonly modalController: ModalController,
-	) {
-	}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly modalController: ModalController,
+	) {}
 
 	removeSlot(slot: IHappeningSlot): void {
 		if (!this.happening?.brief) {
@@ -44,7 +41,7 @@ export class HappeningSlotsComponent {
 			...this.happening,
 			brief: {
 				...this.happening.brief,
-				slots: this.happening.brief.slots?.filter(v => v !== slot) || [],
+				slots: this.happening.brief.slots?.filter((v) => v !== slot) || [],
 			},
 		});
 		this.slotRemoved.emit(this.happening.brief?.slots || []);

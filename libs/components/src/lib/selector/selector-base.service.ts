@@ -9,14 +9,13 @@ export class SelectorBaseService<T = ISelectItem> {
 		private readonly component: Function | HTMLElement | string | null,
 		private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
-	) {
-	}
+	) {}
 
 	selectSingleInModal(options: ISelectorOptions<T>): Promise<T | null> {
 		console.log('selectSingleInModal(), options:', options);
 		return new Promise<T | null>((resolve, reject) => {
 			this.selectMultipleInModal(options)
-				.then(items => resolve(items?.length ? items[0] : null))
+				.then((items) => resolve(items?.length ? items[0] : null))
 				.catch(reject);
 		});
 	}
@@ -27,13 +26,12 @@ export class SelectorBaseService<T = ISelectItem> {
 		// 	return Promise.reject(new Error('items is required parameter'))
 		// }
 
-
 		const result = new Promise<T[] | null>((resolve, reject) => {
 			if (!options.onSelected) {
 				options = {
 					...options,
 					onSelected: (items: T[] | null): void => {
-						this.modalController.dismiss(items).catch(err => {
+						this.modalController.dismiss(items).catch((err) => {
 							this.errorLogger.logError(err, 'Failed to dismiss modal');
 							reject(err);
 						});
@@ -51,10 +49,14 @@ export class SelectorBaseService<T = ISelectItem> {
 				},
 				keyboardClose: true,
 			};
-			this.modalController.create(modalOptions)
-				.then(
-					modal => modal.present().catch(this.errorLogger.logErrorHandler('Failed to present modal')),
-				).catch(this.errorLogger.logErrorHandler('Failed to create modal'));
+			this.modalController
+				.create(modalOptions)
+				.then((modal) =>
+					modal
+						.present()
+						.catch(this.errorLogger.logErrorHandler('Failed to present modal')),
+				)
+				.catch(this.errorLogger.logErrorHandler('Failed to create modal'));
 		});
 
 		return result;

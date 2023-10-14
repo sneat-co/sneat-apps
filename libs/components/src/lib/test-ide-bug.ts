@@ -7,7 +7,7 @@ interface IItem {
 @Component({
 	selector: 'sneat-test',
 	standalone: true,
-	template: `Today's item: {{item}}`,
+	template: `Today's item: {{ item }}`,
 })
 export class TestComponent {
 	@Input() item?: IItem | null;
@@ -17,12 +17,10 @@ export class TestComponent {
 	standalone: true,
 	selector: 'sneat-consumer',
 	imports: [TestComponent],
-	template: `
-		<sneat-test [item]="myItem('test')"></sneat-test>`,
+	template: ` <sneat-test [item]="myItem('test')"></sneat-test>`,
 })
 export class ConsumerComponent {
 	protected myItem(id: string): IItem | undefined {
-		return id ? {id} : undefined;
+		return id ? { id } : undefined;
 	}
 }
-

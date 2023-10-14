@@ -7,11 +7,11 @@ import { LogistTeamRole, LogistTeamRoles } from '../../dto';
 })
 export class LogistTeamRolesComponent {
 	protected readonly roles: {
-		readonly id: LogistTeamRole,
+		readonly id: LogistTeamRole;
 		readonly title: string;
 	}[] = Object.entries(LogistTeamRoles)
-		.sort((a, b) => a[1] > b[1] ? 1 : -1)
-		.map(role => ({ id: role[0] as LogistTeamRole, title: role[1] }));
+		.sort((a, b) => (a[1] > b[1] ? 1 : -1))
+		.map((role) => ({ id: role[0] as LogistTeamRole, title: role[1] }));
 
 	@Input() selectedRoles: string[] = [];
 	@Output() selectedRolesChange = new EventEmitter<string[]>();
@@ -23,7 +23,7 @@ export class LogistTeamRolesComponent {
 		if (ce.detail.checked) {
 			this.selectedRoles = [...this.selectedRoles, role];
 		} else {
-			this.selectedRoles = this.selectedRoles.filter(r => r !== role);
+			this.selectedRoles = this.selectedRoles.filter((r) => r !== role);
 		}
 		this.selectedRolesChange.emit(this.selectedRoles);
 	}

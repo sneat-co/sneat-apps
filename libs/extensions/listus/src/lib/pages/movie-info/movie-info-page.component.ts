@@ -1,21 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {IMovie} from '../../../../models/movie-models';
-import {ParamMap, Router} from '@angular/router';
-import {CommuneBasePageParams} from '../../../../services/params';
-import {NavController} from '@ionic/angular';
-import {CommuneBasePage} from '../../../../pages/commune-base-page';
-import {BaseListItemPage} from '../base-list-item-page';
-import {IListItemInfo} from '../../../../models/dto/dto-list';
-import {IListItemsCommandParams, IListService, IListusService} from '../../services/interfaces';
-import {AuthStateService} from '../../../../services/auth-state.service';
-import {ITmdbService} from '../../watchlist/interfaces';
+import { Component, OnInit } from '@angular/core';
+import { IMovie } from '../../../../models/movie-models';
+import { ParamMap, Router } from '@angular/router';
+import { CommuneBasePageParams } from '../../../../services/params';
+import { NavController } from '@ionic/angular';
+import { CommuneBasePage } from '../../../../pages/commune-base-page';
+import { BaseListItemPage } from '../base-list-item-page';
+import { IListItemInfo } from '../../../../models/dto/dto-list';
+import {
+	IListItemsCommandParams,
+	IListService,
+	IListusService,
+} from '../../services/interfaces';
+import { AuthStateService } from '../../../../services/auth-state.service';
+import { ITmdbService } from '../../watchlist/interfaces';
 
 @Component({
 	selector: 'sneat-movie-info',
 	templateUrl: './movie-info-page.component.html',
 	providers: [CommuneBasePageParams],
 })
-export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, CommuneBasePage {
+export class MovieInfoPageComponent
+	extends BaseListItemPage
+	implements OnInit, CommuneBasePage
+{
 	movie: IMovie | undefined;
 
 	// listDto: IListDto;
@@ -42,14 +49,12 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 		if (!this.itemId) {
 			const movieIdTmdb = queryParams.get('idTmdb');
 			if (movieIdTmdb) {
-				this.tmdbService.loadMovieInfoById(movieIdTmdb)
-					.subscribe(
-						movieTmdb => {
-							this.onListItemInfoChanged(movieTmdb);
-							console.log(movieTmdb);
-						},
-						this.errorLogger.logError,
-					);
+				this.tmdbService
+					.loadMovieInfoById(movieIdTmdb)
+					.subscribe((movieTmdb) => {
+						this.onListItemInfoChanged(movieTmdb);
+						console.log(movieTmdb);
+					}, this.errorLogger.logError);
 			}
 		}
 		console.log('movie', this.movie, 'id', this.movie && this.movie.id);
@@ -60,7 +65,7 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 		if (!this.listInfo) {
 			return;
 		}
-		const {id} = this.listInfo;
+		const { id } = this.listInfo;
 		if (id && (!this.listDto || this.listDto.id !== id)) {
 			this.subscribeForListChanges(id);
 		}
@@ -78,7 +83,7 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 		}
 		return {
 			commune: this.commune,
-			list: {dto: this.listDto, shortId: this.shortListId},
+			list: { dto: this.listDto, shortId: this.shortListId },
 			items: [this.movie],
 		};
 	}
@@ -89,14 +94,12 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 
 	public removeFromWatchlist(): void {
 		console.log('MovieCardComponent.removeFromWatchlist()', this.movie);
-		this.listusService.deleteListItem(this.createListItemCommandParams())
-			.subscribe(
-				listDto => {
-					console.log('MovieCardComponent => movie deleted');
-					this.setList(listDto);
-				},
-				this.errorLogger.logError,
-			);
+		this.listusService
+			.deleteListItem(this.createListItemCommandParams())
+			.subscribe((listDto) => {
+				console.log('MovieCardComponent => movie deleted');
+				this.setList(listDto);
+			}, this.errorLogger.logError);
 	}
 
 	protected onListItemInfoChanged(listItemInfo?: IListItemInfo): void {
@@ -106,19 +109,22 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 	}
 
 	public get isWatched(): boolean {
-		return !!this.movie && this.listusDbService.isWatched(this.movie, this.userId);
+		return (
+			!!this.movie && this.listusDbService.isWatched(this.movie, this.userId)
+		);
 	}
 
 	public toggleIsWatched(): void {
 		// tslint:disable-next-line:no-this-assignment
-		const {movie, isWatched} = this;
+		const { movie, isWatched } = this;
 		if (!movie) {
 			throw new Error('!movie');
 		}
-		this.listusDbService.setIsWatched(movie, this.userId, !isWatched)
+		this.listusDbService
+			.setIsWatched(movie, this.userId, !isWatched)
 			.subscribe({
-				next: movieDto => this.movie = movieDto,
-				error: err => {
+				next: (movieDto) => (this.movie = movieDto),
+				error: (err) => {
 					console.error(err);
 				},
 			});
@@ -132,20 +138,29 @@ export class MovieInfoPageComponent extends BaseListItemPage implements OnInit, 
 			throw new Error('!this.listDto');
 		}
 		if (!this.commune) {
-			throw  new Error('!this.commune');
+			throw new Error('!this.commune');
 		}
 		// tslint:disable-next-line:max-line-length
-		console.log(`AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`, 'this.shortListId', this.shortListId, 'this.listDto', this.listDto, 'this.listInfo', this.listInfo);
-		this.listusDbService.addListItem({
-			commune: this.commune,
-			list: {dto: this.listDto, shortId: this.shortListId},
-			items: [movie],
-		})
+		console.log(
+			`AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`,
+			'this.shortListId',
+			this.shortListId,
+			'this.listDto',
+			this.listDto,
+			'this.listInfo',
+			this.listInfo,
+		);
+		this.listusDbService
+			.addListItem({
+				commune: this.commune,
+				list: { dto: this.listDto, shortId: this.shortListId },
+				items: [movie],
+			})
 			.subscribe({
-				next: result => {
+				next: (result) => {
 					console.log('ListPage.addListItem', result);
 				},
-				error: err => {
+				error: (err) => {
 					this.errorLogger.logError(err, 'Failed to add item to list');
 				},
 			});

@@ -14,6 +14,11 @@ export class LogistTeamSettingsPageComponent extends LogistTeamBaseComponent {
 		teamParams: TeamComponentBaseParams,
 		logistTeamService: LogistTeamService,
 	) {
-		super('LogistTeamSettingsPageComponent', route, teamParams, logistTeamService);
+		super(
+			'LogistTeamSettingsPageComponent',
+			route,
+			teamParams,
+			logistTeamService,
+		);
 	}
 }

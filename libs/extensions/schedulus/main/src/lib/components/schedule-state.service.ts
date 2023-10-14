@@ -5,7 +5,6 @@ export interface IDateChanged {
 	readonly shiftDirection: '' | 'back' | 'forward';
 }
 
-
 function diffInDays(date1: Date, date2: Date): number {
 	const timeDiff = date1.getTime() - date2.getTime();
 	return timeDiff / (1000 * 3600 * 24);
@@ -23,7 +22,10 @@ export function addDays(d: Date, daysToAdd: number): Date {
 
 export class ScheduleStateService {
 	private date = getToday();
-	private readonly dateChanged$ = new BehaviorSubject<IDateChanged>({ date: this.date, shiftDirection: '' });
+	private readonly dateChanged$ = new BehaviorSubject<IDateChanged>({
+		date: this.date,
+		shiftDirection: '',
+	});
 	public readonly dateChanged = this.dateChanged$.asObservable();
 
 	constructor() {
@@ -40,7 +42,8 @@ export class ScheduleStateService {
 	public setActiveDate(date: Date): void {
 		date.setHours(0, 0, 0, 0);
 		const dayDifference = diffInDays(date, this.date);
-		const shiftDirection = dayDifference == 0 ? '' : dayDifference > 0 ? 'forward' : 'back';
+		const shiftDirection =
+			dayDifference == 0 ? '' : dayDifference > 0 ? 'forward' : 'back';
 		this.date = date;
 		this.dateChanged$.next({ date, shiftDirection });
 	}
@@ -96,5 +99,4 @@ export class ScheduleStateService {
 		// }
 		// this.setDay('today', today);
 	}
-
 }

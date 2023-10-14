@@ -17,8 +17,7 @@ export class NewSegmentService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 		private readonly orderNavService: OrderNavService,
-	) {
-	}
+	) {}
 
 	async openNewSegmentDialog(componentProps: INewSegmentParams): Promise<void> {
 		const modal = await this.modalController.create({
@@ -30,10 +29,12 @@ export class NewSegmentService {
 	}
 
 	goNewSegmentPage(params: INewSegmentParams): Promise<boolean> {
-		return this.orderNavService.goOrderPage('forward', params.order,
-			{path: 'new-segments'},
+		return this.orderNavService.goOrderPage(
+			'forward',
+			params.order,
+			{ path: 'new-segments' },
 			excludeUndefined({ container: params.container?.id }),
-			params as unknown as {[id: string]: unknown},
+			params as unknown as { [id: string]: unknown },
 		);
 		// navController.navigateForward('new-segments', { relativeTo: route }).catch(console.error);
 	}

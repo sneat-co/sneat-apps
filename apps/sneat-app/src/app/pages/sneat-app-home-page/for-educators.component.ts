@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-for-educators',
 	templateUrl: './for-educators.component.html',
 })
-export class ForEducatorsComponent {
-
-}
+export class ForEducatorsComponent {}

@@ -2,7 +2,12 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
-import { IAddOrderShippingPointRequest, ILogistOrderContext, IOrderContainer, ShippingPointTask } from '../../dto';
+import {
+	IAddOrderShippingPointRequest,
+	ILogistOrderContext,
+	IOrderContainer,
+	ShippingPointTask,
+} from '../../dto';
 import { LogistOrderService } from '../../services';
 import { IContainer } from '../order-containers-selector/condainer-interface';
 
@@ -11,7 +16,6 @@ import { IContainer } from '../order-containers-selector/condainer-interface';
 	templateUrl: './new-shipping-point-form.component.html',
 })
 export class NewShippingPointFormComponent {
-
 	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
 	@Output() readonly orderCreated = new EventEmitter<ILogistOrderContext>();
@@ -28,14 +32,15 @@ export class NewShippingPointFormComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
-	) {
-	}
+	) {}
 
 	protected onContactChanged(contact: IContactContext): void {
 		this.contact = contact;
 	}
 
-	protected onSelectedContainersChanged(selectedContainers: IContainer[]): void {
+	protected onSelectedContainersChanged(
+		selectedContainers: IContainer[],
+	): void {
 		this.selectedContainers = selectedContainers;
 	}
 
@@ -60,7 +65,11 @@ export class NewShippingPointFormComponent {
 		if (this.unload) {
 			tasks.push('unload');
 		}
-		const containers = this.selectedContainers?.map(sc => ({ id: sc.id, tasks: sc.tasks || [] })) || [];
+		const containers =
+			this.selectedContainers?.map((sc) => ({
+				id: sc.id,
+				tasks: sc.tasks || [],
+			})) || [];
 		if (!containers.length) {
 			return;
 		}
@@ -72,16 +81,15 @@ export class NewShippingPointFormComponent {
 			containers,
 		});
 		this.creating = true;
-		this.orderService.addShippingPoint(order.team, request)
-			.subscribe({
-				next: (order) => {
-					console.log('Shipping point added');
-					this.orderCreated.emit(order);
-				},
-				error: e => {
-					this.errorLogger.logError(e, 'Failed to add shipping point');
-					this.creating = false;
-				},
-			});
+		this.orderService.addShippingPoint(order.team, request).subscribe({
+			next: (order) => {
+				console.log('Shipping point added');
+				this.orderCreated.emit(order);
+			},
+			error: (e) => {
+				this.errorLogger.logError(e, 'Failed to add shipping point');
+				this.creating = false;
+			},
+		});
 	}
 }

@@ -1,6 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-
 export interface ILogger {
 	// tslint:disable-next-line:no-any
 	debug(...v: unknown[]): void;
@@ -19,7 +18,9 @@ export interface ILoggerFactory {
 	getLogger(name: string): ILogger;
 }
 
-export const LOGGER_FACTORY = new InjectionToken<ILoggerFactory>('loggerFactory');
+export const LOGGER_FACTORY = new InjectionToken<ILoggerFactory>(
+	'loggerFactory',
+);
 
 export const loggerFactory: ILoggerFactory = {
 	getLogger(name: string): ILogger {

@@ -11,23 +11,21 @@ describe('InvitePersonalPage', () => {
 	let component: InvitePersonalPageComponent;
 	let fixture: ComponentFixture<InvitePersonalPageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [InvitePersonalPageComponent],
-				imports: [
-					IonicModule.forRoot(),
-					HttpClientTestingModule,
-					RouterTestingModule,
-				],
-				providers: [UserService, TeamService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [InvitePersonalPageComponent],
+			imports: [
+				IonicModule.forRoot(),
+				HttpClientTestingModule,
+				RouterTestingModule,
+			],
+			providers: [UserService, TeamService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(InvitePersonalPageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(InvitePersonalPageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

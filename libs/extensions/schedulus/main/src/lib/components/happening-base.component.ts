@@ -21,7 +21,8 @@ import {
 	IContactContext,
 	IContactusTeamDtoWithID,
 	IHappeningContext,
-	ITeamContext, zipMapBriefsWithIDs,
+	ITeamContext,
+	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
@@ -37,10 +38,8 @@ export class HappeningBaseComponentParams {
 		public readonly membersSelectorService: MembersSelectorService,
 		public readonly modalController: ModalController,
 		public readonly scheduleModalsService: ScheduleModalsService,
-	) {
-	}
+	) {}
 }
-
 
 @Directive()
 /* The meatadata should be passed to component declaration as:
@@ -57,7 +56,6 @@ export class HappeningBaseComponentParams {
 	```
  */
 export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
-
 	static providers = [HappeningBaseComponentParams];
 
 	static metadata = {
@@ -109,8 +107,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	protected constructor(
 		private readonly happeningBaseComponentParams: HappeningBaseComponentParams,
 		protected changeDetectorRef: ChangeDetectorRef,
-	) {
-	}
+	) {}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();
@@ -124,12 +121,20 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	goHappening(event: Event): void {
 		event.stopPropagation();
 		if (!this.team) {
-			this.errorLogger.logErrorHandler('not able to navigate to happening without team context');
+			this.errorLogger.logErrorHandler(
+				'not able to navigate to happening without team context',
+			);
 			return;
 		}
-		this.teamNavService.navigateForwardToTeamPage(this.team, `happening/${this.happening?.id}`, {
-			state: { happening: this.happening },
-		}).catch(this.errorLogger.logErrorHandler('failed to navigate to happening page'));
+		this.teamNavService
+			.navigateForwardToTeamPage(this.team, `happening/${this.happening?.id}`, {
+				state: { happening: this.happening },
+			})
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to navigate to happening page',
+				),
+			);
 		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
 
@@ -137,30 +142,38 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 		console.log('HappeningCardComponent.delete()');
 		event.stopPropagation();
 		if (!this.happening) {
-			this.errorLogger.logError(new Error('Single happening card has no happening context at moment of delete attempt'));
+			this.errorLogger.logError(
+				new Error(
+					'Single happening card has no happening context at moment of delete attempt',
+				),
+			);
 			return;
 		}
-		if (!confirm(`
+		if (
+			!confirm(`
 DELETING: ${this.happening?.brief?.title}
 
 Are you sure you want to delete this happening?
 
-This operation can NOT be undone.`)) {
+This operation can NOT be undone.`)
+		) {
 			return;
 		}
 		this.deleting = true;
 
-		const happening: IHappeningContext = this.happening.team ? this.happening : {
-			...this.happening,
-			team: this.team || { id: '' },
-		};
+		const happening: IHappeningContext = this.happening.team
+			? this.happening
+			: {
+					...this.happening,
+					team: this.team || { id: '' },
+			  };
 
 		this.happeningService
 			.deleteHappening(happening)
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: () => this.deleted.emit(),
-				error: e => {
+				error: (e) => {
 					this.errorLogger.logError(e, 'Failed to delete happening');
 					this.deleting = false;
 				},
@@ -177,35 +190,49 @@ This operation can NOT be undone.`)) {
 		if (!teamID) {
 			return;
 		}
-		const teamMembers: IContactContext[] | undefined = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)
-			?.map(m => contactContextFromBrief(m, team));
+		const teamMembers: IContactContext[] | undefined = zipMapBriefsWithIDs(
+			this.contactusTeam?.dto?.contacts,
+		)?.map((m) => contactContextFromBrief(m, team));
 
-		this.membersSelectorService.selectMembersInModal({
-			selectedMembers: teamMembers?.filter(m => this.happening?.brief?.memberIDs?.some(id => id === m.id)) || [],
-			members: teamMembers,
-			onAdded: this.onMemberAdded,
-			onRemoved: this.onMemberRemoved,
-		}).catch(err => {
-			this.errorLogger.logError(err, 'Failed to select members');
-		});
+		this.membersSelectorService
+			.selectMembersInModal({
+				selectedMembers:
+					teamMembers?.filter(
+						(m) => this.happening?.brief?.memberIDs?.some((id) => id === m.id),
+					) || [],
+				members: teamMembers,
+				onAdded: this.onMemberAdded,
+				onRemoved: this.onMemberRemoved,
+			})
+			.catch((err) => {
+				this.errorLogger.logError(err, 'Failed to select members');
+			});
 	}
 
 	async editSingleHappeningSlot(event: Event): Promise<void> {
 		if (!this.happening) {
 			return Promise.reject('no happening');
 		}
-		await this.happeningBaseComponentParams.scheduleModalsService
-			.editSingleHappeningSlot(event, this.happening);
+		await this.happeningBaseComponentParams.scheduleModalsService.editSingleHappeningSlot(
+			event,
+			this.happening,
+		);
 	}
 
-	private readonly onMemberAdded = (member: IContactContext): Observable<void> => {
+	private readonly onMemberAdded = (
+		member: IContactContext,
+	): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
 		if (!this.team) {
 			return NEVER;
 		}
-		const result = this.happeningService.addMember(this.team.id, this.happening, member.id);
+		const result = this.happeningService.addMember(
+			this.team.id,
+			this.happening,
+			member.id,
+		);
 		// result
 		// 	.pipe(takeUntil(this.destroyed))
 		// 	.subscribe({
@@ -216,18 +243,28 @@ This operation can NOT be undone.`)) {
 		return result;
 	};
 
-	private readonly onMemberRemoved = (member: IContactContext): Observable<void> => {
+	private readonly onMemberRemoved = (
+		member: IContactContext,
+	): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
 		}
 		if (!this.team) {
 			return NEVER;
 		}
-		return this.happeningService.removeMember(this.team?.id, this.happening, member.id);
+		return this.happeningService.removeMember(
+			this.team?.id,
+			this.happening,
+			member.id,
+		);
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log('HappeningCardComponent.ngOnChanges()', this.happening?.id, changes);
+		console.log(
+			'HappeningCardComponent.ngOnChanges()',
+			this.happening?.id,
+			changes,
+		);
 	}
 
 	removeMember(member: IContactContext): void {
@@ -238,24 +275,30 @@ This operation can NOT be undone.`)) {
 		if (!this.team) {
 			return;
 		}
-		this.happeningService.removeMember(this.team.id, this.happening, member.id).subscribe({
-			next: () => {
-				if (this.happening?.brief?.memberIDs) {
-					this.happening.brief.memberIDs = this.happening.brief.memberIDs.filter(id => id !== member.id);
-				}
-				if (this.happening?.dto?.memberIDs) {
-					this.happening.dto.memberIDs = this.happening.dto.memberIDs.filter(id => id !== member.id);
-				}
-				this.changeDetectorRef.markForCheck();
-			},
-			error: this.errorLogger.logErrorHandler('Failed to remove member from happening'),
-		});
+		this.happeningService
+			.removeMember(this.team.id, this.happening, member.id)
+			.subscribe({
+				next: () => {
+					if (this.happening?.brief?.memberIDs) {
+						this.happening.brief.memberIDs =
+							this.happening.brief.memberIDs.filter((id) => id !== member.id);
+					}
+					if (this.happening?.dto?.memberIDs) {
+						this.happening.dto.memberIDs = this.happening.dto.memberIDs.filter(
+							(id) => id !== member.id,
+						);
+					}
+					this.changeDetectorRef.markForCheck();
+				},
+				error: this.errorLogger.logErrorHandler(
+					'Failed to remove member from happening',
+				),
+			});
 	}
 }
 
 @Directive()
 export class HappeningComponent extends HappeningBaseComponent {
-
 	constructor(
 		happeningBaseComponentParams: HappeningBaseComponentParams,
 		changeDetectorRef: ChangeDetectorRef,

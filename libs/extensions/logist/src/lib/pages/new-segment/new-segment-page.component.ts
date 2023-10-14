@@ -19,6 +19,8 @@ export class NewSegmentPageComponent extends OrderPageBaseComponent {
 	}
 
 	back(): void {
-		this.navController.pop().catch(this.errorLogger.logErrorHandler('Failed to navigate back'));
+		this.navController
+			.pop()
+			.catch(this.errorLogger.logErrorHandler('Failed to navigate back'));
 	}
 }

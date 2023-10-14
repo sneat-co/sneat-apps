@@ -6,19 +6,8 @@ import { MultiSelectorModule } from '@sneat/components';
 import { ContactRolesInputComponent } from './contact-roles-input.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		MultiSelectorModule,
-	],
-	declarations: [
-		ContactRolesInputComponent,
-	],
-	exports: [
-		ContactRolesInputComponent,
-	],
+	imports: [CommonModule, IonicModule, FormsModule, MultiSelectorModule],
+	declarations: [ContactRolesInputComponent],
+	exports: [ContactRolesInputComponent],
 })
-export class ContactRolesInputModule {
-
-}
+export class ContactRolesInputModule {}

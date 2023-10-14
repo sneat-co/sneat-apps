@@ -26,19 +26,21 @@ export class SignInFromEmailLinkPageComponent {
 
 	public signIn(): void {
 		this.isSigning = true;
-		this.authStateService
-			.signInWithEmailLink(this.email)
-			.subscribe({
-				next: () => {
-					this.navController.navigateRoot('/')
-						.catch(this.errorLogger.logErrorHandler(
-							'Failed to navigate to root page after signing in with email link'));
-				},
-				error: err => {
-					this.isSigning = false;
-					this.emailFromStorage = false;
-					this.errorLogger.logError(err, 'Failed to sign in with email link');
-				},
-			});
+		this.authStateService.signInWithEmailLink(this.email).subscribe({
+			next: () => {
+				this.navController
+					.navigateRoot('/')
+					.catch(
+						this.errorLogger.logErrorHandler(
+							'Failed to navigate to root page after signing in with email link',
+						),
+					);
+			},
+			error: (err) => {
+				this.isSigning = false;
+				this.emailFromStorage = false;
+				this.errorLogger.logError(err, 'Failed to sign in with email link');
+			},
+		});
 	}
 }

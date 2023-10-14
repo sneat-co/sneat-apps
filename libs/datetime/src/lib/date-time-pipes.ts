@@ -1,7 +1,7 @@
 type Portion = [
-		'year' | 'day' | 'hour' | 'minute' | 'second',
-		'min' | 'sec' | undefined,
-	(seconds: number) => number
+	'year' | 'day' | 'hour' | 'minute' | 'second',
+	'min' | 'sec' | undefined,
+	(seconds: number) => number,
 ];
 
 const y = 31536000,

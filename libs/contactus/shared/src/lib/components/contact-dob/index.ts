@@ -1,1 +1,1 @@
-export * from "./contact-dob.component";
+export * from './contact-dob.component';

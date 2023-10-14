@@ -1,12 +1,14 @@
-import { ActivatedRoute, ParamMap } from "@angular/router";
-import { ContactComponentBaseParams } from "@sneat/contactus-shared";
-import { IContactBrief, IContactDto } from "@sneat/dto";
-import { TeamItemBaseComponent } from "@sneat/team/components";
-import { IContactContext } from "@sneat/team/models";
-import { Observable, throwError } from "rxjs";
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ContactComponentBaseParams } from '@sneat/contactus-shared';
+import { IContactBrief, IContactDto } from '@sneat/dto';
+import { TeamItemBaseComponent } from '@sneat/team/components';
+import { IContactContext } from '@sneat/team/models';
+import { Observable, throwError } from 'rxjs';
 
-export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrief, IContactDto> {
-
+export abstract class ContactBasePage extends TeamItemBaseComponent<
+	IContactBrief,
+	IContactDto
+> {
 	public contact?: IContactContext;
 
 	protected constructor(
@@ -15,23 +17,39 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 		params: ContactComponentBaseParams,
 		// protected preloader: NgModulePreloaderService,
 	) {
-		super(className, route, params.teamParams, "contacts", "contact", params.contactService);
-		this.defaultBackPage = "contacts";
+		super(
+			className,
+			route,
+			params.teamParams,
+			'contacts',
+			'contact',
+			params.contactService,
+		);
+		this.defaultBackPage = 'contacts';
 		this.tackContactId();
 	}
 
-	protected override onRouteParamsChanged(params: ParamMap, itemID?: string, teamID?: string) {
+	protected override onRouteParamsChanged(
+		params: ParamMap,
+		itemID?: string,
+		teamID?: string,
+	) {
 		// Nothing to do here
-		console.log("ContactBasePage.onRouteParamsChanged()", params, itemID, teamID);
+		console.log(
+			'ContactBasePage.onRouteParamsChanged()',
+			params,
+			itemID,
+			teamID,
+		);
 	}
 
 	protected override watchItemChanges(): Observable<IContactContext> {
 		if (!this.contact?.id) {
-			return throwError(() => new Error("no contact context"));
+			return throwError(() => new Error('no contact context'));
 		}
 		const team = this.team;
 		if (!team) {
-			return throwError(() => new Error("no team context"));
+			return throwError(() => new Error('no team context'));
 		}
 		return this.contactService.watchContactById(team, this.contact?.id);
 	}
@@ -46,25 +64,22 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<IContactBrie
 	}
 
 	private tackContactId(): void {
-		this.route.paramMap
-			.pipe(this.takeUntilNeeded())
-			.subscribe({
-				next: params => {
-					const id = params.get("contactID");
-					if (id) {
-						if (this.contact?.id !== id) {
-							const team = this.team;
-							if (!team) {
-								throw new Error("No team context");
-							}
-							this.contact = { id, team };
+		this.route.paramMap.pipe(this.takeUntilNeeded()).subscribe({
+			next: (params) => {
+				const id = params.get('contactID');
+				if (id) {
+					if (this.contact?.id !== id) {
+						const team = this.team;
+						if (!team) {
+							throw new Error('No team context');
 						}
-					} else {
-						this.contact = undefined;
+						this.contact = { id, team };
 					}
-				},
-				error: this.logErrorHandler(),
-			});
+				} else {
+					this.contact = undefined;
+				}
+			},
+			error: this.logErrorHandler(),
+		});
 	}
-
 }

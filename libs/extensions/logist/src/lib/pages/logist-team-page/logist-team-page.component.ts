@@ -9,7 +9,6 @@ import { LogistTeamBaseComponent } from '../logist-team-base.component';
 	templateUrl: './logist-team-page.component.html',
 })
 export class LogistTeamPageComponent extends LogistTeamBaseComponent {
-
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,

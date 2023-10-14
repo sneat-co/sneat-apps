@@ -11,22 +11,20 @@ describe('ScrumsHistoryPage', () => {
 	let component: ScrumsHistoryPageComponent;
 	let fixture: ComponentFixture<ScrumsHistoryPageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [ScrumsHistoryPageComponent],
-				imports: [
-					IonicModule.forRoot(),
-					RouterTestingModule,
-					HttpClientTestingModule,
-				],
-				providers: [TeamService, UserService],
-			}).compileComponents();
-			fixture = TestBed.createComponent(ScrumsHistoryPageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [ScrumsHistoryPageComponent],
+			imports: [
+				IonicModule.forRoot(),
+				RouterTestingModule,
+				HttpClientTestingModule,
+			],
+			providers: [TeamService, UserService],
+		}).compileComponents();
+		fixture = TestBed.createComponent(ScrumsHistoryPageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

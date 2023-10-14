@@ -35,4 +35,3 @@ export type TabulatorOptions = Options;
 // 	readonly rowDeselect?: (row: unknown) => void;
 // 	readonly rowContextMenu?: IRowMenu[];
 // }
-

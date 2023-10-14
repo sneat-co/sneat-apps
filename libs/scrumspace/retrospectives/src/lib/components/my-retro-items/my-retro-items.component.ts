@@ -1,9 +1,21 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
-import { IAddRetroItemRequest, RetrospectiveService } from '../../retrospective.service';
+import {
+	IAddRetroItemRequest,
+	RetrospectiveService,
+} from '../../retrospective.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IRetroItem,
@@ -55,8 +67,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		private readonly retrospectiveService: RetrospectiveService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly userService: SneatUserService,
-	) {
-	}
+	) {}
 
 	public get currentType(): string {
 		return this.typeControl.value as string;

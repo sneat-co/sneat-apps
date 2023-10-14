@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { IBriefAndID, IMemberBrief, ITeamDto } from "@sneat/dto";
+import { IBriefAndID, IMemberBrief, ITeamDto } from '@sneat/dto';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
 	Firestore as AngularFirestore,
@@ -70,7 +70,10 @@ export class ScrumService extends BaseMeetingService {
 		super('scrum', sneatApiService);
 	}
 
-	public getScrums(teamId: string, limit = 10): Observable<IRecord<IScrumDto>[]> {
+	public getScrums(
+		teamId: string,
+		limit = 10,
+	): Observable<IRecord<IScrumDto>[]> {
 		console.log('getScrums()', teamId, limit, this.userService.currentUserID);
 		throw new Error('Not implemented');
 		// const scrums = this.scrumsCollection(teamId);

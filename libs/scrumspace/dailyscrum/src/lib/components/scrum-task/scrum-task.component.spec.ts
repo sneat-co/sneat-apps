@@ -10,23 +10,21 @@ describe('ScrumTaskComponent', () => {
 	let component: ScrumTaskComponent;
 	let fixture: ComponentFixture<ScrumTaskComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [ScrumTaskComponent],
-				imports: [
-					IonicModule.forRoot(),
-					HttpClientTestingModule,
-					// AngularFireModule.initializeApp(environment.firebaseConfig),
-				],
-				// providers: [UserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [ScrumTaskComponent],
+			imports: [
+				IonicModule.forRoot(),
+				HttpClientTestingModule,
+				// AngularFireModule.initializeApp(environment.firebaseConfig),
+			],
+			// providers: [UserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(ScrumTaskComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(ScrumTaskComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

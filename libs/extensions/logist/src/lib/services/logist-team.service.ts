@@ -15,7 +15,6 @@ import {
 	ISetLogistTeamSettingsRequest,
 } from '../dto/logist-team-dto';
 
-
 function briefFromDto(id: string, dto: ILogistTeamDto): ILogistTeamBrief {
 	return dto;
 }
@@ -28,36 +27,49 @@ export class LogistTeamService {
 		private readonly sneatApiService: SneatApiService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>(briefFromDto);
+		this.sfs = new SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>(
+			briefFromDto,
+		);
 	}
 
 	public watchLogistTeamByID(teamID: string): Observable<ILogistTeamContext> {
 		return this.sfs.watchByDocRef(logistTeamDocRef(this.afs, teamID));
 	}
 
-	setLogistTeamSettings(request: ISetLogistTeamSettingsRequest): Observable<void> {
-		return this.sneatApiService.post('logistus/set_logist_team_settings?ts=' + new Date().toISOString(), request);
+	setLogistTeamSettings(
+		request: ISetLogistTeamSettingsRequest,
+	): Observable<void> {
+		return this.sneatApiService.post(
+			'logistus/set_logist_team_settings?ts=' + new Date().toISOString(),
+			request,
+		);
 	}
-
 }
 
-function logistTeamDocRef(afs: AngularFirestore, teamID: string): DocumentReference<ILogistTeamDto> {
+function logistTeamDocRef(
+	afs: AngularFirestore,
+	teamID: string,
+): DocumentReference<ILogistTeamDto> {
 	const teamsCollection = collection(afs, 'teams');
 	const teamRef = doc(teamsCollection, teamID);
 	const modulesCollection = collection(teamRef, 'modules');
-	return doc<ILogistTeamDto>(modulesCollection as CollectionReference<ILogistTeamDto>, 'logistus');
+	return doc<ILogistTeamDto>(
+		modulesCollection as CollectionReference<ILogistTeamDto>,
+		'logistus',
+	);
 }
 
-export function logistTeamModuleSubCollection<Dto>(afs: AngularFirestore, teamID: string, collectionName: string): CollectionReference<Dto> {
+export function logistTeamModuleSubCollection<Dto>(
+	afs: AngularFirestore,
+	teamID: string,
+	collectionName: string,
+): CollectionReference<Dto> {
 	const moduleRef = logistTeamDocRef(afs, teamID);
 	return collection(moduleRef, collectionName) as CollectionReference<Dto>;
 }
 
 @NgModule({
 	imports: [],
-	providers: [
-		LogistTeamService,
-	],
+	providers: [LogistTeamService],
 })
-export class LogistTeamServiceModule {
-}
+export class LogistTeamServiceModule {}

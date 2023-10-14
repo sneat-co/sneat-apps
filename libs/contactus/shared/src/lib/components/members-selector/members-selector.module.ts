@@ -14,9 +14,7 @@ import { MembersSelectorService } from './members-selector.service';
 		SneatPipesModule,
 		MembersAsBadgesComponent,
 	],
-	providers: [
-		MembersSelectorService,
-	],
+	providers: [MembersSelectorService],
 	declarations: [
 		MembersSelectorInputComponent,
 		MembersSelectorListComponent,
@@ -28,5 +26,4 @@ import { MembersSelectorService } from './members-selector.service';
 		MembersSelectorModalComponent,
 	],
 })
-export class MembersSelectorModule {
-}
+export class MembersSelectorModule {}

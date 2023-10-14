@@ -1,13 +1,26 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChange,
+	SimpleChanges,
+} from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team/models';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
-import { ISlotItem, NewHappeningParams, TeamDay } from '@sneat/extensions/schedulus/shared';
+import {
+	ISlotItem,
+	NewHappeningParams,
+	TeamDay,
+} from '@sneat/extensions/schedulus/shared';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { createWeekdays, Week } from '../schedule-core';
 
-export interface Weekday { // This is used to
+export interface Weekday {
+	// This is used to
 	readonly id: WeekdayCode2;
 	readonly longTitle: string;
 	readonly day?: TeamDay; // TODO: make readonly
@@ -18,7 +31,6 @@ export interface Weekday { // This is used to
 	templateUrl: './schedule-week.component.html',
 })
 export class ScheduleWeekComponent implements OnChanges {
-
 	@Input() team: ITeamContext = { id: '' };
 	@Input() week?: Week;
 	@Input() filter?: IScheduleFilter;
@@ -52,7 +64,13 @@ export class ScheduleWeekComponent implements OnChanges {
 		}
 		const prevWeek = week.previousValue as Week | undefined;
 		const currentWeek = week.currentValue as Week | undefined;
-		if (!currentWeek || prevWeek === currentWeek || prevWeek && currentWeek && dateToIso(prevWeek.startDate) == dateToIso(currentWeek.startDate)) {
+		if (
+			!currentWeek ||
+			prevWeek === currentWeek ||
+			(prevWeek &&
+				currentWeek &&
+				dateToIso(prevWeek.startDate) == dateToIso(currentWeek.startDate))
+		) {
 			return;
 		}
 		const { teamDaysProvider } = this;
@@ -65,7 +83,10 @@ export class ScheduleWeekComponent implements OnChanges {
 			let date = new Date(currentWeek.startDate);
 			date = new Date(date.setDate(startDate + i));
 			// console.log('ScheduleWeekComponent.onWeekInputChanged() => i=', i, '; startDate:', currentWeek.startDate, '; date:', date);
-			this.weekdays[i] = { ...this.weekdays[i], day: teamDaysProvider.getTeamDay(date) };
+			this.weekdays[i] = {
+				...this.weekdays[i],
+				day: teamDaysProvider.getTeamDay(date),
+			};
 		}
 	}
 }

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IRetroItem, IRetrospective, RetroItemType } from '@sneat/scrumspace/scrummodels';
+import {
+	IRetroItem,
+	IRetrospective,
+	RetroItemType,
+} from '@sneat/scrumspace/scrummodels';
 import { Observable } from 'rxjs';
 import { BaseMeetingService, IMeetingRequest } from '@sneat/meeting';
 import { SneatApiService } from '@sneat/api';
@@ -36,9 +40,7 @@ export interface IAddRetroItemResponse {
 	providedIn: 'root',
 })
 export class RetrospectiveService extends BaseMeetingService {
-	constructor(
-		sneatApiService: SneatApiService,
-	) {
+	constructor(sneatApiService: SneatApiService) {
 		super('retrospective', sneatApiService);
 	}
 
@@ -63,10 +65,7 @@ export class RetrospectiveService extends BaseMeetingService {
 	addRetroItem(
 		request: IAddRetroItemRequest,
 	): Observable<IAddRetroItemResponse> {
-		return this.sneatApiService.post(
-			'retrospective/add_retro_item',
-			request,
-		);
+		return this.sneatApiService.post('retrospective/add_retro_item', request);
 	}
 
 	public deleteRetroItem(request: IRetroItemRequest): Observable<IRetroItem[]> {

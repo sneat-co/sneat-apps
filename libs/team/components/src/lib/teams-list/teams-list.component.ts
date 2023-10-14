@@ -7,11 +7,11 @@ import { SneatUserService } from '@sneat/auth-core';
 
 @Component({
 	selector: 'sneat-teams-list',
-	templateUrl: 'teams-list.component.html'
+	templateUrl: 'teams-list.component.html',
 })
 export class TeamsListComponent {
 	@Input() pathPrefix = '/space';
-	@Input() iconName = 'people-outline'
+	@Input() iconName = 'people-outline';
 	@Input() teams?: ITeamContext[];
 	@Output() readonly beforeNavigateToTeam = new EventEmitter<ITeamContext>();
 
@@ -24,14 +24,18 @@ export class TeamsListComponent {
 		private readonly teamNavService: TeamNavService,
 		private readonly navController: NavController,
 		private readonly menuController: MenuController,
-	){}
+	) {}
 
 	public goTeam(event: Event, team: ITeamContext): boolean {
 		event.stopPropagation();
 		this.beforeNavigateToTeam.emit(team);
-		this.teamNavService.navigateToTeam(team)
-			.catch(this.errorLogger.logErrorHandler(
-				'Failed to navigate to teams overview page from teams menu'));
+		this.teamNavService
+			.navigateToTeam(team)
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to navigate to teams overview page from teams menu',
+				),
+			);
 		return false;
 	}
 }

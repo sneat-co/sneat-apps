@@ -14,29 +14,23 @@ import { NewSegmentService } from './new-segment.service';
 import { SegmentCounterpartyComponent } from './segment-counterparty.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    DialogHeaderComponent,
-    ContactInputModule,
-    FormsModule,
-    OrderFormModule,
-    OrderContainersSelectorModule,
-    OrderNavServiceModule,
+	imports: [
+		CommonModule,
+		IonicModule,
+		DialogHeaderComponent,
+		ContactInputModule,
+		FormsModule,
+		OrderFormModule,
+		OrderContainersSelectorModule,
+		OrderNavServiceModule,
 		ContactWithRefNumModule,
-  ],
+	],
 	declarations: [
 		NewSegmentFormComponent,
 		NewSegmentDialogComponent,
 		SegmentCounterpartyComponent,
 	],
-	exports: [
-		NewSegmentFormComponent,
-		NewSegmentDialogComponent,
-	],
-	providers: [
-		NewSegmentService,
-	],
+	exports: [NewSegmentFormComponent, NewSegmentDialogComponent],
+	providers: [NewSegmentService],
 })
-export class NewSegmentModule {
-}
+export class NewSegmentModule {}

@@ -9,8 +9,7 @@ describe('SneatAppMenuComponentComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [SneatAppMenuComponentComponent],
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

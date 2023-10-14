@@ -9,7 +9,6 @@ import { TeamType } from '@sneat/core';
 	providedIn: 'root',
 })
 export class TeamContextService {
-
 	// public trackUrl(
 	// 	route: ActivatedRoute,
 	// 	paramName: string,
@@ -24,14 +23,17 @@ export class TeamContextService {
 	// }
 }
 
-export function trackTeamIdAndTypeFromRouteParameter(route: ActivatedRoute): Observable<ITeamContext | undefined> {
+export function trackTeamIdAndTypeFromRouteParameter(
+	route: ActivatedRoute,
+): Observable<ITeamContext | undefined> {
 	return route.paramMap.pipe(
-		map(params => {
-			const
-				id = params.get('teamID'),
+		map((params) => {
+			const id = params.get('teamID'),
 				type = params.get('teamType') as TeamType;
 			console.log('trackTeamIdAndTypeFromRouteParameter', params, id, type);
-			const teamContext: ITeamContext | undefined = id ? { id: id, type: type || undefined } : undefined;
+			const teamContext: ITeamContext | undefined = id
+				? { id: id, type: type || undefined }
+				: undefined;
 			// console.log('trackTeamIdAndTypeFromRouteParameter() => teamContext:', teamContext)
 			return teamContext;
 		}),

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ListService } from './list.service';
-import { IListusAppStateService, ListusAppStateService } from './listus-app-state.service';
+import {
+	IListusAppStateService,
+	ListusAppStateService,
+} from './listus-app-state.service';
 
 @NgModule({
 	providers: [
@@ -8,9 +11,7 @@ import { IListusAppStateService, ListusAppStateService } from './listus-app-stat
 		{
 			provide: IListusAppStateService,
 			useClass: ListusAppStateService,
-		}
+		},
 	],
 })
-export class ListusCoreServicesModule {
-
-}
+export class ListusCoreServicesModule {}

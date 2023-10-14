@@ -1,7 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	OnInit,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { ILogistOrderContext } from '../../dto/order-dto';
 import { IContainer } from './condainer-interface';
-
 
 @Component({
 	selector: 'sneat-order-containers-selector',
@@ -21,20 +28,26 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	hasUncheckedContainers(): boolean {
-		return !!this.containers?.some(c => !c.checked);
+		return !!this.containers?.some((c) => !c.checked);
 	}
 
 	onToggled(container: IContainer): void {
 		console.log('OrderContainersSelectorComponent.onToggled():', container);
-		this.containers = this.containers?.map(c => c.id === container.id ? container : c);
-		const selectedContainers = this.containers?.filter(c => c.checked) || [];
-		this.selectedContainerIDs = selectedContainers.map(c => c.id);
-		console.log('OrderContainersSelectorComponent.selectedContainerIDs:', this.selectedContainerIDs);
+		this.containers = this.containers?.map((c) =>
+			c.id === container.id ? container : c,
+		);
+		const selectedContainers = this.containers?.filter((c) => c.checked) || [];
+		this.selectedContainerIDs = selectedContainers.map((c) => c.id);
+		console.log(
+			'OrderContainersSelectorComponent.selectedContainerIDs:',
+			this.selectedContainerIDs,
+		);
 		this.selectedContainerIDsChange.emit(this.selectedContainerIDs);
 		this.selectedContainersChange.emit(selectedContainers);
 	}
 
-	ngOnInit(): void { // Needed for modal dialog as ngOnChanges is not called for the first change
+	ngOnInit(): void {
+		// Needed for modal dialog as ngOnChanges is not called for the first change
 		this.setContainers();
 	}
 
@@ -51,11 +64,11 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 			this.containers = [this.container];
 			return;
 		}
-		this.containers = this.order?.dto?.containers?.map(c => ({
+		this.containers = this.order?.dto?.containers?.map((c) => ({
 			id: c.id,
 			type: c.type,
 			number: c.number,
-			checked: !!this.containers?.find(cc => cc.id === c.id)?.checked,
+			checked: !!this.containers?.find((cc) => cc.id === c.id)?.checked,
 		}));
 	}
 }

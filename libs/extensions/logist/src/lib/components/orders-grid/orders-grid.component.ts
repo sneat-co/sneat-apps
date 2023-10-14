@@ -1,9 +1,19 @@
-import { Component, Inject, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	NgZone,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { ILogistOrderContext, IOrderCounterpartyRef } from '../../dto/order-dto';
+import {
+	ILogistOrderContext,
+	IOrderCounterpartyRef,
+} from '../../dto/order-dto';
 
 interface OrderRow {
 	readonly id: string;
@@ -20,7 +30,6 @@ interface OrderRow {
 	templateUrl: './orders-grid.component.html',
 })
 export class OrdersGridComponent implements OnChanges {
-
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() orders?: ILogistOrderContext[];
 
@@ -96,20 +105,23 @@ export class OrdersGridComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
 		private readonly zone: NgZone,
-	) {
-	}
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('OrdersGridComponent.ngOnChanges():', changes);
 		if (changes['orders']) {
-			this.rows = this.orders?.map(o => ({
+			this.rows = this.orders?.map((o) => ({
 				id: o.id,
 				status: o.brief?.status,
 				direction: o.brief?.direction,
-				dispatch_agent: o.dto?.counterparties?.find(c => c.role === 'dispatch_agent'),
-				receive_agent: o.dto?.counterparties?.find(c => c.role === 'receive_agent'),
-				buyer: o.dto?.counterparties?.find(c => c.role === 'buyer'),
-				consignee: o.dto?.counterparties?.find(c => c.role === 'consignee'),
+				dispatch_agent: o.dto?.counterparties?.find(
+					(c) => c.role === 'dispatch_agent',
+				),
+				receive_agent: o.dto?.counterparties?.find(
+					(c) => c.role === 'receive_agent',
+				),
+				buyer: o.dto?.counterparties?.find((c) => c.role === 'buyer'),
+				consignee: o.dto?.counterparties?.find((c) => c.role === 'consignee'),
 				containers: o.dto?.containers?.length?.toString(),
 				shippingPoints: o.dto?.shippingPoints?.length?.toString(),
 				segments: o.dto?.segments?.length?.toString(),
@@ -129,10 +141,16 @@ export class OrdersGridComponent implements OnChanges {
 			alert('No team context provided!');
 			return;
 		}
-		this.zone.run(() => this.navController
-			.navigateForward(['space', team.type, team.id, 'order', data.id])
-			.catch(this.errorLogger.logErrorHandler('Failed to navigate to order details page')))
-			.then(() => void 0)
-		;
+		this.zone
+			.run(() =>
+				this.navController
+					.navigateForward(['space', team.type, team.id, 'order', data.id])
+					.catch(
+						this.errorLogger.logErrorHandler(
+							'Failed to navigate to order details page',
+						),
+					),
+			)
+			.then(() => void 0);
 	};
 }

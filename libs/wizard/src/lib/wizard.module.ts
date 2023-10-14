@@ -5,17 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-	],
-	declarations: [
-		RadioGroupToSelectComponent,
-	],
-	exports: [
-		RadioGroupToSelectComponent,
-	],
+	imports: [CommonModule, FormsModule, IonicModule],
+	declarations: [RadioGroupToSelectComponent],
+	exports: [RadioGroupToSelectComponent],
 })
-export class WizardModule {
-}
+export class WizardModule {}

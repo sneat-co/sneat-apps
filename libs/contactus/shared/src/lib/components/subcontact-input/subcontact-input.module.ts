@@ -4,17 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { SubcontactInputComponent } from './subcontact-input.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-	],
-	declarations: [
-		SubcontactInputComponent,
-	],
-	exports: [
-		SubcontactInputComponent
-	],
+	imports: [CommonModule, IonicModule],
+	declarations: [SubcontactInputComponent],
+	exports: [SubcontactInputComponent],
 })
-export class SubcontactInputModule {
-
-}
+export class SubcontactInputModule {}

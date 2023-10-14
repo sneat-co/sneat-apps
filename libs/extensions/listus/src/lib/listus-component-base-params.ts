@@ -7,6 +7,5 @@ export class ListusComponentBaseParams {
 	constructor(
 		public readonly teamParams: TeamComponentBaseParams,
 		public readonly listService: ListService,
-	) {
-	}
+	) {}
 }

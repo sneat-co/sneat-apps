@@ -10,8 +10,9 @@ const routes: Routes = [
 	{
 		path: 'sign-in-from-email-link',
 		loadChildren: () =>
-			import('./sign-in-from-email-link/sign-in-from-email-link-page.module')
-				.then(m => m.SignInFromEmailLinkPageModule),
+			import(
+				'./sign-in-from-email-link/sign-in-from-email-link-page.module'
+			).then((m) => m.SignInFromEmailLinkPageModule),
 	},
 ];
 
@@ -19,5 +20,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class SneatAuthRoutingModule {
-}
+export class SneatAuthRoutingModule {}

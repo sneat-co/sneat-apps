@@ -5,7 +5,10 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactInputModule } from '@sneat/contactus-shared';
 import { LogistOrderServiceModule } from '../services';
-import { AgentRoleMenuComponent, OrderAgentsComponent } from './order-agents/order-agents.component';
+import {
+	AgentRoleMenuComponent,
+	OrderAgentsComponent,
+} from './order-agents/order-agents.component';
 import { OrderCardComponent } from './order-card/order-card.component';
 import { OrderPrintMenuComponent } from './order-card/order-print-menu.component';
 import { OrderCounterpartiesComponent } from './order-counterparties/order-counterparties.component';
@@ -32,14 +35,13 @@ import { OrderCounterpartyComponent } from './order-counterparty/order-counterpa
 		AgentRoleMenuComponent,
 		// OrderShippingPointsCardComponent,
 	],
-  exports: [
-    OrderCardComponent,
-    OrderCounterpartyInputComponent,
-    OrderCounterpartyComponent,
-    OrderCounterpartiesComponent,
-    OrderAgentsComponent,
-    // OrderShippingPointsCardComponent,
-  ],
+	exports: [
+		OrderCardComponent,
+		OrderCounterpartyInputComponent,
+		OrderCounterpartyComponent,
+		OrderCounterpartiesComponent,
+		OrderAgentsComponent,
+		// OrderShippingPointsCardComponent,
+	],
 })
-export class OrderFormModule {
-}
+export class OrderFormModule {}

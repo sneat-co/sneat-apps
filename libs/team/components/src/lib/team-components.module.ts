@@ -4,20 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { InviteLinksComponent } from './index';
 
-const exports = [
-	InviteLinksComponent,
-];
+const exports = [InviteLinksComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-	],
-	declarations: [
-		...exports,
-	],
+	imports: [CommonModule, IonicModule, FormsModule],
+	declarations: [...exports],
 	exports: exports,
 })
-export class TeamComponentsModule {
-}
+export class TeamComponentsModule {}

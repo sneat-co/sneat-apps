@@ -4,5 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-intro',
 	templateUrl: './intro.component.html',
 })
-export class IntroComponent {
-}
+export class IntroComponent {}

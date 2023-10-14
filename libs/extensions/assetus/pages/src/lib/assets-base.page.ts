@@ -1,11 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
 import { AssetCategory, IAssetusTeamContext } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 
 export abstract class AssetsBasePage extends TeamBaseComponent {
-
 	public assets?: IAssetContext[];
 
 	protected assetusTeam?: IAssetusTeamContext;
@@ -27,7 +29,11 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 		}
 		this.teamParams.teamNavService
 			.navigateForwardToTeamPage(team, 'new-asset', { state: { assetType } })
-			.catch(this.errorLogger.logErrorHandler('Failed to navigate to new asset page'));
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to navigate to new asset page',
+				),
+			);
 	}
 
 	override onTeamDtoChanged(): void {
@@ -41,7 +47,6 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 			// this.assets = this.assetusTeam?.dto?.assets;
 		}
 	}
-
 
 	// protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
 	// 	super.onCommuneIdsChanged(communeIds);

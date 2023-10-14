@@ -7,7 +7,5 @@ export class HappeningComponentBaseParams {
 	constructor(
 		public readonly teamParams: TeamComponentBaseParams,
 		public readonly happeningService: HappeningService,
-	) {
-	}
+	) {}
 }
-

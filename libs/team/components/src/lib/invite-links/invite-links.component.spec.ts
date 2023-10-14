@@ -10,24 +10,22 @@ describe('InviteLinksComponent', () => {
 	let component: InviteLinksComponent;
 	let fixture: ComponentFixture<InviteLinksComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [InviteLinksComponent],
-				imports: [
-					IonicModule.forRoot(),
-					RouterTestingModule,
-					HttpClientTestingModule,
-					// AngularFireModule.initializeApp(environment.firebaseConfig),
-				],
-				providers: [SneatUserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [InviteLinksComponent],
+			imports: [
+				IonicModule.forRoot(),
+				RouterTestingModule,
+				HttpClientTestingModule,
+				// AngularFireModule.initializeApp(environment.firebaseConfig),
+			],
+			providers: [SneatUserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(InviteLinksComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(InviteLinksComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

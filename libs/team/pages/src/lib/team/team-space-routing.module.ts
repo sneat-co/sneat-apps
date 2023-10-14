@@ -28,7 +28,8 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		loadChildren: () => import('@sneat/contactus-internal').then((m) => m.ContactusRoutingModule),
+		loadChildren: () =>
+			import('@sneat/contactus-internal').then((m) => m.ContactusRoutingModule),
 	},
 	...budgetusRoutes,
 	...docusRoutes,
@@ -60,5 +61,4 @@ const routes: Routes = [
 	declarations: [],
 	providers: [TeamComponentBaseParams],
 })
-export class TeamSpaceRoutingModule {
-}
+export class TeamSpaceRoutingModule {}

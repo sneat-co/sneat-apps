@@ -5,22 +5,11 @@ import { IonicModule } from '@ionic/angular';
 import { AvatarComponent } from './index';
 import { TeamPageTitleComponent } from './team-page-title/team-page-title.component';
 
-const exports = [
-	AvatarComponent,
-	TeamPageTitleComponent,
-];
+const exports = [AvatarComponent, TeamPageTitleComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-	],
-	declarations: [
-		...exports,
-	],
+	imports: [CommonModule, IonicModule, FormsModule],
+	declarations: [...exports],
 	exports: exports,
 })
-export class TeamCoreComponentsModule {
-
-}
+export class TeamCoreComponentsModule {}

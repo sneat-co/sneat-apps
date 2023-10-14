@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {VehicleCardComponent} from './vehicle-card.component';
+import { VehicleCardComponent } from './vehicle-card.component';
 
 describe('MakeModelEngineComponent', () => {
 	let component: VehicleCardComponent;
@@ -11,8 +11,7 @@ describe('MakeModelEngineComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [VehicleCardComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('MakeModelEngineComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

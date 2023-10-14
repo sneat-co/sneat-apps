@@ -6,7 +6,6 @@ import { DatagridModule } from '@sneat/datagrid';
 import { OrderFormModule } from '../order-form.module';
 import { OrdersGridComponent } from './orders-grid.component';
 
-
 @NgModule({
 	imports: [
 		CommonModule,
@@ -15,12 +14,7 @@ import { OrdersGridComponent } from './orders-grid.component';
 		OrderFormModule,
 		DatagridModule,
 	],
-	declarations: [
-		OrdersGridComponent,
-	],
-	exports: [
-		OrdersGridComponent,
-	],
+	declarations: [OrdersGridComponent],
+	exports: [OrdersGridComponent],
 })
-export class OrdersGridModule {
-}
+export class OrdersGridModule {}

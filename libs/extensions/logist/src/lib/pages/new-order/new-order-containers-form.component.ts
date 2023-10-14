@@ -8,7 +8,9 @@ import { ILogistOrderContext } from '../../dto';
 })
 export class NewOrderContainersFormComponent {
 	@Input() order?: ILogistOrderContext;
-	@Output() readonly numberOfContainersChange = new EventEmitter<{ [size: string]: number }>();
+	@Output() readonly numberOfContainersChange = new EventEmitter<{
+		[size: string]: number;
+	}>();
 
 	size20ft = 0;
 	size20ftHighCube = 0;
@@ -22,7 +24,10 @@ export class NewOrderContainersFormComponent {
 			'40ft': this.size40ft,
 			'40ftHighCube': this.size40ftHighCube,
 		});
-		console.log('NewOrderContainersFormComponent.onSizeChanged(): numberOfContainers:', numberOfContainers);
+		console.log(
+			'NewOrderContainersFormComponent.onSizeChanged(): numberOfContainers:',
+			numberOfContainers,
+		);
 		this.numberOfContainersChange.emit(numberOfContainers);
 	}
 }

@@ -8,12 +8,10 @@ export class ScheduleCardHeaderComponent {
 	@Input() date = new Date();
 	@Input() tab?: 'day' | 'week';
 
-
 	// isCurrentWeek(): boolean {
 	// 	const monday = this.activeWeek && this.activeWeek.startDate;
 	// 	const today = new Date();
 	// 	return !monday || monday.getTime() === getWeekdayDate(today, 0)
 	// 		.getTime();
 	// }
-
 }

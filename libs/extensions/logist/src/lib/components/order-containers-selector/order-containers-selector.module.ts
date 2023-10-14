@@ -8,12 +8,7 @@ import { OrderContainersSelectorDialogComponent } from './order-containers-selec
 import { OrderContainersSelectorComponent } from './order-containers-selector.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		DialogHeaderComponent,
-	],
+	imports: [CommonModule, IonicModule, FormsModule, DialogHeaderComponent],
 	declarations: [
 		OrderContainerFormComponent,
 		OrderContainersSelectorComponent,
@@ -24,5 +19,4 @@ import { OrderContainersSelectorComponent } from './order-containers-selector.co
 		OrderContainersSelectorComponent,
 	],
 })
-export class OrderContainersSelectorModule {
-}
+export class OrderContainersSelectorModule {}

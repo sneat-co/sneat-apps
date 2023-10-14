@@ -43,18 +43,16 @@ export interface DtoTotals {
 	expenses?: DtoTotal;
 }
 
-
 // export interface Category extends ITitledRecord {
 //     id: string;
 // }
-
 
 export interface IWithTeamIDs {
 	teamIDs?: string[];
 }
 
 export interface IWithTag {
-	tags?: string[]
+	tags?: string[];
 }
 
 export interface IWithAssetIDs {
@@ -77,26 +75,30 @@ function newTotal(): DtoTotal {
 	return { count: 0, day: 0, week: 0, month: 0, quarter: 0, year: 0 };
 }
 
-export function newTotals(): DtoTotals { // TODO: Rename to ITotalsDto
+export function newTotals(): DtoTotals {
+	// TODO: Rename to ITotalsDto
 	return { incomes: newTotal(), expenses: newTotal() };
 }
 
 export function zeroIfEmptyTotals(totals: DtoTotals): DtoTotals {
-	const f = (t?: DtoTotal) => t ? {
-		count: t.count || 0,
-		day: t.day || 0,
-		week: t.week || 0,
-		month: t.month || 0,
-		quarter: t.quarter || 0,
-		year: t.year || 0,
-	} : newTotal();
+	const f = (t?: DtoTotal) =>
+		t
+			? {
+					count: t.count || 0,
+					day: t.day || 0,
+					week: t.week || 0,
+					month: t.month || 0,
+					quarter: t.quarter || 0,
+					year: t.year || 0,
+			  }
+			: newTotal();
 	totals.incomes = f(totals.incomes);
 	totals.expenses = f(totals.expenses);
 	return totals;
 }
 
-export interface IPersonRecord extends IWithTeamIDs, IPerson /*, IPersonSize*/
-{
+export interface IPersonRecord extends IWithTeamIDs, IPerson {
+	/*, IPersonSize*/
 }
 
 export interface IVerification {
@@ -106,4 +108,3 @@ export interface IVerification {
 		rejectedBy?: string[]; // List of ID of users who questions validity of the member
 	};
 }
-

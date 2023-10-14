@@ -22,7 +22,7 @@ export abstract class BaseListItemPage extends BaseListPage {
 				this.itemId = this.listItemInfo.id;
 				this.onListItemInfoChanged(this.listItemInfo);
 			}
-			route.queryParamMap.subscribe(queryParams => {
+			route.queryParamMap.subscribe((queryParams) => {
 				const itemId = queryParams.get('item');
 				if (itemId !== this.itemId) {
 					this.itemId = itemId || undefined;
@@ -30,7 +30,10 @@ export abstract class BaseListItemPage extends BaseListPage {
 				this.onQueryParamsChanged(queryParams);
 			});
 		} catch (e) {
-			params.teamParams.errorLogger.logError(e, 'failed in BaseListItemPage.constructor()');
+			params.teamParams.errorLogger.logError(
+				e,
+				'failed in BaseListItemPage.constructor()',
+			);
 		}
 	}
 
@@ -39,7 +42,7 @@ export abstract class BaseListItemPage extends BaseListPage {
 		// tslint:disable-next-line:no-this-assignment
 		const { itemId } = this;
 		if (itemId && list.dto?.items) {
-			const listItemInfo = list.dto.items.find(item => item.id === itemId);
+			const listItemInfo = list.dto.items.find((item) => item.id === itemId);
 			this.listItemInfo = listItemInfo;
 			this.onListItemInfoChanged(listItemInfo);
 		}
@@ -47,7 +50,7 @@ export abstract class BaseListItemPage extends BaseListPage {
 
 	// NO_tslint:disable-next-line:prefer-function-over-method
 	protected onQueryParamsChanged(queryParams: ParamMap): void {
-		console.log('BaseListItemPage.onQueryParamsChanged', queryParams)
+		console.log('BaseListItemPage.onQueryParamsChanged', queryParams);
 	}
 
 	// tslint:disable-next-line:prefer-function-over-method

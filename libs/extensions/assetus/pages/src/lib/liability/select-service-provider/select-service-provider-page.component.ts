@@ -1,12 +1,16 @@
-import {Component} from '@angular/core';
-import {CommuneBasePageParams} from 'sneat-shared/services/params';
-import {AssetBasePage} from 'sneat-shared/extensions/assetus/asset-base.page';
-import {DtoServiceProvider} from 'sneat-shared/models/dto/dto-service-provider';
-import {IAssetService, ICommuneIds, IServiceProviderService} from 'sneat-shared/services/interfaces';
-import {LiabilityServiceType} from 'sneat-shared/models/types';
-import {IAssetDto} from 'sneat-shared/models/dto/dto-asset';
-import {IRecord} from 'rxstore';
-import {CommuneTopPage} from '../../../../../pages/constants';
+import { Component } from '@angular/core';
+import { CommuneBasePageParams } from 'sneat-shared/services/params';
+import { AssetBasePage } from 'sneat-shared/extensions/assetus/asset-base.page';
+import { DtoServiceProvider } from 'sneat-shared/models/dto/dto-service-provider';
+import {
+	IAssetService,
+	ICommuneIds,
+	IServiceProviderService,
+} from 'sneat-shared/services/interfaces';
+import { LiabilityServiceType } from 'sneat-shared/models/types';
+import { IAssetDto } from 'sneat-shared/models/dto/dto-asset';
+import { IRecord } from 'rxstore';
+import { CommuneTopPage } from '../../../../../pages/constants';
 
 @Component({
 	selector: 'sneat-select-service-provider',
@@ -14,7 +18,6 @@ import {CommuneTopPage} from '../../../../../pages/constants';
 	providers: [CommuneBasePageParams],
 })
 export class SelectServiceProviderPageComponent extends AssetBasePage {
-
 	serviceProviders: DtoServiceProvider[];
 	isOtherSelected: boolean;
 	serviceType: LiabilityServiceType;
@@ -30,7 +33,7 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
 
 	protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
 		super.onCommuneIdsChanged(communeIds);
-		this.route.queryParamMap.subscribe(params => {
+		this.route.queryParamMap.subscribe((params) => {
 			this.serviceType = params.get('type') as LiabilityServiceType;
 			this.serviceTypeTitle = this.serviceType;
 			console.log('serviceType:', this.serviceType);
@@ -51,19 +54,21 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
 			if (!this.asset.dto.categoryId) {
 				throw new Error('!this.asset.dto.categoryId');
 			}
-			this.serviceProviderService.getServiceProvidersByAssetCategoryId(
-				undefined, 'ie',
-				this.asset.dto.categoryId)
-				.subscribe(
-					result => {
-						console.log('serviceProviders:', result.values);
-						const serviceType = this.serviceType;
-						this.serviceProviders = this.serviceType ?
-							result.values.filter(v => v.serviceTypes && v.serviceTypes.includes(serviceType)) :
-							result.values;
-					},
-					this.errorLogger.logError,
-				);
+			this.serviceProviderService
+				.getServiceProvidersByAssetCategoryId(
+					undefined,
+					'ie',
+					this.asset.dto.categoryId,
+				)
+				.subscribe((result) => {
+					console.log('serviceProviders:', result.values);
+					const serviceType = this.serviceType;
+					this.serviceProviders = this.serviceType
+						? result.values.filter(
+								(v) => v.serviceTypes && v.serviceTypes.includes(serviceType),
+						  )
+						: result.values;
+				}, this.errorLogger.logError);
 		}
 	}
 

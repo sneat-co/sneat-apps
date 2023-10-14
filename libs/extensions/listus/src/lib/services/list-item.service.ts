@@ -4,13 +4,10 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Injectable()
 export class ListItemService {
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly sneatApiService: SneatApiService,
-	) {
-	}
-
+	) {}
 
 	// public txRemoveKinds(): string[] {
 	//     return [ListItemKind, ListKind, CommuneKind];
@@ -71,5 +68,4 @@ export class ListItemService {
 	// public selectByListId(tx: ISneatReadonlyTx, listId: string, status?: ListStatus): Observable<SelectResult<IListItemDto>> {
 	// 	return this.select(tx, ListItemKind, ['listId', 'status'], [listId, status || 'active']);
 	// }
-
 }

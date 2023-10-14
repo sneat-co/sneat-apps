@@ -17,29 +17,40 @@ export class OrderCardComponent {
 	@Input() order?: ILogistOrderContext;
 	@Input() hideDispatchers = false;
 	@Input() showHeader = true;
-	readonly roles: LogistOrderContactRole[] = ['buyer', 'consignee', 'dispatch_agent', 'receive_agent',  'trucker', 'shipping_line'];
+	readonly roles: LogistOrderContactRole[] = [
+		'buyer',
+		'consignee',
+		'dispatch_agent',
+		'receive_agent',
+		'trucker',
+		'shipping_line',
+	];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
 		private readonly orderService: LogistOrderService,
 		private readonly toastController: ToastController,
-	) {
-	}
+	) {}
 
 	protected copyNumberToClipboard(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
 		const text = this.order?.id;
 		if (text) {
-			navigator.clipboard.writeText(text)
+			navigator.clipboard
+				.writeText(text)
 				.then(() => {
-					this.toastController.create({
-						message: 'Order number copied to clipboard: ' + text,
-						duration: 1500,
-					}).then(toast => toast.present());
+					this.toastController
+						.create({
+							message: 'Order number copied to clipboard: ' + text,
+							duration: 1500,
+						})
+						.then((toast) => toast.present());
 				})
-				.catch(err => alert('Error copying order number to clipboard: ' + err));
+				.catch((err) =>
+					alert('Error copying order number to clipboard: ' + err),
+				);
 		}
 	}
 
@@ -76,8 +87,10 @@ export class OrderCardComponent {
 		if (this.order?.dto?.status === status) {
 			return;
 		}
-		this.orderService.setOrderStatus({ teamID: team.id, orderID: order.id, status }).subscribe({
-			error: this.errorLogger.logErrorHandler('Failed to set order status'),
-		});
+		this.orderService
+			.setOrderStatus({ teamID: team.id, orderID: order.id, status })
+			.subscribe({
+				error: this.errorLogger.logErrorHandler('Failed to set order status'),
+			});
 	}
 }

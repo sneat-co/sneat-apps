@@ -3,15 +3,24 @@ import { TeamType } from '@sneat/core';
 export { TeamMemberType } from '@sneat/auth-models';
 export type MembersVisibility = 'private' | 'protected' | 'public';
 export type WeekdayCode2 = 'mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su';
-export type RepeatsWeek = 'week-1st' | 'week-2nd' | 'week-3d' | 'week-4th' | 'week-last';
-export type Repeats = 'UNKNOWN' | 'once' | 'weekly' | RepeatsWeek | 'fortnightly' | 'monthly' | 'yearly';
+export type RepeatsWeek =
+	| 'week-1st'
+	| 'week-2nd'
+	| 'week-3d'
+	| 'week-4th'
+	| 'week-last';
+export type Repeats =
+	| 'UNKNOWN'
+	| 'once'
+	| 'weekly'
+	| RepeatsWeek
+	| 'fortnightly'
+	| 'monthly'
+	| 'yearly';
 export type ActivityType = 'appointment' | 'school' | 'lesson' | 'todo'; // TODO: Is it same as HappeningKind?
 export type EventType = 'workshop' | 'fixture' | 'appointment';
 export type SettlementType = 'rural' | 'urban';
 export type AgeGroupID = 'adult' | 'child' | 'pet' | 'undisclosed' | 'unknown';
-
-
-
 
 export const MemberGroupTypeAdults = 'adults';
 export const MemberGroupTypeKids = 'kids';
@@ -44,9 +53,18 @@ export type ListStatus = SneatRecordStatus;
 
 export type CommuneType = TeamType;
 
-export type CountryId = 'IE' | 'US' | 'UK' | 'RU' | 'FR' | 'ES' | 'AU' | 'ZA' | string;
+export type CountryId =
+	| 'IE'
+	| 'US'
+	| 'UK'
+	| 'RU'
+	| 'FR'
+	| 'ES'
+	| 'AU'
+	| 'ZA'
+	| string;
 export type LiabilityType =
-	'salary'
+	| 'salary'
 	| 'service'
 	| 'tax'
 	| 'education'
@@ -60,7 +78,7 @@ export type VehicleServiceType = 'roadtax' | 'nct';
 export type EntertainmentServiceType = 'tv' | 'music';
 export type EducationServiceType = 'class';
 export type DwellingServiceType =
-	'electricity'
+	| 'electricity'
 	| 'gas'
 	| 'oil'
 	| 'waste_removal'
@@ -74,14 +92,13 @@ export type LiabilityServiceType =
 	| DwellingTaxServiceType
 	| EntertainmentServiceType
 	| EducationServiceType
-	| VehicleServiceType
-	;
+	| VehicleServiceType;
 export type ServiceCategory = 'service' | 'tax';
 
 export type AssetStatus = 'active' | 'archived' | 'draft';
 
 export type AssetCategory =
-	'undefined'
+	| 'undefined'
 	| 'real_estate'
 	| 'vehicle'
 	| 'document'
@@ -89,16 +106,15 @@ export type AssetCategory =
 	| 'misc';
 
 export type AssetVehicleType =
-	'aircraft' |
-	'bicycle' |
-	'boat' |
-	'bus' |
-	'car' |
-	'helicopter' |
-	'motorcycle' |
-	'truck' |
-	'van'
-	;
+	| 'aircraft'
+	| 'bicycle'
+	| 'boat'
+	| 'bus'
+	| 'car'
+	| 'helicopter'
+	| 'motorcycle'
+	| 'truck'
+	| 'van';
 export type AssetRealEstateType = 'house' | 'apartment' | 'land';
 
 export type AssetType = AssetVehicleType | AssetRealEstateType;
@@ -114,14 +130,14 @@ export const EngineTypeHybrid = 'hybrid';
 export const EngineTypeSteam = 'steam';
 
 export type EngineType =
-	typeof EngineTypeUnknown |
-	typeof EngineTypeOther |
-	typeof EngineTypePHEV |
-	typeof EngineTypeCombustion |
-	typeof EngineTypeElectric |
-	typeof EngineTypePHEV |
-	typeof EngineTypeHybrid |
-	typeof EngineTypeSteam;
+	| typeof EngineTypeUnknown
+	| typeof EngineTypeOther
+	| typeof EngineTypePHEV
+	| typeof EngineTypeCombustion
+	| typeof EngineTypeElectric
+	| typeof EngineTypePHEV
+	| typeof EngineTypeHybrid
+	| typeof EngineTypeSteam;
 
 export enum EngineTypes {
 	unknown = '',
@@ -141,12 +157,12 @@ export const FuelTypeHydrogen = 'hydrogen';
 export const FuelTypeElectricity = 'electricity';
 
 export type FuelType =
-	typeof FuelTypeUnknown |
-	typeof FuelTypeOther |
-	typeof FuelTypePetrol |
-	typeof FuelTypeDiesel |
-	typeof FuelTypeHydrogen |
-	typeof FuelTypeElectricity;
+	| typeof FuelTypeUnknown
+	| typeof FuelTypeOther
+	| typeof FuelTypePetrol
+	| typeof FuelTypeDiesel
+	| typeof FuelTypeHydrogen
+	| typeof FuelTypeElectricity;
 
 export enum FuelTypes {
 	unknown = '', // unknown
@@ -158,7 +174,7 @@ export enum FuelTypes {
 }
 
 export type CommuneItemCounter =
-	'activities'
+	| 'activities'
 	| 'assets'
 	| 'assetGroups'
 	| 'contacts'
@@ -172,7 +188,7 @@ export type CommuneItemCounter =
 	| 'upcomings';
 
 export type ContactToContactRelation =
-	'undefined'
+	| 'undefined'
 	| 'parent'
 	| 'mother'
 	| 'father'
@@ -183,8 +199,7 @@ export type ContactToContactRelation =
 
 export type ContactToAssetRelation = string;
 
-export const
-	AssetPossessionUndisclosed = 'undisclosed',
+export const AssetPossessionUndisclosed = 'undisclosed',
 	AssetPossessionOwning = 'owning',
 	AssetPossessionRenting = 'renting',
 	AssetPossessionLeasing = 'leasing';

@@ -39,5 +39,3 @@ export interface Actor {
 export interface IMovieDto extends IWithTeamIDs, IMovie {
 	listIds: string[];
 }
-
-

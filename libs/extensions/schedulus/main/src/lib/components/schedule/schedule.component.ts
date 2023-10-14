@@ -28,7 +28,10 @@ import { HappeningService, ScheduleDayService } from '@sneat/team/services';
 import { Subject, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { isToday } from '../schedule-core';
-import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
+import {
+	emptyScheduleFilter,
+	ScheduleFilterService,
+} from '../schedule-filter.service';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
 import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
 import { ScheduleStateService } from '../schedule-state.service';
@@ -41,13 +44,13 @@ export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 	styleUrls: ['./schedule.component.scss'],
 })
 export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
-
 	private readonly destroyed = new Subject<void>();
 	private filter = emptyScheduleFilter;
 	private date = new Date();
 	// prevWeekdays: SlotsGroup[];
 	public readonly teamDaysProvider: TeamDaysProvider;
-	@ViewChild('scheduleFilterComponent') scheduleFilterComponent?: ScheduleFilterComponent;
+	@ViewChild('scheduleFilterComponent')
+	scheduleFilterComponent?: ScheduleFilterComponent;
 	@Input() team: ITeamContext = { id: '' };
 	@Input() member?: IMemberContext;
 	@Input() public tab: ScheduleTab = 'day';
@@ -79,18 +82,16 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			sneatApiService,
 		);
 
-		filterService.filter
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-				next: filter => {
-					this.filter = filter;
-					this.recurrings = this.filterRecurrings(filter);
-				},
-				error: this.errorLogger.logErrorHandler('failed to get schedule filter'),
-			});
+		filterService.filter.pipe(takeUntil(this.destroyed)).subscribe({
+			next: (filter) => {
+				this.filter = filter;
+				this.recurrings = this.filterRecurrings(filter);
+			},
+			error: this.errorLogger.logErrorHandler('failed to get schedule filter'),
+		});
 
 		scheduleStateService.dateChanged.subscribe({
-			next: changed => {
+			next: (changed) => {
 				const { date } = changed;
 				this.date = date;
 				this.dateID = dateToIso(date);
@@ -102,7 +103,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		// 	this.setToday();
 		// }, 10);
 	}
-
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
@@ -122,7 +122,11 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	segmentChanged(event: Event): void {
 		console.log('ScheduleComponent.segmentChanged()', event);
-		history.replaceState(history.state, document.title, location.href.replace(/tab=\w+/, `tab=${this.tab}`));
+		history.replaceState(
+			history.state,
+			document.title,
+			location.href.replace(/tab=\w+/, `tab=${this.tab}`),
+		);
 		switch (this.tab) {
 			case 'week':
 				// if (this.activeDay.date) {
@@ -197,7 +201,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	// };
 
-
 	readonly onSlotClicked = (args: { slot: ISlotItem; event: Event }): void => {
 		console.log('ScheduleComponent.onSlotClicked()', args);
 		if (!this.team) {
@@ -205,9 +208,15 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 		const happening: IHappeningContext = args.slot.happening;
 		const page = `happening/${happening.id}`;
-		this.params.teamNavService.navigateForwardToTeamPage(this.team, page, {
-			state: { happening },
-		}).catch(this.errorLogger.logErrorHandler('failed to navigate to recurring happening page'));
+		this.params.teamNavService
+			.navigateForwardToTeamPage(this.team, page, {
+				state: { happening },
+			})
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to navigate to recurring happening page',
+				),
+			);
 	};
 
 	public readonly onDateSelected = (date: Date): void => {
@@ -260,26 +269,29 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private populateRecurrings(): void {
 		console.log('populateRecurrings()');
 		const prevAll = this.allRecurrings;
-		this.allRecurrings = zipMapBriefsWithIDs(this.team?.dto?.recurringHappenings)?.map(rh => {
-			const { id } = rh;
-			const prev = prevAll?.find(p => p.id === id);
-			const result: IHappeningWithUiState = {
-				id,
-				brief: rh.brief,
-				state: prev?.state || {},
-				team: this.team || { id: '' },
-			};
-			return result;
-		}) || [];
+		this.allRecurrings =
+			zipMapBriefsWithIDs(this.team?.dto?.recurringHappenings)?.map((rh) => {
+				const { id } = rh;
+				const prev = prevAll?.find((p) => p.id === id);
+				const result: IHappeningWithUiState = {
+					id,
+					brief: rh.brief,
+					state: prev?.state || {},
+					team: this.team || { id: '' },
+				};
+				return result;
+			}) || [];
 		this.recurrings = this.filterRecurrings(this.filter || emptyScheduleFilter);
 	}
 
 	// We filter recurring at schedule level, so we can share it across different components?
-	private filterRecurrings(filter: IScheduleFilter): IHappeningWithUiState[] | undefined {
+	private filterRecurrings(
+		filter: IScheduleFilter,
+	): IHappeningWithUiState[] | undefined {
 		const text = filter.text.toLowerCase();
 		const { memberIDs, repeats, weekdays } = filter;
 
-		const filtered = this.allRecurrings?.filter(r => {
+		const filtered = this.allRecurrings?.filter((r) => {
 			const title = r.brief?.title || r.dto?.title;
 			if (title && title.trim().toLowerCase().indexOf(text) < 0) {
 				return false;
@@ -290,26 +302,49 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			if (!this.hasWeekday(r.brief?.slots || r.dto?.slots, weekdays)) {
 				return false;
 			}
-			if (repeats?.length && !r.brief?.slots?.some(slot => repeats.includes(slot.repeats))) {
+			if (
+				repeats?.length &&
+				!r.brief?.slots?.some((slot) => repeats.includes(slot.repeats))
+			) {
 				return false;
 			}
 
 			return true;
 		});
-		console.log(`ScheduleComponent.filterRecurrings(')`, filter, this.allRecurrings, ' => ', filtered);
+		console.log(
+			`ScheduleComponent.filterRecurrings(')`,
+			filter,
+			this.allRecurrings,
+			' => ',
+			filtered,
+		);
 
 		return filtered;
 	}
 
 	// TODO: Decouple and reuse
-	private hasMember(item: { memberIDs?: string[] } | undefined, memberIDs?: string[]): boolean {
-		return !memberIDs?.length || !!item?.memberIDs?.some(id => memberIDs.includes(id));
+	private hasMember(
+		item: { memberIDs?: string[] } | undefined,
+		memberIDs?: string[],
+	): boolean {
+		return (
+			!memberIDs?.length ||
+			!!item?.memberIDs?.some((id) => memberIDs.includes(id))
+		);
 	}
 
 	// noinspection JSMethodCanBeStatic
 
-	private hasWeekday(slots: IHappeningSlot[] | undefined, weekdays?: WeekdayCode2[]): boolean {
-		return !weekdays || !!slots?.some(slot => slot.weekdays?.some(wd => weekdays.includes(wd)));
+	private hasWeekday(
+		slots: IHappeningSlot[] | undefined,
+		weekdays?: WeekdayCode2[],
+	): boolean {
+		return (
+			!weekdays ||
+			!!slots?.some(
+				(slot) => slot.weekdays?.some((wd) => weekdays.includes(wd)),
+			)
+		);
 	}
 
 	private setDay(source: string, d: Date): void {
@@ -378,17 +413,26 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 		// Change URL
 		if (this.isToday()) {
-			history.replaceState(history.state, document.title,
-				location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, ''));
+			history.replaceState(
+				history.state,
+				document.title,
+				location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, ''),
+			);
 		} else {
 			const isoDate = `&date=${localDateToIso(d)}`;
 			if (location.href.indexOf('&date') < 0) {
-				history.replaceState(history.state, document.title, location.href + isoDate);
+				history.replaceState(
+					history.state,
+					document.title,
+					location.href + isoDate,
+				);
 			} else {
-				history.replaceState(history.state, document.title,
-					location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, isoDate));
+				history.replaceState(
+					history.state,
+					document.title,
+					location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, isoDate),
+				);
 			}
 		}
 	}
-
 }

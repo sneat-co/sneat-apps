@@ -22,7 +22,10 @@ import { AddRetroItemComponent } from '../../components/add-retro-item/add-retro
 		AngularDndTreeModule,
 		RetroTreePageRoutingModule,
 	],
-	declarations: [AddRetroItemComponent, RetroItemCardComponent, RetroTreePageComponent],
+	declarations: [
+		AddRetroItemComponent,
+		RetroItemCardComponent,
+		RetroTreePageComponent,
+	],
 })
-export class RetroTreePageModule {
-}
+export class RetroTreePageModule {}

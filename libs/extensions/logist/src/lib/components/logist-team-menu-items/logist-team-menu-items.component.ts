@@ -12,7 +12,7 @@ export class LogistTeamMenuItemsComponent {
 
 	@Input() public team?: ITeamContext;
 
-	contactGroups: { type: string, title: string, icon: string }[] = [
+	contactGroups: { type: string; title: string; icon: string }[] = [
 		{ type: 'agent', title: 'Agents', icon: 'body-outline' },
 		{ type: 'buyer', title: 'Buyers', icon: 'cash-outline' },
 		{ type: 'freight_agent', title: 'Freight Agent', icon: 'train-outline' },

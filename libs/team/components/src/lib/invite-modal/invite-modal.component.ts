@@ -35,8 +35,10 @@ export class InviteModalComponent {
 
 	protected creatingInvite = false;
 
-
-	readonly email = new FormControl<string>('', [Validators.required, Validators.email]);
+	readonly email = new FormControl<string>('', [
+		Validators.required,
+		Validators.email,
+	]);
 	readonly phone = new FormControl<string>('', Validators.required);
 	readonly message = new FormControl<string>('');
 
@@ -55,18 +57,13 @@ export class InviteModalComponent {
 		private readonly modalController: ModalController,
 		private readonly toastController: ToastController,
 		private readonly inviteService: InviteService,
-	) {
-
-	}
+	) {}
 
 	async close(): Promise<void> {
 		await this.modalController.dismiss();
 	}
 
-	getInviteText(invite: {
-		id: string;
-		pin?: string
-	}): string {
+	getInviteText(invite: { id: string; pin?: string }): string {
 		if (!this.member) {
 			throw new Error('!this.member');
 		}
@@ -78,7 +75,11 @@ export class InviteModalComponent {
 		return m;
 	}
 
-	private composeInvite(channel: InviteChannel, protocol: 'sms' | 'mailto', address: string): void {
+	private composeInvite(
+		channel: InviteChannel,
+		protocol: 'sms' | 'mailto',
+		address: string,
+	): void {
 		this.creatingInvite = true;
 		switch (protocol) {
 			case 'sms':
@@ -88,12 +89,13 @@ export class InviteModalComponent {
 				this.emailForm.disable();
 				break;
 		}
-		this.createInvite({ channel, address })
-		.subscribe({
-			next: response => {
+		this.createInvite({ channel, address }).subscribe({
+			next: (response) => {
 				const m = this.getInviteText(response.invite);
 				const body = encodeURIComponent(m);
-				const url = protocol + `:${address}?subject=You+are+invited+to+join+${this.team?.type}&body=${body}`;
+				const url =
+					protocol +
+					`:${address}?subject=You+are+invited+to+join+${this.team?.type}&body=${body}`;
 				this.creatingInvite = false;
 				switch (protocol) {
 					case 'sms':
@@ -105,7 +107,7 @@ export class InviteModalComponent {
 				}
 				window.open(url);
 			},
-			error: err => {
+			error: (err) => {
 				this.creatingInvite = false;
 				switch (protocol) {
 					case 'sms':
@@ -115,7 +117,10 @@ export class InviteModalComponent {
 						this.emailForm.enable();
 						break;
 				}
-				this.errorLogger.logError(err, 'failed to create an invite for SMS channel');
+				this.errorLogger.logError(
+					err,
+					'failed to create an invite for SMS channel',
+				);
 			},
 		});
 	}
@@ -156,21 +161,29 @@ export class InviteModalComponent {
 		}
 		const address = this.tab === 'email' ? this.email.value : this.phone.value;
 
-		this.createInvite({ channel: this.tab, address: address || '', send: true }).subscribe({
-			next: async response => {
+		this.createInvite({
+			channel: this.tab,
+			address: address || '',
+			send: true,
+		}).subscribe({
+			next: async (response) => {
 				console.log('personal invite created:', response);
-				await this.showToast('Invite has been created and will be sent shortly', 2000);
+				await this.showToast(
+					'Invite has been created and will be sent shortly',
+					2000,
+				);
 				await this.modalController.dismiss();
 			},
-			error: this.errorLogger.logErrorHandler('failed to create an invite for a member'),
+			error: this.errorLogger.logErrorHandler(
+				'failed to create an invite for a member',
+			),
 		});
-
 	}
 
 	createInvite(to: {
 		channel: InviteChannel;
-		address?: string,
-		send?: boolean
+		address?: string;
+		send?: boolean;
 	}): Observable<ICreatePersonalInviteResponse> {
 		if (!this.team) {
 			return throwError(() => 'can not create invite without team context');
@@ -202,7 +215,9 @@ export class InviteModalComponent {
 			return;
 		}
 		await navigator.clipboard.writeText(this.link);
-		await this.showToast('Invite text with a link has been copied to your clipboard');
+		await this.showToast(
+			'Invite text with a link has been copied to your clipboard',
+		);
 	}
 
 	private async showToast(message: string, duration = 1500): Promise<void> {
@@ -240,14 +255,20 @@ export class InviteModalComponent {
 			message: this.message.value || '',
 		};
 		this.inviteService.getInviteLinkForMember(request).subscribe({
-			next: response => {
+			next: (response) => {
 				console.log('response', response);
 				const { id, pin } = response.invite;
-				const host = location.host.startsWith('localhost:') ? location.host : 'sneat.app/pwa';
-				const protocol = location.host.startsWith('localhost:') ? 'http' : 'https';
+				const host = location.host.startsWith('localhost:')
+					? location.host
+					: 'sneat.app/pwa';
+				const protocol = location.host.startsWith('localhost:')
+					? 'http'
+					: 'https';
 				this.link = `${protocol}://${host}/join/${this.team?.brief?.type}?id=${id}#pin=${pin}`;
 			},
-			error: this.errorLogger.logErrorHandler('failed to generate an invite link'),
+			error: this.errorLogger.logErrorHandler(
+				'failed to generate an invite link',
+			),
 		});
 	}
 }

@@ -9,11 +9,7 @@ import { HappeningBasePage } from './happening-base-page';
 	providers: [HappeningComponentBaseParams], // TODO: get rid of it by using a dedicated module
 })
 export class HappeningPageComponent extends HappeningBasePage {
-
-	constructor(
-		route: ActivatedRoute,
-		params: HappeningComponentBaseParams,
-	) {
+	constructor(route: ActivatedRoute, params: HappeningComponentBaseParams) {
 		super('HappeningPageComponent', route, params);
 	}
 }

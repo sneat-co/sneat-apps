@@ -15,7 +15,6 @@ import { MembersSelectorService } from './members-selector.service';
 	templateUrl: 'members-selector-input.component.html',
 })
 export class MembersSelectorInputComponent {
-
 	protected contactusTeam?: IContactusTeamDtoWithID;
 
 	@Input({ required: true }) team?: ITeamContext;
@@ -24,18 +23,19 @@ export class MembersSelectorInputComponent {
 	@Input() max?: number;
 
 	@Input() selectedMembers?: readonly IContactContext[];
-	@Output() readonly selectedMembersChange = new EventEmitter<readonly IContactContext[]>();
+	@Output() readonly selectedMembersChange = new EventEmitter<
+		readonly IContactContext[]
+	>();
 
 	@Output() readonly removeMember = new EventEmitter<IContactContext>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly membersSelectorService: MembersSelectorService,
-	) {
-	}
+	) {}
 
 	get selectedMemberID(): string | undefined {
-		return this.selectedMembers && this.selectedMembers[0].id || undefined;
+		return (this.selectedMembers && this.selectedMembers[0].id) || undefined;
 	}
 
 	selectMembers(event: Event): void {
@@ -48,18 +48,20 @@ export class MembersSelectorInputComponent {
 		}
 		const options: ISelectMembersOptions = {
 			selectedMembers: this.selectedMembers,
-			members: zipMapBriefsWithIDs(contactusTeam.dto?.contacts)
-				?.map(m => contactContextFromBrief(m, team)),
+			members: zipMapBriefsWithIDs(contactusTeam.dto?.contacts)?.map((m) =>
+				contactContextFromBrief(m, team),
+			),
 			max: this.max,
 		};
 		this.membersSelectorService
 			.selectMembersInModal(options)
-			.then(selectedMembers => {
+			.then((selectedMembers) => {
 				this.selectedMembers = selectedMembers;
 				this.selectedMembersChange.emit(selectedMembers);
-
 			})
-			.catch(this.errorLogger.logErrorHandler('Failed to select members in modal'));
+			.catch(
+				this.errorLogger.logErrorHandler('Failed to select members in modal'),
+			);
 	}
 
 	onRemoveMember(member: IContactContext): void {

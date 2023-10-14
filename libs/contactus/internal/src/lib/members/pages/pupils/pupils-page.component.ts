@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 // import {MembersBasePage} from '../../members-base-page';
 // import {CommuneBasePageParams} from 'sneat-shared/services/params';
 
@@ -8,7 +8,6 @@ import {Component} from '@angular/core';
 	// providers: [CommuneBasePageParams],
 })
 export class PupilsPageComponent /*extends MembersBasePage*/ {
-
 	segment: 'active' | 'archive' = 'active';
 
 	// filteredMembers: ICommuneMemberInfo[] | undefined;
@@ -24,11 +23,9 @@ export class PupilsPageComponent /*extends MembersBasePage*/ {
 		// }
 	}
 
-	constructor(
-		// params: CommuneBasePageParams,
-		// membersService: IMemberService,
-		// preloader: NgModulePreloaderService,
-	) {
+	constructor() // membersService: IMemberService, // params: CommuneBasePageParams,
+	// preloader: NgModulePreloaderService,
+	{
 		// super(params, membersService, preloader);
 	}
 

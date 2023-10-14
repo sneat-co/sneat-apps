@@ -7,7 +7,12 @@ import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { UserRequiredFieldsService } from '@sneat/auth-ui';
 import { TeamType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ICreateTeamRequest, ITeamContext, teamContextFromBrief, zipMapBriefsWithIDs } from '@sneat/team/models';
+import {
+	ICreateTeamRequest,
+	ITeamContext,
+	teamContextFromBrief,
+	zipMapBriefsWithIDs,
+} from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
 import { first } from 'rxjs';
 import { TeamsListModule } from '../teams-list';
@@ -23,12 +28,9 @@ import { TeamsListModule } from '../teams-list';
 		RouterModule,
 		TeamsListModule,
 	],
-	providers: [
-		UserRequiredFieldsService,
-	],
+	providers: [UserRequiredFieldsService],
 })
 export class TeamsMenuComponent {
-
 	@Input() spacesLabel = 'Spaces';
 	@Input() teamType?: TeamType;
 	@Input() pathPrefix = '/space';
@@ -51,7 +53,6 @@ export class TeamsMenuComponent {
 		});
 	}
 
-
 	public newFamily(event: Event): boolean {
 		event.stopPropagation();
 		event.preventDefault();
@@ -61,21 +62,23 @@ export class TeamsMenuComponent {
 			// roles: [TeamMemberType.creator],
 		};
 
-		this.userService.userState.pipe(
-			first(),
-		).subscribe({
-			next: userState => {
+		this.userService.userState.pipe(first()).subscribe({
+			next: (userState) => {
 				if (userState.record) {
 					this.createTeam(request);
 				} else {
 					this.userRequiredFieldsService
 						.open()
-						.then(modalResult => {
+						.then((modalResult) => {
 							if (modalResult) {
 								this.createTeam(request);
 							}
 						})
-						.catch(this.errorLogger.logErrorHandler('Failed to open user required fields modal'));
+						.catch(
+							this.errorLogger.logErrorHandler(
+								'Failed to open user required fields modal',
+							),
+						);
 				}
 			},
 		});
@@ -84,17 +87,22 @@ export class TeamsMenuComponent {
 	}
 
 	private createTeam(request: ICreateTeamRequest): void {
-		this.teamService.createTeam(request)
-			.subscribe({
-				next: value => {
-					console.log('Team created:', value);
-					this.navController.navigateForward('/space/family/' + value.id)
-						.catch(this.errorLogger.logErrorHandler('failed to navigate to newly created family team'));
-				},
-				error: this.errorLogger.logErrorHandler('failed to create a new family team'),
-			});
+		this.teamService.createTeam(request).subscribe({
+			next: (value) => {
+				console.log('Team created:', value);
+				this.navController
+					.navigateForward('/space/family/' + value.id)
+					.catch(
+						this.errorLogger.logErrorHandler(
+							'failed to navigate to newly created family team',
+						),
+					);
+			},
+			error: this.errorLogger.logErrorHandler(
+				'failed to create a new family team',
+			),
+		});
 	}
-
 
 	public newTeam(): void {
 		alert('Creation of a new team is not implemented yet');
@@ -109,17 +117,24 @@ export class TeamsMenuComponent {
 			return;
 		}
 
-		this.teams = user?.record?.teams ? zipMapBriefsWithIDs(user?.record?.teams).filter(t => !this.teamType || t.brief.type === this.teamType).map(t => teamContextFromBrief(t.id, t.brief)) : [];
+		this.teams = user?.record?.teams
+			? zipMapBriefsWithIDs(user?.record?.teams)
+					.filter((t) => !this.teamType || t.brief.type === this.teamType)
+					.map((t) => teamContextFromBrief(t.id, t.brief))
+			: [];
 
-		this.familyTeams = this.teams?.filter(t => t.type === 'family') || [];
-		this.familyTeam = this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
+		this.familyTeams = this.teams?.filter((t) => t.type === 'family') || [];
+		this.familyTeam =
+			this.familyTeams.length === 1 ? this.familyTeams[0] : undefined;
 
 		if (this.familyTeam) {
-			this.teams = this.teams?.filter(t => t.type !== 'family');
+			this.teams = this.teams?.filter((t) => t.type !== 'family');
 		}
 	};
 
 	public closeMenu(): void {
-		this.menuController.close().catch(this.errorLogger.logErrorHandler('Failed to close teams menu'));
+		this.menuController
+			.close()
+			.catch(this.errorLogger.logErrorHandler('Failed to close teams menu'));
 	}
 }

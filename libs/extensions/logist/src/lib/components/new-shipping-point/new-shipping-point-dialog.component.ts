@@ -14,10 +14,11 @@ export class NewShippingPointDialogComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		protected readonly modalController: ModalController,
-	) {
-	}
+	) {}
 
 	protected onOrderCreated(order: ILogistOrderContext): void {
-		this.modalController.dismiss(order).catch(this.errorLogger.logErrorHandler('Failed to dismiss modal'));
+		this.modalController
+			.dismiss(order)
+			.catch(this.errorLogger.logErrorHandler('Failed to dismiss modal'));
 	}
 }

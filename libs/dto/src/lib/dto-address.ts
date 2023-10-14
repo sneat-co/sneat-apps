@@ -6,7 +6,10 @@ export interface IAddress {
 	readonly lines?: string;
 }
 
-export function validateAddress(address?: IAddress, requires?: {city?: boolean, lines?: boolean}): IAddress {
+export function validateAddress(
+	address?: IAddress,
+	requires?: { city?: boolean; lines?: boolean },
+): IAddress {
 	if (!address) {
 		throw new Error('Address is required');
 	}

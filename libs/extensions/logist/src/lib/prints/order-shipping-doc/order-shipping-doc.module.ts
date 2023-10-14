@@ -19,10 +19,6 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		LogistOrderServiceModule,
 	],
-	declarations: [
-		OrderShippingDocComponent,
-	],
+	declarations: [OrderShippingDocComponent],
 })
-export class OrderShippingDocModule {
-
-}
+export class OrderShippingDocModule {}

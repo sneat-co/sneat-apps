@@ -6,8 +6,7 @@ import { ILogistOrderContext, ITransitPoint } from '../../dto';
 	templateUrl: './order-route-card.component.html',
 })
 export class OrderRouteCardComponent {
-
-	@Input() order: ILogistOrderContext = { id: '', team: {id: '',} };
+	@Input() order: ILogistOrderContext = { id: '', team: { id: '' } };
 	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
 	protected addTransitPoint(event: Event): void {

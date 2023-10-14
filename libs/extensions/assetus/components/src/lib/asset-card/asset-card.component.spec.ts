@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {AssetCardComponent} from './asset-card.component';
+import { AssetCardComponent } from './asset-card.component';
 
 describe('AssetCardComponent', () => {
 	let component: AssetCardComponent;
@@ -8,9 +8,8 @@ describe('AssetCardComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [AssetCardComponent]
-		})
-			.compileComponents();
+			declarations: [AssetCardComponent],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -20,7 +19,6 @@ describe('AssetCardComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

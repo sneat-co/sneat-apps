@@ -7,18 +7,16 @@ describe('RetroItemCardComponent', () => {
 	let component: RetroItemCardComponent;
 	let fixture: ComponentFixture<RetroItemCardComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [RetroItemCardComponent],
-				imports: [IonicModule.forRoot()],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [RetroItemCardComponent],
+			imports: [IonicModule.forRoot()],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(RetroItemCardComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(RetroItemCardComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

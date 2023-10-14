@@ -13,7 +13,6 @@ const routes: Routes = [
 	},
 ];
 
-
 @NgModule({
 	imports: [
 		CommonModule,
@@ -24,5 +23,4 @@ const routes: Routes = [
 	],
 	declarations: [NewCommunePageComponent],
 })
-export class NewCommunePageModule {
-}
+export class NewCommunePageModule {}

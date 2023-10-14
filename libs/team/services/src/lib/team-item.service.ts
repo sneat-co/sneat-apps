@@ -6,11 +6,18 @@ import {
 } from '@angular/fire/firestore';
 import { QuerySnapshot } from '@firebase/firestore-types';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { ITeamContext, ITeamItemContext, ITeamRequest } from '@sneat/team/models';
+import {
+	ITeamContext,
+	ITeamItemContext,
+	ITeamRequest,
+} from '@sneat/team/models';
 import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-type ICreateTeamItemResponse<Brief, Dto extends Brief> = ITeamItemContext<Brief, Dto>;
+type ICreateTeamItemResponse<Brief, Dto extends Brief> = ITeamItemContext<
+	Brief,
+	Dto
+>;
 
 export class TeamItemService<Brief, Dto extends Brief> {
 	protected readonly teamsCollection;
@@ -33,17 +40,34 @@ export class TeamItemService<Brief, Dto extends Brief> {
 	// }
 
 	private collectionRef<Dto2 extends Dto>(teamID: string) {
-		return collection(this.teamsCollection, teamID, 'modules', this.moduleID, this.collectionName) as CollectionReference<Dto2>;
+		return collection(
+			this.teamsCollection,
+			teamID,
+			'modules',
+			this.moduleID,
+			this.collectionName,
+		) as CollectionReference<Dto2>;
 	}
 
-	public watchTeamItemByID<Dto2 extends Dto>(team: ITeamContext, id: string): Observable<ITeamItemContext<Brief, Dto2>> {
+	public watchTeamItemByID<Dto2 extends Dto>(
+		team: ITeamContext,
+		id: string,
+	): Observable<ITeamItemContext<Brief, Dto2>> {
 		console.log('watchTeamItemByID()', team.id, this.collectionName, id);
-		const collectionRef= this.collectionRef<Dto2>(team.id);
-		return  this.sfs.watchByID(collectionRef, id)
-			.pipe(
-				map(o => ({ team, ...o })),
-				tap(o => console.log('watchTeamItemByID()', team.id, this.collectionName, id, ' =>', o)),
-			);
+		const collectionRef = this.collectionRef<Dto2>(team.id);
+		return this.sfs.watchByID(collectionRef, id).pipe(
+			map((o) => ({ team, ...o })),
+			tap((o) =>
+				console.log(
+					'watchTeamItemByID()',
+					team.id,
+					this.collectionName,
+					id,
+					' =>',
+					o,
+				),
+			),
+		);
 	}
 
 	private readonly teamRef = (id: string) => doc(this.teamsCollection, id);
@@ -58,17 +82,39 @@ export class TeamItemService<Brief, Dto extends Brief> {
 			filter = [];
 		}
 		filter.push({ field: 'teamIDs', operator: '==', value: team.id });
-		const collectionRef
-			= collection(this.teamsCollection, team.id, 'modules', moduleID, this.collectionName);
-		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter || []);
+		const collectionRef = collection(
+			this.teamsCollection,
+			team.id,
+			'modules',
+			moduleID,
+			this.collectionName,
+		);
+		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(
+			collectionRef as CollectionReference<Dto2>,
+			filter || [],
+		);
 		return querySnapshots.pipe(
-			map(querySnapshot => this.mapQueryToTeamItemContext(team, querySnapshot as unknown as QuerySnapshot<Dto2>)),
+			map((querySnapshot) =>
+				this.mapQueryToTeamItemContext(
+					team,
+					querySnapshot as unknown as QuerySnapshot<Dto2>,
+				),
+			),
 		);
 	}
 
-	private readonly mapQueryToTeamItemContext = <Brief2 extends Brief, Dto2 extends Dto>(team: ITeamContext, querySnapshot: QuerySnapshot<Dto2>) => {
-		console.log(`team item changeActions (${this.collectionName}): `, querySnapshot);
-		return querySnapshot.docs.map(docSnapshot => {
+	private readonly mapQueryToTeamItemContext = <
+		Brief2 extends Brief,
+		Dto2 extends Dto,
+	>(
+		team: ITeamContext,
+		querySnapshot: QuerySnapshot<Dto2>,
+	) => {
+		console.log(
+			`team item changeActions (${this.collectionName}): `,
+			querySnapshot,
+		);
+		return querySnapshot.docs.map((docSnapshot) => {
 			const dto = docSnapshot.data();
 			const { id } = docSnapshot;
 			const brief: Brief2 = { id, ...dto } as unknown as Brief2;
@@ -77,21 +123,33 @@ export class TeamItemService<Brief, Dto extends Brief> {
 		});
 	};
 
-
 	public watchTeamItems<Brief2 extends Brief, Dto2 extends Dto>(
 		team: ITeamContext,
 		filter?: readonly IFilter[],
 	): Observable<ITeamItemContext<Brief2, Dto2>[]> {
 		console.log('watchTeamItems()', team.id, this.collectionName);
-		const collectionRef = collection(this.teamRef(team.id), this.collectionName);
-		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(collectionRef as CollectionReference<Dto2>, filter || []);
+		const collectionRef = collection(
+			this.teamRef(team.id),
+			this.collectionName,
+		);
+		const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(
+			collectionRef as CollectionReference<Dto2>,
+			filter || [],
+		);
 		return querySnapshots.pipe(
-			map(querySnapshot => this.mapQueryToTeamItemContext(team, querySnapshot as unknown as QuerySnapshot<Dto2>)),
+			map((querySnapshot) =>
+				this.mapQueryToTeamItemContext(
+					team,
+					querySnapshot as unknown as QuerySnapshot<Dto2>,
+				),
+			),
 		);
 	}
 
-
-	public deleteTeamItem<Response>(endpoint: string, request: ITeamRequest): Observable<Response> {
+	public deleteTeamItem<Response>(
+		endpoint: string,
+		request: ITeamRequest,
+	): Observable<Response> {
 		return this.sneatApiService.delete<Response>(endpoint, undefined, request);
 	}
 
@@ -104,7 +162,7 @@ export class TeamItemService<Brief, Dto extends Brief> {
 		return this.sneatApiService
 			.post<ICreateTeamItemResponse<Brief, Dto>>(endpoint, request)
 			.pipe(
-				map(response => {
+				map((response) => {
 					if (!response) {
 						throw new Error('create team item response is empty');
 					}

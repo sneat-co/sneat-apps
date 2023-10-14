@@ -23,5 +23,4 @@ import { IntroComponent } from './intro/intro.component';
 	],
 	declarations: [TeamsPageComponent, IntroComponent],
 })
-export class TeamsPageModule {
-}
+export class TeamsPageModule {}

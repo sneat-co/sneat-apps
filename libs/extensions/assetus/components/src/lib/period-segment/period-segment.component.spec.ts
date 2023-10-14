@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {PeriodSegmentComponent} from './period-segment.component';
+import { PeriodSegmentComponent } from './period-segment.component';
 
 describe('PeriodSegmentComponent', () => {
 	let component: PeriodSegmentComponent;
@@ -8,9 +8,8 @@ describe('PeriodSegmentComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [PeriodSegmentComponent]
-		})
-			.compileComponents();
+			declarations: [PeriodSegmentComponent],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -20,7 +19,6 @@ describe('PeriodSegmentComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

@@ -17,5 +17,4 @@ import { ScrumsHistoryPageComponent } from './scrums-history.page';
 	],
 	declarations: [ScrumsHistoryPageComponent],
 })
-export class ScrumsHistoryPageModule {
-}
+export class ScrumsHistoryPageModule {}

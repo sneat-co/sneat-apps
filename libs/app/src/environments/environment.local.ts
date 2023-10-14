@@ -10,7 +10,6 @@ import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
 
 const useEmulators = true;
 
-
 const firebaseConfig: IFirebaseConfig = {
 	useEmulators,
 	emulator: {
@@ -32,4 +31,3 @@ export const localEnvironmentConfig: IEnvironmentConfig = {
 	agents: {},
 	firebaseConfig,
 };
-

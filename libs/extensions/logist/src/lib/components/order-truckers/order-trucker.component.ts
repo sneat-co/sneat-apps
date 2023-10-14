@@ -1,4 +1,10 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
@@ -8,7 +14,10 @@ import {
 	IOrderCounterparty,
 	IOrderSegment,
 } from '../../dto';
-import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-print.service';
+import {
+	IOrderPrintedDocContext,
+	OrderPrintService,
+} from '../../prints/order-print.service';
 import { LogistOrderService } from '../../services';
 import { NewSegmentService } from '../new-segment/new-segment.service';
 
@@ -32,14 +41,15 @@ export class OrderTruckerComponent implements OnChanges {
 		private readonly ordersService: LogistOrderService,
 		private readonly orderPrintService: OrderPrintService,
 		private readonly newSegmentService: NewSegmentService,
-	) {
-	}
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('OrderTruckerComponent.ngOnChanges', changes);
 		if (changes['order'] || changes['trucker']) {
 			const contactID = this.trucker?.contactID;
-			this.orderSegments = getOrderSegments(this.order?.dto?.segments?.filter(s => s.byContactID === contactID));
+			this.orderSegments = getOrderSegments(
+				this.order?.dto?.segments?.filter((s) => s.byContactID === contactID),
+			);
 		}
 	}
 
@@ -48,7 +58,13 @@ export class OrderTruckerComponent implements OnChanges {
 		if (!order) {
 			return;
 		}
-		this.newSegmentService.goNewSegmentPage({ order }).catch(this.errorLogger.logErrorHandler('Failed to navigate to new segment page'));
+		this.newSegmentService
+			.goNewSegmentPage({ order })
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to navigate to new segment page',
+				),
+			);
 	}
 
 	deleteTrucker(): void {
@@ -66,7 +82,7 @@ export class OrderTruckerComponent implements OnChanges {
 			next: () => {
 				console.log('deleted trucker');
 			},
-			error: err => {
+			error: (err) => {
 				this.errorLogger.logError(err, 'Failed to delete trucker');
 				this.deleting = false;
 			},
@@ -88,6 +104,10 @@ export class OrderTruckerComponent implements OnChanges {
 				truckerID: this?.trucker?.contactID,
 			},
 		};
-		this.orderPrintService.openOrderPrintedDocument(event, 'trucker-summary', ctx);
+		this.orderPrintService.openOrderPrintedDocument(
+			event,
+			'trucker-summary',
+			ctx,
+		);
 	}
 }

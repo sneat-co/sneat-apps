@@ -84,9 +84,19 @@ export const carMakes: {
 	Tesla: {
 		yearMin: 2001,
 		models: [
-			{ id: 'Model 3', yearMin: 2017, engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }] },
-			{ id: 'Model S', engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }] },
-			{ id: 'Model X', engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }] },
+			{
+				id: 'Model 3',
+				yearMin: 2017,
+				engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }],
+			},
+			{
+				id: 'Model S',
+				engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }],
+			},
+			{
+				id: 'Model X',
+				engines: [{ title: '90KW', engineFuel: FuelTypes.electricity }],
+			},
 		],
 	},
 	Hyundai: {

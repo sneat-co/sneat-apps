@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Inject, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
@@ -23,9 +30,13 @@ interface IDocumentType {
 	animations: [listItemAnimations],
 	...DocumentsBaseComponent.metadata,
 })
-export class DocumentsByTypeComponent extends DocumentsBaseComponent implements OnChanges {
-
-	docTypes: IDocumentType[] = Object.values(standardDocTypesByID).map(v => ({ ...v }));
+export class DocumentsByTypeComponent
+	extends DocumentsBaseComponent
+	implements OnChanges
+{
+	docTypes: IDocumentType[] = Object.values(standardDocTypesByID).map((v) => ({
+		...v,
+	}));
 
 	@Output() goNewDoc = new EventEmitter<string>();
 	@Output() goDocType = new EventEmitter<string>();
@@ -40,7 +51,7 @@ export class DocumentsByTypeComponent extends DocumentsBaseComponent implements 
 	}
 
 	selectDocType(docType: IDocumentType): void {
-		this.docTypes.some(v => {
+		this.docTypes.some((v) => {
 			if (eq(v.id, docType.id) && !(v.documents && v.documents.length)) {
 				this.newDoc(docType);
 				return true;
@@ -60,17 +71,21 @@ export class DocumentsByTypeComponent extends DocumentsBaseComponent implements 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log('DocumentsListComponent.ngOnChanges', changes, this.allDocuments && [...this.allDocuments]);
+		console.log(
+			'DocumentsListComponent.ngOnChanges',
+			changes,
+			this.allDocuments && [...this.allDocuments],
+		);
 		if (changes['allDocuments'] && this.allDocuments) {
 			this.onDocsChanged();
 		}
 	}
 
 	protected onDocsChanged(): void {
-		this.docTypes.forEach(dt => dt.documents = []);
+		this.docTypes.forEach((dt) => (dt.documents = []));
 		const other = this.docTypes[this.docTypes.length - 1];
-		this.allDocuments?.forEach(d => {
-			const docType = this.docTypes.find(dt => eq(dt.id, d.brief?.type));
+		this.allDocuments?.forEach((d) => {
+			const docType = this.docTypes.find((dt) => eq(dt.id, d.brief?.type));
 			if (docType) {
 				if (!docType.documents) {
 					docType.documents = [];

@@ -8,15 +8,9 @@ import { IonicModule } from '@ionic/angular';
 	selector: 'sneat-filter-item',
 	templateUrl: './filter-item.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		RouterModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
 })
 export class FilterItemComponent {
-
 	@Input() public filter = '';
 
 	@Output() changed = new EventEmitter<string>();

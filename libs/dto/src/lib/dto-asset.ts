@@ -1,12 +1,21 @@
 import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2item';
 import { IDocData } from './dto-document';
-import { IDemoRecord, ITitled, ITitledRecord, ITotalsHolder, IWithTeamIDs } from './dto-models';
+import {
+	IDemoRecord,
+	ITitled,
+	ITitledRecord,
+	ITotalsHolder,
+	IWithTeamIDs,
+} from './dto-models';
 import { IWithModified } from './dto-with-modified';
 import {
-	AssetCategory, AssetPossession, AssetStatus,
+	AssetCategory,
+	AssetPossession,
+	AssetStatus,
 	AssetType,
-	CountryId, EngineType,
+	CountryId,
+	EngineType,
 	FuelType,
 	LiabilityServiceType,
 } from './types';
@@ -43,8 +52,8 @@ export interface IAssetusTeamDto extends ITitled {
 	assets?: { [id: string]: IAssetBrief };
 }
 
-export interface IAssetusTeamContext extends INavContext<IAssetusTeamDto, IAssetusTeamDto> {
-}
+export interface IAssetusTeamContext
+	extends INavContext<IAssetusTeamDto, IAssetusTeamDto> {}
 
 export interface IAssetMainData extends IAssetBrief {
 	parentAssetID?: string;
@@ -55,7 +64,11 @@ export interface IAssetMainData extends IAssetBrief {
 	regNumber?: string;
 }
 
-export interface IAssetDtoBase extends IAssetMainData, IDemoRecord, ITotalsHolder, IWithModified {
+export interface IAssetDtoBase
+	extends IAssetMainData,
+		IDemoRecord,
+		ITotalsHolder,
+		IWithModified {
 	teamID?: string;
 	parentCategoryID?: AssetCategory;
 	sameAssetID?: string; // A link to realtor's or tenant's asset ID
@@ -72,7 +85,6 @@ export interface IDwelling {
 	rent?: 'landlord' | 'tenant';
 }
 
-
 export interface IEngine {
 	engineType: EngineType;
 	engineFuel: FuelType;
@@ -85,26 +97,21 @@ export interface IEngine {
 export interface IVehicleData extends IEngine {
 	vin?: string;
 	number?: string;
-	nctExpires?: string;     // ISO date string 'YYYY-MM-DD'
+	nctExpires?: string; // ISO date string 'YYYY-MM-DD'
 	nctExpiresTaskId?: string;
-	taxExpires?: string;     // ISO date string 'YYYY-MM-DD'
+	taxExpires?: string; // ISO date string 'YYYY-MM-DD'
 	taxExpiresTaskId?: string;
 	nextServiceDue?: string; // ISO date string 'YYYY-MM-DD'
 	nextServiceDueTaskId?: string;
 }
 
-export interface IVehicleAssetDto extends IAssetDtoBase, IVehicleData {
-}
+export interface IVehicleAssetDto extends IAssetDtoBase, IVehicleData {}
 
-export interface IVehicleMainData extends IAssetMainData, IVehicleData {
-}
+export interface IVehicleMainData extends IAssetMainData, IVehicleData {}
 
-export interface IDocumentAssetDto extends IAssetDtoBase, IDocData {
-}
+export interface IDocumentAssetDto extends IAssetDtoBase, IDocData {}
 
-export interface IDocumentMainData extends IAssetMainData, IDocData {
-
-}
+export interface IDocumentMainData extends IAssetMainData, IDocData {}
 
 export interface IAssetCategory extends ITitledRecord {
 	id: AssetCategory;
@@ -119,7 +126,10 @@ export interface IAssetDtoGroupCounts {
 	assets?: number;
 }
 
-export interface IAssetDtoGroup extends IWithTeamIDs, ITitledRecord, ITotalsHolder {
+export interface IAssetDtoGroup
+	extends IWithTeamIDs,
+		ITitledRecord,
+		ITotalsHolder {
 	id: string;
 	order: number;
 	desc?: string;

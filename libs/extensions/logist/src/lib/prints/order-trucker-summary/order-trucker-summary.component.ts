@@ -4,7 +4,8 @@ import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
 	IContainerSegment,
 	IFreightLoad,
-	ILogistOrderContext, IOrderContainer,
+	ILogistOrderContext,
+	IOrderContainer,
 	IOrderCounterparty,
 	IOrderShippingPoint,
 } from '../../dto';
@@ -24,7 +25,6 @@ interface IContainerInfo {
 	templateUrl: './order-trucker-summary.component.html',
 })
 export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
-
 	truckerID?: string;
 	truckerCounterparty?: IOrderCounterparty;
 	buyerCounterparty?: IOrderCounterparty;
@@ -42,7 +42,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	) {
 		super('OrderTruckerSummaryComponent', route, teamParams, orderService);
 		route.queryParams?.subscribe({
-			next: params => {
+			next: (params) => {
 				this.truckerID = params['truckerID'];
 				console.log('truckerID', this.truckerID);
 				if (this.order?.dto) {
@@ -53,7 +53,9 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	}
 
 	private setTrucker(): void {
-		this.truckerCounterparty = this?.order?.dto?.counterparties?.find(c => c.role === 'trucker' && c.contactID === this.truckerID);
+		this.truckerCounterparty = this?.order?.dto?.counterparties?.find(
+			(c) => c.role === 'trucker' && c.contactID === this.truckerID,
+		);
 	}
 
 	protected override onOrderChanged(order: ILogistOrderContext) {
@@ -63,17 +65,36 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 			this.setTrucker();
 		}
 
-		this.buyerCounterparty = counterparties?.find(c => c.role === 'buyer');
-		this.selfCounterparty = counterparties?.find(c => c.contactID === this.team?.id);
-		this.ship = counterparties?.find(c => c.role === 'ship');
-		this.shippingLine = counterparties?.find(c => c.role === 'shipping_line');
-		this.points = order.dto?.segments?.filter(s => s.byContactID === this.truckerID)
-			.map(segment => {
-				const container = order?.dto?.containers?.find(c => c.id === segment.containerID);
-				const toPick = order?.dto?.containerPoints?.find(p => p.containerID === segment.containerID && p.shippingPointID === segment.from.shippingPointID)?.toLoad;
-				const from = order?.dto?.shippingPoints?.find(p => p.id === segment.from.shippingPointID);
-				const dispatcher = order?.dto?.counterparties?.find(c => c.contactID === from?.counterparty?.contactID);
-				const containerInfo: IContainerInfo = { container, from, toLoad: toPick, segment, dispatcher };
+		this.buyerCounterparty = counterparties?.find((c) => c.role === 'buyer');
+		this.selfCounterparty = counterparties?.find(
+			(c) => c.contactID === this.team?.id,
+		);
+		this.ship = counterparties?.find((c) => c.role === 'ship');
+		this.shippingLine = counterparties?.find((c) => c.role === 'shipping_line');
+		this.points = order.dto?.segments
+			?.filter((s) => s.byContactID === this.truckerID)
+			.map((segment) => {
+				const container = order?.dto?.containers?.find(
+					(c) => c.id === segment.containerID,
+				);
+				const toPick = order?.dto?.containerPoints?.find(
+					(p) =>
+						p.containerID === segment.containerID &&
+						p.shippingPointID === segment.from.shippingPointID,
+				)?.toLoad;
+				const from = order?.dto?.shippingPoints?.find(
+					(p) => p.id === segment.from.shippingPointID,
+				);
+				const dispatcher = order?.dto?.counterparties?.find(
+					(c) => c.contactID === from?.counterparty?.contactID,
+				);
+				const containerInfo: IContainerInfo = {
+					container,
+					from,
+					toLoad: toPick,
+					segment,
+					dispatcher,
+				};
 				return containerInfo;
 			});
 	}

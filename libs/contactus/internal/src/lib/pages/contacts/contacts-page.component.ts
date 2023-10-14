@@ -3,12 +3,23 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ContactsByTypeComponent, ContactsListModule } from '@sneat/contactus-shared';
+import {
+	ContactsByTypeComponent,
+	ContactsListModule,
+} from '@sneat/contactus-shared';
 import { listItemAnimations } from '@sneat/core';
-import { FilterItemComponent, ISelectItem, SneatPipesModule } from '@sneat/components';
+import {
+	FilterItemComponent,
+	ISelectItem,
+	SneatPipesModule,
+} from '@sneat/components';
 import { setHrefQueryParam } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
-import { TeamComponentBaseParams, TeamCoreComponentsModule, TeamItemsBaseComponent } from '@sneat/team/components';
+import {
+	TeamComponentBaseParams,
+	TeamCoreComponentsModule,
+	TeamItemsBaseComponent,
+} from '@sneat/team/components';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
 import { Subscription } from 'rxjs';
@@ -31,7 +42,6 @@ import { Subscription } from 'rxjs';
 	],
 })
 export class ContactsPageComponent extends TeamItemsBaseComponent {
-
 	public allContacts?: IContactContext[];
 	public contactsByRole?: { [role: string]: IContactContext[] };
 	public contacts?: IContactContext[];
@@ -51,7 +61,8 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	];
 
 	public contactsNumber(role: string): number {
-		const roleContacts = (this.contactsByRole && this.contactsByRole[role]) ?? [];
+		const roleContacts =
+			(this.contactsByRole && this.contactsByRole[role]) ?? [];
 		return roleContacts?.length ?? 0;
 	}
 
@@ -74,11 +85,9 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		// this.teamIDChanged$.subscribe({
 		// 	next: this.onTeamIDChangedWorker,
 		// });
-		route.queryParamMap.pipe(
-			this.takeUntilNeeded(),
-		).subscribe({
-			next: q => {
-				this.role = q.get('role') as ContactRole || undefined;
+		route.queryParamMap.pipe(this.takeUntilNeeded()).subscribe({
+			next: (q) => {
+				this.role = (q.get('role') as ContactRole) || undefined;
 				this.applyFilter(this.filter, this.role);
 			},
 		});
@@ -98,7 +107,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		}
 
 		this.contactusTeamService.watchContactBriefs(this.team).subscribe({
-			next: contacts => {
+			next: (contacts) => {
 				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
 			},
@@ -132,15 +141,22 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	}
 
 	applyFilter(filter: string, role?: ContactRole): void {
-		console.log('ContactsPageComponent.applyFilter()', filter, role, this.allContacts);
+		console.log(
+			'ContactsPageComponent.applyFilter()',
+			filter,
+			role,
+			this.allContacts,
+		);
 		filter = filter && filter.toLowerCase();
 		this.filter = filter;
-		this.contacts = !filter && !role
-			? this.allContacts
-			: this.allContacts?.filter(c =>
-				(!filter || c.brief?.title?.toLowerCase().includes(filter))
-				&& (!role || c.brief?.roles && c?.brief.roles.includes(role)),
-			);
+		this.contacts =
+			!filter && !role
+				? this.allContacts
+				: this.allContacts?.filter(
+						(c) =>
+							(!filter || c.brief?.title?.toLowerCase().includes(filter)) &&
+							(!role || (c.brief?.roles && c?.brief.roles.includes(role))),
+				  );
 	}
 
 	protected readonly goContact = (contact?: IContactContext): void => {
@@ -152,9 +168,13 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			this.errorLogger.logError('no team');
 			return;
 		}
-		this.teamParams.teamNavService.navigateForwardToTeamPage(this.team, `contact/${contact.id}`, {
-			state: { contact },
-		}).catch(this.errorLogger.logErrorHandler('failed to navigate to contact page'));
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(this.team, `contact/${contact.id}`, {
+				state: { contact },
+			})
+			.catch(
+				this.errorLogger.logErrorHandler('failed to navigate to contact page'),
+			);
 	};
 
 	protected readonly goNewContact = (): void => {
@@ -164,14 +184,23 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		let navResult: Promise<boolean>;
 
 		if (this.team.type === 'family') {
-			navResult = this.teamParams.teamNavService
-				.navigateForwardToTeamPage(this.team, 'new-contact');
+			navResult = this.teamParams.teamNavService.navigateForwardToTeamPage(
+				this.team,
+				'new-contact',
+			);
 		} else {
-			navResult = this.teamParams.teamNavService
-				.navigateForwardToTeamPage(this.team, 'new-company', { queryParams: this.role ? { role: this.role } : undefined });
+			navResult = this.teamParams.teamNavService.navigateForwardToTeamPage(
+				this.team,
+				'new-company',
+				{ queryParams: this.role ? { role: this.role } : undefined },
+			);
 		}
 
-		navResult.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
+		navResult.catch(
+			this.errorLogger.logErrorHandler(
+				'failed to navigate to contact creation page',
+			),
+		);
 	};
 
 	protected goMember(id: string, event: Event): boolean {
@@ -185,7 +214,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 					member: { id },
 				},
 			})
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to navigate to contact creation page',
+				),
+			);
 		return false;
 	}
 
@@ -199,7 +232,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 					group: group,
 				},
 			})
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to contact creation page'));
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to navigate to contact creation page',
+				),
+			);
 	}
 
 	protected id(i: number, record: { id: string }): string {
@@ -210,9 +247,9 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		console.log('ContactsPageComponent.setTeamContacts()', contacts);
 		this.allContacts = contacts;
 		const contactsByRole: { [role: string]: IContactContext[] } = { '': [] };
-		contacts.forEach(c => {
+		contacts.forEach((c) => {
 			contactsByRole[''].push(c);
-			c.brief?.roles?.forEach(role => {
+			c.brief?.roles?.forEach((role) => {
 				const roleContacts = contactsByRole[role as ContactRole];
 				if (roleContacts) {
 					roleContacts.push(c);
@@ -241,6 +278,4 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	// 		this.role = undefined;
 	// 	}
 	// }
-
 }
-

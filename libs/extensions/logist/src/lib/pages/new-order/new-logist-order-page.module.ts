@@ -32,11 +32,6 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 		NewSegmentModule,
 		SelectFromListModule,
 	],
-	declarations: [
-		NewLogistOrderPageComponent,
-		NewOrderContainersFormComponent,
-	],
+	declarations: [NewLogistOrderPageComponent, NewOrderContainersFormComponent],
 })
-export class NewLogistOrderPageModule {
-
-}
+export class NewLogistOrderPageModule {}

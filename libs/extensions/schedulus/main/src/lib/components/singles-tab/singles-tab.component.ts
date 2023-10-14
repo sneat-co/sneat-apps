@@ -1,18 +1,27 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	SimpleChanges,
+} from '@angular/core';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
 import { HappeningService } from '@sneat/team/services';
 import { Subject, Subscription } from 'rxjs';
 import { ScheduleFilterService } from '../schedule-filter.service';
-import { IScheduleFilter, isMatchingScheduleFilter } from '../schedule-filter/schedule-filter';
+import {
+	IScheduleFilter,
+	isMatchingScheduleFilter,
+} from '../schedule-filter/schedule-filter';
 
 @Component({
 	selector: 'sneat-singles-tab',
 	templateUrl: 'singles-tab.component.html',
 })
 export class SinglesTabComponent implements OnChanges, OnDestroy {
-
 	private readonly destroyed = new Subject<void>();
 	private singlesSubscription?: Subscription;
 	public allUpcomingSingles?: IHappeningContext[];
@@ -20,8 +29,8 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 
 	public tab: 'upcoming' | 'past' = 'upcoming';
 
-	@Input() team: ITeamContext = {id: ''};
-	@Input() onSlotClicked?: (args: {slot: ISlotItem; event: Event}) => void;
+	@Input() team: ITeamContext = { id: '' };
+	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void;
 	@Input() onDateSelected?: (date: Date) => void;
 
 	private filter?: IScheduleFilter;
@@ -30,7 +39,10 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 	protected readonly happeningID = (_: number, h: IHappeningContext) => h.id;
 
 	get numberOfHidden(): number {
-		return (this.allUpcomingSingles?.length || 0) - (this.upcomingSingles?.length || 0);
+		return (
+			(this.allUpcomingSingles?.length || 0) -
+			(this.upcomingSingles?.length || 0)
+		);
 	}
 
 	constructor(
@@ -38,7 +50,7 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 		private readonly filterService: ScheduleFilterService,
 		private readonly happeningService: HappeningService,
 	) {
-		filterService.filter.subscribe(filter => {
+		filterService.filter.subscribe((filter) => {
 			this.filter = filter;
 			this.applyFilter();
 		});
@@ -59,9 +71,10 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 		this.singlesSubscription?.unsubscribe();
 	}
 
-
 	public onHappeningRemoved(id: string): void {
-		this.allUpcomingSingles = this.allUpcomingSingles?.filter(h => h.id !== id);
+		this.allUpcomingSingles = this.allUpcomingSingles?.filter(
+			(h) => h.id !== id,
+		);
 		this.applyFilter();
 	}
 
@@ -74,21 +87,26 @@ export class SinglesTabComponent implements OnChanges, OnDestroy {
 			this.singlesSubscription?.unsubscribe();
 		}
 		if (this.team) {
-			this.singlesSubscription = this.happeningService.watchUpcomingSingles(this.team).subscribe({
-				next: singles => {
-					this.allUpcomingSingles = singles;
-					this.applyFilter();
-					console.log('upcoming single:', singles);
-				},
-				error: this.errorLogger.logErrorHandler('Failed to load upcoming happenings'),
-			});
+			this.singlesSubscription = this.happeningService
+				.watchUpcomingSingles(this.team)
+				.subscribe({
+					next: (singles) => {
+						this.allUpcomingSingles = singles;
+						this.applyFilter();
+						console.log('upcoming single:', singles);
+					},
+					error: this.errorLogger.logErrorHandler(
+						'Failed to load upcoming happenings',
+					),
+				});
 		}
 	}
-
 
 	private applyFilter(): void {
 		const f = this.filter;
 		console.log('applyFilter()', f);
-		this.upcomingSingles = this.allUpcomingSingles?.filter(h => isMatchingScheduleFilter(h, f));
+		this.upcomingSingles = this.allUpcomingSingles?.filter((h) =>
+			isMatchingScheduleFilter(h, f),
+		);
 	}
 }

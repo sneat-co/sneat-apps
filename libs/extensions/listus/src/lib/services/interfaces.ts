@@ -1,5 +1,13 @@
 //
-import { ICommuneDto, IListBrief, IListDto, IListItemBase, IListItemBrief, IListItemDto, ListType } from '@sneat/dto';
+import {
+	ICommuneDto,
+	IListBrief,
+	IListDto,
+	IListItemBase,
+	IListItemBrief,
+	IListItemDto,
+	ListType,
+} from '@sneat/dto';
 import { IListContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
 
 export interface GetOrCreateCommuneItemIds {
@@ -35,7 +43,6 @@ export interface IListItemResult {
 	communeDto?: ICommuneDto;
 	listItemDto?: IListItemDto;
 }
-
 
 export interface IListItemsCommandParams {
 	team: ITeamContext;
@@ -75,8 +82,7 @@ export type ReorderListItemsWorker = (listDto: IListDto) => void;
 // 	return { shortCommuneId: id.substr(0, i) as CommuneType, shortListId: id.substr(i + 1) as ListType };
 // }
 
-export interface ICreateListRequest extends ITeamRequest, IListBrief {
-}
+export interface ICreateListRequest extends ITeamRequest, IListBrief {}
 
 export interface IListRequest extends ITeamRequest {
 	readonly listID: string;
@@ -90,7 +96,6 @@ export interface ICreateListItemRequest extends IListItemBase {
 export interface ICreateListItemsRequest extends IListRequest {
 	items: ICreateListItemRequest[];
 }
-
 
 export interface IListItemRequest extends IListRequest {
 	itemID: string;

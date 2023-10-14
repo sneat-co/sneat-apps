@@ -4,5 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-scrum-qna',
 	templateUrl: './scrum-qna.component.html',
 })
-export class ScrumQnaComponent {
-}
+export class ScrumQnaComponent {}

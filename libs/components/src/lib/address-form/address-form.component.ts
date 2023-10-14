@@ -10,7 +10,13 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
@@ -65,20 +71,16 @@ export class AddressFormComponent implements OnChanges, OnInit {
 	protected saving = false;
 
 	protected readonly countryID = new FormControl('', [Validators.required]);
-	protected readonly zip = new FormControl('', [Validators.pattern('[0-9 A-Z]{2,10}')]);
+	protected readonly zip = new FormControl('', [
+		Validators.pattern('[0-9 A-Z]{2,10}'),
+	]);
 	readonly state = new FormControl<string>('', {
-		validators: [
-			Validators.minLength(2),
-			Validators.maxLength(20)],
+		validators: [Validators.minLength(2), Validators.maxLength(20)],
 	});
 	readonly city = new FormControl<string>('', {
-		validators: [
-			Validators.minLength(2),
-			Validators.maxLength(20)],
+		validators: [Validators.minLength(2), Validators.maxLength(20)],
 	});
-	protected readonly lines = new FormControl('', [
-		Validators.maxLength(200),
-	]);
+	protected readonly lines = new FormControl('', [Validators.maxLength(200)]);
 
 	public readonly form: AddressForm = new FormGroup({
 		countryID: this.countryID,
@@ -89,10 +91,8 @@ export class AddressFormComponent implements OnChanges, OnInit {
 	});
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		// private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
-	}
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly changeDetectorRef: ChangeDetectorRef,
+	) {}
 
 	ngOnInit(): void {
 		this.formCreated.emit(this.form);
@@ -101,7 +101,11 @@ export class AddressFormComponent implements OnChanges, OnInit {
 	onCountryChanged(countryID: string): void {
 		this.countryID.setValue(countryID);
 		this.countryID.markAsDirty();
-		if (!countryID || countryID === '--' || this.address?.countryID && this.address.countryID != countryID) {
+		if (
+			!countryID ||
+			countryID === '--' ||
+			(this.address?.countryID && this.address.countryID != countryID)
+		) {
 			this.zip.setValue('');
 			this.lines.setValue('');
 		}
@@ -121,14 +125,24 @@ export class AddressFormComponent implements OnChanges, OnInit {
 	onZipChanged(): void {
 		const address = this.mustAddress;
 		this.address = { ...this.mustAddress, zipCode: this.zip.value || '' };
-		console.log('AddressFormComponent.onZipChanged()', this.zip.value, address, this.address);
+		console.log(
+			'AddressFormComponent.onZipChanged()',
+			this.zip.value,
+			address,
+			this.address,
+		);
 		this.addressChange.emit(this.address);
 	}
 
 	onStateChanged(): void {
 		const address = this.mustAddress;
 		this.address = { ...address, state: this.state.value || '' };
-		console.log('AddressFormComponent.onStateChanged()', this.state.value, address, this.address);
+		console.log(
+			'AddressFormComponent.onStateChanged()',
+			this.state.value,
+			address,
+			this.address,
+		);
 		this.addressChange.emit(this.address);
 	}
 

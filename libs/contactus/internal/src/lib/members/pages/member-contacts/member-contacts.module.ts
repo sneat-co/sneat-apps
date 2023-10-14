@@ -1,17 +1,17 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {MemberContactsPageComponent} from './member-contacts-page.component';
+import { MemberContactsPageComponent } from './member-contacts-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MemberContactsPageComponent
-	}
+		component: MemberContactsPageComponent,
+	},
 ];
 
 @NgModule({
@@ -19,9 +19,8 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		RouterModule.forChild(routes)
+		RouterModule.forChild(routes),
 	],
-	declarations: [MemberContactsPageComponent]
+	declarations: [MemberContactsPageComponent],
 })
-export class MemberContactsPageModule {
-}
+export class MemberContactsPageModule {}

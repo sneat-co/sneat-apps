@@ -1,8 +1,19 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+} from '@angular/core';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RowComponent, RowContextMenuSignature } from 'tabulator-tables';
-import { IContainerRequest, ILogistOrderContext, IOrderContainer } from '../../dto';
+import {
+	IContainerRequest,
+	ILogistOrderContext,
+	IOrderContainer,
+} from '../../dto';
 import { LogistOrderService } from '../../services';
 
 interface IOrderContainerWithIndex extends IOrderContainer {
@@ -25,7 +36,9 @@ export class OrderContainersGridComponent implements OnChanges {
 			action: (e: Event, row: RowComponent) => {
 				row.select();
 				const data = row.getData() as IOrderContainerWithIndex;
-				this.containerSelected.emit(this.order?.dto?.containers?.find(c => c.id === data.id));
+				this.containerSelected.emit(
+					this.order?.dto?.containers?.find((c) => c.id === data.id),
+				);
 			},
 		},
 		{
@@ -37,8 +50,7 @@ export class OrderContainersGridComponent implements OnChanges {
 				row.select();
 				const data = row.getData() as IOrderContainerWithIndex;
 				console.log('Delete row', data);
-				const
-					orderID = this.order?.id,
+				const orderID = this.order?.id,
 					teamID = this.order?.team?.id;
 				if (!orderID || !teamID) {
 					return;
@@ -128,16 +140,20 @@ export class OrderContainersGridComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
-	) {
-	}
+	) {}
 
 	ngOnChanges(/*changes: SimpleChanges*/): void {
-		const containers = this.order?.dto?.containers?.map((c, i) => ({ ...c, i: i + 1 }));
+		const containers = this.order?.dto?.containers?.map((c, i) => ({
+			...c,
+			i: i + 1,
+		}));
 		this.containers = containers ? [...containers] : undefined;
 	}
 
 	protected readonly rowSelected = (row: unknown) => {
-		this.selectedContainer = this.containers?.find(c => c.id === (row as { getData: () => { id: string } }).getData().id);
+		this.selectedContainer = this.containers?.find(
+			(c) => c.id === (row as { getData: () => { id: string } }).getData().id,
+		);
 		this.containerSelected.emit(this.selectedContainer);
 	};
 

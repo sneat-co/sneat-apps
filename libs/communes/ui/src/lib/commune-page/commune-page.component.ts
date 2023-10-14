@@ -8,6 +8,5 @@ import { LoginRequiredServiceService } from '@sneat/auth-core';
 export class CommunePageComponent {
 	constructor(
 		private readonly loginRequiredService: LoginRequiredServiceService,
-	) {
-	}
+	) {}
 }

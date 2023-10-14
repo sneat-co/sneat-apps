@@ -1,12 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IEmail } from '@sneat/dto';
 
 type EmailType = 'personal' | 'work';
 
-const emailTypes: { id: EmailType, title: string }[] = [
+const emailTypes: { id: EmailType; title: string }[] = [
 	{ id: 'personal', title: 'Personal' },
 	{ id: 'work', title: 'Work' },
 ];
@@ -25,11 +32,7 @@ const emptyEmails: emailInput[] = [
 	selector: 'sneat-emails-form',
 	templateUrl: './emails-form.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class EmailsFormComponent implements OnChanges {
 	readonly types = emailTypes;
@@ -45,7 +48,10 @@ export class EmailsFormComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const emailsChange = changes['emails'];
-		console.log('EmailsFormComponent.ngOnChanges(), emailsChange', emailsChange);
+		console.log(
+			'EmailsFormComponent.ngOnChanges(), emailsChange',
+			emailsChange,
+		);
 		if (emailsChange && (this.emails?.length || 0) === 0) {
 			this.emailInputs = emptyEmails;
 		}
@@ -64,7 +70,7 @@ export class EmailsFormComponent implements OnChanges {
 
 	private setEmailsOnInputChanged(): void {
 		console.log('setEmailsOnInputChanged()', this.emailInputs);
-		this.emails = [...this.emailInputs].filter(email => !!email.address);
+		this.emails = [...this.emailInputs].filter((email) => !!email.address);
 		if (this.emails.length === 0) {
 			this.emails = undefined;
 		}

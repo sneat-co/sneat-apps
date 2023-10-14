@@ -20,8 +20,7 @@ export class RetrospectivesComponent {
 		private readonly userService: SneatUserService, // TODO: replace with user context service
 		private readonly navController: NavController,
 		public readonly navService: TeamNavService,
-	) {
-	}
+	) {}
 
 	navigateToCurrentRetro(): void {
 		console.log('navigateToCurrentRetro()');
@@ -49,8 +48,8 @@ export class RetrospectivesComponent {
 		return (
 			(userID
 				? this.team?.dto?.upcomingRetro?.itemsByUserAndType?.[userID]?.[
-					itemType
-					]
+						itemType
+				  ]
 				: 0) || 0
 		);
 	}

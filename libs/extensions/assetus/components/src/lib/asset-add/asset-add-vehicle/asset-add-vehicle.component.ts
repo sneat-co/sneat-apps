@@ -5,7 +5,8 @@ import {
 	AssetPossession,
 	AssetVehicleType,
 	EngineTypes,
-	FuelTypes, IVehicleAssetDto,
+	FuelTypes,
+	IVehicleAssetDto,
 	IVehicleMainData,
 	timestamp,
 } from '@sneat/dto';
@@ -21,8 +22,10 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	templateUrl: './asset-add-vehicle.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class AssetAddVehicleComponent extends AddAssetBaseComponent implements OnChanges {
-
+export class AssetAddVehicleComponent
+	extends AddAssetBaseComponent
+	implements OnChanges
+{
 	@Input() public override team?: ITeamContext;
 	@Input() public vehicleAsset?: IVehicleAssetContext;
 
@@ -34,7 +37,6 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 		{ id: 'boat', title: 'Boat', iconName: 'boat-outline' },
 	];
 
-
 	public countryIso2 = 'IE';
 	public regNumber = '';
 	public vin = '';
@@ -44,33 +46,32 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	public engine = '';
 	public engines?: string[];
 
-	public nctExpires = '';       // ISO date string 'YYYY-MM-DD'
-	public taxExpires = '';      // ISO date string 'YYYY-MM-DD'
-	public nextServiceDue = '';  // ISO date string 'YYYY-MM-DD'
+	public nctExpires = ''; // ISO date string 'YYYY-MM-DD'
+	public taxExpires = ''; // ISO date string 'YYYY-MM-DD'
+	public nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IVehicleAssetContext = this.vehicleAsset
-				?? {
-					id: '',
-					team: this.team ?? { id: '' },
-					dto: {
-						status: 'draft',
-						category: 'vehicle',
-						teamID: this.team?.id,
-						type: this.vehicleType,
-						title: '',
-						make: '',
-						model: '',
-						engineFuel: FuelTypes.unknown,
-						engineType: EngineTypes.unknown,
-						possession: undefined as unknown as AssetPossession,
-						createdAt: new Date().toISOString() as unknown as timestamp,
-						createdBy: '-',
-						updatedAt: new Date().toISOString() as unknown as timestamp,
-						updatedBy: '-',
-					},
-				};
+			const a: IVehicleAssetContext = this.vehicleAsset ?? {
+				id: '',
+				team: this.team ?? { id: '' },
+				dto: {
+					status: 'draft',
+					category: 'vehicle',
+					teamID: this.team?.id,
+					type: this.vehicleType,
+					title: '',
+					make: '',
+					model: '',
+					engineFuel: FuelTypes.unknown,
+					engineType: EngineTypes.unknown,
+					possession: undefined as unknown as AssetPossession,
+					createdAt: new Date().toISOString() as unknown as timestamp,
+					createdBy: '-',
+					updatedAt: new Date().toISOString() as unknown as timestamp,
+					updatedBy: '-',
+				},
+			};
 			this.vehicleAsset = { ...a, team: this.team };
 		}
 	}
@@ -91,7 +92,8 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	onVehicleTypeChanged(): void {
 		if (this.vehicleAsset?.dto) {
 			this.vehicleAsset = {
-				...this.vehicleAsset, dto: {
+				...this.vehicleAsset,
+				dto: {
 					...this.vehicleAsset.dto,
 					type: this.vehicleType,
 					make: '',
@@ -104,7 +106,9 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	formatDate(value?: string | string[] | null): string {
-		return value && !Array.isArray(value) ? format(parseISO(value), 'dd MMMM yyyy') : '';
+		return value && !Array.isArray(value)
+			? format(parseISO(value), 'dd MMMM yyyy')
+			: '';
 	}
 
 	submitVehicleForm(): void {
@@ -129,7 +133,10 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 			teamID: this.team?.id,
 		};
 		if (this.yearOfBuild) {
-			request = { ...request, asset: { ...request.asset, yearOfBuild: +this.yearOfBuild } };
+			request = {
+				...request,
+				asset: { ...request.asset, yearOfBuild: +this.yearOfBuild },
+			};
 		}
 
 		// if (this.vin) {
@@ -166,6 +173,9 @@ export class AssetAddVehicleComponent extends AddAssetBaseComponent implements O
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage<IVehicleMainData, IVehicleAssetDto>(request, this.team);
+		this.createAssetAndGoToAssetPage<IVehicleMainData, IVehicleAssetDto>(
+			request,
+			this.team,
+		);
 	}
 }

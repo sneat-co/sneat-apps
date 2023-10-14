@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {RealEstatesPageComponent} from './real-estates-page.component';
+import { RealEstatesPageComponent } from './real-estates-page.component';
 
 describe('RealEstatesPage', () => {
 	let component: RealEstatesPageComponent;
@@ -11,8 +11,7 @@ describe('RealEstatesPage', () => {
 		TestBed.configureTestingModule({
 			declarations: [RealEstatesPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('RealEstatesPage', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

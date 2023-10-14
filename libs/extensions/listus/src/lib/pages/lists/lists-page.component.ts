@@ -5,7 +5,10 @@ import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
 import { IListGroup, IListInfo, ListType } from '@sneat/dto';
 import { TeamBaseComponent } from '@sneat/team/components';
-import { createShortCommuneInfoFromDto, ITeamContext } from '@sneat/team/models';
+import {
+	createShortCommuneInfoFromDto,
+	ITeamContext,
+} from '@sneat/team/models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
@@ -17,7 +20,6 @@ import { NewListDialogComponent } from './new-list-dialog.component';
 	providers: [ListusComponentBaseParams],
 })
 export class ListsPageComponent extends TeamBaseComponent {
-
 	@ViewChild('newListTitle', { static: false }) newListTitle?: IonInput;
 	addingToGroup: ListType | undefined;
 	listGroups?: IListGroup[];
@@ -37,7 +39,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 	) {
 		super('ListsPageComponent', route, params.teamParams);
 		// this.preloaderService.markAsPreloaded('lists');
-		this.listusAppStateService.changed.subscribe(appState => {
+		this.listusAppStateService.changed.subscribe((appState) => {
 			this.collapsedGroups = appState.collapsedGroups;
 		});
 	}
@@ -52,19 +54,24 @@ export class ListsPageComponent extends TeamBaseComponent {
 	}
 
 	public isCollapsed(group: IListGroup): boolean {
-		return !!group.title && (this.collapsedGroups?.indexOf(group.title) || -1) >= 0;
+		return (
+			!!group.title && (this.collapsedGroups?.indexOf(group.title) || -1) >= 0
+		);
 	}
 
 	public clickGroup(group: IListGroup): void {
 		if (!group.title) {
 			return;
 		}
-		this.listusAppStateService.setGroupCollapsed(group.title, !this.isCollapsed(group));
+		this.listusAppStateService.setGroupCollapsed(
+			group.title,
+			!this.isCollapsed(group),
+		);
 	}
 
 	reorder(event: Event, listGroup: IListGroup): void {
 		console.log('reorder', event, listGroup);
-		this.errorLogger.logError('reorder is not implemented yet', );
+		this.errorLogger.logError('reorder is not implemented yet');
 		// let dtoListGroup: IListGroup | undefined;
 		// let reordered = false;
 		// if (!this.team) {
@@ -128,23 +135,24 @@ export class ListsPageComponent extends TeamBaseComponent {
 	}
 
 	public goList(list: IListInfo): void {
-		console.log(`ListsPage.goList(id=${list.id}, shortId=${list.shortId}, title=${list.title}) => communeInfo:`, list.team);
-		const listGroup = this.listGroups?.find(lg => (lg.lists || []).some(l => eq(l.id, list.id)));
+		console.log(
+			`ListsPage.goList(id=${list.id}, shortId=${list.shortId}, title=${list.title}) => communeInfo:`,
+			list.team,
+		);
+		const listGroup = this.listGroups?.find((lg) =>
+			(lg.lists || []).some((l) => eq(l.id, list.id)),
+		);
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
 		const path = `list/${list.type}/${list.id}`;
-		this.teamParams.teamNavService.navigateForwardToTeamPage(
-			this.team,
-			path,
-			{
-				state: {
-					listInfo: list,
-					listGroupTitle: listGroup && listGroup.title,
-					team: this.team,
-				},
+		this.teamParams.teamNavService.navigateForwardToTeamPage(this.team, path, {
+			state: {
+				listInfo: list,
+				listGroupTitle: listGroup && listGroup.title,
+				team: this.team,
 			},
-		);
+		});
 	}
 
 	addTo(event: Event, listType?: ListType): void {
@@ -154,10 +162,8 @@ export class ListsPageComponent extends TeamBaseComponent {
 			this.errorLogger.logError('listType is a required parameter');
 			return;
 		}
-		this.newList(listType, event)
-			.catch(this.errorLogger.logError);
+		this.newList(listType, event).catch(this.errorLogger.logError);
 	}
-
 
 	// We need this method as user can be a member of multiple communes
 	// As a minimum by default it is `personal` & `family`.
@@ -165,11 +171,14 @@ export class ListsPageComponent extends TeamBaseComponent {
 	// Once a commune DTO loaded we should update combined listGroups[]
 	// A good example would be a "to watch movies" group that will have family lists (visible to all family members)
 
-	remove(listGroup: IListGroup, list: IListInfo, ionItemSliding: IonItemSliding): void {
-		ionItemSliding.close()
-			.catch(err => {
-				this.errorLogger.logError(err, 'Failed to close sliding item');
-			});
+	remove(
+		listGroup: IListGroup,
+		list: IListInfo,
+		ionItemSliding: IonItemSliding,
+	): void {
+		ionItemSliding.close().catch((err) => {
+			this.errorLogger.logError(err, 'Failed to close sliding item');
+		});
 		this.reordered = true;
 		if (!list.id) {
 			throw new Error('!list.id');
@@ -177,15 +186,16 @@ export class ListsPageComponent extends TeamBaseComponent {
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
-		this.params.listService.deleteList(this.team, list.id)
-			.subscribe({
-				next: () => {
-					listGroup.lists = (listGroup.lists || []).filter(l => !eq(l.id, list.id));
-				},
-				error: err => {
-					this.errorLogger.logError(err, 'Failed to delete list');
-				},
-			});
+		this.params.listService.deleteList(this.team, list.id).subscribe({
+			next: () => {
+				listGroup.lists = (listGroup.lists || []).filter(
+					(l) => !eq(l.id, list.id),
+				);
+			},
+			error: (err) => {
+				this.errorLogger.logError(err, 'Failed to delete list');
+			},
+		});
 	}
 
 	cancelListCreation(): void {
@@ -217,10 +227,15 @@ export class ListsPageComponent extends TeamBaseComponent {
 
 	// tslint:disable-next-line:prefer-function-over-method
 	trackById(index: number, item: IListInfo): string | number {
-		return item.id && `id:${item.id}`
-			|| item.shortId && item.team && item.team.id && `${item.team.id}:${item.type}:${item.shortId}`
-			|| item.shortId && `${item.type}:${item.shortId}`
-			|| index;
+		return (
+			(item.id && `id:${item.id}`) ||
+			(item.shortId &&
+				item.team &&
+				item.team.id &&
+				`${item.team.id}:${item.type}:${item.shortId}`) ||
+			(item.shortId && `${item.type}:${item.shortId}`) ||
+			index
+		);
 	}
 
 	// protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
@@ -257,12 +272,14 @@ export class ListsPageComponent extends TeamBaseComponent {
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process onTeamDtoChanged');
 		}
-
 	}
 
 	private unsubscribeFromUserCommunesSubscriptions(): void {
-		if (this.userCommunesSubscriptions && this.userCommunesSubscriptions.length) {
-			this.userCommunesSubscriptions.forEach(s => {
+		if (
+			this.userCommunesSubscriptions &&
+			this.userCommunesSubscriptions.length
+		) {
+			this.userCommunesSubscriptions.forEach((s) => {
 				s.unsubscribe();
 			});
 			this.userCommunesSubscriptions = [];
@@ -304,8 +321,11 @@ export class ListsPageComponent extends TeamBaseComponent {
 		console.log(
 			`ListsPageComponent.updateListsFromTeam()`,
 			team,
-			'\n: passed:', team.dto?.listGroups && team.dto?.listGroups.map(lg => ({ ...lg })),
-			'\n: current:', this.listGroups && this.listGroups.map(lg => ({ ...lg, lists: [...(lg.lists || [])] })),
+			'\n: passed:',
+			team.dto?.listGroups && team.dto?.listGroups.map((lg) => ({ ...lg })),
+			'\n: current:',
+			this.listGroups &&
+				this.listGroups.map((lg) => ({ ...lg, lists: [...(lg.lists || [])] })),
 		);
 		if (!team?.dto) {
 			return;
@@ -313,13 +333,22 @@ export class ListsPageComponent extends TeamBaseComponent {
 		if (!team.dto?.listGroups) {
 			if (team?.type === 'family') {
 				team = {
-					...team, dto: {
-						...team.dto, listGroups: [
+					...team,
+					dto: {
+						...team.dto,
+						listGroups: [
 							{
 								id: 'to-buy',
 								type: 'to-buy',
 								title: 'To buy',
-								lists: [{ id: 'groceries', type: 'to-buy', emoji: '🛒', title: 'Groceries' }],
+								lists: [
+									{
+										id: 'groceries',
+										type: 'to-buy',
+										emoji: '🛒',
+										title: 'Groceries',
+									},
+								],
 							},
 						],
 					},
@@ -331,9 +360,11 @@ export class ListsPageComponent extends TeamBaseComponent {
 		if (!this.listGroups) {
 			this.listGroups = [];
 		}
-		team.dto?.listGroups?.forEach(passedListGroup => {
+		team.dto?.listGroups?.forEach((passedListGroup) => {
 			if (!passedListGroup.type) {
-				throw new Error('!passedListGroup.type: ' + JSON.stringify(passedListGroup));
+				throw new Error(
+					'!passedListGroup.type: ' + JSON.stringify(passedListGroup),
+				);
 			}
 			let listGroup = this.listGroups?.find((v, i) => {
 				if (!v.type) {
@@ -358,35 +389,58 @@ export class ListsPageComponent extends TeamBaseComponent {
 						team: createShortCommuneInfoFromDto(team),
 					};
 				}
-				const matchedList = (listGroup && listGroup.lists || []).find(
+				const matchedList = ((listGroup && listGroup.lists) || []).find(
 					(currentList, listIndex) => {
 						if (!currentList) {
-							throw new Error(`listGroup.lists has null or undefined item at ${listIndex}`);
+							throw new Error(
+								`listGroup.lists has null or undefined item at ${listIndex}`,
+							);
 						}
 						const matchedListTypes = currentList.type === passedList.type;
-						const matchedIds = !!currentList.id && currentList.id === passedList.id;
-						const matchedShortId = !!currentList.shortId && currentList.shortId === passedList.shortId;
-						const matchedCommuneTypes = !!currentList.team && !!passedList.team && currentList.team.type === passedList.team.type;
-						const matchedCommuneIds = !!currentList.team && !!passedList.team && currentList.team.id === passedList.team.type;
-						const matchedCommuneShortIds = !!currentList.team && !!passedList.team
-							&& eq(currentList.team?.id, passedList.team.id);
-						const matched = matchedIds
-							|| (
-								matchedShortId
-								&& matchedListTypes
-								&& matchedCommuneTypes
-								&& (matchedCommuneIds || matchedCommuneShortIds)
-							);
-						if (currentList.title === 'Groceries' && passedList.title === 'Groceries') {
+						const matchedIds =
+							!!currentList.id && currentList.id === passedList.id;
+						const matchedShortId =
+							!!currentList.shortId &&
+							currentList.shortId === passedList.shortId;
+						const matchedCommuneTypes =
+							!!currentList.team &&
+							!!passedList.team &&
+							currentList.team.type === passedList.team.type;
+						const matchedCommuneIds =
+							!!currentList.team &&
+							!!passedList.team &&
+							currentList.team.id === passedList.team.type;
+						const matchedCommuneShortIds =
+							!!currentList.team &&
+							!!passedList.team &&
+							eq(currentList.team?.id, passedList.team.id);
+						const matched =
+							matchedIds ||
+							(matchedShortId &&
+								matchedListTypes &&
+								matchedCommuneTypes &&
+								(matchedCommuneIds || matchedCommuneShortIds));
+						if (
+							currentList.title === 'Groceries' &&
+							passedList.title === 'Groceries'
+						) {
 							console.log(
-								'passedList', passedList,
-								'currentList', currentList,
-								'matchedIds', matchedIds,
-								'matchedListTypes', matchedListTypes,
-								'matchedShortId', matchedShortId,
-								'matchedCommuneTypes', matchedCommuneTypes,
-								'matchedCommuneShortIds', matchedCommuneShortIds,
-								'matched', matched,
+								'passedList',
+								passedList,
+								'currentList',
+								currentList,
+								'matchedIds',
+								matchedIds,
+								'matchedListTypes',
+								matchedListTypes,
+								'matchedShortId',
+								matchedShortId,
+								'matchedCommuneTypes',
+								matchedCommuneTypes,
+								'matchedCommuneShortIds',
+								matchedCommuneShortIds,
+								'matched',
+								matched,
 							);
 						}
 						return matched;
@@ -398,7 +452,10 @@ export class ListsPageComponent extends TeamBaseComponent {
 					}
 					listGroup.lists.push({ ...passedList });
 				} else {
-					if (passedList.itemsCount !== undefined && !eq(matchedList.itemsCount, passedList.itemsCount)) {
+					if (
+						passedList.itemsCount !== undefined &&
+						!eq(matchedList.itemsCount, passedList.itemsCount)
+					) {
 						// Update items count
 						// This happens when we add an item to a list
 						matchedList.itemsCount = passedList.itemsCount;
@@ -418,7 +475,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 	}
 
 	private async newList(listType: ListType, event: Event): Promise<void> {
-		const listGroup = this.listGroups?.find(lg => lg.type === listType);
+		const listGroup = this.listGroups?.find((lg) => lg.type === listType);
 		if (!listGroup) {
 			throw new Error('!listGroup');
 		}

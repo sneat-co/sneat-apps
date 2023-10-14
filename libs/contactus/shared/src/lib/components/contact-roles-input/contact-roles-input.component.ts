@@ -1,8 +1,17 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService, IUpdateContactRequest } from '@sneat/contactus-services';
+import {
+	ContactService,
+	IUpdateContactRequest,
+} from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 
 @Component({
@@ -22,9 +31,9 @@ export class ContactRolesInputComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactService: ContactService,
-		@Inject(CONTACT_ROLES_BY_TYPE) private readonly contactRolesByType?: Record<ContactType, IContactRole[]>,
-	) {
-	}
+		@Inject(CONTACT_ROLES_BY_TYPE)
+		private readonly contactRolesByType?: Record<ContactType, IContactRole[]>,
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contact']) {
@@ -33,7 +42,10 @@ export class ContactRolesInputComponent implements OnChanges {
 	}
 
 	private setRoles(): void {
-		this.roles = this.contact?.brief?.type && this.contactRolesByType ? this.contactRolesByType[this.contact.brief.type] : undefined;
+		this.roles =
+			this.contact?.brief?.type && this.contactRolesByType
+				? this.contactRolesByType[this.contact.brief.type]
+				: undefined;
 	}
 
 	onRoleChanged(event: Event, role: IContactRole): void {
@@ -46,10 +58,16 @@ export class ContactRolesInputComponent implements OnChanges {
 		const request: IUpdateContactRequest = {
 			contactID: this.contact.id,
 			teamID: this.team?.id,
-			roles: { add: checked ? [role.id] : undefined, remove: checked ? undefined : [role.id] },
+			roles: {
+				add: checked ? [role.id] : undefined,
+				remove: checked ? undefined : [role.id],
+			},
 		};
 		this.processingRoleIDs.push(role.id);
-		const complete = () => this.processingRoleIDs = this.processingRoleIDs.filter(id => id !== role.id);
+		const complete = () =>
+			(this.processingRoleIDs = this.processingRoleIDs.filter(
+				(id) => id !== role.id,
+			));
 		this.contactService.updateContact(request).subscribe({
 			error: (err: unknown) => {
 				console.log('setContactRole error', err);

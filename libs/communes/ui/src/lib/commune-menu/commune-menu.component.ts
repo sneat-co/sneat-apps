@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-commune-menu',
 	templateUrl: './commune-menu.component.html',
 })
-export class CommuneMenuComponent {
-
-}
+export class CommuneMenuComponent {}

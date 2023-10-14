@@ -16,8 +16,7 @@ export class NewSegmentDialogComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 		private readonly orderNavService: OrderNavService,
-	) {
-	}
+	) {}
 
 	protected close(): void {
 		// this.modalController

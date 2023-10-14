@@ -15,13 +15,18 @@ export class OrderPrintMenuComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly popoverController: PopoverController,
-	) {
-	}
+	) {}
 
-	print(event: Event, path: string): void { // TODO: can we dismiss popover declaratively?
+	print(event: Event, path: string): void {
+		// TODO: can we dismiss popover declaratively?
 		console.log('print()', path);
 		event.stopPropagation();
-		this.popoverController.dismiss()
-			.catch(this.errorLogger.logErrorHandler('Failed to dismiss popover controller'));
+		this.popoverController
+			.dismiss()
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to dismiss popover controller',
+				),
+			);
 	}
 }

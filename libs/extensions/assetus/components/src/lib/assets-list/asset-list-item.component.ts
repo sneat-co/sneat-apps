@@ -6,21 +6,15 @@ import { IAssetContext, ITeamContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-asset-list-item',
-	template: `
-
-	`,
+	template: ``,
 })
 export class AssetListItemComponent {
-
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() assetType?: AssetCategory;
 	@Input() asset?: IAssetContext;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navCtrl: NavController,
-		// private readonly assertService: AssertSer
-	) {
-	}
-
+		private readonly navCtrl: NavController, // private readonly assertService: AssertSer
+	) {}
 }

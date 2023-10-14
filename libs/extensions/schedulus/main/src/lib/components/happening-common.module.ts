@@ -1,23 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ScheduleService } from '../services/schedule.service';
-import {ParticipantsComponent} from './participants/participants.component';
-import {IonicModule} from '@ionic/angular';
+import { ParticipantsComponent } from './participants/participants.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-	],
-	declarations: [
-		ParticipantsComponent,
-	],
-	exports: [
-		ParticipantsComponent,
-	],
-	providers: [
-		ScheduleService,
-	]
+	imports: [CommonModule, IonicModule],
+	declarations: [ParticipantsComponent],
+	exports: [ParticipantsComponent],
+	providers: [ScheduleService],
 })
-export class HappeningCommonModule {
-}
+export class HappeningCommonModule {}

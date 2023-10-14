@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ScheduleWeekdayComponent} from './schedule-weekday.component';
+import { ScheduleWeekdayComponent } from './schedule-weekday.component';
 
 describe('ScheduleWeekdayComponent', () => {
 	let component: ScheduleWeekdayComponent;
@@ -11,8 +11,7 @@ describe('ScheduleWeekdayComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [ScheduleWeekdayComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('ScheduleWeekdayComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

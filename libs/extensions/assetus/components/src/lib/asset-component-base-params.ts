@@ -7,6 +7,5 @@ export class AssetComponentBaseParams {
 	constructor(
 		public readonly teamParams: TeamComponentBaseParams,
 		public readonly assetService: AssetService,
-	) {
-	}
+	) {}
 }

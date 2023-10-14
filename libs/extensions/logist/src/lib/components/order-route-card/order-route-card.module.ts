@@ -7,20 +7,8 @@ import { OrderRouteCardComponent } from './order-route-card.component';
 import { TransitPointItemComponent } from './transit-point-item.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		CountryInputComponent,
-	],
-	declarations: [
-		OrderRouteCardComponent,
-		TransitPointItemComponent,
-	],
-	exports: [
-		OrderRouteCardComponent,
-	],
+	imports: [CommonModule, FormsModule, IonicModule, CountryInputComponent],
+	declarations: [OrderRouteCardComponent, TransitPointItemComponent],
+	exports: [OrderRouteCardComponent],
 })
-export class OrderRouteCardModule {
-
-}
+export class OrderRouteCardModule {}

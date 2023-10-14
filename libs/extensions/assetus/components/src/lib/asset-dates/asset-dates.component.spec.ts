@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {AssetDatesComponent} from './asset-dates.component';
+import { AssetDatesComponent } from './asset-dates.component';
 
 describe('AssetDatesComponent', () => {
 	let component: AssetDatesComponent;
@@ -11,8 +11,7 @@ describe('AssetDatesComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [AssetDatesComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('AssetDatesComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

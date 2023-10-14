@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
@@ -6,7 +14,11 @@ import { excludeEmpty } from '@sneat/core';
 import { ContactRole, ContactType, validateAddress } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactContext, ICreateContactCompanyRequest, ITeamContext } from '@sneat/team/models';
+import {
+	IContactContext,
+	ICreateContactCompanyRequest,
+	ITeamContext,
+} from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-new-company-form',
@@ -28,7 +40,10 @@ export class NewCompanyFormComponent implements OnChanges {
 	contact?: IContactContext;
 
 	readonly form = new FormGroup({
-		role: new FormControl<ContactRole | undefined>(undefined, Validators.required),
+		role: new FormControl<ContactRole | undefined>(
+			undefined,
+			Validators.required,
+		),
 		title: new FormControl<string>('', Validators.required),
 	});
 
@@ -36,8 +51,7 @@ export class NewCompanyFormComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactService: ContactService,
 		private readonly route: ActivatedRoute,
-	) {
-	}
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
@@ -54,7 +68,11 @@ export class NewCompanyFormComponent implements OnChanges {
 
 	get formIsValid(): boolean {
 		try {
-			return !!this.contactRole && !!this.contact?.dto?.title && !!validateAddress(this.contact.dto?.address);
+			return (
+				!!this.contactRole &&
+				!!this.contact?.dto?.title &&
+				!!validateAddress(this.contact.dto?.address)
+			);
 		} catch (e) {
 			// console.error(e);
 			return false;
@@ -95,7 +113,7 @@ export class NewCompanyFormComponent implements OnChanges {
 			});
 			this.isCreating = true;
 			this.contactService.createContact(this.team, request).subscribe({
-				next: contact => {
+				next: (contact) => {
 					console.log('created contact:', contact);
 					this.contactCreated.emit(contact);
 				},
@@ -109,5 +127,4 @@ export class NewCompanyFormComponent implements OnChanges {
 			return;
 		}
 	}
-
 }

@@ -1,7 +1,8 @@
-import { IAssetMainData } from "@sneat/dto";
-import { ITeamRequest } from "@sneat/team/models";
+import { IAssetMainData } from '@sneat/dto';
+import { ITeamRequest } from '@sneat/team/models';
 
-export interface ICreateAssetRequest<A extends IAssetMainData> extends ITeamRequest {
+export interface ICreateAssetRequest<A extends IAssetMainData>
+	extends ITeamRequest {
 	readonly asset: A;
 }
 

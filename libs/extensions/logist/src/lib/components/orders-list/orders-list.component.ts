@@ -7,7 +7,6 @@ import { ILogistOrderContext } from '../../dto/order-dto';
 	templateUrl: './orders-list.component.html',
 })
 export class OrdersListComponent {
-
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() orders?: ILogistOrderContext[];
 }

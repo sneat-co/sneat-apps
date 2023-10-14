@@ -33,9 +33,11 @@ export class GenderEmojiPipe implements PipeTransform {
 	}
 }
 
-@Pipe({name: 'genderColor'})
+@Pipe({ name: 'genderColor' })
 export class GenderColorPipe implements PipeTransform {
-	transform(gender?: Gender): 'medium' | 'warning' | 'dark' | 'danger' | 'primary' {
+	transform(
+		gender?: Gender,
+	): 'medium' | 'warning' | 'dark' | 'danger' | 'primary' {
 		switch (gender) {
 			case 'male':
 				return 'primary';

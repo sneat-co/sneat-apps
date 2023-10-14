@@ -13,7 +13,6 @@ export interface IUserRecord {
 	readonly teams?: { [id: string]: IUserTeamBrief };
 }
 
-
 export enum TeamMemberTypeEnum {
 	creator = 'creator',
 	member = 'member',

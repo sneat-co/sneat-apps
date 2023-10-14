@@ -1,7 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 export const shortMonthNamesByNumber = [
-	'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+	'Jan',
+	'Feb',
+	'Mar',
+	'Apr',
+	'May',
+	'Jun',
+	'Jul',
+	'Aug',
+	'Sep',
+	'Oct',
+	'Nov',
+	'Dec',
 ];
 
 @Pipe({ name: 'shortMonthName' })

@@ -9,10 +9,12 @@ export class ScheduleNavService {
 	constructor(
 		private readonly teamNavService: TeamNavService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
-	goSchedule(team: ITeamContext, queryParams?: ISchedulePageParams): Promise<boolean> {
+	goSchedule(
+		team: ITeamContext,
+		queryParams?: ISchedulePageParams,
+	): Promise<boolean> {
 		return this.teamNavService.navigateForwardToTeamPage(team, 'schedule', {
 			queryParams,
 		});
@@ -23,12 +25,15 @@ export class ScheduleNavService {
 			.navigateForwardToTeamPage(team, 'new-happening', {
 				queryParams: params,
 			})
-			.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to navigate to new happening page',
+				),
+			);
 	}
 }
 
 @NgModule({
 	providers: [ScheduleNavService],
 })
-export class ScheduleNavServiceModule {
-}
+export class ScheduleNavServiceModule {}

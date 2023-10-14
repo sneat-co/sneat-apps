@@ -3,13 +3,21 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { virtualSliderAnimations } from '@sneat/components';
 import { HappeningType } from '@sneat/dto';
-import { NewHappeningParams, ScheduleNavService } from '@sneat/extensions/schedulus/shared';
-import { emptyScheduleFilter, ScheduleFilterService } from '../../components/schedule-filter.service';
+import {
+	NewHappeningParams,
+	ScheduleNavService,
+} from '@sneat/extensions/schedulus/shared';
+import {
+	emptyScheduleFilter,
+	ScheduleFilterService,
+} from '../../components/schedule-filter.service';
 import { IScheduleFilter } from '../../components/schedule-filter/schedule-filter';
 import { ScheduleTab } from '../../components/schedule/schedule.component';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
 import { IMemberContext } from '@sneat/team/models';
-
 
 @Component({
 	selector: 'sneat-schedule-page',
@@ -19,7 +27,6 @@ import { IMemberContext } from '@sneat/team/models';
 	animations: virtualSliderAnimations,
 })
 export class SchedulePageComponent extends TeamBaseComponent {
-
 	public tab: ScheduleTab = 'day';
 	public date = '';
 	member?: IMemberContext;
@@ -33,8 +40,8 @@ export class SchedulePageComponent extends TeamBaseComponent {
 		super('SchedulePageComponent', route, params);
 
 		filterService.filter.subscribe({
-			next: filter => {
-				this.filter = filter
+			next: (filter) => {
+				this.filter = filter;
 			},
 		});
 
@@ -67,7 +74,7 @@ export class SchedulePageComponent extends TeamBaseComponent {
 		}
 		const memberID = queryParams.get('member');
 		if (memberID) {
-			this.filterService.next({...this.filter, memberIDs: [memberID]});
+			this.filterService.next({ ...this.filter, memberIDs: [memberID] });
 		}
 	};
 
@@ -77,10 +84,7 @@ export class SchedulePageComponent extends TeamBaseComponent {
 		if (href.indexOf('?') < 0) {
 			href += '?tab=';
 		}
-		href = href.replace(
-			/tab=\w*/,
-			`tab=${this.tab}`,
-		);
+		href = href.replace(/tab=\w*/, `tab=${this.tab}`);
 		history.replaceState(history.state, document.title, href);
 	}
 
@@ -92,10 +96,7 @@ export class SchedulePageComponent extends TeamBaseComponent {
 		if (!this.team) {
 			return;
 		}
-		const params: NewHappeningParams = { type: type};
+		const params: NewHappeningParams = { type: type };
 		this.scheduleNavService.goNewHappening(this.team, params);
-
 	}
 }
-
-

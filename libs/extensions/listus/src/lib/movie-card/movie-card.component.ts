@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { listItemAnimations } from '@sneat/core';
 import { IMovie, IMovieDto } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
@@ -12,7 +19,6 @@ import { ITmdbService } from '../watchlist/interfaces';
 	animations: [listItemAnimations],
 })
 export class MovieCardComponent implements OnChanges {
-
 	@Input()
 	public movie?: IMovie;
 	@Input()
@@ -27,15 +33,14 @@ export class MovieCardComponent implements OnChanges {
 	constructor(
 		private readonly param: ListusComponentBaseParams,
 		private readonly tmdbService: ITmdbService,
-	) {
-	}
+	) {}
 
 	get userId(): string | undefined {
 		return this.param.teamParams.userService.currentUserID;
 	}
 
 	public get isWatched(): boolean {
-		console.warn('isWatched is not implemented yet')
+		console.warn('isWatched is not implemented yet');
 		return false;
 		// return this.listusDbService.isWatched(this.movie, this.userId);
 	}
@@ -46,7 +51,7 @@ export class MovieCardComponent implements OnChanges {
 			throw new Error('mode is required');
 		}
 		if (changes['movie'] && this.movie && this.movie.id) {
-			console.error('not implemented yet')
+			console.error('not implemented yet');
 			// this.movieService.getById(this.movie.id)
 			// 	.subscribe(
 			// 		movie => {
@@ -62,7 +67,10 @@ export class MovieCardComponent implements OnChanges {
 	}
 
 	public removeFromWatchlist(movie?: IMovie): void {
-		console.error('MovieCardComponent.removeFromWatchlist() - not implemented yet', movie);
+		console.error(
+			'MovieCardComponent.removeFromWatchlist() - not implemented yet',
+			movie,
+		);
 		// this.listService.deleteListItem(this.createListItemCommandParams(movie))
 		// 	.subscribe(
 		// 		listDto => {
@@ -73,7 +81,7 @@ export class MovieCardComponent implements OnChanges {
 	}
 
 	public markAsWatched(event: Event): void {
-		console.error('markAsWatched() - not implemented yet',);
+		console.error('markAsWatched() - not implemented yet');
 		event.preventDefault();
 		event.stopPropagation();
 		// this.listusDbService.setIsWatched(this.movie, this.userId, !this.isWatched)
@@ -111,7 +119,3 @@ export class MovieCardComponent implements OnChanges {
 	// 	};
 	// }
 }
-
-
-
-

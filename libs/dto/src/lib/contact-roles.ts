@@ -6,7 +6,7 @@ export const ContactRoleParentOfFriend = 'parent_of_friend';
 export const ContactRoleDriver = 'driver';
 export const ContactRoleLocation = 'location';
 export type ContactRoleDwellingRelated =
-	typeof ContactRoleInsurer
+	| typeof ContactRoleInsurer
 	| 'cleaner'
 	| 'gardener'
 	| 'plumber'
@@ -16,26 +16,31 @@ export type ContactRoleDwellingRelated =
 	| 'tenant'
 	| 'realtor';
 export type ContactRoleVehicle =
-	typeof ContactRoleInsurer
+	| typeof ContactRoleInsurer
 	| 'mechanic'
 	| 'electrician'
 	| 'handyman'
 	| typeof ContactRoleDriver;
-export type ContactRoleMedRelated = 'GP' | 'med_specialist'
+export type ContactRoleMedRelated = 'GP' | 'med_specialist';
 export type ContactRoleFamilyRelated = typeof ContactRoleFriend;
-export type ContactRoleWorkRelated = typeof ContactRoleEmployee | 'client' | 'supplier';
+export type ContactRoleWorkRelated =
+	| typeof ContactRoleEmployee
+	| 'client'
+	| 'supplier';
 export type ContactRoleKidRelated =
-	typeof ContactRoleFriend
+	| typeof ContactRoleFriend
 	| typeof ContactRoleParentOfFriend
 	| 'teacher'
 	| 'babysitter';
 export const ContactRoleShip = 'ship';
-export type ContactRoleLogistSubContact = typeof ContactRoleShip | typeof ContactRoleLocation;
+export type ContactRoleLogistSubContact =
+	| typeof ContactRoleShip
+	| typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
 import { RoleTeamMember } from './dto-member';
 
 export type LogistOrderContactRole =
-	ContactRoleLogistParentContact
+	| ContactRoleLogistParentContact
 	| ContactRoleLogistSubContact
 	| 'consignee'
 	| 'dispatch_point'
@@ -54,15 +59,14 @@ export type LogistOrderContactRole =
 	| 'shipping_line'
 	| 'truck'
 	| 'trucker'
-	| 'warehouse'
-	;
+	| 'warehouse';
 export type ContactRole =
-	typeof RoleTeamMember |
-	ContactRoleFamilyRelated |
-	ContactRoleWorkRelated |
-	ContactRoleKidRelated |
-	ContactRoleMedRelated |
-	ContactRoleDwellingRelated |
-	ContactRoleVehicle |
-	LogistOrderContactRole |
-	'applicant';
+	| typeof RoleTeamMember
+	| ContactRoleFamilyRelated
+	| ContactRoleWorkRelated
+	| ContactRoleKidRelated
+	| ContactRoleMedRelated
+	| ContactRoleDwellingRelated
+	| ContactRoleVehicle
+	| LogistOrderContactRole
+	| 'applicant';

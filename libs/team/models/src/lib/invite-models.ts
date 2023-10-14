@@ -6,5 +6,5 @@ export interface ICreatePersonalInviteRequest extends ITeamRequest {
 }
 
 export interface ICreatePersonalInviteResponse {
-	invite: { id: string; pin?: string; };
+	invite: { id: string; pin?: string };
 }

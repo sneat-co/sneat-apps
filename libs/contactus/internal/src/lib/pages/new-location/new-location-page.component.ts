@@ -3,7 +3,10 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { ContactComponentBaseParams, LocationFormModule } from '@sneat/contactus-shared';
+import {
+	ContactComponentBaseParams,
+	LocationFormModule,
+} from '@sneat/contactus-shared';
 import { IContactContext } from '@sneat/team/models';
 import { ContactBasePage } from '../contact-base-page';
 
@@ -11,16 +14,14 @@ import { ContactBasePage } from '../contact-base-page';
 	selector: 'sneat-new-location-page',
 	templateUrl: './new-location-page.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		LocationFormModule,
-		SneatPipesModule,
-	],
+	imports: [CommonModule, IonicModule, LocationFormModule, SneatPipesModule],
 })
 export class NewLocationPageComponent extends ContactBasePage {
-
-	newLocation: IContactContext = { id: '', dto: { type: 'location' }, team: { id: '' } };
+	newLocation: IContactContext = {
+		id: '',
+		dto: { type: 'location' },
+		team: { id: '' },
+	};
 
 	constructor(
 		route: ActivatedRoute,
@@ -52,7 +53,9 @@ export class NewLocationPageComponent extends ContactBasePage {
 		if (url) {
 			this.navController
 				.navigateBack(url)
-				.catch(this.errorLogger.logErrorHandler('failed navigate to parent contact'));
+				.catch(
+					this.errorLogger.logErrorHandler('failed navigate to parent contact'),
+				);
 		}
 	}
 }

@@ -18,4 +18,6 @@ export interface IContactType {
 
 export type ContactRolesByType = Partial<Record<ContactType, IContactRole[]>>;
 
-export const CONTACT_ROLES_BY_TYPE = new InjectionToken<ContactRolesByType>('CONTACT_ROLES_BY_TYPE');
+export const CONTACT_ROLES_BY_TYPE = new InjectionToken<ContactRolesByType>(
+	'CONTACT_ROLES_BY_TYPE',
+);

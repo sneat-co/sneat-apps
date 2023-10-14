@@ -5,8 +5,10 @@ import { IAssetContext, IVehicleAssetContext } from '@sneat/team/models';
 import { NEVER, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 
-export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, IAssetDtoBase> {
-
+export abstract class AssetBasePage extends TeamItemBaseComponent<
+	IAssetBrief,
+	IAssetDtoBase
+> {
 	protected assetusTeam?: IAssetusTeamContext;
 
 	protected asset?: IAssetContext;
@@ -23,10 +25,21 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 		public readonly params: AssetComponentBaseParams,
 		parentPagePath = 'assets',
 	) {
-		super(className, route, params.teamParams, parentPagePath, 'asset', params.assetService);
+		super(
+			className,
+			route,
+			params.teamParams,
+			parentPagePath,
+			'asset',
+			params.assetService,
+		);
 	}
 
-	protected onRouteParamsChanged(params: ParamMap, itemID?: string, teamID?: string): void {
+	protected onRouteParamsChanged(
+		params: ParamMap,
+		itemID?: string,
+		teamID?: string,
+	): void {
 		// Nothing to do
 		console.log('onRouteParamsChanged', params, itemID, teamID);
 	}
@@ -43,8 +56,8 @@ export abstract class AssetBasePage extends TeamItemBaseComponent<IAssetBrief, I
 	}
 
 	protected override setItemContext(item?: IAssetContext) {
-		console.log('AssetBasePage/setItemContext', item)
-		super.setItemContext(item)
+		console.log('AssetBasePage/setItemContext', item);
+		super.setItemContext(item);
 		this.asset = item;
 	}
 

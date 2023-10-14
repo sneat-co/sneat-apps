@@ -27,5 +27,4 @@ const routes: Routes = [
 	],
 	declarations: [NewAssetPageComponent],
 })
-export class NewAssetPageModule {
-}
+export class NewAssetPageModule {}

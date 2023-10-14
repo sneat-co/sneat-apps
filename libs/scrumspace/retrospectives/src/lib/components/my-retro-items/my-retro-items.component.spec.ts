@@ -9,22 +9,17 @@ describe('MyRetroItemsComponent', () => {
 	let component: MyRetroItemsComponent;
 	let fixture: ComponentFixture<MyRetroItemsComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [MyRetroItemsComponent],
-				imports: [
-					IonicModule.forRoot(),
-					HttpClientTestingModule,
-				],
-				providers: [TeamService, UserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [MyRetroItemsComponent],
+			imports: [IonicModule.forRoot(), HttpClientTestingModule],
+			providers: [TeamService, UserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(MyRetroItemsComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(MyRetroItemsComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

@@ -1,9 +1,7 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'sneat-participants',
 	templateUrl: './participants.component.html',
 })
-export class ParticipantsComponent {
-
-}
+export class ParticipantsComponent {}

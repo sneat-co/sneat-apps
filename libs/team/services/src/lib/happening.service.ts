@@ -1,7 +1,5 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
-import {
-	Firestore as AngularFirestore,
-} from '@angular/fire/firestore';
+import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import {
@@ -13,7 +11,11 @@ import {
 	WeekdayCode2,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext, ITeamRequest } from '@sneat/team/models';
+import {
+	IHappeningContext,
+	ITeamContext,
+	ITeamRequest,
+} from '@sneat/team/models';
 import { map, Observable, tap, throwError } from 'rxjs';
 import { TeamItemService } from './team-item.service';
 
@@ -52,11 +54,14 @@ export interface ISlotRequest extends IHappeningRequest {
 	reason?: string;
 }
 
-export type IDeleteSlotRequest = ISlotRequest
+export type IDeleteSlotRequest = ISlotRequest;
 
-export type ICancelHappeningRequest = ISlotRequest
+export type ICancelHappeningRequest = ISlotRequest;
 
-function processHappeningContext(h: IHappeningContext, team: ITeamContext): IHappeningContext {
+function processHappeningContext(
+	h: IHappeningContext,
+	team: ITeamContext,
+): IHappeningContext {
 	if (h.dto) {
 		try {
 			validateHappeningDto(h.dto);
@@ -72,7 +77,10 @@ function processHappeningContext(h: IHappeningContext, team: ITeamContext): IHap
 
 @Injectable()
 export class HappeningService {
-	private readonly teamItemService: TeamItemService<IHappeningBrief, IHappeningDto>;
+	private readonly teamItemService: TeamItemService<
+		IHappeningBrief,
+		IHappeningDto
+	>;
 
 	static statusFilter(statuses: HappeningStatus[]): IFilter {
 		const operator = statuses?.length === 1 ? '==' : 'in';
@@ -85,7 +93,12 @@ export class HappeningService {
 		afs: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService('schedulus','happenings', afs, sneatApiService);
+		this.teamItemService = new TeamItemService(
+			'schedulus',
+			'happenings',
+			afs,
+			sneatApiService,
+		);
 	}
 
 	createHappening(request: ICreateHappeningRequest): Observable<unknown> {
@@ -111,8 +124,13 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/cancel_happening', request);
 	}
 
-	revokeHappeningCancellation(request: ICancelHappeningRequest): Observable<void> {
-		return this.sneatApiService.post('happenings/revoke_happening_cancellation', request);
+	revokeHappeningCancellation(
+		request: ICancelHappeningRequest,
+	): Observable<void> {
+		return this.sneatApiService.post(
+			'happenings/revoke_happening_cancellation',
+			request,
+		);
 	}
 
 	deleteHappening(happening: IHappeningContext): Observable<void> {
@@ -122,7 +140,11 @@ export class HappeningService {
 			happeningID: happening.id,
 			happeningType: happening.brief?.type || happening.dto?.type,
 		};
-		return this.sneatApiService.delete('happenings/delete_happening', undefined, request);
+		return this.sneatApiService.delete(
+			'happenings/delete_happening',
+			undefined,
+			request,
+		);
 	}
 
 	deleteSlots(request: ISlotRequest): Observable<void> {
@@ -133,10 +155,18 @@ export class HappeningService {
 		// if (request.slotIDs?.length === 1) {
 		// 	qp.set('happening', request.slotIDs[0])
 		// }
-		return this.sneatApiService.delete('happenings/delete_slots', undefined, request);
+		return this.sneatApiService.delete(
+			'happenings/delete_slots',
+			undefined,
+			request,
+		);
 	}
 
-	removeMember(teamID: string, happening: IHappeningContext, memberID: string): Observable<void> {
+	removeMember(
+		teamID: string,
+		happening: IHappeningContext,
+		memberID: string,
+	): Observable<void> {
 		const request: IHappeningMemberRequest = {
 			teamID: teamID,
 			happeningID: happening.id,
@@ -145,7 +175,11 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/remove_member', request);
 	}
 
-	addMember(teamID: string, happening: IHappeningContext, memberID: string): Observable<void> {
+	addMember(
+		teamID: string,
+		happening: IHappeningContext,
+		memberID: string,
+	): Observable<void> {
 		const request: IHappeningMemberRequest = {
 			teamID,
 			happeningID: happening.id,
@@ -154,7 +188,11 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/add_member', request);
 	}
 
-	updateSlot(teamID: string, happeningID: string, slot: IHappeningSlot): Observable<void> {
+	updateSlot(
+		teamID: string,
+		happeningID: string,
+		slot: IHappeningSlot,
+	): Observable<void> {
 		const request: IHappeningSlotRequest = {
 			teamID,
 			happeningID,
@@ -163,7 +201,12 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/update_slot', request);
 	}
 
-	adjustSlot(teamID: string, happeningID: string, slot: IHappeningSlot, date: string): Observable<void> {
+	adjustSlot(
+		teamID: string,
+		happeningID: string,
+		slot: IHappeningSlot,
+		date: string,
+	): Observable<void> {
 		slot = {
 			repeats: 'once',
 			id: slot.id,
@@ -184,24 +227,36 @@ export class HappeningService {
 	// 	return this.sfs.watchByTeamID(team.id);
 	// }
 
-	watchHappeningByID(team: ITeamContext, id: string): Observable<IHappeningContext> {
-		return this.teamItemService.watchTeamItemByID(team, id).pipe(
-			map(h => processHappeningContext(h, team)),
-		);
+	watchHappeningByID(
+		team: ITeamContext,
+		id: string,
+	): Observable<IHappeningContext> {
+		return this.teamItemService
+			.watchTeamItemByID(team, id)
+			.pipe(map((h) => processHappeningContext(h, team)));
 	}
 
-	watchUpcomingSingles(team: ITeamContext, statuses: HappeningStatus[] = ['active']): Observable<IHappeningContext[]> {
+	watchUpcomingSingles(
+		team: ITeamContext,
+		statuses: HappeningStatus[] = ['active'],
+	): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
-		return this.teamItemService.watchTeamItems(team, [
-			HappeningService.statusFilter(statuses),
-			{ field: 'dateMin', operator: '>=', value: date },
-		]).pipe(map(happenings => {
-			return happenings.map(h => processHappeningContext(h, team));
-		}));
+		return this.teamItemService
+			.watchTeamItems(team, [
+				HappeningService.statusFilter(statuses),
+				{ field: 'dateMin', operator: '>=', value: date },
+			])
+			.pipe(
+				map((happenings) => {
+					return happenings.map((h) => processHappeningContext(h, team));
+				}),
+			);
 	}
 
 	watchSinglesOnSpecificDay(
-		team: ITeamContext, date: string, statuses: HappeningStatus[] = ['active'],
+		team: ITeamContext,
+		date: string,
+		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
 		if (!team.id) {
 			return throwError(() => 'missing required field "teamID"');
@@ -211,22 +266,29 @@ export class HappeningService {
 		}
 		console.log('watchSinglesOnSpecificDay()', team.id, date, statuses);
 		const teamDate = team.id + ':' + date;
-		return this.teamItemService.watchTeamItems(team, [
-			{ field: 'teamDates', operator: 'array-contains', value: teamDate },
-			HappeningService.statusFilter(statuses),
-		]).pipe(
-			tap(happenings => {
-				console.log('watchSinglesOnSpecificDay() =>', team.id, date, statuses, happenings);
-			}),
-			map(happenings => happenings.map(h => processHappeningContext(h, team))),
-		);
+		return this.teamItemService
+			.watchTeamItems(team, [
+				{ field: 'teamDates', operator: 'array-contains', value: teamDate },
+				HappeningService.statusFilter(statuses),
+			])
+			.pipe(
+				tap((happenings) => {
+					console.log(
+						'watchSinglesOnSpecificDay() =>',
+						team.id,
+						date,
+						statuses,
+						happenings,
+					);
+				}),
+				map((happenings) =>
+					happenings.map((h) => processHappeningContext(h, team)),
+				),
+			);
 	}
 }
 
 @NgModule({
-	providers: [
-		HappeningService,
-	],
+	providers: [HappeningService],
 })
-export class HappeningServiceModule {
-}
+export class HappeningServiceModule {}

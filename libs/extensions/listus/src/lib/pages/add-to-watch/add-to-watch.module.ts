@@ -1,19 +1,19 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {AddToWatchPageComponent} from './add-to-watch-page.component';
-import {TmdbService} from '../../watchlist/tmdb.service';
-import {MovieCardComponentModule} from '../../movie-card/movie-card.component.module';
+import { AddToWatchPageComponent } from './add-to-watch-page.component';
+import { TmdbService } from '../../watchlist/tmdb.service';
+import { MovieCardComponentModule } from '../../movie-card/movie-card.component.module';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: AddToWatchPageComponent
-	}
+		component: AddToWatchPageComponent,
+	},
 ];
 
 @NgModule({
@@ -22,10 +22,9 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		RouterModule.forChild(routes)
+		RouterModule.forChild(routes),
 	],
 	providers: [TmdbService],
-	declarations: [AddToWatchPageComponent]
+	declarations: [AddToWatchPageComponent],
 })
-export class AddToWatchPageModule {
-}
+export class AddToWatchPageModule {}

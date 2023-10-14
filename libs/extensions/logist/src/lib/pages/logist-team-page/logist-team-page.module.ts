@@ -33,9 +33,6 @@ const routes: Routes = [
 		AddressFormComponent,
 		LogistTeamSettingsModule,
 	],
-	declarations: [
-		LogistTeamPageComponent,
-	],
+	declarations: [LogistTeamPageComponent],
 })
-export class LogistTeamPageModule {
-}
+export class LogistTeamPageModule {}

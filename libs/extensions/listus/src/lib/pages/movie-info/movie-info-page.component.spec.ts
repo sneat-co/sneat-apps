@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {MovieInfoPageComponent} from './movie-info-page.component';
+import { MovieInfoPageComponent } from './movie-info-page.component';
 
 describe('MovieInfoPage', () => {
 	let component: MovieInfoPageComponent;
@@ -11,8 +11,7 @@ describe('MovieInfoPage', () => {
 		TestBed.configureTestingModule({
 			declarations: [MovieInfoPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('MovieInfoPage', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

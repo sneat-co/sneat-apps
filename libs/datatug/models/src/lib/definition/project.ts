@@ -69,12 +69,10 @@ export interface IProjDbModelNumbers {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEntity extends IProjItemBrief {
-}
+export interface IProjEntity extends IProjItemBrief {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEnv extends IProjItemBrief {
-}
+export interface IProjEnv extends IProjItemBrief {}
 
 export interface IProjectApp {
 	id: string;

@@ -7,14 +7,17 @@ export class SelectorBaseComponent {
 
 		// This expects either ModalController or PopoverController
 		protected readonly overlayController: IDismissable,
-	) {
-	}
+	) {}
 
 	protected close(event?: Event): void {
 		event?.stopPropagation();
 		event?.preventDefault();
-		this.overlayController.dismiss()
-			.catch(this.errorLogger.logErrorHandler('failed to dismiss contact selector modal'));
+		this.overlayController
+			.dismiss()
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to dismiss contact selector modal',
+				),
+			);
 	}
-
 }

@@ -6,9 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('RetrospectiveService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
-			imports: [
-				HttpClientTestingModule,
-			],
+			imports: [HttpClientTestingModule],
 		}),
 	);
 

@@ -10,8 +10,7 @@ export enum QueryType {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IQueryItem extends IProjItemBrief {
-}
+export interface IQueryItem extends IProjItemBrief {}
 
 export interface IQueryFolder extends IQueryItem {
 	folders?: IQueryFolder[];

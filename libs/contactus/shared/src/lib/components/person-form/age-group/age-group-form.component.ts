@@ -8,20 +8,16 @@ import { AgeGroupID } from '@sneat/dto';
 @Component({
 	selector: 'sneat-age-group-form',
 	templateUrl: 'age-group-form.component.html',
-	animations: [
-		formNexInAnimation,
-	],
+	animations: [formNexInAnimation],
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class AgeGroupFormComponent {
 	@Input({ required: true }) teamType?: TeamType;
 	@Input({ required: true }) ageGroup?: AgeGroupID;
-	@Output() readonly ageGroupChange = new EventEmitter<AgeGroupID | undefined>();
+	@Output() readonly ageGroupChange = new EventEmitter<
+		AgeGroupID | undefined
+	>();
 	@Input() disabled = false;
 	@Input() hidePetOption = false;
 	@Input() hideCompanyOption = false;

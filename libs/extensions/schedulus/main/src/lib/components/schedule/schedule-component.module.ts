@@ -3,11 +3,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FilterItemComponent, MembersAsBadgesComponent, SneatPipesModule } from '@sneat/components';
+import {
+	FilterItemComponent,
+	MembersAsBadgesComponent,
+	SneatPipesModule,
+} from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import { TeamCoreComponentsModule } from '@sneat/team/components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
-import { HappeningServiceModule, ScheduleDayServiceModule } from '@sneat/team/services';
+import {
+	HappeningServiceModule,
+	ScheduleDayServiceModule,
+} from '@sneat/team/services';
 import { ScheduleModalsServiceModule } from '../../services/schedule-modals.service';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
@@ -31,7 +38,6 @@ import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 
-
 @NgModule({
 	imports: [
 		CommonModule,
@@ -49,9 +55,7 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		MembersSelectorModule,
 		ScheduleModalsServiceModule,
 	],
-	exports: [
-		ScheduleComponent,
-	],
+	exports: [ScheduleComponent],
 	declarations: [
 		ScheduleComponent,
 		SlotContextMenuComponent,
@@ -73,11 +77,6 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		ScheduleFilterComponent,
 		ScheduleCardHeaderComponent,
 	],
-	providers: [
-		ScheduleFilterService,
-		ScheduleStateService,
-	],
+	providers: [ScheduleFilterService, ScheduleStateService],
 })
-export class ScheduleComponentModule {
-
-}
+export class ScheduleComponentModule {}

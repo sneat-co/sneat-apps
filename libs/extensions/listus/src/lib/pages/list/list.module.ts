@@ -32,14 +32,7 @@ const routes: Routes = [
 		SharedWithModule,
 		ListusCoreServicesModule,
 	],
-	declarations: [
-		ListItemComponent,
-		NewListItemComponent,
-		ListPageComponent,
-	],
-	providers: [
-		ListDialogsService,
-	],
+	declarations: [ListItemComponent, NewListItemComponent, ListPageComponent],
+	providers: [ListDialogsService],
 })
-export class ListPageModule {
-}
+export class ListPageModule {}

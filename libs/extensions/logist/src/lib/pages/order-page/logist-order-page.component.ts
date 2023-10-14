@@ -1,6 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, PopoverController, ToastController } from '@ionic/angular';
+import {
+	ModalController,
+	PopoverController,
+	ToastController,
+} from '@ionic/angular';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import { first } from 'rxjs';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
@@ -13,15 +17,21 @@ import { OrderPrintMenuComponent } from '../../components/order-card/order-print
 import { LogistOrderService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
-type OrderDetailsTab = 'containers' | 'truckers' | 'points' | 'segments' | 'notes';
+type OrderDetailsTab =
+	| 'containers'
+	| 'truckers'
+	| 'points'
+	| 'segments'
+	| 'notes';
 
 @Component({
 	selector: 'sneat-order-page',
 	templateUrl: './logist-order-page.component.html',
 })
-export class LogistOrderPageComponent extends OrderPageBaseComponent implements OnDestroy {
-
-
+export class LogistOrderPageComponent
+	extends OrderPageBaseComponent
+	implements OnDestroy
+{
 	tab: OrderDetailsTab = 'containers';
 
 	private modal?: HTMLIonModalElement;
@@ -38,8 +48,8 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 	) {
 		super('LogistOrderPageComponent', route, teamParams, orderService);
 		try {
-			route.queryParamMap.pipe(first()).subscribe(params => {
-				this.tab = params.get('tab') as OrderDetailsTab || this.tab;
+			route.queryParamMap.pipe(first()).subscribe((params) => {
+				this.tab = (params.get('tab') as OrderDetailsTab) || this.tab;
 			});
 		} catch (e) {
 			this.errorLogger.logError(e);
@@ -51,14 +61,19 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		event.preventDefault();
 		const text = this.order?.id;
 		if (text) {
-			navigator.clipboard.writeText(text)
+			navigator.clipboard
+				.writeText(text)
 				.then(() => {
-					this.toastController.create({
-						message: 'Order number copied to clipboard: ' + text,
-						duration: 1500,
-					}).then(toast => toast.present());
+					this.toastController
+						.create({
+							message: 'Order number copied to clipboard: ' + text,
+							duration: 1500,
+						})
+						.then((toast) => toast.present());
 				})
-				.catch(err => alert('Error copying order number to clipboard: ' + err));
+				.catch((err) =>
+					alert('Error copying order number to clipboard: ' + err),
+				);
 		}
 	}
 
@@ -75,7 +90,6 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		await popover.present(event as MouseEvent);
 	}
 
-
 	onTabChanged(event: Event): void {
 		try {
 			console.log('onTabChanged', event);
@@ -84,10 +98,7 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 			if (href.indexOf('?') < 0) {
 				href += '?tab=';
 			}
-			href = href.replace(
-				/tab=\w*/,
-				`tab=${this.tab}`,
-			);
+			href = href.replace(/tab=\w*/, `tab=${this.tab}`);
 			history.replaceState(history.state, document.title, href);
 		} catch (e) {
 			this.errorLogger.logError(e, 'failed to handle tab change');
@@ -110,7 +121,13 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		if (!order) {
 			return;
 		}
-		this.newSegmentService.goNewSegmentPage({ order }).catch(this.errorLogger.logErrorHandler('Failed to navigate to new segment page'));
+		this.newSegmentService
+			.goNewSegmentPage({ order })
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to navigate to new segment page',
+				),
+			);
 	}
 
 	addShippingPoint(): void {
@@ -120,18 +137,25 @@ export class LogistOrderPageComponent extends OrderPageBaseComponent implements 
 		const props: INewShippingPointParams = {
 			order: this.order,
 		};
-		this.newShippingPointService.openNewShippingPointDialog(props)
-			.then(modal => {
+		this.newShippingPointService
+			.openNewShippingPointDialog(props)
+			.then((modal) => {
 				this.modal = modal;
 				modal.onDidDismiss().then(() => {
 					this.modal = undefined;
 				});
 			})
-			.catch(this.errorLogger.logErrorHandler('Failed to open new shipping point form'));
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to open new shipping point form',
+				),
+			);
 	}
 
 	override ngOnDestroy() {
-		this.modal?.dismiss().catch(this.errorLogger.logErrorHandler('Failed to dispose modal'));
+		this.modal
+			?.dismiss()
+			.catch(this.errorLogger.logErrorHandler('Failed to dispose modal'));
 		super.ngOnDestroy();
 	}
 }

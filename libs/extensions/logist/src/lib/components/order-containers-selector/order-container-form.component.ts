@@ -24,16 +24,18 @@ export class OrderContainerFormComponent {
 		if (checked && !this.container.tasks?.includes(task)) {
 			this.container = {
 				...this.container,
-				tasks: [...this.container.tasks || [], task],
+				tasks: [...(this.container.tasks || []), task],
 			};
 		} else if (!checked && this.container.tasks?.includes(task)) {
 			this.container = {
 				...this.container,
-				tasks: this.container.tasks?.filter(t => t !== task),
+				tasks: this.container.tasks?.filter((t) => t !== task),
 			};
 		}
-		this.container = { ...this.container, checked: !!this.container.tasks?.length };
+		this.container = {
+			...this.container,
+			checked: !!this.container.tasks?.length,
+		};
 		this.toggled.emit(this.container);
 	}
-
 }

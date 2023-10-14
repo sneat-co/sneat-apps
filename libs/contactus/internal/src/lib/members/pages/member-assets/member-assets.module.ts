@@ -1,17 +1,17 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {MemberAssetsPageComponent} from './member-assets-page-components.component';
+import { MemberAssetsPageComponent } from './member-assets-page-components.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MemberAssetsPageComponent
-	}
+		component: MemberAssetsPageComponent,
+	},
 ];
 
 @NgModule({
@@ -19,9 +19,8 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		RouterModule.forChild(routes)
+		RouterModule.forChild(routes),
 	],
-	declarations: [MemberAssetsPageComponent]
+	declarations: [MemberAssetsPageComponent],
 })
-export class MemberAssetsPageModule {
-}
+export class MemberAssetsPageModule {}

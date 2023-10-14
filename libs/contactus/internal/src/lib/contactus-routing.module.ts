@@ -6,26 +6,27 @@ import { memberRoutes, membersRoutes } from './members';
 export const contactusRoutes: Route[] = [
 	{
 		path: 'contacts',
-		loadComponent: () => import('./pages/contacts/contacts-page.component')
-			.then(m => m.ContactsPageComponent),
+		loadComponent: () =>
+			import('./pages/contacts/contacts-page.component').then(
+				(m) => m.ContactsPageComponent,
+			),
 		// ...guardRoute,
 	},
 	{
 		path: 'new-contact',
-		loadComponent: () => import('./pages')
-			.then(m => m.NewContactPageComponent),
+		loadComponent: () =>
+			import('./pages').then((m) => m.NewContactPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'contact/:contactID',
-		loadComponent: () => import('./pages')
-			.then(m => m.ContactPageComponent),
+		loadComponent: () => import('./pages').then((m) => m.ContactPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'contact/:contactID/new-location',
-		loadComponent: () => import('./pages')
-			.then(m => m.NewLocationPageComponent),
+		loadComponent: () =>
+			import('./pages').then((m) => m.NewLocationPageComponent),
 		// ...guardRoute,
 	},
 	// {
@@ -57,5 +58,4 @@ export const contactusRoutes: Route[] = [
 		]),
 	],
 })
-export class ContactusRoutingModule {
-}
+export class ContactusRoutingModule {}

@@ -11,5 +11,4 @@ import { ErrorLoggerService } from './error-logger.service';
 		},
 	],
 })
-export class SneatLoggingModule {
-}
+export class SneatLoggingModule {}

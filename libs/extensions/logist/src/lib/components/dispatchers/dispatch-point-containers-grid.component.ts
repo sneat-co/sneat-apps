@@ -78,27 +78,41 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 		const shippingPointID = this.shippingPoint?.id;
 
 		const containerPoints = shippingPointID
-			? this.order?.dto?.containerPoints?.filter(cp => cp.shippingPointID === shippingPointID)
+			? this.order?.dto?.containerPoints?.filter(
+					(cp) => cp.shippingPointID === shippingPointID,
+			  )
 			: [];
-		const containerPointToRow = (cp: IContainerPoint, i: number): IDispatchPointContainerRow => {
-			const container = this.order?.dto?.containers?.find(c => c.id === cp.containerID);
-			const tasks = cp.tasks.map(task => {
-				const load = task === 'load' ? cp.toLoad : task === 'unload' ? cp.toUnload : undefined;
-				if (load?.numberOfPallets && load.grossWeightKg) {
-					return `${task} ${load.numberOfPallets} pallets, ${load.grossWeightKg}kg`;
-				} else if (load?.numberOfPallets) {
-					return `${task} ${load.numberOfPallets} pallets`;
-				} else if (load?.grossWeightKg) {
-					return `${task} ${load.grossWeightKg}kg`;
-				}
-				return task;
-			}).join('; ');
-			return  {
+		const containerPointToRow = (
+			cp: IContainerPoint,
+			i: number,
+		): IDispatchPointContainerRow => {
+			const container = this.order?.dto?.containers?.find(
+				(c) => c.id === cp.containerID,
+			);
+			const tasks = cp.tasks
+				.map((task) => {
+					const load =
+						task === 'load'
+							? cp.toLoad
+							: task === 'unload'
+							? cp.toUnload
+							: undefined;
+					if (load?.numberOfPallets && load.grossWeightKg) {
+						return `${task} ${load.numberOfPallets} pallets, ${load.grossWeightKg}kg`;
+					} else if (load?.numberOfPallets) {
+						return `${task} ${load.numberOfPallets} pallets`;
+					} else if (load?.grossWeightKg) {
+						return `${task} ${load.grossWeightKg}kg`;
+					}
+					return task;
+				})
+				.join('; ');
+			return {
 				i: i + 1,
 				type: container?.type,
 				containerID: cp.containerID,
 				number: container?.number,
-				tasks ,
+				tasks,
 				arrivalScheduledDate: cp.arrival?.scheduledDate,
 				departureScheduledDate: cp.departure?.scheduledDate,
 				loadNumberOfPallets: cp.toLoad?.numberOfPallets,
@@ -106,6 +120,15 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 			};
 		};
 		this.containerPoints = containerPoints?.map(containerPointToRow) || [];
-		console.log('DispatchPointContainersGridComponent.ngOnChanges(): shippingPointID', shippingPointID, 'containerPoints', containerPoints, 'this.containerPoints:', this.containerPoints, 'order', this.order?.dto);
+		console.log(
+			'DispatchPointContainersGridComponent.ngOnChanges(): shippingPointID',
+			shippingPointID,
+			'containerPoints',
+			containerPoints,
+			'this.containerPoints:',
+			this.containerPoints,
+			'order',
+			this.order?.dto,
+		);
 	}
 }

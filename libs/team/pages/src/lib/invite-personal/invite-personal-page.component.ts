@@ -1,16 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { IBriefAndID, IContactBrief, IMemberBrief } from "@sneat/dto";
+import { IBriefAndID, IContactBrief, IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
-import { Auth as AngularFireAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import {
+	Auth as AngularFireAuth,
+	createUserWithEmailAndPassword,
+} from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth-core';
 import { MemberService } from '@sneat/contactus-services';
 import {
 	IAcceptPersonalInviteRequest,
 	IPersonalInvite,
-	IRejectPersonalInviteRequest, zipMapBriefsWithIDs,
+	IRejectPersonalInviteRequest,
+	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
@@ -64,7 +68,10 @@ export class InvitePersonalPageComponent implements OnInit {
 				this.errorLogger.logError('teamId is not set');
 			}
 			this.sneatApiService
-				.getAsAnonymous<{ invite?: IPersonalInvite; members?: {[id: string]: IMemberBrief} }>(
+				.getAsAnonymous<{
+					invite?: IPersonalInvite;
+					members?: { [id: string]: IMemberBrief };
+				}>(
 					'invites/personal',
 					new HttpParams({
 						fromObject: { invite: inviteId, team: teamId },
@@ -105,27 +112,24 @@ export class InvitePersonalPageComponent implements OnInit {
 			if (!token) {
 				throw new Error('token is undefined or empty');
 			}
-			this.memberService
-				.acceptPersonalInvite(request, token)
-				.subscribe({
-						next: (/*memberInfo*/) => {
-							console.log('Joined team');
-							this.navController
-								.navigateRoot('team', { queryParams: { id: this.teamId } })
-								.catch((err) => {
-									this.errorLogger.logError(
-										err,
-										'Failed to navigate to team page after successfully joining a team',
-									);
-								});
-						},
-						error: (error) => {
-							this.errorLogger.logError(error, 'Failed to join team');
-							this.accepting = false;
-							this.working = false;
-						},
-					},
-				);
+			this.memberService.acceptPersonalInvite(request, token).subscribe({
+				next: (/*memberInfo*/) => {
+					console.log('Joined team');
+					this.navController
+						.navigateRoot('team', { queryParams: { id: this.teamId } })
+						.catch((err) => {
+							this.errorLogger.logError(
+								err,
+								'Failed to navigate to team page after successfully joining a team',
+							);
+						});
+				},
+				error: (error) => {
+					this.errorLogger.logError(error, 'Failed to join team');
+					this.accepting = false;
+					this.working = false;
+				},
+			});
 		};
 
 		if (this.userService.currentUserID) {

@@ -14,11 +14,7 @@ import { NewCompanyFormComponent } from './new-company-form.component';
 		SelectFromListModule,
 		FormsModule,
 	],
-	declarations: [
-		NewCompanyFormComponent,
-	],
-	exports: [
-		NewCompanyFormComponent,
-	]
+	declarations: [NewCompanyFormComponent],
+	exports: [NewCompanyFormComponent],
 })
-export class NewCompanyFormModule{}
+export class NewCompanyFormModule {}

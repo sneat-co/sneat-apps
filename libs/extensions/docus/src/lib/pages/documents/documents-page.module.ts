@@ -32,5 +32,4 @@ const routes: Routes = [
 		DocumentsPageComponent,
 	],
 })
-export class DocumentsPageModule {
-}
+export class DocumentsPageModule {}

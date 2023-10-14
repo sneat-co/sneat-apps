@@ -15,15 +15,16 @@ export class SegmentCounterpartyComponent {
 	@Input() readonly = false;
 
 	@Input() contact?: IContactContext;
-	@Output() readonly contactChange = new EventEmitter<IContactContext>;
+	@Output() readonly contactChange = new EventEmitter<IContactContext>();
 
 	@Input() date = '';
-	@Output() readonly dateChange = new EventEmitter<string>;
+	@Output() readonly dateChange = new EventEmitter<string>();
 
 	@Input() refNumber = '';
 	@Output() readonly refNumberChange = new EventEmitter<string>();
 
-	@Output() readonly endpointTypeChange = new EventEmitter<SegmentEndpointType>();
+	@Output() readonly endpointTypeChange =
+		new EventEmitter<SegmentEndpointType>();
 
 	onEndpointTypeChanged(event: Event): void {
 		console.log('onEndpointTypeChanged', event);

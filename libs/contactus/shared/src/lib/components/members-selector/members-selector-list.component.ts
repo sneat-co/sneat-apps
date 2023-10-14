@@ -11,7 +11,9 @@ export class MembersSelectorListComponent {
 	// Intentionally removed @Input() team: ITeamContext = { id: '' };
 	@Input() public members?: readonly IContactContext[];
 	@Input() selectedMembers?: readonly IContactContext[];
-	@Output() readonly selectedMembersChange = new EventEmitter<readonly IContactContext[]>();
+	@Output() readonly selectedMembersChange = new EventEmitter<
+		readonly IContactContext[]
+	>();
 	@Input() max?: number;
 	@Input() onAdded?: (member: IContactContext) => Observable<void>;
 	@Input() onRemoved?: (member: IContactContext) => Observable<void>;
@@ -26,16 +28,17 @@ export class MembersSelectorListComponent {
 		// return !max && max !== 0 || max > 1;
 	}
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
+	constructor(@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger) {
 		console.log('MembersSelectorComponent.constructor()');
 	}
 
-	readonly fullMemberID = (_: number, m: IContactContext) => `${m.team?.id}:${m.id}`;
+	readonly fullMemberID = (_: number, m: IContactContext) =>
+		`${m.team?.id}:${m.id}`;
 
 	isSelected(member: IContactContext): boolean {
-		return !!this.selectedMembers?.some(m => m.id === member.id && m.team?.id === member?.team?.id);
+		return !!this.selectedMembers?.some(
+			(m) => m.id === member.id && m.team?.id === member?.team?.id,
+		);
 	}
 
 	isDisabled(memberID: string): boolean {
@@ -65,7 +68,7 @@ export class MembersSelectorListComponent {
 		}
 		const ce = event as CustomEvent;
 		const memberID: string = ce.detail.value;
-		const member = this.members?.find(m => m.id === memberID);
+		const member = this.members?.find((m) => m.id === memberID);
 		if (!member) {
 			throw new Error('member not found by ID=' + memberID);
 		}
@@ -85,7 +88,7 @@ export class MembersSelectorListComponent {
 	}
 
 	private getSelectedMemberIDs(): string[] {
-		return this.selectedMembers?.map(m => m.id) || [];
+		return this.selectedMembers?.map((m) => m.id) || [];
 	}
 
 	private onMemberAdded(member: IContactContext): boolean {
@@ -93,7 +96,10 @@ export class MembersSelectorListComponent {
 		const selectedIDs = this.getSelectedMemberIDs();
 		if (!selectedIDs.includes(member.id)) {
 			selectedIDs.push(member.id);
-			if (this.selectedMembers && !this.selectedMembers?.some(m => m.id === member.id)) {
+			if (
+				this.selectedMembers &&
+				!this.selectedMembers?.some((m) => m.id === member.id)
+			) {
 				this.selectedMembers = [...this.selectedMembers, member];
 			} else {
 				this.setSelectedMembers(selectedIDs);
@@ -101,17 +107,21 @@ export class MembersSelectorListComponent {
 			if (this.onAdded) {
 				this.disabledMemberIDs.push(member.id);
 				this.onAdded(member)
-					.pipe(
-						first(),
-					)
+					.pipe(first())
 					.subscribe({
 						next: () => {
-							this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+							this.disabledMemberIDs = this.disabledMemberIDs.filter(
+								(id) => id !== member.id,
+							);
 						},
-						error: e => {
+						error: (e) => {
 							this.errorLogger.logError(e, 'Failed in onAdded handler');
-							this.selectedMembers = this.selectedMembers?.filter(m => m.id !== member.id);
-							this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+							this.selectedMembers = this.selectedMembers?.filter(
+								(m) => m.id !== member.id,
+							);
+							this.disabledMemberIDs = this.disabledMemberIDs.filter(
+								(id) => id !== member.id,
+							);
 						},
 					});
 			}
@@ -126,16 +136,20 @@ export class MembersSelectorListComponent {
 		if (!selectedIDs.includes(member.id)) {
 			return false;
 		}
-		selectedIDs = selectedIDs.filter(id => id != member.id);
+		selectedIDs = selectedIDs.filter((id) => id != member.id);
 		this.setSelectedMembers(selectedIDs);
 		if (this.onRemoved) {
 			this.disabledMemberIDs.push(member.id);
 			this.onRemoved(member).subscribe({
 				next: () => {
-					this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+					this.disabledMemberIDs = this.disabledMemberIDs.filter(
+						(id) => id !== member.id,
+					);
 				},
-				error: e => {
-					this.disabledMemberIDs = this.disabledMemberIDs.filter(id => id !== member.id);
+				error: (e) => {
+					this.disabledMemberIDs = this.disabledMemberIDs.filter(
+						(id) => id !== member.id,
+					);
 					this.errorLogger.logError(e, 'Failed in onRemoved handler');
 				},
 			});
@@ -143,12 +157,18 @@ export class MembersSelectorListComponent {
 		return true;
 	};
 
-	private setSelectedMembers(selectedIDs: string[]): readonly IContactContext[] {
+	private setSelectedMembers(
+		selectedIDs: string[],
+	): readonly IContactContext[] {
 		const selectedMembers: IContactContext[] = [];
-		selectedIDs.forEach(id => {
-			const m = this.members?.find(m => m.id === id);
+		selectedIDs.forEach((id) => {
+			const m = this.members?.find((m) => m.id === id);
 			if (!m) {
-				console.error(`Selected member not found by ID=${id}, known IDs=${this.getSelectedMemberIDs().join(',')}`);
+				console.error(
+					`Selected member not found by ID=${id}, known IDs=${this.getSelectedMemberIDs().join(
+						',',
+					)}`,
+				);
 				return;
 			}
 			selectedMembers.push(m);

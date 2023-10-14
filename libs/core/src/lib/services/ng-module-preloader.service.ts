@@ -5,14 +5,12 @@ export type PreloadPages =
 	| 'contacts'
 	| 'members'
 	| 'real-estates'
-	| 'budget'
-	;
+	| 'budget';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class NgModulePreloaderService {
-
 	private readonly preloaded: string[] = [];
 
 	/*
@@ -43,22 +41,31 @@ export class NgModulePreloaderService {
 		 'terms': './pages/commune/term/terms/terms.module#TermsPageModule',
 		 'tasks': './pages/commune/todo/tasks/tasks-page.module#TasksPageModule',
 	 */
-	private readonly configs: { [id: string]: { path: string; type: Type<unknown> } } = {}; // Use addPreloadConfigs
+	private readonly configs: {
+		[id: string]: { path: string; type: Type<unknown> };
+	} = {}; // Use addPreloadConfigs
 
 	private warned = false;
 
 	/*
-		* https://blog.angularindepth.com/as-busy-as-a-bee-lazy-loading-in-the-angular-cli-d2812141637f
-		* https://blog.angularindepth.com/here-is-what-you-need-to-know-about-dynamic-components-in-angular-ac1e96167f9e
-		 */
+	 * https://blog.angularindepth.com/as-busy-as-a-bee-lazy-loading-in-the-angular-cli-d2812141637f
+	 * https://blog.angularindepth.com/here-is-what-you-need-to-know-about-dynamic-components-in-angular-ac1e96167f9e
+	 */
 	// constructor(
 	// 	// private readonly injector: Injector,
 	// 	// private loader: NgModuleFactoryLoader,
 	// ) {
 	// }
 
-	public addPreloadConfigs(...configs: { id: string; path: string; type: Type<unknown>; module?: string }[]): void {
-		configs.forEach(config => {
+	public addPreloadConfigs(
+		...configs: {
+			id: string;
+			path: string;
+			type: Type<unknown>;
+			module?: string;
+		}[]
+	): void {
+		configs.forEach((config) => {
 			this.configs[config.id] = { path: config.path, type: config.type };
 		});
 	}
@@ -70,7 +77,9 @@ export class NgModulePreloaderService {
 	public preload(paths: string[], ms = 1000): void {
 		if (!this.warned) {
 			this.warned = true;
-			console.warn(`Preloading is disabled until migrated to Ivy (delay=${ms}ms)`);
+			console.warn(
+				`Preloading is disabled until migrated to Ivy (delay=${ms}ms)`,
+			);
 		}
 		return; // TODO: Enable preloading once migrated to Angular Ivy
 		// setTimeout(

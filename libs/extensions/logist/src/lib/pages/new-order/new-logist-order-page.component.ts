@@ -4,9 +4,19 @@ import { excludeUndefined } from '@sneat/core';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem } from '@sneat/components';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { CounterpartyRole, IOrderCounterparty, OrderDirection } from '../../dto';
-import { ICreateLogistOrderRequest, ILogistOrderContext } from '../../dto/order-dto';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
+import {
+	CounterpartyRole,
+	IOrderCounterparty,
+	OrderDirection,
+} from '../../dto';
+import {
+	ICreateLogistOrderRequest,
+	ILogistOrderContext,
+} from '../../dto/order-dto';
 import { LogistOrderService, LogistTeamService } from '../../services';
 
 @Component({
@@ -28,7 +38,6 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			// 	origin: { id: 'origin', countryID: '' },
 			// 	destination: { id: 'destination', countryID: '' },
 			// },
-
 		},
 	};
 
@@ -54,8 +63,10 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 	}
 
 	get formIsValid(): boolean {
-		return !!this.order.dto?.route?.origin?.countryID
-			&& !!this.order.dto?.route?.destination?.countryID;
+		return (
+			!!this.order.dto?.route?.origin?.countryID &&
+			!!this.order.dto?.route?.destination?.countryID
+		);
 	}
 
 	protected override onTeamIdChanged() {
@@ -65,17 +76,17 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		}
 		this.logistTeamService
 			.watchLogistTeamByID(this.team.id)
-			.pipe(
-				this.takeUntilNeeded(),
-				takeUntil(this.teamIDChanged$),
-			).subscribe({
-			next: logistTeam => {
-				if (logistTeam.dto?.contactID) {
-					this.loadTeamContact(logistTeam.dto.contactID);
-				}
-			},
-			error: this.errorLogger.logErrorHandler('failed to load logist module record'),
-		});
+			.pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
+			.subscribe({
+				next: (logistTeam) => {
+					if (logistTeam.dto?.contactID) {
+						this.loadTeamContact(logistTeam.dto.contactID);
+					}
+				},
+				error: this.errorLogger.logErrorHandler(
+					'failed to load logist module record',
+				),
+			});
 	}
 
 	private loadTeamContact(contactID: string): void {
@@ -88,7 +99,9 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			.pipe(first())
 			.subscribe({
 				next: this.processTeamContact,
-				error: this.errorLogger.logErrorHandler('failed to load logist team default contact'),
+				error: this.errorLogger.logErrorHandler(
+					'failed to load logist team default contact',
+				),
 			});
 	}
 
@@ -103,7 +116,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			return;
 		}
 
-		contact.dto.roles?.forEach(role => {
+		contact.dto.roles?.forEach((role) => {
 			const orderCounterparty: IOrderCounterparty = {
 				contactID: contact.id,
 				title: contactDto.title || contact.id,
@@ -115,7 +128,10 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 				...this.order,
 				dto: {
 					...orderDto,
-					counterparties: [...orderDto.counterparties || [], orderCounterparty],
+					counterparties: [
+						...(orderDto.counterparties || []),
+						orderCounterparty,
+					],
 				},
 			};
 		});
@@ -126,9 +142,11 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		this.order = order;
 	}
 
-
 	onNumberOfContainersChanged(v: { [size: string]: number }): void {
-		console.log('NewLogistOrderPageComponent.onNumberOfContainersChanged():', v);
+		console.log(
+			'NewLogistOrderPageComponent.onNumberOfContainersChanged():',
+			v,
+		);
 		this.numberOfContainers = v;
 	}
 
@@ -139,7 +157,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		if (!this.order?.dto) {
 			throw new Error('!this.order?.dto');
 		}
-		if (!this.order?.dto?.counterparties?.some(c => c.role === 'buyer')) {
+		if (!this.order?.dto?.counterparties?.some((c) => c.role === 'buyer')) {
 			alert('Buyer is required');
 			return;
 		}
@@ -173,31 +191,48 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 				direction: this.direction,
 				route: undefined, //TODO: decide what to do //Object.keys(this.order?.dto?.route || {}).length ? this.order.dto.route : undefined,
 			},
-			numberOfContainers: Object.keys(this.numberOfContainers).length ? this.numberOfContainers : undefined,
+			numberOfContainers: Object.keys(this.numberOfContainers).length
+				? this.numberOfContainers
+				: undefined,
 		});
 
 		this.freightOrdersService.createOrder(request).subscribe({
-			next: response => {
+			next: (response) => {
 				console.log('order created:', response);
-				this.navController.navigateRoot(['..', 'order', response.order.id], { relativeTo: this.route })
-					.catch(this.errorLogger.logErrorHandler('failed to navigate to order'));
+				this.navController
+					.navigateRoot(['..', 'order', response.order.id], {
+						relativeTo: this.route,
+					})
+					.catch(
+						this.errorLogger.logErrorHandler('failed to navigate to order'),
+					);
 			},
 			error: this.errorLogger.logErrorHandler('failed to create new order'),
 		});
 	}
 
 	cancel(): void {
-		this.navController.pop().catch(this.errorLogger.logErrorHandler('failed to cancel new order'));
+		this.navController
+			.pop()
+			.catch(this.errorLogger.logErrorHandler('failed to cancel new order'));
 	}
 
 	protected onCounterpartiesAdded(counterparties: IOrderCounterparty[]): void {
-		console.log('NewLogistOrderPageComponent.onCounterpartiesAdded():', counterparties);
+		console.log(
+			'NewLogistOrderPageComponent.onCounterpartiesAdded():',
+			counterparties,
+		);
 		const orderDto = this.order.dto;
 		if (!orderDto) {
 			return;
 		}
 		const orderCounterparties = orderDto.counterparties || [];
-		counterparties = counterparties.filter(c => !orderCounterparties?.some(oc => oc.contactID === c.contactID && oc.role === c.role));
+		counterparties = counterparties.filter(
+			(c) =>
+				!orderCounterparties?.some(
+					(oc) => oc.contactID === c.contactID && oc.role === c.role,
+				),
+		);
 		this.order = {
 			...this.order,
 			dto: {
@@ -205,6 +240,9 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 				counterparties: [...orderCounterparties, ...counterparties],
 			},
 		};
-		console.log('NewLogistOrderPageComponent.onCounterpartiesAdded() =>', this.order);
+		console.log(
+			'NewLogistOrderPageComponent.onCounterpartiesAdded() =>',
+			this.order,
+		);
 	}
 }

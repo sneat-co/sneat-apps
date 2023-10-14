@@ -1,5 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { IRecord, IRetrospective, ITeam } from '../../../../../models/interfaces';
+import {
+	IRecord,
+	IRetrospective,
+	ITeam,
+} from '../../../../../models/interfaces';
 
 @Component({
 	selector: 'sneat-retro-feedback-stage',

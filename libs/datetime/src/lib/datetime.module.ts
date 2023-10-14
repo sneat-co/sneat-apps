@@ -4,5 +4,4 @@ import { CommonModule } from '@angular/common';
 @NgModule({
 	imports: [CommonModule],
 })
-export class DatetimeModule {
-}
+export class DatetimeModule {}

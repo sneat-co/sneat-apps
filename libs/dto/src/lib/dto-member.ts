@@ -1,7 +1,12 @@
 import { IAvatar } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { ITeamMemberInfo } from './dto-commune';
-import { IPersonRecord, ITitledRecordInfo, ITotalsHolder, IVerification } from './dto-models';
+import {
+	IPersonRecord,
+	ITitledRecordInfo,
+	ITotalsHolder,
+	IVerification,
+} from './dto-models';
 import { IContactBrief } from './dto-contact';
 import { DtoGroupTerms } from './dto-term';
 import { MembersVisibility, TeamMemberType } from './types';
@@ -10,15 +15,19 @@ export const RoleTeamMember = 'member';
 export const MemberRoleContributor = 'contributor';
 export const MemberRoleSpectator = 'spectator';
 export const MemberRoleParish = 'pastor';
-export type MemberRoleEducation = 'administrator' | 'principal' | 'pupil' | 'teacher';
+export type MemberRoleEducation =
+	| 'administrator'
+	| 'principal'
+	| 'pupil'
+	| 'teacher';
 export type MemberRoleRealtor = 'administrator' | 'agent';
 
 export type MemberRole =
-	typeof MemberRoleContributor |
-	typeof MemberRoleSpectator |
-	MemberRoleEducation |
-	MemberRoleRealtor |
-	typeof MemberRoleParish;
+	| typeof MemberRoleContributor
+	| typeof MemberRoleSpectator
+	| MemberRoleEducation
+	| MemberRoleRealtor
+	| typeof MemberRoleParish;
 
 export enum FamilyMemberRelation {
 	child = 'child',
@@ -32,19 +41,20 @@ export enum FamilyMemberRelation {
 	spouse = 'spouse',
 }
 
-
 export function relationshipTitle(id: string): string {
 	// TODO: Needs fix to replace all _ with space
 	return id ? id[0].toUpperCase() + id.substring(1).replace(/_+/g, ' ') : '';
 }
 
-export type FamilyMemberRelations = EnumAsUnionOfKeys<typeof FamilyMemberRelation>;
+export type FamilyMemberRelations = EnumAsUnionOfKeys<
+	typeof FamilyMemberRelation
+>;
 
 export const MemberRelationshipOther = 'other';
 export const MemberRelationshipUndisclosed = 'undisclosed';
 
 export type MemberRelationship =
-	FamilyMemberRelations
+	| FamilyMemberRelations
 	| typeof MemberRelationshipOther
 	| typeof MemberRelationshipUndisclosed;
 
@@ -61,7 +71,10 @@ export interface IContactGroupDto extends IContactGroupBrief {
 	terms?: DtoGroupTerms;
 }
 
-export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder {
+export interface IMemberBase
+	extends IPersonRecord,
+		IVerification,
+		ITotalsHolder {
 	readonly type: TeamMemberType;
 	readonly title?: string;
 	readonly userID?: string; // User ID
@@ -69,8 +82,7 @@ export interface IMemberBase extends IPersonRecord, IVerification, ITotalsHolder
 	readonly avatar?: IAvatar;
 }
 
-export interface IMemberBrief extends IContactBrief {
-}
+export interface IMemberBrief extends IContactBrief {}
 
 export interface IMemberDto extends IMemberBase {
 	position?: string;
@@ -80,10 +92,9 @@ export interface IMemberDto extends IMemberBase {
 export interface IWithContactGroups {
 	groupIDs?: readonly string[];
 	groups: {
-		[id: string]: IContactGroupBrief
+		[id: string]: IContactGroupBrief;
 	};
 }
-
 
 // export function newCommuneMemberInfo(id: string, m: IMemberDto): ITeamMemberInfo {
 // 	return excludeUndefined({
@@ -97,7 +108,11 @@ export interface IWithContactGroups {
 // 	});
 // }
 
-export function memberDtoFromMemberInfo(memberInfo: ITeamMemberInfo, teamId: string, title: string): IMemberDto {
+export function memberDtoFromMemberInfo(
+	memberInfo: ITeamMemberInfo,
+	teamId: string,
+	title: string,
+): IMemberDto {
 	const memberType: TeamMemberType = 'member';
 	return excludeUndefined({
 		...memberInfo,
@@ -115,4 +130,3 @@ export interface IContactGroupDtoCounts {
 export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 	members: number;
 }
-

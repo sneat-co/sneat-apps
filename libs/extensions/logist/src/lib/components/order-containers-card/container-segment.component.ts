@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -6,7 +13,8 @@ import {
 	IContainerPoint,
 	IContainerSegment,
 	IDeleteSegmentsRequest,
-	IFreightLoad, ILogistOrderContext,
+	IFreightLoad,
+	ILogistOrderContext,
 	IOrderCounterparty,
 	IUpdateContainerPointRequest,
 } from '../../dto';
@@ -50,32 +58,36 @@ export class ContainerSegmentComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
 		private readonly changedDetectorRef: ChangeDetectorRef,
-	) {
-	}
+	) {}
 
 	private setForm(): void {
-		this.from = this.order?.dto?.counterparties?.find(c =>
-			c.contactID === this.segment?.from?.contactID
-			&& c.role == this.segment?.from?.role,
+		this.from = this.order?.dto?.counterparties?.find(
+			(c) =>
+				c.contactID === this.segment?.from?.contactID &&
+				c.role == this.segment?.from?.role,
 		);
 		this.fromPoint = this.order?.dto?.containerPoints?.find(
-			p => p.containerID == this.segment?.containerID && p.shippingPointID === this.segment?.from?.shippingPointID,
+			(p) =>
+				p.containerID == this.segment?.containerID &&
+				p.shippingPointID === this.segment?.from?.shippingPointID,
 		);
 		if (this.fromPoint) {
 			if (!this.departDate.dirty) {
-				this.departDate.setValue(this.fromPoint?.departure?.scheduledDate || '');
+				this.departDate.setValue(
+					this.fromPoint?.departure?.scheduledDate || '',
+				);
 			}
 			if (!this.arriveDate.dirty) {
 				this.arriveDate.setValue(this.fromPoint?.arrival?.scheduledDate || '');
 			}
 		}
-		this.to = this.order?.dto?.counterparties?.find(c =>
-			c.contactID === this.segment?.to?.contactID
-			&& c.role == this.segment?.to?.role,
+		this.to = this.order?.dto?.counterparties?.find(
+			(c) =>
+				c.contactID === this.segment?.to?.contactID &&
+				c.role == this.segment?.to?.role,
 		);
-		this.by = this.order?.dto?.counterparties?.find(c =>
-			c.contactID === this.segment?.byContactID
-			&& c.role == 'trucker',
+		this.by = this.order?.dto?.counterparties?.find(
+			(c) => c.contactID === this.segment?.byContactID && c.role == 'trucker',
 		);
 	}
 
@@ -87,14 +99,21 @@ export class ContainerSegmentComponent implements OnChanges {
 
 	onDepartDateChanged($event: Event): void {
 		console.log('onDepartDateChanged', $event);
-		if (this.departDate.value && (!this.arriveDate.value || this.arriveDate.value < this.departDate.value)) {
+		if (
+			this.departDate.value &&
+			(!this.arriveDate.value || this.arriveDate.value < this.departDate.value)
+		) {
 			this.arriveDate.setValue(this.departDate.value);
 		}
 	}
 
 	onArriveDateChanged($event: Event): void {
 		console.log('onArriveDateChanged', $event);
-		if (this.departDate.value && this.arriveDate.value && this.arriveDate.value < this.departDate.value) {
+		if (
+			this.departDate.value &&
+			this.arriveDate.value &&
+			this.arriveDate.value < this.departDate.value
+		) {
 			this.departDate.setValue(null);
 		}
 	}
@@ -114,7 +133,7 @@ export class ContainerSegmentComponent implements OnChanges {
 			containerIDs: [containerID],
 		};
 		this.orderService.deleteSegments(request).subscribe({
-			error: err => {
+			error: (err) => {
 				this.deleting = false;
 				this.errorLogger.logError(err, 'Failed to delete container segment');
 			},
@@ -123,7 +142,7 @@ export class ContainerSegmentComponent implements OnChanges {
 
 	get segmentDates(): string {
 		const dates = this?.segment?.dates;
-		if (!dates || !dates?.start && !dates.end) {
+		if (!dates || (!dates?.start && !dates.end)) {
 			return 'no dates yet';
 		}
 		const { start, end } = dates;
@@ -179,8 +198,11 @@ export class ContainerSegmentComponent implements OnChanges {
 				console.log('updateContainerPoint success');
 				this.form.markAsPristine();
 			},
-			error: err => {
-				this.errorLogger.logError(err, 'Failed to update container segment date');
+			error: (err) => {
+				this.errorLogger.logError(
+					err,
+					'Failed to update container segment date',
+				);
 			},
 			complete: () => {
 				console.log('updateContainerPoint complete');

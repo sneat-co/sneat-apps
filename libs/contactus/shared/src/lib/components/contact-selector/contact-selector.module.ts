@@ -19,16 +19,8 @@ import { ContactSelectorService } from './contact-selector.service';
 		BasicContactFormModule,
 		NewCompanyFormModule,
 	],
-	declarations: [
-		ContactSelectorComponent,
-	],
-	exports: [
-		ContactSelectorComponent,
-	],
-	providers: [
-		ContactSelectorService,
-	],
+	declarations: [ContactSelectorComponent],
+	exports: [ContactSelectorComponent],
+	providers: [ContactSelectorService],
 })
-export class ContactSelectorModule {
-
-}
+export class ContactSelectorModule {}

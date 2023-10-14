@@ -7,5 +7,4 @@ import { Component } from '@angular/core';
 	standalone: true,
 	imports: [CommonModule],
 })
-export class CopyrightComponent {
-}
+export class CopyrightComponent {}

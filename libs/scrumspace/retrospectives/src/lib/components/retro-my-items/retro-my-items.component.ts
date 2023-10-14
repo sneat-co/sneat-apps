@@ -3,7 +3,11 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetroItem, RetroItemType } from '@sneat/scrumspace/scrummodels';
-import { IAddRetroItemRequest, IRetroItemRequest, RetrospectiveService } from '../../retrospective.service';
+import {
+	IAddRetroItemRequest,
+	IRetroItemRequest,
+	RetrospectiveService,
+} from '../../retrospective.service';
 
 @Component({
 	selector: 'sneat-retro-my-items',
@@ -27,15 +31,14 @@ export class RetroMyItemsComponent {
 	constructor(
 		private readonly retrospectiveService: RetrospectiveService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	public trackById = (i: number, item: IRetroItem) => item.ID;
 
 	public delete(item: IRetroItem): void {
-    if (!this.teamId || !this.retroId || !item.type) {
-      return;
-    }
+		if (!this.teamId || !this.retroId || !item.type) {
+			return;
+		}
 		const request: IRetroItemRequest = {
 			teamID: this.teamId,
 			meeting: this.retroId,
@@ -96,9 +99,9 @@ export class RetroMyItemsComponent {
 						this.titleInput.value = title;
 					}
 					this.errorLogger.logError(err, 'Failed to add a retrospective item');
-          if (this.titleInput) {
-            this.titleInput.ionFocus.emit();
-          }
+					if (this.titleInput) {
+						this.titleInput.ionFocus.emit();
+					}
 				},
 			);
 		} catch (e) {

@@ -5,12 +5,9 @@ import { SneatAuthStateService } from './sneat-auth-state-service';
 	providedIn: 'root',
 })
 export class LoginRequiredServiceService {
-
-	constructor(
-		authState: SneatAuthStateService,
-	) {
+	constructor(authState: SneatAuthStateService) {
 		console.log('LoginRequiredServiceService.constructor()');
-		authState.authState.subscribe(state => {
+		authState.authState.subscribe((state) => {
 			console.log('LoginRequiredServiceService => authState:', state);
 		});
 	}

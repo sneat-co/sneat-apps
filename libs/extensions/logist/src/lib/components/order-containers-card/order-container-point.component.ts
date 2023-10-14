@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
@@ -35,11 +42,10 @@ export class OrderContainerPointComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
 		private readonly changeDetector: ChangeDetectorRef,
-	) {
-	}
+	) {}
 
 	get showNotes(): boolean {
-		return this.dateTimeTab as string === 'notes'
+		return (this.dateTimeTab as string) === 'notes';
 	}
 
 	cancelRefNumberChanges(): void {
@@ -66,7 +72,11 @@ export class OrderContainerPointComponent implements OnChanges {
 		this.saveField('notes', this.notes, event);
 	}
 
-	saveField(name: ContainerPointStringField, formControl: FormControl<string | null>, event?: Event): void {
+	saveField(
+		name: ContainerPointStringField,
+		formControl: FormControl<string | null>,
+		event?: Event,
+	): void {
 		event?.preventDefault();
 		event?.stopPropagation();
 		const teamID = this.team?.id,
@@ -77,7 +87,10 @@ export class OrderContainerPointComponent implements OnChanges {
 			return;
 		}
 		const request: ISetContainerPointFieldsRequest = {
-			teamID, orderID, containerID, shippingPointID,
+			teamID,
+			orderID,
+			containerID,
+			shippingPointID,
 			setStrings: { [name]: formControl.value?.trim() || '' },
 		};
 		this.saving = true;
@@ -90,7 +103,7 @@ export class OrderContainerPointComponent implements OnChanges {
 				this.notes.markAsPristine();
 				complete();
 			},
-			error: err => {
+			error: (err) => {
 				this.errorLogger.logError(err, `Failed to save [${name}]`);
 				complete();
 			},
@@ -100,7 +113,11 @@ export class OrderContainerPointComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerPoint'] || changes['order']) {
-			this.shippingPoint = this.containerPoint?.shippingPointID ? this.order?.dto?.shippingPoints?.find(sp => sp.id === this.containerPoint?.shippingPointID) : undefined;
+			this.shippingPoint = this.containerPoint?.shippingPointID
+				? this.order?.dto?.shippingPoints?.find(
+						(sp) => sp.id === this.containerPoint?.shippingPointID,
+				  )
+				: undefined;
 			if (this.containerPoint) {
 				if (!this.notes.dirty) {
 					this.notes.setValue(this.containerPoint.notes || '');
@@ -116,32 +133,43 @@ export class OrderContainerPointComponent implements OnChanges {
 		console.log('ContainerPointComponent.delete()', event);
 		const teamID = this.team?.id;
 		if (!teamID) {
-			throw new Error('ContainerPointComponent.delete(): teamID is not defined');
+			throw new Error(
+				'ContainerPointComponent.delete(): teamID is not defined',
+			);
 		}
 		const orderID = this.order?.id;
 		if (!orderID) {
-			throw new Error('ContainerPointComponent.delete(): orderID is not defined');
+			throw new Error(
+				'ContainerPointComponent.delete(): orderID is not defined',
+			);
 		}
 		const containerID = this.containerPoint?.containerID;
 		if (!containerID) {
-			throw new Error('ContainerPointComponent.delete(): containerPoint is not defined');
+			throw new Error(
+				'ContainerPointComponent.delete(): containerPoint is not defined',
+			);
 		}
 		const shippingPointID = this.containerPoint?.shippingPointID;
 		if (!shippingPointID) {
-			throw new Error('ContainerPointComponent.delete(): shippingPointID is not defined');
+			throw new Error(
+				'ContainerPointComponent.delete(): shippingPointID is not defined',
+			);
 		}
 		this.deleting = true;
-		this.orderService.deleteContainerPoints({
-			teamID,
-			orderID,
-			containerID,
-			shippingPointIDs: [shippingPointID],
-		}).subscribe({
-			complete: () => {
-				this.deleting = false;
-			},
-			error: this.errorLogger.logErrorHandler('Failed to delete container point'),
-		});
+		this.orderService
+			.deleteContainerPoints({
+				teamID,
+				orderID,
+				containerID,
+				shippingPointIDs: [shippingPointID],
+			})
+			.subscribe({
+				complete: () => {
+					this.deleting = false;
+				},
+				error: this.errorLogger.logErrorHandler(
+					'Failed to delete container point',
+				),
+			});
 	}
-
 }

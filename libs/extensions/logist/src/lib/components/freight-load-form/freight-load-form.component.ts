@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { undefinedIfEmpty } from '@sneat/core';
 import { IFreightLoad } from '../../dto';
@@ -17,13 +24,11 @@ export class FreightLoadForm {
 	});
 }
 
-
 @Component({
 	selector: 'sneat-freight-load-form',
 	templateUrl: './freight-load-form.component.html',
 })
 export class FreightLoadFormComponent implements OnChanges {
-
 	label = 'TO BE SET';
 
 	@Input() operation?: 'pick' | 'drop';
@@ -32,7 +37,9 @@ export class FreightLoadFormComponent implements OnChanges {
 
 	@Input() freightLoad?: IFreightLoad;
 
-	@Output() readonly freightLoadChange = new EventEmitter<IFreightLoad | undefined>();
+	@Output() readonly freightLoadChange = new EventEmitter<
+		IFreightLoad | undefined
+	>();
 
 	@Output() readonly keyUpEnter = new EventEmitter<Event>();
 
@@ -54,7 +61,9 @@ export class FreightLoadFormComponent implements OnChanges {
 		if (changes['freightLoad']) {
 			const freightLoad = this.freightLoad;
 			if (!this.form.numberOfPallets.dirty)
-				this.form.numberOfPallets.setValue(freightLoad?.numberOfPallets || null);
+				this.form.numberOfPallets.setValue(
+					freightLoad?.numberOfPallets || null,
+				);
 			if (!this.form.grossWeightKg.dirty)
 				this.form.grossWeightKg.setValue(freightLoad?.grossWeightKg || null);
 			if (!this.form.volumeM3.dirty)
@@ -67,9 +76,18 @@ export class FreightLoadFormComponent implements OnChanges {
 
 	onChanged(): void {
 		this.freightLoad = undefinedIfEmpty({
-			numberOfPallets: this.form.numberOfPallets.value === null ? undefined : this.form.numberOfPallets.value,
-			grossWeightKg: this.form.grossWeightKg.value === null ? undefined : this.form.grossWeightKg.value,
-			volumeM3: this.form.volumeM3.value === null ? undefined : this.form.volumeM3.value,
+			numberOfPallets:
+				this.form.numberOfPallets.value === null
+					? undefined
+					: this.form.numberOfPallets.value,
+			grossWeightKg:
+				this.form.grossWeightKg.value === null
+					? undefined
+					: this.form.grossWeightKg.value,
+			volumeM3:
+				this.form.volumeM3.value === null
+					? undefined
+					: this.form.volumeM3.value,
 			note: this.form.note.value || undefined,
 		});
 		this.freightLoadChange.emit(this.freightLoad);

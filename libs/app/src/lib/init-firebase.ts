@@ -1,7 +1,11 @@
 import { connectAuthEmulator, provideAuth } from '@angular/fire/auth';
 import { connectFirestoreEmulator } from '@angular/fire/firestore';
 import { IFirebaseConfig } from './environment-config';
-import { provideFirebaseApp, initializeApp, FirebaseApp } from '@angular/fire/app';
+import {
+	provideFirebaseApp,
+	initializeApp,
+	FirebaseApp,
+} from '@angular/fire/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
@@ -9,19 +13,21 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 	// console.log('ImportFirebaseModules');
 	return [
 		provideFirebaseApp(() => initFirebase(firebaseConfig)),
-		provideFirestore(injector => {
+		provideFirestore((injector) => {
 			console.log('AngularFire: provideFirestore');
 			const fbApp = injector.get(FirebaseApp);
 			const firestore = getFirestore(fbApp);
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.firestorePort) {
 				const host = 'localhost';
-				console.log(`using firebase firestore emulator on ${host}:${emulator.authPort}`);
+				console.log(
+					`using firebase firestore emulator on ${host}:${emulator.authPort}`,
+				);
 				connectFirestoreEmulator(firestore, host, emulator.firestorePort);
 			}
 			return firestore;
 		}),
-		provideAuth(injector => {
+		provideAuth((injector) => {
 			console.log('AngularFire: provideAuth');
 			const fbApp = injector.get(FirebaseApp);
 			const auth = getAuth(fbApp);
@@ -39,7 +45,12 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 }
 
 export function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {
-	console.log('initFirebase()' + (firebaseConfig.useEmulators && firebaseConfig.emulator ? ' - using firebase emulators' : ''), firebaseConfig);
+	console.log(
+		'initFirebase()' +
+			(firebaseConfig.useEmulators && firebaseConfig.emulator
+				? ' - using firebase emulators'
+				: ''),
+		firebaseConfig,
+	);
 	return initializeApp(firebaseConfig);
-	;
 }

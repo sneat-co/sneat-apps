@@ -8,15 +8,14 @@ export function createSetFocusToInput(errorLogger: IErrorLogger) {
 			console.error('can not set focus to undefined input');
 			return;
 		}
-		setTimeout(
-			() => {
-				requestAnimationFrame(() => {
-					console.log('focusing to input ', input.name);
-					// input.getInputElement().then(el => el.focus()).catch(errorLogger.logErrorHandler('failed to set focus to input'));
-					input.setFocus().catch(errorLogger.logErrorHandler('failed to set focus to input'));
-				});
-			},
-			delay,
-		);
-	}
+		setTimeout(() => {
+			requestAnimationFrame(() => {
+				console.log('focusing to input ', input.name);
+				// input.getInputElement().then(el => el.focus()).catch(errorLogger.logErrorHandler('failed to set focus to input'));
+				input
+					.setFocus()
+					.catch(errorLogger.logErrorHandler('failed to set focus to input'));
+			});
+		}, delay);
+	};
 }

@@ -23,5 +23,4 @@ import { LoginWithTelegramComponent } from './login-with-telegram.component';
 	],
 	exports: [LoginPageComponent],
 })
-export class LoginPageComponentModule {
-}
+export class LoginPageComponentModule {}

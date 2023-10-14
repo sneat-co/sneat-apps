@@ -1,10 +1,22 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { excludeUndefined } from '@sneat/core';
-import { ContactSelectorService, IContactSelectorOptions } from '@sneat/contactus-shared';
+import {
+	ContactSelectorService,
+	IContactSelectorOptions,
+} from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IAddOrderShippingPointRequest, IDeleteCounterpartyRequest,
+	IAddOrderShippingPointRequest,
+	IDeleteCounterpartyRequest,
 	ILogistOrderContext,
 	IOrderCounterparty,
 	ISetOrderCounterpartiesRequest,
@@ -36,14 +48,14 @@ export class DispatcherComponent implements OnChanges {
 
 	saving = false;
 
-	protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) => `${c.contactID}&${c.role}`;
+	protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) =>
+		`${c.contactID}&${c.role}`;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
 		private readonly ordersService: LogistOrderService,
-	) {
-	}
+	) {}
 
 	cancelChanges(): void {
 		this.form.reset();
@@ -58,7 +70,9 @@ export class DispatcherComponent implements OnChanges {
 
 	private setOrder(counterpartyChanged: boolean): void {
 		const contactID = this.counterparty?.contactID;
-		this.locations = this.order?.dto?.counterparties?.filter(l => l.parent?.contactID === contactID);
+		this.locations = this.order?.dto?.counterparties?.filter(
+			(l) => l.parent?.contactID === contactID,
+		);
 		if (counterpartyChanged && !this.refNumber.dirty) {
 			this.refNumber.setValue(this.counterparty?.refNumber || '');
 			// this.specialInstructions.setValue(this.counterparty?.specialInstructions || '');
@@ -71,7 +85,10 @@ export class DispatcherComponent implements OnChanges {
 		event.preventDefault();
 		const team = this.order?.team;
 		if (!team) {
-			this.errorLogger.logError('ContactInputComponent.openContactSelector(): team is required', undefined);
+			this.errorLogger.logError(
+				'ContactInputComponent.openContactSelector(): team is required',
+				undefined,
+			);
 			return;
 		}
 		const dispatcher = this.counterparty;
@@ -94,12 +111,19 @@ export class DispatcherComponent implements OnChanges {
 						countryID: dispatcher.countryID,
 					},
 				},
-				excludeContacts: this.orderDispatchers?.map(c => ({ id: c.contactID, team })),
+				excludeContacts: this.orderDispatchers?.map((c) => ({
+					id: c.contactID,
+					team,
+				})),
 			},
 		};
-		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
-			.then(contact => {
-				console.log('OrderCounterpartiesCardComponent.openContactSelector() contact:', contact);
+		this.contactSelectorService
+			.selectSingleContactInModal(selectorOptions)
+			.then((contact) => {
+				console.log(
+					'OrderCounterpartiesCardComponent.openContactSelector() contact:',
+					contact,
+				);
 				if (!this.order?.dto) {
 					alert('Order is not loaded');
 					return;
@@ -123,21 +147,30 @@ export class DispatcherComponent implements OnChanges {
 					locationContactID: contact.id,
 				};
 				this.ordersService.addShippingPoint(team, request).subscribe({
-					next: order => {
+					next: (order) => {
 						console.log('added shipping point added to order');
 						this.order = { ...order, team: this.order?.team || team };
 						this.orderChange.emit(this.order);
 					},
-					error: e => {
-						this.errorLogger.logError(e, 'Failed to add shipping point to order');
+					error: (e) => {
+						this.errorLogger.logError(
+							e,
+							'Failed to add shipping point to order',
+						);
 					},
 				});
 			})
-			.catch(this.errorLogger.logErrorHandler('failed to open contact selector'));
+			.catch(
+				this.errorLogger.logErrorHandler('failed to open contact selector'),
+			);
 	}
 
 	saveChanges(): void {
-		if (!this.order || !this.counterparty?.contactID || !this.counterparty?.role) {
+		if (
+			!this.order ||
+			!this.counterparty?.contactID ||
+			!this.counterparty?.role
+		) {
 			return;
 		}
 		const request: ISetOrderCounterpartiesRequest = {
@@ -158,7 +191,7 @@ export class DispatcherComponent implements OnChanges {
 			next: () => {
 				this.form.markAsPristine();
 			},
-			error: err => {
+			error: (err) => {
 				this.errorLogger.logError(err, 'Failed to save dispatcher');
 			},
 			complete: () => {
@@ -183,7 +216,7 @@ export class DispatcherComponent implements OnChanges {
 			next: () => {
 				console.log('deleted dispatcher');
 			},
-			error: err => {
+			error: (err) => {
 				this.errorLogger.logError(err, 'Failed to delete dispatcher');
 				this.deleting = false;
 			},

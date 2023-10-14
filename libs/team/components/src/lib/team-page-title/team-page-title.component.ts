@@ -12,6 +12,8 @@ export class TeamPageTitleComponent {
 	@Input() titlesByTeamType?: { [type: string]: string };
 
 	public get typeTitle(): string {
-		return this.team?.type && this.titlesByTeamType ? this.titlesByTeamType[this.team.type] : '';
+		return this.team?.type && this.titlesByTeamType
+			? this.titlesByTeamType[this.team.type]
+			: '';
 	}
 }

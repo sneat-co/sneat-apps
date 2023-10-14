@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-new-container-point',
 	templateUrl: './new-container-point.component.html',
 })
-export class NewContainerPointComponent {
-
-}
+export class NewContainerPointComponent {}

@@ -27,5 +27,4 @@ import { RetroReviewStageComponent } from './stages/retro-review-stage/retro-rev
 		RetrospectivePageComponent,
 	],
 })
-export class RetrospectivePageModule {
-}
+export class RetrospectivePageModule {}

@@ -21,8 +21,7 @@ export interface IHappeningBase {
 	memberIDs?: string[]; // TODO: make readonly
 }
 
-export interface IHappeningBrief extends IHappeningBase {
-}
+export interface IHappeningBrief extends IHappeningBase {}
 
 export interface IWithDates {
 	dates?: string[];
@@ -41,7 +40,9 @@ export function validateHappeningDto(dto: IHappeningDto): void {
 		throw new Error('happening has no title');
 	}
 	if (dto.title !== dto.title.trim()) {
-		throw new Error('happening title has leading or closing whitespace characters');
+		throw new Error(
+			'happening title has leading or closing whitespace characters',
+		);
 	}
 	switch (dto.type) {
 		case 'single':
@@ -65,7 +66,10 @@ export function validateHappeningDto(dto: IHappeningDto): void {
 	}
 }
 
-export function validateRecurringHappeningSlot(slot: IHappeningSlot, index: number): void {
+export function validateRecurringHappeningSlot(
+	slot: IHappeningSlot,
+	index: number,
+): void {
 	if (!slot.start.time) {
 		throw new Error(`slot at index ${index} has no start time`);
 	}
@@ -142,7 +146,7 @@ export interface IHappeningSlot extends IHappeningSlotTiming {
 export const emptyTiming: ITiming = {
 	start: { date: '', time: '' },
 	// durationMinutes: 0,
-}
+};
 
 export const emptyHappeningSlot: IHappeningSlot = {
 	id: '',
@@ -152,7 +156,7 @@ export const emptyHappeningSlot: IHappeningSlot = {
 
 export interface ISingleHappeningDto extends IHappeningDto {
 	readonly dtStarts?: number; // UTC
-	readonly dtEnds?: number;   // UTC
+	readonly dtEnds?: number; // UTC
 	readonly weekdays?: WeekdayCode2[];
 	readonly prices?: IPrice[];
 }

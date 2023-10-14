@@ -6,19 +6,8 @@ import { CommonModule } from '@angular/common';
 import { WizardModule } from '@sneat/wizard';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		WizardModule,
-	],
-	declarations: [
-		NewFamilyWizardComponent,
-	],
-	exports: [
-		NewFamilyWizardComponent,
-	],
+	imports: [CommonModule, FormsModule, IonicModule, WizardModule],
+	declarations: [NewFamilyWizardComponent],
+	exports: [NewFamilyWizardComponent],
 })
-export class NewFamilyWizardModule {
-
-}
+export class NewFamilyWizardModule {}

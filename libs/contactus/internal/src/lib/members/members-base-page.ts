@@ -2,12 +2,17 @@ import { ActivatedRoute } from '@angular/router';
 import { TeamMemberType } from '@sneat/auth-models';
 import { TeamType } from '@sneat/core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
-import { TeamComponentBaseParams, TeamModuleBaseComponent } from '@sneat/team/components';
+import {
+	TeamComponentBaseParams,
+	TeamModuleBaseComponent,
+} from '@sneat/team/components';
 import { ContactusTeamService, MemberService } from '@sneat/contactus-services';
 import { IContactContext, IContactusTeamDto } from '@sneat/team/models';
 
-export abstract class MembersBasePage extends TeamModuleBaseComponent<IContactusTeamDto, IContactusTeamDto> {
-
+export abstract class MembersBasePage extends TeamModuleBaseComponent<
+	IContactusTeamDto,
+	IContactusTeamDto
+> {
 	public members?: readonly IContactContext[];
 
 	// protected currentUserDto: IDtoUser;
@@ -29,9 +34,11 @@ export abstract class MembersBasePage extends TeamModuleBaseComponent<IContactus
 		// this.userService.currentUserLoaded.subscribe(user => this.setCurrentUser(user));
 	}
 
-	goNewMember = () => { // TODO: use it?
-		this.navigateForwardToTeamPage('new-member')
-			.catch(this.logErrorHandler('failed to navigate to new member page'));
+	goNewMember = () => {
+		// TODO: use it?
+		this.navigateForwardToTeamPage('new-member').catch(
+			this.logErrorHandler('failed to navigate to new member page'),
+		);
 	};
 
 	// goMember = (member: IMemberContext, page?: MemberPages) => {
@@ -61,7 +68,9 @@ export abstract class MembersBasePage extends TeamModuleBaseComponent<IContactus
 	// }
 
 	public get supportsMemberGroups(): boolean {
-		return !!this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type);
+		return (
+			!!this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type)
+		);
 	}
 
 	public get teamType(): TeamType | undefined {

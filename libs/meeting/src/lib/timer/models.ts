@@ -33,7 +33,6 @@ export type TimerStatus =
 	| TimerStatusEnum.stopped
 	| TimerStatusEnum.paused;
 
-
 export interface ITimerState {
 	status?: TimerStatus;
 	elapsedSeconds?: number;

@@ -9,8 +9,7 @@ describe('AuthMenuItemComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [AuthMenuItemComponent],
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

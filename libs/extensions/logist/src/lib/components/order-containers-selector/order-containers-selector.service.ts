@@ -8,7 +8,6 @@ import { OrderContainersSelectorDialogComponent } from './order-containers-selec
 
 @Injectable()
 export class OrderContainersSelectorService extends SelectorBaseService<IContainer> {
-
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
@@ -16,7 +15,9 @@ export class OrderContainersSelectorService extends SelectorBaseService<IContain
 		super(OrderContainersSelectorDialogComponent, errorLogger, modalController);
 	}
 
-	public selectOrderContainersInModal(order?: ILogistOrderContext): Promise<IContainer[] | null> {
+	public selectOrderContainersInModal(
+		order?: ILogistOrderContext,
+	): Promise<IContainer[] | null> {
 		const options: ISelectorOptions<IContainer> = {
 			componentProps: {
 				order,

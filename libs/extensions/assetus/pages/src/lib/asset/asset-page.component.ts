@@ -7,8 +7,9 @@ import { LiabilityServiceType } from '@sneat/dto';
 import {
 	AssetBasePage,
 	AssetComponentBaseParams,
-	ModuleAssetRealEstate, VehicleCardComponent,
-} from "@sneat/extensions/assetus/components";
+	ModuleAssetRealEstate,
+	VehicleCardComponent,
+} from '@sneat/extensions/assetus/components';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;
@@ -30,7 +31,6 @@ interface LiabilityServiceBrief {
 	],
 })
 export class AssetPageComponent extends AssetBasePage {
-
 	public segment: 'contacts' | 'taxes' | 'services' = 'services';
 	public period = 'this-month';
 	public scope: 'month' | 'year' = 'year';
@@ -47,10 +47,7 @@ export class AssetPageComponent extends AssetBasePage {
 
 	mode: 'view' | 'edit' = 'view';
 
-	constructor(
-		route: ActivatedRoute,
-		params: AssetComponentBaseParams,
-	) {
+	constructor(route: ActivatedRoute, params: AssetComponentBaseParams) {
 		super('AssetPageComponent', route, params);
 		// const path = location.pathname;
 		// if (path.indexOf('vehicle') >= 0) {

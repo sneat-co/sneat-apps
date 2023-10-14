@@ -12,10 +12,7 @@ export interface IUpdateContactRequest extends IContactRequest {
 	readonly relatedTo?: IRelatedToContact;
 }
 
-
-
 export interface ISetContactRolesRequest {
 	readonly add?: readonly string[];
 	readonly remove?: readonly string[];
 }
-

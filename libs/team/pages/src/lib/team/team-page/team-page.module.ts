@@ -30,5 +30,4 @@ import { TeamPageComponent } from './team-page.component';
 		TeamPageComponent,
 	],
 })
-export class TeamPageModule {
-}
+export class TeamPageModule {}

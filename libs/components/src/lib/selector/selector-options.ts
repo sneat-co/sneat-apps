@@ -1,4 +1,4 @@
-import { ComponentProps} from '@ionic/core';
+import { ComponentProps } from '@ionic/core';
 import { Observable } from 'rxjs';
 
 export interface ISelectorOptions<T> {

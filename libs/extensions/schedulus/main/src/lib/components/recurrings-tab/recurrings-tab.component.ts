@@ -18,9 +18,7 @@ export class RecurringsTabComponent {
 		return (this.allRecurrings?.length || 0) - (this.recurrings?.length || 0);
 	}
 
-	constructor(
-		filterService: ScheduleFilterService,
-	) {
+	constructor(filterService: ScheduleFilterService) {
 		this.resetFilter = filterService.resetFilterHandler;
 	}
 

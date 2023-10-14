@@ -5,13 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { SharedWithComponent } from './shared-with.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-    ],
-    declarations: [SharedWithComponent],
-    exports: [SharedWithComponent]
+	imports: [CommonModule, FormsModule, IonicModule],
+	declarations: [SharedWithComponent],
+	exports: [SharedWithComponent],
 })
-export class SharedWithModule {
-}
+export class SharedWithModule {}

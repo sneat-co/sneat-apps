@@ -3,7 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ISelectItem } from '@sneat/components';
 import { ContactRole } from '@sneat/dto';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
 import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 
@@ -11,8 +14,10 @@ import { first, takeUntil } from 'rxjs';
 	selector: 'sneat-new-logist-company-page',
 	templateUrl: 'new-logist-company-page.component.html',
 })
-export class NewLogistCompanyPageComponent extends TeamBaseComponent implements OnDestroy {
-
+export class NewLogistCompanyPageComponent
+	extends TeamBaseComponent
+	implements OnDestroy
+{
 	readonly contactTypes: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
@@ -26,22 +31,17 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		@Inject(CONTACT_ROLES_BY_TYPE) public readonly contactRolesByType: Record<string, IContactRole[]>,
+		@Inject(CONTACT_ROLES_BY_TYPE)
+		public readonly contactRolesByType: Record<string, IContactRole[]>,
 	) {
-
 		super('NewLogistCompanyPageComponent', route, teamParams);
 		const roles = contactRolesByType['company'];
 		this.contactTypes = roles;
-		route.queryParamMap
-			.pipe(
-				first(),
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: value => {
-					this.contactRole = value.get('role') as ContactRole || undefined;
-				},
-			});
+		route.queryParamMap.pipe(first(), takeUntil(this.destroyed)).subscribe({
+			next: (value) => {
+				this.contactRole = (value.get('role') as ContactRole) || undefined;
+			},
+		});
 	}
 
 	onContactCreated(contact: IContactContext): void {
@@ -49,7 +49,11 @@ export class NewLogistCompanyPageComponent extends TeamBaseComponent implements 
 		this.navController.pop().catch(() => {
 			this.navController
 				.navigateBack(['contacts'], { relativeTo: this.route })
-				.catch(this.errorLogger.logErrorHandler('failed to navigate back to contacts page'));
+				.catch(
+					this.errorLogger.logErrorHandler(
+						'failed to navigate back to contacts page',
+					),
+				);
 		});
 	}
 }

@@ -17,7 +17,6 @@ export interface DtoGroupTerms {
 	prev?: DtoTerm;
 }
 
-
 export interface ITermPrice extends IPrice {
 	title: string;
 	description?: string;

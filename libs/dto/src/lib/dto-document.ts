@@ -1,14 +1,14 @@
 import { IWithAssetIDs, IWithMemberIDs, IWithTag } from './dto-models';
 
 export type AssetDocumentType =
-	'unspecified' |
-	'other' |
-	'passport' |
-	'driving_license' |
-	'birth_certificate' |
-	'marriage_certificate' |
-	'rent_lease' |
-	'insurance_policy';
+	| 'unspecified'
+	| 'other'
+	| 'passport'
+	| 'driving_license'
+	| 'birth_certificate'
+	| 'marriage_certificate'
+	| 'rent_lease'
+	| 'insurance_policy';
 
 export interface IDocTypeField {
 	type?: 'str' | 'int' | 'date';
@@ -35,7 +35,7 @@ export interface DocTypeDef {
 }
 
 export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
-	'other': {
+	other: {
 		id: 'other',
 		title: 'Other',
 		fields: {
@@ -54,7 +54,7 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 	// 	emoji: '💸️️',
 	// 	fields: {},
 	// },
-	'passport': {
+	passport: {
 		id: 'passport',
 		title: 'Passport',
 		emoji: '🛂',
@@ -64,7 +64,7 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 			members: { max: 1 },
 		},
 	},
-	'driving_license': {
+	driving_license: {
 		id: 'driving_license',
 		title: 'Driving license',
 		emoji: '🚗',
@@ -74,7 +74,7 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 			members: { max: 1 },
 		},
 	},
-	'birth_certificate': {
+	birth_certificate: {
 		id: 'birth_certificate',
 		title: 'Birth certificate',
 		emoji: '👼',
@@ -86,7 +86,7 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 			members: { max: 1 },
 		},
 	},
-	'marriage_certificate': {
+	marriage_certificate: {
 		id: 'marriage_certificate',
 		title: 'Marriage certificate',
 		emoji: '💍',
@@ -123,5 +123,4 @@ export interface IDocumentDto
 		IDocData,
 		IWithTag,
 		IWithAssetIDs,
-		IWithMemberIDs {
-}
+		IWithMemberIDs {}

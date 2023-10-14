@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {AddToWatchPageComponent} from './add-to-watch-page.component';
+import { AddToWatchPageComponent } from './add-to-watch-page.component';
 
 describe('AddToWatchPage', () => {
 	let component: AddToWatchPageComponent;
@@ -11,8 +11,7 @@ describe('AddToWatchPage', () => {
 		TestBed.configureTestingModule({
 			declarations: [AddToWatchPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('AddToWatchPage', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

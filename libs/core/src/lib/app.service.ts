@@ -1,7 +1,8 @@
 import { InjectionToken } from '@angular/core';
 import { TeamType } from './team-type';
 
-export type SneatApp = 'sneat'
+export type SneatApp =
+	| 'sneat'
 	| 'aaproject'
 	| 'agendum'
 	| 'class'
@@ -20,8 +21,7 @@ export type SneatApp = 'sneat'
 	| 'sizechart'
 	| 'splitus'
 	| 'sportclubs'
-	| 'tournament'
-	;
+	| 'tournament';
 
 export interface IAppInfo {
 	readonly appId: SneatApp;

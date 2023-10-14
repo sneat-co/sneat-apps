@@ -16,14 +16,9 @@ import {
 	selector: 'sneat-happening-members-form',
 	templateUrl: 'happening-members-form.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		SneatPipesModule,
-	]
+	imports: [CommonModule, IonicModule, SneatPipesModule],
 })
 export class HappeningMembersFormComponent {
-
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
 	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() happening?: IHappeningContext;
@@ -36,22 +31,22 @@ export class HappeningMembersFormComponent {
 	public participantsTab: 'members' | 'others' = 'members';
 
 	public get members(): readonly IContactContext[] | undefined {
-		const
-			contactusTeam = this.contactusTeam,
+		const contactusTeam = this.contactusTeam,
 			team = this.team;
 
 		if (!team || !contactusTeam) {
 			return;
 		}
-		return zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
-			.map(m => contactContextFromBrief(m, team));
+		return zipMapBriefsWithIDs(contactusTeam?.dto?.contacts).map((m) =>
+			contactContextFromBrief(m, team),
+		);
 	}
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	public isMemberChecked(member: IContactContext): boolean {
 		const { id } = member;
-		return this.checkedMemberIDs.some(v => v === id);
+		return this.checkedMemberIDs.some((v) => v === id);
 	}
 
 	public isMemberCheckChanged(member: IContactContext, event: Event): void {
@@ -60,16 +55,17 @@ export class HappeningMembersFormComponent {
 		const checked = ce.detail.value === 'on';
 		const { id } = member;
 		if (!checked) {
-			this.checkedMemberIDs = this.checkedMemberIDs.filter(v => v !== id);
+			this.checkedMemberIDs = this.checkedMemberIDs.filter((v) => v !== id);
 			return;
 		}
-		if (!this.checkedMemberIDs.some(v => v === id)) {
+		if (!this.checkedMemberIDs.some((v) => v === id)) {
 			this.checkedMemberIDs.push(id);
 		}
 		this.populateParticipants();
 	}
 
-	private readonly emitHappeningChange = () => this.happeningChange.emit(this.happening);
+	private readonly emitHappeningChange = () =>
+		this.happeningChange.emit(this.happening);
 
 	private populateParticipants(): void {
 		if (!this.happening) {
@@ -79,17 +75,26 @@ export class HappeningMembersFormComponent {
 		if (!brief || !dto) {
 			return;
 		}
-		const selectedMembers = this.members?.filter(m => this.checkedMemberIDs.some(v => v === m.id)) || [];
+		const selectedMembers =
+			this.members?.filter((m) =>
+				this.checkedMemberIDs.some((v) => v === m.id),
+			) || [];
 		this.happening = {
 			...this.happening,
 			brief: {
 				...brief,
-				memberIDs: selectedMembers.map(m => m.id).filter(v => !!v) as string[],
+				memberIDs: selectedMembers
+					.map((m) => m.id)
+					.filter((v) => !!v) as string[],
 			},
 			dto: {
 				...dto,
-				participants: selectedMembers.map(m => {
-					const s: ISlotParticipant = { type: 'member', id: m.id, title: m.brief?.title || m.id };
+				participants: selectedMembers.map((m) => {
+					const s: ISlotParticipant = {
+						type: 'member',
+						id: m.id,
+						title: m.brief?.title || m.id,
+					};
 					return s;
 				}),
 			},

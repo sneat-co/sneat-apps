@@ -1,3 +1,1 @@
-export class OddEvenVirtualSlider {
-
-}
+export class OddEvenVirtualSlider {}

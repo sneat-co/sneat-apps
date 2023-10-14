@@ -21,8 +21,7 @@ export class MetricsComponent {
 		private readonly teamService: TeamService,
 		private readonly navController: NavController,
 		public readonly navService: TeamNavService,
-	) {
-	}
+	) {}
 
 	public get isDemoMetricsOnly(): boolean {
 		const metrics = this.team?.dto?.metrics;
@@ -88,11 +87,13 @@ export class MetricsComponent {
 		this.navService.navigateToAddMetric(this.navController, this.team);
 	}
 
-	metricColor(v?: IBoolMetricVal): string { // Stupid workaround
+	metricColor(v?: IBoolMetricVal): string {
+		// Stupid workaround
 		return v?.color || '';
 	}
 
-	metricLabel(v?: IBoolMetricVal): string { // Stupid workaround
+	metricLabel(v?: IBoolMetricVal): string {
+		// Stupid workaround
 		return v?.label || '';
 	}
 }

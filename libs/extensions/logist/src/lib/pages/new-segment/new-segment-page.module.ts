@@ -17,10 +17,6 @@ import { NewSegmentPageComponent } from './new-segment-page.component';
 		]),
 		NewSegmentModule,
 	],
-	declarations: [
-		NewSegmentPageComponent,
-	],
+	declarations: [NewSegmentPageComponent],
 })
-export class NewSegmentPageModule {
-
-}
+export class NewSegmentPageModule {}

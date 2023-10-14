@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-for-families',
 	templateUrl: './for-families.component.html',
 })
-export class ForFamiliesComponent {
-
-}
+export class ForFamiliesComponent {}

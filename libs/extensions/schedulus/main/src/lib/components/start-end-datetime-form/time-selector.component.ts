@@ -2,15 +2,39 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 const morningHours: string[] = [
-	'00', '01', '02', '03', '04', '05', '06', '07', '08',
+	'00',
+	'01',
+	'02',
+	'03',
+	'04',
+	'05',
+	'06',
+	'07',
+	'08',
 ];
 
 const dayHours: string[] = [
-	'09', '10', '11', '12', '13', '14', '15', '16', '17'
+	'09',
+	'10',
+	'11',
+	'12',
+	'13',
+	'14',
+	'15',
+	'16',
+	'17',
 ];
 
 const eveningHours: string[] = [
-	'16', '17', '18', '19', '20', '21', '22', '23', '00'
+	'16',
+	'17',
+	'18',
+	'19',
+	'20',
+	'21',
+	'22',
+	'23',
+	'00',
 ];
 
 @Component({
@@ -24,9 +48,7 @@ export class TimeSelectorComponent {
 
 	public hours: string[] = dayHours;
 
-	constructor(
-		private readonly modalController: ModalController,
-	) {
+	constructor(private readonly modalController: ModalController) {
 		console.log('TimeSelectorComponent.constructor()');
 	}
 
@@ -53,5 +75,4 @@ export class TimeSelectorComponent {
 		}
 		return false;
 	}
-
 }

@@ -5,21 +5,15 @@ import { IonicModule } from '@ionic/angular';
 import { OrderFormModule } from '../order-form.module';
 import { OrdersListComponent } from './orders-list.component';
 
-
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    RouterModule,
-    OrderFormModule,
-    CommonModule,
-  ],
-	declarations: [
-		OrdersListComponent,
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule,
+		OrderFormModule,
+		CommonModule,
 	],
-	exports: [
-		OrdersListComponent,
-	],
+	declarations: [OrdersListComponent],
+	exports: [OrdersListComponent],
 })
-export class OrdersListModule {
-}
+export class OrdersListModule {}

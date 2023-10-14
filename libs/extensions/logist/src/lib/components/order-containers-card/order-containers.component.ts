@@ -17,7 +17,6 @@ import { ILogistOrderContext, IOrderContainer } from '../../dto';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderContainersComponent implements OnChanges {
-
 	@Input({ required: true }) team?: ITeamContext;
 
 	@Input() order?: ILogistOrderContext;
@@ -29,10 +28,7 @@ export class OrderContainersComponent implements OnChanges {
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	constructor(
-		private readonly modalController: ModalController,
-	) {
-	}
+	constructor(private readonly modalController: ModalController) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
@@ -40,7 +36,9 @@ export class OrderContainersComponent implements OnChanges {
 			if (this.containers?.length) {
 				const selectedContainer = this.selectedContainer;
 				if (selectedContainer) {
-					this.selectedContainer = this.containers?.find(c => c.id === selectedContainer.id);
+					this.selectedContainer = this.containers?.find(
+						(c) => c.id === selectedContainer.id,
+					);
 				}
 				if (!selectedContainer) {
 					this.selectedContainer = this.containers?.[0];
@@ -68,6 +66,6 @@ export class OrderContainersComponent implements OnChanges {
 	}
 
 	indexOfContainer(container: IOrderContainer): number | undefined {
-		return this.containers?.findIndex(c => c.id === container.id);
+		return this.containers?.findIndex((c) => c.id === container.id);
 	}
 }

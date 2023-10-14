@@ -4,20 +4,26 @@ import { Route } from '@angular/router';
 export const schedulusRoutes: Route[] = [
 	{
 		path: 'schedule',
-		loadChildren: () => import('./pages/schedule/schedule-page.module')
-			.then(m => m.SchedulePageModule),
+		loadChildren: () =>
+			import('./pages/schedule/schedule-page.module').then(
+				(m) => m.SchedulePageModule,
+			),
 		// ...guardRoute,
 	},
 	{
 		path: 'new-happening',
-		loadChildren: () => import('./pages/new-happening/new-happening-page.module')
-			.then(m => m.NewHappeningPageModule),
+		loadChildren: () =>
+			import('./pages/new-happening/new-happening-page.module').then(
+				(m) => m.NewHappeningPageModule,
+			),
 		// ...guardRoute,
 	},
 	{
 		path: 'happening/:happeningID',
-		loadChildren: () => import('./pages/happening/happening-page.module')
-			.then(m => m.HappeningPageModule),
+		loadChildren: () =>
+			import('./pages/happening/happening-page.module').then(
+				(m) => m.HappeningPageModule,
+			),
 		// ...guardRoute,
 	},
 	// {

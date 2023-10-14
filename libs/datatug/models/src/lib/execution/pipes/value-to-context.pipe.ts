@@ -2,8 +2,7 @@ import { ITugPipe, ITugPipeOutput } from '../../pipe';
 import { IValueToContextPipeDefinition } from '../../definition/pipe-definition';
 
 export class ValueToContextPipe implements ITugPipe {
-	constructor(private readonly definition: IValueToContextPipeDefinition) {
-	}
+	constructor(private readonly definition: IValueToContextPipeDefinition) {}
 
 	process(input: { [id: string]: unknown }): ITugPipeOutput {
 		const from = this.definition.from.split('.');

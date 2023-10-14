@@ -1,18 +1,36 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
-import { ContactRole, ContactType, IAddress, IContactBrief, IContactDto } from '@sneat/dto';
+import {
+	ContactRole,
+	ContactType,
+	IAddress,
+	IContactBrief,
+	IContactDto,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactContext, ICreateContactRequest, ITeamContext } from '@sneat/team/models';
+import {
+	IContactContext,
+	ICreateContactRequest,
+	ITeamContext,
+} from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-location-form',
 	templateUrl: './location-form.component.html',
 })
 export class LocationFormComponent implements OnChanges {
-
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
@@ -44,8 +62,7 @@ export class LocationFormComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactService: ContactService,
-	) {
-	}
+	) {}
 
 	private readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
@@ -178,14 +195,12 @@ export class LocationFormComponent implements OnChanges {
 			},
 		};
 		this.isCreating = true;
-		this.contactService.createContact(this.team, request)
-			.subscribe({
-				next: this.onContactCreated,
-				error: (err: unknown) => {
-					this.errorLogger.logError(err, 'Failed to create new contact');
-					this.isCreating = false;
-				},
-			});
+		this.contactService.createContact(this.team, request).subscribe({
+			next: this.onContactCreated,
+			error: (err: unknown) => {
+				this.errorLogger.logError(err, 'Failed to create new contact');
+				this.isCreating = false;
+			},
+		});
 	}
-
 }

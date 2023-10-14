@@ -1,23 +1,38 @@
 import { CommonModule } from '@angular/common';
 import {
-   AfterViewInit,
-   Component,
-   EventEmitter,
-   Inject,
-   Input,
-   OnChanges,
-   Output,
-   SimpleChanges,
-   ViewChild,
+	AfterViewInit,
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+	ViewChild,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	UntypedFormGroup,
+	Validators,
+} from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
-import { HappeningType, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
+import {
+	HappeningType,
+	IHappeningDto,
+	IHappeningSlot,
+	WeekdayCode2,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IContactusTeamDtoWithID, IHappeningContext, ITeamContext } from '@sneat/team/models';
+import {
+	IContactusTeamDtoWithID,
+	IHappeningContext,
+	ITeamContext,
+} from '@sneat/team/models';
 import { HappeningService, HappeningServiceModule } from '@sneat/team/services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
@@ -26,276 +41,291 @@ import { HappeningSlotComponentsModule } from '../happening-slot-components.modu
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
 @Component({
-   selector: 'sneat-happening-form',
-   templateUrl: 'happening-form.component.html',
-   standalone: true,
-   imports: [
-      CommonModule,
-      IonicModule,
-      FormsModule,
-      ReactiveFormsModule,
-      HappeningSlotComponentsModule,
-      SneatPipesModule,
-      HappeningServiceModule,
-      HappeningMembersFormComponent,
-   ],
+	selector: 'sneat-happening-form',
+	templateUrl: 'happening-form.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		ReactiveFormsModule,
+		HappeningSlotComponentsModule,
+		SneatPipesModule,
+		HappeningServiceModule,
+		HappeningMembersFormComponent,
+	],
 })
-export class HappeningFormComponent extends SneatBaseComponent implements OnChanges, AfterViewInit {
+export class HappeningFormComponent
+	extends SneatBaseComponent
+	implements OnChanges, AfterViewInit
+{
+	date = '';
 
-   date = '';
+	isCreating = false;
 
-   isCreating = false;
+	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public happening?: IHappeningContext;
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+	@Input() public contactusTeam?: IContactusTeamDtoWithID;
+	@Input() public wd?: WeekdayCode2;
 
-   @Input({ required: true }) public team?: ITeamContext;
-   @Input({ required: true }) public happening?: IHappeningContext;
-   @Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-   @Input() public contactusTeam?: IContactusTeamDtoWithID;
-   @Input() public wd?: WeekdayCode2;
+	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
+	@ViewChild('happeningSlotsComponent', { static: false })
+	happeningSlotsComponent?: HappeningSlotsComponent;
 
+	public get slots(): IHappeningSlot[] | undefined {
+		return this.happening?.brief?.slots;
+	}
 
-   @ViewChild('titleInput', { static: true }) titleInput?: IonInput;
-   @ViewChild('happeningSlotsComponent', { static: false }) happeningSlotsComponent?: HappeningSlotsComponent;
+	public happeningTitle = new FormControl<string>('', Validators.required);
+	protected happeningType = new FormControl<HappeningType>(
+		'recurring',
+		Validators.required,
+	);
 
-   public get slots(): IHappeningSlot[] | undefined {
-      return this.happening?.brief?.slots;
-   }
+	public happeningForm = new UntypedFormGroup({
+		title: this.happeningTitle,
+	});
 
-   public happeningTitle = new FormControl<string>('', Validators.required);
-   protected happeningType = new FormControl<HappeningType>('recurring', Validators.required);
+	public singleSlot?: IHappeningSlot;
 
-   public happeningForm = new UntypedFormGroup({
-      title: this.happeningTitle,
-   });
+	private readonly logErrorHandler = this.errorLogger.logErrorHandler;
+	private readonly logError = this.errorLogger.logError;
+	private readonly hasNavHistory: boolean;
 
-   public singleSlot?: IHappeningSlot;
+	protected get priceLabel(): string {
+		return this.happening?.brief?.type === 'recurring'
+			? 'Price per visit'
+			: 'Price';
+	}
 
-   private readonly logErrorHandler = this.errorLogger.logErrorHandler;
-   private readonly logError = this.errorLogger.logError;
-   private readonly hasNavHistory: boolean;
+	public isToDo = false;
 
-   protected get priceLabel(): string {
-      return this.happening?.brief?.type === 'recurring' ? 'Price per visit' : 'Price';
-   }
+	constructor(
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
+		routingState: RoutingState,
+		private readonly happeningService: HappeningService,
+		private readonly params: TeamComponentBaseParams,
+	) {
+		super('', errorLogger);
+		this.hasNavHistory = routingState.hasHistory();
+	}
 
-   public isToDo = false;
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['happening']) {
+			if (this.happening?.brief?.title) {
+				this.happeningTitle.setValue(this.happening?.brief?.title);
+				// this.slots = this?.happening?.brief?.slots || [];
+			}
+		}
+	}
 
-   constructor(
-      @Inject(ErrorLogger) errorLogger: IErrorLogger,
-      routingState: RoutingState,
-      private readonly happeningService: HappeningService,
-      private readonly params: TeamComponentBaseParams,
-   ) {
-      super('', errorLogger);
-      this.hasNavHistory = routingState.hasHistory();
-   }
+	ngAfterViewInit(): void {
+		this.setFocusToInput(this.titleInput);
+		if (this.happeningType.value === 'recurring' && !this.slots?.length) {
+			if (this.happeningSlotsComponent) {
+				this.happeningSlotsComponent?.showAddSlot({ wd: this.wd });
+			} else {
+				console.warn('happeningSlotsComponent is not found');
+			}
+		}
+	}
 
-   ngOnChanges(changes: SimpleChanges): void {
-      if (changes['happening']) {
-         if (this.happening?.brief?.title) {
-            this.happeningTitle.setValue(this.happening?.brief?.title);
-            // this.slots = this?.happening?.brief?.slots || [];
-         }
-      }
-   }
+	onHappeningTypeChanged(event: Event): void {
+		console.log('onHappeningTypeChanged()', event);
+		const happeningType = (event as CustomEvent).detail.value as HappeningType;
+		if (this.happening?.brief) {
+			this.happening = {
+				...this.happening,
+				brief: { ...this.happening?.brief, type: happeningType },
+			};
+		}
 
-   ngAfterViewInit(): void {
-      this.setFocusToInput(this.titleInput);
-      if (this.happeningType.value === 'recurring' && !this.slots?.length) {
-         if (this.happeningSlotsComponent) {
-            this.happeningSlotsComponent?.showAddSlot({ wd: this.wd });
-         } else {
-            console.warn('happeningSlotsComponent is not found');
-         }
-      }
-   }
+		// const setSlots = (slots?: IHappeningSlot[]) => {
+		//    if (slots && this.happening?.brief) {
+		//       this.happening = {
+		//          ...this.happening,
+		//          brief: {
+		//             ...this.happening.brief,
+		//             slots,
+		//          },
+		//       };
+		//    }
+		// };
+		//
+		// switch (happeningType) {
+		//    case 'single':
+		//       setSlots(this.happening?.brief?.slots);
+		//       break;
+		//    case 'recurring':
+		//       setSlots(this.happening?.brief?.slots);
+		//       break;
+		// }
 
-   onHappeningTypeChanged(event: Event): void {
-      console.log('onHappeningTypeChanged()', event);
-      const happeningType = (event as CustomEvent).detail.value as HappeningType;
-      if (this.happening?.brief) {
-         this.happening = { ...this.happening, brief: { ...this.happening?.brief, type: happeningType } };
-      }
+		this.happeningChange.emit(this.happening);
+	}
 
-      // const setSlots = (slots?: IHappeningSlot[]) => {
-      //    if (slots && this.happening?.brief) {
-      //       this.happening = {
-      //          ...this.happening,
-      //          brief: {
-      //             ...this.happening.brief,
-      //             slots,
-      //          },
-      //       };
-      //    }
-      // };
-      //
-      // switch (happeningType) {
-      //    case 'single':
-      //       setSlots(this.happening?.brief?.slots);
-      //       break;
-      //    case 'recurring':
-      //       setSlots(this.happening?.brief?.slots);
-      //       break;
-      // }
+	onTitleEnter(): void {
+		//
+	}
 
-      this.happeningChange.emit(this.happening);
-   }
+	ionViewDidEnter(): void {
+		if (!this.titleInput) {
+			this.logError(new Error('titleInput is not initialized'));
+			return;
+		}
+		this.titleInput
+			.setFocus()
+			.catch(this.logErrorHandler('failed to set focus to title input'));
+	}
 
-   onTitleEnter(): void {
-      //
-   }
+	// onAddSlotModalDismissed(): void {
+	// 	console.log('NewHappeningPage.onAddSlotModalDismissed()');
+	// 	if (!this.titleInput?.value) {
+	// 		if (this.titleInput) {
+	// 			setTimeout(() => {
+	// 				this.titleInput?.setFocus().catch(this.logErrorHandler('failed to set focus to title input'));
+	// 			}, 50);
+	// 		} else {
+	// 			console.warn('View child #titleInput is not initialized');
+	// 		}
+	// 	}
+	// }
 
-   ionViewDidEnter(): void {
-      if (!this.titleInput) {
-         this.logError(new Error('titleInput is not initialized'));
-         return;
-      }
-      this.titleInput.setFocus()
-      .catch(this.logErrorHandler('failed to set focus to title input'));
-   }
+	onSlotAdded(slot: IHappeningSlot): void {
+		console.log('onSlotAdded()', slot, this.happening);
+		this.happeningForm.markAllAsTouched();
+	}
 
-   // onAddSlotModalDismissed(): void {
-   // 	console.log('NewHappeningPage.onAddSlotModalDismissed()');
-   // 	if (!this.titleInput?.value) {
-   // 		if (this.titleInput) {
-   // 			setTimeout(() => {
-   // 				this.titleInput?.setFocus().catch(this.logErrorHandler('failed to set focus to title input'));
-   // 			}, 50);
-   // 		} else {
-   // 			console.warn('View child #titleInput is not initialized');
-   // 		}
-   // 	}
-   // }
+	onHappeningChanged(happening: IHappeningContext): void {
+		this.happening = happening;
+		this.happeningForm.markAllAsTouched();
+		this.happeningChange.emit(happening);
+	}
 
+	onSingleSlotChanged(slot: IHappeningSlot): void {
+		console.log('NewHappeningPageComponent.onTimingChanged()', slot);
+		this.singleSlot = slot;
+	}
 
-   onSlotAdded(slot: IHappeningSlot): void {
-      console.log('onSlotAdded()', slot, this.happening);
-      this.happeningForm.markAllAsTouched();
-   }
+	formIsValid(): boolean {
+		if (!this.happeningForm.valid) {
+			return false;
+		}
+		if (!this.slots?.length) {
+			return false;
+		}
+		return true;
+	}
 
-   onHappeningChanged(happening: IHappeningContext): void {
-      this.happening = happening;
-      this.happeningForm.markAllAsTouched();
-      this.happeningChange.emit(happening);
-   }
+	private makeHappeningDto(): IHappeningDto {
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
+		if (!this.happening) {
+			throw new Error('!this.happening');
+		}
+		if (!this.happening.brief) {
+			throw new Error('!this.happening.brief');
+		}
+		const activityFormValue = this.happeningForm.value;
+		const dto: IHappeningDto = {
+			...this.happening.dto,
+			...this.happening.brief,
+			teamIDs: [this.team.id], // TODO: should be already in this.happening.brief
+			title: activityFormValue.title, // TODO: should be already in this.happening.brief
+		};
+		// switch (dto.type) {
+		// 	case 'recurring':
+		// 		// dto.slots = this.slots.map(slot => ({ ...slot, repeats: 'weekly', id: slot.id || newRandomId({ len: 5 }) }));
+		// 		break;
+		// 	case 'single':
+		// 		if (!this.singleSlot) {
+		// 			throw new Error('timing is not set');
+		// 		}
+		// 		dto.slots = [{
+		// 			...this.singleSlot,
+		// 			id: 'once',
+		// 			repeats: 'once',
+		// 		}];
+		// 		break;
+		// 	default:
+		// 		throw new Error('unknown happening type: ' + dto.type);
+		// }
 
-   onSingleSlotChanged(slot: IHappeningSlot): void {
-      console.log('NewHappeningPageComponent.onTimingChanged()', slot);
-      this.singleSlot = slot;
-   }
+		return dto;
+	}
 
+	submit(): void {
+		if (this.happening?.id) {
+			// Update happening
+		} else {
+			//Create happening
+			this.createHappening();
+		}
+	}
 
-   formIsValid(): boolean {
-      if (!this.happeningForm.valid) {
-         return false;
-      }
-      if (!this.slots?.length) {
-         return false;
-      }
-      return true;
-   }
+	createHappening(): void {
+		console.log('NewHappeningPageComponent.createHappening()');
+		if (!this.team) {
+			return;
+		}
+		try {
+			// this.happeningForm.markAsTouched();
+			// if (!this.happeningForm.valid) {
+			// 	alert('title is a required field');
+			// 	// if (!this.happeningForm.controls['title'].valid) {
+			// 	// 	this.titleInput?.setFocus()
+			// 	// 		.catch(this.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
+			// 	// }
+			// 	return;
+			// }
+			const team = this.team;
 
+			if (!team) {
+				this.logError(new Error('!team context'));
+				return;
+			}
 
-   private makeHappeningDto(): IHappeningDto {
-      if (!this.team) {
-         throw new Error('!this.team');
-      }
-      if (!this.happening) {
-         throw new Error('!this.happening');
-      }
-      if (!this.happening.brief) {
-         throw new Error('!this.happening.brief');
-      }
-      const activityFormValue = this.happeningForm.value;
-      const dto: IHappeningDto = {
-         ...this.happening.dto,
-         ...this.happening.brief,
-         teamIDs: [this.team.id], // TODO: should be already in this.happening.brief
-         title: activityFormValue.title, // TODO: should be already in this.happening.brief
-      };
-      // switch (dto.type) {
-      // 	case 'recurring':
-      // 		// dto.slots = this.slots.map(slot => ({ ...slot, repeats: 'weekly', id: slot.id || newRandomId({ len: 5 }) }));
-      // 		break;
-      // 	case 'single':
-      // 		if (!this.singleSlot) {
-      // 			throw new Error('timing is not set');
-      // 		}
-      // 		dto.slots = [{
-      // 			...this.singleSlot,
-      // 			id: 'once',
-      // 			repeats: 'once',
-      // 		}];
-      // 		break;
-      // 	default:
-      // 		throw new Error('unknown happening type: ' + dto.type);
-      // }
+			this.isCreating = true;
 
-      return dto;
-   }
+			const dto = this.makeHappeningDto();
 
-   submit(): void {
-      if (this.happening?.id) {
-         // Update happening
-      } else {
-         //Create happening
-         this.createHappening();
-      }
-   }
-
-   createHappening(): void {
-      console.log('NewHappeningPageComponent.createHappening()');
-      if (!this.team) {
-         return;
-      }
-      try {
-         // this.happeningForm.markAsTouched();
-         // if (!this.happeningForm.valid) {
-         // 	alert('title is a required field');
-         // 	// if (!this.happeningForm.controls['title'].valid) {
-         // 	// 	this.titleInput?.setFocus()
-         // 	// 		.catch(this.logErrorHandler('failed to set focus to title input after happening found to be not valid'));
-         // 	// }
-         // 	return;
-         // }
-         const team = this.team;
-
-         if (!team) {
-            this.logError(new Error('!team context'));
-            return;
-         }
-
-         this.isCreating = true;
-
-         const dto = this.makeHappeningDto();
-
-         this.happeningService
-         .createHappening({ teamID: team.id, dto })
-         .pipe(
-            takeUntil(this.destroyed),
-         )
-         .subscribe({
-            next: () => {
-               console.log('new happening created');
-               if (this.hasNavHistory) {
-                  this.params.navController.pop()
-                  .catch(this.logErrorHandler('failed to pop back after creating a happening'));
-               } else {
-                  this.params.teamNavService.navigateBackToTeamPage(team, 'schedule')
-                  .catch(this.logErrorHandler('failed to team schedule after creating a happening'));
-               }
-            },
-            error: (err: unknown) => {
-               this.isCreating = false;
-               this.logError(err, 'failed to create new happening');
-            },
-            complete: () => {
-               this.isCreating = false;
-            },
-         });
-      } catch (e) {
-         this.isCreating = false;
-         this.errorLogger.logError(e, 'failed to create new happening');
-      }
-   }
-
+			this.happeningService
+				.createHappening({ teamID: team.id, dto })
+				.pipe(takeUntil(this.destroyed))
+				.subscribe({
+					next: () => {
+						console.log('new happening created');
+						if (this.hasNavHistory) {
+							this.params.navController
+								.pop()
+								.catch(
+									this.logErrorHandler(
+										'failed to pop back after creating a happening',
+									),
+								);
+						} else {
+							this.params.teamNavService
+								.navigateBackToTeamPage(team, 'schedule')
+								.catch(
+									this.logErrorHandler(
+										'failed to team schedule after creating a happening',
+									),
+								);
+						}
+					},
+					error: (err: unknown) => {
+						this.isCreating = false;
+						this.logError(err, 'failed to create new happening');
+					},
+					complete: () => {
+						this.isCreating = false;
+					},
+				});
+		} catch (e) {
+			this.isCreating = false;
+			this.errorLogger.logError(e, 'failed to create new happening');
+		}
+	}
 }

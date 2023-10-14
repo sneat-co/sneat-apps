@@ -1,4 +1,10 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -27,7 +33,7 @@ export class SegmentContainerComponent implements OnChanges {
 
 	deleting = false;
 
-	departureDate = new FormControl<string>('' );
+	departureDate = new FormControl<string>('');
 	arrivalDate = new FormControl<string>('');
 
 	form = new FormGroup({
@@ -45,11 +51,15 @@ export class SegmentContainerComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerID'] || changes['order']) {
 			const containerID = this.segment?.containerID;
-			this.container = this.order?.dto?.containers?.find(c => c.id === containerID);
+			this.container = this.order?.dto?.containers?.find(
+				(c) => c.id === containerID,
+			);
 
-			const fromShippingPointID = this.segment?.from?.shippingPointID
+			const fromShippingPointID = this.segment?.from?.shippingPointID;
 			this.from = this.order?.dto?.containerPoints?.find(
-				p => p.containerID === containerID && p.shippingPointID === fromShippingPointID
+				(p) =>
+					p.containerID === containerID &&
+					p.shippingPointID === fromShippingPointID,
 			);
 		}
 		if (changes['segment']) {
@@ -78,16 +88,17 @@ export class SegmentContainerComponent implements OnChanges {
 			return;
 		}
 		this.deleting = true;
-		const request: IDeleteSegmentsRequest = excludeUndefined<IDeleteSegmentsRequest>({
-			teamID: this.order.team.id,
-			orderID: this.order.id,
-			containerIDs: [containerID],
-			fromShippingPointID: this.segment?.from.shippingPointID,
-			toShippingPointID: this.segment?.to.shippingPointID,
-			byContactID: this.segment?.byContactID,
-		});
+		const request: IDeleteSegmentsRequest =
+			excludeUndefined<IDeleteSegmentsRequest>({
+				teamID: this.order.team.id,
+				orderID: this.order.id,
+				containerIDs: [containerID],
+				fromShippingPointID: this.segment?.from.shippingPointID,
+				toShippingPointID: this.segment?.to.shippingPointID,
+				byContactID: this.segment?.byContactID,
+			});
 		this.orderService.deleteSegments(request).subscribe({
-			error: err => {
+			error: (err) => {
 				this.deleting = false;
 				this.errorLogger.logError(err, 'Failed to delete container segment');
 			},

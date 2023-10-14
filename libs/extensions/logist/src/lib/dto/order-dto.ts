@@ -155,14 +155,21 @@ export interface IOrderRoute {
 	readonly destination?: ITransitPoint;
 }
 
-
-export function getSegmentsByContainerID(segments?: ReadonlyArray<IContainerSegment>, id?: string): IContainerSegment[] | undefined {
-	return segments?.filter(s => s.containerID === id);
+export function getSegmentsByContainerID(
+	segments?: ReadonlyArray<IContainerSegment>,
+	id?: string,
+): IContainerSegment[] | undefined {
+	return segments?.filter((s) => s.containerID === id);
 }
 
-export function getSegmentCounterparty(orderDto?: ILogistOrderDto | null, segment?: IContainerSegment): IOrderCounterparty | undefined {
+export function getSegmentCounterparty(
+	orderDto?: ILogistOrderDto | null,
+	segment?: IContainerSegment,
+): IOrderCounterparty | undefined {
 	const contactID = segment?.byContactID;
-	return contactID ? orderDto?.counterparties?.find(c => c.contactID === contactID) : undefined;
+	return contactID
+		? orderDto?.counterparties?.find((c) => c.contactID === contactID)
+		: undefined;
 }
 
 export interface ILogistOrderDto extends IFreightOrderBrief, IWithModified {
@@ -188,10 +195,14 @@ export interface ILogistOrderDto extends IFreightOrderBrief, IWithModified {
 	readonly issued?: IDocIssued;
 }
 
-export interface ILogistOrderBrief extends IFreightOrderBrief { // TODO: Why?
+export interface ILogistOrderBrief extends IFreightOrderBrief {
+	// TODO: Why?
 }
 
-export type ILogistOrderContext = ITeamItemContext<ILogistOrderBrief, ILogistOrderDto>;
+export type ILogistOrderContext = ITeamItemContext<
+	ILogistOrderBrief,
+	ILogistOrderDto
+>;
 
 export interface ICreateLogistOrderRequest extends ITeamRequest {
 	readonly numberOfContainers?: { [size: string]: number };
@@ -265,24 +276,33 @@ export interface IOrderSegment extends IOrderSegmentKey {
 	containerSegments: ReadonlyArray<IContainerSegment>;
 }
 
-function groupBy<T>(x: ReadonlyArray<T>, f: (v: T) => string): { [id: string]: ReadonlyArray<T> } {
-	return x.reduce((a: { [id: string]: T[] }, b: T) => ((a[f(b)] ||= []).push(b), a), {});
+function groupBy<T>(
+	x: ReadonlyArray<T>,
+	f: (v: T) => string,
+): { [id: string]: ReadonlyArray<T> } {
+	return x.reduce(
+		(a: { [id: string]: T[] }, b: T) => ((a[f(b)] ||= []).push(b), a),
+		{},
+	);
 }
 
-export function getOrderSegments(segments?: ReadonlyArray<IContainerSegment>): IOrderSegment[] {
+export function getOrderSegments(
+	segments?: ReadonlyArray<IContainerSegment>,
+): IOrderSegment[] {
 	if (!segments) {
 		return [];
 	}
-	const groups = groupBy(segments, s =>
-		`${s.from.role}-${s.from.contactID}-${s.to.role}-${s.to.contactID}-${s.byContactID}`);
-	const entries = Object.entries(groups);
-	const result = entries.map(
-		([, s]) => ({
-			from: s[0].from,
-			to: s[0].to,
-			containerSegments: s,
-		}),
+	const groups = groupBy(
+		segments,
+		(s) =>
+			`${s.from.role}-${s.from.contactID}-${s.to.role}-${s.to.contactID}-${s.byContactID}`,
 	);
+	const entries = Object.entries(groups);
+	const result = entries.map(([, s]) => ({
+		from: s[0].from,
+		to: s[0].to,
+		containerSegments: s,
+	}));
 	return result;
 }
 
@@ -313,11 +333,13 @@ export interface IAddSegmentsRequest extends ILogistOrderRequest {
 	readonly containers: INewSegmentContainer[];
 }
 
-export interface IUpdateShippingPointRequest extends IOrderShippingPointRequest {
+export interface IUpdateShippingPointRequest
+	extends IOrderShippingPointRequest {
 	readonly setNumbers?: { [field: string]: number };
-	readonly setStrings?: { [key in ShippingPointStringField]: (string | undefined) };
+	readonly setStrings?: {
+		[key in ShippingPointStringField]: string | undefined;
+	};
 }
-
 
 export interface IContainerRequest extends ILogistOrderRequest {
 	readonly containerID: string;
@@ -341,21 +363,28 @@ export interface ISetContainerPointTaskRequest extends IContainerPointRequest {
 export type EndpointDateField = 'scheduledDate' | 'actualDate';
 export type EndpointTimeField = 'scheduledTime' | 'actualTime';
 export type ShippingPointStringField = 'notes';
-export type FreightPointIntField = 'numberOfPallets' | 'grossWeightKg' | 'volumeM3';
+export type FreightPointIntField =
+	| 'numberOfPallets'
+	| 'grossWeightKg'
+	| 'volumeM3';
 export type FreightPointField = FreightPointIntField | EndpointDateField;
 
 export type ContainerStringField = 'number' | 'instructions';
 export type ContainerPointStringField = 'notes' | 'refNumber';
 
-export interface ISetContainerPointFreightFieldsRequest extends IContainerPointRequest {
+export interface ISetContainerPointFreightFieldsRequest
+	extends IContainerPointRequest {
 	readonly task: ShippingPointTask;
-	readonly integers: Partial<{ [key in FreightPointIntField]: (number | undefined) }>;
+	readonly integers: Partial<{
+		[key in FreightPointIntField]: number | undefined;
+	}>;
 }
 
-export interface ISetContainerEndpointFieldsRequest extends IContainerPointRequest {
+export interface ISetContainerEndpointFieldsRequest
+	extends IContainerPointRequest {
 	readonly side: EndpointSide;
-	readonly dates?: Partial<{ [key in EndpointDateField]: (string | undefined) }>;
-	readonly times?: Partial<{ [key in EndpointTimeField]: (string | undefined) }>;
+	readonly dates?: Partial<{ [key in EndpointDateField]: string | undefined }>;
+	readonly times?: Partial<{ [key in EndpointTimeField]: string | undefined }>;
 	readonly byContactID?: string;
 }
 
@@ -363,7 +392,8 @@ export interface ISetContainerFieldsRequest extends IContainerRequest {
 	readonly setStrings: Partial<{ [key in ContainerStringField]: string }>;
 }
 
-export interface ISetContainerPointFieldsRequest extends IContainerPointRequest {
+export interface ISetContainerPointFieldsRequest
+	extends IContainerPointRequest {
 	readonly setStrings: Partial<{ [key in ContainerPointStringField]: string }>;
 }
 
@@ -371,7 +401,9 @@ export interface IOrderShippingPointRequest extends ILogistOrderRequest {
 	readonly shippingPointID: string;
 }
 
-export interface IUpdateContainerPointRequest extends IOrderShippingPointRequest, IContainerRequest {
+export interface IUpdateContainerPointRequest
+	extends IOrderShippingPointRequest,
+		IContainerRequest {
 	readonly toLoad?: IFreightLoad;
 	readonly toUnload?: IFreightLoad;
 	readonly arrivesDate?: string; // Pass empty string to clear date
@@ -386,8 +418,9 @@ export interface IUpdateContainerPointRequest extends IOrderShippingPointRequest
 // 	points: IUpdateSegmentDateRequest[];
 // }
 
-
-export interface IDeleteCounterpartyRequest extends ILogistOrderRequest, IContactRequest {
+export interface IDeleteCounterpartyRequest
+	extends ILogistOrderRequest,
+		IContactRequest {
 	readonly role: string;
 }
 

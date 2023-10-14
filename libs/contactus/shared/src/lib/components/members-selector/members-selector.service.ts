@@ -8,15 +8,14 @@ import { MembersSelectorModalComponent } from './members-selector-modal.componen
 
 @Injectable()
 export class MembersSelectorService {
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
-	) {
-	}
+	) {}
 
-
-	selectMembersInModal(options: ISelectMembersOptions): Promise<IContactContext[]> {
+	selectMembersInModal(
+		options: ISelectMembersOptions,
+	): Promise<IContactContext[]> {
 		console.log('selectMembers(), options:', options);
 		if (!options.members) {
 			throw new Error('members is required parameter to select members');
@@ -35,18 +34,15 @@ export class MembersSelectorService {
 				},
 				keyboardClose: true,
 			};
-			this.modalController.create(modalOptions)
-				.then(
-					modal => {
-						modal.present().catch(
-							(err: unknown) => {
-								this.errorLogger.logError(err, 'Failed to present modal');
-								reject(err);
-							},
-						);
-					},
-				).catch(
-				(err: unknown) => {
+			this.modalController
+				.create(modalOptions)
+				.then((modal) => {
+					modal.present().catch((err: unknown) => {
+						this.errorLogger.logError(err, 'Failed to present modal');
+						reject(err);
+					});
+				})
+				.catch((err: unknown) => {
 					this.errorLogger.logError(err, 'Failed to create modal');
 					reject(err);
 				});

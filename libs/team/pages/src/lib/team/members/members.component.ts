@@ -1,7 +1,17 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
-import { MemberRole, MemberRoleContributor, MemberRoleSpectator } from '@sneat/dto';
+import {
+	MemberRole,
+	MemberRoleContributor,
+	MemberRoleSpectator,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactusTeamDto, zipMapBriefsWithIDs } from '@sneat/team/models';
 import { TeamNavService, TeamService } from '@sneat/team/services';
@@ -22,8 +32,7 @@ export class MembersComponent implements OnChanges {
 		private readonly teamService: TeamService,
 		private readonly navController: NavController,
 		public readonly navService: TeamNavService,
-	) {
-	}
+	) {}
 
 	public goAddMember(event?: Event): void {
 		if (event) {
@@ -54,7 +63,9 @@ export class MembersComponent implements OnChanges {
 	private setMembersCount(team?: IContactusTeamDto): void {
 		if (team) {
 			const count = (role: MemberRole): number =>
-				zipMapBriefsWithIDs(team.contacts)?.filter(m => m.brief.roles?.indexOf(role) || -1 >= 0)?.length || 0;
+				zipMapBriefsWithIDs(team.contacts)?.filter(
+					(m) => m.brief.roles?.indexOf(role) || -1 >= 0,
+				)?.length || 0;
 			this.contributorsCount = count(MemberRoleContributor);
 			this.spectatorsCount = count(MemberRoleSpectator);
 		} else {

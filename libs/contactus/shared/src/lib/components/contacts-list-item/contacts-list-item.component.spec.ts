@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ContactsListItemComponent} from './contacts-list-item.component';
+import { ContactsListItemComponent } from './contacts-list-item.component';
 
 describe('ContactListItemComponent', () => {
 	let component: ContactsListItemComponent;
@@ -11,8 +11,7 @@ describe('ContactListItemComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [ContactsListItemComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('ContactListItemComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

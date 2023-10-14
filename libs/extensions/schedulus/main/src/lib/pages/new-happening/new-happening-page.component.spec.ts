@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {NewHappeningPageComponent} from './new-happening-page.component';
+import { NewHappeningPageComponent } from './new-happening-page.component';
 
 describe('NewHappeningPage', () => {
 	let component: NewHappeningPageComponent;
@@ -11,8 +11,7 @@ describe('NewHappeningPage', () => {
 		TestBed.configureTestingModule({
 			declarations: [NewHappeningPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('NewHappeningPage', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

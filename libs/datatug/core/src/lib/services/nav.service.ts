@@ -6,7 +6,7 @@ import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
-import { IBriefAndID, IMemberBrief, ITeamDto } from "@sneat/dto";
+import { IBriefAndID, IMemberBrief, ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
 
@@ -22,8 +22,7 @@ export class NavService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
-	) {
-	}
+	) {}
 
 	public navigateToTeams(animationDirection?: 'forward' | 'back'): void {
 		console.log('navigateToTeams()');

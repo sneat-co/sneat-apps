@@ -7,18 +7,16 @@ describe('HomePage', () => {
 	let component: TeamsPageComponent;
 	let fixture: ComponentFixture<TeamsPageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [TeamsPageComponent],
-				imports: [IonicModule.forRoot()],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [TeamsPageComponent],
+			imports: [IonicModule.forRoot()],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(TeamsPageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(TeamsPageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

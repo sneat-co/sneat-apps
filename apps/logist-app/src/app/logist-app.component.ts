@@ -8,16 +8,16 @@ import { gitHash } from '@sneat/components';
 	selector: 'sneat-root',
 	templateUrl: './logist-app.component.html',
 })
-export class LogistAppComponent extends SneatBaseAppComponent implements AfterViewInit {
-
+export class LogistAppComponent
+	extends SneatBaseAppComponent
+	implements AfterViewInit
+{
 	@ViewChild('ionSplitPane') ionSplitPane!: IonSplitPane;
 
 	getGitHash(): string {
 		return gitHash;
 	}
-	constructor(
-		topMenuService: TopMenuService,
-	) {
+	constructor(topMenuService: TopMenuService) {
 		super(topMenuService);
 		// window.addEventListener('hashchange', (event: HashChangeEvent) => {
 		// 	// Log the state data to the console

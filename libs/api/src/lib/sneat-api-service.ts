@@ -7,7 +7,9 @@ import { ISneatApiService } from './sneat-api-service.interface';
 const userIsNotAuthenticatedNoFirebaseToken =
 	'User is not authenticated yet - no Firebase ID token';
 
-export const SneatApiAuthTokenProvider = new InjectionToken('SneatApiAuthTokenProvider');
+export const SneatApiAuthTokenProvider = new InjectionToken(
+	'SneatApiAuthTokenProvider',
+);
 export const SneatApiBaseUrl = new InjectionToken('SneatApiBaseUrl');
 export const DefaultSneatTeamApiBaseUrl = 'https://api.sneat.team/v0/';
 export const DefaultSneatAppApiBaseUrl = 'https://sneat.eu/v0/';
@@ -20,8 +22,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	constructor(
 		private readonly httpClient: HttpClient,
 		afAuth: AngularFireAuth, // TODO: Get rid of hard dependency on AngularFireAuth and instead have some token provider using SneatApiAuthTokenProvider injection token
-		@Inject(SneatApiBaseUrl) private readonly baseUrl?: string,
-		// @Inject(SneatApiAuthTokenProvider) private authTokenProvider: Observable<string | undefined>,
+		@Inject(SneatApiBaseUrl) private readonly baseUrl?: string, // @Inject(SneatApiAuthTokenProvider) private authTokenProvider: Observable<string | undefined>,
 	) {
 		console.log('SneatApiService.constructor()', baseUrl);
 		if (!baseUrl) {
@@ -29,8 +30,12 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		}
 		onIdTokenChanged(afAuth, {
 			next: (user) => {
-				user?.getIdToken().then(this.setApiAuthToken).catch(err => console.error('getIdToken() error:', err));
-			}, error: (error) => {
+				user
+					?.getIdToken()
+					.then(this.setApiAuthToken)
+					.catch((err) => console.error('getIdToken() error:', err));
+			},
+			error: (error) => {
 				console.error('onIdTokenChanged() error:', error);
 			},
 			complete: () => void 0,
@@ -87,17 +92,17 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 		});
 	}
 
-	public postAsAnonymous<T>(
-		endpoint: string,
-		body: unknown,
-	): Observable<T> {
+	public postAsAnonymous<T>(endpoint: string, body: unknown): Observable<T> {
 		return this.httpClient.post<T>(this.baseUrl + endpoint, body, {
 			headers: this.headers(),
 		});
 	}
 
-
-	public delete<T>(endpoint: string, params?: HttpParams, body?: unknown): Observable<T> {
+	public delete<T>(
+		endpoint: string,
+		params?: HttpParams,
+		body?: unknown,
+	): Observable<T> {
 		console.log('delete()', endpoint, params);
 		const url = this.baseUrl + endpoint;
 		return (
@@ -111,11 +116,10 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	}
 
 	private errorIfNotAuthenticated(): Observable<never> | undefined {
-		const result: Observable<never> | undefined = (
+		const result: Observable<never> | undefined =
 			(!this.authToken &&
 				throwError(() => userIsNotAuthenticatedNoFirebaseToken)) ||
-			undefined
-		);
+			undefined;
 		return result;
 	}
 

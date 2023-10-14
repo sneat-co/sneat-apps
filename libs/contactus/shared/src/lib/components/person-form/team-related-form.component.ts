@@ -1,8 +1,14 @@
-import { Component, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	OnChanges,
+	SimpleChange,
+	SimpleChanges,
+} from '@angular/core';
 import { ITeamContext } from '@sneat/team/models';
 
 @Component({ template: '' })
-export abstract class TeamRelatedFormComponent implements OnChanges { // TODO: Needs to be in other place
+export abstract class TeamRelatedFormComponent implements OnChanges {
+	// TODO: Needs to be in other place
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const teamChange = changes['team'];

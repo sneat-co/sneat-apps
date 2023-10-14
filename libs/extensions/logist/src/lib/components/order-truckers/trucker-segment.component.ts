@@ -1,7 +1,21 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IDeleteSegmentsRequest, ILogistOrderContext, IOrderCounterparty, IOrderSegment } from '../../dto';
-import { IOrderPrintedDocContext, OrderPrintService } from '../../prints/order-print.service';
+import {
+	IDeleteSegmentsRequest,
+	ILogistOrderContext,
+	IOrderCounterparty,
+	IOrderSegment,
+} from '../../dto';
+import {
+	IOrderPrintedDocContext,
+	OrderPrintService,
+} from '../../prints/order-print.service';
 import { LogistOrderService } from '../../services';
 
 @Component({
@@ -22,8 +36,7 @@ export class TruckerSegmentComponent implements OnChanges {
 		private readonly orderService: LogistOrderService,
 		private readonly orderPrintService: OrderPrintService,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	assignSegmentsToTransporter(): void {
 		alert('not implemented yet');
@@ -31,13 +44,15 @@ export class TruckerSegmentComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['segment']) {
-			this.from = this.order?.dto?.counterparties?.find(c =>
-				c.contactID === this.orderSegment?.from?.contactID
-				&& c.role == this.orderSegment?.from?.role,
+			this.from = this.order?.dto?.counterparties?.find(
+				(c) =>
+					c.contactID === this.orderSegment?.from?.contactID &&
+					c.role == this.orderSegment?.from?.role,
 			);
-			this.to = this.order?.dto?.counterparties?.find(c =>
-				c.contactID === this.orderSegment?.to?.contactID
-				&& c.role == this.orderSegment?.to?.role,
+			this.to = this.order?.dto?.counterparties?.find(
+				(c) =>
+					c.contactID === this.orderSegment?.to?.contactID &&
+					c.role == this.orderSegment?.to?.role,
 			);
 		}
 	}
@@ -49,7 +64,11 @@ export class TruckerSegmentComponent implements OnChanges {
 		const ctx: IOrderPrintedDocContext = {
 			...this.order,
 		};
-		this.orderPrintService.openOrderPrintedDocument(event, 'trucker-summary', ctx);
+		this.orderPrintService.openOrderPrintedDocument(
+			event,
+			'trucker-summary',
+			ctx,
+		);
 	}
 
 	deleteTruckerSegments(): void {
@@ -73,9 +92,9 @@ export class TruckerSegmentComponent implements OnChanges {
 			next: () => {
 				console.log('deleted trucker segments');
 			},
-			error: err => {
+			error: (err) => {
 				this.deleting = false;
-				this.errorLogger.logError(err,'Failed to delete trucker segments')
+				this.errorLogger.logError(err, 'Failed to delete trucker segments');
 			},
 		});
 	}

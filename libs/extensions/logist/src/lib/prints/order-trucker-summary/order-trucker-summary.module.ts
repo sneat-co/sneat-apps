@@ -17,9 +17,6 @@ import { OrderTruckerSummaryComponent } from './order-trucker-summary.component'
 			},
 		]),
 	],
-	declarations: [
-		OrderTruckerSummaryComponent,
-	],
+	declarations: [OrderTruckerSummaryComponent],
 })
-export class OrderTruckerSummaryModule {
-}
+export class OrderTruckerSummaryModule {}

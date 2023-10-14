@@ -9,8 +9,7 @@ describe('TeamMenuComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [TeamMenuComponent],
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

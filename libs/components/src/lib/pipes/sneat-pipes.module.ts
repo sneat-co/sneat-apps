@@ -1,6 +1,10 @@
 import { NgModule, PipeTransform, Type } from '@angular/core';
 import { CountryFlagPipe, CountryTitle } from './country-emoji.pipe';
-import { GenderColorPipe, GenderEmojiPipe, GenderIconNamePipe } from './gender.pipes';
+import {
+	GenderColorPipe,
+	GenderEmojiPipe,
+	GenderIconNamePipe,
+} from './gender.pipes';
 import { LongMonthNamePipe } from './long-month-name.pipe';
 import { ContactTitlePipe } from './member-title.pipe';
 import { PersonTitle } from './person-title.pipe';
@@ -28,6 +32,4 @@ const pipes: Type<PipeTransform>[] = [
 	declarations: pipes,
 	exports: pipes,
 })
-export class SneatPipesModule {
-
-}
+export class SneatPipesModule {}

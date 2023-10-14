@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { OrderPrintService } from './order-print.service';
 
-
 @NgModule({
-	providers: [
-		OrderPrintService,
-	]
+	providers: [OrderPrintService],
 })
-export class OrderPrintServiceModule {
-}
+export class OrderPrintServiceModule {}

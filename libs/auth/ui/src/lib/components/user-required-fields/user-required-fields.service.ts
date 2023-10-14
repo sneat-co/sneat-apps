@@ -4,11 +4,7 @@ import { UserRequiredFieldsModalComponent } from './user-required-fields-modal.c
 
 @Injectable()
 export class UserRequiredFieldsService {
-
-	constructor(
-		private readonly modalController: ModalController,
-	) {
-	}
+	constructor(private readonly modalController: ModalController) {}
 
 	public async open(): Promise<boolean> {
 		const modal = await this.modalController.create({
@@ -16,10 +12,16 @@ export class UserRequiredFieldsService {
 		});
 		await modal.present();
 		return new Promise((resolve, reject) => {
-			modal.onDidDismiss().then(value => {
-				console.log('UserRequiredFieldsService.open(): modal dismissed:', value);
-				resolve(!!value);
-			}).catch(reject);
+			modal
+				.onDidDismiss()
+				.then((value) => {
+					console.log(
+						'UserRequiredFieldsService.open(): modal dismissed:',
+						value,
+					);
+					resolve(!!value);
+				})
+				.catch(reject);
 		});
 	}
 }

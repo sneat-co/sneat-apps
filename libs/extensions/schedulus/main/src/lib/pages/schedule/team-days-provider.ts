@@ -1,8 +1,18 @@
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
-import { IHappeningBrief, IHappeningDto, IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
-import { ISlotItem, RecurringSlots, TeamDay, wd2 } from '@sneat/extensions/schedulus/shared';
+import {
+	IHappeningBrief,
+	IHappeningDto,
+	IHappeningSlot,
+	WeekdayCode2,
+} from '@sneat/dto';
+import {
+	ISlotItem,
+	RecurringSlots,
+	TeamDay,
+	wd2,
+} from '@sneat/extensions/schedulus/shared';
 import { IErrorLogger } from '@sneat/logging';
 import {
 	IHappeningContext,
@@ -11,7 +21,11 @@ import {
 	ITeamItemContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
-import { HappeningService, ScheduleDayService, TeamItemService } from '@sneat/team/services';
+import {
+	HappeningService,
+	ScheduleDayService,
+	TeamItemService,
+} from '@sneat/team/services';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,
@@ -25,17 +39,18 @@ import {
 import { tap } from 'rxjs/operators';
 
 type RecurringsByWeekday = {
-	[wd in WeekdayCode2]: ISlotItem[]
+	[wd in WeekdayCode2]: ISlotItem[];
 };
 
-const emptyRecurringsByWeekday = () => wd2.reduce(
-	(o, wd) => {
-		o[wd] = [];
-		return o;
-	},
-	// tslint:disable-next-line:no-object-literal-type-assertion
-	{} as RecurringsByWeekday,
-);
+const emptyRecurringsByWeekday = () =>
+	wd2.reduce(
+		(o, wd) => {
+			o[wd] = [];
+			return o;
+		},
+		// tslint:disable-next-line:no-object-literal-type-assertion
+		{} as RecurringsByWeekday,
+	);
 
 // export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotItem {
 // 	if (!dto.title) {
@@ -80,7 +95,10 @@ const emptyRecurringsByWeekday = () => wd2.reduce(
 // 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 // }
 
-const slotItemsFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): ISlotItem[] => {
+const slotItemsFromRecurringSlot = (
+	r: IHappeningContext,
+	rs: IHappeningSlot,
+): ISlotItem[] => {
 	const si = {
 		// date: rs.start.date,
 		slotID: rs.id,
@@ -91,12 +109,14 @@ const slotItemsFromRecurringSlot = (r: IHappeningContext, rs: IHappeningSlot): I
 		timing: { start: rs.start, end: rs.end },
 	};
 	if (rs.weekdays?.length) {
-		return rs.weekdays.map(wd => ({ ...si, wd }));
+		return rs.weekdays.map((wd) => ({ ...si, wd }));
 	}
 	return [si];
 };
 
-const groupRecurringSlotsByWeekday = (schedulusTeam?: ISchedulusTeamDtoWithID): RecurringSlots => {
+const groupRecurringSlotsByWeekday = (
+	schedulusTeam?: ISchedulusTeamDtoWithID,
+): RecurringSlots => {
 	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${schedulusTeam?.id})`;
 	const slots: RecurringSlots = {
 		byWeekday: {},
@@ -105,11 +125,15 @@ const groupRecurringSlotsByWeekday = (schedulusTeam?: ISchedulusTeamDtoWithID): 
 		console.log(logPrefix + ', no slots for team:', schedulusTeam);
 		return slots;
 	}
-	zipMapBriefsWithIDs(schedulusTeam.dto.recurringHappenings).forEach(rh => {
-		rh.brief.slots?.forEach(rs => {
-			const happening: IHappeningContext = { id: rh.id, brief: rh.brief, team: schedulusTeam };
+	zipMapBriefsWithIDs(schedulusTeam.dto.recurringHappenings).forEach((rh) => {
+		rh.brief.slots?.forEach((rs) => {
+			const happening: IHappeningContext = {
+				id: rh.id,
+				brief: rh.brief,
+				team: schedulusTeam,
+			};
 			const slotItems: ISlotItem[] = slotItemsFromRecurringSlot(happening, rs);
-			slotItems.forEach(si => {
+			slotItems.forEach((si) => {
 				if (si.wd) {
 					let weekday = slots.byWeekday[si.wd];
 					if (!weekday) {
@@ -130,27 +154,36 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	// At the moment tracks schedule of a single team
 	// but probably will track multiple teams at once.
 
-	private readonly recurringsTeamItemService: TeamItemService<IHappeningBrief, IHappeningDto>;
+	private readonly recurringsTeamItemService: TeamItemService<
+		IHappeningBrief,
+		IHappeningDto
+	>;
 	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};
-	private readonly recurringByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
+	private readonly recurringByWd: RecurringsByWeekday =
+		emptyRecurringsByWeekday();
 
-	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(undefined);
-	private readonly schedulusTeam$ = new BehaviorSubject<ISchedulusTeamDtoWithID | undefined>(undefined);
+	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(
+		undefined,
+	);
+	private readonly schedulusTeam$ = new BehaviorSubject<
+		ISchedulusTeamDtoWithID | undefined
+	>(undefined);
 
 	private readonly teamID$ = this.team$.asObservable().pipe(
-		map(team => team?.id),
+		map((team) => team?.id),
 		distinctUntilChanged(),
 	);
 	private readonly days: { [d: string]: TeamDay } = {};
 	private readonly destroyed = new Subject<void>();
-	private readonly recurrings$: Observable<RecurringSlots> = this.schedulusTeam$.pipe(
-		// TODO: Instead of providing all slots we can provide observables of slots for a specific day
-		// That would minimize number of handlers to be called on watching components
-		// Tough it's a micro optimization that does not seems to worth the effort now.
-		map(groupRecurringSlotsByWeekday),
-		tap(slots => console.log('TeamDaysProvider.recurrings$ =>', slots)),
-		shareReplay(1),
-	);
+	private readonly recurrings$: Observable<RecurringSlots> =
+		this.schedulusTeam$.pipe(
+			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
+			// That would minimize number of handlers to be called on watching components
+			// Tough it's a micro optimization that does not seems to worth the effort now.
+			map(groupRecurringSlotsByWeekday),
+			tap((slots) => console.log('TeamDaysProvider.recurrings$ =>', slots)),
+			shareReplay(1),
+		);
 	private recurringsSubscription?: Subscription;
 	// private teamId?: string;
 	private memberId?: string;
@@ -173,7 +206,12 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 	) {
 		console.log('TeamDaysProvider.constructor()');
 		// super();
-		this.recurringsTeamItemService = new TeamItemService('schedulus', 'recurring_happenings', afs, sneatApiService);
+		this.recurringsTeamItemService = new TeamItemService(
+			'schedulus',
+			'recurring_happenings',
+			afs,
+			sneatApiService,
+		);
 	}
 
 	public destroy(): void {
@@ -188,8 +226,13 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		let day = this.days[id];
 		if (!day) {
 			this.days[id] = day = new TeamDay(
-				this.teamID$, date, this.recurrings$, this.errorLogger,
-				this.happeningService, this.scheduleDayService);
+				this.teamID$,
+				date,
+				this.recurrings$,
+				this.errorLogger,
+				this.happeningService,
+				this.scheduleDayService,
+			);
 		}
 		return day;
 	}
@@ -282,43 +325,59 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 
 	public loadForWeek(d: Date): void {
 		console.log('TeamDaysProvider.loadForWeek()', d);
-
 	}
 
 	private processRecurringBriefs(): void {
 		if (!this._team?.dto?.recurringHappenings) {
 			return;
 		}
-		zipMapBriefsWithIDs(this._schedulusTeam?.dto?.recurringHappenings).forEach(rh => {
-			this.processRecurring({ id: rh.id, brief: rh.brief, team: this._team || { id: '' } });
-		});
+		zipMapBriefsWithIDs(this._schedulusTeam?.dto?.recurringHappenings).forEach(
+			(rh) => {
+				this.processRecurring({
+					id: rh.id,
+					brief: rh.brief,
+					team: this._team || { id: '' },
+				});
+			},
+		);
 	}
 
-	private watchRecurringsByTeamID(team: ITeamContext): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
+	private watchRecurringsByTeamID(
+		team: ITeamContext,
+	): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
 		console.log('TeamDaysProvider.loadRegulars()');
-		const $recurrings = this.recurringsTeamItemService.watchTeamItems(team)
+		const $recurrings = this.recurringsTeamItemService
+			.watchTeamItems(team)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
-				tap(recurrings => {
+				tap((recurrings) => {
 					// tslint:disable-next-line:no-this-assignment
-					recurrings.forEach(recurring => this.processRecurring(recurring));
-				}));
+					recurrings.forEach((recurring) => this.processRecurring(recurring));
+				}),
+			);
 		this.recurringsSubscription = $recurrings.subscribe();
 		return $recurrings;
 	}
 
-	private processRecurring(recurring: ITeamItemContext<IHappeningBrief, IHappeningDto>): void {
-		if (this.memberId && (!recurring.dto?.participants || !recurring?.dto.participants.find(p => p.type === 'member' && p.id === this.memberId))) {
+	private processRecurring(
+		recurring: ITeamItemContext<IHappeningBrief, IHappeningDto>,
+	): void {
+		if (
+			this.memberId &&
+			(!recurring.dto?.participants ||
+				!recurring?.dto.participants.find(
+					(p) => p.type === 'member' && p.id === this.memberId,
+				))
+		) {
 			return;
 		}
 		console.log('processRecurring()', recurring);
 		const { recurringByWd } = this;
-		Object.keys(recurringByWd)
-			.forEach(wd => {
-				recurringByWd[wd as WeekdayCode2] = [];
-			});
+		Object.keys(recurringByWd).forEach((wd) => {
+			recurringByWd[wd as WeekdayCode2] = [];
+		});
 		if (recurring.brief?.slots) {
-			recurring.brief.slots.forEach(slot => {
+			recurring.brief.slots.forEach((slot) => {
 				slot.weekdays?.forEach((wd, i) => {
 					const { brief } = recurring;
 					if (!brief) {
@@ -389,7 +448,9 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		if (!recurrings) {
 			return;
 		}
-		const wdRecurrings = weekday.slots && weekday.slots.filter(r => r.happening.brief?.type === 'recurring');
+		const wdRecurrings =
+			weekday.slots &&
+			weekday.slots.filter((r) => r.happening.brief?.type === 'recurring');
 		if (wdRecurrings && wdRecurrings.length === recurrings.length) {
 			return;
 		}
@@ -403,7 +464,9 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		}
 	}
 
-	private loadEvents(...dates: Date[]): Observable<{ dateKey: string; events: ISlotItem[] }> {
+	private loadEvents(
+		...dates: Date[]
+	): Observable<{ dateKey: string; events: ISlotItem[] }> {
 		console.log('loadEvents()', dates);
 		return EMPTY;
 		// const dateISOs = dates.map(localDateToIso);
@@ -425,6 +488,4 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		// 		}),
 		// 	);
 	}
-
-
 }

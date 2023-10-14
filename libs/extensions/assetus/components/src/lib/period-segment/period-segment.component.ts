@@ -1,5 +1,5 @@
 //tslint:disable:no-unsafe-any
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Period } from '@sneat/dto';
 
 @Component({
@@ -7,7 +7,6 @@ import { Period } from '@sneat/dto';
 	templateUrl: './period-segment.component.html',
 })
 export class PeriodSegmentComponent {
-
 	@Input()
 	public period?: Period;
 

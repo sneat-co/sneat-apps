@@ -3,19 +3,23 @@ import {
 	DtoGroupTerms,
 	DtoTotal,
 	DtoTotals,
-	IAssetDtoGroupCounts, IAssetGroupContext, IContactGroupBrief,
+	IAssetDtoGroupCounts,
+	IAssetGroupContext,
+	IContactGroupBrief,
 	IContactGroupDto,
 	IContactGroupDtoCounts,
 	newTeamCounts,
 	Period,
 	TeamCounts,
 } from '@sneat/dto';
-import { IMemberContext, IMemberGroupContext, ITeamContext } from '../team-context';
+import {
+	IMemberContext,
+	IMemberGroupContext,
+	ITeamContext,
+} from '../team-context';
 
 export class Total {
-	constructor(
-		public readonly dto?: DtoTotal,
-	) {
+	constructor(public readonly dto?: DtoTotal) {
 		if (!dto) {
 			this.dto = { count: 0 };
 		}
@@ -182,9 +186,7 @@ export class Totals {
 	readonly incomes: Total;
 	readonly expenses: Total;
 
-	constructor(
-		dtoTotals?: DtoTotals,
-	) {
+	constructor(dtoTotals?: DtoTotals) {
 		this.incomes = new Total(dtoTotals ? dtoTotals.incomes : undefined);
 		this.expenses = new Total(dtoTotals ? dtoTotals.expenses : undefined);
 	}
@@ -218,10 +220,17 @@ export class Totals {
 		switch (per) {
 			case 'month':
 				// tslint:disable-next-line:no-magic-numbers
-				return Math.round((this.incomes.perMonth() - this.expenses.perMonth()) * 100) / 100;
+				return (
+					Math.round(
+						(this.incomes.perMonth() - this.expenses.perMonth()) * 100,
+					) / 100
+				);
 			case 'day':
 				// tslint:disable-next-line:no-magic-numbers
-				return Math.round((this.incomes.perDay() - this.expenses.perDay()) * 100) / 100;
+				return (
+					Math.round((this.incomes.perDay() - this.expenses.perDay()) * 100) /
+					100
+				);
 			default:
 				throw new Error(`Unknown parameter value: ${per}`);
 		}
@@ -251,13 +260,10 @@ export class Member {
 	}
 }
 
-
 export class AssetGroup {
 	public readonly totals: Totals;
 
-	constructor(
-		public readonly context: IAssetGroupContext,
-	) {
+	constructor(public readonly context: IAssetGroupContext) {
 		this.totals = new Totals(context.dto?.totals);
 	}
 
@@ -271,7 +277,6 @@ export class AssetGroup {
 }
 
 export class Commune implements ITeamContext {
-
 	public readonly totals: Totals;
 
 	constructor(
@@ -341,13 +346,10 @@ export class MemberGroup {
 	public readonly dto?: IContactGroupDto | null;
 	public readonly brief?: IContactGroupBrief | null;
 
-	constructor(
-		memberGroup: IMemberGroupContext,
-	) {
+	constructor(memberGroup: IMemberGroupContext) {
 		this.id = memberGroup.id;
 		this.brief = memberGroup.brief;
 		this.dto = memberGroup.dto;
-
 	}
 
 	public get numberOf(): IContactGroupDtoCounts {
@@ -361,7 +363,6 @@ export class MemberGroup {
 	public get title(): string {
 		return this.brief?.title || '';
 	}
-
 
 	public get terms(): DtoGroupTerms {
 		return this.dto?.terms || {};

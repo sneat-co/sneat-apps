@@ -17,12 +17,17 @@ export class ContactNavService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly teamNavService: TeamNavService,
-	) {
-	}
+	) {}
 
 	goNewContactPage(team: ITeamContext, params?: INewContactPageParams): void {
-		this.teamNavService.navigateForwardToTeamPage(team, 'new-contact', {
-			queryParams: excludeUndefined(params),
-		}).catch(this.errorLogger.logErrorHandler('failed to navigate to "new-contact" page'));
+		this.teamNavService
+			.navigateForwardToTeamPage(team, 'new-contact', {
+				queryParams: excludeUndefined(params),
+			})
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to navigate to "new-contact" page',
+				),
+			);
 	}
 }

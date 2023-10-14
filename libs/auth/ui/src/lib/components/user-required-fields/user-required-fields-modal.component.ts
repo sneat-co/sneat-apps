@@ -1,8 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { IInitUserRecordRequest, ISneatUserState, SneatUserService, UserRecordService } from '@sneat/auth-core';
+import {
+	IInitUserRecordRequest,
+	ISneatUserState,
+	SneatUserService,
+	UserRecordService,
+} from '@sneat/auth-core';
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { AgeGroupID, Gender } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -23,7 +34,6 @@ import { takeUntil } from 'rxjs';
 	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
-
 	@Input({ required: true }) team: ITeamContext = { id: '' };
 
 	protected readonly genders: ISelectItem[] = [
@@ -61,13 +71,9 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 		private readonly sneatUserService: SneatUserService,
 	) {
 		super('UserRequiredFieldsModalComponent', errorLogger);
-		this.sneatUserService.userState
-			.pipe(
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: userState => this.userState = userState,
-			});
+		this.sneatUserService.userState.pipe(takeUntil(this.destroyed)).subscribe({
+			next: (userState) => (this.userState = userState),
+		});
 	}
 
 	protected save(): void {
@@ -93,7 +99,7 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 		};
 		this.userRecordService.initUserRecord(request).subscribe({
 			next: () => this.modalController.dismiss(true).catch(console.error),
-			error: err => {
+			error: (err) => {
 				this.errorLogger.logError('Failed to init user record:', err);
 				alert('Failed to init user record');
 				this.submitting = false;
@@ -102,6 +108,8 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 	}
 
 	protected close(): void {
-		this.modalController.dismiss(false).catch(this.errorLogger.logErrorHandler('Failed to close modal'));
+		this.modalController
+			.dismiss(false)
+			.catch(this.errorLogger.logErrorHandler('Failed to close modal'));
 	}
 }

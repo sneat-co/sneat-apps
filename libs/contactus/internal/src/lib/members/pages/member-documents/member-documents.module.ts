@@ -1,17 +1,17 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {MemberDocumentsPageComponent} from './member-documents-page.component';
+import { MemberDocumentsPageComponent } from './member-documents-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MemberDocumentsPageComponent
-	}
+		component: MemberDocumentsPageComponent,
+	},
 ];
 
 @NgModule({
@@ -19,9 +19,8 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		RouterModule.forChild(routes)
+		RouterModule.forChild(routes),
 	],
-	declarations: [MemberDocumentsPageComponent]
+	declarations: [MemberDocumentsPageComponent],
 })
-export class MemberDocumentsPageModule {
-}
+export class MemberDocumentsPageModule {}

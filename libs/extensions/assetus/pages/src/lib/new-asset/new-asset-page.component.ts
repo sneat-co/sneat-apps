@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IAssetCategory } from '@sneat/dto';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
 
 @Component({
 	selector: 'sneat-new-asset-page',
@@ -9,7 +12,6 @@ import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/componen
 	providers: [TeamComponentBaseParams],
 })
 export class NewAssetPageComponent extends TeamBaseComponent {
-
 	name?: string;
 
 	public category?: IAssetCategory;
@@ -28,7 +30,7 @@ export class NewAssetPageComponent extends TeamBaseComponent {
 		super('AssetNewPageComponent', route, params);
 		const assetType = window.history.state['assetType'];
 		if (assetType) {
-			this.category = this.categories.find(c => c.id === assetType);
+			this.category = this.categories.find((c) => c.id === assetType);
 		}
 		// this.categories = assetCategoryService.allAssetCategories();
 	}

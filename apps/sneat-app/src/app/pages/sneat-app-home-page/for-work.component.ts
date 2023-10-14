@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-for-work',
 	templateUrl: './for-work.component.html',
 })
-export class ForWorkComponent {
-
-}
+export class ForWorkComponent {}

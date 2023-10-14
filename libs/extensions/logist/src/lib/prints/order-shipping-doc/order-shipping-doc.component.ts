@@ -9,7 +9,6 @@ import { OrderPrintPageBaseComponent } from '../order-print-page-base.component'
 	templateUrl: './order-shipping-doc.component.html',
 })
 export class OrderShippingDocComponent extends OrderPrintPageBaseComponent {
-
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,

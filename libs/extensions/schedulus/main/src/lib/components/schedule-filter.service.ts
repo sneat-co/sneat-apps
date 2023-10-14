@@ -1,15 +1,19 @@
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { IScheduleFilter } from './schedule-filter/schedule-filter';
 
-export const emptyScheduleFilter: IScheduleFilter = { text: '', showRecurrings: true, showSingles: true };
+export const emptyScheduleFilter: IScheduleFilter = {
+	text: '',
+	showRecurrings: true,
+	showSingles: true,
+};
 
 export class ScheduleFilterService {
-	private readonly filter$ = new BehaviorSubject<IScheduleFilter>(emptyScheduleFilter);
+	private readonly filter$ = new BehaviorSubject<IScheduleFilter>(
+		emptyScheduleFilter,
+	);
 	public readonly filter = this.filter$
 		.asObservable()
-		.pipe(
-			distinctUntilChanged(),
-		);
+		.pipe(distinctUntilChanged());
 
 	constructor() {
 		console.log('ScheduleFilterService.constructor()');

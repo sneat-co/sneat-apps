@@ -19,5 +19,4 @@ import { ScrumspaceRetrospectivesModule } from '../../scrumspace-retrospectives.
 	],
 	declarations: [RetroMyFeedbackPageComponent],
 })
-export class RetroMyFeedbackPageModule {
-}
+export class RetroMyFeedbackPageModule {}

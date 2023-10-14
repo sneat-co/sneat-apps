@@ -1,4 +1,10 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { AssetCategory } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
@@ -10,7 +16,6 @@ import { AssetService } from '../services/asset-service';
 	templateUrl: './assets-list.component.html',
 })
 export class AssetsListComponent implements OnChanges {
-
 	assets?: IAssetContext[];
 
 	@Input() allAssets?: IAssetContext[];
@@ -25,8 +30,7 @@ export class AssetsListComponent implements OnChanges {
 		private readonly errorLogger: IErrorLogger,
 		private readonly assetService: AssetService,
 		private readonly teamNavService: TeamNavService,
-	) {
-	}
+	) {}
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -39,22 +43,33 @@ export class AssetsListComponent implements OnChanges {
 		if (!allAssets.length) {
 			this.assets = [];
 			return;
-			;
 		}
 		const f = filter?.toLowerCase();
-		if (!allAssets || !filter && !assetType) {
+		if (!allAssets || (!filter && !assetType)) {
 			this.assets = [...allAssets];
 		} else {
-			this.assets = allAssets
-				?.filter(asset => (!assetType || asset?.brief?.category === assetType) &&
-					(!filter || (asset?.brief?.title?.toLowerCase().indexOf(f) || -1) >= 0));
+			this.assets = allAssets?.filter(
+				(asset) =>
+					(!assetType || asset?.brief?.category === assetType) &&
+					(!filter ||
+						(asset?.brief?.title?.toLowerCase().indexOf(f) || -1) >= 0),
+			);
 		}
 		this.assets = this.assets?.sort((a, b) => {
 			if (a.brief && b.brief && a.brief.title > b.brief?.title) return 1;
 			if (a.brief && b.brief && a.brief.title < b.brief?.title) return -1;
 			return 0;
 		});
-		console.log('AssetsListComponent.ngOnChanges =>', changes, this.assetType, this.team, 'allAssets:', this.allAssets, 'filtered assets:', this.assets);
+		console.log(
+			'AssetsListComponent.ngOnChanges =>',
+			changes,
+			this.assetType,
+			this.team,
+			'allAssets:',
+			this.allAssets,
+			'filtered assets:',
+			this.assets,
+		);
 	}
 
 	public goAsset(asset: IAssetContext): void {
@@ -74,38 +89,48 @@ export class AssetsListComponent implements OnChanges {
 		// 		break;
 		// }
 		if (!this.team) {
-			this.errorLogger.logError('can not navigate to asset page without team context');
+			this.errorLogger.logError(
+				'can not navigate to asset page without team context',
+			);
 			return;
 		}
-		this.teamNavService.navigateForwardToTeamPage(this.team, `asset/${asset.id}`, {
-			state: { asset },
-		}).catch(this.errorLogger.logErrorHandler('failed to navigate to asset page'));
+		this.teamNavService
+			.navigateForwardToTeamPage(this.team, `asset/${asset.id}`, {
+				state: { asset },
+			})
+			.catch(
+				this.errorLogger.logErrorHandler('failed to navigate to asset page'),
+			);
 	}
 
 	delete(asset: IAssetContext): void {
 		const { id, brief } = asset;
 		this.deletingIDs.push(id);
-		const deleteCompleted = () => this.deletingIDs = this.deletingIDs.filter(v => v !== id);
+		const deleteCompleted = () =>
+			(this.deletingIDs = this.deletingIDs.filter((v) => v !== id));
 		setTimeout(() => {
-			if (!confirm(
-				`Are you sure you want to delete this asset?
+			if (
+				!confirm(
+					`Are you sure you want to delete this asset?
 
        ID: ${id}
        Title: ${brief?.title}
 
-       This operation can not be undone.`)) {
+       This operation can not be undone.`,
+				)
+			) {
 				deleteCompleted();
 				return;
 			}
 			this.assetService.deleteAsset(asset).subscribe({
 				next: () => {
-					this.assets = this.assets?.filter(a => a.id !== id);
-
+					this.assets = this.assets?.filter((a) => a.id !== id);
 				},
-				error: this.errorLogger.logErrorHandler('failed to delete an asset with ID=' + id),
+				error: this.errorLogger.logErrorHandler(
+					'failed to delete an asset with ID=' + id,
+				),
 				complete: deleteCompleted,
 			});
 		}, 1);
-
 	}
 }

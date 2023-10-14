@@ -1,11 +1,25 @@
-import { Component, Inject, Input, NgZone, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	NgZone,
+	OnChanges,
+	OnDestroy,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITaskWithUiStatus, ScrumService } from '../../services/scrum.service';
-import { IReorderTaskRequest, ITask, IThumbUpRequest, TaskType } from '@sneat/scrumspace/scrummodels';
+import {
+	IReorderTaskRequest,
+	ITask,
+	IThumbUpRequest,
+	TaskType,
+} from '@sneat/scrumspace/scrummodels';
 import { Subscription } from 'rxjs';
 import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 
@@ -50,8 +64,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly scrumService: ScrumService,
 		private modalController: ModalController,
-	) {
-	}
+	) {}
 
 	ngOnDestroy(): void {
 		if (this.userSubscription) {
@@ -101,7 +114,10 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 				this.titleInput
 					?.setFocus()
 					.catch((err) =>
-						this.errorLogger.logError(err, 'Failed to set focus to title input'),
+						this.errorLogger.logError(
+							err,
+							'Failed to set focus to title input',
+						),
 					);
 			}, 99);
 			return;
@@ -111,12 +127,12 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		}
 		const title = this.newTaskTitle;
 		this.newTaskTitle = '';
-    if (!this.member) {
-      throw new Error('!this.member')
-    }
-    if (!this.team) {
-      throw new Error('!this.team')
-    }
+		if (!this.member) {
+			throw new Error('!this.member');
+		}
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
 		this.scrumService
 			.addTask(
 				this.team,
@@ -134,7 +150,8 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 					}
 					this.addingTasks = this.addingTasks.filter((t) => t.id !== task.id);
 					if (this.tasks) {
-						const i = this.visibleTasks?.findIndex((t) => t.id === task.id) ?? -1;
+						const i =
+							this.visibleTasks?.findIndex((t) => t.id === task.id) ?? -1;
 						if (i < 0) {
 							// if existing task update array
 							this.visibleTasks?.push(task);
@@ -166,18 +183,18 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (!task.thumbUps) {
 			task.thumbUps = [];
 		}
-    if (!this.currentMemberId) {
-      throw new Error('!currentMemberId');
-    }
-    if (!this.team) {
-      throw new Error('!team');
-    }
-    if (!this.taskType) {
-      throw new Error('!taskType');
-    }
-    if (!this.member) {
-      throw new Error('!member');
-    }
+		if (!this.currentMemberId) {
+			throw new Error('!currentMemberId');
+		}
+		if (!this.team) {
+			throw new Error('!team');
+		}
+		if (!this.taskType) {
+			throw new Error('!taskType');
+		}
+		if (!this.member) {
+			throw new Error('!member');
+		}
 		const oldState = task.thumbUps.indexOf(this.currentMemberId || '') >= 0;
 		if (oldState) {
 			task.thumbUps = task.thumbUps.filter((v) => v !== this.currentMemberId);
@@ -202,23 +219,23 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 	public deleteTask(event: Event, id: string): void {
 		event.stopPropagation();
 		const tasks = this.visibleTasks;
-    if (!tasks) {
-      throw new Error('!visibleTasks')
-    }
+		if (!tasks) {
+			throw new Error('!visibleTasks');
+		}
 		const index = tasks.findIndex((t) => t.id === id);
 		const task = tasks[index];
 		tasks.splice(index, 1);
 		this.tasks = [...tasks];
 		this.deletingTaskIds.push(id);
-    if (!this.scrumId) {
-      throw new Error('!this.scrumID')
-    }
-    if (!this.member) {
-      throw new Error('!this.member')
-    }
-    if (!this.team) {
-      throw new Error('!this.team')
-    }
+		if (!this.scrumId) {
+			throw new Error('!this.scrumID');
+		}
+		if (!this.member) {
+			throw new Error('!this.member');
+		}
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
 		this.scrumService
 			.deleteTask(
 				this.team.id,
@@ -255,29 +272,29 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			tasks?.length === 1
 		) {
 			(event.detail as { complete: (v: ITaskWithUiStatus[]) => void }).complete(
-				this.visibleTasks|| [],
+				this.visibleTasks || [],
 			); // Should be before setting & after values
 			return;
 		}
-    if (!this.taskType) {
-      throw new Error('!this.taskType')
-    }
-    if (!this.member) {
-      throw new Error('!this.member')
-    }
-    if (!this.scrumId) {
-      throw new Error('!this.scrumId')
-    }
-    if (!this.visibleTasks) {
-      throw new Error('!this.visibleTasks')
-    }
-    const taskID = this.visibleTasks[event.detail.from].id;
-    if (!taskID) {
-      throw new Error(`!this.visibleTasks[${event.detail.from}]`);
-    }
-    if (!this.team) {
-      throw new Error('!this.team')
-    }
+		if (!this.taskType) {
+			throw new Error('!this.taskType');
+		}
+		if (!this.member) {
+			throw new Error('!this.member');
+		}
+		if (!this.scrumId) {
+			throw new Error('!this.scrumId');
+		}
+		if (!this.visibleTasks) {
+			throw new Error('!this.visibleTasks');
+		}
+		const taskID = this.visibleTasks[event.detail.from].id;
+		if (!taskID) {
+			throw new Error(`!this.visibleTasks[${event.detail.from}]`);
+		}
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
 		const request: IReorderTaskRequest = {
 			teamID: this.team.id,
 			// meetingID: this.scrumId,
@@ -317,9 +334,9 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 
 	async showTaskPopover(event: Event, task: ITask) {
 		console.log('showTaskPopover()', task);
-    if (!this.team) {
-      throw new Error('!this.team')
-    }
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
 		try {
 			const modal = await this.modalController.create({
 				component: ScrumTaskComponent,

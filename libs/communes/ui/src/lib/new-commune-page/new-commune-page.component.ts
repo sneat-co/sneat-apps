@@ -22,13 +22,11 @@ export class NewCommunePageComponent {
 	formIsReady?: boolean;
 	@ViewChild('nameInput') nameInput?: IonInput;
 
-
 	public onTypeChanged(): void {
 		setTimeout(() => {
 			this.nameInput?.setFocus().then(() => console.log('set focus to name'));
 		}, 100);
 	}
-
 
 	public onFormReadyChanged(value: boolean): void {
 		this.formIsReady = value;

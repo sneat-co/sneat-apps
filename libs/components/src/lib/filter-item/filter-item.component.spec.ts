@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {FilterItemComponent} from './filter-item.component';
+import { FilterItemComponent } from './filter-item.component';
 
 describe('FilterItemComponent', () => {
 	let component: FilterItemComponent;
@@ -11,8 +11,7 @@ describe('FilterItemComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [FilterItemComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('FilterItemComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

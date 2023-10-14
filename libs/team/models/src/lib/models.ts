@@ -6,10 +6,10 @@ import {
 	IRelatedPerson,
 	IAddress,
 	IContact2ContactInRequest,
-	MemberContactType, ICreatePeronRequest,
+	MemberContactType,
+	ICreatePeronRequest,
 } from '@sneat/dto';
 import { IMemberContext } from './team-context';
-
 
 export interface ITeamRequest {
 	readonly teamID: string;
@@ -82,7 +82,8 @@ export interface ICreateContactPersonRequest extends ICreateContactBaseRequest {
 	person?: ICreatePeronRequest;
 }
 
-export interface ICreateContactLocationRequest extends ICreateContactBaseRequest {
+export interface ICreateContactLocationRequest
+	extends ICreateContactBaseRequest {
 	type: 'location';
 	location?: ICreateLocationRequest;
 }
@@ -107,23 +108,22 @@ export interface ICreateLocationBaseRequest {
 export type ICreateLocationRequest = ICreateLocationBaseRequest;
 export type ICreateCompanyRequest = ICreateLocationBaseRequest;
 
-export interface ICreateContactCompanyRequest extends ICreateContactBaseRequest {
+export interface ICreateContactCompanyRequest
+	extends ICreateContactBaseRequest {
 	company?: ICreateCompanyRequest;
 }
 
 export type ICreateContactRequest =
-	ICreateContactPersonRequest |
-	ICreateContactCompanyRequest |
-	ICreateContactLocationRequest |
-	ICreateContactBasicRequest;
-
+	| ICreateContactPersonRequest
+	| ICreateContactCompanyRequest
+	| ICreateContactLocationRequest
+	| ICreateContactBasicRequest;
 
 export interface IBy {
 	memberID?: string;
 	userID?: string;
 	title: string;
 }
-
 
 interface IInvite {
 	message?: string;

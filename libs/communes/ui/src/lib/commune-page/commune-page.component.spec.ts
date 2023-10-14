@@ -9,8 +9,7 @@ describe('CommunePageComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [CommunePageComponent],
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

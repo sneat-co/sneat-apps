@@ -28,11 +28,6 @@ import { DispatcherComponent } from './dispatcher.component';
 		ContainerPointComponent,
 		DispatchPointContainersGridComponent,
 	],
-	exports: [
-		DispatchersComponent,
-		ContainerPointComponent,
-	],
+	exports: [DispatchersComponent, ContainerPointComponent],
 })
-export class DispatchersModule {
-
-}
+export class DispatchersModule {}

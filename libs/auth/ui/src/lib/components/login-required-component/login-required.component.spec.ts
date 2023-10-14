@@ -9,8 +9,7 @@ describe('LoginRequiredComponentComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [LoginRequiredComponent],
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

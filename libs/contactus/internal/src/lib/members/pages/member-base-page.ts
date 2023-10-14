@@ -1,7 +1,7 @@
-import { ActivatedRoute } from "@angular/router";
-import { IContactContext } from "@sneat/team/models";
-import { ContactBasePage } from "../../pages/contact-base-page";
-import { MemberComponentBaseParams } from "../member-component-base-params";
+import { ActivatedRoute } from '@angular/router';
+import { IContactContext } from '@sneat/team/models';
+import { ContactBasePage } from '../../pages/contact-base-page';
+import { MemberComponentBaseParams } from '../member-component-base-params';
 // import { IMemberDto } from 'sneat-shared/models/dto/dto-member';
 // import { IUserDto } from 'sneat-shared/models/dto/dto-user';
 // import { eq } from 'sneat-shared/services/interfaces';
@@ -9,8 +9,7 @@ import { MemberComponentBaseParams } from "../member-component-base-params";
 // import { CommuneTopPage } from '../../../pages/constants';
 
 export abstract class MemberBasePage extends ContactBasePage {
-
-	public segment: "friends" | "other" | "summary" = "summary";
+	public segment: 'friends' | 'other' | 'summary' = 'summary';
 
 	// override defaultBackUrl = CommuneTopPage.members;
 	// public isDeleted?: boolean;
@@ -23,7 +22,7 @@ export abstract class MemberBasePage extends ContactBasePage {
 		params: MemberComponentBaseParams,
 	) {
 		super(className, route, params);
-		this.defaultBackPage = "members";
+		this.defaultBackPage = 'members';
 	}
 
 	public get member(): IContactContext | undefined {
@@ -32,11 +31,19 @@ export abstract class MemberBasePage extends ContactBasePage {
 
 	override onTeamDtoChanged(): void {
 		super.onTeamDtoChanged();
-		console.log("MemberBasePage.onTeamDtoChanged()", this.team?.dto, this.memberContext);
+		console.log(
+			'MemberBasePage.onTeamDtoChanged()',
+			this.team?.dto,
+			this.memberContext,
+		);
 	}
 
-	protected goNew = (event: Event, type: "new-contact" | "new-document" | "new-liability" | "new-asset", relation?: string): void => {
-		console.log("goNew", event, type, relation);
+	protected goNew = (
+		event: Event,
+		type: 'new-contact' | 'new-document' | 'new-liability' | 'new-asset',
+		relation?: string,
+	): void => {
+		console.log('goNew', event, type, relation);
 		// this.navigateForward(
 		// 	type,
 		// 	{ member: this.memberContext, relation },

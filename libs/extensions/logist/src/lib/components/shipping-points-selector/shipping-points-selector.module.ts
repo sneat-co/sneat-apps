@@ -27,6 +27,4 @@ import { ShippingPointsSelectorComponent } from './shipping-points-selector.comp
 		ShippingPointsSelectorComponent,
 	],
 })
-export class ShippingPointsSelectorModule {
-
-}
+export class ShippingPointsSelectorModule {}

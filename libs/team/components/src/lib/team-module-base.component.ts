@@ -5,9 +5,13 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 import { TeamBaseComponent } from './team-base.component';
 import { TeamModuleService } from '@sneat/team/services';
 
-export class TeamModuleBaseComponent<Brief, Dto extends Brief> extends TeamBaseComponent {
-
-	protected readonly teamModuleDto$ = new BehaviorSubject<Dto | null | undefined>(undefined);
+export class TeamModuleBaseComponent<
+	Brief,
+	Dto extends Brief,
+> extends TeamBaseComponent {
+	protected readonly teamModuleDto$ = new BehaviorSubject<
+		Dto | null | undefined
+	>(undefined);
 
 	constructor(
 		className: string,
@@ -22,16 +26,14 @@ export class TeamModuleBaseComponent<Brief, Dto extends Brief> extends TeamBaseC
 		super.onTeamIdChanged();
 		this.teamModuleService
 			.watchTeamModuleRecord(this.team)
-			.pipe(
-				takeUntil(this.teamIDChanged$),
-			)
+			.pipe(takeUntil(this.teamIDChanged$))
 			.subscribe({
-				next: o => {
+				next: (o) => {
 					console.log('teamModuleDto loaded', o.dto);
 					this.teamModuleDto$.next(o.dto);
 					this.onTeamModuleDtoChanged(o.dto || null);
 				},
-				error: err => {
+				error: (err) => {
 					console.error('Failed to load team module record', err);
 				},
 			});

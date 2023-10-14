@@ -11,14 +11,8 @@ import { AppComponentService } from './app-component.service';
 import { IEnvironmentConfig } from './environment-config';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		SneatLoggingModule,
-		SneatAnalyticsModule,
-	],
-	providers: [
-		AppComponentService,
-	],
+	imports: [CommonModule, SneatLoggingModule, SneatAnalyticsModule],
+	providers: [AppComponentService],
 })
 export class SneatApplicationModule {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -13,13 +13,7 @@ import { LogistTeamSettingsComponent } from './logist-team-settings.component';
 		ReactiveFormsModule,
 		AddressFormComponent,
 	],
-	declarations: [
-		LogistTeamSettingsComponent,
-		LogistTeamRolesComponent,
-	],
-	exports: [
-		LogistTeamSettingsComponent,
-	],
+	declarations: [LogistTeamSettingsComponent, LogistTeamRolesComponent],
+	exports: [LogistTeamSettingsComponent],
 })
-export class LogistTeamSettingsModule {
-}
+export class LogistTeamSettingsModule {}

@@ -1,14 +1,24 @@
-import {Component} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {Period} from 'sneat-shared/models/types';
-import {DtoLiability} from 'sneat-shared/models/dto/dto-liability';
-import {Asset} from 'sneat-shared/models/ui/ui-asset';
-import {IAssetService, IErrorLogger} from 'sneat-shared/services/interfaces';
-import {IRecord, RxRecordKey} from 'rxstore';
+import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Period } from 'sneat-shared/models/types';
+import { DtoLiability } from 'sneat-shared/models/dto/dto-liability';
+import { Asset } from 'sneat-shared/models/ui/ui-asset';
+import { IAssetService, IErrorLogger } from 'sneat-shared/services/interfaces';
+import { IRecord, RxRecordKey } from 'rxstore';
 
 const monthNames = [
-	'January', 'February', 'March', 'April', 'May', 'June',
-	'July', 'August', 'September', 'October', 'November', 'December'
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December',
 ];
 
 @Component({
@@ -17,7 +27,6 @@ const monthNames = [
 	styleUrls: ['./month.page.scss'],
 })
 export class MonthPageComponent {
-
 	public segment: 'expense' | 'income' | 'balance' = 'expense';
 	public period: Period = 'month';
 	public current: 'This' | 'Next' | 'Previous' = 'This';
@@ -34,45 +43,65 @@ export class MonthPageComponent {
 		assetService: IAssetService,
 		private errorLogger: IErrorLogger,
 	) {
-		assetService.userAssets()
-			.subscribe({
-				next: assets => {
-					console.log('MonthPage.assets: ', assets);
-					this.allAssets = assets;
-					this.filterAndOrderAssets();
-				},
-				error: this.errorLogger.logErrorHandler('failed on loading assets'),
-			});
+		assetService.userAssets().subscribe({
+			next: (assets) => {
+				console.log('MonthPage.assets: ', assets);
+				this.allAssets = assets;
+				this.filterAndOrderAssets();
+			},
+			error: this.errorLogger.logErrorHandler('failed on loading assets'),
+		});
 	}
 
 	private filterAndOrderAssets(): void {
 		const s = this.segment;
-		this.assets = this.allAssets.filter(a => s === 'expense' ? a.totals.expenses.count : s === 'income' ? a.totals.count : true);
+		this.assets = this.allAssets.filter((a) =>
+			s === 'expense'
+				? a.totals.expenses.count
+				: s === 'income'
+				? a.totals.count
+				: true,
+		);
 		this.balance = 0;
 		switch (this.segment) {
 			case 'expense':
 				this.assets = this.allAssets
-					.filter(a => a.totals.expenses.count)
-					.sort((a1, a2) => a2.totals.expenses.perMonth() - a1.totals.expenses.perMonth());
-				this.balance = this.assets.map(a => a.totals.expenses.perMonth())
+					.filter((a) => a.totals.expenses.count)
+					.sort(
+						(a1, a2) =>
+							a2.totals.expenses.perMonth() - a1.totals.expenses.perMonth(),
+					);
+				this.balance = this.assets
+					.map((a) => a.totals.expenses.perMonth())
 					.reduce((a, b) => a + b);
 				break;
 			case 'income':
 				this.assets = this.allAssets
-					.filter(a => a.totals.incomes.count)
-					.sort((a1, a2) => a2.totals.incomes.perMonth() - a1.totals.incomes.perMonth());
-				this.balance = this.assets.map(a => a.totals.incomes.perMonth())
+					.filter((a) => a.totals.incomes.count)
+					.sort(
+						(a1, a2) =>
+							a2.totals.incomes.perMonth() - a1.totals.incomes.perMonth(),
+					);
+				this.balance = this.assets
+					.map((a) => a.totals.incomes.perMonth())
 					.reduce((a, b) => a + b);
 				break;
 			case 'balance':
 				this.assets = this.allAssets
-					.filter(a => a.totals.count)
-					.sort((a1, a2) => Math.abs(a2.totals.per('month')) - Math.abs(a1.totals.per('month')));
-				this.balance = this.assets.map(a => a.totals.per('month'))
+					.filter((a) => a.totals.count)
+					.sort(
+						(a1, a2) =>
+							Math.abs(a2.totals.per('month')) -
+							Math.abs(a1.totals.per('month')),
+					);
+				this.balance = this.assets
+					.map((a) => a.totals.per('month'))
 					.reduce((a, b) => a + b);
 				break;
 			default:
-				this.errorLogger.logError(new Error(`Unknown segment: ${this.segment}`));
+				this.errorLogger.logError(
+					new Error(`Unknown segment: ${this.segment}`),
+				);
 				break;
 		}
 	}
@@ -85,14 +114,17 @@ export class MonthPageComponent {
 				return `${monthNames[monthIndex]} ${d.getFullYear()}`;
 			case 'Previous':
 				// tslint:disable-next-line:no-magic-numbers
-				return `${monthNames[monthIndex === 0 ? 11 : monthIndex - 1]} ${d.getFullYear()}`;
+				return `${
+					monthNames[monthIndex === 0 ? 11 : monthIndex - 1]
+				} ${d.getFullYear()}`;
 			case 'Next':
 				// tslint:disable-next-line:no-magic-numbers
-				return `${monthNames[monthIndex === 11 ? 0 : monthIndex + 1]} ${d.getFullYear()}`;
+				return `${
+					monthNames[monthIndex === 11 ? 0 : monthIndex + 1]
+				} ${d.getFullYear()}`;
 			default:
 				this.errorLogger.logError(new Error(`Unknown curent: ${this.current}`));
-				return d.getFullYear()
-					.toString();
+				return d.getFullYear().toString();
 		}
 	}
 

@@ -8,14 +8,9 @@ import { PetKind } from '@sneat/dto';
 	selector: 'sneat-pet-kind',
 	templateUrl: './pet-kind-input.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		SelectFromListModule,
-	],
+	imports: [CommonModule, IonicModule, SelectFromListModule],
 })
 export class PetKindInputComponent {
-
 	@Input({ required: true }) petKind?: PetKind;
 
 	@Output() readonly petKindChange = new EventEmitter<PetKind | undefined>();

@@ -1,4 +1,10 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { IMeetingMember } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { ITeamDto, MemberRoleEnum } from '@sneat/team/models';
@@ -28,10 +34,7 @@ export class RetroMembersComponent implements OnChanges {
 	public spectators: IMeetingMemberWithCounts[];
 	public absents: IMeetingMember[];
 
-	constructor(
-		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
-	) {
-	}
+	constructor(@Inject(ErrorLogger) private errorLogger: IErrorLogger) {}
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -43,11 +46,11 @@ export class RetroMembersComponent implements OnChanges {
 				if (retrospective) {
 					const members = this.retrospective?.dto?.members;
 					if (members) {
-						this.participants = members.filter((m) =>
-							m.roles?.includes(MemberRoleEnum.contributor),
+						this.participants = members.filter(
+							(m) => m.roles?.includes(MemberRoleEnum.contributor),
 						);
-						this.spectators = members?.filter((m) =>
-							m.roles?.includes(MemberRoleEnum.spectator),
+						this.spectators = members?.filter(
+							(m) => m.roles?.includes(MemberRoleEnum.spectator),
 						);
 					}
 				}
@@ -56,11 +59,11 @@ export class RetroMembersComponent implements OnChanges {
 				// Check for this.retrospective?.data?.userIDs is not great
 				if (this.team?.dto && !this.retrospective?.dto?.userIDs) {
 					const { dto } = this.team;
-					this.participants = dto.members?.filter((m) =>
-						m.roles?.includes(MemberRoleEnum.contributor),
+					this.participants = dto.members?.filter(
+						(m) => m.roles?.includes(MemberRoleEnum.contributor),
 					);
-					this.spectators = dto.members?.filter((m) =>
-						m.roles?.includes(MemberRoleEnum.spectator),
+					this.spectators = dto.members?.filter(
+						(m) => m.roles?.includes(MemberRoleEnum.spectator),
 					);
 				}
 			}

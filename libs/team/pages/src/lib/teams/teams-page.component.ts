@@ -4,5 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-teams-page',
 	templateUrl: 'teams-page.component.html',
 })
-export class TeamsPageComponent {
-}
+export class TeamsPageComponent {}

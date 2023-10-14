@@ -1,11 +1,21 @@
 import { CommonModule } from '@angular/common';
 import {
-	AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges,
+	AfterViewInit,
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import {
 	AbstractControl,
-	FormControl, FormGroup, FormsModule, ReactiveFormsModule,
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
 	UntypedFormGroup,
 	ValidationErrors,
 	Validators,
@@ -16,7 +26,6 @@ import { excludeEmpty } from '@sneat/core';
 import { IName, isNameEmpty } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IFormField } from '@sneat/core';
-
 
 export interface INamesFormFields {
 	firstName?: IFormField;
@@ -32,12 +41,7 @@ const maxNameLenValidator = Validators.maxLength(50);
 	selector: 'sneat-names-form',
 	templateUrl: './names-form.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		ReactiveFormsModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input({ required: true }) name?: IName = {};
@@ -45,7 +49,6 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input() disabled = false;
 	@Input() fields?: INamesFormFields;
 	@Input() showNextButton = false;
-
 
 	@ViewChild('firstNameInput', { static: true }) firstNameInput?: IonInput;
 	@ViewChild('lastNameInput', { static: true }) lastNameInput?: IonInput;
@@ -68,8 +71,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	public readonly fullName = new FormControl<string>('', [
 		// Validators.required, -- not required if user entered only first name for example. In future may require to be an option
@@ -84,18 +86,15 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		maxNameLenValidator,
 	]);
 
-	public readonly lastName = new FormControl<string>('', [
-		maxNameLenValidator,
-	]);
+	public readonly lastName = new FormControl<string>('', [maxNameLenValidator]);
 
-	public readonly nickName = new FormControl<string>('', [
-		maxNameLenValidator,
-	]);
+	public readonly nickName = new FormControl<string>('', [maxNameLenValidator]);
 
-
-	readonly isNamesFormValid = (control: AbstractControl): ValidationErrors | null => {
+	readonly isNamesFormValid = (
+		control: AbstractControl,
+	): ValidationErrors | null => {
 		const formGroup = control as UntypedFormGroup;
-		const mustHave = function(name: string): string {
+		const mustHave = function (name: string): string {
 			const c = formGroup.controls[name];
 			if (!c) {
 				throw new Error(`form is missing control: "${name}"`);
@@ -114,30 +113,44 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		];
 
 		if (!firstName && !lastName && !fullName && !nickName) {
-			return { 'fullName': 'If full name is empty at least one of the following must be provided: ' + visibleNameFields.join(', ') };
+			return {
+				fullName:
+					'If full name is empty at least one of the following must be provided: ' +
+					visibleNameFields.join(', '),
+			};
 		}
 		if (firstName && lastName && !fullName)
-			return { 'fullName': 'If first & last names are supplied the full name should be supplied as well' };
+			return {
+				fullName:
+					'If first & last names are supplied the full name should be supplied as well',
+			};
 		return null;
 	};
 
-	public readonly namesForm = new FormGroup({
-		fullName: this.fullName,
-		firstName: this.firstName,
-		lastName: this.lastName,
-		middleName: this.middleName,
-		nickName: this.nickName,
-	}, this.isNamesFormValid);
+	public readonly namesForm = new FormGroup(
+		{
+			fullName: this.fullName,
+			firstName: this.firstName,
+			lastName: this.lastName,
+			middleName: this.middleName,
+			nickName: this.nickName,
+		},
+		this.isNamesFormValid,
+	);
 
 	public get hasNames(): boolean {
-		return !!(this.firstName.value || this.lastName.value || this.fullName.value || this.nickName.value);
+		return !!(
+			this.firstName.value ||
+			this.lastName.value ||
+			this.fullName.value ||
+			this.nickName.value
+		);
 	}
 
 	private setFocusToInput(input: IonInput, delay = 333): void {
 		const setFocusTo = createSetFocusToInput(this.errorLogger);
 		setFocusTo(input, delay);
-	};
-
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['fields']) {
@@ -197,7 +210,10 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	private onInputChangeFields(): void {
 		console.log('onInputChangeFields()');
-		const setValidators = (fc?: FormControl<string | null>, ff?: IFormField) => {
+		const setValidators = (
+			fc?: FormControl<string | null>,
+			ff?: IFormField,
+		) => {
 			if (!fc) {
 				return;
 			}
@@ -223,9 +239,14 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	}
 
 	onNameChanged(event: Event): void {
-		console.log('onNameChanged()', this.isFullNameChanged, this.firstName.value, this.lastName.value, event);
+		console.log(
+			'onNameChanged()',
+			this.isFullNameChanged,
+			this.firstName.value,
+			this.lastName.value,
+			event,
+		);
 		if (!this.isFullNameChanged) {
-
 			const fullName = this.generateFullName();
 
 			if (fullName !== this.fullName.value) {
@@ -264,19 +285,22 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	}
 
 	private generateFullName(): string {
-		const
-			first = (this.firstName.value || '').trim(),
+		const first = (this.firstName.value || '').trim(),
 			middle = (this.middleName.value || '').trim(),
 			last = (this.lastName.value || '').trim();
-		if (first && last || first && middle || middle && last) {
-			return (first + ' ' + middle + ' ' + last)
-			.replace('  ', ' ').trim();
+		if ((first && last) || (first && middle) || (middle && last)) {
+			return (first + ' ' + middle + ' ' + last).replace('  ', ' ').trim();
 		}
 		return '';
 	}
 
 	onFullNameChanged(event: Event): void {
-		console.log('onFullNameChanged()', this.firstName.value, this.lastName.value, event);
+		console.log(
+			'onFullNameChanged()',
+			this.firstName.value,
+			this.lastName.value,
+			event,
+		);
 		if (this.isFullNameChanged) {
 			this.setName();
 		} else {

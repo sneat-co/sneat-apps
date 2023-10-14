@@ -5,7 +5,7 @@ import { UserMyProfilePageComponent } from './user-my-profile-page.component';
 @NgModule({
 	imports: [
 		RouterModule.forChild([
-			{path: '', pathMatch: 'full', component: UserMyProfilePageComponent},
+			{ path: '', pathMatch: 'full', component: UserMyProfilePageComponent },
 		]),
 	],
 })

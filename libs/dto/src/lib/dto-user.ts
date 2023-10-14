@@ -16,15 +16,23 @@ export interface IUserCommuneInfo {
 	};
 }
 
-export function createUserCommuneInfoFromCommuneDto(communeDto: ICommuneDto, shortId?: string): IUserCommuneInfo {
-	return { id: communeDto.id, shortId, title: communeDto.title, type: communeDto.type };
+export function createUserCommuneInfoFromCommuneDto(
+	communeDto: ICommuneDto,
+	shortId?: string,
+): IUserCommuneInfo {
+	return {
+		id: communeDto.id,
+		shortId,
+		title: communeDto.title,
+		type: communeDto.type,
+	};
 }
 
 export interface IUserDto extends ITitledRecord {
 	countryIds?: CountryId[];
 	created: {
 		hostOrApp: string;
-		at: string
+		at: string;
 	};
 	readonly communes?: readonly IUserCommuneInfo[]; // Returns real ID and Title, find by shortId
 	communesCount?: number;
@@ -37,9 +45,15 @@ export interface IUserDto extends ITitledRecord {
 	gender?: 'male' | 'female' | 'undisclosed';
 }
 
-export function addCommuneToUserDto(userDto: IUserDto, communeInfo: IUserCommuneInfo): IUserDto {
+export function addCommuneToUserDto(
+	userDto: IUserDto,
+	communeInfo: IUserCommuneInfo,
+): IUserDto {
 	const communes = userDto.communes || [];
-	if (communeInfo.id && communes.find(c => !!c.id && !!communeInfo.id && c.id === communeInfo.id)) {
+	if (
+		communeInfo.id &&
+		communes.find((c) => !!c.id && !!communeInfo.id && c.id === communeInfo.id)
+	) {
 		throw new Error(`Can't add commune with duplicate id: ${communeInfo.id}`);
 	}
 	return {
@@ -51,17 +65,22 @@ export function addCommuneToUserDto(userDto: IUserDto, communeInfo: IUserCommune
 
 // tslint:disable-next-line:no-unnecessary-class
 export class UserModel {
-
-	public static getCommuneInfoByShortId(id: string, communes?: readonly IUserCommuneInfo[]): IUserCommuneInfo | undefined {
-		return communes && communes.find(c => c.shortId === id);
+	public static getCommuneInfoByShortId(
+		id: string,
+		communes?: readonly IUserCommuneInfo[],
+	): IUserCommuneInfo | undefined {
+		return communes && communes.find((c) => c.shortId === id);
 	}
 
-	public static getCommuneInfoById(id: string, communes: readonly IUserCommuneInfo[]): IUserCommuneInfo | undefined {
-		const ci = communes && communes.find(c => c.shortId === id || c.id === id);
+	public static getCommuneInfoById(
+		id: string,
+		communes: readonly IUserCommuneInfo[],
+	): IUserCommuneInfo | undefined {
+		const ci =
+			communes && communes.find((c) => c.shortId === id || c.id === id);
 		if (!ci && id === 'family') {
 			return { type: 'family', shortId: 'family', title: 'Family' };
 		}
 		return ci;
 	}
-
 }

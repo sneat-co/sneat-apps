@@ -1,23 +1,36 @@
 import { HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Firestore as AngularFirestore, collection, CollectionReference } from '@angular/fire/firestore';
+import {
+	Firestore as AngularFirestore,
+	collection,
+	CollectionReference,
+} from '@angular/fire/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { AuthStatus, AuthStatuses, SneatAuthStateService } from '@sneat/auth-core';
+import {
+	AuthStatus,
+	AuthStatuses,
+	SneatAuthStateService,
+} from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
-import { IBriefAndID, ITeamBrief, ITeamDto, ITeamMetric } from "@sneat/dto";
+import { IBriefAndID, ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreateTeamRequest,
-	ICreateTeamResponse, IJoinTeamInfoResponse,
+	ICreateTeamResponse,
+	IJoinTeamInfoResponse,
 	ITeamContext,
-	ITeamRef, zipMapBriefsWithIDs,
+	ITeamRef,
+	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
-const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({ ...v, type: v.type });
+const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({
+	...v,
+	type: v.type,
+});
 
 // export class CachedDataService<Brief, Dto extends Brief> {
 // 	constructor(
@@ -47,7 +60,10 @@ export class TeamService {
 		private readonly sneatApiService: SneatApiService,
 	) {
 		// console.log('TeamService.constructor()');
-		this.sfs = new SneatFirestoreService<ITeamBrief, ITeamDto>((id, dto) => ({ id, ...dto }));
+		this.sfs = new SneatFirestoreService<ITeamBrief, ITeamDto>((id, dto) => ({
+			id,
+			...dto,
+		}));
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === 'notAuthenticated') {
 				this.unsubscribe('signed out');
@@ -62,13 +78,20 @@ export class TeamService {
 		});
 	}
 
-	private readonly processUserRecordInTeamService = (userState: ISneatUserState) => {
+	private readonly processUserRecordInTeamService = (
+		userState: ISneatUserState,
+	) => {
 		console.log('TeamService.processUserRecordInTeamService()', userState);
 		const user = userState?.record;
 		if (!user) {
 			// this.userID = undefined;
-			if (userState.status === AuthStatuses.notAuthenticated && this.subscriptions?.length) {
-				this.unsubscribe('user is not authenticated and active team subscriptions');
+			if (
+				userState.status === AuthStatuses.notAuthenticated &&
+				this.subscriptions?.length
+			) {
+				this.unsubscribe(
+					'user is not authenticated and active team subscriptions',
+				);
 			}
 			return;
 		}
@@ -83,17 +106,16 @@ export class TeamService {
 		zipMapBriefsWithIDs(user.teams).forEach(this.subscribeForUserTeamChanges);
 	};
 
-	public createTeam(request: ICreateTeamRequest): Observable<IRecord<ITeamDto>> {
+	public createTeam(
+		request: ICreateTeamRequest,
+	): Observable<IRecord<ITeamDto>> {
 		return this.sneatApiService
 			.post<ICreateTeamResponse>('teams/create_team', request)
 			.pipe(map((response) => response.team));
 	}
 
 	public getTeam(ref: ITeamRef): Observable<ITeamContext> {
-		return this.watchTeam(ref)
-			.pipe(
-				first(),
-			);
+		return this.watchTeam(ref).pipe(first());
 	}
 
 	public watchTeam(ref: ITeamRef): Observable<ITeamContext> {
@@ -110,7 +132,11 @@ export class TeamService {
 		if (this.currentUserTeams) {
 			const userTeamInfo = this.currentUserTeams[id];
 			if (userTeamInfo) {
-				teamContext = { id, type: userTeamInfo.type, brief: teamBriefFromUserTeamInfo(userTeamInfo) };
+				teamContext = {
+					id,
+					type: userTeamInfo.type,
+					brief: teamBriefFromUserTeamInfo(userTeamInfo),
+				};
 			}
 		}
 		subj = new BehaviorSubject<ITeamContext>(teamContext);
@@ -120,15 +146,15 @@ export class TeamService {
 		} else {
 			this.userService.userState
 				.pipe(
-					filter(v => v.status === AuthStatuses.authenticated),
+					filter((v) => v.status === AuthStatuses.authenticated),
 					first(),
-				).subscribe({
-				next: () => this.subscribeForTeamChanges(subj),
-			});
+				)
+				.subscribe({
+					next: () => this.subscribeForTeamChanges(subj),
+				});
 		}
 		return subj.asObservable();
 	}
-
 
 	public onTeamUpdated(team: ITeamContext): void {
 		console.log(
@@ -149,21 +175,21 @@ export class TeamService {
 		inviteID: string,
 		pin: string,
 	): Observable<IJoinTeamInfoResponse> {
-		return this.sneatApiService.postAsAnonymous<IJoinTeamInfoResponse>(
-			'team/join_info',
-			{
+		return this.sneatApiService
+			.postAsAnonymous<IJoinTeamInfoResponse>('team/join_info', {
 				inviteID,
 				pin,
-			},
-		).pipe(
-			map(response => ({
-				...response, invite: {
-					...response.invite,
-					id: inviteID,
-					pin,
-				},
-			})),
-		);
+			})
+			.pipe(
+				map((response) => ({
+					...response,
+					invite: {
+						...response.invite,
+						id: inviteID,
+						pin,
+					},
+				})),
+			);
 	}
 
 	// TODO: move to separate module
@@ -180,19 +206,24 @@ export class TeamService {
 			return throwError(() => 'team parameter is required');
 		}
 		const params = new HttpParams({ fromObject: { id: team } });
-		return this.sneatApiService.post(
-			'team/add_metric?' + params.toString(),
-			{ metric },
-		);
+		return this.sneatApiService.post('team/add_metric?' + params.toString(), {
+			metric,
+		});
 	}
 
-	private readonly subscribeForUserTeamChanges = (userTeamInfo: IBriefAndID<IUserTeamBrief>): void => {
+	private readonly subscribeForUserTeamChanges = (
+		userTeamInfo: IBriefAndID<IUserTeamBrief>,
+	): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
 		let subj = this.teams$[userTeamInfo.id];
 		if (subj) {
 			let team = subj.value;
 			if (!team.type) {
-				team = { ...team, type: userTeamInfo.brief?.type, brief: teamBriefFromUserTeamInfo(userTeamInfo.brief) };
+				team = {
+					...team,
+					type: userTeamInfo.brief?.type,
+					brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
+				};
 				subj.next(team);
 			}
 			return;
@@ -203,7 +234,9 @@ export class TeamService {
 			type: userTeamInfo.brief.type,
 			brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
 		};
-		this.teams$[userTeamInfo.id] = subj = new BehaviorSubject<ITeamContext>(team);
+		this.teams$[userTeamInfo.id] = subj = new BehaviorSubject<ITeamContext>(
+			team,
+		);
 		this.subscribeForTeamChanges(subj);
 	};
 
@@ -211,8 +244,12 @@ export class TeamService {
 		const t = subj.value;
 		console.log(`TeamService.subscribeForTeamChanges(${t.id})`);
 		const { id } = t;
-		const teamsCollection = collection(this.afs, 'teams') as CollectionReference<ITeamDto>;
-		const o: Observable<ITeamContext> = this.sfs.watchByID(teamsCollection, id)
+		const teamsCollection = collection(
+			this.afs,
+			'teams',
+		) as CollectionReference<ITeamDto>;
+		const o: Observable<ITeamContext> = this.sfs
+			.watchByID(teamsCollection, id)
 			.pipe(
 				map((team) => {
 					const prevTeam = this.teams$[id].value;
@@ -224,15 +261,22 @@ export class TeamService {
 					return team;
 				}),
 				tap((team) => {
-					console.log('TeamService.subscribeForTeamChanges() => New team from Firestore:', team);
+					console.log(
+						'TeamService.subscribeForTeamChanges() => New team from Firestore:',
+						team,
+					);
 					// subj.next(team);
 				}),
 			);
 
-		this.subscriptions.push(o.subscribe({
-			next: v => subj.next(v), // Do not use as "next: subj.next" because it will be called with wrong "this" context
-			error: this.errorLogger.logErrorHandler(`Failed to watch team with ID="${id}"`),
-		}));
+		this.subscriptions.push(
+			o.subscribe({
+				next: (v) => subj.next(v), // Do not use as "next: subj.next" because it will be called with wrong "this" context
+				error: this.errorLogger.logErrorHandler(
+					`Failed to watch team with ID="${id}"`,
+				),
+			}),
+		);
 	}
 
 	private unsubscribe(on: string): void {
@@ -247,6 +291,3 @@ export class TeamService {
 		}
 	}
 }
-
-
-

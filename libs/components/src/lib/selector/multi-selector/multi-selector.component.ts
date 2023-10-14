@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectItem, ISelectItemEvent, SelectorBaseComponent } from '..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -7,8 +15,10 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-multi-selector',
 	templateUrl: './multi-selector.component.html',
 })
-export class MultiSelectorComponent extends SelectorBaseComponent implements OnChanges {
-
+export class MultiSelectorComponent
+	extends SelectorBaseComponent
+	implements OnChanges
+{
 	@Input() title = 'Select';
 
 	@Input() canRemove = false;
@@ -20,7 +30,6 @@ export class MultiSelectorComponent extends SelectorBaseComponent implements OnC
 
 	protected selectedItems?: ISelectItem[];
 
-
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
@@ -30,13 +39,15 @@ export class MultiSelectorComponent extends SelectorBaseComponent implements OnC
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['allItems']) {
-			this.selectedItems = this.allItems?.filter(item => this.selectedIDs?.includes(item.id));
+			this.selectedItems = this.allItems?.filter(
+				(item) => this.selectedIDs?.includes(item.id),
+			);
 		}
 	}
 
 	protected removeItem(event: Event, item: ISelectItem): void {
 		event.stopPropagation();
-		this.selectedItems = this.selectedItems?.filter(i => i.id !== item.id);
+		this.selectedItems = this.selectedItems?.filter((i) => i.id !== item.id);
 		this.removeItems.emit([{ event, item }]);
 	}
 }

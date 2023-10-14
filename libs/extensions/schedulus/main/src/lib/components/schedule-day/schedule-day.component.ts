@@ -19,7 +19,10 @@ import {
 } from '@sneat/extensions/schedulus/shared';
 import { ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { emptyScheduleFilter, ScheduleFilterService } from '../schedule-filter.service';
+import {
+	emptyScheduleFilter,
+	ScheduleFilterService,
+} from '../schedule-filter.service';
 import { isSlotVisible } from '../schedule-slots';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
@@ -37,7 +40,10 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	@Input() team: ITeamContext = { id: '' };
 	// @Input() showEvents = true;
 	@Input() weekday?: Weekday;
-	@Output() readonly slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
+	@Output() readonly slotClicked = new EventEmitter<{
+		slot: ISlotItem;
+		event: Event;
+	}>();
 	public allSlots?: ISlotItem[];
 	public slots?: ISlotItem[];
 	public slotsHiddenByFilter?: number;
@@ -48,7 +54,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
 		filterService.filter.subscribe({
-			next: filter => {
+			next: (filter) => {
 				this.filter = filter;
 				this.applyFilter();
 			},
@@ -78,13 +84,20 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 
 	private applyFilter(): void {
 		if (this.allSlots?.length) {
-			this.slots = this.allSlots.filter(slot => isSlotVisible(slot, this.filter));
+			this.slots = this.allSlots.filter((slot) =>
+				isSlotVisible(slot, this.filter),
+			);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
-			console.log(this.logPrefix() + '.applyFilter() =>',
-				'slotsHiddenByFilter:', this.slotsHiddenByFilter,
-				'filter:', this.filter,
-				'slots before filter:', this.allSlots,
-				'slots after filter:', this.slots,
+			console.log(
+				this.logPrefix() + '.applyFilter() =>',
+				'slotsHiddenByFilter:',
+				this.slotsHiddenByFilter,
+				'filter:',
+				this.filter,
+				'slots before filter:',
+				this.allSlots,
+				'slots after filter:',
+				this.slots,
 			);
 		} else {
 			// console.log(this.logPrefix() + '.applyFilter() for empty slots');
@@ -97,11 +110,11 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	private subscribeForSlots(): void {
 		this.slotsSubscription?.unsubscribe();
 		if (this.weekday?.day) {
-			console.log(`ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}].subscribeForSlots()`);
+			console.log(
+				`ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}].subscribeForSlots()`,
+			);
 			this.slotsSubscription = this.weekday.day.slots$
-				.pipe(
-					takeUntil(this.destroyed),
-				)
+				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: this.processSlots,
 				});
@@ -117,7 +130,8 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 		this.applyFilter();
 	};
 
-	private readonly logPrefix = () => `ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}]`;
+	private readonly logPrefix = () =>
+		`ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}]`;
 
 	goNewHappening(params: NewHappeningParams): void {
 		if (!this.team) {
@@ -129,7 +143,10 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 		}
 		switch (params.type) {
 			case 'recurring':
-				params = { ...params, wd: jsDayToWeekday(date.getDay() as WeekdayNumber) };
+				params = {
+					...params,
+					wd: jsDayToWeekday(date.getDay() as WeekdayNumber),
+				};
 				break;
 			case 'single':
 				params = { ...params, date: dateToIso(date) };
@@ -138,5 +155,4 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 		console.log('goNewHappening()', date, params);
 		this.scheduleNavService.goNewHappening(this.team, params);
 	}
-
 }

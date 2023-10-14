@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
-import { CONTACT_ROLES_BY_TYPE, ContactRolesByType, ImportFirebaseModules, SneatApplicationModule } from '@sneat/app';
+import {
+	CONTACT_ROLES_BY_TYPE,
+	ContactRolesByType,
+	ImportFirebaseModules,
+	SneatApplicationModule,
+} from '@sneat/app';
 import { CommunesUiModule } from '@sneat/communes/ui';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
@@ -30,32 +35,59 @@ const firebaseModules = ImportFirebaseModules(environment.firebaseConfig);
 console.log('firebaseModules', firebaseModules);
 
 const contactRolesByType: ContactRolesByType = {
-	'company': [
+	company: [
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
-		{ id: 'consignee', title: 'Consignee', canBeImpersonatedByRoles: ['buyer', 'freight_agent', 'receive_agent'] },
-		{ id: 'dispatcher', title: 'Dispatcher', canBeImpersonatedByRoles: ['dispatch_agent'] },
+		{
+			id: 'consignee',
+			title: 'Consignee',
+			canBeImpersonatedByRoles: ['buyer', 'freight_agent', 'receive_agent'],
+		},
+		{
+			id: 'dispatcher',
+			title: 'Dispatcher',
+			canBeImpersonatedByRoles: ['dispatch_agent'],
+		},
 		{ id: 'dispatch_agent', title: 'Dispatch Agent', iconName: 'body-outline' },
 		{ id: 'receive_agent', title: 'Receive Agent', iconName: 'body-outline' },
 		{ id: 'freight_agent', title: 'Freight Agent', iconName: 'train-outline' },
-		{ id: 'notify_party', title: 'Notify Party', canBeImpersonatedByRoles: ['buyer', 'freight_agent', 'receive_agent'] },
+		{
+			id: 'notify_party',
+			title: 'Notify Party',
+			canBeImpersonatedByRoles: ['buyer', 'freight_agent', 'receive_agent'],
+		},
 		{ id: 'port', title: 'Port' },
 		{ id: 'shipper', title: 'Shipper' },
 		{ id: 'shipping_line', title: 'Shipping Line' },
 		{ id: 'trucker', title: 'Trucker' },
 	],
-	'person': [
+	person: [
 		{ id: 'driver', title: 'Driver', childForRoles: ['trucker'] },
 		{
 			id: 'employee',
 			title: 'Driver',
-			childForRoles: ['dispatch_agent', 'receive_agent', 'buyer', 'freight_agent', 'consignee', 'dispatcher', 'notify_party', 'trucker', 'shipper', 'shipping_line'],
+			childForRoles: [
+				'dispatch_agent',
+				'receive_agent',
+				'buyer',
+				'freight_agent',
+				'consignee',
+				'dispatcher',
+				'notify_party',
+				'trucker',
+				'shipper',
+				'shipping_line',
+			],
 		},
 	],
-	'location': [
+	location: [
 		{ id: 'port', title: 'Port' },
-		{ id: 'warehouse', title: 'Warehouse', childForRoles: ['buyer', 'shipper'] },
+		{
+			id: 'warehouse',
+			title: 'Warehouse',
+			childForRoles: ['buyer', 'shipper'],
+		},
 	],
-	'vehicle': [
+	vehicle: [
 		{ id: 'ship', title: 'Ship', childForRoles: ['shipping_line'] },
 		{ id: 'truck', title: 'Truck', childForRoles: ['trucker'] },
 	],
@@ -76,7 +108,9 @@ const contactRolesByType: ContactRolesByType = {
 		...coreProviders,
 		{
 			provide: SneatApiBaseUrl,
-			useValue: environment.useEmulators ? 'http://localhost:4300/v0/' : DefaultSneatAppApiBaseUrl,
+			useValue: environment.useEmulators
+				? 'http://localhost:4300/v0/'
+				: DefaultSneatAppApiBaseUrl,
 		},
 		{
 			provide: CONTACT_ROLES_BY_TYPE,
@@ -91,10 +125,7 @@ const contactRolesByType: ContactRolesByType = {
 			useValue: appInfo,
 		},
 	],
-	declarations: [
-		LogistAppComponent,
-	],
+	declarations: [LogistAppComponent],
 	bootstrap: [LogistAppComponent],
 })
-export class LogistAppModule {
-}
+export class LogistAppModule {}

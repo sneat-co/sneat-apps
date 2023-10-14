@@ -12,15 +12,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-	],
-	declarations: [
-		TelegramMenuPageComponent,
-	],
+	imports: [CommonModule, IonicModule, RouterModule.forChild(routes)],
+	declarations: [TelegramMenuPageComponent],
 })
-export class TelegramMenuPageModule {
-
-}
+export class TelegramMenuPageModule {}

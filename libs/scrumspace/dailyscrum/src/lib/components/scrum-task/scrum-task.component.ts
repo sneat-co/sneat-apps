@@ -33,7 +33,7 @@ export class ScrumTaskComponent implements OnInit {
 		// this.userService.userRecord.subscribe((user) => {
 		// 	this.user = user;
 		// });
-    throw new Error('not implemented yet')
+		throw new Error('not implemented yet');
 	}
 
 	ngOnInit() {
@@ -70,36 +70,36 @@ export class ScrumTaskComponent implements OnInit {
 		// 		by: { userID: this.user.id, title: this.user.data.title },
 		// 	};
 		// 	this.task?.comments.push(comment);
-    //   if (!this.type) {
-    //     throw new Error('!this.type');
-    //   }
-    //   if (!this.teamID) {
-    //     throw new Error('!this.teamID');
-    //   }
-    //   if (!this.date) {
-    //     throw new Error('!this.date');
-    //   }
-    //   if (!this.task) {
-    //     throw new Error('!this.task');
-    //   }
-			// const request: IAddCommentRequest = {
-			// 	teamID: this.teamID || '',
-			// 	meetingID: getMeetingIdFromDate(this.date),
-			// 	type: this.type,
-			// 	task: this.task.id,
-			// 	member: this.memberID,
-			// 	message,
-			// };
-			// this.scrumService.addComment(request).subscribe({
-			// 	next: (id) => (comment.id = id),
-			// 	error: (err) => {
-			// 		this.errorLogger.logError(err, 'Failed to add comment');
-			// 		this.task.comments = this.task.comments.filter(
-			// 			(c) => !c.id && c.message === message,
-			// 		);
-			// 	},
-			// });
+		//   if (!this.type) {
+		//     throw new Error('!this.type');
+		//   }
+		//   if (!this.teamID) {
+		//     throw new Error('!this.teamID');
+		//   }
+		//   if (!this.date) {
+		//     throw new Error('!this.date');
+		//   }
+		//   if (!this.task) {
+		//     throw new Error('!this.task');
+		//   }
+		// const request: IAddCommentRequest = {
+		// 	teamID: this.teamID || '',
+		// 	meetingID: getMeetingIdFromDate(this.date),
+		// 	type: this.type,
+		// 	task: this.task.id,
+		// 	member: this.memberID,
+		// 	message,
+		// };
+		// this.scrumService.addComment(request).subscribe({
+		// 	next: (id) => (comment.id = id),
+		// 	error: (err) => {
+		// 		this.errorLogger.logError(err, 'Failed to add comment');
+		// 		this.task.comments = this.task.comments.filter(
+		// 			(c) => !c.id && c.message === message,
+		// 		);
+		// 	},
+		// });
 		// }
-    throw new Error('not implemented yet')
+		throw new Error('not implemented yet');
 	}
 }

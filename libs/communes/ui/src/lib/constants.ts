@@ -22,12 +22,16 @@ export const enum CommuneTopPage {
 	sizes = 'sizes',
 	staff = 'staff',
 	asset = 'asset',
-	vehicles = 'vehicles'
+	vehicles = 'vehicles',
 }
 
-export type CommuneTopPages = EnumAsUnionOfKeys<typeof CommuneTopPage> | 'real-estates' | 'commune-settings';
+export type CommuneTopPages =
+	| EnumAsUnionOfKeys<typeof CommuneTopPage>
+	| 'real-estates'
+	| 'commune-settings';
 
-export type CommunePages = CommuneTopPages
+export type CommunePages =
+	| CommuneTopPages
 	// | ListPages
 	// | MemberPages
 	| 'add-dwelling'
@@ -67,5 +71,4 @@ export type CommunePages = CommuneTopPages
 	| 'to-do'
 	| 'to-watch'
 	| 'vehicle'
-	| 'movie-info'
-	;
+	| 'movie-info';

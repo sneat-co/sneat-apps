@@ -1,22 +1,21 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {NewListDialogComponent} from './new-list-dialog.component';
+import { NewListDialogComponent } from './new-list-dialog.component';
 
 // import {RouterModule} from "@angular/router";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        // RouterModule.forChild([{path: '', component: NewListDialog}]),
-    ],
-    declarations: [NewListDialogComponent],
-    exports: [NewListDialogComponent]
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		// RouterModule.forChild([{path: '', component: NewListDialog}]),
+	],
+	declarations: [NewListDialogComponent],
+	exports: [NewListDialogComponent],
 })
-export class NewListDialogModule {
-}
+export class NewListDialogModule {}

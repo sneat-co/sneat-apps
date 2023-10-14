@@ -23,5 +23,4 @@ const routes: Routes = [
 	],
 	declarations: [BudgetPageComponent],
 })
-export class BudgetPageModule {
-}
+export class BudgetPageModule {}

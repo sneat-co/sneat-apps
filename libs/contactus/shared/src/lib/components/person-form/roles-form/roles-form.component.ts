@@ -16,15 +16,9 @@ interface Role {
 @Component({
 	selector: 'sneat-roles-form',
 	templateUrl: 'roles-form.component.html',
-	animations: [
-		formNexInAnimation,
-	],
+	animations: [formNexInAnimation],
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class RolesFormComponent extends TeamRelatedFormComponent {
 	@Input() isActive = false;
@@ -51,7 +45,9 @@ export class RolesFormComponent extends TeamRelatedFormComponent {
 
 	roleChecked(event: Event): void {
 		event.stopPropagation();
-		const roles = this.roles?.filter(role => role.checked).map(role => role.id);
+		const roles = this.roles
+			?.filter((role) => role.checked)
+			.map((role) => role.id);
 		this.rolesChange.emit(roles);
 	}
 }

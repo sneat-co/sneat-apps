@@ -27,9 +27,6 @@ import { NewShippingPointService } from './new-shipping-point.service';
 		NewShippingPointDialogComponent,
 		NewShippingPointFormComponent,
 	],
-	providers: [
-		NewShippingPointService,
-	]
+	providers: [NewShippingPointService],
 })
-export class NewShippingPointModule {
-}
+export class NewShippingPointModule {}

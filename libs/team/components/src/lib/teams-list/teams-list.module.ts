@@ -5,18 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { TeamsListComponent } from './teams-list.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule,
-	],
-	declarations: [
-		TeamsListComponent,
-	],
-	exports: [
-		TeamsListComponent,
-	]
+	imports: [CommonModule, IonicModule, RouterModule],
+	declarations: [TeamsListComponent],
+	exports: [TeamsListComponent],
 })
-export class TeamsListModule {
-
-}
+export class TeamsListModule {}

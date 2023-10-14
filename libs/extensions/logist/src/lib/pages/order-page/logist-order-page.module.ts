@@ -50,5 +50,4 @@ const routes: Routes = [
 		SegmentContainerComponent,
 	],
 })
-export class LogistOrderPageModule {
-}
+export class LogistOrderPageModule {}

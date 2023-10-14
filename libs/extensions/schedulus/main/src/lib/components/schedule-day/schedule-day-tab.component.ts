@@ -14,7 +14,6 @@ import { addDays, ScheduleStateService } from '../schedule-state.service';
 	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScheduleDayTabComponent implements OnDestroy {
-
 	private readonly destroyed = new Subject<void>();
 	public date?: Date;
 
@@ -25,29 +24,24 @@ export class ScheduleDayTabComponent implements OnDestroy {
 	@Input() team: ITeamContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
 
-	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void = (args: {
-		slot: ISlotItem;
-		event: Event
-	}) => {
-		console.error('onSlotClicked is not set', args);
-	};
+	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void =
+		(args: { slot: ISlotItem; event: Event }) => {
+			console.error('onSlotClicked is not set', args);
+		};
 
 	constructor(
 		private readonly scheduleSateService: ScheduleStateService,
 		private readonly popoverController: PopoverController,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
-		scheduleSateService.dateChanged
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-				next: value => {
-					console.log('ScheduleDayTabComponent => date changed:', value.date);
-					this.date = value.date;
-					this.changeDetectorRef.markForCheck();
-				},
-			});
+		scheduleSateService.dateChanged.pipe(takeUntil(this.destroyed)).subscribe({
+			next: (value) => {
+				console.log('ScheduleDayTabComponent => date changed:', value.date);
+				this.date = value.date;
+				this.changeDetectorRef.markForCheck();
+			},
+		});
 	}
-
 
 	onPickerDateChanged(event: Event): void {
 		const ce = event as CustomEvent;

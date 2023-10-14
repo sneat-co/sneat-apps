@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {MovieCardComponent} from './movie-card.component';
+import { MovieCardComponent } from './movie-card.component';
 
 describe('MovieCardComponent', () => {
 	let component: MovieCardComponent;
@@ -11,8 +11,7 @@ describe('MovieCardComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [MovieCardComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('MovieCardComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

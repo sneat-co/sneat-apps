@@ -1,8 +1,22 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	OnInit,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
-import { IAddSegmentParty, IAddSegmentsRequest, ILogistOrderContext, IOrderContainer } from '../../dto';
+import {
+	IAddSegmentParty,
+	IAddSegmentsRequest,
+	ILogistOrderContext,
+	IOrderContainer,
+} from '../../dto';
 import { LogistOrderService } from '../../services';
 import { IContainer } from '../order-containers-selector/condainer-interface';
 import { SegmentEndpointType } from './segment-counterparty.component';
@@ -44,8 +58,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
-	) {
-	}
+	) {}
 
 	onSelectedContainersChanged(selectedContainers: IContainer[]): void {
 		this.selectedContainers = selectedContainers;
@@ -61,8 +74,15 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 		}
 	}
 
-	onEndpointTypeChanged(what: 'from' | 'to', endpointType: SegmentEndpointType): void {
-		console.log('NewSegmentComponent.onEndpointTypeChanged()', what, endpointType);
+	onEndpointTypeChanged(
+		what: 'from' | 'to',
+		endpointType: SegmentEndpointType,
+	): void {
+		console.log(
+			'NewSegmentComponent.onEndpointTypeChanged()',
+			what,
+			endpointType,
+		);
 		switch (what) {
 			case 'from':
 				if (this.from === 'port' && this.to === 'port') {
@@ -98,7 +118,9 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 		if (!this.order) {
 			return;
 		}
-		const toPorts = this.order?.dto?.counterparties?.filter(c => c.role === 'port_from');
+		const toPorts = this.order?.dto?.counterparties?.filter(
+			(c) => c.role === 'port_from',
+		);
 		if (toPorts?.length == 1) {
 			const toPort = toPorts[0];
 			this.toContact = {
@@ -125,7 +147,10 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			alert('team is required');
 			return;
 		}
-		if (!this.byContact && !confirm('Do you want to add a segment without a carrier?')) {
+		if (
+			!this.byContact &&
+			!confirm('Do you want to add a segment without a carrier?')
+		) {
 			return;
 		}
 		if (!this.fromContact) {
@@ -155,7 +180,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 		const request: IAddSegmentsRequest = excludeEmpty({
 			orderID: this.order.id,
 			teamID: this.order.team?.id,
-			containers: this.selectedContainers.map(c => ({
+			containers: this.selectedContainers.map((c) => ({
 				id: c.id,
 				tasks: c.tasks || [],
 			})),
@@ -177,12 +202,10 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			}),
 			by,
 		});
-		this.orderService
-			.addSegments(request)
-			.subscribe({
-				next: () => this.created.emit(),
-				error: this.errorLogger.logErrorHandler('Failed to add segments'),
-			});
+		this.orderService.addSegments(request).subscribe({
+			next: () => this.created.emit(),
+			error: this.errorLogger.logErrorHandler('Failed to add segments'),
+		});
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -203,5 +226,4 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	// 		this.toDate = fromDate;
 	// 	}, 10);
 	// }
-
 }

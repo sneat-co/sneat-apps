@@ -1,9 +1,10 @@
 import { Directive, Inject, InjectionToken } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
 import {
-	ILogistOrderContext,
-} from '../dto';
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
+import { ILogistOrderContext } from '../dto';
 import { LogistOrderService } from '../services';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
@@ -22,13 +23,16 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 			// .pipe(
 			// 	takeUntil(this.destroyed),
 			// )
-			.subscribe(params => {
-				this.order = { id: params.get('orderID') || '', team: { id: params.get('teamID') || '' } };
+			.subscribe((params) => {
+				this.order = {
+					id: params.get('orderID') || '',
+					team: { id: params.get('teamID') || '' },
+				};
 				if (this.team?.id && this.order?.id) {
 					this.orderService
 						.watchOrderByID(this.team.id, this.order.id)
 						.subscribe({
-							next: order => {
+							next: (order) => {
 								this.setOrder(order);
 								this.order = order;
 							},
@@ -41,7 +45,9 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 	private setOrder(order: ILogistOrderContext): void {
 		this.order = order;
 		console.log('setOrder', order);
-		this.numberOfDispatchers = order?.dto?.counterparties?.filter(c => c.role === 'dispatcher').length;
+		this.numberOfDispatchers = order?.dto?.counterparties?.filter(
+			(c) => c.role === 'dispatcher',
+		).length;
 		this.onOrderChanged(order);
 	}
 

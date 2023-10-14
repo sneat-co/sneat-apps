@@ -1,21 +1,21 @@
-import { CommonModule } from "@angular/common";
-import { AfterViewInit, Component } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { IonicModule } from "@ionic/angular";
-import { SneatPipesModule } from "@sneat/components";
-import { ContactComponentBaseParams, ContactDetailsComponent } from "@sneat/contactus-shared";
-import {  MemberRelationship } from "@sneat/dto";
-import { MemberComponentBaseParams } from "../../member-component-base-params";
-import { MemberBasePage } from "../member-base-page";
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
+import {
+	ContactComponentBaseParams,
+	ContactDetailsComponent,
+} from '@sneat/contactus-shared';
+import { MemberRelationship } from '@sneat/dto';
+import { MemberComponentBaseParams } from '../../member-component-base-params';
+import { MemberBasePage } from '../member-base-page';
 
 @Component({
-	selector: "sneat-team-member-page",
-	templateUrl: "./team-member-page.component.html",
-	providers: [
-		MemberComponentBaseParams,
-		ContactComponentBaseParams,
-	],
+	selector: 'sneat-team-member-page',
+	templateUrl: './team-member-page.component.html',
+	providers: [MemberComponentBaseParams, ContactComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -25,29 +25,27 @@ import { MemberBasePage } from "../member-base-page";
 		ContactDetailsComponent,
 	],
 })
-export class TeamMemberPageComponent extends MemberBasePage implements AfterViewInit {
-
+export class TeamMemberPageComponent
+	extends MemberBasePage
+	implements AfterViewInit
+{
 	public relatedAs?: MemberRelationship;
 
-	constructor(
-		route: ActivatedRoute,
-		params: MemberComponentBaseParams,
-	) {
-		super("TeamMemberPageComponent", route, params);
+	constructor(route: ActivatedRoute, params: MemberComponentBaseParams) {
+		super('TeamMemberPageComponent', route, params);
 	}
 
 	ngAfterViewInit(): void {
-		this.preloader.preload([ // TODO: implement preloader
-			"members",
-			"document",
-			"document-new",
-			"contact",
-			"contact-new",
-			"sizes",
+		this.preloader.preload([
+			// TODO: implement preloader
+			'members',
+			'document',
+			'document-new',
+			'contact',
+			'contact-new',
+			'sizes',
 		]);
 	}
-
-
 
 	// protected setMemberId(memberId: string): void {
 	// 	super.setMemberId(memberId);
@@ -83,26 +81,29 @@ export class TeamMemberPageComponent extends MemberBasePage implements AfterView
 		}
 		if (!this.team) {
 			this.errorLogger.logError(
-				"Can not remove team member without team context",
+				'Can not remove team member without team context',
 			);
 			return;
 		}
 		if (!this.member?.id) {
 			this.errorLogger.logError(
-				"Can not remove team member without knowing member ID",
+				'Can not remove team member without knowing member ID',
 			);
 			return;
 		}
-		this.contactService.removeTeamMember(this.team.id, this.member?.id).subscribe({
-			next: () => {
-				this.navController
-					.pop()
-					.catch((err) =>
-						this.errorLogger.logError(err, "Failed to pop navigator state"),
-					);
-			},
-			error: (err) => this.errorLogger.logError(err, "Failed to remove member"),
-		});
+		this.contactService
+			.removeTeamMember(this.team.id, this.member?.id)
+			.subscribe({
+				next: () => {
+					this.navController
+						.pop()
+						.catch((err) =>
+							this.errorLogger.logError(err, 'Failed to pop navigator state'),
+						);
+				},
+				error: (err) =>
+					this.errorLogger.logError(err, 'Failed to remove member'),
+			});
 	}
 
 	private setRelatedAs(): void {
@@ -121,5 +122,4 @@ export class TeamMemberPageComponent extends MemberBasePage implements AfterView
 		// 	}
 		// }
 	}
-
 }

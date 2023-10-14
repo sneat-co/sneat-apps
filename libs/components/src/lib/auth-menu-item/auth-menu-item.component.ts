@@ -10,14 +10,9 @@ import { IonicModule, MenuController, NavController } from '@ionic/angular';
 	selector: 'sneat-auth-menu-item',
 	templateUrl: './auth-menu-item.component.html',
 	standalone: true,
-	imports: [
-		IonicModule,
-		CommonModule,
-		RouterModule,
-	],
+	imports: [IonicModule, CommonModule, RouterModule],
 })
 export class AuthMenuItemComponent {
-
 	protected readonly gitHash2 = gitHash;
 
 	public authState?: ISneatAuthState;
@@ -30,13 +25,15 @@ export class AuthMenuItemComponent {
 		private readonly menuController: MenuController,
 	) {
 		authStateService.authState.subscribe({
-			next: authState => this.authState = authState,
+			next: (authState) => (this.authState = authState),
 			error: errorLogger.logErrorHandler('failed to get auth state'),
 		});
 	}
 
 	public closeMenu(): void {
-		this.menuController.close().catch(this.errorLogger.logErrorHandler('Failed to close menu'));
+		this.menuController
+			.close()
+			.catch(this.errorLogger.logErrorHandler('Failed to close menu'));
 	}
 
 	public logout(event: Event): boolean {
@@ -60,5 +57,4 @@ export class AuthMenuItemComponent {
 		}
 		return false;
 	}
-
 }

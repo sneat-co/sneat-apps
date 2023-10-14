@@ -1,7 +1,7 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonicModule } from "@ionic/angular";
-import { ISelectItem, SelectFromListModule } from "@sneat/components";
+import { IonicModule } from '@ionic/angular';
+import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import {
 	EngineType,
 	EngineTypeCombustion,
@@ -14,29 +14,33 @@ import {
 } from '@sneat/dto';
 import { IVehicleAssetContext } from '@sneat/team/models';
 
-
 @Component({
 	selector: 'sneat-vehicle-engine',
 	templateUrl: './vehicle-engine.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		SelectFromListModule,
-	],
+	imports: [CommonModule, IonicModule, SelectFromListModule],
 })
 export class VehicleEngineComponent {
 	@Input() public vehicleAsset?: IVehicleAssetContext;
-	@Output() public readonly vehicleAssetChange = new EventEmitter<IVehicleAssetContext>();
+	@Output() public readonly vehicleAssetChange =
+		new EventEmitter<IVehicleAssetContext>();
 
 	protected get hasBattery(): boolean {
 		const et = this.vehicleAsset?.dto?.engineType;
-		return et === EngineTypeElectric || et === EngineTypePHEV || et === EngineTypeHybrid;
+		return (
+			et === EngineTypeElectric ||
+			et === EngineTypePHEV ||
+			et === EngineTypeHybrid
+		);
 	}
 
 	protected get hasCombustion(): boolean {
 		const et = this.vehicleAsset?.dto?.engineType;
-		return et === EngineTypeCombustion || et === EngineTypePHEV || et === EngineTypeHybrid;
+		return (
+			et === EngineTypeCombustion ||
+			et === EngineTypePHEV ||
+			et === EngineTypeHybrid
+		);
 	}
 
 	readonly engineTypes: ISelectItem[] = [

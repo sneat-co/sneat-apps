@@ -2,7 +2,14 @@ import { Inject, Injectable } from '@angular/core';
 // import { Timestamp } from '@firebase/firestore-types';
 
 import { takeUntil } from 'rxjs/operators';
-import { interval, Observable, ReplaySubject, Subject, Subscription, throwError } from 'rxjs';
+import {
+	interval,
+	Observable,
+	ReplaySubject,
+	Subject,
+	Subscription,
+	throwError,
+} from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 import {
@@ -42,8 +49,7 @@ export class Timer {
 		private readonly released: () => void,
 		public readonly teamId: string,
 		public readonly meetingId: string,
-	) {
-	}
+	) {}
 
 	public releaseTimer(): void {
 		if (this.intervalSubscription) {
@@ -149,7 +155,9 @@ export class Timer {
 						: TimerOperationEnum.start;
 				break;
 			default:
-				return throwError(() => `Unexpected timer status: ${this.state?.status}`);
+				return throwError(
+					() => `Unexpected timer status: ${this.state?.status}`,
+				);
 		}
 		return this.setTimerState(operation, member);
 	}
@@ -170,8 +178,8 @@ export class Timer {
 					operation === TimerOperationEnum.start
 						? TimerStatusEnum.active
 						: operation === TimerOperationEnum.stop
-							? TimerStatusEnum.stopped
-							: undefined,
+						? TimerStatusEnum.stopped
+						: undefined,
 				activeMemberId: member,
 			};
 			this.emitTick();
@@ -189,18 +197,20 @@ export class Timer {
 			}
 			let toggleTimerMethod: () => Observable<ITimerResponse>;
 			if (member) {
-				toggleTimerMethod = () => this.timerService.toggleMemberTimer({
-					teamID: this.teamId,
-					meeting: this.meetingId,
-					operation,
-					member,
-				});
+				toggleTimerMethod = () =>
+					this.timerService.toggleMemberTimer({
+						teamID: this.teamId,
+						meeting: this.meetingId,
+						operation,
+						member,
+					});
 			} else {
-				toggleTimerMethod = () => this.timerService.toggleMeetingTimer({
-					teamID: this.teamId,
-					meeting: this.meetingId,
-					operation,
-				});
+				toggleTimerMethod = () =>
+					this.timerService.toggleMeetingTimer({
+						teamID: this.teamId,
+						meeting: this.meetingId,
+						operation,
+					});
 			}
 
 			toggleTimerMethod()
@@ -315,7 +325,7 @@ export class Timer {
 			this.state.secondsByMember = {
 				...this.state.secondsByMember,
 				[this.state.activeMemberId]:
-				(this.state.secondsByMember[this.state.activeMemberId] ?? 0) + 1,
+					(this.state.secondsByMember[this.state.activeMemberId] ?? 0) + 1,
 			};
 		}
 		this.emitTick();
@@ -346,8 +356,7 @@ export class TimerFactory {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	public getTimer(
 		timerService: IMeetingTimerService,

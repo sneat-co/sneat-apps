@@ -4,14 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 	{
 		path: 'family',
-		loadChildren: () => import('./commune-page/commune-page.module').then(m => m.CommunePageModule),
+		loadChildren: () =>
+			import('./commune-page/commune-page.module').then(
+				(m) => m.CommunePageModule,
+			),
 	},
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forChild(routes),
-	],
+	imports: [RouterModule.forChild(routes)],
 })
-export class RoutesToCommuneModule {
-}
+export class RoutesToCommuneModule {}

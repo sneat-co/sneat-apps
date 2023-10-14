@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IAssetContext } from '@sneat/team/models';
 
 @Component({
@@ -6,6 +6,5 @@ import { IAssetContext } from '@sneat/team/models';
 	templateUrl: './real-estate-location.component.html',
 })
 export class RealEstateLocationComponent {
-
 	@Input() asset?: IAssetContext;
 }

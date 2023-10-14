@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { CountryInputComponent, CountrySelectorComponent } from '@sneat/components';
+import {
+	CountryInputComponent,
+	CountrySelectorComponent,
+} from '@sneat/components';
 import { ContactInputModule } from '@sneat/contactus-shared';
 import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
 import { LogistOrderServiceModule } from '../../services/logist-order.service';
@@ -31,10 +34,6 @@ const routes: Routes = [
 		CountrySelectorComponent,
 		CountryInputComponent,
 	],
-	declarations: [
-		LogistOrdersPageComponent,
-		OrdersFilterComponent,
-	],
+	declarations: [LogistOrdersPageComponent, OrdersFilterComponent],
 })
-export class LogistOrdersPageModule {
-}
+export class LogistOrdersPageModule {}

@@ -9,23 +9,21 @@ import { ignoreElements } from 'rxjs/operators';
 
 @Directive()
 export abstract class DocumentsBaseComponent {
-
 	static metadata = {
 		inputs: ['allDocuments'],
 	};
 
 	@Input() allDocuments?: IAssetContext<IDocumentAssetDto>[];
 
-
 	protected constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		protected readonly asset: AssetService,
 		protected readonly toastCtrl: ToastController,
-	) {
-	}
+	) {}
 
 	deleteDocument(asset: IAssetContext, slidingItem: IonItemSliding): void {
-		this.asset.deleteAsset(asset)
+		this.asset
+			.deleteAsset(asset)
 			.pipe(ignoreElements())
 			.subscribe({
 				complete: async () => {
@@ -34,14 +32,15 @@ export abstract class DocumentsBaseComponent {
 					});
 					await toast.present();
 					await slidingItem.close();
-					this.allDocuments = this.allDocuments?.filter(d => !eq(d.id, asset.id));
+					this.allDocuments = this.allDocuments?.filter(
+						(d) => !eq(d.id, asset.id),
+					);
 					this.onDocsChanged();
 				},
-				error: err => {
-					slidingItem.close()
-						.catch(e => {
-							console.error(e);
-						});
+				error: (err) => {
+					slidingItem.close().catch((e) => {
+						console.error(e);
+					});
 					this.errorLogger.logError(err);
 				},
 			});

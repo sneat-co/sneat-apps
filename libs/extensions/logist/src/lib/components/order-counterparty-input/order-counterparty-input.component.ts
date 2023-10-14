@@ -1,10 +1,19 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { LogistOrderContactRole, ContactType } from '@sneat/dto';
 import { LogistOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import {
-	CounterpartyRole, IDeleteCounterpartyRequest,
+	CounterpartyRole,
+	IDeleteCounterpartyRequest,
 	ILogistOrderContext,
 	IOrderCounterparty,
 	IOrderCounterpartyRef,
@@ -27,7 +36,6 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() contactRole?: LogistOrderContactRole;
 	@Input() contactType?: ContactType;
 
-
 	@Input() parentType: ContactType = 'company';
 	@Input() parentRole?: LogistOrderContactRole;
 
@@ -41,7 +49,6 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 
 	@Output() counterpartyChange = new EventEmitter<IOrderCounterpartyRef>();
 
-
 	protected contact?: IContactContext;
 	protected parentContact?: IContactContext;
 
@@ -50,9 +57,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
-	) {
-
-	}
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);
@@ -75,7 +80,9 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		if (!team) {
 			throw new Error('Team is not set');
 		}
-		const contactFromCounterparty = (counterparty: IOrderCounterparty): IContactContext => ({
+		const contactFromCounterparty = (
+			counterparty: IOrderCounterparty,
+		): IContactContext => ({
 			team,
 			id: counterparty.contactID,
 			brief: {
@@ -87,13 +94,20 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		});
 		this.contact = undefined;
 		const counterparties = this.contactID
-			? this.order?.dto?.counterparties?.filter(c => c.contactID === this.contactID && c.role === this.counterpartyRole)
-			: this.order?.dto?.counterparties?.filter(c => c.role === this.counterpartyRole);
+			? this.order?.dto?.counterparties?.filter(
+					(c) =>
+						c.contactID === this.contactID && c.role === this.counterpartyRole,
+			  )
+			: this.order?.dto?.counterparties?.filter(
+					(c) => c.role === this.counterpartyRole,
+			  );
 		if (counterparties && counterparties.length === 1) {
 			const counterparty = counterparties[0];
 			this.contact = contactFromCounterparty(counterparty);
 			if (counterparty.parent) {
-				const parentCounterparty = this.order?.dto?.counterparties?.find(c => c.contactID === counterparty.parent?.contactID);
+				const parentCounterparty = this.order?.dto?.counterparties?.find(
+					(c) => c.contactID === counterparty.parent?.contactID,
+				);
 				if (parentCounterparty) {
 					this.parentContact = contactFromCounterparty(parentCounterparty);
 				}
@@ -142,9 +156,12 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 					this.contact = undefined;
 					this.deleting = false;
 				},
-				error: err => {
+				error: (err) => {
 					this.deleting = false;
-					this.errorLogger.logError(err, `Failed to remove counterparty with role=${this.counterpartyRole} from the order`);
+					this.errorLogger.logError(
+						err,
+						`Failed to remove counterparty with role=${this.counterpartyRole} from the order`,
+					);
 				},
 			});
 			return;
@@ -157,11 +174,15 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				title: contact?.brief?.title || contact.id,
 				countryID: contact?.brief?.countryID || '--',
 			};
-			const i = orderDto.counterparties?.findIndex(c => c.role === this.contactRole) ?? -1;
+			const i =
+				orderDto.counterparties?.findIndex(
+					(c) => c.role === this.contactRole,
+				) ?? -1;
 			if (i >= 0) {
 				if (orderDto.counterparties) {
 					orderDto = {
-						...orderDto, counterparties: [
+						...orderDto,
+						counterparties: [
 							...orderDto.counterparties.slice(0, i),
 							newCounterparty,
 							...orderDto.counterparties.slice(i + 1),
@@ -186,7 +207,8 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				case 'notify_party':
 					if (orderDto.route) {
 						orderDto = {
-							...orderDto, route: {
+							...orderDto,
+							route: {
 								...orderDto.route,
 								destination: {
 									countryID: newCounterparty.countryID,
@@ -199,7 +221,8 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				case 'shipper':
 					if (orderDto.route) {
 						orderDto = {
-							...orderDto, route: {
+							...orderDto,
+							route: {
 								...orderDto.route,
 								origin: {
 									countryID: newCounterparty.countryID,
@@ -229,20 +252,28 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		if (contact.parentContact && this.parentRole) {
 			request = {
 				...request,
-				counterparties: [...request.counterparties, {
-					contactID: contact.parentContact.id,
-					role: this.parentRole,
-				}],
+				counterparties: [
+					...request.counterparties,
+					{
+						contactID: contact.parentContact.id,
+						role: this.parentRole,
+					},
+				],
 			};
 		}
 		this.orderService.setOrderCounterparties(request).subscribe({
-			next: counterparty => {
-				console.log('onContactChanged(): setOrderCounterparties() =>', counterparty);
+			next: (counterparty) => {
+				console.log(
+					'onContactChanged(): setOrderCounterparties() =>',
+					counterparty,
+				);
 				if (!this.order?.brief) {
 					return;
 				}
 			},
-			error: this.errorLogger.logErrorHandler(`Failed to set order's counterparty`),
+			error: this.errorLogger.logErrorHandler(
+				`Failed to set order's counterparty`,
+			),
 		});
 	}
 

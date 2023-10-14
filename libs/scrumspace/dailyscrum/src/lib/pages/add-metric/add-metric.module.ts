@@ -12,5 +12,4 @@ import { AddMetricPageComponent } from './add-metric-page.component';
 	imports: [CommonModule, FormsModule, IonicModule, AddMetricPageRoutingModule],
 	declarations: [AddMetricPageComponent],
 })
-export class AddMetricPageModule {
-}
+export class AddMetricPageModule {}

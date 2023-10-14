@@ -1,10 +1,25 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	SimpleChanges,
+} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
-import { countryFlagEmoji, ISelectItem, SelectorBaseComponent } from '@sneat/components';
+import {
+	countryFlagEmoji,
+	ISelectItem,
+	SelectorBaseComponent,
+} from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService, ContactusTeamService } from '@sneat/contactus-services';
+import {
+	ContactService,
+	ContactusTeamService,
+} from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription } from 'rxjs';
 import { IContactSelectorOptions } from './contact-selector.service';
@@ -27,11 +42,8 @@ export interface IContactSelectorProps {
 })
 export class ContactSelectorComponent
 	extends SelectorBaseComponent
-	implements IContactSelectorOptions,
-		OnInit,
-		OnChanges,
-		OnDestroy {
-
+	implements IContactSelectorOptions, OnInit, OnChanges, OnDestroy
+{
 	private readonly destroyed = new Subject<void>();
 	private readonly parentChanged = new Subject<void>();
 
@@ -57,7 +69,6 @@ export class ContactSelectorComponent
 		{ id: 'shipper', title: 'Shipper', iconName: 'boat-outline' },
 	];
 
-
 	// @Input() public contacts?: IContactContext[];
 
 	private contactBriefsSub?: Subscription;
@@ -72,7 +83,7 @@ export class ContactSelectorComponent
 
 	protected parentContactID?: string;
 	protected selectedSubContactID?: string;
-	private readonly items$ = new Subject<IContactContext[]>;
+	private readonly items$ = new Subject<IContactContext[]>();
 	public readonly items = this.items$.asObservable();
 
 	protected parentItems?: ISelectItem[];
@@ -87,13 +98,13 @@ export class ContactSelectorComponent
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
-		@Inject(CONTACT_ROLES_BY_TYPE) private readonly contactRolesByType: ContactRolesByType,
+		@Inject(CONTACT_ROLES_BY_TYPE)
+		private readonly contactRolesByType: ContactRolesByType,
 		private readonly contactService: ContactService,
 		private readonly contactusTeamService: ContactusTeamService,
 	) {
 		super(errorLogger, modalController);
 	}
-
 
 	ngOnInit(): void {
 		console.log('ngOnInit()');
@@ -113,7 +124,9 @@ export class ContactSelectorComponent
 	}
 
 	subscribeForData(calledFrom: 'ngOnInit' | 'ngOnChanges'): void {
-		console.log(`ContactSelectorComponent.subscribeForData(calledFrom=${calledFrom})`);
+		console.log(
+			`ContactSelectorComponent.subscribeForData(calledFrom=${calledFrom})`,
+		);
 		this.contactBriefsSub?.unsubscribe();
 		if (!this.team) {
 			return;
@@ -122,48 +135,84 @@ export class ContactSelectorComponent
 	}
 
 	private watchContactBriefs(): void {
-		this.contactBriefsSub = this.contactusTeamService.watchContactBriefs(this.team)
-			.subscribe(contactBriefs => {
+		this.contactBriefsSub = this.contactusTeamService
+			.watchContactBriefs(this.team)
+			.subscribe((contactBriefs) => {
 				this.allContacts = contactBriefs;
 				this.setContacts();
 			});
 	}
 
 	private setContacts(): void {
-		const filterByTypeRoleAndParentID = (t?: ContactType, r?: ContactRole, parentID?: string) => (c: IContactContext) => {
-			const roleIDs: ContactRole[] = [];
-			if (r) {
-				roleIDs.push(r);
-				if (t && r) {
-					const role = this.contactRolesByType[t]?.find(role => role.id === r);
-					if (role?.canBeImpersonatedByRoles?.length) {
-						roleIDs.push(...role.canBeImpersonatedByRoles);
+		const filterByTypeRoleAndParentID =
+			(t?: ContactType, r?: ContactRole, parentID?: string) =>
+			(c: IContactContext) => {
+				const roleIDs: ContactRole[] = [];
+				if (r) {
+					roleIDs.push(r);
+					if (t && r) {
+						const role = this.contactRolesByType[t]?.find(
+							(role) => role.id === r,
+						);
+						if (role?.canBeImpersonatedByRoles?.length) {
+							roleIDs.push(...role.canBeImpersonatedByRoles);
+						}
 					}
 				}
-			}
-			return (!t || c.brief?.type === t) &&
-				(!r || roleIDs.some(roleID => c.brief?.roles?.includes(roleID))) &&
-				(!parentID || c.brief?.parentID === parentID);
-		};
+				return (
+					(!t || c.brief?.type === t) &&
+					(!r || roleIDs.some((roleID) => c.brief?.roles?.includes(roleID))) &&
+					(!parentID || c.brief?.parentID === parentID)
+				);
+			};
 		const allContactBriefs = this.allContacts;
-		this.parentContacts = this.parentType || this.parentRole ? allContactBriefs?.filter(filterByTypeRoleAndParentID(this.parentType, this.parentRole)) || [] : undefined;
-		this.contacts = allContactBriefs?.filter(filterByTypeRoleAndParentID(this.contactType, this.contactRole, this.parentContactID));
+		this.parentContacts =
+			this.parentType || this.parentRole
+				? allContactBriefs?.filter(
+						filterByTypeRoleAndParentID(this.parentType, this.parentRole),
+				  ) || []
+				: undefined;
+		this.contacts = allContactBriefs?.filter(
+			filterByTypeRoleAndParentID(
+				this.contactType,
+				this.contactRole,
+				this.parentContactID,
+			),
+		);
 
-		const removeExcluded = (ids?: string[]) => (c: IContactContext) => !ids?.includes(c.id);
-		this.contactItems = this.contacts?.filter(removeExcluded(this.excludeContactIDs)).map(this.getChildItem);
-		this.parentItems = this.parentContacts?.filter(removeExcluded(this.excludeParentIDs)).map(this.getChildItem);
+		const removeExcluded = (ids?: string[]) => (c: IContactContext) =>
+			!ids?.includes(c.id);
+		this.contactItems = this.contacts
+			?.filter(removeExcluded(this.excludeContactIDs))
+			.map(this.getChildItem);
+		this.parentItems = this.parentContacts
+			?.filter(removeExcluded(this.excludeParentIDs))
+			.map(this.getChildItem);
 
 		if (this.parentType || this.parentRole) {
-			if (!this.parentContactID && this.parentContacts && !this.parentContacts.length) {
+			if (
+				!this.parentContactID &&
+				this.parentContacts &&
+				!this.parentContacts.length
+			) {
 				this.parentTab = 'new';
 			}
 		}
 		if (this.contacts && !this.contacts.length) {
 			this.contactTab = 'new';
 		}
-		console.log('setContacts', this.allContacts, this.contactRole, this.contactType, this.contacts, this.parentType, this.parentRole, this.parentContactID, this.parentContacts);
+		console.log(
+			'setContacts',
+			this.allContacts,
+			this.contactRole,
+			this.contactType,
+			this.contacts,
+			this.parentType,
+			this.parentRole,
+			this.parentContactID,
+			this.parentContacts,
+		);
 	}
-
 
 	private readonly getParentItem = (c: IContactContext): ISelectItem => ({
 		id: c.id,
@@ -187,10 +236,9 @@ export class ContactSelectorComponent
 		this.close(undefined);
 	}
 
-
 	protected onParentContactIDChanged(contactID: string): void {
 		console.log('onParentContactSelected()', contactID);
-		const parentContact = this.parentContacts?.find(c => c.id === contactID);
+		const parentContact = this.parentContacts?.find((c) => c.id === contactID);
 		this.onParentContactChanged(parentContact);
 	}
 
@@ -228,7 +276,7 @@ export class ContactSelectorComponent
 	protected onContactSelected(contactID: string): void {
 		console.log('onContactSelected()', contactID);
 		this.selectedSubContactID = contactID;
-		this.selectedContact = this.contacts?.find(c => c.id === contactID);
+		this.selectedContact = this.contacts?.find((c) => c.id === contactID);
 		if (!this.selectedContact) {
 			console.error('contact not found by ID', contactID, this.contacts);
 		}
@@ -277,7 +325,9 @@ export class ContactSelectorComponent
 		if (this.onSelected) {
 			this.onSelected(contact ? [contact] : null);
 		} else {
-			console.warn('instance ContactSelectorComponent has unset `onSelected` input callback.');
+			console.warn(
+				'instance ContactSelectorComponent has unset `onSelected` input callback.',
+			);
 		}
 	}
 }

@@ -27,5 +27,4 @@ const routes: Routes = [
 	],
 	declarations: [ListsPageComponent],
 })
-export class ListsPageModule {
-}
+export class ListsPageModule {}

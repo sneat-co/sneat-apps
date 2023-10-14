@@ -1,4 +1,9 @@
-import { IParameter, IRecordsetCheckDef, IRecordsetDef, NamedParams } from '@sneat/datatug/models';
+import {
+	IParameter,
+	IRecordsetCheckDef,
+	IRecordsetDef,
+	NamedParams,
+} from '@sneat/datatug/models';
 import { ICommandResponse } from './response';
 
 // import { IValueCheckResult } from '@sneat/datatug/checks';

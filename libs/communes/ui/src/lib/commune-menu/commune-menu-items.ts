@@ -3,28 +3,40 @@ import { CommuneTopPage } from '../constants';
 import { NgModulePreloaderService } from '@sneat/core';
 import { Commune } from '../models/ui/ui-models';
 
-export function getMenuItems(commune: Commune, showExperimental: boolean, preloader: NgModulePreloaderService, preloaderDelay = 0)
-	: CommuneMenuItem[] {
+export function getMenuItems(
+	commune: Commune,
+	showExperimental: boolean,
+	preloader: NgModulePreloaderService,
+	preloaderDelay = 0,
+): CommuneMenuItem[] {
 	const type = commune.type;
 	// showExperimental = showExperimental || type === 'realtor';
-	const menuItems = allCommuneMenuItems.filter(menuItem => {
-			if (menuItem.experimental && !showExperimental) {
-				return false;
-			}
-			if (menuItem.communeSupports && !commune.supports(menuItem.communeSupports)) {
-				return false;
-			}
-			if (menuItem.excludeCommuneType && menuItem.excludeCommuneType.includes(type)) {
-				return false;
-			}
-			// noinspection RedundantIfStatementJS
-			if (menuItem.communeTypes && !menuItem.communeTypes.includes(type)) {
-				return false;
-			}
-			return true;
-		},
+	const menuItems = allCommuneMenuItems.filter((menuItem) => {
+		if (menuItem.experimental && !showExperimental) {
+			return false;
+		}
+		if (
+			menuItem.communeSupports &&
+			!commune.supports(menuItem.communeSupports)
+		) {
+			return false;
+		}
+		if (
+			menuItem.excludeCommuneType &&
+			menuItem.excludeCommuneType.includes(type)
+		) {
+			return false;
+		}
+		// noinspection RedundantIfStatementJS
+		if (menuItem.communeTypes && !menuItem.communeTypes.includes(type)) {
+			return false;
+		}
+		return true;
+	});
+	preloader.preload(
+		menuItems.map((menuItem) => menuItem.preload || menuItem.code),
+		preloaderDelay,
 	);
-	preloader.preload(menuItems.map(menuItem => menuItem.preload || menuItem.code), preloaderDelay);
 	return menuItems;
 }
 

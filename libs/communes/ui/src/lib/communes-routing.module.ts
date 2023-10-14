@@ -6,21 +6,21 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('./communes-page/communes-page.module').then(m => m.CommunesPageModule),
+		loadChildren: () =>
+			import('./communes-page/communes-page.module').then(
+				(m) => m.CommunesPageModule,
+			),
 	},
 	{
 		path: 'new',
-		loadChildren: () => import('./new-commune-page/new-commune-page.module').then(m => m.NewCommunePageModule),
+		loadChildren: () =>
+			import('./new-commune-page/new-commune-page.module').then(
+				(m) => m.NewCommunePageModule,
+			),
 	},
 ];
 
-
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-	],
+	imports: [CommonModule, IonicModule, RouterModule.forChild(routes)],
 })
-export class CommunesRoutingModule {
-}
+export class CommunesRoutingModule {}

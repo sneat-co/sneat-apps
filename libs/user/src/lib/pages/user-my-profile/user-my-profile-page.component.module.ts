@@ -12,9 +12,7 @@ import { UserMyProfilePageRoutingModule } from './user-my-profile-page.routing.m
 		UserMyProfilePageRoutingModule,
 		TeamsCardModule,
 	],
-	declarations: [
-		UserMyProfilePageComponent,
-	],
+	declarations: [UserMyProfilePageComponent],
 })
 export class UserMyProfilePageComponentModule {
 	constructor() {

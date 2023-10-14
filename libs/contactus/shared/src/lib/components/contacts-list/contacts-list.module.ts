@@ -7,21 +7,8 @@ import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-i
 import { ContactsListComponent } from './contacts-list.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule,
-		SneatPipesModule,
-	],
-	declarations: [
-		ContactsListComponent,
-		ContactsListItemComponent,
-	],
-	exports: [
-		ContactsListComponent,
-		ContactsListItemComponent,
-	]
+	imports: [CommonModule, IonicModule, RouterModule, SneatPipesModule],
+	declarations: [ContactsListComponent, ContactsListItemComponent],
+	exports: [ContactsListComponent, ContactsListItemComponent],
 })
-export class ContactsListModule {
-
-}
+export class ContactsListModule {}

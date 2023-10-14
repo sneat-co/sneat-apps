@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {DaySlotItemComponent} from './day-slot-item.component';
+import { DaySlotItemComponent } from './day-slot-item.component';
 
 describe('ActivityItemComponent', () => {
 	let component: DaySlotItemComponent;
@@ -8,9 +8,8 @@ describe('ActivityItemComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [DaySlotItemComponent]
-		})
-			.compileComponents();
+			declarations: [DaySlotItemComponent],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -20,7 +19,6 @@ describe('ActivityItemComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

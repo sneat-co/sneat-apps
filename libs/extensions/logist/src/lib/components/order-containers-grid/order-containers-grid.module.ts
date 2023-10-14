@@ -6,18 +6,8 @@ import { DatagridModule } from '@sneat/datagrid';
 import { OrderContainersGridComponent } from './order-containers-grid.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule,
-		DatagridModule,
-	],
-	declarations: [
-		OrderContainersGridComponent,
-	],
-	exports: [
-		OrderContainersGridComponent
-	],
+	imports: [CommonModule, IonicModule, RouterModule, DatagridModule],
+	declarations: [OrderContainersGridComponent],
+	exports: [OrderContainersGridComponent],
 })
-export class OrderContainersGridModule {
-}
+export class OrderContainersGridModule {}

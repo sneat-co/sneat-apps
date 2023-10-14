@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITimerState, Timer } from '@sneat/meeting';
 import { IScrumDto, TimerStatusEnum } from '@sneat/scrumspace/scrummodels';
@@ -23,8 +32,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	public get isDisabled(): boolean {
 		return !!(
@@ -62,13 +70,13 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 		if (event) {
 			event.stopPropagation();
 		}
-    if (!this.timerState) {
-      throw new Error('!this.timerState')
-    }
+		if (!this.timerState) {
+			throw new Error('!this.timerState');
+		}
 		const { status, activeMemberId } = this.timerState;
 		this.toggled.emit(
 			status !== TimerStatusEnum.active ||
-			(status === TimerStatusEnum.active && activeMemberId !== this.memberId),
+				(status === TimerStatusEnum.active && activeMemberId !== this.memberId),
 		);
 		this.timer?.toggleTimer(this.memberId).subscribe({
 			error: (err) =>
@@ -88,7 +96,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 			this.timerState = timerState;
 			// this.totalElapsed =
 			// 	timerState && secondsToStr(timerState.secondsByMember?.[this.memberId]);
-      throw new Error('Not implemented yet');
+			throw new Error('Not implemented yet');
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process');
 		}

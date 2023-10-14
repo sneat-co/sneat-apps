@@ -1,19 +1,26 @@
-import { AbstractControl, FormControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	UntypedFormGroup,
+	ValidationErrors,
+	ValidatorFn,
+} from '@angular/forms';
 import { WeekdayCode2 } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 
-const weekdayRequired: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+const weekdayRequired: ValidatorFn = (
+	control: AbstractControl,
+): ValidationErrors | null => {
 	const formGroup = control as UntypedFormGroup;
-	const weekdaySelected = Object.values(formGroup.value)
-		.indexOf(true) >= 0;
+	const weekdaySelected = Object.values(formGroup.value).indexOf(true) >= 0;
 	if (weekdaySelected) {
 		return null;
 	}
 	return { required: 'Please select at least 1 weekday.' };
 };
 
-export abstract class WeekdaysFormBase extends  SneatBaseComponent {
+export abstract class WeekdaysFormBase extends SneatBaseComponent {
 	readonly weekdayMo = new FormControl<boolean>(false);
 	readonly weekdayTu = new FormControl<boolean>(false);
 	readonly weekdayWe = new FormControl<boolean>(false);
@@ -23,13 +30,13 @@ export abstract class WeekdaysFormBase extends  SneatBaseComponent {
 	readonly weekdaySu = new FormControl<boolean>(false);
 
 	protected readonly weekdayById = {
-		'mo': this.weekdayMo,
-		'tu': this.weekdayTu,
-		'we': this.weekdayWe,
-		'th': this.weekdayTh,
-		'fr': this.weekdayFr,
-		'sa': this.weekdaySa,
-		'su': this.weekdaySu,
+		mo: this.weekdayMo,
+		tu: this.weekdayTu,
+		we: this.weekdayWe,
+		th: this.weekdayTh,
+		fr: this.weekdayFr,
+		sa: this.weekdaySa,
+		su: this.weekdaySu,
 	};
 
 	readonly weekdaysForm: UntypedFormGroup = new UntypedFormGroup( // TODO: Make typed
@@ -45,7 +52,11 @@ export abstract class WeekdaysFormBase extends  SneatBaseComponent {
 		weekdayRequired,
 	);
 
-	protected constructor(className: string, isWeekdayRequired: boolean, errorLogger: IErrorLogger) {
+	protected constructor(
+		className: string,
+		isWeekdayRequired: boolean,
+		errorLogger: IErrorLogger,
+	) {
 		super(className, errorLogger);
 		this.weekdaysForm = new UntypedFormGroup(
 			{
@@ -62,9 +73,8 @@ export abstract class WeekdaysFormBase extends  SneatBaseComponent {
 	}
 
 	protected selectedWeekdayCodes(): WeekdayCode2[] {
-		return Object
-			.entries(this.weekdayById)
+		return Object.entries(this.weekdayById)
 			.filter(([, c]) => c.value)
-			.map(([wd, ]) => wd as WeekdayCode2);
+			.map(([wd]) => wd as WeekdayCode2);
 	}
 }

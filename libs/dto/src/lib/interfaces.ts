@@ -1,4 +1,3 @@
-
 export interface IBriefAndID<Brief> {
 	readonly id: string;
 	readonly brief: Brief;

@@ -6,19 +6,8 @@ import { ContactInputModule } from '@sneat/contactus-shared';
 import { ContactWithRefNumComponent } from './contact-with-ref-num.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		ContactInputModule,
-		FormsModule,
-	],
-	declarations: [
-		ContactWithRefNumComponent,
-	],
-	exports: [
-		ContactWithRefNumComponent,
-	],
+	imports: [CommonModule, IonicModule, ContactInputModule, FormsModule],
+	declarations: [ContactWithRefNumComponent],
+	exports: [ContactWithRefNumComponent],
 })
-export class ContactWithRefNumModule {
-
-}
+export class ContactWithRefNumModule {}

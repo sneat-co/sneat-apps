@@ -7,18 +7,16 @@ describe('RetroReviewStageComponent', () => {
 	let component: RetroReviewStageComponent;
 	let fixture: ComponentFixture<RetroReviewStageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [RetroReviewStageComponent],
-				imports: [IonicModule.forRoot()],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [RetroReviewStageComponent],
+			imports: [IonicModule.forRoot()],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(RetroReviewStageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(RetroReviewStageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

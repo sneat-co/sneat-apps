@@ -14,7 +14,6 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	providers: [TeamComponentBaseParams],
 })
 export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
-
 	@Input({ required: true }) team?: ITeamContext;
 
 	form = new UntypedFormGroup({
@@ -22,11 +21,7 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 		ownership: new FormControl<string>('', Validators.required),
 	});
 
-
-	constructor(
-		teamParams: TeamComponentBaseParams,
-		assetService: AssetService,
-	) {
+	constructor(teamParams: TeamComponentBaseParams, assetService: AssetService) {
 		super(teamParams, assetService);
 	}
 
@@ -59,19 +54,21 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 		// 	default:
 		// 		break;
 		// }
-		this.assetService.createAsset(this.team, request)
-			.subscribe({
-				next: dto => {
-					console.log('AssetAddDwellingPageComponent.submitDwellingForm(): created asset', dto);
-					// this.navigateForward('asset', { id: dto.id }, { assetDto: request }, {
-					// 	excludeCommuneId: true,
-					// 	replaceUrl: true,
-					// });
-				},
-				error: err => {
-					this.isSubmitting = false;
-					alert(err);
-				}
-			});
+		this.assetService.createAsset(this.team, request).subscribe({
+			next: (dto) => {
+				console.log(
+					'AssetAddDwellingPageComponent.submitDwellingForm(): created asset',
+					dto,
+				);
+				// this.navigateForward('asset', { id: dto.id }, { assetDto: request }, {
+				// 	excludeCommuneId: true,
+				// 	replaceUrl: true,
+				// });
+			},
+			error: (err) => {
+				this.isSubmitting = false;
+				alert(err);
+			},
+		});
 	}
 }

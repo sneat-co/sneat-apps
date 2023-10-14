@@ -16,10 +16,11 @@ export class NewShippingPointService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 		private readonly orderNavService: OrderNavService,
-	) {
-	}
+	) {}
 
-	async openNewShippingPointDialog(componentProps: INewShippingPointParams): Promise<HTMLIonModalElement> {
+	async openNewShippingPointDialog(
+		componentProps: INewShippingPointParams,
+	): Promise<HTMLIonModalElement> {
 		const modal = await this.modalController.create({
 			component: NewShippingPointDialogComponent,
 			componentProps,

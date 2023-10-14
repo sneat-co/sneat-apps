@@ -7,13 +7,8 @@ import { AssetListItemComponent } from './asset-list-item.component';
 import { AssetsListComponent } from './assets-list.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-	],
+	imports: [CommonModule, FormsModule, IonicModule],
 	declarations: [AssetsListComponent, AssetListItemComponent],
 	exports: [AssetsListComponent],
 })
-export class AssetsListComponentModule {
-}
+export class AssetsListComponentModule {}

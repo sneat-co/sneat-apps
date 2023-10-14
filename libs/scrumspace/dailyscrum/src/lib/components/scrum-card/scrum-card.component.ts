@@ -1,4 +1,10 @@
-import { Attribute, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	Attribute,
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+} from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
 import { NavService } from '@sneat/datatug/core';
@@ -6,7 +12,7 @@ import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { Timer } from '@sneat/meeting';
 import { IScrumDto, IStatus, ITask } from '@sneat/scrumspace/scrummodels';
 import { Md5 } from 'ts-md5/dist/md5';
-import {TaskType} from '@sneat/scrumspace/scrummodels';
+import { TaskType } from '@sneat/scrumspace/scrummodels';
 
 @Component({
 	selector: 'sneat-scrum-card',
@@ -43,8 +49,7 @@ export class ScrumCardComponent {
 		@Attribute('viewMode') public viewMode: 'single' | 'team',
 		private readonly navController: NavController,
 		private readonly navService: NavService,
-	) {
-	}
+	) {}
 
 	expandCollapseMember(event: Event): void {
 		if (event) {
@@ -55,12 +60,12 @@ export class ScrumCardComponent {
 	}
 
 	public goMember(member?: IMemberBrief) {
-    if (!this.team) {
-      throw new Error('!this.team');
-    }
-    if (!member) {
-      throw new Error('!this.member');
-    }
+		if (!this.team) {
+			throw new Error('!this.team');
+		}
+		if (!member) {
+			throw new Error('!this.member');
+		}
 		this.navService.navigateToMember(this.navController, this.team, member);
 	}
 
@@ -69,8 +74,11 @@ export class ScrumCardComponent {
 		return (
 			m?.avatar?.gravatar ||
 			m?.avatar?.external?.url ||
-      m?.title && `//www.gravatar.com/avatar/${Md5.hashStr(m.title.trim().toLowerCase())}`
-      || ''
+			(m?.title &&
+				`//www.gravatar.com/avatar/${Md5.hashStr(
+					m.title.trim().toLowerCase(),
+				)}`) ||
+			''
 		);
 	}
 

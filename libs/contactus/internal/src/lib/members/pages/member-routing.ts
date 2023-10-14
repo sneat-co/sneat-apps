@@ -1,13 +1,14 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { Route, RouterModule } from "@angular/router";
-import { IonicModule } from "@ionic/angular";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 
 export const memberRoutes: Route[] = [
 	{
-		path: "",
-		pathMatch: "full",
-		loadComponent: () => import("./member").then(m => m.TeamMemberPageComponent),
+		path: '',
+		pathMatch: 'full',
+		loadComponent: () =>
+			import('./member').then((m) => m.TeamMemberPageComponent),
 	},
 ];
 
@@ -52,15 +53,9 @@ const routes: Route[] = [
 	// },
 ];
 
-
 @NgModule({
-	imports: [
-		RouterModule.forChild(routes),
-		CommonModule,
-		IonicModule,
-	],
+	imports: [RouterModule.forChild(routes), CommonModule, IonicModule],
 	exports: [RouterModule],
 	declarations: [],
 })
-export class MemberRoutingModule {
-}
+export class MemberRoutingModule {}

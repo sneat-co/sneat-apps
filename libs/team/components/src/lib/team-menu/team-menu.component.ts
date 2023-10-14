@@ -4,8 +4,8 @@ import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
-import { IBriefAndID } from "@sneat/dto";
-import {  zipMapBriefsWithIDs } from '@sneat/team/models';
+import { IBriefAndID } from '@sneat/dto';
+import { zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
 import { TeamComponentBaseParams } from '../team-component-base-params';
@@ -29,7 +29,6 @@ import { IonicModule } from '@ionic/angular';
 	],
 })
 export class TeamMenuComponent extends TeamBaseComponent {
-
 	public teams?: readonly IBriefAndID<IUserTeamBrief>[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
@@ -40,14 +39,10 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		private readonly menuCtrl: MenuController,
 	) {
 		super('TeamMenuComponent', route, params);
-		params.userService.userState
-			.pipe(
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: this.trackUserState,
-				error: this.errorLogger.logErrorHandler('failed to get user stage'),
-			});
+		params.userService.userState.pipe(takeUntil(this.destroyed)).subscribe({
+			next: this.trackUserState,
+			error: this.errorLogger.logErrorHandler('failed to get user stage'),
+		});
 	}
 
 	public goOverview(): boolean {
@@ -55,7 +50,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 			this.errorLogger.logError('no team context');
 			return false;
 		}
-		this.teamParams.teamNavService.navigateToTeam(this.team).then(v => {
+		this.teamParams.teamNavService.navigateToTeam(this.team).then((v) => {
 			if (v) {
 				this.closeMenu();
 			}
@@ -95,7 +90,10 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		if (page === 'overview') {
 			return pathname.endsWith(idp);
 		}
-		return pathname.endsWith(idp + '/' + page) || pathname.indexOf(idp + '/' + page) > 0;
+		return (
+			pathname.endsWith(idp + '/' + page) ||
+			pathname.indexOf(idp + '/' + page) > 0
+		);
 	}
 
 	onTeamSelected(event: Event): void {
@@ -105,9 +103,15 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		if (teamID === this.team?.id) {
 			return;
 		}
-		const team = this.teams?.find(t => t.id === teamID);
+		const team = this.teams?.find((t) => t.id === teamID);
 		if (team) {
-			this.teamNav.navigateToTeam(team).catch(this.errorLogger.logErrorHandler('Failed to navigate to teams page on current team changed from team menu dropdown'));
+			this.teamNav
+				.navigateToTeam(team)
+				.catch(
+					this.errorLogger.logErrorHandler(
+						'Failed to navigate to teams page on current team changed from team menu dropdown',
+					),
+				);
 		}
 		this.menuCtrl.close().catch(console.error);
 		return;
@@ -121,5 +125,4 @@ export class TeamMenuComponent extends TeamBaseComponent {
 			this.teams = undefined;
 		}
 	};
-
 }

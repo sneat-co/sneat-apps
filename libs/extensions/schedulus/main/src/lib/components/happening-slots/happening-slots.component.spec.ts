@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {HappeningSlotsComponent} from './happening-slots.component';
+import { HappeningSlotsComponent } from './happening-slots.component';
 
 describe('RegularSlotsComponent', () => {
 	let component: HappeningSlotsComponent;
@@ -11,8 +11,7 @@ describe('RegularSlotsComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [HappeningSlotsComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('RegularSlotsComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

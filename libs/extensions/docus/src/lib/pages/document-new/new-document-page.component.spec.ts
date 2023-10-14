@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {NewDocumentPageComponent} from './new-document-page.component';
+import { NewDocumentPageComponent } from './new-document-page.component';
 
 describe('DocumentNewPage', () => {
 	let component: NewDocumentPageComponent;
@@ -11,8 +11,7 @@ describe('DocumentNewPage', () => {
 		TestBed.configureTestingModule({
 			declarations: [NewDocumentPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('DocumentNewPage', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

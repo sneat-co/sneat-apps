@@ -1,1 +1,1 @@
-export * from "./contact-modules-menu.component";
+export * from './contact-modules-menu.component';

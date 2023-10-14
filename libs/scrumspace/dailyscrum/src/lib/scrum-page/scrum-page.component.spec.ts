@@ -12,24 +12,22 @@ describe('ScrumPage', () => {
 	let component: ScrumPageComponent;
 	let fixture: ComponentFixture<ScrumPageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [ScrumPageComponent],
-				imports: [
-					IonicModule.forRoot(),
-					HttpClientTestingModule,
-					RouterTestingModule,
-					// AngularFireModule.initializeApp(environment.firebaseConfig),
-				],
-				// providers: [TeamService, UserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [ScrumPageComponent],
+			imports: [
+				IonicModule.forRoot(),
+				HttpClientTestingModule,
+				RouterTestingModule,
+				// AngularFireModule.initializeApp(environment.firebaseConfig),
+			],
+			// providers: [TeamService, UserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(ScrumPageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(ScrumPageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

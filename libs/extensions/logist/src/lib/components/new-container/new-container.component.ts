@@ -3,7 +3,12 @@ import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
-import { ContainerType, IAddContainersRequest, ILogistOrderContext, INewContainerPoint } from '../../dto';
+import {
+	ContainerType,
+	IAddContainersRequest,
+	ILogistOrderContext,
+	INewContainerPoint,
+} from '../../dto';
 import { LogistOrderService } from '../../services';
 import { TasksByID } from '../shipping-points-selector';
 
@@ -12,11 +17,11 @@ import { TasksByID } from '../shipping-points-selector';
 	templateUrl: './new-container.component.html',
 })
 export class NewContainerComponent {
-
 	@Input() order?: ILogistOrderContext;
 	@Input({ required: true }) team?: ITeamContext;
 
-	@ViewChild('containerNumberInput', { static: false }) containerNumberInput?: IonInput;
+	@ViewChild('containerNumberInput', { static: false })
+	containerNumberInput?: IonInput;
 
 	private tasksByShippingPoint?: TasksByID;
 
@@ -39,8 +44,7 @@ export class NewContainerComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 		private readonly orderService: LogistOrderService,
-	) {
-	}
+	) {}
 
 	onContainerTypeChanged(): void {
 		setTimeout(() => this.setFocusToInput(this.containerNumberInput), 100);
@@ -68,17 +72,26 @@ export class NewContainerComponent {
 			alert('container type must be selected');
 			return;
 		}
-		if (this.containerNumber?.trim() && this?.order?.dto?.containers?.some(c => c.number === this.containerNumber.trim())) {
-			alert('There is already container with the same number added to the order.');
+		if (
+			this.containerNumber?.trim() &&
+			this?.order?.dto?.containers?.some(
+				(c) => c.number === this.containerNumber.trim(),
+			)
+		) {
+			alert(
+				'There is already container with the same number added to the order.',
+			);
 			return;
 		}
 		if (this.order.id) {
-			const getPoints: () => INewContainerPoint[] =  () => {
-				return Object
-					.entries(this.tasksByShippingPoint || {})
+			const getPoints: () => INewContainerPoint[] = () => {
+				return Object.entries(this.tasksByShippingPoint || {})
 					.filter(([, selected]) => selected?.tasks?.length)
 					.map(([shippingPointID, selected]) => {
-						const point: INewContainerPoint = { shippingPointID, tasks: selected?.tasks || [] };
+						const point: INewContainerPoint = {
+							shippingPointID,
+							tasks: selected?.tasks || [],
+						};
 						return point;
 					});
 			};
@@ -96,9 +109,9 @@ export class NewContainerComponent {
 			};
 			this.orderService.addContainers(request).subscribe({
 				next: () => this.close(event),
-				error: err => {
+				error: (err) => {
 					this.errorLogger.logError(err);
-					setTimeout(() => this.isSubmitting = false, 1000);
+					setTimeout(() => (this.isSubmitting = false), 1000);
 				},
 			});
 		} else {
@@ -106,5 +119,4 @@ export class NewContainerComponent {
 			return;
 		}
 	}
-
 }

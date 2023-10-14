@@ -1,1 +1,1 @@
-export * from './age-group-form.component'
+export * from './age-group-form.component';

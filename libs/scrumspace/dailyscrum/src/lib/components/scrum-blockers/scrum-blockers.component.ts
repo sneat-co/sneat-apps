@@ -4,5 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-scrum-blockers',
 	templateUrl: './scrum-blockers.component.html',
 })
-export class ScrumBlockersComponent {
-}
+export class ScrumBlockersComponent {}

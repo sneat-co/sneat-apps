@@ -1,18 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
-import {RealEstateLocationComponent} from './real-estate-location/real-estate-location.component';
+import { IonicModule } from '@ionic/angular';
+import { RealEstateLocationComponent } from './real-estate-location/real-estate-location.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-	],
+	imports: [CommonModule, FormsModule, IonicModule],
 	declarations: [RealEstateLocationComponent],
 	exports: [RealEstateLocationComponent],
 })
-export class ModuleAssetRealEstate {
-}
+export class ModuleAssetRealEstate {}

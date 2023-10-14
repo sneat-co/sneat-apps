@@ -6,7 +6,6 @@ import { SelectOption } from '@sneat/wizard';
 	templateUrl: './new-family-wizard.component.html',
 })
 export class NewFamilyWizardComponent {
-
 	@Output() ready = new EventEmitter<boolean>();
 
 	dwelling?: string;
@@ -21,7 +20,7 @@ export class NewFamilyWizardComponent {
 	];
 
 	public readonly relationshipOptions: SelectOption[] = [
-		{ value: 'partner', title: 'I\'m married or have a partner' },
+		{ value: 'partner', title: "I'm married or have a partner" },
 		{ value: 'single', title: 'I am single' },
 		{ value: 'child', title: 'I am a child in this family' },
 		{ value: 'undisclosed', title: 'I prefer not to disclose at this stage' },
@@ -46,5 +45,4 @@ export class NewFamilyWizardComponent {
 	onFormChanged(): void {
 		this.ready.emit(this.isReady);
 	}
-
 }

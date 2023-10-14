@@ -5,15 +5,24 @@ import { ISelectItem } from '@sneat/components';
 import {
 	IDocTypeStandardFields,
 	IDocumentAssetDto,
-	IDocumentDto, IDocumentMainData,
+	IDocumentDto,
+	IDocumentMainData,
 	AssetDocumentType,
 	standardDocTypesByID,
 } from '@sneat/dto';
-import { AddAssetBaseComponent, AssetService, ICreateAssetRequest } from '@sneat/extensions/assetus/components';
-import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ContactService, contactContextFromBrief } from '@sneat/contactus-services';
 import {
-	IAssetContext, IContactContext,
+	AddAssetBaseComponent,
+	AssetService,
+	ICreateAssetRequest,
+} from '@sneat/extensions/assetus/components';
+import { TeamComponentBaseParams } from '@sneat/team/components';
+import {
+	ContactService,
+	contactContextFromBrief,
+} from '@sneat/contactus-services';
+import {
+	IAssetContext,
+	IContactContext,
 	IContactusTeamDtoWithID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -26,8 +35,10 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 	templateUrl: './new-document-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewDocumentPageComponent extends AddAssetBaseComponent implements OnChanges {
-
+export class NewDocumentPageComponent
+	extends AddAssetBaseComponent
+	implements OnChanges
+{
 	@Input() public override team?: ITeamContext;
 	@Input() public override contactusTeam?: IContactusTeamDtoWithID;
 
@@ -93,30 +104,35 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 			const team = this.team;
 			if (team) {
 				const contactusTeam = this.contactusTeam;
-				this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
-					.map(contact => contactContextFromBrief(contact, team));
+				this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts).map(
+					(contact) => contactContextFromBrief(contact, team),
+				);
 			}
 		}
 	}
 
 	private trackUrlMemberID(): void {
-		this.route.queryParams.pipe(
-			takeUntil(this.destroyed),
-			map(qp => qp['contact'] as string),
-			distinctUntilChanged(),
-		).subscribe({
-			next: this.watchContact,
-		});
+		this.route.queryParams
+			.pipe(
+				takeUntil(this.destroyed),
+				map((qp) => qp['contact'] as string),
+				distinctUntilChanged(),
+			)
+			.subscribe({
+				next: this.watchContact,
+			});
 	}
 
 	private trackUrlDocType(): void {
-		this.route.queryParams.pipe(
-			takeUntil(this.destroyed),
-			map(qp => qp['type'] as string),
-			distinctUntilChanged(),
-		).subscribe(docType => {
-			this.docType = docType as AssetDocumentType;
-		});
+		this.route.queryParams
+			.pipe(
+				takeUntil(this.destroyed),
+				map((qp) => qp['type'] as string),
+				distinctUntilChanged(),
+			)
+			.subscribe((docType) => {
+				this.docType = docType as AssetDocumentType;
+			});
 	}
 
 	private watchContact = (contactID: string): void => {
@@ -126,14 +142,12 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 			return;
 		}
 		this.contact = { id: contactID, team };
-		this.contactService.watchContactById(team, contactID)
-			.subscribe({
-					next: member => {
-						this.contact = member;
-					},
-					error: this.errorLogger.logErrorHandler('failed in watching member'),
-				},
-			);
+		this.contactService.watchContactById(team, contactID).subscribe({
+			next: (member) => {
+				this.contact = member;
+			},
+			error: this.errorLogger.logErrorHandler('failed in watching member'),
+		});
 	};
 
 	public submit(): void {
@@ -152,8 +166,8 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 			dto,
 		} as unknown as ICreateAssetRequest<IDocumentMainData>;
 
-
-		this.assetService.createAsset<IDocumentMainData, IDocumentAssetDto>(this.team, request)
+		this.assetService
+			.createAsset<IDocumentMainData, IDocumentAssetDto>(this.team, request)
 			.subscribe({
 				next: this.onDocCreated,
 				error: (err: unknown) => {
@@ -169,6 +183,8 @@ export class NewDocumentPageComponent extends AddAssetBaseComponent implements O
 		}
 		this.teamNavService
 			.navigateForwardToTeamPage(team, 'document/' + doc.id)
-			.catch(this.errorLogger.logErrorHandler('Failed to navigate to document page'));
+			.catch(
+				this.errorLogger.logErrorHandler('Failed to navigate to document page'),
+			);
 	};
 }

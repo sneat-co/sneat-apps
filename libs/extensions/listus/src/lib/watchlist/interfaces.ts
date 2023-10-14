@@ -1,5 +1,5 @@
 import { IMovie } from '@sneat/dto';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 // export abstract class IMovieService extends ICommuneItemService<IMovieDto, ListusAppSchema, typeof MovieKind> {
 // 	// abstract getById(id: string, tx?: IRxReadonlyTransaction<ListusAppSchema>): Observable<IMovieDto | undefined>;

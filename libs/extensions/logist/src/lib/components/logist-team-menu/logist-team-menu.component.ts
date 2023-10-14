@@ -1,9 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ActivationStart, Router, RouterModule, RouterOutlet } from '@angular/router';
+import {
+	ActivatedRoute,
+	ActivationStart,
+	Router,
+	RouterModule,
+	RouterOutlet,
+} from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemComponent } from '@sneat/components';
-import { TeamBaseComponent, TeamComponentBaseParams, TeamsMenuComponent } from '@sneat/team/components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+	TeamsMenuComponent,
+} from '@sneat/team/components';
 import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team-menu-items.module';
 
 @Component({
@@ -19,7 +29,10 @@ import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team
 		LogistTeamMenuItemsModule,
 	],
 })
-export class LogistTeamMenuComponent extends TeamBaseComponent implements OnInit {
+export class LogistTeamMenuComponent
+	extends TeamBaseComponent
+	implements OnInit
+{
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
 	constructor(
@@ -30,13 +43,10 @@ export class LogistTeamMenuComponent extends TeamBaseComponent implements OnInit
 		super('LogistTeamMenuComponent', route, teamParams);
 	}
 
-
 	ngOnInit(): void {
-		this.router.events.subscribe(e => {
+		this.router.events.subscribe((e) => {
 			if (e instanceof ActivationStart && e.snapshot.outlet === 'menu')
 				this.outlet?.deactivate();
 		});
 	}
-
-
 }

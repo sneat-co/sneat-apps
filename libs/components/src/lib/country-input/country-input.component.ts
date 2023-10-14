@@ -5,17 +5,11 @@ import { IonicModule } from '@ionic/angular';
 import { CountrySelectorComponent } from '../country-selector';
 import { countries } from '../country-selector/countries';
 
-
 @Component({
 	selector: 'sneat-country-input',
 	templateUrl: './country-input.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		CountrySelectorComponent,
-	],
+	imports: [CommonModule, FormsModule, IonicModule, CountrySelectorComponent],
 })
 export class CountryInputComponent {
 	@Input() canReset = true;

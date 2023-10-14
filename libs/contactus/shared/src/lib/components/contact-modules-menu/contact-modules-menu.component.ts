@@ -1,17 +1,14 @@
-import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
-import { defaultFamilyMemberExtensions, ISneatExtension } from "@sneat/core";
-import { IContactContext, ITeamContext } from "@sneat/team/models";
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { defaultFamilyMemberExtensions, ISneatExtension } from '@sneat/core';
+import { IContactContext, ITeamContext } from '@sneat/team/models';
 
 @Component({
-	selector: "sneat-contact-modules-menu",
-	templateUrl: "contact-modules-menu.component.html",
+	selector: 'sneat-contact-modules-menu',
+	templateUrl: 'contact-modules-menu.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-	],
+	imports: [CommonModule, IonicModule],
 })
 export class ContactModulesMenuComponent {
 	@Input({ required: true }) team?: ITeamContext;
@@ -20,10 +17,10 @@ export class ContactModulesMenuComponent {
 	public readonly extensions = defaultFamilyMemberExtensions;
 
 	goExt(ext: ISneatExtension): void {
-		console.warn("not implemented go()", ext);
+		console.warn('not implemented go()', ext);
 	}
 
 	goNew(event: Event, ext: ISneatExtension): void {
-		console.warn("not implemented goNew()", ext);
+		console.warn('not implemented goNew()', ext);
 	}
 }

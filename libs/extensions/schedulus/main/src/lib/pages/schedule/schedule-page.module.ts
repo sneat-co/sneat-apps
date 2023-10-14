@@ -23,11 +23,8 @@ const routes: Routes = [
 		TeamCoreComponentsModule,
 		ScheduleComponentModule,
 	],
-	declarations: [
-		SchedulePageComponent,
-	],
+	declarations: [SchedulePageComponent],
 	// providers: [
 	// ]
 })
-export class SchedulePageModule {
-}
+export class SchedulePageModule {}

@@ -1,4 +1,3 @@
-
 export interface ISneatExtension {
 	id: string;
 	title: string;
@@ -20,20 +19,20 @@ const assetsExtension: ISneatExtension = {
 const documentsExtension: ISneatExtension = {
 	id: 'documents',
 	title: 'Documents',
-	emoji: '📄'
-}
+	emoji: '📄',
+};
 
 const sizesExtension: ISneatExtension = {
 	id: 'sizes',
 	title: 'Sizes',
-	emoji: '📏'
-}
+	emoji: '📏',
+};
 
 const calendarExtension: ISneatExtension = {
 	id: 'schedulus',
 	title: 'Calendar',
-	emoji: '🗓️'
-}
+	emoji: '🗓️',
+};
 
 export const defaultFamilyExtension: ISneatExtension[] = [
 	assetsExtension,

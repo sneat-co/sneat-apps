@@ -1,16 +1,26 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { countryFlagEmoji } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
-import { ContactSelectorService, IContactSelectorOptions } from '../contact-selector';
+import {
+	ContactSelectorService,
+	IContactSelectorOptions,
+} from '../contact-selector';
 
 @Component({
 	selector: 'sneat-contact-input',
 	templateUrl: './contact-input.component.html',
 })
 export class ContactInputComponent implements OnChanges {
-
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() disabled?: boolean;
 	@Input() canChangeContact = true;
@@ -29,22 +39,30 @@ export class ContactInputComponent implements OnChanges {
 
 	@Output() readonly contactChange = new EventEmitter<IContactContext>();
 
-	protected readonly labelText = () => this.label || this.contactRole && (this.contactRole[0].toUpperCase() + this.contactRole.substr(1)) || 'Contact';
+	protected readonly labelText = () =>
+		this.label ||
+		(this.contactRole &&
+			this.contactRole[0].toUpperCase() + this.contactRole.substr(1)) ||
+		'Contact';
 
 	protected get showFlag(): boolean {
 		return !!this.contact?.brief?.countryID || !!this.contact?.dto?.countryID;
 	}
 
 	protected get showParentFlag(): boolean {
-		return (!!this.parentRole || !!this.parentType) && !!(this.parentContact?.brief?.countryID || this.parentContact?.dto?.countryID);
+		return (
+			(!!this.parentRole || !!this.parentType) &&
+			!!(
+				this.parentContact?.brief?.countryID ||
+				this.parentContact?.dto?.countryID
+			)
+		);
 	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
-	) {
-
-	}
+	) {}
 
 	protected parentTitle(): string {
 		return this.getTitle(this.showParentFlag, this.parentContact);
@@ -59,22 +77,34 @@ export class ContactInputComponent implements OnChanges {
 			return '';
 		}
 		const title = contact?.brief?.title || '';
-		const flag = showFlag ? countryFlagEmoji(contact?.brief?.countryID || contact?.dto?.countryID) + ' ' : '';
+		const flag = showFlag
+			? countryFlagEmoji(contact?.brief?.countryID || contact?.dto?.countryID) +
+			  ' '
+			: '';
 		return flag + title;
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const contactChange = changes['contact'];
 		if (contactChange) {
-			const prevContact = contactChange.previousValue as IContactContext | undefined;
-			if (prevContact && prevContact.id !== this.contact?.id && !changes['parentContact']) {
+			const prevContact = contactChange.previousValue as
+				| IContactContext
+				| undefined;
+			if (
+				prevContact &&
+				prevContact.id !== this.contact?.id &&
+				!changes['parentContact']
+			) {
 				this.parentContact = undefined;
 			}
 		}
 	}
 
 	get contactLink(): string {
-		return `/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}` || '';
+		return (
+			`/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}` ||
+			''
+		);
 	}
 
 	reset(event: Event): void {
@@ -92,7 +122,10 @@ export class ContactInputComponent implements OnChanges {
 			return;
 		}
 		if (!this.team) {
-			this.errorLogger.logError('ContactInputComponent.openContactSelector(): team is required', undefined);
+			this.errorLogger.logError(
+				'ContactInputComponent.openContactSelector(): team is required',
+				undefined,
+			);
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
@@ -104,16 +137,21 @@ export class ContactInputComponent implements OnChanges {
 				contactType: this.contactType,
 			},
 		};
-		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
-			.then(contact => {
-				console.log('ContactInputComponent.openContactSelector() contact:', contact);
+		this.contactSelectorService
+			.selectSingleContactInModal(selectorOptions)
+			.then((contact) => {
+				console.log(
+					'ContactInputComponent.openContactSelector() contact:',
+					contact,
+				);
 				this.contact = contact || undefined;
 				this.parentContact = contact?.parentContact;
 				if (contact) {
 					this.contactChange.emit(contact);
 				}
 			})
-			.catch(this.errorLogger.logErrorHandler('failed to open contact selector'));
+			.catch(
+				this.errorLogger.logErrorHandler('failed to open contact selector'),
+			);
 	}
-
 }

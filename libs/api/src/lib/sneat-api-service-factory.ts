@@ -53,7 +53,7 @@ export class SneatApiServiceFactory {
 		if (!storeRef.type) {
 			throw new Error(
 				'storeRef.type is a required parameter, got empty: ' +
-				typeof storeRef.type,
+					typeof storeRef.type,
 			);
 		}
 		const id = `${storeRef.type}:${storeRef.url}`;

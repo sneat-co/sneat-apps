@@ -6,7 +6,11 @@ import { NavController } from '@ionic/angular';
 import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '@sneat/team/components';
-import { IRetroItem, IRetrospective, RetrospectiveStage } from '@sneat/scrumspace/scrummodels';
+import {
+	IRetroItem,
+	IRetrospective,
+	RetrospectiveStage,
+} from '@sneat/scrumspace/scrummodels';
 import { TeamService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth-core';
 import { getMeetingIdFromDate } from '@sneat/meeting';
@@ -23,14 +27,16 @@ export class RetroTreePageComponent extends TeamBaseComponent {
 
 	public treeSpec: unknown /*IDndTreeSpec<IRetroItem>*/ = {
 		itemId: (item: unknown) => (item as { ID: string }).ID,
-		getChildItems: (item: unknown) => (item as { children: unknown[] }).children,
+		getChildItems: (item: unknown) =>
+			(item as { children: unknown[] }).children,
 		autoExpand: () => true /*node => {
 			const result = node.data.id !== 'doing';
 			// console.log('autoExpand', node.data.id, result);
 			return result;
 		},*/,
 		maxDepth: 2,
-		childrenCount: (item: { children?: unknown[] }) => item?.children?.length || 0,
+		childrenCount: (item: { children?: unknown[] }) =>
+			item?.children?.length || 0,
 		childrenSize: undefined, //(node) => node.level >= 1 ? ChildrenSizeMode.fixed : ChildrenSizeMode.flexible,
 	};
 
@@ -145,7 +151,7 @@ export class RetroTreePageComponent extends TeamBaseComponent {
 	}
 
 	public itemMoved(item: unknown /*IDraggedTreeItem<IRetroItem>*/): void {
-		const itm = item as { node: { id: string }, dropTo: unknown };
+		const itm = item as { node: { id: string }; dropTo: unknown };
 		console.log(`itemMoved: ${itm.node?.id}`, itm.dropTo);
 	}
 

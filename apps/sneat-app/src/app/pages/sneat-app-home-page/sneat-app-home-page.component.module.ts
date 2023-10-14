@@ -21,21 +21,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    TeamsListModule,
-    UserCountryComponent,
-  ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		RouterModule.forChild(routes),
+		TeamsListModule,
+		UserCountryComponent,
+	],
 	declarations: [
 		SneatAppHomePageComponent,
 		ForTeamTypeCardComponent,
 		ForFamiliesComponent,
 		ForEducatorsComponent,
-		ForWorkComponent
+		ForWorkComponent,
 	],
 })
-export class SneatAppHomePageComponentModule {
-}
+export class SneatAppHomePageComponentModule {}

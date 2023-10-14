@@ -1,5 +1,8 @@
 import { Component, Inject, Input, OnDestroy } from '@angular/core';
-import { IAddRetroItemRequest, RetrospectiveService } from '../../retrospective.service';
+import {
+	IAddRetroItemRequest,
+	RetrospectiveService,
+} from '../../retrospective.service';
 import { FormControl, Validators } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { takeUntil } from 'rxjs/operators';
@@ -21,8 +24,7 @@ export class AddRetroItemComponent implements OnDestroy {
 	constructor(
 		private retrospectiveService: RetrospectiveService,
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	ngOnDestroy() {
 		this.destroyed.next(true);
@@ -35,13 +37,13 @@ export class AddRetroItemComponent implements OnDestroy {
 		event?.stopPropagation();
 		event?.preventDefault();
 
-
 		this.titleControl.setValue((this.titleControl.value as string).trim());
 		if (!this.titleControl.valid) {
 			return;
 		}
 		const title = this.titleControl.value as string;
-		const teamID = this.teamId || '', meetingID = this.meetingId || '';
+		const teamID = this.teamId || '',
+			meetingID = this.meetingId || '';
 		if (teamID || meetingID) {
 			alert('no team or meeting id');
 			return;

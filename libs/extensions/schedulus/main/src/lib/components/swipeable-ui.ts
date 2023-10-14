@@ -14,13 +14,17 @@ import { Weekday } from './schedule-week/schedule-week.component';
 
 export type Parity = 'odd' | 'even'; // TODO: change to 'current' | 'next' | 'prev';
 
-export interface Swipeable { // TODO: Is in process of migrating to SwipeableCardBaseComponent?
-														 // id: string;
+export interface Swipeable {
+	// TODO: Is in process of migrating to SwipeableCardBaseComponent?
+	// id: string;
 	readonly animationState: VirtualSlideAnimationsStates;
 	readonly parity: Parity;
 	readonly destroyed: Observable<void>;
 	readonly activeDateID: string;
-	readonly setDate: (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => Swipeable;
+	readonly setDate: (
+		changed: IDateChanged,
+		animationState: VirtualSlideAnimationsStates,
+	) => Swipeable;
 }
 
 function initialAnimationState(parity: Parity): VirtualSlideAnimationsStates {
@@ -45,8 +49,11 @@ export function swipeableDay(
 		activeDateID,
 		setDate: undefined as unknown as (changed: IDateChanged) => SwipeableDay,
 	};
-	const setDate = (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => {
-		const changedToLog = {...changed, date: dateToIso(changed.date)}
+	const setDate = (
+		changed: IDateChanged,
+		animationState: VirtualSlideAnimationsStates,
+	) => {
+		const changedToLog = { ...changed, date: dateToIso(changed.date) };
 		console.log(`swipeableDay.setDate(), changed:`, changedToLog);
 		const { date } = changed;
 		const v: SwipeableDay = {
@@ -61,7 +68,10 @@ export function swipeableDay(
 	return result;
 }
 
-function createWeekday(date: Date, teamDaysProvider: TeamDaysProvider): Weekday {
+function createWeekday(
+	date: Date,
+	teamDaysProvider: TeamDaysProvider,
+): Weekday {
 	const id = getWd2(date);
 	return {
 		id,
@@ -159,7 +169,10 @@ export function swipeableWeek(
 		destroyed,
 		setDate: undefined as unknown as (changed: IDateChanged) => SwipeableWeek,
 	};
-	const setActiveDate = (changed: IDateChanged, animationState: VirtualSlideAnimationsStates) => {
+	const setActiveDate = (
+		changed: IDateChanged,
+		animationState: VirtualSlideAnimationsStates,
+	) => {
 		const { date } = changed;
 		const v: SwipeableWeek = {
 			...result,

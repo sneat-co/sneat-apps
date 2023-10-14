@@ -11,23 +11,21 @@ describe('MembersListComponent', () => {
 	let component: MembersListComponent;
 	let fixture: ComponentFixture<MembersListComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [MembersListComponent],
-				imports: [
-					IonicModule.forRoot(),
-					RouterTestingModule,
-					HttpClientTestingModule,
-				],
-				providers: [SneatUserService, TeamService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [MembersListComponent],
+			imports: [
+				IonicModule.forRoot(),
+				RouterTestingModule,
+				HttpClientTestingModule,
+			],
+			providers: [SneatUserService, TeamService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(MembersListComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(MembersListComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

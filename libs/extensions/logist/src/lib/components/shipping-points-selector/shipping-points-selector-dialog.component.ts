@@ -1,7 +1,11 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAddContainerPointsRequest, ILogistOrderContext, IOrderContainer } from '../../dto';
+import {
+	IAddContainerPointsRequest,
+	ILogistOrderContext,
+	IOrderContainer,
+} from '../../dto';
 import { LogistOrderService } from '../../services';
 import { TasksByID } from './shipping-points-selector.component';
 
@@ -21,11 +25,13 @@ export class ShippingPointsSelectorDialogComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly orderService: LogistOrderService,
 		private readonly modalController: ModalController,
-	) {
-	}
+	) {}
 
 	protected onTasksByShippingPointIDChanged(tasksByID: TasksByID): void {
-		console.log('ShippingPintsSelectorDialogComponent.onTasksByShippingPointIDChanged()', tasksByID);
+		console.log(
+			'ShippingPintsSelectorDialogComponent.onTasksByShippingPointIDChanged()',
+			tasksByID,
+		);
 		this.tasksByID = Object.keys(tasksByID).length ? tasksByID : undefined;
 	}
 
@@ -36,7 +42,6 @@ export class ShippingPointsSelectorDialogComponent {
 		if (!order || !containerID || !tasksByID) {
 			return;
 		}
-
 
 		const request: IAddContainerPointsRequest = {
 			teamID: order.team.id,
@@ -53,12 +58,17 @@ export class ShippingPointsSelectorDialogComponent {
 				}),
 		};
 		this.submitting = true;
-		this.orderService.addContainerPoints(request)
-			.subscribe({
-				next: () => {
-					this.modalController.dismiss().catch(this.errorLogger.logErrorHandler('Failed to close modal of ShippingPointsSelectorDialogComponent'));
-				},
-				error: this.errorLogger.logErrorHandler('Failed to add container points'),
-			});
+		this.orderService.addContainerPoints(request).subscribe({
+			next: () => {
+				this.modalController
+					.dismiss()
+					.catch(
+						this.errorLogger.logErrorHandler(
+							'Failed to close modal of ShippingPointsSelectorDialogComponent',
+						),
+					);
+			},
+			error: this.errorLogger.logErrorHandler('Failed to add container points'),
+		});
 	}
 }

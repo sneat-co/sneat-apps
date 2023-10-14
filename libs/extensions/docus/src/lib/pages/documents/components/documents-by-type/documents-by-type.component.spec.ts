@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {DocumentsByTypeComponent} from './documents-by-type.component';
+import { DocumentsByTypeComponent } from './documents-by-type.component';
 
 describe('DocumentsByTypeComponent', () => {
 	let component: DocumentsByTypeComponent;
@@ -11,8 +11,7 @@ describe('DocumentsByTypeComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [DocumentsByTypeComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('DocumentsByTypeComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

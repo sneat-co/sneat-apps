@@ -48,7 +48,6 @@ export abstract class IListusAppStateService extends LocalAppState<IListusAppSta
 
 @Injectable()
 export class ListusAppStateService extends IListusAppStateService {
-
 	constructor() {
 		super(() => ({ collapsedGroups: [], showWatched: true }));
 	}

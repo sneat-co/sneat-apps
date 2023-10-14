@@ -5,18 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { ContactRoleFormComponent } from './contact-role-form.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-	],
-	declarations: [
-		ContactRoleFormComponent,
-	],
-	exports: [
-		ContactRoleFormComponent,
-	]
+	imports: [CommonModule, IonicModule, FormsModule],
+	declarations: [ContactRoleFormComponent],
+	exports: [ContactRoleFormComponent],
 })
-export class ContactRoleFormModule {
-
-}
+export class ContactRoleFormModule {}

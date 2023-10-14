@@ -11,8 +11,7 @@ describe('AssetAddVehicleComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [AssetAddVehicleComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('AssetAddVehicleComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

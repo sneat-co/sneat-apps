@@ -9,8 +9,7 @@ describe('RadioGroupToSelectComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [RadioGroupToSelectComponent],
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

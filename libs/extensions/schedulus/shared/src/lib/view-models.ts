@@ -1,5 +1,6 @@
 import {
-	HappeningType, IHappeningAdjustment,
+	HappeningType,
+	IHappeningAdjustment,
 	ISlotParticipant,
 	ITiming,
 	Level,
@@ -8,7 +9,6 @@ import {
 	WeekdayCode2,
 } from '@sneat/dto';
 import { IHappeningContext } from '@sneat/team/models';
-
 
 export interface ISchedulePageParams {
 	member?: string;
@@ -31,7 +31,7 @@ export interface ISlotItem {
 	happening: IHappeningContext;
 	title: string;
 	timing: ITiming;
-	repeats: Repeats,
+	repeats: Repeats;
 	location?: SlotLocation;
 	participants?: ISlotParticipant[];
 	levels?: Level[];
@@ -60,10 +60,8 @@ export function getWd2(d: Date): WeekdayCode2 {
 }
 
 export function dateToTimeOnlyStr(d: Date): string {
-	const h = d.getHours()
-		.toString();
-	const m = d.getMinutes()
-		.toString();
+	const h = d.getHours().toString();
+	const m = d.getMinutes().toString();
 	return `${h.length === 1 ? `0${h}` : h}:${m.length === 1 ? `0${m}` : m}`;
 }
 

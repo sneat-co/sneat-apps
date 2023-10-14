@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
-import { ContactRole, IContactBrief, IContactDto, MemberRole } from '@sneat/dto';
+import {
+	ContactRole,
+	IContactBrief,
+	IContactDto,
+	MemberRole,
+} from '@sneat/dto';
 import {
 	IContactContext,
 	ICreateContactRequest,
@@ -14,8 +19,10 @@ import { map, Observable, throwError } from 'rxjs';
 import { IContactRequest, IUpdateContactRequest } from './dto';
 
 @Injectable({ providedIn: 'root' })
-export class ContactService extends TeamItemService<IContactBrief, IContactDto> {
-
+export class ContactService extends TeamItemService<
+	IContactBrief,
+	IContactDto
+> {
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
@@ -26,7 +33,11 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 		// this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
 	}
 
-	public createContact(team: ITeamContext, request: ICreateContactRequest, endpoint = 'contactus/create_contact'): Observable<IContactContext> {
+	public createContact(
+		team: ITeamContext,
+		request: ICreateContactRequest,
+		endpoint = 'contactus/create_contact',
+	): Observable<IContactContext> {
 		return this.createTeamItem(endpoint, team, request);
 	}
 
@@ -42,25 +53,43 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 		return this.sneatApiService.post('contactus/update_contact', request);
 	}
 
-	public setContactsStatus(status: 'archived' | 'active', teamID: string, contacts: IContactContext[]): Observable<void> {
+	public setContactsStatus(
+		status: 'archived' | 'active',
+		teamID: string,
+		contacts: IContactContext[],
+	): Observable<void> {
 		if (!contacts?.length) {
 			return throwError(() => 'at least 1 contact is required');
 		}
 		const request = {
 			teamID,
 			status,
-			contactIDs: contacts.map(c => c.id),
+			contactIDs: contacts.map((c) => c.id),
 		};
-		return this.sneatApiService.post('contactgit pullus/set_contacts_status', request);
+		return this.sneatApiService.post(
+			'contactgit pullus/set_contacts_status',
+			request,
+		);
 	}
 
-
-	watchContactsWithRole(team: ITeamContext, role: string, status: 'active' | 'archived' = 'active', filter?: readonly IFilter[]): Observable<IContactContext[]> {
-		filter = [...(filter || []), { field: 'roles', operator: '==', value: role }];
+	watchContactsWithRole(
+		team: ITeamContext,
+		role: string,
+		status: 'active' | 'archived' = 'active',
+		filter?: readonly IFilter[],
+	): Observable<IContactContext[]> {
+		filter = [
+			...(filter || []),
+			{ field: 'roles', operator: '==', value: role },
+		];
 		return this.watchTeamContacts(team, status, filter);
 	}
 
-	watchTeamContacts(team: ITeamContext, status: 'active' | 'archived' = 'active', filter?: readonly IFilter[]): Observable<IContactContext[]> {
+	watchTeamContacts(
+		team: ITeamContext,
+		status: 'active' | 'archived' = 'active',
+		filter?: readonly IFilter[],
+	): Observable<IContactContext[]> {
 		filter = [
 			{
 				field: 'status',
@@ -77,11 +106,17 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 		return this.watchTeamItems<IContactBrief, IContactDto>(team, filter);
 	}
 
-	watchContactById(team: ITeamContext, contactID: string): Observable<IContactContext> {
+	watchContactById(
+		team: ITeamContext,
+		contactID: string,
+	): Observable<IContactContext> {
 		return this.watchTeamItemByID(team, contactID);
 	}
 
-	watchContactsByRole(team: ITeamContext, filter?: IContactsFilter): Observable<IContactContext[]> {
+	watchContactsByRole(
+		team: ITeamContext,
+		filter?: IContactsFilter,
+	): Observable<IContactContext[]> {
 		console.log('watchContactsByRole, filter:', filter);
 		const f: IFilter[] = [
 			// { field: 'teamID', value: team.id, operator: '==' },
@@ -90,12 +125,20 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 			f.push({ field: 'status', value: filter.status, operator: '==' });
 		}
 		if (filter?.role) {
-			f.push({ field: 'roles', operator: 'array-contains', value: filter.role });
+			f.push({
+				field: 'roles',
+				operator: 'array-contains',
+				value: filter.role,
+			});
 		}
 		return this.watchTeamItems(team, f);
 	}
 
-	watchChildContacts(team: ITeamContext, id: string, filter: IContactsFilter = { status: 'active' }): Observable<IContactContext[]> {
+	watchChildContacts(
+		team: ITeamContext,
+		id: string,
+		filter: IContactsFilter = { status: 'active' },
+	): Observable<IContactContext[]> {
 		console.log('watchRelatedContacts, id:', id);
 		const f: IFilter[] = [
 			{ field: 'parentContactID', value: id, operator: '==' },
@@ -104,7 +147,11 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 			f.push({ field: 'status', value: filter.status, operator: '==' });
 		}
 		if (filter.role) {
-			f.push({ field: 'roles', operator: 'array-contains', value: filter.role });
+			f.push({
+				field: 'roles',
+				operator: 'array-contains',
+				value: filter.role,
+			});
 		}
 		return this.watchTeamItems(team, f);
 	}
@@ -115,19 +162,20 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 		role: MemberRole,
 	): Observable<void> {
 		return this.sneatApiService
-		.post(`contactus/change_member_role`, {
-			teamID,
-			contactID,
-			role,
-		})
-		.pipe(
-			map(() => {
-				return;
-			}),
-		);
+			.post(`contactus/change_member_role`, {
+				teamID,
+				contactID,
+				role,
+			})
+			.pipe(
+				map(() => {
+					return;
+				}),
+			);
 	}
 
-	public removeTeamMember( // TODO: move to members service?
+	public removeTeamMember(
+		// TODO: move to members service?
 		teamID: string,
 		contactID: string,
 	): Observable<ITeamContext> {
@@ -137,8 +185,7 @@ export class ContactService extends TeamItemService<IContactBrief, IContactDto> 
 		if (!contactID) return throwError(() => 'contactID is required parameter');
 
 		const request: IContactRequest = { teamID, contactID };
-		return this.sneatApiService
-		.post('contactus/remove_member', request);
+		return this.sneatApiService.post('contactus/remove_member', request);
 	}
 }
 

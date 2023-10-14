@@ -1,6 +1,17 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { ContactRole, ContactType, LogistOrderContactRole } from '@sneat/dto';
-import { ContactSelectorService, IContactSelectorOptions } from '@sneat/contactus-shared';
+import {
+	ContactSelectorService,
+	IContactSelectorOptions,
+} from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import {
@@ -8,7 +19,8 @@ import {
 	IAddOrderShippingPointRequest,
 	IDeleteCounterpartyRequest,
 	ILogistOrderContext,
-	IOrderCounterparty, IOrderCounterpartyRef,
+	IOrderCounterparty,
+	IOrderCounterpartyRef,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 
@@ -43,8 +55,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
 		private readonly ordersService: LogistOrderService,
-	) {
-	}
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
@@ -55,11 +66,18 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	private setCounterparties(): void {
 		const counterparties = this.order?.dto?.counterparties || [];
 
-		this.counterparties = counterparties.filter(c => c.role === this.contactRole)
-			.map(c => c.parent ? {
-				...c,
-				parent: counterparties.find(cc => cc.contactID === c.parent?.contactID),
-			} : c);
+		this.counterparties = counterparties
+			.filter((c) => c.role === this.contactRole)
+			.map((c) =>
+				c.parent
+					? {
+							...c,
+							parent: counterparties.find(
+								(cc) => cc.contactID === c.parent?.contactID,
+							),
+					  }
+					: c,
+			);
 	}
 
 	addCounterparty(event: Event): void {
@@ -68,7 +86,10 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		event.preventDefault();
 		const team = this.team;
 		if (!team) {
-			this.errorLogger.logError('ContactInputComponent.openContactSelector(): team is required', undefined);
+			this.errorLogger.logError(
+				'ContactInputComponent.openContactSelector(): team is required',
+				undefined,
+			);
 			return;
 		}
 		const selectorOptions: IContactSelectorOptions = {
@@ -77,12 +98,19 @@ export class OrderCounterpartiesComponent implements OnChanges {
 				contactRole: this.contactRole as ContactRole,
 				parentRole: this.parentRole as ContactRole,
 				contactType: this.contactType,
-				excludeContacts: this.counterparties?.map(c => ({ id: c.contactID, team })),
+				excludeContacts: this.counterparties?.map((c) => ({
+					id: c.contactID,
+					team,
+				})),
 			},
 		};
-		this.contactSelectorService.selectSingleContactInModal(selectorOptions)
-			.then(contact => {
-				console.log('OrderCounterpartiesCardComponent.openContactSelector() contact:', contact);
+		this.contactSelectorService
+			.selectSingleContactInModal(selectorOptions)
+			.then((contact) => {
+				console.log(
+					'OrderCounterpartiesCardComponent.openContactSelector() contact:',
+					contact,
+				);
 				if (!this.order?.dto) {
 					return;
 				}
@@ -119,14 +147,19 @@ export class OrderCounterpartiesComponent implements OnChanges {
 					next: () => {
 						console.log('added shipping point added to order');
 					},
-					error: e => {
-						this.errorLogger.logError(e, 'Failed to add shipping point to order');
+					error: (e) => {
+						this.errorLogger.logError(
+							e,
+							'Failed to add shipping point to order',
+						);
 					},
 				});
 				this.setCounterparties();
 				this.emitOrder();
 			})
-			.catch(this.errorLogger.logErrorHandler('failed to open contact selector'));
+			.catch(
+				this.errorLogger.logErrorHandler('failed to open contact selector'),
+			);
 	}
 
 	private emitOrder(): void {
@@ -147,13 +180,11 @@ export class OrderCounterpartiesComponent implements OnChanges {
 			contactID: counterparty.contactID,
 		};
 		this.deleting.push(counterparty);
-		this.ordersService.deleteCounterparty(request)
-			.subscribe({
-				next: () => {
-					console.log('deleted counterparty');
-				},
-				error: this.errorLogger.logErrorHandler('failed to delete counterparty'),
-			});
+		this.ordersService.deleteCounterparty(request).subscribe({
+			next: () => {
+				console.log('deleted counterparty');
+			},
+			error: this.errorLogger.logErrorHandler('failed to delete counterparty'),
+		});
 	}
-
 }

@@ -7,9 +7,11 @@ export interface ITeamBrief {
 	readonly roles?: string[];
 }
 
-export const equalTeamBriefs = (v1?: ITeamBrief | null, v2?: ITeamBrief | null): boolean => {
-	if (v1 === v2)
-		return true;
+export const equalTeamBriefs = (
+	v1?: ITeamBrief | null,
+	v2?: ITeamBrief | null,
+): boolean => {
+	if (v1 === v2) return true;
 	if (v1?.parentTeamID === v2?.parentTeamID && v1?.title === v2?.title)
 		return true;
 	return false;

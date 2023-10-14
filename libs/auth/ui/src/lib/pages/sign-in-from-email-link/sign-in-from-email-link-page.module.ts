@@ -5,15 +5,7 @@ import { SignInFromEmailLinkPageComponent } from './sign-in-from-email-link-page
 import { SignInFromEmailLinkPageRoutingModule } from './sign-in-from-email-link-page.routing';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		SignInFromEmailLinkPageRoutingModule,
-	],
-	declarations: [
-		SignInFromEmailLinkPageComponent,
-	],
+	imports: [CommonModule, IonicModule, SignInFromEmailLinkPageRoutingModule],
+	declarations: [SignInFromEmailLinkPageComponent],
 })
-export class SignInFromEmailLinkPageModule {
-
-}
+export class SignInFromEmailLinkPageModule {}

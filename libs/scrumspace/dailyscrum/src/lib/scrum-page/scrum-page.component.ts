@@ -1,14 +1,29 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	Inject,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
 import { ITeamMemberInfo, MemberRoleSpectator } from '@sneat/dto';
-import { getMeetingIdFromDate, getToday, ITimerState, Timer, TimerFactory } from '@sneat/meeting';
+import {
+	getMeetingIdFromDate,
+	getToday,
+	ITimerState,
+	Timer,
+	TimerFactory,
+} from '@sneat/meeting';
 import { ScrumService } from '../services/scrum.service';
 import { IScrumDto, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
 import { ScrumPageTab } from '@sneat/team/services';
 import { Subscription } from 'rxjs';
 import { first, mergeMap } from 'rxjs/operators';
@@ -20,9 +35,10 @@ import { IMetric } from '../interfaces';
 	styleUrls: ['./scrum-page.component.scss'],
 	providers: [TeamComponentBaseParams],
 })
-export class ScrumPageComponent extends TeamBaseComponent
-	implements OnInit, OnDestroy {
-
+export class ScrumPageComponent
+	extends TeamBaseComponent
+	implements OnInit, OnDestroy
+{
 	public tab: ScrumPageTab = 'my';
 
 	public totalElapsed?: string;
@@ -63,15 +79,12 @@ export class ScrumPageComponent extends TeamBaseComponent
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		private readonly scrumService: ScrumService,
-		@Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
+		@Inject(AnalyticsService)
+		private readonly analyticsService: IAnalyticsService,
 		private readonly location: Location,
 		private readonly timerFactory: TimerFactory,
 	) {
-		super(
-			'ScrumPageComponent',
-			route,
-			params,
-		);
+		super('ScrumPageComponent', route, params);
 	}
 
 	public get prevScrumTitle(): string {
@@ -143,7 +156,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 
 	public goScrumsList(): void {
 		// this.navController.navigateToScrums(this.navController, this.team);
-    throw new Error('not implemented')
+		throw new Error('not implemented');
 	}
 
 	public changeDate(to: 'prev' | 'next' | 'today' | string): void {
@@ -191,7 +204,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 		}
 		if (this.team?.dto) {
 			// this.merge(this.scrum, undefined, this.team.dto?.members);
-      throw new Error('not implmented')
+			throw new Error('not implmented');
 		}
 
 		const path = this.location.path().split('?')[0];
@@ -214,9 +227,9 @@ export class ScrumPageComponent extends TeamBaseComponent
 	public onScrumExpandChanged(memberId: string, isExpanded: boolean) {
 		if (isExpanded) {
 			this.expandedMemberId = memberId;
-      if (this.displayStatuses) {
-        this.displayStatuses = [...this.displayStatuses];
-      }
+			if (this.displayStatuses) {
+				this.displayStatuses = [...this.displayStatuses];
+			}
 		} else {
 			this.expandedMemberId = null;
 		}
@@ -261,8 +274,8 @@ export class ScrumPageComponent extends TeamBaseComponent
 			this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
 		}
 		if (team.members) {
-			this.spectators = team.members.filter((m) =>
-				m.roles?.indexOf(MemberRoleSpectator),
+			this.spectators = team.members.filter(
+				(m) => m.roles?.indexOf(MemberRoleSpectator),
 			);
 			const uid = this.currentUserId;
 			const member = Object.values(team.members).find((m) => m.userID === uid);
@@ -279,21 +292,21 @@ export class ScrumPageComponent extends TeamBaseComponent
 				.map(() => {
 					// const m3 = this.teamMetrics?.find((m2) => m2.id === m.id);
 					// return { ...m, value: m3?.value } as IMetric;
-          throw new Error('not implemented')
+					throw new Error('not implemented');
 				});
 			this.personalMetrics = team.metrics
 				.filter((m) => m.mode === 'personal')
 				.map(() => {
 					// const m3 = this.personalMetrics?.find((m2) => m2.id === m.id);
 					// return { ...m, value: m3?.value } as IMetric;
-          throw new Error('not implemented')
+					throw new Error('not implemented');
 				});
 		}
 		this.merge(this.scrum, undefined, team.members);
 	}
 
 	protected override unsubscribe(reason?: string): void {
-		super.unsubscribe(reason );
+		super.unsubscribe(reason);
 		this.subscriptions.forEach((s) => s.unsubscribe());
 		this.subscriptions = [];
 		this.scrumsById = {};
@@ -345,11 +358,15 @@ export class ScrumPageComponent extends TeamBaseComponent
 				}
 				this.prevScrumID = scrum?.scrumIds?.prev;
 				if (this.prevScrumID) {
-					this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
+					this.prevScrumDate = ScrumPageComponent.getDateFromId(
+						this.prevScrumID,
+					);
 				}
 				this.nextScrumID = scrum?.scrumIds?.next;
 				if (this.nextScrumID) {
-					this.nextScrumDate = ScrumPageComponent.getDateFromId(this.nextScrumID);
+					this.nextScrumDate = ScrumPageComponent.getDateFromId(
+						this.nextScrumID,
+					);
 				}
 				console.log(`mapped to current scrum ${id}:`, this.scrum);
 				break;
@@ -394,7 +411,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 						// 	this.team.data,
 						// 	'back',
 						// );
-            throw new Error('not implemented')
+						throw new Error('not implemented');
 					},
 				}),
 		);
@@ -413,7 +430,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 			'\n\tmembers:',
 			members,
 		);
-    throw new Error('not implemented')
+		throw new Error('not implemented');
 		// this.allStatuses = members
 		// 	.filter((m) => m.roles?.indexOf(MemberRoleEnum.contributor) >= 0)
 		// 	.map((member) => ({
@@ -453,7 +470,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 		// 		status.byType.risk = [];
 		// 	});
 		// }
-    //
+		//
 		// if (prevScrum?.statuses) {
 		// 	Object.values(prevScrum.statuses).forEach((item) => {
 		// 		const { id } = item.member;
@@ -482,7 +499,7 @@ export class ScrumPageComponent extends TeamBaseComponent
 		// 		status.byType.plan = [];
 		// 	});
 		// }
-    //
+		//
 		// this.setStatuses();
 	}
 
@@ -565,13 +582,18 @@ export class ScrumPageComponent extends TeamBaseComponent
 				/*if (scrum) - we need to set prevScrumId even if no scrum record */
 				this.prevScrumID =
 					scrum?.scrumIds?.prev ||
-					(this.isToday && this.team?.dto?.last?.scrum?.id) || undefined;
+					(this.isToday && this.team?.dto?.last?.scrum?.id) ||
+					undefined;
 				if (this.prevScrumID) {
-					this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
+					this.prevScrumDate = ScrumPageComponent.getDateFromId(
+						this.prevScrumID,
+					);
 				}
 				this.nextScrumID = scrum?.scrumIds?.next;
 				if (this.nextScrumID) {
-					this.nextScrumDate = ScrumPageComponent.getDateFromId(this.nextScrumID);
+					this.nextScrumDate = ScrumPageComponent.getDateFromId(
+						this.nextScrumID,
+					);
 				}
 			}
 			if (this.team) {

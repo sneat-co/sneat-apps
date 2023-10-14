@@ -15,14 +15,13 @@ export class LogistMenuComponent implements OnInit {
 		private readonly router: Router,
 		private readonly authStateService: SneatAuthStateService,
 	) {
-		authStateService.authState.subscribe(authState => {
+		authStateService.authState.subscribe((authState) => {
 			this.authState = authState;
 		});
 	}
 
-
 	ngOnInit(): void {
-		this.router.events.subscribe(e => {
+		this.router.events.subscribe((e) => {
 			if (e instanceof ActivationStart && e.snapshot.outlet === 'menu')
 				this.outlet?.deactivate();
 		});

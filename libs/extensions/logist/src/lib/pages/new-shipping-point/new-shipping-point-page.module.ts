@@ -16,10 +16,6 @@ import { NewShippingPointPageComponent } from './new-shipping-point-page.compone
 			},
 		]),
 	],
-	declarations: [
-		NewShippingPointPageComponent,
-	],
+	declarations: [NewShippingPointPageComponent],
 })
-export class NewShippingPointPageModule {
-
-}
+export class NewShippingPointPageModule {}

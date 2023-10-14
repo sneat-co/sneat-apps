@@ -9,26 +9,20 @@ import { Subject, takeUntil } from 'rxjs';
 	templateUrl: './sneat-app-home-page.component.html',
 })
 export class SneatAppHomePageComponent implements OnDestroy {
-
 	readonly destroyed = new Subject<void>();
 
 	public authStatus?: AuthStatus;
 
-	constructor(
-		authStateService: SneatAuthStateService,
-	) {
-		authStateService.authState
-			.pipe(takeUntil(this.destroyed))
-			.subscribe({
-				next: authState => {
-					this.authStatus = authState.status;
-				},
-			});
+	constructor(authStateService: SneatAuthStateService) {
+		authStateService.authState.pipe(takeUntil(this.destroyed)).subscribe({
+			next: (authState) => {
+				this.authStatus = authState.status;
+			},
+		});
 	}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
 	}
-
 }

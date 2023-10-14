@@ -1,4 +1,11 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	SimpleChanges,
+} from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ITeamDto } from '@sneat/dto';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
@@ -28,8 +35,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 		private readonly scrumService: ScrumService,
 		private readonly navController: NavController,
 		public readonly navService: TeamNavService,
-	) {
-	}
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {

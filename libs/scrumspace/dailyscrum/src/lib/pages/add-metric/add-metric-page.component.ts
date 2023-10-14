@@ -1,5 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { IRecord, ITeam, ITeamMetric, MetricColor } from '../../models/interfaces';
+import {
+	IRecord,
+	ITeam,
+	ITeamMetric,
+	MetricColor,
+} from '../../models/interfaces';
 import { TeamService } from '../../services/team.service';
 import { NavController, ToastController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';

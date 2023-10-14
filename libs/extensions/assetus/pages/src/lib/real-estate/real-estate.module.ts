@@ -1,19 +1,19 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import {RealEstatePageComponent} from './real-estate-page.component';
-import {ModuleAssetRealEstate} from '../../module.asset.real-estate';
-import {AssetContactsGroupComponent} from '../../components/asset-contacts-group/asset-contacts-group.component';
+import { RealEstatePageComponent } from './real-estate-page.component';
+import { ModuleAssetRealEstate } from '../../module.asset.real-estate';
+import { AssetContactsGroupComponent } from '../../components/asset-contacts-group/asset-contacts-group.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: RealEstatePageComponent
-	}
+		component: RealEstatePageComponent,
+	},
 ];
 
 @NgModule({
@@ -24,7 +24,6 @@ const routes: Routes = [
 		ModuleAssetRealEstate,
 		RouterModule.forChild(routes),
 	],
-	declarations: [RealEstatePageComponent, AssetContactsGroupComponent]
+	declarations: [RealEstatePageComponent, AssetContactsGroupComponent],
 })
-export class RealEstatePageModule {
-}
+export class RealEstatePageModule {}

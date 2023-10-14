@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	Output,
+	ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
@@ -17,12 +24,7 @@ export interface ICardTab {
 	selector: 'sneat-card-list',
 	templateUrl: './sneat-card-list.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		RouterModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
 })
 export class SneatCardListComponent {
 	@Input() title?: string;
@@ -52,8 +54,7 @@ export class SneatCardListComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	click(event: Event, item: IProjItemBrief): void {
 		event.preventDefault();
@@ -70,7 +71,9 @@ export class SneatCardListComponent {
 			if (this.addInput) {
 				this.addInput
 					?.setFocus()
-					.catch((err) => this.errorLogger.logError(err, 'Failed to set focus'));
+					.catch((err) =>
+						this.errorLogger.logError(err, 'Failed to set focus'),
+					);
 			}
 		}, 200);
 	}

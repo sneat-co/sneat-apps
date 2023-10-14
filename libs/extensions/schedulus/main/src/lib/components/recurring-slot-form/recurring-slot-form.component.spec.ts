@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {RecurrinSlotFormComponent} from './regular-slot-form.component';
+import { RecurrinSlotFormComponent } from './regular-slot-form.component';
 
 describe('RegularSlotFormComponent', () => {
 	let component: RecurrinSlotFormComponent;
@@ -11,8 +11,7 @@ describe('RegularSlotFormComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [RecurrinSlotFormComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('RegularSlotFormComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

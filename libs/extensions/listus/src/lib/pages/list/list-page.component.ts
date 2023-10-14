@@ -1,10 +1,20 @@
-import { AfterViewInit, ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	NgZone,
+	ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IListInfo, IListItemBrief, IMovie, ListType } from '@sneat/dto';
 import { IListContext } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
-import { IDeleteListItemsRequest, IReorderListItemsRequest, ISetListItemsIsComplete } from '../../services/interfaces';
+import {
+	IDeleteListItemsRequest,
+	IReorderListItemsRequest,
+	ISetListItemsIsComplete,
+} from '../../services/interfaces';
 import { ListService } from '../../services/list.service';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
 import { BaseListPage } from '../base-list-page';
@@ -19,11 +29,11 @@ import { NewListItemComponent } from './new-list-item.component';
 	providers: [ListusComponentBaseParams],
 })
 export class ListPageComponent extends BaseListPage implements AfterViewInit {
-
 	public isPersisting = false;
 	public listMode: 'reorder' | 'swipe' = 'swipe';
 	public doneFilter: 'all' | 'active' | 'completed' = 'all';
-	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' = 'list';
+	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' =
+		'list';
 	public isReordering = false;
 	public allListItems?: IListItemWithUiState[];
 	public completedListItems?: IListItemWithUiState[];
@@ -32,9 +42,13 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	public listType?: ListType;
 	public isHideWatched = false;
 	// tslint:disable-next-line:no-any
-	@ViewChild('newListItem', { static: false }) newListItem?: NewListItemComponent;
+	@ViewChild('newListItem', { static: false })
+	newListItem?: NewListItemComponent;
 	addingItems: IListItemWithUiState[] = [];
-	public performing?: 'reactivating completed' | 'deleting completed' | 'clear list';
+	public performing?:
+		| 'reactivating completed'
+		| 'deleting completed'
+		| 'clear list';
 
 	constructor(
 		route: ActivatedRoute,
@@ -46,16 +60,16 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		private readonly listDialogs: ListDialogsService,
 		// private readonly shelfService: ShelfService,
 		private readonly listusAppStateService: IListusAppStateService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-		// private readonly listusDbService: IListusService,
+		private readonly changeDetectorRef: ChangeDetectorRef, // private readonly listusDbService: IListusService,
 	) {
 		super('ListPage', route, params);
 		console.log('ListPage.constructor(), userId:', this.currentUserId);
 		this.preloader.markAsPreloaded('list');
-		if (location.pathname.indexOf('/lists') >= 0) { // TODO: document why & how it is possible
+		if (location.pathname.indexOf('/lists') >= 0) {
+			// TODO: document why & how it is possible
 			return;
 		}
-		listusAppStateService.changed.subscribe(appState => {
+		listusAppStateService.changed.subscribe((appState) => {
 			this.isHideWatched = !appState.showWatched;
 		});
 	}
@@ -75,7 +89,9 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			this.newListItem.added.subscribe({
 				next: (item: IListItemBrief) => {
 					console.log('added', item);
-					this.addingItems = this.addingItems.filter(v => v.brief.id !== item.id);
+					this.addingItems = this.addingItems.filter(
+						(v) => v.brief.id !== item.id,
+					);
 					this.applyFilter();
 				},
 				error: this.errorLogger.logError,
@@ -84,7 +100,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			this.newListItem.failedToAdd.subscribe({
 				next: (id: string): void => {
 					console.log('failed to add:', id);
-					this.addingItems = this.addingItems.filter(v => v.brief.id !== id);
+					this.addingItems = this.addingItems.filter((v) => v.brief.id !== id);
 				},
 				error: this.errorLogger.logError,
 			});
@@ -130,12 +146,18 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			return;
 		}
 		super.setList(list);
-		this.allListItems = list.dto === undefined ? undefined
-			: list.dto?.items ? list.dto.items.map(item => {
-				return { brief: item, state: {} };
-			}) : [];
+		this.allListItems =
+			list.dto === undefined
+				? undefined
+				: list.dto?.items
+				? list.dto.items.map((item) => {
+						return { brief: item, state: {} };
+				  })
+				: [];
 		if (this.allListItems && this.addingItems.length) {
-			this.addingItems = this.addingItems.filter(v => !this.listItems?.some(li => li.brief.id === v.brief.id));
+			this.addingItems = this.addingItems.filter(
+				(v) => !this.listItems?.some((li) => li.brief.id === v.brief.id),
+			);
 			if (this.addingItems.length) {
 				this.allListItems = [...this.allListItems, ...this.addingItems];
 			}
@@ -151,7 +173,9 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	}
 
 	public removeIsWatchedFromWatchlist(): void {
-		this.errorLogger.logError('removeIsWatchedFromWatchlist is not implemented yet');
+		this.errorLogger.logError(
+			'removeIsWatchedFromWatchlist is not implemented yet',
+		);
 		// 	console.log('remove');
 		// 	movies.forEach(movie => {
 		// 		// console.log(movie.watchedByUserIds);
@@ -175,15 +199,24 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		}
 		if (item.subListId) {
 			const path = item.subListType === 'recipes' ? 'recipe' : 'list';
-			this.teamNav.navigateForwardToTeamPage(this.team, path, {
-				state: { list: this.list, listItem: item },
-			}).catch(this.errorLogger.logError);
+			this.teamNav
+				.navigateForwardToTeamPage(this.team, path, {
+					state: { list: this.list, listItem: item },
+				})
+				.catch(this.errorLogger.logError);
 		}
 	}
 
 	reorder(e: Event): void {
-		const event = e as CustomEvent<{ from: number; to: number; complete: (list: boolean | IListItemWithUiState[]) => IListItemWithUiState[] }>;
-		if (this.allListItems) { // temp mock
+		const event = e as CustomEvent<{
+			from: number;
+			to: number;
+			complete: (
+				list: boolean | IListItemWithUiState[],
+			) => IListItemWithUiState[];
+		}>;
+		if (this.allListItems) {
+			// temp mock
 			const movingItem = this.allListItems[event.detail.from];
 			movingItem.state.isReordering = true;
 			event.detail.complete(this.allListItems);
@@ -211,7 +244,9 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 				}
 			}, 1000);
 		}
-		console.log(`ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`);
+		console.log(
+			`ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`,
+		);
 
 		// this.listService.reorderListItems(
 		// 	this.createListItemCommandParams(undefined),
@@ -283,7 +318,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		(this.newListItem as NewListItemComponent).focus();
 	}
 
-	public openCopyListItemsDialog(listItem?: IListItemBrief, event?: Event): void {
+	public openCopyListItemsDialog(
+		listItem?: IListItemBrief,
+		event?: Event,
+	): void {
 		console.log(`openCopyListItemsDialog()`, listItem);
 		if (event) {
 			event.stopPropagation();
@@ -313,7 +351,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public deleteCompleted(): void {
 		console.log('deleteCompleted()');
-		this.deleteItems(this.allListItems?.filter(li => li.brief.isDone));
+		this.deleteItems(this.allListItems?.filter((li) => li.brief.isDone));
 	}
 
 	public deleteAll(): void {
@@ -326,7 +364,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			return;
 		}
 		const deletingItems: IListItemWithUiState[] = [];
-		items.forEach(li => {
+		items.forEach((li) => {
 			deletingItems.push(li);
 			li.state.isDeleting = true;
 		});
@@ -338,13 +376,13 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			teamID: this.team.id,
 			listID: this.list.id,
 			listType: this.list.brief.type,
-			itemIDs: deletingItems.map(li => li.brief.id),
+			itemIDs: deletingItems.map((li) => li.brief.id),
 		};
 		this.changeDetectorRef.markForCheck();
 		this.listService.deleteListItems(request).subscribe({
 			error: this.errorLogger.logErrorHandler('failed to delete list items'),
 			complete: () => {
-				deletingItems.forEach(li => {
+				deletingItems.forEach((li) => {
 					li.state.isDeleting = false;
 				});
 			},
@@ -361,25 +399,29 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			listID: this.list.id,
 			listType: this.list.brief.type,
 			isDone: false,
-			itemIDs: this.allListItems.filter(li => li.brief.isDone).map(li => li.brief.id),
+			itemIDs: this.allListItems
+				.filter((li) => li.brief.isDone)
+				.map((li) => li.brief.id),
 		};
 		if (!request.itemIDs.length) {
 			alert('You have no completed items');
 			return;
 		}
 		this.performing = 'reactivating completed';
-		this.listService.setListItemsIsCompleted(request)
-			.pipe(
-				takeUntil(this.destroyed),
-			)
+		this.listService
+			.setListItemsIsCompleted(request)
+			.pipe(takeUntil(this.destroyed))
 			.subscribe({
 				next: () => {
 					console.log('reactivated all previously completed items');
 					this.performing = undefined;
 				},
-				error: err => {
+				error: (err) => {
 					this.performing = undefined;
-					this.errorLogger.logError(err, 'failed to reactivate all completed items');
+					this.errorLogger.logError(
+						err,
+						'failed to reactivate all completed items',
+					);
 				},
 			});
 	}
@@ -398,9 +440,12 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	private applyFilter(): void {
 		const doneFilter = this.doneFilter;
-		this.listItems = this.allListItems?.filter(li => doneFilter === 'all'
-			|| doneFilter === 'completed' && li.brief.isDone
-			|| doneFilter === 'active' && !li.brief.isDone);
+		this.listItems = this.allListItems?.filter(
+			(li) =>
+				doneFilter === 'all' ||
+				(doneFilter === 'completed' && li.brief.isDone) ||
+				(doneFilter === 'active' && !li.brief.isDone),
+		);
 		if (this.listItems) {
 			this.listItems = [...this.listItems, ...this.addingItems];
 		}
@@ -431,7 +476,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// 		}
 	// 	}
 	// }
-
 
 	// protected setDefaultBackUrl(page?: DefaultBackPage, params?: { member?: string }): void {
 	// 	if (this.appService.appId === 'listus') {
@@ -464,5 +508,3 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// 	};
 	// }
 }
-
-

@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {CommuneBasePageParams} from 'sneat-shared/services/params';
-import {ContactType} from 'sneat-shared/models/types';
-import {AssetBasePage} from '../../asset-base.page';
-import {IAssetDto} from 'sneat-shared/models/dto/dto-asset';
-import {IAssetService} from 'sneat-shared/services/interfaces';
-import {IContact2Asset} from 'sneat-shared/models/dto/dto-contact';
+import { Component } from '@angular/core';
+import { CommuneBasePageParams } from 'sneat-shared/services/params';
+import { ContactType } from 'sneat-shared/models/types';
+import { AssetBasePage } from '../../asset-base.page';
+import { IAssetDto } from 'sneat-shared/models/dto/dto-asset';
+import { IAssetService } from 'sneat-shared/services/interfaces';
+import { IContact2Asset } from 'sneat-shared/models/dto/dto-contact';
 
 @Component({
 	selector: 'sneat-real-estate',
@@ -12,11 +12,7 @@ import {IContact2Asset} from 'sneat-shared/models/dto/dto-contact';
 	providers: [CommuneBasePageParams],
 })
 export class RealEstatePageComponent extends AssetBasePage {
-
-	constructor(
-		params: CommuneBasePageParams,
-		assetService: IAssetService,
-	) {
+	constructor(params: CommuneBasePageParams, assetService: IAssetService) {
 		super('real-estates', params, assetService);
 	}
 
@@ -27,8 +23,10 @@ export class RealEstatePageComponent extends AssetBasePage {
 		super.setAssetDto(assetDto);
 		if (assetDto) {
 			if (assetDto.contacts) {
-				this.landlords = assetDto.contacts.filter(c => c.relation === 'landlord');
-				this.tenants = assetDto.contacts.filter(c => c.relation === 'tenant');
+				this.landlords = assetDto.contacts.filter(
+					(c) => c.relation === 'landlord',
+				);
+				this.tenants = assetDto.contacts.filter((c) => c.relation === 'tenant');
 			} else {
 				this.landlords = [];
 				this.tenants = [];
@@ -42,9 +40,9 @@ export class RealEstatePageComponent extends AssetBasePage {
 		}
 		this.navigateForward(
 			'new-contact',
-			{type, asset: this.asset.id},
-			{assetDto: this.asset.dto},
-			{excludeCommuneId: true},
+			{ type, asset: this.asset.id },
+			{ assetDto: this.asset.dto },
+			{ excludeCommuneId: true },
 		);
 	}
 }

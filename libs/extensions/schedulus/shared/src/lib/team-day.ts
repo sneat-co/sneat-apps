@@ -4,14 +4,21 @@ import { IScheduleDayDto, ITiming, WeekdayCode2 } from '@sneat/dto';
 import { IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/team/models';
 import { HappeningService, ScheduleDayService } from '@sneat/team/services';
-import { BehaviorSubject, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
+import {
+	BehaviorSubject,
+	Observable,
+	shareReplay,
+	Subject,
+	takeUntil,
+} from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { getWd2, ISlotItem, RecurringSlots } from './view-models';
 
 export class TeamDay {
-
 	private readonly destroyed = new Subject<void>();
-	private readonly _slots = new BehaviorSubject<ISlotItem[] | undefined>(undefined);
+	private readonly _slots = new BehaviorSubject<ISlotItem[] | undefined>(
+		undefined,
+	);
 	private recurringSlots?: RecurringSlots;
 	private singles?: ISlotItem[];
 	// private singles?: ISlotItem[];
@@ -27,7 +34,7 @@ export class TeamDay {
 	public readonly slots$ = this._slots.asObservable().pipe(
 		shareReplay(1),
 		takeUntil(this.destroyed),
-		tap(slots => console.log(`TeamDay[${this.isoID}].slots$ =>`, slots)),
+		tap((slots) => console.log(`TeamDay[${this.isoID}].slots$ =>`, slots)),
 	);
 
 	private scheduleDayDto?: IScheduleDayDto | null;
@@ -56,13 +63,9 @@ export class TeamDay {
 		if (!this.dateID) {
 			throw new Error('dateID is missing');
 		}
-		teamID$
-			.pipe(
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: this.processTeamID,
-			});
+		teamID$.pipe(takeUntil(this.destroyed)).subscribe({
+			next: this.processTeamID,
+		});
 		this.wd = getWd2(date);
 		this.isoID = dateToIso(date);
 		if (this.isoID === '1970-01-01') {
@@ -93,20 +96,25 @@ export class TeamDay {
 			return;
 		}
 		this.scheduleDayService
-			.watchTeamDay({id: this.teamID}, this.dateID)
-			.pipe(
-				// takeUntil(this.destroyed),
-				// takeUntil(this.teamID$),
-			)
+			.watchTeamDay({ id: this.teamID }, this.dateID)
+			.pipe
+			// takeUntil(this.destroyed),
+			// takeUntil(this.teamID$),
+			()
 			.subscribe({
-				next: scheduleDay => {
-					const changed = this.scheduleDayDto != scheduleDay.dto || this.scheduleDayDto && !!scheduleDay.dto;
+				next: (scheduleDay) => {
+					const changed =
+						this.scheduleDayDto != scheduleDay.dto ||
+						(this.scheduleDayDto && !!scheduleDay.dto);
 					this.scheduleDayDto = scheduleDay.dto;
 					if (changed) {
 						this.joinRecurringsWithSinglesAndEmit();
 					}
 				},
-				error: this.errorLogger.logErrorHandler('Failed to load scheduleDay record', { show: false, feedback: false }),
+				error: this.errorLogger.logErrorHandler(
+					'Failed to load scheduleDay record',
+					{ show: false, feedback: false },
+				),
 			});
 	};
 
@@ -122,27 +130,36 @@ export class TeamDay {
 		try {
 			const teamID = this.teamID;
 			const date = this.dateID;
-			console.log(`TeamDay[${this.isoID}].subscribeForSingles(), teamID=${teamID}, date=${date}`);
+			console.log(
+				`TeamDay[${this.isoID}].subscribeForSingles(), teamID=${teamID}, date=${date}`,
+			);
 			this.happeningService
-				.watchSinglesOnSpecificDay({id: this.teamID}, this.dateID)
+				.watchSinglesOnSpecificDay({ id: this.teamID }, this.dateID)
 				.pipe(
 					takeUntil(this.destroyed),
 					// takeUntil(this.teamID$),
 				)
 				.subscribe({
 					next: this.processSingles,
-					error: this.errorLogger.logErrorHandler(`Failed to get single happenings for a given day: teamID=${teamID}, date=${date}`),
+					error: this.errorLogger.logErrorHandler(
+						`Failed to get single happenings for a given day: teamID=${teamID}, date=${date}`,
+					),
 				});
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to subscribe for team day single happenings');
+			this.errorLogger.logError(
+				e,
+				'Failed to subscribe for team day single happenings',
+			);
 		}
 	};
 
-	private readonly processSingles = (singleHappenings: IHappeningContext[]): void => {
+	private readonly processSingles = (
+		singleHappenings: IHappeningContext[],
+	): void => {
 		try {
 			this.singles = [];
 
-			singleHappenings.forEach(happening => {
+			singleHappenings.forEach((happening) => {
 				const slot = happening.dto?.slots && happening.dto?.slots[0];
 				if (!slot) {
 					return;
@@ -168,38 +185,50 @@ export class TeamDay {
 		}
 	};
 
-	private subscribeForRecurrings(recurrings$: Observable<RecurringSlots>): void {
-		recurrings$
-			.pipe(
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: this.processRecurrings,
-			});
+	private subscribeForRecurrings(
+		recurrings$: Observable<RecurringSlots>,
+	): void {
+		recurrings$.pipe(takeUntil(this.destroyed)).subscribe({
+			next: this.processRecurrings,
+		});
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-
-		console.log(`TeamDay[${this.isoID},date=${this.date},wd=${this.wd}].processRecurrings(), ${Object.keys(slots.byWeekday).length} weekdays with slots:`, slots);
+		console.log(
+			`TeamDay[${this.isoID},date=${this.date},wd=${
+				this.wd
+			}].processRecurrings(), ${
+				Object.keys(slots.byWeekday).length
+			} weekdays with slots:`,
+			slots,
+		);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
 
 	private joinRecurringsWithSinglesAndEmit(): void {
 		const slots: ISlotItem[] = [];
-		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]
-			?.map(wdSlot => {
-				console.log('joinRecurringsWithSinglesAndEmit, wdSlot', this.wd, wdSlot, this.scheduleDayDto);
+		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]?.map(
+			(wdSlot) => {
+				console.log(
+					'joinRecurringsWithSinglesAndEmit, wdSlot',
+					this.wd,
+					wdSlot,
+					this.scheduleDayDto,
+				);
 				if (this.scheduleDayDto) {
 					const adjustment = this.scheduleDayDto?.happeningAdjustments?.find(
-						a => a.happeningID === wdSlot.happening.id && a.slot.id === wdSlot.slotID,
+						(a) =>
+							a.happeningID === wdSlot.happening.id &&
+							a.slot.id === wdSlot.slotID,
 					);
 					if (adjustment) {
 						return { ...wdSlot, adjustment };
 					}
 				}
 				return wdSlot;
-			});
+			},
+		);
 
 		if (weekdaySlots?.length) {
 			slots.push(...weekdaySlots);

@@ -11,23 +11,21 @@ describe('RetroTreePage', () => {
 	let component: RetroTreePageComponent;
 	let fixture: ComponentFixture<RetroTreePageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [RetroTreePageComponent],
-				imports: [
-					RouterTestingModule,
-					HttpClientTestingModule,
-					IonicModule.forRoot(),
-				],
-				providers: [TeamService, UserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [RetroTreePageComponent],
+			imports: [
+				RouterTestingModule,
+				HttpClientTestingModule,
+				IonicModule.forRoot(),
+			],
+			providers: [TeamService, UserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(RetroTreePageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(RetroTreePageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

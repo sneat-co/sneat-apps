@@ -4,14 +4,18 @@ import { excludeUndefined } from '@sneat/core';
 import { HappeningStatus, IHappeningSlot } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISelectMembersOptions, MembersSelectorService } from '@sneat/contactus-shared';
+import {
+	ISelectMembersOptions,
+	MembersSelectorService,
+} from '@sneat/contactus-shared';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	HappeningUIState,
 	IContactContext,
 	IContactusTeamDtoWithID,
 	IHappeningContext,
-	ITeamContext, zipMapBriefsWithIDs,
+	ITeamContext,
+	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import {
 	HappeningService,
@@ -36,13 +40,15 @@ export class SlotContextMenuComponent {
 	@Input() public slot?: ISlotItem;
 	happeningState?: HappeningUIState;
 
-
 	public get happening(): IHappeningContext | undefined {
 		return this.slot?.happening;
 	}
 
 	public get isCancelled(): boolean {
-		return this.happening?.brief?.status === 'canceled' || !!this.slot?.adjustment?.canceled;
+		return (
+			this.happening?.brief?.status === 'canceled' ||
+			!!this.slot?.adjustment?.canceled
+		);
 	}
 
 	public get disabled(): boolean {
@@ -55,8 +61,7 @@ export class SlotContextMenuComponent {
 		private readonly happeningService: HappeningService,
 		private readonly membersSelectorService: MembersSelectorService,
 		private readonly scheduleModalsService: ScheduleModalsService,
-	) {
-	}
+	) {}
 
 	assign(event: Event, to: 'member' | 'contact'): void {
 		console.log(`SlotContextMenuComponent.assign(${to})`);
@@ -66,8 +71,13 @@ export class SlotContextMenuComponent {
 		if (!team) {
 			return;
 		}
-		const members = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map(mb => contactContextFromBrief(mb, team)) || [];
-		const selectedMembers = members.filter(m => this.happening?.brief?.memberIDs?.some(id => id === m.id));
+		const members =
+			zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map((mb) =>
+				contactContextFromBrief(mb, team),
+			) || [];
+		const selectedMembers = members.filter(
+			(m) => this.happening?.brief?.memberIDs?.some((id) => id === m.id),
+		);
 		const options: ISelectMembersOptions = {
 			members,
 			selectedMembers,
@@ -75,8 +85,9 @@ export class SlotContextMenuComponent {
 			onRemoved: this.onMemberRemoved,
 		};
 		this.popoverController.dismiss().catch(console.error);
-		this.membersSelectorService.selectMembersInModal(options)
-			.then(selectedMembers => {
+		this.membersSelectorService
+			.selectMembersInModal(options)
+			.then((selectedMembers) => {
 				console.log('selected members:', selectedMembers);
 			});
 	}
@@ -97,15 +108,28 @@ export class SlotContextMenuComponent {
 		}
 		const slotID = this.slot?.slotID;
 		const slots = happening?.dto?.slots || happening?.brief?.slots;
-		const happeningSlot: IHappeningSlot | undefined = slots?.find(slot => slot.id === slotID);
-		const recurring = happeningSlot && this.dateID ? {
-			happeningSlot,
-			dateID: this.dateID,
-			adjustment: this.slot?.adjustment,
-		} : undefined;
+		const happeningSlot: IHappeningSlot | undefined = slots?.find(
+			(slot) => slot.id === slotID,
+		);
+		const recurring =
+			happeningSlot && this.dateID
+				? {
+						happeningSlot,
+						dateID: this.dateID,
+						adjustment: this.slot?.adjustment,
+				  }
+				: undefined;
 		this.scheduleModalsService
-			.editSingleHappeningSlot(event, { ...happening, team: this.team }, recurring)
-			.catch(this.errorLogger.logErrorHandler('Failed in editing single happening slot'));
+			.editSingleHappeningSlot(
+				event,
+				{ ...happening, team: this.team },
+				recurring,
+			)
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed in editing single happening slot',
+				),
+			);
 		this.dismissPopover();
 	}
 
@@ -120,26 +144,30 @@ export class SlotContextMenuComponent {
 		}
 		const request = this.createDeleteSlotRequest(event, 'slot');
 		this.happeningState = 'deleting';
-		this.happeningService.deleteSlots(request)
-			.subscribe({
-				next: () => {
-					this.happeningState = 'deleted';
-					this.dismissPopover();
-				},
-				error: err => {
-					setTimeout(() => {
-						this.happeningState = undefined;
-						this.errorLogger.logError(err, 'Failed to delete happening from context menu');
-					}, 2000);
-				},
-			});
+		this.happeningService.deleteSlots(request).subscribe({
+			next: () => {
+				this.happeningState = 'deleted';
+				this.dismissPopover();
+			},
+			error: (err) => {
+				setTimeout(() => {
+					this.happeningState = undefined;
+					this.errorLogger.logError(
+						err,
+						'Failed to delete happening from context menu',
+					);
+				}, 2000);
+			},
+		});
 	}
 
 	private dismissPopover(): void {
-		this.popoverController.dismiss().catch(this.errorLogger.logErrorHandler('Failed to dismiss popover', {
-			show: false,
-			feedback: false,
-		}));
+		this.popoverController.dismiss().catch(
+			this.errorLogger.logErrorHandler('Failed to dismiss popover', {
+				show: false,
+				feedback: false,
+			}),
+		);
 	}
 
 	archive(): void {
@@ -147,7 +175,11 @@ export class SlotContextMenuComponent {
 		this.notImplemented();
 	}
 
-	private stopEvent(event: Event): { slot: ISlotItem, happening: IHappeningContext; team: ITeamContext } {
+	private stopEvent(event: Event): {
+		slot: ISlotItem;
+		happening: IHappeningContext;
+		team: ITeamContext;
+	} {
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
@@ -170,16 +202,25 @@ export class SlotContextMenuComponent {
 			happeningID: happening.id,
 			slotID: mode === 'slot' ? slot.slotID : undefined,
 			weekday: mode === 'slot' ? slot.wd : undefined,
-			date: mode === 'slot' && happening.brief?.type === 'recurring' ? this.dateID : undefined,
+			date:
+				mode === 'slot' && happening.brief?.type === 'recurring'
+					? this.dateID
+					: undefined,
 		});
 		return request;
 	}
 
-	createDeleteSlotRequest(event: Event, mode: 'whole' | 'slot'): IDeleteSlotRequest {
+	createDeleteSlotRequest(
+		event: Event,
+		mode: 'whole' | 'slot',
+	): IDeleteSlotRequest {
 		return this.createSlotRequest(event, mode);
 	}
 
-	createCancellationRequest(event: Event, mode: 'whole' | 'slot'): ICancelHappeningRequest {
+	createCancellationRequest(
+		event: Event,
+		mode: 'whole' | 'slot',
+	): ICancelHappeningRequest {
 		return this.createSlotRequest(event, mode);
 	}
 
@@ -212,42 +253,48 @@ export class SlotContextMenuComponent {
 		if (!this.happening) {
 			return;
 		}
-		const mode: 'whole' | 'slot' = this.happening.brief?.status === 'canceled' ? 'whole' : 'slot';
+		const mode: 'whole' | 'slot' =
+			this.happening.brief?.status === 'canceled' ? 'whole' : 'slot';
 		const request = this.createCancellationRequest(event, mode);
-		this.happeningService.revokeHappeningCancellation(request)
-			.subscribe({
-				next: () => {
+		this.happeningService.revokeHappeningCancellation(request).subscribe({
+			next: () => {
+				this.happeningState = undefined;
+				this.setHappeningStatus('active');
+				this.dismissPopover();
+			},
+			error: (err) => {
+				setTimeout(() => {
 					this.happeningState = undefined;
-					this.setHappeningStatus('active');
-					this.dismissPopover();
-				},
-				error: err => {
-					setTimeout(() => {
-						this.happeningState = undefined;
-						this.errorLogger.logError(err, 'Failed to delete happening from context menu');
-					}, 2000);
-				},
-			});
+					this.errorLogger.logError(
+						err,
+						'Failed to delete happening from context menu',
+					);
+				}, 2000);
+			},
+		});
 	}
 
 	markCanceled(event: Event, mode: 'whole' | 'slot'): void {
 		console.log(`SlotContextMenuComponent.markCanceled(mode=${mode})`);
-		this.happeningState = mode == 'slot' ? 'cancelling-single' : 'cancelling-series';
+		this.happeningState =
+			mode == 'slot' ? 'cancelling-single' : 'cancelling-series';
 		const request = this.createCancellationRequest(event, mode);
-		this.happeningService.cancelHappening(request)
-			.subscribe({
-				next: () => {
-					this.happeningState = 'canceled';
-					this.setHappeningStatus('canceled');
-					this.dismissPopover();
-				},
-				error: err => {
-					setTimeout(() => {
-						this.happeningState = undefined;
-						this.errorLogger.logError(err, 'Failed to delete happening from context menu');
-					}, 2000);
-				},
-			});
+		this.happeningService.cancelHappening(request).subscribe({
+			next: () => {
+				this.happeningState = 'canceled';
+				this.setHappeningStatus('canceled');
+				this.dismissPopover();
+			},
+			error: (err) => {
+				setTimeout(() => {
+					this.happeningState = undefined;
+					this.errorLogger.logError(
+						err,
+						'Failed to delete happening from context menu',
+					);
+				}, 2000);
+			},
+		});
 	}
 
 	notImplemented(): void {
@@ -268,13 +315,15 @@ export class SlotContextMenuComponent {
 		if (!slots) {
 			return n;
 		}
-		slots.forEach(slot => {
+		slots.forEach((slot) => {
 			slot.weekdays?.forEach(() => n++);
 		});
 		return n;
 	}
 
-	private readonly onMemberAdded = (member: IContactContext): Observable<void> => {
+	private readonly onMemberAdded = (
+		member: IContactContext,
+	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberAdded()', member);
 		if (!this.happening) {
 			return NEVER;
@@ -282,7 +331,11 @@ export class SlotContextMenuComponent {
 		if (!this.team) {
 			return NEVER;
 		}
-		const result = this.happeningService.addMember(this.team.id, this.happening, member.id);
+		const result = this.happeningService.addMember(
+			this.team.id,
+			this.happening,
+			member.id,
+		);
 		// result
 		// 	.pipe(takeUntil(this.destroyed))
 		// 	.subscribe({
@@ -293,7 +346,9 @@ export class SlotContextMenuComponent {
 		return result;
 	};
 
-	private readonly onMemberRemoved = (member: IContactContext): Observable<void> => {
+	private readonly onMemberRemoved = (
+		member: IContactContext,
+	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
 		if (!this.happening) {
 			return NEVER;
@@ -301,7 +356,10 @@ export class SlotContextMenuComponent {
 		if (!this.team) {
 			return NEVER;
 		}
-		return this.happeningService.removeMember(this.team?.id, this.happening, member.id);
+		return this.happeningService.removeMember(
+			this.team?.id,
+			this.happening,
+			member.id,
+		);
 	};
-
 }

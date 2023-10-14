@@ -4,7 +4,6 @@ import { ContactService } from '@sneat/contactus-services';
 
 @Injectable()
 export class ContactComponentBaseParams {
-
 	public readonly errorLogger = this.teamParams.errorLogger;
 	public readonly navController = this.teamParams.navController;
 	public readonly userService = this.teamParams.userService;
@@ -13,7 +12,5 @@ export class ContactComponentBaseParams {
 	constructor(
 		public readonly teamParams: TeamComponentBaseParams,
 		public readonly contactService: ContactService,
-	) {
-	}
-
+	) {}
 }

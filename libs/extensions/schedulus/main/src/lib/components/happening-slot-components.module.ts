@@ -34,5 +34,4 @@ import { TimeSelectorComponent } from './start-end-datetime-form/time-selector.c
 		StartEndDatetimeFormComponent,
 	],
 })
-export class HappeningSlotComponentsModule {
-}
+export class HappeningSlotComponentsModule {}

@@ -7,7 +7,8 @@ export interface ICommuneIds {
 	readonly short?: CommuneShortId;
 }
 
-
 export function equalCommuneIds(a?: ICommuneIds, b?: ICommuneIds): boolean {
-	return !a && !b || !!a && !!b && eq(a.real, b.real) && eq(a.short, b.short);
+	return (
+		(!a && !b) || (!!a && !!b && eq(a.real, b.real) && eq(a.short, b.short))
+	);
 }

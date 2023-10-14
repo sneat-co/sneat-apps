@@ -4,7 +4,7 @@ export interface IFirebaseConfig {
 	useEmulators?: boolean;
 	emulator?: {
 		authPort: number;
-		firestorePort: number
+		firestorePort: number;
 	};
 	//
 	projectId: string;
@@ -24,5 +24,9 @@ export interface IEnvironmentConfig {
 	firebaseConfig: IFirebaseConfig;
 }
 
-export const FirebaseConfigToken = new InjectionToken<IFirebaseConfig>('firebaseConfig');
-export const EnvConfigToken = new InjectionToken<IEnvironmentConfig>('envConfig');
+export const FirebaseConfigToken = new InjectionToken<IFirebaseConfig>(
+	'firebaseConfig',
+);
+export const EnvConfigToken = new InjectionToken<IEnvironmentConfig>(
+	'envConfig',
+);

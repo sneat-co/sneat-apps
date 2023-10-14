@@ -1,5 +1,5 @@
 export type TeamType =
-	'family'
+	| 'family'
 	| 'personal'
 	| 'company'
 	| 'team'

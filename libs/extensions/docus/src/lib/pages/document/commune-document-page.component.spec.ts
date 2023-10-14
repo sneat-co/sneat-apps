@@ -1,7 +1,7 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {CommuneDocumentPageComponent} from './commune-document-page.component';
+import { CommuneDocumentPageComponent } from './commune-document-page.component';
 
 describe('CommuneDocumentPage', () => {
 	let component: CommuneDocumentPageComponent;
@@ -11,8 +11,7 @@ describe('CommuneDocumentPage', () => {
 		TestBed.configureTestingModule({
 			declarations: [CommuneDocumentPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -22,7 +21,6 @@ describe('CommuneDocumentPage', () => {
 	});
 
 	it('should create', () => {
-		expect(component)
-			.toBeTruthy();
+		expect(component).toBeTruthy();
 	});
 });

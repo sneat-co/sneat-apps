@@ -10,24 +10,22 @@ describe('MembersComponent', () => {
 	let component: MembersComponent;
 	let fixture: ComponentFixture<MembersComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [MembersComponent],
-				imports: [
-					IonicModule.forRoot(),
-					RouterTestingModule,
-					HttpClientTestingModule,
-					// AngularFireModule.initializeApp(environment.firebaseConfig),
-				],
-				// providers: [TeamService, UserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [MembersComponent],
+			imports: [
+				IonicModule.forRoot(),
+				RouterTestingModule,
+				HttpClientTestingModule,
+				// AngularFireModule.initializeApp(environment.firebaseConfig),
+			],
+			// providers: [TeamService, UserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(MembersComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(MembersComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

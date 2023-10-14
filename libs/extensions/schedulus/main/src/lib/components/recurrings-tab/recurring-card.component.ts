@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnDestroy,
+} from '@angular/core';
 import { IHappeningWithUiState } from '@sneat/team/models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext, ITeamContext } from '@sneat/team/models';
@@ -32,16 +38,27 @@ export class RecurringCardComponent implements OnDestroy {
 
 	goHappening(happening?: IHappeningWithUiState): void {
 		if (!this.team) {
-			this.errorLogger.logErrorHandler('not able to navigate to happening without team context');
+			this.errorLogger.logErrorHandler(
+				'not able to navigate to happening without team context',
+			);
 			return;
 		}
-		this.teamNavService.navigateForwardToTeamPage(this.team, `happening/${happening?.id}`, {
-			state: { happening },
-		}).catch(this.errorLogger.logErrorHandler('failed to navigate to happening page'));
+		this.teamNavService
+			.navigateForwardToTeamPage(this.team, `happening/${happening?.id}`, {
+				state: { happening },
+			})
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to navigate to happening page',
+				),
+			);
 		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
 
-	deleteRecurring(event: Event, happeningWithUiState?: IHappeningWithUiState): void {
+	deleteRecurring(
+		event: Event,
+		happeningWithUiState?: IHappeningWithUiState,
+	): void {
 		console.log('deleteRecurring()', happeningWithUiState);
 		event.stopPropagation();
 		if (!happeningWithUiState) {
@@ -56,11 +73,13 @@ export class RecurringCardComponent implements OnDestroy {
 			brief: happeningWithUiState.brief,
 			dto: happeningWithUiState.dto,
 		};
-		this.happeningService.deleteHappening(happening)
+		this.happeningService
+			.deleteHappening(happening)
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({
-				error: this.errorLogger.logErrorHandler('failed to delete recurring happening'),
+				error: this.errorLogger.logErrorHandler(
+					'failed to delete recurring happening',
+				),
 			});
 	}
-
 }

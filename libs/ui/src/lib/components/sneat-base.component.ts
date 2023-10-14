@@ -5,27 +5,24 @@ import { Subject, Subscription } from 'rxjs';
 
 @Injectable()
 export abstract class SneatBaseComponent implements OnDestroy {
+	protected readonly destroyed = new Subject<void>();
+	protected readonly subs = new Subscription();
 
-  protected readonly destroyed = new Subject<void>();
-  protected readonly subs = new Subscription();
+	protected constructor(
+		@Inject(new InjectionToken('className')) public readonly className: string,
+		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
+	) {}
 
-  protected constructor(
-    @Inject(new InjectionToken('className')) public readonly className: string,
-    @Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
-  ) {
-  }
+	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
-  protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
+	public ngOnDestroy(): void {
+		this.unsubscribe(`${this.className}.ngOnDestroy()`);
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
 
-  public ngOnDestroy(): void {
-    this.unsubscribe(`${this.className}.ngOnDestroy()`);
-    this.destroyed.next();
-    this.destroyed.complete();
-  }
-
-  protected unsubscribe(reason?: string): void {
-    console.log(`${this.className}.unsubscribe(reason: ${reason})`);
-    this.subs.unsubscribe();
-  }
-
+	protected unsubscribe(reason?: string): void {
+		console.log(`${this.className}.unsubscribe(reason: ${reason})`);
+		this.subs.unsubscribe();
+	}
 }

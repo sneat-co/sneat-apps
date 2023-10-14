@@ -2,7 +2,11 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactContext, ICreateContactBasicRequest, ITeamContext } from '@sneat/team/models';
+import {
+	IContactContext,
+	ICreateContactBasicRequest,
+	ITeamContext,
+} from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-basic-contact-form',
@@ -27,8 +31,7 @@ export class BasicContactFormComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactService: ContactService,
-	) {
-	}
+	) {}
 
 	createContact(event: Event): void {
 		event.stopPropagation();
@@ -53,17 +56,18 @@ export class BasicContactFormComponent {
 		};
 		this.isSubmitting = true;
 
-		this.contactService
-			.createContact(this.team, request)
-			.subscribe({
-				next: contact => {
-					this.isCreated = true;
-					this.contactCreated.emit(contact);
-				},
-				error: (err: unknown) => {
-					this.isSubmitting = false;
-					this.errorLogger.logError(err, `Failed to create new [${this.contactType}]`);
-				},
-			});
+		this.contactService.createContact(this.team, request).subscribe({
+			next: (contact) => {
+				this.isCreated = true;
+				this.contactCreated.emit(contact);
+			},
+			error: (err: unknown) => {
+				this.isSubmitting = false;
+				this.errorLogger.logError(
+					err,
+					`Failed to create new [${this.contactType}]`,
+				);
+			},
+		});
 	}
 }

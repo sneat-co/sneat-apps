@@ -13,13 +13,7 @@ import { EncodeSmsText, InviteModalComponent } from './invite-modal.component';
 		ReactiveFormsModule,
 		SneatPipesModule,
 	],
-	declarations: [
-		InviteModalComponent,
-		EncodeSmsText,
-	],
-	exports: [
-		InviteModalComponent,
-	]
+	declarations: [InviteModalComponent, EncodeSmsText],
+	exports: [InviteModalComponent],
 })
-export class InviteModalModule {
-}
+export class InviteModalModule {}

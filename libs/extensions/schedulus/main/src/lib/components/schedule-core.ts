@@ -22,12 +22,18 @@ export function isTomorrow(date: Date): boolean {
 }
 
 export function areSameDates(d1: Date, d2: Date): boolean {
-	return d1.getDate() === d2.getDate() &&
+	return (
+		d1.getDate() === d2.getDate() &&
 		d1.getMonth() === d2.getMonth() &&
-		d1.getFullYear() === d2.getFullYear();
+		d1.getFullYear() === d2.getFullYear()
+	);
 }
 
-export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: Date): Date {
+export function getWdDate(
+	wd: WeekdayCode2,
+	activeWd: WeekdayCode2,
+	activeDate: Date,
+): Date {
 	if (wd === activeWd) {
 		return activeDate;
 	}
@@ -40,18 +46,21 @@ export function getWdDate(wd: WeekdayCode2, activeWd: WeekdayCode2, activeDate: 
 	);
 }
 
-
-export const SHIFT_1_DAY = 1, SHIFT_1_WEEK = 7;
+export const SHIFT_1_DAY = 1,
+	SHIFT_1_WEEK = 7;
 
 export interface Week {
 	startDate: Date; // e.g. Monday
 	endDate: Date; // e.g. Sunday
 }
 
-export const createWeekdays = (): Weekday[] => wd2.map(
-	id => ({ id, longTitle: wdCodeToWeekdayLongName(id) }));
+export const createWeekdays = (): Weekday[] =>
+	wd2.map((id) => ({ id, longTitle: wdCodeToWeekdayLongName(id) }));
 
-export function animationState(activeParity: Parity, direction: 'forward' | 'back'): VirtualSliderAnimationStates {
+export function animationState(
+	activeParity: Parity,
+	direction: 'forward' | 'back',
+): VirtualSliderAnimationStates {
 	let result: VirtualSliderAnimationStates;
 	switch (activeParity) {
 		case 'odd':

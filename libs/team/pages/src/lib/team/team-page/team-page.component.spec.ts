@@ -11,24 +11,22 @@ describe('TeamPage', () => {
 	let component: TeamPageComponent;
 	let fixture: ComponentFixture<TeamPageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [TeamPageComponent],
-				imports: [
-					IonicModule.forRoot(),
-					HttpClientTestingModule,
-					RouterTestingModule,
-					// AngularFireModule.initializeApp(environment.firebaseConfig),
-				],
-				providers: [TeamService, SneatUserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [TeamPageComponent],
+			imports: [
+				IonicModule.forRoot(),
+				HttpClientTestingModule,
+				RouterTestingModule,
+				// AngularFireModule.initializeApp(environment.firebaseConfig),
+			],
+			providers: [TeamService, SneatUserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(TeamPageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(TeamPageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

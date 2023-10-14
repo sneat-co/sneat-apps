@@ -5,13 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { TeamsCardComponent } from './teams-card.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-	],
+	imports: [CommonModule, FormsModule, IonicModule],
 	declarations: [TeamsCardComponent],
 	exports: [TeamsCardComponent],
 })
-export class TeamsCardModule {
-}
+export class TeamsCardModule {}

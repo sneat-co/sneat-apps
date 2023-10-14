@@ -8,10 +8,7 @@ const defaultErrorToastDuration = 7000;
 
 @Injectable()
 export class ErrorLoggerService implements IErrorLogger {
-	constructor(
-		private readonly toastController: ToastController,
-	) {
-	}
+	constructor(private readonly toastController: ToastController) {}
 
 	public readonly logErrorHandler =
 		(message?: string, options?: ILogErrorOptions) => (e: unknown) =>
@@ -22,7 +19,12 @@ export class ErrorLoggerService implements IErrorLogger {
 		message?: string,
 		options?: ILogErrorOptions,
 	): void => {
-		console.error(`ErrorLoggerService.logError: ${message || 'Error'}:`, e, '; Logging options:', options);
+		console.error(
+			`ErrorLoggerService.logError: ${message || 'Error'}:`,
+			e,
+			'; Logging options:',
+			options,
+		);
 		if (e === true || e === false) {
 			try {
 				// noinspection ExceptionCaughtLocallyJS
@@ -47,31 +49,36 @@ export class ErrorLoggerService implements IErrorLogger {
 						ex,
 					);
 				}
-
 			}
 		}
 		if (options?.show === undefined || options.show) {
 			if ((e as { message?: string }).message) {
 				message =
-					(message && `${message}: ${(e as { message?: string }).message}`)
-					|| (e as { message?: string }).message;
+					(message && `${message}: ${(e as { message?: string }).message}`) ||
+					(e as { message?: string }).message;
 			} else if (!message) {
 				message = (e as object).toString();
 			}
 			if (message) {
 				console.log('e:', e instanceof HttpErrorResponse);
 				if (e instanceof HttpErrorResponse) {
-					this.showError({
-						clientMessage: message,
-						serverMessage: e.error?.error?.message,
-					}, options?.showDuration);
+					this.showError(
+						{
+							clientMessage: message,
+							serverMessage: e.error?.error?.message,
+						},
+						options?.showDuration,
+					);
 				}
 			}
 		}
 		return; // return message ? { error: e, message } : e;
 	};
 
-	public showError(details: { clientMessage: string; serverMessage?: string }, duration?: number): void {
+	public showError(
+		details: { clientMessage: string; serverMessage?: string },
+		duration?: number,
+	): void {
 		if (!details.clientMessage) {
 			throw new Error('showError() have not received a message to display');
 		}

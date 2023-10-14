@@ -11,23 +11,21 @@ describe('RetrospectivePage', () => {
 	let component: RetrospectivePageComponent;
 	let fixture: ComponentFixture<RetrospectivePageComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [RetrospectivePageComponent],
-				imports: [
-					IonicModule.forRoot(),
-					HttpClientTestingModule,
-					RouterTestingModule,
-				],
-				providers: [TeamService, UserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [RetrospectivePageComponent],
+			imports: [
+				IonicModule.forRoot(),
+				HttpClientTestingModule,
+				RouterTestingModule,
+			],
+			providers: [TeamService, UserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(RetrospectivePageComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(RetrospectivePageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

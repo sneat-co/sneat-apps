@@ -27,7 +27,11 @@ export interface IAppSpecificConfig {
 	firebase?: IFirebaseAppSpecificConfig;
 }
 
-export function appSpecificConfig(useEmulators: boolean, envConfig: IEnvironmentConfig, appConfig: IAppSpecificConfig): IEnvironmentConfig {
+export function appSpecificConfig(
+	useEmulators: boolean,
+	envConfig: IEnvironmentConfig,
+	appConfig: IAppSpecificConfig,
+): IEnvironmentConfig {
 	let config: IEnvironmentConfig = {
 		...envConfig,
 		useEmulators,
@@ -36,7 +40,10 @@ export function appSpecificConfig(useEmulators: boolean, envConfig: IEnvironment
 			...appConfig.firebase,
 		},
 	};
-	const projectId = firebaseProjectId(useEmulators, config.firebaseConfig.projectId);
+	const projectId = firebaseProjectId(
+		useEmulators,
+		config.firebaseConfig.projectId,
+	);
 	config = {
 		...config,
 		firebaseConfig: {

@@ -6,9 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-const exports = [
-	DataGridComponent,
-];
+const exports = [DataGridComponent];
 
 @NgModule({
 	imports: [
@@ -18,11 +16,7 @@ const exports = [
 		FormsModule,
 		// CodemirrorModule,
 	],
-	declarations: [
-		...exports,
-		CellPopoverComponent,
-	],
+	declarations: [...exports, CellPopoverComponent],
 	exports,
 })
-export class DatagridModule {
-}
+export class DatagridModule {}

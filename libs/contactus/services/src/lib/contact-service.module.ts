@@ -4,10 +4,6 @@ import { ContactService } from './contact-service';
 
 @NgModule({
 	imports: [],
-	providers: [
-		ContactService,
-		ContactNavService,
-	],
+	providers: [ContactService, ContactNavService],
 })
-export class ContactServiceModule {
-}
+export class ContactServiceModule {}

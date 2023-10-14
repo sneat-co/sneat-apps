@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Inject, Input, ViewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	Inject,
+	Input,
+	ViewChild,
+} from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { IListInfo, ListType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -20,14 +26,12 @@ export class NewListDialogComponent implements AfterViewInit {
 	constructor(
 		private readonly modalCtrl: ModalController,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
-	}
+	) {}
 
 	ngAfterViewInit(): void {
 		setTimeout(
 			() => {
-				this.listNameInput?.setFocus()
-					.catch(this.errorLogger.logError);
+				this.listNameInput?.setFocus().catch(this.errorLogger.logError);
 			},
 			// tslint:disable-next-line:no-magic-numbers
 			250,
@@ -42,21 +46,20 @@ export class NewListDialogComponent implements AfterViewInit {
 		const listInfo: IListInfo = {
 			team: {
 				type: this.visibility,
-				title: this.visibility.substr(0, 1)
-					.toUpperCase() + this.visibility.substr(1),
+				title:
+					this.visibility.substr(0, 1).toUpperCase() +
+					this.visibility.substr(1),
 			},
 			type: this.listType,
 			title: this.listName,
 			emoji: '📝',
 		};
-		this.closeDialog(listInfo)
-			.catch(this.errorLogger.logError);
+		this.closeDialog(listInfo).catch(this.errorLogger.logError);
 	}
 
 	cancel(): void {
 		console.log('cancel()');
-		this.closeDialog()
-			.catch(this.errorLogger.logError);
+		this.closeDialog().catch(this.errorLogger.logError);
 	}
 
 	async closeDialog(listInfo?: IListInfo): Promise<void> {

@@ -17,9 +17,7 @@ export interface IListItemCommon extends IListCommon {
 	category?: string;
 }
 
-export interface IListItemBase extends IListItemCommon {
-
-}
+export interface IListItemBase extends IListItemCommon {}
 export interface IListItemBrief extends IListItemBase {
 	id: string;
 	readonly created?: string; // UTC datetime
@@ -28,15 +26,24 @@ export interface IListItemBrief extends IListItemBase {
 	readonly img?: string;
 }
 
-export interface ListCounts {  // TODO: Use some enumerator as IDB library does.
+export interface ListCounts {
+	// TODO: Use some enumerator as IDB library does.
 	active?: number;
 	completed?: number;
 }
 
-export type ListType = 'to-buy' | 'to-watch' | 'to-cook' | 'to-do' | 'other' | 'recipes' | 'rsvp';
+export type ListType =
+	| 'to-buy'
+	| 'to-watch'
+	| 'to-cook'
+	| 'to-do'
+	| 'other'
+	| 'recipes'
+	| 'rsvp';
 
 // IListCommon is a common base class for a List & ListItem
-export interface IListCommon { // Do not extend from IWithCreated as it is not applicable for ICreateListItemRequest
+export interface IListCommon {
+	// Do not extend from IWithCreated as it is not applicable for ICreateListItemRequest
 	title: string;
 	img?: string;
 	emoji?: string;
@@ -59,22 +66,31 @@ export interface IListDto extends IListBase, IWithRestrictions, IWithCreated {
 
 // tslint:disable-next-line:no-unnecessary-class
 export class ListItemInfoModel {
-	static trackBy: (index: number, item: IListItemBrief) => (string | number | undefined) = (index, item) =>
-		!item ? index : !!item.id && `id:${item.id}` || item.subListId && `subList:${item.subListId}` || item.title;
+	static trackBy: (
+		index: number,
+		item: IListItemBrief,
+	) => string | number | undefined = (index, item) =>
+		!item
+			? index
+			: (!!item.id && `id:${item.id}`) ||
+			  (item.subListId && `subList:${item.subListId}`) ||
+			  item.title;
 }
 
 // tslint:disable-next-line:no-unnecessary-class
 export class ListItemModel {
 	static equalListItems(...items: IListItemBrief[]): boolean {
 		const { id, title, subListId, category, subListType } = items[0];
-		return !items.some(item => {
+		return !items.some((item) => {
 			if (id) {
 				return item.id !== id;
 			}
-			return !!title && item.title !== title
-				|| !!subListId && item.subListId !== subListId
-				|| !!category && item.category !== category
-				|| !!subListType && item.subListType !== subListType;
+			return (
+				(!!title && item.title !== title) ||
+				(!!subListId && item.subListId !== subListId) ||
+				(!!category && item.category !== category) ||
+				(!!subListType && item.subListType !== subListType)
+			);
 		});
 	}
 }
@@ -92,12 +108,17 @@ export interface IShortTeamInfo {
 	title?: string;
 }
 
-
-export function createShortCommuneInfoFromUserCommuneInfo(v: IUserCommuneInfo): IShortTeamInfo {
+export function createShortCommuneInfoFromUserCommuneInfo(
+	v: IUserCommuneInfo,
+): IShortTeamInfo {
 	return { id: v.id, title: v.title, /*shortId: v.shortId,*/ type: v.type };
 }
 
-export function getListShortUrlId(communeId: string, shortId?: string, id?: string): string | undefined {
+export function getListShortUrlId(
+	communeId: string,
+	shortId?: string,
+	id?: string,
+): string | undefined {
 	if (shortId) {
 		return `${communeId}-${shortId}`;
 	}
@@ -126,18 +147,20 @@ export interface IListBrief extends IListBase, IWithCreated {
 	emoji?: string;
 }
 
-
-export function isListInfoMatchesListDto(i: IListInfo, l: IRecord<IListDto>): boolean {
-	return !!i.id && i.id === l.id
-		|| (
-			i.type === l.dto?.type
-			&& (
-				!!i.shortId && i.shortId === l.dto?.shortId
-			)
-		);
+export function isListInfoMatchesListDto(
+	i: IListInfo,
+	l: IRecord<IListDto>,
+): boolean {
+	return (
+		(!!i.id && i.id === l.id) ||
+		(i.type === l.dto?.type && !!i.shortId && i.shortId === l.dto?.shortId)
+	);
 }
 
-export function createListInfoFromDto(dto: IListDto, shortId?: string): IListInfo {
+export function createListInfoFromDto(
+	dto: IListDto,
+	shortId?: string,
+): IListInfo {
 	if (!dto.title) {
 		throw new Error('!title');
 	}

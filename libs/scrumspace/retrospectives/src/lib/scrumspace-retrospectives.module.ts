@@ -9,5 +9,4 @@ import { RetroMyItemsComponent } from './components/retro-my-items/retro-my-item
 	declarations: [RetroMyItemsComponent],
 	// exports: [RetroMyItemsComponent],
 })
-export class ScrumspaceRetrospectivesModule {
-}
+export class ScrumspaceRetrospectivesModule {}

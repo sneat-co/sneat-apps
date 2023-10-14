@@ -28,5 +28,4 @@ const routes: Routes = [
 	],
 	declarations: [NewHappeningPageComponent],
 })
-export class NewHappeningPageModule {
-}
+export class NewHappeningPageModule {}

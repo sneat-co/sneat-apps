@@ -9,24 +9,22 @@ describe('RetrospectivesComponent', () => {
 	let component: RetrospectivesComponent;
 	let fixture: ComponentFixture<RetrospectivesComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [RetrospectivesComponent],
-				imports: [
-					IonicModule.forRoot(),
-					HttpClientTestingModule,
-					RouterTestingModule,
-					// AngularFireModule.initializeApp(environment.firebaseConfig),
-				],
-				// providers: [TeamService, UserService],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [RetrospectivesComponent],
+			imports: [
+				IonicModule.forRoot(),
+				HttpClientTestingModule,
+				RouterTestingModule,
+				// AngularFireModule.initializeApp(environment.firebaseConfig),
+			],
+			// providers: [TeamService, UserService],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(RetrospectivesComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(RetrospectivesComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

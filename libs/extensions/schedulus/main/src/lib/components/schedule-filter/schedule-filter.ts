@@ -15,15 +15,24 @@ export interface IScheduleFilter {
 //
 // }
 
-export function isMatchingScheduleFilter(h: IHappeningContext, f?: IScheduleFilter, ): boolean {
+export function isMatchingScheduleFilter(
+	h: IHappeningContext,
+	f?: IScheduleFilter,
+): boolean {
 	if (!f) {
 		return true;
 	}
 	if (f.text && !h.dto?.title?.toLowerCase().includes(f.text)) {
-		return false
+		return false;
 	}
-	if (f.memberIDs?.length
-		&& !f.memberIDs.some(fmID => fmID === '' && !h.dto?.memberIDs?.length || h.dto?.memberIDs?.some(hmID => hmID == fmID))) {
+	if (
+		f.memberIDs?.length &&
+		!f.memberIDs.some(
+			(fmID) =>
+				(fmID === '' && !h.dto?.memberIDs?.length) ||
+				h.dto?.memberIDs?.some((hmID) => hmID == fmID),
+		)
+	) {
 		return false;
 	}
 	return true;

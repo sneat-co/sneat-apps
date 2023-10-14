@@ -6,7 +6,6 @@ import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { TeamsMenuComponent } from '@sneat/team/components';
 import { LogistMenuComponent } from './logist-menu.component';
 
-
 @NgModule({
 	imports: [
 		CommonModule,
@@ -16,13 +15,7 @@ import { LogistMenuComponent } from './logist-menu.component';
 		TeamsMenuComponent,
 		AppVersionComponent,
 	],
-	declarations: [
-		LogistMenuComponent,
-	],
-	exports: [
-		LogistMenuComponent,
-	],
+	declarations: [LogistMenuComponent],
+	exports: [LogistMenuComponent],
 })
-export class LogistMenuModule {
-
-}
+export class LogistMenuModule {}

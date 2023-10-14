@@ -5,7 +5,10 @@ import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team/models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';
-import { IListItemIDsRequest, ISetListItemsIsComplete } from '../../../services/interfaces';
+import {
+	IListItemIDsRequest,
+	ISetListItemsIsComplete,
+} from '../../../services/interfaces';
 import { ListService } from '../../../services/list.service';
 import { ListDialogsService } from '../../dialogs/ListDialogs.service';
 import { IListItemWithUiState } from '../list-item-with-ui-state';
@@ -17,7 +20,6 @@ import { IListItemWithUiState } from '../list-item-with-ui-state';
 	animations: [listItemAnimations],
 })
 export class ListItemComponent {
-
 	@Input()
 	public listItems?: IListItemWithUiState[];
 
@@ -43,12 +45,11 @@ export class ListItemComponent {
 	constructor(
 		private readonly params: ListusComponentBaseParams,
 		private readonly listDialogs: ListDialogsService,
-	) {
-	}
+	) {}
 
 	public get listItem(): IListItemBrief | undefined {
 		return this.listItemWithUiState?.brief;
-	};
+	}
 
 	private get listService(): ListService {
 		return this.params.listService;
@@ -63,7 +64,9 @@ export class ListItemComponent {
 			return false;
 		}
 		const { state } = this.listItemWithUiState;
-		return !!state.isReordering || !!state.isDeleting || !!state.isChangingIsDone;
+		return (
+			!!state.isReordering || !!state.isDeleting || !!state.isChangingIsDone
+		);
 	}
 
 	goListItem(item: IListItemBrief): void {
@@ -91,7 +94,11 @@ export class ListItemComponent {
 	}
 
 	// tslint:disable-next-line:prefer-function-over-method
-	setIsDone(item?: IListItemWithUiState, isDone?: boolean, ionSliding?: IonItemSliding): void {
+	setIsDone(
+		item?: IListItemWithUiState,
+		isDone?: boolean,
+		ionSliding?: IonItemSliding,
+	): void {
 		if (!item) {
 			return;
 		}
@@ -113,14 +120,17 @@ export class ListItemComponent {
 				isDone: !!isDone,
 			};
 			this.listService.setListItemsIsCompleted(request).subscribe({
-				error: this.errorLogger.logErrorHandler('failed to mark list item as completed'),
+				error: this.errorLogger.logErrorHandler(
+					'failed to mark list item as completed',
+				),
 				complete: () => {
 					this.isSettingIsDone = false;
 				},
 			});
 		};
 		if (ionSliding) {
-			(ionSliding as IonItemSliding).close()
+			(ionSliding as IonItemSliding)
+				.close()
 				.then(performSetIsDone)
 				.catch(this.errorLogger.logErrorHandler('Failed to set completed'));
 		} else {
@@ -129,7 +139,10 @@ export class ListItemComponent {
 		}
 	}
 
-	deleteFromList(item: IListItemBrief, ionSliding?: IonItemSliding | HTMLElement): void {
+	deleteFromList(
+		item: IListItemBrief,
+		ionSliding?: IonItemSliding | HTMLElement,
+	): void {
 		console.log('ListItemComponent.deleteFromList()', item);
 		if (!item.id) {
 			return;
@@ -149,21 +162,20 @@ export class ListItemComponent {
 			listType: this.list?.brief?.type,
 			itemIDs: [item.id],
 		};
-		this.listService.deleteListItems(request)
-			.subscribe({
-				next: () => {
-					console.log('ListItemComponent => item deleted');
-					// this.listChanged.emit(listDto);
-				},
-				error: this.errorLogger.logError,
-				complete: () => {
-					if (ionSliding) {
-						(ionSliding as IonItemSliding)
-							?.closeOpened()
-							.catch(this.errorLogger.logError);
-					}
-				},
-			});
+		this.listService.deleteListItems(request).subscribe({
+			next: () => {
+				console.log('ListItemComponent => item deleted');
+				// this.listChanged.emit(listDto);
+			},
+			error: this.errorLogger.logError,
+			complete: () => {
+				if (ionSliding) {
+					(ionSliding as IonItemSliding)
+						?.closeOpened()
+						.catch(this.errorLogger.logError);
+				}
+			},
+		});
 	}
 
 	public openCopyListItemDialog(listItem: IListItemBrief, event: Event): void {
@@ -171,13 +183,11 @@ export class ListItemComponent {
 		event.stopPropagation();
 
 		this.listDialogs
-			.copyListItems(
-				[listItem],
-				{
-					type: listItem.subListType || 'other',
-					id: listItem.subListId,
-					title: listItem.title,
-				})
+			.copyListItems([listItem], {
+				type: listItem.subListType || 'other',
+				id: listItem.subListId,
+				title: listItem.title,
+			})
 			.catch(this.errorLogger.logError);
 	}
 }

@@ -21,9 +21,6 @@ const routes: Routes = [
 		LogistTeamSettingsModule,
 		LogistTeamServiceModule,
 	],
-	declarations: [
-		LogistTeamSettingsPageComponent,
-	],
+	declarations: [LogistTeamSettingsPageComponent],
 })
-export class LogistTeamSettingsPageModule {
-}
+export class LogistTeamSettingsPageModule {}

@@ -33,5 +33,4 @@ import { ScrumTaskComponent } from './components/scrum-task/scrum-task.component
 		MetricsComponent,
 	],
 })
-export class ScrumPageModule {
-}
+export class ScrumPageModule {}

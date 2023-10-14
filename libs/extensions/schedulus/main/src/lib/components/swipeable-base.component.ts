@@ -7,12 +7,16 @@ import { dateToIso } from '@sneat/core';
 import { IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { animationState, areSameDates, isToday } from './schedule-core';
-import { addDays, getToday, IDateChanged, ScheduleStateService } from './schedule-state.service';
+import {
+	addDays,
+	getToday,
+	IDateChanged,
+	ScheduleStateService,
+} from './schedule-state.service';
 import { Parity, Swipeable } from './swipeable-ui';
 
-
 // @Injectable()
-export abstract class SwipeableBaseComponent extends SneatBaseComponent  {
+export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 	public shiftDays = 0;
 
 	public parity: Parity = 'odd';
@@ -41,7 +45,7 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent  {
 		super(className, errorLogger);
 		// this.animationState = this.parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
 		scheduleSateService.dateChanged.subscribe({
-			next: value => this.onDateChanged(value),
+			next: (value) => this.onDateChanged(value),
 		});
 	}
 
@@ -70,7 +74,6 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent  {
 		this.scheduleSateService.setToday();
 	}
 
-
 	// setSlidesAnimationState(): void {
 	// 	switch (this.tab) {
 	// 		case 'day': {
@@ -93,15 +96,21 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent  {
 	}
 
 	protected onDateChanged(changed: IDateChanged): void {
-		const changedToLog = {...changed, date: dateToIso(changed.date)}
-		console.log(`${this.className} extends SwipeableBaseComponent.onDateChanged(), changed:`, changedToLog);
+		const changedToLog = { ...changed, date: dateToIso(changed.date) };
+		console.log(
+			`${this.className} extends SwipeableBaseComponent.onDateChanged(), changed:`,
+			changedToLog,
+		);
 		// this.parity = this.parity === 'odd' ? 'even' : 'odd';
 		if (!this.oddSlide || !this.evenSlide) {
 			return;
 		}
 		this.date = changed.date;
 		if (!changed.shiftDirection) {
-			const passive: IDateChanged = { ...changed, date: addDays(changed.date, this.stepDays) };
+			const passive: IDateChanged = {
+				...changed,
+				date: addDays(changed.date, this.stepDays),
+			};
 			switch (this.parity) {
 				case 'odd':
 					this.oddSlide = this.oddSlide.setDate(changed, 'show');
@@ -121,7 +130,10 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent  {
 				this.parity = 'even';
 				break;
 			case 'even':
-				this.evenSlide = { ...this.evenSlide, animationState: hideVirtualSlide };
+				this.evenSlide = {
+					...this.evenSlide,
+					animationState: hideVirtualSlide,
+				};
 				this.oddSlide = this.oddSlide.setDate(changed, showVirtualSlide);
 				this.parity = 'odd';
 				break;
@@ -129,5 +141,5 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent  {
 		console.log('oddSlide', this.oddSlide);
 		console.log('evenSlide', this.evenSlide);
 		this.animationState = animationState(this.parity, changed.shiftDirection);
-	};
+	}
 }

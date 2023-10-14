@@ -6,15 +6,15 @@ export const listusRoutes: Route[] = [
 	{
 		path: 'lists',
 		// canActivate: [AuthGuard],
-		loadChildren: () => import('./pages/lists/lists-page.module')
-			.then(m => m.ListsPageModule),
+		loadChildren: () =>
+			import('./pages/lists/lists-page.module').then((m) => m.ListsPageModule),
 		// ...guardRoute,
 	},
 	{
 		path: 'list/:listType/:listID',
 		// canActivate: [AuthGuard],
-		loadChildren: () => import('./pages/list/list.module')
-			.then(m => m.ListPageModule),
+		loadChildren: () =>
+			import('./pages/list/list.module').then((m) => m.ListPageModule),
 	},
 	// {   // TODO: How not to list dynamic components in routes?
 	// 	path: 'new-list-dialog',

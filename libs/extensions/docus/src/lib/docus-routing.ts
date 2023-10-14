@@ -4,8 +4,10 @@ import { Route } from '@angular/router';
 export const docusRoutes: Route[] = [
 	{
 		path: 'documents',
-		loadChildren: () => import('./pages/documents/documents-page.module')
-			.then(m => m.DocumentsPageModule),
+		loadChildren: () =>
+			import('./pages/documents/documents-page.module').then(
+				(m) => m.DocumentsPageModule,
+			),
 		// ...guardRoute,
 	},
 	// {
@@ -16,8 +18,10 @@ export const docusRoutes: Route[] = [
 	// },
 	{
 		path: 'new-document',
-		loadChildren: () => import('./pages/document-new/new-document-page.module')
-			.then(m => m.NewDocumentPageModule),
+		loadChildren: () =>
+			import('./pages/document-new/new-document-page.module').then(
+				(m) => m.NewDocumentPageModule,
+			),
 		// ...guardRoute,
 	},
 ];

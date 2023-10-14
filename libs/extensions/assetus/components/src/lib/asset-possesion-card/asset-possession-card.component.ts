@@ -10,26 +10,26 @@ import { IAssetContext } from '@sneat/team/models';
 	standalone: true,
 	selector: 'sneat-asset-possession-card',
 	templateUrl: './asset-possession-card.component.html',
-	imports: [
-		IonicModule,
-		FormsModule,
-		SelectFromListModule,
-		NgIf,
-	],
+	imports: [IonicModule, FormsModule, SelectFromListModule, NgIf],
 })
 export class AssetPossessionCardComponent {
 	@Input() public asset?: IAssetContext;
 	@Output() public readonly assetChange = new EventEmitter<IAssetContext>();
 
-	protected readonly possessionOptions: ISelectItem[] = AssetPossessions.map(p => ({
-		id: p,
-		title: p,
-		iconName: 'radio-button-off',
-	}));
+	protected readonly possessionOptions: ISelectItem[] = AssetPossessions.map(
+		(p) => ({
+			id: p,
+			title: p,
+			iconName: 'radio-button-off',
+		}),
+	);
 
 	protected onPossessionChanged(possession: string): void {
 		if (this.asset?.dto) {
-			this.asset = { ...this.asset, dto: { ...this.asset.dto, possession: possession as AssetPossession } };
+			this.asset = {
+				...this.asset,
+				dto: { ...this.asset.dto, possession: possession as AssetPossession },
+			};
 			this.assetChange.emit(this.asset);
 		}
 		console.log('onPossessionChanged', possession, this.asset);

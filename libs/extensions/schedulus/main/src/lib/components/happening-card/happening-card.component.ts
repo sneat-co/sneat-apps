@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { HappeningBaseComponent, HappeningComponent } from '../happening-base.component';
+import {
+	HappeningBaseComponent,
+	HappeningComponent,
+} from '../happening-base.component';
 
 @Component({
 	selector: 'sneat-happening-card',
@@ -8,5 +11,4 @@ import { HappeningBaseComponent, HappeningComponent } from '../happening-base.co
 	providers: [...HappeningBaseComponent.providers],
 	...HappeningBaseComponent.metadata,
 })
-export class HappeningCardComponent extends HappeningComponent {
-}
+export class HappeningCardComponent extends HappeningComponent {}

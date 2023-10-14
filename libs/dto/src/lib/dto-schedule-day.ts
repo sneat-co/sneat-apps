@@ -19,6 +19,4 @@ export interface IScheduleDayBrief {
 	happeningAdjustments: IHappeningAdjustment[];
 }
 
-export interface IScheduleDayDto extends IScheduleDayBrief {
-}
-
+export interface IScheduleDayDto extends IScheduleDayBrief {}

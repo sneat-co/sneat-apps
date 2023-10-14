@@ -1,12 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IPhone } from '@sneat/dto';
 
 type PhoneType = 'personal' | 'mobile' | 'work' | 'fax' | 'landline';
 
-const phoneTypes: { id: PhoneType, title: string }[] = [
+const phoneTypes: { id: PhoneType; title: string }[] = [
 	{ id: 'personal', title: 'Personal' },
 	{ id: 'mobile', title: 'Mobile' },
 	{ id: 'landline', title: 'Landline' },
@@ -23,14 +30,9 @@ const emptyPhones: IPhone[] = [
 	selector: 'sneat-phones-form',
 	templateUrl: './phones-form.component.html',
 	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class PhonesFormComponent implements OnChanges {
-
 	@Input() disabled = false;
 
 	@Input() hideHeader = false;
@@ -51,15 +53,20 @@ export class PhonesFormComponent implements OnChanges {
 	typeChanged(event: Event, i: number): void {
 		event.stopPropagation();
 		if (this.phones) {
-			this.phones[i] = { ...this.phones[i], type: (event as CustomEvent).detail.value };
+			this.phones[i] = {
+				...this.phones[i],
+				type: (event as CustomEvent).detail.value,
+			};
 		}
 	}
 
 	numberChanged(event: Event, i: number): void {
 		event.stopPropagation();
 		if (this.phones) {
-			this.phones[i] = { ...this.phones[i], number: (event as CustomEvent).detail.value };
+			this.phones[i] = {
+				...this.phones[i],
+				number: (event as CustomEvent).detail.value,
+			};
 		}
 	}
-
 }

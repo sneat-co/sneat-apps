@@ -1,13 +1,12 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ContactType} from 'sneat-shared/models/types';
-import {IContact2Asset} from 'sneat-shared/models/dto/dto-contact';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ContactType } from 'sneat-shared/models/types';
+import { IContact2Asset } from 'sneat-shared/models/dto/dto-contact';
 
 @Component({
 	selector: 'sneat-asset-contacts-group',
 	templateUrl: './asset-contacts-group.component.html',
 })
 export class AssetContactsGroupComponent {
-
 	@Input() contactRelation: ContactType;
 	@Input() contacts: IContact2Asset[];
 

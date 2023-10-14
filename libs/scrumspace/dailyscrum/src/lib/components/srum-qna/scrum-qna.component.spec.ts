@@ -7,18 +7,16 @@ describe('SrumQnaComponent', () => {
 	let component: ScrumQnaComponent;
 	let fixture: ComponentFixture<ScrumQnaComponent>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [ScrumQnaComponent],
-				imports: [IonicModule.forRoot()],
-			}).compileComponents();
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [ScrumQnaComponent],
+			imports: [IonicModule.forRoot()],
+		}).compileComponents();
 
-			fixture = TestBed.createComponent(ScrumQnaComponent);
-			component = fixture.componentInstance;
-			fixture.detectChanges();
-		}),
-	);
+		fixture = TestBed.createComponent(ScrumQnaComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

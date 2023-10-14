@@ -75,7 +75,6 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 		this.navService.navigateToAddMember(this.navController, team);
 	}
 
-
 	copy(s: string): void {
 		if (navigator.clipboard) {
 			navigator.clipboard

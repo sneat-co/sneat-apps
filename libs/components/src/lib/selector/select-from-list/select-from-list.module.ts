@@ -6,14 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		RouterModule,
-	],
+	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
 	declarations: [SelectFromListComponent],
 	exports: [SelectFromListComponent],
 })
-export class SelectFromListModule {
-}
+export class SelectFromListModule {}

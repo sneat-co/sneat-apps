@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PopoverController, PopoverOptions } from '@ionic/angular';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext, HappeningUIState, IContactusTeamDtoWithID } from '@sneat/team/models';
+import {
+	ITeamContext,
+	HappeningUIState,
+	IContactusTeamDtoWithID,
+} from '@sneat/team/models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 
 @Component({
@@ -9,7 +13,6 @@ import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu
 	templateUrl: './day-slot-item.component.html',
 })
 export class DaySlotItemComponent {
-
 	@Input() public slot?: ISlotItem;
 
 	@Input() dateID?: string;
@@ -25,13 +28,13 @@ export class DaySlotItemComponent {
 	slotState?: HappeningUIState;
 
 	get isCanceled(): boolean {
-		return !!this.slot?.adjustment?.canceled || this.slot?.happening?.brief?.status === 'canceled';
+		return (
+			!!this.slot?.adjustment?.canceled ||
+			this.slot?.happening?.brief?.status === 'canceled'
+		);
 	}
 
-	constructor(
-		private readonly popoverController: PopoverController,
-	) {
-	}
+	constructor(private readonly popoverController: PopoverController) {}
 
 	onSlotClicked(event: Event): void {
 		console.log('DaySlotItemComponent.onSlotClicked()');
@@ -41,8 +44,14 @@ export class DaySlotItemComponent {
 		this.slotClicked.emit({ slot: this.slot, event });
 	}
 
-
-	async showContextMenu(event: MouseEvent | TouchEvent | PointerEvent | CustomEvent<unknown> | undefined): Promise<void> {
+	async showContextMenu(
+		event:
+			| MouseEvent
+			| TouchEvent
+			| PointerEvent
+			| CustomEvent<unknown>
+			| undefined,
+	): Promise<void> {
 		// const stateOutput = new EventEmitter<SlotContextState>();
 		//
 		// stateOutput.subscribe({

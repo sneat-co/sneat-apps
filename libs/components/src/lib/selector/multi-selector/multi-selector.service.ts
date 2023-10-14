@@ -8,10 +8,12 @@ export class MultiSelectorService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
-	) {
-	}
+	) {}
 
-	selectMultiple(items: ISelectItem[], selectedItems: ISelectItem[]): Promise<ISelectItem[]> {
+	selectMultiple(
+		items: ISelectItem[],
+		selectedItems: ISelectItem[],
+	): Promise<ISelectItem[]> {
 		console.log('MultiSelectorService.selectMultiple()', items, selectedItems);
 		const result = new Promise<ISelectItem[]>((resolve, reject) => {
 			const modalOptions: ModalOptions = {
@@ -21,17 +23,18 @@ export class MultiSelectorService {
 				},
 				keyboardClose: true,
 			};
-			this.modalController.create(modalOptions)
-				.then(
-					modal => modal.present()
-						.catch(err => {
-							reject(err);
-							this.errorLogger.logError('Failed to present modal');
-						}),
-				).catch(err => {
-				this.errorLogger.logError(err, 'Failed to create modal');
-				reject(err);
-			});
+			this.modalController
+				.create(modalOptions)
+				.then((modal) =>
+					modal.present().catch((err) => {
+						reject(err);
+						this.errorLogger.logError('Failed to present modal');
+					}),
+				)
+				.catch((err) => {
+					this.errorLogger.logError(err, 'Failed to create modal');
+					reject(err);
+				});
 		});
 
 		return result;

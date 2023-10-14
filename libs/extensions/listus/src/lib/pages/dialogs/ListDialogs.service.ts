@@ -5,14 +5,16 @@ import { CopyListItemsPageComponent } from './copy-list-items/copy-list-items-pa
 
 @Injectable()
 export class ListDialogsService {
-	constructor(
-		private readonly modalCtrl: ModalController,
-	) {
-	}
+	constructor(private readonly modalCtrl: ModalController) {}
 
-	async copyListItems(listItems: IListItemBrief[], from: IListInfo, to?: IListInfo): Promise<void> {
+	async copyListItems(
+		listItems: IListItemBrief[],
+		from: IListInfo,
+		to?: IListInfo,
+	): Promise<void> {
 		if (!to) {
-			to = {  // TODO: get rid of hardcoded?
+			to = {
+				// TODO: get rid of hardcoded?
 				type: 'to-buy',
 				emoji: '🛒',
 				shortId: 'groceries',

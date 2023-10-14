@@ -3,10 +3,13 @@ import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/team/models';
-import { ContactSelectorComponent, IContactSelectorProps } from './contact-selector.component';
+import {
+	ContactSelectorComponent,
+	IContactSelectorProps,
+} from './contact-selector.component';
 
-
-export interface IContactSelectorOptions extends ISelectorOptions<IContactContext> {
+export interface IContactSelectorOptions
+	extends ISelectorOptions<IContactContext> {
 	readonly componentProps?: IContactSelectorProps;
 }
 
@@ -24,11 +27,15 @@ export class ContactSelectorService extends SelectorBaseService<IContactContext>
 		super(ContactSelectorComponent, errorLogger, modalController);
 	}
 
-	selectSingleContactInModal(options: IContactSelectorOptions): Promise<IContactContext | null> {
+	selectSingleContactInModal(
+		options: IContactSelectorOptions,
+	): Promise<IContactContext | null> {
 		return this.selectSingleInModal(options);
 	}
 
-	selectMultipleContactsInModal(options: IContactSelectorOptions): Promise<IContactContext[] | null> {
+	selectMultipleContactsInModal(
+		options: IContactSelectorOptions,
+	): Promise<IContactContext[] | null> {
 		return this.selectMultipleInModal(options);
 	}
 }

@@ -46,9 +46,9 @@ export class ScrumsHistoryPageComponent {
 			// 	if (token) {
 			// 		console.log('token', token);
 			// 		setTimeout(() => {
-      //       if (!this.team) {
-      //         throw new Error('!this.team');
-      //       }
+			//       if (!this.team) {
+			//         throw new Error('!this.team');
+			//       }
 			// 			this.scrumService.getScrums(this.team.id).subscribe({
 			// 				next: (scrums) => {
 			// 					console.log('scrums', scrums);
@@ -66,6 +66,6 @@ export class ScrumsHistoryPageComponent {
 	goScrum(scrum: IRecord<IScrumDto>): void {
 		console.log('goScrum', scrum);
 		// this.navService.navigateToScrum(scrum.id, this.team, scrum);
-    throw new Error('not implemented')
+		throw new Error('not implemented');
 	}
 }

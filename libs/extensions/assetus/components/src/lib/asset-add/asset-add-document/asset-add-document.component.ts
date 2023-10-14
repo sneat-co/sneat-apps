@@ -4,11 +4,16 @@ import { ISelectItem } from '@sneat/components';
 import {
 	AssetPossession,
 	AssetVehicleType,
-	IDocumentAssetDto, IDocumentMainData,
+	IDocumentAssetDto,
+	IDocumentMainData,
 	timestamp,
 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
-import { IDocumentAssetContext, ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
+import {
+	IDocumentAssetContext,
+	ITeamContext,
+	IVehicleAssetContext,
+} from '@sneat/team/models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services/asset-service';
 import { ICreateAssetRequest } from '../../services/asset-service.dto';
@@ -19,8 +24,10 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	templateUrl: './asset-add-document.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class AssetAddDocumentComponent extends AddAssetBaseComponent implements OnChanges {
-
+export class AssetAddDocumentComponent
+	extends AddAssetBaseComponent
+	implements OnChanges
+{
 	@Input() public override team?: ITeamContext;
 	@Input() public documentAsset?: IDocumentAssetContext;
 
@@ -32,7 +39,6 @@ export class AssetAddDocumentComponent extends AddAssetBaseComponent implements 
 		{ id: 'boat', title: 'Boat', iconName: 'boat-outline' },
 	];
 
-
 	public countryIso2 = 'IE';
 	public regNumber = '';
 	public vin = '';
@@ -42,31 +48,30 @@ export class AssetAddDocumentComponent extends AddAssetBaseComponent implements 
 	public engine = '';
 	public engines?: string[];
 
-	public nctExpires = '';       // ISO date string 'YYYY-MM-DD'
-	public taxExpires = '';      // ISO date string 'YYYY-MM-DD'
-	public nextServiceDue = '';  // ISO date string 'YYYY-MM-DD'
+	public nctExpires = ''; // ISO date string 'YYYY-MM-DD'
+	public taxExpires = ''; // ISO date string 'YYYY-MM-DD'
+	public nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IDocumentAssetContext = this.documentAsset
-				?? {
-					id: '',
-					team: this.team ?? { id: '' },
-					dto: {
-						status: 'draft',
-						category: 'vehicle',
-						teamID: this.team?.id,
-						type: this.documentType,
-						title: '',
-						make: '',
-						model: '',
-						possession: undefined as unknown as AssetPossession,
-						createdAt: new Date().toISOString() as unknown as timestamp,
-						createdBy: '-',
-						updatedAt: new Date().toISOString() as unknown as timestamp,
-						updatedBy: '-',
-					},
-				};
+			const a: IDocumentAssetContext = this.documentAsset ?? {
+				id: '',
+				team: this.team ?? { id: '' },
+				dto: {
+					status: 'draft',
+					category: 'vehicle',
+					teamID: this.team?.id,
+					type: this.documentType,
+					title: '',
+					make: '',
+					model: '',
+					possession: undefined as unknown as AssetPossession,
+					createdAt: new Date().toISOString() as unknown as timestamp,
+					createdBy: '-',
+					updatedAt: new Date().toISOString() as unknown as timestamp,
+					updatedBy: '-',
+				},
+			};
 			this.documentAsset = { ...a, team: this.team };
 		}
 	}
@@ -87,7 +92,8 @@ export class AssetAddDocumentComponent extends AddAssetBaseComponent implements 
 	onVehicleTypeChanged(): void {
 		if (this.documentAsset?.dto) {
 			this.documentAsset = {
-				...this.documentAsset, dto: {
+				...this.documentAsset,
+				dto: {
 					...this.documentAsset.dto,
 					type: this.documentType,
 					make: '',
@@ -100,7 +106,9 @@ export class AssetAddDocumentComponent extends AddAssetBaseComponent implements 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	formatDate(value?: string | string[] | null): string {
-		return value && !Array.isArray(value) ? format(parseISO(value), 'dd MMMM yyyy') : '';
+		return value && !Array.isArray(value)
+			? format(parseISO(value), 'dd MMMM yyyy')
+			: '';
 	}
 
 	submitVehicleForm(): void {
@@ -125,7 +133,10 @@ export class AssetAddDocumentComponent extends AddAssetBaseComponent implements 
 			teamID: this.team?.id,
 		};
 		if (this.yearOfBuild) {
-			request = { ...request, asset: { ...request.asset, yearOfBuild: +this.yearOfBuild } };
+			request = {
+				...request,
+				asset: { ...request.asset, yearOfBuild: +this.yearOfBuild },
+			};
 		}
 
 		// if (this.vin) {
@@ -162,6 +173,9 @@ export class AssetAddDocumentComponent extends AddAssetBaseComponent implements 
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage<IDocumentMainData, IDocumentAssetDto>(request, this.team);
+		this.createAssetAndGoToAssetPage<IDocumentMainData, IDocumentAssetDto>(
+			request,
+			this.team,
+		);
 	}
 }

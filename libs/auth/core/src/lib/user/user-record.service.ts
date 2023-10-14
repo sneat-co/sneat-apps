@@ -4,19 +4,18 @@ import { excludeUndefined, TeamType } from '@sneat/core';
 import { AgeGroupID, Gender, IName, IUserDto } from '@sneat/dto';
 import { Observable, share } from 'rxjs';
 
-
 @Injectable({ providedIn: 'root' })
 export class UserRecordService {
-	constructor(
-		private readonly sneatApiService: SneatApiService,
-	) {
-	}
+	constructor(private readonly sneatApiService: SneatApiService) {}
 
 	private initUserRecord$?: Observable<IUserDto>;
 
 	public initUserRecord(request: IInitUserRecordRequest): Observable<IUserDto> {
 		if (!request.ianaTimezone) {
-			request = { ...request, ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone };
+			request = {
+				...request,
+				ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+			};
 		}
 		console.log(`initUserRecord()`, request);
 		request = excludeUndefined(request);
@@ -25,7 +24,6 @@ export class UserRecordService {
 			.pipe(share());
 		return this.initUserRecord$;
 	}
-
 }
 
 export interface IInitUserRecordRequest {
@@ -36,5 +34,5 @@ export interface IInitUserRecordRequest {
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly ianaTimezone?: string;
-	readonly team?: { type: TeamType, title: string };
+	readonly team?: { type: TeamType; title: string };
 }

@@ -1,6 +1,19 @@
-import { AfterViewInit, Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnDestroy,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AddressForm, AddressFormComponent, IAddressFormControls } from '@sneat/components';
+import {
+	AddressForm,
+	AddressFormComponent,
+	IAddressFormControls,
+} from '@sneat/components';
 import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
@@ -9,7 +22,6 @@ import { ITeamContext } from '@sneat/team/models';
 import { Subject, takeUntil } from 'rxjs';
 import { ILogistTeamContext, ISetLogistTeamSettingsRequest } from '../../dto';
 import { LogistTeamService } from '../../services';
-
 
 interface ILogistTeamSettingsFormControls extends IAddressFormControls {
 	vatNumber: FormControl<string | null>;
@@ -22,7 +34,9 @@ type LogistTeamSettingsForm = FormGroup<ILogistTeamSettingsFormControls>;
 	selector: 'sneat-logist-team-settings',
 	templateUrl: './logist-team-settings.component.html',
 })
-export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterViewInit {
+export class LogistTeamSettingsComponent
+	implements OnChanges, OnDestroy, AfterViewInit
+{
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() logistTeam?: ILogistTeamContext;
 
@@ -35,13 +49,10 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 	protected roles: string[] = [];
 
 	readonly vatNumber = new FormControl<string>('', {
-		validators: [
-			Validators.minLength(5),
-			Validators.maxLength(20)],
+		validators: [Validators.minLength(5), Validators.maxLength(20)],
 	});
 	readonly orderNumberPrefix = new FormControl<string>('', {
-		validators: [
-			Validators.maxLength(5)],
+		validators: [Validators.maxLength(5)],
 	});
 
 	form = new FormGroup({
@@ -54,21 +65,23 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly logistTeamService: LogistTeamService,
-		private readonly contactService: ContactService,
-		// private readonly navController: NavController,
-	) {
-	}
+		private readonly contactService: ContactService, // private readonly navController: NavController,
+	) {}
 
 	ngAfterViewInit(): void {
 		const c = this.addressFormComponent;
 		if (c) {
-			Object.entries(c.form.controls).forEach(([key/*, control*/]) => {
+			Object.entries(c.form.controls).forEach(([key /*, control*/]) => {
 				const k = key as keyof ILogistTeamSettingsFormControls;
 				this.form.addControl(k, c.form.controls.countryID);
 			});
 		}
 
-		console.log('LogistTeamSettingsComponent.ngAfterViewInit():', c, this.form.controls);
+		console.log(
+			'LogistTeamSettingsComponent.ngAfterViewInit():',
+			c,
+			this.form.controls,
+		);
 	}
 
 	ngOnDestroy(): void {
@@ -82,7 +95,6 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 	protected onAddressChanged(address: IAddress): void {
 		this.address = address;
 	}
-
 
 	submit(): void {
 		this.form.markAllAsTouched();
@@ -114,19 +126,20 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 			next: () => {
 				console.log('success');
 			},
-			error: err => {
+			error: (err) => {
 				this.errorLogger.logError(err, 'Failed to set logist team settings.');
 				this.isSubmitting = false;
 			},
 		});
 	}
 
-
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('LogistTeamSettingsComponent.ngOnChanges()', changes);
 		if (changes['logistTeam']) {
 			if (!this.orderNumberPrefix.dirty) {
-				this.orderNumberPrefix.setValue(this.logistTeam?.dto?.orderNumberPrefix || '');
+				this.orderNumberPrefix.setValue(
+					this.logistTeam?.dto?.orderNumberPrefix || '',
+				);
 			}
 			const contactID = this.logistTeam?.dto?.contactID;
 			if (!contactID) {
@@ -141,13 +154,14 @@ export class LogistTeamSettingsComponent implements OnChanges, OnDestroy, AfterV
 			}
 			this.contactService
 				.watchContactById(team, contactID)
-				.pipe(
-					takeUntil(this.destroyed),
-				)
-				.subscribe(contact => {
+				.pipe(takeUntil(this.destroyed))
+				.subscribe((contact) => {
 					this.address = contact?.dto?.address || this.address;
 					this.roles = contact?.dto?.roles || [];
-					console.log('LogistTeamSettingsComponent.ngOnChanges(): roles:', this.roles);
+					console.log(
+						'LogistTeamSettingsComponent.ngOnChanges(): roles:',
+						this.roles,
+					);
 				});
 		}
 	}

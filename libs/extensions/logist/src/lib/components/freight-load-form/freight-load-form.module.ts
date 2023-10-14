@@ -5,20 +5,11 @@ import { IonicModule } from '@ionic/angular';
 import { FreightLoadFormComponent } from './freight-load-form.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		IonicModule,
-		ReactiveFormsModule,
-	],
-	declarations: [
-		FreightLoadFormComponent,
-	],
-	exports: [
-		FreightLoadFormComponent,
-	],
+	imports: [CommonModule, IonicModule, ReactiveFormsModule],
+	declarations: [FreightLoadFormComponent],
+	exports: [FreightLoadFormComponent],
 	// exports: [
 	// 	FreightLoadFormComponent,
 	// ],
 })
-export class FreightLoadFormModule {
-}
+export class FreightLoadFormModule {}

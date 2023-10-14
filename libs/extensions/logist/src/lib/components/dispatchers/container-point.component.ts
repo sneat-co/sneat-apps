@@ -1,13 +1,24 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ContactSelectorService } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	getSegmentCounterparty,
-	getSegmentsByContainerID, IContainerPoint,
+	getSegmentsByContainerID,
+	IContainerPoint,
 	IContainerSegment,
-	IFreightLoad, ILogistOrderContext, IOrderContainer,
-	IOrderCounterparty, IOrderShippingPoint, IUpdateContainerPointRequest,
+	IFreightLoad,
+	ILogistOrderContext,
+	IOrderContainer,
+	IOrderCounterparty,
+	IOrderShippingPoint,
+	IUpdateContainerPointRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
@@ -50,28 +61,43 @@ export class ContainerPointComponent implements OnChanges {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactSelectorService: ContactSelectorService,
 		private readonly ordersService: LogistOrderService,
-	) {
-	}
+	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['container'] || changes['shippingPoint']) {
 			const containerID = this.container?.id;
 			const shippingPointID = this.shippingPoint?.id;
 			this.containerPoint = this.order?.dto?.containerPoints?.find(
-				cp => cp.containerID === containerID && cp.shippingPointID === shippingPointID);
+				(cp) =>
+					cp.containerID === containerID &&
+					cp.shippingPointID === shippingPointID,
+			);
 			if (!this.numberOfPallets.dirty) {
-				this.numberOfPallets.setValue(this.containerPoint?.toLoad?.numberOfPallets || undefined);
+				this.numberOfPallets.setValue(
+					this.containerPoint?.toLoad?.numberOfPallets || undefined,
+				);
 			}
 			if (!this.grossWeightKg.dirty) {
-				this.grossWeightKg.setValue(this.containerPoint?.toLoad?.grossWeightKg || undefined);
+				this.grossWeightKg.setValue(
+					this.containerPoint?.toLoad?.grossWeightKg || undefined,
+				);
 			}
 			if (!this.volumeM3.dirty) {
-				this.volumeM3.setValue(this.containerPoint?.toLoad?.volumeM3 || undefined);
+				this.volumeM3.setValue(
+					this.containerPoint?.toLoad?.volumeM3 || undefined,
+				);
 			}
 
-			const containerSegments = getSegmentsByContainerID(this.order?.dto?.segments, this.container?.id);
-			this.arriveSegment = containerSegments?.find(s => s.to?.shippingPointID === this.shippingPoint?.id);
-			this.departSegment = containerSegments?.find(s => s.from?.shippingPointID === this.shippingPoint?.id);
+			const containerSegments = getSegmentsByContainerID(
+				this.order?.dto?.segments,
+				this.container?.id,
+			);
+			this.arriveSegment = containerSegments?.find(
+				(s) => s.to?.shippingPointID === this.shippingPoint?.id,
+			);
+			this.departSegment = containerSegments?.find(
+				(s) => s.from?.shippingPointID === this.shippingPoint?.id,
+			);
 
 			if (this.arriveSegment?.dates?.end) {
 				this.arrivesOn.setValue(this.arriveSegment.dates.end);
@@ -80,16 +106,28 @@ export class ContainerPointComponent implements OnChanges {
 				this.arrivesOn.setValue(this.departSegment.dates.start);
 			}
 
-			this.truckerTo = getSegmentCounterparty(this.order?.dto, this.arriveSegment);
-			this.truckerFrom = getSegmentCounterparty(this.order?.dto, this.departSegment);
+			this.truckerTo = getSegmentCounterparty(
+				this.order?.dto,
+				this.arriveSegment,
+			);
+			this.truckerFrom = getSegmentCounterparty(
+				this.order?.dto,
+				this.departSegment,
+			);
 		}
 
-		console.log('ContainerPointComponent.ngOnChanges',
-			'order', this.order,
-			'container', this.container,
-			'shippingPoint', this.shippingPoint,
-			'arriveSegment', this.arriveSegment,
-			'truckerTo', this.truckerTo,
+		console.log(
+			'ContainerPointComponent.ngOnChanges',
+			'order',
+			this.order,
+			'container',
+			this.container,
+			'shippingPoint',
+			this.shippingPoint,
+			'arriveSegment',
+			this.arriveSegment,
+			'truckerTo',
+			this.truckerTo,
 		);
 	}
 
@@ -101,7 +139,6 @@ export class ContainerPointComponent implements OnChanges {
 		alert('not implemented yet');
 	}
 
-
 	saveChanges(): void {
 		if (this.saving || !this.order || !this.shippingPoint || !this.container) {
 			return;
@@ -110,12 +147,12 @@ export class ContainerPointComponent implements OnChanges {
 
 		const pallets = this.numberOfPallets.value;
 		if (pallets || pallets === 0) {
-			toPick = {...toPick, numberOfPallets: pallets};
+			toPick = { ...toPick, numberOfPallets: pallets };
 		}
 
 		const grossKg = this.grossWeightKg.value;
 		if (grossKg || grossKg === 0) {
-			toPick = {...toPick, grossWeightKg: grossKg};
+			toPick = { ...toPick, grossWeightKg: grossKg };
 		}
 
 		const request: IUpdateContainerPointRequest = {
@@ -126,18 +163,18 @@ export class ContainerPointComponent implements OnChanges {
 			toLoad: toPick,
 		};
 		this.saving = true;
-		this.containerForm.disable()
+		this.containerForm.disable();
 		try {
 			this.ordersService.updateContainerPoint(request).subscribe({
 				next: () => {
 					this.containerForm.markAsPristine();
 					this.containerForm.enable();
 				},
-				error: err => {
-					this.errorLogger.logError(err,'Failed to update segment');
+				error: (err) => {
+					this.errorLogger.logError(err, 'Failed to update segment');
 					this.containerForm.enable();
-				}
-			})
+				},
+			});
 		} catch (e) {
 			this.saving = false;
 		}

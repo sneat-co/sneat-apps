@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {IMovie} from '../../../../models/movie-models';
-import {IListService} from '../../services/interfaces';
-import {CommuneBasePage} from '../../../../pages/commune-base-page';
-import {CommuneBasePageParams} from '../../../../services/params';
-import {TmdbService} from '../../watchlist/tmdb.service';
-import {IListItemInfo} from '../../../../models/dto/dto-list';
-import {ListusDbService} from '../../services/listus-db.service';
-import {BaseListPage} from '../base-list-page';
+import { Component } from '@angular/core';
+import { IMovie } from '../../../../models/movie-models';
+import { IListService } from '../../services/interfaces';
+import { CommuneBasePage } from '../../../../pages/commune-base-page';
+import { CommuneBasePageParams } from '../../../../services/params';
+import { TmdbService } from '../../watchlist/tmdb.service';
+import { IListItemInfo } from '../../../../models/dto/dto-list';
+import { ListusDbService } from '../../services/listus-db.service';
+import { BaseListPage } from '../base-list-page';
 
 @Component({
 	selector: 'sneat-add-to-watch-page',
@@ -15,8 +15,10 @@ import {BaseListPage} from '../base-list-page';
 })
 
 // tslint:disable-next-line:component-class-suffix
-export class AddToWatchPageComponent extends BaseListPage implements CommuneBasePage {
-
+export class AddToWatchPageComponent
+	extends BaseListPage
+	implements CommuneBasePage
+{
 	listItems?: IListItemInfo[];
 	searchText = '';
 	movies: IMovie[];
@@ -38,7 +40,6 @@ export class AddToWatchPageComponent extends BaseListPage implements CommuneBase
 		this.showWatched = !this.showWatched;
 		console.log(this.showWatched);
 	}
-
 
 	// searchChanged(event: CustomEvent) {
 	// 	if (!this.searchText) {
@@ -68,20 +69,27 @@ export class AddToWatchPageComponent extends BaseListPage implements CommuneBase
 			throw new Error('Missing required parameter item');
 		}
 		// tslint:disable-next-line:max-line-length
-		console.log(`AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`, 'this.shortListId', this.shortListId, 'this.listDto', this.listDto);
+		console.log(
+			`AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`,
+			'this.shortListId',
+			this.shortListId,
+			'this.listDto',
+			this.listDto,
+		);
 		if (!this.commune) {
 			throw new Error('!this.commune');
 		}
 		if (!this.listDto) {
 			throw new Error('!this.listDto');
 		}
-		this.listusDbService.addListItem({
-			commune: this.commune,
-			list: {dto: this.listDto, shortId: this.shortListId},
-			items: [movie],
-		})
+		this.listusDbService
+			.addListItem({
+				commune: this.commune,
+				list: { dto: this.listDto, shortId: this.shortListId },
+				items: [movie],
+			})
 			.subscribe({
-				next: result => {
+				next: (result) => {
 					console.log('ListPage.addListItem => result', result);
 					// if (result.success) {
 					//     (this.newListItem as NewListItem).clear();
@@ -96,9 +104,7 @@ export class AddToWatchPageComponent extends BaseListPage implements CommuneBase
 					// }
 					this.listItems = result.listDto.items;
 				},
-				error: this.errorLogger.logErrorHandler( 'Failed to add item to list'),
+				error: this.errorLogger.logErrorHandler('Failed to add item to list'),
 			});
 	}
-
 }
-

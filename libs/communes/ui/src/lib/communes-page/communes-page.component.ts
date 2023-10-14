@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
 	selector: 'sneat-communes-page',
 	templateUrl: './communes-page.component.html',
 })
-export class CommunesPageComponent {
-
-}
+export class CommunesPageComponent {}

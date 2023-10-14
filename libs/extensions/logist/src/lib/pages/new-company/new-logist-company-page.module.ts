@@ -3,29 +3,32 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { CountrySelectorComponent, SelectFromListModule } from '@sneat/components';
-import { LocationFormModule, NewCompanyFormModule } from '@sneat/contactus-shared';
+import {
+	CountrySelectorComponent,
+	SelectFromListModule,
+} from '@sneat/components';
+import {
+	LocationFormModule,
+	NewCompanyFormModule,
+} from '@sneat/contactus-shared';
 import { NewLogistCompanyPageComponent } from './new-logist-company-page.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    FormsModule,
-    LocationFormModule,
-    SelectFromListModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: NewLogistCompanyPageComponent,
-      },
-    ]),
-    CountrySelectorComponent,
-    NewCompanyFormModule,
-  ],
-	declarations: [
-		NewLogistCompanyPageComponent,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		LocationFormModule,
+		SelectFromListModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: NewLogistCompanyPageComponent,
+			},
+		]),
+		CountrySelectorComponent,
+		NewCompanyFormModule,
 	],
+	declarations: [NewLogistCompanyPageComponent],
 })
-export class NewLogistCompanyPageModule {
-}
+export class NewLogistCompanyPageModule {}

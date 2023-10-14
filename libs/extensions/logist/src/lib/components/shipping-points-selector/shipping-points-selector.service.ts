@@ -2,7 +2,11 @@ import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ILogistOrderContext, IOrderContainer, IOrderShippingPoint } from '../../dto';
+import {
+	ILogistOrderContext,
+	IOrderContainer,
+	IOrderShippingPoint,
+} from '../../dto';
 import { ShippingPointsSelectorDialogComponent } from './shipping-points-selector-dialog.component';
 
 @Injectable()
@@ -14,7 +18,10 @@ export class ShippingPointsSelectorService extends SelectorBaseService<IOrderShi
 		super(ShippingPointsSelectorDialogComponent, errorLogger, modalController);
 	}
 
-	public selectShippingPointsInModal(order: ILogistOrderContext, container: IOrderContainer): Promise<IOrderShippingPoint[] | null> {
+	public selectShippingPointsInModal(
+		order: ILogistOrderContext,
+		container: IOrderContainer,
+	): Promise<IOrderShippingPoint[] | null> {
 		const options: ISelectorOptions<IOrderShippingPoint> = {
 			// selectedItems: [...(order.dto?.shippingPoints || [])],
 			componentProps: { order, container },
