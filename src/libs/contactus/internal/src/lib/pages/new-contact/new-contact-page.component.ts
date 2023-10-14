@@ -3,7 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
-import { ContactRoleFormModule, PersonWizardComponent } from '@sneat/contactus-shared';
+import {
+	ContactRoleFormModule,
+	PersonWizardComponent,
+} from '@sneat/contactus-shared';
 import {
 	ContactToAssetRelation,
 	ContactToContactRelation,
@@ -15,8 +18,15 @@ import {
 	isRelatedPersonNotReady,
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
-import { TeamBaseComponent, TeamComponentBaseParams } from '@sneat/team/components';
-import { IAssetContext, IContactContext, ICreateContactRequest } from '@sneat/team/models';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team/components';
+import {
+	IAssetContext,
+	IContactContext,
+	ICreateContactRequest,
+} from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
@@ -39,8 +49,10 @@ import {
 		PersonWizardComponent,
 	],
 })
-export class NewContactPageComponent extends TeamBaseComponent implements OnInit {
-
+export class NewContactPageComponent
+	extends TeamBaseComponent
+	implements OnInit
+{
 	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
 
 	public readonly personRequires: IPersonRequirements = {
@@ -78,7 +90,9 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 	get title(): string {
 		return this.contactRole?.brief
-			? `${this.contactRole.brief.emoji} New ${this.contactRole.brief.title.toLowerCase()}`
+			? `${
+					this.contactRole.brief.emoji
+			  } New ${this.contactRole.brief.title.toLowerCase()}`
 			: 'New contact';
 	}
 
@@ -91,8 +105,8 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		private readonly assetService: AssetService,
 		private readonly contactGroupService: ContactGroupService,
 		private readonly contactRoleService: ContactRoleService,
-		// private readonly businessLogic: IBusinessLogic,
-	) {
+	) // private readonly businessLogic: IBusinessLogic,
+	{
 		super('NewContactPageComponent', route, params);
 		this.defaultBackPage = 'contacts';
 		this.contact = window.history.state.contact as IContactContext;
@@ -105,8 +119,8 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 	ngOnInit(): void {
 		this.route.queryParamMap
-		.pipe(takeUntil(this.destroyed))
-		.subscribe(this.onUrlParamsChanged);
+			.pipe(takeUntil(this.destroyed))
+			.subscribe(this.onUrlParamsChanged);
 	}
 
 	private readonly onUrlParamsChanged = (params: ParamMap): void => {
@@ -116,32 +130,28 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		}
 		const contactGroupID = params.get('group');
 		if (contactGroupID && !this.contactGroup) {
-			this.contactGroupService.getContactGroupByID(contactGroupID)
-			.pipe(
-				first(),
-				takeUntil(this.destroyed),
-			)
-			.subscribe({
-				next: contactGroup => {
-					this.contactGroup = contactGroup;
-				},
-				error: this.logErrorHandler('Failed to get contact group by ID'),
-			});
+			this.contactGroupService
+				.getContactGroupByID(contactGroupID)
+				.pipe(first(), takeUntil(this.destroyed))
+				.subscribe({
+					next: (contactGroup) => {
+						this.contactGroup = contactGroup;
+					},
+					error: this.logErrorHandler('Failed to get contact group by ID'),
+				});
 		}
 		const contactRole = params.get('role');
 
 		if (contactRole && !this.contactRole) {
-			this.contactRoleService.getContactRoleByID(contactRole)
-			.pipe(
-				first(),
-				this.takeUntilNeeded(),
-			)
-			.subscribe({
-				next: contactRole => {
-					this.contactRole = contactRole;
-				},
-				error: this.logErrorHandler('Failed to get contact role by ID'),
-			});
+			this.contactRoleService
+				.getContactRoleByID(contactRole)
+				.pipe(first(), this.takeUntilNeeded())
+				.subscribe({
+					next: (contactRole) => {
+						this.contactRole = contactRole;
+					},
+					error: this.logErrorHandler('Failed to get contact role by ID'),
+				});
 		}
 
 		const team = this.team;
@@ -153,24 +163,24 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		if (assetId && this.asset?.id !== assetId) {
 			this.asset = { id: assetId, team };
 			this.assetService
-			.watchAssetByID(team, assetId)
-			.pipe(this.takeUntilNeeded())
-			.subscribe({
-				next: asset => {
-					this.asset = asset;
-				},
-				error: this.logErrorHandler('failed to get asset by ID'),
-			});
+				.watchAssetByID(team, assetId)
+				.pipe(this.takeUntilNeeded())
+				.subscribe({
+					next: (asset) => {
+						this.asset = asset;
+					},
+					error: this.logErrorHandler('failed to get asset by ID'),
+				});
 		}
 		const memberId = params.get('member');
 		if (memberId && this.contact?.id !== memberId) {
 			this.contact = { id: memberId, team };
 			this.contactService
-			.watchContactById(team, memberId)
-			.pipe(this.takeUntilNeeded())
-			.subscribe(member => {
-				this.contact = member;
-			});
+				.watchContactById(team, memberId)
+				.pipe(this.takeUntilNeeded())
+				.subscribe((member) => {
+					this.contact = member;
+				});
 		}
 	};
 
@@ -180,7 +190,8 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	}
 
 	public onContactRoleIDChanged(contactRoleID?: string): void {
-		const brief: IContactRoleBrief | undefined = this.contactGroup?.dto?.roles.find(r => r.id === contactRoleID);
+		const brief: IContactRoleBrief | undefined =
+			this.contactGroup?.dto?.roles.find((r) => r.id === contactRoleID);
 		this.contactRole = brief && { id: brief.id, brief };
 		console.log('onContactRoleIDChanged()', contactRoleID, this.contactRole);
 	}
@@ -233,18 +244,26 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		const roleID = this.contactRole?.id;
 		if (roleID) {
 			if (request.person && !request.person.roles) {
-				request = { ...request, person: { ...request.person, roles: [roleID] } };
-			} else if (request.person && request.person.roles?.some(r => r === roleID)) {
-				request.person = { ...request.person, roles: [...request.person.roles, roleID] };
+				request = {
+					...request,
+					person: { ...request.person, roles: [roleID] },
+				};
+			} else if (
+				request.person &&
+				request.person.roles?.some((r) => r === roleID)
+			) {
+				request.person = {
+					...request.person,
+					roles: [...request.person.roles, roleID],
+				};
 			}
 		}
-		this.contactService.createContact(team, request)
-		.subscribe({
-			next: contact => {
-				this.navigateForwardToTeamPage(
-					`contact/${contact.id}`,
-					{ replaceUrl: true, state: { contact } },
-				).catch(this.logErrorHandler('failed to navigate to contact page'));
+		this.contactService.createContact(team, request).subscribe({
+			next: (contact) => {
+				this.navigateForwardToTeamPage(`contact/${contact.id}`, {
+					replaceUrl: true,
+					state: { contact },
+				}).catch(this.logErrorHandler('failed to navigate to contact page'));
 			},
 			error: (err: unknown) => {
 				this.creating = false;
@@ -266,5 +285,4 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 	public get isContactNotReady(): boolean {
 		return isRelatedPersonNotReady(this.relatedPerson, {});
 	}
-
 }
