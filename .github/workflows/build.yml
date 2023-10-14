@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '.github/workflows/**.yml'
-      - 'src/**'
+#    paths:
+#      - '.github/workflows/**.yml'
+#      - 'src/**'
   pull_request:
-    paths:
-      - '.github/workflows/**.yml'
-      - 'src/**'
+#    paths:
+#      - '.github/workflows/**.yml'
+#      - 'src/**'
 
 jobs:
 
@@ -52,14 +52,14 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - run: pnpm install
-        working-directory: ./src
+#        working-directory: ./src
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
 
       - name: nx lint affected
         run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }}
-        working-directory: ./src
+#        working-directory: ./src
 
       - name: nx build affected
         env:
@@ -67,4 +67,4 @@ jobs:
           BAZEL_TARGET: "1"
         # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
         run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=0 --maxParallel=1
-        working-directory: ./src
+#        working-directory: ./src
