@@ -105,8 +105,8 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 
 	ngOnInit(): void {
 		this.route.queryParamMap
-			.pipe(takeUntil(this.destroyed))
-			.subscribe(this.onUrlParamsChanged);
+		.pipe(takeUntil(this.destroyed))
+		.subscribe(this.onUrlParamsChanged);
 	}
 
 	private readonly onUrlParamsChanged = (params: ParamMap): void => {
@@ -116,33 +116,32 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		}
 		const contactGroupID = params.get('group');
 		if (contactGroupID && !this.contactGroup) {
-
 			this.contactGroupService.getContactGroupByID(contactGroupID)
-				.pipe(
-					first(),
-					takeUntil(this.destroyed),
-				)
-				.subscribe({
-					next: contactGroup => {
-						this.contactGroup = contactGroup;
-					},
-					error: this.logErrorHandler('Failed to get contact group by ID'),
-				});
+			.pipe(
+				first(),
+				takeUntil(this.destroyed),
+			)
+			.subscribe({
+				next: contactGroup => {
+					this.contactGroup = contactGroup;
+				},
+				error: this.logErrorHandler('Failed to get contact group by ID'),
+			});
 		}
 		const contactRole = params.get('role');
 
 		if (contactRole && !this.contactRole) {
 			this.contactRoleService.getContactRoleByID(contactRole)
-				.pipe(
-					first(),
-					this.takeUntilNeeded(),
-				)
-				.subscribe({
-					next: contactRole => {
-						this.contactRole = contactRole;
-					},
-					error: this.logErrorHandler('Failed to get contact role by ID'),
-				});
+			.pipe(
+				first(),
+				this.takeUntilNeeded(),
+			)
+			.subscribe({
+				next: contactRole => {
+					this.contactRole = contactRole;
+				},
+				error: this.logErrorHandler('Failed to get contact role by ID'),
+			});
 		}
 
 		const team = this.team;
@@ -154,24 +153,24 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 		if (assetId && this.asset?.id !== assetId) {
 			this.asset = { id: assetId, team };
 			this.assetService
-				.watchAssetByID(team, assetId)
-				.pipe(this.takeUntilNeeded())
-				.subscribe({
-					next: asset => {
-						this.asset = asset;
-					},
-					error: this.logErrorHandler('failed to get asset by ID'),
-				});
+			.watchAssetByID(team, assetId)
+			.pipe(this.takeUntilNeeded())
+			.subscribe({
+				next: asset => {
+					this.asset = asset;
+				},
+				error: this.logErrorHandler('failed to get asset by ID'),
+			});
 		}
 		const memberId = params.get('member');
 		if (memberId && this.contact?.id !== memberId) {
 			this.contact = { id: memberId, team };
 			this.contactService
-				.watchContactById(team, memberId)
-				.pipe(this.takeUntilNeeded())
-				.subscribe(member => {
-					this.contact = member;
-				});
+			.watchContactById(team, memberId)
+			.pipe(this.takeUntilNeeded())
+			.subscribe(member => {
+				this.contact = member;
+			});
 		}
 	};
 
@@ -240,18 +239,18 @@ export class NewContactPageComponent extends TeamBaseComponent implements OnInit
 			}
 		}
 		this.contactService.createContact(team, request)
-			.subscribe({
-				next: contact => {
-					this.navigateForwardToTeamPage(
-						`contact/${contact.id}`,
-						{ replaceUrl: true, state: { contact } },
-					).catch(this.logErrorHandler('failed to navigate to contact page'));
-				},
-				error: (err: unknown) => {
-					this.creating = false;
-					this.errorLogger.logError(err, 'Failed to create new contact');
-				},
-			});
+		.subscribe({
+			next: contact => {
+				this.navigateForwardToTeamPage(
+					`contact/${contact.id}`,
+					{ replaceUrl: true, state: { contact } },
+				).catch(this.logErrorHandler('failed to navigate to contact page'));
+			},
+			error: (err: unknown) => {
+				this.creating = false;
+				this.errorLogger.logError(err, 'Failed to create new contact');
+			},
+		});
 	}
 
 	// selectRel(rel: ITitledRecord): void {
