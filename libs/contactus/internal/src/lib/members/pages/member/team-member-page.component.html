@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="teamPageUrl('members')"></ion-back-button>
+			<ion-back-button [defaultHref]="teamPageUrl('members')" />
 		</ion-buttons>
 		<ng-container [ngSwitch]="team.type">
 			<ion-title *ngSwitchCase="'family'">
@@ -30,16 +30,13 @@
 				"
 				(click)="removeMember()"
 			>
-				<ion-icon name="trash"></ion-icon>
+				<ion-icon name="trash" />
 			</ion-button>
-			<ion-menu-button menu="mainMenu"></ion-menu-button>
+			<ion-menu-button menu="mainMenu" />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-contact-details
-		[team]="team"
-		[contact]="contact"
-	></sneat-contact-details>
+	<sneat-contact-details [team]="team" [contact]="contact" />
 </ion-content>

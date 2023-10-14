@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="contact; else titleNoContact">{{
 			contact | personTitle
@@ -15,16 +15,13 @@
 				color="medium"
 				(click)="deleteContact()"
 			>
-				<ion-icon name="trash" slot="start"></ion-icon>
+				<ion-icon name="trash" slot="start" />
 			</ion-button>
-			<ion-menu-button></ion-menu-button>
+			<ion-menu-button />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-contact-details
-		[contact]="contact"
-		[team]="team"
-	></sneat-contact-details>
+	<sneat-contact-details [contact]="contact" [team]="team" />
 </ion-content>

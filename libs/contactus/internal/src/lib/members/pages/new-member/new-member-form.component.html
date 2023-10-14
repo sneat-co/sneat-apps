@@ -5,7 +5,7 @@
 		[newPerson]="member"
 		[requires]="personRequirements"
 		(newPersonChange)="onRelatedPersonChanged($event)"
-	></sneat-person-form-wizard>
+	/>
 
 	<ion-card *ngIf="addMemberForm.errors">
 		<ion-card-header color="danger">
@@ -26,7 +26,7 @@
 				name="lines-small"
 				*ngIf="addMemberForm.disabled"
 				slot="start"
-			></ion-spinner>
+			/>
 			<ion-label>Add member</ion-label>
 		</ion-button>
 	</div>

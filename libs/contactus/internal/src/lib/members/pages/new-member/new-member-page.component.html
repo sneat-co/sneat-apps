@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="team?.brief || team?.type; else titleNoCommune">
 			<ng-container *ngIf="member.type === 'animal'; else ageGroupTitle">
@@ -38,7 +38,7 @@
 		*ngIf="tab === 'personal'"
 		[team]="team"
 		[(member)]="member"
-	></sneat-new-member-form>
+	/>
 
 	<ion-card *ngIf="tab === 'mass'">
 		<ion-card-content>

@@ -33,6 +33,14 @@
 			"files": ["*.js", "*.jsx"],
 			"extends": ["plugin:@nx/javascript"],
 			"rules": {}
+		},
+		{
+			"files": ["*.html"],
+			"rules": {
+				"@angular-eslint/template/prefer-self-closing-tags": [
+					"error"
+				]
+			}
 		}
 	]
 }

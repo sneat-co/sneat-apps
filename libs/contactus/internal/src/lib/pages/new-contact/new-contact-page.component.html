@@ -1,9 +1,9 @@
-<ion-nav></ion-nav>
+<ion-nav />
 
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl"></ion-back-button>
+			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title>{{ title }}</ion-title>
 	</ion-toolbar>
@@ -25,7 +25,7 @@
 		(contactGroupChange)="onContactGroupChanged($event)"
 		[contactRoleID]="contactRole?.id"
 		(contactRoleIDChange)="onContactRoleIDChanged($event)"
-	></sneat-contact-role-form>
+	/>
 
 	<sneat-person-form-wizard
 		*ngIf="contactRole"
@@ -37,7 +37,7 @@
 		[requires]="personRequires"
 		(newPersonChange)="onRelatedPersonChange($event)"
 		(isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
-	></sneat-person-form-wizard>
+	/>
 
 	<!--	<ng-container *ngIf="member && !relation">-->
 	<!--		<p *ngIf="!member">Please select relation to member</p>-->

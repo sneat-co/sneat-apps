@@ -3,7 +3,7 @@
 		<ion-back-button
 			slot="start"
 			[defaultHref]="teamPageUrl('contact/{{contact?.id}}')"
-		></ion-back-button>
+		/>
 		<ion-title *ngIf="!contact">New location</ion-title>
 		<ion-title *ngIf="contact"
 			>New location @ {{ contact | personTitle }}</ion-title
@@ -18,5 +18,5 @@
 		[contact]="newLocation"
 		(contactChange)="onContactChanged($event)"
 		(contactCreated)="onContactCreated($event)"
-	></sneat-location-form>
+	/>
 </ion-content>

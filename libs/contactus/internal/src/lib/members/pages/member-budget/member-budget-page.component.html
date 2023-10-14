@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button
 				[defaultHref]="memberId ? '/member?id=' + memberId : '/communes'"
-			></ion-back-button>
+			/>
 		</ion-buttons>
 		<ion-title *ngIf="memberInfo; else titleNoCommune">
 			Budget of {{ memberInfo.title }}
@@ -12,4 +12,4 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content padding> </ion-content>
+<ion-content padding />
