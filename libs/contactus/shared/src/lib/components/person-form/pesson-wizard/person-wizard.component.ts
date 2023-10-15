@@ -100,14 +100,14 @@ export class PersonWizardComponent implements OnChanges {
 	@Input() displayAgeGroupValue = false;
 
 	@Input() nameFields: INamesFormFields = {
+		firstName: { hide: false },
+		lastName: { hide: false },
+		middleName: { hide: false },
 		nickName: { hide: true, required: false },
-		firstName: { hide: true },
-		lastName: { hide: true },
-		middleName: { hide: true },
 		fullName: { hide: false, required: false },
 	};
 
-	@Input() fields: IPersonFormWizardFields = {};
+	@Input({ required: true }) fields: IPersonFormWizardFields = {};
 
 	@Input() newPerson: IRelatedPerson = emptyContactBase;
 	@Output() readonly newPersonChange = new EventEmitter<IRelatedPerson>();
@@ -277,7 +277,15 @@ export class PersonWizardComponent implements OnChanges {
 	protected onRelationshipChanged(relatedAs: string): void {
 		console.log('onRelationshipChanged()', relatedAs);
 		this.setRelatedPerson(
-			{ ...this.newPerson, relatedTo: { relatedAs: relatedAs } },
+			{
+				...this.newPerson,
+				relatedTo: {
+					moduleID: 'contactus',
+					collection: 'contacts',
+					itemID: '',
+					relatedAs: relatedAs,
+				},
+			},
 			{ name: 'relatedAs', hasValue: !!relatedAs },
 		);
 		if (!this.newPerson.ageGroup) {
@@ -364,7 +372,7 @@ export class PersonWizardComponent implements OnChanges {
 		return false;
 	}
 
-	public openNext(currentStepID: keyof personWizardState): void {
+	private openNext(currentStepID: keyof personWizardState): void {
 		for (;;) {
 			console.log('openNext()', currentStepID);
 			const i = this.formOrder.findIndex((step) => step.id === currentStepID);

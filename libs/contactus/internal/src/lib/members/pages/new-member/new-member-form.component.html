@@ -4,6 +4,7 @@
 		[disabled]="disabled"
 		[newPerson]="member"
 		[requires]="personRequirements"
+		[fields]="{ contactType: { hide: true } }"
 		(newPersonChange)="onRelatedPersonChanged($event)"
 	/>
 

@@ -110,7 +110,12 @@ export class ContactDetailsComponent {
 		console.log('onRelatedAsChanged()', relatedAs);
 		const request: IUpdateContactRequest = {
 			...this.newUpdateContactRequest(),
-			relatedTo: { relatedAs },
+			relatedTo: {
+				moduleID: 'contactus',
+				itemID: '',
+				collection: 'contacts',
+				relatedAs,
+			},
 		};
 		this.params.contactService.updateContact(request).subscribe({
 			next: () => {

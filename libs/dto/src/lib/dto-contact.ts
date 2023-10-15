@@ -72,8 +72,10 @@ export type MemberContactType =
 	| typeof ContactTypePerson
 	| typeof ContactTypeAnimal;
 
-export interface IRelatedToContact {
-	readonly contactID?: string;
+export interface IRelatedToRequest {
+	readonly moduleID: string;
+	readonly collection: string;
+	readonly itemID: string;
 	readonly relatedAs: string;
 }
 
@@ -113,7 +115,7 @@ export interface IPerson extends IContactBase {
 
 export interface IRelatedPerson extends IPerson {
 	// relatedAs to current user or a specific contact
-	readonly relatedTo?: IRelatedToContact; // relative to current user
+	readonly relatedTo?: IRelatedToRequest; // relative to current user
 	// readonly roles?: string[]; // Either member roles or contact roles
 }
 
