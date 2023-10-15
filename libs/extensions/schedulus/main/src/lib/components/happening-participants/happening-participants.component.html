@@ -3,6 +3,7 @@
 		<ion-segment-button value="members">Family members</ion-segment-button>
 		<ion-segment-button value="others">Others</ion-segment-button>
 	</ion-segment>
+	<sneat-members-list [team]="team" />
 	<ion-item-group *ngIf="participantsTab === 'members'">
 		<ion-radio-group *ngIf="members?.length; else noMembers">
 			<ng-container *ngIf="members?.length">

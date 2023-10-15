@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
+import { MembersListComponent } from '@sneat/contactus-shared';
 import { ISlotParticipant } from '@sneat/dto';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
@@ -14,11 +15,11 @@ import {
 
 @Component({
 	selector: 'sneat-happening-members-form',
-	templateUrl: 'happening-members-form.component.html',
+	templateUrl: 'happening-participants.component.html',
 	standalone: true,
-	imports: [CommonModule, IonicModule, SneatPipesModule],
+	imports: [CommonModule, IonicModule, SneatPipesModule, MembersListComponent],
 })
-export class HappeningMembersFormComponent {
+export class HappeningParticipantsComponent {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
 	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() happening?: IHappeningContext;

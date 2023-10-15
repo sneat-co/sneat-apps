@@ -36,7 +36,7 @@ import {
 import { HappeningService, HappeningServiceModule } from '@sneat/team/services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
-import { HappeningMembersFormComponent } from '../happening-members-form/happening-members-form.component';
+import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
 import { HappeningSlotComponentsModule } from '../happening-slot-components.module';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
@@ -52,7 +52,7 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		HappeningSlotComponentsModule,
 		SneatPipesModule,
 		HappeningServiceModule,
-		HappeningMembersFormComponent,
+		HappeningParticipantsComponent,
 	],
 })
 export class HappeningFormComponent

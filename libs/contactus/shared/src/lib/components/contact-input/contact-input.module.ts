@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { ContactSelectorModule } from '../contact-selector/contact-selector.module';
+import { ContactSelectorComponent } from '../contact-selector';
 import { ContactInputComponent } from './contact-input.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		IonicModule,
-		ContactSelectorModule,
+		ContactSelectorComponent,
 		RouterModule,
 		SneatPipesModule,
 	],

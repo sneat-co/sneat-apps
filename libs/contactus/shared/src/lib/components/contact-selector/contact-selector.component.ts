@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -7,11 +8,13 @@ import {
 	OnInit,
 	SimpleChanges,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
 import {
 	countryFlagEmoji,
 	ISelectItem,
+	SelectFromListModule,
 	SelectorBaseComponent,
 } from '@sneat/components';
 import { ContactRole, ContactType } from '@sneat/dto';
@@ -22,7 +25,13 @@ import {
 } from '@sneat/contactus-services';
 import { IContactContext, ITeamContext } from '@sneat/team/models';
 import { Subject, Subscription } from 'rxjs';
-import { IContactSelectorOptions } from './contact-selector.service';
+import { BasicContactFormModule } from '../basic-contact-form';
+import { LocationFormModule } from '../location-form';
+import { NewCompanyFormModule } from '../new-company-form';
+import {
+	ContactSelectorService,
+	IContactSelectorOptions,
+} from './contact-selector.service';
 
 export interface IContactSelectorProps {
 	readonly team: ITeamContext;
@@ -39,6 +48,17 @@ export interface IContactSelectorProps {
 @Component({
 	selector: 'sneat-contact-selector',
 	templateUrl: './contact-selector.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		SelectFromListModule,
+		LocationFormModule,
+		BasicContactFormModule,
+		NewCompanyFormModule,
+	],
+	providers: [ContactSelectorService],
 })
 export class ContactSelectorComponent
 	extends SelectorBaseComponent
