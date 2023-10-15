@@ -22,7 +22,7 @@ import {
 } from '@sneat/team/services';
 
 @Component({
-	selector: 'sneat-happening-members-form',
+	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
 	standalone: true,
 	imports: [
@@ -116,21 +116,29 @@ export class HappeningParticipantsComponent {
 		if (!brief || !dto) {
 			return;
 		}
-		const selectedMembers =
-			this.members?.filter((m) =>
-				this.checkedMemberIDs.some((v) => v === m.id),
-			) || [];
 		let happeningBase: IHappeningBase = {
 			...brief,
 			participants: {},
 		};
-		selectedMembers.forEach((m) => {
+		this.checkedMemberIDs.forEach((contactID) => {
 			if (!happeningBase.participants) {
-				happeningBase = { ...happeningBase, participants: { [m.id]: {} } };
+				happeningBase = { ...happeningBase, participants: { [contactID]: {} } };
 			} else {
-				happeningBase.participants[m.id] = {}; // TODO: Should be readonly
+				happeningBase.participants[contactID] = {}; // TODO: Should be readonly
 			}
 		});
+		this.happening = {
+			...this.happening,
+			brief: {
+				...this.happening.brief,
+				...happeningBase,
+			},
+			dto: {
+				// TODO: It does not make much sense to update DTO as brief should be enough?
+				...this.happening.dto,
+				...happeningBase,
+			},
+		};
 		this.emitHappeningChange();
 	}
 

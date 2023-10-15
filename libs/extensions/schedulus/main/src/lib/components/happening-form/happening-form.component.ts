@@ -131,7 +131,7 @@ export class HappeningFormComponent
 		}
 	}
 
-	onHappeningTypeChanged(event: Event): void {
+	protected onHappeningTypeChanged(event: Event): void {
 		console.log('onHappeningTypeChanged()', event);
 		const happeningType = (event as CustomEvent).detail.value as HappeningType;
 		if (this.happening?.brief) {
@@ -165,7 +165,7 @@ export class HappeningFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	onTitleEnter(): void {
+	protected onTitleEnter(): void {
 		//
 	}
 
@@ -192,23 +192,24 @@ export class HappeningFormComponent
 	// 	}
 	// }
 
-	onSlotAdded(slot: IHappeningSlot): void {
+	protected onSlotAdded(slot: IHappeningSlot): void {
 		console.log('onSlotAdded()', slot, this.happening);
 		this.happeningForm.markAllAsTouched();
 	}
 
-	onHappeningChanged(happening: IHappeningContext): void {
+	protected onHappeningChanged(happening: IHappeningContext): void {
+		console.log('HappeningFormComponent.onHappeningChanged()', happening);
 		this.happening = happening;
-		this.happeningForm.markAllAsTouched();
+		this.happeningForm.markAllAsTouched(); // TODO: Document why we need it and if we can remove it
 		this.happeningChange.emit(happening);
 	}
 
-	onSingleSlotChanged(slot: IHappeningSlot): void {
+	protected onSingleSlotChanged(slot: IHappeningSlot): void {
 		console.log('NewHappeningPageComponent.onTimingChanged()', slot);
 		this.singleSlot = slot;
 	}
 
-	formIsValid(): boolean {
+	protected formIsValid(): boolean {
 		if (!this.happeningForm.valid) {
 			return false;
 		}
@@ -256,7 +257,7 @@ export class HappeningFormComponent
 		return dto;
 	}
 
-	submit(): void {
+	protected submit(): void {
 		if (this.happening?.id) {
 			// Update happening
 		} else {
@@ -265,7 +266,7 @@ export class HappeningFormComponent
 		}
 	}
 
-	createHappening(): void {
+	private createHappening(): void {
 		console.log('NewHappeningPageComponent.createHappening()');
 		if (!this.team) {
 			return;
