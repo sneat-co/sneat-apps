@@ -1,4 +1,3 @@
-import { json } from '@angular-devkit/core';
 import { Component } from '@angular/core';
 import {
 	HappeningBaseComponent,
@@ -12,6 +11,4 @@ import {
 	providers: [...HappeningBaseComponent.providers],
 	...HappeningBaseComponent.metadata,
 })
-export class HappeningCardComponent extends HappeningComponent {
-	protected readonly json = json;
-}
+export class HappeningCardComponent extends HappeningComponent {}
