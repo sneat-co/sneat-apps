@@ -3,9 +3,15 @@ import { IPrice } from './dto-pricing';
 import { ActivityType, Repeats, WeekdayCode2 } from './types';
 
 export interface ISlotParticipant {
-	readonly id: string; // To support multi-team slots should be in form of "<TEAM_ID>:<MEMBER_OR_CONTACT_ID>"
-	readonly type: 'member' | 'contact';
-	readonly title: string;
+	readonly roles?: string[];
+	// readonly type: 'member' | 'contact';
+	// readonly title: string;
+}
+
+export interface IHappeningParticipant {
+	readonly roles?: string[];
+	// readonly type: 'member' | 'contact';
+	// readonly title: string;
 }
 
 export interface IHappeningBase {
@@ -17,8 +23,8 @@ export interface IHappeningBase {
 	readonly levels?: Level[];
 	readonly assetIDs?: string[];
 	readonly contactIDs?: string[];
+	readonly participants?: { [id: string]: Readonly<IHappeningParticipant> };
 	slots?: IHappeningSlot[]; // TODO: make readonly
-	memberIDs?: string[]; // TODO: make readonly
 }
 
 export interface IHappeningBrief extends IHappeningBase {}
@@ -26,14 +32,12 @@ export interface IHappeningBrief extends IHappeningBase {}
 export interface IWithDates {
 	dates?: string[];
 }
+
 export interface IWithTeamDates extends IWithTeamIDs, IWithDates {
 	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 }
 
-export interface IHappeningDto extends IHappeningBrief, IWithTeamDates {
-	readonly note?: string;
-	readonly participants?: ISlotParticipant[]; // TODO: We probably do not really need it here.
-}
+export interface IHappeningDto extends IHappeningBrief, IWithTeamDates {}
 
 export function validateHappeningDto(dto: IHappeningDto): void {
 	if (!dto.title) {
@@ -164,5 +168,5 @@ export interface ISingleHappeningDto extends IHappeningDto {
 export interface DtoSingleTask extends ISingleHappeningDto {
 	isCompleted: boolean;
 	completion?: number; // In percents, max value is 100.
-	responsibles?: ISlotParticipant[];
+	responsibles?: IHappeningParticipant[];
 }

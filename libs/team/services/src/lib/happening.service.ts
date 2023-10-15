@@ -21,7 +21,7 @@ import { TeamItemService } from './team-item.service';
 
 export interface ICreateHappeningRequest {
 	teamID: string;
-	dto: IHappeningDto;
+	happening: IHappeningDto;
 }
 
 export interface IHappeningRequest extends ITeamRequest {
@@ -31,7 +31,7 @@ export interface IHappeningRequest extends ITeamRequest {
 
 export interface IHappeningMemberRequest extends ITeamRequest {
 	happeningID: string;
-	memberID: string;
+	contactID: string;
 }
 
 export interface IHappeningSlotRequest extends IHappeningRequest {
@@ -101,30 +101,40 @@ export class HappeningService {
 		);
 	}
 
-	createHappening(request: ICreateHappeningRequest): Observable<unknown> {
-		const title = request.dto.title.trim();
-		if (title !== request.dto.title) {
+	public createHappening(
+		request: ICreateHappeningRequest,
+	): Observable<unknown> {
+		const title = request.happening.title.trim();
+		if (title !== request.happening.title) {
 			request = {
 				...request,
-				dto: {
-					...request.dto,
+				happening: {
+					...request.happening,
 					title,
 				},
 			};
 		}
+		request = {
+			...request,
+			happening: {
+				...request.happening,
+				assetIDs: ['*'], // This is required but will be ignored
+				contactIDs: ['*'], // This is required but will be ignored
+			},
+		};
 		try {
-			validateHappeningDto(request.dto);
+			validateHappeningDto(request.happening);
 		} catch (e) {
 			return throwError(() => e);
 		}
 		return this.sneatApiService.post('happenings/create_happening', request);
 	}
 
-	cancelHappening(request: ICancelHappeningRequest): Observable<void> {
+	public cancelHappening(request: ICancelHappeningRequest): Observable<void> {
 		return this.sneatApiService.post('happenings/cancel_happening', request);
 	}
 
-	revokeHappeningCancellation(
+	public revokeHappeningCancellation(
 		request: ICancelHappeningRequest,
 	): Observable<void> {
 		return this.sneatApiService.post(
@@ -133,7 +143,7 @@ export class HappeningService {
 		);
 	}
 
-	deleteHappening(happening: IHappeningContext): Observable<void> {
+	public deleteHappening(happening: IHappeningContext): Observable<void> {
 		console.log('deleteHappening', happening);
 		const request: IHappeningRequest = {
 			teamID: happening.team?.id || '',
@@ -147,7 +157,7 @@ export class HappeningService {
 		);
 	}
 
-	deleteSlots(request: ISlotRequest): Observable<void> {
+	public deleteSlots(request: ISlotRequest): Observable<void> {
 		console.log('deleteSlots', request);
 		// const qp = new HttpParams();
 		// qp.set('team', request.teamID)
@@ -162,33 +172,15 @@ export class HappeningService {
 		);
 	}
 
-	removeMember(
-		teamID: string,
-		happening: IHappeningContext,
-		memberID: string,
-	): Observable<void> {
-		const request: IHappeningMemberRequest = {
-			teamID: teamID,
-			happeningID: happening.id,
-			memberID,
-		};
-		return this.sneatApiService.post('happenings/remove_member', request);
+	public removeParticipant(request: IHappeningMemberRequest): Observable<void> {
+		return this.sneatApiService.post('happenings/remove_participant', request);
 	}
 
-	addMember(
-		teamID: string,
-		happening: IHappeningContext,
-		memberID: string,
-	): Observable<void> {
-		const request: IHappeningMemberRequest = {
-			teamID,
-			happeningID: happening.id,
-			memberID,
-		};
-		return this.sneatApiService.post('happenings/add_member', request);
+	public addParticipant(request: IHappeningMemberRequest): Observable<void> {
+		return this.sneatApiService.post('happenings/add_participant', request);
 	}
 
-	updateSlot(
+	public updateSlot(
 		teamID: string,
 		happeningID: string,
 		slot: IHappeningSlot,
@@ -201,7 +193,7 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/update_slot', request);
 	}
 
-	adjustSlot(
+	public adjustSlot(
 		teamID: string,
 		happeningID: string,
 		slot: IHappeningSlot,
@@ -227,7 +219,7 @@ export class HappeningService {
 	// 	return this.sfs.watchByTeamID(team.id);
 	// }
 
-	watchHappeningByID(
+	public watchHappeningByID(
 		team: ITeamContext,
 		id: string,
 	): Observable<IHappeningContext> {
@@ -236,7 +228,7 @@ export class HappeningService {
 			.pipe(map((h) => processHappeningContext(h, team)));
 	}
 
-	watchUpcomingSingles(
+	public watchUpcomingSingles(
 		team: ITeamContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
@@ -253,7 +245,7 @@ export class HappeningService {
 			);
 	}
 
-	watchSinglesOnSpecificDay(
+	public watchSinglesOnSpecificDay(
 		team: ITeamContext,
 		date: string,
 		statuses: HappeningStatus[] = ['active'],

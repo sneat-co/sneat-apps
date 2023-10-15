@@ -74,7 +74,7 @@ export class SchedulePageComponent extends TeamBaseComponent {
 		}
 		const memberID = queryParams.get('member');
 		if (memberID) {
-			this.filterService.next({ ...this.filter, memberIDs: [memberID] });
+			this.filterService.next({ ...this.filter, contactIDs: [memberID] });
 		}
 	};
 

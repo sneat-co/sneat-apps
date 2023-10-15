@@ -81,16 +81,16 @@ export class ScheduleFilterComponent
 		console.log('ScheduleFilterComponent.onFilterChanged()', filter);
 		this.filter = filter;
 		this.text.setValue(filter.text || '');
-		const { memberIDs } = filter;
-		if (memberIDs) {
-			this.memberIDs = [...memberIDs];
-			if (memberIDs.length === 1) {
-				this.memberID = memberIDs[0];
+		const { contactIDs } = filter;
+		if (contactIDs) {
+			this.memberIDs = [...contactIDs];
+			if (contactIDs.length === 1) {
+				this.memberID = contactIDs[0];
 				this.accordionValue = 'filter';
 				this.expanded = true;
 			}
 		}
-		if (!memberIDs?.length) {
+		if (!contactIDs?.length) {
 			this.memberIDs = [];
 			this.memberID = '';
 		}
@@ -177,7 +177,7 @@ export class ScheduleFilterComponent
 			showSingles: true,
 		};
 		if (this.memberIDs.length) {
-			filter = { ...filter, memberIDs: [...this.memberIDs] };
+			filter = { ...filter, contactIDs: [...this.memberIDs] };
 		}
 		this.weekdays = this.selectedWeekdayCodes();
 		if (this.weekdays.length) {

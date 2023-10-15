@@ -35,7 +35,7 @@
 			*ngIf="mode === 'full'"
 			[showDelete]="false"
 			[members]="
-				slot?.happening?.brief?.memberIDs || []
+				slot?.happening?.brief?.contactIDs || []
 					| selectedMembers: team : contactusTeam?.dto?.contacts
 			"
 		/>
@@ -47,20 +47,16 @@
 		>
 			{{ slot?.location?.title || slot?.location?.address }}
 		</p>
-		<p
-			*ngIf="
-				mode === 'full' && (slot?.participants?.length || slot?.levels?.length)
-			"
-		>
-			<ng-container *ngIf="slot?.participants?.length">
-				<ion-badge
-					color="light"
-					style="margin-right: 0.5em"
-					*ngFor="let participant of slot?.participants || []"
-				>
-					👩‍🏫 {{ participant.title }}
-				</ion-badge>
-			</ng-container>
+		<p *ngIf="mode === 'full' && (slot?.participants || slot?.levels?.length)">
+			<!--			<ng-container *ngIf="let participantKeys = oKeys(slot?.participants)">-->
+			<!--				<ion-badge-->
+			<!--					color="light"-->
+			<!--					style="margin-right: 0.5em"-->
+			<!--					*ngFor="let participant of participantKeys"-->
+			<!--				>-->
+			<!--					👩‍🏫 {{ participant }}-->
+			<!--				</ion-badge>-->
+			<!--			</ng-container>-->
 			<ng-container *ngIf="slot?.levels?.length">
 				<ion-badge
 					color="light"

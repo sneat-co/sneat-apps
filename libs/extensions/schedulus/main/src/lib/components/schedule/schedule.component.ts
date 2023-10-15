@@ -289,14 +289,14 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		filter: IScheduleFilter,
 	): IHappeningWithUiState[] | undefined {
 		const text = filter.text.toLowerCase();
-		const { memberIDs, repeats, weekdays } = filter;
+		const { contactIDs, repeats, weekdays } = filter;
 
 		const filtered = this.allRecurrings?.filter((r) => {
 			const title = r.brief?.title || r.dto?.title;
 			if (title && title.trim().toLowerCase().indexOf(text) < 0) {
 				return false;
 			}
-			if (!r.brief || !this.hasMember(r.brief, memberIDs)) {
+			if (!r.brief || !this.hasContact(r.brief, contactIDs)) {
 				return false;
 			}
 			if (!this.hasWeekday(r.brief?.slots || r.dto?.slots, weekdays)) {
@@ -323,13 +323,13 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	}
 
 	// TODO: Decouple and reuse
-	private hasMember(
-		item: { memberIDs?: string[] } | undefined,
-		memberIDs?: string[],
+	private hasContact(
+		item: { contactIDs?: string[] } | undefined,
+		contactIDs?: string[],
 	): boolean {
 		return (
-			!memberIDs?.length ||
-			!!item?.memberIDs?.some((id) => memberIDs.includes(id))
+			!contactIDs?.length ||
+			!!item?.contactIDs?.some((id) => contactIDs.includes(id))
 		);
 	}
 

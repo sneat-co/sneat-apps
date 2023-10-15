@@ -15,18 +15,17 @@
 			<ion-text color="primary" style="font-weight: bold">
 				{{ happening?.brief?.title || happening?.dto?.title || "Loading..." }}
 			</ion-text>
-			<p *ngIf="happening?.dto?.participants?.length">
-				<ion-badge
-					color="medium"
-					style="margin-right: 0.5em"
-					*ngFor="
-						let participant of happening?.dto?.participants || [];
-						trackBy: id
-					"
-				>
-					{{ participant.title }}
-				</ion-badge>
-			</p>
+			<!--			<p *ngIf='Object.keys(happening?.dto?.participants || {}).length'>-->
+			<!--				<ion-badge-->
+			<!--					color='medium'-->
+			<!--					style='margin-right: 0.5em'-->
+			<!--					*ngFor='-->
+			<!--						let participant of Object.keys( happening?.dto?.participants || {})-->
+			<!--					'-->
+			<!--				>-->
+			<!--					{{ participant }}-->
+			<!--				</ion-badge>-->
+			<!--			</p>-->
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="delete($event)">
@@ -77,14 +76,14 @@
 	<ion-item>
 		<ion-label color="medium">
 			<sneat-members-as-badges
-				*ngIf="happening?.brief?.memberIDs?.length"
+				*ngIf="happening?.brief?.contactIDs?.length || 0 > 1"
 				[members]="
-					happening?.dto?.memberIDs || happening?.brief?.memberIDs || []
+					happening?.dto?.contactIDs || happening?.brief?.contactIDs || []
 						| selectedMembers: team : contactusTeam?.dto?.contacts
 				"
 				(deleteMember)="removeMember($event)"
 			/>
-			<ng-container *ngIf="!happening?.brief?.memberIDs">
+			<ng-container *ngIf="!happening?.brief?.contactIDs?.length || 0 > 1">
 				Nobody assigned
 			</ng-container>
 		</ion-label>

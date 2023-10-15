@@ -24,7 +24,7 @@ import {
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { IHappeningMemberRequest, TeamNavService } from '@sneat/team/services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team/services';
 import { ScheduleModalsService } from '../services/schedule-modals.service';
@@ -198,7 +198,10 @@ This operation can NOT be undone.`)
 			.selectMembersInModal({
 				selectedMembers:
 					teamMembers?.filter(
-						(m) => this.happening?.brief?.memberIDs?.some((id) => id === m.id),
+						(m) =>
+							Object.keys(this.happening?.brief?.participants || [])?.some(
+								(id) => id === m.id,
+							),
 					) || [],
 				members: teamMembers,
 				onAdded: this.onMemberAdded,
@@ -228,11 +231,12 @@ This operation can NOT be undone.`)
 		if (!this.team) {
 			return NEVER;
 		}
-		const result = this.happeningService.addMember(
-			this.team.id,
-			this.happening,
-			member.id,
-		);
+		const request: IHappeningMemberRequest = {
+			teamID: this.team.id,
+			happeningID: this.happening.id,
+			contactID: member.id,
+		};
+		return this.happeningService.addParticipant(request);
 		// result
 		// 	.pipe(takeUntil(this.destroyed))
 		// 	.subscribe({
@@ -240,7 +244,6 @@ This operation can NOT be undone.`)
 		// 			this.changeDetectorRef.markForCheck();
 		// 		},
 		// 	});
-		return result;
 	};
 
 	private readonly onMemberRemoved = (
@@ -252,11 +255,12 @@ This operation can NOT be undone.`)
 		if (!this.team) {
 			return NEVER;
 		}
-		return this.happeningService.removeMember(
-			this.team?.id,
-			this.happening,
-			member.id,
-		);
+		const request: IHappeningMemberRequest = {
+			teamID: this.team.id,
+			happeningID: this.happening.id,
+			contactID: member.id,
+		};
+		return this.happeningService.removeParticipant(request);
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -275,25 +279,41 @@ This operation can NOT be undone.`)
 		if (!this.team) {
 			return;
 		}
-		this.happeningService
-			.removeMember(this.team.id, this.happening, member.id)
-			.subscribe({
-				next: () => {
-					if (this.happening?.brief?.memberIDs) {
-						this.happening.brief.memberIDs =
-							this.happening.brief.memberIDs.filter((id) => id !== member.id);
-					}
-					if (this.happening?.dto?.memberIDs) {
-						this.happening.dto.memberIDs = this.happening.dto.memberIDs.filter(
-							(id) => id !== member.id,
-						);
-					}
-					this.changeDetectorRef.markForCheck();
-				},
-				error: this.errorLogger.logErrorHandler(
-					'Failed to remove member from happening',
-				),
-			});
+		const request: IHappeningMemberRequest = {
+			teamID: this.team.id,
+			happeningID: this.happening.id,
+			contactID: member.id,
+		};
+		this.happeningService.removeParticipant(request).subscribe({
+			next: () => {
+				if (this.happening?.brief?.contactIDs) {
+					this.happening = {
+						...this.happening,
+						brief: {
+							...this.happening.brief,
+							contactIDs: this.happening.brief.contactIDs.filter(
+								(id) => id !== member.id,
+							),
+						},
+					};
+				}
+				if (this.happening?.dto?.contactIDs) {
+					this.happening = {
+						...this.happening,
+						dto: {
+							...this.happening.dto,
+							contactIDs: this.happening.dto.contactIDs.filter(
+								(id) => id !== member.id,
+							),
+						},
+					};
+				}
+				this.changeDetectorRef.markForCheck();
+			},
+			error: this.errorLogger.logErrorHandler(
+				'Failed to remove member from happening',
+			),
+		});
 	}
 }
 

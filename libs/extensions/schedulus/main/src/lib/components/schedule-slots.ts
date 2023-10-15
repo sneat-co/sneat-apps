@@ -1,13 +1,13 @@
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { IScheduleFilter } from './schedule-filter/schedule-filter';
 
-export function hasMember(
-	item: { memberIDs?: string[] } | undefined,
-	memberIDs?: string[],
+export function hasContact(
+	item: { contactIDs?: string[] } | undefined,
+	contactIDs?: string[],
 ): boolean {
 	return (
-		!memberIDs?.length ||
-		!!item?.memberIDs?.some((id) => memberIDs.includes(id))
+		!contactIDs?.length ||
+		!!item?.contactIDs?.some((id) => contactIDs.includes(id))
 	);
 }
 
@@ -22,8 +22,8 @@ export function isSlotVisible(
 	filter: IScheduleFilter,
 ): boolean {
 	const { happening } = slot;
-	const { memberIDs, repeats } = filter;
-	if (happening?.brief && !hasMember(happening?.brief, memberIDs)) {
+	const { contactIDs, repeats } = filter;
+	if (happening?.brief && !hasContact(happening?.brief, contactIDs)) {
 		return false;
 	}
 	// if (!hasWeekday(happening?.brief?.slots || happening?.dto?.slots, weekdays)) {
@@ -39,12 +39,6 @@ export function isSlotVisible(
 	return (
 		((!!slot.happening && filter.showRecurrings) ||
 			(!!slot.happening && filter.showSingles)) &&
-		(!filter ||
-			slot.title.toLowerCase().indexOf(filter.text) >= 0 ||
-			(!!slot.participants &&
-				slot.participants.some(
-					(participant) =>
-						participant.title.toLowerCase().indexOf(filter.text) >= 0,
-				)))
+		(!filter || slot.title.toLowerCase().indexOf(filter.text) >= 0)
 	);
 }

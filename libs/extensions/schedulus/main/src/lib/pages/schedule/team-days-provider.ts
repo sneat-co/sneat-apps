@@ -150,7 +150,8 @@ const groupRecurringSlotsByWeekday = (
 };
 
 // @Injectable()
-export class TeamDaysProvider /*extends ISlotsProvider*/ {
+export class TeamDaysProvider {
+	/*extends ISlotsProvider*/
 	// At the moment tracks schedule of a single team
 	// but probably will track multiple teams at once.
 
@@ -365,9 +366,7 @@ export class TeamDaysProvider /*extends ISlotsProvider*/ {
 		if (
 			this.memberId &&
 			(!recurring.dto?.participants ||
-				!recurring?.dto.participants.find(
-					(p) => p.type === 'member' && p.id === this.memberId,
-				))
+				!recurring?.dto.participants[this.memberId])
 		) {
 			return;
 		}

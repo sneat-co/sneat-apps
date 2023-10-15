@@ -3,7 +3,7 @@ import { IHappeningContext } from '@sneat/team/models';
 
 export interface IScheduleFilter {
 	readonly text: string;
-	readonly memberIDs?: string[];
+	readonly contactIDs?: string[];
 	readonly weekdays?: WeekdayCode2[];
 	readonly repeats?: string[];
 	readonly showRecurrings: boolean;
@@ -26,11 +26,11 @@ export function isMatchingScheduleFilter(
 		return false;
 	}
 	if (
-		f.memberIDs?.length &&
-		!f.memberIDs.some(
+		f.contactIDs?.length &&
+		!f.contactIDs.some(
 			(fmID) =>
-				(fmID === '' && !h.dto?.memberIDs?.length) ||
-				h.dto?.memberIDs?.some((hmID) => hmID == fmID),
+				(fmID === '' && !Object.keys(h.dto?.participants || {}).length) ||
+				h.dto?.contactIDs?.some((hmID) => hmID == fmID),
 		)
 	) {
 		return false;

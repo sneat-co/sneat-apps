@@ -21,6 +21,7 @@ import {
 	HappeningService,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
+	IHappeningMemberRequest,
 	ISlotRequest,
 } from '@sneat/team/services';
 import { NEVER, Observable } from 'rxjs';
@@ -76,7 +77,7 @@ export class SlotContextMenuComponent {
 				contactContextFromBrief(mb, team),
 			) || [];
 		const selectedMembers = members.filter(
-			(m) => this.happening?.brief?.memberIDs?.some((id) => id === m.id),
+			(m) => (this.happening?.brief?.participants || {})[m.id],
 		);
 		const options: ISelectMembersOptions = {
 			members,
@@ -331,11 +332,12 @@ export class SlotContextMenuComponent {
 		if (!this.team) {
 			return NEVER;
 		}
-		const result = this.happeningService.addMember(
-			this.team.id,
-			this.happening,
-			member.id,
-		);
+		const request: IHappeningMemberRequest = {
+			teamID: this.team.id,
+			happeningID: this.happening.id,
+			contactID: member.id,
+		};
+		return this.happeningService.addParticipant(request);
 		// result
 		// 	.pipe(takeUntil(this.destroyed))
 		// 	.subscribe({
@@ -343,7 +345,6 @@ export class SlotContextMenuComponent {
 		// 			this.changeDetectorRef.markForCheck();
 		// 		},
 		// 	});
-		return result;
 	};
 
 	private readonly onMemberRemoved = (
@@ -356,10 +357,11 @@ export class SlotContextMenuComponent {
 		if (!this.team) {
 			return NEVER;
 		}
-		return this.happeningService.removeMember(
-			this.team?.id,
-			this.happening,
-			member.id,
-		);
+		const request: IHappeningMemberRequest = {
+			teamID: this.team.id,
+			happeningID: this.happening.id,
+			contactID: member.id,
+		};
+		return this.happeningService.removeParticipant(request);
 	};
 }

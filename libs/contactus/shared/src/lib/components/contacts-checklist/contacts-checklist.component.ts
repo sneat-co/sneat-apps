@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IBriefAndID, IContactBrief } from '@sneat/dto';
@@ -17,6 +24,11 @@ export class ContactsChecklistComponent implements OnChanges {
 	@Input() roles: string[] = ['member'];
 	@Input() checkedContactIDs: string[] = [];
 	@Input() noContactsMessage = 'No members found';
+	@Output() readonly checkedChange = new EventEmitter<{
+		event: CustomEvent;
+		id: string;
+		checked: boolean;
+	}>();
 
 	private teamID?: string;
 	private contactusTeamSubscription?: Subscription;
@@ -48,5 +60,21 @@ export class ContactsChecklistComponent implements OnChanges {
 				}
 			}
 		}
+	}
+
+	protected isChecked(id: string): boolean {
+		return this.checkedContactIDs.includes(id);
+	}
+
+	protected onCheckboxChange(event: Event, id: string): void {
+		const ce = event as CustomEvent;
+		console.log('onCheckboxChange()', ce);
+		const checked = !!ce.detail.checked;
+		if (checked) {
+			this.checkedContactIDs = [...this.checkedContactIDs, id];
+		} else {
+			this.checkedContactIDs = this.checkedContactIDs.filter((v) => v !== id);
+		}
+		this.checkedChange.emit({ event: ce, id, checked });
 	}
 }

@@ -292,7 +292,7 @@ export class HappeningFormComponent
 			const dto = this.makeHappeningDto();
 
 			this.happeningService
-				.createHappening({ teamID: team.id, dto })
+				.createHappening({ teamID: team.id, happening: dto })
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () => {

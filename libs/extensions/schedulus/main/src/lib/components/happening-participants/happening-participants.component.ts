@@ -7,7 +7,7 @@ import {
 	ContactsChecklistComponent,
 	MembersListComponent,
 } from '@sneat/contactus-shared';
-import { ISlotParticipant } from '@sneat/dto';
+import { IHappeningBase } from '@sneat/dto';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
@@ -16,6 +16,10 @@ import {
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
+import {
+	HappeningService,
+	IHappeningMemberRequest,
+} from '@sneat/team/services';
 
 @Component({
 	selector: 'sneat-happening-members-form',
@@ -34,6 +38,8 @@ export class HappeningParticipantsComponent {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
 	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() happening?: IHappeningContext;
+
+	constructor(private readonly happeningService: HappeningService) {}
 
 	public get membersTabLabel(): string {
 		return this.team?.brief?.type === 'family'
@@ -62,16 +68,13 @@ export class HappeningParticipantsComponent {
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	public isMemberChecked(member: IContactContext): boolean {
-		const { id } = member;
-		return this.checkedMemberIDs.some((v) => v === id);
-	}
-
-	public isMemberCheckChanged(member: IContactContext, event: Event): void {
-		const ce = event as CustomEvent;
-		console.log('isMemberCheckChanged()', ce);
-		const checked = ce.detail.value === 'on';
-		const { id } = member;
+	public isMemberCheckChanged(args: {
+		event: CustomEvent;
+		id: string;
+		checked: boolean;
+	}): void {
+		console.log('isMemberCheckChanged()', args);
+		const { id, checked } = args;
 		if (!checked) {
 			this.checkedMemberIDs = this.checkedMemberIDs.filter((v) => v !== id);
 			return;
@@ -80,6 +83,26 @@ export class HappeningParticipantsComponent {
 			this.checkedMemberIDs.push(id);
 		}
 		this.populateParticipants();
+		if (!this.happening?.id) {
+			return;
+		}
+		if (!this.team?.id) {
+			return;
+		}
+		const request: IHappeningMemberRequest = {
+			teamID: this.team.id,
+			happeningID: this.happening?.id,
+			contactID: id,
+		};
+		if (args.checked) {
+			this.happeningService.addParticipant(request).subscribe({
+				next: () => console.log('member added'),
+			});
+		} else {
+			this.happeningService.removeParticipant(request).subscribe({
+				next: () => console.log('member added'),
+			});
+		}
 	}
 
 	private readonly emitHappeningChange = () =>
@@ -97,26 +120,17 @@ export class HappeningParticipantsComponent {
 			this.members?.filter((m) =>
 				this.checkedMemberIDs.some((v) => v === m.id),
 			) || [];
-		this.happening = {
-			...this.happening,
-			brief: {
-				...brief,
-				memberIDs: selectedMembers
-					.map((m) => m.id)
-					.filter((v) => !!v) as string[],
-			},
-			dto: {
-				...dto,
-				participants: selectedMembers.map((m) => {
-					const s: ISlotParticipant = {
-						type: 'member',
-						id: m.id,
-						title: m.brief?.title || m.id,
-					};
-					return s;
-				}),
-			},
+		let happeningBase: IHappeningBase = {
+			...brief,
+			participants: {},
 		};
+		selectedMembers.forEach((m) => {
+			if (!happeningBase.participants) {
+				happeningBase = { ...happeningBase, participants: { [m.id]: {} } };
+			} else {
+				happeningBase.participants[m.id] = {}; // TODO: Should be readonly
+			}
+		});
 		this.emitHappeningChange();
 	}
 

@@ -1,36 +1,20 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label>
-			Participants
-			<!--			<ion-grid class='ion-grid-layout'>-->
-			<!--				<ion-row>-->
-			<!--					<ion-col>-->
-			<!--						Participants-->
-			<!--					</ion-col>-->
-			<!--					<ion-col>-->
-			<!--						<ion-segment value='members' [(ngModel)]='tab'>-->
-			<!--							<ion-segment-button value='members'>-->
-			<!--								{{membersTabLabel}}-->
-			<!--							</ion-segment-button>-->
-			<!--							<ion-segment-button value='others'>Others</ion-segment-button>-->
-			<!--						</ion-segment>-->
-			<!--					</ion-col>-->
-			<!--				</ion-row>-->
-			<!--			</ion-grid>-->
-		</ion-label>
+		<ion-label> Participants </ion-label>
 	</ion-item-divider>
 
 	<ion-segment value="members" [(ngModel)]="tab">
 		<ion-segment-button value="members">
 			{{ membersTabLabel }}
 		</ion-segment-button>
-		<ion-segment-button value="others">Others</ion-segment-button>
+		<ion-segment-button value="others">All participants</ion-segment-button>
 	</ion-segment>
 
 	<sneat-contacts-checklist
 		*ngIf="tab === 'members'"
 		[team]="team"
 		noContactsMessage="No members"
+		(checkedChange)="isMemberCheckChanged($event)"
 	/>
 
 	<ion-item-group *ngIf="tab === 'others'">

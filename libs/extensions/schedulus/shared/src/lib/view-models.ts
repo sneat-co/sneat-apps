@@ -33,7 +33,7 @@ export interface ISlotItem {
 	timing: ITiming;
 	repeats: Repeats;
 	location?: SlotLocation;
-	participants?: ISlotParticipant[];
+	participants?: { [id: string]: ISlotParticipant };
 	levels?: Level[];
 }
 
