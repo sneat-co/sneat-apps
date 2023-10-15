@@ -1,0 +1,18 @@
+<ion-list>
+	<ion-item *ngFor="let contact of contacts || []">
+		<ion-checkbox labelPlacement="end" slot="start">
+			{{
+				contact.brief.name?.full ||
+					contact.brief.name?.first + " " + contact.brief.name?.last
+			}}
+			<!--TODO: use pipe-->
+		</ion-checkbox>
+	</ion-item>
+	<ng-template #noContacts>
+		<ion-item>
+			<ion-label>
+				{{ noContactsMessage || "No contacts" }}
+			</ion-label>
+		</ion-item>
+	</ng-template>
+</ion-list>

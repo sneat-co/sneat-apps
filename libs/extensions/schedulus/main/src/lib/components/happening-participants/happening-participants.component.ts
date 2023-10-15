@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { MembersListComponent } from '@sneat/contactus-shared';
+import {
+	ContactsChecklistComponent,
+	MembersListComponent,
+} from '@sneat/contactus-shared';
 import { ISlotParticipant } from '@sneat/dto';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
@@ -17,19 +21,32 @@ import {
 	selector: 'sneat-happening-members-form',
 	templateUrl: 'happening-participants.component.html',
 	standalone: true,
-	imports: [CommonModule, IonicModule, SneatPipesModule, MembersListComponent],
+	imports: [
+		CommonModule,
+		IonicModule,
+		SneatPipesModule,
+		MembersListComponent,
+		ContactsChecklistComponent,
+		FormsModule,
+	],
 })
 export class HappeningParticipantsComponent {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
 	@Input() contactusTeam?: IContactusTeamDtoWithID;
 	@Input() happening?: IHappeningContext;
 
+	public get membersTabLabel(): string {
+		return this.team?.brief?.type === 'family'
+			? 'Family member'
+			: 'Team members';
+	}
+
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	public isToDo = false;
 	public checkedMemberIDs: string[] = [];
 	public contacts: number[] = [];
-	public participantsTab: 'members' | 'others' = 'members';
+	public tab: 'members' | 'others' = 'members';
 
 	public get members(): readonly IContactContext[] | undefined {
 		const contactusTeam = this.contactusTeam,

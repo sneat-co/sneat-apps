@@ -1,46 +1,39 @@
 <ion-card>
-	<ion-segment value="members">
-		<ion-segment-button value="members">Family members</ion-segment-button>
+	<ion-item-divider color="light">
+		<ion-label>
+			Participants
+			<!--			<ion-grid class='ion-grid-layout'>-->
+			<!--				<ion-row>-->
+			<!--					<ion-col>-->
+			<!--						Participants-->
+			<!--					</ion-col>-->
+			<!--					<ion-col>-->
+			<!--						<ion-segment value='members' [(ngModel)]='tab'>-->
+			<!--							<ion-segment-button value='members'>-->
+			<!--								{{membersTabLabel}}-->
+			<!--							</ion-segment-button>-->
+			<!--							<ion-segment-button value='others'>Others</ion-segment-button>-->
+			<!--						</ion-segment>-->
+			<!--					</ion-col>-->
+			<!--				</ion-row>-->
+			<!--			</ion-grid>-->
+		</ion-label>
+	</ion-item-divider>
+
+	<ion-segment value="members" [(ngModel)]="tab">
+		<ion-segment-button value="members">
+			{{ membersTabLabel }}
+		</ion-segment-button>
 		<ion-segment-button value="others">Others</ion-segment-button>
 	</ion-segment>
-	<sneat-members-list [team]="team" />
-	<ion-item-group *ngIf="participantsTab === 'members'">
-		<ion-radio-group *ngIf="members?.length; else noMembers">
-			<ng-container *ngIf="members?.length">
-				<ion-item-divider color="light">
-					<ion-label *ngIf="isToDo">Assign to</ion-label>
-					<ion-label *ngIf="!isToDo">Family attendees</ion-label>
-					<!--							<ion-buttons slot="end">-->
-					<!--								<ion-button title="Add member" (click)="addNewMember()">-->
-					<!--									<ion-icon name="add"></ion-icon>-->
-					<!--								</ion-button>-->
-					<!--							</ion-buttons>-->
-				</ion-item-divider>
-				<ion-item *ngFor="let member of members; trackBy: id">
-					<ion-checkbox
-						slot="start"
-						*ngIf="!isToDo"
-						[checked]="isMemberChecked(member)"
-						(ionChange)="isMemberCheckChanged(member, $event)"
-					/>
-					<ion-radio slot="start" *ngIf="isToDo" [value]="member.id" />
-					<ion-label>{{ member | contactTitle }}</ion-label>
-					<!--						<ion-select interface="popover">-->
-					<!--							<ion-select-option value="busy">Busy</ion-select-option>-->
-					<!--							<ion-select-option value="out_of_house">Out of house</ion-select-option>-->
-					<!--							<ion-select-option value="out_of_office">Out of office</ion-select-option>-->
-					<!--						</ion-select>-->
-				</ion-item>
-			</ng-container>
-		</ion-radio-group>
-		<ng-template #noMembers>
-			<ion-item>
-				<ion-label>No members.</ion-label>
-			</ion-item>
-		</ng-template>
-	</ion-item-group>
 
-	<ion-item-group *ngIf="participantsTab === 'others'">
+	<sneat-contacts-checklist
+		*ngIf="tab === 'members'"
+		[team]="team"
+		noContactsMessage="No members"
+	/>
+
+	<ion-item-group *ngIf="tab === 'others'">
 		<ion-item-divider color="light">
 			<ion-label>Teachers & Contacts</ion-label>
 			<ion-buttons slot="end">

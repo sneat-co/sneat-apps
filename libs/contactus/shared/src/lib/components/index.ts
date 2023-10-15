@@ -1,5 +1,6 @@
 export * from './basic-contact-form';
 export * from './contact-dob';
+export * from './contacts-checklist';
 export * from './contact-details';
 export * from './contact-locations';
 export * from './contact-modules-menu';
