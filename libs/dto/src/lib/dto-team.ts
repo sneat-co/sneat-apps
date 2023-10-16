@@ -1,6 +1,5 @@
 import { TeamType } from '@sneat/core';
 import { TeamCounts } from './dto-commune';
-import { IHappeningBrief } from './dto-happening';
 import { IListGroupsHolder } from './dto-list';
 import { ITotalsHolder } from './dto-models';
 import { ITeamMetric } from './dto-team-metric';
@@ -19,7 +18,7 @@ export interface ITeamDto extends ITotalsHolder, IListGroupsHolder {
 	// readonly assets?: IAssetBrief[];
 	// readonly contacts?: IContactBrief[];
 	readonly numberOf?: TeamCounts;
-	readonly recurringHappenings?: { [id: string]: IHappeningBrief }; // TODO: Move to ISchedulusTeamDto
+	// readonly recurringHappenings?: { [id: string]: IHappeningBrief }; // TODO: Move to ISchedulusTeamDto
 
 	metrics: ITeamMetric[];
 	// active?: ITeamMeetings;

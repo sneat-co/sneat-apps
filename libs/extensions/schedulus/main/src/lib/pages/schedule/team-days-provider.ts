@@ -155,6 +155,9 @@ export class TeamDaysProvider {
 	// At the moment tracks schedule of a single team
 	// but probably will track multiple teams at once.
 
+	private readonly destroyed = new Subject<void>();
+	private recurringsSubscription?: Subscription;
+
 	private readonly recurringsTeamItemService: TeamItemService<
 		IHappeningBrief,
 		IHappeningDto
@@ -166,6 +169,7 @@ export class TeamDaysProvider {
 	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(
 		undefined,
 	);
+
 	private readonly schedulusTeam$ = new BehaviorSubject<
 		ISchedulusTeamDtoWithID | undefined
 	>(undefined);
@@ -174,8 +178,9 @@ export class TeamDaysProvider {
 		map((team) => team?.id),
 		distinctUntilChanged(),
 	);
+
 	private readonly days: { [d: string]: TeamDay } = {};
-	private readonly destroyed = new Subject<void>();
+
 	private readonly recurrings$: Observable<RecurringSlots> =
 		this.schedulusTeam$.pipe(
 			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
@@ -185,12 +190,11 @@ export class TeamDaysProvider {
 			tap((slots) => console.log('TeamDaysProvider.recurrings$ =>', slots)),
 			shareReplay(1),
 		);
-	private recurringsSubscription?: Subscription;
+
 	// private teamId?: string;
 	private memberId?: string;
 
 	private _team?: ITeamContext;
-	private _schedulusTeam?: ISchedulusTeamDtoWithID;
 
 	public get team(): ITeamContext | undefined {
 		return this._team;
@@ -239,11 +243,22 @@ export class TeamDaysProvider {
 	}
 
 	public setTeam(team: ITeamContext): void {
-		console.log('SlotsProvide.setTeam()', team);
+		console.log('TeamDaysProvider.setTeam()', team);
 		this._team = team;
 		this.team$.next(team);
-		this.processRecurringBriefs();
+		// this.processRecurringBriefs();
 		// return this.loadRecurring();
+	}
+
+	public setSchedulusTeam(schedulusTeam: ISchedulusTeamDtoWithID): void {
+		console.log('TeamDaysProvider.setSchedulusTeam()', schedulusTeam);
+		// if (schedulusTeam.id !== this._team?.id) {
+		//   throw new Error(
+		//     `schedulusTeam.id=${schedulusTeam.id} !== this._team?.id=${this._team?.id}`,
+		//   );
+		// }
+		this.schedulusTeam$.next(schedulusTeam);
+		this.processRecurringBriefs();
 	}
 
 	public setMemberId(memberId: string): void {
@@ -329,18 +344,22 @@ export class TeamDaysProvider {
 	}
 
 	private processRecurringBriefs(): void {
-		if (!this._team?.dto?.recurringHappenings) {
+		console.log(
+			'TeamDaysProvider.processRecurringBriefs()',
+			this.schedulusTeam$.value,
+		);
+		if (!this.schedulusTeam$.value?.dto?.recurringHappenings) {
 			return;
 		}
-		zipMapBriefsWithIDs(this._schedulusTeam?.dto?.recurringHappenings).forEach(
-			(rh) => {
-				this.processRecurring({
-					id: rh.id,
-					brief: rh.brief,
-					team: this._team || { id: '' },
-				});
-			},
-		);
+		zipMapBriefsWithIDs(
+			this.schedulusTeam$.value?.dto?.recurringHappenings,
+		).forEach((rh) => {
+			this.processRecurring({
+				id: rh.id,
+				brief: rh.brief,
+				team: this._team || { id: '' },
+			});
+		});
 	}
 
 	private watchRecurringsByTeamID(
@@ -370,21 +389,21 @@ export class TeamDaysProvider {
 		) {
 			return;
 		}
-		console.log('processRecurring()', recurring);
+		console.log('TeamDaysProvider.processRecurring()', recurring);
 		const { recurringByWd } = this;
 		Object.keys(recurringByWd).forEach((wd) => {
 			recurringByWd[wd as WeekdayCode2] = [];
 		});
-		if (recurring.brief?.slots) {
-			recurring.brief.slots.forEach((slot) => {
-				slot.weekdays?.forEach((wd, i) => {
-					const { brief } = recurring;
-					if (!brief) {
-						throw new Error('recurring context has no brief');
-					}
-					if (!brief.title) {
-						throw new Error(`!brief.title at index=${i}`);
-					}
+		const { brief } = recurring;
+		if (!brief) {
+			throw new Error('recurring context has no brief');
+		}
+		if (!brief.title) {
+			throw new Error(`!brief.title`);
+		}
+		if (brief.slots) {
+			brief.slots.forEach((slot) => {
+				slot.weekdays?.forEach((wd) => {
 					if (slot.repeats === 'weekly' && !wd) {
 						throw new Error(`slot.repeats === 'weekly' && !wd=${wd}`);
 					}

@@ -5,7 +5,8 @@
 	}
 </style>
 <ion-item
-	button
+	button="button"
+	lines="full"
 	(click)="onSlotClicked($event)"
 	class="sneat-tiny-end-padding"
 	[color]="color"
@@ -28,8 +29,8 @@
 			{{ slot?.title }}
 		</span>
 		<ion-text color="medium" *ngIf="isCanceled"
-			>&nbsp;&mdash; canceled</ion-text
-		>
+			>&nbsp;&mdash; canceled
+		</ion-text>
 
 		<sneat-members-as-badges
 			*ngIf="mode === 'full'"

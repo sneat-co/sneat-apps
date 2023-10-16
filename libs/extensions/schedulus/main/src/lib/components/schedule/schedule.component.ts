@@ -21,12 +21,14 @@ import {
 	IHappeningContext,
 	IHappeningWithUiState,
 	IMemberContext,
+	ISchedulusTeamDto,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { HappeningService, ScheduleDayService } from '@sneat/team/services';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { SchedulusTeamService } from '../../services';
 import { isToday } from '../schedule-core';
 import {
 	emptyScheduleFilter,
@@ -64,6 +66,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// private date: Date;
 	recurrings?: IHappeningWithUiState[];
 
+	private schedulusTeamDto?: ISchedulusTeamDto | null;
+
+	private schedulusTeamSubscription?: Subscription;
+
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly params: TeamComponentBaseParams,
@@ -73,6 +79,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		scheduleDayService: ScheduleDayService,
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
+		private readonly schedulusTeamService: SchedulusTeamService,
 	) {
 		this.teamDaysProvider = new TeamDaysProvider(
 			this.errorLogger,
@@ -107,6 +114,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
 			this.onTeamContextChanged();
+			const teamChange = changes['team'];
+			const currentTeam = teamChange.currentValue as ITeamContext;
+			const prevTeam = teamChange.previousValue as ITeamContext;
+			if (currentTeam?.id !== prevTeam?.id) {
+				this.onTeamIdChanged();
+			}
 		}
 	}
 
@@ -239,7 +252,22 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	}
 
 	protected onTeamIdChanged(): void {
+		console.log('ScheduleComponent.onTeamIdChanged()', this.team?.id);
+		this.schedulusTeamSubscription?.unsubscribe();
 		if (this.team?.id) {
+			this.schedulusTeamSubscription = this.schedulusTeamService
+				.watchTeamModuleRecord(this.team)
+				.subscribe({
+					next: (schedulusTeam) => {
+						console.log(
+							'ScheduleComponent.onTeamIdChanged() => schedulusTeam:',
+							schedulusTeam,
+						);
+						this.schedulusTeamDto = schedulusTeam?.dto;
+						this.teamDaysProvider.setSchedulusTeam(schedulusTeam);
+						this.populateRecurrings();
+					},
+				});
 			// this.slotsProvider.setCommuneId(this.team.id)
 			// 	.subscribe(
 			// 		(regulars) => {
@@ -270,7 +298,9 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		console.log('populateRecurrings()');
 		const prevAll = this.allRecurrings;
 		this.allRecurrings =
-			zipMapBriefsWithIDs(this.team?.dto?.recurringHappenings)?.map((rh) => {
+			zipMapBriefsWithIDs(
+				this.schedulusTeamDto?.recurringHappenings || {},
+			)?.map((rh) => {
 				const { id } = rh;
 				const prev = prevAll?.find((p) => p.id === id);
 				const result: IHappeningWithUiState = {

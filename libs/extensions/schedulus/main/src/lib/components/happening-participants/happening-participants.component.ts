@@ -124,7 +124,7 @@ export class HappeningParticipantsComponent {
 			if (!happeningBase.participants) {
 				happeningBase = { ...happeningBase, participants: { [contactID]: {} } };
 			} else {
-				happeningBase.participants[contactID] = {}; // TODO: Should be readonly
+				happeningBase.participants[this.team?.id + '_' + contactID] = {}; // TODO: Should be readonly
 			}
 		});
 		this.happening = {

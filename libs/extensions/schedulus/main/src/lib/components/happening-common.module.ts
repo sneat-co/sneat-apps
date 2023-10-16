@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScheduleService } from '../services/schedule.service';
+import { ScheduleService } from '../services';
 import { ParticipantsComponent } from './participants/participants.component';
 import { IonicModule } from '@ionic/angular';
 
