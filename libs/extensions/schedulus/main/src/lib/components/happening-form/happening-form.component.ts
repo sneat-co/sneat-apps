@@ -70,6 +70,7 @@ export class HappeningFormComponent
 	@Input() public wd?: WeekdayCode2;
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
+
 	@ViewChild('happeningSlotsComponent', { static: false })
 	happeningSlotsComponent?: HappeningSlotsComponent;
 
@@ -121,6 +122,7 @@ export class HappeningFormComponent
 	}
 
 	ngAfterViewInit(): void {
+		console.log('HappeningFormComponent.ngAfterViewInit()');
 		this.setFocusToInput(this.titleInput);
 		if (this.happeningType.value === 'recurring' && !this.slots?.length) {
 			if (this.happeningSlotsComponent) {

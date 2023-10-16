@@ -1,6 +1,7 @@
 import {
 	AbstractControl,
 	FormControl,
+	FormGroup,
 	UntypedFormGroup,
 	ValidationErrors,
 	ValidatorFn,
@@ -39,7 +40,7 @@ export abstract class WeekdaysFormBase extends SneatBaseComponent {
 		su: this.weekdaySu,
 	};
 
-	readonly weekdaysForm: UntypedFormGroup = new UntypedFormGroup( // TODO: Make typed
+	readonly weekdaysForm = new FormGroup( // TODO: Make typed
 		{
 			mo: this.weekdayMo,
 			tu: this.weekdayTu,

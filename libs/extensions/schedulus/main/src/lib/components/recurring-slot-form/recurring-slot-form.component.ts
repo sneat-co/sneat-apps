@@ -1,12 +1,12 @@
-//ts*lint:disable:no-unsafe-any
-//ts*lint:disable:no-unbound-method
 import {
 	Component,
 	EventEmitter,
 	Inject,
 	Input,
+	OnChanges,
 	OnDestroy,
 	Output,
+	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
@@ -35,7 +35,7 @@ type Happens = 'once' | 'weekly' | RepeatsWeek | 'fortnightly';
 })
 export class RecurringSlotFormComponent
 	extends WeekdaysFormBase
-	implements OnDestroy
+	implements OnChanges, OnDestroy
 {
 	@Input() mode: 'modal' | 'in-form' = 'modal';
 	@Input() happening?: IHappeningContext;
@@ -91,7 +91,7 @@ export class RecurringSlotFormComponent
 	) {
 		super('RecurringSlotFormComponent', true, errorLogger);
 		// const now = new Date();
-		const preselectedWd = window.history.state.wd as string;
+		const preselectedWd = window.history.state.wd as WeekdayCode2;
 		if (preselectedWd) {
 			this.weekdaysForm.controls[preselectedWd].setValue(true);
 		}
@@ -284,6 +284,16 @@ export class RecurringSlotFormComponent
 	public onTimingChanged(timing: ITiming): void {
 		console.log('onTimingChanged()', timing);
 		this.timing = timing;
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['wd']) {
+			const wd = this.wd;
+			if (wd) {
+				const formControl = this.weekdaysForm.controls[wd];
+				formControl.setValue(true);
+			}
+		}
 	}
 }
 

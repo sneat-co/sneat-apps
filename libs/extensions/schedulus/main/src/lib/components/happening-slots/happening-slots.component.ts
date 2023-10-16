@@ -14,6 +14,8 @@ export interface AddSlotParams {
 export class HappeningSlotsComponent {
 	@Input() happening?: IHappeningContext;
 
+	@Input() wd?: WeekdayCode2;
+
 	@Output() addSlotDismissed = new EventEmitter<void>();
 	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
 	@Output() slotRemoved = new EventEmitter<IHappeningSlot[]>();

@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 
 import { virtualSliderAnimations } from '@sneat/components';
 import { HappeningType } from '@sneat/dto';
@@ -11,11 +13,15 @@ import {
 	emptyScheduleFilter,
 	ScheduleFilterService,
 } from '../../components/schedule-filter.service';
-import { IScheduleFilter } from '../../components/schedule-filter/schedule-filter';
-import { ScheduleTab } from '../../components/schedule/schedule.component';
+import {
+	IScheduleFilter,
+	ScheduleComponentModule,
+	ScheduleTab,
+} from '../../components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
+	TeamCoreComponentsModule,
 } from '@sneat/team/components';
 import { IMemberContext } from '@sneat/team/models';
 
@@ -25,6 +31,13 @@ import { IMemberContext } from '@sneat/team/models';
 	styleUrls: ['./schedule-page.component.scss'],
 	providers: [TeamComponentBaseParams],
 	animations: virtualSliderAnimations,
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		TeamCoreComponentsModule,
+		ScheduleComponentModule,
+	],
 })
 export class SchedulePageComponent extends TeamBaseComponent {
 	public tab: ScheduleTab = 'day';

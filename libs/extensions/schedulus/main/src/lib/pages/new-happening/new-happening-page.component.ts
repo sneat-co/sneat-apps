@@ -1,5 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import { HappeningType, WeekdayCode2 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
@@ -13,6 +17,15 @@ import { ScheduleBasePage } from '../schedule-base-page';
 @Component({
 	selector: 'sneat-happening-new',
 	templateUrl: './new-happening-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		ReactiveFormsModule,
+		SneatPipesModule,
+		HappeningFormComponent,
+	],
 	providers: [TeamComponentBaseParams],
 })
 export class NewHappeningPageComponent extends ScheduleBasePage {
