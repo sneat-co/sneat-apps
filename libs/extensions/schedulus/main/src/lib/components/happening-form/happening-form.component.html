@@ -32,6 +32,7 @@
 					*ngIf="!happening?.brief?.slots?.length"
 					mode="in-form"
 					[wd]="wd"
+					[date]="date"
 					[(happening)]="happening"
 					(happeningChange)="onHappeningChanged($event)"
 					(slotAdded)="onSlotAdded($event)"

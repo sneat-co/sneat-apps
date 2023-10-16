@@ -32,10 +32,13 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	@ViewChild('happeningPageFormComponent')
 	happeningPageFormComponent?: HappeningFormComponent;
 
-	public isToDo: boolean;
-	public wd?: WeekdayCode2;
-	public happening?: IHappeningContext;
-	public date = '';
+	protected isToDo: boolean;
+
+	// protected initialHappeningType?: HappeningType;
+	protected wd?: WeekdayCode2;
+	protected date?: string;
+
+	protected happening?: IHappeningContext;
 
 	constructor(route: ActivatedRoute, params: TeamComponentBaseParams) {
 		super('NewHappeningPageComponent', route, params);
@@ -61,16 +64,22 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 				if (this.team && !this.happening) {
 					this.createHappeningContext(type);
 				}
-				this.wd = queryParams.get('wd') as WeekdayCode2;
+				if (!this.wd) {
+					this.wd = queryParams.get('wd') as WeekdayCode2;
+				}
 				if (!this.date) {
 					this.date = queryParams.get('date') || '';
 				}
+				// if (!this.initialHappeningType) {
+				// 	this.initialHappeningType = queryParams.get('type') as HappeningType;
+				// }
 			},
 			error: this.logErrorHandler('failed to get query params'),
 		});
 	}
 
 	private createHappeningContext(type: HappeningType): void {
+		console.log('createHappeningContext()', type);
 		const team = this.team;
 		if (!team) {
 			throw new Error('!team');

@@ -54,6 +54,8 @@ export class RecurringSlotFormComponent
 	}
 
 	@Input() wd?: WeekdayCode2;
+	@Input() date?: string;
+
 	@Input() isToDo = false;
 
 	get slots(): IHappeningSlot[] | undefined {
@@ -82,7 +84,6 @@ export class RecurringSlotFormComponent
 	});
 	happens: Exclude<Happens, 'once'> = 'weekly';
 	showWeekday = true;
-	date = '';
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,

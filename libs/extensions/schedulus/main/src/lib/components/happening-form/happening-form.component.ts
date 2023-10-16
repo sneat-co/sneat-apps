@@ -59,20 +59,20 @@ export class HappeningFormComponent
 	extends SneatBaseComponent
 	implements OnChanges, AfterViewInit
 {
-	date = '';
-
-	isCreating = false;
+	// @Input() public initialHappeningType?: HappeningType;
+	@Input() public wd?: WeekdayCode2;
+	@Input() public date?: string;
 
 	@Input({ required: true }) public team?: ITeamContext;
 	@Input({ required: true }) public happening?: IHappeningContext;
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 	@Input() public contactusTeam?: IContactusTeamDtoWithID;
-	@Input() public wd?: WeekdayCode2;
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
-
 	@ViewChild('happeningSlotsComponent', { static: false })
 	happeningSlotsComponent?: HappeningSlotsComponent;
+
+	isCreating = false;
 
 	public get slots(): IHappeningSlot[] | undefined {
 		return this.happening?.brief?.slots;
@@ -114,7 +114,11 @@ export class HappeningFormComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['happening']) {
-			if (this.happening?.brief?.title) {
+			const happeningType = this.happening?.brief?.type;
+			if (happeningType) {
+				this.happeningType.setValue(happeningType);
+			}
+			if (this.happening?.brief?.title && this.happeningTitle.untouched) {
 				this.happeningTitle.setValue(this.happening?.brief?.title);
 				// this.slots = this?.happening?.brief?.slots || [];
 			}

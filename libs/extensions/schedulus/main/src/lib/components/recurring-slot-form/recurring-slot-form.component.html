@@ -1,4 +1,4 @@
-wd: {{ wd }}
+<!--wd: {{ wd }}; date: {{date}}-->
 <ion-item-divider color="primary" *ngIf="mode === 'modal'">
 	<ion-label style="font-weight: bold">New slot</ion-label>
 	<ion-buttons slot="end">
@@ -32,7 +32,7 @@ wd: {{ wd }}
 	<!--		<ion-item-divider color="light">When</ion-item-divider>-->
 	<sneat-start-end-datetime-form
 		#startEndDatetimeForm
-		[date]="undefined"
+		[date]="date"
 		[mode]="happeningType"
 		[timing]="timing"
 		(timingChanged)="onTimingChanged($event)"
