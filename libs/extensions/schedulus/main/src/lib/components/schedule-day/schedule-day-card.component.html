@@ -48,20 +48,10 @@
 		</ion-label>
 
 		<ion-buttons slot="end" class="sneat-hide-if-width-less-638">
-			<ion-button
-				title="Add recurring"
-				(click)="
-					goNewHappening({ type: 'recurring', wd: activeDay?.weekday?.id })
-				"
-			>
+			<ion-button title="Add recurring" (click)="goNewHappening('recurring')">
 				<ion-icon name="duplicate-outline" />
 			</ion-button>
-			<ion-button
-				title="Add one-timer"
-				(click)="
-					goNewHappening({ type: 'single', date: activeDay?.activeDateID })
-				"
-			>
+			<ion-button title="Add one-timer" (click)="goNewHappening('single')">
 				<ion-icon name="add-circle-outline" />
 			</ion-button>
 		</ion-buttons>

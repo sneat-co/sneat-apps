@@ -124,13 +124,6 @@ export class HappeningFormComponent
 	ngAfterViewInit(): void {
 		console.log('HappeningFormComponent.ngAfterViewInit()');
 		this.setFocusToInput(this.titleInput);
-		if (this.happeningType.value === 'recurring' && !this.slots?.length) {
-			if (this.happeningSlotsComponent) {
-				this.happeningSlotsComponent?.showAddSlot({ wd: this.wd });
-			} else {
-				console.warn('happeningSlotsComponent is not found');
-			}
-		}
 	}
 
 	protected onHappeningTypeChanged(event: Event): void {

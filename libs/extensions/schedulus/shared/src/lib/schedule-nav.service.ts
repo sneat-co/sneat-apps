@@ -21,6 +21,7 @@ export class ScheduleNavService {
 	}
 
 	goNewHappening(team: ITeamContext, params: NewHappeningParams): void {
+		console.log('ScheduleNavService.goNewHappening()', params);
 		this.teamNavService
 			.navigateForwardToTeamPage(team, 'new-happening', {
 				queryParams: params,

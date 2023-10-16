@@ -72,6 +72,7 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 	}
 
 	goNewHappening(type: HappeningType): void {
+		console.log('ScheduleWeekdayComponent.goNewHappening()', type);
 		if (!this.team) {
 			return;
 		}

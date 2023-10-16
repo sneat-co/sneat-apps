@@ -141,18 +141,12 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 		if (!date) {
 			return;
 		}
-		switch (params.type) {
-			case 'recurring':
-				params = {
-					...params,
-					wd: jsDayToWeekday(date.getDay() as WeekdayNumber),
-				};
-				break;
-			case 'single':
-				params = { ...params, date: dateToIso(date) };
-				break;
-		}
-		console.log('goNewHappening()', date, params);
+		params = {
+			...params,
+			wd: jsDayToWeekday(date.getDay() as WeekdayNumber),
+			date: dateToIso(date),
+		};
+		console.log('ScheduleDayComponent.goNewHappening()', date, params);
 		this.scheduleNavService.goNewHappening(this.team, params);
 	}
 }
