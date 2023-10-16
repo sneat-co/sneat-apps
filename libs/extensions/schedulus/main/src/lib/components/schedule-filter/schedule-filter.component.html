@@ -22,8 +22,7 @@
 			</ion-item>
 			<ion-item-group slot="content">
 				<!--				<ion-item>-->
-				<!--					<ion-checkbox (ionChange)="emitChanged()" slot="start"></ion-checkbox>-->
-				<!--					<ion-label>Myself</ion-label>-->
+				<!--					<ion-checkbox (ionChange)="emitChanged()" slot="start" labelPlacement="end">Myself</ion-checkbox>-->
 				<!--				</ion-item>-->
 				<ion-item-divider color="light" *ngIf="showWeekdays"
 					>Weekdays</ion-item-divider
@@ -36,9 +35,10 @@
 									[formControl]="weekdayMo"
 									(ionChange)="emitChanged()"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Mo</ion-label>
+								Mo
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -47,9 +47,10 @@
 									[formControl]="weekdayTu"
 									(ionChange)="emitChanged()"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Tu</ion-label>
+								Tu
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -58,9 +59,10 @@
 									[formControl]="weekdayWe"
 									(ionChange)="emitChanged()"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>We</ion-label>
+								We
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -69,9 +71,10 @@
 									[formControl]="weekdayTh"
 									(ionChange)="emitChanged()"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Th</ion-label>
+								Th
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -80,9 +83,10 @@
 									[formControl]="weekdayFr"
 									(ionChange)="emitChanged()"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Fr</ion-label>
+								Fr
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -91,9 +95,10 @@
 									[formControl]="weekdaySa"
 									(ionChange)="emitChanged()"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Sa</ion-label>
+								Sa
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -102,9 +107,10 @@
 									[formControl]="weekdaySu"
 									(ionChange)="emitChanged()"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Su</ion-label>
+								Su
 							</ion-item>
 						</ion-col>
 					</ion-row>
@@ -121,9 +127,10 @@
 									[formControl]="repeatWeekly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Weekly</ion-label>
+								Weekly
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -133,9 +140,10 @@
 									[formControl]="repeatMonthly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Monthly</ion-label>
+								Monthly
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -145,9 +153,10 @@
 									[formControl]="repeatQuarterly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Quarterly</ion-label>
+								Quarterly
 							</ion-item>
 						</ion-col>
 						<ion-col>
@@ -157,9 +166,10 @@
 									[formControl]="repeatYearly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
+									labelPlacement="end"
 									class="sneat-small-end-margin"
 								/>
-								<ion-label>Yearly</ion-label>
+								Yearly
 							</ion-item>
 						</ion-col>
 					</ion-row>
@@ -183,19 +193,21 @@
 						<ion-checkbox
 							slot="start"
 							value=""
+							labelPlacement="end"
 							[checked]="memberIDs.includes('')"
 							(ionChange)="onMemberChanged($event)"
 						/>
-						<ion-label color="medium">Unassigned</ion-label>
+						Unassigned
 					</ion-item>
 					<ion-item *ngFor="let member of members">
 						<ion-checkbox
 							slot="start"
+							labelPlacement="end"
 							[value]="member.id"
 							[checked]="memberIDs.includes(member.id)"
 							(ionChange)="onMemberChanged($event)"
 						/>
-						<ion-label>{{ member | contactTitle }}</ion-label>
+						{{ member | contactTitle }}
 					</ion-item>
 					<!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
 					<!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
