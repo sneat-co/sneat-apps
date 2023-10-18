@@ -37,7 +37,7 @@
 		"@sentry/angular-ivy": "7.74.1",
 		"@sentry/browser": "7.74.1",
 		"@sneat/random": "0.0.4",
-		"@types/tabulator-tables": "5.5.2",
+		"@types/tabulator-tables": "5.5.3",
 		"date-fns": "2.30.0",
 		"firebase": "10.5.0",
 		"ionicons": "7.2.1",
