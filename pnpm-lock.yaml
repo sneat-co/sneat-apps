@@ -149,8 +149,8 @@ devDependencies:
     specifier: 1.3.93
     version: 1.3.93
   '@types/jest':
-    specifier: 29.5.5
-    version: 29.5.5
+    specifier: 29.5.6
+    version: 29.5.6
   '@types/node':
     specifier: 18.18.5
     version: 18.18.5
@@ -4485,7 +4485,7 @@ packages:
     peerDependencies:
       rxjs: ^5.5.0 || ^6.5.0
     dependencies:
-      '@types/cordova': 11.0.1
+      '@types/cordova': 11.0.2
       rxjs: 7.8.1
     dev: false
 
@@ -4496,7 +4496,7 @@ packages:
       rxjs: ^5.5.0 || ^6.5.0
     dependencies:
       '@ionic-native/core': 5.36.0(rxjs@7.8.1)
-      '@types/cordova': 11.0.1
+      '@types/cordova': 11.0.2
       rxjs: 7.8.1
     dev: false
 
@@ -4507,7 +4507,7 @@ packages:
       rxjs: ^5.5.0 || ^6.5.0
     dependencies:
       '@ionic-native/core': 5.36.0(rxjs@7.8.1)
-      '@types/cordova': 11.0.1
+      '@types/cordova': 11.0.2
       rxjs: 7.8.1
     dev: false
 
@@ -5995,8 +5995,8 @@ packages:
     dependencies:
       '@types/node': 18.18.5
 
-  /@types/cordova@11.0.1:
-    resolution: {integrity: sha512-Zd6LAhYUAdn0mL0SbxHeF4fO/3uzkcW3fzE0ZIK1wDlTRCWlI4/0i+Phb+otP9ryziyeW2LKofRNSP5yil85hA==}
+  /@types/cordova@11.0.2:
+    resolution: {integrity: sha512-swXLtFffXPQYz80eEX4URII7obHBZCS01JtI2Fh0Gt6dxgwoyDB7ZzfkRZgHHDxl1qRdMVRICMvfx2USIHPWCA==}
     dev: false
 
   /@types/eslint-scope@3.7.4:
@@ -6053,8 +6053,8 @@ packages:
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
 
-  /@types/jest@29.5.5:
-    resolution: {integrity: sha512-ebylz2hnsWR9mYvmBFbXJXr+33UPc4+ZdxyDXh5w0FlPBTfCVN3wPL+kuOiQt3xvrK419v7XWeAs+AeOksafXg==}
+  /@types/jest@29.5.6:
+    resolution: {integrity: sha512-/t9NnzkOpXb4Nfvg17ieHE6EeSjDS2SGSpNYfoLbUAeL/EOueU/RSdOWFpfQTXBEM7BguYW1XQ0EbM+6RlIh6w==}
     dependencies:
       expect: 29.7.0
       pretty-format: 29.7.0
