@@ -66,8 +66,8 @@ dependencies:
     specifier: 0.0.4
     version: 0.0.4(@angular/common@16.2.9)(@angular/core@16.2.9)
   '@types/tabulator-tables':
-    specifier: 5.5.2
-    version: 5.5.2
+    specifier: 5.5.3
+    version: 5.5.3
   date-fns:
     specifier: 2.30.0
     version: 2.30.0
@@ -6136,8 +6136,8 @@ packages:
   /@types/stack-utils@2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
 
-  /@types/tabulator-tables@5.5.2:
-    resolution: {integrity: sha512-8MNNuFsX6Z50QC3jx7tl3/hLOf53DlzJXd8pS7IxDqKcRXqJa8SYGxWBVkz9zJ/uN2GXcB8NmFiV3srt3xjCIA==}
+  /@types/tabulator-tables@5.5.3:
+    resolution: {integrity: sha512-GOc0z+CoOvwT85ojyvDVMvKrNFSRwdRh/duNxa9E5HiD8oZQwDFl8EXZXnTZ8R5n58Idsj9tQGcQA1sqjvNtrQ==}
     dev: false
 
   /@types/tough-cookie@4.0.2:
