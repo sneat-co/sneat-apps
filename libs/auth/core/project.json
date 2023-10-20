@@ -7,9 +7,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": [
-				"{workspaceRoot}/dist/libs/auth/core"
-			],
+			"outputs": ["{workspaceRoot}/dist/libs/auth/core"],
 			"options": {
 				"project": "libs/auth/core/ng-package.json"
 			},
@@ -25,16 +23,14 @@
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
-			"outputs": [
-				"{workspaceRoot}/coverage/libs/auth/core"
-			],
+			"outputs": ["{workspaceRoot}/coverage/libs/auth/core"],
 			"options": {
 				"jestConfig": "libs/auth/core/jest.config.ts",
 				"passWithNoTests": true
 			}
 		},
 		"lint": {
-			"executor": "@nx/linter:eslint",
+			"executor": "@nx/eslint:lint",
 			"options": {
 				"lintFilePatterns": [
 					"libs/auth/core/**/*.ts",
