@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IAssetCategory } from '@sneat/dto';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 
@@ -11,7 +11,7 @@ import {
 	templateUrl: './new-asset-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class NewAssetPageComponent extends TeamBaseComponent {
+export class NewAssetPageComponent extends TeamPageBaseComponent {
 	name?: string;
 
 	public category?: IAssetCategory;

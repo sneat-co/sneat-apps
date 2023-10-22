@@ -106,8 +106,8 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 
 	watchByFilter<Dto2 extends Dto>(
 		collectionRef: CollectionReference<Dto2>,
-		filter: IFilter[],
-		orderBy?: QueryOrderByConstraint[],
+		filter: readonly IFilter[],
+		orderBy?: readonly QueryOrderByConstraint[],
 	): Observable<INavContext<Brief, Dto2>[]> {
 		return this.watchSnapshotsByFilter(collectionRef, filter, orderBy).pipe(
 			map((querySnapshot) => {

@@ -1,8 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
-import { TeamBaseComponent } from './team-base.component';
+import { TeamPageBaseComponent } from './team-page-base-component.service';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
-export abstract class TeamItemsBaseComponent extends TeamBaseComponent {
+export abstract class TeamItemsBaseComponent extends TeamPageBaseComponent {
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,

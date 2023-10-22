@@ -23,7 +23,7 @@ import {
 import {
 	IAssetContext,
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
@@ -40,7 +40,7 @@ export class NewDocumentPageComponent
 	implements OnChanges
 {
 	@Input() public override team?: ITeamContext;
-	@Input() public override contactusTeam?: IContactusTeamDtoWithID;
+	@Input() public override contactusTeam?: IContactusTeamDtoAndID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
 

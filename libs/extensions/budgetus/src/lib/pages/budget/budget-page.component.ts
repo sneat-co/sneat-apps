@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Period } from '@sneat/dto';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import { AssetGroup, Member, Totals } from '@sneat/team/models';
@@ -15,7 +15,7 @@ type LiabilitiesMode = 'incomes' | 'expenses' | 'balance';
 	templateUrl: './budget-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class BudgetPageComponent extends TeamBaseComponent {
+export class BudgetPageComponent extends TeamPageBaseComponent {
 	public total?: number;
 	public liabilitiesMode: LiabilitiesMode = 'balance';
 	// public showIncomes: boolean = true;

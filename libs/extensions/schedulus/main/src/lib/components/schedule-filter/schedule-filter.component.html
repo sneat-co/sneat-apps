@@ -124,7 +124,7 @@
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
 									value="weekly"
-									[formControl]="repeatWeekly"
+									[formControl]="repeatsWeekly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
 									labelPlacement="end"
@@ -137,7 +137,7 @@
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
 									value="monthly"
-									[formControl]="repeatMonthly"
+									[formControl]="repeatsMonthly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
 									labelPlacement="end"
@@ -150,7 +150,7 @@
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
 									value="quarterly"
-									[formControl]="repeatQuarterly"
+									[formControl]="repeatsQuarterly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
 									labelPlacement="end"
@@ -163,7 +163,7 @@
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
 									value="yearly"
-									[formControl]="repeatYearly"
+									[formControl]="repeatsYearly"
 									(ionChange)="repeatChanged($event)"
 									slot="start"
 									labelPlacement="end"
@@ -175,9 +175,11 @@
 					</ion-row>
 				</ion-grid>
 
-				<ng-container *ngIf="members && members.length <= 7; else manyMembers">
+				<ng-container
+					*ngIf="members() && (members() || []).length <= 7; else manyMembers"
+				>
 					<ion-item-divider color="light">
-						<ion-label>Members</ion-label>
+						<ion-label>Members: {{ memberIDs | json }}</ion-label>
 						<ion-buttons slot="end">
 							<ion-button
 								*ngIf="memberIDs.length"
@@ -199,7 +201,7 @@
 						/>
 						Unassigned
 					</ion-item>
-					<ion-item *ngFor="let member of members">
+					<ion-item *ngFor="let member of members() || []">
 						<ion-checkbox
 							slot="start"
 							labelPlacement="end"
@@ -229,7 +231,7 @@
 								>- Unassigned</ion-select-option
 							>
 							<ion-select-option
-								*ngFor="let member of members"
+								*ngFor="let member of members() || []"
 								[value]="member.id"
 							>
 								{{ member | contactTitle }}

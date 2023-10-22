@@ -4,7 +4,7 @@ import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ISelectItem } from '@sneat/components';
 import { ContactRole } from '@sneat/dto';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import { IContactContext } from '@sneat/team/models';
@@ -15,7 +15,7 @@ import { first, takeUntil } from 'rxjs';
 	templateUrl: 'new-logist-company-page.component.html',
 })
 export class NewLogistCompanyPageComponent
-	extends TeamBaseComponent
+	extends TeamPageBaseComponent
 	implements OnDestroy
 {
 	readonly contactTypes: ISelectItem[] = [

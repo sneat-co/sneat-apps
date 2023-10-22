@@ -1,3 +1,5 @@
+<sneat-contactus-team-entry [team]="team" [signal]="$contactusTeam" />
+
 <ion-header>
 	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
@@ -27,8 +29,8 @@
 			>
 				<ion-icon name="duplicate-outline" slot="start" />
 				<ion-label class="sneat-hide-if-width-less-766"
-					>Add recurring</ion-label
-				>
+					>Add recurring
+				</ion-label>
 			</ion-button>
 			<ion-button
 				color="primary"
@@ -46,9 +48,10 @@
 <ion-content class="cardy">
 	<sneat-schedule
 		[team]="team"
+		[contactusTeam]="$contactusTeam()"
 		[tab]="tab"
-		(tabChanged)="onTabChanged($event)"
-		(dateChanged)="onDateChanged($event)"
+		(tabChange)="onTabChanged($event)"
+		(dateIDChange)="onDateChanged($event)"
 	/>
 </ion-content>
 

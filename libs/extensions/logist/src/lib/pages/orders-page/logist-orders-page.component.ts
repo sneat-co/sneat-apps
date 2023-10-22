@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { excludeEmpty } from '@sneat/core';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import { Subscription, takeUntil } from 'rxjs';
@@ -17,7 +17,7 @@ const defaultFilter: IOrdersFilter = { status: 'active' };
 	templateUrl: 'logist-orders-page.component.html',
 	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogistOrdersPageComponent extends TeamBaseComponent {
+export class LogistOrdersPageComponent extends TeamPageBaseComponent {
 	orders?: ILogistOrderContext[];
 
 	private ordersSubscription?: Subscription;

@@ -11,7 +11,7 @@ import { IHappeningBase } from '@sneat/dto';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -36,8 +36,10 @@ import {
 })
 export class HappeningParticipantsComponent {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
+
 	@Input() happening?: IHappeningContext;
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	constructor(private readonly happeningService: HappeningService) {}
 
@@ -47,9 +49,7 @@ export class HappeningParticipantsComponent {
 			: 'Team members';
 	}
 
-	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-
-	public isToDo = false;
+	// public isToDo = false;
 	public checkedMemberIDs: string[] = [];
 	public contacts: number[] = [];
 	public tab: 'members' | 'others' = 'members';
@@ -66,7 +66,12 @@ export class HappeningParticipantsComponent {
 		);
 	}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly id = (
+		_: number,
+		o: {
+			id: string;
+		},
+	) => o.id;
 
 	public isMemberCheckChanged(args: {
 		event: CustomEvent;

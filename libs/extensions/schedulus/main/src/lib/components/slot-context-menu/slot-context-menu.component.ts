@@ -12,7 +12,7 @@ import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	HappeningUIState,
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -35,7 +35,7 @@ const notImplemented = 'Sorry, not implemented yet';
 })
 export class SlotContextMenuComponent {
 	@Input() team: ITeamContext = { id: '' };
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
 	@Input() dateID?: string;
 	@Input() public slot?: ISlotItem;

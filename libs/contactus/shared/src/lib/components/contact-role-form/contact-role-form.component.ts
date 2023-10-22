@@ -7,12 +7,17 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { ISelectItem } from '@sneat/components';
 import {
 	ContactGroupService,
 	defaultFamilyContactGroups,
-	IContactGroupContext,
-	IContactRoleContext,
 } from '@sneat/contactus-services';
+import {
+	IContactGroupDto,
+	IContactRoleBriefWithID,
+	IIdAndBrief,
+	IIdAndDto,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
@@ -25,27 +30,44 @@ export class ContactRoleFormComponent
 	extends SneatBaseComponent
 	implements OnChanges
 {
-	public contactGroup?: IContactGroupContext | null;
+	public contactGroup?: IIdAndDto<IContactGroupDto> | null;
 
 	@Input() public contactGroupID? = defaultFamilyContactGroups[0].id;
+
 	@Output() readonly contactGroupIDChange = new EventEmitter<
 		string | undefined
 	>();
+
 	@Output() readonly contactGroupChange = new EventEmitter<
-		IContactGroupContext | undefined
+		IIdAndDto<IContactGroupDto> | undefined
 	>();
 
 	@Input() public contactRoleID?: string;
+
 	@Output() readonly contactRoleIDChange = new EventEmitter<
 		string | undefined
 	>();
+
 	@Output() readonly contactRoleChange = new EventEmitter<
-		IContactRoleContext | undefined
+		IIdAndBrief<IContactRoleBriefWithID> | undefined
 	>();
 
-	protected groups?: readonly IContactGroupContext[];
+	protected groups?: readonly IIdAndDto<IContactGroupDto>[];
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected get groupItems(): readonly ISelectItem[] {
+		return (
+			this.groups?.map((g) => ({
+				id: g.id,
+				title: g.dto.title,
+				emoji: g.dto.emoji,
+			})) || []
+		);
+	}
+
+	protected readonly roleBriefID = (_: number, o: IContactRoleBriefWithID) =>
+		o.id;
+	protected readonly groupID = (_: number, o: IIdAndDto<IContactGroupDto>) =>
+		o.id;
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -63,12 +85,13 @@ export class ContactRoleFormComponent
 			});
 	}
 
-	public onContactGroupIDChanged(event: Event): void {
-		event.stopPropagation();
+	public onContactGroupIDChanged(contactGroupID: string): void {
+		// event.stopPropagation();
+		this.contactGroupID = contactGroupID;
 		this.clearContactType();
 		this.contactGroupIDChange.emit(this.contactGroupID);
 		this.contactGroup = this.groups?.find((g) => g.id === this.contactGroupID);
-		this.contactGroupChange.emit(this.contactGroup);
+		this.contactGroupChange.emit(this.contactGroup || undefined);
 	}
 
 	public onContactRoleIDChanged(event: Event): void {

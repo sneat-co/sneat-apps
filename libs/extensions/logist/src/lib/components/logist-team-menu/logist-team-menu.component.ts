@@ -10,7 +10,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemComponent } from '@sneat/components';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 	TeamsMenuComponent,
 } from '@sneat/team/components';
@@ -30,7 +30,7 @@ import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team
 	],
 })
 export class LogistTeamMenuComponent
-	extends TeamBaseComponent
+	extends TeamPageBaseComponent
 	implements OnInit
 {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;

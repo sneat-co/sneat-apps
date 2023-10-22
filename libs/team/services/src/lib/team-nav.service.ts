@@ -9,7 +9,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
 import {
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ITeamContext,
 	ITeamRef,
 } from '@sneat/team/models';
@@ -162,7 +162,7 @@ export class TeamNavService {
 
 	public navigateToAddMember = (
 		navController: NavController,
-		team: IContactusTeamDtoWithID,
+		team: IContactusTeamDtoAndID,
 	): void =>
 		this.navToTeamPage(
 			navController,

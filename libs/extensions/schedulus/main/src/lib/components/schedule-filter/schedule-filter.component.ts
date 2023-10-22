@@ -3,16 +3,16 @@ import {
 	Inject,
 	Input,
 	OnChanges,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
-import { WeekdayCode2 } from '@sneat/dto';
+import { IContactBrief, IIdAndBrief, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
@@ -31,27 +31,32 @@ export class ScheduleFilterComponent
 	extends WeekdaysFormBase
 	implements OnChanges
 {
-	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;
-	public expanded = false;
-	public accordionValue?: string;
-	private resetting = false;
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input({ required: true }) contactusTeam?: IContactusTeamDtoAndID;
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
+
+	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;
+
 	readonly text = new FormControl<string>('');
-	weekdays: WeekdayCode2[] = [];
-	memberIDs: string[] = [];
-	selectedMembers: IContactContext[] = [];
-	repeats: string[] = [];
-	memberID = '';
+	protected weekdays: WeekdayCode2[] = [];
+	protected memberIDs: string[] = [];
+	protected selectedMembers: IIdAndBrief<IContactBrief>[] = [];
+	protected repeats: string[] = [];
+	protected memberID = '';
 
-	members?: IContactContext[];
+	protected members = signal<readonly IIdAndBrief<IContactBrief>[] | undefined>(
+		undefined,
+	);
 
-	readonly repeatWeekly = new FormControl<boolean>(false);
-	readonly repeatMonthly = new FormControl<boolean>(false);
-	readonly repeatQuarterly = new FormControl<boolean>(false);
-	readonly repeatYearly = new FormControl<boolean>(false);
+	protected expanded = false;
+	protected accordionValue?: string;
+	private resetting = false;
+
+	protected readonly repeatsWeekly = new FormControl<boolean>(false);
+	protected readonly repeatsMonthly = new FormControl<boolean>(false);
+	protected readonly repeatsQuarterly = new FormControl<boolean>(false);
+	protected readonly repeatsYearly = new FormControl<boolean>(false);
 
 	public get hasFilter(): boolean {
 		return (
@@ -103,13 +108,10 @@ export class ScheduleFilterComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('ScheduleFilterComponent.ngOnChanges()', changes);
-		// TODO: call base class method?
-		this.members = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map(
-			(m) => ({
-				...m,
-				team: this.team || { id: '' },
-			}),
-		);
+		if (changes['contactusTeam']) {
+			const members = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts);
+			this.members.set(members);
+		}
 	}
 
 	clearFilter(event?: Event): void {
@@ -131,10 +133,10 @@ export class ScheduleFilterComponent
 			Object.values(this.weekdayById).forEach((wd) =>
 				wd.setValue(false, resetFormControlOptions),
 			);
-			this.repeatWeekly.setValue(false);
-			this.repeatMonthly.setValue(false);
-			this.repeatQuarterly.setValue(false);
-			this.repeatYearly.setValue(false);
+			this.repeatsWeekly.setValue(false);
+			this.repeatsMonthly.setValue(false);
+			this.repeatsQuarterly.setValue(false);
+			this.repeatsYearly.setValue(false);
 		} catch (e) {
 			console.error(e);
 		}
@@ -213,9 +215,10 @@ export class ScheduleFilterComponent
 	}
 
 	private setSelectedMembers(): void {
-		const members = this.members || [];
-		this.selectedMembers = this.memberIDs.map(
-			(mID) => members.find((m) => m.id == mID) as IContactContext,
-		);
+		const members = this.members() || [];
+		this.selectedMembers = this.memberIDs.map((mID) => {
+			const m = members.find((m) => m.id == mID);
+			return m as IIdAndBrief<IContactBrief>;
+		});
 	}
 }

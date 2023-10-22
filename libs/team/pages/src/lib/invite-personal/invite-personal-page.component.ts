@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { IBriefAndID, IContactBrief, IMemberBrief } from '@sneat/dto';
+import { IIdAndOptionalBrief, IContactBrief, IMemberBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import {
@@ -36,7 +36,7 @@ export class InvitePersonalPageComponent implements OnInit {
 	public rejecting = false;
 
 	public invite?: IPersonalInvite;
-	public members?: IBriefAndID<IContactBrief>[];
+	public members?: IIdAndOptionalBrief<IContactBrief>[];
 
 	private inviteId = '';
 	private teamId = '';

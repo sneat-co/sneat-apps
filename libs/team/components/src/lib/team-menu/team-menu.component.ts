@@ -4,10 +4,10 @@ import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
-import { IBriefAndID } from '@sneat/dto';
+import { IIdAndOptionalBrief } from '@sneat/dto';
 import { zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs/operators';
-import { TeamBaseComponent } from '../team-base.component';
+import { TeamPageBaseComponent } from '../team-page-base-component.service';
 import { TeamComponentBaseParams } from '../team-component-base-params';
 
 import { CommonModule } from '@angular/common';
@@ -28,8 +28,8 @@ import { IonicModule } from '@ionic/angular';
 		AuthMenuItemComponent,
 	],
 })
-export class TeamMenuComponent extends TeamBaseComponent {
-	public teams?: readonly IBriefAndID<IUserTeamBrief>[];
+export class TeamMenuComponent extends TeamPageBaseComponent {
+	public teams?: readonly IIdAndOptionalBrief<IUserTeamBrief>[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 

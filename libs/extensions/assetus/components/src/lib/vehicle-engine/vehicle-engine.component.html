@@ -2,7 +2,7 @@
 	*ngIf="!vehicleAsset?.dto?.engineType"
 	label="Engine type"
 	[items]="engineTypes"
-	(changed)="onEngineTypeChanged($event)"
+	(valueChange)="onEngineTypeChanged($event)"
 />
 
 <ion-item-group *ngIf="vehicleAsset?.dto?.engineFuel">

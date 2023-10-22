@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IBriefAndID, IContactBrief } from '@sneat/dto';
+import { IIdAndOptionalBrief, IContactBrief } from '@sneat/dto';
 import {
 	IContactContext,
 	ITeamContext,
@@ -35,7 +35,7 @@ export class ContactLocationsComponent implements OnChanges {
 		}
 	}
 
-	private getContactLocations(): IBriefAndID<IContactBrief>[] {
+	private getContactLocations(): IIdAndOptionalBrief<IContactBrief>[] {
 		return (
 			zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts)
 				?.map((c) => ({

@@ -3,7 +3,7 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
 import {
-	IBriefAndID,
+	IIdAndOptionalBrief,
 	IContactBrief,
 	IMemberBrief,
 	trimNames,
@@ -23,7 +23,7 @@ import { ContactusTeamService } from './contactus-team.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
 export const contactContextFromBrief = (
-	contact: IBriefAndID<IContactBrief>,
+	contact: IIdAndOptionalBrief<IContactBrief>,
 	team: ITeamContext,
 ): IContactContext => ({
 	...contact,

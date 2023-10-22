@@ -1,9 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IContactContext } from '@sneat/team/models';
+import {
+	IContactBrief,
+	IContactDto,
+	IIdAndOptionalBriefAndOptionalDto,
+} from '@sneat/dto';
 import { personName } from './person-title.pipe';
 
 export function getContactTitle(
-	m: IContactContext,
+	m: IIdAndOptionalBriefAndOptionalDto<IContactBrief, IContactDto>,
 	shortTitle?: string,
 ): string {
 	return (
@@ -18,7 +22,10 @@ export function getContactTitle(
 
 @Pipe({ name: 'contactTitle' })
 export class ContactTitlePipe implements PipeTransform {
-	transform(m?: IContactContext, shortTitle?: string): string {
+	transform(
+		m?: IIdAndOptionalBriefAndOptionalDto<IContactBrief, IContactDto>,
+		shortTitle?: string,
+	): string {
 		return m ? getContactTitle(m, shortTitle) : '';
 	}
 }

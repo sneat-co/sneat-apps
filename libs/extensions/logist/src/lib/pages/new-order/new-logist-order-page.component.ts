@@ -5,7 +5,7 @@ import { IContactContext } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem } from '@sneat/components';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import {
@@ -23,7 +23,7 @@ import { LogistOrderService, LogistTeamService } from '../../services';
 	selector: 'sneat-new-logist-order-page',
 	templateUrl: 'new-logist-order-page.component.html',
 })
-export class NewLogistOrderPageComponent extends TeamBaseComponent {
+export class NewLogistOrderPageComponent extends TeamPageBaseComponent {
 	public order: ILogistOrderContext = {
 		id: '',
 		team: this.team || { id: '', type: 'company' },

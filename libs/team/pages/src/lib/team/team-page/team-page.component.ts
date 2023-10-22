@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TopMenuService } from '@sneat/core';
+import { IContactBrief, IIdAndBrief } from '@sneat/dto';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import {
-	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 
@@ -16,8 +16,11 @@ import {
 	templateUrl: './team-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class TeamPageComponent extends TeamBaseComponent implements OnDestroy {
-	protected members?: IContactContext[];
+export class TeamPageComponent
+	extends TeamPageBaseComponent
+	implements OnDestroy
+{
+	protected members?: IIdAndBrief<IContactBrief>[];
 
 	constructor(
 		route: ActivatedRoute,
@@ -29,7 +32,7 @@ export class TeamPageComponent extends TeamBaseComponent implements OnDestroy {
 	}
 
 	protected override onContactusTeamChanged(
-		contactusTeam: IContactusTeamDtoWithID,
+		contactusTeam: IContactusTeamDtoAndID,
 	) {
 		console.log('TeamPage.onContactusTeamChanged()', contactusTeam);
 		super.onContactusTeamChanged(contactusTeam);

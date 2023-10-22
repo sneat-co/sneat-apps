@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IDocumentAssetDto } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import { IAssetContext, IMemberContext } from '@sneat/team/models';
@@ -13,7 +13,7 @@ import { IAssetContext, IMemberContext } from '@sneat/team/models';
 	templateUrl: './documents-page.component.html',
 	providers: [TeamComponentBaseParams],
 })
-export class DocumentsPageComponent extends TeamBaseComponent {
+export class DocumentsPageComponent extends TeamPageBaseComponent {
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
 	public documents: IAssetContext<IDocumentAssetDto>[];

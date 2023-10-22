@@ -2,6 +2,7 @@ export interface ISneatExtension {
 	id: string;
 	title: string;
 	emoji: string;
+	newPage?: string;
 }
 
 const assetsExtension: ISneatExtension = {
@@ -32,6 +33,7 @@ const calendarExtension: ISneatExtension = {
 	id: 'schedulus',
 	title: 'Calendar',
 	emoji: '🗓️',
+	newPage: 'new-happening',
 };
 
 export const defaultFamilyExtension: ISneatExtension[] = [

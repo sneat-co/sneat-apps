@@ -78,7 +78,7 @@ export class ContactsByTypeComponent implements OnChanges {
 
 		defaultFamilyContactGroups.forEach((group) => {
 			const rolesWithContacts: IContactRoleWithContacts[] = [];
-			group.dto?.roles.forEach((role) => {
+			group.dto?.roles?.forEach((role) => {
 				const roleWithContacts: IContactRoleWithContacts = {
 					...role,
 					contacts: contacts.filter((c) => c.brief?.roles?.includes(role.id)),
@@ -108,7 +108,7 @@ export class ContactsByTypeComponent implements OnChanges {
 			const groupWithContacts: IContactGroupWithContacts = {
 				...group.dto,
 				id: group.id,
-				title: group.dto?.title || group.brief?.title || '',
+				title: group.dto?.title || '',
 				roles: rolesWithContacts,
 			};
 

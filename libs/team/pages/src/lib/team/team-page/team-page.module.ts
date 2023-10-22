@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatCardListComponent } from '@sneat/components';
+import {
+	SneatCardListComponent,
+	UserCountryComponent,
+} from '@sneat/components';
 import { MembersListComponent } from '@sneat/contactus-shared';
 import { TeamComponentsModule } from '@sneat/team/components';
 import { MembersComponent } from '../members/members.component';
@@ -21,6 +24,7 @@ import { TeamPageComponent } from './team-page.component';
 		TeamComponentsModule,
 		SneatCardListComponent,
 		MembersListComponent,
+		UserCountryComponent,
 	],
 	declarations: [
 		MembersComponent,

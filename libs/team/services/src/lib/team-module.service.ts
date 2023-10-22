@@ -4,16 +4,19 @@ import {
 	Firestore as AngularFirestore,
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IDtoAndID } from '@sneat/dto';
+import { IIdAndOptionalDto } from '@sneat/dto';
 import { ITeamContext, ITeamItemContext } from '@sneat/team/models';
 import { map } from 'rxjs/operators';
-import { TeamItemService } from './team-item.service';
+import { ModuleTeamItemService } from './team-item.service';
 import { Observable, tap } from 'rxjs';
 
 // import firebase from "firebase/compat";
 // import Item = firebase.analytics.Item;
 
-export abstract class TeamModuleService<Dto> extends TeamItemService<Dto, Dto> {
+export abstract class TeamModuleService<Dto> extends ModuleTeamItemService<
+	Dto,
+	Dto
+> {
 	// protected readonly sfs: SneatFirestoreService<Brief, Dto>;
 
 	protected constructor(moduleID: string, afs: AngularFirestore) {
@@ -21,7 +24,9 @@ export abstract class TeamModuleService<Dto> extends TeamItemService<Dto, Dto> {
 		super(moduleID, 'modules', afs, undefined as unknown as SneatApiService);
 	}
 
-	watchTeamModuleRecord(team: ITeamContext): Observable<IDtoAndID<Dto>> {
+	watchTeamModuleRecord(
+		team: ITeamContext,
+	): Observable<IIdAndOptionalDto<Dto>> {
 		const logPrefix = `watchTeamModuleEntry(teamID=${team.id}, moduleID=${this.moduleID})`;
 		console.log(logPrefix);
 		const collectionRef = collection(

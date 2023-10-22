@@ -12,7 +12,7 @@
 <ng-template #list>
 	<ion-item-sliding
 		[@addRemove]="'added'"
-		*ngFor="let member of membersToDisplay || []; trackBy: id"
+		*ngFor="let member of membersToDisplay || []; trackBy: memberID"
 	>
 		<ion-item
 			routerLink="/space/{{ team?.type || 'UNKNOWN_TYPE' }}/{{
@@ -23,17 +23,19 @@
 		>
 			<ion-avatar *ngIf="member?.brief?.avatar as avatar; else memberIcon">
 				<ion-img
-					*ngIf="member.brief?.avatar?.external?.url"
+					*ngIf="member.brief?.avatar?.external?.url; let url"
+					[
 					title="avatar"
-					[src]="member.brief?.avatar?.external?.url"
+					[src]="url"
 				/>
 				<ion-img
 					*ngIf="
-						member.brief?.avatar?.gravatar &&
-						!member.brief?.avatar?.external?.url
+						!member.brief?.avatar?.external?.url &&
+							member.brief?.avatar?.gravatar;
+						let gravatar
 					"
 					title="avatar"
-					src="//www.gravatar.com/avatar/{{ member.brief?.avatar?.gravatar }}"
+					src="//www.gravatar.com/avatar/{{ gravatar }}"
 				/>
 			</ion-avatar>
 			<ng-template #memberIcon>
@@ -48,7 +50,7 @@
 				<!--        <ion-badge color="light"  class="ion-margin-start" *ngIf="member.brief?.ageGroup">{{member.brief?.ageGroup}}</ion-badge>-->
 				<ng-container *ngIf="!role">
 					<sneat-contact-role-badges
-						[roles]="member.brief?.roles"
+						[roles]="member.brief.roles"
 						[hideRoles]="hideRoles"
 					/>
 				</ng-container>

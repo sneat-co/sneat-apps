@@ -11,9 +11,9 @@
 		</ng-container>
 
 		<p *ngFor="let member of relatedContacts; trackBy: contactID">
-			{{ member.brief.relatedAs }} of
+			{{ member.brief?.relatedAs }} of
 			<a [href]="member.id" (click)="goMember(member.id, $event)">{{
-				member.brief.title
+				member.brief?.title
 			}}</a>
 		</p>
 

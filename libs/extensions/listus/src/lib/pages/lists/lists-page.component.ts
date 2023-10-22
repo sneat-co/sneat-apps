@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
 import { IListGroup, IListInfo, ListType } from '@sneat/dto';
-import { TeamBaseComponent } from '@sneat/team/components';
+import { TeamPageBaseComponent } from '@sneat/team/components';
 import {
 	createShortCommuneInfoFromDto,
 	ITeamContext,
@@ -19,7 +19,7 @@ import { NewListDialogComponent } from './new-list-dialog.component';
 	templateUrl: './lists-page.component.html',
 	providers: [ListusComponentBaseParams],
 })
-export class ListsPageComponent extends TeamBaseComponent {
+export class ListsPageComponent extends TeamPageBaseComponent {
 	@ViewChild('newListTitle', { static: false }) newListTitle?: IonInput;
 	addingToGroup: ListType | undefined;
 	listGroups?: IListGroup[];

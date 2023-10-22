@@ -20,8 +20,9 @@ import {
 	IVehicleAssetDto,
 	ListType,
 	IHappeningBrief,
-	IBriefAndID,
-	IDtoAndID,
+	IIdAndOptionalBrief,
+	IIdAndOptionalDto,
+	IIdAndBrief,
 } from '@sneat/dto';
 import { ITeamItemContext } from './team-item-context';
 
@@ -32,7 +33,7 @@ export interface ITeamRef {
 
 export function zipMapBriefsWithIDs<Brief>(
 	briefs?: Readonly<{ [id: string]: Brief }>,
-): readonly IBriefAndID<Brief>[] {
+): readonly IIdAndBrief<Brief>[] {
 	return briefs
 		? Object.keys(briefs).map((id) => ({ id, brief: briefs[id] }))
 		: [];
@@ -40,7 +41,7 @@ export function zipMapBriefsWithIDs<Brief>(
 
 export function zipMapDTOsWithIDs<DTO>(
 	o?: Readonly<{ [id: string]: DTO }>,
-): readonly IBriefAndID<DTO>[] {
+): readonly IIdAndOptionalBrief<DTO>[] {
 	return o ? Object.keys(o).map((id) => ({ id, brief: o[id] })) : [];
 }
 
@@ -56,13 +57,15 @@ export interface IContactusTeamDto {
 	contacts: Readonly<{ [id: string]: IContactBrief }>;
 }
 
-export interface IContactusTeamDtoWithID extends IDtoAndID<IContactusTeamDto> {}
+export interface IContactusTeamDtoAndID
+	extends IIdAndOptionalDto<IContactusTeamDto> {}
 
 export interface ISchedulusTeamDto {
 	recurringHappenings?: { [id: string]: IHappeningBrief };
 }
 
-export interface ISchedulusTeamDtoWithID extends IDtoAndID<ISchedulusTeamDto> {}
+export interface ISchedulusTeamDtoWithID
+	extends IIdAndOptionalDto<ISchedulusTeamDto> {}
 
 export const teamContextFromBrief = (
 	id: string,
@@ -88,6 +91,9 @@ export interface IContactContext
 	extends ITeamItemContext<IContactBrief, IContactDto> {
 	parentContact?: IContactContext;
 }
+
+export interface IContactGroupContext
+	extends ITeamItemContext<IContactGroupBrief, IContactGroupDto> {}
 
 export interface IListKey {
 	id: string;

@@ -5,11 +5,11 @@ import { IScheduleDayBrief, IScheduleDayDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team/models';
 import { tap } from 'rxjs';
-import { TeamItemService } from './team-item.service';
+import { ModuleTeamItemService } from './team-item.service';
 
 @Injectable()
 export class ScheduleDayService {
-	private readonly teamItemService: TeamItemService<
+	private readonly teamItemService: ModuleTeamItemService<
 		IScheduleDayBrief,
 		IScheduleDayDto
 	>;
@@ -19,7 +19,7 @@ export class ScheduleDayService {
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService(
+		this.teamItemService = new ModuleTeamItemService(
 			'schedulus',
 			'schedule_days',
 			afs,
@@ -30,7 +30,7 @@ export class ScheduleDayService {
 	public watchTeamDay(team: ITeamContext, dateID: string) {
 		console.log('ScheduleDayService.watchTeamDay()', team.id, dateID);
 		return this.teamItemService
-			.watchTeamItemByID(team, dateID)
+			.watchTeamItemByIdWithTeamRef(team, dateID)
 			.pipe(
 				tap((scheduleDay) =>
 					console.log(

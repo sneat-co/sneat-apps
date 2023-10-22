@@ -13,7 +13,7 @@ import {
 } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
-import { IBriefAndID, ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
+import { IIdAndBrief, ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreateTeamRequest,
@@ -212,7 +212,7 @@ export class TeamService {
 	}
 
 	private readonly subscribeForUserTeamChanges = (
-		userTeamInfo: IBriefAndID<IUserTeamBrief>,
+		userTeamInfo: IIdAndBrief<IUserTeamBrief>,
 	): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
 		let subj = this.teams$[userTeamInfo.id];

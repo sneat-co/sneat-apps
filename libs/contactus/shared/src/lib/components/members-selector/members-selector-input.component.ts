@@ -1,9 +1,14 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {
+	IContactBrief,
+	IContactDto,
+	IIdAndOptionalBriefAndOptionalDto,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
@@ -15,7 +20,7 @@ import { MembersSelectorService } from './members-selector.service';
 	templateUrl: 'members-selector-input.component.html',
 })
 export class MembersSelectorInputComponent {
-	protected contactusTeam?: IContactusTeamDtoWithID;
+	protected contactusTeam?: IContactusTeamDtoAndID;
 
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() members?: readonly IContactContext[];
@@ -66,6 +71,10 @@ export class MembersSelectorInputComponent {
 
 	onRemoveMember(member: IContactContext): void {
 		this.removeMember.emit(member);
+
+		const a: IContactContext = undefined as unknown as IContactContext;
+		const b: IIdAndOptionalBriefAndOptionalDto<IContactBrief, IContactDto> = a;
+		console.log(b);
 	}
 
 	onSelectedMembersChanged(members: readonly IContactContext[]): void {

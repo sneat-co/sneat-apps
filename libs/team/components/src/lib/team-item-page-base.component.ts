@@ -1,16 +1,16 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { INavContext, TeamItem } from '@sneat/core';
-import { TeamItemService } from '@sneat/team/services';
+import { ModuleTeamItemService } from '@sneat/team/services';
 import { Observable, Subscription, tap } from 'rxjs';
-import { TeamBaseComponent } from './team-base.component';
+import { TeamPageBaseComponent } from './team-page-base-component.service';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
 // type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
 
-export abstract class TeamItemBaseComponent<
+export abstract class TeamItemPageBaseComponent<
 	Brief,
 	Dto extends Brief,
-> extends TeamBaseComponent {
+> extends TeamPageBaseComponent {
 	protected item?: INavContext<Brief, Dto>;
 
 	protected constructor(
@@ -19,7 +19,7 @@ export abstract class TeamItemBaseComponent<
 		teamParams: TeamComponentBaseParams,
 		defaultBackPage: string,
 		private readonly itemName: TeamItem,
-		private readonly teamItemService: TeamItemService<Brief, Dto>,
+		private readonly teamItemService: ModuleTeamItemService<Brief, Dto>,
 	) {
 		super(className, route, teamParams);
 		this.defaultBackPage = defaultBackPage;

@@ -1,10 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 
-export class ScheduleBasePage extends TeamBaseComponent {
+export class ScheduleBasePage extends TeamPageBaseComponent {
 	public override get defaultBackUrl(): string {
 		const t = this.team;
 		return t ? `/space/${t.type}/${t.id}/schedule` : '';

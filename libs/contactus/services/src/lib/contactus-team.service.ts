@@ -10,7 +10,7 @@ export class ContactusTeamService extends TeamModuleService<IContactusTeamDto> {
 		super('contactus', afs);
 	}
 
-	readonly watchContactBriefs = (team: ITeamContext) =>
+	public readonly watchContactBriefs = (team: ITeamContext) =>
 		this.watchBriefs<IContactBrief, IContactDto>(
 			team,
 			(dto) => dto?.contacts || {},

@@ -31,11 +31,13 @@ export class SelectFromListComponent
 	implements ControlValueAccessor, OnChanges, OnDestroy
 {
 	@Input() value = '';
+	@Output() readonly valueChange = new EventEmitter<string>();
+
 	@Input() filterLabel = 'Find';
 	@Input() label = 'Please choose';
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
-	@Input() items?: ISelectItem[];
+	@Input() items?: readonly ISelectItem[];
 	@Input() items$: Observable<ISelectItem[]> = NEVER;
 	@Input() radioSlot?: 'start' | 'end';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
@@ -54,7 +56,7 @@ export class SelectFromListComponent
 	@ViewChild('filterInput', { static: false }) filterInput?: IonInput;
 	@ViewChild('selectInput', { static: false }) selectInput?: IonSelect;
 
-	protected displayItems?: ISelectItem[];
+	protected displayItems?: readonly ISelectItem[];
 	protected hiddenCount = 0;
 
 	protected isDisabled = false;
@@ -126,7 +128,7 @@ export class SelectFromListComponent
 	protected onChange = (v: unknown) => {
 		console.log('SelectFromListComponent.onChange()', v);
 		this.value = v as string;
-		this.changed.emit(this.value);
+		this.valueChange.emit(this.value);
 	};
 
 	onTouched: () => void = () => void 0;

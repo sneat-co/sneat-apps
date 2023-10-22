@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
 import { RetrospectiveService } from '../../retrospective.service';
 import { Subscription } from 'rxjs';
-import { TeamBaseComponent } from '@sneat/team/components';
+import { TeamPageBaseComponent } from '@sneat/team/components';
 import { IRecord } from '@sneat/data';
 import {
 	IRetrospective,
@@ -21,7 +21,7 @@ import { getMeetingIdFromDate } from '@sneat/meeting';
 	templateUrl: './retrospective-page.component.html',
 })
 export class RetrospectivePageComponent
-	extends TeamBaseComponent
+	extends TeamPageBaseComponent
 	implements OnDestroy
 {
 	public title = 'Retrospective';

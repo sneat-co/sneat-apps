@@ -19,7 +19,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -66,7 +66,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	protected readonly destroyed = new EventEmitter<void>();
 
 	@Input() team: ITeamContext = { id: '' };
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
 	@Input() happening?: IHappeningContext;
 
 	@Output() readonly deleted = new EventEmitter<string>();

@@ -1,14 +1,24 @@
 import { INavContext } from '@sneat/core';
-import { ITeamContext, ITeamRef } from './team-context';
+import { IIdAndBrief, IIdAndBriefAndDto } from '@sneat/dto';
+import { ITeamRef } from './team-context';
 
 export interface ITeamItemContext<Brief, Dto> extends INavContext<Brief, Dto> {
 	readonly team: ITeamRef;
 }
 
-export function teamItemContextFromBrief<Brief, Dto>(
-	team: ITeamContext,
+export interface ITeamItemWithTeamRef<Brief, Dto>
+	extends IIdAndBriefAndDto<Brief, Dto> {
+	readonly team: ITeamRef;
+}
+
+export interface ITeamItemBriefWithTeamRef<Brief> extends IIdAndBrief<Brief> {
+	readonly team: ITeamRef;
+}
+
+export function teamItemBriefWithTeamRefFromBrief<Brief>(
+	team: ITeamRef,
 	id: string,
 	brief: Brief,
-): ITeamItemContext<Brief, Dto> {
+): ITeamItemBriefWithTeamRef<Brief> {
 	return { id, brief, team };
 }

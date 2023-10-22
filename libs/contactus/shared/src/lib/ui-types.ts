@@ -1,8 +1,7 @@
-import { IContactGroupBrief } from '@sneat/dto';
-import { IContactRoleBrief } from '@sneat/contactus-services';
+import { IContactGroupBrief, IContactRoleBriefWithID } from '@sneat/dto';
 import { IContactContext } from '@sneat/team/models';
 
-export interface IContactRoleWithContacts extends IContactRoleBrief {
+export interface IContactRoleWithContacts extends IContactRoleBriefWithID {
 	contacts?: IContactContext[];
 }
 

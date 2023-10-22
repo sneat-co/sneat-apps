@@ -21,7 +21,7 @@ import {
 import { ScrumService } from '../services/scrum.service';
 import { IScrumDto, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import { ScrumPageTab } from '@sneat/team/services';
@@ -36,7 +36,7 @@ import { IMetric } from '../interfaces';
 	providers: [TeamComponentBaseParams],
 })
 export class ScrumPageComponent
-	extends TeamBaseComponent
+	extends TeamPageBaseComponent
 	implements OnInit, OnDestroy
 {
 	public tab: ScrumPageTab = 'my';

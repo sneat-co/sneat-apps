@@ -1,12 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import { ILogistTeamContext } from '../dto';
 import { LogistTeamService } from '../services';
 
-export class LogistTeamBaseComponent extends TeamBaseComponent {
+export class LogistTeamBaseComponent extends TeamPageBaseComponent {
 	protected logistTeam?: ILogistTeamContext;
 
 	constructor(

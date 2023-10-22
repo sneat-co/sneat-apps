@@ -30,7 +30,7 @@ import {
 	TeamMemberType,
 } from '@sneat/dto';
 import {
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ICreateTeamMemberRequest,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -64,7 +64,7 @@ export class NewMemberFormComponent implements OnChanges {
 
 	@Input({ required: true }) team?: ITeamContext;
 
-	protected contactusTeam?: IContactusTeamDtoWithID;
+	protected contactusTeam?: IContactusTeamDtoAndID;
 
 	@Input() member: IMemberPerson = emptyMemberPerson;
 	@Output() readonly memberChange = new EventEmitter<IMemberPerson>();

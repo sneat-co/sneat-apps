@@ -1,19 +1,23 @@
 import { ActivatedRoute } from '@angular/router';
 import { TeamMemberType } from '@sneat/auth-models';
 import { TeamType } from '@sneat/core';
-import { isTeamSupportsMemberGroups } from '@sneat/dto';
+import {
+	IContactBrief,
+	IIdAndBrief,
+	isTeamSupportsMemberGroups,
+} from '@sneat/dto';
 import {
 	TeamComponentBaseParams,
 	TeamModuleBaseComponent,
 } from '@sneat/team/components';
 import { ContactusTeamService, MemberService } from '@sneat/contactus-services';
-import { IContactContext, IContactusTeamDto } from '@sneat/team/models';
+import { IContactusTeamDto } from '@sneat/team/models';
 
 export abstract class MembersBasePage extends TeamModuleBaseComponent<
 	IContactusTeamDto,
 	IContactusTeamDto
 > {
-	public members?: readonly IContactContext[];
+	public members?: readonly IIdAndBrief<IContactBrief>[];
 
 	// protected currentUserDto: IDtoUser;
 

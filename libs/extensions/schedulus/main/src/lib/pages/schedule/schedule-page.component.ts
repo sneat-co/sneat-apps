@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { virtualSliderAnimations } from '@sneat/components';
-import { HappeningType } from '@sneat/dto';
+import { ContactusTeamEntryComponent } from '@sneat/contactus-shared';
+import { HappeningType, IIdAndOptionalDto } from '@sneat/dto';
 import {
 	NewHappeningParams,
 	ScheduleNavService,
@@ -19,11 +20,11 @@ import {
 	ScheduleTab,
 } from '../../components';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team/components';
-import { IMemberContext } from '@sneat/team/models';
+import { IContactusTeamDto, IMemberContext } from '@sneat/team/models';
 
 @Component({
 	selector: 'sneat-schedule-page',
@@ -37,12 +38,17 @@ import { IMemberContext } from '@sneat/team/models';
 		IonicModule,
 		TeamCoreComponentsModule,
 		ScheduleComponentModule,
+		ContactusTeamEntryComponent,
 	],
 })
-export class SchedulePageComponent extends TeamBaseComponent {
+export class SchedulePageComponent extends TeamPageBaseComponent {
 	public tab: ScheduleTab = 'day';
 	public date = '';
 	member?: IMemberContext;
+
+	protected readonly $contactusTeam = signal<
+		IIdAndOptionalDto<IContactusTeamDto> | undefined
+	>(undefined);
 
 	constructor(
 		route: ActivatedRoute,

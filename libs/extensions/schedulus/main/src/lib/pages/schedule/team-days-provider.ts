@@ -24,7 +24,7 @@ import {
 import {
 	HappeningService,
 	ScheduleDayService,
-	TeamItemService,
+	ModuleTeamItemService,
 } from '@sneat/team/services';
 import {
 	BehaviorSubject,
@@ -158,7 +158,7 @@ export class TeamDaysProvider {
 	private readonly destroyed = new Subject<void>();
 	private recurringsSubscription?: Subscription;
 
-	private readonly recurringsTeamItemService: TeamItemService<
+	private readonly recurringsTeamItemService: ModuleTeamItemService<
 		IHappeningBrief,
 		IHappeningDto
 	>;
@@ -211,7 +211,7 @@ export class TeamDaysProvider {
 	) {
 		console.log('TeamDaysProvider.constructor()');
 		// super();
-		this.recurringsTeamItemService = new TeamItemService(
+		this.recurringsTeamItemService = new ModuleTeamItemService(
 			'schedulus',
 			'recurring_happenings',
 			afs,
@@ -367,7 +367,7 @@ export class TeamDaysProvider {
 	): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
 		console.log('TeamDaysProvider.loadRegulars()');
 		const $recurrings = this.recurringsTeamItemService
-			.watchTeamItems(team)
+			.watchModuleTeamItemsWithTeamRef(team)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
 				tap((recurrings) => {

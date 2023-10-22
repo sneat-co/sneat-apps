@@ -2,12 +2,12 @@ import { ActivatedRoute } from '@angular/router';
 import { AssetCategory, IAssetusTeamContext } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import { IAssetContext } from '@sneat/team/models';
 
-export abstract class AssetsBasePage extends TeamBaseComponent {
+export abstract class AssetsBasePage extends TeamPageBaseComponent {
 	public assets?: IAssetContext[];
 
 	protected assetusTeam?: IAssetusTeamContext;

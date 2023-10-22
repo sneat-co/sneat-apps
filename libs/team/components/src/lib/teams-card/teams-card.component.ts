@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IUserTeamBrief } from '@sneat/auth-models';
-import { IBriefAndID } from '@sneat/dto';
+import { IIdAndBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ICreateTeamRequest, ITeamContext } from '@sneat/team/models';
@@ -18,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TeamsCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addTeamInput?: IonInput; // TODO: IonInput;
 
-	public teams?: IBriefAndID<IUserTeamBrief>[];
+	public teams?: IIdAndBrief<IUserTeamBrief>[];
 	public loadingState: 'Authenticating' | 'Loading' = 'Authenticating';
 	public teamName = '';
 	public adding = false;
@@ -151,7 +151,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		}, 100);
 	}
 
-	public leaveTeam(team: IBriefAndID<IUserTeamBrief>, event?: Event): void {
+	public leaveTeam(team: IIdAndBrief<IUserTeamBrief>, event?: Event): void {
 		if (event) {
 			event.stopPropagation();
 			event.preventDefault();

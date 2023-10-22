@@ -13,13 +13,17 @@ import {
 	emptyContactBase,
 	Gender,
 	IContact2Asset,
+	IContactGroupDto,
+	IContactRoleBrief,
+	IIdAndBrief,
+	IIdAndDto,
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonNotReady,
 } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team/components';
 import {
@@ -31,9 +35,6 @@ import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
 	ContactRoleService,
-	IContactGroupContext,
-	IContactRoleBrief,
-	IContactRoleContext,
 } from '@sneat/contactus-services';
 
 @Component({
@@ -50,7 +51,7 @@ import {
 	],
 })
 export class NewContactPageComponent
-	extends TeamBaseComponent
+	extends TeamPageBaseComponent
 	implements OnInit
 {
 	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
@@ -83,8 +84,8 @@ export class NewContactPageComponent
 
 	public asset?: IAssetContext;
 
-	contactGroup?: IContactGroupContext;
-	contactRole?: IContactRoleContext;
+	contactGroup?: IIdAndDto<IContactGroupDto>;
+	contactRole?: IIdAndBrief<IContactRoleBrief>;
 
 	assetRelation?: ContactToAssetRelation;
 
@@ -97,7 +98,12 @@ export class NewContactPageComponent
 	}
 
 	public personFormIsReadyToSubmit = false;
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly id = (
+		_: number,
+		o: {
+			id: string;
+		},
+	) => o.id;
 
 	constructor(
 		params: TeamComponentBaseParams,
@@ -130,11 +136,13 @@ export class NewContactPageComponent
 		const contactGroupID = params.get('group');
 		if (contactGroupID && !this.contactGroup) {
 			this.contactGroupService
-				.getContactGroupByID(contactGroupID)
+				.getContactGroupByID(contactGroupID, this.team)
 				.pipe(first(), takeUntil(this.destroyed))
 				.subscribe({
 					next: (contactGroup) => {
-						this.contactGroup = contactGroup;
+						this.contactGroup = contactGroup.dto
+							? contactGroup
+							: { id: contactGroup.dto, dto: { title: contactGroupID } };
 					},
 					error: this.logErrorHandler('Failed to get contact group by ID'),
 				});
@@ -183,15 +191,21 @@ export class NewContactPageComponent
 		}
 	};
 
-	public onContactGroupChanged(contactGroup?: IContactGroupContext): void {
+	public onContactGroupChanged(
+		contactGroup?: IIdAndDto<IContactGroupDto>,
+	): void {
 		console.log('onContactGroupChanged()', contactGroup);
 		this.contactGroup = contactGroup;
 	}
 
 	public onContactRoleIDChanged(contactRoleID?: string): void {
-		const brief: IContactRoleBrief | undefined =
-			this.contactGroup?.dto?.roles.find((r) => r.id === contactRoleID);
-		this.contactRole = brief && { id: brief.id, brief };
+		if (contactRoleID) {
+			const brief: IContactRoleBrief | undefined =
+				this.contactGroup?.dto?.roles?.find((r) => r.id === contactRoleID);
+			this.contactRole = brief && { id: contactRoleID, brief };
+		} else {
+			this.contactRole = undefined;
+		}
 		console.log('onContactRoleIDChanged()', contactRoleID, this.contactRole);
 	}
 

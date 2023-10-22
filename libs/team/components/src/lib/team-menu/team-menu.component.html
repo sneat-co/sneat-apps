@@ -13,7 +13,7 @@
 				*ngFor="let team of teams; trackBy: id"
 				[value]="team.id"
 			>
-				{{ team.brief.title || team.id }}
+				{{ team.brief?.title || team.id }}
 			</ion-select-option>
 		</ion-select>
 	</ion-item>

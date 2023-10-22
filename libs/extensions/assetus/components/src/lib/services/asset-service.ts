@@ -9,14 +9,17 @@ import {
 	IAssetMainData,
 } from '@sneat/dto';
 import { IAssetContext, ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
+import { ModuleTeamItemService } from '@sneat/team/services';
 import { Observable, throwError } from 'rxjs';
 import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 
 @Injectable({
 	providedIn: 'root',
 })
-export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
+export class AssetService extends ModuleTeamItemService<
+	IAssetBrief,
+	IAssetDtoBase
+> {
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
 		super('assetus', 'assets', afs, sneatApiService);
 	}
@@ -48,7 +51,7 @@ export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
 		);
 	}
 
-	public readonly watchAssetByID = this.watchTeamItemByID;
+	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
 
 	watchTeamAssets<Brief extends IAssetBrief, Dto extends IAssetDtoBase>(
 		team: ITeamContext,
@@ -64,6 +67,6 @@ export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
 					},
 			  ]
 			: undefined;
-		return this.watchModuleTeamItems<Brief, Dto>('assetus', team, filter);
+		return this.watchModuleTeamItemsWithTeamRef<Brief, Dto>(team, filter);
 	}
 }

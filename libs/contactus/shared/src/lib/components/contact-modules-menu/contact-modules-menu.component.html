@@ -12,7 +12,7 @@
 		<span class="ion-margin-end">{{ ext.emoji }}</span>
 		{{ ext.title }}
 	</ion-label>
-	<ion-buttons slot="end">
+	<ion-buttons slot="end" *ngIf="ext.newPage">
 		<ion-button color="medium" title="Add" (click)="goNew($event, ext)">
 			<ion-icon name="add" />
 		</ion-button>

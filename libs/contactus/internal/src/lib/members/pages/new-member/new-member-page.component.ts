@@ -6,7 +6,7 @@ import { IonicModule, IonInput } from '@ionic/angular';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import { emptyMemberPerson, IMemberPerson } from '@sneat/dto';
 import {
-	TeamBaseComponent,
+	TeamPageBaseComponent,
 	TeamComponentBaseParams,
 	TeamComponentsModule,
 } from '@sneat/team/components';
@@ -26,7 +26,7 @@ import { NewMemberFormComponent } from './new-member-form.component';
 		TeamComponentsModule,
 	],
 })
-export class NewMemberPageComponent extends TeamBaseComponent {
+export class NewMemberPageComponent extends TeamPageBaseComponent {
 	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 
 	public tab: 'personal' | 'mass' = 'mass';

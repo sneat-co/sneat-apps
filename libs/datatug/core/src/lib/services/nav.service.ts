@@ -6,7 +6,7 @@ import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
-import { IBriefAndID, IMemberBrief, ITeamDto } from '@sneat/dto';
+import { IIdAndOptionalBrief, IMemberBrief, ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
 
@@ -82,7 +82,7 @@ export class NavService {
 	public navigateToMember(
 		navController: NavController,
 		team: IRecord<ITeamDto>,
-		memberInfo: IBriefAndID<IMemberBrief>,
+		memberInfo: IIdAndOptionalBrief<IMemberBrief>,
 	): void {
 		console.log(
 			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`,

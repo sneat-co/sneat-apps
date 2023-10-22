@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactusTeamDtoWithID } from '@sneat/team/models';
+import { IContactusTeamDtoAndID } from '@sneat/team/models';
 import { TeamNavService } from '@sneat/team/services';
 import { SneatUserService } from '@sneat/auth-core';
 import { Subscription } from 'rxjs';
@@ -27,7 +27,7 @@ export const stringHash = (s: string): number => {
 	styleUrls: ['./invite-links.component.scss'],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
-	@Input() public contactusTeam?: IContactusTeamDtoWithID;
+	@Input() public contactusTeam?: IContactusTeamDtoAndID;
 
 	public inviteUrlsFor?: {
 		contributors: string;

@@ -4,7 +4,7 @@ import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import {
 	ITeamContext,
 	HappeningUIState,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 } from '@sneat/team/models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 
@@ -21,7 +21,7 @@ export class DaySlotItemComponent {
 	@Input() color?: 'light';
 
 	@Input() team: ITeamContext = { id: '' };
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
 	@Output() slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
 

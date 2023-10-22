@@ -18,6 +18,7 @@ import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	IHappeningWithUiState,
 	IMemberContext,
@@ -26,8 +27,9 @@ import {
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
 import { HappeningService, ScheduleDayService } from '@sneat/team/services';
-import { Subject, Subscription, takeUntil } from 'rxjs';
-import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { SneatBaseComponent } from '@sneat/ui';
+import { Subscription, takeUntil } from 'rxjs';
+import { TeamDaysProvider } from '../../pages/schedule';
 import { SchedulusTeamService } from '../../services';
 import { isToday } from '../schedule-core';
 import {
@@ -45,20 +47,27 @@ export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 	templateUrl: './schedule.component.html',
 	styleUrls: ['./schedule.component.scss'],
 })
-export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
-	private readonly destroyed = new Subject<void>();
+export class ScheduleComponent
+	extends SneatBaseComponent
+	implements AfterViewInit, OnChanges, OnDestroy
+{
+	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) contactusTeam?: IContactusTeamDtoAndID;
+
+	@Input() member?: IMemberContext;
+
+	@Input() tab: ScheduleTab = 'day';
+	@Output() readonly tabChange = new EventEmitter<ScheduleTab>();
+
+	@Input() dateID = '';
+	@Output() readonly dateIDChange = new EventEmitter<string>();
+
+	@ViewChild('scheduleFilterComponent')
 	private filter = emptyScheduleFilter;
 	private date = new Date();
 	// prevWeekdays: SlotsGroup[];
 	public readonly teamDaysProvider: TeamDaysProvider;
-	@ViewChild('scheduleFilterComponent')
 	scheduleFilterComponent?: ScheduleFilterComponent;
-	@Input() team: ITeamContext = { id: '' };
-	@Input() member?: IMemberContext;
-	@Input() public tab: ScheduleTab = 'day';
-	@Input() public dateID = '';
-	@Output() readonly tabChanged = new EventEmitter<ScheduleTab>();
-	@Output() readonly dateChanged = new EventEmitter<string>();
 	public showRecurrings = true;
 	public showEvents = true;
 	allRecurrings?: IHappeningWithUiState[];
@@ -71,7 +80,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private schedulusTeamSubscription?: Subscription;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly params: TeamComponentBaseParams,
 		filterService: ScheduleFilterService,
 		scheduleStateService: ScheduleStateService,
@@ -81,6 +90,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		sneatApiService: SneatApiService,
 		private readonly schedulusTeamService: SchedulusTeamService,
 	) {
+		super('ScheduleComponent', errorLogger);
 		this.teamDaysProvider = new TeamDaysProvider(
 			this.errorLogger,
 			happeningService,
@@ -123,14 +133,13 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
+	override ngOnDestroy(): void {
+		super.ngOnDestroy();
 		this.teamDaysProvider.destroy();
 	}
 
 	ngAfterViewInit(): void {
-		this.tabChanged.emit(this.tab);
+		this.tabChange.emit(this.tab);
 	}
 
 	segmentChanged(event: Event): void {

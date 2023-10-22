@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
-import { TeamBaseComponent } from '@sneat/team/components';
+import { TeamPageBaseComponent } from '@sneat/team/components';
 import {
 	IRetroItem,
 	IRetrospective,
@@ -21,7 +21,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	templateUrl: './retro-tree-page.component.html',
 	styleUrls: ['./retro-tree-page.component.scss'],
 })
-export class RetroTreePageComponent extends TeamBaseComponent {
+export class RetroTreePageComponent extends TeamPageBaseComponent {
 	public meetingId: string;
 	public retrospective: IRetrospective;
 

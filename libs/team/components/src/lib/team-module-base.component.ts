@@ -2,13 +2,13 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
-import { TeamBaseComponent } from './team-base.component';
+import { TeamPageBaseComponent } from './team-page-base-component.service';
 import { TeamModuleService } from '@sneat/team/services';
 
 export class TeamModuleBaseComponent<
 	Brief,
 	Dto extends Brief,
-> extends TeamBaseComponent {
+> extends TeamPageBaseComponent {
 	protected readonly teamModuleDto$ = new BehaviorSubject<
 		Dto | null | undefined
 	>(undefined);
@@ -17,7 +17,7 @@ export class TeamModuleBaseComponent<
 		className: string,
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		protected teamModuleService: TeamModuleService<Dto>,
+		protected readonly teamModuleService: TeamModuleService<Dto>,
 	) {
 		super(className, route, teamParams);
 	}
@@ -38,6 +38,7 @@ export class TeamModuleBaseComponent<
 				},
 			});
 	}
+
 	protected onTeamModuleDtoChanged(dto: Dto | null) {
 		console.log(`${this.className}.onTeamModuleDtoChanged()`, dto);
 	}
