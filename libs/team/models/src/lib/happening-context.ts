@@ -5,6 +5,7 @@ import {
 	HappeningType,
 	IHappeningBrief,
 	IHappeningDto,
+	IIdAndBrief,
 	UiState,
 } from '@sneat/dto';
 import { ITeamContext } from './team-context';
@@ -15,6 +16,8 @@ export type IHappeningContext = ITeamItemContext<
 	IHappeningDto
 >;
 
+export type IHappeningBriefAndID = IIdAndBrief<IHappeningBrief>;
+
 export interface IHappeningWithUiState extends IHappeningContext {
 	readonly state: UiState;
 }
@@ -24,14 +27,14 @@ export function newEmptyHappeningContext(
 	type: HappeningType,
 	kind: HappeningKind,
 	status: HappeningStatus,
-): IHappeningContext {
+): IHappeningBriefAndID {
 	const brief: IHappeningBrief = {
 		type,
 		kind,
 		status,
 		title: '',
 	};
-	return { id: '', team, brief, dto: { ...brief } };
+	return { id: '', brief };
 }
 
 export type CancelOperationState =

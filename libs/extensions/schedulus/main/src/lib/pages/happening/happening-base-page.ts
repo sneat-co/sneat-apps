@@ -1,12 +1,17 @@
 import { ActivatedRoute } from '@angular/router';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningBriefAndID, IHappeningContext } from '@sneat/team/models';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 import { HappeningComponentBaseParams } from '../../components/happening-component-base-params';
 import { ScheduleBasePage } from '../schedule-base-page';
 
 export abstract class HappeningBasePage extends ScheduleBasePage {
 	private readonly happeningID$ = new Subject<string>();
-	public happening?: IHappeningContext;
+
+	protected happening?: IHappeningContext;
+
+	protected get happeningBriefWithID(): IHappeningBriefAndID {
+		return this.happening as unknown as IHappeningBriefAndID;
+	}
 
 	protected constructor(
 		className: string,

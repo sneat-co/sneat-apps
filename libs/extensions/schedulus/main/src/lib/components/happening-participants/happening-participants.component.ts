@@ -12,7 +12,7 @@ import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
 	IContactusTeamDtoAndID,
-	IHappeningContext,
+	IHappeningBriefAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team/models';
@@ -38,8 +38,8 @@ export class HappeningParticipantsComponent {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
 	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
-	@Input() happening?: IHappeningContext;
-	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+	@Input() happening?: IHappeningBriefAndID;
+	@Output() readonly happeningChange = new EventEmitter<IHappeningBriefAndID>();
 
 	constructor(private readonly happeningService: HappeningService) {}
 
@@ -117,8 +117,8 @@ export class HappeningParticipantsComponent {
 		if (!this.happening) {
 			return;
 		}
-		const { brief, dto } = this.happening;
-		if (!brief || !dto) {
+		const { brief } = this.happening;
+		if (!brief) {
 			return;
 		}
 		let happeningBase: IHappeningBase = {
@@ -136,11 +136,6 @@ export class HappeningParticipantsComponent {
 			...this.happening,
 			brief: {
 				...this.happening.brief,
-				...happeningBase,
-			},
-			dto: {
-				// TODO: It does not make much sense to update DTO as brief should be enough?
-				...this.happening.dto,
 				...happeningBase,
 			},
 		};

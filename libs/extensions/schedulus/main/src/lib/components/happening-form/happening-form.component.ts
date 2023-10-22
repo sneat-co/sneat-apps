@@ -30,7 +30,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
 	IContactusTeamDtoAndID,
-	IHappeningContext,
+	IHappeningBriefAndID,
 	ITeamContext,
 } from '@sneat/team/models';
 import { HappeningService, HappeningServiceModule } from '@sneat/team/services';
@@ -64,8 +64,8 @@ export class HappeningFormComponent
 	@Input() public date?: string;
 
 	@Input({ required: true }) public team?: ITeamContext;
-	@Input({ required: true }) public happening?: IHappeningContext;
-	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+	@Input({ required: true }) public happening?: IHappeningBriefAndID;
+	@Output() readonly happeningChange = new EventEmitter<IHappeningBriefAndID>();
 	@Input() public contactusTeam?: IContactusTeamDtoAndID;
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
@@ -196,7 +196,7 @@ export class HappeningFormComponent
 		this.happeningForm.markAllAsTouched();
 	}
 
-	protected onHappeningChanged(happening: IHappeningContext): void {
+	protected onHappeningChanged(happening: IHappeningBriefAndID): void {
 		console.log('HappeningFormComponent.onHappeningChanged()', happening);
 		this.happening = happening;
 		this.happeningForm.markAllAsTouched(); // TODO: Document why we need it and if we can remove it
@@ -229,31 +229,11 @@ export class HappeningFormComponent
 			throw new Error('!this.happening.brief');
 		}
 		const activityFormValue = this.happeningForm.value;
-		const dto: IHappeningDto = {
-			...this.happening.dto,
+		return {
 			...this.happening.brief,
 			teamIDs: [this.team.id], // TODO: should be already in this.happening.brief
 			title: activityFormValue.title, // TODO: should be already in this.happening.brief
 		};
-		// switch (dto.type) {
-		// 	case 'recurring':
-		// 		// dto.slots = this.slots.map(slot => ({ ...slot, repeats: 'weekly', id: slot.id || newRandomId({ len: 5 }) }));
-		// 		break;
-		// 	case 'single':
-		// 		if (!this.singleSlot) {
-		// 			throw new Error('timing is not set');
-		// 		}
-		// 		dto.slots = [{
-		// 			...this.singleSlot,
-		// 			id: 'once',
-		// 			repeats: 'once',
-		// 		}];
-		// 		break;
-		// 	default:
-		// 		throw new Error('unknown happening type: ' + dto.type);
-		// }
-
-		return dto;
 	}
 
 	protected submit(): void {

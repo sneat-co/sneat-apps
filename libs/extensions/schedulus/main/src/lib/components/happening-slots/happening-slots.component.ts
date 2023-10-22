@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningBriefAndID } from '@sneat/team/models';
 
 export interface AddSlotParams {
 	wd?: WeekdayCode2;
@@ -12,7 +12,7 @@ export interface AddSlotParams {
 	templateUrl: './happening-slots.component.html',
 })
 export class HappeningSlotsComponent {
-	@Input() happening?: IHappeningContext;
+	@Input() happening?: IHappeningBriefAndID;
 
 	@Input() wd?: WeekdayCode2;
 
@@ -59,7 +59,7 @@ export class HappeningSlotsComponent {
 		this.slotAdded.emit(slot);
 	}
 
-	onHappeningChanged(happening: IHappeningContext): void {
+	onHappeningChanged(happening: IHappeningBriefAndID): void {
 		console.log('HappeningSlotsComponent.onSlotAdded()');
 		this.happening = happening;
 	}

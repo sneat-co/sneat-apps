@@ -7,7 +7,7 @@ import { SneatPipesModule } from '@sneat/components';
 import { HappeningType, WeekdayCode2 } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team/components';
 import {
-	IHappeningContext,
+	IHappeningBriefAndID,
 	newEmptyHappeningContext,
 } from '@sneat/team/models';
 import { first, takeUntil } from 'rxjs';
@@ -38,7 +38,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	protected wd?: WeekdayCode2;
 	protected date?: string;
 
-	protected happening?: IHappeningContext;
+	protected happening?: IHappeningBriefAndID;
 
 	constructor(route: ActivatedRoute, params: TeamComponentBaseParams) {
 		super('NewHappeningPageComponent', route, params);
@@ -102,7 +102,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	//     }));
 	// }
 
-	protected onHappeningChanged(happening: IHappeningContext): void {
+	protected onHappeningChanged(happening: IHappeningBriefAndID): void {
 		const happeningType = happening.brief?.type;
 		const typeChange =
 			happeningType && happeningType !== this.happening?.brief?.type;

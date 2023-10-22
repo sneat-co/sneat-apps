@@ -6,7 +6,6 @@ import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import {
 	TeamComponentBaseParams,

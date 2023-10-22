@@ -22,7 +22,7 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningBriefAndID } from '@sneat/team/models';
 import { takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
@@ -38,7 +38,7 @@ export class RecurringSlotFormComponent
 	implements OnChanges, OnDestroy
 {
 	@Input() mode: 'modal' | 'in-form' = 'modal';
-	@Input() happening?: IHappeningContext;
+	@Input() happening?: IHappeningBriefAndID;
 
 	@ViewChild('startEndDatetimeForm')
 	startEndDatetimeForm?: StartEndDatetimeFormComponent;
@@ -63,7 +63,7 @@ export class RecurringSlotFormComponent
 	}
 
 	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
-	@Output() happeningChange = new EventEmitter<IHappeningContext>();
+	@Output() happeningChange = new EventEmitter<IHappeningBriefAndID>();
 	@Output() eventTimesChanged = new EventEmitter<ITiming>();
 
 	// minDate = '2000';

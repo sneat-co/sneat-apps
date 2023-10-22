@@ -36,8 +36,7 @@ import {
 	emptyScheduleFilter,
 	ScheduleFilterService,
 } from '../schedule-filter.service';
-import { IScheduleFilter } from '../schedule-filter/schedule-filter';
-import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
+import { IScheduleFilter, ScheduleFilterComponent } from '../schedule-filter';
 import { ScheduleStateService } from '../schedule-state.service';
 
 export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';

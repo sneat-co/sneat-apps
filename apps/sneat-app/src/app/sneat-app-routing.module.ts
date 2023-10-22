@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { RoutesToCommuneModule } from '@sneat/communes/ui'; // TODO: HELP WANTED: find how to fix it
+import { RouterModule, Routes } from '@angular/router';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
+// import { RoutesToCommuneModule } from '@sneat/communes/ui'; // TODO: HELP WANTED: find how to fix it
 
 const routes: Routes = [
 	{
@@ -55,21 +54,21 @@ const routes: Routes = [
 	// 	path: 'invite-to/:teamType',
 	// 	loadChildren: () => import('@sneat/team/pages').then(m => m.)
 	// },
-	{
-		path: 'communes',
-		loadChildren: () =>
-			import('@sneat/communes/ui').then((m) => m.CommunesRoutingModule),
-	},
+	// {
+	// 	path: 'communes',
+	// 	loadChildren: () =>
+	// 		import('@sneat/communes/ui').then((m) => m.CommunesRoutingModule),
+	// },
 	{
 		path: 'signed-out',
 		redirectTo: 'login',
 		pathMatch: 'full',
 	},
-	{
-		path: '',
-		redirectTo: 'communes',
-		pathMatch: 'full',
-	},
+	// {
+	// 	path: '',
+	// 	redirectTo: 'communes',
+	// 	pathMatch: 'full',
+	// },
 	{
 		path: 'new-family',
 		loadChildren: () =>
@@ -79,9 +78,11 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+		RouterModule.forRoot(routes, {
+			// preloadingStrategy: PreloadAllModules,
+		}),
 		SneatAuthRoutingModule,
-		RoutesToCommuneModule,
+		// RoutesToCommuneModule,
 	],
 	exports: [RouterModule],
 })

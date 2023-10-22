@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject } from '@angular/core';
 import {
 	IIdAndBrief,
 	IIdAndOptionalBrief,
@@ -59,9 +59,9 @@ export interface ITaskWithUiStatus extends ITask {
 	uiStatus?: 'adding' | 'deleting';
 }
 
-@Injectable({
-	providedIn: 'root',
-})
+// @Injectable({
+// 	providedIn: 'root',
+// })
 export class ScrumService extends BaseMeetingService {
 	constructor(
 		override readonly sneatApiService: SneatApiService,
