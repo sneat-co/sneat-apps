@@ -15,7 +15,7 @@ import {
 	HappeningServiceModule,
 	ScheduleDayServiceModule,
 } from '@sneat/team/services';
-import { ScheduleModalsServiceModule } from '../../services/schedule-modals.service';
+import { ScheduleModalsServiceModule } from '../../services';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
 import { RecurringsTabComponent } from '../recurrings-tab/recurrings-tab.component';
@@ -25,7 +25,7 @@ import { ScheduleDayTabComponent } from '../schedule-day/schedule-day-tab.compon
 import { ScheduleDayTitleComponent } from '../schedule-day/schedule-day-title.component';
 import { ScheduleDayComponent } from '../schedule-day/schedule-day.component';
 import { ScheduleFilterService } from '../schedule-filter.service';
-import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
+import { ScheduleFilterComponent } from '../schedule-filter';
 import { ScheduleStateService } from '../schedule-state.service';
 import { ScheduleWeekComponent } from '../schedule-week/schedule-week.component';
 import { ScheduleWeekdayComponent } from '../schedule-weekday/schedule-weekday.component';
