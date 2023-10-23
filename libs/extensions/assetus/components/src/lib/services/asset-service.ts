@@ -9,22 +9,24 @@ import {
 	IAssetMainData,
 } from '@sneat/dto';
 import { IAssetContext, ITeamContext } from '@sneat/team-models';
-import { TeamItemService } from '@sneat/team-services';
-import { Observable, throwError } from 'rxjs';
+import { ModuleTeamItemService } from '@sneat/team-services';
+import { Observable } from 'rxjs';
 import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 
-@Injectable()
-export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
+@Injectable({
+	providedIn: 'root',
+})
+export class AssetService extends ModuleTeamItemService<
+	IAssetBrief,
+	IAssetDtoBase
+> {
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
 		super('assetus', 'assets', afs, sneatApiService);
 	}
 
-	public deleteAsset(asset: IAssetContext): Observable<void> {
-		if (!asset?.team?.id) {
-			return throwError(() => 'team ID is not supplied');
-		}
+	public deleteAsset(teamID: string, assetID: string): Observable<void> {
 		const request = new HttpParams({
-			fromObject: { id: asset.id, team: asset.team.id },
+			fromObject: { id: assetID, team: teamID },
 		});
 		return this.sneatApiService.delete<void>('assets/delete_asset', request);
 	}
@@ -46,9 +48,9 @@ export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
 		);
 	}
 
-	public readonly watchAssetByID = this.watchTeamItemByID;
+	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
 
-	watchTeamAssets<Brief extends IAssetBrief, Dto extends IAssetDtoBase>(
+	watchTeamAssets<Dto extends IAssetDtoBase>(
 		team: ITeamContext,
 		category?: AssetCategory,
 	): Observable<IAssetContext<Dto>[]> {
@@ -62,6 +64,6 @@ export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
 					},
 			  ]
 			: undefined;
-		return this.watchModuleTeamItems<Brief, Dto>('assetus', team, filter);
+		return this.watchModuleTeamItemsWithTeamRef<Dto>(team, filter);
 	}
 }

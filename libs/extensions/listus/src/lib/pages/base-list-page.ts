@@ -7,13 +7,13 @@ import {
 	IMovie,
 	ListType,
 } from '@sneat/dto';
-import { TeamItemBaseComponent } from '@sneat/team-components';
+import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { IListContext, ITeamContext } from '@sneat/team-models';
 import { Observable, Subscription, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
-export abstract class BaseListPage extends TeamItemBaseComponent<
+export abstract class BaseListPage extends TeamItemPageBaseComponent<
 	IListBrief,
 	IListDto
 > {

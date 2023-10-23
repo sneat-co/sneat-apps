@@ -14,7 +14,7 @@
 <ion-content>
 	<sneat-location-form
 		[team]="team"
-		[parentContact]="contact || undefined"
+		[parentContact]="contactWithBrief"
 		[contact]="newLocation"
 		(contactChange)="onContactChanged($event)"
 		(contactCreated)="onContactCreated($event)"

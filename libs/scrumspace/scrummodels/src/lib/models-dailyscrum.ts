@@ -1,16 +1,14 @@
 import { IAvatar } from '@sneat/auth-models';
 import { Modified } from '@sneat/data';
-import { MemberRole } from '@sneat/dto';
+import { IMemberBrief, MemberRole } from '@sneat/dto';
 import { IMeeting } from '@sneat/meeting';
-import { IBy, ITeamItemContext } from '@sneat/team-models';
+import { IBy, ITeamItemNavContext } from '@sneat/team-models';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';
 
-export interface IScrumBrief {
-	id: string;
-}
+export interface IScrumBrief extends IMemberBrief {}
 
-export interface IScrumDto extends IMeeting {
+export interface IScrumDto extends IScrumBrief, IMeeting {
 	// Key as: YYYY-MM-DD
 	scrumIds?: {
 		prev?: string; // 'YYYY-MM-DD'
@@ -21,7 +19,7 @@ export interface IScrumDto extends IMeeting {
 	statuses: IStatus[];
 }
 
-export type IScrumContext = ITeamItemContext<IScrumBrief, IScrumDto>;
+export type IScrumContext = ITeamItemNavContext<IScrumBrief, IScrumDto>;
 
 export interface IStatus {
 	member: IScrumStatusMember;

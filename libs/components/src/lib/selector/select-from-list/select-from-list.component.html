@@ -67,9 +67,10 @@
 				[name]="item.iconName"
 				[color]="item.labelColor || 'medium'"
 			/>
-			<ion-label *ngIf="!radioSlot" [color]="item.labelColor"
-				>{{ item.emoji }} {{ item.title }}</ion-label
-			>
+			<ion-label *ngIf="!radioSlot" [color]="item.labelColor">
+				<span class="ion-margin-end">{{ item.emoji }}</span>
+				{{ item.title }}
+			</ion-label>
 		</ion-item>
 	</ion-item-group>
 	<ion-radio-group

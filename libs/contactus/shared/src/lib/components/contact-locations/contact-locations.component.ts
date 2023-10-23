@@ -2,12 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IBriefAndID, IContactBrief } from '@sneat/dto';
-import {
-	IContactContext,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { IContactBrief, IContactDto } from '@sneat/dto';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { ContactsListModule } from '../contacts-list';
 
 @Component({
@@ -18,9 +15,12 @@ import { ContactsListModule } from '../contacts-list';
 })
 export class ContactLocationsComponent implements OnChanges {
 	@Input({ required: true }) public team?: ITeamContext;
-	@Input({ required: true }) public contact?: IContactContext;
+	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDto<
+		IContactBrief,
+		IContactDto
+	>;
 
-	public contactLocations?: IContactContext[];
+	public contactLocations?: IIdAndBrief<IContactBrief>[];
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contact']) {
@@ -35,9 +35,9 @@ export class ContactLocationsComponent implements OnChanges {
 		}
 	}
 
-	private getContactLocations(): IBriefAndID<IContactBrief>[] {
+	private getContactLocations(): IIdAndBrief<IContactBrief>[] {
 		return (
-			zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts)
+			zipMapBriefsWithIDs<IContactBrief>(this.contact?.dto?.relatedContacts)
 				?.map((c) => ({
 					id: c.id,
 					brief: c.brief,

@@ -1,6 +1,6 @@
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { dateToIso, INavContext } from '@sneat/core';
+import { dateToIso, IIdAndOptionalDto, INavContext } from '@sneat/core';
 import {
 	IHappeningBrief,
 	IHappeningDto,
@@ -16,15 +16,15 @@ import {
 import { IErrorLogger } from '@sneat/logging';
 import {
 	IHappeningContext,
-	ISchedulusTeamDtoWithID,
+	ISchedulusTeamDto,
 	ITeamContext,
-	ITeamItemContext,
+	ITeamItemNavContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
 import {
 	HappeningService,
 	ScheduleDayService,
-	TeamItemService,
+	ModuleTeamItemService,
 } from '@sneat/team-services';
 import {
 	BehaviorSubject,
@@ -115,7 +115,7 @@ const slotItemsFromRecurringSlot = (
 };
 
 const groupRecurringSlotsByWeekday = (
-	schedulusTeam?: ISchedulusTeamDtoWithID,
+	schedulusTeam?: IIdAndOptionalDto<ISchedulusTeamDto>,
 ): RecurringSlots => {
 	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${schedulusTeam?.id})`;
 	const slots: RecurringSlots = {
@@ -158,7 +158,7 @@ export class TeamDaysProvider {
 	private readonly destroyed = new Subject<void>();
 	private recurringsSubscription?: Subscription;
 
-	private readonly recurringsTeamItemService: TeamItemService<
+	private readonly recurringsTeamItemService: ModuleTeamItemService<
 		IHappeningBrief,
 		IHappeningDto
 	>;
@@ -171,7 +171,7 @@ export class TeamDaysProvider {
 	);
 
 	private readonly schedulusTeam$ = new BehaviorSubject<
-		ISchedulusTeamDtoWithID | undefined
+		IIdAndOptionalDto<ISchedulusTeamDto> | undefined
 	>(undefined);
 
 	private readonly teamID$ = this.team$.asObservable().pipe(
@@ -211,7 +211,7 @@ export class TeamDaysProvider {
 	) {
 		console.log('TeamDaysProvider.constructor()');
 		// super();
-		this.recurringsTeamItemService = new TeamItemService(
+		this.recurringsTeamItemService = new ModuleTeamItemService(
 			'schedulus',
 			'recurring_happenings',
 			afs,
@@ -250,7 +250,9 @@ export class TeamDaysProvider {
 		// return this.loadRecurring();
 	}
 
-	public setSchedulusTeam(schedulusTeam: ISchedulusTeamDtoWithID): void {
+	public setSchedulusTeam(
+		schedulusTeam: IIdAndOptionalDto<ISchedulusTeamDto>,
+	): void {
 		console.log('TeamDaysProvider.setSchedulusTeam()', schedulusTeam);
 		// if (schedulusTeam.id !== this._team?.id) {
 		//   throw new Error(
@@ -367,7 +369,7 @@ export class TeamDaysProvider {
 	): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
 		console.log('TeamDaysProvider.loadRegulars()');
 		const $recurrings = this.recurringsTeamItemService
-			.watchTeamItems(team)
+			.watchModuleTeamItemsWithTeamRef(team)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
 				tap((recurrings) => {
@@ -380,7 +382,7 @@ export class TeamDaysProvider {
 	}
 
 	private processRecurring(
-		recurring: ITeamItemContext<IHappeningBrief, IHappeningDto>,
+		recurring: ITeamItemNavContext<IHappeningBrief, IHappeningDto>,
 	): void {
 		if (
 			this.memberId &&

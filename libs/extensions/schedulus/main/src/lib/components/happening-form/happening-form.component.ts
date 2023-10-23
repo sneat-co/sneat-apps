@@ -29,7 +29,7 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 } from '@sneat/team-models';
@@ -66,7 +66,7 @@ export class HappeningFormComponent
 	@Input({ required: true }) public team?: ITeamContext;
 	@Input({ required: true }) public happening?: IHappeningContext;
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-	@Input() public contactusTeam?: IContactusTeamDtoWithID;
+	@Input() public contactusTeam?: IContactusTeamDtoAndID;
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false })

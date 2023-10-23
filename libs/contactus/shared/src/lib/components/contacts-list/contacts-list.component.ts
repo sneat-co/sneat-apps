@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { IContactContext } from '@sneat/team-models';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
 
 @Component({
 	selector: 'sneat-contacts-list',
 	templateUrl: './contacts-list.component.html',
 })
 export class ContactsListComponent {
-	@Input() contacts?: IContactContext[] = [];
+	@Input() contacts?: IIdAndBrief<IContactBrief>[] = [];
 
-	protected readonly id = (_: number, o: IContactContext) => o.id;
+	protected readonly id = (_: number, o: IIdAndBrief<IContactBrief>) => o.id;
 }

@@ -25,7 +25,7 @@ export class TeamModuleBaseComponent<
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
 		this.teamModuleService
-			.watchTeamModuleRecord(this.team)
+			.watchTeamModuleRecord(this.team.id)
 			.pipe(takeUntil(this.teamIDChanged$))
 			.subscribe({
 				next: (o) => {

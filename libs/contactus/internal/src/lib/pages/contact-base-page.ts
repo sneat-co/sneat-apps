@@ -1,15 +1,22 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
+import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/dto';
-import { TeamItemBaseComponent } from '@sneat/team-components';
+import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { IContactContext } from '@sneat/team-models';
 import { Observable, throwError } from 'rxjs';
 
-export abstract class ContactBasePage extends TeamItemBaseComponent<
+export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	IContactBrief,
 	IContactDto
 > {
 	public contact?: IContactContext;
+
+	public get contactWithBrief(): IIdAndBrief<IContactBrief> | undefined {
+		return this.contact?.brief
+			? (this.contact as IIdAndBrief<IContactBrief>)
+			: undefined;
+	}
 
 	protected constructor(
 		className: string,
@@ -73,7 +80,12 @@ export abstract class ContactBasePage extends TeamItemBaseComponent<
 						if (!team) {
 							throw new Error('No team context');
 						}
-						this.contact = { id, team };
+						this.contact = {
+							id,
+							brief: undefined,
+							dto: undefined,
+							team: this.team,
+						};
 					}
 				} else {
 					this.contact = undefined;

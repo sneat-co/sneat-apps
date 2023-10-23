@@ -1,5 +1,6 @@
 import { IAvatar } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
+import { IContactGroupBrief } from './contact-group';
 import { ITeamMemberInfo } from './dto-commune';
 import {
 	IPersonRecord,
@@ -8,8 +9,7 @@ import {
 	IVerification,
 } from './dto-models';
 import { IContactBrief } from './dto-contact';
-import { DtoGroupTerms } from './dto-term';
-import { MembersVisibility, TeamMemberType } from './types';
+import { TeamMemberType } from './types';
 
 export const RoleTeamMember = 'member';
 export const MemberRoleContributor = 'contributor';
@@ -57,19 +57,6 @@ export type MemberRelationship =
 	| FamilyMemberRelations
 	| typeof MemberRelationshipOther
 	| typeof MemberRelationshipUndisclosed;
-
-export interface IContactGroupBrief {
-	title: string;
-}
-
-export interface IContactGroupDto extends IContactGroupBrief {
-	// teamID: string; This is part of a key
-	desc?: string;
-	timetable?: string;
-	membersVisibility: MembersVisibility;
-	numberOf?: IContactGroupDtoCounts;
-	terms?: DtoGroupTerms;
-}
 
 export interface IMemberBase
 	extends IPersonRecord,
@@ -120,10 +107,6 @@ export function memberDtoFromMemberInfo(
 		title,
 		type: memberType,
 	});
-}
-
-export interface IContactGroupDtoCounts {
-	members?: number;
 }
 
 // Deprecated

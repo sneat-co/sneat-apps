@@ -16,3 +16,8 @@ export interface ISetContactRolesRequest {
 	readonly add?: readonly string[];
 	readonly remove?: readonly string[];
 }
+
+export interface ISetContactsStatusRequest extends ITeamRequest {
+	status: 'archived' | 'active';
+	contactIDs: readonly string[];
+}

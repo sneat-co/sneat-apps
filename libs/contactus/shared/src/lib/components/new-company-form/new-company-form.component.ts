@@ -10,15 +10,17 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { excludeEmpty } from '@sneat/core';
-import { ContactRole, ContactType, validateAddress } from '@sneat/dto';
+import { excludeEmpty, IIdAndBrief, IIdAndDto } from '@sneat/core';
+import {
+	ContactRole,
+	ContactType,
+	IContactBrief,
+	IContactDto,
+	validateAddress,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import {
-	IContactContext,
-	ICreateContactCompanyRequest,
-	ITeamContext,
-} from '@sneat/team-models';
+import { ICreateContactCompanyRequest, ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-new-company-form',
@@ -29,17 +31,17 @@ export class NewCompanyFormComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
-	@Input() parentContact?: IContactContext;
+	@Input() parentContact?: IIdAndBrief<IContactBrief>;
 
-	@Output() contactCreated = new EventEmitter<IContactContext>();
+	@Output() contactCreated = new EventEmitter<IIdAndDto<IContactDto>>();
 
 	protected readonly Object = Object;
 
-	isCreating = false;
+	protected isCreating = false;
 
-	contact?: IContactContext;
+	protected contact?: IIdAndDto<IContactDto>;
 
-	readonly form = new FormGroup({
+	protected readonly form = new FormGroup({
 		role: new FormControl<ContactRole | undefined>(
 			undefined,
 			Validators.required,
@@ -55,10 +57,11 @@ export class NewCompanyFormComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			if (this.contact) {
-				this.contact = { ...this.contact, team: this.team };
-			} else {
-				this.contact = { id: '', team: this.team, dto: { type: 'company' } };
+			if (!this.contact) {
+				const brief: IContactBrief = { type: 'company' };
+				this.contact = { id: '', dto: brief };
+				// } else {
+				// 	this.contact = { ...this.contact, team: this.team };
 			}
 		}
 		if (changes['contactRole']) {
@@ -79,7 +82,7 @@ export class NewCompanyFormComponent implements OnChanges {
 		}
 	}
 
-	onContactChanged(contact: IContactContext): void {
+	onContactChanged(contact: IIdAndDto<IContactDto>): void {
 		console.log('onContactChanged()', contact);
 		this.contact = contact;
 	}

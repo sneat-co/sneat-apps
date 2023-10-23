@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
+import { IIdAndBriefAndOptionalDto } from '@sneat/core';
 import {
 	ContactRole,
 	IContactBrief,
@@ -12,14 +13,20 @@ import {
 	IContactContext,
 	ICreateContactRequest,
 	ITeamContext,
+	ITeamItemWithBriefAndDto,
+	ITeamItemWithOptionalBriefAndOptionalDto,
 } from '@sneat/team-models';
-import { TeamItemService } from '@sneat/team-services';
+import { ModuleTeamItemService } from '@sneat/team-services';
 import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, throwError } from 'rxjs';
-import { IContactRequest, IUpdateContactRequest } from './dto';
+import {
+	IContactRequest,
+	ISetContactsStatusRequest,
+	IUpdateContactRequest,
+} from './dto';
 
-@Injectable()
-export class ContactService extends TeamItemService<
+@Injectable({ providedIn: 'root' })
+export class ContactService extends ModuleTeamItemService<
 	IContactBrief,
 	IContactDto
 > {
@@ -37,15 +44,11 @@ export class ContactService extends TeamItemService<
 		team: ITeamContext,
 		request: ICreateContactRequest,
 		endpoint = 'contactus/create_contact',
-	): Observable<IContactContext> {
+	): Observable<ITeamItemWithBriefAndDto<IContactBrief, IContactDto>> {
 		return this.createTeamItem(endpoint, team, request);
 	}
 
-	public deleteContact(contact: IContactContext): Observable<void> {
-		const request: IContactRequest = {
-			teamID: contact.team.id,
-			contactID: contact.id,
-		};
+	public deleteContact(request: IContactRequest): Observable<void> {
 		return this.deleteTeamItem('contactus/delete_contact', request);
 	}
 
@@ -56,20 +59,17 @@ export class ContactService extends TeamItemService<
 	public setContactsStatus(
 		status: 'archived' | 'active',
 		teamID: string,
-		contacts: IContactContext[],
+		contactIDs: readonly string[],
 	): Observable<void> {
-		if (!contacts?.length) {
+		if (!contactIDs?.length) {
 			return throwError(() => 'at least 1 contact is required');
 		}
-		const request = {
+		const request: ISetContactsStatusRequest = {
 			teamID,
 			status,
-			contactIDs: contacts.map((c) => c.id),
+			contactIDs,
 		};
-		return this.sneatApiService.post(
-			'contactgit pullus/set_contacts_status',
-			request,
-		);
+		return this.sneatApiService.post('contactus/set_contacts_status', request);
 	}
 
 	watchContactsWithRole(
@@ -77,7 +77,7 @@ export class ContactService extends TeamItemService<
 		role: string,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
-	): Observable<IContactContext[]> {
+	): Observable<IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>[]> {
 		filter = [
 			...(filter || []),
 			{ field: 'roles', operator: '==', value: role },
@@ -89,7 +89,7 @@ export class ContactService extends TeamItemService<
 		team: ITeamContext,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
-	): Observable<IContactContext[]> {
+	): Observable<IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>[]> {
 		filter = [
 			{
 				field: 'status',
@@ -103,14 +103,16 @@ export class ContactService extends TeamItemService<
 			},
 			...(filter || []),
 		];
-		return this.watchTeamItems<IContactBrief, IContactDto>(team, filter);
+		return this.watchModuleTeamItemsWithTeamRef<IContactDto>(team, filter);
 	}
 
 	watchContactById(
 		team: ITeamContext,
 		contactID: string,
-	): Observable<IContactContext> {
-		return this.watchTeamItemByID(team, contactID);
+	): Observable<
+		ITeamItemWithOptionalBriefAndOptionalDto<IContactBrief, IContactDto>
+	> {
+		return this.watchTeamItemByIdWithTeamRef(team, contactID);
 	}
 
 	watchContactsByRole(
@@ -131,7 +133,7 @@ export class ContactService extends TeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchTeamItems(team, f);
+		return this.watchModuleTeamItemsWithTeamRef(team, f);
 	}
 
 	watchChildContacts(
@@ -153,7 +155,7 @@ export class ContactService extends TeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchTeamItems(team, f);
+		return this.watchModuleTeamItemsWithTeamRef(team, f);
 	}
 
 	public changeContactRole(
@@ -181,8 +183,12 @@ export class ContactService extends TeamItemService<
 	): Observable<ITeamContext> {
 		console.log(`removeTeamMember(teamID=${teamID}, contactID=${contactID})`);
 
-		if (!teamID) return throwError(() => 'teamID parameters is required');
-		if (!contactID) return throwError(() => 'contactID is required parameter');
+		if (!teamID) {
+			return throwError(() => 'teamID parameters is required');
+		}
+		if (!contactID) {
+			return throwError(() => 'contactID is required parameter');
+		}
 
 		const request: IContactRequest = { teamID, contactID };
 		return this.sneatApiService.post('contactus/remove_member', request);

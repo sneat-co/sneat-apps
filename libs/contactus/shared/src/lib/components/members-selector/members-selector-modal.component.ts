@@ -1,7 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext } from '@sneat/team-models';
 import { Observable } from 'rxjs';
 import { ISelectMembersOptions } from './members-selector.options';
 
@@ -11,11 +12,11 @@ import { ISelectMembersOptions } from './members-selector.options';
 })
 export class MembersSelectorModalComponent implements ISelectMembersOptions {
 	@Input() mode: 'modal' | 'in-page' = 'in-page';
-	@Input() members?: IContactContext[];
-	@Input() selectedMembers?: IContactContext[];
+	@Input() members?: readonly IIdAndBrief<IContactBrief>[];
+	@Input() selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() max?: number;
-	@Input() onAdded?: (member: IContactContext) => Observable<void>;
-	@Input() onRemoved?: (member: IContactContext) => Observable<void>;
+	@Input() onAdded?: (member: IIdAndBrief<IContactBrief>) => Observable<void>;
+	@Input() onRemoved?: (member: IIdAndBrief<IContactBrief>) => Observable<void>;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

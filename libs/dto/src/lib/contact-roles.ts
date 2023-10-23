@@ -1,6 +1,9 @@
 export const ContactRoleEmployee = 'employee';
 export const ContactRoleInsurer = 'insurer';
+
 export const ContactRoleFriend = 'friend';
+export const ContactRoleRelative = 'relative';
+
 // export type ContactRoleFriend = 'friend';
 export const ContactRoleParentOfFriend = 'parent_of_friend';
 export const ContactRoleDriver = 'driver';
@@ -22,7 +25,9 @@ export type ContactRoleVehicle =
 	| 'handyman'
 	| typeof ContactRoleDriver;
 export type ContactRoleMedRelated = 'GP' | 'med_specialist';
-export type ContactRoleFamilyRelated = typeof ContactRoleFriend;
+export type ContactRoleFamilyRelated =
+	| typeof ContactRoleFriend
+	| typeof ContactRoleRelative;
 export type ContactRoleWorkRelated =
 	| typeof ContactRoleEmployee
 	| 'client'
@@ -37,7 +42,7 @@ export type ContactRoleLogistSubContact =
 	| typeof ContactRoleShip
 	| typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
-import { RoleTeamMember } from './dto-member';
+import { MemberRole, RoleTeamMember } from './dto-member';
 
 export type LogistOrderContactRole =
 	| ContactRoleLogistParentContact
@@ -61,6 +66,7 @@ export type LogistOrderContactRole =
 	| 'trucker'
 	| 'warehouse';
 export type ContactRole =
+	| MemberRole
 	| typeof RoleTeamMember
 	| ContactRoleFamilyRelated
 	| ContactRoleWorkRelated
@@ -70,3 +76,13 @@ export type ContactRole =
 	| ContactRoleVehicle
 	| LogistOrderContactRole
 	| 'applicant';
+
+export interface IContactRoleBrief {
+	title: string;
+	emoji?: string;
+	finder?: string;
+}
+
+export interface IContactRoleBriefWithID extends IContactRoleBrief {
+	id: ContactRole;
+}

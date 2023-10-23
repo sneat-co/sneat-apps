@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { IContactBrief, IContactDto } from '@sneat/dto';
+import { IContactBrief } from '@sneat/dto';
 import { IContactusTeamDto, ITeamContext } from '@sneat/team-models';
 import { TeamModuleService } from '@sneat/team-services';
 
@@ -10,9 +10,6 @@ export class ContactusTeamService extends TeamModuleService<IContactusTeamDto> {
 		super('contactus', afs);
 	}
 
-	readonly watchContactBriefs = (team: ITeamContext) =>
-		this.watchBriefs<IContactBrief, IContactDto>(
-			team,
-			(dto) => dto?.contacts || {},
-		);
+	public readonly watchContactBriefs = (team: ITeamContext) =>
+		this.watchBriefs<IContactBrief>(team.id, (dto) => dto?.contacts || {});
 }

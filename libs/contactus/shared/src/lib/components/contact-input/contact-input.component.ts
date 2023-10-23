@@ -8,7 +8,13 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { countryFlagEmoji } from '@sneat/components';
-import { ContactRole, ContactType } from '@sneat/dto';
+import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import {
+	ContactRole,
+	ContactType,
+	IContactBrief,
+	IContactDto,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext, ITeamContext } from '@sneat/team-models';
 import {
@@ -33,11 +39,16 @@ export class ContactInputComponent implements OnChanges {
 	@Input() subLabel = 'by';
 	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
-	@Input() parentContact?: IContactContext;
+	@Input() parentContact?: IIdAndBriefAndOptionalDto<
+		IContactBrief,
+		IContactDto
+	>;
 	@Input() deleting = false;
-	@Input() contact?: IContactContext;
+	@Input() contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>;
 
-	@Output() readonly contactChange = new EventEmitter<IContactContext>();
+	@Output() readonly contactChange = new EventEmitter<
+		IIdAndBrief<IContactBrief>
+	>();
 
 	protected readonly labelText = () =>
 		this.label ||
@@ -46,7 +57,7 @@ export class ContactInputComponent implements OnChanges {
 		'Contact';
 
 	protected get showFlag(): boolean {
-		return !!this.contact?.brief?.countryID || !!this.contact?.dto?.countryID;
+		return !!this.contact?.brief?.countryID;
 	}
 
 	protected get showParentFlag(): boolean {
@@ -72,7 +83,10 @@ export class ContactInputComponent implements OnChanges {
 		return this.getTitle(this.showFlag, this.contact);
 	}
 
-	private getTitle(showFlag: boolean, contact?: IContactContext): string {
+	private getTitle(
+		showFlag: boolean,
+		contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>,
+	): string {
 		if (!contact) {
 			return '';
 		}
@@ -145,7 +159,7 @@ export class ContactInputComponent implements OnChanges {
 					contact,
 				);
 				this.contact = contact || undefined;
-				this.parentContact = contact?.parentContact;
+				// this.parentContact = contact?.parentContact;
 				if (contact) {
 					this.contactChange.emit(contact);
 				}

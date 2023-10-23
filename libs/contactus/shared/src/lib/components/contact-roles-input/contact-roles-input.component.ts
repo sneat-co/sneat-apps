@@ -6,13 +6,14 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
-import { ContactRole, ContactType } from '@sneat/dto';
+import { IIdAndBrief } from '@sneat/core';
+import { ContactRole, ContactType, IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-contact-roles-input',
@@ -20,7 +21,7 @@ import { IContactContext, ITeamContext } from '@sneat/team-models';
 })
 export class ContactRolesInputComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() contact?: IContactContext;
+	@Input() contact?: IIdAndBrief<IContactBrief>;
 	// @Output() readonly rolesChange = new EventEmitter<ContactRole[]>();
 
 	protected roles?: IContactRole[];

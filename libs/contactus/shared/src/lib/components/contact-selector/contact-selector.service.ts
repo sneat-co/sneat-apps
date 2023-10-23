@@ -1,25 +1,28 @@
 import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext } from '@sneat/team-models';
 import {
 	ContactSelectorComponent,
 	IContactSelectorProps,
 } from './contact-selector.component';
 
 export interface IContactSelectorOptions
-	extends ISelectorOptions<IContactContext> {
+	extends ISelectorOptions<IIdAndBrief<IContactBrief>> {
 	readonly componentProps?: IContactSelectorProps;
 }
 
 export interface ISelectedContact {
-	readonly contact: IContactContext;
+	readonly contact: IIdAndBrief<IContactBrief>;
 	readonly role: string;
 }
 
 @Injectable()
-export class ContactSelectorService extends SelectorBaseService<IContactContext> {
+export class ContactSelectorService extends SelectorBaseService<
+	IIdAndBrief<IContactBrief>
+> {
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
@@ -29,13 +32,13 @@ export class ContactSelectorService extends SelectorBaseService<IContactContext>
 
 	selectSingleContactInModal(
 		options: IContactSelectorOptions,
-	): Promise<IContactContext | null> {
+	): Promise<IIdAndBrief<IContactBrief> | null> {
 		return this.selectSingleInModal(options);
 	}
 
 	selectMultipleContactsInModal(
 		options: IContactSelectorOptions,
-	): Promise<IContactContext[] | null> {
+	): Promise<IIdAndBrief<IContactBrief>[] | null> {
 		return this.selectMultipleInModal(options);
 	}
 }

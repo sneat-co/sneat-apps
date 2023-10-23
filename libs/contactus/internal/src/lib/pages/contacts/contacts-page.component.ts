@@ -7,21 +7,21 @@ import {
 	ContactsByTypeComponent,
 	ContactsListModule,
 } from '@sneat/contactus-shared';
-import { listItemAnimations } from '@sneat/core';
+import { IIdAndBrief, listItemAnimations } from '@sneat/core';
 import {
 	FilterItemComponent,
 	ISelectItem,
 	SneatPipesModule,
 } from '@sneat/components';
 import { setHrefQueryParam } from '@sneat/core';
-import { ContactRole } from '@sneat/dto';
+import { ContactRole, IContactBrief } from '@sneat/dto';
 import {
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
 	TeamItemsBaseComponent,
 } from '@sneat/team-components';
 import { ContactusTeamService } from '@sneat/contactus-services';
-import { IContactContext, IMemberGroupContext } from '@sneat/team-models';
+import { IMemberGroupContext } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -42,9 +42,9 @@ import { Subscription } from 'rxjs';
 	],
 })
 export class ContactsPageComponent extends TeamItemsBaseComponent {
-	public allContacts?: IContactContext[];
-	public contactsByRole?: { [role: string]: IContactContext[] };
-	public contacts?: IContactContext[];
+	public allContacts?: IIdAndBrief<IContactBrief>[];
+	public contactsByRole?: { [role: string]: IIdAndBrief<IContactBrief>[] };
+	public contacts?: IIdAndBrief<IContactBrief>[];
 	public groups: IMemberGroupContext[] = [];
 	public segment: 'list' | 'groups' = 'groups';
 	public filter = '';
@@ -77,7 +77,8 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (role) {
 			this.role = role[1] as ContactRole;
 		}
-		this.allContacts = window.history.state.contacts as IContactContext[];
+		this.allContacts = window.history.state
+			.contacts as IIdAndBrief<IContactBrief>[];
 
 		if (this.allContacts) {
 			this.applyFilter('', this.role);
@@ -159,7 +160,9 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 				  );
 	}
 
-	protected readonly goContact = (contact?: IContactContext): void => {
+	protected readonly goContact = (
+		contact?: IIdAndBrief<IContactBrief>,
+	): void => {
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;
@@ -239,14 +242,18 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			);
 	}
 
-	protected id(i: number, record: { id: string }): string {
-		return record.id;
-	}
+	protected readonly contactID = (_: number, o: IIdAndBrief<IContactBrief>) =>
+		o.id;
+	protected readonly groupID = (_: number, o: IMemberGroupContext) => o.id;
 
-	private readonly setTeamContacts = (contacts: IContactContext[]): void => {
+	private readonly setTeamContacts = (
+		contacts: IIdAndBrief<IContactBrief>[],
+	): void => {
 		console.log('ContactsPageComponent.setTeamContacts()', contacts);
 		this.allContacts = contacts;
-		const contactsByRole: { [role: string]: IContactContext[] } = { '': [] };
+		const contactsByRole: { [role: string]: IIdAndBrief<IContactBrief>[] } = {
+			'': [],
+		};
 		contacts.forEach((c) => {
 			contactsByRole[''].push(c);
 			c.brief?.roles?.forEach((role) => {

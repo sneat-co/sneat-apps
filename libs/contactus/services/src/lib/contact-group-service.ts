@@ -1,121 +1,101 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { INavContext } from '@sneat/core';
+import { IIdAndDto } from '@sneat/core';
 import {
-	ContactRole,
 	ContactRoleParentOfFriend,
-	IDtoAndID,
-	RoleTeamMember,
+	IContactGroupBrief,
+	IContactGroupDto,
+	IContactRoleBriefWithID,
 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team-models';
-import { TeamItemService } from '@sneat/team-services';
+import { ITeamContext, ITeamRef } from '@sneat/team-models';
+import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable, of } from 'rxjs';
 
-export type IContactGroupContext = INavContext<
-	IContactGroupBrief,
-	IContactGroupDto
->;
-
-export interface IContactRoleBase {
-	title: string;
-	emoji?: string;
-	finder?: string;
-}
-
-export interface IContactRoleBrief extends IContactRoleBase {
-	id: ContactRole;
-}
-
-export type IContactRoleDto = IContactRoleBase;
-
-export type IContactRoleContext = INavContext<
-	IContactRoleBrief,
-	IContactRoleDto
->;
-
-export interface IContactGroupBrief {
-	readonly emoji?: string;
-	readonly title: string;
-}
-
-export interface IContactGroupDto extends IContactGroupBrief {
-	readonly roles: readonly IContactRoleBrief[];
-}
-
-const contactTypeFamilyMember: IContactRoleBrief = {
+const contactTypeFamilyMember: IContactRoleBriefWithID = {
 		id: 'member',
 		title: 'Family member',
 		emoji: '👪',
 	},
-	contactTypeTeacher: IContactRoleBrief = {
+	contactTypeRelative: IContactRoleBriefWithID = {
+		id: 'relative',
+		title: 'Relative',
+		emoji: '👪',
+	},
+	contactTypeTeacher: IContactRoleBriefWithID = {
 		id: 'teacher',
 		title: 'Teacher',
 		emoji: '👩‍🏫',
 	},
-	contactTypeBabysitter: IContactRoleBrief = {
+	contactTypeBabysitter: IContactRoleBriefWithID = {
 		id: 'babysitter',
 		title: 'Babysitter',
 		emoji: '👧',
 		finder: 'babysitters.express',
 	},
-	contactTypeFriendOfKid: IContactRoleBrief = {
+	contactTypeFriendOfKid: IContactRoleBriefWithID = {
 		id: 'friend',
 		title: 'Friend',
 		emoji: '🚸',
 	},
-	contactTypeParentOfFriend: IContactRoleBrief = {
+	contactTypeParentOfFriend: IContactRoleBriefWithID = {
 		id: ContactRoleParentOfFriend,
 		title: 'Parent of a friend',
 		emoji: '🚸',
 	},
 	// contactTypeGP: IContactRoleBrief = { id: 'gp', title: 'Family doctor', emoji: '👩‍⚕️', finder: 'gpconnect.app' },
-	contactTypePlumber: IContactRoleBrief = {
+	contactTypePlumber: IContactRoleBriefWithID = {
 		id: 'plumber',
 		title: 'Plumber',
 		emoji: '🚽',
 		finder: 'plumbers.express',
 	},
-	contactTypeElectrician: IContactRoleBrief = {
+	contactTypeElectrician: IContactRoleBriefWithID = {
 		id: 'electrician',
 		title: 'Electrician',
 		emoji: '🔌',
 		finder: 'electricians.express',
 	},
-	contactTypeHandyman: IContactRoleBrief = {
+	contactTypeHandyman: IContactRoleBriefWithID = {
 		id: 'handyman',
 		title: 'Handyman',
 		emoji: '🔨',
 	},
-	contactTypeGardener: IContactRoleBrief = {
+	contactTypeGardener: IContactRoleBriefWithID = {
 		id: 'gardener',
 		title: 'Gardener',
 		emoji: '👨‍🌾',
 		finder: 'gardeners.express',
 	},
-	contactTypeInsurer: IContactRoleBrief = {
+	contactTypeInsurer: IContactRoleBriefWithID = {
 		id: 'insurer',
 		title: 'Insurer',
 		emoji: '🧾',
 	},
-	contactTypeMechanic: IContactRoleBrief = {
+	contactTypeMechanic: IContactRoleBriefWithID = {
 		id: 'mechanic',
 		title: 'Mechanic',
 		emoji: '👨‍🔧',
 	};
 
-export const defaultFamilyContactGroupDTOs: readonly IDtoAndID<IContactGroupDto>[] =
+export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>[] =
 	[
 		{
-			id: RoleTeamMember,
+			id: 'family',
 			dto: {
-				title: 'Family members',
-				roles: [contactTypeFamilyMember],
+				emoji: '👪',
+				title: 'Family',
+				roles: [
+					contactTypeFamilyMember,
+					contactTypeRelative,
+					contactTypeFriendOfKid,
+				],
 			},
 		},
 		{
 			id: 'kid',
 			dto: {
+				emoji: '🚸',
 				title: 'Kids',
 				roles: [
 					contactTypeTeacher,
@@ -128,6 +108,7 @@ export const defaultFamilyContactGroupDTOs: readonly IDtoAndID<IContactGroupDto>
 		{
 			id: 'house',
 			dto: {
+				emoji: '🏠',
 				title: 'House',
 				roles: [
 					contactTypeHandyman,
@@ -141,6 +122,7 @@ export const defaultFamilyContactGroupDTOs: readonly IDtoAndID<IContactGroupDto>
 		{
 			id: 'med',
 			dto: {
+				emoji: '⚕️',
 				title: 'Medical',
 				roles: [
 					{ id: 'gp', title: 'GP / Family doctor', emoji: '🩺' },
@@ -151,24 +133,25 @@ export const defaultFamilyContactGroupDTOs: readonly IDtoAndID<IContactGroupDto>
 		{
 			id: 'vehicle',
 			dto: {
+				emoji: '🚗',
 				title: 'Vehicle',
 				roles: [contactTypeMechanic, contactTypeInsurer],
 			},
 		},
 	];
 
-export const defaultFamilyContactGroups: readonly IContactGroupContext[] =
+export const defaultFamilyContactGroups: readonly IIdAndDto<IContactGroupDto>[] =
 	defaultFamilyContactGroupDTOs.map((cg) => ({ ...cg, brief: cg.dto }));
 
-@Injectable()
+@Injectable({ providedIn: 'root' }) // TODO: Dedicated module?
 export class ContactGroupService {
-	private readonly teamItemService: TeamItemService<
+	private readonly teamItemService: ModuleTeamItemService<
 		IContactGroupBrief,
 		IContactGroupDto
 	>;
 
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
-		this.teamItemService = new TeamItemService(
+		this.teamItemService = new ModuleTeamItemService(
 			'contactus',
 			'contact_groups',
 			afs,
@@ -176,24 +159,27 @@ export class ContactGroupService {
 		);
 	}
 
-	getContactGroups(): Observable<readonly IContactGroupContext[]> {
-		return of(defaultFamilyContactGroups);
+	getContactGroups(): Observable<readonly IIdAndDto<IContactGroupDto>[]> {
+		return of(defaultFamilyContactGroupDTOs);
 	}
 
-	getContactGroupByID(id: string): Observable<IContactGroupContext> {
+	getContactGroupByID(
+		id: string,
+		team: ITeamContext,
+	): Observable<IIdAndDto<IContactGroupDto>> {
 		const cg = defaultFamilyContactGroups.find((cg) => cg.id === id);
 		if (!cg) {
-			return of({ id, dto: null, brief: undefined });
+			return of({ id, team, dto: { title: id } });
 		}
 		return of(cg);
 	}
 
 	watchMemberGroupsByTeam(
-		team: ITeamContext,
+		team: ITeamRef,
 		status: 'active' | 'archived' = 'active',
-	): Observable<IContactGroupContext[]> {
+	): Observable<IIdAndDto<IContactGroupDto>[]> {
 		// console.log('watchMemberGroupsByTeamID()', teamID);
-		return this.teamItemService.watchTeamItems(team, [
+		return this.teamItemService.watchModuleTeamItemsWithTeamRef(team, [
 			{ field: 'status', operator: '==', value: status },
 		]);
 	}

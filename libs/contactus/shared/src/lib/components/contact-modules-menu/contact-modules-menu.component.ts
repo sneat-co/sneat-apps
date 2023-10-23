@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { defaultFamilyMemberExtensions, ISneatExtension } from '@sneat/core';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import {
+	defaultFamilyMemberExtensions,
+	IIdAndBrief,
+	ISneatExtension,
+} from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-contact-modules-menu',
@@ -12,7 +17,7 @@ import { IContactContext, ITeamContext } from '@sneat/team-models';
 })
 export class ContactModulesMenuComponent {
 	@Input({ required: true }) team?: ITeamContext;
-	@Input({ required: true }) public contact?: IContactContext;
+	@Input({ required: true }) public contact?: IIdAndBrief<IContactBrief>;
 
 	public readonly extensions = defaultFamilyMemberExtensions;
 

@@ -1,7 +1,6 @@
 import { IAvatar } from '@sneat/auth-models';
 import { IFormField } from '@sneat/core';
 import { excludeUndefined } from '@sneat/core';
-import { ContactRole } from './contact-roles';
 import { IAddress } from './dto-address';
 import { IContact2Asset } from './dto-contact2item';
 import { IPersonRecord } from './dto-models';
@@ -195,7 +194,6 @@ export interface IContactBrief extends IContactBase {
 }
 
 export interface IContactDto extends IContactBase, IPersonRecord {
-	readonly roles?: ContactRole[];
 	readonly assets?: IContact2Asset[]; // TODO: document purpose, use cases, examples of usage
 	readonly relatedContacts?: {
 		[id: string]: IContactBrief;

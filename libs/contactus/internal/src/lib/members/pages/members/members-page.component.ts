@@ -13,8 +13,8 @@ import {
 	ContactComponentBaseParams,
 	MembersListComponent,
 } from '@sneat/contactus-shared';
+import { IIdAndBrief } from '@sneat/core';
 import {
-	IBriefAndID,
 	IContactBrief,
 	isTeamSupportsMemberGroups,
 	MemberGroupType,
@@ -29,7 +29,6 @@ import {
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import {
-	IContactContext,
 	IContactusTeamDto,
 	IMemberGroupContext,
 	zipMapBriefsWithIDs,
@@ -43,7 +42,7 @@ interface MembersGroup {
 	readonly emoji: string;
 	readonly plural: string;
 	readonly addLabel: string;
-	readonly members?: readonly IContactContext[];
+	readonly members?: readonly IIdAndBrief<IContactBrief>[];
 }
 
 @Component({
@@ -65,7 +64,7 @@ export class MembersPageComponent
 {
 	private prevMembersCount?: number;
 	public contactsByMember: {
-		[id: string]: readonly IBriefAndID<IContactBrief>[];
+		[id: string]: readonly IIdAndBrief<IContactBrief>[];
 	} = {};
 	public adults: MembersGroup = {
 		id: MemberGroupTypeAdults,
@@ -201,6 +200,7 @@ export class MembersPageComponent
 			`MembersPageComponent.loadData(source=${source})`,
 			this.contactusTeam?.dto?.contacts,
 		);
+
 		// this.unsubscribe();
 		const team = this.team;
 		if (!team) {
@@ -268,10 +268,10 @@ export class MembersPageComponent
 
 	private processMembers(): void {
 		console.log('MembersPageComponent.processMembers()', this.members);
-		const adults: IContactContext[] = [];
-		const children: IContactContext[] = [];
-		const pets: IContactContext[] = [];
-		const other: IContactContext[] = [];
+		const adults: IIdAndBrief<IContactBrief>[] = [];
+		const children: IIdAndBrief<IContactBrief>[] = [];
+		const pets: IIdAndBrief<IContactBrief>[] = [];
+		const other: IIdAndBrief<IContactBrief>[] = [];
 		// this.adults = {...this.adults, members: []};
 		// this.children = {...this.children, members = []};
 		// this.other = {...this.other, members = []};

@@ -11,7 +11,7 @@ import { IHappeningBase } from '@sneat/dto';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -36,7 +36,7 @@ import {
 })
 export class HappeningParticipantsComponent {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
 	@Input() happening?: IHappeningContext;
 
 	constructor(private readonly happeningService: HappeningService) {}

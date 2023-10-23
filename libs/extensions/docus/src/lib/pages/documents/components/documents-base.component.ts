@@ -4,11 +4,13 @@ import { eq } from '@sneat/core';
 import { IDocumentAssetDto } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext } from '@sneat/team-models';
+import { IAssetContext, ITeamContext } from '@sneat/team-models';
 import { ignoreElements } from 'rxjs/operators';
 
 @Directive()
 export abstract class DocumentsBaseComponent {
+	@Input() team?: ITeamContext;
+
 	static metadata = {
 		inputs: ['allDocuments'],
 	};
@@ -23,7 +25,7 @@ export abstract class DocumentsBaseComponent {
 
 	deleteDocument(asset: IAssetContext, slidingItem: IonItemSliding): void {
 		this.asset
-			.deleteAsset(asset)
+			.deleteAsset(this.team?.id || '', asset.id)
 			.pipe(ignoreElements())
 			.subscribe({
 				complete: async () => {

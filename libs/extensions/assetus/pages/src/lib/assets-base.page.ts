@@ -1,14 +1,14 @@
 import { ActivatedRoute } from '@angular/router';
-import { AssetCategory, IAssetusTeamContext } from '@sneat/dto';
+import { IIdAndBrief } from '@sneat/core';
+import { AssetCategory, IAssetBrief, IAssetusTeamContext } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { IAssetContext } from '@sneat/team-models';
 
 export abstract class AssetsBasePage extends TeamBaseComponent {
-	public assets?: IAssetContext[];
+	public assets?: IIdAndBrief<IAssetBrief>[];
 
 	protected assetusTeam?: IAssetusTeamContext;
 
@@ -47,20 +47,6 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 			// this.assets = this.assetusTeam?.dto?.assets;
 		}
 	}
-
-	// protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
-	// 	super.onCommuneIdsChanged(communeIds);
-	// 	if (this.communeRealId) {
-	// 		this.subscriptions.push(
-	// 			this.assetService.watchByCommuneId(this.communeRealId)
-	// 				.subscribe(assets => {
-	// 						console.log('Loaded assets:', assets);
-	// 						this.setAssets(assets);
-	// 					},
-	// 				),
-	// 		);
-	// 	}
-	// }
 
 	// protected setAssets(assets: IAssetDto[]): void {
 	// 	this.assets = assets;

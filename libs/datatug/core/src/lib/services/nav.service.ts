@@ -2,11 +2,11 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
-import { AnalyticsService, IAnalyticsService } from '@sneat/core';
+import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
-import { IBriefAndID, IMemberBrief, ITeamDto } from '@sneat/dto';
+import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
 
@@ -82,7 +82,7 @@ export class NavService {
 	public navigateToMember(
 		navController: NavController,
 		team: IRecord<ITeamDto>,
-		memberInfo: IBriefAndID<IMemberBrief>,
+		memberInfo: IIdAndBrief<IMemberBrief>,
 	): void {
 		console.log(
 			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`,

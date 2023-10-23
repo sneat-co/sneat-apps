@@ -11,6 +11,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
+import { IIdAndBrief, IIdAndBriefAndDto, IIdAndDto } from '@sneat/core';
 import {
 	ContactRole,
 	ContactType,
@@ -20,11 +21,7 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import {
-	IContactContext,
-	ICreateContactRequest,
-	ITeamContext,
-} from '@sneat/team-models';
+import { ICreateContactRequest, ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-location-form',
@@ -34,14 +31,16 @@ export class LocationFormComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
-	@Input() contact?: IContactContext;
-	@Input() parentContact?: IContactContext;
+	@Input() contact?: IIdAndDto<IContactDto>;
+	@Input() parentContact?: IIdAndBrief<IContactBrief>;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
 	@Input() contactType: ContactType = 'location';
 
-	@Output() readonly contactChange = new EventEmitter<IContactContext>();
-	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
+	@Output() readonly contactChange = new EventEmitter<IIdAndDto<IContactDto>>();
+	@Output() readonly contactCreated = new EventEmitter<
+		IIdAndDto<IContactDto>
+	>();
 
 	@ViewChild('titleInput', { static: false }) titleInput?: IonInput;
 
@@ -89,19 +88,17 @@ export class LocationFormComponent implements OnChanges {
 		}
 		if (!this.contact) {
 			const title = this.title.value || '';
+			const brief: IContactBrief = { type: this.contactType, title };
 			this.contact = {
 				id: '',
-				team: this.team,
-				brief: { type: this.contactType, title },
-				dto: { type: this.contactType, title },
+				// team: this.team,
+				dto: brief,
 			};
 		}
 		const title = this.title.value || '';
-		const brief: IContactBrief = (this.contact.brief || {}) as IContactBrief;
-		const dto = (this.contact.dto || {}) as IContactDto;
+		const dto = (this.contact?.dto || {}) as IContactDto;
 		this.contact = {
 			...this.contact,
-			brief: { ...brief, title },
 			dto: { ...dto, title },
 		};
 		this.contactChange.emit(this.contact);
@@ -111,15 +108,17 @@ export class LocationFormComponent implements OnChanges {
 		this.contactChange.emit(this.contact);
 	}
 
-	private readonly onContactCreated = (contact: IContactContext): void => {
+	private readonly onContactCreated = (
+		contact: IIdAndBriefAndDto<IContactBrief, IContactDto>,
+	): void => {
 		if (!this.team) {
 			return;
 		}
-		contact = { ...contact, parentContact: this.parentContact };
+		// contact = { ...contact, parentContact: this.parentContact };
 		console.log('LocationFormComponent.onContactCreated()', contact);
 		this.contact = contact;
 		this.emitContactChange();
-		this.contactCreated.emit(this.contact);
+		this.contactCreated.emit(contact);
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -128,8 +127,7 @@ export class LocationFormComponent implements OnChanges {
 			if (!this.contact?.dto && this.contactType && this.team) {
 				this.contact = {
 					id: this.contact?.id || '',
-					team: this.team,
-					brief: { type: this.contactType, title: '' },
+					// team: this.team,
 					dto: { type: this.contactType },
 				};
 				this.emitContactChange();
@@ -150,8 +148,8 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	submit(): void {
-		const contactBrief = this.contact?.brief;
-		if (!contactBrief) {
+		const contactDto = this.contact?.dto;
+		if (!contactDto) {
 			alert('contact brief is not defined');
 			return;
 		}
@@ -161,8 +159,8 @@ export class LocationFormComponent implements OnChanges {
 		// if (!this.parentContact) {
 		// 	return;
 		// }
-		const { title } = contactBrief;
-		const { address } = this.contact?.dto || { type: this.contactType };
+		const { title } = contactDto;
+		const { address } = contactDto || { type: this.contactType };
 		console.log('submit', title, address);
 		if (!title) {
 			alert('title is required');

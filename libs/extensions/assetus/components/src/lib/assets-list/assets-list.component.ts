@@ -5,9 +5,10 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { AssetCategory } from '@sneat/dto';
+import { IIdAndBrief } from '@sneat/core';
+import { AssetCategory, IAssetBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { AssetService } from '../services/asset-service';
 
@@ -16,9 +17,9 @@ import { AssetService } from '../services/asset-service';
 	templateUrl: './assets-list.component.html',
 })
 export class AssetsListComponent implements OnChanges {
-	assets?: IAssetContext[];
+	assets?: IIdAndBrief<IAssetBrief>[];
 
-	@Input() allAssets?: IAssetContext[];
+	@Input() allAssets?: IIdAndBrief<IAssetBrief>[];
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() assetType?: AssetCategory;
 	@Input() filter = '';
@@ -32,7 +33,7 @@ export class AssetsListComponent implements OnChanges {
 		private readonly teamNavService: TeamNavService,
 	) {}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly id = (_: number, o: IIdAndBrief<IAssetBrief>) => o.id;
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const { allAssets, assetType, filter } = this;
@@ -72,7 +73,7 @@ export class AssetsListComponent implements OnChanges {
 		);
 	}
 
-	public goAsset(asset: IAssetContext): void {
+	public goAsset(asset: IIdAndBrief<IAssetBrief>): void {
 		if (!asset) {
 			return;
 		}
@@ -103,7 +104,7 @@ export class AssetsListComponent implements OnChanges {
 			);
 	}
 
-	delete(asset: IAssetContext): void {
+	delete(asset: IIdAndBrief<IAssetBrief>): void {
 		const { id, brief } = asset;
 		this.deletingIDs.push(id);
 		const deleteCompleted = () =>
@@ -122,7 +123,7 @@ export class AssetsListComponent implements OnChanges {
 				deleteCompleted();
 				return;
 			}
-			this.assetService.deleteAsset(asset).subscribe({
+			this.assetService.deleteAsset(this.team?.id || '', asset.id).subscribe({
 				next: () => {
 					this.assets = this.assets?.filter((a) => a.id !== id);
 				},

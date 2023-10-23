@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { listItemAnimations } from '@sneat/core';
+import { IIdAndBrief, listItemAnimations } from '@sneat/core';
 import {
 	ContactsListModule,
 	IContactGroupWithContacts,
 	IContactRoleWithContacts,
 } from '../..';
 import { eq } from '@sneat/core';
-import { ContactRole } from '@sneat/dto';
+import { ContactRole, IContactBrief } from '@sneat/dto';
 import {
 	ContactNavService,
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	standalone: true,
@@ -23,14 +23,15 @@ import { IContactContext, ITeamContext } from '@sneat/team-models';
 	animations: [listItemAnimations],
 })
 export class ContactsByTypeComponent implements OnChanges {
-	protected otherContacts?: IContactContext[];
+	protected otherContacts?: IIdAndBrief<IContactBrief>[];
 	protected contactGroups: IContactGroupWithContacts[] = [];
 
 	//
 	@Input() filter = '';
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() contacts?: IContactContext[];
-	@Input() goContact: (contact?: IContactContext) => void = () => void 0;
+	@Input() contacts?: IIdAndBrief<IContactBrief>[];
+	@Input() goContact: (contact?: IIdAndBrief<IContactBrief>) => void = () =>
+		void 0;
 	@Input() goMember: (id: string, event: Event) => boolean = () => false;
 
 	constructor(private readonly contactNavService: ContactNavService) {}
@@ -41,7 +42,14 @@ export class ContactsByTypeComponent implements OnChanges {
 		}
 	}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	// TODO: have a single `id = (_, o: {id: string) => o.id` function once WebStorm bug is fixed
+	protected readonly contactID = (_: number, o: IIdAndBrief<IContactBrief>) =>
+		o.id;
+	protected readonly roleID = (_: number, o: IContactRoleWithContacts) => o.id;
+	protected readonly contactGroupID = (
+		_: number,
+		o: IContactGroupWithContacts,
+	) => o.id;
 
 	// hideRole(role: string): void {
 	// 	if (!this.commune.id) {
@@ -78,7 +86,7 @@ export class ContactsByTypeComponent implements OnChanges {
 
 		defaultFamilyContactGroups.forEach((group) => {
 			const rolesWithContacts: IContactRoleWithContacts[] = [];
-			group.dto?.roles.forEach((role) => {
+			group.dto?.roles?.forEach((role) => {
 				const roleWithContacts: IContactRoleWithContacts = {
 					...role,
 					contacts: contacts.filter((c) => c.brief?.roles?.includes(role.id)),
@@ -108,7 +116,7 @@ export class ContactsByTypeComponent implements OnChanges {
 			const groupWithContacts: IContactGroupWithContacts = {
 				...group.dto,
 				id: group.id,
-				title: group.dto?.title || group.brief?.title || '',
+				title: group.dto?.title || '',
 				roles: rolesWithContacts,
 			};
 

@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ContactusTeamService } from '@sneat/contactus-services';
-import { IBriefAndID, IContactBrief } from '@sneat/dto';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 
@@ -32,7 +33,7 @@ export class ContactsChecklistComponent implements OnChanges {
 
 	private teamID?: string;
 	private contactusTeamSubscription?: Subscription;
-	protected contacts?: IBriefAndID<IContactBrief>[];
+	protected contacts?: IIdAndBrief<IContactBrief>[];
 
 	constructor(private readonly contactusTeamService: ContactusTeamService) {}
 

@@ -13,7 +13,9 @@
 							{{
 								(contact | contactTitle) ||
 									contact?.brief?.shortTitle ||
-									(contact?.dto?.userID === currentUserId ? "Me" : "(no title)")
+									(contact?.brief?.userID === currentUserId
+										? "Me"
+										: "(no title)")
 							}}
 						</ng-container>
 					</ion-label>
@@ -48,7 +50,7 @@
 					>
 				</ion-item-divider>
 
-				<sneat-contact-dob [contact]="contact" />
+				<sneat-contact-dob [contact]="contactWithBriefAndOptionalDto" />
 			</ion-card>
 			<sneat-gender-form [genderID]="contact?.brief?.gender" />
 
@@ -66,7 +68,10 @@
 		<ion-col>
 			<ion-card>
 				<ion-list>
-					<sneat-contact-modules-menu [team]="team" [contact]="contact" />
+					<sneat-contact-modules-menu
+						[team]="team"
+						[contact]="contactWithBriefAndOptionalDto"
+					/>
 				</ion-list>
 			</ion-card>
 		</ion-col>
@@ -91,7 +96,7 @@
 
 <sneat-contact-contacts
 	*ngIf="tab === 'communicationChannels'"
-	[contact]="contact"
+	[contact]="contactWithBriefAndOptionalDto"
 />
 
 <ion-card *ngIf="tab === 'peers'">
@@ -119,11 +124,11 @@
 <sneat-contact-locations
 	*ngIf="tab === 'locations'"
 	[team]="team"
-	[contact]="contact"
+	[contact]="contactWithBriefAndOptionalDto"
 />
 
 <sneat-contact-roles-input
 	*ngIf="tab === 'roles'"
 	[team]="team"
-	[contact]="contact"
+	[contact]="contactWithBriefAndOptionalDto"
 />

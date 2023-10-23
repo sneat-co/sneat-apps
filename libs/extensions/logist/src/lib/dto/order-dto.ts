@@ -1,6 +1,6 @@
 import { IContactRequest } from '@sneat/contactus-services';
 import { ContactType, IAddress, IWithModified } from '@sneat/dto';
-import { ITeamItemContext, ITeamRequest } from '@sneat/team-models';
+import { ITeamItemNavContext, ITeamRequest } from '@sneat/team-models';
 import { CounterpartyRole } from './logist-team-dto';
 import { OrderDirection } from './orders-filter';
 
@@ -199,7 +199,7 @@ export interface ILogistOrderBrief extends IFreightOrderBrief {
 	// TODO: Why?
 }
 
-export type ILogistOrderContext = ITeamItemContext<
+export type ILogistOrderContext = ITeamItemNavContext<
 	ILogistOrderBrief,
 	ILogistOrderDto
 >;

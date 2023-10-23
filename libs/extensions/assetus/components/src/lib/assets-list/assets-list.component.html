@@ -12,24 +12,24 @@
 		(click)="goAsset(asset)"
 		[class]="{ deleting: deletingIDs.indexOf(asset.id) >= 0 }"
 	>
-		<ion-label *ngIf="asset.brief?.title">
-			{{ asset.brief?.title }}
+		<ion-label *ngIf="asset.brief.title">
+			{{ asset.brief.title }}
 		</ion-label>
-		<ion-label *ngIf="!asset.brief?.title">
-			{{ asset?.brief?.make }} {{ asset?.brief?.model }}
-			{{ asset.dto?.yearOfBuild }}
+		<ion-label *ngIf="!asset.brief.title">
+			{{ asset.brief.make }} {{ asset.brief.model }}
+			{{ asset.brief.yearOfBuild }}
 		</ion-label>
 		<ion-badge
-			*ngIf="asset?.dto?.yearOfBuild && !asset?.brief?.regNumber"
+			*ngIf="asset.brief.yearOfBuild && !asset.brief.regNumber"
 			color="light"
 			style="font-weight: normal"
-			>{{ asset?.dto?.yearOfBuild }}</ion-badge
+			>{{ asset.brief.yearOfBuild }}</ion-badge
 		>
 		<ion-badge
-			*ngIf="asset?.brief?.regNumber"
+			*ngIf="asset.brief.regNumber"
 			color="light"
 			style="font-weight: normal"
-			>{{ asset?.brief?.regNumber }}</ion-badge
+			>{{ asset.brief.regNumber }}</ion-badge
 		>
 		<ion-buttons slot="end">
 			<!--				<ion-button (click)="add2Asset($event)">-->

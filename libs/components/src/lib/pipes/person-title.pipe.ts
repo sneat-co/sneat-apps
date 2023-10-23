@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IName } from '@sneat/dto';
-import { IPersonContext } from '@sneat/team-models';
+import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
+import { IName, IPerson, IPersonBrief } from '@sneat/dto';
 
 export function personName(name?: IName): string | undefined {
 	return (
@@ -10,7 +10,10 @@ export function personName(name?: IName): string | undefined {
 
 @Pipe({ name: 'personTitle' })
 export class PersonTitle implements PipeTransform {
-	transform(p?: IPersonContext, shortTitle?: string): string {
+	transform(
+		p?: IIdAndOptionalBriefAndOptionalDto<IPersonBrief, IPerson>,
+		shortTitle?: string,
+	): string {
 		return (
 			shortTitle ||
 			p?.dto?.title ||

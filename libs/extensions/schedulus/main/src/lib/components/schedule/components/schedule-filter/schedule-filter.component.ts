@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
-import { WeekdayCode2 } from '@sneat/dto';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
@@ -35,18 +35,18 @@ export class ScheduleFilterComponent
 	public expanded = false;
 	public accordionValue?: string;
 	private resetting = false;
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	readonly text = new FormControl<string>('');
 	weekdays: WeekdayCode2[] = [];
 	memberIDs: string[] = [];
-	selectedMembers: IContactContext[] = [];
+	selectedMembers: IIdAndBrief<IContactBrief>[] = [];
 	repeats: string[] = [];
 	memberID = '';
 
-	members?: IContactContext[];
+	members?: IIdAndBrief<IContactBrief>[];
 
 	readonly repeatWeekly = new FormControl<boolean>(false);
 	readonly repeatMonthly = new FormControl<boolean>(false);
@@ -215,7 +215,7 @@ export class ScheduleFilterComponent
 	private setSelectedMembers(): void {
 		const members = this.members || [];
 		this.selectedMembers = this.memberIDs.map(
-			(mID) => members.find((m) => m.id == mID) as IContactContext,
+			(mID) => members.find((m) => m.id == mID) as IIdAndBrief<IContactBrief>,
 		);
 	}
 }

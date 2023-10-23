@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { IBriefAndID, IMemberBrief, ITeamDto } from '@sneat/dto';
+import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
 	Firestore as AngularFirestore,
@@ -14,7 +14,7 @@ import { BaseMeetingService } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { AnalyticsService, IAnalyticsService } from '@sneat/core';
+import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';
 import {
 	IAddCommentRequest,
 	IAddTaskRequest,
@@ -112,7 +112,7 @@ export class ScrumService extends BaseMeetingService {
 	public deleteTask(
 		team: string,
 		scrumId: string,
-		member: IBriefAndID<IMemberBrief>,
+		member: IIdAndBrief<IMemberBrief>,
 		type: TaskType,
 		id: string,
 	): Observable<void> {
@@ -162,7 +162,7 @@ export class ScrumService extends BaseMeetingService {
 	public setTaskCompletion(
 		teamId: string,
 		scrumId: string,
-		member: IBriefAndID<IMemberBrief>,
+		member: IIdAndBrief<IMemberBrief>,
 		taskId: string,
 		isCompleted: boolean,
 	): Observable<IStatus> {
@@ -208,7 +208,7 @@ export class ScrumService extends BaseMeetingService {
 	public addTask(
 		team: IRecord<ITeamDto>,
 		scrumId: string,
-		member: IBriefAndID<IMemberBrief>,
+		member: IIdAndBrief<IMemberBrief>,
 		type: TaskType,
 		title: string,
 	): Observable<ITaskWithUiStatus> {
@@ -259,7 +259,7 @@ export class ScrumService extends BaseMeetingService {
 	private updateStatus(
 		teamId: string,
 		scrumId: string,
-		member: IBriefAndID<IMemberBrief>,
+		member: IIdAndBrief<IMemberBrief>,
 		// TODO: Invalid eslint-disable-next-line no-shadow - lambda definition should not cause shadowing.
 		// https://github.com/sneat-team/sneat-team-pwa/issues/381
 		// eslint-disable-next-line no-shadow

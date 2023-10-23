@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IDocumentAssetDto } from '@sneat/dto';
+import { IDocumentAssetDto, IDocumentDto } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
@@ -39,7 +39,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
 			this.assetService
-				.watchTeamAssets(this.team)
+				.watchTeamAssets<IDocumentDto>(this.team)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: (documents) => {

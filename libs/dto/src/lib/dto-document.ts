@@ -1,3 +1,4 @@
+import { IAssetDtoBase } from './dto-asset';
 import { IWithAssetIDs, IWithMemberIDs, IWithTag } from './dto-models';
 
 export type AssetDocumentType =
@@ -101,7 +102,7 @@ export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
 };
 
 export interface IDocumentBase {
-	type: AssetDocumentType;
+	docType?: AssetDocumentType;
 	title: string;
 	countryID?: string;
 	issuedOn?: string; // ISO date string 'YYYY-MM-DD'
@@ -110,7 +111,7 @@ export interface IDocumentBase {
 }
 
 export interface IDocumentBrief extends IDocumentBase {
-	id: string;
+	// id: string;
 }
 
 export interface IDocData {
@@ -119,7 +120,8 @@ export interface IDocData {
 }
 
 export interface IDocumentDto
-	extends IDocumentBase,
+	extends IAssetDtoBase,
+		IDocumentBase,
 		IDocData,
 		IWithTag,
 		IWithAssetIDs,

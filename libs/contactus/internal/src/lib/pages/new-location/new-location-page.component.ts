@@ -7,7 +7,8 @@ import {
 	ContactComponentBaseParams,
 	LocationFormModule,
 } from '@sneat/contactus-shared';
-import { IContactContext } from '@sneat/team-models';
+import { IIdAndDto } from '@sneat/core';
+import { IContactDto } from '@sneat/dto';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -17,10 +18,9 @@ import { ContactBasePage } from '../contact-base-page';
 	imports: [CommonModule, IonicModule, LocationFormModule, SneatPipesModule],
 })
 export class NewLocationPageComponent extends ContactBasePage {
-	newLocation: IContactContext = {
+	newLocation: IIdAndDto<IContactDto> = {
 		id: '',
 		dto: { type: 'location' },
-		team: { id: '' },
 	};
 
 	constructor(
@@ -39,11 +39,11 @@ export class NewLocationPageComponent extends ContactBasePage {
 		// }
 	}
 
-	onContactChanged(contact: IContactContext): void {
+	onContactChanged(contact: IIdAndDto<IContactDto>): void {
 		this.newLocation = contact;
 	}
 
-	onContactCreated(contact: IContactContext): void {
+	onContactCreated(contact: IIdAndDto<IContactDto>): void {
 		this.newLocation = contact;
 		const team = this.team;
 		if (!team) {

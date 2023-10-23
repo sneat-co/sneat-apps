@@ -8,9 +8,9 @@ import {
 	UiState,
 } from '@sneat/dto';
 import { ITeamContext } from './team-context';
-import { ITeamItemContext } from './team-item-context';
+import { ITeamItemNavContext } from './team-item-context';
 
-export type IHappeningContext = ITeamItemContext<
+export type IHappeningContext = ITeamItemNavContext<
 	IHappeningBrief,
 	IHappeningDto
 >;

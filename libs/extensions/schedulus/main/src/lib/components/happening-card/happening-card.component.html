@@ -79,7 +79,7 @@
 				*ngIf="happening?.brief?.contactIDs?.length || 0 > 1"
 				[members]="
 					happening?.dto?.contactIDs || happening?.brief?.contactIDs || []
-						| selectedMembers: team : contactusTeam?.dto?.contacts
+						| selectedMembers: contactusTeam?.dto?.contacts
 				"
 				(deleteMember)="removeMember($event)"
 			/>

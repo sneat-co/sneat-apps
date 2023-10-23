@@ -2,14 +2,18 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
-import { AnalyticsService, IAnalyticsService } from '@sneat/core';
+import {
+	AnalyticsService,
+	IAnalyticsService,
+	IIdAndOptionalDto,
+} from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
 import {
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDto,
 	ITeamContext,
 	ITeamRef,
 } from '@sneat/team-models';
@@ -162,7 +166,7 @@ export class TeamNavService {
 
 	public navigateToAddMember = (
 		navController: NavController,
-		team: IContactusTeamDtoWithID,
+		team: IIdAndOptionalDto<IContactusTeamDto>,
 	): void =>
 		this.navToTeamPage(
 			navController,

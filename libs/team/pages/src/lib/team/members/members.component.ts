@@ -6,14 +6,17 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { IRecord } from '@sneat/data';
 import {
 	MemberRole,
 	MemberRoleContributor,
 	MemberRoleSpectator,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactusTeamDto, zipMapBriefsWithIDs } from '@sneat/team-models';
+import {
+	IContactusTeamDto,
+	IContactusTeamDtoAndID,
+	zipMapBriefsWithIDs,
+} from '@sneat/team-models';
 import { TeamNavService, TeamService } from '@sneat/team-services';
 
 @Component({
@@ -21,7 +24,7 @@ import { TeamNavService, TeamService } from '@sneat/team-services';
 	templateUrl: './members.component.html',
 })
 export class MembersComponent implements OnChanges {
-	@Input() public contactusTeam?: IRecord<IContactusTeamDto>;
+	@Input() public contactusTeam?: IContactusTeamDtoAndID;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
 	public contributorsCount?: number;

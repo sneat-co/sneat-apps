@@ -1,8 +1,9 @@
 import { Component, Inject, Input } from '@angular/core';
-import { ContactRole, IBriefAndID, IContactBrief } from '@sneat/dto';
+import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { ContactRole, IContactBrief, IContactDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 
 @Component({
@@ -11,8 +12,9 @@ import { TeamNavService } from '@sneat/team-services';
 	styleUrls: ['./contacts-list-item.component.scss'],
 })
 export class ContactsListItemComponent {
+	@Input() team?: ITeamContext;
 	@Input() excludeRole?: ContactRole;
-	@Input() contact?: IContactContext;
+	@Input() contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>;
 	@Input() showAddress = false;
 	@Input() hideRoles: string[] = [
 		'--',
@@ -22,7 +24,7 @@ export class ContactsListItemComponent {
 		'team_member',
 	];
 
-	protected get relatedContacts(): readonly IBriefAndID<IContactBrief>[] {
+	protected get relatedContacts(): readonly IIdAndBrief<IContactBrief>[] {
 		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
 	}
 
@@ -36,13 +38,17 @@ export class ContactsListItemComponent {
 		private readonly contactService: ContactService,
 	) {}
 
-	@Input() goContact = (contact?: IContactContext): void => {
+	@Input() goContact = (contact?: IIdAndBrief<IContactBrief>): void => {
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;
 		}
+		if (!this.team) {
+			this.errorLogger.logError('no team');
+			return;
+		}
 		this.teamNavService
-			.navigateForwardToTeamPage(contact.team, `contact/${contact.id}`, {
+			.navigateForwardToTeamPage(this.team, `contact/${contact.id}`, {
 				state: { contact },
 			})
 			.catch(
@@ -54,14 +60,17 @@ export class ContactsListItemComponent {
 
 	protected readonly contactID = (
 		_: number,
-		record: IBriefAndID<IContactBrief>,
+		record: IIdAndBrief<IContactBrief>,
 	) => record.id;
 
 	archiveContact(): void {
 		console.log('ContactListItemComponent.removeContact()');
+		if (!this.team) {
+			return;
+		}
 		if (this.contact?.id) {
 			this.contactService
-				.setContactsStatus('archived', this.contact.team.id, [this.contact])
+				.setContactsStatus('archived', this.team.id, [this.contact.id])
 				.subscribe({
 					next: () => {
 						console.log('ContactListItemComponent.removeContact() => done');

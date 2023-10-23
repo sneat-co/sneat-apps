@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
-	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
@@ -15,19 +16,21 @@ import { MembersSelectorService } from './members-selector.service';
 	templateUrl: 'members-selector-input.component.html',
 })
 export class MembersSelectorInputComponent {
-	protected contactusTeam?: IContactusTeamDtoWithID;
+	protected contactusTeam?: IContactusTeamDtoAndID;
 
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() members?: readonly IContactContext[];
+	@Input() members?: readonly IIdAndBrief<IContactBrief>[];
 
 	@Input() max?: number;
 
-	@Input() selectedMembers?: readonly IContactContext[];
+	@Input() selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
 	@Output() readonly selectedMembersChange = new EventEmitter<
-		readonly IContactContext[]
+		readonly IIdAndBrief<IContactBrief>[]
 	>();
 
-	@Output() readonly removeMember = new EventEmitter<IContactContext>();
+	@Output() readonly removeMember = new EventEmitter<
+		IIdAndBrief<IContactBrief>
+	>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -64,11 +67,13 @@ export class MembersSelectorInputComponent {
 			);
 	}
 
-	onRemoveMember(member: IContactContext): void {
+	onRemoveMember(member: IIdAndBrief<IContactBrief>): void {
 		this.removeMember.emit(member);
 	}
 
-	onSelectedMembersChanged(members: readonly IContactContext[]): void {
+	onSelectedMembersChanged(
+		members: readonly IIdAndBrief<IContactBrief>[],
+	): void {
 		console.log('onSelectedMembersChanged()', members);
 		this.selectedMembersChange.emit(members);
 	}

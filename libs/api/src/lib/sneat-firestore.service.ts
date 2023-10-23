@@ -8,6 +8,7 @@ import {
 	where,
 	onSnapshot,
 } from '@angular/fire/firestore';
+import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
 import { QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
 import { WhereFilterOp } from '@firebase/firestore-types';
 import { INavContext } from '@sneat/core';
@@ -38,13 +39,13 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 	watchByID<Dto2 extends Dto>(
 		collection: CollectionReference<Dto2>,
 		id: string,
-	): Observable<INavContext<Brief, Dto2>> {
+	): Observable<IIdAndOptionalBriefAndOptionalDto<Brief, Dto2>> {
 		return this.watchByDocRef(doc<Dto2>(collection, id));
 	}
 
 	watchByDocRef<Dto2 extends Dto>(
 		docRef: DocumentReference<Dto2>,
-	): Observable<INavContext<Brief, Dto2>> {
+	): Observable<IIdAndOptionalBriefAndOptionalDto<Brief, Dto2>> {
 		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`, docRef);
 		const subj = new Subject<DocumentSnapshot<Dto2>>();
 		// const snapshots = docSnapshots<Dto2>(docRef);
@@ -134,21 +135,22 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 	): INavContext<Brief, Dto2> {
 		const { id } = doc;
 		const dto: Dto2 | undefined = doc.data();
+		const brief = dto && this.dto2brief(id, dto);
 		return {
 			id,
 			dto,
-			brief: dto && this.dto2brief(id, dto),
-		};
+			brief,
+		} as unknown as INavContext<Brief, Dto2>; // TODO: try to remove this cast
 	}
 }
 
-export function docSnapshotToDto<Brief, Dto>(
+export function docSnapshotToDto<Brief, Dto extends Brief>(
 	id: string,
 	dto2brief: (id: string, dto: Dto) => Brief,
 	docSnapshot: DocumentSnapshot<Dto>,
 ): INavContext<Brief, Dto> {
 	if (!docSnapshot.exists) {
-		return { id, dto: null };
+		return { id, brief: null, dto: null };
 	}
 	const dto: Dto | undefined = docSnapshot.data();
 	return { id, dto, brief: dto ? dto2brief(id, dto) : undefined };

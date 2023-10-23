@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { excludeUndefined } from '@sneat/core';
-import { HappeningStatus, IHappeningSlot } from '@sneat/dto';
+import { excludeUndefined, IIdAndBrief } from '@sneat/core';
+import { HappeningStatus, IContactBrief, IHappeningSlot } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -11,8 +11,7 @@ import {
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	HappeningUIState,
-	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -35,7 +34,7 @@ const notImplemented = 'Sorry, not implemented yet';
 })
 export class SlotContextMenuComponent {
 	@Input() team: ITeamContext = { id: '' };
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
 	@Input() dateID?: string;
 	@Input() public slot?: ISlotItem;
@@ -323,7 +322,7 @@ export class SlotContextMenuComponent {
 	}
 
 	private readonly onMemberAdded = (
-		member: IContactContext,
+		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberAdded()', member);
 		if (!this.happening) {
@@ -348,7 +347,7 @@ export class SlotContextMenuComponent {
 	};
 
 	private readonly onMemberRemoved = (
-		member: IContactContext,
+		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
 		if (!this.happening) {

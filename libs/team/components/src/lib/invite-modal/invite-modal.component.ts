@@ -2,9 +2,10 @@ import { Component, Inject, Input, Pipe, PipeTransform } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { getContactTitle } from '@sneat/components';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IContactContext,
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
 	InviteChannel,
@@ -27,7 +28,7 @@ export class EncodeSmsText implements PipeTransform {
 })
 export class InviteModalComponent {
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() member?: IContactContext;
+	@Input() member?: IIdAndBrief<IContactBrief>;
 
 	tab: InviteChannel = 'email';
 	link?: string;

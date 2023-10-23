@@ -68,7 +68,7 @@
 		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
 			<ion-item-sliding
 				@listItem
-				*ngFor="let contact of contacts || []; trackBy: id"
+				*ngFor="let contact of contacts || []; trackBy: contactID"
 			>
 				<sneat-contacts-list-item
 					[contact]="contact"
@@ -95,7 +95,7 @@
 			</ng-container>
 			<ng-container *ngIf="groups">
 				<ion-item
-					*ngFor="let group of groups; trackBy: id"
+					*ngFor="let group of groups; trackBy: groupID"
 					(click)="goGroup(group)"
 					tappable
 				>

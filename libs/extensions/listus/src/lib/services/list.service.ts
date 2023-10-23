@@ -9,7 +9,7 @@ import {
 import { SneatApiService } from '@sneat/api';
 import { IListBrief, IListDto, ListType } from '@sneat/dto';
 import { IListContext, ITeamContext } from '@sneat/team-models';
-import { TeamItemService } from '@sneat/team-services';
+import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -23,7 +23,7 @@ import {
 } from './interfaces';
 
 @Injectable()
-export class ListService extends TeamItemService<IListBrief, IListDto> {
+export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,

@@ -8,10 +8,10 @@
 			readonly="readonly"
 			type="email"
 			placeholder="no email"
-			[value]="contact?.dto?.email"
+			[value]="contact?.dto?.address"
 		/>
 		<ion-button fill="clear">
-			<ion-icon [name]="contact?.dto?.email ? 'create' : 'add'" />
+			<ion-icon [name]="contact?.dto?.address ? 'create' : 'add'" />
 		</ion-button>
 	</ion-item>
 	<ion-item>
@@ -20,10 +20,10 @@
 			readonly="readonly"
 			type="phone"
 			placeholder="no phone"
-			[value]="contact?.dto?.phone"
+			[value]="contact?.dto?.address"
 		/>
 		<ion-button fill="clear">
-			<ion-icon [name]="contact?.dto?.phone ? 'create' : 'add'" />
+			<ion-icon [name]="contact?.dto?.address ? 'create' : 'add'" />
 		</ion-button>
 	</ion-item>
 	<ion-item>
@@ -32,10 +32,10 @@
 			readonly="readonly"
 			type="url"
 			placeholder="no website"
-			[value]="contact?.dto?.website"
+			[value]="contact?.dto?.address"
 		/>
 		<ion-button fill="clear">
-			<ion-icon [name]="contact?.dto?.website ? 'create' : 'add'" />
+			<ion-icon [name]="contact?.dto?.address ? 'create' : 'add'" />
 		</ion-button>
 	</ion-item>
 	<ion-item>
@@ -47,7 +47,7 @@
 			[value]="contact?.dto?.address | json"
 		/>
 		<ion-button fill="clear">
-			<ion-icon [name]="contact?.dto?.website ? 'create' : 'add'" />
+			<ion-icon [name]="contact?.dto?.address ? 'create' : 'add'" />
 		</ion-button>
 	</ion-item>
 </ion-card>

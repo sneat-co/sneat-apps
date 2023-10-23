@@ -5,7 +5,8 @@ import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
-import { ContactType, Gender, IBriefAndID, IContactBrief } from '@sneat/dto';
+import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { ContactType, Gender, IContactBrief, IContactDto } from '@sneat/dto';
 import {
 	IContactContext,
 	ITeamContext,
@@ -52,6 +53,14 @@ export class ContactDetailsComponent {
 	@Input({ required: true }) public team?: ITeamContext;
 	@Input({ required: true }) public contact?: IContactContext;
 
+	protected get contactWithBriefAndOptionalDto():
+		| IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>
+		| undefined {
+		return this.contact?.brief
+			? (this.contact as IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>)
+			: undefined;
+	}
+
 	protected relatedAs?: string;
 
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
@@ -74,7 +83,7 @@ export class ContactDetailsComponent {
 		return this.params.userService.currentUserID;
 	}
 
-	protected get relatedContacts(): readonly IBriefAndID<IContactBrief>[] {
+	protected get relatedContacts(): readonly IIdAndBrief<IContactBrief>[] {
 		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
 	}
 

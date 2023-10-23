@@ -1,9 +1,10 @@
 export * from './dto';
 export * from './contact-group-service';
 export * from './contact-nav-service';
-export * from './contactus-services.module';
+export * from './contact-service.module';
 export * from './contact-service';
 export * from './contactus-team.service';
+export * from './contactus-services.module';
 export * from './member.service';
 export * from './member-group.service';
-export * from './contact-role.service';
+export { ContactRoleService } from './contact-role.service';

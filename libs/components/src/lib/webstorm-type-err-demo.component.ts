@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-export interface IBriefAndIdDemo<Brief> {
+export interface IIdAndBriefDemo<Brief> {
 	readonly id: string;
 	readonly brief: Brief;
 }
@@ -10,7 +10,7 @@ interface Brief {
 	readonly title: string;
 }
 
-function items<B>(o: { [id: string]: B }): readonly IBriefAndIdDemo<B>[] {
+function items<B>(o: { [id: string]: B }): readonly IIdAndBriefDemo<B>[] {
 	return Object.keys(o).map((id) => ({ id, brief: o[id] }));
 }
 
@@ -27,7 +27,7 @@ export class WebstormTypeErrDemoComponent {
 		first: { title: 'First' },
 	};
 
-	protected get items(): readonly IBriefAndIdDemo<Brief>[] {
+	protected get items(): readonly IIdAndBriefDemo<Brief>[] {
 		return items(this._items);
 	}
 

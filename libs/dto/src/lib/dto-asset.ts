@@ -1,6 +1,6 @@
 import { INavContext } from '@sneat/core';
 import { IContact2Asset } from './dto-contact2item';
-import { IDocData } from './dto-document';
+import { IDocData, IDocumentBrief } from './dto-document';
 import {
 	IDemoRecord,
 	ITitled,
@@ -14,6 +14,7 @@ import {
 	AssetPossession,
 	AssetStatus,
 	AssetType,
+	// AssetType,
 	CountryId,
 	EngineType,
 	FuelType,
@@ -42,9 +43,11 @@ export interface IAssetBrief extends ITitled {
 	category: AssetCategory;
 	countryID?: CountryId;
 	type?: AssetType; // E.g. subcategory - for example for documents could be: passport, visa, etc.
-	make: string;
-	model: string;
+	make?: string;
+	model?: string;
 	regNumber?: string;
+	yearOfBuild?: number; // TODO: consider using only `dateOfBuild`
+	dateOfBuild?: string; // ISO date string 'YYYY-MM-DD'
 	possession: AssetPossession;
 }
 
@@ -58,8 +61,6 @@ export interface IAssetusTeamContext
 export interface IAssetMainData extends IAssetBrief {
 	parentAssetID?: string;
 	desc?: string;
-	yearOfBuild?: number; // TODO: consider using only `dateOfBuild`
-	dateOfBuild?: string; // ISO date string 'YYYY-MM-DD'
 	memberIDs?: string[];
 	regNumber?: string;
 }
@@ -109,7 +110,10 @@ export interface IVehicleAssetDto extends IAssetDtoBase, IVehicleData {}
 
 export interface IVehicleMainData extends IAssetMainData, IVehicleData {}
 
-export interface IDocumentAssetDto extends IAssetDtoBase, IDocData {}
+export interface IDocumentAssetDto
+	extends IDocumentBrief,
+		IDocData,
+		IAssetDtoBase {}
 
 export interface IDocumentMainData extends IAssetMainData, IDocData {}
 

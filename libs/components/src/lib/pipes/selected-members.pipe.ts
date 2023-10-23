@@ -1,17 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/dto';
-import { IContactContext, ITeamRef } from '@sneat/team-models';
 
 @Pipe({ name: 'selectedMembers' })
 export class SelectedMembersPipe implements PipeTransform {
 	transform(
 		selectedIDs: string[],
-		team: ITeamRef,
 		memberBriefs?: { [id: string]: IContactBrief },
-	): IContactContext[] {
+	): IIdAndBrief<IContactBrief>[] {
 		return selectedIDs.map((id) => {
 			const brief = memberBriefs ? memberBriefs[id] : undefined;
-			return { id, brief, team };
-		});
+			return { id, brief };
+		}) as IIdAndBrief<IContactBrief>[];
 	}
 }

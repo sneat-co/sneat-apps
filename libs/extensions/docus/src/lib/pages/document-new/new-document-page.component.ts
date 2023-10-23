@@ -2,6 +2,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
+import { IIdAndBrief } from '@sneat/core';
 import {
 	IDocTypeStandardFields,
 	IDocumentAssetDto,
@@ -9,6 +10,7 @@ import {
 	IDocumentMainData,
 	AssetDocumentType,
 	standardDocTypesByID,
+	IContactBrief,
 } from '@sneat/dto';
 import {
 	AddAssetBaseComponent,
@@ -23,7 +25,7 @@ import {
 import {
 	IAssetContext,
 	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
@@ -40,7 +42,7 @@ export class NewDocumentPageComponent
 	implements OnChanges
 {
 	@Input() public override team?: ITeamContext;
-	@Input() public override contactusTeam?: IContactusTeamDtoWithID;
+	@Input() public override contactusTeam?: IContactusTeamDtoAndID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
@@ -57,9 +59,9 @@ export class NewDocumentPageComponent
 
 	private readonly memberChanged = new Subject<void>();
 
-	public members?: readonly IContactContext[];
+	public members?: readonly IIdAndBrief<IContactBrief>[];
 
-	public selectedMembers?: readonly IContactContext[];
+	public selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
 
 	constructor(
 		route: ActivatedRoute,
@@ -155,6 +157,13 @@ export class NewDocumentPageComponent
 			return;
 		}
 		const dto: IDocumentDto = {
+			status: 'draft',
+			category: 'document',
+			possession: 'owning',
+			createdAt: { seconds: 0, nanoseconds: 0 },
+			createdBy: '-',
+			updatedAt: { seconds: 0, nanoseconds: 0 },
+			updatedBy: '-',
 			title: this.docTitle,
 			type: this.docType,
 			number: this.docNumber,

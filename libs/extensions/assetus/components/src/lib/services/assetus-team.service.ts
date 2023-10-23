@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { IAssetBrief, IAssetDtoBase, IAssetusTeamDto } from '@sneat/dto';
+import { IAssetBrief, IAssetusTeamDto } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamModuleService } from '@sneat/team-services';
 
@@ -11,8 +11,5 @@ export class AssetusTeamService extends TeamModuleService<IAssetusTeamDto> {
 	}
 
 	readonly watchAssetBriefs = (team: ITeamContext) =>
-		this.watchBriefs<IAssetBrief, IAssetDtoBase>(
-			team,
-			(dto) => dto?.assets || {},
-		);
+		this.watchBriefs<IAssetBrief>(team.id, (dto) => dto?.assets || {});
 }

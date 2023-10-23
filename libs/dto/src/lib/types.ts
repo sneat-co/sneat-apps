@@ -117,7 +117,7 @@ export type AssetVehicleType =
 	| 'van';
 export type AssetRealEstateType = 'house' | 'apartment' | 'land';
 
-export type AssetType = AssetVehicleType | AssetRealEstateType;
+export type AssetType = AssetVehicleType | AssetRealEstateType | string;
 
 export type Period = 'day' | 'week' | 'month' | 'quarter' | 'year';
 

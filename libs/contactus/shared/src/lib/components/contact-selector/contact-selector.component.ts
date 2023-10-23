@@ -17,13 +17,19 @@ import {
 	SelectFromListModule,
 	SelectorBaseComponent,
 } from '@sneat/components';
-import { ContactRole, ContactType } from '@sneat/dto';
+import { IIdAndBrief, IIdAndBriefAndDto, IIdAndDto } from '@sneat/core';
+import {
+	ContactRole,
+	ContactType,
+	IContactBrief,
+	IContactDto,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ContactService,
 	ContactusTeamService,
 } from '@sneat/contactus-services';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormModule } from '../location-form';
@@ -39,10 +45,10 @@ export interface IContactSelectorProps {
 	readonly contactType?: ContactType;
 	readonly parentType?: ContactType;
 	readonly parentRole?: ContactRole;
-	readonly parentContact?: IContactContext;
+	readonly parentContact?: IIdAndBrief<IContactBrief>;
 	readonly subType?: ContactRole;
 	readonly subRoleRequired?: boolean;
-	readonly excludeContacts?: readonly IContactContext[];
+	readonly excludeContacts?: readonly IIdAndBrief<IContactBrief>[];
 }
 
 @Component({
@@ -79,7 +85,7 @@ export class ContactSelectorComponent
 	@Input() contactType?: ContactType;
 	@Input() excludeContactIDs?: string[];
 	@Input() excludeParentIDs?: string[];
-	@Input() onSelected?: (items: IContactContext[] | null) => void;
+	@Input() onSelected?: (items: IIdAndBrief<IContactBrief>[] | null) => void;
 
 	readonly contactRoles: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
@@ -93,17 +99,17 @@ export class ContactSelectorComponent
 
 	private contactBriefsSub?: Subscription;
 
-	private allContacts?: IContactContext[];
+	private allContacts?: IIdAndBrief<IContactBrief>[];
 	//
-	protected parentContacts?: IContactContext[];
-	protected contacts?: IContactContext[];
+	protected parentContacts?: IIdAndBrief<IContactBrief>[];
+	protected contacts?: IIdAndBrief<IContactBrief>[];
 
-	protected selectedParent?: IContactContext;
-	protected selectedContact?: IContactContext;
+	protected selectedParent?: IIdAndBrief<IContactBrief>;
+	protected selectedContact?: IIdAndBrief<IContactBrief>;
 
 	protected parentContactID?: string;
 	protected selectedSubContactID?: string;
-	private readonly items$ = new Subject<IContactContext[]>();
+	private readonly items$ = new Subject<IIdAndBrief<IContactBrief>[]>();
 	public readonly items = this.items$.asObservable();
 
 	protected parentItems?: ISelectItem[];
@@ -166,7 +172,7 @@ export class ContactSelectorComponent
 	private setContacts(): void {
 		const filterByTypeRoleAndParentID =
 			(t?: ContactType, r?: ContactRole, parentID?: string) =>
-			(c: IContactContext) => {
+			(c: IIdAndBrief<IContactBrief>) => {
 				const roleIDs: ContactRole[] = [];
 				if (r) {
 					roleIDs.push(r);
@@ -200,8 +206,9 @@ export class ContactSelectorComponent
 			),
 		);
 
-		const removeExcluded = (ids?: string[]) => (c: IContactContext) =>
-			!ids?.includes(c.id);
+		const removeExcluded =
+			(ids?: string[]) => (c: IIdAndBrief<IContactBrief>) =>
+				!ids?.includes(c.id);
 		this.contactItems = this.contacts
 			?.filter(removeExcluded(this.excludeContactIDs))
 			.map(this.getChildItem);
@@ -234,25 +241,30 @@ export class ContactSelectorComponent
 		);
 	}
 
-	private readonly getParentItem = (c: IContactContext): ISelectItem => ({
+	private readonly getParentItem = (
+		c: IIdAndBrief<IContactBrief>,
+	): ISelectItem => ({
 		id: c.id,
 		emoji: countryFlagEmoji(c.brief?.countryID),
 		title: `${c.brief?.title || c.id}`,
 		iconName: this.parentIcon,
 	});
 
-	private readonly getChildItem = (c: IContactContext): ISelectItem => ({
+	private readonly getChildItem = (
+		c: IIdAndBrief<IContactBrief>,
+	): ISelectItem => ({
 		id: c.id,
 		title: `${countryFlagEmoji(c.brief?.countryID)} ${c.brief?.title || c.id}`,
 		iconName: this.contactIcon,
 	});
 
-	protected onLocationCreated(contact: IContactContext): void {
+	protected onLocationCreated(contact: IIdAndDto<IContactDto>): void {
 		// contact = {
 		// 	...contact,
 		// 	parentContact: this.selectedParent,
 		// };
-		this.emitOnSelected(contact);
+		const c = { ...contact, brief: contact.dto };
+		this.emitOnSelected(c);
 		this.close(undefined);
 	}
 
@@ -262,29 +274,32 @@ export class ContactSelectorComponent
 		this.onParentContactChanged(parentContact);
 	}
 
-	protected onParentContactCreated(contact: IContactContext): void {
-		this.parentItems?.push(this.getParentItem(contact));
-		this.onParentContactChanged(contact);
+	protected onParentContactCreated(contact: IIdAndDto<IContactDto>): void {
+		const parentContact = { ...contact, brief: contact.dto };
+		this.parentItems?.push(this.getParentItem(parentContact));
+		this.onParentContactChanged(parentContact);
 	}
 
-	protected onContactCreated(contact: IContactContext): void {
+	protected onContactCreated(contact: IIdAndDto<IContactDto>): void {
 		// contact = {
 		// 	...contact,
 		// 	parentContact: this.selectedContact,
 		// };
 		// this.selectedSubContactID = contact?.id
-		this.selectedContact = contact;
-		this.emitOnSelected(contact);
+		this.selectedContact = { ...contact, brief: contact.dto };
+		this.emitOnSelected(this.selectedContact);
 	}
 
-	protected onSubContactCreated(contact: IContactContext): void {
+	protected onSubContactCreated(
+		contact: IIdAndBriefAndDto<IContactBrief, IContactDto>,
+	): void {
 		console.log('onSubContactCreated()', contact);
 		this.selectedSubContactID = contact.id;
 		this.selectedContact = contact;
 		this.emitOnSelected(contact);
 	}
 
-	private onParentContactChanged(contact?: IContactContext): void {
+	private onParentContactChanged(contact?: IIdAndBrief<IContactBrief>): void {
 		console.log('onParentContactChanged()', contact);
 		this.parentTab = 'existing';
 		this.selectedParent = contact || undefined;
@@ -340,7 +355,7 @@ export class ContactSelectorComponent
 	// 	};
 	// }
 
-	protected emitOnSelected(contact?: IContactContext): void {
+	protected emitOnSelected(contact?: IIdAndBrief<IContactBrief>): void {
 		console.log('ContactSelectorComponent.emitOnSelected()', contact);
 		if (this.onSelected) {
 			this.onSelected(contact ? [contact] : null);

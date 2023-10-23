@@ -3,7 +3,7 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IAssetDtoBase, IAssetMainData } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { IContactusTeamDtoWithID, ITeamContext } from '@sneat/team-models';
+import { IContactusTeamDtoAndID, ITeamContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { AssetService } from '../services/asset-service';
 import { ICreateAssetRequest } from '../services/asset-service.dto';
@@ -11,7 +11,7 @@ import { ICreateAssetRequest } from '../services/asset-service.dto';
 @Component({ template: '' })
 export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 	public team?: ITeamContext; // intentionally public as will be overridden as @Input() in child components
-	public contactusTeam?: IContactusTeamDtoWithID;
+	public contactusTeam?: IContactusTeamDtoAndID;
 	public country?: string;
 
 	public isSubmitting = false;

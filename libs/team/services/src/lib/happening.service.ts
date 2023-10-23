@@ -17,7 +17,7 @@ import {
 	ITeamRequest,
 } from '@sneat/team-models';
 import { map, Observable, tap, throwError } from 'rxjs';
-import { TeamItemService } from './team-item.service';
+import { GlobalTeamItemService } from './team-item.service';
 
 export interface ICreateHappeningRequest {
 	teamID: string;
@@ -77,7 +77,7 @@ function processHappeningContext(
 
 @Injectable()
 export class HappeningService {
-	private readonly teamItemService: TeamItemService<
+	private readonly teamItemService: GlobalTeamItemService<
 		IHappeningBrief,
 		IHappeningDto
 	>;
@@ -93,8 +93,7 @@ export class HappeningService {
 		afs: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new TeamItemService(
-			'schedulus',
+		this.teamItemService = new GlobalTeamItemService(
 			'happenings',
 			afs,
 			sneatApiService,
@@ -224,7 +223,7 @@ export class HappeningService {
 		id: string,
 	): Observable<IHappeningContext> {
 		return this.teamItemService
-			.watchTeamItemByID(team, id)
+			.watchTeamItemByIdWithTeamRef(team, id)
 			.pipe(map((h) => processHappeningContext(h, team)));
 	}
 
@@ -234,7 +233,7 @@ export class HappeningService {
 	): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
 		return this.teamItemService
-			.watchTeamItems(team, [
+			.watchGlobalTeamItemsWithTeamRef(team, [
 				HappeningService.statusFilter(statuses),
 				{ field: 'dateMin', operator: '>=', value: date },
 			])
@@ -259,7 +258,7 @@ export class HappeningService {
 		console.log('watchSinglesOnSpecificDay()', team.id, date, statuses);
 		const teamDate = team.id + ':' + date;
 		return this.teamItemService
-			.watchTeamItems(team, [
+			.watchGlobalTeamItemsWithTeamRef(team, [
 				{ field: 'teamDates', operator: 'array-contains', value: teamDate },
 				HappeningService.statusFilter(statuses),
 			])

@@ -7,8 +7,9 @@ import {
 	Output,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IContactContext } from '@sneat/team-models';
-import { SneatPipesModule } from '../pipes/sneat-pipes.module';
+import { IIdAndBrief } from '@sneat/core';
+import { IContactBrief } from '@sneat/dto';
+import { SneatPipesModule } from '../pipes';
 
 @Component({
 	selector: 'sneat-members-as-badges',
@@ -33,7 +34,7 @@ import { SneatPipesModule } from '../pipes/sneat-pipes.module';
 export class MembersAsBadgesComponent {
 	private readonly deletingMemberIDs: string[] = [];
 
-	@Input() public members?: readonly IContactContext[];
+	@Input() public members?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() color:
 		| 'primary'
 		| 'light'
@@ -43,7 +44,9 @@ export class MembersAsBadgesComponent {
 		| 'tertiary' = 'light';
 	@Input() showDelete = false;
 
-	@Output() readonly deleteMember = new EventEmitter<IContactContext>();
+	@Output() readonly deleteMember = new EventEmitter<
+		IIdAndBrief<IContactBrief>
+	>();
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -51,7 +54,7 @@ export class MembersAsBadgesComponent {
 		return this.deletingMemberIDs.includes(id);
 	}
 
-	delete(event: Event, member: IContactContext): void {
+	delete(event: Event, member: IIdAndBrief<IContactBrief>): void {
 		event.stopPropagation();
 		this.deletingMemberIDs.push(member.id);
 		this.deleteMember.emit(member);

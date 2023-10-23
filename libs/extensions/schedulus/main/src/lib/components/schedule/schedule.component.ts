@@ -256,7 +256,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.schedulusTeamSubscription?.unsubscribe();
 		if (this.team?.id) {
 			this.schedulusTeamSubscription = this.schedulusTeamService
-				.watchTeamModuleRecord(this.team)
+				.watchTeamModuleRecord(this.team.id)
 				.subscribe({
 					next: (schedulusTeam) => {
 						console.log(

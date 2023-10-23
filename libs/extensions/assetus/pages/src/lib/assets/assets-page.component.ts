@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { IAssetCategory } from '@sneat/dto';
+import { IIdAndBrief } from '@sneat/core';
+import { IAssetBrief, IAssetCategory } from '@sneat/dto';
 import {
 	AssetService,
 	AssetsListComponentModule,
@@ -125,7 +126,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 				.watchAssetBriefs(this.team)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
-					next: (assets: IAssetContext[]) => {
+					next: (assets: IIdAndBrief<IAssetBrief>[]) => {
 						console.log(
 							'AssetsPageComponent.onTeamIdChanged() => assets:',
 							assets,

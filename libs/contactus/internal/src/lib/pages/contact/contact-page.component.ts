@@ -19,6 +19,7 @@ import { eq, SneatNavService } from '@sneat/core';
 import { IAddress } from '@sneat/dto';
 import {
 	ContactService,
+	IContactRequest,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { IContactContext } from '@sneat/team-models';
@@ -156,7 +157,12 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 		) {
 			return;
 		}
-		this.contactsService.deleteContact(contact).subscribe({
+		const request: IContactRequest = {
+			teamID: this.team.id,
+			contactID: contact.id,
+		};
+
+		this.contactsService.deleteContact(request).subscribe({
 			next: () => {
 				this.sneatNavService.goBack(`/space/${this.team?.id}/contacts`);
 			},

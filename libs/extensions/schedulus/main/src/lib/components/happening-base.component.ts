@@ -11,15 +11,14 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { isoStringsToDate } from '@sneat/core';
-import { WeekdayCode2 } from '@sneat/dto';
+import { IIdAndBrief, isoStringsToDate } from '@sneat/core';
+import { IContactBrief, WeekdayCode2 } from '@sneat/dto';
 import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
-	IContactContext,
-	IContactusTeamDtoWithID,
+	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
@@ -66,7 +65,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	protected readonly destroyed = new EventEmitter<void>();
 
 	@Input() team: ITeamContext = { id: '' };
-	@Input() contactusTeam?: IContactusTeamDtoWithID;
+	@Input() contactusTeam?: IContactusTeamDtoAndID;
 	@Input() happening?: IHappeningContext;
 
 	@Output() readonly deleted = new EventEmitter<string>();
@@ -190,9 +189,10 @@ This operation can NOT be undone.`)
 		if (!teamID) {
 			return;
 		}
-		const teamMembers: IContactContext[] | undefined = zipMapBriefsWithIDs(
-			this.contactusTeam?.dto?.contacts,
-		)?.map((m) => contactContextFromBrief(m, team));
+		const teamMembers: IIdAndBrief<IContactBrief>[] | undefined =
+			zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map((m) =>
+				contactContextFromBrief(m, team),
+			);
 
 		this.membersSelectorService
 			.selectMembersInModal({
@@ -223,7 +223,7 @@ This operation can NOT be undone.`)
 	}
 
 	private readonly onMemberAdded = (
-		member: IContactContext,
+		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
@@ -247,7 +247,7 @@ This operation can NOT be undone.`)
 	};
 
 	private readonly onMemberRemoved = (
-		member: IContactContext,
+		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
 		if (!this.happening) {
 			return NEVER;
@@ -271,7 +271,7 @@ This operation can NOT be undone.`)
 		);
 	}
 
-	removeMember(member: IContactContext): void {
+	removeMember(member: IIdAndBrief<IContactBrief>): void {
 		console.log('removeMember', member);
 		if (!this.happening) {
 			return;

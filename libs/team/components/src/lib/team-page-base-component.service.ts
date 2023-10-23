@@ -16,7 +16,7 @@ import {
 	trackTeamIdAndTypeFromRouteParameter,
 } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { SneatPageBaseComponent } from '@sneat/ui';
 import {
 	distinctUntilChanged,
 	MonoTypeOperatorFunction,
@@ -27,9 +27,10 @@ import {
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
+import { teamPageUrl } from './team-base.component';
 
 @Injectable() // we need this decorator so we can implement Angular interfaces
-export abstract class TeamBaseComponent extends SneatBaseComponent {
+export abstract class TeamPageBaseComponent extends SneatPageBaseComponent {
 	private readonly teamIDChanged = new Subject<string | undefined>();
 	private readonly teamTypeChanged = new Subject<TeamType | undefined>();
 	private readonly teamBriefChanged = new Subject<
@@ -429,14 +430,3 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 		return teamPageUrl(this.teamContext, page) || '';
 	}
 }
-
-export const teamPageUrl = (
-	team?: ITeamContext,
-	page?: string,
-): string | undefined => {
-	return team?.id
-		? page
-			? `/space/${team.type}/${team.id}/${page}`
-			: `/space/${team.type}/${team.id}`
-		: undefined;
-};
