@@ -15,7 +15,7 @@ export interface AppContext {
 	readonly appCode: AppCode;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AppContextService {
 	// TODO: move to common
 

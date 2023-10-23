@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IProjectRef } from '@sneat/datatug-core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ProjectContextService {
 	private readonly $current = new BehaviorSubject<IProjectRef | undefined>(
 		undefined,

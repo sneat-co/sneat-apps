@@ -56,9 +56,7 @@ const $state = new BehaviorSubject<IQueryEditorState | undefined>(undefined);
 
 let counter = 0;
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class QueryEditorStateService {
 	public readonly queryEditorState = $state
 		.asObservable()

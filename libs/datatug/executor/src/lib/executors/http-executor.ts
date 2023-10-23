@@ -12,9 +12,7 @@ import {
 	IRequestCommand,
 } from '@sneat/datatug-dto';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 	constructor(private httpClient: HttpClient) {}
 

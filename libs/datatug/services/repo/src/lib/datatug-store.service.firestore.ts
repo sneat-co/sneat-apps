@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { IProjectSummary } from '@sneat/datatug-models';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DatatugStoreFirestoreService implements IDatatugStoreService {
 	constructor(private readonly db: AngularFirestore) {}
 

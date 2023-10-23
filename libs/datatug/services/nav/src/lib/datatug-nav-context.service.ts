@@ -35,7 +35,7 @@ const reStore = /\/store\/(.+?)($|\/)/,
 	reEnvDb = /\/env\/\w+\/db\/(.+?)(?:\/|$)/,
 	reTable = /\/table\/(.+?)(?:\/|$)/;
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DatatugNavContextService {
 	readonly id = newRandomId({ len: 5 });
 	private readonly $currentContext = new BehaviorSubject<IDatatugNavContext>(

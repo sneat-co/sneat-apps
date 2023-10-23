@@ -5,9 +5,7 @@ import { IRequestExecutor } from './command-executor';
 import { AgentService } from '@sneat/datatug-services-repo';
 import { IExecuteRequest, IExecuteResponse } from '@sneat/datatug-dto';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class Coordinator {
 	constructor(
 		private readonly httpExecutor: HttpExecutor, // Load dynamically?

@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 // }
 
 // @Injectable({
-// 	providedIn: 'any',
 // 	useFactory: factory,
 // 	deps: [ActivatedRoute],
 // })

@@ -9,7 +9,7 @@ export interface IDatatugUserState extends ISneatUserState {
 	record?: IDatatugUser;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DatatugUserService {
 	public datatugUserState: Observable<IDatatugUserState>;
 

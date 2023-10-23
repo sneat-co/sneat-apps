@@ -7,7 +7,7 @@ import {
 	SneatApiServiceFactory,
 } from '@sneat/api';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class StoreApiService {
 	constructor(
 		private readonly sneatApiServiceFactory: SneatApiServiceFactory,

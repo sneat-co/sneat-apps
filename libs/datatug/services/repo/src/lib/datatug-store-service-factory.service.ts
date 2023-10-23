@@ -3,7 +3,7 @@ import { DatatugStoreGithubService } from './datatug-store.service.github';
 import { DatatugStoreFirestoreService } from './datatug-store.service.firestore';
 import { IDatatugStoreService } from './datatug-store.service.interface';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DatatugStoreServiceFactory {
 	// TODO: consider to use separate factory per each service
 

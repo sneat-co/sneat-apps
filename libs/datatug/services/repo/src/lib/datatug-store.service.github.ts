@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { IProjectSummary } from '@sneat/datatug-models';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DatatugStoreGithubService implements IDatatugStoreService {
 	constructor(private readonly http: HttpClient) {}
 

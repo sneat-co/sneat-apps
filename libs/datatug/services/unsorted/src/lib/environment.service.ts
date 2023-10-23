@@ -19,7 +19,7 @@ const getEnvCacheKey = (projectRef: IProjectRef, env: string): string => {
 
 const envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class EnvironmentService {
 	constructor(
 		private readonly projectContextService: ProjectContextService,

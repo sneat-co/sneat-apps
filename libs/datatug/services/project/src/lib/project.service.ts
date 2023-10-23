@@ -19,7 +19,7 @@ import {
 } from '@sneat/core';
 import { DatatugStoreServiceFactory } from '@sneat/datatug-services-repo';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ProjectService {
 	private projects: { [id: string]: Observable<IProjectFull> } = {};
 	private projSummary: {

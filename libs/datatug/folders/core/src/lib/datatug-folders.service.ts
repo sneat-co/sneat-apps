@@ -4,9 +4,7 @@ import { IFolder } from '@sneat/datatug-models';
 import { DatatugStoreServiceFactory } from '@sneat/datatug-services-repo';
 import { IProjectItemRef } from '@sneat/datatug-core';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class DatatugFoldersService {
 	constructor(
 		private readonly storeServiceFactory: DatatugStoreServiceFactory,

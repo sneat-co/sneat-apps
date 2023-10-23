@@ -27,9 +27,7 @@ export type ProjectTopLevelPage =
 	| 'tags'
 	| 'widgets';
 
-@Injectable({
-	providedIn: 'root', // TODO: embed explicitly
-})
+@Injectable()
 export class DatatugNavService {
 	constructor(
 		private readonly nav: NavController,
