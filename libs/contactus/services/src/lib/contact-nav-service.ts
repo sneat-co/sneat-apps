@@ -12,7 +12,7 @@ export interface INewContactPageParams {
 	document?: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ContactNavService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
