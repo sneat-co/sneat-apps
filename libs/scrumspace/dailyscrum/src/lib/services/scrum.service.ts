@@ -54,9 +54,7 @@ export interface ITaskWithUiStatus extends ITask {
 	uiStatus?: 'adding' | 'deleting';
 }
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class ScrumService extends BaseMeetingService {
 	constructor(
 		override readonly sneatApiService: SneatApiService,
