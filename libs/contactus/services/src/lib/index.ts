@@ -6,3 +6,4 @@ export * from './contact-service';
 export * from './contactus-team.service';
 export * from './member.service';
 export * from './member-group.service';
+export * from './contact-role.service';
