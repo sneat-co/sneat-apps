@@ -4,7 +4,7 @@ import { IAssetBrief, IAssetDtoBase, IAssetusTeamDto } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamModuleService } from '@sneat/team-services';
 
-@Injectable({ providedIn: 'root' }) // TODO: Do not provide in root
+@Injectable()
 export class AssetusTeamService extends TeamModuleService<IAssetusTeamDto> {
 	public constructor(afs: AngularFirestore) {
 		super('assetus', afs);

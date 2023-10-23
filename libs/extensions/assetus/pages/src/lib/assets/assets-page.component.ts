@@ -8,6 +8,7 @@ import { IAssetCategory } from '@sneat/dto';
 import {
 	AssetService,
 	AssetsListComponentModule,
+	AssetusServicesModule,
 	AssetusTeamService,
 } from '@sneat/extensions/assetus/components';
 import {
@@ -30,6 +31,7 @@ import { AssetsBasePage } from '../assets-base.page';
 		AssetsListComponentModule,
 		TeamCoreComponentsModule,
 		ContactusServicesModule,
+		AssetusServicesModule,
 	],
 })
 export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewInit*/ {
