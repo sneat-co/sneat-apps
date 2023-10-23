@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IAssetCategory } from '@sneat/dto';
 import {
 	AssetService,
@@ -28,6 +29,7 @@ import { AssetsBasePage } from '../assets-base.page';
 		IonicModule,
 		AssetsListComponentModule,
 		TeamCoreComponentsModule,
+		ContactusServicesModule,
 	],
 })
 export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewInit*/ {
