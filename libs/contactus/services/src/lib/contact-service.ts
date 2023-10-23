@@ -18,7 +18,7 @@ import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, throwError } from 'rxjs';
 import { IContactRequest, IUpdateContactRequest } from './dto';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ContactService extends TeamItemService<
 	IContactBrief,
 	IContactDto

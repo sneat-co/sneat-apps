@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IBriefAndID } from '@sneat/dto';
 import { zipMapBriefsWithIDs } from '@sneat/team/models';
 import { takeUntil } from 'rxjs/operators';
@@ -26,7 +27,9 @@ import { IonicModule } from '@ionic/angular';
 		FormsModule,
 		RouterModule,
 		AuthMenuItemComponent,
+		ContactusServicesModule,
 	],
+	providers: [TeamComponentBaseParams],
 })
 export class TeamMenuComponent extends TeamBaseComponent {
 	public teams?: readonly IBriefAndID<IUserTeamBrief>[];
