@@ -1,4 +1,4 @@
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import { Observable } from 'rxjs';
 
 export interface ISelectMembersOptions {

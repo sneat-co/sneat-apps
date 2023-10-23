@@ -1,5 +1,5 @@
 import { AgeGroupID, IAddress, IRelatedToRequest } from '@sneat/dto';
-import { ITeamRequest } from '@sneat/team/models';
+import { ITeamRequest } from '@sneat/team-models';
 
 export interface IContactRequest extends ITeamRequest {
 	readonly contactID: string;

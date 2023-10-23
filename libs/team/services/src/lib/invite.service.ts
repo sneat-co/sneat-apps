@@ -15,7 +15,7 @@ import {
 	ICreatePersonalInviteResponse,
 	IJoinTeamInfoResponse,
 	IRejectPersonalInviteRequest,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { from, Observable, switchMap, throwError } from 'rxjs';
 
 @Injectable({

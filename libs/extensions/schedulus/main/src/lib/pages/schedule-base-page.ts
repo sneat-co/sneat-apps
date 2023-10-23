@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 
 export class ScheduleBasePage extends TeamBaseComponent {
 	public override get defaultBackUrl(): string {

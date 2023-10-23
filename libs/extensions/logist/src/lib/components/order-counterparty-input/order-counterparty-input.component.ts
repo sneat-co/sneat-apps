@@ -10,7 +10,7 @@ import {
 import { LogistOrderContactRole, ContactType } from '@sneat/dto';
 import { LogistOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team-models';
 import {
 	CounterpartyRole,
 	IDeleteCounterpartyRequest,

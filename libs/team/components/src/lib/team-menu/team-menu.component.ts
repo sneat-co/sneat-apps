@@ -6,7 +6,7 @@ import { IUserTeamBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IBriefAndID } from '@sneat/dto';
-import { zipMapBriefsWithIDs } from '@sneat/team/models';
+import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { takeUntil } from 'rxjs/operators';
 import { TeamBaseComponent } from '../team-base.component';
 import { TeamComponentBaseParams } from '../team-component-base-params';

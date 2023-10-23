@@ -1,5 +1,5 @@
 import { IByUser } from '@sneat/dto';
-import { ITaskRequest } from '@sneat/team/models';
+import { ITaskRequest } from '@sneat/team-models';
 import { IMeetingRequest, ITimerState } from '@sneat/meeting';
 
 export enum TimerOperationEnum {

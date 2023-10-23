@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { CounterpartyRole, IOrderCounterparty } from '../dto';
 import { LogistOrderService } from '../services';
 

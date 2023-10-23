@@ -1,6 +1,6 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { INavContext, TeamItem } from '@sneat/core';
-import { TeamItemService } from '@sneat/team/services';
+import { TeamItemService } from '@sneat/team-services';
 import { Observable, Subscription, tap } from 'rxjs';
 import { TeamBaseComponent } from './team-base.component';
 import { TeamComponentBaseParams } from './team-component-base-params';

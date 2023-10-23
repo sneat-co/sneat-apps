@@ -10,8 +10,8 @@ import {
 	IVehicleMainData,
 	timestamp,
 } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team/components';
-import { ITeamContext, IVehicleAssetContext } from '@sneat/team/models';
+import { TeamComponentBaseParams } from '@sneat/team-components';
+import { ITeamContext, IVehicleAssetContext } from '@sneat/team-models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services/asset-service';
 import { ICreateAssetRequest } from '../../services/asset-service.dto';

@@ -5,7 +5,7 @@ import { MetricsComponent } from './metrics.component';
 import { UserService } from '../../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TeamService } from '@sneat/team/services';
+import { TeamService } from '@sneat/team-services';
 
 describe('MetricsComponent', () => {
 	let component: MetricsComponent;

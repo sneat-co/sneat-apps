@@ -7,7 +7,7 @@ import {
 	IContactContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { ContactsListModule } from '../contacts-list';
 
 @Component({

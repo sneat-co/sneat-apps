@@ -1,5 +1,5 @@
 import { IMemberBrief } from '@sneat/dto';
-import { ITeamRequest } from '@sneat/team/models';
+import { ITeamRequest } from '@sneat/team-models';
 import { ITimerState } from './timer/models';
 
 export interface IMeetingRequest extends ITeamRequest {

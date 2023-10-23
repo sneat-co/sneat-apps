@@ -1,0 +1,29 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button />
+			<ion-back-button />
+		</ion-buttons>
+		<ion-title>
+			Environments
+			<ng-container *ngIf="project">{{
+				project.title || project.id
+			}}</ng-container>
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+	<ion-card>
+		<ion-item>
+			<ion-label>Project</ion-label>
+			<ion-input readonly color="medium" [value]="project?.title" />
+		</ion-item>
+	</ion-card>
+
+	<sneat-card-list
+		title="Environments"
+		[isLoading]="!project"
+		[items]="project?.environments"
+	/>
+</ion-content>

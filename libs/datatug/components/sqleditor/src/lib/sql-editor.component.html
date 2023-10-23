@@ -1,0 +1,9 @@
+<div style="min-height: 0">
+	<ngx-codemirror
+		#codemirrorComponent
+		style="height: auto"
+		[(ngModel)]="sql"
+		(ngModelChange)="onSqlChanged($event)"
+		[options]="codemirrorOptions"
+	/>
+</div>

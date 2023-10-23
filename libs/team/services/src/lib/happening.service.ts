@@ -15,7 +15,7 @@ import {
 	IHappeningContext,
 	ITeamContext,
 	ITeamRequest,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { map, Observable, tap, throwError } from 'rxjs';
 import { TeamItemService } from './team-item.service';
 

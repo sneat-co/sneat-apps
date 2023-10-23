@@ -15,11 +15,11 @@ import {
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import {
 	HappeningService,
 	IHappeningMemberRequest,
-} from '@sneat/team/services';
+} from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-happening-participants',

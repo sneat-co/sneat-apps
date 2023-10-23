@@ -18,8 +18,8 @@ import {
 	ITiming,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService } from '@sneat/team/services';
+import { IHappeningContext, ITeamContext } from '@sneat/team-models';
+import { HappeningService } from '@sneat/team-services';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

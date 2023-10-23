@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import { personName } from './person-title.pipe';
 
 export function getContactTitle(

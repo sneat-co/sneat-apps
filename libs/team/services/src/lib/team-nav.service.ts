@@ -12,7 +12,7 @@ import {
 	IContactusTeamDtoWithID,
 	ITeamContext,
 	ITeamRef,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 

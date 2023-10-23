@@ -8,8 +8,8 @@ import {
 	IAssetDtoBase,
 	IAssetMainData,
 } from '@sneat/dto';
-import { IAssetContext, ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
+import { IAssetContext, ITeamContext } from '@sneat/team-models';
+import { TeamItemService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 

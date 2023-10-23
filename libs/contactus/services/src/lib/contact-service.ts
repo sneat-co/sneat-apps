@@ -12,8 +12,8 @@ import {
 	IContactContext,
 	ICreateContactRequest,
 	ITeamContext,
-} from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { TeamItemService } from '@sneat/team-services';
 import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, throwError } from 'rxjs';
 import { IContactRequest, IUpdateContactRequest } from './dto';

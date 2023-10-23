@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemComponent } from '@sneat/components';
-import { TeamCoreComponentsModule } from '@sneat/team/components';
+import { TeamCoreComponentsModule } from '@sneat/team-components';
 import { DocumentsByTypeComponent } from './components/documents-by-type/documents-by-type.component';
 import { DocumentsListComponent } from './components/documents-list/documents-list.component';
 

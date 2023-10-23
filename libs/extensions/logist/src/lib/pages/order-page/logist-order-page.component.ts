@@ -5,7 +5,7 @@ import {
 	PopoverController,
 	ToastController,
 } from '@ionic/angular';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { first } from 'rxjs';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { NewSegmentService } from '../../components/new-segment/new-segment.service';

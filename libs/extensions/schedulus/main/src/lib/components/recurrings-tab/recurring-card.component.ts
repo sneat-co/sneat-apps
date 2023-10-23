@@ -5,10 +5,10 @@ import {
 	Input,
 	OnDestroy,
 } from '@angular/core';
-import { IHappeningWithUiState } from '@sneat/team/models';
+import { IHappeningWithUiState } from '@sneat/team-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext } from '@sneat/team/models';
-import { HappeningService, TeamNavService } from '@sneat/team/services';
+import { IHappeningContext, ITeamContext } from '@sneat/team-models';
+import { HappeningService, TeamNavService } from '@sneat/team-services';
 import { takeUntil } from 'rxjs';
 
 @Component({

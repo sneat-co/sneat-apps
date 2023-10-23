@@ -7,12 +7,12 @@ import {
 	ImportFirebaseModules,
 	SneatApplicationModule,
 } from '@sneat/app';
-import { CommunesUiModule } from '@sneat/communes/ui';
+import { CommunesUiModule } from '@sneat/communes-ui';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
-import { TeamsMenuComponent } from '@sneat/team/components';
+import { TeamsMenuComponent } from '@sneat/team-components';
 import { environment } from '../environments/environment';
 import { LogistAppRoutingModule } from './logist-app-routing.module';
 

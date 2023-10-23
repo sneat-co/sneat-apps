@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { IMeetingMember } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { ITeamDto, MemberRoleEnum } from '@sneat/team/models';
+import { ITeamDto, MemberRoleEnum } from '@sneat/team-models';
 import { IRetrospective } from '@sneat/scrumspace/scrummodels';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 

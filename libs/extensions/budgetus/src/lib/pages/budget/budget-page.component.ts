@@ -5,8 +5,8 @@ import { Period } from '@sneat/dto';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
-import { AssetGroup, Member, Totals } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { AssetGroup, Member, Totals } from '@sneat/team-models';
 
 type LiabilitiesMode = 'incomes' | 'expenses' | 'balance';
 

@@ -4,7 +4,7 @@ import {
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({ template: '' })
 export abstract class TeamRelatedFormComponent implements OnChanges {

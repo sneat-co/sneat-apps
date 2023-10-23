@@ -16,7 +16,7 @@ import {
 	IAssetContext,
 	ITeamContext,
 	IVehicleAssetContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 import { AssetRegNumberInputComponent } from '../asset-reg-number-input/asset-reg-number-input.component';
 import { MakeModelCardComponent } from '../make-model-card/make-model-card.component';

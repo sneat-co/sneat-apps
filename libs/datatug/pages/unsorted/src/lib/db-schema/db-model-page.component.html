@@ -1,0 +1,117 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button />
+			<ion-back-button />
+		</ion-buttons>
+		<ion-title
+			>DB model: {{ dbModelBrief?.title || dbModelBrief?.id }}</ion-title
+		>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<sneat-card-list
+		title="Environments"
+		itemIcon="clipboard-outline"
+		[isLoading]="false"
+		[items]="[]"
+	/>
+
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Environments</ion-card-title>
+		</ion-card-header>
+
+		<ion-segment [(ngModel)]="envTab">
+			<ion-segment-button *ngFor="let env of envs" [value]="env">
+				<ion-label>{{ env }}</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+		<ion-list>
+			<ion-item>
+				<ion-label color="medium">Server</ion-label>
+				<ion-input [value]="envTab + '-server'" />
+			</ion-item>
+			<ion-item>
+				<ion-label color="medium">Schema</ion-label>
+				<ion-input
+					value="{{ dbModelBrief?.title || dbModelBrief?.id }}"
+				/>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Objects</ion-card-title>
+		</ion-card-header>
+		<ion-item>
+			<ion-input placeholder="Filter" />
+		</ion-item>
+		<ion-segment [(ngModel)]="tab">
+			<ion-segment-button value="tables">
+				<ion-label>
+					Tables
+					<ion-badge color="light">3</ion-badge>
+				</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="views">
+				<ion-label>Views</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="sp">
+				<ion-label>Stored Procedures</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+		<ion-item-divider>
+			<ion-label>Defined</ion-label>
+		</ion-item-divider>
+		<ion-item tappable>
+			<ion-icon name="book-outline" slot="start" />
+			<ion-label
+				>BusinessUnits
+				<ion-text color="medium">(default alias: <b>bu</b>)</ion-text>
+			</ion-label>
+			<ion-badge color="warning">Dictionary</ion-badge>
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="glasses-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item>
+			<ion-icon slot="start" name="reader-outline" />
+			<ion-label>Orders</ion-label>
+			<ion-badge>Fact</ion-badge>
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="glasses-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item-divider>
+			<ion-label color="danger" style="font-weight: bold">Unexpected</ion-label>
+			<ion-buttons slot="end">
+				<ion-button color="success" title="Mark all as expected">
+					<ion-icon slot="start" name="checkmark-done-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item-divider>
+		<ion-item tappable>
+			<ion-label>BusinessSegments</ion-label>
+			<ion-buttons>
+				<ion-button color="success">
+					<ion-icon name="checkmark-outline" />
+				</ion-button>
+				<ion-button color="danger">
+					<ion-icon name="alert-circle-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		<ion-item>
+			<ion-label color="medium" style="font-style: italic"
+				>There is no unexpected {{ tab }} in
+				{{ envTab.toUpperCase() }}</ion-label
+			>
+		</ion-item>
+	</ion-card>
+</ion-content>

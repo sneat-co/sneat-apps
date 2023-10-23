@@ -15,7 +15,7 @@ import {
 	IContactusTeamDtoWithID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import {
 	emptyScheduleFilter,
 	ScheduleFilterService,

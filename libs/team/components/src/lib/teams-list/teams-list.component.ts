@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { ITeamContext } from '@sneat/team-models';
+import { TeamNavService, TeamService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 
 @Component({

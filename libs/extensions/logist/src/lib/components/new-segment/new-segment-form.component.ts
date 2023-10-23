@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import {
 	IAddSegmentParty,
 	IAddSegmentsRequest,

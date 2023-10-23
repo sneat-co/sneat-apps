@@ -1,0 +1,66 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultHref" />
+			<ion-menu-button />
+		</ion-buttons>
+		<ion-title>Board</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-col size="10" class="ion-padding-start">
+				<h1>{{ projBoard?.title || "Board title" }}</h1>
+			</ion-col>
+			<ion-col size="2" class="ion-padding-top" style="text-align: right">
+				<ion-button color="success" *ngIf="boardContext.mode !== 'edit'">
+					<ion-icon name="play" slot="start" />
+					<ion-label>Run</ion-label>
+				</ion-button>
+				<ion-button
+					fill="outline"
+					color="medium"
+					(click)="startEditing()"
+					*ngIf="boardContext.mode !== 'edit'"
+				>
+					<ion-icon name="create-outline" slot="start" />
+					<ion-label>Edit</ion-label>
+				</ion-button>
+				<ion-button
+					(click)="saveChanges()"
+					*ngIf="boardContext.mode === 'edit'"
+				>
+					<ion-icon name="save-outline" slot="start" />
+					<ion-label>Save</ion-label>
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-card *ngIf="parameters">
+		<ion-item *ngFor="let p of parameters" [title]="'@' + p.def.id">
+			<ion-label color="medium">{{ p.def.title || p.def.id }}</ion-label>
+			<ion-input [placeholder]="p.def.type" [(ngModel)]="p.val" />
+			<ion-buttons slot="end">
+				<ion-button
+					*ngIf="p.def.lookup"
+					color="medium"
+					[title]="p.def.lookup.sql"
+					(click)="lookup(p)"
+				>
+					<ion-icon name="list-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+	</ion-card>
+
+	<datatug-env-selector />
+
+	<datatug-board
+		*ngIf="boardDef"
+		[boardDef]="boardDef"
+		[boardContext]="boardContext"
+	/>
+</ion-content>

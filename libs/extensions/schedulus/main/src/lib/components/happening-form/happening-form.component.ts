@@ -27,13 +27,13 @@ import {
 	WeekdayCode2,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	IContactusTeamDtoWithID,
 	IHappeningContext,
 	ITeamContext,
-} from '@sneat/team/models';
-import { HappeningService, HappeningServiceModule } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { HappeningService, HappeningServiceModule } from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';

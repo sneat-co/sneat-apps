@@ -8,11 +8,11 @@ import {
 	SneatApplicationModule,
 } from '@sneat/app';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { CommunesUiModule } from '@sneat/communes/ui';
+import { CommunesUiModule } from '@sneat/communes-ui';
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
-import { TeamsMenuComponent } from '@sneat/team/components';
+import { TeamsMenuComponent } from '@sneat/team-components';
 import { environment } from '../environments/environment';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
 import { SneatAppRoutingModule } from './sneat-app-routing.module';

@@ -11,7 +11,7 @@ import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import {
 	TeamComponentBaseParams,
 	TeamMenuComponent,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 
 const routes: Routes = [
 	{

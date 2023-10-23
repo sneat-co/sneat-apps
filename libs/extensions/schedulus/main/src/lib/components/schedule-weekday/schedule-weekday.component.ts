@@ -12,7 +12,7 @@ import {
 	ScheduleNavService,
 	TeamDay,
 } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import {
 	emptyScheduleFilter,

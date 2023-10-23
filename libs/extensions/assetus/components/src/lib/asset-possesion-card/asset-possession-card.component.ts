@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { AssetPossession, AssetPossessions } from '@sneat/dto';
-import { IAssetContext } from '@sneat/team/models';
+import { IAssetContext } from '@sneat/team-models';
 
 @Component({
 	standalone: true,

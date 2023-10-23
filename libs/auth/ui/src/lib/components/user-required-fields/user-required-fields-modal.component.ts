@@ -17,7 +17,7 @@ import {
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { AgeGroupID, Gender } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 

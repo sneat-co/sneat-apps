@@ -17,7 +17,7 @@ import {
 	ScheduleNavService,
 	WeekdayNumber,
 } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
 	emptyScheduleFilter,

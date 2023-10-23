@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import {
 	ISlotItem,

@@ -23,8 +23,8 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
-} from '@sneat/team/components';
-import { IMemberContext } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { IMemberContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-schedule-page',

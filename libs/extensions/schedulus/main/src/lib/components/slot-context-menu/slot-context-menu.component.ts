@@ -16,14 +16,14 @@ import {
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import {
 	HappeningService,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
 	IHappeningMemberRequest,
 	ISlotRequest,
-} from '@sneat/team/services';
+} from '@sneat/team-services';
 import { NEVER, Observable } from 'rxjs';
 import { ScheduleModalsService } from '../../services/schedule-modals.service';
 

@@ -1,8 +1,8 @@
 import { Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactusTeamDtoWithID } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { IContactusTeamDtoWithID } from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { Subscription } from 'rxjs';
 

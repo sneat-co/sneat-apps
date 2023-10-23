@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import { Observable } from 'rxjs';
 import { ISelectMembersOptions } from './members-selector.options';
 

@@ -1,6 +1,6 @@
 import { IContactRequest } from '@sneat/contactus-services';
 import { ContactType, IAddress, IWithModified } from '@sneat/dto';
-import { ITeamItemContext, ITeamRequest } from '@sneat/team/models';
+import { ITeamItemContext, ITeamRequest } from '@sneat/team-models';
 import { CounterpartyRole } from './logist-team-dto';
 import { OrderDirection } from './orders-filter';
 

@@ -2,7 +2,7 @@ import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import {
 	ContainerType,
 	IAddContainersRequest,

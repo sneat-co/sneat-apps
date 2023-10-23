@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';

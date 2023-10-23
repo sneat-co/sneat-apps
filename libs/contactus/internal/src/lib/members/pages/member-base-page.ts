@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import { ContactBasePage } from '../../pages/contact-base-page';
 import { MemberComponentBaseParams } from '../member-component-base-params';
 // import { IMemberDto } from 'sneat-shared/models/dto/dto-member';

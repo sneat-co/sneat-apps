@@ -8,8 +8,8 @@ import {
 	IDtoAndID,
 	RoleTeamMember,
 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
+import { ITeamContext } from '@sneat/team-models';
+import { TeamItemService } from '@sneat/team-services';
 import { Observable, of } from 'rxjs';
 
 export type IContactGroupContext = INavContext<

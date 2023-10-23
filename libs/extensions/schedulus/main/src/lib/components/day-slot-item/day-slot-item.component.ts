@@ -5,7 +5,7 @@ import {
 	ITeamContext,
 	HappeningUIState,
 	IContactusTeamDtoWithID,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 
 @Component({

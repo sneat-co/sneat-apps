@@ -18,7 +18,7 @@ import {
 	IContactContext,
 	ICreateContactCompanyRequest,
 	ITeamContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-new-company-form',

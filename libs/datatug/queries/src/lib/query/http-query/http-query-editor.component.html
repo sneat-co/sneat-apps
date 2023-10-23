@@ -1,0 +1,119 @@
+<ion-card>
+	<ion-item>
+		<ion-select [(ngModel)]="queryDef.method" interface="popover" slot="start">
+			<ion-select-option value="GET">GET</ion-select-option>
+			<ion-select-option value="POST">POST</ion-select-option>
+			<ion-select-option value="DELETE">DELETE</ion-select-option>
+		</ion-select>
+		<ion-buttons slot="end">
+			<ion-button color="primary" (click)="run()">
+				<ion-icon slot="start" name="play-circle-outline" />
+				<ion-label>Run</ion-label>
+			</ion-button>
+		</ion-buttons>
+		<ion-input
+			type="text"
+			placeholder="URL"
+			[(ngModel)]="queryDef.url"
+		/>
+	</ion-item>
+	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="headers">Headers</ion-segment-button>
+		<ion-segment-button value="parameters">Parameters</ion-segment-button>
+		<ion-segment-button value="body" *ngIf="takesBody">Body</ion-segment-button>
+	</ion-segment>
+	<ion-item>
+		<ion-input
+			type="text"
+			name="name"
+			slot="start"
+			placeholder="Name"
+		/>
+		<ion-input type="text" name="value" placeholder="Value" />
+		<ion-buttons slot="end">
+			<ion-button color="medium">
+				<ion-icon name="close-outline" />
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-card>
+
+<ion-card *ngIf="response">
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="4">
+				<h2 class="ion-margin-start">Response</h2>
+			</ion-col>
+			<ion-col size="8">
+				<ion-segment [(ngModel)]="responseTab">
+					<ion-segment-button value="headers">Headers</ion-segment-button>
+					<ion-segment-button value="raw">Body</ion-segment-button>
+					<!--					<ion-segment-button value="formatted">Formatted</ion-segment-button>-->
+					<ion-segment-button value="structured">Structured</ion-segment-button>
+				</ion-segment>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ng-container [ngSwitch]="responseTab">
+		<ion-card-content *ngSwitchCase="'headers'">
+			<ion-item *ngFor="let headerKey of response.headers.keys()">
+				<ion-label color="medium">{{ headerKey }}</ion-label>
+				<ion-input
+					readonly="readonly"
+					[value]="response.headers.get(headerKey)"
+				/>
+			</ion-item>
+		</ion-card-content>
+		<ion-card-content *ngSwitchCase="'raw'">
+			<ion-textarea
+				style="border: 1px solid lightgray; background-color: whitesmoke"
+				rows="20"
+				[value]="response.body | json"
+				readonly="readonly"
+			/>
+		</ion-card-content>
+		<ion-card-content *ngSwitchCase="'structured'">
+			<ion-list>
+				<ion-list-header>Widgets</ion-list-header>
+				<ion-item>
+					<ion-checkbox
+						[(ngModel)]="isCurrencyPipeEnabled"
+						value="currency_flag"
+						slot="start"
+					/>
+					<ion-label>Currency flag on:</ion-label>
+					<ion-input value="data.#.id" />
+					<ion-select interface="popover" value="append">
+						<ion-select-option value="append">Append</ion-select-option>
+						<ion-select-option value="replace">Replace</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox value="currency_country" slot="start" />
+					<ion-label>Currency country as:</ion-label>
+					<ion-input
+						placeholder="property name"
+						value="country_code"
+					/>
+				</ion-item>
+			</ion-list>
+			<datatug-json-table
+				[pipes]="isCurrencyPipeEnabled ? [currencyPipe] : undefined"
+				[json]="response.body"
+			/>
+		</ion-card-content>
+	</ng-container>
+</ion-card>
+
+<ion-card>
+	<ion-card-header>
+		<ion-card-title>Public APIs</ion-card-title>
+	</ion-card-header>
+	<!--	https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/ -->
+	<ion-item *ngFor="let apiEndpoint of apiEndpoints" [title]="apiEndpoint.url">
+		<ion-label>{{ apiEndpoint.title }}</ion-label>
+		<ion-buttons>
+			<ion-button (click)="try($event, apiEndpoint)">Try</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-card>

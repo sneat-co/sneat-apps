@@ -10,11 +10,11 @@ import {
 	IContactusTeamDtoWithID,
 	IMemberContext,
 	ITeamContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import {
 	TeamService,
 	trackTeamIdAndTypeFromRouteParameter,
-} from '@sneat/team/services';
+} from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { SneatBaseComponent } from '@sneat/ui';
 import {

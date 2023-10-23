@@ -6,8 +6,8 @@ import { ContactRole } from '@sneat/dto';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
-import { IContactContext } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { IContactContext } from '@sneat/team-models';
 import { first, takeUntil } from 'rxjs';
 
 @Component({

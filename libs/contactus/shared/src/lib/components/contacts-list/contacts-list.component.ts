@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-contacts-list',

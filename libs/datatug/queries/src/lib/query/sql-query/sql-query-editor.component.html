@@ -1,0 +1,406 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button />
+			<ion-back-button
+				defaultHref="/store/{{ project?.ref?.storeId }}/project/{{
+					project?.ref?.projectId
+				}}/queries?folder={{ queryFolderPath }}"
+			/>
+		</ion-buttons>
+		<ion-title>Query</ion-title>
+		<ion-buttons slot="end">
+			<ion-button
+				class="ion-padding-horizontal"
+				slot="end"
+				[disabled]="queryState?.isSaving"
+				[fill]="isChanged ? 'solid' : 'clear'"
+				[color]="isChanged ? 'danger' : 'medium'"
+				title="Save changes"
+				(click)="saveChanges()"
+			>
+				<ion-icon name="save-outline" slot="start" />
+				<ion-label *ngIf="!queryState?.isSaving">Save</ion-label>
+				<ion-label *ngIf="queryState?.isSaving">Saving...</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+	<ion-grid>
+		<ion-row>
+			<ion-col size="8">
+				<ion-item>
+					<ion-input
+						[placeholder]="queryNamePlaceholder"
+						[value]="queryState?.title"
+						(ionChange)="queryTitleChanged($event)"
+						readonly="false"
+					/>
+					<!--			<ion-select interface="popover" slot="end">-->
+					<!--				<ion-select-option value="q1">Query #1</ion-select-option>-->
+					<!--				<ion-select-option value="q2">Query #2</ion-select-option>-->
+					<!--				<ion-select-option value="q3">Query #3</ion-select-option>-->
+					<!--				<ion-select-option value="q4">Query #4</ion-select-option>-->
+					<!--			</ion-select>-->
+				</ion-item>
+			</ion-col>
+			<ion-col size="4">
+				<ion-item>
+					<ion-label
+						[color]="
+							!queryState?.targetDbModel?.id &&
+							currentProject?.summary?.dbModels?.length
+								? 'danger'
+								: 'medium'
+						"
+					>
+						Target
+					</ion-label>
+					<ion-select
+						interface="popover"
+						placeholder="DB model"
+						[disabled]="!currentProject?.summary?.dbModels?.length"
+						[value]="queryState?.targetDbModel?.id"
+					>
+						<ion-select-option
+							*ngFor="let dbModel of currentProject?.summary?.dbModels"
+							[value]="dbModel.id"
+						>
+							{{ dbModel.title || dbModel.id }}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-segment
+		[(ngModel)]="editorTab"
+		color="dark"
+		(ionChange)="editorTabChanged()"
+	>
+		<ion-segment-button value="text">Query text</ion-segment-button>
+		<ion-segment-button value="builder">
+			<ion-label>
+				Query builder
+				<ion-badge
+					*ngIf="showQueryBuilder"
+					color="medium"
+					style="font-weight: normal; font-size: x-small"
+					title="Is not implemented yet"
+					>PROTOTYPE
+				</ion-badge>
+			</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+
+	<ion-card *ngIf="editorTab === 'text'">
+		<datatug-sql
+			[sql]="sql"
+			(sqlChanged)="onSqlChanged($event)"
+			[lineNumbers]="true"
+			[readonly]="false"
+		/>
+	</ion-card>
+
+	<!--	<ion-grid [style.display]="queryMode === 'text' ? 'block' : 'none'">-->
+	<ion-grid>
+		<ion-row>
+			<ion-col size="12" />
+		</ion-row>
+	</ion-grid>
+
+	<ng-container *ngIf="editorTab === 'builder'">
+		<ion-card *ngIf="!showQueryBuilder">
+			<ion-card-content>
+				<p>
+					Query builder is not implemented yet.
+					<ion-button
+						color="danger"
+						slot="end"
+						(click)="showQueryBuilder = true"
+						>Show prototype
+					</ion-button>
+				</p>
+			</ion-card-content>
+		</ion-card>
+		<ng-container *ngIf="showQueryBuilder">
+			<div class="hidden-lg-up">
+				<div class="ion-padding-start ion-padding-end">
+					<ion-segment value="columns">
+						<ion-segment-button
+							value="columns"
+							style="font-size: smaller; text-transform: none"
+						>
+							<ion-label>Columns 2</ion-label>
+						</ion-segment-button>
+						<ion-segment-button
+							value="group"
+							style="font-size: smaller; text-transform: none"
+						>
+							<ion-label>Group by</ion-label>
+						</ion-segment-button>
+						<ion-segment-button
+							value="order"
+							style="font-size: smaller; text-transform: none"
+						>
+							<ion-label>Order by</ion-label>
+						</ion-segment-button>
+					</ion-segment>
+				</div>
+				<ion-card>
+					<ion-list>
+						<ion-item>
+							<ion-checkbox slot="start" checked="true" />
+							<ion-label
+								><b>ft</b> -
+								<ion-text color="medium">FistTable</ion-text>
+							</ion-label>
+						</ion-item>
+						<ion-item>
+							<ion-checkbox
+								slot="start"
+								class="ion-margin-start"
+							/>
+							<ion-label color="medium">ID</ion-label>
+						</ion-item>
+						<ion-item>
+							<ion-checkbox
+								slot="start"
+								class="ion-margin-start"
+							/>
+							<ion-label color="medium">Name</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-card>
+			</div>
+
+			<ion-grid class="ion-no-margin ion-no-padding">
+				<ion-row class="ion-no-margin ion-no-padding">
+					<ion-col
+						size-md="6"
+						class="hidden-md-down ion-no-margin ion-no-padding"
+					>
+						<datatug-qe-joins
+							[sql]="sql"
+							[queryAst]="queryAst"
+							[sqlParser]="sqlParser"
+							(astChanged)="onSqlAstChanged($event)"
+						/>
+						<ion-grid class="ion-no-margin ion-no-margin ion-no-padding">
+							<ion-row class="ion-no-margin ion-no-padding">
+								<ion-col class="ion-no-padding ion-no-margin">
+									<ion-card>
+										<ion-item>
+											<ion-checkbox slot="start" />
+											<ion-label color="medium">Group by</ion-label>
+											<ion-buttons slot="end">
+												<ion-button
+													title="Clear all GROUP BYs"
+													slot="end"
+													color="medium"
+												>
+													<ion-icon name="close" />
+												</ion-button>
+											</ion-buttons>
+										</ion-item>
+										<ion-card-content>
+											<p>Add column(s) to group by.</p>
+										</ion-card-content>
+									</ion-card>
+								</ion-col>
+								<ion-col class="ion-no-padding ion-no-margin">
+									<ion-card>
+										<ion-item>
+											<ion-checkbox slot="start" />
+											<ion-label color="medium">Order by</ion-label>
+											<ion-buttons slot="end">
+												<ion-button
+													title="Clear all ORDER BYs"
+													slot="end"
+													color="medium"
+												>
+													<ion-icon name="close" />
+												</ion-button>
+											</ion-buttons>
+										</ion-item>
+										<ion-card-content>
+											<p>Add columns to order.</p>
+										</ion-card-content>
+									</ion-card>
+								</ion-col>
+							</ion-row>
+						</ion-grid>
+					</ion-col>
+
+					<ion-col
+						size-md="6"
+						class="hidden-md-down ion-no-margin ion-no-padding"
+					>
+						<datatug-qe-columns />
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ng-container>
+	</ng-container>
+
+	<ion-card>
+		<datatug-input-parameters
+			[paramDefs]="queryState?.def?.parameters"
+			(paramValues)="onParametersChanged($event)"
+		/>
+	</ion-card>
+
+	<div class="ion-padding-start ion-padding-end">
+		<ion-segment [value]="activeEnv?.id" (ionChange)="envChanged($event)">
+			<ion-segment-button
+				[value]="env.id"
+				*ngFor="let env of queryState?.environments"
+			>
+				<ion-grid>
+					<ion-row>
+						<ion-col style="margin-top: 0.5rem">
+							{{ env.title || env.id }}
+							<ng-container *ngIf="env.recordsets; let envRecordsets">
+								<ion-badge
+									color="light"
+									*ngIf="
+										envRecordsets.length === 1 &&
+										!!envRecordsets[0].result?.rows?.length
+									"
+								>
+									{{ envRecordsets[0].result?.rows?.length }}
+								</ion-badge>
+							</ng-container>
+						</ion-col>
+						<ion-col>
+							<ion-buttons>
+								<ion-button *ngIf="env.isExecuting" disabled>
+									<ion-spinner name="lines-small" slot="end" />
+								</ion-button>
+								<ion-button
+									*ngIf="!env.isExecuting"
+									(click)="executeFromTab($event, env)"
+								>
+									<ion-icon name="play-circle-outline" />
+								</ion-button>
+							</ion-buttons>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+
+	<ion-grid>
+		<ion-row *ngIf="activeEnv?.id !== '=='">
+			<ion-col size="5">
+				<ion-item>
+					<ion-label
+						[color]="activeEnv && !activeEnv.dbServerId ? 'danger' : 'medium'"
+						>@ Server
+					</ion-label>
+					<ion-input
+						*ngIf="activeEnv && !activeEnv.summary"
+						readonly
+						style="text-align: right"
+						placeholder="loading..."
+					/>
+					<ng-container *ngIf="activeEnv?.summary">
+						<ng-container
+							*ngIf="!activeEnv?.summary?.dbServers?.length; else hasDbServers"
+						>
+							<ion-input
+								readonly
+								*ngIf="activeEnv && !activeEnv.catalogId"
+								placeholder="No known catalogs"
+							/>
+						</ng-container>
+						<ng-template #hasDbServers>
+							<ion-select
+								interface="popover"
+								[value]="activeEnv?.dbServerId"
+								(ionChange)="serverChanged($event)"
+							>
+								<ion-select-option
+									*ngFor="let dbServer of activeEnv?.summary?.dbServers"
+									[value]="getDbServerId(dbServer)"
+								>
+									{{ dbServer.driver }} : {{ dbServer.host }}
+								</ion-select-option>
+							</ion-select>
+						</ng-template>
+					</ng-container>
+				</ion-item>
+			</ion-col>
+			<ion-col size="5">
+				<ion-item>
+					<ion-label
+						[color]="activeEnv && !activeEnv.catalogId ? 'danger' : 'medium'"
+						>DB
+					</ion-label>
+					<ion-input
+						*ngIf="activeEnv && !activeEnv.summary"
+						readonly
+						style="text-align: right"
+						placeholder="loading..."
+					/>
+					<ion-select
+						[value]="activeEnv?.catalogId"
+						*ngIf="activeEnv?.dbServer"
+						interface="popover"
+						(ionChange)="catalogChanged($event)"
+					>
+						<ion-select-option
+							*ngFor="let catalog of activeEnv?.dbServer?.catalogs"
+							[value]="catalog"
+						>
+							{{ catalog }}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col size="2">
+				<ion-button
+					expand="full"
+					[disabled]="!activeEnv || activeEnv.isExecuting"
+					(click)="executeQuery()"
+					style="text-transform: none"
+				>
+					<ion-icon slot="start" name="play-circle-outline" />
+					<ion-label>Execute</ion-label>
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<div class="ion-padding" *ngIf="envId === '=='">
+		<p>Comparison is not implemented yet</p>
+	</div>
+
+	<div
+		class="ion-padding"
+		*ngIf="envId !== '==' && !activeEnv?.recordsets && !activeEnv?.isExecuting"
+	>
+		<ion-text color="medium">Not executed yet</ion-text>
+	</div>
+
+	<ion-progress-bar
+		type="indeterminate"
+		*ngIf="activeEnv?.isExecuting"
+		color="tertiary"
+	/>
+
+	<div
+		class="ion-margin-top"
+		style="margin-left: 0.6rem; margin-right: 0.6rem"
+		*ngIf="activeEnv?.recordsets"
+	>
+		<datatug-grid-widget
+			*ngFor="let recordset of activeEnv?.recordsets; trackBy: trackByIndex"
+			[recordset]="recordset"
+		/>
+	</div>
+</ion-content>

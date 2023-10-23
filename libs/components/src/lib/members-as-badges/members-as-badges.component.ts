@@ -7,7 +7,7 @@ import {
 	Output,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import { SneatPipesModule } from '../pipes/sneat-pipes.module';
 
 @Component({

@@ -1,0 +1,24 @@
+<ng-container [ngSwitch]="widgetDef?.name">
+	<datatug-tabs-widget
+		*ngSwitchCase="'tabs'"
+		[level]="level"
+		[tabsWidgetSettings]="tabsWidgetSettings"
+		[boardContext]="boardContext"
+	/>
+	<datatug-sql-query-widget
+		*ngSwitchCase="'SQL'"
+		[level]="level"
+		[tab]="cardTab //noinspection InvalidExpressionResultType"
+		[data]="sqlWidgetSettings"
+		[boardContext]="boardContext"
+	/>
+	<div class="ion-margin-top" *ngSwitchDefault>
+		<ng-container *ngIf="!widgetDef">No widget definition</ng-container>
+		<ng-container *ngIf="widgetDef && !widgetDef.name"
+			>No widget name</ng-container
+		>
+		<ng-container *ngIf="widgetDef?.name">
+			To be implemented: {{ widgetDef?.name }}
+		</ng-container>
+	</div>
+</ng-container>

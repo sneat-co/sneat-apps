@@ -1,0 +1,11 @@
+<ion-row class="ion-no-padding">
+	<ion-col
+		class="ion-no-padding"
+		*ngFor="let boarCardDef of boardRowDef?.cards"
+	>
+		<datatug-board-card
+			[boarCardDef]="boarCardDef"
+			[boardContext]="boardContext"
+		/>
+	</ion-col>
+</ion-row>

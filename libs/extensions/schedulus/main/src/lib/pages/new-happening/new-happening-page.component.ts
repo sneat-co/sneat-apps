@@ -5,11 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { HappeningType, WeekdayCode2 } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	IHappeningContext,
 	newEmptyHappeningContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { first, takeUntil } from 'rxjs';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { ScheduleBasePage } from '../schedule-base-page';

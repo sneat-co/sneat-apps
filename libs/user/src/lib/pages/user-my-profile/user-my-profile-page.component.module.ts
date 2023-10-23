@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { TeamsCardModule } from '@sneat/team/components';
+import { TeamsCardModule } from '@sneat/team-components';
 import { UserMyProfilePageComponent } from './user-my-profile-page.component';
 import { UserMyProfilePageRoutingModule } from './user-my-profile-page.routing.module';
 

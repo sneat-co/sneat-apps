@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
-import { TeamsMenuComponent } from '@sneat/team/components';
+import { TeamsMenuComponent } from '@sneat/team-components';
 import { LogistMenuComponent } from './logist-menu.component';
 
 @NgModule({

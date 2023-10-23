@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { ITeamContext } from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 
 export interface INewContactPageParams {
 	group?: string;

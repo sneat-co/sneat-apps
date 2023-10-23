@@ -4,7 +4,7 @@ import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/auth-core';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { TeamNavService, TeamService } from '@sneat/team-services';
 import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 
 @Component({

@@ -12,8 +12,8 @@ import {
 import {
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
-} from '@sneat/team/components';
-import { IAssetContext } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { IAssetContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 

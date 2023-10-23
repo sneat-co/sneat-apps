@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { HappeningServiceModule } from '@sneat/team/services';
+import { HappeningServiceModule } from '@sneat/team-services';
 import { HappeningComponentBaseParams } from '../../components/happening-component-base-params';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { HappeningSlotComponentsModule } from '../../components/happening-slot-components.module';

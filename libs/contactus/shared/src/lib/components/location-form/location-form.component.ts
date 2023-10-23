@@ -24,7 +24,7 @@ import {
 	IContactContext,
 	ICreateContactRequest,
 	ITeamContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-location-form',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningContext } from '@sneat/team-models';
 
 export interface AddSlotParams {
 	wd?: WeekdayCode2;

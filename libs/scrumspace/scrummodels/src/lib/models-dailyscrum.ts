@@ -2,7 +2,7 @@ import { IAvatar } from '@sneat/auth-models';
 import { Modified } from '@sneat/data';
 import { MemberRole } from '@sneat/dto';
 import { IMeeting } from '@sneat/meeting';
-import { IBy, ITeamItemContext } from '@sneat/team/models';
+import { IBy, ITeamItemContext } from '@sneat/team-models';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';
 
