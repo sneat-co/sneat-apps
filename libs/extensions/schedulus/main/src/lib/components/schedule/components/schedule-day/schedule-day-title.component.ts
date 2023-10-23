@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { isToday, isTomorrow } from '../schedule-core';
-import { SwipeableDay } from '../swipeable-ui';
+import { isToday, isTomorrow } from '../../../schedule-core';
+import { SwipeableDay } from '../../../swipeable-ui';
 
 @Component({
 	selector: 'sneat-schedule-day-title',

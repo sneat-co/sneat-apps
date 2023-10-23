@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { SwipeableWeek } from '../swipeable-ui';
+import { SwipeableWeek } from '../../../swipeable-ui';
 
 @Component({
 	selector: 'sneat-schedule-week-title',

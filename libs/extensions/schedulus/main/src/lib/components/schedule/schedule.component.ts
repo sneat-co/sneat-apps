@@ -34,9 +34,9 @@ import {
 	emptyScheduleFilter,
 	ScheduleFilterService,
 } from '../schedule-filter.service';
-import { IScheduleFilter } from '../schedule-filter/schedule-filter';
-import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
-import { ScheduleStateService } from '../schedule-state.service';
+import { IScheduleFilter } from './components/schedule-filter/schedule-filter';
+import { ScheduleFilterComponent } from './components/schedule-filter/schedule-filter.component';
+import { ScheduleStateService } from './schedule-state.service';
 
 export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 

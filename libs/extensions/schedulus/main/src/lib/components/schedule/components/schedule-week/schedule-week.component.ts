@@ -10,14 +10,14 @@ import {
 import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { TeamDaysProvider } from '../../../../pages/schedule/team-days-provider';
 import {
 	ISlotItem,
 	NewHappeningParams,
 	TeamDay,
 } from '@sneat/extensions/schedulus/shared';
 import { IScheduleFilter } from '../schedule-filter/schedule-filter';
-import { createWeekdays, Week } from '../schedule-core';
+import { createWeekdays, Week } from '../../../schedule-core';
 
 export interface Weekday {
 	// This is used to

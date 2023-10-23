@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 import { TeamDaysProvider } from '../pages/schedule/team-days-provider';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { Week } from './schedule-core';
-import { IDateChanged } from './schedule-state.service';
-import { Weekday } from './schedule-week/schedule-week.component';
+import { IDateChanged } from './schedule/schedule-state.service';
+import { Weekday } from './schedule/components/schedule-week/schedule-week.component';
 
 export type Parity = 'odd' | 'even'; // TODO: change to 'current' | 'next' | 'prev';
 

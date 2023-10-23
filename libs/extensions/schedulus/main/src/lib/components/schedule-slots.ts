@@ -1,5 +1,5 @@
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { IScheduleFilter } from './schedule-filter/schedule-filter';
+import { IScheduleFilter } from './schedule/components/schedule-filter';
 
 export function hasContact(
 	item: { contactIDs?: string[] } | undefined,

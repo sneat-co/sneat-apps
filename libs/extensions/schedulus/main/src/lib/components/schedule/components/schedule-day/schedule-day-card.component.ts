@@ -10,14 +10,14 @@ import { virtualSliderAnimations } from '@sneat/components';
 import { HappeningType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { TeamDaysProvider } from '../../../../pages/schedule/team-days-provider';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import {
 	ISlotItem,
 	NewHappeningParams,
 } from '@sneat/extensions/schedulus/shared';
-import { getToday, ScheduleStateService } from '../schedule-state.service';
-import { swipeableDay } from '../swipeable-ui';
+import { getToday, ScheduleStateService } from '../../schedule-state.service';
+import { swipeableDay } from '../../../swipeable-ui';
 import { ScheduleDayBaseComponent } from './schedule-day-base.component';
 
 // This is 1 of the 2 "day cards" used at ScheduleDayTabComponent

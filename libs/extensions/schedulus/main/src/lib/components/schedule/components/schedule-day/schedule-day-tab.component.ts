@@ -3,9 +3,9 @@ import { PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { ITeamContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';
-import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { TeamDaysProvider } from '../../../../pages/schedule/team-days-provider';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { addDays, ScheduleStateService } from '../schedule-state.service';
+import { addDays, ScheduleStateService } from '../../schedule-state.service';
 
 @Component({
 	selector: 'sneat-day-tab',

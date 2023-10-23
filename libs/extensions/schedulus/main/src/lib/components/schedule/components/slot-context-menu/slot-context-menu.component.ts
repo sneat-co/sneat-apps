@@ -25,7 +25,7 @@ import {
 	ISlotRequest,
 } from '@sneat/team-services';
 import { NEVER, Observable } from 'rxjs';
-import { ScheduleModalsService } from '../../services/schedule-modals.service';
+import { ScheduleModalsService } from '../../../../services';
 
 const notImplemented = 'Sorry, not implemented yet';
 

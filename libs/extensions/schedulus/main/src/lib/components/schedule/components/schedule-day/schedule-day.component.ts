@@ -22,8 +22,8 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
 	emptyScheduleFilter,
 	ScheduleFilterService,
-} from '../schedule-filter.service';
-import { isSlotVisible } from '../schedule-slots';
+} from '../../../schedule-filter.service';
+import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../schedule-week/schedule-week.component';
 
 @Component({

@@ -1,8 +1,11 @@
 import { dateToIso } from '@sneat/core';
 import { IErrorLogger } from '@sneat/logging';
-import { IDateChanged, ScheduleStateService } from '../schedule-state.service';
-import { SwipeableBaseComponent } from '../swipeable-base.component';
-import { SwipeableDay } from '../swipeable-ui';
+import {
+	IDateChanged,
+	ScheduleStateService,
+} from '../../schedule-state.service';
+import { SwipeableBaseComponent } from '../../../swipeable-base.component';
+import { SwipeableDay } from '../../../swipeable-ui';
 
 export abstract class ScheduleDayBaseComponent extends SwipeableBaseComponent {
 	get oddDay(): SwipeableDay | undefined {

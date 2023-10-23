@@ -19,8 +19,8 @@ import {
 import {
 	emptyScheduleFilter,
 	ScheduleFilterService,
-} from '../schedule-filter.service';
-import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
+} from '../../../schedule-filter.service';
+import { WeekdaysFormBase } from '../../../weekdays/weekdays-form-base';
 import { IScheduleFilter } from './schedule-filter';
 
 @Component({

@@ -1,2 +1,2 @@
 export * from './schedule';
-export * from './schedule-filter';
+export * from './schedule/components/schedule-filter';
