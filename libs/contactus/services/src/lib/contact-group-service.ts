@@ -160,7 +160,7 @@ export const defaultFamilyContactGroupDTOs: readonly IDtoAndID<IContactGroupDto>
 export const defaultFamilyContactGroups: readonly IContactGroupContext[] =
 	defaultFamilyContactGroupDTOs.map((cg) => ({ ...cg, brief: cg.dto }));
 
-@Injectable({ providedIn: 'root' }) // TODO: Dedicated module?
+@Injectable()
 export class ContactGroupService {
 	private readonly teamItemService: TeamItemService<
 		IContactGroupBrief,

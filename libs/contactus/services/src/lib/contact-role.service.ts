@@ -5,7 +5,7 @@ import {
 	IContactRoleContext,
 } from './contact-group-service';
 
-@Injectable({ providedIn: 'root' }) // TODO: Dedicated module?
+@Injectable()
 export class ContactRoleService {
 	getContactRoleByID(id: string): Observable<IContactRoleContext> {
 		for (let i = 0; i < defaultFamilyContactGroups.length; i++) {
