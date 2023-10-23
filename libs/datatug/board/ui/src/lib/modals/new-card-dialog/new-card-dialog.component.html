@@ -1,0 +1,30 @@
+<ion-content>
+	<ion-card>
+		<ion-item-divider>
+			<ion-label>New card</ion-label>
+			<ion-buttons slot="end">
+				<ion-button class="ion-margin" color="medium" (click)="cancel()">
+					<ion-icon name="close-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item-divider>
+		<ion-item>
+			<ion-label position="floating">Title</ion-label>
+			<ion-input #inputTitle />
+		</ion-item>
+		<ion-list>
+			<ion-item-divider>
+				<ion-label>Card type</ion-label>
+			</ion-item-divider>
+			<ion-item tappable (click)="selectCardType('sql')" detail>
+				<ion-label>SQL query</ion-label>
+			</ion-item>
+			<ion-item tappable (click)="selectCardType('http')" detail>
+				<ion-label>HTTP request</ion-label>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-button class="ion-margin" color="medium" (click)="cancel()"
+		>Cancel</ion-button
+	>
+</ion-content>

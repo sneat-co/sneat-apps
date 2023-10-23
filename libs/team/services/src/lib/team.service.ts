@@ -22,7 +22,7 @@ import {
 	ITeamContext,
 	ITeamRef,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';

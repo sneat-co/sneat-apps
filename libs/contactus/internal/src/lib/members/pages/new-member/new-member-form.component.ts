@@ -34,7 +34,7 @@ import {
 	ICreateTeamMemberRequest,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 
 @Component({

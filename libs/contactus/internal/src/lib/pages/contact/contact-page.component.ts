@@ -21,7 +21,7 @@ import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
-import { IOptionallyTitled, IProjItemBrief } from '@sneat/datatug/models';
+import { IOptionallyTitled, IProjItemBrief } from '@sneat/datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Observable } from 'rxjs';
 

@@ -13,7 +13,7 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 	TeamsMenuComponent,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import { LogistTeamMenuItemsModule } from '../logist-team-menu-items/logist-team-menu-items.module';
 
 @Component({

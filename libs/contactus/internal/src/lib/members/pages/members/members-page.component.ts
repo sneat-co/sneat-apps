@@ -27,13 +27,13 @@ import {
 import {
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import {
 	IContactContext,
 	IContactusTeamDto,
 	IMemberGroupContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../../members-base-page';
 

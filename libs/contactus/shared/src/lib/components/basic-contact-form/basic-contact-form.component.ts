@@ -6,7 +6,7 @@ import {
 	IContactContext,
 	ICreateContactBasicRequest,
 	ITeamContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-basic-contact-form',

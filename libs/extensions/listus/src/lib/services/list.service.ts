@@ -8,8 +8,8 @@ import {
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IListBrief, IListDto, ListType } from '@sneat/dto';
-import { IListContext, ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
+import { IListContext, ITeamContext } from '@sneat/team-models';
+import { TeamItemService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {

@@ -6,7 +6,7 @@ import {
 	membersRoutes,
 } from '@sneat/contactus-internal';
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { LogistMenuModule } from '../components/logist-menu/logist-menu.module';
 import { LogistTeamMenuComponent } from '../components/logist-team-menu/logist-team-menu.component';
 

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IContactBrief } from '@sneat/dto';
-import { IContactContext, ITeamRef } from '@sneat/team/models';
+import { IContactContext, ITeamRef } from '@sneat/team-models';
 
 @Pipe({ name: 'selectedMembers' })
 export class SelectedMembersPipe implements PipeTransform {

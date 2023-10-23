@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/core';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 
 interface Role {

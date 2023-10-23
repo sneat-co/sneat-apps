@@ -4,12 +4,12 @@ import { TopMenuService } from '@sneat/core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import {
 	IContactContext,
 	IContactusTeamDtoWithID,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-team-page',

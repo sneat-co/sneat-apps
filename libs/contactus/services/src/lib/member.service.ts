@@ -8,7 +8,7 @@ import {
 	IMemberBrief,
 	trimNames,
 } from '@sneat/dto';
-import { TeamService } from '@sneat/team/services';
+import { TeamService } from '@sneat/team-services';
 import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -17,7 +17,7 @@ import {
 	IContactContext,
 	ICreateTeamMemberRequest,
 	ITeamContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { Observable } from 'rxjs';
 import { ContactusTeamService } from './contactus-team.service';
 

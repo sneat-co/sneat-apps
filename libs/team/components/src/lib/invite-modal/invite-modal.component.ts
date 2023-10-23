@@ -9,8 +9,8 @@ import {
 	ICreatePersonalInviteResponse,
 	InviteChannel,
 	ITeamContext,
-} from '@sneat/team/models';
-import { InviteService } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { InviteService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 
 @Pipe({ name: 'encodeSmsText' })

@@ -15,7 +15,7 @@ import {
 	AssetService,
 	ICreateAssetRequest,
 } from '@sneat/extensions/assetus/components';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactService,
 	contactContextFromBrief,
@@ -26,8 +26,8 @@ import {
 	IContactusTeamDtoWithID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
 @Component({

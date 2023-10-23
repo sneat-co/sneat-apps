@@ -9,7 +9,7 @@ import {
 import { IonInput, ToastController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
-import { IListContext, ITeamContext } from '@sneat/team/models';
+import { IListContext, ITeamContext } from '@sneat/team-models';
 import { detectEmoji } from '../../services/emojis';
 import { ICreateListItemRequest } from '../../services/interfaces';
 import { ListService } from '../../services/list.service';

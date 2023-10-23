@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { IRecordsetDef } from '@sneat/datatug/models';
+import { IRecordsetDef } from '@sneat/datatug-models';
 import { IRecordsetResult } from './execute';
 
 export interface ICommandResponse {

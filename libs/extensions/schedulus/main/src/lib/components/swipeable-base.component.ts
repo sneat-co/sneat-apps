@@ -12,7 +12,7 @@ import {
 	getToday,
 	IDateChanged,
 	ScheduleStateService,
-} from './schedule-state.service';
+} from './schedule/schedule-state.service';
 import { Parity, Swipeable } from './swipeable-ui';
 
 // @Injectable()

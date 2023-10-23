@@ -12,7 +12,7 @@ import {
 	FuelType,
 	FuelTypes,
 } from '@sneat/dto';
-import { IVehicleAssetContext } from '@sneat/team/models';
+import { IVehicleAssetContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-vehicle-engine',

@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { ILogistOrderContext } from '../../dto';
 
 @Component({

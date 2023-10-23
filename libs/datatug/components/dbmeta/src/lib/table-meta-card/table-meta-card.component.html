@@ -1,0 +1,128 @@
+<ion-card [ngSwitch]="tab">
+	<ion-item class="ion-no-padding">
+		<ion-buttons slot="start" class="ion-no-margin">
+			<ion-button slot="start">
+				<ion-icon name="grid-outline" />
+			</ion-button>
+		</ion-buttons>
+		<ion-label><b>Table</b></ion-label>
+		<ion-select [value]="meta?.name">
+			<ion-select-option [value]="meta?.name">{{
+				meta?.name || "Loading..."
+			}}</ion-select-option>
+		</ion-select>
+	</ion-item>
+	<ion-segment [(ngModel)]="tab">
+		<ion-segment-button value="cols" title="Columns">
+			<ion-label>
+				<span class="full-text">Columns</span>
+				<span class="short-text">Cols</span>
+			</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="keys">
+			<ion-label>Keys</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="refs" title="References">
+			<ion-label>
+				<span class="full-text">References</span>
+				<span class="short-text">Refs</span>
+			</ion-label>
+		</ion-segment-button>
+	</ion-segment>
+	<ion-list *ngSwitchCase="'cols'">
+		<ng-container *ngIf="meta?.columns?.length">
+			<ion-item *ngFor="let c of meta.columns">
+				<ion-badge
+					class="ion-margin-end"
+					title="Primary key"
+					color="medium"
+					*ngIf="meta.primaryKey?.columns?.indexOf(c.name) >= 0"
+					>PK
+				</ion-badge>
+				<ion-badge
+					*ngIf="colFk(c)"
+					class="ion-margin-end"
+					tappable
+					title="Foreign key: {{ colFk(c).name }} => {{
+						colFk(c).refTable.name
+					}}"
+					color="medium"
+					>FK
+				</ion-badge>
+				<ion-label
+					[style]="{
+						fontWeight:
+							meta.primaryKey?.columns?.indexOf(c.name) >= 0 ? 'bold' : ''
+					}"
+				>
+					{{ c.name }}
+				</ion-label>
+				<ion-badge color="light" class="ion-margin-start">
+					<ion-text
+						color="medium"
+						style="font-weight: normal; font-size: xx-small"
+						>{{ c.dbType.toUpperCase() }}</ion-text
+					>
+				</ion-badge>
+				<ion-buttons slot="end">
+					<ion-button color="medium">
+						<ion-icon name="filter-outline" />
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		</ng-container>
+	</ion-list>
+	<ion-list *ngSwitchCase="'keys'">
+		<ion-item>
+			<ion-label *ngIf="meta?.primaryKey">
+				Primary key: {{ meta.primaryKey.name }} ({{
+					meta.primaryKey.columns?.join(", ")
+				}})
+			</ion-label>
+		</ion-item>
+		<ion-item-group *ngIf="meta">
+			<ion-item-divider>
+				<ion-label>
+					Foreign keys
+					<ion-badge
+						*ngIf="!meta?.foreignKeys?.length"
+						class="ion-margin-start"
+						color="medium"
+						>NO</ion-badge
+					>
+				</ion-label>
+			</ion-item-divider>
+			<ng-container *ngIf="meta?.foreignKeys?.length">
+				<ion-item *ngFor="let fk of meta.foreignKeys">
+					<ion-label tappable>
+						<h3>
+							<ion-text color="medium">{{ fk.name }}</ion-text>
+						</h3>
+						{{ fk.columns?.join(", ") }} => <b>{{ fk.refTable?.name }}</b>
+					</ion-label>
+					<ion-buttons slot="end">
+						<ion-button>JOIN</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ng-container>
+		</ion-item-group>
+	</ion-list>
+	<ng-container *ngSwitchCase="'refs'">
+		<ion-item-group *ngIf="meta?.referencedBy?.length">
+			<!--				<ion-item-divider>Referenced by</ion-item-divider>-->
+			<ion-list>
+				<ion-item tappable *ngFor="let referencedBy of meta.referencedBy">
+					<ion-label>
+						<h3>{{ referencedBy.schema }}.{{ referencedBy.name }}</h3>
+						<ion-text color="medium" [title]="referencedBy.foreignKeys[0].name">
+							({{ referencedBy.foreignKeys[0].columns.join(", ") }})
+						</ion-text>
+					</ion-label>
+					<ion-buttons slot="end">
+						<ion-button>JOIN</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-list>
+		</ion-item-group>
+	</ng-container>
+</ion-card>

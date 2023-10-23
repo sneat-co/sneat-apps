@@ -12,8 +12,8 @@ import {
 	ITeamContext,
 	teamContextFromBrief,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { TeamNavService, TeamService } from '@sneat/team-services';
 import { first } from 'rxjs';
 import { TeamsListModule } from '../teams-list';
 

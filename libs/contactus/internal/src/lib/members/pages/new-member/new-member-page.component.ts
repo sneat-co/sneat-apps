@@ -9,7 +9,7 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 	TeamComponentsModule,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';
 

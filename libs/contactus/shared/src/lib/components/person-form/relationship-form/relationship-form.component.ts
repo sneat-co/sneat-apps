@@ -18,7 +18,7 @@ import {
 	MemberRelationshipUndisclosed,
 	relationshipTitle,
 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 
 const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [

@@ -5,8 +5,8 @@ import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
-import { IAssetContext, IMemberContext } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { IAssetContext, IMemberContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-documents-page',

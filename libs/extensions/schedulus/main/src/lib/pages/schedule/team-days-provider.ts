@@ -20,12 +20,12 @@ import {
 	ITeamContext,
 	ITeamItemContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import {
 	HappeningService,
 	ScheduleDayService,
 	TeamItemService,
-} from '@sneat/team/services';
+} from '@sneat/team-services';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,

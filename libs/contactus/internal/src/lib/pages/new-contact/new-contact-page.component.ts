@@ -21,12 +21,12 @@ import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import {
 	IAssetContext,
 	IContactContext,
 	ICreateContactRequest,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,

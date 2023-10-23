@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TeamComponentBaseParams } from '@sneat/team/components';
-import { HappeningService } from '@sneat/team/services';
+import { TeamComponentBaseParams } from '@sneat/team-components';
+import { HappeningService } from '@sneat/team-services';
 
 @Injectable()
 export class HappeningComponentBaseParams {

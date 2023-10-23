@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { defaultFamilyMemberExtensions, ISneatExtension } from '@sneat/core';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-contact-modules-menu',

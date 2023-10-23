@@ -27,7 +27,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	InviteModalComponent,
 	InviteModalModule,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import {
 	ContactService,
 	IUpdateContactRequest,
@@ -36,8 +36,8 @@ import {
 	IContactContext,
 	IContactusTeamDtoWithID,
 	ITeamContext,
-} from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
 

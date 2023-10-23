@@ -4,11 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
 import { IListGroup, IListInfo, ListType } from '@sneat/dto';
-import { TeamBaseComponent } from '@sneat/team/components';
+import { TeamBaseComponent } from '@sneat/team-components';
 import {
 	createShortCommuneInfoFromDto,
 	ITeamContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import { IListusAppStateService } from '../../services/listus-app-state.service';

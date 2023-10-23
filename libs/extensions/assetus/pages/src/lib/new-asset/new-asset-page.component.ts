@@ -4,7 +4,7 @@ import { IAssetCategory } from '@sneat/dto';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 
 @Component({
 	selector: 'sneat-new-asset-page',

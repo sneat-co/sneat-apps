@@ -8,8 +8,8 @@ import {
 	IDtoAndID,
 	RoleTeamMember,
 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
+import { ITeamContext } from '@sneat/team-models';
+import { TeamItemService } from '@sneat/team-services';
 import { Observable, of } from 'rxjs';
 
 export type IContactGroupContext = INavContext<
@@ -160,7 +160,7 @@ export const defaultFamilyContactGroupDTOs: readonly IDtoAndID<IContactGroupDto>
 export const defaultFamilyContactGroups: readonly IContactGroupContext[] =
 	defaultFamilyContactGroupDTOs.map((cg) => ({ ...cg, brief: cg.dto }));
 
-@Injectable({ providedIn: 'root' }) // TODO: Dedicated module?
+@Injectable()
 export class ContactGroupService {
 	private readonly teamItemService: TeamItemService<
 		IContactGroupBrief,
@@ -196,21 +196,5 @@ export class ContactGroupService {
 		return this.teamItemService.watchTeamItems(team, [
 			{ field: 'status', operator: '==', value: status },
 		]);
-	}
-}
-
-@Injectable({ providedIn: 'root' }) // TODO: Dedicated module?
-export class ContactRoleService {
-	getContactRoleByID(id: string): Observable<IContactRoleContext> {
-		for (let i = 0; i < defaultFamilyContactGroups.length; i++) {
-			const cg = defaultFamilyContactGroups[i];
-			for (let j = 0; j < (cg?.dto?.roles?.length || 0); j++) {
-				const role = cg.dto?.roles[j];
-				if (role?.id === id) {
-					return of({ id, brief: role });
-				}
-			}
-		}
-		return of({ id });
 	}
 }

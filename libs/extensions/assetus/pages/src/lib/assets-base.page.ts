@@ -4,8 +4,8 @@ import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
-import { IAssetContext } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { IAssetContext } from '@sneat/team-models';
 
 export abstract class AssetsBasePage extends TeamBaseComponent {
 	public assets?: IAssetContext[];

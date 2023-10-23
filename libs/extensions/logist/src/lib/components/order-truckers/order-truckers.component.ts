@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 
 @Component({

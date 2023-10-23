@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { RoutesToCommuneModule } from '@sneat/communes/ui'; // TODO: HELP WANTED: find how to fix it
+import { RoutesToCommuneModule } from '@sneat/communes-ui'; // TODO: HELP WANTED: find how to fix it
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
 
@@ -44,21 +44,21 @@ const routes: Routes = [
 	{
 		path: 'space/:teamType/:teamID',
 		loadChildren: () =>
-			import('@sneat/team/pages').then((m) => m.TeamSpaceRoutingModule),
+			import('@sneat/team-pages').then((m) => m.TeamSpaceRoutingModule),
 	},
 	{
 		path: 'join/:teamType',
 		loadComponent: () =>
-			import('@sneat/team/pages').then((m) => m.JoinTeamPageComponent),
+			import('@sneat/team-pages').then((m) => m.JoinTeamPageComponent),
 	},
 	// {
 	// 	path: 'invite-to/:teamType',
-	// 	loadChildren: () => import('@sneat/team/pages').then(m => m.)
+	// 	loadChildren: () => import('@sneat/team-pages').then(m => m.)
 	// },
 	{
 		path: 'communes',
 		loadChildren: () =>
-			import('@sneat/communes/ui').then((m) => m.CommunesRoutingModule),
+			import('@sneat/communes-ui').then((m) => m.CommunesRoutingModule),
 	},
 	{
 		path: 'signed-out',
@@ -73,7 +73,7 @@ const routes: Routes = [
 	{
 		path: 'new-family',
 		loadChildren: () =>
-			import('@sneat/communes/ui').then((m) => m.NewCommunePageModule),
+			import('@sneat/communes-ui').then((m) => m.NewCommunePageModule),
 	},
 ];
 

@@ -3,17 +3,19 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IAssetCategory } from '@sneat/dto';
 import {
 	AssetService,
 	AssetsListComponentModule,
+	AssetusServicesModule,
 	AssetusTeamService,
 } from '@sneat/extensions/assetus/components';
 import {
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
-} from '@sneat/team/components';
-import { IAssetContext } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { IAssetContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 
@@ -28,6 +30,8 @@ import { AssetsBasePage } from '../assets-base.page';
 		IonicModule,
 		AssetsListComponentModule,
 		TeamCoreComponentsModule,
+		ContactusServicesModule,
+		AssetusServicesModule,
 	],
 })
 export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewInit*/ {

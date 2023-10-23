@@ -1,7 +1,7 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { ITeamContext } from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 import { ISchedulePageParams, NewHappeningParams } from './view-models';
 
 @Injectable()

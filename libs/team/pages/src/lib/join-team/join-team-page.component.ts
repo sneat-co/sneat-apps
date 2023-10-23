@@ -19,12 +19,12 @@ import {
 	IJoinTeamInfoResponse,
 	IRejectPersonalInviteRequest,
 	ITeamContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import {
 	InviteService,
 	TeamNavService,
 	TeamService,
-} from '@sneat/team/services';
+} from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
 

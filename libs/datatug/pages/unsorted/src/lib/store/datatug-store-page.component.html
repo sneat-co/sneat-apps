@@ -1,0 +1,86 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button />
+			<ion-back-button defaultHref="/" />
+		</ion-buttons>
+		<ion-title *ngIf="storeId === 'firestore'"
+			>DataTug Projects Cloud Store</ion-title
+		>
+		<ion-title *ngIf="storeId !== 'firestore'"
+			>DataTug projects @ {{ storeId }}</ion-title
+		>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ng-template #showError>
+		<datatug-error-card [error]="error" />
+	</ng-template>
+	<ng-container *ngIf="!error; else showError">
+		<ion-card>
+			<ion-list>
+				<ion-item-divider>
+					<ion-label>Projects</ion-label>
+					<ion-buttons slot="end">
+						<ion-button title="New project" (click)="create($event)">
+							<ion-icon name="add" slot="start" color="primary" />
+							<ion-label>Add</ion-label>
+						</ion-button>
+					</ion-buttons>
+				</ion-item-divider>
+				<ng-container [ngSwitch]="authStatus">
+					<ion-item *ngSwitchCase="'authenticating'">
+						<ion-label color="medium">Authenticating...</ion-label>
+					</ion-item>
+					<ion-item *ngSwitchCase="'notAuthenticated'">
+						<ion-label color="medium">Please sign in to see projects</ion-label>
+					</ion-item>
+					<ng-container *ngSwitchCase="'authenticated'">
+						<ng-container *ngIf="projects; else loadingProjects">
+							<ion-item *ngIf="!projects?.length; else listOfProjects">
+								<ion-label color="medium">No projects yet</ion-label>
+							</ion-item>
+							<ng-template #listOfProjects>
+								<ion-item
+									*ngFor="let project of projects"
+									tappable
+									(click)="goProject(project, $event)"
+									[routerLink]="'project/' + project.id"
+								>
+									<ion-label>
+										<h3>{{ project.title || project.id }}</h3>
+									</ion-label>
+								</ion-item>
+							</ng-template>
+						</ng-container>
+						<ng-template #loadingProjects>
+							<ion-item *ngIf="isLoading">
+								<ion-icon name="hourglass-outline" slot="start" />
+								<ion-label color="medium">Loading...</ion-label>
+							</ion-item>
+							<ion-item *ngIf="agentState?.isNotAvailable">
+								<ion-label color="medium"
+									>Repository is not available</ion-label
+								>
+							</ion-item>
+						</ng-template>
+					</ng-container>
+				</ng-container>
+			</ion-list>
+		</ion-card>
+		<ion-card *ngIf="agentState?.isNotAvailable">
+			<ion-card-header>
+				<ion-card-title color="warning"
+					>Agent is offline or not available</ion-card-title
+				>
+			</ion-card-header>
+			<ion-card-content>
+				<p>
+					You need to start the DataTug agent to be able to see list of it's
+					projects.
+				</p>
+			</ion-card-content>
+		</ion-card>
+	</ng-container>
+</ion-content>

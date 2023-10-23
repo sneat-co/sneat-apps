@@ -9,34 +9,34 @@ import {
 	SneatPipesModule,
 } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
-import { TeamCoreComponentsModule } from '@sneat/team/components';
+import { TeamCoreComponentsModule } from '@sneat/team-components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import {
 	HappeningServiceModule,
 	ScheduleDayServiceModule,
-} from '@sneat/team/services';
-import { ScheduleModalsServiceModule } from '../../services/schedule-modals.service';
-import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
-import { RecurringCardComponent } from '../recurrings-tab/recurring-card.component';
-import { RecurringsTabComponent } from '../recurrings-tab/recurrings-tab.component';
-import { ScheduleCardHeaderComponent } from '../schedule-card-hearder/schedule-card-header.component';
-import { ScheduleDayCardComponent } from '../schedule-day/schedule-day-card.component';
-import { ScheduleDayTabComponent } from '../schedule-day/schedule-day-tab.component';
-import { ScheduleDayTitleComponent } from '../schedule-day/schedule-day-title.component';
-import { ScheduleDayComponent } from '../schedule-day/schedule-day.component';
+} from '@sneat/team-services';
+import { ScheduleModalsServiceModule } from '../../services';
+import { DaySlotItemComponent } from './components';
+import { RecurringCardComponent } from './components';
+import { RecurringsTabComponent } from './components';
+import { ScheduleCardHeaderComponent } from './components';
+import { ScheduleDayCardComponent } from './components';
+import { ScheduleDayTabComponent } from './components';
+import { ScheduleDayTitleComponent } from './components';
+import { ScheduleDayComponent } from './components';
 import { ScheduleFilterService } from '../schedule-filter.service';
-import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
-import { ScheduleStateService } from '../schedule-state.service';
-import { ScheduleWeekComponent } from '../schedule-week/schedule-week.component';
-import { ScheduleWeekdayComponent } from '../schedule-weekday/schedule-weekday.component';
+import { ScheduleFilterComponent } from './components';
+import { ScheduleStateService } from './schedule-state.service';
+import { ScheduleWeekComponent } from './components';
+import { ScheduleWeekdayComponent } from './components';
 import { ScheduleComponent } from '../schedule/schedule.component';
 import { HappeningCardComponent } from '../happening-card/happening-card.component';
-import { SinglesTabComponent } from '../singles-tab/singles-tab.component';
-import { ScheduleWeekCardComponent } from '../schedule-week/schedule-week-card.component';
-import { ScheduleWeekTabComponent } from '../schedule-week/schedule-week-tab.component';
-import { ScheduleWeekTitleComponent } from '../schedule-week/schedule-week-title.component';
-import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
-import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
+import { SinglesTabComponent } from './components';
+import { ScheduleWeekCardComponent } from './components';
+import { ScheduleWeekTabComponent } from './components';
+import { ScheduleWeekTitleComponent } from './components';
+import { SlotContextMenuComponent } from './components';
+import { TimingBadgeComponent } from './components';
 
 @NgModule({
 	imports: [

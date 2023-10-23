@@ -8,14 +8,12 @@ import {
 	IAssetDtoBase,
 	IAssetMainData,
 } from '@sneat/dto';
-import { IAssetContext, ITeamContext } from '@sneat/team/models';
-import { TeamItemService } from '@sneat/team/services';
+import { IAssetContext, ITeamContext } from '@sneat/team-models';
+import { TeamItemService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class AssetService extends TeamItemService<IAssetBrief, IAssetDtoBase> {
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
 		super('assetus', 'assets', afs, sneatApiService);

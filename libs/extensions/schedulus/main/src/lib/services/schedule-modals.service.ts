@@ -5,7 +5,7 @@ import {
 	IHappeningAdjustment,
 	IHappeningSlot,
 } from '@sneat/dto';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningContext } from '@sneat/team-models';
 import { SingleSlotFormComponent } from '../components/single-slot-form/single-slot-form.component';
 
 @Injectable()

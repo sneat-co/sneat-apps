@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IName } from '@sneat/dto';
-import { IPersonContext } from '@sneat/team/models';
+import { IPersonContext } from '@sneat/team-models';
 
 export function personName(name?: IName): string | undefined {
 	return (

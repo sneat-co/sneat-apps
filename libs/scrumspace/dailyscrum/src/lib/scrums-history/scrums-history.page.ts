@@ -2,11 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { IRecord } from '@sneat/data';
-import { NavService } from '@sneat/datatug/core';
+import { NavService } from '@sneat/datatug-core';
 import { ITeamDto } from '@sneat/dto';
 import { IScrumDto } from '@sneat/scrumspace/scrummodels';
-import { ITeamContext } from '@sneat/team/models';
-import { TeamService } from '@sneat/team/services';
+import { ITeamContext } from '@sneat/team-models';
+import { TeamService } from '@sneat/team-services';
 import { ScrumService } from '../services/scrum.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 

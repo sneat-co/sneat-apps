@@ -16,7 +16,7 @@ import { dateToIso, localDateToIso } from '@sneat/core';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	IHappeningContext,
 	IHappeningWithUiState,
@@ -24,8 +24,8 @@ import {
 	ISchedulusTeamDto,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
-import { HappeningService, ScheduleDayService } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { HappeningService, ScheduleDayService } from '@sneat/team-services';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
 import { SchedulusTeamService } from '../../services';
@@ -34,9 +34,9 @@ import {
 	emptyScheduleFilter,
 	ScheduleFilterService,
 } from '../schedule-filter.service';
-import { IScheduleFilter } from '../schedule-filter/schedule-filter';
-import { ScheduleFilterComponent } from '../schedule-filter/schedule-filter.component';
-import { ScheduleStateService } from '../schedule-state.service';
+import { IScheduleFilter } from './components/schedule-filter/schedule-filter';
+import { ScheduleFilterComponent } from './components/schedule-filter/schedule-filter.component';
+import { ScheduleStateService } from './schedule-state.service';
 
 export type ScheduleTab = 'day' | 'week' | 'recurrings' | 'singles';
 

@@ -23,8 +23,8 @@ import { IScrumDto, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
-import { ScrumPageTab } from '@sneat/team/services';
+} from '@sneat/team-components';
+import { ScrumPageTab } from '@sneat/team-services';
 import { Subscription } from 'rxjs';
 import { first, mergeMap } from 'rxjs/operators';
 import { IMetric } from '../interfaces';

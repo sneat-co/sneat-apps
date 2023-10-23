@@ -13,7 +13,7 @@ import {
 	ContactNavService,
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team-models';
 
 @Component({
 	standalone: true,

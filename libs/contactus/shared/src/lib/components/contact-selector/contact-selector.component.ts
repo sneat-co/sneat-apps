@@ -23,7 +23,7 @@ import {
 	ContactService,
 	ContactusTeamService,
 } from '@sneat/contactus-services';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team-models';
 import { Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormModule } from '../location-form';

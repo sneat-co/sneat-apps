@@ -5,7 +5,7 @@ import {
 	orderBy,
 } from '@angular/fire/firestore';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { map, Observable, throwError } from 'rxjs';
 import {
 	IAddContainersRequest,

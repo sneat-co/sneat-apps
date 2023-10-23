@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
 			{
 				path: 'spaces',
 				loadChildren: () =>
-					import('@sneat/team/pages').then((m) => m.TeamsPageModule),
+					import('@sneat/team-pages').then((m) => m.TeamsPageModule),
 			},
 		]),
 	],

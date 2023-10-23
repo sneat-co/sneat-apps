@@ -10,7 +10,7 @@ import {
 	IContactContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactContactsComponent } from '../contact-contacts';

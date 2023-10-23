@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
-import { NavService } from '@sneat/datatug/core';
+import { NavService } from '@sneat/datatug-core';
 import { IMemberBrief, ITeamDto } from '@sneat/dto';
 import { Timer } from '@sneat/meeting';
 import { IScrumDto, IStatus, ITask } from '@sneat/scrumspace/scrummodels';

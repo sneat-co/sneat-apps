@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { teamPageUrl } from '@sneat/team/components';
-import { ITeamContext } from '@sneat/team/models';
+import { teamPageUrl } from '@sneat/team-components';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-logist-team-menu-items',

@@ -15,10 +15,10 @@ import {
 	IPersonalInvite,
 	IRejectPersonalInviteRequest,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
-import { InviteService } from '@sneat/team/services';
+import { InviteService } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-invite-personal-page',

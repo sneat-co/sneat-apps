@@ -8,12 +8,12 @@ import {
 	IDocumentMainData,
 	timestamp,
 } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	IDocumentAssetContext,
 	ITeamContext,
 	IVehicleAssetContext,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services/asset-service';
 import { ICreateAssetRequest } from '../../services/asset-service.dto';

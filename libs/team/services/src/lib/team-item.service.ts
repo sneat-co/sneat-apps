@@ -10,7 +10,7 @@ import {
 	ITeamContext,
 	ITeamItemContext,
 	ITeamRequest,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 

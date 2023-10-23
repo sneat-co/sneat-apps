@@ -1,0 +1,10 @@
+<ion-item *ngIf="authStatus === 'authenticating'; else loading">
+	<ion-icon name="hourglass-outline" slot="start" />
+	<ion-label color="medium"> Authenticating... ({{authStatus}}) </ion-label>
+</ion-item>
+<ng-template #loading>
+	<ion-item>
+		<ion-icon name="hourglass-outline" slot="start" />
+		<ion-label color="medium"> {{title}} </ion-label>
+	</ion-item>
+</ng-template>

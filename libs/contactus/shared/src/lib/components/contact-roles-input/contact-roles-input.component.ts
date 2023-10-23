@@ -12,7 +12,7 @@ import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-contact-roles-input',

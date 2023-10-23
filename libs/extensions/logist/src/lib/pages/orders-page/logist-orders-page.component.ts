@@ -4,7 +4,7 @@ import { excludeEmpty } from '@sneat/core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import { Subscription, takeUntil } from 'rxjs';
 import { ILogistOrderContext } from '../../dto/order-dto';
 import { LogistOrderService } from '../../services/logist-order.service';

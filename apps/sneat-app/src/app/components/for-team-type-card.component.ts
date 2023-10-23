@@ -15,7 +15,7 @@ import {
 	ITeamContext,
 	teamContextFromBrief,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription, takeUntil } from 'rxjs';
 

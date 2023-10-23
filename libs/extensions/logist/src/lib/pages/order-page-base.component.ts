@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import { ILogistOrderContext } from '../dto';
 import { LogistOrderService } from '../services';
 

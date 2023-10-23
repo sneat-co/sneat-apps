@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { AssetCategory } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext, ITeamContext } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { IAssetContext, ITeamContext } from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 import { AssetService } from '../services/asset-service';
 
 @Component({

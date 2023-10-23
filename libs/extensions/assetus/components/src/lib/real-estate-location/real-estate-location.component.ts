@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IAssetContext } from '@sneat/team/models';
+import { IAssetContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-real-estate-location',

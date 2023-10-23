@@ -1,5 +1,5 @@
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
-import { IScheduleFilter } from './schedule-filter/schedule-filter';
+import { IScheduleFilter } from './schedule/components/schedule-filter/schedule-filter';
 
 export const emptyScheduleFilter: IScheduleFilter = {
 	text: '',

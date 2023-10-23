@@ -21,7 +21,7 @@
 			"@sneat/animations": ["libs/animations/src/index.ts"],
 			"@sneat/api": ["libs/api/src/index.ts"],
 			"@sneat/app": ["libs/app/src/index.ts"],
-			"@sneat/communes/ui": ["libs/communes/ui/src/index.ts"],
+			"@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
 			"@sneat/components": ["libs/components/src/index.ts"],
 			"@sneat/core": ["libs/core/src/index.ts"],
 			"@sneat/data": ["libs/data/src/index.ts"],
@@ -45,16 +45,16 @@
 			"@sneat/datatug/components/sqleditor": [
 				"libs/datatug/components/sqleditor/src/index.ts"
 			],
-			"@sneat/datatug/core": ["libs/datatug/core/src/index.ts"],
+			"@sneat/datatug-core": ["libs/datatug/core/src/index.ts"],
 			"@sneat/datatug/db": ["libs/datatug/db/src/index.ts"],
-			"@sneat/datatug/dto": ["libs/datatug/dto/src/index.ts"],
+			"@sneat/datatug-dto": ["libs/datatug/dto/src/index.ts"],
 			"@sneat/datatug/editor": ["libs/datatug/editor/src/index.ts"],
 			"@sneat/datatug/executor": ["libs/datatug/executor/src/index.ts"],
 			"@sneat/datatug/folders": ["libs/datatug/folders/src/index.ts"],
 			"@sneat/datatug/folders/core": ["libs/datatug/folders/core/src/index.ts"],
 			"@sneat/datatug/folders/ui": ["libs/datatug/folders/ui/src/index.ts"],
 			"@sneat/datatug/menu": ["libs/datatug/menu/src/index.ts"],
-			"@sneat/datatug/models": ["libs/datatug/models/src/index.ts"],
+			"@sneat/datatug-models": ["libs/datatug/models/src/index.ts"],
 			"@sneat/datatug/nav": ["libs/datatug/nav/src/index.ts"],
 			"@sneat/datatug/pages/home": ["libs/datatug/pages/home/src/index.ts"],
 			"@sneat/datatug/pages/my": ["libs/datatug/pages/my/src/index.ts"],
@@ -70,11 +70,11 @@
 			"@sneat/datatug/services/base": [
 				"libs/datatug/services/base/src/index.ts"
 			],
-			"@sneat/datatug/services/nav": ["libs/datatug/services/nav/src/index.ts"],
-			"@sneat/datatug/services/project": [
+			"@sneat/datatug-services-nav": ["libs/datatug/services/nav/src/index.ts"],
+			"@sneat/datatug-services-project": [
 				"libs/datatug/services/project/src/index.ts"
 			],
-			"@sneat/datatug/services/repo": [
+			"@sneat/datatug-services-repo": [
 				"libs/datatug/services/repo/src/index.ts"
 			],
 			"@sneat/datatug/services/unsorted": [
@@ -111,10 +111,10 @@
 			"@sneat/scrumspace/scrummodels": [
 				"libs/scrumspace/scrummodels/src/index.ts"
 			],
-			"@sneat/team/components": ["libs/team/components/src/index.ts"],
-			"@sneat/team/models": ["libs/team/models/src/index.ts"],
-			"@sneat/team/pages": ["libs/team/pages/src/index.ts"],
-			"@sneat/team/services": ["libs/team/services/src/index.ts"],
+			"@sneat/team-components": ["libs/team/components/src/index.ts"],
+			"@sneat/team-models": ["libs/team/models/src/index.ts"],
+			"@sneat/team-pages": ["libs/team/pages/src/index.ts"],
+			"@sneat/team-services": ["libs/team/services/src/index.ts"],
 			"@sneat/timer": ["libs/timer/src/index.ts"],
 			"@sneat/ui": ["libs/ui/src/index.ts"],
 			"@sneat/user": ["libs/user/src/index.ts"],

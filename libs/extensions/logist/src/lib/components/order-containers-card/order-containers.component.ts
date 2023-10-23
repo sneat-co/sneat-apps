@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
 
 @Component({

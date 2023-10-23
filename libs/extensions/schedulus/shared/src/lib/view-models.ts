@@ -8,7 +8,7 @@ import {
 	SlotLocation,
 	WeekdayCode2,
 } from '@sneat/dto';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningContext } from '@sneat/team-models';
 
 export interface ISchedulePageParams {
 	member?: string;

@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningContext } from '@sneat/team-models';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 import { HappeningComponentBaseParams } from '../../components/happening-component-base-params';
 import { ScheduleBasePage } from '../schedule-base-page';
@@ -12,8 +12,8 @@ export abstract class HappeningBasePage extends ScheduleBasePage {
 		className: string,
 		route: ActivatedRoute,
 		protected readonly params: HappeningComponentBaseParams, // 	HappeningModuleSchema,
-	) // 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
-	{
+		// 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
+	) {
 		super(className, route, params.teamParams);
 		const happening = window.history.state
 			.happening as unknown as IHappeningContext;

@@ -5,7 +5,7 @@ import { SneatUserService } from '@sneat/auth-core';
 import { TeamPageComponent } from './team-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TeamService } from '@sneat/team/services';
+import { TeamService } from '@sneat/team-services';
 
 describe('TeamPage', () => {
 	let component: TeamPageComponent;

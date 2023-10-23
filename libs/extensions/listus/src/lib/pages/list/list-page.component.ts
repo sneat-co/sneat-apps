@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IListInfo, IListItemBrief, IMovie, ListType } from '@sneat/dto';
-import { IListContext } from '@sneat/team/models';
+import { IListContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import {

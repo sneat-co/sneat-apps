@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IDtoAndID } from '@sneat/dto';
-import { ITeamContext, ITeamItemContext } from '@sneat/team/models';
+import { ITeamContext, ITeamItemContext } from '@sneat/team-models';
 import { map } from 'rxjs/operators';
 import { TeamItemService } from './team-item.service';
 import { Observable, tap } from 'rxjs';

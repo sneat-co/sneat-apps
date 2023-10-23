@@ -36,9 +36,7 @@ export interface IAddRetroItemResponse {
 	id: string;
 }
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class RetrospectiveService extends BaseMeetingService {
 	constructor(sneatApiService: SneatApiService) {
 		super('retrospective', sneatApiService);

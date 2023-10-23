@@ -10,7 +10,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IBriefAndID, IContactBrief } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -2,8 +2,8 @@ import { Component, Inject, Input } from '@angular/core';
 import { ContactRole, IBriefAndID, IContactBrief } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team/models';
-import { TeamNavService } from '@sneat/team/services';
+import { IContactContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { TeamNavService } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-contacts-list-item',

@@ -23,10 +23,10 @@ import {
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
-import { IHappeningMemberRequest, TeamNavService } from '@sneat/team/services';
+} from '@sneat/team-models';
+import { IHappeningMemberRequest, TeamNavService } from '@sneat/team-services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
-import { HappeningService } from '@sneat/team/services';
+import { HappeningService } from '@sneat/team-services';
 import { ScheduleModalsService } from '../services/schedule-modals.service';
 
 @Injectable()

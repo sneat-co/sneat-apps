@@ -22,7 +22,7 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
-import { IHappeningContext } from '@sneat/team/models';
+import { IHappeningContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';

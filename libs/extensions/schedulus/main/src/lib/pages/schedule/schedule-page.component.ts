@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { virtualSliderAnimations } from '@sneat/components';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { HappeningType } from '@sneat/dto';
 import {
 	NewHappeningParams,
@@ -22,8 +23,8 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
-} from '@sneat/team/components';
-import { IMemberContext } from '@sneat/team/models';
+} from '@sneat/team-components';
+import { IMemberContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-schedule-page',
@@ -37,6 +38,7 @@ import { IMemberContext } from '@sneat/team/models';
 		IonicModule,
 		TeamCoreComponentsModule,
 		ScheduleComponentModule,
+		ContactusServicesModule,
 	],
 })
 export class SchedulePageComponent extends TeamBaseComponent {

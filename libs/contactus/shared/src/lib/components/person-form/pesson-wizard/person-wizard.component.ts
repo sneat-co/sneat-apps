@@ -25,7 +25,7 @@ import {
 	MemberContactType,
 	PetKind,
 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 import { AgeGroupFormComponent } from '../age-group';
 import { EmailsFormComponent } from '../emails-form';
 import { GenderFormComponent } from '../gender-form';

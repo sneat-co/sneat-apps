@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContactRole, ContactType } from '@sneat/dto';
-import { IContactContext } from '@sneat/team/models';
+import { IContactContext } from '@sneat/team-models';
 import { ILogistOrderContext } from '../../dto';
 
 @Component({

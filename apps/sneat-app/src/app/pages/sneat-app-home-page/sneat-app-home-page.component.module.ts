@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { UserCountryComponent } from '@sneat/components';
-import { TeamsListModule } from '@sneat/team/components';
+import { TeamsListModule } from '@sneat/team-components';
 import { ForEducatorsComponent } from './for-educators.component';
 import { ForFamiliesComponent } from './for-families.component';
 import { ForWorkComponent } from './for-work.component';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ITeamContext } from '@sneat/team/models';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-team-page-title',

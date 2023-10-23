@@ -12,7 +12,7 @@ import {
 	ContactService,
 	ContactusTeamService,
 } from '@sneat/contactus-services';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { TeamNavService, TeamService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 
 @Injectable()

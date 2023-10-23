@@ -13,8 +13,8 @@ import {
 	MemberRoleSpectator,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactusTeamDto, zipMapBriefsWithIDs } from '@sneat/team/models';
-import { TeamNavService, TeamService } from '@sneat/team/services';
+import { IContactusTeamDto, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { TeamNavService, TeamService } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-team-members',

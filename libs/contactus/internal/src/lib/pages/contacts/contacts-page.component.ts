@@ -19,9 +19,9 @@ import {
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
 	TeamItemsBaseComponent,
-} from '@sneat/team/components';
+} from '@sneat/team-components';
 import { ContactusTeamService } from '@sneat/contactus-services';
-import { IContactContext, IMemberGroupContext } from '@sneat/team/models';
+import { IContactContext, IMemberGroupContext } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 
 @Component({

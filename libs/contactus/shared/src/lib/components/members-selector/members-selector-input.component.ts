@@ -6,7 +6,7 @@ import {
 	IContactusTeamDtoWithID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
-} from '@sneat/team/models';
+} from '@sneat/team-models';
 import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorService } from './members-selector.service';
 

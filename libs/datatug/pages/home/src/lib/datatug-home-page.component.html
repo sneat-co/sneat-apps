@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title>DataTug.app</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-header collapse="condense">
+		<ion-toolbar>
+			<ion-title size="large">DataTug.app (condense)</ion-title>
+		</ion-toolbar>
+	</ion-header>
+
+	<ion-card>
+		<ion-card-content>
+			<h2>Your data workbench</h2>
+			<ul>
+				<li>Feel the power of context</li>
+				<li>Do not repeat yourself</li>
+				<li>Collaborative work</li>
+			</ul>
+		</ion-card-content>
+	</ion-card>
+
+	<ion-card>
+		<ion-item>
+			<ion-label style="font-weight: bold" color="medium"
+				>GitHub repositories</ion-label
+			>
+			<ion-input placeholder="Search" value="datatug" />
+			<ion-buttons>
+				<ion-button
+					><ion-icon name="settings" color="medium" /></ion-button>
+				<ion-button
+					><ion-icon name="close" color="medium" /></ion-button>
+			</ion-buttons>
+		</ion-item>
+		<!--		<gui-grid-->
+		<!--			[source]="source"-->
+		<!--			[columns]="columns"-->
+		<!--			[searching]="searching"-->
+		<!--			[infoPanel]="infoPanel"-->
+		<!--			[sorting]="sorting"-->
+		<!--			[columnMenu]="columnMenu"-->
+		<!--		>-->
+		<!--		</gui-grid>-->
+	</ion-card>
+
+	<datatug-my-projects title="My projects" />
+	<datatug-my-stores />
+
+	<ion-card>
+		<ion-card-content>
+			<sneat-copyright />
+		</ion-card-content>
+	</ion-card>
+</ion-content>

@@ -6,7 +6,7 @@ import {
 	STORE_TYPE_GITHUB,
 	StoreType,
 } from '@sneat/core';
-import { IProjectRef } from '@sneat/datatug/core';
+import { IProjectRef } from '@sneat/datatug-core';
 
 // export interface IRecord<T> { // TODO: duplicate name
 //   id: string;

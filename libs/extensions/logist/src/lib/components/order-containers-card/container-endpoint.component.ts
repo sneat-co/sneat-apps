@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team/models';
+import { IContactContext, ITeamContext } from '@sneat/team-models';
 import {
 	debounceTime,
 	distinctUntilChanged,
