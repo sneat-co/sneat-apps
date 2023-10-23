@@ -1,14 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-	ContactusRoutingModule,
-	membersRoutes,
-} from '@sneat/contactus-internal';
+import { contactusRoutes, membersRoutes } from '@sneat/contactus-internal';
 import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { LogistMenuModule } from '../components/logist-menu/logist-menu.module';
-import { LogistTeamMenuComponent } from '../components/logist-team-menu/logist-team-menu.component';
+import { LogistMenuModule } from '../components';
+import { LogistTeamMenuComponent } from '../components';
 
 @Component({ template: 'empty component' })
 export class EmptyComponent {}
@@ -90,6 +87,7 @@ export const logistRoutes: Routes = [
 				(m) => m.NewLogistOrderPageModule,
 			),
 	},
+	...contactusRoutes,
 	...membersRoutes,
 	...schedulusRoutes,
 ];
@@ -101,7 +99,6 @@ export const logistRoutes: Routes = [
 			logistRoutes.map((r) => ({ ...r, path: r.path?.replace('logist/', '') })),
 		),
 		LogistMenuModule,
-		ContactusRoutingModule,
 	],
 	declarations: [EmptyComponent],
 	providers: [TeamComponentBaseParams],

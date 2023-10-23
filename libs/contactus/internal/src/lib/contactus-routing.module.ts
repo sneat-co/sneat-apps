@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
+import { Route } from '@angular/router';
 import { memberRoutes, membersRoutes } from './members';
 // import {guardRoute} from '../../utils/guard-route';
 
@@ -29,6 +28,8 @@ export const contactusRoutes: Route[] = [
 			import('./pages').then((m) => m.NewLocationPageComponent),
 		// ...guardRoute,
 	},
+	...memberRoutes,
+	...membersRoutes,
 	// {
 	// 	path: 'applicants',
 	// 	loadChildren: () => import('./pages/contacts/contacts-page.module')
@@ -48,14 +49,3 @@ export const contactusRoutes: Route[] = [
 	// 	// ...guardRoute,
 	// },
 ];
-
-@NgModule({
-	imports: [
-		RouterModule.forChild([
-			...contactusRoutes,
-			...memberRoutes,
-			...membersRoutes,
-		]),
-	],
-})
-export class ContactusRoutingModule {}

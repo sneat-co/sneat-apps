@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { contactusRoutes } from '@sneat/contactus-internal';
 import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { docusRoutes } from '@sneat/extensions/docus';
@@ -26,11 +27,12 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./team-page/team-page.module').then((m) => m.TeamPageModule),
 	},
-	{
-		path: '',
-		loadChildren: () =>
-			import('@sneat/contactus-internal').then((m) => m.ContactusRoutingModule),
-	},
+	...contactusRoutes,
+	// {
+	// 	path: '',
+	// 	loadChildren: () =>
+	// 		import('@sneat/contactus-internal').then((m) => m.ContactusRoutingModule),
+	// },
 	...budgetusRoutes,
 	...docusRoutes,
 	...listusRoutes,
