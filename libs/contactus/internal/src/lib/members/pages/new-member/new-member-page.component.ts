@@ -8,7 +8,7 @@ import { emptyMemberPerson, IMemberPerson } from '@sneat/dto';
 import {
 	TeamPageBaseComponent,
 	TeamComponentBaseParams,
-	TeamComponentsModule,
+	InviteLinksComponent,
 } from '@sneat/team-components';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';
@@ -23,7 +23,7 @@ import { NewMemberFormComponent } from './new-member-form.component';
 		IonicModule,
 		FormsModule,
 		NewMemberFormComponent,
-		TeamComponentsModule,
+		InviteLinksComponent,
 	],
 })
 export class NewMemberPageComponent extends TeamPageBaseComponent {

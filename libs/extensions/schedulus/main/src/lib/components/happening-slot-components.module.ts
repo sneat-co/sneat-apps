@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-
 import { HappeningCommonModule } from './happening-common.module';
 import { RecurringSlotFormComponent } from './recurring-slot-form/recurring-slot-form.component';
 import { HappeningSlotsComponent } from './happening-slots/happening-slots.component';

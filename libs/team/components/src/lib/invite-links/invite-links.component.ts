@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, NavController } from '@ionic/angular';
 import { IIdAndOptionalDto } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactusTeamDto } from '@sneat/team-models';
@@ -26,6 +28,8 @@ export const stringHash = (s: string): number => {
 	selector: 'sneat-invite-links',
 	templateUrl: './invite-links.component.html',
 	styleUrls: ['./invite-links.component.scss'],
+	standalone: true,
+	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
 	@Input() public contactusTeam?: IIdAndOptionalDto<IContactusTeamDto>;
