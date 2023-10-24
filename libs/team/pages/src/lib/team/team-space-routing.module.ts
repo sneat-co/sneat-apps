@@ -24,8 +24,10 @@ const routes: Routes = [
 	{
 		path: '',
 		// pathMatch: 'full',
-		loadChildren: () =>
-			import('./team-page/team-page.module').then((m) => m.TeamPageModule),
+		loadComponent: () =>
+			import('./team-page/team-page.component').then(
+				(m) => m.TeamPageComponent,
+			),
 	},
 	...contactusRoutes,
 	// {

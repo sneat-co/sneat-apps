@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { IBoolMetricVal, ITeamDto, ITeamMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
@@ -8,6 +9,8 @@ import { TeamNavService, TeamService } from '@sneat/team-services';
 @Component({
 	selector: 'sneat-team-metrics',
 	templateUrl: './metrics.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
 export class MetricsComponent {
 	@Input() public team?: IRecord<ITeamDto>;

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -6,7 +7,7 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { ITeamDto } from '@sneat/dto';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { Subject } from 'rxjs';
@@ -19,6 +20,8 @@ import { TeamNavService } from '@sneat/team-services';
 @Component({
 	selector: 'sneat-team-scrums',
 	templateUrl: './scrums.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {
 	@Input() public team?: IRecord<ITeamDto>;

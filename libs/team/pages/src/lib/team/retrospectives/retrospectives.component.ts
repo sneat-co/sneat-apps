@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
@@ -10,6 +11,8 @@ import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 @Component({
 	selector: 'sneat-team-retrospectives',
 	templateUrl: './retrospectives.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
 export class RetrospectivesComponent {
 	@Input() public team?: IRecord<ITeamDto>;

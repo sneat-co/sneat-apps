@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -5,7 +6,8 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, NavController } from '@ionic/angular';
 import {
 	MemberRole,
 	MemberRoleContributor,
@@ -22,6 +24,8 @@ import { TeamNavService, TeamService } from '@sneat/team-services';
 @Component({
 	selector: 'sneat-team-members',
 	templateUrl: './members.component.html',
+	standalone: true,
+	imports: [CommonModule, FormsModule, IonicModule],
 })
 export class MembersComponent implements OnChanges {
 	@Input() public contactusTeam?: IContactusTeamDtoAndID;

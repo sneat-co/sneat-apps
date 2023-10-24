@@ -1,57 +1,42 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IIdAndBrief, TopMenuService } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IonicModule } from '@ionic/angular';
+import { SneatCardListComponent } from '@sneat/components';
+import { ContactusServicesModule } from '@sneat/contactus-services';
+import { MembersListComponent } from '@sneat/contactus-shared';
+import { TopMenuService } from '@sneat/core';
 import {
-	TeamBaseComponent,
+	InviteLinksComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import {
-	IContactusTeamDtoAndID,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { MembersComponent } from '../members/members.component';
+import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 
 @Component({
 	selector: 'sneat-team-page',
 	templateUrl: './team-page.component.html',
 	providers: [TeamComponentBaseParams],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		InviteLinksComponent,
+		SneatCardListComponent,
+		MembersListComponent,
+		ContactusServicesModule,
+		MembersComponent,
+	],
 })
-export class TeamPageComponent extends TeamBaseComponent implements OnDestroy {
-	protected members?: readonly IIdAndBrief<IContactBrief>[];
-
+export class TeamPageComponent extends TeamPageBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		public readonly topMenuService: TopMenuService,
-		public readonly cd: ChangeDetectorRef, // readonly navService: TeamNavService,
+		topMenuService: TopMenuService,
+		cd: ChangeDetectorRef, // readonly navService: TeamNavService,
 	) {
-		super('TeamPageComponent', route, params);
-	}
-
-	protected override onContactusTeamChanged(
-		contactusTeam: IContactusTeamDtoAndID,
-	) {
-		console.log('TeamPage.onContactusTeamChanged()', contactusTeam);
-		super.onContactusTeamChanged(contactusTeam);
-		this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
-			.filter((c) => c.brief?.roles?.includes('member'))
-			.map((c) => ({ ...c, team: this.team }));
-		console.log(
-			'TeamPage.onContactusTeamChanged() => this.members',
-			this.members,
-		);
-		this.cd.markForCheck();
-	}
-
-	protected goMembers(event: Event): void {
-		event.stopPropagation();
-		event.preventDefault();
-		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, 'members', {
-				state: {
-					contactusTeam: this.contactusTeam,
-				},
-			})
-			.catch(console.error);
+		super('TeamPageComponent', route, params, topMenuService, cd);
 	}
 }
