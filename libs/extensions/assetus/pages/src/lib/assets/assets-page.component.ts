@@ -40,7 +40,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 
 	assetTypes: IAssetCategory[] = [
 		{ id: 'vehicle', title: 'Vehicles', iconName: 'car-outline' },
-		{ id: 'real_estate', title: 'Real estates', iconName: 'home-outline' },
+		{ id: 'dwelling', title: 'Real estates', iconName: 'home-outline' },
 	];
 
 	// ngOnInit(): void {

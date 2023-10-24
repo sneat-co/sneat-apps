@@ -1,16 +1,21 @@
-import { Component, Inject, InjectionToken } from '@angular/core';
+import { Component, Inject, InjectionToken, Input } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IAssetDtoBase, IAssetMainData } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { IContactusTeamDtoAndID, ITeamContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
-import { AssetService } from '../services/asset-service';
-import { ICreateAssetRequest } from '../services/asset-service.dto';
+import { AssetService } from '../services';
+import { ICreateAssetRequest } from '../services';
 
 @Component({ template: '' })
 export abstract class AddAssetBaseComponent extends SneatBaseComponent {
-	public team?: ITeamContext; // intentionally public as will be overridden as @Input() in child components
+	@Input({ required: true }) team?: ITeamContext;
+
+	public static readonly metadata = {
+		inputs: ['team'],
+	};
+
 	public contactusTeam?: IContactusTeamDtoAndID;
 	public country?: string;
 

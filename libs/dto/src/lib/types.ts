@@ -99,7 +99,7 @@ export type AssetStatus = 'active' | 'archived' | 'draft';
 
 export type AssetCategory =
 	| 'undefined'
-	| 'real_estate'
+	| 'dwelling'
 	| 'vehicle'
 	| 'document'
 	| 'debt'

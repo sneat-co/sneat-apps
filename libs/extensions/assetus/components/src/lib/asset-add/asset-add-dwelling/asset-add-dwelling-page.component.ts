@@ -1,9 +1,17 @@
-//tslint:disable:no-unbound-method
-//tslint:disable:no-unsafe-any
-import { Component, Input } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	UntypedFormGroup,
+	Validators,
+} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { CountrySelectorComponent } from '@sneat/components';
+import { AssetCategory, IAssetMainData } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { ITeamContext } from '@sneat/team-models';
 import { AssetService } from '../../services/asset-service';
 import { ICreateAssetRequest } from '../../services/asset-service.dto';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
@@ -11,18 +19,29 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 @Component({
 	selector: 'sneat-asset-add-dwelling',
 	templateUrl: './asset-add-dwelling-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		IonicModule,
+		CountrySelectorComponent,
+	],
 	providers: [TeamComponentBaseParams],
+	...AddAssetBaseComponent.metadata,
 })
 export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
-	@Input({ required: true }) team?: ITeamContext;
-
 	form = new UntypedFormGroup({
 		address: new FormControl<string>(''),
 		ownership: new FormControl<string>('', Validators.required),
 	});
 
-	constructor(teamParams: TeamComponentBaseParams, assetService: AssetService) {
-		super(teamParams, assetService);
+	constructor(
+		route: ActivatedRoute,
+		teamParams: TeamComponentBaseParams,
+		assetService: AssetService,
+	) {
+		super('AssetAddDwellingPageComponent', route, teamParams, assetService);
 	}
 
 	submitDwellingForm(): void {
@@ -38,11 +57,15 @@ export class AssetAddDwellingPageComponent extends AddAssetBaseComponent {
 			throw new Error('can not create asset without team context');
 		}
 
-		const request: ICreateAssetRequest = {
+		const request: ICreateAssetRequest<IAssetMainData> = {
 			teamID: this.team?.id,
-			category: 'real_estate',
-			title: this.titleForm.controls['title'].value,
-			// address: this.form.controls['address'].value,
+			asset: {
+				status: 'active',
+				possession: 'undisclosed',
+				category: 'dwelling' as AssetCategory,
+				title: this.titleForm.controls['title'].value,
+				// address: this.form.controls['address'].value,
+			},
 		};
 		// switch (this.form.controls['ownership'].value) {
 		// 	case 'landlord':

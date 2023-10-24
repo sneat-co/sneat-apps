@@ -10,16 +10,12 @@ const assetusRoutes: Route[] = [
 	},
 	{
 		path: 'assets',
-		loadComponent: () =>
-			import('./assets/assets-page.component').then(
-				(m) => m.AssetsPageComponent,
-			),
+		loadComponent: () => import('./assets').then((m) => m.AssetsPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'asset/:assetID',
-		loadComponent: () =>
-			import('./asset/asset-page.component').then((m) => m.AssetPageComponent),
+		loadComponent: () => import('./asset').then((m) => m.AssetPageComponent),
 		// ...guardRoute,
 	},
 	// {
@@ -54,9 +50,7 @@ const assetusRoutes: Route[] = [
 	{
 		path: 'new-asset',
 		loadChildren: () =>
-			import('./new-asset/new-asset-page.module').then(
-				(m) => m.NewAssetPageModule,
-			),
+			import('./new-asset').then((m) => m.NewAssetPageComponent),
 		// ...guardRoute,
 	},
 	// {

@@ -1,15 +1,28 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { IAssetCategory } from '@sneat/dto';
+import { AddAssetComponentsModule } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
+	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 
 @Component({
 	selector: 'sneat-new-asset-page',
 	templateUrl: './new-asset-page.component.html',
 	providers: [TeamComponentBaseParams],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		AddAssetComponentsModule,
+		TeamCoreComponentsModule,
+	],
 })
 export class NewAssetPageComponent extends TeamBaseComponent {
 	name?: string;
@@ -18,7 +31,7 @@ export class NewAssetPageComponent extends TeamBaseComponent {
 
 	public categories: IAssetCategory[] = [
 		{ id: 'vehicle', title: 'Vehicle', order: 1 },
-		{ id: 'real_estate', title: 'Real estate', order: 2 },
+		{ id: 'dwelling', title: 'Real estate', order: 2 },
 	];
 
 	constructor(
