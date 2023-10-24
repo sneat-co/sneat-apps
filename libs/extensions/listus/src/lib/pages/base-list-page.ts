@@ -9,7 +9,7 @@ import {
 } from '@sneat/dto';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { IListContext, ITeamContext } from '@sneat/team-models';
-import { Observable, Subscription, throwError } from 'rxjs';
+import { NEVER, Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
@@ -38,16 +38,18 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 	}
 
 	protected override watchItemChanges(): Observable<IListContext> {
-		if (!this.team) {
-			return throwError(() => new Error('no team context'));
-		}
-		if (!this.list) {
-			return throwError(() => new Error('no list context'));
-		}
-		if (!this.list.type) {
-			return throwError(() => new Error('no list type context'));
-		}
-		return this.listService.watchList(this.team, this.list.type, this.list.id);
+		// console.log(`${this.className}=>BaseListPage.watchItemChanges()`);
+		return NEVER; // Do nothing as we need to get list type
+		// if (!this.team) {
+		// 	return throwError(() => new Error('no team context'));
+		// }
+		// if (!this.list) {
+		// 	return throwError(() => new Error('no list context'));
+		// }
+		// if (!this.list.type) {
+		// 	return throwError(() => new Error(`list  context has no list type: ${JSON.stringify(this.list)}`));
+		// }
+		// return this.listService.watchList(this.team, this.list.type, this.list.id);
 	}
 
 	protected override setItemContext(item?: IListContext): void {

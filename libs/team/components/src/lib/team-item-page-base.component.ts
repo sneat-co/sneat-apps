@@ -80,7 +80,7 @@ export abstract class TeamItemPageBaseComponent<
 		});
 	}
 
-	setBriefFromTeam(id: string): void {
+	private setBriefFromTeam(id: string): void {
 		if (this.item?.brief) {
 			const briefs = this.briefs();
 			if (briefs) {
