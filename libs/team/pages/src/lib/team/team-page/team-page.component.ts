@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatCardListComponent } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
@@ -23,6 +23,7 @@ import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 		CommonModule,
 		FormsModule,
 		IonicModule,
+		RouterModule,
 		InviteLinksComponent,
 		SneatCardListComponent,
 		MembersListComponent,
