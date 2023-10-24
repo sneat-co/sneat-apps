@@ -1,23 +1,21 @@
-<ion-header>
-	<ion-toolbar color="light" *ngIf="appId !== 'sneat'" class="with-end-buttons">
+<ion-header *ngIf="appId !== 'sneat'">
+	<ion-toolbar color="light" class="with-end-buttons">
 		<ion-title [ngSwitch]="appId">
 			<span *ngSwitchCase="'listus'">📜 Listus.app</span>
 			<span *ngSwitchDefault>Lists</span>
 			<ion-badge
 				color="light"
 				style="font-weight: normal; color: grey; margin: 0 1em"
-				>alpha</ion-badge
-			>
+				>alpha
+			</ion-badge>
 		</ion-title>
 		<ion-buttons slot="start">
 			<ion-menu-button menu="mainMenu" />
 		</ion-buttons>
 	</ion-toolbar>
-	<ion-toolbar
-		color="light"
-		*ngIf="appId === 'sneat'"
-		class="with-back-button with-end-buttons"
-	>
+</ion-header>
+<ion-header *ngIf="appId === 'sneat'">
+	<ion-toolbar color="light" class="with-back-button with-end-buttons">
 		<ion-buttons slot="start">
 			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
@@ -28,7 +26,7 @@
 			<ion-title>📜 Lists</ion-title>
 		</ng-template>
 		<ion-buttons slot="end">
-			<ion-menu-button menu="mainMenu" />
+			<ion-menu-button />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -155,14 +153,14 @@
 						<!--suppress AngularUndefinedBinding -->
 						<ion-item-options slot="start" (ionSwipe)="clearAddingToGroup()">
 							<ion-item-option (click)="clearAddingToGroup()"
-								>Cancel</ion-item-option
-							>
+								>Cancel
+							</ion-item-option>
 						</ion-item-options>
 						<!--suppress AngularUndefinedBinding -->
 						<ion-item-options slot="end" (ionSwipe)="clearAddingToGroup()">
 							<ion-item-option (click)="clearAddingToGroup()"
-								>Cancel</ion-item-option
-							>
+								>Cancel
+							</ion-item-option>
 						</ion-item-options>
 					</ion-item-sliding>
 				</form>

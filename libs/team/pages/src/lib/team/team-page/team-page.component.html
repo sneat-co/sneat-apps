@@ -2,7 +2,6 @@
 	<ion-toolbar color="light">
 		<ion-buttons slot="end">
 			<ion-menu-button />
-			<!--			<ion-back-button defaultHref="/"></ion-back-button>-->
 		</ion-buttons>
 		<ion-title *ngIf="team.dto || team.type">
 			{{ team.dto?.title || team.type === "family" ? "Family" : team.id }}

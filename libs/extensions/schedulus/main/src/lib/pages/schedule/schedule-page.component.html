@@ -18,8 +18,9 @@
 				}"
 			/>
 		</ng-template>
-		<ion-buttons slot="end" class="sneat-hide-if-width-less-638">
+		<ion-buttons slot="end">
 			<ion-button
+				class="sneat-hide-if-width-less-638"
 				color="primary"
 				[disabled]="!team.id"
 				(click)="goNew('recurring')"
@@ -27,10 +28,11 @@
 			>
 				<ion-icon name="duplicate-outline" slot="start" />
 				<ion-label class="sneat-hide-if-width-less-766"
-					>Add recurring</ion-label
-				>
+					>Add recurring
+				</ion-label>
 			</ion-button>
 			<ion-button
+				class="sneat-hide-if-width-less-638"
 				color="primary"
 				[disabled]="!team.id"
 				(click)="goNew('single')"
@@ -39,6 +41,7 @@
 				<ion-icon name="add-circle-outline" slot="start" />
 				<ion-label class="sneat-hide-if-width-less-766">Add 1-timer</ion-label>
 			</ion-button>
+			<ion-menu-button />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
