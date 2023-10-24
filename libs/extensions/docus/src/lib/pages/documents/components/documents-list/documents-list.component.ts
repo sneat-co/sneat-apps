@@ -23,12 +23,12 @@ export class DocumentsListComponent
 	extends DocumentsBaseComponent
 	implements OnChanges
 {
-	protected filteredDocs?: IAssetContext<IDocumentAssetDto>[];
-
 	@Input() public filter = '';
 	@Output() public readonly goDoc = new EventEmitter<
 		IAssetContext<IDocumentAssetDto>
 	>();
+
+	protected filteredDocs?: IAssetContext<IDocumentAssetDto>[];
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,

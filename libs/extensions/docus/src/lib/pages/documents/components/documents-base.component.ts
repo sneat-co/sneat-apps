@@ -10,12 +10,11 @@ import { ignoreElements } from 'rxjs/operators';
 @Directive()
 export abstract class DocumentsBaseComponent {
 	@Input() team?: ITeamContext;
-
-	static metadata = {
-		inputs: ['allDocuments'],
-	};
-
 	@Input() allDocuments?: IAssetContext<IDocumentAssetDto>[];
+
+	public static readonly metadata = {
+		inputs: ['team', 'allDocuments'],
+	};
 
 	protected constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
