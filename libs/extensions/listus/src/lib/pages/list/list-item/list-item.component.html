@@ -8,27 +8,29 @@
 		<ion-checkbox
 			*ngIf="listMode !== 'reorder'"
 			color="light"
+			slot="start"
+			labelPlacement="end"
 			[checked]="listItem.isDone"
 			[disabled]="isSettingIsDone"
-			slot="start"
 			[value]="listItem.isDone"
 			(ionChange)="onIsDoneCheckboxChanged($event)"
-		/>
-		<ion-label
-			[class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)"
-			class="ion-text-wrap"
 		>
-			<ng-container *ngIf="listItem.emoji">{{ listItem.emoji }}</ng-container>
-			{{ listItem.title }}
-			<ion-text
-				*ngIf="listItem.quantity"
-				color="medium"
-				style="font-style: italic"
+			<ng-container
+				[class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)"
+				class="ion-text-wrap"
 			>
-				&mdash; {{ listItem.quantity.value
-				}}{{ listItem.quantity.unit }}</ion-text
-			>
-		</ion-label>
+				<ng-container *ngIf="listItem.emoji">{{ listItem.emoji }}</ng-container>
+				{{ listItem.title }}
+				<ion-text
+					*ngIf="listItem.quantity"
+					color="medium"
+					style="font-style: italic"
+				>
+					&mdash; {{ listItem.quantity.value
+					}}{{ listItem.quantity.unit }}</ion-text
+				>
+			</ng-container>
+		</ion-checkbox>
 		<ion-badge
 			*ngIf="listItem.category"
 			slot="end"
