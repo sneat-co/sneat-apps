@@ -32,8 +32,8 @@ const UsersCollection = 'users';
 
 @Injectable({ providedIn: 'root' }) // TODO: lazy loading
 export class SneatUserService {
-	public userDocSubscription?: Subscription;
-	private userCollection: CollectionReference<IUserRecord>;
+	private userDocSubscription?: Subscription;
+	private readonly userCollection: CollectionReference<IUserRecord>;
 
 	private uid?: string;
 	private $userTitle?: string;
@@ -102,6 +102,7 @@ export class SneatUserService {
 		this.userState$.next({
 			...authState,
 		});
+		this.userChanged$.next(uid);
 		const userDocRef = doc(this.userCollection, uid);
 		console.log('SneatUserService: Loading user record...');
 		onSnapshot(userDocRef, {

@@ -27,4 +27,5 @@ export interface IUserTeamBrief {
 	readonly title: string;
 	readonly type: TeamType;
 	readonly roles: string[];
+	readonly userContactID: string;
 }

@@ -38,12 +38,14 @@ export class RelationshipFormComponent
 	extends TeamRelatedFormComponent
 	implements OnChanges
 {
-	@Input() isActive = false;
-	@Input() disabled = false;
 	@Input({ required: true }) team?: ITeamContext;
 	@Input({ required: true }) ageGroup?: AgeGroupID;
+
 	@Input({ required: true }) relationship?: string;
 	@Output() readonly relationshipChange = new EventEmitter<string>();
+
+	@Input() isActive = false;
+	@Input() disabled = false;
 
 	protected readonly label = 'Related to me as';
 

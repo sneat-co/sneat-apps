@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { IUserTeamBrief } from '@sneat/auth-models';
 import { SneatPipesModule } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
 import { ContactType, Gender, IContactBrief, IContactDto } from '@sneat/dto';
 import {
 	IContactContext,
-	ITeamContext,
+	ITeamRef,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
@@ -49,9 +50,12 @@ import {
 		GenderFormComponent,
 	],
 })
-export class ContactDetailsComponent {
-	@Input({ required: true }) public team?: ITeamContext;
+export class ContactDetailsComponent implements OnChanges {
+	@Input({ required: true }) public team?: ITeamRef;
 	@Input({ required: true }) public contact?: IContactContext;
+
+	private userTeamBriefs?: { [id: string]: IUserTeamBrief };
+	private currentUserContactID?: string;
 
 	protected get contactWithBriefAndOptionalDto():
 		| IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>
@@ -66,7 +70,33 @@ export class ContactDetailsComponent {
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
 
-	constructor(private readonly params: ContactComponentBaseParams) {}
+	constructor(private readonly params: ContactComponentBaseParams) {
+		params.userService.userState.subscribe({
+			next: (state) => {
+				this.userTeamBriefs = state?.record?.teams;
+				this.setCurrentUserContactID();
+			},
+		});
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['team']) {
+			this.setCurrentUserContactID();
+		}
+	}
+
+	private setCurrentUserContactID(): void {
+		if (!this.team?.id || !this.userTeamBriefs) {
+			this.currentUserContactID = undefined;
+			return;
+		}
+		const userTeamBrief = this.userTeamBriefs[this.team.id];
+		if (!userTeamBrief) {
+			this.currentUserContactID = undefined;
+			return;
+		}
+		this.currentUserContactID = userTeamBrief.userContactID;
+	}
 
 	protected get currentUserID() {
 		return this.params.userService.currentUserID;
@@ -117,11 +147,17 @@ export class ContactDetailsComponent {
 
 	protected onRelatedAsChanged(relatedAs: string): void {
 		console.log('onRelatedAsChanged()', relatedAs);
+
+		const userContactID = this.currentUserContactID;
+		if (!userContactID) {
+			throw new Error('onRelatedAsChanged() - userContactID is not set');
+		}
+
 		const request: IUpdateContactRequest = {
 			...this.newUpdateContactRequest(),
 			relatedTo: {
 				moduleID: 'contactus',
-				itemID: '',
+				itemID: userContactID,
 				collection: 'contacts',
 				relatedAs,
 			},

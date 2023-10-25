@@ -1,21 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
-import { AssetBasePage } from 'sneat-shared/extensions/assetus/asset-base.page';
-import { DtoServiceProvider } from 'sneat-shared/models/dto/dto-service-provider';
-import {
-	IAssetService,
-	ICommuneIds,
-	IServiceProviderService,
-} from 'sneat-shared/services/interfaces';
-import { LiabilityServiceType } from 'sneat-shared/models/types';
-import { IAssetDto } from 'sneat-shared/models/dto/dto-asset';
-import { IRecord } from 'rxstore';
-import { CommuneTopPage } from '../../../../../pages/constants';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { IRecord } from '@sneat/data';
+import { DtoServiceProvider } from '@sneat/dto';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 
 @Component({
 	selector: 'sneat-select-service-provider',
 	templateUrl: './select-service-provider-page.component.html',
-	providers: [CommuneBasePageParams],
+	providers: [TeamComponentBaseParams],
+	standalone: true,
+	imports: [CommonModule, FormsModule, IonicModule],
 })
 export class SelectServiceProviderPageComponent extends AssetBasePage {
 	serviceProviders: DtoServiceProvider[];
@@ -24,9 +20,9 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
 	serviceTypeTitle: string;
 
 	constructor(
-		assetService: IAssetService,
-		private serviceProviderService: IServiceProviderService,
-		params: CommuneBasePageParams,
+		// assetService: IAssetService,
+		// private serviceProviderService: IServiceProviderService,
+		params: TeamComponentBaseParams,
 	) {
 		super(CommuneTopPage.asset, params, assetService);
 	}
@@ -81,5 +77,5 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
 		this.isOtherSelected = true;
 	}
 
-	trackById = (i: number, record: IRecord) => record.id;
+	trackById = (i: number, record: IRecord<unknown>) => record.id;
 }

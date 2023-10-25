@@ -113,14 +113,15 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			next: (team) => {
 				this.analyticsService.logEvent('teamCreated', { team: team.id });
 				console.log('teamId:', team.id);
-				const userTeam: IUserTeamBrief = {
+				const userTeamBrief2: IUserTeamBrief = {
+					userContactID: 'TODO: populate userContactID',
 					title: team?.dto?.title || team.id,
 					roles: ['creator'],
 					// memberType: request.memberType,
 					type: team?.dto?.type || 'unknown',
 				};
-				if (userTeam && !this.teams?.find((t) => t.id === team.id)) {
-					this.teams?.push({ id: team.id, brief: userTeam });
+				if (userTeamBrief2 && !this.teams?.find((t) => t.id === team.id)) {
+					this.teams?.push({ id: team.id, brief: userTeamBrief2 });
 				}
 				this.adding = false;
 				this.teamName = '';
