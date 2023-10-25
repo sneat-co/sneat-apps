@@ -1,6 +1,11 @@
 import { Component, Inject, Input } from '@angular/core';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
-import { ContactRole, IContactBrief, IContactDto } from '@sneat/dto';
+import {
+	ContactRole,
+	IContactBrief,
+	IContactDto,
+	IContactRelationships,
+} from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -24,7 +29,7 @@ export class ContactsListItemComponent {
 		'team_member',
 	];
 
-	protected get relatedContacts(): readonly IIdAndBrief<IContactBrief>[] {
+	protected get relatedContacts(): readonly IIdAndBrief<IContactRelationships>[] {
 		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
 	}
 
@@ -60,8 +65,14 @@ export class ContactsListItemComponent {
 
 	protected readonly contactID = (
 		_: number,
-		record: IIdAndBrief<IContactBrief>,
+		record: IIdAndBrief<IContactRelationships>,
 	) => record.id;
+
+	protected firstRelatedAs(
+		contactRelationships: IContactRelationships,
+	): string {
+		return Object.keys(contactRelationships)[0];
+	}
 
 	archiveContact(): void {
 		console.log('ContactListItemComponent.removeContact()');

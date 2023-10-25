@@ -7,7 +7,13 @@ import { IUserTeamBrief } from '@sneat/auth-models';
 import { SneatPipesModule } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
-import { ContactType, Gender, IContactBrief, IContactDto } from '@sneat/dto';
+import {
+	ContactType,
+	Gender,
+	IContactBrief,
+	IContactDto,
+	IContactRelationships,
+} from '@sneat/dto';
 import {
 	IContactContext,
 	ITeamRef,
@@ -113,7 +119,7 @@ export class ContactDetailsComponent implements OnChanges {
 		return this.params.userService.currentUserID;
 	}
 
-	protected get relatedContacts(): readonly IIdAndBrief<IContactBrief>[] {
+	protected get relatedContacts(): readonly IIdAndBrief<IContactRelationships>[] {
 		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
 	}
 

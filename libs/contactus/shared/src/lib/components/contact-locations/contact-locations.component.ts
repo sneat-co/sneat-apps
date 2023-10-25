@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/dto';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { ContactsListModule } from '../contacts-list';
 
 @Component({
@@ -36,14 +36,16 @@ export class ContactLocationsComponent implements OnChanges {
 	}
 
 	private getContactLocations(): IIdAndBrief<IContactBrief>[] {
-		return (
-			zipMapBriefsWithIDs<IContactBrief>(this.contact?.dto?.relatedContacts)
-				?.map((c) => ({
-					id: c.id,
-					brief: c.brief,
-					team: this.team,
-				}))
-				?.filter((c) => c.brief?.type === 'location') || []
-		);
+		return [];
+		// return (
+		// 	zipMapBriefsWithIDs<IContactRelationships>(this.contact?.dto?.relatedContacts)
+		// 		?.map((c) => ({
+		// 			id: c.id,
+		// 			brief: c.brief,
+		// 			team: this.team,
+		// 		}))
+		// 		?.filter((c) => c.brief?.type === 'location')
+		// 	|| []
+		// );
 	}
 }

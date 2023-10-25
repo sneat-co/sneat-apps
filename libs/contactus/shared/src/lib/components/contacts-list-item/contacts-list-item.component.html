@@ -11,10 +11,10 @@
 		</ng-container>
 
 		<p *ngFor="let member of relatedContacts; trackBy: contactID">
-			{{ member.brief.relatedAs }} of
-			<a [href]="member.id" (click)="goMember(member.id, $event)">{{
-				member.brief.title
-			}}</a>
+			{{ firstRelatedAs(member.brief) }} of
+			<a [href]="member.id" (click)="goMember(member.id, $event)"
+				>{{ member.id }} (TODO: lookup contact by ID);</a
+			>
 		</p>
 
 		<span

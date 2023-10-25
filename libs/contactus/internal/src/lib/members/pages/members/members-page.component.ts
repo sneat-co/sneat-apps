@@ -227,9 +227,9 @@ export class MembersPageComponent
 							members.forEach((m) => {
 								if (m.id) {
 									if (m.dto?.relatedContacts) {
-										this.contactsByMember[m.id] = zipMapBriefsWithIDs(
-											m.dto.relatedContacts,
-										);
+										// this.contactsByMember[m.id] = zipMapBriefsWithIDs(
+										// 	m.dto.relatedContacts,
+										// );
 									} else if (this.contactsByMember[m.id]) {
 										// tslint:disable-next-line:no-dynamic-delete
 										delete this.contactsByMember[m.id];

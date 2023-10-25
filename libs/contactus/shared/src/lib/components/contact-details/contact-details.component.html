@@ -32,22 +32,22 @@
 				<ion-item-divider mode="md" *ngIf="contact?.brief?.gender && relatedAs">
 					<ion-label
 						*ngIf="contact?.brief?.gender === 'male' && relatedAs === 'child'"
-						>My son</ion-label
-					>
+						>My son
+					</ion-label>
 					<ion-label
 						*ngIf="contact?.brief?.gender === 'female' && relatedAs === 'child'"
-						>My daughter</ion-label
-					>
+						>My daughter
+					</ion-label>
 					<ion-label
 						*ngIf="contact?.brief?.gender === 'male' && relatedAs === 'spouse'"
-						>My husband</ion-label
-					>
+						>My husband
+					</ion-label>
 					<ion-label
 						*ngIf="
 							contact?.brief?.gender === 'female' && relatedAs === 'spouse'
 						"
-						>My wife</ion-label
-					>
+						>My wife
+					</ion-label>
 				</ion-item-divider>
 
 				<sneat-contact-dob [contact]="contactWithBriefAndOptionalDto" />
@@ -79,7 +79,7 @@
 </ion-grid>
 
 <ion-segment class="ion-margin-horizontal" color="primary" [(ngModel)]="tab">
-	<ion-segment-button value="peers"> Peers </ion-segment-button>
+	<ion-segment-button value="peers"> Peers</ion-segment-button>
 	<ion-segment-button
 		value="communicationChannels"
 		*ngIf="hideForContactTypes(['pet'])"
@@ -106,19 +106,23 @@
 	<ion-item *ngIf="!relatedContacts?.length">
 		<ion-label color="medium">No related contacts</ion-label>
 	</ion-item>
-	<ion-item *ngIf="contact?.dto?.relatedContacts">
-		<ion-badge
-			*ngFor="let m of relatedContacts"
-			color="light"
-			style="cursor: pointer"
-			(click)="goMember(m.id)"
-		>
-			{{ m.brief.relatedAs }} of {{ m.brief.title }}
-		</ion-badge>
-		<ion-buttons slot="end">
-			<ion-button (click)="addRelatedContact($event)">Add</ion-button>
-		</ion-buttons>
+	<ion-item>
+		{{ relatedContacts | json }}
 	</ion-item>
+	<!--	<ion-item *ngIf="contact?.dto?.relatedContacts">-->
+	<!--		<ion-badge-->
+	<!--			*ngFor="let m of relatedContacts"-->
+	<!--			color="light"-->
+	<!--			style="cursor: pointer"-->
+	<!--			(click)="goMember(m.id)"-->
+	<!--		>-->
+	<!--			&lt;!&ndash;			{{ m.brief.relatedAs }} of {{ m.brief.title }}&ndash;&gt;-->
+	<!--			{{m|json}}-->
+	<!--		</ion-badge>-->
+	<!--		<ion-buttons slot="end">-->
+	<!--			<ion-button (click)="addRelatedContact($event)">Add</ion-button>-->
+	<!--		</ion-buttons>-->
+	<!--	</ion-item>-->
 </ion-card>
 
 <sneat-contact-locations

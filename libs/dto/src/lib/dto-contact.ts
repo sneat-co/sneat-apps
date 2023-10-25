@@ -4,6 +4,7 @@ import { excludeUndefined } from '@sneat/core';
 import { IAddress } from './dto-address';
 import { IContact2Asset } from './dto-contact2item';
 import { IPersonRecord } from './dto-models';
+import { IWithCreated } from './dto-with-modified';
 import { PetKind } from './pet-kind';
 import { AgeGroupID, Gender, TeamMemberType } from './types';
 
@@ -193,14 +194,15 @@ export interface IContactBrief extends IContactBase {
 	parentID?: string;
 }
 
+export type IContactRelationshipData = IWithCreated;
+export type IContactRelationships = {
+	[relationshipID: string]: IContactRelationshipData;
+};
+export type IRelatedContacts = { [contactID: string]: IContactRelationships };
+
 export interface IContactDto extends IContactBase, IPersonRecord {
 	readonly assets?: IContact2Asset[]; // TODO: document purpose, use cases, examples of usage
-	readonly relatedContacts?: {
-		[id: string]: IContactBrief;
-	};
-	readonly relatedAsByContactID?: {
-		[contactID: string]: string;
-	};
+	readonly relatedContacts?: IRelatedContacts;
 }
 
 export interface IContactsBrief {
