@@ -40,7 +40,7 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 		collection: CollectionReference<Dto2>,
 		id: string,
 	): Observable<IIdAndOptionalBriefAndOptionalDto<Brief, Dto2>> {
-		return this.watchByDocRef(doc<Dto2>(collection, id));
+		return this.watchByDocRef(doc(collection, id));
 	}
 
 	watchByDocRef<Dto2 extends Dto>(
@@ -49,7 +49,7 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`, docRef);
 		const subj = new Subject<DocumentSnapshot<Dto2>>();
 		// const snapshots = docSnapshots<Dto2>(docRef);
-		onSnapshot<Dto2>(
+		onSnapshot(
 			docRef,
 			(snapshot) => subj.next(snapshot),
 			(err) => subj.error(err),
@@ -73,7 +73,7 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 		docRef: DocumentReference<Dto2>,
 	): Observable<INavContext<Brief, Dto2>> {
 		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
-		return from(getDoc<Dto2>(docRef)).pipe(
+		return from(getDoc(docRef)).pipe(
 			map((changes) =>
 				docSnapshotToDto<Brief, Dto2>(docRef.id, this.dto2brief, changes),
 			),
@@ -101,7 +101,7 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 			q,
 		);
 		const subj = new Subject<QuerySnapshot<Dto2>>();
-		onSnapshot<Dto2>(q, subj);
+		onSnapshot(q, subj);
 		return subj;
 	}
 
