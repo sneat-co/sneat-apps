@@ -12,7 +12,7 @@ import {
 	Gender,
 	IContactBrief,
 	IContactDto,
-	IContactRelationships,
+	IRelatedContact,
 } from '@sneat/dto';
 import {
 	IContactContext,
@@ -119,7 +119,7 @@ export class ContactDetailsComponent implements OnChanges {
 		return this.params.userService.currentUserID;
 	}
 
-	protected get relatedContacts(): readonly IIdAndBrief<IContactRelationships>[] {
+	protected get relatedContacts(): readonly IIdAndBrief<IRelatedContact>[] {
 		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
 	}
 

@@ -10,12 +10,18 @@
 			</ng-container>
 		</ng-container>
 
-		<p *ngFor="let member of relatedContacts; trackBy: contactID">
-			{{ firstRelatedAs(member.brief) }} of
-			<a [href]="member.id" (click)="goMember(member.id, $event)"
-				>{{ member.id }} (TODO: lookup contact by ID);</a
-			>
-		</p>
+		<ng-container
+			*ngFor="let relatedContact of relatedContacts; trackBy: contactID"
+		>
+			<ion-badge *ngIf="firstRelated(relatedContact.brief.relatedAs)">
+				firstRelated(relatedContact.brief.relatedAs) }} of
+				<a
+					[href]="relatedContact.id"
+					(click)="goMember(relatedContact.id, $event)"
+					>{{ relatedContact.id }} (TODO: lookup contact by ID);</a
+				>
+			</ion-badge>
+		</ng-container>
 
 		<span
 			*ngIf="contact?.brief?.countryID && contact?.brief?.countryID !== '--'"
@@ -56,6 +62,6 @@
 </ion-item>
 <ion-item-options slot="end">
 	<ion-item-option color="warning" (click)="archiveContact()"
-		>Archive</ion-item-option
-	>
+		>Archive
+	</ion-item-option>
 </ion-item-options>

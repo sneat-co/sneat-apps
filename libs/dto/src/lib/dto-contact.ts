@@ -4,7 +4,7 @@ import { excludeUndefined } from '@sneat/core';
 import { IAddress } from './dto-address';
 import { IContact2Asset } from './dto-contact2item';
 import { IPersonRecord } from './dto-models';
-import { IWithCreated } from './dto-with-modified';
+import { IWithCreatedOn } from './dto-with-modified';
 import { PetKind } from './pet-kind';
 import { AgeGroupID, Gender, TeamMemberType } from './types';
 
@@ -183,22 +183,31 @@ export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
 }
 
 export interface IRelatedPersonContact extends IRelatedPerson {
-	type: 'person';
+	readonly type: 'person';
 }
 
 export interface ICreatePeronRequest extends IRelatedPersonContact {
-	status: 'active' | 'draft';
+	readonly status: 'active' | 'draft';
 }
 
 export interface IContactBrief extends IContactBase {
-	parentID?: string;
+	readonly parentID?: string;
 }
 
-export type IContactRelationshipData = IWithCreated;
-export type IContactRelationships = {
-	[relationshipID: string]: IContactRelationshipData;
-};
-export type IRelatedContacts = { [contactID: string]: IContactRelationships };
+export interface IContactRelationship extends IWithCreatedOn {}
+
+export type IContactRelationships = Readonly<{
+	[relationshipID: string]: IContactRelationship;
+}>;
+
+export interface IRelatedContact {
+	readonly relatedAs?: IContactRelationships; // if related contact is a child of the current contact, then relatedAs = {"child": ...}
+	readonly relatesAs?: IContactRelationships; // if related contact is a child of the current contact, then relatesAs = {"parent": ...}
+}
+
+export type IRelatedContacts = Readonly<{
+	[contactID: string]: IRelatedContact;
+}>;
 
 export interface IContactDto extends IContactBase, IPersonRecord {
 	readonly assets?: IContact2Asset[]; // TODO: document purpose, use cases, examples of usage
@@ -206,5 +215,5 @@ export interface IContactDto extends IContactBase, IPersonRecord {
 }
 
 export interface IContactsBrief {
-	contacts?: IContactBrief[];
+	readonly contacts?: readonly IContactBrief[];
 }

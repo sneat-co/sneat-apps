@@ -5,6 +5,7 @@ import {
 	IContactBrief,
 	IContactDto,
 	IContactRelationships,
+	IRelatedContact,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
@@ -29,7 +30,7 @@ export class ContactsListItemComponent {
 		'team_member',
 	];
 
-	protected get relatedContacts(): readonly IIdAndBrief<IContactRelationships>[] {
+	protected get relatedContacts(): readonly IIdAndBrief<IRelatedContact>[] {
 		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
 	}
 
@@ -63,15 +64,15 @@ export class ContactsListItemComponent {
 
 	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
 
-	protected readonly contactID = (
-		_: number,
-		record: IIdAndBrief<IContactRelationships>,
-	) => record.id;
+	protected readonly contactID = (_: number, v: IIdAndBrief<IRelatedContact>) =>
+		v.id;
 
-	protected firstRelatedAs(
-		contactRelationships: IContactRelationships,
-	): string {
-		return Object.keys(contactRelationships)[0];
+	protected firstRelated(contactRelationships?: IContactRelationships): string {
+		if (!contactRelationships) {
+			return '';
+		}
+		const keys = Object.keys(contactRelationships);
+		return keys.length ? keys[0] : '';
 	}
 
 	archiveContact(): void {
