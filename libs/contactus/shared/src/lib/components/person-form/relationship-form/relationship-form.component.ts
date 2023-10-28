@@ -41,8 +41,8 @@ export class RelationshipFormComponent
 	@Input({ required: true }) team?: ITeamContext;
 	@Input({ required: true }) ageGroup?: AgeGroupID;
 
-	@Input({ required: true }) relationship?: string;
-	@Output() readonly relationshipChange = new EventEmitter<string>();
+	@Input({ required: true }) relatedAs?: string;
+	@Output() readonly relatedAsChange = new EventEmitter<string>();
 
 	@Input() isActive = false;
 	@Input() disabled = false;
@@ -99,6 +99,6 @@ export class RelationshipFormComponent
 
 	public onRelationshipChanged(event: Event): void {
 		event.stopPropagation();
-		this.relationshipChange.emit(this.relationship);
+		this.relatedAsChange.emit(this.relatedAs);
 	}
 }

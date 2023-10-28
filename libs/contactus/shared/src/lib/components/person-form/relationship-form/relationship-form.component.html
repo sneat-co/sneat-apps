@@ -1,5 +1,5 @@
 <ion-card @formNextIn>
-	<ion-item-group *ngIf="!relationship">
+	<ion-item-group *ngIf="!relatedAs">
 		<ion-item-divider [color]="isActive ? 'primary' : 'light'">
 			<ion-label
 				><b>{{ label }}</b
@@ -7,7 +7,7 @@
 			>
 		</ion-item-divider>
 		<ion-radio-group
-			[(ngModel)]="relationship"
+			[(ngModel)]="relatedAs"
 			(ionChange)="onRelationshipChanged($event)"
 		>
 			<ion-item *ngFor="let rel of relationships || []">
@@ -21,10 +21,10 @@
 			</ion-item>
 		</ion-radio-group>
 	</ion-item-group>
-	<ion-item *ngIf="relationship">
+	<ion-item *ngIf="relatedAs">
 		<ion-icon name="people-outline" slot="start" />
 		<ion-select
-			[(ngModel)]="relationship"
+			[(ngModel)]="relatedAs"
 			interface="popover"
 			[disabled]="disabled"
 			(ionChange)="onRelationshipChanged($event)"

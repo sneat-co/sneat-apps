@@ -60,9 +60,9 @@
 					contact?.brief?.userID !== currentUserID
 				"
 				[team]="team"
-				[(relationship)]="relatedAs"
+				[(relatedAs)]="relatedAs"
 				[ageGroup]="contact?.brief?.ageGroup"
-				(relationshipChange)="onRelatedAsChanged($event)"
+				(relatedAsChange)="onRelatedAsChanged($event)"
 			/>
 		</ion-col>
 		<ion-col>

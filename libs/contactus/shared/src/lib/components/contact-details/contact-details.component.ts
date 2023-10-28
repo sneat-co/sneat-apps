@@ -101,8 +101,27 @@ export class ContactDetailsComponent implements OnChanges {
 			this.currentUserContactID = undefined;
 			return;
 		}
-		this.currentUserContactID = userTeamBrief.userContactID;
+		const { userContactID } = userTeamBrief;
+		this.currentUserContactID = userContactID;
+		const relatedContacts = this.contact?.dto?.relatedContacts;
+		if (relatedContacts) {
+			const relatedContact = relatedContacts[userContactID];
+			const relations = relatedContact?.relatedAs
+				? Object.keys(relatedContact.relatedAs)
+				: [];
+			this.relatedAs = relations.length ? relations[0] : undefined;
+		}
+		console.log(
+			'userContactID',
+			userContactID,
+			'relatedAs',
+			this.relatedAs,
+			'contact',
+			this.contact,
+		);
 	}
+
+	private setRelatedAs(): void {}
 
 	protected get currentUserID() {
 		return this.params.userService.currentUserID;
