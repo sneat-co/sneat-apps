@@ -12,7 +12,8 @@ import {
 	Gender,
 	IContactBrief,
 	IContactDto,
-	IRelatedContact,
+	IRelatedItem,
+	IRelationships,
 } from '@sneat/dto';
 import {
 	IContactContext,
@@ -71,7 +72,9 @@ export class ContactDetailsComponent implements OnChanges {
 			: undefined;
 	}
 
-	protected relatedAs?: string;
+	protected relatedAs?: IRelationships;
+
+	protected firstRelatedAs?: string;
 
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
@@ -103,14 +106,14 @@ export class ContactDetailsComponent implements OnChanges {
 		}
 		const { userContactID } = userTeamBrief;
 		this.currentUserContactID = userContactID;
-		const relatedContacts = this.contact?.dto?.relatedContacts;
-		if (relatedContacts) {
-			const relatedContact = relatedContacts[userContactID];
-			const relations = relatedContact?.relatedAs
-				? Object.keys(relatedContact.relatedAs)
-				: [];
-			this.relatedAs = relations.length ? relations[0] : undefined;
-		}
+		const relatedContact =
+			this.contact?.dto?.related?.[this.team.id]?.['contactus']?.['contacts']?.[
+				'userContactID'
+			];
+		this.relatedAs = relatedContact?.relatedAs;
+		const relationshipIDs = Object.keys(this.relatedAs || {});
+		this.firstRelatedAs =
+			relationshipIDs.length > 0 ? relationshipIDs[0] : undefined;
 		console.log(
 			'userContactID',
 			userContactID,
@@ -138,8 +141,8 @@ export class ContactDetailsComponent implements OnChanges {
 		return this.params.userService.currentUserID;
 	}
 
-	protected get relatedContacts(): readonly IIdAndBrief<IRelatedContact>[] {
-		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
+	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
+		return zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}
 
 	protected goMember(id: string): void {
@@ -170,7 +173,7 @@ export class ContactDetailsComponent implements OnChanges {
 			.catch(this.params.errorLogger.logError);
 	}
 
-	protected onRelatedAsChanged(relatedAs: string): void {
+	protected onRelatedAsChanged(relatedAs: IRelationships): void {
 		console.log('onRelatedAsChanged()', relatedAs);
 
 		const userContactID = this.currentUserContactID;
@@ -178,13 +181,16 @@ export class ContactDetailsComponent implements OnChanges {
 			throw new Error('onRelatedAsChanged() - userContactID is not set');
 		}
 
+		const relationshipIDs = Object.keys(relatedAs);
+
 		const request: IUpdateContactRequest = {
 			...this.newUpdateContactRequest(),
 			relatedTo: {
+				teamID: this.team?.id || '',
 				moduleID: 'contactus',
 				itemID: userContactID,
 				collection: 'contacts',
-				relatedAs,
+				relatedAs: relationshipIDs,
 			},
 		};
 		this.params.contactService.updateContact(request).subscribe({

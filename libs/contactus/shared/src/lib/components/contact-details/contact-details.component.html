@@ -31,20 +31,26 @@
 				</ion-item>
 				<ion-item-divider mode="md" *ngIf="contact?.brief?.gender && relatedAs">
 					<ion-label
-						*ngIf="contact?.brief?.gender === 'male' && relatedAs === 'child'"
+						*ngIf="
+							contact?.brief?.gender === 'male' && firstRelatedAs === 'child'
+						"
 						>My son
 					</ion-label>
 					<ion-label
-						*ngIf="contact?.brief?.gender === 'female' && relatedAs === 'child'"
+						*ngIf="
+							contact?.brief?.gender === 'female' && firstRelatedAs === 'child'
+						"
 						>My daughter
 					</ion-label>
 					<ion-label
-						*ngIf="contact?.brief?.gender === 'male' && relatedAs === 'spouse'"
+						*ngIf="
+							contact?.brief?.gender === 'male' && firstRelatedAs === 'spouse'
+						"
 						>My husband
 					</ion-label>
 					<ion-label
 						*ngIf="
-							contact?.brief?.gender === 'female' && relatedAs === 'spouse'
+							contact?.brief?.gender === 'female' && firstRelatedAs === 'spouse'
 						"
 						>My wife
 					</ion-label>

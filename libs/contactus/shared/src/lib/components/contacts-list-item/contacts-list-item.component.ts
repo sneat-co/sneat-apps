@@ -4,8 +4,8 @@ import {
 	ContactRole,
 	IContactBrief,
 	IContactDto,
-	IContactRelationships,
-	IRelatedContact,
+	IRelationships,
+	IRelatedItem,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
@@ -30,8 +30,8 @@ export class ContactsListItemComponent {
 		'team_member',
 	];
 
-	protected get relatedContacts(): readonly IIdAndBrief<IRelatedContact>[] {
-		return zipMapBriefsWithIDs(this.contact?.dto?.relatedContacts);
+	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
+		return zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}
 
 	hideRole(role: string): boolean {
@@ -64,10 +64,10 @@ export class ContactsListItemComponent {
 
 	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
 
-	protected readonly contactID = (_: number, v: IIdAndBrief<IRelatedContact>) =>
+	protected readonly contactID = (_: number, v: IIdAndBrief<IRelatedItem>) =>
 		v.id;
 
-	protected firstRelated(contactRelationships?: IContactRelationships): string {
+	protected firstRelated(contactRelationships?: IRelationships): string {
 		if (!contactRelationships) {
 			return '';
 		}

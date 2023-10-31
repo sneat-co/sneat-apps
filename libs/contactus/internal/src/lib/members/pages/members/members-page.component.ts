@@ -226,7 +226,7 @@ export class MembersPageComponent
 							// TODO: deep equal
 							members.forEach((m) => {
 								if (m.id) {
-									if (m.dto?.relatedContacts) {
+									if (m.dto?.related) {
 										// this.contactsByMember[m.id] = zipMapBriefsWithIDs(
 										// 	m.dto.relatedContacts,
 										// );

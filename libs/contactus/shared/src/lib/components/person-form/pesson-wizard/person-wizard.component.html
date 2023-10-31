@@ -32,10 +32,11 @@
 	[isActive]="wizardStep === 'relatedAs'"
 	[disabled]="disabled"
 	[team]="team"
+	[relatedAs]="undefined"
 	[ageGroup]="newPerson.ageGroup"
-	[relatedAs]="newPerson.relatedTo?.relatedAs"
 	(relatedAsChange)="onRelationshipChanged($event)"
 />
+<!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->
 
 <sneat-names-form
 	*ngIf="show.name"

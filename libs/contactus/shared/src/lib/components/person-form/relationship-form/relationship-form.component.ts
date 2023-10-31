@@ -13,6 +13,7 @@ import { formNexInAnimation } from '@sneat/core';
 import {
 	AgeGroupID,
 	FamilyMemberRelation,
+	IRelationships,
 	ITitledRecord,
 	MemberRelationshipOther,
 	MemberRelationshipUndisclosed,
@@ -41,17 +42,19 @@ export class RelationshipFormComponent
 	@Input({ required: true }) team?: ITeamContext;
 	@Input({ required: true }) ageGroup?: AgeGroupID;
 
-	@Input({ required: true }) relatedAs?: string;
-	@Output() readonly relatedAsChange = new EventEmitter<string>();
+	@Input({ required: true }) relatedAs?: IRelationships;
+	@Output() readonly relatedAsChange = new EventEmitter<IRelationships>();
 
 	@Input() isActive = false;
 	@Input() disabled = false;
 
+	// Defined here as it is used in the template twice
 	protected readonly label = 'Related to me as';
 
 	protected relationships?: ITitledRecord[];
 
 	override ngOnChanges(changes: SimpleChanges): void {
+		console.log('RelationshipFormComponent.ngOnChanges()', changes);
 		if (changes['ageGroup']) {
 			this.setRelationships();
 		}

@@ -73,10 +73,11 @@ export type MemberContactType =
 	| typeof ContactTypeAnimal;
 
 export interface IRelatedToRequest {
+	readonly teamID: string;
 	readonly moduleID: string;
 	readonly collection: string;
 	readonly itemID: string;
-	readonly relatedAs: string;
+	readonly relatedAs: string[];
 }
 
 export interface IContactBase {
@@ -115,7 +116,7 @@ export interface IPerson extends IContactBase {
 
 export interface IRelatedPerson extends IPerson {
 	// relatedAs to current user or a specific contact
-	readonly relatedTo?: IRelatedToRequest; // relative to current user
+	readonly related?: IRelatedItemsByTeam; // relative to current user
 	// readonly roles?: string[]; // Either member roles or contact roles
 }
 
@@ -161,9 +162,7 @@ export function isRelatedPersonNotReady(
 ): boolean {
 	return (
 		isPersonNotReady(p, requires) ||
-		(p.type !== 'animal' &&
-			!!requires.relatedAs?.required &&
-			!p.relatedTo?.relatedAs)
+		(p.type !== 'animal' && !!requires.relatedAs?.required && !p.related)
 	);
 }
 
@@ -178,7 +177,7 @@ export const emptyMemberPerson = emptyContactBase as IMemberPerson;
 
 export function relatedPersonToPerson(v: IRelatedPerson): IPerson {
 	const v2 = { ...excludeUndefined(v) };
-	delete v2['relatedTo'];
+	delete v2['related'];
 	return v2 as IPerson;
 }
 
@@ -194,24 +193,40 @@ export interface IContactBrief extends IContactBase {
 	readonly parentID?: string;
 }
 
-export interface IContactRelationship extends IWithCreatedOn {}
+export interface IRelationship extends IWithCreatedOn {}
 
-export type IContactRelationships = Readonly<{
-	[relationshipID: string]: IContactRelationship;
+export type IRelationships = Readonly<{
+	[relationshipID: string]: IRelationship;
 }>;
 
-export interface IRelatedContact {
-	readonly relatedAs?: IContactRelationships; // if related contact is a child of the current contact, then relatedAs = {"child": ...}
-	readonly relatesAs?: IContactRelationships; // if related contact is a child of the current contact, then relatesAs = {"parent": ...}
+export interface IRelatedItem {
+	readonly relatedAs?: IRelationships; // if related contact is a child of the current contact, then relatedAs = {"child": ...}
+	readonly relatesAs?: IRelationships; // if related contact is a child of the current contact, then relatesAs = {"parent": ...}
 }
 
-export type IRelatedContacts = Readonly<{
-	[contactID: string]: IRelatedContact;
+export type IRelatedItemsByID = Readonly<{
+	[itemID: string]: IRelatedItem;
 }>;
 
-export interface IContactDto extends IContactBase, IPersonRecord {
-	readonly assets?: IContact2Asset[]; // TODO: document purpose, use cases, examples of usage
-	readonly relatedContacts?: IRelatedContacts;
+export type IRelatedItemsByCollection = Readonly<{
+	[collectionID: string]: IRelatedItemsByID;
+}>;
+
+export type IRelatedItemsByModule = Readonly<{
+	[moduleID: string]: IRelatedItemsByCollection;
+}>;
+
+export type IRelatedItemsByTeam = Readonly<{
+	[teamID: string]: IRelatedItemsByModule;
+}>;
+
+export interface IWithRelated {
+	readonly related?: IRelatedItemsByTeam;
+	readonly relatedIDs?: readonly string[];
+}
+
+export interface IContactDto extends IContactBase, IPersonRecord, IWithRelated {
+	readonly assets?: IContact2Asset[]; // TODO: Remove as it can be replaced with IWithRelatedItems?
 }
 
 export interface IContactsBrief {

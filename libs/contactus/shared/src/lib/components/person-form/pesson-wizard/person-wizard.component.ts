@@ -21,6 +21,7 @@ import {
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
+	IRelationships,
 	isNameEmpty,
 	MemberContactType,
 	PetKind,
@@ -274,22 +275,37 @@ export class PersonWizardComponent implements OnChanges {
 		);
 	}
 
-	protected onRelationshipChanged(relatedAs: string): void {
+	protected onRelationshipChanged(relatedAs: IRelationships): void {
 		console.log('onRelationshipChanged()', relatedAs);
+		// const relationshipIDs = Object.keys(relatedAs);
+		/*
+      moduleID: 'contactus',
+      collection: 'contacts',
+      itemID: '',
+      relatedAs: relationshipIDs,
+
+
+ */
+		const teamID = this.team?.id || '';
+		const itemID = '';
+
 		this.setRelatedPerson(
 			{
 				...this.newPerson,
-				relatedTo: {
-					moduleID: 'contactus',
-					collection: 'contacts',
-					itemID: '',
-					relatedAs: relatedAs,
+				related: {
+					[teamID]: {
+						contactus: {
+							[itemID]: { relatedAs },
+						},
+					},
 				},
 			},
 			{ name: 'relatedAs', hasValue: !!relatedAs },
 		);
 		if (!this.newPerson.ageGroup) {
-			const relationship = this.newPerson.relatedTo?.relatedAs;
+			const relationship = Object.keys(relatedAs || []).length
+				? Object.keys(relatedAs)[0]
+				: undefined;
 			if (
 				relationship === 'parent' ||
 				relationship === 'spouse' ||
@@ -426,7 +442,11 @@ export class PersonWizardComponent implements OnChanges {
 			case 'gender':
 				return !!p.gender;
 			case 'relatedAs':
-				return !!p.relatedTo?.relatedAs;
+				return (
+					Object.keys(
+						p.related?.[this.team?.id || '']?.['contactus']?.['contacts'] || {},
+					).length > 0
+				);
 			case 'roles':
 				return !!p.roles?.length;
 		}
