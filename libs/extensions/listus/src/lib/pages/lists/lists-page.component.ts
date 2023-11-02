@@ -5,10 +5,7 @@ import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
 import { IListGroup, IListInfo, ListType } from '@sneat/dto';
 import { TeamBaseComponent } from '@sneat/team-components';
-import {
-	createShortCommuneInfoFromDto,
-	ITeamContext,
-} from '@sneat/team-models';
+import { createShortTeamInfoFromDto, ITeamContext } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
@@ -386,7 +383,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 				if (!passedList.team && team.type === 'personal') {
 					passedList = {
 						...passedList,
-						team: createShortCommuneInfoFromDto(team),
+						team: createShortTeamInfoFromDto(team),
 					};
 				}
 				const matchedList = ((listGroup && listGroup.lists) || []).find(
@@ -466,7 +463,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 						matchedList.id = passedList.id;
 					}
 					if (!matchedList.team) {
-						matchedList.team = createShortCommuneInfoFromDto(team);
+						matchedList.team = createShortTeamInfoFromDto(team);
 					}
 				}
 			});

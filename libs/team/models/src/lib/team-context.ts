@@ -107,9 +107,7 @@ export interface IListContext
 	type?: ListType;
 }
 
-export function createShortCommuneInfoFromDto(
-	team: ITeamContext,
-): IShortTeamInfo {
+export function createShortTeamInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {
 		throw new Error('!team.type');
 	}
