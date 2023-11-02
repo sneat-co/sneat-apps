@@ -1,6 +1,5 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
-import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/dto';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { IContactContext } from '@sneat/team-models';
@@ -11,12 +10,6 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	IContactDto
 > {
 	public contact?: IContactContext;
-
-	public get contactWithBrief(): IIdAndBrief<IContactBrief> | undefined {
-		return this.contact?.brief
-			? (this.contact as IIdAndBrief<IContactBrief>)
-			: undefined;
-	}
 
 	protected constructor(
 		className: string,

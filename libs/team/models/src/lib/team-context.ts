@@ -91,6 +91,12 @@ export interface IContactContext
 	parentContact?: IContactContext;
 }
 
+// export interface IContactContextWithBrief
+// 	extends ITeamItemNavContext<IContactBrief, IContactDto> {
+// 	brief: IContactBrief;
+// 	parentContact?: IContactContext;
+// }
+
 export interface IListKey {
 	id: string;
 	type: ListType;

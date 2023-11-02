@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { countryFlagEmoji } from '@sneat/components';
-import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
 import {
 	ContactRole,
 	ContactType,
@@ -39,15 +39,12 @@ export class ContactInputComponent implements OnChanges {
 	@Input() subLabel = 'by';
 	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
-	@Input() parentContact?: IIdAndBriefAndOptionalDto<
-		IContactBrief,
-		IContactDto
-	>;
+	@Input() parentContact?: IContactContext;
 	@Input() deleting = false;
-	@Input() contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>;
+	@Input() contact?: IContactContext;
 
 	@Output() readonly contactChange = new EventEmitter<
-		IIdAndBrief<IContactBrief>
+		undefined | IContactContext
 	>();
 
 	protected readonly labelText = () =>
@@ -85,7 +82,7 @@ export class ContactInputComponent implements OnChanges {
 
 	private getTitle(
 		showFlag: boolean,
-		contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>,
+		contact?: IIdAndOptionalBriefAndOptionalDto<IContactBrief, IContactDto>,
 	): string {
 		if (!contact) {
 			return '';

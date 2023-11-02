@@ -10,17 +10,20 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { excludeEmpty, IIdAndBrief, IIdAndDto } from '@sneat/core';
+import { excludeEmpty } from '@sneat/core';
 import {
 	ContactRole,
 	ContactType,
 	IContactBrief,
-	IContactDto,
 	validateAddress,
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ICreateContactCompanyRequest, ITeamContext } from '@sneat/team-models';
+import {
+	IContactContext,
+	ICreateContactCompanyRequest,
+	ITeamContext,
+} from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-new-company-form',
@@ -31,15 +34,15 @@ export class NewCompanyFormComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
-	@Input() parentContact?: IIdAndBrief<IContactBrief>;
+	@Input() parentContact?: IContactContext;
 
-	@Output() contactCreated = new EventEmitter<IIdAndDto<IContactDto>>();
+	@Output() contactCreated = new EventEmitter<IContactContext>();
 
 	protected readonly Object = Object;
 
 	protected isCreating = false;
 
-	protected contact?: IIdAndDto<IContactDto>;
+	protected contact?: IContactContext;
 
 	protected readonly form = new FormGroup({
 		role: new FormControl<ContactRole | undefined>(
@@ -59,7 +62,7 @@ export class NewCompanyFormComponent implements OnChanges {
 		if (changes['team'] && this.team) {
 			if (!this.contact) {
 				const brief: IContactBrief = { type: 'company' };
-				this.contact = { id: '', dto: brief };
+				this.contact = { id: '', dto: brief, team: this.team };
 				// } else {
 				// 	this.contact = { ...this.contact, team: this.team };
 			}
@@ -82,7 +85,7 @@ export class NewCompanyFormComponent implements OnChanges {
 		}
 	}
 
-	onContactChanged(contact: IIdAndDto<IContactDto>): void {
+	onContactChanged(contact: IContactContext): void {
 		console.log('onContactChanged()', contact);
 		this.contact = contact;
 	}

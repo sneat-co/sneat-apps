@@ -15,7 +15,9 @@ export class ContactWithRefNumComponent {
 	@Input() contactRole?: ContactRole;
 
 	@Input() contact?: IContactContext;
-	@Output() readonly contactChange = new EventEmitter<IContactContext>();
+	@Output() readonly contactChange = new EventEmitter<
+		undefined | IContactContext
+	>();
 
 	@Input() refNumber = '';
 	@Output() readonly refNumberChange = new EventEmitter<string>();
@@ -24,7 +26,11 @@ export class ContactWithRefNumComponent {
 		return 12 - this.contactColSize;
 	}
 
-	onRefNumberChange(): void {
+	protected onRefNumberChange(): void {
 		this.refNumberChange.emit(this.refNumber);
+	}
+
+	protected onContactChanged(contact?: IContactContext): void {
+		this.contactChange.emit(contact);
 	}
 }

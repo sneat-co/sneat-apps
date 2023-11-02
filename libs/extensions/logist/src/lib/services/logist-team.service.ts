@@ -53,7 +53,7 @@ function logistTeamDocRef(
 	const teamsCollection = collection(afs, 'teams');
 	const teamRef = doc(teamsCollection, teamID);
 	const modulesCollection = collection(teamRef, 'modules');
-	return doc<ILogistTeamDto>(
+	return doc(
 		modulesCollection as CollectionReference<ILogistTeamDto>,
 		'logistus',
 	);

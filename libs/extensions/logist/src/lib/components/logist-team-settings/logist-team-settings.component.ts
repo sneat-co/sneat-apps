@@ -46,7 +46,7 @@ export class LogistTeamSettingsComponent
 	private addressForm?: AddressForm;
 	protected address?: IAddress | null; // undefined means loading, null means no address
 
-	protected roles: string[] = [];
+	protected roles: readonly string[] = [];
 
 	readonly vatNumber = new FormControl<string>('', {
 		validators: [Validators.minLength(5), Validators.maxLength(20)],

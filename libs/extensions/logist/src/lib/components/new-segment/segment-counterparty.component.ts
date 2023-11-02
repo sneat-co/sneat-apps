@@ -35,7 +35,7 @@ export class SegmentCounterpartyComponent {
 		this.endpointTypeChange.emit(this.endpointType);
 	}
 
-	onContactChanged(contact: IContactContext): void {
+	onContactChanged(contact?: IContactContext): void {
 		console.log('SegmentCounterpartyComponent.onContactChanged', contact);
 		this.contactChange.emit(contact);
 	}

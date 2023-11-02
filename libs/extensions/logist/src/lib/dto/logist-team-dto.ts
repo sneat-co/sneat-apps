@@ -52,7 +52,7 @@ export interface ILogistTeamDto extends ILogistTeamBrief {}
 export type ILogistTeamContext = INavContext<ILogistTeamBrief, ILogistTeamDto>;
 
 export interface ISetLogistTeamSettingsRequest extends ITeamRequest {
-	roles: string[];
+	roles: readonly string[];
 	address: IAddress;
 	vatNumber?: string;
 	orderNumberPrefix?: string;

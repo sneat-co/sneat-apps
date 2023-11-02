@@ -11,7 +11,6 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
-import { IIdAndBrief, IIdAndBriefAndDto, IIdAndDto } from '@sneat/core';
 import {
 	ContactRole,
 	ContactType,
@@ -21,7 +20,11 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ICreateContactRequest, ITeamContext } from '@sneat/team-models';
+import {
+	IContactContext,
+	ICreateContactRequest,
+	ITeamContext,
+} from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-location-form',
@@ -31,16 +34,14 @@ export class LocationFormComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
-	@Input() contact?: IIdAndDto<IContactDto>;
-	@Input() parentContact?: IIdAndBrief<IContactBrief>;
+	@Input() contact?: IContactContext;
+	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
 	@Input() contactType: ContactType = 'location';
 
-	@Output() readonly contactChange = new EventEmitter<IIdAndDto<IContactDto>>();
-	@Output() readonly contactCreated = new EventEmitter<
-		IIdAndDto<IContactDto>
-	>();
+	@Output() readonly contactChange = new EventEmitter<IContactContext>();
+	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
 
 	@ViewChild('titleInput', { static: false }) titleInput?: IonInput;
 
@@ -93,6 +94,7 @@ export class LocationFormComponent implements OnChanges {
 				id: '',
 				// team: this.team,
 				dto: brief,
+				team: this.team,
 			};
 		}
 		const title = this.title.value || '';
@@ -108,9 +110,7 @@ export class LocationFormComponent implements OnChanges {
 		this.contactChange.emit(this.contact);
 	}
 
-	private readonly onContactCreated = (
-		contact: IIdAndBriefAndDto<IContactBrief, IContactDto>,
-	): void => {
+	private readonly onContactCreated = (contact: IContactContext): void => {
 		if (!this.team) {
 			return;
 		}
@@ -129,6 +129,7 @@ export class LocationFormComponent implements OnChanges {
 					id: this.contact?.id || '',
 					// team: this.team,
 					dto: { type: this.contactType },
+					team: this.team,
 				};
 				this.emitContactChange();
 			}

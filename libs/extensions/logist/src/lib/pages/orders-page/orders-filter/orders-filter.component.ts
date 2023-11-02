@@ -30,7 +30,7 @@ export class OrdersFilterComponent {
 
 	protected onContactChanged(
 		role: ContactRole,
-		contact: IContactContext,
+		contact?: IContactContext,
 	): void {
 		this.contactByRole[role] = contact;
 		this.counterpartyID = contact?.id || '';

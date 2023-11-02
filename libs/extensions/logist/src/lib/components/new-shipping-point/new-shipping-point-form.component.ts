@@ -34,7 +34,7 @@ export class NewShippingPointFormComponent {
 		private readonly orderService: LogistOrderService,
 	) {}
 
-	protected onContactChanged(contact: IContactContext): void {
+	protected onContactChanged(contact?: IContactContext): void {
 		this.contact = contact;
 	}
 

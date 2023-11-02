@@ -101,7 +101,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 		}
 	}
 
-	onByContactChanged(contact: IContactContext): void {
+	onByContactChanged(contact?: IContactContext): void {
 		console.log('NewSegmentComponent.onByContactChanged()', contact);
 		if (this.byContact && this.byRefNumber) {
 			this.byRefNumber = '';

@@ -1,33 +1,27 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { IIdAndBrief, IIdAndBriefAndDto } from '@sneat/core';
-import {
-	ContactRole,
-	ContactType,
-	IContactBrief,
-	IContactDto,
-} from '@sneat/dto';
+import { ContactRole, ContactType } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ICreateContactBasicRequest, ITeamContext } from '@sneat/team-models';
+import {
+	IContactContext,
+	ICreateContactBasicRequest,
+	ITeamContext,
+} from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-basic-contact-form',
 	templateUrl: './basic-contact-form.component.html',
 })
 export class BasicContactFormComponent {
-	@Input() parentContact?: IIdAndBrief<IContactBrief>;
+	@Input() parentContact?: IContactContext;
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() contactType?: ContactType;
 
 	// @Input() contactRole?: ContactRole; // use contactRoles to support multiple roles
 	@Input() contactRoles?: ContactRole[];
 
-	@Output() readonly contactChange = new EventEmitter<
-		IIdAndBrief<IContactBrief>
-	>();
-	@Output() readonly contactCreated = new EventEmitter<
-		IIdAndBriefAndDto<IContactBrief, IContactDto>
-	>();
+	@Output() readonly contactChange = new EventEmitter<IContactContext>();
+	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
 
 	isSubmitting = false;
 	isCreated = false;

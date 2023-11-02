@@ -13,8 +13,8 @@ export class LogistTeamRolesComponent {
 		.sort((a, b) => (a[1] > b[1] ? 1 : -1))
 		.map((role) => ({ id: role[0] as LogistTeamRole, title: role[1] }));
 
-	@Input() selectedRoles: string[] = [];
-	@Output() selectedRolesChange = new EventEmitter<string[]>();
+	@Input() selectedRoles: readonly string[] = [];
+	@Output() selectedRolesChange = new EventEmitter<readonly string[]>();
 
 	protected onRoleChanged(event: Event): void {
 		console.log('onRoleChanged', event);
