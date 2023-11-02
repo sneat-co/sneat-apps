@@ -111,5 +111,9 @@ export function createShortTeamInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {
 		throw new Error('!team.type');
 	}
-	return { id: team.id, title: team.brief?.title, type: team.type };
+	return {
+		id: team.id,
+		type: team.type,
+		title: team?.dto?.title || team.brief?.title,
+	};
 }
