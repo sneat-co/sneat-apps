@@ -12,7 +12,7 @@ export const SneatApiAuthTokenProvider = new InjectionToken(
 );
 export const SneatApiBaseUrl = new InjectionToken('SneatApiBaseUrl');
 export const DefaultSneatTeamApiBaseUrl = 'https://api.sneat.team/v0/';
-export const DefaultSneatAppApiBaseUrl = 'https://sneat.eu/v0/';
+export const DefaultSneatAppApiBaseUrl = 'https://api.sneat.app/v0/';
 
 @Injectable({ providedIn: 'root' }) // Should it be in root? Probably it is OK.
 export class SneatApiService implements ISneatApiService, OnDestroy {
