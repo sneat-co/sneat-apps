@@ -1,8 +1,11 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
-import { IContactBrief, IContactDto } from '@sneat/dto';
+import {
+	IContactBrief,
+	IContactDto,
+	IContactContext,
+} from '@sneat/contactus-core';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
-import { IContactContext } from '@sneat/team-models';
 import { Observable, throwError } from 'rxjs';
 
 export abstract class ContactBasePage extends TeamItemPageBaseComponent<

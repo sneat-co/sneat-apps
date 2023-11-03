@@ -3,14 +3,14 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { getContactTitle } from '@sneat/components';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IContactBrief,
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
 	InviteChannel,
-	ITeamContext,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext } from '@sneat/team-models';
 import { InviteService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 

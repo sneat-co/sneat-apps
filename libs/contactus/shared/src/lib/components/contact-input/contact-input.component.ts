@@ -14,9 +14,10 @@ import {
 	ContactType,
 	IContactBrief,
 	IContactDto,
-} from '@sneat/dto';
+	IContactContext,
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import {
 	ContactSelectorService,
 	IContactSelectorOptions,

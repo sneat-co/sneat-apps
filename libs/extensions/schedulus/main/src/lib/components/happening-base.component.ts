@@ -11,14 +11,14 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { IIdAndBrief, isoStringsToDate } from '@sneat/core';
-import { IContactBrief, WeekdayCode2 } from '@sneat/dto';
+import { WeekdayCode2 } from '@sneat/dto';
 import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
-	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,

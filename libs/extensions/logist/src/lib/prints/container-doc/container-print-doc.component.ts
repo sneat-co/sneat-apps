@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IAddress } from '@sneat/dto';
+import { IAddress } from '@sneat/contactus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	IContainerPoint,

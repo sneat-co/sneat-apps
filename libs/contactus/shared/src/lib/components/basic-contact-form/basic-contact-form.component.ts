@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { ContactRole, ContactType } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/contactus-services';
 import {
+	ContactRole,
+	ContactType,
 	IContactContext,
 	ICreateContactBasicRequest,
-	ITeamContext,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/contactus-services';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-basic-contact-form',

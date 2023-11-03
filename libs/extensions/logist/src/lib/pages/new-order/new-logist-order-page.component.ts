@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { excludeUndefined } from '@sneat/core';
-import { IContactContext } from '@sneat/team-models';
+import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem } from '@sneat/components';
 import {

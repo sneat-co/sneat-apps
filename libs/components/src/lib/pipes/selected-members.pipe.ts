@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief } from '@sneat/contactus-core';
 
 @Pipe({ name: 'selectedMembers' })
 export class SelectedMembersPipe implements PipeTransform {

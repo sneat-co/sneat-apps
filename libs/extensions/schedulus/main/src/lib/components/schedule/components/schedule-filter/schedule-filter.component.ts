@@ -9,13 +9,10 @@ import {
 import { FormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief, WeekdayCode2 } from '@sneat/dto';
+import { IContactusTeamDtoAndID, IContactBrief } from '@sneat/contactus-core';
+import { WeekdayCode2 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	IContactusTeamDtoAndID,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import {
 	emptyScheduleFilter,
 	ScheduleFilterService,

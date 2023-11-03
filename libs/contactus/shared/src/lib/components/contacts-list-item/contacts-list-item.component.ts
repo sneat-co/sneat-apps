@@ -6,7 +6,7 @@ import {
 	IContactDto,
 	IRelationships,
 	IRelatedItem,
-} from '@sneat/dto';
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';

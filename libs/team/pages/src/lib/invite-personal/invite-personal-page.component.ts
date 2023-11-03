@@ -2,7 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief, IMemberBrief } from '@sneat/dto';
+import {
+	IContactBrief,
+	IMemberBrief,
+	IAcceptPersonalInviteRequest,
+	IPersonalInvite,
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
 import {
@@ -12,8 +17,6 @@ import {
 import { SneatUserService } from '@sneat/auth-core';
 import { MemberService } from '@sneat/contactus-services';
 import {
-	IAcceptPersonalInviteRequest,
-	IPersonalInvite,
 	IRejectPersonalInviteRequest,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';

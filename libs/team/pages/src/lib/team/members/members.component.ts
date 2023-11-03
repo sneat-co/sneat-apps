@@ -12,13 +12,11 @@ import {
 	MemberRole,
 	MemberRoleContributor,
 	MemberRoleSpectator,
-} from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
 	IContactusTeamDto,
 	IContactusTeamDtoAndID,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { TeamNavService, TeamService } from '@sneat/team-services';
 
 @Component({

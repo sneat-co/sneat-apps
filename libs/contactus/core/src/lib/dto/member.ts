@@ -1,15 +1,11 @@
-import { IAvatar } from '@sneat/auth-models';
+import { IAvatar, TeamMemberType } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { IContactGroupBrief } from './contact-group';
-import { ITeamMemberInfo } from './dto-commune';
-import {
-	IPersonRecord,
-	ITitledRecordInfo,
-	ITotalsHolder,
-	IVerification,
-} from './dto-models';
-import { IContactBrief } from './dto-contact';
-import { TeamMemberType } from './types';
+import { ITitledRecordInfo, ITotalsHolder, IVerification } from '@sneat/dto';
+import { IContactBrief } from './contact';
+import { IPersonRecord, ITeamMemberInfo } from './person';
+
+export type MembersVisibility = 'private' | 'protected' | 'public';
 
 export const RoleTeamMember = 'member';
 export const MemberRoleContributor = 'contributor';
@@ -113,3 +109,14 @@ export function memberDtoFromMemberInfo(
 export interface ICommuneDtoMemberGroupInfo extends ITitledRecordInfo {
 	members: number;
 }
+
+export const MemberGroupTypeAdults = 'adults';
+export const MemberGroupTypeKids = 'kids';
+export const MemberGroupTypePets = 'pets';
+export const MemberGroupTypeOther = 'other';
+
+export type MemberGroupType =
+	| typeof MemberGroupTypeAdults
+	| typeof MemberGroupTypeKids
+	| typeof MemberGroupTypePets
+	| typeof MemberGroupTypeOther;

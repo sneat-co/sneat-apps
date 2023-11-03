@@ -16,14 +16,12 @@ import {
 	ContactType,
 	IContactBrief,
 	validateAddress,
-} from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/contactus-services';
-import {
 	IContactContext,
 	ICreateContactCompanyRequest,
-	ITeamContext,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/contactus-services';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-new-company-form',

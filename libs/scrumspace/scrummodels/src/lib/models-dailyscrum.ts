@@ -1,8 +1,8 @@
 import { IAvatar } from '@sneat/auth-models';
 import { Modified } from '@sneat/data';
-import { IMemberBrief, MemberRole } from '@sneat/dto';
+import { IMemberBrief, MemberRole, IBy } from '@sneat/contactus-core';
 import { IMeeting } from '@sneat/meeting';
-import { IBy, ITeamItemNavContext } from '@sneat/team-models';
+import { ITeamItemNavContext } from '@sneat/team-models';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';
 

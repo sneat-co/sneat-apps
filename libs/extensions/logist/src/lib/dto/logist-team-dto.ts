@@ -1,5 +1,5 @@
 import { INavContext } from '@sneat/core';
-import { IAddress } from '@sneat/dto';
+import { IAddress } from '@sneat/contactus-core';
 import { ITeamRequest } from '@sneat/team-models';
 
 export type CounterpartyRole =

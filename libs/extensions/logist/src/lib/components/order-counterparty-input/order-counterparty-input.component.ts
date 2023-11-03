@@ -7,10 +7,14 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { LogistOrderContactRole, ContactType } from '@sneat/dto';
+import {
+	IContactContext,
+	LogistOrderContactRole,
+	ContactType,
+} from '@sneat/contactus-core';
 import { LogistOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import {
 	CounterpartyRole,
 	IDeleteCounterpartyRequest,

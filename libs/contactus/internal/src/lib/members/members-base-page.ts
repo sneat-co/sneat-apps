@@ -1,17 +1,17 @@
 import { ActivatedRoute } from '@angular/router';
 import { TeamMemberType } from '@sneat/auth-models';
 import { IIdAndBriefAndOptionalDto, TeamType } from '@sneat/core';
-import {
-	IContactBrief,
-	IContactDto,
-	isTeamSupportsMemberGroups,
-} from '@sneat/dto';
+import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import {
 	TeamComponentBaseParams,
 	TeamModuleBaseComponent,
 } from '@sneat/team-components';
 import { ContactusTeamService, MemberService } from '@sneat/contactus-services';
-import { IContactusTeamDto } from '@sneat/team-models';
+import {
+	IContactusTeamDto,
+	IContactBrief,
+	IContactDto,
+} from '@sneat/contactus-core';
 
 export abstract class MembersBasePage extends TeamModuleBaseComponent<
 	IContactusTeamDto,

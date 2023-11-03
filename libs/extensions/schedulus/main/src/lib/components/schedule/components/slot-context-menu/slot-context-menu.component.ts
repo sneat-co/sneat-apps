@@ -1,7 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
-import { HappeningStatus, IContactBrief, IHappeningSlot } from '@sneat/dto';
+import { HappeningStatus, IHappeningSlot } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -11,7 +12,6 @@ import {
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
 	HappeningUIState,
-	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,

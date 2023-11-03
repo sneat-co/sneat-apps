@@ -1,4 +1,4 @@
-import { MemberRelationship } from './dto-member';
+// import { MemberRelationship } from './dto-member';
 import { ITitledRecord } from './dto-models';
 import { ICommuneDto } from './dto-commune';
 import { CommuneType, CountryId } from './types';
@@ -8,12 +8,12 @@ export interface IUserCommuneInfo {
 	shortId?: string;
 	title?: string;
 	type: CommuneType;
-	members?: {
-		[id: string]: {
-			relatedAs: MemberRelationship;
-			// title?: string;
-		};
-	};
+	// members?: {
+	// 	[id: string]: {
+	// 		relatedAs: MemberRelationship;
+	// 		// title?: string;
+	// 	};
+	// };
 }
 
 export function createUserCommuneInfoFromCommuneDto(

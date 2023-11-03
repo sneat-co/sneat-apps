@@ -5,15 +5,17 @@ import {
 } from '@angular/fire/auth';
 import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from '@sneat/auth-core';
+import {
+	IAcceptPersonalInviteRequest,
+	ICreatePersonalInviteRequest,
+	ICreatePersonalInviteResponse,
+	IJoinTeamInfoResponse,
+} from '@sneat/contactus-core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
 import {
 	IAcceptInviteResponse,
-	IAcceptPersonalInviteRequest,
-	ICreatePersonalInviteRequest,
-	ICreatePersonalInviteResponse,
-	IJoinTeamInfoResponse,
 	IRejectPersonalInviteRequest,
 } from '@sneat/team-models';
 import { from, Observable, switchMap, throwError } from 'rxjs';

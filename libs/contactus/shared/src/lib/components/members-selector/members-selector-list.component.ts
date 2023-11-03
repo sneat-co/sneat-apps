@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { first, Observable } from 'rxjs';
 

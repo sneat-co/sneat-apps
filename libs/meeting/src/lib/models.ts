@@ -1,6 +1,6 @@
-import { IMemberBrief } from '@sneat/dto';
+import { IMemberBrief } from '@sneat/contactus-core';
 import { ITeamRequest } from '@sneat/team-models';
-import { ITimerState } from './timer/models';
+import { ITimerState } from './timer';
 
 export interface IMeetingRequest extends ITeamRequest {
 	meeting: string;

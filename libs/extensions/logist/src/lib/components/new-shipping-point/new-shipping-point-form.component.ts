@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext } from '@sneat/team-models';
+import { IContactContext } from '@sneat/contactus-core';
 import {
 	IAddOrderShippingPointRequest,
 	ILogistOrderContext,

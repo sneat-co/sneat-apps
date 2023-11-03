@@ -2,11 +2,12 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
+import { IMemberBrief } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';
 import { IUserTeamBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
-import { IMemberBrief, ITeamDto } from '@sneat/dto';
+import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
 

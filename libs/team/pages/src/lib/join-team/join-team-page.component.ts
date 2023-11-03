@@ -13,13 +13,13 @@ import {
 	IPersonFormWizardFields,
 	PersonWizardComponent,
 } from '@sneat/contactus-shared';
-import { emptyContactBase, IRelatedPerson } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	emptyContactBase,
+	IRelatedPerson,
 	IJoinTeamInfoResponse,
-	IRejectPersonalInviteRequest,
-	ITeamContext,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team-models';
 import {
 	InviteService,
 	TeamNavService,

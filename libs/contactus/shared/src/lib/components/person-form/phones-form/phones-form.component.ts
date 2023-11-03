@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IPhone } from '@sneat/dto';
+import { IPhone } from '@sneat/contactus-core';
 
 type PhoneType = 'personal' | 'mobile' | 'work' | 'fax' | 'landline';
 

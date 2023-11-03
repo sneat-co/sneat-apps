@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
-import { emptyMemberPerson, IMemberPerson } from '@sneat/dto';
+import { emptyMemberPerson, IMemberPerson } from '@sneat/contactus-core';
 import {
 	TeamPageBaseComponent,
 	TeamComponentBaseParams,

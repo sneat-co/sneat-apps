@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext } from '@sneat/team-models';
+import { IContactContext } from '@sneat/contactus-core';
 import {
 	ContactSelectorComponent,
 	IContactSelectorProps,

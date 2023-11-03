@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalOptions } from '@ionic/angular';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorModalComponent } from './members-selector-modal.component';

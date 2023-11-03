@@ -2,7 +2,7 @@ import {
 	IContactBrief,
 	IContactGroupBrief,
 	IContactRoleBriefWithID,
-} from '@sneat/dto';
+} from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 
 export interface IContactRoleWithContacts extends IContactRoleBriefWithID {

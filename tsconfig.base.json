@@ -24,6 +24,7 @@
 			"@sneat/auth-ui": ["libs/auth/ui/src/index.ts"],
 			"@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
 			"@sneat/components": ["libs/components/src/index.ts"],
+			"@sneat/contactus-core": ["libs/contactus/core/src/index.ts"],
 			"@sneat/contactus-internal": ["libs/contactus/internal/src/index.ts"],
 			"@sneat/contactus-services": ["libs/contactus/services/src/index.ts"],
 			"@sneat/contactus-shared": ["libs/contactus/shared/src/index.ts"],

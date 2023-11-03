@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PopoverController, PopoverOptions } from '@ionic/angular';
+import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import {
-	ITeamContext,
-	HappeningUIState,
-	IContactusTeamDtoAndID,
-} from '@sneat/team-models';
+import { ITeamContext, HappeningUIState } from '@sneat/team-models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 
 @Component({

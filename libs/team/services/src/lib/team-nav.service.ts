@@ -2,6 +2,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
+import { IContactContext, IContactusTeamDto } from '@sneat/contactus-core';
 import {
 	AnalyticsService,
 	IAnalyticsService,
@@ -11,12 +12,7 @@ import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
-import {
-	IContactContext,
-	IContactusTeamDto,
-	ITeamContext,
-	ITeamRef,
-} from '@sneat/team-models';
+import { ITeamContext, ITeamRef } from '@sneat/team-models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 

@@ -2,6 +2,11 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
+import {
+	IContactBrief,
+	IContactContext,
+	IContactusTeamDtoAndID,
+} from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import {
 	IDocTypeStandardFields,
@@ -10,7 +15,6 @@ import {
 	IDocumentMainData,
 	AssetDocumentType,
 	standardDocTypesByID,
-	IContactBrief,
 } from '@sneat/dto';
 import {
 	AddAssetBaseComponent,
@@ -24,8 +28,6 @@ import {
 } from '@sneat/contactus-services';
 import {
 	IAssetContext,
-	IContactContext,
-	IContactusTeamDtoAndID,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';

@@ -17,13 +17,17 @@ import {
 	SelectFromListModule,
 	SelectorBaseComponent,
 } from '@sneat/components';
-import { ContactRole, ContactType } from '@sneat/dto';
+import {
+	ContactRole,
+	ContactType,
+	IContactContext,
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ContactService,
 	ContactusTeamService,
 } from '@sneat/contactus-services';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormModule } from '../location-form';

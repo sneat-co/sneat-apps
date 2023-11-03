@@ -16,7 +16,7 @@ import {
 } from '@sneat/components';
 import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
-import { IAddress } from '@sneat/dto';
+import { IAddress } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';

@@ -19,17 +19,15 @@ import {
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonNotReady,
-} from '@sneat/dto';
+	IContactContext,
+	ICreateContactRequest,
+} from '@sneat/contactus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import {
-	IAssetContext,
-	IContactContext,
-	ICreateContactRequest,
-} from '@sneat/team-models';
+import { IAssetContext } from '@sneat/team-models';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,

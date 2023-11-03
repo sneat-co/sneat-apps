@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
-import { IName, IPerson, IPersonBrief } from '@sneat/dto';
+import { IName, IPerson, IPersonBrief } from '@sneat/contactus-core';
 
 export function personName(name?: IName): string | undefined {
 	return (

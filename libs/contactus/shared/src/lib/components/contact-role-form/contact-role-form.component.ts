@@ -13,7 +13,10 @@ import {
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndDto } from '@sneat/core';
-import { IContactGroupDto, IContactRoleBriefWithID } from '@sneat/dto';
+import {
+	IContactGroupDto,
+	IContactRoleBriefWithID,
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';

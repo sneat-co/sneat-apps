@@ -1,4 +1,6 @@
-import { DtoGroupTerms, IContactRoleBriefWithID, MembersVisibility } from '.';
+import { IContactRoleBriefWithID } from './contact-roles';
+import { DtoGroupTerms } from './term';
+import { MembersVisibility } from './member';
 
 export interface IContactGroupBrief {
 	readonly emoji?: string;

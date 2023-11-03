@@ -14,12 +14,9 @@ import {
 	IContactDto,
 	IRelatedItem,
 	IRelationships,
-} from '@sneat/dto';
-import {
 	IContactContext,
-	ITeamRef,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { ITeamRef, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactContactsComponent } from '../contact-contacts';

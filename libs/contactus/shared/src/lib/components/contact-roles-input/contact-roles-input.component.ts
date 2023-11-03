@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { IIdAndBrief } from '@sneat/core';
-import { ContactRole, ContactType, IContactBrief } from '@sneat/dto';
+import { ContactRole, ContactType, IContactBrief } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ContactService,

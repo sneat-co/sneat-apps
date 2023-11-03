@@ -3,17 +3,18 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief, IMemberBrief, trimNames } from '@sneat/dto';
-import { TeamService } from '@sneat/team-services';
-import { ContactService } from './contact-service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
+	IContactBrief,
+	IMemberBrief,
+	trimNames,
 	IAcceptPersonalInviteRequest,
 	IAddTeamMemberResponse,
 	ICreateTeamMemberRequest,
-	ITeamContext,
-	ITeamItemBriefWithTeamRef,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { TeamService } from '@sneat/team-services';
+import { ContactService } from './contact-service';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext, ITeamItemBriefWithTeamRef } from '@sneat/team-models';
 import { Observable } from 'rxjs';
 import { ContactusTeamService } from './contactus-team.service';
 

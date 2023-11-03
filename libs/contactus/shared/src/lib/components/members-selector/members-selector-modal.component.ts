@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Observable } from 'rxjs';
 import { ISelectMembersOptions } from './members-selector.options';

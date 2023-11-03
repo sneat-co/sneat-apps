@@ -8,7 +8,7 @@ import {
 	ContactComponentBaseParams,
 	ContactDetailsComponent,
 } from '@sneat/contactus-shared';
-import { MemberRelationship } from '@sneat/dto';
+import { MemberRelationship } from '@sneat/contactus-core';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 import { MemberBasePage } from '../member-base-page';
 

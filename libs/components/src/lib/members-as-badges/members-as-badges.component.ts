@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief } from '@sneat/contactus-core';
 import { SneatPipesModule } from '../pipes';
 
 @Component({

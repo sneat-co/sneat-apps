@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { formNexInAnimation, TeamType } from '@sneat/core';
-import { AgeGroupID } from '@sneat/dto';
+import { AgeGroupID } from '@sneat/contactus-core';
 
 @Component({
 	selector: 'sneat-age-group-form',

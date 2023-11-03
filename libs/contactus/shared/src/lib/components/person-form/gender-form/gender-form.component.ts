@@ -11,7 +11,7 @@ import {
 	GenderOther,
 	GenderUndisclosed,
 	GenderUnknown,
-} from '@sneat/dto';
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 const animationTimings = '150ms';

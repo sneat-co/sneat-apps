@@ -8,7 +8,7 @@ import {
 	IContactRoleWithContacts,
 } from '../..';
 import { eq } from '@sneat/core';
-import { ContactRole, IContactBrief } from '@sneat/dto';
+import { ContactRole, IContactBrief } from '@sneat/contactus-core';
 import {
 	ContactNavService,
 	defaultFamilyContactGroups,

@@ -1,7 +1,6 @@
 import { IListGroupsHolder } from './dto-list';
-import { ICommuneDtoMemberGroupInfo, MemberRole } from './dto-member';
+// import { ICommuneDtoMemberGroupInfo } from './dto-member';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
-import { IPerson } from './dto-contact';
 import { ITeamDto } from './dto-team';
 import { CommuneType, CountryId } from './types';
 
@@ -78,14 +77,6 @@ export function newTeamCounts(numberOf?: TeamCounts): TeamCounts {
 	};
 }
 
-export interface ITeamMemberInfo extends IPerson {
-	readonly id?: string;
-	readonly userID?: string;
-	readonly title?: string;
-	readonly groupIDs?: readonly string[];
-	readonly roles?: readonly MemberRole[];
-}
-
 export interface ICommuneDto
 	extends IDemoRecord,
 		ITitledRecord,
@@ -99,27 +90,27 @@ export interface ICommuneDto
 	readonly numberOf?: TeamCounts;
 	readonly membersCountByRole?: { [id: string]: number };
 	readonly noContactRoles?: string[];
-	readonly groups?: ICommuneDtoMemberGroupInfo[];
-	readonly members?: readonly ITeamMemberInfo[];
+	// readonly groups?: ICommuneDtoMemberGroupInfo[];
+	// readonly members?: readonly ITeamMemberInfo[];
 }
 
 export function isCommuneShouldHoldMembersInfo(type: CommuneType): boolean {
 	return type === 'family' || type === 'cohabit';
 }
 
-export function findCommuneMemberInfo(
-	members: readonly ITeamMemberInfo[],
-	member: { readonly id?: string; readonly userID?: string },
-): ITeamMemberInfo | undefined {
-	return (
-		members &&
-		members.find(
-			(m) =>
-				(m && !!m.id && m.id === member.id) ||
-				(!!m.userID && m.userID === member.userID),
-		)
-	);
-}
+// export function findCommuneMemberInfo(
+// 	members: readonly ITeamMemberInfo[],
+// 	member: { readonly id?: string; readonly userID?: string },
+// ): ITeamMemberInfo | undefined {
+// 	return (
+// 		members &&
+// 		members.find(
+// 			(m) =>
+// 				(m && !!m.id && m.id === member.id) ||
+// 				(!!m.userID && m.userID === member.userID),
+// 		)
+// 	);
+// }
 
 export const personalCommuneIdPrefix = 'u_';
 

@@ -10,12 +10,11 @@ import {
 import { IHappeningBase } from '@sneat/dto';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import {
-	IContactContext,
-	IContactusTeamDtoAndID,
 	IHappeningContext,
 	ITeamContext,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
+import { IContactContext, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import {
 	HappeningService,
 	IHappeningMemberRequest,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { IContactBrief } from '@sneat/dto';
-import { IContactusTeamDto, ITeamContext } from '@sneat/team-models';
+import { IContactBrief, IContactusTeamDto } from '@sneat/contactus-core';
+import { ITeamContext } from '@sneat/team-models';
 import { TeamModuleService } from '@sneat/team-services';
 
 @Injectable({ providedIn: 'root' }) // TODO: Do not provide in root

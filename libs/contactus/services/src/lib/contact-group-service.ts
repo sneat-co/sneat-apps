@@ -7,7 +7,7 @@ import {
 	IContactGroupBrief,
 	IContactGroupDto,
 	IContactRoleBriefWithID,
-} from '@sneat/dto';
+} from '@sneat/contactus-core';
 import { ITeamContext, ITeamRef } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable, of } from 'rxjs';

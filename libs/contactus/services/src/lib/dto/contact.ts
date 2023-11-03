@@ -1,4 +1,5 @@
-import { AgeGroupID, IAddress, IRelatedToRequest } from '@sneat/dto';
+import { AgeGroupID, IRelatedToRequest } from '@sneat/contactus-core';
+import { IAddress } from '@sneat/contactus-core';
 import { ITeamRequest } from '@sneat/team-models';
 
 export interface IContactRequest extends ITeamRequest {

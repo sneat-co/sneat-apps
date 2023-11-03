@@ -2,12 +2,12 @@ import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ISelectItem } from '@sneat/components';
-import { ContactRole } from '@sneat/dto';
+import { ContactRole } from '@sneat/contactus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { IContactContext } from '@sneat/team-models';
+import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
 
 @Component({

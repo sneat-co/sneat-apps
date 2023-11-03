@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
-import { PetKind } from '@sneat/dto';
+import { PetKind } from '@sneat/contactus-core';
 
 @Component({
 	selector: 'sneat-pet-kind',

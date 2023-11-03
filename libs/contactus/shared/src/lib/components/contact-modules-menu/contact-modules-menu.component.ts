@@ -6,7 +6,7 @@ import {
 	IIdAndBrief,
 	ISneatExtension,
 } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief } from '@sneat/contactus-core';
 import { ITeamContext } from '@sneat/team-models';
 
 @Component({

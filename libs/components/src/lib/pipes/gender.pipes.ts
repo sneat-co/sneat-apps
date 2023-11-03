@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Gender } from '@sneat/dto';
+import { Gender } from '@sneat/contactus-core';
 
 @Pipe({ name: 'genderIconName' })
 export class GenderIconNamePipe implements PipeTransform {

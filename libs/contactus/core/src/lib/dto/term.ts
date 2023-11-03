@@ -1,5 +1,4 @@
-import { ITitledRecord, IWithTeamIDs } from './dto-models';
-import { IPrice } from './dto-pricing';
+import { IPrice, ITitledRecord, IWithTeamIDs } from '@sneat/dto';
 
 export interface DtoTerm extends IWithTeamIDs, ITitledRecord {
 	status: 'active' | 'archived';

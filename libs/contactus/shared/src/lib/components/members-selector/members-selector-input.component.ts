@@ -1,13 +1,9 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import {
-	IContactusTeamDtoAndID,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorService } from './members-selector.service';
 

@@ -8,10 +8,10 @@ import {
 	IContactBrief,
 	IContactDto,
 	MemberRole,
-} from '@sneat/dto';
-import {
 	IContactContext,
 	ICreateContactRequest,
+} from '@sneat/contactus-core';
+import {
 	ITeamContext,
 	ITeamItemWithBriefAndDto,
 	ITeamItemWithOptionalBriefAndOptionalDto,

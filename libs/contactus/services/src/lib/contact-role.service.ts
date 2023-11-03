@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactRoleBrief } from '@sneat/dto';
+import { IContactRoleBrief } from '@sneat/contactus-core';
 import { Observable, of } from 'rxjs';
 import { defaultFamilyContactGroups } from './contact-group-service';
 

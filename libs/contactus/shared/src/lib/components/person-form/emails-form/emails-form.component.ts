@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IEmail } from '@sneat/dto';
+import { IEmail } from '@sneat/contactus-core';
 
 type EmailType = 'personal' | 'work';
 

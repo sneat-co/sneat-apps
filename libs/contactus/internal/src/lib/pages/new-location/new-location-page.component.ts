@@ -7,7 +7,7 @@ import {
 	ContactComponentBaseParams,
 	LocationFormModule,
 } from '@sneat/contactus-shared';
-import { IContactContext } from '@sneat/team-models';
+import { IContactContext } from '@sneat/contactus-core';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

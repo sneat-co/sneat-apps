@@ -7,7 +7,11 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ContactRole, ContactType, LogistOrderContactRole } from '@sneat/dto';
+import {
+	ContactRole,
+	ContactType,
+	LogistOrderContactRole,
+} from '@sneat/contactus-core';
 import {
 	ContactSelectorService,
 	IContactSelectorOptions,

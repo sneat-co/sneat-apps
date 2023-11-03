@@ -18,7 +18,7 @@ import {
 } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IIdAndBrief, listAddRemoveAnimation } from '@sneat/core';
-import { AgeGroupID, IContactBrief } from '@sneat/dto';
+import { AgeGroupID, IContactBrief } from '@sneat/contactus-core';
 import {
 	ScheduleNavService,
 	ScheduleNavServiceModule,
@@ -32,7 +32,8 @@ import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { IContactusTeamDtoAndID, ITeamContext } from '@sneat/team-models';
+import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { ITeamContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';

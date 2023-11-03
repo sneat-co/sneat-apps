@@ -12,6 +12,7 @@ import {
 	SneatAuthStateService,
 } from '@sneat/auth-core';
 import { IUserTeamBrief } from '@sneat/auth-models';
+import { IJoinTeamInfoResponse } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
@@ -19,7 +20,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICreateTeamRequest,
 	ICreateTeamResponse,
-	IJoinTeamInfoResponse,
 	ITeamContext,
 	ITeamRef,
 	zipMapBriefsWithIDs,

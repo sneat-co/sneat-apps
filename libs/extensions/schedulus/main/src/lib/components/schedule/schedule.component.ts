@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
+import { IMemberContext } from '@sneat/contactus-core';
 import { dateToIso, localDateToIso } from '@sneat/core';
 import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
@@ -20,7 +21,6 @@ import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	IHappeningContext,
 	IHappeningWithUiState,
-	IMemberContext,
 	ISchedulusTeamDto,
 	ITeamContext,
 	zipMapBriefsWithIDs,

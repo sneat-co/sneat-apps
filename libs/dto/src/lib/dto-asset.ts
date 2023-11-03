@@ -1,5 +1,5 @@
 import { INavContext } from '@sneat/core';
-import { IContact2Asset } from './dto-contact2item';
+// import { IContact2Asset } from './dto-contact2item';
 import { IDocData, IDocumentBrief } from './dto-document';
 import {
 	IDemoRecord,
@@ -75,7 +75,7 @@ export interface IAssetDtoBase
 	sameAssetID?: string; // A link to realtor's or tenant's asset ID
 	groupId?: string; // TODO: document what it is
 	subAssets?: ISubAssetInfo[];
-	contacts?: IContact2Asset[];
+	// contacts?: IContact2Asset[];
 	membersInfo?: ITitledRecord[];
 	liabilities?: AssetLiabilityInfo[];
 	notUsedServiceTypes?: LiabilityServiceType[];

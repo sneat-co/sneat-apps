@@ -2,15 +2,12 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
+import { IContactusTeamDto, IMemberContext } from '@sneat/contactus-core';
 import { IIdAndOptionalDto, ILogger, TeamType } from '@sneat/core';
 import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import {
-	IContactusTeamDto,
-	IMemberContext,
-	ITeamContext,
-} from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import {
 	TeamService,
 	trackTeamIdAndTypeFromRouteParameter,

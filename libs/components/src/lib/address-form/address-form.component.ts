@@ -19,7 +19,7 @@ import {
 } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { excludeUndefined } from '@sneat/core';
-import { IAddress } from '@sneat/dto';
+import { IAddress } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { CountrySelectorComponent } from '../country-selector';
 import { createSetFocusToInput } from '../focus';

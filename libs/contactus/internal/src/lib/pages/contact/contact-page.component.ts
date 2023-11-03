@@ -16,13 +16,12 @@ import {
 	ContactsListModule,
 } from '@sneat/contactus-shared';
 import { eq, SneatNavService } from '@sneat/core';
-import { IAddress } from '@sneat/dto';
+import { IAddress, IContactContext } from '@sneat/contactus-core';
 import {
 	ContactService,
 	IContactRequest,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { IContactContext } from '@sneat/team-models';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

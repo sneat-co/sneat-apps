@@ -1,15 +1,12 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IIdAndBrief, TopMenuService } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactusTeamDtoAndID, IContactBrief } from '@sneat/contactus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import {
-	IContactusTeamDtoAndID,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { zipMapBriefsWithIDs } from '@sneat/team-models';
 
 export abstract class TeamPageBaseComponent
 	extends TeamBaseComponent

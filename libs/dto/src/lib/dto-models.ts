@@ -1,4 +1,3 @@
-import { IPerson } from './dto-contact';
 import { Restriction } from './types';
 
 // import {IPersonSize} from '../ui/dto-sizechart';
@@ -95,10 +94,6 @@ export function zeroIfEmptyTotals(totals: DtoTotals): DtoTotals {
 	totals.incomes = f(totals.incomes);
 	totals.expenses = f(totals.expenses);
 	return totals;
-}
-
-export interface IPersonRecord extends IWithTeamIDs, IPerson {
-	/*, IPersonSize*/
 }
 
 export interface IVerification {

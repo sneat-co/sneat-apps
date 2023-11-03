@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { IIdAndOptionalDto } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactusTeamDto } from '@sneat/team-models';
+import { IContactusTeamDto } from '@sneat/contactus-core';
 import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { Subscription } from 'rxjs';

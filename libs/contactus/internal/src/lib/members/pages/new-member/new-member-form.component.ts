@@ -16,25 +16,22 @@ import {
 	Validators,
 } from '@angular/forms';
 import { IonicModule, IonInput, IonRadio } from '@ionic/angular';
+import { TeamMemberType } from '@sneat/auth-models';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
 import { createSetFocusToInput, personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import {
 	emptyMemberPerson,
+	IContactusTeamDtoAndID,
+	ICreateTeamMemberRequest,
 	IMemberPerson,
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonNotReady,
 	isRelatedPersonReady,
-	TeamMemberType,
-} from '@sneat/dto';
-import {
-	IContactusTeamDtoAndID,
-	ICreateTeamMemberRequest,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+} from '@sneat/contactus-core';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 
 @Component({

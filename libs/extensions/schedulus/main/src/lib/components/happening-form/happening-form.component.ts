@@ -19,6 +19,7 @@ import {
 } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
+import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { RoutingState } from '@sneat/core';
 import {
 	HappeningType,
@@ -28,11 +29,7 @@ import {
 } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import {
-	IContactusTeamDtoAndID,
-	IHappeningContext,
-	ITeamContext,
-} from '@sneat/team-models';
+import { IHappeningContext, ITeamContext } from '@sneat/team-models';
 import { HappeningService, HappeningServiceModule } from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';

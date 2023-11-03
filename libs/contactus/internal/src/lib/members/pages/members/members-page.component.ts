@@ -3,7 +3,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { TeamMemberTypeEnum } from '@sneat/auth-models';
+import { TeamMemberType, TeamMemberTypeEnum } from '@sneat/auth-models';
 import {
 	ContactusTeamService,
 	MemberGroupService,
@@ -16,23 +16,20 @@ import {
 import { IIdAndBrief } from '@sneat/core';
 import {
 	IContactBrief,
-	isTeamSupportsMemberGroups,
 	MemberGroupType,
 	MemberGroupTypeAdults,
 	MemberGroupTypeKids,
 	MemberGroupTypeOther,
 	MemberGroupTypePets,
-	TeamMemberType,
-} from '@sneat/dto';
+	IContactusTeamDto,
+	IMemberGroupContext,
+} from '@sneat/contactus-core';
+import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import {
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
-import {
-	IContactusTeamDto,
-	IMemberGroupContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../../members-base-page';
 

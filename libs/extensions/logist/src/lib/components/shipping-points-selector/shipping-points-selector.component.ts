@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext } from '@sneat/team-models';
+import { IContactContext } from '@sneat/contactus-core';
 import {
 	ILogistOrderContext,
 	IOrderContainer,

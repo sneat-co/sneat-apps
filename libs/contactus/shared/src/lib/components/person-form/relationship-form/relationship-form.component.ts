@@ -14,11 +14,11 @@ import {
 	AgeGroupID,
 	FamilyMemberRelation,
 	IRelationships,
-	ITitledRecord,
 	MemberRelationshipOther,
 	MemberRelationshipUndisclosed,
 	relationshipTitle,
-} from '@sneat/dto';
+} from '@sneat/contactus-core';
+import { ITitledRecord } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 

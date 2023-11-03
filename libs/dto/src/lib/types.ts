@@ -1,7 +1,6 @@
 import { TeamType } from '@sneat/core';
 
 export { TeamMemberType } from '@sneat/auth-models';
-export type MembersVisibility = 'private' | 'protected' | 'public';
 export type WeekdayCode2 = 'mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su';
 export type RepeatsWeek =
 	| 'week-1st'
@@ -20,31 +19,6 @@ export type Repeats =
 export type ActivityType = 'appointment' | 'school' | 'lesson' | 'todo'; // TODO: Is it same as HappeningKind?
 export type EventType = 'workshop' | 'fixture' | 'appointment';
 export type SettlementType = 'rural' | 'urban';
-export type AgeGroupID = 'adult' | 'child' | 'pet' | 'undisclosed' | 'unknown';
-
-export const MemberGroupTypeAdults = 'adults';
-export const MemberGroupTypeKids = 'kids';
-export const MemberGroupTypePets = 'pets';
-export const MemberGroupTypeOther = 'other';
-
-export type MemberGroupType =
-	| typeof MemberGroupTypeAdults
-	| typeof MemberGroupTypeKids
-	| typeof MemberGroupTypePets
-	| typeof MemberGroupTypeOther;
-
-export const GenderUndisclosed = 'undisclosed';
-export const GenderUnknown = 'unknown';
-export const GenderMale = 'male';
-export const GenderFemale = 'female';
-export const GenderOther = 'other';
-
-export type Gender =
-	| typeof GenderUndisclosed
-	| typeof GenderUnknown
-	| typeof GenderMale
-	| typeof GenderFemale
-	| typeof GenderOther;
 
 export type Restriction = 'adults_only' | 'personal' | string;
 
@@ -186,18 +160,6 @@ export type CommuneItemCounter =
 	| 'regularTasks'
 	| 'todos'
 	| 'upcomings';
-
-export type ContactToContactRelation =
-	| 'undefined'
-	| 'parent'
-	| 'mother'
-	| 'father'
-	| 'sibling'
-	| 'childminder'
-	| 'friend'
-	| 'child';
-
-export type ContactToAssetRelation = string;
 
 export const AssetPossessionUndisclosed = 'undisclosed',
 	AssetPossessionOwning = 'owning',

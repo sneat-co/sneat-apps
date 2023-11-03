@@ -7,8 +7,9 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { IContactContext } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import {
 	debounceTime,
 	distinctUntilChanged,

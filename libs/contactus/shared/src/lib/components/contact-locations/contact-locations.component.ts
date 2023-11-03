@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
-import { IContactBrief, IContactDto } from '@sneat/dto';
+import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { ContactsListModule } from '../contacts-list';
 

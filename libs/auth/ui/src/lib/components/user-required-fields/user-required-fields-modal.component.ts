@@ -15,7 +15,7 @@ import {
 	UserRecordService,
 } from '@sneat/auth-core';
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
-import { AgeGroupID, Gender } from '@sneat/dto';
+import { AgeGroupID, Gender } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';

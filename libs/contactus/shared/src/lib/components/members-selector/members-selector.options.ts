@@ -1,5 +1,5 @@
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/dto';
+import { IContactBrief } from '@sneat/contactus-core';
 import { Observable } from 'rxjs';
 
 export interface ISelectMembersOptions {

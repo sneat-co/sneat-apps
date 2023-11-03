@@ -1,22 +1,14 @@
 import { TeamType } from '@sneat/core';
 import {
-	DtoGroupTerms,
 	DtoTotal,
 	DtoTotals,
 	IAssetDtoGroupCounts,
 	IAssetGroupContext,
-	IContactGroupBrief,
-	IContactGroupDto,
-	IContactGroupDtoCounts,
 	newTeamCounts,
 	Period,
 	TeamCounts,
 } from '@sneat/dto';
-import {
-	IMemberContext,
-	IMemberGroupContext,
-	ITeamContext,
-} from '../team-context';
+import { ITeamContext } from '../team-context';
 
 export class Total {
 	constructor(public readonly dto?: DtoTotal) {
@@ -237,29 +229,6 @@ export class Totals {
 	}
 }
 
-export class Member {
-	public readonly totals: Totals;
-
-	constructor(
-		public member: IMemberContext,
-		public isChecked: boolean = false,
-	) {
-		this.totals = new Totals(member.dto?.totals);
-	}
-
-	public get id(): string {
-		return this.member.id;
-	}
-
-	public get title(): string {
-		return this.member.brief?.title || this.member.id;
-	}
-
-	public get emoji(): string {
-		return this.member.dto?.ageGroup === 'child' ? '🧒' : '🧑';
-	}
-}
-
 export class AssetGroup {
 	public readonly totals: Totals;
 
@@ -338,33 +307,5 @@ export class Commune implements ITeamContext {
 				break;
 		}
 		return false;
-	}
-}
-
-export class MemberGroup {
-	public readonly id: string;
-	public readonly dto?: IContactGroupDto | null;
-	public readonly brief?: IContactGroupBrief | null;
-
-	constructor(memberGroup: IMemberGroupContext) {
-		this.id = memberGroup.id;
-		this.brief = memberGroup.brief;
-		this.dto = memberGroup.dto;
-	}
-
-	public get numberOf(): IContactGroupDtoCounts {
-		const n = this.dto?.numberOf || {};
-		if (!n.members) {
-			n.members = 0;
-		}
-		return n;
-	}
-
-	public get title(): string {
-		return this.brief?.title || '';
-	}
-
-	public get terms(): DtoGroupTerms {
-		return this.dto?.terms || {};
 	}
 }
