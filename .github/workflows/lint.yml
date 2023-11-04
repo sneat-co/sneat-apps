@@ -1,4 +1,4 @@
-name: Build
+name: Lint
 
 on:
   push:
@@ -55,10 +55,5 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
 
-      - name: nx build affected
-        env:
-          # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
-          BAZEL_TARGET: "1"
-        # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
-        # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8 --skipNxCache
+      - name: nx lint affected
+        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8 --skipNxCache
