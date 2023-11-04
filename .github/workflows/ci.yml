@@ -56,7 +56,7 @@ jobs:
         uses: nrwl/nx-set-shas@v4
 
       - name: nx lint affected
-        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8 --skipNxCache
+        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
   build:
     runs-on: ubuntu-latest
@@ -106,4 +106,4 @@ jobs:
           BAZEL_TARGET: "1"
         # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
         # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8 --skipNxCache
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
