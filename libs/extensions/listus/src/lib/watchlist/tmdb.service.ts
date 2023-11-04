@@ -1,9 +1,9 @@
 //tslint:disable:no-unsafe-any
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
-import { Actor, Genre, IMovie } from '../../../models/movie-models';
 import { HttpClient } from '@angular/common/http';
 import { last, map, mapTo, mergeMap } from 'rxjs/operators';
+import { Actor, Genre, IMovie } from '../dto';
 import { ITmdbService } from './interfaces';
 
 interface GenresById {
@@ -66,7 +66,7 @@ export class TmdbService extends ITmdbService {
 		);
 	}
 
-	public loadActors(movieId: number): Observable<Actor[]> {
+	public loadActors(movieId: string): Observable<Actor[]> {
 		// console.log('loadActors', movieId);
 		const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${this.api}`;
 		// https://api.themoviedb.org/3/movie/13009/credits?api_key=1fc63e90ce0e426f9534b0b97a9248b6
@@ -130,8 +130,8 @@ export class TmdbService extends ITmdbService {
 		movies.forEach((movie) => {
 			if (movie.genre_ids) {
 				movie.genres = movie.genre_ids
-					.map((id) => genres.find((genre) => genre.id === id))
-					.filter((v) => !!v) as Genre[];
+					.map((id: unknown) => genres.find((genre) => genre.id === id))
+					.filter((v: unknown) => !!v) as Genre[];
 			}
 		});
 	}
@@ -142,7 +142,7 @@ export class TmdbService extends ITmdbService {
 		// console.log(movies);
 		movies.forEach((movie) => {
 			if (movie.genre_ids) {
-				movie.genre_ids.forEach((id) => {
+				movie.genre_ids.forEach((id: number) => {
 					if (genreIds.indexOf(id) === -1) {
 						genreIds.push(id);
 					}
@@ -152,7 +152,7 @@ export class TmdbService extends ITmdbService {
 		return genreIds;
 	}
 
-	addActorsToMovie(movie: { id: number }): Observable<IMovie> {
+	addActorsToMovie(movie: IMovie): Observable<IMovie> {
 		// console.log('addActorsToMovie', movie.id);
 		return this.loadActors(movie.id).pipe(
 			map((actors) => {

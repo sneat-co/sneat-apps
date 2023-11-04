@@ -14,17 +14,17 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IMemberContext } from '@sneat/contactus-core';
 import { dateToIso, localDateToIso } from '@sneat/core';
-import { IHappeningSlot, WeekdayCode2 } from '@sneat/dto';
-import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
+	IHappeningSlot,
+	WeekdayCode2,
 	IHappeningContext,
 	IHappeningWithUiState,
 	ISchedulusTeamDto,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+} from '@sneat/mod-schedulus-core';
+import { ISlotItem } from '@sneat/extensions/schedulus/shared';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { TeamComponentBaseParams } from '@sneat/team-components';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { HappeningService, ScheduleDayService } from '@sneat/team-services';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';

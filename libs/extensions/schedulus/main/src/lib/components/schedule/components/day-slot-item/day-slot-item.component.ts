@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PopoverController, PopoverOptions } from '@ionic/angular';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext, HappeningUIState } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
+import { HappeningUIState } from '@sneat/mod-schedulus-core';
 
 @Component({
 	selector: 'sneat-day-slot-item',

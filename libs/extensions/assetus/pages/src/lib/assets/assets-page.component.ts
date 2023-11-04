@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
-import { IAssetBrief, IAssetCategory } from '@sneat/dto';
+import { IAssetBrief, IAssetCategory } from '@sneat/mod-assetus-core';
 import {
 	AssetService,
 	AssetsListComponentModule,
@@ -16,7 +16,7 @@ import {
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
-import { IAssetContext } from '@sneat/team-models';
+import { IAssetContext } from '@sneat/mod-assetus-core';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 

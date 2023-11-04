@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { IAssetBrief, IAssetusTeamDto } from '@sneat/dto';
+import { IAssetBrief, IAssetusTeamDto } from '@sneat/mod-assetus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamModuleService } from '@sneat/team-services';
 

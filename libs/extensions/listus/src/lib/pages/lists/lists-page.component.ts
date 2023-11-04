@@ -3,9 +3,9 @@ import { Component, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
-import { IListGroup, IListInfo, ListType } from '@sneat/dto';
+import { IListGroup, IListInfo, ListType } from '../../dto';
 import { TeamBaseComponent } from '@sneat/team-components';
-import { createShortTeamInfoFromDto, ITeamContext } from '@sneat/team-models';
+import { createShortTeamInfoFromDto } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
@@ -143,13 +143,15 @@ export class ListsPageComponent extends TeamBaseComponent {
 			throw new Error('!this.team');
 		}
 		const path = `list/${list.type}/${list.id}`;
-		this.teamParams.teamNavService.navigateForwardToTeamPage(this.team, path, {
-			state: {
-				listInfo: list,
-				listGroupTitle: listGroup && listGroup.title,
-				team: this.team,
-			},
-		});
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(this.team, path, {
+				state: {
+					listInfo: list,
+					listGroupTitle: listGroup && listGroup.title,
+					team: this.team,
+				},
+			})
+			.catch(this.errorLogger.logErrorHandler('Failed to navigate to list'));
 	}
 
 	addTo(event: Event, listType?: ListType): void {
@@ -185,9 +187,8 @@ export class ListsPageComponent extends TeamBaseComponent {
 		}
 		this.params.listService.deleteList(this.team, list.id).subscribe({
 			next: () => {
-				listGroup.lists = (listGroup.lists || []).filter(
-					(l) => !eq(l.id, list.id),
-				);
+				listGroup.lists =
+					listGroup.lists?.filter((l) => !eq(l.id, list.id)) || [];
 			},
 			error: (err) => {
 				this.errorLogger.logError(err, 'Failed to delete list');
@@ -261,7 +262,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 					// 		return listGroup;
 					// 	});
 					// }
-					this.updateListsFromTeam(this.team);
+					this.updateListsFromTeam(undefined);
 				}
 			} else {
 				this.listGroups = [];
@@ -314,42 +315,33 @@ export class ListsPageComponent extends TeamBaseComponent {
 	// }
 
 	// and personal lists (private to the current user).
-	private updateListsFromTeam(team: ITeamContext): void {
+	private updateListsFromTeam(listGroups?: IListGroup[]): void {
 		console.log(
 			`ListsPageComponent.updateListsFromTeam()`,
-			team,
+			listGroups,
 			'\n: passed:',
-			team.dto?.listGroups && team.dto?.listGroups.map((lg) => ({ ...lg })),
+			undefined, // TODO(fix): team.dto?.listGroups && team.dto?.listGroups.map((lg) => ({ ...lg })),
 			'\n: current:',
 			this.listGroups &&
 				this.listGroups.map((lg) => ({ ...lg, lists: [...(lg.lists || [])] })),
 		);
-		if (!team?.dto) {
-			return;
-		}
-		if (!team.dto?.listGroups) {
-			if (team?.type === 'family') {
-				team = {
-					...team,
-					dto: {
-						...team.dto,
-						listGroups: [
+		if (!listGroups) {
+			if (this.team?.type === 'family') {
+				listGroups = [
+					{
+						id: 'to-buy',
+						type: 'to-buy',
+						title: 'To buy',
+						lists: [
 							{
-								id: 'to-buy',
+								id: 'groceries',
 								type: 'to-buy',
-								title: 'To buy',
-								lists: [
-									{
-										id: 'groceries',
-										type: 'to-buy',
-										emoji: '🛒',
-										title: 'Groceries',
-									},
-								],
+								emoji: '🛒',
+								title: 'Groceries',
 							},
 						],
 					},
-				};
+				];
 			} else {
 				return;
 			}
@@ -357,7 +349,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 		if (!this.listGroups) {
 			this.listGroups = [];
 		}
-		team.dto?.listGroups?.forEach((passedListGroup) => {
+		listGroups?.forEach((passedListGroup) => {
 			if (!passedListGroup.type) {
 				throw new Error(
 					'!passedListGroup.type: ' + JSON.stringify(passedListGroup),
@@ -380,10 +372,10 @@ export class ListsPageComponent extends TeamBaseComponent {
 				if (!passedList.type) {
 					throw new Error(`!passedList[${i}]`);
 				}
-				if (!passedList.team && team.type === 'personal') {
+				if (!passedList.team && this.team.type === 'personal') {
 					passedList = {
 						...passedList,
-						team: createShortTeamInfoFromDto(team),
+						team: createShortTeamInfoFromDto(this.team),
 					};
 				}
 				const matchedList = ((listGroup && listGroup.lists) || []).find(
@@ -463,7 +455,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 						matchedList.id = passedList.id;
 					}
 					if (!matchedList.team) {
-						matchedList.team = createShortTeamInfoFromDto(team);
+						matchedList.team = createShortTeamInfoFromDto(this.team);
 					}
 				}
 			});

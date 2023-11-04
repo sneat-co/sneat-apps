@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { IListInfo, IListItemBrief, ListType } from '@sneat/dto';
+import { IListInfo, IListItemBrief, ListType } from '../../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ListService } from '../../../services/list.service';
 
@@ -20,8 +20,8 @@ export class CopyListItemsPageComponent implements OnInit {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly toastCrl: ToastController,
 		private readonly listService: ListService, // private readonly listusService: IListusService,
-	) // private readonly userService: IUserService,
-	{}
+		// private readonly userService: IUserService,
+	) {}
 
 	ngOnInit(): void {
 		if (!this.listItems) {

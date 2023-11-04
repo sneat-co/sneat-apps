@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { virtualSliderAnimations } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { HappeningType } from '@sneat/dto';
+import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
 	NewHappeningParams,
 	ScheduleNavService,

@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { MovieCardComponent } from '../../movie-card';
 
 import { AddToWatchPageComponent } from './add-to-watch-page.component';
 import { TmdbService } from '../../watchlist/tmdb.service';
-import { MovieCardComponentModule } from '../../movie-card/movie-card.component.module';
 
 const routes: Routes = [
 	{
@@ -18,7 +18,7 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		MovieCardComponentModule,
+		MovieCardComponent,
 		CommonModule,
 		FormsModule,
 		IonicModule,

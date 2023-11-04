@@ -1,6 +1,5 @@
 import { TeamType } from '@sneat/core';
 import { TeamCounts } from './dto-commune';
-import { IListGroupsHolder } from './dto-list';
 import { ITotalsHolder } from './dto-models';
 import { ITeamMetric } from './dto-team-metric';
 
@@ -9,7 +8,7 @@ import { ITeamMetric } from './dto-team-metric';
 // 	retrospective?: IMeetingInfo;
 // }
 
-export interface ITeamDto extends ITotalsHolder, IListGroupsHolder {
+export interface ITeamDto extends ITotalsHolder {
 	readonly type: TeamType;
 	readonly countryID: string;
 	readonly title: string;

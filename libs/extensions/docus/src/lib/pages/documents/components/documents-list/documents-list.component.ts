@@ -8,10 +8,9 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { IDocumentAssetDto } from '@sneat/dto';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext } from '@sneat/team-models';
+import { IAssetContext, IDocumentAssetDto } from '@sneat/mod-assetus-core';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({

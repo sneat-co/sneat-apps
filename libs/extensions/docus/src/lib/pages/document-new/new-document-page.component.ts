@@ -9,13 +9,14 @@ import {
 } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import {
+	IAssetContext,
 	IDocTypeStandardFields,
 	IDocumentAssetDto,
 	IDocumentDto,
 	IDocumentMainData,
 	AssetDocumentType,
 	standardDocTypesByID,
-} from '@sneat/dto';
+} from '@sneat/mod-assetus-core';
 import {
 	AddAssetBaseComponent,
 	AssetService,
@@ -26,11 +27,7 @@ import {
 	ContactService,
 	contactContextFromBrief,
 } from '@sneat/contactus-services';
-import {
-	IAssetContext,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 

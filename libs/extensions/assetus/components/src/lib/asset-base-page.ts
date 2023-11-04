@@ -1,7 +1,12 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IAssetBrief, IAssetDtoBase, IAssetusTeamContext } from '@sneat/dto';
+import {
+	IAssetBrief,
+	IAssetDtoBase,
+	IAssetusTeamContext,
+	IAssetContext,
+	IVehicleAssetContext,
+} from '@sneat/mod-assetus-core';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
-import { IAssetContext, IVehicleAssetContext } from '@sneat/team-models';
 import { NEVER, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 

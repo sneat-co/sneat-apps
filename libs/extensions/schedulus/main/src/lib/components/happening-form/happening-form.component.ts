@@ -26,10 +26,11 @@ import {
 	IHappeningDto,
 	IHappeningSlot,
 	WeekdayCode2,
-} from '@sneat/dto';
+	IHappeningContext,
+} from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { IHappeningContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { HappeningService, HappeningServiceModule } from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';

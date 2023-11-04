@@ -6,11 +6,11 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IIdAndBrief } from '@sneat/core';
-import { AssetCategory, IAssetBrief } from '@sneat/dto';
+import { AssetCategory, IAssetBrief } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
-import { AssetService } from '../services/asset-service';
+import { AssetService } from '../services';
 
 @Component({
 	selector: 'sneat-assets-list',

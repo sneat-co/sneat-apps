@@ -1,17 +1,17 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
+import { timestamp } from '@sneat/dto';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
+	IVehicleAssetContext,
 	AssetPossession,
 	AssetVehicleType,
 	EngineTypes,
 	FuelTypes,
 	IVehicleAssetDto,
 	IVehicleMainData,
-	timestamp,
-} from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team-components';
-import { IVehicleAssetContext } from '@sneat/team-models';
+} from '@sneat/mod-assetus-core';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services';
 import { ICreateAssetRequest } from '../../services';

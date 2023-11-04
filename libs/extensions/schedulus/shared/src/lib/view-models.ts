@@ -7,8 +7,8 @@ import {
 	Repeats,
 	SlotLocation,
 	WeekdayCode2,
-} from '@sneat/dto';
-import { IHappeningContext } from '@sneat/team-models';
+	IHappeningContext,
+} from '@sneat/mod-schedulus-core';
 
 export interface ISchedulePageParams {
 	member?: string;

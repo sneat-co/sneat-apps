@@ -1,8 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AssetCategory } from '@sneat/dto';
+import { IAssetContext, AssetCategory } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-asset-list-item',

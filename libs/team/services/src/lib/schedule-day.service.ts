@@ -1,7 +1,7 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IScheduleDayBrief, IScheduleDayDto } from '@sneat/dto';
+import { IScheduleDayBrief, IScheduleDayDto } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { tap } from 'rxjs';

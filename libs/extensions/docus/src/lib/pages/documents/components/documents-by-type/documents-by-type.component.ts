@@ -9,10 +9,13 @@ import {
 import { ToastController } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
-import { IDocumentAssetDto, standardDocTypesByID } from '@sneat/dto';
+import {
+	IAssetContext,
+	IDocumentAssetDto,
+	standardDocTypesByID,
+} from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext } from '@sneat/team-models';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 interface IDocumentType {

@@ -6,7 +6,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
-import { IListInfo, ListType } from '@sneat/dto';
+import { IListInfo, ListType } from '../../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({

@@ -1,19 +1,5 @@
-import { IIdAndBrief, IIdAndDto, INavContext, TeamType } from '@sneat/core';
-import {
-	IAssetBrief,
-	IAssetDtoBase,
-	IDocumentAssetDto,
-	IDocumentBrief,
-	IListBrief,
-	IListDto,
-	IShortTeamInfo,
-	ITeamBrief,
-	ITeamDto,
-	IVehicleAssetDto,
-	ListType,
-	IHappeningBrief,
-} from '@sneat/dto';
-import { ITeamItemNavContext } from './team-item-context';
+import { IIdAndBrief, INavContext, TeamType } from '@sneat/core';
+import { IShortTeamInfo, ITeamBrief, ITeamDto } from '@sneat/dto';
 
 export interface ITeamRef {
 	readonly id: string;
@@ -42,40 +28,16 @@ export interface ITeamContext
 	// readonly contacts?: IContactContext[]; // TODO: this should not be here
 }
 
-export interface ISchedulusTeamDto {
-	recurringHappenings?: { [id: string]: IHappeningBrief };
-}
-
-export interface ISchedulusTeamDtoWithID extends IIdAndDto<ISchedulusTeamDto> {}
-
 export const teamContextFromBrief = (
 	id: string,
 	brief: ITeamBrief,
 ): ITeamContext => ({ id, type: brief.type, brief });
-
-export type IAssetContext<Dto extends IAssetDtoBase = IAssetDtoBase> =
-	ITeamItemNavContext<IAssetBrief, Dto>;
-export type IVehicleAssetContext = IAssetContext<IVehicleAssetDto>;
-export type IDocumentAssetContext = ITeamItemNavContext<
-	IDocumentBrief,
-	IDocumentAssetDto
->;
 
 // export interface IContactContextWithBrief
 // 	extends ITeamItemNavContext<IContactBrief, IContactDto> {
 // 	brief: IContactBrief;
 // 	parentContact?: IContactContext;
 // }
-
-export interface IListKey {
-	id: string;
-	type: ListType;
-}
-
-export interface IListContext
-	extends ITeamItemNavContext<IListBrief, IListDto> {
-	type?: ListType;
-}
 
 export function createShortTeamInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	if (!team.type) {

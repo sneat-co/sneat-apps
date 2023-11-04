@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext } from '@sneat/team-models';
+import { IHappeningContext } from '@sneat/mod-schedulus-core';
+import { ITeamContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { Subject, Subscription } from 'rxjs';
 import { ScheduleFilterService } from '../../../schedule-filter.service';

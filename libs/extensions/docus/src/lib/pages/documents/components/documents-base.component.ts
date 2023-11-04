@@ -1,10 +1,10 @@
 import { Directive, Inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
-import { IDocumentAssetDto } from '@sneat/dto';
+import { IAssetContext, IDocumentAssetDto } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { ignoreElements } from 'rxjs/operators';
 
 @Directive()

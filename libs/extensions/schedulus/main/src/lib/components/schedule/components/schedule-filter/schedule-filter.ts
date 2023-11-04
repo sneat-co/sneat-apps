@@ -1,5 +1,4 @@
-import { WeekdayCode2 } from '@sneat/dto';
-import { IHappeningContext } from '@sneat/team-models';
+import { WeekdayCode2, IHappeningContext } from '@sneat/mod-schedulus-core';
 
 export interface IScheduleFilter {
 	readonly text: string;

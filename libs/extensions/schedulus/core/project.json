@@ -1,0 +1,51 @@
+{
+	"name": "extensions-schedulus-core",
+	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/extensions/schedulus/core/src",
+	"prefix": "lib",
+	"tags": [],
+	"projectType": "library",
+	"targets": {
+		"build": {
+			"executor": "@nx/angular:package",
+			"outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+			"options": {
+				"project": "libs/extensions/schedulus/core/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/extensions/schedulus/core/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/extensions/schedulus/core/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "libs/extensions/schedulus/core/jest.config.ts",
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"codeCoverage": true
+				}
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": [
+					"libs/extensions/schedulus/core/**/*.ts",
+					"libs/extensions/schedulus/core/**/*.html",
+					"libs/extensions/schedulus/core/package.json"
+				]
+			}
+		}
+	}
+}

@@ -6,7 +6,7 @@ import {
 	ValidationErrors,
 	ValidatorFn,
 } from '@angular/forms';
-import { WeekdayCode2 } from '@sneat/dto';
+import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 

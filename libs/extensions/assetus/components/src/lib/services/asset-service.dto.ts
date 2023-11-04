@@ -1,4 +1,4 @@
-import { IAssetMainData } from '@sneat/dto';
+import { IAssetMainData } from '@sneat/mod-assetus-core';
 import { ITeamRequest } from '@sneat/team-models';
 
 export interface ICreateAssetRequest<A extends IAssetMainData>

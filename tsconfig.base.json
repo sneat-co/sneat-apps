@@ -56,6 +56,10 @@
 			"@sneat/grid": ["libs/grid/src/index.ts"],
 			"@sneat/logging": ["libs/logging/src/index.ts"],
 			"@sneat/meeting": ["libs/meeting/src/index.ts"],
+			"@sneat/mod-assetus-core": ["libs/extensions/assetus/core/src/index.ts"],
+			"@sneat/mod-schedulus-core": [
+				"libs/extensions/schedulus/core/src/index.ts"
+			],
 			"@sneat/scrumspace/dailyscrum": [
 				"libs/scrumspace/dailyscrum/src/index.ts"
 			],

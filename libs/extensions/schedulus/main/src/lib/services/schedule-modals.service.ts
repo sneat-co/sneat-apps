@@ -4,8 +4,8 @@ import {
 	emptyHappeningSlot,
 	IHappeningAdjustment,
 	IHappeningSlot,
-} from '@sneat/dto';
-import { IHappeningContext } from '@sneat/team-models';
+	IHappeningContext,
+} from '@sneat/mod-schedulus-core';
 import { SingleSlotFormComponent } from '../components/single-slot-form/single-slot-form.component';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { IHappeningWithUiState } from '@sneat/team-models';
+import { IHappeningWithUiState } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { ScheduleFilterService } from '../../../schedule-filter.service';
 

@@ -1,4 +1,5 @@
-import { IListItemBrief, UiState } from '@sneat/dto';
+import { UiState } from '@sneat/dto';
+import { IListItemBrief } from '../../dto';
 
 export interface IListItemUiState extends UiState {
 	isChangingIsDone?: boolean;

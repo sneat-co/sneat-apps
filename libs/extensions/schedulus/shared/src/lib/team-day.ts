@@ -1,8 +1,12 @@
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
-import { IScheduleDayDto, ITiming, WeekdayCode2 } from '@sneat/dto';
+import {
+	IScheduleDayDto,
+	ITiming,
+	WeekdayCode2,
+	IHappeningContext,
+} from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/logging';
-import { IHappeningContext } from '@sneat/team-models';
 import { HappeningService, ScheduleDayService } from '@sneat/team-services';
 import {
 	BehaviorSubject,

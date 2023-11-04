@@ -1,14 +1,15 @@
 //
+import { ICommuneDto } from '@sneat/dto';
 import {
-	ICommuneDto,
 	IListBrief,
 	IListDto,
 	IListItemBase,
 	IListItemBrief,
 	IListItemDto,
 	ListType,
-} from '@sneat/dto';
-import { IListContext, ITeamContext, ITeamRequest } from '@sneat/team-models';
+} from '../dto';
+import { IListContext } from '../contexts';
+import { ITeamContext, ITeamRequest } from '@sneat/team-models';
 
 export interface GetOrCreateCommuneItemIds {
 	id?: string;

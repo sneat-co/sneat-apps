@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -6,17 +7,21 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
-import { IMovie, IMovieDto } from '@sneat/dto';
-import { IListContext, ITeamContext } from '@sneat/team-models';
+import { IMovie, IMovieDto } from '../dto';
+import { IListContext } from '../contexts';
+import { ITeamContext } from '@sneat/team-models';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
-import { ITmdbService } from '../watchlist/interfaces';
+import { ITmdbService } from '../watchlist';
 
 @Component({
 	selector: 'sneat-movie-card',
 	templateUrl: './movie-card.component.html',
 	styleUrls: ['./movie-card.component.scss'],
 	animations: [listItemAnimations],
+	standalone: true,
+	imports: [IonicModule, CommonModule],
 })
 export class MovieCardComponent implements OnChanges {
 	@Input()
@@ -50,7 +55,7 @@ export class MovieCardComponent implements OnChanges {
 		if (mode && !mode.currentValue) {
 			throw new Error('mode is required');
 		}
-		if (changes['movie'] && this.movie && this.movie.id) {
+		if (changes['movie'] && this.movie) {
 			console.error('not implemented yet');
 			// this.movieService.getById(this.movie.id)
 			// 	.subscribe(
@@ -108,7 +113,7 @@ export class MovieCardComponent implements OnChanges {
 	}
 
 	public checkMovieId(): boolean {
-		return !!this.movie?.id;
+		return false; //!!this.movie?.id;
 	}
 
 	// private createListItemCommandParams(movie: IMovie): IListItemCommandParams {

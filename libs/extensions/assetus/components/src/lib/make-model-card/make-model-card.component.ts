@@ -12,7 +12,7 @@ import {
 	SelectFromListComponent,
 	SelectFromListModule,
 } from '@sneat/components';
-import { AssetType, carMakes, IMake, IModel } from '@sneat/dto';
+import { AssetType, carMakes, IMake, IModel } from '@sneat/mod-assetus-core';
 
 @Component({
 	standalone: true,

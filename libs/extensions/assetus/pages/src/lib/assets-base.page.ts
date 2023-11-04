@@ -1,6 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { IIdAndBrief } from '@sneat/core';
-import { AssetCategory, IAssetBrief, IAssetusTeamContext } from '@sneat/dto';
+import {
+	AssetCategory,
+	IAssetBrief,
+	IAssetusTeamContext,
+} from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,

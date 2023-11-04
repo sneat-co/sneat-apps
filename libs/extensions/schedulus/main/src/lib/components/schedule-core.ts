@@ -6,10 +6,10 @@ import {
 	VirtualSliderReversePushedPrev,
 	wdCodeToWeekdayLongName,
 } from '@sneat/components';
-import { WeekdayCode2 } from '@sneat/dto';
+import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { wd2 } from '@sneat/extensions/schedulus/shared';
 import { addDays } from './schedule/schedule-state.service';
-import { Weekday } from './schedule/components/schedule-week/schedule-week.component';
+import { Weekday } from './schedule/components';
 import { Parity } from './swipeable-ui';
 
 export function isToday(date: Date): boolean {

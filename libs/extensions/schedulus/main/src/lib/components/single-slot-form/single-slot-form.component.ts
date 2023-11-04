@@ -16,9 +16,10 @@ import {
 	IHappeningAdjustment,
 	IHappeningSlot,
 	ITiming,
-} from '@sneat/dto';
+	IHappeningContext,
+} from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IHappeningContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { Subject, takeUntil } from 'rxjs';
 

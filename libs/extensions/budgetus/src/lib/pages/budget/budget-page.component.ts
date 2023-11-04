@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@sneat/contactus-core';
 import { Period } from '@sneat/dto';
+import { AssetGroup } from '@sneat/mod-assetus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { AssetGroup, Totals } from '@sneat/team-models';
+import { Totals } from '@sneat/team-models';
 
 type LiabilitiesMode = 'incomes' | 'expenses' | 'balance';
 

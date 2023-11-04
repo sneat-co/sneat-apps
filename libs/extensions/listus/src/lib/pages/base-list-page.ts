@@ -1,14 +1,10 @@
 //tslint:disable:no-unsafe-any
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import {
-	emptyTimestamp,
-	IListBrief,
-	IListDto,
-	IMovie,
-	ListType,
-} from '@sneat/dto';
+import { emptyTimestamp } from '@sneat/dto';
+import { IListBrief, IListDto, IMovie, ListType } from '../dto';
+import { IListContext } from '../contexts';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
-import { IListContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { NEVER, Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ListusComponentBaseParams } from '../listus-component-base-params';

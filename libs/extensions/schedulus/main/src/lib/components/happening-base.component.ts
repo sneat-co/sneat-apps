@@ -13,16 +13,12 @@ import {
 import { ModalController } from '@ionic/angular';
 import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { IIdAndBrief, isoStringsToDate } from '@sneat/core';
-import { WeekdayCode2 } from '@sneat/dto';
+import { IHappeningContext, WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import {
-	IHappeningContext,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { IHappeningMemberRequest, TeamNavService } from '@sneat/team-services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team-services';

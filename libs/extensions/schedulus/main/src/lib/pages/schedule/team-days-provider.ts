@@ -6,7 +6,9 @@ import {
 	IHappeningDto,
 	IHappeningSlot,
 	WeekdayCode2,
-} from '@sneat/dto';
+	IHappeningContext,
+	ISchedulusTeamDto,
+} from '@sneat/mod-schedulus-core';
 import {
 	ISlotItem,
 	RecurringSlots,
@@ -15,8 +17,6 @@ import {
 } from '@sneat/extensions/schedulus/shared';
 import { IErrorLogger } from '@sneat/logging';
 import {
-	IHappeningContext,
-	ISchedulusTeamDto,
 	ITeamContext,
 	ITeamItemNavContext,
 	zipMapBriefsWithIDs,

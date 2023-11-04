@@ -11,8 +11,8 @@ import {
 	EngineTypes,
 	FuelType,
 	FuelTypes,
-} from '@sneat/dto';
-import { IVehicleAssetContext } from '@sneat/team-models';
+	IVehicleAssetContext,
+} from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-vehicle-engine',

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IAssetCategory } from '@sneat/dto';
+import { IAssetCategory } from '@sneat/mod-assetus-core';
 import { AddAssetComponentsModule } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,

@@ -27,7 +27,7 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { IAssetContext } from '@sneat/team-models';
+import { IAssetContext } from '@sneat/mod-assetus-core';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,

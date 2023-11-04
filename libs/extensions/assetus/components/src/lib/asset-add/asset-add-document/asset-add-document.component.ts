@@ -1,22 +1,20 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
+import { timestamp } from '@sneat/dto';
 import {
 	AssetPossession,
 	AssetVehicleType,
 	IDocumentAssetDto,
 	IDocumentMainData,
-	timestamp,
-} from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team-components';
-import {
 	IDocumentAssetContext,
-	ITeamContext,
 	IVehicleAssetContext,
-} from '@sneat/team-models';
+} from '@sneat/mod-assetus-core';
+import { TeamComponentBaseParams } from '@sneat/team-components';
+import { ITeamContext } from '@sneat/team-models';
 import { format, parseISO } from 'date-fns';
-import { AssetService } from '../../services/asset-service';
-import { ICreateAssetRequest } from '../../services/asset-service.dto';
+import { AssetService } from '../../services';
+import { ICreateAssetRequest } from '../../services';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({

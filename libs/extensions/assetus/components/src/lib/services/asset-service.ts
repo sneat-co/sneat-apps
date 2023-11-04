@@ -7,8 +7,9 @@ import {
 	IAssetBrief,
 	IAssetDtoBase,
 	IAssetMainData,
-} from '@sneat/dto';
-import { IAssetContext, ITeamContext } from '@sneat/team-models';
+	IAssetContext,
+} from '@sneat/mod-assetus-core';
+import { ITeamContext } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable } from 'rxjs';
 import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';

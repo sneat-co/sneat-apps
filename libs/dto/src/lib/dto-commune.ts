@@ -1,7 +1,4 @@
-import { IListGroupsHolder } from './dto-list';
-// import { ICommuneDtoMemberGroupInfo } from './dto-member';
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
-import { ITeamDto } from './dto-team';
 import { CommuneType, CountryId } from './types';
 
 export const enum TeamCounter {
@@ -77,11 +74,7 @@ export function newTeamCounts(numberOf?: TeamCounts): TeamCounts {
 	};
 }
 
-export interface ICommuneDto
-	extends IDemoRecord,
-		ITitledRecord,
-		ITotalsHolder,
-		IListGroupsHolder {
+export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder {
 	readonly countryId?: CountryId;
 	readonly type: CommuneType;
 	readonly desc?: string;
@@ -132,34 +125,34 @@ export function isUserPersonalCommune(
 	return !!userID && communeID === getUserPersonalCommuneID(userID);
 }
 
-export const CommuneModel = {
-	getListInfoByRealId: (dto: ITeamDto, listId: string) => {
-		const result =
-			dto.listGroups &&
-			dto.listGroups
-				.map((lg) => lg.lists && lg.lists.find((l) => l.id === listId))
-				.find((l) => !!l);
-		console.log(
-			`CommuneModel.getListInfoByRealId(${listId})`,
-			dto.listGroups,
-			' => ',
-			result,
-		);
-		return result;
-	},
-
-	getListInfoByShortId: (dto: ICommuneDto, shortListId: string) => {
-		console.log(
-			`CommuneModel.getListInfoByShortId(${shortListId})`,
-			dto.listGroups,
-		);
-		return (
-			dto.listGroups &&
-			dto.listGroups
-				.map(
-					(lg) => lg.lists && lg.lists.find((l) => l.shortId === shortListId),
-				)
-				.find((l) => !!l)
-		);
-	},
-};
+// export const CommuneModel = {
+// 	getListInfoByRealId: (dto: ITeamDto, listId: string) => {
+// 		const result =
+// 			dto.listGroups &&
+// 			dto.listGroups
+// 				.map((lg) => lg.lists && lg.lists.find((l) => l.id === listId))
+// 				.find((l) => !!l);
+// 		console.log(
+// 			`CommuneModel.getListInfoByRealId(${listId})`,
+// 			dto.listGroups,
+// 			' => ',
+// 			result,
+// 		);
+// 		return result;
+// 	},
+//
+// 	getListInfoByShortId: (dto: ICommuneDto, shortListId: string) => {
+// 		console.log(
+// 			`CommuneModel.getListInfoByShortId(${shortListId})`,
+// 			dto.listGroups,
+// 		);
+// 		return (
+// 			dto.listGroups &&
+// 			dto.listGroups
+// 				.map(
+// 					(lg) => lg.lists && lg.lists.find((l) => l.shortId === shortListId),
+// 				)
+// 				.find((l) => !!l)
+// 		);
+// 	},
+// };

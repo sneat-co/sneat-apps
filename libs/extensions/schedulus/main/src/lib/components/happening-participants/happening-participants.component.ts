@@ -7,13 +7,9 @@ import {
 	ContactsChecklistComponent,
 	MembersListComponent,
 } from '@sneat/contactus-shared';
-import { IHappeningBase } from '@sneat/dto';
+import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import {
-	IHappeningContext,
-	ITeamContext,
-	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { IContactContext, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import {
 	HappeningService,

@@ -7,7 +7,7 @@ To generate new apps & libraries use `nx` command.
 Run next command:
 
 ```shell
-pnx g lib <LIB_NAME> --buildable=true --publishable=true --importPath=@sneat/<LIB_NAME>
+pnx g @nx/angular:library <LIB_NAME> --buildable=true --publishable=true --importPath=@sneat/<LIB_NAME>
 ```
 
 ## To generate new Ionic app

@@ -11,12 +11,12 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CountrySelectorComponent } from '@sneat/components';
-import { carMakes } from '@sneat/dto';
 import {
+	carMakes,
 	IAssetContext,
-	ITeamContext,
 	IVehicleAssetContext,
-} from '@sneat/team-models';
+} from '@sneat/mod-assetus-core';
+import { ITeamContext } from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 import { AssetRegNumberInputComponent } from '../asset-reg-number-input/asset-reg-number-input.component';
 import { MakeModelCardComponent } from '../make-model-card/make-model-card.component';

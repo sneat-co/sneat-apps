@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { LiabilityServiceType } from '@sneat/dto';
+import { LiabilityServiceType } from '@sneat/mod-assetus-core';
 import {
 	AssetBasePage,
 	AssetComponentBaseParams,

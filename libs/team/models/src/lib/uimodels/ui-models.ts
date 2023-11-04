@@ -2,8 +2,6 @@ import { TeamType } from '@sneat/core';
 import {
 	DtoTotal,
 	DtoTotals,
-	IAssetDtoGroupCounts,
-	IAssetGroupContext,
 	newTeamCounts,
 	Period,
 	TeamCounts,
@@ -226,22 +224,6 @@ export class Totals {
 			default:
 				throw new Error(`Unknown parameter value: ${per}`);
 		}
-	}
-}
-
-export class AssetGroup {
-	public readonly totals: Totals;
-
-	constructor(public readonly context: IAssetGroupContext) {
-		this.totals = new Totals(context.dto?.totals);
-	}
-
-	get id(): string {
-		return this.context.id;
-	}
-
-	public get numberOf(): IAssetDtoGroupCounts {
-		return this.context.dto?.numberOf || {};
 	}
 }
 

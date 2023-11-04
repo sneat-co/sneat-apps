@@ -9,13 +9,10 @@ import {
 	IHappeningSlot,
 	validateHappeningDto,
 	WeekdayCode2,
-} from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
 	IHappeningContext,
-	ITeamContext,
-	ITeamRequest,
-} from '@sneat/team-models';
+} from '@sneat/mod-schedulus-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ITeamContext, ITeamRequest } from '@sneat/team-models';
 import { map, Observable, tap, throwError } from 'rxjs';
 import { GlobalTeamItemService } from './team-item.service';
 

@@ -5,7 +5,7 @@ import {
 	OnDestroy,
 	Output,
 } from '@angular/core';
-import { HappeningType } from '@sneat/dto';
+import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
 	ISlotItem,
 	NewHappeningParams,

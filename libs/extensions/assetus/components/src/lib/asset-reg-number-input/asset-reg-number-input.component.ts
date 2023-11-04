@@ -10,7 +10,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AssetService, IUpdateAssetRequest } from '../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
+import { IAssetContext } from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-asset-reg-number',

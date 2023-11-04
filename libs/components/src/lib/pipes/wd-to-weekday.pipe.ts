@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { WeekdayCode2 } from '@sneat/dto';
+import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 
 export function wdCodeToWeekdayLongName(wd?: WeekdayCode2): string {
 	switch (wd) {

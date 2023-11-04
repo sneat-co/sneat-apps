@@ -17,7 +17,7 @@ import {
 	isValidaTimeString,
 	isValidDateString,
 } from '@sneat/core';
-import { emptyTiming, HappeningType, ITiming } from '@sneat/dto';
+import { emptyTiming, HappeningType, ITiming } from '@sneat/mod-schedulus-core';
 import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 

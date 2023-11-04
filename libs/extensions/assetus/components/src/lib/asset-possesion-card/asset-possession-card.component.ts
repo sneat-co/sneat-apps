@@ -3,8 +3,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
-import { AssetPossession, AssetPossessions } from '@sneat/dto';
-import { IAssetContext } from '@sneat/team-models';
+import {
+	AssetPossession,
+	AssetPossessions,
+	IAssetContext,
+} from '@sneat/mod-assetus-core';
 
 @Component({
 	standalone: true,

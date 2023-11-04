@@ -4,12 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { HappeningType, WeekdayCode2 } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
+	HappeningType,
+	WeekdayCode2,
 	IHappeningContext,
 	newEmptyHappeningContext,
-} from '@sneat/team-models';
+} from '@sneat/mod-schedulus-core';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { first, takeUntil } from 'rxjs';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { ScheduleBasePage } from '../schedule-base-page';
