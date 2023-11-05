@@ -28,7 +28,8 @@ export class HappeningSlotsComponent {
 		return this.happening?.brief?.slots;
 	}
 
-	isShowingAddSlot = false;
+	protected isShowingAddSlot = false;
+
 	public addSlotParams?: AddSlotParams;
 
 	protected readonly id = (_: number, o: IHappeningSlot) => o.id;

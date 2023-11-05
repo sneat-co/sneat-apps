@@ -1,13 +1,13 @@
 <!--wd: {{ wd }}; date: {{date}}-->
-<ion-item-divider color="primary" *ngIf="mode === 'modal'">
-	<ion-label style="font-weight: bold">New slot</ion-label>
-	<ion-buttons slot="end">
-		<ion-button title="Cancel" (click)="dismissModal()">
-			<ion-label color="light">Cancel</ion-label>
-			<ion-icon name="close" slot="end" />
-		</ion-button>
-	</ion-buttons>
-</ion-item-divider>
+<!--<ion-item-divider color="primary" class="sneat-no-end-padding" *ngIf="mode === 'modal'">-->
+<!--	<ion-label style="font-weight: bold">New slot</ion-label>-->
+<!--	<ion-buttons slot="end" class="sneat-no-end-margin">-->
+<!--		<ion-button title="Cancel" (click)="dismissModal()">-->
+<!--			<ion-label color="light">Cancel</ion-label>-->
+<!--			<ion-icon name="close" slot="end" />-->
+<!--		</ion-button>-->
+<!--	</ion-buttons>-->
+<!--</ion-item-divider>-->
 <!--<ion-item *ngIf="happeningType === 'single'">-->
 <!--	<ion-label *ngIf="isToDo && !date">Due</ion-label>-->
 <!--	<ion-label *ngIf="isToDo && date">Due on</ion-label>-->
@@ -27,7 +27,7 @@
 <!--	</ion-segment>-->
 <!--</ion-item-divider>-->
 
-<ion-item-divider color="light">When</ion-item-divider>
+<ion-item-divider color="light" *ngIf="mode !== 'modal'">When</ion-item-divider>
 <form [formGroup]="timeForm">
 	<!--		<ion-item-divider color="light">When</ion-item-divider>-->
 	<sneat-start-end-datetime-form
@@ -35,7 +35,9 @@
 		[date]="date"
 		[mode]="happeningType"
 		[timing]="timing"
+		addSlotLabel="Add slot"
 		(timingChanged)="onTimingChanged($event)"
+		(addClick)="addSlot()"
 	/>
 </form>
 <!--			<ion-item-divider color="light">Where</ion-item-divider>-->
@@ -54,10 +56,6 @@
 <!--<ng-container *ngIf="tab === 'when'">-->
 
 <!--</ng-container>-->
-
-<ion-item-divider *ngIf="happeningType === 'single'">
-	<ion-button (click)="addSlot()">Add slot</ion-button>
-</ion-item-divider>
 
 <!--happeningType: {{happeningType}}, happens: {{happens}};-->
 

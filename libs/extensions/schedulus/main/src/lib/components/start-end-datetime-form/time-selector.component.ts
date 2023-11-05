@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 const morningHours: string[] = [
@@ -42,6 +42,7 @@ const eveningHours: string[] = [
 	templateUrl: './time-selector.component.html',
 })
 export class TimeSelectorComponent {
+	@Input() hideHeader = false;
 	@Output() readonly selected = new EventEmitter<string>();
 
 	tab: 'morning' | 'day' | 'evening' = 'day';

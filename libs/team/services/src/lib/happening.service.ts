@@ -14,7 +14,7 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext, ITeamRequest } from '@sneat/team-models';
 import { map, Observable, tap, throwError } from 'rxjs';
-import { GlobalTeamItemService } from './team-item.service';
+import { ModuleTeamItemService } from './team-item.service';
 
 export interface ICreateHappeningRequest {
 	teamID: string;
@@ -74,7 +74,7 @@ function processHappeningContext(
 
 @Injectable()
 export class HappeningService {
-	private readonly teamItemService: GlobalTeamItemService<
+	private readonly teamItemService: ModuleTeamItemService<
 		IHappeningBrief,
 		IHappeningDto
 	>;
@@ -90,11 +90,10 @@ export class HappeningService {
 		afs: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new GlobalTeamItemService(
-			'happenings',
-			afs,
-			sneatApiService,
-		);
+		this.teamItemService = new ModuleTeamItemService<
+			IHappeningBrief,
+			IHappeningDto
+		>('schedulus', 'happenings', afs, sneatApiService);
 	}
 
 	public createHappening(
@@ -230,7 +229,7 @@ export class HappeningService {
 	): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
 		return this.teamItemService
-			.watchGlobalTeamItemsWithTeamRef(team, [
+			.watchModuleTeamItemsWithTeamRef(team, [
 				HappeningService.statusFilter(statuses),
 				{ field: 'dateMin', operator: '>=', value: date },
 			])
@@ -253,11 +252,11 @@ export class HappeningService {
 			return throwError(() => 'missing required field "date"');
 		}
 		console.log('watchSinglesOnSpecificDay()', team.id, date, statuses);
-		const teamDate = team.id + ':' + date;
+		// const teamDate = team.id + ':' + date;
 		return this.teamItemService
-			.watchGlobalTeamItemsWithTeamRef(team, [
-				{ field: 'teamDates', operator: 'array-contains', value: teamDate },
+			.watchModuleTeamItemsWithTeamRef(team, [
 				HappeningService.statusFilter(statuses),
+				{ field: 'dates', operator: 'array-contains', value: date },
 			])
 			.pipe(
 				tap((happenings) => {

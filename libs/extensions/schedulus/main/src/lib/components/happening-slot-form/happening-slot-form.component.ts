@@ -30,14 +30,14 @@ import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 type Happens = 'once' | 'weekly' | RepeatsWeek | 'fortnightly';
 
 @Component({
-	selector: 'sneat-recurring-slot-form',
-	templateUrl: './recurring-slot-form.component.html',
+	selector: 'sneat-happening-slot-form',
+	templateUrl: './happening-slot-form.component.html',
 })
-export class RecurringSlotFormComponent
+export class HappeningSlotFormComponent
 	extends WeekdaysFormBase
 	implements OnChanges, OnDestroy
 {
-	@Input() mode: 'modal' | 'in-form' = 'modal';
+	@Input({ required: true }) mode?: 'modal' | 'in-form';
 	@Input() happening?: IHappeningContext;
 
 	@ViewChild('startEndDatetimeForm')

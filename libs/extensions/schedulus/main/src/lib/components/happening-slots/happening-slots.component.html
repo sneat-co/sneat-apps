@@ -43,18 +43,21 @@
 				>{{ wd | wdToWeekday }}</ion-badge
 			>
 		</p>
-		<p
-			*ngIf="
-				slot.location && (slot.location.title || slot.location.address);
-				else noLocation
-			"
-		>
-			@ {{ slot.location.title || slot.location.address }}, ends at
-			{{ slot.end?.time }}
+		<p>
+			<ng-container *ngIf="slot?.start?.date"
+				>Starts on {{ slot.start.date }}</ng-container
+			>
+			<ng-container
+				*ngIf="
+					slot.location && (slot.location.title || slot.location.address);
+					else noLocation
+				"
+			>
+				@ {{ slot.location.title || slot.location.address }}, ends at
+				{{ slot.end?.time }}
+			</ng-container>
+			<ng-template #noLocation> Ends at {{ slot.end?.time }} </ng-template>
 		</p>
-		<ng-template #noLocation>
-			<p *ngIf="slot.end">Ends at {{ slot.end.time }}</p>
-		</ng-template>
 	</ion-label>
 	<ion-buttons slot="end">
 		<ion-button (click)="removeSlot(slot)" color="medium">
@@ -63,20 +66,35 @@
 	</ion-buttons>
 </ion-item>
 <ion-modal
-	class="auto-height"
+	#addSlotModal
 	[isOpen]="isShowingAddSlot"
 	(ionModalDidDismiss)="onAddSlotModalDismissed($event)"
 >
+	<!--	class="auto-height"-->
+
 	<ng-template>
-		<div class="modal-wrapper">
-			<sneat-recurring-slot-form
+		<ion-header>
+			<ion-toolbar color="primary">
+				<ion-title>New slot</ion-title>
+				<ion-buttons slot="end">
+					<ion-button (click)="addSlotModal.dismiss()">
+						<ion-icon name="close" slot="icon-only" />
+					</ion-button>
+				</ion-buttons>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content>
+			<!--			<div class="modal-wrapper">-->
+			<sneat-happening-slot-form
 				class="modal-content"
+				mode="modal"
 				[wd]="addSlotParams?.wd"
 				[(happening)]="happening"
 				[isToDo]="false"
 				(slotAdded)="onSlotAdded($event)"
 				(happeningChange)="onHappeningChanged($event)"
 			/>
-		</div>
+			<!--			</div>-->
+		</ion-content>
 	</ng-template>
 </ion-modal>

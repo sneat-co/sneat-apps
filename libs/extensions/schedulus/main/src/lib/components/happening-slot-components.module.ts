@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { HappeningCommonModule } from './happening-common.module';
-import { RecurringSlotFormComponent } from './recurring-slot-form/recurring-slot-form.component';
+import { HappeningSlotFormComponent } from './happening-slot-form/happening-slot-form.component';
 import { HappeningSlotsComponent } from './happening-slots/happening-slots.component';
 import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
 import { StartEndDatetimeFormComponent } from './start-end-datetime-form/start-end-datetime-form.component';
@@ -21,14 +21,14 @@ import { TimeSelectorComponent } from './start-end-datetime-form/time-selector.c
 	],
 	declarations: [
 		HappeningSlotsComponent,
-		RecurringSlotFormComponent,
+		HappeningSlotFormComponent,
 		SingleSlotFormComponent,
 		StartEndDatetimeFormComponent,
 		TimeSelectorComponent,
 	],
 	exports: [
 		HappeningSlotsComponent,
-		RecurringSlotFormComponent,
+		HappeningSlotFormComponent,
 		SingleSlotFormComponent,
 		StartEndDatetimeFormComponent,
 	],

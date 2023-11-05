@@ -59,7 +59,7 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 		);
 	}
 
-	protected queryTeamItems<Dto2 extends Dto>(
+	protected queryItems<Dto2 extends Dto>(
 		collectionRef: CollectionReference<Dto2>,
 		filter?: readonly IFilter[],
 	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
@@ -144,6 +144,14 @@ export class GlobalTeamItemService<
 		) as CollectionReference<Dto2>;
 	}
 
+	public watchGlobalItems<Dto2 extends Dto>(
+		filter?: readonly IFilter[],
+	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
+		console.log('watchGlobalItems()', this.collectionName);
+		const collectionRef = this.collectionRef<Dto2>();
+		return this.queryItems<Dto2>(collectionRef, filter);
+	}
+
 	public watchGlobalTeamItemsWithTeamRef<Dto2 extends Dto>(
 		team: ITeamRef,
 		filter?: readonly IFilter[],
@@ -163,7 +171,7 @@ export class GlobalTeamItemService<
 			{ field: 'teamIDs', operator: '==', value: teamID },
 		];
 		const collectionRef = this.collectionRef<Dto2>();
-		return this.queryTeamItems<Dto2>(collectionRef, filter);
+		return this.queryItems<Dto2>(collectionRef, filter);
 	}
 }
 
@@ -210,23 +218,22 @@ export class ModuleTeamItemService<
 		team: ITeamRef,
 		filter?: readonly IFilter[],
 	): Observable<ITeamItemWithBriefAndDto<Brief, Dto2>[]> {
-		return this.watchModuleTeamItems<Dto2>(this.moduleID, team.id, filter).pipe(
+		return this.watchModuleTeamItems<Dto2>(team.id, filter).pipe(
 			map((items) => items.map((item) => ({ ...item, team }))),
 		);
 	}
 
 	public watchModuleTeamItems<Dto2 extends Dto>(
-		moduleID: string,
 		teamID: string,
 		filter?: readonly IFilter[],
 	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
 		console.log('watchModuleTeamItems()', teamID, this.collectionName);
-		filter = [
-			...(filter || []),
-			{ field: 'teamIDs', operator: '==', value: teamID },
-		];
+		// filter = [
+		// 	...(filter || []),
+		// 	// { field: 'teamIDs', operator: '==', value: teamID },
+		// ];
 		const collectionRef = this.collectionRef<Dto2>(teamID);
-		return this.queryTeamItems<Dto2>(collectionRef, filter);
+		return this.queryItems<Dto2>(collectionRef, filter);
 	}
 
 	// private readonly mapItemTeamItemContext = <

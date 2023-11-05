@@ -26,11 +26,13 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	templateUrl: 'start-end-datetime-form.component.html',
 })
 export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
+	@Input() addSlotLabel?: string;
 	@Input({ required: true }) mode?: HappeningType;
 	@Input({ required: true }) timing: ITiming = emptyTiming;
 	@Input({ required: true }) date?: string;
 
 	@Output() readonly timingChanged = new EventEmitter<ITiming>();
+	@Output() readonly addClick = new EventEmitter<ITiming>();
 
 	@ViewChild('startTimeInput') startTimeInput?: IonInput;
 
@@ -210,18 +212,24 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	protected setStartDate(event: Event, code: 'today' | 'tomorrow'): void {
 		console.log('setStartDate()', event);
 		const today = new Date();
-		let date: Date;
+		let d: Date;
 		switch (code) {
 			case 'today':
-				date = today;
+				d = today;
 				break;
 			case 'tomorrow':
-				date = new Date();
-				date.setDate(today.getDate() + 1);
+				d = new Date();
+				d.setDate(today.getDate() + 1);
 				break;
 		}
-		if (date) {
-			this.startDate.setValue(dateToIso(date));
+		if (d) {
+			const date = dateToIso(d);
+			this.startDate.setValue(date);
+			this.timing = {
+				...this.timing,
+				start: { ...this.timing.start, date: date },
+			};
+			this.emitTimingChanged('setStartDate');
 		}
 	}
 
@@ -242,12 +250,21 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	private emitTimingChanged(from: string): void {
-		if (!from)
+		if (!from) {
 			console.log(
 				`StartEndDatetimeFormComponent.emitSlotChanged(from=${from})`,
 				this.timing,
 			);
+		}
 		this.timingChanged.emit(this.timing);
+	}
+
+	protected add(): void {
+		if (this.mode === 'single' && !this.timing.start?.date) {
+			alert('Please select date');
+			return;
+		}
+		this.addClick.emit(this.timing);
 	}
 
 	protected onStartTimeBlur(): void {
@@ -259,16 +276,27 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	protected onStartDateChanged(): void {
-		// console.log('StartEndDatetimeFormComponent.onStartDateChanged()');
+		console.log(
+			'StartEndDatetimeFormComponent.onStartDateChanged()',
+			this.startDate.value,
+		);
+		let startDate = this.startDate.value || '';
+		if (startDate.indexOf('T') >= 0) {
+			startDate = startDate.split('T')[0];
+			this.startDate.setValue(startDate);
+		}
 		const slot = this.timing;
 		this.timing = {
 			...slot,
 			start: { ...(slot.start || {}), date: this.startDate.value || '' },
 		};
 		if (
-			isValidaTimeString(this.startTime.value as string) &&
-			isValidaTimeString(this.endTime.value as string) &&
-			isValidDateString(this.startDate.value as string)
+			(!this.startTime.value ||
+				isValidaTimeString(this.startTime.value as string)) &&
+			(!this.endTime.value ||
+				isValidaTimeString(this.endTime.value as string)) &&
+			(!this.startDate.value ||
+				isValidDateString(this.startDate.value as string))
 		) {
 			this.emitTimingChanged('onStartDateChanged');
 		}
