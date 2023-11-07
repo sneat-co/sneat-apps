@@ -5,7 +5,7 @@ import {
 	CollectionReference,
 } from '@angular/fire/firestore';
 import { QuerySnapshot } from '@firebase/firestore-types';
-import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
+import { IQueryArgs, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { IIdAndBriefAndDto } from '@sneat/core';
 import { ITeamDto } from '@sneat/dto';
 import {
@@ -61,11 +61,11 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 
 	protected queryItems<Dto2 extends Dto>(
 		collectionRef: CollectionReference<Dto2>,
-		filter?: readonly IFilter[],
+		queryArgs?: IQueryArgs,
 	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
 		const $querySnapshot = this.sfs.watchSnapshotsByFilter<Dto2>(
 			collectionRef,
-			filter || [],
+			queryArgs,
 		);
 		return $querySnapshot.pipe(
 			map((querySnapshot) => {
@@ -145,33 +145,36 @@ export class GlobalTeamItemService<
 	}
 
 	public watchGlobalItems<Dto2 extends Dto>(
-		filter?: readonly IFilter[],
+		queryArgs: IQueryArgs,
 	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
 		console.log('watchGlobalItems()', this.collectionName);
 		const collectionRef = this.collectionRef<Dto2>();
-		return this.queryItems<Dto2>(collectionRef, filter);
+		return this.queryItems<Dto2>(collectionRef, queryArgs);
 	}
 
 	public watchGlobalTeamItemsWithTeamRef<Dto2 extends Dto>(
 		team: ITeamRef,
-		filter?: readonly IFilter[],
+		queryArgs: IQueryArgs,
 	): Observable<ITeamItemWithBriefAndDto<Brief, Dto2>[]> {
-		return this.watchGlobalTeamItems<Dto2>(team.id, filter).pipe(
+		return this.watchGlobalTeamItems<Dto2>(team.id, queryArgs).pipe(
 			map((items) => items.map((item) => ({ ...item, team }))),
 		);
 	}
 
 	public watchGlobalTeamItems<Dto2 extends Dto>(
 		teamID: string,
-		filter?: readonly IFilter[],
+		queryArgs: IQueryArgs,
 	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
 		console.log('watchModuleTeamItems()', teamID, this.collectionName);
-		filter = [
-			...(filter || []),
-			{ field: 'teamIDs', operator: '==', value: teamID },
-		];
+		queryArgs = {
+			...queryArgs,
+			filter: [
+				...(queryArgs?.filter || []),
+				{ field: 'teamIDs', operator: '==', value: teamID },
+			],
+		};
 		const collectionRef = this.collectionRef<Dto2>();
-		return this.queryItems<Dto2>(collectionRef, filter);
+		return this.queryItems<Dto2>(collectionRef, queryArgs);
 	}
 }
 
@@ -216,16 +219,16 @@ export class ModuleTeamItemService<
 
 	public watchModuleTeamItemsWithTeamRef<Dto2 extends Dto>(
 		team: ITeamRef,
-		filter?: readonly IFilter[],
+		queryArgs?: IQueryArgs,
 	): Observable<ITeamItemWithBriefAndDto<Brief, Dto2>[]> {
-		return this.watchModuleTeamItems<Dto2>(team.id, filter).pipe(
+		return this.watchModuleTeamItems<Dto2>(team.id, queryArgs).pipe(
 			map((items) => items.map((item) => ({ ...item, team }))),
 		);
 	}
 
 	public watchModuleTeamItems<Dto2 extends Dto>(
 		teamID: string,
-		filter?: readonly IFilter[],
+		queryArgs?: IQueryArgs,
 	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
 		console.log('watchModuleTeamItems()', teamID, this.collectionName);
 		// filter = [
@@ -233,7 +236,7 @@ export class ModuleTeamItemService<
 		// 	// { field: 'teamIDs', operator: '==', value: teamID },
 		// ];
 		const collectionRef = this.collectionRef<Dto2>(teamID);
-		return this.queryItems<Dto2>(collectionRef, filter);
+		return this.queryItems<Dto2>(collectionRef, queryArgs);
 	}
 
 	// private readonly mapItemTeamItemContext = <

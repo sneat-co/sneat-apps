@@ -1,42 +1,21 @@
-<ion-segment [(ngModel)]="tab" color="dark">
+<ion-segment [(ngModel)]="tab" color="dark" (ionChange)="onTabChanged($event)">
 	<ion-segment-button value="upcoming">Upcoming</ion-segment-button>
 	<ion-segment-button value="past">Past</ion-segment-button>
+	<ion-segment-button value="recent">Recently created</ion-segment-button>
 </ion-segment>
 
-<ion-card *ngIf="!upcomingSingles">
-	<ion-card-content>
-		<ion-spinner name="lines" class="ion-margin-end" />
-		<ion-text color="medium">Loading 1-timers...</ion-text>
-	</ion-card-content>
-</ion-card>
-
-<ng-container *ngIf="tab === 'upcoming'">
-	<sneat-happening-card
-		*ngFor="let happening of upcomingSingles || []; trackBy: happeningID"
-		[team]="team"
-		[happening]="happening"
-		(deleted)="onHappeningRemoved($event)"
-	/>
-
-	<div class="ion-margin-top" *ngIf="!!numberOfHidden">
-		<span class="ion-margin" *ngIf="numberOfHidden === 1">
-			1 out of {{ allUpcomingSingles?.length || 0 }} happenings is hidden by
-			filter.
-		</span>
-
-		<span class="ion-margin" *ngIf="numberOfHidden > 1">
-			{{ numberOfHidden }} out of
-			{{ allUpcomingSingles?.length || 0 }} happenings are hidden by filter.
-		</span>
-
-		<ion-button color="medium" fill="outline" (click)="clearFilter()">
-			<ion-label>Clear filter</ion-label>
-		</ion-button>
-	</div>
-</ng-container>
-
-<ion-card *ngIf="tab === 'past'">
-	<ion-card-content>
-		<p style="font-style: italic">Not implemented yet</p>
-	</ion-card-content>
-</ion-card>
+<sneat-single-happenings-list
+	*ngIf="tab === 'upcoming'"
+	[team]="team"
+	[happenings]="upcomingSingles"
+/>
+<sneat-single-happenings-list
+	*ngIf="tab === 'past'"
+	[team]="team"
+	[happenings]="pastSingles"
+/>
+<sneat-single-happenings-list
+	*ngIf="tab === 'recent'"
+	[team]="team"
+	[happenings]="recentSingles"
+/>

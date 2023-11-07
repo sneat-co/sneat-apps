@@ -16,7 +16,10 @@ import {
 	ScheduleDayServiceModule,
 } from '@sneat/team-services';
 import { ScheduleModalsServiceModule } from '../../services';
-import { DaySlotItemComponent } from './components';
+import {
+	DaySlotItemComponent,
+	SingleHappeningsListComponent,
+} from './components';
 import { RecurringCardComponent } from './components';
 import { RecurringsTabComponent } from './components';
 import { ScheduleCardHeaderComponent } from './components';
@@ -76,6 +79,7 @@ import { TimingBadgeComponent } from './components';
 		ScheduleWeekTitleComponent,
 		ScheduleFilterComponent,
 		ScheduleCardHeaderComponent,
+		SingleHappeningsListComponent,
 	],
 	providers: [ScheduleFilterService, ScheduleStateService],
 })

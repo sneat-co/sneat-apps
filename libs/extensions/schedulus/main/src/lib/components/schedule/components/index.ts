@@ -16,3 +16,4 @@ export * from './slot-context-menu/slot-context-menu.component';
 export * from './timing-badge/timing-badge.component';
 export { RecurringCardComponent } from './recurrings-tab/recurring-card.component';
 export { RecurringsTabComponent } from './recurrings-tab/recurrings-tab.component';
+export { SingleHappeningsListComponent } from './singles-tab/single-happenings-list.component';

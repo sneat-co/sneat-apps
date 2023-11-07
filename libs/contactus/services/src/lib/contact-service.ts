@@ -103,7 +103,7 @@ export class ContactService extends ModuleTeamItemService<
 			},
 			...(filter || []),
 		];
-		return this.watchModuleTeamItemsWithTeamRef<IContactDto>(team, filter);
+		return this.watchModuleTeamItemsWithTeamRef<IContactDto>(team, { filter });
 	}
 
 	watchContactById(
@@ -133,7 +133,7 @@ export class ContactService extends ModuleTeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleTeamItemsWithTeamRef(team, f);
+		return this.watchModuleTeamItemsWithTeamRef(team, { filter: f });
 	}
 
 	watchChildContacts(
@@ -155,7 +155,7 @@ export class ContactService extends ModuleTeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleTeamItemsWithTeamRef(team, f);
+		return this.watchModuleTeamItemsWithTeamRef(team, { filter: f });
 	}
 
 	public changeContactRole(

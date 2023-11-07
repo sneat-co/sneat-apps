@@ -1,0 +1,34 @@
+<ion-card *ngIf="!happenings">
+	<ion-card-content>
+		<ion-spinner name="lines" class="ion-margin-end" />
+		<ion-text color="medium">Loading 1-timers...</ion-text>
+	</ion-card-content>
+</ion-card>
+
+<sneat-happening-card
+	*ngFor="let happening of happenings || []; trackBy: happeningID"
+	[team]="team"
+	[happening]="happening"
+	(deleted)="onHappeningRemoved($event)"
+/>
+
+<div class="ion-margin-top" *ngIf="!!numberOfHidden">
+	<span class="ion-margin" *ngIf="numberOfHidden === 1">
+		1 out of {{ happenings?.length || 0 }} happenings is hidden by filter.
+	</span>
+
+	<span class="ion-margin" *ngIf="numberOfHidden > 1">
+		{{ numberOfHidden }} out of {{ happenings?.length || 0 }} happenings are
+		hidden by filter.
+	</span>
+
+	<ion-button color="medium" fill="outline" (click)="clearFilter()">
+		<ion-label>Clear filter</ion-label>
+	</ion-button>
+</div>
+
+<ion-card *ngIf="happenings && !happenings.length">
+	<ion-card-content>
+		<ion-text color="medium">No records found.</ion-text>
+	</ion-card-content>
+</ion-card>

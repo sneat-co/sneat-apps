@@ -179,8 +179,8 @@ export class ContactGroupService {
 		status: 'active' | 'archived' = 'active',
 	): Observable<IIdAndDto<IContactGroupDto>[]> {
 		// console.log('watchMemberGroupsByTeamID()', teamID);
-		return this.teamItemService.watchModuleTeamItemsWithTeamRef(team, [
-			{ field: 'status', operator: '==', value: status },
-		]);
+		return this.teamItemService.watchModuleTeamItemsWithTeamRef(team, {
+			filter: [{ field: 'status', operator: '==', value: status }],
+		});
 	}
 }

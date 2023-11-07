@@ -15,9 +15,14 @@ import { INavContext } from '@sneat/core';
 import { from, map, Observable, Subject, tap } from 'rxjs';
 
 export interface IFilter {
-	field: string;
-	operator: WhereFilterOp;
-	value: unknown;
+	readonly field: string;
+	readonly operator: WhereFilterOp;
+	readonly value: unknown;
+}
+
+export interface IQueryArgs {
+	readonly filter?: readonly IFilter[];
+	readonly orderBy?: readonly QueryOrderByConstraint[];
 }
 
 export class SneatFirestoreService<Brief, Dto extends Brief> {
@@ -82,24 +87,18 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 
 	watchSnapshotsByFilter<Dto2 extends Dto>(
 		collectionRef: CollectionReference<Dto2>,
-		filter: readonly IFilter[],
-		orderBy?: readonly QueryOrderByConstraint[],
+		queryArgs?: IQueryArgs,
 	): Observable<QuerySnapshot<Dto2>> {
 		const operator = (f: IFilter) =>
 			f.field.endsWith('IDs') ? 'array-contains' : f.operator;
 		const q = query(
 			collectionRef,
-			...filter.map((f) => where(f.field, operator(f), f.value)),
-			...(orderBy || []),
+			...(queryArgs?.filter || []).map((f) =>
+				where(f.field, operator(f), f.value),
+			),
+			...(queryArgs?.orderBy || []),
 		);
-		console.log(
-			'watchSnapshotsByFilter()',
-			collectionRef.path,
-			'filter',
-			filter,
-			'query',
-			q,
-		);
+		console.log('watchSnapshotsByFilter()', collectionRef.path, queryArgs, q);
 		const subj = new Subject<QuerySnapshot<Dto2>>();
 		onSnapshot(q, subj);
 		return subj;
@@ -107,10 +106,9 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 
 	watchByFilter<Dto2 extends Dto>(
 		collectionRef: CollectionReference<Dto2>,
-		filter: IFilter[],
-		orderBy?: QueryOrderByConstraint[],
+		queryArgs?: IQueryArgs,
 	): Observable<INavContext<Brief, Dto2>[]> {
-		return this.watchSnapshotsByFilter(collectionRef, filter, orderBy).pipe(
+		return this.watchSnapshotsByFilter(collectionRef, queryArgs).pipe(
 			map((querySnapshot) => {
 				console.log(
 					'watchByFilter() => querySnapshot: ',

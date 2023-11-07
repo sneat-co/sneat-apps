@@ -287,10 +287,22 @@ export class HappeningFormComponent
 
 			this.isCreating = true;
 
-			const dto = this.makeHappeningDto();
+			let happening = this.makeHappeningDto();
+
+			switch (happening.type) {
+				case 'single':
+					happening = {
+						...happening,
+						slots: happening.slots?.map((slot) => ({
+							...slot,
+							repeats: 'once',
+						})),
+					};
+					break;
+			}
 
 			this.happeningService
-				.createHappening({ teamID: team.id, happening: dto })
+				.createHappening({ teamID: team.id, happening })
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () => {

@@ -65,6 +65,6 @@ export class AssetService extends ModuleTeamItemService<
 					},
 			  ]
 			: undefined;
-		return this.watchModuleTeamItemsWithTeamRef<Dto>(team, filter);
+		return this.watchModuleTeamItemsWithTeamRef<Dto>(team, { filter });
 	}
 }

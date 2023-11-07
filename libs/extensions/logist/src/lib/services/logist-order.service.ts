@@ -141,7 +141,10 @@ export class LogistOrderService {
 		}
 
 		const result = this.sfs
-			.watchByFilter(ordersCollection, qFilter, [orderBy('createdAt', 'desc')])
+			.watchByFilter(ordersCollection, {
+				filter: qFilter,
+				orderBy: [orderBy('createdAt', 'desc')],
+			})
 			.pipe(
 				map((orders) =>
 					orders.map((order) => ({ ...order, team: { id: teamID } })),

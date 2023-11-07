@@ -160,6 +160,7 @@ export class TeamDay {
 	private readonly processSingles = (
 		singleHappenings: IHappeningContext[],
 	): void => {
+		console.log('processSingles', singleHappenings);
 		try {
 			this.singles = [];
 

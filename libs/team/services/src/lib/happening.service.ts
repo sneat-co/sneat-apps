@@ -1,5 +1,8 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
+import {
+	Firestore as AngularFirestore,
+	orderBy,
+} from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import {
@@ -13,6 +16,7 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext, ITeamRequest } from '@sneat/team-models';
+import { QueryOrderByConstraint } from 'firebase/firestore';
 import { map, Observable, tap, throwError } from 'rxjs';
 import { ModuleTeamItemService } from './team-item.service';
 
@@ -108,6 +112,14 @@ export class HappeningService {
 					title,
 				},
 			};
+		}
+		if (
+			request.happening.type === 'single' &&
+			request.happening.slots?.some((slot) => slot.repeats !== 'once')
+		) {
+			return throwError(
+				() => 'Single occurrence happening cannot have recurring slots',
+			);
 		}
 		request = {
 			...request,
@@ -227,12 +239,53 @@ export class HappeningService {
 		team: ITeamContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
+		return this.watchSingles(team, statuses, {
+			field: 'dateMin',
+			operator: '<=',
+		});
+	}
+
+	public watchPastSingles(
+		team: ITeamContext,
+		statuses: HappeningStatus[] = ['active'],
+	): Observable<IHappeningContext[]> {
+		return this.watchSingles(team, statuses, {
+			field: 'dateMax',
+			operator: '<',
+		});
+	}
+
+	public watchRecentlyCreatedSingles(
+		team: ITeamContext,
+		statuses: HappeningStatus[] = ['active'],
+	): Observable<IHappeningContext[]> {
+		return this.watchSingles(
+			team,
+			statuses,
+			undefined,
+			orderBy('created', 'desc'),
+		);
+	}
+
+	public watchSingles(
+		team: ITeamContext,
+		statuses: HappeningStatus[],
+		dateCondition?:
+			| { field: 'dateMin'; operator: '<=' }
+			| { field: 'dateMax'; operator: '<' },
+		orderByConstraint?: QueryOrderByConstraint,
+	): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
+		console.log('watchSingles()', team.id, date, dateCondition);
+		const filter = [HappeningService.statusFilter(statuses)];
+		if (dateCondition) {
+			filter.push({ ...dateCondition, value: date });
+		}
 		return this.teamItemService
-			.watchModuleTeamItemsWithTeamRef(team, [
-				HappeningService.statusFilter(statuses),
-				{ field: 'dateMin', operator: '>=', value: date },
-			])
+			.watchModuleTeamItemsWithTeamRef(team, {
+				filter,
+				orderBy: orderByConstraint ? [orderByConstraint] : undefined,
+			})
 			.pipe(
 				map((happenings) => {
 					return happenings.map((h) => processHappeningContext(h, team));
@@ -243,7 +296,7 @@ export class HappeningService {
 	public watchSinglesOnSpecificDay(
 		team: ITeamContext,
 		date: string,
-		statuses: HappeningStatus[] = ['active'],
+		status: HappeningStatus = 'active',
 	): Observable<IHappeningContext[]> {
 		if (!team.id) {
 			return throwError(() => 'missing required field "teamID"');
@@ -251,20 +304,22 @@ export class HappeningService {
 		if (!date) {
 			return throwError(() => 'missing required field "date"');
 		}
-		console.log('watchSinglesOnSpecificDay()', team.id, date, statuses);
+		console.log('watchSinglesOnSpecificDay()', team.id, date, status);
 		// const teamDate = team.id + ':' + date;
 		return this.teamItemService
-			.watchModuleTeamItemsWithTeamRef(team, [
-				HappeningService.statusFilter(statuses),
-				{ field: 'dates', operator: 'array-contains', value: date },
-			])
+			.watchModuleTeamItemsWithTeamRef(team, {
+				filter: [
+					HappeningService.statusFilter([status]),
+					{ field: 'dates', operator: 'array-contains', value: date },
+				],
+			})
 			.pipe(
 				tap((happenings) => {
 					console.log(
 						'watchSinglesOnSpecificDay() =>',
 						team.id,
 						date,
-						statuses,
+						status,
 						happenings,
 					);
 				}),
