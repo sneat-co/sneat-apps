@@ -22,6 +22,42 @@ const weekdayRequired: ValidatorFn = (
 };
 
 export abstract class WeekdaysFormBase extends SneatBaseComponent {
+	readonly weekdaysCheckbox = new FormControl<boolean>(false);
+	readonly weekendCheckbox = new FormControl<boolean>(false);
+
+	protected onWeekdaysCheckboxChange(): void {
+		const checked = this.weekdaysCheckbox.value;
+		Object.entries(this.weekdayById).forEach((c) => {
+			if (!this.isWeekend(c[0])) {
+				c[1].setValue(checked);
+			}
+		});
+	}
+
+	private isWeekend(day: string): boolean {
+		return day === 'sa' || day === 'su';
+	}
+
+	protected onWeekendCheckboxChange(): void {
+		const checked = this.weekendCheckbox.value;
+		Object.entries(this.weekdayById).forEach((c) => {
+			if (this.isWeekend(c[0])) {
+				c[1].setValue(checked);
+			}
+		});
+	}
+
+	protected onWeekdayChange(): void {
+		this.weekdaysCheckbox.setValue(
+			this.weekdayMo.value &&
+				this.weekdayTu.value &&
+				this.weekdayWe.value &&
+				this.weekdayTh.value &&
+				this.weekdayFr.value,
+		);
+		this.weekendCheckbox.setValue(this.weekdaySa.value && this.weekdaySu.value);
+	}
+
 	readonly weekdayMo = new FormControl<boolean>(false);
 	readonly weekdayTu = new FormControl<boolean>(false);
 	readonly weekdayWe = new FormControl<boolean>(false);

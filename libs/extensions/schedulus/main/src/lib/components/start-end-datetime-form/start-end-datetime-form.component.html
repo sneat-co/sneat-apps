@@ -76,10 +76,21 @@
 	<ion-row *ngIf="!startDate?.value || !startTime.value">
 		<ion-col size="12" size-lg="5">
 			<ion-datetime
+				[min]="today.toISOString().substring(0, 10)"
+				[max]="maxDate"
 				presentation="date"
 				[formControl]="startDate"
 				(ionChange)="onStartDateChanged()"
-			/>
+			>
+				<ion-buttons slot="buttons">
+					<ion-button color="medium" (click)="setStartDate($event, 'today')"
+						>Today</ion-button
+					>
+					<ion-button color="medium" (click)="setStartDate($event, 'tomorrow')"
+						>Tomorrow</ion-button
+					>
+				</ion-buttons>
+			</ion-datetime>
 		</ion-col>
 		<ion-col size="12" size-lg="7">
 			<sneat-time-selector
@@ -228,7 +239,7 @@
 			</ion-item>
 		</ion-col>
 		<ion-col size="6" size-sm="3">
-			<ion-button expand="full" class="ion-margin" (click)="add()">{{
+			<ion-button expand="full" class="ion-margin" (click)="addSlot()">{{
 				addSlotLabel
 			}}</ion-button>
 		</ion-col>

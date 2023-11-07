@@ -120,12 +120,14 @@ export class HappeningSlotFormComponent
 				: this.repeats.value;
 	}
 
-	addSlot(): void {
+	addSlot(timing?: ITiming): void {
 		// this.touchAllFormFields(this.slotForm);
 		this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
 		console.log(
-			'addSlot() => this.slotForm.errors:',
+			'addSlot()',
+			timing,
+			' => this.slotForm.errors:',
 			this.slotForm.controls['locationTitle']?.errors,
 		);
 		if (this.happeningType === 'recurring' && !this.weekdaysForm.valid) {

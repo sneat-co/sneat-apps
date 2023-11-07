@@ -36,8 +36,8 @@
 		[mode]="happeningType"
 		[timing]="timing"
 		addSlotLabel="Add slot"
-		(timingChanged)="onTimingChanged($event)"
-		(addClick)="addSlot()"
+		(timingChange)="onTimingChanged($event)"
+		(addClick)="addSlot($event)"
 	/>
 </form>
 <!--			<ion-item-divider color="light">Where</ion-item-divider>-->
@@ -85,6 +85,22 @@
 				>Every last week of a month</ion-select-option
 			>
 		</ion-select>
+		<ion-checkbox
+			color="medium"
+			labelPlacement="end"
+			slot="end"
+			[formControl]="weekdaysCheckbox"
+			(ionChange)="onWeekdaysCheckboxChange()"
+			><ion-label color="medium">W-days</ion-label></ion-checkbox
+		>
+		<ion-checkbox
+			color="medium"
+			labelPlacement="end"
+			slot="end"
+			[formControl]="weekendCheckbox"
+			(ionChange)="onWeekendCheckboxChange()"
+			><ion-label color="medium">W-end</ion-label></ion-checkbox
+		>
 	</ion-item>
 	<form
 		[formGroup]="weekdaysForm"
@@ -98,6 +114,7 @@
 							slot="start"
 							value="mo"
 							[formControl]="weekdayMo"
+							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
 							>Monday</ion-checkbox
 						>
@@ -107,6 +124,7 @@
 							slot="start"
 							value="tu"
 							[formControl]="weekdayTu"
+							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
 							>Tuesday</ion-checkbox
 						>
@@ -125,6 +143,7 @@
 							slot="start"
 							value="th"
 							[formControl]="weekdayTh"
+							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
 							>Thursday</ion-checkbox
 						>
@@ -136,6 +155,7 @@
 							slot="start"
 							value="fr"
 							[formControl]="weekdayFr"
+							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
 							>Friday</ion-checkbox
 						>
@@ -145,6 +165,7 @@
 							slot="start"
 							value="sa"
 							[formControl]="weekdaySa"
+							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
 							>Saturday</ion-checkbox
 						>
@@ -154,6 +175,7 @@
 							slot="start"
 							value="su"
 							[formControl]="weekdaySu"
+							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
 							>Sunday</ion-checkbox
 						>

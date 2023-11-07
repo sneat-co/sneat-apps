@@ -20,6 +20,7 @@ import {
 import { emptyTiming, HappeningType, ITiming } from '@sneat/mod-schedulus-core';
 import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { isTomorrow } from '../schedule-core';
 
 @Component({
 	selector: 'sneat-start-end-datetime-form',
@@ -28,44 +29,56 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	@Input() addSlotLabel?: string;
 	@Input({ required: true }) mode?: HappeningType;
-	@Input({ required: true }) timing: ITiming = emptyTiming;
 	@Input({ required: true }) date?: string;
 
-	@Output() readonly timingChanged = new EventEmitter<ITiming>();
+	@Input({ required: true }) timing: ITiming = emptyTiming;
+	@Output() readonly timingChange = new EventEmitter<ITiming>();
+
 	@Output() readonly addClick = new EventEmitter<ITiming>();
 
 	@ViewChild('startTimeInput') startTimeInput?: IonInput;
 
-	public tab: 'duration' | 'end' = 'duration';
-	public durationUnits: 'minutes' | 'hours' = 'minutes';
-	public startDate = new FormControl<string>('', {
-		// dateToIso(new Date())
+	protected today = new Date();
+	protected maxDate = new Date(this.today.getFullYear() + 1, 11, 31)
+		.toISOString()
+		.substring(0, 10);
+
+	protected tab: 'duration' | 'end' = 'duration';
+	protected durationUnits: 'minutes' | 'hours' = 'minutes';
+	protected startDateVal? = new Date().toISOString().substring(0, 10);
+
+	protected startDate = new FormControl<string>(
+		new Date().toISOString().substring(0, 10),
+		{
+			// dateToIso(new Date())
+			validators: Validators.required,
+		},
+	);
+	protected endDate = new FormControl<string>('', {
 		// validators: Validators.required,
 	});
-	public endDate = new FormControl<string>('', {
-		// validators: Validators.required,
-	});
-	public readonly startTime = new FormControl<string>('', {
+	protected readonly startTime = new FormControl<string>('', {
 		validators: [Validators.required, Validators.pattern(/[0-2]\d:[0-5]\d/)],
 	});
-	public readonly endTime = new FormControl<string>('', {
+	protected readonly endTime = new FormControl<string>('', {
 		validators: [Validators.required, Validators.pattern(/[0-2]\d:[0-5]\d/)],
 	});
-	public readonly duration = new FormControl<number>(60, {
+	protected readonly duration = new FormControl<number>(60, {
 		validators: [Validators.required],
 	});
-	public readonly form = new UntypedFormGroup({
+
+	protected readonly form = new UntypedFormGroup({
 		startDate: this.startDate,
 		startTime: this.startTime,
 		endTime: this.endTime,
 		duration: this.duration,
 	});
 
-	public get disabled(): boolean {
+	protected get disabled(): boolean {
 		return !this.mode;
 	}
 
-	public get hideStartDate(): boolean {
+	protected get hideStartDate(): boolean {
 		return this.mode === 'recurring';
 	}
 
@@ -89,6 +102,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	// 	return timing;
 	// }
 
+	// Is public property as might be used by component's parent component
 	public get isValid(): boolean {
 		this.form.markAllAsTouched();
 		return (
@@ -108,7 +122,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('StartEndDatetimeFormComponent.ngOnChanges', changes);
 		if (changes['date']) {
-			this.onDateChange();
+			this.onDateChanged();
 		}
 
 		const happeningSlotChange = changes['timing'];
@@ -117,12 +131,21 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		}
 	}
 
-	private onDateChange(): void {
-		console.log('StartEndDatetimeFormComponent.onDateChange', this.date);
+	private onDateChanged(): void {
+		console.log(
+			'StartEndDatetimeFormComponent.onDateChanged()',
+			'date:',
+			this.date,
+			'startDate:',
+			this.startDate.value,
+		);
 		if (this.date) {
 			this.startDate.setValue(this.date);
+			console.log('startDate.setValue()', this.startDate.value);
 			this.startDate.setValidators(Validators.required);
 		} else {
+			this.startDate.setValue(new Date().toISOString().substring(0, 10));
+			console.log('startDate.setValue()', this.startDate.value);
 			this.startDate.setValidators([]);
 		}
 	}
@@ -132,10 +155,23 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		// if (this.happeningSlot.repeats === 'UNKNOWN') {
 		// 	this.setRepeatsBasedOnHappeningType();
 		// }
-		this.startDate.setValue(this.timing.start.date || this.date || '');
-		this.startTime.setValue(this.timing.start.time || '');
-		this.endDate.setValue(this.timing.end?.date || '');
-		this.endTime.setValue(this.timing.end?.time || '');
+		if (!this.startDate.dirty) {
+			this.startDate.setValue(
+				this.timing.start.date ||
+					this.date ||
+					new Date().toISOString().substring(0, 10),
+			);
+			console.log('startDate.setValue()', this.startDate.value);
+		}
+		if (!this.startTime.dirty) {
+			this.startTime.setValue(this.timing.start.time || '');
+		}
+		if (!this.endDate.dirty) {
+			this.endDate.setValue(this.timing.end?.date || '');
+		}
+		if (!this.endTime.dirty) {
+			this.endTime.setValue(this.timing.end?.time || '');
+		}
 		this.setDuration();
 	}
 
@@ -178,6 +214,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 					start: { ...this.timing.start, date: startDate },
 				};
 				this.startDate.setValue(startDate);
+				console.log('startDate.setValue()', this.startDate.value);
 			}
 			if (this.startTime.value) {
 				startTime = dateToTimeOnlyStr(d);
@@ -225,6 +262,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		if (d) {
 			const date = dateToIso(d);
 			this.startDate.setValue(date);
+			console.log('startDate.setValue()', this.startDate.value);
 			this.timing = {
 				...this.timing,
 				start: { ...this.timing.start, date: date },
@@ -256,14 +294,15 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 				this.timing,
 			);
 		}
-		this.timingChanged.emit(this.timing);
+		this.timingChange.emit(this.timing);
 	}
 
-	protected add(): void {
+	protected addSlot(): void {
 		if (this.mode === 'single' && !this.timing.start?.date) {
 			alert('Please select date');
 			return;
 		}
+		this.timingChange.emit(this.timing);
 		this.addClick.emit(this.timing);
 	}
 
@@ -284,6 +323,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		if (startDate.indexOf('T') >= 0) {
 			startDate = startDate.split('T')[0];
 			this.startDate.setValue(startDate);
+			console.log('startDate.setValue()', this.startDate.value);
 		}
 		const slot = this.timing;
 		this.timing = {
@@ -303,12 +343,25 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	}
 
 	protected onStartTimeChanged(): void {
-		// console.log('StartEndDatetimeFormComponent.onStartTimeChanged()');
 		const slot = this.timing;
 		this.timing = {
 			...slot,
 			start: { ...(slot.start || {}), time: this.startTime.value || '' },
 		};
+		if (
+			this.timing.start.time &&
+			!this.timing.start.date &&
+			this.startDate.value
+		) {
+			this.timing = {
+				...this.timing,
+				start: { ...this.timing.start, date: this.startDate.value },
+			};
+		}
+		console.log(
+			'StartEndDatetimeFormComponent.onStartTimeChanged() =>',
+			this.timing,
+		);
 		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setEndTime();
 		}
@@ -383,4 +436,6 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		this.duration.setValue(durationMinutes);
 		this.timing = { ...this.timing, durationMinutes };
 	}
+
+	protected readonly isTomorrow = isTomorrow;
 }
