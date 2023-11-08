@@ -22,9 +22,10 @@
 >
 	<ion-buttons slot="start">
 		<div style="text-align: center">
-			<ion-badge style="display: block" color="light">{{
-				slot.start.time
-			}}</ion-badge>
+			<ion-badge style="display: block" color="light">
+				<b *ngIf="slot?.start?.date">{{ slot.start.date }}</b>
+				@ {{ slot.start.time }}
+			</ion-badge>
 			<ion-text
 				*ngIf="slot.durationMinutes"
 				color="medium"
@@ -44,9 +45,6 @@
 			>
 		</p>
 		<p>
-			<ng-container *ngIf="slot?.start?.date"
-				>Starts on {{ slot.start.date }}</ng-container
-			>
 			<ng-container
 				*ngIf="
 					slot.location && (slot.location.title || slot.location.address);
