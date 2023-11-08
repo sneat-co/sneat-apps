@@ -49,7 +49,7 @@ const assetusRoutes: Route[] = [
 	// },
 	{
 		path: 'new-asset',
-		loadChildren: () =>
+		loadComponent: () =>
 			import('./new-asset').then((m) => m.NewAssetPageComponent),
 		// ...guardRoute,
 	},
