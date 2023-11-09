@@ -2,8 +2,8 @@
   "name": "@sneat/extensions/assetus/pages",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^14.0.0 || ^15.0.0 || ^16.0.0",
-    "@angular/core": "^14.0.0 || ^15.0.0 || ^16.0.0"
+    "@angular/common": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0",
+    "@angular/core": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "dependencies": {
     "tslib": "2.6.2"
