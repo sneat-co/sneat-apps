@@ -28,8 +28,8 @@ import { IMemberContext } from '@sneat/contactus-core';
 
 @Component({
 	selector: 'sneat-schedule-page',
-	templateUrl: './schedule-page.component.html',
-	styleUrls: ['./schedule-page.component.scss'],
+	templateUrl: './calendar-page.component.html',
+	styleUrls: ['./calendar-page.component.scss'],
 	providers: [TeamComponentBaseParams],
 	animations: virtualSliderAnimations,
 	standalone: true,
@@ -41,7 +41,7 @@ import { IMemberContext } from '@sneat/contactus-core';
 		ContactusServicesModule,
 	],
 })
-export class SchedulePageComponent extends TeamBaseComponent {
+export class CalendarPageComponent extends TeamBaseComponent {
 	public tab: ScheduleTab = 'day';
 	public date = '';
 	member?: IMemberContext;

@@ -27,7 +27,7 @@ import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { HappeningService, ScheduleDayService } from '@sneat/team-services';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { TeamDaysProvider } from '../../pages/schedule/team-days-provider';
+import { TeamDaysProvider } from '../../pages/calendar/team-days-provider';
 import { SchedulusTeamService } from '../../services';
 import { isToday } from '../schedule-core';
 import {

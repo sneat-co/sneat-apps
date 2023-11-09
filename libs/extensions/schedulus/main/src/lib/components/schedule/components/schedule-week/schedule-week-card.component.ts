@@ -10,7 +10,7 @@ import { virtualSliderAnimations } from '@sneat/components';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../pages/schedule/team-days-provider';
+import { TeamDaysProvider } from '../../../../pages/calendar/team-days-provider';
 import { getToday, ScheduleStateService } from '../../schedule-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
 import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';

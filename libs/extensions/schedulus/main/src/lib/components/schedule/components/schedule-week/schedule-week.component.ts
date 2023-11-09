@@ -10,7 +10,7 @@ import {
 import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../pages/schedule';
+import { TeamDaysProvider } from '../../../../pages/calendar';
 import {
 	ISlotItem,
 	NewHappeningParams,

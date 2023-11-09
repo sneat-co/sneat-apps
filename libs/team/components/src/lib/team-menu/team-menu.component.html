@@ -37,7 +37,7 @@
 		<ion-icon name="car-sport-outline" slot="start" />
 		<ion-label>Assets</ion-label>
 		<ion-badge
-			style="font-weight: normal; color: gray"
+			style="font-weight: normal"
 			color="light"
 			*ngIf="team.dto?.numberOf?.assets"
 			>{{ team.dto?.numberOf?.assets }}</ion-badge
@@ -52,6 +52,20 @@
 	>
 		<ion-icon name="cash-outline" slot="start" />
 		<ion-label>Budget</ion-label>
+	</ion-item>
+	<ion-item
+		[routerLink]="teamPageUrl('calendar')"
+		routerDirection="root"
+		[disabled]="!team.id"
+		[class.currentPage]="isCurrentPage('calendar')"
+		(click)="closeMenu()"
+	>
+		<ion-icon name="calendar-outline" slot="start" />
+		<ion-label>Calendar</ion-label>
+		<!--		<ion-buttons slot="end">-->
+		<!--			<ion-button color="primary" style="text-transform: none; font-size: x-small">Today</ion-button>-->
+		<!--			<ion-button color="primary" style="text-transform: none; font-size: x-small">Tomorrow</ion-button>-->
+		<!--		</ion-buttons>-->
 	</ion-item>
 	<ion-item
 		[routerLink]="teamPageUrl('contacts')"
@@ -102,20 +116,6 @@
 	>
 		<ion-icon name="people-circle-outline" slot="start" />
 		<ion-label>Members</ion-label>
-	</ion-item>
-	<ion-item
-		[routerLink]="teamPageUrl('schedule')"
-		routerDirection="root"
-		[disabled]="!team.id"
-		[class.currentPage]="isCurrentPage('schedule')"
-		(click)="closeMenu()"
-	>
-		<ion-icon name="calendar-outline" slot="start" />
-		<ion-label>Schedule</ion-label>
-		<!--		<ion-buttons slot="end">-->
-		<!--			<ion-button color="primary" style="text-transform: none; font-size: x-small">Today</ion-button>-->
-		<!--			<ion-button color="primary" style="text-transform: none; font-size: x-small">Tomorrow</ion-button>-->
-		<!--		</ion-buttons>-->
 	</ion-item>
 	<sneat-auth-menu-item />
 </ion-list>

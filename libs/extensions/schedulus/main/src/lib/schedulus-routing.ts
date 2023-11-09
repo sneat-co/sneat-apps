@@ -3,9 +3,9 @@ import { Route } from '@angular/router';
 
 export const schedulusRoutes: Route[] = [
 	{
-		path: 'schedule',
+		path: 'calendar',
 		loadComponent: () =>
-			import('./pages/schedule').then((m) => m.SchedulePageComponent),
+			import('./pages/calendar').then((m) => m.CalendarPageComponent),
 		// ...guardRoute,
 	},
 	{

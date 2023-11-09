@@ -60,6 +60,18 @@
 							>{{ team.dto?.numberOf?.assets }}</ion-badge
 						>
 					</ion-item>
+					<ion-item routerLink="./calendar" detail="">
+						<ion-icon name="calendar-outline" slot="start" />
+						<ion-label>Calendar</ion-label>
+						<!--						<ion-buttons slot="end">-->
+						<!--							<ion-button>-->
+						<!--								<ion-label style="text-transform: none" color="primary">Today</ion-label>-->
+						<!--							</ion-button>-->
+						<!--							<ion-button>-->
+						<!--								<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>-->
+						<!--							</ion-button>-->
+						<!--						</ion-buttons>-->
+					</ion-item>
 					<ion-item routerLink="./contacts" detail>
 						<ion-icon name="people-outline" slot="start" />
 						<ion-label>Contacts</ion-label>
@@ -86,18 +98,6 @@
 								</ion-label>
 							</ion-button>
 						</ion-buttons>
-					</ion-item>
-					<ion-item routerLink="./schedule" detail="">
-						<ion-icon name="calendar-outline" slot="start" />
-						<ion-label>Schedule</ion-label>
-						<!--						<ion-buttons slot="end">-->
-						<!--							<ion-button>-->
-						<!--								<ion-label style="text-transform: none" color="primary">Today</ion-label>-->
-						<!--							</ion-button>-->
-						<!--							<ion-button>-->
-						<!--								<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>-->
-						<!--							</ion-button>-->
-						<!--						</ion-buttons>-->
 					</ion-item>
 				</ion-card>
 			</ion-col>

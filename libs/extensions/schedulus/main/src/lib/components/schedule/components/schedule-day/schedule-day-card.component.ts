@@ -10,7 +10,7 @@ import { virtualSliderAnimations } from '@sneat/components';
 import { HappeningType } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../pages/schedule';
+import { TeamDaysProvider } from '../../../../pages/calendar';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import {
 	ISlotItem,

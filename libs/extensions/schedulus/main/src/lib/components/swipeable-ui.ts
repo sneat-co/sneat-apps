@@ -6,11 +6,11 @@ import {
 } from '@sneat/components';
 import { dateToIso, getWeekdayDate } from '@sneat/core';
 import { Observable } from 'rxjs';
-import { TeamDaysProvider } from '../pages/schedule/team-days-provider';
+import { TeamDaysProvider } from '../pages/calendar';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { Week } from './schedule-core';
 import { IDateChanged } from './schedule/schedule-state.service';
-import { Weekday } from './schedule/components/schedule-week/schedule-week.component';
+import { Weekday } from './schedule/components';
 
 export type Parity = 'odd' | 'even'; // TODO: change to 'current' | 'next' | 'prev';
 
