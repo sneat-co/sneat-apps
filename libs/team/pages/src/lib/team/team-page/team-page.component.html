@@ -6,7 +6,7 @@
 		<ion-title *ngIf="team.dto || team.type">
 			{{ team.dto?.title || team.type === "family" ? "Family" : team.id }}
 			<ion-text color="medium" *ngIf="topMenuService.isTopMenuHidden | async"
-				>@ sneat.app</ion-text
+				>&#64; sneat.app</ion-text
 			>
 		</ion-title>
 		<ion-title *ngIf="!team"> Space: loading...</ion-title>

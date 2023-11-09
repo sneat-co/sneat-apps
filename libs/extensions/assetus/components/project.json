@@ -27,8 +27,7 @@
 				"{workspaceRoot}/coverage/libs/extensions/assetus/components"
 			],
 			"options": {
-				"jestConfig": "libs/extensions/assetus/components/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/extensions/assetus/components/jest.config.ts"
 			}
 		},
 		"lint": {

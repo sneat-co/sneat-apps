@@ -5,14 +5,16 @@
 		</ion-buttons>
 		<ng-container *ngIf="assetGroup; else titleNoAssetGroup">
 			<ion-title *ngIf="commune; else titleWithAssetGroupButNoCommune"
-				>{{ assetGroup.title }} @ {{ commune.title }}</ion-title
+				>{{ assetGroup.title }} &#64; {{ commune.title }}</ion-title
 			>
 			<ng-template #titleWithAssetGroupButNoCommune
 				><ion-title>{{ assetGroup.title }}</ion-title></ng-template
 			>
 		</ng-container>
 		<ng-template #titleNoAssetGroup>
-			<ion-title *ngIf="commune">Loading... @ {{ commune.title }}</ion-title>
+			<ion-title *ngIf="commune"
+				>Loading... &#64; {{ commune.title }}</ion-title
+			>
 			<ion-title *ngIf="!commune">Loading...</ion-title>
 		</ng-template>
 		<ion-buttons slot="end">

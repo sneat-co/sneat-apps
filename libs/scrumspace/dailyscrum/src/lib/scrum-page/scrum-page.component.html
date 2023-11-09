@@ -2,7 +2,9 @@
 	<ion-toolbar>
 		<ion-title
 			>Scrum
-			<ng-container *ngIf="team?.data">@ {{ team.data.title }}</ng-container>
+			<ng-container *ngIf="team?.data"
+				>&#64; {{ team.data.title }}</ng-container
+			>
 		</ion-title>
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />

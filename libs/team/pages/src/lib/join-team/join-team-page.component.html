@@ -1,10 +1,10 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-title *ngIf="inviteInfo?.team?.type !== 'family'"
-			>Join team @ Sneat.app</ion-title
+			>Join team &#64; Sneat.app</ion-title
 		>
 		<ion-title *ngIf="inviteInfo?.team?.type === 'family'"
-			>Join family @ Sneat.app</ion-title
+			>Join family &#64; Sneat.app</ion-title
 		>
 	</ion-toolbar>
 </ion-header>
@@ -29,7 +29,7 @@
 				</p>
 				<ng-template #noTeamTitle>
 					You've been invited by <b>{{ inviteInfo.invite.from.title }}</b> to
-					join {{ inviteInfo.team.type }} space @
+					join {{ inviteInfo.team.type }} space &#64;
 					<a href="https://sneat.app" target="_blank">Sneat.app</a>
 				</ng-template>
 			</ion-card-content>

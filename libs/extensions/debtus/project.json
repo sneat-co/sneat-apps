@@ -25,8 +25,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/extensions/debtus"],
 			"options": {
-				"jestConfig": "libs/extensions/debtus/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/extensions/debtus/jest.config.ts"
 			}
 		},
 		"lint": {

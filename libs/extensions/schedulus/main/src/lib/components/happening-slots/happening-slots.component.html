@@ -24,7 +24,7 @@
 		<div style="text-align: center">
 			<ion-badge style="display: block" color="light">
 				<b *ngIf="slot?.start?.date">{{ slot.start.date }}</b>
-				@ {{ slot.start.time }}
+				&#64; {{ slot.start.time }}
 			</ion-badge>
 			<ion-text
 				*ngIf="slot.durationMinutes"
@@ -51,7 +51,7 @@
 					else noLocation
 				"
 			>
-				@ {{ slot.location.title || slot.location.address }}, ends at
+				&#64; {{ slot.location.title || slot.location.address }}, ends at
 				{{ slot.end?.time }}
 			</ng-container>
 			<ng-template #noLocation> Ends at {{ slot.end?.time }} </ng-template>

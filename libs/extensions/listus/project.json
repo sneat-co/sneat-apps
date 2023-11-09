@@ -25,8 +25,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/extensions/listus"],
 			"options": {
-				"jestConfig": "libs/extensions/listus/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/extensions/listus/jest.config.ts"
 			}
 		},
 		"lint": {

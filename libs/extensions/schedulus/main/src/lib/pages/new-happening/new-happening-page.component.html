@@ -5,13 +5,13 @@
 		</ion-buttons>
 		<ng-container *ngIf="!isToDo">
 			<ion-title *ngIf="team; else titleNoCommune">
-				New happening @ {{ team.brief?.title }}
+				New happening &#64; {{ team.brief?.title }}
 			</ion-title>
 			<ng-template #titleNoCommune>New activity</ng-template>
 		</ng-container>
 		<ng-container *ngIf="isToDo">
 			<ion-title *ngIf="team; else titleNoCommune">
-				New task @ {{ team.brief?.title }}
+				New task &#64; {{ team.brief?.title }}
 			</ion-title>
 			<ng-template #titleNoCommune>New task</ng-template>
 		</ng-container>

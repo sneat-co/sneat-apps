@@ -25,8 +25,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/datatug/dto"],
 			"options": {
-				"jestConfig": "libs/datatug/dto/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/datatug/dto/jest.config.ts"
 			}
 		},
 		"lint": {

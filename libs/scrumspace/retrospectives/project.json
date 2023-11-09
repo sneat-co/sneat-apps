@@ -25,8 +25,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/scrumspace/retrospectives"],
 			"options": {
-				"jestConfig": "libs/scrumspace/retrospectives/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/scrumspace/retrospectives/jest.config.ts"
 			}
 		},
 		"lint": {

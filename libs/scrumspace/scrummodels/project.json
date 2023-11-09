@@ -25,8 +25,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/scrumspace/scrummodels"],
 			"options": {
-				"jestConfig": "libs/scrumspace/scrummodels/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/scrumspace/scrummodels/jest.config.ts"
 			}
 		},
 		"lint": {

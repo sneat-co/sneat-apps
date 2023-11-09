@@ -64,10 +64,10 @@
 			"executor": "@angular-devkit/build-angular:dev-server",
 			"configurations": {
 				"production": {
-					"browserTarget": "sneat-app:build:production"
+					"buildTarget": "sneat-app:build:production"
 				},
 				"development": {
-					"browserTarget": "sneat-app:build:development"
+					"buildTarget": "sneat-app:build:development"
 				}
 			},
 			"defaultConfiguration": "development"
@@ -75,7 +75,7 @@
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"browserTarget": "sneat-app:build"
+				"buildTarget": "sneat-app:build"
 			}
 		},
 		"lint": {
@@ -91,8 +91,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/apps/sneat-app"],
 			"options": {
-				"jestConfig": "apps/sneat-app/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "apps/sneat-app/jest.config.ts"
 			}
 		}
 	}

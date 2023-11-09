@@ -85,7 +85,7 @@
 							<td style="text-align: right">
 								{{ point.containerPoint.arrival?.scheduledDate }}
 								<span *ngIf="point.containerPoint.arrival?.scheduledTime"
-									>@ {{ point.containerPoint.arrival?.scheduledTime }}</span
+									>&#64; {{ point.containerPoint.arrival?.scheduledTime }}</span
 								>
 							</td>
 						</tr>
@@ -96,7 +96,8 @@
 									point.containerPoint.departure?.scheduledDate
 								}}</span>
 								<span *ngIf="point.containerPoint.departure?.scheduledTime"
-									>@ {{ point.containerPoint.departure?.scheduledTime }}</span
+									>&#64;
+									{{ point.containerPoint.departure?.scheduledTime }}</span
 								>
 							</td>
 						</tr>

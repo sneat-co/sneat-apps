@@ -25,8 +25,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/timer"],
 			"options": {
-				"jestConfig": "libs/timer/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/timer/jest.config.ts"
 			}
 		},
 		"lint": {

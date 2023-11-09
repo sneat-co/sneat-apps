@@ -64,10 +64,10 @@
 			"executor": "@angular-devkit/build-angular:dev-server",
 			"configurations": {
 				"production": {
-					"browserTarget": "logist-app:build:production"
+					"buildTarget": "logist-app:build:production"
 				},
 				"development": {
-					"browserTarget": "logist-app:build:development"
+					"buildTarget": "logist-app:build:development"
 				}
 			},
 			"defaultConfiguration": "development"
@@ -75,7 +75,7 @@
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"browserTarget": "logist-app:build"
+				"buildTarget": "logist-app:build"
 			}
 		},
 		"lint": {
@@ -91,8 +91,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/apps/logist-app"],
 			"options": {
-				"jestConfig": "apps/logist-app/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "apps/logist-app/jest.config.ts"
 			}
 		}
 	}

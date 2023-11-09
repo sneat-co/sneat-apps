@@ -14,7 +14,7 @@
 			*ngFor="let relatedContact of relatedContacts; trackBy: contactID"
 		>
 			<ion-badge *ngIf="firstRelated(relatedContact.brief.relatedAs)">
-				firstRelated(relatedContact.brief.relatedAs) }} of
+				firstRelated(relatedContact.brief.relatedAs) &#125;&#125; of
 				<a
 					[href]="relatedContact.id"
 					(click)="goMember(relatedContact.id, $event)"
@@ -38,7 +38,7 @@
 			color="primary"
 			[title]="contact?.dto?.email"
 			(click)="$event.stopPropagation()"
-			>@
+			>&#64;
 		</ion-button>
 		<ion-button
 			*ngIf="contact?.dto?.phone"
@@ -49,7 +49,7 @@
 		>
 			<ion-icon name="call" />
 		</ion-button>
-		<ion-button *ngIf="!contact?.dto?.email" color="light">@</ion-button>
+		<ion-button *ngIf="!contact?.dto?.email" color="light">&#64;</ion-button>
 		<ion-button *ngIf="!contact?.dto?.phone" color="light">
 			<ion-icon name="call" />
 		</ion-button>
