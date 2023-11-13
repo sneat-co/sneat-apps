@@ -6,7 +6,7 @@ describe('NgModulePreloaderService', () => {
 	beforeEach(() => TestBed.configureTestingModule({}));
 
 	it('should be created', () => {
-		const service: NgModulePreloaderService = TestBed.get(
+		const service: NgModulePreloaderService = TestBed.inject(
 			NgModulePreloaderService,
 		);
 		expect(service).toBeTruthy();

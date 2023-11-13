@@ -6,7 +6,7 @@ describe('ListusService', () => {
 	beforeEach(() => TestBed.configureTestingModule({}));
 
 	it('should be created', () => {
-		// const service: ListusDbService = TestBed.get(ListusDbService);
+		// const service: ListusDbService = TestBed.inject(ListusDbService);
 		// expect(service).toBeTruthy();
 	});
 });
