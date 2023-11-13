@@ -74,6 +74,10 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		duration: this.duration,
 	});
 
+	protected onTimingChanged(timing: ITiming): void {
+		this.timingChange.emit(timing);
+	}
+
 	protected get disabled(): boolean {
 		return !this.mode;
 	}

@@ -60,48 +60,60 @@
 <!--happeningType: {{happeningType}}, happens: {{happens}};-->
 
 <ng-container *ngIf="happeningType === 'recurring'">
-	<ion-item color="light">
-		<ion-select
-			label="Repeats"
-			[formControl]="repeats"
-			interface="popover"
-			(ionChange)="repeatsChanged()"
-		>
-			<ion-select-option value="weekly">Weekly</ion-select-option>
-			<!--			<ion-select-option value="fortnightly">Fortnightly</ion-select-option>-->
-			<ion-select-option value="week-1st"
-				>Every 1st week of a month</ion-select-option
-			>
-			<ion-select-option value="week-2nd"
-				>Every 2nd week of a month</ion-select-option
-			>
-			<ion-select-option value="week-3d"
-				>Every 3d week of a month</ion-select-option
-			>
-			<ion-select-option value="week-4th"
-				>Every 4th week of a month</ion-select-option
-			>
-			<ion-select-option value="week-last"
-				>Every last week of a month</ion-select-option
-			>
-		</ion-select>
-		<ion-checkbox
-			color="medium"
-			labelPlacement="end"
-			slot="end"
-			[formControl]="weekdaysCheckbox"
-			(ionChange)="onWeekdaysCheckboxChange()"
-			><ion-label color="medium">W-days</ion-label></ion-checkbox
-		>
-		<ion-checkbox
-			color="medium"
-			labelPlacement="end"
-			slot="end"
-			[formControl]="weekendCheckbox"
-			(ionChange)="onWeekendCheckboxChange()"
-			><ion-label color="medium">W-end</ion-label></ion-checkbox
-		>
-	</ion-item>
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="6">
+				<ion-item color="light" lines="full">
+					<ion-select
+						label="Repeats"
+						[formControl]="repeats"
+						interface="popover"
+						(ionChange)="repeatsChanged()"
+					>
+						<ion-select-option value="weekly">Weekly</ion-select-option>
+						<!--			<ion-select-option value="fortnightly">Fortnightly</ion-select-option>-->
+						<ion-select-option value="week-1st"
+							>Every 1st week of a month
+						</ion-select-option>
+						<ion-select-option value="week-2nd"
+							>Every 2nd week of a month
+						</ion-select-option>
+						<ion-select-option value="week-3d"
+							>Every 3d week of a month
+						</ion-select-option>
+						<ion-select-option value="week-4th"
+							>Every 4th week of a month
+						</ion-select-option>
+						<ion-select-option value="week-last"
+							>Every last week of a month
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item color="light" lines="full">
+					<ion-checkbox
+						color="medium"
+						labelPlacement="end"
+						slot="end"
+						[formControl]="weekdaysCheckbox"
+						(ionChange)="onWeekdaysCheckboxChange()"
+					>
+						<ion-label color="medium">W-days</ion-label>
+					</ion-checkbox>
+					<ion-checkbox
+						color="medium"
+						labelPlacement="end"
+						slot="end"
+						[formControl]="weekendCheckbox"
+						(ionChange)="onWeekendCheckboxChange()"
+					>
+						<ion-label color="medium">W-end</ion-label>
+					</ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 	<form
 		[formGroup]="weekdaysForm"
 		*ngIf="happens.startsWith('week') && showWeekday"
@@ -116,8 +128,8 @@
 							[formControl]="weekdayMo"
 							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
-							>Monday</ion-checkbox
-						>
+							>Monday
+						</ion-checkbox>
 					</ion-item>
 					<ion-item lines="none">
 						<ion-checkbox
@@ -126,8 +138,8 @@
 							[formControl]="weekdayTu"
 							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
-							>Tuesday</ion-checkbox
-						>
+							>Tuesday
+						</ion-checkbox>
 					</ion-item>
 					<ion-item lines="none">
 						<ion-checkbox
@@ -145,8 +157,8 @@
 							[formControl]="weekdayTh"
 							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
-							>Thursday</ion-checkbox
-						>
+							>Thursday
+						</ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col size="6">
@@ -157,8 +169,8 @@
 							[formControl]="weekdayFr"
 							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
-							>Friday</ion-checkbox
-						>
+							>Friday
+						</ion-checkbox>
 					</ion-item>
 					<ion-item lines="none">
 						<ion-checkbox
@@ -167,8 +179,8 @@
 							[formControl]="weekdaySa"
 							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
-							>Saturday</ion-checkbox
-						>
+							>Saturday
+						</ion-checkbox>
 					</ion-item>
 					<ion-item lines="none">
 						<ion-checkbox
@@ -177,8 +189,8 @@
 							[formControl]="weekdaySu"
 							(ionChange)="onWeekdayChange()"
 							labelPlacement="end"
-							>Sunday</ion-checkbox
-						>
+							>Sunday
+						</ion-checkbox>
 					</ion-item>
 					<ion-item lines="none">
 						<ion-button
