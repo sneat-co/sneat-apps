@@ -317,7 +317,7 @@ export class HappeningFormComponent
 								);
 						} else {
 							this.params.teamNavService
-								.navigateBackToTeamPage(team, 'schedule')
+								.navigateBackToTeamPage(team, 'calendar')
 								.catch(
 									this.logErrorHandler(
 										'failed to team schedule after creating a happening',

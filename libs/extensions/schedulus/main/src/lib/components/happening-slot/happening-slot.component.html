@@ -1,0 +1,35 @@
+<ion-item>
+	<ion-badge color="light" slot="start">{{ slot.start.time }}</ion-badge>
+	<ion-label text-wrap>
+		<p>
+			<ion-badge
+				color="light"
+				style="margin-right: 4px"
+				*ngFor="let wd of slot.weekdays || []"
+				>{{ wd | wdToWeekday }}</ion-badge
+			>
+		</p>
+		<p
+			*ngIf="
+				slot.location && (slot.location.title || slot.location.address);
+				else noLocation
+			"
+		>
+			&#64; {{ slot.location.title || slot.location.address }}, ends at
+			{{ slot.end?.time }}
+		</p>
+		<ng-template #noLocation>
+			<p>Ends at {{ slot.end?.time }}</p>
+		</ng-template>
+	</ion-label>
+	<ion-buttons slot="end">
+		<ion-button
+			color="tertiary"
+			(click)="editSingleHappeningSlot($event)"
+			[disabled]="deleting"
+		>
+			<ion-icon slot="start" name="calendar-outline" />
+			<ion-label>Change</ion-label>
+		</ion-button>
+	</ion-buttons>
+</ion-item>
