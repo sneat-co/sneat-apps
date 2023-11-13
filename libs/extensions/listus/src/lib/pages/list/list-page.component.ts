@@ -150,10 +150,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			list.dto === undefined
 				? undefined
 				: list.dto?.items
-				? list.dto.items.map((item) => {
-						return { brief: item, state: {} };
-				  })
-				: [];
+				  ? list.dto.items.map((item) => {
+							return { brief: item, state: {} };
+				    })
+				  : [];
 		if (this.allListItems && this.addingItems.length) {
 			this.addingItems = this.addingItems.filter(
 				(v) => !this.listItems?.some((li) => li.brief.id === v.brief.id),
@@ -448,6 +448,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		);
 		if (this.listItems) {
 			this.listItems = [...this.listItems, ...this.addingItems];
+		} else {
+			this.listItems = [...this.addingItems];
 		}
 	}
 
