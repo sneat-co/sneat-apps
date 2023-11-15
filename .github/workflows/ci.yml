@@ -58,8 +58,82 @@ jobs:
       - name: nx lint affected
         run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
+  e2e:
+    runs-on: ubuntu-latest
+    needs: lint
+    env:
+      GCLOUD_PROJECT: demo-local-sneat-app
+      FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
+      FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch sneat-go-backend
+        run: git clone https://github.com/sneat-co/sneat-go-backend.git
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Install GoLang
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21.4
+          check-latest: true
+          cache: true
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - run: pnpm --version
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache PNPM store directory
+        uses: actions/cache@v3
+        with:
+          path: |
+            /home/runner/.cache/Cypress
+            /home/runner/.cache/firebase/emulators
+            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - run: pnpm install -g firebase-tools
+
+      - uses: cypress-io/github-action@v6
+        with:
+          runTests: false
+
+      - name: Start sneat-go-backend
+        working-directory: ./sneat-go-backend
+        run: |
+          go version
+          sh ./scripts/serve_gae.sh &
+          sleep 20
+
+      - name: Run Cypress tests
+        run: |
+          pnpm install --force
+          pnpm run cy:emulators &
+          sleep 10
+          pnpm run cy:test:prod
+
   build:
     runs-on: ubuntu-latest
+    needs: e2e
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

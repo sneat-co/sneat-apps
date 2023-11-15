@@ -43,3 +43,6 @@ Thumbs.db
 
 .nx/cache
 /.nx/
+
+**/*.log
+**/cypress/downloads
