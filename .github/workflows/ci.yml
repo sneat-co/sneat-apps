@@ -115,7 +115,7 @@ jobs:
         run: pnpm install -g firebase-tools
 
       - name: Cache firebase emulators
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.FIREBASE_EMULATORS_PATH }}
           key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
