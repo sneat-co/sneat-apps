@@ -146,8 +146,8 @@ export class SneatUserService {
 		const userRecord: IUserRecord | null = userDocSnapshot.exists()
 			? (userDocSnapshot.data() as IUserRecord)
 			: authUser
-			? { title: authUser.displayName || authUser.email || authUser.uid }
-			: null;
+			  ? { title: authUser.displayName || authUser.email || authUser.uid }
+			  : null;
 
 		this.userState$.next({
 			...authState,
