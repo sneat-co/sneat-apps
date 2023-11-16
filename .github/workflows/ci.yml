@@ -121,16 +121,18 @@ jobs:
           key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
         continue-on-error: true
 
-      - uses: cypress-io/github-action@v6
-        with:
-          runTests: false
-
       - name: Start sneat-go-backend
         working-directory: ./sneat-go-backend
         run: |
           go version
           sh ./scripts/serve_gae.sh &
           sleep 30
+
+      - name: Install latest Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: latest
+      - run: chrome --version
 
       # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
       # It can be removed once @angular/fire is updated to 17 as well.
@@ -146,11 +148,12 @@ jobs:
         run: |
           pnpm run cy:build:ci
           pnpm run cy:serve:ci &
-          sleep 5
+          sleep 30
 
-      # Only runs the Cypress tests. It skips building the application. That step is done above.
       - name: Run e2e tests
-        run: pnpm run cy:test:ci
+        uses: cypress-io/github-action@v6
+        with:
+          command: pnpm run cy:test:ci
 
   build:
     runs-on: ubuntu-latest
