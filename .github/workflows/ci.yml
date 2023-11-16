@@ -65,6 +65,7 @@ jobs:
       GCLOUD_PROJECT: demo-local-sneat-app
       FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
       FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+      FIREBASE_EMULATORS_PATH: ${{ github.workspace }}/emulator-cache
 
     steps:
       - name: Checkout repository
@@ -73,7 +74,7 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch sneat-go-backend
-        run: git clone https://github.com/sneat-co/sneat-go-backend.git
+        run: git clone https://github.com/sneat-co/sneat-go-backend.git -b main --single-branch --depth 1
 
       - name: Setup NodeJS
         uses: actions/setup-node@v4
@@ -105,13 +106,20 @@ jobs:
         with:
           path: |
             /home/runner/.cache/Cypress
-            /home/runner/.cache/firebase/emulators
             ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - run: pnpm install -g firebase-tools
+      - name: Install Firebase
+        run: pnpm install -g firebase-tools
+
+      - name: Cache firebase emulators
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.FIREBASE_EMULATORS_PATH }}
+          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
+        continue-on-error: true
 
       - uses: cypress-io/github-action@v6
         with:
@@ -124,12 +132,25 @@ jobs:
           sh ./scripts/serve_gae.sh &
           sleep 20
 
-      - name: Run Cypress tests
+      # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
+      # It can be removed once @angular/fire is updated to 17 as well.
+      - name: Run pnpm install
+        run: pnpm install --force
+
+      - name: Run emulators
         run: |
-          pnpm install --force
           pnpm run cy:emulators &
           sleep 10
-          pnpm run cy:test:prod
+
+      - name: Build and serve application
+        run: |
+          pnpm run cy:build:ci
+          pnpm run cy:serve:ci &
+          sleep 5
+
+      # Only runs the Cypress tests. It skips building the application. That step is done above.
+      - name: Run e2e tests
+        run: pnpm run cy:test:ci
 
   build:
     runs-on: ubuntu-latest

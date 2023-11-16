@@ -11,11 +11,16 @@
 		"test": "nx test",
 		"prepare": "husky install",
 		"emulators": "cross-env firebase emulators:start --only auth,firestore",
+		"cy:build:ci": "cross-env pnpm run build sneat-app --configuration=e2e --output-path=dist/apps/sneat-app-e2e --extract-licenses=false",
+		"cy:serve:ci": "cross-env http-server ./dist/apps/sneat-app-e2e -p 4205 --proxy http://localhost:4205?",
+		"cy:test:ci": "cross-env nx e2e-ci sneat-app --browser chrome --baseUrl=http://localhost:4205",
+		"cy:open:ci": "cross-env nx e2e-ci sneat-app --watch --browser chrome --baseUrl=http://localhost:4205",
 		"cy:emulators": "cross-env firebase emulators:start --only auth,firestore --project demo-local-sneat-app",
-		"cy:test:dev": "cross-env cross-env nx e2e sneat-app --browser chrome",
+		"cy:test:dev": "cross-env nx e2e sneat-app --browser chrome",
 		"cy:test:prod": "cross-env nx e2e sneat-app --configuration=production --browser chrome",
 		"cy:open:dev": "cross-env nx e2e sneat-app --watch --browser chrome",
-		"cy:open:prod": "cross-env nx e2e sneat-app --configuration=production --watch --browser chrome"
+		"cy:open:prod": "cross-env nx e2e sneat-app --configuration=production --watch --browser chrome",
+		"serve:help": "serve --help"
 	},
 	"private": true,
 	"pnpm": {
@@ -84,6 +89,7 @@
 		"eslint-plugin-cypress": "2.15.1",
 		"eslint-plugin-json": "3.1.0",
 		"git-describe": "4.1.1",
+		"http-server": "^14.1.1",
 		"husky": ">=7",
 		"jest": "29.7.0",
 		"jest-environment-jsdom": "29.7.0",

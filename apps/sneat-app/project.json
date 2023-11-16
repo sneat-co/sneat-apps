@@ -56,6 +56,16 @@
 					"extractLicenses": false,
 					"sourceMap": true,
 					"namedChunks": true
+				},
+				"e2e": {
+					"optimization": true,
+					"outputHashing": "all",
+					"sourceMap": false,
+					"namedChunks": false,
+					"aot": true,
+					"extractLicenses": true,
+					"vendorChunk": false,
+					"buildOptimizer": true
 				}
 			},
 			"defaultConfiguration": "production"
@@ -68,6 +78,9 @@
 				},
 				"development": {
 					"buildTarget": "sneat-app:build:development"
+				},
+				"e2e": {
+					"buildTarget": "sneat-app:build:e2e"
 				}
 			},
 			"defaultConfiguration": "development"
@@ -100,12 +113,21 @@
 				"cypressConfig": "apps/sneat-app/cypress.config.ts",
 				"testingType": "e2e",
 				"devServerTarget": "sneat-app:serve",
-				"port": "cypress-auto"
+				"port": "cypress-auto",
+				"skipServe": true
 			},
 			"configurations": {
 				"production": {
-					"devServerTarget": "sneat-app:serve:development"
+					"devServerTarget": "sneat-app:serve:e2e"
 				}
+			}
+		},
+		"e2e-ci": {
+			"executor": "@nx/cypress:cypress",
+			"options": {
+				"cypressConfig": "apps/sneat-app/cypress.config.ts",
+				"testingType": "e2e",
+				"skipServe": true
 			}
 		}
 	}
