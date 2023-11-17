@@ -13,7 +13,7 @@
 		"emulators": "cross-env firebase emulators:start --only auth,firestore",
 		"cy:build:ci": "cross-env pnpm run build sneat-app --configuration=e2e --output-path=dist/apps/sneat-app-e2e --extract-licenses=false",
 		"cy:serve-http:ci": "cross-env http-server ./dist/apps/sneat-app-e2e -p 4205 --proxy http://127.0.0.1:4205?",
-		"cy:serve:ci": "cross-env serve ./dist/apps/sneat-app-e2e -S -p 4205",
+		"cy:serve:ci": "cross-env serve ./dist/apps/sneat-app-e2e -S -l http://127.0.0.1:4205",
 		"cy:test:ci": "cross-env nx e2e-ci sneat-app --browser chrome --baseUrl=http://127.0.0.1:4205",
 		"cy:open:ci": "cross-env nx e2e-ci sneat-app --watch --browser chrome --baseUrl=http://127.0.0.1:4205",
 		"cy:emulators": "cross-env firebase emulators:start --only auth,firestore --project demo-local-sneat-app",
