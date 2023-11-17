@@ -81,13 +81,6 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install GoLang
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.21.4
-          check-latest: true
-          cache: true
-
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
@@ -121,18 +114,27 @@ jobs:
           key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
         continue-on-error: true
 
-      - name: Start sneat-go-backend
-        working-directory: ./sneat-go-backend
-        run: |
-          go version
-          sh ./scripts/serve_gae.sh &
-          sleep 30
-
       - name: Install latest Chrome
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: latest
       - run: chrome --version
+
+#      - name: Install GoLang
+#        uses: actions/setup-go@v4
+#        with:
+#            go-version: 1.21.4
+#            check-latest: true
+#            cache: true
+#
+#      - name: Start sneat-go-backend
+#        working-directory: ./sneat-go-backend
+#        run: |
+#            go version
+#            sh ./scripts/serve_gae.sh &
+#            sleep 30
+
+      - uses: sneat-co/sneat-go-backend@main
 
       # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
       # It can be removed once @angular/fire is updated to 17 as well.
