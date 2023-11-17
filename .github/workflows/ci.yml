@@ -73,8 +73,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch sneat-go-backend
-        run: git clone https://github.com/sneat-co/sneat-go-backend.git -b main --single-branch --depth 1
+      - uses: sneat-co/sneat-go-backend@main
+
+#      - name: Install GoLang
+#        uses: actions/setup-go@v4
+#        with:
+#            go-version: 1.21.4
+#            check-latest: true
+#            cache: true
+#
+#      - name: Fetch sneat-go-backend
+#        run: git clone https://github.com/sneat-co/sneat-go-backend.git -b main --single-branch --depth 1
+#
+#      - name: Start sneat-go-backend
+#        working-directory: ./sneat-go-backend
+#        run: |
+#            go version
+#            sh ./scripts/serve_gae.sh &
+#            sleep 30
+
 
       - name: Setup NodeJS
         uses: actions/setup-node@v4
@@ -119,22 +136,6 @@ jobs:
         with:
           chrome-version: latest
       - run: chrome --version
-
-#      - name: Install GoLang
-#        uses: actions/setup-go@v4
-#        with:
-#            go-version: 1.21.4
-#            check-latest: true
-#            cache: true
-#
-#      - name: Start sneat-go-backend
-#        working-directory: ./sneat-go-backend
-#        run: |
-#            go version
-#            sh ./scripts/serve_gae.sh &
-#            sleep 30
-
-      - uses: sneat-co/sneat-go-backend@main
 
       # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
       # It can be removed once @angular/fire is updated to 17 as well.
