@@ -58,106 +58,6 @@ jobs:
       - name: nx lint affected
         run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
-  e2e:
-    runs-on: ubuntu-latest
-#    needs: lint
-    env:
-      GCLOUD_PROJECT: demo-local-sneat-app
-      FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
-      FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
-      FIREBASE_EMULATORS_PATH: ${{ github.workspace }}/emulator-cache
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: sneat-co/sneat-go-backend@main
-
-#      - name: Install GoLang
-#        uses: actions/setup-go@v4
-#        with:
-#            go-version: 1.21.4
-#            check-latest: true
-#            cache: true
-#
-#      - name: Fetch sneat-go-backend
-#        run: git clone https://github.com/sneat-co/sneat-go-backend.git -b main --single-branch --depth 1
-#
-#      - name: Start sneat-go-backend
-#        working-directory: ./sneat-go-backend
-#        run: |
-#            go version
-#            sh ./scripts/serve_gae.sh &
-#            sleep 30
-
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'
-
-      - name: Install PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-
-      - run: pnpm --version
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Cache PNPM store directory
-        uses: actions/cache@v3
-        with:
-          path: |
-            /home/runner/.cache/Cypress
-            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install Firebase
-        run: pnpm install -g firebase-tools
-
-      - name: Cache firebase emulators
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.FIREBASE_EMULATORS_PATH }}
-          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
-        continue-on-error: true
-
-      - name: Install latest Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: latest
-      - run: chrome --version
-
-      # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
-      # It can be removed once @angular/fire is updated to 17 as well.
-      - name: Run pnpm install
-        run: pnpm install --force
-
-      - name: Run emulators
-        run: |
-          pnpm run cy:emulators &
-          sleep 10
-
-      - name: Build and serve application
-        run: |
-          pnpm run cy:build:ci
-          pnpm run cy:serve:ci &
-          sleep 30
-
-      - name: Run e2e tests
-        uses: cypress-io/github-action@v6
-        with:
-          command: pnpm run cy:test:ci
-
   build:
     runs-on: ubuntu-latest
 #    needs: e2e
@@ -208,3 +108,104 @@ jobs:
         # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
         # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
         run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
+
+
+  e2e:
+      runs-on: ubuntu-latest
+      needs: build
+      env:
+          GCLOUD_PROJECT: demo-local-sneat-app
+          FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
+          FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+          FIREBASE_EMULATORS_PATH: ${{ github.workspace }}/emulator-cache
+
+      steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
+            with:
+                fetch-depth: 0
+
+          - uses: sneat-co/sneat-go-backend@main
+
+          #      - name: Install GoLang
+          #        uses: actions/setup-go@v4
+          #        with:
+          #            go-version: 1.21.4
+          #            check-latest: true
+          #            cache: true
+          #
+          #      - name: Fetch sneat-go-backend
+          #        run: git clone https://github.com/sneat-co/sneat-go-backend.git -b main --single-branch --depth 1
+          #
+          #      - name: Start sneat-go-backend
+          #        working-directory: ./sneat-go-backend
+          #        run: |
+          #            go version
+          #            sh ./scripts/serve_gae.sh &
+          #            sleep 30
+
+
+          - name: Setup NodeJS
+            uses: actions/setup-node@v4
+            with:
+                node-version: '16'
+
+          - name: Install PNPM
+            uses: pnpm/action-setup@v2
+            with:
+                version: 8
+                run_install: false
+
+          - run: pnpm --version
+
+          - name: Get pnpm store directory
+            id: pnpm-cache
+            run: |
+                echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+          - name: Cache PNPM store directory
+            uses: actions/cache@v3
+            with:
+                path: |
+                    /home/runner/.cache/Cypress
+                    ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+                key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                restore-keys: |
+                    ${{ runner.os }}-pnpm-store-
+
+          - name: Install Firebase
+            run: pnpm install -g firebase-tools
+
+          - name: Cache firebase emulators
+            uses: actions/cache@v3
+            with:
+                path: ${{ env.FIREBASE_EMULATORS_PATH }}
+                key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
+            continue-on-error: true
+
+          - name: Install latest Chrome
+            uses: browser-actions/setup-chrome@v1
+            with:
+                chrome-version: latest
+          - run: chrome --version
+
+          # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
+          # It can be removed once @angular/fire is updated to 17 as well.
+          - name: Run pnpm install
+            run: pnpm install --force
+
+          - name: Run emulators
+            run: |
+                pnpm run cy:emulators &
+                sleep 10
+
+          - name: Build and serve application
+            run: |
+                pnpm run cy:build:ci
+                pnpm run cy:serve:ci &
+                sleep 30
+
+#          - name: Run e2e tests
+#            uses: cypress-io/github-action@v6
+#            with:
+#                command: pnpm run cy:test:ci
