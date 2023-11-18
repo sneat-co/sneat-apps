@@ -23,26 +23,8 @@ jobs:
 #
 #            -   uses: ./.github/actions/pnpm
 
-    lint:
-#        needs: pnpm-cache
-        runs-on: ubuntu-latest
-
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v4
-                with:
-                    fetch-depth: 0
-
-            -   uses: ./.github/actions/pnpm
-
-            -   name: Derive appropriate SHAs for base and head for `nx affected` commands
-                uses: nrwl/nx-set-shas@v4
-
-            -   name: nx lint affected
-                run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
-
     build:
-#        needs: pnpm-cache
+        #        needs: pnpm-cache
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout repository
@@ -63,6 +45,23 @@ jobs:
                 # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
                 run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
 
+    lint:
+#        needs: pnpm-cache
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
+            -   uses: ./.github/actions/pnpm
+
+            -   name: Derive appropriate SHAs for base and head for `nx affected` commands
+                uses: nrwl/nx-set-shas@v4
+
+            -   name: nx lint affected
+                run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
     e2e-cypress:
 #        needs: pnpm-cache
