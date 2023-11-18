@@ -208,16 +208,6 @@ This operation can NOT be undone.`)
 			});
 	}
 
-	async editSingleHappeningSlot(event: Event): Promise<void> {
-		if (!this.happening) {
-			return Promise.reject('no happening');
-		}
-		await this.happeningBaseComponentParams.scheduleModalsService.editSingleHappeningSlot(
-			event,
-			this.happening,
-		);
-	}
-
 	private readonly onMemberAdded = (
 		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {

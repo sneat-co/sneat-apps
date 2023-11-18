@@ -1,77 +1,93 @@
-<ion-grid *ngIf="mode === 'recurring'" class="ion-grid-layout">
-	<ion-row>
-		<ion-col size="12" size-md="5">
-			<ion-item class="sneat-no-end-padding" lines="none">
-				<ion-input
-					type="time"
-					label="At"
-					#startTimeInput
-					[formControl]="startTime"
-					(ionBlur)="onStartTimeBlur()"
-					(ionChange)="onStartTimeChanged()"
-				/>
-				<ng-container *ngIf="startTime.touched && !startTime.valid">
-					<ion-label color="danger" slot="end" *ngIf="!!startTime.errors">
-						Required field
-					</ion-label>
-				</ng-container>
-				<ion-buttons slot="end" class="ion-no-margin ion-no-padding">
-					<ion-button id="quick-pick-start-time-recurring" color="medium">
-						<!--			<ion-label>Pick</ion-label>-->
-						<ion-icon name="chevron-down-outline" slot="end" />
-					</ion-button>
-					<ion-modal trigger="quick-pick-start-time-recurring">
-						<ng-template>
-							<sneat-time-selector (selected)="setStartTime($event)" />
-						</ng-template>
-					</ion-modal>
-					<ion-button
-						*ngIf="startTime.value"
-						color="medium"
-						(click)="addToStart({ hours: -1 })"
+<ng-container *ngIf="mode === 'recurring'">
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="12" size-md="4">
+				<ion-item class="sneat-no-end-padding" lines="none">
+					<ion-input
+						type="time"
+						label="At"
+						#startTimeInput
+						[formControl]="startTime"
+						(ionBlur)="onStartTimeBlur()"
+						(ionChange)="onStartTimeChanged()"
+					/>
+					<ng-container *ngIf="startTime.touched && !startTime.valid">
+						<ion-label color="danger" slot="end" *ngIf="!!startTime.errors">
+							Required field
+						</ion-label>
+					</ng-container>
+					<ion-buttons slot="end" class="ion-no-margin ion-no-padding">
+						<ion-button id="quick-pick-start-time-recurring" color="medium">
+							<!--			<ion-label>Pick</ion-label>-->
+							<ion-icon name="chevron-down-outline" slot="end" />
+						</ion-button>
+						<ion-modal trigger="quick-pick-start-time-recurring">
+							<ng-template>
+								<sneat-time-selector (selected)="setStartTime($event)" />
+							</ng-template>
+						</ion-modal>
+						<!-- Commented out as does not fit into modal - we might want to show only on wide screens -->
+						<!--					<ion-button-->
+						<!--						*ngIf="startTime.value"-->
+						<!--						color="medium"-->
+						<!--						(click)="addToStart({ hours: -1 })"-->
+						<!--					>-->
+						<!--						<ion-icon name="chevron-back-outline" slot="start" />-->
+						<!--						<ion-label>-1h</ion-label>-->
+						<!--					</ion-button>-->
+						<!--					<ion-button-->
+						<!--						*ngIf="startTime.value"-->
+						<!--						color="medium"-->
+						<!--						(click)="addToStart({ hours: +1 })"-->
+						<!--					>-->
+						<!--						<ion-label>+1h</ion-label>-->
+						<!--						<ion-icon name="chevron-forward-outline" slot="end" />-->
+						<!--					</ion-button>-->
+					</ion-buttons>
+				</ion-item>
+			</ion-col>
+			<ion-col size="12" size-md="5">
+				<ion-item lines="none">
+					<ion-input
+						label="For"
+						[formControl]="duration"
+						(ionChange)="onDurationChanged()"
+						type="number"
+						style="text-align: right"
+					/>
+					<ion-select
+						slot="end"
+						interface="popover"
+						[(ngModel)]="durationUnits"
 					>
-						<ion-icon name="chevron-back-outline" slot="start" />
-						<ion-label>-1h</ion-label>
-					</ion-button>
-					<ion-button
-						*ngIf="startTime.value"
-						color="medium"
-						(click)="addToStart({ hours: +1 })"
-					>
-						<ion-label>+1h</ion-label>
-						<ion-icon name="chevron-forward-outline" slot="end" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		</ion-col>
-		<ion-col size="12" size-md="4">
-			<ion-item lines="none">
-				<ion-input
-					label="For"
-					[formControl]="duration"
-					(ionChange)="onDurationChanged()"
-					type="number"
-					style="text-align: right"
-				/>
-				<ion-select slot="end" interface="popover" [(ngModel)]="durationUnits">
-					<ion-select-option value="minutes">minutes</ion-select-option>
-					<ion-select-option value="hours">hours</ion-select-option>
-				</ion-select>
-			</ion-item>
-		</ion-col>
-		<ion-col size="12" size-md="3">
-			<ion-item lines="none">
-				<ion-input
-					type="time"
-					label="Ends at"
-					[formControl]="endTime"
-					(ionChange)="onEndTimeChanged()"
-					placeholder="HH:MM"
-				/>
-			</ion-item>
-		</ion-col>
-	</ion-row>
-</ion-grid>
+						<ion-select-option value="minutes">minutes</ion-select-option>
+						<ion-select-option value="hours">hours</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col size="12" size-md="3">
+				<ion-item lines="none">
+					<ion-input
+						type="time"
+						label="Ends at"
+						[formControl]="endTime"
+						(ionChange)="onEndTimeChanged()"
+						placeholder="HH:MM"
+					/>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-item-divider color="light" lines="full">
+		<ion-label>Dates</ion-label>
+	</ion-item-divider>
+
+	<sneat-start-end-dates-range-form
+		[timing]="timing"
+		(timingChange)="onTimingChanged($event)"
+	/>
+</ng-container>
+
 <ion-grid *ngIf="mode === 'single'" class="ion-grid-layout">
 	<ion-row *ngIf="!startDate?.value || !startTime.value">
 		<ion-col size="12" size-lg="5">
@@ -84,11 +100,11 @@
 			>
 				<ion-buttons slot="buttons">
 					<ion-button color="medium" (click)="setStartDate($event, 'today')"
-						>Today</ion-button
-					>
+						>Today
+					</ion-button>
 					<ion-button color="medium" (click)="setStartDate($event, 'tomorrow')"
-						>Tomorrow</ion-button
-					>
+						>Tomorrow
+					</ion-button>
 				</ion-buttons>
 			</ion-datetime>
 		</ion-col>

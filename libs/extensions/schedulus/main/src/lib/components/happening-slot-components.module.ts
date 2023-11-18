@@ -7,6 +7,7 @@ import { HappeningCommonModule } from './happening-common.module';
 import { HappeningSlotFormComponent } from './happening-slot-form/happening-slot-form.component';
 import { HappeningSlotsComponent } from './happening-slots/happening-slots.component';
 import { SingleSlotFormComponent } from './single-slot-form/single-slot-form.component';
+import { StartEndDatesRangeFormComponent } from './start-end-dates-range-form/start-end-dates-range-form.component';
 import { StartEndDatetimeFormComponent } from './start-end-datetime-form/start-end-datetime-form.component';
 import { TimeSelectorComponent } from './start-end-datetime-form/time-selector.component';
 
@@ -18,6 +19,7 @@ import { TimeSelectorComponent } from './start-end-datetime-form/time-selector.c
 		IonicModule,
 		HappeningCommonModule,
 		SneatPipesModule,
+		StartEndDatesRangeFormComponent,
 	],
 	declarations: [
 		HappeningSlotsComponent,

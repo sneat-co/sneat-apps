@@ -7,7 +7,7 @@ import {
 export class ScheduleBasePage extends TeamBaseComponent {
 	public override get defaultBackUrl(): string {
 		const t = this.team;
-		return t ? `/space/${t.type}/${t.id}/schedule` : '';
+		return t ? `/space/${t.type}/${t.id}/calendar` : '';
 	}
 
 	constructor(
