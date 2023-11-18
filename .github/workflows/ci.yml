@@ -13,18 +13,18 @@ on:
 
 jobs:
 
-    pnpm-cache:
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v4
-                with:
-                    fetch-depth: 0
-
-            -   uses: ./.github/actions/pnpm
+#    pnpm-cache:
+#        runs-on: ubuntu-latest
+#        steps:
+#            -   name: Checkout repository
+#                uses: actions/checkout@v4
+#                with:
+#                    fetch-depth: 0
+#
+#            -   uses: ./.github/actions/pnpm
 
     lint:
-        needs: pnpm-cache
+#        needs: pnpm-cache
         runs-on: ubuntu-latest
 
         steps:
@@ -42,7 +42,7 @@ jobs:
                 run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
     build:
-        needs: pnpm-cache
+#        needs: pnpm-cache
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout repository
@@ -65,7 +65,7 @@ jobs:
 
 
     e2e:
-        needs: pnpm-cache
+#        needs: pnpm-cache
         runs-on: ubuntu-latest
         env:
             GCLOUD_PROJECT: demo-local-sneat-app
@@ -74,6 +74,11 @@ jobs:
             FIREBASE_EMULATORS_PATH: ${{ github.workspace }}/emulator-cache
 
         steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
             -   uses: ./.github/actions/pnpm
 
             -   uses: sneat-co/sneat-go-backend@main
