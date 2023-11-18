@@ -64,7 +64,7 @@ jobs:
                 run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
 
 
-    e2e:
+    e2e-cypress:
 #        needs: pnpm-cache
         runs-on: ubuntu-latest
         env:
