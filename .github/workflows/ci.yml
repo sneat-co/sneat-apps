@@ -78,9 +78,15 @@ jobs:
                 with:
                     fetch-depth: 0
 
-            -   uses: ./.github/actions/pnpm
-
             -   uses: sneat-co/sneat-go-backend@main
+
+            -   name: Install latest Chrome
+                uses: browser-actions/setup-chrome@v1
+                with:
+                    chrome-version: latest
+            -   run: chrome --version
+
+            -   uses: ./.github/actions/pnpm
 
             -   name: Install Firebase
                 run: pnpm install -g firebase-tools
@@ -92,16 +98,10 @@ jobs:
                     key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
                 continue-on-error: true
 
-            -   name: Install latest Chrome
-                uses: browser-actions/setup-chrome@v1
-                with:
-                    chrome-version: latest
-            -   run: chrome --version
-
             # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
             # It can be removed once @angular/fire is updated to 17 as well.
-            -   name: Run pnpm install
-                run: pnpm install --force
+#            -   name: Run pnpm install
+#                run: pnpm install --force
 
             -   name: Run emulators
                 run: |
