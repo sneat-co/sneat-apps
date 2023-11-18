@@ -21,7 +21,7 @@ jobs:
                 with:
                     fetch-depth: 0
 
-            -   uses: ./.github/actions/pnpm.yml
+            -   uses: ./actions/pnpm.yml
 
     lint:
         needs: pnpm-cache
@@ -33,7 +33,7 @@ jobs:
                 with:
                     fetch-depth: 0
 
-            -   uses: ../actions/pnpm.yml
+            -   uses: ./actions/pnpm.yml
 
             -   name: Derive appropriate SHAs for base and head for `nx affected` commands
                 uses: nrwl/nx-set-shas@v4
