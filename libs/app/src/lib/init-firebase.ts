@@ -19,7 +19,7 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 			const firestore = getFirestore(fbApp);
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.firestorePort) {
-				const host = '127.0.0.1';
+				const host = 'localhost';
 				console.log(
 					`using firebase firestore emulator on ${host}:${emulator.authPort}`,
 				);
@@ -33,7 +33,7 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 			const auth = getAuth(fbApp);
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.authPort) {
-				connectAuthEmulator(auth, 'http://127.0.0.1:' + emulator.authPort);
+				connectAuthEmulator(auth, 'http://localhost:' + emulator.authPort);
 			}
 			return auth;
 		}),

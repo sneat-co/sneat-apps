@@ -113,8 +113,7 @@
 				"cypressConfig": "apps/sneat-app/cypress.config.ts",
 				"testingType": "e2e",
 				"devServerTarget": "sneat-app:serve",
-				"port": "cypress-auto",
-				"skipServe": true
+				"port": "cypress-auto"
 			},
 			"configurations": {
 				"production": {
