@@ -13,7 +13,13 @@ on:
 
 jobs:
 
+    pnpm-cache:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: ./.github/actions/checkout+pnpm.yml
+
     lint:
+        needs: pnpm-cache
         runs-on: ubuntu-latest
 
         steps:
@@ -26,8 +32,8 @@ jobs:
                 run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
     build:
+        needs: pnpm-cache
         runs-on: ubuntu-latest
-        #    needs: e2e
         steps:
             -   uses: ./.github/actions/checkout+pnpm.yml
 
@@ -44,8 +50,8 @@ jobs:
 
 
     e2e:
+        needs: pnpm-cache
         runs-on: ubuntu-latest
-        needs: build
         env:
             GCLOUD_PROJECT: demo-local-sneat-app
             FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
