@@ -16,14 +16,24 @@ jobs:
     pnpm-cache:
         runs-on: ubuntu-latest
         steps:
-            -   uses: ./.github/actions/checkout+pnpm.yml
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
+            -   uses: ./.github/actions/pnpm.yml
 
     lint:
         needs: pnpm-cache
         runs-on: ubuntu-latest
 
         steps:
-            -   uses: ./.github/actions/checkout+pnpm.yml
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
+            -   uses: ./.github/actions/pnpm.yml
 
             -   name: Derive appropriate SHAs for base and head for `nx affected` commands
                 uses: nrwl/nx-set-shas@v4
@@ -35,7 +45,12 @@ jobs:
         needs: pnpm-cache
         runs-on: ubuntu-latest
         steps:
-            -   uses: ./.github/actions/checkout+pnpm.yml
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
+            -   uses: ./.github/actions/pnpm.yml
 
             -   name: Derive appropriate SHAs for base and head for `nx affected` commands
                 uses: nrwl/nx-set-shas@v4

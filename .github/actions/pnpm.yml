@@ -1,15 +1,10 @@
-name: 'Checkout & PNPM install'
+name: 'PNPM install'
 
-description: "Checkouts repo (depth=0), installs PNPM, runs `pnpm install`"
+description: "Installs PNPM & runs `pnpm install`"
 
 runs:
     using: "composite"
     steps:
-        -   name: Checkout repository
-            uses: actions/checkout@v4
-            with:
-                fetch-depth: 0
-
         -   run: git rev-parse HEAD
         -   run: git rev-parse HEAD~1
 
