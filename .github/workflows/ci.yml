@@ -199,13 +199,15 @@ jobs:
                 pnpm run cy:emulators &
                 sleep 10
 
-          - name: Build and serve application
+          - name: Build application
+            run: pnpm run cy:build:ci
+
+          - name: Serve application
             run: |
-                pnpm run cy:build:ci
                 pnpm run cy:serve:ci &
                 sleep 30
 
-#          - name: Run e2e tests
-#            uses: cypress-io/github-action@v6
-#            with:
-#                command: pnpm run cy:test:ci
+          - name: Run e2e tests
+            uses: cypress-io/github-action@v6
+            with:
+                command: pnpm run cy:test:ci
