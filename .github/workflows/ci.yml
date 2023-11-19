@@ -100,20 +100,6 @@ jobs:
                       ${{ runner.os }}-firebase-emulators-
                 continue-on-error: true
 
-            -   name: Install Cypress
-                uses: cypress-io/github-action@v6
-                with:
-                    runTests: false
-
-            -   name: Cache firebase emulators
-                uses: actions/cache@v3
-                with:
-                    path: /home/runner/.cache/Cypress
-                    key: ${{ runner.os }}-cypress-${{ hashFiles('Cypress/**') }}
-                    restore-keys: |
-                      ${{ runner.os }}-cypress-
-                continue-on-error: true
-
             # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
             # It can be removed once @angular/fire is updated to 17 as well.
 #            -   name: Run pnpm install
