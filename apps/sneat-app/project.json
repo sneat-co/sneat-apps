@@ -81,6 +81,9 @@
 				},
 				"e2e": {
 					"buildTarget": "sneat-app:build:e2e"
+				},
+				"e2e-ci": {
+					"buildTarget": "sneat-app:build:e2e"
 				}
 			},
 			"defaultConfiguration": "development"

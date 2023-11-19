@@ -96,6 +96,8 @@ jobs:
                 with:
                     path: ${{ env.FIREBASE_EMULATORS_PATH }}
                     key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
+                    restore-keys: |
+                      ${{ runner.os }}-firebase-emulators-
                 continue-on-error: true
 
             # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
@@ -108,15 +110,12 @@ jobs:
                     pnpm run cy:emulators &
                     sleep 10
 
-            -   name: Build application
-                run: pnpm run cy:build:ci
-
-            -   name: Serve application
-                run: |
-                    pnpm run cy:serve:ci &
-                    sleep 30
+            -   name: Build and serve application
+                run: pnpm run cy:serve:ci &
 
             -   name: Run e2e tests
                 uses: cypress-io/github-action@v6
                 with:
                     command: pnpm run cy:test:ci
+                    wait-on: 'http://localhost:4205'
+                    wait-on-timeout: 120

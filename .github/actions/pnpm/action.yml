@@ -34,7 +34,9 @@ runs:
         -   name: Cache PNPM store directory
             uses: actions/cache@v3
             with:
-                path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+                path: |
+                    /home/runner/.cache/Cypress
+                    ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
                 key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                 restore-keys: |
                     ${{ runner.os }}-pnpm-store-
