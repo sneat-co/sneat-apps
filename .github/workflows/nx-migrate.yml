@@ -1,4 +1,4 @@
-name: 'Nx migrate'
+name: 'NX migrate'
 
 on:
     workflow_dispatch:
