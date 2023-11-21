@@ -7,5 +7,4 @@
 /node_modules
 /src_old
 
-/.nx/cache
 .angular
