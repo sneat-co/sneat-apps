@@ -38,6 +38,8 @@ jobs:
 
             -   name: Check if has migrations
                 id: nrwl-workspace-has-migrations
+                # we check if migrations.json exists - might be accidentally checked-in by a developer
+                # if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
                 run: |
                     HAS_MIGRATIONS=$(test -f migrations.json && echo true || echo false)
                     echo $HAS_MIGRATIONS
