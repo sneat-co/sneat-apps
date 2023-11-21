@@ -1,86 +1,89 @@
 name: 'Nx migrate'
 
 on:
-  workflow_dispatch:
-  schedule:
-    # Every day at 6am UTC
-    - cron: '0 6 * * *'
+    workflow_dispatch:
+    schedule:
+        # Every day at 6am UTC
+        -   cron: '0 6 * * *'
 
 jobs:
-  nx-migrate:
-    runs-on: ubuntu-latest
+    nx-migrate:
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/pnpm
-      #        with:
-      #          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+            -   name: Setup
+                uses: ./.github/actions/pnpm
+            #        with:
+            #          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
 
-      - name: Check if @nx/workspace is outdated
-        id: nrwl-workspace-outdated
-        run: |
-          IS_OUTDATED=$(test ! -z "$(npm outdated @nx/workspace)" && echo true || echo false)
-          echo $IS_OUTDATED
-          echo "outdated=$IS_OUTDATED" >> $GITHUB_OUTPUT
+            -   name: Check if @nx/workspace is outdated
+                id: nrwl-workspace-outdated
+                run: |
+                    IS_OUTDATED=$(test ! -z "$(npm outdated @nx/workspace)" && echo true || echo false)
+                    echo $IS_OUTDATED
+                    echo "outdated=$IS_OUTDATED" >> $GITHUB_OUTPUT
 
-      - name: Update @nx/workspace
-        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-        run: pnpm run nx migrate latest
+            -   name: Update @nx/workspace
+                if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
+                run: pnpm run nx migrate latest
 
-      - name: Install dependencies
-        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-        run: pnpm run install --no-immutable
+            -   name: Install dependencies
+                if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
+                run: pnpm run install --no-immutable
 
-      - name: Check if has migrations
-        id: nrwl-workspace-has-migrations
-        run: |
-          HAS_MIGRATIONS=$(test -f migrations.json && echo true || echo false)
-          echo $HAS_MIGRATIONS
-          echo "has_migrations=$HAS_MIGRATIONS" >> $GITHUB_OUTPUT
+            -   name: Check if has migrations
+                id: nrwl-workspace-has-migrations
+                run: |
+                    HAS_MIGRATIONS=$(test -f migrations.json && echo true || echo false)
+                    echo $HAS_MIGRATIONS
+                    echo "has_migrations=$HAS_MIGRATIONS" >> $GITHUB_OUTPUT
 
-      - name: Run @nx/workspace migrations
-        if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
-        run: pnpm run nx migrate --run-migrations
+            -   name: Run @nx/workspace migrations
+                if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
+                run: pnpm run nx migrate --run-migrations
 
-      #      - name: Test
-      #        id: test
-      #        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-      #        continue-on-error: true
-      #        uses: ./.github/actions/test
-      #        with:
-      #          codecov_token: ${{ secrets.CODECOV_TOKEN }}
+            #      - name: Test
+            #        id: test
+            #        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
+            #        continue-on-error: true
+            #        uses: ./.github/actions/test
+            #        with:
+            #          codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Commit changes
-        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-        run: |
-          LAST_VERSION=$(npm view @nx/workspace version)
-          git add .
-          [[ $(git status --porcelain) ]] && git commit -m "build: 📦 update nrwl workspace to ${LAST_VERSION}" || echo "nothing to commit"
+            -   name: Commit changes
+                if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
+                run: |
+                    LAST_VERSION=$(npm view @nx/workspace version)
+                    git add .
+                    [[ $(git status --porcelain) ]] && git commit -m "build: 📦 update nrwl workspace to ${LAST_VERSION}" || echo "nothing to commit"
 
-      - name: Remove migrations.json & commit
-        if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
-        run: |
-          git rm -f migrations.json
-          git commit -m "build: 📦 remove migrations.json"
+            -   name: Remove migrations.json & commit
+                if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
+                run: |
+                    git rm -f migrations.json
+                    git commit -m "build: 📦 remove migrations.json"
 
-      - name: Push changes
-        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true' #  && steps.test.outcome == 'success'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          force: true
-          tags: true
+            -   name: Push changes
+                if: steps.nrwl-workspace-outdated.outputs.outdated == 'true' #  && steps.test.outcome == 'success'
+                uses: ad-m/github-push-action@master
+                with:
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    branch: ${{ github.ref }}
+                    force: true
+                    tags: true
 
-      - name: Create PR
-        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true' #  && steps.test.outcome != 'success'
-        run: |
-          LAST_VERSION=$(npm view @nx/workspace version)
-          BRANCH="renovate/nx-migrate-to-${LAST_VERSION}"
-          git checkout -b ${BRANCH}
-          git push -f --set-upstream origin ${BRANCH}
-          gh pr view ${BRANCH} || gh pr create -t "Update @nx/workspace to ${BRANCH}" -b "Update @nx/workspace dependencies to ${LAST_VERSION}."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_BOT_TOKEN }}
+            -   name: Create PR
+                if: steps.nrwl-workspace-outdated.outputs.outdated == 'true' #  && steps.test.outcome != 'success'
+                run: |
+                    LAST_VERSION=$(npm view @nx/workspace version)
+                    BRANCH="renovate/nx-migrate-to-${LAST_VERSION}"
+                    git checkout -b ${BRANCH}
+                    git push -f --set-upstream origin ${BRANCH}
+                    gh pr view ${BRANCH} || gh pr create -t "Update @nx/workspace to ${BRANCH}" -b "Update @nx/workspace dependencies to ${LAST_VERSION}."
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GIT_BOT_TOKEN }}
