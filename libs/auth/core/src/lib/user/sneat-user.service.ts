@@ -34,6 +34,7 @@ const UsersCollection = 'users';
 export class SneatUserService {
 	private userDocSubscription?: Subscription;
 	private readonly userCollection: CollectionReference<IUserRecord>;
+	private readonly userDocRef = (uid: string) => doc(this.userCollection, uid);
 
 	private uid?: string;
 	private $userTitle?: string;
@@ -103,8 +104,18 @@ export class SneatUserService {
 			...authState,
 		});
 		this.userChanged$.next(uid);
-		const userDocRef = doc(this.userCollection, uid);
+		const userDocRef = this.userDocRef(uid);
 		console.log('SneatUserService: Loading user record...');
+		// updateDoc(userDocRef, { test1: 'test1' })
+		// 	.then(() => console.log('updateDoc() => success'))
+		// 	.catch((err) => console.error(err));
+		// getDoc(userDocRef).then((userDocSnapshot) => {
+		// 	console.log(
+		// 		`getDoc(uid: ${
+		// 			userDocRef.path
+		// 		}) => exists: ${userDocSnapshot.exists()}`,
+		// 	);
+		// });
 		onSnapshot(userDocRef, {
 			next: (userDocSnapshot) => {
 				this.userDocChanged(userDocSnapshot, authState);
@@ -134,9 +145,14 @@ export class SneatUserService {
 			userDocSnapshot.exists(),
 			'authState:',
 			authState,
+			'userDocSnapshot:',
+			userDocSnapshot,
 		);
 		if (userDocSnapshot.ref.id !== this.uid) {
-			return; // Should always be equal as we unsubscribe if uid changes
+			console.error(
+				'userDocSnapshot.ref.id !== this.uid - Should always be equal as we unsubscribe if uid changes',
+			);
+			return;
 		}
 		// console.log('SneatUserService => userDocSnapshot.exists:', userDocSnapshot.exists)
 		const authUser = authState.user;
