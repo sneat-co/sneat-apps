@@ -27,13 +27,15 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 
 @Injectable() // we need this decorator so we can implement Angular interfaces
 export abstract class TeamBaseComponent extends SneatBaseComponent {
-	private readonly teamIDChanged = new Subject<string | undefined>();
-	private readonly teamTypeChanged = new Subject<TeamType | undefined>();
-	private readonly teamBriefChanged = new Subject<
+	protected readonly teamIDChanged = new Subject<string | undefined>();
+	protected readonly teamTypeChanged = new Subject<TeamType | undefined>();
+	protected readonly teamBriefChanged = new Subject<
 		ITeamBrief | undefined | null
 	>();
-	private readonly teamDtoChanged = new Subject<ITeamDto | undefined | null>();
-	private teamContext?: ITeamContext; // TODO: check - is it duplication of team?
+	protected readonly teamDtoChanged = new Subject<
+		ITeamDto | undefined | null
+	>();
+	protected teamContext?: ITeamContext; // TODO: check - is it duplication of team?
 
 	protected contactusTeam?: IIdAndOptionalDto<IContactusTeamDto>;
 

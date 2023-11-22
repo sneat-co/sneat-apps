@@ -2,7 +2,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { INavContext, TeamItem } from '@sneat/core';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable, Subscription, tap } from 'rxjs';
-import { TeamPageBaseComponent } from './team-page-base-component.service';
+import { TeamPageBaseComponent } from './team-page-base-component';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
 // type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
