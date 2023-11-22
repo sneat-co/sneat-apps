@@ -21,7 +21,7 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 			if (firebaseConfig.useEmulators && emulator?.firestorePort) {
 				const host = 'localhost';
 				console.log(
-					`using firebase firestore emulator on ${host}:${emulator.authPort}`,
+					`using firebase firestore emulator on ${host}:${emulator.firestorePort}`,
 				);
 				connectFirestoreEmulator(firestore, host, emulator.firestorePort);
 			}
