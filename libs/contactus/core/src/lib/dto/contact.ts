@@ -1,8 +1,7 @@
 import { IFormField } from '@sneat/core';
 import { IContact2Asset } from './contact2item';
-import { IWithCreatedOn } from '@sneat/dto';
 import { IContactBase } from './contact-base';
-import { TeamMemberType } from '@sneat/dto';
+import { IWithRelatedAndRelatedIDs, TeamMemberType } from '@sneat/dto';
 import { IMemberPerson, IPersonRecord } from './person';
 
 export interface IName {
@@ -101,39 +100,10 @@ export interface IContactBrief extends IContactBase {
 	readonly parentID?: string;
 }
 
-export interface IRelationship extends IWithCreatedOn {}
-
-export type IRelationships = Readonly<{
-	[relationshipID: string]: IRelationship;
-}>;
-
-export interface IRelatedItem {
-	readonly relatedAs?: IRelationships; // if related contact is a child of the current contact, then relatedAs = {"child": ...}
-	readonly relatesAs?: IRelationships; // if related contact is a child of the current contact, then relatesAs = {"parent": ...}
-}
-
-export type IRelatedItemsByID = Readonly<{
-	[itemID: string]: IRelatedItem;
-}>;
-
-export type IRelatedItemsByCollection = Readonly<{
-	[collectionID: string]: IRelatedItemsByID;
-}>;
-
-export type IRelatedItemsByModule = Readonly<{
-	[moduleID: string]: IRelatedItemsByCollection;
-}>;
-
-export type IRelatedItemsByTeam = Readonly<{
-	[teamID: string]: IRelatedItemsByModule;
-}>;
-
-export interface IWithRelated {
-	readonly related?: IRelatedItemsByTeam;
-	readonly relatedIDs?: readonly string[];
-}
-
-export interface IContactDto extends IContactBase, IPersonRecord, IWithRelated {
+export interface IContactDto
+	extends IContactBase,
+		IPersonRecord,
+		IWithRelatedAndRelatedIDs {
 	readonly assets?: IContact2Asset[]; // TODO: Remove as it can be replaced with IWithRelatedItems?
 }
 

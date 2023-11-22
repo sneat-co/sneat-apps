@@ -1,12 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
-import {
-	ContactRole,
-	IContactBrief,
-	IContactDto,
-	IRelationships,
-	IRelatedItem,
-} from '@sneat/contactus-core';
+import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
+import { IRelatedItem, IRelationships } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';

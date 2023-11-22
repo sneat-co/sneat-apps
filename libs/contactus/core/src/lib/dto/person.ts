@@ -1,9 +1,8 @@
 import { excludeUndefined } from '@sneat/core';
-import { IWithTeamIDs } from '@sneat/dto';
+import { IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
 import {
 	IEmail,
 	IPhone,
-	IRelatedItemsByTeam,
 	MemberContactType,
 	IContactBase,
 	IPersonRequirements,
@@ -29,9 +28,8 @@ export interface ITeamMemberInfo extends IPerson {
 	readonly roles?: readonly MemberRole[];
 }
 
-export interface IRelatedPerson extends IPerson {
+export interface IRelatedPerson extends IPerson, IWithRelatedOnly {
 	// relatedAs to current user or a specific contact
-	readonly related?: IRelatedItemsByTeam; // relative to current user
 	// readonly roles?: string[]; // Either member roles or contact roles
 }
 

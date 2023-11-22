@@ -13,12 +13,11 @@ import { formNexInAnimation } from '@sneat/core';
 import {
 	AgeGroupID,
 	FamilyMemberRelation,
-	IRelationships,
 	MemberRelationshipOther,
 	MemberRelationshipUndisclosed,
 	relationshipTitle,
 } from '@sneat/contactus-core';
-import { ITitledRecord } from '@sneat/dto';
+import { IRelationships, ITitledRecord } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 

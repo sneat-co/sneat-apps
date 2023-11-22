@@ -12,10 +12,9 @@ import {
 	Gender,
 	IContactBrief,
 	IContactDto,
-	IRelatedItem,
-	IRelationships,
 	IContactContext,
 } from '@sneat/contactus-core';
+import { IRelatedItem, IRelationships } from '@sneat/dto';
 import { ITeamRef, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';

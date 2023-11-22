@@ -21,11 +21,11 @@ import {
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
-	IRelationships,
 	isNameEmpty,
 	MemberContactType,
 	PetKind,
 } from '@sneat/contactus-core';
+import { IRelationships } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { AgeGroupFormComponent } from '../age-group';
 import { EmailsFormComponent } from '../emails-form';
@@ -295,7 +295,9 @@ export class PersonWizardComponent implements OnChanges {
 				related: {
 					[teamID]: {
 						contactus: {
-							[itemID]: { relatedAs },
+							contacts: {
+								[itemID]: relatedAs,
+							},
 						},
 					},
 				},

@@ -14,4 +14,5 @@ export * from './dto-user';
 export * from './dto-with-modified';
 export * from './by-user';
 export * from './types';
+export * from './with-related';
 export * from './period';
