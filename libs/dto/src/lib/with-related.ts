@@ -1,6 +1,8 @@
-import { IWithCreatedOn } from './dto-with-modified';
+import { IWithCreatedShort } from './dto-with-modified';
 
-export interface IRelationship extends IWithCreatedOn {}
+export interface IRelationship {
+	created: IWithCreatedShort;
+}
 
 export type IRelationships = Readonly<{
 	[relationshipID: string]: IRelationship;

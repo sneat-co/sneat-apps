@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { SneatUserService } from '@sneat/auth-core';
 import { formNexInAnimation } from '@sneat/core';
 import {
 	AgeGroupID,
@@ -17,7 +18,12 @@ import {
 	MemberRelationshipUndisclosed,
 	relationshipTitle,
 } from '@sneat/contactus-core';
-import { IRelationships, ITitledRecord } from '@sneat/dto';
+import {
+	IRelationship,
+	IRelationships,
+	ITitledRecord,
+	IWithCreatedShort,
+} from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 
@@ -38,14 +44,18 @@ export class RelationshipFormComponent
 	extends TeamRelatedFormComponent
 	implements OnChanges
 {
-	@Input({ required: true }) team?: ITeamContext;
-	@Input({ required: true }) ageGroup?: AgeGroupID;
+	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
-	@Input({ required: true }) relatedAs?: IRelationships;
+	@Input({ required: true }) public relatedAs?: IRelationships;
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationships>();
 
-	@Input() isActive = false;
-	@Input() disabled = false;
+	@Input() public isActive = false;
+	@Input() public disabled = false;
+
+	constructor(private readonly userService: SneatUserService) {
+		super();
+	}
 
 	// Defined here as it is used in the template twice
 	protected readonly label = 'Related to me as';
@@ -101,6 +111,17 @@ export class RelationshipFormComponent
 
 	public onRelationshipChanged(event: Event): void {
 		event.stopPropagation();
+		const ce = event as CustomEvent;
+		const value = ce.detail.value as string;
+		console.log('onRelationshipChanged()', value);
+		const created: IWithCreatedShort = {
+			on: new Date().toISOString().substring(0, 10),
+			by: this.userService.currentUserID as unknown as string,
+		};
+		const rel: IRelationship = { created };
+		this.relatedAs = {
+			[value]: rel,
+		};
 		this.relatedAsChange.emit(this.relatedAs);
 	}
 }

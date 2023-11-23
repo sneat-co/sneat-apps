@@ -6,10 +6,7 @@
 				>:</ion-label
 			>
 		</ion-item-divider>
-		<ion-radio-group
-			[(ngModel)]="relatedAs"
-			(ionChange)="onRelationshipChanged($event)"
-		>
+		<ion-radio-group (ionChange)="onRelationshipChanged($event)">
 			<ion-item *ngFor="let rel of relationships || []">
 				<ion-radio
 					[value]="rel.id"

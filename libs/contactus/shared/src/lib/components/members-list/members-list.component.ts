@@ -89,7 +89,7 @@ export class MembersListComponent implements OnChanges {
 
 	protected isAgeOptionsVisible(member: IIdAndBrief<IContactBrief>): boolean {
 		const teamDto = this.team?.dto;
-		console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);
+		// console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);
 		return (
 			teamDto?.type === 'family' &&
 			member.brief?.type === 'person' &&
@@ -153,18 +153,23 @@ export class MembersListComponent implements OnChanges {
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		console.log('MembersListComponent.ngOnChanges()', changes);
 		if (changes['members'] || changes['role']) {
+			this.membersToDisplay = this.filterMembers(this.members);
 			console.log(
 				'MembersListComponent.ngOnChanges(): members or role changed:',
+				'role:',
 				this.role,
+				'members:',
 				this.members,
+				'membersToDisplay:',
+				this.membersToDisplay,
 			);
-			this.membersToDisplay = this.filterMembers(this.members);
 			console.log(
 				'MembersListComponent.ngOnChanges(): membersToDisplay:',
 				this.membersToDisplay,
 			);
+		} else if (Object.keys(changes).length) {
+			console.log('MembersListComponent.ngOnChanges()', changes);
 		}
 	}
 

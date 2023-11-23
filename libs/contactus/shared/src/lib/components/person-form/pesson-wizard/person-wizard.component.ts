@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { SneatUserService } from '@sneat/auth-core';
 import { excludeUndefined, formNexInAnimation, TeamType } from '@sneat/core';
 import { IFormField } from '@sneat/core';
 import {
@@ -25,7 +26,7 @@ import {
 	MemberContactType,
 	PetKind,
 } from '@sneat/contactus-core';
-import { IRelationships } from '@sneat/dto';
+import { IRelatedItem, IRelatedItemsByTeam, IRelationships } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { AgeGroupFormComponent } from '../age-group';
 import { EmailsFormComponent } from '../emails-form';
@@ -124,6 +125,8 @@ export class PersonWizardComponent implements OnChanges {
 
 	@ViewChild(NamesFormComponent) namesFormComponent?: NamesFormComponent;
 	@ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
+
+	constructor(private readonly userService: SneatUserService) {}
 
 	private readonly formOrder: readonly WizardStepDef[] = [
 		{ id: 'contactType' },
@@ -276,7 +279,12 @@ export class PersonWizardComponent implements OnChanges {
 	}
 
 	protected onRelationshipChanged(relatedAs: IRelationships): void {
-		console.log('onRelationshipChanged()', relatedAs);
+		console.log('onRelationshipChanged()', relatedAs, typeof relatedAs);
+		if ((typeof relatedAs as unknown) === 'string') {
+			console.error('onRelationshipChanged() relatedAs is string:', relatedAs);
+			return;
+		}
+
 		// const relationshipIDs = Object.keys(relatedAs);
 		/*
       moduleID: 'contactus',
@@ -287,20 +295,26 @@ export class PersonWizardComponent implements OnChanges {
 
  */
 		const teamID = this.team?.id || '';
-		const itemID = '';
+		const userID = this.userService.currentUserID || '';
+
+		const userRelatedItem: IRelatedItem = {
+			relatedAs: relatedAs,
+		};
+
+		const related: IRelatedItemsByTeam = {
+			[teamID]: {
+				contactus: {
+					contacts: {
+						[userID]: userRelatedItem,
+					},
+				},
+			},
+		};
 
 		this.setRelatedPerson(
 			{
 				...this.newPerson,
-				related: {
-					[teamID]: {
-						contactus: {
-							contacts: {
-								[itemID]: relatedAs,
-							},
-						},
-					},
-				},
+				related,
 			},
 			{ name: 'relatedAs', hasValue: !!relatedAs },
 		);
