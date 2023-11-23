@@ -32,9 +32,10 @@
 	[isActive]="wizardStep === 'relatedAs'"
 	[disabled]="disabled"
 	[team]="team"
+	[relatedTo]="relatedToUser"
 	[relatedAs]="undefined"
 	[ageGroup]="newPerson.ageGroup"
-	(relatedAsChange)="onRelationshipChanged($event)"
+	(relatedAsChange)="onRelatedAsChanged($event)"
 />
 <!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->
 

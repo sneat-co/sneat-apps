@@ -26,7 +26,12 @@ import {
 	MemberContactType,
 	PetKind,
 } from '@sneat/contactus-core';
-import { IRelatedItem, IRelatedItemsByTeam, IRelationships } from '@sneat/dto';
+import {
+	IRelatedItem,
+	IRelatedItemsByTeam,
+	IRelationships,
+	ITeamModuleDocRef,
+} from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
 import { AgeGroupFormComponent } from '../age-group';
 import { EmailsFormComponent } from '../emails-form';
@@ -126,7 +131,23 @@ export class PersonWizardComponent implements OnChanges {
 	@ViewChild(NamesFormComponent) namesFormComponent?: NamesFormComponent;
 	@ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
 
-	constructor(private readonly userService: SneatUserService) {}
+	protected relatedToUser?: ITeamModuleDocRef;
+
+	constructor(readonly userService: SneatUserService) {
+		userService.userChanged.subscribe(() => this.setRelatedToUser());
+	}
+
+	private setRelatedToUser(): void {
+		const itemID = this.userService.currentUserID;
+		this.relatedToUser = itemID
+			? {
+					teamID: this.team?.id || '',
+					moduleID: 'contactus',
+					collection: 'contacts',
+					itemID,
+			  }
+			: undefined;
+	}
 
 	private readonly formOrder: readonly WizardStepDef[] = [
 		{ id: 'contactType' },
@@ -149,6 +170,9 @@ export class PersonWizardComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('PersonFormComponent.ngOnChanges()', changes);
+		if (changes['team']) {
+			this.setRelatedToUser();
+		}
 		if (changes['relatedPerson']) {
 			if (this.wizardStep === 'contactType') {
 				if (this.newPerson.type) {
@@ -278,12 +302,12 @@ export class PersonWizardComponent implements OnChanges {
 		);
 	}
 
-	protected onRelationshipChanged(relatedAs: IRelationships): void {
+	protected onRelatedAsChanged(relatedAs: IRelationships): void {
 		console.log('onRelationshipChanged()', relatedAs, typeof relatedAs);
-		if ((typeof relatedAs as unknown) === 'string') {
-			console.error('onRelationshipChanged() relatedAs is string:', relatedAs);
-			return;
-		}
+		// if ((typeof relatedAs as unknown) === 'string') {
+		// 	console.error('onRelationshipChanged() relatedAs is string:', relatedAs);
+		// 	return;
+		// }
 
 		// const relationshipIDs = Object.keys(relatedAs);
 		/*
@@ -295,7 +319,7 @@ export class PersonWizardComponent implements OnChanges {
 
  */
 		const teamID = this.team?.id || '';
-		const userID = this.userService.currentUserID || '';
+		const userID = this.relatedToUser?.itemID || '';
 
 		const userRelatedItem: IRelatedItem = {
 			relatedAs: relatedAs,

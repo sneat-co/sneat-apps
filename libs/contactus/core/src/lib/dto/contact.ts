@@ -73,7 +73,14 @@ export interface IRelatedToRequest {
 	readonly moduleID: string;
 	readonly collection: string;
 	readonly itemID: string;
-	readonly relatedAs: string[];
+	readonly add?: {
+		readonly relatedAs?: string[];
+		readonly relatesAs?: string[];
+	};
+	readonly remove?: {
+		readonly relatedAs?: string[];
+		readonly relatesAs?: string[];
+	};
 }
 
 export const emptyContactBase: IContactBase = {

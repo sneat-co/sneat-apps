@@ -47,10 +47,10 @@ const gendersOptions: readonly GenderOption[] = [
 		]),
 		trigger('selectIn', [
 			transition(':enter', [
-				style({ display: 'none' }), // initial styles
+				// style({ display: 'none' }), // initial styles
 				animate(
 					animationTimings,
-					style({ display: 'block' }), // final style after the transition has finished
+					// style({ display: 'block' }), // final style after the transition has finished
 				),
 			]),
 		]),

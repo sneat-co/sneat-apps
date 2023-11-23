@@ -7,7 +7,7 @@
 			>
 		</ion-item-divider>
 		<ion-radio-group (ionChange)="onRelationshipChanged($event)">
-			<ion-item *ngFor="let rel of relationships || []">
+			<ion-item *ngFor="let rel of relationshipOptions || []">
 				<ion-radio
 					[value]="rel.id"
 					[disabled]="disabled"
@@ -21,14 +21,14 @@
 	<ion-item *ngIf="relatedAs">
 		<ion-icon name="people-outline" slot="start" />
 		<ion-select
-			[(ngModel)]="relatedAs"
+			[formControl]="relatedAsSingle"
 			interface="popover"
 			[disabled]="disabled"
 			(ionChange)="onRelationshipChanged($event)"
 			[label]="label"
 		>
 			<ion-select-option
-				*ngFor="let rel of relationships || []"
+				*ngFor="let rel of relationshipOptions || []"
 				[value]="rel.id"
 				>{{ rel.title }}</ion-select-option
 			>

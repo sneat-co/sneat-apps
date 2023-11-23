@@ -15,7 +15,7 @@ export interface IContactBase {
 	readonly avatar?: IAvatar;
 	readonly roles?: readonly string[];
 	readonly groupIDs?: readonly string[];
-	readonly relatedAs?: string;
+	// readonly relatedAs?: string;
 	readonly invitesCount?: string;
 	readonly dob?: string; // Date of birth
 }

@@ -66,7 +66,8 @@
 					contact?.brief?.userID !== currentUserID
 				"
 				[team]="team"
-				[(relatedAs)]="relatedAs"
+				[relatedTo]="relatedToCurrentUser"
+				[allRelated]="contact?.dto?.related"
 				[ageGroup]="contact?.brief?.ageGroup"
 				(relatedAsChange)="onRelatedAsChanged($event)"
 			/>

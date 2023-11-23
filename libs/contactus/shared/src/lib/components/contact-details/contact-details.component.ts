@@ -14,7 +14,7 @@ import {
 	IContactDto,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { IRelatedItem, IRelationships } from '@sneat/dto';
+import { IRelatedItem, IRelationships, ITeamModuleDocRef } from '@sneat/dto';
 import { ITeamRef, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
@@ -75,7 +75,12 @@ export class ContactDetailsComponent implements OnChanges {
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
 
+	protected relatedToCurrentUser?: ITeamModuleDocRef;
+
 	constructor(private readonly params: ContactComponentBaseParams) {
+		params.userService.userChanged.subscribe(() => {
+			this.setRelatedToCurrentUser();
+		});
 		params.userService.userState.subscribe({
 			next: (state) => {
 				this.userTeamBriefs = state?.record?.teams;
@@ -84,9 +89,22 @@ export class ContactDetailsComponent implements OnChanges {
 		});
 	}
 
+	private setRelatedToCurrentUser(): void {
+		const itemID = this.params.userService.currentUserID;
+		this.relatedToCurrentUser = itemID
+			? {
+					teamID: this.team?.id || '',
+					moduleID: 'contactus',
+					collection: 'contacts',
+					itemID,
+			  }
+			: undefined;
+	}
+
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
 			this.setCurrentUserContactID();
+			this.setRelatedToCurrentUser();
 		}
 	}
 
@@ -184,9 +202,11 @@ export class ContactDetailsComponent implements OnChanges {
 			relatedTo: {
 				teamID: this.team?.id || '',
 				moduleID: 'contactus',
-				itemID: userContactID,
 				collection: 'contacts',
-				relatedAs: relationshipIDs,
+				itemID: userContactID,
+				add: {
+					relatedAs: relationshipIDs,
+				},
 			},
 		};
 		this.params.contactService.updateContact(request).subscribe({

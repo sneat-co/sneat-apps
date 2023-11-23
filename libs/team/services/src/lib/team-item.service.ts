@@ -42,7 +42,10 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 		team: ITeamRef,
 		itemID: string,
 	): Observable<ITeamItemNavContext<Brief, Dto2>> {
-		console.log('watchTeamItemByID()', this.collectionName, team.id, itemID);
+		console.log(
+			`watchTeamItemByID(team=${team.id}, itemID=${itemID}), collectionName=`,
+			this.collectionName,
+		);
 		const collectionRef = this.collectionRef<Dto2>(team.id);
 		return this.sfs.watchByID(collectionRef, itemID).pipe(
 			map((o) => ({ team, ...o })),

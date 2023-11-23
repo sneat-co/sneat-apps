@@ -1,5 +1,12 @@
 import { IWithCreatedShort } from './dto-with-modified';
 
+export interface ITeamModuleDocRef {
+	readonly teamID: string;
+	readonly moduleID: string;
+	readonly collection: string;
+	readonly itemID: string;
+}
+
 export interface IRelationship {
 	created: IWithCreatedShort;
 }

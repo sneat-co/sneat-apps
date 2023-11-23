@@ -7,7 +7,7 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { formNexInAnimation } from '@sneat/core';
@@ -19,8 +19,9 @@ import {
 	relationshipTitle,
 } from '@sneat/contactus-core';
 import {
-	IRelationship,
+	IRelatedItemsByTeam,
 	IRelationships,
+	ITeamModuleDocRef,
 	ITitledRecord,
 	IWithCreatedShort,
 } from '@sneat/dto';
@@ -38,7 +39,7 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
 	templateUrl: 'relationship-form.component.html',
 	animations: [formNexInAnimation],
 	standalone: true,
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class RelationshipFormComponent
 	extends TeamRelatedFormComponent
@@ -47,11 +48,16 @@ export class RelationshipFormComponent
 	@Input({ required: true }) public team?: ITeamContext;
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
-	@Input({ required: true }) public relatedAs?: IRelationships;
+	@Input({ required: true }) public relatedTo?: ITeamModuleDocRef;
+	@Input() public allRelated?: IRelatedItemsByTeam;
+	@Input() public relatedAs?: string[];
+
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationships>();
 
 	@Input() public isActive = false;
 	@Input() public disabled = false;
+
+	protected readonly relatedAsSingle = new FormControl<string>('');
 
 	constructor(private readonly userService: SneatUserService) {
 		super();
@@ -60,13 +66,45 @@ export class RelationshipFormComponent
 	// Defined here as it is used in the template twice
 	protected readonly label = 'Related to me as';
 
-	protected relationships?: ITitledRecord[];
+	protected relationshipOptions?: ITitledRecord[];
 
 	override ngOnChanges(changes: SimpleChanges): void {
 		console.log('RelationshipFormComponent.ngOnChanges()', changes);
-		if (changes['ageGroup']) {
+		if (changes['ageGroup'] || changes['team']) {
 			this.setRelationships();
 		}
+		if (changes['relatedTo'] || changes['allRelated']) {
+			this.onRelatedChanged();
+		}
+	}
+
+	private onRelatedChanged(): void {
+		console.log(
+			'RelationshipFormComponent.onRelatedToChanged()',
+			this.relatedTo,
+		);
+		if (this.relatedTo && this.allRelated) {
+			if (!this.relatedTo.teamID) {
+				console.error(
+					'onRelatedChanged(): relatedTo.teamID is not set',
+					this.relatedTo,
+				);
+			}
+			const relatedItem =
+				this.allRelated[this.relatedTo.teamID]?.[this.relatedTo.moduleID]?.[
+					this.relatedTo.collection
+				]?.[this.relatedTo.itemID];
+			if (relatedItem) {
+				const relatedAsIDs = Object.keys(relatedItem.relatedAs || {});
+				this.relatedAs = relatedAsIDs;
+				this.relatedAsSingle.setValue(
+					relatedAsIDs.length == 1 ? relatedAsIDs[0] : '',
+				);
+				return;
+			}
+		}
+		this.relatedAsSingle.setValue('');
+		this.relatedAs = undefined;
 	}
 
 	//
@@ -78,7 +116,7 @@ export class RelationshipFormComponent
 	private setRelationships(): void {
 		switch (this.team?.type) {
 			case 'family': {
-				this.relationships = getRelOptions(
+				this.relationshipOptions = getRelOptions(
 					this.ageGroup === 'child'
 						? ([
 								FamilyMemberRelation.child,
@@ -105,11 +143,11 @@ export class RelationshipFormComponent
 		console.log(
 			'RelationshipFormComponent.setRelationships()',
 			this.team,
-			this.relationships,
+			this.relationshipOptions,
 		);
 	}
 
-	public onRelationshipChanged(event: Event): void {
+	protected onRelationshipChanged(event: Event): void {
 		event.stopPropagation();
 		const ce = event as CustomEvent;
 		const value = ce.detail.value as string;
@@ -118,10 +156,7 @@ export class RelationshipFormComponent
 			on: new Date().toISOString().substring(0, 10),
 			by: this.userService.currentUserID as unknown as string,
 		};
-		const rel: IRelationship = { created };
-		this.relatedAs = {
-			[value]: rel,
-		};
-		this.relatedAsChange.emit(this.relatedAs);
+		this.relatedAs = [value];
+		this.relatedAsChange.emit({ [value]: { created } });
 	}
 }
