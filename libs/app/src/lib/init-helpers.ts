@@ -27,6 +27,7 @@ export interface IAppSpecificConfig {
 	firebase?: IFirebaseAppSpecificConfig;
 }
 
+// TODO: document why needed
 export function appSpecificConfig(
 	useEmulators: boolean,
 	envConfig: IEnvironmentConfig,
