@@ -295,7 +295,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// noinspection JSMethodCanBqw2se3333eStatic
 
 	private populateRecurrings(): void {
-		console.log('populateRecurrings()');
 		const prevAll = this.allRecurrings;
 		this.allRecurrings =
 			zipMapBriefsWithIDs(
@@ -312,6 +311,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 				return result;
 			}) || [];
 		this.recurrings = this.filterRecurrings(this.filter || emptyScheduleFilter);
+		console.log('populateRecurrings()', this.allRecurrings, this.recurrings);
 	}
 
 	// We filter recurring at schedule level, so we can share it across different components?

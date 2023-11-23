@@ -64,8 +64,13 @@ export function validateHappeningDto(dto: IHappeningDto): void {
 	if (!dto.slots?.length) {
 		throw new Error('!dto.slots?.length');
 	}
-	if (dto.type === 'recurring') {
-		dto.slots?.forEach(validateRecurringHappeningSlot);
+	switch (dto.type) {
+		case 'single':
+			dto.slots?.forEach(validateSingleHappeningSlot);
+			break;
+		case 'recurring':
+			dto.slots?.forEach(validateRecurringHappeningSlot);
+			break;
 	}
 }
 
@@ -73,8 +78,29 @@ export function validateRecurringHappeningSlot(
 	slot: IHappeningSlot,
 	index: number,
 ): void {
+	if (slot.repeats === 'once' || slot.repeats === 'UNKNOWN') {
+		throw new Error(
+			`slots[${index}]: slot.repeats is not valid for recurring happening: ${slot.repeats}`,
+		);
+	}
+	validateHappeningSlot(slot, index);
+}
+
+export function validateSingleHappeningSlot(
+	slot: IHappeningSlot,
+	index: number,
+): void {
+	if (slot.repeats != 'once') {
+		throw new Error(
+			`slots[${index}]: slot repeats is not 'once': ${slot.repeats}`,
+		);
+	}
+	validateHappeningSlot(slot, index);
+}
+
+function validateHappeningSlot(slot: IHappeningSlot, index: number): void {
 	if (!slot.start.time) {
-		throw new Error(`slot at index ${index} has no start time`);
+		throw new Error(`slots[${index}]: slot has no start time: ${slot}`);
 	}
 }
 
