@@ -48,7 +48,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	protected startDateVal? = new Date().toISOString().substring(0, 10);
 
 	protected startDate = new FormControl<string>(
-		new Date().toISOString().substring(0, 10),
+		'', //TODO: set to current date only for single happenings: new Date().toISOString().substring(0, 10),
 		{
 			// dateToIso(new Date())
 			validators: Validators.required,
@@ -143,14 +143,16 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			'startDate:',
 			this.startDate.value,
 		);
-		if (this.date) {
-			this.startDate.setValue(this.date);
-			console.log('startDate.setValue()', this.startDate.value);
-			this.startDate.setValidators(Validators.required);
+
+		if (this.mode === 'single') {
+			if (!this.startDate.dirty) {
+				const date = this.date || new Date().toISOString().substring(0, 10);
+				this.startDate.setValue(date);
+				console.log('startDate.setValue()', this.startDate.value);
+			}
 		} else {
-			this.startDate.setValue(new Date().toISOString().substring(0, 10));
-			console.log('startDate.setValue()', this.startDate.value);
-			this.startDate.setValidators([]);
+			this.startDate.setValue('');
+			console.log('startDate.setValue() to empty string');
 		}
 	}
 
@@ -160,12 +162,11 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		// 	this.setRepeatsBasedOnHappeningType();
 		// }
 		if (!this.startDate.dirty) {
-			this.startDate.setValue(
-				this.timing.start.date ||
-					this.date ||
-					new Date().toISOString().substring(0, 10),
-			);
-			console.log('startDate.setValue()', this.startDate.value);
+			const startDate = this.timing.start.date;
+			if (startDate) {
+				this.startDate.setValue(startDate);
+				console.log('startDate.setValue()', this.startDate.value);
+			}
 		}
 		if (!this.startTime.dirty) {
 			this.startTime.setValue(this.timing.start.time || '');
@@ -366,7 +367,10 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			'StartEndDatetimeFormComponent.onStartTimeChanged() =>',
 			this.timing,
 		);
-		if (isValidaTimeString(this.startTime.value as string)) {
+		if (
+			isValidaTimeString(this.startTime.value as string) &&
+			this.duration.value
+		) {
 			this.setEndTime();
 		}
 	}
@@ -406,6 +410,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			endTime,
 		);
 		this.endTime.setValue(endTime);
+		this.emitTimingChanged('setEndTime');
 	}
 
 	protected onEndTimeChanged(): void {
