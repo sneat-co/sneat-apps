@@ -39,3 +39,8 @@ ___
 
 If you want to contribute to this open source project you can
 read instructions on how to set up local dev environment in [README-DEV-SETUP.md](docs/README-DEV-SETUP.md).
+
+# Promoted discussions
+
+- [Best tag-line for Sneat.app?](https://github.com/sneat-co/sneat-apps/discussions/1568)
+
