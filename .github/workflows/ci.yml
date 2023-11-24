@@ -1,121 +1,123 @@
 name: CI/CD
 
 on:
-    push:
-        branches:
-            # - renovate/* - do not build renovate branches as they'll be built by PRs
-            - main
-            - feature/*
-            - bugfix/*
-            - improvement/*
-            - personal/*
-    pull_request:
+  push:
+    branches:
+      # - renovate/* - do not build renovate branches as they'll be built by PRs
+      - main
+      - feature/*
+      - bugfix/*
+      - improvement/*
+      - personal/*
+  pull_request:
 
 jobs:
 
-#    pnpm-cache:
-#        runs-on: ubuntu-latest
-#        steps:
-#            -   name: Checkout repository
-#                uses: actions/checkout@v4
-#                with:
-#                    fetch-depth: 0
-#
-#            -   uses: ./.github/actions/pnpm
+  #    pnpm-cache:
+  #        runs-on: ubuntu-latest
+  #        steps:
+  #            -   name: Checkout repository
+  #                uses: actions/checkout@v4
+  #                with:
+  #                    fetch-depth: 0
+  #
+  #            -   uses: ./.github/actions/pnpm
 
-    build:
-        #        needs: pnpm-cache
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v4
-                with:
-                    fetch-depth: 0
+  build:
+    #        needs: pnpm-cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            -   uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/pnpm
 
-            -   name: Derive appropriate SHAs for base and head for `nx affected` commands
-                uses: nrwl/nx-set-shas@v4
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
 
-            -   name: nx build affected
-                env:
-                    # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
-                    BAZEL_TARGET: "1"
-                # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
-                # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
-                run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
-
-    lint:
-#        needs: pnpm-cache
-        runs-on: ubuntu-latest
-
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v4
-                with:
-                    fetch-depth: 0
-
-            -   uses: ./.github/actions/pnpm
-
-            -   name: Derive appropriate SHAs for base and head for `nx affected` commands
-                uses: nrwl/nx-set-shas@v4
-
-            -   name: nx lint affected
-                run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
-
-    e2e-cypress:
-#        needs: pnpm-cache
-        runs-on: ubuntu-latest
+      - name: nx build affected
         env:
-            GCLOUD_PROJECT: demo-local-sneat-app
-            FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
-            FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
-            FIREBASE_EMULATORS_PATH: ${{ github.workspace }}/emulator-cache
+          # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
+          BAZEL_TARGET: "1"
+        # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
+        # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
 
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v4
-                with:
-                    fetch-depth: 0
+  lint:
+    #        needs: pnpm-cache
+    runs-on: ubuntu-latest
 
-            -   uses: sneat-co/sneat-go-backend@main
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            -   name: Install latest Chrome
-                uses: browser-actions/setup-chrome@v1
-                with:
-                    chrome-version: latest
-            -   run: chrome --version
+      - uses: ./.github/actions/pnpm
 
-            -   uses: ./.github/actions/pnpm
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
 
-            -   name: Install Firebase
-                run: pnpm install -g firebase-tools
+      - name: nx lint affected
+        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
-            -   name: Cache firebase emulators
-                uses: actions/cache@v3
-                with:
-                    path: ${{ env.FIREBASE_EMULATORS_PATH }}
-                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
-                    restore-keys: |
-                      ${{ runner.os }}-firebase-emulators-
-                continue-on-error: true
+  e2e-cypress:
+    #        needs: pnpm-cache
+    runs-on: ubuntu-latest
+    env:
+      GCLOUD_PROJECT: demo-local-sneat-app
+      FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
+      FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+      FIREBASE_EMULATORS_PATH: ${{ github.workspace }}/emulator-cache
 
-            # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
-            # It can be removed once @angular/fire is updated to 17 as well.
-#            -   name: Run pnpm install
-#                run: pnpm install --force
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            -   name: Run emulators
-                run: |
-                    pnpm run cy:emulators &
-                    sleep 10
+      - uses: sneat-co/sneat-go-backend@main
 
-            -   name: Build and serve application
-                run: pnpm run cy:serve:ci &
+      - name: Install latest Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: latest
+      - run: chrome --version
 
-            -   name: Run e2e tests
-                uses: cypress-io/github-action@v6
-                with:
-                    command: pnpm run cy:test:ci
-                    wait-on: 'http://localhost:4205'
-                    wait-on-timeout: 120
+      - uses: ./.github/actions/pnpm
+
+      - name: Install Firebase
+        run: curl -sL https://firebase.tools | bash
+      #            -   name: Install Firebase
+      #                run: pnpm install -g firebase-tools
+
+      - name: Cache firebase emulators
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.FIREBASE_EMULATORS_PATH }}
+          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
+          restore-keys: |
+            ${{ runner.os }}-firebase-emulators-
+        continue-on-error: true
+
+      # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
+      # It can be removed once @angular/fire is updated to 17 as well.
+      #            -   name: Run pnpm install
+      #                run: pnpm install --force
+
+      - name: Run emulators
+        run: |
+          pnpm run cy:emulators &
+          sleep 10
+
+      - name: Build and serve application
+        run: pnpm run cy:serve:ci &
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v6
+        with:
+          command: pnpm run cy:test:ci
+          wait-on: 'http://localhost:4205'
+          wait-on-timeout: 120
