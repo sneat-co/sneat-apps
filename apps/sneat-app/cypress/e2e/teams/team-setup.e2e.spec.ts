@@ -1,7 +1,7 @@
 import { runSignUpTest } from '../common/auth';
 import {
 	assertNewTeamButtonIsVisible,
-	// assertSpacesDropdownIsVisible,
+	assertSpacesDropdownIsVisible,
 	clickNewTeamButton,
 } from '../common/teams';
 
@@ -23,6 +23,6 @@ describe('Team Setup', () => {
 		clickNewTeamButton();
 		cy.wait('@createNewTeam');
 
-		//TODO(help-wanted): fix assertSpacesDropdownIsVisible();
+		assertSpacesDropdownIsVisible();
 	});
 });
