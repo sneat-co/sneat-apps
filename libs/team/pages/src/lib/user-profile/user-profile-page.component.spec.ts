@@ -10,8 +10,8 @@ describe('UserProfilePage', () => {
 	let component: UserProfilePageComponent;
 	let fixture: ComponentFixture<UserProfilePageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [UserProfilePageComponent],
 			imports: [
 				IonicModule.forRoot(),

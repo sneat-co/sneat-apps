@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { LogistAppComponent } from './logist-app.component';
 
 describe('AppComponent', () => {
-	beforeEach(async () => {
+	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [LogistAppComponent],
 		}).compileComponents();
-	});
+	}));
 
 	it('should create the app', () => {
 		const fixture = TestBed.createComponent(LogistAppComponent);

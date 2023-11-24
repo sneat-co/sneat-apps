@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { NewCardDialogComponent } from './new-card-dialog.component';
@@ -7,8 +7,8 @@ describe('NewCardDialogComponent', () => {
 	let component: NewCardDialogComponent;
 	let fixture: ComponentFixture<NewCardDialogComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [NewCardDialogComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

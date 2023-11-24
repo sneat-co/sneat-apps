@@ -7,8 +7,8 @@ describe('ProjectPage', () => {
 	let component: ProjectPageComponent;
 	let fixture: ComponentFixture<ProjectPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [ProjectPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

@@ -11,8 +11,8 @@ describe('MembersListComponent', () => {
 	let component: MembersListComponent;
 	let fixture: ComponentFixture<MembersListComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [MembersListComponent],
 			imports: [
 				IonicModule.forRoot(),

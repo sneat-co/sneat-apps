@@ -7,8 +7,8 @@ describe('DiffPage', () => {
 	let component: DiffPageComponent;
 	let fixture: ComponentFixture<DiffPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [DiffPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

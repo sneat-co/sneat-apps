@@ -7,8 +7,8 @@ describe('EntityEditPage', () => {
 	let component: EntityEditPageComponent;
 	let fixture: ComponentFixture<EntityEditPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [EntityEditPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

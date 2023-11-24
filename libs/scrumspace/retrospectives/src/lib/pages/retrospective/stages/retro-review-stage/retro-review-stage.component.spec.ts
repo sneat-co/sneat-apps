@@ -7,8 +7,8 @@ describe('RetroReviewStageComponent', () => {
 	let component: RetroReviewStageComponent;
 	let fixture: ComponentFixture<RetroReviewStageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetroReviewStageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

@@ -7,8 +7,8 @@ describe('RetroMembersComponent', () => {
 	let component: RetroMembersComponent;
 	let fixture: ComponentFixture<RetroMembersComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetroMembersComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

@@ -7,8 +7,8 @@ describe('RetroItemCardComponent', () => {
 	let component: RetroItemCardComponent;
 	let fixture: ComponentFixture<RetroItemCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetroItemCardComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

@@ -7,8 +7,8 @@ describe('DatatugMenuComponent', () => {
 	let component: DatatugMenuComponent;
 	let fixture: ComponentFixture<DatatugMenuComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [DatatugMenuComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

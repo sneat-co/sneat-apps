@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssetAddVehicleComponent } from './asset-add-vehicle.component';
 
@@ -7,8 +7,8 @@ describe('AssetAddVehicleComponent', () => {
 	let component: AssetAddVehicleComponent;
 	let fixture: ComponentFixture<AssetAddVehicleComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [AssetAddVehicleComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

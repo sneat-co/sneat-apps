@@ -7,8 +7,8 @@ describe('HomePage', () => {
 	let component: TeamsPageComponent;
 	let fixture: ComponentFixture<TeamsPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [TeamsPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

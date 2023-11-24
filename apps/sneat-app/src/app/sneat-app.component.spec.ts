@@ -4,8 +4,8 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { SneatAppComponent } from './sneat-app.component';
 
 describe('AppComponent', () => {
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [SneatAppComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

@@ -11,7 +11,7 @@ describe('ScrumsHistoryPage', () => {
 	let component: ScrumsHistoryPageComponent;
 	let fixture: ComponentFixture<ScrumsHistoryPageComponent>;
 
-	beforeEach(waitForAsync(() => {
+	beforeEach(waitForAsync(async () => {
 		TestBed.configureTestingModule({
 			declarations: [ScrumsHistoryPageComponent],
 			imports: [

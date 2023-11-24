@@ -7,8 +7,8 @@ describe('BoardWidgetComponent', () => {
 	let component: BoardWidgetComponent;
 	let fixture: ComponentFixture<BoardWidgetComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [BoardWidgetComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

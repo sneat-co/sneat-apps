@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PeriodSegmentComponent } from './period-segment.component';
 
@@ -6,8 +6,8 @@ describe('PeriodSegmentComponent', () => {
 	let component: PeriodSegmentComponent;
 	let fixture: ComponentFixture<PeriodSegmentComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [PeriodSegmentComponent],
 		}).compileComponents();
 	}));

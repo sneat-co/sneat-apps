@@ -10,8 +10,8 @@ describe('ScrumTaskComponent', () => {
 	let component: ScrumTaskComponent;
 	let fixture: ComponentFixture<ScrumTaskComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [ScrumTaskComponent],
 			imports: [
 				IonicModule.forRoot(),

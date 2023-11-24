@@ -7,8 +7,8 @@ describe('ParameterLookupComponent', () => {
 	let component: ParameterLookupComponent;
 	let fixture: ComponentFixture<ParameterLookupComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [ParameterLookupComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

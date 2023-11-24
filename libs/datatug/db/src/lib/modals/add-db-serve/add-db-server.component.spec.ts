@@ -7,8 +7,8 @@ describe('AddDbServerComponent', () => {
 	let component: AddDbServerComponent;
 	let fixture: ComponentFixture<AddDbServerComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [AddDbServerComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

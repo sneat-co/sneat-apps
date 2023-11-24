@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CommunePageComponent } from './commune-page.component';
 
@@ -6,11 +6,11 @@ describe('CommunePageComponent', () => {
 	let component: CommunePageComponent;
 	let fixture: ComponentFixture<CommunePageComponent>;
 
-	beforeEach(async () => {
+	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [CommunePageComponent],
 		}).compileComponents();
-	});
+	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(CommunePageComponent);

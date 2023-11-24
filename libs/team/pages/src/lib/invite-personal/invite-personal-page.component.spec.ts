@@ -11,8 +11,8 @@ describe('InvitePersonalPage', () => {
 	let component: InvitePersonalPageComponent;
 	let fixture: ComponentFixture<InvitePersonalPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [InvitePersonalPageComponent],
 			imports: [
 				IonicModule.forRoot(),

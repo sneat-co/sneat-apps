@@ -7,8 +7,8 @@ describe('TableMetaCardComponent', () => {
 	let component: TableMetaCardComponent;
 	let fixture: ComponentFixture<TableMetaCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [TableMetaCardComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

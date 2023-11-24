@@ -7,8 +7,8 @@ describe('RetroFeedbackStageComponent', () => {
 	let component: RetroFeedbackStageComponent;
 	let fixture: ComponentFixture<RetroFeedbackStageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetroFeedbackStageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RadioGroupToSelectComponent } from './radio-group-to-select.component';
 
@@ -6,11 +6,11 @@ describe('RadioGroupToSelectComponent', () => {
 	let component: RadioGroupToSelectComponent;
 	let fixture: ComponentFixture<RadioGroupToSelectComponent>;
 
-	beforeEach(async () => {
+	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [RadioGroupToSelectComponent],
 		}).compileComponents();
-	});
+	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(RadioGroupToSelectComponent);

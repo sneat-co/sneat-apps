@@ -7,8 +7,8 @@ describe('BoardCardComponent', () => {
 	let component: BoardCardComponent;
 	let fixture: ComponentFixture<BoardCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [BoardCardComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

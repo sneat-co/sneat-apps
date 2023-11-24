@@ -10,8 +10,8 @@ describe('JoinTeamPage', () => {
 	let component: JoinTeamPageComponent;
 	let fixture: ComponentFixture<JoinTeamPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [JoinTeamPageComponent],
 			imports: [
 				IonicModule.forRoot(),

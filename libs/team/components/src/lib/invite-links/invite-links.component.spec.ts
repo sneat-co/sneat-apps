@@ -10,8 +10,8 @@ describe('InviteLinksComponent', () => {
 	let component: InviteLinksComponent;
 	let fixture: ComponentFixture<InviteLinksComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [InviteLinksComponent],
 			imports: [
 				IonicModule.forRoot(),

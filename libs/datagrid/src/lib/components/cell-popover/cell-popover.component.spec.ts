@@ -7,8 +7,8 @@ describe('CellPopoverComponent', () => {
 	let component: CellPopoverComponent;
 	let fixture: ComponentFixture<CellPopoverComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [CellPopoverComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

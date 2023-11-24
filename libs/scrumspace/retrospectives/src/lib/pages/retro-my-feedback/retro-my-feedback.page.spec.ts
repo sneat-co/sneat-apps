@@ -8,7 +8,7 @@ describe('RetroMyFeedbackPage', () => {
 	let component: RetroMyFeedbackPageComponent;
 	let fixture: ComponentFixture<RetroMyFeedbackPageComponent>;
 
-	beforeEach(waitForAsync(() => {
+	beforeEach(waitForAsync(async () => {
 		TestBed.configureTestingModule({
 			declarations: [RetroMyFeedbackPageComponent],
 			imports: [IonicModule.forRoot(), RouterTestingModule],

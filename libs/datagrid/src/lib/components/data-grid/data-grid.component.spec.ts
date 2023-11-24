@@ -7,8 +7,8 @@ describe('DataGridComponent', () => {
 	let component: DataGridComponent;
 	let fixture: ComponentFixture<DataGridComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [DataGridComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

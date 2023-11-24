@@ -7,8 +7,8 @@ describe('EnvDbPage', () => {
 	let component: EnvDbPageComponent;
 	let fixture: ComponentFixture<EnvDbPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [EnvDbPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

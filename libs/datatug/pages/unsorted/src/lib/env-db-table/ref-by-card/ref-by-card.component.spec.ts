@@ -7,8 +7,8 @@ describe('RefByCardComponent', () => {
 	let component: RefByCardComponent;
 	let fixture: ComponentFixture<RefByCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RefByCardComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

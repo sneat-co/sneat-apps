@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LiabilityNewPageComponent } from './liability-new-page.component';
 
@@ -7,8 +7,8 @@ describe('LiabilityNewPage', () => {
 	let component: LiabilityNewPageComponent;
 	let fixture: ComponentFixture<LiabilityNewPageComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [LiabilityNewPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

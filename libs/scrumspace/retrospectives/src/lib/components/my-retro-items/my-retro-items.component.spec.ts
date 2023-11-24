@@ -9,8 +9,8 @@ describe('MyRetroItemsComponent', () => {
 	let component: MyRetroItemsComponent;
 	let fixture: ComponentFixture<MyRetroItemsComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [MyRetroItemsComponent],
 			imports: [IonicModule.forRoot(), HttpClientTestingModule],
 			providers: [TeamService, UserService],

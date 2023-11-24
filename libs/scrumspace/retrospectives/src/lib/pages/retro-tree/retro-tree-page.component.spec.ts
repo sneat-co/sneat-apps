@@ -11,8 +11,8 @@ describe('RetroTreePage', () => {
 	let component: RetroTreePageComponent;
 	let fixture: ComponentFixture<RetroTreePageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetroTreePageComponent],
 			imports: [
 				RouterTestingModule,

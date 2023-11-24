@@ -7,8 +7,8 @@ describe('EntityPage', () => {
 	let component: EntityPageComponent;
 	let fixture: ComponentFixture<EntityPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [EntityPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

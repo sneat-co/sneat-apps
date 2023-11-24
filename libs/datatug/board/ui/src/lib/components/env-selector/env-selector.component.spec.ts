@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { EnvSelectorComponent } from './env-selector.component';
@@ -7,8 +7,8 @@ describe('EnvSelectorComponent', () => {
 	let component: EnvSelectorComponent;
 	let fixture: ComponentFixture<EnvSelectorComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [EnvSelectorComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

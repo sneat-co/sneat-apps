@@ -7,8 +7,8 @@ describe('ErrorCardComponent', () => {
 	let component: SneatErrorCardComponent;
 	let fixture: ComponentFixture<SneatErrorCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [SneatErrorCardComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

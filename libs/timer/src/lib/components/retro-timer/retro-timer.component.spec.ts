@@ -8,8 +8,8 @@ describe('RetroTimerComponent', () => {
 	let component: RetroTimerComponent;
 	let fixture: ComponentFixture<RetroTimerComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetroTimerComponent],
 			imports: [IonicModule.forRoot(), HttpClientTestingModule],
 		}).compileComponents();

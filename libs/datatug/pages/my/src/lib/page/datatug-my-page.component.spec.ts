@@ -7,8 +7,8 @@ describe('MyPage', () => {
 	let component: DatatugMyPageComponent;
 	let fixture: ComponentFixture<DatatugMyPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [DatatugMyPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

@@ -11,8 +11,8 @@ describe('RetrospectivePage', () => {
 	let component: RetrospectivePageComponent;
 	let fixture: ComponentFixture<RetrospectivePageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetrospectivePageComponent],
 			imports: [
 				IonicModule.forRoot(),

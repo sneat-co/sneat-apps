@@ -7,8 +7,8 @@ describe('AvatarComponent', () => {
 	let component: AvatarComponent;
 	let fixture: ComponentFixture<AvatarComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [AvatarComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

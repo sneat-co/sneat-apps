@@ -7,8 +7,8 @@ describe('EnvironmentPage', () => {
 	let component: EnvironmentPageComponent;
 	let fixture: ComponentFixture<EnvironmentPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [EnvironmentPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

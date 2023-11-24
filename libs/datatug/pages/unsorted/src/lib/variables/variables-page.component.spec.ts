@@ -7,8 +7,8 @@ describe('VariablesPage', () => {
 	let component: VariablesPageComponent;
 	let fixture: ComponentFixture<VariablesPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [VariablesPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

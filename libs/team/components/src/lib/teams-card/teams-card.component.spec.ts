@@ -11,8 +11,8 @@ describe('TeamsCardComponent', () => {
 	let component: TeamsCardComponent;
 	let fixture: ComponentFixture<TeamsCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [TeamsCardComponent],
 			imports: [
 				IonicModule.forRoot(),

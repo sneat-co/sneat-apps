@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CommuneMenuComponent } from './commune-menu.component';
 
@@ -6,11 +6,11 @@ describe('CommuneMenuComponent', () => {
 	let component: CommuneMenuComponent;
 	let fixture: ComponentFixture<CommuneMenuComponent>;
 
-	beforeEach(async () => {
+	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [CommuneMenuComponent],
 		}).compileComponents();
-	});
+	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(CommuneMenuComponent);

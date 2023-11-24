@@ -12,8 +12,8 @@ describe('ScrumPage', () => {
 	let component: ScrumPageComponent;
 	let fixture: ComponentFixture<ScrumPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [ScrumPageComponent],
 			imports: [
 				IonicModule.forRoot(),

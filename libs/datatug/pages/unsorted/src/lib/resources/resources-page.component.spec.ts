@@ -7,8 +7,8 @@ describe('ResourcesPage', () => {
 	let component: ResourcesPageComponent;
 	let fixture: ComponentFixture<ResourcesPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [ResourcesPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

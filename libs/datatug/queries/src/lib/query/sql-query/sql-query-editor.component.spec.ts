@@ -7,8 +7,8 @@ describe('SqlEditorPage', () => {
 	let component: SqlQueryEditorComponent;
 	let fixture: ComponentFixture<SqlQueryEditorComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [SqlQueryEditorComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

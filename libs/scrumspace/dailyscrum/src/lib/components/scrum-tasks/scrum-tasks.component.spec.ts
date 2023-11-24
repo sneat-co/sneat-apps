@@ -10,8 +10,8 @@ describe('ScrumTasksComponent', () => {
 	let component: ScrumTasksComponent;
 	let fixture: ComponentFixture<ScrumTasksComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [ScrumTasksComponent],
 			imports: [IonicModule.forRoot(), HttpClientTestingModule],
 			providers: [TeamService, UserService],

@@ -7,8 +7,8 @@ describe('ForeignKeyCardComponent', () => {
 	let component: ForeignKeyCardComponent;
 	let fixture: ComponentFixture<ForeignKeyCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [ForeignKeyCardComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

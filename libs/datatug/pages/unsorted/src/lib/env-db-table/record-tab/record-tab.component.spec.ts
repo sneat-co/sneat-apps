@@ -7,8 +7,8 @@ describe('RecordTabComponent', () => {
 	let component: RecordTabComponent;
 	let fixture: ComponentFixture<RecordTabComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RecordTabComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

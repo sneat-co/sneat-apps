@@ -11,8 +11,8 @@ describe('AddMetricPage', () => {
 	let component: AddMetricPageComponent;
 	let fixture: ComponentFixture<AddMetricPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [AddMetricPageComponent],
 			imports: [
 				IonicModule.forRoot(),

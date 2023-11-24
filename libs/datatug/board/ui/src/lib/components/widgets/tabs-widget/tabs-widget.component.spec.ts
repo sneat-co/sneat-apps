@@ -7,8 +7,8 @@ describe('TabsWidgetComponent', () => {
 	let component: TabsWidgetComponent;
 	let fixture: ComponentFixture<TabsWidgetComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [TabsWidgetComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

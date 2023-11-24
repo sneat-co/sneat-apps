@@ -7,8 +7,8 @@ describe('CardListComponent', () => {
 	let component: SneatCardListComponent;
 	let fixture: ComponentFixture<SneatCardListComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [SneatCardListComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

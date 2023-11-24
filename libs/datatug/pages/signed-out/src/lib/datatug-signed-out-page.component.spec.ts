@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { DatatugSignedOutPageComponent } from './datatug-signed-out-page.component';
@@ -7,8 +7,8 @@ describe('SignedOutPage', () => {
 	let component: DatatugSignedOutPageComponent;
 	let fixture: ComponentFixture<DatatugSignedOutPageComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [DatatugSignedOutPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

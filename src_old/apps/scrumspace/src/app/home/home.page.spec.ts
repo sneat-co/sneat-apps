@@ -7,7 +7,7 @@ describe('HomePage', () => {
 	let component: HomePage;
 	let fixture: ComponentFixture<HomePage>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(async () => {
 		TestBed.configureTestingModule({
 			declarations: [HomePage],
 			imports: [IonicModule.forRoot()],

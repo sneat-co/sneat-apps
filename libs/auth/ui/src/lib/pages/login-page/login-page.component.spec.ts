@@ -7,8 +7,8 @@ describe('LoginPage', () => {
 	let component: LoginPageComponent;
 	let fixture: ComponentFixture<LoginPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [LoginPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

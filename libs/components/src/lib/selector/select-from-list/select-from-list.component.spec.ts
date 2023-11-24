@@ -7,8 +7,8 @@ describe('CardListComponent', () => {
 	let component: SelectFromListComponent;
 	let fixture: ComponentFixture<SelectFromListComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [SelectFromListComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

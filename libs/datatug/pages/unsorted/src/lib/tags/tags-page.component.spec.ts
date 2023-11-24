@@ -7,8 +7,8 @@ describe('TagsPage', () => {
 	let component: TagsPageComponent;
 	let fixture: ComponentFixture<TagsPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [TagsPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

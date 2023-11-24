@@ -11,8 +11,8 @@ describe('TeamPage', () => {
 	let component: TeamPageComponent;
 	let fixture: ComponentFixture<TeamPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [TeamPageComponent],
 			imports: [
 				IonicModule.forRoot(),

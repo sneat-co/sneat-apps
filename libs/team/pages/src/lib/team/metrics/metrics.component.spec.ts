@@ -11,8 +11,8 @@ describe('MetricsComponent', () => {
 	let component: MetricsComponent;
 	let fixture: ComponentFixture<MetricsComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [MetricsComponent],
 			imports: [
 				IonicModule.forRoot(),

@@ -10,8 +10,8 @@ describe('MembersComponent', () => {
 	let component: MembersComponent;
 	let fixture: ComponentFixture<MembersComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [MembersComponent],
 			imports: [
 				IonicModule.forRoot(),

@@ -7,8 +7,8 @@ describe('DbModelPage', () => {
 	let component: DbModelPageComponent;
 	let fixture: ComponentFixture<DbModelPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [DbModelPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

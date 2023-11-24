@@ -7,7 +7,7 @@ describe('FolderPage', () => {
 	let component: FolderPage;
 	let fixture: ComponentFixture<FolderPage>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(async () => {
 		TestBed.configureTestingModule({
 			declarations: [FolderPage],
 			imports: [IonicModule.forRoot(), RouterModule.forRoot([])],

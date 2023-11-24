@@ -7,8 +7,8 @@ describe('RecordValuesCardComponent', () => {
 	let component: RecordValuesCardComponent;
 	let fixture: ComponentFixture<RecordValuesCardComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RecordValuesCardComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

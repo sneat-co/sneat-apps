@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TeamMenuComponent } from './team-menu.component';
 
@@ -6,11 +6,11 @@ describe('TeamMenuComponent', () => {
 	let component: TeamMenuComponent;
 	let fixture: ComponentFixture<TeamMenuComponent>;
 
-	beforeEach(async () => {
+	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [TeamMenuComponent],
 		}).compileComponents();
-	});
+	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(TeamMenuComponent);

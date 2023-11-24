@@ -7,8 +7,8 @@ describe('GridWidgetComponent', () => {
 	let component: GridWidgetComponent;
 	let fixture: ComponentFixture<GridWidgetComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [GridWidgetComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

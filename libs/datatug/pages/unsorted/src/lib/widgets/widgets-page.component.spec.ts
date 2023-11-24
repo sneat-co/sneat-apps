@@ -7,8 +7,8 @@ describe('WidgetsPage', () => {
 	let component: WidgetsPageComponent;
 	let fixture: ComponentFixture<WidgetsPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [WidgetsPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

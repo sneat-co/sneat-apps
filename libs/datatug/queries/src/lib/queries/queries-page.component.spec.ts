@@ -7,8 +7,8 @@ describe('SqlQueriesPage', () => {
 	let component: QueriesPageComponent;
 	let fixture: ComponentFixture<QueriesPageComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [QueriesPageComponent],
 			imports: [IonicModule.forRoot()],
 		}).compileComponents();

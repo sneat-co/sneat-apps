@@ -9,8 +9,8 @@ describe('RetrospectivesComponent', () => {
 	let component: RetrospectivesComponent;
 	let fixture: ComponentFixture<RetrospectivesComponent>;
 
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
 			declarations: [RetrospectivesComponent],
 			imports: [
 				IonicModule.forRoot(),

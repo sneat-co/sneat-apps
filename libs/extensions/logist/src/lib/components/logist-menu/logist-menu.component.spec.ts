@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LogistMenuComponent } from './logist-menu.component';
 
@@ -6,7 +6,7 @@ describe('LogistMenuComponent', () => {
 	let component: LogistMenuComponent;
 	let fixture: ComponentFixture<LogistMenuComponent>;
 
-	beforeEach(async () => {
+	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [LogistMenuComponent],
 		}).compileComponents();
@@ -14,7 +14,7 @@ describe('LogistMenuComponent', () => {
 		fixture = TestBed.createComponent(LogistMenuComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
-	});
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

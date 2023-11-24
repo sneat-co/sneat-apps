@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LogistTeamPageComponent } from './logist-team-page.component';
 
@@ -6,7 +6,7 @@ describe('LogistMainPageComponent', () => {
 	let component: LogistTeamPageComponent;
 	let fixture: ComponentFixture<LogistTeamPageComponent>;
 
-	beforeEach(async () => {
+	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [LogistTeamPageComponent],
 		}).compileComponents();
@@ -14,7 +14,7 @@ describe('LogistMainPageComponent', () => {
 		fixture = TestBed.createComponent(LogistTeamPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
-	});
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();
