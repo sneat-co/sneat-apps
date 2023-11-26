@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
@@ -29,12 +36,25 @@ import {
 		FormsModule,
 	],
 })
-export class HappeningParticipantsComponent {
+export class HappeningParticipantsComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
-	@Input() contactusTeam?: IContactusTeamDtoAndID;
-	@Input() happening?: IHappeningContext;
+	@Input({ required: true }) contactusTeam?: IContactusTeamDtoAndID;
+	@Input({ required: true }) happening?: IHappeningContext;
 
 	constructor(private readonly happeningService: HappeningService) {}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		console.log(
+			'HappeningParticipantsComponent.ngOnChanges()',
+			changes,
+			this.happening?.dto?.participants,
+		);
+		if (changes['happening']) {
+			this.checkedContactIDs = Object.keys(
+				this.happening?.dto?.participants || {},
+			);
+		}
+	}
 
 	public get membersTabLabel(): string {
 		return this.team?.brief?.type === 'family'
@@ -45,7 +65,7 @@ export class HappeningParticipantsComponent {
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	public isToDo = false;
-	public checkedMemberIDs: string[] = [];
+	public checkedContactIDs: string[] = [];
 	public contacts: number[] = [];
 	public tab: 'members' | 'others' = 'members';
 
@@ -71,11 +91,11 @@ export class HappeningParticipantsComponent {
 		console.log('isMemberCheckChanged()', args);
 		const { id, checked } = args;
 		if (!checked) {
-			this.checkedMemberIDs = this.checkedMemberIDs.filter((v) => v !== id);
+			this.checkedContactIDs = this.checkedContactIDs.filter((v) => v !== id);
 			return;
 		}
-		if (!this.checkedMemberIDs.some((v) => v === id)) {
-			this.checkedMemberIDs.push(id);
+		if (!this.checkedContactIDs.some((v) => v === id)) {
+			this.checkedContactIDs.push(id);
 		}
 		this.populateParticipants();
 		if (!this.happening?.id) {
@@ -115,7 +135,7 @@ export class HappeningParticipantsComponent {
 			...brief,
 			participants: {},
 		};
-		this.checkedMemberIDs.forEach((contactID) => {
+		this.checkedContactIDs.forEach((contactID) => {
 			if (!happeningBase.participants) {
 				happeningBase = { ...happeningBase, participants: { [contactID]: {} } };
 			} else {

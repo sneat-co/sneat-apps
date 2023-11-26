@@ -1,6 +1,6 @@
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { dateToIso, IIdAndOptionalDto, INavContext } from '@sneat/core';
+import { dateToIso, INavContext } from '@sneat/core';
 import {
 	IHappeningBrief,
 	IHappeningDto,
@@ -8,6 +8,7 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	ISchedulusTeamDto,
+	ISchedulusTeamContext,
 } from '@sneat/mod-schedulus-core';
 import {
 	ISlotItem,
@@ -19,6 +20,7 @@ import { IErrorLogger } from '@sneat/logging';
 import {
 	ITeamContext,
 	ITeamItemNavContext,
+	ITeamItemWithOptionalDto,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
 import {
@@ -115,7 +117,7 @@ const slotItemsFromRecurringSlot = (
 };
 
 const groupRecurringSlotsByWeekday = (
-	schedulusTeam?: IIdAndOptionalDto<ISchedulusTeamDto>,
+	schedulusTeam?: ISchedulusTeamContext,
 ): RecurringSlots => {
 	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${schedulusTeam?.id})`;
 	const slots: RecurringSlots = {
@@ -130,7 +132,7 @@ const groupRecurringSlotsByWeekday = (
 			const happening: IHappeningContext = {
 				id: rh.id,
 				brief: rh.brief,
-				team: schedulusTeam,
+				team: schedulusTeam.team,
 			};
 			const slotItems: ISlotItem[] = slotItemsFromRecurringSlot(happening, rs);
 			slotItems.forEach((si) => {
@@ -171,7 +173,7 @@ export class TeamDaysProvider {
 	);
 
 	private readonly schedulusTeam$ = new BehaviorSubject<
-		IIdAndOptionalDto<ISchedulusTeamDto> | undefined
+		ISchedulusTeamContext | undefined
 	>(undefined);
 
 	private readonly teamID$ = this.team$.asObservable().pipe(
@@ -186,7 +188,7 @@ export class TeamDaysProvider {
 			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
 			// That would minimize number of handlers to be called on watching components
 			// Tough it's a micro optimization that does not seems to worth the effort now.
-			map(groupRecurringSlotsByWeekday),
+			map((schedulusTeam) => groupRecurringSlotsByWeekday(schedulusTeam)),
 			tap((slots) => console.log('TeamDaysProvider.recurrings$ =>', slots)),
 			shareReplay(1),
 		);
@@ -251,7 +253,7 @@ export class TeamDaysProvider {
 	}
 
 	public setSchedulusTeam(
-		schedulusTeam: IIdAndOptionalDto<ISchedulusTeamDto>,
+		schedulusTeam: ITeamItemWithOptionalDto<ISchedulusTeamDto>,
 	): void {
 		console.log('TeamDaysProvider.setSchedulusTeam()', schedulusTeam);
 		// if (schedulusTeam.id !== this._team?.id) {

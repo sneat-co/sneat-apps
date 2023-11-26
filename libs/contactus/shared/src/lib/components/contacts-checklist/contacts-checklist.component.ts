@@ -23,7 +23,7 @@ import { Subscription } from 'rxjs';
 export class ContactsChecklistComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() roles: string[] = ['member'];
-	@Input() checkedContactIDs: string[] = [];
+	@Input({ required: true }) checkedContactIDs: string[] = [];
 	@Input() noContactsMessage = 'No members found';
 	@Output() readonly checkedChange = new EventEmitter<{
 		event: CustomEvent;

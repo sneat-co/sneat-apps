@@ -5,18 +5,22 @@ import { Subject, Subscription } from 'rxjs';
 
 @Injectable()
 export abstract class SneatBaseComponent implements OnDestroy {
+	// Signals that the component is destroyed and should not be used anymore
 	protected readonly destroyed = new Subject<void>();
+	// All active subscriptions of a component. Will be unsubscribed on destroy
 	protected readonly subs = new Subscription();
+	// Passes focus to the input element
+	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
 	protected constructor(
 		@Inject(new InjectionToken('className')) public readonly className: string,
 		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
-	) {}
-
-	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
+	) {
+		console.log(`${this.className}.SneatBaseComponent.constructor()`);
+	}
 
 	public ngOnDestroy(): void {
-		this.unsubscribe(`${this.className}.ngOnDestroy()`);
+		this.unsubscribe(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
 		this.destroyed.next();
 		this.destroyed.complete();
 	}

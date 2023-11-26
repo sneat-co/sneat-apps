@@ -121,6 +121,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 			);
 			return;
 		}
+		console.log('goHappening()', this.happening, this.team);
 		this.teamNavService
 			.navigateForwardToTeamPage(this.team, `happening/${this.happening?.id}`, {
 				state: { happening: this.happening },

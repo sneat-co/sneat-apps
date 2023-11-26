@@ -1,39 +1,39 @@
 import { Injectable, NgModule } from '@angular/core';
 import {
-	Firestore as AngularFirestore,
 	CollectionReference,
+	Firestore as AngularFirestore,
 	orderBy,
 } from '@angular/fire/firestore';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { ITeamContext } from '@sneat/team-models';
 import { map, Observable, throwError } from 'rxjs';
 import {
+	IAddContainerPointsRequest,
 	IAddContainersRequest,
+	IAddOrderShippingPointRequest,
+	IAddSegmentsRequest,
+	IContainerPointsRequest,
 	IContainerRequest,
-	IDeleteCounterpartyRequest,
-	ICreateLogistOrderRequest,
 	ICreateFreightOrderResponse,
+	ICreateLogistOrderRequest,
+	IDeleteCounterpartyRequest,
+	IDeleteSegmentsRequest,
+	IFreightOrderBrief,
 	ILogistOrderContext,
 	ILogistOrderDto,
-	IFreightOrderBrief,
-	ISetOrderCounterpartiesRequest,
-	IAddOrderShippingPointRequest,
 	IOrderCounterparty,
-	IAddSegmentsRequest,
 	IOrderShippingPointRequest,
-	IDeleteSegmentsRequest,
-	IUpdateContainerPointRequest,
-	IContainerPointsRequest,
-	ISetContainerPointTaskRequest,
-	ISetContainerPointFreightFieldsRequest,
-	IAddContainerPointsRequest,
 	ISetContainerEndpointFieldsRequest,
-	IUpdateShippingPointRequest,
-	ISetContainerPointFieldsRequest,
 	ISetContainerFieldsRequest,
+	ISetContainerPointFieldsRequest,
+	ISetContainerPointFreightFieldsRequest,
+	ISetContainerPointTaskRequest,
+	ISetOrderCounterpartiesRequest,
+	IUpdateContainerPointRequest,
+	IUpdateShippingPointRequest,
 } from '../dto';
-import { logistTeamModuleSubCollection } from './logist-team.service';
 import { IOrdersFilter } from '../dto/orders-filter';
+import { logistTeamModuleSubCollection } from './logist-team.service';
 
 function briefFromDto(id: string, dto: ILogistOrderDto): IFreightOrderBrief {
 	return dto;
@@ -140,7 +140,7 @@ export class LogistOrderService {
 			});
 		}
 
-		const result = this.sfs
+		return this.sfs
 			.watchByFilter(ordersCollection, {
 				filter: qFilter,
 				orderBy: [orderBy('createdAt', 'desc')],
@@ -150,7 +150,6 @@ export class LogistOrderService {
 					orders.map((order) => ({ ...order, team: { id: teamID } })),
 				),
 			);
-		return result;
 	}
 
 	setOrderStatus(request: {

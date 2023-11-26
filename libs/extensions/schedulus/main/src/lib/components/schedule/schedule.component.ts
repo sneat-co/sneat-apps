@@ -220,6 +220,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			throw new Error('!team');
 		}
 		const happening: IHappeningContext = args.slot.happening;
+		console.log('');
 		const page = `happening/${happening.id}`;
 		this.params.teamNavService
 			.navigateForwardToTeamPage(this.team, page, {
@@ -237,7 +238,12 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.setDay('onDateSelected', date);
 	};
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected readonly id = (
+		_: number,
+		o: {
+			id: string;
+		},
+	) => o.id;
 
 	readonly index = (i: number): number => i;
 
@@ -264,7 +270,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 							schedulusTeam,
 						);
 						this.schedulusTeamDto = schedulusTeam?.dto;
-						this.teamDaysProvider.setSchedulusTeam(schedulusTeam);
+						const schedulusTeamContext = { team: this.team, ...schedulusTeam };
+						this.teamDaysProvider.setSchedulusTeam(schedulusTeamContext);
 						this.populateRecurrings();
 					},
 				});
@@ -354,7 +361,11 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	// TODO: Decouple and reuse
 	private hasContact(
-		item: { contactIDs?: string[] } | undefined,
+		item:
+			| {
+					contactIDs?: string[];
+			  }
+			| undefined,
 		contactIDs?: string[],
 	): boolean {
 		return (

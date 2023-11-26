@@ -7,6 +7,7 @@ import {
 	query,
 	where,
 	onSnapshot,
+	limit,
 } from '@angular/fire/firestore';
 import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
 import { QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
@@ -21,6 +22,7 @@ export interface IFilter {
 }
 
 export interface IQueryArgs {
+	readonly limit?: number;
 	readonly filter?: readonly IFilter[];
 	readonly orderBy?: readonly QueryOrderByConstraint[];
 }
@@ -97,6 +99,7 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 				where(f.field, operator(f), f.value),
 			),
 			...(queryArgs?.orderBy || []),
+			...(queryArgs?.limit ? [limit(queryArgs.limit)] : []),
 		);
 		console.log('watchSnapshotsByFilter()', collectionRef.path, queryArgs, q);
 		const subj = new Subject<QuerySnapshot<Dto2>>();

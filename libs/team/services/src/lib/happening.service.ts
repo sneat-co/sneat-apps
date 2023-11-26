@@ -230,9 +230,11 @@ export class HappeningService {
 		team: ITeamContext,
 		id: string,
 	): Observable<IHappeningContext> {
-		return this.teamItemService
-			.watchTeamItemByIdWithTeamRef(team, id)
-			.pipe(map((h) => processHappeningContext(h, team)));
+		console.log(`watchHappeningByID(team.id=${team.id}, id=${id})`);
+		return this.teamItemService.watchTeamItemByIdWithTeamRef(team, id).pipe(
+			tap((happening) => console.log('watchHappeningByID() =>', happening)),
+			map((h) => processHappeningContext(h, team)),
+		);
 	}
 
 	public watchUpcomingSingles(
@@ -240,8 +242,8 @@ export class HappeningService {
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
 		return this.watchSingles(team, statuses, {
-			field: 'dateMin',
-			operator: '<=',
+			field: 'dateMax',
+			operator: '>=',
 		});
 	}
 
@@ -249,10 +251,16 @@ export class HappeningService {
 		team: ITeamContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
-		return this.watchSingles(team, statuses, {
-			field: 'dateMax',
-			operator: '<',
-		});
+		return this.watchSingles(
+			team,
+			statuses,
+			{
+				field: 'dateMax',
+				operator: '<',
+			},
+			undefined,
+			100,
+		);
 	}
 
 	public watchRecentlyCreatedSingles(
@@ -263,17 +271,25 @@ export class HappeningService {
 			team,
 			statuses,
 			undefined,
-			orderBy('created', 'desc'),
+			orderBy('createdAt', 'desc'),
+			10,
 		);
 	}
 
-	public watchSingles(
+	private watchSingles(
 		team: ITeamContext,
 		statuses: HappeningStatus[],
 		dateCondition?:
-			| { field: 'dateMin'; operator: '<=' }
-			| { field: 'dateMax'; operator: '<' },
+			| {
+					field: 'dateMax';
+					operator: '>=';
+			  } // Upcoming
+			| {
+					field: 'dateMax';
+					operator: '<';
+			  }, // Past
 		orderByConstraint?: QueryOrderByConstraint,
+		limit?: number,
 	): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
 		console.log('watchSingles()', team.id, date, dateCondition);
@@ -285,8 +301,10 @@ export class HappeningService {
 			.watchModuleTeamItemsWithTeamRef(team, {
 				filter,
 				orderBy: orderByConstraint ? [orderByConstraint] : undefined,
+				limit,
 			})
 			.pipe(
+				tap((happening) => console.log('watchSingles() =>', happening)),
 				map((happenings) => {
 					return happenings.map((h) => processHappeningContext(h, team));
 				}),

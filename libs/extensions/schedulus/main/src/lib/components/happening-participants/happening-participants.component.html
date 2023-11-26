@@ -13,6 +13,7 @@
 	<sneat-contacts-checklist
 		*ngIf="tab === 'members'"
 		[team]="team"
+		[checkedContactIDs]="[]"
 		noContactsMessage="No members"
 		(checkedChange)="isMemberCheckChanged($event)"
 	/>
@@ -45,4 +46,5 @@
 			</ion-item>
 		</ng-container>
 	</ion-item-group>
+	checkedContactIDs: {{ checkedContactIDs | json }}
 </ion-card>

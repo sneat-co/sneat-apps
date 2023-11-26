@@ -31,6 +31,9 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 		public readonly afs: AngularFirestore,
 		public readonly sneatApiService: SneatApiService,
 	) {
+		if (!this.collectionName) {
+			throw new Error('collectionName is required');
+		}
 		this.sfs = new SneatFirestoreService<Brief, Dto>();
 	}
 
@@ -43,8 +46,7 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 		itemID: string,
 	): Observable<ITeamItemNavContext<Brief, Dto2>> {
 		console.log(
-			`watchTeamItemByID(team=${team.id}, itemID=${itemID}), collectionName=`,
-			this.collectionName,
+			`TeamItemBaseService.watchTeamItemByIdWithTeamRef(team=${team.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
 		);
 		const collectionRef = this.collectionRef<Dto2>(team.id);
 		return this.sfs.watchByID(collectionRef, itemID).pipe(
@@ -194,6 +196,9 @@ export class ModuleTeamItemService<
 		sneatApiService: SneatApiService,
 	) {
 		super(collectionName, afs, sneatApiService);
+		if (!moduleID) {
+			throw new Error('moduleID is required');
+		}
 		this.teamsCollection = collection(
 			this.afs,
 			'teams',
@@ -209,6 +214,9 @@ export class ModuleTeamItemService<
 	protected override collectionRef<Dto2 extends Dto>(
 		teamID: string,
 	): CollectionReference<Dto2> {
+		if (!teamID) {
+			throw new Error('teamID is required');
+		}
 		return collection(
 			this.teamsCollection,
 			teamID,

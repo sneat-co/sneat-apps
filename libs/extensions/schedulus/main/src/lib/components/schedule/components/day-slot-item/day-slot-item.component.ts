@@ -21,7 +21,10 @@ export class DaySlotItemComponent {
 	@Input() team: ITeamContext = { id: '' };
 	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
-	@Output() slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
+	@Output() readonly slotClicked = new EventEmitter<{
+		slot: ISlotItem;
+		event: Event;
+	}>();
 
 	slotState?: HappeningUIState;
 
