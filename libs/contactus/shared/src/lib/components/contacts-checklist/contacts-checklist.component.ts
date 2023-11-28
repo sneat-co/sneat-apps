@@ -31,17 +31,29 @@ export class ContactsChecklistComponent implements OnChanges {
 		checked: boolean;
 	}>();
 
-	private teamID?: string;
 	private contactusTeamSubscription?: Subscription;
 	protected contacts?: IIdAndBrief<IContactBrief>[];
+
+	protected readonly contactID = (
+		_: number,
+		contact: IIdAndBrief<IContactBrief>,
+	) => contact.id;
 
 	constructor(private readonly contactusTeamService: ContactusTeamService) {}
 
 	private subscribeForContactBriefs(team: ITeamContext): void {
+		console.log(
+			`ContactsChecklistComponent.subscribeForContactBriefs(team=${team?.id})`,
+		);
 		this.contactusTeamSubscription = this.contactusTeamService
 			.watchContactBriefs(team)
+			// .pipe(takeUntilDestroyed())
 			.subscribe({
 				next: (contacts) => {
+					console.log(
+						'ContactsChecklistComponent.subscribeForContactBriefs() =>',
+						contacts,
+					);
 					const roles = this.roles;
 					this.contacts = contacts
 						.filter((c) => roles?.some((r) => c.brief?.roles?.includes(r)))
@@ -54,7 +66,7 @@ export class ContactsChecklistComponent implements OnChanges {
 		console.log('ContactsChecklistComponent.ngOnChanges()', changes);
 		if (changes['team']) {
 			const team = this.team;
-			if (team?.id !== this.teamID) {
+			if (team?.id !== this.team?.id) {
 				this.contactusTeamSubscription?.unsubscribe();
 				if (team) {
 					this.subscribeForContactBriefs(team);
@@ -63,8 +75,16 @@ export class ContactsChecklistComponent implements OnChanges {
 		}
 	}
 
-	protected isChecked(id: string): boolean {
-		return this.checkedContactIDs.includes(id);
+	protected isChecked(contact: IIdAndBrief<IContactBrief>): boolean {
+		const participantID = `${this.team?.id}_${contact.id}`;
+		console.log(
+			'isChecked()',
+			participantID,
+			this.checkedContactIDs,
+			contact,
+			this.team?.id,
+		);
+		return this.checkedContactIDs.includes(participantID);
 	}
 
 	protected onCheckboxChange(event: Event, id: string): void {

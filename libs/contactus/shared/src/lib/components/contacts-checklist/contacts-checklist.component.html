@@ -1,9 +1,9 @@
 <ion-list>
-	<ion-item *ngFor="let contact of contacts || []">
+	<ion-item *ngFor="let contact of contacts || []; trackBy: contactID">
 		<ion-checkbox
 			labelPlacement="end"
 			slot="start"
-			[checked]="isChecked(contact.id)"
+			[checked]="isChecked(contact)"
 			(ionChange)="onCheckboxChange($event, contact.id)"
 		>
 			{{
