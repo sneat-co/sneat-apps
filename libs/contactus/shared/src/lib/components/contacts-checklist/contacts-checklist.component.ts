@@ -65,11 +65,13 @@ export class ContactsChecklistComponent implements OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('ContactsChecklistComponent.ngOnChanges()', changes);
 		if (changes['team']) {
-			const team = this.team;
-			if (team?.id !== this.team?.id) {
+			const teamChanges = changes['team'];
+			const previousTeam = teamChanges.previousValue as ITeamContext;
+
+			if (previousTeam?.id !== this.team?.id) {
 				this.contactusTeamSubscription?.unsubscribe();
-				if (team) {
-					this.subscribeForContactBriefs(team);
+				if (this.team?.id) {
+					this.subscribeForContactBriefs(this.team);
 				}
 			}
 		}
