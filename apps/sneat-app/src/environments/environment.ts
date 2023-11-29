@@ -4,7 +4,7 @@
 import {
 	appSpecificConfig,
 	IEnvironmentConfig,
-	localEnvironmentConfig,
+	environmentConfig,
 } from '@sneat/app';
 
 const useEmulators = true;
@@ -12,7 +12,7 @@ const useEmulators = true;
 // noinspection SpellCheckingInspection
 export const environment: IEnvironmentConfig = appSpecificConfig(
 	useEmulators,
-	localEnvironmentConfig,
+	environmentConfig,
 	{
 		firebase: {
 			nickname: 'Sneat.app',

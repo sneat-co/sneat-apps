@@ -16,9 +16,9 @@
     "cy:test:ci": "cross-env nx e2e-ci sneat-app --browser chrome --headed --baseUrl=http://localhost:4205",
     "cy:open:ci": "cross-env nx e2e-ci sneat-app --watch --browser chrome --baseUrl=http://localhost:4205",
     "cy:emulators": "cross-env firebase emulators:start --only auth,firestore --project demo-local-sneat-app",
-    "cy:test:dev": "cross-env nx e2e sneat-app --browser chrome",
-    "cy:test:prod": "cross-env nx e2e sneat-app --configuration=production --browser chrome --baseUrl=http://localhost:4205",
-    "cy:open:dev": "cross-env nx e2e sneat-app --watch --browser chrome",
+		"cy:test:dev": "cross-env nx e2e sneat-app --configuration=development --browser chrome --baseUrl=http://localhost:4205",
+		"cy:test:prod": "cross-env nx e2e sneat-app --configuration=production --browser chrome --baseUrl=http://localhost:4205",
+		"cy:open:dev": "cross-env nx e2e sneat-app --configuration=development --watch --browser chrome",
     "cy:open:prod": "cross-env nx e2e sneat-app --configuration=production --watch --browser chrome",
     "serve:help": "serve --help"
   },

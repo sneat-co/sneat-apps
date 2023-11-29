@@ -55,9 +55,31 @@
 					"vendorChunk": true,
 					"extractLicenses": false,
 					"sourceMap": true,
-					"namedChunks": true
+					"namedChunks": true,
+					"fileReplacements": [
+						{
+							"replace": "libs/app/src/environments/environment.ts",
+							"with": "libs/app/src/environments/environment.local.ts"
+						}
+					]
 				},
-				"e2e": {
+				"e2e-development": {
+					"optimization": false,
+					"outputHashing": "all",
+					"sourceMap": true,
+					"namedChunks": true,
+					"aot": true,
+					"extractLicenses": false,
+					"vendorChunk": true,
+					"buildOptimizer": true,
+					"fileReplacements": [
+						{
+							"replace": "libs/app/src/environments/environment.ts",
+							"with": "libs/app/src/environments/environment.e2e.ts"
+						}
+					]
+				},
+				"e2e-production": {
 					"optimization": true,
 					"outputHashing": "all",
 					"sourceMap": false,
@@ -65,7 +87,29 @@
 					"aot": true,
 					"extractLicenses": true,
 					"vendorChunk": false,
-					"buildOptimizer": true
+					"buildOptimizer": true,
+					"fileReplacements": [
+						{
+							"replace": "libs/app/src/environments/environment.ts",
+							"with": "libs/app/src/environments/environment.e2e.ts"
+						}
+					]
+				},
+				"e2e-ci": {
+					"optimization": true,
+					"outputHashing": "all",
+					"sourceMap": false,
+					"namedChunks": false,
+					"aot": true,
+					"extractLicenses": true,
+					"vendorChunk": false,
+					"buildOptimizer": true,
+					"fileReplacements": [
+						{
+							"replace": "libs/app/src/environments/environment.ts",
+							"with": "libs/app/src/environments/environment.ci.ts"
+						}
+					]
 				}
 			},
 			"defaultConfiguration": "production"
@@ -79,11 +123,14 @@
 				"development": {
 					"buildTarget": "sneat-app:build:development"
 				},
-				"e2e": {
-					"buildTarget": "sneat-app:build:e2e"
+				"e2e-development": {
+					"buildTarget": "sneat-app:build:e2e-development"
+				},
+				"e2e-production": {
+					"buildTarget": "sneat-app:build:e2e-production"
 				},
 				"e2e-ci": {
-					"buildTarget": "sneat-app:build:e2e"
+					"buildTarget": "sneat-app:build:e2e-ci"
 				}
 			},
 			"defaultConfiguration": "development"
@@ -119,8 +166,11 @@
 				"port": "cypress-auto"
 			},
 			"configurations": {
+				"development": {
+					"devServerTarget": "sneat-app:serve:e2e-development"
+				},
 				"production": {
-					"devServerTarget": "sneat-app:serve:e2e"
+					"devServerTarget": "sneat-app:serve:e2e-production"
 				}
 			}
 		},
