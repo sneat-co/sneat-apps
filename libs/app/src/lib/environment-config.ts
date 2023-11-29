@@ -22,6 +22,7 @@ export interface IEnvironmentConfig {
 	useEmulators: boolean;
 	agents: { [id: string]: string };
 	firebaseConfig: IFirebaseConfig;
+	firebaseBaseUrl?: string;
 }
 
 export const FirebaseConfigToken = new InjectionToken<IFirebaseConfig>(
